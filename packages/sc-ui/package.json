@@ -1,0 +1,122 @@
+{
+  "name": "@selfcommunity/ui",
+  "version": "0.1.0",
+  "description": "React UI Components to integrate a Community created with SelfCommunity.",
+  "author": "mirk8xr <mirk8xr@gmail.com>",
+  "homepage": "https://www.selfcommunity.com",
+  "license": "MIT",
+  "main": "./src/index.js",
+  "types": "./src/index.d.ts",
+  "keywords": [
+    "react",
+    "widgets",
+    "community",
+    "react-ui",
+    "react-component"
+  ],
+  "scripts": {
+    "test": "npm run lint && npm run test-only",
+    "test-only": "jest --runInBand",
+    "tdd": "jest --watch --runInBand",
+    "lint": "eslint ./src test --ext .ts,.tsx,.js",
+    "prettier": "prettier './**/*.js' './**/*.css' './**/*.md' --write",
+    "prettier-list-different": "prettier './**/*.js' './**/*.css' './**/*.md' --list-different",
+    "clean:lib": "rimraf lib",
+    "clean:node_modules": "rimraf node_modules",
+    "build:commonjs": "cross-env BABEL_ENV=commonjs babel --root-mode upward --extensions .js,.jsx,.ts,.tsx  ./src --out-dir lib/cjs --ignore **/*.stories.js,**/*.spec.js",
+    "build:es": "cross-env BABEL_ENV=es babel --root-mode upward --extensions .js,.jsx,.ts,.tsx ./src --out-dir lib/esm --ignore **/*.stories.js,**/*.spec.js",
+    "build:umd": "webpack --mode production",
+    "build": "yarn clean:lib && yarn build:commonjs && yarn build:es && yarn build:umd",
+    "prerelease": "yarn run clean:lib && yarn run build"
+  },
+  "directories": {
+    "lib": "lib"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/selfcommunity/selfcommunity-ui-widgets.git"
+  },
+  "peerDependencies": {
+    "react": ">=17.0.2",
+    "react-dom": ">=17.0.2"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.4.1",
+    "@emotion/styled": "^11.3.0",
+    "@mui/material": "^5.0.3",
+    "@types/classnames": "^2.2.11",
+    "classnames": "^2.2.6",
+    "prop-types": "^15.7.2",
+    "prop-types-extra": "^1.1.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "@selfcommunity/core": "0.1.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.12.13",
+    "@babel/core": "^7.12.13",
+    "@babel/plugin-proposal-class-properties": "^7.12.13",
+    "@babel/plugin-proposal-export-default-from": "^7.12.13",
+    "@babel/plugin-proposal-export-namespace-from": "^7.12.13",
+    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.12.13",
+    "@babel/plugin-proposal-object-rest-spread": "^7.12.13",
+    "@babel/plugin-transform-modules-commonjs": "^7.12.13",
+    "@babel/preset-modules": "^0.1.4",
+    "@babel/preset-react": "^7.12.13",
+    "@babel/preset-typescript": "^7.12.13",
+    "@storybook/addon-actions": "^6.3.10",
+    "@storybook/addon-essentials": "^6.3.10",
+    "@storybook/addon-links": "^6.3.10",
+    "@storybook/react": "^6.3.10",
+    "@types/chai": "^4.2.14",
+    "@types/enzyme": "^3.10.8",
+    "@types/jest": "^26.0.20",
+    "@types/react": "^17.0.1",
+    "@types/react-dom": "^17.0.0",
+    "@types/sinon": "^9.0.10",
+    "@typescript-eslint/eslint-plugin": "^4.14.2",
+    "@typescript-eslint/parser": "^4.14.2",
+    "babel-jest": "^26.6.3",
+    "babel-loader": "^8.2.2",
+    "babel-preset-jason": "^6.3.0",
+    "chai": "^4.2.0",
+    "cherry-pick": "^0.5.0",
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.15.6",
+    "eslint": "^7.19.0",
+    "eslint-config-jason": "^8.1.1",
+    "eslint-config-prettier": "^7.2.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-mocha": "^8.0.0",
+    "eslint-plugin-react": "^7.22.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "faker": "^5.3.1",
+    "jest": "^26.6.3",
+    "lodash": "^4.17.15",
+    "postcss": "^8.2.4",
+    "prettier": "^2.2.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "rimraf": "^3.0.2",
+    "sass": "^1.32.6",
+    "sinon": "^9.2.4",
+    "typescript": "^4.1.3",
+    "webpack": "^5.20.1",
+    "webpack-atoms": "^16.0.0",
+    "webpack-cli": "^4.5.0",
+    "react-intl": "^3.11.0"
+  },
+  "prettier": {
+    "printWidth": 150,
+    "bracketSpacing": false,
+    "trailingComma": "none",
+    "singleQuote": true,
+    "bracketSameLine": true
+  },
+  "bugs": {
+    "url": "https://github.com/selfcommunity/selfcommunity-ui-widgets/issues"
+  }
+}

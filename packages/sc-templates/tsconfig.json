@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "lib",
+    "rootDir": "src",
+    "jsx": "react",
+    "allowSyntheticDefaultImports": true
+  },
+  "include": ["src", "./globals.d.ts"]
+}

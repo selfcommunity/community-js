@@ -1,0 +1,3 @@
+**/src/**/variables.less
+**/node_modules/
+packages/**/node_modules/

@@ -1,0 +1,15 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "lib",
+    "moduleResolution": "node",
+    "rootDir": "src",
+    "jsx": "react",
+    "allowSyntheticDefaultImports": true,
+    // Import non-ES modules as default imports.
+    "esModuleInterop": true,
+    // Ensure that .d.ts files are created by tsc, but not .js files
+    "declaration": true
+  },
+  "include": ["src", "./globals.d.ts"]
+}
