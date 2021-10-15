@@ -1,5 +1,5 @@
 {
-  "name": "community-ui",
+  "name": "@selfcommunity/community-ui",
   "private": true,
   "scripts": {
     "bootstrap": "yarn && lerna bootstrap --use-workspaces",
