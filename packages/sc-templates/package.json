@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "license": "MIT",
   "private": false,
-  "main": "./src/index.js",
+  "main": "./lib/esm/index.js",
   "types": "./src/index.d.ts",
   "description": "React Templates Components to integrate a Community created with SelfCommunity.",
   "author": "SelfCommunity (https://www.selfcommunity.com)",

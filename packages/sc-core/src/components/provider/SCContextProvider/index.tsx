@@ -50,7 +50,6 @@ export function SCContextProvider({settings, children}: SCContextProviderType): 
     const [, setError] = useState<any>();
     const [loading, setLoading] = useState<boolean>(false);
     setBasePortal(settings.portal);
-
     useEffect(() => {
       preferencesServices.loadPreferences()
         .then((res) => {

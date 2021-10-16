@@ -1,21 +1,26 @@
-extends:
-  - jason/react
-  - prettier
-globals:
-  css: false
-  JSX: true
-rules:
-  global-require: 0
-  quotes: 0
-  no-case-declarations: 0
-  no-unused-expressions: 0
-  prefer-const: off
-  no-duplicate-imports: off
-  import/no-duplicates: off
-  no-return-assign: 0
-  no-script-url: 0
-  no-loop-func: 0
-  no-undef: off
-  '@typescript-eslint/member-delimiter-style': off
-  '@typescript-eslint/no-use-before-define': off
-  '@typescript-eslint/consistent-type-assertions': off
+{
+  "extends": [
+    "jason/react",
+    "prettier"
+  ],
+  "globals": {
+    "css": false,
+    "JSX": true
+  },
+  "rules": {
+    "global-require": 0,
+    "quotes": 0,
+    "no-case-declarations": 0,
+    "no-unused-expressions": 0,
+    "prefer-const": "off",
+    "no-duplicate-imports": "off",
+    "import/no-duplicates": "off",
+    "no-return-assign": 0,
+    "no-script-url": 0,
+    "no-loop-func": 0,
+    "no-undef": "off",
+    "@typescript-eslint/member-delimiter-style": "off",
+    "@typescript-eslint/no-use-before-define": "off",
+    "@typescript-eslint/consistent-type-assertions": "off"
+  }
+}
