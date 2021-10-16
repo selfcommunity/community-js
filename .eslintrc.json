@@ -22,5 +22,23 @@
     "@typescript-eslint/member-delimiter-style": "off",
     "@typescript-eslint/no-use-before-define": "off",
     "@typescript-eslint/consistent-type-assertions": "off"
-  }
+  },
+  "settings": {
+    "import/resolver": {
+      "typescript": {}
+    }
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "./tsconfig.json",
+    "tsconfigRootDir": "./"
+  },
+  "plugins": [
+    "@typescript-eslint",
+    "import"
+  ],
+  "extends": [
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking"
+  ]
 }
