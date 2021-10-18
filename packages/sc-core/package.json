@@ -5,8 +5,9 @@
   "author": "mirk8xr <mirk8xr@gmail.com>",
   "homepage": "https://www.selfcommunity.com",
   "license": "MIT",
-  "main": "./lib/esm/index.js",
-  "types": "./src/index.d.ts",
+  "main": "./lib/cjs/index.js",
+  "module": "./lib/esm/index.js",
+  "types": "./lib/types/index.d.ts",
   "keywords": [
     "react",
     "widgets",
@@ -37,7 +38,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/selfcommunity/selfcommunity-ui-widgets.git"
+    "url": "https://github.com/selfcommunity/community-ui/tree/main/packages/sc-core"
   },
   "publishConfig": {
     "access": "public",
