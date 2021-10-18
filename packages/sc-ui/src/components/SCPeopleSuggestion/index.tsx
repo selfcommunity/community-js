@@ -1,11 +1,11 @@
-import React, {useEffect, useState } from 'react'
+import React, {useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
-import { Button, Typography } from '@mui/material'
+import {Button, Typography} from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import {Endpoints, http} from '@selfcommunity/core';
-import { SCPeopleSuggestionSkeleton } from '../SCSkeleton';
+import {SCPeopleSuggestionSkeleton} from '../SCSkeleton';
 import SCUser from '../SCUser';
 
 const PREFIX = 'SCPeopleSuggestion';
@@ -48,13 +48,11 @@ export default function SCPeopleSuggestion(): JSX.Element {
 
   if (loading) {
     return <SCPeopleSuggestionSkeleton />;
-  };
+  }
   return (
     <Root variant={'outlined'}>
       <CardContent>
-        <Typography variant="body1">
-          People suggestion
-        </Typography>
+        <Typography variant="body1">People suggestion</Typography>
         <List>
           {users.slice(0, 4).map((user: {username: string}, index) => (
             <SCUser contained={false} scUser={user} key={index} />
@@ -65,7 +63,7 @@ export default function SCPeopleSuggestion(): JSX.Element {
             Show All
           </Button>
         )}
-        {openPeopleSuggestionDialog && (<></>)}
+        {openPeopleSuggestionDialog && <></>}
       </CardContent>
     </Root>
   );
