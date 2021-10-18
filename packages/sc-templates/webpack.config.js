@@ -1,5 +1,5 @@
-const path = require('path')
-const { plugins, rules } = require('webpack-atoms')
+const path = require('path');
+const { plugins, rules } = require('webpack-atoms');
 
 module.exports = (env, argv) => {
   const mode = argv.mode || 'development'; // dev mode by default
@@ -7,7 +7,7 @@ module.exports = (env, argv) => {
     mode,
     devtool: 'source-map',
     entry: {
-      'templates': './src/index.js',
+      templates: './src/index.ts',
     },
     output: {
       path: path.join(__dirname, './lib/umd'),
@@ -37,7 +37,7 @@ module.exports = (env, argv) => {
     },
     plugins: [
       plugins.define({
-        'process.env.NODE_ENV': JSON.stringify(mode)
+        'process.env.NODE_ENV': JSON.stringify(mode),
       }),
       // plugins.uglify(),
       plugins.banner({
@@ -46,5 +46,5 @@ module.exports = (env, argv) => {
         entryOnly: true,
       }),
     ],
-  }
+  };
 };

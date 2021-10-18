@@ -11,8 +11,6 @@
     "tdd": "npm run rw tdd",
     "clean:node_modules": "lerna exec yarn clean:node_modules && rimraf node_modules",
     "clean:libs": "lerna exec yarn clean:lib",
-    "docs:start": "yarn --cwd ./docs start",
-    "docs:deploy": "yarn build && yarn --cwd ./docs && GIT_USER=selfcommunity yarn --cwd ./docs deploy",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
@@ -48,7 +46,7 @@
     "babel-preset-env-modules": "^1.0.0",
     "cross-env": "^5.0.5",
     "eslint": "^7.0.0",
-    "eslint-config-jason": "^7.0.1",
+    "eslint-plugin-prettier": "^4.0.0",
     "eslint-config-prettier": "^6.5.0",
     "eslint-import-resolver-typescript": "^2.5.0",
     "eslint-plugin-import": "^2.25.2",
@@ -63,7 +61,7 @@
   "prettier": {
     "trailingComma": "all",
     "singleQuote": true,
-    "semi": false
+    "semi": true
   },
   "workspaces": {
     "packages": [
