@@ -1,8 +1,13 @@
 {
-  "files": [],
-  "references": [
-    {
-      "path": "docs"
+  "extends": "./tsconfig.base.json",
+
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@selfcommunity/core": ["packages/sc-core/src"],
+      "@selfcommunity/ui": ["packages/sc-ui/src"],
+      "@selfcommunity/templates": ["packages/sc-templates/src"],
+      "@selfcommunity/*": ["packages/*/src"]
     }
-  ]
+  }
 }

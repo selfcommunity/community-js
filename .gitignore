@@ -4,6 +4,7 @@ dist/
 *.tsbuildinfo
 .env.development
 .env.production
+NOTE.md
 
 temp/
 

@@ -3,20 +3,18 @@
   "version": "0.1.0",
   "license": "MIT",
   "private": false,
-  "main": "./src/index.js",
-  "types": "./src/index.d.ts",
+  "main": "./lib/cjs/index.js",
+  "module": "./lib/esm/index.js",
+  "types": "./lib/esm/index.d.ts",
   "description": "React Templates Components to integrate a Community created with SelfCommunity.",
   "author": "SelfCommunity (https://www.selfcommunity.com)",
-  "files": [
-    "lib"
-  ],
   "keywords": [
     "react",
     "widgets",
     "community",
     "react-ui",
-    "react-component",
-    "react templates"
+    "react-components",
+    "react-templates"
   ],
   "scripts": {
     "test": "npm run lint && npm run test-only",
@@ -34,9 +32,16 @@
     "prerelease": "yarn run clean:lib && yarn run build"
   },
   "homepage": "https://www.selfcommunity.com",
+  "files": [
+    "lib"
+  ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/selfcommunity/selfcommunity-ui-widgets.git"
+    "url": "https://github.com/selfcommunity/community-ui/tree/main/packages/sc-core"
+  },
+  "publishConfig": {
+    "access": "public",
+    "directory": "lib"
   },
   "peerDependencies": {
     "react": ">=17.0.2",
@@ -50,8 +55,6 @@
     "classnames": "^2.2.6",
     "prop-types": "^15.7.2",
     "prop-types-extra": "^1.1.1",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
     "@selfcommunity/core": "0.1.0",
     "@selfcommunity/ui": "0.1.0"
   },

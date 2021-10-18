@@ -1,6 +1,19 @@
 {
-  "extends": "./tsconfig.json",
+  "extends": "../../tsconfig.base.json",
+
   "compilerOptions": {
-    "composite": false
-  }
+    "composite": true,
+    "declaration": true,
+    "outDir": "./lib",
+    "rootDir": "./src"
+  },
+
+  "references": [{
+    "path": "../sc-core/tsconfig.build.json",
+    "path": "../sc-ui/tsconfig.build.json"
+  }],
+
+  "include": [
+    "src/**/*"
+  ]
 }
