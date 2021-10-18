@@ -5,7 +5,6 @@
   "private": false,
   "main": "./lib/cjs/index.js",
   "module": "./lib/esm/index.js",
-  "types": "./lib/esm/index.d.ts",
   "description": "React Templates Components to integrate a Community created with SelfCommunity.",
   "author": "SelfCommunity (https://www.selfcommunity.com)",
   "keywords": [
@@ -28,7 +27,8 @@
     "build:commonjs": "cross-env BABEL_ENV=commonjs babel --root-mode upward --extensions .js,.jsx,.ts,.tsx  ./src --out-dir lib/cjs --ignore **/*.stories.js,**/*.spec.js",
     "build:es": "cross-env BABEL_ENV=es babel --root-mode upward --extensions .js,.jsx,.ts,.tsx ./src --out-dir lib/esm --ignore **/*.stories.js,**/*.spec.js",
     "build:umd": "webpack --mode production",
-    "build": "yarn clean:lib && yarn build:commonjs && yarn build:es && yarn build:umd",
+    "build:types": "tsc -d --declarationDir lib/esm --declarationMap --emitDeclarationOnly",
+    "build": "yarn clean:lib && yarn build:commonjs && yarn build:es && yarn build:umd && yarn build:types",
     "prerelease": "yarn run clean:lib && yarn run build"
   },
   "homepage": "https://www.selfcommunity.com",
