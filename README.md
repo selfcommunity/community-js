@@ -59,8 +59,8 @@ Here is a quick example to get you started, **it's all you need**:
 ```jsx
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {SCPeopleSuggestion} from '@selfcommunity/ui';
 import {SCContextProvider} from '@selfcommunity/core';
+import {PeopleSuggestion} from '@selfcommunity/ui';
 
 function App() {
   const conf = {
@@ -73,7 +73,7 @@ function App() {
     },
   };
   return (
-    <SCContextProvider settings={conf}><SCPeopleSuggestion /></SCContextProvider>
+    <SCContextProvider settings={conf}><PeopleSuggestion /></SCContextProvider>
   );
 }
 

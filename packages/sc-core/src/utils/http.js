@@ -7,7 +7,7 @@ import axios from 'axios';
  */
 const http = axios.create({
   timeout: 100000,
-  responseType: 'json'
+  responseType: 'json',
 });
 
 /**

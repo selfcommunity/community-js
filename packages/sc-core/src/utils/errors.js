@@ -27,7 +27,6 @@ const ValidationError = class extends Error {
   }
 };
 
-
 /**
  * InvalidTargetError
  */
@@ -120,5 +119,5 @@ export {
   InvalidRouterError,
   InvalidThemeError,
   InvalidRefreshTokenEndpointError,
-  InvalidPreferencesError
+  InvalidPreferencesError,
 };

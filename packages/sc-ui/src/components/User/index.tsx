@@ -1,24 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, {useContext, useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import { SCUserBoxSkeleton } from '../SCSkeleton';
-import {
-  Avatar,
-  Button,
-  ListItem,
-  ListItemAvatar,
-  ListItemSecondaryAction,
-  ListItemText,
-} from '@mui/material';
-import {
-  SCContext, SCContextType,
-  Endpoints, http, SCPreferences,
-  SCAuthContext,
-  SCAuthContextType,
-  SCUserType,
-} from '@selfcommunity/core';
+import {UserBoxSkeleton} from '../Skeleton';
+import {Avatar, Button, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText} from '@mui/material';
+import {SCContext, SCContextType, Endpoints, http, SCPreferences, SCAuthContext, SCAuthContextType, SCUserType} from '@selfcommunity/core';
 
 const PREFIX = 'SCUser';
 
@@ -31,12 +18,20 @@ const Root = styled(Card, {
   marginBottom: theme.spacing(2)
 }));
 
-export default function SCUser({scUserId = null, scUser= null, contained = true}: {scUserId?: number, scUser?: SCUserType, contained: boolean}): JSX.Element {
+export default function User({
+  scUserId = null,
+  scUser = null,
+  contained = true
+}: {
+  scUserId?: number;
+  scUser?: SCUserType;
+  contained: boolean;
+}): JSX.Element {
   const [user, setUser] = useState<SCUserType>(scUser);
   const scContext: SCContextType = useContext(SCContext);
   const scAuthContext: SCAuthContextType = useContext(SCAuthContext);
-  console.log(scContext);
-  const followEnabled = SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED in scContext.preferences && scContext.preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED].value
+  const followEnabled =
+    SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED in scContext.preferences && scContext.preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED].value;
   const connectionEnabled = !followEnabled;
 
   /**
@@ -110,11 +105,7 @@ export default function SCUser({scUserId = null, scUser= null, contained = true}
    * @return {JSX.Element}
    */
   function renderAnonymousActions() {
-    return (
-      <Button size="small">
-        Go to Profile
-      </Button>
-    );
+    return <Button size="small">Go to Profile</Button>;
   }
 
   useEffect(() => {
@@ -132,13 +123,11 @@ export default function SCUser({scUserId = null, scUser= null, contained = true}
           </ListItemAvatar>
           <ListItemText primary={user.username} secondary={user.slogan} />
           <ListItemSecondaryAction>
-            {scAuthContext.user && connectionEnabled
-              ? renderAuthenticatedActions()
-              : renderAnonymousActions()}
+            {scAuthContext.user && connectionEnabled ? renderAuthenticatedActions() : renderAnonymousActions()}
           </ListItemSecondaryAction>
         </ListItem>
       ) : (
-        <SCUserBoxSkeleton contained />
+        <UserBoxSkeleton contained />
       )}
     </React.Fragment>
   );

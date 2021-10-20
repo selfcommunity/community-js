@@ -5,7 +5,7 @@ function loadPreferences() {
   return http
     .request({
       url: endpoints.Preferences.url(),
-      method: endpoints.Preferences.method
+      method: endpoints.Preferences.method,
     })
     .then((res) => {
       if (res.status >= 300) {
@@ -20,5 +20,5 @@ function loadPreferences() {
 }
 
 export default {
-  loadPreferences
+  loadPreferences,
 };

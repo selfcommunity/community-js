@@ -3,14 +3,14 @@
 /**
  * ContextStateProvider component
  */
-import {SCContext, SCContextType} from './components/provider/SCContextProvider'
-import SCContextProvider from './components/provider/SCContextProvider'
+import {SCContext, SCContextType} from './components/provider/SCContextProvider';
+import SCContextProvider from './components/provider/SCContextProvider';
 
 /**
  * AuthStateProvider component
  */
-import {SCAuthContext, SCAuthContextType, SCUserType} from './components/provider/SCAuthProvider'
-import SCAuthProvider from './components/provider/SCAuthProvider'
+import {SCAuthContext, SCAuthContextType, SCUserType} from './components/provider/SCAuthProvider';
+import SCAuthProvider from './components/provider/SCAuthProvider';
 
 /**
  * AuthStateProvider component
@@ -30,15 +30,4 @@ import Endpoints from './constants/Endpoints';
 /**
  * List all exports
  */
-export {
-  SCContextProvider,
-  SCContext,
-  SCContextType,
-  SCAuthProvider,
-  SCAuthContext,
-  SCAuthContextType,
-  SCUserType,
-  SCPreferences,
-  http,
-  Endpoints
-};
+export {SCContextProvider, SCContext, SCContextType, SCAuthProvider, SCAuthContext, SCAuthContextType, SCUserType, SCPreferences, http, Endpoints};

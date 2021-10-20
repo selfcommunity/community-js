@@ -32,8 +32,7 @@ export interface SCUserBoxProps {
   contained: boolean;
 }
 
-export default function SCUserBoxSkeleton({contained = false }: SCUserBoxProps): JSX.Element {
-
+export default function UserBoxSkeleton({contained = false}: SCUserBoxProps): JSX.Element {
   const user = (
     <ListItem>
       <ListItemAvatar>
@@ -51,7 +50,11 @@ export default function SCUserBoxSkeleton({contained = false }: SCUserBoxProps):
     </ListItem>
   );
   if (contained) {
-    return <Root variant={'outlined'}><List>{user}</List></Root>;
+    return (
+      <Root variant={'outlined'}>
+        <List>{user}</List>
+      </Root>
+    );
   }
   return user;
 }

@@ -1,17 +1,21 @@
 import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import {ComponentStory, ComponentMeta} from '@storybook/react';
 
-import SCUser from './index';
+import User from './index';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Design System/SC UI/User',
-  component: SCUser,
+  component: User
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
-} as ComponentMeta<typeof SCUser>;
+} as ComponentMeta<typeof User>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof SCUser> = (args) => <div style={{width: 400}}><SCUser scUserId={1} {...args} /></div>;
+const Template: ComponentStory<typeof User> = (args) => (
+  <div style={{width: 400}}>
+    <User scUserId={1} {...args} />
+  </div>
+);
 
 export const Base = Template.bind({});
 

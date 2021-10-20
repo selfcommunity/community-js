@@ -1,8 +1,8 @@
-import React, { createContext, ReactNode, useEffect, useState } from 'react'
+import React, {createContext, ReactNode, useEffect, useState} from 'react';
 import SCAuthProvider from '../SCAuthProvider';
 import preferencesServices from '../../../services/preferences';
-import SCLocalizationProvider from '../SCLocalizationProvider'
-import SCRoutingProvider from '../SCRoutingProvider'
+import SCLocalizationProvider from '../SCLocalizationProvider';
+import SCRoutingProvider from '../SCRoutingProvider';
 import SCThemeProvider from '../SCThemeProvider';
 import {setBasePortal} from '../../../utils/http';
 
@@ -46,34 +46,35 @@ export const SCContext = createContext<SCContextType>({} as SCContextType);
  * This import all providers
  */
 export function SCContextProvider({settings, children}: SCContextProviderType): JSX.Element {
-    const [preferences, setPreferences] = useState<any[]>([]);
-    const [, setError] = useState<any>();
-    const [loading, setLoading] = useState<boolean>(false);
-    setBasePortal(settings.portal);
-    useEffect(() => {
-      preferencesServices.loadPreferences()
-        .then((res) => {
-          setPreferences(res.results)
-        })
-        .catch((_error) => {
-          setError(_error)
-          console.log(_error);
-        })
-        .finally(() => setLoading(false));
-    }, []);
+  const [preferences, setPreferences] = useState<any[]>([]);
+  const [, setError] = useState<any>();
+  const [loading, setLoading] = useState<boolean>(false);
+  setBasePortal(settings.portal);
+  useEffect(() => {
+    preferencesServices
+      .loadPreferences()
+      .then((res) => {
+        setPreferences(res.results);
+      })
+      .catch((_error) => {
+        setError(_error);
+        console.log(_error);
+      })
+      .finally(() => setLoading(false));
+  }, []);
 
-    return (
-      <SCContext.Provider value={{settings, preferences}}>
-        {!loading && <SCThemeProvider>
+  return (
+    <SCContext.Provider value={{settings, preferences}}>
+      {!loading && (
+        <SCThemeProvider>
           <SCAuthProvider>
             <SCRoutingProvider>
-                <SCLocalizationProvider>
-                  {children}
-                </SCLocalizationProvider>
+              <SCLocalizationProvider>{children}</SCLocalizationProvider>
             </SCRoutingProvider>
           </SCAuthProvider>
-        </SCThemeProvider>}
-      </SCContext.Provider>
-    );
-  }
+        </SCThemeProvider>
+      )}
+    </SCContext.Provider>
+  );
+}
 export default SCContextProvider;

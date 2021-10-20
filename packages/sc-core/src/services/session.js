@@ -5,7 +5,7 @@ function getCurrentUser() {
   return http
     .request({
       url: endpoints.Me.url(),
-      method: endpoints.Me.method
+      method: endpoints.Me.method,
     })
     .then((res) => {
       if (res.status >= 300) {
@@ -23,7 +23,7 @@ function getUser(id) {
   return http
     .request({
       url: endpoints.User.url({id: id}),
-      method: endpoints.User.method
+      method: endpoints.User.method,
     })
     .then((res) => {
       if (res.status >= 300) {
@@ -39,5 +39,5 @@ function getUser(id) {
 
 export default {
   getCurrentUser,
-  getUser
+  getUser,
 };
