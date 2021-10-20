@@ -1,4 +1,4 @@
-import { createTheme } from '@mui/material/styles';
+import {createTheme} from '@mui/material/styles';
 import {mergeDeep} from '../utils/object';
 import t from 'typy';
 import {COLORS_COLORBACK, COLORS_COLORPRIMARY, COLORS_COLORSECONDARY, FONT_FAMILY} from '../constants/Preferences';
@@ -31,36 +31,36 @@ const getTheme = (options, preferences) => {
           ...(isValidPreference(preferences, COLORS_COLORBACK, 'isColor') && {background: {default: preferences[COLORS_COLORBACK].value}}),
           ...(isValidPreference(preferences, COLORS_COLORPRIMARY, 'isColor') && {text: {primary: preferences[COLORS_COLORPRIMARY].value}}),
           ...(isValidPreference(preferences, COLORS_COLORPRIMARY, 'isColor') && {primary: {main: preferences[COLORS_COLORPRIMARY].value}}),
-          ...(isValidPreference(preferences, COLORS_COLORSECONDARY, 'isColor') && {secondary: {main: preferences[COLORS_COLORSECONDARY].value}})
+          ...(isValidPreference(preferences, COLORS_COLORSECONDARY, 'isColor') && {secondary: {main: preferences[COLORS_COLORSECONDARY].value}}),
         },
         typography: {
           ...(isValidPreference(preferences, FONT_FAMILY, 'isString') && {fontFamily: preferences[FONT_FAMILY].value}),
           body1: {
-            fontSize: '0.9rem'
+            fontSize: '0.9rem',
           },
           body2: {
-            fontSize: '0.8rem'
-          }
+            fontSize: '0.8rem',
+          },
         },
         components: {
           MuiPaper: {
             styleOverrides: {
               rounded: {
-                borderRadius: 10
-              }
-            }
+                borderRadius: 10,
+              },
+            },
           },
           SCFeedObject: {
             styleOverrides: {
               root: {
                 '& .SCFeedObject-category': {
                   backgroundColor: '#FF0000',
-                  borderColor: '#FF0000'
-                }
-              }
-            }
-          }
-        }
+                  borderColor: '#FF0000',
+                },
+              },
+            },
+          },
+        },
       }
     : {};
   return createTheme(mergeDeep(defaultOptions, options));
