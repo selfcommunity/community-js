@@ -3,7 +3,7 @@ import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import {SCUserBoxSkeleton} from '../SCSkeleton';
+import {UserBoxSkeleton} from '../Skeleton';
 import {Avatar, Button, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText} from '@mui/material';
 import {SCContext, SCContextType, Endpoints, http, SCPreferences, SCAuthContext, SCAuthContextType, SCUserType} from '@selfcommunity/core';
 
@@ -18,7 +18,7 @@ const Root = styled(Card, {
   marginBottom: theme.spacing(2)
 }));
 
-export default function SCUser({
+export default function User({
   scUserId = null,
   scUser = null,
   contained = true
@@ -127,7 +127,7 @@ export default function SCUser({
           </ListItemSecondaryAction>
         </ListItem>
       ) : (
-        <SCUserBoxSkeleton contained />
+        <UserBoxSkeleton contained />
       )}
     </React.Fragment>
   );

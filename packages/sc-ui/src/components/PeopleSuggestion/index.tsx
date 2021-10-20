@@ -5,8 +5,8 @@ import {Button, Typography} from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import {Endpoints, http} from '@selfcommunity/core';
-import {SCPeopleSuggestionSkeleton} from '../SCSkeleton';
-import SCUser from '../SCUser';
+import {PeopleSuggestionSkeleton} from '../Skeleton';
+import User from '../User';
 
 const PREFIX = 'SCPeopleSuggestion';
 
@@ -47,7 +47,7 @@ export default function SCPeopleSuggestion(): JSX.Element {
   }, []);
 
   if (loading) {
-    return <SCPeopleSuggestionSkeleton />;
+    return <PeopleSuggestionSkeleton />;
   }
   return (
     <Root variant={'outlined'}>
@@ -55,7 +55,7 @@ export default function SCPeopleSuggestion(): JSX.Element {
         <Typography variant="body1">People suggestion</Typography>
         <List>
           {users.slice(0, 4).map((user: {username: string}, index) => (
-            <SCUser contained={false} scUser={user} key={index} />
+            <User contained={false} scUser={user} key={index} />
           ))}
         </List>
         {hasMore && (

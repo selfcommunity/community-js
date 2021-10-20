@@ -3,7 +3,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import List from '@mui/material/List';
 import {styled} from '@mui/material/styles';
-import SCUserBoxSkeleton from './SCUserBoxSkeleton'
+import UserBoxSkeleton from './UserBoxSkeleton';
 
 const PREFIX = 'SCPeopleSuggestionSkeleton';
 
@@ -21,14 +21,13 @@ const Root = styled(Card)(({theme}) => ({
   }
 }));
 
-export default function SCPeopleSuggestionSkeleton(): JSX.Element {
-
+export default function PeopleSuggestionSkeleton(): JSX.Element {
   return (
     <Root variant={'outlined'}>
       <CardContent>
         <List className={classes.list}>
           {[...Array(4)].map((user, index) => (
-            <SCUserBoxSkeleton key={index} contained={false} />
+            <UserBoxSkeleton key={index} contained={false} />
           ))}
         </List>
       </CardContent>

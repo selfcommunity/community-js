@@ -1,17 +1,21 @@
 import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import {ComponentStory, ComponentMeta} from '@storybook/react';
 
-import {SCUserBoxSkeleton} from './index';
+import {UserBoxSkeleton} from './index';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Design System/SC UI/Skeleton/UserBox',
-  component: SCUserBoxSkeleton,
+  component: UserBoxSkeleton
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
-} as ComponentMeta<typeof SCUserBoxSkeleton>;
+} as ComponentMeta<typeof UserBoxSkeleton>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof SCUserBoxSkeleton> = (args) => <div style={{width: 400}}><SCUserBoxSkeleton {...args} /></div>;
+const Template: ComponentStory<typeof UserBoxSkeleton> = (args) => (
+  <div style={{width: 400}}>
+    <UserBoxSkeleton {...args} />
+  </div>
+);
 
 export const Base = Template.bind({});
 
