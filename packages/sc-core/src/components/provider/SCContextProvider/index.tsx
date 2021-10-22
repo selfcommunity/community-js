@@ -5,31 +5,7 @@ import SCLocalizationProvider from '../SCLocalizationProvider';
 import SCRoutingProvider from '../SCRoutingProvider';
 import SCThemeProvider from '../SCThemeProvider';
 import {setBasePortal} from '../../../utils/http';
-
-/**
- * Interface SCSettingsType
- */
-export interface SCSettingsType {
-  portal: string;
-  locale: string;
-  session: any;
-}
-
-/**
- * Interface SCContextType
- */
-export interface SCContextType {
-  settings: SCSettingsType;
-  preferences?: any;
-}
-
-/**
- * Interface SCContextProviderType
- */
-export interface SCContextProviderType {
-  settings: SCSettingsType;
-  children: ReactNode;
-}
+import {SCContextProviderType, SCContextType} from '../../../types';
 
 /**
  * Create Global Context
@@ -48,8 +24,9 @@ export const SCContext = createContext<SCContextType>({} as SCContextType);
 export function SCContextProvider({settings, children}: SCContextProviderType): JSX.Element {
   const [preferences, setPreferences] = useState<any[]>([]);
   const [, setError] = useState<any>();
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   setBasePortal(settings.portal);
+
   useEffect(() => {
     preferencesServices
       .loadPreferences()

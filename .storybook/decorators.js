@@ -7,8 +7,7 @@ const withProvider = (Story, context) => {
     locale: context.globals.locale,
     session: {
       type: context.globals.session,
-      token: context.globals.authToken,
-      refreshToken: context.globals.authToken,
+      authToken: context.globals.authToken,
       refreshTokenEndpoint: context.globals.authRefreshTokenEndpoint
     },
   };

@@ -1,16 +1,17 @@
-/* eslint-disable global-require */
+/**
+ * Types
+ */
+import {SCContextType, SCAuthContextType, SCUserType, SCContextProviderType, SCTagType, SCSettingsType, SCSessionType} from './types';
 
 /**
  * ContextStateProvider component
  */
-import {SCContext, SCContextType} from './components/provider/SCContextProvider';
-import SCContextProvider from './components/provider/SCContextProvider';
+import SCContextProvider, {SCContext} from './components/provider/SCContextProvider';
 
 /**
  * AuthStateProvider component
  */
-import {SCAuthContext, SCAuthContextType, SCUserType} from './components/provider/SCAuthProvider';
-import SCAuthProvider from './components/provider/SCAuthProvider';
+import SCAuthProvider, {SCAuthContext} from './components/provider/SCAuthProvider';
 
 /**
  * AuthStateProvider component
@@ -30,4 +31,19 @@ import Endpoints from './constants/Endpoints';
 /**
  * List all exports
  */
-export {SCContextProvider, SCContext, SCContextType, SCAuthProvider, SCAuthContext, SCAuthContextType, SCUserType, SCPreferences, http, Endpoints};
+export {
+  SCContextProviderType,
+  SCTagType,
+  SCSettingsType,
+  SCSessionType,
+  SCContextType,
+  SCAuthContextType,
+  SCUserType,
+  SCContext,
+  SCAuthContext,
+  SCContextProvider,
+  SCAuthProvider,
+  SCPreferences,
+  http,
+  Endpoints,
+};

@@ -49,7 +49,13 @@ export const globalTypes = {
   authToken: {
     name: 'OAuth Token',
     description: 'OAuth Token',
-    defaultValue: {"access_token": process.env.STORYBOOK_PLATFORM_ACCESS_TOKEN, "refresh_token": process.env.STORYBOOK_PLATFORM_REFRESH_TOKEN}
+    defaultValue: {
+      "accessToken": process.env.STORYBOOK_PLATFORM_ACCESS_TOKEN,
+      "refreshToken": process.env.STORYBOOK_PLATFORM_REFRESH_TOKEN,
+      "tokenType": process.env.STORYBOOK_PLATFORM_ACCESS_TOKEN_TYPE,
+      "expiresIn": process.env.STORYBOOK_PLATFORM_ACCESS_TOKEN_EXPIRES_IN,
+      "scope": process.env.STORYBOOK_PLATFORM_ACCESS_TOKEN_SCOPE,
+    }
   },
   authRefreshTokenEndpoint: {
     name: 'Refresh Token Endpoint',
