@@ -35,7 +35,6 @@ export function SCContextProvider({settings, children}: SCContextProviderType): 
       })
       .catch((_error) => {
         setError(_error);
-        console.log(_error);
       })
       .finally(() => setLoading(false));
   }, []);

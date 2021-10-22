@@ -45,8 +45,9 @@ export default function SCAuthProvider({children}: {children: React.ReactNode}):
    * Call the logout endpoint and then remove the user
    * from the state.
    */
-  function logout() {
+  function logout(): void {
     setUser(undefined);
+    setSession(undefined);
   }
 
   /**
@@ -60,27 +61,28 @@ export default function SCAuthProvider({children}: {children: React.ReactNode}):
    * you only get re-renders when logging in and out
    * we want to keep things very performant.
    */
-  const memoedValue = useMemo(
+  const contextValue = useMemo(
     () => ({
       user,
+      session,
       loading,
       error,
       logout,
     }),
-    [user, loading, error]
+    [user, session, loading, error]
   );
 
   /**
    * We only want to render the underlying app after we
    * assert for the presence of a current user.
    */
-  return <SCAuthContext.Provider value={memoedValue}>{!loading && children}</SCAuthContext.Provider>;
+  return <SCAuthContext.Provider value={contextValue}>{!loading && children}</SCAuthContext.Provider>;
 }
 
 /**
  * Let's only export the `useAuth` hook instead of the context.
  * We only want to use the hook directly and never the context component.
  */
-export function useSCAuth() {
+export function useSCAuth(): SCAuthContextType {
   return useContext(SCAuthContext);
 }
