@@ -121,7 +121,7 @@ export default function User({
           <ListItemAvatar>
             <Avatar alt={user.username} src={user.avatar} />
           </ListItemAvatar>
-          <ListItemText primary={user.username} secondary={user.slogan} />
+          <ListItemText primary={user.username} secondary={user.description} />
           <ListItemSecondaryAction>
             {scAuthContext.user && connectionEnabled ? renderAuthenticatedActions() : renderAnonymousActions()}
           </ListItemSecondaryAction>

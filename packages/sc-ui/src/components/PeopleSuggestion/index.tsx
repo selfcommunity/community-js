@@ -4,7 +4,7 @@ import List from '@mui/material/List';
 import {Button, Typography} from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import {Endpoints, http} from '@selfcommunity/core';
+import { Endpoints, http, SCUserType } from '@selfcommunity/core';
 import {PeopleSuggestionSkeleton} from '../Skeleton';
 import User from '../User';
 
@@ -20,7 +20,7 @@ const Root = styled(Card, {
 }));
 
 export default function SCPeopleSuggestion(): JSX.Element {
-  const [users, setUsers] = useState<any[]>([]);
+  const [users, setUsers] = useState<SCUserType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [hasMore, setHasMore] = useState<boolean>(false);
   const [openPeopleSuggestionDialog, setOpenPeopleSuggestionDialog] = useState<boolean>(false);
@@ -54,7 +54,7 @@ export default function SCPeopleSuggestion(): JSX.Element {
       <CardContent>
         <Typography variant="body1">People suggestion</Typography>
         <List>
-          {users.slice(0, 4).map((user: {username: string}, index) => (
+          {users.slice(0, 4).map((user: SCUserType, index) => (
             <User contained={false} scUser={user} key={index} />
           ))}
         </List>
