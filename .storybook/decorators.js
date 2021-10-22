@@ -8,7 +8,11 @@ const withProvider = (Story, context) => {
     session: {
       type: context.globals.session,
       authToken: context.globals.authToken,
-      refreshTokenEndpoint: context.globals.authRefreshTokenEndpoint
+      isRefreshing: false,
+      refreshTokenEndpoint: {
+        path: context.globals.authRefreshTokenEndpoint.path,
+        method: context.globals.authRefreshTokenEndpoint.method
+      }
     },
   };
   return (

@@ -6,7 +6,7 @@ import t from 'typy';
  * @param source
  * @return {*}
  */
-export function mergeDeep(target, source) {
+export function mergeDeep(target: object, source: object): object {
   let output = Object.assign({}, target);
   if (t(target).isObject && t(source).isObject) {
     Object.keys(source).forEach((key) => {

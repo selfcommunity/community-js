@@ -60,7 +60,10 @@ export const globalTypes = {
   authRefreshTokenEndpoint: {
     name: 'Refresh Token Endpoint',
     description: 'Endpoint config to refresh token',
-    defaultValue: process.env.STORYBOOK_PLATFORM_REFRESH_TOKEN_ENDPOINT
+    defaultValue: {
+      "path": process.env.STORYBOOK_PLATFORM_REFRESH_TOKEN_ENDPOINT_PATH,
+      "method": process.env.STORYBOOK_PLATFORM_REFRESH_TOKEN_ENDPOINT_PATH
+    }
   }
 };
 

@@ -1,13 +1,13 @@
-export function capitalize(str) {
+export function capitalize(str: string): string {
   let strVal = '';
-  str = str.split(' ');
-  for (let chr = 0; chr < str.length; chr++) {
-    strVal += str[chr].substring(0, 1).toUpperCase() + str[chr].substring(1, str[chr].length);
+  let strArr: string[] = str.split(' ');
+  for (let chr = 0; chr < strArr.length; chr++) {
+    strVal += strArr[chr].substring(0, 1).toUpperCase() + strArr[chr].substring(1, strArr[chr].length);
   }
   return strVal;
 }
 
-export function camelCase(str) {
+export function camelCase(str: string): string {
   // Lower cases the string
   return (
     str
@@ -26,6 +26,6 @@ export function camelCase(str) {
   );
 }
 
-export function stripHtml(str) {
+export function stripHtml(str: string): string {
   return str.replace(/<[^>]*>?/gm, '').trim();
 }

@@ -2,7 +2,7 @@ import React, {createContext, useContext, useEffect, useMemo, useState} from 're
 import sessionServices from '../../../services/session';
 import {SCAuthContextType, SCContextType, SCSessionType, SCUserType} from '../../../types';
 import {SCContext} from '../SCContextProvider';
-import {setAuthorizeToken} from '../../../utils/http';
+import {addOauth2Interceptor, ejectOauth2Interceptor, setAuthorizeToken, setSupportWithCredentials} from '../../../utils/http';
 import * as Session from '../../../constants/Session';
 
 export const SCAuthContext = createContext<SCAuthContextType>({} as SCAuthContextType);
@@ -25,6 +25,7 @@ export default function SCAuthProvider({children}: {children: React.ReactNode}):
   if ([Session.OAUTH_SESSION, Session.JWT_SESSION].includes(currentSession.type)) {
     setAuthorizeToken(currentSession.authToken.accessToken);
   }
+  setSupportWithCredentials(currentSession.type === Session.COOKIE_SESSION);
 
   /**
    * Check if there is a currently active session
@@ -34,12 +35,24 @@ export default function SCAuthProvider({children}: {children: React.ReactNode}):
   useEffect(() => {
     sessionServices
       .getCurrentUser()
-      .then((_user) => setUser(_user))
+      .then((_user) => {
+        setUser(_user);
+        addOauth2Interceptor();
+      })
       .catch((_error) => {
         setError(_error);
+        ejectOauth2Interceptor();
       })
       .finally(() => setLoading(false));
-  }, []);
+  }, [session]);
+
+  /**
+   * Call the logout endpoint and then remove the user
+   * from the state.
+   */
+  function updateSession(session: SCSessionType): void {
+    setSession(session);
+  }
 
   /**
    * Call the logout endpoint and then remove the user
@@ -52,7 +65,7 @@ export default function SCAuthProvider({children}: {children: React.ReactNode}):
 
   /**
    * Make the provider update only when it should.
-   * We only want to force re-renders if the user,
+   * We only want to force re-renders if the user, session,
    * loading or error states change.
    *
    * Whenever the `value` passed into a provider changes,
@@ -68,6 +81,7 @@ export default function SCAuthProvider({children}: {children: React.ReactNode}):
       loading,
       error,
       logout,
+      updateSession,
     }),
     [user, session, loading, error]
   );
