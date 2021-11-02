@@ -1,7 +1,16 @@
 /**
  * Types
  */
-import {SCContextType, SCAuthContextType, SCUserType, SCContextProviderType, SCTagType, SCSettingsType, SCSessionType} from './types';
+import {
+  SCContextType,
+  SCAuthContextType,
+  SCUserType,
+  SCContextProviderType,
+  SCTagType,
+  SCSettingsType,
+  SCSessionType,
+  SCThemeContextType,
+} from './types';
 
 /**
  * ContextStateProvider component
@@ -12,6 +21,11 @@ import SCContextProvider, {SCContext} from './components/provider/SCContextProvi
  * AuthStateProvider component
  */
 import SCAuthProvider, {SCAuthContext} from './components/provider/SCAuthProvider';
+
+/**
+ * AuthStateProvider component
+ */
+import SCThemeProvider, {withSCTheme} from './components/provider/SCThemeProvider';
 
 /**
  * AuthStateProvider component
@@ -43,6 +57,9 @@ export {
   SCAuthContext,
   SCContextProvider,
   SCAuthProvider,
+  SCThemeProvider,
+  SCThemeContextType,
+  withSCTheme,
   SCPreferences,
   http,
   Endpoints,

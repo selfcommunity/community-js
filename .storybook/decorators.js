@@ -38,7 +38,7 @@ const withProvider = (Story, context) => {
       theme: {
         palette: {
           secondary: {
-            main: '#3baeae'
+            main: '#de3927'
           }
         }
       }

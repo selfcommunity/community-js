@@ -1,6 +1,6 @@
 import React, {createContext, useContext, useEffect, useMemo, useReducer, useState} from 'react';
 import sessionServices from '../../../services/session';
-import {SCAuthContextType, SCAuthTokenType, SCContextType, SCSessionType, SCUserType} from '../../../types';
+import {SCAuthContextType, SCContextType, SCSessionType, SCUserType} from '../../../types';
 import {SCContext} from '../SCContextProvider';
 import useAuth, {authActionTypes} from '../../../hooks/useAuth';
 

@@ -138,3 +138,19 @@ export interface SCContextProviderType {
    */
   children: ReactNode;
 }
+
+/**
+ * Interface SCThemeContextType
+ */
+export interface SCThemeContextType {
+  /**
+   * Theme
+   */
+  theme: object;
+
+  /**
+   * Change theme
+   * @param theme
+   */
+  setTheme: (theme) => void;
+}

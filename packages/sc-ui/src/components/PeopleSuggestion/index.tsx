@@ -7,6 +7,7 @@ import CardContent from '@mui/material/CardContent';
 import {Endpoints, http, SCUserType} from '@selfcommunity/core';
 import {PeopleSuggestionSkeleton} from '../Skeleton';
 import User from '../User';
+import {withSCTheme} from '@selfcommunity/core';
 
 const PREFIX = 'SCPeopleSuggestion';
 
@@ -19,7 +20,7 @@ const Root = styled(Card, {
   marginBottom: theme.spacing(2)
 }));
 
-export default function SCPeopleSuggestion(): JSX.Element {
+function SCPeopleSuggestion(props): JSX.Element {
   const [users, setUsers] = useState<SCUserType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [hasMore, setHasMore] = useState<boolean>(false);
@@ -93,3 +94,5 @@ export default function SCPeopleSuggestion(): JSX.Element {
     </Root>
   );
 }
+
+export default withSCTheme(SCPeopleSuggestion);
