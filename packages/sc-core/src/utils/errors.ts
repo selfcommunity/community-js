@@ -28,15 +28,6 @@ const ValidationError = class extends Error {
 };
 
 /**
- * InvalidTargetError
- */
-const InvalidTargetError = class extends ValidationError {
-  constructor(targetId) {
-    super(`Invalid target. Cannot find tag with id ${targetId}.`);
-  }
-};
-
-/**
  * InvalidPortalError
  */
 const InvalidPortalError = class extends ValidationError {
@@ -94,8 +85,8 @@ const InvalidThemeError = class extends ValidationError {
  * InvalidRefreshTokenEndpointError
  */
 const InvalidRefreshTokenEndpointError = class extends ValidationError {
-  constructor(endpoint) {
-    super(`Invalid path '${endpoint.path}' with method '${endpoint.method}' for refresh token.`);
+  constructor() {
+    super(`Unable to refresh current session.`);
   }
 };
 
@@ -111,7 +102,6 @@ const InvalidPreferencesError = class extends ValidationError {
 export {
   InitializationError,
   ValidationError,
-  InvalidTargetError,
   InvalidPortalError,
   InvalidTokenError,
   InvalidLocaleError,

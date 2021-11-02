@@ -29,11 +29,6 @@ export interface SCAuthContextType {
    * Triggered when the a user logout is performed.
    */
   logout: () => void;
-
-  /**
-   * Callback to update session
-   */
-  updateSession: (session: SCSessionType) => void
 }
 
 /**
@@ -47,11 +42,15 @@ export interface SCSettingsType {
   /**
    * i18n. Locale: it, en, etc...
    */
-  locale: string;
+  locale?: string;
   /**
    * Object conf of session.
    */
   session: SCSessionType;
+  /**
+   * Object conf of session.
+   */
+  theme?: object;
 }
 
 /**
@@ -64,19 +63,20 @@ export interface SCSessionType {
   type: string;
 
   /**
+   * ClientID: only for OAuth.
+   * It will be passed to refreshTokenCallback
+   */
+  clientId: string;
+
+  /**
    * Access Token.
    */
   authToken?: SCAuthTokenType;
 
   /**
-   * Endpoint to refresh the token.
+   * Callback to refresh the token.
    */
-  refreshTokenEndpoint?: SCRefreshTokenEndpointType;
-
-  /**
-   * Indicates whether the session is updating
-   */
-  isRefreshing: boolean;
+  refreshTokenCallback?: (currentSession) => Promise<SCAuthTokenType>;
 }
 
 /**
@@ -101,64 +101,13 @@ export interface SCAuthTokenType {
   /**
    * Expire in.
    */
-  expiresIn?: string;
+  expiresIn?: number;
 
   /**
    * Token scopes;
    */
   scope?: Array<string>;
 }
-
-/**
- * Interface SCRefreshTokenEndpointType
- */
-export interface SCRefreshTokenEndpointType {
-  /**
-   * Path of the endpoint.
-   * If it is relative path, the endpoint prefix will be settings.portal
-   */
-  path: string;
-
-  /**
-   * Method: POST or GET
-   */
-  method: Method;
-
-  /**
-   * Extra data to include in the request payload during refresh token action
-   */
-  extraHeadersData?: object;
-
-  /**
-   * Extra data to include in the request payload during refresh token action
-   */
-  extraPayloadData?: object;
-}
-
-/**
- * Request methods
- */
-export type Method =
-  | 'get'
-  | 'GET'
-  | 'delete'
-  | 'DELETE'
-  | 'head'
-  | 'HEAD'
-  | 'options'
-  | 'OPTIONS'
-  | 'post'
-  | 'POST'
-  | 'put'
-  | 'PUT'
-  | 'patch'
-  | 'PATCH'
-  | 'purge'
-  | 'PURGE'
-  | 'link'
-  | 'LINK'
-  | 'unlink'
-  | 'UNLINK';
 
 /**
  * Interface SCContextType

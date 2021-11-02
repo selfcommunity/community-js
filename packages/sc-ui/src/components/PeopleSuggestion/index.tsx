@@ -4,7 +4,7 @@ import List from '@mui/material/List';
 import {Button, Typography} from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import { Endpoints, http, SCUserType } from '@selfcommunity/core';
+import {Endpoints, http, SCUserType} from '@selfcommunity/core';
 import {PeopleSuggestionSkeleton} from '../Skeleton';
 import User from '../User';
 
@@ -33,9 +33,36 @@ export default function SCPeopleSuggestion(): JSX.Element {
       })
       .then((res) => {
         const data = res.data;
-        setUsers(data.results);
-        setHasMore(data.count > 4);
+        setUsers(data['results']);
+        setHasMore(data['count'] > 2);
         setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  function fetchUserForTest() {
+    console.log('fetchUserForTest 1');
+    http
+      .request({
+        url: Endpoints.UserSuggestion.url(),
+        method: Endpoints.UserSuggestion.method
+      })
+      .then((res) => {
+        const data = res.data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    console.log('fetchUserForTest 2');
+    http
+      .request({
+        url: Endpoints.UserSuggestion.url(),
+        method: Endpoints.UserSuggestion.method
+      })
+      .then((res) => {
+        const data = res.data;
       })
       .catch((error) => {
         console.log(error);
@@ -54,15 +81,13 @@ export default function SCPeopleSuggestion(): JSX.Element {
       <CardContent>
         <Typography variant="body1">People suggestion</Typography>
         <List>
-          {users.slice(0, 4).map((user: SCUserType, index) => (
+          {users.slice(0, 2).map((user: SCUserType, index) => (
             <User contained={false} scUser={user} key={index} />
           ))}
         </List>
-        {hasMore && (
-          <Button size="small" onClick={() => setOpenPeopleSuggestionDialog(true)}>
-            Show All
-          </Button>
-        )}
+        <Button color="secondary" size="small" onClick={() => fetchUserForTest()}>
+          Show All
+        </Button>
         {openPeopleSuggestionDialog && <></>}
       </CardContent>
     </Root>

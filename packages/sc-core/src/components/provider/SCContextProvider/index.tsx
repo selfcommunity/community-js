@@ -1,11 +1,11 @@
-import React, {createContext, ReactNode, useEffect, useState} from 'react';
-import SCAuthProvider from '../SCAuthProvider';
+import React, {createContext, ReactNode, useContext, useEffect, useState} from 'react';
+import SCAuthProvider, {SCAuthContext} from '../SCAuthProvider';
 import preferencesServices from '../../../services/preferences';
 import SCLocalizationProvider from '../SCLocalizationProvider';
 import SCRoutingProvider from '../SCRoutingProvider';
 import SCThemeProvider from '../SCThemeProvider';
 import {setBasePortal} from '../../../utils/http';
-import {SCContextProviderType, SCContextType} from '../../../types';
+import {SCAuthContextType, SCContextProviderType, SCContextType} from '../../../types';
 
 /**
  * Create Global Context
@@ -21,12 +21,20 @@ export const SCContext = createContext<SCContextType>({} as SCContextType);
  * SCContextProvider
  * This import all providers
  */
-export function SCContextProvider({settings, children}: SCContextProviderType): JSX.Element {
+export default function SCContextProvider({settings, children}: SCContextProviderType): JSX.Element {
   const [preferences, setPreferences] = useState<any[]>([]);
   const [, setError] = useState<any>();
   const [loading, setLoading] = useState<boolean>(true);
+
+  /**
+   * Set the base path on the http objects
+   */
   setBasePortal(settings.portal);
 
+  /**
+   * Export the provider as we need to wrap the entire app with it
+   * This provider keeps current user logged and session
+   */
   useEffect(() => {
     preferencesServices
       .loadPreferences()
@@ -39,6 +47,10 @@ export function SCContextProvider({settings, children}: SCContextProviderType): 
       .finally(() => setLoading(false));
   }, []);
 
+  /**
+   * Nesting all necessary providers
+   * All child components will use help contexts to works
+   */
   return (
     <SCContext.Provider value={{settings, preferences}}>
       {!loading && (
@@ -53,4 +65,11 @@ export function SCContextProvider({settings, children}: SCContextProviderType): 
     </SCContext.Provider>
   );
 }
-export default SCContextProvider;
+
+/**
+ * Let's only export the `useAuth` hook instead of the context.
+ * We only want to use the hook directly and never the context component.
+ */
+export function useSCContext(): SCContextType {
+  return useContext(SCContext);
+}

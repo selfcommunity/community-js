@@ -21,8 +21,7 @@ module.exports = {
   ],
   "addons": [
     "@storybook/addon-docs",
-    "@storybook/addon-links",
-    "@storybook/addon-essentials"
+    "@storybook/addon-links"
   ],
   "features": {
     "postcss": false

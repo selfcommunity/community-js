@@ -1,5 +1,5 @@
 import {addDecorator} from '@storybook/react'
-import decorators from './decorators'
+import decorators from './decorators';
 addDecorator(decorators.withProvider);
 
 /**
@@ -46,24 +46,25 @@ export const globalTypes = {
     description: 'Type of session',
     defaultValue: process.env.STORYBOOK_PLATFORM_SESSION_TYPE
   },
-  authToken: {
-    name: 'OAuth Token',
-    description: 'OAuth Token',
-    defaultValue: {
-      "accessToken": process.env.STORYBOOK_PLATFORM_ACCESS_TOKEN,
-      "refreshToken": process.env.STORYBOOK_PLATFORM_REFRESH_TOKEN,
-      "tokenType": process.env.STORYBOOK_PLATFORM_ACCESS_TOKEN_TYPE,
-      "expiresIn": process.env.STORYBOOK_PLATFORM_ACCESS_TOKEN_EXPIRES_IN,
-      "scope": process.env.STORYBOOK_PLATFORM_ACCESS_TOKEN_SCOPE,
-    }
+  clientId: {
+    name: 'Client Id',
+    description: 'Client id OAuth2',
+    defaultValue: process.env.STORYBOOK_PLATFORM_SESSION_CLIENT_ID
   },
-  authRefreshTokenEndpoint: {
-    name: 'Refresh Token Endpoint',
-    description: 'Endpoint config to refresh token',
-    defaultValue: {
-      "path": process.env.STORYBOOK_PLATFORM_REFRESH_TOKEN_ENDPOINT_PATH,
-      "method": process.env.STORYBOOK_PLATFORM_REFRESH_TOKEN_ENDPOINT_PATH
-    }
+  accessTokenJwtExpiresIn: {
+    name: 'JWT Expires in',
+    description: 'Expires in JWT',
+    defaultValue: process.env.STORYBOOK_PLATFORM_ACCESS_JWT_TOKEN_EXPIRES_IN
+  },
+  accountUsername: {
+    name: 'Account Username',
+    description: 'Username of the logged user',
+    defaultValue: process.env.STORYBOOK_PLATFORM_ACCOUNT_USERNAME
+  },
+  accountPassword: {
+    name: 'Account Password',
+    description: 'Password of the logged user',
+    defaultValue: process.env.STORYBOOK_PLATFORM_ACCOUNT_PASSWORD
   }
 };
 

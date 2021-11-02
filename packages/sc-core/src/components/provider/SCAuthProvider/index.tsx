@@ -1,31 +1,23 @@
-import React, {createContext, useContext, useEffect, useMemo, useState} from 'react';
+import React, {createContext, useContext, useEffect, useMemo, useReducer, useState} from 'react';
 import sessionServices from '../../../services/session';
-import {SCAuthContextType, SCContextType, SCSessionType, SCUserType} from '../../../types';
+import {SCAuthContextType, SCAuthTokenType, SCContextType, SCSessionType, SCUserType} from '../../../types';
 import {SCContext} from '../SCContextProvider';
-import {addOauth2Interceptor, ejectOauth2Interceptor, setAuthorizeToken, setSupportWithCredentials} from '../../../utils/http';
-import * as Session from '../../../constants/Session';
+import useAuth, {authActionTypes} from '../../../hooks/useAuth';
 
+/**
+ * SCAuthContext
+ * Authentication Context
+ */
 export const SCAuthContext = createContext<SCAuthContextType>({} as SCAuthContextType);
 
 /**
  * Export the provider as we need to wrap the entire app with it
+ * This provider keeps current user logged and session
  */
 export default function SCAuthProvider({children}: {children: React.ReactNode}): JSX.Element {
   const scContext: SCContextType = useContext(SCContext);
-  const currentSession: SCSessionType = scContext.settings.session;
-
-  const [user, setUser] = useState<SCUserType>();
-  const [session, setSession] = useState<SCSessionType>(currentSession);
-  const [error, setError] = useState<any>();
-  const [loading, setLoading] = useState<boolean>(false);
-
-  /**
-   * Set http authorization if session type is OAuth or JWT
-   */
-  if ([Session.OAUTH_SESSION, Session.JWT_SESSION].includes(currentSession.type)) {
-    setAuthorizeToken(currentSession.authToken.accessToken);
-  }
-  setSupportWithCredentials(currentSession.type === Session.COOKIE_SESSION);
+  const initialSession: SCSessionType = scContext.settings.session;
+  const {state, dispatch} = useAuth(initialSession);
 
   /**
    * Check if there is a currently active session
@@ -33,34 +25,23 @@ export default function SCAuthProvider({children}: {children: React.ReactNode}):
    * If there is an error, it means there is no session.
    */
   useEffect(() => {
+    dispatch({type: authActionTypes.LOGIN_LOADING});
     sessionServices
       .getCurrentUser()
-      .then((_user) => {
-        setUser(_user);
-        addOauth2Interceptor();
+      .then((user: SCUserType) => {
+        dispatch({type: authActionTypes.LOGIN_SUCCESS, payload: {user}});
       })
-      .catch((_error) => {
-        setError(_error);
-        ejectOauth2Interceptor();
-      })
-      .finally(() => setLoading(false));
-  }, [session]);
-
-  /**
-   * Call the logout endpoint and then remove the user
-   * from the state.
-   */
-  function updateSession(session: SCSessionType): void {
-    setSession(session);
-  }
+      .catch((error) => {
+        dispatch({type: authActionTypes.LOGIN_FAILURE, payload: {error}});
+      });
+  }, []);
 
   /**
    * Call the logout endpoint and then remove the user
    * from the state.
    */
   function logout(): void {
-    setUser(undefined);
-    setSession(undefined);
+    dispatch({type: authActionTypes.LOGOUT});
   }
 
   /**
@@ -76,21 +57,20 @@ export default function SCAuthProvider({children}: {children: React.ReactNode}):
    */
   const contextValue = useMemo(
     () => ({
-      user,
-      session,
-      loading,
-      error,
+      user: state.user,
+      session: state.session,
+      loading: state.loading,
+      error: state.loading,
       logout,
-      updateSession,
     }),
-    [user, session, loading, error]
+    [state]
   );
 
   /**
    * We only want to render the underlying app after we
    * assert for the presence of a current user.
    */
-  return <SCAuthContext.Provider value={contextValue}>{!loading && children}</SCAuthContext.Provider>;
+  return <SCAuthContext.Provider value={contextValue}>{!state.loading && children}</SCAuthContext.Provider>;
 }
 
 /**
