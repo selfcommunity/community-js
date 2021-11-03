@@ -13,11 +13,11 @@ export const urlReplacer = (path: string) => {
     }
     return tpl;
   };
-  return (params) => replacer(path, params);
+  return (params: object) => replacer(path, params);
 };
 
 export const getDomain = (url: string): string => {
-  // eslint-disable-next-line no-useless-escape
+  // eslint-disable-next-line no-useless-escape,@typescript-eslint/prefer-regexp-exec
   const matches = url.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i);
   if (matches && matches[1]) {
     return matches[1];
@@ -51,4 +51,22 @@ export const validateLocale = (locale: string) => {
     return locale;
   }
   throw new ValidationError(locale);
+};
+
+/**
+ * Generate path
+ */
+// eslint-disable-next-line no-empty-pattern
+export const url = (path = '', params = {}): (() => string) => {
+  const replacer = function (tpl, data) {
+    const re = /:([^/]+)?/g;
+    let match = re.exec(tpl);
+    while (match) {
+      tpl = tpl.replace(match[0], data[match[1]]);
+      re.lastIndex = 0;
+      match = re.exec(tpl);
+    }
+    return tpl;
+  };
+  return replacer(path, params);
 };

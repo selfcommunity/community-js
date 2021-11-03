@@ -11,7 +11,7 @@ import {SCThemeContextType} from '../../../types';
  *  1. <SCThemeContext.Consumer>
  *       {(theme,) => (...)}
  *     </SCThemeContext.Consumer>
- *  2. const scContext: SCThemeContext = useContext(SCContext);
+ *  2. const scThemeContext: SCThemeContext = useContext(SCThemeContext);
  */
 export const SCThemeContext = createContext<SCThemeContextType>({} as SCThemeContextType);
 

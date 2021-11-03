@@ -1,5 +1,31 @@
 import {SCUserType} from './user';
-import {ReactNode} from 'react';
+import React, {ReactNode} from 'react';
+
+/**
+ * Interface SCSettingsType
+ */
+export interface SCSettingsType {
+  /**
+   * Portal.
+   */
+  portal: string;
+  /**
+   * i18n. Locale: it, en, etc...
+   */
+  locale?: string;
+  /**
+   * Object conf of session.
+   */
+  session: SCSessionType;
+  /**
+   * Object conf of session.
+   */
+  theme?: object;
+  /**
+   * Object conf of router.
+   */
+  router?: SCRoutingContextType;
+}
 
 /**
  * Interface SCAuthContextType
@@ -29,28 +55,6 @@ export interface SCAuthContextType {
    * Triggered when the a user logout is performed.
    */
   logout: () => void;
-}
-
-/**
- * Interface SCSettingsType
- */
-export interface SCSettingsType {
-  /**
-   * Portal.
-   */
-  portal: string;
-  /**
-   * i18n. Locale: it, en, etc...
-   */
-  locale?: string;
-  /**
-   * Object conf of session.
-   */
-  session: SCSessionType;
-  /**
-   * Object conf of session.
-   */
-  theme?: object;
 }
 
 /**
@@ -153,4 +157,16 @@ export interface SCThemeContextType {
    * @param theme
    */
   setTheme: (theme) => void;
+}
+
+export interface SCRoutingContextType {
+  /**
+   * Component
+   */
+  routerLink?: React.ComponentClass<any>;
+
+  /**
+   * Routes
+   */
+  routes?: object;
 }

@@ -44,19 +44,6 @@ function SCPeopleSuggestion(props): JSX.Element {
   }
 
   function fetchUserForTest() {
-    console.log('fetchUserForTest 1');
-    http
-      .request({
-        url: Endpoints.UserSuggestion.url(),
-        method: Endpoints.UserSuggestion.method
-      })
-      .then((res) => {
-        const data = res.data;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    console.log('fetchUserForTest 2');
     http
       .request({
         url: Endpoints.UserSuggestion.url(),

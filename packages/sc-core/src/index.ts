@@ -10,27 +10,39 @@ import {
   SCSettingsType,
   SCSessionType,
   SCThemeContextType,
+  SCRoutingContextType,
 } from './types';
 
 /**
- * ContextStateProvider component
+ * ContextProvider component
  */
 import SCContextProvider, {SCContext} from './components/provider/SCContextProvider';
 
 /**
- * AuthStateProvider component
+ * AuthProvider component
  */
 import SCAuthProvider, {SCAuthContext} from './components/provider/SCAuthProvider';
 
 /**
- * AuthStateProvider component
+ * ThemeProvider component
  */
 import SCThemeProvider, {withSCTheme} from './components/provider/SCThemeProvider';
+
+/**
+ * RoutingProvider component
+ */
+import SCRoutingProvider, {SCRoutingContext} from './components/provider/SCRoutingProvider';
 
 /**
  * AuthStateProvider component
  */
 import * as SCPreferences from './constants/Preferences';
+
+/**
+ * Routing component
+ */
+import Link from './components/router';
+import {url} from './utils/url';
 
 /**
  * Http component
@@ -60,7 +72,12 @@ export {
   SCThemeProvider,
   SCThemeContextType,
   withSCTheme,
+  SCRoutingProvider,
+  SCRoutingContext,
+  SCRoutingContextType,
   SCPreferences,
   http,
+  Link,
+  url,
   Endpoints,
 };

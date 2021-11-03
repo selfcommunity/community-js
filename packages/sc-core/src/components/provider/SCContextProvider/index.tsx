@@ -55,11 +55,11 @@ export default function SCContextProvider({settings, children}: SCContextProvide
     <SCContext.Provider value={{settings, preferences}}>
       {!loading && (
         <SCThemeProvider>
-          <SCAuthProvider>
+          <SCLocalizationProvider>
             <SCRoutingProvider>
-              <SCLocalizationProvider>{children}</SCLocalizationProvider>
+              <SCAuthProvider>{children}</SCAuthProvider>
             </SCRoutingProvider>
-          </SCAuthProvider>
+          </SCLocalizationProvider>
         </SCThemeProvider>
       )}
     </SCContext.Provider>

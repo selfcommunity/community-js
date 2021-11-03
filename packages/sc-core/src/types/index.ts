@@ -1,4 +1,13 @@
-import {SCAuthContextType, SCContextProviderType, SCContextType, SCSettingsType, SCSessionType, SCAuthTokenType, SCThemeContextType} from './context';
+import {
+  SCAuthContextType,
+  SCContextProviderType,
+  SCContextType,
+  SCSettingsType,
+  SCSessionType,
+  SCAuthTokenType,
+  SCThemeContextType,
+  SCRoutingContextType,
+} from './context';
 import {SCUserType} from './user';
 import {SCTagType} from './tag';
 
@@ -15,4 +24,5 @@ export {
   SCUserType,
   SCTagType,
   SCThemeContextType,
+  SCRoutingContextType,
 };

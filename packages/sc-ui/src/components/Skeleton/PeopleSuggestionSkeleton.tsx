@@ -4,6 +4,7 @@ import CardContent from '@mui/material/CardContent';
 import List from '@mui/material/List';
 import {styled} from '@mui/material/styles';
 import UserBoxSkeleton from './UserBoxSkeleton';
+import {withSCTheme} from '@selfcommunity/core';
 
 const PREFIX = 'SCPeopleSuggestionSkeleton';
 
@@ -21,7 +22,7 @@ const Root = styled(Card)(({theme}) => ({
   }
 }));
 
-export default function PeopleSuggestionSkeleton(): JSX.Element {
+function PeopleSuggestionSkeleton(): JSX.Element {
   return (
     <Root variant={'outlined'}>
       <CardContent>
@@ -34,3 +35,5 @@ export default function PeopleSuggestionSkeleton(): JSX.Element {
     </Root>
   );
 }
+
+export default withSCTheme(PeopleSuggestionSkeleton);

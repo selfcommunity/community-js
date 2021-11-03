@@ -8,6 +8,7 @@ import {Button} from '@mui/material';
 import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
 import {styled} from '@mui/material/styles';
 import Skeleton from '@mui/material/Skeleton';
+import {withSCTheme} from '@selfcommunity/core';
 
 const PREFIX = 'SCUserBoxSkeleton';
 
@@ -32,7 +33,7 @@ export interface SCUserBoxProps {
   contained: boolean;
 }
 
-export default function UserBoxSkeleton({contained = false}: SCUserBoxProps): JSX.Element {
+function UserBoxSkeleton({contained = false}: SCUserBoxProps): JSX.Element {
   const user = (
     <ListItem>
       <ListItemAvatar>
@@ -58,3 +59,5 @@ export default function UserBoxSkeleton({contained = false}: SCUserBoxProps): JS
   }
   return user;
 }
+
+export default withSCTheme(UserBoxSkeleton);
