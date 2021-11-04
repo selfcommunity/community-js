@@ -8,6 +8,7 @@ import {Endpoints, http, SCUserType} from '@selfcommunity/core';
 import {PeopleSuggestionSkeleton} from '../Skeleton';
 import User from '../User';
 import {withSCTheme, withSCLocale} from '@selfcommunity/core';
+import {FormattedMessage} from 'react-intl';
 
 const PREFIX = 'SCPeopleSuggestion';
 
@@ -21,6 +22,7 @@ const Root = styled(Card, {
 }));
 
 function SCPeopleSuggestion(props): JSX.Element {
+  console.log(props);
   const [users, setUsers] = useState<SCUserType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [hasMore, setHasMore] = useState<boolean>(false);
@@ -44,19 +46,6 @@ function SCPeopleSuggestion(props): JSX.Element {
   }
 
   function fetchUserForTest() {
-    console.log('fetchUserForTest 1');
-    http
-      .request({
-        url: Endpoints.UserSuggestion.url(),
-        method: Endpoints.UserSuggestion.method
-      })
-      .then((res) => {
-        const data = res.data;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    console.log('fetchUserForTest 2');
     http
       .request({
         url: Endpoints.UserSuggestion.url(),
@@ -80,7 +69,9 @@ function SCPeopleSuggestion(props): JSX.Element {
   return (
     <Root variant={'outlined'}>
       <CardContent>
-        <Typography variant="body1">People Suggestion</Typography>
+        <Typography variant="body1">
+          <FormattedMessage id="sc.peopleSuggestion.title" defaultMessage="sc.peopleSuggestion.title" />
+        </Typography>
         <List>
           {users.slice(0, 2).map((user: SCUserType, index) => (
             <User contained={false} scUser={user} key={index} />
