@@ -7,6 +7,8 @@ import CardContent from '@mui/material/CardContent';
 import {Endpoints, http} from '@selfcommunity/core';
 import InterestSuggestionSkeleton from '../Skeleton/InterestSuggestionSkeleton';
 import Interest from '../Interest';
+import {withSCTheme} from '@selfcommunity/core';
+import {AxiosResponse} from 'axios';
 
 const PREFIX = 'SCInterestFollowed';
 
@@ -19,7 +21,7 @@ const Root = styled(Card, {
   marginBottom: theme.spacing(2)
 }));
 
-export default function SCInterestFollowed(): JSX.Element {
+function SCInterestFollowed(): JSX.Element {
   const [interests, setInterests] = useState<any[]>([]);
   const [visibleInterests, setVisibleInterests] = useState<number>(3);
   const [loading, setLoading] = useState<boolean>(true);
@@ -34,7 +36,7 @@ export default function SCInterestFollowed(): JSX.Element {
         url: Endpoints.CategoryFollowed.url(),
         method: Endpoints.CategoryFollowed.method
       })
-      .then((res) => {
+      .then((res: AxiosResponse<any>) => {
         const data = res.data;
         setInterests(data.results);
         setHasMore(data.count > visibleInterests);
@@ -80,3 +82,4 @@ export default function SCInterestFollowed(): JSX.Element {
     </Root>
   );
 }
+export default withSCTheme(SCInterestFollowed);

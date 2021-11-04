@@ -8,6 +8,8 @@ import {Endpoints, http, SCUserType} from '@selfcommunity/core';
 import {PostBoxSkeleton} from '@selfcommunity/ui';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import TimeAgo from 'timeago-react';
+import {withSCTheme} from '@selfcommunity/core';
+import {AxiosResponse} from 'axios';
 
 const PREFIX = 'SCPost';
 
@@ -27,15 +29,7 @@ export interface SCPostType {
   author?: SCUserType;
 }
 
-export default function Post({
-  scInterestId = null,
-  scPost = null,
-  contained = true
-}: {
-  scInterestId?: number;
-  scPost?: SCPostType;
-  contained: boolean;
-}): JSX.Element {
+function Post({scInterestId = null, scPost = null, contained = true}: {scInterestId?: number; scPost?: SCPostType; contained: boolean}): JSX.Element {
   const [post, setPost] = useState<SCPostType>(scPost);
 
   /**
@@ -47,7 +41,7 @@ export default function Post({
         url: Endpoints.CategoryTrendingFeed.url({id: scInterestId}),
         method: Endpoints.CategoryTrendingFeed.method
       })
-      .then((res) => {
+      .then((res: AxiosResponse<any>) => {
         const data = res.data;
         setPost(data.results[0].discussion);
       })
@@ -110,3 +104,4 @@ export default function Post({
   }
   return p;
 }
+export default withSCTheme(Post);

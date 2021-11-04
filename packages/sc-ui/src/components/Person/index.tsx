@@ -7,6 +7,8 @@ import {Avatar, Button, ListItem, ListItemAvatar, ListItemSecondaryAction, ListI
 import {Endpoints, http, SCUserType} from '@selfcommunity/core';
 import PersonBoxSkeleton from '../Skeleton/PersonBoxSkeleton';
 import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
+import {withSCTheme} from '@selfcommunity/core';
+import {AxiosResponse} from 'axios';
 
 const PREFIX = 'SCPerson';
 
@@ -23,7 +25,7 @@ export interface SCPersonType extends SCUserType {
   followers_counter?: number;
 }
 
-export default function Person({
+function Person({
   scInterestId = null,
   scPerson = null,
   contained = true
@@ -43,7 +45,7 @@ export default function Person({
         url: Endpoints.CategoryTrendingPeople.url({id: scInterestId}),
         method: Endpoints.CategoryTrendingPeople.method
       })
-      .then((res) => {
+      .then((res: AxiosResponse<any>) => {
         const data = res.data;
         setPerson(data.results[0]);
       })
@@ -100,3 +102,4 @@ export default function Person({
   }
   return p;
 }
+export default withSCTheme(Person);

@@ -7,6 +7,8 @@ import CardContent from '@mui/material/CardContent';
 import {Endpoints, http} from '@selfcommunity/core';
 import PeopleSuggestionSkeleton from '../Skeleton/PeopleSuggestionSkeleton';
 import User from '../User';
+import {withSCTheme} from '@selfcommunity/core';
+import {AxiosResponse} from 'axios';
 
 const PREFIX = 'SCUserFollowers';
 
@@ -19,7 +21,7 @@ const Root = styled(Card, {
   marginBottom: theme.spacing(2)
 }));
 
-export default function SCUserFollowers({scPersonId = null}: {scPersonId?: number}): JSX.Element {
+function SCUserFollowers({scPersonId = null}: {scPersonId?: number}): JSX.Element {
   const [followers, setFollowers] = useState<any[]>([]);
   const [lUfollowers, setLUFollowers] = useState<any[]>([]);
   const [visibleUsers, setVisibleUsers] = useState<number>(3);
@@ -34,7 +36,7 @@ export default function SCUserFollowers({scPersonId = null}: {scPersonId?: numbe
         url: Endpoints.UserFollowers.url({id: scPersonId}),
         method: Endpoints.UserFollowers.method
       })
-      .then((res) => {
+      .then((res: AxiosResponse<any>) => {
         const data = res.data;
         setFollowers(data.results);
         setHasMore(data.count > visibleUsers);
@@ -52,7 +54,7 @@ export default function SCUserFollowers({scPersonId = null}: {scPersonId?: numbe
         url: Endpoints.UserFollowers.url({id: 1}),
         method: Endpoints.UserFollowers.method
       })
-      .then((res) => {
+      .then((res: AxiosResponse<any>) => {
         const data = res.data;
         setLUFollowers(data.results);
       })
@@ -115,3 +117,4 @@ export default function SCUserFollowers({scPersonId = null}: {scPersonId?: numbe
     </Root>
   );
 }
+export default withSCTheme(SCUserFollowers);

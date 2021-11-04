@@ -7,6 +7,8 @@ import CardContent from '@mui/material/CardContent';
 import {Endpoints, http} from '@selfcommunity/core';
 import Post from '../Post';
 import TrendingPostSkeleton from '../Skeleton/TrendingPostSkeleton';
+import {withSCTheme} from '@selfcommunity/core';
+import {AxiosResponse} from 'axios';
 
 const PREFIX = 'SCTrendingPost';
 
@@ -19,7 +21,7 @@ const Root = styled(Card, {
   marginBottom: theme.spacing(2)
 }));
 
-export default function SCTrendingPost({scInterestId = null}: {scInterestId?: number}): JSX.Element {
+function SCTrendingPost({scInterestId = null}: {scInterestId?: number}): JSX.Element {
   const [posts, setPosts] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [hasMore, setHasMore] = useState<boolean>(false);
@@ -31,7 +33,7 @@ export default function SCTrendingPost({scInterestId = null}: {scInterestId?: nu
         url: Endpoints.CategoryTrendingFeed.url({id: scInterestId}),
         method: Endpoints.CategoryTrendingFeed.method
       })
-      .then((res) => {
+      .then((res: AxiosResponse<any>) => {
         const data = res.data;
         setPosts(getAlltypes(data.results));
         setHasMore(data.count > 4);
@@ -74,3 +76,4 @@ export default function SCTrendingPost({scInterestId = null}: {scInterestId?: nu
     </Root>
   );
 }
+export default withSCTheme(SCTrendingPost);

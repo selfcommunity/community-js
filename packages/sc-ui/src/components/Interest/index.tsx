@@ -7,6 +7,8 @@ import {Avatar, Button, ListItem, ListItemAvatar, ListItemSecondaryAction, ListI
 import {Endpoints, http} from '@selfcommunity/core';
 import InterestBoxSkeleton from '../Skeleton/InterestBoxSkeleton';
 import FollowButton from '../Button';
+import {withSCTheme} from '@selfcommunity/core';
+import {AxiosResponse} from 'axios';
 
 const PREFIX = 'SCInterest';
 
@@ -25,7 +27,7 @@ export interface SCInterestType {
   slogan?: string;
 }
 
-export default function SCInterest({
+function SCInterest({
   scInterestId = null,
   scInterest = null,
   contained = true,
@@ -47,7 +49,7 @@ export default function SCInterest({
         url: Endpoints.Category.url({id: scInterestId}),
         method: Endpoints.Category.method
       })
-      .then((res) => {
+      .then((res: AxiosResponse<SCInterestType>) => {
         const data = res.data;
         setInterest(data);
       })
@@ -97,3 +99,5 @@ export default function SCInterest({
   }
   return i;
 }
+
+export default withSCTheme(SCInterest);

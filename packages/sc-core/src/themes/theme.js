@@ -56,22 +56,6 @@ const getTheme = (options, preferences) => {
                 textTransform: 'none',
               },
             },
-            // variants: [
-            //   {
-            //     props: {variant: 'rounded'},
-            //     style: {
-            //       textTransform: 'none',
-            //       border: '0px',
-            //       color: 'black',
-            //       borderRadius: 20,
-            //       backgroundColor: '#e2e2e2',
-            //       paddingTop: '4px',
-            //       paddingRight: '16px',
-            //       paddingBottom: '4px',
-            //       paddingLeft: '16px',
-            //     },
-            //   },
-            // ],
           },
           MuiDivider: {
             styleOverrides: {

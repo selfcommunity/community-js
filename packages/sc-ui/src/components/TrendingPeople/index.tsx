@@ -7,6 +7,8 @@ import CardContent from '@mui/material/CardContent';
 import {Endpoints, http} from '@selfcommunity/core';
 import Person from '../Person';
 import TrendingPeopleSkeleton from '../Skeleton/TrendingPeopleSkeleton';
+import {withSCTheme} from '@selfcommunity/core';
+import {AxiosResponse} from 'axios';
 
 const PREFIX = 'SCTrendingPeople.';
 
@@ -19,7 +21,7 @@ const Root = styled(Card, {
   marginBottom: theme.spacing(2)
 }));
 
-export default function SCTrendingPeople({scInterestId = null}: {scInterestId?: number}): JSX.Element {
+function SCTrendingPeople({scInterestId = null}: {scInterestId?: number}): JSX.Element {
   const [people, setPeople] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [hasMore, setHasMore] = useState<boolean>(false);
@@ -31,7 +33,7 @@ export default function SCTrendingPeople({scInterestId = null}: {scInterestId?: 
         url: Endpoints.CategoryTrendingPeople.url({id: scInterestId}),
         method: Endpoints.CategoryTrendingPeople.method
       })
-      .then((res) => {
+      .then((res: AxiosResponse<any>) => {
         const data = res.data;
         setPeople(data.results);
         setHasMore(data.count > 4);
@@ -68,3 +70,4 @@ export default function SCTrendingPeople({scInterestId = null}: {scInterestId?: 
     </Root>
   );
 }
+export default withSCTheme(SCTrendingPeople);
