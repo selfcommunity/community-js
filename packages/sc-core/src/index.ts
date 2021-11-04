@@ -16,22 +16,27 @@ import {
 /**
  * ContextProvider component
  */
-import SCContextProvider, {SCContext} from './components/provider/SCContextProvider';
+import SCContextProvider, {SCContext, useSCContext} from './components/provider/SCContextProvider';
 
 /**
  * AuthProvider component
  */
-import SCAuthProvider, {SCAuthContext} from './components/provider/SCAuthProvider';
+import SCAuthProvider, {SCAuthContext, useSCAuth} from './components/provider/SCAuthProvider';
 
 /**
  * ThemeProvider component
  */
-import SCThemeProvider, {withSCTheme} from './components/provider/SCThemeProvider';
+import SCThemeProvider, {SCThemeContext, withSCTheme, useSCTheme} from './components/provider/SCThemeProvider';
 
 /**
  * RoutingProvider component
  */
-import SCRoutingProvider, {SCRoutingContext} from './components/provider/SCRoutingProvider';
+import SCRoutingProvider, {SCRoutingContext, useSCRouting} from './components/provider/SCRoutingProvider';
+
+/**
+ * LocaleProvider component
+ */
+import SCLocaleProvider, {SCLocaleContext, withSCLocale} from './components/provider/SCLocaleProvider';
 
 /**
  * AuthStateProvider component
@@ -64,17 +69,25 @@ export {
   SCSessionType,
   SCContextType,
   SCAuthContextType,
+  SCThemeContextType,
+  SCRoutingContextType,
   SCUserType,
   SCContext,
   SCAuthContext,
+  SCThemeContext,
+  SCRoutingContext,
+  SCLocaleContext,
+  useSCContext,
   SCContextProvider,
   SCAuthProvider,
+  useSCAuth,
   SCThemeProvider,
-  SCThemeContextType,
   withSCTheme,
+  useSCTheme,
   SCRoutingProvider,
-  SCRoutingContext,
-  SCRoutingContextType,
+  useSCRouting,
+  SCLocaleProvider,
+  withSCLocale,
   SCPreferences,
   http,
   Link,

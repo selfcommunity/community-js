@@ -1,4 +1,4 @@
-import {LOCALES} from '../constants/I18n';
+import {LOCALES} from '../constants/Locale';
 import {sessionTypes} from '../constants/Session';
 
 /**

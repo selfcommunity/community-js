@@ -9,18 +9,22 @@ export interface SCSettingsType {
    * Portal.
    */
   portal: string;
+
   /**
    * i18n. Locale: it, en, etc...
    */
   locale?: string;
+
   /**
    * Object conf of session.
    */
   session: SCSessionType;
+
   /**
    * Object conf of session.
    */
-  theme?: object;
+  theme?: Record<string, any>;
+
   /**
    * Object conf of router.
    */
@@ -150,7 +154,7 @@ export interface SCThemeContextType {
   /**
    * Theme
    */
-  theme: object;
+  theme: Record<string, any>;
 
   /**
    * Change theme
@@ -159,6 +163,9 @@ export interface SCThemeContextType {
   setTheme: (theme) => void;
 }
 
+/**
+ * Interface SCRoutingContextType
+ */
 export interface SCRoutingContextType {
   /**
    * Component
@@ -168,5 +175,30 @@ export interface SCRoutingContextType {
   /**
    * Routes
    */
-  routes?: object;
+  routes?: Record<string, string>;
+
+  /**
+   * Routes
+   */
+  url?: (string) => string;
+}
+
+/**
+ * Interface SCLocaleContextType
+ */
+export interface SCLocaleContextType {
+  /**
+   * Locale: en, it, etc.
+   */
+  locale: string;
+
+  /**
+   * Locale messages
+   */
+  messages: Record<any, any>;
+
+  /**
+   * Change locale
+   */
+  selectLocale: (l: string) => void;
 }

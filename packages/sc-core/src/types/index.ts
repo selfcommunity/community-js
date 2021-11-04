@@ -7,6 +7,7 @@ import {
   SCAuthTokenType,
   SCThemeContextType,
   SCRoutingContextType,
+  SCLocaleContextType,
 } from './context';
 import {SCUserType} from './user';
 import {SCTagType} from './tag';
@@ -25,4 +26,5 @@ export {
   SCTagType,
   SCThemeContextType,
   SCRoutingContextType,
+  SCLocaleContextType,
 };

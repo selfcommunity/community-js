@@ -1,6 +1,6 @@
 import t from 'typy';
 import {ValidationError} from '../utils/errors';
-import {LOCALES} from '../constants/I18n';
+import {LOCALES} from '../constants/Locale';
 
 export const urlReplacer = (path: string) => {
   const replacer = function (tpl, data) {
@@ -51,22 +51,4 @@ export const validateLocale = (locale: string) => {
     return locale;
   }
   throw new ValidationError(locale);
-};
-
-/**
- * Generate path
- */
-// eslint-disable-next-line no-empty-pattern
-export const url = (path = '', params = {}): (() => string) => {
-  const replacer = function (tpl, data) {
-    const re = /:([^/]+)?/g;
-    let match = re.exec(tpl);
-    while (match) {
-      tpl = tpl.replace(match[0], data[match[1]]);
-      re.lastIndex = 0;
-      match = re.exec(tpl);
-    }
-    return tpl;
-  };
-  return replacer(path, params);
 };

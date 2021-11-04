@@ -1,11 +1,11 @@
-import React, {createContext, ReactNode, useContext, useEffect, useState} from 'react';
-import SCAuthProvider, {SCAuthContext} from '../SCAuthProvider';
+import React, {createContext, useContext, useEffect, useState} from 'react';
+import SCAuthProvider from '../SCAuthProvider';
 import preferencesServices from '../../../services/preferences';
-import SCLocalizationProvider from '../SCLocalizationProvider';
+import SCLocaleProvider from '../SCLocaleProvider';
 import SCRoutingProvider from '../SCRoutingProvider';
 import SCThemeProvider from '../SCThemeProvider';
 import {setBasePortal} from '../../../utils/http';
-import {SCAuthContextType, SCContextProviderType, SCContextType} from '../../../types';
+import {SCContextProviderType, SCContextType} from '../../../types';
 
 /**
  * Create Global Context
@@ -16,6 +16,11 @@ import {SCAuthContextType, SCContextProviderType, SCContextType} from '../../../
  *  2. const settings: SCSettingsType = useContext(SCContext);
  */
 export const SCContext = createContext<SCContextType>({} as SCContextType);
+
+/**
+ * List of all nested providers that are required to run
+ */
+const contextProviders = [SCThemeProvider, SCLocaleProvider, SCRoutingProvider, SCAuthProvider];
 
 /**
  * SCContextProvider
@@ -53,15 +58,10 @@ export default function SCContextProvider({settings, children}: SCContextProvide
    */
   return (
     <SCContext.Provider value={{settings, preferences}}>
-      {!loading && (
-        <SCThemeProvider>
-          <SCLocalizationProvider>
-            <SCRoutingProvider>
-              <SCAuthProvider>{children}</SCAuthProvider>
-            </SCRoutingProvider>
-          </SCLocalizationProvider>
-        </SCThemeProvider>
-      )}
+      {!loading &&
+        contextProviders.reduceRight((memo, ContextProvider) => {
+          return <ContextProvider>{memo}</ContextProvider>;
+        }, children)}
     </SCContext.Provider>
   );
 }

@@ -11,7 +11,7 @@ import {SCThemeContextType} from '../../../types';
  *  1. <SCThemeContext.Consumer>
  *       {(theme,) => (...)}
  *     </SCThemeContext.Consumer>
- *  2. const scThemeContext: SCThemeContext = useContext(SCThemeContext);
+ *  2. const scThemeContext: SCThemeContextType = useContext(SCThemeContext);
  */
 export const SCThemeContext = createContext<SCThemeContextType>({} as SCThemeContextType);
 
@@ -22,7 +22,7 @@ export const SCThemeContext = createContext<SCThemeContextType>({} as SCThemeCon
  */
 export default function SCThemeProvider({children = null}: {children: React.ReactNode}): JSX.Element {
   const scContext: SCContextType = useSCContext();
-  const [theme, setTheme] = useState<object>(getTheme(scContext.settings.theme, scContext.preferences));
+  const [theme, setTheme] = useState<Record<string, any>>(getTheme(scContext.settings.theme, scContext.preferences));
 
   return (
     <StyledEngineProvider injectFirst>
@@ -43,3 +43,11 @@ export const withSCTheme = (WrappedComponent) => (props) => {
     </ThemeProvider>
   );
 };
+
+/**
+ * Let's only export the `useSCTheme` hook instead of the context.
+ * We only want to use the hook directly and never the context component.
+ */
+export function useSCTheme(): SCThemeContextType {
+  return useContext(SCThemeContext);
+}
