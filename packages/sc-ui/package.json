@@ -52,12 +52,14 @@
   "dependencies": {
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
+    "@mui/icons-material": "^5.0.5",
     "@mui/material": "^5.0.3",
     "@selfcommunity/core": "0.1.0",
     "@types/classnames": "^2.2.11",
     "classnames": "^2.2.6",
     "prop-types": "^15.7.2",
-    "prop-types-extra": "^1.1.1"
+    "prop-types-extra": "^1.1.1",
+    "timeago-react": "^3.0.4"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.13",
