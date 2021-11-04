@@ -63,10 +63,8 @@ function User({scUserId = null, scUser = null, contained = true}: {scUserId?: nu
     /* TODO: render proper action based on redux connection (follow) store */
     return (
       <React.Fragment>
-        <Button size="small" onClick={this.ignore}>
-          Ignore
-        </Button>
-        <Button size="small" variant="outlined" onClick={this.follow}>
+        <Button size="small">Ignore</Button>
+        <Button size="small" variant="outlined">
           Follow
         </Button>
       </React.Fragment>
@@ -81,10 +79,8 @@ function User({scUserId = null, scUser = null, contained = true}: {scUserId?: nu
     /* TODO: render proper action based on redux connection (friendship) store */
     return (
       <React.Fragment>
-        <Button size="small" onClick={this.ignore}>
-          Ignore
-        </Button>
-        <Button size="small" variant="outlined" onClick={this.requestConnect}>
+        <Button size="small">Ignore</Button>
+        <Button size="small" variant="outlined">
           Connect
         </Button>
       </React.Fragment>
