@@ -1,5 +1,5 @@
 import {addDecorator} from '@storybook/react'
-import decorators from './decorators'
+import decorators from './decorators';
 addDecorator(decorators.withProvider);
 
 /**
@@ -46,15 +46,25 @@ export const globalTypes = {
     description: 'Type of session',
     defaultValue: process.env.STORYBOOK_PLATFORM_SESSION_TYPE
   },
-  authToken: {
-    name: 'OAuth Token',
-    description: 'OAuth Token',
-    defaultValue: {"access_token": process.env.STORYBOOK_PLATFORM_ACCESS_TOKEN, "refresh_token": process.env.STORYBOOK_PLATFORM_REFRESH_TOKEN}
+  clientId: {
+    name: 'Client Id',
+    description: 'Client id OAuth2',
+    defaultValue: process.env.STORYBOOK_PLATFORM_SESSION_CLIENT_ID
   },
-  authRefreshTokenEndpoint: {
-    name: 'Refresh Token Endpoint',
-    description: 'Endpoint config to refresh token',
-    defaultValue: process.env.STORYBOOK_PLATFORM_REFRESH_TOKEN_ENDPOINT
+  accessTokenJwtExpiresIn: {
+    name: 'JWT Expires in',
+    description: 'Expires in JWT',
+    defaultValue: process.env.STORYBOOK_PLATFORM_ACCESS_JWT_TOKEN_EXPIRES_IN
+  },
+  accountUsername: {
+    name: 'Account Username',
+    description: 'Username of the logged user',
+    defaultValue: process.env.STORYBOOK_PLATFORM_ACCOUNT_USERNAME
+  },
+  accountPassword: {
+    name: 'Account Password',
+    description: 'Password of the logged user',
+    defaultValue: process.env.STORYBOOK_PLATFORM_ACCOUNT_PASSWORD
   }
 };
 

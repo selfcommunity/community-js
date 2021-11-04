@@ -11,8 +11,7 @@ function getCurrentUser() {
       if (res.status >= 300) {
         return Promise.reject(res);
       }
-      const data = res.data.data;
-      return Promise.resolve(data);
+      return Promise.resolve(res.data);
     })
     .catch((error) => {
       return Promise.reject(error);
@@ -29,8 +28,7 @@ function getUser(id) {
       if (res.status >= 300) {
         return Promise.reject(res);
       }
-      const data = res.data.data;
-      return Promise.resolve(data);
+      return Promise.resolve(res.data);
     })
     .catch((error) => {
       return Promise.reject(error);
@@ -39,5 +37,5 @@ function getUser(id) {
 
 export default {
   getCurrentUser,
-  getUser,
+  getUser
 };

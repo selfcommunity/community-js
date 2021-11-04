@@ -1,12 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
-import {Button, Divider, Typography} from '@mui/material';
+import {Button, Typography} from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import {Endpoints, http} from '@selfcommunity/core';
-import PeopleSuggestionSkeleton from '../Skeleton/PeopleSuggestionSkeleton';
+import {Endpoints, http, SCUserType} from '@selfcommunity/core';
+import {PeopleSuggestionSkeleton} from '../Skeleton';
 import User from '../User';
+import {withSCTheme, withSCLocale} from '@selfcommunity/core';
+import {FormattedMessage} from 'react-intl';
 
 const PREFIX = 'SCPeopleSuggestion';
 
@@ -19,9 +21,8 @@ const Root = styled(Card, {
   marginBottom: theme.spacing(2)
 }));
 
-export default function SCPeopleSuggestion(): JSX.Element {
-  const [users, setUsers] = useState<any[]>([]);
-  const [visibleUsers, setVisibleUsers] = useState<number>(3);
+function SCPeopleSuggestion(props): JSX.Element {
+  const [users, setUsers] = useState<SCUserType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [hasMore, setHasMore] = useState<boolean>(false);
   const [openPeopleSuggestionDialog, setOpenPeopleSuggestionDialog] = useState<boolean>(false);
@@ -34,8 +35,8 @@ export default function SCPeopleSuggestion(): JSX.Element {
       })
       .then((res) => {
         const data = res.data;
-        setUsers(data.results);
-        setHasMore(data.count > visibleUsers);
+        setUsers(data['results']);
+        setHasMore(data['count'] > 2);
         setLoading(false);
       })
       .catch((error) => {
@@ -43,8 +44,18 @@ export default function SCPeopleSuggestion(): JSX.Element {
       });
   }
 
-  function loadUsers() {
-    setVisibleUsers((prevVisibleUsers) => prevVisibleUsers + 3);
+  function fetchUserForTest() {
+    http
+      .request({
+        url: Endpoints.UserSuggestion.url(),
+        method: Endpoints.UserSuggestion.method
+      })
+      .then((res) => {
+        const data = res.data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   useEffect(() => {
@@ -57,22 +68,21 @@ export default function SCPeopleSuggestion(): JSX.Element {
   return (
     <Root variant={'outlined'}>
       <CardContent>
-        <Typography variant="body1">People suggestion</Typography>
+        <Typography variant="body1">
+          <FormattedMessage id="sc.peopleSuggestion.title" defaultMessage="sc.peopleSuggestion.title" />
+        </Typography>
         <List>
-          {users.slice(0, visibleUsers).map((user: {username: string}, index) => (
-            <div key={index}>
-              <User contained={false} scUser={user} />
-              <Divider />
-            </div>
+          {users.slice(0, 2).map((user: SCUserType, index) => (
+            <User contained={false} scUser={user} key={index} />
           ))}
         </List>
-        {hasMore && (
-          <Button size="small" onClick={() => loadUsers()}>
-            See More
-          </Button>
-        )}
+        <Button color="secondary" size="small" onClick={() => fetchUserForTest()}>
+          Show All
+        </Button>
         {openPeopleSuggestionDialog && <></>}
       </CardContent>
     </Root>
   );
 }
+
+export default withSCLocale(withSCTheme(SCPeopleSuggestion));

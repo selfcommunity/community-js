@@ -1,8 +1,8 @@
 import t from 'typy';
 import {ValidationError} from '../utils/errors';
-import {LOCALES} from '../constants/I18n';
+import {LOCALES} from '../constants/Locale';
 
-export const urlReplacer = (path) => {
+export const urlReplacer = (path: string) => {
   const replacer = function (tpl, data) {
     const re = /\$\(([^)]+)?\)/g;
     let match = re.exec(tpl);
@@ -13,11 +13,11 @@ export const urlReplacer = (path) => {
     }
     return tpl;
   };
-  return (params) => replacer(path, params);
+  return (params: object) => replacer(path, params);
 };
 
-export const getDomain = (url) => {
-  // eslint-disable-next-line no-useless-escape
+export const getDomain = (url: string): string => {
+  // eslint-disable-next-line no-useless-escape,@typescript-eslint/prefer-regexp-exec
   const matches = url.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i);
   if (matches && matches[1]) {
     return matches[1];
@@ -28,7 +28,7 @@ export const getDomain = (url) => {
 /**
  * Check a str is a valid url pattern
  */
-export const isValidUrl = (url) => {
+export const isValidUrl = (url: string): boolean => {
   const regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-/]))?/;
   return regexp.test(url);
 };
@@ -36,7 +36,7 @@ export const isValidUrl = (url) => {
 /**
  * Check a str is a valid list of urls separated by delimiter
  */
-export const isValidUrls = (value, delimiter) => {
+export const isValidUrls = (value: string, delimiter: string): boolean => {
   const urls = value.trim().split(delimiter);
   return urls.every(isValidUrl);
 };
@@ -46,7 +46,7 @@ export const isValidUrls = (value, delimiter) => {
  * @param locale
  * @return {locale}
  */
-export const validateLocale = (locale) => {
+export const validateLocale = (locale: string) => {
   if (t(locale).isString && LOCALES.indexOf(locale) >= -1) {
     return locale;
   }

@@ -2,6 +2,7 @@ import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
 
 import PeopleSuggestion from './index';
+import {ThemeProvider} from '@mui/material';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -13,9 +14,33 @@ export default {
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const Template: ComponentStory<typeof PeopleSuggestion> = (args) => (
   <div style={{width: 400}}>
-    <PeopleSuggestion {...args} />
+    <ThemeProvider
+      theme={{
+        palette: {
+          secondary: {
+            main: '#000'
+          }
+        }
+      }}>
+      <PeopleSuggestion {...args} />
+    </ThemeProvider>
   </div>
 );
+
+/**
+ *
+ *     <ThemeProvider
+ theme={{
+        palette: {
+          secondary: {
+            main: '#000'
+          }
+        }
+      }}>
+ <PeopleSuggestion {...args} />
+ </ThemeProvider>
+
+ */
 
 export const Base = Template.bind({});
 

@@ -1,35 +1,11 @@
-import React, {createContext, ReactNode, useEffect, useState} from 'react';
+import React, {createContext, useContext, useEffect, useState} from 'react';
 import SCAuthProvider from '../SCAuthProvider';
 import preferencesServices from '../../../services/preferences';
-import SCLocalizationProvider from '../SCLocalizationProvider';
+import SCLocaleProvider from '../SCLocaleProvider';
 import SCRoutingProvider from '../SCRoutingProvider';
 import SCThemeProvider from '../SCThemeProvider';
 import {setBasePortal} from '../../../utils/http';
-
-/**
- * Interface SCSettingsType
- */
-export interface SCSettingsType {
-  portal: string;
-  locale: string;
-  session: any;
-}
-
-/**
- * Interface SCContextType
- */
-export interface SCContextType {
-  settings: SCSettingsType;
-  preferences?: any;
-}
-
-/**
- * Interface SCContextProviderType
- */
-export interface SCContextProviderType {
-  settings: SCSettingsType;
-  children: ReactNode;
-}
+import {SCContextProviderType, SCContextType} from '../../../types';
 
 /**
  * Create Global Context
@@ -42,14 +18,28 @@ export interface SCContextProviderType {
 export const SCContext = createContext<SCContextType>({} as SCContextType);
 
 /**
+ * List of all nested providers that are required to run
+ */
+const contextProviders = [SCThemeProvider, SCLocaleProvider, SCRoutingProvider, SCAuthProvider];
+
+/**
  * SCContextProvider
  * This import all providers
  */
-export function SCContextProvider({settings, children}: SCContextProviderType): JSX.Element {
+export default function SCContextProvider({settings, children}: SCContextProviderType): JSX.Element {
   const [preferences, setPreferences] = useState<any[]>([]);
   const [, setError] = useState<any>();
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  /**
+   * Set the base path on the http objects
+   */
   setBasePortal(settings.portal);
+
+  /**
+   * Export the provider as we need to wrap the entire app with it
+   * This provider keeps current user logged and session
+   */
   useEffect(() => {
     preferencesServices
       .loadPreferences()
@@ -58,23 +48,28 @@ export function SCContextProvider({settings, children}: SCContextProviderType): 
       })
       .catch((_error) => {
         setError(_error);
-        console.log(_error);
       })
       .finally(() => setLoading(false));
   }, []);
 
+  /**
+   * Nesting all necessary providers
+   * All child components will use help contexts to works
+   */
   return (
     <SCContext.Provider value={{settings, preferences}}>
-      {!loading && (
-        <SCThemeProvider>
-          <SCAuthProvider>
-            <SCRoutingProvider>
-              <SCLocalizationProvider>{children}</SCLocalizationProvider>
-            </SCRoutingProvider>
-          </SCAuthProvider>
-        </SCThemeProvider>
-      )}
+      {!loading &&
+        contextProviders.reduceRight((memo, ContextProvider) => {
+          return <ContextProvider>{memo}</ContextProvider>;
+        }, children)}
     </SCContext.Provider>
   );
 }
-export default SCContextProvider;
+
+/**
+ * Let's only export the `useAuth` hook instead of the context.
+ * We only want to use the hook directly and never the context component.
+ */
+export function useSCContext(): SCContextType {
+  return useContext(SCContext);
+}

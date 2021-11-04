@@ -5,13 +5,18 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import {UserBoxSkeleton} from '../Skeleton';
 import {Avatar, Button, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText} from '@mui/material';
-import {SCContext, SCContextType, Endpoints, http, SCPreferences, SCAuthContext, SCAuthContextType, SCUserType} from '@selfcommunity/core';
-import FollowButton from '../Button';
-declare module '@mui/material/Button' {
-  interface ButtonPropsVariantOverrides {
-    rounded: true;
-  }
-}
+import {AxiosResponse} from 'axios';
+import {
+  SCContext,
+  SCContextType,
+  Endpoints,
+  http,
+  SCPreferences,
+  SCAuthContext,
+  SCAuthContextType,
+  SCUserType,
+  withSCTheme
+} from '@selfcommunity/core';
 
 const PREFIX = 'SCUser';
 
@@ -24,15 +29,7 @@ const Root = styled(Card, {
   marginBottom: theme.spacing(2)
 }));
 
-export default function User({
-  scUserId = null,
-  scUser = null,
-  contained = true
-}: {
-  scUserId?: number;
-  scUser?: SCUserType;
-  contained: boolean;
-}): JSX.Element {
+function User({scUserId = null, scUser = null, contained = true}: {scUserId?: number; scUser?: SCUserType; contained: boolean}): JSX.Element {
   const [user, setUser] = useState<SCUserType>(scUser);
   const scContext: SCContextType = useContext(SCContext);
   const scAuthContext: SCAuthContextType = useContext(SCAuthContext);
@@ -49,8 +46,8 @@ export default function User({
         url: Endpoints.User.url({id: scUserId}),
         method: Endpoints.User.method
       })
-      .then((res) => {
-        const data = res.data;
+      .then((res: AxiosResponse<SCUserType>) => {
+        const data: SCUserType = res.data;
         setUser(data);
       })
       .catch((error) => {
@@ -66,8 +63,12 @@ export default function User({
     /* TODO: render proper action based on redux connection (follow) store */
     return (
       <React.Fragment>
-        <FollowButton onClick={this.ignore}>Ignore</FollowButton>
-        <FollowButton onClick={this.follow}>Follow</FollowButton>
+        <Button size="small" onClick={this.ignore}>
+          Ignore
+        </Button>
+        <Button size="small" variant="outlined" onClick={this.follow}>
+          Follow
+        </Button>
       </React.Fragment>
     );
   }
@@ -80,8 +81,12 @@ export default function User({
     /* TODO: render proper action based on redux connection (friendship) store */
     return (
       <React.Fragment>
-        <FollowButton onClick={this.ignore}>Ignore</FollowButton>
-        <FollowButton onClick={this.requestConnect}>Connect</FollowButton>
+        <Button size="small" onClick={this.ignore}>
+          Ignore
+        </Button>
+        <Button size="small" variant="outlined" onClick={this.requestConnect}>
+          Connect
+        </Button>
       </React.Fragment>
     );
   }
@@ -103,7 +108,7 @@ export default function User({
    * @return {JSX.Element}
    */
   function renderAnonymousActions() {
-    return <FollowButton>Go to Profile</FollowButton>;
+    return <Button size="small">Go to Profile</Button>;
   }
 
   useEffect(() => {
@@ -115,11 +120,11 @@ export default function User({
   const u = (
     <React.Fragment>
       {user ? (
-        <ListItem alignItems="flex-start">
+        <ListItem button={true}>
           <ListItemAvatar>
             <Avatar alt={user.username} src={user.avatar} />
           </ListItemAvatar>
-          <ListItemText primary={user.username} secondary={user.location} />
+          <ListItemText primary={user.username} secondary={user.description} />
           <ListItemSecondaryAction>
             {scAuthContext.user && connectionEnabled ? renderAuthenticatedActions() : renderAnonymousActions()}
           </ListItemSecondaryAction>
@@ -141,3 +146,5 @@ export default function User({
   }
   return u;
 }
+
+export default withSCTheme(User);

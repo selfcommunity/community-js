@@ -1,4 +1,4 @@
-import {LOCALES} from '../constants/I18n';
+import {LOCALES} from '../constants/Locale';
 import {sessionTypes} from '../constants/Session';
 
 /**
@@ -24,15 +24,6 @@ const ValidationError = class extends Error {
   constructor(message) {
     super(message ? message : 'Validation error. Invalid value for a parameter.');
     this.name = _ValidationErrorType;
-  }
-};
-
-/**
- * InvalidTargetError
- */
-const InvalidTargetError = class extends ValidationError {
-  constructor(targetId) {
-    super(`Invalid target. Cannot find tag with id ${targetId}.`);
   }
 };
 
@@ -94,8 +85,8 @@ const InvalidThemeError = class extends ValidationError {
  * InvalidRefreshTokenEndpointError
  */
 const InvalidRefreshTokenEndpointError = class extends ValidationError {
-  constructor(endpoint) {
-    super(`Invalid path '${endpoint.path}' with method '${endpoint.method}' for refresh token.`);
+  constructor() {
+    super(`Unable to refresh current session.`);
   }
 };
 
@@ -111,7 +102,6 @@ const InvalidPreferencesError = class extends ValidationError {
 export {
   InitializationError,
   ValidationError,
-  InvalidTargetError,
   InvalidPortalError,
   InvalidTokenError,
   InvalidLocaleError,
