@@ -1,11 +1,14 @@
 /**
  * Components
  */
-import SCPeopleSuggestion from './components/PeopleSuggestion';
+import SCInterest from './components/Interest';
+import SCPerson from './components/Person';
 import SCUser from './components/User';
-import {UserBoxSkeleton, PeopleSuggestionSkeleton} from './components/Skeleton';
+import SCPost from './components/Post';
+import SCFollowButton from './components/Button';
+import {InterestBoxSkeleton, PersonBoxSkeleton, PostBoxSkeleton, UserBoxSkeleton} from './components/Skeleton';
 
 /**
  * List all exports
  */
-export {SCPeopleSuggestion, SCUser, UserBoxSkeleton, PeopleSuggestionSkeleton};
+export {SCInterest, SCPerson, SCUser, SCPost, InterestBoxSkeleton, PersonBoxSkeleton, PostBoxSkeleton, UserBoxSkeleton, SCFollowButton};

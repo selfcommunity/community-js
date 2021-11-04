@@ -5,10 +5,10 @@ import {Button, Divider, Typography} from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import {Endpoints, http} from '@selfcommunity/core';
-import PeopleSuggestionSkeleton from '../Skeleton/PeopleSuggestionSkeleton';
-import User from '../User';
+import InterestSuggestionSkeleton from '../Skeleton/InterestSuggestionSkeleton';
+import Interest from '../Interest';
 
-const PREFIX = 'SCPeopleSuggestion';
+const PREFIX = 'SCInterestSuggestion';
 
 const Root = styled(Card, {
   name: PREFIX,
@@ -19,59 +19,56 @@ const Root = styled(Card, {
   marginBottom: theme.spacing(2)
 }));
 
-export default function SCPeopleSuggestion(): JSX.Element {
-  const [users, setUsers] = useState<any[]>([]);
-  const [visibleUsers, setVisibleUsers] = useState<number>(3);
+export default function SCInterestSuggestion(): JSX.Element {
+  const [interests, setInterests] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [hasMore, setHasMore] = useState<boolean>(false);
-  const [openPeopleSuggestionDialog, setOpenPeopleSuggestionDialog] = useState<boolean>(false);
+  const [followed, setFollowed] = useState<boolean>(false);
+  const [openInterestSuggestionDialog, setOpenInterestSuggestionDialog] = useState<boolean>(false);
 
-  function fetchUserSuggestion() {
+  function fetchInterestSuggestion() {
     http
       .request({
-        url: Endpoints.UserSuggestion.url(),
-        method: Endpoints.UserSuggestion.method
+        url: Endpoints.CategorySuggestion.url(),
+        method: Endpoints.CategorySuggestion.method
       })
       .then((res) => {
         const data = res.data;
-        setUsers(data.results);
-        setHasMore(data.count > visibleUsers);
+        setInterests(data.results);
+        setHasMore(data.count > 4);
         setLoading(false);
+        setFollowed(false);
       })
       .catch((error) => {
         console.log(error);
       });
   }
 
-  function loadUsers() {
-    setVisibleUsers((prevVisibleUsers) => prevVisibleUsers + 3);
-  }
-
   useEffect(() => {
-    fetchUserSuggestion();
+    fetchInterestSuggestion();
   }, []);
 
   if (loading) {
-    return <PeopleSuggestionSkeleton />;
+    return <InterestSuggestionSkeleton />;
   }
   return (
     <Root variant={'outlined'}>
       <CardContent>
-        <Typography variant="body1">People suggestion</Typography>
+        <Typography variant="body1">Explore Interests</Typography>
         <List>
-          {users.slice(0, visibleUsers).map((user: {username: string}, index) => (
+          {interests.slice(0, 4).map((interest: {name: string}, index) => (
             <div key={index}>
-              <User contained={false} scUser={user} />
+              <Interest contained={false} scInterest={interest} followed={followed} />
               <Divider />
             </div>
           ))}
         </List>
         {hasMore && (
-          <Button size="small" onClick={() => loadUsers()}>
+          <Button size="small" onClick={() => setOpenInterestSuggestionDialog(true)}>
             See More
           </Button>
         )}
-        {openPeopleSuggestionDialog && <></>}
+        {openInterestSuggestionDialog && <></>}
       </CardContent>
     </Root>
   );

@@ -6,6 +6,12 @@ import CardContent from '@mui/material/CardContent';
 import {UserBoxSkeleton} from '../Skeleton';
 import {Avatar, Button, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText} from '@mui/material';
 import {SCContext, SCContextType, Endpoints, http, SCPreferences, SCAuthContext, SCAuthContextType, SCUserType} from '@selfcommunity/core';
+import FollowButton from '../Button';
+declare module '@mui/material/Button' {
+  interface ButtonPropsVariantOverrides {
+    rounded: true;
+  }
+}
 
 const PREFIX = 'SCUser';
 
@@ -60,12 +66,8 @@ export default function User({
     /* TODO: render proper action based on redux connection (follow) store */
     return (
       <React.Fragment>
-        <Button size="small" onClick={this.ignore}>
-          Ignore
-        </Button>
-        <Button size="small" variant="outlined" onClick={this.follow}>
-          Follow
-        </Button>
+        <FollowButton onClick={this.ignore}>Ignore</FollowButton>
+        <FollowButton onClick={this.follow}>Follow</FollowButton>
       </React.Fragment>
     );
   }
@@ -78,12 +80,8 @@ export default function User({
     /* TODO: render proper action based on redux connection (friendship) store */
     return (
       <React.Fragment>
-        <Button size="small" onClick={this.ignore}>
-          Ignore
-        </Button>
-        <Button size="small" variant="outlined" onClick={this.requestConnect}>
-          Connect
-        </Button>
+        <FollowButton onClick={this.ignore}>Ignore</FollowButton>
+        <FollowButton onClick={this.requestConnect}>Connect</FollowButton>
       </React.Fragment>
     );
   }
@@ -105,7 +103,7 @@ export default function User({
    * @return {JSX.Element}
    */
   function renderAnonymousActions() {
-    return <Button size="small">Go to Profile</Button>;
+    return <FollowButton>Go to Profile</FollowButton>;
   }
 
   useEffect(() => {
@@ -117,11 +115,11 @@ export default function User({
   const u = (
     <React.Fragment>
       {user ? (
-        <ListItem button={true}>
+        <ListItem alignItems="flex-start">
           <ListItemAvatar>
             <Avatar alt={user.username} src={user.avatar} />
           </ListItemAvatar>
-          <ListItemText primary={user.username} secondary={user.slogan} />
+          <ListItemText primary={user.username} secondary={user.location} />
           <ListItemSecondaryAction>
             {scAuthContext.user && connectionEnabled ? renderAuthenticatedActions() : renderAnonymousActions()}
           </ListItemSecondaryAction>

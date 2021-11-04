@@ -50,12 +50,62 @@ const getTheme = (options, preferences) => {
               },
             },
           },
+          MuiButton: {
+            styleOverrides: {
+              root: {
+                textTransform: 'none',
+              },
+            },
+            // variants: [
+            //   {
+            //     props: {variant: 'rounded'},
+            //     style: {
+            //       textTransform: 'none',
+            //       border: '0px',
+            //       color: 'black',
+            //       borderRadius: 20,
+            //       backgroundColor: '#e2e2e2',
+            //       paddingTop: '4px',
+            //       paddingRight: '16px',
+            //       paddingBottom: '4px',
+            //       paddingLeft: '16px',
+            //     },
+            //   },
+            // ],
+          },
+          MuiDivider: {
+            styleOverrides: {
+              root: {
+                borderWidth: '1px',
+              },
+            },
+          },
           SCFeedObject: {
             styleOverrides: {
               root: {
                 '& .SCFeedObject-category': {
                   backgroundColor: '#FF0000',
                   borderColor: '#FF0000',
+                },
+              },
+            },
+          },
+          SCPost: {
+            styleOverrides: {
+              root: {
+                '& .MuiSvgIcon-root': {
+                  width: '0.7em',
+                  marginBottom: '0.5px',
+                },
+              },
+            },
+          },
+          SCTrendingPost: {
+            styleOverrides: {
+              root: {
+                '& .MuiSvgIcon-root': {
+                  width: '0.7em',
+                  marginBottom: '0.5px',
                 },
               },
             },

@@ -10,6 +10,7 @@ export interface SCUserType {
   username: string;
   avatar?: string;
   slogan?: string;
+  location?: string;
 }
 
 /**
