@@ -26,7 +26,7 @@
     "build:commonjs": "cross-env BABEL_ENV=commonjs babel --root-mode upward --extensions .js,.jsx,.ts,.tsx  ./src --out-dir lib/cjs --ignore **/*.stories.js,**/*.spec.js",
     "build:es": "cross-env BABEL_ENV=es babel --root-mode upward --extensions .js,.jsx,.ts,.tsx ./src --out-dir lib/esm --ignore **/*.stories.js,**/*.spec.js",
     "build:umd": "webpack --mode production",
-    "build:types": "tsc -d --declarationDir lib/esm --declarationMap --emitDeclarationOnly",
+    "build:types": "tsc -d --declarationDir lib/esm --declarationMap --resolveJsonModule --emitDeclarationOnly",
     "build": "yarn clean:lib && yarn build:commonjs && yarn build:es && yarn build:umd && yarn build:types",
     "prerelease": "yarn run clean:lib && yarn run build"
   },

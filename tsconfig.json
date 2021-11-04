@@ -8,6 +8,7 @@
       "@selfcommunity/ui": ["packages/sc-ui/src"],
       "@selfcommunity/templates": ["packages/sc-templates/src"],
       "@selfcommunity/*": ["packages/*/src"]
-    }
+    },
+    "resolveJsonModule": true
   }
 }

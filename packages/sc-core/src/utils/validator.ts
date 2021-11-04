@@ -1,5 +1,5 @@
 import t, {addCustomTypes} from 'typy';
-import {LOCALES} from '../constants/I18n';
+import {LOCALES} from '../constants/Locale';
 import {isValidUrl} from './url';
 import {sessionTypes} from '../constants/Session';
 // import {routerSchema, tokenSchema} from '../constants/SchemaValidators';

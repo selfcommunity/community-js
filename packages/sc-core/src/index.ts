@@ -47,7 +47,6 @@ import * as SCPreferences from './constants/Preferences';
  * Routing component
  */
 import Link from './components/router';
-import {url} from './utils/url';
 
 /**
  * Http component
@@ -91,6 +90,5 @@ export {
   SCPreferences,
   http,
   Link,
-  url,
   Endpoints,
 };
