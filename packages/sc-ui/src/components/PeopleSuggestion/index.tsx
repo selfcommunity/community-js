@@ -7,7 +7,7 @@ import CardContent from '@mui/material/CardContent';
 import {Endpoints, http, SCUserType} from '@selfcommunity/core';
 import {PeopleSuggestionSkeleton} from '../Skeleton';
 import User from '../User';
-import {withSCTheme} from '@selfcommunity/core';
+import {withSCTheme, withSCLocale} from '@selfcommunity/core';
 
 const PREFIX = 'SCPeopleSuggestion';
 
@@ -44,6 +44,19 @@ function SCPeopleSuggestion(props): JSX.Element {
   }
 
   function fetchUserForTest() {
+    console.log('fetchUserForTest 1');
+    http
+      .request({
+        url: Endpoints.UserSuggestion.url(),
+        method: Endpoints.UserSuggestion.method
+      })
+      .then((res) => {
+        const data = res.data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    console.log('fetchUserForTest 2');
     http
       .request({
         url: Endpoints.UserSuggestion.url(),
@@ -67,7 +80,7 @@ function SCPeopleSuggestion(props): JSX.Element {
   return (
     <Root variant={'outlined'}>
       <CardContent>
-        <Typography variant="body1">People suggestion</Typography>
+        <Typography variant="body1">People Suggestion</Typography>
         <List>
           {users.slice(0, 2).map((user: SCUserType, index) => (
             <User contained={false} scUser={user} key={index} />
@@ -82,4 +95,4 @@ function SCPeopleSuggestion(props): JSX.Element {
   );
 }
 
-export default withSCTheme(SCPeopleSuggestion);
+export default withSCLocale(withSCTheme(SCPeopleSuggestion));
