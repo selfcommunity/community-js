@@ -22,7 +22,6 @@ const Root = styled(Card, {
 }));
 
 function SCPeopleSuggestion(props): JSX.Element {
-  console.log(props);
   const [users, setUsers] = useState<SCUserType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [hasMore, setHasMore] = useState<boolean>(false);

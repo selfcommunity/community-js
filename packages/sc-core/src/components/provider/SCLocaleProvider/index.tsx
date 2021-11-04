@@ -91,7 +91,6 @@ export default function SCLocaleProvider({children = null}: {children: React.Rea
  */
 export const withSCLocale = (WrappedComponent) => (props) => {
   const scLocaleContext: SCLocaleContextType = useContext(SCLocaleContext);
-  console.log(scLocaleContext);
   return (
     <IntlProvider locale={scLocaleContext.locale} messages={scLocaleContext.messages}>
       <WrappedComponent setLanguage={scLocaleContext.selectLocale} {...props} />
