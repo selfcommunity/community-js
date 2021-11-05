@@ -1,14 +1,13 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import {Avatar, Box, Grid, Link, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
-import {Endpoints, http, SCUserType} from '@selfcommunity/core';
+import {Endpoints, http, SCUserType, withSCTheme} from '@selfcommunity/core';
 import {PostBoxSkeleton} from '@selfcommunity/ui';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import TimeAgo from 'timeago-react';
-import {withSCTheme} from '@selfcommunity/core';
 import {AxiosResponse} from 'axios';
 
 const PREFIX = 'SCPost';
@@ -43,11 +42,17 @@ function Post({scInterestId = null, scPost = null, contained = true}: {scInteres
       })
       .then((res: AxiosResponse<any>) => {
         const data = res.data;
-        setPost(data.results[0].discussion);
+        setPost(selectPost(data.results));
       })
       .catch((error) => {
         console.log(error);
       });
+  }
+
+  function selectPost(results) {
+    const res = results[Math.floor(Math.random() * results.length)];
+    const type = res.type;
+    return res[type];
   }
 
   useEffect(() => {
