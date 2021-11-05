@@ -21,7 +21,7 @@ import SCContextProvider, {SCContext, useSCContext} from './components/provider/
 /**
  * AuthProvider component
  */
-import SCUserProvider, {SCUserContext, useSCAuth} from './components/provider/SCUserProvider';
+import SCUserProvider, {SCUserContext, useSCUser} from './components/provider/SCUserProvider';
 
 /**
  * ThemeProvider component
@@ -79,7 +79,7 @@ export {
   useSCContext,
   SCContextProvider,
   SCUserProvider,
-  useSCAuth,
+  useSCUser,
   SCThemeProvider,
   withSCTheme,
   useSCTheme,
@@ -92,6 +92,3 @@ export {
   Link,
   Endpoints,
 };
-
-export { default as ReactFromModule } from 'react';
-
