@@ -3,7 +3,7 @@
  */
 import {
   SCContextType,
-  SCAuthContextType,
+  SCUserContextType,
   SCUserType,
   SCContextProviderType,
   SCTagType,
@@ -21,7 +21,7 @@ import SCContextProvider, {SCContext, useSCContext} from './components/provider/
 /**
  * AuthProvider component
  */
-import SCAuthProvider, {SCAuthContext, useSCAuth} from './components/provider/SCAuthProvider';
+import SCUserProvider, {SCUserContext, useSCAuth} from './components/provider/SCUserProvider';
 
 /**
  * ThemeProvider component
@@ -67,18 +67,18 @@ export {
   SCSettingsType,
   SCSessionType,
   SCContextType,
-  SCAuthContextType,
+  SCUserContextType,
   SCThemeContextType,
   SCRoutingContextType,
   SCUserType,
   SCContext,
-  SCAuthContext,
+  SCUserContext,
   SCThemeContext,
   SCRoutingContext,
   SCLocaleContext,
   useSCContext,
   SCContextProvider,
-  SCAuthProvider,
+  SCUserProvider,
   useSCAuth,
   SCThemeProvider,
   withSCTheme,
@@ -92,3 +92,6 @@ export {
   Link,
   Endpoints,
 };
+
+export { default as ReactFromModule } from 'react';
+

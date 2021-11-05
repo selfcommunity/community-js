@@ -32,9 +32,9 @@ export interface SCSettingsType {
 }
 
 /**
- * Interface SCAuthContextType
+ * Interface SCUserContextType
  */
-export interface SCAuthContextType {
+export interface SCUserContextType {
   /**
    * Authenticated User.
    */

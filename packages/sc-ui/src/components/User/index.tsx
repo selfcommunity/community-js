@@ -12,8 +12,8 @@ import {
   Endpoints,
   http,
   SCPreferences,
-  SCAuthContext,
-  SCAuthContextType,
+  SCUserContext,
+  SCUserContextType,
   SCUserType,
   withSCTheme
 } from '@selfcommunity/core';
@@ -32,7 +32,7 @@ const Root = styled(Card, {
 function User({scUserId = null, scUser = null, contained = true}: {scUserId?: number; scUser?: SCUserType; contained: boolean}): JSX.Element {
   const [user, setUser] = useState<SCUserType>(scUser);
   const scContext: SCContextType = useContext(SCContext);
-  const scAuthContext: SCAuthContextType = useContext(SCAuthContext);
+  const scAuthContext: SCUserContextType = useContext(SCUserContext);
   const followEnabled =
     SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED in scContext.preferences && scContext.preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED].value;
   const connectionEnabled = !followEnabled;

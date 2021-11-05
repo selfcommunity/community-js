@@ -1,5 +1,5 @@
 import React, {createContext, useContext, useEffect, useState} from 'react';
-import SCAuthProvider from '../SCAuthProvider';
+import SCUserProvider from '../SCUserProvider';
 import preferencesServices from '../../../services/preferences';
 import SCLocaleProvider from '../SCLocaleProvider';
 import SCRoutingProvider from '../SCRoutingProvider';
@@ -20,7 +20,7 @@ export const SCContext = createContext<SCContextType>({} as SCContextType);
 /**
  * List of all nested providers that are required to run
  */
-const contextProviders = [SCThemeProvider, SCLocaleProvider, SCRoutingProvider, SCAuthProvider];
+const contextProviders = [SCThemeProvider, SCLocaleProvider, SCRoutingProvider, SCUserProvider];
 
 /**
  * SCContextProvider

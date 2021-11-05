@@ -9,3 +9,6 @@ import {UserBoxSkeleton, PeopleSuggestionSkeleton} from './components/Skeleton';
  * List all exports
  */
 export {SCPeopleSuggestion, SCUser, UserBoxSkeleton, PeopleSuggestionSkeleton};
+
+export { default as ReactFromModule } from 'react';
+
