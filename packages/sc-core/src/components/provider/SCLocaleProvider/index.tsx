@@ -91,8 +91,21 @@ export default function SCLocaleProvider({children = null}: {children: React.Rea
  */
 export const withSCLocale = (WrappedComponent) => (props) => {
   const scLocaleContext: SCLocaleContextType = useContext(SCLocaleContext);
+
+  /**
+   * handleIntlError
+   * @param error
+   */
+  const handleIntlError = (error) => {
+    if (error.code === 'MISSING_TRANSLATION') {
+      console.warn('Missing translation', error.message);
+      return;
+    }
+    throw error;
+  };
+
   return (
-    <IntlProvider locale={scLocaleContext.locale} messages={scLocaleContext.messages}>
+    <IntlProvider key={scLocaleContext.locale} locale={scLocaleContext.locale} messages={scLocaleContext.messages} onError={handleIntlError}>
       <WrappedComponent setLanguage={scLocaleContext.selectLocale} {...props} />
     </IntlProvider>
   );

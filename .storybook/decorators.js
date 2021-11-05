@@ -25,7 +25,7 @@ const withProvider = (Story, context) => {
 
     if (!authToken) return null;
 
-    const _settings = {
+    const _conf = {
       portal: context.globals.portal,
       locale: context.globals.locale,
       session: {
@@ -45,7 +45,7 @@ const withProvider = (Story, context) => {
     };
 
     return (
-      <SCContextProvider settings={_settings}>
+      <SCContextProvider conf={_conf}>
         <Story {...context} />
       </SCContextProvider>
     );

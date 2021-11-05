@@ -1,3 +1,15 @@
+/**
+ * Check if v is a string
+ * @param v
+ */
+export function isString(v) {
+  return typeof v === 'string' || v instanceof String;
+}
+
+/**
+ * Capitalize a string
+ * @param str
+ */
 export function capitalize(str: string): string {
   let strVal = '';
   let strArr: string[] = str.split(' ');
@@ -7,6 +19,10 @@ export function capitalize(str: string): string {
   return strVal;
 }
 
+/**
+ * CamelCase a string
+ * @param str
+ */
 export function camelCase(str: string): string {
   // Lower cases the string
   return (
@@ -26,6 +42,10 @@ export function camelCase(str: string): string {
   );
 }
 
+/**
+ * Stripe html tags from a string
+ * @param str
+ */
 export function stripHtml(str: string): string {
   return str.replace(/<[^>]*>?/gm, '').trim();
 }

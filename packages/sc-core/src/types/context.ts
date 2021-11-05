@@ -139,7 +139,7 @@ export interface SCContextProviderType {
   /**
    * Settings
    */
-  settings: SCSettingsType;
+  conf: SCSettingsType;
 
   /**
    * Nested children

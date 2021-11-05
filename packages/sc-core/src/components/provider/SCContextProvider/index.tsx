@@ -1,11 +1,19 @@
 import React, {createContext, useContext, useEffect, useState} from 'react';
 import SCUserProvider from '../SCUserProvider';
-import preferencesServices from '../../../services/preferences';
 import SCLocaleProvider from '../SCLocaleProvider';
 import SCRoutingProvider from '../SCRoutingProvider';
 import SCThemeProvider from '../SCThemeProvider';
 import {setBasePortal} from '../../../utils/http';
-import {SCContextProviderType, SCContextType} from '../../../types';
+import {validateOptions, validOptions} from '../../../utils/validator';
+import preferencesServices from '../../../services/preferences';
+import {SCContextProviderType, SCContextType, SCSettingsType} from '../../../types';
+import {emitInitialMessage} from '../../../utils/console';
+
+/**
+ * Emit initial message.
+ * TODO: Enable only if lib is debug mode;
+ */
+emitInitialMessage();
 
 /**
  * Create Global Context
@@ -26,30 +34,53 @@ const contextProviders = [SCThemeProvider, SCLocaleProvider, SCRoutingProvider, 
  * SCContextProvider
  * This import all providers
  */
-export default function SCContextProvider({settings, children}: SCContextProviderType): JSX.Element {
+export default function SCContextProvider({conf, children}: SCContextProviderType): JSX.Element {
+  const [settings, setSettings] = useState<SCSettingsType>();
   const [preferences, setPreferences] = useState<any[]>([]);
   const [, setError] = useState<any>();
   const [loading, setLoading] = useState<boolean>(true);
-
-  /**
-   * Set the base path on the http objects
-   */
-  setBasePortal(settings.portal);
 
   /**
    * Export the provider as we need to wrap the entire app with it
    * This provider keeps current user logged and session
    */
   useEffect(() => {
-    preferencesServices
-      .loadPreferences()
-      .then((res) => {
-        setPreferences(res.results);
-      })
-      .catch((_error) => {
-        setError(_error);
-      })
-      .finally(() => setLoading(false));
+    /**
+     * Validate intial settings
+     */
+    const {validationResult, settings} = validateOptions(conf, validOptions);
+    if (validationResult.hasErrors()) {
+      /**
+       * Exist errors in initial conf
+       */
+      validationResult.emit();
+    } else {
+      /**
+       * Emit warnings if exist
+       */
+      validationResult.emitWarnings();
+
+      /**
+       * Set the base path on the http objects
+       */
+      setBasePortal(settings.portal);
+
+      /**
+       * Load community preferences
+       */
+      preferencesServices
+        .loadPreferences()
+        .then((res) => {
+          setPreferences(res.results);
+        })
+        .catch((_error) => {
+          setError(_error);
+        })
+        .finally(() => {
+          setSettings(settings);
+          setLoading(false);
+        });
+    }
   }, []);
 
   /**
