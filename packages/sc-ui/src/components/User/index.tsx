@@ -25,12 +25,10 @@ function User({scUserId = null, scUser = null, contained = true}: {scUserId?: nu
   const [user, setUser] = useState<SCUserType>(scUser);
   const scPreferencesContext: SCPreferencesType = useContext(SCPreferencesContext);
   const scAuthContext: SCUserContextType = useContext(SCUserContext);
-  console.log(scPreferencesContext);
   const followEnabled =
     SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED in scPreferencesContext.preferences &&
     scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED].value;
   const connectionEnabled = !followEnabled;
-  console.log('aaaa');
 
   /**
    * If user not in props, attempt to get the user by id (in props) if exist

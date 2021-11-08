@@ -1,18 +1,17 @@
 {
-  "name": "@selfcommunity/ui",
+  "name": "@selfcommunity/i18n",
   "version": "0.1.0",
-  "description": "React UI Components to integrate a Community created with SelfCommunity.",
-  "author": "mirk8xr <mirk8xr@gmail.com>",
-  "homepage": "https://www.selfcommunity.com",
   "license": "MIT",
+  "private": false,
   "main": "./lib/cjs/index.js",
   "module": "./lib/esm/index.js",
+  "description": "Translations to integrate a Community created with SelfCommunity.",
+  "author": "SelfCommunity (https://www.selfcommunity.com)",
   "keywords": [
     "react",
     "widgets",
     "community",
-    "react-ui",
-    "react-component"
+    "community-i18n"
   ],
   "scripts": {
     "prepare": "install-peers -f",
@@ -32,35 +31,17 @@
     "build": "yarn clean:lib && yarn build:commonjs && yarn build:es && yarn build:umd && yarn build:types",
     "prerelease": "yarn run clean:lib && yarn run build"
   },
-  "directories": {
-    "lib": "lib"
-  },
+  "homepage": "https://www.selfcommunity.com",
   "files": [
     "lib"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/selfcommunity/community-ui/tree/main/packages/sc-ui"
+    "url": "https://github.com/selfcommunity/community-ui/tree/main/packages/sc-i18n"
   },
   "publishConfig": {
     "access": "public",
     "directory": "lib"
-  },
-  "peerDependencies": {
-    "react": ">=17.0.2",
-    "react-dom": ">=17.0.2",
-    "react-intl": "^5.21.0",
-    "@emotion/react": "^11.4.1",
-    "@emotion/styled": "^11.3.0",
-    "@mui/material": "^5.0.3"
-  },
-  "dependencies": {
-    "@selfcommunity/i18n": "^0.1.0",
-    "@selfcommunity/core": "^0.1.0",
-    "@types/classnames": "^2.2.11",
-    "classnames": "^2.2.6",
-    "prop-types": "^15.7.2",
-    "prop-types-extra": "^1.1.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.13",
@@ -114,14 +95,7 @@
     "webpack-atoms": "^16.0.0",
     "webpack-cli": "^4.5.0"
   },
-  "prettier": {
-    "printWidth": 150,
-    "bracketSpacing": false,
-    "trailingComma": "none",
-    "singleQuote": true,
-    "bracketSameLine": true
-  },
   "bugs": {
-    "url": "https://github.com/selfcommunity/selfcommunity-ui-widgets/issues"
+    "url": "https://github.com/selfcommunity/community-ui/issues"
   }
 }

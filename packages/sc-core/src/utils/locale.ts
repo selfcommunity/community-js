@@ -1,5 +1,5 @@
-import {DEFAULT_LANGUAGE_UI, LOCALE_EN, LOCALE_IT, LOCALES} from '../constants/Locale';
-import localeData from '../locale/locales';
+import {DEFAULT_LANGUAGE_UI, LOCALE_EN, LOCALE_IT} from '../constants/Locale';
+import localeData from '@selfcommunity/i18n';
 import {createIntl, createIntlCache} from 'react-intl';
 
 // This is optional but highly recommended since it prevents memory leak

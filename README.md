@@ -95,6 +95,7 @@ This repo contains this workspaces:
 - sc-core
 - sc-ui
 - sc-templates
+- sc-i18n
 
 ### sc-core
 Groups core components.
@@ -107,6 +108,10 @@ what is published on npm.
 
 ### sc-templates
 Contains full community pages components usefull to integrate a community in a frontend service context.
+
+### sc-ui
+Contains i18n.
+
 
 ## Environment variables
 Use .env files to change Storybook's behavior in different modes.

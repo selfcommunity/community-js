@@ -68,7 +68,7 @@ function SCPeopleSuggestion(props): JSX.Element {
     <Root variant={'outlined'}>
       <CardContent>
         <Typography variant="body1">
-          <FormattedMessage id="sc.peopleSuggestion.title" defaultMessage="sc.peopleSuggestion.title" />
+          <FormattedMessage id="ui.peopleSuggestion.title" defaultMessage="ui.peopleSuggestion.title" />
         </Typography>
         <List>
           {users.slice(0, 2).map((user: SCUserType, index) => (

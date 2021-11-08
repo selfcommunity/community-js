@@ -36,6 +36,7 @@ module.exports = {
           "@emotion/core": toPath("node_modules/@emotion/react"),
           "@emotion/styled": require.resolve('@emotion/styled'),
           "emotion-theming": toPath("node_modules/@emotion/react"),
+          "@selfcommunity/i18n": toPath("packages/sc-i18n/src"), // development
           "@selfcommunity/core": toPath("packages/sc-core/src"), // development
           "@selfcommunity/ui": toPath("packages/sc-ui/src"), // development
           "@selfcommunity/templates": toPath("packages/sc-templates/src") // development
