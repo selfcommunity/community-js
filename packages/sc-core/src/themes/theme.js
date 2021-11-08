@@ -66,8 +66,6 @@ const getTheme = (options, preferences) => {
         },
       }
     : {};
-  console.log('Merge deep');
-  console.log(mergeDeep(defaultOptions, options));
   return createTheme(mergeDeep(defaultOptions, options));
 };
 
