@@ -51,7 +51,7 @@ import Link from './components/router';
 /**
  * Http component
  */
-import http from './utils/http';
+import http, {formatHttpError} from './utils/http';
 
 /**
  * Endpoint component
@@ -89,6 +89,7 @@ export {
   withSCLocale,
   SCPreferences,
   http,
+  formatHttpError,
   Link,
   Endpoints,
 };

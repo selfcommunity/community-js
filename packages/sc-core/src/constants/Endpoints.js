@@ -2,6 +2,10 @@ import {urlReplacer} from '../utils/url';
 
 export default {
   // Interests
+  CategoryList: {
+    url: urlReplacer('/api/v2/category/'),
+    method: 'GET',
+  },
   Category: {
     url: urlReplacer('/api/v2/category/$(id)/'),
     method: 'GET',
@@ -42,6 +46,27 @@ export default {
   },
   CategorySuggestion: {
     url: urlReplacer('/api/v2/suggestion/category/'),
+    method: 'GET',
+  },
+  // Composer
+  Composer: {
+    url: urlReplacer('/api/v2/$(type)/'),
+    method: 'POST',
+  },
+  ComposerChunkUploadMedia: {
+    url: urlReplacer('/api/v2/media/upload/chunk/'),
+    method: 'POST',
+  },
+  ComposerChunkUploadMediaComplete: {
+    url: urlReplacer('/api/v2/media/upload/complete/'),
+    method: 'POST',
+  },
+  ComposerMediaCreate: {
+    url: urlReplacer('/api/v2/media/'),
+    method: 'POST',
+  },
+  ComposerCategoryList: {
+    url: urlReplacer('/api/v2/category/'),
     method: 'GET',
   },
 };

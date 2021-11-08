@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { camelCase } from './string';
 
 /**
  * Define axios instance
@@ -57,6 +58,27 @@ export function defaultError(error: {request?: any; message?: any}): void {
     // Something happened in setting up the request that triggered an Error
     console.log('Error', error.message);
   }
+}
+
+export function formatHttpError(error) {
+  const errors: any = {};
+  if (error.response && error.response.data && typeof error.response.data === 'object' && error.response.data.errors) {
+    if (Array.isArray(error.response.data.errors)) {
+      for (let i = 0; i < error.response.data.errors.length; i++) {
+        const err = error.response.data.errors[i];
+        if (err.field) {
+          errors[`${camelCase(err.field)}Error`] = Array.isArray(err.messages) ? err.messages[0].message : err.messages;
+        } else {
+          errors.error = err.message;
+        }
+      }
+    } else {
+      errors.error = error.response.data.errors;
+    }
+  } else {
+    defaultError(error);
+  }
+  return errors;
 }
 
 export default http;
