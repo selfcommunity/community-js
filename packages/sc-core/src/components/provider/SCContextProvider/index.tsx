@@ -5,8 +5,8 @@ import SCRoutingProvider from '../SCRoutingProvider';
 import SCThemeProvider from '../SCThemeProvider';
 import {setBasePortal} from '../../../utils/http';
 import {validateOptions, validOptions} from '../../../utils/validator';
-import preferencesServices from '../../../services/preferences';
 import {SCContextProviderType, SCContextType, SCSettingsType} from '../../../types';
+import SCPreferencesProvider from '../SCPreferencesProvider';
 
 /**
  * Create Global Context
@@ -21,17 +21,14 @@ export const SCContext = createContext<SCContextType>({} as SCContextType);
 /**
  * List of all nested providers that are required to run
  */
-const contextProviders = [SCThemeProvider, SCLocaleProvider, SCRoutingProvider, SCUserProvider];
+const contextProviders = [SCPreferencesProvider, SCThemeProvider, SCLocaleProvider, SCRoutingProvider, SCUserProvider];
 
 /**
  * SCContextProvider
  * This import all providers
  */
 export default function SCContextProvider({conf, children}: SCContextProviderType): JSX.Element {
-  const [settings, setSettings] = useState<SCSettingsType>();
-  const [preferences, setPreferences] = useState<any[]>([]);
-  const [, setError] = useState<any>();
-  const [loading, setLoading] = useState<boolean>(true);
+  const [settings, setSettings] = useState<SCSettingsType>(null);
 
   /**
    * Export the provider as we need to wrap the entire app with it
@@ -39,7 +36,7 @@ export default function SCContextProvider({conf, children}: SCContextProviderTyp
    */
   useEffect(() => {
     /**
-     * Validate intial settings
+     * Validate initial settings
      */
     const {validationResult, settings} = validateOptions(conf, validOptions);
 
@@ -63,20 +60,9 @@ export default function SCContextProvider({conf, children}: SCContextProviderTyp
       setBasePortal(settings.portal);
 
       /**
-       * Load community preferences
+       * Render all Providers
        */
-      preferencesServices
-        .loadPreferences()
-        .then((res) => {
-          setPreferences(res);
-        })
-        .catch((_error) => {
-          setError(_error);
-        })
-        .finally(() => {
-          setSettings(settings);
-          setLoading(false);
-        });
+      setSettings(settings);
     }
   }, []);
 
@@ -85,8 +71,8 @@ export default function SCContextProvider({conf, children}: SCContextProviderTyp
    * All child components will use help contexts to works
    */
   return (
-    <SCContext.Provider value={{settings, preferences}}>
-      {!loading &&
+    <SCContext.Provider value={{settings}}>
+      {settings &&
         contextProviders.reduceRight((memo, ContextProvider) => {
           return <ContextProvider>{memo}</ContextProvider>;
         }, children)}

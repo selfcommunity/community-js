@@ -6,17 +6,9 @@ import CardContent from '@mui/material/CardContent';
 import {UserBoxSkeleton} from '../Skeleton';
 import {Avatar, Button, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText} from '@mui/material';
 import {AxiosResponse} from 'axios';
-import {
-  SCContext,
-  SCContextType,
-  Endpoints,
-  http,
-  SCPreferences,
-  SCUserContext,
-  SCUserContextType,
-  SCUserType,
-  withSCTheme
-} from '@selfcommunity/core';
+import {SCContext, SCContextType, Endpoints, http, SCPreferences, SCUserContext, SCUserContextType, SCUserType} from '@selfcommunity/core';
+import {SCPreferencesContext} from '../../../../sc-core/src/components/provider/SCPreferencesProvider';
+import {SCPreferencesType} from '../../../../sc-core/src/types/context';
 
 const PREFIX = 'SCUser';
 
@@ -31,11 +23,14 @@ const Root = styled(Card, {
 
 function User({scUserId = null, scUser = null, contained = true}: {scUserId?: number; scUser?: SCUserType; contained: boolean}): JSX.Element {
   const [user, setUser] = useState<SCUserType>(scUser);
-  const scContext: SCContextType = useContext(SCContext);
+  const scPreferencesContext: SCPreferencesType = useContext(SCPreferencesContext);
   const scAuthContext: SCUserContextType = useContext(SCUserContext);
+  console.log(scPreferencesContext);
   const followEnabled =
-    SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED in scContext.preferences && scContext.preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED].value;
+    SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED in scPreferencesContext.preferences &&
+    scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED].value;
   const connectionEnabled = !followEnabled;
+  console.log('aaaa');
 
   /**
    * If user not in props, attempt to get the user by id (in props) if exist
@@ -143,4 +138,4 @@ function User({scUserId = null, scUser = null, contained = true}: {scUserId?: nu
   return u;
 }
 
-export default withSCTheme(User);
+export default User;

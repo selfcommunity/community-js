@@ -125,11 +125,6 @@ export interface SCContextType {
    * Settings
    */
   settings: SCSettingsType;
-
-  /**
-   * Preferences
-   */
-  preferences?: any;
 }
 
 /**
@@ -145,6 +140,16 @@ export interface SCContextProviderType {
    * Nested children
    */
   children: ReactNode;
+}
+
+/**
+ * Interface SCPreferencesType
+ */
+export interface SCPreferencesType {
+  /**
+   * List of all community preferences
+   */
+  preferences: Record<string, any>;
 }
 
 /**

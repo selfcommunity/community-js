@@ -8,7 +8,6 @@ import {Button} from '@mui/material';
 import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
 import {styled} from '@mui/material/styles';
 import Skeleton from '@mui/material/Skeleton';
-import {withSCTheme} from '@selfcommunity/core';
 
 const PREFIX = 'SCUserBoxSkeleton';
 
@@ -60,4 +59,4 @@ function UserBoxSkeleton({contained = false}: SCUserBoxProps): JSX.Element {
   return user;
 }
 
-export default withSCTheme(UserBoxSkeleton);
+export default UserBoxSkeleton;

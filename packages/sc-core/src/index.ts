@@ -26,7 +26,7 @@ import SCUserProvider, {SCUserContext, useSCUser} from './components/provider/SC
 /**
  * ThemeProvider component
  */
-import SCThemeProvider, {SCThemeContext, withSCTheme, useSCTheme} from './components/provider/SCThemeProvider';
+import SCThemeProvider, {SCThemeContext, useSCTheme} from './components/provider/SCThemeProvider';
 
 /**
  * RoutingProvider component
@@ -36,7 +36,7 @@ import SCRoutingProvider, {SCRoutingContext, useSCRouting} from './components/pr
 /**
  * LocaleProvider component
  */
-import SCLocaleProvider, {SCLocaleContext, withSCLocale} from './components/provider/SCLocaleProvider';
+import SCLocaleProvider, {SCLocaleContext} from './components/provider/SCLocaleProvider';
 
 /**
  * AuthStateProvider component
@@ -81,12 +81,10 @@ export {
   SCUserProvider,
   useSCUser,
   SCThemeProvider,
-  withSCTheme,
   useSCTheme,
   SCRoutingProvider,
   useSCRouting,
   SCLocaleProvider,
-  withSCLocale,
   SCPreferences,
   http,
   Link,

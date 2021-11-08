@@ -4,7 +4,6 @@ import CardContent from '@mui/material/CardContent';
 import List from '@mui/material/List';
 import {styled} from '@mui/material/styles';
 import UserBoxSkeleton from './UserBoxSkeleton';
-import {withSCTheme} from '@selfcommunity/core';
 
 const PREFIX = 'SCPeopleSuggestionSkeleton';
 
@@ -36,4 +35,4 @@ function PeopleSuggestionSkeleton(): JSX.Element {
   );
 }
 
-export default withSCTheme(PeopleSuggestionSkeleton);
+export default PeopleSuggestionSkeleton;
