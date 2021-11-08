@@ -7,13 +7,6 @@ import {setBasePortal} from '../../../utils/http';
 import {validateOptions, validOptions} from '../../../utils/validator';
 import preferencesServices from '../../../services/preferences';
 import {SCContextProviderType, SCContextType, SCSettingsType} from '../../../types';
-import {emitInitialMessage} from '../../../utils/console';
-
-/**
- * Emit initial message.
- * TODO: Enable only if lib is debug mode;
- */
-emitInitialMessage();
 
 /**
  * Create Global Context
@@ -49,6 +42,10 @@ export default function SCContextProvider({conf, children}: SCContextProviderTyp
      * Validate intial settings
      */
     const {validationResult, settings} = validateOptions(conf, validOptions);
+
+    /**
+     * Init provider
+     */
     if (validationResult.hasErrors()) {
       /**
        * Exist errors in initial conf
@@ -71,7 +68,7 @@ export default function SCContextProvider({conf, children}: SCContextProviderTyp
       preferencesServices
         .loadPreferences()
         .then((res) => {
-          setPreferences(res.results);
+          setPreferences(res);
         })
         .catch((_error) => {
           setError(_error);

@@ -1,7 +1,8 @@
 import {createTheme} from '@mui/material/styles';
 import {mergeDeep} from '../utils/object';
-import t from 'typy';
+import validateColor from 'validate-color';
 import {COLORS_COLORBACK, COLORS_COLORPRIMARY, COLORS_COLORSECONDARY, FONT_FAMILY} from '../constants/Preferences';
+import {isString} from '../utils/string';
 
 /**
  * check if colorProp is a valid color
@@ -10,10 +11,10 @@ import {COLORS_COLORBACK, COLORS_COLORPRIMARY, COLORS_COLORSECONDARY, FONT_FAMIL
  * @param tFunc: type func validator
  * @return {boolean|(function(*=): boolean)}
  */
-const isValidPreference = (preferences, colorProp, tFunc) => {
+const isValidPreference = (preferences, prop, tFunc) => {
   // eslint-disable-next-line no-prototype-builtins
-  if (preferences.hasOwnProperty(colorProp) && preferences[colorProp].hasOwnProperty('value')) {
-    return t(preferences[colorProp].value)[tFunc];
+  if (preferences.hasOwnProperty(prop) && preferences[prop].hasOwnProperty('value')) {
+    return tFunc(preferences[prop].value);
   }
   return false;
 };
@@ -28,13 +29,15 @@ const getTheme = (options, preferences) => {
   const defaultOptions = preferences
     ? {
         palette: {
-          ...(isValidPreference(preferences, COLORS_COLORBACK, 'isColor') && {background: {default: preferences[COLORS_COLORBACK].value}}),
-          ...(isValidPreference(preferences, COLORS_COLORPRIMARY, 'isColor') && {text: {primary: preferences[COLORS_COLORPRIMARY].value}}),
-          ...(isValidPreference(preferences, COLORS_COLORPRIMARY, 'isColor') && {primary: {main: preferences[COLORS_COLORPRIMARY].value}}),
-          ...(isValidPreference(preferences, COLORS_COLORSECONDARY, 'isColor') && {secondary: {main: preferences[COLORS_COLORSECONDARY].value}}),
+          ...(isValidPreference(preferences, COLORS_COLORBACK, validateColor) && {background: {default: preferences[COLORS_COLORBACK].value}}),
+          ...(isValidPreference(preferences, COLORS_COLORPRIMARY, validateColor) && {text: {primary: preferences[COLORS_COLORPRIMARY].value}}),
+          ...(isValidPreference(preferences, COLORS_COLORPRIMARY, validateColor) && {primary: {main: preferences[COLORS_COLORPRIMARY].value}}),
+          ...(isValidPreference(preferences, COLORS_COLORSECONDARY, validateColor) && {
+            secondary: {main: preferences[COLORS_COLORSECONDARY].value},
+          }),
         },
         typography: {
-          ...(isValidPreference(preferences, FONT_FAMILY, 'isString') && {fontFamily: preferences[FONT_FAMILY].value}),
+          ...(isValidPreference(preferences, FONT_FAMILY, isString) && {fontFamily: preferences[FONT_FAMILY].value}),
           body1: {
             fontSize: '0.9rem',
           },
@@ -63,6 +66,8 @@ const getTheme = (options, preferences) => {
         },
       }
     : {};
+  console.log('Merge deep');
+  console.log(mergeDeep(defaultOptions, options));
   return createTheme(mergeDeep(defaultOptions, options));
 };
 

@@ -78,5 +78,8 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/selfcommunity/community-ui"
+  },
+  "dependencies": {
+    "validate-color": "^2.2.1"
   }
 }

@@ -1,5 +1,6 @@
 import {DEFAULT_LANGUAGE_UI, LOCALES} from '../constants/Locale';
 import * as Session from '../constants/Session';
+import {Logger} from './logger';
 
 /**
  * Manage Validation Error
@@ -118,7 +119,7 @@ export class ValidationResult {
    */
   emitErrors() {
     if (this.hasErrors()) {
-      this.errors.map((e) => console.error(`%c[${this.scope}]`, 'color:#008080', ` ${e.errorMessage}`));
+      this.errors.map((e) => Logger.error(this.scope, e.errorMessage));
     }
   }
 
@@ -127,7 +128,7 @@ export class ValidationResult {
    */
   emitWarnings() {
     if (this.hasWarnings()) {
-      this.warnings.map((w) => console.warn(`%c[${this.scope}]`, 'color:#008080', ` ${w.warningMessage}`));
+      this.warnings.map((w) => Logger.warn(this.scope, w.warningMessage));
     }
   }
 

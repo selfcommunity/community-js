@@ -1,5 +1,5 @@
 import React, {createContext, useContext, useState} from 'react';
-import {ThemeProvider, StyledEngineProvider} from '@mui/material/styles';
+import {StyledEngineProvider, ThemeProvider} from '@mui/material/styles';
 import getTheme from '../../../themes/theme';
 import {SCContextType} from '@selfcommunity/core';
 import {useSCContext} from '../SCContextProvider';
@@ -24,22 +24,26 @@ export default function SCThemeProvider({children = null}: {children: React.Reac
   const scContext: SCContextType = useSCContext();
   const [theme, setTheme] = useState<Record<string, any>>(getTheme(scContext.settings.theme, scContext.preferences));
 
+  const setCustomTheme = (theme) => {
+    setTheme(getTheme(theme, scContext.preferences));
+  };
+
   return (
     <StyledEngineProvider injectFirst>
-      <SCThemeContext.Provider value={{theme, setTheme}}>{children}</SCThemeContext.Provider>
+      <SCThemeContext.Provider value={{theme, setTheme: setCustomTheme}}>{children}</SCThemeContext.Provider>
     </StyledEngineProvider>
   );
 }
 
 /**
  * Export hoc to inject the base theme to components
- * @param WrappedComponent
+ * @param Component
  */
-export const withSCTheme = (WrappedComponent) => (props) => {
+export const withSCTheme = (Component) => (props) => {
   const scThemeContext: SCThemeContextType = useContext(SCThemeContext);
   return (
     <ThemeProvider theme={scThemeContext.theme}>
-      <WrappedComponent setTheme={scThemeContext.setTheme} {...props} />
+      <Component setTheme={scThemeContext.setTheme} {...props} />
     </ThemeProvider>
   );
 };
