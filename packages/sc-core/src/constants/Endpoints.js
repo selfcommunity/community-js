@@ -42,6 +42,7 @@ export default {
   UserSuggestion: {
     url: urlReplacer('/api/v2/suggestion/user/'),
     method: 'GET',
+  },
   /**
    * Preferences Endpoints
    */
@@ -49,6 +50,4 @@ export default {
     url: urlReplacer('/api/v2/dynamic_preference/'),
     method: 'GET',
   },
-
-
 };
