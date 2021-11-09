@@ -949,7 +949,7 @@ export default function Composer({
             <ReactSortable list={links} setList={(newSort) => dispatch({type: 'links', value: newSort})}>
               {links.map((media) => (
                 <Box key={media.id} m={1} className={classes.sortableMedia}>
-                  <Link media={media} wide />
+                  <Link media={media} fullWidth />
                   <Box className={classes.mediasActions}>
                     &nbsp;
                     <Button onClick={handleDeleteMedia(MEDIA_TYPE_LINK, media.id)} size="small" color="primary" variant="contained">
