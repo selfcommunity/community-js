@@ -45,7 +45,6 @@ export default function SCRoutingProvider({children = null}: {children: React.Re
     [routerLink, routes]
   );
 
-
   return <SCRoutingContext.Provider value={contextValue}>{children}</SCRoutingContext.Provider>;
 }
 

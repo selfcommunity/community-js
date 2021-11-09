@@ -11,7 +11,8 @@ function loadPreferences() {
       if (res.status >= 300) {
         return Promise.reject(res);
       }
-      const data = res.data;
+      const data = res.data.results.reduce((obj, p) => ({...obj, [`${p.section}.${p.name}`]: p}), {});
+      console.log(data);
       return Promise.resolve(data);
     })
     .catch((error) => {

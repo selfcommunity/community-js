@@ -1,20 +1,20 @@
 import React, {createContext, useContext, useEffect, useMemo} from 'react';
 import sessionServices from '../../../services/session';
-import {SCAuthContextType, SCContextType, SCSessionType, SCUserType} from '../../../types';
+import {SCUserContextType, SCContextType, SCSessionType, SCUserType} from '../../../types';
 import {SCContext} from '../SCContextProvider';
 import useAuth, {authActionTypes} from '../../../hooks/useAuth';
 
 /**
- * SCAuthContext
+ * SCUserContext
  * Authentication Context
  */
-export const SCAuthContext = createContext<SCAuthContextType>({} as SCAuthContextType);
+export const SCUserContext = createContext<SCUserContextType>({} as SCUserContextType);
 
 /**
  * Export the provider as we need to wrap the entire app with it
  * This provider keeps current user logged and session
  */
-export default function SCAuthProvider({children}: {children: React.ReactNode}): JSX.Element {
+export default function SCUserProvider({children}: {children: React.ReactNode}): JSX.Element {
   const scContext: SCContextType = useContext(SCContext);
   const initialSession: SCSessionType = scContext.settings.session;
   const {state, dispatch} = useAuth(initialSession);
@@ -70,13 +70,13 @@ export default function SCAuthProvider({children}: {children: React.ReactNode}):
    * We only want to render the underlying app after we
    * assert for the presence of a current user.
    */
-  return <SCAuthContext.Provider value={contextValue}>{!state.loading && children}</SCAuthContext.Provider>;
+  return <SCUserContext.Provider value={contextValue}>{!state.loading && children}</SCUserContext.Provider>;
 }
 
 /**
- * Let's only export the `useAuth` hook instead of the context.
+ * Let's only export the `useSCUser` hook instead of the context.
  * We only want to use the hook directly and never the context component.
  */
-export function useSCAuth(): SCAuthContextType {
-  return useContext(SCAuthContext);
+export function useSCUser(): SCUserContextType {
+  return useContext(SCUserContext);
 }

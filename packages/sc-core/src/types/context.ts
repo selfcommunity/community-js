@@ -32,9 +32,9 @@ export interface SCSettingsType {
 }
 
 /**
- * Interface SCAuthContextType
+ * Interface SCUserContextType
  */
-export interface SCAuthContextType {
+export interface SCUserContextType {
   /**
    * Authenticated User.
    */
@@ -125,11 +125,6 @@ export interface SCContextType {
    * Settings
    */
   settings: SCSettingsType;
-
-  /**
-   * Preferences
-   */
-  preferences?: any;
 }
 
 /**
@@ -139,12 +134,22 @@ export interface SCContextProviderType {
   /**
    * Settings
    */
-  settings: SCSettingsType;
+  conf: SCSettingsType;
 
   /**
    * Nested children
    */
   children: ReactNode;
+}
+
+/**
+ * Interface SCPreferencesType
+ */
+export interface SCPreferencesType {
+  /**
+   * List of all community preferences
+   */
+  preferences: Record<string, any>;
 }
 
 /**

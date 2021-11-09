@@ -1,7 +1,3 @@
-import t from 'typy';
-import {ValidationError} from '../utils/errors';
-import {LOCALES} from '../constants/Locale';
-
 export const urlReplacer = (path: string) => {
   const replacer = function (tpl, data) {
     const re = /\$\(([^)]+)?\)/g;
@@ -39,16 +35,4 @@ export const isValidUrl = (url: string): boolean => {
 export const isValidUrls = (value: string, delimiter: string): boolean => {
   const urls = value.trim().split(delimiter);
   return urls.every(isValidUrl);
-};
-
-/**
- * Validate locale option
- * @param locale
- * @return {locale}
- */
-export const validateLocale = (locale: string) => {
-  if (t(locale).isString && LOCALES.indexOf(locale) >= -1) {
-    return locale;
-  }
-  throw new ValidationError(locale);
 };

@@ -82,21 +82,26 @@ export default function SCLocaleProvider({children = null}: {children: React.Rea
     [locale]
   );
 
-  return <SCLocaleContext.Provider value={{locale, messages, selectLocale}}>{children}</SCLocaleContext.Provider>;
-}
+  /**
+   * handleIntlError
+   * @param error
+   */
+  const handleIntlError = (error) => {
+    if (error.code === 'MISSING_TRANSLATION') {
+      console.warn('Missing translation', error.message);
+      return;
+    }
+    throw error;
+  };
 
-/**
- * Export hoc to inject the base theme to components
- * @param WrappedComponent
- */
-export const withSCLocale = (WrappedComponent) => (props) => {
-  const scLocaleContext: SCLocaleContextType = useContext(SCLocaleContext);
   return (
-    <IntlProvider locale={scLocaleContext.locale} messages={scLocaleContext.messages}>
-      <WrappedComponent setLanguage={scLocaleContext.selectLocale} {...props} />
-    </IntlProvider>
+    <SCLocaleContext.Provider value={{locale, messages, selectLocale}}>
+      <IntlProvider key={locale} locale={locale} messages={messages} onError={handleIntlError}>
+        {children}
+      </IntlProvider>
+    </SCLocaleContext.Provider>
   );
-};
+}
 
 /**
  * Let's only export the `useSCTheme` hook instead of the context.

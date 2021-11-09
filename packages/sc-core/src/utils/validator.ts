@@ -1,74 +1,92 @@
-import t, {addCustomTypes} from 'typy';
 import {LOCALES} from '../constants/Locale';
 import {isValidUrl} from './url';
-import {sessionTypes} from '../constants/Session';
-// import {routerSchema, tokenSchema} from '../constants/SchemaValidators';
-import {
-  InvalidLocaleError,
-  InvalidPortalError,
-  InvalidPreferencesError,
-  InvalidRefreshTokenEndpointError,
-  InvalidRouterError,
-  InvalidSessionError,
-  InvalidThemeError,
-  InvalidTokenError,
-} from './errors';
-
-/**
- * Add to t CustomTypes before use in validator
- */
-addCustomTypes({
-  isRouter: (router) => {
-    const history = router.history;
-    const routes = router.routes;
-    return (
-      // t(router, routerSchema).isValid ||
-      t(history).isBoolean &&
-      history !== undefined &&
-      t(routes).isObject &&
-      (!routes.notification || (routes.notification && t(routes.notification).isString)) &&
-      (!routes.post || (routes.post && t(routes.post).isString)) &&
-      (!routes.discussion || (routes.discussion && t(routes.discussion).isString)) &&
-      (!routes.profile || (routes.profile && t(routes.profile).isString)) &&
-      (!routes.home || (routes.home && t(routes.home).isString))
-    );
-  },
-  isToken: (token) => /* t(token, tokenSchema).isValid || */ token.access_token && t(token.access_token).isString,
-  isRefreshTokenEndpoint: (endpoint) => {
-    const httpMethod = ['GET', 'POST', 'PUT', 'PATCH'];
-    return (
-      endpoint['path'] &&
-      t(endpoint.path).isString &&
-      endpoint['method'] &&
-      t(endpoint.path).isString &&
-      httpMethod.includes(endpoint.method) &&
-      (!endpoint['extra_data'] || (endpoint['extra_data'] && (t(endpoint.extra_data).isObject || t(endpoint.extra_data).isEmptyObject)))
-    );
-  },
-});
+import * as Session from '../constants/Session';
+import {SCSessionType, SCSettingsType} from '@selfcommunity/core';
+import {SCOPE_SC_CORE} from '../constants/Errors';
+import {isFunc, ValidationError, ValidationResult, ValidationWarnings} from './errors';
+import {isObject} from './object';
+import {isString} from './string';
 
 /**
  * Validate session option
  * @param session
  * @return {session}
  */
-export function validateSession(sessionType) {
-  if (t(sessionType).isString && sessionTypes.includes(sessionType)) {
-    return sessionType;
+export function validateSession(v: Record<string, any>) {
+  const errors = [];
+  const warnings = [];
+  if (!v || !isObject(v)) {
+    errors.push(ValidationError.ERROR_INVALID_SESSION);
+    return {v, errors, warnings};
   }
-  throw new InvalidSessionError();
+  const _options = Object.keys(sessionOptions);
+  const value: SCSessionType = Object.keys(v)
+    .filter((key) => _options.includes(key))
+    .reduce((obj, key) => {
+      const res = sessionOptions[key].validator(v[key], v);
+      res.errors.map((error) => errors.push(error));
+      res.warnings.map((warning) => warnings.push(warning));
+      obj[key] = res.value;
+      return obj;
+    }, {} as SCSessionType);
+  return {errors, warnings, value};
 }
 
 /**
- * Validate token option
- * @param token
- * @return {token}
+ * Validate session type
+ * @param value
  */
-export const validateToken = (token) => {
-  if (t(token)['isToken']) {
-    return token;
+export const validateSessionType = (value, session) => {
+  const errors = [];
+  const warnings = [];
+  if (!session.type || !Session.sessionTypes.includes(session.type)) {
+    errors.push(ValidationError.ERROR_INVALID_SESSION_TYPE);
   }
-  throw new InvalidTokenError();
+  return {errors, warnings, value};
+};
+
+/**
+ * Validate session client id
+ * @param value
+ */
+export const validateSessionClientId = (value, session) => {
+  const errors = [];
+  const warnings = [];
+  if (session.type && (session.type === Session.OAUTH_SESSION || session.type === Session.OAUTH_SESSION)) {
+    if (session.type === Session.OAUTH_SESSION && (!session.clientId || !isString(session.clientId))) {
+      errors.push(ValidationError.ERROR_INVALID_SESSION_CLIENT_ID);
+    }
+  }
+  return {errors, warnings, value};
+};
+
+/**
+ * Validate session auth token
+ * @param value
+ */
+export const validateSessionAuthTokenOption = (value, session) => {
+  const errors = [];
+  const warnings = [];
+  if (session.type && (session.type === Session.OAUTH_SESSION || session.type === Session.JWT_SESSION)) {
+    if (!session.authToken || !isObject(session.authToken)) {
+      errors.push(ValidationError.ERROR_INVALID_SESSION_AUTH_TOKEN);
+    }
+  }
+  return {errors, warnings, value};
+};
+
+export const validateRefreshTokenCallback = (value, session) => {
+  const errors = [];
+  const warnings = [];
+  if (session.type && (session.type === Session.OAUTH_SESSION || session.type === Session.JWT_SESSION)) {
+    if (!session.refreshTokenCallback) {
+      warnings.push(ValidationWarnings.WARNING_SESSION_REFRESH_TOKEN_CALLBACK_NOT_FOUND);
+    }
+    if (session.refreshTokenCallback && !isFunc(session.refreshTokenCallback)) {
+      errors.push(ValidationError.ERROR_INVALID_SESSION_REFRESH_TOKEN_CALLBACK);
+    }
+  }
+  return {errors, warnings, value};
 };
 
 /**
@@ -76,11 +94,13 @@ export const validateToken = (token) => {
  * @param portal
  * @return {portal}
  */
-export const validatePortal = (portal) => {
-  if (t(portal).isString && isValidUrl(portal)) {
-    return portal;
+export const validatePortal = (value) => {
+  const errors = [];
+  const warnings = [];
+  if (!value || !isString(value) || !isValidUrl(value)) {
+    errors.push(ValidationError.ERROR_INVALID_PORTAL);
   }
-  throw new InvalidPortalError(portal);
+  return {errors, warnings, value};
 };
 
 /**
@@ -88,11 +108,15 @@ export const validatePortal = (portal) => {
  * @param locale
  * @return {locale}
  */
-export const validateLocale = (locale) => {
-  if (t(locale).isString && LOCALES.includes(locale)) {
-    return locale;
+export const validateLocale = (value) => {
+  const errors = [];
+  const warnings = [];
+  if (!value) {
+    warnings.push(ValidationWarnings.WARNING_LOCALE_FALLBACK);
+  } else if (value && (!isString(value) || !LOCALES.includes(value))) {
+    errors.push(ValidationError.ERROR_INVALID_LOCALE);
   }
-  throw new InvalidLocaleError(locale);
+  return {errors, warnings, value};
 };
 
 /**
@@ -100,11 +124,15 @@ export const validateLocale = (locale) => {
  * @param router
  * @return {boolean}
  */
-export const validateRouter = (router) => {
-  if (t(router)['isRouter']) {
-    return router;
+export const validateRouter = (value) => {
+  const errors = [];
+  const warnings = [];
+  if (value && !isObject(value)) {
+    errors.push(ValidationError.ERROR_INVALID_ROUTER);
+  } else {
+    warnings.push(ValidationWarnings.WARNING_ROUTER_FALLBACK);
   }
-  throw new InvalidRouterError();
+  return {errors, warnings, value};
 };
 
 /**
@@ -112,35 +140,13 @@ export const validateRouter = (router) => {
  * @param theme
  * @return {boolean}
  */
-export const validateTheme = (theme) => {
-  if (t(theme).isObject) {
-    return theme;
+export const validateTheme = (value) => {
+  const errors = [];
+  const warnings = [];
+  if (value && !isObject(value)) {
+    errors.push(ValidationError.ERROR_INVALID_THEME);
   }
-  throw new InvalidThemeError();
-};
-
-/**
- * Validate preferences option
- * @param preferences
- * @return {boolean}
- */
-export const validatePreferences = (preferences) => {
-  if (t(preferences).isObject) {
-    return preferences;
-  }
-  throw new InvalidPreferencesError();
-};
-
-/**
- * Validate portal option
- * @param portal
- * @return {portal}
- */
-export const validateRefreshTokenEndpoint = (endpoint) => {
-  if (t(endpoint)['isRefreshTokenEndpoint']) {
-    return endpoint;
-  }
-  throw new InvalidRefreshTokenEndpointError();
+  return {errors, warnings, value};
 };
 
 /**
@@ -162,57 +168,77 @@ const RouterOption = {
   name: 'router',
   validator: validateRouter,
 };
-const TokenOption = {
-  name: 'token',
-  validator: validateToken,
-};
 const SessionOption = {
-  name: 'sessionType',
+  name: 'session',
   validator: validateSession,
 };
-const RefreshTokenEndpointOption = {
-  name: 'refreshTokenEndpoint',
-  validator: validateRefreshTokenEndpoint,
+
+/**
+ * Session options
+ */
+const SessionTypeOption = {
+  name: 'type',
+  validator: validateSessionType,
 };
-const PreferencesOption = {
-  name: 'preferences',
-  validator: validatePreferences,
+const SessionClientIdOption = {
+  name: 'clientId',
+  validator: validateSessionClientId,
+};
+const SessionAuthTokenOption = {
+  name: 'authToken',
+  validator: validateSessionAuthTokenOption,
+};
+const SessionRefreshTokenCallbackOption = {
+  name: 'refreshTokenCallback',
+  validator: validateRefreshTokenCallback,
 };
 
 /**
  * Valid options
  * @type {{}}
  */
-export const settingsOptions = {
+export const settingsOptions: Record<string, any> = {
   [PortalOption.name]: PortalOption,
   [LocaleOption.name]: LocaleOption,
   [ThemeOption.name]: ThemeOption,
   [RouterOption.name]: RouterOption,
-  [PreferencesOption.name]: PreferencesOption,
+  [SessionOption.name]: SessionOption,
 };
 
-export const sessionOptions = {
-  [TokenOption.name]: TokenOption,
-  [SessionOption.name]: SessionOption,
-  [RefreshTokenEndpointOption.name]: RefreshTokenEndpointOption,
+export const sessionOptions: Record<string, any> = {
+  [SessionTypeOption.name]: SessionTypeOption,
+  [SessionClientIdOption.name]: SessionClientIdOption,
+  [SessionAuthTokenOption.name]: SessionAuthTokenOption,
+  [SessionRefreshTokenCallbackOption.name]: SessionRefreshTokenCallbackOption,
 };
 
 export const validOptions = {
   ...settingsOptions,
-  ...sessionOptions,
 };
 
 /**
- * Validate all options by type before populate the store
+ * Validate all options by type
  * @param options
  * @return {options hydrated}
  */
-export const validateOptions = (values, options) => {
-  const _options = Object.keys(options);
-  return Object.keys(values)
+export const validateOptions = (values: SCSettingsType, schemaOptions: Record<string, any>) => {
+  const validationResult = new ValidationResult(SCOPE_SC_CORE);
+  const _options = Object.keys(schemaOptions);
+  const _data = {
+    ...values,
+    ...Object.keys(schemaOptions).reduce((obj, key) => {
+      obj[key] = null;
+      return obj;
+    }, {}),
+  };
+  const settings: SCSettingsType = Object.keys(_data)
     .filter((key) => _options.includes(key))
     .reduce((obj, key) => {
-      obj[key] = options[key].validator(values[key]);
+      const res: {errors: ValidationError[]; warnings: ValidationWarnings[]; value: Record<string, any>} = schemaOptions[key].validator(values[key]);
+      res.errors.map((error: ValidationError) => validationResult.addError(error, res.value));
+      res.warnings.map((warning) => validationResult.addWarnings(warning, res.value));
+      obj[key] = res.value;
       return obj;
-    }, {});
+    }, {} as SCSettingsType);
+  return {validationResult, settings};
 };

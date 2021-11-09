@@ -6,17 +6,9 @@ import CardContent from '@mui/material/CardContent';
 import {UserBoxSkeleton} from '../Skeleton';
 import {Avatar, Button, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText} from '@mui/material';
 import {AxiosResponse} from 'axios';
-import {
-  SCContext,
-  SCContextType,
-  Endpoints,
-  http,
-  SCPreferences,
-  SCAuthContext,
-  SCAuthContextType,
-  SCUserType,
-  withSCTheme
-} from '@selfcommunity/core';
+import {SCContext, SCContextType, Endpoints, http, SCPreferences, SCUserContext, SCUserContextType, SCUserType} from '@selfcommunity/core';
+import {SCPreferencesContext} from '../../../../sc-core/src/components/provider/SCPreferencesProvider';
+import {SCPreferencesType} from '../../../../sc-core/src/types/context';
 
 const PREFIX = 'SCUser';
 
@@ -31,10 +23,11 @@ const Root = styled(Card, {
 
 function User({scUserId = null, scUser = null, contained = true}: {scUserId?: number; scUser?: SCUserType; contained: boolean}): JSX.Element {
   const [user, setUser] = useState<SCUserType>(scUser);
-  const scContext: SCContextType = useContext(SCContext);
-  const scAuthContext: SCAuthContextType = useContext(SCAuthContext);
+  const scPreferencesContext: SCPreferencesType = useContext(SCPreferencesContext);
+  const scAuthContext: SCUserContextType = useContext(SCUserContext);
   const followEnabled =
-    SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED in scContext.preferences && scContext.preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED].value;
+    SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED in scPreferencesContext.preferences &&
+    scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED].value;
   const connectionEnabled = !followEnabled;
 
   /**
@@ -63,10 +56,8 @@ function User({scUserId = null, scUser = null, contained = true}: {scUserId?: nu
     /* TODO: render proper action based on redux connection (follow) store */
     return (
       <React.Fragment>
-        <Button size="small" onClick={this.ignore}>
-          Ignore
-        </Button>
-        <Button size="small" variant="outlined" onClick={this.follow}>
+        <Button size="small">Ignore</Button>
+        <Button size="small" variant="outlined">
           Follow
         </Button>
       </React.Fragment>
@@ -81,10 +72,8 @@ function User({scUserId = null, scUser = null, contained = true}: {scUserId?: nu
     /* TODO: render proper action based on redux connection (friendship) store */
     return (
       <React.Fragment>
-        <Button size="small" onClick={this.ignore}>
-          Ignore
-        </Button>
-        <Button size="small" variant="outlined" onClick={this.requestConnect}>
+        <Button size="small">Ignore</Button>
+        <Button size="small" variant="outlined">
           Connect
         </Button>
       </React.Fragment>
@@ -147,4 +136,4 @@ function User({scUserId = null, scUser = null, contained = true}: {scUserId?: nu
   return u;
 }
 
-export default withSCTheme(User);
+export default User;
