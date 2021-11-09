@@ -13,7 +13,7 @@ export interface SCSettingsType {
   /**
    * i18n. Locale: it, en, etc...
    */
-  locale?: string;
+  locale?: SCLocaleType;
 
   /**
    * Object conf of session.
@@ -31,10 +31,22 @@ export interface SCSettingsType {
   router?: SCRoutingContextType;
 }
 
+export interface SCLocaleType {
+  /**
+   * Default locale.
+   */
+  default?: string;
+
+  /**
+   * Override default messages.
+   */
+  messages?: Record<string, any>;
+}
+
 /**
- * Interface SCAuthContextType
+ * Interface SCUserContextType
  */
-export interface SCAuthContextType {
+export interface SCUserContextType {
   /**
    * Authenticated User.
    */
@@ -125,11 +137,6 @@ export interface SCContextType {
    * Settings
    */
   settings: SCSettingsType;
-
-  /**
-   * Preferences
-   */
-  preferences?: any;
 }
 
 /**
@@ -139,12 +146,22 @@ export interface SCContextProviderType {
   /**
    * Settings
    */
-  settings: SCSettingsType;
+  conf: SCSettingsType;
 
   /**
    * Nested children
    */
   children: ReactNode;
+}
+
+/**
+ * Interface SCPreferencesType
+ */
+export interface SCPreferencesContextType {
+  /**
+   * List of all community preferences
+   */
+  preferences: Record<string, any>;
 }
 
 /**

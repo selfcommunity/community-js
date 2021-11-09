@@ -9,6 +9,7 @@
 
   "references": [{
     "path": "../sc-core/tsconfig.build.json",
+    "path": "../sc-ui/tsconfig.build.json"
   }],
 
   "include": [

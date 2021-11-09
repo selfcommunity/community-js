@@ -5,11 +5,12 @@ import {defaultRoutes} from '../../../constants/Routes';
 
 /**
  * Create Global Context
- * Consuming this context:
+ * Consuming this context in one of the following ways:
  *  1. <SCRoutingContext.Consumer>
  *       {(routerLink, routes, url) => (...)}
  *     </SCRoutingContext.Consumer>
- *  2. const scRoutingContext: SCRoutingContextType = useSCRouting();
+ *  2. const scRoutingContext: SCRoutingContextType = useContext(SCRoutingContext);
+ *  3. const scRoutingContext: SCRoutingContextType = useSCRouting();
  */
 export const SCRoutingContext = createContext<SCRoutingContextType>({} as SCRoutingContextType);
 
@@ -44,7 +45,6 @@ export default function SCRoutingProvider({children = null}: {children: React.Re
     }),
     [routerLink, routes]
   );
-
 
   return <SCRoutingContext.Provider value={contextValue}>{children}</SCRoutingContext.Provider>;
 }

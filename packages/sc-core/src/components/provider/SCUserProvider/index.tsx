@@ -1,20 +1,27 @@
 import React, {createContext, useContext, useEffect, useMemo} from 'react';
 import sessionServices from '../../../services/session';
-import {SCAuthContextType, SCContextType, SCSessionType, SCUserType} from '../../../types';
+import {SCUserContextType, SCContextType, SCSessionType, SCUserType} from '../../../types';
 import {SCContext} from '../SCContextProvider';
 import useAuth, {authActionTypes} from '../../../hooks/useAuth';
+import {Logger} from '../../../utils/logger';
+import {SCOPE_SC_CORE} from '../../../constants/Errors';
 
 /**
- * SCAuthContext
- * Authentication Context
+ * SCUserContext (Authentication Context)
+ * Consuming this context in one of the following ways:
+ *  1. <SCUserContext.Consumer>
+ *       {(user, session, error, loading, logout) => (...)}
+ *     </SCUserContext.Consumer>
+ *  2. const scUserContext: SCUserContextType = useContext(SCUserContext);
+ *  3. const scUserContext: SCUserContextType = useSCUser();
  */
-export const SCAuthContext = createContext<SCAuthContextType>({} as SCAuthContextType);
+export const SCUserContext = createContext<SCUserContextType>({} as SCUserContextType);
 
 /**
  * Export the provider as we need to wrap the entire app with it
  * This provider keeps current user logged and session
  */
-export default function SCAuthProvider({children}: {children: React.ReactNode}): JSX.Element {
+export default function SCUserProvider({children}: {children: React.ReactNode}): JSX.Element {
   const scContext: SCContextType = useContext(SCContext);
   const initialSession: SCSessionType = scContext.settings.session;
   const {state, dispatch} = useAuth(initialSession);
@@ -32,6 +39,7 @@ export default function SCAuthProvider({children}: {children: React.ReactNode}):
         dispatch({type: authActionTypes.LOGIN_SUCCESS, payload: {user}});
       })
       .catch((error) => {
+        Logger.error(SCOPE_SC_CORE, 'Unable to retrieve the authenticated user.');
         dispatch({type: authActionTypes.LOGIN_FAILURE, payload: {error}});
       });
   }, []);
@@ -70,13 +78,13 @@ export default function SCAuthProvider({children}: {children: React.ReactNode}):
    * We only want to render the underlying app after we
    * assert for the presence of a current user.
    */
-  return <SCAuthContext.Provider value={contextValue}>{!state.loading && children}</SCAuthContext.Provider>;
+  return <SCUserContext.Provider value={contextValue}>{!state.loading && children}</SCUserContext.Provider>;
 }
 
 /**
- * Let's only export the `useAuth` hook instead of the context.
+ * Let's only export the `useSCUser` hook instead of the context.
  * We only want to use the hook directly and never the context component.
  */
-export function useSCAuth(): SCAuthContextType {
-  return useContext(SCAuthContext);
+export function useSCUser(): SCUserContextType {
+  return useContext(SCUserContext);
 }
