@@ -59,6 +59,15 @@ const getTheme = (options, preferences) => {
                 textTransform: 'none',
               },
             },
+            variants: [
+              {
+                props: {variant: 'outlined'},
+                style: {
+                  border: `1px solid black`,
+                  color: 'black',
+                },
+              },
+            ],
           },
           MuiDivider: {
             styleOverrides: {
@@ -93,6 +102,17 @@ const getTheme = (options, preferences) => {
                 '& .MuiSvgIcon-root': {
                   width: '0.7em',
                   marginBottom: '0.5px',
+                },
+              },
+            },
+          },
+          SCPlatform: {
+            styleOverrides: {
+              root: {
+                '& .MuiSvgIcon-root': {
+                  width: '0.8em',
+                  marginLeft: '2px',
+                  marginBottom: '-3px',
                 },
               },
             },

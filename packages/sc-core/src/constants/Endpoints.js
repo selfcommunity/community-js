@@ -12,6 +12,10 @@ export default {
     url: urlReplacer('/api/v2/category/followed/'),
     method: 'GET',
   },
+  CategorySuggestion: {
+    url: urlReplacer('/api/v2/suggestion/category/'),
+    method: 'GET',
+  },
   CategoryTrendingFeed: {
     url: urlReplacer('/api/v2/category/$(id)/feed/trending/'),
     method: 'GET',
@@ -20,9 +24,9 @@ export default {
     url: urlReplacer('/api/v2/category/$(id)/followers/trending/'),
     method: 'GET',
   },
-  CategorySuggestion: {
-    url: urlReplacer('/api/v2/suggestion/category/'),
-    method: 'GET',
+  FollowCategory: {
+    url: urlReplacer('/api/v2/category/$(id)/follow/'),
+    method: 'POST',
   },
   /**
    * User Endpoints
@@ -41,6 +45,10 @@ export default {
   },
   UserSuggestion: {
     url: urlReplacer('/api/v2/suggestion/user/'),
+    method: 'GET',
+  },
+  Platform: {
+    url: urlReplacer('/api/v2/user/me/platform_url'),
     method: 'GET',
   },
   /**
