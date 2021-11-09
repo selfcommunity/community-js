@@ -223,6 +223,10 @@ export const validOptions = {
  */
 export const validateOptions = (values: SCSettingsType, schemaOptions: Record<string, any>) => {
   const validationResult = new ValidationResult(SCOPE_SC_CORE);
+  if (!values) {
+    validationResult.addError(ValidationError.ERROR_INVALID_CONF, values);
+    return {validationResult, values};
+  }
   const _options = Object.keys(schemaOptions);
   const _data = {
     ...values,

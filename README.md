@@ -73,7 +73,7 @@ function App() {
     },
   };
   return (
-    <SCContextProvider settings={conf}><PeopleSuggestion /></SCContextProvider>
+    <SCContextProvider conf={conf}><PeopleSuggestion /></SCContextProvider>
   );
 }
 

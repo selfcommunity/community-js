@@ -6,9 +6,16 @@ import CardContent from '@mui/material/CardContent';
 import {UserBoxSkeleton} from '../Skeleton';
 import {Avatar, Button, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText} from '@mui/material';
 import {AxiosResponse} from 'axios';
-import {SCContext, SCContextType, Endpoints, http, SCPreferences, SCUserContext, SCUserContextType, SCUserType} from '@selfcommunity/core';
-import {SCPreferencesContext} from '../../../../sc-core/src/components/provider/SCPreferencesProvider';
-import {SCPreferencesType} from '../../../../sc-core/src/types/context';
+import {
+  Endpoints,
+  http,
+  SCPreferences,
+  SCUserContext,
+  SCPreferencesContext,
+  SCUserContextType,
+  SCUserType,
+  SCPreferencesType
+} from '@selfcommunity/core';
 
 const PREFIX = 'SCUser';
 
@@ -114,9 +121,7 @@ function User({scUserId = null, scUser = null, contained = true}: {scUserId?: nu
             <Avatar alt={user.username} src={user.avatar} />
           </ListItemAvatar>
           <ListItemText primary={user.username} secondary={user.description} />
-          <ListItemSecondaryAction>
-            {scAuthContext.user ? renderAuthenticatedActions() : renderAnonymousActions()}
-          </ListItemSecondaryAction>
+          <ListItemSecondaryAction>{scAuthContext.user ? renderAuthenticatedActions() : renderAnonymousActions()}</ListItemSecondaryAction>
         </ListItem>
       ) : (
         <UserBoxSkeleton contained />

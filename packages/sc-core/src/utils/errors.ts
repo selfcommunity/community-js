@@ -7,6 +7,7 @@ import {Logger} from './logger';
  * Used to check the initial configurations
  */
 export class ValidationError {
+  static ERROR_INVALID_CONF = 3100;
   static ERROR_INVALID_SESSION = 4100;
   static ERROR_INVALID_SESSION_TYPE = 4101;
   static ERROR_INVALID_SESSION_AUTH_TOKEN = 4102;
@@ -17,6 +18,8 @@ export class ValidationError {
   static ERROR_INVALID_THEME = 4403;
   static ERROR_INVALID_ROUTER = 4503;
   static defaultErrorMessageMap = {
+    [ValidationError.ERROR_INVALID_CONF]:
+      'Invalid or missing library configuration. Check the configuration that is passed to the SCContextProvider.',
     [ValidationError.ERROR_INVALID_SESSION]: 'Invalid session format.',
     [ValidationError.ERROR_INVALID_SESSION_TYPE]: `Invalid sessionType. Available options are ${Session.sessionTypes.join(', ')}.`,
     [ValidationError.ERROR_INVALID_SESSION_AUTH_TOKEN]: 'Invalid auth token format',
