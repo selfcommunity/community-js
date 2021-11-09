@@ -4,10 +4,10 @@ import LazyLoad from 'react-lazyload';
 import PropTypes from 'prop-types';
 import {MEDIA_TYPE_VIDEO} from '../../../../constants/Media';
 import AutoPlayer from '../AutoPlayer';
-import CentralProgress from '../../../CentralProgress';
+import CentralProgress from '../../../../shared/CentralProgress';
 import Box from '@mui/material/Box';
 
-const PREFIX = 'SCFeedObjectMediaLink';
+const PREFIX = 'SCPostMediaLink';
 
 const classes = {
   preview: `${PREFIX}-preview`,
@@ -51,15 +51,9 @@ const Root = styled(Box, {
   }
 }));
 
-class Link extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  renderPreview() {
-    const {media, wide} = this.props;
-    if (wide) {
+export default function Link({media, fullWidth = false}: {media: any; fullWidth?: boolean}): JSX.Element {
+  const renderPreview = () => {
+    if (fullWidth) {
       return (
         <div className={classes.preview}>
           <img src={media.embed.metadata.images[0].url} className={classes.image} />
@@ -92,31 +86,13 @@ class Link extends React.Component {
         <div style={{clear: 'both'}}></div>
       </div>
     );
-  }
+  };
 
-  render() {
-    const {media} = this.props;
-    return (
-      <LazyLoad height={360} placeholder={<CentralProgress size={20} />} once>
-        <Root>
-          {media.embed.metadata && media.embed.metadata.type === MEDIA_TYPE_VIDEO ? (
-            <AutoPlayer url={media.url} width={'100%'} />
-          ) : (
-            this.renderPreview()
-          )}
-        </Root>
-      </LazyLoad>
-    );
-  }
+  return (
+    <LazyLoad height={360} placeholder={<CentralProgress size={20} />} once>
+      <Root>
+        {media.embed.metadata && media.embed.metadata.type === MEDIA_TYPE_VIDEO ? <AutoPlayer url={media.url} width={'100%'} /> : renderPreview()}
+      </Root>
+    </LazyLoad>
+  );
 }
-
-Link.defaultProps = {
-  wide: false
-};
-
-Link.propTypes = {
-  media: PropTypes.object.isRequired,
-  wide: PropTypes.bool
-};
-
-export default Link;

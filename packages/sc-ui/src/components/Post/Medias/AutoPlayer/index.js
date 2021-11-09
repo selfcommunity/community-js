@@ -50,7 +50,7 @@ class AutoPlayer extends React.Component {
   }
 }
 
-AutoReactPlayer.defaultProps = {
+AutoPlayer.defaultProps = {
   enableAutoplay: true,
   loop: false,
   muted: true,
@@ -59,7 +59,7 @@ AutoReactPlayer.defaultProps = {
   pip: true
 };
 
-AutoReactPlayer.propTypes = {
+AutoPlayer.propTypes = {
   enableAutoplay: PropTypes.bool,
   muted: PropTypes.bool,
   loop: PropTypes.bool,
@@ -68,4 +68,4 @@ AutoReactPlayer.propTypes = {
   pip: PropTypes.bool
 };
 
-export default AutoReactPlayer;
+export default AutoPlayer;

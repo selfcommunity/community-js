@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import PreviewImage from './PreviewImage';
 import PropTypes from 'prop-types';
@@ -124,32 +124,36 @@ const Root = styled(Box, {
   }
 }));
 
-class GridImages extends Component {
-  constructor(props) {
-    super(props);
+export default function GridImages({
+  images,
+  gallery = true,
+  adornment = null,
+  onClick = null
+}: {
+  images: Array<any>;
+  gallery?: boolean;
+  adornment?: React.ReactNode;
+  onClick?: (any) => void;
+}): JSX.Element {
+  const [preview, setPreview] = useState(-1);
+  const [from, setFrom] = useState(0);
+  const [conditionalRender, setConditionalRender] = useState(false);
 
-    this.state = {
-      previewImageOpen: false,
-      countFrom: props.countFrom > 0 && props.countFrom < 5 ? props.countFrom : 5,
-      conditionalRender: false
-    };
+  // HANDLERS
+  const handleClose = () => {
+    setPreview(-1);
+  };
 
-    this.openPreviewImage = this.openPreviewImage.bind(this);
-    this.handleClose = this.handleClose.bind(this);
+  // UTILS
 
-    if (props.countFrom <= 0 || props.countFrom > 5) {
-      console.warn('countFrom is limited to 5!');
+  const getImageUrl = (image) => {
+    if (typeof image === 'object') {
+      return image.image ? image.image : '/static/frontend_v2/images/image.svg';
     }
+    return image;
+  };
 
-    this.renderOne = this.renderOne.bind(this);
-    this.renderTwo = this.renderTwo.bind(this);
-    this.renderThree = this.renderThree.bind(this);
-    this.renderOverlay = this.renderOverlay.bind(this);
-    this.renderCountOverlay = this.renderCountOverlay.bind(this);
-    this.renderTitle = this.renderTitle.bind(this);
-  }
-
-  openPreviewImage(index) {
+  const openPreviewImage = (index) => {
     const {onClickEach, images, gallery} = this.props;
 
     if (onClickEach) {
@@ -161,25 +165,15 @@ class GridImages extends Component {
       return;
     }
 
-    this.setState({previewImageOpen: true, index});
-  }
+    setPreview(index);
+  };
 
-  handleClose() {
-    this.setState({previewImageOpen: false});
-  }
+  // RENDERING
 
-  getImageUrl(image) {
-    if (typeof image === 'object') {
-      return image.image ? image.image : '/static/frontend_v2/images/image.svg';
-    }
-    return image;
-  }
-
-  renderTitle(o) {
+  const renderTitle = (o) => {
     if (!o) {
       return null;
     }
-    const {title, titleBackgroundColor} = this.props;
     let startAdornment = null;
     if (o.type) {
       switch (o.type) {
@@ -193,8 +187,8 @@ class GridImages extends Component {
     }
     return (
       <React.Fragment>
-        {title && (
-          <div className={classes.title} style={{backgroundColor: titleBackgroundColor}}>
+        {o.title && (
+          <div className={classes.title}>
             <Typography variant="subtitle2">
               {startAdornment} {o.title}
             </Typography>
@@ -202,12 +196,10 @@ class GridImages extends Component {
         )}
       </React.Fragment>
     );
-  }
+  };
 
-  renderOne() {
-    const {images, gallery} = this.props;
-    const {countFrom} = this.state;
-    const overlay = images.length > countFrom && countFrom == 1 ? this.renderCountOverlay(true) : this.renderOverlay();
+  const renderOne = () => {
+    const overlay = images.length > from && from == 1 ? renderCountOverlay(true) : renderOverlay(0);
 
     return (
       <Grid container>
@@ -215,52 +207,46 @@ class GridImages extends Component {
           item
           xs={12}
           classes={{root: classNames(classes.border, classes.heightOne, classes.background, {[classes.gallery]: gallery})}}
-          onClick={this.openPreviewImage.bind(this, 0)}
+          onClick={() => openPreviewImage(0)}
           style={{background: `url(${this.getImageUrl(images[0])})`}}>
           {overlay}
-          {this.renderTitle(images[0])}
+          {renderTitle(images[0])}
         </Grid>
       </Grid>
     );
-  }
+  };
 
-  renderTwo() {
-    const {images, gallery} = this.props;
-    const {countFrom} = this.state;
-    const overlay = images.length > countFrom && [2, 3].includes(+countFrom) ? this.renderCountOverlay(true) : this.renderOverlay();
-    const conditionalRender = [3, 4].includes(images.length) || (images.length > +countFrom && [3, 4].includes(+countFrom));
+  const renderTwo = () => {
+    const overlay = images.length > from && [2, 3].includes(+from) ? renderCountOverlay(true) : renderOverlay(1);
+    const conditionalRender = [3, 4].includes(images.length) || (images.length > +from && [3, 4].includes(+from));
     return (
       <Grid container>
         <Grid
           item
           xs={6}
           classes={{root: classNames(classes.border, classes.heightTwo, classes.background, {[classes.gallery]: gallery})}}
-          onClick={this.openPreviewImage.bind(this, conditionalRender ? 1 : 0)}
+          onClick={() => openPreviewImage(conditionalRender ? 1 : 0)}
           style={{background: `url(${this.getImageUrl(conditionalRender ? images[1] : images[0])})`}}>
-          {this.renderOverlay()}
-          {this.renderTitle(images[0])}
+          {renderOverlay(conditionalRender ? 1 : 0)}
+          {renderTitle(images[0])}
         </Grid>
         <Grid
           item
           xs={6}
           classes={{root: classNames(classes.border, classes.heightTwo, classes.background, {[classes.gallery]: gallery})}}
-          onClick={this.openPreviewImage.bind(this, conditionalRender ? 1 : 0)}
+          onClick={() => openPreviewImage(conditionalRender ? 1 : 0)}
           style={{background: `url(${this.getImageUrl(conditionalRender ? images[2] : images[1])})`}}>
           {overlay}
-          {this.renderTitle(images[1])}
+          {renderTitle(images[1])}
         </Grid>
       </Grid>
     );
-  }
+  };
 
-  renderThree() {
-    const {images, gallery} = this.props;
-    const {countFrom} = this.state;
+  const renderThree = () => {
+    const conditionalRender = images.length == 4 || (images.length > +from && +from == 4);
     const overlay =
-      !countFrom || countFrom > 5 || (images.length > countFrom && [4, 5].includes(+countFrom))
-        ? this.renderCountOverlay(true)
-        : this.renderOverlay(conditionalRender ? 3 : 4);
-    const conditionalRender = images.length == 4 || (images.length > +countFrom && +countFrom == 4);
+      !from || from > 5 || (images.length > from && [4, 5].includes(+from)) ? renderCountOverlay(true) : renderOverlay(conditionalRender ? 3 : 4);
     return (
       <Grid container>
         <Grid
@@ -268,8 +254,8 @@ class GridImages extends Component {
           xs={6}
           md={4}
           classes={{root: classNames(classes.border, classes.heightThree, classes.background, {[classes.gallery]: gallery})}}
-          onClick={this.openPreviewImage.bind(this, conditionalRender ? 1 : 2)}
-          style={{background: `url(${this.getImageUrl(conditionalRender ? images[1] : images[2])})`}}>
+          onClick={() => openPreviewImage(conditionalRender ? 1 : 2)}
+          style={{background: `url(${getImageUrl(conditionalRender ? images[1] : images[2])})`}}>
           {this.renderOverlay(conditionalRender ? 1 : 2)}
           {this.renderTitle(images[1])}
         </Grid>
@@ -278,42 +264,36 @@ class GridImages extends Component {
           xs={6}
           md={4}
           classes={{root: classNames(classes.border, classes.heightThree, classes.background, {[classes.gallery]: gallery})}}
-          onClick={this.openPreviewImage.bind(this, conditionalRender ? 2 : 3)}
+          onClick={() => openPreviewImage(conditionalRender ? 2 : 3)}
           style={{background: `url(${this.getImageUrl(conditionalRender ? images[2] : images[3])})`}}>
-          {this.renderOverlay(conditionalRender ? 2 : 3)}
-          {this.renderTitle(images[2])}
+          {renderOverlay(conditionalRender ? 2 : 3)}
+          {renderTitle(images[2])}
         </Grid>
         <Grid
           item
           xs={6}
           md={4}
           classes={{root: classNames(classes.border, classes.heightThree, classes.background, {[classes.gallery]: gallery})}}
-          onClick={this.openPreviewImage.bind(this, conditionalRender ? 3 : 4)}
-          style={{background: `url(${this.getImageUrl(conditionalRender ? images[3] : images[4])})`}}>
+          onClick={() => openPreviewImage(conditionalRender ? 3 : 4)}
+          style={{background: `url(${getImageUrl(conditionalRender ? images[3] : images[4])})`}}>
           {overlay}
-          {this.renderTitle(images[3])}
+          {renderTitle(images[3])}
         </Grid>
       </Grid>
     );
-  }
+  };
 
-  renderOverlay(id) {
-    const {overlay, renderOverlay, overlayBackgroundColor} = this.props;
-    if (!overlay) {
-      return false;
-    }
+  const renderOverlay = (id) => {
     return [
-      <div key={`cover-${id}`} className={classNames(classes.cover, classes.slide)} style={{backgroundColor: overlayBackgroundColor}}></div>,
+      <div key={`cover-${id}`} className={classNames(classes.cover, classes.slide)}></div>,
       <div key={`cover-text-${id}`} className={classNames(classes.coverText, classes.slide, 'animate-text')} style={{fontSize: '100%'}}>
-        {renderOverlay()}
+        <ZoomOut />
       </div>
     ];
-  }
+  };
 
-  renderCountOverlay(more) {
-    const {images} = this.props;
-    const {countFrom} = this.state;
-    const extra = images.length - (countFrom && countFrom > 5 ? 5 : countFrom);
+  const renderCountOverlay = (more) => {
+    const extra = images.length - (from && from > 5 ? 5 : from);
 
     return [
       more && <div key="count" className={classes.cover}></div>,
@@ -323,52 +303,21 @@ class GridImages extends Component {
         </div>
       )
     ];
-  }
+  };
 
-  render() {
-    const {previewImageOpen, index, countFrom} = this.state;
-    const {images, adornment} = this.props;
-    const imagesToShow = [...images];
-    if (countFrom && images.length > countFrom) {
-      imagesToShow.length = countFrom;
-    }
-    return (
-      <Root>
-        {adornment}
-        {[1, 3, 4].includes(imagesToShow.length) && this.renderOne()}
-        {imagesToShow.length >= 2 && imagesToShow.length != 4 && this.renderTwo()}
-        {imagesToShow.length >= 4 && this.renderThree()}
-
-        {/* eslint-disable-next-line @typescript-eslint/unbound-method */}
-        {previewImageOpen && <PreviewImage onClose={this.handleClose} index={index} images={images} />}
-      </Root>
-    );
+  const imagesToShow = [...images];
+  if (from && images.length > from) {
+    imagesToShow.length = from;
   }
+  return (
+    <Root>
+      {adornment}
+      {[1, 3, 4].includes(imagesToShow.length) && renderOne()}
+      {imagesToShow.length >= 2 && imagesToShow.length != 4 && renderTwo()}
+      {imagesToShow.length >= 4 && renderThree()}
+
+      {/* eslint-disable-next-line @typescript-eslint/unbound-method */}
+      {preview !== -1 && <PreviewImage onClose={handleClose} index={preview} images={images} />}
+    </Root>
+  );
 }
-
-GridImages.defaultProps = {
-  gallery: true,
-  images: [],
-  overlay: true,
-  renderOverlay: () => <ZoomOut />,
-  overlayBackgroundColor: 'rgba(70, 66, 66, 0.45)',
-  titleBackgroundColor: 'rgba(70, 66, 66, 0.45)',
-  onClickEach: null,
-  countFrom: MAX_GRID_IMAGES,
-  adornment: null
-};
-
-GridImages.propTypes = {
-  images: PropTypes.array.isRequired,
-  gallery: PropTypes.bool,
-  overlay: PropTypes.bool,
-  title: PropTypes.bool,
-  titleBackgroundColor: PropTypes.string,
-  renderOverlay: PropTypes.func,
-  overlayBackgroundColor: PropTypes.string,
-  adornment: PropTypes.node,
-  onClickEach: PropTypes.func,
-  countFrom: PropTypes.number,
-  classes: PropTypes.object
-};
-export default GridImages;

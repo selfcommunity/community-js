@@ -55,7 +55,7 @@ import {AxiosResponse} from 'axios';
 import {CHUNK_EVENTS} from '@rpldy/chunked-sender';
 import Link from '../Post/Medias/Link';
 import Medias from '../Post/Medias';
-import Editor from '../Editor';
+import Editor from '../../shared/Editor';
 
 const DialogTransition = forwardRef(function Transition(
   props: TransitionProps & {
@@ -423,6 +423,10 @@ export default function Composer({
     dispatch({type: 'type', value: target.value});
   };
 
+  const handleChangeText = (value: string): void => {
+    dispatch({type: 'text', value});
+  };
+
   const handleChange =
     (prop: string) =>
     (event: SyntheticEvent, data?: object): void => {
@@ -440,7 +444,6 @@ export default function Composer({
             }
           });
           break;
-        case 'text':
         case 'categories':
         case 'addressing':
           dispatch({type: prop, value: event});
@@ -1025,7 +1028,7 @@ export default function Composer({
                   />
                 </div>
               )}
-              <Editor className={classes.block} onChange={handleChange('text')} defaultValue={text} />
+              <Editor className={classes.block} onChange={handleChangeText} defaultValue={text} />
               <Box className={classes.medias}>
                 <Medias
                   medias={[...images, ...videos, ...docs, ...links, ...Object.values(chunks).filter((c: Chunk) => !c.error)]}
