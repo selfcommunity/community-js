@@ -1,10 +1,12 @@
 import {
-  SCAuthContextType,
+  SCUserContextType,
   SCContextProviderType,
   SCContextType,
   SCSettingsType,
   SCSessionType,
   SCAuthTokenType,
+  SCPreferencesContextType,
+  SCLocaleType,
   SCThemeContextType,
   SCRoutingContextType,
   SCLocaleContextType,
@@ -16,7 +18,7 @@ import {SCTagType} from './tag';
  * Exports all types
  */
 export {
-  SCAuthContextType,
+  SCUserContextType,
   SCContextProviderType,
   SCContextType,
   SCSettingsType,
@@ -24,6 +26,8 @@ export {
   SCAuthTokenType,
   SCUserType,
   SCTagType,
+  SCLocaleType,
+  SCPreferencesContextType,
   SCThemeContextType,
   SCRoutingContextType,
   SCLocaleContextType,

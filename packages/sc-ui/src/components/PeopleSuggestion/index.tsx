@@ -7,7 +7,6 @@ import CardContent from '@mui/material/CardContent';
 import {Endpoints, http, SCUserType} from '@selfcommunity/core';
 import {PeopleSuggestionSkeleton} from '../Skeleton';
 import User from '../User';
-import {withSCTheme, withSCLocale} from '@selfcommunity/core';
 import {FormattedMessage} from 'react-intl';
 
 const PREFIX = 'SCPeopleSuggestion';
@@ -69,7 +68,7 @@ function SCPeopleSuggestion(props): JSX.Element {
     <Root variant={'outlined'}>
       <CardContent>
         <Typography variant="body1">
-          <FormattedMessage id="sc.peopleSuggestion.title" defaultMessage="sc.peopleSuggestion.title" />
+          <FormattedMessage id="ui.peopleSuggestion.title" defaultMessage="ui.peopleSuggestion.title" />
         </Typography>
         <List>
           {users.slice(0, 2).map((user: SCUserType, index) => (
@@ -85,4 +84,4 @@ function SCPeopleSuggestion(props): JSX.Element {
   );
 }
 
-export default withSCLocale(withSCTheme(SCPeopleSuggestion));
+export default SCPeopleSuggestion;

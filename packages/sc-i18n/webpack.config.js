@@ -1,22 +1,22 @@
 const path = require('path');
-const {plugins, rules} = require('webpack-atoms');
+const { plugins, rules } = require('webpack-atoms');
 
 module.exports = (env, argv) => {
   const mode = argv.mode || 'development'; // dev mode by default
   return {
     mode,
-    devtool: 'eval-source-map',
+    devtool: 'source-map',
     entry: {
-      core: './src/index.ts',
+      i18n: './src/index.ts',
     },
     output: {
       path: path.join(__dirname, './lib/umd'),
       filename: '[name].js',
-      library: 'SelfCommunityCore',
+      library: 'SelfCommunityI18n',
       libraryTarget: 'umd',
     },
     module: {
-      rules: [{...rules.js({rootMode: 'upward'}), test: /\.(j|t)sx?$/}],
+      rules: [{ ...rules.js({ rootMode: 'upward' }), test: /\.(j|t)sx?$/ }],
     },
     resolve: {
       extensions: ['.js', '.ts', '.tsx', '.json'],
@@ -34,12 +34,6 @@ module.exports = (env, argv) => {
         commonjs2: 'react-dom',
         amd: 'react-dom',
       },
-      'react-intl': {
-        root: 'ReactIntl',
-        commonjs: 'react-intl',
-        commonjs2: 'react-intl',
-        amd: 'react-intl',
-      },
     },
     plugins: [
       plugins.define({
@@ -47,7 +41,8 @@ module.exports = (env, argv) => {
       }),
       // plugins.uglify(),
       plugins.banner({
-        banner: '(c) 2021 - present: Quentral Srl | https://github.com/selfcommunity/community-ui/blob/master/LICENSE.md',
+        banner:
+          '(c) 2021 - present: Quentral Srl | https://github.com/selfcommunity/community-ui-widgets/blob/master/LICENSE.md',
         entryOnly: true,
       }),
     ],

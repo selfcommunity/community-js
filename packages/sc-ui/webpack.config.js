@@ -33,6 +33,12 @@ module.exports = (env, argv) => {
         commonjs: 'react-dom',
         commonjs2: 'react-dom',
         amd: 'react-dom'
+      },
+      'react-intl': {
+        root: 'ReactIntl',
+        commonjs: 'react-intl',
+        commonjs2: 'react-intl',
+        amd: 'react-intl'
       }
     },
     plugins: [

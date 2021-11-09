@@ -1,7 +1,9 @@
 import {urlReplacer} from '../utils/url';
 
 export default {
-  // Interests
+  /**
+   * Categories Endpoints
+   */
   Category: {
     url: urlReplacer('/api/v2/category/$(id)/'),
     method: 'GET',
@@ -18,7 +20,13 @@ export default {
     url: urlReplacer('/api/v2/category/$(id)/followers/trending/'),
     method: 'GET',
   },
-  // Users
+  CategorySuggestion: {
+    url: urlReplacer('/api/v2/suggestion/category/'),
+    method: 'GET',
+  },
+  /**
+   * User Endpoints
+   */
   User: {
     url: urlReplacer('/api/v2/user/$(id)/'),
     method: 'GET',
@@ -31,17 +39,15 @@ export default {
     url: urlReplacer('/api/v2/user/me/'),
     method: 'GET',
   },
-  // Preferences
-  Preferences: {
-    url: urlReplacer('/api/v2/dynamic_preference/'),
-    method: 'GET',
-  },
   UserSuggestion: {
     url: urlReplacer('/api/v2/suggestion/user/'),
     method: 'GET',
   },
-  CategorySuggestion: {
-    url: urlReplacer('/api/v2/suggestion/category/'),
+  /**
+   * Preferences Endpoints
+   */
+  Preferences: {
+    url: urlReplacer('/api/v2/dynamic_preference/'),
     method: 'GET',
   },
 };

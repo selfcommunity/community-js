@@ -2,17 +2,20 @@ import React, {createContext, useContext, useMemo, useRef, useState} from 'react
 import {SCContextType} from '../../../types';
 import {useSCContext} from '../SCContextProvider';
 import {SCLocaleContextType} from '../../../types';
-import newIntl, {loadLocaleData} from '../../../utils/locale';
-import {DEFAULT_LANGUAGE_UI, LOCALE_EN, LOCALE_IT} from '../../../constants/Locale';
-import {createIntlCache, IntlProvider} from 'react-intl';
+import {loadLocaleData} from '../../../utils/locale';
+import {DEFAULT_LANGUAGE_UI} from '../../../constants/Locale';
+import {IntlProvider} from 'react-intl';
+import {Logger} from '../../../utils/logger';
+import {SCOPE_SC_CORE} from '../../../constants/Errors';
 
 /**
  * Create Global Context
- * Consuming this context:
+ * Consuming this context in one of the following ways:
  *  1. <SCLocaleContext.Consumer>
  *       {(locale,) => (...)}
  *     </SCLocaleContext.Consumer>
- *  2. const SCLocaleContext: SCLocaleContextType = useContext(SCLocaleContext);
+ *  2. const scLocaleContext: SCLocaleContextType = useContext(SCLocaleContext);
+ *  3. const scLocaleContext: SCLocaleContextType = useSCLocale();
  */
 export const SCLocaleContext = createContext<SCLocaleContextType>({} as SCLocaleContextType);
 
@@ -21,79 +24,54 @@ export const SCLocaleContext = createContext<SCLocaleContextType>({} as SCLocale
  */
 export default function SCLocaleProvider({children = null}: {children: React.ReactNode}): JSX.Element {
   const scContext: SCContextType = useSCContext();
-  const initialLocale: string = scContext.settings.locale ? scContext.settings.locale : DEFAULT_LANGUAGE_UI;
-  let intl = useRef(
-    newIntl(
-      {
-        locale: initialLocale,
-        defaultLocale: DEFAULT_LANGUAGE_UI,
-        messages: loadLocaleData(initialLocale),
-      },
-      createIntlCache()
-    )
-  );
-  const [locale, setLocale] = useState(intl.current.locale);
-  const [messages, setMessages] = useState(intl.current.messages);
+  const initialLocale: string = scContext.settings.locale?.default ? scContext.settings.locale.default : DEFAULT_LANGUAGE_UI;
+  const initial = loadLocaleData(initialLocale, scContext.settings);
+  const [locale, setLocale] = useState(initial.locale);
+  const [messages, setMessages] = useState(initial.messages);
 
   const updateLocale = (_intl) => {
-    intl.current = _intl;
     setLocale(_intl.locale);
     setMessages(_intl.messages);
   };
 
   const selectLocale = useMemo(
-    () => (locale) => {
-      const cache = createIntlCache();
-      let _intl;
-      switch (locale) {
-        case LOCALE_EN:
-          _intl = newIntl(
-            {
-              locale: LOCALE_EN,
-              defaultLocale: DEFAULT_LANGUAGE_UI,
-              messages: loadLocaleData(LOCALE_EN),
-            },
-            cache
-          );
-          break;
-        case LOCALE_IT:
-          _intl = newIntl(
-            {
-              locale: LOCALE_IT,
-              defaultLocale: DEFAULT_LANGUAGE_UI,
-              messages: loadLocaleData(LOCALE_IT),
-            },
-            cache
-          );
-          break;
-        default:
-          _intl = newIntl(
-            {
-              locale: LOCALE_EN,
-              defaultLocale: DEFAULT_LANGUAGE_UI,
-              messages: loadLocaleData(LOCALE_EN),
-            },
-            cache
-          );
-          break;
-      }
-      updateLocale(_intl);
+    () => (l) => {
+      const {messages, locale} = loadLocaleData(l, scContext.settings);
+      updateLocale({messages, locale});
     },
     [locale]
   );
 
-  return <SCLocaleContext.Provider value={{locale, messages, selectLocale}}>{children}</SCLocaleContext.Provider>;
+  /**
+   * handleIntlError
+   * @param error
+   */
+  const handleIntlError = (error) => {
+    if (error.code === 'MISSING_TRANSLATION') {
+      Logger.warn(SCOPE_SC_CORE, `Missing translation: ${error.message}`);
+      return;
+    }
+    throw error;
+  };
+
+  return (
+    <SCLocaleContext.Provider value={{locale, messages, selectLocale}}>
+      <IntlProvider key={locale} locale={locale} messages={messages} onError={handleIntlError}>
+        {children}
+      </IntlProvider>
+    </SCLocaleContext.Provider>
+  );
 }
 
 /**
  * Export hoc to inject the base theme to components
- * @param WrappedComponent
+ * @param Component
  */
-export const withSCLocale = (WrappedComponent) => (props) => {
+export const withSCLocale = (Component) => (props) => {
   const scLocaleContext: SCLocaleContextType = useContext(SCLocaleContext);
   return (
     <IntlProvider locale={scLocaleContext.locale} messages={scLocaleContext.messages}>
-      <WrappedComponent setLanguage={scLocaleContext.selectLocale} {...props} />
+      <Component setLanguage={scLocaleContext.selectLocale} {...props} />
     </IntlProvider>
   );
 };

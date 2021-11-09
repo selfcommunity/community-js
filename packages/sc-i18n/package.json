@@ -1,19 +1,17 @@
 {
-  "name": "@selfcommunity/templates",
+  "name": "@selfcommunity/i18n",
   "version": "0.1.0",
   "license": "MIT",
   "private": false,
   "main": "./lib/cjs/index.js",
   "module": "./lib/esm/index.js",
-  "description": "React Templates Components to integrate a Community created with SelfCommunity.",
+  "description": "Translations to integrate a Community created with SelfCommunity.",
   "author": "SelfCommunity (https://www.selfcommunity.com)",
   "keywords": [
     "react",
     "widgets",
     "community",
-    "react-ui",
-    "react-components",
-    "react-templates"
+    "community-i18n"
   ],
   "scripts": {
     "prepare": "install-peers -f",
@@ -39,26 +37,11 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/selfcommunity/community-ui/tree/main/packages/sc-core"
+    "url": "https://github.com/selfcommunity/community-ui/tree/main/packages/sc-i18n"
   },
   "publishConfig": {
     "access": "public",
     "directory": "lib"
-  },
-  "peerDependencies": {
-    "react": ">=17.0.2",
-    "react-dom": ">=17.0.2",
-    "react-intl": "^5.21.0",
-    "@emotion/react": "^11.4.1",
-    "@emotion/styled": "^11.3.0",
-    "@mui/material": "^5.0.3"
-  },
-  "dependencies": {
-    "@selfcommunity/i18n": "^0.1.0",
-    "@selfcommunity/core": "0.1.0",
-    "@selfcommunity/ui": "0.1.0",
-    "@types/classnames": "^2.2.11",
-    "classnames": "^2.2.6"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.13",
@@ -113,6 +96,6 @@
     "webpack-cli": "^4.5.0"
   },
   "bugs": {
-    "url": "https://github.com/selfcommunity/selfcommunity-ui-widgets/issues"
+    "url": "https://github.com/selfcommunity/community-ui/issues"
   }
 }
