@@ -72,6 +72,12 @@ import * as ObjectUtils from './utils/object';
 import * as UrlUtils from './utils/url';
 
 /**
+ * Constants:
+ * Locale
+ */
+import * as Locale from './constants/Locale';
+
+/**
  * List all exports
  */
 export {
@@ -114,4 +120,5 @@ export {
   StringUtils,
   ObjectUtils,
   UrlUtils,
+  Locale,
 };
