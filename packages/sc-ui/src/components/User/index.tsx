@@ -115,7 +115,7 @@ function User({scUserId = null, scUser = null, contained = true}: {scUserId?: nu
           </ListItemAvatar>
           <ListItemText primary={user.username} secondary={user.description} />
           <ListItemSecondaryAction>
-            {scAuthContext.user && connectionEnabled ? renderAuthenticatedActions() : renderAnonymousActions()}
+            {scAuthContext.user ? renderAuthenticatedActions() : renderAnonymousActions()}
           </ListItemSecondaryAction>
         </ListItem>
       ) : (

@@ -9,11 +9,12 @@ import {useSCPreferencesContext} from '../SCPreferencesProvider';
 
 /**
  * Create Global Context
- * Consuming this context:
+ * Consuming this context in one of the following ways:
  *  1. <SCThemeContext.Consumer>
  *       {(theme,) => (...)}
  *     </SCThemeContext.Consumer>
  *  2. const scThemeContext: SCThemeContextType = useContext(SCThemeContext);
+ *  3. const scThemeContext: SCThemeContextType = useSCTheme();
  */
 export const SCThemeContext = createContext<SCThemeContextType>({} as SCThemeContextType);
 
@@ -39,6 +40,19 @@ export default function SCThemeProvider({children = null}: {children: React.Reac
     </StyledEngineProvider>
   );
 }
+
+/**
+ * Export hoc to inject the base theme to components
+ * @param Component
+ */
+export const withSCTheme = (Component) => (props) => {
+  const scThemeContext: SCThemeContextType = useContext(SCThemeContext);
+  return (
+    <ThemeProvider theme={scThemeContext.theme}>
+      <Component setTheme={scThemeContext.setTheme} {...props} />
+    </ThemeProvider>
+  );
+};
 
 /**
  * Let's only export the `useSCTheme` hook instead of the context.

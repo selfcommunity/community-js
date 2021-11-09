@@ -2,10 +2,15 @@ import {DEFAULT_LANGUAGE_UI, LOCALE_EN, LOCALE_IT} from '../constants/Locale';
 import localeData from '@selfcommunity/i18n';
 import {createIntl, createIntlCache} from 'react-intl';
 
-// This is optional but highly recommended since it prevents memory leak
+/**
+ * This is optional but highly recommended
+ * since it prevents memory leak
+ */
 const cache = createIntlCache();
 
-// Load Locale Data
+/**
+ * Load Locale Data
+ */
 export function loadLocaleData(locale) {
   switch (locale) {
     case 'it':
@@ -15,7 +20,9 @@ export function loadLocaleData(locale) {
   }
 }
 
-// Global intl object
+/**
+ * Global intl object
+ */
 let newIntl = (languageCode) =>
   createIntl(
     {

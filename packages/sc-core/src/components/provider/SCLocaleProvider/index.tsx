@@ -5,14 +5,17 @@ import {SCLocaleContextType} from '../../../types';
 import newIntl, {loadLocaleData} from '../../../utils/locale';
 import {DEFAULT_LANGUAGE_UI, LOCALE_EN, LOCALE_IT} from '../../../constants/Locale';
 import {createIntlCache, IntlProvider} from 'react-intl';
+import {Logger} from '../../../utils/logger';
+import {SCOPE_SC_CORE} from '../../../constants/Errors';
 
 /**
  * Create Global Context
- * Consuming this context:
+ * Consuming this context in one of the following ways:
  *  1. <SCLocaleContext.Consumer>
  *       {(locale,) => (...)}
  *     </SCLocaleContext.Consumer>
- *  2. const SCLocaleContext: SCLocaleContextType = useContext(SCLocaleContext);
+ *  2. const scLocaleContext: SCLocaleContextType = useContext(SCLocaleContext);
+ *  3. const scLocaleContext: SCLocaleContextType = useSCLocale();
  */
 export const SCLocaleContext = createContext<SCLocaleContextType>({} as SCLocaleContextType);
 
@@ -88,7 +91,7 @@ export default function SCLocaleProvider({children = null}: {children: React.Rea
    */
   const handleIntlError = (error) => {
     if (error.code === 'MISSING_TRANSLATION') {
-      console.warn('Missing translation', error.message);
+      Logger.warn(SCOPE_SC_CORE, `Missing translation: ${error.message}`)
       return;
     }
     throw error;
@@ -102,6 +105,19 @@ export default function SCLocaleProvider({children = null}: {children: React.Rea
     </SCLocaleContext.Provider>
   );
 }
+
+/**
+ * Export hoc to inject the base theme to components
+ * @param Component
+ */
+export const withSCLocale = (Component) => (props) => {
+  const scLocaleContext: SCLocaleContextType = useContext(SCLocaleContext);
+  return (
+    <IntlProvider locale={scLocaleContext.locale} messages={scLocaleContext.messages}>
+      <Component setLanguage={scLocaleContext.selectLocale} {...props} />
+    </IntlProvider>
+  );
+};
 
 /**
  * Let's only export the `useSCTheme` hook instead of the context.

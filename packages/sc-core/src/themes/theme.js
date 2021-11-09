@@ -49,20 +49,10 @@ const getTheme = (options, preferences) => {
           MuiPaper: {
             styleOverrides: {
               rounded: {
-                borderRadius: 10,
+                borderRadius: 3,
               },
             },
-          },
-          SCFeedObject: {
-            styleOverrides: {
-              root: {
-                '& .SCFeedObject-category': {
-                  backgroundColor: '#FF0000',
-                  borderColor: '#FF0000',
-                },
-              },
-            },
-          },
+          }
         },
       }
     : {};

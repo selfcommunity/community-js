@@ -1,3 +1,7 @@
+/**
+ * Utility Url Replacer
+ * @param path
+ */
 export const urlReplacer = (path: string) => {
   const replacer = function (tpl, data) {
     const re = /\$\(([^)]+)?\)/g;
@@ -12,6 +16,10 @@ export const urlReplacer = (path: string) => {
   return (params: object) => replacer(path, params);
 };
 
+/**
+ * Get domain
+ * @param url
+ */
 export const getDomain = (url: string): string => {
   // eslint-disable-next-line no-useless-escape,@typescript-eslint/prefer-regexp-exec
   const matches = url.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i);
@@ -23,6 +31,7 @@ export const getDomain = (url: string): string => {
 
 /**
  * Check a str is a valid url pattern
+ * @param url
  */
 export const isValidUrl = (url: string): boolean => {
   const regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-/]))?/;
@@ -31,6 +40,8 @@ export const isValidUrl = (url: string): boolean => {
 
 /**
  * Check a str is a valid list of urls separated by delimiter
+ * @param value
+ * @param delimiter
  */
 export const isValidUrls = (value: string, delimiter: string): boolean => {
   const urls = value.trim().split(delimiter);
