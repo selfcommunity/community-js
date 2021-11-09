@@ -6,6 +6,7 @@ import {SCOPE_SC_CORE} from '../constants/Errors';
 import {isFunc, ValidationError, ValidationResult, ValidationWarnings} from './errors';
 import {isObject} from './object';
 import {isString} from './string';
+import {SCLocaleType} from '../types';
 
 /**
  * Validate session option
@@ -104,18 +105,59 @@ export const validatePortal = (value) => {
 };
 
 /**
+ * Validate default locale
+ * @param value
+ * @param locale
+ */
+export const validateLocaleDefault = (value, locale) => {
+  const errors = [];
+  const warnings = [];
+  if (locale.default) {
+    if (!isString(value) || (!locale.messages && !LOCALES.includes(value))) {
+      errors.push(ValidationError.ERROR_INVALID_LOCALE);
+    }
+  } else {
+    warnings.push(ValidationWarnings.WARNING_LOCALE_FALLBACK);
+  }
+  return {errors, warnings, value};
+};
+
+/**
+ * Validate default locale
+ * @param value
+ * @param locale
+ */
+export const validateLocaleMessages = (value) => {
+  const errors = [];
+  const warnings = [];
+  if (value.messages && !isObject(value.messages)) {
+    errors.push(ValidationError.ERROR_INVALID_TRANSLATIONS);
+  }
+  return {errors, warnings, value};
+};
+
+/**
  * Validate locale option
  * @param locale
  * @return {locale}
  */
-export const validateLocale = (value) => {
+export const validateLocale = (v) => {
   const errors = [];
   const warnings = [];
-  if (!value) {
+  if (!v || !isObject(v) || (isObject(v) && !v.messages && !v.default)) {
     warnings.push(ValidationWarnings.WARNING_LOCALE_FALLBACK);
-  } else if (value && (!isString(value) || !LOCALES.includes(value))) {
-    errors.push(ValidationError.ERROR_INVALID_LOCALE);
+    return {v, errors, warnings};
   }
+  const _options = Object.keys(localeOptions);
+  const value: SCLocaleType = Object.keys(v)
+    .filter((key) => _options.includes(key))
+    .reduce((obj, key) => {
+      const res = localeOptions[key].validator(v[key], v);
+      res.errors.map((error) => errors.push(error));
+      res.warnings.map((warning) => warnings.push(warning));
+      obj[key] = res.value;
+      return obj;
+    }, {} as SCLocaleType);
   return {errors, warnings, value};
 };
 
@@ -192,6 +234,14 @@ const SessionRefreshTokenCallbackOption = {
   name: 'refreshTokenCallback',
   validator: validateRefreshTokenCallback,
 };
+const LocaleDefaultOption = {
+  name: 'default',
+  validator: validateLocaleDefault,
+};
+const LocaleMessagesOption = {
+  name: 'messages',
+  validator: validateLocaleMessages,
+};
 
 /**
  * Valid options
@@ -204,12 +254,15 @@ export const settingsOptions: Record<string, any> = {
   [RouterOption.name]: RouterOption,
   [SessionOption.name]: SessionOption,
 };
-
 export const sessionOptions: Record<string, any> = {
   [SessionTypeOption.name]: SessionTypeOption,
   [SessionClientIdOption.name]: SessionClientIdOption,
   [SessionAuthTokenOption.name]: SessionAuthTokenOption,
   [SessionRefreshTokenCallbackOption.name]: SessionRefreshTokenCallbackOption,
+};
+export const localeOptions: Record<string, any> = {
+  [LocaleDefaultOption.name]: LocaleDefaultOption,
+  [LocaleMessagesOption.name]: LocaleMessagesOption,
 };
 
 export const validOptions = {

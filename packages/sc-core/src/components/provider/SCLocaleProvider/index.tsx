@@ -2,9 +2,9 @@ import React, {createContext, useContext, useMemo, useRef, useState} from 'react
 import {SCContextType} from '../../../types';
 import {useSCContext} from '../SCContextProvider';
 import {SCLocaleContextType} from '../../../types';
-import newIntl, {loadLocaleData} from '../../../utils/locale';
-import {DEFAULT_LANGUAGE_UI, LOCALE_EN, LOCALE_IT} from '../../../constants/Locale';
-import {createIntlCache, IntlProvider} from 'react-intl';
+import {loadLocaleData} from '../../../utils/locale';
+import {DEFAULT_LANGUAGE_UI} from '../../../constants/Locale';
+import {IntlProvider} from 'react-intl';
 import {Logger} from '../../../utils/logger';
 import {SCOPE_SC_CORE} from '../../../constants/Errors';
 
@@ -24,63 +24,20 @@ export const SCLocaleContext = createContext<SCLocaleContextType>({} as SCLocale
  */
 export default function SCLocaleProvider({children = null}: {children: React.ReactNode}): JSX.Element {
   const scContext: SCContextType = useSCContext();
-  const initialLocale: string = scContext.settings.locale ? scContext.settings.locale : DEFAULT_LANGUAGE_UI;
-  let intl = useRef(
-    newIntl(
-      {
-        locale: initialLocale,
-        defaultLocale: DEFAULT_LANGUAGE_UI,
-        messages: loadLocaleData(initialLocale),
-      },
-      createIntlCache()
-    )
-  );
-  const [locale, setLocale] = useState(intl.current.locale);
-  const [messages, setMessages] = useState(intl.current.messages);
+  const initialLocale: string = scContext.settings.locale?.default ? scContext.settings.locale.default : DEFAULT_LANGUAGE_UI;
+  const initial = loadLocaleData(initialLocale, scContext.settings);
+  const [locale, setLocale] = useState(initial.locale);
+  const [messages, setMessages] = useState(initial.messages);
 
   const updateLocale = (_intl) => {
-    intl.current = _intl;
     setLocale(_intl.locale);
     setMessages(_intl.messages);
   };
 
   const selectLocale = useMemo(
-    () => (locale) => {
-      const cache = createIntlCache();
-      let _intl;
-      switch (locale) {
-        case LOCALE_EN:
-          _intl = newIntl(
-            {
-              locale: LOCALE_EN,
-              defaultLocale: DEFAULT_LANGUAGE_UI,
-              messages: loadLocaleData(LOCALE_EN),
-            },
-            cache
-          );
-          break;
-        case LOCALE_IT:
-          _intl = newIntl(
-            {
-              locale: LOCALE_IT,
-              defaultLocale: DEFAULT_LANGUAGE_UI,
-              messages: loadLocaleData(LOCALE_IT),
-            },
-            cache
-          );
-          break;
-        default:
-          _intl = newIntl(
-            {
-              locale: LOCALE_EN,
-              defaultLocale: DEFAULT_LANGUAGE_UI,
-              messages: loadLocaleData(LOCALE_EN),
-            },
-            cache
-          );
-          break;
-      }
-      updateLocale(_intl);
+    () => (l) => {
+      const {messages, locale} = loadLocaleData(l, scContext.settings);
+      updateLocale({messages, locale});
     },
     [locale]
   );
@@ -91,7 +48,7 @@ export default function SCLocaleProvider({children = null}: {children: React.Rea
    */
   const handleIntlError = (error) => {
     if (error.code === 'MISSING_TRANSLATION') {
-      Logger.warn(SCOPE_SC_CORE, `Missing translation: ${error.message}`)
+      Logger.warn(SCOPE_SC_CORE, `Missing translation: ${error.message}`);
       return;
     }
     throw error;

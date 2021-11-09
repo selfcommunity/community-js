@@ -4,7 +4,7 @@ import getTheme from '../../../themes/theme';
 import {SCContextType} from '@selfcommunity/core';
 import {useSCContext} from '../SCContextProvider';
 import {SCThemeContextType} from '../../../types';
-import {SCPreferencesType} from '../../../types/context';
+import {SCPreferencesContextType} from '../../../types/context';
 import {useSCPreferencesContext} from '../SCPreferencesProvider';
 
 /**
@@ -25,7 +25,7 @@ export const SCThemeContext = createContext<SCThemeContextType>({} as SCThemeCon
  */
 export default function SCThemeProvider({children = null}: {children: React.ReactNode}): JSX.Element {
   const scContext: SCContextType = useSCContext();
-  const scPreferencesContext: SCPreferencesType = useSCPreferencesContext();
+  const scPreferencesContext: SCPreferencesContextType = useSCPreferencesContext();
   const [theme, setTheme] = useState<Record<string, any>>(getTheme(scContext.settings.theme, scPreferencesContext.preferences));
 
   const setCustomTheme = (theme) => {

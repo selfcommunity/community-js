@@ -22,7 +22,7 @@ export const SCContext = createContext<SCContextType>({} as SCContextType);
 /**
  * List of all nested providers that are required to run
  */
-const contextProviders = [SCPreferencesProvider, SCThemeProvider, SCLocaleProvider, SCRoutingProvider, SCUserProvider];
+const contextProviders = [SCPreferencesProvider, SCRoutingProvider, SCUserProvider, SCThemeProvider, SCLocaleProvider];
 
 /**
  * SCContextProvider

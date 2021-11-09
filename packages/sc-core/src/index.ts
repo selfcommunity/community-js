@@ -13,7 +13,7 @@ import {
   SCThemeContextType,
   SCRoutingContextType,
   SCLocaleContextType,
-  SCPreferencesType,
+  SCPreferencesContextType,
 } from './types';
 
 /**
@@ -77,7 +77,7 @@ export {
   SCRoutingContextType,
   SCLocaleContextType,
   SCUserType,
-  SCPreferencesType,
+  SCPreferencesContextType,
   SCContext,
   SCUserContext,
   SCThemeContext,
