@@ -63,6 +63,15 @@ import http from './utils/http';
 import Endpoints from './constants/Endpoints';
 
 /**
+ * Utilities:
+ * logger, string, url, object
+ */
+import {Logger} from './utils/logger';
+import * as StringUtils from './utils/string';
+import * as ObjectUtils from './utils/object';
+import * as UrlUtils from './utils/url';
+
+/**
  * List all exports
  */
 export {
@@ -101,4 +110,8 @@ export {
   http,
   Link,
   Endpoints,
+  Logger,
+  StringUtils,
+  ObjectUtils,
+  UrlUtils,
 };
