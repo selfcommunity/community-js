@@ -58,9 +58,7 @@
     "@selfcommunity/core": "0.1.0",
     "@selfcommunity/ui": "0.1.0",
     "@types/classnames": "^2.2.11",
-    "classnames": "^2.2.6",
-    "prop-types": "^15.7.2",
-    "prop-types-extra": "^1.1.1"
+    "classnames": "^2.2.6"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.13",
