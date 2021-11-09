@@ -4,7 +4,7 @@ import List from '@mui/material/List';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import {UserBoxSkeleton} from '../Skeleton';
-import {Avatar, Button, createTheme, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText} from '@mui/material';
+import {Avatar, Button, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText} from '@mui/material';
 import {AxiosResponse} from 'axios';
 import {
   Endpoints,
@@ -20,7 +20,6 @@ import {
   SCLocaleContextType,
   SCLocaleContext
 } from '@selfcommunity/core';
-import {FormattedMessage} from 'react-intl';
 
 const PREFIX = 'SCUser';
 
@@ -141,34 +140,6 @@ function User({scUserId = null, scUser = null, contained = true}: {scUserId?: nu
       <Root variant="outlined">
         <CardContent>
           <List>{u}</List>
-          <FormattedMessage id="ui.peopleSuggestion.title" defaultMessage="ui.peopleSuggestion.title" />
-          <br />
-          <Button
-            onClick={() => {
-              scThemeContext.setTheme(
-                createTheme({
-                  palette: {
-                    primary: {
-                      main: '#f5e107'
-                    },
-                    secondary: {
-                      main: '#bb39d9'
-                    }
-                  }
-                })
-              );
-            }}>
-            Change theme
-          </Button>
-          <Button
-            onClick={() => {
-              console.log(scLocaleContext.locale);
-              const newLocale = scLocaleContext.locale === 'it' ? 'en' : 'it';
-              console.log(newLocale);
-              scLocaleContext.selectLocale(newLocale);
-            }}>
-            Change locale
-          </Button>
         </CardContent>
       </Root>
     );
