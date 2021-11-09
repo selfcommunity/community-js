@@ -22,34 +22,56 @@ A set of React components UI to use to integrate a community.
 
 CommunityUI is available as an [npm package](https://www.npmjs.com/package/@selfcommunity/community-ui).
 
+First install peer dependencies needed to make the library work: 
+
+```sh
+// with npm
+`npm install @mui/material @@emotion/react @emotion/styled react-intl`
+
+// with yarn
+`yarn add @mui/material @@emotion/react @emotion/styled react-intl`
+```
+
+Based on which package you want to install proceed as follows:
+
 Install sc-core:
 
 ```sh
 // with npm
-`npm install @selfcommunity/core @selfcommunity/core`
+`npm install @selfcommunity/i18n @selfcommunity/core`
 
 // with yarn
-`yarn @selfcommunity/core @selfcommunity/core`
+`yarn add @selfcommunity/i18n @selfcommunity/core`
 ```
 
 Install sc-ui package:
 
 ```sh
 // with npm
-`npm install @selfcommunity/core @selfcommunity/ui`
+`npm install @selfcommunity/i18n @selfcommunity/core @selfcommunity/ui`
 
 // with yarn
-`yarn @selfcommunity/core @selfcommunity/ui`
+`yarn add @selfcommunity/i18n @selfcommunity/core @selfcommunity/ui`
 ```
 
 Install sc-templates package:
 
 ```sh
 // with npm
-`npm install @selfcommunity/core @selfcommunity/templates`
+`npm install @selfcommunity/i18n @selfcommunity/core @selfcommunity/templates`
 
 // with yarn
-`yarn @selfcommunity/core @selfcommunity/templates`
+`yarn add @selfcommunity/i18n @selfcommunity/core @selfcommunity/templates`
+```
+
+Install sc-i18n:
+
+```sh
+// with npm
+`npm install @selfcommunity/i18n`
+
+// with yarn
+`yarn add @selfcommunity/i18n`
 ```
 
 ## Usage
