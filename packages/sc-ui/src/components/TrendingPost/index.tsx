@@ -4,10 +4,9 @@ import List from '@mui/material/List';
 import {Button, Typography} from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import {Endpoints, http} from '@selfcommunity/core';
+import {Endpoints, http, withSCTheme} from '@selfcommunity/core';
 import Post from '../Post';
 import TrendingPostSkeleton from '../Skeleton/TrendingPostSkeleton';
-import {withSCTheme} from '@selfcommunity/core';
 import {AxiosResponse} from 'axios';
 
 const PREFIX = 'SCTrendingPost';
@@ -21,7 +20,7 @@ const Root = styled(Card, {
   marginBottom: theme.spacing(2)
 }));
 
-function SCTrendingPost({scInterestId = null}: {scInterestId?: number}): JSX.Element {
+function SCTrendingPost({scCategoryId = null}: {scCategoryId?: number}): JSX.Element {
   const [posts, setPosts] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [hasMore, setHasMore] = useState<boolean>(false);
@@ -30,7 +29,7 @@ function SCTrendingPost({scInterestId = null}: {scInterestId?: number}): JSX.Ele
   function fetchTrendingPost() {
     http
       .request({
-        url: Endpoints.CategoryTrendingFeed.url({id: scInterestId}),
+        url: Endpoints.CategoryTrendingFeed.url({id: scCategoryId}),
         method: Endpoints.CategoryTrendingFeed.method
       })
       .then((res: AxiosResponse<any>) => {
@@ -47,7 +46,11 @@ function SCTrendingPost({scInterestId = null}: {scInterestId?: number}): JSX.Ele
   function getAlltypes(data) {
     const discussion = data.map((t) => t.discussion);
     const post = data.map((t) => t.post);
-    return discussion.concat(post);
+    const status = data.map((s) => s.status);
+    const array = discussion.concat(post).concat(status);
+    return array.filter(function (el) {
+      return el != null;
+    });
   }
 
   useEffect(() => {

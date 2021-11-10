@@ -20,7 +20,7 @@ const Root = styled(Card, {
   marginBottom: theme.spacing(2)
 }));
 
-function SCPeopleSuggestion(props): JSX.Element {
+function PeopleSuggestion(props): JSX.Element {
   const [users, setUsers] = useState<SCUserType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [hasMore, setHasMore] = useState<boolean>(false);
@@ -84,4 +84,4 @@ function SCPeopleSuggestion(props): JSX.Element {
   );
 }
 
-export default SCPeopleSuggestion;
+export default PeopleSuggestion;

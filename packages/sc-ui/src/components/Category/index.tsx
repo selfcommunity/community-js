@@ -3,14 +3,15 @@ import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import {Avatar, Button, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText} from '@mui/material';
+import {Avatar, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText} from '@mui/material';
 import {Endpoints, http} from '@selfcommunity/core';
-import InterestBoxSkeleton from '../Skeleton/InterestBoxSkeleton';
+import CategoryBoxSkeleton from '../Skeleton/CategoryBoxSkeleton';
 import FollowButton from '../Button';
 import {withSCTheme} from '@selfcommunity/core';
 import {AxiosResponse} from 'axios';
+import {SCCategoryType} from '@selfcommunity/core/src/types';
 
-const PREFIX = 'SCInterest';
+const PREFIX = 'Category';
 
 const Root = styled(Card, {
   name: PREFIX,
@@ -21,37 +22,31 @@ const Root = styled(Card, {
   marginBottom: theme.spacing(2)
 }));
 
-export interface SCInterestType {
-  name: string;
-  image_original?: string;
-  slogan?: string;
-}
-
-function SCInterest({
-  scInterestId = null,
-  scInterest = null,
-  contained = true,
-  followed = false
+function Category({
+  scCategoryId = null,
+  scCategory = null,
+  contained = true
 }: {
-  scInterestId?: number;
-  scInterest?: SCInterestType;
+  scCategoryId?: number;
+  scCategory?: SCCategoryType;
   contained: boolean;
-  followed: boolean;
 }): JSX.Element {
-  const [interest, setInterest] = useState<SCInterestType>(scInterest);
+  const [category, setCategory] = useState<SCCategoryType>(scCategory);
+  const [followed, setFollowed] = useState<boolean>(false);
+  const buttonText = followed ? 'Followed' : 'Follow';
 
   /**
-   * If interest not in props, attempt to get the interest by id (in props) if exist
+   * If category not in props, attempt to get the interest by id (in props) if exist
    */
-  function fetchInterest() {
+  function fetchCategory() {
     http
       .request({
-        url: Endpoints.Category.url({id: scInterestId}),
+        url: Endpoints.Category.url({id: scCategoryId}),
         method: Endpoints.Category.method
       })
-      .then((res: AxiosResponse<SCInterestType>) => {
+      .then((res: AxiosResponse<SCCategoryType>) => {
         const data = res.data;
-        setInterest(data);
+        setCategory(data);
       })
       .catch((error) => {
         console.log(error);
@@ -63,27 +58,31 @@ function SCInterest({
    * @return {JSX.Element}
    */
   function renderFollowStatus() {
-    return <React.Fragment>{followed ? <FollowButton>Followed</FollowButton> : <FollowButton>Follow</FollowButton>}</React.Fragment>;
+    return (
+      <React.Fragment>
+        <FollowButton>{buttonText}</FollowButton>
+      </React.Fragment>
+    );
   }
 
   useEffect(() => {
-    if (!interest) {
-      fetchInterest();
+    if (!category) {
+      fetchCategory();
     }
   }, []);
 
-  const i = (
+  const c = (
     <React.Fragment>
-      {interest ? (
+      {category ? (
         <ListItem button={true}>
           <ListItemAvatar>
-            <Avatar alt={interest.name} src={interest.image_original} variant="square" />
+            <Avatar alt={category.name} src={category.image_original} variant="square" />
           </ListItemAvatar>
-          <ListItemText primary={interest.name} secondary={interest.slogan} />
+          <ListItemText primary={category.name} secondary={category.slogan} />
           <ListItemSecondaryAction>{renderFollowStatus()}</ListItemSecondaryAction>
         </ListItem>
       ) : (
-        <InterestBoxSkeleton contained />
+        <CategoryBoxSkeleton contained />
       )}
     </React.Fragment>
   );
@@ -92,12 +91,12 @@ function SCInterest({
     return (
       <Root variant="outlined">
         <CardContent>
-          <List>{i}</List>
+          <List>{c}</List>
         </CardContent>
       </Root>
     );
   }
-  return i;
+  return c;
 }
 
-export default withSCTheme(SCInterest);
+export default withSCTheme(Category);

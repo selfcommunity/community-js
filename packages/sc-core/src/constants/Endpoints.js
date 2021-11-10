@@ -2,7 +2,14 @@ import {urlReplacer} from '../utils/url';
 
 export default {
   /**
-   * Category Endpoints
+   * Preferences Endpoints
+   */
+  Preferences: {
+    url: urlReplacer('/api/v2/dynamic_preference/'),
+    method: 'GET',
+  },
+  /**
+   * Categories Endpoints
    */
   CategoryList: {
     url: urlReplacer('/api/v2/category/'),
@@ -12,8 +19,12 @@ export default {
     url: urlReplacer('/api/v2/category/$(id)/'),
     method: 'GET',
   },
-  CategoryFollowed: {
+  CategoriesFollowed: {
     url: urlReplacer('/api/v2/category/followed/'),
+    method: 'GET',
+  },
+  CategorySuggestion: {
+    url: urlReplacer('/api/v2/suggestion/category/'),
     method: 'GET',
   },
   CategoryTrendingFeed: {
@@ -23,6 +34,10 @@ export default {
   CategoryTrendingPeople: {
     url: urlReplacer('/api/v2/category/$(id)/followers/trending/'),
     method: 'GET',
+  },
+  FollowCategory: {
+    url: urlReplacer('/api/v2/category/$(id)/follow/'),
+    method: 'POST',
   },
   /**
    * User Endpoints
@@ -39,11 +54,6 @@ export default {
     url: urlReplacer('/api/v2/user/me/'),
     method: 'GET',
   },
-  // Preferences
-  Preferences: {
-    url: urlReplacer('/api/v2/dynamic_preference/'),
-    method: 'GET',
-  },
   /**
    * Suggestion Endpoints
    */
@@ -51,8 +61,8 @@ export default {
     url: urlReplacer('/api/v2/suggestion/user/'),
     method: 'GET',
   },
-  CategorySuggestion: {
-    url: urlReplacer('/api/v2/suggestion/category/'),
+  Platform: {
+    url: urlReplacer('/api/v2/user/me/platform_url'),
     method: 'GET',
   },
   /**

@@ -1,17 +1,16 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import {Avatar, Box, Grid, Link, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
-import {Endpoints, http, SCUserType} from '@selfcommunity/core';
+import {Endpoints, http, SCUserType, withSCTheme} from '@selfcommunity/core';
 import {PostBoxSkeleton} from '@selfcommunity/ui';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import TimeAgo from 'timeago-react';
-import {withSCTheme} from '@selfcommunity/core';
 import {AxiosResponse} from 'axios';
 
-const PREFIX = 'SCPost';
+const PREFIX = 'Post';
 
 const Root = styled(Card, {
   name: PREFIX,
@@ -29,25 +28,31 @@ export interface SCPostType {
   author?: SCUserType;
 }
 
-function Post({scInterestId = null, scPost = null, contained = true}: {scInterestId?: number; scPost?: SCPostType; contained: boolean}): JSX.Element {
+function Post({scCategoryId = null, scPost = null, contained = true}: {scCategoryId?: number; scPost?: SCPostType; contained: boolean}): JSX.Element {
   const [post, setPost] = useState<SCPostType>(scPost);
 
   /**
-   * If interest not in props, attempt to get the interest by id (in props) if exist
+   * If post not in props, attempt to get it by category id (in props) if exist
    */
   function fetchPost() {
     http
       .request({
-        url: Endpoints.CategoryTrendingFeed.url({id: scInterestId}),
+        url: Endpoints.CategoryTrendingFeed.url({id: scCategoryId}),
         method: Endpoints.CategoryTrendingFeed.method
       })
       .then((res: AxiosResponse<any>) => {
         const data = res.data;
-        setPost(data.results[0].discussion);
+        setPost(selectPost(data.results));
       })
       .catch((error) => {
         console.log(error);
       });
+  }
+
+  function selectPost(results) {
+    const res = results[Math.floor(Math.random() * results.length)];
+    const type = res.type;
+    return res[type];
   }
 
   useEffect(() => {

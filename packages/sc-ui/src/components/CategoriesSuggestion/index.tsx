@@ -5,12 +5,13 @@ import {Button, Divider, Typography} from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import {Endpoints, http} from '@selfcommunity/core';
-import InterestSuggestionSkeleton from '../Skeleton/InterestSuggestionSkeleton';
-import Interest from '../Interest';
+import CategoriesSuggestionSkeleton from '../Skeleton/CategoriesSuggestionSkeleton';
+import Category from '../Category';
 import {withSCTheme} from '@selfcommunity/core';
 import {AxiosResponse} from 'axios';
+import {SCCategoryType} from '@selfcommunity/core/src/types';
 
-const PREFIX = 'SCInterestSuggestion';
+const PREFIX = 'CategoriesSuggestion';
 
 const Root = styled(Card, {
   name: PREFIX,
@@ -21,14 +22,13 @@ const Root = styled(Card, {
   marginBottom: theme.spacing(2)
 }));
 
-function SCInterestSuggestion(): JSX.Element {
-  const [interests, setInterests] = useState<any[]>([]);
+function CategoriesSuggestion(): JSX.Element {
+  const [categories, setCategories] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [hasMore, setHasMore] = useState<boolean>(false);
-  const [followed, setFollowed] = useState<boolean>(false);
-  const [openInterestSuggestionDialog, setOpenInterestSuggestionDialog] = useState<boolean>(false);
+  const [openCategoriesSuggestionDialog, setOpenCategoriesSuggestionDialog] = useState<boolean>(false);
 
-  function fetchInterestSuggestion() {
+  function fetchCategoriesSuggestion() {
     http
       .request({
         url: Endpoints.CategorySuggestion.url(),
@@ -36,10 +36,9 @@ function SCInterestSuggestion(): JSX.Element {
       })
       .then((res: AxiosResponse<any>) => {
         const data = res.data;
-        setInterests(data.results);
+        setCategories(data.results);
         setHasMore(data.count > 4);
         setLoading(false);
-        setFollowed(false);
       })
       .catch((error) => {
         console.log(error);
@@ -47,32 +46,32 @@ function SCInterestSuggestion(): JSX.Element {
   }
 
   useEffect(() => {
-    fetchInterestSuggestion();
+    fetchCategoriesSuggestion();
   }, []);
 
   if (loading) {
-    return <InterestSuggestionSkeleton />;
+    return <CategoriesSuggestionSkeleton />;
   }
   return (
     <Root variant={'outlined'}>
       <CardContent>
         <Typography variant="body1">Explore Interests</Typography>
         <List>
-          {interests.slice(0, 4).map((interest: {name: string}, index) => (
-            <div key={index}>
-              <Interest contained={false} scInterest={interest} followed={followed} />
+          {categories.slice(0, 4).map((category: SCCategoryType) => (
+            <div>
+              <Category contained={false} scCategory={category} key={category.id} />
               <Divider />
             </div>
           ))}
         </List>
         {hasMore && (
-          <Button size="small" onClick={() => setOpenInterestSuggestionDialog(true)}>
+          <Button size="small" onClick={() => setOpenCategoriesSuggestionDialog(true)}>
             See More
           </Button>
         )}
-        {openInterestSuggestionDialog && <></>}
+        {openCategoriesSuggestionDialog && <></>}
       </CardContent>
     </Root>
   );
 }
-export default withSCTheme(SCInterestSuggestion);
+export default withSCTheme(CategoriesSuggestion);

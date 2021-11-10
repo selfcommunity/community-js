@@ -14,11 +14,7 @@ import {
   SCPreferencesContext,
   SCUserContextType,
   SCUserType,
-  SCPreferencesContextType,
-  SCThemeContextType,
-  useSCTheme,
-  SCLocaleContextType,
-  SCLocaleContext
+  SCPreferencesContextType
 } from '@selfcommunity/core';
 
 const PREFIX = 'SCUser';
@@ -35,8 +31,6 @@ const Root = styled(Card, {
 function User({scUserId = null, scUser = null, contained = true}: {scUserId?: number; scUser?: SCUserType; contained: boolean}): JSX.Element {
   const [user, setUser] = useState<SCUserType>(scUser);
   const scPreferencesContext: SCPreferencesContextType = useContext(SCPreferencesContext);
-  const scThemeContext: SCThemeContextType = useSCTheme();
-  const scLocaleContext: SCLocaleContextType = useContext(SCLocaleContext);
   const scAuthContext: SCUserContextType = useContext(SCUserContext);
   const followEnabled =
     SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED in scPreferencesContext.preferences &&

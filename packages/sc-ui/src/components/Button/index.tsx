@@ -1,9 +1,9 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Button} from '@mui/material';
 import {withSCTheme} from '@selfcommunity/core';
 
-const PREFIX = 'SCFollowButton';
+const PREFIX = 'FollowButton';
 
 const SCButton = styled(Button, {
   name: PREFIX,
@@ -21,11 +21,13 @@ const SCButton = styled(Button, {
 }));
 
 function FollowButton({onClick, children}: {onClick?: () => void | undefined; children?: React.ReactNode}): JSX.Element {
-  return (
-    <SCButton size="small" onClick={onClick}>
-      {children}
-    </SCButton>
-  );
+  const [followed, setFollowed] = useState<boolean>(false);
+
+  function handleFollow() {
+    setFollowed(true);
+  }
+
+  return <SCButton size="small">{children}</SCButton>;
 }
 
 export default withSCTheme(FollowButton);

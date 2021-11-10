@@ -4,12 +4,10 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemText from '@mui/material/ListItemText';
-import {Button} from '@mui/material';
-import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
 import {styled} from '@mui/material/styles';
 import Skeleton from '@mui/material/Skeleton';
 
-const PREFIX = 'SCInterestBoxSkeleton';
+const PREFIX = 'CategoryBoxSkeleton';
 
 const classes = {
   list: `${PREFIX}-list`
@@ -25,15 +23,15 @@ const Root = styled(Card)(({theme}) => ({
   }
 }));
 
-export interface SCInterestBoxProps {
+export interface CategoryBoxProps {
   /**
    * Contained
    */
   contained: boolean;
 }
 
-export default function InterestBoxSkeleton({contained = false}: SCInterestBoxProps): JSX.Element {
-  const interest = (
+export default function CategoryBoxSkeleton({contained = false}: CategoryBoxProps): JSX.Element {
+  const category = (
     <ListItem>
       <ListItemAvatar>
         <Skeleton animation="wave" variant="rectangular" width={40} height={40} />
@@ -42,19 +40,14 @@ export default function InterestBoxSkeleton({contained = false}: SCInterestBoxPr
         primary={<Skeleton animation="wave" height={10} width={120} style={{marginBottom: 10}} />}
         secondary={<Skeleton animation="wave" height={10} width={70} style={{marginBottom: 10}} />}
       />
-      {/*<ListItemSecondaryAction>*/}
-      {/*  <Button size="small" variant="outlined" disabled>*/}
-      {/*    <Skeleton animation="wave" height={10} width={50} style={{marginTop: 5, marginBottom: 5}} />*/}
-      {/*  </Button>*/}
-      {/*</ListItemSecondaryAction>*/}
     </ListItem>
   );
   if (contained) {
     return (
       <Root variant={'outlined'}>
-        <List>{interest}</List>
+        <List>{category}</List>
       </Root>
     );
   }
-  return interest;
+  return category;
 }

@@ -10,7 +10,7 @@ import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
 import {withSCTheme} from '@selfcommunity/core';
 import {AxiosResponse} from 'axios';
 
-const PREFIX = 'SCPerson';
+const PREFIX = 'Person';
 
 const Root = styled(Card, {
   name: PREFIX,
@@ -26,11 +26,11 @@ export interface SCPersonType extends SCUserType {
 }
 
 function Person({
-  scInterestId = null,
+  scCategoryId = null,
   scPerson = null,
   contained = true
 }: {
-  scInterestId?: number;
+  scCategoryId?: number;
   scPerson?: SCPersonType;
   contained: boolean;
 }): JSX.Element {
@@ -42,7 +42,7 @@ function Person({
   function fetchPerson() {
     http
       .request({
-        url: Endpoints.CategoryTrendingPeople.url({id: scInterestId}),
+        url: Endpoints.CategoryTrendingPeople.url({id: scCategoryId}),
         method: Endpoints.CategoryTrendingPeople.method
       })
       .then((res: AxiosResponse<any>) => {

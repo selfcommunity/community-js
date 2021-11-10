@@ -1,19 +1,19 @@
 import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
 
-import Interest from './index';
+import CategoriesFollowed from './index';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC UI/Interest',
-  component: Interest
+  title: 'Design System/SC UI/Categories Followed',
+  component: CategoriesFollowed
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
-} as ComponentMeta<typeof Interest>;
+} as ComponentMeta<typeof CategoriesFollowed>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof Interest> = (args) => (
+const Template: ComponentStory<typeof CategoriesFollowed> = (args) => (
   <div style={{width: 400}}>
-    <Interest scInterestId={1} {...args} />
+    <CategoriesFollowed {...args} />
   </div>
 );
 

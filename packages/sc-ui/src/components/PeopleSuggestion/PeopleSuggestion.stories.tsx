@@ -14,16 +14,7 @@ export default {
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const Template: ComponentStory<typeof PeopleSuggestion> = (args) => (
   <div style={{width: 400}}>
-    <ThemeProvider
-      theme={createTheme({
-        palette: {
-          secondary: {
-            main: '#dc1616'
-          }
-        }
-      })}>
-      <PeopleSuggestion {...args} />
-    </ThemeProvider>
+    <PeopleSuggestion {...args} />
   </div>
 );
 
