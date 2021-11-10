@@ -7,7 +7,7 @@ import ListItemText from '@mui/material/ListItemText';
 import {styled} from '@mui/material/styles';
 import Skeleton from '@mui/material/Skeleton';
 
-const PREFIX = 'CategoryBoxSkeleton';
+const PREFIX = 'SCCategoryBoxSkeleton';
 
 const classes = {
   list: `${PREFIX}-list`

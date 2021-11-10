@@ -4,11 +4,11 @@ import List from '@mui/material/List';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import {Button, Grid, ListItem, Typography} from '@mui/material';
-import {Endpoints, http, SCLocaleContextType, SCUserContext, SCUserContextType, useSCLocale, withSCTheme} from '@selfcommunity/core';
+import {Endpoints, http, SCLocaleContextType, SCUserContext, SCUserContextType, useSCLocale} from '@selfcommunity/core';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import {AxiosResponse} from 'axios';
 
-const PREFIX = 'Platform';
+const PREFIX = 'SCPlatform';
 
 const Root = styled(Card, {
   name: PREFIX,
@@ -119,4 +119,4 @@ function Platform({contained = true}: {contained: boolean}): JSX.Element {
   return p;
 }
 
-export default withSCTheme(Platform);
+export default Platform;

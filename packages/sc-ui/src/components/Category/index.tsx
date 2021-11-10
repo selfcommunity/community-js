@@ -7,11 +7,10 @@ import {Avatar, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText}
 import {Endpoints, http} from '@selfcommunity/core';
 import CategoryBoxSkeleton from '../Skeleton/CategoryBoxSkeleton';
 import FollowButton from '../Button';
-import {withSCTheme} from '@selfcommunity/core';
 import {AxiosResponse} from 'axios';
 import {SCCategoryType} from '@selfcommunity/core/src/types';
 
-const PREFIX = 'Category';
+const PREFIX = 'SCCategory';
 
 const Root = styled(Card, {
   name: PREFIX,
@@ -99,4 +98,4 @@ function Category({
   return c;
 }
 
-export default withSCTheme(Category);
+export default Category;

@@ -3,14 +3,13 @@ import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import {Avatar, Button, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText, Typography, TypographyClasses} from '@mui/material';
+import {Avatar, Button, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
 import {Endpoints, http, SCUserType} from '@selfcommunity/core';
 import PersonBoxSkeleton from '../Skeleton/PersonBoxSkeleton';
 import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
-import {withSCTheme} from '@selfcommunity/core';
 import {AxiosResponse} from 'axios';
 
-const PREFIX = 'Person';
+const PREFIX = 'SCPerson';
 
 const Root = styled(Card, {
   name: PREFIX,
@@ -102,4 +101,4 @@ function Person({
   }
   return p;
 }
-export default withSCTheme(Person);
+export default Person;

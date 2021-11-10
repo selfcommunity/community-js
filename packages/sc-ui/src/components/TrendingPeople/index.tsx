@@ -5,12 +5,11 @@ import {Button, Typography} from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import {Endpoints, http} from '@selfcommunity/core';
-import Person from '../Person';
+import Person, {SCPersonType} from '../Person';
 import TrendingPeopleSkeleton from '../Skeleton/TrendingPeopleSkeleton';
-import {withSCTheme} from '@selfcommunity/core';
 import {AxiosResponse} from 'axios';
 
-const PREFIX = 'SCTrendingPeople.';
+const PREFIX = 'SCTrendingPeople';
 
 const Root = styled(Card, {
   name: PREFIX,
@@ -56,7 +55,7 @@ function SCTrendingPeople({scCategoryId = null}: {scCategoryId?: number}): JSX.E
       <CardContent>
         <Typography variant="body1">Trending People</Typography>
         <List>
-          {people.slice(0, 4).map((people: {username: string}, index) => (
+          {people.slice(0, 4).map((people: SCPersonType, index) => (
             <Person contained={false} scPerson={people} key={index} />
           ))}
         </List>
@@ -70,4 +69,4 @@ function SCTrendingPeople({scCategoryId = null}: {scCategoryId?: number}): JSX.E
     </Root>
   );
 }
-export default withSCTheme(SCTrendingPeople);
+export default SCTrendingPeople;

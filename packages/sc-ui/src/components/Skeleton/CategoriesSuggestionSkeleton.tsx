@@ -5,7 +5,7 @@ import List from '@mui/material/List';
 import {styled} from '@mui/material/styles';
 import CategoryBoxSkeleton from './UserBoxSkeleton';
 
-const PREFIX = 'CategoriesSuggestionSkeleton';
+const PREFIX = 'SCCategoriesSuggestionSkeleton';
 
 const classes = {
   list: `${PREFIX}-list`

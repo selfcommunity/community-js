@@ -7,10 +7,9 @@ import CardContent from '@mui/material/CardContent';
 import {Endpoints, http} from '@selfcommunity/core';
 import CategoriesSuggestionSkeleton from '../Skeleton/CategoriesSuggestionSkeleton';
 import Category from '../Category';
-import {withSCTheme} from '@selfcommunity/core';
 import {AxiosResponse} from 'axios';
 
-const PREFIX = 'CategoriesFollowed';
+const PREFIX = 'SCCategoriesFollowed';
 
 const Root = styled(Card, {
   name: PREFIX,
@@ -82,4 +81,4 @@ function CategoriesFollowed(): JSX.Element {
     </Root>
   );
 }
-export default withSCTheme(CategoriesFollowed);
+export default CategoriesFollowed;

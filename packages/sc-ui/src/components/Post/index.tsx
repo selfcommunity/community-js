@@ -4,13 +4,13 @@ import List from '@mui/material/List';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import {Avatar, Box, Grid, Link, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
-import {Endpoints, http, SCUserType, withSCTheme} from '@selfcommunity/core';
+import {Endpoints, http, SCUserType} from '@selfcommunity/core';
 import {PostBoxSkeleton} from '@selfcommunity/ui';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import TimeAgo from 'timeago-react';
 import {AxiosResponse} from 'axios';
 
-const PREFIX = 'Post';
+const PREFIX = 'SCPost';
 
 const Root = styled(Card, {
   name: PREFIX,
@@ -109,4 +109,4 @@ function Post({scCategoryId = null, scPost = null, contained = true}: {scCategor
   }
   return p;
 }
-export default withSCTheme(Post);
+export default Post;

@@ -7,11 +7,10 @@ import CardContent from '@mui/material/CardContent';
 import {Endpoints, http} from '@selfcommunity/core';
 import CategoriesSuggestionSkeleton from '../Skeleton/CategoriesSuggestionSkeleton';
 import Category from '../Category';
-import {withSCTheme} from '@selfcommunity/core';
 import {AxiosResponse} from 'axios';
 import {SCCategoryType} from '@selfcommunity/core/src/types';
 
-const PREFIX = 'CategoriesSuggestion';
+const PREFIX = 'SCCategoriesSuggestion';
 
 const Root = styled(Card, {
   name: PREFIX,
@@ -74,4 +73,4 @@ function CategoriesSuggestion(): JSX.Element {
     </Root>
   );
 }
-export default withSCTheme(CategoriesSuggestion);
+export default CategoriesSuggestion;

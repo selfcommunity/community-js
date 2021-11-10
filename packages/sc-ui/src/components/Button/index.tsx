@@ -1,9 +1,8 @@
 import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Button} from '@mui/material';
-import {withSCTheme} from '@selfcommunity/core';
 
-const PREFIX = 'FollowButton';
+const PREFIX = 'SCFollowButton';
 
 const SCButton = styled(Button, {
   name: PREFIX,
@@ -30,4 +29,4 @@ function FollowButton({onClick, children}: {onClick?: () => void | undefined; ch
   return <SCButton size="small">{children}</SCButton>;
 }
 
-export default withSCTheme(FollowButton);
+export default FollowButton;

@@ -4,7 +4,7 @@ import List from '@mui/material/List';
 import {Button, Typography} from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import {Endpoints, http, withSCTheme} from '@selfcommunity/core';
+import {Endpoints, http} from '@selfcommunity/core';
 import Post from '../Post';
 import TrendingPostSkeleton from '../Skeleton/TrendingPostSkeleton';
 import {AxiosResponse} from 'axios';
@@ -20,7 +20,7 @@ const Root = styled(Card, {
   marginBottom: theme.spacing(2)
 }));
 
-function SCTrendingPost({scCategoryId = null}: {scCategoryId?: number}): JSX.Element {
+function TrendingPost({scCategoryId = null}: {scCategoryId?: number}): JSX.Element {
   const [posts, setPosts] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [hasMore, setHasMore] = useState<boolean>(false);
@@ -79,4 +79,4 @@ function SCTrendingPost({scCategoryId = null}: {scCategoryId?: number}): JSX.Ele
     </Root>
   );
 }
-export default withSCTheme(SCTrendingPost);
+export default TrendingPost;

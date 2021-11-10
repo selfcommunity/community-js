@@ -7,7 +7,6 @@ import CardContent from '@mui/material/CardContent';
 import {Endpoints, http, SCUserType} from '@selfcommunity/core';
 import PeopleSuggestionSkeleton from '../Skeleton/PeopleSuggestionSkeleton';
 import User from '../User';
-import {withSCTheme} from '@selfcommunity/core';
 import {AxiosResponse} from 'axios';
 
 const PREFIX = 'SCUserFollowers';
@@ -117,4 +116,4 @@ function SCUserFollowers({scPersonId = null}: {scPersonId?: number}): JSX.Elemen
     </Root>
   );
 }
-export default withSCTheme(SCUserFollowers);
+export default SCUserFollowers;
