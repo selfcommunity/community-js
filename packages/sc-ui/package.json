@@ -60,7 +60,7 @@
     "@selfcommunity/core": "^0.1.0",
     "@mui/lab": "~5.0.0-alpha.54",
     "@mui/icons-material": "^5.1.0",
-    "@mui/styles": "^5.1.0",
+    "@mui/styles": ">=5.1.0",
     "@rpldy/chunked-uploady": "^0.14.1",
     "@rpldy/chunked-sender": "^0.14.1",
     "@rpldy/upload-button": "^0.14.1",

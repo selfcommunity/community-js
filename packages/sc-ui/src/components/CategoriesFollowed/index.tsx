@@ -66,7 +66,7 @@ function CategoriesFollowed(): JSX.Element {
         <List>
           {categories.slice(0, visibleCategories).map((category, index) => (
             <div key={index}>
-              <Category contained={false} scCategory={category} followed={followed} />
+              <Category contained={false} scCategory={category} />
               <Divider />
             </div>
           ))}
