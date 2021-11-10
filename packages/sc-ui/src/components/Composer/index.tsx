@@ -65,7 +65,7 @@ import {AxiosResponse} from 'axios';
 import {CHUNK_EVENTS} from '@rpldy/chunked-sender';
 import Link from '../Post/Medias/Link';
 import Medias from '../Post/Medias';
-import Editor from '../../shared/Editor';
+import Editor from '../Editor';
 
 const DialogTransition = forwardRef(function Transition(
   props: TransitionProps & {
@@ -324,7 +324,7 @@ export default function Composer({
 }: {
   open?: boolean;
   view?: string;
-  onClose?: Function;
+  onClose?: (event: SyntheticEvent) => void;
   onSuccess?: (res: any) => void;
 }): JSX.Element {
   // Refs
@@ -343,7 +343,6 @@ export default function Composer({
   const intl = useIntl();
 
   // State variables
-  const [_open, setOpen] = useState(open);
   const [fades, setFades] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [_view, setView] = useState(view);
@@ -470,7 +469,7 @@ export default function Composer({
 
   const handleClose = (event: SyntheticEvent): void => {
     dispatch({type: 'reset'});
-    onClose && onClose();
+    onClose && onClose(event);
   };
 
   const handleFadeIn = (obj: string) => {
@@ -536,7 +535,7 @@ export default function Composer({
           <Box className={classes.mediasActions} onMouseEnter={handleFadeIn(MEDIA_TYPE_IMAGE)} onMouseLeave={handleFadeOut(MEDIA_TYPE_IMAGE)}>
             <Fade in={Boolean(fades[MEDIA_TYPE_IMAGE])}>
               <Typography align="left">
-                <Button onClick={() => setView(IMAGES_VIEW)} variant="contained" color="primary" size="small">
+                <Button onClick={handleChangeView(IMAGES_VIEW)} variant="contained" color="primary" size="small">
                   <WriteIcon /> <FormattedMessage id="thread.dialog.media.images.edit" defaultMessage="thread.dialog.media.images.edit" />
                 </Button>
               </Typography>
@@ -553,7 +552,7 @@ export default function Composer({
           <Box className={classes.mediasActions} onMouseEnter={handleFadeIn(MEDIA_TYPE_VIDEO)} onMouseLeave={handleFadeOut(MEDIA_TYPE_VIDEO)}>
             <Fade in={Boolean(fades[MEDIA_TYPE_VIDEO])}>
               <Typography align="left">
-                <Button onClick={() => setView(VIDEOS_VIEW)} variant="contained" color="primary" size="small">
+                <Button onClick={handleChangeView(VIDEOS_VIEW)} variant="contained" color="primary" size="small">
                   <WriteIcon /> <FormattedMessage id="thread.dialog.media.videos.edit" defaultMessage="thread.dialog.media.videos.edit" />
                 </Button>
               </Typography>
@@ -574,7 +573,7 @@ export default function Composer({
             onMouseLeave={handleFadeOut(MEDIA_TYPE_DOCUMENT)}>
             <Fade in={Boolean(fades[MEDIA_TYPE_DOCUMENT])}>
               <Typography align="left">
-                <Button onClick={() => setView(DOCUMENTS_VIEW)} variant="contained" color="primary" size="small">
+                <Button onClick={handleChangeView(DOCUMENTS_VIEW)} variant="contained" color="primary" size="small">
                   <WriteIcon /> <FormattedMessage id="thread.dialog.media.images.edit" defaultMessage="thread.dialog.media.images.edit" />
                 </Button>
               </Typography>
@@ -591,7 +590,7 @@ export default function Composer({
           <Box className={classes.mediasActions} onMouseEnter={handleFadeIn(MEDIA_TYPE_LINK)} onMouseLeave={handleFadeOut(MEDIA_TYPE_LINK)}>
             <Fade in={Boolean(fades[MEDIA_TYPE_LINK])}>
               <Typography align="left">
-                <Button onClick={() => setView(LINKS_VIEW)} variant="contained" color="primary" size="small">
+                <Button onClick={handleChangeView(LINKS_VIEW)} variant="contained" color="primary" size="small">
                   <WriteIcon /> <FormattedMessage id="thread.dialog.media.links.edit" defaultMessage="thread.dialog.media.links.edit" />
                 </Button>
               </Typography>
@@ -686,7 +685,7 @@ export default function Composer({
       <React.Fragment>
         <DialogTitle className={classes.title}>
           <Typography align="left" component="div">
-            <IconButton onClick={() => setView(MAIN_VIEW)} size="small">
+            <IconButton onClick={handleChangeView(MAIN_VIEW)} size="small">
               <BackIcon />
             </IconButton>
             <FormattedMessage id="thread.audience.title" defaultMessage="thread.audience.title" />
@@ -695,7 +694,7 @@ export default function Composer({
             <Avatar className={classes.avatar} src={scAuthContext.user.avatar}></Avatar>
           </Box>
           <Box sx={{textAlign: 'right'}}>
-            <Button onClick={() => setView(MAIN_VIEW)} variant="outlined">
+            <Button onClick={handleChangeView(MAIN_VIEW)} variant="outlined">
               <FormattedMessage id="thread.dialog.done" defaultMessage="thread.dialog.done" />
             </Button>
           </Box>
@@ -736,7 +735,7 @@ export default function Composer({
       <React.Fragment>
         <DialogTitle className={classes.title}>
           <Typography align="left" component="div">
-            <IconButton onClick={() => setView(MAIN_VIEW)} size="small">
+            <IconButton onClick={handleChangeView(MAIN_VIEW)} size="small">
               <BackIcon />
             </IconButton>
             <FormattedMessage id="thread.dialog.media.images.edit" defaultMessage="thread.dialog.media.images.edit" />
@@ -745,7 +744,7 @@ export default function Composer({
             <Avatar className={classes.avatar} src={scAuthContext.user.avatar}></Avatar>
           </Box>
           <Box sx={{textAlign: 'right'}}>
-            <Button onClick={() => setView(MAIN_VIEW)} variant="outlined">
+            <Button onClick={handleChangeView(MAIN_VIEW)} variant="outlined">
               <FormattedMessage id="thread.dialog.done" defaultMessage="thread.dialog.done" />
             </Button>
           </Box>
@@ -838,7 +837,7 @@ export default function Composer({
       <React.Fragment>
         <DialogTitle className={classes.title}>
           <Typography align="left" component="div">
-            <IconButton onClick={() => setView(MAIN_VIEW)} size="small">
+            <IconButton onClick={handleChangeView(MAIN_VIEW)} size="small">
               <BackIcon />
             </IconButton>
             <FormattedMessage id="thread.dialog.media.documents.edit" defaultMessage="thread.dialog.media.documents.edit" />
@@ -847,7 +846,7 @@ export default function Composer({
             <Avatar className={classes.avatar} src={scAuthContext.user.avatar}></Avatar>
           </Box>
           <Box sx={{textAlign: 'right'}}>
-            <Button onClick={() => setView(MAIN_VIEW)} variant="outlined">
+            <Button onClick={handleChangeView(MAIN_VIEW)} variant="outlined">
               <FormattedMessage id="thread.dialog.done" defaultMessage="thread.dialog.done" />
             </Button>
           </Box>
@@ -932,7 +931,7 @@ export default function Composer({
       <React.Fragment>
         <DialogTitle className={classes.title}>
           <Typography align="left" component="div">
-            <IconButton onClick={() => setView(MAIN_VIEW)} size="small">
+            <IconButton onClick={handleChangeView(MAIN_VIEW)} size="small">
               <BackIcon />
             </IconButton>
             <FormattedMessage id="thread.dialog.media.links.edit" defaultMessage="thread.dialog.media.links.edit" />
@@ -941,7 +940,7 @@ export default function Composer({
             <Avatar className={classes.avatar} src={scAuthContext.user.avatar}></Avatar>
           </Box>
           <Box sx={{textAlign: 'right'}}>
-            <Button onClick={() => setView(MAIN_VIEW)} variant="outlined">
+            <Button onClick={handleChangeView(MAIN_VIEW)} variant="outlined">
               <FormattedMessage id="thread.dialog.done" defaultMessage="thread.dialog.done" />
             </Button>
           </Box>
@@ -1103,12 +1102,12 @@ export default function Composer({
               accept="application/pdf">
               <DocumentUploadIconButton inputFieldName="document" ref={this.documentsUploadRef} />
             </ChunkedUploady>
-            <IconButton aria-label="add link" onClick={() => setView(LINKS_VIEW)} size="large">
+            <IconButton aria-label="add link" onClick={handleChangeView(LINKS_VIEW)} size="large">
               <LinkIcon />
             </IconButton>
           </Typography>
           <Typography align="right">
-            <IconButton onClick={() => setView(AUDIENCE_VIEW)} size="large">
+            <IconButton onClick={handleChangeView(AUDIENCE_VIEW)} size="large">
               {addressing.length > 0 ? <TagIcon /> : <PublicIcon />}
             </IconButton>
             <LoadingButton

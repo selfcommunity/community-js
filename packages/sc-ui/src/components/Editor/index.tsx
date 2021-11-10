@@ -1,12 +1,12 @@
-import React, {Component} from 'react';
+import React, { RefObject, useMemo } from 'react';
 import {styled} from '@mui/material/styles';
-import PropTypes from 'prop-types';
 import {ContentState, convertFromHTML, convertToRaw} from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
-import {defineMessages, injectIntl, useIntl} from 'react-intl';
-import MUIRichTextEditor from 'mui-rte';
-import {Box} from '@mui/material';
-import CircularProgress from '@mui/material/CircularProgress';
+import {defineMessages, useIntl} from 'react-intl';
+import MUIRichTextEditor, {TMUIRichTextEditorRef} from 'mui-rte';
+import { Box, useControlled } from '@mui/material';
+import { SCPreferences } from '@selfcommunity/core';
+import { DOCUMENTS_VIEW, IMAGES_VIEW, VIDEOS_VIEW } from '../Composer';
 
 const PREFIX = 'SCEditor';
 
@@ -37,21 +37,24 @@ export default function Editor({
   defaultValue?: string;
   onChange?: (value: string) => void;
 }): JSX.Element {
-  const editor = React.createRef();
+  const editor: RefObject<TMUIRichTextEditorRef> = React.createRef();
 
   // INTL
   const intl = useIntl();
 
-  const blocksFromHTML = convertFromHTML(defaultValue);
-  const content = JSON.stringify(ContentState.createFromBlockArray(blocksFromHTML.contentBlocks, blocksFromHTML.entityMap));
+  // Default editor content
+  const content: string = useMemo(() => {
+    const contentHTML = convertFromHTML(defaultValue);
+    const state = ContentState.createFromBlockArray(contentHTML.contentBlocks, contentHTML.entityMap);
+    return JSON.stringify(convertToRaw(state));
+  }, []);
 
   const handleChange = (editor) => {
     onChange && onChange(draftToHtml(convertToRaw(editor.getCurrentContent())));
   };
 
   const handleFocus = () => {
-    const target = editor.current as HTMLElement;
-    target.focus();
+    editor.current.focus();
   };
 
   return (
@@ -59,7 +62,7 @@ export default function Editor({
       <MUIRichTextEditor
         label={intl.formatMessage(messages.placeholder)}
         onChange={handleChange}
-        ref={this.editor}
+        ref={editor}
         defaultValue={content}
         inlineToolbarControls={['bold', 'italic', 'underline', 'strikethrough', 'highlight', 'link', 'clear']}
         toolbar={false}
