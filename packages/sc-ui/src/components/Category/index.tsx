@@ -24,14 +24,15 @@ const Root = styled(Card, {
 function Category({
   scCategoryId = null,
   scCategory = null,
-  contained = true
+  contained = true,
+  followed = null
 }: {
   scCategoryId?: number;
   scCategory?: SCCategoryType;
   contained: boolean;
+  followed: boolean;
 }): JSX.Element {
   const [category, setCategory] = useState<SCCategoryType>(scCategory);
-  const [followed, setFollowed] = useState<boolean>(false);
   const buttonText = followed ? 'Followed' : 'Follow';
 
   /**
@@ -52,18 +53,6 @@ function Category({
       });
   }
 
-  /**
-   * Render follow status
-   * @return {JSX.Element}
-   */
-  function renderFollowStatus() {
-    return (
-      <React.Fragment>
-        <FollowButton>{buttonText}</FollowButton>
-      </React.Fragment>
-    );
-  }
-
   useEffect(() => {
     if (!category) {
       fetchCategory();
@@ -78,7 +67,9 @@ function Category({
             <Avatar alt={category.name} src={category.image_original} variant="square" />
           </ListItemAvatar>
           <ListItemText primary={category.name} secondary={category.slogan} />
-          <ListItemSecondaryAction>{renderFollowStatus()}</ListItemSecondaryAction>
+          <ListItemSecondaryAction>
+            <FollowButton scCategoryId={category.id}>{buttonText}</FollowButton>
+          </ListItemSecondaryAction>
         </ListItem>
       ) : (
         <CategoryBoxSkeleton contained />

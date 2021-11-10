@@ -1,6 +1,9 @@
 import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Button} from '@mui/material';
+import {SCCategoryType} from '@selfcommunity/core/src/types';
+import {Endpoints, http} from '@selfcommunity/core';
+import {AxiosResponse} from 'axios';
 
 const PREFIX = 'SCFollowButton';
 
@@ -19,14 +22,34 @@ const SCButton = styled(Button, {
   paddingLeft: '16px'
 }));
 
-function FollowButton({onClick, children}: {onClick?: () => void | undefined; children?: React.ReactNode}): JSX.Element {
-  const [followed, setFollowed] = useState<boolean>(false);
-
-  function handleFollow() {
-    setFollowed(true);
+function FollowButton({
+  onClick,
+  children,
+  scCategoryId
+}: {
+  onClick?: () => void | undefined;
+  children?: React.ReactNode;
+  scCategoryId?: number;
+}): JSX.Element {
+  function followCategory() {
+    http
+      .request({
+        url: Endpoints.FollowCategory.url({id: scCategoryId}),
+        method: Endpoints.FollowCategory.method
+      })
+      .then((res: AxiosResponse<any>) => {
+        console.log(res);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
-  return <SCButton size="small">{children}</SCButton>;
+  return (
+    <SCButton size="small" onClick={() => followCategory()}>
+      {children}
+    </SCButton>
+  );
 }
 
 export default FollowButton;

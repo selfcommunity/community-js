@@ -8,6 +8,7 @@ import {Endpoints, http} from '@selfcommunity/core';
 import CategoriesSuggestionSkeleton from '../Skeleton/CategoriesSuggestionSkeleton';
 import Category from '../Category';
 import {AxiosResponse} from 'axios';
+import {SCCategoryType} from '@selfcommunity/core/src/types';
 
 const PREFIX = 'SCCategoriesFollowed';
 
@@ -64,9 +65,9 @@ function CategoriesFollowed(): JSX.Element {
       <CardContent>
         <Typography variant="body1">{total} Interests</Typography>
         <List>
-          {categories.slice(0, visibleCategories).map((category, index) => (
+          {categories.slice(0, visibleCategories).map((category: SCCategoryType, index) => (
             <div key={index}>
-              <Category contained={false} scCategory={category} />
+              <Category contained={false} scCategory={category} followed={followed} key={category.id} />
               <Divider />
             </div>
           ))}
