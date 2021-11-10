@@ -1,5 +1,5 @@
 import React, {forwardRef, ForwardRefExoticComponent, ReactNode, SyntheticEvent, useContext, useEffect, useMemo, useReducer, useState} from 'react';
-import {Endpoints, http, formatHttpError, SCAuthContext, SCAuthContextType, SCContext, SCContextType, SCPreferences} from '@selfcommunity/core';
+import {Endpoints, formatHttpError, http, SCContext, SCContextType, SCPreferences, SCUserContext, SCUserContextType} from '@selfcommunity/core';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import CloseIcon from '@mui/icons-material/CancelOutlined';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
@@ -17,7 +17,6 @@ import {
   Avatar,
   Box,
   Button,
-  capitalize,
   CircularProgress,
   Dialog,
   DialogActions,
@@ -39,7 +38,7 @@ import {
 import {asUploadButton} from '@rpldy/upload-button';
 import ChunkedUploady, {UPLOADER_EVENTS} from '@rpldy/chunked-uploady';
 import {styled} from '@mui/material/styles';
-import {COMPOSER_TYPE_DISCUSSION, COMPOSER_TYPE_POST, COMPOSER_TITLE_MAX_LENGTH} from '../../constants/Composer';
+import {COMPOSER_TITLE_MAX_LENGTH, COMPOSER_TYPE_DISCUSSION, COMPOSER_TYPE_POST} from '../../constants/Composer';
 import {MEDIA_TYPE_DOCUMENT, MEDIA_TYPE_IMAGE, MEDIA_TYPE_LINK, MEDIA_TYPE_VIDEO} from '../../constants/Media';
 import LoadingButton from '@mui/lab/LoadingButton';
 import Audience from './Audience';
@@ -56,6 +55,8 @@ import {CHUNK_EVENTS} from '@rpldy/chunked-sender';
 import Link from '../Post/Medias/Link';
 import Medias from '../Post/Medias';
 import Editor from '../../shared/Editor';
+import {SCPreferencesType, SCSessionType} from '@selfcommunity/core/src/types/context';
+import {SCPreferencesContext} from '@selfcommunity/core/src/components/provider/SCPreferencesProvider';
 
 const DialogTransition = forwardRef(function Transition(
   props: TransitionProps & {
@@ -326,7 +327,8 @@ export default function Composer({
 
   // Context
   const scContext: SCContextType = useContext(SCContext);
-  const scAuthContext: SCAuthContextType = useContext(SCAuthContext);
+  const scPrefernces: SCPreferencesType = useContext(SCPreferencesContext);
+  const scAuthContext: SCUserContextType = useContext(SCUserContext);
 
   // INTL
   const intl = useIntl();
@@ -351,9 +353,9 @@ export default function Composer({
    */
   const preferences = useMemo(() => {
     const _preferences = {};
-    PREFERENCES.map((p) => (_preferences[p] = p in scContext.preferences ? scContext.preferences[p].value : null));
+    PREFERENCES.map((p) => (_preferences[p] = p in scPrefernces.preferences ? scPrefernces.preferences[p].value : null));
     return _preferences;
-  }, [scContext.preferences]);
+  }, [scPrefernces.preferences]);
 
   /*
    * Compute views

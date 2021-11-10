@@ -55,10 +55,10 @@
     "@mui/material": "^5.0.3"
   },
   "dependencies": {
-    "@selfcommunity/i18n": "^0.1.0",
-    "@selfcommunity/core": "^0.1.0",
-    "@mui/lab": "~5.0.0-alpha.53",
-    "@mui/material": "^5.0.6",
+    "@selfcommunity/i18n": "file:../sc-i18n",
+    "@selfcommunity/core": "file:../sc-core",
+    "@mui/lab": "~5.0.0-alpha.54",
+    "@mui/icons-material": "^5.0.5",
     "@mui/styles": "^5.0.2",
     "@rpldy/chunked-uploady": "^0.14.1",
     "@rpldy/chunked-sender": "^0.14.1",
