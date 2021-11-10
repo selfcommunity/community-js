@@ -30,8 +30,8 @@ function CategoriesSuggestion(): JSX.Element {
   function fetchCategoriesSuggestion() {
     http
       .request({
-        url: Endpoints.CategorySuggestion.url(),
-        method: Endpoints.CategorySuggestion.method
+        url: Endpoints.CategoriesSuggestion.url(),
+        method: Endpoints.CategoriesSuggestion.method
       })
       .then((res: AxiosResponse<any>) => {
         const data = res.data;

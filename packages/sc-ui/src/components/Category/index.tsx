@@ -30,7 +30,7 @@ function Category({
   scCategoryId?: number;
   scCategory?: SCCategoryType;
   contained: boolean;
-  followed: boolean;
+  followed?: boolean;
 }): JSX.Element {
   const [category, setCategory] = useState<SCCategoryType>(scCategory);
   const buttonText = followed ? 'Followed' : 'Follow';

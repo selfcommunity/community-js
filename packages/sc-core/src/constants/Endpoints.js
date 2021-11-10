@@ -23,7 +23,7 @@ export default {
     url: urlReplacer('/api/v2/category/followed/'),
     method: 'GET',
   },
-  CategorySuggestion: {
+  CategoriesSuggestion: {
     url: urlReplacer('/api/v2/suggestion/category/'),
     method: 'GET',
   },
