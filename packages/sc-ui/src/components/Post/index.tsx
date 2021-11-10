@@ -10,7 +10,7 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import TimeAgo from 'timeago-react';
 import {AxiosResponse} from 'axios';
 
-const PREFIX = 'SCPost';
+const PREFIX = 'Post';
 
 const Root = styled(Card, {
   name: PREFIX,
@@ -28,16 +28,16 @@ export interface SCPostType {
   author?: SCUserType;
 }
 
-function Post({scInterestId = null, scPost = null, contained = true}: {scInterestId?: number; scPost?: SCPostType; contained: boolean}): JSX.Element {
+function Post({scCategoryId = null, scPost = null, contained = true}: {scCategoryId?: number; scPost?: SCPostType; contained: boolean}): JSX.Element {
   const [post, setPost] = useState<SCPostType>(scPost);
 
   /**
-   * If interest not in props, attempt to get the interest by id (in props) if exist
+   * If post not in props, attempt to get it by category id (in props) if exist
    */
   function fetchPost() {
     http
       .request({
-        url: Endpoints.CategoryTrendingFeed.url({id: scInterestId}),
+        url: Endpoints.CategoryTrendingFeed.url({id: scCategoryId}),
         method: Endpoints.CategoryTrendingFeed.method
       })
       .then((res: AxiosResponse<any>) => {

@@ -8,7 +8,7 @@ export default {
     url: urlReplacer('/api/v2/category/$(id)/'),
     method: 'GET',
   },
-  CategoryFollowed: {
+  CategoriesFollowed: {
     url: urlReplacer('/api/v2/category/followed/'),
     method: 'GET',
   },

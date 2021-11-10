@@ -13,6 +13,7 @@ import {
 } from './context';
 import {SCUserType} from './user';
 import {SCTagType} from './tag';
+import {SCCategoryType} from './category';
 
 /**
  * Exports all types
@@ -26,6 +27,7 @@ export {
   SCAuthTokenType,
   SCUserType,
   SCTagType,
+  SCCategoryType,
   SCLocaleType,
   SCPreferencesContextType,
   SCThemeContextType,

@@ -4,7 +4,7 @@ import List from '@mui/material/List';
 import {Button, Divider, Typography} from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import {Endpoints, http} from '@selfcommunity/core';
+import {Endpoints, http, SCUserType} from '@selfcommunity/core';
 import PeopleSuggestionSkeleton from '../Skeleton/PeopleSuggestionSkeleton';
 import User from '../User';
 import {withSCTheme} from '@selfcommunity/core';
@@ -97,13 +97,13 @@ function SCUserFollowers({scPersonId = null}: {scPersonId?: number}): JSX.Elemen
           {total} ({mutualPeople.length} mutual)
         </Typography>
         <List>
-          {mutualPeople.slice(0, visibleUsers).map((follower: {username: string}, index) => (
+          {mutualPeople.slice(0, visibleUsers).map((follower: SCUserType, index) => (
             <User contained={false} scUser={follower} key={index} />
           ))}
         </List>
         <Divider />
         <List>
-          {filteredFollowers.slice(0, visibleUsers).map((follower: {username: string}, index) => (
+          {filteredFollowers.slice(0, visibleUsers).map((follower: SCUserType, index) => (
             <User contained={false} scUser={follower} key={index} />
           ))}
         </List>

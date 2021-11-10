@@ -1,14 +1,14 @@
 /**
  * Components
  */
-import SCInterest from './components/Interest';
-import SCPerson from './components/Person';
+import Category from './components/Category';
+import Person from './components/Person';
 import SCUser from './components/User';
-import SCPost from './components/Post';
-import SCPlatform from './components/Platform';
-import {InterestBoxSkeleton, PersonBoxSkeleton, PostBoxSkeleton, UserBoxSkeleton} from './components/Skeleton';
+import Post from './components/Post';
+import Platform from './components/Platform';
+import {CategoryBoxSkeleton, PersonBoxSkeleton, PostBoxSkeleton, UserBoxSkeleton} from './components/Skeleton';
 
 /**
  * List all exports
  */
-export {SCInterest, SCPerson, SCUser, SCPost, InterestBoxSkeleton, PersonBoxSkeleton, PostBoxSkeleton, UserBoxSkeleton, SCPlatform};
+export {Category, Person, SCUser, Post, CategoryBoxSkeleton, PersonBoxSkeleton, PostBoxSkeleton, UserBoxSkeleton, Platform};

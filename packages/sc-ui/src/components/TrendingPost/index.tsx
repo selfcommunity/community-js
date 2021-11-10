@@ -20,7 +20,7 @@ const Root = styled(Card, {
   marginBottom: theme.spacing(2)
 }));
 
-function SCTrendingPost({scInterestId = null}: {scInterestId?: number}): JSX.Element {
+function SCTrendingPost({scCategoryId = null}: {scCategoryId?: number}): JSX.Element {
   const [posts, setPosts] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [hasMore, setHasMore] = useState<boolean>(false);
@@ -29,7 +29,7 @@ function SCTrendingPost({scInterestId = null}: {scInterestId?: number}): JSX.Ele
   function fetchTrendingPost() {
     http
       .request({
-        url: Endpoints.CategoryTrendingFeed.url({id: scInterestId}),
+        url: Endpoints.CategoryTrendingFeed.url({id: scCategoryId}),
         method: Endpoints.CategoryTrendingFeed.method
       })
       .then((res: AxiosResponse<any>) => {

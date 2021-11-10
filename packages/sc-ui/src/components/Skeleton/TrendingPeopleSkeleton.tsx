@@ -5,7 +5,7 @@ import List from '@mui/material/List';
 import {styled} from '@mui/material/styles';
 import {PersonBoxSkeleton} from '@selfcommunity/ui';
 
-const PREFIX = 'SCTrendingPeopleSkeleton';
+const PREFIX = 'TrendingPeopleSkeleton';
 
 const classes = {
   list: `${PREFIX}-list`

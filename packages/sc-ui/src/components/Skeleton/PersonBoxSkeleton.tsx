@@ -9,7 +9,7 @@ import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
 import {styled} from '@mui/material/styles';
 import Skeleton from '@mui/material/Skeleton';
 
-const PREFIX = 'SCPersonBoxSkeleton';
+const PREFIX = 'PersonBoxSkeleton';
 
 const classes = {
   list: `${PREFIX}-list`

@@ -21,7 +21,7 @@ const Root = styled(Card, {
   marginBottom: theme.spacing(2)
 }));
 
-function SCTrendingPeople({scInterestId = null}: {scInterestId?: number}): JSX.Element {
+function SCTrendingPeople({scCategoryId = null}: {scCategoryId?: number}): JSX.Element {
   const [people, setPeople] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [hasMore, setHasMore] = useState<boolean>(false);
@@ -30,7 +30,7 @@ function SCTrendingPeople({scInterestId = null}: {scInterestId?: number}): JSX.E
   function fetchTrendingPeople() {
     http
       .request({
-        url: Endpoints.CategoryTrendingPeople.url({id: scInterestId}),
+        url: Endpoints.CategoryTrendingPeople.url({id: scCategoryId}),
         method: Endpoints.CategoryTrendingPeople.method
       })
       .then((res: AxiosResponse<any>) => {

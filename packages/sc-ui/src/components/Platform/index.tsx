@@ -8,7 +8,7 @@ import {Endpoints, http, SCLocaleContextType, SCUserContext, SCUserContextType, 
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import {AxiosResponse} from 'axios';
 
-const PREFIX = 'SCPlatform';
+const PREFIX = 'Platform';
 
 const Root = styled(Card, {
   name: PREFIX,
