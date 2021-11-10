@@ -6,9 +6,20 @@ import CardContent from '@mui/material/CardContent';
 import {UserBoxSkeleton} from '../Skeleton';
 import {Avatar, Button, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText} from '@mui/material';
 import {AxiosResponse} from 'axios';
-import {SCContext, SCContextType, Endpoints, http, SCPreferences, SCUserContext, SCUserContextType, SCUserType} from '@selfcommunity/core';
-import {SCPreferencesContext} from '../../../../sc-core/src/components/provider/SCPreferencesProvider';
-import {SCPreferencesType} from '../../../../sc-core/src/types/context';
+import {
+  Endpoints,
+  http,
+  SCPreferences,
+  SCUserContext,
+  SCPreferencesContext,
+  SCUserContextType,
+  SCUserType,
+  SCPreferencesContextType,
+  SCThemeContextType,
+  useSCTheme,
+  SCLocaleContextType,
+  SCLocaleContext
+} from '@selfcommunity/core';
 
 const PREFIX = 'SCUser';
 
@@ -23,7 +34,9 @@ const Root = styled(Card, {
 
 function User({scUserId = null, scUser = null, contained = true}: {scUserId?: number; scUser?: SCUserType; contained: boolean}): JSX.Element {
   const [user, setUser] = useState<SCUserType>(scUser);
-  const scPreferencesContext: SCPreferencesType = useContext(SCPreferencesContext);
+  const scPreferencesContext: SCPreferencesContextType = useContext(SCPreferencesContext);
+  const scThemeContext: SCThemeContextType = useSCTheme();
+  const scLocaleContext: SCLocaleContextType = useContext(SCLocaleContext);
   const scAuthContext: SCUserContextType = useContext(SCUserContext);
   const followEnabled =
     SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED in scPreferencesContext.preferences &&
@@ -114,9 +127,7 @@ function User({scUserId = null, scUser = null, contained = true}: {scUserId?: nu
             <Avatar alt={user.username} src={user.avatar} />
           </ListItemAvatar>
           <ListItemText primary={user.username} secondary={user.description} />
-          <ListItemSecondaryAction>
-            {scAuthContext.user && connectionEnabled ? renderAuthenticatedActions() : renderAnonymousActions()}
-          </ListItemSecondaryAction>
+          <ListItemSecondaryAction>{scAuthContext.user ? renderAuthenticatedActions() : renderAnonymousActions()}</ListItemSecondaryAction>
         </ListItem>
       ) : (
         <UserBoxSkeleton contained />

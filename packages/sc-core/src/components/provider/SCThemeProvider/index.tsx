@@ -4,16 +4,17 @@ import getTheme from '../../../themes/theme';
 import {SCContextType} from '@selfcommunity/core';
 import {useSCContext} from '../SCContextProvider';
 import {SCThemeContextType} from '../../../types';
-import {SCPreferencesType} from '../../../types/context';
+import {SCPreferencesContextType} from '../../../types/context';
 import {useSCPreferencesContext} from '../SCPreferencesProvider';
 
 /**
  * Create Global Context
- * Consuming this context:
+ * Consuming this context in one of the following ways:
  *  1. <SCThemeContext.Consumer>
  *       {(theme,) => (...)}
  *     </SCThemeContext.Consumer>
  *  2. const scThemeContext: SCThemeContextType = useContext(SCThemeContext);
+ *  3. const scThemeContext: SCThemeContextType = useSCTheme();
  */
 export const SCThemeContext = createContext<SCThemeContextType>({} as SCThemeContextType);
 
@@ -24,7 +25,7 @@ export const SCThemeContext = createContext<SCThemeContextType>({} as SCThemeCon
  */
 export default function SCThemeProvider({children = null}: {children: React.ReactNode}): JSX.Element {
   const scContext: SCContextType = useSCContext();
-  const scPreferencesContext: SCPreferencesType = useSCPreferencesContext();
+  const scPreferencesContext: SCPreferencesContextType = useSCPreferencesContext();
   const [theme, setTheme] = useState<Record<string, any>>(getTheme(scContext.settings.theme, scPreferencesContext.preferences));
 
   const setCustomTheme = (theme) => {
@@ -39,6 +40,19 @@ export default function SCThemeProvider({children = null}: {children: React.Reac
     </StyledEngineProvider>
   );
 }
+
+/**
+ * Export hoc to inject the base theme to components
+ * @param Component
+ */
+export const withSCTheme = (Component) => (props) => {
+  const scThemeContext: SCThemeContextType = useContext(SCThemeContext);
+  return (
+    <ThemeProvider theme={scThemeContext.theme}>
+      <Component setTheme={scThemeContext.setTheme} {...props} />
+    </ThemeProvider>
+  );
+};
 
 /**
  * Let's only export the `useSCTheme` hook instead of the context.

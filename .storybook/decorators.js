@@ -27,7 +27,7 @@ const withProvider = (Story, context) => {
 
     const _conf = {
       portal: context.globals.portal,
-      locale: context.globals.locale,
+      locale: {default: context.globals.locale},
       session: {
         type: context.globals.session,
         clientId: context.globals.clientId,

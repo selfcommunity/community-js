@@ -1,18 +1,19 @@
 import React, {createContext, ReactNode, useContext, useEffect, useState} from 'react';
 import preferencesServices from '../../../services/preferences';
-import {SCPreferencesType} from '../../../types/context';
+import {SCPreferencesContextType} from '../../../types/context';
 import {Logger} from '../../../utils/logger';
 import {SCOPE_SC_CORE} from '../../../constants/Errors';
 
 /**
  * Create Preferences Context
- * Consuming this context:
+ * Consuming this context in one of the following ways:
  *  1. <SCPreferencesContext.Consumer>
- *       {preferences => (...)}
+ *       {(preferences) => (...)}
  *     </SCPreferencesContext.Consumer>
  *  2. const settings: SCPreferencesType = usePreferencesContext(SCPreferencesContext);
+ *  3. const settings: SCPreferencesType = useSCPreferencesContext();
  */
-export const SCPreferencesContext = createContext<SCPreferencesType>({} as SCPreferencesType);
+export const SCPreferencesContext = createContext<SCPreferencesContextType>({} as SCPreferencesContextType);
 
 /**
  * SCPreferencesProvider
@@ -51,6 +52,6 @@ export default function SCPreferencesProvider({children = null}: {children: Reac
  * Let's only export the `useSCPreferencesContext` hook instead of the context.
  * We only want to use the hook directly and never the context component.
  */
-export function useSCPreferencesContext(): SCPreferencesType {
+export function useSCPreferencesContext(): SCPreferencesContextType {
   return useContext(SCPreferencesContext);
 }

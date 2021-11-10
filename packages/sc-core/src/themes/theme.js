@@ -49,54 +49,10 @@ const getTheme = (options, preferences) => {
           MuiPaper: {
             styleOverrides: {
               rounded: {
-                borderRadius: 10,
+                borderRadius: 3,
               },
             },
-          },
-          MuiButton: {
-            styleOverrides: {
-              root: {
-                textTransform: 'none',
-              },
-            },
-          },
-          MuiDivider: {
-            styleOverrides: {
-              root: {
-                borderWidth: '1px',
-              },
-            },
-          },
-          SCFeedObject: {
-            styleOverrides: {
-              root: {
-                '& .SCFeedObject-category': {
-                  backgroundColor: '#FF0000',
-                  borderColor: '#FF0000',
-                },
-              },
-            },
-          },
-          SCPost: {
-            styleOverrides: {
-              root: {
-                '& .MuiSvgIcon-root': {
-                  width: '0.7em',
-                  marginBottom: '0.5px',
-                },
-              },
-            },
-          },
-          SCTrendingPost: {
-            styleOverrides: {
-              root: {
-                '& .MuiSvgIcon-root': {
-                  width: '0.7em',
-                  marginBottom: '0.5px',
-                },
-              },
-            },
-          },
+          }
         },
       }
     : {};

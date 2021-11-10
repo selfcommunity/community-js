@@ -13,7 +13,7 @@ export interface SCSettingsType {
   /**
    * i18n. Locale: it, en, etc...
    */
-  locale?: string;
+  locale?: SCLocaleType;
 
   /**
    * Object conf of session.
@@ -29,6 +29,18 @@ export interface SCSettingsType {
    * Object conf of router.
    */
   router?: SCRoutingContextType;
+}
+
+export interface SCLocaleType {
+  /**
+   * Default locale.
+   */
+  default?: string;
+
+  /**
+   * Override default messages.
+   */
+  messages?: Record<string, any>;
 }
 
 /**
@@ -145,7 +157,7 @@ export interface SCContextProviderType {
 /**
  * Interface SCPreferencesType
  */
-export interface SCPreferencesType {
+export interface SCPreferencesContextType {
   /**
    * List of all community preferences
    */

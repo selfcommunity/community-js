@@ -7,6 +7,7 @@ import {Logger} from './logger';
  * Used to check the initial configurations
  */
 export class ValidationError {
+  static ERROR_INVALID_CONF = 3100;
   static ERROR_INVALID_SESSION = 4100;
   static ERROR_INVALID_SESSION_TYPE = 4101;
   static ERROR_INVALID_SESSION_AUTH_TOKEN = 4102;
@@ -14,9 +15,12 @@ export class ValidationError {
   static ERROR_INVALID_SESSION_REFRESH_TOKEN_CALLBACK = 4103;
   static ERROR_INVALID_PORTAL = 4203;
   static ERROR_INVALID_LOCALE = 4303;
+  static ERROR_INVALID_TRANSLATIONS = 4304;
   static ERROR_INVALID_THEME = 4403;
   static ERROR_INVALID_ROUTER = 4503;
   static defaultErrorMessageMap = {
+    [ValidationError.ERROR_INVALID_CONF]:
+      'Invalid or missing library configuration. Check the configuration that is passed to the SCContextProvider.',
     [ValidationError.ERROR_INVALID_SESSION]: 'Invalid session format.',
     [ValidationError.ERROR_INVALID_SESSION_TYPE]: `Invalid sessionType. Available options are ${Session.sessionTypes.join(', ')}.`,
     [ValidationError.ERROR_INVALID_SESSION_AUTH_TOKEN]: 'Invalid auth token format',
@@ -24,6 +28,7 @@ export class ValidationError {
     [ValidationError.ERROR_INVALID_SESSION_REFRESH_TOKEN_CALLBACK]: 'Invalid refresh token callback',
     [ValidationError.ERROR_INVALID_PORTAL]: `Invalid portal. Check if the url format is valid.`,
     [ValidationError.ERROR_INVALID_LOCALE]: `Invalid locale. Available options are ${LOCALES.join(', ')}.`,
+    [ValidationError.ERROR_INVALID_TRANSLATIONS]: `Invalid locale messages(translations) options.`,
     [ValidationError.ERROR_INVALID_THEME]: 'Invalid theme options.',
     [ValidationError.ERROR_INVALID_ROUTER]: 'Invalid router configuration',
   };

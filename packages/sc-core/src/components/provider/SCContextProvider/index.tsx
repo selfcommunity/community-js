@@ -10,18 +10,19 @@ import SCPreferencesProvider from '../SCPreferencesProvider';
 
 /**
  * Create Global Context
- * Consuming this context:
+ * Consuming this context in one of the following ways:
  *  1. <SCContext.Consumer>
  *       {settings => (...)}
  *     </SCContext.Consumer>
- *  2. const settings: SCSettingsType = useContext(SCContext);
+ *  2. const scSettings: SCSettingsType = useContext(SCContext);
+ *  3. const scSettings: SCSettingsType = useSCContext();
  */
 export const SCContext = createContext<SCContextType>({} as SCContextType);
 
 /**
  * List of all nested providers that are required to run
  */
-const contextProviders = [SCPreferencesProvider, SCThemeProvider, SCLocaleProvider, SCRoutingProvider, SCUserProvider];
+const contextProviders = [SCPreferencesProvider, SCRoutingProvider, SCUserProvider, SCThemeProvider, SCLocaleProvider];
 
 /**
  * SCContextProvider

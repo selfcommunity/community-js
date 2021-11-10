@@ -3,10 +3,17 @@ import sessionServices from '../../../services/session';
 import {SCUserContextType, SCContextType, SCSessionType, SCUserType} from '../../../types';
 import {SCContext} from '../SCContextProvider';
 import useAuth, {authActionTypes} from '../../../hooks/useAuth';
+import {Logger} from '../../../utils/logger';
+import {SCOPE_SC_CORE} from '../../../constants/Errors';
 
 /**
- * SCUserContext
- * Authentication Context
+ * SCUserContext (Authentication Context)
+ * Consuming this context in one of the following ways:
+ *  1. <SCUserContext.Consumer>
+ *       {(user, session, error, loading, logout) => (...)}
+ *     </SCUserContext.Consumer>
+ *  2. const scUserContext: SCUserContextType = useContext(SCUserContext);
+ *  3. const scUserContext: SCUserContextType = useSCUser();
  */
 export const SCUserContext = createContext<SCUserContextType>({} as SCUserContextType);
 
@@ -32,6 +39,7 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
         dispatch({type: authActionTypes.LOGIN_SUCCESS, payload: {user}});
       })
       .catch((error) => {
+        Logger.error(SCOPE_SC_CORE, 'Unable to retrieve the authenticated user.');
         dispatch({type: authActionTypes.LOGIN_FAILURE, payload: {error}});
       });
   }, []);

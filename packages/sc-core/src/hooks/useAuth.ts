@@ -2,6 +2,8 @@ import http, {setAuthorizeToken, setSupportWithCredentials} from '../utils/http'
 import {useEffect, useMemo, useReducer, useRef} from 'react';
 import {SCAuthTokenType, SCSessionType} from '../types';
 import * as Session from '../constants/Session';
+import {Logger} from '../utils/logger';
+import {SCOPE_SC_CORE} from '../constants/Errors';
 
 /**
  * We have complex state logic that involves multiple sub-values,
@@ -135,6 +137,7 @@ export default function useAuth(initialSession: SCSessionType) {
                     return http(originalConfig);
                   })
                   .catch((err) => {
+                    Logger.error(SCOPE_SC_CORE, 'Unable to resolve promises in failedQueue.');
                     return Promise.reject(err);
                   });
               }
@@ -167,6 +170,7 @@ export default function useAuth(initialSession: SCSessionType) {
                   processQueue(null, res['accessToken']);
                   return Promise.resolve(http(originalConfig));
                 } catch (_error) {
+                  Logger.error(SCOPE_SC_CORE, 'Unable to refresh user session.');
                   isSessionRefreshing.current = false;
                   if (_error.response && _error.response.data) {
                     dispatch({type: authActionTypes.REFRESH_TOKEN_FAILURE, payload: {error: _error.response.toString()}});

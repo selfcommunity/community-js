@@ -3,6 +3,7 @@
  */
 import {
   SCContextType,
+  SCAuthTokenType,
   SCUserContextType,
   SCUserType,
   SCContextProviderType,
@@ -11,6 +12,8 @@ import {
   SCSessionType,
   SCThemeContextType,
   SCRoutingContextType,
+  SCLocaleContextType,
+  SCPreferencesContextType,
 } from './types';
 
 /**
@@ -26,7 +29,7 @@ import SCUserProvider, {SCUserContext, useSCUser} from './components/provider/SC
 /**
  * ThemeProvider component
  */
-import SCThemeProvider, {SCThemeContext, useSCTheme} from './components/provider/SCThemeProvider';
+import SCThemeProvider, {SCThemeContext, useSCTheme, withSCTheme} from './components/provider/SCThemeProvider';
 
 /**
  * RoutingProvider component
@@ -36,11 +39,12 @@ import SCRoutingProvider, {SCRoutingContext, useSCRouting} from './components/pr
 /**
  * LocaleProvider component
  */
-import SCLocaleProvider, {SCLocaleContext} from './components/provider/SCLocaleProvider';
+import SCLocaleProvider, {SCLocaleContext, useSCLocale, withSCLocale} from './components/provider/SCLocaleProvider';
 
 /**
- * AuthStateProvider component
+ * PreferencesProvider component
  */
+import SCPreferencesProvider, {SCPreferencesContext} from './components/provider/SCPreferencesProvider';
 import * as SCPreferences from './constants/Preferences';
 
 /**
@@ -59,35 +63,63 @@ import http, {formatHttpError} from './utils/http';
 import Endpoints from './constants/Endpoints';
 
 /**
+ * Utilities:
+ * logger, string, url, object
+ */
+import {Logger} from './utils/logger';
+import * as StringUtils from './utils/string';
+import * as ObjectUtils from './utils/object';
+import * as UrlUtils from './utils/url';
+
+/**
+ * Constants:
+ * Locale
+ */
+import * as Locale from './constants/Locale';
+
+/**
  * List all exports
  */
 export {
   SCContextProviderType,
   SCTagType,
   SCSettingsType,
+  SCAuthTokenType,
   SCSessionType,
   SCContextType,
   SCUserContextType,
   SCThemeContextType,
   SCRoutingContextType,
+  SCLocaleContextType,
   SCUserType,
+  SCPreferencesContextType,
   SCContext,
   SCUserContext,
   SCThemeContext,
   SCRoutingContext,
   SCLocaleContext,
+  SCPreferencesContext,
   useSCContext,
   SCContextProvider,
   SCUserProvider,
   useSCUser,
   SCThemeProvider,
   useSCTheme,
+  withSCTheme,
   SCRoutingProvider,
   useSCRouting,
   SCLocaleProvider,
+  useSCLocale,
+  withSCLocale,
+  SCPreferencesProvider,
   SCPreferences,
   http,
   formatHttpError,
   Link,
   Endpoints,
+  Logger,
+  StringUtils,
+  ObjectUtils,
+  UrlUtils,
+  Locale,
 };
