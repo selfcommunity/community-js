@@ -1,5 +1,16 @@
 import React, {forwardRef, ForwardRefExoticComponent, ReactNode, SyntheticEvent, useContext, useEffect, useMemo, useReducer, useState} from 'react';
-import {Endpoints, formatHttpError, http, SCContext, SCContextType, SCPreferences, SCUserContext, SCUserContextType} from '@selfcommunity/core';
+import {
+  Endpoints,
+  formatHttpError,
+  http,
+  SCContext,
+  SCContextType,
+  SCPreferences,
+  SCPreferencesContext,
+  SCPreferencesContextType,
+  SCUserContext,
+  SCUserContextType
+} from '@selfcommunity/core';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import CloseIcon from '@mui/icons-material/CancelOutlined';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
@@ -55,8 +66,6 @@ import {CHUNK_EVENTS} from '@rpldy/chunked-sender';
 import Link from '../Post/Medias/Link';
 import Medias from '../Post/Medias';
 import Editor from '../../shared/Editor';
-import {SCPreferencesType, SCSessionType} from '@selfcommunity/core/src/types/context';
-import {SCPreferencesContext} from '@selfcommunity/core/src/components/provider/SCPreferencesProvider';
 
 const DialogTransition = forwardRef(function Transition(
   props: TransitionProps & {
@@ -327,7 +336,7 @@ export default function Composer({
 
   // Context
   const scContext: SCContextType = useContext(SCContext);
-  const scPrefernces: SCPreferencesType = useContext(SCPreferencesContext);
+  const scPrefernces: SCPreferencesContextType = useContext(SCPreferencesContext);
   const scAuthContext: SCUserContextType = useContext(SCUserContext);
 
   // INTL
@@ -525,7 +534,7 @@ export default function Composer({
       case MEDIA_TYPE_IMAGE:
         return (
           <Box className={classes.mediasActions} onMouseEnter={handleFadeIn(MEDIA_TYPE_IMAGE)} onMouseLeave={handleFadeOut(MEDIA_TYPE_IMAGE)}>
-            <Fade in={Boolean(this.state.fades[MEDIA_TYPE_IMAGE])}>
+            <Fade in={Boolean(fades[MEDIA_TYPE_IMAGE])}>
               <Typography align="left">
                 <Button onClick={() => setView(IMAGES_VIEW)} variant="contained" color="primary" size="small">
                   <WriteIcon /> <FormattedMessage id="thread.dialog.media.images.edit" defaultMessage="thread.dialog.media.images.edit" />
@@ -542,7 +551,7 @@ export default function Composer({
       case MEDIA_TYPE_VIDEO:
         return (
           <Box className={classes.mediasActions} onMouseEnter={handleFadeIn(MEDIA_TYPE_VIDEO)} onMouseLeave={handleFadeOut(MEDIA_TYPE_VIDEO)}>
-            <Fade in={Boolean(this.state.fades[MEDIA_TYPE_VIDEO])}>
+            <Fade in={Boolean(fades[MEDIA_TYPE_VIDEO])}>
               <Typography align="left">
                 <Button onClick={() => setView(VIDEOS_VIEW)} variant="contained" color="primary" size="small">
                   <WriteIcon /> <FormattedMessage id="thread.dialog.media.videos.edit" defaultMessage="thread.dialog.media.videos.edit" />
@@ -563,7 +572,7 @@ export default function Composer({
             className={classes.mediasActions}
             onMouseEnter={handleFadeIn(MEDIA_TYPE_DOCUMENT)}
             onMouseLeave={handleFadeOut(MEDIA_TYPE_DOCUMENT)}>
-            <Fade in={Boolean(this.state.fades[MEDIA_TYPE_DOCUMENT])}>
+            <Fade in={Boolean(fades[MEDIA_TYPE_DOCUMENT])}>
               <Typography align="left">
                 <Button onClick={() => setView(DOCUMENTS_VIEW)} variant="contained" color="primary" size="small">
                   <WriteIcon /> <FormattedMessage id="thread.dialog.media.images.edit" defaultMessage="thread.dialog.media.images.edit" />
@@ -580,7 +589,7 @@ export default function Composer({
       case MEDIA_TYPE_LINK:
         return (
           <Box className={classes.mediasActions} onMouseEnter={handleFadeIn(MEDIA_TYPE_LINK)} onMouseLeave={handleFadeOut(MEDIA_TYPE_LINK)}>
-            <Fade in={Boolean(this.state.fades[MEDIA_TYPE_LINK])}>
+            <Fade in={Boolean(fades[MEDIA_TYPE_LINK])}>
               <Typography align="left">
                 <Button onClick={() => setView(LINKS_VIEW)} variant="contained" color="primary" size="small">
                   <WriteIcon /> <FormattedMessage id="thread.dialog.media.links.edit" defaultMessage="thread.dialog.media.links.edit" />
@@ -626,8 +635,8 @@ export default function Composer({
           formData.append('md5', hash);
           http
             .request({
-              url: Endpoints.ChunkUploadMediaComplete.url(),
-              method: Endpoints.ChunkUploadMediaComplete.method,
+              url: Endpoints.ComposerChunkUploadMediaComplete.url(),
+              method: Endpoints.ComposerChunkUploadMediaComplete.method,
               data: formData,
               headers: {'Content-Type': 'multipart/form-data'}
             })
@@ -805,9 +814,9 @@ export default function Composer({
           <Typography align="center">
             <ChunkedUploady
               destination={{
-                url: `${scContext.settings.portal}${Endpoints.ChunkUploadMedia.url()}`,
+                url: `${scContext.settings.portal}${Endpoints.ComposerChunkUploadMedia.url()}`,
                 headers,
-                method: Endpoints.ChunkUploadMedia.method
+                method: Endpoints.ComposerChunkUploadMedia.method
               }}
               listeners={listeners}
               chunkSize={2142880}
@@ -902,9 +911,9 @@ export default function Composer({
           <Typography align="center">
             <ChunkedUploady
               destination={{
-                url: `${scContext.settings.portal}${Endpoints.ChunkUploadMedia.url()}`,
+                url: `${scContext.settings.portal}${Endpoints.ComposerChunkUploadMedia.url()}`,
                 headers,
-                method: Endpoints.ChunkUploadMedia.method
+                method: Endpoints.ComposerChunkUploadMedia.method
               }}
               listeners={listeners}
               chunkSize={2142880}
@@ -1004,7 +1013,11 @@ export default function Composer({
         </DialogTitle>
         <DialogContent className={classes.content}>
           <ChunkedUploady
-            destination={{url: `${scContext.settings.portal}${Endpoints.ChunkUploadMedia.url()}`, headers, method: Endpoints.ChunkUploadMedia.method}}
+            destination={{
+              url: `${scContext.settings.portal}${Endpoints.ComposerChunkUploadMedia.url()}`,
+              headers,
+              method: Endpoints.ComposerChunkUploadMedia.method
+            }}
             listeners={listeners}
             chunkSize={2142880}
             multiple>
@@ -1035,10 +1048,10 @@ export default function Composer({
                 <Medias
                   medias={[...images, ...videos, ...docs, ...links, ...Object.values(chunks).filter((c: Chunk) => !c.error)]}
                   GridImageProps={{gallery: false, overlay: false}}
-                  imagesAdornment={this.renderMediaControls(MEDIA_TYPE_IMAGE)}
-                  videosAdornment={this.renderMediaControls(MEDIA_TYPE_VIDEO)}
-                  documentsAdornment={this.renderMediaControls(MEDIA_TYPE_DOCUMENT)}
-                  linksAdornment={this.renderMediaControls(MEDIA_TYPE_LINK)}
+                  imagesAdornment={renderMediaControls(MEDIA_TYPE_IMAGE)}
+                  videosAdornment={renderMediaControls(MEDIA_TYPE_VIDEO)}
+                  documentsAdornment={renderMediaControls(MEDIA_TYPE_DOCUMENT)}
+                  linksAdornment={renderMediaControls(MEDIA_TYPE_LINK)}
                 />
               </Box>
               <div className={classes.block}>
@@ -1063,9 +1076,9 @@ export default function Composer({
           <Typography align="left">
             <ChunkedUploady
               destination={{
-                url: `${scContext.settings.portal}${Endpoints.ChunkUploadMedia.url()}`,
+                url: `${scContext.settings.portal}${Endpoints.ComposerChunkUploadMedia.url()}`,
                 headers,
-                method: Endpoints.ChunkUploadMedia.method
+                method: Endpoints.ComposerChunkUploadMedia.method
               }}
               listeners={listeners}
               chunkSize={2142880}
@@ -1080,9 +1093,9 @@ export default function Composer({
             )}
             <ChunkedUploady
               destination={{
-                url: `${scContext.settings.portal}${Endpoints.ChunkUploadMedia.url()}`,
+                url: `${scContext.settings.portal}${Endpoints.ComposerChunkUploadMedia.url()}`,
                 headers,
-                method: Endpoints.ChunkUploadMedia.method
+                method: Endpoints.ComposerChunkUploadMedia.method
               }}
               listeners={listeners}
               chunkSize={2142880}

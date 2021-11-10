@@ -58,7 +58,7 @@ export default {
   /**
    * Composer Endpoints
    */
-   Composer: {
+  Composer: {
     url: urlReplacer('/api/v2/$(type)/'),
     method: 'POST',
   },
