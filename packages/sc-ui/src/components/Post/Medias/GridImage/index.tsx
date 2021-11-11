@@ -208,7 +208,7 @@ export default function GridImages({
           xs={12}
           classes={{root: classNames(classes.border, classes.heightOne, classes.background, {[classes.gallery]: gallery})}}
           onClick={() => openPreviewImage(0)}
-          style={{background: `url(${this.getImageUrl(images[0])})`}}>
+          style={{background: `url(${getImageUrl(images[0])})`}}>
           {overlay}
           {renderTitle(images[0])}
         </Grid>
@@ -226,7 +226,7 @@ export default function GridImages({
           xs={6}
           classes={{root: classNames(classes.border, classes.heightTwo, classes.background, {[classes.gallery]: gallery})}}
           onClick={() => openPreviewImage(conditionalRender ? 1 : 0)}
-          style={{background: `url(${this.getImageUrl(conditionalRender ? images[1] : images[0])})`}}>
+          style={{background: `url(${getImageUrl(conditionalRender ? images[1] : images[0])})`}}>
           {renderOverlay(conditionalRender ? 1 : 0)}
           {renderTitle(images[0])}
         </Grid>
@@ -235,7 +235,7 @@ export default function GridImages({
           xs={6}
           classes={{root: classNames(classes.border, classes.heightTwo, classes.background, {[classes.gallery]: gallery})}}
           onClick={() => openPreviewImage(conditionalRender ? 1 : 0)}
-          style={{background: `url(${this.getImageUrl(conditionalRender ? images[2] : images[1])})`}}>
+          style={{background: `url(${getImageUrl(conditionalRender ? images[2] : images[1])})`}}>
           {overlay}
           {renderTitle(images[1])}
         </Grid>
