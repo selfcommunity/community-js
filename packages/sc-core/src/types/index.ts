@@ -18,7 +18,16 @@ import {SCEmbedType} from './embed';
 import {SCMediaType} from './media';
 import {SCContributeLocation} from './location';
 import {SCPollChoiceType, SCPollType} from './poll';
-import {SCFeedUnitType, SCFeedUnitActivityType, SCFeedObjectType, SCFeedPostType, SCFeedDiscussionType, SCFeedStatusType} from './feed';
+import {
+  SCFeedUnitType,
+  SCFeedUnitActivityType,
+  SCFeedObjectType,
+  SCFeedPostType,
+  SCFeedDiscussionType,
+  SCFeedStatusType,
+  SCFeedObjectTypologyType,
+  SCFeedUnitActivityTypologyType,
+} from './feed';
 
 /**
  * Exports all types
@@ -49,4 +58,6 @@ export {
   SCFeedPostType,
   SCFeedDiscussionType,
   SCFeedStatusType,
+  SCFeedObjectTypologyType,
+  SCFeedUnitActivityTypologyType,
 };

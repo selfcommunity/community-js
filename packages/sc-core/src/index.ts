@@ -25,6 +25,8 @@ import {
   SCFeedPostType,
   SCFeedDiscussionType,
   SCFeedStatusType,
+  SCFeedObjectTypologyType,
+  SCFeedUnitActivityTypologyType,
 } from './types';
 
 /**
@@ -115,6 +117,8 @@ export {
   SCFeedPostType,
   SCFeedDiscussionType,
   SCFeedStatusType,
+  SCFeedObjectTypologyType,
+  SCFeedUnitActivityTypologyType,
   SCContext,
   SCUserContext,
   SCThemeContext,

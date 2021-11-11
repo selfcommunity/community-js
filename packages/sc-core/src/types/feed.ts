@@ -4,6 +4,12 @@ import {SCContributeLocation} from './location';
 import {SCPollType} from './poll';
 import {SCMediaType} from './media';
 
+export enum SCFeedObjectTypologyType {
+  DISCUSSION = 'discussion',
+  POST = 'post',
+  STATUS = 'status',
+}
+
 /**
  * Interface SCFeedUnitType.
  * FeedUnit Schema.
@@ -12,7 +18,7 @@ export interface SCFeedUnitType {
   /**
    * The type of the object, can be discussion, post or status
    */
-  type: string;
+  type: SCFeedObjectTypologyType;
 
   /**
    * Discussion object
@@ -45,15 +51,38 @@ export interface SCFeedUnitType {
   activities?: SCFeedUnitActivityType[];
 }
 
+export enum SCFeedUnitActivityTypologyType {
+  COMMENT = 'comment',
+  VOTE = 'vote',
+  POLLVOTE = 'pollvote',
+  FOLLOW = 'follow',
+}
+
 /**
  * Interface SCFeedUnitActivityType.
  * FeedUnit Activity Schema.
  */
 export interface SCFeedUnitActivityType {
   /**
-   * The ID of the post.
+   * The type of the activity.
    */
-  type: string;
+  type: SCFeedUnitActivityTypologyType;
+  /**
+   * The comment if type ==  SCFeedUnitActivityTypologyType.COMMENT.
+   */
+  comment?: any;
+  /**
+   * The user involved.
+   */
+  author: SCUserType;
+  /**
+   * Time of activity
+   */
+  active_at: Date;
+  /**
+   * Id of Users that have seen this activity
+   */
+  seen_by_id?: number[];
 }
 
 /**
