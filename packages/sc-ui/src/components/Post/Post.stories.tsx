@@ -13,7 +13,7 @@ export default {
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const Template: ComponentStory<typeof Post> = (args) => (
   <div style={{width: 500}}>
-    <Post scCategoryId={1} {...args} />
+    <Post postObjectId={7605} {...args} />
   </div>
 );
 

@@ -4,11 +4,13 @@ import List from '@mui/material/List';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import {Avatar, Box, Grid, Link, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
-import {Endpoints, http, SCUserType} from '@selfcommunity/core';
+import {Endpoints, http, Logger, SCUserType} from '@selfcommunity/core';
 import {PostBoxSkeleton} from '@selfcommunity/ui';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import TimeAgo from 'timeago-react';
 import {AxiosResponse} from 'axios';
+import {SCOPE_SC_UI} from '../../constants/Errors';
+import { SCFeedPostType } from '@selfcommunity/core';
 
 const PREFIX = 'SCPost';
 
@@ -21,46 +23,57 @@ const Root = styled(Card, {
   marginBottom: theme.spacing(2)
 }));
 
-export interface SCPostType {
-  title: string;
-  summary?: string;
-  added_at?: string;
-  author?: SCUserType;
-}
-
-function Post({scCategoryId = null, scPost = null, contained = true}: {scCategoryId?: number; scPost?: SCPostType; contained: boolean}): JSX.Element {
-  const [post, setPost] = useState<SCPostType>(scPost);
+function Post({
+  postObjectId = null,
+  postObject = null,
+  contained = true
+}: {
+  postObjectId?: number;
+  postObject?: SCFeedPostType;
+  contained: boolean;
+  variant: string;
+}): JSX.Element {
+  const [post, setPost] = useState<SCFeedPostType>(postObject);
 
   /**
-   * If post not in props, attempt to get it by category id (in props) if exist
+   * If postObjectId in props attempt to get it
+   * by id if exist
    */
   function fetchPost() {
-    http
+    return http
       .request({
-        url: Endpoints.CategoryTrendingFeed.url({id: scCategoryId}),
-        method: Endpoints.CategoryTrendingFeed.method
+        url: Endpoints.Post.url({id: postObjectId}),
+        method: Endpoints.Post.method
       })
       .then((res: AxiosResponse<any>) => {
-        const data = res.data;
-        setPost(selectPost(data.results));
+        if (res.status >= 300) {
+          return Promise.reject(res);
+        }
+        return Promise.resolve(res.data);
       })
       .catch((error) => {
         console.log(error);
+        Promise.reject(error);
       });
   }
 
-  function selectPost(results) {
-    const res = results[Math.floor(Math.random() * results.length)];
-    const type = res.type;
-    return res[type];
-  }
-
   useEffect(() => {
-    if (!post) {
-      fetchPost();
+    /**
+     * If postObjectId retrive/refresh the post
+     * on component mount
+     */
+    if (postObjectId) {
+      fetchPost()
+        .then((post) => setPost(post))
+        .catch((err) => {
+          Logger.error(SCOPE_SC_UI, `Post with id ${postObjectId} not found`);
+        });
     }
   }, []);
 
+  /**
+   * Render the post object
+   */
   const p = (
     <React.Fragment>
       {post ? (
@@ -72,7 +85,7 @@ function Post({scCategoryId = null, scPost = null, contained = true}: {scCategor
             primary={
               <React.Fragment>
                 <Typography component="span" sx={{display: 'inline'}} color="primary">
-                  {post.author.username} - {post.title}
+                  {post.author.username}
                 </Typography>
               </React.Fragment>
             }
@@ -98,15 +111,24 @@ function Post({scCategoryId = null, scPost = null, contained = true}: {scCategor
     </React.Fragment>
   );
 
+  /**
+   * If contained=true in props render card container
+   * that wrap the post content
+   */
   if (contained) {
     return (
-      <Root variant="outlined">
+      <Root>
         <CardContent>
           <List>{p}</List>
         </CardContent>
       </Root>
     );
   }
+
+  /**
+   * If contained=false in props render the content post
+   * without the wrap
+   */
   return p;
 }
 export default Post;

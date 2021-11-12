@@ -86,7 +86,7 @@ const ImageUploadButton = asUploadButton(
 
 const ImageUploadIconButton = asUploadButton(
   forwardRef((props, ref) => (
-    <IconButton {...props} aria-label="upload image" ref={ref} size="large">
+    <IconButton {...props} aria-label="upload image" ref={ref}>
       <ImageIcon />
     </IconButton>
   ))
@@ -102,7 +102,7 @@ const DocumentUploadButton = asUploadButton(
 
 const DocumentUploadIconButton = asUploadButton(
   forwardRef((props, ref) => (
-    <IconButton {...props} aria-label="upload document" ref={ref} size="large">
+    <IconButton {...props} aria-label="upload document" ref={ref}>
       <DocumentIcon />
     </IconButton>
   ))
@@ -140,8 +140,9 @@ const classes = {
   avatar: `${PREFIX}-avatar`,
   content: `${PREFIX}-content`,
   block: `${PREFIX}-block`,
+  editor: `${PREFIX}-editor`,
   divider: `${PREFIX}-divider`,
-  drop: `${PREFIX}-drop`,
+  dragHover: `${PREFIX}-drag-hover`,
   medias: `${PREFIX}-medias`,
   mediasActions: `${PREFIX}-mediasActions`,
   sortableMedia: `${PREFIX}-sortableMedia`,
@@ -189,18 +190,20 @@ const Root = styled(Dialog, {
   [`& .${classes.content}`]: {
     paddingLeft: 0,
     paddingRight: 0,
-    minHeight: 300,
+    paddingBottom: 0,
     position: 'relative',
     overflowY: 'visible'
   },
   [`& .${classes.block}`]: {
-    padding: theme.spacing(2),
-    width: '100%'
+    padding: theme.spacing(2)
+  },
+  [`& .${classes.editor}`]: {
+    minHeight: 200
   },
   [`& .${classes.divider}`]: {
     borderTop: '1px solid #D1D1D1'
   },
-  [`& .${classes.drop}`]: {
+  [`& .${classes.dragHover}`]: {
     position: 'relative',
     '&::before': {
       content: 'attr(data-content)',
@@ -249,7 +252,7 @@ const Root = styled(Dialog, {
   [`& .${classes.actions}`]: {
     margin: 0,
     borderTop: '1px solid #D1D1D1',
-    padding: theme.spacing(2),
+    padding: theme.spacing(1),
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'nowrap',
@@ -262,7 +265,7 @@ const Root = styled(Dialog, {
 }));
 
 export const MAIN_VIEW = 'main';
-const AUDIENCE_VIEW = 'audience';
+export const AUDIENCE_VIEW = 'audience';
 export const IMAGES_VIEW = 'images';
 export const VIDEOS_VIEW = 'videos';
 export const DOCUMENTS_VIEW = 'documents';
@@ -314,7 +317,20 @@ interface Chunk {
   image: string;
   completed: number;
   error: string;
+  upload_id: string;
 }
+
+interface ChunkArray {
+  [index: string]: Chunk;
+}
+
+let chunks: ChunkArray = {};
+const setChunk: Function = (id, data) => {
+  chunks = {...chunks, [id]: {...chunks[id], ...data}};
+};
+const clearChunks: Function = () => {
+  chunks = {};
+};
 
 export default function Composer({
   open = false,
@@ -350,11 +366,6 @@ export default function Composer({
 
   const [state, dispatch] = useReducer(reducer, {...COMPOSER_INITIAL_STATE, open, view});
   const {type, title, titleError, text, categories, addressing, audience, images, videos, docs, links} = state;
-
-  const [chunks, setChunks] = useState({});
-  const setChunk: Function = (id, data) => {
-    setChunk({...chunks, [id]: {...chunks[id], ...data}});
-  };
 
   /*
    * Compute preferences
@@ -409,10 +420,10 @@ export default function Composer({
 
   // componentDidUpdate
   useEffect(() => {
-    if (UPLOAD_VIEWS.includes(view)) {
+    if (UPLOAD_VIEWS.includes(_view)) {
       setView(MAIN_VIEW);
-    } else if (VIEWS.includes(view)) {
-      setView(view);
+    } else if (VIEWS.includes(_view)) {
+      setView(_view);
     }
   }, [_view]);
 
@@ -494,7 +505,6 @@ export default function Composer({
   const handleDeleteMediaChunk = (id) => {
     return (event: SyntheticEvent): void => {
       delete chunks[id];
-      setChunks(chunks);
     };
   };
 
@@ -643,7 +653,6 @@ export default function Composer({
               const mediasKey = `${res.data.type}s`;
               const medias = [...state[mediasKey], res.data];
               delete chunks[item.id];
-              setChunks(chunks);
               dispatch({type: mediasKey, value: medias});
             })
             .catch((error) => {
@@ -1021,7 +1030,7 @@ export default function Composer({
             chunkSize={2142880}
             multiple>
             <UploadDropZone
-              onDragOverClassName={classes.drop}
+              onDragOverClassName={classes.dragHover}
               inputFieldName="image"
               // TODO: accept="image/*"
               extraProps={{'data-content': intl.formatMessage(messages.drop)}}>
@@ -1042,7 +1051,7 @@ export default function Composer({
                   />
                 </div>
               )}
-              <Editor className={classes.block} onChange={handleChangeText} defaultValue={text} />
+              <Editor className={classNames(classes.block, classes.editor)} onChange={handleChangeText} defaultValue={text} />
               <Box className={classes.medias}>
                 <Medias
                   medias={[...images, ...videos, ...docs, ...links, ...Object.values(chunks).filter((c: Chunk) => !c.error)]}
@@ -1086,7 +1095,7 @@ export default function Composer({
               <ImageUploadIconButton inputFieldName="image" ref={this.imagesUploadRef} />
             </ChunkedUploady>
             {preferences[SCPreferences.ADDONS_VIDEO_UPLOAD_ENABLED] && (
-              <IconButton aria-label="add video" size="large">
+              <IconButton aria-label="add video" size="medium">
                 <VideoIcon />
               </IconButton>
             )}
@@ -1102,14 +1111,12 @@ export default function Composer({
               accept="application/pdf">
               <DocumentUploadIconButton inputFieldName="document" ref={this.documentsUploadRef} />
             </ChunkedUploady>
-            <IconButton aria-label="add link" onClick={handleChangeView(LINKS_VIEW)} size="large">
+            <IconButton aria-label="add link" onClick={handleChangeView(LINKS_VIEW)}>
               <LinkIcon />
             </IconButton>
           </Typography>
           <Typography align="right">
-            <IconButton onClick={handleChangeView(AUDIENCE_VIEW)} size="large">
-              {addressing.length > 0 ? <TagIcon /> : <PublicIcon />}
-            </IconButton>
+            <IconButton onClick={handleChangeView(AUDIENCE_VIEW)}>{addressing.length > 0 ? <TagIcon /> : <PublicIcon />}</IconButton>
             <LoadingButton
               onClick={handleSubmit}
               color="primary"
@@ -1142,7 +1149,7 @@ export default function Composer({
 
   return (
     <Root open={open} TransitionComponent={DialogTransition} keepMounted onClose={handleClose} maxWidth="sm" fullWidth scroll="body">
-      {views[view]()}
+      {views[_view]()}
     </Root>
   );
 }

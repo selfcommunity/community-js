@@ -9,6 +9,13 @@ export default {
     method: 'GET',
   },
   /**
+   * Post Endpoints
+   */
+  Post: {
+    url: urlReplacer('/api/v2/post/$(id)/'),
+    method: 'GET',
+  },
+  /**
    * Categories Endpoints
    */
   CategoryList: {
