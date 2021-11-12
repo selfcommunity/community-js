@@ -54,6 +54,10 @@ export default {
     url: urlReplacer('/api/v2/user/me/'),
     method: 'GET',
   },
+  UpdateUser: {
+    url: urlReplacer('/api/v2/user/$(id)/'),
+    method: 'PATCH',
+  },
   /**
    * Suggestion Endpoints
    */
