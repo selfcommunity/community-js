@@ -31,7 +31,7 @@ export const globalTypes = {
   },
   locale: {
     name: 'Locale',
-    description: 'Internationalization locale',
+    description: 'Locale i18n',
     defaultValue: process.env.STORYBOOK_PLATFORM_LOCALE,
     toolbar: {
       icon: 'globe',

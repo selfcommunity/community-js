@@ -2,7 +2,6 @@ import React, {useContext, useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
 import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
 import {UserBoxSkeleton} from '../Skeleton';
 import {Avatar, Button, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText} from '@mui/material';
 import {AxiosResponse} from 'axios';
@@ -28,7 +27,7 @@ const Root = styled(Card, {
   marginBottom: theme.spacing(2)
 }));
 
-function User({scUserId = null, scUser = null, contained = true}: {scUserId?: number; scUser?: SCUserType; contained: boolean}): JSX.Element {
+export default function User({scUserId = null, scUser = null, ...rest}: {scUserId?: number; scUser?: SCUserType}): JSX.Element {
   const [user, setUser] = useState<SCUserType>(scUser);
   const scPreferencesContext: SCPreferencesContextType = useContext(SCPreferencesContext);
   const scAuthContext: SCUserContextType = useContext(SCUserContext);
@@ -124,21 +123,13 @@ function User({scUserId = null, scUser = null, contained = true}: {scUserId?: nu
           <ListItemSecondaryAction>{scAuthContext.user ? renderAuthenticatedActions() : renderAnonymousActions()}</ListItemSecondaryAction>
         </ListItem>
       ) : (
-        <UserBoxSkeleton contained />
+        <UserBoxSkeleton />
       )}
     </React.Fragment>
   );
-
-  if (contained) {
-    return (
-      <Root variant="outlined">
-        <CardContent>
-          <List>{u}</List>
-        </CardContent>
-      </Root>
-    );
-  }
-  return u;
+  return (
+    <Root {...rest}>
+      <List>{u}</List>
+    </Root>
+  );
 }
-
-export default User;

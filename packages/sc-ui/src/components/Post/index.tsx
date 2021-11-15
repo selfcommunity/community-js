@@ -5,7 +5,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import {Avatar, Box, Grid, Link, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
 import {Endpoints, http, Logger, SCUserType} from '@selfcommunity/core';
-import {PostBoxSkeleton} from '@selfcommunity/ui';
+import FeedObjectSkeleton from '../Skeleton/FeedObjectSkeleton';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import TimeAgo from 'timeago-react';
 import {AxiosResponse} from 'axios';
@@ -106,7 +106,7 @@ function Post({
           />
         </ListItem>
       ) : (
-        <PostBoxSkeleton contained />
+        <FeedObjectSkeleton variant={'outlined'} />
       )}
     </React.Fragment>
   );

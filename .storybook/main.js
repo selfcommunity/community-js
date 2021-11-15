@@ -21,7 +21,8 @@ module.exports = {
   ],
   "addons": [
     "@storybook/addon-docs",
-    "@storybook/addon-links"
+    "@storybook/addon-links",
+    "@storybook/addon-toolbars"
   ],
   "features": {
     "postcss": false

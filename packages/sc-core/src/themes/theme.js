@@ -78,12 +78,7 @@ const getTheme = (options, preferences) => {
           },
           SCFeedObject: {
             styleOverrides: {
-              root: {
-                '& .SCFeedObject-category': {
-                  backgroundColor: '#FF0000',
-                  borderColor: '#FF0000',
-                },
-              },
+              root: {},
             },
           },
           SCPost: {
