@@ -92,6 +92,7 @@ export default function FeedObject({
   feedObject?: SCFeedObjectType;
   feedObjectType?: SCFeedObjectTypologyType;
   type?: FeedObjectComponentType;
+  [p: string]: any;
 }): JSX.Element {
   const [obj, setObj] = useState<SCFeedDiscussionType | SCFeedPostType | SCFeedStatusType>(feedObject);
 
@@ -99,7 +100,6 @@ export default function FeedObject({
    * If postObjectId in props attempt to get it
    * by id if exist
    */
-
   const fetchFeedObject = useMemo(
     () => () => {
       const _type = StringUtils.capitalize(feedObjectType);
