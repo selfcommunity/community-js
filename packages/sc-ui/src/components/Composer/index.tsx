@@ -4,12 +4,13 @@ import {
   formatHttpError,
   http,
   SCContext,
-  SCContextType, SCMediaType,
+  SCContextType,
+  SCMediaType,
   SCPreferences,
   SCPreferencesContext,
   SCPreferencesContextType,
   SCUserContext,
-  SCUserContextType,
+  SCUserContextType
 } from '@selfcommunity/core';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import CloseIcon from '@mui/icons-material/CancelOutlined';
@@ -661,8 +662,8 @@ export default function Composer({
               color="primary"
               variant="contained"
               disabled={
-                // Object.keys(chunks).length > 0 ||
-                (type === COMPOSER_TYPE_DISCUSSION && title.length === 0) || (type === COMPOSER_TYPE_POST && stripHtml(text).length === 0)
+                (type === COMPOSER_TYPE_DISCUSSION && title.length === 0) ||
+                (type === COMPOSER_TYPE_POST && stripHtml(text).length === 0 && medias.length === 0)
               }
               loading={isSubmitting}>
               <FormattedMessage id="ui.composer.submit" defaultMessage="ui.composer.submit" />
