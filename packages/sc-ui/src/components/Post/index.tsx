@@ -4,13 +4,13 @@ import List from '@mui/material/List';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import {Avatar, Box, Grid, Link, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
-import {Endpoints, http, Logger, SCUserType} from '@selfcommunity/core';
+import {Endpoints, http, Logger} from '@selfcommunity/core';
 import {PostBoxSkeleton} from '@selfcommunity/ui';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import TimeAgo from 'timeago-react';
 import {AxiosResponse} from 'axios';
 import {SCOPE_SC_UI} from '../../constants/Errors';
-import { SCFeedPostType } from '@selfcommunity/core';
+import {SCFeedPostType} from '@selfcommunity/core';
 
 const PREFIX = 'SCPost';
 
@@ -31,7 +31,7 @@ function Post({
   postObjectId?: number;
   postObject?: SCFeedPostType;
   contained: boolean;
-  variant: string;
+  variant?: string;
 }): JSX.Element {
   const [post, setPost] = useState<SCFeedPostType>(postObject);
 

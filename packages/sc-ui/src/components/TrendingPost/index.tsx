@@ -65,7 +65,7 @@ function TrendingPost({scCategoryId = null}: {scCategoryId?: number}): JSX.Eleme
       <CardContent>
         <Typography variant="body1">Trending Feed</Typography>
         <List>
-          {posts.slice(0, 4).map((post: {title: string}, index) => (
+          {posts.slice(0, 4).map((post, index) => (
             <Post contained={false} postObject={post} key={index} />
           ))}
         </List>
