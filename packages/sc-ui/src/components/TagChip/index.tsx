@@ -2,9 +2,9 @@ import React, {Fragment, useEffect, useState} from 'react';
 import Chip from '@mui/material/Chip';
 import classNames from 'classnames';
 import {styled} from '@mui/material/styles';
-import { Endpoints, http, Logger, SCTagType } from '@selfcommunity/core';
+import {Endpoints, http, Logger, SCTagType} from '@selfcommunity/core';
 import {AxiosResponse} from 'axios';
-import { SCOPE_SC_UI } from '../../constants/Errors';
+import {SCOPE_SC_UI} from '../../constants/Errors';
 
 const PREFIX = 'SCTagChip';
 
@@ -33,28 +33,33 @@ const Root = styled('span', {
   }
 }));
 
-export default function TagChip(props: {
-  scTagId?: number;
-  scTag?: SCTagType;
+export default function TagChip({
+  id = null,
+  tag = null,
+  onClick = null,
+  ellipsed = null,
+  ...rest
+}: {
+  id?: number;
+  tag?: SCTagType;
   onClick?: (res: any) => void;
   ellipsed?: boolean;
   [p: string]: any;
 }): JSX.Element {
-  const [tag, setTag] = useState<SCTagType>(props.scTag);
-  const {classes, ellipsed, ...rest} = props;
-
+  const [scTag, setSCTag] = useState<SCTagType>(tag);
+  const {classes} = rest;
   /**
    * If scTag not in props, attempt to get the tag by scTagId (in props) if exist
    */
   function fetchTag() {
     http
       .request({
-        url: Endpoints.Tag.url({id: props.scTagId}),
+        url: Endpoints.Tag.url({id: id}),
         method: Endpoints.Tag.method
       })
       .then((res: AxiosResponse<SCTagType>) => {
         const data: SCTagType = res.data;
-        setTag(data);
+        setSCTag(data);
       })
       .catch((error) => {
         Logger.error(SCOPE_SC_UI, error);
@@ -62,7 +67,7 @@ export default function TagChip(props: {
   }
 
   useEffect(() => {
-    if (!tag && props.scTagId !== null) {
+    if (id) {
       fetchTag();
     }
   }, []);
@@ -71,7 +76,7 @@ export default function TagChip(props: {
    * Handle click on tagChip
    */
   function handleClick(id) {
-    props.onClick(id);
+    onClick(id);
   }
 
   if (!tag) {

@@ -224,7 +224,7 @@ class Vote extends React.Component {
                   }>
                   <List>
                     {votes.slice(0, 4).map((vote, index) => (
-                      <User contained={false} user={vote.user} key={index} />
+                      <User elevation={0} user={vote.user} key={index} />
                     ))}
                   </List>
                 </InfiniteScroll>

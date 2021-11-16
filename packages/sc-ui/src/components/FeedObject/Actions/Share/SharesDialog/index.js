@@ -67,7 +67,7 @@ class SharesDialog extends React.Component {
             }>
             <List>
               {shares.slice(0, 4).map((like, index) => (
-                <User contained={false} user={like.user} key={index} />
+                <User elevation={0} user={like.user} key={index} />
               ))}
             </List>
           </InfiniteScroll>

@@ -9,6 +9,24 @@ export default {
   title: 'Design System/SC UI/FeedObject',
   component: FeedObject,
   argTypes: {
+    id: {
+      control: {type: 'number'},
+      description: 'FeedObject Id',
+      defaultValue: 7605,
+      table: {defaultValue: {summary: 7605}}
+    },
+    feedObjectType: {
+      options: [SCFeedObjectTypologyType.POST, SCFeedObjectTypologyType.DISCUSSION, SCFeedObjectTypologyType.STATUS],
+      control: {type: 'select'},
+      description: 'Object type. Used only with args id.'
+    },
+    type: {
+      options: [FeedObjectComponentType.SNIPPET, FeedObjectComponentType.PREVIEW, FeedObjectComponentType.DETAIL],
+      control: {type: 'select'},
+      description: 'Object type. Used only with args id.',
+      defaultValue: FeedObjectComponentType.SNIPPET,
+      table: {defaultValue: {summary: FeedObjectComponentType.SNIPPET}}
+    },
     elevation: {
       control: {type: 'number'},
       description: 'Used only if variant="elevation". Shadow depth, corresponds to dp in the spec. It accepts values between 0 and 24 inclusive.',
@@ -21,18 +39,6 @@ export default {
       description: 'The variant to use. Types: "elevation", "outlined", etc.',
       defaultValue: 'elevation',
       table: {defaultValue: {summary: 'elevation'}}
-    },
-    type: {
-      options: [FeedObjectComponentType.SNIPPET, FeedObjectComponentType.PREVIEW, FeedObjectComponentType.DETAIL],
-      control: {type: 'select'},
-      description: 'Object type. Used only with args id.',
-      defaultValue: FeedObjectComponentType.SNIPPET,
-      table: {defaultValue: {summary: FeedObjectComponentType.SNIPPET}}
-    },
-    feedObjectType: {
-      options: [SCFeedObjectTypologyType.POST, SCFeedObjectTypologyType.DISCUSSION, SCFeedObjectTypologyType.STATUS],
-      control: {type: 'select'},
-      description: 'Object type. Used only with args id.'
     }
   }
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
@@ -41,7 +47,7 @@ export default {
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const Template: ComponentStory<typeof FeedObject> = (args) => (
   <div style={{width: 500}}>
-    <FeedObject id={7605} {...args} />
+    <FeedObject {...args} />
   </div>
 );
 

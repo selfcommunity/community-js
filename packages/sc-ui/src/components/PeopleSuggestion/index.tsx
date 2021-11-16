@@ -72,7 +72,7 @@ function PeopleSuggestion(props): JSX.Element {
         </Typography>
         <List>
           {users.slice(0, 2).map((user: SCUserType, index) => (
-            <User contained={false} scUser={user} key={index} />
+            <User elevation={0} user={user} key={index} />
           ))}
         </List>
         <Button color="secondary" size="small" onClick={() => fetchUserForTest()}>

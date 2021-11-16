@@ -109,17 +109,14 @@ export default function FeedObject({
           method: Endpoints[_type].method
         })
         .then((res: AxiosResponse<any>) => {
+          console.log(res);
           if (res.status >= 300) {
             return Promise.reject(res);
           }
           return Promise.resolve(res.data);
-        })
-        .catch((error) => {
-          Logger.error(SCOPE_SC_UI, error);
-          Promise.reject(error);
         });
     },
-    [type]
+    [id, feedObjectType]
   );
 
   useEffect(() => {
@@ -129,13 +126,15 @@ export default function FeedObject({
      */
     if (id) {
       fetchFeedObject()
-        .then((obj) => setObj(obj))
+        .then((obj) => {
+          setObj(obj);
+        })
         .catch((err) => {
           Logger.error(SCOPE_SC_UI, `FeedObject with id ${id} not found`);
           Logger.error(SCOPE_SC_UI, err.message);
         });
     }
-  }, []);
+  }, [id]);
 
   /**
    * Render the obj object

@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
 import Card from '@mui/material/Card';
@@ -13,8 +13,10 @@ import {
   SCPreferences,
   SCUserContextType,
   SCUserType,
-  SCPreferencesContextType
+  SCPreferencesContextType,
+  Logger
 } from '@selfcommunity/core';
+import {SCOPE_SC_UI} from '../../constants/Errors';
 
 const PREFIX = 'SCUser';
 
@@ -27,8 +29,8 @@ const Root = styled(Card, {
   marginBottom: theme.spacing(2)
 }));
 
-export default function User({scUserId = null, scUser = null, ...rest}: {scUserId?: number; scUser?: SCUserType}): JSX.Element {
-  const [user, setUser] = useState<SCUserType>(scUser);
+export default function User({id = null, user = null, ...rest}: {id?: number; user?: SCUserType; [p: string]: any}): JSX.Element {
+  const [scUser, setSCUser] = useState<SCUserType>(user);
   const scPreferencesContext: SCPreferencesContextType = useContext(SCPreferencesContext);
   const scAuthContext: SCUserContextType = useContext(SCUserContext);
   const followEnabled =
@@ -39,20 +41,23 @@ export default function User({scUserId = null, scUser = null, ...rest}: {scUserI
   /**
    * If user not in props, attempt to get the user by id (in props) if exist
    */
-  function fetchUser() {
-    http
-      .request({
-        url: Endpoints.User.url({id: scUserId}),
-        method: Endpoints.User.method
-      })
-      .then((res: AxiosResponse<SCUserType>) => {
-        const data: SCUserType = res.data;
-        setUser(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
+  const fetchUser = useMemo(
+    () => () => {
+      http
+        .request({
+          url: Endpoints.User.url({id: id}),
+          method: Endpoints.User.method
+        })
+        .then((res: AxiosResponse<SCUserType>) => {
+          const data: SCUserType = res.data;
+          setSCUser(data);
+        })
+        .catch((error) => {
+          Logger.error(SCOPE_SC_UI, error);
+        });
+    },
+    [id]
+  );
 
   /**
    * Render follow action
@@ -107,19 +112,19 @@ export default function User({scUserId = null, scUser = null, ...rest}: {scUserI
   }
 
   useEffect(() => {
-    if (scUserId) {
+    if (id) {
       fetchUser();
     }
-  }, [scUserId]);
+  }, [id]);
 
   const u = (
     <React.Fragment>
-      {user ? (
+      {scUser ? (
         <ListItem button={true}>
           <ListItemAvatar>
-            <Avatar alt={user.username} src={user.avatar} />
+            <Avatar alt={scUser.username} src={scUser.avatar} />
           </ListItemAvatar>
-          <ListItemText primary={user.username} secondary={user.description} />
+          <ListItemText primary={scUser.username} secondary={scUser.description} />
           <ListItemSecondaryAction>{scAuthContext.user ? renderAuthenticatedActions() : renderAnonymousActions()}</ListItemSecondaryAction>
         </ListItem>
       ) : (

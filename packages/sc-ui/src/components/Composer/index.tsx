@@ -63,8 +63,8 @@ import {TransitionProps} from '@mui/material/transitions';
 import {ReactSortable} from 'react-sortablejs';
 import {AxiosResponse} from 'axios';
 import {CHUNK_EVENTS} from '@rpldy/chunked-sender';
-import Link from '../Post/Medias/Link';
-import Medias from '../Post/Medias';
+import Link from '../FeedObject/Medias/Link';
+import Medias from '../FeedObject/Medias';
 import Editor from '../Editor';
 
 const DialogTransition = forwardRef(function Transition(
