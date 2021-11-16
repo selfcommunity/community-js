@@ -1,4 +1,4 @@
-import React, {forwardRef, ForwardRefExoticComponent, ReactNode, SyntheticEvent, useContext, useEffect, useMemo, useReducer, useState} from 'react';
+import React, {forwardRef, ReactNode, SyntheticEvent, useContext, useMemo, useReducer, useState} from 'react';
 import {
   Endpoints,
   formatHttpError,
@@ -18,24 +18,17 @@ import WriteIcon from '@mui/icons-material/CreateOutlined';
 import PublicIcon from '@mui/icons-material/PublicOutlined';
 import TagIcon from '@mui/icons-material/LabelOutlined';
 import BackIcon from '@mui/icons-material/ArrowBackOutlined';
-import ImageIcon from '@mui/icons-material/ImageOutlined';
 import VideoIcon from '@mui/icons-material/PlayCircleOutlineOutlined';
-import DocumentIcon from '@mui/icons-material/PictureAsPdfOutlined';
-import LinkIcon from '@mui/icons-material/LinkOutlined';
 import {
-  Alert,
-  AlertTitle,
   Avatar,
   Box,
   Button,
-  CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
   Fade,
   FormControl,
-  Grid,
   IconButton,
   InputBase,
   MenuItem,
@@ -46,26 +39,19 @@ import {
   ToggleButtonGroup,
   Typography
 } from '@mui/material';
-import {asUploadButton} from '@rpldy/upload-button';
-import ChunkedUploady, {UPLOADER_EVENTS} from '@rpldy/chunked-uploady';
 import {styled} from '@mui/material/styles';
 import {COMPOSER_TITLE_MAX_LENGTH, COMPOSER_TYPE_DISCUSSION, COMPOSER_TYPE_POST} from '../../constants/Composer';
 import {MEDIA_TYPE_DOCUMENT, MEDIA_TYPE_IMAGE, MEDIA_TYPE_LINK, MEDIA_TYPE_VIDEO} from '../../constants/Media';
 import LoadingButton from '@mui/lab/LoadingButton';
 import Audience from './Audience';
 import Categories from './Categories';
-import UrlTextField from './Media/UrlTextField';
-import {md5} from '../../utils/hash';
 import {stripHtml} from '../../utils/string';
 import classNames from 'classnames';
-import UploadDropZone from '@rpldy/upload-drop-zone';
 import {TransitionProps} from '@mui/material/transitions';
-import {ReactSortable} from 'react-sortablejs';
-import {AxiosResponse} from 'axios';
-import {CHUNK_EVENTS} from '@rpldy/chunked-sender';
-import Link from '../FeedObject/Medias/Link';
-import Medias from '../FeedObject/Medias';
+import Medias from '../Post/Medias';
 import Editor from '../Editor';
+import {SCComposerMediaActionType} from '../../types/composer';
+import {Document, Image, Link} from './MediaAction';
 
 const DialogTransition = forwardRef(function Transition(
   props: TransitionProps & {
@@ -75,38 +61,6 @@ const DialogTransition = forwardRef(function Transition(
 ) {
   return <Fade ref={ref} {...props}></Fade>;
 });
-
-const ImageUploadButton = asUploadButton(
-  forwardRef((props, ref) => (
-    <Button {...props} aria-label="upload image" ref={ref} variant="outlined">
-      <ImageIcon /> <FormattedMessage id="thread.dialog.media.images.add" defaultMessage="thread.dialog.media.images.add" />
-    </Button>
-  ))
-);
-
-const ImageUploadIconButton = asUploadButton(
-  forwardRef((props, ref) => (
-    <IconButton {...props} aria-label="upload image" ref={ref}>
-      <ImageIcon />
-    </IconButton>
-  ))
-);
-
-const DocumentUploadButton = asUploadButton(
-  forwardRef((props, ref) => (
-    <Button {...props} aria-label="upload image" ref={ref} variant="outlined">
-      <DocumentIcon /> <FormattedMessage id="thread.dialog.media.documents.add" defaultMessage="thread.dialog.media.documents.add" />
-    </Button>
-  ))
-);
-
-const DocumentUploadIconButton = asUploadButton(
-  forwardRef((props, ref) => (
-    <IconButton {...props} aria-label="upload document" ref={ref}>
-      <DocumentIcon />
-    </IconButton>
-  ))
-);
 
 const messages = defineMessages({
   drop: {
@@ -139,10 +93,10 @@ const classes = {
   types: `${PREFIX}-types`,
   avatar: `${PREFIX}-avatar`,
   content: `${PREFIX}-content`,
+  mediaContent: `${PREFIX}-mediaContent`,
   block: `${PREFIX}-block`,
   editor: `${PREFIX}-editor`,
   divider: `${PREFIX}-divider`,
-  dragHover: `${PREFIX}-drag-hover`,
   medias: `${PREFIX}-medias`,
   mediasActions: `${PREFIX}-mediasActions`,
   sortableMedia: `${PREFIX}-sortableMedia`,
@@ -194,6 +148,9 @@ const Root = styled(Dialog, {
     position: 'relative',
     overflowY: 'visible'
   },
+  [`& .${classes.mediaContent}`]: {
+    minHeight: 300
+  },
   [`& .${classes.block}`]: {
     padding: theme.spacing(2)
   },
@@ -202,24 +159,6 @@ const Root = styled(Dialog, {
   },
   [`& .${classes.divider}`]: {
     borderTop: '1px solid #D1D1D1'
-  },
-  [`& .${classes.dragHover}`]: {
-    position: 'relative',
-    '&::before': {
-      content: 'attr(data-content)',
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      backgroundColor: theme.palette.primary.main,
-      color: theme.palette.primary.contrastText,
-      zIndex: 2,
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center'
-    }
   },
   [`& .${classes.medias}`]: {
     margin: '0 23px'
@@ -293,10 +232,7 @@ const COMPOSER_INITIAL_STATE = {
   categoriesError: null,
   addressing: [],
   addressingError: null,
-  images: [],
-  videos: [],
-  docs: [],
-  links: []
+  medias: []
 };
 
 const reducer = (state, action) => {
@@ -310,36 +246,16 @@ const reducer = (state, action) => {
   }
 };
 
-interface Chunk {
-  id: number;
-  name: string;
-  type: string;
-  image: string;
-  completed: number;
-  error: string;
-  upload_id: string;
-}
-
-interface ChunkArray {
-  [index: string]: Chunk;
-}
-
-let chunks: ChunkArray = {};
-const setChunk: Function = (id, data) => {
-  chunks = {...chunks, [id]: {...chunks[id], ...data}};
-};
-const clearChunks: Function = () => {
-  chunks = {};
-};
-
 export default function Composer({
   open = false,
   view = MAIN_VIEW,
+  mediaActions = [Image, Document, Link],
   onClose = null,
   onSuccess = null
 }: {
   open?: boolean;
   view?: string;
+  mediaActions?: SCComposerMediaActionType[];
   onClose?: (event: SyntheticEvent) => void;
   onSuccess?: (res: any) => void;
 }): JSX.Element {
@@ -365,7 +281,7 @@ export default function Composer({
   const [composerTypes, setComposerTypes] = useState([]);
 
   const [state, dispatch] = useReducer(reducer, {...COMPOSER_INITIAL_STATE, open, view});
-  const {type, title, titleError, text, categories, addressing, audience, images, videos, docs, links} = state;
+  const {type, title, titleError, text, categories, addressing, audience, medias} = state;
 
   /*
    * Compute preferences
@@ -375,28 +291,6 @@ export default function Composer({
     PREFERENCES.map((p) => (_preferences[p] = p in scPrefernces.preferences ? scPrefernces.preferences[p].value : null));
     return _preferences;
   }, [scPrefernces.preferences]);
-
-  /*
-   * Compute views
-   * */
-  const VIEWS: string[] = useMemo(() => {
-    const views = [MAIN_VIEW, LINKS_VIEW];
-    if (preferences[SCPreferences.ADDONS_POLLS_ENABLED]) {
-      views.push(POLL_VIEW);
-    }
-    return views;
-  }, [preferences]);
-
-  /*
-   * Compute uploads views
-   * */
-  const UPLOAD_VIEWS: string[] = useMemo(() => {
-    const views = [IMAGES_VIEW, DOCUMENTS_VIEW];
-    if (preferences[SCPreferences.ADDONS_VIDEO_UPLOAD_ENABLED]) {
-      views.push(VIDEOS_VIEW);
-    }
-    return views;
-  }, [preferences]);
 
   /*
    * Compose the enabled types of posts that can be created based on preferences
@@ -417,21 +311,6 @@ export default function Composer({
     }
   };
   setEnabledComposerTypes();
-
-  // componentDidUpdate
-  useEffect(() => {
-    if (UPLOAD_VIEWS.includes(_view)) {
-      setView(MAIN_VIEW);
-    } else if (VIEWS.includes(_view)) {
-      setView(_view);
-    }
-  }, [_view]);
-
-  useEffect(() => {
-    if (UPLOAD_VIEWS.includes(_view)) {
-      refs[_view].current.click();
-    }
-  }, [_view]);
 
   /* Handlers */
 
@@ -491,28 +370,25 @@ export default function Composer({
     return (event: SyntheticEvent): void => setFades({...fades, [obj]: false});
   };
 
-  const handleDeleteMedia = (type: string, id?: number) => {
+  const handleDeleteMedia = (id?: number) => {
     return (event: SyntheticEvent): void => {
-      const key = `${type}s`;
       if (id) {
-        dispatch({type: key, value: state[key].filter((m) => m.id != id)});
+        dispatch({type: 'medias', value: medias.filter((m) => m.id != id)});
       } else {
-        dispatch({type: key, value: []});
+        dispatch({type: 'medias', value: []});
       }
     };
   };
 
-  const handleDeleteMediaChunk = (id) => {
-    return (event: SyntheticEvent): void => {
-      delete chunks[id];
-    };
+  const handleAddMedia = (media) => {
+    dispatch({type: 'medias', value: [...medias, media]});
   };
 
-  const handleAddMedia = (type: string) => {
-    return (media) => {
-      const key = `${type}s`;
-      dispatch({type: key, value: [...state[key], media]});
-    };
+  const handleSortMedia = (newSort) => {
+    dispatch({
+      type: 'medias',
+      value: [...medias.filter((media: any) => newSort.findIndex((m: any) => m.id === media.id) === -1), ...newSort]
+    });
   };
 
   const handleSubmit = (event: SyntheticEvent): void => {
@@ -520,7 +396,7 @@ export default function Composer({
       title,
       text,
       addressing,
-      medias: [...images, ...videos, ...docs, ...links].map((m) => m.id),
+      medias: medias.map((m) => m.id),
       categories: categories.map((c) => c.id)
     };
     setIsSubmitting(true);
@@ -617,78 +493,6 @@ export default function Composer({
     }
   };
 
-  const getChunkUploadHeaders: Function = () => {
-    return {Authorization: `Bearer ${scContext.settings.session.authToken.accessToken}`};
-  };
-
-  const getChunkUploadListeners: Function = () => {
-    return {
-      [UPLOADER_EVENTS.ITEM_START]: (item) => {
-        if (item.file.type.startsWith('image/')) {
-          const reader = new FileReader();
-          reader.onload = (e) => {
-            setChunk(item.id, {image: e.target.result});
-          };
-          reader.readAsDataURL(item.file);
-        }
-        setChunk(item.id, {id: item.id, [`upload_id`]: null, completed: 0, name: item.file.name});
-      },
-      [UPLOADER_EVENTS.ITEM_PROGRESS]: (item) => {
-        setChunk(item.id, {completed: item.completed});
-      },
-      [UPLOADER_EVENTS.ITEM_FINISH]: (item) => {
-        md5(item.file, 2142880, (hash) => {
-          const formData = new FormData();
-          formData.append('upload_id', chunks[item.id].upload_id);
-          formData.append('type', chunks[item.id].type === 'document' ? MEDIA_TYPE_DOCUMENT : chunks[item.id].type);
-          formData.append('md5', hash);
-          http
-            .request({
-              url: Endpoints.ComposerChunkUploadMediaComplete.url(),
-              method: Endpoints.ComposerChunkUploadMediaComplete.method,
-              data: formData,
-              headers: {'Content-Type': 'multipart/form-data'}
-            })
-            .then((res: AxiosResponse<any>) => {
-              const mediasKey = `${res.data.type}s`;
-              const medias = [...state[mediasKey], res.data];
-              delete chunks[item.id];
-              dispatch({type: mediasKey, value: medias});
-            })
-            .catch((error) => {
-              error = formatHttpError(error);
-              setChunk(item.id, {error: error.error});
-            });
-        });
-      },
-      [CHUNK_EVENTS.CHUNK_START]: (data) => {
-        if (chunks[data.item.id].upload_id) {
-          return {
-            sendOptions: {
-              params: {[`upload_id`]: chunks[data.item.id].upload_id}
-            }
-          };
-        } else {
-          setChunk(data.item.id, {type: data.sendOptions.paramName === 'document' ? MEDIA_TYPE_DOCUMENT : data.sendOptions.paramName});
-        }
-      },
-      [CHUNK_EVENTS.CHUNK_FINISH]: (data) => {
-        setChunk(data.item.id, {[`upload_id`]: data.uploadData.response.data.upload_id});
-      },
-      [UPLOADER_EVENTS.REQUEST_PRE_SEND]: ({items, options}) => {
-        if (items.length == 0) {
-          return Promise.resolve({options});
-        }
-        //returned object can be wrapped with a promise
-        return Promise.resolve({
-          options: {
-            inputFieldName: items[0].file.type === 'application/pdf' ? 'document' : options.inputFieldName
-          }
-        });
-      }
-    };
-  };
-
   const renderAudienceView: Function = () => {
     return (
       <React.Fragment>
@@ -736,261 +540,44 @@ export default function Composer({
     );
   };
 
-  const renderImagesView: Function = () => {
-    const headers = getChunkUploadHeaders();
-    const listeners = getChunkUploadListeners();
-
-    return (
-      <React.Fragment>
-        <DialogTitle className={classes.title}>
-          <Typography align="left" component="div">
-            <IconButton onClick={handleChangeView(MAIN_VIEW)} size="small">
-              <BackIcon />
-            </IconButton>
-            <FormattedMessage id="thread.dialog.media.images.edit" defaultMessage="thread.dialog.media.images.edit" />
-          </Typography>
-          <Box sx={{textAlign: 'center'}}>
-            <Avatar className={classes.avatar} src={scAuthContext.user.avatar}></Avatar>
-          </Box>
-          <Box sx={{textAlign: 'right'}}>
-            <Button onClick={handleChangeView(MAIN_VIEW)} variant="outlined">
-              <FormattedMessage id="thread.dialog.done" defaultMessage="thread.dialog.done" />
-            </Button>
-          </Box>
-        </DialogTitle>
-        <DialogContent className={classes.content}>
-          <Typography gutterBottom component="div">
-            <ReactSortable
-              list={images}
-              setList={(newSort) => dispatch({type: 'images', value: newSort})}
-              tag={Grid as ForwardRefExoticComponent<any>}
-              container>
-              {images.map((media) => (
-                <Grid
-                  key={media.id}
-                  item
-                  xs={12}
-                  className={classNames(classes.sortableMedia, classes.sortableMediaCover)}
-                  style={{backgroundImage: `url(${media.image})`}}>
-                  <Box sx={{textAlign: 'right'}} m={1}>
-                    <Button onClick={handleDeleteMedia(MEDIA_TYPE_IMAGE, media.id)} size="small" color="primary" variant="contained">
-                      <DeleteIcon />
-                    </Button>
-                  </Box>
-                </Grid>
-              ))}
-            </ReactSortable>
-            <Grid container>
-              {Object.values(chunks)
-                .filter((c: Chunk) => c.type === MEDIA_TYPE_IMAGE && !c.error)
-                .map((media: Chunk) => (
-                  <Grid
-                    key={media.id}
-                    item
-                    xs={12}
-                    className={classNames(classes.sortableMedia, classes.sortableMediaCover)}
-                    style={{backgroundImage: `url(${media.image})`}}>
-                    <Box sx={{textAlign: 'right'}} m={1}>
-                      <Button onClick={handleDeleteMedia(MEDIA_TYPE_IMAGE, media.id)} size="small" color="primary" variant="contained">
-                        <DeleteIcon />
-                      </Button>
-                    </Box>
-                    <Box>
-                      <Box>
-                        <CircularProgress variant="determinate" value={media.completed} />
-                        <Box top={0} left={0} bottom={0} right={0} position="absolute" display="flex" alignItems="center" justifyContent="center">
-                          <Typography variant="caption" component="div" color="textSecondary">{`${Math.round(media.completed)}%`}</Typography>
-                        </Box>
-                      </Box>
-                    </Box>
-                  </Grid>
-                ))}
-            </Grid>
-          </Typography>
-          <Box>
-            {Object.values(chunks)
-              .filter((c: Chunk) => c.type === MEDIA_TYPE_IMAGE && c.error)
-              .map((c: Chunk) => (
-                <Fade in key={c.id}>
-                  <Alert severity="error" onClose={handleDeleteMediaChunk(c.id)}>
-                    <AlertTitle>{c.name}</AlertTitle>
-                    {c.error}
-                  </Alert>
-                </Fade>
-              ))}
-          </Box>
-          <Typography align="center">
-            <ChunkedUploady
-              destination={{
-                url: `${scContext.settings.portal}${Endpoints.ComposerChunkUploadMedia.url()}`,
-                headers,
-                method: Endpoints.ComposerChunkUploadMedia.method
-              }}
-              listeners={listeners}
-              chunkSize={2142880}
-              multiple
-              accept="image/*">
-              <ImageUploadButton inputFieldName="image" />
-            </ChunkedUploady>
-          </Typography>
-        </DialogContent>
-      </React.Fragment>
-    );
-  };
-
-  const renderDocumentsView: Function = () => {
-    const headers = getChunkUploadHeaders();
-    const listeners = getChunkUploadListeners();
-
-    return (
-      <React.Fragment>
-        <DialogTitle className={classes.title}>
-          <Typography align="left" component="div">
-            <IconButton onClick={handleChangeView(MAIN_VIEW)} size="small">
-              <BackIcon />
-            </IconButton>
-            <FormattedMessage id="thread.dialog.media.documents.edit" defaultMessage="thread.dialog.media.documents.edit" />
-          </Typography>
-          <Box sx={{textAlign: 'center'}}>
-            <Avatar className={classes.avatar} src={scAuthContext.user.avatar}></Avatar>
-          </Box>
-          <Box sx={{textAlign: 'right'}}>
-            <Button onClick={handleChangeView(MAIN_VIEW)} variant="outlined">
-              <FormattedMessage id="thread.dialog.done" defaultMessage="thread.dialog.done" />
-            </Button>
-          </Box>
-        </DialogTitle>
-        <DialogContent className={classes.content}>
-          <Typography gutterBottom component="div">
-            <ReactSortable
-              list={docs}
-              setList={(newSort) => dispatch({type: 'docs', value: newSort})}
-              tag={Grid as ForwardRefExoticComponent<any>}
-              container>
-              {docs.map((media) => (
-                <Grid key={media.id} item xs={12} className={classes.sortableMedia} style={{backgroundImage: `url(${media.image})`}}>
-                  <Box sx={{textAlign: 'right'}} m={1}>
-                    <Button onClick={handleDeleteMedia(MEDIA_TYPE_DOCUMENT, media.id)} size="small" color="primary" variant="contained">
-                      <DeleteIcon />
-                    </Button>
-                  </Box>
-                </Grid>
-              ))}
-            </ReactSortable>
-            <Grid container>
-              {Object.values(chunks)
-                .filter((c: Chunk) => c.type === MEDIA_TYPE_DOCUMENT && !c.error)
-                .map((media: Chunk) => (
-                  <Grid
-                    key={media.id}
-                    item
-                    xs={12}
-                    className={classNames(classes.sortableMedia, classes.sortableMediaCover)}
-                    style={{backgroundImage: `url(${media.image})`}}>
-                    <Box sx={{textAlign: 'right'}} m={1}>
-                      <Button onClick={handleDeleteMedia(MEDIA_TYPE_DOCUMENT, media.id)} size="small" color="primary" variant="contained">
-                        <DeleteIcon />
-                      </Button>
-                    </Box>
-                    <Box>
-                      <Box>
-                        <CircularProgress variant="determinate" value={media.completed} />
-                        <Box top={0} left={0} bottom={0} right={0} position="absolute" display="flex" alignItems="center" justifyContent="center">
-                          <Typography variant="caption" component="div" color="textSecondary">{`${Math.round(media.completed)}%`}</Typography>
-                        </Box>
-                      </Box>
-                    </Box>
-                  </Grid>
-                ))}
-            </Grid>
-          </Typography>
-          <Box>
-            {Object.values(chunks)
-              .filter((c: Chunk) => c.type === MEDIA_TYPE_DOCUMENT && c.error)
-              .map((c: Chunk) => (
-                <Fade in key={c.id}>
-                  <Alert severity="error" onClose={handleDeleteMediaChunk(c.id)}>
-                    <AlertTitle>{c.name}</AlertTitle>
-                    {c.error}
-                  </Alert>
-                </Fade>
-              ))}
-          </Box>
-          <Typography align="center">
-            <ChunkedUploady
-              destination={{
-                url: `${scContext.settings.portal}${Endpoints.ComposerChunkUploadMedia.url()}`,
-                headers,
-                method: Endpoints.ComposerChunkUploadMedia.method
-              }}
-              listeners={listeners}
-              chunkSize={2142880}
-              multiple
-              accept="application/pdf">
-              <DocumentUploadButton inputFieldName="document" />
-            </ChunkedUploady>
-          </Typography>
-        </DialogContent>
-      </React.Fragment>
-    );
-  };
-
-  const renderLinksView: Function = () => {
-    return (
-      <React.Fragment>
-        <DialogTitle className={classes.title}>
-          <Typography align="left" component="div">
-            <IconButton onClick={handleChangeView(MAIN_VIEW)} size="small">
-              <BackIcon />
-            </IconButton>
-            <FormattedMessage id="thread.dialog.media.links.edit" defaultMessage="thread.dialog.media.links.edit" />
-          </Typography>
-          <Box sx={{textAlign: 'center'}}>
-            <Avatar className={classes.avatar} src={scAuthContext.user.avatar}></Avatar>
-          </Box>
-          <Box sx={{textAlign: 'right'}}>
-            <Button onClick={handleChangeView(MAIN_VIEW)} variant="outlined">
-              <FormattedMessage id="thread.dialog.done" defaultMessage="thread.dialog.done" />
-            </Button>
-          </Box>
-        </DialogTitle>
-        <DialogContent className={classNames(classes.content, classes.links)}>
-          <UrlTextField
-            id="page"
-            name="page"
-            label={<FormattedMessage id="thread.dialog.media.links.add.label" defaultMessage="thread.dialog.media.links.add.label" />}
-            fullWidth
-            variant="outlined"
-            placeholder="https://"
-            onSuccess={handleAddMedia(MEDIA_TYPE_LINK)}
-          />
-          {links.length > 0 && (
-            <ReactSortable list={links} setList={(newSort) => dispatch({type: 'links', value: newSort})}>
-              {links.map((media) => (
-                <Box key={media.id} m={1} className={classes.sortableMedia}>
-                  <Link media={media} fullWidth />
-                  <Box className={classes.mediasActions}>
-                    &nbsp;
-                    <Button onClick={handleDeleteMedia(MEDIA_TYPE_LINK, media.id)} size="small" color="primary" variant="contained">
-                      <DeleteIcon />
-                    </Button>
-                  </Box>
-                </Box>
-              ))}
-            </ReactSortable>
-          )}
-        </DialogContent>
-      </React.Fragment>
-    );
-  };
-
   const renderVideosView: Function = () => null;
 
-  const renderMainView: Function = () => {
-    const headers = getChunkUploadHeaders();
-    const listeners = getChunkUploadListeners();
-    const chunkErrors = Object.values(chunks).filter((c: Chunk) => c.error);
+  const renderMediaView: Function = (action: SCComposerMediaActionType) => {
+    return () => {
+      return (
+        <React.Fragment>
+          <DialogTitle className={classes.title}>
+            <Typography align="left" component="div">
+              <IconButton onClick={handleChangeView(MAIN_VIEW)} size="small">
+                <BackIcon />
+              </IconButton>
+              <FormattedMessage id="thread.dialog.media.edit" defaultMessage="thread.dialog.media.edit" />
+            </Typography>
+            <Box sx={{textAlign: 'center'}}>
+              <Avatar className={classes.avatar} src={scAuthContext.user.avatar}></Avatar>
+            </Box>
+            <Box sx={{textAlign: 'right'}}>
+              <Button onClick={handleChangeView(MAIN_VIEW)} variant="outlined">
+                <FormattedMessage id="thread.dialog.done" defaultMessage="thread.dialog.done" />
+              </Button>
+            </Box>
+          </DialogTitle>
+          <DialogContent className={classNames(classes.content, classes.mediaContent)}>
+            {
+              <action.component
+                medias={medias.filter(action.filter)}
+                onSuccess={handleAddMedia}
+                onSort={handleSortMedia}
+                onDelete={handleDeleteMedia}
+              />
+            }
+          </DialogContent>
+        </React.Fragment>
+      );
+    };
+  };
 
+  const renderMainView: Function = () => {
     return (
       <React.Fragment>
         <DialogTitle className={classes.title}>
@@ -1020,100 +607,48 @@ export default function Composer({
           </Box>
         </DialogTitle>
         <DialogContent className={classes.content}>
-          <ChunkedUploady
-            destination={{
-              url: `${scContext.settings.portal}${Endpoints.ComposerChunkUploadMedia.url()}`,
-              headers,
-              method: Endpoints.ComposerChunkUploadMedia.method
-            }}
-            listeners={listeners}
-            chunkSize={2142880}
-            multiple>
-            <UploadDropZone
-              onDragOverClassName={classes.dragHover}
-              inputFieldName="image"
-              // TODO: accept="image/*"
-              extraProps={{'data-content': intl.formatMessage(messages.drop)}}>
-              {type === COMPOSER_TYPE_DISCUSSION && (
-                <div className={classes.block}>
-                  <TextField
-                    label={<FormattedMessage id="thread.title.label" defaultMessage="thread.title.label" />}
-                    fullWidth
-                    variant="outlined"
-                    value={title}
-                    multiline
-                    onChange={handleChange('title')}
-                    InputProps={{
-                      endAdornment: <Typography variant="body2">{COMPOSER_TITLE_MAX_LENGTH - title.length}</Typography>
-                    }}
-                    error={Boolean(titleError)}
-                    helperText={titleError}
-                  />
-                </div>
-              )}
-              <Editor className={classNames(classes.block, classes.editor)} onChange={handleChangeText} defaultValue={text} />
-              <Box className={classes.medias}>
-                <Medias
-                  medias={[...images, ...videos, ...docs, ...links, ...Object.values(chunks).filter((c: Chunk) => !c.error)]}
-                  GridImageProps={{gallery: false, overlay: false}}
-                  imagesAdornment={renderMediaControls(MEDIA_TYPE_IMAGE)}
-                  videosAdornment={renderMediaControls(MEDIA_TYPE_VIDEO)}
-                  documentsAdornment={renderMediaControls(MEDIA_TYPE_DOCUMENT)}
-                  linksAdornment={renderMediaControls(MEDIA_TYPE_LINK)}
-                />
-              </Box>
-              <div className={classes.block}>
-                <Categories onChange={handleChange('categories')} defaultValue={categories} />
-              </div>
-            </UploadDropZone>
-          </ChunkedUploady>
-          {chunkErrors.length > 0 && (
-            <Box>
-              {chunkErrors.map((c: Chunk) => (
-                <Fade in key={c.id}>
-                  <Alert severity="error" onClose={handleDeleteMediaChunk(c.id)}>
-                    <AlertTitle>{c.name}</AlertTitle>
-                    {c.error}
-                  </Alert>
-                </Fade>
-              ))}
-            </Box>
+          {type === COMPOSER_TYPE_DISCUSSION && (
+            <div className={classes.block}>
+              <TextField
+                label={<FormattedMessage id="thread.title.label" defaultMessage="thread.title.label" />}
+                fullWidth
+                variant="outlined"
+                value={title}
+                multiline
+                onChange={handleChange('title')}
+                InputProps={{
+                  endAdornment: <Typography variant="body2">{COMPOSER_TITLE_MAX_LENGTH - title.length}</Typography>
+                }}
+                error={Boolean(titleError)}
+                helperText={titleError}
+              />
+            </div>
           )}
+          <Editor className={classNames(classes.block, classes.editor)} onChange={handleChangeText} defaultValue={text} />
+          <Box className={classes.medias}>
+            <Medias
+              medias={medias}
+              GridImageProps={{gallery: false, overlay: false}}
+              imagesAdornment={renderMediaControls(MEDIA_TYPE_IMAGE)}
+              videosAdornment={renderMediaControls(MEDIA_TYPE_VIDEO)}
+              documentsAdornment={renderMediaControls(MEDIA_TYPE_DOCUMENT)}
+              linksAdornment={renderMediaControls(MEDIA_TYPE_LINK)}
+            />
+          </Box>
+          <div className={classes.block}>
+            <Categories onChange={handleChange('categories')} defaultValue={categories} />
+          </div>
         </DialogContent>
         <DialogActions className={classes.actions}>
           <Typography align="left">
-            <ChunkedUploady
-              destination={{
-                url: `${scContext.settings.portal}${Endpoints.ComposerChunkUploadMedia.url()}`,
-                headers,
-                method: Endpoints.ComposerChunkUploadMedia.method
-              }}
-              listeners={listeners}
-              chunkSize={2142880}
-              multiple
-              accept="image/*">
-              <ImageUploadIconButton inputFieldName="image" ref={this.imagesUploadRef} />
-            </ChunkedUploady>
+            {mediaActions.map((action: SCComposerMediaActionType) => (
+              <action.button key={action.name} onClick={handleChangeView(action.name)} />
+            ))}
             {preferences[SCPreferences.ADDONS_VIDEO_UPLOAD_ENABLED] && (
               <IconButton aria-label="add video" size="medium">
                 <VideoIcon />
               </IconButton>
             )}
-            <ChunkedUploady
-              destination={{
-                url: `${scContext.settings.portal}${Endpoints.ComposerChunkUploadMedia.url()}`,
-                headers,
-                method: Endpoints.ComposerChunkUploadMedia.method
-              }}
-              listeners={listeners}
-              chunkSize={2142880}
-              multiple
-              accept="application/pdf">
-              <DocumentUploadIconButton inputFieldName="document" ref={this.documentsUploadRef} />
-            </ChunkedUploady>
-            <IconButton aria-label="add link" onClick={handleChangeView(LINKS_VIEW)}>
-              <LinkIcon />
-            </IconButton>
           </Typography>
           <Typography align="right">
             <IconButton onClick={handleChangeView(AUDIENCE_VIEW)}>{addressing.length > 0 ? <TagIcon /> : <PublicIcon />}</IconButton>
@@ -1122,9 +657,8 @@ export default function Composer({
               color="primary"
               variant="contained"
               disabled={
-                Object.keys(chunks).length > 0 ||
-                (type === COMPOSER_TYPE_DISCUSSION && title.length === 0) ||
-                (type === COMPOSER_TYPE_POST && stripHtml(text).length === 0)
+                // Object.keys(chunks).length > 0 ||
+                (type === COMPOSER_TYPE_DISCUSSION && title.length === 0) || (type === COMPOSER_TYPE_POST && stripHtml(text).length === 0)
               }
               loading={isSubmitting}>
               <FormattedMessage id="thread.dialog.submit" defaultMessage="thread.dialog.submit" />
@@ -1137,19 +671,24 @@ export default function Composer({
 
   const renderPollView: Function = () => null;
 
-  const views = {
-    [MAIN_VIEW]: renderMainView,
-    [AUDIENCE_VIEW]: renderAudienceView,
-    [IMAGES_VIEW]: renderImagesView,
-    [VIDEOS_VIEW]: renderVideosView,
-    [DOCUMENTS_VIEW]: renderDocumentsView,
-    [LINKS_VIEW]: renderLinksView,
-    [POLL_VIEW]: renderPollView
-  };
+  let child = null;
+  switch (_view) {
+    case MAIN_VIEW:
+      child = renderMainView;
+      break;
+    case POLL_VIEW:
+      child = renderPollView;
+      break;
+    case AUDIENCE_VIEW:
+      child = renderAudienceView;
+      break;
+    default:
+      child = renderMediaView(mediaActions.find((mv) => mv.name === _view));
+  }
 
   return (
     <Root open={open} TransitionComponent={DialogTransition} keepMounted onClose={handleClose} maxWidth="sm" fullWidth scroll="body">
-      {views[_view]()}
+      {child()}
     </Root>
   );
 }
