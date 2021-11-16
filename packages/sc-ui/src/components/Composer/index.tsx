@@ -231,6 +231,7 @@ const COMPOSER_INITIAL_STATE = {
   textError: null,
   categories: [],
   categoriesError: null,
+  audience: AUDIENCE_ALL,
   addressing: [],
   addressingError: null,
   medias: []
@@ -252,7 +253,8 @@ export default function Composer({
   view = MAIN_VIEW,
   mediaActions = [Image, Document, Link],
   onClose = null,
-  onSuccess = null
+  onSuccess = null,
+  ...props
 }: {
   open?: boolean;
   view?: string;
@@ -545,8 +547,6 @@ export default function Composer({
     );
   };
 
-  const renderVideosView: Function = () => null;
-
   const renderMediaView: Function = (action: SCComposerMediaActionType) => {
     return () => {
       return (
@@ -688,11 +688,12 @@ export default function Composer({
       child = renderAudienceView;
       break;
     default:
-      child = renderMediaView(mediaActions.find((mv) => mv.name === _view));
+      const media = mediaActions.find((mv) => mv.name === _view);
+      child = media ? renderMediaView(media) : renderMainView;
   }
 
   return (
-    <Root open={open} TransitionComponent={DialogTransition} keepMounted onClose={handleClose} maxWidth="sm" fullWidth scroll="body">
+    <Root open={open} TransitionComponent={DialogTransition} keepMounted onClose={handleClose} {...props} /* maxWidth="sm" fullWidth scroll="body" */>
       {child()}
     </Root>
   );
