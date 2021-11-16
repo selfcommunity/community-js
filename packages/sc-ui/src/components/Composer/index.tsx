@@ -402,8 +402,8 @@ export default function Composer({
     setIsSubmitting(true);
     http
       .request({
-        url: Endpoints.ui.composer.url({type}),
-        method: Endpoints.ui.composer.method,
+        url: Endpoints.Composer.url({type}),
+        method: Endpoints.Composer.method,
         data
       })
       .then(onSuccess)
