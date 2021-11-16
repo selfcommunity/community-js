@@ -59,6 +59,10 @@ const Root = styled(Card, {
     display: 'inline-block',
     position: 'relative',
     top: 5
+  },
+  '& .MuiSvgIcon-root': {
+    width: '0.7em',
+    marginBottom: '0.5px'
   }
 }));
 
