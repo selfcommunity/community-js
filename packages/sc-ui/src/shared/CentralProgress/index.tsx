@@ -17,7 +17,7 @@ const Root = styled(Box, {
   padding: 50
 }));
 
-export default function CentralProgress({size}: {size: number}): JSX.Element {
+export default function CentralProgress({size = 30}: {size: number}): JSX.Element {
   return (
     <Root>
       <CircularProgress

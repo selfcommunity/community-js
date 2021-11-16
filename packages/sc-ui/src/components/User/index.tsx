@@ -6,11 +6,11 @@ import {UserBoxSkeleton} from '../Skeleton';
 import {Avatar, Button, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText} from '@mui/material';
 import {AxiosResponse} from 'axios';
 import {
-  Endpoints,
-  http,
-  SCPreferences,
   SCUserContext,
   SCPreferencesContext,
+  http,
+  Endpoints,
+  SCPreferences,
   SCUserContextType,
   SCUserType,
   SCPreferencesContextType
@@ -107,10 +107,10 @@ export default function User({scUserId = null, scUser = null, ...rest}: {scUserI
   }
 
   useEffect(() => {
-    if (!user) {
+    if (scUserId) {
       fetchUser();
     }
-  }, []);
+  }, [scUserId]);
 
   const u = (
     <React.Fragment>
@@ -123,7 +123,7 @@ export default function User({scUserId = null, scUser = null, ...rest}: {scUserI
           <ListItemSecondaryAction>{scAuthContext.user ? renderAuthenticatedActions() : renderAnonymousActions()}</ListItemSecondaryAction>
         </ListItem>
       ) : (
-        <UserBoxSkeleton />
+        <UserBoxSkeleton elevation={0} />
       )}
     </React.Fragment>
   );

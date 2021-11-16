@@ -15,6 +15,7 @@ module.exports = {
   "stories": [
     "../packages/sc-core/src/**/*.stories.@(js|jsx|ts|tsx)",
     "../packages/sc-ui/src/components/**/*.stories.@(js|jsx|ts|tsx)",
+    "../packages/sc-ui/src/shared/**/*.stories.@(js|jsx|ts|tsx)",
     // "../packages/sc-templates/src/components/**/*.stories.@(js|jsx|ts|tsx)",
     "../stories/**/*.stories.mdx",
     "../stories/**/*.stories.@(js|jsx|ts|tsx)"

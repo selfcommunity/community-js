@@ -17,7 +17,6 @@ const classes = {
 
 const Root = styled(Card)(({theme}) => ({
   maxWidth: 700,
-  marginBottom: theme.spacing(2),
   [`& .${classes.list}`]: {
     marginLeft: -16,
     marginRight: -16
