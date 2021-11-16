@@ -41,7 +41,7 @@ const Root = styled(Box, {
 const UploadButton = asUploadButton(
   forwardRef((props, ref) => (
     <MuiButton {...props} aria-label="upload document" ref={ref} variant="outlined">
-      <DocumentIcon /> <FormattedMessage id="thread.dialog.media.documents.add" defaultMessage="thread.dialog.media.documents.add" />
+      <DocumentIcon /> <FormattedMessage id="ui.composer.media.document.add" defaultMessage="ui.composer.media.document.add" />
     </MuiButton>
   ))
 );

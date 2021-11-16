@@ -1,3 +1,28 @@
 {
-  "ui.peopleSuggestion.title": "Persone Suggerite"
+  "ui.peopleSuggestion.title": "People Suggestion",
+
+  "ui.composer.type.post": "Create Post",
+  "ui.composer.type.discussion": "Create Discussion",
+  "ui.composer.done": "done",
+  "ui.composer.title.label": "Write a good title...",
+  "ui.composer.title.error.maxlength": "the title cannot be more than 160 chars",
+  "ui.composer.audience.title": "Filter the audience",
+  "ui.composer.audience.all": "Everybody",
+  "ui.composer.audience.tag": "By tags",
+  "ui.composer.audience.all.message": "Your post will be visible to all users.",
+  "ui.composer.audience.tag.message": "Your post will be visible to those users with at least one of the selected tags.",
+  "ui.composer.audience.addressing.label": "Search Tag...",
+  "ui.composer.media.drop": "Drop Here",
+  "ui.composer.media.image.add": "Add Images",
+  "ui.composer.media.image.edit": "Edit Images",
+  "ui.composer.media.document.add": "Add Documents",
+  "ui.composer.media.document.edit": "Edit Documents",
+  "ui.composer.media.link.edit": "Edit Links",
+  "ui.composer.media.link.add.label": "Link url",
+  "ui.composer.media.link.add.help": "Insert a valid url (youtube, vimeo or web page).",
+  "ui.composer.categories.label": "Category",
+  "ui.composer.categories.empty": "No category to assign",
+  "ui.composer.submit": "Publish",
+
+  "ui.editor.placeholder": "Write your text..."
 }

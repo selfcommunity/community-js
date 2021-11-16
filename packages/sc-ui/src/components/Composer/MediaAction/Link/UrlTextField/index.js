@@ -95,7 +95,7 @@ class UrlTextField extends React.Component {
           error={Boolean(error)}
           helperText={
             this.props.helperText ||
-            error || <FormattedMessage id="thread.dialog.media.links.add.help" defaultMessage="thread.dialog.media.links.add.help" />
+            error || <FormattedMessage id="ui.composer.media.link.add.help" defaultMessage="ui.composer.media.link.add.help" />
           }
           placeholder={this.props.placeholder}
           autoFocus={this.props.autoFocus}

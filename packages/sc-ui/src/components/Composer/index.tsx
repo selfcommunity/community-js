@@ -48,7 +48,7 @@ import Categories from './Categories';
 import {stripHtml} from '../../utils/string';
 import classNames from 'classnames';
 import {TransitionProps} from '@mui/material/transitions';
-import Medias from '../Post/Medias';
+import Medias from '../FeedObject/Medias';
 import Editor from '../Editor';
 import {SCComposerMediaActionType} from '../../types/composer';
 import {Document, Image, Link} from './MediaAction';
@@ -64,8 +64,8 @@ const DialogTransition = forwardRef(function Transition(
 
 const messages = defineMessages({
   drop: {
-    id: 'thread.dialog.media.drop',
-    defaultMessage: 'thread.dialog.media.drop'
+    id: 'ui.composer.media.drop',
+    defaultMessage: 'ui.composer.media.drop'
   }
 });
 
@@ -339,7 +339,7 @@ export default function Composer({
               title: target.value,
               titleError:
                 target.value.length > COMPOSER_TITLE_MAX_LENGTH ? (
-                  <FormattedMessage id="thread.title.error.maxlength" defaultMessage="thread.title.error.maxlength" />
+                  <FormattedMessage id="ui.composer.title.error.maxlength" defaultMessage="ui.composer.title.error.maxlength" />
                 ) : null
             }
           });
@@ -402,8 +402,8 @@ export default function Composer({
     setIsSubmitting(true);
     http
       .request({
-        url: Endpoints.Composer.url({type}),
-        method: Endpoints.Composer.method,
+        url: Endpoints.ui.composer.url({type}),
+        method: Endpoints.ui.composer.method,
         data
       })
       .then(onSuccess)
@@ -422,7 +422,7 @@ export default function Composer({
             <Fade in={Boolean(fades[MEDIA_TYPE_IMAGE])}>
               <Typography align="left">
                 <Button onClick={handleChangeView(IMAGES_VIEW)} variant="contained" color="primary" size="small">
-                  <WriteIcon /> <FormattedMessage id="thread.dialog.media.images.edit" defaultMessage="thread.dialog.media.images.edit" />
+                  <WriteIcon /> <FormattedMessage id="ui.composer.media.images.edit" defaultMessage="ui.composer.media.images.edit" />
                 </Button>
               </Typography>
             </Fade>
@@ -439,7 +439,7 @@ export default function Composer({
             <Fade in={Boolean(fades[MEDIA_TYPE_VIDEO])}>
               <Typography align="left">
                 <Button onClick={handleChangeView(VIDEOS_VIEW)} variant="contained" color="primary" size="small">
-                  <WriteIcon /> <FormattedMessage id="thread.dialog.media.videos.edit" defaultMessage="thread.dialog.media.videos.edit" />
+                  <WriteIcon /> <FormattedMessage id="ui.composer.media.videos.edit" defaultMessage="ui.composer.media.videos.edit" />
                 </Button>
               </Typography>
             </Fade>
@@ -460,7 +460,7 @@ export default function Composer({
             <Fade in={Boolean(fades[MEDIA_TYPE_DOCUMENT])}>
               <Typography align="left">
                 <Button onClick={handleChangeView(DOCUMENTS_VIEW)} variant="contained" color="primary" size="small">
-                  <WriteIcon /> <FormattedMessage id="thread.dialog.media.images.edit" defaultMessage="thread.dialog.media.images.edit" />
+                  <WriteIcon /> <FormattedMessage id="ui.composer.media.images.edit" defaultMessage="ui.composer.media.images.edit" />
                 </Button>
               </Typography>
             </Fade>
@@ -477,7 +477,7 @@ export default function Composer({
             <Fade in={Boolean(fades[MEDIA_TYPE_LINK])}>
               <Typography align="left">
                 <Button onClick={handleChangeView(LINKS_VIEW)} variant="contained" color="primary" size="small">
-                  <WriteIcon /> <FormattedMessage id="thread.dialog.media.links.edit" defaultMessage="thread.dialog.media.links.edit" />
+                  <WriteIcon /> <FormattedMessage id="ui.composer.media.link.edit" defaultMessage="ui.composer.media.link.edit" />
                 </Button>
               </Typography>
             </Fade>
@@ -501,14 +501,14 @@ export default function Composer({
             <IconButton onClick={handleChangeView(MAIN_VIEW)} size="small">
               <BackIcon />
             </IconButton>
-            <FormattedMessage id="thread.audience.title" defaultMessage="thread.audience.title" />
+            <FormattedMessage id="ui.composer.audience.title" defaultMessage="ui.composer.audience.title" />
           </Typography>
           <Box sx={{textAlign: 'center'}}>
             <Avatar className={classes.avatar} src={scAuthContext.user.avatar}></Avatar>
           </Box>
           <Box sx={{textAlign: 'right'}}>
             <Button onClick={handleChangeView(MAIN_VIEW)} variant="outlined">
-              <FormattedMessage id="thread.dialog.done" defaultMessage="thread.dialog.done" />
+              <FormattedMessage id="ui.composer.done" defaultMessage="ui.composer.done" />
             </Button>
           </Box>
         </DialogTitle>
@@ -517,16 +517,20 @@ export default function Composer({
             <ToggleButtonGroup value={audience} exclusive onChange={handleChange('audience')}>
               <ToggleButton value={AUDIENCE_ALL} size="small">
                 <PublicIcon />
-                <FormattedMessage id="thread.audience.all" defaultMessage="thread.audience.all" />
+                <FormattedMessage id="ui.composer.audience.all" defaultMessage="ui.composer.audience.all" />
               </ToggleButton>
               <ToggleButton value={AUDIENCE_TAG} size="small">
-                <TagIcon /> <FormattedMessage id="thread.audience.tag" defaultMessage="thread.audience.tag" />
+                <TagIcon /> <FormattedMessage id="ui.composer.audience.tag" defaultMessage="ui.composer.audience.tag" />
               </ToggleButton>
             </ToggleButtonGroup>
           </Box>
           <Typography align="center" className={classes.block} gutterBottom>
-            {audience === AUDIENCE_ALL && <FormattedMessage id="thread.audience.all.message" defaultMessage="thread.audience.all.message" />}
-            {audience === AUDIENCE_TAG && <FormattedMessage id="thread.audience.tag.message" defaultMessage="thread.audience.tag.message" />}
+            {audience === AUDIENCE_ALL && (
+              <FormattedMessage id="ui.composer.audience.all.message" defaultMessage="ui.composer.audience.all.message" />
+            )}
+            {audience === AUDIENCE_TAG && (
+              <FormattedMessage id="ui.composer.audience.tag.message" defaultMessage="ui.composer.audience.tag.message" />
+            )}
           </Typography>
           {audience === AUDIENCE_TAG && (
             <Box className={classes.divider}>
@@ -551,14 +555,14 @@ export default function Composer({
               <IconButton onClick={handleChangeView(MAIN_VIEW)} size="small">
                 <BackIcon />
               </IconButton>
-              <FormattedMessage id="thread.dialog.media.edit" defaultMessage="thread.dialog.media.edit" />
+              <FormattedMessage id={`ui.composer.media.${action.name}.edit`} defaultMessage={`ui.composer.media.${action.name}.edit`} />
             </Typography>
             <Box sx={{textAlign: 'center'}}>
               <Avatar className={classes.avatar} src={scAuthContext.user.avatar}></Avatar>
             </Box>
             <Box sx={{textAlign: 'right'}}>
               <Button onClick={handleChangeView(MAIN_VIEW)} variant="outlined">
-                <FormattedMessage id="thread.dialog.done" defaultMessage="thread.dialog.done" />
+                <FormattedMessage id="ui.composer.done" defaultMessage="ui.composer.done" />
               </Button>
             </Box>
           </DialogTitle>
@@ -588,9 +592,9 @@ export default function Composer({
                 {composerTypes.map((t) => (
                   <MenuItem value={t} key={t}>
                     {t === 'post' ? (
-                      <FormattedMessage id={'thread.dialog.type.post'} defaultMessage={'thread.dialog.type.post'} />
+                      <FormattedMessage id={'ui.composer.type.post'} defaultMessage={'ui.composer.type.post'} />
                     ) : (
-                      <FormattedMessage id={'thread.dialog.type.discussion'} defaultMessage={'thread.dialog.type.discussion'} />
+                      <FormattedMessage id={'ui.composer.type.discussion'} defaultMessage={'ui.composer.type.discussion'} />
                     )}
                   </MenuItem>
                 ))}
@@ -610,7 +614,7 @@ export default function Composer({
           {type === COMPOSER_TYPE_DISCUSSION && (
             <div className={classes.block}>
               <TextField
-                label={<FormattedMessage id="thread.title.label" defaultMessage="thread.title.label" />}
+                label={<FormattedMessage id="ui.composer.title.label" defaultMessage="ui.composer.title.label" />}
                 fullWidth
                 variant="outlined"
                 value={title}
@@ -661,7 +665,7 @@ export default function Composer({
                 (type === COMPOSER_TYPE_DISCUSSION && title.length === 0) || (type === COMPOSER_TYPE_POST && stripHtml(text).length === 0)
               }
               loading={isSubmitting}>
-              <FormattedMessage id="thread.dialog.submit" defaultMessage="thread.dialog.submit" />
+              <FormattedMessage id="ui.composer.submit" defaultMessage="ui.composer.submit" />
             </LoadingButton>
           </Typography>
         </DialogActions>

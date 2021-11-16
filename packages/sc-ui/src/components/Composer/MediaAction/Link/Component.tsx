@@ -7,7 +7,7 @@ import {ReactSortable} from 'react-sortablejs';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import {SCContext, SCContextType, SCPreferencesContext, SCPreferencesContextType, SCUserContext, SCUserContextType} from '@selfcommunity/core';
 import {styled} from '@mui/material/styles';
-import Link from '../../../Post/Medias/Link';
+import Link from '../../../FeedObject/Medias/Link';
 import UrlTextField from './UrlTextField';
 
 const PREFIX = 'SCMediaActionLink';
@@ -45,7 +45,7 @@ export default ({
       <UrlTextField
         id="page"
         name="page"
-        label={<FormattedMessage id="thread.dialog.media.links.add.label" defaultMessage="thread.dialog.media.links.add.label" />}
+        label={<FormattedMessage id="ui.composer.media.link.add.label" defaultMessage="ui.composer.media.link.add.label" />}
         fullWidth
         variant="outlined"
         placeholder="https://"
