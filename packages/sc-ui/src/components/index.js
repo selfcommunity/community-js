@@ -22,8 +22,8 @@ const Root = styled(Box, {
 
 const messages = defineMessages({
   placeholder: {
-    id: 'editor.placeholder',
-    defaultMessage: 'editor.placeholder'
+    id: 'ui.editor.placeholder',
+    defaultMessage: 'ui.editor.placeholder'
   }
 });
 

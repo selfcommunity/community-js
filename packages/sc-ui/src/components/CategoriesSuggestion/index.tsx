@@ -21,7 +21,7 @@ const Root = styled(Card, {
   marginBottom: theme.spacing(2)
 }));
 
-function CategoriesSuggestion(): JSX.Element {
+export default function CategoriesSuggestion(props): JSX.Element {
   const [categories, setCategories] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [hasMore, setHasMore] = useState<boolean>(false);
@@ -48,29 +48,35 @@ function CategoriesSuggestion(): JSX.Element {
     fetchCategoriesSuggestion();
   }, []);
 
-  if (loading) {
-    return <CategoriesSuggestionSkeleton />;
-  }
   return (
-    <Root variant={'outlined'}>
-      <CardContent>
-        <Typography variant="body1">Explore Interests</Typography>
-        <List>
-          {categories.slice(0, 4).map((category: SCCategoryType) => (
-            <div>
-              <Category contained={false} scCategory={category} key={category.id} />
-              <Divider />
-            </div>
-          ))}
-        </List>
-        {hasMore && (
-          <Button size="small" onClick={() => setOpenCategoriesSuggestionDialog(true)}>
-            See More
-          </Button>
-        )}
-        {openCategoriesSuggestionDialog && <></>}
-      </CardContent>
-    </Root>
+    <>
+      {loading ? (
+        <Root {...props}>
+          <CategoriesSuggestionSkeleton elevation={0} />
+        </Root>
+      ) : (
+        <>
+          {!categories.length ? null : (
+            <Root {...props}>
+              <Typography variant="body1">Explore Interests</Typography>
+              <List>
+                {categories.slice(0, 4).map((category: SCCategoryType) => (
+                  <div>
+                    <Category contained={false} scCategory={category} key={category.id} />
+                    <Divider />
+                  </div>
+                ))}
+              </List>
+              {hasMore && (
+                <Button size="small" onClick={() => setOpenCategoriesSuggestionDialog(true)}>
+                  See More
+                </Button>
+              )}
+              {openCategoriesSuggestionDialog && <></>}
+            </Root>
+          )}
+        </>
+      )}
+    </>
   );
 }
-export default CategoriesSuggestion;

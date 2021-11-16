@@ -61,6 +61,14 @@ import SCPreferencesProvider, {SCPreferencesContext} from './components/provider
 import * as SCPreferences from './constants/Preferences';
 
 /**
+ * Custom Hooks
+ */
+import useSCFetchUser from './hooks/useSCFetchUser';
+import useSCFetchFeedObject from './hooks/useSCFetchFeedObject';
+import useSCFetchTag from './hooks/useSCFetchTag';
+import useSCFetchCategory from './hooks/useSCFetchCategory';
+
+/**
  * Routing component
  */
 import Link from './components/router';
@@ -148,4 +156,8 @@ export {
   ObjectUtils,
   UrlUtils,
   Locale,
+  useSCFetchUser,
+  useSCFetchFeedObject,
+  useSCFetchTag,
+  useSCFetchCategory,
 };

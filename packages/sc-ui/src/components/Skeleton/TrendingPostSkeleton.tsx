@@ -3,7 +3,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import List from '@mui/material/List';
 import {styled} from '@mui/material/styles';
-import {PostBoxSkeleton} from '@selfcommunity/ui';
+import FeedObjectSkeleton from '../Skeleton/FeedObjectSkeleton';
 
 const PREFIX = 'SCTrendingPostSkeleton';
 
@@ -27,7 +27,7 @@ export default function TrendingPostSkeleton(): JSX.Element {
       <CardContent>
         <List className={classes.list}>
           {[...Array(4)].map((post, index) => (
-            <PostBoxSkeleton key={index} contained={false} />
+            <FeedObjectSkeleton key={index} elevation={0} />
           ))}
         </List>
       </CardContent>

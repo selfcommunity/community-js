@@ -17,22 +17,13 @@ const classes = {
 
 const Root = styled(Card)(({theme}) => ({
   maxWidth: 700,
-  marginBottom: theme.spacing(2),
-
   [`& .${classes.list}`]: {
     marginLeft: -16,
     marginRight: -16
   }
 }));
 
-export interface SCUserBoxProps {
-  /**
-   * Contained
-   */
-  contained: boolean;
-}
-
-function UserBoxSkeleton({contained = false}: SCUserBoxProps): JSX.Element {
+function UserBoxSkeleton(props): JSX.Element {
   const user = (
     <ListItem>
       <ListItemAvatar>
@@ -49,14 +40,11 @@ function UserBoxSkeleton({contained = false}: SCUserBoxProps): JSX.Element {
       </ListItemSecondaryAction>
     </ListItem>
   );
-  if (contained) {
-    return (
-      <Root variant={'outlined'}>
-        <List>{user}</List>
-      </Root>
-    );
-  }
-  return user;
+  return (
+    <Root {...props}>
+      <List>{user}</List>
+    </Root>
+  );
 }
 
 export default UserBoxSkeleton;

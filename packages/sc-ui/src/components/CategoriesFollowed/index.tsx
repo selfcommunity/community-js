@@ -4,11 +4,12 @@ import List from '@mui/material/List';
 import {Button, Divider, Typography} from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import {Endpoints, http} from '@selfcommunity/core';
+import {Endpoints, http, Logger} from '@selfcommunity/core';
 import CategoriesSuggestionSkeleton from '../Skeleton/CategoriesSuggestionSkeleton';
 import Category from '../Category';
 import {AxiosResponse} from 'axios';
 import {SCCategoryType} from '@selfcommunity/core/src/types';
+import {SCOPE_SC_UI} from '../../constants/Errors';
 
 const PREFIX = 'SCCategoriesFollowed';
 
@@ -21,7 +22,7 @@ const Root = styled(Card, {
   marginBottom: theme.spacing(2)
 }));
 
-function CategoriesFollowed(): JSX.Element {
+export default function CategoriesFollowed(props): JSX.Element {
   const [categories, setCategories] = useState<any[]>([]);
   const [visibleCategories, setVisibleCategories] = useState<number>(3);
   const [loading, setLoading] = useState<boolean>(true);
@@ -45,7 +46,7 @@ function CategoriesFollowed(): JSX.Element {
         setFollowed(true);
       })
       .catch((error) => {
-        console.log(error);
+        Logger.error(SCOPE_SC_UI, error);
       });
   }
 
@@ -57,29 +58,35 @@ function CategoriesFollowed(): JSX.Element {
     fetchCategoriesSuggestion();
   }, []);
 
-  if (loading) {
-    return <CategoriesSuggestionSkeleton />;
-  }
   return (
-    <Root variant={'outlined'}>
-      <CardContent>
-        <Typography variant="body1">{total} Interests</Typography>
-        <List>
-          {categories.slice(0, visibleCategories).map((category: SCCategoryType, index) => (
-            <div key={index}>
-              <Category contained={false} scCategory={category} followed={followed} key={category.id} />
-              <Divider />
-            </div>
-          ))}
-        </List>
-        {hasMore && (
-          <Button size="small" onClick={() => loadCategories()}>
-            Show More
-          </Button>
-        )}
-        {openCategoriesSuggestionDialog && <></>}
-      </CardContent>
+    <Root {...props}>
+      {loading ? (
+        <CategoriesSuggestionSkeleton elevation={0} />
+      ) : (
+        <CardContent>
+          <Typography variant="body1">{Boolean(total) && total} Categories Followed</Typography>
+          {!total ? (
+            <Typography variant="body2">No categories</Typography>
+          ) : (
+            <React.Fragment>
+              <List>
+                {categories.slice(0, visibleCategories).map((category: SCCategoryType, index) => (
+                  <div key={index}>
+                    <Category elevation={0} category={category} followed={followed} key={category.id} />
+                    <Divider />
+                  </div>
+                ))}
+              </List>
+              {hasMore && (
+                <Button size="small" onClick={() => loadCategories()}>
+                  Show More
+                </Button>
+              )}
+            </React.Fragment>
+          )}
+          {openCategoriesSuggestionDialog && <></>}
+        </CardContent>
+      )}
     </Root>
   );
 }
-export default CategoriesFollowed;

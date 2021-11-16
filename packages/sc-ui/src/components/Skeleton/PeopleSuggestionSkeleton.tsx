@@ -13,8 +13,6 @@ const classes = {
 
 const Root = styled(Card)(({theme}) => ({
   maxWidth: 700,
-  marginBottom: theme.spacing(2),
-
   [`& .${classes.list}`]: {
     marginLeft: -16,
     marginRight: -16
@@ -27,7 +25,7 @@ function PeopleSuggestionSkeleton(): JSX.Element {
       <CardContent>
         <List className={classes.list}>
           {[...Array(4)].map((user, index) => (
-            <UserBoxSkeleton key={index} contained={false} />
+            <UserBoxSkeleton key={index} elevation={0} />
           ))}
         </List>
       </CardContent>

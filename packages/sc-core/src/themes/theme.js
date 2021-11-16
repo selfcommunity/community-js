@@ -78,22 +78,7 @@ const getTheme = (options, preferences) => {
           },
           SCFeedObject: {
             styleOverrides: {
-              root: {
-                '& .SCFeedObject-category': {
-                  backgroundColor: '#FF0000',
-                  borderColor: '#FF0000',
-                },
-              },
-            },
-          },
-          SCPost: {
-            styleOverrides: {
-              root: {
-                '& .MuiSvgIcon-root': {
-                  width: '0.7em',
-                  marginBottom: '0.5px',
-                },
-              },
+              root: {},
             },
           },
           SCTrendingPost: {

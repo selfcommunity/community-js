@@ -6,9 +6,9 @@ import SubmitIcon from '@mui/icons-material/PlayArrowOutlined';
 import TextField from '@mui/material/TextField';
 import {http, Endpoints} from '@selfcommunity/core';
 import {isValidUrl} from '@selfcommunity/core/utils/url';
-import {MEDIA_TYPE_URL} from '../../../../constants/Media';
+import {MEDIA_TYPE_URL} from '../../../../../constants/Media';
 import {FormattedMessage, injectIntl} from 'react-intl';
-import commonMessages from '../../../../messages/common';
+import commonMessages from '../../../../../messages/common';
 import {CircularProgress, Fade} from '@mui/material';
 
 class UrlTextField extends React.Component {
@@ -95,7 +95,7 @@ class UrlTextField extends React.Component {
           error={Boolean(error)}
           helperText={
             this.props.helperText ||
-            error || <FormattedMessage id="thread.dialog.media.links.add.help" defaultMessage="thread.dialog.media.links.add.help" />
+            error || <FormattedMessage id="ui.composer.media.link.add.help" defaultMessage="ui.composer.media.link.add.help" />
           }
           placeholder={this.props.placeholder}
           autoFocus={this.props.autoFocus}

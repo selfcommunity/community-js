@@ -82,7 +82,9 @@
     "prop-types-extra": "^1.1.1",
     "spark-md5": "~3.0.2",
     "sortablejs": "^1.14.0",
-    "react-sortablejs": "^6.0.0"
+    "react-sortablejs": "^6.0.0",
+    "react-timeago": "^5.2.0",
+    "react-lazyload": "^3.2.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.13",
@@ -96,10 +98,6 @@
     "@babel/preset-modules": "^0.1.4",
     "@babel/preset-react": "^7.12.13",
     "@babel/preset-typescript": "^7.12.13",
-    "@storybook/addon-actions": "^6.3.10",
-    "@storybook/addon-essentials": "^6.3.10",
-    "@storybook/addon-links": "^6.3.10",
-    "@storybook/react": "^6.3.10",
     "@types/chai": "^4.2.14",
     "@types/enzyme": "^3.10.8",
     "@types/jest": "^26.0.20",

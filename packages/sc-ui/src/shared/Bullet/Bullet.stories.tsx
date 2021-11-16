@@ -1,21 +1,15 @@
 import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
-
-import Post from './index';
+import Bullet from './index';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC UI/Post',
-  component: Post
-  // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
-} as ComponentMeta<typeof Post>;
+  title: 'Design System/SHARED COMPONENT/Bullet',
+  component: Bullet
+} as ComponentMeta<typeof Bullet>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof Post> = (args) => (
-  <div style={{width: 500}}>
-    <Post postObjectId={7605} {...args} />
-  </div>
-);
+const Template: ComponentStory<typeof Bullet> = (args) => <Bullet {...args} />;
 
 export const Base = Template.bind({});
 

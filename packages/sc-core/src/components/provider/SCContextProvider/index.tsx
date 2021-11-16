@@ -82,7 +82,7 @@ export default function SCContextProvider({conf, children}: SCContextProviderTyp
 }
 
 /**
- * Let's only export the `useAuth` hook instead of the context.
+ * Let's only export the `useSCContext` hook instead of the context.
  * We only want to use the hook directly and never the context component.
  */
 export function useSCContext(): SCContextType {

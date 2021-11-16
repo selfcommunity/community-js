@@ -9,10 +9,24 @@ export default {
     method: 'GET',
   },
   /**
+   * Discussion Endpoints
+   */
+  Discussion: {
+    url: urlReplacer('/api/v2/discussion/$(id)/'),
+    method: 'GET',
+  },
+  /**
    * Post Endpoints
    */
   Post: {
     url: urlReplacer('/api/v2/post/$(id)/'),
+    method: 'GET',
+  },
+  /**
+   * Status Endpoints
+   */
+  Status: {
+    url: urlReplacer('/api/v2/status/$(id)/'),
     method: 'GET',
   },
   /**
@@ -45,6 +59,13 @@ export default {
   FollowCategory: {
     url: urlReplacer('/api/v2/category/$(id)/follow/'),
     method: 'POST',
+  },
+  /**
+   * Tag Endpoints
+   */
+  Tag: {
+    url: urlReplacer('/api/v2/tag/$(id)/'),
+    method: 'GET',
   },
   /**
    * User Endpoints

@@ -1,21 +1,11 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
 import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
 import {UserBoxSkeleton} from '../Skeleton';
 import {Avatar, Button, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText} from '@mui/material';
-import {AxiosResponse} from 'axios';
-import {
-  Endpoints,
-  http,
-  SCPreferences,
-  SCUserContext,
-  SCPreferencesContext,
-  SCUserContextType,
-  SCUserType,
-  SCPreferencesContextType
-} from '@selfcommunity/core';
+import {SCUserContext, SCPreferencesContext, SCPreferences, SCUserContextType, SCUserType, SCPreferencesContextType} from '@selfcommunity/core';
+import useSCFetchUser from '../../../../sc-core/src/hooks/useSCFetchUser';
 
 const PREFIX = 'SCUser';
 
@@ -28,32 +18,14 @@ const Root = styled(Card, {
   marginBottom: theme.spacing(2)
 }));
 
-function User({scUserId = null, scUser = null, contained = true}: {scUserId?: number; scUser?: SCUserType; contained: boolean}): JSX.Element {
-  const [user, setUser] = useState<SCUserType>(scUser);
+export default function User({id = null, user = null, ...rest}: {id?: number; user?: SCUserType; [p: string]: any}): JSX.Element {
+  const {scUser, setSCUser} = useSCFetchUser({id, user});
   const scPreferencesContext: SCPreferencesContextType = useContext(SCPreferencesContext);
   const scAuthContext: SCUserContextType = useContext(SCUserContext);
   const followEnabled =
     SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED in scPreferencesContext.preferences &&
     scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED].value;
   const connectionEnabled = !followEnabled;
-
-  /**
-   * If user not in props, attempt to get the user by id (in props) if exist
-   */
-  function fetchUser() {
-    http
-      .request({
-        url: Endpoints.User.url({id: scUserId}),
-        method: Endpoints.User.method
-      })
-      .then((res: AxiosResponse<SCUserType>) => {
-        const data: SCUserType = res.data;
-        setUser(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
 
   /**
    * Render follow action
@@ -107,38 +79,24 @@ function User({scUserId = null, scUser = null, contained = true}: {scUserId?: nu
     return <Button size="small">Go to Profile</Button>;
   }
 
-  useEffect(() => {
-    if (!user) {
-      fetchUser();
-    }
-  }, []);
-
   const u = (
     <React.Fragment>
-      {user ? (
+      {scUser ? (
         <ListItem button={true}>
           <ListItemAvatar>
-            <Avatar alt={user.username} src={user.avatar} />
+            <Avatar alt={scUser.username} src={scUser.avatar} />
           </ListItemAvatar>
-          <ListItemText primary={user.username} secondary={user.description} />
+          <ListItemText primary={scUser.username} secondary={scUser.description} />
           <ListItemSecondaryAction>{scAuthContext.user ? renderAuthenticatedActions() : renderAnonymousActions()}</ListItemSecondaryAction>
         </ListItem>
       ) : (
-        <UserBoxSkeleton contained />
+        <UserBoxSkeleton elevation={0} />
       )}
     </React.Fragment>
   );
-
-  if (contained) {
-    return (
-      <Root variant="outlined">
-        <CardContent>
-          <List>{u}</List>
-        </CardContent>
-      </Root>
-    );
-  }
-  return u;
+  return (
+    <Root {...rest}>
+      <List>{u}</List>
+    </Root>
+  );
 }
-
-export default User;

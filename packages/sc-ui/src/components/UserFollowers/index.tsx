@@ -97,13 +97,13 @@ function SCUserFollowers({scPersonId = null}: {scPersonId?: number}): JSX.Elemen
         </Typography>
         <List>
           {mutualPeople.slice(0, visibleUsers).map((follower: SCUserType, index) => (
-            <User contained={false} scUser={follower} key={index} />
+            <User elevation={0} user={follower} key={index} />
           ))}
         </List>
         <Divider />
         <List>
           {filteredFollowers.slice(0, visibleUsers).map((follower: SCUserType, index) => (
-            <User contained={false} scUser={follower} key={index} />
+            <User elevation={0} user={follower} key={index} />
           ))}
         </List>
         {hasMore && (

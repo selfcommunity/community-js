@@ -62,7 +62,7 @@ class Audience extends React.Component {
         clearOnBlur
         handleHomeEndKeys
         clearIcon={null}
-        noOptionsText={<FormattedMessage id="thread.audience.addressing.empty" defaultMessage="thread.audience.addressing.empty" />}
+        noOptionsText={<FormattedMessage id="ui.composer.audience.addressing.empty" defaultMessage="ui.composer.audience.addressing.empty" />}
         onChange={this.handleChange}
         isOptionEqualToValue={(option, value) => value.id === option.id}
         renderTags={(value, getTagProps) => {
@@ -122,7 +122,7 @@ Audience.defaultProps = {
   checkboxSelect: false,
   onChange: null,
   limitTags: 2,
-  inputLabel: <FormattedMessage id="thread.audience.addressing.label" defaultMessage="thread.audience.addressing.label" />,
+  inputLabel: <FormattedMessage id="ui.composer.audience.addressing.label" defaultMessage="ui.composer.audience.addressing.label" />,
   variant: 'outlined',
   inputLabelBold: false,
   forcePopupIcon: false,

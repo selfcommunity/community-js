@@ -4,10 +4,11 @@ import List from '@mui/material/List';
 import {Button, Typography} from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import {Endpoints, http} from '@selfcommunity/core';
-import Post from '../Post';
+import {Endpoints, http, Logger, SCFeedObjectType, SCFeedUnitType} from '@selfcommunity/core';
 import TrendingPostSkeleton from '../Skeleton/TrendingPostSkeleton';
 import {AxiosResponse} from 'axios';
+import {SCOPE_SC_UI} from '../../constants/Errors';
+import FeedObject from '../FeedObject';
 
 const PREFIX = 'SCTrendingPost';
 
@@ -39,7 +40,7 @@ function TrendingPost({scCategoryId = null}: {scCategoryId?: number}): JSX.Eleme
         setLoading(false);
       })
       .catch((error) => {
-        console.log(error);
+        Logger.error(SCOPE_SC_UI, error);
       });
   }
 
@@ -65,9 +66,10 @@ function TrendingPost({scCategoryId = null}: {scCategoryId?: number}): JSX.Eleme
       <CardContent>
         <Typography variant="body1">Trending Feed</Typography>
         <List>
-          {posts.slice(0, 4).map((post, index) => (
-            <Post contained={false} postObject={post} key={index} />
-          ))}
+          {posts.slice(0, 4).map((feedUnit: SCFeedUnitType, index) => {
+            const feedObject: SCFeedObjectType = feedUnit[feedUnit.type];
+            <FeedObject feedObject={feedObject} key={index} elevation={0} />;
+          })}
         </List>
         {hasMore && (
           <Button size="small" onClick={() => setOpenTrendingPostDialog(true)}>

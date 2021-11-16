@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Button} from '@mui/material';
-import {SCCategoryType} from '@selfcommunity/core/src/types';
 import {Endpoints, http} from '@selfcommunity/core';
 import {AxiosResponse} from 'axios';
 

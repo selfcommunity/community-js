@@ -106,7 +106,7 @@ class Categories extends React.Component {
         blurOnSelect
         handleHomeEndKeys
         clearIcon={null}
-        noOptionsText={<FormattedMessage id="thread.dialog.categories.empty" defaultMessage="thread.dialog.categories.empty" />}
+        noOptionsText={<FormattedMessage id="ui.composer.categories.empty" defaultMessage="ui.composer.categories.empty" />}
         onChange={this.handleChange}
         isOptionEqualToValue={(option, value) => value.id === option.id}
         renderTags={(value, getTagProps) => {
@@ -166,7 +166,7 @@ Categories.defaultProps = {
   checkboxSelect: false,
   onChange: null,
   limitTags: 2,
-  inputLabel: <FormattedMessage id="thread.dialog.categories.label" defaultMessage="thread.dialog.categories.label" />,
+  inputLabel: <FormattedMessage id="ui.composer.categories.label" defaultMessage="ui.composer.categories.label" />,
   variant: 'outlined',
   inputLabelBold: false,
   forcePopupIcon: false,
