@@ -2,7 +2,7 @@ import React, {createContext, useContext, useEffect, useMemo} from 'react';
 import sessionServices from '../../../services/session';
 import {SCUserContextType, SCContextType, SCSessionType, SCUserType} from '../../../types';
 import {SCContext} from '../SCContextProvider';
-import useAuth, {authActionTypes} from '../../../hooks/useAuth';
+import useSCAuth, {authActionTypes} from '../../../hooks/useSCAuth';
 import {Logger} from '../../../utils/logger';
 import {SCOPE_SC_CORE} from '../../../constants/Errors';
 
@@ -24,7 +24,7 @@ export const SCUserContext = createContext<SCUserContextType>({} as SCUserContex
 export default function SCUserProvider({children}: {children: React.ReactNode}): JSX.Element {
   const scContext: SCContextType = useContext(SCContext);
   const initialSession: SCSessionType = scContext.settings.session;
-  const {state, dispatch} = useAuth(initialSession);
+  const {state, dispatch} = useSCAuth(initialSession);
 
   /**
    * Check if there is a currently active session

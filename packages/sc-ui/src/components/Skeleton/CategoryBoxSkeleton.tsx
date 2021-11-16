@@ -15,22 +15,13 @@ const classes = {
 
 const Root = styled(Card)(({theme}) => ({
   maxWidth: 700,
-  marginBottom: theme.spacing(2),
-
   [`& .${classes.list}`]: {
     marginLeft: -16,
     marginRight: -16
   }
 }));
 
-export interface CategoryBoxProps {
-  /**
-   * Contained
-   */
-  contained: boolean;
-}
-
-export default function CategoryBoxSkeleton({contained = false}: CategoryBoxProps): JSX.Element {
+export default function CategoryBoxSkeleton(props): JSX.Element {
   const category = (
     <ListItem>
       <ListItemAvatar>
@@ -42,12 +33,9 @@ export default function CategoryBoxSkeleton({contained = false}: CategoryBoxProp
       />
     </ListItem>
   );
-  if (contained) {
-    return (
-      <Root variant={'outlined'}>
-        <List>{category}</List>
-      </Root>
-    );
-  }
-  return category;
+  return (
+    <Root {...props}>
+      <List>{category}</List>
+    </Root>
+  );
 }

@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React from 'react';
 import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -6,25 +6,12 @@ import {Avatar, Box, CardHeader, Collapse, Grid, ListItem, ListItemAvatar, ListI
 import FeedObjectSkeleton from '../Skeleton/FeedObjectSkeleton';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import TimeAgo from 'timeago-react';
-import {AxiosResponse} from 'axios';
-import {SCOPE_SC_UI} from '../../constants/Errors';
 import DateTimeAgo from '../../shared/DateTimeAgo';
 import Bullet from '../../shared/Bullet';
 import UserTags from '../../shared/UserTags';
-import {
-  Endpoints,
-  http,
-  Logger,
-  SCFeedDiscussionType,
-  SCFeedPostType,
-  SCFeedObjectType,
-  SCFeedObjectTypologyType,
-  SCFeedStatusType,
-  StringUtils,
-  Link
-} from '@selfcommunity/core';
 import Medias from './Medias';
 import ReportingFlagMenu from '../ReportingFlagMenu';
+import {SCFeedObjectType, SCFeedObjectTypologyType, Link, useSCFetchFeedObject} from '@selfcommunity/core';
 
 const PREFIX = 'SCFeedObject';
 
@@ -94,47 +81,7 @@ export default function FeedObject({
   type?: FeedObjectComponentType;
   [p: string]: any;
 }): JSX.Element {
-  const [obj, setObj] = useState<SCFeedDiscussionType | SCFeedPostType | SCFeedStatusType>(feedObject);
-
-  /**
-   * If postObjectId in props attempt to get it
-   * by id if exist
-   */
-  const fetchFeedObject = useMemo(
-    () => () => {
-      const _type = StringUtils.capitalize(feedObjectType);
-      return http
-        .request({
-          url: Endpoints[_type].url({id: id}),
-          method: Endpoints[_type].method
-        })
-        .then((res: AxiosResponse<any>) => {
-          console.log(res);
-          if (res.status >= 300) {
-            return Promise.reject(res);
-          }
-          return Promise.resolve(res.data);
-        });
-    },
-    [id, feedObjectType]
-  );
-
-  useEffect(() => {
-    /**
-     * If postObjectId retrive/refresh the obj
-     * on component mount
-     */
-    if (id) {
-      fetchFeedObject()
-        .then((obj) => {
-          setObj(obj);
-        })
-        .catch((err) => {
-          Logger.error(SCOPE_SC_UI, `FeedObject with id ${id} not found`);
-          Logger.error(SCOPE_SC_UI, err.message);
-        });
-    }
-  }, [id]);
+  const {obj, setObj} = useSCFetchFeedObject({id, feedObject, feedObjectType});
 
   /**
    * Render the obj object

@@ -13,21 +13,19 @@ const classes = {
 
 const Root = styled(Card)(({theme}) => ({
   maxWidth: 700,
-  marginBottom: theme.spacing(2),
-
   [`& .${classes.list}`]: {
     marginLeft: -16,
     marginRight: -16
   }
 }));
 
-export default function CategoriesSuggestionSkeleton(): JSX.Element {
+export default function CategoriesSuggestionSkeleton(props): JSX.Element {
   return (
-    <Root variant={'outlined'}>
+    <Root {...props}>
       <CardContent>
         <List className={classes.list}>
           {[...Array(4)].map((category, index) => (
-            <CategoryBoxSkeleton key={index} contained={false} />
+            <CategoryBoxSkeleton key={index} elevation={0} />
           ))}
         </List>
       </CardContent>

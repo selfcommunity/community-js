@@ -4,10 +4,9 @@ import List from '@mui/material/List';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import {Avatar, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText} from '@mui/material';
-import {Endpoints, http} from '@selfcommunity/core';
+import {useSCFetchCategory} from '@selfcommunity/core';
 import CategoryBoxSkeleton from '../Skeleton/CategoryBoxSkeleton';
 import FollowButton from '../Button';
-import {AxiosResponse} from 'axios';
 import {SCCategoryType} from '@selfcommunity/core/src/types';
 
 const PREFIX = 'SCCategory';
@@ -17,76 +16,49 @@ const Root = styled(Card, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  maxWidth: 700,
-  marginBottom: theme.spacing(2)
+  maxWidth: 700
 }));
 
 function Category({
-  scCategoryId = null,
-  scCategory = null,
+  id = null,
+  category = null,
   contained = true,
-  followed = null
+  followed = null,
+  ...rest
 }: {
-  scCategoryId?: number;
-  scCategory?: SCCategoryType;
-  contained: boolean;
+  id?: number;
+  category?: SCCategoryType;
   followed?: boolean;
+  [p: string]: any;
 }): JSX.Element {
-  const [category, setCategory] = useState<SCCategoryType>(scCategory);
+  const {scCategory, setSCCategory} = useSCFetchCategory({id, category});
   const buttonText = followed ? 'Followed' : 'Follow';
-
-  /**
-   * If category not in props, attempt to get the interest by id (in props) if exist
-   */
-  function fetchCategory() {
-    http
-      .request({
-        url: Endpoints.Category.url({id: scCategoryId}),
-        method: Endpoints.Category.method
-      })
-      .then((res: AxiosResponse<SCCategoryType>) => {
-        const data = res.data;
-        setCategory(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-
-  useEffect(() => {
-    if (!category) {
-      fetchCategory();
-    }
-  }, []);
 
   const c = (
     <React.Fragment>
-      {category ? (
+      {scCategory ? (
         <ListItem button={true}>
           <ListItemAvatar>
-            <Avatar alt={category.name} src={category.image_original} variant="square" />
+            <Avatar alt={scCategory.name} src={scCategory.image_original} variant="square" />
           </ListItemAvatar>
-          <ListItemText primary={category.name} secondary={category.slogan} />
+          <ListItemText primary={scCategory.name} secondary={scCategory.slogan} />
           <ListItemSecondaryAction>
-            <FollowButton scCategoryId={category.id}>{buttonText}</FollowButton>
+            <FollowButton scCategoryId={scCategory.id}>{buttonText}</FollowButton>
           </ListItemSecondaryAction>
         </ListItem>
       ) : (
-        <CategoryBoxSkeleton contained />
+        <CategoryBoxSkeleton elevation={0} />
       )}
     </React.Fragment>
   );
 
-  if (contained) {
-    return (
-      <Root variant="outlined">
-        <CardContent>
-          <List>{c}</List>
-        </CardContent>
-      </Root>
-    );
-  }
-  return c;
+  return (
+    <Root {...rest}>
+      <CardContent>
+        <List>{c}</List>
+      </CardContent>
+    </Root>
+  );
 }
 
 export default Category;

@@ -4,19 +4,8 @@ import List from '@mui/material/List';
 import Card from '@mui/material/Card';
 import {UserBoxSkeleton} from '../Skeleton';
 import {Avatar, Button, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText} from '@mui/material';
-import {AxiosResponse} from 'axios';
-import {
-  SCUserContext,
-  SCPreferencesContext,
-  http,
-  Endpoints,
-  SCPreferences,
-  SCUserContextType,
-  SCUserType,
-  SCPreferencesContextType,
-  Logger
-} from '@selfcommunity/core';
-import {SCOPE_SC_UI} from '../../constants/Errors';
+import {SCUserContext, SCPreferencesContext, SCPreferences, SCUserContextType, SCUserType, SCPreferencesContextType} from '@selfcommunity/core';
+import useSCFetchUser from '../../../../sc-core/src/hooks/useSCFetchUser';
 
 const PREFIX = 'SCUser';
 
@@ -30,34 +19,13 @@ const Root = styled(Card, {
 }));
 
 export default function User({id = null, user = null, ...rest}: {id?: number; user?: SCUserType; [p: string]: any}): JSX.Element {
-  const [scUser, setSCUser] = useState<SCUserType>(user);
+  const {scUser, setSCUser} = useSCFetchUser({id, user});
   const scPreferencesContext: SCPreferencesContextType = useContext(SCPreferencesContext);
   const scAuthContext: SCUserContextType = useContext(SCUserContext);
   const followEnabled =
     SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED in scPreferencesContext.preferences &&
     scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED].value;
   const connectionEnabled = !followEnabled;
-
-  /**
-   * If user not in props, attempt to get the user by id (in props) if exist
-   */
-  const fetchUser = useMemo(
-    () => () => {
-      http
-        .request({
-          url: Endpoints.User.url({id: id}),
-          method: Endpoints.User.method
-        })
-        .then((res: AxiosResponse<SCUserType>) => {
-          const data: SCUserType = res.data;
-          setSCUser(data);
-        })
-        .catch((error) => {
-          Logger.error(SCOPE_SC_UI, error);
-        });
-    },
-    [id]
-  );
 
   /**
    * Render follow action
@@ -110,12 +78,6 @@ export default function User({id = null, user = null, ...rest}: {id?: number; us
   function renderAnonymousActions() {
     return <Button size="small">Go to Profile</Button>;
   }
-
-  useEffect(() => {
-    if (id) {
-      fetchUser();
-    }
-  }, [id]);
 
   const u = (
     <React.Fragment>
