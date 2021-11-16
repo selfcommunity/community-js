@@ -6,7 +6,7 @@ import {ReactSortable} from 'react-sortablejs';
 import classNames from 'classnames';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import ChunkedUploady from '@rpldy/chunked-uploady';
-import {Endpoints, SCContext, SCContextType} from '@selfcommunity/core';
+import {Endpoints, SCContext, SCContextType, SCMediaType} from '@selfcommunity/core';
 import {styled} from '@mui/material/styles';
 import MediaChunkUploader from '../../../../shared/MediaChunkUploader';
 import {SCMediaChunkType} from '../../../../types/media';
@@ -60,9 +60,9 @@ export default ({
   onSort,
   onDelete
 }: {
-  medias?: any[];
-  onSuccess: (media: any) => void;
-  onSort: (newSort: any[]) => void;
+  medias?: SCMediaType[];
+  onSuccess: (media: SCMediaType) => void;
+  onSort: (newSort: SCMediaType[]) => void;
   onDelete: (id?: number) => (event: SyntheticEvent) => void;
 }): JSX.Element => {
   // State variables
@@ -74,7 +74,7 @@ export default ({
 
   // Handlers
 
-  const handleSuccess = (media: any) => {
+  const handleSuccess = (media: SCMediaType) => {
     onSuccess(media);
   };
 

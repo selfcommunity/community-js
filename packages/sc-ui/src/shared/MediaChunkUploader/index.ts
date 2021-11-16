@@ -6,7 +6,7 @@ import {
   useItemFinishListener,
   useRequestPreSend
 } from '@rpldy/chunked-uploady';
-import {Endpoints, formatHttpError, http, SCContext, SCContextType} from '@selfcommunity/core';
+import {Endpoints, formatHttpError, http, SCContext, SCContextType, SCMediaType} from '@selfcommunity/core';
 import {useItemProgressListener, useItemStartListener} from '@rpldy/uploady';
 import {AxiosResponse} from 'axios';
 import {md5} from '../../utils/hash';
@@ -20,7 +20,7 @@ export default ({
   onProgress = null,
   onError = null
 }: {
-  onSuccess: (media: any) => void;
+  onSuccess: (media: SCMediaType) => void;
   onProgress: (chunks: any) => void;
   onError: (chunk: SCMediaChunkType, error: string) => void;
 }): JSX.Element => {

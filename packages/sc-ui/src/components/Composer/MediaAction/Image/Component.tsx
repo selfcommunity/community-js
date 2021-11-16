@@ -10,11 +10,11 @@ import ChunkedUploady from '@rpldy/chunked-uploady';
 import {
   Endpoints,
   SCContext,
-  SCContextType,
+  SCContextType, SCMediaType,
   SCPreferencesContext,
   SCPreferencesContextType,
   SCUserContext,
-  SCUserContextType
+  SCUserContextType,
 } from '@selfcommunity/core';
 import {styled} from '@mui/material/styles';
 import MediaChunkUploader from '../../../../shared/MediaChunkUploader';
@@ -68,9 +68,9 @@ export default ({
   onSort,
   onDelete
 }: {
-  medias?: any[];
-  onSuccess: (media: any) => void;
-  onSort: (newSort: any[]) => void;
+  medias?: SCMediaType[];
+  onSuccess: (media: SCMediaType) => void;
+  onSort: (newSort: SCMediaType[]) => void;
   onDelete: (id?: number) => (event: SyntheticEvent) => void;
 }): JSX.Element => {
   // State variables
@@ -84,7 +84,7 @@ export default ({
 
   // Handlers
 
-  const handleSuccess = (media: any) => {
+  const handleSuccess = (media: SCMediaType) => {
     onSuccess(media);
   };
 

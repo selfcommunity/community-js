@@ -4,12 +4,12 @@ import {
   formatHttpError,
   http,
   SCContext,
-  SCContextType,
+  SCContextType, SCMediaType,
   SCPreferences,
   SCPreferencesContext,
   SCPreferencesContextType,
   SCUserContext,
-  SCUserContextType
+  SCUserContextType,
 } from '@selfcommunity/core';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import CloseIcon from '@mui/icons-material/CancelOutlined';
@@ -380,11 +380,11 @@ export default function Composer({
     };
   };
 
-  const handleAddMedia = (media) => {
+  const handleAddMedia = (media: SCMediaType) => {
     dispatch({type: 'medias', value: [...medias, media]});
   };
 
-  const handleSortMedia = (newSort) => {
+  const handleSortMedia = (newSort: SCMediaType[]) => {
     dispatch({
       type: 'medias',
       value: [...medias.filter((media: any) => newSort.findIndex((m: any) => m.id === media.id) === -1), ...newSort]
