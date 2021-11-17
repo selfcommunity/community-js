@@ -2,6 +2,7 @@ import React from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
 import {styled} from '@mui/material/styles';
 import {Box} from '@mui/material';
+import {CircularProgressProps} from '@mui/material/CircularProgress/CircularProgress';
 
 const PREFIX = 'SCCentralProgress';
 
@@ -13,11 +14,11 @@ const Root = styled(Box, {
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
-  height: '100%',
+  height: 'calc(100% - 100px)',
   padding: 50
 }));
 
-export default function CentralProgress({size = 30}: {size: number}): JSX.Element {
+export default function CentralProgress(props: CircularProgressProps): JSX.Element {
   return (
     <Root>
       <CircularProgress
@@ -25,7 +26,7 @@ export default function CentralProgress({size = 30}: {size: number}): JSX.Elemen
           margin: '0 auto',
           display: 'block'
         }}
-        size={size}
+        {...props}
       />
     </Root>
   );

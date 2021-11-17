@@ -12,14 +12,16 @@ const classes = {
   preview: `${PREFIX}-preview`,
   thumbnail: `${PREFIX}-thumbnail`,
   image: `${PREFIX}-image`,
-  snippet: `${PREFIX}-snippet`
+  snippet: `${PREFIX}-snippet`,
+  snippetTitle: `${PREFIX}-snippetTitle`,
+  snippetDescription: `${PREFIX}-snippetDescription`
 };
 
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(() => ({
+})(({theme}) => ({
   [`& .${classes.preview}`]: {
     position: 'relative'
   },
@@ -40,7 +42,8 @@ const Root = styled(Box, {
   [`& .${classes.snippet}`]: {
     padding: 7,
     backgroundColor: '#F5F5F5',
-    '& p': {
+    [`& .${classes.snippetTitle}`]: {},
+    [`& .${classes.snippetDescription}`]: {
       fontSize: 12
     },
     '& a': {
@@ -57,9 +60,9 @@ export default function Link({media, fullWidth = false}: {media: any; fullWidth?
         <div className={classes.preview}>
           <img src={media.embed.metadata.images[0].url} className={classes.image} />
           <div className={classes.snippet}>
-            <b>{media.embed.metadata.title}</b>
+            <b className={classes.snippetTitle}>{media.embed.metadata.title}</b>
             <br />
-            <p>{media.embed.metadata.description}</p>
+            <p className={classes.snippetDescription}>{media.embed.metadata.description}</p>
             <a href={media.embed.metadata.url} target={'_blank'}>
               {media.embed.metadata.url}
             </a>
@@ -75,9 +78,9 @@ export default function Link({media, fullWidth = false}: {media: any; fullWidth?
           <img src={media.embed.metadata.images[0].url} className={classes.image} />
         </div>
         <div className={classes.snippet}>
-          <b>{media.embed.metadata.title}</b>
+          <b className={classes.snippetTitle}>{media.embed.metadata.title}</b>
           <br />
-          <p>{media.embed.metadata.description}</p>
+          <p className={classes.snippetDescription}>{media.embed.metadata.description}</p>
           <a href={media.embed.metadata.url} target={'_blank'}>
             {media.embed.metadata.url}
           </a>

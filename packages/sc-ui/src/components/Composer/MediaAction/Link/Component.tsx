@@ -1,11 +1,8 @@
-import {asUploadButton} from '@rpldy/upload-button';
-import React, {forwardRef, SyntheticEvent, useContext, useState} from 'react';
-import {Box, Button, Button as MuiButton, Dialog} from '@mui/material';
-import ImageIcon from '@mui/icons-material/ImageOutlined';
+import React, {SyntheticEvent} from 'react';
+import {Box, IconButton} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import {ReactSortable} from 'react-sortablejs';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
-import {SCContext, SCContextType, SCPreferencesContext, SCPreferencesContextType, SCUserContext, SCUserContextType} from '@selfcommunity/core';
 import {styled} from '@mui/material/styles';
 import Link from '../../../FeedObject/Medias/Link';
 import UrlTextField from './UrlTextField';
@@ -13,7 +10,8 @@ import UrlTextField from './UrlTextField';
 const PREFIX = 'SCMediaActionLink';
 
 const classes = {
-  sortableMedia: `${PREFIX}-sortableMedia`
+  link: `${PREFIX}-link`,
+  close: `${PREFIX}-close`
 };
 
 const Root = styled(Box, {
@@ -22,8 +20,14 @@ const Root = styled(Box, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   padding: theme.spacing(),
-  [`& .${classes.sortableMedia}`]: {
+  [`& .${classes.link}`]: {
     position: 'relative'
+  },
+  [`& .${classes.close}`]: {
+    position: 'absolute',
+    right: 0,
+    top: 0,
+    margin: theme.spacing()
   }
 }));
 
@@ -54,12 +58,12 @@ export default ({
       {medias.length > 0 && (
         <ReactSortable list={medias} setList={onSort}>
           {medias.map((media) => (
-            <Box key={media.id} m={1} className={classes.sortableMedia}>
+            <Box key={media.id} m={1} className={classes.link}>
               <Link media={media} />
-              <Box sx={{textAlign: 'right'}} m={1}>
-                <Button onClick={onDelete(media.id)} size="small" color="primary" variant="contained">
+              <Box className={classes.close}>
+                <IconButton onClick={onDelete(media.id)} size="small">
                   <DeleteIcon />
-                </Button>
+                </IconButton>
               </Box>
             </Box>
           ))}

@@ -1,6 +1,17 @@
 import {asUploadButton} from '@rpldy/upload-button';
 import React, {forwardRef, SyntheticEvent, useContext, useState} from 'react';
-import {Alert, AlertTitle, Box, Button, Button as MuiButton, CircularProgress, Fade, Grid, Typography} from '@mui/material';
+import {
+  Alert,
+  AlertTitle,
+  Box,
+  Button,
+  Button as MuiButton,
+  CircularProgress,
+  Fade,
+  Grid, IconButton,
+  ImageList, ImageListItem, ImageListItemBar,
+  Typography,
+} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import {ReactSortable} from 'react-sortablejs';
 import classNames from 'classnames';
@@ -15,8 +26,7 @@ import DocumentIcon from '@mui/icons-material/PictureAsPdfOutlined';
 const PREFIX = 'SCMediaActionDocument';
 
 const classes = {
-  sortableMedia: `${PREFIX}-sortableMedia`,
-  sortableMediaCover: `${PREFIX}-sortableMediaCover`
+  preview: `${PREFIX}-preview`
 };
 
 const Root = styled(Box, {
@@ -25,16 +35,10 @@ const Root = styled(Box, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   padding: theme.spacing(),
-  [`& .${classes.sortableMedia}`]: {
+  [`& .${classes.preview}`]: {
+    backgroundColor: theme.palette.background.default,
+    height: 200,
     position: 'relative'
-  },
-  [`& .${classes.sortableMediaCover}`]: {
-    backgroundSize: 'cover !important',
-    backgroundPosition: 'center !important',
-    backgroundRepeat: 'no-repeat !important',
-    border: '2px solid white',
-    borderRadius: 6,
-    height: 300
   }
 }));
 
@@ -46,11 +50,11 @@ const UploadButton = asUploadButton(
   ))
 );
 
-const SortableComponent = forwardRef<HTMLDivElement, any>((props, ref) => {
+const SortableComponent = forwardRef<HTMLDivElement, any>(({children, ...props}, ref) => {
   return (
-    <Grid container ref={ref}>
-      {props.children}
-    </Grid>
+    <ImageList ref={ref} cols={3} {...props}>
+      {children}
+    </ImageList>
   );
 });
 
@@ -96,39 +100,32 @@ export default ({
   return (
     <Root>
       <Typography gutterBottom component="div">
-        <ReactSortable list={medias} setList={onSort} tag={SortableComponent}>
-          {medias.map((media) => (
-            <Grid
-              key={media.id}
-              item
-              xs={6}
-              className={classNames(classes.sortableMedia, classes.sortableMediaCover)}
-              style={{backgroundImage: `url(${media.image})`}}>
-              <Box sx={{textAlign: 'right'}} m={1}>
-                <Button onClick={onDelete(media.id)} size="small" color="primary" variant="contained">
-                  <DeleteIcon />
-                </Button>
+        <ReactSortable
+          list={[...medias, ...Object.values(uploading)] as any[]}
+          setList={(newSort) => onSort(newSort.filter((s: any) => s.upload_id === undefined) as SCMediaType[])}
+          tag={SortableComponent}>
+          {medias.map((media: SCMediaType) => (
+            <ImageListItem key={media.id}>
+              <Box className={classes.preview} sx={{backgroundImage: `url(${media.image})`}}></Box>
+              <ImageListItemBar
+                position="top"
+                actionIcon={
+                  <IconButton onClick={onDelete(media.id)} size="small">
+                    <DeleteIcon />
+                  </IconButton>
+                }
+              />
+            </ImageListItem>
+          ))}
+          {Object.values(uploading).map((media: SCMediaChunkType) => (
+            <ImageListItem key={media.id} className={'ignore-elements'}>
+              <Box className={classes.preview} sx={{backgroundImage: `url(${media.image})`}}>
+                <DocumentIcon style={{position: 'absolute', left: 0, top: 0, width: '100%', height: '100%'}} />
               </Box>
-            </Grid>
+              <ImageListItemBar title={<Typography align="center">{`${Math.round(media.completed)}%`}</Typography>} position="top" />
+            </ImageListItem>
           ))}
         </ReactSortable>
-        <Grid container>
-          {Object.values(uploading).map((media: SCMediaChunkType) => (
-            <Grid
-              key={media.id}
-              item
-              xs={6}
-              className={classNames(classes.sortableMedia, classes.sortableMediaCover)}
-              style={{backgroundImage: `url(${media.image})`}}>
-              <Box>
-                <CircularProgress variant="determinate" value={media.completed} />
-                <Box top={0} left={0} bottom={0} right={0} position="absolute" display="flex" alignItems="center" justifyContent="center">
-                  <Typography variant="caption" component="div" color="textSecondary">{`${Math.round(media.completed)}%`}</Typography>
-                </Box>
-              </Box>
-            </Grid>
-          ))}
-        </Grid>
       </Typography>
       <Box>
         {Object.keys(errors).map((id: string) => (
