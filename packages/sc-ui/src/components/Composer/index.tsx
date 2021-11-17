@@ -558,10 +558,10 @@ export default function Composer({
               </IconButton>
               <FormattedMessage id={`ui.composer.media.${action.name}.edit`} defaultMessage={`ui.composer.media.${action.name}.edit`} />
             </Typography>
-            <Box sx={{textAlign: 'center'}}>
+            <Box>
               <Avatar className={classes.avatar} src={scAuthContext.user.avatar}></Avatar>
             </Box>
-            <Box sx={{textAlign: 'right'}}>
+            <Box>
               <Button onClick={handleChangeView(MAIN_VIEW)} variant="outlined">
                 <FormattedMessage id="ui.composer.done" defaultMessage="ui.composer.done" />
               </Button>
@@ -606,7 +606,7 @@ export default function Composer({
             <Avatar className={classes.avatar} src={scAuthContext.user.avatar}></Avatar>
           </Box>
           <Box>
-            <IconButton onClick={handleClose} size="large">
+            <IconButton onClick={handleClose}>
               <CloseIcon />
             </IconButton>
           </Box>
