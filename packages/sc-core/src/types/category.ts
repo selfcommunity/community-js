@@ -115,4 +115,8 @@ export interface SCCategoryType {
    * The category's tags.
    */
   tags?: Array<SCTagType>;
+  /**
+   * Followers counter for the category.
+   */
+  followers_count?: number;
 }

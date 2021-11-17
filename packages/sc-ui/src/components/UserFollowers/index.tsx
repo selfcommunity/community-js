@@ -50,7 +50,7 @@ function SCUserFollowers({scPersonId = null}: {scPersonId?: number}): JSX.Elemen
   function fetchLUFollowers() {
     http
       .request({
-        url: Endpoints.UserFollowers.url({id: 1}),
+        url: Endpoints.UserFollowers.url({id: 115}),
         method: Endpoints.UserFollowers.method
       })
       .then((res: AxiosResponse<any>) => {

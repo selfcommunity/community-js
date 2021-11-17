@@ -6,6 +6,7 @@ import {UserBoxSkeleton} from '../Skeleton';
 import {Avatar, Button, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText} from '@mui/material';
 import {SCUserContext, SCPreferencesContext, SCPreferences, SCUserContextType, SCUserType, SCPreferencesContextType} from '@selfcommunity/core';
 import useSCFetchUser from '../../../../sc-core/src/hooks/useSCFetchUser';
+import FollowConnect from '../FollowConnect';
 
 const PREFIX = 'SCUser';
 
@@ -18,7 +19,17 @@ const Root = styled(Card, {
   marginBottom: theme.spacing(2)
 }));
 
-export default function User({id = null, user = null, ...rest}: {id?: number; user?: SCUserType; [p: string]: any}): JSX.Element {
+export default function User({
+  id = null,
+  user = null,
+  followed = null,
+  ...rest
+}: {
+  id?: number;
+  user?: SCUserType;
+  [p: string]: any;
+  followed?: boolean;
+}): JSX.Element {
   const {scUser, setSCUser} = useSCFetchUser({id, user});
   const scPreferencesContext: SCPreferencesContextType = useContext(SCPreferencesContext);
   const scAuthContext: SCUserContextType = useContext(SCUserContext);
@@ -66,7 +77,8 @@ export default function User({id = null, user = null, ...rest}: {id?: number; us
   function renderAuthenticatedActions() {
     return (
       <React.Fragment>
-        {followEnabled ? renderFollowActions() : <React.Fragment>{connectionEnabled ? renderConnectionActions() : null}</React.Fragment>}
+        <FollowConnect user={scUser} followed={followed} />
+        {/*{followEnabled ? renderFollowActions() : <React.Fragment>{connectionEnabled ? renderConnectionActions() : null}</React.Fragment>}*/}
       </React.Fragment>
     );
   }

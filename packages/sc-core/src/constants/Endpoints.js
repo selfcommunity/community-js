@@ -60,6 +60,10 @@ export default {
     url: urlReplacer('/api/v2/category/$(id)/follow/'),
     method: 'POST',
   },
+  PopularCategories: {
+    url: urlReplacer('/api/v2/category/popular/'),
+    method: 'GET',
+  },
   /**
    * Tag Endpoints
    */
@@ -77,6 +81,30 @@ export default {
   UserFollowers: {
     url: urlReplacer('/api/v2/user/$(id)/followers/'),
     method: 'GET',
+  },
+  UsersFollowed: {
+    url: urlReplacer('/api/v2/user/$(id)/followings/'),
+    method: 'GET',
+  },
+  UserConnections: {
+    url: urlReplacer('/api/v2/user/$(id)/connections/'),
+    method: 'GET',
+  },
+  FollowUser: {
+    url: urlReplacer('/api/v2/user/$(id)/follow/'),
+    method: 'POST',
+  },
+  RequestConnection: {
+    url: urlReplacer('/api/v2/user/$(id)/connection/request'),
+    method: 'POST',
+  },
+  CancelConnectionRequest: {
+    url: urlReplacer('/api/v2/user/$(id)/connection/cancel_request'),
+    method: 'POST',
+  },
+  RemoveConnection: {
+    url: urlReplacer('/api/v2/user/$(id)/connection/remove'),
+    method: 'POST',
   },
   Me: {
     url: urlReplacer('/api/v2/user/me/'),
