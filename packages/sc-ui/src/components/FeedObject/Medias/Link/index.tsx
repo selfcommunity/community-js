@@ -1,7 +1,6 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
 import LazyLoad from 'react-lazyload';
-import PropTypes from 'prop-types';
 import {MEDIA_TYPE_VIDEO} from '../../../../constants/Media';
 import AutoPlayer from '../AutoPlayer';
 import CentralProgress from '../../../../shared/CentralProgress';

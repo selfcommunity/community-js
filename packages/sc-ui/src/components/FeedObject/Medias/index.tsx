@@ -3,7 +3,14 @@ import {styled} from '@mui/material/styles';
 import LazyLoad from 'react-lazyload';
 import GridImage from './GridImage';
 import AutoPlayer from './AutoPlayer';
-import {MAX_GRID_IMAGES, MEDIA_TYPE_DOCUMENT, MEDIA_TYPE_IMAGE, MEDIA_TYPE_URL} from '../../../constants/Media';
+import {
+  MAX_GRID_IMAGES,
+  MEDIA_TYPE_DOCUMENT,
+  MEDIA_TYPE_IMAGE,
+  MEDIA_TYPE_URL,
+  MEDIA_EMBED_SC_VIMEO_TYPE,
+  MEDIA_EMBED_SC_LINK_TYPE
+} from '../../../constants/Media';
 import classNames from 'classnames';
 import ZoomInIcon from '@mui/icons-material/ZoomIn';
 import Link from './Link';
@@ -43,9 +50,6 @@ const Root = styled(Box, {
     marginRight: theme.spacing(-1.5)
   }
 }));
-
-const MEDIA_EMBED_SC_LINK_TYPE = 'sc_link';
-const MEDIA_EMBED_SC_VIMEO_TYPE = 'sc_vimeo';
 
 export default function Medias({
   medias,

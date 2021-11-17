@@ -55,7 +55,7 @@ export default ({
         <ReactSortable list={medias} setList={onSort}>
           {medias.map((media) => (
             <Box key={media.id} m={1} className={classes.sortableMedia}>
-              <Link media={media} fullWidth />
+              <Link media={media} />
               <Box sx={{textAlign: 'right'}} m={1}>
                 <Button onClick={onDelete(media.id)} size="small" color="primary" variant="contained">
                   <DeleteIcon />
