@@ -50,24 +50,24 @@ function Platform({contained = true}: {contained: boolean}): JSX.Element {
   function renderAdminPanel() {
     return (
       <React.Fragment>
-        <Grid container spacing={1}>
+        <Grid container spacing={1} justifyContent="center">
           <Grid item xs={12}>
             <Typography component="h3" align="center">
               Platform Access
               <LockOutlinedIcon fontSize="small" />
             </Typography>
           </Grid>
-          <Grid item xs="auto">
+          <Grid item xs="auto" style={{textAlign: 'center'}}>
             <Button variant="outlined" size="small" onClick={() => fetchPlatform('')}>
               Administration
             </Button>
           </Grid>
-          <Grid item xs>
+          <Grid item xs="auto" style={{textAlign: 'center'}}>
             <Button variant="outlined" size="small" onClick={() => fetchPlatform('/moderation/flags')}>
               Moderation
             </Button>
           </Grid>
-          <Grid item xs>
+          <Grid item xs="auto" style={{textAlign: 'center'}}>
             <Button variant="outlined" size="small" href={`https://support.selfcommunity.com/hc/${language}`} target="_blank">
               Help Center
             </Button>
@@ -84,19 +84,19 @@ function Platform({contained = true}: {contained: boolean}): JSX.Element {
   function renderRolePanel() {
     return (
       <React.Fragment>
-        <Grid container spacing={3} columns={12}>
+        <Grid container spacing={2} justifyContent="center">
           <Grid item xs={12}>
             <Typography component="h3" align="center">
               Platform Access
               <LockOutlinedIcon fontSize="small" />
             </Typography>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={6} style={{textAlign: 'center'}}>
             <Button variant="outlined" size="small" onClick={() => fetchPlatform('')}>
               {roleText}
             </Button>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={6} style={{textAlign: 'center'}}>
             <Button variant="outlined" size="small" href={`https://support.selfcommunity.com/hc/it`} target="_blank">
               Help Center
             </Button>
@@ -110,9 +110,7 @@ function Platform({contained = true}: {contained: boolean}): JSX.Element {
   if (contained) {
     return (
       <Root variant="outlined">
-        <CardContent>
-          <List>{p}</List>
-        </CardContent>
+        <CardContent>{p}</CardContent>
       </Root>
     );
   }

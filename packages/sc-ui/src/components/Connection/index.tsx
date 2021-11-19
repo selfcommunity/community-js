@@ -22,7 +22,18 @@ const ConnectionButton = styled(Button, {
 }));
 
 function Connection({user = null, followed = null}: {user?: SCUserType; followed?: boolean}): JSX.Element {
+  const [status, setStatus] = useState<any>(followed ? 'Remove' : 'Connect');
+
+  function updateStatus(status) {
+    if (status === 'Connect') {
+      setStatus('Remove');
+    } else {
+      setStatus('Connect');
+    }
+  }
+
   function requestConnection() {
+    updateStatus(status);
     http
       .request({
         url: Endpoints.RequestConnection.url({id: user.id}),
@@ -52,7 +63,6 @@ function Connection({user = null, followed = null}: {user?: SCUserType; followed
   }
 
   function removeConnection() {
-    console.log('connection');
     http
       .request({
         url: Endpoints.RemoveConnection.url({id: user.id}),
@@ -66,17 +76,17 @@ function Connection({user = null, followed = null}: {user?: SCUserType; followed
       });
   }
 
+  function handleConnectionStatus() {
+    {
+      followed ? removeConnection() : requestConnection();
+    }
+  }
+
   return (
     <React.Fragment>
-      {followed ? (
-        <ConnectionButton size="small" variant="outlined" onClick={() => removeConnection()}>
-          Remove
-        </ConnectionButton>
-      ) : (
-        <ConnectionButton size="small" variant="outlined" onClick={() => requestConnection()}>
-          Connect
-        </ConnectionButton>
-      )}
+      <ConnectionButton size="small" variant="outlined" onClick={() => handleConnectionStatus()}>
+        {status}
+      </ConnectionButton>
     </React.Fragment>
   );
 }

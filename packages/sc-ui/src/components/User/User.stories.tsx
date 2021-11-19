@@ -11,7 +11,7 @@ export default {
     id: {
       control: {type: 'number'},
       description: 'User Id',
-      defaultValue: 1,
+      defaultValue: 115,
       table: {defaultValue: {summary: 1}}
     },
     elevation: {
@@ -34,7 +34,7 @@ export default {
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const Template: ComponentStory<typeof User> = (args) => (
   <div style={{width: 400}}>
-    <User id={1} {...args} />
+    <User id={115} {...args} />
   </div>
 );
 

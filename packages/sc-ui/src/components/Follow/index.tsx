@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Button} from '@mui/material';
 import {Endpoints, http, SCUserType} from '@selfcommunity/core';
@@ -22,9 +22,18 @@ const FollowButton = styled(Button, {
 }));
 
 function Follow({user = null, followed = null}: {user?: SCUserType; followed?: boolean}): JSX.Element {
-  const status = followed ? 'Unfollow' : 'Follow';
+  const [status, setStatus] = useState<any>(followed ? 'Unfollow' : 'Follow');
+
+  function updateStatus(status) {
+    if (status === 'Follow') {
+      setStatus('Unfollow');
+    } else {
+      setStatus('Follow');
+    }
+  }
 
   function followUser() {
+    updateStatus(status);
     http
       .request({
         url: Endpoints.FollowUser.url({id: user.id}),

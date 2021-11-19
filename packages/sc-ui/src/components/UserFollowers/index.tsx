@@ -50,7 +50,7 @@ function SCUserFollowers({scPersonId = null}: {scPersonId?: number}): JSX.Elemen
   function fetchLUFollowers() {
     http
       .request({
-        url: Endpoints.UserFollowers.url({id: 115}),
+        url: Endpoints.UserFollowers.url({id: 1}),
         method: Endpoints.UserFollowers.method
       })
       .then((res: AxiosResponse<any>) => {
@@ -97,13 +97,13 @@ function SCUserFollowers({scPersonId = null}: {scPersonId?: number}): JSX.Elemen
         </Typography>
         <List>
           {mutualPeople.slice(0, visibleUsers).map((follower: SCUserType, index) => (
-            <User elevation={0} user={follower} key={index} />
+            <User elevation={0} user={follower} key={index} id={follower.id} />
           ))}
         </List>
         <Divider />
         <List>
           {filteredFollowers.slice(0, visibleUsers).map((follower: SCUserType, index) => (
-            <User elevation={0} user={follower} key={index} />
+            <User elevation={0} user={follower} key={index} id={follower.id} />
           ))}
         </List>
         {hasMore && (

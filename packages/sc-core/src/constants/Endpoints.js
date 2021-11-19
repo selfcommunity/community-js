@@ -44,6 +44,10 @@ export default {
     url: urlReplacer('/api/v2/category/followed/'),
     method: 'GET',
   },
+  CategoryFollowers: {
+    url: urlReplacer('/api/v2/category/$(id)/followers/'),
+    method: 'GET',
+  },
   CategoriesSuggestion: {
     url: urlReplacer('/api/v2/suggestion/category/'),
     method: 'GET',
@@ -94,6 +98,10 @@ export default {
     url: urlReplacer('/api/v2/user/$(id)/follow/'),
     method: 'POST',
   },
+  CheckUserFollowed: {
+    url: urlReplacer('/api/v2/user/$(id)/is_followed/'),
+    method: 'GET',
+  },
   RequestConnection: {
     url: urlReplacer('/api/v2/user/$(id)/connection/request'),
     method: 'POST',
@@ -105,6 +113,10 @@ export default {
   RemoveConnection: {
     url: urlReplacer('/api/v2/user/$(id)/connection/remove'),
     method: 'POST',
+  },
+  CheckUserConnection: {
+    url: urlReplacer('/api/v2/user/$(id)/is_connection/'),
+    method: 'GET',
   },
   Me: {
     url: urlReplacer('/api/v2/user/me/'),

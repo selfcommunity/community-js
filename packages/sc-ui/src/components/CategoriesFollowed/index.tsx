@@ -29,7 +29,7 @@ export default function CategoriesFollowed(props): JSX.Element {
   const [hasMore, setHasMore] = useState<boolean>(false);
   const [total, setTotal] = useState<number>(0);
   const [followed, setFollowed] = useState<boolean>(false);
-  const [openCategoriesSuggestionDialog, setOpenCategoriesSuggestionDialog] = useState<boolean>(false);
+  const [openCategoriesFollowedDialog, setOpenCategoriesFollowedDialog] = useState<boolean>(false);
 
   function fetchCategoriesSuggestion() {
     http
@@ -84,7 +84,7 @@ export default function CategoriesFollowed(props): JSX.Element {
               )}
             </React.Fragment>
           )}
-          {openCategoriesSuggestionDialog && <></>}
+          {openCategoriesFollowedDialog && <></>}
         </CardContent>
       )}
     </Root>

@@ -4,9 +4,19 @@ import List from '@mui/material/List';
 import Card from '@mui/material/Card';
 import {UserBoxSkeleton} from '../Skeleton';
 import {Avatar, Button, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText} from '@mui/material';
-import {SCUserContext, SCPreferencesContext, SCPreferences, SCUserContextType, SCUserType, SCPreferencesContextType} from '@selfcommunity/core';
+import {
+  SCUserContext,
+  SCPreferencesContext,
+  SCPreferences,
+  SCUserContextType,
+  SCUserType,
+  SCPreferencesContextType,
+  http,
+  Endpoints
+} from '@selfcommunity/core';
 import useSCFetchUser from '../../../../sc-core/src/hooks/useSCFetchUser';
 import FollowConnect from '../FollowConnect';
+import {AxiosResponse} from 'axios';
 
 const PREFIX = 'SCUser';
 
@@ -19,17 +29,7 @@ const Root = styled(Card, {
   marginBottom: theme.spacing(2)
 }));
 
-export default function User({
-  id = null,
-  user = null,
-  followed = null,
-  ...rest
-}: {
-  id?: number;
-  user?: SCUserType;
-  [p: string]: any;
-  followed?: boolean;
-}): JSX.Element {
+export default function User({id = null, user = null, ...rest}: {id?: number; user?: SCUserType; [p: string]: any}): JSX.Element {
   const {scUser, setSCUser} = useSCFetchUser({id, user});
   const scPreferencesContext: SCPreferencesContextType = useContext(SCPreferencesContext);
   const scAuthContext: SCUserContextType = useContext(SCUserContext);
@@ -37,7 +37,21 @@ export default function User({
     SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED in scPreferencesContext.preferences &&
     scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED].value;
   const connectionEnabled = !followEnabled;
+  const [followed, setFollowed] = useState<boolean>(null);
 
+  function checkFollowStatus() {
+    http
+      .request({
+        url: Endpoints.CheckUserFollowed.url({id: id}),
+        method: Endpoints.CheckUserFollowed.method
+      })
+      .then((res: AxiosResponse<any>) => {
+        setFollowed(res.data.is_followed);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
   /**
    * Render follow action
    * @return {JSX.Element}
@@ -90,6 +104,10 @@ export default function User({
   function renderAnonymousActions() {
     return <Button size="small">Go to Profile</Button>;
   }
+
+  useEffect(() => {
+    checkFollowStatus();
+  }, []);
 
   const u = (
     <React.Fragment>

@@ -6,7 +6,7 @@ import CardContent from '@mui/material/CardContent';
 import {Avatar, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText} from '@mui/material';
 import {useSCFetchCategory} from '@selfcommunity/core';
 import CategoryBoxSkeleton from '../Skeleton/CategoryBoxSkeleton';
-import FollowButton from '../Button';
+import FollowButton from '../FollowButton';
 import {SCCategoryType} from '@selfcommunity/core/src/types';
 
 const PREFIX = 'SCCategory';

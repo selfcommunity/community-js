@@ -10,7 +10,7 @@ import Category from '../Category';
 import {AxiosResponse} from 'axios';
 import {SCCategoryType} from '@selfcommunity/core/src/types';
 import {SCOPE_SC_UI} from '../../constants/Errors';
-import FollowButton from '../Button';
+import FollowButton from '../FollowButton';
 
 const PREFIX = 'SCCategoriesPopular';
 
@@ -29,7 +29,7 @@ export default function CategoriesPopular({followed = null}: {followed?: boolean
   const [loading, setLoading] = useState<boolean>(true);
   const [hasMore, setHasMore] = useState<boolean>(false);
   const [total, setTotal] = useState<number>(0);
-  const [openCategoriesSuggestionDialog, setOpenCategoriesSuggestionDialog] = useState<boolean>(false);
+  const [openPopularCategoriesDialog, setOpenPopularCategoriesDialog] = useState<boolean>(false);
   const buttonText = followed ? 'Followed' : 'Follow';
 
   function fetchCategoriesSuggestion() {
@@ -89,7 +89,7 @@ export default function CategoriesPopular({followed = null}: {followed?: boolean
               )}
             </React.Fragment>
           )}
-          {openCategoriesSuggestionDialog && <></>}
+          {openPopularCategoriesDialog && <></>}
         </CardContent>
       )}
     </Root>
