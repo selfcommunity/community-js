@@ -50,7 +50,9 @@ const Root = styled(Popper, {
 
   [`& .${classes.selectedIcon}`]: {
     marginLeft: -17,
-    minWidth: 25,
+    '&.MuiListItemIcon-root': {
+      minWidth: '21px'
+    },
     '& svg': {
       fontSize: '1.2rem'
     }
@@ -174,7 +176,7 @@ export default function ReportingFlagMenu({
       setIsFlagging(true);
       performFlag(type)
         .then((data) => {
-          setFlagType(type);
+          setFlagType(flagType === type ? null : type);
           setIsFlagging(false);
         })
         .catch((error) => {

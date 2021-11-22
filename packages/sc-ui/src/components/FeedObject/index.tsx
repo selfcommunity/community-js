@@ -14,7 +14,7 @@ import {
   ListItemAvatar,
   ListItemText,
   Tooltip,
-  Typography,
+  Typography
 } from '@mui/material';
 import FeedObjectSkeleton from '../Skeleton/FeedObjectSkeleton';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
@@ -27,7 +27,7 @@ import ReportingFlagMenu from '../../shared/ReportingFlagMenu';
 import {SCFeedObjectType, SCFeedObjectTypologyType, Link, useSCFetchFeedObject} from '@selfcommunity/core';
 import Actions from './Actions';
 import WorldIcon from '@mui/icons-material/Public';
-import { defineMessages, useIntl } from 'react-intl';
+import {defineMessages, useIntl} from 'react-intl';
 
 const messages = defineMessages({
   comment: {
@@ -120,44 +120,8 @@ export default function FeedObject({
    * Manage variants:
    * SNIPPET, PREVIEW, DETAIL
    */
-  let objElement = <></>;
-  if (type === FeedObjectComponentType.SNIPPET) {
-    objElement = (
-      <React.Fragment>
-        {obj ? (
-          <ListItem button={true} alignItems="flex-start">
-            <ListItemAvatar>
-              <Avatar alt={obj.author.username} variant="circular" src={obj.author.avatar} />
-            </ListItemAvatar>
-            <ListItemText
-              primary={
-                <Typography component="span" sx={{display: 'inline'}} color="primary">
-                  {obj.author.username}
-                </Typography>
-              }
-              secondary={
-                <React.Fragment>
-                  {obj.summary}
-                  <Box component="span" sx={{display: 'flex', justifyContent: 'flex-start', p: '2px'}}>
-                    <Grid component="span" item={true} sm="auto" container direction="row" alignItems="center">
-                      <AccessTimeIcon sx={{paddingRight: '2px'}} />
-                      <TimeAgo datetime={obj.added_at} />
-                      <Bullet sx={{paddingLeft: '4px', paddingTop: '1px'}} />
-                      <Button variant={'text'} sx={{marginTop: '-1px'}}>
-                        Comment
-                      </Button>
-                    </Grid>
-                  </Box>
-                </React.Fragment>
-              }
-            />
-          </ListItem>
-        ) : (
-          <FeedObjectSkeleton elevation={0} />
-        )}
-      </React.Fragment>
-    );
-  } else if (type === FeedObjectComponentType.PREVIEW || type === FeedObjectComponentType.DETAIL) {
+  let objElement;
+  if (type === FeedObjectComponentType.PREVIEW || type === FeedObjectComponentType.DETAIL) {
     objElement = (
       <React.Fragment>
         {obj ? (
@@ -183,7 +147,13 @@ export default function FeedObject({
                   <DateTimeAgo date={obj.last_activity_at} />
                   <Bullet />
                   <div className={classes.tag}>
-                    {obj.addressing.length > 0 ? <Tags tags={obj.addressing} /> : <Tooltip title={`${intl.formatMessage(messages.visibleToAll)}`}><WorldIcon color="disabled" fontSize="small" /></Tooltip>}
+                    {obj.addressing.length > 0 ? (
+                      <Tags tags={obj.addressing} />
+                    ) : (
+                      <Tooltip title={`${intl.formatMessage(messages.visibleToAll)}`}>
+                        <WorldIcon color="disabled" fontSize="small" />
+                      </Tooltip>
+                    )}
                   </div>
                 </React.Fragment>
               }
@@ -196,7 +166,7 @@ export default function FeedObject({
                 </Typography>
               )}
               <Medias medias={obj.medias} />
-              <Typography variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: obj.summary}}></Typography>
+              <Typography variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: type === FeedObjectComponentType.PREVIEW ? obj.summary : obj.html}}></Typography>
             </CardContent>
             <CardActions>
               <Actions feedObject={obj} feedObjectType={feedObjectType} />
@@ -217,30 +187,29 @@ export default function FeedObject({
             </ListItemAvatar>
             <ListItemText
               primary={
-                <React.Fragment>
-                  <Typography component="span" sx={{display: 'inline'}} color="primary">
-                    {obj.author.username}
-                  </Typography>
-                </React.Fragment>
+                <Typography component="span" sx={{display: 'inline'}} color="primary">
+                  {obj.author.username}
+                </Typography>
               }
               secondary={
                 <React.Fragment>
                   {obj.summary}
                   <Box component="span" sx={{display: 'flex', justifyContent: 'flex-start', p: '2px'}}>
                     <Grid component="span" item={true} sm="auto" container direction="row" alignItems="center">
-                      <AccessTimeIcon />
+                      <AccessTimeIcon sx={{paddingRight: '2px'}} />
                       <TimeAgo datetime={obj.added_at} />
+                      <Bullet sx={{paddingLeft: '4px', paddingTop: '1px'}} />
+                      <Button variant={'text'} sx={{marginTop: '-1px'}}>
+                        {intl.formatMessage(messages.comment)}
+                      </Button>
                     </Grid>
-                    <Link component="button" variant="body1" underline="none" sx={{marginLeft: '10px'}}>
-                      {intl.formatMessage(messages.comment)}
-                    </Link>
                   </Box>
                 </React.Fragment>
               }
             />
           </ListItem>
         ) : (
-          <FeedObjectSkeleton type={type} elevation={0} />
+          <FeedObjectSkeleton elevation={0} />
         )}
       </React.Fragment>
     );

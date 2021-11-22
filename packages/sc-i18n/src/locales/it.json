@@ -49,5 +49,10 @@
   "ui.reportingMenu.vulgar": "Volgare",
   "ui.reportingMenu.poorContent": "Scadente",
   "ui.reportingMenu.offtopic": "Fuori tema",
-  "ui.reportingMenu.footer": "La segnalazione è anonima e deve essere conforme al regolamento."
+  "ui.reportingMenu.footer": "La segnalazione è anonima e deve essere conforme al regolamento.",
+
+  "ui.commentsObject.noComment": "Non ci sono ancora commenti al momento.",
+
+  "ui.commentObject.like": "Apprezza",
+  "ui.commentObject.reply": "Replica"
 }

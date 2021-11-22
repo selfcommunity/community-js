@@ -49,5 +49,10 @@
   "ui.reportingMenu.vulgar": "Vulgar",
   "ui.reportingMenu.poorContent": "Poor content",
   "ui.reportingMenu.offtopic": "Offtopic",
-  "ui.reportingMenu.footer": "Reporting is anonymous and must be compliant with rules."
+  "ui.reportingMenu.footer": "Reporting is anonymous and must be compliant with rules.",
+
+  "ui.commentsObject.noComment": "No comments at the moment.",
+
+  "ui.commentObject.like": "Like",
+  "ui.commentObject.reply": "Reply"
 }

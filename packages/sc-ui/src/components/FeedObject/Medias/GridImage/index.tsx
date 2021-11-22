@@ -154,10 +154,8 @@ export default function GridImages({
   };
 
   const openPreviewImage = (index) => {
-    const {onClickEach, images, gallery} = this.props;
-
-    if (onClickEach) {
-      return onClickEach({src: images[index], index});
+    if (onClick) {
+      return onClick({src: images[index], index});
     }
 
     if (gallery === false) {

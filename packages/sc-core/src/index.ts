@@ -65,6 +65,7 @@ import * as SCPreferences from './constants/Preferences';
  */
 import useSCFetchUser from './hooks/useSCFetchUser';
 import useSCFetchFeedObject from './hooks/useSCFetchFeedObject';
+import useSCFetchCommentObject from './hooks/useSCFetchCommentObject';
 import useSCFetchTag from './hooks/useSCFetchTag';
 import useSCFetchCategory from './hooks/useSCFetchCategory';
 
@@ -158,6 +159,7 @@ export {
   Locale,
   useSCFetchUser,
   useSCFetchFeedObject,
+  useSCFetchCommentObject,
   useSCFetchTag,
   useSCFetchCategory,
 };

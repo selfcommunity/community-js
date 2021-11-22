@@ -30,6 +30,17 @@ export default {
     method: 'GET',
   },
   /**
+   * Comments
+   */
+  Comment: {
+    url: urlReplacer('/api/v2/comment/$(id)/'),
+    method: 'GET',
+  },
+  Comments: {
+    url: urlReplacer('/api/v2/comment/'),
+    method: 'GET',
+  },
+  /**
    * Reporting Flag Endpoints
    */
   FlagStatus: {
