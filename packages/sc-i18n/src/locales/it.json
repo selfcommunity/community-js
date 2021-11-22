@@ -31,6 +31,18 @@
 
   "ui.editor.placeholder": "Write your text...",
 
+  "ui.feedObject.comment": "Commenta",
+  "ui.feedObject.visibleToAll": "Visibile a tutti",
+  "ui.feedObject.comment.comment": "Commenta",
+  "ui.feedObject.comment.comments": "{total, plural, =0 {# Commenti} one {# Commento} other {# Commenti}}",
+  "ui.feedObject.vote.voteUp": "Mi piace",
+  "ui.feedObject.vote.voteDown": "Rimuovi il tuo like",
+  "ui.feedObject.vote.votes": "{total, plural, =0 {# Voti} one {# Voto} other {# Voti}}",
+  "ui.feedObject.vote.votedByOnlyMe": "Solo tu",
+  "ui.feedObject.vote.votedByMe": "Tu",
+  "ui.feedObject.share.share": "Condividi il contributo",
+  "ui.feedObject.share.shares": "{total, plural, =0 {# Condivisioni} one {# Condivisione} other {# Condivisioni}}",
+
   "ui.reportingMenu.title": "Questo contenuto è:",
   "ui.reportingMenu.spam": "Spam",
   "ui.reportingMenu.aggressive": "Aggressivo",

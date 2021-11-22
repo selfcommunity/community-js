@@ -1,7 +1,7 @@
 import React, {useEffect, useMemo, useReducer} from 'react';
 import BaseDialog from '../../../../shared/BaseDialog';
-import {FormattedMessage} from 'react-intl';
-import { Box, Button, Divider, IconButton, List, Tooltip, Typography } from '@mui/material';
+import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
+import {Box, Button, Divider, IconButton, List, Tooltip, Typography} from '@mui/material';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import VoteIcon from '@mui/icons-material/ThumbUpOutlined';
 import VoteFilledIcon from '@mui/icons-material/ThumbUpTwoTone';
@@ -24,7 +24,6 @@ import {
   useSCUser
 } from '@selfcommunity/core';
 import {styled} from '@mui/material/styles';
-import Card from '@mui/material/Card';
 
 /**
  * We have complex state logic that involves multiple sub-values,
@@ -112,6 +111,29 @@ const classes = {
   inlineVoteButton: `${PREFIX}-inlineVoteButton`
 };
 
+const messages = defineMessages({
+  voteUp: {
+    id: 'ui.feedObject.vote.voteUp',
+    defaultMessage: 'ui.feedObject.vote.voteUp'
+  },
+  voteDown: {
+    id: 'ui.feedObject.vote.voteDown',
+    defaultMessage: 'ui.feedObject.vote.voteDown'
+  },
+  votes: {
+    id: 'ui.feedObject.vote.votes',
+    defaultMessage: 'ui.feedObject.vote.votes'
+  },
+  votedByMe: {
+    id: 'ui.feedObject.vote.votedByMe',
+    defaultMessage: 'ui.feedObject.votedByMe.you'
+  },
+  votedByOnlyMe: {
+    id: 'ui.feedObject.vote.votedByOnlyMe',
+    defaultMessage: 'ui.feedObject.votedByOnlyMe.you'
+  }
+});
+
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
@@ -142,6 +164,7 @@ export default function Vote({
   const {obj, setObj} = useSCFetchFeedObject({id, feedObject, feedObjectType});
   const [state, dispatch] = useReducer(votesReducer, {}, () => stateInitializer({id, feedObject, feedObjectType}));
   const scUserContext: SCUserContextType = useSCUser();
+  const intl = useIntl();
 
   /**
    * Fetch Votes only if obj
@@ -240,7 +263,7 @@ export default function Vote({
       return obj.voted ? (
         <VoteFilledIcon fontSize="medium" color={'secondary'} className={classes.inlineVoteButton} />
       ) : (
-        <VoteIcon fontSize="medium" />
+        <VoteIcon fontSize="medium" sx={{marginTop: '-1px'}}/>
       );
     }
     return (
@@ -274,7 +297,7 @@ export default function Vote({
         <Button variant="text" size="small" onClick={handleToggleVotesDialog} disabled>
           {renderInlineStartVoteBtn()}
           <Typography variant={'body2'} sx={{marginLeft: (theme) => theme.spacing()}}>
-            {`${obj.vote_count} Votes`}
+            {`${intl.formatMessage(messages.votes, {total: obj.vote_count})}`}
           </Typography>
         </Button>
       );
@@ -285,9 +308,13 @@ export default function Vote({
             {renderInlineStartVoteBtn()}
             <Typography variant={'body2'} sx={{marginLeft: (theme) => theme.spacing()}}>
               {obj.voted ? (
-                <React.Fragment>{obj.vote_count === 1 ? `You` : `You + ${obj.vote_count - 1}`}</React.Fragment>
+                <React.Fragment>
+                  {obj.vote_count === 1
+                    ? intl.formatMessage(messages.votedByOnlyMe)
+                    : `${intl.formatMessage(messages.votedByMe)} + ${obj.vote_count - 1}`}
+                </React.Fragment>
               ) : (
-                <React.Fragment>{`${obj.vote_count} Votes`}</React.Fragment>
+                <React.Fragment>{`${intl.formatMessage(messages.votes, {total: obj.vote_count})}`}</React.Fragment>
               )}
             </Typography>
           </Button>
@@ -339,7 +366,7 @@ export default function Vote({
         {withAction && !inlineAction && (
           <React.Fragment>
             <Divider />
-            <Tooltip title={voting ? '' : obj.voted ? 'Vote down' : 'Vote up'}>
+            <Tooltip title={voting ? '' : obj.voted ? intl.formatMessage(messages.voteDown) : intl.formatMessage(messages.voteUp)}>
               <span>
                 <LoadingButton loading={voting} disabled={!canVote || !obj} onClick={vote}>
                   <React.Fragment>

@@ -1,14 +1,18 @@
 import React from 'react';
-import {defineMessages, injectIntl} from 'react-intl';
-import {Box, Button, Divider, Typography} from '@mui/material';
+import {defineMessages, injectIntl, useIntl} from 'react-intl';
+import { Box, Button, Divider, Tooltip, Typography } from '@mui/material';
 import CommentIcon from '@mui/icons-material/ChatBubbleOutline';
 import {SCFeedObjectType, SCFeedObjectTypologyType, SCRoutingContextType, useSCFetchFeedObject, useSCRouting, Link} from '@selfcommunity/core';
 import {styled} from '@mui/material/styles';
 
 const messages = defineMessages({
   comments: {
-    id: 'feedObject.audience.comments',
-    defaultMessage: 'feedObject.audience.comments'
+    id: 'ui.feedObject.comment.comments',
+    defaultMessage: 'ui.feedObject.comment.comments'
+  },
+  comment: {
+    id: 'ui.feedObject.comment.comment',
+    defaultMessage: 'ui.feedObject.comment.comment'
   }
 });
 
@@ -39,18 +43,21 @@ export default function Comment({
 }): JSX.Element {
   const {obj, setObj} = useSCFetchFeedObject({id, feedObject, feedObjectType});
   const scRoutingContext: SCRoutingContextType = useSCRouting();
+  const intl = useIntl();
 
   return (
     <Root {...rest}>
       <Button variant="text" size="small" component={Link} to={scRoutingContext.url(feedObjectType.toLowerCase(), {id: obj.id})} sx={{height: 32}}>
-        <Typography variant={'body2'}>{`${obj.comment_count} Comments`}</Typography>
+        <Typography variant={'body2'}>{`${intl.formatMessage(messages.comments, {total: obj.comment_count})}`}</Typography>
       </Button>
       {withAction && (
         <React.Fragment>
           <Divider />
-          <Button component={Link} to={scRoutingContext.url(feedObjectType.toLowerCase(), {id: obj.id})}>
-            <CommentIcon fontSize={'large'} />
-          </Button>
+          <Tooltip title={`${intl.formatMessage(messages.comment)}`}>
+            <Button component={Link} to={scRoutingContext.url(feedObjectType.toLowerCase(), {id: obj.id})}>
+              <CommentIcon fontSize={'large'} />
+            </Button>
+          </Tooltip>
         </React.Fragment>
       )}
     </Root>

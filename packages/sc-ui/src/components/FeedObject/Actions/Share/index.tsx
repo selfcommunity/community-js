@@ -1,21 +1,21 @@
 import React, {useState} from 'react';
-import {defineMessages} from 'react-intl';
+import {defineMessages, useIntl} from 'react-intl';
 import {Box, Button, Divider, IconButton, Tooltip, Typography} from '@mui/material';
 import ShareIcon from '@mui/icons-material/ShareOutlined';
 import CircularProgress from '@mui/material/CircularProgress';
 import LoadingButton from '@mui/lab/LoadingButton';
 import SharesDialog from './SharesDialog';
-import {SCFeedObjectType, SCFeedObjectTypologyType, SCUserContextType, useSCFetchFeedObject, useSCUser} from '@selfcommunity/core';
+import {SCFeedObjectType, SCFeedObjectTypologyType, useSCFetchFeedObject} from '@selfcommunity/core';
 import {styled} from '@mui/material/styles';
 
 const messages = defineMessages({
   shares: {
-    id: 'feedObject.audience.shares',
-    defaultMessage: 'feedObject.audience.shares'
+    id: 'ui.feedObject.share.shares',
+    defaultMessage: 'ui.feedObject.share.shares'
   },
   share: {
-    id: 'feedObject.actions.share',
-    defaultMessage: 'feedObject.actions.share'
+    id: 'ui.feedObject.share.share',
+    defaultMessage: 'ui.feedObject.share.share'
   }
 });
 
@@ -49,7 +49,7 @@ export default function Share({
   const {obj, setObj} = useSCFetchFeedObject({id, feedObject, feedObjectType});
   const [isSharing, setIsSharing] = useState<boolean>(false);
   const [openSharesDialog, setOpenSharesDialog] = useState<boolean>(false);
-  const scUserContext: SCUserContextType = useSCUser();
+  const intl = useIntl();
 
   /**
    * Open/Close dialog shares
@@ -101,7 +101,7 @@ export default function Share({
         {renderInlineStartShareBtn()}
         <Button variant="text" size="small" onClick={handleToggleSharesDialog} disabled={sharesCount < 1} sx={{height: 32}}>
           <Typography variant={'body2'}>
-            <React.Fragment>{`${sharesCount} shares`}</React.Fragment>
+            <React.Fragment>{`${intl.formatMessage(messages.shares, {total: sharesCount})}`}</React.Fragment>
           </Typography>
         </Button>
         {openSharesDialog && sharesCount > 0 && <SharesDialog object={obj} open={openSharesDialog} onClose={handleToggleSharesDialog} />}
@@ -119,7 +119,7 @@ export default function Share({
         {withAction && !inlineAction && (
           <React.Fragment>
             <Divider />
-            <Tooltip title={isSharing ? '' : 'Share'}>
+            <Tooltip title={`${intl.formatMessage(messages.share)}`}>
               <LoadingButton loading={isSharing} onClick={share}>
                 <ShareIcon fontSize={'large'} />
               </LoadingButton>

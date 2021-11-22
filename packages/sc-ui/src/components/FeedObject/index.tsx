@@ -2,7 +2,20 @@ import React from 'react';
 import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import {Avatar, Box, Button, CardActions, CardHeader, Collapse, Grid, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
+import {
+  Avatar,
+  Box,
+  Button,
+  CardActions,
+  CardHeader,
+  Collapse,
+  Grid,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+  Tooltip,
+  Typography,
+} from '@mui/material';
 import FeedObjectSkeleton from '../Skeleton/FeedObjectSkeleton';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import TimeAgo from 'timeago-react';
@@ -14,6 +27,18 @@ import ReportingFlagMenu from '../../shared/ReportingFlagMenu';
 import {SCFeedObjectType, SCFeedObjectTypologyType, Link, useSCFetchFeedObject} from '@selfcommunity/core';
 import Actions from './Actions';
 import WorldIcon from '@mui/icons-material/Public';
+import { defineMessages, useIntl } from 'react-intl';
+
+const messages = defineMessages({
+  comment: {
+    id: 'ui.feedObject.comment',
+    defaultMessage: 'ui.feedObject.comment'
+  },
+  visibleToAll: {
+    id: 'ui.feedObject.visibleToAll',
+    defaultMessage: 'ui.feedObject.visibleToAll'
+  }
+});
 
 const PREFIX = 'SCFeedObject';
 
@@ -88,6 +113,7 @@ export default function FeedObject({
   [p: string]: any;
 }): JSX.Element {
   const {obj, setObj} = useSCFetchFeedObject({id, feedObject, feedObjectType});
+  const intl = useIntl();
 
   /**
    * Render the obj object
@@ -157,7 +183,7 @@ export default function FeedObject({
                   <DateTimeAgo date={obj.last_activity_at} />
                   <Bullet />
                   <div className={classes.tag}>
-                    {obj.addressing.length > 0 ? <Tags tags={obj.addressing} /> : <WorldIcon color="disabled" fontSize="small" />}
+                    {obj.addressing.length > 0 ? <Tags tags={obj.addressing} /> : <Tooltip title={`${intl.formatMessage(messages.visibleToAll)}`}><WorldIcon color="disabled" fontSize="small" /></Tooltip>}
                   </div>
                 </React.Fragment>
               }
@@ -206,7 +232,7 @@ export default function FeedObject({
                       <TimeAgo datetime={obj.added_at} />
                     </Grid>
                     <Link component="button" variant="body1" underline="none" sx={{marginLeft: '10px'}}>
-                      Comment
+                      {intl.formatMessage(messages.comment)}
                     </Link>
                   </Box>
                 </React.Fragment>
