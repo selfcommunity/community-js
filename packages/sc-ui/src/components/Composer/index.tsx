@@ -54,6 +54,7 @@ import Medias from '../FeedObject/Medias';
 import Editor from '../Editor';
 import {SCComposerMediaActionType} from '../../types/composer';
 import {Document, Image, Link} from './MediaAction';
+import Poll from './Poll';
 
 const DialogTransition = forwardRef(function Transition(
   props: TransitionProps & {
@@ -236,7 +237,8 @@ const COMPOSER_INITIAL_STATE = {
   audience: AUDIENCE_ALL,
   addressing: [],
   addressingError: null,
-  medias: []
+  medias: [],
+  poll: null
 };
 
 const reducer = (state, action) => {
@@ -286,7 +288,7 @@ export default function Composer({
   const [composerTypes, setComposerTypes] = useState([]);
 
   const [state, dispatch] = useReducer(reducer, {...COMPOSER_INITIAL_STATE, open, view});
-  const {type, title, titleError, text, categories, addressing, audience, medias} = state;
+  const {type, title, titleError, text, categories, addressing, audience, medias, poll} = state;
 
   /*
    * Compute preferences
@@ -351,6 +353,8 @@ export default function Composer({
           break;
         case 'categories':
         case 'addressing':
+        case 'poll':
+          console.log(event);
           dispatch({type: prop, value: event});
           break;
         case 'audience':
@@ -402,7 +406,8 @@ export default function Composer({
       text,
       addressing,
       medias: medias.map((m) => m.id),
-      categories: categories.map((c) => c.id)
+      categories: categories.map((c) => c.id),
+      poll
     };
     setIsSubmitting(true);
     http
@@ -684,7 +689,31 @@ export default function Composer({
     );
   };
 
-  const renderPollView: Function = () => null;
+  const renderPollView: Function = () => {
+    return (
+      <React.Fragment>
+        <DialogTitle className={classes.title}>
+          <Typography align="left" component="div">
+            <IconButton onClick={handleChangeView(MAIN_VIEW)} size="small">
+              <BackIcon />
+            </IconButton>
+            <FormattedMessage id="ui.composer.poll.title" defaultMessage="ui.composer.poll.title" />
+          </Typography>
+          <Box sx={{textAlign: 'center'}}>
+            <Avatar className={classes.avatar} src={scAuthContext.user.avatar}></Avatar>
+          </Box>
+          <Box sx={{textAlign: 'right'}}>
+            <Button onClick={handleChangeView(MAIN_VIEW)} variant="outlined">
+              <FormattedMessage id="ui.composer.done" defaultMessage="ui.composer.done" />
+            </Button>
+          </Box>
+        </DialogTitle>
+        <DialogContent className={classes.content}>
+          <Poll onChange={handleChange('poll')} poll={poll} />
+        </DialogContent>
+      </React.Fragment>
+    );
+  };
 
   let child = null;
   switch (_view) {

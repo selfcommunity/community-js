@@ -1,4 +1,4 @@
-import React, { SyntheticEvent, useEffect, useState } from 'react';
+import React, {SyntheticEvent, useEffect, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField, {TextFieldProps} from '@mui/material/TextField';
@@ -12,8 +12,8 @@ import {AutocompleteClasses} from '@mui/material/Autocomplete/autocompleteClasse
 import {OverridableStringUnion} from '@mui/types';
 import {AutocompletePropsSizeOverrides} from '@mui/material/Autocomplete/Autocomplete';
 import {SCTagType} from '@selfcommunity/core/src/types';
-import { Endpoints, http } from '@selfcommunity/core';
-import { AxiosResponse } from 'axios';
+import {Endpoints, http} from '@selfcommunity/core';
+import {AxiosResponse} from 'axios';
 
 const PREFIX = 'SCComposerAudience';
 
