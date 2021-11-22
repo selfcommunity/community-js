@@ -105,11 +105,9 @@ export default function FeedObject({
             </ListItemAvatar>
             <ListItemText
               primary={
-                <React.Fragment>
-                  <Typography component="span" sx={{display: 'inline'}} color="primary">
-                    {obj.author.username}
-                  </Typography>
-                </React.Fragment>
+                <Typography component="span" sx={{display: 'inline'}} color="primary">
+                  {obj.author.username}
+                </Typography>
               }
               secondary={
                 <React.Fragment>

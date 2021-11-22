@@ -1,8 +1,9 @@
 import React from 'react';
 import {defineMessages, injectIntl} from 'react-intl';
-import {Button, Divider, Typography} from '@mui/material';
+import {Box, Button, Divider, Typography} from '@mui/material';
 import CommentIcon from '@mui/icons-material/ChatBubbleOutline';
 import {SCFeedObjectType, SCFeedObjectTypologyType, SCRoutingContextType, useSCFetchFeedObject, useSCRouting, Link} from '@selfcommunity/core';
+import {styled} from '@mui/material/styles';
 
 const messages = defineMessages({
   comments: {
@@ -10,6 +11,18 @@ const messages = defineMessages({
     defaultMessage: 'feedObject.audience.comments'
   }
 });
+
+const PREFIX = 'SCCommentObject';
+
+const classes = {
+  root: `${PREFIX}-root`
+};
+
+const Root = styled(Box, {
+  name: PREFIX,
+  slot: 'Root',
+  overridesResolver: (props, styles) => styles.root
+})(({theme}) => ({}));
 
 export default function Comment({
   id = null,
@@ -28,18 +41,18 @@ export default function Comment({
   const scRoutingContext: SCRoutingContextType = useSCRouting();
 
   return (
-    <React.Fragment>
-      <Button variant="text" size="small" component={Link} to={scRoutingContext.url(feedObjectType.toLowerCase(), {id: obj.id})}>
+    <Root {...rest}>
+      <Button variant="text" size="small" component={Link} to={scRoutingContext.url(feedObjectType.toLowerCase(), {id: obj.id})} sx={{height: 32}}>
         <Typography variant={'body2'}>{`${obj.comment_count} Comments`}</Typography>
       </Button>
       {withAction && (
         <React.Fragment>
           <Divider />
           <Button component={Link} to={scRoutingContext.url(feedObjectType.toLowerCase(), {id: obj.id})}>
-            <CommentIcon fontSize="small" />
+            <CommentIcon fontSize={'large'} />
           </Button>
         </React.Fragment>
       )}
-    </React.Fragment>
+    </Root>
   );
 }

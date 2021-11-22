@@ -194,7 +194,14 @@ export default function ReportingFlagMenu({
    * Close the flagging popup
    */
   function handleClose() {
+    if (popperRef.current && popperRef.current.contains(event.target)) {
+      return;
+    }
+
     setOpen(false);
+    if (rest.onClose) {
+      rest.onClose();
+    }
   }
 
   /**

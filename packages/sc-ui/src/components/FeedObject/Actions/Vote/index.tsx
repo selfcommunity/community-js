@@ -1,7 +1,7 @@
 import React, {useEffect, useMemo, useReducer} from 'react';
 import BaseDialog from '../../../../shared/BaseDialog';
 import {FormattedMessage} from 'react-intl';
-import {Button, Divider, IconButton, List, Tooltip, Typography} from '@mui/material';
+import { Box, Button, Divider, IconButton, List, Tooltip, Typography } from '@mui/material';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import VoteIcon from '@mui/icons-material/ThumbUpOutlined';
 import VoteFilledIcon from '@mui/icons-material/ThumbUpTwoTone';
@@ -23,6 +23,8 @@ import {
   useSCFetchFeedObject,
   useSCUser
 } from '@selfcommunity/core';
+import {styled} from '@mui/material/styles';
+import Card from '@mui/material/Card';
 
 /**
  * We have complex state logic that involves multiple sub-values,
@@ -103,6 +105,25 @@ function stateInitializer({
   };
 }
 
+const PREFIX = 'SCVoteObject';
+
+const classes = {
+  root: `${PREFIX}-root`,
+  inlineVoteButton: `${PREFIX}-inlineVoteButton`
+};
+
+const Root = styled(Box, {
+  name: PREFIX,
+  slot: 'Root',
+  overridesResolver: (props, styles) => styles.root
+})(({theme}) => ({
+  [`& .${classes.inlineVoteButton}`]: {
+    backgroundColor: '#d5d5d5',
+    padding: '0 3px',
+    borderRadius: 10
+  }
+}));
+
 export default function Vote({
   id = null,
   feedObject = null,
@@ -116,7 +137,6 @@ export default function Vote({
   feedObjectType?: SCFeedObjectTypologyType;
   withAction: boolean;
   inlineAction: boolean;
-
   [p: string]: any;
 }): JSX.Element {
   const {obj, setObj} = useSCFetchFeedObject({id, feedObject, feedObjectType});
@@ -217,7 +237,11 @@ export default function Vote({
     const canVote = scUserContext.user.id !== obj.author.id;
     const {loading, voting} = state;
     if (!canVote || (withAction && !inlineAction)) {
-      return obj.voted ? <VoteFilledIcon sx={{fontSize: '1rem'}} /> : <VoteIcon sx={{fontSize: '1rem'}} />;
+      return obj.voted ? (
+        <VoteFilledIcon fontSize="medium" color={'secondary'} className={classes.inlineVoteButton} />
+      ) : (
+        <VoteIcon fontSize="medium" />
+      );
     }
     return (
       <Tooltip title={loading || voting ? '' : obj.voted ? 'Vote down' : 'Vote up'}>
@@ -290,7 +314,7 @@ export default function Vote({
                   }>
                   <List>
                     {votes.map((vote, index) => (
-                      <User elevation={0} user={vote.user} key={index} sx={{m: 0}}/>
+                      <User elevation={0} user={vote.user} key={index} sx={{m: 0}} />
                     ))}
                   </List>
                 </InfiniteScroll>
@@ -318,7 +342,9 @@ export default function Vote({
             <Tooltip title={voting ? '' : obj.voted ? 'Vote down' : 'Vote up'}>
               <span>
                 <LoadingButton loading={voting} disabled={!canVote || !obj} onClick={vote}>
-                  <React.Fragment>{obj.voted ? <VoteFilledIcon fontSize="small" /> : <VoteIcon fontSize="small" />}</React.Fragment>
+                  <React.Fragment>
+                    {obj.voted ? <VoteFilledIcon fontSize={'large'} color={'secondary'} /> : <VoteIcon fontSize={'large'} />}
+                  </React.Fragment>
                 </LoadingButton>
               </span>
             </Tooltip>
@@ -329,9 +355,9 @@ export default function Vote({
   }
 
   return (
-    <React.Fragment>
+    <Root {...rest}>
       {renderAudience()}
       {renderVoteBtn()}
-    </React.Fragment>
+    </Root>
   );
 }

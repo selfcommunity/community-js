@@ -6,6 +6,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import LoadingButton from '@mui/lab/LoadingButton';
 import SharesDialog from './SharesDialog';
 import {SCFeedObjectType, SCFeedObjectTypologyType, SCUserContextType, useSCFetchFeedObject, useSCUser} from '@selfcommunity/core';
+import {styled} from '@mui/material/styles';
 
 const messages = defineMessages({
   shares: {
@@ -17,6 +18,18 @@ const messages = defineMessages({
     defaultMessage: 'feedObject.actions.share'
   }
 });
+
+const PREFIX = 'SCShareObject';
+
+const classes = {
+  root: `${PREFIX}-root`
+};
+
+const Root = styled(Box, {
+  name: PREFIX,
+  slot: 'Root',
+  overridesResolver: (props, styles) => styles.root
+})(({theme}) => ({}));
 
 export default function Share({
   id = null,
@@ -86,7 +99,7 @@ export default function Share({
     return (
       <Box>
         {renderInlineStartShareBtn()}
-        <Button variant="text" size="small" onClick={handleToggleSharesDialog} /* disabled={sharesCount < 1} */>
+        <Button variant="text" size="small" onClick={handleToggleSharesDialog} disabled={sharesCount < 1} sx={{height: 32}}>
           <Typography variant={'body2'}>
             <React.Fragment>{`${sharesCount} shares`}</React.Fragment>
           </Typography>
@@ -108,7 +121,7 @@ export default function Share({
             <Divider />
             <Tooltip title={isSharing ? '' : 'Share'}>
               <LoadingButton loading={isSharing} onClick={share}>
-                <ShareIcon fontSize="small" />
+                <ShareIcon fontSize={'large'} />
               </LoadingButton>
             </Tooltip>
           </React.Fragment>
@@ -118,9 +131,9 @@ export default function Share({
   }
 
   return (
-    <React.Fragment>
+    <Root {...rest}>
       {renderAudience()}
       {renderShareBtn()}
-    </React.Fragment>
+    </Root>
   );
 }

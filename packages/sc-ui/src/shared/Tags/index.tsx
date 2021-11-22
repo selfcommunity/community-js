@@ -88,14 +88,18 @@ export default function Tags({
   const [open, setOpen] = useState<boolean>(false);
   let popperRef = useRef(null);
 
-  function handleOpen() {
-    setOpen(true);
+  function handleToggle() {
+    setOpen((prevOpen) => !prevOpen);
     if (rest.onOpen) {
-      rest.onOpen();
+      rest.onOpen(!open);
     }
   }
 
   function handleClose() {
+    if (popperRef.current && popperRef.current.contains(event.target)) {
+      return;
+    }
+
     setOpen(false);
     if (rest.onClose) {
       rest.onClose();
@@ -115,20 +119,22 @@ export default function Tags({
     );
   }
 
+  // return focus to the button when we transitioned from !open -> open
+  const prevOpen = useRef(open);
+  React.useEffect(() => {
+    if (prevOpen.current === true && open === false) {
+      popperRef.current.focus();
+    }
+    prevOpen.current = open;
+  }, [open]);
+
   return (
     <>
       {tags.length && (
         <React.Fragment>
           {type === TagsComponentType.POPPER ? (
             <TagsPopperRoot {...rest}>
-              <TagOutlinedIcon
-                fontSize="small"
-                onClick={handleOpen}
-                ref={(ref) => {
-                  popperRef.current = ref;
-                }}
-                aria-haspopup="true"
-              />
+              <TagOutlinedIcon ref={popperRef} fontSize="small" onClick={handleToggle} aria-haspopup="true" />
               <TagsPopper
                 open={open}
                 anchorEl={popperRef.current}
