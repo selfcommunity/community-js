@@ -626,10 +626,11 @@ export default function Composer({
                 }}
                 error={Boolean(titleError)}
                 helperText={titleError}
+                disabled={isSubmitting}
               />
             </div>
           )}
-          <Editor className={classNames(classes.block, classes.editor)} onChange={handleChangeText} defaultValue={text} />
+          <Editor className={classNames(classes.block, classes.editor)} onChange={handleChangeText} defaultValue={text} readOnly={isSubmitting} />
           <Box className={classes.medias}>
             <Medias
               medias={medias}
@@ -641,13 +642,13 @@ export default function Composer({
             />
           </Box>
           <div className={classes.block}>
-            <Categories onChange={handleChange('categories')} defaultValue={categories} />
+            <Categories onChange={handleChange('categories')} defaultValue={categories} disabled={isSubmitting} />
           </div>
         </DialogContent>
         <DialogActions className={classes.actions}>
           <Typography align="left">
             {mediaActions.map((action: SCComposerMediaActionType) => (
-              <action.button key={action.name} onClick={handleChangeView(action.name)} />
+              <action.button key={action.name} onClick={handleChangeView(action.name)} disabled={isSubmitting} />
             ))}
             {preferences[SCPreferences.ADDONS_VIDEO_UPLOAD_ENABLED] && (
               <IconButton aria-label="add video" size="medium">
@@ -656,7 +657,9 @@ export default function Composer({
             )}
           </Typography>
           <Typography align="right">
-            <IconButton onClick={handleChangeView(AUDIENCE_VIEW)}>{addressing.length > 0 ? <TagIcon /> : <PublicIcon />}</IconButton>
+            <IconButton disabled={isSubmitting} onClick={handleChangeView(AUDIENCE_VIEW)}>
+              {addressing.length > 0 ? <TagIcon /> : <PublicIcon />}
+            </IconButton>
             <LoadingButton
               onClick={handleSubmit}
               color="primary"

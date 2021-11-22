@@ -1,12 +1,12 @@
-import React, { RefObject, useMemo } from 'react';
+import React, {RefObject, useMemo} from 'react';
 import {styled} from '@mui/material/styles';
 import {ContentState, convertFromHTML, convertToRaw} from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 import {defineMessages, useIntl} from 'react-intl';
 import MUIRichTextEditor, {TMUIRichTextEditorRef} from 'mui-rte';
-import { Box, useControlled } from '@mui/material';
-import { SCPreferences } from '@selfcommunity/core';
-import { DOCUMENTS_VIEW, IMAGES_VIEW, VIDEOS_VIEW } from '../Composer';
+import {Box, useControlled} from '@mui/material';
+import {SCPreferences} from '@selfcommunity/core';
+import {DOCUMENTS_VIEW, IMAGES_VIEW, VIDEOS_VIEW} from '../Composer';
 
 const PREFIX = 'SCEditor';
 
@@ -31,10 +31,12 @@ const messages = defineMessages({
 export default function Editor({
   className = '',
   defaultValue = '',
+  readOnly = false,
   onChange = null
 }: {
   className?: string;
   defaultValue?: string;
+  readOnly?: boolean;
   onChange?: (value: string) => void;
 }): JSX.Element {
   const editor: RefObject<TMUIRichTextEditorRef> = React.createRef();
@@ -60,6 +62,7 @@ export default function Editor({
   return (
     <Root className={className} onClick={handleFocus}>
       <MUIRichTextEditor
+        readOnly={readOnly}
         label={intl.formatMessage(messages.placeholder)}
         onChange={handleChange}
         ref={editor}

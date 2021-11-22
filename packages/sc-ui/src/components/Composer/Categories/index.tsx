@@ -53,6 +53,11 @@ export interface CategoriesProps extends StandardProps<React.HTMLAttributes<HTML
    */
   disableCloseOnSelect?: boolean;
   /**
+   * If `true`, the autocomplede will be disabled.
+   * @default false
+   */
+  disabled?: boolean;
+  /**
    * Force the visibility display of the popup icon.
    * @default 'auto'
    */
@@ -67,6 +72,7 @@ export default function ({
   defaultValue = [],
   limitCountCategories = 0,
   checkboxSelect = false,
+  disabled = false,
   TextFieldProps = {variant: 'outlined', label: <FormattedMessage id="ui.composer.categories.label" defaultMessage="ui.composer.categories.label" />},
   ...props
 }: CategoriesProps): JSX.Element {
@@ -145,6 +151,7 @@ export default function ({
       blurOnSelect
       handleHomeEndKeys
       clearIcon={null}
+      disabled={disabled}
       noOptionsText={<FormattedMessage id="ui.composer.categories.empty" defaultMessage="ui.composer.categories.empty" />}
       onChange={handleChange}
       isOptionEqualToValue={(option: SCCategoryType, value: SCCategoryType) => value.id === option.id}
