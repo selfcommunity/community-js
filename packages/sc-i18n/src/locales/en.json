@@ -23,6 +23,8 @@
   "ui.composer.media.link.edit": "Edit Links",
   "ui.composer.media.link.add.label": "Link url",
   "ui.composer.media.link.add.help": "Insert a valid url (youtube, vimeo or web page).",
+  "ui.composer.audience.tags.empty": "No tags to address",
+  "ui.composer.audience.tags.label": "Tags",
   "ui.composer.categories.label": "Category",
   "ui.composer.categories.empty": "No category to assign",
   "ui.composer.submit": "Publish",

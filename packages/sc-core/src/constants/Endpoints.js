@@ -182,4 +182,8 @@ export default {
     url: urlReplacer('/api/v2/category/'),
     method: 'GET',
   },
+  ComposerAddressingTagList: {
+    url: urlReplacer('/api/v2/user/tag/tags_to_address_a_contribution/'),
+    method: 'GET',
+  },
 };

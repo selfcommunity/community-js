@@ -95,6 +95,7 @@ const classes = {
   avatar: `${PREFIX}-avatar`,
   content: `${PREFIX}-content`,
   mediaContent: `${PREFIX}-mediaContent`,
+  audienceContent: `${PREFIX}-audienceContent`,
   block: `${PREFIX}-block`,
   editor: `${PREFIX}-editor`,
   divider: `${PREFIX}-divider`,
@@ -149,7 +150,7 @@ const Root = styled(Dialog, {
     position: 'relative',
     overflowY: 'visible'
   },
-  [`& .${classes.mediaContent}`]: {
+  [`& .${classes.mediaContent}, & .${classes.audienceContent}`]: {
     minHeight: 300
   },
   [`& .${classes.block}`]: {
@@ -352,7 +353,7 @@ export default function Composer({
           dispatch({type: prop, value: event});
           break;
         case 'audience':
-          dispatch({type: 'multiple', value: {audience: data, addressing: audience === AUDIENCE_ALL ? [] : audience}});
+          data !== null && dispatch({type: 'multiple', value: {audience: data, addressing: audience === AUDIENCE_ALL ? [] : audience}});
           break;
         default:
           dispatch({type: prop, value: target.value});
@@ -515,7 +516,7 @@ export default function Composer({
             </Button>
           </Box>
         </DialogTitle>
-        <DialogContent className={classes.content}>
+        <DialogContent className={classes.audienceContent}>
           <Box sx={{textAlign: 'center'}} className={classes.block}>
             <ToggleButtonGroup value={audience} exclusive onChange={handleChange('audience')}>
               <ToggleButton value={AUDIENCE_ALL} size="small">
@@ -538,7 +539,7 @@ export default function Composer({
           {audience === AUDIENCE_TAG && (
             <Box className={classes.divider}>
               <Box className={classes.block} sx={{textAlign: 'center'}}>
-                <Audience onChange={handleChange('addressing')} defaultValue={addressing} tags={[{id: 0, name: 'zero'}]} />
+                <Audience onChange={handleChange('addressing')} defaultValue={addressing} />
               </Box>
             </Box>
           )}
