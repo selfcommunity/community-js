@@ -131,11 +131,12 @@ export default function ReportingFlagMenu({
    * Perform Flag
    */
   const performFlag = useMemo(
-    () => () => {
+    () => (type) => {
       return http
         .request({
           url: Endpoints.Flag.url({type: feedObjectType, id: obj.id}),
-          method: Endpoints.Flag.method
+          method: Endpoints.Flag.method,
+          data: {flag_type: type}
         })
         .then((res: AxiosResponse<any>) => {
           if (res.status >= 300) {
@@ -171,7 +172,7 @@ export default function ReportingFlagMenu({
   function handleFlag(type) {
     if (obj && !isLoading && !isFlagging && type) {
       setIsFlagging(true);
-      performFlag()
+      performFlag(type)
         .then((data) => {
           setFlagType(type);
           setIsFlagging(false);

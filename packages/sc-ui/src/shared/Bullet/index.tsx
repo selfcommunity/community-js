@@ -13,6 +13,6 @@ const Root = styled('span', {
   transform: 'scale(1.2)'
 }));
 
-export default function Bullet(): JSX.Element {
-  return <Root>•</Root>;
+export default function Bullet(props): JSX.Element {
+  return <Root {...props}>•</Root>;
 }

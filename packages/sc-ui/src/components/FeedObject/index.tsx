@@ -2,7 +2,7 @@ import React from 'react';
 import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import {Avatar, Box, CardActions, CardHeader, Collapse, Grid, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
+import {Avatar, Box, Button, CardActions, CardHeader, Collapse, Grid, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
 import FeedObjectSkeleton from '../Skeleton/FeedObjectSkeleton';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import TimeAgo from 'timeago-react';
@@ -114,12 +114,13 @@ export default function FeedObject({
                   {obj.summary}
                   <Box component="span" sx={{display: 'flex', justifyContent: 'flex-start', p: '2px'}}>
                     <Grid component="span" item={true} sm="auto" container direction="row" alignItems="center">
-                      <AccessTimeIcon />
+                      <AccessTimeIcon sx={{paddingRight: '2px'}} />
                       <TimeAgo datetime={obj.added_at} />
+                      <Bullet sx={{paddingLeft: '4px', paddingTop: '1px'}} />
+                      <Button variant={'text'} sx={{marginTop: '-1px'}}>
+                        Comment
+                      </Button>
                     </Grid>
-                    <Link component="button" variant="body1" underline="none" sx={{marginLeft: '10px'}}>
-                      Comment
-                    </Link>
                   </Box>
                 </React.Fragment>
               }
