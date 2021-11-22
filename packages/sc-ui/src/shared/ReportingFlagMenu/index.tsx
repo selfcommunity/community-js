@@ -15,6 +15,7 @@ import CentralProgress from '../CentralProgress';
 const PREFIX = 'SCFeedObjectReportMenu';
 
 const classes = {
+  button: `${PREFIX}-button`,
   popper: `${PREFIX}-popper`,
   paper: `${PREFIX}-paper`,
   footer: `${PREFIX}-footer`,
@@ -167,7 +168,7 @@ export default function ReportingFlagMenu({
    * Perform contribute flagging by authenticated user
    * @param type
    */
-  function flag(type) {
+  function handleFlag(type) {
     if (obj && !isLoading && !isFlagging && type) {
       setIsFlagging(true);
       performFlag()
@@ -233,7 +234,7 @@ export default function ReportingFlagMenu({
     return REPORTS.map((flag, index) => (
       <MenuItem key={index} className={classes.item} disabled={isFlagging}>
         <ListItemIcon classes={{root: classes.selectedIcon}}>{flagType === flag && <SelectedIcon color="secondary" />}</ListItemIcon>
-        <ListItemText primary={getFlagName(flag)} onClick={() => flag(flag)} classes={{root: classes.itemText}} />
+        <ListItemText primary={getFlagName(flag)} onClick={() => handleFlag(flag)} classes={{root: classes.itemText}} />
       </MenuItem>
     ));
   }
@@ -241,13 +242,13 @@ export default function ReportingFlagMenu({
   return (
     <React.Fragment>
       <IconButton
-        aria-label="settings"
         ref={(ref) => {
           popperRef.current = ref;
         }}
         aria-haspopup="true"
         onClick={handleOpen}
-        size="large">
+        className={classes.button}
+        size="medium">
         <MoreVertIcon />
       </IconButton>
       <Root open={open} anchorEl={popperRef.current} role={undefined} transition className={classes.popper} placement="bottom-start">
