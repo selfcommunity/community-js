@@ -20,6 +20,7 @@ import PublicIcon from '@mui/icons-material/PublicOutlined';
 import TagIcon from '@mui/icons-material/LabelOutlined';
 import BackIcon from '@mui/icons-material/ArrowBackOutlined';
 import VideoIcon from '@mui/icons-material/PlayCircleOutlineOutlined';
+import PollIcon from '@mui/icons-material/BarChartOutlined';
 import {
   Avatar,
   Box,
@@ -654,6 +655,11 @@ export default function Composer({
             {preferences[SCPreferences.ADDONS_VIDEO_UPLOAD_ENABLED] && (
               <IconButton aria-label="add video" size="medium">
                 <VideoIcon />
+              </IconButton>
+            )}
+            {preferences[SCPreferences.ADDONS_POLLS_ENABLED] && (
+              <IconButton aria-label="add poll" size="medium">
+                <PollIcon onClick={handleChangeView(POLL_VIEW)} />
               </IconButton>
             )}
           </Typography>
