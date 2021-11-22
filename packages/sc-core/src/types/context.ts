@@ -197,7 +197,7 @@ export interface SCRoutingContextType {
   /**
    * Routes
    */
-  url?: (string) => string;
+  url?: (string, object) => string;
 }
 
 /**

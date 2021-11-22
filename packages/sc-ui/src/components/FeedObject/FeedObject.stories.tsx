@@ -12,8 +12,8 @@ export default {
     id: {
       control: {type: 'number'},
       description: 'FeedObject Id',
-      defaultValue: 7605,
-      table: {defaultValue: {summary: 7605}}
+      defaultValue: 7604,
+      table: {defaultValue: {summary: 7604}}
     },
     feedObjectType: {
       options: [SCFeedObjectTypologyType.POST, SCFeedObjectTypologyType.DISCUSSION, SCFeedObjectTypologyType.STATUS],

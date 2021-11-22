@@ -27,7 +27,7 @@ export default function useSCFetchFeedObject({
 }: {
   id?: number;
   feedObject?: SCFeedObjectType;
-  feedObjectType?: SCFeedObjectTypologyType;
+  feedObjectType: SCFeedObjectTypologyType;
 }) {
   const [obj, setObj] = useState<SCFeedDiscussionType | SCFeedPostType | SCFeedStatusType>(feedObject);
 

@@ -3,6 +3,7 @@ import {SCCategoryType} from './category';
 import {SCContributeLocation} from './location';
 import {SCPollType} from './poll';
 import {SCMediaType} from './media';
+import { SCTagType } from '@selfcommunity/core';
 
 export enum SCFeedObjectTypologyType {
   DISCUSSION = 'discussion',
@@ -179,7 +180,7 @@ export interface SCFeedObjectType {
   /**
    * Tags adderssing
    */
-  addressing: number[];
+  addressing: SCTagType[];
 }
 
 /**

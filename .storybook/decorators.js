@@ -35,7 +35,7 @@ const withProvider = (Story, context) => {
         refreshTokenCallback:
           context.globals.session !== 'Cookie' ? refreshToken(context) : null,
       },
-      theme: {
+      /* theme: {
         palette: {
           primary: {
             main: '#1cd43a'
@@ -44,7 +44,7 @@ const withProvider = (Story, context) => {
             main: '#5b63ab'
           }
         }
-      }
+      } */
     };
 
     return (

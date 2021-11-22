@@ -27,5 +27,13 @@
   "ui.composer.categories.empty": "No category to assign",
   "ui.composer.submit": "Publish",
 
-  "ui.editor.placeholder": "Write your text..."
+  "ui.editor.placeholder": "Write your text...",
+
+  "ui.reportingMenu.title": "Questo contenuto è:",
+  "ui.reportingMenu.spam": "Spam",
+  "ui.reportingMenu.aggressive": "Aggressivo",
+  "ui.reportingMenu.vulgar": "Volgare",
+  "ui.reportingMenu.poorContent": "Scadente",
+  "ui.reportingMenu.offtopic": "Fuori tema",
+  "ui.reportingMenu.footer": "La segnalazione è anonima e deve essere conforme al regolamento."
 }

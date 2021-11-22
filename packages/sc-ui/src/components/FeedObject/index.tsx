@@ -2,16 +2,18 @@ import React from 'react';
 import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import {Avatar, Box, CardHeader, Collapse, Grid, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
+import {Avatar, Box, CardActions, CardHeader, Collapse, Grid, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
 import FeedObjectSkeleton from '../Skeleton/FeedObjectSkeleton';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import TimeAgo from 'timeago-react';
 import DateTimeAgo from '../../shared/DateTimeAgo';
 import Bullet from '../../shared/Bullet';
-import UserTags from '../../shared/UserTags';
+import Tags from '../../shared/Tags';
 import Medias from './Medias';
-import ReportingFlagMenu from '../ReportingFlagMenu';
+import ReportingFlagMenu from '../../shared/ReportingFlagMenu';
 import {SCFeedObjectType, SCFeedObjectTypologyType, Link, useSCFetchFeedObject} from '@selfcommunity/core';
+import Actions from './Actions';
+import WorldIcon from '@mui/icons-material/Public';
 
 const PREFIX = 'SCFeedObject';
 
@@ -58,7 +60,7 @@ const Root = styled(Card, {
   [`& .${classes.tag}`]: {
     display: 'inline-block',
     position: 'relative',
-    top: 5
+    top: 6
   },
   '& .MuiSvgIcon-root': {
     width: '0.7em',
@@ -155,14 +157,12 @@ export default function FeedObject({
                 <React.Fragment>
                   <DateTimeAgo date={obj.last_activity_at} />
                   <Bullet />
-                  {
-                    <div className={classes.tag}>
-                      <UserTags user={obj.author} />
-                    </div>
-                  }
+                  <div className={classes.tag}>
+                    {obj.addressing.length > 0 ? <Tags tags={obj.addressing} /> : <WorldIcon color="disabled" fontSize="small" />}
+                  </div>
                 </React.Fragment>
               }
-              action={<ReportingFlagMenu object={obj} />}
+              action={<ReportingFlagMenu feedObject={obj} feedObjectType={feedObjectType} />}
             />
             <CardContent classes={{root: classes.content}}>
               {'title' in obj && (
@@ -173,6 +173,9 @@ export default function FeedObject({
               <Medias medias={obj.medias} />
               <Typography variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: obj.summary}}></Typography>
             </CardContent>
+            <CardActions>
+              <Actions feedObject={obj} feedObjectType={feedObjectType} />
+            </CardActions>
           </React.Fragment>
         ) : (
           <FeedObjectSkeleton type={type} elevation={0} />

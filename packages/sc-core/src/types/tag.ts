@@ -11,7 +11,7 @@ export interface SCTagType {
   /**
    * The type of the tag (unique together name).
    */
-  type: string;
+  type?: string;
 
   /**
    * The name of the tag (unique together type).
@@ -21,7 +21,7 @@ export interface SCTagType {
   /**
    * Short description of the tag.
    */
-  description?: string;
+  description: string;
 
   /**
    * Hexadecimal format color code with prefix '#'.
@@ -31,22 +31,22 @@ export interface SCTagType {
   /**
    * Tag publicly visible.
    */
-  visible: boolean;
+  visible?: boolean;
 
   /**
    * The tag has a visibility boost.
    */
-  visibility_boost: boolean;
+  visibility_boost?: boolean;
 
   /**
    * Creation date time.
    */
-  created_at: Date;
+  created_at?: string;
 
   /**
    * Tag active or not
    */
-  active: boolean;
+  active?: boolean;
 
   /**
    * Tag deleted or not

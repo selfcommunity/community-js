@@ -6,22 +6,28 @@ import {SCTagType, useSCFetchTag} from '@selfcommunity/core';
 
 const PREFIX = 'SCTagChip';
 
+const classes = {
+  label: `${PREFIX}-label`,
+  main: `${PREFIX}-main`,
+  ellipsis: `${PREFIX}-ellipsis`
+};
+
 const Root = styled('span', {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => [styles.root]
 })(({theme}) => ({
-  mainChip: {
+  [`& .${classes.main}`]: {
     marginTop: theme.spacing(1),
     marginRight: theme.spacing(1),
     '&:first-of-type': {
       marginLeft: 0
     }
   },
-  chipEllipsis: {
+  [`& .${classes.ellipsis}`]: {
     maxWidth: 120
   },
-  label: {
+  [`& .${classes.label}`]: {
     fontSize: '14px',
     paddingLeft: 12,
     paddingRight: 12,
@@ -32,25 +38,20 @@ const Root = styled('span', {
 }));
 
 export default function TagChip({
-  id = null,
   tag = null,
   onClick = null,
-  ellipsed = null,
+  ellipsis = null,
   ...rest
 }: {
-  id?: number;
   tag?: SCTagType;
-  onClick?: (res: any) => void;
-  ellipsed?: boolean;
+  onClick?: (id: number) => void;
+  ellipsis?: boolean;
   [p: string]: any;
 }): JSX.Element {
-  const {scTag, setSCTag} = useSCFetchTag({id, tag});
-  const {classes} = rest;
-
   /**
    * Handle click on tagChip
    */
-  function handleClick(id) {
+  function handleClick(id: number): void {
     onClick(id);
   }
 
@@ -59,16 +60,14 @@ export default function TagChip({
   }
 
   return (
-    <Fragment>
+    <Root {...rest}>
       <Chip
-        ref={this.ref}
         size="small"
-        classes={{labelSmall: classes.label, root: classNames(classes.mainChip, {[classes.chipEllipsis]: ellipsed})}}
-        color="primary"
-        style={{backgroundColor: `${tag.color}`}}
-        onClick={this.handleClick ? () => this.handleClick(tag.id) : null}
-        {...rest}
+        classes={{labelSmall: classes.label, root: classNames(classes.main, {[classes.ellipsis]: ellipsis})}}
+        sx={{backgroundColor: `${tag.color}`, color: (theme) => theme.palette.getContrastText(tag.color)}}
+        onClick={handleClick ? () => handleClick(tag.id) : null}
+        label={tag.name}
       />
-    </Fragment>
+    </Root>
   );
 }

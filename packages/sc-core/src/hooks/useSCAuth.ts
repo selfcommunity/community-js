@@ -85,7 +85,7 @@ function stateInitializer(session: SCSessionType): any {
  */
 export default function useAuth(initialSession: SCSessionType) {
   const [state, dispatch] = useReducer(authReducer, {}, () => stateInitializer(initialSession));
-  let authInterceptor = useRef(null);;
+  let authInterceptor = useRef(null);
   let isSessionRefreshing = useRef(false);
   let failedQueue = useRef([]);
 

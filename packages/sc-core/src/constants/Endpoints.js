@@ -30,6 +30,17 @@ export default {
     method: 'GET',
   },
   /**
+   * Reporting Flag Endpoints
+   */
+  FlagStatus: {
+    url: urlReplacer('/api/v2/$(type)/$(id)/flag/status/'),
+    method: 'GET',
+  },
+  Flag: {
+    url: urlReplacer('/api/v2/$(type)/$(id)/flag/'),
+    method: 'POST',
+  },
+  /**
    * Categories Endpoints
    */
   CategoryList: {
@@ -135,6 +146,17 @@ export default {
   },
   Platform: {
     url: urlReplacer('/api/v2/user/me/platform_url'),
+    method: 'GET',
+  },
+  /**
+   * Votes
+   */
+  Vote: {
+    url: urlReplacer('/api/v2/$(type)/$(id)/vote/'),
+    method: 'POST',
+  },
+  VotesList: {
+    url: urlReplacer('/api/v2/$(type)/$(id)/vote/'),
     method: 'GET',
   },
   /**

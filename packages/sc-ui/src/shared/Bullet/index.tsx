@@ -8,11 +8,9 @@ const Root = styled('span', {
   slot: 'Root',
   overridesResolver: (props, styles) => [styles.root]
 })(() => ({
-  root: {
-    display: 'inline-block',
-    margin: '0 4px',
-    transform: 'scale(1.2)'
-  }
+  display: 'inline-block',
+  margin: '0 4px',
+  transform: 'scale(1.2)'
 }));
 
 export default function Bullet(): JSX.Element {

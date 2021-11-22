@@ -256,8 +256,8 @@ export default function GridImages({
           classes={{root: classNames(classes.border, classes.heightThree, classes.background, {[classes.gallery]: gallery})}}
           onClick={() => openPreviewImage(conditionalRender ? 1 : 2)}
           style={{background: `url(${getImageUrl(conditionalRender ? images[1] : images[2])})`}}>
-          {this.renderOverlay(conditionalRender ? 1 : 2)}
-          {this.renderTitle(images[1])}
+          {renderOverlay(conditionalRender ? 1 : 2)}
+          {renderTitle(images[1])}
         </Grid>
         <Grid
           item
