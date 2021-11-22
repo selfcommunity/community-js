@@ -18,6 +18,7 @@ import {SCEmbedType} from './embed';
 import {SCMediaType} from './media';
 import {SCContributeLocation} from './location';
 import {SCPollChoiceType, SCPollType} from './poll';
+import {SCCommentType} from './comment';
 import {
   SCFeedUnitType,
   SCFeedUnitActivityType,
@@ -60,4 +61,5 @@ export {
   SCFeedStatusType,
   SCFeedObjectTypologyType,
   SCFeedUnitActivityTypologyType,
+  SCCommentType,
 };
