@@ -16,7 +16,7 @@ import {SCTagType} from './tag';
 import {SCCategoryType} from './category';
 import {SCEmbedType} from './embed';
 import {SCMediaType} from './media';
-import {SCContributeLocation} from './location';
+import {SCContributeLocation, SCLocalityType} from './location';
 import {SCPollChoiceType, SCPollType} from './poll';
 import {SCCommentType} from './comment';
 import {
@@ -51,6 +51,7 @@ export {
   SCEmbedType,
   SCMediaType,
   SCContributeLocation,
+  SCLocalityType,
   SCPollChoiceType,
   SCPollType,
   SCFeedUnitType,

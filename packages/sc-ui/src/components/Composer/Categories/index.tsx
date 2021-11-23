@@ -111,6 +111,10 @@ export default function ({
     }
   }, [open]);
 
+  useEffect(() => {
+    onChange && onChange(value);
+  }, [value]);
+
   // Handlers
 
   const handleOpen = () => {
@@ -130,7 +134,6 @@ export default function ({
       newValue = value;
     }
     setValue(newValue);
-    onChange && onChange(newValue);
   };
 
   // Render

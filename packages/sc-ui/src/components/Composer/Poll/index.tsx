@@ -70,15 +70,15 @@ const DEFAULT_POLL = {
   choices: [{...DEFAULT_CHOICE}, {...DEFAULT_CHOICE}]
 };
 
-export default ({poll = null, onChange}: {poll?: any; onChange: (poll: any) => void}): JSX.Element => {
-  poll = poll || {...DEFAULT_POLL};
+export default ({value = null, onChange}: {value?: any; onChange: (value: any) => void}): JSX.Element => {
+  value = value || {...DEFAULT_POLL};
 
   // STATE
-  const [title, setTitle] = useState<string>(poll.title);
-  const [multiple, setMultiple] = useState<boolean>(poll.multiple_choices);
-  const [expiration, setExpiration] = React.useState<Date | null>(poll.expiration_at);
+  const [title, setTitle] = useState<string>(value.title);
+  const [multiple, setMultiple] = useState<boolean>(value.multiple_choices);
+  const [expiration, setExpiration] = React.useState<Date | null>(value.expiration_at);
 
-  const _choicesInitialState = [...poll.choices];
+  const _choicesInitialState = [...value.choices];
   while (_choicesInitialState.length < COMPOSER_POLL_MIN_CHOICES) {
     _choicesInitialState.push({...DEFAULT_CHOICE});
   }

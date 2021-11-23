@@ -197,4 +197,8 @@ export default {
     url: urlReplacer('/api/v2/user/tag/tags_to_address_a_contribution/'),
     method: 'GET',
   },
+  ComposerLocalitySearch: {
+    url: urlReplacer('/api/v2/locality/search/'),
+    method: 'GET',
+  },
 };

@@ -21,6 +21,7 @@ import TagIcon from '@mui/icons-material/LabelOutlined';
 import BackIcon from '@mui/icons-material/ArrowBackOutlined';
 import VideoIcon from '@mui/icons-material/PlayCircleOutlineOutlined';
 import PollIcon from '@mui/icons-material/BarChartOutlined';
+import LocationIcon from '@mui/icons-material/AddLocationAltOutlined';
 import {
   Avatar,
   Box,
@@ -56,6 +57,7 @@ import Editor from '../Editor';
 import {SCComposerMediaActionType} from '../../types/composer';
 import {Document, Image, Link} from './MediaAction';
 import Poll from './Poll';
+import Location from './Location';
 
 const DialogTransition = forwardRef(function Transition(
   props: TransitionProps & {
@@ -99,6 +101,7 @@ const classes = {
   content: `${PREFIX}-content`,
   mediaContent: `${PREFIX}-mediaContent`,
   audienceContent: `${PREFIX}-audienceContent`,
+  locationContent: `${PREFIX}-locationContent`,
   block: `${PREFIX}-block`,
   editor: `${PREFIX}-editor`,
   divider: `${PREFIX}-divider`,
@@ -154,7 +157,7 @@ const Root = styled(Dialog, {
     position: 'relative',
     overflowY: 'visible'
   },
-  [`& .${classes.mediaContent}, & .${classes.audienceContent}`]: {
+  [`& .${classes.mediaContent}, & .${classes.audienceContent}, & .${classes.locationContent}`]: {
     minHeight: 300
   },
   [`& .${classes.block}`]: {
@@ -216,6 +219,7 @@ export const VIDEOS_VIEW = 'videos';
 export const DOCUMENTS_VIEW = 'documents';
 export const LINKS_VIEW = 'links';
 export const POLL_VIEW = 'poll';
+export const LOCATION_VIEW = 'location';
 
 const AUDIENCE_ALL = 'all';
 const AUDIENCE_TAG = 'tag';
@@ -240,7 +244,8 @@ const COMPOSER_INITIAL_STATE = {
   addressing: [],
   addressingError: null,
   medias: [],
-  poll: null
+  poll: null,
+  location: null
 };
 
 const reducer = (state, action) => {
@@ -285,12 +290,12 @@ export default function Composer({
 
   // State variables
   const [fades, setFades] = useState({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [_view, setView] = useState(view);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [_view, setView] = useState<string>(view);
   const [composerTypes, setComposerTypes] = useState([]);
 
   const [state, dispatch] = useReducer(reducer, {...COMPOSER_INITIAL_STATE, open, view});
-  const {type, title, titleError, text, categories, addressing, audience, medias, poll} = state;
+  const {type, title, titleError, text, categories, addressing, audience, medias, poll, location} = state;
 
   /*
    * Compute preferences
@@ -351,9 +356,10 @@ export default function Composer({
   const handleChange =
     (prop: string) =>
     (event: SyntheticEvent, data?: object): void => {
-      const target = event.target as HTMLInputElement;
+      let target = null;
       switch (prop) {
         case 'title':
+          target = event.target as HTMLInputElement;
           dispatch({
             type: 'multiple',
             value: {
@@ -368,13 +374,14 @@ export default function Composer({
         case 'categories':
         case 'addressing':
         case 'poll':
-          console.log(event);
+        case 'location':
           dispatch({type: prop, value: event});
           break;
         case 'audience':
           data !== null && dispatch({type: 'multiple', value: {audience: data, addressing: audience === AUDIENCE_ALL ? [] : audience}});
           break;
         default:
+          target = event.target as HTMLInputElement;
           dispatch({type: prop, value: target.value});
           break;
       }
@@ -420,14 +427,23 @@ export default function Composer({
   };
 
   const handleSubmit = (event: SyntheticEvent): void => {
-    const data = {
+    const data: any = {
       title,
       text,
       addressing,
       medias: medias.map((m) => m.id),
-      categories: categories.map((c) => c.id),
-      poll
+      categories: categories.map((c) => c.id)
     };
+    if (preferences[SCPreferences.ADDONS_POLLS_ENABLED] && poll) {
+      data.poll = poll;
+    }
+    if (preferences[SCPreferences.ADDONS_POST_GEOLOCATION_ENABLED] && location) {
+      data.location = {
+        location: location.full_address,
+        lat: location.lat,
+        lng: location.lng
+      };
+    }
     setIsSubmitting(true);
     http
       .request({
@@ -608,6 +624,61 @@ export default function Composer({
     };
   };
 
+  const renderPollView: Function = () => {
+    return (
+      <React.Fragment>
+        <DialogTitle className={classes.title}>
+          <Typography component="div">
+            <IconButton onClick={handleChangeView(MAIN_VIEW)} size="small">
+              <BackIcon />
+            </IconButton>
+            <FormattedMessage id="ui.composer.poll.title" defaultMessage="ui.composer.poll.title" />
+          </Typography>
+          <Box>
+            <Avatar className={classes.avatar} src={scAuthContext.user.avatar}></Avatar>
+          </Box>
+          <Stack spacing={2} direction="row">
+            <Button onClick={handleDeletePoll} variant="outlined">
+              <FormattedMessage id="ui.composer.delete" defaultMessage="ui.composer.delete" />
+            </Button>
+            <Button onClick={handleChangeView(MAIN_VIEW)} variant="outlined">
+              <FormattedMessage id="ui.composer.done" defaultMessage="ui.composer.done" />
+            </Button>
+          </Stack>
+        </DialogTitle>
+        <DialogContent className={classes.content}>
+          <Poll onChange={handleChange('poll')} value={poll} />
+        </DialogContent>
+      </React.Fragment>
+    );
+  };
+
+  const renderLocationView: Function = () => {
+    return (
+      <React.Fragment>
+        <DialogTitle className={classes.title}>
+          <Typography component="div">
+            <IconButton onClick={handleChangeView(MAIN_VIEW)} size="small">
+              <BackIcon />
+            </IconButton>
+            <FormattedMessage id="ui.composer.location.title" defaultMessage="ui.composer.location.title" />
+          </Typography>
+          <Box>
+            <Avatar className={classes.avatar} src={scAuthContext.user.avatar}></Avatar>
+          </Box>
+          <Box>
+            <Button onClick={handleChangeView(MAIN_VIEW)} variant="outlined">
+              <FormattedMessage id="ui.composer.done" defaultMessage="ui.composer.done" />
+            </Button>
+          </Box>
+        </DialogTitle>
+        <DialogContent className={classes.locationContent}>
+          <Location onChange={handleChange('location')} defaultValue={location} />
+        </DialogContent>
+      </React.Fragment>
+    );
+  };
+
   const renderMainView: Function = () => {
     return (
       <React.Fragment>
@@ -687,12 +758,17 @@ export default function Composer({
               </IconButton>
             )}
             {preferences[SCPreferences.ADDONS_POLLS_ENABLED] && (
-              <IconButton aria-label="add poll" size="medium" color={poll ? 'primary' : 'default'}>
+              <IconButton aria-label="add poll" color={poll ? 'primary' : 'default'} disabled={isSubmitting}>
                 <PollIcon onClick={handleChangeView(POLL_VIEW)} />
               </IconButton>
             )}
           </Typography>
           <Typography align="right">
+            {preferences[SCPreferences.ADDONS_POST_GEOLOCATION_ENABLED] && (
+              <IconButton disabled={isSubmitting} onClick={handleChangeView(LOCATION_VIEW)} color={location !== null ? 'primary' : 'default'}>
+                <LocationIcon />
+              </IconButton>
+            )}
             <IconButton disabled={isSubmitting} onClick={handleChangeView(AUDIENCE_VIEW)}>
               {addressing.length > 0 ? <TagIcon /> : <PublicIcon />}
             </IconButton>
@@ -701,35 +777,6 @@ export default function Composer({
             </LoadingButton>
           </Typography>
         </DialogActions>
-      </React.Fragment>
-    );
-  };
-
-  const renderPollView: Function = () => {
-    return (
-      <React.Fragment>
-        <DialogTitle className={classes.title}>
-          <Typography component="div">
-            <IconButton onClick={handleChangeView(MAIN_VIEW)} size="small">
-              <BackIcon />
-            </IconButton>
-            <FormattedMessage id="ui.composer.poll.title" defaultMessage="ui.composer.poll.title" />
-          </Typography>
-          <Box>
-            <Avatar className={classes.avatar} src={scAuthContext.user.avatar}></Avatar>
-          </Box>
-          <Stack spacing={2} direction="row">
-            <Button onClick={handleDeletePoll} variant="outlined">
-              <FormattedMessage id="ui.composer.delete" defaultMessage="ui.composer.delete" />
-            </Button>
-            <Button onClick={handleChangeView(MAIN_VIEW)} variant="outlined">
-              <FormattedMessage id="ui.composer.done" defaultMessage="ui.composer.done" />
-            </Button>
-          </Stack>
-        </DialogTitle>
-        <DialogContent className={classes.content}>
-          <Poll onChange={handleChange('poll')} poll={poll} />
-        </DialogContent>
       </React.Fragment>
     );
   };
@@ -744,6 +791,9 @@ export default function Composer({
       break;
     case AUDIENCE_VIEW:
       child = renderAudienceView;
+      break;
+    case LOCATION_VIEW:
+      child = renderLocationView;
       break;
     default:
       const media = mediaActions.find((mv) => mv.name === _view);
