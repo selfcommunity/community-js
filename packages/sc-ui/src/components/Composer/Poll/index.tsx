@@ -1,5 +1,5 @@
 import React, {forwardRef, useEffect, useState} from 'react';
-import {Box, Button, Checkbox, Divider, FormControlLabel, FormGroup, IconButton, TextField} from '@mui/material';
+import {Box, Button, Checkbox, Divider, FormControlLabel, FormGroup, IconButton, TextField, Tooltip, Typography} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
@@ -9,6 +9,14 @@ import {ReactSortable} from 'react-sortablejs';
 import InputAdornment from '@mui/material/InputAdornment';
 import {DatePicker, LocalizationProvider} from '@mui/lab';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import {COMPOSER_POLL_MIN_CHOICES, COMPOSER_POLL_MIN_CLOSE_DATE_DELTA, COMPOSER_POLL_TITLE_MAX_LENGTH} from '../../../constants/Composer';
+import itLocale from 'date-fns/locale/it';
+import enLocale from 'date-fns/locale/en-US';
+
+const localeMap = {
+  en: enLocale,
+  it: itLocale
+};
 
 const PREFIX = 'SCComposerPoll';
 
@@ -69,14 +77,19 @@ export default ({poll = null, onChange}: {poll?: any; onChange: (poll: any) => v
   const [title, setTitle] = useState<string>(poll.title);
   const [multiple, setMultiple] = useState<boolean>(poll.multiple_choices);
   const [expiration, setExpiration] = React.useState<Date | null>(poll.expiration_at);
-  const [choices, setChoices] = useState([...poll.choices]);
+
+  const _choicesInitialState = [...poll.choices];
+  while (_choicesInitialState.length < COMPOSER_POLL_MIN_CHOICES) {
+    _choicesInitialState.push({...DEFAULT_CHOICE});
+  }
+  const [choices, setChoices] = useState(_choicesInitialState);
 
   // INTL
   const intl = useIntl();
 
   // Component update
   useEffect(() => {
-    onChange && onChange({title, expiration_at: expiration, multiple_choices: multiple, choices});
+    onChange && onChange({title, expiration_at: expiration, multiple_choices: multiple, choices: choices.filter((c) => c.choice.length > 0)});
   }, [title, multiple, expiration, choices]);
 
   // HANDLERS
@@ -112,6 +125,9 @@ export default ({poll = null, onChange}: {poll?: any; onChange: (poll: any) => v
     };
   };
 
+  const minDate = new Date();
+  minDate.setDate(minDate.getDate() + COMPOSER_POLL_MIN_CLOSE_DATE_DELTA);
+
   return (
     <Root>
       <Box className={classes.title}>
@@ -121,6 +137,9 @@ export default ({poll = null, onChange}: {poll?: any; onChange: (poll: any) => v
           value={title}
           onChange={handleChangeTitle}
           fullWidth
+          InputProps={{
+            endAdornment: <Typography variant="body2">{COMPOSER_POLL_TITLE_MAX_LENGTH - title.length}</Typography>
+          }}
         />
       </Box>
       <Box className={classes.choices}>
@@ -140,9 +159,20 @@ export default ({poll = null, onChange}: {poll?: any; onChange: (poll: any) => v
                 ),
                 endAdornment: (
                   <InputAdornment position="end">
-                    <IconButton onClick={handleDeleteChoice(index)}>
-                      <DeleteIcon />
-                    </IconButton>
+                    <Tooltip
+                      title={
+                        choices.length <= COMPOSER_POLL_MIN_CHOICES ? (
+                          <FormattedMessage id="ui.composer.poll.choice.delete.disabled" defaultMessage="ui.composer.poll.choice.delete.disabled" />
+                        ) : (
+                          <FormattedMessage id="ui.composer.poll.choice.delete" defaultMessage="ui.composer.poll.choice.delete" />
+                        )
+                      }>
+                      <span>
+                        <IconButton onClick={handleDeleteChoice(index)} disabled={choices.length <= COMPOSER_POLL_MIN_CHOICES}>
+                          <DeleteIcon />
+                        </IconButton>
+                      </span>
+                    </Tooltip>
                   </InputAdornment>
                 )
               }}
@@ -162,12 +192,13 @@ export default ({poll = null, onChange}: {poll?: any; onChange: (poll: any) => v
           control={<Checkbox checked={multiple} onChange={handleChangeMultiple} />}
           label={<FormattedMessage id="ui.composer.poll.multiple" defaultMessage="ui.composer.poll.multiple" />}
         />
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <LocalizationProvider dateAdapter={AdapterDateFns} locale={localeMap[intl.locale]}>
           <DatePicker
             label={<FormattedMessage id="ui.composer.poll.expiration" defaultMessage="ui.composer.poll.expiration" />}
             value={expiration}
             onChange={handleChangeExpiration}
             renderInput={(params) => <TextField {...params} />}
+            minDate={minDate}
           />
         </LocalizationProvider>
       </FormGroup>

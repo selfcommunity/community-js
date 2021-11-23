@@ -6,3 +6,6 @@ export const COMPOSER_TYPES = {
 };
 
 export const COMPOSER_TITLE_MAX_LENGTH = 160;
+export const COMPOSER_POLL_TITLE_MAX_LENGTH = 160;
+export const COMPOSER_POLL_MIN_CHOICES = 2;
+export const COMPOSER_POLL_MIN_CLOSE_DATE_DELTA = 2;

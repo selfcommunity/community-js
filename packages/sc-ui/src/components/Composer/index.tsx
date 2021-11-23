@@ -36,13 +36,14 @@ import {
   MenuItem,
   Select,
   SelectChangeEvent,
+  Stack,
   TextField,
   ToggleButton,
   ToggleButtonGroup,
   Typography
 } from '@mui/material';
 import {styled} from '@mui/material/styles';
-import {COMPOSER_TITLE_MAX_LENGTH, COMPOSER_TYPE_DISCUSSION, COMPOSER_TYPE_POST} from '../../constants/Composer';
+import {COMPOSER_TITLE_MAX_LENGTH, COMPOSER_TYPE_DISCUSSION, COMPOSER_TYPE_POST, COMPOSER_POLL_MIN_CHOICES} from '../../constants/Composer';
 import {MEDIA_TYPE_DOCUMENT, MEDIA_TYPE_IMAGE, MEDIA_TYPE_LINK, MEDIA_TYPE_VIDEO} from '../../constants/Media';
 import LoadingButton from '@mui/lab/LoadingButton';
 import Audience from './Audience';
@@ -133,7 +134,8 @@ const Root = styled(Dialog, {
       textAlign: 'left'
     },
     '& > div:last-of-type': {
-      textAlign: 'right'
+      textAlign: 'right',
+      display: 'block'
     }
   },
   [`& .${classes.types}`]: {
@@ -319,6 +321,18 @@ export default function Composer({
   };
   setEnabledComposerTypes();
 
+  // CHECKS
+  const hasPoll = () => {
+    return poll && poll.title.length > 0 && poll.choices.length >= COMPOSER_POLL_MIN_CHOICES;
+  };
+
+  const canSubmit = () => {
+    return (
+      (type === COMPOSER_TYPE_DISCUSSION && title.length > 0) ||
+      (type === COMPOSER_TYPE_POST && (stripHtml(text).length > 0 || medias.length > 0 || hasPoll()))
+    );
+  };
+
   /* Handlers */
 
   const handleChangeView = (view) => {
@@ -369,6 +383,11 @@ export default function Composer({
   const handleClose = (event: SyntheticEvent): void => {
     dispatch({type: 'reset'});
     onClose && onClose(event);
+  };
+
+  const handleDeletePoll = (event: React.MouseEvent<HTMLButtonElement>): void => {
+    dispatch({type: 'poll', value: null});
+    setView(MAIN_VIEW);
   };
 
   const handleFadeIn = (obj: string) => {
@@ -507,16 +526,16 @@ export default function Composer({
     return (
       <React.Fragment>
         <DialogTitle className={classes.title}>
-          <Typography align="left" component="div">
+          <Typography component="div">
             <IconButton onClick={handleChangeView(MAIN_VIEW)} size="small">
               <BackIcon />
             </IconButton>
             <FormattedMessage id="ui.composer.audience.title" defaultMessage="ui.composer.audience.title" />
           </Typography>
-          <Box sx={{textAlign: 'center'}}>
+          <Box>
             <Avatar className={classes.avatar} src={scAuthContext.user.avatar}></Avatar>
           </Box>
-          <Box sx={{textAlign: 'right'}}>
+          <Box>
             <Button onClick={handleChangeView(MAIN_VIEW)} variant="outlined">
               <FormattedMessage id="ui.composer.done" defaultMessage="ui.composer.done" />
             </Button>
@@ -559,7 +578,7 @@ export default function Composer({
       return (
         <React.Fragment>
           <DialogTitle className={classes.title}>
-            <Typography align="left" component="div">
+            <Typography component="div">
               <IconButton onClick={handleChangeView(MAIN_VIEW)} size="small">
                 <BackIcon />
               </IconButton>
@@ -655,7 +674,12 @@ export default function Composer({
         <DialogActions className={classes.actions}>
           <Typography align="left">
             {mediaActions.map((action: SCComposerMediaActionType) => (
-              <action.button key={action.name} onClick={handleChangeView(action.name)} disabled={isSubmitting} />
+              <action.button
+                key={action.name}
+                onClick={handleChangeView(action.name)}
+                disabled={isSubmitting}
+                color={medias.filter(action.filter).length > 0 ? 'primary' : 'default'}
+              />
             ))}
             {preferences[SCPreferences.ADDONS_VIDEO_UPLOAD_ENABLED] && (
               <IconButton aria-label="add video" size="medium">
@@ -663,7 +687,7 @@ export default function Composer({
               </IconButton>
             )}
             {preferences[SCPreferences.ADDONS_POLLS_ENABLED] && (
-              <IconButton aria-label="add poll" size="medium">
+              <IconButton aria-label="add poll" size="medium" color={poll ? 'primary' : 'default'}>
                 <PollIcon onClick={handleChangeView(POLL_VIEW)} />
               </IconButton>
             )}
@@ -672,15 +696,7 @@ export default function Composer({
             <IconButton disabled={isSubmitting} onClick={handleChangeView(AUDIENCE_VIEW)}>
               {addressing.length > 0 ? <TagIcon /> : <PublicIcon />}
             </IconButton>
-            <LoadingButton
-              onClick={handleSubmit}
-              color="primary"
-              variant="contained"
-              disabled={
-                (type === COMPOSER_TYPE_DISCUSSION && title.length === 0) ||
-                (type === COMPOSER_TYPE_POST && stripHtml(text).length === 0 && medias.length === 0)
-              }
-              loading={isSubmitting}>
+            <LoadingButton onClick={handleSubmit} color="primary" variant="contained" disabled={!canSubmit()} loading={isSubmitting}>
               <FormattedMessage id="ui.composer.submit" defaultMessage="ui.composer.submit" />
             </LoadingButton>
           </Typography>
@@ -693,20 +709,23 @@ export default function Composer({
     return (
       <React.Fragment>
         <DialogTitle className={classes.title}>
-          <Typography align="left" component="div">
+          <Typography component="div">
             <IconButton onClick={handleChangeView(MAIN_VIEW)} size="small">
               <BackIcon />
             </IconButton>
             <FormattedMessage id="ui.composer.poll.title" defaultMessage="ui.composer.poll.title" />
           </Typography>
-          <Box sx={{textAlign: 'center'}}>
+          <Box>
             <Avatar className={classes.avatar} src={scAuthContext.user.avatar}></Avatar>
           </Box>
-          <Box sx={{textAlign: 'right'}}>
+          <Stack spacing={2} direction="row">
+            <Button onClick={handleDeletePoll} variant="outlined">
+              <FormattedMessage id="ui.composer.delete" defaultMessage="ui.composer.delete" />
+            </Button>
             <Button onClick={handleChangeView(MAIN_VIEW)} variant="outlined">
               <FormattedMessage id="ui.composer.done" defaultMessage="ui.composer.done" />
             </Button>
-          </Box>
+          </Stack>
         </DialogTitle>
         <DialogContent className={classes.content}>
           <Poll onChange={handleChange('poll')} poll={poll} />
