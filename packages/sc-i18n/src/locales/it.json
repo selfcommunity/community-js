@@ -60,7 +60,14 @@
   "ui.reportingMenu.footer": "La segnalazione è anonima e deve essere conforme al regolamento.",
 
   "ui.commentsObject.noComment": "Non ci sono ancora commenti al momento.",
+  "ui.commentsObject.noOtherComment": "Non ci sono altri commenti.",
 
-  "ui.commentObject.like": "Apprezza",
-  "ui.commentObject.reply": "Replica"
+  "ui.commentObject.voteUp": "Apprezza",
+  "ui.commentObject.voteDown": "Non apprezzare",
+  "ui.commentObject.reply": "Replica",
+  "ui.commentObject.votes": "{total, plural, =0 {# Voti} one {# Voto} other {# Voti}}",
+  "ui.commentObject.viewLatestComment": "Vedi {total, plural, =0 {# Comments} one {# Comment} other {# Comments}} precedenti",
+
+  "ui.commentObjectVotesDialog.title": "Voti",
+  "ui.commentObject.noOtherVotes": "Non ci sono altri voti."
 }

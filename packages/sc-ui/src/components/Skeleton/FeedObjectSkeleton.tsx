@@ -50,15 +50,19 @@ export default function FeedObjectSkeleton(props: {type?: FeedObjectComponentTyp
     );
   } else {
     obj = (
-      <ListItem>
-        <ListItemAvatar>
-          <Skeleton animation="wave" variant="circular" width={40} height={40} />
-        </ListItemAvatar>
-        <ListItemText
-          primary={<Skeleton animation="wave" height={10} width={120} style={{marginBottom: 10}} />}
-          secondary={<Skeleton animation="wave" height={10} width={70} style={{marginBottom: 10}} />}
+      <React.Fragment>
+        <CardHeader
+          avatar={<Skeleton animation="wave" variant="circular" width={40} height={40} />}
+          title={<Skeleton animation="wave" height={10} width="80%" style={{marginBottom: 6}} />}
+          subheader={<Skeleton animation="wave" height={10} width="40%" />}
         />
-      </ListItem>
+        <CardContent>
+          <React.Fragment>
+            <Skeleton animation="wave" height={10} style={{marginBottom: 6}} />
+            <Skeleton animation="wave" height={10} width="80%" />
+          </React.Fragment>
+        </CardContent>
+      </React.Fragment>
     );
   }
 

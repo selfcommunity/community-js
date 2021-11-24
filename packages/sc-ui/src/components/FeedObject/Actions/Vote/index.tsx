@@ -263,7 +263,7 @@ export default function Vote({
       return obj.voted ? (
         <VoteFilledIcon fontSize="medium" color={'secondary'} className={classes.inlineVoteButton} />
       ) : (
-        <VoteIcon fontSize="medium" sx={{marginTop: '-1px'}}/>
+        <VoteIcon fontSize="medium" sx={{marginTop: '-1px'}} />
       );
     }
     return (

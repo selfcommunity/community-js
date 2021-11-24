@@ -12,13 +12,26 @@ export default {
     id: {
       control: {type: 'number'},
       description: 'FeedObject Id',
-      defaultValue: 7574,
-      table: {defaultValue: {summary: 7574}}
+      defaultValue: 17,
+      table: {defaultValue: {summary: 17}}
     },
     feedObjectType: {
       options: [SCFeedObjectTypologyType.POST, SCFeedObjectTypologyType.DISCUSSION, SCFeedObjectTypologyType.STATUS],
       control: {type: 'select'},
       description: 'Object type. Used only with args id.'
+    },
+    elevation: {
+      control: {type: 'number'},
+      description: 'Used only if variant="elevation". Shadow depth, corresponds to dp in the spec. It accepts values between 0 and 24 inclusive.',
+      defaultValue: 1,
+      table: {defaultValue: {summary: 1}}
+    },
+    variant: {
+      options: ['elevation', 'outlined'],
+      control: {type: 'select'},
+      description: 'The variant to use. Types: "elevation", "outlined", etc.',
+      defaultValue: 'elevation',
+      table: {defaultValue: {summary: 'elevation'}}
     }
   }
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
@@ -26,7 +39,7 @@ export default {
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const Template: ComponentStory<typeof CommentsObject> = (args) => (
-  <div style={{width: 500}}>
+  <div style={{width: 800}}>
     <CommentsObject {...args} />
   </div>
 );
@@ -34,4 +47,5 @@ const Template: ComponentStory<typeof CommentsObject> = (args) => (
 export const Base = Template.bind({});
 
 Base.args = {
+  feedObjectType: SCFeedObjectTypologyType.DISCUSSION
 };

@@ -4,7 +4,7 @@ import FeedObjectSkeleton from './FeedObjectSkeleton';
 import {FeedObjectComponentType} from '../FeedObject';
 
 export default {
-  title: 'Design System/SC UI/Skeleton/FeedObjectSkeleton',
+  title: 'Design System/SC UI/Skeleton/FeedObject',
   component: FeedObjectSkeleton,
   argTypes: {
     variant: {

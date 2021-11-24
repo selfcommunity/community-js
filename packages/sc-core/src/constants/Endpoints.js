@@ -40,6 +40,10 @@ export default {
     url: urlReplacer('/api/v2/comment/'),
     method: 'GET',
   },
+  CommentVotes: {
+    url: urlReplacer('/api/v2/comment/{id}/vote/'),
+    method: 'GET',
+  },
   /**
    * Reporting Flag Endpoints
    */

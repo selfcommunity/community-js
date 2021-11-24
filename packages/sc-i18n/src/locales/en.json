@@ -60,7 +60,17 @@
   "ui.reportingMenu.footer": "Reporting is anonymous and must be compliant with rules.",
 
   "ui.commentsObject.noComment": "No comments at the moment.",
+  "ui.commentsObject.noOtherComment": "No other comments.",
 
-  "ui.commentObject.like": "Like",
-  "ui.commentObject.reply": "Reply"
+  "ui.commentObject.voteUp": "Like",
+  "ui.commentObject.voteDown": "DisLike",
+  "ui.commentObject.reply": "Reply",
+  "ui.commentObject.votes": "{total, plural, =0 {# Likes} one {# Like} other {# Likes}}",
+  "ui.commentObject.viewLatestComment": "View previous {total, plural, =0 {# Comments} one {# Comment} other {# Comments}} ",
+
+  "ui.commentObjectVotesDialog.title": "Votes",
+  "ui.commentObject.noOtherVotes": "No other votes.",
+
+  "ui.feedObjectVotesDialog.title": "Votes",
+  "ui.commentObject.noOtherVotes": "No other votes."
 }

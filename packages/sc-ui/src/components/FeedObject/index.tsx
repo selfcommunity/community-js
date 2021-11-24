@@ -2,20 +2,7 @@ import React from 'react';
 import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import {
-  Avatar,
-  Box,
-  Button,
-  CardActions,
-  CardHeader,
-  Collapse,
-  Grid,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
-  Tooltip,
-  Typography
-} from '@mui/material';
+import {Avatar, Box, Button, CardActions, CardHeader, Grid, ListItem, ListItemAvatar, ListItemText, Tooltip, Typography} from '@mui/material';
 import FeedObjectSkeleton from '../Skeleton/FeedObjectSkeleton';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import TimeAgo from 'timeago-react';
@@ -24,10 +11,11 @@ import Bullet from '../../shared/Bullet';
 import Tags from '../../shared/Tags';
 import Medias from './Medias';
 import ReportingFlagMenu from '../../shared/ReportingFlagMenu';
-import {SCFeedObjectType, SCFeedObjectTypologyType, Link, useSCFetchFeedObject} from '@selfcommunity/core';
 import Actions from './Actions';
 import WorldIcon from '@mui/icons-material/Public';
 import {defineMessages, useIntl} from 'react-intl';
+import PollObject from './Poll';
+import {SCFeedObjectType, SCFeedObjectTypologyType, Link, useSCFetchFeedObject, SCPollType} from '@selfcommunity/core';
 
 const messages = defineMessages({
   comment: {
@@ -43,7 +31,6 @@ const messages = defineMessages({
 const PREFIX = 'SCFeedObject';
 
 const classes = {
-  root: `${PREFIX}-root`,
   title: `${PREFIX}-title`,
   username: `${PREFIX}-username`,
   category: `${PREFIX}-category`,
@@ -116,6 +103,15 @@ export default function FeedObject({
   const intl = useIntl();
 
   /**
+   * Handle change poll
+   */
+  function handleChangePoll(pollObject: SCPollType) {
+    const newObj = obj;
+    obj['poll'] = pollObject;
+    setObj(newObj);
+  }
+
+  /**
    * Render the obj object
    * Manage variants:
    * SNIPPET, PREVIEW, DETAIL
@@ -166,7 +162,11 @@ export default function FeedObject({
                 </Typography>
               )}
               <Medias medias={obj.medias} />
-              <Typography variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: type === FeedObjectComponentType.PREVIEW ? obj.summary : obj.html}}></Typography>
+              <Typography
+                variant="body2"
+                gutterBottom
+                dangerouslySetInnerHTML={{__html: type === FeedObjectComponentType.PREVIEW ? obj.summary : obj.html}}></Typography>
+              {obj['poll'] && <PollObject pollObject={obj['poll']} onChange={handleChangePoll} elevation={0} />}
             </CardContent>
             <CardActions>
               <Actions feedObject={obj} feedObjectType={feedObjectType} />
@@ -216,7 +216,7 @@ export default function FeedObject({
   }
 
   /**
-   * Render object
+   * Render root object
    */
   return (
     <Root {...rest}>

@@ -13,6 +13,19 @@ export default {
       description: 'CommentObject Id',
       defaultValue: 7604,
       table: {defaultValue: {summary: 7604}}
+    },
+    elevation: {
+      control: {type: 'number'},
+      description: 'Used only if variant="elevation". Shadow depth, corresponds to dp in the spec. It accepts values between 0 and 24 inclusive.',
+      defaultValue: 1,
+      table: {defaultValue: {summary: 1}}
+    },
+    variant: {
+      options: ['elevation', 'outlined'],
+      control: {type: 'select'},
+      description: 'The variant to use. Types: "elevation", "outlined", etc.',
+      defaultValue: 'elevation',
+      table: {defaultValue: {summary: 'elevation'}}
     }
   }
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes

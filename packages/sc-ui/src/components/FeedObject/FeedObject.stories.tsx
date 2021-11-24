@@ -46,7 +46,7 @@ export default {
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const Template: ComponentStory<typeof FeedObject> = (args) => (
-  <div style={{width: 500}}>
+  <div style={{width: 800}}>
     <FeedObject {...args} />
   </div>
 );

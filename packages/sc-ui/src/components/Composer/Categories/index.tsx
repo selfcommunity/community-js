@@ -1,5 +1,4 @@
 import React, {SyntheticEvent, useEffect, useState} from 'react';
-import PropTypes from 'prop-types';
 import {FormattedMessage} from 'react-intl';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField, {TextFieldProps} from '@mui/material/TextField';
