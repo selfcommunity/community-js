@@ -66,23 +66,23 @@ export default function Votes({
    * @return {JSX.Element}
    */
   function renderVotes() {
-    return [
-      <Button variant="text" size="small" disabled={obj.vote_count <= 0} className={classes.btnViewVotes} onClick={handleToggleSharesDialog}>
-        {obj.voted ? (
-          <VoteFilledIcon fontSize="medium" color={'secondary'} className={classes.votes} />
-        ) : (
-          <VoteIcon fontSize="medium" sx={{marginTop: '-1px'}} />
-        )}
-        <Typography variant={'body2'} sx={{marginLeft: (theme) => theme.spacing()}}>
-          {`${intl.formatMessage(messages.votes, {total: obj.vote_count})}`}
-        </Typography>
-      </Button>,
+    return (
       <>
+        <Button variant="text" size="small" disabled={obj.vote_count <= 0} className={classes.btnViewVotes} onClick={handleToggleSharesDialog}>
+          {obj.voted ? (
+            <VoteFilledIcon fontSize="medium" color={'secondary'} className={classes.votes} />
+          ) : (
+            <VoteIcon fontSize="medium" sx={{marginTop: '-1px'}} />
+          )}
+          <Typography variant={'body2'} sx={{marginLeft: (theme) => theme.spacing()}}>
+            {`${intl.formatMessage(messages.votes, {total: obj.vote_count})}`}
+          </Typography>
+        </Button>
         {openVotesDialog && obj.vote_count > 0 && (
           <CommentObjectVotesDialog commentObject={obj} open={openVotesDialog} onClose={handleToggleSharesDialog} />
         )}
       </>
-    ];
+    );
   }
 
   return <Root {...rest}>{renderVotes()}</Root>;

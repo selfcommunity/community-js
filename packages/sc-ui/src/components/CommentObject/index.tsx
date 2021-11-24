@@ -141,8 +141,7 @@ export default function CommentObject({
   }
 
   /**
-   * Handle reply
-   * Open Editor
+   * Handle reply: open Editor
    * @param comment
    */
   function reply(comment) {
@@ -310,8 +309,8 @@ export default function CommentObject({
             )}
           </>
         )}
-        {comment.latest_comments?.map((lc: SCCommentType) => (
-          <React.Fragment key={lc.id}>{renderComment(lc)}</React.Fragment>
+        {comment.latest_comments?.map((lc: SCCommentType, index) => (
+          <React.Fragment key={index}>{renderComment(lc)}</React.Fragment>
         ))}
       </>
     );

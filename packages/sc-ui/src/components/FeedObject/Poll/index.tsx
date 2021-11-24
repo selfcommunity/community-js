@@ -1,6 +1,7 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
+import {SCPollType} from '@selfcommunity/core';
 
 const PREFIX = 'SCPollObject';
 
@@ -20,6 +21,10 @@ const Root = styled(Card, {
 
 export interface PollObjectProps {
   /**
+   * Poll object
+   */
+  pollObject: SCPollType;
+  /**
    * If `false`, the poll is not votable
    * @default false
    */
@@ -35,7 +40,7 @@ export interface PollObjectProps {
   [p: string]: any;
 }
 
-export default function PollObject({pollObject = null, votable = true, ...rest}: PollObjectProps): JSX.Element {
+export default function PollObject({pollObject = null, votable = true, onChange = null, ...rest}: PollObjectProps): JSX.Element {
   /**
    * Render the poll object
    */

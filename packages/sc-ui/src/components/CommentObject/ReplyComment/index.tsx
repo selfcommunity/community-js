@@ -33,18 +33,18 @@ const Root = styled(Card, {
 }));
 
 export default function ReplyCommentObject({
-  id = null,
+  commentObjectId = null,
   commentObject = null,
   onReply = null,
   ...rest
 }: {
-  id?: number;
+  commentObjectId?: number;
   commentObject?: SCCommentType;
   onReply?: (comment) => void;
   [p: string]: any;
 }): JSX.Element {
   const scUser: SCUserContextType = useContext(SCUserContext);
-  const {obj, setObj} = useSCFetchCommentObject({id, commentObject});
+  const {obj, setObj} = useSCFetchCommentObject({id: commentObjectId, commentObject});
   const intl = useIntl();
 
   function renderReply(obj) {
@@ -81,9 +81,5 @@ export default function ReplyCommentObject({
   /**
    * Render object
    */
-  return (
-    <Root elevation={0}>
-      {renderReply(obj)}
-    </Root>
-  );
+  return <Root elevation={0}>{renderReply(obj)}</Root>;
 }

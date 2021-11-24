@@ -1,7 +1,6 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
-import FeedObjectSkeleton from '../Skeleton/FeedObjectSkeleton';
 import {SCFeedObjectType, SCFeedObjectTypologyType, useSCFetchFeedObject, http, Endpoints, Logger} from '@selfcommunity/core';
 import {defineMessages, FormattedMessage} from 'react-intl';
 import {SCOPE_SC_UI} from '../../constants/Errors';
@@ -62,7 +61,7 @@ export default function CommentsObject({
     () => () => {
       return http
         .request({
-          url: next ? next : `${Endpoints.Comments.url()}?${feedObjectType}=${obj.id}&limit=5`,
+          url: next ? next : `${Endpoints.Comments.url()}?${feedObjectType}=${obj.id}&limit=2`,
           method: Endpoints.Comments.method
         })
         .then((res: AxiosResponse<any>) => {
@@ -116,6 +115,10 @@ export default function CommentsObject({
    */
   function openReplyBox(comment) {
     setReplyComment(comment);
+    setTimeout(() => {
+      const element = document.getElementById(`reply-${comment.id}`);
+      element && element.scrollIntoView({behavior: 'smooth'});
+    }, 100);
   }
 
   /**
@@ -149,7 +152,7 @@ export default function CommentsObject({
         dataLength={data.length}
         next={fetchData}
         hasMore={next !== null}
-        loader={<FeedObjectSkeleton elevation={0} />}
+        loader={<CommentObjectSkeleton {...rest} />}
         height={400}
         endMessage={
           <Typography variant="body2" align="center">
@@ -158,19 +161,20 @@ export default function CommentsObject({
             </b>
           </Typography>
         }>
-        {data.map((comment: SCCommentType) => {
-          if (renderComment) {
-            renderComment(comment);
-          }
-          return (
-            <React.Fragment key={comment.id}>
-              <CommentObject commentObject={comment} onReply={openReplyBox} feedObject={obj} feedObjectType={feedObjectType} {...rest} />
-              {replyComment && (replyComment.id === comment.id || replyComment.parent === comment.id) && (
-                <ReplyCommentObject {...rest} onReply={(c) => handleReply(c)} />
-              )}
-            </React.Fragment>
-          );
-        })}
+        {data.map((comment: SCCommentType, index) => (
+          <React.Fragment key={index}>
+            {renderComment ? (
+              renderComment(comment)
+            ) : (
+              <>
+                <CommentObject commentObject={comment} onReply={openReplyBox} feedObject={obj} feedObjectType={feedObjectType} {...rest} />
+                {replyComment && (replyComment.id === comment.id || replyComment.parent === comment.id) && (
+                  <ReplyCommentObject id={`reply-${comment.id}`} {...rest} onReply={(c) => handleReply(c)} />
+                )}
+              </>
+            )}
+          </React.Fragment>
+        ))}
       </InfiniteScroll>
     );
   }
