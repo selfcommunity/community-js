@@ -22,10 +22,13 @@ import BackIcon from '@mui/icons-material/ArrowBackOutlined';
 import VideoIcon from '@mui/icons-material/PlayCircleOutlineOutlined';
 import PollIcon from '@mui/icons-material/BarChartOutlined';
 import LocationIcon from '@mui/icons-material/AddLocationAltOutlined';
+import ErrorIcon from '@mui/icons-material/ErrorOutlineOutlined';
 import {
   Avatar,
+  Badge,
   Box,
   Button,
+  Chip,
   Dialog,
   DialogActions,
   DialogContent,
@@ -106,12 +109,14 @@ const classes = {
   editor: `${PREFIX}-editor`,
   divider: `${PREFIX}-divider`,
   medias: `${PREFIX}-medias`,
+  location: `${PREFIX}-location`,
   mediasActions: `${PREFIX}-mediasActions`,
   sortableMedia: `${PREFIX}-sortableMedia`,
   sortableMediaCover: `${PREFIX}-sortableMediaCover`,
   links: `${PREFIX}-links`,
   actions: `${PREFIX}-actions`,
-  actionInput: `${PREFIX}-actionInput`
+  actionInput: `${PREFIX}-actionInput`,
+  badgeError: `${PREFIX}-badgeError`
 };
 
 const Root = styled(Dialog, {
@@ -172,6 +177,10 @@ const Root = styled(Dialog, {
   [`& .${classes.medias}`]: {
     margin: '0 23px'
   },
+  [`& .${classes.location}`]: {
+    padding: theme.spacing(2),
+    paddingBottom: 0
+  },
   [`& .${classes.mediasActions}`]: {
     position: 'absolute',
     top: theme.spacing(),
@@ -209,6 +218,9 @@ const Root = styled(Dialog, {
   },
   [`& .${classes.actionInput}`]: {
     display: 'none !important'
+  },
+  [`& .${classes.badgeError} .MuiBadge-badge`]: {
+    padding: 0
   }
 }));
 
@@ -273,13 +285,6 @@ export default function Composer({
   onClose?: (event: SyntheticEvent) => void;
   onSuccess?: (res: any) => void;
 }): JSX.Element {
-  // Refs
-  const refs = {
-    images: React.createRef(),
-    videos: React.createRef(),
-    documents: React.createRef()
-  };
-
   // Context
   const scContext: SCContextType = useContext(SCContext);
   const scPrefernces: SCPreferencesContextType = useContext(SCPreferencesContext);
@@ -295,7 +300,7 @@ export default function Composer({
   const [composerTypes, setComposerTypes] = useState([]);
 
   const [state, dispatch] = useReducer(reducer, {...COMPOSER_INITIAL_STATE, open, view});
-  const {type, title, titleError, text, categories, addressing, audience, medias, poll, location} = state;
+  const {type, title, titleError, text, categories, addressing, audience, medias, poll, pollError, location} = state;
 
   /*
    * Compute preferences
@@ -397,6 +402,10 @@ export default function Composer({
     setView(MAIN_VIEW);
   };
 
+  const handleDeleteLocation = (event: React.MouseEvent<HTMLButtonElement>): void => {
+    dispatch({type: 'location', value: null});
+  };
+
   const handleFadeIn = (obj: string) => {
     return (event: SyntheticEvent): void => setFades({...fades, [obj]: true});
   };
@@ -434,7 +443,7 @@ export default function Composer({
       medias: medias.map((m) => m.id),
       categories: categories.map((c) => c.id)
     };
-    if (preferences[SCPreferences.ADDONS_POLLS_ENABLED] && poll) {
+    if (preferences[SCPreferences.ADDONS_POLLS_ENABLED] && hasPoll()) {
       data.poll = poll;
     }
     if (preferences[SCPreferences.ADDONS_POST_GEOLOCATION_ENABLED] && location) {
@@ -453,8 +462,10 @@ export default function Composer({
       })
       .then(onSuccess)
       .catch((error) => {
+        console.log(formatHttpError(error));
         dispatch({type: 'multiple', value: formatHttpError(error)});
-      });
+      })
+      .then(() => setIsSubmitting(false));
   };
 
   /* Renderers */
@@ -647,7 +658,7 @@ export default function Composer({
           </Stack>
         </DialogTitle>
         <DialogContent className={classes.content}>
-          <Poll onChange={handleChange('poll')} value={poll} />
+          <Poll onChange={handleChange('poll')} value={poll} error={pollError} />
         </DialogContent>
       </React.Fragment>
     );
@@ -738,6 +749,11 @@ export default function Composer({
               linksAdornment={renderMediaControls(MEDIA_TYPE_LINK)}
             />
           </Box>
+          {location && (
+            <Box className={classes.location}>
+              <Chip icon={<LocationIcon />} label={location.full_address} onDelete={handleDeleteLocation} />
+            </Box>
+          )}
           <div className={classes.block}>
             <Categories onChange={handleChange('categories')} defaultValue={categories} disabled={isSubmitting} />
           </div>
@@ -758,8 +774,10 @@ export default function Composer({
               </IconButton>
             )}
             {preferences[SCPreferences.ADDONS_POLLS_ENABLED] && (
-              <IconButton aria-label="add poll" color={poll ? 'primary' : 'default'} disabled={isSubmitting}>
-                <PollIcon onClick={handleChangeView(POLL_VIEW)} />
+              <IconButton aria-label="add poll" color={poll ? 'primary' : 'default'} disabled={isSubmitting} onClick={handleChangeView(POLL_VIEW)}>
+                <Badge className={classes.badgeError} badgeContent={pollError ? <ErrorIcon fontSize="small" /> : null} color="error">
+                  <PollIcon />
+                </Badge>
               </IconButton>
             )}
           </Typography>

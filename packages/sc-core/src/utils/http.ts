@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { camelCase } from './string';
+import {camelCase} from './string';
 
 /**
  * Define axios instance
@@ -60,21 +60,27 @@ export function defaultError(error: {request?: any; message?: any}): void {
   }
 }
 
-export function formatHttpError(error) {
+const formatError = (error) => {
   const errors: any = {};
-  if (error.response && error.response.data && typeof error.response.data === 'object' && error.response.data.errors) {
-    if (Array.isArray(error.response.data.errors)) {
-      for (let i = 0; i < error.response.data.errors.length; i++) {
-        const err = error.response.data.errors[i];
-        if (err.field) {
-          errors[`${camelCase(err.field)}Error`] = Array.isArray(err.messages) ? err.messages[0].message : err.messages;
-        } else {
-          errors.error = err.message;
-        }
+  if (Array.isArray(error)) {
+    for (let i = 0; i < error.length; i++) {
+      const err = error[i];
+      if (err.field) {
+        errors[`${camelCase(err.field)}Error`] = Array.isArray(err.messages) ? formatError(err.messages) : err.messages;
+      } else {
+        errors.error = err.message;
       }
-    } else {
-      errors.error = error.response.data.errors;
     }
+  } else {
+    errors.error = error.errors;
+  }
+  return errors;
+};
+
+export function formatHttpError(error) {
+  let errors: any = {};
+  if (error.response && error.response.data && typeof error.response.data === 'object' && error.response.data.errors) {
+    errors = {...formatError(error.response.data.errors)};
   } else {
     defaultError(error);
   }

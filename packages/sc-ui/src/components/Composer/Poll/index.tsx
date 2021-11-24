@@ -70,8 +70,12 @@ const DEFAULT_POLL = {
   choices: [{...DEFAULT_CHOICE}, {...DEFAULT_CHOICE}]
 };
 
-export default ({value = null, onChange}: {value?: any; onChange: (value: any) => void}): JSX.Element => {
+export default ({value = null, error = null, onChange}: {value?: any; error?: any | null; onChange: (value: any) => void}): JSX.Element => {
   value = value || {...DEFAULT_POLL};
+
+  // PROPS
+  error = error || {};
+  const {titleError = null} = {...error};
 
   // STATE
   const [title, setTitle] = useState<string>(value.title);
@@ -89,7 +93,9 @@ export default ({value = null, onChange}: {value?: any; onChange: (value: any) =
 
   // Component update
   useEffect(() => {
-    onChange && onChange({title, expiration_at: expiration, multiple_choices: multiple, choices: choices.filter((c) => c.choice.length > 0)});
+    if (onChange && (title || expiration !== null || multiple !== null || choices.length > 0)) {
+      onChange({title, expiration_at: expiration, multiple_choices: multiple, choices: choices.filter((c) => c.choice.length > 0)});
+    }
   }, [title, multiple, expiration, choices]);
 
   // HANDLERS
@@ -137,6 +143,8 @@ export default ({value = null, onChange}: {value?: any; onChange: (value: any) =
           value={title}
           onChange={handleChangeTitle}
           fullWidth
+          error={Boolean(titleError)}
+          helperText={titleError ? titleError.error : null}
           InputProps={{
             endAdornment: <Typography variant="body2">{COMPOSER_POLL_TITLE_MAX_LENGTH - title.length}</Typography>
           }}
