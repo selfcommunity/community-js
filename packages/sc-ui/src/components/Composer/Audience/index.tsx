@@ -14,6 +14,7 @@ import {AutocompletePropsSizeOverrides} from '@mui/material/Autocomplete/Autocom
 import {SCTagType} from '@selfcommunity/core/src/types';
 import {Endpoints, http} from '@selfcommunity/core';
 import {AxiosResponse} from 'axios';
+import TagChip from '../../../shared/TagChip';
 
 const PREFIX = 'SCComposerAudience';
 
@@ -148,17 +149,17 @@ export default function ({
       onChange={handleChange}
       isOptionEqualToValue={(option: SCTagType, value: SCTagType) => value.id === option.id}
       renderTags={(value, getTagProps) => {
-        return value.map((option: any, index) => (
-          <Chip key={option.id} id={option.id} label={option.name} color={option.color} {...getTagProps({index})} />
-        ));
+        return value.map((option: any, index) => <TagChip key={option.id} tag={option} {...getTagProps({index})} />);
       }}
-      renderOption={(props, option: any, {selected, inputValue}) => {
+      renderOption={(props, option: SCTagType, {selected, inputValue}) => {
         const matches = match(option.name, inputValue);
         const parts = parse(option.name, matches);
         return (
           <li {...props}>
-            {this.props.checkboxSelect && <Checkbox style={{marginRight: 8}} checked={selected} />}
-            <Chip
+            {checkboxSelect && <Checkbox style={{marginRight: 8}} checked={selected} />}
+            <TagChip
+              key={option.id}
+              tag={option}
               label={
                 <React.Fragment>
                   {parts.map((part, index) => (
@@ -168,7 +169,6 @@ export default function ({
                   ))}
                 </React.Fragment>
               }
-              color={option.color}
             />
           </li>
         );

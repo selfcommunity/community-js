@@ -5,14 +5,16 @@ import {
   http,
   SCContext,
   SCContextType,
+  SCFeatures,
   SCMediaType,
   SCPreferences,
   SCPreferencesContext,
   SCPreferencesContextType,
+  SCTagType,
   SCUserContext,
   SCUserContextType
 } from '@selfcommunity/core';
-import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
+import {defineMessages, FormattedMessage} from 'react-intl';
 import CloseIcon from '@mui/icons-material/CancelOutlined';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import WriteIcon from '@mui/icons-material/CreateOutlined';
@@ -43,11 +45,11 @@ import {
   Stack,
   TextField,
   ToggleButton,
-  ToggleButtonGroup,
-  Typography
+  ToggleButtonGroup, Tooltip,
+  Typography,
 } from '@mui/material';
 import {styled} from '@mui/material/styles';
-import {COMPOSER_TITLE_MAX_LENGTH, COMPOSER_TYPE_DISCUSSION, COMPOSER_TYPE_POST, COMPOSER_POLL_MIN_CHOICES} from '../../constants/Composer';
+import {COMPOSER_POLL_MIN_CHOICES, COMPOSER_TITLE_MAX_LENGTH, COMPOSER_TYPE_DISCUSSION, COMPOSER_TYPE_POST} from '../../constants/Composer';
 import {MEDIA_TYPE_DOCUMENT, MEDIA_TYPE_IMAGE, MEDIA_TYPE_LINK, MEDIA_TYPE_VIDEO} from '../../constants/Media';
 import LoadingButton from '@mui/lab/LoadingButton';
 import Audience from './Audience';
@@ -61,6 +63,7 @@ import {SCComposerMediaActionType} from '../../types/composer';
 import {Document, Image, Link} from './MediaAction';
 import Poll from './Poll';
 import Location from './Location';
+import TagChip from '../../shared/TagChip';
 
 const DialogTransition = forwardRef(function Transition(
   props: TransitionProps & {
@@ -110,6 +113,7 @@ const classes = {
   divider: `${PREFIX}-divider`,
   medias: `${PREFIX}-medias`,
   location: `${PREFIX}-location`,
+  audience: `${PREFIX}-audience`,
   mediasActions: `${PREFIX}-mediasActions`,
   sortableMedia: `${PREFIX}-sortableMedia`,
   sortableMediaCover: `${PREFIX}-sortableMediaCover`,
@@ -177,7 +181,7 @@ const Root = styled(Dialog, {
   [`& .${classes.medias}`]: {
     margin: '0 23px'
   },
-  [`& .${classes.location}`]: {
+  [`& .${classes.location}, & .${classes.audience}`]: {
     padding: theme.spacing(2),
     paddingBottom: 0
   },
@@ -289,9 +293,6 @@ export default function Composer({
   const scContext: SCContextType = useContext(SCContext);
   const scPrefernces: SCPreferencesContextType = useContext(SCPreferencesContext);
   const scAuthContext: SCUserContextType = useContext(SCUserContext);
-
-  // INTL
-  const intl = useIntl();
 
   // State variables
   const [fades, setFades] = useState({});
@@ -406,6 +407,13 @@ export default function Composer({
     dispatch({type: 'location', value: null});
   };
 
+  const handleDeleteTag =
+    (id: number) =>
+    (event: React.MouseEvent<HTMLButtonElement>): void => {
+      const _addressing = addressing.filter((t) => t.id !== id);
+      dispatch({type: 'multiple', value: {audience: _addressing.length === 0 ? AUDIENCE_ALL : AUDIENCE_TAG, addressing: _addressing}});
+    };
+
   const handleFadeIn = (obj: string) => {
     return (event: SyntheticEvent): void => setFades({...fades, [obj]: true});
   };
@@ -439,7 +447,6 @@ export default function Composer({
     const data: any = {
       title,
       text,
-      addressing,
       medias: medias.map((m) => m.id),
       categories: categories.map((c) => c.id)
     };
@@ -453,6 +460,9 @@ export default function Composer({
         lng: location.lng
       };
     }
+    if (scPrefernces.features.includes(SCFeatures.USER_TAGGING) && audience === AUDIENCE_TAG) {
+      data.addressing = addressing.map((t) => t.id);
+    }
     setIsSubmitting(true);
     http
       .request({
@@ -462,7 +472,6 @@ export default function Composer({
       })
       .then(onSuccess)
       .catch((error) => {
-        console.log(formatHttpError(error));
         dispatch({type: 'multiple', value: formatHttpError(error)});
       })
       .then(() => setIsSubmitting(false));
@@ -754,6 +763,20 @@ export default function Composer({
               <Chip icon={<LocationIcon />} label={location.full_address} onDelete={handleDeleteLocation} />
             </Box>
           )}
+          {audience === AUDIENCE_TAG && addressing.length && (
+            <Stack spacing={2} className={classes.audience} direction="row">
+              <Tooltip title={<FormattedMessage id="ui.composer.audience.tag" defaultMessage="ui.composer.audience.tag" />}>
+                <span>
+                  <IconButton disabled={isSubmitting} onClick={handleChangeView(AUDIENCE_VIEW)} size="small">
+                    <TagIcon />
+                  </IconButton>
+                </span>
+              </Tooltip>
+              {addressing.map((t: SCTagType) => (
+                <TagChip key={t.id} tag={t} onDelete={handleDeleteTag(t.id)} />
+              ))}
+            </Stack>
+          )}
           <div className={classes.block}>
             <Categories onChange={handleChange('categories')} defaultValue={categories} disabled={isSubmitting} />
           </div>
@@ -787,9 +810,11 @@ export default function Composer({
                 <LocationIcon />
               </IconButton>
             )}
-            <IconButton disabled={isSubmitting} onClick={handleChangeView(AUDIENCE_VIEW)}>
-              {addressing.length > 0 ? <TagIcon /> : <PublicIcon />}
-            </IconButton>
+            {scPrefernces.features.includes(SCFeatures.USER_TAGGING) && (
+              <IconButton disabled={isSubmitting} onClick={handleChangeView(AUDIENCE_VIEW)}>
+                {audience === AUDIENCE_TAG ? <TagIcon /> : <PublicIcon />}
+              </IconButton>
+            )}
             <LoadingButton onClick={handleSubmit} color="primary" variant="contained" disabled={!canSubmit()} loading={isSubmitting}>
               <FormattedMessage id="ui.composer.submit" defaultMessage="ui.composer.submit" />
             </LoadingButton>

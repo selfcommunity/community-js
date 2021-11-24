@@ -9,6 +9,13 @@ export default {
     method: 'GET',
   },
   /**
+   * Features Endpoints
+   * */
+  Feature: {
+    url: urlReplacer('/api/v2/feature/'),
+    method: 'GET',
+  },
+  /**
    * Discussion Endpoints
    */
   Discussion: {

@@ -61,6 +61,7 @@ import SCLocaleProvider, {SCLocaleContext, useSCLocale, withSCLocale} from './co
  */
 import SCPreferencesProvider, {SCPreferencesContext} from './components/provider/SCPreferencesProvider';
 import * as SCPreferences from './constants/Preferences';
+import * as SCFeatures from './constants/Features';
 
 /**
  * Custom Hooks
@@ -152,6 +153,7 @@ export {
   withSCLocale,
   SCPreferencesProvider,
   SCPreferences,
+  SCFeatures,
   http,
   formatHttpError,
   Link,

@@ -162,6 +162,11 @@ export interface SCPreferencesContextType {
    * List of all community preferences
    */
   preferences: Record<string, any>;
+
+  /**
+   * List of all community enabled features
+   */
+  features: string[];
 }
 
 /**

@@ -1,5 +1,6 @@
 import React, {createContext, ReactNode, useContext, useEffect, useState} from 'react';
 import preferencesServices from '../../../services/preferences';
+import featuresServices from '../../../services/features';
 import {SCPreferencesContextType} from '../../../types/context';
 import {Logger} from '../../../utils/logger';
 import {SCOPE_SC_CORE} from '../../../constants/Errors';
@@ -21,6 +22,7 @@ export const SCPreferencesContext = createContext<SCPreferencesContextType>({} a
  */
 export default function SCPreferencesProvider({children = null}: {children: React.ReactNode}): JSX.Element {
   const [preferences, setPreferences] = useState<Record<string, any>>({});
+  const [features, setFeatures] = useState<string[]>([]);
   const [, setError] = useState<any>();
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -29,10 +31,10 @@ export default function SCPreferencesProvider({children = null}: {children: Reac
    * configurations of the project
    */
   useEffect(() => {
-    preferencesServices
-      .loadPreferences()
-      .then((res) => {
-        setPreferences(res);
+    Promise.all([preferencesServices.loadPreferences(), featuresServices.loadFeatures()])
+      .then(function (results) {
+        setPreferences(results[0]);
+        setFeatures(results[1]);
       })
       .catch((_error) => {
         Logger.error(SCOPE_SC_CORE, _error);
@@ -45,7 +47,7 @@ export default function SCPreferencesProvider({children = null}: {children: Reac
    * Nesting all necessary providers
    * All child components will use help contexts to works
    */
-  return <SCPreferencesContext.Provider value={{preferences}}>{!loading && children}</SCPreferencesContext.Provider>;
+  return <SCPreferencesContext.Provider value={{preferences, features}}>{!loading && children}</SCPreferencesContext.Provider>;
 }
 
 /**
