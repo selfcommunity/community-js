@@ -1,11 +1,12 @@
-import React, {useContext} from 'react';
+import React, {RefObject, useContext, useEffect} from 'react';
 import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import {defineMessages, useIntl} from 'react-intl';
 import {Avatar, Box, Button, CardContent, Grid, ListItem, ListItemAvatar, ListItemText} from '@mui/material';
 import {SCCommentType} from '@selfcommunity/core/src/types/comment';
-import {SCUserContext, SCUserContextType, SCUserType, useSCFetchCommentObject} from '@selfcommunity/core';
+import {SCUserContext, SCUserContextType, useSCFetchCommentObject} from '@selfcommunity/core';
 import Editor from '../../Editor';
+import {TMUIRichTextEditorRef} from 'mui-rte';
 
 const messages = defineMessages({
   reply: {
@@ -35,18 +36,47 @@ const Root = styled(Card, {
 export default function ReplyCommentObject({
   commentObjectId = null,
   commentObject = null,
+  autoFocus = false,
   onReply = null,
   ...rest
 }: {
   commentObjectId?: number;
   commentObject?: SCCommentType;
+  autoFocus?: boolean;
   onReply?: (comment) => void;
   [p: string]: any;
 }): JSX.Element {
   const scUser: SCUserContextType = useContext(SCUserContext);
   const {obj, setObj} = useSCFetchCommentObject({id: commentObjectId, commentObject});
+  let editor: RefObject<TMUIRichTextEditorRef> = React.createRef();
   const intl = useIntl();
 
+  /**
+   * When ReplyCommentObject is mount
+   * if autoFocus === true focus on editor
+   */
+  useEffect(() => {
+    autoFocus && handleEditorFocus();
+  }, []);
+
+  /**
+   * Focus on editor
+   */
+  const handleEditorFocus = () => {
+    editor.current.focus();
+  };
+
+  /**
+   * Handle Replay
+   */
+  const handleReply = () => {
+    onReply && onReply(obj);
+  };
+
+  /**
+   * Render reply
+   * @param obj
+   */
   function renderReply(obj) {
     return (
       <React.Fragment>
@@ -59,13 +89,17 @@ export default function ReplyCommentObject({
             secondary={
               <>
                 <Card classes={{root: classes.comment}} {...rest}>
-                  <CardContent>
-                    <Editor />
+                  <CardContent sx={{padding: 0}}>
+                    <Editor
+                      onRef={(e) => {
+                        editor = e;
+                      }}
+                    />
                   </CardContent>
                 </Card>
                 <Box component="span" sx={{display: 'flex', justifyContent: 'flex-start'}}>
                   <Grid component="span" item={true} sm="auto" container direction="row" alignItems="right">
-                    <Button variant={'text'} sx={{marginTop: '-1px'}} onClick={onReply}>
+                    <Button variant={'text'} sx={{marginTop: '-1px'}} onClick={handleReply}>
                       {intl.formatMessage(messages.reply)}
                     </Button>
                   </Grid>
@@ -79,7 +113,7 @@ export default function ReplyCommentObject({
   }
 
   /**
-   * Render object
+   * Render root object
    */
   return <Root elevation={0}>{renderReply(obj)}</Root>;
 }

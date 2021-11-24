@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, { RefObject, useEffect, useMemo, useRef, useState } from 'react';
 import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import {SCFeedObjectType, SCFeedObjectTypologyType, useSCFetchFeedObject, http, Endpoints, Logger} from '@selfcommunity/core';
@@ -105,7 +105,7 @@ export default function CommentsObject({
    * Handle comment reply
    * @param comment
    */
-  function handleReply(comment) {
+  function handleReply(comment: SCCommentType) {
     console.log(comment);
   }
 
@@ -117,8 +117,8 @@ export default function CommentsObject({
     setReplyComment(comment);
     setTimeout(() => {
       const element = document.getElementById(`reply-${comment.id}`);
-      element && element.scrollIntoView({behavior: 'smooth'});
-    }, 100);
+      element && element.scrollIntoView({behavior: 'smooth', block: 'center'});
+    }, 200);
   }
 
   /**
@@ -141,7 +141,7 @@ export default function CommentsObject({
         ) : (
           <>
             <FormattedMessage id={'ui.commentsObject.noComments'} defaultMessage={'ui.commentsObject.noComments'} />
-            <ReplyCommentObject onReply={(c) => handleReply(c)} {...rest} />
+            <ReplyCommentObject onReply={handleReply} {...rest} />
           </>
         )}
       </>
@@ -169,7 +169,7 @@ export default function CommentsObject({
               <>
                 <CommentObject commentObject={comment} onReply={openReplyBox} feedObject={obj} feedObjectType={feedObjectType} {...rest} />
                 {replyComment && (replyComment.id === comment.id || replyComment.parent === comment.id) && (
-                  <ReplyCommentObject id={`reply-${comment.id}`} {...rest} onReply={(c) => handleReply(c)} />
+                  <ReplyCommentObject autoFocus id={`reply-${comment.id}`} {...rest} onReply={(c) => handleReply(c)} />
                 )}
               </>
             )}

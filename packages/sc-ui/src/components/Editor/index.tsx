@@ -1,12 +1,10 @@
-import React, {RefObject, useMemo} from 'react';
+import React, { RefObject, useEffect, useMemo } from 'react';
 import {styled} from '@mui/material/styles';
 import {ContentState, convertFromHTML, convertToRaw} from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 import {defineMessages, useIntl} from 'react-intl';
 import MUIRichTextEditor, {TMUIRichTextEditorRef} from 'mui-rte';
-import {Box, useControlled} from '@mui/material';
-import {SCPreferences} from '@selfcommunity/core';
-import {DOCUMENTS_VIEW, IMAGES_VIEW, VIDEOS_VIEW} from '../Composer';
+import {Box} from '@mui/material';
 
 const PREFIX = 'SCEditor';
 
@@ -32,17 +30,25 @@ export default function Editor({
   className = '',
   defaultValue = '',
   readOnly = false,
-  onChange = null
+  onChange = null,
+  onRef = null,
 }: {
   className?: string;
   defaultValue?: string;
   readOnly?: boolean;
   onChange?: (value: string) => void;
+  onRef?: (editor: RefObject<TMUIRichTextEditorRef>) => void;
 }): JSX.Element {
   const editor: RefObject<TMUIRichTextEditorRef> = React.createRef();
-
-  // INTL
   const intl = useIntl();
+
+  /**
+   * On mount if onRef in props
+   * forward editor ref
+   */
+  useEffect(() => {
+    onRef && onRef(editor);
+  }, []);
 
   // Default editor content
   const content: string = useMemo(() => {
