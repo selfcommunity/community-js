@@ -7,6 +7,7 @@ import {Endpoints, http, SCLocaleContextType, SCUserContext, SCUserContextType, 
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import {AxiosResponse} from 'axios';
 import {FormattedMessage} from 'react-intl';
+import FollowConnect from '../FollowConnect';
 
 const PREFIX = 'SCPlatform';
 
@@ -111,7 +112,21 @@ function Platform({contained = true}: {contained: boolean}): JSX.Element {
     );
   }
 
-  const p = <React.Fragment>{scUserContext.user['role'] === 'admin' ? renderAdminPanel() : renderRolePanel()}</React.Fragment>;
+  function renderPanel() {
+    return <React.Fragment>{scUserContext.user['role'] === 'admin' ? renderAdminPanel() : renderRolePanel()}</React.Fragment>;
+  }
+
+  const p = (
+    <React.Fragment>
+      {scUserContext.user['role'] === null ? (
+        <Typography>
+          <FormattedMessage id="ui.platform.warning" defaultMessage="ui.platform.warning" />
+        </Typography>
+      ) : (
+        renderPanel()
+      )}
+    </React.Fragment>
+  );
   if (contained) {
     return (
       <Root variant="outlined">

@@ -66,9 +66,9 @@ export default function CategoriesSuggestion(props): JSX.Element {
             </Typography>
           ) : (
             <React.Fragment>
-              {categories.slice(0, 4).map((category: SCCategoryType) => (
-                <div>
-                  <Category contained={false} scCategory={category} key={category.id} />
+              {categories.slice(0, 4).map((category: SCCategoryType, index) => (
+                <div key={index}>
+                  <Category contained={false} category={category} key={category.id} />
                   <Divider />
                 </div>
               ))}

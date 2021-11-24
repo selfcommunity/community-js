@@ -112,7 +112,7 @@ function ChangeCover({onClick}: {onClick?: () => void | undefined}): JSX.Element
             open={isOpen}
             onClose={() => setIsOpen(false)}
             anchorReference="anchorPosition"
-            anchorPosition={{top: 45, left: 145}}
+            anchorPosition={{top: 220, left: 520}}
             anchorOrigin={{
               vertical: 'bottom',
               horizontal: 'right'
@@ -122,7 +122,7 @@ function ChangeCover({onClick}: {onClick?: () => void | undefined}): JSX.Element
               horizontal: 'left'
             }}
             sx={{
-              width: '400px',
+              width: '800px',
               height: '200px'
             }}>
             <Typography component="h3">

@@ -2,6 +2,8 @@
   "ui.common.error": "Error",
   "ui.common.error.url": "The url is not valid",
 
+  "ui.platform.warning": "Not authorized to see this page!",
+
   "ui.baseDialog.button.close": "Close",
 
   "ui.peopleSuggestion.title": "People Suggestion",
