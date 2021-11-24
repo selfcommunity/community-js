@@ -6,11 +6,18 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import {Endpoints, http, Logger} from '@selfcommunity/core';
 import CategoriesSuggestionSkeleton from '../Skeleton/CategoriesSuggestionSkeleton';
-import Category from '../Category';
 import {AxiosResponse} from 'axios';
 import {SCCategoryType} from '@selfcommunity/core/src/types';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import FollowButton from '../FollowButton';
+import {FormattedMessage, defineMessages, useIntl} from 'react-intl';
+
+const messages = defineMessages({
+  categoryFollowers: {
+    id: 'ui.categoriesPopular.categoryFollowers',
+    defaultMessage: 'ui.categoriesPopular.categoryFollowers'
+  }
+});
 
 const PREFIX = 'SCCategoriesPopular';
 
@@ -23,14 +30,14 @@ const Root = styled(Card, {
   marginBottom: theme.spacing(2)
 }));
 
-export default function CategoriesPopular({followed = null}: {followed?: boolean}, props): JSX.Element {
+export default function CategoriesPopular(props): JSX.Element {
   const [categories, setCategories] = useState<any[]>([]);
   const [visibleCategories, setVisibleCategories] = useState<number>(3);
   const [loading, setLoading] = useState<boolean>(true);
   const [hasMore, setHasMore] = useState<boolean>(false);
   const [total, setTotal] = useState<number>(0);
   const [openPopularCategoriesDialog, setOpenPopularCategoriesDialog] = useState<boolean>(false);
-  const buttonText = followed ? 'Followed' : 'Follow';
+  const intl = useIntl();
 
   function fetchCategoriesSuggestion() {
     http
@@ -64,18 +71,25 @@ export default function CategoriesPopular({followed = null}: {followed?: boolean
         <CategoriesSuggestionSkeleton elevation={0} />
       ) : (
         <CardContent>
-          <Typography variant="body1">Popular Categories</Typography>
+          <Typography variant="body1">
+            <FormattedMessage id="ui.categoriesPopular.title" defaultMessage="ui.categoriesPopular.title" />
+          </Typography>
           {!total ? (
-            <Typography variant="body2">No categories</Typography>
+            <Typography variant="body2">
+              <FormattedMessage id="ui.categoriesPopular.noResults" defaultMessage="ui.categoriesPopular.noResults" />
+            </Typography>
           ) : (
             <React.Fragment>
               {categories.slice(0, visibleCategories).map((category: SCCategoryType, index) => (
                 <div key={index}>
                   <List>
                     <ListItem button={true} key={category.id}>
-                      <ListItemText primary={category.name} secondary={<Typography>Followed by {category.followers_count} people.</Typography>} />
+                      <ListItemText
+                        primary={category.name}
+                        secondary={`${intl.formatMessage(messages.categoryFollowers, {total: category.followers_count})}`}
+                      />
                       <ListItemSecondaryAction>
-                        <FollowButton scCategoryId={category.id}>{buttonText}</FollowButton>
+                        <FollowButton scCategoryId={category.id}>Follow</FollowButton>
                       </ListItemSecondaryAction>
                     </ListItem>
                     <Divider />
@@ -84,7 +98,7 @@ export default function CategoriesPopular({followed = null}: {followed?: boolean
               ))}
               {hasMore && (
                 <Button size="small" onClick={() => loadCategories()}>
-                  See More
+                  <FormattedMessage id="ui.categoriesPopular.button.showMore" defaultMessage="ui.categoriesPopular.button.showMore" />
                 </Button>
               )}
             </React.Fragment>

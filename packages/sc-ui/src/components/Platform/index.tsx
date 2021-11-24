@@ -1,12 +1,12 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext} from 'react';
 import {styled} from '@mui/material/styles';
-import List from '@mui/material/List';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import {Button, Grid, ListItem, Typography} from '@mui/material';
 import {Endpoints, http, SCLocaleContextType, SCUserContext, SCUserContextType, useSCLocale} from '@selfcommunity/core';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import {AxiosResponse} from 'axios';
+import {FormattedMessage} from 'react-intl';
 
 const PREFIX = 'SCPlatform';
 
@@ -24,7 +24,12 @@ function Platform({contained = true}: {contained: boolean}): JSX.Element {
   const scUserContext: SCUserContextType = useContext(SCUserContext);
   const scLocaleContext: SCLocaleContextType = useSCLocale();
   const language = scLocaleContext.locale;
-  const roleText = scUserContext.user['role'] === 'moderator' ? 'Moderation' : 'Editor';
+  const roleText =
+    scUserContext.user['role'] === 'moderator' ? (
+      <FormattedMessage id="ui.platformAccess.mod" defaultMessage="ui.platformAccess.mod" />
+    ) : (
+      <FormattedMessage id="ui.platformAccess.edt" defaultMessage="ui.platformAccess.edt" />
+    );
 
   function fetchPlatform(query) {
     http
@@ -53,23 +58,23 @@ function Platform({contained = true}: {contained: boolean}): JSX.Element {
         <Grid container spacing={1} justifyContent="center">
           <Grid item xs={12}>
             <Typography component="h3" align="center">
-              Platform Access
+              <FormattedMessage id="ui.platformAccess.title" defaultMessage="ui.platformAccess.title" />
               <LockOutlinedIcon fontSize="small" />
             </Typography>
           </Grid>
           <Grid item xs="auto" style={{textAlign: 'center'}}>
             <Button variant="outlined" size="small" onClick={() => fetchPlatform('')}>
-              Administration
+              <FormattedMessage id="ui.platformAccess.adm" defaultMessage="ui.platformAccess.adm" />
             </Button>
           </Grid>
           <Grid item xs="auto" style={{textAlign: 'center'}}>
             <Button variant="outlined" size="small" onClick={() => fetchPlatform('/moderation/flags')}>
-              Moderation
+              <FormattedMessage id="ui.platformAccess.mod" defaultMessage="ui.platformAccess.mod" />
             </Button>
           </Grid>
           <Grid item xs="auto" style={{textAlign: 'center'}}>
             <Button variant="outlined" size="small" href={`https://support.selfcommunity.com/hc/${language}`} target="_blank">
-              Help Center
+              <FormattedMessage id="ui.platformAccess.hc" defaultMessage="ui.platformAccess.hc" />
             </Button>
           </Grid>
         </Grid>
@@ -87,7 +92,7 @@ function Platform({contained = true}: {contained: boolean}): JSX.Element {
         <Grid container spacing={2} justifyContent="center">
           <Grid item xs={12}>
             <Typography component="h3" align="center">
-              Platform Access
+              <FormattedMessage id="ui.platformAccess.title" defaultMessage="ui.platformAccess.title" />
               <LockOutlinedIcon fontSize="small" />
             </Typography>
           </Grid>
@@ -98,7 +103,7 @@ function Platform({contained = true}: {contained: boolean}): JSX.Element {
           </Grid>
           <Grid item xs={6} style={{textAlign: 'center'}}>
             <Button variant="outlined" size="small" href={`https://support.selfcommunity.com/hc/it`} target="_blank">
-              Help Center
+              <FormattedMessage id="ui.platformAccess.hc" defaultMessage="ui.platformAccess.hc" />
             </Button>
           </Grid>
         </Grid>

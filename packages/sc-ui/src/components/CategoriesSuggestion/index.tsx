@@ -9,6 +9,7 @@ import CategoriesSuggestionSkeleton from '../Skeleton/CategoriesSuggestionSkelet
 import Category from '../Category';
 import {AxiosResponse} from 'axios';
 import {SCCategoryType} from '@selfcommunity/core/src/types';
+import {FormattedMessage} from 'react-intl';
 
 const PREFIX = 'SCCategoriesSuggestion';
 
@@ -26,6 +27,7 @@ export default function CategoriesSuggestion(props): JSX.Element {
   const [loading, setLoading] = useState<boolean>(true);
   const [hasMore, setHasMore] = useState<boolean>(false);
   const [openCategoriesSuggestionDialog, setOpenCategoriesSuggestionDialog] = useState<boolean>(false);
+  const [total, setTotal] = useState<number>(0);
 
   function fetchCategoriesSuggestion() {
     http
@@ -38,6 +40,7 @@ export default function CategoriesSuggestion(props): JSX.Element {
         setCategories(data.results);
         setHasMore(data.count > 4);
         setLoading(false);
+        setTotal(data.count);
       })
       .catch((error) => {
         console.log(error);
@@ -49,34 +52,36 @@ export default function CategoriesSuggestion(props): JSX.Element {
   }, []);
 
   return (
-    <>
+    <Root {...props}>
       {loading ? (
-        <Root {...props}>
-          <CategoriesSuggestionSkeleton elevation={0} />
-        </Root>
+        <CategoriesSuggestionSkeleton elevation={0} />
       ) : (
-        <>
-          {!categories.length ? null : (
-            <Root {...props}>
-              <Typography variant="body1">Explore Interests</Typography>
-              <List>
-                {categories.slice(0, 4).map((category: SCCategoryType) => (
-                  <div>
-                    <Category contained={false} scCategory={category} key={category.id} />
-                    <Divider />
-                  </div>
-                ))}
-              </List>
+        <CardContent>
+          <Typography variant="body1">
+            <FormattedMessage id="ui.categoriesSuggestion.title" defaultMessage="ui.categoriesSuggestion.title" />
+          </Typography>
+          {!total ? (
+            <Typography variant="body2">
+              <FormattedMessage id="ui.categoriesSuggestion.noResults" defaultMessage="ui.categoriesSuggestion.noResults" />
+            </Typography>
+          ) : (
+            <React.Fragment>
+              {categories.slice(0, 4).map((category: SCCategoryType) => (
+                <div>
+                  <Category contained={false} scCategory={category} key={category.id} />
+                  <Divider />
+                </div>
+              ))}
               {hasMore && (
                 <Button size="small" onClick={() => setOpenCategoriesSuggestionDialog(true)}>
-                  See More
+                  <FormattedMessage id="ui.categoriesSuggestion.button.showMore" defaultMessage="ui.categoriesSuggestion.button.showMore" />
                 </Button>
               )}
-              {openCategoriesSuggestionDialog && <></>}
-            </Root>
+            </React.Fragment>
           )}
-        </>
+          {openCategoriesSuggestionDialog && <></>}
+        </CardContent>
       )}
-    </>
+    </Root>
   );
 }

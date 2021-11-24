@@ -4,7 +4,49 @@
 
   "ui.baseDialog.button.close": "Chiudi",
 
-  "ui.peopleSuggestion.title": "People Suggestion",
+  "ui.peopleSuggestion.title": "Persone che potresti conoscere",
+  "ui.peopleSuggestion.subtitle.noResults": "Nessuno da mostrare",
+  "ui.peopleSuggestion.button.showAll": "Mostra tutti",
+
+  "ui.TrendingPeople.title": "Persone di tendenza",
+  "ui.TrendingPeople.noResults": "Nessuno da mostrare",
+  "ui.TrendingPeople.button.showAll": "Mostra tutti",
+
+  "ui.TrendingPost.title": "Post di tendenza",
+  "ui.TrendingPost.noResults": "Niente da mostrare",
+  "ui.TrendingPost.button.showMore": "Mostra di piú",
+
+  "ui.categoriesFollowed.subtitle.noResults": "Nessuna Categoria Seguita",
+  "ui.categoriesFollowed.categoriesFollowed": "{total, plural, =0 {# Categorie Seguite} one {# Categoria Seguita} other {# Categorie Seguite}}",
+  "ui.categoriesFollowed.button.showMore": "Mostra di piú",
+  "ui.categoriesPopular.title": "Categorie Popolari",
+  "ui.categoriesPopular.noResults": "Nessuna Categoria",
+  "ui.categoriesPopular.categoryFollowers": "{total, plural, =0 {Seguita da # persone} one {Seguita da # persona} other {Seguita da # persone}}",
+  "ui.categoriesPopular.button.showMore": "Mostra di piú",
+  "ui.categoriesSuggestion.title": "Esplora Categorie",
+  "ui.categoriesSuggestion.noResults": "Nessuna Categoria",
+  "ui.categoriesSuggestion.button.showMore": "Mostra di piú",
+
+  "ui.changeCover.button.change": "Cambia Copertina",
+  "ui.changeCover.button.delete": "Elimina Copertina",
+  "ui.changeCover.button.upload": "Carica Nuova Copertina",
+  "ui.changeCover.button.uploadA": "Carica una nuova copertina",
+  "ui.changeCover.listF": "Formati ammessi: JPG, PNG, GIF (non animate)",
+  "ui.changeCover.listD": "Dimensioni ottimali: 1600 x 400 pixel",
+  "ui.changeCover.listW": "Peso: max 5MB",
+
+  "ui.changePicture.title": "Cambia l'immagine del profilo",
+  "ui.changePicture.button.change": "Cambia immagine",
+  "ui.changePicture.button.upload": "Carica una nuova immagine",
+  "ui.changePicture.listF": "Formati ammessi: gif, png, jpg, jpeg",
+  "ui.changePicture.listS": "Dimensione massima: 3 MB",
+  "ui.changePicture.button.finished": "Finito",
+
+  "ui.platformAccess.title": "Accesso alla Piattaforma",
+  "ui.platformAccess.adm": "Amministrazione",
+  "ui.platformAccess.mod": "Moderazione",
+  "ui.platformAccess.edt": "Editor",
+  "ui.platformAccess.hc": "Help Center",
 
   "ui.composer.type.post": "Create Post",
   "ui.composer.type.discussion": "Create Discussion",

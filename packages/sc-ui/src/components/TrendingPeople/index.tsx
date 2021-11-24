@@ -1,13 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
-import {Button, Typography} from '@mui/material';
+import {Avatar, Button, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import {Endpoints, http} from '@selfcommunity/core';
-import Person, {SCPersonType} from '../Person';
-import TrendingPeopleSkeleton from '../Skeleton/TrendingPeopleSkeleton';
 import {AxiosResponse} from 'axios';
+import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
+import {PeopleSuggestionSkeleton} from '../Skeleton';
+import {FormattedMessage} from 'react-intl';
 
 const PREFIX = 'SCTrendingPeople';
 
@@ -20,11 +21,12 @@ const Root = styled(Card, {
   marginBottom: theme.spacing(2)
 }));
 
-function SCTrendingPeople({scCategoryId = null}: {scCategoryId?: number}): JSX.Element {
+function SCTrendingPeople({scCategoryId = null, ...rest}: {scCategoryId?: number}): JSX.Element {
   const [people, setPeople] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [hasMore, setHasMore] = useState<boolean>(false);
   const [openTrendingPeopleDialog, setOpenTrendingPeopleDialog] = useState<boolean>(false);
+  const [total, setTotal] = useState<number>(0);
 
   function fetchTrendingPeople() {
     http
@@ -37,6 +39,7 @@ function SCTrendingPeople({scCategoryId = null}: {scCategoryId?: number}): JSX.E
         setPeople(data.results);
         setHasMore(data.count > 4);
         setLoading(false);
+        setTotal(data.count);
       })
       .catch((error) => {
         console.log(error);
@@ -47,25 +50,57 @@ function SCTrendingPeople({scCategoryId = null}: {scCategoryId?: number}): JSX.E
     fetchTrendingPeople();
   }, []);
 
-  if (loading) {
-    return <TrendingPeopleSkeleton />;
-  }
   return (
-    <Root variant={'outlined'}>
-      <CardContent>
-        <Typography variant="body1">Trending People</Typography>
-        <List>
-          {people.slice(0, 4).map((people: SCPersonType, index) => (
-            <Person contained={false} scPerson={people} key={index} />
-          ))}
-        </List>
-        {hasMore && (
-          <Button size="small" onClick={() => setOpenTrendingPeopleDialog(true)}>
-            Show All
-          </Button>
-        )}
-        {openTrendingPeopleDialog && <></>}
-      </CardContent>
+    <Root {...rest}>
+      {loading ? (
+        <PeopleSuggestionSkeleton />
+      ) : (
+        <CardContent>
+          <Typography variant="body1">
+            <FormattedMessage id="ui.TrendingPeople.title" defaultMessage="ui.TrendingPeople.title" />
+          </Typography>
+          {!total ? (
+            <Typography variant="body2">
+              <FormattedMessage id="ui.TrendingPeople.noResults" defaultMessage="ui.TrendingPeople.noResults" />
+            </Typography>
+          ) : (
+            <React.Fragment>
+              <List>
+                {people.slice(0, 4).map((p) => (
+                  <ListItem button={true} alignItems="flex-start">
+                    <ListItemAvatar>
+                      <Avatar alt={p.username} variant="circular" src={p.avatar} />
+                    </ListItemAvatar>
+                    <ListItemText
+                      primary={
+                        <React.Fragment>
+                          <Typography sx={{display: 'inline'}} color="primary">
+                            {p.username}
+                          </Typography>
+                        </React.Fragment>
+                      }
+                      secondary={
+                        <Button
+                          sx={{maxWidth: '20px', maxHeight: '20px', minWidth: '10px', minHeight: '10px', paddingRight: '20px'}}
+                          variant="outlined"
+                          startIcon={<ThumbUpOutlinedIcon sx={{width: '0.7em', marginLeft: '9px'}} />}>
+                          {p.followers_counter}
+                        </Button>
+                      }
+                    />
+                  </ListItem>
+                ))}
+              </List>
+            </React.Fragment>
+          )}
+          {hasMore && (
+            <Button size="small" onClick={() => setOpenTrendingPeopleDialog(true)}>
+              <FormattedMessage id="ui.TrendingPeople.showAll" defaultMessage="ui.TrendingPeople.showAll" />
+            </Button>
+          )}
+          {openTrendingPeopleDialog && <></>}
+        </CardContent>
+      )}
     </Root>
   );
 }

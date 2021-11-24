@@ -5,8 +5,22 @@ import TrendingPost from './index';
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Design System/SC UI/Trending Post',
-  component: TrendingPost
-  // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
+  component: TrendingPost,
+  argTypes: {
+    elevation: {
+      control: {type: 'number'},
+      description: 'Used only if variant="elevation". Shadow depth, corresponds to dp in the spec. It accepts values between 0 and 24 inclusive.',
+      defaultValue: 1,
+      table: {defaultValue: {summary: 1}}
+    },
+    variant: {
+      options: ['elevation', 'outlined'],
+      control: {type: 'select'},
+      description: 'The variant to use. Types: "elevation", "outlined", etc.',
+      defaultValue: 'elevation',
+      table: {defaultValue: {summary: 'elevation'}}
+    }
+  }
 } as ComponentMeta<typeof TrendingPost>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args

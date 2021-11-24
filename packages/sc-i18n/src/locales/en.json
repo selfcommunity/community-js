@@ -5,6 +5,49 @@
   "ui.baseDialog.button.close": "Close",
 
   "ui.peopleSuggestion.title": "People Suggestion",
+  "ui.peopleSuggestion.subtitle.noResults": "No People",
+  "ui.peopleSuggestion.button.showAll": "Show All",
+
+  "ui.TrendingPeople.title": "Trending People",
+  "ui.TrendingPeople.noResults": "No trending people to show",
+  "ui.TrendingPeople.button.showAll": "Show All",
+
+  "ui.TrendingPost.title": "Trending Feed",
+  "ui.TrendingPost.noResults": "Nothing to show",
+  "ui.TrendingPost.button.showMore": "Show More",
+
+  "ui.categoriesFollowed.subtitle.noResults": "No Categories Followed",
+  "ui.categoriesFollowed.categoriesFollowed": "{total, plural, =0 {# Categories Followed} one {# Category Followed} other {# Categories Followed}}",
+  "ui.categoriesFollowed.button.showMore": "Show More",
+  "ui.categoriesPopular.title": "Popular Categories",
+  "ui.categoriesPopular.noResults": "No Categories",
+  "ui.categoriesPopular.categoryFollowers": "{total, plural, =0 {Followed by # people} one {Followed by # person} other {Followed by # people}}",
+  "ui.categoriesPopular.button.showMore": "See More",
+  "ui.categoriesSuggestion.title": "Explore Categories",
+  "ui.categoriesSuggestion.noResults": "No Categories",
+  "ui.categoriesSuggestion.button.showMore": "See More",
+
+  "ui.changeCover.button.change": "Change Cover",
+  "ui.changeCover.button.delete": "Delete Cover",
+  "ui.changeCover.button.upload": "Upload New Cover",
+  "ui.changeCover.button.uploadA": "Upload a new cover",
+  "ui.changeCover.listF": "Allowed formats: JPG, PNG, GIF(not animated)",
+  "ui.changeCover.listD": "Optimal dimensions: 1600 x 400 pixel",
+  "ui.changeCover.listW": "Weight: max 5MB",
+
+  "ui.changePicture.title": "Change Profile Image",
+  "ui.changePicture.button.change": "Change Picture",
+  "ui.changePicture.button.upload": "Upload new Image",
+  "ui.changePicture.listF": "Allowed formats: gif,png,jpg,jpeg \n Maximum size: 3 MB",
+  "ui.changePicture.listS": "Maximum size: 3 MB",
+  "ui.changePicture.button.finished": "Finished",
+
+  "ui.platformAccess.title": "Platform Access",
+  "ui.platformAccess.adm": "Administration",
+  "ui.platformAccess.mod": "Moderation",
+  "ui.platformAccess.edt": "Editor",
+  "ui.platformAccess.hc": "Help Center",
+
 
   "ui.composer.type.post": "Create Post",
   "ui.composer.type.discussion": "Create Discussion",

@@ -21,9 +21,9 @@ const Root = styled(Card)(({theme}) => ({
   }
 }));
 
-export default function TrendingPostSkeleton(): JSX.Element {
+export default function TrendingPostSkeleton(props): JSX.Element {
   return (
-    <Root variant={'outlined'}>
+    <Root {...props}>
       <CardContent>
         <List className={classes.list}>
           {[...Array(4)].map((post, index) => (

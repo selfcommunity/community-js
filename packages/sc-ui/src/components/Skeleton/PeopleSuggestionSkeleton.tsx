@@ -19,9 +19,9 @@ const Root = styled(Card)(({theme}) => ({
   }
 }));
 
-function PeopleSuggestionSkeleton(): JSX.Element {
+function PeopleSuggestionSkeleton(props): JSX.Element {
   return (
-    <Root variant={'outlined'}>
+    <Root {...props}>
       <CardContent>
         <List className={classes.list}>
           {[...Array(4)].map((user, index) => (

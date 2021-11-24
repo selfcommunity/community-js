@@ -24,6 +24,7 @@ function PeopleSuggestion(props): JSX.Element {
   const [users, setUsers] = useState<SCUserType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [hasMore, setHasMore] = useState<boolean>(false);
+  const [total, setTotal] = useState<number>(0);
   const [openPeopleSuggestionDialog, setOpenPeopleSuggestionDialog] = useState<boolean>(false);
 
   function fetchUserSuggestion() {
@@ -32,11 +33,12 @@ function PeopleSuggestion(props): JSX.Element {
         url: Endpoints.UserSuggestion.url(),
         method: Endpoints.UserSuggestion.method
       })
-      .then((res) => {
+      .then((res: any) => {
         const data = res.data;
         setUsers(data['results']);
         setHasMore(data['count'] > 2);
         setLoading(false);
+        setTotal(data.count);
       })
       .catch((error) => {
         console.log(error);
@@ -61,25 +63,36 @@ function PeopleSuggestion(props): JSX.Element {
     fetchUserSuggestion();
   }, []);
 
-  if (loading) {
-    return <PeopleSuggestionSkeleton />;
-  }
   return (
-    <Root variant={'outlined'}>
-      <CardContent>
-        <Typography variant="body1">
-          <FormattedMessage id="ui.peopleSuggestion.title" defaultMessage="ui.peopleSuggestion.title" />
-        </Typography>
-        <List>
-          {users.slice(0, 2).map((user: SCUserType, index) => (
-            <User elevation={0} user={user} id={user.id} key={index} />
-          ))}
-        </List>
-        <Button color="secondary" size="small" onClick={() => fetchUserForTest()}>
-          Show All
-        </Button>
-        {openPeopleSuggestionDialog && <></>}
-      </CardContent>
+    <Root {...props}>
+      {loading ? (
+        <PeopleSuggestionSkeleton elevation={0} />
+      ) : (
+        <CardContent>
+          <Typography variant="body1">
+            <FormattedMessage id="ui.peopleSuggestion.title" defaultMessage="ui.peopleSuggestion.title" />
+          </Typography>
+          {!total ? (
+            <Typography variant="body2">
+              <FormattedMessage id="ui.peopleSuggestion.subtitle.noResults" defaultMessage="ui.peopleSuggestion.subtitle.noResults" />
+            </Typography>
+          ) : (
+            <React.Fragment>
+              <List>
+                {users.slice(0, 2).map((user: SCUserType, index) => (
+                  <User elevation={0} user={user} id={user.id} key={index} />
+                ))}
+              </List>
+              {hasMore && (
+                <Button color="secondary" size="small" onClick={() => fetchUserForTest()}>
+                  <FormattedMessage id="ui.peopleSuggestion.button.showAll" defaultMessage="ui.peopleSuggestion.button.showAll" />
+                </Button>
+              )}
+            </React.Fragment>
+          )}
+          {openPeopleSuggestionDialog && <></>}
+        </CardContent>
+      )}
     </Root>
   );
 }

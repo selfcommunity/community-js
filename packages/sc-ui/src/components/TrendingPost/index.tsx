@@ -9,6 +9,7 @@ import TrendingPostSkeleton from '../Skeleton/TrendingPostSkeleton';
 import {AxiosResponse} from 'axios';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import FeedObject from '../FeedObject';
+import {FormattedMessage} from 'react-intl';
 
 const PREFIX = 'SCTrendingPost';
 
@@ -21,11 +22,12 @@ const Root = styled(Card, {
   marginBottom: theme.spacing(2)
 }));
 
-function TrendingPost({scCategoryId = null}: {scCategoryId?: number}): JSX.Element {
+function TrendingPost({scCategoryId = null, ...props}: {scCategoryId?: number}): JSX.Element {
   const [posts, setPosts] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [hasMore, setHasMore] = useState<boolean>(false);
   const [openTrendingPostDialog, setOpenTrendingPostDialog] = useState<boolean>(false);
+  const [total, setTotal] = useState<number>(0);
 
   function fetchTrendingPost() {
     http
@@ -38,6 +40,7 @@ function TrendingPost({scCategoryId = null}: {scCategoryId?: number}): JSX.Eleme
         setPosts(getAlltypes(data.results));
         setHasMore(data.count > 4);
         setLoading(false);
+        setTotal(data.count);
       })
       .catch((error) => {
         Logger.error(SCOPE_SC_UI, error);
@@ -58,26 +61,37 @@ function TrendingPost({scCategoryId = null}: {scCategoryId?: number}): JSX.Eleme
     fetchTrendingPost();
   }, []);
 
-  if (loading) {
-    return <TrendingPostSkeleton />;
-  }
   return (
-    <Root variant={'outlined'}>
-      <CardContent>
-        <Typography variant="body1">Trending Feed</Typography>
-        <List>
-          {posts.slice(0, 4).map((feedUnit: SCFeedUnitType, index) => {
-            const feedObject: SCFeedObjectType = feedUnit[feedUnit.type];
-            <FeedObject feedObject={feedObject} key={index} elevation={0} />;
-          })}
-        </List>
-        {hasMore && (
-          <Button size="small" onClick={() => setOpenTrendingPostDialog(true)}>
-            Show More
-          </Button>
-        )}
-        {openTrendingPostDialog && <></>}
-      </CardContent>
+    <Root {...props}>
+      {loading ? (
+        <TrendingPostSkeleton elevation={0} />
+      ) : (
+        <CardContent>
+          <Typography variant="body1">
+            <FormattedMessage id="ui.TrendingPost.title" defaultMessage="ui.TrendingPost.title" />
+          </Typography>
+          {!total ? (
+            <Typography variant="body2">
+              <FormattedMessage id="ui.TrendingPost.noResults" defaultMessage="ui.TrendingPost.noResults" />
+            </Typography>
+          ) : (
+            <React.Fragment>
+              <List>
+                {posts.slice(0, 4).map((feedUnit: SCFeedUnitType, index) => {
+                  const feedObject: SCFeedObjectType = feedUnit[feedUnit.type];
+                  <FeedObject feedObject={feedObject} key={index} elevation={0} />;
+                })}
+              </List>
+              {hasMore && (
+                <Button size="small" onClick={() => setOpenTrendingPostDialog(true)}>
+                  <FormattedMessage id="ui.TrendingPost.button.showMore" defaultMessage="ui.TrendingPost.button.showMore" />
+                </Button>
+              )}
+            </React.Fragment>
+          )}
+          {openTrendingPostDialog && <></>}
+        </CardContent>
+      )}
     </Root>
   );
 }

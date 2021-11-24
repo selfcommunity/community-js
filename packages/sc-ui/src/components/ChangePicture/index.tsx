@@ -2,6 +2,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Button} from '@mui/material';
 import ChangePictureDialog from './ChangePictureDialog';
+import {FormattedMessage} from 'react-intl';
 
 const PREFIX = 'SCChangePictureButton';
 
@@ -21,7 +22,7 @@ function ChangePicture({onClick}: {onClick?: () => void | undefined}): JSX.Eleme
   return (
     <React.Fragment>
       <CPButton size="small" variant="outlined" onClick={() => setOpenChangePictureDialog(true)}>
-        Change Picture
+        <FormattedMessage id="ui.changePicture.button.change" defaultMessage="ui.changePicture.button.change" />
       </CPButton>
       {openChangePictureDialog && <ChangePictureDialog open={openChangePictureDialog} onClose={() => handleCloseChangePictureDialog()} />}
     </React.Fragment>

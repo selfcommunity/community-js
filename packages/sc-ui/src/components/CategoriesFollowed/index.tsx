@@ -10,6 +10,18 @@ import Category from '../Category';
 import {AxiosResponse} from 'axios';
 import {SCCategoryType} from '@selfcommunity/core/src/types';
 import {SCOPE_SC_UI} from '../../constants/Errors';
+import {defineMessages, useIntl, FormattedMessage} from 'react-intl';
+
+const messages = defineMessages({
+  categoriesFollowed: {
+    id: 'ui.categoriesFollowed.categoriesFollowed',
+    defaultMessage: 'ui.categoriesFollowed.categoriesFollowed'
+  },
+  noCategories: {
+    id: 'ui.categoriesFollowed.subtitle.noResults',
+    defaultMessage: 'ui.categoriesFollowed.subtitle.noResults'
+  }
+});
 
 const PREFIX = 'SCCategoriesFollowed';
 
@@ -30,6 +42,7 @@ export default function CategoriesFollowed(props): JSX.Element {
   const [total, setTotal] = useState<number>(0);
   const [followed, setFollowed] = useState<boolean>(false);
   const [openCategoriesFollowedDialog, setOpenCategoriesFollowedDialog] = useState<boolean>(false);
+  const intl = useIntl();
 
   function fetchCategoriesSuggestion() {
     http
@@ -64,9 +77,9 @@ export default function CategoriesFollowed(props): JSX.Element {
         <CategoriesSuggestionSkeleton elevation={0} />
       ) : (
         <CardContent>
-          <Typography variant="body1">{Boolean(total) && total} Categories Followed</Typography>
+          <Typography variant="body1">{`${intl.formatMessage(messages.categoriesFollowed, {total: total})}`}</Typography>
           {!total ? (
-            <Typography variant="body2">No categories</Typography>
+            <Typography variant="body2">{`${intl.formatMessage(messages.noCategories)}`}</Typography>
           ) : (
             <React.Fragment>
               <List>
@@ -79,7 +92,7 @@ export default function CategoriesFollowed(props): JSX.Element {
               </List>
               {hasMore && (
                 <Button size="small" onClick={() => loadCategories()}>
-                  Show More
+                  <FormattedMessage id="ui.categoriesFollowed.button.showMore" defaultMessage="ui.categoriesFollowed.button.showMore" />
                 </Button>
               )}
             </React.Fragment>

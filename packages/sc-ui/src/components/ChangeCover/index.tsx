@@ -6,6 +6,7 @@ import {AxiosResponse} from 'axios';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
+import {FormattedMessage} from 'react-intl';
 
 const PREFIX = 'SCChangeCoverButton';
 
@@ -86,7 +87,7 @@ function ChangeCover({onClick}: {onClick?: () => void | undefined}): JSX.Element
     <React.Fragment>
       <Root>
         <Button variant="outlined" onClick={handleClick} size="small" sx={{ml: 2}}>
-          Change Cover
+          <FormattedMessage id="ui.changeCover.button.change" defaultMessage="ui.changeCover.button.change" />
         </Button>
         <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
           {hasCover && (
@@ -94,7 +95,7 @@ function ChangeCover({onClick}: {onClick?: () => void | undefined}): JSX.Element
               <ListItemIcon>
                 <DeleteOutlineOutlinedIcon fontSize="small" />
               </ListItemIcon>
-              Delete Cover
+              <FormattedMessage id="ui.changeCover.button.delete" defaultMessage="ui.changeCover.button.delete" />
             </MenuItem>
           )}
           <input type="file" onChange={() => handleUpload(event)} ref={fileInput} hidden />
@@ -102,7 +103,7 @@ function ChangeCover({onClick}: {onClick?: () => void | undefined}): JSX.Element
             <ListItemIcon>
               <AddCircleOutlineOutlinedIcon fontSize="small" />
             </ListItemIcon>
-            Upload New Cover
+            <FormattedMessage id="ui.changeCover.button.upload" defaultMessage="ui.changeCover.button.upload" />
           </MenuItem>
         </Menu>
         <HelpOutlineOutlinedIcon onClick={() => setIsOpen(true)} sx={{ml: 1}} />
@@ -124,13 +125,21 @@ function ChangeCover({onClick}: {onClick?: () => void | undefined}): JSX.Element
               width: '400px',
               height: '200px'
             }}>
-            <Typography component="h3">Upload a new cover</Typography>
+            <Typography component="h3">
+              <FormattedMessage id="ui.changeCover.button.uploadA" defaultMessage="ui.changeCover.button.uploadA" />
+            </Typography>
             <Divider />
             <Typography component="span">
               <ul className="list">
-                <li>Allowed formats: JPG, PNG, GIF(not animated)</li>
-                <li> Optimal dimensions: 1600 x 400 pixel</li>
-                <li> Weight: max 5MB</li>
+                <li>
+                  <FormattedMessage id="ui.changeCover.listF" defaultMessage="ui.changeCover.listF" />
+                </li>
+                <li>
+                  <FormattedMessage id="ui.changeCover.listD" defaultMessage="ui.changeCover.listF" />
+                </li>
+                <li>
+                  <FormattedMessage id="ui.changeCover.listW" defaultMessage="ui.changeCover.listF" />
+                </li>
               </ul>
             </Typography>
           </Popover>

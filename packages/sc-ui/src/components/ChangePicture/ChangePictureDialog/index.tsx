@@ -10,6 +10,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import FolderOpenIcon from '@mui/icons-material/FolderOpen';
 import {Endpoints, http, SCUserContext, SCUserContextType, SCUserType} from '@selfcommunity/core';
 import {AxiosResponse} from 'axios';
+import {FormattedMessage} from 'react-intl';
 
 const PREFIX = 'SCChangePictureDialog';
 
@@ -85,7 +86,7 @@ function ChangePictureDialog({open, onClose}: {open: boolean; onClose?: () => vo
               <CloseIcon fontSize="small" />
             </IconButton>
           }
-          title="Change Profile Image"
+          title={<FormattedMessage id="ui.changePicture.title" defaultMessage="ui.changePicture.title" />}
         />
         <Divider />
         <CardContent>
@@ -93,20 +94,19 @@ function ChangePictureDialog({open, onClose}: {open: boolean; onClose?: () => vo
             <input type="file" onChange={() => handleUpload(event)} ref={fileInput} hidden />
             <Button variant="outlined" onClick={() => fileInput.current.click()}>
               <FolderOpenIcon fontSize="small" />
-              Upload new image
+              <FormattedMessage id="ui.changePicture.button.upload" defaultMessage="ui.changePicture.button.upload" />
             </Button>
           </React.Fragment>
           <Typography sx={{fontSize: 10}} color="text.secondary" gutterBottom>
-            Allowed formats: gif,png,jpg,jpeg
-            <br />
-            Maximum size: 3 MB
+            <FormattedMessage id="ui.changePicture.listF" defaultMessage="ui.changePicture.listF" /> <br />
+            <FormattedMessage id="ui.changePicture.listS" defaultMessage="ui.changePicture.listS" />
           </Typography>
           <CardMedia component="img" src={file} sx={{width: 151}} />
         </CardContent>
         <Divider />
         <CardActions disableSpacing sx={{display: 'flex', justifyContent: 'flex-end'}}>
           <Button variant="contained" size="small" onClick={() => handleSave()}>
-            Finished
+            <FormattedMessage id="ui.changePicture.button.finished" defaultMessage="ui.changePicture.button.finished" />
           </Button>
         </CardActions>
       </Root>
