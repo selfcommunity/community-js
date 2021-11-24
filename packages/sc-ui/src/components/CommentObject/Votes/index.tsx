@@ -1,22 +1,11 @@
 import React, {useContext, useState} from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 import {Box, Button, Divider, IconButton, Tooltip, Typography} from '@mui/material';
-import ShareIcon from '@mui/icons-material/ShareOutlined';
-import CircularProgress from '@mui/material/CircularProgress';
-import LoadingButton from '@mui/lab/LoadingButton';
-import SharesDialog from './VotesDialog';
-import {
-  SCCommentType,
-  SCFeedObjectType,
-  SCFeedObjectTypologyType,
-  SCUserContext,
-  SCUserContextType,
-  useSCFetchCommentObject,
-  useSCFetchFeedObject
-} from '@selfcommunity/core';
+import {SCCommentType, SCUserContext, SCUserContextType, useSCFetchCommentObject} from '@selfcommunity/core';
 import {styled} from '@mui/material/styles';
 import VoteFilledIcon from '@mui/icons-material/ThumbUpTwoTone';
 import VoteIcon from '@mui/icons-material/ThumbUpOutlined';
+import CommentObjectVotesDialog from './VotesDialog';
 
 const messages = defineMessages({
   votes: {
@@ -88,7 +77,11 @@ export default function Votes({
           {`${intl.formatMessage(messages.votes, {total: obj.vote_count})}`}
         </Typography>
       </Button>,
-      <>{/* openVotesDialog && obj.vote_count > 0 && <SharesDialog object={obj} open={openVotesDialog} onClose={handleToggleSharesDialog} /> */}</>
+      <>
+        {openVotesDialog && obj.vote_count > 0 && (
+          <CommentObjectVotesDialog commentObject={obj} open={openVotesDialog} onClose={handleToggleSharesDialog} />
+        )}
+      </>
     ];
   }
 

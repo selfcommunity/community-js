@@ -42,13 +42,14 @@ export default function CommentObjectVotesDialog({
   const [next, setNext] = useState<string>(null);
 
   useEffect(() => {
-    if (obj && next) {
+    if (obj) {
       fetchVotes();
     }
   }, [obj.id]);
 
   function fetchVotes() {
     setIsLoading(true);
+    console.log(obj);
     http
       .request({
         url: next ? next : `${Endpoints.CommentVotes.url({id: obj.id})}`,

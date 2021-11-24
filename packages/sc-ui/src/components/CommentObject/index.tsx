@@ -8,6 +8,11 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import TimeAgo from 'timeago-react';
 import Bullet from '../../shared/Bullet';
 import {SCCommentType} from '@selfcommunity/core/src/types/comment';
+import classNames from 'classnames';
+import Votes from './Votes';
+import {AxiosResponse} from 'axios';
+import {SCOPE_SC_UI} from '../../constants/Errors';
+import CommentObjectSkeleton from '../Skeleton/CommentObjectSkeleton';
 import {
   Endpoints,
   http,
@@ -20,11 +25,7 @@ import {
   SCUserType,
   useSCFetchCommentObject
 } from '@selfcommunity/core';
-import classNames from 'classnames';
-import Votes from './Votes';
-import {AxiosResponse} from 'axios';
-import {SCOPE_SC_UI} from '../../constants/Errors';
-import CommentObjectSkeleton from '../Skeleton/CommentObjectSkeleton';
+import {LoadingButton} from '@mui/lab';
 
 const messages = defineMessages({
   reply: {
@@ -76,6 +77,7 @@ export default function CommentObject({
   feedObjectType = SCFeedObjectTypologyType.POST,
   onReply = null,
   onVote = null,
+  onFetchLatestComment = null,
   ...rest
 }: {
   id?: number;
@@ -84,11 +86,13 @@ export default function CommentObject({
   commentObject?: SCCommentType;
   onReply?: (comment: SCCommentType) => void;
   onVote?: (comment: SCCommentType) => void;
+  onFetchLatestComment?: () => void;
   [p: string]: any;
 }): JSX.Element {
   const scUser: SCUserContextType = useContext(SCUserContext);
   const {obj, setObj} = useSCFetchCommentObject({id, commentObject});
-  const [loading, setLoading] = useState(false);
+  const [loadingVote, setLoadingVote] = useState(false);
+  const [loadingLatestComments, setLoadingLatestComments] = useState(false);
   const [next, setNext] = useState<string>(`${Endpoints.Comments.url()}?${feedObjectType}=${feedObject.id}&parent=${commentObject.id}&limit=5`);
   const intl = useIntl();
 
@@ -111,9 +115,9 @@ export default function CommentObject({
    */
   function renderActionVote(comment) {
     return (
-      <Button variant={'text'} sx={{marginTop: '-1px'}} onClick={vote}>
+      <LoadingButton variant={'text'} sx={{marginTop: '-1px'}} onClick={() => vote(comment)} disabled={loadingVote}>
         {comment.voted ? intl.formatMessage(messages.voteDown) : intl.formatMessage(messages.voteUp)}
-      </Button>
+      </LoadingButton>
     );
   }
 
@@ -148,28 +152,19 @@ export default function CommentObject({
   }
 
   /**
-   * Handle vote comment
-   * @param comment
-   */
-  function vote(comment) {
-    if (onVote) {
-      onVote(comment);
-    }
-  }
-
-  /**
    * Handle fetch latest comments
    * @param comment
    */
   function loadLatestComment() {
-    setLoading(true);
+    setLoadingLatestComments(true);
     fetchLatestComment()
       .then((data) => {
         const newObj = obj;
         obj.latest_comments = [...data.results, ...obj.latest_comments];
         setObj(newObj);
         setNext(data.next);
-        setLoading(false);
+        setLoadingLatestComments(false);
+        onFetchLatestComment && onFetchLatestComment();
       })
       .catch((error) => {
         Logger.error(SCOPE_SC_UI, error);
@@ -195,6 +190,59 @@ export default function CommentObject({
     },
     [next]
   );
+
+  /**
+   * fetchVotes
+   */
+  const performVoteComment = useMemo(
+    () => (comment) => {
+      return http
+        .request({
+          url: Endpoints.CommentVote.url({id: comment.id}),
+          method: Endpoints.CommentVote.method
+        })
+        .then((res: AxiosResponse<any>) => {
+          if (res.status >= 300) {
+            return Promise.reject(res);
+          }
+          return Promise.resolve(res.data);
+        });
+    },
+    [obj.id]
+  );
+
+  /**
+   * Handle vote comment
+   * @param comment
+   */
+  function vote(comment) {
+    setLoadingVote(true);
+    performVoteComment(comment)
+      .then((data) => {
+        const newObj = obj;
+        if (comment.parent) {
+          // 2° comment level
+          const newLatestComments: SCCommentType[] = obj.latest_comments.map((lc) => {
+            if (lc.id === comment.id) {
+              lc.voted = !lc.voted;
+              lc.vote_count = lc.vote_count - (lc.voted ? -1 : 1);;
+            }
+            return lc;
+          });
+          obj.latest_comments = newLatestComments;
+        } else {
+          // 1° comment level
+          obj.voted = !obj.voted;
+          obj.vote_count = obj.vote_count - (obj.voted ? -1 : 1);
+        }
+        setObj(newObj);
+        setLoadingVote(false);
+        onVote && onVote(comment);
+      })
+      .catch((error) => {
+        Logger.error(SCOPE_SC_UI, error);
+      });
+  }
 
   /**
    * Render comment & latest activities
@@ -247,7 +295,7 @@ export default function CommentObject({
       <>
         {comment.comment_count - comment.latest_comments?.length >= 1 && (
           <>
-            {loading ? (
+            {loadingLatestComments ? (
               <Box sx={{paddingLeft: '55px', paddingRight: 0}}>
                 <CommentObjectSkeleton {...rest} />
               </Box>
@@ -262,7 +310,9 @@ export default function CommentObject({
             )}
           </>
         )}
-        {comment.latest_comments?.map((lc: SCCommentType) => renderComment(lc))}
+        {comment.latest_comments?.map((lc: SCCommentType) => (
+          <React.Fragment key={lc.id}>{renderComment(lc)}</React.Fragment>
+        ))}
       </>
     );
   }

@@ -2,6 +2,8 @@
   "ui.common.error": "Error",
   "ui.common.error.url": "The url is not valid",
 
+  "ui.baseDialog.button.close": "Close",
+
   "ui.peopleSuggestion.title": "People Suggestion",
 
   "ui.composer.type.post": "Create Post",
@@ -63,14 +65,13 @@
   "ui.commentsObject.noOtherComment": "No other comments.",
 
   "ui.commentObject.voteUp": "Like",
-  "ui.commentObject.voteDown": "DisLike",
+  "ui.commentObject.voteDown": "Dislike",
   "ui.commentObject.reply": "Reply",
   "ui.commentObject.votes": "{total, plural, =0 {# Likes} one {# Like} other {# Likes}}",
   "ui.commentObject.viewLatestComment": "View previous {total, plural, =0 {# Comments} one {# Comment} other {# Comments}} ",
 
   "ui.commentObjectVotesDialog.title": "Votes",
-  "ui.commentObject.noOtherVotes": "No other votes.",
+  "ui.commentObjectVotesDialog.noOtherVotes": "No other votes.",
 
-  "ui.feedObjectVotesDialog.title": "Votes",
-  "ui.commentObject.noOtherVotes": "No other votes."
+  "ui.feedObjectVotesDialog.title": "Votes"
 }

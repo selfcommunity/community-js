@@ -40,7 +40,7 @@ export default function BaseDialog({
       <DialogContent dividers>{children}</DialogContent>
       <DialogActions>
         <Button onClick={onClose} color="primary" autoFocus variant={'outlined'}>
-          <FormattedMessage id="button.close" defaultMessage="button.close" />
+          <FormattedMessage id="ui.baseDialog.button.close" defaultMessage="ui.baseDialog.button.close" />
         </Button>
       </DialogActions>
     </Root>

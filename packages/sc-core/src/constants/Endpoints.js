@@ -47,8 +47,12 @@ export default {
     url: urlReplacer('/api/v2/comment/'),
     method: 'GET',
   },
+  CommentVote: {
+    url: urlReplacer('/api/v2/comment/$(id)/vote/'),
+    method: 'POST',
+  },
   CommentVotes: {
-    url: urlReplacer('/api/v2/comment/{id}/vote/'),
+    url: urlReplacer('/api/v2/comment/$(id)/vote/'),
     method: 'GET',
   },
   /**

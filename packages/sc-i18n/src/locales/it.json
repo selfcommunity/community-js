@@ -2,6 +2,8 @@
   "ui.common.error": "Error",
   "ui.common.error.url": "The url is not valid",
 
+  "ui.baseDialog.button.close": "Chiudi",
+
   "ui.peopleSuggestion.title": "People Suggestion",
 
   "ui.composer.type.post": "Create Post",
@@ -69,5 +71,7 @@
   "ui.commentObject.viewLatestComment": "Vedi {total, plural, =0 {# Comments} one {# Comment} other {# Comments}} precedenti",
 
   "ui.commentObjectVotesDialog.title": "Voti",
-  "ui.commentObject.noOtherVotes": "Non ci sono altri voti."
+  "ui.commentObjectVotesDialog.noOtherVotes": "Non ci sono altri voti.",
+
+  "ui.feedObjectVotesDialog.title": "Votes"
 }
