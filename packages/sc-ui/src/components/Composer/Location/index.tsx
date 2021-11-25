@@ -150,12 +150,16 @@ export default function ({
         const matches = match(option.full_address, inputValue);
         const parts = parse(option.full_address, matches);
         return (
-          <li key={`${option.lat}_${option.lng}`} {...props}>
-            {parts.map((part, index) => (
-              <span key={index} style={{fontWeight: part.highlight ? 700 : 400}}>
-                {part.text}
-              </span>
-            ))}
+          <li key={`${option.lat}_${option.lng}`} {...props} style={{whiteSpace: 'break-spaces'}}>
+            {parts.map((part, index) =>
+              part.highlight ? (
+                <span key={index} style={{fontWeight: 700}}>
+                  {part.text}
+                </span>
+              ) : (
+                part.text
+              )
+            )}
           </li>
         );
       }}

@@ -45,8 +45,9 @@ import {
   Stack,
   TextField,
   ToggleButton,
-  ToggleButtonGroup, Tooltip,
-  Typography,
+  ToggleButtonGroup,
+  Tooltip,
+  Typography
 } from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {COMPOSER_POLL_MIN_CHOICES, COMPOSER_TITLE_MAX_LENGTH, COMPOSER_TYPE_DISCUSSION, COMPOSER_TYPE_POST} from '../../constants/Composer';
@@ -758,25 +759,16 @@ export default function Composer({
               linksAdornment={renderMediaControls(MEDIA_TYPE_LINK)}
             />
           </Box>
-          {location && (
-            <Box className={classes.location}>
-              <Chip icon={<LocationIcon />} label={location.full_address} onDelete={handleDeleteLocation} />
-            </Box>
-          )}
-          {audience === AUDIENCE_TAG && addressing.length && (
-            <Stack spacing={2} className={classes.audience} direction="row">
-              <Tooltip title={<FormattedMessage id="ui.composer.audience.tag" defaultMessage="ui.composer.audience.tag" />}>
-                <span>
-                  <IconButton disabled={isSubmitting} onClick={handleChangeView(AUDIENCE_VIEW)} size="small">
-                    <TagIcon />
-                  </IconButton>
-                </span>
-              </Tooltip>
-              {addressing.map((t: SCTagType) => (
-                <TagChip key={t.id} tag={t} onDelete={handleDeleteTag(t.id)} />
+          <Stack spacing={2} className={classes.audience} direction="row">
+            {location && (
+              <Chip icon={<LocationIcon />} label={location.full_address} onDelete={handleDeleteLocation} onClick={handleChangeView(LOCATION_VIEW)} />
+            )}
+            {audience === AUDIENCE_TAG &&
+              addressing.length &&
+              addressing.map((t: SCTagType) => (
+                <TagChip key={t.id} tag={t} onDelete={handleDeleteTag(t.id)} icon={<TagIcon />} onClick={handleChangeView(AUDIENCE_VIEW)} />
               ))}
-            </Stack>
-          )}
+          </Stack>
           <div className={classes.block}>
             <Categories onChange={handleChange('categories')} defaultValue={categories} disabled={isSubmitting} />
           </div>

@@ -138,7 +138,7 @@ export default ({
               <ImageListItemBar
                 position="top"
                 actionIcon={
-                  <IconButton onClick={onDelete(media.id)} size="small">
+                  <IconButton onClick={onDelete(media.id)} size="small" sx={{ color: 'rgba(255, 255, 255, 0.54)' }}>
                     <DeleteIcon />
                   </IconButton>
                 }
