@@ -6,7 +6,7 @@ import {Logger} from '../../../utils/logger';
 import {SCOPE_SC_CORE} from '../../../constants/Errors';
 
 /**
- * Create Preferences Context
+ * Create Preferences/Features Context
  * Consuming this context in one of the following ways:
  *  1. <SCPreferencesContext.Consumer>
  *       {(preferences) => (...)}
@@ -18,7 +18,7 @@ export const SCPreferencesContext = createContext<SCPreferencesContextType>({} a
 
 /**
  * SCPreferencesProvider
- * This import all preferences
+ * This import all preferences and features enabled
  */
 export default function SCPreferencesProvider({children = null}: {children: React.ReactNode}): JSX.Element {
   const [preferences, setPreferences] = useState<Record<string, any>>({});
@@ -27,8 +27,8 @@ export default function SCPreferencesProvider({children = null}: {children: Reac
   const [loading, setLoading] = useState<boolean>(true);
 
   /**
-   * Load all dynamic preferences to manages
-   * configurations of the project
+   * Load all dynamic preferences and features enabled
+   * to manages configurations of the project
    */
   useEffect(() => {
     Promise.all([preferencesServices.loadPreferences(), featuresServices.loadFeatures()])
