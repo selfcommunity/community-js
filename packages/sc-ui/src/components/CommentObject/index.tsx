@@ -75,6 +75,7 @@ export default function CommentObject({
   commentObject = null,
   feedObject = null,
   feedObjectType = SCFeedObjectTypologyType.POST,
+  onOpenReply = null,
   onReply = null,
   onVote = null,
   onFetchLatestComment = null,
@@ -84,7 +85,7 @@ export default function CommentObject({
   feedObject: SCFeedObjectType;
   feedObjectType: SCFeedObjectTypologyType;
   commentObject?: SCCommentType;
-  onReply?: (comment: SCCommentType) => void;
+  onOpenReply?: (comment: SCCommentType) => void;
   onVote?: (comment: SCCommentType) => void;
   onFetchLatestComment?: () => void;
   [p: string]: any;
@@ -145,9 +146,7 @@ export default function CommentObject({
    * @param comment
    */
   function reply(comment) {
-    if (onReply) {
-      onReply(comment);
-    }
+    onOpenReply && onOpenReply(comment);
   }
 
   /**

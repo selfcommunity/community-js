@@ -1,4 +1,4 @@
-import React, {RefObject, useContext, useEffect} from 'react';
+import React, { RefObject, useContext, useEffect, useState } from 'react';
 import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import {defineMessages, useIntl} from 'react-intl';
@@ -48,6 +48,7 @@ export default function ReplyCommentObject({
 }): JSX.Element {
   const scUser: SCUserContextType = useContext(SCUserContext);
   const {obj, setObj} = useSCFetchCommentObject({id: commentObjectId, commentObject});
+  const [html, setHtml] = useState('');
   let editor: RefObject<TMUIRichTextEditorRef> = React.createRef();
   const intl = useIntl();
 
@@ -70,7 +71,14 @@ export default function ReplyCommentObject({
    * Handle Replay
    */
   const handleReply = () => {
-    onReply && onReply(obj);
+    onReply && onReply(html);
+  };
+
+  /**
+   * Handle Editor change
+   */
+  const handleChangeText = (value: string): void => {
+    setHtml(value);
   };
 
   /**
@@ -94,6 +102,7 @@ export default function ReplyCommentObject({
                       onRef={(e) => {
                         editor = e;
                       }}
+                      onChange={handleChangeText}
                     />
                   </CardContent>
                 </Card>

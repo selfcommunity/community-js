@@ -320,7 +320,7 @@ export default function Vote({
           </Button>
           {openVotesDialog && (
             <BaseDialog
-              title={<FormattedMessage defaultMessage="votesObject.title" id="votesObject.title" />}
+              title={<FormattedMessage defaultMessage="ui.feedObject.votesDialog.title" id="ui.feedObject.votesDialog.title" />}
               onClose={handleToggleVotesDialog}
               open={openVotesDialog}>
               {loadingVotes ? (
@@ -335,7 +335,7 @@ export default function Vote({
                   endMessage={
                     <p style={{textAlign: 'center'}}>
                       <b>
-                        <FormattedMessage id="votesObject.noOtherLikes" defaultMessage="votesObject.noOtherLikes" />
+                        <FormattedMessage id="ui.feedObject.votesDialog.noOtherLikes" defaultMessage="ui.feedObject.votesDialog.noOtherLikes" />
                       </b>
                     </p>
                   }>

@@ -14,7 +14,7 @@ const Root = styled(DialogTitle, {
 })(({theme}) => ({
   display: 'flex',
   alignItems: 'center',
-  padding: theme.spacing()
+  padding: '9px 10px 9px 15px'
 }));
 
 export default function ({children = null, onClose = null}) {
@@ -28,7 +28,7 @@ export default function ({children = null, onClose = null}) {
           sx={{
             position: 'absolute',
             right: 8,
-            top: 8,
+            top: 5,
             color: (theme) => theme.palette.grey[500]
           }}>
           <CloseIcon />

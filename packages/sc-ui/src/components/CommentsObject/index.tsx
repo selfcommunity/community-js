@@ -106,7 +106,8 @@ export default function CommentsObject({
    * @param comment
    */
   function handleReply(comment: SCCommentType) {
-    console.log(comment);
+    // if not replyComment handle a feedObject comment
+    console.log(replyComment);
   }
 
   /**
@@ -167,9 +168,9 @@ export default function CommentsObject({
               renderComment(comment)
             ) : (
               <>
-                <CommentObject commentObject={comment} onReply={openReplyBox} feedObject={obj} feedObjectType={feedObjectType} {...rest} />
+                <CommentObject commentObject={comment} onOpenReply={openReplyBox} feedObject={obj} feedObjectType={feedObjectType} {...rest} />
                 {replyComment && (replyComment.id === comment.id || replyComment.parent === comment.id) && (
-                  <ReplyCommentObject autoFocus id={`reply-${comment.id}`} {...rest} onReply={(c) => handleReply(c)} />
+                  <ReplyCommentObject autoFocus id={`reply-${comment.id}`} commentObject={comment} onReply={handleReply} {...rest} />
                 )}
               </>
             )}
