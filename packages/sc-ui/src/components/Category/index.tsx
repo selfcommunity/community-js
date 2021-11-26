@@ -4,10 +4,10 @@ import List from '@mui/material/List';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import {Avatar, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText} from '@mui/material';
-import {useSCFetchCategory} from '@selfcommunity/core';
+import {Logger, useSCFetchCategory} from '@selfcommunity/core';
 import CategoryBoxSkeleton from '../Skeleton/CategoryBoxSkeleton';
-import FollowButton from '../FollowButton';
-import {SCCategoryType} from '@selfcommunity/core/src/types';
+import FollowButton from '../CategoryFollowButton';
+import {SCCategoryType} from '@selfcommunity/core';
 
 const PREFIX = 'SCCategory';
 
@@ -32,7 +32,6 @@ function Category({
   [p: string]: any;
 }): JSX.Element {
   const {scCategory, setSCCategory} = useSCFetchCategory({id, category});
-  const buttonText = followed ? 'Followed' : 'Follow';
 
   const c = (
     <React.Fragment>
@@ -43,7 +42,7 @@ function Category({
           </ListItemAvatar>
           <ListItemText primary={scCategory.name} secondary={scCategory.slogan} />
           <ListItemSecondaryAction>
-            <FollowButton scCategoryId={scCategory.id}>{buttonText}</FollowButton>
+            <FollowButton category={scCategory} />
           </ListItemSecondaryAction>
         </ListItem>
       ) : (

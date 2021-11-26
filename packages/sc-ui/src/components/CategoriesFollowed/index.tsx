@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
 import {Button, Divider, Typography} from '@mui/material';
@@ -44,31 +44,42 @@ export default function CategoriesFollowed(props): JSX.Element {
   const [openCategoriesFollowedDialog, setOpenCategoriesFollowedDialog] = useState<boolean>(false);
   const intl = useIntl();
 
-  function fetchCategoriesSuggestion() {
-    http
-      .request({
-        url: Endpoints.CategoriesFollowed.url(),
-        method: Endpoints.CategoriesFollowed.method
-      })
-      .then((res: AxiosResponse<any>) => {
-        const data = res.data;
-        setCategories(data.results);
-        setHasMore(data.count > visibleCategories);
-        setLoading(false);
-        setTotal(data.count);
-        setFollowed(true);
-      })
-      .catch((error) => {
-        Logger.error(SCOPE_SC_UI, error);
-      });
-  }
+  /**
+   * fetchCategoriesFollower
+   */
+  const fetchCategoriesFollower = useMemo(
+    () => () => {
+      return http
+        .request({
+          url: Endpoints.CategoriesFollowed.url(),
+          method: Endpoints.CategoriesFollowed.method
+        })
+        .then((res: AxiosResponse<any>) => {
+          if (res.status >= 300) {
+            return Promise.reject(res);
+          }
+          return Promise.resolve(res.data);
+        });
+    },
+    []
+  );
 
   function loadCategories() {
     setVisibleCategories((prevVisibleCategories) => prevVisibleCategories + 3);
   }
 
   useEffect(() => {
-    fetchCategoriesSuggestion();
+    fetchCategoriesFollower()
+      .then((data: AxiosResponse<any>) => {
+        setCategories(data['results']);
+        setHasMore(data['count'] > visibleCategories);
+        setLoading(false);
+        setTotal(data['count']);
+        setFollowed(true);
+      })
+      .catch((error) => {
+        Logger.error(SCOPE_SC_UI, error);
+      });
   }, []);
 
   return (
@@ -85,7 +96,7 @@ export default function CategoriesFollowed(props): JSX.Element {
               <List>
                 {categories.slice(0, visibleCategories).map((category: SCCategoryType, index) => (
                   <div key={index}>
-                    <Category elevation={0} category={category} followed={followed} key={category.id} />
+                    <Category elevation={0} category={category} key={category.id} />
                     <Divider />
                   </div>
                 ))}

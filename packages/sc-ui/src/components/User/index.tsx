@@ -35,7 +35,7 @@ const Root = styled(Card, {
 export default function User({id = null, user = null, ...rest}: {id?: number; user?: SCUserType; [p: string]: any}): JSX.Element {
   const {scUser, setSCUser} = useSCFetchUser({id, user});
   const scPreferencesContext: SCPreferencesContextType = useContext(SCPreferencesContext);
-  const scAuthContext: SCUserContextType = useContext(SCUserContext);
+  const scUserContext: SCUserContextType = useContext(SCUserContext);
   const followEnabled =
     SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED in scPreferencesContext.preferences &&
     scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED].value;
@@ -120,7 +120,7 @@ export default function User({id = null, user = null, ...rest}: {id?: number; us
             <Avatar alt={scUser.username} src={scUser.avatar} />
           </ListItemAvatar>
           <ListItemText primary={scUser.username} secondary={scUser.description} />
-          <ListItemSecondaryAction>{scAuthContext.user ? renderAuthenticatedActions() : renderAnonymousActions()}</ListItemSecondaryAction>
+          <ListItemSecondaryAction>{scUserContext.user ? renderAuthenticatedActions() : renderAnonymousActions()}</ListItemSecondaryAction>
         </ListItem>
       ) : (
         <UserBoxSkeleton elevation={0} />

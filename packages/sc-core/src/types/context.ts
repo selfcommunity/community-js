@@ -1,5 +1,6 @@
 import {SCUserType} from './user';
 import React, {ReactNode} from 'react';
+import { SCCategoryType } from './category';
 
 /**
  * Interface SCSettingsType
@@ -71,6 +72,43 @@ export interface SCUserContextType {
    * Triggered when the a user logout is performed.
    */
   logout: () => void;
+
+  /**
+   * Triggered when the a user logout is performed.
+   */
+  categoriesManager: SCCategoriesManagerType;
+}
+
+export interface SCCategoriesManagerType {
+  /**
+   * List of all categories followed by the authenticated user
+   */
+  categories: SCCategoryType[];
+
+  /**
+   * List of current categories in loading state
+   */
+  isLoading: (category: SCCategoryType) => boolean;
+
+  /**
+   * Handle user follow/unfollow category
+   */
+  follow: (category: SCCategoryType) => Promise<any>;
+
+  /**
+   * Handle check if a user follow a category, caching data
+   */
+  isFollowed: (category: SCCategoryType) => boolean;
+
+  /**
+   * Refresh categories
+   */
+  refresh: () => void;
+
+  /**
+   * Empty cache to revalidate all categories
+   */
+  emptyCache: () => void;
 }
 
 /**

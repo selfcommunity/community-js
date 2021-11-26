@@ -1,5 +1,6 @@
 import {
   SCUserContextType,
+  SCCategoriesManagerType,
   SCContextProviderType,
   SCContextType,
   SCSettingsType,
@@ -35,6 +36,7 @@ import {
  */
 export {
   SCUserContextType,
+  SCCategoriesManagerType,
   SCContextProviderType,
   SCContextType,
   SCSettingsType,

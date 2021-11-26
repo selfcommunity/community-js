@@ -1,10 +1,11 @@
 import React, {createContext, useContext, useEffect, useMemo} from 'react';
 import sessionServices from '../../../services/session';
-import {SCUserContextType, SCContextType, SCSessionType, SCUserType} from '../../../types';
+import {SCUserContextType, SCContextType, SCSessionType, SCUserType, SCCategoriesManagerType} from '../../../types';
 import {SCContext} from '../SCContextProvider';
 import useSCAuth, {authActionTypes} from '../../../hooks/useSCAuth';
 import {Logger} from '../../../utils/logger';
 import {SCOPE_SC_CORE} from '../../../constants/Errors';
+import useSCCategoriesManager from '../../../hooks/useSCCategoriesManager';
 
 /**
  * SCUserContext (Authentication Context)
@@ -23,8 +24,23 @@ export const SCUserContext = createContext<SCUserContextType>({} as SCUserContex
  */
 export default function SCUserProvider({children}: {children: React.ReactNode}): JSX.Element {
   const scContext: SCContextType = useContext(SCContext);
+
+  /**
+   * Manage user session
+   * Refresh token if necessary
+   */
   const initialSession: SCSessionType = scContext.settings.session;
   const {state, dispatch} = useSCAuth(initialSession);
+
+  /**
+   * Manage categories followed
+   */
+  const categoriesManager: SCCategoriesManagerType = useSCCategoriesManager();
+
+  /**
+   * Manage community friendship
+   * Follow/friendship
+   */
 
   /**
    * Check if there is a currently active session
@@ -70,8 +86,9 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
       loading: state.loading,
       error: state.loading,
       logout,
+      categoriesManager,
     }),
-    [state]
+    [state, categoriesManager.categories]
   );
 
   /**

@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
-import {Avatar, Button, Divider, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText, Typography} from '@mui/material';
+import {Avatar, Button, Divider, ListItem, ListItemSecondaryAction, ListItemText, Typography} from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import {Endpoints, http, Logger} from '@selfcommunity/core';
@@ -9,7 +9,7 @@ import CategoriesSuggestionSkeleton from '../Skeleton/CategoriesSuggestionSkelet
 import {AxiosResponse} from 'axios';
 import {SCCategoryType} from '@selfcommunity/core/src/types';
 import {SCOPE_SC_UI} from '../../constants/Errors';
-import FollowButton from '../FollowButton';
+import FollowButton from '../CategoryFollowButton';
 import {FormattedMessage, defineMessages, useIntl} from 'react-intl';
 
 const messages = defineMessages({
@@ -39,30 +39,38 @@ export default function CategoriesPopular(props): JSX.Element {
   const [openPopularCategoriesDialog, setOpenPopularCategoriesDialog] = useState<boolean>(false);
   const intl = useIntl();
 
-  function fetchCategoriesSuggestion() {
-    http
-      .request({
-        url: Endpoints.PopularCategories.url(),
-        method: Endpoints.PopularCategories.method
-      })
-      .then((res: AxiosResponse<any>) => {
-        const data = res.data;
-        setCategories(data.results);
-        setHasMore(data.count > visibleCategories);
-        setLoading(false);
-        setTotal(data.count);
-      })
-      .catch((error) => {
-        Logger.error(SCOPE_SC_UI, error);
-      });
-  }
+  const fetchPopularCategories = useMemo(
+    () => () => {
+      return http
+        .request({
+          url: Endpoints.PopularCategories.url(),
+          method: Endpoints.PopularCategories.method
+        })
+        .then((res: AxiosResponse<any>) => {
+          if (res.status >= 300) {
+            return Promise.reject(res);
+          }
+          return Promise.resolve(res.data);
+        });
+    },
+    []
+  );
 
   function loadCategories() {
     setVisibleCategories((prevVisibleCategories) => prevVisibleCategories + 3);
   }
 
   useEffect(() => {
-    fetchCategoriesSuggestion();
+    fetchPopularCategories()
+      .then((data: AxiosResponse<any>) => {
+        setCategories(data['results']);
+        setHasMore(data['count'] > visibleCategories);
+        setLoading(false);
+        setTotal(data['count']);
+      })
+      .catch((error) => {
+        Logger.error(SCOPE_SC_UI, error);
+      });
   }, []);
 
   return (
@@ -89,7 +97,7 @@ export default function CategoriesPopular(props): JSX.Element {
                         secondary={`${intl.formatMessage(messages.categoryFollowers, {total: category.followers_count})}`}
                       />
                       <ListItemSecondaryAction>
-                        <FollowButton scCategoryId={category.id}>Follow</FollowButton>
+                        <FollowButton category={category} />
                       </ListItemSecondaryAction>
                     </ListItem>
                     <Divider />

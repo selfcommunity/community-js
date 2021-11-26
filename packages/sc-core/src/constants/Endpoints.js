@@ -101,6 +101,10 @@ export default {
     url: urlReplacer('/api/v2/category/$(id)/follow/'),
     method: 'POST',
   },
+  CheckCategoryIsFollowed: {
+    url: urlReplacer('/api/v2/category/$(id)/is_followed/'),
+    method: 'GET',
+  },
   PopularCategories: {
     url: urlReplacer('/api/v2/category/popular/'),
     method: 'GET',
@@ -162,6 +166,10 @@ export default {
   UpdateUser: {
     url: urlReplacer('/api/v2/user/$(id)/'),
     method: 'PATCH',
+  },
+  FollowedCategories: {
+    url: urlReplacer('/api/v2/user/$(id)/categories'),
+    method: 'GET',
   },
   /**
    * Suggestion Endpoints
