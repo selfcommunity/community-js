@@ -83,6 +83,8 @@
   "ui.composer.poll.expiration": "Close date",
   "ui.composer.submit": "Publish",
 
+  "ui.inlineComposer.label": "Create content...",
+
   "ui.editor.placeholder": "Write your text...",
 
   "ui.feedObject.comment": "Commenta",

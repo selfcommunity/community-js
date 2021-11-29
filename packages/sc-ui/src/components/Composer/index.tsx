@@ -1,4 +1,13 @@
-import React, {forwardRef, ReactNode, SyntheticEvent, useContext, useMemo, useReducer, useState} from 'react';
+import React, {
+  forwardRef,
+  ReactNode,
+  SyntheticEvent,
+  useContext,
+  useEffect,
+  useMemo,
+  useReducer,
+  useState,
+} from 'react';
 import {
   Endpoints,
   formatHttpError,
@@ -34,6 +43,7 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
+  DialogProps,
   DialogTitle,
   Fade,
   FormControl,
@@ -229,6 +239,13 @@ const Root = styled(Dialog, {
   }
 }));
 
+export interface ComposerProps extends DialogProps {
+  view?: string;
+  mediaActions?: SCComposerMediaActionType[];
+  onSuccess?: (res: any) => void;
+  onClose?: (event: SyntheticEvent) => void;
+}
+
 export const MAIN_VIEW = 'main';
 export const AUDIENCE_VIEW = 'audience';
 export const IMAGES_VIEW = 'images';
@@ -276,20 +293,10 @@ const reducer = (state, action) => {
   }
 };
 
-export default function Composer({
-  open = false,
-  view = MAIN_VIEW,
-  mediaActions = [Image, Document, Link],
-  onClose = null,
-  onSuccess = null,
-  ...props
-}: {
-  open?: boolean;
-  view?: string;
-  mediaActions?: SCComposerMediaActionType[];
-  onClose?: (event: SyntheticEvent) => void;
-  onSuccess?: (res: any) => void;
-}): JSX.Element {
+export default function Composer(props: ComposerProps): JSX.Element {
+  // PROPS
+  const {open = false, view = MAIN_VIEW, mediaActions = [Image, Document, Link], onClose = null, onSuccess = null, ...rest} = props;
+
   // Context
   const scContext: SCContextType = useContext(SCContext);
   const scPrefernces: SCPreferencesContextType = useContext(SCPreferencesContext);
@@ -332,6 +339,9 @@ export default function Composer({
     }
   };
   setEnabledComposerTypes();
+
+  // Props update
+  useEffect(() => setView(view), [view]);
 
   // CHECKS
   const hasPoll = () => {
@@ -836,7 +846,7 @@ export default function Composer({
   }
 
   return (
-    <Root open={open} TransitionComponent={DialogTransition} keepMounted onClose={handleClose} {...props} /* maxWidth="sm" fullWidth scroll="body" */>
+    <Root open={open} TransitionComponent={DialogTransition} keepMounted onClose={handleClose} {...rest}>
       {child()}
     </Root>
   );
