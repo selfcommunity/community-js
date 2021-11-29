@@ -153,9 +153,7 @@ export default function useSCCategoriesManager() {
           return Boolean(categories.filter((c) => c.id === category.id).length);
         }
         if (!loading.includes(category.id)) {
-          setTimeout(() => {
-            checkIsCategoryFollowed(category);
-          });
+          checkIsCategoryFollowed(category);
         }
         return false;
       },
