@@ -6,7 +6,10 @@ import {SCCategoryType} from '../types';
 
 /**
  * Custom hook 'useSCCategoriesManager'
- * Use this hook to manage categories
+ * Use this hook to manage categories followed:
+ * 1. const scUserContext: SCUserContextType = useSCUser();
+ * 2. const scCategoriesManager: SCCategoriesManagerType = scUserContext.categoriesManager;
+ * 3. scCategoriesManager.isFollowed(category)
  */
 export default function useSCCategoriesManager() {
   const cache = useRef<number[]>([]);
@@ -14,8 +17,8 @@ export default function useSCCategoriesManager() {
   const [loading, setLoading] = useState<number[]>([]);
 
   /**
-   * Sync categories cache
-   * @param categoryId
+   * Update categories cache
+   * @param categoriesIds
    */
   const updateCache = useMemo(
     () =>
@@ -31,7 +34,8 @@ export default function useSCCategoriesManager() {
 
   /**
    * Empty cache
-   * @param categoryId
+   * emptying the cache each isFollow request
+   * results in a request to the server
    */
   const emptyCache = useMemo(
     () => (): void => {
@@ -42,6 +46,8 @@ export default function useSCCategoriesManager() {
 
   /**
    * Category is checking
+   * Return true if the manager is checking
+   * the follow status of the category
    * @param category
    */
   const isLoading = useMemo(
@@ -54,6 +60,9 @@ export default function useSCCategoriesManager() {
 
   /**
    * Memoized refresh all categories
+   * It makes a single request to the server and retrieves
+   * all the categories followed by the user in a single solution
+   * It might be useful for multi-tab sync
    */
   const refresh = useMemo(
     () => () => {
@@ -104,6 +113,12 @@ export default function useSCCategoriesManager() {
     [categories, loading, cache]
   );
 
+  /**
+   * Check if the user forllow the category
+   * Update the categories cached
+   * Update categories followed
+   * @param category
+   */
   const checkIsCategoryFollowed = (category: SCCategoryType) => {
     setLoading((prev) => [...prev, ...[category.id]]);
     return http
@@ -128,6 +143,8 @@ export default function useSCCategoriesManager() {
 
   /**
    * Memoized isCategoryFollowed
+   * If category is already in cache -> check if the category is in categories,
+   * otherwise, check if user follow the category
    */
   const isFollowed = useMemo(
     () =>
