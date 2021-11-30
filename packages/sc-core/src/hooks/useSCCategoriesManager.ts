@@ -8,7 +8,7 @@ import {SCCategoryType} from '../types';
  * Custom hook 'useSCCategoriesManager'
  * Use this hook to manage categories followed:
  * 1. const scUserContext: SCUserContextType = useSCUser();
- * 2. const scCategoriesManager: SCCategoriesManagerType = scUserContext.categoriesManager;
+ * 2. const scCategoriesManager: SCCategoriesManagerType = scUserContext.manager.categories;
  * 3. scCategoriesManager.isFollowed(category)
  */
 export default function useSCCategoriesManager() {
@@ -18,7 +18,7 @@ export default function useSCCategoriesManager() {
 
   /**
    * Update categories cache
-   * @param categoriesIds
+   * @param categoryIds
    */
   const updateCache = useMemo(
     () =>
@@ -100,13 +100,13 @@ export default function useSCCategoriesManager() {
             return Promise.reject(res);
           }
           updateCache([category.id]);
-          setLoading(loading.filter((c) => c !== category.id));
           const isFollowed = categories.filter((c) => c.id === category.id).length > 0;
           if (isFollowed) {
             setCategories(categories.filter((c: SCCategoryType) => c.id !== category.id));
           } else {
             setCategories([...[category], ...categories]);
           }
+          setLoading((prev) => prev.filter((c) => c !== category.id));
           return Promise.resolve(res.data);
         });
     },
@@ -114,14 +114,14 @@ export default function useSCCategoriesManager() {
   );
 
   /**
-   * Check if the user forllow the category
+   * Check if the user follow the category
    * Update the categories cached
    * Update categories followed
    * @param category
    */
   const checkIsCategoryFollowed = (category: SCCategoryType) => {
-    setLoading((prev) => [...prev, ...[category.id]]);
-    return http
+    setLoading((prev) => (prev.includes(category.id) ? prev : [...prev, ...[category.id]]));
+    http
       .request({
         url: Endpoints.CheckCategoryIsFollowed.url({id: category.id}),
         method: Endpoints.CheckCategoryIsFollowed.method,
@@ -136,13 +136,13 @@ export default function useSCCategoriesManager() {
         } else {
           setCategories((prev) => prev.filter((c: SCCategoryType) => c.id !== category.id));
         }
-        setLoading(loading.filter((c) => c !== category.id));
+        setLoading((prev) => prev.filter((c) => c !== category.id));
         return Promise.resolve(res.data);
       });
   };
 
   /**
-   * Memoized isCategoryFollowed
+   * Memoized isFollowed
    * If category is already in cache -> check if the category is in categories,
    * otherwise, check if user follow the category
    */
@@ -157,8 +157,8 @@ export default function useSCCategoriesManager() {
         }
         return false;
       },
-    [categories, cache]
+    [categories, loading, cache]
   );
 
-  return {categories, isLoading, follow, isFollowed, refresh, emptyCache};
+  return {categories, loading, isLoading, follow, isFollowed, refresh, emptyCache};
 }

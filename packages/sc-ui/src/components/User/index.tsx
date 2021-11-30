@@ -1,22 +1,12 @@
-import React, {useContext, useEffect, useMemo, useState} from 'react';
+import React, {useContext} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
 import Card from '@mui/material/Card';
 import {UserBoxSkeleton} from '../Skeleton';
 import {Avatar, Button, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText} from '@mui/material';
-import {
-  SCUserContext,
-  SCPreferencesContext,
-  SCPreferences,
-  SCUserContextType,
-  SCUserType,
-  SCPreferencesContextType,
-  http,
-  Endpoints
-} from '@selfcommunity/core';
+import {SCUserContext, SCPreferencesContext, SCPreferences, SCUserContextType, SCUserType, SCPreferencesContextType} from '@selfcommunity/core';
 import useSCFetchUser from '../../../../sc-core/src/hooks/useSCFetchUser';
-import FollowConnect from '../FollowConnect';
-import {AxiosResponse} from 'axios';
+import FollowUserButton from '../FollowUserButton';
 
 const PREFIX = 'SCUser';
 
@@ -39,22 +29,7 @@ export default function User({id = null, user = null, ...rest}: {id?: number; us
   const followEnabled =
     SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED in scPreferencesContext.preferences &&
     scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED].value;
-  const connectionEnabled = !followEnabled;
-  const [followed, setFollowed] = useState<boolean>(null);
 
-  function checkFollowStatus() {
-    http
-      .request({
-        url: Endpoints.CheckUserFollowed.url({id: id}),
-        method: Endpoints.CheckUserFollowed.method
-      })
-      .then((res: AxiosResponse<any>) => {
-        setFollowed(res.data.is_followed);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
   /**
    * Render follow action
    * @return {JSX.Element}
@@ -64,9 +39,7 @@ export default function User({id = null, user = null, ...rest}: {id?: number; us
     return (
       <React.Fragment>
         <Button size="small">Ignore</Button>
-        <Button size="small" variant="outlined">
-          Follow
-        </Button>
+        <FollowUserButton user={scUser} />
       </React.Fragment>
     );
   }
@@ -92,12 +65,7 @@ export default function User({id = null, user = null, ...rest}: {id?: number; us
    * @return {JSX.Element}
    */
   function renderAuthenticatedActions() {
-    return (
-      <React.Fragment>
-        <FollowConnect user={scUser} followed={followed} />
-        {/*{followEnabled ? renderFollowActions() : <React.Fragment>{connectionEnabled ? renderConnectionActions() : null}</React.Fragment>}*/}
-      </React.Fragment>
-    );
+    return <React.Fragment>{followEnabled ? renderFollowActions() : renderConnectionActions()}</React.Fragment>;
   }
 
   /**
@@ -107,10 +75,6 @@ export default function User({id = null, user = null, ...rest}: {id?: number; us
   function renderAnonymousActions() {
     return <Button size="small">Go to Profile</Button>;
   }
-
-  useEffect(() => {
-    checkFollowStatus();
-  }, []);
 
   const u = (
     <React.Fragment>

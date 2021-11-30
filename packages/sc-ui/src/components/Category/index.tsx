@@ -1,12 +1,12 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import {Avatar, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText} from '@mui/material';
-import {Logger, useSCFetchCategory} from '@selfcommunity/core';
+import {useSCFetchCategory} from '@selfcommunity/core';
 import CategoryBoxSkeleton from '../Skeleton/CategoryBoxSkeleton';
-import FollowButton from '../CategoryFollowButton';
+import FollowButton from '../FollowCategoryButton';
 import {SCCategoryType} from '@selfcommunity/core';
 
 const PREFIX = 'SCCategory';
@@ -22,13 +22,10 @@ const Root = styled(Card, {
 function Category({
   id = null,
   category = null,
-  contained = true,
-  followed = null,
   ...rest
 }: {
   id?: number;
   category?: SCCategoryType;
-  followed?: boolean;
   [p: string]: any;
 }): JSX.Element {
   const {scCategory, setSCCategory} = useSCFetchCategory({id, category});

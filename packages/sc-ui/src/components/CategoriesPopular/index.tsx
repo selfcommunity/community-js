@@ -9,7 +9,7 @@ import CategoriesSuggestionSkeleton from '../Skeleton/CategoriesSuggestionSkelet
 import {AxiosResponse} from 'axios';
 import {SCCategoryType} from '@selfcommunity/core/src/types';
 import {SCOPE_SC_UI} from '../../constants/Errors';
-import FollowButton from '../CategoryFollowButton';
+import FollowButton from '../FollowCategoryButton';
 import {FormattedMessage, defineMessages, useIntl} from 'react-intl';
 
 const messages = defineMessages({

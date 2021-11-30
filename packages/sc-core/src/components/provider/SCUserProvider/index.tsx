@@ -1,11 +1,12 @@
 import React, {createContext, useContext, useEffect, useMemo} from 'react';
 import sessionServices from '../../../services/session';
-import {SCUserContextType, SCContextType, SCSessionType, SCUserType, SCCategoriesManagerType} from '../../../types';
+import {SCUserContextType, SCContextType, SCSessionType, SCUserType, SCCategoriesManagerType, SCFollowedManagerType} from '../../../types';
 import {SCContext} from '../SCContextProvider';
 import useSCAuth, {authActionTypes} from '../../../hooks/useSCAuth';
 import {Logger} from '../../../utils/logger';
 import {SCOPE_SC_CORE} from '../../../constants/Errors';
 import useSCCategoriesManager from '../../../hooks/useSCCategoriesManager';
+import useSCFollowedManager from '../../../hooks/useSCFollowersManager';
 
 /**
  * SCUserContext (Authentication Context)
@@ -33,14 +34,10 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
   const {state, dispatch} = useSCAuth(initialSession);
 
   /**
-   * Manage categories followed
+   * Managers followed, categories
    */
+  const followedManager: SCFollowedManagerType = useSCFollowedManager();
   const categoriesManager: SCCategoriesManagerType = useSCCategoriesManager();
-
-  /**
-   * Manage community friendship
-   * Follow/friendship
-   */
 
   /**
    * Check if there is a currently active session
@@ -86,9 +83,12 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
       loading: state.loading,
       error: state.loading,
       logout,
-      categoriesManager,
+      managers: {
+        categories: categoriesManager,
+        followed: followedManager,
+      },
     }),
-    [state, categoriesManager.categories]
+    [state, categoriesManager.loading, categoriesManager.categories, followedManager.loading, followedManager.followed]
   );
 
   /**

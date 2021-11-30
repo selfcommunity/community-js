@@ -72,9 +72,9 @@ export default function CategoriesFollowed(props): JSX.Element {
     fetchCategoriesFollower()
       .then((data: AxiosResponse<any>) => {
         setCategories(data['results']);
+        setTotal(data['count']);
         setHasMore(data['count'] > visibleCategories);
         setLoading(false);
-        setTotal(data['count']);
         setFollowed(true);
       })
       .catch((error) => {

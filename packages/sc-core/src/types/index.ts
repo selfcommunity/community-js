@@ -1,5 +1,6 @@
 import {
   SCUserContextType,
+  SCFollowedManagerType,
   SCCategoriesManagerType,
   SCContextProviderType,
   SCContextType,
@@ -45,6 +46,7 @@ export {
   SCUserType,
   SCTagType,
   SCCategoryType,
+  SCFollowedManagerType,
   SCLocaleType,
   SCPreferencesContextType,
   SCThemeContextType,
