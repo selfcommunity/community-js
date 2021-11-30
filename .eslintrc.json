@@ -28,7 +28,9 @@
     "@typescript-eslint/no-use-before-define": "off",
     "@typescript-eslint/consistent-type-assertions": "off",
     "@typescript-eslint/no-unsafe-assignment": "off",
-    "@typescript-eslint/no-unsafe-call": "off"
+    "@typescript-eslint/no-unsafe-call": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "react-hooks/exhaustive-deps": "off"
   },
   "settings": {
     "import/resolver": {

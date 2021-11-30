@@ -3,6 +3,7 @@ import {AxiosResponse} from 'axios';
 import http from '../utils/http';
 import Endpoints from '../constants/Endpoints';
 import {SCCategoryType} from '../types';
+import useSCCachingManager from './useSCCachingManager';
 
 /**
  * Custom hook 'useSCCategoriesManager'
@@ -12,51 +13,7 @@ import {SCCategoryType} from '../types';
  * 3. scCategoriesManager.isFollowed(category)
  */
 export default function useSCCategoriesManager() {
-  const cache = useRef<number[]>([]);
-  const [categories, setCategories] = useState<SCCategoryType[]>([]);
-  const [loading, setLoading] = useState<number[]>([]);
-
-  /**
-   * Update categories cache
-   * @param categoryIds
-   */
-  const updateCache = useMemo(
-    () =>
-      (categoryIds: number[]): void => {
-        categoryIds.map((c) => {
-          if (!cache.current.includes(c)) {
-            cache.current.push(c);
-          }
-        });
-      },
-    [cache]
-  );
-
-  /**
-   * Empty cache
-   * emptying the cache each isFollow request
-   * results in a request to the server
-   */
-  const emptyCache = useMemo(
-    () => (): void => {
-      cache.current = [];
-    },
-    [cache]
-  );
-
-  /**
-   * Category is checking
-   * Return true if the manager is checking
-   * the follow status of the category
-   * @param category
-   */
-  const isLoading = useMemo(
-    () =>
-      (category: SCCategoryType): boolean => {
-        return loading.includes(category.id);
-      },
-    [loading]
-  );
+  const {cache, updateCache, emptyCache, data, setData, loading, setLoading, isLoading} = useSCCachingManager();
 
   /**
    * Memoized refresh all categories
@@ -65,7 +22,7 @@ export default function useSCCategoriesManager() {
    * It might be useful for multi-tab sync
    */
   const refresh = useMemo(
-    () => () => {
+    () => (): Promise<any> => {
       return http
         .request({
           url: Endpoints.FollowedCategories.url(),
@@ -76,11 +33,11 @@ export default function useSCCategoriesManager() {
             return Promise.reject(res);
           }
           updateCache(res.data.map((c: SCCategoryType) => c.id));
-          setCategories(res.data);
+          setData(res.data);
           return Promise.resolve(res.data);
         });
     },
-    [categories, cache]
+    [data, cache]
   );
 
   /**
@@ -88,29 +45,30 @@ export default function useSCCategoriesManager() {
    * Toggle action
    */
   const follow = useMemo(
-    () => (category: SCCategoryType) => {
-      setLoading((prev) => [...prev, ...[category.id]]);
-      return http
-        .request({
-          url: Endpoints.FollowCategory.url({id: category.id}),
-          method: Endpoints.FollowCategory.method,
-        })
-        .then((res: AxiosResponse<any>) => {
-          if (res.status >= 300) {
-            return Promise.reject(res);
-          }
-          updateCache([category.id]);
-          const isFollowed = categories.filter((c) => c.id === category.id).length > 0;
-          if (isFollowed) {
-            setCategories(categories.filter((c: SCCategoryType) => c.id !== category.id));
-          } else {
-            setCategories([...[category], ...categories]);
-          }
-          setLoading((prev) => prev.filter((c) => c !== category.id));
-          return Promise.resolve(res.data);
-        });
-    },
-    [categories, loading, cache]
+    () =>
+      (category: SCCategoryType): Promise<any> => {
+        setLoading((prev) => [...prev, ...[category.id]]);
+        return http
+          .request({
+            url: Endpoints.FollowCategory.url({id: category.id}),
+            method: Endpoints.FollowCategory.method,
+          })
+          .then((res: AxiosResponse<any>) => {
+            if (res.status >= 300) {
+              return Promise.reject(res);
+            }
+            updateCache([category.id]);
+            const isFollowed = data.filter((c) => c.id === category.id).length > 0;
+            if (isFollowed) {
+              setData(data.filter((c: SCCategoryType) => c.id !== category.id));
+            } else {
+              setData([...[category], ...data]);
+            }
+            setLoading((prev) => prev.filter((c) => c !== category.id));
+            return Promise.resolve(res.data);
+          });
+      },
+    [data, loading, cache]
   );
 
   /**
@@ -119,7 +77,7 @@ export default function useSCCategoriesManager() {
    * Update categories followed
    * @param category
    */
-  const checkIsCategoryFollowed = (category: SCCategoryType) => {
+  const checkIsCategoryFollowed = (category: SCCategoryType): void => {
     setLoading((prev) => (prev.includes(category.id) ? prev : [...prev, ...[category.id]]));
     http
       .request({
@@ -132,9 +90,9 @@ export default function useSCCategoriesManager() {
         }
         updateCache([category.id]);
         if (res.data.is_followed) {
-          setCategories((prev) => [...[category], ...prev]);
+          setData((prev) => [...[category], ...prev]);
         } else {
-          setCategories((prev) => prev.filter((c: SCCategoryType) => c.id !== category.id));
+          setData((prev) => prev.filter((c: SCCategoryType) => c.id !== category.id));
         }
         setLoading((prev) => prev.filter((c) => c !== category.id));
         return Promise.resolve(res.data);
@@ -150,15 +108,15 @@ export default function useSCCategoriesManager() {
     () =>
       (category: SCCategoryType): boolean => {
         if (cache.current.includes(category.id)) {
-          return Boolean(categories.filter((c) => c.id === category.id).length);
+          return Boolean(data.filter((c) => c.id === category.id).length);
         }
         if (!loading.includes(category.id)) {
           checkIsCategoryFollowed(category);
         }
         return false;
       },
-    [categories, loading, cache]
+    [data, loading, cache]
   );
 
-  return {categories, loading, isLoading, follow, isFollowed, refresh, emptyCache};
+  return {categories: data, loading, isLoading, follow, isFollowed, refresh, emptyCache};
 }

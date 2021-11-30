@@ -21,7 +21,7 @@ const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})();
+})({});
 
 export default function CommentObjectVotesDialog({
   id = null,

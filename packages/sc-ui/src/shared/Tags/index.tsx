@@ -44,13 +44,13 @@ const ListRoot = styled(Stack, {
   name: `${PREFIX}List`,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})();
+})({});
 
 const StackList = styled(Stack, {
   name: `${PREFIX}Stack`,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})();
+})({});
 
 const ItemList = styled(Box, {
   name: `${PREFIX}ItemList`,
