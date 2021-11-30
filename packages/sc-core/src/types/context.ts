@@ -74,14 +74,14 @@ export interface SCUserContextType {
   logout: () => void;
 
   /**
-   * Managers: followed, categories, etc...
+   * Managers: followed, connections, categories, etc...
    */
-  managers: {followed?: SCFollowedManagerType; categories: SCCategoriesManagerType};
+  managers: {followed?: SCFollowedManagerType; connections?: SCConnectionsManagerType; categories: SCCategoriesManagerType};
 }
 
 export interface SCFollowedManagerType {
   /**
-   * List of all user followed by the authenticated user
+   * List of all user ids followed by the authenticated user
    */
   followed: number[];
 
@@ -118,7 +118,7 @@ export interface SCFollowedManagerType {
 
 export interface SCCategoriesManagerType {
   /**
-   * List of all categories followed by the authenticated user
+   * List of all categories ids followed by the authenticated user
    */
   categories: number[];
 
@@ -144,6 +144,48 @@ export interface SCCategoriesManagerType {
 
   /**
    * Refresh categories
+   */
+  refresh: () => void;
+
+  /**
+   * Empty cache to revalidate all categories
+   */
+  emptyCache: () => void;
+}
+
+export interface SCConnectionsManagerType {
+  /**
+   * List of all users in relations(social graph) with authenticated user
+   */
+  connections: number[];
+
+  /**
+   * List of all users in loading state
+   */
+  loading: number[];
+
+  /**
+   * List of current users in loading state
+   */
+  isLoading: (user: SCUserType) => boolean;
+
+  /**
+   * Handle request connection
+   */
+  requestConnection: (user: SCUserType) => Promise<any>;
+
+  /**
+   * Handle accept connection
+   */
+  acceptConnection: (user: SCUserType) => Promise<any>;
+
+  /**
+   * Check user status
+   */
+  status: (user: SCUserType) => string;
+
+  /**
+   * Refresh connections status
    */
   refresh: () => void;
 

@@ -1,12 +1,21 @@
 import React, {createContext, useContext, useEffect, useMemo} from 'react';
 import sessionServices from '../../../services/session';
-import {SCUserContextType, SCContextType, SCSessionType, SCUserType, SCCategoriesManagerType, SCFollowedManagerType} from '../../../types';
 import {SCContext} from '../SCContextProvider';
 import useSCAuth, {authActionTypes} from '../../../hooks/useSCAuth';
 import {Logger} from '../../../utils/logger';
 import {SCOPE_SC_CORE} from '../../../constants/Errors';
 import useSCCategoriesManager from '../../../hooks/useSCCategoriesManager';
 import useSCFollowedManager from '../../../hooks/useSCFollowersManager';
+import useSCConnectionsManager from '../../../hooks/useSCConnectionsManager';
+import {
+  SCUserContextType,
+  SCContextType,
+  SCSessionType,
+  SCUserType,
+  SCCategoriesManagerType,
+  SCFollowedManagerType,
+  SCConnectionsManagerType,
+} from '../../../types';
 
 /**
  * SCUserContext (Authentication Context)
@@ -37,6 +46,7 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
    * Managers followed, categories
    */
   const followedManager: SCFollowedManagerType = useSCFollowedManager(state.user);
+  const connectionsManager: SCConnectionsManagerType = useSCConnectionsManager(state.user);
   const categoriesManager: SCCategoriesManagerType = useSCCategoriesManager(state.user);
 
   /**
@@ -110,6 +120,7 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
       managers: {
         categories: categoriesManager,
         followed: followedManager,
+        connections: connectionsManager,
       },
     }),
     [state, categoriesManager.loading, categoriesManager.categories, followedManager.loading, followedManager.followed]
