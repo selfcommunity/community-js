@@ -85,9 +85,9 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
    */
   function handleVisibilityChange() {
     if (!document.hidden) {
-      console.log('aaa');
       categoriesManager.refresh();
-      followedManager.refresh();
+      followedManager && followedManager.refresh();
+      connectionsManager && connectionsManager.refresh();
     }
   }
 
