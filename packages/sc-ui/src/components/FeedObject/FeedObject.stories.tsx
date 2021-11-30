@@ -1,7 +1,7 @@
 import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
 
-import FeedObject, {FeedObjectComponentType} from './index';
+import FeedObject, {FeedObjectTemplateType} from './index';
 import {SCFeedObjectTypologyType} from '@selfcommunity/core';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
@@ -9,7 +9,7 @@ export default {
   title: 'Design System/SC UI/FeedObject',
   component: FeedObject,
   argTypes: {
-    id: {
+    feedObjectId: {
       control: {type: 'number'},
       description: 'FeedObject Id',
       table: {defaultValue: {summary: 7604}}
@@ -19,11 +19,11 @@ export default {
       control: {type: 'select'},
       description: 'Object type. Used only with args id.'
     },
-    type: {
-      options: [FeedObjectComponentType.SNIPPET, FeedObjectComponentType.PREVIEW, FeedObjectComponentType.DETAIL],
+    template: {
+      options: [FeedObjectTemplateType.SNIPPET, FeedObjectTemplateType.PREVIEW, FeedObjectTemplateType.DETAIL],
       control: {type: 'select'},
-      description: 'Object type. Used only with args id.',
-      table: {defaultValue: {summary: FeedObjectComponentType.SNIPPET}}
+      description: 'Object template. Used only with args id.',
+      table: {defaultValue: {summary: FeedObjectTemplateType.SNIPPET}}
     },
     elevation: {
       control: {type: 'number'},
@@ -38,8 +38,8 @@ export default {
     }
   },
   args: {
-    id: 7604,
-    type: FeedObjectComponentType.SNIPPET,
+    feedObjectId: 7604,
+    template: FeedObjectTemplateType.SNIPPET,
     elevation: 1,
     variant: 'elevation'
   }
@@ -56,17 +56,17 @@ const Template: ComponentStory<typeof FeedObject> = (args) => (
 export const Preview = Template.bind({});
 
 Preview.args = {
-  type: FeedObjectComponentType.PREVIEW
+  template: FeedObjectTemplateType.PREVIEW
 };
 
 export const Snippet = Template.bind({});
 
 Snippet.args = {
-  type: FeedObjectComponentType.SNIPPET
+  template: FeedObjectTemplateType.SNIPPET
 };
 
 export const Detail = Template.bind({});
 
 Detail.args = {
-  type: FeedObjectComponentType.DETAIL
+  template: FeedObjectTemplateType.DETAIL
 };

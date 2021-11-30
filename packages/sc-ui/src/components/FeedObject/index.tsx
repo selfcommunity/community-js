@@ -80,26 +80,26 @@ const Root = styled(Card, {
   }
 }));
 
-export enum FeedObjectComponentType {
+export enum FeedObjectTemplateType {
   SNIPPET = 'snippet',
   PREVIEW = 'preview',
   DETAIL = 'detail'
 }
 
 export default function FeedObject({
-  id = null,
+  feedObjectId = null,
   feedObject = null,
   feedObjectType = SCFeedObjectTypologyType.POST,
-  type = FeedObjectComponentType.PREVIEW,
+  template = FeedObjectTemplateType.PREVIEW,
   ...rest
 }: {
-  id?: number;
+  feedObjectId?: number;
   feedObject?: SCFeedObjectType;
   feedObjectType?: SCFeedObjectTypologyType;
-  type?: FeedObjectComponentType;
+  template?: FeedObjectTemplateType;
   [p: string]: any;
 }): JSX.Element {
-  const {obj, setObj} = useSCFetchFeedObject({id, feedObject, feedObjectType});
+  const {obj, setObj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
   const intl = useIntl();
 
   /**
@@ -117,7 +117,7 @@ export default function FeedObject({
    * SNIPPET, PREVIEW, DETAIL
    */
   let objElement;
-  if (type === FeedObjectComponentType.PREVIEW || type === FeedObjectComponentType.DETAIL) {
+  if (template === FeedObjectTemplateType.PREVIEW || template === FeedObjectTemplateType.DETAIL) {
     objElement = (
       <React.Fragment>
         {obj ? (
@@ -165,7 +165,7 @@ export default function FeedObject({
               <Typography
                 variant="body2"
                 gutterBottom
-                dangerouslySetInnerHTML={{__html: type === FeedObjectComponentType.PREVIEW ? obj.summary : obj.html}}></Typography>
+                dangerouslySetInnerHTML={{__html: template === FeedObjectTemplateType.PREVIEW ? obj.summary : obj.html}}></Typography>
               {obj['poll'] && <PollObject pollObject={obj['poll']} onChange={handleChangePoll} elevation={0} />}
             </CardContent>
             <CardActions>
@@ -173,7 +173,7 @@ export default function FeedObject({
             </CardActions>
           </React.Fragment>
         ) : (
-          <FeedObjectSkeleton type={type} elevation={0} />
+          <FeedObjectSkeleton template={template} elevation={0} />
         )}
       </React.Fragment>
     );
@@ -220,7 +220,7 @@ export default function FeedObject({
    */
   return (
     <Root {...rest}>
-      <div className={`${PREFIX}-${type}`}>{objElement}</div>
+      <div className={`${PREFIX}-${template}`}>{objElement}</div>
     </Root>
   );
 }

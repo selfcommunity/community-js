@@ -3,7 +3,7 @@ import Card from '@mui/material/Card';
 import List from '@mui/material/List';
 import {styled} from '@mui/material/styles';
 import Skeleton from '@mui/material/Skeleton';
-import {FeedObjectComponentType} from '../FeedObject';
+import {FeedObjectTemplateType} from '../FeedObject';
 import {CardContent, CardHeader} from '@mui/material';
 
 const PREFIX = 'SCFeedObjectSkeleton';
@@ -24,11 +24,11 @@ const Root = styled(Card, {
   }
 }));
 
-export default function FeedObjectSkeleton(props: {type?: FeedObjectComponentType; [p: string]: any}): JSX.Element {
-  const {type, ...rest} = props;
-  const _type = type || FeedObjectComponentType.SNIPPET;
+export default function FeedObjectSkeleton(props: {template?: FeedObjectTemplateType; [p: string]: any}): JSX.Element {
+  const {template, ...rest} = props;
+  const _template = template || FeedObjectTemplateType.SNIPPET;
   let obj;
-  if (_type === FeedObjectComponentType.PREVIEW || _type === FeedObjectComponentType.DETAIL) {
+  if (_template === FeedObjectTemplateType.PREVIEW || _template === FeedObjectTemplateType.DETAIL) {
     obj = (
       <React.Fragment>
         <CardHeader
@@ -65,7 +65,7 @@ export default function FeedObjectSkeleton(props: {type?: FeedObjectComponentTyp
 
   return (
     <Root {...rest}>
-      <div className={`${PREFIX}-${_type}`}>
+      <div className={`${PREFIX}-${_template}`}>
         <List>{obj}</List>
       </div>
     </Root>

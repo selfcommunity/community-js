@@ -1,7 +1,7 @@
 import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
 import FeedObjectSkeleton from './FeedObjectSkeleton';
-import {FeedObjectComponentType} from '../FeedObject';
+import {FeedObjectTemplateType} from '../FeedObject';
 
 export default {
   title: 'Design System/SC UI/Skeleton/FeedObject',
@@ -18,11 +18,11 @@ export default {
       description: 'Used only if variant="elevation". Shadow depth, corresponds to dp in the spec. It accepts values between 0 and 24 inclusive.',
       table: {defaultValue: {summary: 1}}
     },
-    type: {
-      options: [FeedObjectComponentType.SNIPPET, FeedObjectComponentType.PREVIEW, FeedObjectComponentType.DETAIL],
+    template: {
+      options: [FeedObjectTemplateType.SNIPPET, FeedObjectTemplateType.PREVIEW, FeedObjectTemplateType.DETAIL],
       control: {type: 'select'},
-      description: 'Object type. Used only with args id.',
-      table: {defaultValue: {summary: FeedObjectComponentType.SNIPPET}}
+      description: 'Object template. Used only with args id.',
+      table: {defaultValue: {summary: FeedObjectTemplateType.SNIPPET}}
     },
     className: {
       table: {
@@ -38,7 +38,7 @@ export default {
   args: {
     elevation: 1,
     variant: 'elevation',
-    type: FeedObjectComponentType.SNIPPET
+    template: FeedObjectTemplateType.SNIPPET
   }
 } as ComponentMeta<typeof FeedObjectSkeleton>;
 
