@@ -165,8 +165,11 @@ export default function FeedObject({
               <Typography
                 variant="body2"
                 gutterBottom
-                dangerouslySetInnerHTML={{__html: template === FeedObjectTemplateType.PREVIEW ? obj.summary : obj.html}}></Typography>
-              {obj['poll'] && <PollObject pollObject={obj['poll']} onChange={handleChangePoll} elevation={0} />}
+                dangerouslySetInnerHTML={{__html: template === FeedObjectTemplateType.PREVIEW ? obj.summary : obj.html}}
+              />
+              {obj['poll'] && (
+                <PollObject feedObject={obj} feedObjectType={feedObjectType} pollObject={obj['poll']} onChange={handleChangePoll} elevation={0} />
+              )}
             </CardContent>
             <CardActions>
               <Actions feedObject={obj} feedObjectType={feedObjectType} />

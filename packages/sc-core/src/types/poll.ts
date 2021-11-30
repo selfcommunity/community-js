@@ -36,7 +36,7 @@ export interface SCPollType {
   /**
    * Expiration at
    */
-  expiration_at: Date;
+  expiration_at: string;
 
   /**
    * Expiration at
@@ -44,7 +44,7 @@ export interface SCPollType {
   hidden: boolean;
 
   /**
-   * Choices
+   * Choice
    */
   choices: SCPollChoiceType[];
 }

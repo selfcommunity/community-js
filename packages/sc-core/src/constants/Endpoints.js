@@ -219,6 +219,17 @@ export default {
     method: 'GET',
   },
   /**
+   * Poll
+   */
+  PollVote: {
+    url: urlReplacer('/api/v2/$(type)/$(id)/poll/vote/'),
+    method: 'POST',
+  },
+  PollVotesList: {
+    url: urlReplacer('/api/v2/$(type)/$(id)/poll/vote/'),
+    method: 'GET',
+  },
+  /**
    * Composer Endpoints
    */
   Composer: {

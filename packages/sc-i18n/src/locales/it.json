@@ -101,6 +101,12 @@
   "ui.feedObject.votesDialog.title": "Voti",
   "ui.feedObject.votesDialog.noOtherLikes": "Non ci sono altri voti.",
 
+  "ui.feedObject.poll.title": "Sondaggio Correlato",
+  "ui.feedObject.poll.expDate": "Vota una delle seguenti scelte entro il ",
+  "ui.feedObject.poll.voters": "{total, plural, =0 {# votanti} one {# votante} other {# votanti}}",
+  "ui.feedObject.poll.votes": "{total, plural, =0 {# voti} one {# voto} other {# voti}}",
+  "ui.feedObject.poll.choice.vote": "Vota",
+
   "ui.reportingMenu.title": "Questo contenuto è:",
   "ui.reportingMenu.spam": "Spam",
   "ui.reportingMenu.aggressive": "Aggressivo",
