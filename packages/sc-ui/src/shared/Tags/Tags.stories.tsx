@@ -11,22 +11,24 @@ export default {
       options: [TagsComponentType.LIST, TagsComponentType.POPPER],
       control: {type: 'select'},
       description: 'Component type.',
-      defaultValue: TagsComponentType.POPPER,
       table: {defaultValue: {summary: TagsComponentType.POPPER}}
     },
     direction: {
       options: ['row', 'column'],
       control: {type: 'select'},
       description: 'The direction of the list.',
-      defaultValue: 'column',
       table: {defaultValue: {summary: 'column'}}
     },
     title: {
       control: {type: 'text'},
       description: 'The title of the list or the popper.',
-      defaultValue: '',
       table: {defaultValue: {summary: ''}}
     }
+  },
+  args: {
+    type: TagsComponentType.POPPER,
+    direction: 'column',
+    title: ''
   }
 } as ComponentMeta<typeof Tags>;
 

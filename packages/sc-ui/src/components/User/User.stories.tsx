@@ -11,22 +11,24 @@ export default {
     id: {
       control: {type: 'number'},
       description: 'User Id',
-      defaultValue: 115,
       table: {defaultValue: {summary: 1}}
     },
     elevation: {
       control: {type: 'number'},
       description: 'Used only if variant="elevation". Shadow depth, corresponds to dp in the spec. It accepts values between 0 and 24 inclusive.',
-      defaultValue: 1,
       table: {defaultValue: {summary: 1}}
     },
     variant: {
       options: ['elevation', 'outlined'],
       control: {type: 'select'},
       description: 'The variant to use. Types: "elevation", "outlined", etc.',
-      defaultValue: 'elevation',
       table: {defaultValue: {summary: 'elevation'}}
     }
+  },
+  args: {
+    id: 1,
+    elevation: 1,
+    variant: 'elevation'
   }
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
 } as ComponentMeta<typeof User>;

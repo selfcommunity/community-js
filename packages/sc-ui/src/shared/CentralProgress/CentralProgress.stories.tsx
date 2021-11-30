@@ -10,9 +10,11 @@ export default {
     size: {
       control: {type: 'number'},
       description: 'Size of the circular progress.',
-      defaultValue: 1,
       table: {defaultValue: {summary: 30}}
     }
+  },
+  args: {
+    size: 30
   }
 } as ComponentMeta<typeof CentralProgress>;
 

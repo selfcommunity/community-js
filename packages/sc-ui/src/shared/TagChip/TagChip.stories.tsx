@@ -43,10 +43,16 @@ export default {
         }
       }
     }
+  },
+  args: {
+    name: 'Gold partner',
+    color: '#bb1717',
+    visible: true,
+    active: true
   }
 } as ComponentMeta<typeof TagChip>;
 
-const Template: ComponentStory<typeof TagChip> = (args) => {
+const Template: ComponentStory<typeof TagChip> = (args: {name?: string; color?: string; visible?: boolean; active?: boolean; [p: string]: any}) => {
   /**
    * Example of a tag
    */

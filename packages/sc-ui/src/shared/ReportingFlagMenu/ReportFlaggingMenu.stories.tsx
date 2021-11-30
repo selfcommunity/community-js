@@ -1,5 +1,5 @@
 import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
+import { ComponentMeta, ComponentStory } from '@storybook/react';
 import ReportingFlagMenu from './index';
 import { SCFeedObjectTypologyType } from '@selfcommunity/core';
 
@@ -10,7 +10,6 @@ export default {
     id: {
       control: {type: 'number'},
       description: 'FeedObject Id',
-      defaultValue: 7604,
       table: {defaultValue: {summary: 7604}}
     },
     feedObjectType: {
@@ -18,6 +17,10 @@ export default {
       control: {type: 'select'},
       description: 'Object type. Used only with args id.'
     }
+  },
+  args: {
+    id: 7604,
+    feedObjectType: SCFeedObjectTypologyType.POST
   }
 } as ComponentMeta<typeof ReportingFlagMenu>;
 
