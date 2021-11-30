@@ -24,16 +24,12 @@ const FollowButton = styled(LoadingButton, {
 export default function FollowCategoryButton({categoryId = null, category = null}: {categoryId?: number; category?: SCCategoryType}): JSX.Element {
   const {scCategory, setSCCategory} = useSCFetchCategory({id: categoryId, category});
   const [followed, setFollowed] = useState<boolean>(true);
-  console.log('FollowCategoryButton');
   const scUserContext: SCUserContextType = useContext(SCUserContext);
   const scCategoriesManager: SCCategoriesManagerType = scUserContext.managers.categories;
 
   useEffect(() => {
     setFollowed(scCategoriesManager.isFollowed(scCategory));
   });
-
-  // const buttonText = scCategoriesManager.isFollowed(scCategory) ? 'Unfollow' : 'Follow';
-  // const isLoading = scCategoriesManager.isLoading(scCategory);
 
   const followCategory = () => {
     scCategoriesManager.follow(scCategory).catch((e) => {
