@@ -44,7 +44,7 @@ export default function useSCCategoriesManager(user?: SCUserType) {
             return Promise.resolve(res.data);
           })
           .catch((e) => {
-            Logger.error(SCOPE_SC_CORE, 'Unable to refresh users followed by the authenticated user.');
+            Logger.error(SCOPE_SC_CORE, 'Unable to refresh categories followed by the authenticated user.');
             Logger.error(SCOPE_SC_CORE, e);
           });
       }
