@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Logger, SCCategoriesManagerType, SCCategoryType, SCUserContext, SCUserContextType, useSCFetchCategory} from '@selfcommunity/core';
 import {SCOPE_SC_UI} from '../../constants/Errors';
@@ -23,11 +23,15 @@ const FollowButton = styled(LoadingButton, {
 
 export default function FollowCategoryButton({categoryId = null, category = null}: {categoryId?: number; category?: SCCategoryType}): JSX.Element {
   const {scCategory, setSCCategory} = useSCFetchCategory({id: categoryId, category});
-  const [followed, setFollowed] = useState<boolean>(true);
+  const [followed, setFollowed] = useState<boolean>(null);
   const scUserContext: SCUserContextType = useContext(SCUserContext);
   const scCategoriesManager: SCCategoriesManagerType = scUserContext.managers.categories;
 
   useEffect(() => {
+    /**
+     * Call scCategoriesManager.isFollowed inside an effect
+     * to avoid warning rendering child during update parent state
+     */
     setFollowed(scCategoriesManager.isFollowed(scCategory));
   });
 
@@ -38,7 +42,7 @@ export default function FollowCategoryButton({categoryId = null, category = null
   };
 
   return (
-    <FollowButton size="small" onClick={followCategory} loading={scCategoriesManager.isLoading(scCategory)}>
+    <FollowButton size="small" onClick={followCategory} loading={followed === null || scCategoriesManager.isLoading(scCategory)}>
       {followed ? 'Unfollow' : 'Follow'}
     </FollowButton>
   );

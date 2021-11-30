@@ -1,7 +1,16 @@
-import React, {useContext, useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
-import {Avatar, Button, Divider, ListItem, ListItemSecondaryAction, ListItemText, Typography} from '@mui/material';
+import {
+  Avatar,
+  Button,
+  Divider,
+  ListItem,
+  ListItemAvatar,
+  ListItemSecondaryAction,
+  ListItemText,
+  Typography,
+} from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import {Endpoints, http, Logger} from '@selfcommunity/core';
@@ -92,6 +101,9 @@ export default function CategoriesPopular(props): JSX.Element {
                 <div key={index}>
                   <List>
                     <ListItem button={true} key={category.id}>
+                      <ListItemAvatar>
+                        <Avatar alt={category.name} src={category.image_small} variant="square" />
+                      </ListItemAvatar>
                       <ListItemText
                         primary={category.name}
                         secondary={`${intl.formatMessage(messages.categoryFollowers, {total: category.followers_count})}`}

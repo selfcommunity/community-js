@@ -23,11 +23,15 @@ const FollowButton = styled(LoadingButton, {
 
 export default function FollowUserButton({userId = null, user = null, ...rest}: {userId?: number; user?: SCUserType; [p: string]: any}): JSX.Element {
   const {scUser, setSCUser} = useSCFetchUser({id: userId, user});
-  const [followed, setFollowed] = useState<boolean>(true);
+  const [followed, setFollowed] = useState<boolean>(null);
   const scUserContext: SCUserContextType = useContext(SCUserContext);
   const scFollowedManager: SCFollowedManagerType = scUserContext.managers.followed;
 
   useEffect(() => {
+    /**
+     * Call scFollowedManager.isFollowed inside an effect
+     * to avoid warning rendering child during update parent state
+     */
     setFollowed(scFollowedManager.isFollowed(scUser));
   });
 
@@ -38,7 +42,7 @@ export default function FollowUserButton({userId = null, user = null, ...rest}: 
   };
 
   return (
-    <FollowButton size="small" variant="outlined" onClick={followCUser} loading={scFollowedManager.isLoading(scUser)} {...rest}>
+    <FollowButton size="small" variant="outlined" onClick={followCUser} loading={followed === null || scFollowedManager.isLoading(scUser)} {...rest}>
       {followed ? 'Unfollow' : 'Follow'}
     </FollowButton>
   );
