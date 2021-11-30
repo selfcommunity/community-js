@@ -10,24 +10,18 @@ import {CONFIGURATIONS_FOLLOW_ENABLED} from '../constants/Preferences';
 import useSCCachingManager from './useSCCachingManager';
 
 /**
- * Used on refresh and in isFollowed method
- * Check if the user status is 'followed'
- * to update the cache and data
- */
-const STATUS_FOLLOWED = 'followed';
-
-/**
- * Custom hook 'useSCFollowedManager'
- * Use this hook to manage followed users:
+ * Custom hook 'useSCFriendshipManager'
+ * Use this hook to manage friends:
  * 1. const scUserContext: SCUserContextType = useSCUser();
- * 2. const scFollowedManager: SCFollowedManagerType = scUserContext.manager.followed;
- * 3. scFollowedManager.isFollowed(user)
+ * 2. const scFriendshipManager: SCFriendshipManagerType = scUserContext.manager.friendship;
+ * 3. scFriendshipManager.state(user)
  */
-export default function useSCFollowedManager(user?: SCUserType) {
+export default function useSCFollowedManager() {
   const {cache, updateCache, emptyCache, data, setData, loading, setLoading, isLoading} = useSCCachingManager();
   const scPreferencesContext: SCPreferencesContextType = useSCPreferencesContext();
-  const followEnabled =
-    CONFIGURATIONS_FOLLOW_ENABLED in scPreferencesContext.preferences && scPreferencesContext.preferences[CONFIGURATIONS_FOLLOW_ENABLED].value;
+  const friendshipEnabled = !(
+    CONFIGURATIONS_FOLLOW_ENABLED in scPreferencesContext.preferences && scPreferencesContext.preferences[CONFIGURATIONS_FOLLOW_ENABLED].value
+  );
 
   /**
    * Memoized refresh all followed
@@ -37,56 +31,34 @@ export default function useSCFollowedManager(user?: SCUserType) {
    */
   const refresh = useMemo(
     () => (): void => {
-      emptyCache();
-      if (user && cache.length > 0) {
-        // Only if user is authenticated
-        http
-          .request({
-            url: Endpoints.UserConnectionStatuses.url({}),
-            method: Endpoints.UserConnectionStatuses.method,
-            data: {users: cache},
-          })
-          .then((res: AxiosResponse<any>) => {
-            if (res.status >= 300) {
-              return Promise.reject(res);
-            }
-            updateCache(Object.keys(res.data.connection_statuses).map((id) => parseInt(id)));
-            setData(
-              Object.entries(res.data.connection_statuses)
-                .filter(([k, v]) => v === STATUS_FOLLOWED)
-                .map(([k, v]) => parseInt(k))
-            );
-            return Promise.resolve(res.data);
-          })
-          .catch((e) => {
-            Logger.error(SCOPE_SC_CORE, 'Unable to refresh users followed by the authenticated user.');
-            Logger.error(SCOPE_SC_CORE, e);
-          });
-      }
+      Logger.warn(SCOPE_SC_CORE, 'This method has not yet been implemented.');
     },
-    [data, user, cache]
+    []
   );
 
   /**
-   * Memoized follow/unfollow User
-   * Toggle action
+   * Memoized Request connection
    */
-  const follow = useMemo(
+  const requestConnection = useMemo(
     () =>
       (user: SCUserType): Promise<any> => {
         setLoading((prev) => [...prev, ...[user.id]]);
         return http
           .request({
-            url: Endpoints.FollowUser.url({id: user.id}),
-            method: Endpoints.FollowUser.method,
+            url: Endpoints.UserRequestConnection.url({id: user.id}),
+            method: Endpoints.UserRequestConnection.method,
           })
           .then((res: AxiosResponse<any>) => {
             if (res.status >= 300) {
               return Promise.reject(res);
             }
             updateCache([user.id]);
-            const isFollowed = data.includes(user.id);
-            setData((prev) => (isFollowed ? prev.filter((id) => id !== user.id) : [...[user.id], ...prev]));
+            const isFollowed = data.filter((u) => u.id === user.id).length > 0;
+            if (isFollowed) {
+              setData(data.filter((u: SCUserType) => u.id !== user.id));
+            } else {
+              setData([...[user], ...data]);
+            }
             setLoading((prev) => prev.filter((u) => u !== user.id));
             return Promise.resolve(res.data);
           });
@@ -112,24 +84,15 @@ export default function useSCFollowedManager(user?: SCUserType) {
           return Promise.reject(res);
         }
         updateCache([user.id]);
-        setData((prev) => (res.data.is_followed ? [...prev, ...[user.id]] : prev.filter((id) => id !== user.id)));
+        if (res.data.is_followed) {
+          setData((prev) => [...[user], ...prev]);
+        } else {
+          setData((prev) => prev.filter((u: SCUserType) => u.id !== user.id));
+        }
         setLoading((prev) => prev.filter((u) => u !== user.id));
         return Promise.resolve(res.data);
       });
   };
-
-  /**
-   * Bypass remote check if the user is followed
-   */
-  const getConnectionStatus = useMemo(
-    () => (user: SCUserType) => {
-      const isFollowed = user.connection_status === STATUS_FOLLOWED;
-      updateCache([user.id]);
-      setData((prev) => (isFollowed ? [...prev, ...[user.id]] : prev));
-      return isFollowed;
-    },
-    [data, cache]
-  );
 
   /**
    * Memoized isFollowed
@@ -139,11 +102,8 @@ export default function useSCFollowedManager(user?: SCUserType) {
   const isFollowed = useMemo(
     () =>
       (user: SCUserType): boolean => {
-        if (cache.includes(user.id)) {
-          return Boolean(data.includes(user.id));
-        }
-        if ('connection_status' in user) {
-          return getConnectionStatus(user);
+        if (cache.current.includes(user.id)) {
+          return Boolean(data.filter((u) => u.id === user.id).length);
         }
         if (!loading.includes(user.id)) {
           checkIsUserFollowed(user);
@@ -153,8 +113,8 @@ export default function useSCFollowedManager(user?: SCUserType) {
     [data, loading, cache]
   );
 
-  if (!followEnabled) {
+  if (!friendshipEnabled) {
     return null;
   }
-  return {followed: data, loading, isLoading, follow, isFollowed, refresh, emptyCache};
+  return {friends: data, loading, isLoading, follow, isFollowed, refresh, emptyCache};
 }

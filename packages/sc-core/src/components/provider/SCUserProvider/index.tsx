@@ -36,8 +36,8 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
   /**
    * Managers followed, categories
    */
-  const followedManager: SCFollowedManagerType = useSCFollowedManager();
-  const categoriesManager: SCCategoriesManagerType = useSCCategoriesManager();
+  const followedManager: SCFollowedManagerType = useSCFollowedManager(state.user);
+  const categoriesManager: SCCategoriesManagerType = useSCCategoriesManager(state.user);
 
   /**
    * Check if there is a currently active session
@@ -56,6 +56,30 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
         dispatch({type: authActionTypes.LOGIN_FAILURE, payload: {error}});
       });
   }, []);
+
+  /**
+   * Controls caching of follow categories, users, etc...
+   * To avoid multi-tab problems, on visibility change and document
+   * is in foreground refresh the cache
+   */
+  useEffect(() => {
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  });
+
+  /**
+   * handler handleVisibilityChange for this provider
+   * Refresh followed categories, users, etc..
+   */
+  function handleVisibilityChange() {
+    if (!document.hidden) {
+      console.log('aaa');
+      categoriesManager.refresh();
+      followedManager.refresh();
+    }
+  }
 
   /**
    * Call the logout endpoint and then remove the user

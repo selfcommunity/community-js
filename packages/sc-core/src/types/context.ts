@@ -83,7 +83,7 @@ export interface SCFollowedManagerType {
   /**
    * List of all user followed by the authenticated user
    */
-  followed: SCUserType[];
+  followed: number[];
 
   /**
    * List of all users in loading state
@@ -120,7 +120,7 @@ export interface SCCategoriesManagerType {
   /**
    * List of all categories followed by the authenticated user
    */
-  categories: SCCategoryType[];
+  categories: number[];
 
   /**
    * List of all categories in loading state

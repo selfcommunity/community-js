@@ -131,10 +131,6 @@ export default {
     url: urlReplacer('/api/v2/user/$(id)/followings/'),
     method: 'GET',
   },
-  UserConnections: {
-    url: urlReplacer('/api/v2/user/$(id)/connections/'),
-    method: 'GET',
-  },
   FollowUser: {
     url: urlReplacer('/api/v2/user/$(id)/follow/'),
     method: 'POST',
@@ -143,21 +139,49 @@ export default {
     url: urlReplacer('/api/v2/user/$(id)/is_followed/'),
     method: 'GET',
   },
-  RequestConnection: {
+  UserConnections: {
+    url: urlReplacer('/api/v2/user/$(id)/connections/'),
+    method: 'GET',
+  },
+  UserCheckConnection: {
+    url: urlReplacer('/api/v2/user/$(id)/is_connection/'),
+    method: 'GET',
+  },
+  UserConnectionStatuses: {
+    url: urlReplacer('/api/v2/user/connection/statuses/'),
+    method: 'POST',
+  },
+  UserConnectionRequests: {
+    url: urlReplacer('/api/v2/user/$(id)/connection/requests/'),
+    method: 'POST',
+  },
+  UserRequestConnections: {
+    url: urlReplacer('/api/v2/user/$(id)/connection/requests_sent/'),
+    method: 'POST',
+  },
+  UserRequestConnection: {
     url: urlReplacer('/api/v2/user/$(id)/connection/request'),
     method: 'POST',
   },
-  CancelConnectionRequest: {
+  UserCancelRequestConnection: {
     url: urlReplacer('/api/v2/user/$(id)/connection/cancel_request'),
     method: 'POST',
   },
-  RemoveConnection: {
-    url: urlReplacer('/api/v2/user/$(id)/connection/remove'),
+  UserAcceptRequestConnection: {
+    url: urlReplacer('/api/v2/user/$(id)/connection/accept/'),
     method: 'POST',
   },
-  CheckUserConnection: {
-    url: urlReplacer('/api/v2/user/$(id)/is_connection/'),
-    method: 'GET',
+  UserRejectConnectionRequest: {
+    url: urlReplacer('/api/v2/user/$(id)/connection/reject'),
+    method: 'POST',
+  },
+  UserCancelRejectConnectionRequest: {
+    url: urlReplacer('/api/v2/user/$(id)/connection/cancel_reject'),
+    method: 'POST',
+  },
+  UserRemoveConnection: {
+    url: urlReplacer('/api/v2/user/$(id)/connection/remove'),
+    method: 'POST',
   },
   Me: {
     url: urlReplacer('/api/v2/user/me/'),
@@ -171,6 +195,7 @@ export default {
     url: urlReplacer('/api/v2/user/$(id)/categories'),
     method: 'GET',
   },
+
   /**
    * Suggestion Endpoints
    */

@@ -52,5 +52,5 @@ export default function useSCCachingManager() {
     [loading]
   );
 
-  return {cache, updateCache, emptyCache, data, setData, loading, setLoading, isLoading};
+  return {cache: cache.current, updateCache, emptyCache, data, setData, loading, setLoading, isLoading};
 }

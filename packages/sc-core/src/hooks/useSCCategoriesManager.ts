@@ -1,9 +1,11 @@
-import {useMemo, useRef, useState} from 'react';
+import {useEffect, useMemo, useRef, useState} from 'react';
 import {AxiosResponse} from 'axios';
 import http from '../utils/http';
 import Endpoints from '../constants/Endpoints';
-import {SCCategoryType} from '../types';
+import {SCCategoryType, SCUserType} from '../types';
 import useSCCachingManager from './useSCCachingManager';
+import {SCOPE_SC_CORE} from '../constants/Errors';
+import {Logger} from '../utils/logger';
 
 /**
  * Custom hook 'useSCCategoriesManager'
@@ -12,7 +14,7 @@ import useSCCachingManager from './useSCCachingManager';
  * 2. const scCategoriesManager: SCCategoriesManagerType = scUserContext.manager.categories;
  * 3. scCategoriesManager.isFollowed(category)
  */
-export default function useSCCategoriesManager() {
+export default function useSCCategoriesManager(user?: SCUserType) {
   const {cache, updateCache, emptyCache, data, setData, loading, setLoading, isLoading} = useSCCachingManager();
 
   /**
@@ -22,22 +24,32 @@ export default function useSCCategoriesManager() {
    * It might be useful for multi-tab sync
    */
   const refresh = useMemo(
-    () => (): Promise<any> => {
-      return http
-        .request({
-          url: Endpoints.FollowedCategories.url(),
-          method: Endpoints.FollowedCategories.method,
-        })
-        .then((res: AxiosResponse<any>) => {
-          if (res.status >= 300) {
-            return Promise.reject(res);
-          }
-          updateCache(res.data.map((c: SCCategoryType) => c.id));
-          setData(res.data);
-          return Promise.resolve(res.data);
-        });
+    () => (): void => {
+      emptyCache();
+      console.log(user);
+      if (user && cache.length > 0) {
+        // Only if user is authenticated
+        http
+          .request({
+            url: Endpoints.FollowedCategories.url({id: user.id}),
+            method: Endpoints.FollowedCategories.method,
+          })
+          .then((res: AxiosResponse<any>) => {
+            if (res.status >= 300) {
+              return Promise.reject(res);
+            }
+            const categoryIds = res.data.map((c: SCCategoryType) => c.id);
+            updateCache(categoryIds);
+            setData(categoryIds);
+            return Promise.resolve(res.data);
+          })
+          .catch((e) => {
+            Logger.error(SCOPE_SC_CORE, 'Unable to refresh users followed by the authenticated user.');
+            Logger.error(SCOPE_SC_CORE, e);
+          });
+      }
     },
-    [data, cache]
+    [data, user, cache]
   );
 
   /**
@@ -58,12 +70,8 @@ export default function useSCCategoriesManager() {
               return Promise.reject(res);
             }
             updateCache([category.id]);
-            const isFollowed = data.filter((c) => c.id === category.id).length > 0;
-            if (isFollowed) {
-              setData(data.filter((c: SCCategoryType) => c.id !== category.id));
-            } else {
-              setData([...[category], ...data]);
-            }
+            const isFollowed = data.includes(category.id);
+            setData((prev) => (isFollowed ? prev.filter((id) => id !== category.id) : [...[category.id], ...prev]));
             setLoading((prev) => prev.filter((c) => c !== category.id));
             return Promise.resolve(res.data);
           });
@@ -89,11 +97,7 @@ export default function useSCCategoriesManager() {
           return Promise.reject(res);
         }
         updateCache([category.id]);
-        if (res.data.is_followed) {
-          setData((prev) => [...[category], ...prev]);
-        } else {
-          setData((prev) => prev.filter((c: SCCategoryType) => c.id !== category.id));
-        }
+        setData((prev) => (res.data.is_followed ? [...[category.id], ...prev] : prev.filter((id) => id !== category.id)));
         setLoading((prev) => prev.filter((c) => c !== category.id));
         return Promise.resolve(res.data);
       });
@@ -107,8 +111,8 @@ export default function useSCCategoriesManager() {
   const isFollowed = useMemo(
     () =>
       (category: SCCategoryType): boolean => {
-        if (cache.current.includes(category.id)) {
-          return Boolean(data.filter((c) => c.id === category.id).length);
+        if (cache.includes(category.id)) {
+          return Boolean(data.includes(category.id));
         }
         if (!loading.includes(category.id)) {
           checkIsCategoryFollowed(category);
