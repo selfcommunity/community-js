@@ -101,6 +101,8 @@
   "ui.feedObject.share.shares": "{total, plural, =0 {# Shares} one {# Share} other {# Shares}}",
   "ui.feedObject.votesDialog.title": "Votes",
   "ui.feedObject.votesDialog.noOtherLikes": "No other votes.",
+  "ui.feedObject.sharesDialog.title": "Shares",
+  "ui.feedObject.sharesDialog.noOtherLikes": "No other shares.",
 
   "ui.feedObject.poll.title": "Related Poll",
   "ui.feedObject.poll.expDate": "Vote one of the following choices by ",
@@ -128,5 +130,11 @@
   "ui.commentObjectVotesDialog.title": "Votes",
   "ui.commentObjectVotesDialog.noOtherVotes": "No other votes.",
 
-  "ui.feedObjectVotesDialog.title": "Votes"
+  "ui.feedObjectVotesDialog.title": "Votes",
+
+  "ui.followCategoryButton.follow": "Follow",
+  "ui.followCategoryButton.unfollow": "Unfollow",
+
+  "ui.followUserButton.follow": "Follow",
+  "ui.followUserButton.unfollow": "Unfollow"
 }

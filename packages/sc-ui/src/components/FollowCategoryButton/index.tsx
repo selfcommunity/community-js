@@ -3,6 +3,7 @@ import {styled} from '@mui/material/styles';
 import {Logger, SCCategoriesManagerType, SCCategoryType, SCUserContext, SCUserContextType, useSCFetchCategory} from '@selfcommunity/core';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {LoadingButton} from '@mui/lab';
+import {FormattedMessage} from 'react-intl';
 
 const PREFIX = 'SCFollowCategoryButton';
 
@@ -21,7 +22,17 @@ const FollowButton = styled(LoadingButton, {
   paddingLeft: '16px'
 }));
 
-export default function FollowCategoryButton({categoryId = null, category = null}: {categoryId?: number; category?: SCCategoryType}): JSX.Element {
+export default function FollowCategoryButton({
+  categoryId = null,
+  category = null,
+  onFollow = null,
+  ...rest
+}: {
+  categoryId?: number;
+  category?: SCCategoryType;
+  onFollow?: (category: SCCategoryType, followed: boolean) => any;
+  [p: string]: any;
+}): JSX.Element {
   const {scCategory, setSCCategory} = useSCFetchCategory({id: categoryId, category});
   const [followed, setFollowed] = useState<boolean>(null);
   const scUserContext: SCUserContextType = useContext(SCUserContext);
@@ -36,14 +47,23 @@ export default function FollowCategoryButton({categoryId = null, category = null
   });
 
   const followCategory = () => {
-    scCategoriesManager.follow(scCategory).catch((e) => {
-      Logger.error(SCOPE_SC_UI, e);
-    });
+    scCategoriesManager
+      .follow(scCategory)
+      .then(() => {
+        onFollow && onFollow(scCategory, !followed);
+      })
+      .catch((e) => {
+        Logger.error(SCOPE_SC_UI, e);
+      });
   };
 
   return (
-    <FollowButton size="small" onClick={followCategory} loading={followed === null || scCategoriesManager.isLoading(scCategory)}>
-      {followed ? 'Unfollow' : 'Follow'}
+    <FollowButton size="small" onClick={followCategory} loading={followed === null || scCategoriesManager.isLoading(scCategory)} {...rest}>
+      {followed ? (
+        <FormattedMessage defaultMessage="ui.followCategoryButton.unfollow" id="ui.followCategoryButton.unfollow" />
+      ) : (
+        <FormattedMessage defaultMessage="ui.followCategoryButton.follow" id="ui.followCategoryButton.follow" />
+      )}
     </FollowButton>
   );
 }

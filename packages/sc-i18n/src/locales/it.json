@@ -100,6 +100,8 @@
   "ui.feedObject.share.shares": "{total, plural, =0 {# Condivisioni} one {# Condivisione} other {# Condivisioni}}",
   "ui.feedObject.votesDialog.title": "Voti",
   "ui.feedObject.votesDialog.noOtherLikes": "Non ci sono altri voti.",
+  "ui.feedObject.sharesDialog.title": "Condivisioni",
+  "ui.feedObject.sharesDialog.noOtherLikes": "Non ci sono altre condivisioni.",
 
   "ui.feedObject.poll.title": "Sondaggio Correlato",
   "ui.feedObject.poll.expDate": "Vota una delle seguenti scelte entro il ",
@@ -127,5 +129,11 @@
   "ui.commentObjectVotesDialog.title": "Voti",
   "ui.commentObjectVotesDialog.noOtherVotes": "Non ci sono altri voti.",
 
-  "ui.feedObjectVotesDialog.title": "Votes"
+  "ui.feedObjectVotesDialog.title": "Votes",
+
+  "ui.followCategoryButton.follow": "Segui",
+  "ui.followCategoryButton.unfollow": "Non seguire",
+
+  "ui.followUserButton.follow": "Segui",
+  "ui.followUserButton.unfollow": "Non seguire"
 }

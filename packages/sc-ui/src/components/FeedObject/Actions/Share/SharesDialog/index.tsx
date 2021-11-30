@@ -30,9 +30,9 @@ export default function SharesDialog({
   const [shares, setShares] = useState([]);
   const [next, setNext] = useState<string>(
     id && feedObjectType
-      ? `${Endpoints.VotesList.url({type: feedObjectType, id: id})}`
+      ? `${Endpoints.ShareUsersList.url({type: feedObjectType, id: id})}`
       : feedObject && feedObjectType
-      ? `${Endpoints.VotesList.url({type: feedObjectType, id: feedObject.id})}`
+      ? `${Endpoints.ShareUsersList.url({type: feedObjectType, id: feedObject.id})}`
       : null
   );
 
@@ -47,7 +47,7 @@ export default function SharesDialog({
     http
       .request({
         url: next,
-        method: Endpoints.VotesList.method
+        method: Endpoints.ShareUsersList.method
       })
       .then((res: AxiosResponse<any>) => {
         const data: {results: Record<string, any>[]; next?: string} = res.data;
@@ -61,7 +61,7 @@ export default function SharesDialog({
   }
 
   return (
-    <BaseDialog title={<FormattedMessage defaultMessage="sharesDialog.title" id="sharesDialog.title" />} onClose={onClose} open={open}>
+    <BaseDialog title={<FormattedMessage defaultMessage="ui.feedObject.sharesDialog.title" id="ui.feedObject.sharesDialog.title" />} onClose={onClose} open={open}>
       {isLoading ? (
         <CentralProgress size={50} />
       ) : (
@@ -74,7 +74,7 @@ export default function SharesDialog({
           endMessage={
             <Typography variant="body2" align="center">
               <b>
-                <FormattedMessage id="sharesDialog.noOtherShares" defaultMessage="sharesDialog.noOtherShares" />
+                <FormattedMessage id="ui.feedObject.sharesDialog.noOtherLikes" defaultMessage="ui.feedObject.sharesDialog.noOtherLikes" />
               </b>
             </Typography>
           }>

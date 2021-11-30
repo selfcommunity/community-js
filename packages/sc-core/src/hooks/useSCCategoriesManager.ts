@@ -26,7 +26,6 @@ export default function useSCCategoriesManager(user?: SCUserType) {
   const refresh = useMemo(
     () => (): void => {
       emptyCache();
-      console.log(user);
       if (user && cache.length > 0) {
         // Only if user is authenticated
         http

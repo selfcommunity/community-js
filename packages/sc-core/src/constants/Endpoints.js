@@ -219,6 +219,13 @@ export default {
     method: 'GET',
   },
   /**
+   * Shares
+   */
+  ShareUsersList: {
+    url: urlReplacer('/api/v2/$(type)/$(id)/shares_users/'),
+    method: 'GET',
+  },
+  /**
    * Poll
    */
   PollVote: {

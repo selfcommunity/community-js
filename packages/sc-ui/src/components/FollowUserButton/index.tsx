@@ -1,8 +1,9 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Logger, SCFollowedManagerType, SCUserContext, SCUserContextType, SCUserType, useSCFetchUser} from '@selfcommunity/core';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {LoadingButton} from '@mui/lab';
+import {FormattedMessage} from 'react-intl';
+import {Logger, SCFollowedManagerType, SCUserContext, SCUserContextType, SCUserType, useSCFetchUser} from '@selfcommunity/core';
 
 const PREFIX = 'SCFollowUserButton';
 
@@ -21,7 +22,17 @@ const FollowButton = styled(LoadingButton, {
   paddingLeft: '16px'
 }));
 
-export default function FollowUserButton({userId = null, user = null, ...rest}: {userId?: number; user?: SCUserType; [p: string]: any}): JSX.Element {
+export default function FollowUserButton({
+  userId = null,
+  user = null,
+  onFollow = null,
+  ...rest
+}: {
+  userId?: number;
+  user?: SCUserType;
+  onFollow?: (user: SCUserType, followed: boolean) => any;
+  [p: string]: any;
+}): JSX.Element {
   const {scUser, setSCUser} = useSCFetchUser({id: userId, user});
   const [followed, setFollowed] = useState<boolean>(null);
   const scUserContext: SCUserContextType = useContext(SCUserContext);
@@ -36,14 +47,23 @@ export default function FollowUserButton({userId = null, user = null, ...rest}: 
   });
 
   const followCUser = () => {
-    scFollowedManager.follow(scUser).catch((e) => {
-      Logger.error(SCOPE_SC_UI, e);
-    });
+    scFollowedManager
+      .follow(scUser)
+      .then(() => {
+        onFollow && onFollow(scUser, !followed);
+      })
+      .catch((e) => {
+        Logger.error(SCOPE_SC_UI, e);
+      });
   };
 
   return (
     <FollowButton size="small" variant="outlined" onClick={followCUser} loading={followed === null || scFollowedManager.isLoading(scUser)} {...rest}>
-      {followed ? 'Unfollow' : 'Follow'}
+      {followed ? (
+        <FormattedMessage defaultMessage="ui.followUserButton.unfollow" id="ui.followUserButton.unfollow" />
+      ) : (
+        <FormattedMessage defaultMessage="ui.followUserButton.follow" id="ui.followUserButton.follow" />
+      )}
     </FollowButton>
   );
 }
