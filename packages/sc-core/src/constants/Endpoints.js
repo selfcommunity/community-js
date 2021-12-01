@@ -119,6 +119,10 @@ export default {
   /**
    * User Endpoints
    */
+  UserSearch: {
+    url: urlReplacer('/api/v2/user/search/'),
+    method: 'GET',
+  },
   User: {
     url: urlReplacer('/api/v2/user/$(id)/'),
     method: 'GET',
