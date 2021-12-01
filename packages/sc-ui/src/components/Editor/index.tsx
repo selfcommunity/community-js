@@ -1,12 +1,16 @@
-import React, {FunctionComponent, RefObject, useEffect, useMemo, useRef} from 'react';
+import React, {FunctionComponent, RefObject, useContext, useEffect, useMemo, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {ContentState, convertFromHTML, convertToRaw, EditorState} from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 import {defineMessages, useIntl} from 'react-intl';
-import MUIRichTextEditor, {TAutocompleteItem, TMUIRichTextEditorRef} from 'mui-rte';
-import {Avatar, Box, ListItemAvatar, ListItemText} from '@mui/material';
-import {Endpoints, http, SCUserType} from '@selfcommunity/core';
+import MUIRichTextEditor, {TAsyncAtomicBlockResponse, TAutocompleteItem, TMUIRichTextEditorRef} from 'mui-rte';
+import {Alert, AlertTitle, Avatar, Box, Fade, LinearProgress, ListItemAvatar, ListItemText, Stack} from '@mui/material';
+import {Endpoints, http, SCContext, SCContextType, SCMediaType, SCUserType} from '@selfcommunity/core';
 import {AxiosResponse} from 'axios';
+import MediaChunkUploader from '../../shared/MediaChunkUploader';
+import ChunkedUploady from '@rpldy/chunked-uploady';
+import {SCMediaChunkType} from '../../types/media';
+import UploadDropZone from '@rpldy/upload-drop-zone';
 
 const PREFIX = 'SCEditor';
 
@@ -47,6 +51,11 @@ const User: FunctionComponent<TUser> = (props) => {
   );
 };
 
+const EditorImage: FunctionComponent<any> = (props) => {
+  const {blockProps} = props;
+  return <img {...blockProps} />;
+};
+
 export default function Editor({
   className = '',
   defaultValue = '',
@@ -67,6 +76,13 @@ export default function Editor({
 
   // INTL
   const intl = useIntl();
+
+  // Context
+  const scContext: SCContextType = useContext(SCContext);
+
+  // State
+  const [uploading, setUploading] = useState({});
+  const [errors, setErrors] = useState({});
 
   /**
    * On mount if onRef in props
@@ -93,7 +109,7 @@ export default function Editor({
     return response.data.results.map((user: SCUserType) => {
       return {
         keys: [user.email, user.username, user.real_name],
-        value: `${user.username}`,
+        value: `@${user.username}`,
         content: <User username={user.username} realName={user.real_name} avatar={user.avatar} />
       };
     });
@@ -101,31 +117,100 @@ export default function Editor({
 
   // HANDLERS
 
+  const handleUploadSuccess = (media: SCMediaType) => {
+    const data = {
+      src: media.image,
+      width: 300,
+      height: 200
+    };
+    editor.current?.insertAtomicBlockSync('sc-image', data);
+  };
+
+  const handleUploadProgress = (chunks: any) => {
+    setUploading({...chunks});
+  };
+
+  const handleUploadError = (chunk: SCMediaChunkType, error: string) => {
+    setErrors({...errors, [chunk.id]: {...chunk, error}});
+  };
+
+  const handleRemoveUploadErrors = (id: string) => {
+    return () => {
+      delete errors[id];
+      setErrors({...errors});
+    };
+  };
+
   const handleChange = (editor: EditorState) => {
     onChange && onChange(draftToHtml(convertToRaw(editor.getCurrentContent())));
   };
 
+  const handleFileUploadFilter = (file: File, index: number, a: File[] | string[]): boolean => {
+    return file.type.startsWith('image/');
+  };
+
   return (
-    <Root className={className}>
-      <MUIRichTextEditor
-        id={editorId}
-        readOnly={readOnly}
-        label={intl.formatMessage(messages.placeholder)}
-        onChange={handleChange}
-        ref={editor}
-        defaultValue={content}
-        inlineToolbarControls={['bold', 'italic', 'underline', 'strikethrough', 'highlight', 'link', 'clear']}
-        toolbar={false}
-        inlineToolbar={true}
-        autocomplete={{
-          strategies: [
-            {
-              asyncItems: searchMentions,
-              triggerChar: '@'
-            }
-          ]
-        }}
-      />
-    </Root>
+    <ChunkedUploady
+      destination={{
+        url: `${scContext.settings.portal}${Endpoints.ComposerChunkUploadMedia.url()}`,
+        headers: {Authorization: `Bearer ${scContext.settings.session.authToken.accessToken}`},
+        method: Endpoints.ComposerChunkUploadMedia.method
+      }}
+      chunkSize={2142880}
+      multiple
+      accept="image/*"
+      fileFilter={handleFileUploadFilter}>
+      <MediaChunkUploader type="eimage" onSuccess={handleUploadSuccess} onProgress={handleUploadProgress} onError={handleUploadError} />
+      <UploadDropZone onDragOverClassName="drag-over" inputFieldName="image">
+        <Root className={className}>
+          <MUIRichTextEditor
+            id={editorId}
+            readOnly={readOnly}
+            label={intl.formatMessage(messages.placeholder)}
+            onChange={handleChange}
+            ref={editor}
+            defaultValue={content}
+            inlineToolbarControls={['bold', 'italic', 'underline', 'strikethrough', 'highlight', 'link', 'clear']}
+            customControls={[
+              {
+                name: 'sc-image',
+                type: 'atomic',
+                atomicComponent: EditorImage
+              }
+            ]}
+            toolbar={false}
+            inlineToolbar={true}
+            autocomplete={{
+              strategies: [
+                {
+                  asyncItems: searchMentions,
+                  triggerChar: '@'
+                }
+              ]
+            }}
+          />
+          {(uploading || errors) && (
+            <Stack>
+              {Object.values(uploading).map((chunk: SCMediaChunkType) => (
+                <Fade in key={chunk.id}>
+                  <Box>
+                    {chunk.name}
+                    <LinearProgress variant="determinate" value={chunk.completed} />
+                  </Box>
+                </Fade>
+              ))}
+              {Object.keys(errors).map((id: string) => (
+                <Fade in key={id}>
+                  <Alert severity="error" onClose={handleRemoveUploadErrors(id)}>
+                    <AlertTitle>{errors[id].name}</AlertTitle>
+                    {errors[id].error}
+                  </Alert>
+                </Fade>
+              ))}
+            </Stack>
+          )}
+        </Root>
+      </UploadDropZone>
+    </ChunkedUploady>
   );
 }

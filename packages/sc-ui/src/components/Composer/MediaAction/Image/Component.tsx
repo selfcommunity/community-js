@@ -101,8 +101,6 @@ export default ({
 
   // Context
   const scContext: SCContextType = useContext(SCContext);
-  const scPrefernces: SCPreferencesContextType = useContext(SCPreferencesContext);
-  const scAuthContext: SCUserContextType = useContext(SCUserContext);
 
   // Handlers
 
@@ -138,7 +136,7 @@ export default ({
               <ImageListItemBar
                 position="top"
                 actionIcon={
-                  <IconButton onClick={onDelete(media.id)} size="small" sx={{ color: 'rgba(255, 255, 255, 0.54)' }}>
+                  <IconButton onClick={onDelete(media.id)} size="small" sx={{color: 'rgba(255, 255, 255, 0.54)'}}>
                     <DeleteIcon />
                   </IconButton>
                 }

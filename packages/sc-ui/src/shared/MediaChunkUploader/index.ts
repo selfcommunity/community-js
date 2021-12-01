@@ -16,10 +16,12 @@ import {useIntl} from 'react-intl';
 import messages from '../../messages/common';
 
 export default ({
+  type = null,
   onSuccess = null,
   onProgress = null,
   onError = null
 }: {
+  type?: string | null;
   onSuccess: (media: SCMediaType) => void;
   onProgress: (chunks: any) => void;
   onError: (chunk: SCMediaChunkType, error: string) => void;
@@ -112,7 +114,7 @@ export default ({
     if (chunkStateRef.current.chunks[data.item.id].upload_id) {
       res.sendOptions.params = {[`upload_id`]: chunkStateRef.current.chunks[data.item.id].upload_id};
     } else {
-      chunkStateRef.current.setChunk({id: data.item.id, type: data.sendOptions.paramName});
+      chunkStateRef.current.setChunk({id: data.item.id, type: type || data.sendOptions.paramName});
     }
     return res;
   });

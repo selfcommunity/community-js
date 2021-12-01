@@ -21,4 +21,5 @@ export const Base = Template.bind({});
 
 Base.args = {
   /* the args you need here will depend on your component */
+  defaultValue: 'ciao <mention id="1" ext-id="5">@username</mention>'
 };
