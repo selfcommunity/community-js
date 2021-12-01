@@ -42,7 +42,11 @@
   "ui.changePicture.button.upload": "Carica una nuova immagine",
   "ui.changePicture.listF": "Formati ammessi: gif, png, jpg, jpeg",
   "ui.changePicture.listS": "Dimensione massima: 3 MB",
+  "ui.changePicture.button.delete": "Cancella",
   "ui.changePicture.button.finished": "Finito",
+  "ui.changePicture.dialog.msg": "Sei sicuro di voler rimuovere questa immagine ?",
+  "ui.changePicture.dialog.close": "Chiudi",
+  "ui.changePicture.dialog.confirm": "Conferma",
 
   "ui.platformAccess.title": "Accesso alla Piattaforma",
   "ui.platformAccess.adm": "Amministrazione",

@@ -42,7 +42,11 @@
   "ui.changePicture.button.upload": "Upload new Image",
   "ui.changePicture.listF": "Allowed formats: gif,png,jpg,jpeg \n Maximum size: 3 MB",
   "ui.changePicture.listS": "Maximum size: 3 MB",
+  "ui.changePicture.button.delete": "Delete",
   "ui.changePicture.button.finished": "Finished",
+  "ui.changePicture.dialog.msg": "Are you sure you want to delete this picture ?",
+  "ui.changePicture.dialog.close": "Close",
+  "ui.changePicture.dialog.confirm": "Confirm",
 
   "ui.platformAccess.title": "Platform Access",
   "ui.platformAccess.adm": "Administration",

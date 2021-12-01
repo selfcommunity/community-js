@@ -199,6 +199,22 @@ export default {
     url: urlReplacer('/api/v2/user/$(id)/categories'),
     method: 'GET',
   },
+  GetAvatars: {
+    url: urlReplacer('/api/v2/user/avatar/'),
+    method: 'GET',
+  },
+  SetPrimaryAvatar: {
+    url: urlReplacer('/api/v2/user/avatar/'),
+    method: 'PATCH',
+  },
+  AddAvatar: {
+    url: urlReplacer('/api/v2/user/avatar/'),
+    method: 'POST',
+  },
+  RemoveAvatar: {
+    url: urlReplacer('/api/v2/user/avatar/'),
+    method: 'DELETE',
+  },
 
   /**
    * Suggestion Endpoints
