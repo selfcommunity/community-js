@@ -67,6 +67,7 @@ import {Document, Image, Link} from './MediaAction';
 import Poll from './Poll';
 import Location from './Location';
 import TagChip from '../../shared/TagChip';
+import {random} from '../../utils/string';
 
 const DialogTransition = forwardRef(function Transition(
   props: TransitionProps & {
@@ -277,7 +278,7 @@ const COMPOSER_INITIAL_STATE = {
 const reducer = (state, action) => {
   switch (action.type) {
     case 'reset':
-      return {...COMPOSER_INITIAL_STATE};
+      return {...COMPOSER_INITIAL_STATE, key: random()};
     case 'multiple':
       return {...state, ...action.value};
     default:
@@ -300,8 +301,8 @@ export default function Composer(props: ComposerProps): JSX.Element {
   const [_view, setView] = useState<string>(view);
   const [composerTypes, setComposerTypes] = useState([]);
 
-  const [state, dispatch] = useReducer(reducer, {...COMPOSER_INITIAL_STATE, open, view});
-  const {type, title, titleError, text, categories, addressing, audience, medias, poll, pollError, location} = state;
+  const [state, dispatch] = useReducer(reducer, {...COMPOSER_INITIAL_STATE, open, view, key: random()});
+  const {key, type, title, titleError, text, categories, addressing, audience, medias, poll, pollError, location} = state;
 
   /*
    * Compute preferences
@@ -750,7 +751,13 @@ export default function Composer(props: ComposerProps): JSX.Element {
               />
             </div>
           )}
-          <Editor className={classNames(classes.block, classes.editor)} onChange={handleChangeText} defaultValue={text} readOnly={isSubmitting} />
+          <Editor
+            key={`${key}-editor`}
+            className={classNames(classes.block, classes.editor)}
+            onChange={handleChangeText}
+            defaultValue={text}
+            readOnly={isSubmitting}
+          />
           <Box className={classes.medias}>
             <MediasPreview
               medias={medias}
@@ -773,7 +780,7 @@ export default function Composer(props: ComposerProps): JSX.Element {
               ))}
           </Stack>
           <div className={classes.block}>
-            <Categories onChange={handleChange('categories')} defaultValue={categories} disabled={isSubmitting} />
+            <Categories key={`${key}-categories`} onChange={handleChange('categories')} defaultValue={categories} disabled={isSubmitting} />
           </div>
         </DialogContent>
         <DialogActions className={classes.actions}>

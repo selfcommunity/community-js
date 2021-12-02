@@ -13,6 +13,7 @@ import {SCMediaChunkType} from '../../types/media';
 import UploadDropZone from '@rpldy/upload-drop-zone';
 import EmojiIcon from '@mui/icons-material/SentimentSatisfiedOutlined';
 import Picker from 'emoji-picker-react';
+import {random} from '../../utils/string';
 
 const PREFIX = 'SCEditor';
 
@@ -113,7 +114,7 @@ export default function Editor({
   onChange?: (value: string) => void;
   onRef?: (editor: RefObject<TMUIRichTextEditorRef>) => void;
 }): JSX.Element {
-  const editorId = useMemo(() => `editor${(Math.random() + 1).toString(36).substring(7)}`, []);
+  const editorId = useMemo(() => `editor${random()}`, []);
 
   // Refs
   const editor = useRef<TMUIRichTextEditorRef>(null);
