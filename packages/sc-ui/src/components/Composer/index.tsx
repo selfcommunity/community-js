@@ -59,7 +59,8 @@ import Categories from './Categories';
 import {stripHtml} from '../../utils/string';
 import classNames from 'classnames';
 import {TransitionProps} from '@mui/material/transitions';
-import Medias from '../FeedObject/Medias';
+import MediasPreview from '../FeedObject/Medias';
+import PollPreview from '../FeedObject/Poll';
 import Editor from '../Editor';
 import {SCComposerMediaActionType} from '../../types/composer';
 import {Document, Image, Link} from './MediaAction';
@@ -751,7 +752,7 @@ export default function Composer(props: ComposerProps): JSX.Element {
           )}
           <Editor className={classNames(classes.block, classes.editor)} onChange={handleChangeText} defaultValue={text} readOnly={isSubmitting} />
           <Box className={classes.medias}>
-            <Medias
+            <MediasPreview
               medias={medias}
               GridImageProps={{gallery: false, overlay: false}}
               imagesAdornment={renderMediaControls(MEDIA_TYPE_IMAGE)}
@@ -760,6 +761,7 @@ export default function Composer(props: ComposerProps): JSX.Element {
               linksAdornment={renderMediaControls(MEDIA_TYPE_LINK)}
             />
           </Box>
+          {poll && <PollPreview pollObject={poll} />}
           <Stack spacing={2} className={classes.audience} direction="row">
             {location && (
               <Chip icon={<LocationIcon />} label={location.full_address} onDelete={handleDeleteLocation} onClick={handleChangeView(LOCATION_VIEW)} />
