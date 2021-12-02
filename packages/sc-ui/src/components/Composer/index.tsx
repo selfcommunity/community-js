@@ -68,7 +68,7 @@ import Poll from './Poll';
 import Location from './Location';
 import TagChip from '../../shared/TagChip';
 import {random} from '../../utils/string';
-import { AxiosResponse } from 'axios';
+import {AxiosResponse} from 'axios';
 
 const DialogTransition = forwardRef(function Transition(
   props: TransitionProps & {
@@ -305,6 +305,9 @@ export default function Composer(props: ComposerProps): JSX.Element {
   const [state, dispatch] = useReducer(reducer, {...COMPOSER_INITIAL_STATE, open, view, key: random()});
   const {key, type, title, titleError, text, categories, addressing, audience, medias, poll, pollError, location} = state;
 
+  // REFS
+  const unloadRef = React.useRef<boolean>(false);
+
   /*
    * Compute preferences
    */
@@ -336,6 +339,21 @@ export default function Composer(props: ComposerProps): JSX.Element {
 
   // Props update
   useEffect(() => setView(view), [view]);
+
+  // Prevent unload
+  useEffect(() => {
+    if (!unloadRef.current && canSubmit()) {
+      unloadRef.current = true;
+      const onUnload = (event) => {
+        event.preventDefault();
+        return '';
+      };
+      window.onbeforeunload = onUnload;
+    } else if (unloadRef.current && !canSubmit()) {
+      unloadRef.current = false;
+      window.onbeforeunload = null;
+    }
+  }, [state]);
 
   // CHECKS
   const hasPoll = () => {
@@ -399,6 +417,9 @@ export default function Composer(props: ComposerProps): JSX.Element {
     };
 
   const handleClose = (event: SyntheticEvent): void => {
+    if (unloadRef.current) {
+      window.onbeforeunload = null;
+    }
     onClose && onClose(event);
   };
 
@@ -476,6 +497,9 @@ export default function Composer(props: ComposerProps): JSX.Element {
       })
       .then((res: AxiosResponse<any>) => {
         onSuccess(res.data);
+        if (unloadRef.current) {
+          window.onbeforeunload = null;
+        }
         dispatch({type: 'reset'});
       })
       .catch((error) => {
