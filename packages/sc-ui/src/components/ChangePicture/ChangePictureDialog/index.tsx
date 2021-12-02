@@ -8,16 +8,17 @@ import Typography from '@mui/material/Typography';
 import {CardHeader, Divider, IconButton, Box, Dialog, DialogTitle, DialogActions} from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import FolderOpenIcon from '@mui/icons-material/FolderOpen';
-import {Endpoints, http, SCUserContext, SCUserContextType, SCUserType} from '@selfcommunity/core';
-import {AxiosResponse} from 'axios';
+import {Endpoints, http, SCUserContext, SCUserContextType} from '@selfcommunity/core';
 import {FormattedMessage} from 'react-intl';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
+import DeleteAvatarDialog from './DeleteAvatarDialog';
 
 const PREFIX = 'SCChangePictureDialog';
 
 const classes = {
-  actions: `${PREFIX}-actions`
+  actions: `${PREFIX}-actions`,
+  primary: `${PREFIX}-primary`
 };
 
 const Root = styled(Card, {
@@ -30,25 +31,29 @@ const Root = styled(Card, {
   [`& .${classes.actions}`]: {
     display: 'flex',
     justifyContent: 'flex-end'
+  },
+  [`& .${classes.primary}`]: {
+    border: 'solid'
   }
 }));
 
 function ChangePictureDialog({open, onClose}: {open: boolean; onClose?: () => void | undefined}): JSX.Element {
   const scUser: SCUserContextType = useContext(SCUserContext);
   const [file, setFile] = useState(scUser.user['avatar']);
-  const [avatar, setAvatar] = useState(null);
+  const [primary, setPrimary] = useState(null);
   const [avatars, setAvatars] = useState([]);
   const [avatarId, setAvatarId] = useState<number>(null);
   let fileInput = useRef(null);
-  const [openModal, setOpenModal] = React.useState(false);
+  const [openDeleteAvatarDialog, setOpenDeleteAvatarDialog] = useState<boolean>(false);
 
   function handleOpen(id) {
-    setOpenModal(true);
+    setOpenDeleteAvatarDialog(true);
     setAvatarId(id);
   }
 
   function handleClose() {
-    setOpenModal(false);
+    setOpenDeleteAvatarDialog(false);
+    fetchUserAvatar();
   }
 
   function handleUpload(event) {
@@ -88,7 +93,7 @@ function ChangePictureDialog({open, onClose}: {open: boolean; onClose?: () => vo
       .then((res: any) => {
         const primary = getPrimaryAvatar(res.data);
         setAvatars(res.data.results);
-        setAvatar(primary);
+        setPrimary(primary.id);
         setFile(primary.avatar);
       })
       .catch((error) => {
@@ -100,17 +105,16 @@ function ChangePictureDialog({open, onClose}: {open: boolean; onClose?: () => vo
     return data.results.find((a) => a.primary === true);
   }
 
-  function deleteAvatar() {
+  function selectPrimaryAvatar(id) {
     http
       .request({
-        url: Endpoints.RemoveAvatar.url({id: scUser.user['id']}),
-        method: Endpoints.RemoveAvatar.method,
+        url: Endpoints.SetPrimaryAvatar.url({id: scUser.user['id']}),
+        method: Endpoints.SetPrimaryAvatar.method,
         data: {
-          avatar_id: avatarId
+          avatar_id: id
         }
       })
       .then(() => {
-        handleClose();
         fetchUserAvatar();
       })
       .catch((error) => {
@@ -124,19 +128,7 @@ function ChangePictureDialog({open, onClose}: {open: boolean; onClose?: () => vo
 
   return (
     <React.Fragment>
-      <Dialog open={openModal} onClose={() => handleClose()}>
-        <DialogTitle>
-          <FormattedMessage id="ui.changePicture.dialog.msg" defaultMessage="ui.changePicture.dialog.msg" />
-        </DialogTitle>
-        <DialogActions>
-          <Button onClick={() => handleClose()}>
-            <FormattedMessage id="ui.changePicture.dialog.close" defaultMessage="ui.changePicture.dialog.close" />
-          </Button>
-          <Button onClick={() => deleteAvatar()} autoFocus>
-            <FormattedMessage id="ui.changePicture.dialog.confirm" defaultMessage="ui.changePicture.dialog.confirm" />
-          </Button>
-        </DialogActions>
-      </Dialog>
+      {openDeleteAvatarDialog && <DeleteAvatarDialog open={openDeleteAvatarDialog} onClose={() => handleClose()} id={avatarId} />}
       <Root>
         <CardHeader
           action={
@@ -161,7 +153,10 @@ function ChangePictureDialog({open, onClose}: {open: boolean; onClose?: () => vo
           </Typography>
           <ImageList cols={3} rowHeight={'auto'}>
             {avatars.map((avatar) => (
-              <ImageListItem key={avatar.id}>
+              <ImageListItem
+                className={primary === avatar.id ? classes.primary : null}
+                key={avatar.id}
+                onClick={() => selectPrimaryAvatar(avatar.id)}>
                 <img src={avatar.avatar} loading="lazy" alt={'img'} />
                 <Button variant="outlined" onClick={() => handleOpen(avatar.id)}>
                   <FormattedMessage id="ui.changePicture.button.delete" defaultMessage="ui.changePicture.button.delete" />
