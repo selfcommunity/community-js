@@ -68,6 +68,7 @@ import Poll from './Poll';
 import Location from './Location';
 import TagChip from '../../shared/TagChip';
 import {random} from '../../utils/string';
+import { AxiosResponse } from 'axios';
 
 const DialogTransition = forwardRef(function Transition(
   props: TransitionProps & {
@@ -398,7 +399,6 @@ export default function Composer(props: ComposerProps): JSX.Element {
     };
 
   const handleClose = (event: SyntheticEvent): void => {
-    dispatch({type: 'reset'});
     onClose && onClose(event);
   };
 
@@ -474,7 +474,10 @@ export default function Composer(props: ComposerProps): JSX.Element {
         method: Endpoints.Composer.method,
         data
       })
-      .then(onSuccess)
+      .then((res: AxiosResponse<any>) => {
+        onSuccess(res.data);
+        dispatch({type: 'reset'});
+      })
       .catch((error) => {
         dispatch({type: 'multiple', value: formatHttpError(error)});
       })
