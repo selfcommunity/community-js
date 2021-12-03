@@ -18,7 +18,17 @@ const Root = styled(Card, {
   marginBottom: theme.spacing(2)
 }));
 
-function DeleteAvatarDialog({id, open, onClose}: {id?: number; open: boolean; onClose?: () => void | undefined}): JSX.Element {
+function DeleteAvatarDialog({
+  id,
+  open,
+  onClose,
+  onSuccess
+}: {
+  id?: number;
+  open: boolean;
+  onClose?: () => void | undefined;
+  onSuccess?: (id: number) => void | undefined;
+}): JSX.Element {
   const scUser: SCUserContextType = useContext(SCUserContext);
 
   function handleClose() {
@@ -36,6 +46,7 @@ function DeleteAvatarDialog({id, open, onClose}: {id?: number; open: boolean; on
       })
       .then(() => {
         onClose();
+        onSuccess(id);
       })
       .catch((error) => {
         console.log(error);

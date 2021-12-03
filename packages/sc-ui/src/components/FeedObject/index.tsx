@@ -181,9 +181,7 @@ export default function FeedObject({
                 gutterBottom
                 dangerouslySetInnerHTML={{__html: template === FeedObjectTemplateType.PREVIEW ? obj.summary : obj.html}}
               />
-              {obj['poll'] && (
-                <PollObject feedObject={obj} feedObjectType={feedObjectType} pollObject={obj['poll']} onChange={handleChangePoll} elevation={0} />
-              )}
+              {obj['poll'] && <PollObject feedObject={obj} pollObject={obj['poll']} onChange={handleChangePoll} elevation={0} />}
               <ContributorsFeedObject feedObject={obj} feedObjectType={feedObjectType} />
             </CardContent>
             <CardActions>

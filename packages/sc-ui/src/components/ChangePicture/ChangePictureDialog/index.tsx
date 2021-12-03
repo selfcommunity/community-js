@@ -45,15 +45,17 @@ function ChangePictureDialog({open, onClose}: {open: boolean; onClose?: () => vo
   const [avatarId, setAvatarId] = useState<number>(null);
   let fileInput = useRef(null);
   const [openDeleteAvatarDialog, setOpenDeleteAvatarDialog] = useState<boolean>(false);
+  const handleClose = () => {
+    setOpenDeleteAvatarDialog(false);
+  };
+
+  function handleDeleteSuccess(id) {
+    setAvatars(avatars.filter((a) => a.id !== id));
+  }
 
   function handleOpen(id) {
     setOpenDeleteAvatarDialog(true);
     setAvatarId(id);
-  }
-
-  function handleClose() {
-    setOpenDeleteAvatarDialog(false);
-    fetchUserAvatar();
   }
 
   function handleUpload(event) {
@@ -76,8 +78,8 @@ function ChangePictureDialog({open, onClose}: {open: boolean; onClose?: () => vo
         },
         data: formData
       })
-      .then(() => {
-        fetchUserAvatar();
+      .then((res) => {
+        setAvatars((prev) => [...prev, res.data]);
       })
       .catch((error) => {
         console.log(error);
@@ -128,7 +130,9 @@ function ChangePictureDialog({open, onClose}: {open: boolean; onClose?: () => vo
 
   return (
     <React.Fragment>
-      {openDeleteAvatarDialog && <DeleteAvatarDialog open={openDeleteAvatarDialog} onClose={() => handleClose()} id={avatarId} />}
+      {openDeleteAvatarDialog && (
+        <DeleteAvatarDialog open={openDeleteAvatarDialog} onClose={handleClose} onSuccess={() => handleDeleteSuccess(avatarId)} id={avatarId} />
+      )}
       <Root>
         <CardHeader
           action={

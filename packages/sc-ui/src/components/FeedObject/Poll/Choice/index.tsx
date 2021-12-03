@@ -1,7 +1,7 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
-import {Endpoints, http, Logger, SCFeedObjectType, SCFeedObjectTypologyType, SCPollChoiceType} from '@selfcommunity/core';
+import {Endpoints, http, Logger, SCFeedObjectType, SCPollChoiceType} from '@selfcommunity/core';
 import {Box, Button, Typography} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import {AxiosResponse} from 'axios';
@@ -82,27 +82,23 @@ function LinearProgressWithLabel(props: LinearProgressProps & {value: number}) {
 export default function Choice({
   choiceObj = null,
   feedObject = null,
-  feedObjectType = null,
-  votes = null,
   onVote = null,
-  multipleChoices = null,
+  onUnVote = null,
+  votes = null,
   ...rest
 }: {
   feedObject?: SCFeedObjectType;
-  feedObjectType?: SCFeedObjectTypologyType;
   choiceObj?: SCPollChoiceType;
-  votes?: number;
   multipleChoices?: boolean;
   [p: string]: any;
 }): JSX.Element {
   const [obj, setObj] = useState<SCPollChoiceType>(choiceObj);
-  const [voting, setVoting] = useState<boolean>(false);
+  const disabled = feedObject === null;
 
   function vote() {
-    setVoting(true);
     http
       .request({
-        url: Endpoints.PollVote.url({id: feedObject.id, type: feedObjectType}),
+        url: Endpoints.PollVote.url({id: feedObject.id, type: feedObject['type']}),
         method: Endpoints.PollVote.method,
         data: {
           choice: choiceObj.id
@@ -115,8 +111,11 @@ export default function Choice({
             vote_count: obj.voted ? obj.vote_count - 1 : obj.vote_count + 1
           })
         );
-        setVoting(false);
-        onVote();
+        if (obj.voted) {
+          onUnVote();
+        } else {
+          onVote();
+        }
       })
       .catch((error) => {
         Logger.error(SCOPE_SC_UI, error);
@@ -127,33 +126,20 @@ export default function Choice({
     return (100 * voteCount) / totalVotes;
   }
 
-  /**
-   * Render the choice object
-   * @return {JSX.Element}
-   */
-
-  function renderChoice() {
-    return (
-      <React.Fragment>
-        <div className={classes.display}>
-          {obj.voted ? (
-            <Button variant="outlined" size="small" disabled={voting} className={classes.voted} onClick={vote}>
-              <CheckIcon />
-            </Button>
-          ) : (
-            <Button variant="outlined" size="small" disabled={voting} className={classes.vote} onClick={vote}>
-              <FormattedMessage id="ui.feedObject.poll.choice.vote" defaultMessage="ui.feedObject.poll.choice.vote" />
-            </Button>
-          )}
-          <Typography>{obj.choice}</Typography>
-        </div>
-        <LinearProgressWithLabel className={classes.progress} value={renderVotes(obj.vote_count, votes)} />
-      </React.Fragment>
-    );
-  }
+  const c = (
+    <React.Fragment>
+      <div className={classes.display}>
+        <Button variant="outlined" size="small" disabled={disabled} className={obj.voted ? classes.voted : classes.vote} onClick={vote}>
+          {obj.voted ? <CheckIcon /> : <FormattedMessage id="ui.feedObject.poll.choice.vote" defaultMessage="ui.feedObject.poll.choice.vote" />}
+        </Button>
+        <Typography>{obj.choice}</Typography>
+      </div>
+      <LinearProgressWithLabel className={classes.progress} value={renderVotes(obj.vote_count, votes)} />
+    </React.Fragment>
+  );
 
   /**
    * Render root element
    */
-  return <Root {...rest}>{renderChoice()}</Root>;
+  return <Root {...rest}>{c}</Root>;
 }

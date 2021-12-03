@@ -1,13 +1,12 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
-import {Endpoints, http, SCPollChoiceType, SCPollType} from '@selfcommunity/core';
+import {SCFeedObjectType, SCPollChoiceType, SCPollType} from '@selfcommunity/core';
 import {CardContent, CardHeader, Typography} from '@mui/material';
 import {defineMessages, useIntl} from 'react-intl';
 import List from '@mui/material/List';
 import Choice from './Choice';
 import PeopleAltOutlinedIcon from '@mui/icons-material/PeopleAltOutlined';
-import {AxiosResponse} from 'axios';
 import ListOutlinedIcon from '@mui/icons-material/ListOutlined';
 
 const messages = defineMessages({
@@ -95,7 +94,7 @@ export interface PollObjectProps {
    * If `false`, the poll is not votable
    * @default false
    */
-  votable?: boolean;
+  disabled?: boolean;
   /**
    * callback to sync poll obj of the feedObject
    * @param value
@@ -104,42 +103,32 @@ export interface PollObjectProps {
   /**
    * Any othe properties
    */
+  feedObject?: SCFeedObjectType;
   [p: string]: any;
 }
 
-export default function PollObject({
-  feedObject = null,
-  feedObjectType = null,
-  pollObject = null,
-  votable = true,
-  onChange = null,
-  ...rest
-}: PollObjectProps): JSX.Element {
+export default function PollObject({feedObject = null, pollObject = null, disabled = null, onChange = null, ...rest}: PollObjectProps): JSX.Element {
   const intl = useIntl();
-  const [votes, setVotes] = useState<number>(null);
+  const [obj, setObj] = useState<SCPollType>(pollObject);
+  const [votes, setVotes] = useState(getVotes());
   const multipleChoices = pollObject['multiple_choices'];
 
-  function fetchPollVotes() {
-    http
-      .request({
-        url: Endpoints.PollVotesList.url({id: feedObject['id'], type: feedObjectType}),
-        method: Endpoints.PollVotesList.method
-      })
-      .then((res: AxiosResponse<any>) => {
-        setVotes(res.data.count);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-
-  useEffect(() => {
-    fetchPollVotes();
-  }, []);
-
-  const onVote = () => {
-    fetchPollVotes();
+  const handleVote = () => {
+    setVotes((prevVotes) => prevVotes + 1);
   };
+
+  const handleUnVote = () => {
+    setVotes((prevVotes) => prevVotes - 1);
+  };
+
+  function getVotes() {
+    const choices = pollObject.choices;
+    let totalVotes = 0;
+    for (let i = 0; i < choices.length; i++) {
+      totalVotes += choices[i].vote_count;
+    }
+    return totalVotes;
+  }
 
   /**
    * Render the poll object
@@ -151,23 +140,22 @@ export default function PollObject({
         <CardHeader title={`${intl.formatMessage(messages.title)}`} className={classes.title} />
         <CardContent>
           <Typography variant="body1" gutterBottom className={classes.poll}>
-            {pollObject.title}
+            {obj.title}
           </Typography>
           <Typography variant="body2" gutterBottom className={classes.poll}>
             {`${intl.formatMessage(messages.expDate)}`}
-            {`${intl.formatDate(Date.parse(pollObject.expiration_at), {year: 'numeric', month: 'numeric', day: 'numeric'})}`}
+            {`${intl.formatDate(Date.parse(obj.expiration_at), {year: 'numeric', month: 'numeric', day: 'numeric'})}`}
           </Typography>
           <List>
-            {pollObject.choices.map((choice: SCPollChoiceType, index) => (
+            {pollObject.choices.map((choice: SCPollChoiceType) => (
               <Choice
                 elevation={0}
                 choiceObj={choice}
-                key={index}
-                feedObject={feedObject}
-                feedObjectType={feedObjectType}
+                key={choice.id}
+                feedObject={disabled ? null : feedObject}
                 votes={votes}
-                onVote={onVote}
-                multipleChoices={multipleChoices}
+                onVote={handleVote}
+                onUnVote={handleUnVote}
               />
             ))}
           </List>
