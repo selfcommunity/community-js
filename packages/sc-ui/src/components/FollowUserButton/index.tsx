@@ -43,7 +43,9 @@ export default function FollowUserButton({
      * Call scFollowedManager.isFollowed inside an effect
      * to avoid warning rendering child during update parent state
      */
-    setFollowed(scFollowedManager.isFollowed(scUser));
+    if (scUserContext.user.id !== scUser.id) {
+      setFollowed(scFollowedManager.isFollowed(scUser));
+    }
   });
 
   const followCUser = () => {
@@ -57,6 +59,9 @@ export default function FollowUserButton({
       });
   };
 
+  if (scUserContext.user.id === scUser.id) {
+    return null;
+  }
   return (
     <FollowButton size="small" variant="outlined" onClick={followCUser} loading={followed === null || scFollowedManager.isLoading(scUser)} {...rest}>
       {followed ? (

@@ -22,7 +22,17 @@ const Root = styled(Card, {
   }
 }));
 
-export default function User({id = null, user = null, ...rest}: {id?: number; user?: SCUserType; [p: string]: any}): JSX.Element {
+export default function User({
+  id = null,
+  user = null,
+  handleIgnoreAction = null,
+  ...rest
+}: {
+  id?: number;
+  user?: SCUserType;
+  handleIgnoreAction?: (u) => void;
+  [p: string]: any;
+}): JSX.Element {
   const {scUser, setSCUser} = useSCFetchUser({id, user});
   const scPreferencesContext: SCPreferencesContextType = useContext(SCPreferencesContext);
   const scUserContext: SCUserContextType = useContext(SCUserContext);
@@ -38,7 +48,11 @@ export default function User({id = null, user = null, ...rest}: {id?: number; us
     /* TODO: render proper action based on redux connection (follow) store */
     return (
       <React.Fragment>
-        <Button size="small">Ignore</Button>
+        {handleIgnoreAction && (
+          <Button size="small" onClick={handleIgnoreAction}>
+            Ignore
+          </Button>
+        )}
         <FollowUserButton user={scUser} />
       </React.Fragment>
     );
@@ -52,7 +66,11 @@ export default function User({id = null, user = null, ...rest}: {id?: number; us
     /* TODO: render proper action based on redux connection (friendship) store */
     return (
       <React.Fragment>
-        <Button size="small">Ignore</Button>
+        {handleIgnoreAction && (
+          <Button size="small" onClick={handleIgnoreAction}>
+            Ignore
+          </Button>
+        )}
         <Button size="small" variant="outlined">
           Connect
         </Button>

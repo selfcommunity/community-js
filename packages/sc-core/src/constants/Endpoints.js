@@ -256,6 +256,15 @@ export default {
     url: urlReplacer('/api/v2/$(type)/$(id)/poll/vote/'),
     method: 'GET',
   },
+
+  /**
+   * Contributors
+   */
+  Contributors: {
+    url: urlReplacer('/api/v2/$(type)/$(id)/contributors/'),
+    method: 'GET',
+  },
+
   /**
    * Composer Endpoints
    */

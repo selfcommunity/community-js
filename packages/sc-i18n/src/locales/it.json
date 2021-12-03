@@ -106,6 +106,8 @@
   "ui.feedObject.votesDialog.noOtherLikes": "Non ci sono altri voti.",
   "ui.feedObject.sharesDialog.title": "Condivisioni",
   "ui.feedObject.sharesDialog.noOtherLikes": "Non ci sono altre condivisioni.",
+  "ui.feedObject.contributors.title": "{total, plural, =0 {# Partecipanti} one {# Partecipante} other {# ContribuPartecipantitors}}",
+  "ui.feedObject.contributors.noOtherContributors": "Non ci sono altri partecipanti.",
 
   "ui.feedObject.poll.title": "Sondaggio Correlato",
   "ui.feedObject.poll.expDate": "Vota una delle seguenti scelte entro il ",

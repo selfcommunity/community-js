@@ -2,7 +2,20 @@ import React from 'react';
 import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import {Avatar, Box, Button, CardActions, CardHeader, Grid, ListItem, ListItemAvatar, ListItemText, Tooltip, Typography} from '@mui/material';
+import {
+  Avatar,
+  AvatarGroup,
+  Box,
+  Button,
+  CardActions,
+  CardHeader,
+  Grid,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+  Tooltip,
+  Typography
+} from '@mui/material';
 import FeedObjectSkeleton from '../Skeleton/FeedObjectSkeleton';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import TimeAgo from 'timeago-react';
@@ -16,6 +29,7 @@ import WorldIcon from '@mui/icons-material/Public';
 import {defineMessages, useIntl} from 'react-intl';
 import PollObject from './Poll';
 import {SCFeedObjectType, SCFeedObjectTypologyType, Link, useSCFetchFeedObject, SCPollType} from '@selfcommunity/core';
+import ContributorsFeedObject from './Contributors';
 
 const messages = defineMessages({
   comment: {
@@ -170,6 +184,7 @@ export default function FeedObject({
               {obj['poll'] && (
                 <PollObject feedObject={obj} feedObjectType={feedObjectType} pollObject={obj['poll']} onChange={handleChangePoll} elevation={0} />
               )}
+              <ContributorsFeedObject feedObject={obj} feedObjectType={feedObjectType} />
             </CardContent>
             <CardActions>
               <Actions feedObject={obj} feedObjectType={feedObjectType} />
