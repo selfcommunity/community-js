@@ -30,6 +30,7 @@ import {defineMessages, useIntl} from 'react-intl';
 import PollObject from './Poll';
 import {SCFeedObjectType, SCFeedObjectTypologyType, Link, useSCFetchFeedObject, SCPollType} from '@selfcommunity/core';
 import ContributorsFeedObject from './Contributors';
+import LazyLoad from 'react-lazyload';
 
 const messages = defineMessages({
   comment: {
@@ -182,7 +183,9 @@ export default function FeedObject({
                 dangerouslySetInnerHTML={{__html: template === FeedObjectTemplateType.PREVIEW ? obj.summary : obj.html}}
               />
               {obj['poll'] && <PollObject feedObject={obj} pollObject={obj['poll']} onChange={handleChangePoll} elevation={0} />}
-              <ContributorsFeedObject feedObject={obj} feedObjectType={feedObjectType} />
+              <LazyLoad>
+                <ContributorsFeedObject feedObject={obj} feedObjectType={feedObjectType} />
+              </LazyLoad>
             </CardContent>
             <CardActions>
               <Actions feedObject={obj} feedObjectType={feedObjectType} />

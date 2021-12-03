@@ -97,7 +97,7 @@ export default function ReplyCommentObject({
             secondary={
               <>
                 <Card classes={{root: classes.comment}} {...rest}>
-                  <CardContent sx={{padding: 0}}>
+                  <CardContent sx={{padding: '10px 10px 0px 10px'}}>
                     <Editor
                       onRef={(e) => {
                         editor = e;

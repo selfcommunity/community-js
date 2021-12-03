@@ -71,8 +71,9 @@ const Root = styled(Box, {
 }));
 
 export default function CommentObject({
-  id = null,
+  commentObjectId = null,
   commentObject = null,
+  feedObjectId = null,
   feedObject = null,
   feedObjectType = SCFeedObjectTypologyType.POST,
   onOpenReply = null,
@@ -81,20 +82,25 @@ export default function CommentObject({
   onFetchLatestComment = null,
   ...rest
 }: {
-  id?: number;
-  feedObject: SCFeedObjectType;
-  feedObjectType: SCFeedObjectTypologyType;
+  commentObjectId?: number;
   commentObject?: SCCommentType;
+  feedObjectId?: number;
+  feedObject?: SCFeedObjectType;
+  feedObjectType?: SCFeedObjectTypologyType;
   onOpenReply?: (comment: SCCommentType) => void;
   onVote?: (comment: SCCommentType) => void;
   onFetchLatestComment?: () => void;
   [p: string]: any;
 }): JSX.Element {
   const scUser: SCUserContextType = useContext(SCUserContext);
-  const {obj, setObj} = useSCFetchCommentObject({id, commentObject});
+  const {obj, setObj} = useSCFetchCommentObject({id: commentObjectId, commentObject});
   const [loadingVote, setLoadingVote] = useState(false);
   const [loadingLatestComments, setLoadingLatestComments] = useState(false);
-  const [next, setNext] = useState<string>(`${Endpoints.Comments.url()}?${feedObjectType}=${feedObject.id}&parent=${commentObject.id}&limit=5`);
+  const [next, setNext] = useState<string>(
+    feedObject || feedObjectId
+      ? `${Endpoints.Comments.url()}?${feedObjectType}=${feedObjectId ? feedObjectId : feedObject.id}&parent=${commentObject.id}&limit=5`
+      : null
+  );
   const intl = useIntl();
 
   /**
@@ -206,7 +212,7 @@ export default function CommentObject({
           return Promise.resolve(res.data);
         });
     },
-    [obj.id]
+    [obj]
   );
 
   /**
@@ -223,7 +229,7 @@ export default function CommentObject({
           const newLatestComments: SCCommentType[] = obj.latest_comments.map((lc) => {
             if (lc.id === comment.id) {
               lc.voted = !lc.voted;
-              lc.vote_count = lc.vote_count - (lc.voted ? -1 : 1);;
+              lc.vote_count = lc.vote_count - (lc.voted ? -1 : 1);
             }
             return lc;
           });
@@ -298,7 +304,11 @@ export default function CommentObject({
                 <CommentObjectSkeleton {...rest} />
               </Box>
             ) : (
-              <Button variant="text" onClick={loadLatestComment} classes={{text: classNames(classes.btnViewPreviousComments, classes.commentChild)}}>
+              <Button
+                variant="text"
+                onClick={loadLatestComment}
+                disabled={!feedObjectId && !feedObject}
+                classes={{text: classNames(classes.btnViewPreviousComments, classes.commentChild)}}>
                 <FormattedMessage
                   id={'ui.commentObject.viewLatestComment'}
                   defaultMessage={'ui.commentObject.viewLatestComment'}
@@ -319,6 +329,7 @@ export default function CommentObject({
    * Render comments
    */
   let comment;
+  console.log(obj);
   if (obj) {
     comment = renderComment(obj);
   } else {

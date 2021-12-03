@@ -263,7 +263,7 @@ export default function GridImages({
           md={4}
           classes={{root: classNames(classes.border, classes.heightThree, classes.background, {[classes.gallery]: gallery})}}
           onClick={() => openPreviewImage(conditionalRender ? 2 : 3)}
-          style={{background: `url(${this.getImageUrl(conditionalRender ? images[2] : images[3])})`}}>
+          style={{background: `url(${getImageUrl(conditionalRender ? images[2] : images[3])})`}}>
           {renderOverlay(conditionalRender ? 2 : 3)}
           {renderTitle(images[2])}
         </Grid>

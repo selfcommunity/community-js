@@ -1,18 +1,12 @@
 import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
-
-import CommentObject from './index';
+import UserNotifications from './index';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC UI/CommentObject',
-  component: CommentObject,
+  title: 'Design System/SC UI/UserNotifications',
+  component: UserNotifications,
   argTypes: {
-    commentObjectId: {
-      control: {type: 'number'},
-      description: 'CommentObject Id',
-      table: {defaultValue: {summary: 79}}
-    },
     elevation: {
       control: {type: 'number'},
       description: 'Used only if variant="elevation". Shadow depth, corresponds to dp in the spec. It accepts values between 0 and 24 inclusive.',
@@ -26,18 +20,20 @@ export default {
     }
   },
   args: {
-    commentObjectId: 79
+    elevation: 1,
+    variant: 'elevation'
   }
-  // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
-} as ComponentMeta<typeof CommentObject>;
+} as ComponentMeta<typeof UserNotifications>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof CommentObject> = (args) => (
+const Template: ComponentStory<typeof UserNotifications> = (args) => (
   <div style={{width: 500}}>
-    <CommentObject {...args} />
+    <UserNotifications {...args} />
   </div>
 );
 
 export const Base = Template.bind({});
 
-Base.args = {};
+Base.args = {
+  /* the args you need here will depend on your component */
+};

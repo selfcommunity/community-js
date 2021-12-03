@@ -217,6 +217,22 @@ export default {
   },
 
   /**
+   * Notifications
+   */
+  UserNotificationList: {
+    url: urlReplacer('/api/v2/notification/'),
+    method: 'GET',
+  },
+  UserMarkReadNotification: {
+    url: urlReplacer('/api/v2/notification/read/'),
+    method: 'POST',
+  },
+  UserUnseenNotificationCount: {
+    url: urlReplacer('/api/v2/notification/unseen/'),
+    method: 'GET',
+  },
+
+  /**
    * Suggestion Endpoints
    */
   UserSuggestion: {
