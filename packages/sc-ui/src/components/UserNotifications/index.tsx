@@ -58,11 +58,11 @@ export default function UserNotifications(props): JSX.Element {
         <Box>
           {notifications.length <= 0 ? (
             <Typography variant="body2">
-              <FormattedMessage id="ui.TrendingPost.noResults" defaultMessage="ui.TrendingPost.noResults" />
+              <FormattedMessage id="ui.userNotifications.noResults" defaultMessage="ui.userNotifications.noResults" />
             </Typography>
           ) : (
             <InfiniteScroll
-              dataLength={500}
+              dataLength={notifications.length}
               next={fetchNotifications}
               hasMore={Boolean(next)}
               height={500}
@@ -71,8 +71,8 @@ export default function UserNotifications(props): JSX.Element {
                 <p style={{textAlign: 'center'}}>
                   <b>
                     <FormattedMessage
-                      id="ui.feedObject.contributors.noOtherContributors"
-                      defaultMessage="ui.feedObject.contributors.noOtherContributors"
+                      id="ui.userNotifications.noOtherNotifications"
+                      defaultMessage="ui.userNotifications.noOtherNotifications"
                     />
                   </b>
                 </p>

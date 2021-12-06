@@ -3,6 +3,8 @@ import {styled} from '@mui/material/styles';
 import {Avatar, Box, Grid, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import TimeAgo from 'timeago-react';
+import EmojiFlagsIcon from '@mui/icons-material/EmojiFlags';
+import {green} from '@mui/material/colors';
 
 const PREFIX = 'SCUndeletedForNotification';
 
@@ -22,7 +24,9 @@ export default function UndeletedForNotification({notificationObject = null, ...
     <Root {...props}>
       <ListItem button={true} alignItems="flex-start">
         <ListItemAvatar>
-          <Avatar variant="circular" />
+          <Avatar variant="circular" sx={{bgcolor: green[500]}}>
+            <EmojiFlagsIcon />
+          </Avatar>
         </ListItemAvatar>
         <ListItemText
           primary={

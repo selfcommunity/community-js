@@ -142,5 +142,8 @@
   "ui.followCategoryButton.unfollow": "Unfollow",
 
   "ui.followUserButton.follow": "Follow",
-  "ui.followUserButton.unfollow": "Unfollow"
+  "ui.followUserButton.unfollow": "Unfollow",
+
+  "ui.userNotifications.noResults": "There arent notifications at the moment.",
+  "ui.userNotifications.noOtherNotifications": "No other notifications."
 }

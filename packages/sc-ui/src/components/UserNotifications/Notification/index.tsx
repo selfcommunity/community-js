@@ -1,11 +1,30 @@
 import React, {useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Avatar, Card, Typography} from '@mui/material';
+import {Avatar, Card, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
 import CardContent from '@mui/material/CardContent';
 import UserNotificationComment from './Comment';
 import UserFollowNotification from './UserFollow';
 import UndeletedForNotification from './UndeletedFor';
 import DeletedForNotification from './DeletedFor';
+import {
+  NotificationTypeComment,
+  NotificationTypeConnectionRequest,
+  NotificationTypeConnectionAccept,
+  NotificationTypeDeletedForAdvertising,
+  NotificationTypeDeletedForAggressive,
+  NotificationTypeDeletedForOfftopic,
+  NotificationTypeDeletedForPoor,
+  NotificationTypeDeletedForVulgar,
+  NotificationTypePrivateMessage,
+  NotificationTypeUndeletedFor,
+  NotificationTypeUserFollow,
+  NotificationTypeBlockedUser,
+  NotificationTypeUnBlockedUser, NotificationTypeMention,
+} from '../../../constants/Notification.js';
+import UserConnectionNotification from './UserConnection';
+import UserNotificationPrivateMessage from './PrivateMessage';
+import UserBlockedNotification from './UserBlocked';
+import UserNotificationmention from './Mention';
 
 const PREFIX = 'SCUserNotification';
 
@@ -18,20 +37,31 @@ const Root = styled(Card, {
   marginBottom: theme.spacing(1)
 }));
 
-const NotificationTypeComment = 'comment';
-const NotificationTypeUserFollow = 'user_follow';
-const NotificationTypeUndeletedFor = 'undeleted_for';
-const NotificationTypeDeletedForAdvertising = 'deleted_for_advertising';
-const NotificationTypeDeletedForAggressive = 'deleted_for_aggressive';
-const NotificationTypeDeletedForVulgar = 'deleted_for_vulgar';
-const NotificationTypeDeletedForPoor = 'deleted_for_poor';
-const NotificationTypeDeletedForOfftopic = 'deleted_for_offtopic';
-
 export default function UserNotification({notificationObject = null, ...props}: {notificationObject: any}): JSX.Element {
   /**
-   * Render discussion/post/status intro if needed
+   * Render discussion/post/status intro if needed or header for private message
    */
   function renderTitle() {
+    if (notificationObject.aggregated && notificationObject.aggregated[0].type === NotificationTypePrivateMessage) {
+      return (
+        <ListItem alignItems="flex-start">
+          <ListItemAvatar>
+            <Avatar
+              alt={notificationObject.aggregated[0].message.sender.username}
+              variant="circular"
+              src={notificationObject.aggregated[0].message.sender.avatar}
+            />
+          </ListItemAvatar>
+          <ListItemText
+            primary={
+              <Typography component="span" sx={{display: 'inline'}} color="primary">
+                {notificationObject.aggregated[0].message.sender.username} ti ha inviato {notificationObject.aggregated.length} messaggi
+              </Typography>
+            }
+          />
+        </ListItem>
+      );
+    }
     return (
       <Typography variant="body1" gutterBottom>
         <b>
@@ -53,6 +83,8 @@ export default function UserNotification({notificationObject = null, ...props}: 
       return <UserNotificationComment notificationObject={n} key={i} />;
     } else if (n.type === NotificationTypeUserFollow) {
       return <UserFollowNotification notificationObject={n} key={i} />;
+    } else if (n.type === NotificationTypeConnectionRequest || n.type === NotificationTypeConnectionAccept) {
+      return <UserConnectionNotification notificationObject={n} key={i} />;
     } else if (n.type === NotificationTypeUndeletedFor) {
       return <UndeletedForNotification notificationObject={n} key={i} />;
     } else if (
@@ -63,6 +95,12 @@ export default function UserNotification({notificationObject = null, ...props}: 
       n.type === NotificationTypeDeletedForOfftopic
     ) {
       return <DeletedForNotification notificationObject={n} key={i} />;
+    } else if (n.type === NotificationTypePrivateMessage) {
+      return <UserNotificationPrivateMessage notificationObject={n} key={i} />;
+    } else if (n.type === NotificationTypeBlockedUser || n.type === NotificationTypeUnBlockedUser) {
+      return <UserBlockedNotification notificationObject={n} key={i} />;
+    } else if (n.type === NotificationTypeMention) {
+      return <UserNotificationmention notificationObject={n} key={i} />;
     }
     return null;
   }
