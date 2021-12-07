@@ -160,3 +160,28 @@ export interface SCUserType {
    */
   polls_counter?: number;
 }
+
+/**
+ * User Blocked Settings
+ */
+export interface SCUserBlockedSettingsType {
+  /**
+   * N° days of block
+   */
+  days_blocked: number;
+
+  /**
+   * Reputation stolen
+   */
+  reputation_delta: number;
+
+  /**
+   * Start User Block datetime
+   */
+  blocked_at?: Date;
+
+  /**
+   * End User Block datetime
+   */
+  expire_at?: Date;
+}

@@ -14,7 +14,7 @@ import {
   SCRoutingContextType,
   SCLocaleContextType,
 } from './context';
-import {SCUserType} from './user';
+import {SCUserType, SCUserBlockedSettingsType} from './user';
 import {SCTagType} from './tag';
 import {SCCategoryType} from './category';
 import {SCEmbedType} from './embed';
@@ -22,6 +22,8 @@ import {SCMediaType} from './media';
 import {SCContributeLocation, SCLocalityType} from './location';
 import {SCPollChoiceType, SCPollType} from './poll';
 import {SCCommentType} from './comment';
+import {SCPrivateMessageType, SCPrivateMessageStatusType} from './privateMessage';
+import {SCCustomNotificationType} from './customNotification';
 import {
   SCFeedUnitType,
   SCFeedUnitActivityType,
@@ -32,6 +34,26 @@ import {
   SCFeedObjectTypologyType,
   SCFeedUnitActivityTypologyType,
 } from './feed';
+import {
+  SCNotificationTypologyType,
+  SCNotificationAggregatedType,
+  SCNotificationCommentType,
+  SCNotificationConnectionAcceptType,
+  SCNotificationConnectionRequestType,
+  SCNotificationPrivateMessageType,
+  SCNotificationMentionType,
+  SCNotificationType,
+  SCNotificationBlockedUserType,
+  SCNotificationCollapsedForType,
+  SCNotificationCustomNotificationType,
+  SCNotificationDeletedForType,
+  SCNotificationFollowType,
+  SCNotificationKindlyNoticeType,
+  SCNotificationUnBlockedUserType,
+  SCNotificationUnDeletedForType,
+  SCNotificationUserFollowType,
+  SCNotificationVoteUpType,
+} from './notification';
 
 /**
  * Exports all types
@@ -45,6 +67,7 @@ export {
   SCSessionType,
   SCAuthTokenType,
   SCUserType,
+  SCUserBlockedSettingsType,
   SCTagType,
   SCCategoryType,
   SCFollowedManagerType,
@@ -69,4 +92,25 @@ export {
   SCFeedObjectTypologyType,
   SCFeedUnitActivityTypologyType,
   SCCommentType,
+  SCPrivateMessageType,
+  SCPrivateMessageStatusType,
+  SCNotificationTypologyType,
+  SCNotificationAggregatedType,
+  SCNotificationCommentType,
+  SCNotificationConnectionAcceptType,
+  SCNotificationConnectionRequestType,
+  SCNotificationPrivateMessageType,
+  SCNotificationMentionType,
+  SCNotificationType,
+  SCNotificationBlockedUserType,
+  SCNotificationCollapsedForType,
+  SCNotificationCustomNotificationType,
+  SCNotificationDeletedForType,
+  SCNotificationFollowType,
+  SCNotificationKindlyNoticeType,
+  SCNotificationUnBlockedUserType,
+  SCNotificationUnDeletedForType,
+  SCNotificationUserFollowType,
+  SCNotificationVoteUpType,
+  SCCustomNotificationType,
 };

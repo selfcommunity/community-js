@@ -1,10 +1,10 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import {Avatar, Box, Button, Grid, IconButton, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
+import {Avatar, Box, Button, ListItem, ListItemText, Typography} from '@mui/material';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import TimeAgo from 'timeago-react';
 import ReplyIcon from '@mui/icons-material/Reply';
-import {FeedObjectTemplateType} from '../../../FeedObject';
+import {SCNotificationPrivateMessageType} from '@selfcommunity/core';
 
 const PREFIX = 'SCUserNotificationPrivateMessage';
 
@@ -19,7 +19,12 @@ const Root = styled(Box, {
   }
 }));
 
-export default function UserNotificationPrivateMessage({notificationObject = null, ...props}: {notificationObject: any}): JSX.Element {
+export default function UserNotificationPrivateMessage({
+  notificationObject = null,
+  ...props
+}: {
+  notificationObject: SCNotificationPrivateMessageType;
+}): JSX.Element {
   return (
     <Root {...props}>
       <ListItem

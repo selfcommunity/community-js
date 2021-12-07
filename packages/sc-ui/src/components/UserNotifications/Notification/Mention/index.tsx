@@ -3,7 +3,7 @@ import {styled} from '@mui/material/styles';
 import {Avatar, Box, Grid, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import TimeAgo from 'timeago-react';
-import {SCFeedObjectTypologyType} from '@selfcommunity/core';
+import {SCFeedObjectTypologyType, SCNotificationMentionType} from '@selfcommunity/core';
 
 const PREFIX = 'SCUserNotificationMention';
 
@@ -18,7 +18,7 @@ const Root = styled(Box, {
   }
 }));
 
-export default function UserNotificationmention({notificationObject = null, ...props}: {notificationObject: any}): JSX.Element {
+export default function UserNotificationMention({notificationObject = null, ...props}: {notificationObject: SCNotificationMentionType}): JSX.Element {
   const objectType = notificationObject.discussion
     ? SCFeedObjectTypologyType.DISCUSSION
     : notificationObject.post

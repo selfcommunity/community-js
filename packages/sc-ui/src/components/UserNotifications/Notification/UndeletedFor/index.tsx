@@ -5,6 +5,7 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import TimeAgo from 'timeago-react';
 import EmojiFlagsIcon from '@mui/icons-material/EmojiFlags';
 import {green} from '@mui/material/colors';
+import {SCNotificationUnDeletedForType} from '@selfcommunity/core';
 
 const PREFIX = 'SCUndeletedForNotification';
 
@@ -19,7 +20,12 @@ const Root = styled(Box, {
   }
 }));
 
-export default function UndeletedForNotification({notificationObject = null, ...props}: {notificationObject: any}): JSX.Element {
+export default function UndeletedForNotification({
+  notificationObject = null,
+  ...props
+}: {
+  notificationObject: SCNotificationUnDeletedForType;
+}): JSX.Element {
   return (
     <Root {...props}>
       <ListItem button={true} alignItems="flex-start">

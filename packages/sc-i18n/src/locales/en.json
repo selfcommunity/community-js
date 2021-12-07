@@ -145,5 +145,9 @@
   "ui.followUserButton.unfollow": "Unfollow",
 
   "ui.userNotifications.noResults": "There arent notifications at the moment.",
-  "ui.userNotifications.noOtherNotifications": "No other notifications."
+  "ui.userNotifications.noOtherNotifications": "No other notifications.",
+  "ui.userNotifications.receivePrivateMessage": "{username} send you <b>{total, plural, =0 {# messages} one {# message} other {# messages}}</b>",
+  "ui.userNotifications.userFollow.followUser": "{username} started <b>following</b> you",
+  "ui.userNotifications.userConnection.requestConnection": "{username} sent you a <b>connection request</b>",
+  "ui.userNotifications.userConnection.acceptConnection": "{username} accepted your <b>connection request</b>"
 }

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {styled} from '@mui/material/styles';
 import {Avatar, Card, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
 import CardContent from '@mui/material/CardContent';
@@ -6,25 +6,19 @@ import UserNotificationComment from './Comment';
 import UserFollowNotification from './UserFollow';
 import UndeletedForNotification from './UndeletedFor';
 import DeletedForNotification from './DeletedFor';
-import {
-  NotificationTypeComment,
-  NotificationTypeConnectionRequest,
-  NotificationTypeConnectionAccept,
-  NotificationTypeDeletedForAdvertising,
-  NotificationTypeDeletedForAggressive,
-  NotificationTypeDeletedForOfftopic,
-  NotificationTypeDeletedForPoor,
-  NotificationTypeDeletedForVulgar,
-  NotificationTypePrivateMessage,
-  NotificationTypeUndeletedFor,
-  NotificationTypeUserFollow,
-  NotificationTypeBlockedUser,
-  NotificationTypeUnBlockedUser, NotificationTypeMention,
-} from '../../../constants/Notification.js';
 import UserConnectionNotification from './UserConnection';
 import UserNotificationPrivateMessage from './PrivateMessage';
 import UserBlockedNotification from './UserBlocked';
-import UserNotificationmention from './Mention';
+import UserNotificationMention from './Mention';
+import {SCNotificationAggregatedType, SCNotificationPrivateMessageType, SCNotificationType, SCNotificationTypologyType} from '@selfcommunity/core';
+import {defineMessages, useIntl} from 'react-intl';
+
+const messages = defineMessages({
+  receivePrivateMessage: {
+    id: 'ui.userNotifications.receivePrivateMessage',
+    defaultMessage: 'ui.userNotifications.receivePrivateMessage'
+  }
+});
 
 const PREFIX = 'SCUserNotification';
 
@@ -37,25 +31,29 @@ const Root = styled(Card, {
   marginBottom: theme.spacing(1)
 }));
 
-export default function UserNotification({notificationObject = null, ...props}: {notificationObject: any}): JSX.Element {
+export default function UserNotification({notificationObject = null, ...props}: {notificationObject: SCNotificationAggregatedType}): JSX.Element {
+  const intl = useIntl();
   /**
-   * Render discussion/post/status intro if needed or header for private message
+   * Render:
+   * - discussion/post/status summary if notification include contribute
+   * - user header for private message
    */
   function renderTitle() {
-    if (notificationObject.aggregated && notificationObject.aggregated[0].type === NotificationTypePrivateMessage) {
+    if (notificationObject.aggregated && notificationObject.aggregated[0].type === SCNotificationTypologyType.PRIVATE_MESSAGE) {
+      let messageNotification: SCNotificationPrivateMessageType = notificationObject.aggregated[0] as SCNotificationPrivateMessageType;
       return (
         <ListItem alignItems="flex-start">
           <ListItemAvatar>
-            <Avatar
-              alt={notificationObject.aggregated[0].message.sender.username}
-              variant="circular"
-              src={notificationObject.aggregated[0].message.sender.avatar}
-            />
+            <Avatar alt={messageNotification.message.sender.username} variant="circular" src={messageNotification.message.sender.avatar} />
           </ListItemAvatar>
           <ListItemText
             primary={
               <Typography component="span" sx={{display: 'inline'}} color="primary">
-                {notificationObject.aggregated[0].message.sender.username} ti ha inviato {notificationObject.aggregated.length} messaggi
+                {intl.formatMessage(messages.receivePrivateMessage, {
+                  username: messageNotification.message.sender.username,
+                  total: notificationObject.aggregated.length,
+                  b: (...chunks) => <strong>{chunks}</strong>
+                })}
               </Typography>
             }
           />
@@ -63,44 +61,42 @@ export default function UserNotification({notificationObject = null, ...props}: 
       );
     }
     return (
-      <Typography variant="body1" gutterBottom>
-        <b>
-          {'discussion' in notificationObject && notificationObject.discussion.title}
-          {'post' in notificationObject && notificationObject.post.title}
-          {'status' in notificationObject && notificationObject.status.title}
-        </b>
+      <Typography variant="body1" gutterBottom sx={{color: 'black'}}>
+        {'discussion' in notificationObject && notificationObject.discussion.summary}
+        {'post' in notificationObject && notificationObject.post.summary}
+        {'status' in notificationObject && notificationObject.status.summary}
       </Typography>
     );
   }
 
   /**
-   * Render single aggregated notification
+   * Render every single notification in aggregated group
    * @param n
    * @param i
    */
   function renderAggregated(n, i) {
-    if (n.type === NotificationTypeComment) {
+    if (n.type === SCNotificationTypologyType.COMMENT || n.type === SCNotificationTypologyType.NESTED_COMMENT) {
       return <UserNotificationComment notificationObject={n} key={i} />;
-    } else if (n.type === NotificationTypeUserFollow) {
+    } else if (n.type === SCNotificationTypologyType.USER_FOLLOW) {
       return <UserFollowNotification notificationObject={n} key={i} />;
-    } else if (n.type === NotificationTypeConnectionRequest || n.type === NotificationTypeConnectionAccept) {
+    } else if (n.type === SCNotificationTypologyType.CONNECTION_REQUEST || n.type === SCNotificationTypologyType.CONNECTION_ACCEPT) {
       return <UserConnectionNotification notificationObject={n} key={i} />;
-    } else if (n.type === NotificationTypeUndeletedFor) {
+    } else if (n.type === SCNotificationTypologyType.UNDELETED_FOR) {
       return <UndeletedForNotification notificationObject={n} key={i} />;
     } else if (
-      n.type === NotificationTypeDeletedForAdvertising ||
-      n.type === NotificationTypeDeletedForAggressive ||
-      n.type === NotificationTypeDeletedForVulgar ||
-      n.type === NotificationTypeDeletedForPoor ||
-      n.type === NotificationTypeDeletedForOfftopic
+      n.type === SCNotificationTypologyType.DELETED_FOR_ADVERTISING ||
+      n.type === SCNotificationTypologyType.DELETED_FOR_AGGRESSIVE ||
+      n.type === SCNotificationTypologyType.DELETED_FOR_POOR ||
+      n.type === SCNotificationTypologyType.DELETED_FOR_VULGAR ||
+      n.type === SCNotificationTypologyType.DELETED_FOR_OFFTOPIC
     ) {
       return <DeletedForNotification notificationObject={n} key={i} />;
-    } else if (n.type === NotificationTypePrivateMessage) {
+    } else if (n.type === SCNotificationTypologyType.PRIVATE_MESSAGE) {
       return <UserNotificationPrivateMessage notificationObject={n} key={i} />;
-    } else if (n.type === NotificationTypeBlockedUser || n.type === NotificationTypeUnBlockedUser) {
+    } else if (n.type === SCNotificationTypologyType.BLOCKED_USER || n.type === SCNotificationTypologyType.UNBLOCKED_USER) {
       return <UserBlockedNotification notificationObject={n} key={i} />;
-    } else if (n.type === NotificationTypeMention) {
-      return <UserNotificationmention notificationObject={n} key={i} />;
+    } else if (n.type === SCNotificationTypologyType.MENTION) {
+      return <UserNotificationMention notificationObject={n} key={i} />;
     }
     return null;
   }
@@ -109,7 +105,7 @@ export default function UserNotification({notificationObject = null, ...props}: 
     <Root {...props}>
       <CardContent sx={{paddingBottom: 1}}>
         {renderTitle()}
-        {notificationObject.aggregated.map((n, i) => renderAggregated(n, i))}
+        {notificationObject.aggregated.map((n: SCNotificationType, i) => renderAggregated(n, i))}
       </CardContent>
     </Root>
   );

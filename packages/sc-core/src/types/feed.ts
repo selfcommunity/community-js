@@ -68,18 +68,22 @@ export interface SCFeedUnitActivityType {
    * The type of the activity.
    */
   type: SCFeedUnitActivityTypologyType;
+
   /**
    * The comment if type ==  SCFeedUnitActivityTypologyType.COMMENT.
    */
   comment?: any;
+
   /**
    * The user involved.
    */
   author: SCUserType;
+
   /**
    * Time of activity
    */
   active_at: Date;
+
   /**
    * Id of Users that have seen this activity
    */

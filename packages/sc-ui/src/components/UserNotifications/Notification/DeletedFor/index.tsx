@@ -4,7 +4,9 @@ import {Avatar, Box, Grid, ListItem, ListItemAvatar, ListItemText, Typography} f
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import TimeAgo from 'timeago-react';
 import EmojiFlagsIcon from '@mui/icons-material/EmojiFlags';
-import { red } from '@mui/material/colors';
+import {red} from '@mui/material/colors';
+import {SCNotificationDeletedForType} from '@selfcommunity/core';
+import DateTimeAgo from '../../../../shared/DateTimeAgo';
 
 const PREFIX = 'SCDeletedForNotification';
 
@@ -19,12 +21,17 @@ const Root = styled(Box, {
   }
 }));
 
-export default function DeletedForNotification({notificationObject = null, ...props}: {notificationObject: any}): JSX.Element {
+export default function DeletedForNotification({
+  notificationObject = null,
+  ...props
+}: {
+  notificationObject: SCNotificationDeletedForType;
+}): JSX.Element {
   return (
     <Root {...props}>
       <ListItem button={true} alignItems="flex-start">
         <ListItemAvatar>
-          <Avatar variant="circular" sx={{bgcolor: red[500]}}>
+          <Avatar variant="circular" sx={{backgroundColor: red[500]}}>
             <EmojiFlagsIcon />
           </Avatar>
         </ListItemAvatar>
@@ -42,7 +49,7 @@ export default function DeletedForNotification({notificationObject = null, ...pr
       <Box component="span" sx={{display: 'flex', justifyContent: 'flex-start', p: '2px'}}>
         <Grid component="span" item={true} sm="auto" container direction="row" alignItems="center">
           <AccessTimeIcon sx={{paddingRight: '2px'}} />
-          <TimeAgo datetime={notificationObject.active_at} />
+          <DateTimeAgo date={notificationObject.active_at} />
         </Grid>
       </Box>
     </Root>

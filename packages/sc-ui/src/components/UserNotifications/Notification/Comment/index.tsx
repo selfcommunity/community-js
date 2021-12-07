@@ -3,6 +3,7 @@ import {styled} from '@mui/material/styles';
 import {Avatar, Box, Grid, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import TimeAgo from 'timeago-react';
+import {SCNotificationCommentType} from '@selfcommunity/core';
 
 const PREFIX = 'SCUserNotificationComment';
 
@@ -17,7 +18,7 @@ const Root = styled(Box, {
   }
 }));
 
-export default function UserNotificationComment({notificationObject = null, ...props}: {notificationObject: any}): JSX.Element {
+export default function UserNotificationComment({notificationObject = null, ...props}: {notificationObject: SCNotificationCommentType}): JSX.Element {
   return (
     <Root {...props}>
       <ListItem button={true} alignItems="flex-start">

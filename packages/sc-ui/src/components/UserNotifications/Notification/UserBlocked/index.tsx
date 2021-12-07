@@ -3,9 +3,9 @@ import {styled} from '@mui/material/styles';
 import {Avatar, Box, Grid, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import TimeAgo from 'timeago-react';
-import {NotificationTypeBlockedUser, NotificationTypeUnBlockedUser} from '../../../../constants/Notification';
 import {green} from '@mui/material/colors';
 import EmojiFlagsIcon from '@mui/icons-material/EmojiFlags';
+import {SCNotificationBlockedUserType, SCNotificationTypologyType} from '@selfcommunity/core';
 
 const PREFIX = 'SCUserBlockedNotification';
 
@@ -20,7 +20,12 @@ const Root = styled(Box, {
   }
 }));
 
-export default function UserBlockedNotification({notificationObject = null, ...props}: {notificationObject: any}): JSX.Element {
+export default function UserBlockedNotification({
+  notificationObject = null,
+  ...props
+}: {
+  notificationObject: SCNotificationBlockedUserType;
+}): JSX.Element {
   return (
     <Root {...props}>
       <ListItem alignItems="flex-start">
@@ -33,7 +38,9 @@ export default function UserBlockedNotification({notificationObject = null, ...p
           primary={
             <Typography component="span" sx={{display: 'inline'}} color="primary">
               <b>
-                {notificationObject.type === NotificationTypeBlockedUser ? 'Il tuo account è stato bloccato.' : 'Il tuo account è stato riattivato.'}
+                {notificationObject.type === SCNotificationTypologyType.BLOCKED_USER
+                  ? 'Il tuo account è stato bloccato.'
+                  : 'Il tuo account è stato riattivato.'}
               </b>
             </Typography>
           }

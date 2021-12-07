@@ -8,6 +8,7 @@ import {FormattedMessage} from 'react-intl';
 import {NotificationSkeleton} from '../Skeleton';
 import UserNotification from './Notification';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import {SCNotificationAggregatedType} from '@selfcommunity/core';
 
 const PREFIX = 'SCUserNotifications';
 
@@ -21,17 +22,21 @@ const Root = styled(Box, {
 }));
 
 export default function UserNotifications(props): JSX.Element {
-  const [notifications, setNotifications] = useState<any[]>([]);
+  const [notifications, setNotifications] = useState<SCNotificationAggregatedType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [next, setNext] = useState<string>(Endpoints.UserNotificationList.url({}));
 
+  /**
+   * Fetch user notifications
+   * Manage pagination, infinite scrolling
+   */
   function fetchNotifications() {
     http
       .request({
         url: next,
         method: Endpoints.UserNotificationList.method
       })
-      .then((res: AxiosResponse<any>) => {
+      .then((res: AxiosResponse<{next?: string; previous?: string; results: SCNotificationAggregatedType[]}>) => {
         const data = res.data;
         setNotifications([...notifications, ...data.results]);
         setNext(data.next);
@@ -42,6 +47,9 @@ export default function UserNotifications(props): JSX.Element {
       });
   }
 
+  /**
+   * On mount, fetch first page of notifications
+   */
   useEffect(() => {
     fetchNotifications();
   }, []);
@@ -62,23 +70,23 @@ export default function UserNotifications(props): JSX.Element {
             </Typography>
           ) : (
             <InfiniteScroll
+              style={{
+                margin: 10
+              }}
               dataLength={notifications.length}
               next={fetchNotifications}
               hasMore={Boolean(next)}
-              height={500}
               loader={<NotificationSkeleton {...props} />}
+              pullDownToRefreshThreshold={10}
               endMessage={
                 <p style={{textAlign: 'center'}}>
                   <b>
-                    <FormattedMessage
-                      id="ui.userNotifications.noOtherNotifications"
-                      defaultMessage="ui.userNotifications.noOtherNotifications"
-                    />
+                    <FormattedMessage id="ui.userNotifications.noOtherNotifications" defaultMessage="ui.userNotifications.noOtherNotifications" />
                   </b>
                 </p>
               }>
               <List>
-                {notifications.map((n, i) => (
+                {notifications.map((n: SCNotificationAggregatedType, i) => (
                   <UserNotification notificationObject={n} key={i} {...props} />
                 ))}
               </List>

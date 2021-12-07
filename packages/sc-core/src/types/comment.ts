@@ -1,9 +1,9 @@
+import {SCUserType} from './index';
+
 /**
  * Interface SCCommentType.
  * Comment Schema.
  */
-import {SCUserType} from '@selfcommunity/core';
-
 export interface SCCommentType {
   /**
    * Id of the comment

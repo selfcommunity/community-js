@@ -4,7 +4,6 @@ import {SCTagType} from '@selfcommunity/core';
  * Interface SCCategoryType.
  * Category Schema.
  */
-
 export interface SCCategoryType {
   /**
    * The ID of the category.
