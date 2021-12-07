@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import {Endpoints, http, Logger, SCFeedObjectType, SCPollChoiceType} from '@selfcommunity/core';
@@ -80,20 +80,23 @@ function LinearProgressWithLabel(props: LinearProgressProps & {value: number}) {
 }
 
 export default function Choice({
+  id = null,
   choiceObj = null,
   feedObject = null,
   onVote = null,
   onUnVote = null,
   votes = null,
+  multipleChoices = null,
   ...rest
 }: {
+  id?: number;
   feedObject?: SCFeedObjectType;
   choiceObj?: SCPollChoiceType;
   multipleChoices?: boolean;
   [p: string]: any;
 }): JSX.Element {
   const [obj, setObj] = useState<SCPollChoiceType>(choiceObj);
-  const disabled = feedObject === null;
+  const disabled = !feedObject;
 
   function vote() {
     http
@@ -101,7 +104,7 @@ export default function Choice({
         url: Endpoints.PollVote.url({id: feedObject.id, type: feedObject['type']}),
         method: Endpoints.PollVote.method,
         data: {
-          choice: choiceObj.id
+          choice: id
         }
       })
       .then((res: AxiosResponse<any>) => {
@@ -123,6 +126,9 @@ export default function Choice({
   }
 
   function renderVotes(voteCount, totalVotes) {
+    if (totalVotes === 0) {
+      return 0;
+    }
     return (100 * voteCount) / totalVotes;
   }
 

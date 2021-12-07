@@ -111,6 +111,7 @@ export default function PollObject({feedObject = null, pollObject = null, disabl
   const intl = useIntl();
   const [obj, setObj] = useState<SCPollType>(pollObject);
   const [votes, setVotes] = useState(getVotes());
+  const [choices, setChoices] = useState(pollObject.choices);
   const multipleChoices = pollObject['multiple_choices'];
 
   const handleVote = () => {
@@ -147,11 +148,12 @@ export default function PollObject({feedObject = null, pollObject = null, disabl
             {`${intl.formatDate(Date.parse(obj.expiration_at), {year: 'numeric', month: 'numeric', day: 'numeric'})}`}
           </Typography>
           <List>
-            {pollObject.choices.map((choice: SCPollChoiceType) => (
+            {choices.map((choice: SCPollChoiceType, index) => (
               <Choice
+                id={choice.id}
                 elevation={0}
                 choiceObj={choice}
-                key={choice.id}
+                key={index}
                 feedObject={disabled ? null : feedObject}
                 votes={votes}
                 onVote={handleVote}
