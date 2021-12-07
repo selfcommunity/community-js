@@ -40,17 +40,22 @@ export default function UndeletedForNotification({
               <b>Un tuo contenuto, precedentemente rimosso, è stato ripristinato</b>
             </Typography>
           }
+          secondary={
+            <React.Fragment>
+              <Box component="span" sx={{display: 'flex', justifyContent: 'flex-start', p: '2px'}}>
+                <Grid component="span" item={true} sm="auto" container direction="row" alignItems="center">
+                  <AccessTimeIcon sx={{paddingRight: '2px'}} />
+                  <TimeAgo datetime={notificationObject.active_at} />
+                </Grid>
+              </Box>
+            </React.Fragment>
+          }
         />
       </ListItem>
-      <Typography variant={'body2'} color={'primary'}>
-        Hai scritto: {notificationObject.post.summary}
+      <Typography variant={'body2'} color={'primary'} sx={{p: 1}}>
+        Hai scritto:{' '}
+        <Typography component={'span'} variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: notificationObject.post.summary}} />
       </Typography>
-      <Box component="span" sx={{display: 'flex', justifyContent: 'flex-start', p: '2px'}}>
-        <Grid component="span" item={true} sm="auto" container direction="row" alignItems="center">
-          <AccessTimeIcon sx={{paddingRight: '2px'}} />
-          <TimeAgo datetime={notificationObject.active_at} />
-        </Grid>
-      </Box>
     </Root>
   );
 }

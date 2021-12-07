@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Box, Button, List, Typography} from '@mui/material';
+import {Box, Button, Card, CardActions, CardContent, List, ListItem, Typography} from '@mui/material';
 import {Endpoints, http, Logger, SCFeedObjectType, SCFeedUnitType} from '@selfcommunity/core';
 import {AxiosResponse} from 'axios';
 import {SCOPE_SC_UI} from '../../constants/Errors';
@@ -55,7 +55,7 @@ export default function UserNotifications(props): JSX.Element {
   }, []);
 
   return (
-    <Root {...props}>
+    <Root>
       {loading ? (
         <>
           {[...Array(Math.floor(Math.random() * 5) + 3)].map((x, i) => (
@@ -70,9 +70,6 @@ export default function UserNotifications(props): JSX.Element {
             </Typography>
           ) : (
             <InfiniteScroll
-              style={{
-                margin: 10
-              }}
               dataLength={notifications.length}
               next={fetchNotifications}
               hasMore={Boolean(next)}
@@ -87,7 +84,9 @@ export default function UserNotifications(props): JSX.Element {
               }>
               <List>
                 {notifications.map((n: SCNotificationAggregatedType, i) => (
-                  <UserNotification notificationObject={n} key={i} {...props} />
+                  <ListItem>
+                    <UserNotification notificationObject={n} key={i} {...props} />
+                  </ListItem>
                 ))}
               </List>
             </InfiniteScroll>

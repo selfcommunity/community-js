@@ -40,7 +40,7 @@ export default function UserNotificationMention({notificationObject = null, ...p
           }
           secondary={
             <React.Fragment>
-              {notificationObject[objectType].summary}
+              <Typography component={'span'} variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: notificationObject[objectType].summary}} />
               <Box component="span" sx={{display: 'flex', justifyContent: 'flex-start', p: '2px'}}>
                 <Grid component="span" item={true} sm="auto" container direction="row" alignItems="center">
                   <AccessTimeIcon sx={{paddingRight: '2px'}} />

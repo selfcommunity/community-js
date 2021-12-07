@@ -5,6 +5,7 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import TimeAgo from 'timeago-react';
 import ReplyIcon from '@mui/icons-material/Reply';
 import {SCNotificationPrivateMessageType} from '@selfcommunity/core';
+import {grey} from '@mui/material/colors';
 
 const PREFIX = 'SCUserNotificationPrivateMessage';
 
@@ -15,7 +16,19 @@ const Root = styled(Box, {
 })(({theme}) => ({
   '& .MuiSvgIcon-root': {
     width: '0.7em',
-    marginBottom: '0.5px'
+    marginBottom: '0.5px',
+    float: 'left'
+  },
+  '& .MuiListItemText-root': {
+    color: grey[600]
+  },
+  '& .MuiListItemSecondaryAction-root': {
+    color: grey[600],
+    fontSize: '13px'
+  },
+  '& .MuiButton-root': {
+    paddingTop: 1,
+    paddingBottom: 1
   }
 }));
 
@@ -38,7 +51,7 @@ export default function UserNotificationPrivateMessage({
             </Button>
           </Box>
         }>
-        <ListItemText secondary={<Typography variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: notificationObject.message.html}} />} />
+        <ListItemText primary={<Typography variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: notificationObject.message.html}} />} />
       </ListItem>
     </Root>
   );

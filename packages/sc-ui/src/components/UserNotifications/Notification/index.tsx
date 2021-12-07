@@ -12,6 +12,7 @@ import UserBlockedNotification from './UserBlocked';
 import UserNotificationMention from './Mention';
 import {SCNotificationAggregatedType, SCNotificationPrivateMessageType, SCNotificationType, SCNotificationTypologyType} from '@selfcommunity/core';
 import {defineMessages, useIntl} from 'react-intl';
+import {grey} from '@mui/material/colors';
 
 const messages = defineMessages({
   receivePrivateMessage: {
@@ -22,17 +23,32 @@ const messages = defineMessages({
 
 const PREFIX = 'SCUserNotification';
 
+const classes = {
+  title: `${PREFIX}-title`
+};
+
 const Root = styled(Card, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  maxWidth: 700,
-  marginBottom: theme.spacing(1)
+  width: '100%',
+  marginBottom: theme.spacing(1),
+  [`& .${classes.title}`]: {
+    fontWeight: 600,
+    color: grey[800],
+    fontSize: 15,
+    padding: '10px 8px 2px 8px',
+    textDecoration: 'underline'
+  },
+  ['& .MuiCardContent-root']: {
+    padding: 0
+  }
 }));
 
 export default function UserNotification({notificationObject = null, ...props}: {notificationObject: SCNotificationAggregatedType}): JSX.Element {
   const intl = useIntl();
+
   /**
    * Render:
    * - discussion/post/status summary if notification include contribute
@@ -60,13 +76,15 @@ export default function UserNotification({notificationObject = null, ...props}: 
         </ListItem>
       );
     }
-    return (
-      <Typography variant="body1" gutterBottom sx={{color: 'black'}}>
-        {'discussion' in notificationObject && notificationObject.discussion.summary}
-        {'post' in notificationObject && notificationObject.post.summary}
-        {'status' in notificationObject && notificationObject.status.summary}
-      </Typography>
-    );
+    const summary =
+      'discussion' in notificationObject
+        ? notificationObject.discussion.summary
+        : 'post' in notificationObject
+        ? notificationObject.post.summary
+        : 'status' in notificationObject
+        ? notificationObject.status.summary
+        : null;
+    return <>{summary && <Typography variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: summary}} classes={{root: classes.title}} />}</>;
   }
 
   /**
