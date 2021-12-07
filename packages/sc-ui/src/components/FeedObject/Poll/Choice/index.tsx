@@ -8,6 +8,7 @@ import {AxiosResponse} from 'axios';
 import CheckIcon from '@mui/icons-material/Check';
 import {SCOPE_SC_UI} from '../../../../constants/Errors';
 import LinearProgress, {LinearProgressProps} from '@mui/material/LinearProgress';
+import {LoadingButton} from '@mui/lab';
 
 const PREFIX = 'SCChoices';
 
@@ -80,50 +81,21 @@ function LinearProgressWithLabel(props: LinearProgressProps & {value: number}) {
 }
 
 export default function Choice({
-  id = null,
   choiceObj = null,
   feedObject = null,
-  onVote = null,
-  onUnVote = null,
+  vote = null,
   votes = null,
   multipleChoices = null,
+  isVoting = null,
   ...rest
 }: {
-  id?: number;
+  isVoting?: number;
   feedObject?: SCFeedObjectType;
   choiceObj?: SCPollChoiceType;
   multipleChoices?: boolean;
   [p: string]: any;
 }): JSX.Element {
-  const [obj, setObj] = useState<SCPollChoiceType>(choiceObj);
   const disabled = !feedObject;
-
-  function vote() {
-    http
-      .request({
-        url: Endpoints.PollVote.url({id: feedObject.id, type: feedObject['type']}),
-        method: Endpoints.PollVote.method,
-        data: {
-          choice: id
-        }
-      })
-      .then((res: AxiosResponse<any>) => {
-        setObj(
-          Object.assign({}, obj, {
-            voted: !obj.voted,
-            vote_count: obj.voted ? obj.vote_count - 1 : obj.vote_count + 1
-          })
-        );
-        if (obj.voted) {
-          onUnVote();
-        } else {
-          onVote();
-        }
-      })
-      .catch((error) => {
-        Logger.error(SCOPE_SC_UI, error);
-      });
-  }
 
   function renderVotes(voteCount, totalVotes) {
     if (totalVotes === 0) {
@@ -135,12 +107,18 @@ export default function Choice({
   const c = (
     <React.Fragment>
       <div className={classes.display}>
-        <Button variant="outlined" size="small" disabled={disabled} className={obj.voted ? classes.voted : classes.vote} onClick={vote}>
-          {obj.voted ? <CheckIcon /> : <FormattedMessage id="ui.feedObject.poll.choice.vote" defaultMessage="ui.feedObject.poll.choice.vote" />}
-        </Button>
-        <Typography>{obj.choice}</Typography>
+        <LoadingButton
+          loading={isVoting === choiceObj.id}
+          variant="outlined"
+          size="small"
+          disabled={disabled || isVoting !== null}
+          className={choiceObj.voted ? classes.voted : classes.vote}
+          onClick={() => vote(choiceObj)}>
+          {choiceObj.voted ? <CheckIcon /> : <FormattedMessage id="ui.feedObject.poll.choice.vote" defaultMessage="ui.feedObject.poll.choice.vote" />}
+        </LoadingButton>
+        <Typography>{choiceObj.choice}</Typography>
       </div>
-      <LinearProgressWithLabel className={classes.progress} value={renderVotes(obj.vote_count, votes)} />
+      <LinearProgressWithLabel className={classes.progress} value={renderVotes(choiceObj.vote_count, votes)} />
     </React.Fragment>
   );
 

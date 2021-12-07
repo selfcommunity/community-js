@@ -1,13 +1,15 @@
 import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
-import {SCFeedObjectType, SCPollChoiceType, SCPollType} from '@selfcommunity/core';
+import {Endpoints, http, Logger, SCFeedObjectType, SCPollChoiceType, SCPollType} from '@selfcommunity/core';
 import {CardContent, CardHeader, Typography} from '@mui/material';
 import {defineMessages, useIntl} from 'react-intl';
 import List from '@mui/material/List';
 import Choice from './Choice';
 import PeopleAltOutlinedIcon from '@mui/icons-material/PeopleAltOutlined';
 import ListOutlinedIcon from '@mui/icons-material/ListOutlined';
+import {SCOPE_SC_UI} from '../../../constants/Errors';
+import {AxiosResponse} from 'axios';
 
 const messages = defineMessages({
   title: {
@@ -113,12 +115,43 @@ export default function PollObject({feedObject = null, pollObject = null, disabl
   const [votes, setVotes] = useState(getVotes());
   const [choices, setChoices] = useState(pollObject.choices);
   const multipleChoices = pollObject['multiple_choices'];
+  const [isVoting, setIsVoting] = useState<number>(null);
 
-  const handleVote = () => {
-    setVotes((prevVotes) => prevVotes + 1);
+  const handleVote = (id) => {
+    if (multipleChoices) {
+      setChoices((prevChoices) => {
+        return prevChoices.map((choice) =>
+          Object.assign({}, choice, {
+            voted: choice.id === id ? true : choice.voted,
+            vote_count: choice.id === id ? choice.vote_count + 1 : choice.vote_count
+          })
+        );
+      });
+      setVotes((prevVotes) => prevVotes + 1);
+    } else {
+      let isVoted = false;
+      setChoices((prevChoices) => {
+        return prevChoices.map((choice) => {
+          isVoted = isVoted || choice.voted;
+          return Object.assign({}, choice, {
+            voted: choice.id === id ? true : false,
+            vote_count: choice.id === id ? choice.vote_count + 1 : choice.vote_count > 0 && choice.voted ? choice.vote_count - 1 : choice.vote_count
+          });
+        });
+      });
+      !isVoted && setVotes((prevVotes) => prevVotes + 1);
+    }
   };
 
-  const handleUnVote = () => {
+  const handleUnVote = (id) => {
+    setChoices((prevChoices) => {
+      return prevChoices.map((choice) =>
+        Object.assign({}, choice, {
+          voted: choice.id === id ? false : choice.voted,
+          vote_count: choice.id === id && choice.vote_count > 0 ? choice.vote_count - 1 : choice.vote_count
+        })
+      );
+    });
     setVotes((prevVotes) => prevVotes - 1);
   };
 
@@ -129,6 +162,29 @@ export default function PollObject({feedObject = null, pollObject = null, disabl
       totalVotes += choices[i].vote_count;
     }
     return totalVotes;
+  }
+
+  function vote(choiceObj) {
+    setIsVoting(choiceObj.id);
+    http
+      .request({
+        url: Endpoints.PollVote.url({id: feedObject.id, type: feedObject['type']}),
+        method: Endpoints.PollVote.method,
+        data: {
+          choice: choiceObj.id
+        }
+      })
+      .then((res: AxiosResponse<any>) => {
+        if (choiceObj.voted) {
+          handleUnVote(choiceObj.id);
+        } else {
+          handleVote(choiceObj.id);
+        }
+        setIsVoting(null);
+      })
+      .catch((error) => {
+        Logger.error(SCOPE_SC_UI, error);
+      });
   }
 
   /**
@@ -150,14 +206,13 @@ export default function PollObject({feedObject = null, pollObject = null, disabl
           <List>
             {choices.map((choice: SCPollChoiceType, index) => (
               <Choice
-                id={choice.id}
                 elevation={0}
                 choiceObj={choice}
                 key={index}
                 feedObject={disabled ? null : feedObject}
                 votes={votes}
-                onVote={handleVote}
-                onUnVote={handleUnVote}
+                vote={vote}
+                isVoting={isVoting}
               />
             ))}
           </List>
