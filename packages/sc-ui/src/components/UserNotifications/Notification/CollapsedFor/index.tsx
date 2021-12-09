@@ -10,29 +10,29 @@ import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {camelCase} from '../../../../../../sc-core/src/utils/string';
 
 const messages = defineMessages({
-  deletedForAdvertising: {
-    id: 'ui.userNotifications.deletedFor.deletedForAdvertising',
-    defaultMessage: 'ui.userNotifications.deletedFor.deletedForAdvertising'
+  kindlyNoticeForAdvertising: {
+    id: 'ui.userNotifications.kindlyNoticeFor.kindlyNoticeForAdvertising',
+    defaultMessage: 'ui.userNotifications.kindlyNoticeFor.kindlyNoticeForAdvertising'
   },
-  deletedForAggressive: {
-    id: 'ui.userNotifications.deletedFor.deletedForAggressive',
-    defaultMessage: 'ui.userNotifications.deletedFor.deletedForAggressive'
+  kindlyNoticeForAggressive: {
+    id: 'ui.userNotifications.kindlyNoticeFor.kindlyNoticeForAggressive',
+    defaultMessage: 'ui.userNotifications.kindlyNoticeFor.kindlyNoticeForAggressive'
   },
-  deletedForVulgar: {
-    id: 'ui.userNotifications.deletedFor.deletedForVulgar',
-    defaultMessage: 'ui.userNotifications.deletedFor.deletedForVulgar'
+  kindlyNoticeForVulgar: {
+    id: 'ui.userNotifications.kindlyNoticeFor.kindlyNoticeForVulgar',
+    defaultMessage: 'ui.userNotifications.kindlyNoticeFor.kindlyNoticeForVulgar'
   },
-  deletedForPoor: {
-    id: 'ui.userNotifications.deletedFor.deletedForPoor',
-    defaultMessage: 'ui.userNotifications.deletedFor.deletedForPoor'
+  kindlyNoticeForPoor: {
+    id: 'ui.userNotifications.kindlyNoticeFor.kindlyNoticeForPoor',
+    defaultMessage: 'ui.userNotifications.kindlyNoticeFor.kindlyNoticeForPoor'
   },
-  deletedForOfftopic: {
-    id: 'ui.userNotifications.deletedFor.deletedForOfftopic',
-    defaultMessage: 'ui.userNotifications.deletedFor.deletedForOfftopic'
+  kindlyNoticeForOfftopic: {
+    id: 'ui.userNotifications.kindlyNoticeFor.kindlyNoticeForOfftopic',
+    defaultMessage: 'ui.userNotifications.kindlyNoticeFor.kindlyNoticeForOfftopic'
   }
 });
 
-const PREFIX = 'SCDeletedForNotification';
+const PREFIX = 'SCCollapsedForNotification';
 
 const Root = styled(Box, {
   name: PREFIX,
@@ -45,7 +45,7 @@ const Root = styled(Box, {
   }
 }));
 
-export default function DeletedForNotification({
+export default function CollapsedForNotification({
   notificationObject = null,
   ...props
 }: {
@@ -82,17 +82,11 @@ export default function DeletedForNotification({
           }
         />
       </ListItem>
-      <Box sx={{mb: 1, p: 1}}>
-        <Typography variant={'body2'} color={'primary'} component={'span'}>
+      <Box sx={{mb: 1}}>
+        <Typography variant={'body2'} color={'primary'} sx={{p: 1}}>
           <FormattedMessage id="ui.userNotifications.undeletedFor.youWrote" defaultMessage="ui.userNotifications.undeletedFor.youWrote" />
         </Typography>
-        <Typography
-          component={'span'}
-          color={'primary'}
-          variant="body2"
-          gutterBottom
-          dangerouslySetInnerHTML={{__html: notificationObject.post.summary}}
-        />
+        <Typography component={'span'} variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: notificationObject.post.summary}} />
       </Box>
     </Root>
   );

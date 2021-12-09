@@ -35,7 +35,7 @@ export default function UserFollowNotification({
   const intl = useIntl();
   return (
     <Root {...props}>
-      <ListItem button={true} alignItems="flex-start">
+      <ListItem alignItems="flex-start">
         <ListItemAvatar>
           <Avatar alt={notificationObject.follower.username} variant="circular" src={notificationObject.follower.avatar} />
         </ListItemAvatar>
@@ -47,8 +47,8 @@ export default function UserFollowNotification({
           }
           secondary={
             <React.Fragment>
-              <Box component="span" sx={{display: 'flex', justifyContent: 'flex-start', p: '2px'}}>
-                <Grid component="span" item={true} sm="auto" container direction="row" alignItems="center">
+              <Box sx={{display: 'flex', justifyContent: 'flex-start', p: '2px'}}>
+                <Grid item={true} sm="auto" container direction="row" alignItems="center">
                   <AccessTimeIcon sx={{paddingRight: '2px'}} />
                   <DateTimeAgo date={notificationObject.active_at} />
                 </Grid>

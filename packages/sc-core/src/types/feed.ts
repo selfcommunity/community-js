@@ -185,6 +185,11 @@ export interface SCFeedObjectType {
    * Tags adderssing
    */
   addressing: SCTagType[];
+
+  /**
+   * Suspended notification
+   */
+  notification_suspended: boolean;
 }
 
 /**

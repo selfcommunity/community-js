@@ -73,7 +73,11 @@ export default function UserNotifications(props): JSX.Element {
               dataLength={notifications.length}
               next={fetchNotifications}
               hasMore={Boolean(next)}
-              loader={<NotificationSkeleton {...props} />}
+              loader={
+                <ListItem>
+                  <NotificationSkeleton {...props} sx={{width: '100%'}} />
+                </ListItem>
+              }
               pullDownToRefreshThreshold={10}
               endMessage={
                 <p style={{textAlign: 'center'}}>

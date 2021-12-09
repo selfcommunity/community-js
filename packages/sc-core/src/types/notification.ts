@@ -261,6 +261,11 @@ export interface SCNotificationVoteUpType extends SCNotificationType {
    * If user is mentioned in a comment
    */
   comment?: SCCommentType;
+
+  /**
+   * User voted up
+   */
+  user?: SCUserType;
 }
 
 /**

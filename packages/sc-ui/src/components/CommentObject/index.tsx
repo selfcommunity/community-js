@@ -196,7 +196,7 @@ export default function CommentObject({
   );
 
   /**
-   * fetchVotes
+   * Perform vote comment
    */
   const performVoteComment = useMemo(
     () => (comment) => {

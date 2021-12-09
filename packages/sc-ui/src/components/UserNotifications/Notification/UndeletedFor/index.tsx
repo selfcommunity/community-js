@@ -6,6 +6,7 @@ import TimeAgo from 'timeago-react';
 import EmojiFlagsIcon from '@mui/icons-material/EmojiFlags';
 import {green} from '@mui/material/colors';
 import {SCNotificationUnDeletedForType} from '@selfcommunity/core';
+import {FormattedMessage} from 'react-intl';
 
 const PREFIX = 'SCUndeletedForNotification';
 
@@ -28,7 +29,7 @@ export default function UndeletedForNotification({
 }): JSX.Element {
   return (
     <Root {...props}>
-      <ListItem button={true} alignItems="flex-start">
+      <ListItem alignItems="flex-start">
         <ListItemAvatar>
           <Avatar variant="circular" sx={{bgcolor: green[500]}}>
             <EmojiFlagsIcon />
@@ -37,7 +38,12 @@ export default function UndeletedForNotification({
         <ListItemText
           primary={
             <Typography component="span" sx={{display: 'inline'}} color="primary">
-              <b>Un tuo contenuto, precedentemente rimosso, è stato ripristinato</b>
+              <b>
+                <FormattedMessage
+                  id="ui.userNotifications.undeletedFor.restoredContent"
+                  defaultMessage="ui.userNotifications.undeletedFor.restoredContent"
+                />
+              </b>
             </Typography>
           }
           secondary={
@@ -52,10 +58,12 @@ export default function UndeletedForNotification({
           }
         />
       </ListItem>
-      <Typography variant={'body2'} color={'primary'} sx={{p: 1}}>
-        Hai scritto:{' '}
-        <Typography component={'span'} variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: notificationObject.post.summary}} />
-      </Typography>
+      <Box sx={{mb: 1, p: 1}}>
+        <Typography component={'span'} variant={'body2'} color={'primary'}>
+          <FormattedMessage id="ui.userNotifications.undeletedFor.youWrote" defaultMessage="ui.userNotifications.undeletedFor.youWrote" />
+        </Typography>
+        <Typography component={'span'} variant="body2" color={'primary'} gutterBottom dangerouslySetInnerHTML={{__html: notificationObject.post.summary}} />
+      </Box>
     </Root>
   );
 }

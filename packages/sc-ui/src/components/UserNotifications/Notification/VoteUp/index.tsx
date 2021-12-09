@@ -2,24 +2,18 @@ import React from 'react';
 import {styled} from '@mui/material/styles';
 import {Avatar, Box, Grid, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import TimeAgo from 'timeago-react';
-import {green} from '@mui/material/colors';
-import EmojiFlagsIcon from '@mui/icons-material/EmojiFlags';
-import {SCNotificationBlockedUserType, SCNotificationTypologyType} from '@selfcommunity/core';
+import { SCNotificationUserFollowType, SCNotificationVoteUpType } from '@selfcommunity/core';
 import {defineMessages, useIntl} from 'react-intl';
+import DateTimeAgo from '../../../../shared/DateTimeAgo';
 
 const messages = defineMessages({
-  accountBlocked: {
-    id: 'ui.userNotifications.userBlocked.accountBlocked',
-    defaultMessage: 'ui.userNotifications.userBlocked.accountBlocked'
-  },
-  accountReactivated: {
-    id: 'ui.userNotifications.userBlocked.accountReactivated',
-    defaultMessage: 'ui.userNotifications.userBlocked.accountReactivated'
+  appreciated: {
+    id: 'ui.userNotifications.voteUp.appreciated',
+    defaultMessage: 'ui.userNotifications.voteUp.appreciated'
   }
 });
 
-const PREFIX = 'SCUserBlockedNotification';
+const PREFIX = 'SCVoteUpNotification';
 
 const Root = styled(Box, {
   name: PREFIX,
@@ -32,30 +26,21 @@ const Root = styled(Box, {
   }
 }));
 
-export default function UserBlockedNotification({
-  notificationObject = null,
-  ...props
-}: {
-  notificationObject: SCNotificationBlockedUserType;
-}): JSX.Element {
+export default function VoteUpNotification({notificationObject = null, ...props}: {notificationObject: SCNotificationVoteUpType}): JSX.Element {
   const intl = useIntl();
-
   return (
     <Root {...props}>
       <ListItem alignItems="flex-start">
         <ListItemAvatar>
-          <Avatar variant="circular" sx={{bgcolor: green[500]}}>
-            <EmojiFlagsIcon />
-          </Avatar>
+          <Avatar alt={notificationObject.user.username} variant="circular" src={notificationObject.user.avatar} />
         </ListItemAvatar>
         <ListItemText
           primary={
             <Typography component="span" sx={{display: 'inline'}} color="primary">
-              <b>
-                {notificationObject.type === SCNotificationTypologyType.BLOCKED_USER
-                  ? intl.formatMessage(messages.accountBlocked, {b: (...chunks) => <strong>{chunks}</strong>})
-                  : intl.formatMessage(messages.accountReactivated, {b: (...chunks) => <strong>{chunks}</strong>})}
-              </b>
+              {intl.formatMessage(messages.appreciated, {
+                username: notificationObject.user.username,
+                b: (...chunks) => <strong>{chunks}</strong>
+              })}
             </Typography>
           }
           secondary={
@@ -63,7 +48,7 @@ export default function UserBlockedNotification({
               <Box component="span" sx={{display: 'flex', justifyContent: 'flex-start', p: '2px'}}>
                 <Grid component="span" item={true} sm="auto" container direction="row" alignItems="center">
                   <AccessTimeIcon sx={{paddingRight: '2px'}} />
-                  <TimeAgo datetime={notificationObject.active_at} />
+                  <DateTimeAgo date={notificationObject.active_at} />
                 </Grid>
               </Box>
             </React.Fragment>

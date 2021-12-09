@@ -3,21 +3,20 @@ import {styled} from '@mui/material/styles';
 import {Avatar, Box, Grid, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import TimeAgo from 'timeago-react';
-import {SCNotificationConnectionAcceptType, SCNotificationConnectionRequestType, SCNotificationTypologyType} from '@selfcommunity/core';
+import EmojiFlagsIcon from '@mui/icons-material/EmojiFlags';
+import {red} from '@mui/material/colors';
+import {SCNotificationDeletedForType} from '@selfcommunity/core';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
+import {camelCase} from '../../../../../../sc-core/src/utils/string';
 
 const messages = defineMessages({
-  requestConnection: {
-    id: 'ui.userNotifications.userConnection.requestConnection',
-    defaultMessage: 'ui.userNotifications.userConnection.requestConnection'
-  },
-  acceptConnection: {
-    id: 'ui.userNotifications.userConnection.acceptConnection',
-    defaultMessage: 'ui.userNotifications.userConnection.acceptConnection'
+  kindlyNoticeFlag: {
+    id: 'ui.userNotifications.kindlyNoticeFlag.kindlyNoticeFlag',
+    defaultMessage: 'ui.userNotifications.kindlyNoticeFlag.kindlyNoticeFlag'
   }
 });
 
-const PREFIX = 'SCUserConnectionNotification';
+const PREFIX = 'SCKindlyNoticeFlagNotification';
 
 const Root = styled(Box, {
   name: PREFIX,
@@ -30,27 +29,29 @@ const Root = styled(Box, {
   }
 }));
 
-export default function UserConnectionNotification({
+export default function KindlyNoticeFlagNotification({
   notificationObject = null,
   ...props
 }: {
-  notificationObject: SCNotificationConnectionRequestType | SCNotificationConnectionAcceptType;
+  notificationObject: SCNotificationDeletedForType;
 }): JSX.Element {
-  const userConnection =
-    notificationObject.type === SCNotificationTypologyType.CONNECTION_REQUEST ? notificationObject.request_user : notificationObject.accept_user;
   const intl = useIntl();
   return (
     <Root {...props}>
       <ListItem alignItems="flex-start">
         <ListItemAvatar>
-          <Avatar alt={userConnection.username} variant="circular" src={userConnection.avatar} />
+          <Avatar variant="circular" sx={{backgroundColor: red[500]}}>
+            <EmojiFlagsIcon />
+          </Avatar>
         </ListItemAvatar>
         <ListItemText
           primary={
             <Typography component="span" sx={{display: 'inline'}} color="primary">
-              {notificationObject.type === SCNotificationTypologyType.CONNECTION_REQUEST
-                ? intl.formatMessage(messages.requestConnection, {username: userConnection.username, b: (...chunks) => <strong>{chunks}</strong>})
-                : intl.formatMessage(messages.requestConnection, {username: userConnection.username, b: (...chunks) => <strong>{chunks}</strong>})}
+              <b>
+                {intl.formatMessage(messages[camelCase(notificationObject.type)], {b: (...chunks) => <strong>{chunks}</strong>})} (
+                <FormattedMessage id="ui.userNotifications.viewRules" defaultMessage="ui.userNotifications.viewRules" />
+                ).
+              </b>
             </Typography>
           }
           secondary={
@@ -65,6 +66,12 @@ export default function UserConnectionNotification({
           }
         />
       </ListItem>
+      <Box sx={{mb: 1, p: 1}}>
+        <Typography variant={'body2'} color={'primary'}>
+          <FormattedMessage id="ui.userNotifications.undeletedFor.youWrote" defaultMessage="ui.userNotifications.undeletedFor.youWrote" />
+        </Typography>
+        <Typography component={'span'} variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: notificationObject.post.summary}} />
+      </Box>
     </Root>
   );
 }

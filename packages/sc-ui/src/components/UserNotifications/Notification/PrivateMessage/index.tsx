@@ -6,6 +6,7 @@ import TimeAgo from 'timeago-react';
 import ReplyIcon from '@mui/icons-material/Reply';
 import {SCNotificationPrivateMessageType} from '@selfcommunity/core';
 import {grey} from '@mui/material/colors';
+import {FormattedMessage} from 'react-intl';
 
 const PREFIX = 'SCUserNotificationPrivateMessage';
 
@@ -47,7 +48,10 @@ export default function UserNotificationPrivateMessage({
             <AccessTimeIcon sx={{paddingRight: '2px'}} />
             <TimeAgo datetime={notificationObject.active_at} />
             <Button variant="outlined" size="small" endIcon={<ReplyIcon />} sx={{marginLeft: '5px'}}>
-              Reply
+              <FormattedMessage
+                id="ui.userNotifications.privateMessage.btnReplyLabel"
+                defaultMessage="ui.userNotifications.privateMessage.btnReplyLabel"
+              />
             </Button>
           </Box>
         }>
