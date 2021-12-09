@@ -199,10 +199,12 @@ export default function PollObject({feedObject = null, pollObject = null, disabl
           <Typography variant="body1" gutterBottom className={classes.poll}>
             {obj.title}
           </Typography>
-          <Typography variant="body2" gutterBottom className={classes.poll}>
-            {`${intl.formatMessage(messages.expDate)}`}
-            {`${intl.formatDate(Date.parse(obj.expiration_at), {year: 'numeric', month: 'numeric', day: 'numeric'})}`}
-          </Typography>
+          {obj.expiration_at && (
+            <Typography variant="body2" gutterBottom className={classes.poll}>
+              {`${intl.formatMessage(messages.expDate)}`}
+              {`${intl.formatDate(Date.parse(obj.expiration_at), {year: 'numeric', month: 'numeric', day: 'numeric'})}`}
+            </Typography>
+          )}
           <List>
             {choices.map((choice: SCPollChoiceType, index) => (
               <Choice
