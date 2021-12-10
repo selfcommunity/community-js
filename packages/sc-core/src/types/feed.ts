@@ -187,6 +187,11 @@ export interface SCFeedObjectType {
   addressing: SCTagType[];
 
   /**
+   * Type: discussion, post, status
+   */
+  type: SCFeedObjectTypologyType,
+
+  /**
    * Suspended notification
    */
   notification_suspended: boolean;

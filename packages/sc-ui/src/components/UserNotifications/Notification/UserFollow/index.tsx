@@ -2,9 +2,10 @@ import React from 'react';
 import {styled} from '@mui/material/styles';
 import {Avatar, Box, Grid, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import {SCNotificationUserFollowType} from '@selfcommunity/core';
+import {Link, SCNotificationUserFollowType, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
 import {defineMessages, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../../shared/DateTimeAgo';
+import {grey} from '@mui/material/colors';
 
 const messages = defineMessages({
   followUser: {
@@ -32,17 +33,22 @@ export default function UserFollowNotification({
 }: {
   notificationObject: SCNotificationUserFollowType;
 }): JSX.Element {
+  const scRoutingContext: SCRoutingContextType = useSCRouting();
   const intl = useIntl();
+
   return (
     <Root {...props}>
       <ListItem alignItems="flex-start">
         <ListItemAvatar>
-          <Avatar alt={notificationObject.follower.username} variant="circular" src={notificationObject.follower.avatar} />
+          <Link to={scRoutingContext.url('profile', {id: notificationObject.follower.id})}>
+            <Avatar alt={notificationObject.follower.username} variant="circular" src={notificationObject.follower.avatar} />
+          </Link>
         </ListItemAvatar>
         <ListItemText
           primary={
             <Typography component="span" sx={{display: 'inline'}} color="primary">
-              {intl.formatMessage(messages.followUser, {username: notificationObject.follower.username, b: (...chunks) => <strong>{chunks}</strong>})}
+              <Link to={scRoutingContext.url('profile', {id: notificationObject.follower.id})}>{notificationObject.follower.username}</Link>{' '}
+              {intl.formatMessage(messages.followUser, {b: (...chunks) => <strong>{chunks}</strong>})}
             </Typography>
           }
           secondary={

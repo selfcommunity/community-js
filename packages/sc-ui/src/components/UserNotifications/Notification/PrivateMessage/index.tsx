@@ -1,10 +1,10 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import {Avatar, Box, Button, ListItem, ListItemText, Typography} from '@mui/material';
+import {Box, Button, ListItem, ListItemText, Typography} from '@mui/material';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import TimeAgo from 'timeago-react';
 import ReplyIcon from '@mui/icons-material/Reply';
-import {SCNotificationPrivateMessageType} from '@selfcommunity/core';
+import {Link, SCNotificationPrivateMessageType, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
 import {grey} from '@mui/material/colors';
 import {FormattedMessage} from 'react-intl';
 
@@ -39,6 +39,7 @@ export default function UserNotificationPrivateMessage({
 }: {
   notificationObject: SCNotificationPrivateMessageType;
 }): JSX.Element {
+  const scRoutingContext: SCRoutingContextType = useSCRouting();
   return (
     <Root {...props}>
       <ListItem
@@ -55,7 +56,13 @@ export default function UserNotificationPrivateMessage({
             </Button>
           </Box>
         }>
-        <ListItemText primary={<Typography variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: notificationObject.message.html}} />} />
+        <ListItemText
+          primary={
+            <Link to={scRoutingContext.url('messages', {})}>
+              <Typography variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: notificationObject.message.html}} />
+            </Link>
+          }
+        />
       </ListItem>
     </Root>
   );

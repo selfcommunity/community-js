@@ -5,8 +5,9 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import TimeAgo from 'timeago-react';
 import EmojiFlagsIcon from '@mui/icons-material/EmojiFlags';
 import {green} from '@mui/material/colors';
-import {SCNotificationUnDeletedForType} from '@selfcommunity/core';
+import {Link, SCNotificationUnDeletedForType, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
 import {FormattedMessage} from 'react-intl';
+import {getContributeType} from '../../../../utils/contribute';
 
 const PREFIX = 'SCUndeletedForNotification';
 
@@ -27,6 +28,8 @@ export default function UndeletedForNotification({
 }: {
   notificationObject: SCNotificationUnDeletedForType;
 }): JSX.Element {
+  const scRoutingContext: SCRoutingContextType = useSCRouting();
+  const contributionType = getContributeType(notificationObject);
   return (
     <Root {...props}>
       <ListItem alignItems="flex-start">
@@ -62,7 +65,15 @@ export default function UndeletedForNotification({
         <Typography component={'span'} variant={'body2'} color={'primary'}>
           <FormattedMessage id="ui.userNotifications.undeletedFor.youWrote" defaultMessage="ui.userNotifications.undeletedFor.youWrote" />
         </Typography>
-        <Typography component={'span'} variant="body2" color={'primary'} gutterBottom dangerouslySetInnerHTML={{__html: notificationObject.post.summary}} />
+        <Link to={scRoutingContext.url(contributionType, {id: notificationObject[contributionType].id})}>
+          <Typography
+            component={'span'}
+            variant="body2"
+            color={'primary'}
+            gutterBottom
+            dangerouslySetInnerHTML={{__html: notificationObject[contributionType].summary}}
+          />
+        </Link>
       </Box>
     </Root>
   );

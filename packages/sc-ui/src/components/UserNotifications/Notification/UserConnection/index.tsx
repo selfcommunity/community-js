@@ -3,7 +3,14 @@ import {styled} from '@mui/material/styles';
 import {Avatar, Box, Grid, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import TimeAgo from 'timeago-react';
-import {SCNotificationConnectionAcceptType, SCNotificationConnectionRequestType, SCNotificationTypologyType} from '@selfcommunity/core';
+import {
+  Link,
+  SCNotificationConnectionAcceptType,
+  SCNotificationConnectionRequestType,
+  SCNotificationTypologyType,
+  SCRoutingContextType,
+  useSCRouting
+} from '@selfcommunity/core';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 
 const messages = defineMessages({
@@ -36,21 +43,25 @@ export default function UserConnectionNotification({
 }: {
   notificationObject: SCNotificationConnectionRequestType | SCNotificationConnectionAcceptType;
 }): JSX.Element {
+  const scRoutingContext: SCRoutingContextType = useSCRouting();
+  const intl = useIntl();
   const userConnection =
     notificationObject.type === SCNotificationTypologyType.CONNECTION_REQUEST ? notificationObject.request_user : notificationObject.accept_user;
-  const intl = useIntl();
   return (
     <Root {...props}>
       <ListItem alignItems="flex-start">
         <ListItemAvatar>
-          <Avatar alt={userConnection.username} variant="circular" src={userConnection.avatar} />
+          <Link to={scRoutingContext.url('profile', {id: userConnection.id})}>
+            <Avatar alt={userConnection.username} variant="circular" src={userConnection.avatar} />
+          </Link>
         </ListItemAvatar>
         <ListItemText
           primary={
             <Typography component="span" sx={{display: 'inline'}} color="primary">
+              <Link to={scRoutingContext.url('profile', {id: userConnection.id})}>{userConnection.username}</Link>{' '}
               {notificationObject.type === SCNotificationTypologyType.CONNECTION_REQUEST
-                ? intl.formatMessage(messages.requestConnection, {username: userConnection.username, b: (...chunks) => <strong>{chunks}</strong>})
-                : intl.formatMessage(messages.requestConnection, {username: userConnection.username, b: (...chunks) => <strong>{chunks}</strong>})}
+                ? intl.formatMessage(messages.requestConnection, {b: (...chunks) => <strong>{chunks}</strong>})
+                : intl.formatMessage(messages.requestConnection, {b: (...chunks) => <strong>{chunks}</strong>})}
             </Typography>
           }
           secondary={

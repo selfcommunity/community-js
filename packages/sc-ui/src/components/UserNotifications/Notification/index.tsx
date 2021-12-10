@@ -15,12 +15,15 @@ import KindlyNoticeForNotification from './KindlyNoticeFor';
 import {
   Endpoints,
   http,
+  Link,
   Logger,
   SCCommentType,
   SCNotificationAggregatedType,
   SCNotificationPrivateMessageType,
   SCNotificationType,
-  SCNotificationTypologyType
+  SCNotificationTypologyType,
+  SCRoutingContextType,
+  useSCRouting
 } from '@selfcommunity/core';
 import {defineMessages, useIntl} from 'react-intl';
 import {grey} from '@mui/material/colors';
@@ -66,6 +69,10 @@ const Root = styled(Card, {
     marginTop: '5px',
     padding: '2px 2px 2px 2px',
     minWidth: 'auto'
+  },
+  '& a': {
+    textDecoration: 'none',
+    color: grey[900]
   }
 }));
 
@@ -76,9 +83,10 @@ export default function UserNotification({
   notificationObject: SCNotificationAggregatedType;
   key: number;
 }): JSX.Element {
-  const intl = useIntl();
+  const scRoutingContext: SCRoutingContextType = useSCRouting();
   const [obj, setObj] = useState<SCNotificationAggregatedType>(notificationObject);
   const [loadingVote, setLoadingVote] = useState<number>(null);
+  const intl = useIntl();
 
   /**
    * Handle stop notification for contribution
@@ -140,13 +148,17 @@ export default function UserNotification({
       return (
         <ListItem alignItems="flex-start">
           <ListItemAvatar>
-            <Avatar alt={messageNotification.message.sender.username} variant="circular" src={messageNotification.message.sender.avatar} />
+            <Link to={scRoutingContext.url('profile', {id: messageNotification.message.sender.id})}>
+              <Avatar alt={messageNotification.message.sender.username} variant="circular" src={messageNotification.message.sender.avatar} />
+            </Link>
           </ListItemAvatar>
           <ListItemText
             primary={
               <Typography component="span" sx={{display: 'inline'}} color="primary">
+                <Link to={scRoutingContext.url('profile', {id: messageNotification.message.sender.id})}>
+                  {messageNotification.message.sender.username}
+                </Link>{' '}
                 {intl.formatMessage(messages.receivePrivateMessage, {
-                  username: messageNotification.message.sender.username,
                   total: notificationObject.aggregated.length,
                   b: (...chunks) => <strong>{chunks}</strong>
                 })}
@@ -175,7 +187,9 @@ export default function UserNotification({
           {contribution && contribution.summary && (
             <Grid container spacing={2}>
               <Grid item xs={11}>
-                <Typography variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: contribution.summary}} classes={{root: classes.title}} />
+                <Link to={scRoutingContext.url(contribution.type, {id: notificationObject[contribution.type].id})}>
+                  <Typography variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: contribution.summary}} classes={{root: classes.title}} />
+                </Link>
               </Grid>
               <Grid item xs={1}>
                 {contribution && (

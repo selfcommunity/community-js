@@ -7,5 +7,7 @@ export const defaultRoutes = {
   profile: '/user/:id/',
   post: '/post/:id/',
   status: '/post/:id/',
-  discussion: '/discussion/:id/:slug/',
+  discussion: '/discussion/:id/',
+  comment: '/comment/:id/',
+  messages: '/messages/',
 };

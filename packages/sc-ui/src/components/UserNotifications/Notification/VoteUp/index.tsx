@@ -2,9 +2,10 @@ import React from 'react';
 import {styled} from '@mui/material/styles';
 import {Avatar, Box, Grid, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import { SCNotificationUserFollowType, SCNotificationVoteUpType } from '@selfcommunity/core';
+import {Link, SCNotificationUserFollowType, SCNotificationVoteUpType, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
 import {defineMessages, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../../shared/DateTimeAgo';
+import {grey} from '@mui/material/colors';
 
 const messages = defineMessages({
   appreciated: {
@@ -23,20 +24,28 @@ const Root = styled(Box, {
   '& .MuiSvgIcon-root': {
     width: '0.7em',
     marginBottom: '0.5px'
+  },
+  '& a': {
+    textDecoration: 'none',
+    color: grey[900]
   }
 }));
 
 export default function VoteUpNotification({notificationObject = null, ...props}: {notificationObject: SCNotificationVoteUpType}): JSX.Element {
+  const scRoutingContext: SCRoutingContextType = useSCRouting();
   const intl = useIntl();
   return (
     <Root {...props}>
       <ListItem alignItems="flex-start">
         <ListItemAvatar>
-          <Avatar alt={notificationObject.user.username} variant="circular" src={notificationObject.user.avatar} />
+          <Link to={scRoutingContext.url('profile', {id: notificationObject.user.id})}>
+            <Avatar alt={notificationObject.user.username} variant="circular" src={notificationObject.user.avatar} />
+          </Link>
         </ListItemAvatar>
         <ListItemText
           primary={
             <Typography component="span" sx={{display: 'inline'}} color="primary">
+              <Link to={scRoutingContext.url('profile', {id: notificationObject.user.id})}>{notificationObject.user.username}</Link>{' '}
               {intl.formatMessage(messages.appreciated, {
                 username: notificationObject.user.username,
                 b: (...chunks) => <strong>{chunks}</strong>

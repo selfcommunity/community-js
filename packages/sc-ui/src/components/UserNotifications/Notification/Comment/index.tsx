@@ -1,14 +1,22 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import {Avatar, Box, Grid, ListItem, ListItemAvatar, ListItemText, Tooltip, Typography} from '@mui/material';
+import { Avatar, Box, Grid, ListItem, ListItemAvatar, ListItemText, Tooltip, Typography } from '@mui/material';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import TimeAgo from 'timeago-react';
-import {SCNotificationCommentType, SCNotificationTypologyType} from '@selfcommunity/core';
+import {
+  Link,
+  SCNotificationCommentType,
+  SCNotificationTypologyType,
+  SCRoutingContextType,
+  useSCRouting,
+} from '@selfcommunity/core';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import Bullet from '../../../../shared/Bullet';
 import {LoadingButton} from '@mui/lab';
 import VoteFilledIcon from '@mui/icons-material/ThumbUpTwoTone';
 import VoteIcon from '@mui/icons-material/ThumbUpOutlined';
+import { getContributeType } from '../../../../utils/contribute';
+import { grey } from '@mui/material/colors';
 
 const messages = defineMessages({
   comment: {
@@ -31,6 +39,10 @@ const Root = styled(Box, {
   '& .MuiSvgIcon-root': {
     width: '0.7em',
     marginBottom: '0.5px'
+  },
+  '& a': {
+    textDecoration: 'none',
+    color: grey[900]
   }
 }));
 
@@ -47,30 +59,35 @@ export default function UserNotificationComment({
   loadingVote: number;
   [p: string]: any;
 }): JSX.Element {
+  const scRoutingContext: SCRoutingContextType = useSCRouting();
   const intl = useIntl();
   return (
     <Root {...props}>
       <ListItem alignItems="flex-start">
         <ListItemAvatar>
-          <Avatar alt={notificationObject.comment.author.username} variant="circular" src={notificationObject.comment.author.avatar} />
+          <Link to={scRoutingContext.url('profile', {id: notificationObject.comment.author.id})}>
+            <Avatar alt={notificationObject.comment.author.username} variant="circular" src={notificationObject.comment.author.avatar} />
+          </Link>
         </ListItemAvatar>
         <ListItemText
           primary={
             <Typography component="span" sx={{display: 'inline'}} color="primary">
+              <Link to={scRoutingContext.url('profile', {id: notificationObject.comment.author.id})}>
+                {notificationObject.comment.author.username}</Link>{' '}
               {notificationObject.type === SCNotificationTypologyType.NESTED_COMMENT
                 ? intl.formatMessage(messages.comment, {
-                    username: notificationObject.comment.author.username,
                     b: (...chunks) => <strong>{chunks}</strong>
                   })
                 : intl.formatMessage(messages.nestedComment, {
-                    username: notificationObject.comment.author.username,
                     b: (...chunks) => <strong>{chunks}</strong>
                   })}
             </Typography>
           }
           secondary={
             <React.Fragment>
-              <Typography variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: notificationObject.comment.summary}} />
+              <Link to={scRoutingContext.url('comment', {id: notificationObject.comment.id})}>
+                <Typography variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: notificationObject.comment.summary}} />
+              </Link>
               <Box component="span" sx={{display: 'flex', justifyContent: 'flex-start', p: '2px'}}>
                 <Grid component="span" item={true} sm="auto" container direction="row" alignItems="center">
                   <AccessTimeIcon sx={{paddingRight: '2px'}} />
