@@ -5,6 +5,9 @@ import {SCPollType} from './poll';
 import {SCMediaType} from './media';
 import {SCTagType} from '@selfcommunity/core';
 
+/**
+ * Typology of feedObject
+ */
 export enum SCFeedObjectTypologyType {
   DISCUSSION = 'discussion',
   POST = 'post',

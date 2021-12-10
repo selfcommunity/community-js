@@ -1,6 +1,6 @@
 import React, {useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Avatar, Button, Card, Grid, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
+import {Avatar, Button, Card, Collapse, Grid, ListItem, ListItemAvatar, ListItemButton, ListItemIcon, ListItemText, Typography} from '@mui/material';
 import CardContent from '@mui/material/CardContent';
 import UserNotificationComment from './Comment';
 import UserFollowNotification from './UserFollow';
@@ -17,13 +17,13 @@ import {
   http,
   Link,
   Logger,
-  SCCommentType,
+  SCCommentType, SCCommentTypologyType,
   SCNotificationAggregatedType,
   SCNotificationPrivateMessageType,
   SCNotificationType,
   SCNotificationTypologyType,
   SCRoutingContextType,
-  useSCRouting
+  useSCRouting,
 } from '@selfcommunity/core';
 import {defineMessages, useIntl} from 'react-intl';
 import {grey} from '@mui/material/colors';
@@ -33,6 +33,8 @@ import NotificationsOffOutlinedIcon from '@mui/icons-material/NotificationsOffOu
 import NotificationsOnOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
 import {SCOPE_SC_UI} from '../../../constants/Errors';
 import {AxiosResponse} from 'axios';
+import {ExpandLess, ExpandMore} from '@mui/icons-material';
+import { getContribute } from '../../../utils/contribute';
 
 const messages = defineMessages({
   receivePrivateMessage: {
@@ -45,7 +47,8 @@ const PREFIX = 'SCUserNotification';
 
 const classes = {
   title: `${PREFIX}-title`,
-  btnStopNotification: `${PREFIX}-btn-stop-notification`
+  btnStopNotification: `${PREFIX}-btn-stop-notification`,
+  showOtherAggregated: `${PREFIX}-show-other-aggregated`
 };
 
 const Root = styled(Card, {
@@ -70,6 +73,9 @@ const Root = styled(Card, {
     padding: '2px 2px 2px 2px',
     minWidth: 'auto'
   },
+  [`& .${classes.showOtherAggregated}`]: {
+    backgroundColor: grey[100]
+  },
   '& a': {
     textDecoration: 'none',
     color: grey[900]
@@ -78,22 +84,56 @@ const Root = styled(Card, {
 
 export default function UserNotification({
   notificationObject = null,
+  showMaxAggregated = 2,
   ...props
 }: {
   notificationObject: SCNotificationAggregatedType;
+  showMaxAggregated: number;
   key: number;
 }): JSX.Element {
   const scRoutingContext: SCRoutingContextType = useSCRouting();
   const [obj, setObj] = useState<SCNotificationAggregatedType>(notificationObject);
   const [loadingVote, setLoadingVote] = useState<number>(null);
+  const [loadingSuspendNotification, setLoadingSuspendNotification] = useState<boolean>(false);
+  const [openOtherAggregated, setOpenOtherAggregated] = useState<boolean>(false);
   const intl = useIntl();
+
+  /**
+   * Perform suspend notification
+   */
+  const performSuspendNotification = useMemo(
+    () => (obj) => {
+      return http
+        .request({
+          url: Endpoints.UserSuspendNotification.url({type: obj.type, id: obj.id}),
+          method: Endpoints.UserSuspendNotification.method
+        })
+        .then((res: AxiosResponse<any>) => {
+          if (res.status >= 300) {
+            return Promise.reject(res);
+          }
+          return Promise.resolve(res.data);
+        });
+    },
+    [obj]
+  );
 
   /**
    * Handle stop notification for contribution
    * @param contribution
    */
   function handleStopContentNotification(contribution) {
-    console.log(contribution);
+    setLoadingSuspendNotification(true);
+    performSuspendNotification(contribution)
+      .then((data) => {
+        const newObj: SCNotificationAggregatedType = obj;
+        newObj[contribution.type].notification_suspended = !newObj[contribution.type].notification_suspended;
+        setObj(newObj);
+        setLoadingSuspendNotification(false);
+      })
+      .catch((error) => {
+        Logger.error(SCOPE_SC_UI, error);
+      });
   }
 
   /**
@@ -142,7 +182,10 @@ export default function UserNotification({
    * - discussion/post/status summary if notification include contribute
    * - user header for private message
    */
-  function renderTitle() {
+  function renderNotificationHeader() {
+    /**
+     * Private messages header
+     */
     if (notificationObject.aggregated && notificationObject.aggregated[0].type === SCNotificationTypologyType.PRIVATE_MESSAGE) {
       let messageNotification: SCNotificationPrivateMessageType = notificationObject.aggregated[0] as SCNotificationPrivateMessageType;
       return (
@@ -168,30 +211,26 @@ export default function UserNotification({
         </ListItem>
       );
     }
+    /**
+     * Comment, NestedComment, Follow Contribution header
+     */
     if (
       notificationObject.aggregated &&
       (notificationObject.aggregated[0].type === SCNotificationTypologyType.COMMENT ||
         notificationObject.aggregated[0].type === SCNotificationTypologyType.NESTED_COMMENT ||
         notificationObject.aggregated[0].type === SCNotificationTypologyType.FOLLOW)
     ) {
-      const contribution =
-        'discussion' in notificationObject
-          ? notificationObject.discussion
-          : 'post' in notificationObject
-          ? notificationObject.post
-          : 'status' in notificationObject
-          ? notificationObject.status
-          : null;
+      const contribution = getContribute(notificationObject);
       return (
         <>
-          {contribution && contribution.summary && (
+          {contribution && contribution.type !== SCCommentTypologyType && contribution.summary && (
             <Grid container spacing={2}>
-              <Grid item xs={11}>
+              <Grid item xs={10} sm={11}>
                 <Link to={scRoutingContext.url(contribution.type, {id: notificationObject[contribution.type].id})}>
                   <Typography variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: contribution.summary}} classes={{root: classes.title}} />
                 </Link>
               </Grid>
-              <Grid item xs={1}>
+              <Grid item xs={2} sm={1}>
                 {contribution && (
                   <Button
                     variant="outlined"
@@ -270,8 +309,19 @@ export default function UserNotification({
   return (
     <Root {...props}>
       <CardContent sx={{paddingBottom: 1}}>
-        {renderTitle()}
-        {notificationObject.aggregated.map((n: SCNotificationType, i) => renderAggregated(n, i))}
+        {renderNotificationHeader()}
+        {notificationObject.aggregated.slice(0, showMaxAggregated).map((n: SCNotificationType, i) => renderAggregated(n, i))}
+        {notificationObject.aggregated.length > showMaxAggregated && (
+          <>
+            <ListItemButton onClick={() => setOpenOtherAggregated((prev) => !prev)} classes={{root: classes.showOtherAggregated}}>
+              <ListItemText primary="Vedi altri" />
+              {openOtherAggregated ? <ExpandLess /> : <ExpandMore />}
+            </ListItemButton>
+            <Collapse in={openOtherAggregated} timeout="auto" unmountOnExit>
+              {notificationObject.aggregated.slice(showMaxAggregated).map((n: SCNotificationType, i) => renderAggregated(n, i))}
+            </Collapse>
+          </>
+        )}
       </CardContent>
     </Root>
   );

@@ -1,14 +1,13 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import {Avatar, Box, Grid, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import TimeAgo from 'timeago-react';
+import {Avatar, Box, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
 import EmojiFlagsIcon from '@mui/icons-material/EmojiFlags';
 import {red} from '@mui/material/colors';
 import {Link, SCNotificationDeletedForType, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {camelCase} from '../../../../../../sc-core/src/utils/string';
 import {getContributeType} from '../../../../utils/contribute';
+import DateTimeAgo from '../../../../shared/DateTimeAgo';
 
 const messages = defineMessages({
   collapsedForAdvertising: {
@@ -39,12 +38,7 @@ const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  '& .MuiSvgIcon-root': {
-    width: '0.7em',
-    marginBottom: '0.5px'
-  }
-}));
+})(({theme}) => ({}));
 
 export default function KindlyNoticeForNotification({
   notificationObject = null,
@@ -73,16 +67,7 @@ export default function KindlyNoticeForNotification({
               </b>
             </Typography>
           }
-          secondary={
-            <React.Fragment>
-              <Box component="span" sx={{display: 'flex', justifyContent: 'flex-start', p: '2px'}}>
-                <Grid component="span" item={true} sm="auto" container direction="row" alignItems="center">
-                  <AccessTimeIcon sx={{paddingRight: '2px'}} />
-                  <TimeAgo datetime={notificationObject.active_at} />
-                </Grid>
-              </Box>
-            </React.Fragment>
-          }
+          secondary={<DateTimeAgo date={notificationObject.active_at} />}
         />
       </ListItem>
       <Box sx={{mb: 1, p: 1}}>
@@ -93,6 +78,7 @@ export default function KindlyNoticeForNotification({
           <Typography
             component={'span'}
             variant="body2"
+            sx={{textDecoration: 'underline'}}
             gutterBottom
             dangerouslySetInnerHTML={{__html: notificationObject[contributionType].summary}}
           />

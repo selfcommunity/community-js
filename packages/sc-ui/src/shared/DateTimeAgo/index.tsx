@@ -3,7 +3,9 @@ import TimeAgo from 'react-timeago';
 import itStrings from 'react-timeago/lib/language-strings/it';
 import buildFormatter from 'react-timeago/lib/formatters/buildFormatter';
 import {styled} from '@mui/material/styles';
-import {Box} from '@mui/material';
+import {Box, Tooltip} from '@mui/material';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import {useIntl} from 'react-intl';
 
 const PREFIX = 'SCDateTimeAgo';
 
@@ -13,16 +15,34 @@ const Root = styled(Box, {
   overridesResolver: (props, styles) => [styles.root]
 })(() => ({
   width: 'auto',
-  display: 'inline-block'
+  display: 'flex',
+  '& .MuiSvgIcon-root': {
+    width: '0.6em',
+    marginTop: -4
+  }
 }));
 
 const formatter = buildFormatter(itStrings);
 
-export default function DateTimeAgo({live = true, date, ...rest}: {live?: boolean; date: Date; [p: string]: any;}): JSX.Element {
+export default function DateTimeAgo({
+  live = true,
+  date = null,
+  showStartIcon = true,
+  ...rest
+}: {
+  live?: boolean;
+  date: Date;
+  showStartIcon?: boolean;
+  [p: string]: any;
+}): JSX.Element {
+  const intl = useIntl();
   if (date) {
     return (
       <Root {...rest}>
-        <TimeAgo date={date} live={live} formatter={formatter} />
+        {showStartIcon && <AccessTimeIcon sx={{paddingRight: '2px'}} />}
+        <Tooltip title={`${intl.formatDate(date, {year: 'numeric', month: 'numeric', day: 'numeric'})}`}>
+          <TimeAgo date={date} live={live} formatter={formatter} />
+        </Tooltip>
       </Root>
     );
   }

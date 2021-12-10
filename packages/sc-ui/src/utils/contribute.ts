@@ -1,4 +1,4 @@
-import {SCFeedObjectTypologyType} from '@selfcommunity/core';
+import {SCCommentTypologyType, SCFeedObjectTypologyType} from '@selfcommunity/core';
 
 /**
  * From obj extract type of the contribution
@@ -11,8 +11,8 @@ export function getContributeType(obj) {
     ? SCFeedObjectTypologyType.POST
     : SCFeedObjectTypologyType.STATUS in obj
     ? SCFeedObjectTypologyType.STATUS
-    : 'comment' in obj
-    ? 'comment'
+    : SCCommentTypologyType in obj
+    ? SCCommentTypologyType
     : null;
 }
 
@@ -27,7 +27,7 @@ export function getContribute(obj) {
     ? obj[SCFeedObjectTypologyType.POST]
     : SCFeedObjectTypologyType.STATUS in obj
     ? obj[SCFeedObjectTypologyType.STATUS]
-    : 'comment' in obj
-    ? obj['comment']
+    : SCCommentTypologyType in obj
+    ? obj[SCCommentTypologyType]
     : null;
 }

@@ -21,7 +21,7 @@ import {SCEmbedType} from './embed';
 import {SCMediaType} from './media';
 import {SCContributeLocation, SCLocalityType} from './location';
 import {SCPollChoiceType, SCPollType} from './poll';
-import {SCCommentType} from './comment';
+import {SCCommentType, SCCommentTypologyType} from './comment';
 import {SCPrivateMessageType, SCPrivateMessageStatusType} from './privateMessage';
 import {SCCustomNotificationType} from './customNotification';
 import {
@@ -91,6 +91,7 @@ export {
   SCFeedStatusType,
   SCFeedObjectTypologyType,
   SCFeedUnitActivityTypologyType,
+  SCCommentTypologyType,
   SCCommentType,
   SCPrivateMessageType,
   SCPrivateMessageStatusType,

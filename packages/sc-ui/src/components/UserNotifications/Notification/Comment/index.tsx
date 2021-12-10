@@ -1,22 +1,14 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import { Avatar, Box, Grid, ListItem, ListItemAvatar, ListItemText, Tooltip, Typography } from '@mui/material';
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import TimeAgo from 'timeago-react';
-import {
-  Link,
-  SCNotificationCommentType,
-  SCNotificationTypologyType,
-  SCRoutingContextType,
-  useSCRouting,
-} from '@selfcommunity/core';
+import {Avatar, Box, Grid, ListItem, ListItemAvatar, ListItemText, Tooltip, Typography} from '@mui/material';
+import {Link, SCNotificationCommentType, SCNotificationTypologyType, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import Bullet from '../../../../shared/Bullet';
 import {LoadingButton} from '@mui/lab';
 import VoteFilledIcon from '@mui/icons-material/ThumbUpTwoTone';
 import VoteIcon from '@mui/icons-material/ThumbUpOutlined';
-import { getContributeType } from '../../../../utils/contribute';
-import { grey } from '@mui/material/colors';
+import {grey} from '@mui/material/colors';
+import DateTimeAgo from '../../../../shared/DateTimeAgo';
 
 const messages = defineMessages({
   comment: {
@@ -73,7 +65,8 @@ export default function UserNotificationComment({
           primary={
             <Typography component="span" sx={{display: 'inline'}} color="primary">
               <Link to={scRoutingContext.url('profile', {id: notificationObject.comment.author.id})}>
-                {notificationObject.comment.author.username}</Link>{' '}
+                {notificationObject.comment.author.username}
+              </Link>{' '}
               {notificationObject.type === SCNotificationTypologyType.NESTED_COMMENT
                 ? intl.formatMessage(messages.comment, {
                     b: (...chunks) => <strong>{chunks}</strong>
@@ -85,14 +78,12 @@ export default function UserNotificationComment({
           }
           secondary={
             <React.Fragment>
-              <Link to={scRoutingContext.url('comment', {id: notificationObject.comment.id})}>
+              <Link to={scRoutingContext.url('comment', {id: notificationObject.comment.id})} sx={{textDecoration: 'underline'}}>
                 <Typography variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: notificationObject.comment.summary}} />
               </Link>
               <Box component="span" sx={{display: 'flex', justifyContent: 'flex-start', p: '2px'}}>
                 <Grid component="span" item={true} sm="auto" container direction="row" alignItems="center">
-                  <AccessTimeIcon sx={{paddingRight: '2px'}} />
-                  <TimeAgo datetime={notificationObject.active_at} />
-                  <Bullet sx={{paddingLeft: '10px', paddingTop: '1px'}} />
+                  <DateTimeAgo date={notificationObject.active_at} /> <Bullet sx={{paddingLeft: '10px', paddingTop: '1px'}} />
                   <LoadingButton
                     variant={'text'}
                     sx={{marginTop: '-1px', minWidth: '30px'}}

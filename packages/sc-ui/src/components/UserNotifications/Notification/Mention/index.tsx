@@ -1,11 +1,10 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import {Avatar, Box, Grid, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import TimeAgo from 'timeago-react';
-import {Link, SCFeedObjectTypologyType, SCNotificationMentionType, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
+import {Avatar, Box, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
+import {Link, SCNotificationMentionType, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
 import {defineMessages, useIntl} from 'react-intl';
 import {getContributeType} from '../../../../utils/contribute';
+import DateTimeAgo from '../../../../shared/DateTimeAgo';
 
 const messages = defineMessages({
   quotedYouOn: {
@@ -56,16 +55,12 @@ export default function UserNotificationMention({notificationObject = null, ...p
                 <Typography
                   component={'span'}
                   variant="body2"
+                  sx={{textDecoration: 'underline'}}
                   gutterBottom
                   dangerouslySetInnerHTML={{__html: notificationObject[objectType].summary}}
                 />
               </Link>
-              <Box component="span" sx={{display: 'flex', justifyContent: 'flex-start', p: '2px'}}>
-                <Grid component="span" item={true} sm="auto" container direction="row" alignItems="center">
-                  <AccessTimeIcon sx={{paddingRight: '2px'}} />
-                  <TimeAgo datetime={notificationObject.active_at} />
-                </Grid>
-              </Box>
+              <DateTimeAgo date={notificationObject.active_at} />
             </React.Fragment>
           }
         />

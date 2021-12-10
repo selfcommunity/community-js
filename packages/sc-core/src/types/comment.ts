@@ -1,4 +1,9 @@
-import {SCUserType} from './index';
+import { SCFeedObjectTypologyType, SCUserType } from './index';
+
+/**
+ * Typology Comment
+ */
+export const SCCommentTypologyType = 'comment';
 
 /**
  * Interface SCCommentType.

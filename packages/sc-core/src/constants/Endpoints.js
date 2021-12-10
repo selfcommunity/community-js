@@ -231,6 +231,10 @@ export default {
     url: urlReplacer('/api/v2/notification/unseen/'),
     method: 'GET',
   },
+  UserSuspendNotification: {
+    url: urlReplacer('/api/v2/$(type)/$(id)/notification/suspend/'),
+    method: 'POST',
+  },
 
   /**
    * Suggestion Endpoints
