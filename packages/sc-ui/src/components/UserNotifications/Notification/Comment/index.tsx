@@ -83,7 +83,8 @@ export default function UserNotificationComment({
               </Link>
               <Box component="span" sx={{display: 'flex', justifyContent: 'flex-start', p: '2px'}}>
                 <Grid component="span" item={true} sm="auto" container direction="row" alignItems="center">
-                  <DateTimeAgo date={notificationObject.active_at} /> <Bullet sx={{paddingLeft: '10px', paddingTop: '1px'}} />
+                  <DateTimeAgo date={notificationObject.active_at} />
+                  <Bullet sx={{paddingLeft: '10px', paddingTop: '1px'}} />
                   <LoadingButton
                     variant={'text'}
                     sx={{marginTop: '-1px', minWidth: '30px'}}

@@ -41,7 +41,7 @@ export default {
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const Template: ComponentStory<typeof CommentsObject> = (args) => (
-  <div style={{width: 800}}>
+  <div style={{width: '100%', maxWidth: 800}}>
     <CommentsObject {...args} />
   </div>
 );

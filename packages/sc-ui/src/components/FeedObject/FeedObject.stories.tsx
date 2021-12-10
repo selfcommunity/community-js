@@ -12,7 +12,7 @@ export default {
     feedObjectId: {
       control: {type: 'number'},
       description: 'FeedObject Id',
-      table: {defaultValue: {summary: 7604}}
+      table: {defaultValue: {summary: 358}}
     },
     feedObjectType: {
       options: [SCFeedObjectTypologyType.POST, SCFeedObjectTypologyType.DISCUSSION, SCFeedObjectTypologyType.STATUS],
@@ -38,7 +38,7 @@ export default {
     }
   },
   args: {
-    feedObjectId: 7604,
+    feedObjectId: 358,
     template: FeedObjectTemplateType.SNIPPET,
     elevation: 1,
     variant: 'elevation'
@@ -48,7 +48,7 @@ export default {
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const Template: ComponentStory<typeof FeedObject> = (args) => (
-  <div style={{width: 800}}>
+  <div style={{width: '100%', maxWidth: 800}}>
     <FeedObject {...args} />
   </div>
 );

@@ -294,7 +294,7 @@ export default function Vote({
       );
     } else if (obj.vote_count <= 0) {
       audience = (
-        <Button variant="text" size="small" onClick={handleToggleVotesDialog} disabled>
+        <Button variant="text" size="small" onClick={handleToggleVotesDialog} disabled sx={{height: 32}}>
           {renderInlineStartVoteBtn()}
           <Typography variant={'body2'} sx={{marginLeft: (theme) => theme.spacing()}}>
             {`${intl.formatMessage(messages.votes, {total: obj.vote_count})}`}
@@ -304,7 +304,7 @@ export default function Vote({
     } else {
       audience = (
         <React.Fragment>
-          <Button variant="text" size="small" onClick={handleToggleVotesDialog} disabled={obj.vote_count === 0}>
+          <Button variant="text" size="small" onClick={handleToggleVotesDialog} disabled={obj.vote_count === 0} sx={{height: 32}}>
             {renderInlineStartVoteBtn()}
             <Typography variant={'body2'} sx={{marginLeft: (theme) => theme.spacing()}}>
               {obj.voted ? (
@@ -367,13 +367,9 @@ export default function Vote({
           <React.Fragment>
             <Divider />
             <Tooltip title={voting ? '' : obj.voted ? intl.formatMessage(messages.voteDown) : intl.formatMessage(messages.voteUp)}>
-              <span>
-                <LoadingButton loading={voting} disabled={!canVote || !obj} onClick={vote}>
-                  <React.Fragment>
-                    {obj.voted ? <VoteFilledIcon fontSize={'large'} color={'secondary'} /> : <VoteIcon fontSize={'large'} />}
-                  </React.Fragment>
-                </LoadingButton>
-              </span>
+              <LoadingButton loading={voting} disabled={!canVote || !obj} onClick={vote}>
+                {obj.voted ? <VoteFilledIcon fontSize={'large'} color={'secondary'} /> : <VoteIcon fontSize={'large'} />}
+              </LoadingButton>
             </Tooltip>
           </React.Fragment>
         )}

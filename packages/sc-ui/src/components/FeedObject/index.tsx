@@ -87,7 +87,7 @@ const Root = styled(Card, {
   [`& .${classes.tag}`]: {
     display: 'inline-block',
     position: 'relative',
-    top: 6
+    top: 3
   },
   '& .MuiSvgIcon-root': {
     width: '0.7em',
@@ -154,7 +154,7 @@ export default function FeedObject({
               }
               title={<span className={classes.username}>{obj.author.username}</span>}
               subheader={
-                <React.Fragment>
+                <Grid component="span" item={true} sm="auto" container direction="row" alignItems="center">
                   <DateTimeAgo date={obj.last_activity_at} />
                   <Bullet />
                   <div className={classes.tag}>
@@ -166,7 +166,7 @@ export default function FeedObject({
                       </Tooltip>
                     )}
                   </div>
-                </React.Fragment>
+                </Grid>
               }
               action={<ReportingFlagMenu feedObject={obj} feedObjectType={feedObjectType} />}
             />

@@ -3,7 +3,7 @@ import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import FeedObjectSkeleton from '../Skeleton/FeedObjectSkeleton';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {Avatar, Box, Button, CardContent, Grid, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
+import {Avatar, Box, Button, CardContent, Grid, ListItem, ListItemAvatar, ListItemText, Tooltip, Typography} from '@mui/material';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import TimeAgo from 'timeago-react';
 import Bullet from '../../shared/Bullet';
@@ -15,17 +15,19 @@ import {SCOPE_SC_UI} from '../../constants/Errors';
 import CommentObjectSkeleton from '../Skeleton/CommentObjectSkeleton';
 import {
   Endpoints,
-  http,
+  http, Link,
   Logger,
   SCFeedObjectType,
-  SCFeedObjectTypologyType,
+  SCFeedObjectTypologyType, SCRoutingContextType,
   SCTagType,
   SCUserContext,
   SCUserContextType,
   SCUserType,
-  useSCFetchCommentObject
+  useSCFetchCommentObject, useSCRouting,
 } from '@selfcommunity/core';
 import {LoadingButton} from '@mui/lab';
+import VoteFilledIcon from '@mui/icons-material/ThumbUpTwoTone';
+import VoteIcon from '@mui/icons-material/ThumbUpOutlined';
 
 const messages = defineMessages({
   reply: {
@@ -93,6 +95,7 @@ export default function CommentObject({
   [p: string]: any;
 }): JSX.Element {
   const scUser: SCUserContextType = useContext(SCUserContext);
+  const scRoutingContext: SCRoutingContextType = useSCRouting();
   const {obj, setObj} = useSCFetchCommentObject({id: commentObjectId, commentObject});
   const [loadingVote, setLoadingVote] = useState(false);
   const [loadingLatestComments, setLoadingLatestComments] = useState(false);
@@ -122,8 +125,16 @@ export default function CommentObject({
    */
   function renderActionVote(comment) {
     return (
-      <LoadingButton variant={'text'} sx={{marginTop: '-1px'}} onClick={() => vote(comment)} disabled={loadingVote}>
-        {comment.voted ? intl.formatMessage(messages.voteDown) : intl.formatMessage(messages.voteUp)}
+      <LoadingButton variant={'text'} sx={{minWidth: 30}} onClick={() => vote(comment)} disabled={loadingVote}>
+        {comment.voted ? (
+          <Tooltip title={<FormattedMessage id={'ui.commentObject.voteDown'} defaultMessage={'ui.commentObject.voteDown'} />}>
+            <VoteFilledIcon fontSize={'small'} color={'secondary'} />
+          </Tooltip>
+        ) : (
+          <Tooltip title={<FormattedMessage id={'ui.commentObject.voteUp'} defaultMessage={'ui.commentObject.voteUp'} />}>
+            <VoteIcon fontSize={'small'} />
+          </Tooltip>
+        )}
       </LoadingButton>
     );
   }
@@ -134,7 +145,7 @@ export default function CommentObject({
    */
   function renderActionReply(comment) {
     return (
-      <Button variant={'text'} sx={{marginTop: '-1px'}} onClick={() => reply(comment)}>
+      <Button variant={'text'} onClick={() => reply(comment)}>
         {intl.formatMessage(messages.reply)}
       </Button>
     );
@@ -144,7 +155,7 @@ export default function CommentObject({
    * Render Votes counter
    */
   function renderVotes(comment) {
-    return <Votes commentObject={comment} />;
+    return <Votes commentObject={comment} sx={{display: {xs: 'none', sm: 'block'}}} />;
   }
 
   /**
@@ -257,7 +268,9 @@ export default function CommentObject({
       <React.Fragment key={comment.id}>
         <ListItem button={false} alignItems="flex-start" classes={{root: classNames({[classes.commentChild]: Boolean(comment.parent)})}}>
           <ListItemAvatar>
-            <Avatar alt={obj.author.username} variant="circular" src={comment.author.avatar} />
+            <Link to={scRoutingContext.url('profile', {id: comment.author.id})}>
+              <Avatar alt={obj.author.username} variant="circular" src={comment.author.avatar} />
+            </Link>
           </ListItemAvatar>
           <ListItemText
             disableTypography
@@ -265,9 +278,11 @@ export default function CommentObject({
               <>
                 <Card classes={{root: classes.comment}} {...rest}>
                   <CardContent>
-                    <Typography component="span" sx={{display: 'inline'}} gutterBottom color="primary">
-                      {comment.author.username}
-                    </Typography>
+                    <Link to={scRoutingContext.url('profile', {id: comment.author.id})}>
+                      <Typography component="span" sx={{display: 'inline'}} gutterBottom color="primary">
+                        {comment.author.username}
+                      </Typography>
+                    </Link>
                     <Typography variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: comment.html}}></Typography>
                   </CardContent>
                 </Card>

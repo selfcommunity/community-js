@@ -107,7 +107,7 @@
   "ui.feedObject.votesDialog.noOtherLikes": "No other votes.",
   "ui.feedObject.sharesDialog.title": "Shares",
   "ui.feedObject.sharesDialog.noOtherLikes": "No other shares.",
-  "ui.feedObject.contributors.title": "{total, plural, =0 {# Contributors} one {# Contributor} other {# Contributors}}",
+  "ui.feedObject.contributors.title": "Contributors ({total})",
   "ui.feedObject.contributors.noOtherContributors": "No other contributors.",
 
   "ui.feedObject.poll.title": "Related Poll",
