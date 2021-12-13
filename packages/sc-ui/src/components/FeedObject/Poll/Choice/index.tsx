@@ -85,14 +85,12 @@ export default function Choice({
   feedObject = null,
   vote = null,
   votes = null,
-  multipleChoices = null,
   isVoting = null,
   ...rest
 }: {
   isVoting?: number;
   feedObject?: SCFeedObjectType;
   choiceObj?: SCPollChoiceType;
-  multipleChoices?: boolean;
   [p: string]: any;
 }): JSX.Element {
   const disabled = !feedObject;

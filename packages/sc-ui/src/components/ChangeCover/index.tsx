@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useRef, useState} from 'react';
+import React, {useContext, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Menu, MenuItem, ListItemIcon, Typography, Button, Popover, Divider, Grid} from '@mui/material';
 import {Endpoints, http, SCUserContext, SCUserContextType, SCUserType} from '@selfcommunity/core';
@@ -64,25 +64,6 @@ function ChangeCover({onClick}: {onClick?: () => void | undefined}): JSX.Element
       });
   }
 
-  function fetchUser() {
-    http
-      .request({
-        url: Endpoints.User.url({id: scUser.user['id']}),
-        method: Endpoints.User.method
-      })
-      .then((res: AxiosResponse<SCUserType>) => {
-        const data: SCUserType = res.data;
-        setUser(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-
-  useEffect(() => {
-    fetchUser();
-  }, []);
-
   return (
     <React.Fragment>
       <Root>
@@ -112,7 +93,7 @@ function ChangeCover({onClick}: {onClick?: () => void | undefined}): JSX.Element
             open={isOpen}
             onClose={() => setIsOpen(false)}
             anchorReference="anchorPosition"
-            anchorPosition={{top: 220, left: 520}}
+            anchorPosition={{top: 50, left: 150}}
             anchorOrigin={{
               vertical: 'bottom',
               horizontal: 'right'

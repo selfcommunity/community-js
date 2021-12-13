@@ -42,20 +42,19 @@ function ChangePictureDialog({open, onClose}: {open: boolean; onClose?: () => vo
   const [file, setFile] = useState(scUser.user['avatar']);
   const [primary, setPrimary] = useState(null);
   const [avatars, setAvatars] = useState([]);
-  const [avatarId, setAvatarId] = useState<number>(null);
   let fileInput = useRef(null);
   const [openDeleteAvatarDialog, setOpenDeleteAvatarDialog] = useState<boolean>(false);
-  const handleClose = () => {
+
+  function handleOpen() {
+    setOpenDeleteAvatarDialog(true);
+  }
+
+  function handleClose() {
     setOpenDeleteAvatarDialog(false);
-  };
+  }
 
   function handleDeleteSuccess(id) {
     setAvatars(avatars.filter((a) => a.id !== id));
-  }
-
-  function handleOpen(id) {
-    setOpenDeleteAvatarDialog(true);
-    setAvatarId(id);
   }
 
   function handleUpload(event) {
@@ -94,6 +93,7 @@ function ChangePictureDialog({open, onClose}: {open: boolean; onClose?: () => vo
       })
       .then((res: any) => {
         const primary = getPrimaryAvatar(res.data);
+        console.log(primary);
         setAvatars(res.data.results);
         setPrimary(primary.id);
         setFile(primary.avatar);
@@ -131,7 +131,7 @@ function ChangePictureDialog({open, onClose}: {open: boolean; onClose?: () => vo
   return (
     <React.Fragment>
       {openDeleteAvatarDialog && (
-        <DeleteAvatarDialog open={openDeleteAvatarDialog} onClose={handleClose} onSuccess={() => handleDeleteSuccess(avatarId)} id={avatarId} />
+        <DeleteAvatarDialog open={openDeleteAvatarDialog} onClose={handleClose} onSuccess={() => handleDeleteSuccess(primary)} id={primary} />
       )}
       <Root>
         <CardHeader
@@ -162,7 +162,7 @@ function ChangePictureDialog({open, onClose}: {open: boolean; onClose?: () => vo
                 key={avatar.id}
                 onClick={() => selectPrimaryAvatar(avatar.id)}>
                 <img src={avatar.avatar} loading="lazy" alt={'img'} />
-                <Button variant="outlined" onClick={() => handleOpen(avatar.id)}>
+                <Button variant="outlined" onClick={() => handleOpen()}>
                   <FormattedMessage id="ui.changePicture.button.delete" defaultMessage="ui.changePicture.button.delete" />
                 </Button>
               </ImageListItem>

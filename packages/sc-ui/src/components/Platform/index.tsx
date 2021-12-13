@@ -7,7 +7,6 @@ import {Endpoints, http, SCLocaleContextType, SCUserContext, SCUserContextType, 
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import {AxiosResponse} from 'axios';
 import {FormattedMessage} from 'react-intl';
-import FollowConnect from '../FollowConnect';
 
 const PREFIX = 'SCPlatform';
 
