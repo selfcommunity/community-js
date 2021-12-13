@@ -192,7 +192,7 @@ export interface SCFeedObjectType {
   /**
    * Type: discussion, post, status
    */
-  type: SCFeedObjectTypologyType,
+  type: SCFeedObjectTypologyType;
 
   /**
    * Suspended notification

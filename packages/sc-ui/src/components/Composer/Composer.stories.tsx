@@ -23,5 +23,6 @@ Base.args = {
   /* the args you need here will depend on your component */
   maxWidth: 'sm',
   fullWidth: true,
-  scroll: 'body'
+  scroll: 'body',
+  open: false
 };

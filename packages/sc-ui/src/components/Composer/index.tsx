@@ -3,9 +3,11 @@ import {
   Endpoints,
   formatHttpError,
   http,
-  SCContext,
-  SCContextType,
   SCFeatures,
+  SCFeedDiscussionType,
+  SCFeedPostType,
+  SCFeedObjectTypologyType,
+  SCFeedStatusType,
   SCMediaType,
   SCPreferences,
   SCPreferencesContext,
@@ -26,6 +28,8 @@ import PollIcon from '@mui/icons-material/BarChartOutlined';
 import LocationIcon from '@mui/icons-material/AddLocationAltOutlined';
 import ErrorIcon from '@mui/icons-material/ErrorOutlineOutlined';
 import {
+  Alert,
+  AlertTitle,
   Avatar,
   Badge,
   Box,
@@ -47,7 +51,6 @@ import {
   TextField,
   ToggleButton,
   ToggleButtonGroup,
-  Tooltip,
   Typography
 } from '@mui/material';
 import {styled} from '@mui/material/styles';
@@ -56,7 +59,7 @@ import {MEDIA_TYPE_DOCUMENT, MEDIA_TYPE_IMAGE, MEDIA_TYPE_LINK, MEDIA_TYPE_VIDEO
 import LoadingButton from '@mui/lab/LoadingButton';
 import Audience from './Audience';
 import Categories from './Categories';
-import {stripHtml} from '../../utils/string';
+import {random, stripHtml} from '../../utils/string';
 import classNames from 'classnames';
 import {TransitionProps} from '@mui/material/transitions';
 import MediasPreview from '../FeedObject/Medias';
@@ -67,8 +70,8 @@ import {Document, Image, Link} from './MediaAction';
 import Poll from './Poll';
 import Location from './Location';
 import TagChip from '../../shared/TagChip';
-import {random} from '../../utils/string';
 import {AxiosResponse} from 'axios';
+import ComposerSkeleton from '../Skeleton/ComposerSkeleton';
 
 const DialogTransition = forwardRef(function Transition(
   props: TransitionProps & {
@@ -234,6 +237,8 @@ const Root = styled(Dialog, {
 }));
 
 export interface ComposerProps extends DialogProps {
+  feedObjectId?: number;
+  feedObjectType?: SCFeedObjectTypologyType;
   view?: string;
   mediaActions?: SCComposerMediaActionType[];
   onSuccess?: (res: any) => void;
@@ -289,10 +294,18 @@ const reducer = (state, action) => {
 
 export default function Composer(props: ComposerProps): JSX.Element {
   // PROPS
-  const {open = false, view = MAIN_VIEW, mediaActions = [Image, Document, Link], onClose = null, onSuccess = null, ...rest} = props;
+  const {
+    feedObjectId = null,
+    feedObjectType = null,
+    open = false,
+    view = MAIN_VIEW,
+    mediaActions = [Image, Document, Link],
+    onClose = null,
+    onSuccess = null,
+    ...rest
+  } = props;
 
   // Context
-  const scContext: SCContextType = useContext(SCContext);
   const scPrefernces: SCPreferencesContextType = useContext(SCPreferencesContext);
   const scAuthContext: SCUserContextType = useContext(SCUserContext);
 
@@ -304,6 +317,11 @@ export default function Composer(props: ComposerProps): JSX.Element {
 
   const [state, dispatch] = useReducer(reducer, {...COMPOSER_INITIAL_STATE, open, view, key: random()});
   const {key, type, title, titleError, text, categories, addressing, audience, medias, poll, pollError, location} = state;
+
+  // Edit state variables
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [loadError, setLoadError] = useState<boolean>(false);
+  const editMode = feedObjectId && feedObjectType;
 
   // REFS
   const unloadRef = React.useRef<boolean>(false);
@@ -336,6 +354,48 @@ export default function Composer(props: ComposerProps): JSX.Element {
     }
   };
   setEnabledComposerTypes();
+
+  // Load feed object
+  useEffect(() => {
+    setIsLoading(true);
+    http
+      .request({
+        url: Endpoints.FeedObject.url({type: feedObjectType, id: feedObjectId}),
+        method: Endpoints.FeedObject.method
+      })
+      .then((res: AxiosResponse<any>) => {
+        let feedObject = null;
+        if (feedObjectType === COMPOSER_TYPE_POST) {
+          feedObject = res.data as SCFeedPostType;
+        } else if (feedObjectType === COMPOSER_TYPE_DISCUSSION) {
+          feedObject = res.data as SCFeedDiscussionType;
+        } else {
+          feedObject = res.data as SCFeedStatusType;
+        }
+        if (feedObject.author.id === scAuthContext.user.id) {
+          dispatch({
+            type: 'multiple',
+            value: {
+              type: feedObjectType,
+              title: feedObject.title,
+              text: feedObject.html,
+              categories: feedObject.categories,
+              audience: feedObject.addressing ? AUDIENCE_TAG : AUDIENCE_ALL,
+              addressing: feedObject.addressing,
+              medias: feedObject.medias,
+              poll: feedObject.poll,
+              location: feedObject.location
+            }
+          });
+        } else {
+          setLoadError(true);
+        }
+      })
+      .catch(() => {
+        setLoadError(true);
+      })
+      .then(() => setIsLoading(false));
+  }, [editMode]);
 
   // Props update
   useEffect(() => setView(view), [view]);
@@ -489,10 +549,20 @@ export default function Composer(props: ComposerProps): JSX.Element {
       data.addressing = addressing.map((t) => t.id);
     }
     setIsSubmitting(true);
+
+    // Finding right url
+    let url = Endpoints.Composer.url({type});
+    let method = Endpoints.Composer.method;
+    if (editMode) {
+      let url = Endpoints.ComposerEdit.url({type: feedObjectType, id: feedObjectId});
+      let method = Endpoints.ComposerEdit.method;
+    }
+
+    // Perform request
     http
       .request({
-        url: Endpoints.Composer.url({type}),
-        method: Endpoints.Composer.method,
+        url,
+        method,
         data
       })
       .then((res: AxiosResponse<any>) => {
@@ -801,7 +871,7 @@ export default function Composer(props: ComposerProps): JSX.Element {
               <Chip icon={<LocationIcon />} label={location.full_address} onDelete={handleDeleteLocation} onClick={handleChangeView(LOCATION_VIEW)} />
             )}
             {audience === AUDIENCE_TAG &&
-              addressing.length &&
+              addressing &&
               addressing.map((t: SCTagType) => (
                 <TagChip key={t.id} tag={t} onDelete={handleDeleteTag(t.id)} icon={<TagIcon />} onClick={handleChangeView(AUDIENCE_VIEW)} />
               ))}
@@ -870,6 +940,19 @@ export default function Composer(props: ComposerProps): JSX.Element {
     default:
       const media = mediaActions.find((mv) => mv.name === _view);
       child = media ? renderMediaView(media) : renderMainView;
+  }
+
+  if (editMode && isLoading) {
+    child = () => <ComposerSkeleton />;
+  } else if (editMode && loadError) {
+    child = () => (
+      <Alert severity="error" onClose={handleClose}>
+        <AlertTitle>
+          <FormattedMessage id="ui.composer.edit.error.title" defaultMessage="ui.composer.edit.error.title" />
+        </AlertTitle>
+        <FormattedMessage id="ui.composer.edit.error.content" defaultMessage="ui.composer.edit.error.content" />
+      </Alert>
+    );
   }
 
   return (

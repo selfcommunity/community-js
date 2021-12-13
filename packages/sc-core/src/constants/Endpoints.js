@@ -16,24 +16,10 @@ export default {
     method: 'GET',
   },
   /**
-   * Discussion Endpoints
+   * FeedObject Endpoints
    */
-  Discussion: {
-    url: urlReplacer('/api/v2/discussion/$(id)/'),
-    method: 'GET',
-  },
-  /**
-   * Post Endpoints
-   */
-  Post: {
-    url: urlReplacer('/api/v2/post/$(id)/'),
-    method: 'GET',
-  },
-  /**
-   * Status Endpoints
-   */
-  Status: {
-    url: urlReplacer('/api/v2/status/$(id)/'),
+  FeedObject: {
+    url: urlReplacer('/api/v2/$(type)/$(id)/'),
     method: 'GET',
   },
   /**
@@ -291,6 +277,10 @@ export default {
   Composer: {
     url: urlReplacer('/api/v2/$(type)/'),
     method: 'POST',
+  },
+  ComposerEdit: {
+    url: urlReplacer('/api/v2/$(type)/$(id)/'),
+    method: 'PUT',
   },
   ComposerChunkUploadMedia: {
     url: urlReplacer('/api/v2/media/upload/chunk/'),

@@ -57,7 +57,7 @@ export interface LocationProps extends StandardProps<React.HTMLAttributes<HTMLDi
 export default function ({
   defaultValue = null,
   disabled = false,
-  TextFieldProps = {variant: 'outlined', label: <FormattedMessage id="ui.composer.locations.label" defaultMessage="ui.composer.locations.label" />},
+  TextFieldProps = {variant: 'outlined', label: <FormattedMessage id="ui.composer.location.label" defaultMessage="ui.composer.locations.label" />},
   ...props
 }: LocationProps): JSX.Element {
   // Props

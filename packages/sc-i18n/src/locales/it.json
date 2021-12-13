@@ -76,6 +76,8 @@
   "ui.composer.media.link.add.help": "Insert a valid url (youtube, vimeo or web page).",
   "ui.composer.audience.tags.empty": "No tags to address",
   "ui.composer.audience.tags.label": "Tags",
+  "ui.composer.location.title": "Localize",
+  "ui.composer.location.label": "Insert a city",
   "ui.composer.categories.label": "Category",
   "ui.composer.categories.empty": "No category to assign",
   "ui.composer.poll.title": "Poll's title",
@@ -86,6 +88,8 @@
   "ui.composer.poll.multiple": "Multiple choices are admitted",
   "ui.composer.poll.expiration": "Close date",
   "ui.composer.submit": "Publish",
+  "ui.composer.edit.error.title": "Error loading content",
+  "ui.composer.edit.error.content": "This contribution is unavailable for editing",
 
   "ui.inlineComposer.label": "Create content...",
 
