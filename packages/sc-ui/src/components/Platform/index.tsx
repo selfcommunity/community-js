@@ -24,12 +24,8 @@ function Platform({contained = true}: {contained: boolean}): JSX.Element {
   const scUserContext: SCUserContextType = useContext(SCUserContext);
   const scLocaleContext: SCLocaleContextType = useSCLocale();
   const language = scLocaleContext.locale;
-  const roleText =
-    scUserContext.user['role'] === 'moderator' ? (
-      <FormattedMessage id="ui.platformAccess.mod" defaultMessage="ui.platformAccess.mod" />
-    ) : (
-      <FormattedMessage id="ui.platformAccess.edt" defaultMessage="ui.platformAccess.edt" />
-    );
+  const role = scUserContext.user['role'];
+  const spacing = role === 'admin' ? 1 : 3;
 
   function fetchPlatform(query) {
     http
@@ -48,60 +44,38 @@ function Platform({contained = true}: {contained: boolean}): JSX.Element {
         console.log(error);
       });
   }
-  /**
-   * Renders admin panel
-   * @return {JSX.Element}
-   */
-  function renderAdminPanel() {
-    return (
-      <React.Fragment>
-        <Grid container spacing={1} justifyContent="center">
-          <Grid item xs={12}>
-            <Typography component="h3" align="center">
-              <FormattedMessage id="ui.platformAccess.title" defaultMessage="ui.platformAccess.title" />
-              <LockOutlinedIcon fontSize="small" />
-            </Typography>
-          </Grid>
-          <Grid item xs="auto" style={{textAlign: 'center'}}>
-            <Button variant="outlined" size="small" onClick={() => fetchPlatform('')}>
-              <FormattedMessage id="ui.platformAccess.adm" defaultMessage="ui.platformAccess.adm" />
-            </Button>
-          </Grid>
-          <Grid item xs="auto" style={{textAlign: 'center'}}>
-            <Button variant="outlined" size="small" onClick={() => fetchPlatform('/moderation/flags')}>
-              <FormattedMessage id="ui.platformAccess.mod" defaultMessage="ui.platformAccess.mod" />
-            </Button>
-          </Grid>
-          <Grid item xs="auto" style={{textAlign: 'center'}}>
-            <Button variant="outlined" size="small" href={`https://support.selfcommunity.com/hc/${language}`} target="_blank">
-              <FormattedMessage id="ui.platformAccess.hc" defaultMessage="ui.platformAccess.hc" />
-            </Button>
-          </Grid>
-        </Grid>
-      </React.Fragment>
-    );
-  }
 
   /**
-   * Renders moderator or editor panel
+   * Renders platform panel
    * @return {JSX.Element}
    */
-  function renderRolePanel() {
+  function renderPanel() {
     return (
       <React.Fragment>
-        <Grid container spacing={2} justifyContent="center">
+        <Grid container spacing={spacing} justifyContent="center">
           <Grid item xs={12}>
             <Typography component="h3" align="center">
               <FormattedMessage id="ui.platformAccess.title" defaultMessage="ui.platformAccess.title" />
               <LockOutlinedIcon fontSize="small" />
             </Typography>
           </Grid>
-          <Grid item xs={6} style={{textAlign: 'center'}}>
+          {role === 'admin' && (
+            <Grid item xs="auto" style={{textAlign: 'center'}}>
+              <Button variant="outlined" size="small" onClick={() => fetchPlatform('')}>
+                <FormattedMessage id="ui.platformAccess.adm" defaultMessage="ui.platformAccess.adm" />
+              </Button>
+            </Grid>
+          )}
+          <Grid item xs="auto" style={{textAlign: 'center'}}>
             <Button variant="outlined" size="small" onClick={() => fetchPlatform('')}>
-              {roleText}
+              {role === 'moderator' || role === 'admin' ? (
+                <FormattedMessage id="ui.platformAccess.mod" defaultMessage="ui.platformAccess.mod" />
+              ) : (
+                <FormattedMessage id="ui.platformAccess.edt" defaultMessage="ui.platformAccess.edt" />
+              )}
             </Button>
           </Grid>
-          <Grid item xs={6} style={{textAlign: 'center'}}>
+          <Grid item xs="auto" style={{textAlign: 'center'}}>
             <Button variant="outlined" size="small" href={`https://support.selfcommunity.com/hc/it`} target="_blank">
               <FormattedMessage id="ui.platformAccess.hc" defaultMessage="ui.platformAccess.hc" />
             </Button>
@@ -111,13 +85,9 @@ function Platform({contained = true}: {contained: boolean}): JSX.Element {
     );
   }
 
-  function renderPanel() {
-    return <React.Fragment>{scUserContext.user['role'] === 'admin' ? renderAdminPanel() : renderRolePanel()}</React.Fragment>;
-  }
-
   const p = (
     <React.Fragment>
-      {scUserContext.user['role'] === null ? (
+      {role === null ? (
         <Typography>
           <FormattedMessage id="ui.platform.warning" defaultMessage="ui.platform.warning" />
         </Typography>
