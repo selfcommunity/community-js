@@ -13,6 +13,7 @@ import {FormattedMessage} from 'react-intl';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import DeleteAvatarDialog from './DeleteAvatarDialog';
+import CentralProgress from '../../../shared/CentralProgress';
 
 const PREFIX = 'SCChangePictureDialog';
 
@@ -34,6 +35,9 @@ const Root = styled(Card, {
   },
   [`& .${classes.primary}`]: {
     border: 'solid'
+  },
+  '& .MuiCardHeader-title': {
+    fontSize: '1.2rem'
   }
 }));
 
@@ -42,6 +46,7 @@ function ChangePictureDialog({open, onClose}: {open: boolean; onClose?: () => vo
   const [file, setFile] = useState(scUser.user['avatar']);
   const [primary, setPrimary] = useState(null);
   const [avatars, setAvatars] = useState([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   let fileInput = useRef(null);
   const [openDeleteAvatarDialog, setOpenDeleteAvatarDialog] = useState<boolean>(false);
 
@@ -55,6 +60,7 @@ function ChangePictureDialog({open, onClose}: {open: boolean; onClose?: () => vo
 
   function handleDeleteSuccess(id) {
     setAvatars(avatars.filter((a) => a.id !== id));
+    setPrimary(avatars[0].id);
   }
 
   function handleUpload(event) {
@@ -64,6 +70,7 @@ function ChangePictureDialog({open, onClose}: {open: boolean; onClose?: () => vo
   }
 
   function handleSave() {
+    setIsLoading(true);
     const formData = new FormData();
     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore
@@ -77,8 +84,10 @@ function ChangePictureDialog({open, onClose}: {open: boolean; onClose?: () => vo
         },
         data: formData
       })
-      .then((res) => {
+      .then((res: any) => {
+        setIsLoading(false);
         setAvatars((prev) => [...prev, res.data]);
+        setPrimary(res.data.id);
       })
       .catch((error) => {
         console.log(error);
@@ -92,8 +101,8 @@ function ChangePictureDialog({open, onClose}: {open: boolean; onClose?: () => vo
         method: Endpoints.GetAvatars.method
       })
       .then((res: any) => {
+        setIsLoading(false);
         const primary = getPrimaryAvatar(res.data);
-        console.log(primary);
         setAvatars(res.data.results);
         setPrimary(primary.id);
         setFile(primary.avatar);
@@ -117,7 +126,7 @@ function ChangePictureDialog({open, onClose}: {open: boolean; onClose?: () => vo
         }
       })
       .then(() => {
-        fetchUserAvatar();
+        setPrimary(id);
       })
       .catch((error) => {
         console.log(error);
@@ -155,19 +164,23 @@ function ChangePictureDialog({open, onClose}: {open: boolean; onClose?: () => vo
             <FormattedMessage id="ui.changePicture.listF" defaultMessage="ui.changePicture.listF" /> <br />
             <FormattedMessage id="ui.changePicture.listS" defaultMessage="ui.changePicture.listS" />
           </Typography>
-          <ImageList cols={3} rowHeight={'auto'}>
-            {avatars.map((avatar) => (
-              <ImageListItem
-                className={primary === avatar.id ? classes.primary : null}
-                key={avatar.id}
-                onClick={() => selectPrimaryAvatar(avatar.id)}>
-                <img src={avatar.avatar} loading="lazy" alt={'img'} />
-                <Button variant="outlined" onClick={() => handleOpen()}>
-                  <FormattedMessage id="ui.changePicture.button.delete" defaultMessage="ui.changePicture.button.delete" />
-                </Button>
-              </ImageListItem>
-            ))}
-          </ImageList>
+          {isLoading ? (
+            <CentralProgress size={50} />
+          ) : (
+            <ImageList cols={3} rowHeight={'auto'}>
+              {avatars.map((avatar) => (
+                <ImageListItem
+                  className={primary === avatar.id ? classes.primary : null}
+                  key={avatar.id}
+                  onClick={() => selectPrimaryAvatar(avatar.id)}>
+                  <img src={avatar.avatar} loading="lazy" alt={'img'} />
+                  <Button variant="outlined" onClick={() => handleOpen()}>
+                    <FormattedMessage id="ui.changePicture.button.delete" defaultMessage="ui.changePicture.button.delete" />
+                  </Button>
+                </ImageListItem>
+              ))}
+            </ImageList>
+          )}
         </CardContent>
         <Divider />
         <CardActions disableSpacing className={classes.actions}>
