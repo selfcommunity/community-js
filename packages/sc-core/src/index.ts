@@ -85,7 +85,7 @@ import SCLocaleProvider, {SCLocaleContext, useSCLocale, withSCLocale} from './co
 /**
  * PreferencesProvider component
  */
-import SCPreferencesProvider, {SCPreferencesContext} from './components/provider/SCPreferencesProvider';
+import SCPreferencesProvider, {SCPreferencesContext, useSCPreferencesContext} from './components/provider/SCPreferencesProvider';
 import * as SCPreferences from './constants/Preferences';
 import * as SCFeatures from './constants/Features';
 
@@ -195,6 +195,7 @@ export {
   SCContextProvider,
   SCUserProvider,
   useSCUser,
+  useSCPreferencesContext,
   SCThemeProvider,
   useSCTheme,
   withSCTheme,

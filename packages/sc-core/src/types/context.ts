@@ -74,6 +74,16 @@ export interface SCUserContextType {
   logout: () => void;
 
   /**
+   * Handle change avatar
+   */
+  setAvatar: (avatar: string) => void;
+
+  /**
+   * Handle change cover
+   */
+  setCover: (cover: string) => void;
+
+  /**
    * Managers: followed, connections, categories, etc...
    */
   managers: {followed?: SCFollowedManagerType; connections?: SCConnectionsManagerType; categories: SCCategoriesManagerType};

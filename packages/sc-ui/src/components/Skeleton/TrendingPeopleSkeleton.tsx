@@ -3,7 +3,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import List from '@mui/material/List';
 import {styled} from '@mui/material/styles';
-import {PersonBoxSkeleton} from '@selfcommunity/ui';
+import UserBoxSkeleton from './UserBoxSkeleton';
 
 const PREFIX = 'SCTrendingPeopleSkeleton';
 
@@ -27,7 +27,7 @@ export default function TrendingPeopleSkeleton(): JSX.Element {
       <CardContent>
         <List className={classes.list}>
           {[...Array(4)].map((person, index) => (
-            <PersonBoxSkeleton key={index} contained={false} />
+            <UserBoxSkeleton key={index} contained={false} />
           ))}
         </List>
       </CardContent>

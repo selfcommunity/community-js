@@ -8,12 +8,14 @@ import Typography from '@mui/material/Typography';
 import {CardHeader, Divider, IconButton, Box, Dialog, DialogTitle, DialogActions} from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import FolderOpenIcon from '@mui/icons-material/FolderOpen';
-import {Endpoints, http, SCUserContext, SCUserContextType} from '@selfcommunity/core';
+import {Endpoints, http, SCUserContext, SCUserContextType, SCUserType} from '@selfcommunity/core';
 import {FormattedMessage} from 'react-intl';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import DeleteAvatarDialog from './DeleteAvatarDialog';
+import {AxiosResponse} from 'axios';
 import CentralProgress from '../../../shared/CentralProgress';
+import BaseDialog from '../../../shared/BaseDialog';
 
 const PREFIX = 'SCChangePictureDialog';
 
@@ -35,32 +37,31 @@ const Root = styled(Card, {
   },
   [`& .${classes.primary}`]: {
     border: 'solid'
-  },
-  '& .MuiCardHeader-title': {
-    fontSize: '1.2rem'
   }
 }));
 
 function ChangePictureDialog({open, onClose}: {open: boolean; onClose?: () => void | undefined}): JSX.Element {
-  const scUser: SCUserContextType = useContext(SCUserContext);
-  const [file, setFile] = useState(scUser.user['avatar']);
+  const scUserContext: SCUserContextType = useContext(SCUserContext);
+  const [file, setFile] = useState(scUserContext.user['avatar']);
   const [primary, setPrimary] = useState(null);
   const [avatars, setAvatars] = useState([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [avatarId, setAvatarId] = useState<number>(null);
   let fileInput = useRef(null);
   const [openDeleteAvatarDialog, setOpenDeleteAvatarDialog] = useState<boolean>(false);
-
-  function handleOpen() {
-    setOpenDeleteAvatarDialog(true);
-  }
-
-  function handleClose() {
+  const handleClose = () => {
     setOpenDeleteAvatarDialog(false);
-  }
+  };
 
   function handleDeleteSuccess(id) {
     setAvatars(avatars.filter((a) => a.id !== id));
-    setPrimary(avatars[0].id);
+    if (avatars.length > 0) {
+      scUserContext.setAvatar(avatars[avatars.length - 1].avatar);
+    }
+  }
+
+  function handleOpen(id) {
+    setOpenDeleteAvatarDialog(true);
+    setAvatarId(id);
   }
 
   function handleUpload(event) {
@@ -70,24 +71,21 @@ function ChangePictureDialog({open, onClose}: {open: boolean; onClose?: () => vo
   }
 
   function handleSave() {
-    setIsLoading(true);
     const formData = new FormData();
     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore
     formData.append('avatar', fileInput);
     http
       .request({
-        url: Endpoints.AddAvatar.url({id: scUser.user['id']}),
+        url: Endpoints.AddAvatar.url({id: scUserContext.user['id']}),
         method: Endpoints.AddAvatar.method,
         headers: {
           'Content-Type': 'multipart/form-data'
         },
         data: formData
       })
-      .then((res: any) => {
-        setIsLoading(false);
+      .then((res) => {
         setAvatars((prev) => [...prev, res.data]);
-        setPrimary(res.data.id);
       })
       .catch((error) => {
         console.log(error);
@@ -97,11 +95,10 @@ function ChangePictureDialog({open, onClose}: {open: boolean; onClose?: () => vo
   function fetchUserAvatar() {
     http
       .request({
-        url: Endpoints.GetAvatars.url({id: scUser.user['id']}),
+        url: Endpoints.GetAvatars.url({id: scUserContext.user['id']}),
         method: Endpoints.GetAvatars.method
       })
       .then((res: any) => {
-        setIsLoading(false);
         const primary = getPrimaryAvatar(res.data);
         setAvatars(res.data.results);
         setPrimary(primary.id);
@@ -116,17 +113,17 @@ function ChangePictureDialog({open, onClose}: {open: boolean; onClose?: () => vo
     return data.results.find((a) => a.primary === true);
   }
 
-  function selectPrimaryAvatar(id) {
+  function selectPrimaryAvatar(avatar) {
     http
       .request({
-        url: Endpoints.SetPrimaryAvatar.url({id: scUser.user['id']}),
+        url: Endpoints.SetPrimaryAvatar.url({id: scUserContext.user['id']}),
         method: Endpoints.SetPrimaryAvatar.method,
         data: {
-          avatar_id: id
+          avatar_id: avatar.id
         }
       })
       .then(() => {
-        setPrimary(id);
+        scUserContext.setAvatar(avatar.avatar);
       })
       .catch((error) => {
         console.log(error);
@@ -138,58 +135,34 @@ function ChangePictureDialog({open, onClose}: {open: boolean; onClose?: () => vo
   }, []);
 
   return (
-    <React.Fragment>
+    <Root>
       {openDeleteAvatarDialog && (
-        <DeleteAvatarDialog open={openDeleteAvatarDialog} onClose={handleClose} onSuccess={() => handleDeleteSuccess(primary)} id={primary} />
+        <DeleteAvatarDialog open={openDeleteAvatarDialog} onClose={handleClose} onSuccess={() => handleDeleteSuccess(avatarId)} id={avatarId} />
       )}
-      <Root>
-        <CardHeader
-          action={
-            <IconButton onClick={onClose}>
-              <CloseIcon fontSize="small" />
-            </IconButton>
-          }
-          title={<FormattedMessage id="ui.changePicture.title" defaultMessage="ui.changePicture.title" />}
-        />
-        <Divider />
-        <CardContent>
-          <React.Fragment>
-            <input type="file" onChange={() => handleUpload(event)} ref={fileInput} hidden />
-            <Button variant="outlined" onClick={() => fileInput.current.click()}>
-              <FolderOpenIcon fontSize="small" />
-              <FormattedMessage id="ui.changePicture.button.upload" defaultMessage="ui.changePicture.button.upload" />
-            </Button>
-          </React.Fragment>
-          <Typography sx={{fontSize: 10}} color="text.secondary" gutterBottom>
-            <FormattedMessage id="ui.changePicture.listF" defaultMessage="ui.changePicture.listF" /> <br />
-            <FormattedMessage id="ui.changePicture.listS" defaultMessage="ui.changePicture.listS" />
-          </Typography>
-          {isLoading ? (
-            <CentralProgress size={50} />
-          ) : (
-            <ImageList cols={3} rowHeight={'auto'}>
-              {avatars.map((avatar) => (
-                <ImageListItem
-                  className={primary === avatar.id ? classes.primary : null}
-                  key={avatar.id}
-                  onClick={() => selectPrimaryAvatar(avatar.id)}>
-                  <img src={avatar.avatar} loading="lazy" alt={'img'} />
-                  <Button variant="outlined" onClick={() => handleOpen()}>
-                    <FormattedMessage id="ui.changePicture.button.delete" defaultMessage="ui.changePicture.button.delete" />
-                  </Button>
-                </ImageListItem>
-              ))}
-            </ImageList>
-          )}
-        </CardContent>
-        <Divider />
-        <CardActions disableSpacing className={classes.actions}>
-          <Button variant="contained" size="small" onClick={onClose}>
-            <FormattedMessage id="ui.changePicture.button.finished" defaultMessage="ui.changePicture.button.finished" />
+      <BaseDialog title={<FormattedMessage defaultMessage="ui.changePicture.title" id="ui.changePicture.title" />} onClose={onClose} open={open}>
+        <React.Fragment>
+          <input type="file" onChange={() => handleUpload(event)} ref={fileInput} hidden />
+          <Button variant="outlined" onClick={() => fileInput.current.click()}>
+            <FolderOpenIcon fontSize="small" />
+            <FormattedMessage id="ui.changePicture.button.upload" defaultMessage="ui.changePicture.button.upload" />
           </Button>
-        </CardActions>
-      </Root>
-    </React.Fragment>
+        </React.Fragment>
+        <Typography sx={{fontSize: 10}} color="text.secondary" gutterBottom>
+          <FormattedMessage id="ui.changePicture.listF" defaultMessage="ui.changePicture.listF" /> <br />
+          <FormattedMessage id="ui.changePicture.listS" defaultMessage="ui.changePicture.listS" />
+        </Typography>
+        <ImageList cols={3} rowHeight={'auto'}>
+          {avatars.map((avatar) => (
+            <ImageListItem className={primary === avatar.id ? classes.primary : null} key={avatar.id} onClick={() => selectPrimaryAvatar(avatar)}>
+              <img src={avatar.avatar} loading="lazy" alt={'img'} />
+              <Button variant="outlined" onClick={() => handleOpen(avatar.id)}>
+                <FormattedMessage id="ui.changePicture.button.delete" defaultMessage="ui.changePicture.button.delete" />
+              </Button>
+            </ImageListItem>
+          ))}
+        </ImageList>
+      </BaseDialog>
+    </Root>
   );
 }
 
