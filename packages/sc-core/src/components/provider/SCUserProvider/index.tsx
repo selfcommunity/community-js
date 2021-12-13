@@ -1,7 +1,7 @@
 import React, {createContext, useContext, useEffect, useMemo} from 'react';
 import sessionServices from '../../../services/session';
 import {SCContext} from '../SCContextProvider';
-import useSCAuth, {authActionTypes} from '../../../hooks/useSCAuth';
+import useSCAuth, {userActionTypes} from '../../../hooks/useSCAuth';
 import {Logger} from '../../../utils/logger';
 import {SCOPE_SC_CORE} from '../../../constants/Errors';
 import useSCCategoriesManager from '../../../hooks/useSCCategoriesManager';
@@ -55,15 +55,15 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
    * If there is an error, it means there is no session.
    */
   useEffect(() => {
-    dispatch({type: authActionTypes.LOGIN_LOADING});
+    dispatch({type: userActionTypes.LOGIN_LOADING});
     sessionServices
       .getCurrentUser()
       .then((user: SCUserType) => {
-        dispatch({type: authActionTypes.LOGIN_SUCCESS, payload: {user}});
+        dispatch({type: userActionTypes.LOGIN_SUCCESS, payload: {user}});
       })
       .catch((error) => {
         Logger.error(SCOPE_SC_CORE, 'Unable to retrieve the authenticated user.');
-        dispatch({type: authActionTypes.LOGIN_FAILURE, payload: {error}});
+        dispatch({type: userActionTypes.LOGIN_FAILURE, payload: {error}});
       });
   }, []);
 
@@ -92,11 +92,25 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
   }
 
   /**
+   * Handle change avatar
+   */
+  function setAvatar(avatar): void {
+    dispatch({type: userActionTypes.CHANGE_AVATAR, payload: {avatar}});
+  }
+
+  /**
+   * Handle change cover
+   */
+  function setCover(cover): void {
+    dispatch({type: userActionTypes.CHANGE_COVER, payload: {cover}});
+  }
+
+  /**
    * Call the logout endpoint and then remove the user
    * from the state.
    */
   function logout(): void {
-    dispatch({type: authActionTypes.LOGOUT});
+    dispatch({type: userActionTypes.LOGOUT});
   }
 
   /**
@@ -116,6 +130,8 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
       session: state.session,
       loading: state.loading,
       error: state.loading,
+      setAvatar,
+      setCover,
       logout,
       managers: {
         categories: categoriesManager,

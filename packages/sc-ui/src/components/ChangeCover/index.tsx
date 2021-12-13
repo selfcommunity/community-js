@@ -1,6 +1,6 @@
-import React, {useContext, useRef, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Menu, MenuItem, ListItemIcon, Typography, Button, Popover, Divider, Grid} from '@mui/material';
+import {Menu, MenuItem, ListItemIcon, Typography, Button, Popover, Divider, Grid, IconButton, Box} from '@mui/material';
 import {Endpoints, http, SCUserContext, SCUserContextType, SCUserType} from '@selfcommunity/core';
 import {AxiosResponse} from 'axios';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
@@ -9,6 +9,10 @@ import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import {FormattedMessage} from 'react-intl';
 
 const PREFIX = 'SCChangeCoverButton';
+
+const classes = {
+  helpPopover: `${PREFIX}-help-popover`
+};
 
 const Root = styled(Grid, {
   name: PREFIX,
@@ -20,20 +24,27 @@ const Root = styled(Grid, {
   flexWrap: 'wrap'
 }));
 
-function ChangeCover({onClick}: {onClick?: () => void | undefined}): JSX.Element {
-  const scUser: SCUserContextType = useContext(SCUserContext);
-  const [user, setUser] = useState<SCUserType>(scUser.user);
+export default function ChangeCover({onClick, ...rest}: {onClick?: () => void | undefined; [p: string]: any}): JSX.Element {
+  const scUserContext: SCUserContextType = useContext(SCUserContext);
   let fileInput = useRef(null);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [anchorElPopover, setAnchorElPopover] = React.useState<null | HTMLElement>(null);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const hasCover = user.cover !== null;
+  const hasCover = scUserContext.user.cover !== null;
+
+  const handleClickHelpButton = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElPopover(event.currentTarget);
+  };
+  const handleCloseHelpPopover = () => {
+    setAnchorElPopover(null);
+  };
+  const isOpen = Boolean(anchorElPopover);
 
   function handleUpload(event) {
     fileInput = event.target.files[0];
@@ -45,10 +56,9 @@ function ChangeCover({onClick}: {onClick?: () => void | undefined}): JSX.Element
     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore
     formData.append('cover', fileInput);
-    console.log(fileInput);
     http
       .request({
-        url: Endpoints.UpdateUser.url({id: scUser.user['id']}),
+        url: Endpoints.UpdateUser.url({id: scUserContext.user['id']}),
         method: Endpoints.UpdateUser.method,
         headers: {
           'Content-Type': 'multipart/form-data'
@@ -56,7 +66,7 @@ function ChangeCover({onClick}: {onClick?: () => void | undefined}): JSX.Element
         data: formData
       })
       .then((res: AxiosResponse<SCUserType>) => {
-        setUser(res.data);
+        scUserContext.setCover(res.data.cover);
         setAnchorEl(null);
       })
       .catch((error) => {
@@ -65,47 +75,40 @@ function ChangeCover({onClick}: {onClick?: () => void | undefined}): JSX.Element
   }
 
   return (
-    <React.Fragment>
-      <Root>
-        <Button variant="outlined" onClick={handleClick} size="small" sx={{ml: 2}}>
-          <FormattedMessage id="ui.changeCover.button.change" defaultMessage="ui.changeCover.button.change" />
-        </Button>
-        <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
-          {hasCover && (
-            <MenuItem>
-              <ListItemIcon>
-                <DeleteOutlineOutlinedIcon fontSize="small" />
-              </ListItemIcon>
-              <FormattedMessage id="ui.changeCover.button.delete" defaultMessage="ui.changeCover.button.delete" />
-            </MenuItem>
-          )}
-          <input type="file" onChange={() => handleUpload(event)} ref={fileInput} hidden />
-          <MenuItem onClick={() => fileInput.current.click()}>
+    <Root>
+      <Button size="small" variant="contained" onClick={handleClick} {...rest}>
+        <FormattedMessage id="ui.changeCover.button.change" defaultMessage="ui.changeCover.button.change" />
+      </Button>
+      <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
+        {hasCover && (
+          <MenuItem>
             <ListItemIcon>
-              <AddCircleOutlineOutlinedIcon fontSize="small" />
+              <DeleteOutlineOutlinedIcon fontSize="small" />
             </ListItemIcon>
-            <FormattedMessage id="ui.changeCover.button.upload" defaultMessage="ui.changeCover.button.upload" />
+            <FormattedMessage id="ui.changeCover.button.delete" defaultMessage="ui.changeCover.button.delete" />
           </MenuItem>
-        </Menu>
-        <HelpOutlineOutlinedIcon onClick={() => setIsOpen(true)} sx={{ml: 1}} />
-        {isOpen && (
-          <Popover
-            open={isOpen}
-            onClose={() => setIsOpen(false)}
-            anchorReference="anchorPosition"
-            anchorPosition={{top: 50, left: 150}}
-            anchorOrigin={{
-              vertical: 'bottom',
-              horizontal: 'right'
-            }}
-            transformOrigin={{
-              vertical: 'top',
-              horizontal: 'left'
-            }}
-            sx={{
-              width: '800px',
-              height: '200px'
-            }}>
+        )}
+        <input type="file" onChange={() => handleUpload(event)} ref={fileInput} hidden />
+        <MenuItem onClick={() => fileInput.current.click()}>
+          <ListItemIcon>
+            <AddCircleOutlineOutlinedIcon fontSize="small" />
+          </ListItemIcon>
+          <FormattedMessage id="ui.changeCover.button.upload" defaultMessage="ui.changeCover.button.upload" />
+        </MenuItem>
+      </Menu>
+      <IconButton color="primary" aria-label="upload picture" component="span" onClick={handleClickHelpButton}>
+        <HelpOutlineOutlinedIcon />
+      </IconButton>
+      {isOpen && (
+        <Popover
+          open={isOpen}
+          anchorEl={anchorElPopover}
+          onClose={handleCloseHelpPopover}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'right'
+          }}>
+          <Box sx={{p: '10px'}}>
             <Typography component="h3">
               <FormattedMessage id="ui.changeCover.button.uploadA" defaultMessage="ui.changeCover.button.uploadA" />
             </Typography>
@@ -123,11 +126,9 @@ function ChangeCover({onClick}: {onClick?: () => void | undefined}): JSX.Element
                 </li>
               </ul>
             </Typography>
-          </Popover>
-        )}
-      </Root>
-    </React.Fragment>
+          </Box>
+        </Popover>
+      )}
+    </Root>
   );
 }
-
-export default ChangeCover;

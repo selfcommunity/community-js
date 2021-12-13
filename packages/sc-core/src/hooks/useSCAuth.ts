@@ -11,33 +11,36 @@ import {SCOPE_SC_CORE} from '../constants/Errors';
  * Define all possible auth action types label
  * Use this to export actions and dispatch an action
  */
-export const authActionTypes = {
+export const userActionTypes = {
   LOGIN_LOADING: '_login_loading',
   LOGIN_SUCCESS: '_login_success',
   LOGIN_FAILURE: '_login_failure',
   LOGOUT: '_logout',
   REFRESH_TOKEN_SUCCESS: '_refresh_token_success',
   REFRESH_TOKEN_FAILURE: '_invalid_token_failure',
+  CHANGE_AVATAR: '_change_avatar',
+  CHANGE_COVER: '_change_cover',
 };
 
 /**
- * authReducer manage the state of authentication
- * update the state base on action type
+ * userReducer:
+ *  - manage the state of authentication
+ *  - update the state base on action type
  * @param state
  * @param action
  */
-function authReducer(state, action) {
+function userReducer(state, action) {
   switch (action.type) {
-    case authActionTypes.LOGIN_LOADING:
+    case userActionTypes.LOGIN_LOADING:
       return {user: null, session: Object.assign({}, state.session), error: null, loading: true};
 
-    case authActionTypes.LOGIN_SUCCESS:
+    case userActionTypes.LOGIN_SUCCESS:
       return {user: action.payload.user, error: null, session: Object.assign({}, state.session), loading: false};
 
-    case authActionTypes.LOGIN_FAILURE:
+    case userActionTypes.LOGIN_FAILURE:
       return {user: null, session: Object.assign({}, state.session), error: action.payload.error, loading: false};
 
-    case authActionTypes.REFRESH_TOKEN_SUCCESS:
+    case userActionTypes.REFRESH_TOKEN_SUCCESS:
       const newSession: SCSessionType = Object.assign({}, state.session, {
         authToken: {
           ...state.session.authToken,
@@ -50,11 +53,17 @@ function authReducer(state, action) {
       setAuthorizeToken(newSession.authToken.accessToken);
       return {user: state.user, session: newSession, error: null, loading: false};
 
-    case authActionTypes.REFRESH_TOKEN_FAILURE:
+    case userActionTypes.REFRESH_TOKEN_FAILURE:
       return {user: null, session: Object.assign({}, state.session), loading: null, error: action.payload.error};
 
-    case authActionTypes.LOGOUT:
+    case userActionTypes.LOGOUT:
       return {user: null, session: null, error: null, loading: null};
+
+    case userActionTypes.CHANGE_AVATAR:
+      return {...state, user: {...state.user, ...{avatar: action.payload.avatar}}};
+
+    case userActionTypes.CHANGE_COVER:
+      return {...state, user: {...state.user, ...{cover: action.payload.cover}}};
 
     default:
       throw new Error(`Unhandled type: ${action.type}`);
@@ -84,7 +93,7 @@ function stateInitializer(session: SCSessionType): any {
  * @param initialSession
  */
 export default function useAuth(initialSession: SCSessionType) {
-  const [state, dispatch] = useReducer(authReducer, {}, () => stateInitializer(initialSession));
+  const [state, dispatch] = useReducer(userReducer, {}, () => stateInitializer(initialSession));
   let authInterceptor = useRef(null);
   let isSessionRefreshing = useRef(false);
   let failedQueue = useRef([]);
@@ -164,7 +173,7 @@ export default function useAuth(initialSession: SCSessionType) {
                 try {
                   const res = await session.refreshTokenCallback(session);
                   originalConfig.headers.Authorization = `Bearer ${res['accessToken']}`;
-                  dispatch({type: authActionTypes.REFRESH_TOKEN_SUCCESS, payload: {token: res}});
+                  dispatch({type: userActionTypes.REFRESH_TOKEN_SUCCESS, payload: {token: res}});
                   isSessionRefreshing.current = false;
                   // return a request
                   processQueue(null, res['accessToken']);
@@ -173,7 +182,7 @@ export default function useAuth(initialSession: SCSessionType) {
                   Logger.error(SCOPE_SC_CORE, 'Unable to refresh user session.');
                   isSessionRefreshing.current = false;
                   if (_error.response && _error.response.data) {
-                    dispatch({type: authActionTypes.REFRESH_TOKEN_FAILURE, payload: {error: _error.response.toString()}});
+                    dispatch({type: userActionTypes.REFRESH_TOKEN_FAILURE, payload: {error: _error.response.toString()}});
                     processQueue(_error, null);
                     return Promise.reject(_error.response.data);
                   }

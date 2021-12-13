@@ -143,6 +143,16 @@
   "ui.followUserButton.follow": "Segui",
   "ui.followUserButton.unfollow": "Non seguire",
 
+  "ui.userProfileHeader.realName": "Nome reale",
+  "ui.userProfileHeader.dateOfBirth": "Data di nascita",
+  "ui.userProfileHeader.job": "Occupazione",
+  "ui.userProfileHeader.dateJoined": "Registrato dal",
+  "ui.userProfileHeader.website": "Website",
+
+  "ui.categoryHeader.followedBy": "Seguita da ",
+  "ui.categoryHeader.followers": "Followers",
+  "ui.userNotifications.noOtherFollowers": "Non ci sono altri followers.",
+
   "ui.userNotifications.noResults": "Non ci sono notifiche al momento.",
   "ui.userNotifications.noOtherNotifications": "Non ci sono altre notifiche.",
   "ui.userNotifications.receivePrivateMessage": "<b>ti ha inviato {total, plural, =0 {# messaggi} one {# messaggio} other {# messaggi}}</b>",

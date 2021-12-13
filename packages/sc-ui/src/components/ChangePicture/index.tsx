@@ -3,6 +3,7 @@ import {styled} from '@mui/material/styles';
 import {Button} from '@mui/material';
 import ChangePictureDialog from './ChangePictureDialog';
 import {FormattedMessage} from 'react-intl';
+import PhotoCameraOutlinedIcon from '@mui/icons-material/PhotoCameraOutlined';
 
 const PREFIX = 'SCChangePictureButton';
 
@@ -12,7 +13,7 @@ const CPButton = styled(Button, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({}));
 
-function ChangePicture({onClick}: {onClick?: () => void | undefined}): JSX.Element {
+export default function ChangePicture({iconButton, ...rest}: {iconButton: boolean; [p: string]: any}): JSX.Element {
   const [openChangePictureDialog, setOpenChangePictureDialog] = useState<boolean>(false);
 
   function handleCloseChangePictureDialog() {
@@ -21,12 +22,19 @@ function ChangePicture({onClick}: {onClick?: () => void | undefined}): JSX.Eleme
 
   return (
     <React.Fragment>
-      <CPButton size="small" variant="outlined" onClick={() => setOpenChangePictureDialog(true)}>
-        <FormattedMessage id="ui.changePicture.button.change" defaultMessage="ui.changePicture.button.change" />
+      <CPButton
+        size="small"
+        variant="contained"
+        onClick={() => setOpenChangePictureDialog(true)}
+        style={iconButton ? {padding: 6, borderRadius: 50, minWidth: 'auto'} : {}}
+        {...rest}>
+        {iconButton ? (
+          <PhotoCameraOutlinedIcon />
+        ) : (
+          <FormattedMessage id="ui.changePicture.button.change" defaultMessage="ui.changePicture.button.change" />
+        )}
       </CPButton>
       {openChangePictureDialog && <ChangePictureDialog open={openChangePictureDialog} onClose={() => handleCloseChangePictureDialog()} />}
     </React.Fragment>
   );
 }
-
-export default ChangePicture;
