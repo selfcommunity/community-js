@@ -1,14 +1,13 @@
 import {useEffect, useMemo, useState} from 'react';
 import {
-  http,
   Endpoints,
+  http,
   Logger,
   SCFeedDiscussionType,
   SCFeedObjectType,
   SCFeedObjectTypologyType,
   SCFeedPostType,
   SCFeedStatusType,
-  StringUtils,
 } from '@selfcommunity/core';
 import {AxiosResponse} from 'axios';
 import {SCOPE_SC_CORE} from '../constants/Errors';
@@ -36,10 +35,9 @@ export default function useSCFetchFeedObject({
    */
   const fetchFeedObject = useMemo(
     () => () => {
-      const type = StringUtils.capitalize(feedObjectType);
       return http
         .request({
-          url: Endpoints.FeedObject.url({type, id: id}),
+          url: Endpoints.FeedObject.url({type: feedObjectType, id: id}),
           method: Endpoints.FeedObject.method,
         })
         .then((res: AxiosResponse<any>) => {
