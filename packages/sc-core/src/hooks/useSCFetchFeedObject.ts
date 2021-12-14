@@ -36,11 +36,11 @@ export default function useSCFetchFeedObject({
    */
   const fetchFeedObject = useMemo(
     () => () => {
-      const _type = StringUtils.capitalize(feedObjectType);
+      const type = StringUtils.capitalize(feedObjectType);
       return http
         .request({
-          url: Endpoints[_type].url({id: id}),
-          method: Endpoints[_type].method,
+          url: Endpoints.FeedObject.url({type, id: id}),
+          method: Endpoints.FeedObject.method,
         })
         .then((res: AxiosResponse<any>) => {
           if (res.status >= 300) {
