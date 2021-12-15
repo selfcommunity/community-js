@@ -86,11 +86,13 @@ export default function Choice({
   vote = null,
   votes = null,
   isVoting = null,
+  votable = null,
   ...rest
 }: {
   isVoting?: number;
   feedObject?: SCFeedObjectType;
   choiceObj?: SCPollChoiceType;
+  votable?: boolean;
   [p: string]: any;
 }): JSX.Element {
   const disabled = !feedObject;
@@ -109,7 +111,7 @@ export default function Choice({
           loading={isVoting === choiceObj.id}
           variant="outlined"
           size="small"
-          disabled={disabled || isVoting !== null}
+          disabled={disabled || isVoting !== null || votable}
           className={choiceObj.voted ? classes.voted : classes.vote}
           onClick={() => vote(choiceObj)}>
           {choiceObj.voted ? <CheckIcon /> : <FormattedMessage id="ui.feedObject.poll.choice.vote" defaultMessage="ui.feedObject.poll.choice.vote" />}

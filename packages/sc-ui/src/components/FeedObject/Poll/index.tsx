@@ -3,7 +3,7 @@ import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import {Endpoints, http, Logger, SCFeedObjectType, SCPollChoiceType, SCPollType} from '@selfcommunity/core';
 import {CardContent, CardHeader, Typography} from '@mui/material';
-import {defineMessages, useIntl} from 'react-intl';
+import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import List from '@mui/material/List';
 import Choice from './Choice';
 import PeopleAltOutlinedIcon from '@mui/icons-material/PeopleAltOutlined';
@@ -34,7 +34,6 @@ const PREFIX = 'SCPollObject';
 
 const classes = {
   root: `${PREFIX}-root`,
-  poll: `${PREFIX}-poll`,
   voters: `${PREFIX}-voters`,
   votes: `${PREFIX}-votes`,
   title: `${PREFIX}-title`
@@ -55,9 +54,6 @@ const Root = styled(Card, {
     width: '100%',
     maxHeight: '10px',
     background: theme.palette.grey['A200']
-  },
-  [`& .${classes.poll}`]: {
-    textAlign: 'center'
   },
   [`& .${classes.voters}`]: {
     display: 'flex',
@@ -116,6 +112,7 @@ export default function PollObject({feedObject = null, pollObject = null, disabl
   const [choices, setChoices] = useState(pollObject.choices);
   const multipleChoices = pollObject['multiple_choices'];
   const [isVoting, setIsVoting] = useState<number>(null);
+  const votable = pollObject['closed'];
 
   const handleVote = (id) => {
     if (multipleChoices) {
@@ -196,13 +193,17 @@ export default function PollObject({feedObject = null, pollObject = null, disabl
       <>
         <CardHeader title={`${intl.formatMessage(messages.title)}`} className={classes.title} />
         <CardContent>
-          <Typography variant="body1" gutterBottom className={classes.poll}>
+          <Typography variant="body1" gutterBottom align={'center'}>
             {obj.title}
           </Typography>
-          {obj.expiration_at && (
-            <Typography variant="body2" gutterBottom className={classes.poll}>
+          {obj.expiration_at && Date.parse(obj.expiration_at) >= new Date().getTime() ? (
+            <Typography variant="body2" gutterBottom align={'center'}>
               {`${intl.formatMessage(messages.expDate)}`}
               {`${intl.formatDate(Date.parse(obj.expiration_at), {year: 'numeric', month: 'numeric', day: 'numeric'})}`}
+            </Typography>
+          ) : (
+            <Typography variant="body2" gutterBottom align={'center'}>
+              <FormattedMessage id="ui.feedObject.poll.closed" defaultMessage="ui.feedObject.poll.closed" />
             </Typography>
           )}
           <List>
@@ -215,6 +216,7 @@ export default function PollObject({feedObject = null, pollObject = null, disabl
                 votes={votes}
                 vote={vote}
                 isVoting={isVoting}
+                votable={votable}
               />
             ))}
           </List>

@@ -19,15 +19,7 @@ const Root = styled(Card, {
   maxWidth: 700
 }));
 
-function Category({
-  id = null,
-  category = null,
-  ...rest
-}: {
-  id?: number;
-  category?: SCCategoryType;
-  [p: string]: any;
-}): JSX.Element {
+function Category({id = null, category = null, ...rest}: {id?: number; category?: SCCategoryType; [p: string]: any}): JSX.Element {
   const {scCategory, setSCCategory} = useSCFetchCategory({id, category});
 
   const c = (

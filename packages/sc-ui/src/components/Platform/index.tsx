@@ -85,17 +85,7 @@ function Platform({contained = true}: {contained: boolean}): JSX.Element {
     );
   }
 
-  const p = (
-    <React.Fragment>
-      {role === null ? (
-        <Typography>
-          <FormattedMessage id="ui.platform.warning" defaultMessage="ui.platform.warning" />
-        </Typography>
-      ) : (
-        renderPanel()
-      )}
-    </React.Fragment>
-  );
+  const p = <React.Fragment>{role === null ? null : renderPanel()}</React.Fragment>;
   if (contained) {
     return (
       <Root variant="outlined">

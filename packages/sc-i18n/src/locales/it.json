@@ -2,7 +2,7 @@
   "ui.common.error": "Error",
   "ui.common.error.url": "The url is not valid",
 
-   "ui.platform.warning": "Non sei autorizzato a vedere questa pagina!",
+
 
   "ui.baseDialog.button.close": "Chiudi",
 
@@ -42,7 +42,6 @@
   "ui.changePicture.button.upload": "Carica una nuova immagine",
   "ui.changePicture.listF": "Formati ammessi: gif, png, jpg, jpeg",
   "ui.changePicture.listS": "Dimensione massima: 3 MB",
-  "ui.changePicture.button.delete": "Cancella",
   "ui.changePicture.button.finished": "Finito",
   "ui.changePicture.dialog.msg": "Sei sicuro di voler rimuovere questa immagine ?",
   "ui.changePicture.dialog.close": "Chiudi",
@@ -115,6 +114,7 @@
 
   "ui.feedObject.poll.title": "Sondaggio Correlato",
   "ui.feedObject.poll.expDate": "Vota una delle seguenti scelte entro il ",
+  "ui.feedObject.poll.closed": "Chiuso",
   "ui.feedObject.poll.voters": "{total, plural, =0 {# votanti} one {# votante} other {# votanti}}",
   "ui.feedObject.poll.votes": "{total, plural, =0 {# voti} one {# voto} other {# voti}}",
   "ui.feedObject.poll.choice.vote": "Vota",
