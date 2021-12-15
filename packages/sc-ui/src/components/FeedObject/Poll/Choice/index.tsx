@@ -16,7 +16,7 @@ const classes = {
   root: `${PREFIX}-root`,
   vote: `${PREFIX}-vote`,
   voted: `${PREFIX}-voted`,
-  display: `${PREFIX}-display`,
+  choice: `${PREFIX}-choice`,
   result: `${PREFIX}-result`,
   progress: `${PREFIX}-progress`
 };
@@ -40,7 +40,7 @@ const Root = styled(Card, {
     },
     marginRight: theme.spacing(1)
   },
-  [`& .${classes.display}`]: {
+  [`& .${classes.choice}`]: {
     display: 'inline-flex',
     margin: theme.spacing(1)
   },
@@ -106,7 +106,7 @@ export default function Choice({
 
   const c = (
     <React.Fragment>
-      <div className={classes.display}>
+      <Box className={classes.choice}>
         <LoadingButton
           loading={isVoting === choiceObj.id}
           variant="outlined"
@@ -117,7 +117,7 @@ export default function Choice({
           {choiceObj.voted ? <CheckIcon /> : <FormattedMessage id="ui.feedObject.poll.choice.vote" defaultMessage="ui.feedObject.poll.choice.vote" />}
         </LoadingButton>
         <Typography>{choiceObj.choice}</Typography>
-      </div>
+      </Box>
       <LinearProgressWithLabel className={classes.progress} value={renderVotes(choiceObj.vote_count, votes)} />
     </React.Fragment>
   );

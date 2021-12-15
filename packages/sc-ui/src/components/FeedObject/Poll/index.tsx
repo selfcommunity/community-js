@@ -36,7 +36,8 @@ const classes = {
   root: `${PREFIX}-root`,
   voters: `${PREFIX}-voters`,
   votes: `${PREFIX}-votes`,
-  title: `${PREFIX}-title`
+  title: `${PREFIX}-title`,
+  content: `${PREFIX}-content`
 };
 
 const Root = styled(Card, {
@@ -192,7 +193,7 @@ export default function PollObject({feedObject = null, pollObject = null, disabl
     objElement = (
       <>
         <CardHeader title={`${intl.formatMessage(messages.title)}`} className={classes.title} />
-        <CardContent>
+        <CardContent className={classes.content}>
           <Typography variant="body1" gutterBottom align={'center'}>
             {obj.title}
           </Typography>

@@ -11,7 +11,8 @@ import {FormattedMessage} from 'react-intl';
 const PREFIX = 'SCChangeCoverButton';
 
 const classes = {
-  helpPopover: `${PREFIX}-help-popover`
+  helpPopover: `${PREFIX}-help-popover`,
+  menuItem: `${PREFIX}-menu-item`
 };
 
 const Root = styled(Box, {
@@ -81,7 +82,7 @@ export default function ChangeCover({onClick, ...rest}: {onClick?: () => void | 
       </Button>
       <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
         {hasCover && (
-          <MenuItem>
+          <MenuItem className={classes.menuItem}>
             <ListItemIcon>
               <DeleteOutlineOutlinedIcon fontSize="small" />
             </ListItemIcon>
@@ -89,14 +90,14 @@ export default function ChangeCover({onClick, ...rest}: {onClick?: () => void | 
           </MenuItem>
         )}
         <input type="file" onChange={() => handleUpload(event)} ref={fileInput} hidden />
-        <MenuItem onClick={() => fileInput.current.click()}>
+        <MenuItem onClick={() => fileInput.current.click()} className={classes.menuItem}>
           <ListItemIcon>
             <AddCircleOutlineOutlinedIcon fontSize="small" />
           </ListItemIcon>
           <FormattedMessage id="ui.changeCover.button.upload" defaultMessage="ui.changeCover.button.upload" />
         </MenuItem>
       </Menu>
-      <IconButton color="primary" aria-label="upload picture" component="span" onClick={handleClickHelpButton}>
+      <IconButton className={classes.helpPopover} color="primary" aria-label="upload picture" component="span" onClick={handleClickHelpButton}>
         <HelpOutlineOutlinedIcon />
       </IconButton>
       {isOpen && (
