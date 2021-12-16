@@ -40,18 +40,22 @@ export default ({
   };
 
   return (
-    <LazyLoad height={360} placeholder={<CentralProgress size={20} />} once>
-      <Root>
-        {adornment}
-        <Image.previewComponent
-          images={medias}
-          title
-          renderOverlay={() => <ZoomInIcon />}
-          onClickEach={handleClickOnPdf}
-          {...GridImageProps}
-          adornment={adornment}
-        />
-      </Root>
-    </LazyLoad>
+    <>
+      {medias.length > 0 && (
+        <LazyLoad height={360} placeholder={<CentralProgress size={20} />} once>
+          <Root>
+            {adornment}
+            <Image.previewComponent
+              medias={medias}
+              title
+              renderOverlay={() => <ZoomInIcon />}
+              onClickEach={handleClickOnPdf}
+              {...GridImageProps}
+              adornment={adornment}
+            />
+          </Root>
+        </LazyLoad>
+      )}
+    </>
   );
 };

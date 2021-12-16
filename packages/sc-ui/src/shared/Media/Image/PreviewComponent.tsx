@@ -307,17 +307,22 @@ export default ({
   if (from && medias.length > from) {
     imagesToShow.length = from;
   }
-  return (
-    <LazyLoad height={360} placeholder={<CentralProgress size={20} />} once>
-      <Root>
-        {adornment}
-        {[1, 3, 4].includes(imagesToShow.length) && renderOne()}
-        {imagesToShow.length >= 2 && imagesToShow.length != 4 && renderTwo()}
-        {imagesToShow.length >= 4 && renderThree()}
 
-        {/* eslint-disable-next-line @typescript-eslint/unbound-method */}
-        {preview !== -1 && <PreviewImage onClose={handleClose} index={preview} images={medias} />}
-      </Root>
-    </LazyLoad>
+  return (
+    <>
+      {medias.length > 0 && (
+        <LazyLoad height={360} placeholder={<CentralProgress size={20} />} once>
+          <Root>
+            {adornment}
+            {[1, 3, 4].includes(imagesToShow.length) && renderOne()}
+            {imagesToShow.length >= 2 && imagesToShow.length != 4 && renderTwo()}
+            {imagesToShow.length >= 4 && renderThree()}
+
+            {/* eslint-disable-next-line @typescript-eslint/unbound-method */}
+            {preview !== -1 && <PreviewImage onClose={handleClose} index={preview} images={medias} />}
+          </Root>
+        </LazyLoad>
+      )}
+    </>
   );
 };

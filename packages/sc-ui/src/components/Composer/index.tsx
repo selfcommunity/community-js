@@ -710,8 +710,6 @@ export default function Composer(props: ComposerProps): JSX.Element {
   };
 
   const renderMediaView: Function = (action: SCMediaObjectType) => {
-    console.log(action.name);
-    console.log(action.editComponent);
     return () => {
       return (
         <React.Fragment>
@@ -857,14 +855,16 @@ export default function Composer(props: ComposerProps): JSX.Element {
             readOnly={isSubmitting}
           />
           <Box className={classes.medias}>
-            {<MediasPreview
-              medias={medias}
-              GridImageProps={{gallery: false, overlay: false}}
-              imagesAdornment={renderMediaControls(MEDIA_TYPE_IMAGE)}
-              videosAdornment={renderMediaControls(MEDIA_TYPE_VIDEO)}
-              documentsAdornment={renderMediaControls(MEDIA_TYPE_DOCUMENT)}
-              linksAdornment={renderMediaControls(MEDIA_TYPE_LINK)}
-            />}
+            {
+              <MediasPreview
+                medias={medias}
+                GridImageProps={{gallery: false, overlay: false}}
+                imagesAdornment={renderMediaControls(MEDIA_TYPE_IMAGE)}
+                videosAdornment={renderMediaControls(MEDIA_TYPE_VIDEO)}
+                documentsAdornment={renderMediaControls(MEDIA_TYPE_DOCUMENT)}
+                linksAdornment={renderMediaControls(MEDIA_TYPE_LINK)}
+              />
+            }
           </Box>
           {poll && <PollPreview pollObject={poll} />}
           <Stack spacing={2} className={classes.audience} direction="row">

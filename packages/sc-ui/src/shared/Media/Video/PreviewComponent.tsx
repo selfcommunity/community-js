@@ -15,15 +15,19 @@ const Root = styled(Box, {
 
 export default ({medias = [], adornment = null}: {medias: any[]; adornment?: React.ReactNode}): JSX.Element => {
   return (
-    <LazyLoad height={360} placeholder={<CentralProgress size={20} />} once>
-      <Root>
-        {adornment}
-        {medias.map((v, i) => (
-          <LazyLoad height={360} placeholder={<CentralProgress size={20} />} key={i} once>
-            <AutoPlayer url={v.url} width={'100%'} />
-          </LazyLoad>
-        ))}
-      </Root>
-    </LazyLoad>
+    <>
+      {medias.length > 0 && (
+        <LazyLoad height={360} placeholder={<CentralProgress size={20} />} once>
+          <Root>
+            {adornment}
+            {medias.map((v, i) => (
+              <LazyLoad height={360} placeholder={<CentralProgress size={20} />} key={i} once>
+                <AutoPlayer url={v.url} width={'100%'} />
+              </LazyLoad>
+            ))}
+          </Root>
+        </LazyLoad>
+      )}
+    </>
   );
 };

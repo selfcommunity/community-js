@@ -92,16 +92,20 @@ export default ({medias, fullWidth = false, adornment = null}: {medias: any[]; f
   };
 
   return (
-    <LazyLoad height={360} placeholder={<CentralProgress size={20} />} once>
-      <Root>
-        {adornment}
-        {medias.map((l, i) => {
-          if (l.embed.metadata && l.embed.metadata.type === MEDIA_TYPE_VIDEO) {
-            return <AutoPlayer url={l.url} width={'100%'} />;
-          }
-          return renderPreview(l);
-        })}
-      </Root>
-    </LazyLoad>
+    <>
+      {medias.length > 0 && (
+        <LazyLoad height={360} placeholder={<CentralProgress size={20} />} once>
+          <Root>
+            {adornment}
+            {medias.map((l, i) => {
+              if (l.embed.metadata && l.embed.metadata.type === MEDIA_TYPE_VIDEO) {
+                return <AutoPlayer url={l.url} width={'100%'} />;
+              }
+              return renderPreview(l);
+            })}
+          </Root>
+        </LazyLoad>
+      )}
+    </>
   );
 };
