@@ -159,6 +159,9 @@
   "ui.categoryHeader.followers": "Followers",
   "ui.categoryHeader.noOtherFollowers": "Non ci sono altri followers.",
 
+  "ui.feed.noFeedObject": "Al momento non ci sono contributi da vedere",
+  "ui.feed.noOtherFeedObject": "Non ci sono altri contenuti",
+
   "ui.userNotifications.noResults": "Non ci sono notifiche al momento.",
   "ui.userNotifications.noOtherNotifications": "Non ci sono altre notifiche.",
   "ui.userNotifications.showOthers": "Vedi altro",
