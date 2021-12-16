@@ -38,8 +38,8 @@ export default {
     }
   },
   args: {
-    feedObjectId: 7624,
-    feedObjectType: SCFeedObjectTypologyType.DISCUSSION,
+    feedObjectId: 7625,
+    feedObjectType: SCFeedObjectTypologyType.POST,
     template: FeedObjectTemplateType.SNIPPET,
     elevation: 1,
     variant: 'elevation'

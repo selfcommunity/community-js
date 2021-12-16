@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -9,6 +9,7 @@ import {
   CardActions,
   CardHeader,
   Grid,
+  IconButton,
   ListItem,
   ListItemAvatar,
   ListItemText,
@@ -27,9 +28,11 @@ import Actions from './Actions';
 import WorldIcon from '@mui/icons-material/Public';
 import {defineMessages, useIntl} from 'react-intl';
 import PollObject from './Poll';
-import {SCFeedObjectType, SCFeedObjectTypologyType, Link, useSCFetchFeedObject, SCPollType} from '@selfcommunity/core';
 import ContributorsFeedObject from './Contributors';
 import LazyLoad from 'react-lazyload';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import {SCFeedObjectType, SCFeedObjectTypologyType, Link, useSCFetchFeedObject, SCPollType, SCUserContextType, useSCUser} from '@selfcommunity/core';
+import Composer from '../Composer';
 
 const messages = defineMessages({
   comment: {
@@ -115,15 +118,49 @@ export default function FeedObject({
   [p: string]: any;
 }): JSX.Element {
   const {obj, setObj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
+  const [composerOpen, setComposerOpen] = useState<boolean>(false);
+  const scUserContext: SCUserContextType = useSCUser();
   const intl = useIntl();
 
   /**
-   * Handle change poll
+   * Handle change/update poll: votes
    */
   function handleChangePoll(pollObject: SCPollType) {
     const newObj = obj;
     obj['poll'] = pollObject;
     setObj(newObj);
+  }
+
+  /**
+   * Render header action
+   * if author = authenticated user -> render edit action
+   * else render ReportingMenu
+   */
+  function renderHeaderAction() {
+    if (scUserContext.user.id === obj.author.id) {
+      return (
+        <IconButton aria-haspopup="true" onClick={handleToggleEdit} size="medium">
+          <EditOutlinedIcon />
+        </IconButton>
+      );
+    }
+    return <ReportingFlagMenu feedObject={obj} feedObjectType={feedObjectType} />;
+  }
+
+  /**
+   * Handle initial edit
+   * Open composer
+   */
+  function handleToggleEdit() {
+    setComposerOpen((prev) => !prev);
+  }
+
+  /**
+   * handle edit success
+   */
+  function handleEditSuccess(data) {
+    setObj(data);
+    setComposerOpen(false);
   }
 
   /**
@@ -168,7 +205,7 @@ export default function FeedObject({
                   </div>
                 </Grid>
               }
-              action={<ReportingFlagMenu feedObject={obj} feedObjectType={feedObjectType} />}
+              action={renderHeaderAction()}
             />
             <CardContent classes={{root: classes.content}}>
               {'title' in obj && (
@@ -190,6 +227,15 @@ export default function FeedObject({
             <CardActions>
               <Actions feedObject={obj} feedObjectType={feedObjectType} />
             </CardActions>
+            {composerOpen && (
+              <Composer
+                open={composerOpen}
+                feedObjectType={feedObjectType}
+                feedObjectId={obj.id}
+                onClose={handleToggleEdit}
+                onSuccess={handleEditSuccess}
+              />
+            )}
           </React.Fragment>
         ) : (
           <FeedObjectSkeleton template={template} elevation={0} />
