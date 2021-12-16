@@ -10,6 +10,11 @@ import FollowUserButton from '../FollowUserButton';
 
 const PREFIX = 'SCUser';
 
+const classes = {
+  avatar: `${PREFIX}-avatar`,
+  actions: `${PREFIX}-actions`
+};
+
 const Root = styled(Card, {
   name: PREFIX,
   slot: 'Root',
@@ -99,10 +104,12 @@ export default function User({
       {scUser ? (
         <ListItem button={true}>
           <ListItemAvatar>
-            <Avatar alt={scUser.username} src={scUser.avatar} />
+            <Avatar alt={scUser.username} src={scUser.avatar} className={classes.avatar} />
           </ListItemAvatar>
           <ListItemText primary={scUser.username} secondary={scUser.description} />
-          <ListItemSecondaryAction>{scUserContext.user ? renderAuthenticatedActions() : renderAnonymousActions()}</ListItemSecondaryAction>
+          <ListItemSecondaryAction className={classes.actions}>
+            {scUserContext.user ? renderAuthenticatedActions() : renderAnonymousActions()}
+          </ListItemSecondaryAction>
         </ListItem>
       ) : (
         <UserBoxSkeleton elevation={0} />

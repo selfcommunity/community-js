@@ -18,12 +18,14 @@
   "ui.TrendingPost.noResults": "Niente da mostrare",
   "ui.TrendingPost.button.showMore": "Mostra di piú",
 
+  "ui.RelatedDiscussion.title": "Post correlati",
+
+  "ui.category.categoryFollowers": "{total, plural, =0 {Seguita da # persone} one {Seguita da # persona} other {Seguita da # persone}}",
   "ui.categoriesFollowed.subtitle.noResults": "Nessuna Categoria Seguita",
   "ui.categoriesFollowed.categoriesFollowed": "{total, plural, =0 {# Categorie Seguite} one {# Categoria Seguita} other {# Categorie Seguite}}",
   "ui.categoriesFollowed.button.showMore": "Mostra di piú",
   "ui.categoriesPopular.title": "Categorie Popolari",
   "ui.categoriesPopular.noResults": "Nessuna Categoria",
-  "ui.categoriesPopular.categoryFollowers": "{total, plural, =0 {Seguita da # persone} one {Seguita da # persona} other {Seguita da # persone}}",
   "ui.categoriesPopular.button.showMore": "Mostra di piú",
   "ui.categoriesSuggestion.title": "Esplora Categorie",
   "ui.categoriesSuggestion.noResults": "Nessuna Categoria",

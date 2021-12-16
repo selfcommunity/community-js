@@ -18,12 +18,14 @@
   "ui.TrendingPost.noResults": "Nothing to show",
   "ui.TrendingPost.button.showMore": "Show More",
 
+  "ui.RelatedDiscussion.title": "Related Discussions",
+
+  "ui.category.categoryFollowers": "{total, plural, =0 {Followed by # people} one {Followed by # person} other {Followed by # people}}",
   "ui.categoriesFollowed.subtitle.noResults": "No Categories Followed",
   "ui.categoriesFollowed.categoriesFollowed": "{total, plural, =0 {# Categories Followed} one {# Category Followed} other {# Categories Followed}}",
   "ui.categoriesFollowed.button.showMore": "Show More",
   "ui.categoriesPopular.title": "Popular Categories",
   "ui.categoriesPopular.noResults": "No Categories",
-  "ui.categoriesPopular.categoryFollowers": "{total, plural, =0 {Followed by # people} one {Followed by # person} other {Followed by # people}}",
   "ui.categoriesPopular.button.showMore": "See More",
   "ui.categoriesSuggestion.title": "Explore Categories",
   "ui.categoriesSuggestion.noResults": "No Categories",
