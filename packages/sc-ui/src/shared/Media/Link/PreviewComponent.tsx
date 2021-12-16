@@ -23,14 +23,16 @@ const Root = styled(Box, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   [`& .${classes.preview}`]: {
-    position: 'relative'
+    position: 'relative',
+    backgroundColor: '#F5F5F5',
+    margin: '10px 0px'
   },
 
   [`& .${classes.thumbnail}`]: {
-    maxWidth: 180,
+    maxWidth: 150,
     border: '1px solid #dddddd',
     borderRadius: 4,
-    margin: '10px 10px 40px 10px',
+    margin: '10px 10px 10px 20px',
     padding: 4,
     float: 'left'
   },
@@ -40,8 +42,7 @@ const Root = styled(Box, {
   },
 
   [`& .${classes.snippet}`]: {
-    padding: 7,
-    backgroundColor: '#F5F5F5',
+    padding: 10,
     [`& .${classes.snippetTitle}`]: {},
     [`& .${classes.snippetDescription}`]: {
       fontSize: 12
