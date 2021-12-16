@@ -22,6 +22,10 @@ export default {
     url: urlReplacer('/api/v2/$(type)/$(id)/'),
     method: 'GET',
   },
+  RelatedDiscussion: {
+    url: urlReplacer('/api/v2/$(type)/$(id)/related/'),
+    method: 'GET',
+  },
   /**
    * Comments
    */

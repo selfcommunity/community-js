@@ -1,27 +1,24 @@
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import {CardHeader, Divider, IconButton, Box, Dialog, DialogTitle, DialogActions} from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
+import {Box, IconButton, ImageListItemBar} from '@mui/material';
 import FolderOpenIcon from '@mui/icons-material/FolderOpen';
-import {Endpoints, http, SCUserContext, SCUserContextType, SCUserType} from '@selfcommunity/core';
+import {Endpoints, http, SCUserContext, SCUserContextType} from '@selfcommunity/core';
 import {FormattedMessage} from 'react-intl';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import DeleteAvatarDialog from './DeleteAvatarDialog';
-import {AxiosResponse} from 'axios';
-import CentralProgress from '../../../shared/CentralProgress';
 import BaseDialog from '../../../shared/BaseDialog';
+import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 
 const PREFIX = 'SCChangePictureDialog';
 
 const classes = {
   actions: `${PREFIX}-actions`,
-  primary: `${PREFIX}-primary`
+  upload: `${PREFIX}-upload`,
+  imageItem: `${PREFIX}-imageItem`
 };
 
 const Root = styled(Card, {
@@ -34,13 +31,10 @@ const Root = styled(Card, {
   [`& .${classes.actions}`]: {
     display: 'flex',
     justifyContent: 'flex-end'
-  },
-  [`& .${classes.primary}`]: {
-    border: 'solid'
   }
 }));
 
-function ChangePictureDialog({open, onClose}: {open: boolean; onClose?: () => void | undefined}): JSX.Element {
+function ChangePictureDialog({open, onClose, ...props}: {open: boolean; onClose?: () => void | undefined}): JSX.Element {
   const scUserContext: SCUserContextType = useContext(SCUserContext);
   const [file, setFile] = useState(scUserContext.user['avatar']);
   const [primary, setPrimary] = useState(null);
@@ -100,6 +94,7 @@ function ChangePictureDialog({open, onClose}: {open: boolean; onClose?: () => vo
       })
       .then((res: any) => {
         const primary = getPrimaryAvatar(res.data);
+        console.log(primary);
         setAvatars(res.data.results);
         setPrimary(primary.id);
         setFile(primary.avatar);
@@ -124,6 +119,7 @@ function ChangePictureDialog({open, onClose}: {open: boolean; onClose?: () => vo
       })
       .then(() => {
         scUserContext.setAvatar(avatar.avatar);
+        setPrimary(avatar.id);
       })
       .catch((error) => {
         console.log(error);
@@ -135,30 +131,37 @@ function ChangePictureDialog({open, onClose}: {open: boolean; onClose?: () => vo
   }, []);
 
   return (
-    <Root>
+    <Root {...props}>
       {openDeleteAvatarDialog && (
         <DeleteAvatarDialog open={openDeleteAvatarDialog} onClose={handleClose} onSuccess={() => handleDeleteSuccess(avatarId)} id={avatarId} />
       )}
       <BaseDialog title={<FormattedMessage defaultMessage="ui.changePicture.title" id="ui.changePicture.title" />} onClose={onClose} open={open}>
-        <React.Fragment>
+        <Box className={classes.upload}>
           <input type="file" onChange={() => handleUpload(event)} ref={fileInput} hidden />
           <Button variant="outlined" onClick={() => fileInput.current.click()}>
             <FolderOpenIcon fontSize="small" />
             <FormattedMessage id="ui.changePicture.button.upload" defaultMessage="ui.changePicture.button.upload" />
           </Button>
-        </React.Fragment>
-        <Typography sx={{fontSize: 10}} color="text.secondary" gutterBottom>
-          <FormattedMessage id="ui.changePicture.listF" defaultMessage="ui.changePicture.listF" /> <br />
-          <FormattedMessage id="ui.changePicture.listS" defaultMessage="ui.changePicture.listS" />
-        </Typography>
+          <Typography sx={{fontSize: 10}} color="text.secondary" gutterBottom>
+            <FormattedMessage id="ui.changePicture.listF" defaultMessage="ui.changePicture.listF" /> <br />
+            <FormattedMessage id="ui.changePicture.listS" defaultMessage="ui.changePicture.listS" />
+          </Typography>
+        </Box>
         <ImageList cols={3} rowHeight={'auto'}>
           {avatars.map((avatar) => (
-            <ImageListItem className={primary === avatar.id ? classes.primary : null} key={avatar.id} onClick={() => selectPrimaryAvatar(avatar)}>
-              <img src={avatar.avatar} loading="lazy" alt={'img'} />
-              <Button variant="outlined" onClick={() => handleOpen(avatar.id)}>
-                <FormattedMessage id="ui.changePicture.button.delete" defaultMessage="ui.changePicture.button.delete" />
-              </Button>
-            </ImageListItem>
+            <Box className={classes.imageItem} key={avatar.id}>
+              <ImageListItem key={avatar.id} onClick={() => selectPrimaryAvatar(avatar)} sx={{border: primary === avatar.id ? 'solid' : null}}>
+                <img src={avatar.avatar} loading="lazy" alt={'img'} />
+                <ImageListItemBar
+                  position="top"
+                  actionIcon={
+                    <IconButton onClick={() => handleOpen(avatar.id)} size="small" sx={{color: 'rgba(255, 255, 255, 0.54)'}}>
+                      <DeleteIcon />
+                    </IconButton>
+                  }
+                />
+              </ImageListItem>
+            </Box>
           ))}
         </ImageList>
       </BaseDialog>

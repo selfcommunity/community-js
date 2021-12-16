@@ -1,14 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
-import {Avatar, Button, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
+import {Button, Typography} from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import {Endpoints, http} from '@selfcommunity/core';
 import {AxiosResponse} from 'axios';
-import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
 import {PeopleSuggestionSkeleton} from '../Skeleton';
 import {FormattedMessage} from 'react-intl';
+import User from '../User';
 
 const PREFIX = 'SCTrendingPeople';
 
@@ -21,7 +21,7 @@ const Root = styled(Card, {
   marginBottom: theme.spacing(2)
 }));
 
-function SCTrendingPeople({scCategoryId = null, ...rest}: {scCategoryId?: number}): JSX.Element {
+function SCTrendingPeople({scCategoryId = null, ...props}: {scCategoryId?: number}): JSX.Element {
   const [people, setPeople] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [hasMore, setHasMore] = useState<boolean>(false);
@@ -51,7 +51,7 @@ function SCTrendingPeople({scCategoryId = null, ...rest}: {scCategoryId?: number
   }, []);
 
   return (
-    <Root {...rest}>
+    <Root {...props}>
       {loading ? (
         <PeopleSuggestionSkeleton />
       ) : (
@@ -66,29 +66,8 @@ function SCTrendingPeople({scCategoryId = null, ...rest}: {scCategoryId?: number
           ) : (
             <React.Fragment>
               <List>
-                {people.slice(0, 4).map((p) => (
-                  <ListItem button={true} alignItems="flex-start">
-                    <ListItemAvatar>
-                      <Avatar alt={p.username} variant="circular" src={p.avatar} />
-                    </ListItemAvatar>
-                    <ListItemText
-                      primary={
-                        <React.Fragment>
-                          <Typography sx={{display: 'inline'}} color="primary">
-                            {p.username}
-                          </Typography>
-                        </React.Fragment>
-                      }
-                      secondary={
-                        <Button
-                          sx={{maxWidth: '20px', maxHeight: '20px', minWidth: '10px', minHeight: '10px', paddingRight: '20px'}}
-                          variant="outlined"
-                          startIcon={<ThumbUpOutlinedIcon sx={{width: '0.7em', marginLeft: '9px'}} />}>
-                          {p.followers_counter}
-                        </Button>
-                      }
-                    />
-                  </ListItem>
+                {people.slice(0, 4).map((user, index) => (
+                  <User elevation={0} user={user} id={user.id} key={index} />
                 ))}
               </List>
             </React.Fragment>

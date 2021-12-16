@@ -1,16 +1,6 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import List from '@mui/material/List';
-import {
-  Avatar,
-  Button,
-  Divider,
-  ListItem,
-  ListItemAvatar,
-  ListItemSecondaryAction,
-  ListItemText,
-  Typography,
-} from '@mui/material';
+import {Button, Divider, Typography} from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import {Endpoints, http, Logger} from '@selfcommunity/core';
@@ -18,15 +8,8 @@ import CategoriesSuggestionSkeleton from '../Skeleton/CategoriesSuggestionSkelet
 import {AxiosResponse} from 'axios';
 import {SCCategoryType} from '@selfcommunity/core/src/types';
 import {SCOPE_SC_UI} from '../../constants/Errors';
-import FollowButton from '../FollowCategoryButton';
 import {FormattedMessage, defineMessages, useIntl} from 'react-intl';
-
-const messages = defineMessages({
-  categoryFollowers: {
-    id: 'ui.categoriesPopular.categoryFollowers',
-    defaultMessage: 'ui.categoriesPopular.categoryFollowers'
-  }
-});
+import Category from '../Category';
 
 const PREFIX = 'SCCategoriesPopular';
 
@@ -46,7 +29,6 @@ export default function CategoriesPopular(props): JSX.Element {
   const [hasMore, setHasMore] = useState<boolean>(false);
   const [total, setTotal] = useState<number>(0);
   const [openPopularCategoriesDialog, setOpenPopularCategoriesDialog] = useState<boolean>(false);
-  const intl = useIntl();
 
   const fetchPopularCategories = useMemo(
     () => () => {
@@ -99,21 +81,8 @@ export default function CategoriesPopular(props): JSX.Element {
             <React.Fragment>
               {categories.slice(0, visibleCategories).map((category: SCCategoryType, index) => (
                 <div key={index}>
-                  <List>
-                    <ListItem button={true} key={category.id}>
-                      <ListItemAvatar>
-                        <Avatar alt={category.name} src={category.image_small} variant="square" />
-                      </ListItemAvatar>
-                      <ListItemText
-                        primary={category.name}
-                        secondary={`${intl.formatMessage(messages.categoryFollowers, {total: category.followers_count})}`}
-                      />
-                      <ListItemSecondaryAction>
-                        <FollowButton category={category} />
-                      </ListItemSecondaryAction>
-                    </ListItem>
-                    <Divider />
-                  </List>
+                  <Category elevation={0} category={category} key={category.id} popular={true} />
+                  <Divider />
                 </div>
               ))}
               {hasMore && (

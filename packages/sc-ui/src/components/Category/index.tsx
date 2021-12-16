@@ -8,8 +8,22 @@ import {useSCFetchCategory} from '@selfcommunity/core';
 import CategoryBoxSkeleton from '../Skeleton/CategoryBoxSkeleton';
 import FollowButton from '../FollowCategoryButton';
 import {SCCategoryType} from '@selfcommunity/core';
+import {defineMessages, useIntl} from 'react-intl';
+
+const messages = defineMessages({
+  categoryFollowers: {
+    id: 'ui.category.categoryFollowers',
+    defaultMessage: 'ui.category.categoryFollowers'
+  }
+});
 
 const PREFIX = 'SCCategory';
+
+const classes = {
+  avatar: `${PREFIX}-avatar`,
+  title: `${PREFIX}-title`,
+  actions: `${PREFIX}-actions`
+};
 
 const Root = styled(Card, {
   name: PREFIX,
@@ -22,23 +36,30 @@ const Root = styled(Card, {
 function Category({
   id = null,
   category = null,
+  popular = null,
   ...rest
 }: {
   id?: number;
   category?: SCCategoryType;
+  popular?: boolean;
   [p: string]: any;
 }): JSX.Element {
   const {scCategory, setSCCategory} = useSCFetchCategory({id, category});
+  const intl = useIntl();
 
   const c = (
     <React.Fragment>
       {scCategory ? (
         <ListItem button={true}>
           <ListItemAvatar>
-            <Avatar alt={scCategory.name} src={scCategory.image_original} variant="square" />
+            <Avatar alt={scCategory.name} src={scCategory.image_original} variant="square" className={classes.avatar} />
           </ListItemAvatar>
-          <ListItemText primary={scCategory.name} secondary={scCategory.slogan} />
-          <ListItemSecondaryAction>
+          <ListItemText
+            primary={scCategory.name}
+            secondary={popular ? `${intl.formatMessage(messages.categoryFollowers, {total: category.followers_count})}` : scCategory.slogan}
+            className={classes.title}
+          />
+          <ListItemSecondaryAction className={classes.actions}>
             <FollowButton category={scCategory} />
           </ListItemSecondaryAction>
         </ListItem>

@@ -1,6 +1,6 @@
-import React, {useContext, useEffect, useRef, useState} from 'react';
+import React, {useContext, useRef} from 'react';
 import {styled} from '@mui/material/styles';
-import {Menu, MenuItem, ListItemIcon, Typography, Button, Popover, Divider, Grid, IconButton, Box} from '@mui/material';
+import {Menu, MenuItem, ListItemIcon, Typography, Button, Popover, Divider, IconButton, Box} from '@mui/material';
 import {Endpoints, http, SCUserContext, SCUserContextType, SCUserType} from '@selfcommunity/core';
 import {AxiosResponse} from 'axios';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
@@ -11,10 +11,11 @@ import {FormattedMessage} from 'react-intl';
 const PREFIX = 'SCChangeCoverButton';
 
 const classes = {
-  helpPopover: `${PREFIX}-help-popover`
+  helpPopover: `${PREFIX}-help-popover`,
+  menuItem: `${PREFIX}-menu-item`
 };
 
-const Root = styled(Grid, {
+const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
@@ -75,13 +76,13 @@ export default function ChangeCover({onClick, ...rest}: {onClick?: () => void | 
   }
 
   return (
-    <Root>
+    <Root {...rest}>
       <Button size="small" variant="contained" onClick={handleClick} {...rest}>
         <FormattedMessage id="ui.changeCover.button.change" defaultMessage="ui.changeCover.button.change" />
       </Button>
       <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
         {hasCover && (
-          <MenuItem>
+          <MenuItem className={classes.menuItem}>
             <ListItemIcon>
               <DeleteOutlineOutlinedIcon fontSize="small" />
             </ListItemIcon>
@@ -89,14 +90,14 @@ export default function ChangeCover({onClick, ...rest}: {onClick?: () => void | 
           </MenuItem>
         )}
         <input type="file" onChange={() => handleUpload(event)} ref={fileInput} hidden />
-        <MenuItem onClick={() => fileInput.current.click()}>
+        <MenuItem onClick={() => fileInput.current.click()} className={classes.menuItem}>
           <ListItemIcon>
             <AddCircleOutlineOutlinedIcon fontSize="small" />
           </ListItemIcon>
           <FormattedMessage id="ui.changeCover.button.upload" defaultMessage="ui.changeCover.button.upload" />
         </MenuItem>
       </Menu>
-      <IconButton color="primary" aria-label="upload picture" component="span" onClick={handleClickHelpButton}>
+      <IconButton className={classes.helpPopover} color="primary" aria-label="upload picture" component="span" onClick={handleClickHelpButton}>
         <HelpOutlineOutlinedIcon />
       </IconButton>
       {isOpen && (

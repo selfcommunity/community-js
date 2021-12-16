@@ -16,7 +16,7 @@ const classes = {
   root: `${PREFIX}-root`,
   vote: `${PREFIX}-vote`,
   voted: `${PREFIX}-voted`,
-  display: `${PREFIX}-display`,
+  choice: `${PREFIX}-choice`,
   result: `${PREFIX}-result`,
   progress: `${PREFIX}-progress`
 };
@@ -40,7 +40,7 @@ const Root = styled(Card, {
     },
     marginRight: theme.spacing(1)
   },
-  [`& .${classes.display}`]: {
+  [`& .${classes.choice}`]: {
     display: 'inline-flex',
     margin: theme.spacing(1)
   },
@@ -86,11 +86,13 @@ export default function Choice({
   vote = null,
   votes = null,
   isVoting = null,
+  votable = null,
   ...rest
 }: {
   isVoting?: number;
   feedObject?: SCFeedObjectType;
   choiceObj?: SCPollChoiceType;
+  votable?: boolean;
   [p: string]: any;
 }): JSX.Element {
   const disabled = !feedObject;
@@ -104,18 +106,18 @@ export default function Choice({
 
   const c = (
     <React.Fragment>
-      <div className={classes.display}>
+      <Box className={classes.choice}>
         <LoadingButton
           loading={isVoting === choiceObj.id}
           variant="outlined"
           size="small"
-          disabled={disabled || isVoting !== null}
+          disabled={disabled || isVoting !== null || votable}
           className={choiceObj.voted ? classes.voted : classes.vote}
           onClick={() => vote(choiceObj)}>
           {choiceObj.voted ? <CheckIcon /> : <FormattedMessage id="ui.feedObject.poll.choice.vote" defaultMessage="ui.feedObject.poll.choice.vote" />}
         </LoadingButton>
         <Typography>{choiceObj.choice}</Typography>
-      </div>
+      </Box>
       <LinearProgressWithLabel className={classes.progress} value={renderVotes(choiceObj.vote_count, votes)} />
     </React.Fragment>
   );
