@@ -86,7 +86,7 @@ function Platform({contained = true}: {contained: boolean}): JSX.Element {
   }
 
   const p = <React.Fragment>{role === null ? null : renderPanel()}</React.Fragment>;
-  if (contained) {
+  if (contained && role !== null) {
     return (
       <Root variant="outlined">
         <CardContent>{p}</CardContent>
