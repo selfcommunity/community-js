@@ -6,6 +6,14 @@ import {SCMediaType} from './media';
 import {SCTagType} from '@selfcommunity/core';
 
 /**
+ * Typology of feed
+ */
+export enum SCFeedTypologyType {
+  MAIN = 'main',
+  EXPLORE = 'explore'
+}
+
+/**
  * Typology of feedObject
  */
 export enum SCFeedObjectTypologyType {

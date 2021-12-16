@@ -18,7 +18,7 @@ import {SCUserType, SCUserBlockedSettingsType} from './user';
 import {SCTagType} from './tag';
 import {SCCategoryType} from './category';
 import {SCEmbedType} from './embed';
-import {SCMediaType, SCMediaObjectType} from './media';
+import {SCMediaType} from './media';
 import {SCContributeLocation, SCLocalityType} from './location';
 import {SCPollChoiceType, SCPollType} from './poll';
 import {SCCommentType, SCCommentTypologyType} from './comment';
@@ -33,6 +33,7 @@ import {
   SCFeedStatusType,
   SCFeedObjectTypologyType,
   SCFeedUnitActivityTypologyType,
+  SCFeedTypologyType,
 } from './feed';
 import {
   SCNotificationTypologyType,
@@ -91,6 +92,7 @@ export {
   SCFeedStatusType,
   SCFeedObjectTypologyType,
   SCFeedUnitActivityTypologyType,
+  SCFeedTypologyType,
   SCCommentTypologyType,
   SCCommentType,
   SCPrivateMessageType,

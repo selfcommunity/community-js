@@ -175,11 +175,12 @@ export default function FeedObject({
         {obj ? (
           <React.Fragment>
             <div className={classes.category}>
-              {obj.categories.map((c) => (
-                <Link key={c.id}>
-                  <Typography variant="overline">{c.name}</Typography>
-                </Link>
-              ))}
+              {obj.categories &&
+                obj.categories.map((c) => (
+                  <Link key={c.id}>
+                    <Typography variant="overline">{c.name}</Typography>
+                  </Link>
+                ))}
             </div>
             <CardHeader
               avatar={
@@ -221,7 +222,7 @@ export default function FeedObject({
               />
               {obj['poll'] && <PollObject feedObject={obj} pollObject={obj['poll']} onChange={handleChangePoll} elevation={0} />}
               <LazyLoad>
-                <ContributorsFeedObject feedObject={obj} feedObjectType={feedObjectType} />
+                <ContributorsFeedObject feedObject={obj} feedObjectType={feedObjectType} sx={{padding: '6px'}}/>
               </LazyLoad>
             </CardContent>
             <CardActions>

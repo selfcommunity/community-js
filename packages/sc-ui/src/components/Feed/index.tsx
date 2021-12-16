@@ -1,16 +1,17 @@
 import React, {useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Box, Button, Card, CardActions, CardContent, List, ListItem, Typography} from '@mui/material';
+import {Box, Button, capitalize, Card, CardActions, CardContent, List, ListItem, Typography} from '@mui/material';
 import {Endpoints, http, Logger, SCFeedObjectType, SCFeedUnitType} from '@selfcommunity/core';
 import {AxiosResponse} from 'axios';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {FormattedMessage} from 'react-intl';
-import {NotificationSkeleton} from '../Skeleton';
-import UserNotification from './Notification';
+import {FeedObjectSkeleton} from '../Skeleton';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import {SCNotificationAggregatedType} from '@selfcommunity/core';
+import FeedObject, {FeedObjectTemplateType} from '../FeedObject';
+import {SCFeedTypologyType} from '@selfcommunity/core';
 
-const PREFIX = 'SCUserNotifications';
+const PREFIX = 'SCFeed';
 
 const Root = styled(Box, {
   name: PREFIX,
@@ -21,24 +22,24 @@ const Root = styled(Box, {
   marginBottom: theme.spacing(2)
 }));
 
-export default function UserNotifications(props): JSX.Element {
-  const [notifications, setNotifications] = useState<SCNotificationAggregatedType[]>([]);
+export default function Feed({type = SCFeedTypologyType.MAIN, ...rest}: {type?: SCFeedTypologyType; [p: string]: any}): JSX.Element {
+  const [feedData, setFeedData] = useState([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [next, setNext] = useState<string>(Endpoints.UserNotificationList.url({}));
+  const [next, setNext] = useState<string>(Endpoints[`${capitalize(type)}Feed`].url({}));
 
   /**
-   * Fetch user notifications
+   * Fetch main feed
    * Manage pagination, infinite scrolling
    */
-  function fetchNotifications() {
+  function fetchFeedData() {
     http
       .request({
         url: next,
-        method: Endpoints.UserNotificationList.method
+        method: Endpoints[`${capitalize(type)}Feed`].method
       })
       .then((res: AxiosResponse<{next?: string; previous?: string; results: SCNotificationAggregatedType[]}>) => {
         const data = res.data;
-        setNotifications([...notifications, ...data.results]);
+        setFeedData([...feedData, ...data.results]);
         setNext(data.next);
         setLoading(false);
       })
@@ -51,7 +52,7 @@ export default function UserNotifications(props): JSX.Element {
    * On mount, fetch first page of notifications
    */
   useEffect(() => {
-    fetchNotifications();
+    fetchFeedData();
   }, []);
 
   return (
@@ -59,37 +60,37 @@ export default function UserNotifications(props): JSX.Element {
       {loading ? (
         <>
           {[...Array(Math.floor(Math.random() * 5) + 3)].map((x, i) => (
-            <NotificationSkeleton key={i} {...props} />
+            <FeedObjectSkeleton key={i} template={FeedObjectTemplateType.PREVIEW} />
           ))}
         </>
       ) : (
         <Box>
-          {notifications.length <= 0 ? (
+          {feedData.length <= 0 ? (
             <Typography variant="body2">
-              <FormattedMessage id="ui.userNotifications.noResults" defaultMessage="ui.userNotifications.noResults" />
+              <FormattedMessage id="ui.feed.noFeedObject" defaultMessage="ui.feed.noFeedObject" />
             </Typography>
           ) : (
             <InfiniteScroll
-              dataLength={notifications.length}
-              next={fetchNotifications}
+              dataLength={feedData.length}
+              next={fetchFeedData}
               hasMore={Boolean(next)}
               loader={
-                <ListItem>
-                  <NotificationSkeleton {...props} sx={{width: '100%'}} />
+                <ListItem sx={{width: '100%'}}>
+                  <FeedObjectSkeleton template={FeedObjectTemplateType.PREVIEW} {...rest} />
                 </ListItem>
               }
               pullDownToRefreshThreshold={10}
               endMessage={
                 <p style={{textAlign: 'center'}}>
                   <b>
-                    <FormattedMessage id="ui.userNotifications.noOtherNotifications" defaultMessage="ui.userNotifications.noOtherNotifications" />
+                    <FormattedMessage id="ui.feed.noOtherFeedObject" defaultMessage="ui.feed.noOtherFeedObject" />
                   </b>
                 </p>
               }>
               <List>
-                {notifications.map((n: SCNotificationAggregatedType, i) => (
-                  <ListItem>
-                    <UserNotification notificationObject={n} key={i} {...props} />
+                {feedData.map((n: SCFeedUnitType, i) => (
+                  <ListItem key={i}>
+                    <FeedObject feedObject={n[n.type]} feedObjectType={n.type} {...rest} sx={{width: '100%'}} />
                   </ListItem>
                 ))}
               </List>

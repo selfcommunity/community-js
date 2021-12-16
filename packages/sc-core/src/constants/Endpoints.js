@@ -310,4 +310,28 @@ export default {
     url: urlReplacer('/api/v2/locality/search/'),
     method: 'GET',
   },
+
+  /**
+   * Feed
+   */
+  MainFeed: {
+    url: urlReplacer('/api/v2/feed/'),
+    method: 'GET',
+  },
+  MainFeedUnseenCount: {
+    url: urlReplacer('/api/v2/feed/unseen/count/'),
+    method: 'GET',
+  },
+  MarkFeedObjectAsRead: {
+    url: urlReplacer('/api/v2/feed/read/'),
+    method: 'POST',
+  },
+  ExploreFeed: {
+    url: urlReplacer('/api/v2/feed/explore/'),
+    method: 'GET',
+  },
+  FeedLikeThese: {
+    url: urlReplacer('/api/v2/feed/likethis/'),
+    method: 'POST',
+  },
 };

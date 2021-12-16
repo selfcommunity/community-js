@@ -160,6 +160,9 @@
   "ui.categoryHeader.followers": "Followers",
   "ui.categoryHeader.noOtherFollowers": "No other followers.",
 
+  "ui.feed.noFeedObject": "At the moment there aren't any contribution to see",
+  "ui.feed.noOtherFeedObject": "No others contribution",
+
   "ui.userNotifications.noResults": "There arent notifications at the moment.",
   "ui.userNotifications.noOtherNotifications": "No other notifications.",
   "ui.userNotifications.showOthers": "Show more",
