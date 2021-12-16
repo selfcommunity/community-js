@@ -4,7 +4,7 @@ import {FormattedMessage} from 'react-intl';
 import {ReactSortable} from 'react-sortablejs';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import {styled} from '@mui/material/styles';
-import Link from '../../../FeedObject/Medias/Link';
+import Link from './PreviewComponent';
 import UrlTextField from './UrlTextField';
 
 const PREFIX = 'SCMediaActionLink';
@@ -59,7 +59,7 @@ export default ({
         <ReactSortable list={medias} setList={onSort}>
           {medias.map((media) => (
             <Box key={media.id} m={1} className={classes.link}>
-              <Link media={media} />
+              <Link medias={[media]} />
               <Box className={classes.close}>
                 <IconButton onClick={onDelete(media.id)} size="small">
                   <DeleteIcon />

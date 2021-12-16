@@ -54,7 +54,6 @@
   "ui.platformAccess.edt": "Editor",
   "ui.platformAccess.hc": "Help Center",
 
-
   "ui.composer.type.post": "Create Post",
   "ui.composer.type.discussion": "Create Discussion",
   "ui.composer.done": "done",
@@ -156,10 +155,11 @@
 
   "ui.categoryHeader.followedBy": "Followed by",
   "ui.categoryHeader.followers": "Followers",
-  "ui.userNotifications.noOtherFollowers": "No other followers.",
+  "ui.categoryHeader.noOtherFollowers": "No other followers.",
 
   "ui.userNotifications.noResults": "There arent notifications at the moment.",
   "ui.userNotifications.noOtherNotifications": "No other notifications.",
+  "ui.userNotifications.showOthers": "Show more",
   "ui.userNotifications.receivePrivateMessage": "<b>sent you {total, plural, =0 {# messages} one {# message} other {# messages}}</b>",
   "ui.userNotifications.userFollow.followUser": "<b>started following you</b>",
   "ui.userNotifications.comment.comment": "<b>commented on your content:</b> ",
@@ -169,6 +169,7 @@
   "ui.userNotifications.userConnection.requestConnection": "<b>sent you a connection request</b>",
   "ui.userNotifications.userConnection.acceptConnection": "<b>accepted your connection request</b>",
   "ui.userNotifications.voteUp.appreciated": "<b>appreciated you on</b>",
+  "ui.userNotifications.contributionFollow.follow": "<b>is following your contribution</b>",
   "ui.userNotifications.userBlocked.accountBlocked": "Your account has been <b>blocked</b>",
   "ui.userNotifications.userBlocked.accountReactivated": "Your account has been <b>reactivated</b>",
   "ui.userNotifications.undeletedFor.restoredContent": "Your previously removed content has been restored",

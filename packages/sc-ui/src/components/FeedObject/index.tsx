@@ -22,7 +22,7 @@ import TimeAgo from 'timeago-react';
 import DateTimeAgo from '../../shared/DateTimeAgo';
 import Bullet from '../../shared/Bullet';
 import Tags from '../../shared/Tags';
-import Medias from './Medias';
+import Medias from '../../shared/Media/Medias';
 import ReportingFlagMenu from '../../shared/ReportingFlagMenu';
 import Actions from './Actions';
 import WorldIcon from '@mui/icons-material/Public';
@@ -61,7 +61,8 @@ const Root = styled(Card, {
   maxWidth: 700,
   marginBottom: theme.spacing(2),
   [`& .${classes.title}`]: {
-    fontWeight: 600
+    fontWeight: 600,
+    color: '#3e3e3e'
   },
   [`& .${classes.username}`]: {
     color: '#000',

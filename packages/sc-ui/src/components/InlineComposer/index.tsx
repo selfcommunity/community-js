@@ -2,9 +2,9 @@ import React, {useContext, useMemo, useState} from 'react';
 import {SCPreferences, SCPreferencesContext, SCPreferencesContextType, SCUserContext, SCUserContextType} from '@selfcommunity/core';
 import {Avatar, Box, Button, CardProps, IconButton} from '@mui/material';
 import {styled} from '@mui/material/styles';
-import {SCComposerMediaActionType} from '../../types/composer';
+import {SCMediaObjectType} from '../../types/media';
 import Paper from '@mui/material/Paper';
-import {Document, Image, Link} from '../Composer/MediaAction';
+import {Document, Image, Link} from '../../shared/Media';
 import Composer, {MAIN_VIEW, POLL_VIEW} from '../Composer';
 import PollIcon from '@mui/icons-material/BarChartOutlined';
 import {FormattedMessage} from 'react-intl';
@@ -52,7 +52,7 @@ export default function InlineComposer({
   onSuccess = null,
   ...props
 }: {
-  mediaActions?: SCComposerMediaActionType[];
+  mediaActions?: SCMediaObjectType[];
   onSuccess?: (feedObject: any) => void;
   props: CardProps;
 }): JSX.Element {
@@ -96,8 +96,8 @@ export default function InlineComposer({
           </Button>
         </Box>
         <Box className={classes.actions}>
-          {mediaActions.map((action: SCComposerMediaActionType) => (
-            <action.button key={action.name} onClick={handleOpen(action.name)} />
+          {mediaActions.map((action: SCMediaObjectType) => (
+            <action.editButton key={action.name} onClick={handleOpen(action.name)} />
           ))}
           {preferences[SCPreferences.ADDONS_POLLS_ENABLED] && (
             <IconButton onClick={handleOpen(POLL_VIEW)}>

@@ -4,7 +4,7 @@ export const MEDIA_TYPE_DOCUMENT = 'doc';
 export const MEDIA_TYPE_LINK = 'link';
 export const MEDIA_TYPE_URL = 'url';
 
-/*
+/**
  * Embed types
  **/
 export const MEDIA_EMBED_SC_LINK_TYPE = 'sc_link';

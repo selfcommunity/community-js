@@ -1,14 +1,16 @@
 import React from 'react';
-import {SCComposerMediaActionType} from '../../../../types/composer';
-import Button from './Button';
-import Component from './Component';
-import {MEDIA_TYPE_DOCUMENT} from '../../../../constants/Media';
+import {SCMediaObjectType} from '../../../types/media';
+import PreviewComponent from './PreviewComponent';
+import EditButton from './EditButton';
+import EditComponent from './EditComponent';
+import {MEDIA_TYPE_DOCUMENT} from '../../../constants/Media';
 import {SCMediaType} from '@selfcommunity/core';
 
-const Document: SCComposerMediaActionType = {
+const Document: SCMediaObjectType = {
   name: 'document',
-  button: (props) => <Button {...props} />,
-  component: (props) => <Component {...props} />,
+  previewComponent: (props) => <PreviewComponent {...props} />,
+  editButton: (props) => <EditButton {...props} />,
+  editComponent: (props) => <EditComponent {...props} />,
   filter: (media: SCMediaType): boolean => media.type === MEDIA_TYPE_DOCUMENT
 };
 

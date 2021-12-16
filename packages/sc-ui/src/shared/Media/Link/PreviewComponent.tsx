@@ -1,17 +1,20 @@
-import React, {SyntheticEvent} from 'react';
-import {Box, IconButton} from '@mui/material';
-import {FormattedMessage} from 'react-intl';
-import {ReactSortable} from 'react-sortablejs';
-import DeleteIcon from '@mui/icons-material/DeleteOutlined';
+import React from 'react';
 import {styled} from '@mui/material/styles';
-import Link from '../../../FeedObject/Medias/Link';
-import UrlTextField from './UrlTextField';
+import LazyLoad from 'react-lazyload';
+import {MEDIA_TYPE_VIDEO} from '../../../constants/Media';
+import AutoPlayer from '../../AutoPlayer';
+import CentralProgress from '../../CentralProgress';
+import Box from '@mui/material/Box';
 
-const PREFIX = 'SCMediaActionLink';
+const PREFIX = 'SCPreviewMediaLink';
 
 const classes = {
-  link: `${PREFIX}-link`,
-  close: `${PREFIX}-close`
+  preview: `${PREFIX}-preview`,
+  thumbnail: `${PREFIX}-thumbnail`,
+  image: `${PREFIX}-image`,
+  snippet: `${PREFIX}-snippet`,
+  snippetTitle: `${PREFIX}-snippetTitle`,
+  snippetDescription: `${PREFIX}-snippetDescription`
 };
 
 const Root = styled(Box, {
@@ -19,56 +22,85 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  padding: theme.spacing(),
-  [`& .${classes.link}`]: {
+  [`& .${classes.preview}`]: {
     position: 'relative'
   },
-  [`& .${classes.close}`]: {
-    position: 'absolute',
-    right: 0,
-    top: 0,
-    margin: theme.spacing()
+
+  [`& .${classes.thumbnail}`]: {
+    maxWidth: 180,
+    border: '1px solid #dddddd',
+    borderRadius: 4,
+    margin: '10px 10px 40px 10px',
+    padding: 4,
+    float: 'left'
+  },
+
+  [`& .${classes.image}`]: {
+    width: '100%'
+  },
+
+  [`& .${classes.snippet}`]: {
+    padding: 7,
+    backgroundColor: '#F5F5F5',
+    [`& .${classes.snippetTitle}`]: {},
+    [`& .${classes.snippetDescription}`]: {
+      fontSize: 12
+    },
+    '& a': {
+      fontSize: 13,
+      fontStyle: 'italic'
+    }
   }
 }));
 
-export default ({
-  medias = [],
-  onSuccess,
-  onSort,
-  onProgress,
-  onDelete
-}: {
-  medias?: any[];
-  onSuccess: (media: any) => void;
-  onSort: (newSort: any[]) => void;
-  onProgress: (id: number) => void;
-  onDelete: (id?: number) => (event: SyntheticEvent) => void;
-}): JSX.Element => {
+export default ({medias, fullWidth = false, adornment = null}: {medias: any[]; fullWidth?: boolean; adornment?: React.ReactNode}): JSX.Element => {
+  const renderPreview = (link) => {
+    if (fullWidth) {
+      return (
+        <div className={classes.preview}>
+          <img src={link.embed.metadata.images[0].url} className={classes.image} />
+          <div className={classes.snippet}>
+            <b className={classes.snippetTitle}>{link.embed.metadata.title}</b>
+            <br />
+            <p className={classes.snippetDescription}>{link.embed.metadata.description}</p>
+            <a href={link.embed.metadata.url} target={'_blank'}>
+              {link.embed.metadata.url}
+            </a>
+          </div>
+          <div style={{clear: 'both'}}></div>
+        </div>
+      );
+    }
+
+    return (
+      <div className={classes.preview}>
+        <div className={classes.thumbnail}>
+          <img src={link.embed.metadata.images[0].url} className={classes.image} />
+        </div>
+        <div className={classes.snippet}>
+          <b className={classes.snippetTitle}>{link.embed.metadata.title}</b>
+          <br />
+          <p className={classes.snippetDescription}>{link.embed.metadata.description}</p>
+          <a href={link.embed.metadata.url} target={'_blank'}>
+            {link.embed.metadata.url}
+          </a>
+        </div>
+        <div style={{clear: 'both'}}></div>
+      </div>
+    );
+  };
+
   return (
-    <Root>
-      <UrlTextField
-        id="page"
-        name="page"
-        label={<FormattedMessage id="ui.composer.media.link.add.label" defaultMessage="ui.composer.media.link.add.label" />}
-        fullWidth
-        variant="outlined"
-        placeholder="https://"
-        onSuccess={onSuccess}
-      />
-      {medias.length > 0 && (
-        <ReactSortable list={medias} setList={onSort}>
-          {medias.map((media) => (
-            <Box key={media.id} m={1} className={classes.link}>
-              <Link media={media} />
-              <Box className={classes.close}>
-                <IconButton onClick={onDelete(media.id)} size="small">
-                  <DeleteIcon />
-                </IconButton>
-              </Box>
-            </Box>
-          ))}
-        </ReactSortable>
-      )}
-    </Root>
+    <LazyLoad height={360} placeholder={<CentralProgress size={20} />} once>
+      <Root>
+        {adornment}
+        {medias.map((l, i) => {
+          if (l.embed.metadata && l.embed.metadata.type === MEDIA_TYPE_VIDEO) {
+            return <AutoPlayer url={l.url} width={'100%'} />;
+          }
+          return renderPreview(l);
+        })}
+      </Root>
+    </LazyLoad>
   );
 };

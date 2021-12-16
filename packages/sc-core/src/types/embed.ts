@@ -33,5 +33,4 @@ export interface SCEmbedType {
    * that contains the id of the object shared
    */
   metadata: Record<string, any>;
-
 }

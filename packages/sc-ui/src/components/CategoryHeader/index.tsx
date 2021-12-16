@@ -9,14 +9,15 @@ import CentralProgress from '../../shared/CentralProgress';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import User from '../User';
 import FaceIcon from '@mui/icons-material/Face';
-import {Endpoints, http, SCCategoryType, SCUserType, useSCFetchCategory} from '@selfcommunity/core';
+import {Endpoints, http, SCCategoryType, SCUserContext, SCUserContextType, SCUserType, useSCFetchCategory} from '@selfcommunity/core';
 import AvatarGroupSkeleton from '../Skeleton/AvatarGroupSkeleton';
 
 const PREFIX = 'SCCategoryHeader';
 
 const classes = {
   cover: `${PREFIX}-cover`,
-  categoryName: `${PREFIX}-name`
+  categoryName: `${PREFIX}-name`,
+  categorySlogan: `${PREFIX}-slogan`,
 };
 
 const Root = styled(Box, {
@@ -26,6 +27,7 @@ const Root = styled(Box, {
 })(({theme}) => ({
   [`& .${classes.cover}`]: {
     display: 'flex',
+    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
     minHeight: 270,
@@ -33,7 +35,16 @@ const Root = styled(Box, {
     background: 'linear-gradient(180deg, rgba(177,177,177,1) 0%, rgba(255,255,255,1) 90%)'
   },
   [`& .${classes.categoryName}`]: {
-    display: 'block'
+    display: 'block',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+  },
+  [`& .${classes.categorySlogan}`]: {
+    display: 'block',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis'
   },
   ['& .MuiAvatar-root']: {
     color: '#FFF',
@@ -51,6 +62,7 @@ export default function CategoryHeader({
   category?: SCCategoryType;
   [p: string]: any;
 }): JSX.Element {
+  const scUserContext: SCUserContextType = useContext(SCUserContext);
   const {scCategory, setSCCategory} = useSCFetchCategory({id, category});
   const [loading, setLoading] = useState<boolean>(true);
   const [next, setNext] = useState<string>(null);
@@ -102,8 +114,23 @@ export default function CategoryHeader({
    * Handle callback follow/unfollow category
    */
   function handleFollowCategory(category, follow) {
+    let _followers = [];
+    if (follow) {
+      // if I follow him now I add at the head of the group
+      _followers = [...[scUserContext.user], ...followers];
+    } else {
+      // if now I don't follow category anymore
+      // I remove my avatar from the visible group
+      if (total < 5) {
+        _followers = [...followers.filter((u) => u.id !== scUserContext.user.id)];
+      } else {
+        const _pFollowers = followers.slice(0, 5).filter((u) => u.id !== scUserContext.user.id);
+        _followers = [..._pFollowers, ...followers.slice(5)];
+      }
+    }
+    setFollowers(_followers);
     setNext(null);
-    fetchFollowers();
+    setTotal((prev) => prev + (follow ? 1 : -1));
   }
 
   /**
@@ -120,9 +147,14 @@ export default function CategoryHeader({
   return (
     <Root {...rest}>
       <Paper style={_backgroundCover} classes={{root: classes.cover}}>
-        <Typography variant={'h3'} align={'center'} className={classes.categoryName}>
+        <Typography variant={'h3'} align={'center'} className={classes.categoryName} gutterBottom>
           {scCategory.name}
         </Typography>
+        {scCategory.slogan && (
+          <Typography variant={'h5'} align={'center'} className={classes.categorySlogan}>
+            {scCategory.slogan}
+          </Typography>
+        )}
       </Paper>
       <Grid container spacing={2} sx={{mt: 0.5, p: 3}}>
         <Grid item xs={12} sx={{textAlign: 'center'}}>

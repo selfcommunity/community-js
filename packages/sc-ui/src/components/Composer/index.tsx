@@ -62,11 +62,10 @@ import Categories from './Categories';
 import {random, stripHtml} from '../../utils/string';
 import classNames from 'classnames';
 import {TransitionProps} from '@mui/material/transitions';
-import MediasPreview from '../FeedObject/Medias';
 import PollPreview from '../FeedObject/Poll';
 import Editor from '../Editor';
-import {SCComposerMediaActionType} from '../../types/composer';
-import {Document, Image, Link} from './MediaAction';
+import {SCMediaObjectType} from '../../types/media';
+import {Document, Image, Link, MediasPreview} from '../../shared/Media';
 import Poll from './Poll';
 import Location from './Location';
 import TagChip from '../../shared/TagChip';
@@ -240,7 +239,7 @@ export interface ComposerProps extends DialogProps {
   feedObjectId?: number;
   feedObjectType?: SCFeedObjectTypologyType;
   view?: string;
-  mediaActions?: SCComposerMediaActionType[];
+  mediaActions?: SCMediaObjectType[];
   onSuccess?: (res: any) => void;
   onClose?: (event: SyntheticEvent) => void;
 }
@@ -710,7 +709,9 @@ export default function Composer(props: ComposerProps): JSX.Element {
     );
   };
 
-  const renderMediaView: Function = (action: SCComposerMediaActionType) => {
+  const renderMediaView: Function = (action: SCMediaObjectType) => {
+    console.log(action.name);
+    console.log(action.editComponent);
     return () => {
       return (
         <React.Fragment>
@@ -732,7 +733,7 @@ export default function Composer(props: ComposerProps): JSX.Element {
           </DialogTitle>
           <DialogContent className={classNames(classes.content, classes.mediaContent)}>
             {
-              <action.component
+              <action.editComponent
                 medias={medias.filter(action.filter)}
                 onSuccess={handleAddMedia}
                 onSort={handleSortMedia}
@@ -856,14 +857,14 @@ export default function Composer(props: ComposerProps): JSX.Element {
             readOnly={isSubmitting}
           />
           <Box className={classes.medias}>
-            <MediasPreview
+            {<MediasPreview
               medias={medias}
               GridImageProps={{gallery: false, overlay: false}}
               imagesAdornment={renderMediaControls(MEDIA_TYPE_IMAGE)}
               videosAdornment={renderMediaControls(MEDIA_TYPE_VIDEO)}
               documentsAdornment={renderMediaControls(MEDIA_TYPE_DOCUMENT)}
               linksAdornment={renderMediaControls(MEDIA_TYPE_LINK)}
-            />
+            />}
           </Box>
           {poll && <PollPreview pollObject={poll} />}
           <Stack spacing={2} className={classes.audience} direction="row">
@@ -882,8 +883,8 @@ export default function Composer(props: ComposerProps): JSX.Element {
         </DialogContent>
         <DialogActions className={classes.actions}>
           <Typography align="left">
-            {mediaActions.map((action: SCComposerMediaActionType) => (
-              <action.button
+            {mediaActions.map((action: SCMediaObjectType) => (
+              <action.editButton
                 key={action.name}
                 onClick={handleChangeView(action.name)}
                 disabled={isSubmitting}

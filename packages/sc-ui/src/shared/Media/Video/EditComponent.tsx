@@ -6,9 +6,8 @@ import {
   Box,
   Button,
   Button as MuiButton,
-  CircularProgress,
   Fade,
-  Grid, IconButton,
+  IconButton,
   ImageList, ImageListItem, ImageListItemBar,
   Typography,
 } from '@mui/material';
@@ -22,7 +21,7 @@ import MediaChunkUploader from '../../MediaChunkUploader';
 import {SCMediaChunkType} from '../../../types/media';
 import DocumentIcon from '@mui/icons-material/PictureAsPdfOutlined';
 
-const PREFIX = 'SCMediaActionDocument';
+const PREFIX = 'SCMediaActionVideo';
 
 const classes = {
   preview: `${PREFIX}-preview`

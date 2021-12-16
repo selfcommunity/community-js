@@ -14,13 +14,12 @@ import {
 } from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import {ReactSortable} from 'react-sortablejs';
-import classNames from 'classnames';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import ChunkedUploady from '@rpldy/chunked-uploady';
 import {Endpoints, SCContext, SCContextType, SCMediaType} from '@selfcommunity/core';
 import {styled} from '@mui/material/styles';
-import MediaChunkUploader from '../../../../shared/MediaChunkUploader';
-import {SCMediaChunkType} from '../../../../types/media';
+import MediaChunkUploader from '../../MediaChunkUploader';
+import {SCMediaChunkType} from '../../../types/media';
 import DocumentIcon from '@mui/icons-material/PictureAsPdfOutlined';
 
 const PREFIX = 'SCMediaActionDocument';
