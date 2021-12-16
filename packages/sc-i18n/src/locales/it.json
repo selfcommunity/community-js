@@ -14,9 +14,9 @@
   "ui.TrendingPeople.noResults": "Nessuno da mostrare",
   "ui.TrendingPeople.button.showAll": "Mostra tutti",
 
-  "ui.TrendingPost.title": "Post di tendenza",
-  "ui.TrendingPost.noResults": "Niente da mostrare",
-  "ui.TrendingPost.button.showMore": "Mostra di piú",
+  "ui.TrendingFeed.title": "Post di tendenza",
+  "ui.TrendingFeed.noResults": "Niente da mostrare",
+  "ui.TrendingFeed.button.showMore": "Mostra di piú",
 
   "ui.RelatedDiscussion.title": "Post correlati",
 

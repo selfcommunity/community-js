@@ -81,7 +81,7 @@ const getTheme = (options, preferences) => {
               root: {},
             },
           },
-          SCTrendingPost: {
+          SCTrendingFeed: {
             styleOverrides: {
               root: {
                 '& .MuiSvgIcon-root': {

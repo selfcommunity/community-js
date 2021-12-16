@@ -1,11 +1,12 @@
 import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
-import TrendingPost from './index';
+import TrendingFeed from './index';
+import {FeedObjectTemplateType} from '../FeedObject';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Design System/SC UI/Trending Post',
-  component: TrendingPost,
+  component: TrendingFeed,
   argTypes: {
     elevation: {
       control: {type: 'number'},
@@ -20,20 +21,20 @@ export default {
     }
   },
   args: {
+    scCategoryId: 1,
     elevation: 1,
-    variant: 'elevation'
+    variant: 'elevation',
+    template: FeedObjectTemplateType.SNIPPET
   }
-} as ComponentMeta<typeof TrendingPost>;
+} as ComponentMeta<typeof TrendingFeed>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof TrendingPost> = (args) => (
+const Template: ComponentStory<typeof TrendingFeed> = (args) => (
   <div style={{width: 500}}>
-    <TrendingPost scCategoryId={1} {...args} />
+    <TrendingFeed {...args} />
   </div>
 );
 
 export const Base = Template.bind({});
 
-Base.args = {
-  /* the args you need here will depend on your component */
-};
+Base.args = {};

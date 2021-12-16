@@ -5,7 +5,7 @@ import List from '@mui/material/List';
 import {styled} from '@mui/material/styles';
 import FeedObjectSkeleton from '../Skeleton/FeedObjectSkeleton';
 
-const PREFIX = 'SCTrendingPostSkeleton';
+const PREFIX = 'SCTrendingFeedSkeleton';
 
 const classes = {
   list: `${PREFIX}-list`
@@ -21,7 +21,7 @@ const Root = styled(Card)(({theme}) => ({
   }
 }));
 
-export default function TrendingPostSkeleton(props): JSX.Element {
+export default function TrendingFeedSkeleton(props): JSX.Element {
   return (
     <Root {...props}>
       <CardContent>

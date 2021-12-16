@@ -4,14 +4,14 @@ import List from '@mui/material/List';
 import {Button, Typography} from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import {Endpoints, http, Logger, SCFeedObjectType, SCFeedUnitType} from '@selfcommunity/core';
-import TrendingPostSkeleton from '../Skeleton/TrendingPostSkeleton';
+import {Endpoints, http, Logger, SCFeedDiscussionType, SCFeedObjectType, SCFeedUnitType} from '@selfcommunity/core';
+import TrendingPostSkeleton from '../Skeleton/TrendingFeedSkeleton';
 import {AxiosResponse} from 'axios';
 import {SCOPE_SC_UI} from '../../constants/Errors';
-import FeedObject from '../FeedObject';
+import FeedObject, {FeedObjectTemplateType} from '../FeedObject';
 import {FormattedMessage} from 'react-intl';
 
-const PREFIX = 'SCTrendingPost';
+const PREFIX = 'SCTrendingFeed';
 
 const Root = styled(Card, {
   name: PREFIX,
@@ -22,12 +22,13 @@ const Root = styled(Card, {
   marginBottom: theme.spacing(2)
 }));
 
-function TrendingPost({scCategoryId = null, ...props}: {scCategoryId?: number}): JSX.Element {
+function TrendingFeed({scCategoryId = null, template = null, ...props}: {scCategoryId?: number; template?: FeedObjectTemplateType}): JSX.Element {
   const [posts, setPosts] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [hasMore, setHasMore] = useState<boolean>(false);
   const [openTrendingPostDialog, setOpenTrendingPostDialog] = useState<boolean>(false);
   const [total, setTotal] = useState<number>(0);
+  const [visible, setVisible] = useState<number>(4);
 
   function fetchTrendingPost() {
     http
@@ -38,13 +39,16 @@ function TrendingPost({scCategoryId = null, ...props}: {scCategoryId?: number}):
       .then((res: AxiosResponse<any>) => {
         const data = res.data;
         setPosts(getAlltypes(data.results));
-        setHasMore(data.count > 4);
+        setHasMore(data.count > visible);
         setLoading(false);
         setTotal(data.count);
       })
       .catch((error) => {
         Logger.error(SCOPE_SC_UI, error);
       });
+  }
+  function loadMore() {
+    setVisible((prevVisible) => prevVisible + 4);
   }
 
   function getAlltypes(data) {
@@ -68,23 +72,24 @@ function TrendingPost({scCategoryId = null, ...props}: {scCategoryId?: number}):
       ) : (
         <CardContent>
           <Typography variant="body1">
-            <FormattedMessage id="ui.TrendingPost.title" defaultMessage="ui.TrendingPost.title" />
+            <FormattedMessage id="ui.TrendingFeed.title" defaultMessage="ui.TrendingFeed.title" />
           </Typography>
           {!total ? (
             <Typography variant="body2">
-              <FormattedMessage id="ui.TrendingPost.noResults" defaultMessage="ui.TrendingPost.noResults" />
+              <FormattedMessage id="ui.TrendingFeed.noResults" defaultMessage="ui.TrendingFeed.noResults" />
             </Typography>
           ) : (
             <React.Fragment>
               <List>
-                {posts.slice(0, 4).map((feedUnit: SCFeedUnitType, index) => {
-                  const feedObject: SCFeedObjectType = feedUnit[feedUnit.type];
-                  <FeedObject feedObject={feedObject} key={index} elevation={0} />;
-                })}
+                {posts.slice(0, 4).map((obj: SCFeedObjectType, index) => (
+                  <div key={index}>
+                    <FeedObject elevation={0} feedObject={obj} key={obj.id} template={template} />
+                  </div>
+                ))}
               </List>
               {hasMore && (
-                <Button size="small" onClick={() => setOpenTrendingPostDialog(true)}>
-                  <FormattedMessage id="ui.TrendingPost.button.showMore" defaultMessage="ui.TrendingPost.button.showMore" />
+                <Button size="small" onClick={() => loadMore()}>
+                  <FormattedMessage id="ui.TrendingFeed.button.showMore" defaultMessage="ui.TrendingFeed.button.showMore" />
                 </Button>
               )}
             </React.Fragment>
@@ -95,4 +100,4 @@ function TrendingPost({scCategoryId = null, ...props}: {scCategoryId?: number}):
     </Root>
   );
 }
-export default TrendingPost;
+export default TrendingFeed;

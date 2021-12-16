@@ -14,7 +14,7 @@ import {
   SCFeedObjectTypologyType,
   SCFeedUnitType
 } from '@selfcommunity/core';
-import TrendingPostSkeleton from '../Skeleton/TrendingPostSkeleton';
+import TrendingPostSkeleton from '../Skeleton/TrendingFeedSkeleton';
 import {AxiosResponse} from 'axios';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import FeedObject, {FeedObjectTemplateType} from '../FeedObject';
@@ -97,7 +97,6 @@ function RelatedDiscussion({
                   </div>
                 ))}
               </List>
-              {/*    <FeedObject feedObject={obj} feedObjectId={obj.id} feedObjectType={obj.type} key={index} />;*/}
               {hasMore && (
                 <Button size="small" onClick={() => loadDiscussions()}>
                   <FormattedMessage id="ui.TrendingPost.button.showMore" defaultMessage="ui.TrendingPost.button.showMore" />

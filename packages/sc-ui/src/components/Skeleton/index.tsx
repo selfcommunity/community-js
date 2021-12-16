@@ -3,7 +3,7 @@ import UserBoxSkeleton from './UserBoxSkeleton';
 import CategoryBoxSkeleton from './CategoryBoxSkeleton';
 import PeopleSuggestionSkeleton from './PeopleSuggestionSkeleton';
 import CommentObjectSkeleton from './CommentObjectSkeleton';
-import TrendingPostSkeleton from './TrendingPostSkeleton';
+import TrendingFeedSkeleton from './TrendingFeedSkeleton';
 import AvatarGroupSkeleton from './AvatarGroupSkeleton';
 import NotificationSkeleton from './NotificationSkeleton';
 
@@ -13,7 +13,7 @@ export {
   CategoryBoxSkeleton,
   PeopleSuggestionSkeleton,
   AvatarGroupSkeleton,
-  TrendingPostSkeleton,
+  TrendingFeedSkeleton,
   CommentObjectSkeleton,
   NotificationSkeleton
 };
