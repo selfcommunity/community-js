@@ -12,7 +12,7 @@ export default {
     feedObjectId: {
       control: {type: 'number'},
       description: 'FeedObject Id',
-      table: {defaultValue: {summary: 358}}
+      table: {defaultValue: {summary: 7624}}
     },
     feedObjectType: {
       options: [SCFeedObjectTypologyType.POST, SCFeedObjectTypologyType.DISCUSSION, SCFeedObjectTypologyType.STATUS],
@@ -38,7 +38,8 @@ export default {
     }
   },
   args: {
-    feedObjectId: 358,
+    feedObjectId: 7624,
+    feedObjectType: SCFeedObjectTypologyType.DISCUSSION,
     template: FeedObjectTemplateType.SNIPPET,
     elevation: 1,
     variant: 'elevation'

@@ -155,10 +155,11 @@
 
   "ui.categoryHeader.followedBy": "Seguita da ",
   "ui.categoryHeader.followers": "Followers",
-  "ui.userNotifications.noOtherFollowers": "Non ci sono altri followers.",
+  "ui.categoryHeader.noOtherFollowers": "Non ci sono altri followers.",
 
   "ui.userNotifications.noResults": "Non ci sono notifiche al momento.",
   "ui.userNotifications.noOtherNotifications": "Non ci sono altre notifiche.",
+  "ui.userNotifications.showOthers": "Vedi altro",
   "ui.userNotifications.receivePrivateMessage": "<b>ti ha inviato {total, plural, =0 {# messaggi} one {# messaggio} other {# messaggi}}</b>",
   "ui.userNotifications.userFollow.followUser": "<b>ti sta seguendo</b>",
   "ui.userNotifications.comment.comment": "<b>ha commentato il tuo contenuto:</b> ",
@@ -168,6 +169,7 @@
   "ui.userNotifications.userConnection.requestConnection": "<b>ti ha inviato una richiesta di connessione</b>",
   "ui.userNotifications.userConnection.acceptConnection": "<b>ha accettato la tua richiesta di connessione</b>",
   "ui.userNotifications.voteUp.appreciated": "<b>ti ha apprezzato su</b>",
+  "ui.userNotifications.contributionFollow.follow": "<b>sta seguendo il tuo post</b>",
   "ui.userNotifications.userBlocked.accountBlocked": "Il tuo account è stato <b>bloccato</b>",
   "ui.userNotifications.userBlocked.accountReactivated": "Il tuo accont è stato <b>sbloccato</b>",
   "ui.userNotifications.undeletedFor.restoredContent": "Un tuo contenuto, precedentemente rimosso, è stato ripristinato",

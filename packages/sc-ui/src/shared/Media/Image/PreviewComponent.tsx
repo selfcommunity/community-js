@@ -1,15 +1,15 @@
 import React, {Component, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import PreviewImage from './PreviewImage';
-import PropTypes from 'prop-types';
 import {Grid, Typography, Box} from '@mui/material';
 import classNames from 'classnames';
 import ZoomOut from '@mui/icons-material/ZoomOutMap';
-import {MAX_GRID_IMAGES} from '../../../../constants/Media';
 import IconPdf from '@mui/icons-material/PictureAsPdf';
 import IconGenericsFile from '@mui/icons-material/InsertDriveFileOutlined';
+import CentralProgress from '../../CentralProgress';
+import LazyLoad from 'react-lazyload';
 
-const PREFIX = 'SCGridImage';
+const PREFIX = 'SCPreviewMediaImage';
 
 const classes = {
   background: `${PREFIX}-background`,
@@ -124,17 +124,17 @@ const Root = styled(Box, {
   }
 }));
 
-export default function GridImages({
-  images,
+export default ({
+  medias = [],
   gallery = true,
   adornment = null,
   onClick = null
 }: {
-  images: Array<any>;
+  medias: Array<any>;
   gallery?: boolean;
   adornment?: React.ReactNode;
   onClick?: (any) => void;
-}): JSX.Element {
+}): JSX.Element => {
   const [preview, setPreview] = useState(-1);
   const [from, setFrom] = useState(0);
   const [conditionalRender, setConditionalRender] = useState(false);
@@ -155,7 +155,7 @@ export default function GridImages({
 
   const openPreviewImage = (index) => {
     if (onClick) {
-      return onClick({src: images[index], index});
+      return onClick({src: medias[index], index});
     }
 
     if (gallery === false) {
@@ -197,7 +197,7 @@ export default function GridImages({
   };
 
   const renderOne = () => {
-    const overlay = images.length > from && from == 1 ? renderCountOverlay(true) : renderOverlay(0);
+    const overlay = medias.length > from && from == 1 ? renderCountOverlay(true) : renderOverlay(0);
 
     return (
       <Grid container>
@@ -206,17 +206,17 @@ export default function GridImages({
           xs={12}
           classes={{root: classNames(classes.border, classes.heightOne, classes.background, {[classes.gallery]: gallery})}}
           onClick={() => openPreviewImage(0)}
-          style={{background: `url(${getImageUrl(images[0])})`}}>
+          style={{background: `url(${getImageUrl(medias[0])})`}}>
           {overlay}
-          {renderTitle(images[0])}
+          {renderTitle(medias[0])}
         </Grid>
       </Grid>
     );
   };
 
   const renderTwo = () => {
-    const overlay = images.length > from && [2, 3].includes(+from) ? renderCountOverlay(true) : renderOverlay(1);
-    const conditionalRender = [3, 4].includes(images.length) || (images.length > +from && [3, 4].includes(+from));
+    const overlay = medias.length > from && [2, 3].includes(+from) ? renderCountOverlay(true) : renderOverlay(1);
+    const conditionalRender = [3, 4].includes(medias.length) || (medias.length > +from && [3, 4].includes(+from));
     return (
       <Grid container>
         <Grid
@@ -224,27 +224,27 @@ export default function GridImages({
           xs={6}
           classes={{root: classNames(classes.border, classes.heightTwo, classes.background, {[classes.gallery]: gallery})}}
           onClick={() => openPreviewImage(conditionalRender ? 1 : 0)}
-          style={{background: `url(${getImageUrl(conditionalRender ? images[1] : images[0])})`}}>
+          style={{background: `url(${getImageUrl(conditionalRender ? medias[1] : medias[0])})`}}>
           {renderOverlay(conditionalRender ? 1 : 0)}
-          {renderTitle(images[0])}
+          {renderTitle(medias[0])}
         </Grid>
         <Grid
           item
           xs={6}
           classes={{root: classNames(classes.border, classes.heightTwo, classes.background, {[classes.gallery]: gallery})}}
           onClick={() => openPreviewImage(conditionalRender ? 1 : 0)}
-          style={{background: `url(${getImageUrl(conditionalRender ? images[2] : images[1])})`}}>
+          style={{background: `url(${getImageUrl(conditionalRender ? medias[2] : medias[1])})`}}>
           {overlay}
-          {renderTitle(images[1])}
+          {renderTitle(medias[1])}
         </Grid>
       </Grid>
     );
   };
 
   const renderThree = () => {
-    const conditionalRender = images.length == 4 || (images.length > +from && +from == 4);
+    const conditionalRender = medias.length == 4 || (medias.length > +from && +from == 4);
     const overlay =
-      !from || from > 5 || (images.length > from && [4, 5].includes(+from)) ? renderCountOverlay(true) : renderOverlay(conditionalRender ? 3 : 4);
+      !from || from > 5 || (medias.length > from && [4, 5].includes(+from)) ? renderCountOverlay(true) : renderOverlay(conditionalRender ? 3 : 4);
     return (
       <Grid container>
         <Grid
@@ -253,9 +253,9 @@ export default function GridImages({
           md={4}
           classes={{root: classNames(classes.border, classes.heightThree, classes.background, {[classes.gallery]: gallery})}}
           onClick={() => openPreviewImage(conditionalRender ? 1 : 2)}
-          style={{background: `url(${getImageUrl(conditionalRender ? images[1] : images[2])})`}}>
+          style={{background: `url(${getImageUrl(conditionalRender ? medias[1] : medias[2])})`}}>
           {renderOverlay(conditionalRender ? 1 : 2)}
-          {renderTitle(images[1])}
+          {renderTitle(medias[1])}
         </Grid>
         <Grid
           item
@@ -263,9 +263,9 @@ export default function GridImages({
           md={4}
           classes={{root: classNames(classes.border, classes.heightThree, classes.background, {[classes.gallery]: gallery})}}
           onClick={() => openPreviewImage(conditionalRender ? 2 : 3)}
-          style={{background: `url(${getImageUrl(conditionalRender ? images[2] : images[3])})`}}>
+          style={{background: `url(${getImageUrl(conditionalRender ? medias[2] : medias[3])})`}}>
           {renderOverlay(conditionalRender ? 2 : 3)}
-          {renderTitle(images[2])}
+          {renderTitle(medias[2])}
         </Grid>
         <Grid
           item
@@ -273,9 +273,9 @@ export default function GridImages({
           md={4}
           classes={{root: classNames(classes.border, classes.heightThree, classes.background, {[classes.gallery]: gallery})}}
           onClick={() => openPreviewImage(conditionalRender ? 3 : 4)}
-          style={{background: `url(${getImageUrl(conditionalRender ? images[3] : images[4])})`}}>
+          style={{background: `url(${getImageUrl(conditionalRender ? medias[3] : medias[4])})`}}>
           {overlay}
-          {renderTitle(images[3])}
+          {renderTitle(medias[3])}
         </Grid>
       </Grid>
     );
@@ -291,7 +291,7 @@ export default function GridImages({
   };
 
   const renderCountOverlay = (more) => {
-    const extra = images.length - (from && from > 5 ? 5 : from);
+    const extra = medias.length - (from && from > 5 ? 5 : from);
 
     return [
       more && <div key="count" className={classes.cover}></div>,
@@ -303,19 +303,26 @@ export default function GridImages({
     ];
   };
 
-  const imagesToShow = [...images];
-  if (from && images.length > from) {
+  const imagesToShow = [...medias];
+  if (from && medias.length > from) {
     imagesToShow.length = from;
   }
-  return (
-    <Root>
-      {adornment}
-      {[1, 3, 4].includes(imagesToShow.length) && renderOne()}
-      {imagesToShow.length >= 2 && imagesToShow.length != 4 && renderTwo()}
-      {imagesToShow.length >= 4 && renderThree()}
 
-      {/* eslint-disable-next-line @typescript-eslint/unbound-method */}
-      {preview !== -1 && <PreviewImage onClose={handleClose} index={preview} images={images} />}
-    </Root>
+  return (
+    <>
+      {medias.length > 0 && (
+        <LazyLoad height={360} placeholder={<CentralProgress size={20} />} once>
+          <Root>
+            {adornment}
+            {[1, 3, 4].includes(imagesToShow.length) && renderOne()}
+            {imagesToShow.length >= 2 && imagesToShow.length != 4 && renderTwo()}
+            {imagesToShow.length >= 4 && renderThree()}
+
+            {/* eslint-disable-next-line @typescript-eslint/unbound-method */}
+            {preview !== -1 && <PreviewImage onClose={handleClose} index={preview} images={medias} />}
+          </Root>
+        </LazyLoad>
+      )}
+    </>
   );
-}
+};

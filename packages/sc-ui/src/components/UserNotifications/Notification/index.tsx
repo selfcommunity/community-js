@@ -17,15 +17,16 @@ import {
   http,
   Link,
   Logger,
-  SCCommentType, SCCommentTypologyType,
+  SCCommentType,
+  SCCommentTypologyType,
   SCNotificationAggregatedType,
   SCNotificationPrivateMessageType,
   SCNotificationType,
   SCNotificationTypologyType,
   SCRoutingContextType,
-  useSCRouting,
+  useSCRouting
 } from '@selfcommunity/core';
-import {defineMessages, useIntl} from 'react-intl';
+import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
 import {grey} from '@mui/material/colors';
 import KindlyNoticeFlagNotification from './KindlyNoticeFlag';
 import VoteUpNotification from './VoteUp';
@@ -34,7 +35,8 @@ import NotificationsOnOutlinedIcon from '@mui/icons-material/NotificationsOutlin
 import {SCOPE_SC_UI} from '../../../constants/Errors';
 import {AxiosResponse} from 'axios';
 import {ExpandLess, ExpandMore} from '@mui/icons-material';
-import { getContribute } from '../../../utils/contribute';
+import {getContribute} from '../../../utils/contribute';
+import ContributionFollowNotification from './ContributionFollow';
 
 const messages = defineMessages({
   receivePrivateMessage: {
@@ -262,6 +264,8 @@ export default function UserNotification({
   function renderAggregated(n, i) {
     if (n.type === SCNotificationTypologyType.COMMENT || n.type === SCNotificationTypologyType.NESTED_COMMENT) {
       return <UserNotificationComment notificationObject={n} key={i} index={i} onVote={handleVote} loadingVote={loadingVote} />;
+    } else if (n.type === SCNotificationTypologyType.FOLLOW) {
+      return <ContributionFollowNotification notificationObject={n} key={i} />;
     } else if (n.type === SCNotificationTypologyType.USER_FOLLOW) {
       return <UserFollowNotification notificationObject={n} key={i} />;
     } else if (n.type === SCNotificationTypologyType.CONNECTION_REQUEST || n.type === SCNotificationTypologyType.CONNECTION_ACCEPT) {
@@ -314,7 +318,7 @@ export default function UserNotification({
         {notificationObject.aggregated.length > showMaxAggregated && (
           <>
             <ListItemButton onClick={() => setOpenOtherAggregated((prev) => !prev)} classes={{root: classes.showOtherAggregated}}>
-              <ListItemText primary="Vedi altri" />
+              <ListItemText primary={<FormattedMessage id={'ui.userNotifications.showOthers'} defaultMessage={'ui.userNotifications.showOthers'} />} />
               {openOtherAggregated ? <ExpandLess /> : <ExpandMore />}
             </ListItemButton>
             <Collapse in={openOtherAggregated} timeout="auto" unmountOnExit>

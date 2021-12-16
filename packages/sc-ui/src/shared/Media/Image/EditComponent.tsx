@@ -4,29 +4,39 @@ import {
   Alert,
   AlertTitle,
   Box,
-  Button,
   Button as MuiButton,
   CircularProgress,
   Fade,
-  Grid, IconButton,
-  ImageList, ImageListItem, ImageListItemBar,
-  Typography,
+  IconButton,
+  ImageList,
+  ImageListItem,
+  ImageListItemBar,
+  Typography
 } from '@mui/material';
+import ImageIcon from '@mui/icons-material/ImageOutlined';
 import {FormattedMessage} from 'react-intl';
 import {ReactSortable} from 'react-sortablejs';
-import classNames from 'classnames';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import ChunkedUploady from '@rpldy/chunked-uploady';
-import {Endpoints, SCContext, SCContextType, SCMediaType} from '@selfcommunity/core';
+import {
+  Endpoints,
+  SCContext,
+  SCContextType,
+  SCMediaType,
+  SCPreferencesContext,
+  SCPreferencesContextType,
+  SCUserContext,
+  SCUserContextType
+} from '@selfcommunity/core';
 import {styled} from '@mui/material/styles';
-import MediaChunkUploader from '../../../../shared/MediaChunkUploader';
-import {SCMediaChunkType} from '../../../../types/media';
-import DocumentIcon from '@mui/icons-material/PictureAsPdfOutlined';
+import MediaChunkUploader from '../../MediaChunkUploader';
+import {SCMediaChunkType} from '../../../types/media';
 
-const PREFIX = 'SCMediaActionDocument';
+const PREFIX = 'SCMediaActionImage';
 
 const classes = {
-  preview: `${PREFIX}-preview`
+  preview: `${PREFIX}-preview`,
+  loadingText: `${PREFIX}-loadingText`
 };
 
 const Root = styled(Box, {
@@ -36,16 +46,32 @@ const Root = styled(Box, {
 })(({theme}) => ({
   padding: theme.spacing(),
   [`& .${classes.preview}`]: {
-    backgroundColor: theme.palette.background.default,
+    backgroundSize: 'cover !important',
+    backgroundPosition: 'center !important',
+    backgroundRepeat: 'no-repeat !important',
     height: 200,
     position: 'relative'
+  },
+  [`& .${PREFIX}-loadingText`]: {
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
+    position: 'absolute',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(0,0,0,.8)',
+    '& > *': {
+      color: theme.palette.text.primary
+    }
   }
 }));
 
 const UploadButton = asUploadButton(
   forwardRef((props, ref) => (
-    <MuiButton {...props} aria-label="upload document" ref={ref} variant="outlined">
-      <DocumentIcon /> <FormattedMessage id="ui.composer.media.document.add" defaultMessage="ui.composer.media.document.add" />
+    <MuiButton {...props} aria-label="upload image" ref={ref} variant="outlined">
+      <ImageIcon /> <FormattedMessage id="ui.composer.media.image.add" defaultMessage="ui.composer.media.image.add" />
     </MuiButton>
   ))
 );
@@ -110,7 +136,7 @@ export default ({
               <ImageListItemBar
                 position="top"
                 actionIcon={
-                  <IconButton onClick={onDelete(media.id)} size="small" sx={{ color: 'rgba(255, 255, 255, 0.54)' }}>
+                  <IconButton onClick={onDelete(media.id)} size="small" sx={{color: 'rgba(255, 255, 255, 0.54)'}}>
                     <DeleteIcon />
                   </IconButton>
                 }
@@ -119,9 +145,7 @@ export default ({
           ))}
           {Object.values(uploading).map((media: SCMediaChunkType) => (
             <ImageListItem key={media.id} className={'ignore-elements'}>
-              <Box className={classes.preview} sx={{backgroundImage: `url(${media.image})`}}>
-                <DocumentIcon style={{position: 'absolute', left: 0, top: 0, width: '100%', height: '100%'}} />
-              </Box>
+              <Box className={classes.preview} sx={{backgroundImage: `url(${media.image})`}}></Box>
               <ImageListItemBar title={<Typography align="center">{`${Math.round(media.completed)}%`}</Typography>} position="top" />
             </ImageListItem>
           ))}
@@ -146,9 +170,9 @@ export default ({
           }}
           chunkSize={2142880}
           multiple
-          accept="application/pdf">
+          accept="image/*">
           <MediaChunkUploader onSuccess={handleSuccess} onProgress={handleProgress} onError={handleError} />
-          <UploadButton inputFieldName="document" />
+          <UploadButton inputFieldName="image" />
         </ChunkedUploady>
       </Typography>
     </Root>

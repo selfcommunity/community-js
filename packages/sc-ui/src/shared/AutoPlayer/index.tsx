@@ -1,7 +1,8 @@
-import React, {useState} from 'react';
+import React, {forwardRef, useRef, useState} from 'react';
 import {Waypoint} from 'react-waypoint';
 import ReactPlayer from 'react-player';
 import {styled} from '@mui/material/styles';
+import {Box, ImageList} from '@mui/material';
 
 const PREFIX = 'SCAutoPlayer';
 
@@ -47,26 +48,24 @@ export default function AutoPlayer({
   }
 
   return (
-    <Root>
-      <Waypoint scrollableAncestor={window} onEnter={handleEnterViewport} onLeave={handleExitViewport}>
-        <div>
-          <ReactPlayer
-            config={{
-              youtube: {
-                playerVars: {rel: 0}
-              }
-            }}
-            enableAutoplay={enableAutoplay}
-            loop={loop}
-            controls={controls}
-            stopOnUnmount={stopOnUnmount}
-            pip={pip}
-            playing={shouldPlay}
-            muted={muted}
-            {...rest}
-          />
-        </div>
-      </Waypoint>
+    <Root scrollableAncestor={window} onEnter={handleEnterViewport} onLeave={handleExitViewport}>
+      <div>
+        <ReactPlayer
+          config={{
+            youtube: {
+              playerVars: {rel: 0}
+            }
+          }}
+          enableAutoplay={enableAutoplay}
+          loop={loop}
+          controls={controls}
+          stopOnUnmount={stopOnUnmount}
+          pip={pip}
+          playing={shouldPlay}
+          muted={muted}
+          {...rest}
+        />
+      </div>
     </Root>
   );
 }

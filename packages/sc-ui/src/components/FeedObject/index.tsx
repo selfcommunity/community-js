@@ -4,7 +4,6 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import {
   Avatar,
-  AvatarGroup,
   Box,
   Button,
   CardActions,
@@ -22,7 +21,7 @@ import TimeAgo from 'timeago-react';
 import DateTimeAgo from '../../shared/DateTimeAgo';
 import Bullet from '../../shared/Bullet';
 import Tags from '../../shared/Tags';
-import Medias from './Medias';
+import MediasPreview from '../../shared/MediasPreview';
 import ReportingFlagMenu from '../../shared/ReportingFlagMenu';
 import Actions from './Actions';
 import WorldIcon from '@mui/icons-material/Public';
@@ -61,7 +60,8 @@ const Root = styled(Card, {
   maxWidth: 700,
   marginBottom: theme.spacing(2),
   [`& .${classes.title}`]: {
-    fontWeight: 600
+    fontWeight: 600,
+    color: '#3e3e3e'
   },
   [`& .${classes.username}`]: {
     color: '#000',
@@ -176,7 +176,7 @@ export default function FeedObject({
                   {obj.title}
                 </Typography>
               )}
-              <Medias medias={obj.medias} />
+              <MediasPreview medias={obj.medias} />
               <Typography
                 variant="body2"
                 gutterBottom

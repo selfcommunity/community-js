@@ -18,7 +18,7 @@ import {SCUserType, SCUserBlockedSettingsType} from './user';
 import {SCTagType} from './tag';
 import {SCCategoryType} from './category';
 import {SCEmbedType} from './embed';
-import {SCMediaType} from './media';
+import {SCMediaType, SCMediaObjectType} from './media';
 import {SCContributeLocation, SCLocalityType} from './location';
 import {SCPollChoiceType, SCPollType} from './poll';
 import {SCCommentType, SCCommentTypologyType} from './comment';
