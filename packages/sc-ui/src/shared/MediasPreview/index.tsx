@@ -1,44 +1,24 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import classNames from 'classnames';
 import Box from '@mui/material/Box';
 import {SCMediaObjectType} from '../../../types/media';
 import Document from '../Document';
 import Image from '../Image';
 import Link from '../Link';
+import {MEDIA_TYPE_DOCUMENT, MEDIA_TYPE_IMAGE, MEDIA_TYPE_LINK, MEDIA_TYPE_VIDEO} from '../../../constants/Media';
 
 const PREFIX = 'SCMedias';
-
-const classes = {
-  medias: `${PREFIX}-medias`,
-  videos: `${PREFIX}-videos`,
-  links: `${PREFIX}-links`
-};
 
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  [`& .${classes.medias}`]: {
-    position: 'relative',
-    marginTop: 0,
-    marginBottom: theme.spacing(),
-    marginLeft: -23,
-    marginRight: -23
-  },
-
-  [`& .${classes.videos}`]: {
-    marginLeft: -11,
-    marginRight: -11
-  },
-
-  [`& .${classes.links}`]: {
-    marginTop: 0,
-    marginBottom: theme.spacing(),
-    marginLeft: theme.spacing(-1.5),
-    marginRight: theme.spacing(-1.5)
-  }
+  position: 'relative',
+  marginTop: 0,
+  marginBottom: theme.spacing(),
+  marginLeft: -23,
+  marginRight: -23
 }));
 
 export default ({
@@ -48,7 +28,8 @@ export default ({
   imagesAdornment = null,
   videosAdornment = null,
   documentsAdornment = null,
-  linksAdornment = null
+  linksAdornment = null,
+  ...rest
 }: {
   medias: Array<any>;
   mediaObjectTypes?: Array<SCMediaObjectType>;
@@ -57,35 +38,40 @@ export default ({
   videosAdornment?: React.ReactNode;
   documentsAdornment?: React.ReactNode;
   linksAdornment?: React.ReactNode;
+  [p: string]: any;
 }): JSX.Element => {
   if (!medias.length) {
     // Feed without any medias
     return null;
   }
 
+  /**
+   * Render list of media preview
+   * The adornment prop
+   */
   return (
-    <Root>
+    <Root {...rest}>
       {mediaObjectTypes.map((mediaObject: SCMediaObjectType) => {
         let adornment;
         switch (mediaObject.name) {
-          case 'image':
+          case MEDIA_TYPE_IMAGE:
             adornment = imagesAdornment;
             break;
-          case 'video':
-            adornment = videosAdornment;
-            break;
-          case 'document':
+          case MEDIA_TYPE_DOCUMENT:
             adornment = documentsAdornment;
             break;
-          case 'link':
+          case MEDIA_TYPE_LINK:
             adornment = linksAdornment;
+            break;
+          case MEDIA_TYPE_VIDEO:
+            adornment = videosAdornment;
             break;
           default:
             adornment = null;
             break;
         }
         return (
-          <div className={classNames(classes.medias)} key={mediaObject.name}>
+          <div key={mediaObject.name}>
             <mediaObject.previewComponent medias={medias.filter(mediaObject.filter)} {...GridImageProps} adornment={adornment} />
           </div>
         );
