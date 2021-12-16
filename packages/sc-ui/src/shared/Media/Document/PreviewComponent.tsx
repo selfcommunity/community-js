@@ -42,7 +42,7 @@ export default ({
   return (
     <>
       {medias.length > 0 && (
-        <LazyLoad height={360} placeholder={<CentralProgress size={20} />} once>
+        <LazyLoad height={360} placeholder={<CentralProgress size={20} />}>
           <Root>
             {adornment}
             <Image.previewComponent

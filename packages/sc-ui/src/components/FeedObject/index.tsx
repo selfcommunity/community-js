@@ -4,7 +4,6 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import {
   Avatar,
-  AvatarGroup,
   Box,
   Button,
   CardActions,
@@ -22,7 +21,7 @@ import TimeAgo from 'timeago-react';
 import DateTimeAgo from '../../shared/DateTimeAgo';
 import Bullet from '../../shared/Bullet';
 import Tags from '../../shared/Tags';
-import Medias from '../../shared/Media/Medias';
+import MediasPreview from '../../shared/MediasPreview';
 import ReportingFlagMenu from '../../shared/ReportingFlagMenu';
 import Actions from './Actions';
 import WorldIcon from '@mui/icons-material/Public';
@@ -177,7 +176,7 @@ export default function FeedObject({
                   {obj.title}
                 </Typography>
               )}
-              <Medias medias={obj.medias} />
+              <MediasPreview medias={obj.medias} />
               <Typography
                 variant="body2"
                 gutterBottom

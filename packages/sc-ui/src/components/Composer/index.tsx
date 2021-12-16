@@ -65,7 +65,8 @@ import {TransitionProps} from '@mui/material/transitions';
 import PollPreview from '../FeedObject/Poll';
 import Editor from '../Editor';
 import {SCMediaObjectType} from '../../types/media';
-import {Document, Image, Link, MediasPreview} from '../../shared/Media';
+import {Document, Image, Link} from '../../shared/Media';
+import MediasPreview from '../../shared/MediasPreview';
 import Poll from './Poll';
 import Location from './Location';
 import TagChip from '../../shared/TagChip';
@@ -246,10 +247,10 @@ export interface ComposerProps extends DialogProps {
 
 export const MAIN_VIEW = 'main';
 export const AUDIENCE_VIEW = 'audience';
-export const IMAGES_VIEW = 'images';
-export const VIDEOS_VIEW = 'videos';
-export const DOCUMENTS_VIEW = 'documents';
-export const LINKS_VIEW = 'links';
+export const IMAGES_VIEW = 'image';
+export const VIDEOS_VIEW = 'video';
+export const DOCUMENTS_VIEW = 'document';
+export const LINKS_VIEW = 'link';
 export const POLL_VIEW = 'poll';
 export const LOCATION_VIEW = 'location';
 
@@ -397,7 +398,7 @@ export default function Composer(props: ComposerProps): JSX.Element {
   }, [editMode]);
 
   // Props update
-  useEffect(() => setView(view), [view]);
+  useEffect(() => setView(_view), [_view]);
 
   // Prevent unload
   useEffect(() => {
@@ -429,7 +430,9 @@ export default function Composer(props: ComposerProps): JSX.Element {
   /* Handlers */
 
   const handleChangeView = (view) => {
-    return (event: SyntheticEvent): void => setView(view);
+    return (event: SyntheticEvent): void => {
+      setView(view);
+    };
   };
 
   const handleChangeType = (event: SelectChangeEvent<any>, child: ReactNode): void => {
@@ -587,7 +590,7 @@ export default function Composer(props: ComposerProps): JSX.Element {
             <Fade in={Boolean(fades[MEDIA_TYPE_IMAGE])}>
               <Typography align="left">
                 <Button onClick={handleChangeView(IMAGES_VIEW)} variant="contained" color="primary" size="small">
-                  <WriteIcon /> <FormattedMessage id="ui.composer.media.images.edit" defaultMessage="ui.composer.media.images.edit" />
+                  <WriteIcon /> <FormattedMessage id="ui.composer.media.image.edit" defaultMessage="ui.composer.media.image.edit" />
                 </Button>
               </Typography>
             </Fade>
@@ -617,11 +620,7 @@ export default function Composer(props: ComposerProps): JSX.Element {
         );
       case MEDIA_TYPE_DOCUMENT:
         return (
-          <Box
-            component="div"
-            className={classes.mediasActions}
-            onMouseEnter={handleFadeIn(MEDIA_TYPE_DOCUMENT)}
-            onMouseLeave={handleFadeOut(MEDIA_TYPE_DOCUMENT)}>
+          <Box className={classes.mediasActions} onMouseEnter={handleFadeIn(MEDIA_TYPE_DOCUMENT)} onMouseLeave={handleFadeOut(MEDIA_TYPE_DOCUMENT)}>
             <Fade in={Boolean(fades[MEDIA_TYPE_DOCUMENT])}>
               <Typography align="left">
                 <Button onClick={handleChangeView(DOCUMENTS_VIEW)} variant="contained" color="primary" size="small">
@@ -855,16 +854,14 @@ export default function Composer(props: ComposerProps): JSX.Element {
             readOnly={isSubmitting}
           />
           <Box className={classes.medias}>
-            {
-              <MediasPreview
-                medias={medias}
-                GridImageProps={{gallery: false, overlay: false}}
-                imagesAdornment={renderMediaControls(MEDIA_TYPE_IMAGE)}
-                videosAdornment={renderMediaControls(MEDIA_TYPE_VIDEO)}
-                documentsAdornment={renderMediaControls(MEDIA_TYPE_DOCUMENT)}
-                linksAdornment={renderMediaControls(MEDIA_TYPE_LINK)}
-              />
-            }
+            <MediasPreview
+              medias={medias}
+              GridImageProps={{gallery: false, overlay: false}}
+              imagesAdornment={renderMediaControls(MEDIA_TYPE_IMAGE)}
+              videosAdornment={renderMediaControls(MEDIA_TYPE_VIDEO)}
+              documentsAdornment={renderMediaControls(MEDIA_TYPE_DOCUMENT)}
+              linksAdornment={renderMediaControls(MEDIA_TYPE_LINK)}
+            />
           </Box>
           {poll && <PollPreview pollObject={poll} />}
           <Stack spacing={2} className={classes.audience} direction="row">

@@ -1,11 +1,11 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import {SCMediaObjectType} from '../../../types/media';
-import Document from '../Document';
-import Image from '../Image';
-import Link from '../Link';
-import {MEDIA_TYPE_DOCUMENT, MEDIA_TYPE_IMAGE, MEDIA_TYPE_LINK, MEDIA_TYPE_VIDEO} from '../../../constants/Media';
+import {SCMediaObjectType} from '../../types/media';
+import Document from '../Media/Document';
+import Image from '../Media/Image';
+import Link from '../Media/Link';
+import {MEDIA_TYPE_DOCUMENT, MEDIA_TYPE_IMAGE, MEDIA_TYPE_LINK, MEDIA_TYPE_VIDEO} from '../../constants/Media';
 
 const PREFIX = 'SCMedias';
 
@@ -41,13 +41,17 @@ export default ({
   [p: string]: any;
 }): JSX.Element => {
   if (!medias.length) {
-    // Feed without any medias
+    /**
+     * Feed without any medias:
+     * don't render anything
+     */
     return null;
   }
 
   /**
    * Render list of media preview
-   * The adornment prop
+   * The adornment prop is used to insert the controls
+   * for re-editing the media at the top of the group of elements
    */
   return (
     <Root {...rest}>
