@@ -57,6 +57,12 @@
   "ui.platformAccess.edt": "Editor",
   "ui.platformAccess.hc": "Help Center",
 
+  "ui.loyaltyProgram.title":"Collecting Points",
+  "ui.loyaltyProgram.lp":"Loyalty Program",
+  "ui.loyaltyProgram.description":"Convert your partecipation into precious points. The loyalty program is simple and full of advantages.",
+  "ui.loyaltyProgram.points": "Your points: {total}",
+  "ui.loyaltyProgram.discover": "Discover more",
+
   "ui.composer.type.post": "Create Post",
   "ui.composer.type.discussion": "Create Discussion",
   "ui.composer.done": "done",

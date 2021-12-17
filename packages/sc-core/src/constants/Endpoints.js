@@ -117,6 +117,10 @@ export default {
     url: urlReplacer('/api/v2/user/$(id)/'),
     method: 'GET',
   },
+  GetUserLoyaltyPoints: {
+    url: urlReplacer('/api/v2/user/$(id)/loyalty/points/'),
+    method: 'GET',
+  },
   UserFollowers: {
     url: urlReplacer('/api/v2/user/$(id)/followers/'),
     method: 'GET',
