@@ -73,17 +73,19 @@ export default function Share({
     if (withAction && inlineAction) {
       return (
         <Tooltip title={isSharing ? '' : 'Share'}>
-          <IconButton disabled={isSharing} onClick={share} edge={isSharing ? false : 'end'} size="large">
-            {isSharing ? (
-              <Box style={{padding: 10}}>
-                <CircularProgress size={14} style={{marginTop: -2}} />
-              </Box>
-            ) : (
-              <React.Fragment>
-                <ShareIcon fontSize="small" />
-              </React.Fragment>
-            )}
-          </IconButton>
+          <span>
+            <IconButton disabled={isSharing} onClick={share} edge={isSharing ? false : 'end'} size="large">
+              {isSharing ? (
+                <Box style={{padding: 10}}>
+                  <CircularProgress size={14} style={{marginTop: -2}} />
+                </Box>
+              ) : (
+                <React.Fragment>
+                  <ShareIcon fontSize="small" />
+                </React.Fragment>
+              )}
+            </IconButton>
+          </span>
         </Tooltip>
       );
     }

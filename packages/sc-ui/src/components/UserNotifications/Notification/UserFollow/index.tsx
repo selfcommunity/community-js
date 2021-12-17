@@ -1,7 +1,7 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
 import {Avatar, Box, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
-import {Link, SCNotificationUserFollowType, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
+import { Link, SCNotificationUserFollowType, SCRoutes, SCRoutingContextType, useSCRouting } from '@selfcommunity/core';
 import {defineMessages, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../../shared/DateTimeAgo';
 
@@ -33,14 +33,14 @@ export default function UserFollowNotification({
     <Root {...props}>
       <ListItem alignItems="flex-start">
         <ListItemAvatar>
-          <Link to={scRoutingContext.url('profile', {id: notificationObject.follower.id})}>
+          <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: notificationObject.follower.id})}>
             <Avatar alt={notificationObject.follower.username} variant="circular" src={notificationObject.follower.avatar} />
           </Link>
         </ListItemAvatar>
         <ListItemText
           primary={
             <Typography component="span" sx={{display: 'inline'}} color="primary">
-              <Link to={scRoutingContext.url('profile', {id: notificationObject.follower.id})}>{notificationObject.follower.username}</Link>{' '}
+              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: notificationObject.follower.id})}>{notificationObject.follower.username}</Link>{' '}
               {intl.formatMessage(messages.followUser, {b: (...chunks) => <strong>{chunks}</strong>})}
             </Typography>
           }

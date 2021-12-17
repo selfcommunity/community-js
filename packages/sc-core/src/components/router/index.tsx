@@ -5,12 +5,11 @@ import {SCRoutingContextType} from '@selfcommunity/core';
 /**
  *
  * Import this components:
- * import {Link} from '@selfcommunity/core';
- * import {SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
+ * import {SCRoutingContextType, useSCRouting, Link, SCRoutes} from '@selfcommunity/core';
  *
  * Example:
  *    const scRoutingContext: SCRoutingContextType = useSCRouting();
- *    <Button component={Link} to={scRoutingContext.url('profile', {id: user.id})}>Go to profile</Button>
+ *    <Button component={Link} to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: user.id})}>Go to profile</Button>
  * or
  *    const scRoutingContext: SCRoutingContextType = useSCRouting();
  *    <Link to={scRoutingContext.url('profile', {id: user.id})}>Go to profile</Link>

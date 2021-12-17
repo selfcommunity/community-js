@@ -55,10 +55,10 @@ const Root = styled(Box, {
 }));
 
 export default ({medias, fullWidth = false, adornment = null}: {medias: any[]; fullWidth?: boolean; adornment?: React.ReactNode}): JSX.Element => {
-  const renderPreview = (link) => {
+  const renderPreview = (link, key) => {
     if (fullWidth) {
       return (
-        <div className={classes.preview}>
+        <div className={classes.preview} key={key}>
           <img src={link.embed.metadata.images[0].url} className={classes.image} />
           <div className={classes.snippet}>
             <b className={classes.snippetTitle}>{link.embed.metadata.title}</b>
@@ -74,7 +74,7 @@ export default ({medias, fullWidth = false, adornment = null}: {medias: any[]; f
     }
 
     return (
-      <div className={classes.preview}>
+      <div className={classes.preview} key={key}>
         <div className={classes.thumbnail}>
           <img src={link.embed.metadata.images[0].url} className={classes.image} />
         </div>
@@ -99,9 +99,9 @@ export default ({medias, fullWidth = false, adornment = null}: {medias: any[]; f
             {adornment}
             {medias.map((l, i) => {
               if (l.embed.metadata && l.embed.metadata.type === MEDIA_TYPE_VIDEO) {
-                return <AutoPlayer url={l.url} width={'100%'} />;
+                return <AutoPlayer url={l.url} width={'100%'} key={i} />;
               }
-              return renderPreview(l);
+              return renderPreview(l, i);
             })}
           </Root>
         </LazyLoad>

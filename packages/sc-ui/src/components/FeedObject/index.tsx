@@ -31,7 +31,18 @@ import PollObject from './Poll';
 import ContributorsFeedObject from './Contributors';
 import LazyLoad from 'react-lazyload';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import {SCFeedObjectType, SCFeedObjectTypologyType, Link, useSCFetchFeedObject, SCPollType, SCUserContextType, useSCUser} from '@selfcommunity/core';
+import {
+  SCFeedObjectType,
+  SCFeedObjectTypologyType,
+  Link,
+  useSCFetchFeedObject,
+  SCPollType,
+  SCUserContextType,
+  useSCUser,
+  SCRoutingContextType,
+  useSCRouting,
+  SCRoutes
+} from '@selfcommunity/core';
 import Composer from '../Composer';
 
 const messages = defineMessages({
@@ -52,6 +63,7 @@ const classes = {
   username: `${PREFIX}-username`,
   category: `${PREFIX}-category`,
   content: `${PREFIX}-content`,
+  snippetContent: `${PREFIX}-snippet-content`,
   tag: `${PREFIX}-tag`
 };
 
@@ -68,13 +80,18 @@ const Root = styled(Card, {
   },
   [`& .${classes.username}`]: {
     color: '#000',
-    fontWeight: 700,
-    fontSize: '1.1em'
+    fontWeight: 600,
+    fontSize: '15px',
+    textDecoration: 'none'
   },
   [`& .${classes.category}`]: {
     textAlign: 'center',
     color: '#939598',
     borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
+    '& a': {
+      textDecoration: 'none',
+      color: '#3e3e3e'
+    },
     '& a::after': {
       content: '"\\2022"',
       padding: theme.spacing()
@@ -86,6 +103,10 @@ const Root = styled(Card, {
   [`& .${classes.content}`]: {
     paddingTop: 0,
     paddingBottom: 0
+  },
+  [`& .${classes.snippetContent}`]: {
+    textDecoration: 'none',
+    color: '#3e3e3e'
   },
   [`& .${classes.tag}`]: {
     display: 'inline-block',
@@ -117,6 +138,7 @@ export default function FeedObject({
   template?: FeedObjectTemplateType;
   [p: string]: any;
 }): JSX.Element {
+  const scRoutingContext: SCRoutingContextType = useSCRouting();
   const {obj, setObj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
   const [composerOpen, setComposerOpen] = useState<boolean>(false);
   const scUserContext: SCUserContextType = useSCUser();
@@ -174,23 +196,28 @@ export default function FeedObject({
       <React.Fragment>
         {obj ? (
           <React.Fragment>
-            <div className={classes.category}>
-              {obj.categories &&
-                obj.categories.map((c) => (
-                  <Link key={c.id}>
+            {obj.categories && (
+              <div className={classes.category}>
+                {obj.categories.map((c) => (
+                  <Link to={scRoutingContext.url(SCRoutes.CATEGORY_ROUTE_NAME, {id: c.id})} key={c.id}>
                     <Typography variant="overline">{c.name}</Typography>
                   </Link>
                 ))}
-            </div>
+              </div>
+            )}
             <CardHeader
               avatar={
-                <Link>
+                <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: obj.author.id})}>
                   <Avatar aria-label="recipe" src={obj.author.avatar}>
                     {obj.author.username}
                   </Avatar>
                 </Link>
               }
-              title={<span className={classes.username}>{obj.author.username}</span>}
+              title={
+                <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: obj.author.id})} className={classes.username}>
+                  {obj.author.username}
+                </Link>
+              }
               subheader={
                 <Grid component="span" item={true} sm="auto" container direction="row" alignItems="center">
                   <DateTimeAgo date={obj.last_activity_at} />
@@ -210,9 +237,11 @@ export default function FeedObject({
             />
             <CardContent classes={{root: classes.content}}>
               {'title' in obj && (
-                <Typography variant="body1" gutterBottom className={classes.title}>
-                  {obj.title}
-                </Typography>
+                <Link to={scRoutingContext.url(feedObjectType, {id: obj.id})}>
+                  <Typography variant="body1" gutterBottom className={classes.title}>
+                    {obj.title}
+                  </Typography>
+                </Link>
               )}
               <MediasPreview medias={obj.medias} />
               <Typography
@@ -222,7 +251,7 @@ export default function FeedObject({
               />
               {obj['poll'] && <PollObject feedObject={obj} pollObject={obj['poll']} onChange={handleChangePoll} elevation={0} />}
               <LazyLoad>
-                <ContributorsFeedObject feedObject={obj} feedObjectType={feedObjectType} sx={{padding: '6px'}}/>
+                <ContributorsFeedObject feedObject={obj} feedObjectType={feedObjectType} sx={{padding: '6px'}} />
               </LazyLoad>
             </CardContent>
             <CardActions>
@@ -250,25 +279,29 @@ export default function FeedObject({
     objElement = (
       <React.Fragment>
         {obj ? (
-          <ListItem button={true} alignItems="flex-start">
+          <ListItem alignItems="flex-start">
             <ListItemAvatar>
-              <Avatar alt={obj.author.username} variant="circular" src={obj.author.avatar} />
+              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: obj.author.id})}>
+                <Avatar alt={obj.author.username} variant="circular" src={obj.author.avatar} />
+              </Link>
             </ListItemAvatar>
             <ListItemText
               primary={
-                <Typography component="span" sx={{display: 'inline'}} color="primary">
+                <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: obj.author.id})} className={classes.username}>
                   {obj.author.username}
-                </Typography>
+                </Link>
               }
               secondary={
                 <React.Fragment>
-                  {obj.summary}
+                  <Link to={scRoutingContext.url(feedObjectType, {id: obj.id})} className={classes.snippetContent}>
+                    {obj.summary}
+                  </Link>
                   <Box component="span" sx={{display: 'flex', justifyContent: 'flex-start', p: '2px'}}>
                     <Grid component="span" item={true} sm="auto" container direction="row" alignItems="center">
                       <AccessTimeIcon sx={{paddingRight: '2px'}} />
                       <TimeAgo datetime={obj.added_at} />
                       <Bullet sx={{paddingLeft: '4px', paddingTop: '1px'}} />
-                      <Button variant={'text'} sx={{marginTop: '-1px'}}>
+                      <Button component={Link} to={scRoutingContext.url(feedObjectType, {id: obj.id})} variant={'text'} sx={{marginTop: '-1px'}}>
                         {intl.formatMessage(messages.comment)}
                       </Button>
                     </Grid>

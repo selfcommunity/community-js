@@ -124,7 +124,7 @@ export default function ContributorsFeedObject({
               <Button variant={'text'} onClick={() => setOpenContributorsDialog(true)}>
                 <AvatarGroup {...rest}>
                   {contributors.map((c: SCUserType) => (
-                    <Avatar alt={c.username} src={c.avatar} />
+                    <Avatar alt={c.username} src={c.avatar} key={c.id}/>
                   ))}
                   {[...Array(total - contributors.length)].map((x, i) => (
                     <Avatar key={i}></Avatar>

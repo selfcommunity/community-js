@@ -268,13 +268,15 @@ export default function Vote({
     }
     return (
       <Tooltip title={loading || voting ? '' : obj.voted ? 'Vote down' : 'Vote up'}>
-        <IconButton disabled={loading || voting} onClick={vote} edge={loading ? false : 'end'} size="large">
-          {voting ? (
-            <CircularProgress size={14} style={{marginTop: -7}} />
-          ) : (
-            <React.Fragment>{obj.voted ? <VoteFilledIcon fontSize="small" /> : <VoteIcon fontSize="small" />}</React.Fragment>
-          )}
-        </IconButton>
+        <span>
+          <IconButton disabled={loading || voting} onClick={vote} edge={loading ? false : 'end'} size="large">
+            {voting ? (
+              <CircularProgress size={14} style={{marginTop: -7}} />
+            ) : (
+              <React.Fragment>{obj.voted ? <VoteFilledIcon fontSize="small" /> : <VoteIcon fontSize="small" />}</React.Fragment>
+            )}
+          </IconButton>
+        </span>
       </Tooltip>
     );
   }
@@ -367,9 +369,11 @@ export default function Vote({
           <React.Fragment>
             <Divider />
             <Tooltip title={voting ? '' : obj.voted ? intl.formatMessage(messages.voteDown) : intl.formatMessage(messages.voteUp)}>
-              <LoadingButton loading={voting} disabled={!canVote || !obj} onClick={vote}>
-                {obj.voted ? <VoteFilledIcon fontSize={'large'} color={'secondary'} /> : <VoteIcon fontSize={'large'} />}
-              </LoadingButton>
+              <span>
+                <LoadingButton loading={voting} disabled={!canVote || !obj} onClick={vote}>
+                  {obj.voted ? <VoteFilledIcon fontSize={'large'} color={'secondary'} /> : <VoteIcon fontSize={'large'} />}
+                </LoadingButton>
+              </span>
             </Tooltip>
           </React.Fragment>
         )}

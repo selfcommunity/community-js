@@ -22,9 +22,9 @@ import {
   SCNotificationAggregatedType,
   SCNotificationPrivateMessageType,
   SCNotificationType,
-  SCNotificationTypologyType,
+  SCNotificationTypologyType, SCRoutes,
   SCRoutingContextType,
-  useSCRouting
+  useSCRouting,
 } from '@selfcommunity/core';
 import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
 import {grey} from '@mui/material/colors';
@@ -193,14 +193,14 @@ export default function UserNotification({
       return (
         <ListItem alignItems="flex-start">
           <ListItemAvatar>
-            <Link to={scRoutingContext.url('profile', {id: messageNotification.message.sender.id})}>
+            <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: messageNotification.message.sender.id})}>
               <Avatar alt={messageNotification.message.sender.username} variant="circular" src={messageNotification.message.sender.avatar} />
             </Link>
           </ListItemAvatar>
           <ListItemText
             primary={
               <Typography component="span" sx={{display: 'inline'}} color="primary">
-                <Link to={scRoutingContext.url('profile', {id: messageNotification.message.sender.id})}>
+                <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: messageNotification.message.sender.id})}>
                   {messageNotification.message.sender.username}
                 </Link>{' '}
                 {intl.formatMessage(messages.receivePrivateMessage, {

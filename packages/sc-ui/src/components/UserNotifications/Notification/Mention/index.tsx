@@ -1,7 +1,7 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
 import {Avatar, Box, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
-import {Link, SCNotificationMentionType, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
+import { Link, SCNotificationMentionType, SCRoutes, SCRoutingContextType, useSCRouting } from '@selfcommunity/core';
 import {defineMessages, useIntl} from 'react-intl';
 import {getContributeType} from '../../../../utils/contribute';
 import DateTimeAgo from '../../../../shared/DateTimeAgo';
@@ -34,14 +34,14 @@ export default function UserNotificationMention({notificationObject = null, ...p
     <Root {...props}>
       <ListItem alignItems="flex-start">
         <ListItemAvatar>
-          <Link to={scRoutingContext.url('profile', {id: notificationObject[objectType].author.id})}>
+          <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: notificationObject[objectType].author.id})}>
             <Avatar alt={notificationObject[objectType].author.username} variant="circular" src={notificationObject[objectType].author.avatar} />
           </Link>
         </ListItemAvatar>
         <ListItemText
           primary={
             <Typography component="span" sx={{display: 'inline'}} color="primary">
-              <Link to={scRoutingContext.url('profile', {id: notificationObject[objectType].author.id})}>
+              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: notificationObject[objectType].author.id})}>
                 {notificationObject[objectType].author.username}
               </Link>{' '}
               {intl.formatMessage(messages.quotedYouOn, {

@@ -41,7 +41,9 @@ export default function DateTimeAgo({
       <Root {...rest}>
         {showStartIcon && <AccessTimeIcon sx={{paddingRight: '2px'}} />}
         <Tooltip title={`${intl.formatDate(date, {year: 'numeric', month: 'numeric', day: 'numeric'})}`}>
-          <TimeAgo date={date} live={live} formatter={formatter} />
+          <span>
+            <TimeAgo date={date} live={live} formatter={formatter} />
+          </span>
         </Tooltip>
       </Root>
     );

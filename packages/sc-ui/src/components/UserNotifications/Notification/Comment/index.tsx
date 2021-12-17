@@ -1,7 +1,14 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
 import {Avatar, Box, Grid, ListItem, ListItemAvatar, ListItemText, Tooltip, Typography} from '@mui/material';
-import {Link, SCNotificationCommentType, SCNotificationTypologyType, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
+import {
+  Link,
+  SCNotificationCommentType,
+  SCNotificationTypologyType,
+  SCRoutes,
+  SCRoutingContextType,
+  useSCRouting,
+} from '@selfcommunity/core';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import Bullet from '../../../../shared/Bullet';
 import {LoadingButton} from '@mui/lab';
@@ -57,14 +64,14 @@ export default function UserNotificationComment({
     <Root {...props}>
       <ListItem alignItems="flex-start">
         <ListItemAvatar>
-          <Link to={scRoutingContext.url('profile', {id: notificationObject.comment.author.id})}>
+          <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: notificationObject.comment.author.id})}>
             <Avatar alt={notificationObject.comment.author.username} variant="circular" src={notificationObject.comment.author.avatar} />
           </Link>
         </ListItemAvatar>
         <ListItemText
           primary={
             <Typography component="span" sx={{display: 'inline'}} color="primary">
-              <Link to={scRoutingContext.url('profile', {id: notificationObject.comment.author.id})}>
+              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: notificationObject.comment.author.id})}>
                 {notificationObject.comment.author.username}
               </Link>{' '}
               {notificationObject.type === SCNotificationTypologyType.NESTED_COMMENT

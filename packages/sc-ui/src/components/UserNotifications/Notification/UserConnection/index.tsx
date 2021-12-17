@@ -7,9 +7,9 @@ import {
   Link,
   SCNotificationConnectionAcceptType,
   SCNotificationConnectionRequestType,
-  SCNotificationTypologyType,
+  SCNotificationTypologyType, SCRoutes,
   SCRoutingContextType,
-  useSCRouting
+  useSCRouting,
 } from '@selfcommunity/core';
 
 const messages = defineMessages({
@@ -45,14 +45,14 @@ export default function UserConnectionNotification({
     <Root {...props}>
       <ListItem alignItems="flex-start">
         <ListItemAvatar>
-          <Link to={scRoutingContext.url('profile', {id: userConnection.id})}>
+          <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: userConnection.id})}>
             <Avatar alt={userConnection.username} variant="circular" src={userConnection.avatar} />
           </Link>
         </ListItemAvatar>
         <ListItemText
           primary={
             <Typography component="span" sx={{display: 'inline'}} color="primary">
-              <Link to={scRoutingContext.url('profile', {id: userConnection.id})}>{userConnection.username}</Link>{' '}
+              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: userConnection.id})}>{userConnection.username}</Link>{' '}
               {notificationObject.type === SCNotificationTypologyType.CONNECTION_REQUEST
                 ? intl.formatMessage(messages.requestConnection, {b: (...chunks) => <strong>{chunks}</strong>})
                 : intl.formatMessage(messages.requestConnection, {b: (...chunks) => <strong>{chunks}</strong>})}

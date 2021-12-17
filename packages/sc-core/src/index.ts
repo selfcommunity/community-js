@@ -103,6 +103,7 @@ import useSCFetchCategory from './hooks/useSCFetchCategory';
  * Routing component
  */
 import Link from './components/router';
+import * as SCRoutes from './constants/Routes';
 
 /**
  * Http component
@@ -212,6 +213,7 @@ export {
   http,
   formatHttpError,
   Link,
+  SCRoutes,
   Endpoints,
   Logger,
   StringUtils,
