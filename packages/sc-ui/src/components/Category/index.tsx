@@ -37,11 +37,13 @@ function Category({
   id = null,
   category = null,
   popular = null,
+  autoHide = null,
   ...rest
 }: {
   id?: number;
   category?: SCCategoryType;
   popular?: boolean;
+  autoHide?: boolean;
   [p: string]: any;
 }): JSX.Element {
   const {scCategory, setSCCategory} = useSCFetchCategory({id, category});

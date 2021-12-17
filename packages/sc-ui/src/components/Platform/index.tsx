@@ -20,7 +20,7 @@ const Root = styled(Card, {
   padding: 20
 }));
 
-function Platform({contained = true}: {contained: boolean}): JSX.Element {
+export default function Platform({contained = true, autoHide = null}: {contained: boolean; autoHide: boolean}): JSX.Element {
   const scUserContext: SCUserContextType = useContext(SCUserContext);
   const scLocaleContext: SCLocaleContextType = useSCLocale();
   const language = scLocaleContext.locale;
@@ -85,7 +85,7 @@ function Platform({contained = true}: {contained: boolean}): JSX.Element {
     );
   }
 
-  const p = <React.Fragment>{role === null ? null : renderPanel()}</React.Fragment>;
+  const p = <React.Fragment>{role === null ? autoHide : renderPanel()}</React.Fragment>;
   if (contained && role !== null) {
     return (
       <Root variant="outlined">
@@ -95,5 +95,3 @@ function Platform({contained = true}: {contained: boolean}): JSX.Element {
   }
   return p;
 }
-
-export default Platform;

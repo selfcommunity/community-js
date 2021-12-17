@@ -21,7 +21,7 @@ const Root = styled(Card, {
   marginBottom: theme.spacing(2)
 }));
 
-function SCTrendingPeople({scCategoryId = null, ...props}: {scCategoryId?: number}): JSX.Element {
+export default function TrendingPeople({scCategoryId = null, ...props}: {scCategoryId?: number; [p: string]: any}): JSX.Element {
   const [people, setPeople] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [hasMore, setHasMore] = useState<boolean>(false);
@@ -50,8 +50,8 @@ function SCTrendingPeople({scCategoryId = null, ...props}: {scCategoryId?: numbe
     fetchTrendingPeople();
   }, []);
 
-  return (
-    <Root {...props}>
+  const p = (
+    <React.Fragment>
       {loading ? (
         <PeopleSuggestionSkeleton />
       ) : (
@@ -80,7 +80,11 @@ function SCTrendingPeople({scCategoryId = null, ...props}: {scCategoryId?: numbe
           {openTrendingPeopleDialog && <></>}
         </CardContent>
       )}
-    </Root>
+    </React.Fragment>
   );
+
+  if (!props.autoHide) {
+    return <Root {...props}>{p}</Root>;
+  }
+  return null;
 }
-export default SCTrendingPeople;

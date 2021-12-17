@@ -50,8 +50,8 @@ export default function CategoriesSuggestion(props): JSX.Element {
     fetchCategoriesSuggestion();
   }, []);
 
-  return (
-    <Root {...props}>
+  const c = (
+    <React.Fragment>
       {loading ? (
         <CategoriesSuggestionSkeleton elevation={0} />
       ) : (
@@ -81,6 +81,11 @@ export default function CategoriesSuggestion(props): JSX.Element {
           {openCategoriesSuggestionDialog && <></>}
         </CardContent>
       )}
-    </Root>
+    </React.Fragment>
   );
+
+  if (!props.autoHide) {
+    return <Root {...props}>{c}</Root>;
+  }
+  return null;
 }

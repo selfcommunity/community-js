@@ -22,7 +22,16 @@ const Root = styled(Card, {
   marginBottom: theme.spacing(2)
 }));
 
-function TrendingFeed({scCategoryId = null, template = null, ...props}: {scCategoryId?: number; template?: FeedObjectTemplateType}): JSX.Element {
+export default function TrendingFeed({
+  scCategoryId = null,
+  template = null,
+  autoHide = null,
+  ...props
+}: {
+  scCategoryId?: number;
+  template?: FeedObjectTemplateType;
+  autoHide?: boolean;
+}): JSX.Element {
   const [posts, setPosts] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [hasMore, setHasMore] = useState<boolean>(false);
@@ -65,8 +74,8 @@ function TrendingFeed({scCategoryId = null, template = null, ...props}: {scCateg
     fetchTrendingPost();
   }, []);
 
-  return (
-    <Root {...props}>
+  const f = (
+    <React.Fragment>
       {loading ? (
         <TrendingPostSkeleton elevation={0} />
       ) : (
@@ -97,7 +106,10 @@ function TrendingFeed({scCategoryId = null, template = null, ...props}: {scCateg
           {openTrendingPostDialog && <></>}
         </CardContent>
       )}
-    </Root>
+    </React.Fragment>
   );
+  if (!autoHide) {
+    return <Root {...props}>{f}</Root>;
+  }
+  return null;
 }
-export default TrendingFeed;

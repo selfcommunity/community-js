@@ -31,11 +31,13 @@ export default function User({
   id = null,
   user = null,
   handleIgnoreAction = null,
+  autoHide = null,
   ...rest
 }: {
   id?: number;
   user?: SCUserType;
   handleIgnoreAction?: (u) => void;
+  autoHide?: boolean;
   [p: string]: any;
 }): JSX.Element {
   const {scUser, setSCUser} = useSCFetchUser({id, user});

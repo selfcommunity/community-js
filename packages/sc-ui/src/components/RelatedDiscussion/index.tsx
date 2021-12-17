@@ -32,15 +32,17 @@ const Root = styled(Card, {
   marginBottom: theme.spacing(2)
 }));
 
-function RelatedDiscussion({
+export default function RelatedDiscussion({
   feedObjectId = null,
   feedObjectType = null,
   template = null,
+  autoHide = null,
   ...props
 }: {
   feedObjectId?: number;
   feedObjectType?: SCFeedObjectTypologyType;
   template?: FeedObjectTemplateType;
+  autoHide?: boolean;
 }): JSX.Element {
   const [objs, setObjs] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -75,8 +77,8 @@ function RelatedDiscussion({
     fetchRelated();
   }, []);
 
-  return (
-    <Root {...props}>
+  const d = (
+    <React.Fragment>
       {loading ? (
         <TrendingPostSkeleton elevation={0} />
       ) : (
@@ -107,7 +109,11 @@ function RelatedDiscussion({
           {openTrendingPostDialog && <></>}
         </CardContent>
       )}
-    </Root>
+    </React.Fragment>
   );
+
+  if (!autoHide) {
+    return <Root {...props}>{d}</Root>;
+  }
+  return null;
 }
-export default RelatedDiscussion;

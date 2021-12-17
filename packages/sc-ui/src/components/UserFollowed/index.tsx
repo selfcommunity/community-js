@@ -21,7 +21,7 @@ const Root = styled(Card, {
   marginBottom: theme.spacing(2)
 }));
 
-function UserFollowed({scPersonId = null, ...props}: {scPersonId?: number}): JSX.Element {
+export default function UserFollowed({scPersonId = null, ...props}: {scPersonId?: number; [p: string]: any}): JSX.Element {
   const [followed, setFollowed] = useState<any[]>([]);
   const [lUfollowed, setLUFollowed] = useState<any[]>([]);
   const [visibleUsers, setVisibleUsers] = useState<number>(3);
@@ -89,8 +89,8 @@ function UserFollowed({scPersonId = null, ...props}: {scPersonId?: number}): JSX
   const mutualPeople = getMutuals(followed, lUfollowed);
   const filteredFollowers = removeMutuals(followed, mutualPeople);
 
-  return (
-    <Root {...props}>
+  const u = (
+    <React.Fragment>
       <CardContent>
         <Typography variant="body1">People</Typography>
         <Typography variant="body2">
@@ -114,7 +114,11 @@ function UserFollowed({scPersonId = null, ...props}: {scPersonId?: number}): JSX
         )}
         {openMutualPeopleDialog && <></>}
       </CardContent>
-    </Root>
+    </React.Fragment>
   );
+
+  if (!props.autoHide) {
+    return <Root {...props}>{u}</Root>;
+  }
+  return null;
 }
-export default UserFollowed;

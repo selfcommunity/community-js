@@ -20,7 +20,7 @@ const Root = styled(Card, {
   marginBottom: theme.spacing(2)
 }));
 
-function PeopleSuggestion(props): JSX.Element {
+export default function PeopleSuggestion(props): JSX.Element {
   const [users, setUsers] = useState<SCUserType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [hasMore, setHasMore] = useState<boolean>(false);
@@ -63,8 +63,8 @@ function PeopleSuggestion(props): JSX.Element {
     fetchUserSuggestion();
   }, []);
 
-  return (
-    <Root {...props}>
+  const p = (
+    <React.Fragment>
       {loading ? (
         <PeopleSuggestionSkeleton elevation={0} />
       ) : (
@@ -93,8 +93,11 @@ function PeopleSuggestion(props): JSX.Element {
           {openPeopleSuggestionDialog && <></>}
         </CardContent>
       )}
-    </Root>
+    </React.Fragment>
   );
-}
 
-export default PeopleSuggestion;
+  if (!props.autoHide) {
+    return <Root {...props}>{p}</Root>;
+  }
+  return null;
+}

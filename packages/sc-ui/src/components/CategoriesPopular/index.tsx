@@ -64,8 +64,8 @@ export default function CategoriesPopular(props): JSX.Element {
       });
   }, []);
 
-  return (
-    <Root {...props}>
+  const c = (
+    <React.Fragment>
       {loading ? (
         <CategoriesSuggestionSkeleton elevation={0} />
       ) : (
@@ -95,6 +95,11 @@ export default function CategoriesPopular(props): JSX.Element {
           {openPopularCategoriesDialog && <></>}
         </CardContent>
       )}
-    </Root>
+    </React.Fragment>
   );
+
+  if (!props.autoHide) {
+    return <Root {...props}>{c}</Root>;
+  }
+  return null;
 }
