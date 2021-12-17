@@ -1,6 +1,6 @@
 /**
  * Default Routes
- * @type {{post: string, profile: string, discussion: string, category: string, status: string}}
+ * @type {{post: string, profile: string, discussion: string, category: string, status: string, messages: string}}
  */
 export const defaultRoutes = {
   category: '/category/:id/',

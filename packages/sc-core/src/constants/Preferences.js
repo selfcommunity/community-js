@@ -95,7 +95,13 @@ export const CONFIGURATIONS_STREAM_QUALITY = 'configurations.stream_quality';
 export const CONFIGURATIONS_CONTENT_AVAILABILITY = 'configurations.content_availability';
 export const CONFIGURATIONS_USERS_APPROVAL_ENABLED = 'configurations.users_approval_enabled';
 export const CONFIGURATIONS_DISCUSSION_TYPE_ENABLED = 'configurations.discussion_type_enabled';
-export const CONFIGURATIONS_POST_TYPE_ENABLED = 'configurations.post_type_enabled';
+export const CONFIGURATIONS_STATUS_TYPE_ENABLED = 'configurations.status_type_enabled';
+export const CONFIGURATIONS_URL_TEMPLATE_POST = 'configurations.url_template_post';
+export const CONFIGURATIONS_URL_TEMPLATE_DISCUSSION = 'configurations.url_template_discussion';
+export const CONFIGURATIONS_URL_TEMPLATE_STATUS = 'configurations.url_template_status';
+export const CONFIGURATIONS_URL_TEMPLATE_COMMENT = 'configurations.url_template_comment';
+export const CONFIGURATIONS_URL_TEMPLATE_CATEGORY = 'configurations.url_template_category';
+export const CONFIGURATIONS_URL_TEMPLATE_PROFILE = 'configurations.url_template_profile';
 
 /**
  * PROVIDERS
@@ -196,6 +202,14 @@ export const DATA_TYPES = {
   [CONFIGURATIONS_CONTENT_AVAILABILITY]: booleanType,
   [CONFIGURATIONS_STREAM_QUALITY]: booleanType,
   [CONFIGURATIONS_USERS_APPROVAL_ENABLED]: booleanType,
+  [CONFIGURATIONS_DISCUSSION_TYPE_ENABLED]: booleanType,
+  [CONFIGURATIONS_STATUS_TYPE_ENABLED]: booleanType,
+  [CONFIGURATIONS_URL_TEMPLATE_POST]: stringType,
+  [CONFIGURATIONS_URL_TEMPLATE_DISCUSSION]: stringType,
+  [CONFIGURATIONS_URL_TEMPLATE_STATUS]: stringType,
+  [CONFIGURATIONS_URL_TEMPLATE_COMMENT]: stringType,
+  [CONFIGURATIONS_URL_TEMPLATE_CATEGORY]: stringType,
+  [CONFIGURATIONS_URL_TEMPLATE_PROFILE]: stringType,
   [PROVIDERS_GOOGLE_GEOCODING_API_KEY]: stringType,
   [WEBMASTER_META_ROBOTS]: stringType,
   [WEBMASTER_META_TITLE_HOME_NOT_LOGGED]: stringType,

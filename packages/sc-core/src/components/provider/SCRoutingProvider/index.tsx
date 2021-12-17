@@ -1,7 +1,9 @@
 import React, {createContext, useContext, useMemo} from 'react';
-import {SCContextType, SCRoutingContextType} from '../../../types';
+import {SCContextType, SCPreferencesContextType, SCRoutingContextType, SCUserContextType} from '../../../types';
 import {useSCContext} from '../SCContextProvider';
 import {defaultRoutes} from '../../../constants/Routes';
+import {SCPreferencesContext} from '../SCPreferencesProvider';
+import * as SCPreferences from '../../../constants/Preferences';
 
 /**
  * Create Global Context
@@ -15,10 +17,26 @@ import {defaultRoutes} from '../../../constants/Routes';
 export const SCRoutingContext = createContext<SCRoutingContextType>({} as SCRoutingContextType);
 
 export default function SCRoutingProvider({children = null}: {children: React.ReactNode}): JSX.Element {
+  const scPreferencesContext: SCPreferencesContextType = useContext(SCPreferencesContext);
   const scContext: SCContextType = useSCContext();
   const router: SCRoutingContextType = scContext.settings.router ? scContext.settings.router : {};
   const routerLink: React.ComponentClass<any> = router.routerLink ? router.routerLink : null;
-  const routes: Record<string, any> = router.routes ? {...defaultRoutes, ...router.routes} : defaultRoutes;
+  const _routes = Object.assign(getPreferencesRoutes(), defaultRoutes);
+  const routes: Record<string, any> = router.routes ? {..._routes, ...router.routes} : defaultRoutes;
+
+  /**
+   * Get override routes from community preferences
+   */
+  function getPreferencesRoutes() {
+    return {
+      category: scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_CATEGORY].value,
+      profile: scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_PROFILE].value,
+      post: scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_POST].value,
+      status: scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_STATUS].value,
+      discussion: scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_DISCUSSION].value,
+      comment: scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_COMMENT].value,
+    };
+  }
 
   /**
    * Generate path
