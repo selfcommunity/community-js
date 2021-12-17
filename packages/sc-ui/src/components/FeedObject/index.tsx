@@ -235,6 +235,9 @@ export default function FeedObject({
                 feedObjectId={obj.id}
                 onClose={handleToggleEdit}
                 onSuccess={handleEditSuccess}
+                maxWidth="sm"
+                fullWidth
+                scroll="body"
               />
             )}
           </React.Fragment>

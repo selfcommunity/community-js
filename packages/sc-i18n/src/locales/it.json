@@ -2,7 +2,8 @@
   "ui.common.error": "Error",
   "ui.common.error.url": "The url is not valid",
 
-
+  "ui.confirmDialog.btnConfirm": "Si",
+  "ui.confirmDialog.btnCancel": "No",
 
   "ui.baseDialog.button.close": "Chiudi",
 
@@ -38,6 +39,7 @@
   "ui.changeCover.listF": "Formati ammessi: JPG, PNG, GIF (non animate)",
   "ui.changeCover.listD": "Dimensioni ottimali: 1600 x 400 pixel",
   "ui.changeCover.listW": "Peso: max 5MB",
+  "ui.changeCover.dialog.msg": "Sei sicuro di voler rimuovere questa cover?",
 
   "ui.changePicture.title": "Cambia l'immagine del profilo",
   "ui.changePicture.button.change": "Cambia immagine",
@@ -45,7 +47,7 @@
   "ui.changePicture.listF": "Formati ammessi: gif, png, jpg, jpeg",
   "ui.changePicture.listS": "Dimensione massima: 3 MB",
   "ui.changePicture.button.finished": "Finito",
-  "ui.changePicture.dialog.msg": "Sei sicuro di voler rimuovere questa immagine ?",
+  "ui.changePicture.dialog.msg": "Sei sicuro di voler rimuovere questa immagine?",
   "ui.changePicture.dialog.close": "Chiudi",
   "ui.changePicture.dialog.confirm": "Conferma",
 

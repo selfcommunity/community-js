@@ -1,4 +1,4 @@
-import React, {useContext, useRef} from 'react';
+import React, {useContext, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Menu, MenuItem, ListItemIcon, Typography, Button, Popover, Divider, IconButton, Box} from '@mui/material';
 import {Endpoints, http, SCUserContext, SCUserContextType, SCUserType} from '@selfcommunity/core';
@@ -7,6 +7,7 @@ import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import {FormattedMessage} from 'react-intl';
+import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
 
 const PREFIX = 'SCChangeCoverButton';
 
@@ -25,12 +26,15 @@ const Root = styled(Box, {
   flexWrap: 'wrap'
 }));
 
-export default function ChangeCover({onClick, ...rest}: {onClick?: () => void | undefined; [p: string]: any}): JSX.Element {
+export default function ChangeCover({onChange, ...rest}: {onChange?: (cover) => void; [p: string]: any}): JSX.Element {
   const scUserContext: SCUserContextType = useContext(SCUserContext);
   let fileInput = useRef(null);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const [anchorElPopover, setAnchorElPopover] = React.useState<null | HTMLElement>(null);
+  const [openDeleteCoverDialog, setOpenDeleteCoverDialog] = useState<boolean>(false);
+  const [isDeletingCover, setIsDeletingCover] = useState<boolean>(false);
+
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -52,11 +56,24 @@ export default function ChangeCover({onClick, ...rest}: {onClick?: () => void | 
     handleSave();
   }
 
-  function handleSave() {
+  /**
+   * Handle delete a specific cover
+   * @param id
+   */
+  function deleteCover() {
+    setIsDeletingCover(true);
+    handleSave(true);
+  }
+
+  function handleSave(performDelete = false) {
     const formData = new FormData();
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore
-    formData.append('cover', fileInput);
+    if (!performDelete) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // @ts-ignore
+      formData.append('cover', fileInput);
+    } else {
+      formData.append('cover', '');
+    }
     http
       .request({
         url: Endpoints.UpdateUser.url({id: scUserContext.user['id']}),
@@ -68,7 +85,12 @@ export default function ChangeCover({onClick, ...rest}: {onClick?: () => void | 
       })
       .then((res: AxiosResponse<SCUserType>) => {
         scUserContext.setCover(res.data.cover);
+        onChange && onChange(res.data.cover);
         setAnchorEl(null);
+        if (performDelete) {
+          setIsDeletingCover(false);
+          setOpenDeleteCoverDialog(false);
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -82,7 +104,7 @@ export default function ChangeCover({onClick, ...rest}: {onClick?: () => void | 
       </Button>
       <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
         {hasCover && (
-          <MenuItem className={classes.menuItem}>
+          <MenuItem className={classes.menuItem} onClick={() => setOpenDeleteCoverDialog(true)}>
             <ListItemIcon>
               <DeleteOutlineOutlinedIcon fontSize="small" />
             </ListItemIcon>
@@ -129,6 +151,18 @@ export default function ChangeCover({onClick, ...rest}: {onClick?: () => void | 
             </Typography>
           </Box>
         </Popover>
+      )}
+      {openDeleteCoverDialog && (
+        <ConfirmDialog
+          open={openDeleteCoverDialog}
+          title={<FormattedMessage id="ui.changeCover.dialog.msg" defaultMessage="ui.changeCover.dialog.msg" />}
+          onConfirm={deleteCover}
+          isUpdating={isDeletingCover}
+          onClose={() => {
+            setOpenDeleteCoverDialog(false);
+            setAnchorEl(null);
+          }}
+        />
       )}
     </Root>
   );

@@ -13,12 +13,16 @@ const CPButton = styled(Button, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({}));
 
-export default function ChangePicture({iconButton, ...rest}: {iconButton: boolean; [p: string]: any}): JSX.Element {
+export default function ChangePicture({
+  iconButton,
+  onChange,
+  ...rest
+}: {
+  iconButton: boolean;
+  onChange?: (avatar) => void;
+  [p: string]: any;
+}): JSX.Element {
   const [openChangePictureDialog, setOpenChangePictureDialog] = useState<boolean>(false);
-
-  function handleCloseChangePictureDialog() {
-    setOpenChangePictureDialog(false);
-  }
 
   return (
     <React.Fragment>
@@ -34,7 +38,13 @@ export default function ChangePicture({iconButton, ...rest}: {iconButton: boolea
           <FormattedMessage id="ui.changePicture.button.change" defaultMessage="ui.changePicture.button.change" />
         )}
       </CPButton>
-      {openChangePictureDialog && <ChangePictureDialog open={openChangePictureDialog} onClose={() => handleCloseChangePictureDialog()} />}
+      {openChangePictureDialog && (
+        <ChangePictureDialog
+          open={openChangePictureDialog}
+          onChange={(avatar) => onChange && onChange(avatar)}
+          onClose={() => setOpenChangePictureDialog(false)}
+        />
+      )}
     </React.Fragment>
   );
 }

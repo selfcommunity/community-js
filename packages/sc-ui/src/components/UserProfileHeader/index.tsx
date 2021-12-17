@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {styled} from '@mui/material/styles';
 import {Box, Divider, Grid, Paper, Typography} from '@mui/material';
 import ChangeCover from '../ChangeCover';
@@ -86,6 +86,28 @@ export default function UserProfileHeader({
   }
 
   /**
+   * Handle Change Avatar
+   * Only if scUser.id === scUserContext.user.id
+   * @param avatar
+   */
+  function handleChangeAvatar(avatar) {
+    if (scUser.id === scUserContext.user.id) {
+      setSCUser(Object.assign({}, scUser, {avatar: avatar.avatar}));
+    }
+  }
+
+  /**
+   * Handle Change Cover
+   * Only if scUser.id === scUserContext.user.id
+   * @param cover
+   */
+  function handleChangeCover(cover) {
+    if (scUser.id === scUserContext.user.id) {
+      setSCUser(Object.assign({}, scUser, {cover: cover}));
+    }
+  }
+
+  /**
    * User exist
    */
   const _backgroundCover = {
@@ -99,9 +121,9 @@ export default function UserProfileHeader({
         <img src={scUser.avatar ? scUser.avatar : ''} className={classes.avatar} />
         {scUser.id === scUserContext.user.id && (
           <>
-            <ChangePicture iconButton={true} className={classes.changePicture} />
+            <ChangePicture iconButton={true} onChange={handleChangeAvatar} className={classes.changePicture} />
             <div className={classes.changeCover}>
-              <ChangeCover />
+              <ChangeCover onChange={handleChangeCover} />
             </div>
           </>
         )}

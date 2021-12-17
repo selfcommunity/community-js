@@ -9,9 +9,9 @@ import {Endpoints, http, SCUserContext, SCUserContextType} from '@selfcommunity/
 import {FormattedMessage} from 'react-intl';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
-import DeleteAvatarDialog from './DeleteAvatarDialog';
 import BaseDialog from '../../../shared/BaseDialog';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
+import ConfirmDialog from '../../../shared/ConfirmDialog/ConfirmDialog';
 
 const PREFIX = 'SCChangePictureDialog';
 
@@ -34,36 +34,51 @@ const Root = styled(Card, {
   }
 }));
 
-function ChangePictureDialog({open, onClose, ...props}: {open: boolean; onClose?: () => void | undefined}): JSX.Element {
+export default function ChangePictureDialog({
+  open = false,
+  onChange = null,
+  onClose = null,
+  ...rest
+}: {
+  open: boolean;
+  onChange?: (avatar) => void;
+  onClose?: () => void;
+  [p: string]: any;
+}): JSX.Element {
   const scUserContext: SCUserContextType = useContext(SCUserContext);
   const [file, setFile] = useState(scUserContext.user['avatar']);
   const [primary, setPrimary] = useState(null);
   const [avatars, setAvatars] = useState([]);
-  const [avatarId, setAvatarId] = useState<number>(null);
+  const [deleteAvatarId, setDeleteAvatarId] = useState<number>(null);
   let fileInput = useRef(null);
   const [openDeleteAvatarDialog, setOpenDeleteAvatarDialog] = useState<boolean>(false);
+  const [isDeletingAvatar, setIsDeletingAvatar] = useState<boolean>(false);
   const handleClose = () => {
     setOpenDeleteAvatarDialog(false);
   };
 
-  function handleDeleteSuccess(id) {
-    setAvatars(avatars.filter((a) => a.id !== id));
-    if (avatars.length > 0) {
-      scUserContext.setAvatar(avatars[avatars.length - 1].avatar);
-    }
-  }
-
+  /**
+   * Handle open confirm delete avatar dialog
+   * @param id
+   */
   function handleOpen(id) {
     setOpenDeleteAvatarDialog(true);
-    setAvatarId(id);
+    setDeleteAvatarId(id);
   }
 
+  /**
+   * Handle upload
+   * @param event
+   */
   function handleUpload(event) {
     fileInput = event.target.files[0];
     setFile(URL.createObjectURL(fileInput));
     handleSave();
   }
 
+  /**
+   * Perform save avatar uploaded
+   */
   function handleSave() {
     const formData = new FormData();
     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
@@ -80,12 +95,16 @@ function ChangePictureDialog({open, onClose, ...props}: {open: boolean; onClose?
       })
       .then((res) => {
         setAvatars((prev) => [...prev, res.data]);
+        selectPrimaryAvatar(res.data);
       })
       .catch((error) => {
         console.log(error);
       });
   }
 
+  /**
+   * Fetch the list of avatars of scUser
+   */
   function fetchUserAvatar() {
     http
       .request({
@@ -94,34 +113,78 @@ function ChangePictureDialog({open, onClose, ...props}: {open: boolean; onClose?
       })
       .then((res: any) => {
         const primary = getPrimaryAvatar(res.data);
-        console.log(primary);
-        setAvatars(res.data.results);
-        setPrimary(primary.id);
-        setFile(primary.avatar);
+        if (res.data && res.data.results.length) {
+          setAvatars(res.data.results);
+          setPrimary(primary.id);
+          setFile(primary.avatar);
+        }
       })
       .catch((error) => {
         console.log(error);
       });
   }
 
+  /**
+   * Get the primary avatar from a list of avatars
+   * @param data
+   */
   function getPrimaryAvatar(data) {
     return data.results.find((a) => a.primary === true);
   }
 
+  /**
+   * Select primary avatar
+   * Only if another avatar is selected (primary !== avatar.id)
+   * @param avatar
+   */
   function selectPrimaryAvatar(avatar) {
+    if (avatar.id !== primary) {
+      http
+        .request({
+          url: Endpoints.SetPrimaryAvatar.url({id: scUserContext.user['id']}),
+          method: Endpoints.SetPrimaryAvatar.method,
+          data: {
+            avatar_id: avatar.id
+          }
+        })
+        .then(() => {
+          scUserContext.setAvatar(avatar.avatar);
+          setPrimary(avatar.id);
+          onChange && onChange(avatar);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }
+
+  /**
+   * Handle delete a specific avatar
+   * @param id
+   */
+  function deleteAvatar() {
+    setIsDeletingAvatar(true);
     http
       .request({
-        url: Endpoints.SetPrimaryAvatar.url({id: scUserContext.user['id']}),
-        method: Endpoints.SetPrimaryAvatar.method,
+        url: Endpoints.RemoveAvatar.url({id: scUserContext.user['id']}),
+        method: Endpoints.RemoveAvatar.method,
         data: {
-          avatar_id: avatar.id
+          avatar_id: deleteAvatarId
         }
       })
       .then(() => {
-        scUserContext.setAvatar(avatar.avatar);
-        setPrimary(avatar.id);
+        const _avatars = avatars.filter((a) => a.id !== deleteAvatarId);
+        setAvatars(_avatars);
+        setIsDeletingAvatar(false);
+        setOpenDeleteAvatarDialog(false);
+        if (primary === deleteAvatarId) {
+          if (_avatars.length > 0) {
+            selectPrimaryAvatar(_avatars[_avatars.length - 1]);
+          }
+        }
       })
       .catch((error) => {
+        setOpenDeleteAvatarDialog(false);
         console.log(error);
       });
   }
@@ -131,9 +194,16 @@ function ChangePictureDialog({open, onClose, ...props}: {open: boolean; onClose?
   }, []);
 
   return (
-    <Root {...props}>
+    <Root {...rest}>
       {openDeleteAvatarDialog && (
-        <DeleteAvatarDialog open={openDeleteAvatarDialog} onClose={handleClose} onSuccess={() => handleDeleteSuccess(avatarId)} id={avatarId} />
+        <ConfirmDialog
+          open={openDeleteAvatarDialog}
+          title={<FormattedMessage id="ui.changePicture.dialog.msg" defaultMessage="ui.changePicture.dialog.msg" />}
+          btnConfirm={<FormattedMessage id="ui.changePicture.dialog.confirm" defaultMessage="ui.changePicture.dialog.confirm" />}
+          onConfirm={deleteAvatar}
+          isUpdating={isDeletingAvatar}
+          onClose={() => setOpenDeleteAvatarDialog(false)}
+        />
       )}
       <BaseDialog title={<FormattedMessage defaultMessage="ui.changePicture.title" id="ui.changePicture.title" />} onClose={onClose} open={open}>
         <Box className={classes.upload}>
@@ -168,5 +238,3 @@ function ChangePictureDialog({open, onClose, ...props}: {open: boolean; onClose?
     </Root>
   );
 }
-
-export default ChangePictureDialog;
