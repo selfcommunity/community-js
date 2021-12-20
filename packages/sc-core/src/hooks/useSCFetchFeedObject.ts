@@ -1,4 +1,4 @@
-import {useEffect, useMemo, useState} from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   Endpoints,
   http,
@@ -9,8 +9,8 @@ import {
   SCFeedPostType,
   SCFeedStatusType,
 } from '@selfcommunity/core';
-import {AxiosResponse} from 'axios';
-import {SCOPE_SC_CORE} from '../constants/Errors';
+import { AxiosResponse } from 'axios';
+import { SCOPE_SC_CORE } from '../constants/Errors';
 
 /**
  * Custom hook 'useFetchFeedObject'
@@ -22,7 +22,7 @@ import {SCOPE_SC_CORE} from '../constants/Errors';
 export default function useSCFetchFeedObject({
   id = null,
   feedObject = null,
-  feedObjectType = SCFeedObjectTypologyType.POST,
+  feedObjectType = SCFeedObjectTypologyType.POST || SCFeedObjectTypologyType.DISCUSSION || SCFeedObjectTypologyType.STATUS,
 }: {
   id?: number;
   feedObject?: SCFeedObjectType;

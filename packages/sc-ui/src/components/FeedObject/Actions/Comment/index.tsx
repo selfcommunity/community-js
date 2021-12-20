@@ -1,6 +1,6 @@
 import React from 'react';
 import {defineMessages, injectIntl, useIntl} from 'react-intl';
-import { Box, Button, Divider, Tooltip, Typography } from '@mui/material';
+import {Box, Button, Divider, Tooltip, Typography} from '@mui/material';
 import CommentIcon from '@mui/icons-material/ChatBubbleOutline';
 import {SCFeedObjectType, SCFeedObjectTypologyType, SCRoutingContextType, useSCFetchFeedObject, useSCRouting, Link} from '@selfcommunity/core';
 import {styled} from '@mui/material/styles';
@@ -18,10 +18,6 @@ const messages = defineMessages({
 
 const PREFIX = 'SCCommentObject';
 
-const classes = {
-  root: `${PREFIX}-root`
-};
-
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
@@ -33,12 +29,14 @@ export default function Comment({
   feedObject = null,
   feedObjectType = SCFeedObjectTypologyType.POST,
   withAction = false,
+  onActionCLick = null,
   ...rest
 }: {
   id?: number;
   feedObject?: SCFeedObjectType;
   feedObjectType?: SCFeedObjectTypologyType;
   withAction: boolean;
+  onActionCLick?: () => void;
   [p: string]: any;
 }): JSX.Element {
   const {obj, setObj} = useSCFetchFeedObject({id, feedObject, feedObjectType});
@@ -54,7 +52,7 @@ export default function Comment({
         <React.Fragment>
           <Divider />
           <Tooltip title={`${intl.formatMessage(messages.comment)}`}>
-            <Button component={Link} to={scRoutingContext.url(feedObjectType.toLowerCase(), {id: obj.id})}>
+            <Button onClick={() => onActionCLick()}>
               <CommentIcon fontSize={'large'} />
             </Button>
           </Tooltip>

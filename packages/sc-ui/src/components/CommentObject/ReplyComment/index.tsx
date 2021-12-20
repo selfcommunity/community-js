@@ -1,4 +1,4 @@
-import React, { RefObject, useContext, useEffect, useState } from 'react';
+import React, {RefObject, useContext, useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import {defineMessages, useIntl} from 'react-intl';
@@ -7,6 +7,7 @@ import {SCCommentType} from '@selfcommunity/core/src/types/comment';
 import {SCUserContext, SCUserContextType, useSCFetchCommentObject} from '@selfcommunity/core';
 import Editor from '../../Editor';
 import {TMUIRichTextEditorRef} from 'mui-rte';
+import classNames from 'classnames';
 
 const messages = defineMessages({
   reply: {
@@ -28,6 +29,7 @@ const Root = styled(Card, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
+  padding: '1px',
   [`& .${classes.commentChild}`]: {
     paddingLeft: '70px'
   }
@@ -37,6 +39,7 @@ export default function ReplyCommentObject({
   commentObjectId = null,
   commentObject = null,
   autoFocus = false,
+  inline = false,
   onReply = null,
   ...rest
 }: {
@@ -88,7 +91,7 @@ export default function ReplyCommentObject({
   function renderReply(obj) {
     return (
       <React.Fragment>
-        <ListItem button={false} alignItems="flex-start" classes={{root: classes.commentChild}}>
+        <ListItem alignItems="flex-start" classes={{root: classNames({[classes.commentChild]: !inline})}}>
           <ListItemAvatar>
             <Avatar alt={scUser.user.username} variant="circular" src={scUser.user.avatar} />
           </ListItemAvatar>
@@ -97,22 +100,22 @@ export default function ReplyCommentObject({
             secondary={
               <>
                 <Card classes={{root: classes.comment}} {...rest}>
-                  <CardContent sx={{padding: '10px 10px 0px 10px'}}>
-                    <Editor
-                      onRef={(e) => {
-                        editor = e;
-                      }}
-                      onChange={handleChangeText}
-                    />
-                  </CardContent>
+                  <Editor
+                    onRef={(e) => {
+                      editor = e;
+                    }}
+                    onChange={handleChangeText}
+                  />
                 </Card>
-                <Box component="span" sx={{display: 'flex', justifyContent: 'flex-start'}}>
-                  <Grid component="span" item={true} sm="auto" container direction="row" alignItems="right">
-                    <Button variant={'text'} sx={{marginTop: '-1px'}} onClick={handleReply}>
-                      {intl.formatMessage(messages.reply)}
-                    </Button>
-                  </Grid>
-                </Box>
+                {!inline && (
+                  <Box component="span" sx={{display: 'flex', justifyContent: 'flex-start'}}>
+                    <Grid component="span" item={true} sm="auto" container direction="row" alignItems="right">
+                      <Button variant={'text'} sx={{marginTop: '-1px'}} onClick={handleReply}>
+                        {intl.formatMessage(messages.reply)}
+                      </Button>
+                    </Grid>
+                  </Box>
+                )}
               </>
             }
           />

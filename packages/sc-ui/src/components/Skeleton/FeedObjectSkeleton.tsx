@@ -3,7 +3,7 @@ import Card from '@mui/material/Card';
 import List from '@mui/material/List';
 import {styled} from '@mui/material/styles';
 import Skeleton from '@mui/material/Skeleton';
-import {FeedObjectTemplateType} from '../FeedObject';
+import {FeedObjectTemplateType} from '../../types/feedObject';
 import {CardContent, CardHeader} from '@mui/material';
 
 const PREFIX = 'SCFeedObjectSkeleton';

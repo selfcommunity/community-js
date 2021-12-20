@@ -22,11 +22,12 @@ import {
   SCNotificationAggregatedType,
   SCNotificationPrivateMessageType,
   SCNotificationType,
-  SCNotificationTypologyType, SCRoutes,
+  SCNotificationTypologyType,
+  SCRoutes,
   SCRoutingContextType,
-  useSCRouting,
+  useSCRouting
 } from '@selfcommunity/core';
-import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
+import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {grey} from '@mui/material/colors';
 import KindlyNoticeFlagNotification from './KindlyNoticeFlag';
 import VoteUpNotification from './VoteUp';
@@ -318,7 +319,9 @@ export default function UserNotification({
         {notificationObject.aggregated.length > showMaxAggregated && (
           <>
             <ListItemButton onClick={() => setOpenOtherAggregated((prev) => !prev)} classes={{root: classes.showOtherAggregated}}>
-              <ListItemText primary={<FormattedMessage id={'ui.userNotifications.showOthers'} defaultMessage={'ui.userNotifications.showOthers'} />} />
+              <ListItemText
+                primary={<FormattedMessage id={'ui.userNotifications.showOthers'} defaultMessage={'ui.userNotifications.showOthers'} />}
+              />
               {openOtherAggregated ? <ExpandLess /> : <ExpandMore />}
             </ListItemButton>
             <Collapse in={openOtherAggregated} timeout="auto" unmountOnExit>

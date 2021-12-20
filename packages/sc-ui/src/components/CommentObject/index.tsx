@@ -15,15 +15,16 @@ import {SCOPE_SC_UI} from '../../constants/Errors';
 import CommentObjectSkeleton from '../Skeleton/CommentObjectSkeleton';
 import {
   Endpoints,
-  http, Link,
+  http,
+  Link,
   Logger,
   SCFeedObjectType,
-  SCFeedObjectTypologyType, SCRoutingContextType,
-  SCTagType,
+  SCFeedObjectTypologyType,
+  SCRoutingContextType,
   SCUserContext,
   SCUserContextType,
-  SCUserType,
-  useSCFetchCommentObject, useSCRouting,
+  useSCFetchCommentObject,
+  useSCRouting
 } from '@selfcommunity/core';
 import {LoadingButton} from '@mui/lab';
 import VoteFilledIcon from '@mui/icons-material/ThumbUpTwoTone';
@@ -49,6 +50,7 @@ const PREFIX = 'SCCommentsObject';
 const classes = {
   root: `${PREFIX}-root`,
   comment: `${PREFIX}-comment`,
+  content: `${PREFIX}-content`,
   commentChild: `${PREFIX}-commentChild`,
   btnVotes: `${PREFIX}-btnVotes`,
   votes: `${PREFIX}-votes`,
@@ -63,6 +65,15 @@ const Root = styled(Box, {
   '& .MuiSvgIcon-root': {
     width: '0.7em',
     marginBottom: '0.5px'
+  },
+  [`& .${classes.comment}`]: {
+    paddingBottom: 0
+  },
+  [`& .${classes.content}`]: {
+    '& .MuiCardContent-root': {
+      paddingTop: 7,
+      paddingBottom: 0
+    }
   },
   [`& .${classes.commentChild}`]: {
     paddingLeft: '70px'
@@ -266,7 +277,10 @@ export default function CommentObject({
   function renderComment(comment) {
     return (
       <React.Fragment key={comment.id}>
-        <ListItem button={false} alignItems="flex-start" classes={{root: classNames({[classes.commentChild]: Boolean(comment.parent)})}}>
+        <ListItem
+          button={false}
+          alignItems="flex-start"
+          classes={{root: classNames(classes.comment, {[classes.commentChild]: Boolean(comment.parent)})}}>
           <ListItemAvatar>
             <Link to={scRoutingContext.url('profile', {id: comment.author.id})}>
               <Avatar alt={obj.author.username} variant="circular" src={comment.author.avatar} />
@@ -276,7 +290,7 @@ export default function CommentObject({
             disableTypography
             secondary={
               <>
-                <Card classes={{root: classes.comment}} {...rest}>
+                <Card classes={{root: classes.content}} {...rest}>
                   <CardContent>
                     <Link to={scRoutingContext.url('profile', {id: comment.author.id})}>
                       <Typography component="span" sx={{display: 'inline'}} gutterBottom color="primary">
@@ -344,7 +358,6 @@ export default function CommentObject({
    * Render comments
    */
   let comment;
-  console.log(obj);
   if (obj) {
     comment = renderComment(obj);
   } else {

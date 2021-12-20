@@ -20,11 +20,13 @@ const Root = styled(Grid, {
 export default function Actions({
   feedObjectId = null,
   feedObject = null,
-  feedObjectType = SCFeedObjectTypologyType.POST
+  feedObjectType = SCFeedObjectTypologyType.POST,
+  handleExpandActivities = null
 }: {
   feedObjectId?: number;
   feedObject?: SCFeedObjectType;
   feedObjectType?: SCFeedObjectTypologyType;
+  handleExpandActivities?: () => void;
 }): JSX.Element {
   const {obj, setObj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
   if (!obj) {
@@ -36,7 +38,7 @@ export default function Actions({
         <Vote feedObject={obj} feedObjectType={feedObjectType} id={feedObjectId} withAction={true} inlineAction={false} />
       </Grid>
       <Grid item xs={4} sx={{textAlign: 'center'}}>
-        <Comment feedObject={obj} feedObjectType={feedObjectType} id={feedObjectId} withAction={true} />
+        <Comment feedObject={obj} feedObjectType={feedObjectType} id={feedObjectId} withAction={true} onActionCLick={handleExpandActivities} />
       </Grid>
       <Grid item xs={4} sx={{textAlign: 'center'}}>
         <Share feedObject={obj} feedObjectType={feedObjectType} id={feedObjectId} withAction={true} inlineAction={false} />

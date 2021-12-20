@@ -129,6 +129,16 @@
   "ui.feedObject.poll.votes": "{total, plural, =0 {# voti} one {# voto} other {# voti}}",
   "ui.feedObject.poll.choice.vote": "Vota",
 
+  "ui.feedObject.relevantActivities.noResults": "Non ci sono rilevanti attività da vedere al momento.",
+  "ui.feedObject.relevantActivities.showOthers": "Vedi altre",
+
+  "ui.feedObject.activitiesMenu.relevantActivities": "Attività rilevanti",
+  "ui.feedObject.activitiesMenu.relevantActivitiesDesc": "Lista di arrività rilevanti",
+  "ui.feedObject.activitiesMenu.recentComments": "Commenti recenti",
+  "ui.feedObject.activitiesMenu.recentCommentsDesc": "Lista dei commenti più recenti",
+  "ui.feedObject.activitiesMenu.firstComments": "Primi commenti",
+  "ui.feedObject.activitiesMenu.firstCommentsDesc": "Lista dei primi commenti",
+
   "ui.reportingMenu.title": "Questo contenuto è:",
   "ui.reportingMenu.spam": "Spam",
   "ui.reportingMenu.aggressive": "Aggressivo",
@@ -137,8 +147,8 @@
   "ui.reportingMenu.offtopic": "Fuori tema",
   "ui.reportingMenu.footer": "La segnalazione è anonima e deve essere conforme al regolamento.",
 
-  "ui.commentsObject.noComment": "Non ci sono ancora commenti al momento.",
-  "ui.commentsObject.noOtherComment": "Non ci sono altri commenti.",
+  "ui.commentsObject.noComments": "Non ci sono ancora commenti al momento.",
+  "ui.commentsObject.noOtherComments": "Non ci sono altri commenti.",
 
   "ui.commentObject.voteUp": "Apprezza",
   "ui.commentObject.voteDown": "Non apprezzare",

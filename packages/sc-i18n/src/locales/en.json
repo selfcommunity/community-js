@@ -129,6 +129,15 @@
   "ui.feedObject.poll.votes": "{total, plural, =0 {# votes} one {# vote} other {# votes}}",
   "ui.feedObject.poll.choice.vote": "Vote",
 
+  "ui.feedObject.relevantActivities.noResults": "There aren't relevant activities to show at the moment.",
+  "ui.feedObject.relevantActivities.showOthers": "Show more",
+
+  "ui.feedObject.activitiesMenu.relevantActivities": "Relevant activities",
+  "ui.feedObject.activitiesMenu.relevantActivitiesDesc": "List of relevant activities.",
+  "ui.feedObject.activitiesMenu.recentComments": "Recent comments",
+  "ui.feedObject.activitiesMenu.recentCommentsDesc": "List of recent comments.",
+  "ui.feedObject.activitiesMenu.firstComments": "First comments",
+  "ui.feedObject.activitiesMenu.firstCommentsDesc": "List of old comments.",
 
   "ui.reportingMenu.title": "This content is:",
   "ui.reportingMenu.spam": "Spam",
@@ -138,8 +147,8 @@
   "ui.reportingMenu.offtopic": "Offtopic",
   "ui.reportingMenu.footer": "Reporting is anonymous and must be compliant with rules.",
 
-  "ui.commentsObject.noComment": "No comments at the moment.",
-  "ui.commentsObject.noOtherComment": "No other comments.",
+  "ui.commentsObject.noComments": "No comments at the moment.",
+  "ui.commentsObject.noOtherComments": "No other comments.",
 
   "ui.commentObject.voteUp": "Like",
   "ui.commentObject.voteDown": "Dislike",
@@ -171,7 +180,7 @@
   "ui.feed.noFeedObject": "At the moment there aren't any contribution to see",
   "ui.feed.noOtherFeedObject": "No others contribution",
 
-  "ui.userNotifications.noResults": "There arent notifications at the moment.",
+  "ui.userNotifications.noResults": "There aren't notifications at the moment.",
   "ui.userNotifications.noOtherNotifications": "No other notifications.",
   "ui.userNotifications.showOthers": "Show more",
   "ui.userNotifications.receivePrivateMessage": "<b>sent you {total, plural, =0 {# messages} one {# message} other {# messages}}</b>",

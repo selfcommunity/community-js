@@ -9,8 +9,8 @@ import {SCTagType} from '@selfcommunity/core';
  * Typology of feed
  */
 export enum SCFeedTypologyType {
-  MAIN = 'main',
-  EXPLORE = 'explore'
+  HOME = 'home',
+  EXPLORE = 'explore',
 }
 
 /**
@@ -136,6 +136,11 @@ export interface SCFeedObjectType {
    * Last activity at
    */
   last_activity_at: Date;
+
+  /**
+   * Latest activities
+   */
+  lastest_activities: any[];
 
   /**
    * Added at

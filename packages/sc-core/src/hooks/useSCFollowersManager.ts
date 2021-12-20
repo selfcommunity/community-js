@@ -5,7 +5,7 @@ import Endpoints from '../constants/Endpoints';
 import {SCPreferencesContextType, SCUserType} from '../types';
 import {Logger} from '../utils/logger';
 import {SCOPE_SC_CORE} from '../constants/Errors';
-import {useSCPreferencesContext} from '../components/provider/SCPreferencesProvider';
+import {useSCPreferences} from '../components/provider/SCPreferencesProvider';
 import {CONFIGURATIONS_FOLLOW_ENABLED} from '../constants/Preferences';
 import useSCCachingManager from './useSCCachingManager';
 
@@ -25,7 +25,7 @@ const STATUS_FOLLOWED = 'followed';
  */
 export default function useSCFollowedManager(user?: SCUserType) {
   const {cache, updateCache, emptyCache, data, setData, loading, setLoading, isLoading} = useSCCachingManager();
-  const scPreferencesContext: SCPreferencesContextType = useSCPreferencesContext();
+  const scPreferencesContext: SCPreferencesContextType = useSCPreferences();
   const followEnabled =
     CONFIGURATIONS_FOLLOW_ENABLED in scPreferencesContext.preferences && scPreferencesContext.preferences[CONFIGURATIONS_FOLLOW_ENABLED].value;
 

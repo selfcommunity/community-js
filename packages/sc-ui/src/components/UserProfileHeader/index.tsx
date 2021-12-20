@@ -7,7 +7,7 @@ import {FormattedMessage, useIntl} from 'react-intl';
 import {
   SCPreferences,
   SCPreferencesContextType,
-  useSCPreferencesContext,
+  useSCPreferences,
   SCUserContextType,
   SCUserType,
   useSCFetchUser,
@@ -73,7 +73,7 @@ export default function UserProfileHeader({
   user?: SCUserType;
   [p: string]: any;
 }): JSX.Element {
-  const scPreferences: SCPreferencesContextType = useSCPreferencesContext();
+  const scPreferences: SCPreferencesContextType = useSCPreferences();
   const scUserContext: SCUserContextType = useSCUser();
   const {scUser, setSCUser} = useSCFetchUser({id: userId, user});
   const intl = useIntl();

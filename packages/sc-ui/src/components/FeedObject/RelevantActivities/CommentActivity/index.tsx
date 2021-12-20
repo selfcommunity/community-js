@@ -3,11 +3,10 @@ import {styled} from '@mui/material/styles';
 import {Avatar, Box, Grid, ListItem, ListItemAvatar, ListItemText, Tooltip, Typography} from '@mui/material';
 import {
   Link,
-  SCNotificationCommentType,
-  SCNotificationTypologyType,
+  SCFeedUnitActivityType,
   SCRoutes,
   SCRoutingContextType,
-  useSCRouting,
+  useSCRouting
 } from '@selfcommunity/core';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import Bullet from '../../../../shared/Bullet';
@@ -21,14 +20,10 @@ const messages = defineMessages({
   comment: {
     id: 'ui.userNotifications.comment.comment',
     defaultMessage: 'ui.userNotifications.comment.comment'
-  },
-  nestedComment: {
-    id: 'ui.userNotifications.comment.nestedComment',
-    defaultMessage: 'ui.userNotifications.comment.nestedComment'
   }
 });
 
-const PREFIX = 'SCUserNotificationComment';
+const PREFIX = 'SCCommentRelevantActivity';
 
 const Root = styled(Box, {
   name: PREFIX,
@@ -45,14 +40,14 @@ const Root = styled(Box, {
   }
 }));
 
-export default function UserNotificationComment({
-  notificationObject = null,
+export default function CommentRelevantActivity({
+  activityObject = null,
   index = null,
   onVote = null,
   loadingVote = null,
   ...props
 }: {
-  notificationObject: SCNotificationCommentType;
+  activityObject: SCFeedUnitActivityType;
   index: number;
   onVote: (i, v) => void;
   loadingVote: number;
@@ -60,45 +55,45 @@ export default function UserNotificationComment({
 }): JSX.Element {
   const scRoutingContext: SCRoutingContextType = useSCRouting();
   const intl = useIntl();
+  if (!activityObject) {
+    return null;
+  }
+  console.log(activityObject);
   return (
     <Root {...props}>
       <ListItem alignItems="flex-start">
         <ListItemAvatar>
-          <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: notificationObject.comment.author.id})}>
-            <Avatar alt={notificationObject.comment.author.username} variant="circular" src={notificationObject.comment.author.avatar} />
+          <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: activityObject.author.id})}>
+            <Avatar alt={activityObject.author.username} variant="circular" src={activityObject.author.avatar} />
           </Link>
         </ListItemAvatar>
         <ListItemText
           primary={
             <Typography component="span" sx={{display: 'inline'}} color="primary">
-              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: notificationObject.comment.author.id})}>
-                {notificationObject.comment.author.username}
+              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: activityObject.author.id})}>
+                {activityObject.author.username}
               </Link>{' '}
-              {notificationObject.type === SCNotificationTypologyType.NESTED_COMMENT
-                ? intl.formatMessage(messages.comment, {
-                    b: (...chunks) => <strong>{chunks}</strong>
-                  })
-                : intl.formatMessage(messages.nestedComment, {
-                    b: (...chunks) => <strong>{chunks}</strong>
-                  })}
+              {intl.formatMessage(messages.comment, {
+                b: (...chunks) => <strong>{chunks}</strong>
+              })}
             </Typography>
           }
           secondary={
             <React.Fragment>
-              <Link to={scRoutingContext.url('comment', {id: notificationObject.comment.id})} sx={{textDecoration: 'underline'}}>
-                <Typography variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: notificationObject.comment.summary}} />
+              <Link to={scRoutingContext.url('comment', {id: activityObject.comment.id})} sx={{textDecoration: 'underline'}}>
+                <Typography variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: activityObject.comment.summary}} />
               </Link>
               <Box component="span" sx={{display: 'flex', justifyContent: 'flex-start', p: '2px'}}>
                 <Grid component="span" item={true} sm="auto" container direction="row" alignItems="center">
-                  <DateTimeAgo date={notificationObject.active_at} />
+                  <DateTimeAgo date={activityObject.active_at} />
                   <Bullet sx={{paddingLeft: '10px', paddingTop: '1px'}} />
                   <LoadingButton
                     variant={'text'}
                     sx={{marginTop: '-1px', minWidth: '30px'}}
-                    onClick={() => onVote(index, notificationObject.comment)}
+                    onClick={() => onVote(index, activityObject.comment)}
                     disabled={loadingVote !== null}
                     loading={loadingVote === index}>
-                    {notificationObject.comment.voted ? (
+                    {activityObject.comment.voted ? (
                       <Tooltip
                         title={
                           <FormattedMessage id={'ui.userNotifications.comment.voteDown'} defaultMessage={'ui.userNotifications.comment.voteDown'} />

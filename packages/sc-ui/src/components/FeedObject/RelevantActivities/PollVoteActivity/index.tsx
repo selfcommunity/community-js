@@ -1,7 +1,7 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
 import {Avatar, Box, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
-import {Link, SCNotificationUserFollowType, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
+import {Link, SCFeedUnitActivityType, SCNotificationUserFollowType, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
 import {defineMessages, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../../shared/DateTimeAgo';
 
@@ -12,7 +12,7 @@ const messages = defineMessages({
   }
 });
 
-const PREFIX = 'SCUserFollowNotification';
+const PREFIX = 'SCPollVoteRelevantActivity';
 
 const Root = styled(Box, {
   name: PREFIX,
@@ -20,11 +20,11 @@ const Root = styled(Box, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({}));
 
-export default function UserFollowNotification({
-  notificationObject = null,
+export default function PollVoteRelevantActivity({
+  activityObject = null,
   ...props
 }: {
-  notificationObject: SCNotificationUserFollowType;
+  activityObject: SCFeedUnitActivityType;
   [p: string]: any;
 }): JSX.Element {
   const scRoutingContext: SCRoutingContextType = useSCRouting();
@@ -34,20 +34,20 @@ export default function UserFollowNotification({
     <Root {...props}>
       <ListItem alignItems="flex-start">
         <ListItemAvatar>
-          <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: notificationObject.follower.id})}>
-            <Avatar alt={notificationObject.follower.username} variant="circular" src={notificationObject.follower.avatar} />
+          <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: activityObject.author.id})}>
+            <Avatar alt={activityObject.author.username} variant="circular" src={activityObject.author.avatar} />
           </Link>
         </ListItemAvatar>
         <ListItemText
           primary={
             <Typography component="span" sx={{display: 'inline'}} color="primary">
-              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: notificationObject.follower.id})}>
-                {notificationObject.follower.username}
+              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: activityObject.author.id})}>
+                {activityObject.author.username}
               </Link>{' '}
-              {intl.formatMessage(messages.followUser, {b: (...chunks) => <strong>{chunks}</strong>})}
+              ha votato il poll
             </Typography>
           }
-          secondary={<DateTimeAgo date={notificationObject.active_at} />}
+          secondary={<DateTimeAgo date={activityObject.active_at} />}
         />
       </ListItem>
     </Root>

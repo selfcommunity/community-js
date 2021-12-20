@@ -29,7 +29,7 @@ const Root = styled(Box, {
 })(({theme}) => ({
   boxSizing: 'border-box',
   cursor: 'text',
-  padding: theme.spacing(2),
+  padding: theme.spacing(1),
   minHeight: 100,
   position: 'relative',
   [`& .${classes.drop}`]: {

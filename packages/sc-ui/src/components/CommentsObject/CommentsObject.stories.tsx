@@ -9,7 +9,7 @@ export default {
   title: 'Design System/SC UI/CommentsObject',
   component: CommentsObject,
   argTypes: {
-    id: {
+    feedObjectId: {
       control: {type: 'number'},
       description: 'FeedObject Id',
       table: {defaultValue: {summary: 17}}
@@ -32,7 +32,9 @@ export default {
     }
   },
   args: {
-    id: 17,
+    feedObjectId: 17,
+    infiniteScrolling: false,
+    commentsPageSize: 10,
     elevation: 1,
     variant: 'elevation'
   }

@@ -1,8 +1,9 @@
 import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
 
-import FeedObject, {FeedObjectTemplateType} from './index';
+import FeedObject from './index';
 import {SCFeedObjectTypologyType} from '@selfcommunity/core';
+import {FeedObjectTemplateType} from '../../types/feedObject';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -12,7 +13,7 @@ export default {
     feedObjectId: {
       control: {type: 'number'},
       description: 'FeedObject Id',
-      table: {defaultValue: {summary: 7624}}
+      table: {defaultValue: {summary: 9}}
     },
     feedObjectType: {
       options: [SCFeedObjectTypologyType.POST, SCFeedObjectTypologyType.DISCUSSION, SCFeedObjectTypologyType.STATUS],
@@ -38,8 +39,8 @@ export default {
     }
   },
   args: {
-    feedObjectId: 7625,
-    feedObjectType: SCFeedObjectTypologyType.POST,
+    feedObjectId: 9,
+    feedObjectType: SCFeedObjectTypologyType.DISCUSSION,
     template: FeedObjectTemplateType.SNIPPET,
     elevation: 1,
     variant: 'elevation'

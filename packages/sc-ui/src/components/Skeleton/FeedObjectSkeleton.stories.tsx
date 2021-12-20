@@ -1,7 +1,7 @@
 import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
 import FeedObjectSkeleton from './FeedObjectSkeleton';
-import {FeedObjectTemplateType} from '../FeedObject';
+import {FeedObjectTemplateType} from '../../types/feedObject';
 
 export default {
   title: 'Design System/SC UI/Skeleton/FeedObject',

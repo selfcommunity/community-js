@@ -318,11 +318,11 @@ export default {
   /**
    * Feed
    */
-  MainFeed: {
+  HomeFeed: {
     url: urlReplacer('/api/v2/feed/'),
     method: 'GET',
   },
-  MainFeedUnseenCount: {
+  HomeFeedUnseenCount: {
     url: urlReplacer('/api/v2/feed/unseen/count/'),
     method: 'GET',
   },

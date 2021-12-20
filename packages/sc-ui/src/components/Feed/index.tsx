@@ -1,15 +1,25 @@
 import React, {useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Box, Button, capitalize, Card, CardActions, CardContent, List, ListItem, Typography} from '@mui/material';
-import {Endpoints, http, Logger, SCFeedObjectType, SCFeedUnitType} from '@selfcommunity/core';
+import {
+  Endpoints,
+  http,
+  Logger,
+  SCFeedUnitType,
+  SCPreferences,
+  SCPreferencesContextType,
+  useSCPreferences
+} from '@selfcommunity/core';
 import {AxiosResponse} from 'axios';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {FormattedMessage} from 'react-intl';
 import {FeedObjectSkeleton} from '../Skeleton';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import {SCNotificationAggregatedType} from '@selfcommunity/core';
-import FeedObject, {FeedObjectTemplateType} from '../FeedObject';
+import FeedObject from '../FeedObject';
 import {SCFeedTypologyType} from '@selfcommunity/core';
+import {FeedObjectTemplateType} from '../../types/feedObject';
+import {FeedType} from '../../types/feed';
 
 const PREFIX = 'SCFeed';
 
@@ -22,7 +32,9 @@ const Root = styled(Box, {
   marginBottom: theme.spacing(2)
 }));
 
-export default function Feed({type = SCFeedTypologyType.MAIN, ...rest}: {type?: SCFeedTypologyType; [p: string]: any}): JSX.Element {
+export default function Feed({type = SCFeedTypologyType.HOME, ...rest}: {type?: SCFeedTypologyType; [p: string]: any}): JSX.Element {
+  const scPreferencesContext: SCPreferencesContextType = useSCPreferences();
+  const feedOrderBy = scPreferencesContext.preferences[SCPreferences[`CONFIGURATIONS_${type.toUpperCase()}_STREAM_ORDER_BY`]].value;
   const [feedData, setFeedData] = useState([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [next, setNext] = useState<string>(Endpoints[`${capitalize(type)}Feed`].url({}));
@@ -90,7 +102,14 @@ export default function Feed({type = SCFeedTypologyType.MAIN, ...rest}: {type?: 
               <List>
                 {feedData.map((n: SCFeedUnitType, i) => (
                   <ListItem key={i}>
-                    <FeedObject feedObject={n[n.type]} feedObjectType={n.type} {...rest} sx={{width: '100%'}} />
+                    <FeedObject
+                      feedObject={n[n.type]}
+                      feedObjectType={n.type}
+                      feedObjectActivities={feedOrderBy === FeedType.RELEVANCE ? n.activities : []}
+                      feedOrderBy={feedOrderBy}
+                      {...rest}
+                      sx={{width: '100%'}}
+                    />
                   </ListItem>
                 ))}
               </List>

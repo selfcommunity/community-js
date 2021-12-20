@@ -12,7 +12,7 @@ import {SCOPE_SC_CORE} from '../../../constants/Errors';
  *       {(preferences) => (...)}
  *     </SCPreferencesContext.Consumer>
  *  2. const scPreferences: SCPreferencesType = usePreferencesContext(SCPreferencesContext);
- *  3. const scPreferences: SCPreferencesType = useSCPreferencesContext();
+ *  3. const scPreferences: SCPreferencesType = useSCPreferences();
  */
 export const SCPreferencesContext = createContext<SCPreferencesContextType>({} as SCPreferencesContextType);
 
@@ -51,9 +51,9 @@ export default function SCPreferencesProvider({children = null}: {children: Reac
 }
 
 /**
- * Let's only export the `useSCPreferencesContext` hook instead of the context.
+ * Let's only export the `useSCPreferences` hook instead of the context.
  * We only want to use the hook directly and never the context component.
  */
-export function useSCPreferencesContext(): SCPreferencesContextType {
+export function useSCPreferences(): SCPreferencesContextType {
   return useContext(SCPreferencesContext);
 }

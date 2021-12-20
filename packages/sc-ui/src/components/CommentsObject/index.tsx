@@ -1,4 +1,4 @@
-import React, { RefObject, useEffect, useMemo, useRef, useState } from 'react';
+import React, {RefObject, useEffect, useMemo, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import {SCFeedObjectType, SCFeedObjectTypologyType, useSCFetchFeedObject, http, Endpoints, Logger} from '@selfcommunity/core';
@@ -11,6 +11,8 @@ import ReplyCommentObject from '../CommentObject/ReplyComment';
 import Typography from '@mui/material/Typography';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import CommentObjectSkeleton from '../Skeleton/CommentObjectSkeleton';
+import {Button} from '@mui/material';
+import { CommentsOrderBy } from '../../types/comments';
 
 const messages = defineMessages({
   noOtherComment: {
@@ -34,21 +36,29 @@ const Root = styled(Card, {
 }));
 
 export default function CommentsObject({
-  id = null,
+  feedObjectId = null,
   feedObject = null,
   feedObjectType = SCFeedObjectTypologyType.POST,
   renderComment = null,
   renderNoComment = null,
+  commentsPageSize = 5,
+  commentsOrderBy = CommentsOrderBy.ADDED_AT_DESC,
+  infiniteScrolling = true,
+  hidePrimaryReply = false,
   ...rest
 }: {
-  id?: number;
+  feedObjectId?: number;
   feedObject?: SCFeedObjectType;
   feedObjectType?: SCFeedObjectTypologyType;
   renderComment?: (SCCommentType) => JSX.Element;
   renderNoComment?: () => JSX.Element;
+  commentsPageSize?: number;
+  commentsOrderBy?: CommentsOrderBy;
+  infiniteScrolling?: boolean;
+  hidePrimaryReply?: boolean;
   [p: string]: any;
 }): JSX.Element {
-  const {obj, setObj} = useSCFetchFeedObject({id, feedObject, feedObjectType});
+  const {obj, setObj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [data, setData] = useState<SCCommentType[]>([]);
   const [next, setNext] = useState<string>(null);
@@ -61,7 +71,7 @@ export default function CommentsObject({
     () => () => {
       return http
         .request({
-          url: next ? next : `${Endpoints.Comments.url()}?${feedObjectType}=${obj.id}&limit=2`,
+          url: next ? next : `${Endpoints.Comments.url()}?${feedObjectType}=${obj.id}&limit=${commentsPageSize}&ordering=${commentsOrderBy}`,
           method: Endpoints.Comments.method
         })
         .then((res: AxiosResponse<any>) => {
@@ -71,7 +81,7 @@ export default function CommentsObject({
           return Promise.resolve(res.data);
         });
     },
-    [obj, next]
+    [obj, next, commentsOrderBy, commentsPageSize]
   );
 
   /**
@@ -96,10 +106,20 @@ export default function CommentsObject({
    * Fetch data only if obj changed
    */
   useEffect(() => {
-    if (obj && obj.id) {
+    if (obj && obj.id && data.length === 0) {
       fetchData();
     }
-  }, [obj]);
+  }, [obj, data]);
+
+  /**
+   * Reload comments data
+   */
+  useEffect(() => {
+    if (obj && obj.id) {
+      setNext(null);
+      setData([]);
+    }
+  }, [commentsPageSize, commentsOrderBy]);
 
   /**
    * Handle comment reply
@@ -142,46 +162,76 @@ export default function CommentsObject({
         ) : (
           <>
             <FormattedMessage id={'ui.commentsObject.noComments'} defaultMessage={'ui.commentsObject.noComments'} />
-            <ReplyCommentObject onReply={handleReply} {...rest} />
           </>
         )}
       </>
     );
   } else {
-    comments = (
-      <InfiniteScroll
-        dataLength={data.length}
-        next={fetchData}
-        hasMore={next !== null}
-        loader={<CommentObjectSkeleton {...rest} />}
-        height={400}
-        endMessage={
-          <Typography variant="body2" align="center">
-            <b>
-              <FormattedMessage id="ui.commentsObject.noOtherComment" defaultMessage="ui.commentsObject.noOtherComment" />
-            </b>
-          </Typography>
-        }>
-        {data.map((comment: SCCommentType, index) => (
-          <React.Fragment key={index}>
-            {renderComment ? (
-              renderComment(comment)
-            ) : (
-              <>
-                <CommentObject commentObject={comment} onOpenReply={openReplyBox} feedObject={obj} feedObjectType={feedObjectType} {...rest} />
-                {replyComment && (replyComment.id === comment.id || replyComment.parent === comment.id) && (
-                  <ReplyCommentObject autoFocus id={`reply-${comment.id}`} commentObject={comment} onReply={handleReply} {...rest} />
-                )}
-              </>
-            )}
-          </React.Fragment>
-        ))}
-      </InfiniteScroll>
-    );
+    if (infiniteScrolling) {
+      comments = (
+        <InfiniteScroll
+          dataLength={data.length}
+          next={fetchData}
+          hasMore={next !== null}
+          loader={<CommentObjectSkeleton {...rest} />}
+          endMessage={
+            <Typography variant="body2" align="center">
+              <b>
+                <FormattedMessage id="ui.commentsObject.noOtherComments" defaultMessage="ui.commentsObject.noOtherComments" />
+              </b>
+            </Typography>
+          }>
+          {data.map((comment: SCCommentType, index) => (
+            <React.Fragment key={index}>
+              {renderComment ? (
+                renderComment(comment)
+              ) : (
+                <>
+                  <CommentObject commentObject={comment} onOpenReply={openReplyBox} feedObject={obj} feedObjectType={feedObjectType} {...rest} />
+                  {replyComment && (replyComment.id === comment.id || replyComment.parent === comment.id) && (
+                    <ReplyCommentObject autoFocus id={`reply-${comment.id}`} commentObject={comment} onReply={handleReply} {...rest} />
+                  )}
+                </>
+              )}
+            </React.Fragment>
+          ))}
+        </InfiniteScroll>
+      );
+    } else {
+      comments = (
+        <>
+          {data.map((comment: SCCommentType, index) => (
+            <React.Fragment key={index}>
+              {renderComment ? (
+                renderComment(comment)
+              ) : (
+                <>
+                  <CommentObject commentObject={comment} onOpenReply={openReplyBox} feedObject={obj} feedObjectType={feedObjectType} {...rest} />
+                  {replyComment && (replyComment.id === comment.id || replyComment.parent === comment.id) && (
+                    <ReplyCommentObject autoFocus id={`reply-${comment.id}`} commentObject={comment} onReply={handleReply} {...rest} />
+                  )}
+                </>
+              )}
+            </React.Fragment>
+          ))}
+          {Boolean(next) && !isLoading && (
+            <Button variant="text" onClick={fetchData} disabled={isLoading}>
+              Load more comments
+            </Button>
+          )}
+          {isLoading && <CommentObjectSkeleton {...rest} />}
+        </>
+      );
+    }
   }
 
   /**
    * Render root object
    */
-  return <Root>{comments}</Root>;
+  return (
+    <Root>
+      {!hidePrimaryReply && <ReplyCommentObject onReply={handleReply} inline {...rest} />}
+      {comments}
+    </Root>
+  );
 }
