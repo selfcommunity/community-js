@@ -41,7 +41,7 @@ import {
   DialogProps,
   DialogTitle,
   Fade,
-  FormControl,
+  FormControl, hexToRgb,
   IconButton,
   InputBase,
   MenuItem,
@@ -51,7 +51,7 @@ import {
   TextField,
   ToggleButton,
   ToggleButtonGroup,
-  Typography
+  Typography,
 } from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {COMPOSER_POLL_MIN_CHOICES, COMPOSER_TITLE_MAX_LENGTH, COMPOSER_TYPE_DISCUSSION, COMPOSER_TYPE_POST} from '../../constants/Composer';
@@ -80,13 +80,6 @@ const DialogTransition = forwardRef(function Transition(
   ref: React.Ref<unknown>
 ) {
   return <Fade ref={ref} {...props}></Fade>;
-});
-
-const messages = defineMessages({
-  drop: {
-    id: 'ui.composer.media.drop',
-    defaultMessage: 'ui.composer.media.drop'
-  }
 });
 
 const TypeInput = styled(InputBase, {
@@ -195,9 +188,9 @@ const Root = styled(Dialog, {
   },
   [`& .${classes.mediasActions}`]: {
     position: 'absolute',
-    top: theme.spacing(),
-    left: theme.spacing(),
-    right: theme.spacing(),
+    left: 0,
+    right: 0,
+    background: hexToRgb(theme.palette.getContrastText(theme.palette.primary.main)).replace(')', ', .8)'),
     padding: theme.spacing(),
     zIndex: 1,
     display: 'flex',
@@ -240,17 +233,13 @@ export interface ComposerProps extends DialogProps {
   feedObjectId?: number;
   feedObjectType?: SCFeedObjectTypologyType;
   view?: string;
-  mediaActions?: SCMediaObjectType[];
+  mediaObjectTypes?: SCMediaObjectType[];
   onSuccess?: (res: any) => void;
   onClose?: (event: SyntheticEvent) => void;
 }
 
 export const MAIN_VIEW = 'main';
 export const AUDIENCE_VIEW = 'audience';
-export const IMAGES_VIEW = 'image';
-export const VIDEOS_VIEW = 'video';
-export const DOCUMENTS_VIEW = 'document';
-export const LINKS_VIEW = 'link';
 export const POLL_VIEW = 'poll';
 export const LOCATION_VIEW = 'location';
 
@@ -299,7 +288,7 @@ export default function Composer(props: ComposerProps): JSX.Element {
     feedObjectType = null,
     open = false,
     view = MAIN_VIEW,
-    mediaActions = [Image, Document, Link],
+    mediaObjectTypes = [Image, Document, Link],
     onClose = null,
     onSuccess = null,
     ...rest
@@ -398,7 +387,7 @@ export default function Composer(props: ComposerProps): JSX.Element {
   }, [editMode]);
 
   // Props update
-  useEffect(() => setView(_view), [_view]);
+  useEffect(() => setView(view), [view]);
 
   // Prevent unload
   useEffect(() => {
@@ -509,12 +498,12 @@ export default function Composer(props: ComposerProps): JSX.Element {
     return (event: SyntheticEvent): void => setFades({...fades, [obj]: false});
   };
 
-  const handleDeleteMedia = (id?: number) => {
+  const handleDeleteMedia = (id?: number | null, mediaObjectType?: any) => {
     return (event: SyntheticEvent): void => {
       if (id) {
         dispatch({type: 'medias', value: medias.filter((m) => m.id != id)});
-      } else {
-        dispatch({type: 'medias', value: []});
+      } else if (mediaObjectType) {
+        dispatch({type: 'medias', value: medias.filter((m) => !mediaObjectType.filter(m))});
       }
     };
   };
@@ -582,79 +571,27 @@ export default function Composer(props: ComposerProps): JSX.Element {
 
   /* Renderers */
 
-  const renderMediaControls = (type: string): JSX.Element => {
-    switch (type) {
-      case MEDIA_TYPE_IMAGE:
-        return (
-          <Box className={classes.mediasActions} onMouseEnter={handleFadeIn(MEDIA_TYPE_IMAGE)} onMouseLeave={handleFadeOut(MEDIA_TYPE_IMAGE)}>
-            <Fade in={Boolean(fades[MEDIA_TYPE_IMAGE])}>
-              <Typography align="left">
-                <Button onClick={handleChangeView(IMAGES_VIEW)} variant="contained" color="primary" size="small">
-                  <WriteIcon /> <FormattedMessage id="ui.composer.media.image.edit" defaultMessage="ui.composer.media.image.edit" />
-                </Button>
-              </Typography>
-            </Fade>
-            <Typography align="right">
-              <Button onClick={handleDeleteMedia(MEDIA_TYPE_IMAGE)} size="small" color="primary" variant="contained">
-                <DeleteIcon />
-              </Button>
-            </Typography>
-          </Box>
-        );
-      case MEDIA_TYPE_VIDEO:
-        return (
-          <Box className={classes.mediasActions} onMouseEnter={handleFadeIn(MEDIA_TYPE_VIDEO)} onMouseLeave={handleFadeOut(MEDIA_TYPE_VIDEO)}>
-            <Fade in={Boolean(fades[MEDIA_TYPE_VIDEO])}>
-              <Typography align="left">
-                <Button onClick={handleChangeView(VIDEOS_VIEW)} variant="contained" color="primary" size="small">
-                  <WriteIcon /> <FormattedMessage id="ui.composer.media.videos.edit" defaultMessage="ui.composer.media.videos.edit" />
-                </Button>
-              </Typography>
-            </Fade>
-            <Typography align="right">
-              <Button onClick={handleDeleteMedia(MEDIA_TYPE_VIDEO)} size="small" color="primary" variant="contained">
-                <DeleteIcon />
-              </Button>
-            </Typography>
-          </Box>
-        );
-      case MEDIA_TYPE_DOCUMENT:
-        return (
-          <Box className={classes.mediasActions} onMouseEnter={handleFadeIn(MEDIA_TYPE_DOCUMENT)} onMouseLeave={handleFadeOut(MEDIA_TYPE_DOCUMENT)}>
-            <Fade in={Boolean(fades[MEDIA_TYPE_DOCUMENT])}>
-              <Typography align="left">
-                <Button onClick={handleChangeView(DOCUMENTS_VIEW)} variant="contained" color="primary" size="small">
-                  <WriteIcon /> <FormattedMessage id="ui.composer.media.images.edit" defaultMessage="ui.composer.media.images.edit" />
-                </Button>
-              </Typography>
-            </Fade>
-            <Typography align="right">
-              <Button onClick={handleDeleteMedia(MEDIA_TYPE_DOCUMENT)} size="small" color="primary" variant="contained">
-                <DeleteIcon />
-              </Button>
-            </Typography>
-          </Box>
-        );
-      case MEDIA_TYPE_LINK:
-        return (
-          <Box className={classes.mediasActions} onMouseEnter={handleFadeIn(MEDIA_TYPE_LINK)} onMouseLeave={handleFadeOut(MEDIA_TYPE_LINK)}>
-            <Fade in={Boolean(fades[MEDIA_TYPE_LINK])}>
-              <Typography align="left">
-                <Button onClick={handleChangeView(LINKS_VIEW)} variant="contained" color="primary" size="small">
-                  <WriteIcon /> <FormattedMessage id="ui.composer.media.link.edit" defaultMessage="ui.composer.media.link.edit" />
-                </Button>
-              </Typography>
-            </Fade>
-            <Typography align="right">
-              <Button onClick={handleDeleteMedia(MEDIA_TYPE_LINK)} size="small" color="primary" variant="contained">
-                <DeleteIcon />
-              </Button>
-            </Typography>
-          </Box>
-        );
-      default:
-        return null;
-    }
+  const renderMediaAdornment = (mediaObjectType: SCMediaObjectType): JSX.Element => {
+    return (
+      <Box className={classes.mediasActions} onMouseEnter={handleFadeIn(mediaObjectType.name)} onMouseLeave={handleFadeOut(mediaObjectType.name)}>
+        <Fade in={Boolean(fades[mediaObjectType.name])}>
+          <Typography align="left">
+            <Button onClick={handleChangeView(mediaObjectType.name)} variant="outlined" color="primary" size="small">
+              <WriteIcon />{' '}
+              <FormattedMessage
+                id={`ui.composer.media.${mediaObjectType.name}.edit`}
+                defaultMessage={`ui.composer.media.${mediaObjectType.name}.edit`}
+              />
+            </Button>
+          </Typography>
+        </Fade>
+        <Typography align="right">
+          <IconButton onClick={handleDeleteMedia(null, mediaObjectType)} size="small" color="primary">
+            <DeleteIcon />
+          </IconButton>
+        </Typography>
+      </Box>
+    );
   };
 
   const renderAudienceView: Function = () => {
@@ -708,7 +645,7 @@ export default function Composer(props: ComposerProps): JSX.Element {
     );
   };
 
-  const renderMediaView: Function = (action: SCMediaObjectType) => {
+  const renderMediaView: Function = (mediaObjectType: SCMediaObjectType) => {
     return () => {
       return (
         <React.Fragment>
@@ -717,7 +654,10 @@ export default function Composer(props: ComposerProps): JSX.Element {
               <IconButton onClick={handleChangeView(MAIN_VIEW)} size="small">
                 <BackIcon />
               </IconButton>
-              <FormattedMessage id={`ui.composer.media.${action.name}.edit`} defaultMessage={`ui.composer.media.${action.name}.edit`} />
+              <FormattedMessage
+                id={`ui.composer.media.${mediaObjectType.name}.edit`}
+                defaultMessage={`ui.composer.media.${mediaObjectType.name}.edit`}
+              />
             </Typography>
             <Box>
               <Avatar className={classes.avatar} src={scAuthContext.user.avatar}></Avatar>
@@ -730,8 +670,8 @@ export default function Composer(props: ComposerProps): JSX.Element {
           </DialogTitle>
           <DialogContent className={classNames(classes.content, classes.mediaContent)}>
             {
-              <action.editComponent
-                medias={medias.filter(action.filter)}
+              <mediaObjectType.editComponent
+                medias={medias.filter(mediaObjectType.filter)}
                 onSuccess={handleAddMedia}
                 onSort={handleSortMedia}
                 onDelete={handleDeleteMedia}
@@ -856,11 +796,9 @@ export default function Composer(props: ComposerProps): JSX.Element {
           <Box className={classes.medias}>
             <MediasPreview
               medias={medias}
-              GridImageProps={{gallery: false, overlay: false}}
-              imagesAdornment={renderMediaControls(MEDIA_TYPE_IMAGE)}
-              videosAdornment={renderMediaControls(MEDIA_TYPE_VIDEO)}
-              documentsAdornment={renderMediaControls(MEDIA_TYPE_DOCUMENT)}
-              linksAdornment={renderMediaControls(MEDIA_TYPE_LINK)}
+              mediaObjectTypes={mediaObjectTypes.map((mediaObjectType) => {
+                return {...mediaObjectType, previewProps: {adornment: renderMediaAdornment(mediaObjectType), gallery: false}} as SCMediaObjectType;
+              })}
             />
           </Box>
           {poll && <PollPreview pollObject={poll} />}
@@ -880,12 +818,12 @@ export default function Composer(props: ComposerProps): JSX.Element {
         </DialogContent>
         <DialogActions className={classes.actions}>
           <Typography align="left">
-            {mediaActions.map((action: SCMediaObjectType) => (
-              <action.editButton
-                key={action.name}
-                onClick={handleChangeView(action.name)}
+            {mediaObjectTypes.map((mediaObjectType: SCMediaObjectType) => (
+              <mediaObjectType.editButton
+                key={mediaObjectType.name}
+                onClick={handleChangeView(mediaObjectType.name)}
                 disabled={isSubmitting}
-                color={medias.filter(action.filter).length > 0 ? 'primary' : 'default'}
+                color={medias.filter(mediaObjectType.filter).length > 0 ? 'primary' : 'default'}
               />
             ))}
             {preferences[SCPreferences.ADDONS_VIDEO_UPLOAD_ENABLED] && (
@@ -936,7 +874,7 @@ export default function Composer(props: ComposerProps): JSX.Element {
       child = renderLocationView;
       break;
     default:
-      const media = mediaActions.find((mv) => mv.name === _view);
+      const media = mediaObjectTypes.find((mv) => mv.name === _view);
       child = media ? renderMediaView(media) : renderMainView;
   }
 

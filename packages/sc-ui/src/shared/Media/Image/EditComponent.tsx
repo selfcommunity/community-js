@@ -1,33 +1,12 @@
 import {asUploadButton} from '@rpldy/upload-button';
 import React, {forwardRef, SyntheticEvent, useContext, useState} from 'react';
-import {
-  Alert,
-  AlertTitle,
-  Box,
-  Button as MuiButton,
-  CircularProgress,
-  Fade,
-  IconButton,
-  ImageList,
-  ImageListItem,
-  ImageListItemBar,
-  Typography
-} from '@mui/material';
+import {Alert, AlertTitle, Box, Button as MuiButton, Fade, IconButton, ImageList, ImageListItem, ImageListItemBar, Typography} from '@mui/material';
 import ImageIcon from '@mui/icons-material/ImageOutlined';
 import {FormattedMessage} from 'react-intl';
 import {ReactSortable} from 'react-sortablejs';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import ChunkedUploady from '@rpldy/chunked-uploady';
-import {
-  Endpoints,
-  SCContext,
-  SCContextType,
-  SCMediaType,
-  SCPreferencesContext,
-  SCPreferencesContextType,
-  SCUserContext,
-  SCUserContextType
-} from '@selfcommunity/core';
+import {Endpoints, SCContext, SCContextType, SCMediaType} from '@selfcommunity/core';
 import {styled} from '@mui/material/styles';
 import MediaChunkUploader from '../../MediaChunkUploader';
 import {SCMediaChunkType} from '../../../types/media';

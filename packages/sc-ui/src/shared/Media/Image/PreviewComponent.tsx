@@ -14,6 +14,7 @@ const PREFIX = 'SCPreviewMediaImage';
 const classes = {
   background: `${PREFIX}-background`,
   heightOne: `${PREFIX}-heightOne`,
+  heightHalfOne: `${PREFIX}-heightHalfOne`,
   heightTwo: `${PREFIX}-heightTwo`,
   heightThree: `${PREFIX}-heightThree`,
   cover: `${PREFIX}-cover`,
@@ -45,6 +46,10 @@ const Root = styled(Box, {
   [`& .${classes.heightOne}`]: {
     width: '100%',
     paddingTop: '100%'
+  },
+
+  [`& .${classes.heightHalfOne}`]: {
+    paddingTop: '50%'
   },
 
   [`& .${classes.heightTwo}`]: {
@@ -204,7 +209,7 @@ export default ({
         <Grid
           item
           xs={12}
-          classes={{root: classNames(classes.border, classes.heightOne, classes.background, {[classes.gallery]: gallery})}}
+          classes={{root: classNames(classes.border, classes.heightOne, classes.background, {[classes.gallery]: gallery, [classes.heightHalfOne]: medias.length > 1})}}
           onClick={() => openPreviewImage(0)}
           style={{background: `url(${getImageUrl(medias[0])})`}}>
           {overlay}

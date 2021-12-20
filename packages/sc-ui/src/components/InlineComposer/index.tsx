@@ -48,11 +48,11 @@ const INITIAL_STATE = {
 };
 
 export default function InlineComposer({
-  mediaActions = [Image, Document, Link],
+  mediaObjectTypes = [Image, Document, Link],
   onSuccess = null,
   ...props
 }: {
-  mediaActions?: SCMediaObjectType[];
+  mediaObjectTypes?: SCMediaObjectType[];
   onSuccess?: (feedObject: any) => void;
   props: CardProps;
 }): JSX.Element {
@@ -96,7 +96,7 @@ export default function InlineComposer({
           </Button>
         </Box>
         <Box className={classes.actions}>
-          {mediaActions.map((action: SCMediaObjectType) => (
+          {mediaObjectTypes.map((action: SCMediaObjectType) => (
             <action.editButton key={action.name} onClick={handleOpen(action.name)} />
           ))}
           {preferences[SCPreferences.ADDONS_POLLS_ENABLED] && (
@@ -112,7 +112,7 @@ export default function InlineComposer({
       <Composer
         open={open}
         view={view}
-        mediaActions={mediaActions}
+        mediaObjectTypes={mediaObjectTypes}
         maxWidth="sm"
         fullWidth
         scroll="body"

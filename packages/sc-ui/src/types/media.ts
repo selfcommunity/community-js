@@ -15,6 +15,11 @@ export interface SCMediaObjectType {
   previewComponent: React.ElementType;
 
   /**
+   * Hook for insert custom props to preview component
+   */
+  previewProps?: any;
+
+  /**
    * The button used to trigger the action
    */
   editButton: React.ElementType;
