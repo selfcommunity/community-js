@@ -41,7 +41,8 @@ import {
   DialogProps,
   DialogTitle,
   Fade,
-  FormControl, hexToRgb,
+  FormControl,
+  hexToRgb,
   IconButton,
   InputBase,
   MenuItem,
@@ -51,7 +52,7 @@ import {
   TextField,
   ToggleButton,
   ToggleButtonGroup,
-  Typography,
+  Typography
 } from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {COMPOSER_POLL_MIN_CHOICES, COMPOSER_TITLE_MAX_LENGTH, COMPOSER_TYPE_DISCUSSION, COMPOSER_TYPE_POST} from '../../constants/Composer';
@@ -346,6 +347,9 @@ export default function Composer(props: ComposerProps): JSX.Element {
 
   // Load feed object
   useEffect(() => {
+    if (!editMode){
+      return;
+    }
     setIsLoading(true);
     http
       .request({

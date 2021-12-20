@@ -93,7 +93,7 @@ export default ({value = null, error = null, onChange}: {value?: any; error?: an
 
   // Component update
   useEffect(() => {
-    if (onChange && (title || expiration !== null || multiple !== null || choices.length > 0)) {
+    if (onChange && (title || expiration !== null || choices.filter((c) => c.choice.length > 0).length > 0)) {
       onChange({title, expiration_at: expiration, multiple_choices: multiple, choices: choices.filter((c) => c.choice.length > 0)});
     }
   }, [title, multiple, expiration, choices]);
