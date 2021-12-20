@@ -269,7 +269,7 @@ export default function FeedObject({
               feedObjectType={feedObjectType}
               variant={'outlined'}
               infiniteScrolling={false}
-              commentsPageSize={3}
+              commentsPageCount={3}
               hidePrimaryReply={true}
               commentsOrderBy={
                 selectedActivities === FeedObjectActivitiesType.FIRST_COMMENTS ? CommentsOrderBy.ADDED_AT_ASC : CommentsOrderBy.ADDED_AT_DESC
@@ -355,7 +355,9 @@ export default function FeedObject({
             </CardActions>
             {template === FeedObjectTemplateType.PREVIEW && (
               <Collapse in={expandedActivities} timeout="auto" unmountOnExit>
-                <CardContent className={classes.activitiesContent}>{renderActivities()}</CardContent>
+                <CardContent className={classes.activitiesContent} sx={{paddingTop: 0}}>
+                  {renderActivities()}
+                </CardContent>
               </Collapse>
             )}
             {composerOpen && (

@@ -10,16 +10,26 @@ import CommentRelevantActivity from './CommentActivity';
 import VoteUpRelevantActivity from './VoteUpActivity';
 import FollowRelevantActivity from './FollowActivity';
 import PollVoteRelevantActivity from './PollVoteActivity';
+import { grey } from '@mui/material/colors';
 
 const PREFIX = 'SCFeedRelevantActivities';
+
+const classes = {
+  activityItem: `${PREFIX}-activity`
+};
 
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  marginTop: theme.spacing(2),
-  marginBottom: theme.spacing(2)
+  [`& .${classes.activityItem}`]: {
+    padding: 0
+  },
+  '& a': {
+    textDecoration: 'none',
+    color: grey[900]
+  }
 }));
 
 export default function RelevantActivities({
@@ -93,19 +103,24 @@ export default function RelevantActivities({
       ) : (
         <List>
           {activities.slice(0, showMaxRelevantActivities).map((a: SCFeedUnitActivityType, i) => (
-            <ListItem>{renderActivity(a, i)}</ListItem>
+            <ListItem classes={{root: classes.activityItem}}>{renderActivity(a, i)}</ListItem>
           ))}
           {!openOtherActivities && activities.length > showMaxRelevantActivities && (
             <ListItemButton onClick={() => setOpenOtherActivities((prev) => !prev)}>
               <ListItemText
-                primary={<FormattedMessage id={'ui.feedObject.relevantActivities.showOthers'} defaultMessage={'ui.feedObject.relevantActivities.showOthers'} />}
+                primary={
+                  <FormattedMessage
+                    id={'ui.feedObject.relevantActivities.showOthers'}
+                    defaultMessage={'ui.feedObject.relevantActivities.showOthers'}
+                  />
+                }
               />
               {openOtherActivities ? <ExpandLess /> : <ExpandMore />}
             </ListItemButton>
           )}
           <Collapse in={openOtherActivities} timeout="auto" unmountOnExit>
             {activities.slice(showMaxRelevantActivities).map((a: SCFeedUnitActivityType, i) => (
-              <ListItem>{renderActivity(a, i)}</ListItem>
+              <ListItem classes={{root: classes.activityItem}}>{renderActivity(a, i)}</ListItem>
             ))}
           </Collapse>
         </List>

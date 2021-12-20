@@ -13,7 +13,7 @@ const Root = styled(Grid, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(() => ({
-  margin: '13px 0',
+  margin: '0px 0px',
   color: '#3A3A3A'
 }));
 

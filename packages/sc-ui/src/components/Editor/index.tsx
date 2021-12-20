@@ -30,7 +30,7 @@ const Root = styled(Box, {
   boxSizing: 'border-box',
   cursor: 'text',
   padding: theme.spacing(1),
-  minHeight: 100,
+  minHeight: 59,
   position: 'relative',
   [`& .${classes.drop}`]: {
     position: 'relative',

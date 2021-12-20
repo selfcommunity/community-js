@@ -24,8 +24,8 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  marginTop: theme.spacing(2),
-  marginBottom: theme.spacing(2),
+  marginTop: 0,
+  marginBottom: 0,
   ['& .MuiAvatarGroup-root']: {
     justifyContent: 'flex-end'
   },

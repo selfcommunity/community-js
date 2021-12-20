@@ -12,7 +12,7 @@ import Typography from '@mui/material/Typography';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import CommentObjectSkeleton from '../Skeleton/CommentObjectSkeleton';
 import {Button} from '@mui/material';
-import { CommentsOrderBy } from '../../types/comments';
+import {CommentsOrderBy} from '../../types/comments';
 
 const messages = defineMessages({
   noOtherComment: {
@@ -41,10 +41,11 @@ export default function CommentsObject({
   feedObjectType = SCFeedObjectTypologyType.POST,
   renderComment = null,
   renderNoComment = null,
-  commentsPageSize = 5,
+  commentsPageCount = 5,
   commentsOrderBy = CommentsOrderBy.ADDED_AT_DESC,
   infiniteScrolling = true,
   hidePrimaryReply = false,
+  commentsLoadingBoxCount = 3,
   ...rest
 }: {
   feedObjectId?: number;
@@ -52,10 +53,11 @@ export default function CommentsObject({
   feedObjectType?: SCFeedObjectTypologyType;
   renderComment?: (SCCommentType) => JSX.Element;
   renderNoComment?: () => JSX.Element;
-  commentsPageSize?: number;
+  commentsPageCount?: number;
   commentsOrderBy?: CommentsOrderBy;
   infiniteScrolling?: boolean;
   hidePrimaryReply?: boolean;
+  commentsLoadingBoxCount?: number;
   [p: string]: any;
 }): JSX.Element {
   const {obj, setObj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
@@ -71,7 +73,7 @@ export default function CommentsObject({
     () => () => {
       return http
         .request({
-          url: next ? next : `${Endpoints.Comments.url()}?${feedObjectType}=${obj.id}&limit=${commentsPageSize}&ordering=${commentsOrderBy}`,
+          url: next ? next : `${Endpoints.Comments.url()}?${feedObjectType}=${obj.id}&limit=${commentsPageCount}&ordering=${commentsOrderBy}`,
           method: Endpoints.Comments.method
         })
         .then((res: AxiosResponse<any>) => {
@@ -81,7 +83,7 @@ export default function CommentsObject({
           return Promise.resolve(res.data);
         });
     },
-    [obj, next, commentsOrderBy, commentsPageSize]
+    [obj, next, commentsOrderBy, commentsPageCount]
   );
 
   /**
@@ -119,7 +121,7 @@ export default function CommentsObject({
       setNext(null);
       setData([]);
     }
-  }, [commentsPageSize, commentsOrderBy]);
+  }, [commentsPageCount, commentsOrderBy]);
 
   /**
    * Handle comment reply
@@ -149,9 +151,9 @@ export default function CommentsObject({
   if (data.length === 0 && isLoading) {
     comments = (
       <>
-        <CommentObjectSkeleton {...rest} />
-        <CommentObjectSkeleton {...rest} />
-        <CommentObjectSkeleton {...rest} />
+        {[...Array(commentsLoadingBoxCount)].map((x, i) => (
+          <CommentObjectSkeleton key={i} {...rest} />
+        ))}
       </>
     );
   } else if (data.length === 0 && !isLoading) {
