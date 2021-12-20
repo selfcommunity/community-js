@@ -35,11 +35,13 @@ const Root = styled(Box, {
   },
   ['& .MuiAvatar-root']: {
     backgroundColor: '#d5d5d5',
-    border: '2px solid #d5d5d5 !important',
+    border: '2px solid #FFF !important',
     color: '#FFF',
-    fontSize: '0.75rem',
+    fontSize: '0.55rem',
     width: 24,
-    height: 24
+    height: 24,
+    marginLeft: -7,
+    lineHeight: '24px'
   }
 }));
 
