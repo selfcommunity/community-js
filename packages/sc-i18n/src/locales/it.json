@@ -139,6 +139,8 @@
   "ui.feedObject.activitiesMenu.firstComments": "Primi commenti",
   "ui.feedObject.activitiesMenu.firstCommentsDesc": "Lista dei primi commenti",
 
+  "ui.feedObject.contributors.participants": "Partecipanti",
+
   "ui.reportingMenu.title": "Questo contenuto è:",
   "ui.reportingMenu.spam": "Spam",
   "ui.reportingMenu.aggressive": "Aggressivo",

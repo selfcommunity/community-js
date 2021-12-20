@@ -16,7 +16,8 @@ const PREFIX = 'SCContributorsFeedObject';
 const classes = {
   root: `${PREFIX}-root`,
   avatarGroup: `${PREFIX}-avatarGroup`,
-  avatar: `${PREFIX}-avatar`
+  avatar: `${PREFIX}-avatar`,
+  btnParticipants: `${PREFIX}-btn-participants`
 };
 
 const Root = styled(Box, {
@@ -26,6 +27,9 @@ const Root = styled(Box, {
 })(({theme}) => ({
   marginTop: 0,
   marginBottom: 0,
+  [`& .${classes.btnParticipants}`]: {
+    marginLeft: -10
+  },
   ['& .MuiAvatarGroup-root']: {
     justifyContent: 'flex-end'
   },
@@ -116,15 +120,19 @@ export default function ContributorsFeedObject({
   return (
     <Root>
       {loading && !openContributorsDialog ? (
-        <AvatarGroupSkeleton {...rest} />
+        <Button variant={'text'} disabled classes={{root: classes.btnParticipants}}>
+          <FormattedMessage id={'ui.feedObject.contributors.participants'} defaultMessage={'ui.feedObject.contributors.participants'} />:
+          <AvatarGroupSkeleton {...rest} />
+        </Button>
       ) : (
         <>
           {contributors.length > 0 ? (
             <>
-              <Button variant={'text'} onClick={() => setOpenContributorsDialog(true)}>
+              <Button variant={'text'} onClick={() => setOpenContributorsDialog(true)} classes={{root: classes.btnParticipants}}>
+                <FormattedMessage id={'ui.feedObject.contributors.participants'} defaultMessage={'ui.feedObject.contributors.participants'} />:
                 <AvatarGroup {...rest}>
                   {contributors.map((c: SCUserType) => (
-                    <Avatar alt={c.username} src={c.avatar} key={c.id}/>
+                    <Avatar alt={c.username} src={c.avatar} key={c.id} />
                   ))}
                   {[...Array(total - contributors.length)].map((x, i) => (
                     <Avatar key={i}></Avatar>

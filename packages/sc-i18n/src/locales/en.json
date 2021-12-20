@@ -139,6 +139,8 @@
   "ui.feedObject.activitiesMenu.firstComments": "First comments",
   "ui.feedObject.activitiesMenu.firstCommentsDesc": "List of old comments.",
 
+  "ui.feedObject.contributors.participants": "Participants",
+
   "ui.reportingMenu.title": "This content is:",
   "ui.reportingMenu.spam": "Spam",
   "ui.reportingMenu.aggressive": "Aggressive",
