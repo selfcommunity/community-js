@@ -822,14 +822,16 @@ export default function Composer(props: ComposerProps): JSX.Element {
         </DialogContent>
         <DialogActions className={classes.actions}>
           <Typography align="left">
-            {mediaObjectTypes.map((mediaObjectType: SCMediaObjectType) => (
-              <mediaObjectType.editButton
-                key={mediaObjectType.name}
-                onClick={handleChangeView(mediaObjectType.name)}
-                disabled={isSubmitting}
-                color={medias.filter(mediaObjectType.filter).length > 0 ? 'primary' : 'default'}
-              />
-            ))}
+            {mediaObjectTypes
+              .filter((mediaObjectType: SCMediaObjectType) => mediaObjectType.editButton !== null)
+              .map((mediaObjectType: SCMediaObjectType) => (
+                <mediaObjectType.editButton
+                  key={mediaObjectType.name}
+                  onClick={handleChangeView(mediaObjectType.name)}
+                  disabled={isSubmitting}
+                  color={medias.filter(mediaObjectType.filter).length > 0 ? 'primary' : 'default'}
+                />
+              ))}
             {preferences[SCPreferences.ADDONS_VIDEO_UPLOAD_ENABLED] && (
               <IconButton aria-label="add video" size="medium">
                 <VideoIcon />
@@ -878,7 +880,9 @@ export default function Composer(props: ComposerProps): JSX.Element {
       child = renderLocationView;
       break;
     default:
-      const media = mediaObjectTypes.find((mv) => mv.name === _view);
+      const media = mediaObjectTypes
+        .filter((mediaObjectType: SCMediaObjectType) => mediaObjectType.editComponent !== null)
+        .find((mv) => mv.name === _view);
       child = media ? renderMediaView(media) : renderMainView;
   }
 

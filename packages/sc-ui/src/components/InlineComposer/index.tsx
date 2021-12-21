@@ -96,9 +96,11 @@ export default function InlineComposer({
           </Button>
         </Box>
         <Box className={classes.actions}>
-          {mediaObjectTypes.map((action: SCMediaObjectType) => (
-            <action.editButton key={action.name} onClick={handleOpen(action.name)} />
-          ))}
+          {mediaObjectTypes
+            .filter((mediaObjectType: SCMediaObjectType) => mediaObjectType.editButton !== null)
+            .map((mediaObjectType: SCMediaObjectType) => (
+              <mediaObjectType.editButton key={mediaObjectType.name} onClick={handleOpen(mediaObjectType.name)} />
+            ))}
           {preferences[SCPreferences.ADDONS_POLLS_ENABLED] && (
             <IconButton onClick={handleOpen(POLL_VIEW)}>
               <PollIcon />
