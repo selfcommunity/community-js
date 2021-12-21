@@ -90,37 +90,35 @@ export default function ReplyCommentObject({
    */
   function renderReply(obj) {
     return (
-      <React.Fragment>
-        <ListItem alignItems="flex-start" classes={{root: classNames({[classes.commentChild]: !inline})}}>
-          <ListItemAvatar>
-            <Avatar alt={scUser.user.username} variant="circular" src={scUser.user.avatar} />
-          </ListItemAvatar>
-          <ListItemText
-            disableTypography
-            secondary={
-              <>
-                <Card classes={{root: classes.comment}} {...rest}>
-                  <Editor
-                    onRef={(e) => {
-                      editor = e;
-                    }}
-                    onChange={handleChangeText}
-                  />
-                </Card>
-                {!inline && (
-                  <Box component="span" sx={{display: 'flex', justifyContent: 'flex-start'}}>
-                    <Grid component="span" item={true} sm="auto" container direction="row" alignItems="right">
-                      <Button variant={'text'} sx={{marginTop: '-1px'}} onClick={handleReply}>
-                        {intl.formatMessage(messages.reply)}
-                      </Button>
-                    </Grid>
-                  </Box>
-                )}
-              </>
-            }
-          />
-        </ListItem>
-      </React.Fragment>
+      <ListItem alignItems="flex-start" classes={{root: classNames({[classes.commentChild]: !inline})}}>
+        <ListItemAvatar>
+          <Avatar alt={scUser.user.username} variant="circular" src={scUser.user.avatar} />
+        </ListItemAvatar>
+        <ListItemText
+          disableTypography
+          secondary={
+            <>
+              <Card classes={{root: classes.comment}} {...rest}>
+                <Editor
+                  onRef={(e) => {
+                    editor = e;
+                  }}
+                  onChange={handleChangeText}
+                />
+              </Card>
+              {!inline && (
+                <Box component="span" sx={{display: 'flex', justifyContent: 'flex-start'}}>
+                  <Grid component="span" item={true} sm="auto" container direction="row" alignItems="right">
+                    <Button variant={'text'} sx={{marginTop: '-1px'}} onClick={handleReply}>
+                      {intl.formatMessage(messages.reply)}
+                    </Button>
+                  </Grid>
+                </Box>
+              )}
+            </>
+          }
+        />
+      </ListItem>
     );
   }
 

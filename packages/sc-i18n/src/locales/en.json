@@ -138,6 +138,8 @@
   "ui.feedObject.sharesDialog.noOtherLikes": "No other shares.",
   "ui.feedObject.contributors.title": "Contributors ({total})",
   "ui.feedObject.contributors.noOtherContributors": "No other contributors.",
+  "ui.feedObject.follow": "Follow",
+  "ui.feedObject.unfollow": "Unfollow",
 
   "ui.feedObject.poll.title": "Related Poll",
   "ui.feedObject.poll.expDate": "Vote one of the following choices by ",
@@ -149,12 +151,17 @@
   "ui.feedObject.relevantActivities.noResults": "There aren't relevant activities to show at the moment.",
   "ui.feedObject.relevantActivities.showOthers": "Show more",
 
+  "ui.feedObject.activitiesMenu.tooltipTitle": "Select the type of activity",
   "ui.feedObject.activitiesMenu.relevantActivities": "Relevant activities",
   "ui.feedObject.activitiesMenu.relevantActivitiesDesc": "List of relevant activities.",
   "ui.feedObject.activitiesMenu.recentComments": "Recent comments",
   "ui.feedObject.activitiesMenu.recentCommentsDesc": "List of recent comments.",
   "ui.feedObject.activitiesMenu.firstComments": "First comments",
   "ui.feedObject.activitiesMenu.firstCommentsDesc": "List of old comments.",
+  "ui.feedObject.activitiesMenu.connectionsComments": "Comments from connected users",
+  "ui.feedObject.activitiesMenu.connectionsCommentsDesc": "List of comments made by users connected with you.",
+  "ui.feedObject.activitiesMenu.followedComments": "Comments from users followed",
+  "ui.feedObject.activitiesMenu.followedCommentsDesc": "List of comments made by users followed.",
 
   "ui.feedObject.contributors.participants": "Participants",
 

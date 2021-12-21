@@ -33,7 +33,7 @@ export default {
   },
   args: {
     feedObjectId: 17,
-    infiniteScrolling: false,
+    infiniteScrolling: true,
     commentsPageSize: 10,
     elevation: 1,
     variant: 'elevation'

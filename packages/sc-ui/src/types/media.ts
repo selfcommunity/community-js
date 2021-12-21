@@ -22,12 +22,12 @@ export interface SCMediaObjectType {
   /**
    * The button used to trigger the action
    */
-  editButton: React.ElementType;
+  editButton: React.ElementType | null;
 
   /**
    * The component used to interact with the list of media of this type
    */
-  editComponent: React.ElementType;
+  editComponent: React.ElementType | null;
 
   /**
    * The function used to filter media objects for rendering purpose

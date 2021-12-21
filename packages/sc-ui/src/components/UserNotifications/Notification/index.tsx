@@ -1,6 +1,6 @@
 import React, {useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Avatar, Button, Card, Collapse, Grid, ListItem, ListItemAvatar, ListItemButton, ListItemIcon, ListItemText, Typography} from '@mui/material';
+
 import CardContent from '@mui/material/CardContent';
 import UserNotificationComment from './Comment';
 import UserFollowNotification from './UserFollow';
@@ -12,6 +12,18 @@ import UserBlockedNotification from './UserBlocked';
 import UserNotificationMention from './Mention';
 import CollapsedForNotification from './CollapsedFor';
 import KindlyNoticeForNotification from './KindlyNoticeFor';
+import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
+import {grey} from '@mui/material/colors';
+import KindlyNoticeFlagNotification from './KindlyNoticeFlag';
+import VoteUpNotification from './VoteUp';
+import NotificationsOffOutlinedIcon from '@mui/icons-material/NotificationsOffOutlined';
+import NotificationsOnOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
+import {SCOPE_SC_UI} from '../../../constants/Errors';
+import {AxiosResponse} from 'axios';
+import {ExpandLess, ExpandMore} from '@mui/icons-material';
+import {getContribute} from '../../../utils/contribute';
+import ContributionFollowNotification from './ContributionFollow';
+import {Avatar, Button, Card, Collapse, ListItem, ListItemAvatar, ListItemButton, ListItemText, Stack, Typography} from '@mui/material';
 import {
   Endpoints,
   http,
@@ -27,17 +39,6 @@ import {
   SCRoutingContextType,
   useSCRouting
 } from '@selfcommunity/core';
-import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {grey} from '@mui/material/colors';
-import KindlyNoticeFlagNotification from './KindlyNoticeFlag';
-import VoteUpNotification from './VoteUp';
-import NotificationsOffOutlinedIcon from '@mui/icons-material/NotificationsOffOutlined';
-import NotificationsOnOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
-import {SCOPE_SC_UI} from '../../../constants/Errors';
-import {AxiosResponse} from 'axios';
-import {ExpandLess, ExpandMore} from '@mui/icons-material';
-import {getContribute} from '../../../utils/contribute';
-import ContributionFollowNotification from './ContributionFollow';
 
 const messages = defineMessages({
   receivePrivateMessage: {
@@ -50,7 +51,7 @@ const PREFIX = 'SCUserNotification';
 
 const classes = {
   title: `${PREFIX}-title`,
-  btnStopNotification: `${PREFIX}-btn-stop-notification`,
+  stopNotificationButton: `${PREFIX}-stop-notification-button`,
   showOtherAggregated: `${PREFIX}-show-other-aggregated`
 };
 
@@ -71,8 +72,8 @@ const Root = styled(Card, {
   ['& .MuiCardContent-root']: {
     padding: 0
   },
-  [`& .${classes.btnStopNotification}`]: {
-    marginTop: '5px',
+  [`& .${classes.stopNotificationButton}`]: {
+    margin: '5px 10px',
     padding: '2px 2px 2px 2px',
     minWidth: 'auto'
   },
@@ -108,8 +109,8 @@ export default function UserNotification({
     () => (obj) => {
       return http
         .request({
-          url: Endpoints.UserSuspendNotification.url({type: obj.type, id: obj.id}),
-          method: Endpoints.UserSuspendNotification.method
+          url: Endpoints.UserSuspendContributionNotification.url({type: obj.type, id: obj.id}),
+          method: Endpoints.UserSuspendContributionNotification.method
         })
         .then((res: AxiosResponse<any>) => {
           if (res.status >= 300) {
@@ -130,7 +131,7 @@ export default function UserNotification({
     performSuspendNotification(contribution)
       .then((data) => {
         const newObj: SCNotificationAggregatedType = obj;
-        newObj[contribution.type].notification_suspended = !newObj[contribution.type].notification_suspended;
+        newObj[contribution.type].suspended = !newObj[contribution.type].suspended;
         setObj(newObj);
         setLoadingSuspendNotification(false);
       })
@@ -227,29 +228,25 @@ export default function UserNotification({
       return (
         <>
           {contribution && contribution.type !== SCCommentTypologyType && contribution.summary && (
-            <Grid container spacing={2}>
-              <Grid item xs={10} sm={11}>
-                <Link to={scRoutingContext.url(contribution.type, {id: notificationObject[contribution.type].id})}>
-                  <Typography variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: contribution.summary}} classes={{root: classes.title}} />
-                </Link>
-              </Grid>
-              <Grid item xs={2} sm={1}>
-                {contribution && (
-                  <Button
-                    variant="outlined"
-                    size="small"
-                    color={'secondary'}
-                    classes={{root: classes.btnStopNotification}}
-                    onClick={() => handleStopContentNotification(contribution)}>
-                    {contribution.notification_suspended ? (
-                      <NotificationsOffOutlinedIcon fontSize="small" />
-                    ) : (
-                      <NotificationsOnOutlinedIcon fontSize="small" />
-                    )}
-                  </Button>
-                )}
-              </Grid>
-            </Grid>
+            <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
+              <Link to={scRoutingContext.url(contribution.type, {id: notificationObject[contribution.type].id})}>
+                <Typography variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: contribution.summary}} classes={{root: classes.title}} />
+              </Link>
+              {contribution && (
+                <Button
+                  variant="outlined"
+                  size="small"
+                  color={'secondary'}
+                  classes={{root: classes.stopNotificationButton}}
+                  onClick={() => handleStopContentNotification(contribution)}>
+                  {contribution.notification_suspended ? (
+                    <NotificationsOffOutlinedIcon fontSize="small" />
+                  ) : (
+                    <NotificationsOnOutlinedIcon fontSize="small" />
+                  )}
+                </Button>
+              )}
+            </Stack>
           )}
         </>
       );

@@ -5,8 +5,8 @@ import {
   http,
   SCFeatures,
   SCFeedDiscussionType,
-  SCFeedPostType,
   SCFeedObjectTypologyType,
+  SCFeedPostType,
   SCFeedStatusType,
   SCMediaType,
   SCPreferences,
@@ -16,7 +16,7 @@ import {
   SCUserContext,
   SCUserContextType
 } from '@selfcommunity/core';
-import {defineMessages, FormattedMessage} from 'react-intl';
+import {FormattedMessage} from 'react-intl';
 import CloseIcon from '@mui/icons-material/CancelOutlined';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import WriteIcon from '@mui/icons-material/CreateOutlined';
@@ -56,7 +56,6 @@ import {
 } from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {COMPOSER_POLL_MIN_CHOICES, COMPOSER_TITLE_MAX_LENGTH, COMPOSER_TYPE_DISCUSSION, COMPOSER_TYPE_POST} from '../../constants/Composer';
-import {MEDIA_TYPE_DOCUMENT, MEDIA_TYPE_IMAGE, MEDIA_TYPE_LINK, MEDIA_TYPE_VIDEO} from '../../constants/Media';
 import LoadingButton from '@mui/lab/LoadingButton';
 import Audience from './Audience';
 import Categories from './Categories';
@@ -347,7 +346,7 @@ export default function Composer(props: ComposerProps): JSX.Element {
 
   // Load feed object
   useEffect(() => {
-    if (!editMode){
+    if (!editMode) {
       return;
     }
     setIsLoading(true);
@@ -822,14 +821,16 @@ export default function Composer(props: ComposerProps): JSX.Element {
         </DialogContent>
         <DialogActions className={classes.actions}>
           <Typography align="left">
-            {mediaObjectTypes.map((mediaObjectType: SCMediaObjectType) => (
-              <mediaObjectType.editButton
-                key={mediaObjectType.name}
-                onClick={handleChangeView(mediaObjectType.name)}
-                disabled={isSubmitting}
-                color={medias.filter(mediaObjectType.filter).length > 0 ? 'primary' : 'default'}
-              />
-            ))}
+            {mediaObjectTypes
+              .filter((mediaObjectType: SCMediaObjectType) => mediaObjectType.editButton !== null)
+              .map((mediaObjectType: SCMediaObjectType) => (
+                <mediaObjectType.editButton
+                  key={mediaObjectType.name}
+                  onClick={handleChangeView(mediaObjectType.name)}
+                  disabled={isSubmitting}
+                  color={medias.filter(mediaObjectType.filter).length > 0 ? 'primary' : 'default'}
+                />
+              ))}
             {preferences[SCPreferences.ADDONS_VIDEO_UPLOAD_ENABLED] && (
               <IconButton aria-label="add video" size="medium">
                 <VideoIcon />
@@ -878,7 +879,9 @@ export default function Composer(props: ComposerProps): JSX.Element {
       child = renderLocationView;
       break;
     default:
-      const media = mediaObjectTypes.find((mv) => mv.name === _view);
+      const media = mediaObjectTypes
+        .filter((mediaObjectType: SCMediaObjectType) => mediaObjectType.editComponent !== null)
+        .find((mv) => mv.name === _view);
       child = media ? renderMediaView(media) : renderMainView;
   }
 

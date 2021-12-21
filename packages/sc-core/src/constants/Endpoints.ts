@@ -1,6 +1,12 @@
 import {urlReplacer} from '../utils/url';
+import {Method} from 'axios';
 
-export default {
+export interface EndpointType {
+  url: (params: object) => string;
+  method: Method;
+}
+
+const Endpoints: {[key: string]: EndpointType} = {
   /**
    * Preferences Endpoints
    */
@@ -225,9 +231,17 @@ export default {
     url: urlReplacer('/api/v2/notification/unseen/'),
     method: 'GET',
   },
-  UserSuspendNotification: {
-    url: urlReplacer('/api/v2/$(type)/$(id)/notification/suspend/'),
+  UserSuspendContributionNotification: {
+    url: urlReplacer('/api/v2/$(type)/$(id)/suspend/'),
     method: 'POST',
+  },
+  UserCheckContributionNotificationSuspended: {
+    url: urlReplacer('/api/v2/$(type)/$(id)/suspended/'),
+    method: 'GET',
+  },
+  UserListContributionNotificationSuspended: {
+    url: urlReplacer('/api/v2/$(type)/suspended/'),
+    method: 'GET',
   },
 
   /**
@@ -240,6 +254,13 @@ export default {
   Platform: {
     url: urlReplacer('/api/v2/user/me/platform_url'),
     method: 'GET',
+  },
+  /**
+   * Follow
+   */
+  FollowContribution: {
+    url: urlReplacer('/api/v2/$(type)/$(id)/follow/'),
+    method: 'POST',
   },
   /**
    * Votes
@@ -345,3 +366,5 @@ export default {
     method: 'POST',
   },
 };
+
+export default Endpoints;
