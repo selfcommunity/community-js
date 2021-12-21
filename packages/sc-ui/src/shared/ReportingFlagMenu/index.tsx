@@ -32,12 +32,12 @@ const Root = styled(Popper, {
   zIndex: 2,
 
   [`& .${classes.paper}`]: {
-    maxWidth: 260,
-    padding: '10px 20px'
+    maxWidth: 200,
+    padding: '7px 13px'
   },
 
   [`& .${classes.footer}`]: {
-    marginTop: 10
+    marginTop: 15
   },
 
   [`& .${classes.item}`]: {
@@ -274,7 +274,7 @@ export default function ReportingFlagMenu({
                       {intl.formatMessage(messages.title)}
                     </Typography>
                     {renderFlags()}
-                    <Typography variant={'caption'} className={classes.footer}>
+                    <Typography variant={'caption'} component={'div'} className={classes.footer}>
                       {intl.formatMessage(messages.footer)}
                     </Typography>
                   </MenuList>

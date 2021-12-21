@@ -215,7 +215,7 @@ export interface SCFeedObjectType {
   /**
    * Suspended notification
    */
-  notification_suspended: boolean;
+  suspended?: boolean;
 }
 
 /**

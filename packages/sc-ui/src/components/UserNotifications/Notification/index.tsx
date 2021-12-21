@@ -108,8 +108,8 @@ export default function UserNotification({
     () => (obj) => {
       return http
         .request({
-          url: Endpoints.UserSuspendNotification.url({type: obj.type, id: obj.id}),
-          method: Endpoints.UserSuspendNotification.method
+          url: Endpoints.UserSuspendContributionNotification.url({type: obj.type, id: obj.id}),
+          method: Endpoints.UserSuspendContributionNotification.method
         })
         .then((res: AxiosResponse<any>) => {
           if (res.status >= 300) {
@@ -130,7 +130,7 @@ export default function UserNotification({
     performSuspendNotification(contribution)
       .then((data) => {
         const newObj: SCNotificationAggregatedType = obj;
-        newObj[contribution.type].notification_suspended = !newObj[contribution.type].notification_suspended;
+        newObj[contribution.type].suspended = !newObj[contribution.type].suspended;
         setObj(newObj);
         setLoadingSuspendNotification(false);
       })
