@@ -7,7 +7,7 @@ import {Endpoints, http, SCLocaleContextType, SCUserContext, SCUserContextType, 
 import CardMembershipOutlinedIcon from '@mui/icons-material/CardMembershipOutlined';
 import {AxiosResponse} from 'axios';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import ChangePictureDialog from '../ChangePicture/ChangePictureDialog';
+import LoyaltyProgramDialog from './LoyaltyProgramDialog';
 
 const messages = defineMessages({
   points: {
@@ -67,6 +67,9 @@ export default function LoyaltyProgram({autoHide = null, ...props}: {autoHide: b
   const [points, setPoints] = useState<number>(null);
   const [openLoyaltyProgramDialog, setOpenLoyaltyProgramDialog] = useState<boolean>(false);
   const intl = useIntl();
+  const handleClose = () => {
+    setOpenLoyaltyProgramDialog(false);
+  };
 
   function fetchLP() {
     http
@@ -114,11 +117,11 @@ export default function LoyaltyProgram({autoHide = null, ...props}: {autoHide: b
             {`${intl.formatMessage(messages.points, {total: points})}`}
           </Typography>
         </Box>
-        <Button variant="outlined" size="small">
+        <Button variant="outlined" size="small" onClick={() => setOpenLoyaltyProgramDialog(true)}>
           <FormattedMessage id="ui.loyaltyProgram.discover" defaultMessage="ui.loyaltyProgram.discover" />
         </Button>
       </CardActions>
-      {/*{openLoyaltyProgramDialog && <LoyaltyProgramDialog open={openLoyaltyProgramDialog} />}*/}
+      {openLoyaltyProgramDialog && <LoyaltyProgramDialog open={openLoyaltyProgramDialog} onClose={handleClose} points={points} />}
     </React.Fragment>
   );
 
@@ -129,5 +132,5 @@ export default function LoyaltyProgram({autoHide = null, ...props}: {autoHide: b
       </Root>
     );
   }
-  null;
+  return null;
 }

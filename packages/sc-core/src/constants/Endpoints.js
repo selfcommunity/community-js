@@ -278,7 +278,13 @@ export default {
     url: urlReplacer('/api/v2/$(type)/$(id)/contributors/'),
     method: 'GET',
   },
-
+  /**
+   * Loyalty Endpoints
+   */
+  GetPrizes: {
+    url: urlReplacer('/api/v2/loyalty/prize/'),
+    method: 'GET',
+  },
   /**
    * Composer Endpoints
    */

@@ -1,25 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
-import {Button, Divider, Typography} from '@mui/material';
+import {Button, Typography} from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import {
-  Endpoints,
-  http,
-  Logger,
-  SCCategoryType,
-  SCFeedDiscussionType,
-  SCFeedObjectType,
-  SCFeedObjectTypologyType,
-  SCFeedUnitType
-} from '@selfcommunity/core';
+import {Endpoints, http, Logger, SCFeedDiscussionType, SCFeedObjectTypologyType} from '@selfcommunity/core';
 import TrendingPostSkeleton from '../Skeleton/TrendingFeedSkeleton';
 import {AxiosResponse} from 'axios';
 import {SCOPE_SC_UI} from '../../constants/Errors';
-import FeedObject, {FeedObjectTemplateType} from '../FeedObject';
+import FeedObject from '../FeedObject';
 import {FormattedMessage} from 'react-intl';
-import Category from '../Category';
+import {FeedObjectTemplateType} from '../../types/feedObject';
 
 const PREFIX = 'SCTrendingPost';
 

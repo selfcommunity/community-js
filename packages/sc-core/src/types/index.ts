@@ -24,6 +24,7 @@ import {SCPollChoiceType, SCPollType} from './poll';
 import {SCCommentType, SCCommentTypologyType} from './comment';
 import {SCPrivateMessageType, SCPrivateMessageStatusType} from './privateMessage';
 import {SCCustomNotificationType} from './customNotification';
+import {SCPrizeType} from './prize';
 import {
   SCFeedUnitType,
   SCFeedUnitActivityType,
@@ -116,4 +117,5 @@ export {
   SCNotificationUserFollowType,
   SCNotificationVoteUpType,
   SCCustomNotificationType,
+  SCPrizeType,
 };

@@ -4,12 +4,13 @@ import List from '@mui/material/List';
 import {Button, Typography} from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import {Endpoints, http, Logger, SCFeedDiscussionType, SCFeedObjectType, SCFeedUnitType} from '@selfcommunity/core';
+import {Endpoints, http, Logger, SCFeedObjectType} from '@selfcommunity/core';
 import TrendingPostSkeleton from '../Skeleton/TrendingFeedSkeleton';
 import {AxiosResponse} from 'axios';
 import {SCOPE_SC_UI} from '../../constants/Errors';
-import FeedObject, {FeedObjectTemplateType} from '../FeedObject';
+import FeedObject from '../FeedObject';
 import {FormattedMessage} from 'react-intl';
+import {FeedObjectTemplateType} from '../../types/feedObject';
 
 const PREFIX = 'SCTrendingFeed';
 
