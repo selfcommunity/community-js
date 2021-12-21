@@ -347,7 +347,7 @@ export default function Composer(props: ComposerProps): JSX.Element {
 
   // Load feed object
   useEffect(() => {
-    if (!editMode){
+    if (!editMode) {
       return;
     }
     setIsLoading(true);
