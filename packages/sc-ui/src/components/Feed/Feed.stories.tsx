@@ -1,7 +1,7 @@
 import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
+import {ComponentMeta, ComponentStory} from '@storybook/react';
 import Feed from './index';
-import {SCFeedTypologyType, Endpoints} from '@selfcommunity/core';
+import {Endpoints} from '@selfcommunity/core';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
