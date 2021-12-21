@@ -6,7 +6,6 @@ import {Button, ListItem, ListItemText} from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {styled} from '@mui/material/styles';
 import {FeedObjectActivitiesType} from '../../../types/feedObject';
-import {FeedType} from '../../../types/feed';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {camelCase} from '../../../../../sc-core/src/utils/string';
 import {SCPreferences, SCPreferencesContext, SCPreferencesContextType} from '@selfcommunity/core';
@@ -56,12 +55,12 @@ const Root = styled(Box, {
 
 export default function ActivitiesMenu({
   selectedActivities = null,
-  feedOrderBy = FeedType.RECENT,
+  hideRelevantActivitiesItem = false,
   onChange = null,
   ...rest
 }: {
   selectedActivities?: string;
-  feedOrderBy?: FeedType;
+  hideRelevantActivitiesItem?: boolean;
   onChange?: (type) => void;
   [p: string]: any;
 }) {
@@ -132,7 +131,7 @@ export default function ActivitiesMenu({
         }}
         transformOrigin={{horizontal: 'right', vertical: 'top'}}
         anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}>
-        {feedOrderBy === FeedType.RELEVANCE && (
+        {!hideRelevantActivitiesItem && (
           <ListItem
             selected={selectedActivities === FeedObjectActivitiesType.RELEVANCE_ACTIVITIES}
             button

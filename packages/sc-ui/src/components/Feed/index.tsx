@@ -1,15 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Box, Button, capitalize, Card, CardActions, CardContent, List, ListItem, Typography} from '@mui/material';
-import {
-  Endpoints,
-  http,
-  Logger,
-  SCFeedUnitType,
-  SCPreferences,
-  SCPreferencesContextType,
-  useSCPreferences
-} from '@selfcommunity/core';
+import {Box, capitalize, List, ListItem, Typography} from '@mui/material';
+import {Endpoints, http, Logger, SCFeedUnitType, SCPreferences, SCPreferencesContextType, useSCPreferences} from '@selfcommunity/core';
 import {AxiosResponse} from 'axios';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {FormattedMessage} from 'react-intl';
@@ -19,7 +11,6 @@ import {SCNotificationAggregatedType} from '@selfcommunity/core';
 import FeedObject from '../FeedObject';
 import {SCFeedTypologyType} from '@selfcommunity/core';
 import {FeedObjectTemplateType} from '../../types/feedObject';
-import {FeedType} from '../../types/feed';
 
 const PREFIX = 'SCFeed';
 
@@ -105,7 +96,7 @@ export default function Feed({type = SCFeedTypologyType.HOME, ...rest}: {type?: 
                     <FeedObject
                       feedObject={n[n.type]}
                       feedObjectType={n.type}
-                      feedObjectActivities={feedOrderBy === FeedType.RELEVANCE ? n.activities : []}
+                      feedObjectActivities={n.activities ? n.activities : null}
                       feedOrderBy={feedOrderBy}
                       {...rest}
                       sx={{width: '100%'}}

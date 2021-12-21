@@ -52,7 +52,6 @@ import {
 import Composer from '../Composer';
 import CommentsObject from '../CommentsObject';
 import ActivitiesMenu from './ActivitiesMenu';
-import {FeedType} from '../../types/feed';
 import {CommentsOrderBy} from '../../types/comments';
 import {FeedObjectActivitiesType, FeedObjectTemplateType} from '../../types/feedObject';
 import RelevantActivities from './RelevantActivities';
@@ -82,7 +81,7 @@ const classes = {
   snippetContent: `${PREFIX}-snippet-content`,
   tag: `${PREFIX}-tag`,
   activitiesContent: `${PREFIX}-activities-content`,
-  followButton: `${PREFIX}-follow-button`,
+  followButton: `${PREFIX}-follow-button`
 };
 
 const Root = styled(Card, {
@@ -140,7 +139,7 @@ const Root = styled(Card, {
     boxShadow: 'none',
     '&:hover': {
       backgroundColor: theme.palette.grey[300],
-      boxShadow: 'none',
+      boxShadow: 'none'
     }
   },
   '& .MuiSvgIcon-root': {
@@ -153,15 +152,13 @@ export default function FeedObject({
   feedObjectId = null,
   feedObject = null,
   feedObjectType = SCFeedObjectTypologyType.POST,
-  feedOrderBy = FeedType.RECENT,
-  feedObjectActivities = [],
+  feedObjectActivities = null,
   template = FeedObjectTemplateType.PREVIEW,
   ...rest
 }: {
   feedObjectId?: number;
   feedObject?: SCFeedObjectType;
   feedObjectType?: SCFeedObjectTypologyType;
-  feedOrderBy?: FeedType;
   feedObjectActivities?: any[];
   template?: FeedObjectTemplateType;
   [p: string]: any;
@@ -179,29 +176,17 @@ export default function FeedObject({
    * Get initial expanded activities
    */
   function getInitialExpandedActivities() {
-    if (obj) {
-      if (feedOrderBy === FeedType.RELEVANCE) {
-        return feedObjectActivities.length > 0 || obj.comment_count > 0;
-      } else if (feedOrderBy === FeedType.RECENT || feedOrderBy === FeedType.CONNECTION) {
-        return obj.comment_count > 0;
-      }
-    }
-    return false;
+    return obj && ((feedObjectActivities && feedObjectActivities.length > 0) || obj.comment_count > 0);
   }
 
   /**
    * Get initial selected activities section
    */
   function getInitialSelectedActivitiesType() {
-    if (feedOrderBy === FeedType.RELEVANCE) {
-      if (feedObjectActivities.length > 0) {
-        return FeedObjectActivitiesType.RELEVANCE_ACTIVITIES;
-      }
-      return FeedObjectActivitiesType.RECENT_COMMENTS;
-    } else if (feedOrderBy === FeedType.RECENT || feedOrderBy === FeedType.CONNECTION) {
-      return FeedObjectActivitiesType.RECENT_COMMENTS;
+    if (feedObjectActivities && feedObjectActivities.length > 0) {
+      return FeedObjectActivitiesType.RELEVANCE_ACTIVITIES;
     }
-    return FeedObjectActivitiesType.FIRST_COMMENTS;
+    return FeedObjectActivitiesType.RECENT_COMMENTS;
   }
 
   /**
@@ -297,7 +282,11 @@ export default function FeedObject({
       <>
         {<ReplyCommentObject inline variant={'outlined'} />}
         {(obj.comment_count || obj.lastest_activities) && (
-          <ActivitiesMenu selectedActivities={selectedActivities} feedOrderBy={feedOrderBy} onChange={handleSelectActivitiesType} />
+          <ActivitiesMenu
+            selectedActivities={selectedActivities}
+            hideRelevantActivitiesItem={!(feedObjectActivities && feedObjectActivities.length > 0)}
+            onChange={handleSelectActivitiesType}
+          />
         )}
         {selectedActivities === FeedObjectActivitiesType.RELEVANCE_ACTIVITIES ? renderRelevantActivities() : renderComments()}
       </>
@@ -412,7 +401,11 @@ export default function FeedObject({
                 {obj.author.id !== scUserContext.user.id && (
                   <LoadingButton
                     classes={{root: classes.followButton}}
-                    loading={isFollowing} variant="contained" size="small" disabled={isFollowing} onClick={handleFollow}>
+                    loading={isFollowing}
+                    variant="contained"
+                    size="small"
+                    disabled={isFollowing}
+                    onClick={handleFollow}>
                     {obj.followed ? (
                       <FormattedMessage id="ui.feedObject.unfollow" defaultMessage="ui.feedObject.unfollow" />
                     ) : (
