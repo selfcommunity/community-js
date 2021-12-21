@@ -1,4 +1,4 @@
-import React, {useContext, useMemo, useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -8,6 +8,7 @@ import {
   Button,
   CardActions,
   CardHeader,
+  CardProps,
   Collapse,
   Grid,
   IconButton,
@@ -34,20 +35,20 @@ import ContributorsFeedObject from './Contributors';
 import LazyLoad from 'react-lazyload';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import {
+  Endpoints,
+  http,
+  Link,
+  Logger,
   SCFeedObjectType,
   SCFeedObjectTypologyType,
-  Link,
   SCPollType,
-  SCUserContextType,
-  SCRoutingContextType,
   SCRoutes,
-  useSCFetchFeedObject,
-  useSCUser,
-  useSCRouting,
-  http,
-  Endpoints,
+  SCRoutingContextType,
   SCTagType,
-  Logger
+  SCUserContextType,
+  useSCFetchFeedObject,
+  useSCRouting,
+  useSCUser
 } from '@selfcommunity/core';
 import Composer from '../Composer';
 import CommentsObject from '../CommentsObject';
@@ -148,24 +149,50 @@ const Root = styled(Card, {
   }
 }));
 
-export default function FeedObject({
-  feedObjectId = null,
-  feedObject = null,
-  feedObjectType = SCFeedObjectTypologyType.POST,
-  feedObjectActivities = null,
-  template = FeedObjectTemplateType.PREVIEW,
-  ...rest
-}: {
+export interface FeedObjectProps extends CardProps {
+  /**
+   * Id of feed object
+   */
   feedObjectId?: number;
+
+  /**
+   * Feed Object
+   */
   feedObject?: SCFeedObjectType;
+
+  /**
+   * Feed Object type
+   */
   feedObjectType?: SCFeedObjectTypologyType;
+
+  /**
+   * Feed Object latest activities
+   */
   feedObjectActivities?: any[];
+
+  /**
+   * Feed Object template type
+   */
   template?: FeedObjectTemplateType;
-  [p: string]: any;
-}): JSX.Element {
+}
+
+export default function FeedObject(props: FeedObjectProps): JSX.Element {
+  // PROPS
+  const {
+    feedObjectId = null,
+    feedObject = null,
+    feedObjectType = SCFeedObjectTypologyType.POST,
+    feedObjectActivities = null,
+    template = FeedObjectTemplateType.PREVIEW,
+    ...rest
+  } = props;
+
+  // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
   const scUserContext: SCUserContextType = useSCUser();
   const {obj, setObj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
+
+  // STATE
   const [composerOpen, setComposerOpen] = useState<boolean>(false);
   const [expandedActivities, setExpandedActivities] = useState<boolean>(getInitialExpandedActivities());
   const [selectedActivities, setSelectedActivities] = useState<string>(getInitialSelectedActivitiesType());

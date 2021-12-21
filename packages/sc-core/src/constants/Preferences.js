@@ -82,6 +82,13 @@ export const ANALYTICS_GOOGLE_ANALYTICS_STATS_ENABLED_DEBUG = 'analytics.google_
 export const ANALYTICS_GOOGLE_ANALYTICS_STATS_ID = 'analytics.google_analytics_stats_property_id';
 
 /**
+ * ADVERTISING
+ */
+export const ADVERTISING_CUSTOM_ADV_ENABLED = 'advertising.custom_adv_enabled';
+export const ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED = 'advertising.custom_adv_only_for_anonymous_users_enabled';
+
+
+/**
  * CONFIGURATIONS
  */
 export const CONFIGURATIONS_FOLLOW_ENABLED = 'configurations.follow_enabled';

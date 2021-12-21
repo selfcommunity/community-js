@@ -5,8 +5,8 @@ import {
   http,
   SCFeatures,
   SCFeedDiscussionType,
-  SCFeedPostType,
   SCFeedObjectTypologyType,
+  SCFeedPostType,
   SCFeedStatusType,
   SCMediaType,
   SCPreferences,
@@ -16,7 +16,7 @@ import {
   SCUserContext,
   SCUserContextType
 } from '@selfcommunity/core';
-import {defineMessages, FormattedMessage} from 'react-intl';
+import {FormattedMessage} from 'react-intl';
 import CloseIcon from '@mui/icons-material/CancelOutlined';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import WriteIcon from '@mui/icons-material/CreateOutlined';
@@ -56,7 +56,6 @@ import {
 } from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {COMPOSER_POLL_MIN_CHOICES, COMPOSER_TITLE_MAX_LENGTH, COMPOSER_TYPE_DISCUSSION, COMPOSER_TYPE_POST} from '../../constants/Composer';
-import {MEDIA_TYPE_DOCUMENT, MEDIA_TYPE_IMAGE, MEDIA_TYPE_LINK, MEDIA_TYPE_VIDEO} from '../../constants/Media';
 import LoadingButton from '@mui/lab/LoadingButton';
 import Audience from './Audience';
 import Categories from './Categories';

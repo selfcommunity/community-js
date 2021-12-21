@@ -1,6 +1,12 @@
 import {urlReplacer} from '../utils/url';
+import {Method} from 'axios';
 
-export default {
+export interface EndpointType {
+  url: (params: object) => string;
+  method: Method;
+}
+
+const Endpoints: {[key: string]: EndpointType} = {
   /**
    * Preferences Endpoints
    */
@@ -354,3 +360,5 @@ export default {
     method: 'POST',
   },
 };
+
+export default Endpoints;
