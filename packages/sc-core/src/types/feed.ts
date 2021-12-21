@@ -183,6 +183,11 @@ export interface SCFeedObjectType {
   share_count: number;
 
   /**
+   * True if the logged user follow this object
+   */
+  followed?: boolean;
+
+  /**
    * Number of votes
    */
   vote_count: number;

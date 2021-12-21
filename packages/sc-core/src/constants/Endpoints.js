@@ -242,6 +242,13 @@ export default {
     method: 'GET',
   },
   /**
+   * Follow
+   */
+  FollowContribution: {
+    url: urlReplacer('/api/v2/$(type)/$(id)/follow/'),
+    method: 'POST',
+  },
+  /**
    * Votes
    */
   Vote: {

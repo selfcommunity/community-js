@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -14,6 +14,7 @@ import {
   ListItem,
   ListItemAvatar,
   ListItemText,
+  Stack,
   Tooltip,
   Typography
 } from '@mui/material';
@@ -27,7 +28,7 @@ import MediasPreview from '../../shared/MediasPreview';
 import ReportingFlagMenu from '../../shared/ReportingFlagMenu';
 import Actions from './Actions';
 import WorldIcon from '@mui/icons-material/Public';
-import {defineMessages, useIntl} from 'react-intl';
+import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import PollObject from './Poll';
 import ContributorsFeedObject from './Contributors';
 import LazyLoad from 'react-lazyload';
@@ -36,13 +37,17 @@ import {
   SCFeedObjectType,
   SCFeedObjectTypologyType,
   Link,
-  useSCFetchFeedObject,
   SCPollType,
   SCUserContextType,
-  useSCUser,
   SCRoutingContextType,
+  SCRoutes,
+  useSCFetchFeedObject,
+  useSCUser,
   useSCRouting,
-  SCRoutes
+  http,
+  Endpoints,
+  SCTagType,
+  Logger
 } from '@selfcommunity/core';
 import Composer from '../Composer';
 import CommentsObject from '../CommentsObject';
@@ -52,6 +57,9 @@ import {CommentsOrderBy} from '../../types/comments';
 import {FeedObjectActivitiesType, FeedObjectTemplateType} from '../../types/feedObject';
 import RelevantActivities from './RelevantActivities';
 import ReplyCommentObject from '../CommentObject/ReplyComment';
+import {LoadingButton} from '@mui/lab';
+import {SCOPE_SC_UI} from '../../constants/Errors';
+import {AxiosResponse} from 'axios';
 
 const messages = defineMessages({
   comment: {
@@ -73,7 +81,8 @@ const classes = {
   content: `${PREFIX}-content`,
   snippetContent: `${PREFIX}-snippet-content`,
   tag: `${PREFIX}-tag`,
-  activitiesContent: `${PREFIX}-activities-content`
+  activitiesContent: `${PREFIX}-activities-content`,
+  followButton: `${PREFIX}-follow-button`,
 };
 
 const Root = styled(Card, {
@@ -125,6 +134,15 @@ const Root = styled(Card, {
   [`& .${classes.activitiesContent}`]: {
     paddingBottom: '3px'
   },
+  [`& .${classes.followButton}`]: {
+    backgroundColor: theme.palette.grey[100],
+    color: theme.palette.grey[700],
+    boxShadow: 'none',
+    '&:hover': {
+      backgroundColor: theme.palette.grey[300],
+      boxShadow: 'none',
+    }
+  },
   '& .MuiSvgIcon-root': {
     width: '0.7em',
     marginBottom: '0.5px'
@@ -154,6 +172,7 @@ export default function FeedObject({
   const [composerOpen, setComposerOpen] = useState<boolean>(false);
   const [expandedActivities, setExpandedActivities] = useState<boolean>(getInitialExpandedActivities());
   const [selectedActivities, setSelectedActivities] = useState<string>(getInitialSelectedActivitiesType());
+  const [isFollowing, setIsFollowing] = useState<boolean>(false);
   const intl = useIntl();
 
   /**
@@ -227,6 +246,42 @@ export default function FeedObject({
   }
 
   /**
+   * Perform follow/unfollow
+   * Post, Discussion, Status
+   */
+  const performFollow = useMemo(
+    () => () => {
+      return http
+        .request({
+          url: Endpoints.FollowContribution.url({type: feedObjectType, id: obj.id}),
+          method: Endpoints.FollowContribution.method
+        })
+        .then((res: AxiosResponse<SCTagType>) => {
+          if (res.status >= 300) {
+            return Promise.reject(res);
+          }
+          return Promise.resolve(res.data);
+        });
+    },
+    [obj]
+  );
+
+  /**
+   * Handle follow object
+   */
+  function handleFollow() {
+    setIsFollowing(true);
+    performFollow()
+      .then((data) => {
+        setObj(Object.assign({}, obj, {followed: !obj.followed}));
+        setIsFollowing(false);
+      })
+      .catch((error) => {
+        Logger.error(SCOPE_SC_UI, error);
+      });
+  }
+
+  /**
    * Handle change activities type
    * @param type
    */
@@ -260,6 +315,12 @@ export default function FeedObject({
    * Render comments of feedObject
    */
   function renderComments() {
+    const _commentsOrderBy =
+      selectedActivities === FeedObjectActivitiesType.CONNECTIONS_COMMENTS
+        ? CommentsOrderBy.CONNECTION_DESC
+        : selectedActivities === FeedObjectActivitiesType.FIRST_COMMENTS
+        ? CommentsOrderBy.ADDED_AT_ASC
+        : CommentsOrderBy.ADDED_AT_DESC;
     return (
       <>
         {obj.comment_count > 0 && (
@@ -271,9 +332,7 @@ export default function FeedObject({
               infiniteScrolling={false}
               commentsPageCount={3}
               hidePrimaryReply={true}
-              commentsOrderBy={
-                selectedActivities === FeedObjectActivitiesType.FIRST_COMMENTS ? CommentsOrderBy.ADDED_AT_ASC : CommentsOrderBy.ADDED_AT_DESC
-              }
+              commentsOrderBy={_commentsOrderBy}
             />
           </LazyLoad>
         )}
@@ -346,9 +405,22 @@ export default function FeedObject({
                 dangerouslySetInnerHTML={{__html: template === FeedObjectTemplateType.PREVIEW ? obj.summary : obj.html}}
               />
               {obj['poll'] && <PollObject feedObject={obj} pollObject={obj['poll']} onChange={handleChangePoll} elevation={0} />}
-              <LazyLoad once>
-                <ContributorsFeedObject feedObject={obj} feedObjectType={feedObjectType} sx={{padding: '6px'}} />
-              </LazyLoad>
+              <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
+                <LazyLoad once>
+                  <ContributorsFeedObject feedObject={obj} feedObjectType={feedObjectType} sx={{padding: '6px'}} />
+                </LazyLoad>
+                {obj.author.id !== scUserContext.user.id && (
+                  <LoadingButton
+                    classes={{root: classes.followButton}}
+                    loading={isFollowing} variant="contained" size="small" disabled={isFollowing} onClick={handleFollow}>
+                    {obj.followed ? (
+                      <FormattedMessage id="ui.feedObject.unfollow" defaultMessage="ui.feedObject.unfollow" />
+                    ) : (
+                      <FormattedMessage id="ui.feedObject.follow" defaultMessage="ui.feedObject.follow" />
+                    )}
+                  </LoadingButton>
+                )}
+              </Stack>
             </CardContent>
             <CardActions sx={{padding: '1px 8px'}}>
               <Actions feedObject={obj} feedObjectType={feedObjectType} handleExpandActivities={() => setExpandedActivities((prev) => !prev)} />

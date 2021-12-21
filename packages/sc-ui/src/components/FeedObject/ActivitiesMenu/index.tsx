@@ -9,6 +9,8 @@ import {FeedObjectActivitiesType} from '../../../types/feedObject';
 import {FeedType} from '../../../types/feed';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {camelCase} from '../../../../../sc-core/src/utils/string';
+import {SCPreferences, SCPreferencesContext, SCPreferencesContextType} from '@selfcommunity/core';
+import {useContext} from 'react';
 
 const messages = defineMessages({
   relevantActivities: {
@@ -22,6 +24,14 @@ const messages = defineMessages({
   firstComments: {
     id: 'ui.feedObject.activitiesMenu.firstComments',
     defaultMessage: 'ui.feedObject.activitiesMenu.firstComments'
+  },
+  followedComments: {
+    id: 'ui.feedObject.activitiesMenu.followedComments',
+    defaultMessage: 'ui.feedObject.activitiesMenu.followedComments'
+  },
+  connectionsComments: {
+    id: 'ui.feedObject.activitiesMenu.connectionsComments',
+    defaultMessage: 'ui.feedObject.activitiesMenu.connectionsComments'
   }
 });
 
@@ -55,6 +65,8 @@ export default function ActivitiesMenu({
   onChange?: (type) => void;
   [p: string]: any;
 }) {
+  const scPreferencesContext: SCPreferencesContextType = useContext(SCPreferencesContext);
+  const followEnabled = scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED].value;
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const intl = useIntl();
@@ -73,13 +85,17 @@ export default function ActivitiesMenu({
     };
   };
 
-  console.log(camelCase(selectedActivities));
   return (
     <Root {...rest}>
       <Box className={classes.selector}>
-        <Tooltip title="Account settings">
+        <Tooltip
+          title={<FormattedMessage id="ui.feedObject.activitiesMenu.tooltipTitle" defaultMessage="ui.feedObject.activitiesMenu.tooltipTitle" />}>
           <Button variant="text" size="small" onClick={handleClick} endIcon={<ExpandMoreIcon />}>
-            <b>{intl.formatMessage(messages[`${camelCase(selectedActivities)}`])}</b>
+            <b>
+              {selectedActivities === FeedObjectActivitiesType.CONNECTIONS_COMMENTS && followEnabled
+                ? intl.formatMessage(messages.followedComments)
+                : intl.formatMessage(messages[`${camelCase(selectedActivities)}`])}
+            </b>
           </Button>
         </Tooltip>
       </Box>
@@ -157,6 +173,27 @@ export default function ActivitiesMenu({
                 id={'ui.feedObject.activitiesMenu.firstCommentsDesc'}
                 defaultMessage={'ui.feedObject.activitiesMenu.firstCommentsDesc'}
               />
+            }
+          />
+        </ListItem>
+        <ListItem
+          selected={selectedActivities === FeedObjectActivitiesType.CONNECTIONS_COMMENTS}
+          button
+          onClick={handleChangeActivitiesType(FeedObjectActivitiesType.CONNECTIONS_COMMENTS)}>
+          <ListItemText
+            primary={<b>{followEnabled ? intl.formatMessage(messages.followedComments) : intl.formatMessage(messages.connectionsComments)}</b>}
+            secondary={
+              followEnabled ? (
+                <FormattedMessage
+                  id={'ui.feedObject.activitiesMenu.followedCommentsDesc'}
+                  defaultMessage={'ui.feedObject.activitiesMenu.followedCommentsDesc'}
+                />
+              ) : (
+                <FormattedMessage
+                  id={'ui.feedObject.activitiesMenu.connectionsCommentsDesc'}
+                  defaultMessage={'ui.feedObject.activitiesMenu.connectionsCommentsDesc'}
+                />
+              )
             }
           />
         </ListItem>

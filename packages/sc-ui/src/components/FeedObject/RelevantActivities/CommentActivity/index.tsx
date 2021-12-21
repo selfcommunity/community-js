@@ -58,7 +58,6 @@ export default function CommentRelevantActivity({
   if (!activityObject) {
     return null;
   }
-  console.log(activityObject);
   return (
     <Root {...props}>
       <ListItem alignItems="flex-start">

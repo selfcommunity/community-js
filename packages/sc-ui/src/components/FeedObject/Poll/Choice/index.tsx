@@ -1,12 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
-import {Endpoints, http, Logger, SCFeedObjectType, SCPollChoiceType} from '@selfcommunity/core';
-import {Box, Button, Typography} from '@mui/material';
+import {SCFeedObjectType, SCPollChoiceType} from '@selfcommunity/core';
+import {Box, Typography} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
-import {AxiosResponse} from 'axios';
 import CheckIcon from '@mui/icons-material/Check';
-import {SCOPE_SC_UI} from '../../../../constants/Errors';
 import LinearProgress, {LinearProgressProps} from '@mui/material/LinearProgress';
 import {LoadingButton} from '@mui/lab';
 
