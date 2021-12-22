@@ -152,26 +152,31 @@ const Root = styled(Card, {
 export interface FeedObjectProps extends CardProps {
   /**
    * Id of feed object
+   * @default null
    */
   feedObjectId?: number;
 
   /**
    * Feed Object
+   * @default null
    */
   feedObject?: SCFeedObjectType;
 
   /**
    * Feed Object type
+   * @default 'post'
    */
   feedObjectType?: SCFeedObjectTypologyType;
 
   /**
    * Feed Object latest activities
+   * @default null
    */
   feedObjectActivities?: any[];
 
   /**
    * Feed Object template type
+   * @default 'preview'
    */
   template?: FeedObjectTemplateType;
 }
@@ -455,8 +460,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
             {composerOpen && (
               <Composer
                 open={composerOpen}
-                feedObjectType={feedObjectType}
-                feedObjectId={obj.id}
+                feedObject={obj}
                 onClose={handleToggleEdit}
                 onSuccess={handleEditSuccess}
                 maxWidth="sm"

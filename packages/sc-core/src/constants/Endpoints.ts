@@ -2,7 +2,7 @@ import {urlReplacer} from '../utils/url';
 import {Method} from 'axios';
 
 export interface EndpointType {
-  url: (params: object) => string;
+  url: (params?: object) => string;
   method: Method;
 }
 

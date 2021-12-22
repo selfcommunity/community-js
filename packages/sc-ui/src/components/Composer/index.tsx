@@ -50,6 +50,7 @@ import {
   SelectChangeEvent,
   Stack,
   TextField,
+  Theme,
   ToggleButton,
   ToggleButtonGroup,
   Typography
@@ -72,6 +73,11 @@ import Location from './Location';
 import TagChip from '../../shared/TagChip';
 import {AxiosResponse} from 'axios';
 import ComposerSkeleton from '../Skeleton/ComposerSkeleton';
+import {DistributiveOmit} from '@mui/types';
+import {PaperProps} from '@mui/material/Paper';
+import {CardClasses} from '@mui/material/Card/cardClasses';
+import {SxProps} from '@mui/system';
+import {OverridableComponent, OverrideProps} from '@mui/material/OverridableComponent';
 
 const DialogTransition = forwardRef(function Transition(
   props: TransitionProps & {
@@ -229,14 +235,54 @@ const Root = styled(Dialog, {
   }
 }));
 
-export interface ComposerProps extends DialogProps {
-  feedObjectId?: number;
-  feedObjectType?: SCFeedObjectTypologyType;
-  view?: string;
-  mediaObjectTypes?: SCMediaObjectType[];
-  onSuccess?: (res: any) => void;
-  onClose?: (event: SyntheticEvent) => void;
+export interface ComposerTypeMap<P = {}, D extends React.ElementType = 'div'> {
+  props: P &
+    DistributiveOmit<DialogProps, 'defaultValue'> & {
+      /**
+       * Id of feed object
+       * @default null
+       */
+      feedObjectId?: number;
+      /**
+       * Type of feed object
+       * @default null
+       */
+      feedObjectType?: SCFeedObjectTypologyType;
+      /**
+       * Feed object
+       * @default null
+       */
+      feedObject?: SCFeedDiscussionType | SCFeedPostType | SCFeedStatusType | null;
+      /**
+       * Initialization Data for the Composer, this is a hook to generate custom posts
+       * @default null
+       */
+      defaultValue?: SCFeedDiscussionType | SCFeedPostType | SCFeedStatusType | null;
+      /**
+       * Initial view to render
+       * @default 'main'
+       */
+      view?: string;
+      /**
+       * Media objects available
+       * @default Image, Document, Link
+       */
+      mediaObjectTypes?: SCMediaObjectType[];
+      /**
+       * Callback triggered on success contribution creation
+       * @default null
+       */
+      onSuccess?: (res: any) => void;
+      /**
+       * Callback triggered on close click
+       * @default null
+       */
+      onClose?: (event: SyntheticEvent) => void;
+    };
+  defaultComponent: D;
 }
+
+export type ComposerProps<D extends React.ElementType = ComposerTypeMap['defaultComponent'], P = {}> = OverrideProps<ComposerTypeMap<P, D>, D>;
 
 export const MAIN_VIEW = 'main';
 export const AUDIENCE_VIEW = 'audience';
@@ -286,7 +332,8 @@ export default function Composer(props: ComposerProps): JSX.Element {
   const {
     feedObjectId = null,
     feedObjectType = null,
-    open = false,
+    feedObject = null,
+    defaultValue = {},
     view = MAIN_VIEW,
     mediaObjectTypes = [Image, Document, Link],
     onClose = null,
@@ -304,13 +351,41 @@ export default function Composer(props: ComposerProps): JSX.Element {
   const [_view, setView] = useState<string>(view);
   const [composerTypes, setComposerTypes] = useState([]);
 
-  const [state, dispatch] = useReducer(reducer, {...COMPOSER_INITIAL_STATE, open, view, key: random()});
+  const [state, dispatch] = useReducer(reducer, {...COMPOSER_INITIAL_STATE, ...defaultValue, view, key: random()});
   const {key, type, title, titleError, text, categories, addressing, audience, medias, poll, pollError, location} = state;
+
+  const destructureFeedObject = (_feedObject) => {
+    if (_feedObject.type === COMPOSER_TYPE_POST) {
+      _feedObject = _feedObject as SCFeedPostType;
+    } else if (_feedObject.type === COMPOSER_TYPE_DISCUSSION) {
+      _feedObject = _feedObject as SCFeedDiscussionType;
+    } else {
+      _feedObject = _feedObject as SCFeedStatusType;
+    }
+    if (feedObject.author.id === scAuthContext.user.id) {
+      dispatch({
+        type: 'multiple',
+        value: {
+          type: _feedObject.type,
+          title: _feedObject.title,
+          text: _feedObject.html,
+          categories: _feedObject.categories,
+          audience: _feedObject.addressing ? AUDIENCE_TAG : AUDIENCE_ALL,
+          addressing: _feedObject.addressing,
+          medias: _feedObject.medias,
+          poll: _feedObject.poll,
+          location: _feedObject.location
+        }
+      });
+    } else {
+      setLoadError(true);
+    }
+  };
 
   // Edit state variables
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [loadError, setLoadError] = useState<boolean>(false);
-  const editMode = feedObjectId && feedObjectType;
+  const editMode = (feedObjectId && feedObjectType) || feedObject;
 
   // REFS
   const unloadRef = React.useRef<boolean>(false);
@@ -348,6 +423,9 @@ export default function Composer(props: ComposerProps): JSX.Element {
   useEffect(() => {
     if (!editMode) {
       return;
+    } else if (feedObject !== null) {
+      destructureFeedObject(feedObject);
+      return;
     }
     setIsLoading(true);
     http
@@ -356,32 +434,7 @@ export default function Composer(props: ComposerProps): JSX.Element {
         method: Endpoints.FeedObject.method
       })
       .then((res: AxiosResponse<any>) => {
-        let feedObject = null;
-        if (feedObjectType === COMPOSER_TYPE_POST) {
-          feedObject = res.data as SCFeedPostType;
-        } else if (feedObjectType === COMPOSER_TYPE_DISCUSSION) {
-          feedObject = res.data as SCFeedDiscussionType;
-        } else {
-          feedObject = res.data as SCFeedStatusType;
-        }
-        if (feedObject.author.id === scAuthContext.user.id) {
-          dispatch({
-            type: 'multiple',
-            value: {
-              type: feedObjectType,
-              title: feedObject.title,
-              text: feedObject.html,
-              categories: feedObject.categories,
-              audience: feedObject.addressing ? AUDIENCE_TAG : AUDIENCE_ALL,
-              addressing: feedObject.addressing,
-              medias: feedObject.medias,
-              poll: feedObject.poll,
-              location: feedObject.location
-            }
-          });
-        } else {
-          setLoadError(true);
-        }
+        destructureFeedObject(res.data);
       })
       .catch(() => {
         setLoadError(true);
@@ -800,7 +853,10 @@ export default function Composer(props: ComposerProps): JSX.Element {
             <MediasPreview
               medias={medias}
               mediaObjectTypes={mediaObjectTypes.map((mediaObjectType) => {
-                return {...mediaObjectType, previewProps: {adornment: renderMediaAdornment(mediaObjectType), gallery: false}} as SCMediaObjectType;
+                return {
+                  ...mediaObjectType,
+                  previewProps: {adornment: mediaObjectType.editButton !== null ? renderMediaAdornment(mediaObjectType) : null, gallery: false}
+                } as SCMediaObjectType;
               })}
             />
           </Box>
@@ -899,7 +955,7 @@ export default function Composer(props: ComposerProps): JSX.Element {
   }
 
   return (
-    <Root open={open} TransitionComponent={DialogTransition} keepMounted onClose={handleClose} {...rest}>
+    <Root TransitionComponent={DialogTransition} keepMounted onClose={handleClose} {...rest}>
       {child()}
     </Root>
   );
