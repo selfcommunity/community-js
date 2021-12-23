@@ -50,7 +50,6 @@ import {
   SelectChangeEvent,
   Stack,
   TextField,
-  Theme,
   ToggleButton,
   ToggleButtonGroup,
   Typography
@@ -74,10 +73,7 @@ import TagChip from '../../shared/TagChip';
 import {AxiosResponse} from 'axios';
 import ComposerSkeleton from '../Skeleton/ComposerSkeleton';
 import {DistributiveOmit} from '@mui/types';
-import {PaperProps} from '@mui/material/Paper';
-import {CardClasses} from '@mui/material/Card/cardClasses';
-import {SxProps} from '@mui/system';
-import {OverridableComponent, OverrideProps} from '@mui/material/OverridableComponent';
+import {OverrideProps} from '@mui/material/OverridableComponent';
 
 const DialogTransition = forwardRef(function Transition(
   props: TransitionProps & {

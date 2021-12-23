@@ -1,4 +1,5 @@
 import FeedObjectSkeleton from './FeedObjectSkeleton';
+import GenericSkeleton from './GenericSkeleton';
 import UserBoxSkeleton from './UserBoxSkeleton';
 import CategoryBoxSkeleton from './CategoryBoxSkeleton';
 import PeopleSuggestionSkeleton from './PeopleSuggestionSkeleton';
@@ -9,6 +10,7 @@ import NotificationSkeleton from './NotificationSkeleton';
 
 export {
   FeedObjectSkeleton,
+  GenericSkeleton,
   UserBoxSkeleton,
   CategoryBoxSkeleton,
   PeopleSuggestionSkeleton,

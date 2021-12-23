@@ -1,6 +1,6 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Box, List, ListItem, Typography} from '@mui/material';
+import {Card, CardContent, Grid, Hidden, useMediaQuery, Theme} from '@mui/material';
 import {
   http,
   Logger,
@@ -13,26 +13,51 @@ import {
 import {AxiosResponse} from 'axios';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {FormattedMessage} from 'react-intl';
-import {FeedObjectSkeleton} from '../Skeleton';
+import {FeedObjectSkeleton, GenericSkeleton} from '../Skeleton';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import FeedObject, {FeedObjectProps} from '../FeedObject';
 import {FeedObjectTemplateType} from '../../types/feedObject';
 import {EndpointType} from '@selfcommunity/core/src/constants/Endpoints';
+import {SCFeedWidgetType} from '../../types/Feed';
+import Sticky from 'react-stickynode';
+import {useTheme} from '@mui/styles';
 
 const PREFIX = 'SCFeed';
 
-const Root = styled(Box, {
+const classes = {
+  left: `${PREFIX}-left`,
+  right: `${PREFIX}-right`,
+  end: `${PREFIX}-end`,
+  refresh: `${PREFIX}-refresh`
+};
+
+const Root = styled(Grid, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   marginTop: theme.spacing(2),
-  marginBottom: theme.spacing(2)
+  marginBottom: theme.spacing(2),
+  [`& .${classes.end}, & .${classes.refresh}`]: {
+    textAlign: 'center'
+  }
 }));
+
+export interface StickySidebarProps {
+  top: string | number;
+  bottomBoundary: string | number;
+}
 
 export interface FeedProps {
   /**
+   * Id of the feed object
+   * @default 'feed'
+   */
+  id?: string;
+
+  /**
    * Override or extend the styles applied to the component.
+   * @default null
    */
   className?: string;
 
@@ -42,16 +67,34 @@ export interface FeedProps {
   endpoint: EndpointType;
 
   /**
+   * Widgets to insert into the feed
+   * @default empty array
+   */
+  widgets?: SCFeedWidgetType[];
+
+  /**
    * Props to spread to single feed object
+   * @default empty object
    */
   FeedObjectProps?: FeedObjectProps;
+
+  /**
+   * Props to spread to single feed object
+   * @default {top: 0, bottomBoundary: `#${id}`}
+   */
+  StickySidebarProps?: StickySidebarProps;
+}
+
+interface FeedData {
+  left: Array<SCFeedWidgetType | SCFeedUnitType>;
+  right: Array<SCFeedWidgetType>;
 }
 
 const PREFERENCES = [SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED, SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED];
 
 export default function Feed(props: FeedProps): JSX.Element {
   // PROPS
-  const {className, endpoint, FeedObjectProps = {}} = props;
+  const {id = 'feed', className, endpoint, widgets = [], FeedObjectProps = {}, StickySidebarProps = {top: 0, bottomBoundary: `#${id}`}} = props;
 
   // STATE
   const [feedData, setFeedData] = useState([]);
@@ -74,7 +117,8 @@ export default function Feed(props: FeedProps): JSX.Element {
    * Fetch main feed
    * Manage pagination, infinite scrolling
    */
-  function fetch() {
+  const fetch = () => {
+    setLoading(true);
     http
       .request({
         url: next,
@@ -84,12 +128,17 @@ export default function Feed(props: FeedProps): JSX.Element {
         const data = res.data;
         setFeedData([...feedData, ...data.results]);
         setNext(data.next);
-        setLoading(false);
       })
       .catch((error) => {
         Logger.error(SCOPE_SC_UI, error);
-      });
-  }
+      })
+      .then(() => setLoading(false));
+  };
+
+  const refresh = () => {
+    setNext(endpoint.url({}));
+    fetch();
+  };
 
   /**
    * On mount, fetch first page of notifications
@@ -98,54 +147,94 @@ export default function Feed(props: FeedProps): JSX.Element {
     fetch();
   }, []);
 
+  const theme: Theme = useTheme();
+  const oneColLayout = useMediaQuery(theme.breakpoints.down('xs'));
+
+  const getData = useCallback((): FeedData => {
+    const widgetSort = (w1, w2) => (w1.position > w2.position ? 1 : -1);
+    const widgetReducer = (value, w) => {
+      value.splice(w.position, 0, w);
+      return value;
+    };
+    if (oneColLayout) {
+      return {
+        left: widgets
+          .map((w) => Object.assign({}, w, {position: w.position * (w.column === 'right' ? 5 : 1)}))
+          .sort(widgetSort)
+          .reduce(widgetReducer, [...feedData]),
+        right: []
+      };
+    } else {
+      return {
+        left: widgets
+          .filter((w) => w.column === 'left')
+          .sort(widgetSort)
+          .reduce(widgetReducer, [...feedData]),
+        right: widgets.filter((w) => w.column === 'right').sort(widgetSort)
+      };
+    }
+  }, [oneColLayout, feedData]);
+
+  const data = getData();
+
   return (
-    <Root className={className}>
-      {loading ? (
-        <>
-          {[...Array(Math.floor(Math.random() * 5) + 3)].map((x, i) => (
-            <FeedObjectSkeleton key={i} template={FeedObjectTemplateType.PREVIEW} />
-          ))}
-        </>
-      ) : (
-        <Box>
-          {feedData.length <= 0 ? (
-            <Typography variant="body2">
-              <FormattedMessage id="ui.feed.noFeedObject" defaultMessage="ui.feed.noFeedObject" />
-            </Typography>
-          ) : (
-            <InfiniteScroll
-              dataLength={feedData.length}
-              next={fetch}
-              hasMore={Boolean(next)}
-              loader={
-                <ListItem sx={{width: '100%'}}>
-                  <FeedObjectSkeleton template={FeedObjectTemplateType.PREVIEW} {...FeedObjectProps} />
-                </ListItem>
-              }
-              pullDownToRefreshThreshold={10}
-              endMessage={
-                <p style={{textAlign: 'center'}}>
-                  <b>
-                    <FormattedMessage id="ui.feed.noOtherFeedObject" defaultMessage="ui.feed.noOtherFeedObject" />
-                  </b>
-                </p>
-              }>
-              <List>
-                {feedData.map((n: SCFeedUnitType, i) => (
-                  <ListItem key={i}>
-                    <FeedObject
-                      feedObject={n[n.type]}
-                      feedObjectType={n.type}
-                      feedObjectActivities={n.activities ? n.activities : null}
-                      {...FeedObjectProps}
-                      sx={{width: '100%'}}
-                    />
-                  </ListItem>
+    <Root container spacing={2} id="feed" className={className}>
+      <Grid item xs={12} md={7}>
+        <React.Suspense fallback={<FeedObjectSkeleton template={FeedObjectTemplateType.PREVIEW} />}>
+          <InfiniteScroll
+            className={classes.left}
+            dataLength={data.left.length}
+            next={fetch}
+            hasMore={Boolean(next)}
+            loader={false}
+            endMessage={
+              <Card variant="outlined" className={classes.end}>
+                <CardContent>
+                  <FormattedMessage id="feed.end" defaultMessage="feed.end" />{' '}
+                </CardContent>
+              </Card>
+            }
+            refreshFunction={refresh}
+            pullDownToRefresh
+            pullDownToRefreshThreshold={1000}
+            pullDownToRefreshContent={null}
+            releaseToRefreshContent={
+              <Card variant="outlined" className={classes.refresh}>
+                <CardContent>
+                  &#8593; <FormattedMessage id="feed.refreshRelease" defaultMessage="feed.refreshRelease" />{' '}
+                </CardContent>
+              </Card>
+            }>
+            {data.left.map((d, i) =>
+              d.type === 'widget' ? (
+                <d.component key={i} {...d.componentProps}></d.component>
+              ) : (
+                <FeedObject
+                  key={i}
+                  feedObject={d[d.type]}
+                  feedObjectType={d.type}
+                  feedObjectActivities={d.activities ? d.activities : null}
+                  {...FeedObjectProps}
+                  sx={{width: '100%'}}
+                />
+              )
+            )}
+          </InfiniteScroll>
+          {loading && Array.from({length: 5}).map((e, i) => <FeedObjectSkeleton key={i} template={FeedObjectTemplateType.PREVIEW} />)}
+        </React.Suspense>
+      </Grid>
+      {data.right.length > 0 && (
+        <Hidden smDown>
+          <Grid item xs={12} md={5}>
+            <Sticky enabled className={classes.right} {...StickySidebarProps}>
+              <React.Suspense fallback={<GenericSkeleton />}>
+                {data.right.map((d, i) => (
+                  <d.component key={i} {...d.componentProps}></d.component>
                 ))}
-              </List>
-            </InfiniteScroll>
-          )}
-        </Box>
+              </React.Suspense>
+            </Sticky>
+          </Grid>
+        </Hidden>
       )}
     </Root>
   );
