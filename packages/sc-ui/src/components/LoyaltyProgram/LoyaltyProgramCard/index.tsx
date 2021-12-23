@@ -2,12 +2,11 @@ import React, {useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import {Endpoints, http} from '@selfcommunity/core';
-import {Box, Button, CardActions, CardContent, CardMedia, Dialog, Grid, Typography} from '@mui/material';
+import {AppBar, Box, Button, CardActions, CardContent, CardMedia, Dialog, Grid, Typography} from '@mui/material';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {SCPrizeType} from '@selfcommunity/core/src/types';
 import Chip from '@mui/material/Chip';
 import CardGiftcardOutlinedIcon from '@mui/icons-material/CardGiftcardOutlined';
-import BaseDialog from '../../../shared/BaseDialog';
 
 const messages = defineMessages({
   points: {
@@ -20,9 +19,10 @@ const messages = defineMessages({
   }
 });
 
-const PREFIX = 'SCLoyaltyProgramDialog';
+const PREFIX = 'SCLoyaltyProgramCard';
 
 const classes = {
+  header: `${PREFIX}-header`,
   icon: `${PREFIX}-icon`,
   card: `${PREFIX}-card`,
   title: `${PREFIX}-title`,
@@ -31,15 +31,16 @@ const classes = {
   action: `${PREFIX}-action`
 };
 
-const Root = styled(BaseDialog, {
+const Root = styled(Card, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  // minWidth: 500,
+  minWidth: 500,
   margin: 2,
-  [theme.breakpoints.down(500)]: {
-    minWidth: 300
+  [`& .${classes.header}`]: {
+    backgroundColor: theme.palette.grey['A200'],
+    marginBottom: '20px'
   },
   [`& .${classes.points}`]: {
     marginLeft: '16px'
@@ -50,6 +51,7 @@ const Root = styled(BaseDialog, {
   [`& .${classes.icon}`]: {
     backgroundColor: theme.palette.grey['A200'],
     padding: 5,
+    borderRadius: '5px',
     '& .MuiSvgIcon-root ': {
       fontSize: '2rem'
     }
@@ -69,15 +71,11 @@ const Root = styled(BaseDialog, {
   }
 }));
 
-export default function LoyaltyProgramDialog({
-  open = false,
-  onClose = null,
+export default function LoyaltyProgramCard({
   points = null,
   requestable = true,
   ...rest
 }: {
-  open: boolean;
-  onClose?: () => void;
   points?: number;
   requestable?: boolean;
   [p: string]: any;
@@ -107,9 +105,12 @@ export default function LoyaltyProgramDialog({
   }, []);
 
   return (
-    <Root title={<FormattedMessage id="ui.loyaltyProgram.lp" defaultMessage="ui.loyaltyProgram.lp" />} open={open} onClose={onClose} {...rest}>
-      <Box sx={{display: 'flex'}}>
-        <Box className={classes.icon} sx={{marginRight: '10px', marginBottom: '10px', alignItems: 'center'}}>
+    <Root {...rest}>
+      <Typography component="h3" align="left" className={classes.header}>
+        <FormattedMessage id="ui.loyaltyProgram.lp" defaultMessage="ui.loyaltyProgram.lp" />
+      </Typography>
+      <Box sx={{display: 'flex', alignItems: 'center', marginBottom: '20px'}}>
+        <Box className={classes.icon}>
           <CardGiftcardOutlinedIcon />
         </Box>
         <Box className={classes.points}>

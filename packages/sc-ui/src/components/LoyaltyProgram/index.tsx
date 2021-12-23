@@ -8,6 +8,7 @@ import CardMembershipOutlinedIcon from '@mui/icons-material/CardMembershipOutlin
 import {AxiosResponse} from 'axios';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import LoyaltyProgramDialog from './LoyaltyProgramDialog';
+import LoyaltyProgramCard from './LoyaltyProgramCard';
 
 const messages = defineMessages({
   points: {

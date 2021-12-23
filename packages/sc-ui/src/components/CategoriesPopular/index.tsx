@@ -8,7 +8,7 @@ import CategoriesSuggestionSkeleton from '../Skeleton/CategoriesSuggestionSkelet
 import {AxiosResponse} from 'axios';
 import {SCCategoryType} from '@selfcommunity/core/src/types';
 import {SCOPE_SC_UI} from '../../constants/Errors';
-import {FormattedMessage, defineMessages, useIntl} from 'react-intl';
+import {FormattedMessage} from 'react-intl';
 import Category from '../Category';
 
 const PREFIX = 'SCCategoriesPopular';
