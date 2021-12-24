@@ -110,7 +110,6 @@ export default function Share({
    */
   function handleComposerOnSuccess(shareObj) {
     handleComposerOnClose();
-    console.log('Object shared');
     console.log(shareObj);
   }
 
@@ -125,7 +124,7 @@ export default function Share({
       // Avoid to re-share an object with a shared_object in medias
       const shareMedias: SCMediaType[] = obj.medias.filter((media) => media.type === MEDIA_TYPE_SHARE);
       if (shareMedias.length) {
-        sharedObjectId = shareMedias[0].embed.id;
+        sharedObjectId = shareMedias[0].embed.metadata.id;
       }
       return http
         .request({
