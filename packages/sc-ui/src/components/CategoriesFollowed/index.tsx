@@ -65,7 +65,10 @@ export default function CategoriesFollowed(props): JSX.Element {
   );
 
   function loadCategories() {
-    setVisibleCategories((prevVisibleCategories) => prevVisibleCategories + 3);
+    const newIndex = visibleCategories + 3;
+    const newHasMore = newIndex < categories.length - 1;
+    setVisibleCategories(newIndex);
+    setHasMore(newHasMore);
   }
 
   useEffect(() => {
@@ -97,7 +100,7 @@ export default function CategoriesFollowed(props): JSX.Element {
                 {categories.slice(0, visibleCategories).map((category: SCCategoryType, index) => (
                   <div key={index}>
                     <Category elevation={0} category={category} key={category.id} />
-                    <Divider />
+                    {index < visibleCategories - 1 ? <Divider /> : null}
                   </div>
                 ))}
               </List>

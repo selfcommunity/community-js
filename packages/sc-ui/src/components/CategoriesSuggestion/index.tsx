@@ -23,6 +23,7 @@ const Root = styled(Card, {
 
 export default function CategoriesSuggestion(props): JSX.Element {
   const [categories, setCategories] = useState<any[]>([]);
+  const [visibleCategories, setVisibleCategories] = useState<number>(3);
   const [loading, setLoading] = useState<boolean>(true);
   const [hasMore, setHasMore] = useState<boolean>(false);
   const [openCategoriesSuggestionDialog, setOpenCategoriesSuggestionDialog] = useState<boolean>(false);
@@ -37,13 +38,20 @@ export default function CategoriesSuggestion(props): JSX.Element {
       .then((res: AxiosResponse<any>) => {
         const data = res.data;
         setCategories(data.results);
-        setHasMore(data.count > 4);
+        setHasMore(data.count > visibleCategories);
         setLoading(false);
         setTotal(data.count);
       })
       .catch((error) => {
         console.log(error);
       });
+  }
+
+  function loadCategories() {
+    const newIndex = visibleCategories + 3;
+    const newHasMore = newIndex < categories.length - 1;
+    setVisibleCategories(newIndex);
+    setHasMore(newHasMore);
   }
 
   useEffect(() => {
@@ -65,14 +73,14 @@ export default function CategoriesSuggestion(props): JSX.Element {
             </Typography>
           ) : (
             <React.Fragment>
-              {categories.slice(0, 4).map((category: SCCategoryType, index) => (
+              {categories.slice(0, visibleCategories).map((category: SCCategoryType, index) => (
                 <div key={index}>
                   <Category contained={false} category={category} key={category.id} />
-                  <Divider />
+                  {index < visibleCategories - 1 ? <Divider /> : null}
                 </div>
               ))}
               {hasMore && (
-                <Button size="small" onClick={() => setOpenCategoriesSuggestionDialog(true)}>
+                <Button size="small" onClick={() => loadCategories()}>
                   <FormattedMessage id="ui.categoriesSuggestion.button.showMore" defaultMessage="ui.categoriesSuggestion.button.showMore" />
                 </Button>
               )}

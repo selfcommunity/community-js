@@ -23,6 +23,7 @@ const Root = styled(Card, {
 
 export default function TrendingPeople({scCategoryId = null, ...props}: {scCategoryId?: number; [p: string]: any}): JSX.Element {
   const [people, setPeople] = useState<any[]>([]);
+  const [visiblePeople, setVisiblePeople] = useState<number>(3);
   const [loading, setLoading] = useState<boolean>(true);
   const [hasMore, setHasMore] = useState<boolean>(false);
   const [openTrendingPeopleDialog, setOpenTrendingPeopleDialog] = useState<boolean>(false);
@@ -37,13 +38,20 @@ export default function TrendingPeople({scCategoryId = null, ...props}: {scCateg
       .then((res: AxiosResponse<any>) => {
         const data = res.data;
         setPeople(data.results);
-        setHasMore(data.count > 4);
+        setHasMore(data.count > visiblePeople);
         setLoading(false);
         setTotal(data.count);
       })
       .catch((error) => {
         console.log(error);
       });
+  }
+
+  function loadPeople() {
+    const newIndex = visiblePeople + 3;
+    const newHasMore = newIndex < people.length - 1;
+    setVisiblePeople(newIndex);
+    setHasMore(newHasMore);
   }
 
   useEffect(() => {
@@ -73,7 +81,7 @@ export default function TrendingPeople({scCategoryId = null, ...props}: {scCateg
             </React.Fragment>
           )}
           {hasMore && (
-            <Button size="small" onClick={() => setOpenTrendingPeopleDialog(true)}>
+            <Button size="small" onClick={() => loadPeople()}>
               <FormattedMessage id="ui.TrendingPeople.showAll" defaultMessage="ui.TrendingPeople.showAll" />
             </Button>
           )}
