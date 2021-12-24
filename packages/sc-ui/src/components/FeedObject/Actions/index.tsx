@@ -4,7 +4,7 @@ import {Grid} from '@mui/material';
 import Vote from './Vote';
 import Comment from './Comment';
 import Share from './Share';
-import { SCFeedObjectType, SCFeedObjectTypologyType, useSCFetchFeedObject } from '@selfcommunity/core';
+import {SCFeedObjectType, SCFeedObjectTypologyType, useSCFetchFeedObject} from '@selfcommunity/core';
 
 const PREFIX = 'SCFeedObjectActions';
 
@@ -21,11 +21,13 @@ export default function Actions({
   feedObjectId = null,
   feedObject = null,
   feedObjectType = SCFeedObjectTypologyType.POST,
+  hideShareAction = false,
   handleExpandActivities = null
 }: {
   feedObjectId?: number;
   feedObject?: SCFeedObjectType;
   feedObjectType?: SCFeedObjectTypologyType;
+  hideShareAction?: boolean;
   handleExpandActivities?: () => void;
 }): JSX.Element {
   const {obj, setObj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
@@ -34,15 +36,17 @@ export default function Actions({
   }
   return (
     <Root container>
-      <Grid item xs={4} sx={{textAlign: 'center'}}>
+      <Grid item xs={hideShareAction ? 6 : 4} sx={{textAlign: 'center'}}>
         <Vote feedObject={obj} feedObjectType={feedObjectType} id={feedObjectId} withAction={true} inlineAction={false} />
       </Grid>
-      <Grid item xs={4} sx={{textAlign: 'center'}}>
+      <Grid item xs={hideShareAction ? 6 : 4} sx={{textAlign: 'center'}}>
         <Comment feedObject={obj} feedObjectType={feedObjectType} id={feedObjectId} withAction={true} onActionCLick={handleExpandActivities} />
       </Grid>
-      <Grid item xs={4} sx={{textAlign: 'center'}}>
-        <Share feedObject={obj} feedObjectType={feedObjectType} id={feedObjectId} withAction={true} inlineAction={false} />
-      </Grid>
+      {!hideShareAction && (
+        <Grid item xs={4} sx={{textAlign: 'center'}}>
+          <Share feedObject={obj} feedObjectType={feedObjectType} id={feedObjectId} withAction={true} inlineAction={false} />
+        </Grid>
+      )}
     </Root>
   );
 }

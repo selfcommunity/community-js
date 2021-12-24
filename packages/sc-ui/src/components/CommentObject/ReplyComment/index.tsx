@@ -1,4 +1,4 @@
-import React, {RefObject, useContext, useEffect, useState} from 'react';
+import React, { RefObject, useContext, useEffect, useMemo, useState } from 'react';
 import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import {defineMessages, useIntl} from 'react-intl';
@@ -8,6 +8,7 @@ import {SCUserContext, SCUserContextType, useSCFetchCommentObject} from '@selfco
 import Editor from '../../Editor';
 import {TMUIRichTextEditorRef} from 'mui-rte';
 import classNames from 'classnames';
+import {LoadingButton} from '@mui/lab';
 
 const messages = defineMessages({
   reply: {
@@ -41,12 +42,14 @@ export default function ReplyCommentObject({
   autoFocus = false,
   inline = false,
   onReply = null,
+  isLoading = false,
   ...rest
 }: {
   commentObjectId?: number;
   commentObject?: SCCommentType;
   autoFocus?: boolean;
   onReply?: (comment) => void;
+  isLoading?: boolean;
   [p: string]: any;
 }): JSX.Element {
   const scUser: SCUserContextType = useContext(SCUserContext);
@@ -75,6 +78,7 @@ export default function ReplyCommentObject({
    */
   const handleReply = () => {
     onReply && onReply(html);
+    setHtml('');
   };
 
   /**
@@ -83,6 +87,17 @@ export default function ReplyCommentObject({
   const handleChangeText = (value: string): void => {
     setHtml(value);
   };
+
+  /**
+   * Check if editor is empty
+   */
+  const isEditorEmpty = useMemo(
+    () => () => {
+      const _html = html.trim();
+      return _html === '' || _html === '<p></p>';
+    },
+    [html]
+  );
 
   /**
    * Render reply
@@ -103,15 +118,16 @@ export default function ReplyCommentObject({
                   onRef={(e) => {
                     editor = e;
                   }}
+                  defaultValue={html}
                   onChange={handleChangeText}
                 />
               </Card>
-              {!inline && (
+              {!isEditorEmpty() && (
                 <Box component="span" sx={{display: 'flex', justifyContent: 'flex-start'}}>
                   <Grid component="span" item={true} sm="auto" container direction="row" alignItems="right">
-                    <Button variant={'text'} sx={{marginTop: '-1px'}} onClick={handleReply}>
+                    <LoadingButton variant={'text'} sx={{marginTop: '-1px'}} onClick={handleReply} loading={isLoading}>
                       {intl.formatMessage(messages.reply)}
-                    </Button>
+                    </LoadingButton>
                   </Grid>
                 </Box>
               )}

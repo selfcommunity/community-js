@@ -115,7 +115,7 @@ export interface SCFeedObjectType {
   /**
    * List of categories.
    */
-  categories: SCCategoryType[];
+  categories?: SCCategoryType[];
 
   /**
    * List of medias
@@ -136,11 +136,6 @@ export interface SCFeedObjectType {
    * Last activity at
    */
   last_activity_at: Date;
-
-  /**
-   * Latest activities
-   */
-  lastest_activities: any[];
 
   /**
    * Added at

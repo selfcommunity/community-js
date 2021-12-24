@@ -5,6 +5,7 @@ import {SCMediaObjectType} from '../../types/media';
 import Document from '../Media/Document';
 import Image from '../Media/Image';
 import Link from '../Media/Link';
+import Share from '../Media/Share';
 
 const PREFIX = 'SCMedias';
 
@@ -22,7 +23,7 @@ const Root = styled(Box, {
 
 export default ({
   medias,
-  mediaObjectTypes = [Image, Document, Link],
+  mediaObjectTypes = [Image, Document, Link, Share],
   ...rest
 }: {
   medias: Array<any>;

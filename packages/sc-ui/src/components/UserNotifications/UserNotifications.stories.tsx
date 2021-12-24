@@ -27,7 +27,7 @@ export default {
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const Template: ComponentStory<typeof UserNotifications> = (args) => (
-  <div style={{width: '100%'}}>
+  <div style={{width: '600px'}}>
     <UserNotifications {...args} />
   </div>
 );

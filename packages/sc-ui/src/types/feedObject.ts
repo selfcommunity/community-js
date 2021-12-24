@@ -4,7 +4,8 @@
 export enum FeedObjectTemplateType {
   SNIPPET = 'snippet',
   PREVIEW = 'preview',
-  DETAIL = 'detail'
+  DETAIL = 'detail',
+  SHARE = 'share'
 }
 
 /**

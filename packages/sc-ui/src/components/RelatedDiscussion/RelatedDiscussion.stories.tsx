@@ -1,8 +1,8 @@
 import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
 import RelatedDiscussion from './index';
-import {FeedObjectTemplateType} from '../FeedObject';
 import {SCFeedObjectTypologyType} from '@selfcommunity/core';
+import {FeedObjectTemplateType} from '../../types/feedObject';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {

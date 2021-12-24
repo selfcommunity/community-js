@@ -46,6 +46,7 @@ const Root = styled(Card, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   background: theme.palette.grey['A100'],
+  marginTop: theme.spacing(1),
   marginBottom: theme.spacing(2),
   padding: theme.spacing(1),
   '& .MuiCardHeader-root': {

@@ -124,6 +124,8 @@
   "ui.feedObject.vote.votedByOnlyMe": "Solo tu",
   "ui.feedObject.vote.votedByMe": "Tu",
   "ui.feedObject.share.share": "Condividi il contributo",
+  "ui.feedObject.share.shareNow": "Condividi ora",
+  "ui.feedObject.share.shareInCategories": "Condividi in {categories}",
   "ui.feedObject.share.shares": "{total, plural, =0 {# Condivisioni} one {# Condivisione} other {# Condivisioni}}",
   "ui.feedObject.votesDialog.title": "Voti",
   "ui.feedObject.votesDialog.noOtherLikes": "Non ci sono altri voti.",

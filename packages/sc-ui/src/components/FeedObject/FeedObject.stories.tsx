@@ -21,7 +21,7 @@ export default {
       description: 'Object type. Used only with args id.'
     },
     template: {
-      options: [FeedObjectTemplateType.SNIPPET, FeedObjectTemplateType.PREVIEW, FeedObjectTemplateType.DETAIL],
+      options: [FeedObjectTemplateType.SNIPPET, FeedObjectTemplateType.PREVIEW, FeedObjectTemplateType.DETAIL, FeedObjectTemplateType.SHARE],
       control: {type: 'select'},
       description: 'Object template. Used only with args id.',
       table: {defaultValue: {summary: FeedObjectTemplateType.SNIPPET}}
@@ -43,8 +43,9 @@ export default {
     feedObjectType: SCFeedObjectTypologyType.DISCUSSION,
     template: FeedObjectTemplateType.SNIPPET,
     elevation: 1,
-    variant: 'elevation'
-  }
+    variant: 'elevation',
+    hideShareAction: false
+  },
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
 } as ComponentMeta<typeof FeedObject>;
 
@@ -55,20 +56,6 @@ const Template: ComponentStory<typeof FeedObject> = (args) => (
   </div>
 );
 
-export const Preview = Template.bind({});
+export const Base = Template.bind({});
 
-Preview.args = {
-  template: FeedObjectTemplateType.PREVIEW
-};
-
-export const Snippet = Template.bind({});
-
-Snippet.args = {
-  template: FeedObjectTemplateType.SNIPPET
-};
-
-export const Detail = Template.bind({});
-
-Detail.args = {
-  template: FeedObjectTemplateType.DETAIL
-};
+Base.args = {};

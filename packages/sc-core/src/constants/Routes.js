@@ -8,10 +8,11 @@ export const DISCUSSION_ROUTE_NAME = 'discussion';
 export const STATUS_ROUTE_NAME = 'status';
 export const COMMENT_ROUTE_NAME = 'comment';
 export const PRIVATE_MESSAGES_ROUTE_NAME = 'messages';
+export const LOYALTY_ROUTE_NAME = 'loyalty';
 
 /**
  * Default Routes
- * @type {{post: string, profile: string, discussion: string, category: string, status: string, messages: string}}
+ * @type {{post: string, profile: string, discussion: string, category: string, status: string, messages: string, loyalty: string}}
  */
 export const defaultRoutes = {
   [CATEGORY_ROUTE_NAME]: '/category/:id/',
@@ -20,5 +21,6 @@ export const defaultRoutes = {
   [STATUS_ROUTE_NAME]: '/status/:id/',
   [DISCUSSION_ROUTE_NAME]: '/discussion/:id/',
   [COMMENT_ROUTE_NAME]: '/comment/:id/',
-  [PRIVATE_MESSAGES_ROUTE_NAME]: '/messages/',
+  [PRIVATE_MESSAGES_ROUTE_NAME]: '/messages/:id',
+  [LOYALTY_ROUTE_NAME]: '/loyalty/',
 };

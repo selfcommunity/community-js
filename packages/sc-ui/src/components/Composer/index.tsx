@@ -8,13 +8,13 @@ import {
   SCFeedObjectTypologyType,
   SCFeedPostType,
   SCFeedStatusType,
-  SCMediaType,
+  SCMediaType, SCPollType,
   SCPreferences,
   SCPreferencesContext,
   SCPreferencesContextType,
   SCTagType,
   SCUserContext,
-  SCUserContextType
+  SCUserContextType,
 } from '@selfcommunity/core';
 import {FormattedMessage} from 'react-intl';
 import CloseIcon from '@mui/icons-material/CancelOutlined';
@@ -65,7 +65,7 @@ import {TransitionProps} from '@mui/material/transitions';
 import PollPreview from '../FeedObject/Poll';
 import Editor from '../Editor';
 import {SCMediaObjectType} from '../../types/media';
-import {Document, Image, Link} from '../../shared/Media';
+import {Document, Image, Link, Share} from '../../shared/Media';
 import MediasPreview from '../../shared/MediasPreview';
 import Poll from './Poll';
 import Location from './Location';
@@ -253,7 +253,16 @@ export interface ComposerTypeMap<P = {}, D extends React.ElementType = 'div'> {
        * Initialization Data for the Composer, this is a hook to generate custom posts
        * @default null
        */
-      defaultValue?: SCFeedDiscussionType | SCFeedPostType | SCFeedStatusType | null;
+      defaultValue?: {
+        title?: string;
+        text?: string;
+        categories?: [];
+        audience?: string;
+        addressing?: SCTagType[];
+        medias?: SCMediaType[];
+        poll?: SCPollType;
+        location?: string;
+      };
       /**
        * Initial view to render
        * @default 'main'
@@ -331,7 +340,7 @@ export default function Composer(props: ComposerProps): JSX.Element {
     feedObject = null,
     defaultValue = {},
     view = MAIN_VIEW,
-    mediaObjectTypes = [Image, Document, Link],
+    mediaObjectTypes = [Image, Document, Link, Share],
     onClose = null,
     onSuccess = null,
     ...rest
