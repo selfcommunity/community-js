@@ -1,6 +1,6 @@
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
-import {styled} from '@mui/material/styles';
-import {Card, CardContent, Grid, Hidden, useMediaQuery, Theme} from '@mui/material';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { styled } from '@mui/material/styles';
+import { Card, CardContent, Grid, Hidden, Theme, useMediaQuery } from '@mui/material';
 import {
   http,
   Logger,
@@ -8,19 +8,19 @@ import {
   SCNotificationAggregatedType,
   SCPreferences,
   SCPreferencesContextType,
-  useSCPreferences
+  useSCPreferences,
 } from '@selfcommunity/core';
-import {AxiosResponse} from 'axios';
-import {SCOPE_SC_UI} from '../../constants/Errors';
-import {FormattedMessage} from 'react-intl';
-import {FeedObjectSkeleton, GenericSkeleton} from '../Skeleton';
+import { AxiosResponse } from 'axios';
+import { SCOPE_SC_UI } from '../../constants/Errors';
+import { FormattedMessage } from 'react-intl';
+import { FeedObjectSkeleton, GenericSkeleton } from '../Skeleton';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import FeedObject, {FeedObjectProps} from '../FeedObject';
-import {FeedObjectTemplateType} from '../../types/feedObject';
-import {EndpointType} from '@selfcommunity/core/src/constants/Endpoints';
-import {SCFeedWidgetType} from '../../types/Feed';
+import FeedObject, { FeedObjectProps } from '../FeedObject';
+import { FeedObjectTemplateType } from '../../types/feedObject';
+import { EndpointType } from '@selfcommunity/core/src/constants/Endpoints';
+import { SCFeedWidgetType } from '../../types/Feed';
 import Sticky from 'react-stickynode';
-import {useTheme} from '@mui/styles';
+import { useTheme } from '@mui/styles';
 
 const PREFIX = 'SCFeed';
 
@@ -37,7 +37,6 @@ const Root = styled(Grid, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   marginTop: theme.spacing(2),
-  marginBottom: theme.spacing(2),
   [`& .${classes.end}, & .${classes.refresh}`]: {
     textAlign: 'center'
   }

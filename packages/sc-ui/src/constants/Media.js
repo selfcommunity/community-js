@@ -3,6 +3,7 @@ export const MEDIA_TYPE_VIDEO = 'video';
 export const MEDIA_TYPE_DOCUMENT = 'doc';
 export const MEDIA_TYPE_LINK = 'link';
 export const MEDIA_TYPE_URL = 'url';
+export const MEDIA_TYPE_SHARE = 'share';
 
 /**
  * Embed types

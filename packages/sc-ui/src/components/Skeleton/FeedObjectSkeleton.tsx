@@ -1,10 +1,9 @@
 import React from 'react';
 import Card from '@mui/material/Card';
-import List from '@mui/material/List';
 import {styled} from '@mui/material/styles';
 import Skeleton from '@mui/material/Skeleton';
 import {FeedObjectTemplateType} from '../../types/feedObject';
-import {CardContent, CardHeader} from '@mui/material';
+import { Box, CardContent, CardHeader } from '@mui/material';
 
 const PREFIX = 'SCFeedObjectSkeleton';
 
@@ -19,7 +18,7 @@ const Root = styled(Card, {
 })(({theme}) => ({
   width: '100%',
   maxWidth: 700,
-  marginBottom: theme.spacing(2),
+  margin: `${theme.spacing(2)} 3px `,
   [`& .${classes.media}`]: {
     height: 190
   }
@@ -66,9 +65,7 @@ export default function FeedObjectSkeleton(props: {template?: FeedObjectTemplate
 
   return (
     <Root {...rest}>
-      <div className={`${PREFIX}-${_template}`}>
-        <List>{obj}</List>
-      </div>
+      <Box className={`${PREFIX}-${_template}`}>{obj}</Box>
     </Root>
   );
 }

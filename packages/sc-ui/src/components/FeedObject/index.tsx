@@ -79,6 +79,7 @@ const classes = {
   username: `${PREFIX}-username`,
   category: `${PREFIX}-category`,
   content: `${PREFIX}-content`,
+  text: `${PREFIX}-text`,
   snippetContent: `${PREFIX}-snippet-content`,
   tag: `${PREFIX}-tag`,
   activitiesContent: `${PREFIX}-activities-content`,
@@ -91,7 +92,10 @@ const Root = styled(Card, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   maxWidth: 700,
-  marginBottom: theme.spacing(2),
+  margin: `${theme.spacing(2)} 3px `,
+  [`& .${PREFIX}-share`]: {
+    backgroundColor: '#f8f8f8'
+  },
   [`& .${classes.title}`]: {
     fontWeight: 600,
     color: '#3e3e3e'
@@ -121,6 +125,9 @@ const Root = styled(Card, {
   [`& .${classes.content}`]: {
     paddingTop: 0,
     paddingBottom: 0
+  },
+  [`& .${classes.text}`]: {
+    padding: 1
   },
   [`& .${classes.snippetContent}`]: {
     textDecoration: 'none',
@@ -179,6 +186,24 @@ export interface FeedObjectProps extends CardProps {
    * @default 'preview'
    */
   template?: FeedObjectTemplateType;
+
+  /**
+   * Hide share action object
+   * @default false
+   */
+  hideShareAction?: boolean;
+
+  /**
+   * Hide follow action object
+   * @default false
+   */
+  hideFollowAction?: boolean;
+
+  /**
+   * Hide Participants preview
+   * @default false
+   */
+  hideParticipantsPreview?: boolean;
 }
 
 export default function FeedObject(props: FeedObjectProps): JSX.Element {
@@ -189,6 +214,9 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
     feedObjectType = SCFeedObjectTypologyType.POST,
     feedObjectActivities = null,
     template = FeedObjectTemplateType.PREVIEW,
+    hideShareAction = false,
+    hideFollowAction = false,
+    hideParticipantsPreview = false,
     ...rest
   } = props;
 
@@ -201,6 +229,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
   const [composerOpen, setComposerOpen] = useState<boolean>(false);
   const [expandedActivities, setExpandedActivities] = useState<boolean>(getInitialExpandedActivities());
   const [selectedActivities, setSelectedActivities] = useState<string>(getInitialSelectedActivitiesType());
+  const [isReplying, setIsReplying] = useState<boolean>(false);
   const [isFollowing, setIsFollowing] = useState<boolean>(false);
   const intl = useIntl();
 
@@ -307,13 +336,58 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
   }
 
   /**
+   * Perform reply
+   * Comment of first level
+   */
+  const performReply = useMemo(
+    () => (comment) => {
+      return http
+        .request({
+          url: Endpoints.NewComment.url({}),
+          method: Endpoints.NewComment.method,
+          data: {
+            [`${feedObjectType}`]: obj.id,
+            text: comment
+          }
+        })
+        .then((res: AxiosResponse<SCTagType>) => {
+          if (res.status >= 300) {
+            return Promise.reject(res);
+          }
+          return Promise.resolve(res.data);
+        });
+    },
+    [obj]
+  );
+
+  /**
+   * Handle comment
+   */
+  function handleReply(comment) {
+    setIsReplying(true);
+    performReply(comment)
+      .then((data) => {
+        setIsReplying(false);
+        if (selectedActivities !== FeedObjectActivitiesType.RECENT_COMMENTS) {
+          setSelectedActivities(FeedObjectActivitiesType.RECENT_COMMENTS);
+        } else {
+          console.log(data);
+        }
+        // setObj(Object.assign({}, obj, {followed: !obj.followed}));
+      })
+      .catch((error) => {
+        Logger.error(SCOPE_SC_UI, error);
+      });
+  }
+
+  /**
    * Render collapsed activities of the single feedObject
    */
   function renderActivities() {
     return (
       <>
-        {<ReplyCommentObject inline variant={'outlined'} />}
-        {(obj.comment_count || obj.lastest_activities) && (
+        {<ReplyCommentObject inline variant={'outlined'} onReply={handleReply} isLoading={isReplying} />}
+        {(obj.comment_count || feedObjectActivities) && (
           <ActivitiesMenu
             selectedActivities={selectedActivities}
             hideRelevantActivitiesItem={!(feedObjectActivities && feedObjectActivities.length > 0)}
@@ -421,16 +495,19 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
               )}
               <MediasPreview medias={obj.medias} />
               <Typography
-                variant="body2"
+                component="div"
                 gutterBottom
+                className={classes.text}
                 dangerouslySetInnerHTML={{__html: template === FeedObjectTemplateType.PREVIEW ? obj.summary : obj.html}}
               />
               {obj['poll'] && <PollObject feedObject={obj} pollObject={obj['poll']} onChange={handleChangePoll} elevation={0} />}
               <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
-                <LazyLoad once>
-                  <ContributorsFeedObject feedObject={obj} feedObjectType={feedObjectType} sx={{padding: '6px'}} />
-                </LazyLoad>
-                {obj.author.id !== scUserContext.user.id && (
+                {!hideParticipantsPreview && (
+                  <LazyLoad once>
+                    <ContributorsFeedObject feedObject={obj} feedObjectType={feedObjectType} sx={{padding: '6px'}} />
+                  </LazyLoad>
+                )}
+                {obj.author.id !== scUserContext.user.id && !hideFollowAction && (
                   <LoadingButton
                     classes={{root: classes.followButton}}
                     loading={isFollowing}
@@ -448,7 +525,12 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
               </Stack>
             </CardContent>
             <CardActions sx={{padding: '1px 8px'}}>
-              <Actions feedObject={obj} feedObjectType={feedObjectType} handleExpandActivities={() => setExpandedActivities((prev) => !prev)} />
+              <Actions
+                feedObject={obj}
+                feedObjectType={feedObjectType}
+                hideShareAction={hideShareAction}
+                handleExpandActivities={() => setExpandedActivities((prev) => !prev)}
+              />
             </CardActions>
             {template === FeedObjectTemplateType.PREVIEW && (
               <Collapse in={expandedActivities} timeout="auto" unmountOnExit>
@@ -468,6 +550,47 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
                 scroll="body"
               />
             )}
+          </React.Fragment>
+        ) : (
+          <FeedObjectSkeleton template={template} elevation={0} />
+        )}
+      </React.Fragment>
+    );
+  } else if (template === FeedObjectTemplateType.SHARE) {
+    objElement = (
+      <React.Fragment>
+        {obj ? (
+          <React.Fragment>
+            {obj.categories && (
+              <div className={classes.category}>
+                {obj.categories.map((c) => (
+                  <Typography variant="overline">{c.name}</Typography>
+                ))}
+              </div>
+            )}
+            <CardHeader
+              avatar={
+                <Avatar aria-label="recipe" src={obj.author.avatar}>
+                  {obj.author.username}
+                </Avatar>
+              }
+              title={obj.author.username}
+              subheader={
+                <Grid component="span" item={true} sm="auto" container direction="row" alignItems="center">
+                  <DateTimeAgo date={obj.last_activity_at} />
+                </Grid>
+              }
+            />
+            <CardContent classes={{root: classes.content}}>
+              {'title' in obj && (
+                <Typography variant="body1" gutterBottom className={classes.title}>
+                  {obj.title}
+                </Typography>
+              )}
+              <MediasPreview medias={obj.medias} />
+              <Typography component="div" className={classes.text} variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: obj.html}} />
+              {obj['poll'] && <PollObject feedObject={obj} pollObject={obj['poll']} onChange={handleChangePoll} elevation={0} />}
+            </CardContent>
           </React.Fragment>
         ) : (
           <FeedObjectSkeleton template={template} elevation={0} />
@@ -521,7 +644,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
    */
   return (
     <Root {...rest}>
-      <div className={`${PREFIX}-${template}`}>{objElement}</div>
+      <Box className={`${PREFIX}-${template}`}>{objElement}</Box>
     </Root>
   );
 }

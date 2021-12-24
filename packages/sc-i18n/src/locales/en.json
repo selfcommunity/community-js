@@ -131,6 +131,8 @@
   "ui.feedObject.vote.votedByOnlyMe": "Only you",
   "ui.feedObject.vote.votedByMe": "You",
   "ui.feedObject.share.share": "Share this contribute",
+  "ui.feedObject.share.shareNow": "Share now",
+  "ui.feedObject.share.shareInCategories": "Share in {categories}",
   "ui.feedObject.share.shares": "{total, plural, =0 {# Shares} one {# Share} other {# Shares}}",
   "ui.feedObject.votesDialog.title": "Votes",
   "ui.feedObject.votesDialog.noOtherLikes": "No other votes.",
