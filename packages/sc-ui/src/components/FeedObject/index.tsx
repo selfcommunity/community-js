@@ -127,7 +127,8 @@ const Root = styled(Card, {
     paddingBottom: 0
   },
   [`& .${classes.text}`]: {
-    padding: 1
+    padding: '5px 1px',
+    marginBottom: 0
   },
   [`& .${classes.snippetContent}`]: {
     textDecoration: 'none',
