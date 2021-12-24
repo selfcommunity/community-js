@@ -1,17 +1,17 @@
 import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
 
-import LoyaltyProgramCard from './index';
+import LoyaltyProgramDetail from './index';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Design System/SC UI/Loyalty Program Card',
-  component: LoyaltyProgramCard
+  component: LoyaltyProgramDetail
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
-} as ComponentMeta<typeof LoyaltyProgramCard>;
+} as ComponentMeta<typeof LoyaltyProgramDetail>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof LoyaltyProgramCard> = (args) => <LoyaltyProgramCard {...args} />;
+const Template: ComponentStory<typeof LoyaltyProgramDetail> = (args) => <LoyaltyProgramDetail {...args} />;
 
 export const Base = Template.bind({});
 

@@ -3,12 +3,13 @@ import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import {Button, CardActions, Box, Typography, Grid} from '@mui/material';
-import {Endpoints, http, SCLocaleContextType, SCUserContext, SCUserContextType, useSCLocale} from '@selfcommunity/core';
+import {Endpoints, http, SCUserContext, SCUserContextType} from '@selfcommunity/core';
 import CardMembershipOutlinedIcon from '@mui/icons-material/CardMembershipOutlined';
 import {AxiosResponse} from 'axios';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import LoyaltyProgramDialog from './LoyaltyProgramDialog';
-import LoyaltyProgramCard from './LoyaltyProgramCard';
+import {SCRoutingContextType, useSCRouting, Link, SCRoutes} from '@selfcommunity/core';
+import LoyaltyProgramDetail from './LoyaltyProgramDetail';
 
 const messages = defineMessages({
   points: {
@@ -63,11 +64,12 @@ const Root = styled(Card, {
   }
 }));
 
-export default function LoyaltyProgram({autoHide = null, ...props}: {autoHide: boolean}): JSX.Element {
+export default function LoyaltyProgram({autoHide = null, cardType = null, ...props}: {autoHide: boolean; cardType?: boolean}): JSX.Element {
   const scUserContext: SCUserContextType = useContext(SCUserContext);
   const [points, setPoints] = useState<number>(null);
   const [openLoyaltyProgramDialog, setOpenLoyaltyProgramDialog] = useState<boolean>(false);
   const intl = useIntl();
+  const scRoutingContext: SCRoutingContextType = useSCRouting();
   const handleClose = () => {
     setOpenLoyaltyProgramDialog(false);
   };
@@ -118,9 +120,15 @@ export default function LoyaltyProgram({autoHide = null, ...props}: {autoHide: b
             {`${intl.formatMessage(messages.points, {total: points})}`}
           </Typography>
         </Box>
-        <Button variant="outlined" size="small" onClick={() => setOpenLoyaltyProgramDialog(true)}>
-          <FormattedMessage id="ui.loyaltyProgram.discover" defaultMessage="ui.loyaltyProgram.discover" />
-        </Button>
+        {cardType ? (
+          <Button variant="outlined" size="small" component={Link} to={scRoutingContext.url(SCRoutes.LOYALTY_ROUTE_NAME, {LoyaltyProgramDetail})}>
+            <FormattedMessage id="ui.loyaltyProgram.discover" defaultMessage="ui.loyaltyProgram.discover" />
+          </Button>
+        ) : (
+          <Button variant="outlined" size="small" onClick={() => setOpenLoyaltyProgramDialog(true)}>
+            <FormattedMessage id="ui.loyaltyProgram.discover" defaultMessage="ui.loyaltyProgram.discover" />
+          </Button>
+        )}
       </CardActions>
       {openLoyaltyProgramDialog && <LoyaltyProgramDialog open={openLoyaltyProgramDialog} onClose={handleClose} points={points} />}
     </React.Fragment>

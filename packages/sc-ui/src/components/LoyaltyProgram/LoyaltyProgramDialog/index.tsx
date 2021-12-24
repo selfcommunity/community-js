@@ -2,7 +2,7 @@ import React from 'react';
 import {styled} from '@mui/material/styles';
 import {FormattedMessage} from 'react-intl';
 import BaseDialog from '../../../shared/BaseDialog';
-import LoyaltyProgramCard from '../LoyaltyProgramCard';
+import LoyaltyProgramDetail from '../LoyaltyProgramDetail';
 
 const PREFIX = 'SCLoyaltyProgramDialog';
 
@@ -33,7 +33,7 @@ export default function LoyaltyProgramDialog({
 }): JSX.Element {
   return (
     <Root title={<FormattedMessage id="ui.loyaltyProgram.lp" defaultMessage="ui.loyaltyProgram.lp" />} open={open} onClose={onClose} {...rest}>
-      <LoyaltyProgramCard points={points} cardType={false} />
+      <LoyaltyProgramDetail points={points} cardType={false} />
     </Root>
   );
 }
