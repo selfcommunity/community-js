@@ -72,10 +72,12 @@ const Root = styled(Card, {
 }));
 
 export default function LoyaltyProgramCard({
+  cardType = true,
   points = null,
   requestable = true,
   ...rest
 }: {
+  cardType?: boolean;
   points?: number;
   requestable?: boolean;
   [p: string]: any;
@@ -106,9 +108,11 @@ export default function LoyaltyProgramCard({
 
   return (
     <Root {...rest}>
-      <Typography component="h3" align="left" className={classes.header}>
-        <FormattedMessage id="ui.loyaltyProgram.lp" defaultMessage="ui.loyaltyProgram.lp" />
-      </Typography>
+      {cardType && (
+        <Typography component="h3" align="left" className={classes.header}>
+          <FormattedMessage id="ui.loyaltyProgram.lp" defaultMessage="ui.loyaltyProgram.lp" />
+        </Typography>
+      )}
       <Box sx={{display: 'flex', alignItems: 'center', marginBottom: '20px'}}>
         <Box className={classes.icon}>
           <CardGiftcardOutlinedIcon />
@@ -133,73 +137,11 @@ export default function LoyaltyProgramCard({
           <ul style={{columnCount: 2}}>
             <li>
               <FormattedMessage
-                id="ui.loyaltyProgramDialog.list.1"
-                defaultMessage="ui.loyaltyProgramDialog.list.1"
+                id="ui.loyaltyProgramDialog.list"
+                defaultMessage="ui.loyaltyProgramDialog.list"
                 values={{
-                  b: (chunks) => <strong>{chunks}</strong>
-                }}
-              />
-            </li>
-            <li>
-              <FormattedMessage
-                id="ui.loyaltyProgramDialog.list.2"
-                defaultMessage="ui.loyaltyProgramDialog.list.2"
-                values={{
-                  b: (chunks) => <strong>{chunks}</strong>
-                }}
-              />
-            </li>
-            <li>
-              <FormattedMessage
-                id="ui.loyaltyProgramDialog.list.3"
-                defaultMessage="ui.loyaltyProgramDialog.list.3"
-                values={{
-                  b: (chunks) => <strong>{chunks}</strong>
-                }}
-              />
-            </li>
-            <li>
-              <FormattedMessage
-                id="ui.loyaltyProgramDialog.list.4"
-                defaultMessage="ui.loyaltyProgramDialog.list.4"
-                values={{
-                  b: (chunks) => <strong>{chunks}</strong>
-                }}
-              />
-            </li>
-            <li>
-              <FormattedMessage
-                id="ui.loyaltyProgramDialog.list.5"
-                defaultMessage="ui.loyaltyProgramDialog.list.5"
-                values={{
-                  b: (chunks) => <strong>{chunks}</strong>
-                }}
-              />
-            </li>
-            <li>
-              <FormattedMessage
-                id="ui.loyaltyProgramDialog.list.6"
-                defaultMessage="ui.loyaltyProgramDialog.list.6"
-                values={{
-                  b: (chunks) => <strong>{chunks}</strong>
-                }}
-              />
-            </li>
-            <li>
-              <FormattedMessage
-                id="ui.loyaltyProgramDialog.list.7"
-                defaultMessage="ui.loyaltyProgramDialog.list.7"
-                values={{
-                  b: (chunks) => <strong>{chunks}</strong>
-                }}
-              />
-            </li>
-            <li>
-              <FormattedMessage
-                id="ui.loyaltyProgramDialog.list.8"
-                defaultMessage="ui.loyaltyProgramDialog.list.8"
-                values={{
-                  b: (chunks) => <strong>{chunks}</strong>
+                  b: (chunks) => <strong>{chunks}</strong>,
+                  li: (chunks) => <li>{chunks}</li>
                 }}
               />
             </li>
