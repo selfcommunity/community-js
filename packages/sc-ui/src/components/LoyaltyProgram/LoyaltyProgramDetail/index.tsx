@@ -23,6 +23,7 @@ const PREFIX = 'SCLoyaltyProgramDetail';
 
 const classes = {
   header: `${PREFIX}-header`,
+  intro: `${PREFIX}-intro`,
   icon: `${PREFIX}-icon`,
   card: `${PREFIX}-card`,
   title: `${PREFIX}-title`,
@@ -41,6 +42,11 @@ const Root = styled(Card, {
   margin: 2,
   [`& .${classes.header}`]: {
     backgroundColor: theme.palette.grey['A200'],
+    marginBottom: '20px'
+  },
+  [`& .${classes.intro}`]: {
+    display: 'flex',
+    alignItems: 'center',
     marginBottom: '20px'
   },
   [`& .${classes.points}`]: {
@@ -80,7 +86,7 @@ export default function LoyaltyProgramDetail({
   requestable = true,
   ...rest
 }: {
-  autoHide: boolean;
+  autoHide?: boolean;
   cardType?: boolean;
   points?: number;
   requestable?: boolean;
@@ -117,7 +123,7 @@ export default function LoyaltyProgramDetail({
           <FormattedMessage id="ui.loyaltyProgram.lp" defaultMessage="ui.loyaltyProgram.lp" />
         </Typography>
       )}
-      <Box sx={{display: 'flex', alignItems: 'center', marginBottom: '20px'}}>
+      <Box className={classes.intro}>
         <Box className={classes.icon}>
           <CardGiftcardOutlinedIcon />
         </Box>

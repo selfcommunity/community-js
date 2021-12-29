@@ -64,7 +64,7 @@ const Root = styled(Card, {
   }
 }));
 
-export default function LoyaltyProgram({autoHide = null, cardType = null, ...props}: {autoHide: boolean; cardType?: boolean}): JSX.Element {
+export default function LoyaltyProgram({autoHide = null, cardType = null, ...props}: {autoHide?: boolean; cardType?: boolean}): JSX.Element {
   const scUserContext: SCUserContextType = useContext(SCUserContext);
   const [points, setPoints] = useState<number>(null);
   const [openLoyaltyProgramDialog, setOpenLoyaltyProgramDialog] = useState<boolean>(false);
