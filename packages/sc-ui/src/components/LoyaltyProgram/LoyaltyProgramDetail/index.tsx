@@ -145,16 +145,14 @@ export default function LoyaltyProgramDetail({
             <FormattedMessage id="ui.LoyaltyProgramDetail.listTitle" defaultMessage="ui.LoyaltyProgramDetail.listTitle" />
           </Typography>
           <ul style={{columnCount: 2}}>
-            <li>
-              <FormattedMessage
-                id="ui.LoyaltyProgramDetail.list"
-                defaultMessage="ui.LoyaltyProgramDetail.list"
-                values={{
-                  b: (chunks) => <strong>{chunks}</strong>,
-                  li: (chunks) => <li>{chunks}</li>
-                }}
-              />
-            </li>
+            <FormattedMessage
+              id="ui.LoyaltyProgramDetail.list"
+              defaultMessage="ui.LoyaltyProgramDetail.list"
+              values={{
+                b: (chunks) => <strong>{chunks}</strong>,
+                li: (chunks) => <li>{chunks}</li>
+              }}
+            />
           </ul>
         </Grid>
         <Grid item xs={12} sx={{mb: 2}}>

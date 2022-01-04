@@ -5,7 +5,7 @@ import LoyaltyProgramDetail from './index';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC UI/Loyalty Program Card',
+  title: 'Design System/SC UI/Loyalty Program Detail',
   component: LoyaltyProgramDetail
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
 } as ComponentMeta<typeof LoyaltyProgramDetail>;
