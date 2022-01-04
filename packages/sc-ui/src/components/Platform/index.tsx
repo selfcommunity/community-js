@@ -2,7 +2,7 @@ import React, {useContext} from 'react';
 import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import {Button, Grid, ListItem, Typography} from '@mui/material';
+import {Button, Grid, Typography} from '@mui/material';
 import {Endpoints, http, SCLocaleContextType, SCUserContext, SCUserContextType, useSCLocale} from '@selfcommunity/core';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import {AxiosResponse} from 'axios';
@@ -20,7 +20,15 @@ const Root = styled(Card, {
   padding: 20
 }));
 
-export default function Platform({contained = true, autoHide = null}: {contained: boolean; autoHide: boolean}): JSX.Element {
+export default function Platform({
+  contained = true,
+  autoHide = null,
+  className = ''
+}: {
+  contained: boolean;
+  autoHide?: boolean;
+  className?: string;
+}): JSX.Element {
   const scUserContext: SCUserContextType = useContext(SCUserContext);
   const scLocaleContext: SCLocaleContextType = useSCLocale();
   const language = scLocaleContext.locale;
@@ -88,7 +96,7 @@ export default function Platform({contained = true, autoHide = null}: {contained
   const p = <React.Fragment>{role === null ? autoHide : renderPanel()}</React.Fragment>;
   if (contained && role !== null) {
     return (
-      <Root variant="outlined">
+      <Root className={className}>
         <CardContent>{p}</CardContent>
       </Root>
     );

@@ -31,12 +31,14 @@ export default function User({
   id = null,
   user = null,
   handleIgnoreAction = null,
+  className = '',
   autoHide = null,
   ...rest
 }: {
   id?: number;
   user?: SCUserType;
   handleIgnoreAction?: (u) => void;
+  className?: string;
   autoHide?: boolean;
   [p: string]: any;
 }): JSX.Element {
@@ -119,7 +121,7 @@ export default function User({
     </React.Fragment>
   );
   return (
-    <Root {...rest}>
+    <Root {...rest} className={className}>
       <List>{u}</List>
     </Root>
   );

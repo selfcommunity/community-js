@@ -236,5 +236,10 @@
   "ui.userNotifications.kindlyNoticeFor.kindlyNoticeForVulgar": "Several users have flagged your contribution as \"vulgar\". Please, fix it according to",
   "ui.userNotifications.kindlyNoticeFor.kindlyNoticeForPoor": "Several users have flagged your contribution as \"poor content\". Please, fix it according to",
   "ui.userNotifications.kindlyNoticeFor.kindlyNoticeForOfftopic": "Several users have flagged your contribution as \"off-topic\". Please, fix it according to",
-  "ui.userNotifications.kindlyNoticeFlag.title": "You have flagged a contribution which is not irregular. Please read website rules before further flagging"
+  "ui.userNotifications.kindlyNoticeFlag.title": "You have flagged a contribution which is not irregular. Please read website rules before further flagging",
+
+
+
+
+  "ui.PrivateMessage.new" : "New Message"
 }

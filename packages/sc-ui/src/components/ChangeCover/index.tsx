@@ -26,7 +26,17 @@ const Root = styled(Box, {
   flexWrap: 'wrap'
 }));
 
-export default function ChangeCover({onChange, ...rest}: {onChange?: (cover) => void; [p: string]: any}): JSX.Element {
+export default function ChangeCover({
+  onChange,
+  autoHide = null,
+  className = '',
+  ...rest
+}: {
+  onChange?: (cover) => void;
+  autoHide?: boolean;
+  className?: string;
+  [p: string]: any;
+}): JSX.Element {
   const scUserContext: SCUserContextType = useContext(SCUserContext);
   let fileInput = useRef(null);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -97,8 +107,8 @@ export default function ChangeCover({onChange, ...rest}: {onChange?: (cover) => 
       });
   }
 
-  return (
-    <Root {...rest}>
+  const cc = (
+    <React.Fragment>
       <Button size="small" variant="contained" onClick={handleClick} {...rest}>
         <FormattedMessage id="ui.changeCover.button.change" defaultMessage="ui.changeCover.button.change" />
       </Button>
@@ -164,6 +174,15 @@ export default function ChangeCover({onChange, ...rest}: {onChange?: (cover) => 
           }}
         />
       )}
-    </Root>
+    </React.Fragment>
   );
+
+  if (!autoHide) {
+    return (
+      <Root {...rest} className={className}>
+        {cc}
+      </Root>
+    );
+  }
+  return null;
 }

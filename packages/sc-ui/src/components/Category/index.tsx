@@ -38,12 +38,14 @@ function Category({
   category = null,
   popular = null,
   autoHide = null,
+  className = '',
   ...rest
 }: {
   id?: number;
   category?: SCCategoryType;
   popular?: boolean;
   autoHide?: boolean;
+  className?: string;
   [p: string]: any;
 }): JSX.Element {
   const {scCategory, setSCCategory} = useSCFetchCategory({id, category});
@@ -72,7 +74,7 @@ function Category({
   );
 
   return (
-    <Root {...rest}>
+    <Root {...rest} className={className}>
       <CardContent>
         <List>{c}</List>
       </CardContent>

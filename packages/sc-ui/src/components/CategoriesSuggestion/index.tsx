@@ -21,7 +21,15 @@ const Root = styled(Card, {
   marginBottom: theme.spacing(2)
 }));
 
-export default function CategoriesSuggestion(props): JSX.Element {
+export default function CategoriesSuggestion({
+  className = '',
+  autoHide = null,
+  props
+}: {
+  className?: string;
+  autoHide?: boolean;
+  [p: string]: any;
+}): JSX.Element {
   const [categories, setCategories] = useState<any[]>([]);
   const [visibleCategories, setVisibleCategories] = useState<number>(3);
   const [loading, setLoading] = useState<boolean>(true);
@@ -92,8 +100,12 @@ export default function CategoriesSuggestion(props): JSX.Element {
     </React.Fragment>
   );
 
-  if (!props.autoHide) {
-    return <Root {...props}>{c}</Root>;
+  if (!autoHide) {
+    return (
+      <Root {...props} className={className}>
+        {c}
+      </Root>
+    );
   }
   return null;
 }

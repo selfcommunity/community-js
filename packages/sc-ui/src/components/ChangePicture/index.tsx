@@ -16,35 +16,43 @@ const CPButton = styled(Button, {
 export default function ChangePicture({
   iconButton,
   onChange,
+  className = '',
+  autoHide,
   ...rest
 }: {
   iconButton: boolean;
+  className?: string;
   onChange?: (avatar) => void;
+  autoHide?: boolean;
   [p: string]: any;
 }): JSX.Element {
   const [openChangePictureDialog, setOpenChangePictureDialog] = useState<boolean>(false);
 
-  return (
-    <React.Fragment>
-      <CPButton
-        size="small"
-        variant="contained"
-        onClick={() => setOpenChangePictureDialog(true)}
-        style={iconButton ? {padding: 6, borderRadius: 50, minWidth: 'auto'} : {}}
-        {...rest}>
-        {iconButton ? (
-          <PhotoCameraOutlinedIcon />
-        ) : (
-          <FormattedMessage id="ui.changePicture.button.change" defaultMessage="ui.changePicture.button.change" />
+  if (!autoHide) {
+    return (
+      <React.Fragment>
+        <CPButton
+          className={className}
+          size="small"
+          variant="contained"
+          onClick={() => setOpenChangePictureDialog(true)}
+          style={iconButton ? {padding: 6, borderRadius: 50, minWidth: 'auto'} : {}}
+          {...rest}>
+          {iconButton ? (
+            <PhotoCameraOutlinedIcon />
+          ) : (
+            <FormattedMessage id="ui.changePicture.button.change" defaultMessage="ui.changePicture.button.change" />
+          )}
+        </CPButton>
+        {openChangePictureDialog && (
+          <ChangePictureDialog
+            open={openChangePictureDialog}
+            onChange={(avatar) => onChange && onChange(avatar)}
+            onClose={() => setOpenChangePictureDialog(false)}
+          />
         )}
-      </CPButton>
-      {openChangePictureDialog && (
-        <ChangePictureDialog
-          open={openChangePictureDialog}
-          onChange={(avatar) => onChange && onChange(avatar)}
-          onClose={() => setOpenChangePictureDialog(false)}
-        />
-      )}
-    </React.Fragment>
-  );
+      </React.Fragment>
+    );
+  }
+  return null;
 }
