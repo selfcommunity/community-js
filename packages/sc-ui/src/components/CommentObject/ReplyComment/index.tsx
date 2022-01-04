@@ -1,4 +1,4 @@
-import React, { RefObject, useContext, useEffect, useMemo, useState } from 'react';
+import React, {RefObject, useContext, useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import {defineMessages, useIntl} from 'react-intl';
@@ -31,6 +31,9 @@ const Root = styled(Card, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   padding: '1px',
+  [`& .${classes.comment}`]: {
+    overflow: 'visible'
+  },
   [`& .${classes.commentChild}`]: {
     paddingLeft: '70px'
   }
@@ -42,19 +45,21 @@ export default function ReplyCommentObject({
   autoFocus = false,
   inline = false,
   onReply = null,
-  isLoading = false,
+  readOnly = false,
+  text = '',
   ...rest
 }: {
   commentObjectId?: number;
   commentObject?: SCCommentType;
   autoFocus?: boolean;
   onReply?: (comment) => void;
-  isLoading?: boolean;
+  readOnly?: boolean;
+  text?: string;
   [p: string]: any;
 }): JSX.Element {
   const scUser: SCUserContextType = useContext(SCUserContext);
   const {obj, setObj} = useSCFetchCommentObject({id: commentObjectId, commentObject});
-  const [html, setHtml] = useState('');
+  const [html, setHtml] = useState(text);
   let editor: RefObject<TMUIRichTextEditorRef> = React.createRef();
   const intl = useIntl();
 
@@ -64,7 +69,7 @@ export default function ReplyCommentObject({
    */
   useEffect(() => {
     autoFocus && handleEditorFocus();
-  }, []);
+  }, [autoFocus]);
 
   /**
    * Focus on editor
@@ -78,6 +83,8 @@ export default function ReplyCommentObject({
    */
   const handleReply = () => {
     onReply && onReply(html);
+    // editor.current?.insertAtomicBlockSync('', '');
+    // editor.current?.save();
     setHtml('');
   };
 
@@ -118,14 +125,15 @@ export default function ReplyCommentObject({
                   onRef={(e) => {
                     editor = e;
                   }}
-                  defaultValue={html}
                   onChange={handleChangeText}
+                  defaultValue={html}
+                  readOnly={readOnly}
                 />
               </Card>
               {!isEditorEmpty() && (
                 <Box component="span" sx={{display: 'flex', justifyContent: 'flex-start'}}>
                   <Grid component="span" item={true} sm="auto" container direction="row" alignItems="right">
-                    <LoadingButton variant={'text'} sx={{marginTop: '-1px'}} onClick={handleReply} loading={isLoading}>
+                    <LoadingButton variant={'text'} sx={{marginTop: '-1px'}} onClick={handleReply} loading={readOnly}>
                       {intl.formatMessage(messages.reply)}
                     </LoadingButton>
                   </Grid>

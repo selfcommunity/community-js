@@ -1,8 +1,9 @@
 import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
+import { ComponentMeta, ComponentStory } from '@storybook/react';
 
 import CommentsObject from './index';
-import {SCFeedObjectTypologyType} from '@selfcommunity/core';
+import { SCFeedObjectTypologyType } from '@selfcommunity/core';
+import { CommentsOrderBy } from '../../types/comments';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -33,10 +34,12 @@ export default {
   },
   args: {
     feedObjectId: 17,
+    feedObjectType: SCFeedObjectTypologyType.DISCUSSION,
     infiniteScrolling: true,
     commentsPageSize: 10,
     elevation: 1,
-    variant: 'elevation'
+    variant: 'elevation',
+    commentsOrderBy: CommentsOrderBy.ADDED_AT_ASC
   }
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
 } as ComponentMeta<typeof CommentsObject>;
@@ -50,6 +53,4 @@ const Template: ComponentStory<typeof CommentsObject> = (args) => (
 
 export const Base = Template.bind({});
 
-Base.args = {
-  feedObjectType: SCFeedObjectTypologyType.DISCUSSION
-};
+Base.args = {};

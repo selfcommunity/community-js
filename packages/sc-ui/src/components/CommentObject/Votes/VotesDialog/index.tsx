@@ -49,7 +49,6 @@ export default function CommentObjectVotesDialog({
 
   function fetchVotes() {
     setIsLoading(true);
-    console.log(obj);
     http
       .request({
         url: next ? next : `${Endpoints.CommentVotes.url({id: obj.id})}`,

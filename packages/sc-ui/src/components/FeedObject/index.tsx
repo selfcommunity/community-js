@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -38,7 +38,7 @@ import {
   Endpoints,
   http,
   Link,
-  Logger,
+  Logger, SCCommentType,
   SCFeedObjectType,
   SCFeedObjectTypologyType,
   SCPollType,
@@ -48,7 +48,7 @@ import {
   SCUserContextType,
   useSCFetchFeedObject,
   useSCRouting,
-  useSCUser
+  useSCUser,
 } from '@selfcommunity/core';
 import Composer from '../Composer';
 import CommentsObject from '../CommentsObject';
@@ -228,11 +228,24 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
 
   // STATE
   const [composerOpen, setComposerOpen] = useState<boolean>(false);
+  const [comments, setComments] = useState<SCCommentType[]>([]);
   const [expandedActivities, setExpandedActivities] = useState<boolean>(getInitialExpandedActivities());
   const [selectedActivities, setSelectedActivities] = useState<string>(getInitialSelectedActivitiesType());
   const [isReplying, setIsReplying] = useState<boolean>(false);
   const [isFollowing, setIsFollowing] = useState<boolean>(false);
   const intl = useIntl();
+
+  /**
+   * Set:
+   * - expandedActivities
+   * - selectedActivities
+   * when update the current obj
+   */
+  useEffect(() => {
+    if (obj) {
+      setExpandedActivities(getInitialExpandedActivities());
+    }
+  }, [obj]);
 
   /**
    * Get initial expanded activities
@@ -333,6 +346,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
    * @param type
    */
   function handleSelectActivitiesType(type) {
+    setComments([]);
     setSelectedActivities(type);
   }
 
@@ -351,7 +365,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
             text: comment
           }
         })
-        .then((res: AxiosResponse<SCTagType>) => {
+        .then((res: AxiosResponse<SCCommentType>) => {
           if (res.status >= 300) {
             return Promise.reject(res);
           }
@@ -367,12 +381,13 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
   function handleReply(comment) {
     setIsReplying(true);
     performReply(comment)
-      .then((data) => {
+      .then((data: SCCommentType) => {
         setIsReplying(false);
         if (selectedActivities !== FeedObjectActivitiesType.RECENT_COMMENTS) {
+          setComments([]);
           setSelectedActivities(FeedObjectActivitiesType.RECENT_COMMENTS);
         } else {
-          console.log(data);
+          setComments([...[data], ...comments]);
         }
         // setObj(Object.assign({}, obj, {followed: !obj.followed}));
       })
@@ -429,6 +444,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
               commentsPageCount={3}
               hidePrimaryReply={true}
               commentsOrderBy={_commentsOrderBy}
+              additionalComments={comments}
             />
           </LazyLoad>
         )}

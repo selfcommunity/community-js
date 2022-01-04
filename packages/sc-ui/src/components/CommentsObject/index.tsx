@@ -11,7 +11,7 @@ import ReplyCommentObject from '../CommentObject/ReplyComment';
 import Typography from '@mui/material/Typography';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import CommentObjectSkeleton from '../Skeleton/CommentObjectSkeleton';
-import {Button} from '@mui/material';
+import {Button, Stack} from '@mui/material';
 import {CommentsOrderBy} from '../../types/comments';
 
 const messages = defineMessages({
@@ -40,31 +40,34 @@ export default function CommentsObject({
   feedObject = null,
   feedObjectType = SCFeedObjectTypologyType.POST,
   renderComment = null,
-  renderNoComment = null,
+  renderNoComments = null,
   commentsPageCount = 5,
   commentsOrderBy = CommentsOrderBy.ADDED_AT_DESC,
   infiniteScrolling = true,
   hidePrimaryReply = false,
   commentsLoadingBoxCount = 3,
+  additionalComments = [],
   ...rest
 }: {
   feedObjectId?: number;
   feedObject?: SCFeedObjectType;
   feedObjectType?: SCFeedObjectTypologyType;
   renderComment?: (SCCommentType) => JSX.Element;
-  renderNoComment?: () => JSX.Element;
+  renderNoComments?: () => JSX.Element;
   commentsPageCount?: number;
   commentsOrderBy?: CommentsOrderBy;
   infiniteScrolling?: boolean;
   hidePrimaryReply?: boolean;
   commentsLoadingBoxCount?: number;
+  additionalComments?: SCCommentType[];
   [p: string]: any;
 }): JSX.Element {
   const {obj, setObj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [data, setData] = useState<SCCommentType[]>([]);
   const [next, setNext] = useState<string>(null);
-  const [replyComment, setReplyComment] = useState<SCCommentType>(null);
+  const [total, setTotal] = useState<number>(null);
+  const [isReplying, setIsReplying] = useState<boolean>(false);
 
   /**
    * Get Comments
@@ -95,6 +98,7 @@ export default function CommentsObject({
       performFetchComments()
         .then((res) => {
           setData([...data, ...res.results]);
+          setTotal(res.count);
           setNext(res.next);
           setIsLoading(false);
         })
@@ -124,24 +128,51 @@ export default function CommentsObject({
   }, [commentsPageCount, commentsOrderBy]);
 
   /**
-   * Handle comment reply
-   * @param comment
-   */
-  function handleReply(comment: SCCommentType) {
-    // if not replyComment handle a feedObject comment
-    console.log(replyComment);
-  }
-
-  /**
    * Handle open reply box
    * @param comment
    */
   function openReplyBox(comment) {
-    setReplyComment(comment);
     setTimeout(() => {
       const element = document.getElementById(`reply-${comment.id}`);
       element && element.scrollIntoView({behavior: 'smooth', block: 'center'});
     }, 200);
+  }
+
+  /**
+   * Perform reply
+   * Comment of first level
+   */
+  const performReply = (comment) => {
+    return http
+      .request({
+        url: Endpoints.NewComment.url({}),
+        method: Endpoints.NewComment.method,
+        data: {
+          [`${feedObjectType}`]: feedObjectId,
+          text: comment
+        }
+      })
+      .then((res: AxiosResponse<SCCommentType>) => {
+        if (res.status >= 300) {
+          return Promise.reject(res);
+        }
+        return Promise.resolve(res.data);
+      });
+  };
+
+  /**
+   * Handle comment of 2° level
+   */
+  function handleReply(comment) {
+    setIsReplying(true);
+    performReply(comment)
+      .then((comment: SCCommentType) => {
+        setData([...[comment], ...data]);
+        setIsReplying(false);
+      })
+      .catch((error) => {
+        Logger.error(SCOPE_SC_UI, error);
+      });
   }
 
   /**
@@ -159,8 +190,8 @@ export default function CommentsObject({
   } else if (data.length === 0 && !isLoading) {
     comments = (
       <>
-        {renderNoComment ? (
-          renderNoComment()
+        {renderNoComments ? (
+          renderNoComments()
         ) : (
           <>
             <FormattedMessage id={'ui.commentsObject.noComments'} defaultMessage={'ui.commentsObject.noComments'} />
@@ -183,17 +214,12 @@ export default function CommentsObject({
               </b>
             </Typography>
           }>
-          {data.map((comment: SCCommentType, index) => (
+          {[...additionalComments, ...data].map((comment: SCCommentType, index) => (
             <React.Fragment key={index}>
               {renderComment ? (
                 renderComment(comment)
               ) : (
-                <>
-                  <CommentObject commentObject={comment} onOpenReply={openReplyBox} feedObject={obj} feedObjectType={feedObjectType} {...rest} />
-                  {replyComment && (replyComment.id === comment.id || replyComment.parent === comment.id) && (
-                    <ReplyCommentObject autoFocus id={`reply-${comment.id}`} commentObject={comment} onReply={handleReply} {...rest} />
-                  )}
-                </>
+                <CommentObject commentObject={comment} onOpenReply={openReplyBox} feedObject={obj} feedObjectType={feedObjectType} {...rest} />
               )}
             </React.Fragment>
           ))}
@@ -202,24 +228,32 @@ export default function CommentsObject({
     } else {
       comments = (
         <>
-          {data.map((comment: SCCommentType, index) => (
-            <React.Fragment key={index}>
-              {renderComment ? (
-                renderComment(comment)
-              ) : (
-                <>
+          {[...additionalComments, ...data].map((comment: SCCommentType, index) => {
+            return (
+              <React.Fragment key={comment.id}>
+                {renderComment ? (
+                  renderComment(comment)
+                ) : (
                   <CommentObject commentObject={comment} onOpenReply={openReplyBox} feedObject={obj} feedObjectType={feedObjectType} {...rest} />
-                  {replyComment && (replyComment.id === comment.id || replyComment.parent === comment.id) && (
-                    <ReplyCommentObject autoFocus id={`reply-${comment.id}`} commentObject={comment} onReply={handleReply} {...rest} />
-                  )}
-                </>
-              )}
-            </React.Fragment>
-          ))}
+                )}
+              </React.Fragment>
+            );
+          })}
           {Boolean(next) && !isLoading && (
-            <Button variant="text" onClick={fetchData} disabled={isLoading}>
-              Load more comments
-            </Button>
+            <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
+              <Button variant="text" onClick={fetchData} disabled={isLoading}>
+                <FormattedMessage id="ui.commentsObject.loadMoreComments" defaultMessage="ui.commentsObject.loadMoreComments" />
+              </Button>
+              {total && (
+                <Typography variant="body1">
+                  <FormattedMessage
+                    id="ui.commentsObject.numberOfComments"
+                    defaultMessage="ui.commentsObject.numberOfComments"
+                    values={{loaded: data.length, total: total}}
+                  />
+                </Typography>
+              )}
+            </Stack>
           )}
           {isLoading && <CommentObjectSkeleton {...rest} />}
         </>
@@ -232,7 +266,7 @@ export default function CommentsObject({
    */
   return (
     <Root>
-      {!hidePrimaryReply && <ReplyCommentObject onReply={handleReply} inline {...rest} />}
+      {!hidePrimaryReply && <ReplyCommentObject readOnly={isReplying} onReply={handleReply} inline {...rest} />}
       {comments}
     </Root>
   );
