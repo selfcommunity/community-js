@@ -29,6 +29,8 @@ import {
 import {LoadingButton} from '@mui/lab';
 import VoteFilledIcon from '@mui/icons-material/ThumbUpTwoTone';
 import VoteIcon from '@mui/icons-material/ThumbUpOutlined';
+import {CommentsOrderBy} from '../../types/comments';
+import ReplyCommentObject from './ReplyComment';
 
 const messages = defineMessages({
   reply: {
@@ -89,6 +91,8 @@ export default function CommentObject({
   feedObjectId = null,
   feedObject = null,
   feedObjectType = SCFeedObjectTypologyType.POST,
+  commentsPageCount = 5,
+  commentsOrderBy = CommentsOrderBy.ADDED_AT_DESC,
   onOpenReply = null,
   onReply = null,
   onVote = null,
@@ -100,6 +104,8 @@ export default function CommentObject({
   feedObjectId?: number;
   feedObject?: SCFeedObjectType;
   feedObjectType?: SCFeedObjectTypologyType;
+  commentsPageCount?: number;
+  commentsOrderBy?: CommentsOrderBy;
   onOpenReply?: (comment: SCCommentType) => void;
   onVote?: (comment: SCCommentType) => void;
   onFetchLatestComment?: () => void;
@@ -110,11 +116,9 @@ export default function CommentObject({
   const {obj, setObj} = useSCFetchCommentObject({id: commentObjectId, commentObject});
   const [loadingVote, setLoadingVote] = useState(false);
   const [loadingLatestComments, setLoadingLatestComments] = useState(false);
-  const [next, setNext] = useState<string>(
-    feedObject || feedObjectId
-      ? `${Endpoints.Comments.url()}?${feedObjectType}=${feedObjectId ? feedObjectId : feedObject.id}&parent=${commentObject.id}&limit=5`
-      : null
-  );
+  const [next, setNext] = useState<string>(null);
+  const [replyComment, setReplyComment] = useState<SCCommentType>(null);
+  const [isReplying, setIsReplying] = useState<boolean>(false);
   const intl = useIntl();
 
   /**
@@ -174,6 +178,7 @@ export default function CommentObject({
    * @param comment
    */
   function reply(comment) {
+    setReplyComment(comment);
     onOpenReply && onOpenReply(comment);
   }
 
@@ -186,7 +191,7 @@ export default function CommentObject({
     fetchLatestComment()
       .then((data) => {
         const newObj = obj;
-        obj.latest_comments = [...data.results, ...obj.latest_comments];
+        obj.latest_comments = obj.latest_comments.length <= 1 ? [...data.results.reverse()] : [...data.results.reverse(), ...obj.latest_comments];
         setObj(newObj);
         setNext(data.next);
         setLoadingLatestComments(false);
@@ -199,13 +204,19 @@ export default function CommentObject({
 
   /**
    * fetchVotes
+   *       ? `${Endpoints.Comments.url()}?${feedObjectType}=${feedObjectId ? feedObjectId : feedObject.id}&parent=${commentObject.id}&limit=5`
+
    */
   const fetchLatestComment = useMemo(
     () => () => {
       return http
         .request({
-          url: next,
-          method: Endpoints.VotesList.method
+          url: next
+            ? next
+            : `${Endpoints.Comments.url()}?${feedObjectType}=${feedObjectId ? feedObjectId : feedObject.id}&parent=${
+                commentObject.id
+              }&limit=${commentsPageCount}&ordering=${commentsOrderBy}`,
+          method: Endpoints.Comments.method
         })
         .then((res: AxiosResponse<any>) => {
           if (res.status >= 300) {
@@ -214,7 +225,7 @@ export default function CommentObject({
           return Promise.resolve(res.data);
         });
     },
-    [next]
+    [obj, next, commentsOrderBy, commentsPageCount]
   );
 
   /**
@@ -271,6 +282,52 @@ export default function CommentObject({
   }
 
   /**
+   * Perform reply
+   * Comment of second level
+   */
+  const performReply = (comment) => {
+    return http
+      .request({
+        url: Endpoints.NewComment.url({}),
+        method: Endpoints.NewComment.method,
+        data: {
+          [`${feedObjectType}`]: feedObjectId ? feedObjectId : feedObject.id,
+          parent: replyComment.parent ? replyComment.parent : replyComment.id,
+          ...(replyComment.parent ? {in_reply_to: replyComment.id} : {}),
+          text: comment
+        }
+      })
+      .then((res: AxiosResponse<SCCommentType>) => {
+        if (res.status >= 300) {
+          return Promise.reject(res);
+        }
+        return Promise.resolve(res.data);
+      });
+  };
+
+  /**
+   * Handle comment of 2° level
+   */
+  function handleReply(comment) {
+    setIsReplying(true);
+    performReply(comment)
+      .then((data: SCCommentType) => {
+        const _replyCommentId = replyComment.parent ? replyComment.parent : replyComment.id;
+        console.log(_replyCommentId);
+        setObj(
+          Object.assign({}, obj, {
+            latest_comments: [...obj.latest_comments, ...[data]]
+          })
+        );
+        setReplyComment(null);
+        setIsReplying(false);
+      })
+      .catch((error) => {
+        Logger.error(SCOPE_SC_UI, error);
+      });
+  }
+
+  /**
    * Render comment & latest activities
    * @param comment
    */
@@ -315,6 +372,17 @@ export default function CommentObject({
           />
         </ListItem>
         {renderLatestComment(comment)}
+        {replyComment && (replyComment.id === comment.id || replyComment.parent === comment.id) && !comment.parent && (
+          <ReplyCommentObject
+            text={replyComment.parent ? `@${replyComment.author.username}, ` : ''}
+            autoFocus
+            id={`reply-${replyComment.id}`}
+            commentObject={replyComment}
+            onReply={handleReply}
+            readOnly={isReplying}
+            {...rest}
+          />
+        )}
       </React.Fragment>
     );
   }

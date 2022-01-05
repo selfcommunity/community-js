@@ -41,7 +41,7 @@ export default {
   args: {
     feedObjectId: 9,
     feedObjectType: SCFeedObjectTypologyType.DISCUSSION,
-    template: FeedObjectTemplateType.SNIPPET,
+    template: FeedObjectTemplateType.PREVIEW,
     elevation: 1,
     variant: 'elevation',
     hideShareAction: false

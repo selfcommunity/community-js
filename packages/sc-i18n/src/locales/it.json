@@ -170,6 +170,8 @@
 
   "ui.commentsObject.noComments": "Non ci sono ancora commenti al momento.",
   "ui.commentsObject.noOtherComments": "Non ci sono altri commenti.",
+  "ui.commentsObject.loadMoreComments": "Carica altri commenti",
+  "ui.commentsObject.numberOfComments": "{loaded} di {total}",
 
   "ui.commentObject.voteUp": "Apprezza",
   "ui.commentObject.voteDown": "Non apprezzare",

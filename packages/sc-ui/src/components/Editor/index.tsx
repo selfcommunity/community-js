@@ -136,7 +136,7 @@ export default function Editor({
    */
   useEffect(() => {
     onRef && onRef(editor);
-  }, []);
+  });
 
   // Default editor content
   const content: string = useMemo(() => {
