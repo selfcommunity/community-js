@@ -369,6 +369,19 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/feed/likethis/'),
     method: 'POST',
   },
+
+  /**
+   * Private Messages Endpoints
+   */
+
+  SendMessage: {
+    url: urlReplacer('/api/v2/pm/'),
+    method: 'POST',
+  },
+  GetAThread: {
+    url: urlReplacer('/api/v2/pm/'),
+    method: 'GET',
+  },
 };
 
 export default Endpoints;
