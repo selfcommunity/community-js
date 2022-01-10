@@ -8,10 +8,10 @@ import {
   Logger,
   SCCommentType,
   SCFeedObjectType,
-  SCFeedObjectTypologyType,
+  SCFeedObjectTypologyType, SCRoutes, SCRoutingContextType,
   SCUserContext,
   SCUserContextType,
-  useSCFetchCommentObject
+  useSCFetchCommentObject, useSCRouting,
 } from '@selfcommunity/core';
 import {AxiosResponse} from 'axios';
 import {SCOPE_SC_UI} from '../../../constants/Errors';
@@ -123,6 +123,7 @@ export default function CommentActionsMenu({
 }): JSX.Element {
   const intl = useIntl();
   const scUser: SCUserContextType = useContext(SCUserContext);
+  const scRoutingContext: SCRoutingContextType = useSCRouting();
   const {obj, setObj} = useSCFetchCommentObject({id: commentObjectId, commentObject});
   const [flagType, setFlagType] = useState<string>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -208,6 +209,13 @@ export default function CommentActionsMenu({
           Logger.error(SCOPE_SC_UI, error);
         });
     }
+  }
+
+  /**
+   * Handle permanent link
+   */
+  function handlePermanentLink() {
+    return scRoutingContext.url(SCRoutes.POST_ROUTE_NAME, {id: feedObject.id});
   }
 
   /**
@@ -371,7 +379,7 @@ export default function CommentActionsMenu({
                   <CentralProgress size={30} />
                 ) : (
                   <MenuList>
-                    <MenuItem onClick={handleCloseMenu}>
+                    <MenuItem onClick={handlePermanentLink}>
                       <FormattedMessage
                         id="ui.commentObject.commentActionsMenu.permanentLink"
                         defaultMessage="ui.commentObject.commentActionsMenu.permanentLink"
