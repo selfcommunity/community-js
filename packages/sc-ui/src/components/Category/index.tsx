@@ -3,7 +3,7 @@ import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import {Avatar, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText} from '@mui/material';
+import {Avatar, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText, CardProps} from '@mui/material';
 import {useSCFetchCategory} from '@selfcommunity/core';
 import CategoryBoxSkeleton from '../Skeleton/CategoryBoxSkeleton';
 import FollowButton from '../FollowCategoryButton';
@@ -33,21 +33,30 @@ const Root = styled(Card, {
   maxWidth: 700
 }));
 
-function Category({
-  id = null,
-  category = null,
-  popular = null,
-  autoHide = null,
-  className = '',
-  ...rest
-}: {
+export interface CategoryProps extends CardProps {
+  /**
+   * Id of category object
+   * @default null
+   */
   id?: number;
+  /**
+   * Category Object
+   * @default null
+   */
   category?: SCCategoryType;
-  popular?: boolean;
+  /**
+   * Hides category component
+   * @default false
+   */
   autoHide?: boolean;
-  className?: string;
-  [p: string]: any;
-}): JSX.Element {
+  /**
+   * Renders different section for popular categories list
+   * @default false
+   */
+  popular?: boolean;
+}
+export default function Category(props: CategoryProps): JSX.Element {
+  const {id = null, category = null, popular = false, autoHide = false, ...rest} = props;
   const {scCategory, setSCCategory} = useSCFetchCategory({id, category});
   const intl = useIntl();
 
@@ -73,13 +82,14 @@ function Category({
     </React.Fragment>
   );
 
+  /**
+   * Render root object
+   */
   return (
-    <Root {...rest} className={className}>
+    <Root {...rest}>
       <CardContent>
         <List>{c}</List>
       </CardContent>
     </Root>
   );
 }
-
-export default Category;

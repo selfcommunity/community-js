@@ -5,7 +5,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import {Endpoints, http} from '@selfcommunity/core';
 import CategoriesSuggestionSkeleton from '../Skeleton/CategoriesSuggestionSkeleton';
-import Category from '../Category';
+import Category, {CategoryProps} from '../Category';
 import {AxiosResponse} from 'axios';
 import {SCCategoryType} from '@selfcommunity/core/src/types';
 import {FormattedMessage} from 'react-intl';
@@ -21,15 +21,26 @@ const Root = styled(Card, {
   marginBottom: theme.spacing(2)
 }));
 
-export default function CategoriesSuggestion({
-  className = '',
-  autoHide = null,
-  props
-}: {
-  className?: string;
+export interface CategoriesListProps {
+  /**
+   * Hides category component
+   * @default false
+   */
   autoHide?: boolean;
-  [p: string]: any;
-}): JSX.Element {
+  /**
+   * Override or extend the styles applied to the component.
+   * @default null
+   */
+  className?: string;
+  /**
+   * Props to spread to single category object
+   * @default empty object
+   */
+  CategoryProps?: CategoryProps;
+}
+
+export default function CategoriesSuggestion(props: CategoriesListProps): JSX.Element {
+  const {autoHide, className, CategoryProps = {}} = props;
   const [categories, setCategories] = useState<any[]>([]);
   const [visibleCategories, setVisibleCategories] = useState<number>(3);
   const [loading, setLoading] = useState<boolean>(true);
@@ -83,7 +94,7 @@ export default function CategoriesSuggestion({
             <React.Fragment>
               {categories.slice(0, visibleCategories).map((category: SCCategoryType, index) => (
                 <div key={index}>
-                  <Category contained={false} category={category} key={category.id} />
+                  <Category elevation={0} category={category} key={category.id} {...CategoryProps} />
                   {index < visibleCategories - 1 ? <Divider /> : null}
                 </div>
               ))}
@@ -101,11 +112,7 @@ export default function CategoriesSuggestion({
   );
 
   if (!autoHide) {
-    return (
-      <Root {...props} className={className}>
-        {c}
-      </Root>
-    );
+    return <Root className={className}>{c}</Root>;
   }
   return null;
 }

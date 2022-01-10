@@ -11,6 +11,7 @@ import {AxiosResponse} from 'axios';
 import {SCCategoryType} from '@selfcommunity/core/src/types';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {defineMessages, useIntl, FormattedMessage} from 'react-intl';
+import {CategoriesListProps} from '../CategoriesSuggestion';
 
 const messages = defineMessages({
   categoriesFollowed: {
@@ -34,15 +35,8 @@ const Root = styled(Card, {
   marginBottom: theme.spacing(2)
 }));
 
-export default function CategoriesFollowed({
-  className = '',
-  autoHide = null,
-  props
-}: {
-  className?: string;
-  autoHide?: boolean;
-  [p: string]: any;
-}): JSX.Element {
+export default function CategoriesFollowed(props: CategoriesListProps): JSX.Element {
+  const {autoHide, className, CategoryProps = {}} = props;
   const [categories, setCategories] = useState<any[]>([]);
   const [visibleCategories, setVisibleCategories] = useState<number>(3);
   const [loading, setLoading] = useState<boolean>(true);
@@ -107,7 +101,7 @@ export default function CategoriesFollowed({
               <List>
                 {categories.slice(0, visibleCategories).map((category: SCCategoryType, index) => (
                   <div key={index}>
-                    <Category elevation={0} category={category} key={category.id} />
+                    <Category elevation={0} category={category} key={category.id} {...CategoryProps} />
                     {index < visibleCategories - 1 ? <Divider /> : null}
                   </div>
                 ))}
@@ -126,11 +120,7 @@ export default function CategoriesFollowed({
   );
 
   if (!autoHide) {
-    return (
-      <Root {...props} className={className}>
-        {c}
-      </Root>
-    );
+    return <Root className={className}>{c}</Root>;
   }
   return null;
 }
