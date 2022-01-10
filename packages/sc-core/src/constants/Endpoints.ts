@@ -357,11 +357,11 @@ const Endpoints: {[key: string]: EndpointType} = {
   /**
    * Feed
    */
-  HomeFeed: {
+  MainFeed: {
     url: urlReplacer('/api/v2/feed/'),
     method: 'GET',
   },
-  HomeFeedUnseenCount: {
+  MainFeedUnseenCount: {
     url: urlReplacer('/api/v2/feed/unseen/count/'),
     method: 'GET',
   },
@@ -377,7 +377,14 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/feed/likethis/'),
     method: 'POST',
   },
-
+  CategoryFeed: {
+    url: urlReplacer('/api/v2/category/$(id)/feed/'),
+    method: 'GET',
+  },
+  UserFeed: {
+    url: urlReplacer('/api/v2/user/$(id)/feed/'),
+    method: 'GET',
+  },
   /**
    * Private Messages Endpoints
    */

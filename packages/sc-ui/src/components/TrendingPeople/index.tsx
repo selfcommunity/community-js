@@ -21,7 +21,7 @@ const Root = styled(Card, {
   marginBottom: theme.spacing(2)
 }));
 
-export default function TrendingPeople({scCategoryId = null, ...props}: {scCategoryId?: number; [p: string]: any}): JSX.Element {
+export default function TrendingPeople({categoryId = null, ...props}: {categoryId?: number; [p: string]: any}): JSX.Element {
   const [people, setPeople] = useState<any[]>([]);
   const [visiblePeople, setVisiblePeople] = useState<number>(3);
   const [loading, setLoading] = useState<boolean>(true);
@@ -32,7 +32,7 @@ export default function TrendingPeople({scCategoryId = null, ...props}: {scCateg
   function fetchTrendingPeople() {
     http
       .request({
-        url: Endpoints.CategoryTrendingPeople.url({id: scCategoryId}),
+        url: Endpoints.CategoryTrendingPeople.url({id: categoryId}),
         method: Endpoints.CategoryTrendingPeople.method
       })
       .then((res: AxiosResponse<any>) => {

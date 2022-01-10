@@ -8,14 +8,14 @@ export default {
   title: 'Design System/SC UI/CategoryHeader ',
   component: CategoryHeader,
   argTypes: {
-    id: {
+    categoryId: {
       control: {type: 'number'},
       description: 'Category Id',
       table: {defaultValue: {summary: 1}}
-    },
+    }
   },
   args: {
-    id: 1,
+    categoryId: 1
   }
 } as ComponentMeta<typeof CategoryHeader>;
 

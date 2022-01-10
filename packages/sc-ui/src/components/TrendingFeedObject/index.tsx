@@ -23,13 +23,13 @@ const Root = styled(Card, {
   marginBottom: theme.spacing(2)
 }));
 
-export default function TrendingFeed({
-  scCategoryId = null,
+export default function TrendingFeedObject({
+  categoryId = null,
   template = null,
   autoHide = null,
   ...props
 }: {
-  scCategoryId?: number;
+  categoryId?: number;
   template?: FeedObjectTemplateType;
   autoHide?: boolean;
 }): JSX.Element {
@@ -43,7 +43,7 @@ export default function TrendingFeed({
   function fetchTrendingPost() {
     http
       .request({
-        url: Endpoints.CategoryTrendingFeed.url({id: scCategoryId}),
+        url: Endpoints.CategoryTrendingFeed.url({id: categoryId}),
         method: Endpoints.CategoryTrendingFeed.method
       })
       .then((res: AxiosResponse<any>) => {

@@ -33,7 +33,6 @@ const Root = styled(Card, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  maxWidth: 400,
   marginBottom: theme.spacing(2),
   padding: 2,
   [`& .${classes.cardHeader}`]: {

@@ -17,7 +17,7 @@ const PREFIX = 'SCCategoryHeader';
 const classes = {
   cover: `${PREFIX}-cover`,
   categoryName: `${PREFIX}-name`,
-  categorySlogan: `${PREFIX}-slogan`,
+  categorySlogan: `${PREFIX}-slogan`
 };
 
 const Root = styled(Box, {
@@ -38,7 +38,7 @@ const Root = styled(Box, {
     display: 'block',
     whiteSpace: 'nowrap',
     overflow: 'hidden',
-    textOverflow: 'ellipsis',
+    textOverflow: 'ellipsis'
   },
   [`& .${classes.categorySlogan}`]: {
     display: 'block',
@@ -54,16 +54,16 @@ const Root = styled(Box, {
 }));
 
 export default function CategoryHeader({
-  id = null,
+  categoryId = null,
   category = null,
   ...rest
 }: {
-  id?: number;
+  categoryId?: number;
   category?: SCCategoryType;
   [p: string]: any;
 }): JSX.Element {
   const scUserContext: SCUserContextType = useContext(SCUserContext);
-  const {scCategory, setSCCategory} = useSCFetchCategory({id, category});
+  const {scCategory, setSCCategory} = useSCFetchCategory({id: categoryId, category});
   const [loading, setLoading] = useState<boolean>(true);
   const [next, setNext] = useState<string>(null);
   const [total, setTotal] = useState<number>(0);

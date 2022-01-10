@@ -19,7 +19,7 @@ const Template: ComponentStory<typeof Feed> = (args) => (
 export const Main = Template.bind({});
 
 Main.args = {
-  endpoint: Endpoints.HomeFeed
+  endpoint: Endpoints.MainFeed
 };
 
 export const Explore = Template.bind({});
