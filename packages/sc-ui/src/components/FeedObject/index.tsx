@@ -91,7 +91,6 @@ const Root = styled(Card, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  maxWidth: 700,
   margin: `${theme.spacing(2)} 3px `,
   [`& .${PREFIX}-share`]: {
     backgroundColor: '#f8f8f8'

@@ -21,7 +21,7 @@ const Root = styled(Card, {
   marginBottom: theme.spacing(2)
 }));
 
-export default function UserFollowed({scPersonId = null, ...props}: {scPersonId?: number; [p: string]: any}): JSX.Element {
+export default function UserFollowed({userId = null, ...props}: {userId?: number; [p: string]: any}): JSX.Element {
   const [followed, setFollowed] = useState<any[]>([]);
   const [lUfollowed, setLUFollowed] = useState<any[]>([]);
   const [visibleUsers, setVisibleUsers] = useState<number>(3);
@@ -33,7 +33,7 @@ export default function UserFollowed({scPersonId = null, ...props}: {scPersonId?
   function fetchUserFollowed() {
     http
       .request({
-        url: Endpoints.UsersFollowed.url({id: scPersonId}),
+        url: Endpoints.UsersFollowed.url({id: userId}),
         method: Endpoints.UsersFollowed.method
       })
       .then((res: AxiosResponse<any>) => {
