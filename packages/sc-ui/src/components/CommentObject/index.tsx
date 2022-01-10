@@ -31,6 +31,7 @@ import VoteFilledIcon from '@mui/icons-material/ThumbUpTwoTone';
 import VoteIcon from '@mui/icons-material/ThumbUpOutlined';
 import {CommentsOrderBy} from '../../types/comments';
 import ReplyCommentObject from './ReplyComment';
+import CommentActionsMenu from './CommentActionsMenu';
 
 const messages = defineMessages({
   reply: {
@@ -52,11 +53,15 @@ const PREFIX = 'SCCommentsObject';
 const classes = {
   root: `${PREFIX}-root`,
   comment: `${PREFIX}-comment`,
+  author: `${PREFIX}-author`,
   content: `${PREFIX}-content`,
-  commentChild: `${PREFIX}-commentChild`,
-  btnVotes: `${PREFIX}-btnVotes`,
+  textContent: `${PREFIX}-text-content`,
+  commentChild: `${PREFIX}-comment-child`,
+  btnVotes: `${PREFIX}-btn-votes`,
   votes: `${PREFIX}-votes`,
-  btnViewPreviousComments: `${PREFIX}-btnViewPreviousComments`
+  btnViewPreviousComments: `${PREFIX}-btn-view-previous-comments`,
+  commentActionsMenu: `${PREFIX}-comment-actions-menu`,
+  deleted: `${PREFIX}-deleted`
 };
 
 const Root = styled(Box, {
@@ -71,10 +76,21 @@ const Root = styled(Box, {
   [`& .${classes.comment}`]: {
     paddingBottom: 0
   },
+  [`& .${classes.author}`]: {
+    textDecoration: 'none',
+    '& span': {
+      fontWeight: '600'
+    }
+  },
   [`& .${classes.content}`]: {
     '& .MuiCardContent-root': {
-      paddingTop: 7,
-      paddingBottom: 0
+      padding: '7px 13px 7px 13px'
+    }
+  },
+  [`& .${classes.textContent}`]: {
+    '& p': {
+      marginBlockStart: '0.3em',
+      marginBlockEnd: '0.3em'
     }
   },
   [`& .${classes.commentChild}`]: {
@@ -82,6 +98,14 @@ const Root = styled(Box, {
   },
   [`& .${classes.btnViewPreviousComments}`]: {
     paddingLeft: '70px'
+  },
+  [`& .${classes.commentActionsMenu}`]: {
+    position: 'absolute',
+    top: 10,
+    right: 11
+  },
+  [`& .${classes.deleted}`]: {
+    opacity: 0.3
   }
 }));
 
@@ -313,7 +337,6 @@ export default function CommentObject({
     performReply(comment)
       .then((data: SCCommentType) => {
         const _replyCommentId = replyComment.parent ? replyComment.parent : replyComment.id;
-        console.log(_replyCommentId);
         setObj(
           Object.assign({}, obj, {
             latest_comments: [...obj.latest_comments, ...[data]]
@@ -328,10 +351,48 @@ export default function CommentObject({
   }
 
   /**
+   * Handle comment delete
+   */
+  function handleDelete(comment) {
+    if (comment.parent) {
+      const _latestComment = obj.latest_comments.map((c) => {
+        if (c.id === comment.id) {
+          c.deleted = true;
+        }
+        return c;
+      });
+      setObj(Object.assign({}, obj, {latest_comments: _latestComment}));
+    } else {
+      setObj(Object.assign({}, obj, {deleted: true}));
+    }
+  }
+
+  /**
+   * Handle comment restore
+   */
+  function handleRestore(comment) {
+    if (comment.parent) {
+      const _latestComment = obj.latest_comments.map((c) => {
+        if (c.id === comment.id) {
+          c.deleted = false;
+        }
+        return c;
+      });
+      setObj(Object.assign({}, obj, {latest_comments: _latestComment}));
+    } else {
+      setObj(Object.assign({}, obj, {deleted: false}));
+    }
+  }
+
+  /**
    * Render comment & latest activities
    * @param comment
    */
   function renderComment(comment) {
+    if ((comment.deleted && !scUser.user.role) || (scUser.user.role && !scUser.user.role.includes('admin'))) {
+      // if the logged user isn't an administrator can't view the comment
+      return null;
+    }
     return (
       <React.Fragment key={comment.id}>
         <ListItem
@@ -348,14 +409,28 @@ export default function CommentObject({
             secondary={
               <>
                 <Card classes={{root: classes.content}} {...rest}>
-                  <CardContent>
-                    <Link to={scRoutingContext.url('profile', {id: comment.author.id})}>
+                  <CardContent classes={{root: classNames({[classes.deleted]: obj.deleted})}}>
+                    <Link className={classes.author} to={scRoutingContext.url('profile', {id: comment.author.id})}>
                       <Typography component="span" sx={{display: 'inline'}} gutterBottom color="primary">
                         {comment.author.username}
                       </Typography>
                     </Link>
-                    <Typography variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: comment.html}}></Typography>
+                    <Typography
+                      className={classes.textContent}
+                      variant="body2"
+                      gutterBottom
+                      dangerouslySetInnerHTML={{__html: comment.html}}></Typography>
                   </CardContent>
+                  <Box className={classes.commentActionsMenu}>
+                    <CommentActionsMenu
+                      commentObject={obj}
+                      feedObject={feedObject}
+                      feedObjectId={feedObjectId}
+                      feedObjectType={feedObjectType}
+                      onRestore={handleRestore}
+                      onDelete={handleDelete}
+                    />
+                  </Box>
                 </Card>
                 <Box component="span" sx={{display: 'flex', justifyContent: 'flex-start', p: '2px'}}>
                   <Grid component="span" item={true} sm="auto" container direction="row" alignItems="center">

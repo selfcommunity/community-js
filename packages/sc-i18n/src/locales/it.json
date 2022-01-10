@@ -170,7 +170,7 @@
 
   "ui.commentsObject.noComments": "Non ci sono ancora commenti al momento.",
   "ui.commentsObject.noOtherComments": "Non ci sono altri commenti.",
-  "ui.commentsObject.loadMoreComments": "Carica altri commenti",
+  "ui.commentsObject.loadMoreComments": "Vedi altri commenti",
   "ui.commentsObject.numberOfComments": "{loaded} di {total}",
 
   "ui.commentObject.voteUp": "Apprezza",
@@ -178,6 +178,15 @@
   "ui.commentObject.reply": "Replica",
   "ui.commentObject.votes": "{total, plural, =0 {# Voti} one {# Voto} other {# Voti}}",
   "ui.commentObject.viewLatestComment": "Vedi {total, plural, =0 {# Comments} one {# Comment} other {# Comments}} precedenti",
+
+  "ui.commentObject.commentActionsMenu.permanentLink": "Link permanente",
+  "ui.commentObject.commentActionsMenu.edit": "Modifica",
+  "ui.commentObject.commentActionsMenu.restore": "Ripristina",
+  "ui.commentObject.commentActionsMenu.delete": "Elimina",
+  "ui.commentObject.commentActionsMenu.restoreCommentTitleDialog": "Ripristina questo commento",
+  "ui.commentObject.commentActionsMenu.restoreCommentContentDialog": "Sei sicuro di voler ripristinare questo commento?",
+  "ui.commentObject.commentActionsMenu.deleteCommentTitleDialog": "Elimina questo commento",
+  "ui.commentObject.commentActionsMenu.deleteCommentContentDialog": "Sei sicuro di voler eliminare questo commento?",
 
   "ui.commentObjectVotesDialog.title": "Voti",
   "ui.commentObjectVotesDialog.noOtherVotes": "Non ci sono altri voti.",

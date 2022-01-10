@@ -53,9 +53,6 @@ export default function ChangePictureDialog({
   let fileInput = useRef(null);
   const [openDeleteAvatarDialog, setOpenDeleteAvatarDialog] = useState<boolean>(false);
   const [isDeletingAvatar, setIsDeletingAvatar] = useState<boolean>(false);
-  const handleClose = () => {
-    setOpenDeleteAvatarDialog(false);
-  };
 
   /**
    * Handle open confirm delete avatar dialog

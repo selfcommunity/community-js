@@ -55,6 +55,14 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/comment/$(id)/vote/'),
     method: 'GET',
   },
+  CommentDelete: {
+    url: urlReplacer('/api/v2/comment/$(id)/'),
+    method: 'DELETE',
+  },
+  CommentRestore: {
+    url: urlReplacer('/api/v2/comment/$(id)/restore'),
+    method: 'POST',
+  },
   /**
    * Reporting Flag Endpoints
    */

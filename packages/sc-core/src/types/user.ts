@@ -159,6 +159,11 @@ export interface SCUserType {
    * Number of polls created by the user.
    */
   polls_counter?: number;
+
+  /**
+   *  User roles
+   */
+  role: string[];
 }
 
 /**

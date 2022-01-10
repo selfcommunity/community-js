@@ -11,7 +11,7 @@ import ReplyCommentObject from '../CommentObject/ReplyComment';
 import Typography from '@mui/material/Typography';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import CommentObjectSkeleton from '../Skeleton/CommentObjectSkeleton';
-import {Button, Stack} from '@mui/material';
+import {Box, Button, Stack} from '@mui/material';
 import {CommentsOrderBy} from '../../types/comments';
 
 const messages = defineMessages({
