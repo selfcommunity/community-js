@@ -2,11 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { styled } from '@mui/material/styles';
 import { Box } from '@mui/material';
 import {
-  Feed,
-  InlineComposer,
   CategoriesFollowed,
-  UserFollowed,
+  Feed,
   SCFeedWidgetType,
+  UserFollowed,
 } from '@selfcommunity/ui';
 import { Endpoints } from '@selfcommunity/core';
 
@@ -42,13 +41,6 @@ export interface UserFeedProps {
 
 // Widgets for feed
 const WIDGETS: SCFeedWidgetType[] = [
-  {
-    type: 'widget',
-    component: InlineComposer,
-    componentProps: {},
-    column: 'left',
-    position: 0,
-  },
   {
     type: 'widget',
     component: CategoriesFollowed,
