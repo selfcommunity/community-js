@@ -353,6 +353,13 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/locality/search/'),
     method: 'GET',
   },
+  /**
+   * Custom ADV
+   */
+  CustomAdvSearch: {
+    url: urlReplacer('/api/v2/custom_adv/search/'),
+    method: 'GET',
+  },
 
   /**
    * Feed

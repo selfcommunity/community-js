@@ -1,8 +1,8 @@
 import React from 'react';
-import { styled } from '@mui/material/styles';
-import { Box } from '@mui/material';
-import { UserProfileHeader } from '@selfcommunity/ui';
-import { useSCFetchUser } from '@selfcommunity/core';
+import {styled} from '@mui/material/styles';
+import {Box} from '@mui/material';
+import {UserProfileHeader} from '@selfcommunity/ui';
+import {useSCFetchUser} from '@selfcommunity/core';
 import UserFeed from '../UserFeed';
 
 const PREFIX = 'SCUserProfileTemplate';
@@ -10,9 +10,9 @@ const PREFIX = 'SCUserProfileTemplate';
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.root,
-})(({ theme }) => ({
-  marginTop: theme.spacing(2),
+  overridesResolver: (props, styles) => styles.root
+})(({theme}) => ({
+  marginTop: theme.spacing(2)
 }));
 
 export interface UserProfileProps {
@@ -37,10 +37,10 @@ export interface UserProfileProps {
 
 export default function UserProfile(props: UserProfileProps): JSX.Element {
   // PROPS
-  const { id = 'user', className, userId } = props;
+  const {id = 'user', className, userId} = props;
 
   // CONTEXT
-  const { scUser, setSCUser } = useSCFetchUser({ id: userId });
+  const {scUser, setSCUser} = useSCFetchUser({id: userId});
 
   return (
     <Root id={id} className={className}>

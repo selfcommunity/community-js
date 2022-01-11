@@ -14,6 +14,7 @@ import {
   SCRoutingContextType,
   SCLocaleContextType,
 } from './context';
+import {SCCustomAdvPosition, SCCustomAdvType} from './customAdv';
 import {SCUserType, SCUserBlockedSettingsType} from './user';
 import {SCTagType} from './tag';
 import {SCCategoryType} from './category';
@@ -72,6 +73,8 @@ export {
   SCUserBlockedSettingsType,
   SCTagType,
   SCCategoryType,
+  SCCustomAdvPosition,
+  SCCustomAdvType,
   SCFollowedManagerType,
   SCConnectionsManagerType,
   SCLocaleType,

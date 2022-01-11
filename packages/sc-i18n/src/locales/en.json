@@ -209,6 +209,7 @@
   "ui.categoryHeader.followers": "Followers",
   "ui.categoryHeader.noOtherFollowers": "No other followers.",
 
+  "ui.feed.refreshRelease": "Release to refresh the feed",
   "ui.feed.noFeedObject": "At the moment there aren't any contribution to see",
   "ui.feed.noOtherFeedObject": "No others contribution",
 
