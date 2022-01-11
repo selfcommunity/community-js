@@ -9,6 +9,8 @@ import {
   SCConnectionsManagerType,
   SCCategoriesManagerType,
   SCContextProviderType,
+  SCCustomAdvPosition,
+  SCCustomAdvType,
   SCSettingsType,
   SCSessionType,
   SCThemeContextType,
@@ -96,6 +98,7 @@ import * as SCFeatures from './constants/Features';
 import useSCFetchUser from './hooks/useSCFetchUser';
 import useSCFetchFeedObject from './hooks/useSCFetchFeedObject';
 import useSCFetchCommentObject from './hooks/useSCFetchCommentObject';
+import useSCFetchCustomAdv from './hooks/useSCFetchCustomAdv';
 import useSCFetchTag from './hooks/useSCFetchTag';
 import useSCFetchCategory from './hooks/useSCFetchCategory';
 
@@ -135,6 +138,8 @@ import * as Locale from './constants/Locale';
  */
 export {
   SCContextProviderType,
+  SCCustomAdvPosition,
+  SCCustomAdvType,
   SCSettingsType,
   SCAuthTokenType,
   SCSessionType,
@@ -223,6 +228,7 @@ export {
   useSCFetchUser,
   useSCFetchFeedObject,
   useSCFetchCommentObject,
+  useSCFetchCustomAdv,
   useSCFetchTag,
   useSCFetchCategory,
 };

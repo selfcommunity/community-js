@@ -214,6 +214,7 @@
   "ui.categoryHeader.followers": "Followers",
   "ui.categoryHeader.noOtherFollowers": "Non ci sono altri followers.",
 
+  "ui.feed.refreshRelease": "Rilascia per ricaricare",
   "ui.feed.noFeedObject": "Al momento non ci sono contributi da vedere",
   "ui.feed.noOtherFeedObject": "Non ci sono altri contenuti",
 

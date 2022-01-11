@@ -1,13 +1,16 @@
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useContext, useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Card, CardContent, Grid, Hidden, Theme, useMediaQuery} from '@mui/material';
 import {
   http,
   Logger,
+  SCCustomAdvPosition,
   SCFeedUnitType,
   SCNotificationAggregatedType,
   SCPreferences,
   SCPreferencesContextType,
+  SCUserContext,
+  SCUserContextType,
   useSCPreferences
 } from '@selfcommunity/core';
 import {AxiosResponse} from 'axios';
@@ -21,6 +24,8 @@ import {EndpointType} from '@selfcommunity/core/src/constants/Endpoints';
 import {SCFeedWidgetType} from '../../types/Feed';
 import Sticky from 'react-stickynode';
 import {useTheme} from '@mui/styles';
+import {InlineComposer} from '@selfcommunity/ui';
+import CustomAdv from '../CustomAdv';
 
 const PREFIX = 'SCFeed';
 
@@ -37,6 +42,9 @@ const Root = styled(Grid, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   marginTop: theme.spacing(2),
+  [`& .${classes.left}`]: {
+    padding: '3px'
+  },
   [`& .${classes.end}, & .${classes.refresh}`]: {
     textAlign: 'center'
   }
@@ -102,6 +110,7 @@ export default function Feed(props: FeedProps): JSX.Element {
 
   // CONTEXT
   const scPreferences: SCPreferencesContextType = useSCPreferences();
+  const scAuthContext: SCUserContextType = useContext(SCUserContext);
 
   /*
    * Compute preferences
@@ -111,6 +120,44 @@ export default function Feed(props: FeedProps): JSX.Element {
     PREFERENCES.map((p) => (_preferences[p] = p in scPreferences.preferences ? scPreferences.preferences[p].value : null));
     return _preferences;
   }, [scPreferences.preferences]);
+
+  /**
+   * Compute Widgets
+   */
+  const _widgets: SCFeedWidgetType[] = useMemo(() => {
+    if (
+      preferences[SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED] &&
+      ((preferences[SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED] && scAuthContext.user === null) ||
+        !preferences[SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED])
+    ) {
+      return [
+        ...widgets,
+        {
+          type: 'widget',
+          component: CustomAdv,
+          componentProps: {
+            position: SCCustomAdvPosition.POSITION_FEED_SIDEBAR
+          },
+          column: 'right',
+          position: 0
+        },
+        ...Array.from({length: feedData.length / 10}, (_, i) => i * 10).map((position): SCFeedWidgetType => {
+          return {
+            type: 'widget',
+            component: CustomAdv,
+            componentProps: {
+              position: SCCustomAdvPosition.POSITION_FEED
+            },
+            column: 'left',
+            position
+          };
+        })
+      ];
+    }
+    return [...widgets];
+  }, [widgets, feedData, preferences]);
+
+  console.log(_widgets);
 
   /**
    * Fetch main feed
@@ -146,6 +193,8 @@ export default function Feed(props: FeedProps): JSX.Element {
     fetch();
   }, []);
 
+  // Main Loop
+
   const theme: Theme = useTheme();
   const oneColLayout = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -157,7 +206,7 @@ export default function Feed(props: FeedProps): JSX.Element {
     };
     if (oneColLayout) {
       return {
-        left: widgets
+        left: _widgets
           .map((w) => Object.assign({}, w, {position: w.position * (w.column === 'right' ? 5 : 1)}))
           .sort(widgetSort)
           .reduce(widgetReducer, [...feedData]),
@@ -165,11 +214,11 @@ export default function Feed(props: FeedProps): JSX.Element {
       };
     } else {
       return {
-        left: widgets
+        left: _widgets
           .filter((w) => w.column === 'left')
           .sort(widgetSort)
           .reduce(widgetReducer, [...feedData]),
-        right: widgets.filter((w) => w.column === 'right').sort(widgetSort)
+        right: _widgets.filter((w) => w.column === 'right').sort(widgetSort)
       };
     }
   }, [oneColLayout, feedData]);
@@ -189,7 +238,7 @@ export default function Feed(props: FeedProps): JSX.Element {
             endMessage={
               <Card variant="outlined" className={classes.end}>
                 <CardContent>
-                  <FormattedMessage id="feed.end" defaultMessage="feed.end" />{' '}
+                  <FormattedMessage id="ui.feed.noOtherFeedObject" defaultMessage="ui.feed.noOtherFeedObject" />{' '}
                 </CardContent>
               </Card>
             }
@@ -200,7 +249,7 @@ export default function Feed(props: FeedProps): JSX.Element {
             releaseToRefreshContent={
               <Card variant="outlined" className={classes.refresh}>
                 <CardContent>
-                  &#8593; <FormattedMessage id="feed.refreshRelease" defaultMessage="feed.refreshRelease" />{' '}
+                  &#8593; <FormattedMessage id="ui.feed.refreshRelease" defaultMessage="ui.feed.refreshRelease" />{' '}
                 </CardContent>
               </Card>
             }>

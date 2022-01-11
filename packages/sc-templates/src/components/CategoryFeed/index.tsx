@@ -1,23 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { styled } from '@mui/material/styles';
-import { Box } from '@mui/material';
-import {
-  Feed,
-  InlineComposer,
-  TrendingFeedObject,
-  TrendingPeople,
-  SCFeedWidgetType,
-} from '@selfcommunity/ui';
-import { Endpoints } from '@selfcommunity/core';
+import React, {useEffect, useState} from 'react';
+import {styled} from '@mui/material/styles';
+import {Box} from '@mui/material';
+import {Feed, InlineComposer, TrendingFeedObject, TrendingPeople, SCFeedWidgetType} from '@selfcommunity/ui';
+import {Endpoints} from '@selfcommunity/core';
 
 const PREFIX = 'SCCategoryFeedTemplate';
 
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.root,
-})(({ theme }) => ({
-  marginTop: theme.spacing(2),
+  overridesResolver: (props, styles) => styles.root
+})(({theme}) => ({
+  marginTop: theme.spacing(2)
 }));
 
 export interface CategoryFeedProps {
@@ -47,33 +41,33 @@ const WIDGETS: SCFeedWidgetType[] = [
     component: InlineComposer,
     componentProps: {},
     column: 'left',
-    position: 0,
+    position: 0
   },
   {
     type: 'widget',
     component: TrendingPeople,
     componentProps: {},
     column: 'right',
-    position: 0,
+    position: 0
   },
   {
     type: 'widget',
     component: TrendingFeedObject,
     componentProps: {},
     column: 'right',
-    position: 1,
-  },
+    position: 1
+  }
 ];
 
 export default function CategoryFeed(props: CategoryFeedProps): JSX.Element {
   // PROPS
-  const { id = 'category_feed', className, categoryId } = props;
+  const {id = 'category_feed', className, categoryId} = props;
 
   // STATE
   const [widgets, setWidgets] = useState<SCFeedWidgetType[]>(
     WIDGETS.map((w) => {
-      return { ...w, componentProps: { ...w.componentProps, categoryId } };
-    }),
+      return {...w, componentProps: {...w.componentProps, categoryId}};
+    })
   );
 
   // Component props update
@@ -81,10 +75,10 @@ export default function CategoryFeed(props: CategoryFeedProps): JSX.Element {
     () =>
       setWidgets(
         WIDGETS.map((w) => {
-          return { ...w, componentProps: { ...w.componentProps, categoryId } };
-        }),
+          return {...w, componentProps: {...w.componentProps, categoryId}};
+        })
       ),
-    [categoryId],
+    [categoryId]
   );
 
   return (
@@ -92,7 +86,7 @@ export default function CategoryFeed(props: CategoryFeedProps): JSX.Element {
       <Feed
         endpoint={{
           ...Endpoints.CategoryFeed,
-          url: () => Endpoints.CategoryFeed.url({ id: categoryId }),
+          url: () => Endpoints.CategoryFeed.url({id: categoryId})
         }}
         widgets={widgets}
       />

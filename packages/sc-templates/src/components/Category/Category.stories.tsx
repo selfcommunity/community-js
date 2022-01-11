@@ -4,7 +4,7 @@ import CategoryTemplate from './index';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC Templates/Category',
+  title: 'Design System/SC TEMPLATES/Category',
   component: CategoryTemplate,
 } as ComponentMeta<typeof CategoryTemplate>;
 

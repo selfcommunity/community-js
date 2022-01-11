@@ -1,22 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { styled } from '@mui/material/styles';
-import { Box } from '@mui/material';
-import {
-  CategoriesFollowed,
-  Feed,
-  SCFeedWidgetType,
-  UserFollowed,
-} from '@selfcommunity/ui';
-import { Endpoints } from '@selfcommunity/core';
+import React, {useEffect, useState} from 'react';
+import {styled} from '@mui/material/styles';
+import {Box} from '@mui/material';
+import {CategoriesFollowed, Feed, SCFeedWidgetType, UserFollowed} from '@selfcommunity/ui';
+import {Endpoints} from '@selfcommunity/core';
 
 const PREFIX = 'SCUserFeedTemplate';
 
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.root,
-})(({ theme }) => ({
-  marginTop: theme.spacing(2),
+  overridesResolver: (props, styles) => styles.root
+})(({theme}) => ({
+  marginTop: theme.spacing(2)
 }));
 
 export interface UserFeedProps {
@@ -46,26 +41,26 @@ const WIDGETS: SCFeedWidgetType[] = [
     component: CategoriesFollowed,
     componentProps: {},
     column: 'right',
-    position: 0,
+    position: 0
   },
   {
     type: 'widget',
     component: UserFollowed,
     componentProps: {},
     column: 'right',
-    position: 1,
-  },
+    position: 1
+  }
 ];
 
 export default function UserFeed(props: UserFeedProps): JSX.Element {
   // PROPS
-  const { id = 'user_feed', className, userId } = props;
+  const {id = 'user_feed', className, userId} = props;
 
   // STATE
   const [widgets, setWidgets] = useState<SCFeedWidgetType[]>(
     WIDGETS.map((w) => {
-      return { ...w, componentProps: { ...w.componentProps, userId } };
-    }),
+      return {...w, componentProps: {...w.componentProps, userId}};
+    })
   );
 
   // Component props update
@@ -73,10 +68,10 @@ export default function UserFeed(props: UserFeedProps): JSX.Element {
     () =>
       setWidgets(
         WIDGETS.map((w) => {
-          return { ...w, componentProps: { ...w.componentProps, userId } };
-        }),
+          return {...w, componentProps: {...w.componentProps, userId}};
+        })
       ),
-    [userId],
+    [userId]
   );
 
   return (
@@ -84,7 +79,7 @@ export default function UserFeed(props: UserFeedProps): JSX.Element {
       <Feed
         endpoint={{
           ...Endpoints.UserFeed,
-          url: () => Endpoints.UserFeed.url({ id: userId }),
+          url: () => Endpoints.UserFeed.url({id: userId})
         }}
         widgets={widgets}
       />
