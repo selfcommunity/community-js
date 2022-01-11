@@ -8,13 +8,14 @@ import {
   SCFeedObjectTypologyType,
   SCFeedPostType,
   SCFeedStatusType,
-  SCMediaType, SCPollType,
+  SCMediaType,
+  SCPollType,
   SCPreferences,
   SCPreferencesContext,
   SCPreferencesContextType,
   SCTagType,
   SCUserContext,
-  SCUserContextType,
+  SCUserContextType
 } from '@selfcommunity/core';
 import {FormattedMessage} from 'react-intl';
 import CloseIcon from '@mui/icons-material/CancelOutlined';
@@ -494,6 +495,10 @@ export default function Composer(props: ComposerProps): JSX.Element {
     dispatch({type: 'text', value});
   };
 
+  const handleChangePoll = (poll: SCPollType): void => {
+    dispatch({type: 'text', value: poll});
+  };
+
   const handleChange =
     (prop: string) =>
     (event: SyntheticEvent, data?: object): void => {
@@ -514,7 +519,6 @@ export default function Composer(props: ComposerProps): JSX.Element {
           break;
         case 'categories':
         case 'addressing':
-        case 'poll':
         case 'location':
           dispatch({type: prop, value: event});
           break;
@@ -767,7 +771,7 @@ export default function Composer(props: ComposerProps): JSX.Element {
           </Stack>
         </DialogTitle>
         <DialogContent className={classes.content}>
-          <Poll onChange={handleChange('poll')} value={poll} error={pollError} />
+          <Poll onChange={handleChangePoll} value={poll} error={pollError} />
         </DialogContent>
       </React.Fragment>
     );

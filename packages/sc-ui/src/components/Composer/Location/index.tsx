@@ -3,14 +3,13 @@ import {FormattedMessage} from 'react-intl';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField, {TextFieldProps} from '@mui/material/TextField';
 import CircularProgress from '@mui/material/CircularProgress';
-import {Chip, InternalStandardProps as StandardProps} from '@mui/material';
+import {InternalStandardProps as StandardProps} from '@mui/material';
 import {Endpoints, http, SCLocalityType} from '@selfcommunity/core';
 import {styled} from '@mui/material/styles';
 import {AutocompleteClasses} from '@mui/material/Autocomplete/autocompleteClasses';
 import {OverridableStringUnion} from '@mui/types';
 import {AutocompletePropsSizeOverrides} from '@mui/material/Autocomplete/Autocomplete';
 import {AxiosResponse} from 'axios';
-import Checkbox from '@mui/material/Checkbox';
 import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
 

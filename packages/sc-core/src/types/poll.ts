@@ -6,7 +6,7 @@ export interface SCPollType {
   /**
    * Id of the poll
    */
-  id: number;
+  id?: number;
 
   /**
    * Title of the poll
@@ -21,27 +21,27 @@ export interface SCPollType {
   /**
    * Added at
    */
-  added_at: Date;
+  added_at?: Date;
 
   /**
    * Modified at
    */
-  modified_at: Date;
+  modified_at?: Date;
 
   /**
    * Poll is closed or not
    */
-  closed: boolean;
+  closed?: boolean;
 
   /**
    * Expiration at
    */
-  expiration_at: string;
+  expiration_at: string | Date;
 
   /**
    * Expiration at
    */
-  hidden: boolean;
+  hidden?: boolean;
 
   /**
    * Choice
@@ -57,7 +57,7 @@ export interface SCPollChoiceType {
   /**
    * Id of the poll choice
    */
-  id: number;
+  id?: number;
 
   /**
    * Title of the poll
@@ -67,22 +67,22 @@ export interface SCPollChoiceType {
   /**
    * Order in the list of choices
    */
-  order: number;
+  order?: number;
 
   /**
    * Added at
    */
-  added_at: Date;
+  added_at?: Date;
 
   /**
    * True if the poll is deleted
    */
-  deleted: boolean;
+  deleted?: boolean;
 
   /**
    * Number of votes
    */
-  vote_count: number;
+  vote_count?: number;
 
   /**
    * True if the logged user has already voted the choice

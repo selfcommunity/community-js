@@ -101,20 +101,49 @@ const EditorImage: FunctionComponent<any> = (props) => {
   return <img src={src} {...calculateAspectRatioFit(width, height, 300, 300)} {...rest} />;
 };
 
-export default function Editor({
-  className = '',
-  defaultValue = '',
-  readOnly = false,
-  onChange = null,
-  onRef = null
-}: {
+export interface EditorProps {
+  /**
+   * Id of the feed object
+   * @default 'poll'
+   */
+  id?: string;
+
+  /**
+   * Override or extend the styles applied to the component.
+   * @default null
+   */
   className?: string;
+
+  /**
+   * Default value for the editor
+   * @default null
+   */
   defaultValue?: string;
+
+  /**
+   * Is the content of the editor read only
+   * @default false
+   */
   readOnly?: boolean;
+
+  /**
+   * Handler for change event of the editor
+   * @default null
+   * */
   onChange?: (value: string) => void;
+
+  /**
+   * Handler for ref forwarding of the MUIRichTextEditor
+   * @default null
+   */
   onRef?: (editor: RefObject<TMUIRichTextEditorRef>) => void;
-}): JSX.Element {
+}
+
+export default function Editor(props: EditorProps): JSX.Element {
   const editorId = useMemo(() => `editor${random()}`, []);
+
+  // PROPS
+  const {id = 'editor', className = null, defaultValue = '', readOnly = false, onChange = null, onRef = null} = props;
 
   // Refs
   const editor = useRef<TMUIRichTextEditorRef>(null);
@@ -204,7 +233,7 @@ export default function Editor({
   };
 
   return (
-    <Root className={className}>
+    <Root id={id} className={className}>
       <ChunkedUploady
         destination={{
           url: `${scContext.settings.portal}${Endpoints.ComposerChunkUploadMedia.url()}`,
