@@ -38,7 +38,7 @@ const Root = styled(Grid, {
 })(({theme}) => ({
   marginTop: theme.spacing(2),
   [`& .${classes.left}`]: {
-    padding: '0px 5px'
+    padding: '3px'
   },
   [`& .${classes.end}, & .${classes.refresh}`]: {
     textAlign: 'center'
