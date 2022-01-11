@@ -7,6 +7,8 @@
 
   "ui.baseDialog.button.close": "Close",
 
+  "ui.button.showMore": "See More",
+
   "ui.peopleSuggestion.title": "People Suggestion",
   "ui.peopleSuggestion.subtitle.noResults": "No People",
   "ui.peopleSuggestion.button.showAll": "Show All",
@@ -204,6 +206,9 @@
   "ui.userProfileHeader.job": "Job",
   "ui.userProfileHeader.dateJoined": "Date joined",
   "ui.userProfileHeader.website": "Website",
+
+  "ui.usersFollowed.usersFollowed": "{total, plural, =0 {# users followed} one {# user followed} other {# users followed}}",
+  "ui.usersFollowed.subtitle.noResults": "No users followed",
 
   "ui.categoryHeader.followedBy": "Followed by",
   "ui.categoryHeader.followers": "Followers",

@@ -7,6 +7,8 @@
 
   "ui.baseDialog.button.close": "Chiudi",
 
+  "ui.button.showMore": "Mostra di piú",
+
   "ui.peopleSuggestion.title": "Persone che potresti conoscere",
   "ui.peopleSuggestion.subtitle.noResults": "Nessuno da mostrare",
   "ui.peopleSuggestion.button.showAll": "Mostra tutti",
@@ -204,6 +206,9 @@
   "ui.userProfileHeader.job": "Occupazione",
   "ui.userProfileHeader.dateJoined": "Registrato dal",
   "ui.userProfileHeader.website": "Website",
+
+  "ui.usersFollowed.usersFollowed": "{total, plural, =0 {# utenti seguiti} one {# utente seguito} other {# utenti seguiti}}",
+  "ui.usersFollowed.subtitle.noResults": "Nessun utente seguito",
 
   "ui.categoryHeader.followedBy": "Seguita da ",
   "ui.categoryHeader.followers": "Followers",

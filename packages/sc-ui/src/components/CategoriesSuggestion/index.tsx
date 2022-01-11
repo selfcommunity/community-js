@@ -23,7 +23,7 @@ const Root = styled(Card, {
 
 export interface CategoriesListProps {
   /**
-   * Hides category component
+   * Hides this component
    * @default false
    */
   autoHide?: boolean;

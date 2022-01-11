@@ -8,7 +8,7 @@ import {Endpoints, http} from '@selfcommunity/core';
 import {AxiosResponse} from 'axios';
 import {PeopleSuggestionSkeleton} from '../Skeleton';
 import {FormattedMessage} from 'react-intl';
-import User from '../User';
+import User, {UserProps} from '../User';
 
 const PREFIX = 'SCTrendingPeople';
 
@@ -21,7 +21,31 @@ const Root = styled(Card, {
   marginBottom: theme.spacing(2)
 }));
 
-export default function TrendingPeople({categoryId = null, ...props}: {categoryId?: number; [p: string]: any}): JSX.Element {
+export interface TrendingPeople {
+  /**
+   * Category id
+   * @default null
+   */
+  categoryId?: number;
+  /**
+   * Hides this component
+   * @default false
+   */
+  autoHide?: boolean;
+  /**
+   * Override or extend the styles applied to the component.
+   * @default null
+   */
+  className?: string;
+  /**
+   * Props to spread to single user object
+   * @default empty object
+   */
+  UserProps?: UserProps;
+}
+
+export default function TrendingPeople(props: TrendingPeople): JSX.Element {
+  const {categoryId, autoHide, className, UserProps = {}} = props;
   const [people, setPeople] = useState<any[]>([]);
   const [visiblePeople, setVisiblePeople] = useState<number>(3);
   const [loading, setLoading] = useState<boolean>(true);
@@ -75,7 +99,7 @@ export default function TrendingPeople({categoryId = null, ...props}: {categoryI
             <React.Fragment>
               <List>
                 {people.slice(0, 4).map((user, index) => (
-                  <User elevation={0} user={user} id={user.id} key={index} />
+                  <User elevation={0} user={user} id={user.id} key={index} {...UserProps} />
                 ))}
               </List>
             </React.Fragment>
@@ -91,8 +115,8 @@ export default function TrendingPeople({categoryId = null, ...props}: {categoryI
     </React.Fragment>
   );
 
-  if (!props.autoHide) {
-    return <Root {...props}>{p}</Root>;
+  if (!autoHide) {
+    return <Root className={className}>{p}</Root>;
   }
   return null;
 }

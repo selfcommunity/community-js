@@ -33,12 +33,19 @@ const Root = styled(Card, {
   maxWidth: 700
 }));
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+// @ts-ignore
 export interface CategoryProps extends CardProps {
   /**
    * Id of category object
    * @default null
    */
   id?: number;
+  /**
+   * Override or extend the styles applied to the component.
+   * @default null
+   */
+  className?: string;
   /**
    * Category Object
    * @default null
@@ -56,7 +63,7 @@ export interface CategoryProps extends CardProps {
   popular?: boolean;
 }
 export default function Category(props: CategoryProps): JSX.Element {
-  const {id = null, category = null, popular = false, autoHide = false, ...rest} = props;
+  const {id = null, category = null, className = null, popular = false, autoHide = false, ...rest} = props;
   const {scCategory, setSCCategory} = useSCFetchCategory({id, category});
   const intl = useIntl();
 
@@ -86,7 +93,7 @@ export default function Category(props: CategoryProps): JSX.Element {
    * Render root object
    */
   return (
-    <Root {...rest}>
+    <Root className={className} {...rest}>
       <CardContent>
         <List>{c}</List>
       </CardContent>

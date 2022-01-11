@@ -3,8 +3,16 @@ import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
 import Card from '@mui/material/Card';
 import {UserBoxSkeleton} from '../Skeleton';
-import {Avatar, Button, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText} from '@mui/material';
-import {SCUserContext, SCPreferencesContext, SCPreferences, SCUserContextType, SCUserType, SCPreferencesContextType} from '@selfcommunity/core';
+import {Avatar, Button, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText, CardProps} from '@mui/material';
+import {
+  SCUserContext,
+  SCPreferencesContext,
+  SCPreferences,
+  SCUserContextType,
+  SCUserType,
+  SCPreferencesContextType,
+  SCCategoryType
+} from '@selfcommunity/core';
 import useSCFetchUser from '../../../../sc-core/src/hooks/useSCFetchUser';
 import FollowUserButton from '../FollowUserButton';
 
@@ -26,22 +34,38 @@ const Root = styled(Card, {
     padding: 0
   }
 }));
-
-export default function User({
-  id = null,
-  user = null,
-  handleIgnoreAction = null,
-  className = '',
-  autoHide = null,
-  ...rest
-}: {
+// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+// @ts-ignore
+export interface UserProps extends CardProps {
+  /**
+   * Id of user object
+   * @default null
+   */
   id?: number;
-  user?: SCUserType;
-  handleIgnoreAction?: (u) => void;
+  /**
+   * Override or extend the styles applied to the component.
+   * @default null
+   */
   className?: string;
+  /**
+   * User Object
+   * @default null
+   */
+  user?: SCUserType;
+  /**
+   * Hides user component
+   * @default false
+   */
   autoHide?: boolean;
-  [p: string]: any;
-}): JSX.Element {
+  /**
+   * Handles actions
+   * @default void
+   */
+  handleIgnoreAction?: (u) => void;
+}
+
+export default function User(props: UserProps): JSX.Element {
+  const {id = null, user = null, handleIgnoreAction, className = null, autoHide = false, ...rest} = props;
   const {scUser, setSCUser} = useSCFetchUser({id, user});
   const scPreferencesContext: SCPreferencesContextType = useContext(SCPreferencesContext);
   const scUserContext: SCUserContextType = useContext(SCUserContext);
