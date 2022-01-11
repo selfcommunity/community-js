@@ -7,21 +7,25 @@ import {
   http,
   Logger,
   SCCommentType,
+  SCCommentTypologyType,
   SCFeedObjectType,
-  SCFeedObjectTypologyType, SCRoutes, SCRoutingContextType,
+  SCFeedObjectTypologyType,
+  SCRoutes,
+  SCRoutingContextType,
   SCUserContext,
   SCUserContextType,
-  useSCFetchCommentObject, useSCRouting,
+  useSCFetchCommentObject,
+  useSCRouting
 } from '@selfcommunity/core';
 import {AxiosResponse} from 'axios';
 import {SCOPE_SC_UI} from '../../../constants/Errors';
 import SelectedIcon from '@mui/icons-material/CheckCircleOutline';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import {ClickAwayListener, Divider, Grow, IconButton, ListItemIcon, ListItemText, MenuItem, MenuList, Paper, Typography} from '@mui/material';
-
 import {REPORT_AGGRESSIVE, REPORT_OFFTOPIC, REPORT_POORCONTENT, REPORT_SPAM, REPORT_VULGAR, REPORTS} from '../../../constants/Flagging';
 import CentralProgress from '../../../shared/CentralProgress';
 import ConfirmDialog from '../../../shared/ConfirmDialog/ConfirmDialog';
+import {copyTextToClipboard} from '../../../utils/string';
 
 const PREFIX = 'SCCommentActionsMenu';
 
@@ -110,6 +114,7 @@ export default function CommentActionsMenu({
   feedObjectType = SCFeedObjectTypologyType.POST,
   onDelete = null,
   onRestore = null,
+  onEdit = null,
   ...rest
 }: {
   commentObjectId?: number;
@@ -119,6 +124,7 @@ export default function CommentActionsMenu({
   feedObjectType?: SCFeedObjectTypologyType;
   onDelete?: (SCCommentType) => void;
   onRestore?: (SCCommentType) => void;
+  onEdit?: (SCCommentType) => void;
   [p: string]: any;
 }): JSX.Element {
   const intl = useIntl();
@@ -142,7 +148,7 @@ export default function CommentActionsMenu({
     () => () => {
       return http
         .request({
-          url: Endpoints.FlagStatus.url({type: 'comment', id: obj.id}),
+          url: Endpoints.FlagStatus.url({type: SCCommentTypologyType, id: obj.id}),
           method: Endpoints.FlagStatus.method
         })
         .then((res: AxiosResponse<any>) => {
@@ -162,7 +168,7 @@ export default function CommentActionsMenu({
     () => (type) => {
       return http
         .request({
-          url: Endpoints.Flag.url({type: 'comment', id: obj.id}),
+          url: Endpoints.Flag.url({type: SCCommentTypologyType, id: obj.id}),
           method: Endpoints.Flag.method,
           data: {flag_type: type}
         })
@@ -215,7 +221,17 @@ export default function CommentActionsMenu({
    * Handle permanent link
    */
   function handlePermanentLink() {
-    return scRoutingContext.url(SCRoutes.POST_ROUTE_NAME, {id: feedObject.id});
+    copyTextToClipboard(`${location.protocol}//${location.host}${scRoutingContext.url(SCRoutes.COMMENT_ROUTE_NAME, {id: obj.id})}`).then(() => {
+      setOpen(false);
+    });
+  }
+
+  /**
+   * Handle edit comment
+   */
+  function handleEditComment() {
+    setOpen(false);
+    onEdit && onEdit(obj);
   }
 
   /**
@@ -306,7 +322,7 @@ export default function CommentActionsMenu({
    * Close the flagging popup
    */
   function handleCloseMenu() {
-    if (popperRef.current && popperRef.current.contains(event.target)) {
+    if (popperRef.current && event && event.target && popperRef.current.contains(event.target)) {
       return;
     }
 
@@ -387,7 +403,7 @@ export default function CommentActionsMenu({
                     </MenuItem>
                     {scUser.user.id === obj.author.id ? (
                       <>
-                        <MenuItem onClick={handleCloseMenu}>
+                        <MenuItem onClick={handleEditComment}>
                           <FormattedMessage id="ui.commentObject.commentActionsMenu.edit" defaultMessage="ui.commentObject.commentActionsMenu.edit" />
                         </MenuItem>
                         {obj.deleted && scUser.user && (

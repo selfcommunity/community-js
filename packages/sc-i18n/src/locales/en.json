@@ -181,6 +181,10 @@
   "ui.commentObject.votes": "{total, plural, =0 {# Likes} one {# Like} other {# Likes}}",
   "ui.commentObject.viewLatestComment": "View previous {total, plural, =0 {# Comments} one {# Comment} other {# Comments}} ",
 
+  "ui.commentObject.replyComment.reply": "Reply",
+  "ui.commentObject.replyComment.save": "Save",
+  "ui.commentObject.replyComment.cancel": "Cancel",
+
   "ui.commentObject.commentActionsMenu.permanentLink": "Permanent Link",
   "ui.commentObject.commentActionsMenu.edit": "Edit",
   "ui.commentObject.commentActionsMenu.restore": "Restore",

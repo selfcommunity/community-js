@@ -43,6 +43,10 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/comment/'),
     method: 'POST',
   },
+  UpdateComment: {
+    url: urlReplacer('/api/v2/comment/$(id)/'),
+    method: 'PUT',
+  },
   Comments: {
     url: urlReplacer('/api/v2/comment/'),
     method: 'GET',

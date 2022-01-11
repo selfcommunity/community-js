@@ -53,6 +53,8 @@ const PREFIX = 'SCCommentsObject';
 const classes = {
   root: `${PREFIX}-root`,
   comment: `${PREFIX}-comment`,
+  avatarWrap: `${PREFIX}-avatar-wrap`,
+  avatar: `${PREFIX}-avatar`,
   author: `${PREFIX}-author`,
   content: `${PREFIX}-content`,
   textContent: `${PREFIX}-text-content`,
@@ -69,12 +71,20 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
+  overflow: 'auto',
   '& .MuiSvgIcon-root': {
     width: '0.7em',
     marginBottom: '0.5px'
   },
   [`& .${classes.comment}`]: {
     paddingBottom: 0
+  },
+  [`& .${classes.avatarWrap}`]: {
+    minWidth: 46
+  },
+  [`& .${classes.avatar}`]: {
+    width: 35,
+    height: 35
   },
   [`& .${classes.author}`]: {
     textDecoration: 'none',
@@ -143,6 +153,8 @@ export default function CommentObject({
   const [next, setNext] = useState<string>(null);
   const [replyComment, setReplyComment] = useState<SCCommentType>(null);
   const [isReplying, setIsReplying] = useState<boolean>(false);
+  const [editComment, setEditComment] = useState<SCCommentType>(null);
+  const [isSavingComment, setIsSavingComment] = useState<boolean>(false);
   const intl = useIntl();
 
   /**
@@ -336,7 +348,6 @@ export default function CommentObject({
     setIsReplying(true);
     performReply(comment)
       .then((data: SCCommentType) => {
-        const _replyCommentId = replyComment.parent ? replyComment.parent : replyComment.id;
         setObj(
           Object.assign({}, obj, {
             latest_comments: [...obj.latest_comments, ...[data]]
@@ -385,6 +396,61 @@ export default function CommentObject({
   }
 
   /**
+   * Handle edit comment
+   */
+  function handleEdit(comment) {
+    setEditComment(comment);
+  }
+
+  function handleCancel() {
+    setEditComment(null);
+  }
+
+  /**
+   * Perform save/update comment
+   */
+  const performSave = (comment) => {
+    return http
+      .request({
+        url: Endpoints.UpdateComment.url({id: editComment.id}),
+        method: Endpoints.UpdateComment.method,
+        data: {text: comment}
+      })
+      .then((res: AxiosResponse<SCCommentType>) => {
+        if (res.status >= 300) {
+          return Promise.reject(res);
+        }
+        return Promise.resolve(res.data);
+      });
+  };
+
+  /**
+   * Handle save comment
+   */
+  function handleSave(comment) {
+    setIsSavingComment(true);
+    performSave(comment)
+      .then((data: SCCommentType) => {
+        if (data.parent) {
+          const _latestComment = obj.latest_comments.map((c) => {
+            if (c.id === data.id) {
+              return data;
+            }
+            return c;
+          });
+          setObj(Object.assign({}, obj, {latest_comments: _latestComment}));
+        } else {
+          setObj(Object.assign({}, obj, {text: data.text, html: data.html, summary: data.summary, added_at: data.added_at}));
+        }
+        setEditComment(null);
+        setIsSavingComment(false);
+      })
+      .catch((error) => {
+        Logger.error(SCOPE_SC_UI, error);
+      });
+  }
+
+  /**
    * Render comment & latest activities
    * @param comment
    */
@@ -395,57 +461,72 @@ export default function CommentObject({
     }
     return (
       <React.Fragment key={comment.id}>
-        <ListItem
-          button={false}
-          alignItems="flex-start"
-          classes={{root: classNames(classes.comment, {[classes.commentChild]: Boolean(comment.parent)})}}>
-          <ListItemAvatar>
-            <Link to={scRoutingContext.url('profile', {id: comment.author.id})}>
-              <Avatar alt={obj.author.username} variant="circular" src={comment.author.avatar} />
-            </Link>
-          </ListItemAvatar>
-          <ListItemText
-            disableTypography
-            secondary={
-              <>
-                <Card classes={{root: classes.content}} {...rest}>
-                  <CardContent classes={{root: classNames({[classes.deleted]: obj.deleted})}}>
-                    <Link className={classes.author} to={scRoutingContext.url('profile', {id: comment.author.id})}>
-                      <Typography component="span" sx={{display: 'inline'}} gutterBottom color="primary">
-                        {comment.author.username}
-                      </Typography>
-                    </Link>
-                    <Typography
-                      className={classes.textContent}
-                      variant="body2"
-                      gutterBottom
-                      dangerouslySetInnerHTML={{__html: comment.html}}></Typography>
-                  </CardContent>
-                  <Box className={classes.commentActionsMenu}>
-                    <CommentActionsMenu
-                      commentObject={obj}
-                      feedObject={feedObject}
-                      feedObjectId={feedObjectId}
-                      feedObjectType={feedObjectType}
-                      onRestore={handleRestore}
-                      onDelete={handleDelete}
-                    />
-                  </Box>
-                </Card>
-                <Box component="span" sx={{display: 'flex', justifyContent: 'flex-start', p: '2px'}}>
-                  <Grid component="span" item={true} sm="auto" container direction="row" alignItems="center">
-                    {renderTimeAgo(comment)}
-                    <Bullet sx={{paddingLeft: '10px', paddingTop: '1px'}} />
-                    {renderActionVote(comment)}
-                    <Bullet sx={{paddingTop: '1px'}} />
-                    {renderActionReply(comment)}
-                    {renderVotes(comment)}
-                  </Grid>
-                </Box>
-              </>
-            }
+        {editComment && editComment.id === comment.id ? (
+          <ReplyCommentObject
+            text={comment.html}
+            autoFocus
+            id={`reply-${comment.id}`}
+            commentObject={comment}
+            onSave={handleSave}
+            onCancel={handleCancel}
+            readOnly={isReplying}
+            inline={!comment.parent}
+            {...rest}
           />
-        </ListItem>
+        ) : (
+          <ListItem
+            button={false}
+            alignItems="flex-start"
+            classes={{root: classNames(classes.comment, {[classes.commentChild]: Boolean(comment.parent)})}}>
+            <ListItemAvatar classes={{root: classes.avatarWrap}}>
+              <Link to={scRoutingContext.url('profile', {id: comment.author.id})}>
+                <Avatar alt={obj.author.username} variant="circular" src={comment.author.avatar} classes={{root: classes.avatar}}/>
+              </Link>
+            </ListItemAvatar>
+            <ListItemText
+              disableTypography
+              secondary={
+                <>
+                  <Card classes={{root: classes.content}} {...rest}>
+                    <CardContent classes={{root: classNames({[classes.deleted]: obj.deleted})}}>
+                      <Link className={classes.author} to={scRoutingContext.url('profile', {id: comment.author.id})}>
+                        <Typography component="span" sx={{display: 'inline'}} gutterBottom color="primary">
+                          {comment.author.username}
+                        </Typography>
+                      </Link>
+                      <Typography
+                        className={classes.textContent}
+                        variant="body2"
+                        gutterBottom
+                        dangerouslySetInnerHTML={{__html: comment.html}}></Typography>
+                    </CardContent>
+                    <Box className={classes.commentActionsMenu}>
+                      <CommentActionsMenu
+                        commentObject={comment}
+                        feedObject={feedObject}
+                        feedObjectId={feedObjectId}
+                        feedObjectType={feedObjectType}
+                        onRestore={handleRestore}
+                        onDelete={handleDelete}
+                        onEdit={handleEdit}
+                      />
+                    </Box>
+                  </Card>
+                  <Box component="span" sx={{display: 'flex', justifyContent: 'flex-start', p: '2px'}}>
+                    <Grid component="span" item={true} sm="auto" container direction="row" alignItems="center">
+                      {renderTimeAgo(comment)}
+                      <Bullet sx={{paddingLeft: '10px', paddingTop: '1px'}} />
+                      {renderActionVote(comment)}
+                      <Bullet sx={{paddingTop: '1px'}} />
+                      {renderActionReply(comment)}
+                      {renderVotes(comment)}
+                    </Grid>
+                  </Box>
+                </>
+              }
+            />
+          </ListItem>
+        )}
         {renderLatestComment(comment)}
         {replyComment && (replyComment.id === comment.id || replyComment.parent === comment.id) && !comment.parent && (
           <ReplyCommentObject

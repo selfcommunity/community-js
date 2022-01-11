@@ -177,9 +177,13 @@
 
   "ui.commentObject.voteUp": "Apprezza",
   "ui.commentObject.voteDown": "Non apprezzare",
-  "ui.commentObject.reply": "Replica",
+  "ui.commentObject.replyComment.reply": "Reply",
   "ui.commentObject.votes": "{total, plural, =0 {# Voti} one {# Voto} other {# Voti}}",
   "ui.commentObject.viewLatestComment": "Vedi {total, plural, =0 {# Comments} one {# Comment} other {# Comments}} precedenti",
+
+  "ui.commentObject.replyComment.reply": "Reply",
+  "ui.commentObject.replyComment.save": "Save",
+  "ui.commentObject.replyComment.cancel": "Cancel",
 
   "ui.commentObject.commentActionsMenu.permanentLink": "Link permanente",
   "ui.commentObject.commentActionsMenu.edit": "Modifica",

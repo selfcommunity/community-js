@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -38,7 +38,8 @@ import {
   Endpoints,
   http,
   Link,
-  Logger, SCCommentType,
+  Logger,
+  SCCommentType,
   SCFeedObjectType,
   SCFeedObjectTypologyType,
   SCPollType,
@@ -48,7 +49,7 @@ import {
   SCUserContextType,
   useSCFetchFeedObject,
   useSCRouting,
-  useSCUser,
+  useSCUser
 } from '@selfcommunity/core';
 import Composer from '../Composer';
 import CommentsObject from '../CommentsObject';
@@ -382,14 +383,13 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
     setIsReplying(true);
     performReply(comment)
       .then((data: SCCommentType) => {
-        setIsReplying(false);
         if (selectedActivities !== FeedObjectActivitiesType.RECENT_COMMENTS) {
           setComments([]);
           setSelectedActivities(FeedObjectActivitiesType.RECENT_COMMENTS);
         } else {
           setComments([...[data], ...comments]);
         }
-        // setObj(Object.assign({}, obj, {followed: !obj.followed}));
+        setIsReplying(false);
       })
       .catch((error) => {
         Logger.error(SCOPE_SC_UI, error);
@@ -402,7 +402,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
   function renderActivities() {
     return (
       <>
-        {<ReplyCommentObject inline variant={'outlined'} onReply={handleReply} isLoading={isReplying} />}
+        {<ReplyCommentObject inline variant={'outlined'} onReply={handleReply} isLoading={isReplying} key={Number(isReplying)} />}
         {(obj.comment_count || feedObjectActivities) && (
           <ActivitiesMenu
             selectedActivities={selectedActivities}
