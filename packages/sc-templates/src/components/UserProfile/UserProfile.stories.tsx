@@ -4,7 +4,7 @@ import UserProfileTemplate from './index';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC Templates/User Profile',
+  title: 'Design System/SC TEMPLATES/User Profile',
   component: UserProfileTemplate,
 } as ComponentMeta<typeof UserProfileTemplate>;
 

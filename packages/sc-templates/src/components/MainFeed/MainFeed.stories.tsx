@@ -4,7 +4,7 @@ import MainFeedTemplate from './index';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC Templates/Main Feed',
+  title: 'Design System/SC TEMPLATES/Main Feed',
   component: MainFeedTemplate,
 } as ComponentMeta<typeof MainFeedTemplate>;
 
