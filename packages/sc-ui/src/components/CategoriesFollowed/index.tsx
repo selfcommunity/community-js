@@ -36,18 +36,34 @@ const Root = styled(Card, {
 }));
 
 export default function CategoriesFollowed(props: CategoriesListProps): JSX.Element {
+  // CONST
+  const limit = 3;
+
+  // PROPS
   const {autoHide, className, CategoryProps = {}} = props;
+
+  // STATE
   const [categories, setCategories] = useState<any[]>([]);
-  const [visibleCategories, setVisibleCategories] = useState<number>(3);
+  const [visibleCategories, setVisibleCategories] = useState<number>(limit);
   const [loading, setLoading] = useState<boolean>(true);
   const [hasMore, setHasMore] = useState<boolean>(false);
   const [total, setTotal] = useState<number>(0);
-  const [followed, setFollowed] = useState<boolean>(false);
   const [openCategoriesFollowedDialog, setOpenCategoriesFollowedDialog] = useState<boolean>(false);
   const intl = useIntl();
 
   /**
-   * fetchCategoriesFollower
+   * Handles list change on category follow
+   */
+  function handleClick(clickedId) {
+    setCategories(categories.filter((c) => c.id !== clickedId));
+    setTotal((prev) => prev - 1);
+    if (visibleCategories < limit) {
+      setVisibleCategories((prev) => prev + 1);
+    }
+  }
+
+  /**
+   * fetches Categories Followed
    */
   const fetchCategoriesFollower = useMemo(
     () => () => {
@@ -66,13 +82,19 @@ export default function CategoriesFollowed(props: CategoriesListProps): JSX.Elem
     []
   );
 
+  /**
+   * Loads more categories on "see more" button click
+   */
   function loadCategories() {
-    const newIndex = visibleCategories + 3;
+    const newIndex = visibleCategories + limit;
     const newHasMore = newIndex < categories.length - 1;
     setVisibleCategories(newIndex);
     setHasMore(newHasMore);
   }
 
+  /**
+   * On mount, fetches the list of categories followed
+   */
   useEffect(() => {
     fetchCategoriesFollower()
       .then((data: AxiosResponse<any>) => {
@@ -80,13 +102,15 @@ export default function CategoriesFollowed(props: CategoriesListProps): JSX.Elem
         setTotal(data['count']);
         setHasMore(data['count'] > visibleCategories);
         setLoading(false);
-        setFollowed(true);
       })
       .catch((error) => {
         Logger.error(SCOPE_SC_UI, error);
       });
   }, []);
 
+  /**
+   * Renders the list of categories followed
+   */
   const c = (
     <React.Fragment>
       {loading ? (
@@ -101,7 +125,7 @@ export default function CategoriesFollowed(props: CategoriesListProps): JSX.Elem
               <List>
                 {categories.slice(0, visibleCategories).map((category: SCCategoryType, index) => (
                   <div key={index}>
-                    <Category elevation={0} category={category} key={category.id} {...CategoryProps} />
+                    <Category elevation={0} category={category} key={category.id} {...CategoryProps} onClick={() => handleClick(category.id)} />
                     {index < visibleCategories - 1 ? <Divider /> : null}
                   </div>
                 ))}
@@ -119,6 +143,9 @@ export default function CategoriesFollowed(props: CategoriesListProps): JSX.Elem
     </React.Fragment>
   );
 
+  /**
+   * Renders root object (if not hidden by autoHide prop)
+   */
   if (!autoHide) {
     return <Root className={className}>{c}</Root>;
   }

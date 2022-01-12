@@ -63,10 +63,18 @@ export interface CategoryProps extends CardProps {
   popular?: boolean;
 }
 export default function Category(props: CategoryProps): JSX.Element {
+  // PROPS
   const {id = null, category = null, className = null, popular = false, autoHide = false, ...rest} = props;
+
+  // STATE
   const {scCategory, setSCCategory} = useSCFetchCategory({id, category});
+
+  //CONST
   const intl = useIntl();
 
+  /**
+   * Renders category object
+   */
   const c = (
     <React.Fragment>
       {scCategory ? (
@@ -90,13 +98,16 @@ export default function Category(props: CategoryProps): JSX.Element {
   );
 
   /**
-   * Render root object
+   * Renders root object (if not hidden by autoHide prop)
    */
-  return (
-    <Root className={className} {...rest}>
-      <CardContent>
-        <List>{c}</List>
-      </CardContent>
-    </Root>
-  );
+  if (!autoHide) {
+    return (
+      <Root className={className} {...rest}>
+        <CardContent>
+          <List>{c}</List>
+        </CardContent>
+      </Root>
+    );
+  }
+  return null;
 }

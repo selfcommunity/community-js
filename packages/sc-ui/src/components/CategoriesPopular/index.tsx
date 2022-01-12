@@ -24,14 +24,23 @@ const Root = styled(Card, {
 }));
 
 export default function CategoriesPopular(props: CategoriesListProps): JSX.Element {
+  // CONST
+  const limit = 3;
+
+  // PROPS
   const {autoHide, className, CategoryProps = {}} = props;
+
+  // STATE
   const [categories, setCategories] = useState<any[]>([]);
-  const [visibleCategories, setVisibleCategories] = useState<number>(3);
+  const [visibleCategories, setVisibleCategories] = useState<number>(limit);
   const [loading, setLoading] = useState<boolean>(true);
   const [hasMore, setHasMore] = useState<boolean>(false);
   const [total, setTotal] = useState<number>(0);
   const [openPopularCategoriesDialog, setOpenPopularCategoriesDialog] = useState<boolean>(false);
 
+  /**
+   * Fetches popular categories list
+   */
   const fetchPopularCategories = useMemo(
     () => () => {
       return http
@@ -49,13 +58,19 @@ export default function CategoriesPopular(props: CategoriesListProps): JSX.Eleme
     []
   );
 
+  /**
+   * Loads more categories on "see more" button click
+   */
   function loadCategories() {
-    const newIndex = visibleCategories + 3;
+    const newIndex = visibleCategories + limit;
     const newHasMore = newIndex < categories.length - 1;
     setVisibleCategories(newIndex);
     setHasMore(newHasMore);
   }
 
+  /**
+   * On mount, fetches popular categories list
+   */
   useEffect(() => {
     fetchPopularCategories()
       .then((data: AxiosResponse<any>) => {
@@ -69,6 +84,9 @@ export default function CategoriesPopular(props: CategoriesListProps): JSX.Eleme
       });
   }, []);
 
+  /**
+   * Renders   popular categories list
+   */
   const c = (
     <React.Fragment>
       {loading ? (
@@ -103,6 +121,9 @@ export default function CategoriesPopular(props: CategoriesListProps): JSX.Eleme
     </React.Fragment>
   );
 
+  /**
+   * Renders root object (if not hidden by autoHide prop)
+   */
   if (!autoHide) {
     return <Root className={className}>{c}</Root>;
   }

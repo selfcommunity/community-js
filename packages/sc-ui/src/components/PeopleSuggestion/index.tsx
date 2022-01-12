@@ -6,7 +6,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import {Endpoints, http, SCUserType} from '@selfcommunity/core';
 import {PeopleSuggestionSkeleton} from '../Skeleton';
-import User from '../User';
+import User, {UserProps} from '../User';
 import {FormattedMessage} from 'react-intl';
 
 const PREFIX = 'SCPeopleSuggestion';
@@ -20,13 +20,52 @@ const Root = styled(Card, {
   marginBottom: theme.spacing(2)
 }));
 
-export default function PeopleSuggestion(props): JSX.Element {
+export interface PeopleSuggestion {
+  /**
+   * Hides this component
+   * @default false
+   */
+  autoHide?: boolean;
+  /**
+   * Override or extend the styles applied to the component.
+   * @default null
+   */
+  className?: string;
+  /**
+   * Props to spread to single user object
+   * @default empty object
+   */
+  UserProps?: UserProps;
+}
+
+export default function PeopleSuggestion(props: PeopleSuggestion): JSX.Element {
+  // CONST
+  const limit = 3;
+
+  // PROPS
+  const {autoHide, className, UserProps = {}} = props;
+
+  // STATE
   const [users, setUsers] = useState<SCUserType[]>([]);
+  const [visiblePeople, setVisiblePeople] = useState<number>(limit);
   const [loading, setLoading] = useState<boolean>(true);
   const [hasMore, setHasMore] = useState<boolean>(false);
   const [total, setTotal] = useState<number>(0);
   const [openPeopleSuggestionDialog, setOpenPeopleSuggestionDialog] = useState<boolean>(false);
 
+  /**
+   * Handles list change on user follow
+   */
+  function handleClick(clickedId) {
+    setUsers(users.filter((u) => u.id !== clickedId));
+    if (visiblePeople < limit) {
+      setVisiblePeople((prev) => prev + 1);
+    }
+  }
+
+  /**
+   * Fetches user suggestion list
+   */
   function fetchUserSuggestion() {
     http
       .request({
@@ -36,7 +75,7 @@ export default function PeopleSuggestion(props): JSX.Element {
       .then((res: any) => {
         const data = res.data;
         setUsers(data['results']);
-        setHasMore(data['count'] > 2);
+        setHasMore(data['count'] > visiblePeople);
         setLoading(false);
         setTotal(data.count);
       })
@@ -45,24 +84,26 @@ export default function PeopleSuggestion(props): JSX.Element {
       });
   }
 
-  function fetchUserForTest() {
-    http
-      .request({
-        url: Endpoints.UserSuggestion.url(),
-        method: Endpoints.UserSuggestion.method
-      })
-      .then((res) => {
-        const data = res.data;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  /**
+   * Loads more people on "see more" button click
+   */
+  function loadPeople() {
+    const newIndex = visiblePeople + limit;
+    const newHasMore = newIndex < users.length - 1;
+    setVisiblePeople(newIndex);
+    setHasMore(newHasMore);
   }
 
+  /**
+   * On mount, fetches people suggestion list
+   */
   useEffect(() => {
     fetchUserSuggestion();
   }, []);
 
+  /**
+   * Renders people suggestion list
+   */
   const p = (
     <React.Fragment>
       {loading ? (
@@ -79,13 +120,15 @@ export default function PeopleSuggestion(props): JSX.Element {
           ) : (
             <React.Fragment>
               <List>
-                {users.slice(0, 2).map((user: SCUserType, index) => (
-                  <User elevation={0} user={user} id={user.id} key={index} />
+                {users.slice(0, visiblePeople).map((user: SCUserType, index) => (
+                  <div key={index}>
+                    <User elevation={0} user={user} id={user.id} key={user.id} onClick={() => handleClick(user.id)} />
+                  </div>
                 ))}
               </List>
               {hasMore && (
-                <Button color="secondary" size="small" onClick={() => fetchUserForTest()}>
-                  <FormattedMessage id="ui.peopleSuggestion.button.showAll" defaultMessage="ui.peopleSuggestion.button.showAll" />
+                <Button color="secondary" size="small" onClick={() => loadPeople()}>
+                  <FormattedMessage id="ui.button.showMore" defaultMessage="ui.button.showMore" />
                 </Button>
               )}
             </React.Fragment>
@@ -96,8 +139,11 @@ export default function PeopleSuggestion(props): JSX.Element {
     </React.Fragment>
   );
 
-  if (!props.autoHide) {
-    return <Root {...props}>{p}</Root>;
+  /**
+   * Renders root object (if not hidden by autoHide prop)
+   */
+  if (!autoHide) {
+    return <Root className={className}>{p}</Root>;
   }
   return null;
 }

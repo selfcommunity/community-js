@@ -45,15 +45,25 @@ export interface TrendingPeople {
 }
 
 export default function TrendingPeople(props: TrendingPeople): JSX.Element {
+  // CONST
+  const limit = 3;
+
+  // PROPS
   const {categoryId, autoHide, className, UserProps = {}} = props;
+
+  // STATE
   const [people, setPeople] = useState<any[]>([]);
-  const [visiblePeople, setVisiblePeople] = useState<number>(3);
+  const [visiblePeople, setVisiblePeople] = useState<number>(limit);
   const [loading, setLoading] = useState<boolean>(true);
   const [hasMore, setHasMore] = useState<boolean>(false);
   const [openTrendingPeopleDialog, setOpenTrendingPeopleDialog] = useState<boolean>(false);
   const [total, setTotal] = useState<number>(0);
 
+  /**
+   * Fetches trending people list
+   */
   function fetchTrendingPeople() {
+    setLoading(true);
     http
       .request({
         url: Endpoints.CategoryTrendingPeople.url({id: categoryId}),
@@ -71,17 +81,26 @@ export default function TrendingPeople(props: TrendingPeople): JSX.Element {
       });
   }
 
+  /**
+   * Loads more people on "see more" button click
+   */
   function loadPeople() {
-    const newIndex = visiblePeople + 3;
+    const newIndex = visiblePeople + limit;
     const newHasMore = newIndex < people.length - 1;
     setVisiblePeople(newIndex);
     setHasMore(newHasMore);
   }
 
+  /**
+   * On mount, fetches trending people list
+   */
   useEffect(() => {
     fetchTrendingPeople();
   }, []);
 
+  /**
+   * Renders trending people list
+   */
   const p = (
     <React.Fragment>
       {loading ? (
@@ -98,7 +117,7 @@ export default function TrendingPeople(props: TrendingPeople): JSX.Element {
           ) : (
             <React.Fragment>
               <List>
-                {people.slice(0, 4).map((user, index) => (
+                {people.slice(0, visiblePeople).map((user, index) => (
                   <User elevation={0} user={user} id={user.id} key={index} {...UserProps} />
                 ))}
               </List>
@@ -115,6 +134,9 @@ export default function TrendingPeople(props: TrendingPeople): JSX.Element {
     </React.Fragment>
   );
 
+  /**
+   * Renders root object (if not hidden by autoHide prop)
+   */
   if (!autoHide) {
     return <Root className={className}>{p}</Root>;
   }
