@@ -30,9 +30,10 @@ const Root = styled(Box, {
   [`& .${classes.votes}`]: {
     backgroundColor: '#d5d5d5',
     padding: '0 3px',
-    borderRadius: 10
+    borderRadius: 20
   },
   [`& .${classes.btnViewVotes}`]: {
+    minWidth: 42,
     marginRight: theme.spacing(2),
     marginTop: -14,
     right: 0,
@@ -74,8 +75,9 @@ export default function Votes({
           ) : (
             <VoteIcon fontSize="medium" sx={{marginTop: '-1px'}} />
           )}
-          <Typography variant={'body2'} sx={{marginLeft: (theme) => theme.spacing()}}>
-            {`${intl.formatMessage(messages.votes, {total: obj.vote_count})}`}
+          <Typography variant={'body2'} sx={{marginLeft: '5px'}}>
+            {obj.vote_count}
+            {/*`${intl.formatMessage(messages.votes, {total: obj.vote_count})}`*/}
           </Typography>
         </Button>
         {openVotesDialog && obj.vote_count > 0 && (

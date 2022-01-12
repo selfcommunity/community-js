@@ -12,6 +12,8 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import {COMPOSER_POLL_MIN_CHOICES, COMPOSER_POLL_MIN_CLOSE_DATE_DELTA, COMPOSER_POLL_TITLE_MAX_LENGTH} from '../../../constants/Composer';
 import itLocale from 'date-fns/locale/it';
 import enLocale from 'date-fns/locale/en-US';
+import {SCFeedWidgetType} from '@selfcommunity/ui';
+import {SCPollChoiceType, SCPollType} from '@selfcommunity/core';
 
 const localeMap = {
   en: enLocale,
@@ -62,7 +64,7 @@ const SortableComponent = forwardRef<HTMLDivElement, any>(({children, ...props},
 /**
  * Default poll
  */
-const DEFAULT_CHOICE = {choice: ''};
+const DEFAULT_CHOICE: SCPollChoiceType = {choice: ''};
 const DEFAULT_POLL = {
   title: '',
   multiple_choices: false,
@@ -70,11 +72,40 @@ const DEFAULT_POLL = {
   choices: [{...DEFAULT_CHOICE}, {...DEFAULT_CHOICE}]
 };
 
-export default ({value = null, error = null, onChange}: {value?: any; error?: any | null; onChange: (value: any) => void}): JSX.Element => {
-  value = value || {...DEFAULT_POLL};
+export interface PollProps {
+  /**
+   * Id of the feed object
+   * @default 'poll'
+   */
+  id?: string;
 
+  /**
+   * Override or extend the styles applied to the component.
+   * @default null
+   */
+  className?: string;
+
+  /**
+   * Value of the component
+   */
+  value?: SCPollType | null;
+
+  /**
+   * Widgets to insert into the feed
+   * @default empty array
+   */
+  error?: SCFeedWidgetType[];
+
+  /**
+   * Callback for change event on poll object
+   * @default empty object
+   */
+  onChange: (value: SCPollType) => void;
+}
+
+export default (props: PollProps): JSX.Element => {
   // PROPS
-  error = error || {};
+  const {id = 'poll', className = null, value = {...DEFAULT_POLL}, error = {}, onChange} = props;
   const {titleError = null} = {...error};
 
   // STATE
@@ -82,11 +113,11 @@ export default ({value = null, error = null, onChange}: {value?: any; error?: an
   const [multiple, setMultiple] = useState<boolean>(value.multiple_choices);
   const [expiration, setExpiration] = React.useState<Date | null>(value.expiration_at);
 
-  const _choicesInitialState = [...value.choices];
+  const _choicesInitialState: SCPollChoiceType[] = [...value.choices];
   while (_choicesInitialState.length < COMPOSER_POLL_MIN_CHOICES) {
     _choicesInitialState.push({...DEFAULT_CHOICE});
   }
-  const [choices, setChoices] = useState(_choicesInitialState);
+  const [choices, setChoices] = useState<SCPollChoiceType[]>(_choicesInitialState);
 
   // INTL
   const intl = useIntl();
@@ -135,7 +166,7 @@ export default ({value = null, error = null, onChange}: {value?: any; error?: an
   minDate.setDate(minDate.getDate() + COMPOSER_POLL_MIN_CLOSE_DATE_DELTA);
 
   return (
-    <Root>
+    <Root id={id} className={className}>
       <Box className={classes.title}>
         <TextField
           label={<FormattedMessage id="ui.composer.poll.title" defaultMessage="ui.composer.poll.title" />}

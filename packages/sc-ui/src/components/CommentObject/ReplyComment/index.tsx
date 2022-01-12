@@ -2,7 +2,7 @@ import React, {RefObject, useContext, useEffect, useMemo, useState} from 'react'
 import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import {defineMessages, useIntl} from 'react-intl';
-import {Avatar, Box, Button, CardContent, Grid, ListItem, ListItemAvatar, ListItemText} from '@mui/material';
+import {Avatar, Box, Grid, ListItem, ListItemAvatar, ListItemText} from '@mui/material';
 import {SCCommentType} from '@selfcommunity/core/src/types/comment';
 import {SCUserContext, SCUserContextType, useSCFetchCommentObject} from '@selfcommunity/core';
 import Editor from '../../Editor';
@@ -12,8 +12,16 @@ import {LoadingButton} from '@mui/lab';
 
 const messages = defineMessages({
   reply: {
-    id: 'ui.commentObject.reply',
-    defaultMessage: 'ui.commentObject.reply'
+    id: 'ui.commentObject.replyComment.reply',
+    defaultMessage: 'ui.commentObject.replyComment.reply'
+  },
+  save: {
+    id: 'ui.commentObject.replyComment.save',
+    defaultMessage: 'ui.commentObject.replyComment.save'
+  },
+  cancel: {
+    id: 'ui.commentObject.replyComment.cancel',
+    defaultMessage: 'ui.commentObject.replyComment.cancel'
   }
 });
 
@@ -22,7 +30,9 @@ const PREFIX = 'SCReplyCommentObject';
 const classes = {
   root: `${PREFIX}-root`,
   comment: `${PREFIX}-comment`,
-  commentChild: `${PREFIX}-commentChild`
+  commentChild: `${PREFIX}-commentChild`,
+  avatarWrap: `${PREFIX}-avatar-wrap`,
+  avatar: `${PREFIX}-avatar`
 };
 
 const Root = styled(Card, {
@@ -31,12 +41,20 @@ const Root = styled(Card, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   padding: '1px',
+  overflow: 'auto',
   [`& .${classes.comment}`]: {
     overflow: 'visible'
   },
   [`& .${classes.commentChild}`]: {
     paddingLeft: '70px'
-  }
+  },
+  [`& .${classes.avatarWrap}`]: {
+    minWidth: 46
+  },
+  [`& .${classes.avatar}`]: {
+    width: 35,
+    height: 35
+  },
 }));
 
 export default function ReplyCommentObject({
@@ -45,6 +63,8 @@ export default function ReplyCommentObject({
   autoFocus = false,
   inline = false,
   onReply = null,
+  onSave = null,
+  onCancel = null,
   readOnly = false,
   text = '',
   ...rest
@@ -53,6 +73,8 @@ export default function ReplyCommentObject({
   commentObject?: SCCommentType;
   autoFocus?: boolean;
   onReply?: (comment) => void;
+  onSave?: (comment) => void;
+  onCancel?: () => void;
   readOnly?: boolean;
   text?: string;
   [p: string]: any;
@@ -83,9 +105,20 @@ export default function ReplyCommentObject({
    */
   const handleReply = () => {
     onReply && onReply(html);
-    // editor.current?.insertAtomicBlockSync('', '');
-    // editor.current?.save();
-    setHtml('');
+  };
+
+  /**
+   * Handle Save
+   */
+  const handleSave = () => {
+    onSave && onSave(html);
+  };
+
+  /**
+   * Handle cancel save
+   */
+  const handleCancel = () => {
+    onCancel && onCancel();
   };
 
   /**
@@ -113,8 +146,8 @@ export default function ReplyCommentObject({
   function renderReply(obj) {
     return (
       <ListItem alignItems="flex-start" classes={{root: classNames({[classes.commentChild]: !inline})}}>
-        <ListItemAvatar>
-          <Avatar alt={scUser.user.username} variant="circular" src={scUser.user.avatar} />
+        <ListItemAvatar classes={{root: classes.avatarWrap}}>
+          <Avatar alt={scUser.user.username} variant="circular" src={scUser.user.avatar} classes={{root: classes.avatar}} />
         </ListItemAvatar>
         <ListItemText
           disableTypography
@@ -132,11 +165,29 @@ export default function ReplyCommentObject({
               </Card>
               {!isEditorEmpty() && (
                 <Box component="span" sx={{display: 'flex', justifyContent: 'flex-start'}}>
-                  <Grid component="span" item={true} sm="auto" container direction="row" alignItems="right">
-                    <LoadingButton variant={'text'} sx={{marginTop: '-1px'}} onClick={handleReply} loading={readOnly}>
-                      {intl.formatMessage(messages.reply)}
-                    </LoadingButton>
-                  </Grid>
+                  {onReply && (
+                    <Grid component="span" item={true} sm="auto" container direction="row" alignItems="right">
+                      <LoadingButton variant={'text'} sx={{marginTop: '-1px'}} onClick={handleReply} loading={readOnly}>
+                        {intl.formatMessage(messages.reply)}
+                      </LoadingButton>
+                    </Grid>
+                  )}
+                  {onSave && (
+                    <>
+                      <Grid component="span" item={true} sm="auto" container direction="row" alignItems="right">
+                        <LoadingButton variant={'text'} sx={{marginTop: '-1px'}} onClick={handleSave} loading={readOnly}>
+                          {intl.formatMessage(messages.save)}
+                        </LoadingButton>
+                      </Grid>
+                      {onCancel && (
+                        <Grid component="span" item={true} sm="auto" container direction="row" alignItems="right">
+                          <LoadingButton variant={'text'} sx={{marginTop: '-1px'}} onClick={handleCancel} loading={readOnly}>
+                            {intl.formatMessage(messages.cancel)}
+                          </LoadingButton>
+                        </Grid>
+                      )}
+                    </>
+                  )}
                 </Box>
               )}
             </>
