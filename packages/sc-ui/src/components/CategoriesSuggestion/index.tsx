@@ -59,7 +59,6 @@ export default function CategoriesSuggestion(props: CategoriesListProps): JSX.El
    */
   function handleClick(clickedId) {
     setCategories(categories.filter((c) => c.id !== clickedId));
-    setTotal((prev) => prev - 1);
     if (visibleCategories < limit) {
       setVisibleCategories((prev) => prev + 1);
     }
