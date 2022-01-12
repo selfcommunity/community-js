@@ -26,18 +26,31 @@ const Root = styled(Box, {
   flexWrap: 'wrap'
 }));
 
-export default function ChangeCover({
-  onChange,
-  autoHide = null,
-  className = '',
-  ...rest
-}: {
+export interface ChangecoverProps {
+  /**
+   * On change function.
+   * @default void
+   */
   onChange?: (cover) => void;
+  /**
+   * Hides category component
+   * @default false
+   */
   autoHide?: boolean;
+  /**
+   * Override or extend the styles applied to the component.
+   * @default null
+   */
   className?: string;
-  [p: string]: any;
-}): JSX.Element {
+}
+export default function ChangeCover(props: ChangecoverProps): JSX.Element {
+  //PROPS
+  const {onChange, autoHide, className, ...rest} = props;
+
+  //CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
+
+  //STATE
   let fileInput = useRef(null);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -67,7 +80,7 @@ export default function ChangeCover({
   }
 
   /**
-   * Handle delete a specific cover
+   * Handles deletion of a specific cover
    * @param id
    */
   function deleteCover() {
@@ -75,6 +88,9 @@ export default function ChangeCover({
     handleSave(true);
   }
 
+  /**
+   * Handles cover saving after upload and delete actions
+   */
   function handleSave(performDelete = false) {
     const formData = new FormData();
     if (!performDelete) {
@@ -107,6 +123,9 @@ export default function ChangeCover({
       });
   }
 
+  /**
+   * Renders change cover card
+   */
   const cc = (
     <React.Fragment>
       <Button size="small" variant="contained" onClick={handleClick} {...rest}>
@@ -177,6 +196,9 @@ export default function ChangeCover({
     </React.Fragment>
   );
 
+  /**
+   * Renders root object (if not hidden by autoHide prop)
+   */
   if (!autoHide) {
     return (
       <Root {...rest} className={className}>

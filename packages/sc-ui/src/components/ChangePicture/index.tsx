@@ -13,21 +13,38 @@ const CPButton = styled(Button, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({}));
 
-export default function ChangePicture({
-  iconButton,
-  onChange,
-  className = '',
-  autoHide,
-  ...rest
-}: {
-  iconButton: boolean;
-  className?: string;
+export interface ChangePictureProps {
+  /**
+   * On change function.
+   * @default void
+   */
   onChange?: (avatar) => void;
+  /**
+   * Hides category component
+   * @default false
+   */
   autoHide?: boolean;
-  [p: string]: any;
-}): JSX.Element {
+  /**
+   * Override or extend the styles applied to the component.
+   * @default null
+   */
+  className?: string;
+  /**
+   * Override or extend the styles applied to the component.
+   * @default null
+   */
+  iconButton: boolean;
+}
+export default function ChangePicture(props: ChangePictureProps): JSX.Element {
+  //PROPS
+  const {iconButton, onChange, autoHide, className, ...rest} = props;
+
+  //STATE
   const [openChangePictureDialog, setOpenChangePictureDialog] = useState<boolean>(false);
 
+  /**
+   * Renders change picture (if not hidden by autoHide prop)
+   */
   if (!autoHide) {
     return (
       <React.Fragment>

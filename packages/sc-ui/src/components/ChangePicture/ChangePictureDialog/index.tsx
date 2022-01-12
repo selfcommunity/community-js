@@ -34,18 +34,36 @@ const Root = styled(Card, {
   }
 }));
 
-export default function ChangePictureDialog({
-  open = false,
-  onChange = null,
-  onClose = null,
-  ...rest
-}: {
-  open: boolean;
+export interface CPDialogProps {
+  /**
+   * Overrides or extends the styles applied to the component.
+   * @default null
+   */
+  className?: string;
+  /**
+   * On change function.
+   * @default void
+   */
   onChange?: (avatar) => void;
+  /**
+   * On dialog close callback function
+   * @default void
+   */
   onClose?: () => void;
-  [p: string]: any;
-}): JSX.Element {
+  /**
+   * Opens dialog
+   * @default false
+   */
+  open: boolean;
+}
+
+export default function ChangePictureDialog(props: CPDialogProps): JSX.Element {
+  //PROPS
+  const {open, onChange, onClose, ...rest} = props;
+  //CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
+
+  //STATE
   const [file, setFile] = useState(scUserContext.user['avatar']);
   const [primary, setPrimary] = useState(null);
   const [avatars, setAvatars] = useState([]);
@@ -55,7 +73,7 @@ export default function ChangePictureDialog({
   const [isDeletingAvatar, setIsDeletingAvatar] = useState<boolean>(false);
 
   /**
-   * Handle open confirm delete avatar dialog
+   * Handles open confirm delete avatar dialog
    * @param id
    */
   function handleOpen(id) {
@@ -64,7 +82,7 @@ export default function ChangePictureDialog({
   }
 
   /**
-   * Handle upload
+   * Handles avatar upload
    * @param event
    */
   function handleUpload(event) {
@@ -74,7 +92,7 @@ export default function ChangePictureDialog({
   }
 
   /**
-   * Perform save avatar uploaded
+   * Performs save avatar after upload
    */
   function handleSave() {
     const formData = new FormData();
@@ -100,7 +118,7 @@ export default function ChangePictureDialog({
   }
 
   /**
-   * Fetch the list of avatars of scUser
+   * Fetches the list of scUser's avatars
    */
   function fetchUserAvatar() {
     http
@@ -122,7 +140,7 @@ export default function ChangePictureDialog({
   }
 
   /**
-   * Get the primary avatar from a list of avatars
+   * Gets the primary avatar from a list of avatars
    * @param data
    */
   function getPrimaryAvatar(data) {
@@ -130,7 +148,7 @@ export default function ChangePictureDialog({
   }
 
   /**
-   * Select primary avatar
+   * Selects primary avatar
    * Only if another avatar is selected (primary !== avatar.id)
    * @param avatar
    */
@@ -156,7 +174,7 @@ export default function ChangePictureDialog({
   }
 
   /**
-   * Handle delete a specific avatar
+   * Handles deletion of a specific avatar
    * @param id
    */
   function deleteAvatar() {
@@ -186,6 +204,9 @@ export default function ChangePictureDialog({
       });
   }
 
+  /**
+   * On mount, fetches the list of scUser's avatars
+   */
   useEffect(() => {
     fetchUserAvatar();
   }, []);

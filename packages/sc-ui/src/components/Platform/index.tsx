@@ -19,22 +19,35 @@ const Root = styled(Card, {
   marginBottom: theme.spacing(2),
   padding: 20
 }));
-
-export default function Platform({
-  contained = true,
-  autoHide = null,
-  className = ''
-}: {
-  contained: boolean;
+export interface PlatformProps {
+  /**
+   * Hides this component
+   * @default false
+   */
   autoHide?: boolean;
+  /**
+   * Override or extend the styles applied to the component.
+   * @default null
+   */
   className?: string;
-}): JSX.Element {
+}
+
+export default function Platform(props: PlatformProps): JSX.Element {
+  // PROPS
+  const {autoHide, className} = props;
+
+  // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
   const scLocaleContext: SCLocaleContextType = useSCLocale();
+
+  // CONST
   const language = scLocaleContext.locale;
-  const role = scUserContext.user['role'];
+  const role = scUserContext.user['role'].toString();
   const spacing = role === 'admin' ? 1 : 3;
 
+  /**
+   * Fetches platform url
+   */
   function fetchPlatform(query) {
     http
       .request({
@@ -54,52 +67,47 @@ export default function Platform({
   }
 
   /**
-   * Renders platform panel
-   * @return {JSX.Element}
+   * Renders platform card
    */
-  function renderPanel() {
-    return (
-      <React.Fragment>
-        <Grid container spacing={spacing} justifyContent="center">
-          <Grid item xs={12}>
-            <Typography component="h3" align="center">
-              <FormattedMessage id="ui.platformAccess.title" defaultMessage="ui.platformAccess.title" />
-              <LockOutlinedIcon fontSize="small" />
-            </Typography>
-          </Grid>
-          {role === 'admin' && (
-            <Grid item xs="auto" style={{textAlign: 'center'}}>
-              <Button variant="outlined" size="small" onClick={() => fetchPlatform('')}>
-                <FormattedMessage id="ui.platformAccess.adm" defaultMessage="ui.platformAccess.adm" />
-              </Button>
-            </Grid>
-          )}
+  const c = (
+    <React.Fragment>
+      <Grid container spacing={spacing} justifyContent="center">
+        <Grid item xs={12}>
+          <Typography component="h3" align="center">
+            <FormattedMessage id="ui.platformAccess.title" defaultMessage="ui.platformAccess.title" />
+            <LockOutlinedIcon fontSize="small" />
+          </Typography>
+        </Grid>
+        {role === 'admin' && (
           <Grid item xs="auto" style={{textAlign: 'center'}}>
             <Button variant="outlined" size="small" onClick={() => fetchPlatform('')}>
-              {role === 'moderator' || role === 'admin' ? (
-                <FormattedMessage id="ui.platformAccess.mod" defaultMessage="ui.platformAccess.mod" />
-              ) : (
-                <FormattedMessage id="ui.platformAccess.edt" defaultMessage="ui.platformAccess.edt" />
-              )}
+              <FormattedMessage id="ui.platformAccess.adm" defaultMessage="ui.platformAccess.adm" />
             </Button>
           </Grid>
-          <Grid item xs="auto" style={{textAlign: 'center'}}>
-            <Button variant="outlined" size="small" href={`https://support.selfcommunity.com/hc/it`} target="_blank">
-              <FormattedMessage id="ui.platformAccess.hc" defaultMessage="ui.platformAccess.hc" />
-            </Button>
-          </Grid>
+        )}
+        <Grid item xs="auto" style={{textAlign: 'center'}}>
+          <Button variant="outlined" size="small" onClick={() => fetchPlatform('')}>
+            {role === 'moderator' || role === 'admin' ? (
+              <FormattedMessage id="ui.platformAccess.mod" defaultMessage="ui.platformAccess.mod" />
+            ) : (
+              <FormattedMessage id="ui.platformAccess.edt" defaultMessage="ui.platformAccess.edt" />
+            )}
+          </Button>
         </Grid>
-      </React.Fragment>
-    );
-  }
+        <Grid item xs="auto" style={{textAlign: 'center'}}>
+          <Button variant="outlined" size="small" href={`https://support.selfcommunity.com/hc/it`} target="_blank">
+            <FormattedMessage id="ui.platformAccess.hc" defaultMessage="ui.platformAccess.hc" />
+          </Button>
+        </Grid>
+      </Grid>
+    </React.Fragment>
+  );
 
-  const p = <React.Fragment>{role === null ? autoHide : renderPanel()}</React.Fragment>;
-  if (contained && role !== null) {
-    return (
-      <Root className={className}>
-        <CardContent>{p}</CardContent>
-      </Root>
-    );
+  /**
+   * Renders root object (if not hidden by autoHide prop)
+   */
+  if (!autoHide && role !== null) {
+    return <Root className={className}>{c}</Root>;
   }
-  return p;
+  return null;
 }
