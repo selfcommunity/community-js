@@ -34,14 +34,13 @@ const Root = styled(Card, {
     padding: 0
   }
 }));
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
+
 export interface UserProps extends CardProps {
   /**
    * Id of user object
    * @default null
    */
-  id?: number;
+  id?: string;
   /**
    * Override or extend the styles applied to the component.
    * @default null
@@ -62,10 +61,15 @@ export interface UserProps extends CardProps {
    * @default void
    */
   handleIgnoreAction?: (u) => void;
+  /**
+   * Callback function on follow action.
+   * @default void
+   */
+  onFollowProps?: () => void;
 }
 
 export default function User(props: UserProps): JSX.Element {
-  const {id = null, user = null, handleIgnoreAction, className = null, autoHide = false, ...rest} = props;
+  const {id = null, user = null, handleIgnoreAction, className = null, autoHide = false, onFollowProps, ...rest} = props;
   const {scUser, setSCUser} = useSCFetchUser({id, user});
   const scPreferencesContext: SCPreferencesContextType = useContext(SCPreferencesContext);
   const scUserContext: SCUserContextType = useContext(SCUserContext);
@@ -86,7 +90,7 @@ export default function User(props: UserProps): JSX.Element {
             Ignore
           </Button>
         )}
-        <FollowUserButton user={scUser} />
+        <FollowUserButton user={scUser} onFollow={onFollowProps} />
       </React.Fragment>
     );
   }

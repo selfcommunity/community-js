@@ -33,14 +33,12 @@ const Root = styled(Card, {
   maxWidth: 700
 }));
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
 export interface CategoryProps extends CardProps {
   /**
    * Id of category object
    * @default null
    */
-  id?: number;
+  id?: string;
   /**
    * Override or extend the styles applied to the component.
    * @default null
@@ -61,10 +59,15 @@ export interface CategoryProps extends CardProps {
    * @default false
    */
   popular?: boolean;
+  /**
+   * Callback function on follow action.
+   * @default void
+   */
+  onFollowProps?: () => void;
 }
 export default function Category(props: CategoryProps): JSX.Element {
   // PROPS
-  const {id = null, category = null, className = null, popular = false, autoHide = false, ...rest} = props;
+  const {id = null, category = null, className = null, popular = false, autoHide = false, onFollowProps, ...rest} = props;
 
   // STATE
   const {scCategory, setSCCategory} = useSCFetchCategory({id, category});
@@ -88,7 +91,7 @@ export default function Category(props: CategoryProps): JSX.Element {
             className={classes.title}
           />
           <ListItemSecondaryAction className={classes.actions}>
-            <FollowButton category={scCategory} />
+            <FollowButton category={scCategory} onFollow={onFollowProps} />
           </ListItemSecondaryAction>
         </ListItem>
       ) : (

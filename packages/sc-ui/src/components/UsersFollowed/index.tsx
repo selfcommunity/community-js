@@ -1,10 +1,10 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
-import {Button, Divider, Typography} from '@mui/material';
+import {Button, Typography} from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import {Endpoints, http, SCFollowedManagerType, SCUserContext, SCUserContextType, SCUserType, useSCUser} from '@selfcommunity/core';
+import {Endpoints, http, SCUserContext, SCUserContextType, SCUserType} from '@selfcommunity/core';
 import PeopleSuggestionSkeleton from '../Skeleton/PeopleSuggestionSkeleton';
 import User, {UserProps} from '../User';
 import {AxiosResponse} from 'axios';
@@ -51,15 +51,37 @@ export interface UsersFollowed {
 }
 
 export default function UsersFollowed(props: UsersFollowed): JSX.Element {
-  const {autoHide, className, UserProps = {}} = props;
+  // CONST
+  const limit = 3;
+  const intl = useIntl();
+
+  // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
+
+  // PROPS
+  const {autoHide, className, UserProps = {}} = props;
+
+  // STATE
   const [followed, setFollowed] = useState<any[]>([]);
-  const [visibleUsers, setVisibleUsers] = useState<number>(3);
+  const [visibleUsers, setVisibleUsers] = useState<number>(limit);
   const [loading, setLoading] = useState<boolean>(true);
   const [hasMore, setHasMore] = useState<boolean>(false);
   const [total, setTotal] = useState<number>(0);
-  const intl = useIntl();
 
+  /**
+   * Handles list change on user follow
+   */
+  function handleClick(clickedId) {
+    setFollowed(followed.filter((u) => u.id !== clickedId));
+    setTotal((prev) => prev - 1);
+    if (visibleUsers < limit && total > 1) {
+      loadUsers(1);
+    }
+  }
+
+  /**
+   * Fetches the list of users followed
+   */
   function fetchFollowed() {
     http
       .request({
@@ -78,17 +100,26 @@ export default function UsersFollowed(props: UsersFollowed): JSX.Element {
       });
   }
 
-  function loadUsers() {
-    const newIndex = visibleUsers + 3;
+  /**
+   * Loads more users on "see more" button click
+   */
+  function loadUsers(n) {
+    const newIndex = visibleUsers + n;
     const newHasMore = newIndex < followed.length - 1;
     setVisibleUsers(newIndex);
     setHasMore(newHasMore);
   }
 
+  /**
+   * On mount, fetches the list of users followed
+   */
   useEffect(() => {
     fetchFollowed();
   }, []);
 
+  /**
+   * Renders the list of users followed
+   */
   const u = (
     <React.Fragment>
       {loading ? (
@@ -101,12 +132,14 @@ export default function UsersFollowed(props: UsersFollowed): JSX.Element {
           ) : (
             <React.Fragment>
               <List>
-                {followed.slice(0, visibleUsers).map((follower: SCUserType, index) => (
-                  <User elevation={0} user={follower} key={index} id={follower.id} {...UserProps} />
+                {followed.slice(0, visibleUsers).map((user: SCUserType, index) => (
+                  <div key={index}>
+                    <User elevation={0} user={user} key={user.id} onFollowProps={() => handleClick(user.id)} {...UserProps} />
+                  </div>
                 ))}
               </List>
               {hasMore && (
-                <Button size="small" sx={{color: ' black'}} onClick={() => loadUsers()}>
+                <Button size="small" sx={{color: ' black'}} onClick={() => loadUsers(limit)}>
                   <FormattedMessage id="ui.button.showMore" defaultMessage="ui.button.showMore" />
                 </Button>
               )}
@@ -117,6 +150,9 @@ export default function UsersFollowed(props: UsersFollowed): JSX.Element {
     </React.Fragment>
   );
 
+  /**
+   * Renders root object (if not hidden by autoHide prop)
+   */
   if (!autoHide) {
     return <Root className={className}>{u}</Root>;
   }

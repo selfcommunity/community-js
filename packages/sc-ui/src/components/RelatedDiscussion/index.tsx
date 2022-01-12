@@ -8,7 +8,7 @@ import {Endpoints, http, Logger, SCFeedDiscussionType, SCFeedObjectTypologyType}
 import TrendingPostSkeleton from '../Skeleton/TrendingFeedSkeleton';
 import {AxiosResponse} from 'axios';
 import {SCOPE_SC_UI} from '../../constants/Errors';
-import FeedObject from '../FeedObject';
+import FeedObject, {FeedObjectProps} from '../FeedObject';
 import {FormattedMessage} from 'react-intl';
 import {FeedObjectTemplateType} from '../../types/feedObject';
 
@@ -23,25 +23,56 @@ const Root = styled(Card, {
   marginBottom: theme.spacing(2)
 }));
 
-export default function RelatedDiscussion({
-  feedObjectId = null,
-  feedObjectType = null,
-  template = null,
-  autoHide = null,
-  ...props
-}: {
+export interface RelatedDiscussionProps {
+  /**
+   * Id of the feed object
+   * @default null
+   */
   feedObjectId?: number;
+  /**
+   * Type of  feed object
+   * @default 'discussion'
+   */
   feedObjectType?: SCFeedObjectTypologyType;
+  /**
+   * Feed Object template type
+   * @default 'snippet'
+   */
   template?: FeedObjectTemplateType;
+  /**
+   * Props to spread to single feed object
+   * @default empty object
+   */
+  FeedObjectProps?: FeedObjectProps;
+  /**
+   * Override or extend the styles applied to the component.
+   * @default null
+   */
+  className?: string;
+  /**
+   * Hides this component
+   * @default false
+   */
   autoHide?: boolean;
-}): JSX.Element {
+}
+export default function RelatedDiscussion(props: RelatedDiscussionProps): JSX.Element {
+  // CONST
+  const limit = 4;
+
+  // PROPS
+  const {feedObjectId, feedObjectType, template, FeedObjectProps = {}, className, autoHide} = props;
+
+  // STATE
   const [objs, setObjs] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [hasMore, setHasMore] = useState<boolean>(false);
   const [total, setTotal] = useState<number>(0);
-  const [visibleDiscussions, setVisibleDiscussions] = useState<number>(4);
+  const [visibleDiscussions, setVisibleDiscussions] = useState<number>(limit);
   const [openTrendingPostDialog, setOpenTrendingPostDialog] = useState<boolean>(false);
 
+  /**
+   * Fetches related discussions list
+   */
   function fetchRelated() {
     http
       .request({
@@ -60,14 +91,26 @@ export default function RelatedDiscussion({
       });
   }
 
+  /**
+   * Loads more discussions on "see more" button click
+   */
   function loadDiscussions() {
-    setVisibleDiscussions((prevVisibleDiscussions) => prevVisibleDiscussions + 4);
+    const newIndex = visibleDiscussions + limit;
+    const newHasMore = newIndex < objs.length - 1;
+    setVisibleDiscussions(newIndex);
+    setHasMore(newHasMore);
   }
 
+  /**
+   * On mount, fetches related discussions list
+   */
   useEffect(() => {
     fetchRelated();
   }, []);
 
+  /**
+   * Renders related discussions list
+   */
   const d = (
     <React.Fragment>
       {loading ? (
@@ -92,7 +135,7 @@ export default function RelatedDiscussion({
               </List>
               {hasMore && (
                 <Button size="small" onClick={() => loadDiscussions()}>
-                  <FormattedMessage id="ui.TrendingPost.button.showMore" defaultMessage="ui.TrendingPost.button.showMore" />
+                  <FormattedMessage id="ui.button.showMore" defaultMessage="ui.button.showMore" />
                 </Button>
               )}
             </React.Fragment>
@@ -103,8 +146,11 @@ export default function RelatedDiscussion({
     </React.Fragment>
   );
 
+  /**
+   * Renders root object (if not hidden by autoHide prop)
+   */
   if (!autoHide) {
-    return <Root {...props}>{d}</Root>;
+    return <Root className={className}>{d}</Root>;
   }
   return null;
 }

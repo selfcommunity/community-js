@@ -59,8 +59,8 @@ export default function CategoriesSuggestion(props: CategoriesListProps): JSX.El
    */
   function handleClick(clickedId) {
     setCategories(categories.filter((c) => c.id !== clickedId));
-    if (visibleCategories < limit) {
-      setVisibleCategories((prev) => prev + 1);
+    if (visibleCategories < limit && total > 1) {
+      loadCategories(1);
     }
   }
 
@@ -88,8 +88,8 @@ export default function CategoriesSuggestion(props: CategoriesListProps): JSX.El
   /**
    * Loads more categories on "see more" button click
    */
-  function loadCategories() {
-    const newIndex = visibleCategories + limit;
+  function loadCategories(n) {
+    const newIndex = visibleCategories + n;
     const newHasMore = newIndex < categories.length - 1;
     setVisibleCategories(newIndex);
     setHasMore(newHasMore);
@@ -122,12 +122,12 @@ export default function CategoriesSuggestion(props: CategoriesListProps): JSX.El
             <React.Fragment>
               {categories.slice(0, visibleCategories).map((category: SCCategoryType, index) => (
                 <div key={index}>
-                  <Category elevation={0} category={category} key={category.id} {...CategoryProps} onClick={() => handleClick(category.id)} />
+                  <Category elevation={0} category={category} key={category.id} onFollowProps={() => handleClick(category.id)} {...CategoryProps} />
                   {index < visibleCategories - 1 ? <Divider /> : null}
                 </div>
               ))}
               {hasMore && (
-                <Button size="small" onClick={() => loadCategories()}>
+                <Button size="small" onClick={() => loadCategories(2)}>
                   <FormattedMessage id="ui.categoriesSuggestion.button.showMore" defaultMessage="ui.categoriesSuggestion.button.showMore" />
                 </Button>
               )}

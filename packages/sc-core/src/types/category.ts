@@ -8,7 +8,7 @@ export interface SCCategoryType {
   /**
    * The ID of the category.
    */
-  id: number;
+  id: number | string;
 
   /**
    * The manual ordering number of the category.

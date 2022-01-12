@@ -38,6 +38,7 @@ const Root = styled(Card, {
 export default function CategoriesFollowed(props: CategoriesListProps): JSX.Element {
   // CONST
   const limit = 3;
+  const intl = useIntl();
 
   // PROPS
   const {autoHide, className, CategoryProps = {}} = props;
@@ -49,7 +50,6 @@ export default function CategoriesFollowed(props: CategoriesListProps): JSX.Elem
   const [hasMore, setHasMore] = useState<boolean>(false);
   const [total, setTotal] = useState<number>(0);
   const [openCategoriesFollowedDialog, setOpenCategoriesFollowedDialog] = useState<boolean>(false);
-  const intl = useIntl();
 
   /**
    * Handles list change on category follow
@@ -57,8 +57,8 @@ export default function CategoriesFollowed(props: CategoriesListProps): JSX.Elem
   function handleClick(clickedId) {
     setCategories(categories.filter((c) => c.id !== clickedId));
     setTotal((prev) => prev - 1);
-    if (visibleCategories < limit) {
-      setVisibleCategories((prev) => prev + 1);
+    if (visibleCategories < limit && total > 1) {
+      loadCategories(1);
     }
   }
 
@@ -85,8 +85,8 @@ export default function CategoriesFollowed(props: CategoriesListProps): JSX.Elem
   /**
    * Loads more categories on "see more" button click
    */
-  function loadCategories() {
-    const newIndex = visibleCategories + limit;
+  function loadCategories(n) {
+    const newIndex = visibleCategories + n;
     const newHasMore = newIndex < categories.length - 1;
     setVisibleCategories(newIndex);
     setHasMore(newHasMore);
@@ -125,13 +125,13 @@ export default function CategoriesFollowed(props: CategoriesListProps): JSX.Elem
               <List>
                 {categories.slice(0, visibleCategories).map((category: SCCategoryType, index) => (
                   <div key={index}>
-                    <Category elevation={0} category={category} key={category.id} {...CategoryProps} onClick={() => handleClick(category.id)} />
-                    {index < visibleCategories - 1 ? <Divider /> : null}
+                    <Category elevation={0} category={category} key={category.id} onFollowProps={() => handleClick(category.id)} {...CategoryProps} />
+                    {index < visibleCategories - 1 && total !== 1 ? <Divider /> : null}
                   </div>
                 ))}
               </List>
               {hasMore && (
-                <Button size="small" onClick={() => loadCategories()}>
+                <Button size="small" onClick={() => loadCategories(2)}>
                   <FormattedMessage id="ui.categoriesFollowed.button.showMore" defaultMessage="ui.categoriesFollowed.button.showMore" />
                 </Button>
               )}

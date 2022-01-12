@@ -2,7 +2,7 @@ import {useEffect, useMemo, useState} from 'react';
 import {AxiosResponse} from 'axios';
 import {SCOPE_SC_CORE} from '../constants/Errors';
 import {http, Endpoints, Logger, SCTagType} from '@selfcommunity/core';
-import { SCCategoryType } from '../types';
+import {SCCategoryType} from '../types';
 
 /**
  * Custom hook 'useSCFetchCategory'
@@ -10,7 +10,7 @@ import { SCCategoryType } from '../types';
  * @param id
  * @param tag
  */
-export default function useSCFetchCategory({id = null, category = null}: {id?: number; category?: SCCategoryType}) {
+export default function useSCFetchCategory({id = null, category = null}: {id?: string; category?: SCCategoryType}) {
   const [scCategory, setSCCategory] = useState<SCCategoryType>(category);
 
   /**

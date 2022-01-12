@@ -8,7 +8,7 @@ export interface SCUserType {
   /**
    * The ID of the user.
    */
-  id: number;
+  id: number | string;
 
   /**
    * The username of the user.

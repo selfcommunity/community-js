@@ -58,8 +58,8 @@ export default function PeopleSuggestion(props: PeopleSuggestion): JSX.Element {
    */
   function handleClick(clickedId) {
     setUsers(users.filter((u) => u.id !== clickedId));
-    if (visiblePeople < limit) {
-      setVisiblePeople((prev) => prev + 1);
+    if (visiblePeople < limit && total > 1) {
+      loadPeople(1);
     }
   }
 
@@ -87,8 +87,8 @@ export default function PeopleSuggestion(props: PeopleSuggestion): JSX.Element {
   /**
    * Loads more people on "see more" button click
    */
-  function loadPeople() {
-    const newIndex = visiblePeople + limit;
+  function loadPeople(n) {
+    const newIndex = visiblePeople + n;
     const newHasMore = newIndex < users.length - 1;
     setVisiblePeople(newIndex);
     setHasMore(newHasMore);
@@ -122,12 +122,12 @@ export default function PeopleSuggestion(props: PeopleSuggestion): JSX.Element {
               <List>
                 {users.slice(0, visiblePeople).map((user: SCUserType, index) => (
                   <div key={index}>
-                    <User elevation={0} user={user} id={user.id} key={user.id} onClick={() => handleClick(user.id)} />
+                    <User elevation={0} user={user} key={user.id} onFollowProps={() => handleClick(user.id)} {...UserProps} />
                   </div>
                 ))}
               </List>
               {hasMore && (
-                <Button color="secondary" size="small" onClick={() => loadPeople()}>
+                <Button color="secondary" size="small" onClick={() => loadPeople(limit)}>
                   <FormattedMessage id="ui.button.showMore" defaultMessage="ui.button.showMore" />
                 </Button>
               )}
