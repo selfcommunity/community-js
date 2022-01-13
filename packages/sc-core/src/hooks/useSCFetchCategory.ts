@@ -10,7 +10,7 @@ import {SCCategoryType} from '../types';
  * @param id
  * @param tag
  */
-export default function useSCFetchCategory({id = null, category = null}: {id?: string; category?: SCCategoryType}) {
+export default function useSCFetchCategory({id = null, category = null}: {id?: number; category?: SCCategoryType}) {
   const [scCategory, setSCCategory] = useState<SCCategoryType>(category);
 
   /**
