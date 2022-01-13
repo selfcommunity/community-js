@@ -127,8 +127,8 @@ export default function CommentObject({
   feedObjectType = SCFeedObjectTypologyType.POST,
   commentsPageCount = 5,
   commentsOrderBy = CommentsOrderBy.ADDED_AT_DESC,
+  commentReply = null,
   onOpenReply = null,
-  onReply = null,
   onVote = null,
   onFetchLatestComment = null,
   ...rest
@@ -140,6 +140,7 @@ export default function CommentObject({
   feedObjectType?: SCFeedObjectTypologyType;
   commentsPageCount?: number;
   commentsOrderBy?: CommentsOrderBy;
+  commentReply?: SCCommentType;
   onOpenReply?: (comment: SCCommentType) => void;
   onVote?: (comment: SCCommentType) => void;
   onFetchLatestComment?: () => void;
@@ -151,7 +152,7 @@ export default function CommentObject({
   const [loadingVote, setLoadingVote] = useState(false);
   const [loadingLatestComments, setLoadingLatestComments] = useState(false);
   const [next, setNext] = useState<string>(null);
-  const [replyComment, setReplyComment] = useState<SCCommentType>(null);
+  const [replyComment, setReplyComment] = useState<SCCommentType>(commentReply);
   const [isReplying, setIsReplying] = useState<boolean>(false);
   const [editComment, setEditComment] = useState<SCCommentType>(null);
   const [isSavingComment, setIsSavingComment] = useState<boolean>(false);
@@ -480,7 +481,7 @@ export default function CommentObject({
             classes={{root: classNames(classes.comment, {[classes.commentChild]: Boolean(comment.parent)})}}>
             <ListItemAvatar classes={{root: classes.avatarWrap}}>
               <Link to={scRoutingContext.url('profile', {id: comment.author.id})}>
-                <Avatar alt={obj.author.username} variant="circular" src={comment.author.avatar} classes={{root: classes.avatar}}/>
+                <Avatar alt={obj.author.username} variant="circular" src={comment.author.avatar} classes={{root: classes.avatar}} />
               </Link>
             </ListItemAvatar>
             <ListItemText
