@@ -64,5 +64,5 @@ CommentFirstLevel.args = {
 export const CommentSecondLevel = Template.bind({});
 
 CommentSecondLevel.args = {
-  commentObjectId: 31909
+  commentObjectId: 4522 // 31909
 };

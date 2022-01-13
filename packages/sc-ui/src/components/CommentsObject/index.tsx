@@ -43,37 +43,112 @@ const Root = styled(Card, {
   boxShadow: 'none'
 }));
 
-export default function CommentsObject({
-  feedObjectId = null,
-  feedObject = null,
-  feedObjectType = SCFeedObjectTypologyType.POST,
-  commentObjectId = null,
-  commentObject = null,
-  renderComment = null,
-  renderNoComments = null,
-  commentsPageCount = 5,
-  commentsOrderBy = CommentsOrderBy.ADDED_AT_DESC,
-  infiniteScrolling = true,
-  hidePrimaryReply = false,
-  commentsLoadingBoxCount = 3,
-  additionalHeaderComments = [],
-  ...rest
-}: {
+export interface CommentsObjectProps {
+  /**
+   * Id of feed object
+   * @default null
+   */
   feedObjectId?: number;
+
+  /**
+   * Feed object
+   * @default null
+   */
   feedObject?: SCFeedObjectType;
+
+  /**
+   * Type of feed object
+   * @default SCFeedObjectTypologyType.POST
+   */
   feedObjectType?: SCFeedObjectTypologyType;
+
+  /**
+   * Id of the comment object
+   * @default null
+   */
   commentObjectId?: number;
+
+  /**
+   * Comment object
+   * @default null
+   */
   commentObject?: SCCommentType;
+
+  /**
+   * renderComment function
+   * Usefull to override the single Comment
+   * @default null
+   */
   renderComment?: (SCCommentType) => JSX.Element;
+
+  /**
+   * renderNoComment function
+   * invoked when no comments founds
+   * @default null
+   */
   renderNoComments?: () => JSX.Element;
+
+  /**
+   * comments per page
+   * @default null
+   */
   commentsPageCount?: number;
+
+  /**
+   * comments orderBy
+   * @default CommentsOrderBy.ADDED_AT_DESC
+   */
   commentsOrderBy?: CommentsOrderBy;
+
+  /**
+   * enable/disable infinite scrolling
+   * @default true
+   */
   infiniteScrolling?: boolean;
+
+  /**
+   * show/hide primary content reply box
+   * @default false
+   */
   hidePrimaryReply?: boolean;
+
+  /**
+   * number of box of skeleton loading to show during loading phase
+   * @default 3
+   */
   commentsLoadingBoxCount?: number;
+
+  /**
+   * additional comments to show in the header
+   * @default []
+   */
   additionalHeaderComments?: SCCommentType[];
+
+  /**
+   * Other props
+   */
   [p: string]: any;
-}): JSX.Element {
+}
+
+export default function CommentsObject(props: CommentsObjectProps): JSX.Element {
+  // PROPS
+  const {
+    feedObjectId,
+    feedObject,
+    feedObjectType = SCFeedObjectTypologyType.POST,
+    commentObjectId,
+    commentObject,
+    renderComment,
+    renderNoComments,
+    commentsPageCount = 5,
+    commentsOrderBy = CommentsOrderBy.ADDED_AT_DESC,
+    infiniteScrolling = true,
+    hidePrimaryReply = false,
+    commentsLoadingBoxCount = 3,
+    additionalHeaderComments = [],
+    ...rest
+  } = props;
+
   // STATE
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [commentData, setCommentData] = useState<SCCommentType>(null);
@@ -84,7 +159,6 @@ export default function CommentsObject({
   const [infiniteScrollingEnabled, setInfiniteScrollingEnabled] = useState<boolean>(
     infiniteScrolling && !(commentObject || Boolean(commentObjectId))
   );
-
 
   // RETRIVE objects
   const {obj, setObj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
@@ -169,7 +243,7 @@ export default function CommentsObject({
           .then((parent) => {
             const _parent = Object.assign({}, parent);
             _parent.latest_comments = [commentObj.obj];
-            setCommentData(parent);
+            setCommentData(_parent);
             setIsLoading(false);
           })
           .catch((error) => {

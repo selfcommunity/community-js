@@ -119,33 +119,97 @@ const Root = styled(Box, {
   }
 }));
 
-export default function CommentObject({
-  commentObjectId = null,
-  commentObject = null,
-  feedObjectId = null,
-  feedObject = null,
-  feedObjectType = SCFeedObjectTypologyType.POST,
-  commentsPageCount = 5,
-  commentsOrderBy = CommentsOrderBy.ADDED_AT_DESC,
-  commentReply = null,
-  onOpenReply = null,
-  onVote = null,
-  onFetchLatestComment = null,
-  ...rest
-}: {
+export interface CommentObjectProps {
+  /**
+   * Id of the comment object
+   * @default null
+   */
   commentObjectId?: number;
+
+  /**
+   * Comment object
+   * @default null
+   */
   commentObject?: SCCommentType;
+
+  /**
+   * Id of feed object
+   * @default null
+   */
   feedObjectId?: number;
+
+  /**
+   * Feed object
+   * @default null
+   */
   feedObject?: SCFeedObjectType;
+
+  /**
+   * Type of feed object
+   * @default SCFeedObjectTypologyType.POST
+   */
   feedObjectType?: SCFeedObjectTypologyType;
+
+  /**
+   * comments per page (latest_comments)
+   * @default null
+   */
   commentsPageCount?: number;
+
+  /**
+   * comments orderBy
+   * @default CommentsOrderBy.ADDED_AT_DESC
+   */
   commentsOrderBy?: CommentsOrderBy;
+
+  /**
+   * comment to reply
+   * Used to intial open reply box for that comment
+   * @default null
+   */
   commentReply?: SCCommentType;
+
+  /**
+   * Callback on open reply box
+   * @default null
+   */
   onOpenReply?: (comment: SCCommentType) => void;
+
+  /**
+   * Callback on vote the comment or a sub-comment (latest_comments)
+   * @default null
+   */
   onVote?: (comment: SCCommentType) => void;
+
+  /**
+   * Callback on fecth latest comments
+   * @default null
+   */
   onFetchLatestComment?: () => void;
+
+  /**
+   * Other props
+   */
   [p: string]: any;
-}): JSX.Element {
+}
+
+export default function CommentObject(props: CommentObjectProps): JSX.Element {
+  // PROPS
+  const {
+    commentObjectId,
+    commentObject,
+    feedObjectId,
+    feedObject,
+    feedObjectType = SCFeedObjectTypologyType.POST,
+    commentsPageCount = 5,
+    commentsOrderBy = CommentsOrderBy.ADDED_AT_DESC,
+    commentReply,
+    onOpenReply,
+    onVote,
+    onFetchLatestComment,
+    ...rest
+  } = props;
+
   const scUser: SCUserContextType = useContext(SCUserContext);
   const scRoutingContext: SCRoutingContextType = useSCRouting();
   const {obj, setObj} = useSCFetchCommentObject({id: commentObjectId, commentObject});
