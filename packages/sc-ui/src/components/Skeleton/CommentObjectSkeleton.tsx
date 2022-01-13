@@ -15,7 +15,6 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  maxWidth: 700,
   marginBottom: theme.spacing(3)
 }));
 
