@@ -8,7 +8,6 @@ import Skeleton from '@mui/material/Skeleton';
 const PREFIX = 'SCNotificationSkeleton';
 
 const Root = styled(Card)(({theme}) => ({
-  maxWidth: 700,
   marginBottom: theme.spacing(2)
 }));
 

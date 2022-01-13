@@ -39,12 +39,9 @@ export default function UserProfile(props: UserProfileProps): JSX.Element {
   // PROPS
   const {id = 'user', className, userId} = props;
 
-  // CONTEXT
-  const {scUser, setSCUser} = useSCFetchUser({id: userId});
-
   return (
     <Root id={id} className={className}>
-      <UserProfileHeader userId={userId} user={scUser} />
+      <UserProfileHeader userId={userId} />
       <UserFeed userId={userId} />
     </Root>
   );

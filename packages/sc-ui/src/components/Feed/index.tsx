@@ -112,7 +112,7 @@ export default function Feed(props: FeedProps): JSX.Element {
   const scPreferences: SCPreferencesContextType = useSCPreferences();
   const scAuthContext: SCUserContextType = useContext(SCUserContext);
 
-  /*
+  /**
    * Compute preferences
    */
   const preferences = useMemo(() => {
@@ -156,8 +156,6 @@ export default function Feed(props: FeedProps): JSX.Element {
     }
     return [...widgets];
   }, [widgets, feedData, preferences]);
-
-  console.log(_widgets);
 
   /**
    * Fetch main feed

@@ -17,7 +17,6 @@ const Root = styled(Card, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   width: '100%',
-  maxWidth: 700,
   margin: `${theme.spacing(2)} 3px `,
   [`& .${classes.media}`]: {
     height: 190
