@@ -3,7 +3,7 @@ import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import {Endpoints, http, Logger, SCFeedObjectType, SCPollChoiceType, SCPollType} from '@selfcommunity/core';
 import {CardContent, CardHeader, Typography} from '@mui/material';
-import {defineMessages, useIntl} from 'react-intl';
+import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import List from '@mui/material/List';
 import Choice from './Choice';
 import PeopleAltOutlinedIcon from '@mui/icons-material/PeopleAltOutlined';
@@ -130,6 +130,7 @@ export default function PollObject(props: PollObjectProps): JSX.Element {
   const [choices, setChoices] = useState(pollObject.choices);
   const multipleChoices = pollObject['multiple_choices'];
   const [isVoting, setIsVoting] = useState<number>(null);
+  const votable = pollObject['closed'];
 
   /**
    * Handles choice upvote
@@ -225,10 +226,14 @@ export default function PollObject(props: PollObjectProps): JSX.Element {
           <Typography variant="body1" gutterBottom align={'center'}>
             {obj.title}
           </Typography>
-          {obj.expiration_at && (
+          {obj.expiration_at && Date.parse(obj.expiration_at as string) >= new Date().getTime() ? (
             <Typography variant="body2" gutterBottom align={'center'}>
               {`${intl.formatMessage(messages.expDate)}`}
               {`${intl.formatDate(Date.parse(obj.expiration_at as string), {year: 'numeric', month: 'numeric', day: 'numeric'})}`}
+            </Typography>
+          ) : (
+            <Typography variant="body2" gutterBottom align={'center'}>
+              <FormattedMessage id="ui.feedObject.poll.closed" defaultMessage="ui.feedObject.poll.closed" />
             </Typography>
           )}
           <List>
@@ -241,6 +246,7 @@ export default function PollObject(props: PollObjectProps): JSX.Element {
                 votes={votes}
                 vote={vote}
                 isVoting={isVoting}
+                votable={votable}
               />
             ))}
           </List>

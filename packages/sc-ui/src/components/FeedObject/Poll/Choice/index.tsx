@@ -96,7 +96,7 @@ export interface ChoiceProps {
    */
   choiceObj?: SCPollChoiceType;
   /**
-   * If `false`, the choice is not votable
+   * If `true`, the choice is not votable because poll is closed
    * @default null
    */
   votable?: boolean;
