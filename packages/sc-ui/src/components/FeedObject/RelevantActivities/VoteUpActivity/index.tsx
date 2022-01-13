@@ -4,6 +4,7 @@ import {Avatar, Box, ListItem, ListItemAvatar, ListItemText, Typography} from '@
 import {Link, SCFeedUnitActivityType, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
 import {defineMessages, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../../shared/DateTimeAgo';
+import {ActionsRelevantActivityProps} from '../FollowActivity';
 
 const messages = defineMessages({
   appreciated: {
@@ -20,11 +21,21 @@ const Root = styled(Box, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({}));
 
-export default function VoteUpRelevantActivity({activityObject = null, ...props}: {activityObject: SCFeedUnitActivityType}): JSX.Element {
+export default function VoteUpRelevantActivity(props: ActionsRelevantActivityProps): JSX.Element {
+  // PROPS
+  const {className = null, activityObject = null, ...rest} = props;
+
+  // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
+
+  // STATE
   const intl = useIntl();
+
+  /**
+   * Renders root object
+   */
   return (
-    <Root {...props}>
+    <Root className={className} {...props}>
       <ListItem alignItems="flex-start">
         <ListItemAvatar>
           <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: activityObject.author.id})}>

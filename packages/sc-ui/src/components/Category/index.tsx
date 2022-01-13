@@ -40,7 +40,7 @@ export interface CategoryProps extends CardProps {
    */
   id?: string;
   /**
-   * Override or extend the styles applied to the component.
+   * Overrides or extends the styles applied to the component.
    * @default null
    */
   className?: string;
@@ -50,7 +50,7 @@ export interface CategoryProps extends CardProps {
    */
   category?: SCCategoryType;
   /**
-   * Hides category component
+   * Hides this component
    * @default false
    */
   autoHide?: boolean;
@@ -61,9 +61,14 @@ export interface CategoryProps extends CardProps {
   popular?: boolean;
   /**
    * Callback function on follow action.
-   * @default void
+   * @default null
    */
   onFollowProps?: () => void;
+  /**
+   * Any other properties
+   * @default any
+   */
+  [p: string]: any;
 }
 export default function Category(props: CategoryProps): JSX.Element {
   // PROPS

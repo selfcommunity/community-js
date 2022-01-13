@@ -8,7 +8,7 @@ import {http, Endpoints, Logger, SCUserType} from '@selfcommunity/core';
  * Use this hook to fetch a user object
  * @param initialSession
  */
-export default function useSCFetchUser({id = null, user = null}: {id?: string; user?: SCUserType}) {
+export default function useSCFetchUser({id = null, user = null}: {id?: number; user?: SCUserType}) {
   const [scUser, setSCUser] = useState<SCUserType>(user);
 
   /**

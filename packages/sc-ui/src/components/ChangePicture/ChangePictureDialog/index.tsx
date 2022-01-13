@@ -42,12 +42,12 @@ export interface CPDialogProps {
   className?: string;
   /**
    * On change function.
-   * @default void
+   * @default null
    */
   onChange?: (avatar) => void;
   /**
    * On dialog close callback function
-   * @default void
+   * @default null
    */
   onClose?: () => void;
   /**
@@ -55,11 +55,16 @@ export interface CPDialogProps {
    * @default false
    */
   open: boolean;
+  /**
+   * Any other properties
+   * @default any
+   */
+  [p: string]: any;
 }
 
 export default function ChangePictureDialog(props: CPDialogProps): JSX.Element {
   //PROPS
-  const {open, onChange, onClose, ...rest} = props;
+  const {open, onChange, onClose, className, ...rest} = props;
   //CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
 
@@ -212,7 +217,7 @@ export default function ChangePictureDialog(props: CPDialogProps): JSX.Element {
   }, []);
 
   return (
-    <Root {...rest}>
+    <Root className={className} {...rest}>
       {openDeleteAvatarDialog && (
         <ConfirmDialog
           open={openDeleteAvatarDialog}

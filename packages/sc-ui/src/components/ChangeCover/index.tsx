@@ -29,19 +29,24 @@ const Root = styled(Box, {
 export interface ChangecoverProps {
   /**
    * On change function.
-   * @default void
+   * @default null
    */
   onChange?: (cover) => void;
   /**
-   * Hides category component
+   * Hides this component
    * @default false
    */
   autoHide?: boolean;
   /**
-   * Override or extend the styles applied to the component.
+   * Overrides or extends the styles applied to the component.
    * @default null
    */
   className?: string;
+  /**
+   * Any other properties
+   * @default any
+   */
+  [p: string]: any;
 }
 export default function ChangeCover(props: ChangecoverProps): JSX.Element {
   //PROPS

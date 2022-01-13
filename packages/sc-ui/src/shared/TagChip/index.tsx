@@ -31,7 +31,7 @@ const Root = styled(Chip, {
 export interface TagChipProps {
   className?: string;
   /**
-   * Override or extend the styles applied to the component.
+   * Overrides or extends the styles applied to the component.
    */
   classes?: Partial<ChipClasses>;
   /**

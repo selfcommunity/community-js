@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import {Endpoints, http} from '@selfcommunity/core';
-import {AppBar, Box, Button, CardActions, CardContent, CardMedia, Dialog, Grid, Typography} from '@mui/material';
+import {Box, Button, CardActions, CardContent, CardMedia, Grid, Typography} from '@mui/material';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {SCPrizeType} from '@selfcommunity/core/src/types';
 import Chip from '@mui/material/Chip';
@@ -79,24 +79,42 @@ const Root = styled(Card, {
   }
 }));
 
-export default function LoyaltyProgramDetail({
-  autoHide = null,
-  cardType = true,
-  points = null,
-  requestable = true,
-  ...rest
-}: {
+export interface LoyaltyProgramDetailProps {
+  /**
+   * Hides this component
+   * @default false
+   */
   autoHide?: boolean;
-  cardType?: boolean;
+  /**
+   * Overrides or extends the styles applied to the component.
+   * @default null
+   */
+  className?: string;
+  /**
+   * user loyalty points
+   * @default null
+   */
   points?: number;
+  /**
+   * Sets the type card for the component
+   * @default true
+   */
+  cardType?: boolean;
+  /**
+   * Sets the type card for the component
+   * @default true
+   */
   requestable?: boolean;
-  [p: string]: any;
-}): JSX.Element {
+}
+export default function LoyaltyProgramDetail(props: LoyaltyProgramDetailProps): JSX.Element {
+  //PROPS
+  const {className, autoHide, points, cardType, requestable, ...rest} = props;
+  //STATE
   const [prizes, setPrizes] = useState([]);
   const intl = useIntl();
 
   /**
-   * Fetch the list of available prizes
+   * Fetches the list of available prizes
    */
   function fetchPrizes() {
     http
@@ -112,10 +130,16 @@ export default function LoyaltyProgramDetail({
       });
   }
 
+  /**
+   * On mount, fetches prizes
+   */
   useEffect(() => {
     fetchPrizes();
   }, []);
 
+  /**
+   * Renders loyalty program detail
+   */
   const d = (
     <React.Fragment>
       {cardType && (
@@ -198,9 +222,15 @@ export default function LoyaltyProgramDetail({
       </Grid>
     </React.Fragment>
   );
-
+  /**
+   * Renders the component (if not hidden by autoHide prop)
+   */
   if (!autoHide) {
-    return <Root {...rest}>{d}</Root>;
+    return (
+      <Root className={className} {...rest}>
+        {d}
+      </Root>
+    );
   }
   return null;
 }

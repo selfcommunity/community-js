@@ -40,9 +40,9 @@ export interface UserProps extends CardProps {
    * Id of user object
    * @default null
    */
-  id?: string;
+  id?: number;
   /**
-   * Override or extend the styles applied to the component.
+   * Overrides or extends the styles applied to the component.
    * @default null
    */
   className?: string;
@@ -57,15 +57,20 @@ export interface UserProps extends CardProps {
    */
   autoHide?: boolean;
   /**
-   * Handles actions
-   * @default void
+   * Handles actions ignore
+   * @default null
    */
   handleIgnoreAction?: (u) => void;
   /**
    * Callback function on follow action.
-   * @default void
+   * @default null
    */
   onFollowProps?: () => void;
+  /**
+   * Any other properties
+   * @default any
+   */
+  [p: string]: any;
 }
 
 export default function User(props: UserProps): JSX.Element {

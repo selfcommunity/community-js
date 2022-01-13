@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
 import {Button, Divider, Typography} from '@mui/material';
@@ -8,7 +8,6 @@ import {Endpoints, http, SCFollowedManagerType, SCUserContext, SCUserContextType
 import PeopleSuggestionSkeleton from '../Skeleton/PeopleSuggestionSkeleton';
 import User from '../User';
 import {AxiosResponse} from 'axios';
-import useSCFollowedManager from '@selfcommunity/core/src/hooks/useSCFollowersManager';
 
 const PREFIX = 'SCUserFollowed';
 
@@ -98,13 +97,13 @@ export default function UserFollowed({userId = null, ...props}: {userId?: number
         </Typography>
         <List>
           {mutualPeople.slice(0, visibleUsers).map((follower: SCUserType, index) => (
-            <User elevation={0} user={follower} key={index} id={follower.id} />
+            <User elevation={0} user={follower} key={follower.id} />
           ))}
         </List>
         <Divider />
         <List>
           {filteredFollowers.slice(0, visibleUsers).map((followed: SCUserType, index) => (
-            <User elevation={0} user={followed} key={index} id={followed.id} />
+            <User elevation={0} user={followed} key={followed.id} />
           ))}
         </List>
         {hasMore && (

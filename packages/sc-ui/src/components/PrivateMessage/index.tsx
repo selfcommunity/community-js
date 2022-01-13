@@ -52,6 +52,9 @@ export default function PrivateMessage({className = '', autoHide = null, ...prop
     </React.Fragment>
   );
 
+  /**
+   * Renders the component (if not hidden by autoHide prop)
+   */
   if (!autoHide) {
     return (
       <Root className={className} {...props}>

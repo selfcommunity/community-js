@@ -10,7 +10,7 @@ import CommentRelevantActivity from './CommentActivity';
 import VoteUpRelevantActivity from './VoteUpActivity';
 import FollowRelevantActivity from './FollowActivity';
 import PollVoteRelevantActivity from './PollVoteActivity';
-import { grey } from '@mui/material/colors';
+import {grey} from '@mui/material/colors';
 
 const PREFIX = 'SCFeedRelevantActivities';
 
@@ -31,21 +31,38 @@ const Root = styled(Box, {
     color: grey[900]
   }
 }));
-
-export default function RelevantActivities({
-  activities = [],
-  showMaxRelevantActivities = 5,
-  ...rest
-}: {
+export interface RelevantActivitiesProps {
+  /**
+   * Overrides or extends the styles applied to the component.
+   * @default null
+   */
+  className?: string;
+  /**
+   * Activities available.
+   * @default []
+   */
   activities: SCFeedUnitActivityType[];
+  /**
+   * The number of relevant activities shown
+   * @default 5
+   */
   showMaxRelevantActivities?: number;
+  /**
+   * Any other properties
+   * @default any
+   */
   [p: string]: any;
-}): JSX.Element {
+}
+export default function RelevantActivities(props: RelevantActivitiesProps): JSX.Element {
+  //PROPS
+  const {className = null, activities = [], showMaxRelevantActivities = 5, ...rest} = props;
+
+  // STATE
   const [openOtherActivities, setOpenOtherActivities] = useState<boolean>(false);
   const [loadingVote, setLoadingVote] = useState<number>(null);
 
   /**
-   * Perform vote comment
+   * Performs vote comment
    */
   const performVoteComment = (comment) => {
     return http
@@ -62,7 +79,7 @@ export default function RelevantActivities({
   };
 
   /**
-   * Handle vote comment
+   * Handles vote comment
    * @param comment
    */
   function handleVote(index, comment) {
@@ -77,7 +94,7 @@ export default function RelevantActivities({
   }
 
   /**
-   * Render single relevant activity
+   * Renders single relevant activity
    * @param a
    * @param i
    */
@@ -94,8 +111,11 @@ export default function RelevantActivities({
     return null;
   }
 
+  /**
+   * Renders root object
+   */
   return (
-    <Root {...rest}>
+    <Root className={className} {...rest}>
       {activities.length <= 0 ? (
         <Typography variant="body2">
           <FormattedMessage id="ui.feedObject.relevantActivities.noResults" defaultMessage="ui.feedObject.relevantActivities.noResults" />

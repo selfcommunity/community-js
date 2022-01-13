@@ -262,7 +262,7 @@ export default function CommentsObject({
   }
 
   /**
-   * Render root object
+   * Renders root object
    */
   return (
     <Root>

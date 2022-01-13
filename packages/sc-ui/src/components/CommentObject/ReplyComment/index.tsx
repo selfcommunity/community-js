@@ -54,7 +54,7 @@ const Root = styled(Card, {
   [`& .${classes.avatar}`]: {
     width: 35,
     height: 35
-  },
+  }
 }));
 
 export default function ReplyCommentObject({
@@ -198,7 +198,7 @@ export default function ReplyCommentObject({
   }
 
   /**
-   * Render root object
+   * Renders root object
    */
   return <Root elevation={0}>{renderReply(obj)}</Root>;
 }

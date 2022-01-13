@@ -63,7 +63,7 @@ export interface FeedProps {
   id?: string;
 
   /**
-   * Override or extend the styles applied to the component.
+   * Overrides or extends the styles applied to the component.
    * @default null
    */
   className?: string;

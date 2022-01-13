@@ -59,21 +59,57 @@ const Root = styled(Box, {
   }
 }));
 
-export default function Share({
-  id = null,
-  feedObject = null,
-  feedObjectType = SCFeedObjectTypologyType.POST,
-  withAction = false,
-  inlineAction = true,
-  ...rest
-}: {
+export interface VoteShareProps {
+  /**
+   * Overrides or extends the styles applied to the component.
+   * @default null
+   */
+  className?: string;
+  /**
+   * Feed object id
+   * @default null
+   */
   id?: number;
+  /**
+   * Feed object
+   * @default null
+   */
   feedObject?: SCFeedObjectType;
+  /**
+   * Feed object type
+   * @default 'post' type
+   */
   feedObjectType?: SCFeedObjectTypologyType;
+  /**
+   * Manages action (if present)
+   * @default false
+   */
   withAction: boolean;
+  /**
+   * Manages inline action
+   * @default true
+   */
   inlineAction: boolean;
+  /**
+   * Any other properties
+   * @default any
+   */
   [p: string]: any;
-}): JSX.Element {
+}
+
+export default function Share(props: VoteShareProps): JSX.Element {
+  // PROPS
+  const {
+    className = null,
+    id = null,
+    feedObject = null,
+    feedObjectType = SCFeedObjectTypologyType.POST,
+    withAction = false,
+    inlineAction = true,
+    ...rest
+  } = props;
+
+  // STATE
   const {obj, setObj} = useSCFetchFeedObject({id, feedObject, feedObjectType});
   const [isSharing, setIsSharing] = useState<boolean>(false);
   const [isComposerOpen, setIsComposerOpen] = useState<boolean>(false);
@@ -98,7 +134,7 @@ export default function Share({
   }
 
   /**
-   * Handle Composer onClose
+   * Handles Composer onClose
    */
   function handleComposerOnClose() {
     setIsSharing(false);
@@ -106,7 +142,7 @@ export default function Share({
   }
 
   /**
-   * Handle Composer onSuccess
+   * Handles Composer onSuccess
    */
   function handleComposerOnSuccess(shareObj) {
     handleComposerOnClose();
@@ -114,7 +150,7 @@ export default function Share({
   }
 
   /**
-   * Perform follow/unfollow
+   * Performs follow/unfollow
    * Post, Discussion, Status
    */
   const performCreateMediaShare = useMemo(
@@ -146,7 +182,7 @@ export default function Share({
   );
 
   /**
-   * Perform share contribute
+   * Performs the contribute sharing
    */
   function share(inCategories) {
     setIsSharing(true);
@@ -163,7 +199,7 @@ export default function Share({
   }
 
   /**
-   * Render inline action (as button if withAction==true && inlineAction==true)
+   * Renders inline action (as button if withAction==true && inlineAction==true)
    * @return {JSX.Element}
    */
   function renderInlineStartShareBtn() {
@@ -190,7 +226,7 @@ export default function Share({
   }
 
   /**
-   * Render audience with detail dialog
+   * Renders audience with detail dialog
    * @return {JSX.Element}
    */
   function renderAudience() {
@@ -209,7 +245,7 @@ export default function Share({
   }
 
   /**
-   * Render vote action if withAction==true
+   * Renders vote action if withAction==true
    * @return {JSX.Element}
    */
   function renderShareBtn() {
@@ -284,8 +320,11 @@ export default function Share({
     );
   }
 
+  /**
+   * Renders share action
+   */
   return (
-    <Root {...rest}>
+    <Root className={className} {...rest}>
       {renderAudience()}
       {renderShareBtn()}
     </Root>

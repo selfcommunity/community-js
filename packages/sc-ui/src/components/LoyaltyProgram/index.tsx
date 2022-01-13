@@ -63,25 +63,43 @@ const Root = styled(Card, {
   }
 }));
 
-export default function LoyaltyProgram({
-  autoHide = null,
-  className = '',
-  cardType = null,
-  ...props
-}: {
+export interface LoyaltyProgramProps {
+  /**
+   * Hides this component
+   * @default false
+   */
   autoHide?: boolean;
+  /**
+   * Overrides or extends the styles applied to the component.
+   * @default null
+   */
   className?: string;
+  /**
+   * Sets the type card for the component
+   * @default null
+   */
   cardType?: boolean;
-}): JSX.Element {
+}
+
+export default function LoyaltyProgram(props: LoyaltyProgramProps): JSX.Element {
+  //PROPS
+  const {autoHide, className, cardType} = props;
+
+  // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
+  const scRoutingContext: SCRoutingContextType = useSCRouting();
+
+  // STATE
   const [points, setPoints] = useState<number>(null);
   const [openLoyaltyProgramDialog, setOpenLoyaltyProgramDialog] = useState<boolean>(false);
   const intl = useIntl();
-  const scRoutingContext: SCRoutingContextType = useSCRouting();
   const handleClose = () => {
     setOpenLoyaltyProgramDialog(false);
   };
 
+  /**
+   * Fetches user loyalty points
+   */
   function fetchLP() {
     http
       .request({
@@ -96,10 +114,16 @@ export default function LoyaltyProgram({
       });
   }
 
+  /**
+   * On mount, fetches user loyalty points
+   */
   useEffect(() => {
     fetchLP();
   }, []);
 
+  /**
+   * Renders loyalty card
+   */
   const l = (
     <React.Fragment>
       <Typography component="h3" align="left">
@@ -142,6 +166,9 @@ export default function LoyaltyProgram({
     </React.Fragment>
   );
 
+  /**
+   * Renders root object (if not hidden by autoHide prop)
+   */
   if (!autoHide) {
     return (
       <Root {...props} className={className}>

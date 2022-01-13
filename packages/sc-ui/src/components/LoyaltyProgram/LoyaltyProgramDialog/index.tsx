@@ -18,21 +18,39 @@ const Root = styled(BaseDialog, {
   }
 }));
 
-export default function LoyaltyProgramDialog({
-  open = false,
-  onClose = null,
-  points = null,
-  cardType = null,
-  ...rest
-}: {
+export interface LoyaltyProgramDialogProps {
+  /**
+   * Overrides or extends the styles applied to the component.
+   * @default null
+   */
+  className?: string;
+  /**
+   * Opens dialog
+   * @default false
+   */
   open: boolean;
+  /**
+   * On dialog close callback function
+   * @default null
+   */
   onClose?: () => void;
+  /**
+   * user loyalty points
+   * @default null
+   */
   points?: number;
-  cardType?: boolean;
-  [p: string]: any;
-}): JSX.Element {
+}
+
+export default function LoyaltyProgramDialog(props: LoyaltyProgramDialogProps): JSX.Element {
+  // PROPS
+  const {className, open, onClose, points, ...rest} = props;
   return (
-    <Root title={<FormattedMessage id="ui.loyaltyProgram.lp" defaultMessage="ui.loyaltyProgram.lp" />} open={open} onClose={onClose} {...rest}>
+    <Root
+      title={<FormattedMessage id="ui.loyaltyProgram.lp" defaultMessage="ui.loyaltyProgram.lp" />}
+      open={open}
+      onClose={onClose}
+      className={className}
+      {...rest}>
       <LoyaltyProgramDetail points={points} cardType={false} />
     </Root>
   );

@@ -47,6 +47,11 @@ const Root = styled(Box, {
 
 export interface ContributorsFeedObjectProps {
   /**
+   * Overrides or extends the styles applied to the component.
+   * @default null
+   */
+  className?: string;
+  /**
    * feedObjectId object
    */
   feedObjectId?: number;
@@ -60,16 +65,16 @@ export interface ContributorsFeedObjectProps {
   feedObjectType: SCFeedObjectTypologyType;
   /**
    * Any other properties
+   * @default any
    */
   [p: string]: any;
 }
 
-export default function ContributorsFeedObject({
-  feedObjectId = null,
-  feedObject = null,
-  feedObjectType = null,
-  ...rest
-}: ContributorsFeedObjectProps): JSX.Element {
+export default function ContributorsFeedObject(props: ContributorsFeedObjectProps): JSX.Element {
+  // PROPS
+  const {className = null, feedObjectId = null, feedObject = null, feedObjectType = null, ...rest} = props;
+
+  // STATE
   const {obj, setObj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
   const [loading, setLoading] = useState<boolean>(true);
   const [total, setTotal] = useState<number>(0);
@@ -80,7 +85,7 @@ export default function ContributorsFeedObject({
   );
 
   /**
-   * fetchContributors
+   * Fetches contributors
    */
   const fetchContributors = useMemo(
     () => () => {
@@ -107,6 +112,9 @@ export default function ContributorsFeedObject({
     [obj, contributors, next, loading]
   );
 
+  /**
+   * On mount fetches contributors
+   */
   useEffect(() => {
     if (obj) {
       fetchContributors();
@@ -114,13 +122,13 @@ export default function ContributorsFeedObject({
   }, [obj]);
 
   /**
-   * Render root object
+   * Renders root object (if obj)
    */
   if (!obj) {
     return null;
   }
   return (
-    <Root>
+    <Root className={className} {...rest}>
       {loading && !openContributorsDialog ? (
         <Button variant={'text'} disabled classes={{root: classes.btnParticipants}}>
           <FormattedMessage id={'ui.feedObject.contributors.participants'} defaultMessage={'ui.feedObject.contributors.participants'} />:

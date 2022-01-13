@@ -101,6 +101,7 @@ import useSCFetchCommentObject from './hooks/useSCFetchCommentObject';
 import useSCFetchCustomAdv from './hooks/useSCFetchCustomAdv';
 import useSCFetchTag from './hooks/useSCFetchTag';
 import useSCFetchCategory from './hooks/useSCFetchCategory';
+import useSCFetchPrivateMessage from './hooks/useSCFetchPrivateMessage';
 
 /**
  * Routing component
@@ -231,4 +232,5 @@ export {
   useSCFetchCustomAdv,
   useSCFetchTag,
   useSCFetchCategory,
+  useSCFetchPrivateMessage,
 };

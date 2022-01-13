@@ -24,27 +24,67 @@ const Root = styled(Box, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({}));
 
-export default function Comment({
-  id = null,
-  feedObject = null,
-  feedObjectType = SCFeedObjectTypologyType.POST,
-  withAction = false,
-  onActionCLick = null,
-  ...rest
-}: {
+export interface CommentProps {
+  /**
+   * Overrides or extends the styles applied to the component.
+   * @default null
+   */
+  className?: string;
+  /**
+   * Feed object id
+   * @default null
+   */
   id?: number;
+  /**
+   * Feed object
+   * @default null
+   */
   feedObject?: SCFeedObjectType;
+  /**
+   * Feed object type
+   * @default 'post' type
+   */
   feedObjectType?: SCFeedObjectTypologyType;
+  /**
+   * Manages action (if present)
+   * @default false
+   */
   withAction: boolean;
+  /**
+   * Handles action click
+   * @default null
+   */
   onActionCLick?: () => void;
+  /**
+   * Any other properties
+   * @default any
+   */
   [p: string]: any;
-}): JSX.Element {
+}
+export default function Comment(props: CommentProps): JSX.Element {
+  // PROPS
+  const {
+    className = null,
+    id = null,
+    feedObject = null,
+    feedObjectType = SCFeedObjectTypologyType.POST,
+    withAction = false,
+    onActionCLick = null,
+    ...rest
+  } = props;
+
+  //STATE
   const {obj, setObj} = useSCFetchFeedObject({id, feedObject, feedObjectType});
+
+  //CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
   const intl = useIntl();
 
+  /**
+   * Renders comment action
+   */
   return (
-    <Root {...rest}>
+    <Root className={className} {...rest}>
       <Button variant="text" size="small" component={Link} to={scRoutingContext.url(feedObjectType.toLowerCase(), {id: obj.id})} sx={{height: 32}}>
         <Typography variant={'body2'}>{`${intl.formatMessage(messages.comments, {total: obj.comment_count})}`}</Typography>
       </Button>

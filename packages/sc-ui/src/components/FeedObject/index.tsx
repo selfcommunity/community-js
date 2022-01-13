@@ -160,6 +160,11 @@ const Root = styled(Card, {
 
 export interface FeedObjectProps extends CardProps {
   /**
+   * Overrides or extends the styles applied to the component.
+   * @default null
+   */
+  className?: string;
+  /**
    * Id of feed object
    * @default null
    */
@@ -211,6 +216,7 @@ export interface FeedObjectProps extends CardProps {
 export default function FeedObject(props: FeedObjectProps): JSX.Element {
   // PROPS
   const {
+    className = null,
     feedObjectId = null,
     feedObject = null,
     feedObjectType = SCFeedObjectTypologyType.POST,
@@ -657,10 +663,10 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
   }
 
   /**
-   * Render root object
+   * Renders root object
    */
   return (
-    <Root {...rest}>
+    <Root className={className} {...rest}>
       <Box className={`${PREFIX}-${template}`}>{objElement}</Box>
     </Root>
   );

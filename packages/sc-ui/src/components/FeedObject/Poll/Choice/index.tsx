@@ -77,24 +77,43 @@ function LinearProgressWithLabel(props: LinearProgressProps & {value: number}) {
     </Box>
   );
 }
-
-export default function Choice({
-  choiceObj = null,
-  feedObject = null,
-  vote = null,
-  votes = null,
-  isVoting = null,
-  votable = null,
-  ...rest
-}: {
+export interface ChoiceProps {
+  /**
+   * Overrides or extends the styles applied to the component.
+   * @default null
+   */
+  className?: string;
+  /**
+   * The id of the selected choice
+   */
   isVoting?: number;
+  /**
+   * Feed object
+   */
   feedObject?: SCFeedObjectType;
+  /**
+   * Choice object
+   */
   choiceObj?: SCPollChoiceType;
+  /**
+   * If `false`, the choice is not votable
+   * @default null
+   */
   votable?: boolean;
+  /**
+   * Any other properties
+   * @default any
+   */
   [p: string]: any;
-}): JSX.Element {
+}
+export default function Choice(props: ChoiceProps): JSX.Element {
+  //PROPS
+  const {className = null, choiceObj = null, feedObject = null, vote = null, votes = null, isVoting = null, votable = null, ...rest} = props;
   const disabled = !feedObject;
 
+  /**
+   * Renders total votes in percentage
+   */
   function renderVotes(voteCount, totalVotes) {
     if (totalVotes === 0) {
       return 0;
@@ -102,6 +121,9 @@ export default function Choice({
     return (100 * voteCount) / totalVotes;
   }
 
+  /**
+   * Renders choice obj
+   */
   const c = (
     <React.Fragment>
       <Box className={classes.choice}>
@@ -121,7 +143,11 @@ export default function Choice({
   );
 
   /**
-   * Render root element
+   * Renders root element
    */
-  return <Root {...rest}>{c}</Root>;
+  return (
+    <Root className={className} {...rest}>
+      {c}
+    </Root>
+  );
 }

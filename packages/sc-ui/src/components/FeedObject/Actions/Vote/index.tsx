@@ -24,6 +24,7 @@ import {
   useSCUser
 } from '@selfcommunity/core';
 import {styled} from '@mui/material/styles';
+import {VoteShareProps} from '../Share';
 
 /**
  * We have complex state logic that involves multiple sub-values,
@@ -78,7 +79,7 @@ function votesReducer(state, action) {
 }
 
 /**
- * Define initial state
+ * Defines initial state
  */
 function stateInitializer({
   id = null,
@@ -146,28 +147,26 @@ const Root = styled(Box, {
   }
 }));
 
-export default function Vote({
-  id = null,
-  feedObject = null,
-  feedObjectType = SCFeedObjectTypologyType.POST,
-  withAction = false,
-  inlineAction = true,
-  ...rest
-}: {
-  id?: number;
-  feedObject?: SCFeedObjectType;
-  feedObjectType?: SCFeedObjectTypologyType;
-  withAction: boolean;
-  inlineAction: boolean;
-  [p: string]: any;
-}): JSX.Element {
+export default function Vote(props: VoteShareProps): JSX.Element {
+  // PROPS
+  const {
+    className = null,
+    id = null,
+    feedObject = null,
+    feedObjectType = SCFeedObjectTypologyType.POST,
+    withAction = false,
+    inlineAction = true,
+    ...rest
+  } = props;
+
+  // STATE
   const {obj, setObj} = useSCFetchFeedObject({id, feedObject, feedObjectType});
   const [state, dispatch] = useReducer(votesReducer, {}, () => stateInitializer({id, feedObject, feedObjectType}));
   const scUserContext: SCUserContextType = useSCUser();
   const intl = useIntl();
 
   /**
-   * Fetch Votes only if obj
+   * Fetches Votes only if obj
    */
   useEffect(() => {
     if (obj && state.next && !state.loading && !state.refreshing && state.openVotesDialog) {
@@ -189,14 +188,14 @@ export default function Vote({
   }, [state.openVotesDialog]);
 
   /**
-   * Open dialog votes
+   * Opens dialog votes
    */
   function handleToggleVotesDialog() {
     dispatch({type: voteActionTypes.TOGGLE_VOTE_DIALOG});
   }
 
   /**
-   * fetchVotes
+   * fetches Votes
    */
   const fetchVotes = useMemo(
     () => () => {
@@ -216,7 +215,7 @@ export default function Vote({
   );
 
   /**
-   * vote up/down
+   * Performs vote up/down
    */
   const performVote = useMemo(
     () => () => {
@@ -236,7 +235,7 @@ export default function Vote({
   );
 
   /**
-   * Perform voteUp/voteDown
+   * Performs voteUp/voteDown
    */
   function vote() {
     if (obj && !state.voting) {
@@ -253,7 +252,7 @@ export default function Vote({
   }
 
   /**
-   * Render inline action (as button if withAction==true && inlineAction==true)
+   * Renders inline action (as button if withAction==true && inlineAction==true)
    * @return {JSX.Element}
    */
   function renderInlineStartVoteBtn() {
@@ -282,7 +281,7 @@ export default function Vote({
   }
 
   /**
-   * Render audience with detail dialog
+   * Renders audience with detail dialog
    * @return {JSX.Element}
    */
   function renderAudience() {
@@ -357,7 +356,7 @@ export default function Vote({
   }
 
   /**
-   * Render vote action if withAction==true
+   * Renders vote action if withAction==true
    * @return {JSX.Element}
    */
   function renderVoteBtn() {
@@ -381,8 +380,11 @@ export default function Vote({
     );
   }
 
+  /**
+   * Renders vote action and audience section
+   */
   return (
-    <Root {...rest}>
+    <Root className={className} {...rest}>
       {renderAudience()}
       {renderVoteBtn()}
     </Root>

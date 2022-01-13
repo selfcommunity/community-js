@@ -10,21 +10,43 @@ import BaseDialog from '../../../../../shared/BaseDialog';
 import CentralProgress from '../../../../../shared/CentralProgress';
 import User from '../../../../User';
 
-export default function SharesDialog({
-  id = null,
-  feedObject = null,
-  feedObjectType = SCFeedObjectTypologyType.POST,
-  open = false,
-  onClose = null,
-  ...rest
-}: {
+export interface ShareDialogProps {
+  /**
+   * Feed object id
+   * @default null
+   */
   id?: number;
+  /**
+   * Feed object
+   * @default null
+   */
   feedObject?: SCFeedObjectType;
+  /**
+   * Feed object type
+   * @default 'post' type
+   */
   feedObjectType?: SCFeedObjectTypologyType;
+  /**
+   * Opens dialog
+   * @default false
+   */
   open: boolean;
+  /**
+   * On dialog close callback function
+   * @default any
+   */
   onClose: () => any;
+  /**
+   * Any other properties
+   * @default any
+   */
   [p: string]: any;
-}): JSX.Element {
+}
+export default function SharesDialog(props: ShareDialogProps): JSX.Element {
+  // PROPS
+  const {id = null, feedObject = null, feedObjectType = SCFeedObjectTypologyType.POST, open = false, onClose = null, ...rest} = props;
+
+  // STATE
   const {obj, setObj} = useSCFetchFeedObject({id, feedObject, feedObjectType});
   const [isLoading, setIsLoading] = useState<boolean>(Boolean((id && feedObjectType) || feedObject));
   const [shares, setShares] = useState([]);
@@ -36,12 +58,18 @@ export default function SharesDialog({
       : null
   );
 
+  /**
+   * On mount, fetches shares
+   */
   useEffect(() => {
     if (obj && next) {
       fetchShares();
     }
   }, [obj.id]);
 
+  /**
+   * Fetches shares
+   */
   function fetchShares() {
     setIsLoading(true);
     http
@@ -60,8 +88,15 @@ export default function SharesDialog({
       });
   }
 
+  /**
+   * Renders shares dialog
+   */
   return (
-    <BaseDialog title={<FormattedMessage defaultMessage="ui.feedObject.sharesDialog.title" id="ui.feedObject.sharesDialog.title" />} onClose={onClose} open={open}>
+    <BaseDialog
+      title={<FormattedMessage defaultMessage="ui.feedObject.sharesDialog.title" id="ui.feedObject.sharesDialog.title" />}
+      onClose={onClose}
+      open={open}
+      {...rest}>
       {isLoading ? (
         <CentralProgress size={50} />
       ) : (

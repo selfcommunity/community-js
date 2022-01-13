@@ -28,7 +28,7 @@ const Root = styled(Autocomplete, {
 
 export interface AudienceProps extends StandardProps<React.HTMLAttributes<HTMLDivElement>, 'defaultValue' | 'onChange' | 'children'> {
   /**
-   * Override or extend the styles applied to the component.
+   * Overrides or extends the styles applied to the component.
    */
   classes?: Partial<AutocompleteClasses>;
   /**

@@ -1,13 +1,7 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
 import {Avatar, Box, Grid, ListItem, ListItemAvatar, ListItemText, Tooltip, Typography} from '@mui/material';
-import {
-  Link,
-  SCFeedUnitActivityType,
-  SCRoutes,
-  SCRoutingContextType,
-  useSCRouting
-} from '@selfcommunity/core';
+import {Link, SCFeedUnitActivityType, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import Bullet from '../../../../shared/Bullet';
 import {LoadingButton} from '@mui/lab';
@@ -40,26 +34,56 @@ const Root = styled(Box, {
   }
 }));
 
-export default function CommentRelevantActivity({
-  activityObject = null,
-  index = null,
-  onVote = null,
-  loadingVote = null,
-  ...props
-}: {
+export interface CommentRelevantActivityProps {
+  /**
+   * Overrides or extends the styles applied to the component.
+   * @default null
+   */
+  className?: string;
+  /**
+   * Activity object
+   * @default null
+   */
   activityObject: SCFeedUnitActivityType;
+  /**
+   * Index
+   * @default null
+   */
   index: number;
+  /**
+   * On vote function
+   * @default null
+   */
   onVote: (i, v) => void;
+  /**
+   * The id of the loading vote
+   * @default null
+   */
   loadingVote: number;
+  /**
+   * Any other properties
+   * @default any
+   */
   [p: string]: any;
-}): JSX.Element {
+}
+export default function CommentRelevantActivity(props: CommentRelevantActivityProps): JSX.Element {
+  // PROPS
+  const {className = null, activityObject = null, index = null, onVote = null, loadingVote = null, ...rest} = props;
+
+  // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
+
+  // STATE
   const intl = useIntl();
+
+  /**
+   * Renders root object (if obj)
+   */
   if (!activityObject) {
     return null;
   }
   return (
-    <Root {...props}>
+    <Root className={className} {...rest}>
       <ListItem alignItems="flex-start">
         <ListItemAvatar>
           <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: activityObject.author.id})}>

@@ -16,24 +16,29 @@ const CPButton = styled(Button, {
 export interface ChangePictureProps {
   /**
    * On change function.
-   * @default void
+   * @default null
    */
   onChange?: (avatar) => void;
   /**
-   * Hides category component
+   * Hides this component
    * @default false
    */
   autoHide?: boolean;
   /**
-   * Override or extend the styles applied to the component.
+   * Overrides or extends the styles applied to the component.
    * @default null
    */
   className?: string;
   /**
-   * Override or extend the styles applied to the component.
+   * Overrides or extends the styles applied to the component.
    * @default null
    */
   iconButton: boolean;
+  /**
+   * Any other properties
+   * @default any
+   */
+  [p: string]: any;
 }
 export default function ChangePicture(props: ChangePictureProps): JSX.Element {
   //PROPS
@@ -43,7 +48,7 @@ export default function ChangePicture(props: ChangePictureProps): JSX.Element {
   const [openChangePictureDialog, setOpenChangePictureDialog] = useState<boolean>(false);
 
   /**
-   * Renders change picture (if not hidden by autoHide prop)
+   * Renders the component (if not hidden by autoHide prop)
    */
   if (!autoHide) {
     return (

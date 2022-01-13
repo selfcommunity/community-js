@@ -53,39 +53,75 @@ const Root = styled(Box, {
   }
 }));
 
-export default function ActivitiesMenu({
-  selectedActivities = null,
-  hideRelevantActivitiesItem = false,
-  onChange = null,
-  ...rest
-}: {
+export interface ActivitiesMenuProps {
+  /**
+   * Overrides or extends the styles applied to the component.
+   * @default null
+   */
+  className?: string;
+  /**
+   * Selected activities
+   * @default string
+   */
   selectedActivities?: string;
+  /**
+   * Hides relevant activity item
+   * @default false
+   */
   hideRelevantActivitiesItem?: boolean;
+  /**
+   * Handles on change
+   * @default false
+   */
   onChange?: (type) => void;
+  /**
+   * Any other properties
+   * @default any
+   */
   [p: string]: any;
-}) {
+}
+export default function ActivitiesMenu(props: ActivitiesMenuProps) {
+  // PROPS
+  const {className = null, selectedActivities = null, hideRelevantActivitiesItem = false, onChange = null, ...rest} = props;
+
+  // CONTEXT
   const scPreferencesContext: SCPreferencesContextType = useContext(SCPreferencesContext);
+
+  //STATE
   const followEnabled = scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED].value;
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const intl = useIntl();
 
+  /**
+   * Handles click
+   * @param event
+   */
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
+  /**
+   * Handles close
+   */
   const handleClose = () => {
     setAnchorEl(null);
   };
 
+  /**
+   * Handles change of activity type
+   */
   const handleChangeActivitiesType = (type) => {
     return () => {
       onChange && onChange(type);
     };
   };
 
+  /**
+   * Renders root object
+   */
   return (
-    <Root {...rest}>
+    <Root className={className} {...rest}>
       <Box className={classes.selector}>
         <Tooltip
           title={<FormattedMessage id="ui.feedObject.activitiesMenu.tooltipTitle" defaultMessage="ui.feedObject.activitiesMenu.tooltipTitle" />}>

@@ -90,6 +90,11 @@ const Root = styled(Card, {
 
 export interface PollObjectProps {
   /**
+   * Overrides or extends the styles applied to the component.
+   * @default null
+   */
+  className?: string;
+  /**
    * Poll object
    */
   pollObject: SCPollType;
@@ -99,18 +104,26 @@ export interface PollObjectProps {
    */
   disabled?: boolean;
   /**
-   * callback to sync poll obj of the feedObject
+   * Callback to sync poll obj of the feedObject
    * @param value
    */
   onChange?: (value: any) => void;
   /**
-   * Any othe properties
+   * Feed object
    */
   feedObject?: SCFeedObjectType;
+  /**
+   * Any other properties
+   * @default any
+   */
   [p: string]: any;
 }
 
-export default function PollObject({feedObject = null, pollObject = null, disabled = null, onChange = null, ...rest}: PollObjectProps): JSX.Element {
+export default function PollObject(props: PollObjectProps): JSX.Element {
+  //  PROPS
+  const {className = null, feedObject = null, pollObject = null, disabled = null, onChange = null, ...rest} = props;
+
+  //STATE
   const intl = useIntl();
   const [obj, setObj] = useState<SCPollType>(pollObject);
   const [votes, setVotes] = useState(getVotes());
@@ -118,6 +131,9 @@ export default function PollObject({feedObject = null, pollObject = null, disabl
   const multipleChoices = pollObject['multiple_choices'];
   const [isVoting, setIsVoting] = useState<number>(null);
 
+  /**
+   * Handles choice upvote
+   */
   const handleVote = (id) => {
     if (multipleChoices) {
       setChoices((prevChoices) => {
@@ -144,6 +160,9 @@ export default function PollObject({feedObject = null, pollObject = null, disabl
     }
   };
 
+  /**
+   * Handles choice unvote
+   */
   const handleUnVote = (id) => {
     setChoices((prevChoices) => {
       return prevChoices.map((choice) =>
@@ -156,6 +175,9 @@ export default function PollObject({feedObject = null, pollObject = null, disabl
     setVotes((prevVotes) => prevVotes - 1);
   };
 
+  /**
+   * Gets total votes
+   */
   function getVotes() {
     const choices = pollObject.choices;
     let totalVotes = 0;
@@ -165,6 +187,9 @@ export default function PollObject({feedObject = null, pollObject = null, disabl
     return totalVotes;
   }
 
+  /**
+   * Performs poll vote
+   */
   function vote(choiceObj) {
     setIsVoting(choiceObj.id);
     http
@@ -189,7 +214,7 @@ export default function PollObject({feedObject = null, pollObject = null, disabl
   }
 
   /**
-   * Render the poll object
+   * Renders the poll object
    */
   let objElement = <></>;
   if (pollObject) {
@@ -203,7 +228,7 @@ export default function PollObject({feedObject = null, pollObject = null, disabl
           {obj.expiration_at && (
             <Typography variant="body2" gutterBottom align={'center'}>
               {`${intl.formatMessage(messages.expDate)}`}
-              {`${intl.formatDate(Date.parse(obj.expiration_at), {year: 'numeric', month: 'numeric', day: 'numeric'})}`}
+              {`${intl.formatDate(Date.parse(obj.expiration_at as string), {year: 'numeric', month: 'numeric', day: 'numeric'})}`}
             </Typography>
           )}
           <List>
@@ -236,7 +261,11 @@ export default function PollObject({feedObject = null, pollObject = null, disabl
   }
 
   /**
-   * Render root element
+   * Renders root element
    */
-  return <Root {...rest}>{objElement}</Root>;
+  return (
+    <Root className={className} {...rest}>
+      {objElement}
+    </Root>
+  );
 }

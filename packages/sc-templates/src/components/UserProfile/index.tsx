@@ -20,10 +20,10 @@ export interface UserProfileProps {
    * Id of the feed object
    * @default 'feed'
    */
-  id?: string;
+  id?: number;
 
   /**
-   * Override or extend the styles applied to the component.
+   * Overrides or extends the styles applied to the component.
    * @default null
    */
   className?: string;

@@ -2,7 +2,7 @@ import React, {RefObject, useContext, useEffect, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import {CardHeader, Divider, Grid, IconButton, Box, TextField, Typography, InputAdornment, Stack, Popover} from '@mui/material';
+import {CardHeader, Divider, Grid, IconButton, Box, TextField, Typography, InputAdornment, Stack, Popover, Chip} from '@mui/material';
 import {Endpoints, http, SCLocaleContextType, SCUserContext, SCUserContextType, useSCLocale} from '@selfcommunity/core';
 import CloseIcon from '@mui/icons-material/Close';
 import {FormattedMessage} from 'react-intl';
@@ -76,17 +76,23 @@ export default function PrivateMessageCard({
   const scLocaleContext: SCLocaleContextType = useSCLocale();
   const language = scLocaleContext.locale;
   const [followers, setFollowers] = useState<any[]>([]);
-  const [recipientId, setRecipientId] = useState<any[]>(null);
+  const [recipientId, setRecipientId] = useState([]);
   const [message, setMessage] = useState<string>('');
   const [show, setShow] = useState(false);
   const [showBox, setShowBox] = useState(false);
   const [sending, setSending] = useState<boolean>(false);
   const selectRecipients = (event, recipient) => {
-    if (recipient !== null) {
-      const rId = recipient.id;
+    if (recipient) {
+      const rId = recipient[0].id;
       setRecipientId(rId);
       setShowBox(true);
     }
+    // if (recipientId) {
+    //   const rId = recipient[0].id;
+    //   setRecipientId((prevRecipientId: []) => ({
+    //     recipientId: [...prevRecipientId, rId]
+    //   }));
+    // }
   };
   const handleMessageInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setMessage(event.target.value);
@@ -102,6 +108,7 @@ export default function PrivateMessageCard({
     const text = message.slice(0, cursor) + emojiObject.emoji + message.slice(cursor);
     setMessage(text);
   };
+  console.log('id', recipientId);
 
   function fetchFollowers() {
     http
@@ -164,14 +171,16 @@ export default function PrivateMessageCard({
               </Grid>
               <Grid item xs={8}>
                 <Autocomplete
-                  className={classes.input}
-                  disableClearable
-                  getOptionLabel={(option) => option.username}
+                  multiple
+                  freeSolo
+                  //className={classes.input}
                   options={followers}
+                  getOptionLabel={(option) => option.username}
+                  // defaultValue={recipientId}
                   renderInput={(params) => (
                     <TextField
-                      variant="standard"
                       {...params}
+                      variant="standard"
                       InputProps={{
                         ...params.InputProps,
                         disableUnderline: true
@@ -186,6 +195,7 @@ export default function PrivateMessageCard({
             {showBox && (
               <Box className={classes.messageBox}>
                 <TextField
+                  size="small"
                   ref={ref}
                   className={classes.messageInput}
                   multiline

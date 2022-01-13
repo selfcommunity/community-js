@@ -399,7 +399,14 @@ const Endpoints: {[key: string]: EndpointType} = {
   /**
    * Private Messages Endpoints
    */
-
+  GetSnippets: {
+    url: urlReplacer('/api/v2/pm/'),
+    method: 'GET',
+  },
+  GetASingleMessage: {
+    url: urlReplacer('/api/v2/pm/$(id)/'),
+    method: 'GET',
+  },
   SendMessage: {
     url: urlReplacer('/api/v2/pm/'),
     method: 'POST',
@@ -407,6 +414,14 @@ const Endpoints: {[key: string]: EndpointType} = {
   GetAThread: {
     url: urlReplacer('/api/v2/pm/'),
     method: 'GET',
+  },
+  PrivateMessageUploadMediaInChunks: {
+    url: urlReplacer('/api/v2/pm/upload/'),
+    method: 'POST',
+  },
+  PrivateMessageChunkUploadDone: {
+    url: urlReplacer('/api/v2/pm/upload/?done/'),
+    method: 'POST',
   },
 };
 

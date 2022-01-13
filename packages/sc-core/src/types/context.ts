@@ -39,7 +39,7 @@ export interface SCLocaleType {
   default?: string;
 
   /**
-   * Override default messages.
+   * Overrides default messages.
    */
   messages?: Record<string, any>;
 }

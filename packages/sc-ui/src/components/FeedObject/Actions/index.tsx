@@ -16,26 +16,60 @@ const Root = styled(Grid, {
   margin: '0px 0px',
   color: '#3A3A3A'
 }));
-
-export default function Actions({
-  feedObjectId = null,
-  feedObject = null,
-  feedObjectType = SCFeedObjectTypologyType.POST,
-  hideShareAction = false,
-  handleExpandActivities = null
-}: {
+export interface ActionsProps {
+  /**
+   * Overrides or extends the styles applied to the component.
+   * @default null
+   */
+  className?: string;
+  /**
+   * Feed object id
+   * @default null
+   */
   feedObjectId?: number;
+  /**
+   * Feed object
+   * @default null
+   */
   feedObject?: SCFeedObjectType;
+  /**
+   * Feed object type
+   * @default 'post' type
+   */
   feedObjectType?: SCFeedObjectTypologyType;
+  /**
+   * Hides share action
+   * @default false
+   */
   hideShareAction?: boolean;
+  /**
+   * Handles section expansion
+   * @default null
+   */
   handleExpandActivities?: () => void;
-}): JSX.Element {
+}
+export default function Actions(props: ActionsProps): JSX.Element {
+  // PROPS
+  const {
+    className = null,
+    feedObjectId = null,
+    feedObject = null,
+    feedObjectType = SCFeedObjectTypologyType.POST,
+    hideShareAction = false,
+    handleExpandActivities = null
+  } = props;
+  // STATE
   const {obj, setObj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
+
   if (!obj) {
     return null;
   }
+
+  /**
+   * Renders action section
+   */
   return (
-    <Root container>
+    <Root container className={className}>
       <Grid item xs={hideShareAction ? 6 : 4} sx={{textAlign: 'center'}}>
         <Vote feedObject={obj} feedObjectType={feedObjectType} id={feedObjectId} withAction={true} inlineAction={false} />
       </Grid>

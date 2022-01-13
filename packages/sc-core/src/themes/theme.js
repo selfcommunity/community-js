@@ -20,7 +20,7 @@ const isValidPreference = (preferences, prop, tFunc) => {
 };
 
 /**
- * Override theme properties
+ * Overrides theme properties
  * @param options: store.settings.theme
  * @param preferences: community global preferences
  * @return {Theme}
