@@ -54,3 +54,15 @@ const Template: ComponentStory<typeof CommentsObject> = (args) => (
 export const Base = Template.bind({});
 
 Base.args = {};
+
+export const CommentFirstLevel = Template.bind({});
+
+CommentFirstLevel.args = {
+  commentObjectId: 32022 // 81
+};
+
+export const CommentSecondLevel = Template.bind({});
+
+CommentSecondLevel.args = {
+  commentObjectId: 31909
+};

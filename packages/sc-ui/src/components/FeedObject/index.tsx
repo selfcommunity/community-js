@@ -450,7 +450,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
               commentsPageCount={3}
               hidePrimaryReply={true}
               commentsOrderBy={_commentsOrderBy}
-              additionalComments={comments}
+              additionalHeaderComments={comments}
             />
           </LazyLoad>
         )}

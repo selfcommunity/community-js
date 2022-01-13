@@ -1,7 +1,15 @@
-import React, {RefObject, useEffect, useMemo, useRef, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
-import {SCFeedObjectType, SCFeedObjectTypologyType, useSCFetchFeedObject, http, Endpoints, Logger} from '@selfcommunity/core';
+import {
+  SCFeedObjectType,
+  SCFeedObjectTypologyType,
+  useSCFetchFeedObject,
+  http,
+  Endpoints,
+  Logger,
+  useSCFetchCommentObject
+} from '@selfcommunity/core';
 import {defineMessages, FormattedMessage} from 'react-intl';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {AxiosResponse} from 'axios';
@@ -39,6 +47,8 @@ export default function CommentsObject({
   feedObjectId = null,
   feedObject = null,
   feedObjectType = SCFeedObjectTypologyType.POST,
+  commentObjectId = null,
+  commentObject = null,
   renderComment = null,
   renderNoComments = null,
   commentsPageCount = 5,
@@ -46,12 +56,14 @@ export default function CommentsObject({
   infiniteScrolling = true,
   hidePrimaryReply = false,
   commentsLoadingBoxCount = 3,
-  additionalComments = [],
+  additionalHeaderComments = [],
   ...rest
 }: {
   feedObjectId?: number;
   feedObject?: SCFeedObjectType;
   feedObjectType?: SCFeedObjectTypologyType;
+  commentObjectId?: number;
+  commentObject?: SCCommentType;
   renderComment?: (SCCommentType) => JSX.Element;
   renderNoComments?: () => JSX.Element;
   commentsPageCount?: number;
@@ -59,15 +71,24 @@ export default function CommentsObject({
   infiniteScrolling?: boolean;
   hidePrimaryReply?: boolean;
   commentsLoadingBoxCount?: number;
-  additionalComments?: SCCommentType[];
+  additionalHeaderComments?: SCCommentType[];
   [p: string]: any;
 }): JSX.Element {
-  const {obj, setObj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
+  // STATE
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [commentData, setCommentData] = useState<SCCommentType>(null);
   const [data, setData] = useState<SCCommentType[]>([]);
   const [next, setNext] = useState<string>(null);
   const [total, setTotal] = useState<number>(null);
   const [isReplying, setIsReplying] = useState<boolean>(false);
+  const [infiniteScrollingEnabled, setInfiniteScrollingEnabled] = useState<boolean>(
+    infiniteScrolling && !(commentObject || Boolean(commentObjectId))
+  );
+
+
+  // RETRIVE objects
+  const {obj, setObj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
+  const commentObj = useSCFetchCommentObject({id: commentObjectId, commentObject});
 
   /**
    * Get Comments
@@ -90,9 +111,9 @@ export default function CommentsObject({
   );
 
   /**
-   * Fetch initial data
+   * Fetch COMMENTS initial data
    */
-  function fetchData() {
+  function fetchCommentsData() {
     if (obj) {
       setIsLoading(true);
       performFetchComments()
@@ -100,6 +121,14 @@ export default function CommentsObject({
           setData([...data, ...res.results]);
           setTotal(res.count);
           setNext(res.next);
+          if (commentObj.obj) {
+            const _searchId = commentObj.obj.parent ? commentObj.obj.parent : commentObj.obj.id;
+            const _isCommentDataIncluded =
+              res.results.filter((c) => {
+                return c.id === _searchId || (c.latest_comments.length > 0 && c.latest_comments[0].id === _searchId);
+              }).length > 0;
+            _isCommentDataIncluded && setCommentData(null);
+          }
           setIsLoading(false);
         })
         .catch((error) => {
@@ -109,13 +138,60 @@ export default function CommentsObject({
   }
 
   /**
+   * Get a single comment
+   */
+  const performFetchComment = useMemo(
+    () => (commentId) => {
+      return http
+        .request({
+          url: Endpoints.Comment.url({id: commentId}),
+          method: Endpoints.Comment.method
+        })
+        .then((res: AxiosResponse<any>) => {
+          if (res.status >= 300) {
+            return Promise.reject(res);
+          }
+          return Promise.resolve(res.data);
+        });
+    },
+    [obj, commentObjectId, commentObj]
+  );
+
+  /**
+   * Fetch COMMENT initial data
+   * and comment parent (if need it)
+   */
+  function fetchCommentData() {
+    setIsLoading(true);
+    if (commentObjectId && commentObj && commentObj.obj) {
+      if (commentObj.obj.parent) {
+        performFetchComment(commentObj.obj.parent)
+          .then((parent) => {
+            const _parent = Object.assign({}, parent);
+            _parent.latest_comments = [commentObj.obj];
+            setCommentData(parent);
+            setIsLoading(false);
+          })
+          .catch((error) => {
+            Logger.error(SCOPE_SC_UI, error);
+          });
+      } else {
+        setCommentData(commentObj.obj);
+        setIsLoading(false);
+      }
+    }
+  }
+
+  /**
    * Fetch data only if obj changed
    */
   useEffect(() => {
-    if (obj && obj.id && data.length === 0) {
-      fetchData();
+    if (commentObjectId) {
+      fetchCommentData();
+    } else if (obj && obj.id && data.length === 0) {
+      fetchCommentsData();
     }
-  }, [obj, data]);
+  }, [obj, commentObjectId, commentObject, commentObj.obj]);
 
   /**
    * Reload comments data
@@ -187,7 +263,7 @@ export default function CommentsObject({
         ))}
       </>
     );
-  } else if (data.length === 0 && !isLoading) {
+  } else if (data.length === 0 && !commentData && !isLoading) {
     comments = (
       <>
         {renderNoComments ? (
@@ -200,11 +276,11 @@ export default function CommentsObject({
       </>
     );
   } else {
-    if (infiniteScrolling) {
+    if (infiniteScrollingEnabled) {
       comments = (
         <InfiniteScroll
           dataLength={data.length}
-          next={fetchData}
+          next={fetchCommentsData}
           hasMore={next !== null}
           loader={<CommentObjectSkeleton {...rest} />}
           endMessage={
@@ -214,7 +290,7 @@ export default function CommentsObject({
               </b>
             </Typography>
           }>
-          {[...additionalComments, ...data].map((comment: SCCommentType, index) => (
+          {[...additionalHeaderComments, ...data, ...(commentData ? [commentData] : [])].map((comment: SCCommentType, index) => (
             <React.Fragment key={index}>
               {renderComment ? (
                 renderComment(comment)
@@ -228,23 +304,36 @@ export default function CommentsObject({
     } else {
       comments = (
         <>
-          {[...additionalComments, ...data].map((comment: SCCommentType, index) => {
+          {isLoading && commentObj.obj && data.length === 0 && <CommentObjectSkeleton {...rest} />}
+          {commentData && data.length === 0 && obj && obj.comment_count > 0 && !isLoading && (
+            <Button variant="text" onClick={fetchCommentsData} disabled={isLoading}>
+              <FormattedMessage id="ui.commentsObject.loadMoreComments" defaultMessage="ui.commentsObject.loadMoreComments" />
+            </Button>
+          )}
+          {[...additionalHeaderComments, ...data].map((comment: SCCommentType, index) => {
             return (
               <React.Fragment key={comment.id}>
                 {renderComment ? (
                   renderComment(comment)
                 ) : (
-                  <CommentObject commentObject={comment} onOpenReply={openReplyBox} feedObject={obj} feedObjectType={feedObjectType} {...rest} />
+                  <CommentObject
+                    commentObject={comment}
+                    onOpenReply={openReplyBox}
+                    feedObject={obj}
+                    feedObjectType={feedObjectType}
+                    commentReply={commentObj.obj ? commentObj.obj : null}
+                    {...rest}
+                  />
                 )}
               </React.Fragment>
             );
           })}
           {Boolean(next) && !isLoading && (
             <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
-              <Button variant="text" onClick={fetchData} disabled={isLoading}>
+              <Button variant="text" onClick={fetchCommentsData} disabled={isLoading}>
                 <FormattedMessage id="ui.commentsObject.loadMoreComments" defaultMessage="ui.commentsObject.loadMoreComments" />
               </Button>
-              {total && (
+              {total && !commentObj.obj && (
                 <Typography variant="body1">
                   <FormattedMessage
                     id="ui.commentsObject.numberOfComments"
@@ -255,7 +344,23 @@ export default function CommentsObject({
               )}
             </Stack>
           )}
-          {isLoading && <CommentObjectSkeleton {...rest} />}
+          {isLoading && (!commentObj.obj || (commentObj.obj && data.length > 0)) && <CommentObjectSkeleton {...rest} />}
+          {commentData && (
+            <React.Fragment key={commentData.id}>
+              {renderComment ? (
+                renderComment(commentData)
+              ) : (
+                <CommentObject
+                  commentObject={commentData}
+                  onOpenReply={openReplyBox}
+                  feedObject={obj}
+                  feedObjectType={feedObjectType}
+                  commentReply={commentObj.obj ? commentObj.obj : null}
+                  {...rest}
+                />
+              )}
+            </React.Fragment>
+          )}
         </>
       );
     }
@@ -266,7 +371,7 @@ export default function CommentsObject({
    */
   return (
     <Root>
-      {!hidePrimaryReply && <ReplyCommentObject readOnly={isReplying} onReply={handleReply} inline {...rest} />}
+      {!hidePrimaryReply && !commentObj.obj && <ReplyCommentObject readOnly={isReplying} onReply={handleReply} inline {...rest} />}
       {comments}
     </Root>
   );
