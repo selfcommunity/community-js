@@ -92,7 +92,6 @@ export interface VoteShareProps {
   inlineAction: boolean;
   /**
    * Any other properties
-   * @default any
    */
   [p: string]: any;
 }

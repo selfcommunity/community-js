@@ -44,7 +44,6 @@ export interface ChangecoverProps {
   className?: string;
   /**
    * Any other properties
-   * @default any
    */
   [p: string]: any;
 }

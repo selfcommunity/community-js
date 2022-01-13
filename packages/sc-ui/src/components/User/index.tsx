@@ -35,7 +35,7 @@ const Root = styled(Card, {
   }
 }));
 
-export interface UserProps extends CardProps {
+export interface UserProps extends Pick<CardProps, Exclude<keyof CardProps, 'id'>> {
   /**
    * Id of user object
    * @default null
@@ -68,7 +68,6 @@ export interface UserProps extends CardProps {
   onFollowProps?: () => void;
   /**
    * Any other properties
-   * @default any
    */
   [p: string]: any;
 }

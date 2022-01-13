@@ -33,12 +33,12 @@ const Root = styled(Card, {
   maxWidth: 700
 }));
 
-export interface CategoryProps extends CardProps {
+export interface CategoryProps extends Pick<CardProps, Exclude<keyof CardProps, 'id'>> {
   /**
    * Id of category object
    * @default null
    */
-  id?: string;
+  id?: number;
   /**
    * Overrides or extends the styles applied to the component.
    * @default null
@@ -66,7 +66,6 @@ export interface CategoryProps extends CardProps {
   onFollowProps?: () => void;
   /**
    * Any other properties
-   * @default any
    */
   [p: string]: any;
 }

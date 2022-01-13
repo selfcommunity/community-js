@@ -65,7 +65,6 @@ export interface ContributorsFeedObjectProps {
   feedObjectType: SCFeedObjectTypologyType;
   /**
    * Any other properties
-   * @default any
    */
   [p: string]: any;
 }

@@ -62,7 +62,6 @@ export interface CommentRelevantActivityProps {
   loadingVote: number;
   /**
    * Any other properties
-   * @default any
    */
   [p: string]: any;
 }

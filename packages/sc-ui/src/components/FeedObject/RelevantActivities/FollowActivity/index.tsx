@@ -33,7 +33,6 @@ export interface ActionsRelevantActivityProps {
   activityObject: SCFeedUnitActivityType;
   /**
    * Any other properties
-   * @default any
    */
   [p: string]: any;
 }

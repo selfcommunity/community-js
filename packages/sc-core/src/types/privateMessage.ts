@@ -2,7 +2,7 @@
  * Interface SCPrivateMessageType.
  * Private Message Schema.
  */
-import { SCUserType } from '@selfcommunity/core';
+import {SCUserType} from '@selfcommunity/core';
 
 export interface SCPrivateMessageType {
   /**
@@ -14,6 +14,10 @@ export interface SCPrivateMessageType {
    * Sender User
    */
   sender: SCUserType;
+  /**
+   *Receiver User
+   */
+  receiver: SCUserType;
 
   /**
    * Message
@@ -23,17 +27,25 @@ export interface SCPrivateMessageType {
   /**
    * Send date time
    */
-  created_at: Date;
+  created_at: Date | string;
+  /**
+   * Last interaction date time
+   */
+  last_message_at: Date;
 
   /**
    * Message status: created, deleted or hidden message
    */
-  status: SCPrivateMessageStatusType;
+  thread_status: SCPrivateMessageStatusType;
 
   /**
    * file
    */
   file?: any;
+  /**
+   * Headline
+   */
+  headline: string;
 }
 
 /**

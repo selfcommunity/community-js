@@ -33,12 +33,10 @@ export interface ShareDialogProps {
   open: boolean;
   /**
    * On dialog close callback function
-   * @default any
    */
   onClose: () => any;
   /**
    * Any other properties
-   * @default any
    */
   [p: string]: any;
 }

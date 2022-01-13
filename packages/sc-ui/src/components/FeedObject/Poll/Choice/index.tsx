@@ -102,7 +102,6 @@ export interface ChoiceProps {
   votable?: boolean;
   /**
    * Any other properties
-   * @default any
    */
   [p: string]: any;
 }

@@ -57,7 +57,6 @@ export interface CPDialogProps {
   open: boolean;
   /**
    * Any other properties
-   * @default any
    */
   [p: string]: any;
 }

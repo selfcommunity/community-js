@@ -36,7 +36,6 @@ export interface ChangePictureProps {
   iconButton: boolean;
   /**
    * Any other properties
-   * @default any
    */
   [p: string]: any;
 }

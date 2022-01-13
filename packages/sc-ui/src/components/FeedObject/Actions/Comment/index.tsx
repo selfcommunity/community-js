@@ -57,7 +57,6 @@ export interface CommentProps {
   onActionCLick?: () => void;
   /**
    * Any other properties
-   * @default any
    */
   [p: string]: any;
 }

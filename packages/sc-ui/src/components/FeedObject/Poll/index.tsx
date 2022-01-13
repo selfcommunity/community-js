@@ -114,7 +114,6 @@ export interface PollObjectProps {
   feedObject?: SCFeedObjectType;
   /**
    * Any other properties
-   * @default any
    */
   [p: string]: any;
 }

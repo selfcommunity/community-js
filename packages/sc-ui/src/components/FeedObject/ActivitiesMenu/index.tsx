@@ -76,7 +76,6 @@ export interface ActivitiesMenuProps {
   onChange?: (type) => void;
   /**
    * Any other properties
-   * @default any
    */
   [p: string]: any;
 }
