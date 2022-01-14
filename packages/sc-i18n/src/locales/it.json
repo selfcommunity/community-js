@@ -173,6 +173,7 @@
   "ui.commentsObject.noComments": "Non ci sono ancora commenti al momento.",
   "ui.commentsObject.noOtherComments": "Non ci sono altri commenti.",
   "ui.commentsObject.loadMoreComments": "Vedi altri commenti",
+  "ui.commentsObject.loadPreviousComments": "Vedi commenti precedenti",
   "ui.commentsObject.numberOfComments": "{loaded} di {total}",
 
   "ui.commentsObject.title": "{total, plural, =0 {# Commenti} one {# Commento} other {# Commenti}}",

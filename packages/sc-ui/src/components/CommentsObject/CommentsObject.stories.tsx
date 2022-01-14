@@ -33,13 +33,14 @@ export default {
     }
   },
   args: {
-    feedObjectId: 1064, // 17,
-    feedObjectType: SCFeedObjectTypologyType.POST,
+    feedObjectId: 17, // 1064,
+    feedObjectType: SCFeedObjectTypologyType.DISCUSSION,
     infiniteScrolling: true,
     commentsPageSize: 10,
     elevation: 1,
     variant: 'elevation',
-    commentsOrderBy: CommentsOrderBy.ADDED_AT_ASC
+    commentsOrderBy: CommentsOrderBy.ADDED_AT_ASC,
+    page: 3
     /* renderComment: (comment) => (
       <>
         {comment.html}
