@@ -40,14 +40,18 @@ import {
   Link,
   Logger,
   SCCommentType,
+  SCCustomAdvPosition,
   SCFeedObjectType,
   SCFeedObjectTypologyType,
   SCPollType,
+  SCPreferences,
+  SCPreferencesContextType,
   SCRoutes,
   SCRoutingContextType,
   SCTagType,
   SCUserContextType,
   useSCFetchFeedObject,
+  useSCPreferences,
   useSCRouting,
   useSCUser
 } from '@selfcommunity/core';
@@ -61,6 +65,7 @@ import ReplyCommentObject from '../CommentObject/ReplyComment';
 import {LoadingButton} from '@mui/lab';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {AxiosResponse} from 'axios';
+import CustomAdv from '../CustomAdv';
 
 const messages = defineMessages({
   comment: {
@@ -213,6 +218,8 @@ export interface FeedObjectProps extends CardProps {
   hideParticipantsPreview?: boolean;
 }
 
+const PREFERENCES = [SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED, SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED];
+
 export default function FeedObject(props: FeedObjectProps): JSX.Element {
   // PROPS
   const {
@@ -231,6 +238,9 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
   const scUserContext: SCUserContextType = useSCUser();
+  const scPreferences: SCPreferencesContextType = useSCPreferences();
+
+  // RETRIVE OBJECTS
   const {obj, setObj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
 
   // STATE
@@ -243,6 +253,15 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
 
   // INTL
   const intl = useIntl();
+
+  /**
+   * Compute preferences
+   */
+  const preferences = useMemo(() => {
+    const _preferences = {};
+    PREFERENCES.map((p) => (_preferences[p] = p in scPreferences.preferences ? scPreferences.preferences[p].value : null));
+    return _preferences;
+  }, [scPreferences.preferences]);
 
   /**
    * Set:
@@ -461,6 +480,24 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
   }
 
   /**
+   * Render advertising above FeedObject Detail
+   */
+  function renderAdvertising() {
+    if (
+      obj &&
+      template === FeedObjectTemplateType.DETAIL &&
+      preferences[SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED] &&
+      ((preferences[SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED] && scUserContext.user === null) ||
+        !preferences[SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED])
+    ) {
+      return (
+        <CustomAdv position={SCCustomAdvPosition.POSITION_BELOW_FEED_OBJECT} {...(obj.categories.length ? {categoryId: obj.categories[0].id} : {})} />
+      );
+    }
+    return null;
+  }
+
+  /**
    * Render the obj object
    * Manage variants:
    * SNIPPET, PREVIEW, DETAIL
@@ -668,8 +705,11 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
    * Renders root object
    */
   return (
-    <Root className={className} {...rest}>
-      <Box className={`${PREFIX}-${template}`}>{objElement}</Box>
-    </Root>
+    <>
+      <Root className={className} {...rest}>
+        <Box className={`${PREFIX}-${template}`}>{objElement}</Box>
+      </Root>
+      {renderAdvertising()}
+    </>
   );
 }

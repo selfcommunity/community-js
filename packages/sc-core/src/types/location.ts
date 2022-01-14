@@ -1,8 +1,8 @@
 /**
- * Interface SCLocationLatLon.
+ * Interface SCContributionLocation.
  * Location Schema.
  */
-export interface SCContributeLocation {
+export interface SCContributionLocation {
   /**
    * location
    */

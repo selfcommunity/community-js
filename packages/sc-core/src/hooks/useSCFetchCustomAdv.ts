@@ -24,7 +24,7 @@ export default function useSCFetchCustomAdv({position = null, categoryId = null}
           method: Endpoints.CustomAdvSearch.method,
           params: {
             position,
-            category: categoryId,
+            ...(categoryId ? {category: categoryId} : {}),
           },
         })
         .then((res: AxiosResponse<any>) => {

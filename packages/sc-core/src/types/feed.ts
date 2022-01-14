@@ -1,6 +1,6 @@
 import {SCUserType} from './user';
 import {SCCategoryType} from './category';
-import {SCContributeLocation} from './location';
+import {SCContributionLocation} from './location';
 import {SCPollType} from './poll';
 import {SCMediaType} from './media';
 import {SCTagType} from '@selfcommunity/core';
@@ -123,9 +123,9 @@ export interface SCFeedObjectType {
   medias?: SCMediaType[];
 
   /**
-   * Location (contribute geolocation)
+   * Location (contribution geolocation)
    */
-  location?: SCContributeLocation;
+  location?: SCContributionLocation;
 
   /**
    * Author of the contribute
