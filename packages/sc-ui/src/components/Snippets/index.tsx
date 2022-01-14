@@ -1,14 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Button, Divider, Typography} from '@mui/material';
+import {Divider, Typography} from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import {Endpoints, http} from '@selfcommunity/core';
-import Snippet from '../Message';
 import {AxiosResponse} from 'axios';
 import {SCPrivateMessageType} from '@selfcommunity/core/src/types';
 import {FormattedMessage} from 'react-intl';
 import SnippetsSkeleton from '../Skeleton/SnippetsSkeleton';
+import SnippetMessage from '../Message/SnippetMessage';
 
 const PREFIX = 'SCSnippets';
 
@@ -79,6 +79,13 @@ export default function SnippetsSuggestion(props: SnippetSuggestionProps): JSX.E
   }, []);
 
   /**
+   * Handles thread opening
+   */
+  function handleOpenThread() {
+    setOpenSnippet(true);
+  }
+
+  /**
    * Renders snippets list
    */
   const c = (
@@ -95,7 +102,7 @@ export default function SnippetsSuggestion(props: SnippetSuggestionProps): JSX.E
             <React.Fragment>
               {snippets.map((message: SCPrivateMessageType, index) => (
                 <div key={index}>
-                  <Snippet elevation={0} message={message} key={message.id} onClick={() => setOpenSnippet(true)} />
+                  <SnippetMessage elevation={0} message={message} key={message.id} onClick={() => handleOpenThread()} />
                   {index < total - 1 ? <Divider /> : null}
                 </div>
               ))}

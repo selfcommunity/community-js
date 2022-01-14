@@ -4,11 +4,11 @@ import List from '@mui/material/List';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import {Avatar, ListItem, ListItemAvatar, ListItemText, CardProps, Typography, Box} from '@mui/material';
-import {SCPrivateMessageType} from '@selfcommunity/core';
+import SnippetMessageBoxSkeleton from '../../Skeleton/SnippetMessageBoxSkeleton';
 import {useIntl} from 'react-intl';
-import SnippetMessageBoxSkeleton from '../Skeleton/SnippetMessageBoxSkeleton';
+import {MessageProps} from '../index';
 
-const PREFIX = 'SCMessage';
+const PREFIX = 'SCSnippetMessage';
 
 const classes = {
   info: `${PREFIX}-info`
@@ -26,34 +26,7 @@ const Root = styled(Card, {
   }
 }));
 
-export interface MessageProps extends Pick<CardProps, Exclude<keyof CardProps, 'id'>> {
-  /**
-   * Id of message object
-   * @default null
-   */
-  id?: number;
-  /**
-   * Overrides or extends the styles applied to the component.
-   * @default null
-   */
-  className?: string;
-  /**
-   * Message Object
-   * @default null
-   */
-  message?: SCPrivateMessageType;
-  /**
-   * Hides this component
-   * @default false
-   */
-  autoHide?: boolean;
-  /**
-   * Function fired when message obj is clicked.
-   */
-  onClick?: () => void;
-}
-
-export default function Message(props: MessageProps): JSX.Element {
+export default function SnippetMessage(props: MessageProps): JSX.Element {
   // PROPS
   const {id = null, autoHide = false, message = null, className = null, ...rest} = props;
 
@@ -67,13 +40,17 @@ export default function Message(props: MessageProps): JSX.Element {
     <React.Fragment>
       {message ? (
         <ListItem button={true}>
-          {/*message.sender_id avatar!*/}
-          {/*<ListItemAvatar>*/}
-          {/*  <Avatar alt={message.sender.username} src={message.sender.avatar} />*/}
-          {/*</ListItemAvatar>*/}
+          <ListItemAvatar>
+            <Avatar alt={message.receiver.username} src={message.receiver.avatar} />
+          </ListItemAvatar>
           <ListItemText
-            primary={<Typography>{message.message}</Typography>}
-            secondary={<Typography variant="body2">{`${intl.formatDate(message.last_message_at, {hour: 'numeric', minute: 'numeric'})}`}</Typography>}
+            primary={
+              <Box className={classes.info}>
+                <Typography>{message.receiver.username}</Typography>
+                <Typography variant="body2">{`${intl.formatDate(message.last_message_at, {weekday: 'long', day: 'numeric'})}`}</Typography>
+              </Box>
+            }
+            secondary={message.headline}
           />
         </ListItem>
       ) : (

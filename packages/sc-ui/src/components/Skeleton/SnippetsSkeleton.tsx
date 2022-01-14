@@ -3,7 +3,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import List from '@mui/material/List';
 import {styled} from '@mui/material/styles';
-import MessageBoxSkeleton from './MessageBoxSkeleton';
+import SnippetMessageBoxSkeleton from './SnippetMessageBoxSkeleton';
 
 const PREFIX = 'SCSnippetsSkeleton';
 
@@ -25,7 +25,7 @@ export default function SnippetsSkeleton(props): JSX.Element {
       <CardContent>
         <List className={classes.list}>
           {[...Array(4)].map((category, index) => (
-            <MessageBoxSkeleton key={index} elevation={0} />
+            <SnippetMessageBoxSkeleton key={index} elevation={0} />
           ))}
         </List>
       </CardContent>

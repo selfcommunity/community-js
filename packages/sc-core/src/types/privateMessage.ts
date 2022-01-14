@@ -46,6 +46,10 @@ export interface SCPrivateMessageType {
    * Headline
    */
   headline: string;
+  /**
+   * Message content
+   */
+  message: string;
 }
 
 /**

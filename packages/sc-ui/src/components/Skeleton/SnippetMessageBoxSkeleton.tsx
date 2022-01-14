@@ -9,7 +9,7 @@ import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
 import {styled} from '@mui/material/styles';
 import Skeleton from '@mui/material/Skeleton';
 
-const PREFIX = 'SCMessageBoxSkeleton';
+const PREFIX = 'SCSnippetMessageBoxSkeleton';
 
 const classes = {
   list: `${PREFIX}-list`
@@ -23,7 +23,7 @@ const Root = styled(Card)(({theme}) => ({
   }
 }));
 
-function MessageBoxSkeleton(props): JSX.Element {
+function SnippetMessageBoxSkeleton(props): JSX.Element {
   const snippet = (
     <ListItem>
       <ListItemAvatar>
@@ -47,4 +47,4 @@ function MessageBoxSkeleton(props): JSX.Element {
   );
 }
 
-export default MessageBoxSkeleton;
+export default SnippetMessageBoxSkeleton;
