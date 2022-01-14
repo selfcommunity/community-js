@@ -400,7 +400,8 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
     setIsReplying(true);
     performReply(comment)
       .then((data: SCCommentType) => {
-        if (selectedActivities !== FeedObjectActivitiesType.RECENT_COMMENTS) {
+        if (selectedActivities !== FeedObjectActivitiesType.RECENT_COMMENTS || obj.comment_count === 0) {
+          setObj(Object.assign({}, obj, {comment_count: obj.comment_count + 1}));
           setComments([]);
           setSelectedActivities(FeedObjectActivitiesType.RECENT_COMMENTS);
         } else {
@@ -420,7 +421,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
     return (
       <>
         {<ReplyCommentObject inline variant={'outlined'} onReply={handleReply} isLoading={isReplying} key={Number(isReplying)} />}
-        {(obj.comment_count || feedObjectActivities) && (
+        {(obj.comment_count || feedObjectActivities || comments.length > 0) && (
           <ActivitiesMenu
             selectedActivities={selectedActivities}
             hideRelevantActivitiesItem={!(feedObjectActivities && feedObjectActivities.length > 0)}
@@ -451,7 +452,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
         : CommentsOrderBy.ADDED_AT_DESC;
     return (
       <>
-        {obj.comment_count > 0 && (
+        {(obj.comment_count > 0 || comments.length > 0) && (
           <LazyLoad once>
             <CommentsObject
               feedObject={obj}

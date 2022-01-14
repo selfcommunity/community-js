@@ -315,7 +315,7 @@ export default function CommentObject(props: CommentObjectProps): JSX.Element {
           url: next
             ? next
             : `${Endpoints.Comments.url()}?${feedObjectType}=${feedObjectId ? feedObjectId : feedObject.id}&parent=${
-                commentObject.id
+                obj.id
               }&limit=${commentsPageCount}&ordering=${commentsOrderBy}`,
           method: Endpoints.Comments.method
         })

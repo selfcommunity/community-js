@@ -39,7 +39,7 @@ export default {
     commentsPageSize: 10,
     elevation: 1,
     variant: 'elevation',
-    commentsOrderBy: CommentsOrderBy.ADDED_AT_DESC
+    commentsOrderBy: CommentsOrderBy.ADDED_AT_ASC
     /* renderComment: (comment) => (
       <>
         {comment.html}
