@@ -16,9 +16,9 @@ const Template: ComponentStory<typeof FeedObjectPage> = (args) => (
   </div>
 );
 
-export const Main = Template.bind({});
+export const Page = Template.bind({});
 
-Main.args = {
+Page.args = {
   feedObjectId: 9,
   feedObjectType: SCFeedObjectTypologyType.DISCUSSION
 };

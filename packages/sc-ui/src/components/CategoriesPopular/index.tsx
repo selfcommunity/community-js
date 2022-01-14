@@ -85,9 +85,8 @@ export default function CategoriesPopular(props: CategoriesListProps): JSX.Eleme
   }, []);
 
   /**
-   * Renders   popular categories list
+   * Renders popular categories list
    */
-  console.log(categories);
   const c = (
     <React.Fragment>
       {loading ? (
