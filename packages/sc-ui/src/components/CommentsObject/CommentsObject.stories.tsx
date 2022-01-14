@@ -1,9 +1,9 @@
 import React from 'react';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import {ComponentMeta, ComponentStory} from '@storybook/react';
 
 import CommentsObject from './index';
-import { SCFeedObjectTypologyType } from '@selfcommunity/core';
-import { CommentsOrderBy } from '../../types/comments';
+import {SCFeedObjectTypologyType} from '@selfcommunity/core';
+import {CommentsOrderBy} from '../../types/comments';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -33,13 +33,19 @@ export default {
     }
   },
   args: {
-    feedObjectId: 17,
-    feedObjectType: SCFeedObjectTypologyType.DISCUSSION,
+    feedObjectId: 1064, // 17,
+    feedObjectType: SCFeedObjectTypologyType.POST,
     infiniteScrolling: true,
     commentsPageSize: 10,
     elevation: 1,
     variant: 'elevation',
-    commentsOrderBy: CommentsOrderBy.ADDED_AT_ASC
+    commentsOrderBy: CommentsOrderBy.ADDED_AT_DESC
+    /* renderComment: (comment) => (
+      <>
+        {comment.html}
+        <br />
+      </>
+    ) */
   }
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
 } as ComponentMeta<typeof CommentsObject>;

@@ -1,7 +1,7 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
 import {Box, Grid, Hidden, Typography} from '@mui/material';
-import {FeedObject, RelatedDiscussion, FeedObjectTemplateType, CommentsObject} from '@selfcommunity/ui';
+import {FeedObject, RelatedDiscussion, FeedObjectTemplateType, CommentsObject, CommentsOrderBy} from '@selfcommunity/ui';
 import {SCFeedObjectType, SCFeedObjectTypologyType} from '@selfcommunity/core';
 import Sticky from 'react-stickynode';
 import {FormattedMessage} from 'react-intl';
@@ -67,7 +67,12 @@ export default function FeedObjectPage(props: FeedObjectPageProps): JSX.Element 
           <Typography variant="h6" gutterBottom>
             <FormattedMessage id="templates.feedObjectPage.comments" defaultMessage="templates.feedObjectPage.comments" />
           </Typography>
-          <CommentsObject feedObject={feedObject} feedObjectId={feedObjectId} feedObjectType={feedObjectType} />
+          <CommentsObject
+            feedObject={feedObject}
+            feedObjectId={feedObjectId}
+            feedObjectType={feedObjectType}
+            commentsOrderBy={CommentsOrderBy.ADDED_AT_ASC}
+          />
         </Grid>
         <Grid item xs={12} md={5}>
           <Hidden smDown>

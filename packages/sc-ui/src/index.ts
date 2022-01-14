@@ -22,7 +22,7 @@ import CommentObject from './components/CommentObject';
 import CommentsObject from './components/CommentsObject';
 import ReplyComment from './components/CommentObject/ReplyComment';
 import {CategoryBoxSkeleton, FeedObjectSkeleton, UserBoxSkeleton} from './components/Skeleton';
-import {SCFeedWidgetType, FeedObjectTemplateType} from './types';
+import {SCFeedWidgetType, FeedObjectTemplateType, CommentsOrderBy, FeedObjectActivitiesType, SCMediaObjectType, SCMediaChunkType} from './types';
 
 /**
  * List all exports
@@ -50,7 +50,11 @@ export {
   UserProfileHeader,
   UserFollowed,
   UserBoxSkeleton,
+  SCUser,
   SCFeedWidgetType,
   FeedObjectTemplateType,
-  SCUser
+  CommentsOrderBy,
+  FeedObjectActivitiesType,
+  SCMediaObjectType,
+  SCMediaChunkType
 };

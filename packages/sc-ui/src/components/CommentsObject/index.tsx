@@ -322,16 +322,36 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
   /**
    * Handle comment of 2° level
    */
-  function handleReply(comment) {
+  function handleReply(content) {
     setIsReplying(true);
-    performReply(comment)
-      .then((comment: SCCommentType) => {
-        setComments([...[comment], ...comments]);
+    performReply(content)
+      .then((c: SCCommentType) => {
+        setComments(commentsOrderBy === CommentsOrderBy.ADDED_AT_DESC ? [...[c], ...comments] : [...comments, ...[c]]);
         setIsReplying(false);
       })
       .catch((error) => {
         Logger.error(SCOPE_SC_UI, error);
       });
+  }
+
+  /**
+   * Render header primary reply
+   */
+  function renderHeadPrimaryReply() {
+    if (!hidePrimaryReply && !commentObj && !isLoading && commentsOrderBy === CommentsOrderBy.ADDED_AT_DESC) {
+      return <ReplyCommentObject readOnly={isReplying} onReply={handleReply} key={Number(isReplying)} inline {...rest} />;
+    }
+    return null;
+  }
+
+  /**
+   * Render footer primary reply
+   */
+  function renderFooterPrimaryReply() {
+    if (!hidePrimaryReply && !commentObj && !isLoading && commentsOrderBy === CommentsOrderBy.ADDED_AT_ASC) {
+      return <ReplyCommentObject readOnly={isReplying} onReply={handleReply} key={Number(isReplying)} inline {...rest} />;
+    }
+    return null;
   }
 
   /**
@@ -367,21 +387,25 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
           hasMore={next !== null}
           loader={<CommentObjectSkeleton {...rest} />}
           endMessage={
-            <Typography variant="body2" align="center">
-              <b>
-                <FormattedMessage id="ui.commentsObject.noOtherComments" defaultMessage="ui.commentsObject.noOtherComments" />
-              </b>
-            </Typography>
+            commentsOrderBy === CommentsOrderBy.ADDED_AT_DESC ? (
+              <Typography variant="body2" align="center">
+                <b>
+                  <FormattedMessage id="ui.commentsObject.noOtherComments" defaultMessage="ui.commentsObject.noOtherComments" />
+                </b>
+              </Typography>
+            ) : null
           }>
-          {[...additionalHeaderComments, ...comments, ...(comment ? [comment] : [])].map((comment: SCCommentType, index) => (
-            <React.Fragment key={index}>
-              {renderComment ? (
-                renderComment(comment)
-              ) : (
-                <CommentObject commentObject={comment} onOpenReply={openReplyBox} feedObject={obj} feedObjectType={feedObjectType} {...rest} />
-              )}
-            </React.Fragment>
-          ))}
+          {[...additionalHeaderComments, ...comments, ...(comment ? [comment] : [])].map((c: SCCommentType) => {
+            return (
+              <React.Fragment key={c.id}>
+                {renderComment ? (
+                  renderComment(c)
+                ) : (
+                  <CommentObject commentObject={c} onOpenReply={openReplyBox} feedObject={obj} feedObjectType={feedObjectType} {...rest} />
+                )}
+              </React.Fragment>
+            );
+          })}
         </InfiniteScroll>
       );
     } else {
@@ -454,8 +478,9 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
    */
   return (
     <Root>
-      {!hidePrimaryReply && !commentObj && <ReplyCommentObject readOnly={isReplying} onReply={handleReply} inline {...rest} />}
+      {renderHeadPrimaryReply()}
       {commentsRendered}
+      {renderFooterPrimaryReply()}
     </Root>
   );
 }
