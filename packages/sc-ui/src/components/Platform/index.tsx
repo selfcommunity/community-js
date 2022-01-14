@@ -1,7 +1,6 @@
 import React, {useContext} from 'react';
 import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
 import {Button, Grid, Typography} from '@mui/material';
 import {Endpoints, http, SCLocaleContextType, SCUserContext, SCUserContextType, useSCLocale} from '@selfcommunity/core';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -19,6 +18,7 @@ const Root = styled(Card, {
   marginBottom: theme.spacing(2),
   padding: 20
 }));
+
 export interface PlatformProps {
   /**
    * Hides this component
@@ -30,11 +30,16 @@ export interface PlatformProps {
    * @default null
    */
   className?: string;
+
+  /**
+   * Other props
+   */
+  [p: string]: any;
 }
 
 export default function Platform(props: PlatformProps): JSX.Element {
   // PROPS
-  const {autoHide, className} = props;
+  const {autoHide, className, ...rest} = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
@@ -42,8 +47,9 @@ export default function Platform(props: PlatformProps): JSX.Element {
 
   // CONST
   const language = scLocaleContext.locale;
-  const role = scUserContext.user['role'].toString();
-  const spacing = role === 'admin' ? 1 : 3;
+  const roles = scUserContext.user.role;
+  const isAdmin = roles && roles.includes('admin');
+  const isModerator = roles && roles.includes('moderator');
 
   /**
    * Fetches platform url
@@ -71,14 +77,14 @@ export default function Platform(props: PlatformProps): JSX.Element {
    */
   const c = (
     <React.Fragment>
-      <Grid container spacing={spacing} justifyContent="center">
+      <Grid container spacing={isAdmin ? 1 : 3} justifyContent="center">
         <Grid item xs={12}>
           <Typography component="h3" align="center">
             <FormattedMessage id="ui.platformAccess.title" defaultMessage="ui.platformAccess.title" />
             <LockOutlinedIcon fontSize="small" />
           </Typography>
         </Grid>
-        {role === 'admin' && (
+        {isAdmin && (
           <Grid item xs="auto" style={{textAlign: 'center'}}>
             <Button variant="outlined" size="small" onClick={() => fetchPlatform('')}>
               <FormattedMessage id="ui.platformAccess.adm" defaultMessage="ui.platformAccess.adm" />
@@ -87,7 +93,7 @@ export default function Platform(props: PlatformProps): JSX.Element {
         )}
         <Grid item xs="auto" style={{textAlign: 'center'}}>
           <Button variant="outlined" size="small" onClick={() => fetchPlatform('')}>
-            {role === 'moderator' || role === 'admin' ? (
+            {isAdmin || isModerator ? (
               <FormattedMessage id="ui.platformAccess.mod" defaultMessage="ui.platformAccess.mod" />
             ) : (
               <FormattedMessage id="ui.platformAccess.edt" defaultMessage="ui.platformAccess.edt" />
@@ -95,7 +101,7 @@ export default function Platform(props: PlatformProps): JSX.Element {
           </Button>
         </Grid>
         <Grid item xs="auto" style={{textAlign: 'center'}}>
-          <Button variant="outlined" size="small" href={`https://support.selfcommunity.com/hc/it`} target="_blank">
+          <Button variant="outlined" size="small" href={`https://support.selfcommunity.com/hc/${language}`} target="_blank">
             <FormattedMessage id="ui.platformAccess.hc" defaultMessage="ui.platformAccess.hc" />
           </Button>
         </Grid>
@@ -106,8 +112,12 @@ export default function Platform(props: PlatformProps): JSX.Element {
   /**
    * Renders root object (if not hidden by autoHide prop)
    */
-  if (!autoHide && role !== null) {
-    return <Root className={className}>{c}</Root>;
+  if (!autoHide && roles !== null) {
+    return (
+      <Root className={className} {...rest}>
+        {c}
+      </Root>
+    );
   }
   return null;
 }

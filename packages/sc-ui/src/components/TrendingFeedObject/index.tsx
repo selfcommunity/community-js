@@ -27,7 +27,7 @@ export default function TrendingFeedObject({
   categoryId = null,
   template = null,
   autoHide = null,
-  ...props
+  ...rest
 }: {
   categoryId?: number;
   template?: FeedObjectTemplateType;
@@ -113,7 +113,7 @@ export default function TrendingFeedObject({
    * Renders the component (if not hidden by autoHide prop)
    */
   if (!autoHide) {
-    return <Root {...props}>{f}</Root>;
+    return <Root {...rest}>{f}</Root>;
   }
   return null;
 }

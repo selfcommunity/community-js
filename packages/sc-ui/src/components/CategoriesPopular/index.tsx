@@ -28,7 +28,7 @@ export default function CategoriesPopular(props: CategoriesListProps): JSX.Eleme
   const limit = 3;
 
   // PROPS
-  const {autoHide, className, CategoryProps = {}} = props;
+  const {autoHide, className, CategoryProps = {}, ...rest} = props;
 
   // STATE
   const [categories, setCategories] = useState<any[]>([]);
@@ -87,6 +87,7 @@ export default function CategoriesPopular(props: CategoriesListProps): JSX.Eleme
   /**
    * Renders   popular categories list
    */
+  console.log(categories);
   const c = (
     <React.Fragment>
       {loading ? (
@@ -125,7 +126,7 @@ export default function CategoriesPopular(props: CategoriesListProps): JSX.Eleme
    * Renders root object (if not hidden by autoHide prop)
    */
   if (!autoHide) {
-    return <Root className={className}>{c}</Root>;
+    return <Root className={className} {...rest}>{c}</Root>;
   }
   return null;
 }

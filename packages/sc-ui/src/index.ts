@@ -21,6 +21,7 @@ import RelatedDiscussion from './components/RelatedDiscussion';
 import CommentObject from './components/CommentObject';
 import CommentsObject from './components/CommentsObject';
 import ReplyComment from './components/CommentObject/ReplyComment';
+import CustomAdv from './components/CustomAdv'
 import {CategoryBoxSkeleton, FeedObjectSkeleton, UserBoxSkeleton} from './components/Skeleton';
 import {SCFeedWidgetType, FeedObjectTemplateType, CommentsOrderBy, FeedObjectActivitiesType, SCMediaObjectType, SCMediaChunkType} from './types';
 
@@ -50,6 +51,7 @@ export {
   UserProfileHeader,
   UserFollowed,
   UserBoxSkeleton,
+  CustomAdv,
   SCUser,
   SCFeedWidgetType,
   FeedObjectTemplateType,

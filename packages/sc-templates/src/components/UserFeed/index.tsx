@@ -39,14 +39,14 @@ const WIDGETS: SCFeedWidgetType[] = [
   {
     type: 'widget',
     component: CategoriesFollowed,
-    componentProps: {},
+    componentProps: {variant: 'outlined'},
     column: 'right',
     position: 0
   },
   {
     type: 'widget',
     component: UserFollowed,
-    componentProps: {},
+    componentProps: {variant: 'outlined'},
     column: 'right',
     position: 1
   }
@@ -82,6 +82,7 @@ export default function UserFeed(props: UserFeedProps): JSX.Element {
           url: () => Endpoints.UserFeed.url({id: userId})
         }}
         widgets={widgets}
+        FeedObjectProps={{variant: 'outlined'}}
       />
     </Root>
   );

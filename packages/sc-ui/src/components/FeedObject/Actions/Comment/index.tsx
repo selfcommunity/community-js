@@ -4,6 +4,7 @@ import {Box, Button, Divider, Tooltip, Typography} from '@mui/material';
 import CommentIcon from '@mui/icons-material/ChatBubbleOutline';
 import {SCFeedObjectType, SCFeedObjectTypologyType, SCRoutingContextType, useSCFetchFeedObject, useSCRouting, Link} from '@selfcommunity/core';
 import {styled} from '@mui/material/styles';
+import {FeedObjectTemplateType} from '@selfcommunity/ui';
 
 const messages = defineMessages({
   comments: {
@@ -30,31 +31,49 @@ export interface CommentProps {
    * @default null
    */
   className?: string;
+
   /**
    * Feed object id
    * @default null
    */
   id?: number;
+
   /**
    * Feed object
    * @default null
    */
   feedObject?: SCFeedObjectType;
+
   /**
    * Feed object type
    * @default 'post' type
    */
   feedObjectType?: SCFeedObjectTypologyType;
+
+  /**
+   * Feed Object template type
+   * @default 'preview'
+   */
+  feedObjectTemplate?: FeedObjectTemplateType;
+
   /**
    * Manages action (if present)
    * @default false
    */
   withAction: boolean;
+
   /**
-   * Handles action click
+   * Handles action view all comments click
    * @default null
    */
-  onActionCLick?: () => void;
+  onViewCommentsAction?: () => any;
+
+  /**
+   * Handles action comment click
+   * @default null
+   */
+  onCommentAction?: () => any;
+
   /**
    * Any other properties
    */
@@ -63,12 +82,14 @@ export interface CommentProps {
 export default function Comment(props: CommentProps): JSX.Element {
   // PROPS
   const {
-    className = null,
-    id = null,
-    feedObject = null,
+    className,
+    id,
+    feedObject,
     feedObjectType = SCFeedObjectTypologyType.POST,
+    feedObjectTemplate = FeedObjectTemplateType,
     withAction = false,
-    onActionCLick = null,
+    onViewCommentsAction,
+    onCommentAction,
     ...rest
   } = props;
 
@@ -86,14 +107,31 @@ export default function Comment(props: CommentProps): JSX.Element {
    */
   return (
     <Root className={className} {...rest}>
-      <Button variant="text" size="small" component={Link} to={scRoutingContext.url(feedObjectType.toLowerCase(), {id: obj.id})} sx={{height: 32}}>
-        <Typography variant={'body2'}>{`${intl.formatMessage(messages.comments, {total: obj.comment_count})}`}</Typography>
-      </Button>
+      {onViewCommentsAction ? (
+        <Button variant="text" size="small" sx={{height: 32}} onClick={onViewCommentsAction}>
+          <Typography variant={'body2'}>{`${intl.formatMessage(messages.comments, {total: obj.comment_count})}`}</Typography>
+        </Button>
+      ) : (
+        <>
+          {feedObjectTemplate === FeedObjectTemplateType.DETAIL ? (
+            <Typography variant={'body2'} sx={{mt: '7px', mb: '6px'}}>{`${intl.formatMessage(messages.comments, {total: obj.comment_count})}`}</Typography>
+          ) : (
+            <Button
+              variant="text"
+              size="small"
+              component={Link}
+              to={scRoutingContext.url(feedObjectType.toLowerCase(), {id: obj.id})}
+              sx={{height: 32}}>
+              <Typography variant={'body2'}>{`${intl.formatMessage(messages.comments, {total: obj.comment_count})}`}</Typography>
+            </Button>
+          )}
+        </>
+      )}
       {withAction && (
         <React.Fragment>
           <Divider />
           <Tooltip title={`${intl.formatMessage(messages.comment)}`}>
-            <Button onClick={() => onActionCLick()}>
+            <Button onClick={onCommentAction}>
               <CommentIcon fontSize={'large'} />
             </Button>
           </Tooltip>

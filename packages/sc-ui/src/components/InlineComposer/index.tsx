@@ -28,6 +28,7 @@ const Root = styled(Paper, {
   display: 'flex',
   flexDirection: 'row',
   justifyContent: 'space-between',
+  marginBottom: theme.spacing(2),
   [`& .${classes.input}`]: {
     flexGrow: 2
   },

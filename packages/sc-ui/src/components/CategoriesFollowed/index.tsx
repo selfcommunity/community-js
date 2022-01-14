@@ -43,7 +43,7 @@ export default function CategoriesFollowed(props: CategoriesListProps): JSX.Elem
   const intl = useIntl();
 
   // PROPS
-  const {autoHide, className, CategoryProps = {}} = props;
+  const {autoHide, className, CategoryProps = {}, ...rest} = props;
 
   // STATE
   const [categories, setCategories] = useState<any[]>([]);
@@ -149,7 +149,7 @@ export default function CategoriesFollowed(props: CategoriesListProps): JSX.Elem
    * Renders root object (if not hidden by autoHide prop)
    */
   if (!autoHide) {
-    return <Root className={className}>{c}</Root>;
+    return <Root className={className} {...rest}>{c}</Root>;
   }
   return null;
 }

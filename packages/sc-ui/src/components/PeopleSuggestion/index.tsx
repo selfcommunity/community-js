@@ -36,6 +36,11 @@ export interface PeopleSuggestion {
    * @default empty object
    */
   UserProps?: UserProps;
+
+  /**
+   * Other props
+   */
+  [p: string]: any;
 }
 
 export default function PeopleSuggestion(props: PeopleSuggestion): JSX.Element {
@@ -43,7 +48,7 @@ export default function PeopleSuggestion(props: PeopleSuggestion): JSX.Element {
   const limit = 3;
 
   // PROPS
-  const {autoHide, className, UserProps = {}} = props;
+  const {autoHide, className, UserProps = {}, ...rest} = props;
 
   // STATE
   const [users, setUsers] = useState<SCUserType[]>([]);
@@ -143,7 +148,11 @@ export default function PeopleSuggestion(props: PeopleSuggestion): JSX.Element {
    * Renders root object (if not hidden by autoHide prop)
    */
   if (!autoHide) {
-    return <Root className={className}>{p}</Root>;
+    return (
+      <Root className={className} {...rest}>
+        {p}
+      </Root>
+    );
   }
   return null;
 }
