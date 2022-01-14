@@ -55,12 +55,13 @@ export interface RelatedDiscussionProps {
    */
   autoHide?: boolean;
 }
+
 export default function RelatedDiscussion(props: RelatedDiscussionProps): JSX.Element {
   // CONST
   const limit = 4;
 
   // PROPS
-  const {feedObjectId, feedObjectType, template, FeedObjectProps = {}, className, autoHide} = props;
+  const {feedObjectId, feedObjectType, template = FeedObjectTemplateType.SNIPPET, FeedObjectProps = {}, className, autoHide} = props;
 
   // STATE
   const [objs, setObjs] = useState<any[]>([]);

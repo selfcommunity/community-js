@@ -17,8 +17,12 @@ import TrendingFeedObject from './components/TrendingFeedObject';
 import TrendingPeople from './components/TrendingPeople';
 import UserProfileHeader from './components/UserProfileHeader';
 import UserFollowed from './components/UserFollowed';
+import RelatedDiscussion from './components/RelatedDiscussion';
+import CommentObject from './components/CommentObject';
+import CommentsObject from './components/CommentsObject';
+import ReplyComment from './components/CommentObject/ReplyComment';
 import {CategoryBoxSkeleton, FeedObjectSkeleton, UserBoxSkeleton} from './components/Skeleton';
-import {SCFeedWidgetType} from './types/Feed';
+import {SCFeedWidgetType, FeedObjectTemplateType} from './types';
 
 /**
  * List all exports
@@ -33,15 +37,20 @@ export {
   Feed,
   FeedObject,
   FeedObjectSkeleton,
+  CommentObject,
+  CommentsObject,
+  ReplyComment,
   InlineComposer,
   PeopleSuggestion,
   Platform,
   LoyaltyProgram,
   TrendingFeedObject,
   TrendingPeople,
+  RelatedDiscussion,
   UserProfileHeader,
   UserFollowed,
   UserBoxSkeleton,
   SCFeedWidgetType,
+  FeedObjectTemplateType,
   SCUser
 };

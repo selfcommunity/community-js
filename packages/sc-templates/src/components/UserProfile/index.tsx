@@ -2,7 +2,6 @@ import React from 'react';
 import {styled} from '@mui/material/styles';
 import {Box} from '@mui/material';
 import {UserProfileHeader} from '@selfcommunity/ui';
-import {useSCFetchUser} from '@selfcommunity/core';
 import UserFeed from '../UserFeed';
 
 const PREFIX = 'SCUserProfileTemplate';

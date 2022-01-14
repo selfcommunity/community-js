@@ -24,7 +24,6 @@ import {EndpointType} from '@selfcommunity/core/src/constants/Endpoints';
 import {SCFeedWidgetType} from '../../types/Feed';
 import Sticky from 'react-stickynode';
 import {useTheme} from '@mui/styles';
-import {InlineComposer} from '@selfcommunity/ui';
 import CustomAdv from '../CustomAdv';
 
 const PREFIX = 'SCFeed';

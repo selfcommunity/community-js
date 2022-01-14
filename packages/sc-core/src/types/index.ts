@@ -20,7 +20,7 @@ import {SCTagType} from './tag';
 import {SCCategoryType} from './category';
 import {SCEmbedType} from './embed';
 import {SCMediaType} from './media';
-import {SCContributeLocation, SCLocalityType} from './location';
+import {SCContributionLocation, SCLocalityType} from './location';
 import {SCPollChoiceType, SCPollType} from './poll';
 import {SCCommentType, SCCommentTypologyType} from './comment';
 import {SCPrivateMessageType, SCPrivateMessageStatusType} from './privateMessage';
@@ -84,7 +84,7 @@ export {
   SCLocaleContextType,
   SCEmbedType,
   SCMediaType,
-  SCContributeLocation,
+  SCContributionLocation,
   SCLocalityType,
   SCPollChoiceType,
   SCPollType,
