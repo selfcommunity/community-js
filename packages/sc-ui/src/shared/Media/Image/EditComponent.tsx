@@ -10,6 +10,7 @@ import {Endpoints, SCContext, SCContextType, SCMediaType} from '@selfcommunity/c
 import {styled} from '@mui/material/styles';
 import MediaChunkUploader from '../../MediaChunkUploader';
 import {SCMediaChunkType} from '../../../types/media';
+import {EditComponentProps} from '../Document/EditComponent';
 
 const PREFIX = 'SCMediaActionImage';
 
@@ -63,25 +64,18 @@ const SortableComponent = forwardRef<HTMLDivElement, any>(({children, ...props},
   );
 });
 
-export default ({
-  medias = [],
-  onSuccess,
-  onSort,
-  onDelete
-}: {
-  medias?: SCMediaType[];
-  onSuccess: (media: SCMediaType) => void;
-  onSort: (newSort: SCMediaType[]) => void;
-  onDelete: (id?: number) => (event: SyntheticEvent) => void;
-}): JSX.Element => {
-  // State variables
+export default (props: EditComponentProps): JSX.Element => {
+  //PROPS
+  const {medias = [], onSuccess, onSort, onDelete} = props;
+
+  // STATE
   const [uploading, setUploading] = useState({});
   const [errors, setErrors] = useState({});
 
-  // Context
+  // CONTEXT
   const scContext: SCContextType = useContext(SCContext);
 
-  // Handlers
+  // HANDLERS
 
   const handleSuccess = (media: SCMediaType) => {
     onSuccess(media);
@@ -102,6 +96,9 @@ export default ({
     };
   };
 
+  /**
+   * Renders root object
+   */
   return (
     <Root>
       <Typography gutterBottom component="div">

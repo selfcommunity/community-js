@@ -65,7 +65,7 @@ export default function CollapsedForNotification(props: NotificationDeletedForPr
   const intl = useIntl();
 
   /**
-   * Renders root obj
+   * Renders root object
    */
   return (
     <Root {...rest}>

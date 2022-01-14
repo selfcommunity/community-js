@@ -52,7 +52,7 @@ export default function UserNotificationMention(props: NotificationMentionProps)
   const intl = useIntl();
 
   /**
-   * Renders root obj
+   * Renders root object
    */
   return (
     <Root {...rest}>

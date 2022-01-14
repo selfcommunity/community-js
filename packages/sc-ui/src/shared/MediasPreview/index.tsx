@@ -20,16 +20,25 @@ const Root = styled(Box, {
   marginLeft: -23,
   marginRight: -23
 }));
-
-export default ({
-  medias,
-  mediaObjectTypes = [Image, Document, Link, Share],
-  ...rest
-}: {
+export interface MediaPreviewProps {
+  /**
+   * Medias preview array
+   */
   medias: Array<any>;
+  /**
+   * Media types
+   * @default 'image', 'document', 'link', 'share'
+   */
   mediaObjectTypes?: Array<SCMediaObjectType>;
+  /**
+   * Any other properties
+   */
   [p: string]: any;
-}): JSX.Element => {
+}
+export default (props: MediaPreviewProps): JSX.Element => {
+  //PROPS
+  const {medias, mediaObjectTypes = [Image, Document, Link, Share], ...rest} = props;
+
   if (!medias.length) {
     /**
      * Feed without any medias:
@@ -39,7 +48,7 @@ export default ({
   }
 
   /**
-   * Render list of media preview
+   * Renders list of media preview
    * The adornment prop is used to insert the controls
    * for re-editing the media at the top of the group of elements
    */

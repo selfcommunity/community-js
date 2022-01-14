@@ -13,7 +13,25 @@ const Root = styled(Box, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({}));
 
-export default ({medias = [], adornment = null}: {medias: any[]; adornment?: React.ReactNode}): JSX.Element => {
+export interface PreviewVideoProps {
+  /**
+   * Medias
+   * @default []
+   */
+  medias: any[];
+  /**
+   * Component adornments
+   * @default null
+   */
+  adornment?: React.ReactNode;
+}
+export default (props: PreviewVideoProps): JSX.Element => {
+  // PROPS
+  const {medias = [], adornment = null} = props;
+
+  /**
+   * Renders Video preview
+   */
   return (
     <>
       {medias.length > 0 && (

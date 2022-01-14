@@ -67,27 +67,51 @@ export enum TagsComponentType {
   LIST = 'list',
   POPPER = 'popper'
 }
-
-export default function Tags({
-  tags = [],
-  title = null,
-  type = TagsComponentType.POPPER,
-  onOpen = null,
-  onClose = null,
-  onClickTag = null,
-  ...rest
-}: {
+export interface TagsProps {
+  /**
+   * Tags
+   * @default []
+   */
   tags?: SCTagType[];
+  /**
+   * Tag title
+   * @default null
+   */
   title?: string;
+  /**
+   * Handles component opening
+   * @default null
+   */
   onOpen?: (res: any) => void;
+  /**
+   * Handles component closing
+   * @default null
+   */
   onClose?: (res: any) => void;
+  /**
+   * Handles on tag clicking
+   * @default null
+   */
   onClickTag?: (res: any) => void;
+  /**
+   * Tag component type
+   * @default 'popper'
+   */
   type?: TagsComponentType;
+  /**
+   * Any other properties
+   */
   [p: string]: any;
-}): JSX.Element {
+}
+export default function Tags(props: TagsProps): JSX.Element {
+  // PROPS
+  const {tags = [], title = null, type = TagsComponentType.POPPER, onOpen = null, onClose = null, onClickTag = null, ...rest} = props;
+
+  // STATE
   const [open, setOpen] = useState<boolean>(false);
   let popperRef = useRef(null);
 
+  // HANDLERS
   function handleToggle() {
     setOpen((prevOpen) => !prevOpen);
     if (rest.onOpen) {
@@ -106,6 +130,9 @@ export default function Tags({
     }
   }
 
+  /**
+   * Renders tag title
+   */
   function renderTitle() {
     return (
       <>
@@ -119,7 +146,9 @@ export default function Tags({
     );
   }
 
-  // return focus to the button when we transitioned from !open -> open
+  /**
+   * Returns focus to the button when we transitioned from !open -> open
+   */
   const prevOpen = useRef(open);
   React.useEffect(() => {
     if (prevOpen.current === true && open === false) {
@@ -128,6 +157,9 @@ export default function Tags({
     prevOpen.current = open;
   }, [open]);
 
+  /**
+   * Renders component
+   */
   return (
     <>
       {tags.length && (

@@ -328,7 +328,7 @@ export default function UserNotification(props: UserNotificationProps): JSX.Elem
   }
 
   /**
-   * Renders root obj
+   * Renders root object
    */
   return (
     <Root {...rest}>

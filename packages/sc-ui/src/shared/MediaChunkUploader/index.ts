@@ -15,18 +15,33 @@ import {SCMediaChunkType} from '../../types/media';
 import {useIntl} from 'react-intl';
 import messages from '../../messages/common';
 
-export default ({
-  type = null,
-  onSuccess = null,
-  onProgress = null,
-  onError = null
-}: {
+export interface ChunkUploaderProps {
+  /**
+   * Chunk type
+   * @default null
+   */
   type?: string | null;
+  /**
+   * Handles on success
+   * @default null
+   */
   onSuccess: (media: SCMediaType) => void;
+  /**
+   * Handles on progress
+   * @default null
+   */
   onProgress: (chunks: any) => void;
+  /**
+   * Handles on error
+   * @default null
+   */
   onError: (chunk: SCMediaChunkType, error: string) => void;
-}): JSX.Element => {
-  // State
+}
+export default (props: ChunkUploaderProps): JSX.Element => {
+  // PROPS
+  const {type = null, onSuccess = null, onProgress = null, onError = null} = props;
+
+  // STATE
   const [chunks, setChunks] = useState({});
   const setChunk: Function = (chunk: SCMediaChunkType) => {
     setChunks({...chunks, [chunk.id]: {...chunks[chunk.id], ...chunk}});
@@ -37,7 +52,7 @@ export default ({
   const chunkStateRef = React.useRef({chunks, setChunk, setChunks});
   chunkStateRef.current = {chunks, setChunk, setChunks};
 
-  // Context
+  // CONTEXT
   const scContext: SCContextType = useContext(SCContext);
 
   // INTL
@@ -48,7 +63,7 @@ export default ({
     onProgress && onProgress(chunks);
   }, [chunks]);
 
-  // Listeners
+  // LISTENERS
   useItemStartListener((item) => {
     if (item.file.type.startsWith('image/')) {
       const reader = new FileReader();

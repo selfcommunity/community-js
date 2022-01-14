@@ -128,18 +128,32 @@ const Root = styled(Box, {
     top: 2
   }
 }));
-
-export default ({
-  medias = [],
-  gallery = true,
-  adornment = null,
-  onClick = null
-}: {
+export interface ImagePreviewComponentProps {
+  /**
+   * Medias objs
+   * @default []
+   */
   medias: Array<any>;
+  /**
+   * Gallery view
+   * @default true
+   */
   gallery?: boolean;
+  /**
+   * Component adornments
+   * @default null
+   */
   adornment?: React.ReactNode;
+  /**
+   * Handles on click
+   */
   onClick?: (any) => void;
-}): JSX.Element => {
+}
+export default (props: ImagePreviewComponentProps): JSX.Element => {
+  // PROPS
+  const {medias = [], gallery = true, adornment = null, onClick = null} = props;
+
+  // STATE
   const [preview, setPreview] = useState(-1);
   const [from, setFrom] = useState(0);
   const [conditionalRender, setConditionalRender] = useState(false);
@@ -150,7 +164,6 @@ export default ({
   };
 
   // UTILS
-
   const getImageUrl = (image) => {
     if (typeof image === 'object') {
       return image.image ? image.image : '/static/frontend_v2/images/image.svg';
@@ -209,7 +222,12 @@ export default ({
         <Grid
           item
           xs={12}
-          classes={{root: classNames(classes.border, classes.heightOne, classes.background, {[classes.gallery]: gallery, [classes.heightHalfOne]: medias.length > 1})}}
+          classes={{
+            root: classNames(classes.border, classes.heightOne, classes.background, {
+              [classes.gallery]: gallery,
+              [classes.heightHalfOne]: medias.length > 1
+            })
+          }}
           onClick={() => openPreviewImage(0)}
           style={{background: `url(${getImageUrl(medias[0])})`}}>
           {overlay}

@@ -55,7 +55,7 @@ export default function DeletedForNotification(props: NotificationDeletedForProp
   const intl = useIntl();
 
   /**
-   * Renders root obj
+   * Renders root object
    */
   return (
     <Root {...rest}>

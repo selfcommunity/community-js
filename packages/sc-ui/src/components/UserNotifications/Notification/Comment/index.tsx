@@ -74,7 +74,7 @@ export default function UserNotificationComment(props: UserNotificationCommentPr
   const intl = useIntl();
 
   /**
-   * Renders root obj
+   * Renders root object
    */
   return (
     <Root {...rest}>

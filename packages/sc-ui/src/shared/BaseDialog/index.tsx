@@ -21,19 +21,39 @@ const Root = styled(Dialog, {
   minWidth: 500
 }));
 
-export default function BaseDialog({
-  title = '',
-  open = false,
-  onClose = null,
-  ...rest
-}: {
+export interface BaseDialogProps {
+  /**
+   * Dialog title
+   * @default ''
+   */
   title: any;
+  /**
+   * Handles dialog opening
+   * @default false
+   */
   open: boolean;
+  /**
+   * Handles dialog closing
+   * @default null
+   */
   onClose: () => any;
+  /**
+   * Any other properties
+   */
   [p: string]: any;
-}) {
+}
+
+export default function BaseDialog(props: BaseDialogProps) {
+  // PROPS
+  const {title = '', open = false, onClose = null, ...rest} = props;
   const {children} = rest;
+
+  // OPTIONS
   const fullScreen = useMediaQuery((theme) => theme['breakpoints'].down('sm'));
+
+  /**
+   * Renders root object
+   */
   return (
     <Root fullScreen={fullScreen} fullWidth open={open} onClose={onClose} maxWidth={rest.maxWidth ? rest.maxWidth : 'sm'} scroll="body">
       <Title onClose={onClose}>{title}</Title>

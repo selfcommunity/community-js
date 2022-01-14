@@ -92,16 +92,11 @@ export interface TagChipProps {
   ellipsis?: boolean;
 }
 
-export default function TagChip({
-  tag,
-  label = null,
-  ellipsis = false,
-  onClick = null,
-  onDelete = null,
-  className = null,
-  ...rest
-}: TagChipProps): JSX.Element {
-  // Handlers
+export default function TagChip(props: TagChipProps): JSX.Element {
+  // PROPS
+  const {tag, label = null, ellipsis = false, onClick = null, onDelete = null, className = null, ...rest} = props;
+
+  // HANDLERS
   const handleClick = (): void => {
     onClick && onClick(tag.id);
   };
@@ -109,6 +104,9 @@ export default function TagChip({
     onDelete && onDelete(tag.id);
   };
 
+  /**
+   * Renders root object
+   */
   return (
     <Root
       className={classNames(className, {[classes.ellipsis]: ellipsis})}

@@ -31,19 +31,36 @@ const Root = styled(Box, {
   }
 }));
 
-export default ({
-  medias = [],
-  onSuccess,
-  onSort,
-  onProgress,
-  onDelete
-}: {
+export interface EditLinkProps {
+  /**
+   * Medias
+   * @default []
+   */
   medias?: any[];
+  /**
+   * Handles on success
+   */
   onSuccess: (media: any) => void;
+  /**
+   * Handles on sort
+   */
   onSort: (newSort: any[]) => void;
+  /**
+   * Handles on progress
+   */
   onProgress: (id: number) => void;
+  /**
+   * Handles on delete
+   */
   onDelete: (id?: number) => (event: SyntheticEvent) => void;
-}): JSX.Element => {
+}
+export default (props: EditLinkProps): JSX.Element => {
+  // PROPS
+  const {medias = [], onSuccess, onSort, onProgress, onDelete} = props;
+
+  /**
+   * Renders root object
+   */
   return (
     <Root>
       <UrlTextField

@@ -11,36 +11,52 @@ const Root = styled(Lightbox, {
   overridesResolver: (props, styles) => styles.root
 })(() => ({}));
 
-export default function PreviewImage({
-  images = [],
-  index = null,
-  onClose = null,
-  ...rest
-}: {
+export interface PreviewImageProps {
+  /**
+   * Images objs
+   * @default []
+   */
   images: any[];
+  /**
+   * Obj index
+   * @default null
+   */
   index: number;
+  /**
+   * Handles on close
+   * @default null
+   */
   onClose: () => void;
+  /**
+   * Any other properties
+   */
   [p: string]: any;
-}) {
+}
+
+export default function PreviewImage(props: PreviewImageProps) {
+  // PROPS
+  const {images = [], index = null, onClose = null, ...rest} = props;
+
+  // STATE
   const [currentImages, setCurrentImages] = useState<any[]>(images || []);
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(index);
 
   /**
-   * Handle Prev image
+   * Handles Prev image
    */
   function onMovePrevRequest() {
     setCurrentImageIndex((currentImageIndex + currentImages.length - 1) % currentImages.length);
   }
 
   /**
-   * Handle next image
+   * Handles next image
    */
   function onMoveNextRequest() {
     setCurrentImageIndex((currentImageIndex + 1) % currentImages.length);
   }
 
   /**
-   * Get image url
+   * Gets image url
    * @param image
    */
   function getImageUrl(image) {
@@ -50,6 +66,9 @@ export default function PreviewImage({
     return image;
   }
 
+  /**
+   * Renders root object
+   */
   return (
     <Root
       {...rest}

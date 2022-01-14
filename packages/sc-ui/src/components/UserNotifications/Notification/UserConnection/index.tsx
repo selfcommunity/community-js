@@ -58,7 +58,7 @@ export default function UserConnectionNotification(props: NotificationConnection
     notificationObject.type === SCNotificationTypologyType.CONNECTION_REQUEST ? notificationObject.request_user : notificationObject.accept_user;
 
   /**
-   * Renders root obj
+   * Renders root object
    */
   return (
     <Root {...rest}>

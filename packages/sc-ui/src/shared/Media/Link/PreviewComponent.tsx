@@ -53,8 +53,31 @@ const Root = styled(Box, {
     }
   }
 }));
+export interface LinkPreviewProps {
+  /**
+   * Medias
+   */
+  medias: any[];
+  /**
+   * Handle full width option
+   * @default false
+   */
+  fullWidth?: boolean;
+  /**
+   * Component adornments
+   * @default null
+   */
+  adornment?: React.ReactNode;
+}
+export default (props: LinkPreviewProps): JSX.Element => {
+  // PROPS
+  const {medias, fullWidth = false, adornment = null} = props;
 
-export default ({medias, fullWidth = false, adornment = null}: {medias: any[]; fullWidth?: boolean; adornment?: React.ReactNode}): JSX.Element => {
+  /**
+   * Renders link preview
+   * @param (link)
+   * @param(key)
+   */
   const renderPreview = (link, key) => {
     if (fullWidth) {
       return (
@@ -91,6 +114,9 @@ export default ({medias, fullWidth = false, adornment = null}: {medias: any[]; f
     );
   };
 
+  /**
+   * Renders component
+   */
   return (
     <>
       {medias.length > 0 && (

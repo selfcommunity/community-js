@@ -43,7 +43,7 @@ export default function ContributionFollowNotification(props: NotificationVoteUp
   const intl = useIntl();
 
   /**
-   * Renders root obj
+   * Renders root object
    */
   return (
     <Root {...rest}>

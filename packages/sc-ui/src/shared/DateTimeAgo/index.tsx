@@ -24,18 +24,38 @@ const Root = styled(Box, {
 
 const formatter = buildFormatter(itStrings);
 
-export default function DateTimeAgo({
-  live = true,
-  date = null,
-  showStartIcon = true,
-  ...rest
-}: {
+export interface DateTimeAgoProps {
+  /**
+   * Handles live option
+   * @default true
+   */
   live?: boolean;
+  /**
+   * Date obj
+   * @default null
+   */
   date: Date;
+  /**
+   * Handles icon showing
+   * @default true
+   */
   showStartIcon?: boolean;
+  /**
+   * Any other properties
+   */
   [p: string]: any;
-}): JSX.Element {
+}
+export default function DateTimeAgo(props: DateTimeAgoProps): JSX.Element {
+  // PROPS
+  const {live = true, date = null, showStartIcon = true, ...rest} = props;
+
+  // INTL
   const intl = useIntl();
+
+  /**
+   * Renders root object (if date obj)
+   */
+
   if (date) {
     return (
       <Root {...rest}>

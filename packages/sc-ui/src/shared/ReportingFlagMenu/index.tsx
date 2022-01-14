@@ -89,19 +89,34 @@ const messages = defineMessages({
     defaultMessage: 'ui.reportingMenu.footer'
   }
 });
-
-export default function ReportingFlagMenu({
-  id = null,
-  feedObject = null,
-  feedObjectType = SCFeedObjectTypologyType.POST,
-  ...rest
-}: {
+export interface ReportingFlagMenuProps {
+  /**
+   * Obj id
+   * @default null
+   */
   id?: number;
+  /**
+   * Feed obj
+   * @default null
+   */
   feedObject?: SCFeedObjectType;
+  /**
+   * Feed obj type
+   * @default 'post'
+   */
   feedObjectType?: SCFeedObjectTypologyType;
+  /**
+   * Any other properties
+   */
   [p: string]: any;
-}): JSX.Element {
+}
+export default function ReportingFlagMenu(props: ReportingFlagMenuProps): JSX.Element {
+  // PROPS
+  const {id = null, feedObject = null, feedObjectType = SCFeedObjectTypologyType.POST, ...rest} = props;
+  // INTL
   const intl = useIntl();
+
+  // STATE
   const {obj, setObj} = useSCFetchFeedObject({id, feedObject, feedObjectType});
   const [flagType, setFlagType] = useState<string>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -186,7 +201,7 @@ export default function ReportingFlagMenu({
   }
 
   /**
-   * Handle open flagging popup, retrive always the flag status (if exist)
+   * Handles open flagging popup, retrive always the flag status (if exist)
    */
   function handleOpen() {
     setOpen(true);
@@ -194,7 +209,7 @@ export default function ReportingFlagMenu({
   }
 
   /**
-   * Close the flagging popup
+   * Closes the flagging popup
    */
   function handleClose() {
     if (popperRef.current && popperRef.current.contains(event.target)) {
@@ -208,7 +223,7 @@ export default function ReportingFlagMenu({
   }
 
   /**
-   * Return flag label based on type
+   * Returns flag label based on type
    * @param flagType
    * @return {*}
    */
@@ -237,7 +252,7 @@ export default function ReportingFlagMenu({
   }
 
   /**
-   * Render single flag item
+   * Renders single flag item
    * @return {[{REPORTS}]}
    */
   function renderFlags() {
@@ -249,6 +264,9 @@ export default function ReportingFlagMenu({
     ));
   }
 
+  /**
+   * Renders component
+   */
   return (
     <React.Fragment>
       <IconButton

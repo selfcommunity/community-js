@@ -42,7 +42,7 @@ export default function UserFollowNotification(props: NotificationFollowProps): 
   const intl = useIntl();
 
   /**
-   * Renders root obj
+   * Renders root object
    */
   return (
     <Root {...rest}>

@@ -44,7 +44,7 @@ export default function UserBlockedNotification(props: NotificationBlockedProps)
   const intl = useIntl();
 
   /**
-   * Renders root obj
+   * Renders root object
    */
   return (
     <Root {...rest}>

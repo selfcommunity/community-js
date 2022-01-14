@@ -98,17 +98,17 @@ const INITIAL_STATE = {
 };
 
 export default (props: UrlTextFieldProps): JSX.Element => {
-  // State
+  // STATE
   const [isCreating, setIsCreating] = useState(false);
   const [state, setState] = useState({...INITIAL_STATE});
   const {url, urlError} = state;
 
-  // Refs
+  // REFS
   const urlRef = React.useRef(url);
   urlRef.current = url;
   const timerRef = React.useRef(null);
 
-  // Props
+  // PROPS
   const {helperText, error, onSuccess, ...rest} = props;
 
   // INTL
@@ -120,7 +120,7 @@ export default (props: UrlTextFieldProps): JSX.Element => {
     return () => clearTimeout(timerRef.current);
   }, []);
 
-  // Handlers
+  // HANDLERS
   const handleChange = (event: SyntheticEvent) => {
     const target = event.target as HTMLInputElement;
     setState({url: target.value, urlError: UrlUtils.isValidUrl(target.value) ? null : intl.formatMessage(commonMessages.urlError)});
@@ -161,6 +161,9 @@ export default (props: UrlTextFieldProps): JSX.Element => {
     }, 500);
   };
 
+  /**
+   * Renders url text field
+   */
   return (
     <form method="post" onSubmit={handleSubmit}>
       <TextField

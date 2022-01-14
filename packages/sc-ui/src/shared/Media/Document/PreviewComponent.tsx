@@ -15,17 +15,29 @@ const Root = styled(Box, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({}));
 
-export default ({
-  medias = [],
-  GridImageProps = {},
-  adornment = null
-}: {
-  medias: any[];
-  GridImageProps?: any;
-  adornment?: React.ReactNode;
-}): JSX.Element => {
+export interface PreviewComponentProps {
   /**
-   * Handle click on pdf
+   * Medias
+   * @default []
+   */
+  medias: any[];
+  /**
+   * Grid Image props
+   * @default {}
+   */
+  GridImageProps?: any;
+  /**
+   * Component adornments
+   * @default null
+   */
+  adornment?: React.ReactNode;
+}
+export default (props: PreviewComponentProps): JSX.Element => {
+  // PROPS
+  const {medias = [], GridImageProps = {}, adornment = null} = props;
+
+  /**
+   * Handles click on pdf
    * @param doc
    */
   const handleClickOnPdf = (doc) => {
@@ -39,6 +51,9 @@ export default ({
     }
   };
 
+  /**
+   * Renders document preview
+   */
   return (
     <>
       {medias.length > 0 && (

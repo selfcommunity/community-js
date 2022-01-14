@@ -38,7 +38,7 @@ export default function UndeletedForNotification(props: NotificationUndeletedPro
   const contributionType = getContributeType(notificationObject);
 
   /**
-   * Renders root obj
+   * Renders root object
    */
   return (
     <Root {...rest}>

@@ -6,11 +6,12 @@ import {
   Box,
   Button,
   Button as MuiButton,
-  CircularProgress,
   Fade,
-  Grid, IconButton,
-  ImageList, ImageListItem, ImageListItemBar,
-  Typography,
+  IconButton,
+  ImageList,
+  ImageListItem,
+  ImageListItemBar,
+  Typography
 } from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import {ReactSortable} from 'react-sortablejs';
@@ -57,25 +58,37 @@ const SortableComponent = forwardRef<HTMLDivElement, any>(({children, ...props},
   );
 });
 
-export default ({
-  medias = [],
-  onSuccess,
-  onSort,
-  onDelete
-}: {
+export interface EditComponentProps {
+  /**
+   * Medias
+   * @default []
+   */
   medias?: SCMediaType[];
+  /**
+   * Handles on success
+   */
   onSuccess: (media: SCMediaType) => void;
+  /**
+   * Handles on sort
+   */
   onSort: (newSort: SCMediaType[]) => void;
+  /**
+   * Handles on delete
+   */
   onDelete: (id?: number) => (event: SyntheticEvent) => void;
-}): JSX.Element => {
-  // State variables
+}
+export default (props: EditComponentProps): JSX.Element => {
+  //PROPS
+  const {medias = [], onSuccess, onSort, onDelete} = props;
+
+  // STATE
   const [uploading, setUploading] = useState({});
   const [errors, setErrors] = useState({});
 
-  // Context
+  // CONTEXT
   const scContext: SCContextType = useContext(SCContext);
 
-  // Handlers
+  // HANDLERS
 
   const handleSuccess = (media: SCMediaType) => {
     onSuccess(media);
@@ -96,6 +109,9 @@ export default ({
     };
   };
 
+  /**
+   * Renders root object
+   */
   return (
     <Root>
       <Typography gutterBottom component="div">
@@ -109,7 +125,7 @@ export default ({
               <ImageListItemBar
                 position="top"
                 actionIcon={
-                  <IconButton onClick={onDelete(media.id)} size="small" sx={{ color: 'rgba(255, 255, 255, 0.54)' }}>
+                  <IconButton onClick={onDelete(media.id)} size="small" sx={{color: 'rgba(255, 255, 255, 0.54)'}}>
                     <DeleteIcon />
                   </IconButton>
                 }

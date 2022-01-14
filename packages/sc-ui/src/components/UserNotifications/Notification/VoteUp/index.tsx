@@ -32,7 +32,7 @@ export default function VoteUpNotification(props: NotificationVoteUpProps): JSX.
   const intl = useIntl();
 
   /**
-   * Renders root obj
+   * Renders root object
    */
   return (
     <Root {...rest}>

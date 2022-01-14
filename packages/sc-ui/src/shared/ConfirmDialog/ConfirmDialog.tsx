@@ -18,33 +18,75 @@ const Root = styled(Card, {
   marginBottom: theme.spacing(2)
 }));
 
-export default function ConfirmDialog({
-  open,
-  title,
-  content = null,
-  btnConfirm = null,
-  btnCancel = null,
-  isUpdating = false,
-  onClose = null,
-  onConfirm = null,
-  disableBackdropClick = false,
-  ...rest
-}: {
+export interface ConfirmDialogProps {
+  /**
+   * Handles confirm dialog opening
+   */
   open: boolean;
+  /**
+   * Confirm dialog title
+   */
   title: React.ReactNode;
+  /**
+   * Confirm dialog content
+   * @default null
+   */
   content?: React.ReactNode;
+  /**
+   * Handles confirm button click
+   * @default null
+   */
   btnConfirm?: React.ReactNode;
+  /**
+   * Handles cancel button click
+   * @default null
+   */
   btnCancel?: React.ReactNode;
+  /**
+   * Handles component update
+   * @default false
+   */
   isUpdating?: boolean;
+  /**
+   * Handles dialog closing
+   * @default null
+   */
   onClose?: () => void;
+  /**
+   * Handles dialog confirm
+   * @default null
+   */
   onConfirm?: () => void;
+  /**
+   * Handles backdrop disable on click
+   * @default false
+   */
   disableBackdropClick?: boolean;
+  /**
+   * Any other properties
+   */
   [p: string]: any;
-}): JSX.Element {
+}
+export default function ConfirmDialog(props: ConfirmDialogProps): JSX.Element {
+  // PROPS
+  const {
+    open,
+    title,
+    content = null,
+    btnConfirm = null,
+    btnCancel = null,
+    isUpdating = false,
+    onClose = null,
+    onConfirm = null,
+    disableBackdropClick = false,
+    ...rest
+  } = props;
+
+  // CONTEXT
   const scUser: SCUserContextType = useContext(SCUserContext);
 
   /**
-   * Handle close dialog
+   * Handles dialog closing
    * @param reason
    */
   function handleClose(reason) {
@@ -57,12 +99,15 @@ export default function ConfirmDialog({
   }
 
   /**
-   * Handle confirm action
+   * Handles action confirm
    */
   function handleConfirm() {
     onConfirm && onConfirm();
   }
 
+  /**
+   * Renders root object
+   */
   return (
     <Root>
       <Dialog open={open} onClose={handleClose} {...rest}>

@@ -51,7 +51,7 @@ export default function UserNotificationPrivateMessage(props: NotificationPMProp
   const scRoutingContext: SCRoutingContextType = useSCRouting();
 
   /**
-   * Renders root obj
+   * Renders root object
    */
   return (
     <Root {...rest}>
