@@ -240,6 +240,8 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
   const [selectedActivities, setSelectedActivities] = useState<string>(getInitialSelectedActivitiesType());
   const [isReplying, setIsReplying] = useState<boolean>(false);
   const [isFollowing, setIsFollowing] = useState<boolean>(false);
+
+  // INTL
   const intl = useIntl();
 
   /**

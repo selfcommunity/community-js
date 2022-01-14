@@ -53,16 +53,35 @@ const Root = styled(Box, {
   }
 }));
 
-export default function CategoryHeader({
-  categoryId = null,
-  category = null,
-  ...rest
-}: {
-  categoryId?: number;
+export interface CategoryHeaderProps {
+  /**
+   * Overrides or extends the styles applied to the component.
+   * @default null
+   */
+  className?: string;
+  /**
+   * Category Object
+   * @default null
+   */
   category?: SCCategoryType;
+  /**
+   * Id of category object
+   * @default null
+   */
+  categoryId?: number;
+  /**
+   * Any other properties
+   */
   [p: string]: any;
-}): JSX.Element {
+}
+export default function CategoryHeader(props: CategoryHeaderProps): JSX.Element {
+  // PROPS
+  const {className = null, category = null, categoryId = null, ...rest} = props;
+
+  // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
+
+  // STATE
   const {scCategory, setSCCategory} = useSCFetchCategory({id: categoryId, category});
   const [loading, setLoading] = useState<boolean>(true);
   const [next, setNext] = useState<string>(null);
@@ -71,7 +90,7 @@ export default function CategoryHeader({
   const [openFollowersDialog, setOpenFollowersDialog] = useState<boolean>(false);
 
   /**
-   * If id attempt to get the category by id
+   * If id attempts to get the category by id
    */
   useEffect(() => {
     if (scCategory) {
@@ -104,14 +123,14 @@ export default function CategoryHeader({
   );
 
   /**
-   * Open dialog votes
+   * Opens dialog votes
    */
   function handleToggleFollowersDialog() {
     setOpenFollowersDialog((prev) => !prev);
   }
 
   /**
-   * Handle callback follow/unfollow category
+   * Handles callback follow/unfollow category
    */
   function handleFollowCategory(category, follow) {
     let _followers = [];
@@ -134,7 +153,7 @@ export default function CategoryHeader({
   }
 
   /**
-   * If not category object return null
+   * If not category object returns null
    */
   if (!scCategory) {
     return null;
@@ -144,8 +163,11 @@ export default function CategoryHeader({
     ...(scCategory ? {background: `url('${scCategory.image_bigger}') center / cover`} : {})
   };
 
+  /**
+   * Renders root object
+   */
   return (
-    <Root {...rest}>
+    <Root className={className} {...rest}>
       <Paper style={_backgroundCover} classes={{root: classes.cover}}>
         <Typography variant={'h3'} align={'center'} className={classes.categoryName} gutterBottom>
           {scCategory.name}

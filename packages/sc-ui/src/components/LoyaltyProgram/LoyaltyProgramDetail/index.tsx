@@ -107,10 +107,13 @@ export interface LoyaltyProgramDetailProps {
   requestable?: boolean;
 }
 export default function LoyaltyProgramDetail(props: LoyaltyProgramDetailProps): JSX.Element {
-  //PROPS
+  // PROPS
   const {className, autoHide, points, cardType, requestable, ...rest} = props;
-  //STATE
+
+  // STATE
   const [prizes, setPrizes] = useState([]);
+
+  // INTL
   const intl = useIntl();
 
   /**

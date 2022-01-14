@@ -28,7 +28,7 @@ export default function VoteUpRelevantActivity(props: ActionsRelevantActivityPro
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
 
-  // STATE
+  // INTL
   const intl = useIntl();
 
   /**

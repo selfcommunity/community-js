@@ -20,18 +20,32 @@ const Root = styled(Box, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({}));
 
-export default function UserFollowNotification({
-  notificationObject = null,
-  ...props
-}: {
+export interface NotificationFollowProps {
+  /**
+   * Notification obj
+   * @default null
+   */
   notificationObject: SCNotificationUserFollowType;
+  /**
+   * Any other properties
+   */
   [p: string]: any;
-}): JSX.Element {
+}
+export default function UserFollowNotification(props: NotificationFollowProps): JSX.Element {
+  // PROPS
+  const {notificationObject = null, ...rest} = props;
+
+  // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
+
+  // INTL
   const intl = useIntl();
 
+  /**
+   * Renders root obj
+   */
   return (
-    <Root {...props}>
+    <Root {...rest}>
       <ListItem alignItems="flex-start">
         <ListItemAvatar>
           <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: notificationObject.follower.id})}>

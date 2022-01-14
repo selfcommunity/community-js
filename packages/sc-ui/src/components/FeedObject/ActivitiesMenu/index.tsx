@@ -86,30 +86,23 @@ export default function ActivitiesMenu(props: ActivitiesMenuProps) {
   // CONTEXT
   const scPreferencesContext: SCPreferencesContextType = useContext(SCPreferencesContext);
 
-  //STATE
+  // STATE
   const followEnabled = scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED].value;
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+
+  // INTL
   const intl = useIntl();
 
-  /**
-   * Handles click
-   * @param event
-   */
+  // HANDLERS
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
-  /**
-   * Handles close
-   */
   const handleClose = () => {
     setAnchorEl(null);
   };
 
-  /**
-   * Handles change of activity type
-   */
   const handleChangeActivitiesType = (type) => {
     return () => {
       onChange && onChange(type);

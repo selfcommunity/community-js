@@ -162,7 +162,12 @@ export default function Vote(props: VoteShareProps): JSX.Element {
   // STATE
   const {obj, setObj} = useSCFetchFeedObject({id, feedObject, feedObjectType});
   const [state, dispatch] = useReducer(votesReducer, {}, () => stateInitializer({id, feedObject, feedObjectType}));
+
+  // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
+
+  // INTL
+
   const intl = useIntl();
 
   /**

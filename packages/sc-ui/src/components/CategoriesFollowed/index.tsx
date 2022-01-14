@@ -38,6 +38,8 @@ const Root = styled(Card, {
 export default function CategoriesFollowed(props: CategoriesListProps): JSX.Element {
   // CONST
   const limit = 3;
+
+  // INTL
   const intl = useIntl();
 
   // PROPS

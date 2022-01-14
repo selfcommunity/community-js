@@ -54,7 +54,7 @@ export interface MessageProps extends Pick<CardProps, Exclude<keyof CardProps, '
 }
 
 export default function Message(props: MessageProps): JSX.Element {
-  //PROPS
+  // PROPS
   const {id = null, autoHide = false, message = null, className = null, ...rest} = props;
 
   // INTL

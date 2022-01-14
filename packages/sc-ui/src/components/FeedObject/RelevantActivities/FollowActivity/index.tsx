@@ -43,7 +43,7 @@ export default function FollowRelevantActivity(props: ActionsRelevantActivityPro
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
 
-  // STATE
+  // INTL
   const intl = useIntl();
 
   /**

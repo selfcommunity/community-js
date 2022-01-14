@@ -1,14 +1,7 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
 import {Avatar, Box, Grid, ListItem, ListItemAvatar, ListItemText, Tooltip, Typography} from '@mui/material';
-import {
-  Link,
-  SCNotificationCommentType,
-  SCNotificationTypologyType,
-  SCRoutes,
-  SCRoutingContextType,
-  useSCRouting,
-} from '@selfcommunity/core';
+import {Link, SCNotificationCommentType, SCNotificationTypologyType, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import Bullet from '../../../../shared/Bullet';
 import {LoadingButton} from '@mui/lab';
@@ -44,24 +37,47 @@ const Root = styled(Box, {
     color: grey[900]
   }
 }));
-
-export default function UserNotificationComment({
-  notificationObject = null,
-  index = null,
-  onVote = null,
-  loadingVote = null,
-  ...props
-}: {
+export interface UserNotificationCommentProps {
+  /**
+   * Notification obj
+   * @default null
+   */
   notificationObject: SCNotificationCommentType;
+  /**
+   * Index
+   * @default null
+   */
   index: number;
+  /**
+   * Handles action on vote
+   * @default null
+   */
   onVote: (i, v) => void;
+  /**
+   * The id of the loading vote
+   * @default null
+   */
   loadingVote: number;
+  /**
+   * Any other properties
+   */
   [p: string]: any;
-}): JSX.Element {
+}
+export default function UserNotificationComment(props: UserNotificationCommentProps): JSX.Element {
+  // PROPS
+  const {notificationObject = null, index = null, onVote = null, loadingVote = null, ...rest} = props;
+
+  // ROUTING
   const scRoutingContext: SCRoutingContextType = useSCRouting();
+
+  //INTL
   const intl = useIntl();
+
+  /**
+   * Renders root obj
+   */
   return (
-    <Root {...props}>
+    <Root {...rest}>
       <ListItem alignItems="flex-start">
         <ListItemAvatar>
           <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: notificationObject.comment.author.id})}>

@@ -26,16 +26,28 @@ const Root = styled(Box, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({}));
 
-export default function UserBlockedNotification({
-  notificationObject = null,
-  ...props
-}: {
+export interface NotificationBlockedProps {
+  /**
+   * Notification obj
+   * @default null
+   */
   notificationObject: SCNotificationBlockedUserType;
-}): JSX.Element {
+  /**
+   * Any other properties
+   */
+  [p: string]: any;
+}
+export default function UserBlockedNotification(props: NotificationBlockedProps): JSX.Element {
+  // PROPS
+  const {notificationObject = null, ...rest} = props;
+  // INTL
   const intl = useIntl();
 
+  /**
+   * Renders root obj
+   */
   return (
-    <Root {...props}>
+    <Root {...rest}>
       <ListItem alignItems="flex-start">
         <ListItemAvatar>
           <Avatar variant="circular" sx={{bgcolor: green[500]}}>

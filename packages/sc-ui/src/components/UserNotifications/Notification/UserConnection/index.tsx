@@ -7,9 +7,10 @@ import {
   Link,
   SCNotificationConnectionAcceptType,
   SCNotificationConnectionRequestType,
-  SCNotificationTypologyType, SCRoutes,
+  SCNotificationTypologyType,
+  SCRoutes,
   SCRoutingContextType,
-  useSCRouting,
+  useSCRouting
 } from '@selfcommunity/core';
 
 const messages = defineMessages({
@@ -31,18 +32,36 @@ const Root = styled(Box, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({}));
 
-export default function UserConnectionNotification({
-  notificationObject = null,
-  ...props
-}: {
+export interface NotificationConnectionProps {
+  /**
+   * Notification obj
+   * @default null
+   */
   notificationObject: SCNotificationConnectionRequestType | SCNotificationConnectionAcceptType;
-}): JSX.Element {
+  /**
+   * Any other properties
+   */
+  [p: string]: any;
+}
+export default function UserConnectionNotification(props: NotificationConnectionProps): JSX.Element {
+  // PROPS
+  const {notificationObject = null, ...rest} = props;
+
+  // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
+
+  // INTL
   const intl = useIntl();
+
+  // STATE
   const userConnection =
     notificationObject.type === SCNotificationTypologyType.CONNECTION_REQUEST ? notificationObject.request_user : notificationObject.accept_user;
+
+  /**
+   * Renders root obj
+   */
   return (
-    <Root {...props}>
+    <Root {...rest}>
       <ListItem alignItems="flex-start">
         <ListItemAvatar>
           <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: userConnection.id})}>
@@ -58,8 +77,7 @@ export default function UserConnectionNotification({
                 : intl.formatMessage(messages.requestConnection, {b: (...chunks) => <strong>{chunks}</strong>})}
             </Typography>
           }
-          secondary={<DateTimeAgo date={notificationObject.active_at} />
-          }
+          secondary={<DateTimeAgo date={notificationObject.active_at} />}
         />
       </ListItem>
     </Root>

@@ -72,7 +72,7 @@ export default function CommentRelevantActivity(props: CommentRelevantActivityPr
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
 
-  // STATE
+  // INTL
   const intl = useIntl();
 
   /**

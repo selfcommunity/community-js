@@ -122,8 +122,10 @@ export default function PollObject(props: PollObjectProps): JSX.Element {
   //  PROPS
   const {className = null, feedObject = null, pollObject = null, disabled = null, onChange = null, ...rest} = props;
 
-  //STATE
+  // INTL
   const intl = useIntl();
+
+  //STATE
   const [obj, setObj] = useState<SCPollType>(pollObject);
   const [votes, setVotes] = useState(getVotes());
   const [choices, setChoices] = useState(pollObject.choices);

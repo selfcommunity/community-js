@@ -115,8 +115,11 @@ export default function Share(props: VoteShareProps): JSX.Element {
   const [composerShareProps, setComposerShareProps] = useState<any>(null);
   const [openSharesDialog, setOpenSharesDialog] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
+
+  // INTL
   const intl = useIntl();
 
+  // HANDLERS
   const handleOpenShareMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };

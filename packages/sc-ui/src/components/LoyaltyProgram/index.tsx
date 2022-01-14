@@ -82,7 +82,7 @@ export interface LoyaltyProgramProps {
 }
 
 export default function LoyaltyProgram(props: LoyaltyProgramProps): JSX.Element {
-  //PROPS
+  // PROPS
   const {autoHide, className, cardType} = props;
 
   // CONTEXT
@@ -92,7 +92,13 @@ export default function LoyaltyProgram(props: LoyaltyProgramProps): JSX.Element 
   // STATE
   const [points, setPoints] = useState<number>(null);
   const [openLoyaltyProgramDialog, setOpenLoyaltyProgramDialog] = useState<boolean>(false);
+
+  // INTL
   const intl = useIntl();
+
+  /**
+   * Handles dialog close
+   */
   const handleClose = () => {
     setOpenLoyaltyProgramDialog(false);
   };

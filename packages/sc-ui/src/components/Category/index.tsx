@@ -76,7 +76,7 @@ export default function Category(props: CategoryProps): JSX.Element {
   // STATE
   const {scCategory, setSCCategory} = useSCFetchCategory({id, category});
 
-  //CONST
+  // INTL
   const intl = useIntl();
 
   /**

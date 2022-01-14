@@ -1,7 +1,7 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
 import {Avatar, Box, Grid, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
-import { Link, SCNotificationVoteUpType, SCRoutes, SCRoutingContextType, useSCRouting } from '@selfcommunity/core';
+import {Link, SCNotificationVoteUpType, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
 import {defineMessages, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../../shared/DateTimeAgo';
 import {grey} from '@mui/material/colors';
@@ -21,16 +21,32 @@ const Root = styled(Box, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({}));
 
-export default function ContributionFollowNotification({
-  notificationObject = null,
-  ...props
-}: {
+export interface NotificationVoteUpProps {
+  /**
+   * Notification obj
+   * @default null
+   */
   notificationObject: SCNotificationVoteUpType;
-}): JSX.Element {
+  /**
+   * Any other properties
+   */
+  [p: string]: any;
+}
+export default function ContributionFollowNotification(props: NotificationVoteUpProps): JSX.Element {
+  // PROPS
+  const {notificationObject = null, ...rest} = props;
+
+  // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
+
+  // INTL
   const intl = useIntl();
+
+  /**
+   * Renders root obj
+   */
   return (
-    <Root {...props}>
+    <Root {...rest}>
       <ListItem alignItems="flex-start">
         <ListItemAvatar>
           <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: notificationObject.user.id})}>
@@ -40,7 +56,9 @@ export default function ContributionFollowNotification({
         <ListItemText
           primary={
             <Typography component="span" sx={{display: 'inline'}} color="primary">
-              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: notificationObject.user.id})}>{notificationObject.user.username}</Link>{' '}
+              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: notificationObject.user.id})}>
+                {notificationObject.user.username}
+              </Link>{' '}
               {intl.formatMessage(messages.contributionFollow, {
                 username: notificationObject.user.username,
                 b: (...chunks) => <strong>{chunks}</strong>

@@ -1,7 +1,7 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
 import {Avatar, Box, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
-import { Link, SCNotificationMentionType, SCRoutes, SCRoutingContextType, useSCRouting } from '@selfcommunity/core';
+import {Link, SCNotificationMentionType, SCNotificationVoteUpType, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
 import {defineMessages, useIntl} from 'react-intl';
 import {getContributeType} from '../../../../utils/contribute';
 import DateTimeAgo from '../../../../shared/DateTimeAgo';
@@ -26,12 +26,36 @@ const Root = styled(Box, {
   }
 }));
 
-export default function UserNotificationMention({notificationObject = null, ...props}: {notificationObject: SCNotificationMentionType}): JSX.Element {
+export interface NotificationMentionProps {
+  /**
+   * Notification obj
+   * @default null
+   */
+  notificationObject: SCNotificationMentionType;
+  /**
+   * Any other properties
+   */
+  [p: string]: any;
+}
+
+export default function UserNotificationMention(props: NotificationMentionProps): JSX.Element {
+  // PROPS
+  const {notificationObject = null, ...rest} = props;
+
+  // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
-  const intl = useIntl();
+
+  // STATE
   const objectType = getContributeType(notificationObject);
+
+  // INTL
+  const intl = useIntl();
+
+  /**
+   * Renders root obj
+   */
   return (
-    <Root {...props}>
+    <Root {...rest}>
       <ListItem alignItems="flex-start">
         <ListItemAvatar>
           <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: notificationObject[objectType].author.id})}>

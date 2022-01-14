@@ -31,16 +31,30 @@ const Root = styled(Box, {
     paddingBottom: 1
   }
 }));
-
-export default function UserNotificationPrivateMessage({
-  notificationObject = null,
-  ...props
-}: {
+export interface NotificationPMProps {
+  /**
+   * Notification obj
+   * @default null
+   */
   notificationObject: SCNotificationPrivateMessageType;
-}): JSX.Element {
+  /**
+   * Any other properties
+   */
+  [p: string]: any;
+}
+
+export default function UserNotificationPrivateMessage(props: NotificationPMProps): JSX.Element {
+  // PROPS
+  const {notificationObject = null, ...rest} = props;
+
+  // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
+
+  /**
+   * Renders root obj
+   */
   return (
-    <Root {...props}>
+    <Root {...rest}>
       <ListItem
         secondaryAction={
           <Box>

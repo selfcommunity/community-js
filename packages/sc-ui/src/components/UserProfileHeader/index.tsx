@@ -64,18 +64,36 @@ const Root = styled(Box, {
   }
 }));
 
-export default function UserProfileHeader({
-  userId = null,
-  user = null,
-  ...rest
-}: {
+export interface UserProfileHeaderProps {
+  /**
+   * Id of user object
+   * @default null
+   */
   userId?: number;
+  /**
+   * User Object
+   * @default null
+   */
   user?: SCUserType;
+  /**
+   * Any other properties
+   */
   [p: string]: any;
-}): JSX.Element {
+}
+export default function UserProfileHeader(props: UserProfileHeaderProps): JSX.Element {
+  // PROPS
+  const {className = null, userId = null, user = null, ...rest} = props;
+
+  // PREFERENCES
   const scPreferences: SCPreferencesContextType = useSCPreferences();
+
+  // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
+
+  // STATE
   const {scUser, setSCUser} = useSCFetchUser({id: userId, user});
+
+  // INTL
   const intl = useIntl();
 
   /**
@@ -86,7 +104,7 @@ export default function UserProfileHeader({
   }
 
   /**
-   * Handle Change Avatar
+   * Handles Change Avatar
    * Only if scUser.id === scUserContext.user.id
    * @param avatar
    */
@@ -97,7 +115,7 @@ export default function UserProfileHeader({
   }
 
   /**
-   * Handle Change Cover
+   * Handles Change Cover
    * Only if scUser.id === scUserContext.user.id
    * @param cover
    */
@@ -115,8 +133,12 @@ export default function UserProfileHeader({
       ? {background: `url('${scUser.cover}') center / cover`}
       : {background: `url('${scPreferences.preferences[SCPreferences.IMAGES_USER_DEFAULT_COVER].value}') center / cover`})
   };
+
+  /**
+   * Renders root object
+   */
   return (
-    <Root>
+    <Root className={className} {...rest}>
       <Paper style={_backgroundCover} classes={{root: classes.cover}}>
         <img src={scUser.avatar ? scUser.avatar : ''} className={classes.avatar} />
         {scUser.id === scUserContext.user.id && (

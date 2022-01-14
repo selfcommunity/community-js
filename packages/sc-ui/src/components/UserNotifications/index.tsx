@@ -21,14 +21,14 @@ const Root = styled(Box, {
   marginBottom: theme.spacing(2)
 }));
 
-export default function UserNotifications(props): JSX.Element {
+export default function UserNotifications(rest): JSX.Element {
   const [notifications, setNotifications] = useState<SCNotificationAggregatedType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [next, setNext] = useState<string>(Endpoints.UserNotificationList.url({}));
 
   /**
-   * Fetch user notifications
-   * Manage pagination, infinite scrolling
+   * Fetches user notifications
+   * Manages pagination, infinite scrolling
    */
   function fetchNotifications() {
     http
@@ -48,7 +48,7 @@ export default function UserNotifications(props): JSX.Element {
   }
 
   /**
-   * On mount, fetch first page of notifications
+   * On mount, fetches first page of notifications
    */
   useEffect(() => {
     fetchNotifications();
@@ -59,7 +59,7 @@ export default function UserNotifications(props): JSX.Element {
       {loading ? (
         <>
           {[...Array(Math.floor(Math.random() * 5) + 3)].map((x, i) => (
-            <NotificationSkeleton key={i} {...props} />
+            <NotificationSkeleton key={i} {...rest} />
           ))}
         </>
       ) : (
@@ -75,7 +75,7 @@ export default function UserNotifications(props): JSX.Element {
               hasMore={Boolean(next)}
               loader={
                 <ListItem>
-                  <NotificationSkeleton {...props} sx={{width: '100%'}} />
+                  <NotificationSkeleton {...rest} sx={{width: '100%'}} />
                 </ListItem>
               }
               pullDownToRefreshThreshold={10}
@@ -89,7 +89,7 @@ export default function UserNotifications(props): JSX.Element {
               <List>
                 {notifications.map((n: SCNotificationAggregatedType, i) => (
                   <ListItem>
-                    <UserNotification notificationObject={n} key={i} {...props} />
+                    <UserNotification notificationObject={n} key={i} {...rest} />
                   </ListItem>
                 ))}
               </List>

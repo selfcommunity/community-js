@@ -72,11 +72,13 @@ export default function Comment(props: CommentProps): JSX.Element {
     ...rest
   } = props;
 
-  //STATE
+  // STATE
   const {obj, setObj} = useSCFetchFeedObject({id, feedObject, feedObjectType});
 
-  //CONTEXT
+  // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
+
+  // INTL
   const intl = useIntl();
 
   /**

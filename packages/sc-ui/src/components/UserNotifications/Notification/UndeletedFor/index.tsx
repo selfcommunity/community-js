@@ -16,16 +16,32 @@ const Root = styled(Box, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({}));
 
-export default function UndeletedForNotification({
-  notificationObject = null,
-  ...props
-}: {
+export interface NotificationUndeletedProps {
+  /**
+   * Notification obj
+   * @default null
+   */
   notificationObject: SCNotificationUnDeletedForType;
-}): JSX.Element {
+  /**
+   * Any other properties
+   */
+  [p: string]: any;
+}
+export default function UndeletedForNotification(props: NotificationUndeletedProps): JSX.Element {
+  // PROPS
+  const {notificationObject = null, ...rest} = props;
+
+  // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
+
+  // STATE
   const contributionType = getContributeType(notificationObject);
+
+  /**
+   * Renders root obj
+   */
   return (
-    <Root {...props}>
+    <Root {...rest}>
       <ListItem alignItems="flex-start">
         <ListItemAvatar>
           <Avatar variant="circular" sx={{bgcolor: green[500]}}>

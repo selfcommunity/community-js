@@ -8,6 +8,7 @@ import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {camelCase} from '../../../../../../sc-core/src/utils/string';
 import {getContributeType} from '../../../../utils/contribute';
 import DateTimeAgo from '../../../../shared/DateTimeAgo';
+import {NotificationDeletedForProps} from '../CollapsedFor';
 
 const messages = defineMessages({
   collapsedForAdvertising: {
@@ -40,17 +41,24 @@ const Root = styled(Box, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({}));
 
-export default function KindlyNoticeForNotification({
-  notificationObject = null,
-  ...props
-}: {
-  notificationObject: SCNotificationDeletedForType;
-}): JSX.Element {
+export default function KindlyNoticeForNotification(props: NotificationDeletedForProps): JSX.Element {
+  // PROPS
+  const {notificationObject = null, ...rest} = props;
+
+  // ROUTING
   const scRoutingContext: SCRoutingContextType = useSCRouting();
+
+  // STATE
   const contributionType = getContributeType(notificationObject);
+
+  //INTL
   const intl = useIntl();
+
+  /**
+   * Renders root obj
+   */
   return (
-    <Root {...props}>
+    <Root {...rest}>
       <ListItem alignItems="flex-start">
         <ListItemAvatar>
           <Avatar variant="circular" sx={{backgroundColor: red[500]}}>

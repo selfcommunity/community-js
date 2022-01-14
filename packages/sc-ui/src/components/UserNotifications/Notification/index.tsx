@@ -85,25 +85,44 @@ const Root = styled(Card, {
     color: grey[900]
   }
 }));
-
-export default function UserNotification({
-  notificationObject = null,
-  showMaxAggregated = 2,
-  ...props
-}: {
+export interface UserNotificationProps {
+  /**
+   * Notification obj
+   * @default null
+   */
   notificationObject: SCNotificationAggregatedType;
+  /**
+   * The max n of results shown
+   * @default 2
+   */
   showMaxAggregated: number;
+  /**
+   * The obj key
+   */
   key: number;
-}): JSX.Element {
+  /**
+   * Any other properties
+   */
+  [p: string]: any;
+}
+export default function UserNotification(props: UserNotificationProps): JSX.Element {
+  // PROPS
+  const {notificationObject = null, showMaxAggregated = 2, ...rest} = props;
+
+  // ROUTING
   const scRoutingContext: SCRoutingContextType = useSCRouting();
+
+  // STATE
   const [obj, setObj] = useState<SCNotificationAggregatedType>(notificationObject);
   const [loadingVote, setLoadingVote] = useState<number>(null);
   const [loadingSuspendNotification, setLoadingSuspendNotification] = useState<boolean>(false);
   const [openOtherAggregated, setOpenOtherAggregated] = useState<boolean>(false);
+
+  //INTL
   const intl = useIntl();
 
   /**
-   * Perform suspend notification
+   * Performs  notification suspension
    */
   const performSuspendNotification = useMemo(
     () => (obj) => {
@@ -123,7 +142,7 @@ export default function UserNotification({
   );
 
   /**
-   * Handle stop notification for contribution
+   * Handles stop notification for contribution
    * @param contribution
    */
   function handleStopContentNotification(contribution) {
@@ -141,7 +160,7 @@ export default function UserNotification({
   }
 
   /**
-   * Perform vote comment
+   * Performs comment vote
    */
   const performVoteComment = useMemo(
     () => (comment) => {
@@ -161,7 +180,7 @@ export default function UserNotification({
   );
 
   /**
-   * Handle vote comment
+   * Handles comment vote
    * @param comment
    */
   function handleVote(index, comment) {
@@ -308,8 +327,11 @@ export default function UserNotification({
     return null;
   }
 
+  /**
+   * Renders root obj
+   */
   return (
-    <Root {...props}>
+    <Root {...rest}>
       <CardContent sx={{paddingBottom: 1}}>
         {renderNotificationHeader()}
         {notificationObject.aggregated.slice(0, showMaxAggregated).map((n: SCNotificationType, i) => renderAggregated(n, i))}

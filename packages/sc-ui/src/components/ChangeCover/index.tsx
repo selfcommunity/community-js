@@ -62,6 +62,7 @@ export default function ChangeCover(props: ChangecoverProps): JSX.Element {
   const [openDeleteCoverDialog, setOpenDeleteCoverDialog] = useState<boolean>(false);
   const [isDeletingCover, setIsDeletingCover] = useState<boolean>(false);
 
+  // HANDLERS
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -78,6 +79,10 @@ export default function ChangeCover(props: ChangecoverProps): JSX.Element {
   };
   const isOpen = Boolean(anchorElPopover);
 
+  /**
+   * Handles file upload
+   * @param event
+   */
   function handleUpload(event) {
     fileInput = event.target.files[0];
     handleSave();

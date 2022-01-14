@@ -40,17 +40,35 @@ const Root = styled(Box, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({}));
 
-export default function CollapsedForNotification({
-  notificationObject = null,
-  ...props
-}: {
+export interface NotificationDeletedForProps {
+  /**
+   * Notification obj
+   * @default null
+   */
   notificationObject: SCNotificationDeletedForType;
-}): JSX.Element {
+  /**
+   * Any other properties
+   */
+  [p: string]: any;
+}
+export default function CollapsedForNotification(props: NotificationDeletedForProps): JSX.Element {
+  // PROPS
+  const {notificationObject = null, ...rest} = props;
+
+  // ROUTING
   const scRoutingContext: SCRoutingContextType = useSCRouting();
+
+  // STATE
   const contributionType = getContributeType(notificationObject);
+
+  //INTL
   const intl = useIntl();
+
+  /**
+   * Renders root obj
+   */
   return (
-    <Root {...props}>
+    <Root {...rest}>
       <ListItem alignItems="flex-start">
         <ListItemAvatar>
           <Avatar variant="circular" sx={{backgroundColor: red[500]}}>

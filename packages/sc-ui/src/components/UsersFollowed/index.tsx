@@ -53,6 +53,8 @@ export interface UsersFollowed {
 export default function UsersFollowed(props: UsersFollowed): JSX.Element {
   // CONST
   const limit = 3;
+
+  // INTL
   const intl = useIntl();
 
   // CONTEXT
