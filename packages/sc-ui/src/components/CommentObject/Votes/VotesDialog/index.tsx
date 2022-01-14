@@ -23,20 +23,39 @@ const Root = styled(Box, {
   overridesResolver: (props, styles) => styles.root
 })({});
 
-export default function CommentObjectVotesDialog({
-  id = null,
-  commentObject = null,
-  open = false,
-  onClose = null,
-  ...rest
-}: {
-  id?: number;
+export interface CommentObjectVotesDialogProps {
+  /**
+   * Id of the comment object
+   * @default null
+   */
+  commentObjectId?: number;
+
+  /**
+   * Comment object
+   * @default null
+   */
   commentObject?: SCCommentType;
-  open: boolean;
-  onClose: () => any;
-  [p: string]: any;
-}): JSX.Element {
-  const {obj, setObj} = useSCFetchCommentObject({id, commentObject});
+
+  /**
+   * open/close the dialog
+   * @default false
+   */
+  open?: boolean;
+
+  /**
+   * Callback invoked when dialog close
+   */
+  onClose?: () => any;
+}
+
+export default function CommentObjectVotesDialog(props: CommentObjectVotesDialogProps): JSX.Element {
+  // PROPS
+  const {commentObjectId, commentObject, open = false, onClose} = props;
+
+  // RETRIVE OBJECTS
+  const {obj, setObj} = useSCFetchCommentObject({id: commentObjectId, commentObject});
+
+  // STATE
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [votes, setVotes] = useState([]);
   const [next, setNext] = useState<string>(null);

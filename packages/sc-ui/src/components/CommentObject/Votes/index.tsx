@@ -1,18 +1,10 @@
-import React, {useContext, useState} from 'react';
-import {defineMessages, useIntl} from 'react-intl';
-import {Box, Button, Divider, IconButton, Tooltip, Typography} from '@mui/material';
-import {SCCommentType, SCUserContext, SCUserContextType, useSCFetchCommentObject} from '@selfcommunity/core';
+import React, {useState} from 'react';
+import {Box, Button, Typography} from '@mui/material';
+import {SCCommentType, useSCFetchCommentObject} from '@selfcommunity/core';
 import {styled} from '@mui/material/styles';
 import VoteFilledIcon from '@mui/icons-material/ThumbUpTwoTone';
 import VoteIcon from '@mui/icons-material/ThumbUpOutlined';
 import CommentObjectVotesDialog from './VotesDialog';
-
-const messages = defineMessages({
-  votes: {
-    id: 'ui.commentObject.votes',
-    defaultMessage: 'ui.commentObject.votes'
-  }
-});
 
 const PREFIX = 'SCCommentObjectVotes';
 
@@ -41,19 +33,34 @@ const Root = styled(Box, {
   }
 }));
 
-export default function Votes({
-  id = null,
-  commentObject = null,
-  ...rest
-}: {
-  id?: number;
+export interface VotesProps {
+  /**
+   * Id of the comment object
+   * @default null
+   */
+  commentObjectId?: number;
+
+  /**
+   * Comment object
+   * @default null
+   */
   commentObject?: SCCommentType;
+
+  /**
+   * Other props
+   */
   [p: string]: any;
-}): JSX.Element {
-  const scUser: SCUserContextType = useContext(SCUserContext);
-  const {obj, setObj} = useSCFetchCommentObject({id, commentObject});
+}
+
+export default function Votes(props: VotesProps): JSX.Element {
+  // PROPS
+  const {commentObjectId, commentObject, ...rest} = props;
+
+  // RETRIVE OBJECTS
+  const {obj, setObj} = useSCFetchCommentObject({id: commentObjectId, commentObject});
+
+  // STATE
   const [openVotesDialog, setOpenVotesDialog] = useState<boolean>(false);
-  const intl = useIntl();
 
   /**
    * Open/Close dialog shares
@@ -77,7 +84,6 @@ export default function Votes({
           )}
           <Typography variant={'body2'} sx={{marginLeft: '5px'}}>
             {obj.vote_count}
-            {/*`${intl.formatMessage(messages.votes, {total: obj.vote_count})}`*/}
           </Typography>
         </Button>
         {openVotesDialog && obj.vote_count > 0 && (

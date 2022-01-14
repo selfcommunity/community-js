@@ -125,6 +125,13 @@ export interface CommentsObjectProps {
   additionalHeaderComments?: SCCommentType[];
 
   /**
+   * Callback invoked when load comments page
+   * Usefull to sync location path for SEO optimization
+   * @param page
+   */
+  onChangePage?: (page) => any;
+
+  /**
    * Other props
    */
   [p: string]: any;
@@ -146,13 +153,14 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
     hidePrimaryReply = false,
     commentsLoadingBoxCount = 3,
     additionalHeaderComments = [],
+    onChangePage,
     ...rest
   } = props;
 
   // STATE
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [commentData, setCommentData] = useState<SCCommentType>(null);
-  const [data, setData] = useState<SCCommentType[]>([]);
+  const [comment, setComment] = useState<SCCommentType>(null);
+  const [comments, setComments] = useState<SCCommentType[]>([]);
   const [next, setNext] = useState<string>(null);
   const [total, setTotal] = useState<number>(null);
   const [isReplying, setIsReplying] = useState<boolean>(false);
@@ -160,9 +168,9 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
     infiniteScrolling && !(commentObject || Boolean(commentObjectId))
   );
 
-  // RETRIVE objects
+  // RETRIVE OBJECTS
   const {obj, setObj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
-  const commentObj = useSCFetchCommentObject({id: commentObjectId, commentObject});
+  const {obj: commentObj, setObj: setCommentObj} = useSCFetchCommentObject({id: commentObjectId, commentObject});
 
   /**
    * Get Comments
@@ -185,25 +193,26 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
   );
 
   /**
-   * Fetch COMMENTS initial data
+   * Fetch comments
    */
-  function fetchCommentsData() {
+  function fetchComments() {
     if (obj) {
       setIsLoading(true);
       performFetchComments()
         .then((res) => {
-          setData([...data, ...res.results]);
+          setComments([...comments, ...res.results]);
           setTotal(res.count);
           setNext(res.next);
-          if (commentObj.obj) {
-            const _searchId = commentObj.obj.parent ? commentObj.obj.parent : commentObj.obj.id;
+          if (commentObj) {
+            const _searchId = commentObj.parent ? commentObj.parent : commentObj.id;
             const _isCommentDataIncluded =
               res.results.filter((c) => {
                 return c.id === _searchId || (c.latest_comments.length > 0 && c.latest_comments[0].id === _searchId);
               }).length > 0;
-            _isCommentDataIncluded && setCommentData(null);
+            _isCommentDataIncluded && setComment(null);
           }
           setIsLoading(false);
+          onChangePage && onChangePage(comments.length / commentsPageCount + 1);
         })
         .catch((error) => {
           Logger.error(SCOPE_SC_UI, error);
@@ -232,48 +241,48 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
   );
 
   /**
-   * Fetch COMMENT initial data
+   * Fetch a single comment
    * and comment parent (if need it)
    */
-  function fetchCommentData() {
+  function fetchComment() {
     setIsLoading(true);
-    if (commentObjectId && commentObj && commentObj.obj) {
-      if (commentObj.obj.parent) {
-        performFetchComment(commentObj.obj.parent)
+    if (commentObjectId && commentObj) {
+      if (commentObj.parent) {
+        performFetchComment(commentObj.parent)
           .then((parent) => {
             const _parent = Object.assign({}, parent);
-            _parent.latest_comments = [commentObj.obj];
-            setCommentData(_parent);
+            _parent.latest_comments = [commentObj];
+            setComment(_parent);
             setIsLoading(false);
           })
           .catch((error) => {
             Logger.error(SCOPE_SC_UI, error);
           });
       } else {
-        setCommentData(commentObj.obj);
+        setComment(commentObj);
         setIsLoading(false);
       }
     }
   }
 
   /**
-   * Fetch data only if obj changed
+   * Fetch comments only if obj changed
    */
   useEffect(() => {
     if (commentObjectId) {
-      fetchCommentData();
-    } else if (obj && obj.id && data.length === 0) {
-      fetchCommentsData();
+      fetchComment();
+    } else if (obj && obj.id && comments.length === 0) {
+      fetchComments();
     }
-  }, [obj, commentObjectId, commentObject, commentObj.obj]);
+  }, [obj, commentObjectId, commentObject, commentObj]);
 
   /**
-   * Reload comments data
+   * Reload comments
    */
   useEffect(() => {
     if (obj && obj.id) {
       setNext(null);
-      setData([]);
+      setComments([]);
     }
   }, [commentsPageCount, commentsOrderBy]);
 
@@ -317,7 +326,7 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
     setIsReplying(true);
     performReply(comment)
       .then((comment: SCCommentType) => {
-        setData([...[comment], ...data]);
+        setComments([...[comment], ...comments]);
         setIsReplying(false);
       })
       .catch((error) => {
@@ -328,17 +337,17 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
   /**
    * Render comments
    */
-  let comments = <></>;
-  if (data.length === 0 && isLoading) {
-    comments = (
+  let commentsRendered = <></>;
+  if (comments.length === 0 && isLoading) {
+    commentsRendered = (
       <>
         {[...Array(commentsLoadingBoxCount)].map((x, i) => (
           <CommentObjectSkeleton key={i} {...rest} />
         ))}
       </>
     );
-  } else if (data.length === 0 && !commentData && !isLoading) {
-    comments = (
+  } else if (comments.length === 0 && !comment && !isLoading) {
+    commentsRendered = (
       <>
         {renderNoComments ? (
           renderNoComments()
@@ -351,10 +360,10 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
     );
   } else {
     if (infiniteScrollingEnabled) {
-      comments = (
+      commentsRendered = (
         <InfiniteScroll
-          dataLength={data.length}
-          next={fetchCommentsData}
+          dataLength={comments.length}
+          next={fetchComments}
           hasMore={next !== null}
           loader={<CommentObjectSkeleton {...rest} />}
           endMessage={
@@ -364,7 +373,7 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
               </b>
             </Typography>
           }>
-          {[...additionalHeaderComments, ...data, ...(commentData ? [commentData] : [])].map((comment: SCCommentType, index) => (
+          {[...additionalHeaderComments, ...comments, ...(comment ? [comment] : [])].map((comment: SCCommentType, index) => (
             <React.Fragment key={index}>
               {renderComment ? (
                 renderComment(comment)
@@ -376,15 +385,15 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
         </InfiniteScroll>
       );
     } else {
-      comments = (
+      commentsRendered = (
         <>
-          {isLoading && commentObj.obj && data.length === 0 && <CommentObjectSkeleton {...rest} />}
-          {commentData && data.length === 0 && obj && obj.comment_count > 0 && !isLoading && (
-            <Button variant="text" onClick={fetchCommentsData} disabled={isLoading}>
+          {isLoading && commentObj && comments.length === 0 && <CommentObjectSkeleton {...rest} />}
+          {comment && comments.length === 0 && obj && obj.comment_count > 0 && !isLoading && (
+            <Button variant="text" onClick={fetchComments} disabled={isLoading}>
               <FormattedMessage id="ui.commentsObject.loadMoreComments" defaultMessage="ui.commentsObject.loadMoreComments" />
             </Button>
           )}
-          {[...additionalHeaderComments, ...data].map((comment: SCCommentType, index) => {
+          {[...additionalHeaderComments, ...comments].map((comment: SCCommentType, index) => {
             return (
               <React.Fragment key={comment.id}>
                 {renderComment ? (
@@ -395,7 +404,7 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
                     onOpenReply={openReplyBox}
                     feedObject={obj}
                     feedObjectType={feedObjectType}
-                    commentReply={commentObj.obj ? commentObj.obj : null}
+                    commentReply={commentObj}
                     {...rest}
                   />
                 )}
@@ -404,32 +413,32 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
           })}
           {Boolean(next) && !isLoading && (
             <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
-              <Button variant="text" onClick={fetchCommentsData} disabled={isLoading}>
+              <Button variant="text" onClick={fetchComments} disabled={isLoading}>
                 <FormattedMessage id="ui.commentsObject.loadMoreComments" defaultMessage="ui.commentsObject.loadMoreComments" />
               </Button>
-              {total && !commentObj.obj && (
+              {total && !commentObj && (
                 <Typography variant="body1">
                   <FormattedMessage
                     id="ui.commentsObject.numberOfComments"
                     defaultMessage="ui.commentsObject.numberOfComments"
-                    values={{loaded: data.length, total: total}}
+                    values={{loaded: comments.length, total: total}}
                   />
                 </Typography>
               )}
             </Stack>
           )}
-          {isLoading && (!commentObj.obj || (commentObj.obj && data.length > 0)) && <CommentObjectSkeleton {...rest} />}
-          {commentData && (
-            <React.Fragment key={commentData.id}>
+          {isLoading && (!commentObj || (commentObj && comments.length > 0)) && <CommentObjectSkeleton {...rest} />}
+          {comment && (
+            <React.Fragment key={comment.id}>
               {renderComment ? (
-                renderComment(commentData)
+                renderComment(comment)
               ) : (
                 <CommentObject
-                  commentObject={commentData}
+                  commentObject={comment}
                   onOpenReply={openReplyBox}
                   feedObject={obj}
                   feedObjectType={feedObjectType}
-                  commentReply={commentObj.obj ? commentObj.obj : null}
+                  commentReply={commentObj}
                   {...rest}
                 />
               )}
@@ -445,8 +454,8 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
    */
   return (
     <Root>
-      {!hidePrimaryReply && !commentObj.obj && <ReplyCommentObject readOnly={isReplying} onReply={handleReply} inline {...rest} />}
-      {comments}
+      {!hidePrimaryReply && !commentObj && <ReplyCommentObject readOnly={isReplying} onReply={handleReply} inline {...rest} />}
+      {commentsRendered}
     </Root>
   );
 }

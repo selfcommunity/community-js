@@ -106,31 +106,84 @@ const messages = defineMessages({
   }
 });
 
-export default function CommentActionsMenu({
-  commentObjectId = null,
-  commentObject = null,
-  feedObjectId = null,
-  feedObject = null,
-  feedObjectType = SCFeedObjectTypologyType.POST,
-  onDelete = null,
-  onRestore = null,
-  onEdit = null,
-  ...rest
-}: {
+export interface CommentActionsMenuProps {
+  /**
+   * Id of the comment object
+   * @default null
+   */
   commentObjectId?: number;
+
+  /**
+   * Comment object
+   * @default null
+   */
   commentObject?: SCCommentType;
+
+  /**
+   * Id of feed object
+   * @default null
+   */
   feedObjectId?: number;
+
+  /**
+   * Feed object
+   * @default null
+   */
   feedObject?: SCFeedObjectType;
+
+  /**
+   * Type of feed object
+   * @default SCFeedObjectTypologyType.POST
+   */
   feedObjectType?: SCFeedObjectTypologyType;
-  onDelete?: (SCCommentType) => void;
-  onRestore?: (SCCommentType) => void;
-  onEdit?: (SCCommentType) => void;
+
+  /**
+   * Callback invoked after delete
+   * @param comment
+   */
+  onDelete?: (SCCommentType) => any;
+
+  /**
+   * Callback invoked after restore
+   * @param comment
+   */
+  onRestore?: (SCCommentType) => any;
+
+  /**
+   * Callback invoked after delete
+   * @param comment
+   */
+  onEdit?: (SCCommentType) => any;
+
+  /**
+   * Other props
+   */
   [p: string]: any;
-}): JSX.Element {
+}
+
+export default function CommentActionsMenu(props: CommentActionsMenuProps): JSX.Element {
+  // PROPS
+  const {
+    commentObjectId,
+    commentObject,
+    feedObjectId,
+    feedObject,
+    feedObjectType = SCFeedObjectTypologyType.POST,
+    onDelete,
+    onRestore,
+    onEdit,
+    ...rest
+  } = props;
+
+  // CONTEXT
   const intl = useIntl();
   const scUser: SCUserContextType = useContext(SCUserContext);
   const scRoutingContext: SCRoutingContextType = useSCRouting();
+
+  // RETRIVE OBJECTS
   const {obj, setObj} = useSCFetchCommentObject({id: commentObjectId, commentObject});
+
+  // STATE
   const [flagType, setFlagType] = useState<string>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isFlagging, setIsFlagging] = useState<boolean>(false);
@@ -139,6 +192,8 @@ export default function CommentActionsMenu({
   const [isDeletingComment, setIsDeletingComment] = useState<boolean>(false);
   const [openRestoreCommentDialog, setOpenRestoreCommentDialog] = useState<boolean>(false);
   const [isRestoringComment, setIsRestoringComment] = useState<boolean>(false);
+
+  // REFS
   let popperRef = useRef(null);
 
   /**

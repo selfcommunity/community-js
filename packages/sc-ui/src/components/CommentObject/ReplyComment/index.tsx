@@ -57,33 +57,75 @@ const Root = styled(Card, {
   }
 }));
 
-export default function ReplyCommentObject({
-  commentObjectId = null,
-  commentObject = null,
-  autoFocus = false,
-  inline = false,
-  onReply = null,
-  onSave = null,
-  onCancel = null,
-  readOnly = false,
-  text = '',
-  ...rest
-}: {
+export interface ReplyCommentObjectProps {
+  /**
+   * Id of the comment object
+   * @default null
+   */
   commentObjectId?: number;
+
+  /**
+   * Comment object
+   * @default null
+   */
   commentObject?: SCCommentType;
+
+  /**
+   * Bind focuse on mount
+   * @default false
+   */
   autoFocus?: boolean;
+
+  /**
+   * Callback invoked after reply
+   * @param comment
+   */
   onReply?: (comment) => void;
+
+  /**
+   * Callback invoked after save/edit
+   * @param comment
+   */
   onSave?: (comment) => void;
+
+  /**
+   * Callback invoked after disccard save/edit
+   * @param comment
+   */
   onCancel?: () => void;
+
+  /**
+   * Disable component
+   * @default false
+   */
   readOnly?: boolean;
+
+  /**
+   * Initial content
+   * @default ''
+   */
   text?: string;
+
+  /**
+   * Other props
+   */
   [p: string]: any;
-}): JSX.Element {
+}
+
+export default function ReplyCommentObject(props: ReplyCommentObjectProps): JSX.Element {
+  // PROPS
+  const {commentObjectId, commentObject, autoFocus = false, inline = false, onReply, onSave, onCancel, readOnly = false, text = '', ...rest} = props;
+
+  // CONTEXT
   const scUser: SCUserContextType = useContext(SCUserContext);
-  const {obj, setObj} = useSCFetchCommentObject({id: commentObjectId, commentObject});
-  const [html, setHtml] = useState(text);
-  let editor: RefObject<TMUIRichTextEditorRef> = React.createRef();
   const intl = useIntl();
+
+  // RETRIVE OBJECTS
+  const {obj} = useSCFetchCommentObject({id: commentObjectId, commentObject});
+  const [html, setHtml] = useState(text);
+
+  // REFS
+  let editor: RefObject<TMUIRichTextEditorRef> = React.createRef();
 
   /**
    * When ReplyCommentObject is mount
@@ -96,28 +138,28 @@ export default function ReplyCommentObject({
   /**
    * Focus on editor
    */
-  const handleEditorFocus = () => {
+  const handleEditorFocus = (): void => {
     editor.current.focus();
   };
 
   /**
    * Handle Replay
    */
-  const handleReply = () => {
+  const handleReply = (): void => {
     onReply && onReply(html);
   };
 
   /**
    * Handle Save
    */
-  const handleSave = () => {
+  const handleSave = (): void => {
     onSave && onSave(html);
   };
 
   /**
    * Handle cancel save
    */
-  const handleCancel = () => {
+  const handleCancel = (): void => {
     onCancel && onCancel();
   };
 
@@ -132,7 +174,7 @@ export default function ReplyCommentObject({
    * Check if editor is empty
    */
   const isEditorEmpty = useMemo(
-    () => () => {
+    () => (): boolean => {
       const _html = html.trim();
       return _html === '' || _html === '<p></p>';
     },
