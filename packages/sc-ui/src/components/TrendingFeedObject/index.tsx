@@ -22,24 +22,50 @@ const Root = styled(Card, {
   maxWidth: 700,
   marginBottom: theme.spacing(2)
 }));
-
-export default function TrendingFeedObject({
-  categoryId = null,
-  template = null,
-  autoHide = null,
-  ...props
-}: {
+export interface TrendingFeedProps {
+  /**
+   * Overrides or extends the styles applied to the component.
+   * @default null
+   */
+  className?: string;
+  /**
+   * Id of category
+   * @default null
+   */
   categoryId?: number;
+  /**
+   * Feed Object template type
+   * @default 'preview'
+   */
   template?: FeedObjectTemplateType;
+  /**
+   * Hides this component
+   * @default false
+   */
   autoHide?: boolean;
-}): JSX.Element {
+  /**
+   * Any other properties
+   */
+  [p: string]: any;
+}
+export default function TrendingFeedObject(props: TrendingFeedProps): JSX.Element {
+  //CONST
+  const limit = 4;
+
+  // PROPS
+  const {className = null, categoryId = null, template = null, autoHide = null, ...rest} = props;
+
+  // STATE
   const [posts, setPosts] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [hasMore, setHasMore] = useState<boolean>(false);
   const [openTrendingPostDialog, setOpenTrendingPostDialog] = useState<boolean>(false);
   const [total, setTotal] = useState<number>(0);
-  const [visible, setVisible] = useState<number>(4);
+  const [visible, setVisible] = useState<number>(limit);
 
+  /**
+   * Fetches a list of trending posts
+   */
   function fetchTrendingPost() {
     http
       .request({
@@ -48,7 +74,7 @@ export default function TrendingFeedObject({
       })
       .then((res: AxiosResponse<any>) => {
         const data = res.data;
-        setPosts(getAlltypes(data.results));
+        setPosts(data.results);
         setHasMore(data.count > visible);
         setLoading(false);
         setTotal(data.count);
@@ -57,24 +83,27 @@ export default function TrendingFeedObject({
         Logger.error(SCOPE_SC_UI, error);
       });
   }
+
+  /**
+   * Loads more posts
+   */
   function loadMore() {
-    setVisible((prevVisible) => prevVisible + 4);
+    const newIndex = visible + limit;
+    const newHasMore = newIndex < posts.length - 1;
+    setVisible(newIndex);
+    setHasMore(newHasMore);
   }
 
-  function getAlltypes(data) {
-    const discussion = data.map((t) => t.discussion);
-    const post = data.map((t) => t.post);
-    const status = data.map((s) => s.status);
-    const array = discussion.concat(post).concat(status);
-    return array.filter(function (el) {
-      return el != null;
-    });
-  }
-
+  /**
+   * On mount, fetches trending posts list
+   */
   useEffect(() => {
     fetchTrendingPost();
   }, []);
 
+  /**
+   * Renders the list
+   */
   const f = (
     <React.Fragment>
       {loading ? (
@@ -91,9 +120,9 @@ export default function TrendingFeedObject({
           ) : (
             <React.Fragment>
               <List>
-                {posts.slice(0, 4).map((obj: SCFeedObjectType, index) => (
+                {posts.slice(0, visible).map((obj: SCFeedObjectType, index) => (
                   <div key={index}>
-                    <FeedObject elevation={0} feedObject={obj} key={obj.id} template={template} />
+                    <FeedObject elevation={0} feedObject={obj[obj.type]} key={obj.id} template={template} />
                   </div>
                 ))}
               </List>
@@ -109,11 +138,16 @@ export default function TrendingFeedObject({
       )}
     </React.Fragment>
   );
+
   /**
-   * Renders the component (if not hidden by autoHide prop)
+   * Renders root object (if not hidden by autoHide prop)
    */
   if (!autoHide) {
-    return <Root {...props}>{f}</Root>;
+    return (
+      <Root className={className} {...rest}>
+        {f}
+      </Root>
+    );
   }
   return null;
 }
