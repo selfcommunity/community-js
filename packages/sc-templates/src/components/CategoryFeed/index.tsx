@@ -39,21 +39,21 @@ const WIDGETS: SCFeedWidgetType[] = [
   {
     type: 'widget',
     component: InlineComposer,
-    componentProps: {},
+    componentProps: {variant: 'outlined'},
     column: 'left',
     position: 0
   },
   {
     type: 'widget',
     component: TrendingPeople,
-    componentProps: {},
+    componentProps: {variant: 'outlined'},
     column: 'right',
     position: 0
   },
   {
     type: 'widget',
     component: TrendingFeedObject,
-    componentProps: {},
+    componentProps: {variant: 'outlined'},
     column: 'right',
     position: 1
   }
@@ -89,6 +89,7 @@ export default function CategoryFeed(props: CategoryFeedProps): JSX.Element {
           url: () => Endpoints.CategoryFeed.url({id: categoryId})
         }}
         widgets={widgets}
+        FeedObjectProps={{variant: 'outlined'}}
       />
     </Root>
   );

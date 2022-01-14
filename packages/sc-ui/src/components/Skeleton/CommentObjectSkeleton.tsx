@@ -7,7 +7,8 @@ import {Box, CardContent, ListItem, ListItemAvatar, ListItemText} from '@mui/mat
 const PREFIX = 'SCCommentObjectSkeleton';
 
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-root`,
+  avatarWrap: `${PREFIX}-avatar-wrap`,
 };
 
 const Root = styled(Box, {
@@ -15,15 +16,18 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  marginBottom: theme.spacing(3)
+  marginBottom: theme.spacing(3),
+  [`& .${classes.avatarWrap}`]: {
+    minWidth: 46
+  },
 }));
 
 export default function CommentObjectSkeleton(props): JSX.Element {
   return (
     <Root>
       <ListItem button={false} alignItems="flex-start">
-        <ListItemAvatar>
-          <Skeleton animation="wave" variant="circular" width={40} height={40} />
+        <ListItemAvatar classes={{root: classes.avatarWrap}}>
+          <Skeleton animation="wave" variant="circular" width={35} height={35} />
         </ListItemAvatar>
         <ListItemText
           secondary={

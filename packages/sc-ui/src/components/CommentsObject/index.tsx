@@ -101,6 +101,11 @@ export interface CommentsObjectProps {
   commentsOrderBy?: CommentsOrderBy;
 
   /**
+   * show title (number of comments)
+   */
+  showTitle?: boolean;
+
+  /**
    * enable/disable infinite scrolling
    * @default true
    */
@@ -149,6 +154,7 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
     renderNoComments,
     commentsPageCount = 5,
     commentsOrderBy = CommentsOrderBy.ADDED_AT_DESC,
+    showTitle = false,
     infiniteScrolling = true,
     hidePrimaryReply = false,
     commentsLoadingBoxCount = 3,
@@ -171,6 +177,23 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
   // RETRIVE OBJECTS
   const {obj, setObj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
   const {obj: commentObj, setObj: setCommentObj} = useSCFetchCommentObject({id: commentObjectId, commentObject});
+
+  /**
+   * Render title
+   */
+  const renderTitle = useMemo(
+    () => () => {
+      if (showTitle) {
+        return (
+          <Typography variant="h6" gutterBottom>
+            <FormattedMessage id="ui.commentsObject.title" defaultMessage="ui.commentsObject.title" values={{total: total}} />
+          </Typography>
+        );
+      }
+      return null;
+    },
+    [total]
+  );
 
   /**
    * Get Comments
@@ -200,7 +223,7 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
       setIsLoading(true);
       performFetchComments()
         .then((res) => {
-          setComments([...comments, ...res.results]);
+          setComments(next ? [...comments, ...res.results] : res.results);
           setTotal(res.count);
           setNext(res.next);
           if (commentObj) {
@@ -266,17 +289,6 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
   }
 
   /**
-   * Fetch comments only if obj changed
-   */
-  useEffect(() => {
-    if (commentObjectId) {
-      fetchComment();
-    } else if (obj && obj.id && comments.length === 0) {
-      fetchComments();
-    }
-  }, [obj, commentObjectId, commentObject, commentObj]);
-
-  /**
    * Reload comments
    */
   useEffect(() => {
@@ -285,6 +297,17 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
       setComments([]);
     }
   }, [commentsPageCount, commentsOrderBy]);
+
+  /**
+   * Fetch comments only if obj changed
+   */
+  useEffect(() => {
+    if (commentObjectId) {
+      fetchComment();
+    } else if (obj && obj.id && comments.length === 0) {
+      fetchComments();
+    }
+  }, [obj, commentObj, comments]);
 
   /**
    * Handle open reply box
@@ -478,6 +501,7 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
    */
   return (
     <Root>
+      {renderTitle()}
       {renderHeadPrimaryReply()}
       {commentsRendered}
       {renderFooterPrimaryReply()}

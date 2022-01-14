@@ -54,6 +54,11 @@ export interface RelatedDiscussionProps {
    * @default false
    */
   autoHide?: boolean;
+
+  /**
+   * Other props
+   */
+  [p: string]: any;
 }
 
 export default function RelatedDiscussion(props: RelatedDiscussionProps): JSX.Element {
@@ -61,7 +66,7 @@ export default function RelatedDiscussion(props: RelatedDiscussionProps): JSX.El
   const limit = 4;
 
   // PROPS
-  const {feedObjectId, feedObjectType, template = FeedObjectTemplateType.SNIPPET, FeedObjectProps = {}, className, autoHide} = props;
+  const {feedObjectId, feedObjectType, template = FeedObjectTemplateType.SNIPPET, FeedObjectProps = {}, className, autoHide, ...rest} = props;
 
   // STATE
   const [objs, setObjs] = useState<any[]>([]);
@@ -151,7 +156,11 @@ export default function RelatedDiscussion(props: RelatedDiscussionProps): JSX.El
    * Renders root object (if not hidden by autoHide prop)
    */
   if (!autoHide) {
-    return <Root className={className}>{d}</Root>;
+    return (
+      <Root className={className} {...rest}>
+        {d}
+      </Root>
+    );
   }
   return null;
 }

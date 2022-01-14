@@ -40,11 +40,9 @@ import {
   Link,
   Logger,
   SCCommentType,
-  SCCustomAdvPosition,
   SCFeedObjectType,
   SCFeedObjectTypologyType,
   SCPollType,
-  SCPreferences,
   SCPreferencesContextType,
   SCRoutes,
   SCRoutingContextType,
@@ -65,7 +63,6 @@ import ReplyCommentObject from '../CommentObject/ReplyComment';
 import {LoadingButton} from '@mui/lab';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {AxiosResponse} from 'axios';
-import CustomAdv from '../CustomAdv';
 
 const messages = defineMessages({
   comment: {
@@ -97,7 +94,6 @@ const Root = styled(Card, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  marginTop: theme.spacing(2),
   marginBottom: theme.spacing(2),
   [`& .${PREFIX}-share`]: {
     backgroundColor: '#f8f8f8'
@@ -216,9 +212,12 @@ export interface FeedObjectProps extends CardProps {
    * @default false
    */
   hideParticipantsPreview?: boolean;
-}
 
-const PREFERENCES = [SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED, SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED];
+  /**
+   * Other props
+   */
+  [p: string]: any;
+}
 
 export default function FeedObject(props: FeedObjectProps): JSX.Element {
   // PROPS
@@ -253,15 +252,6 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
 
   // INTL
   const intl = useIntl();
-
-  /**
-   * Compute preferences
-   */
-  const preferences = useMemo(() => {
-    const _preferences = {};
-    PREFERENCES.map((p) => (_preferences[p] = p in scPreferences.preferences ? scPreferences.preferences[p].value : null));
-    return _preferences;
-  }, [scPreferences.preferences]);
 
   /**
    * Set:
@@ -410,7 +400,8 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
     setIsReplying(true);
     performReply(comment)
       .then((data: SCCommentType) => {
-        if (selectedActivities !== FeedObjectActivitiesType.RECENT_COMMENTS) {
+        if (selectedActivities !== FeedObjectActivitiesType.RECENT_COMMENTS || obj.comment_count === 0) {
+          setObj(Object.assign({}, obj, {comment_count: obj.comment_count + 1}));
           setComments([]);
           setSelectedActivities(FeedObjectActivitiesType.RECENT_COMMENTS);
         } else {
@@ -430,7 +421,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
     return (
       <>
         {<ReplyCommentObject inline variant={'outlined'} onReply={handleReply} isLoading={isReplying} key={Number(isReplying)} />}
-        {(obj.comment_count || feedObjectActivities) && (
+        {(obj.comment_count || feedObjectActivities || comments.length > 0) && (
           <ActivitiesMenu
             selectedActivities={selectedActivities}
             hideRelevantActivitiesItem={!(feedObjectActivities && feedObjectActivities.length > 0)}
@@ -461,7 +452,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
         : CommentsOrderBy.ADDED_AT_DESC;
     return (
       <>
-        {obj.comment_count > 0 && (
+        {(obj.comment_count > 0 || comments.length > 0) && (
           <LazyLoad once>
             <CommentsObject
               feedObject={obj}
@@ -477,24 +468,6 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
         )}
       </>
     );
-  }
-
-  /**
-   * Render advertising above FeedObject Detail
-   */
-  function renderAdvertising() {
-    if (
-      obj &&
-      template === FeedObjectTemplateType.DETAIL &&
-      preferences[SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED] &&
-      ((preferences[SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED] && scUserContext.user === null) ||
-        !preferences[SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED])
-    ) {
-      return (
-        <CustomAdv position={SCCustomAdvPosition.POSITION_BELOW_FEED_OBJECT} {...(obj.categories.length ? {categoryId: obj.categories[0].id} : {})} />
-      );
-    }
-    return null;
   }
 
   /**
@@ -549,11 +522,19 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
             />
             <CardContent classes={{root: classes.content}}>
               {'title' in obj && (
-                <Link to={scRoutingContext.url(feedObjectType, {id: obj.id})}>
-                  <Typography variant="body1" gutterBottom className={classes.title}>
-                    {obj.title}
-                  </Typography>
-                </Link>
+                <>
+                  {template === FeedObjectTemplateType.DETAIL ? (
+                    <Typography variant="body1" gutterBottom className={classes.title}>
+                      {obj.title}
+                    </Typography>
+                  ) : (
+                    <Link to={scRoutingContext.url(feedObjectType, {id: obj.id})}>
+                      <Typography variant="body1" gutterBottom className={classes.title}>
+                        {obj.title}
+                      </Typography>
+                    </Link>
+                  )}
+                </>
               )}
               <MediasPreview medias={obj.medias} />
               <Typography
@@ -591,6 +572,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
                 feedObject={obj}
                 feedObjectType={feedObjectType}
                 hideShareAction={hideShareAction}
+                hideCommentAction={template === FeedObjectTemplateType.DETAIL}
                 handleExpandActivities={() => setExpandedActivities((prev) => !prev)}
               />
             </CardActions>
@@ -705,11 +687,8 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
    * Renders root object
    */
   return (
-    <>
-      <Root className={className} {...rest}>
-        <Box className={`${PREFIX}-${template}`}>{objElement}</Box>
-      </Root>
-      {renderAdvertising()}
-    </>
+    <Root className={className} {...rest}>
+      <Box className={`${PREFIX}-${template}`}>{objElement}</Box>
+    </Root>
   );
 }

@@ -27,21 +27,29 @@ export interface TrendingPeople {
    * @default null
    */
   categoryId?: number;
+
   /**
    * Hides this component
    * @default false
    */
   autoHide?: boolean;
+
   /**
    * Overrides or extends the styles applied to the component.
    * @default null
    */
   className?: string;
+
   /**
    * Props to spread to single user object
    * @default empty object
    */
   UserProps?: UserProps;
+
+  /**
+   * Other props
+   */
+  [p: string]: any;
 }
 
 export default function TrendingPeople(props: TrendingPeople): JSX.Element {
@@ -49,7 +57,7 @@ export default function TrendingPeople(props: TrendingPeople): JSX.Element {
   const limit = 3;
 
   // PROPS
-  const {categoryId, autoHide, className, UserProps = {}} = props;
+  const {categoryId, autoHide, className, UserProps = {}, ...rest} = props;
 
   // STATE
   const [people, setPeople] = useState<any[]>([]);
@@ -138,7 +146,11 @@ export default function TrendingPeople(props: TrendingPeople): JSX.Element {
    * Renders root object (if not hidden by autoHide prop)
    */
   if (!autoHide) {
-    return <Root className={className}>{p}</Root>;
+    return (
+      <Root className={className} {...rest}>
+        {p}
+      </Root>
+    );
   }
   return null;
 }

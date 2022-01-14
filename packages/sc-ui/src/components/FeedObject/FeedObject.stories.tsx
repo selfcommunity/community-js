@@ -39,11 +39,11 @@ export default {
     }
   },
   args: {
-    feedObjectId: 9,
+    feedObjectId: 7628, // 9,
     feedObjectType: SCFeedObjectTypologyType.DISCUSSION,
-    template: FeedObjectTemplateType.DETAIL,
+    template: FeedObjectTemplateType.PREVIEW,
     elevation: 1,
-    variant: 'elevation',
+    variant: 'outlined',
     hideShareAction: false
   },
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes

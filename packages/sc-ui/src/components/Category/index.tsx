@@ -87,7 +87,7 @@ export default function Category(props: CategoryProps): JSX.Element {
       {scCategory ? (
         <ListItem button={true}>
           <ListItemAvatar>
-            <Avatar alt={scCategory.name} src={scCategory.image_original} variant="square" className={classes.avatar} />
+            <Avatar alt={scCategory.name} src={scCategory.image_medium} variant="square" className={classes.avatar} />
           </ListItemAvatar>
           <ListItemText
             primary={scCategory.name}

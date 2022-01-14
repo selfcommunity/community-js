@@ -37,6 +37,11 @@ export interface CategoriesListProps {
    * @default empty object
    */
   CategoryProps?: CategoryProps;
+
+  /**
+   * Other props
+   */
+  [p: string]: any;
 }
 
 export default function CategoriesSuggestion(props: CategoriesListProps): JSX.Element {
@@ -44,7 +49,7 @@ export default function CategoriesSuggestion(props: CategoriesListProps): JSX.El
   const limit = 3;
 
   // PROPS
-  const {autoHide, className, CategoryProps = {}} = props;
+  const {autoHide, className, CategoryProps = {}, ...rest} = props;
 
   // STATE
   const [categories, setCategories] = useState<any[]>([]);
@@ -143,7 +148,11 @@ export default function CategoriesSuggestion(props: CategoriesListProps): JSX.El
    * Renders root object (if not hidden by autoHide prop)
    */
   if (!autoHide) {
-    return <Root className={className}>{c}</Root>;
+    return (
+      <Root className={className} {...rest}>
+        {c}
+      </Root>
+    );
   }
   return null;
 }

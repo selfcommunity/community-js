@@ -33,35 +33,35 @@ const WIDGETS: SCFeedWidgetType[] = [
   {
     type: 'widget',
     component: InlineComposer,
-    componentProps: {},
+    componentProps: {variant: 'outlined'},
     column: 'left',
     position: 0
   },
   {
     type: 'widget',
     component: Platform,
-    componentProps: {},
+    componentProps: {variant: 'outlined'},
     column: 'right',
     position: 0
   },
   {
     type: 'widget',
     component: LoyaltyProgram,
-    componentProps: {},
+    componentProps: {variant: 'outlined'},
     column: 'right',
     position: 1
   },
   {
     type: 'widget',
     component: CategoriesPopular,
-    componentProps: {},
+    componentProps: {variant: 'outlined'},
     column: 'right',
     position: 2
   },
   {
     type: 'widget',
     component: PeopleSuggestion,
-    componentProps: {},
+    componentProps: {variant: 'outlined'},
     column: 'right',
     position: 3
   }
@@ -73,7 +73,7 @@ export default function ExploreFeed(props: ExploreFeedProps): JSX.Element {
 
   return (
     <Root id={id} className={className}>
-      <Feed endpoint={Endpoints.ExploreFeed} widgets={WIDGETS} />
+      <Feed endpoint={Endpoints.ExploreFeed} widgets={WIDGETS} FeedObjectProps={{variant: 'outlined'}} />
     </Root>
   );
 }
