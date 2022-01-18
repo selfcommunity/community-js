@@ -29,24 +29,18 @@ export default {
       options: ['elevation', 'outlined'],
       control: {type: 'select'},
       description: 'The variant to use. Types: "elevation", "outlined", etc.',
-      table: {defaultValue: {summary: 'elevation'}}
+      table: {defaultValue: {summary: 'elevation'}},
     }
   },
   args: {
     feedObjectId: 17, // 1064,
     feedObjectType: SCFeedObjectTypologyType.DISCUSSION,
     infiniteScrolling: true,
-    commentsPageSize: 10,
     elevation: 1,
     variant: 'elevation',
-    commentsOrderBy: CommentsOrderBy.ADDED_AT_ASC,
-    page: 3
-    /* renderComment: (comment) => (
-      <>
-        {comment.html}
-        <br />
-      </>
-    ) */
+    commentsOrderBy: CommentsOrderBy.ADDED_AT_DESC,
+    fixedPrimaryReply: true,
+    commentsPageCount: 10
   }
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
 } as ComponentMeta<typeof CommentsObject>;

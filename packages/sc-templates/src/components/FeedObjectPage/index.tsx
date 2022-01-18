@@ -112,6 +112,7 @@ export default function FeedObjectPage(props: FeedObjectPageProps): JSX.Element 
             feedObjectId={feedObjectId}
             feedObjectType={feedObjectType}
             commentsOrderBy={CommentsOrderBy.ADDED_AT_ASC}
+            bottomPrimaryReply
           />
         </Grid>
         <Grid item xs={12} md={5}>
