@@ -1,26 +1,27 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import {
+  Endpoints,
+  http,
+  Logger,
+  SCCommentType,
   SCFeedObjectType,
   SCFeedObjectTypologyType,
-  useSCFetchFeedObject,
-  http,
-  Endpoints,
-  Logger,
-  useSCFetchCommentObject
+  useSCFetchCommentObject,
+  useSCFetchFeedObject
 } from '@selfcommunity/core';
 import {defineMessages, FormattedMessage} from 'react-intl';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {AxiosResponse} from 'axios';
 import CommentObject from '../CommentObject';
-import {SCCommentType} from '@selfcommunity/core';
 import ReplyCommentObject from '../CommentObject/ReplyComment';
 import Typography from '@mui/material/Typography';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import CommentObjectSkeleton from '../Skeleton/CommentObjectSkeleton';
 import {Box, Button, Stack} from '@mui/material';
 import {CommentsOrderBy} from '../../types/comments';
+import classNames from 'classnames';
 
 const messages = defineMessages({
   noOtherComment: {
@@ -32,7 +33,10 @@ const messages = defineMessages({
 const PREFIX = 'SCCommentsObject';
 
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-root`,
+  fixedPrimaryReply: `${PREFIX}-fixed-primary-reply`,
+  fixedTopPrimaryReply: `${PREFIX}-fixed-top-primary-reply`,
+  fixedBottomPrimaryReply: `${PREFIX}-fixed-bottom-primary-reply`
 };
 
 const Root = styled(Card, {
@@ -40,7 +44,28 @@ const Root = styled(Card, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  boxShadow: 'none'
+  boxShadow: 'none',
+  position: 'relative',
+  height: '100%',
+  [`& .${classes.fixedPrimaryReply}`]: {
+    height: 100,
+    width: '100%',
+    position: 'fixed',
+    background: '#FFF',
+    boxSizing: 'border-box',
+    transitionProperty: 'box-shadow',
+    transitionDuration: '250ms',
+    transitionTimingFunction: 'ease-out',
+    zIndex: 1
+  },
+  [`& .${classes.fixedTopPrimaryReply}`]: {
+    top: 0,
+    'box-shadow': 'rgb(0 0 0 / 5%) 0px 1px 0px 0px, rgb(0 0 0 / 4%) 0px 2px 1px'
+  },
+  [`& .${classes.fixedBottomPrimaryReply}`]: {
+    bottom: 0,
+    'box-shadow': 'rgb(0 0 0 / 5%) 0px -1px 0px 0px, rgb(0 0 0 / 4%) 0px -1px 1px'
+  }
 }));
 
 export interface CommentsObjectProps {
@@ -124,6 +149,12 @@ export interface CommentsObjectProps {
   hidePrimaryReply?: boolean;
 
   /**
+   * position the primary reply in the bottom of the component
+   * @default false
+   */
+  fixedPrimaryReply?: boolean;
+
+  /**
    * number of box of skeleton loading to show during loading phase
    * @default 3
    */
@@ -164,6 +195,7 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
     showTitle = false,
     infiniteScrolling = true,
     hidePrimaryReply = false,
+    fixedPrimaryReply = false,
     commentsLoadingBoxCount = 3,
     additionalHeaderComments = [],
     onChangePage,
@@ -174,6 +206,7 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [comment, setComment] = useState<SCCommentType>(null);
   const [comments, setComments] = useState<SCCommentType[]>([]);
+  const [newComments, setNewComments] = useState<SCCommentType[]>([]);
   const [next, setNext] = useState<string>(null);
   const [previous, setPrevious] = useState<string>(null);
   const [total, setTotal] = useState<number>(null);
@@ -181,10 +214,22 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
   const [infiniteScrollingEnabled, setInfiniteScrollingEnabled] = useState<boolean>(
     infiniteScrolling && !(commentObject || Boolean(commentObjectId))
   );
+  const [rootRef, setRootRef] = useState(null);
+  const [rootWidth, setRootWidth] = useState(null);
 
   // RETRIVE OBJECTS
   const {obj, setObj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
   const {obj: commentObj, setObj: setCommentObj} = useSCFetchCommentObject({id: commentObjectId, commentObject});
+
+  /**
+   * Define root width to set primary reply width
+   */
+  const rootContainer = useCallback((node) => {
+    if (node !== null) {
+      setRootRef(node);
+      setRootWidth(node.getBoundingClientRect().width);
+    }
+  }, []);
 
   /**
    * Render title
@@ -202,6 +247,30 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
     },
     [total]
   );
+
+  /**
+   * Remove commentObj or comments from newComments
+   * if commentsObj.id or ids of newComments are included in commentsSet
+   * @param commentsSet
+   */
+  const filterExtraComments = (commentsSet) => {
+    // Filter comment
+    if (comment) {
+      const _isCommentDataIncluded = commentsSet.filter((c) => c.id === comment.id).length > 0;
+      _isCommentDataIncluded && setComment(null);
+    }
+    // Filter newComments
+    if (newComments.length) {
+      const commentIds: number[] = commentsSet.map((c) => c.id);
+      let newCommentsToRemove = [];
+      newComments.map((nC: SCCommentType) => {
+        if (commentIds.includes(nC.id)) {
+          newCommentsToRemove.push(nC.id);
+        }
+      });
+      setNewComments(newComments.filter((c) => !newCommentsToRemove.includes(c.id)));
+    }
+  };
 
   /**
    * Get Comments
@@ -233,14 +302,7 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
         .then((res) => {
           setComments([...res.results, ...comments]);
           setPrevious(res.previous);
-          if (commentObj) {
-            const _searchId = commentObj.parent ? commentObj.parent : commentObj.id;
-            const _isCommentDataIncluded =
-              res.results.filter((c) => {
-                return c.id === _searchId || (c.latest_comments.length > 0 && c.latest_comments[0].id === _searchId);
-              }).length > 0;
-            _isCommentDataIncluded && setComment(null);
-          }
+          filterExtraComments(res.results);
           setIsLoading(false);
           onChangePage && onChangePage(comments.length / commentsPageCount + 1);
         })
@@ -271,14 +333,7 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
             // Save initial previous if start from a page > 1
             setPrevious(res.previous);
           }
-          if (commentObj) {
-            const _searchId = commentObj.parent ? commentObj.parent : commentObj.id;
-            const _isCommentDataIncluded =
-              res.results.filter((c) => {
-                return c.id === _searchId || (c.latest_comments.length > 0 && c.latest_comments[0].id === _searchId);
-              }).length > 0;
-            _isCommentDataIncluded && setComment(null);
-          }
+          filterExtraComments(res.results);
           setIsLoading(false);
           onChangePage && onChangePage(comments.length / commentsPageCount + 1);
         })
@@ -314,7 +369,7 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
    */
   function fetchComment() {
     setIsLoading(true);
-    if (commentObjectId && commentObj) {
+    if (commentObj) {
       if (commentObj.parent) {
         performFetchComment(commentObj.parent)
           .then((parent) => {
@@ -340,19 +395,21 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
     if (obj && obj.id) {
       setNext(null);
       setComments([]);
+      setNewComments([]);
+      fetchNextComments();
     }
   }, [commentsPageCount, commentsOrderBy]);
 
   /**
-   * Fetch comments only if obj changed
+   * Fetch comments only if obj change
    */
   useEffect(() => {
-    if (commentObjectId) {
+    if (commentObjectId || commentObj) {
       fetchComment();
-    } else if (obj && obj.id && comments.length === 0) {
+    } else if (obj && obj.id) {
       fetchNextComments();
     }
-  }, [obj, commentObj, comments]);
+  }, [obj, commentObj]);
 
   /**
    * Handle open reply box
@@ -388,14 +445,21 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
   };
 
   /**
-   * Handle comment of 2° level
+   * Handle comment of 1° level
    */
   function handleReply(content) {
     setIsReplying(true);
     performReply(content)
       .then((c: SCCommentType) => {
-        setComments(commentsOrderBy === CommentsOrderBy.ADDED_AT_DESC ? [...[c], ...comments] : [...comments, ...[c]]);
+        if (infiniteScrollingEnabled && (previous || comment)) {
+          setInfiniteScrollingEnabled(false);
+        }
+        setNewComments(commentsOrderBy === CommentsOrderBy.ADDED_AT_DESC ? [...[c], ...newComments] : [...newComments, ...[c]]);
         setIsReplying(false);
+        setTimeout(() => {
+          const element = document.getElementById(`${c.id}`);
+          element && element.scrollIntoView({behavior: 'smooth', block: 'center'});
+        }, 100);
       })
       .catch((error) => {
         Logger.error(SCOPE_SC_UI, error);
@@ -406,8 +470,14 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
    * Render header primary reply
    */
   function renderHeadPrimaryReply() {
-    if (!hidePrimaryReply && !commentObj && !isLoading && commentsOrderBy === CommentsOrderBy.ADDED_AT_DESC) {
-      return <ReplyCommentObject readOnly={isReplying} onReply={handleReply} key={Number(isReplying)} inline {...rest} />;
+    if (!hidePrimaryReply && !isLoading && commentsOrderBy === CommentsOrderBy.ADDED_AT_DESC) {
+      return (
+        <Box
+          className={classNames({[classes.fixedPrimaryReply]: fixedPrimaryReply, [classes.fixedTopPrimaryReply]: fixedPrimaryReply})}
+          style={{width: `${rootWidth}px`}}>
+          <ReplyCommentObject readOnly={isReplying} onReply={handleReply} key={Number(isReplying)} inline {...rest} />
+        </Box>
+      );
     }
     return null;
   }
@@ -416,8 +486,46 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
    * Render footer primary reply
    */
   function renderFooterPrimaryReply() {
-    if (!hidePrimaryReply && !commentObj && !isLoading && commentsOrderBy === CommentsOrderBy.ADDED_AT_ASC) {
-      return <ReplyCommentObject readOnly={isReplying} onReply={handleReply} key={Number(isReplying)} inline {...rest} />;
+    if (!hidePrimaryReply && !isLoading && commentsOrderBy === CommentsOrderBy.ADDED_AT_ASC) {
+      return (
+        <Box
+          className={classNames({[classes.fixedPrimaryReply]: fixedPrimaryReply, [classes.fixedBottomPrimaryReply]: fixedPrimaryReply})}
+          style={{width: `${rootWidth}px`}}>
+          <ReplyCommentObject readOnly={isReplying} onReply={handleReply} key={Number(isReplying)} inline {...rest} />
+        </Box>
+      );
+    }
+    return null;
+  }
+
+  /**
+   * Render new comments
+   */
+  function renderNewComments(order) {
+    if (order === commentsOrderBy) {
+      return (
+        <>
+          {newComments.map((comment: SCCommentType, index) => {
+            return (
+              <React.Fragment key={comment.id}>
+                {renderComment ? (
+                  renderComment(comment)
+                ) : (
+                  <CommentObject
+                    id={comment.id}
+                    commentObject={comment}
+                    onOpenReply={openReplyBox}
+                    feedObject={obj}
+                    feedObjectType={feedObjectType}
+                    commentReply={commentObj}
+                    {...rest}
+                  />
+                )}
+              </React.Fragment>
+            );
+          })}
+        </>
+      );
     }
     return null;
   }
@@ -447,6 +555,9 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
       </>
     );
   } else {
+    const wrapperStyles = {
+      ...(fixedPrimaryReply ? (commentsOrderBy === CommentsOrderBy.ADDED_AT_DESC ? {paddingTop: 100} : {paddingBottom: 100}) : {})
+    };
     if (infiniteScrollingEnabled) {
       commentsRendered = (
         <InfiniteScroll
@@ -454,6 +565,7 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
           next={fetchNextComments}
           hasMore={next !== null}
           loader={<CommentObjectSkeleton {...rest} />}
+          style={wrapperStyles}
           endMessage={
             commentsOrderBy === CommentsOrderBy.ADDED_AT_DESC ? (
               <Typography variant="body2" align="center">
@@ -468,13 +580,13 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
               <FormattedMessage id="ui.commentsObject.loadPreviousComments" defaultMessage="ui.commentsObject.loadPreviousComments" />
             </Button>
           )}
-          {[...additionalHeaderComments, ...comments, ...(comment ? [comment] : [])].map((c: SCCommentType) => {
+          {[...additionalHeaderComments, ...newComments, ...comments, ...(comment ? [comment] : [])].map((c: SCCommentType) => {
             return (
               <React.Fragment key={c.id}>
                 {renderComment ? (
                   renderComment(c)
                 ) : (
-                  <CommentObject commentObject={c} onOpenReply={openReplyBox} feedObject={obj} feedObjectType={feedObjectType} {...rest} />
+                  <CommentObject id={c.id} commentObject={c} onOpenReply={openReplyBox} feedObject={obj} feedObjectType={feedObjectType} {...rest} />
                 )}
               </React.Fragment>
             );
@@ -483,8 +595,9 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
       );
     } else {
       commentsRendered = (
-        <>
+        <Box style={wrapperStyles}>
           {isLoading && commentObj && comments.length === 0 && <CommentObjectSkeleton {...rest} />}
+          {renderNewComments(CommentsOrderBy.ADDED_AT_DESC)}
           {comment && comments.length === 0 && obj && obj.comment_count > 0 && !isLoading && (
             <Button variant="text" onClick={fetchNextComments} disabled={isLoading}>
               <FormattedMessage id="ui.commentsObject.loadMoreComments" defaultMessage="ui.commentsObject.loadMoreComments" />
@@ -502,6 +615,7 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
                   renderComment(comment)
                 ) : (
                   <CommentObject
+                    id={comment.id}
                     commentObject={comment}
                     onOpenReply={openReplyBox}
                     feedObject={obj}
@@ -530,12 +644,14 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
             </Stack>
           )}
           {isLoading && (!commentObj || (commentObj && comments.length > 0)) && <CommentObjectSkeleton {...rest} />}
+          {renderNewComments(CommentsOrderBy.ADDED_AT_ASC)}
           {comment && (
             <React.Fragment key={comment.id}>
               {renderComment ? (
                 renderComment(comment)
               ) : (
                 <CommentObject
+                  id={comment.id}
                   commentObject={comment}
                   onOpenReply={openReplyBox}
                   feedObject={obj}
@@ -546,7 +662,7 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
               )}
             </React.Fragment>
           )}
-        </>
+        </Box>
       );
     }
   }
@@ -555,7 +671,7 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
    * Renders root object
    */
   return (
-    <Root>
+    <Root ref={rootContainer}>
       {renderTitle()}
       {renderHeadPrimaryReply()}
       {commentsRendered}

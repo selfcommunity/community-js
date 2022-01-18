@@ -450,6 +450,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
         : selectedActivities === FeedObjectActivitiesType.FIRST_COMMENTS
         ? CommentsOrderBy.ADDED_AT_ASC
         : CommentsOrderBy.ADDED_AT_DESC;
+    console.log(_commentsOrderBy);
     return (
       <>
         {(obj.comment_count > 0 || comments.length > 0) && (
