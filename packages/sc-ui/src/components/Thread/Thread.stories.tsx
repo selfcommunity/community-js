@@ -13,7 +13,7 @@ export default {
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const Template: ComponentStory<typeof Thread> = (args) => (
   <div style={{width: 400}}>
-    <Thread id={29} {...args} />
+    <Thread {...args} />
   </div>
 );
 

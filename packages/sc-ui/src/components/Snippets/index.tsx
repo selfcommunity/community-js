@@ -9,6 +9,7 @@ import {SCPrivateMessageType} from '@selfcommunity/core/src/types';
 import {FormattedMessage} from 'react-intl';
 import SnippetsSkeleton from '../Skeleton/SnippetsSkeleton';
 import Message from '../Message';
+import Thread from '../Thread';
 
 const PREFIX = 'SCSnippets';
 
@@ -36,10 +37,6 @@ export interface SnippetSuggestionProps {
    * Any other properties
    */
   [p: string]: any;
-  /**
-   * Function fired when message obj is clicked.
-   */
-  onClick?: () => void;
 }
 export default function SnippetsSuggestion(props: SnippetSuggestionProps): JSX.Element {
   //PROPS
@@ -48,8 +45,9 @@ export default function SnippetsSuggestion(props: SnippetSuggestionProps): JSX.E
   // STATE
   const [snippets, setSnippets] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [openSnippet, setOpenSnippet] = useState<boolean>(false);
+  const [openThread, setOpenThread] = useState<boolean>(false);
   const [total, setTotal] = useState<number>(0);
+  const [threadId, setThreadId] = useState<number>(null);
 
   /**
    * Fetches Snippets
@@ -81,8 +79,10 @@ export default function SnippetsSuggestion(props: SnippetSuggestionProps): JSX.E
   /**
    * Handles thread opening
    */
-  function handleOpenThread() {
-    setOpenSnippet(true);
+  function handleOpenThread(id) {
+    console.log(id);
+    setOpenThread(true);
+    setThreadId(id);
   }
 
   /**
@@ -102,13 +102,17 @@ export default function SnippetsSuggestion(props: SnippetSuggestionProps): JSX.E
             <React.Fragment>
               {snippets.map((message: SCPrivateMessageType, index) => (
                 <div key={index}>
-                  <Message elevation={0} message={message} key={message.id} onClick={() => handleOpenThread()} />
+                  <Message elevation={0} message={message} key={message.id} onClick={() => handleOpenThread(message.id)} />
                   {index < total - 1 ? <Divider /> : null}
                 </div>
               ))}
             </React.Fragment>
           )}
-          {openSnippet && <></>}
+          {/*{openThread && (*/}
+          <>
+            <Thread id={threadId} open={openThread} />
+          </>
+          {/*)}*/}
         </CardContent>
       )}
     </React.Fragment>

@@ -59,10 +59,6 @@ export interface MessageProps extends Pick<CardProps, Exclude<keyof CardProps, '
    */
   autoHide?: boolean;
   /**
-   * Function fired when message obj is clicked.
-   */
-  onClick?: () => void;
-  /**
    * The message type. If true, it shows snippet type structure, otherwise it shows thread message structure;
    * @default true
    */

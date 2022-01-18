@@ -5,12 +5,13 @@ import {Endpoints, http, SCPrivateMessageType, SCUserContext, SCUserContextType}
 import {AxiosResponse} from 'axios';
 import Message from '../Message';
 import _ from 'lodash';
-import {useIntl} from 'react-intl';
-import {Typography} from '@mui/material';
+import {FormattedMessage, useIntl} from 'react-intl';
+import {Box, Typography} from '@mui/material';
 
 const PREFIX = 'SCThread';
 
 const classes = {
+  emptyBox: `${PREFIX}-emptyBox`,
   sender: `${PREFIX}-sender`,
   receiver: `${PREFIX}-receiver`
 };
@@ -22,6 +23,18 @@ const Root = styled(Card, {
 })(({theme}) => ({
   maxWidth: 700,
   marginBottom: theme.spacing(2),
+  [`& .${classes.emptyBox}`]: {
+    display: 'flex',
+    height: '100%',
+    width: '50%',
+    position: 'absolute',
+    background: theme.palette.grey['A200'],
+    justifyContent: 'center',
+    alignItems: 'center',
+    '& .MuiTypography-root': {
+      fontSize: '1.5rem'
+    }
+  },
   [`& .${classes.sender}`]: {
     display: 'flex',
     justifyContent: 'flex-end',
@@ -111,27 +124,44 @@ export default function Thread(props: ThreadProps): JSX.Element {
    */
   useEffect(() => {
     fetchThread();
-  }, []);
+  }, [id]);
 
   /**
    * Renders thread component
+   * @return {JSX.Element}
    */
-  const t = (
-    <React.Fragment>
-      {Object.keys(messages).map((key, index) => (
-        <div key={index}>
-          <Typography component="h3" align="center">
-            {key}
-          </Typography>
-          {messages[key].map((msg: SCPrivateMessageType, index) => (
-            <div key={index} className={loggedUser === msg.sender_id ? classes.sender : classes.receiver}>
-              <Message elevation={0} message={msg} key={msg.id} snippetType={false} />
-            </div>
-          ))}
-        </div>
-      ))}
-    </React.Fragment>
-  );
+  function renderThread() {
+    return (
+      <React.Fragment>
+        {Object.keys(messages).map((key, index) => (
+          <div key={index}>
+            <Typography component="h3" align="center">
+              {key}
+            </Typography>
+            {messages[key].map((msg: SCPrivateMessageType, index) => (
+              <div key={index} className={loggedUser === msg.sender_id ? classes.sender : classes.receiver}>
+                <Message elevation={0} message={msg} key={msg.id} snippetType={false} />
+              </div>
+            ))}
+          </div>
+        ))}
+      </React.Fragment>
+    );
+  }
+
+  /**
+   * Renders empty box (when there is no thread open)
+   * @return {JSX.Element}
+   */
+  function renderEmptyBox() {
+    return (
+      <Box className={classes.emptyBox}>
+        <Typography component="h3">
+          <FormattedMessage id="ui.Thread.emptyBox.message" defaultMessage="ui.Thread.emptyBox.message" />
+        </Typography>
+      </Box>
+    );
+  }
 
   /**
    * Renders the component (if not hidden by autoHide prop)
@@ -139,7 +169,7 @@ export default function Thread(props: ThreadProps): JSX.Element {
   if (!autoHide) {
     return (
       <Root {...rest} className={className}>
-        {t}
+        {id ? renderThread() : renderEmptyBox()}
       </Root>
     );
   }
