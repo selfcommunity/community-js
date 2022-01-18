@@ -15,6 +15,10 @@ export interface SCPrivateMessageType {
    */
   sender: SCUserType;
   /**
+   * Sender id
+   */
+  sender_id: number;
+  /**
    *Receiver User
    */
   receiver: SCUserType;

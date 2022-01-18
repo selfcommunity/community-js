@@ -1,11 +1,19 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
-import {Endpoints, http, SCPrivateMessageType} from '@selfcommunity/core';
+import {Endpoints, http, SCPrivateMessageType, SCUserContext, SCUserContextType} from '@selfcommunity/core';
 import {AxiosResponse} from 'axios';
 import Message from '../Message';
+import _ from 'lodash';
+import {useIntl} from 'react-intl';
+import {Typography} from '@mui/material';
 
 const PREFIX = 'SCThread';
+
+const classes = {
+  sender: `${PREFIX}-sender`,
+  receiver: `${PREFIX}-receiver`
+};
 
 const Root = styled(Card, {
   name: PREFIX,
@@ -13,7 +21,23 @@ const Root = styled(Card, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   maxWidth: 700,
-  marginBottom: theme.spacing(2)
+  marginBottom: theme.spacing(2),
+  [`& .${classes.sender}`]: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    '& .SCMessage-messageBox': {
+      backgroundColor: theme.palette.grey[400]
+    }
+  },
+  [`& .${classes.receiver}`]: {
+    '& .SCMessage-messageBox': {
+      backgroundColor: theme.palette.grey['A200']
+    },
+    '& .SCMessage-messageTime': {
+      display: 'flex',
+      justifyContent: 'flex-start'
+    }
+  }
 }));
 
 export interface ThreadProps {
@@ -39,12 +63,26 @@ export interface ThreadProps {
 }
 export default function Thread(props: ThreadProps): JSX.Element {
   // PROPS
-  const {id = 29, autoHide, className, ...rest} = props;
+  const {id = null, autoHide, className, ...rest} = props;
+
+  //CONTEXT
+  const scUserContext: SCUserContextType = useContext(SCUserContext);
 
   // STATE
   const [loading, setLoading] = useState<boolean>(true);
   const [messages, setMessages] = useState<any[]>([]);
-  console.log(messages);
+  const loggedUser = scUserContext['user'].id;
+
+  // INTL
+  const intl = useIntl();
+
+  // UTILS
+  const format = (item) =>
+    intl.formatDate(item.created_at, {
+      weekday: 'long',
+      day: 'numeric',
+      month: 'long'
+    });
 
   /**
    * Fetches thread
@@ -60,7 +98,7 @@ export default function Thread(props: ThreadProps): JSX.Element {
       })
       .then((res: AxiosResponse<any>) => {
         const data = res.data;
-        setMessages(data.results);
+        setMessages(_.groupBy(data.results, format));
         setLoading(false);
       })
       .catch((error) => {
@@ -80,13 +118,18 @@ export default function Thread(props: ThreadProps): JSX.Element {
    */
   const t = (
     <React.Fragment>
-      <React.Fragment>
-        {messages.map((message: SCPrivateMessageType, index) => (
-          <div key={index}>
-            <Message elevation={0} message={message} key={message.id} />
-          </div>
-        ))}
-      </React.Fragment>
+      {Object.keys(messages).map((key, index) => (
+        <div key={index}>
+          <Typography component="h3" align="center">
+            {key}
+          </Typography>
+          {messages[key].map((msg: SCPrivateMessageType, index) => (
+            <div key={index} className={loggedUser === msg.sender_id ? classes.sender : classes.receiver}>
+              <Message elevation={0} message={msg} key={msg.id} snippetType={false} />
+            </div>
+          ))}
+        </div>
+      ))}
     </React.Fragment>
   );
 

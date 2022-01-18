@@ -8,7 +8,7 @@ import {AxiosResponse} from 'axios';
 import {SCPrivateMessageType} from '@selfcommunity/core/src/types';
 import {FormattedMessage} from 'react-intl';
 import SnippetsSkeleton from '../Skeleton/SnippetsSkeleton';
-import SnippetMessage from '../Message/SnippetMessage';
+import Message from '../Message';
 
 const PREFIX = 'SCSnippets';
 
@@ -102,7 +102,7 @@ export default function SnippetsSuggestion(props: SnippetSuggestionProps): JSX.E
             <React.Fragment>
               {snippets.map((message: SCPrivateMessageType, index) => (
                 <div key={index}>
-                  <SnippetMessage elevation={0} message={message} key={message.id} onClick={() => handleOpenThread()} />
+                  <Message elevation={0} message={message} key={message.id} onClick={() => handleOpenThread()} />
                   {index < total - 1 ? <Divider /> : null}
                 </div>
               ))}
