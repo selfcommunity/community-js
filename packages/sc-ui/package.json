@@ -56,7 +56,8 @@
     "react-intl": "^5.21.0"
   },
   "dependencies": {
-    "@mui/lab": "~5.0.0-alpha.64",
+    "@mui/lab": "~5.0.0-alpha.65",
+    "notistack": "^2.0.3",
     "@rpldy/chunked-sender": "^0.14.1",
     "@rpldy/chunked-uploady": "^0.14.1",
     "@rpldy/upload-button": "^0.14.1",

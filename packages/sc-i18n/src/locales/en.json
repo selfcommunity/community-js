@@ -113,6 +113,7 @@
   "ui.composer.edit.error.content": "This contribution is unavailable for editing",
 
   "ui.inlineComposer.label": "Create content...",
+  "ui.inlineComposer.success": "Creation succeed!",
 
   "ui.editor.placeholder": "Write your text...",
 

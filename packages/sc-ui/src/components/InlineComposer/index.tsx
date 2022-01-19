@@ -10,6 +10,7 @@ import PollIcon from '@mui/icons-material/BarChartOutlined';
 import {FormattedMessage} from 'react-intl';
 import {DistributiveOmit} from '@mui/types';
 import {OverrideProps} from '@mui/material/OverridableComponent';
+import { useSnackbar } from 'notistack';
 
 const PREFIX = 'SCInlineComposer';
 
@@ -79,6 +80,7 @@ export default function InlineComposer(props: InlineComposerProps): JSX.Element 
   // Context
   const scPrefernces: SCPreferencesContextType = useContext(SCPreferencesContext);
   const scUser: SCUserContextType = useContext(SCUserContext);
+  const {enqueueSnackbar} = useSnackbar();
 
   // State variables
   const [state, setState] = useState({...INITIAL_STATE});
@@ -104,6 +106,9 @@ export default function InlineComposer(props: InlineComposerProps): JSX.Element 
 
   const handleSuccess = (feedObject) => {
     onSuccess && onSuccess(feedObject);
+    enqueueSnackbar(<FormattedMessage id="ui.inlineComposer.success" defaultMessage="ui.inlineComposer.success" />, {
+      variant: 'success'
+    });
     setState({...INITIAL_STATE});
   };
 
