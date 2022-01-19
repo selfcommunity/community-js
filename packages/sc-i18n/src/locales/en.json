@@ -262,6 +262,7 @@
   "ui.userNotifications.kindlyNoticeFor.kindlyNoticeForOfftopic": "Several users have flagged your contribution as \"off-topic\". Please, fix it according to",
   "ui.userNotifications.kindlyNoticeFlag.title": "You have flagged a contribution which is not irregular. Please read website rules before further flagging",
 
-  "ui.PrivateMessage.new" : "New Message",
+  "ui.NewMessage.new" : "New Message",
+  "ui.NewMessage.to" : "To:",
   "ui.Thread.emptyBox.message" : "Select or compose a message"
 }

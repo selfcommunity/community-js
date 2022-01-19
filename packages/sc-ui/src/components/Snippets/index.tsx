@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Divider, Typography} from '@mui/material';
+import {Divider, Typography, Button, Box} from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import {Endpoints, http} from '@selfcommunity/core';
@@ -10,16 +10,23 @@ import {FormattedMessage} from 'react-intl';
 import SnippetsSkeleton from '../Skeleton/SnippetsSkeleton';
 import Message from '../Message';
 import Thread from '../Thread';
+import NewMessage from '../NewMessage';
 
 const PREFIX = 'SCSnippets';
+
+const classes = {
+  selected: `${PREFIX}-selected`
+};
 
 const Root = styled(Card, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  maxWidth: 700,
-  marginBottom: theme.spacing(2)
+  maxWidth: 500,
+  [`& .${classes.selected}`]: {
+    backgroundColor: '#a0c7e9'
+  }
 }));
 
 export interface SnippetSuggestionProps {
@@ -48,6 +55,8 @@ export default function SnippetsSuggestion(props: SnippetSuggestionProps): JSX.E
   const [openThread, setOpenThread] = useState<boolean>(false);
   const [total, setTotal] = useState<number>(0);
   const [threadId, setThreadId] = useState<number>(null);
+  const [unseen, setUnseen] = useState<boolean>(null);
+  const [selected, setSelected] = useState<number>(null);
 
   /**
    * Fetches Snippets
@@ -80,9 +89,10 @@ export default function SnippetsSuggestion(props: SnippetSuggestionProps): JSX.E
    * Handles thread opening
    */
   function handleOpenThread(id) {
-    console.log(id);
     setOpenThread(true);
     setThreadId(id);
+    setUnseen(false);
+    setSelected(id);
   }
 
   /**
@@ -100,19 +110,28 @@ export default function SnippetsSuggestion(props: SnippetSuggestionProps): JSX.E
             </Typography>
           ) : (
             <React.Fragment>
+              <NewMessage />
+              <Divider />
               {snippets.map((message: SCPrivateMessageType, index) => (
                 <div key={index}>
-                  <Message elevation={0} message={message} key={message.id} onClick={() => handleOpenThread(message.id)} />
+                  <Message
+                    elevation={0}
+                    message={message}
+                    key={message.id}
+                    onClick={() => handleOpenThread(message.id)}
+                    unseen={unseen === null ? message.thread_status === 'new' : unseen}
+                    className={message.id === selected ? classes.selected : ''}
+                  />
                   {index < total - 1 ? <Divider /> : null}
                 </div>
               ))}
             </React.Fragment>
           )}
-          {/*{openThread && (*/}
-          <>
-            <Thread id={threadId} open={openThread} />
-          </>
-          {/*)}*/}
+          {openThread && (
+            <>
+              <Thread id={threadId} open={openThread} />
+            </>
+          )}
         </CardContent>
       )}
     </React.Fragment>

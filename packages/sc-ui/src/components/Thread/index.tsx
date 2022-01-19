@@ -43,6 +43,8 @@ const Root = styled(Card, {
     }
   },
   [`& .${classes.receiver}`]: {
+    display: 'flex',
+    justifyContent: 'flex-start',
     '& .SCMessage-messageBox': {
       backgroundColor: theme.palette.grey['A200']
     },
@@ -85,6 +87,7 @@ export default function Thread(props: ThreadProps): JSX.Element {
   const [loading, setLoading] = useState<boolean>(true);
   const [messages, setMessages] = useState<any[]>([]);
   const loggedUser = scUserContext['user'].id;
+  console.log(messages);
 
   // INTL
   const intl = useIntl();
@@ -96,6 +99,26 @@ export default function Thread(props: ThreadProps): JSX.Element {
       day: 'numeric',
       month: 'long'
     });
+
+  /**
+   * Handles deletion of a single message
+   * @param id
+   */
+  function handleDelete(id) {
+    http
+      .request({
+        url: Endpoints.DeleteASingleMessage.url({id: id}),
+        method: Endpoints.DeleteASingleMessage.method
+      })
+      .then(() => {
+        const index = format(messages);
+        const result = messages[index].filter((m) => m.id !== id);
+        setMessages(_.groupBy(result, format));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
   /**
    * Fetches thread
@@ -140,7 +163,7 @@ export default function Thread(props: ThreadProps): JSX.Element {
             </Typography>
             {messages[key].map((msg: SCPrivateMessageType, index) => (
               <div key={index} className={loggedUser === msg.sender_id ? classes.sender : classes.receiver}>
-                <Message elevation={0} message={msg} key={msg.id} snippetType={false} />
+                <Message elevation={0} message={msg} key={msg.id} snippetType={false} onClick={() => console.log(msg.id)} />
               </div>
             ))}
           </div>

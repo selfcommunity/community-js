@@ -2,8 +2,8 @@ import React, {RefObject, useContext, useEffect, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import {CardHeader, Divider, Grid, IconButton, Box, TextField, Typography, InputAdornment, Stack, Popover, Chip} from '@mui/material';
-import {Endpoints, http, SCLocaleContextType, SCUserContext, SCUserContextType, useSCLocale} from '@selfcommunity/core';
+import {CardHeader, Divider, Grid, IconButton, Box, TextField, InputAdornment, Stack, Popover} from '@mui/material';
+import {Endpoints, http, SCUserContext, SCUserContextType} from '@selfcommunity/core';
 import CloseIcon from '@mui/icons-material/Close';
 import {FormattedMessage} from 'react-intl';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -58,57 +58,80 @@ const Root = styled(Card, {
   }
 }));
 
-export default function PrivateMessageCard({
-  autoHide = null,
-  open = null,
-  className = '',
-  onClose = null,
-  onRef = null,
-  ...props
-}: {
+export interface NewMessageProps {
+  /**
+   * Hides this component
+   * @default false
+   */
   autoHide?: boolean;
+  /**
+   * Handles new message card opening
+   * @default null
+   */
   open?: boolean;
+  /**
+   * Overrides or extends the styles applied to the component.
+   * @default null
+   */
   className?: string;
+  /**
+   * Handles emoji editor
+   * @default null
+   */
   onRef?: (ref: RefObject<TMUIRichTextEditorRef>) => void;
+  /**
+   * Callback to close new message card section
+   * @default null
+   */
   onClose?: () => void;
-}): JSX.Element {
+  /**
+   * Any other properties
+   */
+  [p: string]: any;
+}
+
+export default function NewMessageCard(props: NewMessageProps): JSX.Element {
+  // PROPS
+  const {autoHide = null, open = null, className = null, onClose = null, onRef = null, ...rest} = props;
+
+  // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
-  const scLocaleContext: SCLocaleContextType = useSCLocale();
-  const language = scLocaleContext.locale;
+
+  // STATE
   const [followers, setFollowers] = useState<any[]>([]);
-  const [recipientId, setRecipientId] = useState([]);
+  const [recipients, setRecipients] = useState([]);
   const [message, setMessage] = useState<string>('');
   const [show, setShow] = useState(false);
   const [showBox, setShowBox] = useState(false);
   const [sending, setSending] = useState<boolean>(false);
+  const [emojiAnchorEl, setEmojiAnchorEl] = React.useState<null | HTMLElement>(null);
+
+  // REF
+  const ref = useRef(null);
+
+  // HANDLERS
+  const ids = recipients.map((u) => {
+    return parseInt(u.id, 10);
+  });
+
   const selectRecipients = (event, recipient) => {
-    if (recipient) {
-      const rId = recipient[0].id;
-      setRecipientId(rId);
-      setShowBox(true);
-    }
-    // if (recipientId) {
-    //   const rId = recipient[0].id;
-    //   setRecipientId((prevRecipientId: []) => ({
-    //     recipientId: [...prevRecipientId, rId]
-    //   }));
-    // }
+    setRecipients(recipient);
+    setShowBox(true);
   };
+
   const handleMessageInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setMessage(event.target.value);
     setShow(true);
   };
-  const ref = useRef(null);
-  const [emojiAnchorEl, setEmojiAnchorEl] = React.useState<null | HTMLElement>(null);
+
   const handleToggleEmoji = (event: React.MouseEvent<HTMLElement>) => {
     setEmojiAnchorEl(emojiAnchorEl ? null : event.currentTarget);
   };
   const handleEmojiClick = (event, emojiObject) => {
     const cursor = ref.current.selectionStart;
-    const text = message.slice(0, cursor) + emojiObject.emoji + message.slice(cursor);
+    const text = message.slice(0, cursor) + emojiObject.emoji;
     setMessage(text);
   };
-  console.log('id', recipientId);
 
   function fetchFollowers() {
     http
@@ -132,14 +155,14 @@ export default function PrivateMessageCard({
         url: Endpoints.SendMessage.url(),
         method: Endpoints.SendMessage.method,
         data: {
-          recipients: [recipientId],
+          recipients: ids,
           message: message
         }
       })
       .then(() => {
         setSending(false);
         setMessage('');
-        setRecipientId(null);
+        onClose();
       })
       .catch((error) => {
         console.log(error);
@@ -148,12 +171,11 @@ export default function PrivateMessageCard({
 
   useEffect(() => {
     fetchFollowers();
-    onRef && onRef(ref);
   }, []);
 
   if (!autoHide) {
     return (
-      <Root {...props} className={className}>
+      <Root {...rest} className={className}>
         <React.Fragment>
           <CardHeader
             className={classes.header}
@@ -162,12 +184,14 @@ export default function PrivateMessageCard({
                 <CloseIcon />
               </IconButton>
             }
-            title={<FormattedMessage defaultMessage="ui.PrivateMessage.new" id="ui.PrivateMessage.new" />}
+            title={<FormattedMessage defaultMessage="ui.NewMessage.new" id="ui.NewMessage.new" />}
           />
           <CardContent>
             <Grid container spacing={2}>
               <Grid item xs={4}>
-                <b>To:</b>
+                <b>
+                  <FormattedMessage defaultMessage="ui.NewMessage.to" id="ui.NewMessage.to" />
+                </b>
               </Grid>
               <Grid item xs={8}>
                 <Autocomplete
@@ -176,7 +200,7 @@ export default function PrivateMessageCard({
                   //className={classes.input}
                   options={followers}
                   getOptionLabel={(option) => option.username}
-                  // defaultValue={recipientId}
+                  // defaultValue={recipients}
                   renderInput={(params) => (
                     <TextField
                       {...params}

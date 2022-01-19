@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
 import Card from '@mui/material/Card';
@@ -7,13 +7,18 @@ import {Avatar, ListItem, ListItemAvatar, ListItemText, CardProps, Typography, B
 import SnippetMessageBoxSkeleton from '../Skeleton/SnippetMessageBoxSkeleton';
 import {useIntl} from 'react-intl';
 import {SCPrivateMessageType} from '@selfcommunity/core';
+import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 
 const PREFIX = 'SCMessage';
 
 const classes = {
+  card: `${PREFIX}-card`,
+  selected: `${PREFIX}-selected`,
   info: `${PREFIX}-info`,
   messageBox: `${PREFIX}-messageBox`,
-  messageTime: `${PREFIX}-messageTime`
+  messageTime: `${PREFIX}-messageTime`,
+  unread: `${PREFIX}-unread`,
+  hide: `${PREFIX}-hide`
 };
 
 const Root = styled(Card, {
@@ -22,6 +27,9 @@ const Root = styled(Card, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   maxWidth: 700,
+  [`& .${classes.card}`]: {
+    padding: '0px'
+  },
   [`& .${classes.info}`]: {
     display: 'flex',
     justifyContent: 'space-between'
@@ -34,6 +42,13 @@ const Root = styled(Card, {
     marginTop: '5px',
     display: 'flex',
     justifyContent: 'flex-end'
+  },
+  [`& .${classes.unread}`]: {
+    width: '0.8rem',
+    fill: 'blue'
+  },
+  [`& .${classes.hide}`]: {
+    display: 'none'
   }
 }));
 
@@ -63,11 +78,16 @@ export interface MessageProps extends Pick<CardProps, Exclude<keyof CardProps, '
    * @default true
    */
   snippetType?: boolean;
+  /**
+   * The message status. If true, shows a dot next to message headline.
+   * @default null
+   */
+  unseen?: boolean;
 }
 
 export default function Message(props: MessageProps): JSX.Element {
   // PROPS
-  const {id = null, autoHide = false, message = null, className = null, snippetType = true, ...rest} = props;
+  const {id = null, autoHide = false, message = null, className = null, snippetType = true, unseen = null, ...rest} = props;
 
   // INTL
   const intl = useIntl();
@@ -94,7 +114,12 @@ export default function Message(props: MessageProps): JSX.Element {
                     })}`}</Typography>
                   </Box>
                 }
-                secondary={message.headline}
+                secondary={
+                  <Box className={classes.info}>
+                    <Typography component="span"> {message.headline}</Typography>
+                    <FiberManualRecordIcon fontSize="small" className={unseen ? classes.unread : classes.hide} />
+                  </Box>
+                }
               />
             </React.Fragment>
           ) : (
@@ -127,7 +152,7 @@ export default function Message(props: MessageProps): JSX.Element {
   if (!autoHide) {
     return (
       <Root className={className} {...rest}>
-        <CardContent>
+        <CardContent className={classes.card}>
           <List>{c}</List>
         </CardContent>
       </Root>

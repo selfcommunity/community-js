@@ -1,19 +1,19 @@
 import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
 
-import PrivateMessage from './index';
+import NewMessage from './index';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC UI/PrivateMessage',
-  component: PrivateMessage
+  title: 'Design System/SC UI/NewMessage',
+  component: NewMessage
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
-} as ComponentMeta<typeof PrivateMessage>;
+} as ComponentMeta<typeof NewMessage>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof PrivateMessage> = (args) => (
+const Template: ComponentStory<typeof NewMessage> = (args) => (
   <div style={{width: 400}}>
-    <PrivateMessage {...args} />
+    <NewMessage {...args} />
   </div>
 );
 

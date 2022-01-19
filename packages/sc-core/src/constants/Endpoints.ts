@@ -423,6 +423,14 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/pm/upload/?done/'),
     method: 'POST',
   },
+  DeleteASingleMessage: {
+    url: urlReplacer('/api/v2/pm/$(id)/'),
+    method: 'DELETE',
+  },
+  DeleteAThread: {
+    url: urlReplacer('/api/v2/pm/$(id)/?hide=1'),
+    method: 'DELETE',
+  },
 };
 
 export default Endpoints;

@@ -261,6 +261,7 @@
   "ui.userNotifications.kindlyNoticeFor.kindlyNoticeForOfftopic": "La community ha segnalato un tuo contributo come \"fuori tema\". Un post è \"fuori tema\" quando l'interesse associato non è pertinente. Ti chiediamo di modificare il tuo post, verificando che l'associazione dell'interesse sia coerente.<br/>Associando al tuo post interessi pertinenti regalerai allo stesso maggiore visibilità e ci aiuterai a preservare la qualità delle interazioni.<br/>Se il tuo post non verrà modificato, sarà rimosso. Per maggiori informazioni, consulta il",
   "ui.userNotifications.kindlyNoticeFlag.kindlyNoticeFlag": "Il contenuto da te segnalato non rientra nella casitica dei contenuti ritenuti irregolari. Ti preghiamo di leggere con attenzione il regolamento prima di effettuare ulteriori segnalazioni",
 
-  "ui.PrivateMessage.new" : "Nuovo Messaggio",
+  "ui.NewMessage.new" : "Nuovo Messaggio",
+  "ui.NewMessage.to" : "A:",
   "ui.Thread.emptyBox.message" : "Seleziona or componi un messaggio"
 }

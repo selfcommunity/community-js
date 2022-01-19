@@ -64,4 +64,5 @@ export enum SCPrivateMessageStatusType {
   CREATED = 'created',
   DELETED = 'deleted',
   HIDDEN = 'hidden',
+  NEW = 'new',
 }
