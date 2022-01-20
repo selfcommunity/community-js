@@ -17,4 +17,8 @@ export class Logger {
   static log(scope, message) {
     console.log(`%c[${scope}]`, 'color:#008080', ` ${message}`);
   }
+
+  static debug(scope, message) {
+    console.debug(`%c[${scope}]`, 'color:#008080', ` ${message}`);
+  }
 }

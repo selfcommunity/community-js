@@ -11,6 +11,7 @@ import {styled} from '@mui/material/styles';
 import MediaChunkUploader from '../../MediaChunkUploader';
 import {SCMediaChunkType} from '../../../types/media';
 import {EditComponentProps} from '../Document/EditComponent';
+import { ButtonProps } from '@mui/material/Button/Button';
 
 const PREFIX = 'SCMediaActionImage';
 
@@ -49,7 +50,7 @@ const Root = styled(Box, {
 }));
 
 const UploadButton = asUploadButton(
-  forwardRef((props, ref) => (
+  forwardRef((props: ButtonProps, ref: any) => (
     <MuiButton {...props} aria-label="upload image" ref={ref} variant="outlined">
       <ImageIcon /> <FormattedMessage id="ui.composer.media.image.add" defaultMessage="ui.composer.media.image.add" />
     </MuiButton>

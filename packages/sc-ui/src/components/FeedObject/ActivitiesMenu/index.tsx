@@ -7,8 +7,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {styled} from '@mui/material/styles';
 import {FeedObjectActivitiesType} from '../../../types/feedObject';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {camelCase} from '../../../../../sc-core/src/utils/string';
-import {SCPreferences, SCPreferencesContext, SCPreferencesContextType} from '@selfcommunity/core';
+import {SCPreferences, SCPreferencesContext, SCPreferencesContextType, StringUtils} from '@selfcommunity/core';
 import {useContext} from 'react';
 
 const messages = defineMessages({
@@ -121,7 +120,7 @@ export default function ActivitiesMenu(props: ActivitiesMenuProps) {
             <b>
               {selectedActivities === FeedObjectActivitiesType.CONNECTIONS_COMMENTS && followEnabled
                 ? intl.formatMessage(messages.followedComments)
-                : intl.formatMessage(messages[`${camelCase(selectedActivities)}`])}
+                : intl.formatMessage(messages[`${StringUtils.camelCase(selectedActivities)}`])}
             </b>
           </Button>
         </Tooltip>

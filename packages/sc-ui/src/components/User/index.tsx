@@ -11,9 +11,8 @@ import {
   SCUserContextType,
   SCUserType,
   SCPreferencesContextType,
-  SCCategoryType
+  useSCFetchUser
 } from '@selfcommunity/core';
-import useSCFetchUser from '../../../../sc-core/src/hooks/useSCFetchUser';
 import FollowUserButton from '../FollowUserButton';
 
 const PREFIX = 'SCUser';

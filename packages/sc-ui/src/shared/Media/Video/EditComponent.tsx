@@ -23,6 +23,7 @@ import MediaChunkUploader from '../../MediaChunkUploader';
 import {SCMediaChunkType} from '../../../types/media';
 import DocumentIcon from '@mui/icons-material/PictureAsPdfOutlined';
 import {EditComponentProps} from '../Document/EditComponent';
+import { ButtonProps } from '@mui/material/Button/Button';
 
 const PREFIX = 'SCMediaActionVideo';
 
@@ -44,7 +45,7 @@ const Root = styled(Box, {
 }));
 
 const UploadButton = asUploadButton(
-  forwardRef((props, ref) => (
+  forwardRef((props: ButtonProps, ref: any) => (
     <MuiButton {...props} aria-label="upload document" ref={ref} variant="outlined">
       <DocumentIcon /> <FormattedMessage id="ui.composer.media.document.add" defaultMessage="ui.composer.media.document.add" />
     </MuiButton>
