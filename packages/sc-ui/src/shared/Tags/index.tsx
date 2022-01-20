@@ -57,7 +57,6 @@ const ItemList = styled(Box, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  ...theme.typography.body2,
   padding: theme.spacing(0.2),
   textAlign: 'center',
   color: theme.palette.text.secondary

@@ -1,18 +1,6 @@
 import {asUploadButton} from '@rpldy/upload-button';
 import React, {forwardRef, SyntheticEvent, useContext, useState} from 'react';
-import {
-  Alert,
-  AlertTitle,
-  Box,
-  Button,
-  Button as MuiButton,
-  Fade,
-  IconButton,
-  ImageList,
-  ImageListItem,
-  ImageListItemBar,
-  Typography
-} from '@mui/material';
+import {Alert, AlertTitle, Box, Button as MuiButton, Fade, IconButton, ImageList, ImageListItem, ImageListItemBar, Typography} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import {ReactSortable} from 'react-sortablejs';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
@@ -22,6 +10,7 @@ import {styled} from '@mui/material/styles';
 import MediaChunkUploader from '../../MediaChunkUploader';
 import {SCMediaChunkType} from '../../../types/media';
 import DocumentIcon from '@mui/icons-material/PictureAsPdfOutlined';
+import {ButtonProps} from '@mui/material/Button/Button';
 
 const PREFIX = 'SCMediaActionDocument';
 
@@ -43,7 +32,7 @@ const Root = styled(Box, {
 }));
 
 const UploadButton = asUploadButton(
-  forwardRef((props, ref) => (
+  forwardRef((props: ButtonProps, ref: any) => (
     <MuiButton {...props} aria-label="upload document" ref={ref} variant="outlined">
       <DocumentIcon /> <FormattedMessage id="ui.composer.media.document.add" defaultMessage="ui.composer.media.document.add" />
     </MuiButton>
