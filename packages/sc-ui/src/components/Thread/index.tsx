@@ -6,7 +6,7 @@ import {AxiosResponse} from 'axios';
 import Message from '../Message';
 import _ from 'lodash';
 import {FormattedMessage, useIntl} from 'react-intl';
-import {Box, Typography} from '@mui/material';
+import {Box, List, Typography} from '@mui/material';
 import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
 
 const PREFIX = 'SCThread';
@@ -22,12 +22,11 @@ const Root = styled(Card, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  maxWidth: 700,
   marginBottom: theme.spacing(2),
   [`& .${classes.emptyBox}`]: {
     display: 'flex',
-    height: '100%',
-    width: '50%',
+    height: '71%',
+    width: '40%',
     position: 'absolute',
     background: theme.palette.grey['A200'],
     justifyContent: 'center',
@@ -61,7 +60,7 @@ export interface ThreadProps {
    * Thread id
    * @default null
    */
-  id: number;
+  id?: number;
   /**
    * Overrides or extends the styles applied to the component.
    * @default null

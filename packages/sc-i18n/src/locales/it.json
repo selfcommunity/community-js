@@ -265,5 +265,5 @@
   "ui.Message.dialog.confirm": "Sì",
   "ui.NewMessage.new" : "Nuovo Messaggio",
   "ui.NewMessage.to" : "A:",
-  "ui.Thread.emptyBox.message" : "Seleziona or componi un messaggio"
+  "ui.Thread.emptyBox.message" : "Seleziona o componi un messaggio"
 }

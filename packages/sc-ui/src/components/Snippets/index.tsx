@@ -23,13 +23,12 @@ const Root = styled(Card, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  maxWidth: 500,
   [`& .${classes.selected}`]: {
     backgroundColor: '#a0c7e9'
   }
 }));
 
-export interface SnippetSuggestionProps {
+export interface SnippetsProps {
   /**
    * Overrides or extends the styles applied to the component.
    * @default null
@@ -45,7 +44,7 @@ export interface SnippetSuggestionProps {
    */
   [p: string]: any;
 }
-export default function SnippetsSuggestion(props: SnippetSuggestionProps): JSX.Element {
+export default function Snippets(props: SnippetsProps): JSX.Element {
   //PROPS
   const {autoHide = false, className = null, ...rest} = props;
 

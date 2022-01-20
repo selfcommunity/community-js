@@ -9,7 +9,6 @@ import {FormattedMessage, useIntl} from 'react-intl';
 import {SCPrivateMessageType} from '@selfcommunity/core';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import DeleteIcon from '@mui/icons-material/Delete';
-import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
 
 const PREFIX = 'SCMessage';
 
