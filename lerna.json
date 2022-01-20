@@ -7,10 +7,12 @@
   ],
   "commands" : {
     "version": {
-      "conventionalCommits": true
+      "conventionalCommits": true,
+      "conventionalPrerelease": true
     },
     "publish": {
-      "conventionalCommits": true
+      "conventionalCommits": true,
+      "conventionalPrerelease": true
     }
   }
 }
