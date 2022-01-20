@@ -16,7 +16,7 @@ module.exports = (env, argv) => {
       libraryTarget: 'umd'
     },
     module: {
-      rules: [{...rules.js({rootMode: 'upward'}), test: /\.(j|t)sx?$/}]
+      rules: [{...rules.js({rootMode: 'upward'}), test: /\.(j|t)sx?$/}, {...rules.css()}]
     },
     resolve: {
       extensions: ['.js', '.ts', '.tsx', '.json']
@@ -33,6 +33,12 @@ module.exports = (env, argv) => {
         commonjs: 'react-dom',
         commonjs2: 'react-dom',
         amd: 'react-dom'
+      },
+      'react-intl': {
+        root: 'ReactIntl',
+        commonjs: 'react-intl',
+        commonjs2: 'react-intl',
+        amd: 'react-intl'
       }
     },
     plugins: [

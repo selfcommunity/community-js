@@ -1,28 +1,63 @@
-import React from "react";
-import SCContextProvider from '../packages/sc-core/src/components/provider/SCContextProvider'
+import React, { useEffect, useState } from 'react';
+import SCContextProvider from '../packages/sc-core/src/components/provider/SCContextProvider';
+import { getJWTSession, getOAuthSession, refreshToken } from './sessionHelpers';
+import { SnackbarProvider } from 'notistack';
 
 const withProvider = (Story, context) => {
-  const _settings = {
-    portal: context.globals.portal,
-    locale: context.globals.locale,
-    session: {
-      type: context.globals.session,
-      token: context.globals.authToken,
-      refreshToken: context.globals.authToken,
-      refreshTokenEndpoint: context.globals.authRefreshTokenEndpoint
-    },
-  };
-  return (
-    <SCContextProvider settings={_settings}><Story {...context}/></SCContextProvider>
-  );
-};
+    const [authToken, setAuthToken] = useState(undefined);
+
+    /**
+     * Get initial session for testing
+     * OAuth2 and JWT create initial session
+     */
+    useEffect(() => {
+      if (context.globals.session === 'OAuth') {
+        getOAuthSession(context).then((res) => {
+          setAuthToken(res);
+        });
+      } else if (context.globals.session === 'JWT') {
+        getJWTSession(context).then((res) => {
+          setAuthToken(res);
+        });
+      } else {
+        setAuthToken({});
+      }
+    }, []);
+
+    if (!authToken) return null;
+
+    const _conf = {
+      portal: context.globals.portal,
+      locale: {default: context.globals.locale},
+      session: {
+        type: context.globals.session,
+        clientId: context.globals.clientId,
+        authToken: authToken,
+        refreshTokenCallback:
+          context.globals.session !== 'Cookie' ? refreshToken(context) : null,
+      },
+      theme: {
+        palette: {
+          primary: {
+            main: '#5e625e'
+          },
+          secondary: {
+            main: '#4a8f62'
+          }
+        }
+      }
+    };
+
+    return (
+        <SCContextProvider conf={_conf}>
+          <SnackbarProvider maxSnack={3}>
+            <Story {...context} />
+          </SnackbarProvider>
+        </SCContextProvider>
+    );
+  }
+;
 
 export default {
-  withProvider
+  withProvider,
 };
-
-
-
-
-
-

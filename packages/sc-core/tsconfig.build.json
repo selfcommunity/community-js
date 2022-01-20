@@ -7,6 +7,10 @@
     "outDir": "./lib"
   },
 
+  "references": [{
+    "path": "../sc-core/tsconfig.build.json",
+  }],
+
   "include": [
     "src/**/*"
   ]

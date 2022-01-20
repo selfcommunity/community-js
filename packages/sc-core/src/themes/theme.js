@@ -1,7 +1,8 @@
 import {createTheme} from '@mui/material/styles';
 import {mergeDeep} from '../utils/object';
-import t from 'typy';
+import validateColor from 'validate-color';
 import {COLORS_COLORBACK, COLORS_COLORPRIMARY, COLORS_COLORSECONDARY, FONT_FAMILY} from '../constants/Preferences';
+import {isString} from '../utils/string';
 
 /**
  * check if colorProp is a valid color
@@ -10,16 +11,16 @@ import {COLORS_COLORBACK, COLORS_COLORPRIMARY, COLORS_COLORSECONDARY, FONT_FAMIL
  * @param tFunc: type func validator
  * @return {boolean|(function(*=): boolean)}
  */
-const isValidPreference = (preferences, colorProp, tFunc) => {
+const isValidPreference = (preferences, prop, tFunc) => {
   // eslint-disable-next-line no-prototype-builtins
-  if (preferences.hasOwnProperty(colorProp) && preferences[colorProp].hasOwnProperty('value')) {
-    return t(preferences[colorProp].value)[tFunc];
+  if (preferences.hasOwnProperty(prop) && preferences[prop].hasOwnProperty('value')) {
+    return tFunc(preferences[prop].value);
   }
   return false;
 };
 
 /**
- * Override theme properties
+ * Overrides theme properties
  * @param options: store.settings.theme
  * @param preferences: community global preferences
  * @return {Theme}
@@ -28,13 +29,15 @@ const getTheme = (options, preferences) => {
   const defaultOptions = preferences
     ? {
         palette: {
-          ...(isValidPreference(preferences, COLORS_COLORBACK, 'isColor') && {background: {default: preferences[COLORS_COLORBACK].value}}),
-          ...(isValidPreference(preferences, COLORS_COLORPRIMARY, 'isColor') && {text: {primary: preferences[COLORS_COLORPRIMARY].value}}),
-          ...(isValidPreference(preferences, COLORS_COLORPRIMARY, 'isColor') && {primary: {main: preferences[COLORS_COLORPRIMARY].value}}),
-          ...(isValidPreference(preferences, COLORS_COLORSECONDARY, 'isColor') && {secondary: {main: preferences[COLORS_COLORSECONDARY].value}}),
+          ...(isValidPreference(preferences, COLORS_COLORBACK, validateColor) && {background: {default: preferences[COLORS_COLORBACK].value}}),
+          ...(isValidPreference(preferences, COLORS_COLORPRIMARY, validateColor) && {text: {primary: preferences[COLORS_COLORPRIMARY].value}}),
+          ...(isValidPreference(preferences, COLORS_COLORPRIMARY, validateColor) && {primary: {main: preferences[COLORS_COLORPRIMARY].value}}),
+          ...(isValidPreference(preferences, COLORS_COLORSECONDARY, validateColor) && {
+            secondary: {main: preferences[COLORS_COLORSECONDARY].value},
+          }),
         },
         typography: {
-          ...(isValidPreference(preferences, FONT_FAMILY, 'isString') && {fontFamily: preferences[FONT_FAMILY].value}),
+          ...(isValidPreference(preferences, FONT_FAMILY, isString) && {fontFamily: preferences[FONT_FAMILY].value}),
           body1: {
             fontSize: '0.9rem',
           },
@@ -46,16 +49,55 @@ const getTheme = (options, preferences) => {
           MuiPaper: {
             styleOverrides: {
               rounded: {
-                borderRadius: 10,
+                borderRadius: 3,
+              },
+            },
+          },
+          MuiButton: {
+            styleOverrides: {
+              root: {
+                textTransform: 'none',
+              },
+            },
+            variants: [
+              {
+                props: {variant: 'outlined'},
+                style: {
+                  border: `1px solid black`,
+                  color: 'black',
+                },
+              },
+            ],
+          },
+          MuiDivider: {
+            styleOverrides: {
+              root: {
+                borderWidth: '1px',
               },
             },
           },
           SCFeedObject: {
             styleOverrides: {
+              root: {},
+            },
+          },
+          SCTrendingFeed: {
+            styleOverrides: {
               root: {
-                '& .SCFeedObject-category': {
-                  backgroundColor: '#FF0000',
-                  borderColor: '#FF0000',
+                '& .MuiSvgIcon-root': {
+                  width: '0.7em',
+                  marginBottom: '0.5px',
+                },
+              },
+            },
+          },
+          SCPlatform: {
+            styleOverrides: {
+              root: {
+                '& .MuiSvgIcon-root': {
+                  width: '0.8em',
+                  marginLeft: '2px',
+                  marginBottom: '-3px',
                 },
               },
             },

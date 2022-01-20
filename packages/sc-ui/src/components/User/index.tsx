@@ -1,13 +1,26 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
 import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
 import {UserBoxSkeleton} from '../Skeleton';
-import {Avatar, Button, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText} from '@mui/material';
-import {SCContext, SCContextType, Endpoints, http, SCPreferences, SCAuthContext, SCAuthContextType, SCUserType} from '@selfcommunity/core';
+import {Avatar, Button, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText, CardProps} from '@mui/material';
+import {
+  SCUserContext,
+  SCPreferencesContext,
+  SCPreferences,
+  SCUserContextType,
+  SCUserType,
+  SCPreferencesContextType,
+  useSCFetchUser
+} from '@selfcommunity/core';
+import FollowUserButton from '../FollowUserButton';
 
 const PREFIX = 'SCUser';
+
+const classes = {
+  avatar: `${PREFIX}-avatar`,
+  actions: `${PREFIX}-actions`
+};
 
 const Root = styled(Card, {
   name: PREFIX,
@@ -15,42 +28,57 @@ const Root = styled(Card, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   maxWidth: 700,
-  marginBottom: theme.spacing(2)
+  marginBottom: theme.spacing(2),
+  '& .MuiList-root': {
+    padding: 0
+  }
 }));
 
-export default function User({
-  scUserId = null,
-  scUser = null,
-  contained = true
-}: {
-  scUserId?: number;
-  scUser?: SCUserType;
-  contained: boolean;
-}): JSX.Element {
-  const [user, setUser] = useState<SCUserType>(scUser);
-  const scContext: SCContextType = useContext(SCContext);
-  const scAuthContext: SCAuthContextType = useContext(SCAuthContext);
-  const followEnabled =
-    SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED in scContext.preferences && scContext.preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED].value;
-  const connectionEnabled = !followEnabled;
-
+export interface UserProps extends Pick<CardProps, Exclude<keyof CardProps, 'id'>> {
   /**
-   * If user not in props, attempt to get the user by id (in props) if exist
+   * Id of user object
+   * @default null
    */
-  function fetchUser() {
-    http
-      .request({
-        url: Endpoints.User.url({id: scUserId}),
-        method: Endpoints.User.method
-      })
-      .then((res) => {
-        const data = res.data;
-        setUser(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
+  id?: number;
+  /**
+   * Overrides or extends the styles applied to the component.
+   * @default null
+   */
+  className?: string;
+  /**
+   * User Object
+   * @default null
+   */
+  user?: SCUserType;
+  /**
+   * Hides user component
+   * @default false
+   */
+  autoHide?: boolean;
+  /**
+   * Handles actions ignore
+   * @default null
+   */
+  handleIgnoreAction?: (u) => void;
+  /**
+   * Callback function on follow action.
+   * @default null
+   */
+  onFollowProps?: () => void;
+  /**
+   * Any other properties
+   */
+  [p: string]: any;
+}
+
+export default function User(props: UserProps): JSX.Element {
+  const {id = null, user = null, handleIgnoreAction, className = null, autoHide = false, onFollowProps, ...rest} = props;
+  const {scUser, setSCUser} = useSCFetchUser({id, user});
+  const scPreferencesContext: SCPreferencesContextType = useContext(SCPreferencesContext);
+  const scUserContext: SCUserContextType = useContext(SCUserContext);
+  const followEnabled =
+    SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED in scPreferencesContext.preferences &&
+    scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED].value;
 
   /**
    * Render follow action
@@ -60,12 +88,12 @@ export default function User({
     /* TODO: render proper action based on redux connection (follow) store */
     return (
       <React.Fragment>
-        <Button size="small" onClick={this.ignore}>
-          Ignore
-        </Button>
-        <Button size="small" variant="outlined" onClick={this.follow}>
-          Follow
-        </Button>
+        {handleIgnoreAction && (
+          <Button size="small" onClick={handleIgnoreAction}>
+            Ignore
+          </Button>
+        )}
+        <FollowUserButton user={scUser} onFollow={onFollowProps} />
       </React.Fragment>
     );
   }
@@ -78,10 +106,12 @@ export default function User({
     /* TODO: render proper action based on redux connection (friendship) store */
     return (
       <React.Fragment>
-        <Button size="small" onClick={this.ignore}>
-          Ignore
-        </Button>
-        <Button size="small" variant="outlined" onClick={this.requestConnect}>
+        {handleIgnoreAction && (
+          <Button size="small" onClick={handleIgnoreAction}>
+            Ignore
+          </Button>
+        )}
+        <Button size="small" variant="outlined">
           Connect
         </Button>
       </React.Fragment>
@@ -93,11 +123,7 @@ export default function User({
    * @return {JSX.Element}
    */
   function renderAuthenticatedActions() {
-    return (
-      <React.Fragment>
-        {followEnabled ? renderFollowActions() : <React.Fragment>{connectionEnabled ? renderConnectionActions() : null}</React.Fragment>}
-      </React.Fragment>
-    );
+    return <React.Fragment>{followEnabled ? renderFollowActions() : renderConnectionActions()}</React.Fragment>;
   }
 
   /**
@@ -108,38 +134,26 @@ export default function User({
     return <Button size="small">Go to Profile</Button>;
   }
 
-  useEffect(() => {
-    if (!user) {
-      fetchUser();
-    }
-  }, []);
-
   const u = (
     <React.Fragment>
-      {user ? (
+      {scUser ? (
         <ListItem button={true}>
           <ListItemAvatar>
-            <Avatar alt={user.username} src={user.avatar} />
+            <Avatar alt={scUser.username} src={scUser.avatar} className={classes.avatar} />
           </ListItemAvatar>
-          <ListItemText primary={user.username} secondary={user.slogan} />
-          <ListItemSecondaryAction>
-            {scAuthContext.user && connectionEnabled ? renderAuthenticatedActions() : renderAnonymousActions()}
+          <ListItemText primary={scUser.username} secondary={scUser.description} />
+          <ListItemSecondaryAction className={classes.actions}>
+            {scUserContext.user ? renderAuthenticatedActions() : renderAnonymousActions()}
           </ListItemSecondaryAction>
         </ListItem>
       ) : (
-        <UserBoxSkeleton contained />
+        <UserBoxSkeleton elevation={0} />
       )}
     </React.Fragment>
   );
-
-  if (contained) {
-    return (
-      <Root variant="outlined">
-        <CardContent>
-          <List>{u}</List>
-        </CardContent>
-      </Root>
-    );
-  }
-  return u;
+  return (
+    <Root {...rest} className={className}>
+      <List>{u}</List>
+    </Root>
+  );
 }

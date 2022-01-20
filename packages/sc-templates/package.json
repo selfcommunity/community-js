@@ -1,6 +1,6 @@
 {
   "name": "@selfcommunity/templates",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "license": "MIT",
   "private": false,
   "main": "./lib/cjs/index.js",
@@ -16,6 +16,8 @@
     "react-templates"
   ],
   "scripts": {
+    "prepare": "install-peers -f",
+    "install-peers": "install-peers -f",
     "test": "npm run lint && npm run test-only",
     "test-only": "jest --runInBand",
     "tdd": "jest --watch --runInBand",
@@ -24,10 +26,10 @@
     "prettier-list-different": "prettier './**/*.js' './**/*.css' './**/*.md' --list-different",
     "clean:lib": "rimraf lib",
     "clean:node_modules": "rimraf node_modules",
-    "build:commonjs": "cross-env BABEL_ENV=commonjs babel --root-mode upward --extensions .js,.jsx,.ts,.tsx  ./src --out-dir lib/cjs --ignore **/*.stories.js,**/*.spec.js",
-    "build:es": "cross-env BABEL_ENV=es babel --root-mode upward --extensions .js,.jsx,.ts,.tsx ./src --out-dir lib/esm --ignore **/*.stories.js,**/*.spec.js",
+    "build:commonjs": "cross-env BABEL_ENV=commonjs babel --root-mode upward --extensions .js,.jsx,.ts,.tsx  ./src --out-dir lib/cjs --ignore **/*.stories.js,**/*.spec.js --copy-files",
+    "build:es": "cross-env BABEL_ENV=es babel --root-mode upward --extensions .js,.jsx,.ts,.tsx ./src --out-dir lib/esm --ignore **/*.stories.js,**/*.spec.js --copy-files",
     "build:umd": "webpack --mode production",
-    "build:types": "tsc -d --declarationDir lib/esm --declarationMap --emitDeclarationOnly",
+    "build:types": "tsc -d --declarationDir lib/esm --declarationMap --resolveJsonModule --emitDeclarationOnly",
     "build": "yarn clean:lib && yarn build:commonjs && yarn build:es && yarn build:umd && yarn build:types",
     "prerelease": "yarn run clean:lib && yarn run build"
   },
@@ -45,18 +47,19 @@
   },
   "peerDependencies": {
     "react": ">=17.0.2",
-    "react-dom": ">=17.0.2"
+    "react-dom": ">=17.0.2",
+    "react-intl": "^5.21.0",
+    "@emotion/react": "^11.7.1",
+    "@emotion/styled": "^11.6.0",
+    "@mui/material": "^5.2.8",
+    "react-stickynode": "^4.0.0"
   },
   "dependencies": {
-    "@emotion/react": "^11.4.1",
-    "@emotion/styled": "^11.3.0",
-    "@mui/material": "^5.0.3",
-    "@types/classnames": "^2.2.11",
-    "classnames": "^2.2.6",
-    "prop-types": "^15.7.2",
-    "prop-types-extra": "^1.1.1",
+    "@selfcommunity/i18n": "^0.1.0",
     "@selfcommunity/core": "0.1.0",
-    "@selfcommunity/ui": "0.1.0"
+    "@selfcommunity/ui": "0.1.0",
+    "@types/classnames": "^2.2.11",
+    "classnames": "^2.2.6"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.13",
@@ -70,10 +73,6 @@
     "@babel/preset-modules": "^0.1.4",
     "@babel/preset-react": "^7.12.13",
     "@babel/preset-typescript": "^7.12.13",
-    "@storybook/addon-actions": "^6.3.10",
-    "@storybook/addon-essentials": "^6.3.10",
-    "@storybook/addon-links": "^6.3.10",
-    "@storybook/react": "^6.3.10",
     "@types/chai": "^4.2.14",
     "@types/enzyme": "^3.10.8",
     "@types/jest": "^26.0.20",
@@ -90,26 +89,32 @@
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.15.6",
     "eslint": "^7.19.0",
-    "eslint-plugin-prettier": "^4.0.0",
     "eslint-config-prettier": "^7.2.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-mocha": "^8.0.0",
+    "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.22.0",
     "eslint-plugin-react-hooks": "^4.2.0",
     "faker": "^5.3.1",
+    "install-peers-cli": "^2.2.0",
     "jest": "^26.6.3",
     "lodash": "^4.17.15",
     "postcss": "^8.2.4",
     "prettier": "^2.2.1",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
     "rimraf": "^3.0.2",
     "sass": "^1.32.6",
     "sinon": "^9.2.4",
     "typescript": "^4.1.3",
     "webpack": "^5.20.1",
-    "webpack-atoms": "^16.0.0",
+    "webpack-atoms": "^17.1.0",
     "webpack-cli": "^4.5.0"
+  },
+  "prettier": {
+    "printWidth": 150,
+    "bracketSpacing": false,
+    "trailingComma": "none",
+    "singleQuote": true,
+    "bracketSameLine": true
   },
   "bugs": {
     "url": "https://github.com/selfcommunity/selfcommunity-ui-widgets/issues"

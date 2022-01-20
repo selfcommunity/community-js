@@ -1,0 +1,459 @@
+import {SCCommentType, SCFeedDiscussionType, SCFeedPostType, SCFeedStatusType, SCUserType} from '../index';
+import {SCPrivateMessageType} from './privateMessage';
+import {SCUserBlockedSettingsType} from './user';
+import {SCCustomNotificationType} from './customNotification';
+
+/**
+ * Notification types
+ */
+export enum SCNotificationTypologyType {
+  COMMENT = 'comment',
+  NESTED_COMMENT = 'nested_comment',
+  CONNECTION_REQUEST = 'connection_request',
+  CONNECTION_ACCEPT = 'connection_accept',
+  MENTION = 'mention',
+  VOTE_UP = 'vote_up',
+  FOLLOW = 'follow',
+  PRIVATE_MESSAGE = 'private_message',
+  DELETED_FOR_ADVERTISING = 'deleted_for_advertising',
+  DELETED_FOR_AGGRESSIVE = 'deleted_for_aggressive',
+  DELETED_FOR_VULGAR = 'deleted_for_vulgar',
+  DELETED_FOR_POOR = 'deleted_for_poor',
+  DELETED_FOR_OFFTOPIC = 'deleted_for_offtopic',
+  UNDELETED_FOR = 'undeleted_for',
+  COLLAPSED_FOR_ADVERTISING = 'collapsed_for_advertising',
+  COLLAPSED_FOR_AGGRESSIVE = 'collapsed_for_aggressive',
+  COLLAPSED_FOR_VULGAR = 'collapsed_for_vulgar',
+  COLLAPSED_FOR_POOR = 'collapsed_for_poor',
+  COLLAPSED_FOR_OFFTOPIC = 'collapsed_for_offtopic',
+  USER_FOLLOW = 'user_follow',
+  KINDLY_NOTICE_ADVERTISING = 'kindly_notice_advertising',
+  KINDLY_NOTICE_AGGRESSIVE = 'kindly_notice_aggressive',
+  KINDLY_NOTICE_VULGAR = 'kindly_notice_vulgar',
+  KINDLY_NOTICE_POOR = 'kindly_notice_poor',
+  KINDLY_NOTICE_OFFTOPIC = 'kindly_notice_offtopic',
+  KINDLY_NOTICE_FLAG = 'kindly_notice_flag',
+  BLOCKED_USER = 'blocked_user',
+  UNBLOCKED_USER = 'unblocked_user',
+  CUSTOM_NOTIFICATION = 'custom_notification',
+}
+
+/**
+ * Interface SCNotificationAggregatedType.
+ * Notification aggregated Schema.
+ */
+export interface SCNotificationAggregatedType {
+  /**
+   * Serialization id of the macro notification aggregate block
+   */
+  sid: string;
+
+  /**
+   * It's true if in the aggregated group there is at least one
+   * notification not yet seen by the user making the request
+   */
+  is_new: boolean;
+
+  /**
+   * Primary object involved (object that is common to notifications group)
+   * if it is a discusssion. For some types of notifications it will not be present.
+   */
+  discussion?: SCFeedDiscussionType;
+
+  /**
+   * Primary object involved (object that is common to notifications group)
+   * if it is a post. For some types of notifications it will not be present.
+   */
+  post?: SCFeedPostType;
+
+  /**
+   * Primary object involved (object that is common to notifications group)
+   * if it is a status. For some types of notifications it will not be present.
+   */
+  status?: SCFeedStatusType;
+
+  /**
+   * List of aggregated notifications by type.
+   * Types Object: NotificationTypeComment, NotificationTypeMention,
+   * NotificationTypeConnectionAccept, NotificationTypeConnectionRequest,
+   * NotificationTypePrivateMessage, NotificationTypeFollow, NotificationTypeVoteUp,
+   * NotificationTypeBlockedUser, NotificationTypeUnBlockedUser,
+   * NotificationTypeKindlyNotice, NotificationTypeCollapsedFor,
+   * NotificationTypeDeletedFor, NotificationTypeCustomNotification
+   */
+  aggregated: SCNotificationType[];
+}
+
+/**
+ * Interface SCNotificationType.
+ * Notification Schema.
+ */
+export interface SCNotificationType {
+  /**
+   * True if the notification has been read, otherwise false
+   */
+  is_new: boolean;
+
+  /**
+   * Serialization id of the single notification
+   */
+  sid: string;
+
+  /**
+   * Type of the notification
+   */
+  type: SCNotificationTypologyType;
+
+  /**
+   * Time when the notification was generated
+   */
+  active_at: Date;
+}
+
+/**
+ * Interface SCNotificationCommentType.
+ * Comment Notification Schema.
+ */
+export interface SCNotificationCommentType extends SCNotificationType {
+  /**
+   * Comment of first/second level
+   */
+  comment: SCCommentType;
+
+  /**
+   * Type Comment or Nested_comment
+   */
+  type: SCNotificationTypologyType.COMMENT | SCNotificationTypologyType.NESTED_COMMENT;
+}
+
+/**
+ * Interface SCNotificationMentionType.
+ * Mention Notification Schema.
+ */
+export interface SCNotificationMentionType extends SCNotificationType {
+  /**
+   * Type Mention
+   */
+  type: SCNotificationTypologyType.MENTION;
+
+  /**
+   * If user is mentioned in a discussion
+   */
+  discussion?: SCFeedDiscussionType;
+
+  /**
+   * If the user is mentioned in a post
+   */
+  post?: SCFeedPostType;
+
+  /**
+   * If user is mentioned in a status
+   */
+  status?: SCFeedStatusType;
+
+  /**
+   * If user is mentioned in a comment
+   */
+  comment?: SCCommentType;
+}
+
+/**
+ * Interface SCNotificationConnectionRequestType.
+ * Connection Request Notification Schema.
+ */
+export interface SCNotificationConnectionRequestType extends SCNotificationType {
+  /**
+   * Type Connection request
+   */
+  type: SCNotificationTypologyType.CONNECTION_REQUEST;
+
+  /**
+   * User request the connection
+   */
+  request_user: SCUserType;
+}
+
+/**
+ * Interface SCNotificationConnectionAcceptType.
+ * Connection Accept Notification Schema.
+ */
+export interface SCNotificationConnectionAcceptType extends SCNotificationType {
+  /**
+   * Type Connection accept
+   */
+  type: SCNotificationTypologyType.CONNECTION_ACCEPT;
+
+  /**
+   * User accepted the connection request
+   */
+  accept_user: SCUserType;
+}
+
+/**
+ * Interface SCNotificationPrivateMessageType.
+ * Private Message Notification Schema.
+ */
+export interface SCNotificationPrivateMessageType extends SCNotificationType {
+  /**
+   * Type Private message
+   */
+  type: SCNotificationTypologyType.PRIVATE_MESSAGE;
+
+  /**
+   * Private message
+   */
+  message: SCPrivateMessageType;
+}
+
+/**
+ * Interface SCNotificationFollowType.
+ * Follow Notification Schema.
+ * (discussion, post, status)
+ */
+export interface SCNotificationFollowType extends SCNotificationType {
+  /**
+   * Type Follow
+   */
+  type: SCNotificationTypologyType.FOLLOW;
+
+  /**
+   * If user is mentioned in a discussion
+   */
+  discussion?: SCFeedDiscussionType;
+
+  /**
+   * If the user is mentioned in a post
+   */
+  post?: SCFeedPostType;
+
+  /**
+   * If user is mentioned in a status
+   */
+  status?: SCFeedStatusType;
+}
+
+/**
+ * Interface SCNotificationVoteUpType.
+ * VoteUp Notification Schema.
+ */
+export interface SCNotificationVoteUpType extends SCNotificationType {
+  /**
+   * Type VoteUp
+   */
+  type: SCNotificationTypologyType.VOTE_UP;
+
+  /**
+   * If user is mentioned in a discussion
+   */
+  discussion?: SCFeedDiscussionType;
+
+  /**
+   * If the user is mentioned in a post
+   */
+  post?: SCFeedPostType;
+
+  /**
+   * If user is mentioned in a status
+   */
+  status?: SCFeedStatusType;
+
+  /**
+   * If user is mentioned in a comment
+   */
+  comment?: SCCommentType;
+
+  /**
+   * User voted up
+   */
+  user?: SCUserType;
+}
+
+/**
+ * Interface SCNotificationBlockedUserType.
+ * Blocked User Notification Schema.
+ */
+export interface SCNotificationBlockedUserType extends SCNotificationType {
+  /**
+   * Type Blocked User
+   */
+  type: SCNotificationTypologyType.BLOCKED_USER;
+
+  /**
+   * Data of user block
+   */
+  blocked_settings: SCUserBlockedSettingsType;
+}
+
+/**
+ * Interface SCNotificationUnBlockedUserType.
+ * UnBlocked User Notification Schema.
+ */
+export interface SCNotificationUnBlockedUserType extends SCNotificationType {
+  /**
+   * Type UnBlocked User
+   */
+  type: SCNotificationTypologyType.UNBLOCKED_USER;
+}
+
+/**
+ * Interface SCNotificationKindlyNoticeType.
+ * Kindly notice User Notification Schema.
+ */
+export interface SCNotificationKindlyNoticeType extends SCNotificationType {
+  /**
+   * Type Kindly Notice User
+   */
+  type:
+    | SCNotificationTypologyType.KINDLY_NOTICE_ADVERTISING
+    | SCNotificationTypologyType.KINDLY_NOTICE_FLAG
+    | SCNotificationTypologyType.KINDLY_NOTICE_VULGAR
+    | SCNotificationTypologyType.KINDLY_NOTICE_AGGRESSIVE
+    | SCNotificationTypologyType.KINDLY_NOTICE_POOR
+    | SCNotificationTypologyType.KINDLY_NOTICE_OFFTOPIC;
+
+  /**
+   * If the contribute is a discussion
+   */
+  discussion?: SCFeedDiscussionType;
+
+  /**
+   * If the contribute is a post
+   */
+  post?: SCFeedPostType;
+
+  /**
+   * If the contribute is a status
+   */
+  status?: SCFeedStatusType;
+
+  /**
+   * If the contribute is a comment
+   */
+  comment?: SCCommentType;
+}
+
+/**
+ * Interface SCNotificationCollapsedForType.
+ * Collapsed for Notification Schema.
+ * Only for comments.
+ */
+export interface SCNotificationCollapsedForType extends SCNotificationType {
+  /**
+   * Type Kindly Notice User
+   */
+  type:
+    | SCNotificationTypologyType.COLLAPSED_FOR_ADVERTISING
+    | SCNotificationTypologyType.COLLAPSED_FOR_AGGRESSIVE
+    | SCNotificationTypologyType.COLLAPSED_FOR_POOR
+    | SCNotificationTypologyType.COLLAPSED_FOR_OFFTOPIC
+    | SCNotificationTypologyType.COLLAPSED_FOR_VULGAR;
+
+  /**
+   * comment collapsed
+   */
+  comment: SCCommentType;
+}
+
+/**
+ * Interface SCNotificationDeletedForType.
+ * Deleted for Notification Schema.
+ */
+export interface SCNotificationDeletedForType extends SCNotificationType {
+  /**
+   * Type Deleted for
+   */
+  type:
+    | SCNotificationTypologyType.DELETED_FOR_ADVERTISING
+    | SCNotificationTypologyType.DELETED_FOR_AGGRESSIVE
+    | SCNotificationTypologyType.DELETED_FOR_VULGAR
+    | SCNotificationTypologyType.DELETED_FOR_POOR
+    | SCNotificationTypologyType.DELETED_FOR_OFFTOPIC;
+
+  /**
+   * If a discussion is deleted
+   */
+  discussion?: SCFeedDiscussionType;
+
+  /**
+   * If a post is deleted
+   */
+  post?: SCFeedPostType;
+
+  /**
+   * If a comment is deleted
+   */
+  status?: SCFeedStatusType;
+
+  /**
+   * If a status is deleted
+   */
+  comment?: SCCommentType;
+}
+
+/**
+ * Interface SCNotificationUnDeletedForType.
+ * Undeleted for Notification Schema.
+ */
+export interface SCNotificationUnDeletedForType extends SCNotificationType {
+  /**
+   * Type Undeleted for
+   */
+  type: SCNotificationTypologyType.UNDELETED_FOR;
+
+  /**
+   * If a discussion is undeleted
+   */
+  discussion?: SCFeedDiscussionType;
+
+  /**
+   * If a post is undeleted
+   */
+  post?: SCFeedPostType;
+
+  /**
+   * If a comment is undeleted
+   */
+  status?: SCFeedStatusType;
+
+  /**
+   * If a status is undeleted
+   */
+  comment?: SCCommentType;
+}
+
+/**
+ * Interface SCNotificationUserFollowType.
+ * User Follow Notification Schema.
+ */
+export interface SCNotificationUserFollowType extends SCNotificationType {
+  /**
+   * Type User Follow
+   */
+  type: SCNotificationTypologyType.USER_FOLLOW;
+
+  /**
+   * Follower
+   */
+  follower: SCUserType;
+}
+
+/**
+ * Interface SCNotificationCustomNotificationType.
+ * CustomNotification Notification Schema.
+ */
+export interface SCNotificationCustomNotificationType extends SCNotificationType {
+  /**
+   * Type User Follow
+   */
+  type: SCNotificationTypologyType.CUSTOM_NOTIFICATION;
+
+  /**
+   * User generate the custom notification
+   */
+  user: SCUserType;
+
+  /**
+   * Custom notification data
+   */
+  custom_notification: SCCustomNotificationType;
+}
