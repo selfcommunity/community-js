@@ -46,7 +46,6 @@ const Root = styled(Card, {
 })(({theme}) => ({
   boxShadow: 'none',
   position: 'relative',
-  height: '100%',
   [`& .${classes.fixedPrimaryReply}`]: {
     height: 100,
     width: '100%',
@@ -470,12 +469,12 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
    * Render header primary reply
    */
   function renderHeadPrimaryReply() {
-    if (!hidePrimaryReply && !isLoading && commentsOrderBy === CommentsOrderBy.ADDED_AT_DESC) {
+    if (!hidePrimaryReply && commentsOrderBy === CommentsOrderBy.ADDED_AT_DESC) {
       return (
         <Box
           className={classNames({[classes.fixedPrimaryReply]: fixedPrimaryReply, [classes.fixedTopPrimaryReply]: fixedPrimaryReply})}
           style={{width: `${rootWidth}px`}}>
-          <ReplyCommentObject readOnly={isReplying} onReply={handleReply} key={Number(isReplying)} inline {...rest} />
+          <ReplyCommentObject readOnly={isReplying || isLoading} onReply={handleReply} key={Number(isReplying)} inline {...rest} />
         </Box>
       );
     }
@@ -486,12 +485,12 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
    * Render footer primary reply
    */
   function renderFooterPrimaryReply() {
-    if (!hidePrimaryReply && !isLoading && commentsOrderBy === CommentsOrderBy.ADDED_AT_ASC) {
+    if (!hidePrimaryReply && commentsOrderBy === CommentsOrderBy.ADDED_AT_ASC) {
       return (
         <Box
           className={classNames({[classes.fixedPrimaryReply]: fixedPrimaryReply, [classes.fixedBottomPrimaryReply]: fixedPrimaryReply})}
           style={{width: `${rootWidth}px`}}>
-          <ReplyCommentObject readOnly={isReplying} onReply={handleReply} key={Number(isReplying)} inline {...rest} />
+          <ReplyCommentObject readOnly={isReplying || isLoading} onReply={handleReply} key={Number(isReplying)} inline {...rest} />
         </Box>
       );
     }

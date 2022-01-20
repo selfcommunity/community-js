@@ -1,4 +1,4 @@
-import React, {createContext, useContext, useMemo, useRef, useState} from 'react';
+import React, {createContext, useContext, useMemo, useState} from 'react';
 import {SCContextType} from '../../../types';
 import {useSCContext} from '../SCContextProvider';
 import {SCLocaleContextType} from '../../../types';
@@ -77,7 +77,7 @@ export const withSCLocale = (Component) => (props) => {
 };
 
 /**
- * Let's only export the `useSCTheme` hook instead of the context.
+ * Let's only export the `useSCLocale` hook instead of the context.
  * We only want to use the hook directly and never the context component.
  */
 export function useSCLocale(): SCLocaleContextType {

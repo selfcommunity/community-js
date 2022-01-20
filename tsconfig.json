@@ -10,6 +10,7 @@
       "@selfcommunity/templates": ["packages/sc-templates/src"],
       "@selfcommunity/*": ["packages/*/src"]
     },
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "skipLibCheck": true
   }
 }

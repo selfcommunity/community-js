@@ -338,6 +338,16 @@ export interface SCRoutingContextType {
 }
 
 /**
+ * Interface SCNotificationContextType
+ */
+export interface SCNotificationContextType {
+  /**
+   * ws4redis instance
+   */
+  ws4redis: any;
+}
+
+/**
  * Interface SCLocaleContextType
  */
 export interface SCLocaleContextType {
