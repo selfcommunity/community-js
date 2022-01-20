@@ -4,5 +4,15 @@
   "npmClient": "yarn",
   "packages": [
     "packages/*"
-  ]
+  ],
+  "commands" : {
+    "version": {
+      "conventionalCommits": true,
+      "conventionalPrerelease": true
+    },
+    "publish": {
+      "conventionalCommits": true,
+      "conventionalPrerelease": true
+    }
+  }
 }
