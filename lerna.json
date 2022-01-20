@@ -5,7 +5,7 @@
   "packages": [
     "packages/*"
   ],
-  "commands" : {
+  "command" : {
     "version": {
       "conventionalCommits": true,
       "conventionalPrerelease": true
