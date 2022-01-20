@@ -1,14 +1,16 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {styled} from '@mui/material/styles';
-import {Box, Button, Card, CardActions, CardContent, List, ListItem, Typography} from '@mui/material';
-import {Endpoints, http, Logger, SCFeedObjectType, SCFeedUnitType} from '@selfcommunity/core';
+import {Box, List, ListItem, Typography} from '@mui/material';
+import { Endpoints, http, Logger, SCNotificationTopicType } from '@selfcommunity/core';
 import {AxiosResponse} from 'axios';
+import PubSub from 'pubsub-js';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {FormattedMessage} from 'react-intl';
 import {NotificationSkeleton} from '../Skeleton';
 import UserNotification from './Notification';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import {SCNotificationAggregatedType} from '@selfcommunity/core';
+import { SCNotificationTopics } from '@selfcommunity/core/src/constants/Notification';
 
 const PREFIX = 'SCUserNotifications';
 
@@ -25,6 +27,7 @@ export default function UserNotifications(rest): JSX.Element {
   const [notifications, setNotifications] = useState<SCNotificationAggregatedType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [next, setNext] = useState<string>(Endpoints.UserNotificationList.url({}));
+  const notificationSubscription = useRef(null);
 
   /**
    * Fetches user notifications
@@ -48,10 +51,24 @@ export default function UserNotifications(rest): JSX.Element {
   }
 
   /**
+   * Notification subscriber
+   * @param msg
+   * @param data
+   */
+  const notificationSubscriber = (msg, data) => {
+    console.log('interactions');
+    console.dir(data);
+  };
+
+  /**
    * On mount, fetches first page of notifications
    */
   useEffect(() => {
     fetchNotifications();
+    notificationSubscription.current = PubSub.subscribe(SCNotificationTopicType.INTERACTION, notificationSubscriber);
+    return () => {
+      PubSub.unsubscribe(notificationSubscription.current);
+    };
   }, []);
 
   return (

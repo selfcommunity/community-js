@@ -1,13 +1,15 @@
-import {useMemo, useRef, useState} from 'react';
+import {useEffect, useMemo, useRef, useState} from 'react';
 import {AxiosResponse} from 'axios';
 import http from '../utils/http';
 import Endpoints from '../constants/Endpoints';
-import {SCPreferencesContextType, SCUserType} from '../types';
+import {SCNotificationTopicType, SCNotificationTypologyType, SCPreferencesContextType, SCUserType} from '../types';
 import {Logger} from '../utils/logger';
 import {SCOPE_SC_CORE} from '../constants/Errors';
 import {useSCPreferences} from '../components/provider/SCPreferencesProvider';
 import {CONFIGURATIONS_FOLLOW_ENABLED} from '../constants/Preferences';
 import useSCCachingManager from './useSCCachingManager';
+import PubSub from 'pubsub-js';
+import {SCNotificationMapping} from '../constants/Notification';
 
 /**
  * Used on refresh and in status method
@@ -15,6 +17,7 @@ import useSCCachingManager from './useSCCachingManager';
  * 'received_connection_request', to update the cache and data
  */
 const STATUS_CONNECTED = 'connected';
+const STATUS_DISCONNECTED = 'disconnected';
 const STATUS_CONNECTION_REQUEST_SENT = 'sent_connection_request';
 const STATUS_CONNECTION_REQUEST_RECEIVED = 'received_connection_request';
 
@@ -30,6 +33,58 @@ export default function useSCConnectionsManager(user?: SCUserType) {
   const scPreferencesContext: SCPreferencesContextType = useSCPreferences();
   const connectionsDisabled =
     CONFIGURATIONS_FOLLOW_ENABLED in scPreferencesContext.preferences && scPreferencesContext.preferences[CONFIGURATIONS_FOLLOW_ENABLED].value;
+  const notificationConnAcceptSubscription = useRef(null);
+  const notificationConnRequestSubscription = useRef(null);
+  const notificationConnRemoveSubscription = useRef(null);
+
+  /**
+   * Notification subscriber only for FOLLOW
+   * @param msg
+   * @param data
+   */
+  const notificationSubscriber = (msg, data) => {
+    /*
+    updateCache([data.data.connection.id]);
+    if (SCNotificationMapping[data.data.activity_type] === SCNotificationTypologyType.CONNECTION_REQUEST) {
+      const _data = data.map(([k, v]) => ({
+        k: k === data.data.connection.id ? STATUS_CONNECTION_REQUEST_SENT : v,
+      }));
+      setData(_data);
+    } else if (SCNotificationMapping[data.data.activity_type] === SCNotificationTypologyType.CONNECTION_ACCEPT) {
+      const _data = data.map(([k, v]) => ({
+        k: k === data.data.connection.id ? STATUS_CONNECTED : v,
+      }));
+    } else if (SCNotificationMapping[data.data.activity_type] === SCNotificationTypologyType.CONNECTION_REMOVE) {
+      const _data = data.map(([k, v]) => ({
+        k: k === data.data.connection.id ? STATUS_DISCONNECTED : v,
+      }));
+    }
+    setData(_data);
+    */
+  };
+
+  /**
+   * Subscribe to notification types user_follow, user_unfollow
+   */
+  useEffect(() => {
+    notificationConnAcceptSubscription.current = PubSub.subscribe(
+      `${SCNotificationTopicType.INTERACTION}.${SCNotificationTypologyType.CONNECTION_ACCEPT}`,
+      notificationSubscriber
+    );
+    notificationConnRequestSubscription.current = PubSub.subscribe(
+      `${SCNotificationTopicType.INTERACTION}.${SCNotificationTypologyType.CONNECTION_REQUEST}`,
+      notificationSubscriber
+    );
+    notificationConnRemoveSubscription.current = PubSub.subscribe(
+      `${SCNotificationTopicType.INTERACTION}.${SCNotificationTypologyType.CONNECTION_REMOVE}`,
+      notificationSubscriber
+    );
+    return () => {
+      PubSub.unsubscribe(notificationConnAcceptSubscription.current);
+      PubSub.unsubscribe(notificationConnRequestSubscription.current);
+      PubSub.unsubscribe(notificationConnRemoveSubscription.current);
+    };
+  }, []);
 
   /**
    * Memoized refresh all connections

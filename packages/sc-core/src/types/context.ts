@@ -342,9 +342,9 @@ export interface SCRoutingContextType {
  */
 export interface SCNotificationContextType {
   /**
-   * ws4redis instance
+   * ws instance
    */
-  ws4redis: any;
+  wsInstance: any;
 }
 
 /**

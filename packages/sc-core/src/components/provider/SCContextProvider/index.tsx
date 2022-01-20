@@ -3,10 +3,11 @@ import SCUserProvider from '../SCUserProvider';
 import SCLocaleProvider from '../SCLocaleProvider';
 import SCRoutingProvider from '../SCRoutingProvider';
 import SCThemeProvider from '../SCThemeProvider';
+import SCPreferencesProvider from '../SCPreferencesProvider';
+import SCNotificationProvider from '../SCNotificationProvider';
 import {setBasePortal} from '../../../utils/http';
 import {validateOptions, validOptions} from '../../../utils/validator';
 import {SCContextProviderType, SCContextType, SCSettingsType} from '../../../types';
-import SCPreferencesProvider from '../SCPreferencesProvider';
 
 /**
  * Create Global Context
@@ -22,7 +23,7 @@ export const SCContext = createContext<SCContextType>({} as SCContextType);
 /**
  * List of all nested providers that are required to run
  */
-const contextProviders = [SCPreferencesProvider, SCRoutingProvider, SCUserProvider, SCThemeProvider, SCLocaleProvider];
+const contextProviders = [SCPreferencesProvider, SCRoutingProvider, SCUserProvider, SCNotificationProvider, SCThemeProvider, SCLocaleProvider];
 
 /**
  * SCContextProvider

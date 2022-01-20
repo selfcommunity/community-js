@@ -57,6 +57,7 @@ import {
   SCNotificationUnDeletedForType,
   SCNotificationUserFollowType,
   SCNotificationVoteUpType,
+  SCNotificationTopicType,
 } from './notification';
 
 /**
@@ -122,5 +123,6 @@ export {
   SCNotificationUserFollowType,
   SCNotificationVoteUpType,
   SCCustomNotificationType,
+  SCNotificationTopicType,
   SCPrizeType,
 };
