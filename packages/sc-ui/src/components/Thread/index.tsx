@@ -7,6 +7,7 @@ import Message from '../Message';
 import _ from 'lodash';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {Box, Typography} from '@mui/material';
+import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
 
 const PREFIX = 'SCThread';
 
@@ -78,7 +79,7 @@ export interface ThreadProps {
 }
 export default function Thread(props: ThreadProps): JSX.Element {
   // PROPS
-  const {id = null, autoHide, className, ...rest} = props;
+  const {id, autoHide, className, ...rest} = props;
 
   //CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
@@ -87,7 +88,9 @@ export default function Thread(props: ThreadProps): JSX.Element {
   const [loading, setLoading] = useState<boolean>(true);
   const [messages, setMessages] = useState<any[]>([]);
   const loggedUser = scUserContext['user'].id;
-  console.log(messages);
+  const [isHovered, setIsHovered] = useState({});
+  const [openDeleteMessageDialog, setOpenDeleteMessageDialog] = useState<boolean>(false);
+  const [deletingMsg, setDeletingMsg] = useState(null);
 
   // INTL
   const intl = useIntl();
@@ -100,20 +103,44 @@ export default function Thread(props: ThreadProps): JSX.Element {
       month: 'long'
     });
 
+  // HANDLERS
+
+  const handleMouseEnter = (index) => {
+    setIsHovered((prevState) => {
+      return {...prevState, [index]: true};
+    });
+  };
+
+  const handleMouseLeave = (index) => {
+    setIsHovered((prevState) => {
+      return {...prevState, [index]: false};
+    });
+  };
+
+  const handleClose = () => {
+    setOpenDeleteMessageDialog(false);
+  };
+
+  function handleDeleteDialog(msg) {
+    setOpenDeleteMessageDialog(true);
+    setDeletingMsg(msg);
+  }
+
   /**
    * Handles deletion of a single message
    * @param id
    */
-  function handleDelete(id) {
+  function handleDelete() {
     http
       .request({
-        url: Endpoints.DeleteASingleMessage.url({id: id}),
+        url: Endpoints.DeleteASingleMessage.url({id: deletingMsg.id}),
         method: Endpoints.DeleteASingleMessage.method
       })
       .then(() => {
-        const index = format(messages);
-        const result = messages[index].filter((m) => m.id !== id);
+        const index = format(deletingMsg);
+        const result = messages[index].filter((m) => m.id !== deletingMsg.id);
         setMessages(_.groupBy(result, format));
+        handleClose();
       })
       .catch((error) => {
         console.log(error);
@@ -156,6 +183,15 @@ export default function Thread(props: ThreadProps): JSX.Element {
   function renderThread() {
     return (
       <React.Fragment>
+        {openDeleteMessageDialog && (
+          <ConfirmDialog
+            open={openDeleteMessageDialog}
+            title={<FormattedMessage id="ui.Message.dialog.msg" defaultMessage="ui.Message.dialog.msg" />}
+            btnConfirm={<FormattedMessage id="ui.Message.dialog.confirm" defaultMessage="ui.Message.dialog.confirm" />}
+            onConfirm={() => handleDelete()}
+            onClose={handleClose}
+          />
+        )}
         {Object.keys(messages).map((key, index) => (
           <div key={index}>
             <Typography component="h3" align="center">
@@ -163,7 +199,17 @@ export default function Thread(props: ThreadProps): JSX.Element {
             </Typography>
             {messages[key].map((msg: SCPrivateMessageType, index) => (
               <div key={index} className={loggedUser === msg.sender_id ? classes.sender : classes.receiver}>
-                <Message elevation={0} message={msg} key={msg.id} snippetType={false} onClick={() => console.log(msg.id)} />
+                <Message
+                  elevation={0}
+                  message={msg}
+                  key={msg.id}
+                  snippetType={false}
+                  loggedUser={loggedUser}
+                  onMouseEnter={() => handleMouseEnter(msg.id)}
+                  onMouseLeave={() => handleMouseLeave(msg.id)}
+                  isHovering={isHovered[msg.id]}
+                  onDeleteIconClick={() => handleDeleteDialog(msg)}
+                />
               </div>
             ))}
           </div>

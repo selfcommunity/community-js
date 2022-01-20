@@ -3,11 +3,13 @@ import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import {Avatar, ListItem, ListItemAvatar, ListItemText, CardProps, Typography, Box} from '@mui/material';
+import {Avatar, ListItem, ListItemAvatar, ListItemText, CardProps, Typography, Box, IconButton} from '@mui/material';
 import SnippetMessageBoxSkeleton from '../Skeleton/SnippetMessageBoxSkeleton';
-import {useIntl} from 'react-intl';
+import {FormattedMessage, useIntl} from 'react-intl';
 import {SCPrivateMessageType} from '@selfcommunity/core';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
+import DeleteIcon from '@mui/icons-material/Delete';
+import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
 
 const PREFIX = 'SCMessage';
 
@@ -83,11 +85,45 @@ export interface MessageProps extends Pick<CardProps, Exclude<keyof CardProps, '
    * @default null
    */
   unseen?: boolean;
+  /**
+   * Callback fired on mouse hover
+   * @default null
+   */
+  onMouseEnter?: () => void;
+  /**
+   * Callback fired on mouse leave
+   * @default null
+   */
+  onMouseLeave?: () => void;
+  /**
+   * Gets mouse hovering status
+   * @default null
+   */
+  isHovering?: () => void;
+  /**
+   * Id of the logged user
+   * @default null
+   */
+  loggedUser?: number;
+  onDeleteIconClick?: () => void;
 }
 
 export default function Message(props: MessageProps): JSX.Element {
   // PROPS
-  const {id = null, autoHide = false, message = null, className = null, snippetType = true, unseen = null, ...rest} = props;
+  const {
+    id = null,
+    autoHide = false,
+    message = null,
+    className = null,
+    snippetType = true,
+    unseen = null,
+    onMouseEnter = null,
+    onMouseLeave = null,
+    isHovering = null,
+    loggedUser = null,
+    onDeleteIconClick = null,
+    ...rest
+  } = props;
 
   // INTL
   const intl = useIntl();
@@ -98,7 +134,14 @@ export default function Message(props: MessageProps): JSX.Element {
   const c = (
     <React.Fragment>
       {message ? (
-        <ListItem button={true}>
+        <ListItem onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+          {!snippetType && isHovering && loggedUser === message.sender_id && message.status !== 'hidden' && (
+            <>
+              <IconButton sx={{marginBottom: '25px'}} onClick={onDeleteIconClick}>
+                <DeleteIcon fontSize="small" />
+              </IconButton>
+            </>
+          )}
           {snippetType ? (
             <React.Fragment>
               <ListItemAvatar>
@@ -115,7 +158,7 @@ export default function Message(props: MessageProps): JSX.Element {
                   </Box>
                 }
                 secondary={
-                  <Box className={classes.info}>
+                  <Box component="span" className={classes.info}>
                     <Typography component="span"> {message.headline}</Typography>
                     <FiberManualRecordIcon fontSize="small" className={unseen ? classes.unread : classes.hide} />
                   </Box>
@@ -130,7 +173,7 @@ export default function Message(props: MessageProps): JSX.Element {
                 </Box>
               }
               secondary={
-                <Box className={classes.messageTime}>
+                <Box component="span" className={classes.messageTime}>
                   <Typography component="span">{`${intl.formatDate(message.created_at, {
                     hour: 'numeric',
                     minute: 'numeric'

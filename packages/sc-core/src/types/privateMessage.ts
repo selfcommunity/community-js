@@ -6,6 +6,10 @@ import {SCUserType} from '@selfcommunity/core';
 
 export interface SCPrivateMessageType {
   /**
+   * Message status: created, deleted or hidden message
+   */
+  status: string;
+  /**
    * Id of the message
    */
   id: number;
