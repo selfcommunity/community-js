@@ -1,6 +1,6 @@
 {
   "name": "@selfcommunity/ui",
-  "version": "0.0.0",
+  "version": "0.1.0-alpha.0",
   "description": "React UI Components to integrate a Community created with SelfCommunity.",
   "author": "mirk8xr <mirk8xr@gmail.com>",
   "homepage": "https://www.selfcommunity.com",
@@ -57,7 +57,6 @@
   },
   "dependencies": {
     "@mui/lab": "~5.0.0-alpha.65",
-    "notistack": "^2.0.3",
     "@rpldy/chunked-sender": "^0.14.1",
     "@rpldy/chunked-uploady": "^0.14.1",
     "@rpldy/upload-button": "^0.14.1",
@@ -74,6 +73,7 @@
     "draftjs-to-html": "^0.9.1",
     "emoji-picker-react": "^3.4.8",
     "mui-rte": "https://github.com/fedetorre/mui-rte.git#6d162ae04a0b98889b24b0229375f218e5d6a961",
+    "notistack": "^2.0.3",
     "prop-types": "^15.7.2",
     "prop-types-extra": "^1.1.1",
     "react-image-lightbox": "^5.1.4",
@@ -81,12 +81,12 @@
     "react-lazyload": "^3.2.0",
     "react-player": "^2.9.0",
     "react-sortablejs": "^6.0.0",
+    "react-stickynode": "^4.0.0",
     "react-timeago": "^5.2.0",
     "react-waypoint": "^10.1.0",
     "sortablejs": "^1.14.0",
     "spark-md5": "~3.0.2",
-    "timeago-react": "^3.0.4",
-    "react-stickynode": "^4.0.0"
+    "timeago-react": "^3.0.4"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.13",
