@@ -1,6 +1,6 @@
 {
   "name": "@selfcommunity/core",
-  "version": "0.1.0-alpha.0",
+  "version": "0.1.0-alpha.1",
   "description": "React Core Components useful for integrating UI Community components (sc-ui).",
   "author": "mirk8xr <mirk8xr@gmail.com>",
   "homepage": "https://www.selfcommunity.com",
