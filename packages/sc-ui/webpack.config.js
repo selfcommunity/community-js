@@ -16,7 +16,7 @@ module.exports = (env, argv) => {
       libraryTarget: 'umd'
     },
     module: {
-      rules: [{...rules.js({rootMode: 'upward'}), test: /\.(j|t)sx?$/}]
+      rules: [{...rules.js({rootMode: 'upward'}), test: /\.(j|t)sx?$/}, {...rules.css()}, {...rules.postcss()}]
     },
     resolve: {
       extensions: ['.js', '.ts', '.tsx', '.json']
