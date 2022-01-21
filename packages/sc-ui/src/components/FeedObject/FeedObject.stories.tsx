@@ -42,7 +42,7 @@ export default {
     feedObjectId: 7628, // 9,
     feedObjectType: SCFeedObjectTypologyType.DISCUSSION,
     template: FeedObjectTemplateType.PREVIEW,
-    elevation: 1,
+    elevation: 0,
     variant: 'outlined',
     hideShareAction: false
   },

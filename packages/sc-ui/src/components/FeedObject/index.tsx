@@ -59,7 +59,7 @@ import ActivitiesMenu from './ActivitiesMenu';
 import {CommentsOrderBy} from '../../types/comments';
 import {FeedObjectActivitiesType, FeedObjectTemplateType} from '../../types/feedObject';
 import RelevantActivities from './RelevantActivities';
-import ReplyCommentObject from '../CommentObject/ReplyComment';
+import ReplyCommentObject, { ReplyCommentObjectProps } from '../CommentObject/ReplyComment';
 import {LoadingButton} from '@mui/lab';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {AxiosResponse} from 'axios';
@@ -161,6 +161,12 @@ const Root = styled(Card, {
 
 export interface FeedObjectProps extends CardProps {
   /**
+   * Id of the feedObject
+   * @default 'feed_object_<feedObjectType>_<feedObjectId | feedObject.id>'
+   */
+  id?: string;
+
+  /**
    * Overrides or extends the styles applied to the component.
    * @default null
    */
@@ -222,6 +228,7 @@ export interface FeedObjectProps extends CardProps {
 export default function FeedObject(props: FeedObjectProps): JSX.Element {
   // PROPS
   const {
+    id = `feed_object_${props.feedObjectType}_${props.feedObjectId ? props.feedObjectId : props.feedObject ? props.feedObject.id : ''}`,
     className = null,
     feedObjectId = null,
     feedObject = null,
@@ -237,7 +244,6 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
   const scUserContext: SCUserContextType = useSCUser();
-  const scPreferences: SCPreferencesContextType = useSCPreferences();
 
   // RETRIVE OBJECTS
   const {obj, setObj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
@@ -450,7 +456,6 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
         : selectedActivities === FeedObjectActivitiesType.FIRST_COMMENTS
         ? CommentsOrderBy.ADDED_AT_ASC
         : CommentsOrderBy.ADDED_AT_DESC;
-    console.log(_commentsOrderBy);
     return (
       <>
         {(obj.comment_count > 0 || comments.length > 0) && (
@@ -464,6 +469,8 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
               hidePrimaryReply={true}
               commentsOrderBy={_commentsOrderBy}
               additionalHeaderComments={comments}
+              hideAdvertising={true}
+              CommentObjectProps={{variant: 'outlined'}}
             />
           </LazyLoad>
         )}
@@ -688,7 +695,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
    * Renders root object
    */
   return (
-    <Root className={className} {...rest}>
+    <Root id={id} className={className} {...rest}>
       <Box className={`${PREFIX}-${template}`}>{objElement}</Box>
     </Root>
   );

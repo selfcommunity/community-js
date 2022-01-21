@@ -8,7 +8,7 @@ const PREFIX = 'SCCommentObjectSkeleton';
 
 const classes = {
   root: `${PREFIX}-root`,
-  avatarWrap: `${PREFIX}-avatar-wrap`,
+  avatarWrap: `${PREFIX}-avatar-wrap`
 };
 
 const Root = styled(Box, {
@@ -19,7 +19,7 @@ const Root = styled(Box, {
   marginBottom: theme.spacing(3),
   [`& .${classes.avatarWrap}`]: {
     minWidth: 46
-  },
+  }
 }));
 
 export default function CommentObjectSkeleton(props): JSX.Element {
