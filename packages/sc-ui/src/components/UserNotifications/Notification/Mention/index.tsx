@@ -5,6 +5,7 @@ import {Link, SCNotificationMentionType, SCNotificationVoteUpType, SCRoutes, SCR
 import {defineMessages, useIntl} from 'react-intl';
 import {getContributeType} from '../../../../utils/contribute';
 import DateTimeAgo from '../../../../shared/DateTimeAgo';
+import NotificationNewChip from '../../NotificationNewChip';
 
 const messages = defineMessages({
   quotedYouOn: {
@@ -75,6 +76,7 @@ export default function UserNotificationMention(props: NotificationMentionProps)
           }
           secondary={
             <React.Fragment>
+              {notificationObject.is_new && <NotificationNewChip />}
               <Link to={scRoutingContext.url(objectType, {id: notificationObject[objectType].id})}>
                 <Typography
                   component={'span'}

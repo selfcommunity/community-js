@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Box, List, ListItem, Typography} from '@mui/material';
-import { Endpoints, http, Logger, SCNotificationTopicType } from '@selfcommunity/core';
+import {Box, Button, List, ListItem, Stack, Typography} from '@mui/material';
+import {Endpoints, http, Logger, SCNotificationTopicType} from '@selfcommunity/core';
 import {AxiosResponse} from 'axios';
 import PubSub from 'pubsub-js';
 import {SCOPE_SC_UI} from '../../constants/Errors';
@@ -10,9 +10,12 @@ import {NotificationSkeleton} from '../Skeleton';
 import UserNotification from './Notification';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import {SCNotificationAggregatedType} from '@selfcommunity/core';
-import { SCNotificationTopics } from '@selfcommunity/core/src/constants/Notification';
 
 const PREFIX = 'SCUserNotifications';
+
+const classes = {
+  btnNewNotification: `${PREFIX}-btn-new-notification`
+};
 
 const Root = styled(Box, {
   name: PREFIX,
@@ -20,13 +23,19 @@ const Root = styled(Box, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   marginTop: theme.spacing(2),
-  marginBottom: theme.spacing(2)
+  marginBottom: theme.spacing(2),
+  [`& .${classes.btnNewNotification}`]: {
+    width: '95%',
+    color: theme.palette.error.main,
+    borderColor: theme.palette.error.main
+  }
 }));
 
 export default function UserNotifications(rest): JSX.Element {
   const [notifications, setNotifications] = useState<SCNotificationAggregatedType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [next, setNext] = useState<string>(Endpoints.UserNotificationList.url({}));
+  const [newNotifications, setNewNotifications] = useState<boolean>(false);
   const notificationSubscription = useRef(null);
 
   /**
@@ -51,13 +60,38 @@ export default function UserNotifications(rest): JSX.Element {
   }
 
   /**
+   * Reload notifications
+   */
+  const reloadNotifications = () => {
+    setNext(null);
+    setNotifications([]);
+    setLoading(true);
+    setNewNotifications(false);
+    fetchNotifications();
+  };
+
+  /**
+   * Render box new notifications
+   */
+  const renderNewNotificationAlert = () => {
+    return (
+      <Stack spacing={2} direction="row" justifyContent="center" alignItems="center">
+        <Button variant="outlined" classes={{root: classes.btnNewNotification}} onClick={reloadNotifications}>
+          <FormattedMessage id="ui.userNotifications.newNotificationsLabel" defaultMessage="ui.userNotifications.newNotificationsLabel" />
+        </Button>
+      </Stack>
+    );
+  };
+
+  /**
    * Notification subscriber
    * @param msg
    * @param data
    */
   const notificationSubscriber = (msg, data) => {
-    console.log('interactions');
-    console.dir(data);
+    if (data && data.data && data.data.count_interactions > 0) {
+      setNewNotifications(true);
+    }
   };
 
   /**
@@ -81,6 +115,7 @@ export default function UserNotifications(rest): JSX.Element {
         </>
       ) : (
         <Box>
+          {newNotifications && renderNewNotificationAlert()}
           {notifications.length <= 0 ? (
             <Typography variant="body2">
               <FormattedMessage id="ui.userNotifications.noResults" defaultMessage="ui.userNotifications.noResults" />

@@ -9,6 +9,7 @@ import {camelCase} from '../../../../../../sc-core/src/utils/string';
 import {getContributeType} from '../../../../utils/contribute';
 import DateTimeAgo from '../../../../shared/DateTimeAgo';
 import {NotificationDeletedForProps} from '../CollapsedFor';
+import NotificationNewChip from '../../NotificationNewChip';
 
 const messages = defineMessages({
   deletedForAdvertising: {
@@ -79,6 +80,7 @@ export default function DeletedForNotification(props: NotificationDeletedForProp
         />
       </ListItem>
       <Box sx={{mb: 1, p: 1}}>
+        {notificationObject.is_new && <NotificationNewChip />}
         <Typography variant={'body2'} color={'primary'} component={'span'}>
           <FormattedMessage id="ui.userNotifications.undeletedFor.youWrote" defaultMessage="ui.userNotifications.undeletedFor.youWrote" />
         </Typography>

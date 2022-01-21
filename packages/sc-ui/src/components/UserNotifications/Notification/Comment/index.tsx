@@ -9,6 +9,7 @@ import VoteFilledIcon from '@mui/icons-material/ThumbUpTwoTone';
 import VoteIcon from '@mui/icons-material/ThumbUpOutlined';
 import {grey} from '@mui/material/colors';
 import DateTimeAgo from '../../../../shared/DateTimeAgo';
+import NotificationNewChip from '../../NotificationNewChip';
 
 const messages = defineMessages({
   comment: {
@@ -87,6 +88,7 @@ export default function UserNotificationComment(props: UserNotificationCommentPr
         <ListItemText
           primary={
             <Typography component="span" sx={{display: 'inline'}} color="primary">
+              {notificationObject.is_new && <NotificationNewChip />}
               <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: notificationObject.comment.author.id})}>
                 {notificationObject.comment.author.username}
               </Link>{' '}

@@ -5,6 +5,7 @@ import {Link, SCNotificationVoteUpType, SCRoutes, SCRoutingContextType, useSCRou
 import {defineMessages, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../../shared/DateTimeAgo';
 import {NotificationVoteUpProps} from '../ContributionFollow';
+import NotificationNewChip from '../../NotificationNewChip';
 
 const messages = defineMessages({
   appreciated: {
@@ -44,7 +45,8 @@ export default function VoteUpNotification(props: NotificationVoteUpProps): JSX.
         </ListItemAvatar>
         <ListItemText
           primary={
-            <Typography component="span" sx={{display: 'inline'}} color="primary">
+            <Typography component="div" sx={{display: 'inline'}} color="primary">
+              {notificationObject.is_new && <NotificationNewChip />}
               <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: notificationObject.user.id})}>
                 {notificationObject.user.username}
               </Link>{' '}

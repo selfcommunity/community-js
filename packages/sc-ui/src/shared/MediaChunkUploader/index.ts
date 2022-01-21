@@ -6,11 +6,11 @@ import {
   useItemFinishListener,
   useRequestPreSend
 } from '@rpldy/chunked-uploady';
-import {Endpoints, formatHttpError, http, SCContext, SCContextType, SCMediaType} from '@selfcommunity/core';
+import {Endpoints, formatHttpError, http, SCContextType, SCMediaType, useSCContext} from '@selfcommunity/core';
 import {useItemProgressListener, useItemStartListener} from '@rpldy/uploady';
 import {AxiosResponse} from 'axios';
 import {md5} from '../../utils/hash';
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {SCMediaChunkType} from '../../types/media';
 import {useIntl} from 'react-intl';
 import messages from '../../messages/common';
@@ -53,7 +53,7 @@ export default (props: ChunkUploaderProps): JSX.Element => {
   chunkStateRef.current = {chunks, setChunk, setChunks};
 
   // CONTEXT
-  const scContext: SCContextType = useContext(SCContext);
+  const scContext: SCContextType = useSCContext();
 
   // INTL
   const intl = useIntl();

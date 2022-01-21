@@ -9,6 +9,7 @@ import {camelCase} from '../../../../../../sc-core/src/utils/string';
 import {getContributeType} from '../../../../utils/contribute';
 import DateTimeAgo from '../../../../shared/DateTimeAgo';
 import {NotificationDeletedForProps} from '../CollapsedFor';
+import NotificationNewChip from '../../NotificationNewChip';
 
 const messages = defineMessages({
   kindlyNoticeFlag: {
@@ -63,6 +64,7 @@ export default function KindlyNoticeFlagNotification(props: NotificationDeletedF
         />
       </ListItem>
       <Box sx={{mb: 1, p: 1}}>
+        {notificationObject.is_new && <NotificationNewChip />}
         <Typography variant={'body2'} color={'primary'}>
           <FormattedMessage id="ui.userNotifications.undeletedFor.youWrote" defaultMessage="ui.userNotifications.undeletedFor.youWrote" />
         </Typography>

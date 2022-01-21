@@ -14,6 +14,7 @@ import {
   SCThemeContextType,
   SCRoutingContextType,
   SCLocaleContextType,
+  SCAlertMessagesContextType,
 } from './context';
 import {SCCustomAdvPosition, SCCustomAdvType} from './customAdv';
 import {SCUserType, SCUserBlockedSettingsType} from './user';
@@ -85,6 +86,7 @@ export {
   SCThemeContextType,
   SCRoutingContextType,
   SCLocaleContextType,
+  SCAlertMessagesContextType,
   SCEmbedType,
   SCMediaType,
   SCContributionLocation,

@@ -1,5 +1,5 @@
 import {SCUserType} from './user';
-import React, {ReactNode} from 'react';
+import React, { Provider, ProviderProps, ReactNode } from 'react';
 import {SCCategoryType} from './category';
 
 /**
@@ -30,6 +30,15 @@ export interface SCSettingsType {
    * Object conf of router.
    */
   router?: SCRoutingContextType;
+
+  /**
+   * List of SC context providers to override the default value
+   * Default context providers:
+   * SCPreferencesProvider, SCRoutingProvider, SCUserProvider,
+   * SCNotificationProvider, SCThemeProvider, SCLocaleProvider,
+   * SCPreferencesProvider,
+   */
+  contextProviders?: ((children) => JSX.Element)[];
 }
 
 export interface SCLocaleType {
@@ -281,6 +290,11 @@ export interface SCContextProviderType {
   conf: SCSettingsType;
 
   /**
+   * Providers
+   */
+  contextProviders?: ((children) => JSX.Element)[];
+
+  /**
    * Nested children
    */
   children: ReactNode;
@@ -365,4 +379,14 @@ export interface SCLocaleContextType {
    * Change locale
    */
   selectLocale: (l: string) => void;
+}
+
+/**
+ * Interface SCAlertMessagesContextType
+ */
+export interface SCAlertMessagesContextType {
+  /**
+   * Options
+   */
+  [p: string]: any;
 }

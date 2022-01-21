@@ -65,10 +65,8 @@ export default function SCNotificationProvider({children = null}: {children: Rea
     let _data = JSON.parse(data);
     if (_data && _data.type && SCNotificationTopics.includes(_data.type)) {
       if (_data.type === SCNotificationTopicType.INTERACTION && SCNotificationMapping[_data.data.activity_type]) {
-        console.log(`${_data.type}.${SCNotificationMapping[_data.data.activity_type]}`);
         PubSub.publish(`${_data.type}.${SCNotificationMapping[_data.data.activity_type]}`, _data);
       } else {
-        console.log('uuuu');
         PubSub.publish(`${_data.type}`, _data);
       }
     }

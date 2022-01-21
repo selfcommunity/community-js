@@ -1,11 +1,11 @@
-import React, {FunctionComponent, RefObject, SyntheticEvent, useContext, useEffect, useMemo, useRef, useState} from 'react';
+import React, {FunctionComponent, RefObject, SyntheticEvent, useEffect, useMemo, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {ContentState, convertFromHTML, convertToRaw, EditorState} from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 import {defineMessages, useIntl} from 'react-intl';
 import MUIRichTextEditor, {TAutocompleteItem, TMUIRichTextEditorRef} from 'mui-rte';
 import {Alert, AlertTitle, Avatar, Box, Fade, IconButton, LinearProgress, ListItemAvatar, ListItemText, Popover, Stack} from '@mui/material';
-import { Endpoints, http, SCContextType, SCMediaType, SCUserType, useSCContext } from '@selfcommunity/core';
+import {Endpoints, http, SCContextType, SCMediaType, SCUserType, useSCContext} from '@selfcommunity/core';
 import {AxiosResponse} from 'axios';
 import MediaChunkUploader from '../../shared/MediaChunkUploader';
 import ChunkedUploady from '@rpldy/chunked-uploady';

@@ -43,13 +43,11 @@ import {
   SCFeedObjectType,
   SCFeedObjectTypologyType,
   SCPollType,
-  SCPreferencesContextType,
   SCRoutes,
   SCRoutingContextType,
   SCTagType,
   SCUserContextType,
   useSCFetchFeedObject,
-  useSCPreferences,
   useSCRouting,
   useSCUser
 } from '@selfcommunity/core';

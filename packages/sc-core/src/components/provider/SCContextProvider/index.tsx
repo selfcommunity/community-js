@@ -1,10 +1,4 @@
-import React, {createContext, useContext, useEffect, useState} from 'react';
-import SCUserProvider from '../SCUserProvider';
-import SCLocaleProvider from '../SCLocaleProvider';
-import SCRoutingProvider from '../SCRoutingProvider';
-import SCThemeProvider from '../SCThemeProvider';
-import SCPreferencesProvider from '../SCPreferencesProvider';
-import SCNotificationProvider from '../SCNotificationProvider';
+import React, {createContext, ReactNode, useContext, useEffect, useState} from 'react';
 import {setBasePortal} from '../../../utils/http';
 import {validateOptions, validOptions} from '../../../utils/validator';
 import {SCContextProviderType, SCContextType, SCSettingsType} from '../../../types';
@@ -15,15 +9,10 @@ import {SCContextProviderType, SCContextType, SCSettingsType} from '../../../typ
  *  1. <SCContext.Consumer>
  *       {settings => (...)}
  *     </SCContext.Consumer>
- *  2. const scSettings: SCSettingsType = useContext(SCContext);
- *  3. const scSettings: SCSettingsType = useSCContext();
+ *  2. const scContext: SCContextType = useContext(SCContext);
+ *  3. const scContext: SCContextType = useSCContext();
  */
 export const SCContext = createContext<SCContextType>({} as SCContextType);
-
-/**
- * List of all nested providers that are required to run
- */
-const contextProviders = [SCPreferencesProvider, SCRoutingProvider, SCUserProvider, /* SCNotificationProvider,*/ SCThemeProvider, SCLocaleProvider];
 
 /**
  * SCContextProvider
@@ -75,7 +64,7 @@ export default function SCContextProvider({conf, children}: SCContextProviderTyp
   return (
     <SCContext.Provider value={{settings}}>
       {settings &&
-        contextProviders.reduceRight((memo, ContextProvider) => {
+        settings.contextProviders.reduceRight((memo, ContextProvider) => {
           return <ContextProvider>{memo}</ContextProvider>;
         }, children)}
     </SCContext.Provider>

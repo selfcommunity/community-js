@@ -12,6 +12,7 @@ import {
   SCRoutingContextType,
   useSCRouting
 } from '@selfcommunity/core';
+import NotificationNewChip from '../../NotificationNewChip';
 
 const messages = defineMessages({
   requestConnection: {
@@ -70,7 +71,8 @@ export default function UserConnectionNotification(props: NotificationConnection
         </ListItemAvatar>
         <ListItemText
           primary={
-            <Typography component="span" sx={{display: 'inline'}} color="primary">
+            <Typography component="div" sx={{display: 'inline'}} color="primary">
+              {notificationObject.is_new && <NotificationNewChip />}
               <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: userConnection.id})}>{userConnection.username}</Link>{' '}
               {notificationObject.type === SCNotificationTypologyType.CONNECTION_REQUEST
                 ? intl.formatMessage(messages.requestConnection, {b: (...chunks) => <strong>{chunks}</strong>})

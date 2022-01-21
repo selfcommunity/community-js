@@ -1,9 +1,10 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import {Avatar, Box, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
+import { Avatar, Box, Chip, ListItem, ListItemAvatar, ListItemText, Typography } from '@mui/material';
 import {Link, SCNotificationUserFollowType, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
 import {defineMessages, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../../shared/DateTimeAgo';
+import NotificationNewChip from '../../NotificationNewChip';
 
 const messages = defineMessages({
   followUser: {
@@ -44,6 +45,7 @@ export default function UserFollowNotification(props: NotificationFollowProps): 
   /**
    * Renders root object
    */
+  console.log(notificationObject);
   return (
     <Root {...rest}>
       <ListItem alignItems="flex-start">
@@ -54,7 +56,8 @@ export default function UserFollowNotification(props: NotificationFollowProps): 
         </ListItemAvatar>
         <ListItemText
           primary={
-            <Typography component="span" sx={{display: 'inline'}} color="primary">
+            <Typography component="div" sx={{display: 'inline'}} color="primary">
+              {notificationObject.is_new && <NotificationNewChip />}
               <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: notificationObject.follower.id})}>
                 {notificationObject.follower.username}
               </Link>{' '}

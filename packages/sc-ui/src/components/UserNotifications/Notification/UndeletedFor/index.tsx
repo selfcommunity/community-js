@@ -7,6 +7,7 @@ import {Link, SCNotificationUnDeletedForType, SCRoutingContextType, useSCRouting
 import {FormattedMessage} from 'react-intl';
 import {getContributeType} from '../../../../utils/contribute';
 import DateTimeAgo from '../../../../shared/DateTimeAgo';
+import NotificationNewChip from '../../NotificationNewChip';
 
 const PREFIX = 'SCUndeletedForNotification';
 
@@ -63,6 +64,7 @@ export default function UndeletedForNotification(props: NotificationUndeletedPro
         />
       </ListItem>
       <Box sx={{mb: 1, p: 1}}>
+        {notificationObject.is_new && <NotificationNewChip />}
         <Typography component={'span'} variant={'body2'} color={'primary'}>
           <FormattedMessage id="ui.userNotifications.undeletedFor.youWrote" defaultMessage="ui.userNotifications.undeletedFor.youWrote" />
         </Typography>

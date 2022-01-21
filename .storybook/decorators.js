@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import SCContextProvider from '../packages/sc-core/src/components/provider/SCContextProvider';
 import { getJWTSession, getOAuthSession, refreshToken } from './sessionHelpers';
-import { SnackbarProvider } from 'notistack';
 
 const withProvider = (Story, context) => {
     const [authToken, setAuthToken] = useState(undefined);
@@ -45,14 +44,19 @@ const withProvider = (Story, context) => {
             main: '#4a8f62'
           }
         }
-      }
+      },
+      /* contextProviders: [
+        SCPreferencesProvider,
+        SCRoutingProvider,
+        SCUserProvider,
+        SCLocaleProvider,
+        SCAlertMessagesProvider
+      ] */
     };
 
     return (
         <SCContextProvider conf={_conf}>
-          <SnackbarProvider maxSnack={3}>
-            <Story {...context} />
-          </SnackbarProvider>
+          <Story {...context} />
         </SCContextProvider>
     );
   }
