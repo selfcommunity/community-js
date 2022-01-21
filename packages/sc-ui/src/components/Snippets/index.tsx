@@ -24,9 +24,9 @@ const Root = styled(Card, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  minWidth: '500px',
+  height: '100%',
   [`& .${classes.selected}`]: {
-    backgroundColor: '#9dd4af'
+    background: '#9dd4af'
   },
   [`& .${classes.newMessage}`]: {
     '& .MuiSvgIcon-root': {
@@ -114,12 +114,12 @@ export default function Snippets(props: SnippetsProps): JSX.Element {
               <FormattedMessage id="ui.categoriesSuggestion.noResults" defaultMessage="ui.categoriesSuggestion.noResults" />
             </Typography>
           ) : (
-            <React.Fragment>
-              <Button className={classes.newMessage}>
-                <AddCircleOutlineIcon />
-                <FormattedMessage id="ui.NewMessage.new" defaultMessage="ui.NewMessage.new" />
-              </Button>
-              <Divider />
+            <Box sx={{minWidth: '300px'}}>
+              {/*<Button className={classes.newMessage}>*/}
+              {/*  <AddCircleOutlineIcon />*/}
+              {/*  <FormattedMessage id="ui.NewMessage.new" defaultMessage="ui.NewMessage.new" />*/}
+              {/*</Button>*/}
+              {/*<Divider />*/}
               {snippets.map((message: SCPrivateMessageType, index) => (
                 <div key={index}>
                   <Message
@@ -133,7 +133,7 @@ export default function Snippets(props: SnippetsProps): JSX.Element {
                   {index < total - 1 ? <Divider /> : null}
                 </div>
               ))}
-            </React.Fragment>
+            </Box>
           )}
         </CardContent>
       )}

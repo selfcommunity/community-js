@@ -11,7 +11,6 @@ import {TMUIRichTextEditorRef} from 'mui-rte';
 const PREFIX = 'SCMessageEditor';
 
 const classes = {
-  messageBox: `${PREFIX}-message-box`,
   messageInput: `${PREFIX}-message-input`
 };
 
@@ -20,15 +19,10 @@ const Root = styled(Card, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  minWidth: '275px',
+  width: '100%',
   display: 'inline-block',
-  [`& .${classes.messageBox}`]: {
-    margin: '20px'
-  },
   [`& .${classes.messageInput}`]: {
-    '& .MuiOutlinedInput-root': {
-      borderRadius: '20px'
-    }
+    width: '100%'
   }
 }));
 
@@ -112,50 +106,48 @@ export default function MessageEditor(props: MessageEditorProps): JSX.Element {
   if (!autoHide && recipient) {
     return (
       <Root {...rest} className={className}>
-        <Box className={classes.messageBox}>
-          <TextField
-            size="small"
-            ref={ref}
-            className={classes.messageInput}
-            multiline
-            placeholder="Aa"
-            value={message}
-            onChange={handleMessageInput}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <Stack>
-                    <div>
-                      <IconButton size="small" onClick={handleToggleEmoji}>
-                        <EmojiIcon />
-                      </IconButton>
-                      <Popover
-                        open={Boolean(emojiAnchorEl)}
-                        anchorEl={emojiAnchorEl}
-                        onClose={handleToggleEmoji}
-                        anchorOrigin={{
-                          vertical: 'top',
-                          horizontal: 'right'
-                        }}
-                        transformOrigin={{
-                          vertical: 'bottom',
-                          horizontal: 'left'
-                        }}
-                        sx={(theme) => {
-                          return {zIndex: theme.zIndex.tooltip};
-                        }}>
-                        <Picker onEmojiClick={handleEmojiClick} />
-                      </Popover>
-                    </div>
-                  </Stack>
-                  <IconButton disabled={sending || !recipient} onClick={() => sendMessage()}>
-                    {show && <SendIcon />}
-                  </IconButton>
-                </InputAdornment>
-              )
-            }}
-          />
-        </Box>
+        <TextField
+          size="small"
+          ref={ref}
+          className={classes.messageInput}
+          multiline
+          placeholder="Aa"
+          value={message}
+          onChange={handleMessageInput}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <Stack>
+                  <div>
+                    <IconButton size="small" onClick={handleToggleEmoji}>
+                      <EmojiIcon />
+                    </IconButton>
+                    <Popover
+                      open={Boolean(emojiAnchorEl)}
+                      anchorEl={emojiAnchorEl}
+                      onClose={handleToggleEmoji}
+                      anchorOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right'
+                      }}
+                      transformOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'left'
+                      }}
+                      sx={(theme) => {
+                        return {zIndex: theme.zIndex.tooltip};
+                      }}>
+                      <Picker onEmojiClick={handleEmojiClick} />
+                    </Popover>
+                  </div>
+                </Stack>
+                <IconButton disabled={sending || !recipient} onClick={() => sendMessage()}>
+                  {show && <SendIcon />}
+                </IconButton>
+              </InputAdornment>
+            )
+          }}
+        />
       </Root>
     );
   }

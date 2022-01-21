@@ -23,12 +23,11 @@ const Root = styled(Card, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  marginBottom: theme.spacing(2),
+  overflow: 'auto',
+  maxHeight: '500px',
   [`& .${classes.emptyBox}`]: {
     display: 'flex',
-    height: '71%',
-    width: '40%',
-    position: 'absolute',
+    height: '100%',
     background: theme.palette.grey['A200'],
     justifyContent: 'center',
     alignItems: 'center',
