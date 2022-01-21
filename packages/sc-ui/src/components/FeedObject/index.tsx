@@ -488,7 +488,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
       <React.Fragment>
         {obj ? (
           <React.Fragment>
-            {obj.categories && (
+            {obj.categories.length > 0 && (
               <div className={classes.category}>
                 {obj.categories.map((c) => (
                   <Link to={scRoutingContext.url(SCRoutes.CATEGORY_ROUTE_NAME, {id: c.id})} key={c.id}>
