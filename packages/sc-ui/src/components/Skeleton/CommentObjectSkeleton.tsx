@@ -30,6 +30,7 @@ export default function CommentObjectSkeleton(props): JSX.Element {
           <Skeleton animation="wave" variant="circular" width={35} height={35} />
         </ListItemAvatar>
         <ListItemText
+          disableTypography
           secondary={
             <>
               <Card {...props}>

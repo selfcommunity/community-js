@@ -2,7 +2,7 @@ import React, {RefObject, useContext, useEffect, useMemo, useState} from 'react'
 import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import {defineMessages, useIntl} from 'react-intl';
-import {Avatar, Box, Grid, ListItem, ListItemAvatar, ListItemText} from '@mui/material';
+import {Avatar, Box, CardProps, Grid, ListItem, ListItemAvatar, ListItemText} from '@mui/material';
 import {SCCommentType} from '@selfcommunity/core/src/types/comment';
 import {SCUserContext, SCUserContextType, useSCFetchCommentObject} from '@selfcommunity/core';
 import Editor from '../../Editor';
@@ -35,7 +35,7 @@ const classes = {
   avatar: `${PREFIX}-avatar`
 };
 
-const Root = styled(Card, {
+const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
@@ -58,6 +58,12 @@ const Root = styled(Card, {
 }));
 
 export interface ReplyCommentObjectProps {
+  /**
+   * Overrides or extends the styles applied to the component.
+   * @default null
+   */
+  className?: string;
+
   /**
    * Id of the comment object
    * @default null
@@ -107,6 +113,12 @@ export interface ReplyCommentObjectProps {
   text?: string;
 
   /**
+   * Initial content
+   * @default {variant: 'outlined'}
+   */
+  ReplyBoxProps?: CardProps;
+
+  /**
    * Other props
    */
   [p: string]: any;
@@ -114,7 +126,20 @@ export interface ReplyCommentObjectProps {
 
 export default function ReplyCommentObject(props: ReplyCommentObjectProps): JSX.Element {
   // PROPS
-  const {commentObjectId, commentObject, autoFocus = false, inline = false, onReply, onSave, onCancel, readOnly = false, text = '', ...rest} = props;
+  const {
+    className,
+    commentObjectId,
+    commentObject,
+    autoFocus = false,
+    inline = false,
+    onReply,
+    onSave,
+    onCancel,
+    readOnly = false,
+    text = '',
+    ReplyBoxProps = {variant: 'outlined'},
+    ...rest
+  } = props;
 
   // CONTEXT
   const scUser: SCUserContextType = useContext(SCUserContext);
@@ -195,7 +220,7 @@ export default function ReplyCommentObject(props: ReplyCommentObjectProps): JSX.
           disableTypography
           secondary={
             <>
-              <Card classes={{root: classes.comment}} {...rest}>
+              <Card classes={{root: classes.comment}} {...ReplyBoxProps}>
                 <Editor
                   onRef={(e) => {
                     editor = e;
@@ -242,5 +267,5 @@ export default function ReplyCommentObject(props: ReplyCommentObjectProps): JSX.
   /**
    * Renders root object
    */
-  return <Root elevation={0}>{renderReply(obj)}</Root>;
+  return <Root className={className} {...rest}>{renderReply(obj)}</Root>;
 }

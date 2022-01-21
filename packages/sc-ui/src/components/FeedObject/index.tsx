@@ -459,6 +459,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
         {(obj.comment_count > 0 || comments.length > 0) && (
           <LazyLoad once>
             <CommentsObject
+              key={_commentsOrderBy}
               feedObject={obj}
               feedObjectType={feedObjectType}
               variant={'outlined'}

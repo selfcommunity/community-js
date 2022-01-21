@@ -121,6 +121,12 @@ const Root = styled(Box, {
 
 export interface CommentObjectProps {
   /**
+   * Overrides or extends the styles applied to the component.
+   * @default null
+   */
+  className?: string;
+
+  /**
    * Id of the comment object
    * @default null
    */
@@ -202,6 +208,7 @@ export interface CommentObjectProps {
 export default function CommentObject(props: CommentObjectProps): JSX.Element {
   // PROPS
   const {
+    className,
     commentObjectId,
     commentObject,
     feedObjectId,
@@ -234,12 +241,14 @@ export default function CommentObject(props: CommentObjectProps): JSX.Element {
    * @param comment
    */
   function renderTimeAgo(comment) {
-    return [
-      <AccessTimeIcon sx={{paddingRight: '2px'}} />,
-      <Typography variant={'body2'}>
-        <TimeAgo datetime={comment.added_at} />
-      </Typography>
-    ];
+    return (
+      <>
+        <AccessTimeIcon sx={{paddingRight: '2px'}} />
+        <Typography variant={'body2'}>
+          <TimeAgo datetime={comment.added_at} />
+        </Typography>
+      </>
+    );
   }
 
   /**
@@ -663,5 +672,5 @@ export default function CommentObject(props: CommentObjectProps): JSX.Element {
   /**
    * Render object
    */
-  return <Root>{comment}</Root>;
+  return <Root className={className}>{comment}</Root>;
 }
