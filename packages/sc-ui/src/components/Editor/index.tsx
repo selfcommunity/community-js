@@ -5,7 +5,7 @@ import draftToHtml from 'draftjs-to-html';
 import {defineMessages, useIntl} from 'react-intl';
 import MUIRichTextEditor, {TAutocompleteItem, TMUIRichTextEditorRef} from 'mui-rte';
 import {Alert, AlertTitle, Avatar, Box, Fade, IconButton, LinearProgress, ListItemAvatar, ListItemText, Popover, Stack} from '@mui/material';
-import {Endpoints, http, SCContext, SCContextType, SCMediaType, SCUserType} from '@selfcommunity/core';
+import { Endpoints, http, SCContextType, SCMediaType, SCUserType, useSCContext } from '@selfcommunity/core';
 import {AxiosResponse} from 'axios';
 import MediaChunkUploader from '../../shared/MediaChunkUploader';
 import ChunkedUploady from '@rpldy/chunked-uploady';
@@ -152,7 +152,7 @@ export default function Editor(props: EditorProps): JSX.Element {
   const intl = useIntl();
 
   // Context
-  const scContext: SCContextType = useContext(SCContext);
+  const scContext: SCContextType = useSCContext();
 
   // State
   const [uploading, setUploading] = useState({});
