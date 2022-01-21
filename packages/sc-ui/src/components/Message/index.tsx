@@ -19,7 +19,8 @@ const classes = {
   messageBox: `${PREFIX}-messageBox`,
   messageTime: `${PREFIX}-messageTime`,
   unread: `${PREFIX}-unread`,
-  hide: `${PREFIX}-hide`
+  hide: `${PREFIX}-hide`,
+  img: `${PREFIX}-img`
 };
 
 const Root = styled(Card, {
@@ -36,6 +37,7 @@ const Root = styled(Card, {
     justifyContent: 'space-between'
   },
   [`& .${classes.messageBox}`]: {
+    margin: 'auto',
     padding: '16px',
     borderRadius: '20px'
   },
@@ -50,6 +52,10 @@ const Root = styled(Card, {
   },
   [`& .${classes.hide}`]: {
     display: 'none'
+  },
+  [`& .${classes.img}`]: {
+    height: '100%',
+    width: '100%'
   }
 }));
 
@@ -127,6 +133,9 @@ export default function Message(props: MessageProps): JSX.Element {
   // INTL
   const intl = useIntl();
 
+  // STATE
+  const hasFile = message.file;
+
   /**
    * Renders snippet or thread type message object
    */
@@ -168,7 +177,11 @@ export default function Message(props: MessageProps): JSX.Element {
             <ListItemText
               primary={
                 <Box className={classes.messageBox}>
-                  <Typography component="span">{message.message}</Typography>
+                  {hasFile ? (
+                    <img className={classes.img} src={message.file.url} loading="lazy" alt={'img'} />
+                  ) : (
+                    <Typography component="span">{message.message}</Typography>
+                  )}
                 </Box>
               }
               secondary={

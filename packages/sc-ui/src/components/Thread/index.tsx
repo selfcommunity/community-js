@@ -8,6 +8,7 @@ import _ from 'lodash';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {Box, List, Typography} from '@mui/material';
 import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
+import MessageEditor from '../MessageEditor';
 
 const PREFIX = 'SCThread';
 
@@ -62,6 +63,11 @@ export interface ThreadProps {
    */
   id?: number;
   /**
+   * Message receiver id
+   * @default null
+   */
+  receiverId?: number;
+  /**
    * Overrides or extends the styles applied to the component.
    * @default null
    */
@@ -75,10 +81,11 @@ export interface ThreadProps {
    * Any other properties
    */
   [p: string]: any;
+  newMessage?: boolean;
 }
 export default function Thread(props: ThreadProps): JSX.Element {
   // PROPS
-  const {id, autoHide, className, ...rest} = props;
+  const {id = 29, receiverId, autoHide, className, newMessage, ...rest} = props;
 
   //CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
@@ -213,6 +220,9 @@ export default function Thread(props: ThreadProps): JSX.Element {
             ))}
           </div>
         ))}
+        <>
+          <MessageEditor recipient={receiverId} />
+        </>
       </React.Fragment>
     );
   }

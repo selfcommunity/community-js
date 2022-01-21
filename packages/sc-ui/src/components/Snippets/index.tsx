@@ -10,12 +10,13 @@ import {FormattedMessage} from 'react-intl';
 import SnippetsSkeleton from '../Skeleton/SnippetsSkeleton';
 import Message from '../Message';
 import Thread from '../Thread';
-import NewMessage from '../NewMessage';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 const PREFIX = 'SCSnippets';
 
 const classes = {
-  selected: `${PREFIX}-selected`
+  selected: `${PREFIX}-selected`,
+  newMessage: `${PREFIX}-selected`
 };
 
 const Root = styled(Card, {
@@ -23,8 +24,14 @@ const Root = styled(Card, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
+  minWidth: '500px',
   [`& .${classes.selected}`]: {
-    backgroundColor: '#a0c7e9'
+    backgroundColor: '#9dd4af'
+  },
+  [`& .${classes.newMessage}`]: {
+    '& .MuiSvgIcon-root': {
+      marginRight: '5px'
+    }
   }
 }));
 
@@ -54,8 +61,8 @@ export default function Snippets(props: SnippetsProps): JSX.Element {
   const [openThread, setOpenThread] = useState<boolean>(false);
   const [total, setTotal] = useState<number>(0);
   const [threadId, setThreadId] = useState<number>(null);
+  const [receiverId, setReceiverId] = useState<number>(null);
   const [unseen, setUnseen] = useState<boolean>(null);
-  const [selected, setSelected] = useState<number>(null);
 
   /**
    * Fetches Snippets
@@ -87,18 +94,17 @@ export default function Snippets(props: SnippetsProps): JSX.Element {
   /**
    * Handles thread opening
    */
-  function handleOpenThread(id) {
-    setOpenThread(true);
-    setThreadId(id);
+  function handleOpenThread(msg) {
+    setReceiverId(msg.receiver.id);
+    setThreadId(msg.id);
     setUnseen(false);
-    setSelected(id);
   }
 
   /**
    * Renders snippets list
    */
   const c = (
-    <React.Fragment>
+    <Box sx={{display: 'flex', flexDirection: 'row'}}>
       {loading ? (
         <SnippetsSkeleton elevation={0} />
       ) : (
@@ -109,7 +115,10 @@ export default function Snippets(props: SnippetsProps): JSX.Element {
             </Typography>
           ) : (
             <React.Fragment>
-              <NewMessage />
+              <Button className={classes.newMessage}>
+                <AddCircleOutlineIcon />
+                <FormattedMessage id="ui.NewMessage.new" defaultMessage="ui.NewMessage.new" />
+              </Button>
               <Divider />
               {snippets.map((message: SCPrivateMessageType, index) => (
                 <div key={index}>
@@ -117,23 +126,21 @@ export default function Snippets(props: SnippetsProps): JSX.Element {
                     elevation={0}
                     message={message}
                     key={message.id}
-                    onClick={() => handleOpenThread(message.id)}
+                    onClick={() => handleOpenThread(message)}
                     unseen={unseen === null ? message.thread_status === 'new' : unseen}
-                    className={message.id === selected ? classes.selected : ''}
+                    className={message.id === threadId ? classes.selected : ''}
                   />
                   {index < total - 1 ? <Divider /> : null}
                 </div>
               ))}
             </React.Fragment>
           )}
-          {openThread && (
-            <>
-              <Thread id={threadId} open={openThread} />
-            </>
-          )}
         </CardContent>
       )}
-    </React.Fragment>
+      <>
+        <Thread id={threadId ?? null} receiverId={receiverId ?? null} open={openThread} />
+      </>
+    </Box>
   );
 
   /**
