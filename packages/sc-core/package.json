@@ -53,7 +53,7 @@
     "react-intl": "^5.21.0"
   },
   "dependencies": {
-    "@selfcommunity/i18n": "^0.1.0",
+    "@selfcommunity/i18n": "^0.0.0",
     "axios": "^0.23.0",
     "pubsub-js": "^1.9.4",
     "validate-color": "^2.2.1"
