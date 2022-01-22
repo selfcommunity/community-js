@@ -33,18 +33,17 @@
     "prerelease": "yarn run clean:lib && yarn run build"
   },
   "directories": {
-    "lib": "lib"
+    "lib": "./lib"
   },
   "files": [
-    "lib"
+    "./lib"
   ],
   "repository": {
     "type": "git",
     "url": "https://github.com/selfcommunity/community-ui/tree/main/packages/sc-ui"
   },
   "publishConfig": {
-    "access": "public",
-    "directory": "lib"
+    "access": "public"
   },
   "peerDependencies": {
     "@emotion/react": "^11.7.0",
