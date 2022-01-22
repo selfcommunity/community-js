@@ -1,4 +1,4 @@
-@selfcommunity/i18n (sc-i18n)
+@selfcommunity/core (sc-core)
 =============
 
 [![NPM version][npm-image]][npm-url]
