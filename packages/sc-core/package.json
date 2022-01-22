@@ -1,6 +1,6 @@
 {
   "name": "@selfcommunity/core",
-  "version": "0.1.0-alpha.3",
+  "version": "0.0.0",
   "description": "React Core Components useful for integrating UI Community components (sc-ui).",
   "author": "mirk8xr <mirk8xr@gmail.com>",
   "homepage": "https://www.selfcommunity.com",
@@ -53,7 +53,7 @@
     "react-intl": "^5.21.0"
   },
   "dependencies": {
-    "@selfcommunity/i18n": "^0.1.0",
+    "@selfcommunity/i18n": "^0.1.0-alpha.1",
     "axios": "^0.23.0",
     "validate-color": "^2.2.1"
   },
@@ -116,5 +116,5 @@
   "bugs": {
     "url": "https://github.com/selfcommunity/selfcommunity-ui-widgets/issues"
   },
-  "gitHead": "504add360b17200273ca782cc4e5a80fc834a8f9"
+  "gitHead": "7eadc2dc8515e9d8ea00ef8592e2bf208f7bda6a"
 }
