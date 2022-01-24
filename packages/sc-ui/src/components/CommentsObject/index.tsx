@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {
   Endpoints,
@@ -356,22 +356,19 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
   /**
    * Get Comments
    */
-  const performFetchComments = useMemo(
-    () => (url) => {
-      return http
-        .request({
-          url,
-          method: Endpoints.Comments.method
-        })
-        .then((res: AxiosResponse<any>) => {
-          if (res.status >= 300) {
-            return Promise.reject(res);
-          }
-          return Promise.resolve(res.data);
-        });
-    },
-    []
-  );
+  const performFetchComments = (url) => {
+    return http
+      .request({
+        url,
+        method: Endpoints.Comments.method
+      })
+      .then((res: AxiosResponse<any>) => {
+        if (res.status >= 300) {
+          return Promise.reject(res);
+        }
+        return Promise.resolve(res.data);
+      });
+  };
 
   /**
    * Fetch prevoius comments
@@ -398,14 +395,13 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
    */
   function fetchNextComments() {
     if (obj) {
+      const _next = next
+        ? next
+        : `${Endpoints.Comments.url()}?${feedObjectType}=${obj.id}&limit=${commentsPageCount}&ordering=${commentsOrderBy}&offset=${
+            page > 0 ? (page - 1) * commentsPageCount : 0
+          }`;
       setIsLoading(true);
-      performFetchComments(
-        next
-          ? next
-          : `${Endpoints.Comments.url()}?${feedObjectType}=${obj.id}&limit=${commentsPageCount}&ordering=${commentsOrderBy}&offset=${
-              page > 0 ? (page - 1) * commentsPageCount : 0
-            }`
-      )
+      performFetchComments(_next)
         .then((res) => {
           setComments(next ? [...comments, ...res.results] : res.results);
           setTotal(res.count);
@@ -766,7 +762,7 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
    * Renders root object
    */
   return (
-    <Root ref={rootContainer} id={id} className={className}>
+    <Root ref={rootContainer} id={id} className={className} {...rest}>
       {renderTitle()}
       {renderHeadPrimaryReply()}
       {commentsRendered}

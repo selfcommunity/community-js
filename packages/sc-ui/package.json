@@ -1,6 +1,6 @@
 {
   "name": "@selfcommunity/ui",
-  "version": "0.0.0",
+  "version": "0.1.0-alpha.0",
   "description": "React UI Components to integrate a Community created with SelfCommunity.",
   "author": "mirk8xr <mirk8xr@gmail.com>",
   "homepage": "https://www.selfcommunity.com",
@@ -33,18 +33,17 @@
     "prerelease": "yarn run clean:lib && yarn run build"
   },
   "directories": {
-    "lib": "lib"
+    "lib": "./lib"
   },
   "files": [
-    "lib"
+    "./lib"
   ],
   "repository": {
     "type": "git",
     "url": "https://github.com/selfcommunity/community-ui/tree/main/packages/sc-ui"
   },
   "publishConfig": {
-    "access": "public",
-    "directory": "lib"
+    "access": "public"
   },
   "peerDependencies": {
     "@emotion/react": "^11.7.0",
@@ -57,15 +56,14 @@
   },
   "dependencies": {
     "@mui/lab": "~5.0.0-alpha.65",
-    "notistack": "^2.0.3",
     "@rpldy/chunked-sender": "^0.14.1",
     "@rpldy/chunked-uploady": "^0.14.1",
     "@rpldy/upload-button": "^0.14.1",
     "@rpldy/upload-drop-zone": "^0.14.1",
     "@rpldy/upload-preview": "^0.14.1",
     "@rpldy/uploady": "^0.14.1",
-    "@selfcommunity/core": "^0.0.0",
-    "@selfcommunity/i18n": "^0.0.0",
+    "@selfcommunity/core": "^0.1.0-alpha.0",
+    "@selfcommunity/i18n": "^0.1.0-alpha.0",
     "@types/classnames": "^2.2.11",
     "autosuggest-highlight": "^3.1.1",
     "classnames": "^2.2.6",
@@ -74,6 +72,7 @@
     "draftjs-to-html": "^0.9.1",
     "emoji-picker-react": "^3.4.8",
     "mui-rte": "https://github.com/fedetorre/mui-rte.git#6d162ae04a0b98889b24b0229375f218e5d6a961",
+    "notistack": "^2.0.3",
     "prop-types": "^15.7.2",
     "prop-types-extra": "^1.1.1",
     "react-image-lightbox": "^5.1.4",
@@ -81,6 +80,7 @@
     "react-lazyload": "^3.2.0",
     "react-player": "^2.9.0",
     "react-sortablejs": "^6.0.0",
+    "react-stickynode": "^4.0.0",
     "react-timeago": "^5.2.0",
     "react-waypoint": "^10.1.0",
     "sortablejs": "^1.14.0",
@@ -146,5 +146,6 @@
   },
   "bugs": {
     "url": "https://github.com/selfcommunity/selfcommunity-ui-widgets/issues"
-  }
+  },
+  "gitHead": "7eadc2dc8515e9d8ea00ef8592e2bf208f7bda6a"
 }

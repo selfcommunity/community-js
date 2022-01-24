@@ -1,6 +1,6 @@
 {
   "name": "@selfcommunity/i18n",
-  "version": "0.0.0",
+  "version": "0.1.0-alpha.0",
   "license": "MIT",
   "private": false,
   "main": "./lib/cjs/index.js",
@@ -93,5 +93,6 @@
   },
   "bugs": {
     "url": "https://github.com/selfcommunity/community-ui/issues"
-  }
+  },
+  "gitHead": "7eadc2dc8515e9d8ea00ef8592e2bf208f7bda6a"
 }
