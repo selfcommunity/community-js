@@ -28,11 +28,6 @@ const Root = styled(Card, {
 
 export interface MessageEditorProps {
   /**
-   * The message receiver
-   * @default null
-   */
-  recipient?: number;
-  /**
    * Hides this component
    * @default false
    */
@@ -51,11 +46,20 @@ export interface MessageEditorProps {
    * Any other properties
    */
   [p: string]: any;
+  /**
+   * Callback to send the message
+   */
+  send?: () => void;
+  /**
+   * Callback to pass message item
+   * @param message
+   */
+  getMessage?: (message) => void;
 }
 
 export default function MessageEditor(props: MessageEditorProps): JSX.Element {
   // PROPS
-  const {autoHide = null, className = null, onRef = null, recipient = null, ...rest} = props;
+  const {autoHide = null, className = null, onRef = null, send = null, isSending = null, getMessage = null, ...rest} = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
@@ -63,15 +67,22 @@ export default function MessageEditor(props: MessageEditorProps): JSX.Element {
   // STATE
   const [message, setMessage] = useState<string>('');
   const [show, setShow] = useState(false);
-  const [sending, setSending] = useState<boolean>(false);
   const [emojiAnchorEl, setEmojiAnchorEl] = React.useState<null | HTMLElement>(null);
 
   // REF
   const ref = useRef(null);
 
+  // HANDLERS
+
+  const handleMessageSend = () => {
+    send();
+    setMessage('');
+    setShow(false);
+  };
   const handleMessageInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setMessage(event.target.value);
     setShow(true);
+    getMessage(event.target.value);
   };
 
   const handleToggleEmoji = (event: React.MouseEvent<HTMLElement>) => {
@@ -81,29 +92,11 @@ export default function MessageEditor(props: MessageEditorProps): JSX.Element {
     const cursor = ref.current.selectionStart;
     const text = message.slice(0, cursor) + emojiObject.emoji;
     setMessage(text);
+    getMessage(text);
+    setShow(true);
   };
 
-  function sendMessage() {
-    setSending(true);
-    http
-      .request({
-        url: Endpoints.SendMessage.url(),
-        method: Endpoints.SendMessage.method,
-        data: {
-          recipients: [recipient],
-          message: message
-        }
-      })
-      .then(() => {
-        setSending(false);
-        setMessage('');
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-
-  if (!autoHide && recipient) {
+  if (!autoHide) {
     return (
       <Root {...rest} className={className}>
         <TextField
@@ -141,7 +134,7 @@ export default function MessageEditor(props: MessageEditorProps): JSX.Element {
                     </Popover>
                   </div>
                 </Stack>
-                <IconButton disabled={sending || !recipient} onClick={() => sendMessage()}>
+                <IconButton disabled={isSending} onClick={handleMessageSend}>
                   {show && <SendIcon />}
                 </IconButton>
               </InputAdornment>

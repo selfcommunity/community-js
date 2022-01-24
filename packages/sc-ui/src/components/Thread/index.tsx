@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import {Endpoints, http, SCPrivateMessageType, SCUserContext, SCUserContextType} from '@selfcommunity/core';
@@ -6,7 +6,7 @@ import {AxiosResponse} from 'axios';
 import Message from '../Message';
 import _ from 'lodash';
 import {FormattedMessage, useIntl} from 'react-intl';
-import {Box, List, Typography} from '@mui/material';
+import {Box, ListSubheader, Typography} from '@mui/material';
 import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
 import MessageEditor from '../MessageEditor';
 
@@ -15,7 +15,8 @@ const PREFIX = 'SCThread';
 const classes = {
   emptyBox: `${PREFIX}-emptyBox`,
   sender: `${PREFIX}-sender`,
-  receiver: `${PREFIX}-receiver`
+  receiver: `${PREFIX}-receiver`,
+  center: `${PREFIX}-center`
 };
 
 const Root = styled(Card, {
@@ -52,6 +53,10 @@ const Root = styled(Card, {
       display: 'flex',
       justifyContent: 'flex-start'
     }
+  },
+  [`& .${classes.center}`]: {
+    display: 'flex',
+    justifyContent: 'center'
   }
 }));
 
@@ -80,11 +85,10 @@ export interface ThreadProps {
    * Any other properties
    */
   [p: string]: any;
-  newMessage?: boolean;
 }
 export default function Thread(props: ThreadProps): JSX.Element {
   // PROPS
-  const {id = 29, receiverId, autoHide, className, newMessage, ...rest} = props;
+  const {id, receiverId, autoHide, className, ...rest} = props;
 
   //CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
@@ -96,6 +100,8 @@ export default function Thread(props: ThreadProps): JSX.Element {
   const [isHovered, setIsHovered] = useState({});
   const [openDeleteMessageDialog, setOpenDeleteMessageDialog] = useState<boolean>(false);
   const [deletingMsg, setDeletingMsg] = useState(null);
+  const [message, setMessage] = useState<string>('');
+  const [sending, setSending] = useState<boolean>(false);
 
   // INTL
   const intl = useIntl();
@@ -109,6 +115,18 @@ export default function Thread(props: ThreadProps): JSX.Element {
     });
 
   // HANDLERS
+
+  const formatMessages = (messages) => {
+    return _.groupBy(messages, format);
+  };
+
+  const formattedMessages = useMemo(() => {
+    return formatMessages(messages);
+  }, [messages]);
+
+  const handleMessage = (m) => {
+    setMessage(m);
+  };
 
   const handleMouseEnter = (index) => {
     setIsHovered((prevState) => {
@@ -142,10 +160,29 @@ export default function Thread(props: ThreadProps): JSX.Element {
         method: Endpoints.DeleteASingleMessage.method
       })
       .then(() => {
-        const index = format(deletingMsg);
-        const result = messages[index].filter((m) => m.id !== deletingMsg.id);
-        setMessages(_.groupBy(result, format));
+        const result = messages.filter((m) => m.id !== deletingMsg.id);
+        setMessages(result);
         handleClose();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  function sendMessage() {
+    setSending(true);
+    http
+      .request({
+        url: Endpoints.SendMessage.url(),
+        method: Endpoints.SendMessage.method,
+        data: {
+          recipients: [receiverId],
+          message: message
+        }
+      })
+      .then((res) => {
+        setMessages((prev) => [...prev, res.data]);
+        setSending(false);
       })
       .catch((error) => {
         console.log(error);
@@ -166,7 +203,7 @@ export default function Thread(props: ThreadProps): JSX.Element {
       })
       .then((res: AxiosResponse<any>) => {
         const data = res.data;
-        setMessages(_.groupBy(data.results, format));
+        setMessages(data.results);
         setLoading(false);
       })
       .catch((error) => {
@@ -197,12 +234,10 @@ export default function Thread(props: ThreadProps): JSX.Element {
             onClose={handleClose}
           />
         )}
-        {Object.keys(messages).map((key, index) => (
+        {Object.keys(formattedMessages).map((key, index) => (
           <div key={index}>
-            <Typography component="h3" align="center">
-              {key}
-            </Typography>
-            {messages[key].map((msg: SCPrivateMessageType, index) => (
+            <ListSubheader className={classes.center}>{key}</ListSubheader>
+            {formattedMessages[key].map((msg: SCPrivateMessageType, index) => (
               <div key={index} className={loggedUser === msg.sender_id ? classes.sender : classes.receiver}>
                 <Message
                   elevation={0}
@@ -220,7 +255,7 @@ export default function Thread(props: ThreadProps): JSX.Element {
           </div>
         ))}
         <>
-          <MessageEditor recipient={receiverId} />
+          <MessageEditor send={() => sendMessage()} isSending={sending} getMessage={handleMessage} />
         </>
       </React.Fragment>
     );
