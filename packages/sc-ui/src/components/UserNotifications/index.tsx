@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {styled} from '@mui/material/styles';
 import {Box, Button, List, ListItem, Stack, Typography} from '@mui/material';
 import {Endpoints, http, Logger, SCNotificationTopicType} from '@selfcommunity/core';
@@ -42,22 +42,31 @@ export default function UserNotifications(rest): JSX.Element {
    * Fetches user notifications
    * Manages pagination, infinite scrolling
    */
-  function fetchNotifications() {
-    http
-      .request({
-        url: next,
-        method: Endpoints.UserNotificationList.method
-      })
-      .then((res: AxiosResponse<{next?: string; previous?: string; results: SCNotificationAggregatedType[]}>) => {
-        const data = res.data;
-        setNotifications([...notifications, ...data.results]);
-        setNext(data.next);
-        setLoading(false);
-      })
-      .catch((error) => {
-        Logger.error(SCOPE_SC_UI, error);
-      });
-  }
+  const fetchNotifications = useMemo(
+    () => () => {
+      console.log(next);
+      http
+        .request({
+          url: next,
+          method: Endpoints.UserNotificationList.method
+        })
+        .then((res: AxiosResponse<any>) => {
+          console.log(res);
+          const data = res.data;
+          console.log(notifications);
+          console.log(data.results);
+          setNotifications([...notifications, ...data.results]);
+          setNext(data.next);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.log(error);
+          Logger.error(SCOPE_SC_UI, error);
+        });
+    }, [next, notifications, loading]
+  );
+
+
 
   /**
    * Reload notifications
@@ -140,7 +149,7 @@ export default function UserNotifications(rest): JSX.Element {
               }>
               <List>
                 {notifications.map((n: SCNotificationAggregatedType, i) => (
-                  <ListItem>
+                  <ListItem key={n.sid}>
                     <UserNotification notificationObject={n} key={i} {...rest} />
                   </ListItem>
                 ))}

@@ -45,7 +45,6 @@ export default function UserFollowNotification(props: NotificationFollowProps): 
   /**
    * Renders root object
    */
-  console.log(notificationObject);
   return (
     <Root {...rest}>
       <ListItem alignItems="flex-start">
@@ -55,6 +54,7 @@ export default function UserFollowNotification(props: NotificationFollowProps): 
           </Link>
         </ListItemAvatar>
         <ListItemText
+          disableTypography={true}
           primary={
             <Typography component="div" sx={{display: 'inline'}} color="primary">
               {notificationObject.is_new && <NotificationNewChip />}

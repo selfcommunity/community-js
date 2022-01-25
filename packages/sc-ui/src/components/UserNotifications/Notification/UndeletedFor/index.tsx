@@ -50,6 +50,7 @@ export default function UndeletedForNotification(props: NotificationUndeletedPro
           </Avatar>
         </ListItemAvatar>
         <ListItemText
+          disableTypography={true}
           primary={
             <Typography component="span" sx={{display: 'inline'}} color="primary">
               <b>

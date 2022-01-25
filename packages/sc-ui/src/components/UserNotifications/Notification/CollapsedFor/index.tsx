@@ -77,6 +77,7 @@ export default function CollapsedForNotification(props: NotificationDeletedForPr
           </Avatar>
         </ListItemAvatar>
         <ListItemText
+          disableTypography={true}
           primary={
             <Typography component="span" sx={{display: 'inline'}} color="primary">
               <b>

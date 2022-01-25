@@ -51,6 +51,7 @@ export default function KindlyNoticeFlagNotification(props: NotificationDeletedF
           </Avatar>
         </ListItemAvatar>
         <ListItemText
+          disableTypography={true}
           primary={
             <Typography component="span" sx={{display: 'inline'}} color="primary">
               <b>

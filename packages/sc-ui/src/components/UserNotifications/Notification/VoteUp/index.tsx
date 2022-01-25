@@ -44,6 +44,7 @@ export default function VoteUpNotification(props: NotificationVoteUpProps): JSX.
           </Link>
         </ListItemAvatar>
         <ListItemText
+          disableTypography={true}
           primary={
             <Typography component="div" sx={{display: 'inline'}} color="primary">
               {notificationObject.is_new && <NotificationNewChip />}
