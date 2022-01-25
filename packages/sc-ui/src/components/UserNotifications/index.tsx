@@ -1,7 +1,17 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Box, Button, List, ListItem, Stack, Typography} from '@mui/material';
-import {Endpoints, http, Logger, SCNotificationTopicType} from '@selfcommunity/core';
+import {
+  Endpoints,
+  http,
+  Logger,
+  SCMediaType,
+  SCNotificationTopicType,
+  SCNotificationType,
+  SCTagType,
+  SCUserContextType,
+  useSCUser
+} from '@selfcommunity/core';
 import {AxiosResponse} from 'axios';
 import PubSub from 'pubsub-js';
 import {SCOPE_SC_UI} from '../../constants/Errors';
@@ -32,51 +42,65 @@ const Root = styled(Box, {
 }));
 
 export default function UserNotifications(rest): JSX.Element {
+  // CONTEXT
+  const scUserContext: SCUserContextType = useSCUser();
+
+  // STATE
   const [notifications, setNotifications] = useState<SCNotificationAggregatedType[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [next, setNext] = useState<string>(Endpoints.UserNotificationList.url({}));
+  const [loading, setLoading] = useState<boolean>(false);
+  const [next, setNext] = useState<string>(null);
   const [newNotifications, setNewNotifications] = useState<boolean>(false);
+
+  // REF
   const notificationSubscription = useRef(null);
+
+  // CONST
+  const notificationBaseUrl = Endpoints.UserNotificationList.url({});
 
   /**
    * Fetches user notifications
    * Manages pagination, infinite scrolling
    */
-  const fetchNotifications = useMemo(
-    () => () => {
-      console.log(next);
-      http
+  const performFetchNotifications = useMemo(
+    () => (next) => {
+      return http
         .request({
           url: next,
           method: Endpoints.UserNotificationList.method
         })
         .then((res: AxiosResponse<any>) => {
-          console.log(res);
-          const data = res.data;
-          console.log(notifications);
-          console.log(data.results);
-          setNotifications([...notifications, ...data.results]);
-          setNext(data.next);
-          setLoading(false);
-        })
-        .catch((error) => {
-          console.log(error);
-          Logger.error(SCOPE_SC_UI, error);
+          if (res.status >= 300) {
+            return Promise.reject(res);
+          }
+          return Promise.resolve(res.data);
         });
-    }, [next, notifications, loading]
+    },
+    []
   );
 
-
+  /**
+   * Performs the contribute sharing
+   */
+  function fetchNotifications(next) {
+    setLoading(true);
+    performFetchNotifications(next)
+      .then((r) => {
+        setNotifications(next === notificationBaseUrl ? [...r.results] : [...notifications, ...r.results]);
+        setNext(r.next);
+        setLoading(false);
+      })
+      .catch((error) => {
+        Logger.error(SCOPE_SC_UI, error);
+        setLoading(false);
+      });
+  }
 
   /**
    * Reload notifications
    */
   const reloadNotifications = () => {
-    setNext(null);
-    setNotifications([]);
-    setLoading(true);
     setNewNotifications(false);
-    fetchNotifications();
+    fetchNotifications(notificationBaseUrl);
   };
 
   /**
@@ -86,7 +110,11 @@ export default function UserNotifications(rest): JSX.Element {
     return (
       <Stack spacing={2} direction="row" justifyContent="center" alignItems="center">
         <Button variant="outlined" classes={{root: classes.btnNewNotification}} onClick={reloadNotifications}>
-          <FormattedMessage id="ui.userNotifications.newNotificationsLabel" defaultMessage="ui.userNotifications.newNotificationsLabel" />
+          <FormattedMessage
+            id="ui.userNotifications.newNotificationsLabel"
+            defaultMessage="ui.userNotifications.newNotificationsLabel"
+            values={{count: scUserContext.user.unseen_interactions_counter}}
+          />
         </Button>
       </Stack>
     );
@@ -105,9 +133,10 @@ export default function UserNotifications(rest): JSX.Element {
 
   /**
    * On mount, fetches first page of notifications
+   * On mount, subscribe to receive notification updates
    */
   useEffect(() => {
-    fetchNotifications();
+    fetchNotifications(notificationBaseUrl);
     notificationSubscription.current = PubSub.subscribe(SCNotificationTopicType.INTERACTION, notificationSubscriber);
     return () => {
       PubSub.unsubscribe(notificationSubscription.current);
@@ -132,7 +161,7 @@ export default function UserNotifications(rest): JSX.Element {
           ) : (
             <InfiniteScroll
               dataLength={notifications.length}
-              next={fetchNotifications}
+              next={() => fetchNotifications(next)}
               hasMore={Boolean(next)}
               loader={
                 <ListItem>
@@ -149,7 +178,7 @@ export default function UserNotifications(rest): JSX.Element {
               }>
               <List>
                 {notifications.map((n: SCNotificationAggregatedType, i) => (
-                  <ListItem key={n.sid}>
+                  <ListItem key={i}>
                     <UserNotification notificationObject={n} key={i} {...rest} />
                   </ListItem>
                 ))}

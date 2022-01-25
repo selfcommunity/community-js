@@ -44,7 +44,7 @@ export const voteActionTypes = {
 };
 
 /**
- * authReducer manage the state of authentication
+ * votesReducer manage the state of authentication
  * update the state base on action type
  * @param state
  * @param action
