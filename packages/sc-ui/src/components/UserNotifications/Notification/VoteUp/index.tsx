@@ -37,7 +37,7 @@ export default function VoteUpNotification(props: NotificationVoteUpProps): JSX.
    */
   return (
     <Root {...rest}>
-      <ListItem alignItems="flex-start">
+      <ListItem alignItems="flex-start" component={'div'}>
         <ListItemAvatar>
           <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: notificationObject.user.id})}>
             <Avatar alt={notificationObject.user.username} variant="circular" src={notificationObject.user.avatar} />

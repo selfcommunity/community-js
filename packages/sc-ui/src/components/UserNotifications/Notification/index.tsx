@@ -212,13 +212,14 @@ export default function UserNotification(props: UserNotificationProps): JSX.Elem
     if (notificationObject.aggregated && notificationObject.aggregated[0].type === SCNotificationTypologyType.PRIVATE_MESSAGE) {
       let messageNotification: SCNotificationPrivateMessageType = notificationObject.aggregated[0] as SCNotificationPrivateMessageType;
       return (
-        <ListItem alignItems="flex-start">
+        <ListItem alignItems="flex-start" component={'div'}>
           <ListItemAvatar>
             <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: messageNotification.message.sender.id})}>
               <Avatar alt={messageNotification.message.sender.username} variant="circular" src={messageNotification.message.sender.avatar} />
             </Link>
           </ListItemAvatar>
           <ListItemText
+            disableTypography={true}
             primary={
               <Typography component="span" sx={{display: 'inline'}} color="primary">
                 <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: messageNotification.message.sender.id})}>
@@ -339,6 +340,7 @@ export default function UserNotification(props: UserNotificationProps): JSX.Elem
           <>
             <ListItemButton onClick={() => setOpenOtherAggregated((prev) => !prev)} classes={{root: classes.showOtherAggregated}}>
               <ListItemText
+                disableTypography={true}
                 primary={<FormattedMessage id={'ui.userNotifications.showOthers'} defaultMessage={'ui.userNotifications.showOthers'} />}
               />
               {openOtherAggregated ? <ExpandLess /> : <ExpandMore />}
