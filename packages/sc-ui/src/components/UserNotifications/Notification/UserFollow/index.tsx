@@ -47,7 +47,7 @@ export default function UserFollowNotification(props: NotificationFollowProps): 
    */
   return (
     <Root {...rest}>
-      <ListItem alignItems="flex-start">
+      <ListItem alignItems="flex-start" component={'div'}>
         <ListItemAvatar>
           <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: notificationObject.follower.id})}>
             <Avatar alt={notificationObject.follower.username} variant="circular" src={notificationObject.follower.avatar} />

@@ -57,7 +57,7 @@ export default function UserNotificationMention(props: NotificationMentionProps)
    */
   return (
     <Root {...rest}>
-      <ListItem alignItems="flex-start">
+      <ListItem alignItems="flex-start" component={'div'}>
         <ListItemAvatar>
           <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: notificationObject[objectType].author.id})}>
             <Avatar alt={notificationObject[objectType].author.username} variant="circular" src={notificationObject[objectType].author.avatar} />

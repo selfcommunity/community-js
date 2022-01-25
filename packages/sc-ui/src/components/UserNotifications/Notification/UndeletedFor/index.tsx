@@ -43,7 +43,7 @@ export default function UndeletedForNotification(props: NotificationUndeletedPro
    */
   return (
     <Root {...rest}>
-      <ListItem alignItems="flex-start">
+      <ListItem alignItems="flex-start" component={'div'}>
         <ListItemAvatar>
           <Avatar variant="circular" sx={{bgcolor: green[500]}}>
             <EmojiFlagsIcon />

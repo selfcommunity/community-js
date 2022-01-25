@@ -44,7 +44,7 @@ export default function KindlyNoticeFlagNotification(props: NotificationDeletedF
    */
   return (
     <Root {...rest}>
-      <ListItem alignItems="flex-start">
+      <ListItem alignItems="flex-start" component={'div'}>
         <ListItemAvatar>
           <Avatar variant="circular" sx={{backgroundColor: red[500]}}>
             <EmojiFlagsIcon />

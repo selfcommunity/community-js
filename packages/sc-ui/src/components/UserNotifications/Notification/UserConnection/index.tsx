@@ -63,7 +63,7 @@ export default function UserConnectionNotification(props: NotificationConnection
    */
   return (
     <Root {...rest}>
-      <ListItem alignItems="flex-start">
+      <ListItem alignItems="flex-start" component={'div'}>
         <ListItemAvatar>
           <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: userConnection.id})}>
             <Avatar alt={userConnection.username} variant="circular" src={userConnection.avatar} />
