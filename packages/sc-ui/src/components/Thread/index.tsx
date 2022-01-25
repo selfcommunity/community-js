@@ -6,9 +6,11 @@ import {AxiosResponse} from 'axios';
 import Message from '../Message';
 import _ from 'lodash';
 import {FormattedMessage, useIntl} from 'react-intl';
-import {Box, ListSubheader, Typography} from '@mui/material';
+import {Box, Divider, Grid, ListSubheader, TextField, Typography} from '@mui/material';
 import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
 import MessageEditor from '../MessageEditor';
+import CardContent from '@mui/material/CardContent';
+import Autocomplete from '@mui/material/Autocomplete';
 
 const PREFIX = 'SCThread';
 
@@ -24,8 +26,9 @@ const Root = styled(Card, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  overflow: 'auto',
-  maxHeight: '500px',
+  width: '500px',
+  maxWidth: '500px',
+  display: 'inline-block',
   [`& .${classes.emptyBox}`]: {
     display: 'flex',
     height: '100%',
@@ -85,10 +88,15 @@ export interface ThreadProps {
    * Any other properties
    */
   [p: string]: any;
+  /**
+   * Opens new message screen
+   * @default false
+   */
+  openNewMessage?: boolean;
 }
 export default function Thread(props: ThreadProps): JSX.Element {
   // PROPS
-  const {id, receiverId, autoHide, className, ...rest} = props;
+  const {id, receiverId, autoHide, className, openNewMessage, ...rest} = props;
 
   //CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
@@ -102,6 +110,8 @@ export default function Thread(props: ThreadProps): JSX.Element {
   const [deletingMsg, setDeletingMsg] = useState(null);
   const [message, setMessage] = useState<string>('');
   const [sending, setSending] = useState<boolean>(false);
+  const [followers, setFollowers] = useState<any[]>([]);
+  const [recipients, setRecipients] = useState([]);
 
   // INTL
   const intl = useIntl();
@@ -149,6 +159,18 @@ export default function Thread(props: ThreadProps): JSX.Element {
     setDeletingMsg(msg);
   }
 
+  const selectRecipients = (event, recipient) => {
+    setRecipients(recipient);
+  };
+
+  const ids = useMemo(() => {
+    if (recipients !== null) {
+      return recipients.map((u) => {
+        return parseInt(u.id, 10);
+      });
+    }
+  }, [recipients]);
+
   /**
    * Handles deletion of a single message
    * @param id
@@ -176,13 +198,31 @@ export default function Thread(props: ThreadProps): JSX.Element {
         url: Endpoints.SendMessage.url(),
         method: Endpoints.SendMessage.method,
         data: {
-          recipients: [receiverId],
+          recipients: openNewMessage ? ids : [receiverId],
           message: message
         }
       })
       .then((res) => {
         setMessages((prev) => [...prev, res.data]);
         setSending(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  /**
+   * Fetches user followers
+   */
+  function fetchFollowers() {
+    http
+      .request({
+        url: Endpoints.UserFollowers.url({id: scUserContext['user'].id}),
+        method: Endpoints.UserFollowers.method
+      })
+      .then((res: AxiosResponse<any>) => {
+        const data = res.data;
+        setFollowers(data.results);
       })
       .catch((error) => {
         console.log(error);
@@ -213,10 +253,14 @@ export default function Thread(props: ThreadProps): JSX.Element {
 
   /**
    * On mount, fetches thread
+   * if openNewMessage is true, fetches user follwers too.
    */
   useEffect(() => {
+    if (openNewMessage) {
+      fetchFollowers();
+    }
     fetchThread();
-  }, [id]);
+  }, [id, openNewMessage]);
 
   /**
    * Renders thread component
@@ -254,9 +298,7 @@ export default function Thread(props: ThreadProps): JSX.Element {
             ))}
           </div>
         ))}
-        <>
-          <MessageEditor send={() => sendMessage()} isSending={sending} getMessage={handleMessage} />
-        </>
+        <MessageEditor send={() => sendMessage()} isSending={sending} getMessage={handleMessage} />
       </React.Fragment>
     );
   }
@@ -268,9 +310,41 @@ export default function Thread(props: ThreadProps): JSX.Element {
   function renderEmptyBox() {
     return (
       <Box className={classes.emptyBox}>
-        <Typography component="h3">
-          <FormattedMessage id="ui.Thread.emptyBox.message" defaultMessage="ui.Thread.emptyBox.message" />
-        </Typography>
+        {openNewMessage ? (
+          <CardContent>
+            <Grid container spacing={2}>
+              <Grid item xs={4}>
+                <b>
+                  <FormattedMessage defaultMessage="ui.NewMessage.to" id="ui.NewMessage.to" />
+                </b>
+              </Grid>
+              <Grid item xs={8}>
+                <Autocomplete
+                  multiple
+                  freeSolo
+                  options={followers}
+                  getOptionLabel={(option) => option.username}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      variant="standard"
+                      InputProps={{
+                        ...params.InputProps,
+                        disableUnderline: true
+                      }}
+                    />
+                  )}
+                  onChange={selectRecipients}
+                />
+              </Grid>
+            </Grid>
+            <MessageEditor send={() => sendMessage()} isSending={sending} getMessage={handleMessage} />
+          </CardContent>
+        ) : (
+          <Typography component="h3">
+            <FormattedMessage id="ui.Thread.emptyBox.message" defaultMessage="ui.Thread.emptyBox.message" />
+          </Typography>
+        )}
       </Box>
     );
   }

@@ -142,7 +142,7 @@ export default function Message(props: MessageProps): JSX.Element {
   const c = (
     <React.Fragment>
       {message ? (
-        <ListItem onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+        <ListItem onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} button={true}>
           {!snippetType && isHovering && loggedUser === message.sender_id && message.status !== 'hidden' && (
             <>
               <IconButton sx={{marginBottom: '25px'}} onClick={onDeleteIconClick}>
