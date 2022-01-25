@@ -54,6 +54,7 @@ export default function ContributionFollowNotification(props: NotificationVoteUp
           </Link>
         </ListItemAvatar>
         <ListItemText
+          disableTypography={true}
           primary={
             <Typography component="div" sx={{display: 'inline'}} color="primary">
               {notificationObject.is_new && <NotificationNewChip />}

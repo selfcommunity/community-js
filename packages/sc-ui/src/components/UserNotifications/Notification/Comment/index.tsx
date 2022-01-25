@@ -86,6 +86,7 @@ export default function UserNotificationComment(props: UserNotificationCommentPr
           </Link>
         </ListItemAvatar>
         <ListItemText
+          disableTypography={true}
           primary={
             <Typography component="span" sx={{display: 'inline'}} color="primary">
               {notificationObject.is_new && <NotificationNewChip />}

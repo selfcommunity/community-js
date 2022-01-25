@@ -81,6 +81,7 @@ export default function UserNotificationPrivateMessage(props: NotificationPMProp
           </Box>
         }>
         <ListItemText
+          disableTypography={true}
           primary={
             <>
               {notificationObject.is_new && <NotificationNewChip />}

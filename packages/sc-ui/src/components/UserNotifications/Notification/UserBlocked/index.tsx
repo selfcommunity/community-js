@@ -56,6 +56,7 @@ export default function UserBlockedNotification(props: NotificationBlockedProps)
           </Avatar>
         </ListItemAvatar>
         <ListItemText
+          disableTypography={true}
           primary={
             <Typography component="div" sx={{display: 'inline'}} color="primary">
               {notificationObject.is_new && <NotificationNewChip />}
