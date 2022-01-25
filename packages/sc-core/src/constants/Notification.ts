@@ -18,7 +18,7 @@ export const SCNotificationMapping = {
   100: SCNotificationTypologyType.MENTION,
   9: SCNotificationTypologyType.VOTE_UP,
   16: SCNotificationTypologyType.FOLLOW,
-  105: SCNotificationTypologyType.PRIVATE_MESSAGE,
+  37: SCNotificationTypologyType.PRIVATE_MESSAGE,
   50: SCNotificationTypologyType.DELETED_FOR_ADVERTISING,
   51: SCNotificationTypologyType.DELETED_FOR_AGGRESSIVE,
   52: SCNotificationTypologyType.DELETED_FOR_VULGAR,

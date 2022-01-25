@@ -39,17 +39,18 @@ export default function useSCFollowedManager(user?: SCUserType) {
    * @param data
    */
   const notificationSubscriber = (msg, data) => {
-    /*
-    updateCache([data.connection.id]);
-    if (SCNotificationMapping[data.data.activity_type] === SCNotificationTypologyType.USER_FOLLOW) {
-      if (!data.includes(user.id)) {
-        setData((prev) => [...[data.connection.id], ...prev]);
+    if (data.connection && data.connection_id !== undefined) {
+      updateCache([data.connection_id]);
+      if (SCNotificationMapping[data.data.activity_type] === SCNotificationTypologyType.USER_FOLLOW) {
+        if (!data.includes(user.id)) {
+          setData((prev) => [...[data.connection_id], ...prev]);
+        }
+      } else if (SCNotificationMapping[data.data.activity_type] === SCNotificationTypologyType.USER_UNFOLLOW) {
+        if (data.includes(user.id)) {
+          setData((prev) => prev.filter((id) => id !== data.connection_id));
+        }
       }
-    } else if (SCNotificationMapping[data.data.activity_type] === SCNotificationTypologyType.USER_UNFOLLOW) {
-      if (data.includes(user.id)) {
-        setData((prev) => prev.filter((id) => id !== data.connection.id));
-      }
-    } */
+    }
   };
 
   /**

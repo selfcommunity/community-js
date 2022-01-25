@@ -93,6 +93,16 @@ export interface SCUserContextType {
   setCover: (cover: string) => void;
 
   /**
+   * Handle change unseen interactions counter
+   */
+  setUnseenInteractionsCounter: (counter: number) => void;
+
+  /**
+   * Handle change unseen notification banner counter
+   */
+  setUnseenNotificationBannersCounter: (counter: number) => void;
+
+  /**
    * Managers: followed, connections, categories, etc...
    */
   managers: {followed?: SCFollowedManagerType; connections?: SCConnectionsManagerType; categories: SCCategoriesManagerType};

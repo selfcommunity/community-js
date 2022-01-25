@@ -106,6 +106,20 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
   }
 
   /**
+   * Handle change unseen interactions counter
+   */
+  function setUnseenInteractionsCounter(counter): void {
+    dispatch({type: userActionTypes.CHANGE_UNSEEN_INTERACTIONS_COUNTER, payload: {counter}});
+  }
+
+  /**
+   * Handle change unseen notification banners counter
+   */
+  function setUnseenNotificationBannersCounter(counter): void {
+    dispatch({type: userActionTypes.CHANGE_UNSEEN_NOTIFICATION_BANNERS_COUNTER, payload: {counter}});
+  }
+
+  /**
    * Call the logout endpoint and then remove the user
    * from the state.
    */
@@ -132,6 +146,8 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
       error: state.loading,
       setAvatar,
       setCover,
+      setUnseenInteractionsCounter,
+      setUnseenNotificationBannersCounter,
       logout,
       managers: {
         categories: categoriesManager,

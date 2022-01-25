@@ -1,8 +1,8 @@
-import React, {createContext, useContext, useEffect, useMemo, useState} from 'react';
+import React, {createContext, useContext, useEffect, useState} from 'react';
 import {SCContextType, SCNotificationTopicType, SCUserContextType} from '../../../types';
 import {useSCContext} from '../SCContextProvider';
 import {SCNotificationContextType} from '../../../types';
-import {Logger, useSCUser} from '@selfcommunity/core';
+import {useSCUser} from '@selfcommunity/core';
 import WSClient from '../../../utils/websocket';
 import PubSub from 'pubsub-js';
 import {WS_FACILITY_NOTIFY, WS_PROTOCOL_PREFIX, WS_HEARTBEAT_MESSAGE} from '../../../constants/WebSocket';
@@ -55,7 +55,7 @@ export default function SCNotificationProvider({children = null}: {children: Rea
     return () => {
       wsInstance && wsInstance.close();
     };
-  }, []);
+  }, [scContext.settings.session.authToken]);
 
   /**
    * Receive a message from wsInstance.
@@ -65,11 +65,21 @@ export default function SCNotificationProvider({children = null}: {children: Rea
     let _data = JSON.parse(data);
     if (_data && _data.type && SCNotificationTopics.includes(_data.type)) {
       if (_data.type === SCNotificationTopicType.INTERACTION && SCNotificationMapping[_data.data.activity_type]) {
+        setNotificationCounters(_data.data);
         PubSub.publish(`${_data.type}.${SCNotificationMapping[_data.data.activity_type]}`, _data);
       } else {
         PubSub.publish(`${_data.type}`, _data);
       }
     }
+  };
+
+  /**
+   * Update user context counters
+   * @param payload
+   */
+  const setNotificationCounters = (payload) => {
+    payload.count_interactions !== undefined && scUserContext.setUnseenInteractionsCounter(payload.count_interactions);
+    payload.count_notification_banners !== undefined && scUserContext.setUnseenInteractionsCounter(payload.count_notification_banners);
   };
 
   return <SCNotificationContext.Provider value={{wsInstance}}>{children}</SCNotificationContext.Provider>;

@@ -43,24 +43,24 @@ export default function useSCConnectionsManager(user?: SCUserType) {
    * @param data
    */
   const notificationSubscriber = (msg, data) => {
-    /*
-    updateCache([data.data.connection.id]);
-    if (SCNotificationMapping[data.data.activity_type] === SCNotificationTypologyType.CONNECTION_REQUEST) {
-      const _data = data.map(([k, v]) => ({
-        k: k === data.data.connection.id ? STATUS_CONNECTION_REQUEST_SENT : v,
-      }));
+    if (data.connection && data.connection_id !== undefined) {
+      updateCache([data.data.connection.id]);
+      let _data = [];
+      if (SCNotificationMapping[data.data.activity_type] === SCNotificationTypologyType.CONNECTION_REQUEST) {
+        _data = data.map(([k, v]) => ({
+          k: k === data.data.connection_id ? STATUS_CONNECTION_REQUEST_SENT : v,
+        }));
+      } else if (SCNotificationMapping[data.data.activity_type] === SCNotificationTypologyType.CONNECTION_ACCEPT) {
+        _data = data.map(([k, v]) => ({
+          k: k === data.data.connection_id ? STATUS_CONNECTED : v,
+        }));
+      } else if (SCNotificationMapping[data.data.activity_type] === SCNotificationTypologyType.CONNECTION_REMOVE) {
+        _data = data.map(([k, v]) => ({
+          k: k === data.data.connection_id ? STATUS_DISCONNECTED : v,
+        }));
+      }
       setData(_data);
-    } else if (SCNotificationMapping[data.data.activity_type] === SCNotificationTypologyType.CONNECTION_ACCEPT) {
-      const _data = data.map(([k, v]) => ({
-        k: k === data.data.connection.id ? STATUS_CONNECTED : v,
-      }));
-    } else if (SCNotificationMapping[data.data.activity_type] === SCNotificationTypologyType.CONNECTION_REMOVE) {
-      const _data = data.map(([k, v]) => ({
-        k: k === data.data.connection.id ? STATUS_DISCONNECTED : v,
-      }));
     }
-    setData(_data);
-    */
   };
 
   /**
