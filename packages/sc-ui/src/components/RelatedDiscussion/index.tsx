@@ -1,16 +1,29 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
 import {Button, Typography} from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import {Endpoints, http, Logger, SCFeedDiscussionType, SCFeedObjectTypologyType} from '@selfcommunity/core';
+import {
+  Endpoints,
+  http,
+  Logger,
+  SCCustomAdvPosition,
+  SCFeedDiscussionType,
+  SCFeedObjectTypologyType,
+  SCPreferences,
+  SCPreferencesContextType,
+  SCUserContextType,
+  useSCPreferences,
+  useSCUser
+} from '@selfcommunity/core';
 import TrendingPostSkeleton from '../Skeleton/TrendingFeedSkeleton';
 import {AxiosResponse} from 'axios';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import FeedObject, {FeedObjectProps} from '../FeedObject';
 import {FormattedMessage} from 'react-intl';
 import {FeedObjectTemplateType} from '../../types/feedObject';
+import {CustomAdv} from '@selfcommunity/ui';
 
 const PREFIX = 'SCTrendingPost';
 
@@ -61,9 +74,15 @@ export interface RelatedDiscussionProps {
   [p: string]: any;
 }
 
+const PREFERENCES = [SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED, SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED];
+
 export default function RelatedDiscussion(props: RelatedDiscussionProps): JSX.Element {
   // CONST
   const limit = 4;
+
+  // CONTEXT
+  const scPreferences: SCPreferencesContextType = useSCPreferences();
+  const scUserContext: SCUserContextType = useSCUser();
 
   // PROPS
   const {feedObjectId, feedObjectType, template = FeedObjectTemplateType.SNIPPET, FeedObjectProps = {}, className, autoHide, ...rest} = props;
@@ -75,6 +94,29 @@ export default function RelatedDiscussion(props: RelatedDiscussionProps): JSX.El
   const [total, setTotal] = useState<number>(0);
   const [visibleDiscussions, setVisibleDiscussions] = useState<number>(limit);
   const [openTrendingPostDialog, setOpenTrendingPostDialog] = useState<boolean>(false);
+
+  /**
+   * Compute preferences
+   */
+  const preferences = useMemo(() => {
+    const _preferences = {};
+    PREFERENCES.map((p) => (_preferences[p] = p in scPreferences.preferences ? scPreferences.preferences[p].value : null));
+    return _preferences;
+  }, [scPreferences.preferences]);
+
+  /**
+   * Render advertising
+   */
+  function renderAdvertising() {
+    if (
+      preferences[SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED] &&
+      ((preferences[SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED] && scUserContext.user === null) ||
+        !preferences[SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED])
+    ) {
+      return <CustomAdv position={SCCustomAdvPosition.POSITION_RELATED_POSTS_COLUMN} />;
+    }
+    return null;
+  }
 
   /**
    * Fetches related discussions list
@@ -117,6 +159,7 @@ export default function RelatedDiscussion(props: RelatedDiscussionProps): JSX.El
   /**
    * Renders related discussions list
    */
+  const advPosition = Math.floor(Math.random() * (Math.min(total, 5) - 1 + 1) + 1);
   const d = (
     <React.Fragment>
       {loading ? (
@@ -133,11 +176,16 @@ export default function RelatedDiscussion(props: RelatedDiscussionProps): JSX.El
           ) : (
             <React.Fragment>
               <List>
-                {objs.slice(0, visibleDiscussions).map((obj: SCFeedDiscussionType, index) => (
-                  <div key={index}>
-                    <FeedObject elevation={0} feedObject={obj} key={obj.id} template={template} />
-                  </div>
-                ))}
+                {objs.slice(0, visibleDiscussions).map((obj: SCFeedDiscussionType, index) => {
+                  return (
+                    <>
+                      <div key={index}>
+                        <FeedObject elevation={0} feedObject={obj} key={obj.id} template={template} />
+                      </div>
+                      {advPosition === index && renderAdvertising()}
+                    </>
+                  );
+                })}
               </List>
               {hasMore && (
                 <Button size="small" onClick={() => loadDiscussions()}>

@@ -1,5 +1,5 @@
 import {SCUserType} from './user';
-import React, {ReactNode} from 'react';
+import React, { Provider, ProviderProps, ReactNode } from 'react';
 import {SCCategoryType} from './category';
 
 /**
@@ -30,6 +30,15 @@ export interface SCSettingsType {
    * Object conf of router.
    */
   router?: SCRoutingContextType;
+
+  /**
+   * List of SC context providers to override the default value
+   * Default context providers:
+   * SCPreferencesProvider, SCRoutingProvider, SCUserProvider,
+   * SCNotificationProvider, SCThemeProvider, SCLocaleProvider,
+   * SCPreferencesProvider,
+   */
+  contextProviders?: ((children) => JSX.Element)[];
 }
 
 export interface SCLocaleType {
@@ -82,6 +91,16 @@ export interface SCUserContextType {
    * Handle change cover
    */
   setCover: (cover: string) => void;
+
+  /**
+   * Handle change unseen interactions counter
+   */
+  setUnseenInteractionsCounter: (counter: number) => void;
+
+  /**
+   * Handle change unseen notification banner counter
+   */
+  setUnseenNotificationBannersCounter: (counter: number) => void;
 
   /**
    * Managers: followed, connections, categories, etc...
@@ -281,6 +300,11 @@ export interface SCContextProviderType {
   conf: SCSettingsType;
 
   /**
+   * Providers
+   */
+  contextProviders?: ((children) => JSX.Element)[];
+
+  /**
    * Nested children
    */
   children: ReactNode;
@@ -342,9 +366,9 @@ export interface SCRoutingContextType {
  */
 export interface SCNotificationContextType {
   /**
-   * ws4redis instance
+   * ws instance
    */
-  ws4redis: any;
+  wsInstance: any;
 }
 
 /**
@@ -365,4 +389,14 @@ export interface SCLocaleContextType {
    * Change locale
    */
   selectLocale: (l: string) => void;
+}
+
+/**
+ * Interface SCAlertMessagesContextType
+ */
+export interface SCAlertMessagesContextType {
+  /**
+   * Options
+   */
+  [p: string]: any;
 }

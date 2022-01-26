@@ -20,6 +20,8 @@ export const userActionTypes = {
   REFRESH_TOKEN_FAILURE: '_invalid_token_failure',
   CHANGE_AVATAR: '_change_avatar',
   CHANGE_COVER: '_change_cover',
+  CHANGE_UNSEEN_INTERACTIONS_COUNTER: '_change_unseen_interactions',
+  CHANGE_UNSEEN_NOTIFICATION_BANNERS_COUNTER: '_change_unseen_notification_banners',
 };
 
 /**
@@ -64,6 +66,12 @@ function userReducer(state, action) {
 
     case userActionTypes.CHANGE_COVER:
       return {...state, user: {...state.user, ...{cover: action.payload.cover}}};
+
+    case userActionTypes.CHANGE_UNSEEN_INTERACTIONS_COUNTER:
+      return {...state, user: {...state.user, ...{unseen_interactions_counter: action.payload.counter}}};
+
+    case userActionTypes.CHANGE_UNSEEN_NOTIFICATION_BANNERS_COUNTER:
+      return {...state, user: {...state.user, ...{unseen_notification_banner_counter: action.payload.counter}}};
 
     default:
       throw new Error(`Unhandled type: ${action.type}`);

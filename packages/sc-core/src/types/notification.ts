@@ -11,6 +11,7 @@ export enum SCNotificationTypologyType {
   NESTED_COMMENT = 'nested_comment',
   CONNECTION_REQUEST = 'connection_request',
   CONNECTION_ACCEPT = 'connection_accept',
+  CONNECTION_REMOVE = 'connection_remove',
   MENTION = 'mention',
   VOTE_UP = 'vote_up',
   FOLLOW = 'follow',
@@ -27,6 +28,7 @@ export enum SCNotificationTypologyType {
   COLLAPSED_FOR_POOR = 'collapsed_for_poor',
   COLLAPSED_FOR_OFFTOPIC = 'collapsed_for_offtopic',
   USER_FOLLOW = 'user_follow',
+  USER_UNFOLLOW = 'user_unfollow',
   KINDLY_NOTICE_ADVERTISING = 'kindly_notice_advertising',
   KINDLY_NOTICE_AGGRESSIVE = 'kindly_notice_aggressive',
   KINDLY_NOTICE_VULGAR = 'kindly_notice_vulgar',
@@ -36,6 +38,15 @@ export enum SCNotificationTypologyType {
   BLOCKED_USER = 'blocked_user',
   UNBLOCKED_USER = 'unblocked_user',
   CUSTOM_NOTIFICATION = 'custom_notification',
+}
+
+/**
+ * Define topic for notifications
+ * Usefull for websocket
+ */
+export enum SCNotificationTopicType {
+  INTERACTION = 'interaction',
+  NEWS = 'news',
 }
 
 /**

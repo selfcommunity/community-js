@@ -164,6 +164,16 @@ export interface SCUserType {
    *  User roles
    */
   role: string[];
+
+  /**
+   * interactions counter
+   */
+  unseen_interactions_counter?: number;
+
+  /**
+   * interactions counter
+   */
+  unseen_notification_banner_counter?: number;
 }
 
 /**

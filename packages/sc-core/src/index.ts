@@ -39,6 +39,7 @@ import {
   SCCommentType,
   SCPrivateMessageType,
   SCPrivateMessageStatusType,
+  SCNotificationContextType,
   SCNotificationTypologyType,
   SCNotificationAggregatedType,
   SCNotificationCommentType,
@@ -58,6 +59,8 @@ import {
   SCNotificationUserFollowType,
   SCNotificationVoteUpType,
   SCCustomNotificationType,
+  SCNotificationTopicType,
+  SCAlertMessagesContextType,
 } from './types';
 
 /**
@@ -84,6 +87,16 @@ import SCRoutingProvider, {SCRoutingContext, useSCRouting} from './components/pr
  * LocaleProvider component
  */
 import SCLocaleProvider, {SCLocaleContext, useSCLocale, withSCLocale} from './components/provider/SCLocaleProvider';
+
+/**
+ * NotificationProvider component
+ */
+import SCNotificationProvider, {SCNotificationContext, useSCNotification} from './components/provider/SCNotificationProvider';
+
+/**
+ * AlertMessagesProvider component
+ */
+import SCAlertMessagesProvider, {SCAlertMessagesContext, useSCAlertMessages} from './components/provider/SCAlertMessagesProvider';
 
 /**
  * PreferencesProvider component
@@ -152,6 +165,8 @@ export {
   SCRoutingContextType,
   SCLocaleContextType,
   SCPreferencesContextType,
+  SCNotificationContextType,
+  SCAlertMessagesContextType,
   SCUserType,
   SCTagType,
   SCCategoryType,
@@ -193,6 +208,7 @@ export {
   SCNotificationUserFollowType,
   SCNotificationVoteUpType,
   SCCustomNotificationType,
+  SCNotificationTopicType,
   SCContext,
   SCUserContext,
   SCThemeContext,
@@ -215,6 +231,10 @@ export {
   SCPreferencesProvider,
   SCPreferences,
   SCFeatures,
+  SCNotificationProvider,
+  SCNotificationContext,
+  useSCNotification,
+  SCAlertMessagesProvider, SCAlertMessagesContext, useSCAlertMessages,
   http,
   formatHttpError,
   Link,

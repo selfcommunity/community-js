@@ -6,6 +6,7 @@ import EmojiFlagsIcon from '@mui/icons-material/EmojiFlags';
 import {SCNotificationBlockedUserType, SCNotificationTypologyType} from '@selfcommunity/core';
 import {defineMessages, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../../shared/DateTimeAgo';
+import NotificationNewChip from '../../NotificationNewChip';
 
 const messages = defineMessages({
   accountBlocked: {
@@ -48,15 +49,17 @@ export default function UserBlockedNotification(props: NotificationBlockedProps)
    */
   return (
     <Root {...rest}>
-      <ListItem alignItems="flex-start">
+      <ListItem alignItems="flex-start" component={'div'}>
         <ListItemAvatar>
           <Avatar variant="circular" sx={{bgcolor: green[500]}}>
             <EmojiFlagsIcon />
           </Avatar>
         </ListItemAvatar>
         <ListItemText
+          disableTypography={true}
           primary={
-            <Typography component="span" sx={{display: 'inline'}} color="primary">
+            <Typography component="div" sx={{display: 'inline'}} color="primary">
+              {notificationObject.is_new && <NotificationNewChip />}
               <b>
                 {notificationObject.type === SCNotificationTypologyType.BLOCKED_USER
                   ? intl.formatMessage(messages.accountBlocked, {b: (...chunks) => <strong>{chunks}</strong>})

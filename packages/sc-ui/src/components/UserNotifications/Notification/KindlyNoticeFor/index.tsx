@@ -9,6 +9,7 @@ import {camelCase} from '../../../../../../sc-core/src/utils/string';
 import {getContributeType} from '../../../../utils/contribute';
 import DateTimeAgo from '../../../../shared/DateTimeAgo';
 import {NotificationDeletedForProps} from '../CollapsedFor';
+import NotificationNewChip from '../../NotificationNewChip';
 
 const messages = defineMessages({
   collapsedForAdvertising: {
@@ -59,13 +60,14 @@ export default function KindlyNoticeForNotification(props: NotificationDeletedFo
    */
   return (
     <Root {...rest}>
-      <ListItem alignItems="flex-start">
+      <ListItem alignItems="flex-start" component={'div'}>
         <ListItemAvatar>
           <Avatar variant="circular" sx={{backgroundColor: red[500]}}>
             <EmojiFlagsIcon />
           </Avatar>
         </ListItemAvatar>
         <ListItemText
+          disableTypography={true}
           primary={
             <Typography component="span" sx={{display: 'inline'}} color="primary">
               <b>
@@ -79,6 +81,7 @@ export default function KindlyNoticeForNotification(props: NotificationDeletedFo
         />
       </ListItem>
       <Box sx={{mb: 1, p: 1}}>
+        {notificationObject.is_new && <NotificationNewChip />}
         <Typography variant={'body2'} color={'primary'}>
           <FormattedMessage id="ui.userNotifications.undeletedFor.youWrote" defaultMessage="ui.userNotifications.undeletedFor.youWrote" />
         </Typography>

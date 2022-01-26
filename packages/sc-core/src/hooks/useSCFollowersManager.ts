@@ -1,13 +1,15 @@
-import {useMemo, useRef, useState} from 'react';
+import {useEffect, useMemo, useRef, useState} from 'react';
 import {AxiosResponse} from 'axios';
 import http from '../utils/http';
 import Endpoints from '../constants/Endpoints';
-import {SCPreferencesContextType, SCUserType} from '../types';
+import {SCNotificationTopicType, SCNotificationType, SCNotificationTypologyType, SCPreferencesContextType, SCUserType} from '../types';
 import {Logger} from '../utils/logger';
 import {SCOPE_SC_CORE} from '../constants/Errors';
 import {useSCPreferences} from '../components/provider/SCPreferencesProvider';
 import {CONFIGURATIONS_FOLLOW_ENABLED} from '../constants/Preferences';
 import useSCCachingManager from './useSCCachingManager';
+import PubSub from 'pubsub-js';
+import {SCNotificationMapping} from '../constants/Notification';
 
 /**
  * Used on refresh and in isFollowed method
@@ -28,6 +30,46 @@ export default function useSCFollowedManager(user?: SCUserType) {
   const scPreferencesContext: SCPreferencesContextType = useSCPreferences();
   const followEnabled =
     CONFIGURATIONS_FOLLOW_ENABLED in scPreferencesContext.preferences && scPreferencesContext.preferences[CONFIGURATIONS_FOLLOW_ENABLED].value;
+  const notificationFollowSubscription = useRef(null);
+  const notificationUnFollowSubscription = useRef(null);
+
+  /**
+   * Notification subscriber only for FOLLOW
+   * @param msg
+   * @param data
+   */
+  const notificationSubscriber = (msg, data) => {
+    if (data.connection && data.connection_id !== undefined) {
+      updateCache([data.connection_id]);
+      if (SCNotificationMapping[data.data.activity_type] === SCNotificationTypologyType.USER_FOLLOW) {
+        if (!data.includes(user.id)) {
+          setData((prev) => [...[data.connection_id], ...prev]);
+        }
+      } else if (SCNotificationMapping[data.data.activity_type] === SCNotificationTypologyType.USER_UNFOLLOW) {
+        if (data.includes(user.id)) {
+          setData((prev) => prev.filter((id) => id !== data.connection_id));
+        }
+      }
+    }
+  };
+
+  /**
+   * Subscribe to notification types user_follow, user_unfollow
+   */
+  useEffect(() => {
+    notificationFollowSubscription.current = PubSub.subscribe(
+      `${SCNotificationTopicType.INTERACTION}.${SCNotificationTypologyType.USER_FOLLOW}`,
+      notificationSubscriber
+    );
+    notificationUnFollowSubscription.current = PubSub.subscribe(
+      `${SCNotificationTopicType.INTERACTION}.${SCNotificationTypologyType.USER_UNFOLLOW}`,
+      notificationSubscriber
+    );
+    return () => {
+      PubSub.unsubscribe(notificationFollowSubscription.current);
+      PubSub.unsubscribe(notificationUnFollowSubscription.current);
+    };
+  }, []);
 
   /**
    * Memoized refresh all followed

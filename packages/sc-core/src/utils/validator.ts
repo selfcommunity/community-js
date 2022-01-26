@@ -1,12 +1,22 @@
 import {LOCALES} from '../constants/Locale';
 import {isValidUrl} from './url';
 import * as Session from '../constants/Session';
-import {SCSessionType, SCSettingsType} from '@selfcommunity/core';
+import {
+  SCLocaleProvider,
+  SCPreferencesProvider,
+  SCRoutingProvider,
+  SCSessionType,
+  SCSettingsType,
+  SCThemeProvider,
+  SCUserProvider,
+} from '@selfcommunity/core';
 import {SCOPE_SC_CORE} from '../constants/Errors';
 import {isFunc, ValidationError, ValidationResult, ValidationWarnings} from './errors';
 import {isObject} from './object';
 import {isString} from './string';
 import {SCLocaleType} from '../types';
+import SCNotificationProvider from '../components/provider/SCNotificationProvider';
+import {DEFAULT_CONTEXT_PROVIDERS} from '../constants/ContextProviders';
 
 /**
  * Validate session option
@@ -18,7 +28,7 @@ export function validateSession(v: Record<string, any>) {
   const warnings = [];
   if (!v || !isObject(v)) {
     errors.push(ValidationError.ERROR_INVALID_SESSION);
-    return {v, errors, warnings};
+    return {errors, warnings, value: v};
   }
   const _options = Object.keys(sessionOptions);
   const value: SCSessionType = Object.keys(v)
@@ -146,7 +156,7 @@ export const validateLocale = (v) => {
   const warnings = [];
   if (!v || !isObject(v) || (isObject(v) && !v.messages && !v.default)) {
     warnings.push(ValidationWarnings.WARNING_LOCALE_FALLBACK);
-    return {v, errors, warnings};
+    return {errors, warnings, v};
   }
   const _options = Object.keys(localeOptions);
   const value: SCLocaleType = Object.keys(v)
@@ -192,6 +202,29 @@ export const validateTheme = (value) => {
 };
 
 /**
+ * Validate contextProviders option
+ * @param contextProviders
+ * @return [...contextProviders]
+ */
+export const validateContextProviders = (value) => {
+  const errors = [];
+  const warnings = [];
+  if (value) {
+    if (!Array.isArray(value)) {
+      errors.push(ValidationError.ERROR_INVALID_PROVIDERS);
+    } else {
+      const _providers = value.filter((c) => !DEFAULT_CONTEXT_PROVIDERS.includes(c));
+      if (_providers.length > 0) {
+        errors.push(ValidationError.ERROR_INVALID_PROVIDERS);
+      }
+    }
+  } else {
+    return {errors, warnings, value: DEFAULT_CONTEXT_PROVIDERS};
+  }
+  return {errors, warnings, value};
+};
+
+/**
  * Components Widget
  */
 const PortalOption = {
@@ -213,6 +246,10 @@ const RouterOption = {
 const SessionOption = {
   name: 'session',
   validator: validateSession,
+};
+const ContextProvidersOption = {
+  name: 'contextProviders',
+  validator: validateContextProviders,
 };
 
 /**
@@ -253,6 +290,7 @@ export const settingsOptions: Record<string, any> = {
   [ThemeOption.name]: ThemeOption,
   [RouterOption.name]: RouterOption,
   [SessionOption.name]: SessionOption,
+  [ContextProvidersOption.name]: ContextProvidersOption,
 };
 export const sessionOptions: Record<string, any> = {
   [SessionTypeOption.name]: SessionTypeOption,
@@ -291,7 +329,7 @@ export const validateOptions = (values: SCSettingsType, schemaOptions: Record<st
   const settings: SCSettingsType = Object.keys(_data)
     .filter((key) => _options.includes(key))
     .reduce((obj, key) => {
-      const res: {errors: ValidationError[]; warnings: ValidationWarnings[]; value: Record<string, any>} = schemaOptions[key].validator(values[key]);
+      const res: {errors: ValidationError[]; warnings: ValidationWarnings[]; value: any} = schemaOptions[key].validator(values[key]);
       res.errors.map((error: ValidationError) => validationResult.addError(error, res.value));
       res.warnings.map((warning) => validationResult.addWarnings(warning, res.value));
       obj[key] = res.value;

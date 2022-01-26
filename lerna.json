@@ -8,12 +8,10 @@
   "command" : {
     "version": {
       "conventionalCommits": true,
-      "conventionalPrerelease": true,
       "noVerifyAccess": true
     },
     "publish": {
       "conventionalCommits": true,
-      "conventionalPrerelease": true,
       "message": "chore: Package release",
       "noVerifyAccess": true
     }

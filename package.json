@@ -10,8 +10,8 @@
     "bootstrap": "yarn && lerna bootstrap --use-workspaces && yarn install-peers",
     "install-peers": "install-peers -f",
     "build": "lerna run build",
-    "prerelease": "lerna prerelease",
-    "release": "lerna exec publish",
+    "prerelease": "lerna publish --conventional-prerelease",
+    "release": "lerna publish",
     "lint": "lerna run lint",
     "test": "lerna run test",
     "tdd": "npm run rw tdd",
@@ -65,6 +65,7 @@
   },
   "dependencies": {
     "notistack": "^2.0.3",
+    "pubsub-js": "^1.9.4",
     "react-infinite-scroll-component": "^6.1.0",
     "react-lazyload": "^3.2.0",
     "react-timeago": "^5.2.0",

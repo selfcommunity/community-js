@@ -14,6 +14,7 @@ import {
   SCThemeContextType,
   SCRoutingContextType,
   SCLocaleContextType,
+  SCAlertMessagesContextType,
 } from './context';
 import {SCCustomAdvPosition, SCCustomAdvType} from './customAdv';
 import {SCUserType, SCUserBlockedSettingsType} from './user';
@@ -57,6 +58,7 @@ import {
   SCNotificationUnDeletedForType,
   SCNotificationUserFollowType,
   SCNotificationVoteUpType,
+  SCNotificationTopicType,
 } from './notification';
 
 /**
@@ -84,6 +86,7 @@ export {
   SCThemeContextType,
   SCRoutingContextType,
   SCLocaleContextType,
+  SCAlertMessagesContextType,
   SCEmbedType,
   SCMediaType,
   SCContributionLocation,
@@ -122,5 +125,6 @@ export {
   SCNotificationUserFollowType,
   SCNotificationVoteUpType,
   SCCustomNotificationType,
+  SCNotificationTopicType,
   SCPrizeType,
 };

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Divider, Typography, Button, Box} from '@mui/material';
+import {Divider, Typography, List} from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import {Endpoints, http} from '@selfcommunity/core';
@@ -9,8 +9,6 @@ import {SCPrivateMessageType} from '@selfcommunity/core/src/types';
 import {FormattedMessage} from 'react-intl';
 import SnippetsSkeleton from '../Skeleton/SnippetsSkeleton';
 import Message from '../Message';
-import Thread from '../Thread';
-import NewMessage from '../NewMessage';
 
 const PREFIX = 'SCSnippets';
 
@@ -23,13 +21,12 @@ const Root = styled(Card, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  maxWidth: 500,
   [`& .${classes.selected}`]: {
-    backgroundColor: '#a0c7e9'
+    background: '#9dd4af'
   }
 }));
 
-export interface SnippetSuggestionProps {
+export interface SnippetsProps {
   /**
    * Overrides or extends the styles applied to the component.
    * @default null
@@ -44,19 +41,22 @@ export interface SnippetSuggestionProps {
    * Any other properties
    */
   [p: string]: any;
+  /**
+   * *Callback on snippet click
+   * @param msg
+   */
+  onSnippetClick?: (msg) => void;
+  threadId?: number;
 }
-export default function SnippetsSuggestion(props: SnippetSuggestionProps): JSX.Element {
-  //PROPS
-  const {autoHide = false, className = null, ...rest} = props;
+export default function Snippets(props: SnippetsProps): JSX.Element {
+  // PROPS
+  const {autoHide = false, className = null, onSnippetClick, threadId, ...rest} = props;
 
   // STATE
   const [snippets, setSnippets] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [openThread, setOpenThread] = useState<boolean>(false);
   const [total, setTotal] = useState<number>(0);
-  const [threadId, setThreadId] = useState<number>(null);
   const [unseen, setUnseen] = useState<boolean>(null);
-  const [selected, setSelected] = useState<number>(null);
 
   /**
    * Fetches Snippets
@@ -88,11 +88,9 @@ export default function SnippetsSuggestion(props: SnippetSuggestionProps): JSX.E
   /**
    * Handles thread opening
    */
-  function handleOpenThread(id) {
-    setOpenThread(true);
-    setThreadId(id);
+  function handleOpenThread(msg) {
+    onSnippetClick(msg);
     setUnseen(false);
-    setSelected(id);
   }
 
   /**
@@ -109,28 +107,21 @@ export default function SnippetsSuggestion(props: SnippetSuggestionProps): JSX.E
               <FormattedMessage id="ui.categoriesSuggestion.noResults" defaultMessage="ui.categoriesSuggestion.noResults" />
             </Typography>
           ) : (
-            <React.Fragment>
-              <NewMessage />
-              <Divider />
+            <List>
               {snippets.map((message: SCPrivateMessageType, index) => (
                 <div key={index}>
                   <Message
                     elevation={0}
                     message={message}
                     key={message.id}
-                    onClick={() => handleOpenThread(message.id)}
+                    onClick={() => handleOpenThread(message)}
                     unseen={unseen === null ? message.thread_status === 'new' : unseen}
-                    className={message.id === selected ? classes.selected : ''}
+                    className={message.id === threadId ? classes.selected : ''}
                   />
                   {index < total - 1 ? <Divider /> : null}
                 </div>
               ))}
-            </React.Fragment>
-          )}
-          {openThread && (
-            <>
-              <Thread id={threadId} open={openThread} />
-            </>
+            </List>
           )}
         </CardContent>
       )}

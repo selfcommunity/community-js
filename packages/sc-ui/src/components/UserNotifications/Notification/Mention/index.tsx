@@ -5,6 +5,7 @@ import {Link, SCNotificationMentionType, SCNotificationVoteUpType, SCRoutes, SCR
 import {defineMessages, useIntl} from 'react-intl';
 import {getContributeType} from '../../../../utils/contribute';
 import DateTimeAgo from '../../../../shared/DateTimeAgo';
+import NotificationNewChip from '../../NotificationNewChip';
 
 const messages = defineMessages({
   quotedYouOn: {
@@ -56,13 +57,14 @@ export default function UserNotificationMention(props: NotificationMentionProps)
    */
   return (
     <Root {...rest}>
-      <ListItem alignItems="flex-start">
+      <ListItem alignItems="flex-start" component={'div'}>
         <ListItemAvatar>
           <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: notificationObject[objectType].author.id})}>
             <Avatar alt={notificationObject[objectType].author.username} variant="circular" src={notificationObject[objectType].author.avatar} />
           </Link>
         </ListItemAvatar>
         <ListItemText
+          disableTypography={true}
           primary={
             <Typography component="span" sx={{display: 'inline'}} color="primary">
               <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: notificationObject[objectType].author.id})}>
@@ -75,6 +77,7 @@ export default function UserNotificationMention(props: NotificationMentionProps)
           }
           secondary={
             <React.Fragment>
+              {notificationObject.is_new && <NotificationNewChip />}
               <Link to={scRoutingContext.url(objectType, {id: notificationObject[objectType].id})}>
                 <Typography
                   component={'span'}

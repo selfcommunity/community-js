@@ -1,27 +1,33 @@
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import Card from '@mui/material/Card';
 import {
   Endpoints,
   http,
   Logger,
   SCCommentType,
+  SCCustomAdvPosition,
   SCFeedObjectType,
   SCFeedObjectTypologyType,
+  SCPreferences,
+  SCPreferencesContextType,
+  SCUserContextType,
   useSCFetchCommentObject,
-  useSCFetchFeedObject
+  useSCFetchFeedObject,
+  useSCPreferences,
+  useSCUser
 } from '@selfcommunity/core';
 import {defineMessages, FormattedMessage} from 'react-intl';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {AxiosResponse} from 'axios';
-import CommentObject from '../CommentObject';
-import ReplyCommentObject from '../CommentObject/ReplyComment';
+import CommentObject, {CommentObjectProps} from '../CommentObject';
+import ReplyCommentObject, {ReplyCommentObjectProps} from '../CommentObject/ReplyComment';
 import Typography from '@mui/material/Typography';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import CommentObjectSkeleton from '../Skeleton/CommentObjectSkeleton';
-import {Box, Button, Stack} from '@mui/material';
+import {Box, Button, CardProps, Stack} from '@mui/material';
 import {CommentsOrderBy} from '../../types/comments';
 import classNames from 'classnames';
+import {CustomAdv} from '@selfcommunity/ui';
 
 const messages = defineMessages({
   noOtherComment: {
@@ -39,7 +45,7 @@ const classes = {
   fixedBottomPrimaryReply: `${PREFIX}-fixed-bottom-primary-reply`
 };
 
-const Root = styled(Card, {
+const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
@@ -59,15 +65,27 @@ const Root = styled(Card, {
   },
   [`& .${classes.fixedTopPrimaryReply}`]: {
     top: 0,
-    'box-shadow': 'rgb(0 0 0 / 5%) 0px 1px 0px 0px, rgb(0 0 0 / 4%) 0px 2px 1px'
+    boxShadow: 'rgb(0 0 0 / 5%) 0px 1px 0px 0px, rgb(0 0 0 / 4%) 0px 2px 1px'
   },
   [`& .${classes.fixedBottomPrimaryReply}`]: {
     bottom: 0,
-    'box-shadow': 'rgb(0 0 0 / 5%) 0px -1px 0px 0px, rgb(0 0 0 / 4%) 0px -1px 1px'
+    boxShadow: 'rgb(0 0 0 / 5%) 0px -1px 0px 0px, rgb(0 0 0 / 4%) 0px -1px 1px'
   }
 }));
 
 export interface CommentsObjectProps {
+  /**
+   * Id of the CommentsObject
+   * @default 'comments_object_<feedObjectType>_<feedObjectId | feedObject.id>'
+   */
+  id?: string;
+
+  /**
+   * Overrides or extends the styles applied to the component.
+   * @default null
+   */
+  className?: string;
+
   /**
    * Id of feed object
    * @default null
@@ -97,6 +115,24 @@ export interface CommentsObjectProps {
    * @default null
    */
   commentObject?: SCCommentType;
+
+  /**
+   * Props to spread to single comment object
+   * @default {variant: 'outlined'}
+   */
+  CommentObjectProps?: CommentObjectProps;
+
+  /**
+   * Props to spread to single comment object skeleton
+   * @default {variant: 'outlined'}
+   */
+  CommentObjectSkeletonProps?: CardProps;
+
+  /**
+   * Props to spread to single reply comment object
+   * @default {variant: 'outlined'}
+   */
+  ReplyCommentObjectProps?: ReplyCommentObjectProps;
 
   /**
    * renderComment function
@@ -173,19 +209,30 @@ export interface CommentsObjectProps {
   onChangePage?: (page) => any;
 
   /**
+   * show/hide box advertising
+   * @default false
+   */
+  hideAdvertising?: boolean;
+
+  /**
    * Other props
    */
   [p: string]: any;
 }
 
+const PREFERENCES = [SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED, SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED];
+
 export default function CommentsObject(props: CommentsObjectProps): JSX.Element {
   // PROPS
   const {
+    id = `comments_object_${props.feedObjectType}_${props.feedObjectId ? props.feedObjectId : props.feedObject ? props.feedObject.id : ''}`,
+    className,
     feedObjectId,
     feedObject,
     feedObjectType = SCFeedObjectTypologyType.POST,
     commentObjectId,
     commentObject,
+    CommentObjectProps = {variant: 'outlined', elevation: 0},
     renderComment,
     renderNoComments,
     page = 1,
@@ -193,13 +240,20 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
     commentsOrderBy = CommentsOrderBy.ADDED_AT_DESC,
     showTitle = false,
     infiniteScrolling = true,
+    ReplyCommentObjectProps = {variant: 'outlined', elevation: 0},
     hidePrimaryReply = false,
     fixedPrimaryReply = false,
+    CommentObjectSkeletonProps = {variant: 'outlined', elevation: 0},
     commentsLoadingBoxCount = 3,
     additionalHeaderComments = [],
     onChangePage,
+    hideAdvertising = false,
     ...rest
   } = props;
+
+  // CONTEXT
+  const scUserContext: SCUserContextType = useSCUser();
+  const scPreferences: SCPreferencesContextType = useSCPreferences();
 
   // STATE
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -215,6 +269,9 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
   );
   const [rootRef, setRootRef] = useState(null);
   const [rootWidth, setRootWidth] = useState(null);
+
+  // REFS
+  const isComponentMounted = useRef(false);
 
   // RETRIVE OBJECTS
   const {obj, setObj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
@@ -248,6 +305,31 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
   );
 
   /**
+   * Compute preferences
+   */
+  const preferences = useMemo(() => {
+    const _preferences = {};
+    PREFERENCES.map((p) => (_preferences[p] = p in scPreferences.preferences ? scPreferences.preferences[p].value : null));
+    return _preferences;
+  }, [scPreferences.preferences]);
+
+  /**
+   * Render advertising above FeedObject Detail
+   */
+  function renderAdvertising() {
+    if (
+      isComponentMounted.current &&
+      !hideAdvertising &&
+      preferences[SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED] &&
+      ((preferences[SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED] && scUserContext.user === null) ||
+        !preferences[SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED])
+    ) {
+      return <CustomAdv position={SCCustomAdvPosition.POSITION_IN_COMMENTS} />;
+    }
+    return null;
+  }
+
+  /**
    * Remove commentObj or comments from newComments
    * if commentsObj.id or ids of newComments are included in commentsSet
    * @param commentsSet
@@ -274,22 +356,19 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
   /**
    * Get Comments
    */
-  const performFetchComments = useMemo(
-    () => (url) => {
-      return http
-        .request({
-          url,
-          method: Endpoints.Comments.method
-        })
-        .then((res: AxiosResponse<any>) => {
-          if (res.status >= 300) {
-            return Promise.reject(res);
-          }
-          return Promise.resolve(res.data);
-        });
-    },
-    [obj, next, commentsOrderBy, commentsPageCount]
-  );
+  const performFetchComments = (url) => {
+    return http
+      .request({
+        url,
+        method: Endpoints.Comments.method
+      })
+      .then((res: AxiosResponse<any>) => {
+        if (res.status >= 300) {
+          return Promise.reject(res);
+        }
+        return Promise.resolve(res.data);
+      });
+  };
 
   /**
    * Fetch prevoius comments
@@ -316,14 +395,13 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
    */
   function fetchNextComments() {
     if (obj) {
+      const _next = next
+        ? next
+        : `${Endpoints.Comments.url()}?${feedObjectType}=${obj.id}&limit=${commentsPageCount}&ordering=${commentsOrderBy}&offset=${
+            page > 0 ? (page - 1) * commentsPageCount : 0
+          }`;
       setIsLoading(true);
-      performFetchComments(
-        next
-          ? next
-          : `${Endpoints.Comments.url()}?${feedObjectType}=${obj.id}&limit=${commentsPageCount}&ordering=${commentsOrderBy}&offset=${
-              page > 0 ? (page - 1) * commentsPageCount : 0
-            }`
-      )
+      performFetchComments(_next)
         .then((res) => {
           setComments(next ? [...comments, ...res.results] : res.results);
           setTotal(res.count);
@@ -391,7 +469,7 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
    * Reload comments
    */
   useEffect(() => {
-    if (obj && obj.id) {
+    if (obj && obj.id && isComponentMounted.current) {
       setNext(null);
       setComments([]);
       setNewComments([]);
@@ -408,6 +486,10 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
     } else if (obj && obj.id) {
       fetchNextComments();
     }
+    isComponentMounted.current = true;
+    return () => {
+      isComponentMounted.current = false;
+    };
   }, [obj, commentObj]);
 
   /**
@@ -450,7 +532,7 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
     setIsReplying(true);
     performReply(content)
       .then((c: SCCommentType) => {
-        if (infiniteScrollingEnabled && (previous || comment)) {
+        if (infiniteScrollingEnabled && (commentsOrderBy === CommentsOrderBy.ADDED_AT_ASC || previous || comment)) {
           setInfiniteScrollingEnabled(false);
         }
         setNewComments(commentsOrderBy === CommentsOrderBy.ADDED_AT_DESC ? [...[c], ...newComments] : [...newComments, ...[c]]);
@@ -474,7 +556,7 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
         <Box
           className={classNames({[classes.fixedPrimaryReply]: fixedPrimaryReply, [classes.fixedTopPrimaryReply]: fixedPrimaryReply})}
           style={{width: `${rootWidth}px`}}>
-          <ReplyCommentObject readOnly={isReplying || isLoading} onReply={handleReply} key={Number(isReplying)} inline {...rest} />
+          <ReplyCommentObject readOnly={isReplying || isLoading} onReply={handleReply} key={Number(isReplying)} inline {...ReplyCommentObjectProps} />
         </Box>
       );
     }
@@ -490,7 +572,7 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
         <Box
           className={classNames({[classes.fixedPrimaryReply]: fixedPrimaryReply, [classes.fixedBottomPrimaryReply]: fixedPrimaryReply})}
           style={{width: `${rootWidth}px`}}>
-          <ReplyCommentObject readOnly={isReplying || isLoading} onReply={handleReply} key={Number(isReplying)} inline {...rest} />
+          <ReplyCommentObject readOnly={isReplying || isLoading} onReply={handleReply} key={Number(isReplying)} inline {...ReplyCommentObjectProps} />
         </Box>
       );
     }
@@ -504,7 +586,7 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
     if (order === commentsOrderBy) {
       return (
         <>
-          {newComments.map((comment: SCCommentType, index) => {
+          {newComments.map((comment: SCCommentType) => {
             return (
               <React.Fragment key={comment.id}>
                 {renderComment ? (
@@ -517,7 +599,7 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
                     feedObject={obj}
                     feedObjectType={feedObjectType}
                     commentReply={commentObj}
-                    {...rest}
+                    {...CommentObjectProps}
                   />
                 )}
               </React.Fragment>
@@ -532,12 +614,13 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
   /**
    * Render comments
    */
+  const advPosition = Math.floor(Math.random() * (Math.min(total, 5) - 1 + 1) + 1);
   let commentsRendered = <></>;
   if (comments.length === 0 && isLoading) {
     commentsRendered = (
       <>
         {[...Array(commentsLoadingBoxCount)].map((x, i) => (
-          <CommentObjectSkeleton key={i} {...rest} />
+          <CommentObjectSkeleton key={i} {...CommentObjectSkeletonProps} />
         ))}
       </>
     );
@@ -563,7 +646,7 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
           dataLength={comments.length}
           next={fetchNextComments}
           hasMore={next !== null}
-          loader={<CommentObjectSkeleton {...rest} />}
+          loader={<CommentObjectSkeleton {...CommentObjectSkeletonProps} />}
           style={wrapperStyles}
           endMessage={
             commentsOrderBy === CommentsOrderBy.ADDED_AT_DESC ? (
@@ -579,14 +662,22 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
               <FormattedMessage id="ui.commentsObject.loadPreviousComments" defaultMessage="ui.commentsObject.loadPreviousComments" />
             </Button>
           )}
-          {[...additionalHeaderComments, ...newComments, ...comments, ...(comment ? [comment] : [])].map((c: SCCommentType) => {
+          {[...additionalHeaderComments, ...newComments, ...comments, ...(comment ? [comment] : [])].map((c: SCCommentType, index) => {
             return (
               <React.Fragment key={c.id}>
                 {renderComment ? (
                   renderComment(c)
                 ) : (
-                  <CommentObject id={c.id} commentObject={c} onOpenReply={openReplyBox} feedObject={obj} feedObjectType={feedObjectType} {...rest} />
+                  <CommentObject
+                    id={c.id}
+                    commentObject={c}
+                    onOpenReply={openReplyBox}
+                    feedObject={obj}
+                    feedObjectType={feedObjectType}
+                    {...CommentObjectProps}
+                  />
                 )}
+                {advPosition === index && renderAdvertising()}
               </React.Fragment>
             );
           })}
@@ -595,7 +686,7 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
     } else {
       commentsRendered = (
         <Box style={wrapperStyles}>
-          {isLoading && commentObj && comments.length === 0 && <CommentObjectSkeleton {...rest} />}
+          {isLoading && commentObj && comments.length === 0 && <CommentObjectSkeleton {...CommentObjectSkeletonProps} />}
           {renderNewComments(CommentsOrderBy.ADDED_AT_DESC)}
           {comment && comments.length === 0 && obj && obj.comment_count > 0 && !isLoading && (
             <Button variant="text" onClick={fetchNextComments} disabled={isLoading}>
@@ -620,9 +711,10 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
                     feedObject={obj}
                     feedObjectType={feedObjectType}
                     commentReply={commentObj}
-                    {...rest}
+                    {...CommentObjectProps}
                   />
                 )}
+                {advPosition === index && renderAdvertising()}
               </React.Fragment>
             );
           })}
@@ -642,7 +734,7 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
               )}
             </Stack>
           )}
-          {isLoading && (!commentObj || (commentObj && comments.length > 0)) && <CommentObjectSkeleton {...rest} />}
+          {isLoading && (!commentObj || (commentObj && comments.length > 0)) && <CommentObjectSkeleton {...CommentObjectSkeletonProps} />}
           {renderNewComments(CommentsOrderBy.ADDED_AT_ASC)}
           {comment && (
             <React.Fragment key={comment.id}>
@@ -656,7 +748,7 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
                   feedObject={obj}
                   feedObjectType={feedObjectType}
                   commentReply={commentObj}
-                  {...rest}
+                  {...CommentObjectProps}
                 />
               )}
             </React.Fragment>
@@ -670,7 +762,7 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
    * Renders root object
    */
   return (
-    <Root ref={rootContainer}>
+    <Root ref={rootContainer} id={id} className={className} {...rest}>
       {renderTitle()}
       {renderHeadPrimaryReply()}
       {commentsRendered}

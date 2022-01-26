@@ -6,6 +6,7 @@ import {Link, SCNotificationPrivateMessageType, SCRoutingContextType, useSCRouti
 import {grey} from '@mui/material/colors';
 import {FormattedMessage} from 'react-intl';
 import DateTimeAgo from '../../../../shared/DateTimeAgo';
+import NotificationNewChip from '../../NotificationNewChip';
 
 const PREFIX = 'SCUserNotificationPrivateMessage';
 
@@ -20,11 +21,13 @@ const Root = styled(Box, {
     float: 'left'
   },
   '& .MuiListItemText-root': {
-    color: grey[600]
+    color: grey[600],
+    maxWidth: '60%'
   },
   '& .MuiListItemSecondaryAction-root': {
     color: grey[600],
-    fontSize: '13px'
+    fontSize: '13px',
+    maxWidth: '40%'
   },
   '& .MuiButton-root': {
     paddingTop: 1,
@@ -55,10 +58,10 @@ export default function UserNotificationPrivateMessage(props: NotificationPMProp
    */
   return (
     <Root {...rest}>
-      <ListItem
+      <ListItem component={'div'}
         secondaryAction={
           <Box>
-            <Box component={'span'} sx={{display: {xs: 'none', md: 'inline'}, marginRight: '2px'}}>
+            <Box component={'span'} sx={{display: {xs: 'none', md: 'inline-block'}, marginRight: '5px', paddingTop: '5px', float: 'left'}}>
               <DateTimeAgo date={notificationObject.active_at} />
             </Box>
             <Button
@@ -78,10 +81,16 @@ export default function UserNotificationPrivateMessage(props: NotificationPMProp
           </Box>
         }>
         <ListItemText
+          disableTypography={true}
           primary={
-            <Link to={scRoutingContext.url('messages', {id: notificationObject.message.id})}>
-              <Typography variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: notificationObject.message.html}} />
-            </Link>
+            <>
+              {notificationObject.is_new && <NotificationNewChip />}
+              <Box sx={{display: 'inline-block'}}>
+                <Link to={scRoutingContext.url('messages', {id: notificationObject.message.id})}>
+                  <Typography variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: notificationObject.message.html}} />
+                </Link>
+              </Box>
+            </>
           }
         />
       </ListItem>

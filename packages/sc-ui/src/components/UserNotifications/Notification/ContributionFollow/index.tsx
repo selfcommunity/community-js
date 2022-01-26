@@ -4,7 +4,7 @@ import {Avatar, Box, Grid, ListItem, ListItemAvatar, ListItemText, Typography} f
 import {Link, SCNotificationVoteUpType, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
 import {defineMessages, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../../shared/DateTimeAgo';
-import {grey} from '@mui/material/colors';
+import NotificationNewChip from '../../NotificationNewChip';
 
 const messages = defineMessages({
   contributionFollow: {
@@ -47,15 +47,17 @@ export default function ContributionFollowNotification(props: NotificationVoteUp
    */
   return (
     <Root {...rest}>
-      <ListItem alignItems="flex-start">
+      <ListItem alignItems="flex-start" component={'div'}>
         <ListItemAvatar>
           <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: notificationObject.user.id})}>
             <Avatar alt={notificationObject.user.username} variant="circular" src={notificationObject.user.avatar} />
           </Link>
         </ListItemAvatar>
         <ListItemText
+          disableTypography={true}
           primary={
-            <Typography component="span" sx={{display: 'inline'}} color="primary">
+            <Typography component="div" sx={{display: 'inline'}} color="primary">
+              {notificationObject.is_new && <NotificationNewChip />}
               <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: notificationObject.user.id})}>
                 {notificationObject.user.username}
               </Link>{' '}

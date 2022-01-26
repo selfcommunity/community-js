@@ -18,6 +18,7 @@ export class ValidationError {
   static ERROR_INVALID_TRANSLATIONS = 4304;
   static ERROR_INVALID_THEME = 4403;
   static ERROR_INVALID_ROUTER = 4503;
+  static ERROR_INVALID_PROVIDERS = 4603;
   static defaultErrorMessageMap = {
     [ValidationError.ERROR_INVALID_CONF]:
       'Invalid or missing library configuration. Check the configuration that is passed to the SCContextProvider.',
@@ -31,6 +32,7 @@ export class ValidationError {
     [ValidationError.ERROR_INVALID_TRANSLATIONS]: `Invalid locale messages(translations) options.`,
     [ValidationError.ERROR_INVALID_THEME]: 'Invalid theme options.',
     [ValidationError.ERROR_INVALID_ROUTER]: 'Invalid router configuration',
+    [ValidationError.ERROR_INVALID_PROVIDERS]: `Invalid providers. Check if the list of providers is valid.`,
   };
 
   errorCode = null;

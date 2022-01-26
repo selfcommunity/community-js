@@ -223,7 +223,7 @@ export default function Feed(props: FeedProps): JSX.Element {
   const data = getData();
 
   return (
-    <Root container spacing={2} id="feed" className={className}>
+    <Root container spacing={2} id={id} className={className}>
       <Grid item xs={12} md={7}>
         <React.Suspense fallback={<FeedObjectSkeleton template={FeedObjectTemplateType.PREVIEW} />}>
           <InfiniteScroll

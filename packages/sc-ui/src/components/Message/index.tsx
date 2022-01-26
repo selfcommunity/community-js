@@ -9,7 +9,6 @@ import {FormattedMessage, useIntl} from 'react-intl';
 import {SCPrivateMessageType} from '@selfcommunity/core';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import DeleteIcon from '@mui/icons-material/Delete';
-import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
 
 const PREFIX = 'SCMessage';
 
@@ -20,7 +19,8 @@ const classes = {
   messageBox: `${PREFIX}-messageBox`,
   messageTime: `${PREFIX}-messageTime`,
   unread: `${PREFIX}-unread`,
-  hide: `${PREFIX}-hide`
+  hide: `${PREFIX}-hide`,
+  img: `${PREFIX}-img`
 };
 
 const Root = styled(Card, {
@@ -37,6 +37,7 @@ const Root = styled(Card, {
     justifyContent: 'space-between'
   },
   [`& .${classes.messageBox}`]: {
+    margin: 'auto',
     padding: '16px',
     borderRadius: '20px'
   },
@@ -51,6 +52,10 @@ const Root = styled(Card, {
   },
   [`& .${classes.hide}`]: {
     display: 'none'
+  },
+  [`& .${classes.img}`]: {
+    height: '100%',
+    width: '100%'
   }
 }));
 
@@ -128,13 +133,16 @@ export default function Message(props: MessageProps): JSX.Element {
   // INTL
   const intl = useIntl();
 
+  // STATE
+  const hasFile = message.file;
+
   /**
    * Renders snippet or thread type message object
    */
   const c = (
     <React.Fragment>
       {message ? (
-        <ListItem onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+        <ListItem onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} button={true}>
           {!snippetType && isHovering && loggedUser === message.sender_id && message.status !== 'hidden' && (
             <>
               <IconButton sx={{marginBottom: '25px'}} onClick={onDeleteIconClick}>
@@ -169,7 +177,11 @@ export default function Message(props: MessageProps): JSX.Element {
             <ListItemText
               primary={
                 <Box className={classes.messageBox}>
-                  <Typography component="span">{message.message}</Typography>
+                  {hasFile ? (
+                    <img className={classes.img} src={message.file.url} loading="lazy" alt={'img'} />
+                  ) : (
+                    <Typography component="span">{message.message}</Typography>
+                  )}
                 </Box>
               }
               secondary={

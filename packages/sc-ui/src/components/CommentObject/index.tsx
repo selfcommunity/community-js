@@ -3,7 +3,7 @@ import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import FeedObjectSkeleton from '../Skeleton/FeedObjectSkeleton';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {Avatar, Box, Button, CardContent, Grid, ListItem, ListItemAvatar, ListItemText, Tooltip, Typography} from '@mui/material';
+import {Avatar, Box, Button, CardContent, CardProps, Grid, ListItem, ListItemAvatar, ListItemText, Tooltip, Typography} from '@mui/material';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import TimeAgo from 'timeago-react';
 import Bullet from '../../shared/Bullet';
@@ -121,6 +121,12 @@ const Root = styled(Box, {
 
 export interface CommentObjectProps {
   /**
+   * Overrides or extends the styles applied to the component.
+   * @default null
+   */
+  className?: string;
+
+  /**
    * Id of the comment object
    * @default null
    */
@@ -188,6 +194,12 @@ export interface CommentObjectProps {
   onFetchLatestComment?: () => void;
 
   /**
+   * Props to spread to single comment object skeleton
+   * @default {elevation: 0}
+   */
+  CommentObjectSkeletonProps?: CardProps;
+
+  /**
    * Other props
    */
   [p: string]: any;
@@ -196,6 +208,7 @@ export interface CommentObjectProps {
 export default function CommentObject(props: CommentObjectProps): JSX.Element {
   // PROPS
   const {
+    className,
     commentObjectId,
     commentObject,
     feedObjectId,
@@ -207,6 +220,7 @@ export default function CommentObject(props: CommentObjectProps): JSX.Element {
     onOpenReply,
     onVote,
     onFetchLatestComment,
+    CommentObjectSkeletonProps = {elevation: 0, variant: 'outlined'},
     ...rest
   } = props;
 
@@ -227,12 +241,14 @@ export default function CommentObject(props: CommentObjectProps): JSX.Element {
    * @param comment
    */
   function renderTimeAgo(comment) {
-    return [
-      <AccessTimeIcon sx={{paddingRight: '2px'}} />,
-      <Typography variant={'body2'}>
-        <TimeAgo datetime={comment.added_at} />
-      </Typography>
-    ];
+    return (
+      <>
+        <AccessTimeIcon sx={{paddingRight: '2px'}} />
+        <Typography variant={'body2'}>
+          <TimeAgo datetime={comment.added_at} />
+        </Typography>
+      </>
+    );
   }
 
   /**
@@ -637,7 +653,7 @@ export default function CommentObject(props: CommentObjectProps): JSX.Element {
           </>
         )}
         {comment.latest_comments?.map((lc: SCCommentType, index) => (
-          <React.Fragment key={index}>{renderComment(lc)}</React.Fragment>
+          <React.Fragment key={lc.id}>{renderComment(lc)}</React.Fragment>
         ))}
       </>
     );
@@ -650,11 +666,11 @@ export default function CommentObject(props: CommentObjectProps): JSX.Element {
   if (obj) {
     comment = renderComment(obj);
   } else {
-    comment = <FeedObjectSkeleton elevation={0} />;
+    comment = <CommentObjectSkeleton {...CommentObjectSkeletonProps} />;
   }
 
   /**
    * Render object
    */
-  return <Root>{comment}</Root>;
+  return <Root className={className}>{comment}</Root>;
 }

@@ -36,9 +36,7 @@ export default {
     feedObjectId: 17, // 1064,
     feedObjectType: SCFeedObjectTypologyType.DISCUSSION,
     infiniteScrolling: true,
-    elevation: 1,
-    variant: 'elevation',
-    commentsOrderBy: CommentsOrderBy.ADDED_AT_DESC,
+    commentsOrderBy: CommentsOrderBy.ADDED_AT_ASC,
     fixedPrimaryReply: true,
     commentsPageCount: 10
   }
