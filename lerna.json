@@ -8,12 +8,12 @@
   "command" : {
     "version": {
       "conventionalCommits": true,
-      "noVerifyAccess": true
+      "verifyAccess": false
     },
     "publish": {
+      "verifyAccess": false,
       "conventionalCommits": true,
-      "message": "chore: Package release",
-      "noVerifyAccess": true
+      "message": "chore: Package release"
     }
   }
 }
