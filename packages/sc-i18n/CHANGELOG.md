@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.1](https://github.com/selfcommunity/community-ui/compare/@selfcommunity/i18n@0.1.0-alpha.0...@selfcommunity/i18n@0.1.0-alpha.1) (2022-01-26)
+
+
+### Bug Fixes
+
+* bugfixes ([a392cb1](https://github.com/selfcommunity/community-ui/commit/a392cb1fdd7e8721f1531ac72c86a2466ce70d85))
+* fixes, added component to display all message components ([3692840](https://github.com/selfcommunity/community-ui/commit/3692840ad07363eb09af2f36c11d175db4ffe271))
+* update notification message ([1a32506](https://github.com/selfcommunity/community-ui/commit/1a3250685e26315b8de330ca0c924699fb503d14))
+
+
+
+
+
 
 # 0.1.0-alpha.0 (2022-01-20)
 

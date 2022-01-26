@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.1](https://github.com/selfcommunity/community-ui/compare/@selfcommunity/core@0.1.0-alpha.0...@selfcommunity/core@0.1.0-alpha.1) (2022-01-26)
+
+
+### Bug Fixes
+
+* bugfixes ([a392cb1](https://github.com/selfcommunity/community-ui/commit/a392cb1fdd7e8721f1531ac72c86a2466ce70d85))
+* bugfixes ([c69a606](https://github.com/selfcommunity/community-ui/commit/c69a606cfab720da91c837ddc17644224a3f2c5e))
+* notification provider & hook helpers ([4dd7e0c](https://github.com/selfcommunity/community-ui/commit/4dd7e0c3199aa360753b2f9b36eadfc9f39938c6))
+* packages ([0b26923](https://github.com/selfcommunity/community-ui/commit/0b26923d5139db36f2c67affc867739a2361c315))
+* websocket ([98e76ea](https://github.com/selfcommunity/community-ui/commit/98e76eab3c5f52ca77d921def4880a7d29c85263))
+
+
+
+
+
 
 
 # 0.1.0-alpha.0 (2022-01-20)
