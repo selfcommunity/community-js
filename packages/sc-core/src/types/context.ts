@@ -1,5 +1,5 @@
 import {SCUserType} from './user';
-import React, { Provider, ProviderProps, ReactNode } from 'react';
+import React, {ReactNode} from 'react';
 import {SCCategoryType} from './category';
 
 /**
