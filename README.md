@@ -20,7 +20,7 @@ A set of React components UI to use to integrate a community.
 
 ## Installation
 
-CommunityUI is available as an [npm package](https://www.npmjs.com/package/@selfcommunity/community-ui).
+CommunityUI is available as an [npm package](https://www.npmjs.com/package/@selfcommunity/ui).
 
 First install peer dependencies needed to make the library work:
 
