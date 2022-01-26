@@ -1,6 +1,6 @@
 {
   "name": "@selfcommunity/ui",
-  "version": "0.1.0-alpha.1",
+  "version": "0.1.0-alpha.0",
   "description": "React UI Components to integrate a Community created with SelfCommunity.",
   "author": "mirk8xr <mirk8xr@gmail.com>",
   "homepage": "https://www.selfcommunity.com",
@@ -145,6 +145,5 @@
   },
   "bugs": {
     "url": "https://github.com/selfcommunity/selfcommunity-ui-widgets/issues"
-  },
-  "gitHead": "7eadc2dc8515e9d8ea00ef8592e2bf208f7bda6a"
+  }
 }

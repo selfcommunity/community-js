@@ -1,6 +1,6 @@
 {
   "name": "@selfcommunity/templates",
-  "version": "0.0.1-alpha.1",
+  "version": "0.0.1-alpha.0",
   "license": "MIT",
   "private": false,
   "main": "./lib/cjs/index.js",
@@ -42,8 +42,7 @@
     "url": "https://github.com/selfcommunity/community-ui/tree/main/packages/sc-core"
   },
   "publishConfig": {
-    "access": "public",
-    "directory": "lib"
+    "access": "public"
   },
   "peerDependencies": {
     "@emotion/react": "^11.7.1",
@@ -55,9 +54,9 @@
     "react-stickynode": "^4.0.0"
   },
   "dependencies": {
-    "@selfcommunity/core": "^0.1.0-alpha.1",
-    "@selfcommunity/i18n": "^0.1.0-alpha.1",
-    "@selfcommunity/ui": "^0.1.0-alpha.1",
+    "@selfcommunity/core": "^0.1.0-alpha.0",
+    "@selfcommunity/i18n": "^0.1.0-alpha.0",
+    "@selfcommunity/ui": "^0.1.0-alpha.0",
     "@types/classnames": "^2.2.11",
     "classnames": "^2.2.6"
   },
@@ -118,6 +117,5 @@
   },
   "bugs": {
     "url": "https://github.com/selfcommunity/selfcommunity-ui-widgets/issues"
-  },
-  "gitHead": "7eadc2dc8515e9d8ea00ef8592e2bf208f7bda6a"
+  }
 }

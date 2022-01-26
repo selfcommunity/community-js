@@ -1,6 +1,6 @@
 {
   "name": "@selfcommunity/i18n",
-  "version": "0.1.0-alpha.1",
+  "version": "0.1.0-alpha.0",
   "license": "MIT",
   "private": false,
   "main": "./lib/cjs/index.js",
@@ -40,8 +40,7 @@
     "url": "https://github.com/selfcommunity/community-ui/tree/main/packages/sc-i18n"
   },
   "publishConfig": {
-    "access": "public",
-    "directory": "lib"
+    "access": "public"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.13",
@@ -94,5 +93,5 @@
   "bugs": {
     "url": "https://github.com/selfcommunity/community-ui/issues"
   },
-  "gitHead": "7eadc2dc8515e9d8ea00ef8592e2bf208f7bda6a"
+  "gitHead": "1848949f11caa7c2306f0380ff036395e2e26f9b"
 }
