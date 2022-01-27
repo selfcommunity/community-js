@@ -8,14 +8,12 @@ import {
   Endpoints,
   http,
   Logger,
-  SCFeedDiscussionType,
   SCFeedObjectType,
   SCFeedObjectTypologyType,
-  SCFeedPostType,
-  SCFeedStatusType,
   SCMediaType,
-  SCTagType,
-  useSCFetchFeedObject
+  SCUserContextType,
+  useSCFetchFeedObject,
+  useSCUser
 } from '@selfcommunity/core';
 import {styled} from '@mui/material/styles';
 import ShareMenuIcon from '@mui/icons-material/RedoOutlined';
@@ -59,7 +57,7 @@ const Root = styled(Box, {
   }
 }));
 
-export interface VoteShareProps {
+export interface ShareProps {
   /**
    * Overrides or extends the styles applied to the component.
    * @default null
@@ -91,12 +89,17 @@ export interface VoteShareProps {
    */
   inlineAction: boolean;
   /**
+   * Callback on share from anonymous user
+   * @default () => null
+   */
+  onShareFromAnonymous?: () => void;
+  /**
    * Any other properties
    */
   [p: string]: any;
 }
 
-export default function Share(props: VoteShareProps): JSX.Element {
+export default function Share(props: ShareProps): JSX.Element {
   // PROPS
   const {
     className = null,
@@ -105,6 +108,7 @@ export default function Share(props: VoteShareProps): JSX.Element {
     feedObjectType = SCFeedObjectTypologyType.POST,
     withAction = false,
     inlineAction = true,
+    onShareFromAnonymous = () => null,
     ...rest
   } = props;
 
@@ -115,6 +119,9 @@ export default function Share(props: VoteShareProps): JSX.Element {
   const [composerShareProps, setComposerShareProps] = useState<any>(null);
   const [openSharesDialog, setOpenSharesDialog] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
+
+  // CONTEXT
+  const scUserContext: SCUserContextType = useSCUser();
 
   // INTL
   const intl = useIntl();
@@ -146,9 +153,8 @@ export default function Share(props: VoteShareProps): JSX.Element {
   /**
    * Handles Composer onSuccess
    */
-  function handleComposerOnSuccess(shareObj) {
+  function handleComposerOnSuccess() {
     handleComposerOnClose();
-    console.log(shareObj);
   }
 
   /**
@@ -187,17 +193,21 @@ export default function Share(props: VoteShareProps): JSX.Element {
    * Performs the contribute sharing
    */
   function share(inCategories) {
-    setIsSharing(true);
-    performCreateMediaShare()
-      .then((data: SCMediaType) => {
-        console.log(data);
-        setComposerShareProps({medias: [data], ...(inCategories ? {categories: obj.categories} : {})});
-        setIsComposerOpen(true);
-      })
-      .catch((error) => {
-        Logger.error(SCOPE_SC_UI, error);
-        setIsSharing(false);
-      });
+    if (!scUserContext.user) {
+      onShareFromAnonymous && onShareFromAnonymous();
+    } else {
+      setIsSharing(true);
+      performCreateMediaShare()
+        .then((data: SCMediaType) => {
+          console.log(data);
+          setComposerShareProps({medias: [data], ...(inCategories ? {categories: obj.categories} : {})});
+          setIsComposerOpen(true);
+        })
+        .catch((error) => {
+          Logger.error(SCOPE_SC_UI, error);
+          setIsSharing(false);
+        });
+    }
   }
 
   /**

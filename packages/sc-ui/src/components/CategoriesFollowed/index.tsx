@@ -53,9 +53,6 @@ export default function CategoriesFollowed(props: CategoriesListProps): JSX.Elem
   const [total, setTotal] = useState<number>(0);
   const [openCategoriesFollowedDialog, setOpenCategoriesFollowedDialog] = useState<boolean>(false);
 
-  // CONTEXT
-  const scUserContext: SCUserContextType = useContext(SCUserContext);
-
   /**
    * Handles list change on category follow
    */
@@ -101,18 +98,16 @@ export default function CategoriesFollowed(props: CategoriesListProps): JSX.Elem
    * On mount, fetches the list of categories followed
    */
   useEffect(() => {
-    if (scUserContext.user) {
-      fetchCategoriesFollower()
-        .then((data: AxiosResponse<any>) => {
-          setCategories(data['results']);
-          setTotal(data['count']);
-          setHasMore(data['count'] > visibleCategories);
-          setLoading(false);
-        })
-        .catch((error) => {
-          Logger.error(SCOPE_SC_UI, error);
-        });
-    }
+    fetchCategoriesFollower()
+      .then((data: AxiosResponse<any>) => {
+        setCategories(data['results']);
+        setTotal(data['count']);
+        setHasMore(data['count'] > visibleCategories);
+        setLoading(false);
+      })
+      .catch((error) => {
+        Logger.error(SCOPE_SC_UI, error);
+      });
   }, []);
 
   /**
@@ -153,7 +148,7 @@ export default function CategoriesFollowed(props: CategoriesListProps): JSX.Elem
   /**
    * Renders root object (if not hidden by autoHide prop)
    */
-  if (!autoHide && scUserContext.user) {
+  if (!autoHide) {
     return (
       <Root className={className} {...rest}>
         {c}
