@@ -1,6 +1,17 @@
 import React, {useCallback, useContext, useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Card, CardContent, Grid, Hidden, Theme, useMediaQuery} from '@mui/material';
+import {AxiosResponse} from 'axios';
+import {SCOPE_SC_UI} from '../../constants/Errors';
+import {FormattedMessage} from 'react-intl';
+import {FeedObjectSkeleton, GenericSkeleton} from '../Skeleton';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import FeedObject, {FeedObjectProps} from '../FeedObject';
+import {FeedObjectTemplateType} from '../../types/feedObject';
+import {SCFeedWidgetType} from '../../types/Feed';
+import Sticky from 'react-stickynode';
+import {useTheme} from '@mui/styles';
+import CustomAdv from '../CustomAdv';
 import {
   http,
   Logger,
@@ -11,20 +22,9 @@ import {
   SCPreferencesContextType,
   SCUserContext,
   SCUserContextType,
-  useSCPreferences
+  useSCPreferences,
+  EndpointType
 } from '@selfcommunity/core';
-import {AxiosResponse} from 'axios';
-import {SCOPE_SC_UI} from '../../constants/Errors';
-import {FormattedMessage} from 'react-intl';
-import {FeedObjectSkeleton, GenericSkeleton} from '../Skeleton';
-import InfiniteScroll from 'react-infinite-scroll-component';
-import FeedObject, {FeedObjectProps} from '../FeedObject';
-import {FeedObjectTemplateType} from '../../types/feedObject';
-import {EndpointType} from '@selfcommunity/core/src/constants/Endpoints';
-import {SCFeedWidgetType} from '../../types/Feed';
-import Sticky from 'react-stickynode';
-import {useTheme} from '@mui/styles';
-import CustomAdv from '../CustomAdv';
 
 const PREFIX = 'SCFeed';
 
@@ -109,7 +109,7 @@ export default function Feed(props: FeedProps): JSX.Element {
 
   // CONTEXT
   const scPreferences: SCPreferencesContextType = useSCPreferences();
-  const scAuthContext: SCUserContextType = useContext(SCUserContext);
+  const scUserContext: SCUserContextType = useContext(SCUserContext);
 
   /**
    * Compute preferences
@@ -126,7 +126,7 @@ export default function Feed(props: FeedProps): JSX.Element {
   const _widgets: SCFeedWidgetType[] = useMemo(() => {
     if (
       preferences[SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED] &&
-      ((preferences[SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED] && scAuthContext.user === null) ||
+      ((preferences[SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED] && scUserContext.user === null) ||
         !preferences[SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED])
     ) {
       return [
