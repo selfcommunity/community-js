@@ -20,5 +20,7 @@ jobs:
     - run: echo //registry.npmjs.org/:_authToken=${NPM_TOKEN} > .npmrc
       env:
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+    - run: git config --global user.email "fede.torre@gmail.com"
+    - run: git config --global user.name "fedetorre"
     - run: yarn build
     - run: yarn prerelease
