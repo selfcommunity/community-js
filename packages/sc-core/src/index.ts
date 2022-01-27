@@ -131,7 +131,7 @@ import http, {formatHttpError} from './utils/http';
 /**
  * Endpoint component
  */
-import Endpoints from './constants/Endpoints';
+import Endpoints, {EndpointType} from './constants/Endpoints';
 
 /**
  * Utilities:
@@ -246,6 +246,7 @@ export {
   Link,
   SCRoutes,
   Endpoints,
+  EndpointType,
   Logger,
   StringUtils,
   ObjectUtils,

@@ -78,9 +78,14 @@ export interface SCUserContextType {
   error?: any;
 
   /**
-   * Triggered when the a user logout is performed.
+   * Triggered when logout is performed.
    */
   logout: () => void;
+
+  /**
+   * Triggered when call a refresh session.
+   */
+  refreshSession: () => Promise<any>;
 
   /**
    * Handle change avatar

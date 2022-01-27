@@ -21,7 +21,7 @@ import {
  * SCUserContext (Authentication Context)
  * Consuming this context in one of the following ways:
  *  1. <SCUserContext.Consumer>
- *       {(user, session, error, loading, logout) => (...)}
+ *       {(user, session, error, loading, logout, ...) => (...)}
  *     </SCUserContext.Consumer>
  *  2. const scUserContext: SCUserContextType = useContext(SCUserContext);
  *  3. const scUserContext: SCUserContextType = useSCUser();
@@ -40,7 +40,7 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
    * Refresh token if necessary
    */
   const initialSession: SCSessionType = scContext.settings.session;
-  const {state, dispatch} = useSCAuth(initialSession);
+  const {state, dispatch, helpers} = useSCAuth(initialSession);
 
   /**
    * Managers followed, categories
@@ -122,6 +122,13 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
   }
 
   /**
+   * Helper to refresh the session
+   */
+  function refreshSession(): Promise<any> {
+    return helpers.refreshSession();
+  }
+
+  /**
    * Call the logout endpoint and then remove the user
    * from the state.
    */
@@ -151,6 +158,7 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
       setUnseenInteractionsCounter,
       setUnseenNotificationBannersCounter,
       logout,
+      refreshSession,
       managers: {
         categories: categoriesManager,
         followed: followedManager,
