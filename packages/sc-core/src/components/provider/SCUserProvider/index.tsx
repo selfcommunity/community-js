@@ -55,17 +55,19 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
    * If there is an error, it means there is no session.
    */
   useEffect(() => {
-    dispatch({type: userActionTypes.LOGIN_LOADING});
-    sessionServices
-      .getCurrentUser()
-      .then((user: SCUserType) => {
-        dispatch({type: userActionTypes.LOGIN_SUCCESS, payload: {user}});
-      })
-      .catch((error) => {
-        Logger.error(SCOPE_SC_CORE, 'Unable to retrieve the authenticated user.');
-        dispatch({type: userActionTypes.LOGIN_FAILURE, payload: {error}});
-      });
-  }, []);
+    if (state.session.authToken && state.session.authToken.accessToken) {
+      dispatch({type: userActionTypes.LOGIN_LOADING});
+      sessionServices
+        .getCurrentUser()
+        .then((user: SCUserType) => {
+          dispatch({type: userActionTypes.LOGIN_SUCCESS, payload: {user}});
+        })
+        .catch((error) => {
+          Logger.error(SCOPE_SC_CORE, 'Unable to retrieve the authenticated user.');
+          dispatch({type: userActionTypes.LOGIN_FAILURE, payload: {error}});
+        });
+    }
+  }, [state.session.accessToken]);
 
   /**
    * Controls caching of follow categories, users, etc...
@@ -84,7 +86,7 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
    * Refresh followed categories, users, etc..
    */
   function handleVisibilityChange() {
-    if (!document.hidden) {
+    if (!document.hidden && state.user) {
       categoriesManager.refresh();
       followedManager && followedManager.refresh();
       connectionsManager && connectionsManager.refresh();
@@ -143,7 +145,7 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
       user: state.user,
       session: state.session,
       loading: state.loading,
-      error: state.loading,
+      error: state.error,
       setAvatar,
       setCover,
       setUnseenInteractionsCounter,
@@ -155,7 +157,15 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
         connections: connectionsManager,
       },
     }),
-    [state, categoriesManager.loading, categoriesManager.categories, followedManager.loading, followedManager.followed]
+    [
+      state,
+      categoriesManager.loading,
+      categoriesManager.categories,
+      followedManager.loading,
+      followedManager.followed,
+      connectionsManager.loading,
+      connectionsManager.connections,
+    ]
   );
 
   /**

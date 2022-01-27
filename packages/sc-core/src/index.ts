@@ -61,6 +61,7 @@ import {
   SCCustomNotificationType,
   SCNotificationTopicType,
   SCAlertMessagesContextType,
+  SCPrizeType,
 } from './types';
 
 /**
@@ -210,6 +211,7 @@ export {
   SCNotificationVoteUpType,
   SCCustomNotificationType,
   SCNotificationTopicType,
+  SCPrizeType,
   SCContext,
   SCUserContext,
   SCThemeContext,

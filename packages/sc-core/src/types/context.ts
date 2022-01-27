@@ -127,22 +127,22 @@ export interface SCFollowedManagerType {
   /**
    * Handle user follow/unfollow user
    */
-  follow: (user: SCUserType) => Promise<any>;
+  follow?: (user: SCUserType) => Promise<any>;
 
   /**
    * Handle check if a user follow a user, caching data
    */
-  isFollowed: (user: SCUserType) => boolean;
+  isFollowed?: (user: SCUserType) => boolean;
 
   /**
    * Refresh followed
    */
-  refresh: () => void;
+  refresh?: () => void;
 
   /**
    * Empty cache to revalidate all followed
    */
-  emptyCache: () => void;
+  emptyCache?: () => void;
 }
 
 export interface SCCategoriesManagerType {
@@ -164,22 +164,22 @@ export interface SCCategoriesManagerType {
   /**
    * Handle user follow/unfollow category
    */
-  follow: (category: SCCategoryType) => Promise<any>;
+  follow?: (category: SCCategoryType) => Promise<any>;
 
   /**
    * Handle check if a user follow a category, caching data
    */
-  isFollowed: (category: SCCategoryType) => boolean;
+  isFollowed?: (category: SCCategoryType) => boolean;
 
   /**
    * Refresh categories
    */
-  refresh: () => void;
+  refresh?: () => void;
 
   /**
    * Empty cache to revalidate all categories
    */
-  emptyCache: () => void;
+  emptyCache?: () => void;
 }
 
 export interface SCConnectionsManagerType {
@@ -201,27 +201,27 @@ export interface SCConnectionsManagerType {
   /**
    * Handle request connection
    */
-  requestConnection: (user: SCUserType) => Promise<any>;
+  requestConnection?: (user: SCUserType) => Promise<any>;
 
   /**
    * Handle accept connection
    */
-  acceptConnection: (user: SCUserType) => Promise<any>;
+  acceptConnection?: (user: SCUserType) => Promise<any>;
 
   /**
    * Check user status
    */
-  status: (user: SCUserType) => string;
+  status?: (user: SCUserType) => string;
 
   /**
    * Refresh connections status
    */
-  refresh: () => void;
+  refresh?: () => void;
 
   /**
    * Empty cache to revalidate all categories
    */
-  emptyCache: () => void;
+  emptyCache?: () => void;
 }
 
 /**

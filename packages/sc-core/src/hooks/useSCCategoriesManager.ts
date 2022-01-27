@@ -121,5 +121,8 @@ export default function useSCCategoriesManager(user?: SCUserType) {
     [data, loading, cache]
   );
 
+  if (!user) {
+    return {categories: data, loading, isLoading};
+  }
   return {categories: data, loading, isLoading, follow, isFollowed, refresh, emptyCache};
 }

@@ -70,7 +70,7 @@ export const validateSessionAuthTokenOption = (value, session) => {
   const errors = [];
   const warnings = [];
   if (session.type && (session.type === Session.OAUTH_SESSION || session.type === Session.JWT_SESSION)) {
-    if (!session.authToken || !isObject(session.authToken)) {
+    if (session.authToken && !isObject(session.authToken)) {
       errors.push(ValidationError.ERROR_INVALID_SESSION_AUTH_TOKEN);
     }
   }
@@ -81,7 +81,7 @@ export const validateRefreshTokenCallback = (value, session) => {
   const errors = [];
   const warnings = [];
   if (session.type && (session.type === Session.OAUTH_SESSION || session.type === Session.JWT_SESSION)) {
-    if (!session.refreshTokenCallback) {
+    if (session.authToken && !session.refreshTokenCallback) {
       warnings.push(ValidationWarnings.WARNING_SESSION_REFRESH_TOKEN_CALLBACK_NOT_FOUND);
     }
     if (session.refreshTokenCallback && !isFunc(session.refreshTokenCallback)) {

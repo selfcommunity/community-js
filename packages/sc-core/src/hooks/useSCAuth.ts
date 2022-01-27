@@ -84,15 +84,17 @@ function userReducer(state, action) {
  */
 function stateInitializer(session: SCSessionType): any {
   let _session: SCSessionType = Object.assign({}, session);
+  let _isLoading = false;
   /**
    * Set http authorization if session type is OAuth or JWT
    * Configure http object (Authorization, etc...)
    */
-  if ([Session.OAUTH_SESSION, Session.JWT_SESSION].includes(_session.type)) {
+  if ([Session.OAUTH_SESSION, Session.JWT_SESSION].includes(_session.type) && _session.authToken && _session.authToken.accessToken) {
     setAuthorizeToken(_session.authToken.accessToken);
+    _isLoading = true;
   }
   setSupportWithCredentials(_session.type === Session.COOKIE_SESSION);
-  return {user: null, session: _session, error: null, loading: true, isSessionRefreshing: false};
+  return {user: null, session: _session, error: null, loading: _isLoading, isSessionRefreshing: false};
 }
 
 /**
@@ -207,7 +209,7 @@ export default function useAuth(initialSession: SCSessionType) {
         http.interceptors.response.eject(authInterceptor.current);
       }
     };
-  }, [state.user, state.session.authToken.accessToken]);
+  }, [state.user, state.session]);
 
   return {state, dispatch};
 }

@@ -29,7 +29,10 @@ export default function SCNotificationProvider({children = null}: {children: Rea
 
   // Websocket uri and protocols
   const _wsUri = `wss://${new URL(scContext.settings.portal).hostname}/ws/${WS_FACILITY_NOTIFY}?subscribe-user`;
-  const _wsProtocol = `${WS_PROTOCOL_PREFIX}${scContext.settings.session.authToken.accessToken}`;
+  const _wsProtocol =
+    scContext.settings.session.authToken && scContext.settings.session.authToken.accessToken
+      ? `${WS_PROTOCOL_PREFIX}${scContext.settings.session.authToken.accessToken}`
+      : null;
 
   /**
    * Check if there is a currently active session and a
@@ -37,7 +40,7 @@ export default function SCNotificationProvider({children = null}: {children: Rea
    * If there is an error, it means there is no session.
    */
   useEffect(() => {
-    if (scUserContext.user && !wsInstance) {
+    if (scUserContext.user && !wsInstance && _wsUri && _wsProtocol) {
       setWsInstance(
         WSClient({
           uri: _wsUri,
