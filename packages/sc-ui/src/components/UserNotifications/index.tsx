@@ -1,14 +1,11 @@
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Box, Button, List, ListItem, Stack, Typography} from '@mui/material';
+import {Box, BoxProps, Button, List, ListItem, Stack, Typography} from '@mui/material';
 import {
   Endpoints,
   http,
   Logger,
-  SCMediaType,
   SCNotificationTopicType,
-  SCNotificationType,
-  SCTagType,
   SCUserContextType,
   useSCUser
 } from '@selfcommunity/core';
@@ -17,14 +14,15 @@ import PubSub from 'pubsub-js';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {FormattedMessage} from 'react-intl';
 import {NotificationSkeleton} from '../Skeleton';
-import UserNotification from './Notification';
+import UserNotification, {UserNotificationProps} from './Notification';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import {SCNotificationAggregatedType} from '@selfcommunity/core';
 
 const PREFIX = 'SCUserNotifications';
 
 const classes = {
-  btnNewNotification: `${PREFIX}-btn-new-notification`
+  btnNewNotification: `${PREFIX}-btn-new-notification`,
+  notificationsList: `${PREFIX}-notification-list`,
 };
 
 const Root = styled(Box, {
@@ -41,7 +39,35 @@ const Root = styled(Box, {
   }
 }));
 
-export default function UserNotifications(rest): JSX.Element {
+export interface UserNotificationsProps extends BoxProps {
+  /**
+   * Id of the UserNotifications
+   * @default 'notifications'
+   */
+  id?: string;
+
+  /**
+   * Overrides or extends the styles applied to the component.
+   * @default null
+   */
+  className?: string;
+
+  /**
+   * Props to spread to single notification
+   * @default empty object
+   */
+  UserNotificationProps?: UserNotificationProps;
+
+  /**
+   * Other props
+   */
+  [p: string]: any;
+}
+
+export default function UserNotifications(props: UserNotificationsProps): JSX.Element {
+  // PROPS
+  const {id = `notifications`, className = null, UserNotificationProps = {}, ...rest} = props;
+
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
 
@@ -51,7 +77,7 @@ export default function UserNotifications(rest): JSX.Element {
   const [next, setNext] = useState<string>(null);
   const [newNotifications, setNewNotifications] = useState<boolean>(false);
 
-  // REF
+  // REFS
   const notificationSubscription = useRef(null);
 
   // CONST
@@ -144,7 +170,7 @@ export default function UserNotifications(rest): JSX.Element {
   }, []);
 
   return (
-    <Root>
+    <Root id={id} className={className} {...rest}>
       {loading ? (
         <>
           {[...Array(Math.floor(Math.random() * 5) + 3)].map((x, i) => (
@@ -176,10 +202,10 @@ export default function UserNotifications(rest): JSX.Element {
                   </b>
                 </p>
               }>
-              <List>
+              <List className={classes.notificationsList}>
                 {notifications.map((n: SCNotificationAggregatedType, i) => (
                   <ListItem key={i}>
-                    <UserNotification notificationObject={n} key={i} {...rest} />
+                    <UserNotification notificationObject={n} key={i} {...UserNotificationProps} />
                   </ListItem>
                 ))}
               </List>
