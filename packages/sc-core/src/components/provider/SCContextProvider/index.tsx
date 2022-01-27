@@ -20,9 +20,7 @@ export const SCContext = createContext<SCContextType>({} as SCContextType);
  */
 export default function SCContextProvider({conf, children}: SCContextProviderType): JSX.Element {
   const [settings, setSettings] = useState<SCSettingsType>(null);
-  console.log('SCContextProvider');
-  console.log(conf);
-  console.log(settings);
+
   /**
    * Export the provider as we need to wrap the entire app with it
    * This provider keeps current user logged and session
@@ -67,7 +65,6 @@ export default function SCContextProvider({conf, children}: SCContextProviderTyp
     <SCContext.Provider value={{settings}}>
       {settings &&
         settings.contextProviders.reduceRight((memo, ContextProvider) => {
-          console.log(ContextProvider);
           return <ContextProvider>{memo}</ContextProvider>;
         }, children)}
     </SCContext.Provider>

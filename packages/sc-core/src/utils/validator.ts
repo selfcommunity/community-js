@@ -198,8 +198,6 @@ export const validateTheme = (value) => {
  * @return [...contextProviders]
  */
 export const validateContextProviders = (value) => {
-  console.log('validator');
-  console.log(value);
   const errors = [];
   const warnings = [];
   if (value) {
