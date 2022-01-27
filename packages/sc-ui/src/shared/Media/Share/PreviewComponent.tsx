@@ -3,7 +3,7 @@ import {styled} from '@mui/material/styles';
 import LazyLoad from 'react-lazyload';
 import CentralProgress from '../../CentralProgress';
 import Box from '@mui/material/Box';
-import {FeedObject} from '@selfcommunity/ui';
+import FeedObject from '../../../components/FeedObject';
 import {FeedObjectTemplateType} from '../../../types/feedObject';
 
 const PREFIX = 'SCPreviewMediaShare';

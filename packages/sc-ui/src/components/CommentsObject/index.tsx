@@ -27,7 +27,7 @@ import CommentObjectSkeleton from '../Skeleton/CommentObjectSkeleton';
 import {Box, Button, CardProps, Stack} from '@mui/material';
 import {CommentsOrderBy} from '../../types/comments';
 import classNames from 'classnames';
-import {CustomAdv} from '@selfcommunity/ui';
+import CustomAdv from '../CustomAdv';
 
 const messages = defineMessages({
   noOtherComment: {
