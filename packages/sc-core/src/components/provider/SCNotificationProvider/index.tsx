@@ -2,7 +2,7 @@ import React, {createContext, useContext, useEffect, useState} from 'react';
 import {SCContextType, SCNotificationTopicType, SCUserContextType} from '../../../types';
 import {useSCContext} from '../SCContextProvider';
 import {SCNotificationContextType} from '../../../types';
-import {useSCUser} from '@selfcommunity/core';
+import {useSCUser} from '../SCUserProvider';
 import WSClient from '../../../utils/websocket';
 import PubSub from 'pubsub-js';
 import {WS_FACILITY_NOTIFY, WS_PROTOCOL_PREFIX, WS_HEARTBEAT_MESSAGE} from '../../../constants/WebSocket';

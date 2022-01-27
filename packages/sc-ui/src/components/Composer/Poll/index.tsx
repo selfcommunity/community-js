@@ -12,7 +12,7 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import {COMPOSER_POLL_MIN_CHOICES, COMPOSER_POLL_MIN_CLOSE_DATE_DELTA, COMPOSER_POLL_TITLE_MAX_LENGTH} from '../../../constants/Composer';
 import itLocale from 'date-fns/locale/it';
 import enLocale from 'date-fns/locale/en-US';
-import {SCFeedWidgetType} from '@selfcommunity/ui';
+import {SCFeedWidgetType} from '../../../types/Feed';
 import {SCPollChoiceType, SCPollType} from '@selfcommunity/core';
 
 const localeMap = {

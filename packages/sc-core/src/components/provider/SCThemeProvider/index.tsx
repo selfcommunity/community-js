@@ -1,7 +1,7 @@
 import React, {createContext, useContext, useState} from 'react';
 import {StyledEngineProvider, ThemeProvider} from '@mui/material/styles';
 import getTheme from '../../../themes/theme';
-import {SCContextType} from '@selfcommunity/core';
+import {SCContextType} from '../../../types/context';
 import {useSCContext} from '../SCContextProvider';
 import {SCThemeContextType} from '../../../types';
 import {SCPreferencesContextType} from '../../../types/context';

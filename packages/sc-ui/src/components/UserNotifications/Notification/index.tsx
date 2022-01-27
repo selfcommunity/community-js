@@ -23,7 +23,7 @@ import {AxiosResponse} from 'axios';
 import {ExpandLess, ExpandMore} from '@mui/icons-material';
 import {getContribute} from '../../../utils/contribute';
 import ContributionFollowNotification from './ContributionFollow';
-import {Avatar, Button, Card, Collapse, ListItem, ListItemAvatar, ListItemButton, ListItemText, Stack, Typography} from '@mui/material';
+import {Avatar, Button, Card, CardProps, Collapse, ListItem, ListItemAvatar, ListItemButton, ListItemText, Stack, Typography} from '@mui/material';
 import {
   Endpoints,
   http,
@@ -85,29 +85,46 @@ const Root = styled(Card, {
     color: grey[900]
   }
 }));
-export interface UserNotificationProps {
+
+export interface UserNotificationProps extends CardProps {
+  /**
+   * Id of the UserNotification
+   * @default 'notification_<notificationObject.sid>'
+   */
+  id?: string;
+
+  /**
+   * Overrides or extends the styles applied to the component.
+   * @default null
+   */
+  className?: string;
+
   /**
    * Notification obj
    * @default null
    */
   notificationObject: SCNotificationAggregatedType;
+
   /**
    * The max n of results shown
    * @default 2
    */
-  showMaxAggregated: number;
+  showMaxAggregated?: number;
+
   /**
    * The obj key
    */
   key: number;
+
   /**
    * Any other properties
    */
   [p: string]: any;
 }
+
 export default function UserNotification(props: UserNotificationProps): JSX.Element {
   // PROPS
-  const {notificationObject = null, showMaxAggregated = 2, ...rest} = props;
+  const {id = `notification_${props.notificationObject.sid}`, className = null, notificationObject = null, showMaxAggregated = 2, ...rest} = props;
 
   // ROUTING
   const scRoutingContext: SCRoutingContextType = useSCRouting();
@@ -332,7 +349,7 @@ export default function UserNotification(props: UserNotificationProps): JSX.Elem
    * Renders root object
    */
   return (
-    <Root {...rest}>
+    <Root id={id} className={className} {...rest}>
       <CardContent sx={{paddingBottom: 1}}>
         {renderNotificationHeader()}
         {notificationObject.aggregated.slice(0, showMaxAggregated).map((n: SCNotificationType, i) => renderAggregated(n, i))}

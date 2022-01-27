@@ -33,10 +33,10 @@
     "prerelease": "yarn run clean:lib && yarn run build"
   },
   "directories": {
-    "lib": "./lib"
+    "lib": "lib"
   },
   "files": [
-    "./lib"
+    "lib"
   ],
   "repository": {
     "type": "git",

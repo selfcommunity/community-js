@@ -71,7 +71,7 @@ function userReducer(state, action) {
       return {...state, user: {...state.user, ...{unseen_interactions_counter: action.payload.counter}}};
 
     case userActionTypes.CHANGE_UNSEEN_NOTIFICATION_BANNERS_COUNTER:
-      return {...state, user: {...state.user, ...{unseen_notification_banner_counter: action.payload.counter}}};
+      return {...state, user: {...state.user, ...{unseen_notification_banners_counter: action.payload.counter}}};
 
     default:
       throw new Error(`Unhandled type: ${action.type}`);

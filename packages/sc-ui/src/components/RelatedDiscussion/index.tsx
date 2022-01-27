@@ -23,7 +23,7 @@ import {SCOPE_SC_UI} from '../../constants/Errors';
 import FeedObject, {FeedObjectProps} from '../FeedObject';
 import {FormattedMessage} from 'react-intl';
 import {FeedObjectTemplateType} from '../../types/feedObject';
-import {CustomAdv} from '@selfcommunity/ui';
+import CustomAdv from '../CustomAdv';
 
 const PREFIX = 'SCTrendingPost';
 

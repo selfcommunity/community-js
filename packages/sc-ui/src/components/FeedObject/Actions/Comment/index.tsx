@@ -4,7 +4,7 @@ import {Box, Button, Divider, Tooltip, Typography} from '@mui/material';
 import CommentIcon from '@mui/icons-material/ChatBubbleOutline';
 import {SCFeedObjectType, SCFeedObjectTypologyType, SCRoutingContextType, useSCFetchFeedObject, useSCRouting, Link} from '@selfcommunity/core';
 import {styled} from '@mui/material/styles';
-import {FeedObjectTemplateType} from '@selfcommunity/ui';
+import {FeedObjectTemplateType} from '../../../../types/feedObject';
 
 const messages = defineMessages({
   comments: {

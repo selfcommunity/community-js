@@ -26,10 +26,10 @@ First install peer dependencies needed to make the library work:
 
 ```sh
 // with npm
-`npm install @mui/material @mui/icons-material @emotion/react @emotion/styled react-intl`
+`npm install @mui/material @mui/icons-material @mui/styles @emotion/react @emotion/styled react-intl`
 
 // with yarn
-`yarn add @mui/material @mui/icons-material @emotion/react @emotion/styled react-intl`
+`yarn add @mui/material @mui/icons-material @mui/styles @emotion/react @emotion/styled react-intl`
 ```
 
 Based on which package you want to install proceed as follows:

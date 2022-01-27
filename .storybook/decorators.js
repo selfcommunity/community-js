@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import SCContextProvider from '../packages/sc-core/src/components/provider/SCContextProvider';
+import {SCContextProvider} from '../packages/sc-core/src';
 import { getJWTSession, getOAuthSession, refreshToken } from './sessionHelpers';
 
 const withProvider = (Story, context) => {

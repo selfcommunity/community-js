@@ -5,7 +5,7 @@ import Vote from './Vote';
 import Comment from './Comment';
 import Share from './Share';
 import {SCFeedObjectType, SCFeedObjectTypologyType, useSCFetchFeedObject} from '@selfcommunity/core';
-import {FeedObjectTemplateType} from '@selfcommunity/ui';
+import {FeedObjectTemplateType} from '../../../types/feedObject';
 
 const PREFIX = 'SCFeedObjectActions';
 

@@ -1,21 +1,12 @@
 import {LOCALES} from '../constants/Locale';
 import {isValidUrl} from './url';
 import * as Session from '../constants/Session';
-import {
-  SCLocaleProvider,
-  SCPreferencesProvider,
-  SCRoutingProvider,
-  SCSessionType,
-  SCSettingsType,
-  SCThemeProvider,
-  SCUserProvider,
-} from '@selfcommunity/core';
+import {SCSessionType, SCSettingsType} from '../types/context';
 import {SCOPE_SC_CORE} from '../constants/Errors';
 import {isFunc, ValidationError, ValidationResult, ValidationWarnings} from './errors';
 import {isObject} from './object';
 import {isString} from './string';
 import {SCLocaleType} from '../types';
-import SCNotificationProvider from '../components/provider/SCNotificationProvider';
 import {DEFAULT_CONTEXT_PROVIDERS} from '../constants/ContextProviders';
 
 /**
