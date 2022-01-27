@@ -77,7 +77,7 @@ export interface ReplyCommentObjectProps {
   commentObject?: SCCommentType;
 
   /**
-   * Bind focuse on mount
+   * Bind focus on mount
    * @default false
    */
   autoFocus?: boolean;
@@ -142,7 +142,7 @@ export default function ReplyCommentObject(props: ReplyCommentObjectProps): JSX.
   } = props;
 
   // CONTEXT
-  const scUser: SCUserContextType = useContext(SCUserContext);
+  const scUserContext: SCUserContextType = useContext(SCUserContext);
   const intl = useIntl();
 
   // RETRIVE OBJECTS
@@ -164,7 +164,9 @@ export default function ReplyCommentObject(props: ReplyCommentObjectProps): JSX.
    * Focus on editor
    */
   const handleEditorFocus = (): void => {
-    editor.current.focus();
+    if (editor.current) {
+      editor.current.focus();
+    }
   };
 
   /**
@@ -214,7 +216,11 @@ export default function ReplyCommentObject(props: ReplyCommentObjectProps): JSX.
     return (
       <ListItem alignItems="flex-start" classes={{root: classNames({[classes.commentChild]: !inline})}}>
         <ListItemAvatar classes={{root: classes.avatarWrap}}>
-          <Avatar alt={scUser.user.username} variant="circular" src={scUser.user.avatar} classes={{root: classes.avatar}} />
+          {!scUserContext.user ? (
+            <Avatar variant="circular" classes={{root: classes.avatar}} />
+          ) : (
+            <Avatar alt={scUserContext.user.username} variant="circular" src={scUserContext.user.avatar} classes={{root: classes.avatar}} />
+          )}
         </ListItemAvatar>
         <ListItemText
           disableTypography
@@ -267,5 +273,9 @@ export default function ReplyCommentObject(props: ReplyCommentObjectProps): JSX.
   /**
    * Renders root object
    */
-  return <Root className={className} {...rest}>{renderReply(obj)}</Root>;
+  return (
+    <Root className={className} {...rest}>
+      {renderReply(obj)}
+    </Root>
+  );
 }

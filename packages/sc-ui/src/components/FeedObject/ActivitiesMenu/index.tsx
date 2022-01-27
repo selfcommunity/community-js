@@ -7,7 +7,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {styled} from '@mui/material/styles';
 import {FeedObjectActivitiesType} from '../../../types/feedObject';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {SCPreferences, SCPreferencesContext, SCPreferencesContextType, StringUtils} from '@selfcommunity/core';
+import {SCPreferences, SCPreferencesContext, SCPreferencesContextType, SCUserContextType, StringUtils, useSCUser} from '@selfcommunity/core';
 import {useContext} from 'react';
 
 const messages = defineMessages({
@@ -84,6 +84,7 @@ export default function ActivitiesMenu(props: ActivitiesMenuProps) {
 
   // CONTEXT
   const scPreferencesContext: SCPreferencesContextType = useContext(SCPreferencesContext);
+  const scUserContext: SCUserContextType = useSCUser();
 
   // STATE
   const followEnabled = scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED].value;
@@ -196,27 +197,29 @@ export default function ActivitiesMenu(props: ActivitiesMenuProps) {
             }
           />
         </ListItem>
-        <ListItem
-          selected={selectedActivities === FeedObjectActivitiesType.CONNECTIONS_COMMENTS}
-          button
-          onClick={handleChangeActivitiesType(FeedObjectActivitiesType.CONNECTIONS_COMMENTS)}>
-          <ListItemText
-            primary={<b>{followEnabled ? intl.formatMessage(messages.followedComments) : intl.formatMessage(messages.connectionsComments)}</b>}
-            secondary={
-              followEnabled ? (
-                <FormattedMessage
-                  id={'ui.feedObject.activitiesMenu.followedCommentsDesc'}
-                  defaultMessage={'ui.feedObject.activitiesMenu.followedCommentsDesc'}
-                />
-              ) : (
-                <FormattedMessage
-                  id={'ui.feedObject.activitiesMenu.connectionsCommentsDesc'}
-                  defaultMessage={'ui.feedObject.activitiesMenu.connectionsCommentsDesc'}
-                />
-              )
-            }
-          />
-        </ListItem>
+        {scUserContext.user && (
+          <ListItem
+            selected={selectedActivities === FeedObjectActivitiesType.CONNECTIONS_COMMENTS}
+            button
+            onClick={handleChangeActivitiesType(FeedObjectActivitiesType.CONNECTIONS_COMMENTS)}>
+            <ListItemText
+              primary={<b>{followEnabled ? intl.formatMessage(messages.followedComments) : intl.formatMessage(messages.connectionsComments)}</b>}
+              secondary={
+                followEnabled ? (
+                  <FormattedMessage
+                    id={'ui.feedObject.activitiesMenu.followedCommentsDesc'}
+                    defaultMessage={'ui.feedObject.activitiesMenu.followedCommentsDesc'}
+                  />
+                ) : (
+                  <FormattedMessage
+                    id={'ui.feedObject.activitiesMenu.connectionsCommentsDesc'}
+                    defaultMessage={'ui.feedObject.activitiesMenu.connectionsCommentsDesc'}
+                  />
+                )
+              }
+            />
+          </ListItem>
+        )}
       </Menu>
     </Root>
   );

@@ -824,7 +824,7 @@ export default function Composer(props: ComposerProps): JSX.Element {
             </FormControl>
           </Box>
           <Box>
-            <Avatar className={classes.avatar} src={scAuthContext.user.avatar}></Avatar>
+            {!scAuthContext.user ? <Avatar className={classes.avatar} /> : <Avatar className={classes.avatar} src={scAuthContext.user.avatar} />}
           </Box>
           <Box>
             <IconButton onClick={handleClose}>

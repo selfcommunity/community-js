@@ -27,7 +27,7 @@ export default {
     }
   },
   args: {
-    feedObjectId: 67522,
+    feedObjectId: 9,
     feedObjectType: SCFeedObjectTypologyType.DISCUSSION,
     template: FeedObjectTemplateType.SNIPPET,
     elevation: 1,

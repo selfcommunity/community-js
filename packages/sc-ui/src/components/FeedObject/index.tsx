@@ -57,7 +57,7 @@ import ActivitiesMenu from './ActivitiesMenu';
 import {CommentsOrderBy} from '../../types/comments';
 import {FeedObjectActivitiesType, FeedObjectTemplateType} from '../../types/feedObject';
 import RelevantActivities from './RelevantActivities';
-import ReplyCommentObject, { ReplyCommentObjectProps } from '../CommentObject/ReplyComment';
+import ReplyCommentObject, {ReplyCommentObjectProps} from '../CommentObject/ReplyComment';
 import {LoadingButton} from '@mui/lab';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {AxiosResponse} from 'axios';
@@ -301,7 +301,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
    * else render ReportingMenu
    */
   function renderHeaderAction() {
-    if (scUserContext.user.id === obj.author.id) {
+    if (scUserContext.user && scUserContext.user.id === obj.author.id) {
       return (
         <IconButton aria-haspopup="true" onClick={handleToggleEdit} size="medium">
           <EditOutlinedIcon />
@@ -424,7 +424,9 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
   function renderActivities() {
     return (
       <>
-        {<ReplyCommentObject inline variant={'outlined'} onReply={handleReply} isLoading={isReplying} key={Number(isReplying)} />}
+        {scUserContext.user && (
+          <ReplyCommentObject inline variant={'outlined'} onReply={handleReply} isLoading={isReplying} key={Number(isReplying)} />
+        )}
         {(obj.comment_count || feedObjectActivities || comments.length > 0) && (
           <ActivitiesMenu
             selectedActivities={selectedActivities}
@@ -557,7 +559,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
                     <ContributorsFeedObject feedObject={obj} feedObjectType={feedObjectType} sx={{padding: '6px'}} />
                   </LazyLoad>
                 )}
-                {obj.author.id !== scUserContext.user.id && !hideFollowAction && (
+                {scUserContext.user && obj.author.id !== scUserContext.user.id && !hideFollowAction && (
                   <LoadingButton
                     classes={{root: classes.followButton}}
                     loading={isFollowing}

@@ -1,9 +1,10 @@
-import React, {useState} from 'react';
+import React, { useContext, useState } from 'react';
 import {styled} from '@mui/material/styles';
 import {Button} from '@mui/material';
 import ChangePictureDialog from './ChangePictureDialog';
 import {FormattedMessage} from 'react-intl';
 import PhotoCameraOutlinedIcon from '@mui/icons-material/PhotoCameraOutlined';
+import { SCUserContext, SCUserContextType } from '@selfcommunity/core';
 
 const PREFIX = 'SCChangePictureButton';
 
@@ -39,12 +40,21 @@ export interface ChangePictureProps {
    */
   [p: string]: any;
 }
+
 export default function ChangePicture(props: ChangePictureProps): JSX.Element {
   //PROPS
   const {iconButton, onChange, autoHide, className, ...rest} = props;
 
   //STATE
   const [openChangePictureDialog, setOpenChangePictureDialog] = useState<boolean>(false);
+
+  //CONTEXT
+  const scUserContext: SCUserContextType = useContext(SCUserContext);
+
+  // Anonymous
+  if (!scUserContext.user) {
+    return null;
+  }
 
   /**
    * Renders the component (if not hidden by autoHide prop)

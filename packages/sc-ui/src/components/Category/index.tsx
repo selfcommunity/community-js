@@ -1,10 +1,10 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import {Avatar, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText, CardProps} from '@mui/material';
-import {useSCFetchCategory} from '@selfcommunity/core';
+import {SCUserContext, SCUserContextType, useSCFetchCategory} from '@selfcommunity/core';
 import CategoryBoxSkeleton from '../Skeleton/CategoryBoxSkeleton';
 import FollowButton from '../FollowCategoryButton';
 import {SCCategoryType} from '@selfcommunity/core';
@@ -73,6 +73,9 @@ export default function Category(props: CategoryProps): JSX.Element {
   // PROPS
   const {id = null, category = null, className = null, popular = false, autoHide = false, onFollowProps, ...rest} = props;
 
+  // CONTEXT
+  const scUserContext: SCUserContextType = useContext(SCUserContext);
+
   // STATE
   const {scCategory, setSCCategory} = useSCFetchCategory({id, category});
 
@@ -94,9 +97,11 @@ export default function Category(props: CategoryProps): JSX.Element {
             secondary={popular ? `${intl.formatMessage(messages.categoryFollowers, {total: category.followers_count})}` : scCategory.slogan}
             className={classes.title}
           />
-          <ListItemSecondaryAction className={classes.actions}>
-            <FollowButton category={scCategory} onFollow={onFollowProps} />
-          </ListItemSecondaryAction>
+          {scUserContext.user && (
+            <ListItemSecondaryAction className={classes.actions}>
+              <FollowButton category={scCategory} onFollow={onFollowProps} />
+            </ListItemSecondaryAction>
+          )}
         </ListItem>
       ) : (
         <CategoryBoxSkeleton elevation={0} />

@@ -116,7 +116,9 @@ export default function UsersFollowed(props: UsersFollowed): JSX.Element {
    * On mount, fetches the list of users followed
    */
   useEffect(() => {
-    fetchFollowed();
+    if (scUserContext.user) {
+      fetchFollowed();
+    }
   }, []);
 
   /**
@@ -155,7 +157,7 @@ export default function UsersFollowed(props: UsersFollowed): JSX.Element {
   /**
    * Renders root object (if not hidden by autoHide prop)
    */
-  if (!autoHide) {
+  if (!autoHide && scUserContext.user) {
     return <Root className={className}>{u}</Root>;
   }
   return null;

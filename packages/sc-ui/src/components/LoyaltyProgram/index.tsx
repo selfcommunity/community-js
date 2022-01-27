@@ -124,7 +124,9 @@ export default function LoyaltyProgram(props: LoyaltyProgramProps): JSX.Element 
    * On mount, fetches user loyalty points
    */
   useEffect(() => {
-    fetchLP();
+    if (scUserContext.user) {
+      fetchLP();
+    }
   }, []);
 
   /**
@@ -175,7 +177,7 @@ export default function LoyaltyProgram(props: LoyaltyProgramProps): JSX.Element 
   /**
    * Renders root object (if not hidden by autoHide prop)
    */
-  if (!autoHide) {
+  if (!autoHide && scUserContext.user) {
     return (
       <Root {...props} className={className}>
         <CardContent>{l}</CardContent>

@@ -43,7 +43,9 @@ export default function FollowCategoryButton({
      * Call scCategoriesManager.isFollowed inside an effect
      * to avoid warning rendering child during update parent state
      */
-    setFollowed(scCategoriesManager.isFollowed(scCategory));
+    if (scUserContext.user) {
+      setFollowed(scCategoriesManager.isFollowed(scCategory));
+    }
   });
 
   const followCategory = () => {
@@ -56,6 +58,11 @@ export default function FollowCategoryButton({
         Logger.error(SCOPE_SC_UI, e);
       });
   };
+
+  // User anonymous
+  if (!scUserContext.user) {
+    return null;
+  }
 
   return (
     <FollowButton size="small" onClick={followCategory} loading={followed === null || scCategoriesManager.isLoading(scCategory)} {...rest}>

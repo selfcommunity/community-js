@@ -1,10 +1,10 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useContext, useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
 import {Button, Divider, Typography} from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import {Endpoints, http, Logger} from '@selfcommunity/core';
+import {Endpoints, http, Logger, SCUserContext, SCUserContextType} from '@selfcommunity/core';
 import CategoriesSuggestionSkeleton from '../Skeleton/CategoriesSuggestionSkeleton';
 import Category from '../Category';
 import {AxiosResponse} from 'axios';
@@ -53,6 +53,9 @@ export default function CategoriesFollowed(props: CategoriesListProps): JSX.Elem
   const [total, setTotal] = useState<number>(0);
   const [openCategoriesFollowedDialog, setOpenCategoriesFollowedDialog] = useState<boolean>(false);
 
+  // CONTEXT
+  const scUserContext: SCUserContextType = useContext(SCUserContext);
+
   /**
    * Handles list change on category follow
    */
@@ -98,16 +101,18 @@ export default function CategoriesFollowed(props: CategoriesListProps): JSX.Elem
    * On mount, fetches the list of categories followed
    */
   useEffect(() => {
-    fetchCategoriesFollower()
-      .then((data: AxiosResponse<any>) => {
-        setCategories(data['results']);
-        setTotal(data['count']);
-        setHasMore(data['count'] > visibleCategories);
-        setLoading(false);
-      })
-      .catch((error) => {
-        Logger.error(SCOPE_SC_UI, error);
-      });
+    if (scUserContext.user) {
+      fetchCategoriesFollower()
+        .then((data: AxiosResponse<any>) => {
+          setCategories(data['results']);
+          setTotal(data['count']);
+          setHasMore(data['count'] > visibleCategories);
+          setLoading(false);
+        })
+        .catch((error) => {
+          Logger.error(SCOPE_SC_UI, error);
+        });
+    }
   }, []);
 
   /**
@@ -148,8 +153,12 @@ export default function CategoriesFollowed(props: CategoriesListProps): JSX.Elem
   /**
    * Renders root object (if not hidden by autoHide prop)
    */
-  if (!autoHide) {
-    return <Root className={className} {...rest}>{c}</Root>;
+  if (!autoHide && scUserContext.user) {
+    return (
+      <Root className={className} {...rest}>
+        {c}
+      </Root>
+    );
   }
   return null;
 }

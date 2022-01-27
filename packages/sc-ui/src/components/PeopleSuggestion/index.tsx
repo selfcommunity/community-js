@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
 import {Button, Typography} from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import {Endpoints, http, SCUserType} from '@selfcommunity/core';
+import { Endpoints, http, SCUserContext, SCUserContextType, SCUserType } from '@selfcommunity/core';
 import {PeopleSuggestionSkeleton} from '../Skeleton';
 import User, {UserProps} from '../User';
 import {FormattedMessage} from 'react-intl';
@@ -58,6 +58,9 @@ export default function PeopleSuggestion(props: PeopleSuggestion): JSX.Element {
   const [total, setTotal] = useState<number>(0);
   const [openPeopleSuggestionDialog, setOpenPeopleSuggestionDialog] = useState<boolean>(false);
 
+  // CONTEXT
+  const scUserContext: SCUserContextType = useContext(SCUserContext);
+
   /**
    * Handles list change on user follow
    */
@@ -103,7 +106,9 @@ export default function PeopleSuggestion(props: PeopleSuggestion): JSX.Element {
    * On mount, fetches people suggestion list
    */
   useEffect(() => {
+    if (scUserContext.user) {
     fetchUserSuggestion();
+    }
   }, []);
 
   /**
@@ -147,7 +152,7 @@ export default function PeopleSuggestion(props: PeopleSuggestion): JSX.Element {
   /**
    * Renders root object (if not hidden by autoHide prop)
    */
-  if (!autoHide) {
+  if (!autoHide && scUserContext.user) {
     return (
       <Root className={className} {...rest}>
         {p}

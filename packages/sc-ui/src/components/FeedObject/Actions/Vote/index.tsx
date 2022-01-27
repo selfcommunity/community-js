@@ -261,7 +261,7 @@ export default function Vote(props: VoteShareProps): JSX.Element {
    * @return {JSX.Element}
    */
   function renderInlineStartVoteBtn() {
-    const canVote = scUserContext.user.id !== obj.author.id;
+    const canVote = scUserContext.user && scUserContext.user.id !== obj.author.id;
     const {loading, voting} = state;
     if (!canVote || (withAction && !inlineAction)) {
       return obj.voted ? (
@@ -366,7 +366,7 @@ export default function Vote(props: VoteShareProps): JSX.Element {
    */
   function renderVoteBtn() {
     const {voting} = state;
-    const canVote = scUserContext.user.id !== obj.author.id;
+    const canVote = scUserContext.user && scUserContext.user.id !== obj.author.id;
     return (
       <React.Fragment>
         {withAction && !inlineAction && (
