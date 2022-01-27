@@ -23,6 +23,7 @@ import SnackMessage from './Toast';
 const PREFIX = 'SCUserToastNotifications';
 
 const classes = {
+  toastMessage: `${PREFIX}-toast-message`,
   toastContent: `${PREFIX}-toast-content`,
   toastActions: `${PREFIX}-toast-actions`
 };
@@ -32,10 +33,11 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
+  [`& .${classes.toastMessage}`]: {
+    minWidth: 280
+  },
   [`& .${classes.toastContent}`]: {
-    [theme.breakpoints.up('sm')]: {
-      minWidth: '344px !important'
-    }
+    marginBottom: 10
   }
 }));
 
@@ -63,9 +65,8 @@ export default function UserToastNotifications(props: UserToastNotificationsProp
   const {enqueueSnackbar, closeSnackbar} = useSnackbar();
 
   /**
-   * Render every single notification in aggregated group
+   * Render every single notification content
    * @param n
-   * @param i
    */
   const getContent = (n) => {
     const type = SCNotification.SCNotificationMapping[n.activity_type];
@@ -117,19 +118,24 @@ export default function UserToastNotifications(props: UserToastNotificationsProp
     return null;
   };
 
+  /**
+   * Render every single action notification
+   * @param n
+   */
   const getActions = (n) => {
-    return (
+    /* return (
       <Stack spacing={2} justifyContent="center" alignItems="center">
         <Button
           variant={'outlined'}
           size={'small'}
           onClick={() => {
-            closeSnackbar(props.key);
+            closeSnackbar(n.feed_serialization_id);
           }}>
           <FormattedMessage id="ui.userToastNotifications.dismiss" defaultMessage="ui.userToastNotifications.dismiss" />
         </Button>
       </Stack>
-    );
+    ); */
+    return null;
   };
 
   /**
@@ -154,7 +160,7 @@ export default function UserToastNotifications(props: UserToastNotificationsProp
               <SnackMessage
                 id={data.data.feed_serialization_id}
                 message={
-                  <div>
+                  <div className={classes.toastMessage}>
                     <div className={classes.toastContent}>{getContent(data.data)}</div>
                     <div className={classes.toastActions}>{getActions(data.data)}</div>
                   </div>
