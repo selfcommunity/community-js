@@ -171,9 +171,9 @@ export interface SCUserType {
   unseen_interactions_counter?: number;
 
   /**
-   * interactions counter
+   * notification banner counter
    */
-  unseen_notification_banner_counter?: number;
+  unseen_notification_banners_counter?: number;
 }
 
 /**

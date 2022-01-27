@@ -42,3 +42,8 @@ export const SCNotificationMapping = {
   83: SCNotificationTypologyType.UNBLOCKED_USER,
   99: SCNotificationTypologyType.CUSTOM_NOTIFICATION,
 };
+
+/**
+ * Silent Notifications
+ */
+export const SCSilentNotifications: number[] = [59, 98, 99];

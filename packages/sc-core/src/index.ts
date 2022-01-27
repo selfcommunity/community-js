@@ -104,6 +104,7 @@ import SCAlertMessagesProvider, {SCAlertMessagesContext, useSCAlertMessages} fro
 import SCPreferencesProvider, {SCPreferencesContext, useSCPreferences} from './components/provider/SCPreferencesProvider';
 import * as SCPreferences from './constants/Preferences';
 import * as SCFeatures from './constants/Features';
+import * as SCNotification from './constants/Notification';
 
 /**
  * Custom Hooks
@@ -231,6 +232,7 @@ export {
   SCPreferencesProvider,
   SCPreferences,
   SCFeatures,
+  SCNotification,
   SCNotificationProvider,
   SCNotificationContext,
   useSCNotification,
