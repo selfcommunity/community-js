@@ -263,6 +263,8 @@
   "ui.userNotifications.newNotificationsLabel": "Ci sono nuove notifiche per te ({count}). Vuoi vederle?",
   "ui.userNotifications.notificationNewChip.label": "New",
 
+  "ui.userToastNotifications.dismiss": "Ok",
+
   "ui.Message.dialog.msg": "Sei sicuro di voler eliminare il messaggio selezionato?",
   "ui.Message.dialog.confirm": "Sì",
   "ui.NewMessage.new" : "Nuovo Messaggio",
