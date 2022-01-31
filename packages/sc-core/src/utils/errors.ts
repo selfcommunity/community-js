@@ -19,6 +19,7 @@ export class ValidationError {
   static ERROR_INVALID_THEME = 4403;
   static ERROR_INVALID_ROUTER = 4503;
   static ERROR_INVALID_PROVIDERS = 4603;
+  static ERROR_INVALID_HANDLE_ANONYMOUS_ACTION = 4703;
   static defaultErrorMessageMap = {
     [ValidationError.ERROR_INVALID_CONF]:
       'Invalid or missing library configuration. Check the configuration that is passed to the SCContextProvider.',
@@ -33,6 +34,7 @@ export class ValidationError {
     [ValidationError.ERROR_INVALID_THEME]: 'Invalid theme options.',
     [ValidationError.ERROR_INVALID_ROUTER]: 'Invalid router configuration',
     [ValidationError.ERROR_INVALID_PROVIDERS]: `Invalid providers. Check if the list of providers is valid.`,
+    [ValidationError.ERROR_INVALID_HANDLE_ANONYMOUS_ACTION]: 'Invalid handle anonymous action callback',
   };
 
   errorCode = null;
@@ -54,12 +56,15 @@ export class ValidationWarnings {
   static WARNING_SESSION_REFRESH_TOKEN_CALLBACK_NOT_FOUND = 3100;
   static WARNING_LOCALE_FALLBACK = 3303;
   static WARNING_ROUTER_FALLBACK = 3500;
+  static WARNING_HANDLE_ANONYMOUS_ACTION_FALLBACK = 3700;
 
   static defaultErrorMessageMap = {
     [ValidationWarnings.WARNING_SESSION_REFRESH_TOKEN_CALLBACK_NOT_FOUND]:
-      "The 'refreshTokenCallback' is not defined in initial conf. When the token expires it will not be renewed and the user session will be lost.",
+      "The 'handleRefreshToken' is not defined in initial conf. When the token expires it will not be renewed and the user session will be lost.",
     [ValidationWarnings.WARNING_LOCALE_FALLBACK]: `The 'locale' is not defined in initial conf, fallback to the default ${DEFAULT_LANGUAGE_UI}.`,
     [ValidationWarnings.WARNING_ROUTER_FALLBACK]: "The 'router' is not defined in initial conf, fallback to the default configurations.",
+    [ValidationWarnings.WARNING_HANDLE_ANONYMOUS_ACTION_FALLBACK]:
+      "The 'handleAnonymousAction' is not defined in initial conf, fallback to the default configurations.",
   };
 
   warningCode = null;

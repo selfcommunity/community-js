@@ -115,10 +115,10 @@ export default function useAuth(initialSession: SCSessionType) {
   const refreshSession = useMemo(
     () => () => {
       const session: SCSessionType = state.session;
-      if (!isSessionRefreshing.current && session.refreshTokenCallback) {
+      if (!isSessionRefreshing.current && session.handleRefreshToken) {
         isSessionRefreshing.current = true;
         return session
-          .refreshTokenCallback(state.session)
+          .handleRefreshToken(state.session)
           .then((res: SCAuthTokenType) => {
             isSessionRefreshing.current = false;
             dispatch({type: userActionTypes.REFRESH_TOKEN_SUCCESS, payload: {token: res}});
@@ -200,7 +200,7 @@ export default function useAuth(initialSession: SCSessionType) {
                 !isSessionRefreshing.current &&
                 state.user &&
                 session &&
-                session.refreshTokenCallback &&
+                session.handleRefreshToken &&
                 Boolean(authToken && authToken.refreshToken)
               ) {
                 /**

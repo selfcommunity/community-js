@@ -32,6 +32,12 @@ export interface SCSettingsType {
   router?: SCRoutingContextType;
 
   /**
+   * Callback to handle anonymous action
+   * Ex. an anonymous user attempt to post a comment
+   */
+  handleAnonymousAction?: () => void;
+
+  /**
    * List of SC context providers to override the default value
    * Default context providers:
    * SCPreferencesProvider, SCRoutingProvider, SCUserProvider,
@@ -240,7 +246,7 @@ export interface SCSessionType {
 
   /**
    * ClientID: only for OAuth.
-   * It will be passed to refreshTokenCallback
+   * It will be passed to handleRefreshToken
    */
   clientId: string;
 
@@ -252,7 +258,7 @@ export interface SCSessionType {
   /**
    * Callback to refresh the token.
    */
-  refreshTokenCallback?: (currentSession) => Promise<SCAuthTokenType>;
+  handleRefreshToken?: (currentSession) => Promise<SCAuthTokenType>;
 }
 
 /**

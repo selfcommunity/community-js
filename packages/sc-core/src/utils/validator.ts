@@ -8,11 +8,12 @@ import {isObject} from './object';
 import {isString} from './string';
 import {SCLocaleType} from '../types';
 import {DEFAULT_CONTEXT_PROVIDERS} from '../constants/ContextProviders';
+import {Logger} from '@selfcommunity/core';
 
 /**
  * Validate session option
  * @param session
- * @return {session}
+ * @return {}
  */
 export function validateSession(v: Record<string, any>) {
   const errors = [];
@@ -37,6 +38,7 @@ export function validateSession(v: Record<string, any>) {
 /**
  * Validate session type
  * @param value
+ * @return {}
  */
 export const validateSessionType = (value, session) => {
   const errors = [];
@@ -50,6 +52,7 @@ export const validateSessionType = (value, session) => {
 /**
  * Validate session client id
  * @param value
+ * @return {}
  */
 export const validateSessionClientId = (value, session) => {
   const errors = [];
@@ -65,6 +68,7 @@ export const validateSessionClientId = (value, session) => {
 /**
  * Validate session auth token
  * @param value
+ * @return {}
  */
 export const validateSessionAuthTokenOption = (value, session) => {
   const errors = [];
@@ -77,14 +81,19 @@ export const validateSessionAuthTokenOption = (value, session) => {
   return {errors, warnings, value};
 };
 
-export const validateRefreshTokenCallback = (value, session) => {
+/**
+ * Validate handleRefreshToken option
+ * @param value
+ * @return {}
+ */
+export const validateHandleRefreshToken = (value, session) => {
   const errors = [];
   const warnings = [];
   if (session.type && (session.type === Session.OAUTH_SESSION || session.type === Session.JWT_SESSION)) {
-    if (session.authToken && !session.refreshTokenCallback) {
+    if (session.authToken && !session.handleRefreshToken) {
       warnings.push(ValidationWarnings.WARNING_SESSION_REFRESH_TOKEN_CALLBACK_NOT_FOUND);
     }
-    if (session.refreshTokenCallback && !isFunc(session.refreshTokenCallback)) {
+    if (session.handleRefreshToken && !isFunc(session.handleRefreshToken)) {
       errors.push(ValidationError.ERROR_INVALID_SESSION_REFRESH_TOKEN_CALLBACK);
     }
   }
@@ -94,7 +103,7 @@ export const validateRefreshTokenCallback = (value, session) => {
 /**
  * Validate portal option
  * @param portal
- * @return {portal}
+ * @return {}
  */
 export const validatePortal = (value) => {
   const errors = [];
@@ -108,7 +117,7 @@ export const validatePortal = (value) => {
 /**
  * Validate default locale
  * @param value
- * @param locale
+ * @param {}
  */
 export const validateLocaleDefault = (value, locale) => {
   const errors = [];
@@ -126,7 +135,7 @@ export const validateLocaleDefault = (value, locale) => {
 /**
  * Validate default locale
  * @param value
- * @param locale
+ * @param {}
  */
 export const validateLocaleMessages = (value) => {
   const errors = [];
@@ -140,7 +149,7 @@ export const validateLocaleMessages = (value) => {
 /**
  * Validate locale option
  * @param locale
- * @return {locale}
+ * @return {}
  */
 export const validateLocale = (v) => {
   const errors = [];
@@ -165,7 +174,7 @@ export const validateLocale = (v) => {
 /**
  * Validate router option
  * @param router
- * @return {boolean}
+ * @return {}
  */
 export const validateRouter = (value) => {
   const errors = [];
@@ -181,7 +190,7 @@ export const validateRouter = (value) => {
 /**
  * Validate theme option
  * @param theme
- * @return {boolean}
+ * @return {}
  */
 export const validateTheme = (value) => {
   const errors = [];
@@ -190,6 +199,31 @@ export const validateTheme = (value) => {
     errors.push(ValidationError.ERROR_INVALID_THEME);
   }
   return {errors, warnings, value};
+};
+
+/**
+ * Validate handleAnonymousAction option
+ * @param handleAnonymousAction
+ * @return {}
+ */
+export const validateHandleAnonymousAction = (v) => {
+  const errors = [];
+  const warnings = [];
+  if (v) {
+    if (!isFunc(v)) {
+      errors.push(ValidationError.ERROR_INVALID_HANDLE_ANONYMOUS_ACTION);
+    }
+  } else {
+    warnings.push(ValidationWarnings.WARNING_HANDLE_ANONYMOUS_ACTION_FALLBACK);
+    return {
+      errors,
+      warnings,
+      value: () => {
+        Logger.info(SCOPE_SC_CORE, '');
+      },
+    };
+  }
+  return {errors, warnings, value: v};
 };
 
 /**
@@ -238,6 +272,10 @@ const SessionOption = {
   name: 'session',
   validator: validateSession,
 };
+const HandleAnonymousActionOption = {
+  name: 'handleAnonymousAction',
+  validator: validateHandleAnonymousAction,
+};
 const ContextProvidersOption = {
   name: 'contextProviders',
   validator: validateContextProviders,
@@ -258,9 +296,9 @@ const SessionAuthTokenOption = {
   name: 'authToken',
   validator: validateSessionAuthTokenOption,
 };
-const SessionRefreshTokenCallbackOption = {
-  name: 'refreshTokenCallback',
-  validator: validateRefreshTokenCallback,
+const SessionHandleRefreshTokenOption = {
+  name: 'handleRefreshToken',
+  validator: validateHandleRefreshToken,
 };
 const LocaleDefaultOption = {
   name: 'default',
@@ -281,13 +319,14 @@ export const settingsOptions: Record<string, any> = {
   [ThemeOption.name]: ThemeOption,
   [RouterOption.name]: RouterOption,
   [SessionOption.name]: SessionOption,
+  [HandleAnonymousActionOption.name]: HandleAnonymousActionOption,
   [ContextProvidersOption.name]: ContextProvidersOption,
 };
 export const sessionOptions: Record<string, any> = {
   [SessionTypeOption.name]: SessionTypeOption,
   [SessionClientIdOption.name]: SessionClientIdOption,
   [SessionAuthTokenOption.name]: SessionAuthTokenOption,
-  [SessionRefreshTokenCallbackOption.name]: SessionRefreshTokenCallbackOption,
+  [SessionHandleRefreshTokenOption.name]: SessionHandleRefreshTokenOption,
 };
 export const localeOptions: Record<string, any> = {
   [LocaleDefaultOption.name]: LocaleDefaultOption,

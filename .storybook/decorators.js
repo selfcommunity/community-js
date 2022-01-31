@@ -32,7 +32,7 @@ const withProvider = (Story, context) => {
         type: context.globals.session,
         clientId: context.globals.clientId,
         authToken: authToken, // Comment this line to test anonymous session
-        refreshTokenCallback: context.globals.session !== 'Cookie' ? refreshToken(context) : null,
+        handleRefreshToken: context.globals.session !== 'Cookie' ? refreshToken(context) : null,
       },
       theme: {
         palette: {
@@ -44,7 +44,10 @@ const withProvider = (Story, context) => {
           }
         }
       },
-      /* contextProviders: [
+      /* handleAnonymousAction: () => {
+        alert('Anonymous action');
+      },
+      contextProviders: [
         SCPreferencesProvider,
         SCRoutingProvider,
         SCUserProvider,
