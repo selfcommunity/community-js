@@ -7,15 +7,14 @@ import SharesDialog from './SharesDialog';
 import {
   Endpoints,
   http,
-  Logger,
-  SCContextType,
+  Logger, SCContext, SCContextType,
   SCFeedObjectType,
   SCFeedObjectTypologyType,
   SCMediaType,
   SCUserContextType,
   useSCContext,
   useSCFetchFeedObject,
-  useSCUser
+  useSCUser,
 } from '@selfcommunity/core';
 import {styled} from '@mui/material/styles';
 import ShareMenuIcon from '@mui/icons-material/RedoOutlined';
@@ -197,7 +196,7 @@ export default function Share(props: ShareProps): JSX.Element {
    */
   function share(inCategories) {
     if (!scUserContext.user) {
-      scContext.settings.handleAnonymousAction;
+      scContext.settings.handleAnonymousAction();
     } else {
       setIsSharing(true);
       performCreateMediaShare()

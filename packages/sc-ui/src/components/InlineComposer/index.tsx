@@ -1,5 +1,13 @@
 import React, {useContext, useMemo, useState} from 'react';
-import {SCPreferences, SCPreferencesContext, SCPreferencesContextType, SCUserContext, SCUserContextType} from '@selfcommunity/core';
+import {
+  SCContext,
+  SCContextType,
+  SCPreferences,
+  SCPreferencesContext,
+  SCPreferencesContextType,
+  SCUserContext,
+  SCUserContextType,
+} from '@selfcommunity/core';
 import {Avatar, Box, Button, IconButton, PaperProps} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {SCMediaObjectType} from '../../types/media';
@@ -78,6 +86,7 @@ export default function InlineComposer(props: InlineComposerProps): JSX.Element 
   const {mediaObjectTypes = [Image, Document, Link], onSuccess = null, ...rest} = props;
 
   // Context
+  const scContext: SCContextType = useContext(SCContext);
   const scPreferencesContext: SCPreferencesContextType = useContext(SCPreferencesContext);
   const scUserContext: SCUserContextType = useContext(SCUserContext);
   const {enqueueSnackbar} = useSnackbar();
@@ -97,7 +106,13 @@ export default function InlineComposer(props: InlineComposerProps): JSX.Element 
 
   // Handlers
   const handleOpen = (view) => {
-    return () => setState({view, open: true});
+    return () => {
+      if (scUserContext.user) {
+        setState({view, open: true});
+      } else {
+        scContext.settings.handleAnonymousAction();
+      }
+    };
   };
 
   const handleClose = () => {
@@ -133,7 +148,11 @@ export default function InlineComposer(props: InlineComposerProps): JSX.Element 
           )}
         </Box>
         <Box className={classes.avatar}>
-          {!scUserContext.user ? <Avatar variant="circular" /> : <Avatar alt={scUserContext.user.username} variant="circular" src={scUserContext.user.avatar} />}
+          {!scUserContext.user ? (
+            <Avatar variant="circular" />
+          ) : (
+            <Avatar alt={scUserContext.user.username} variant="circular" src={scUserContext.user.avatar} />
+          )}
         </Box>
       </Root>
       <Composer

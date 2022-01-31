@@ -200,6 +200,7 @@ export default function Vote(props: VoteProps): JSX.Element {
     feedObjectType = SCFeedObjectTypologyType.POST,
     withAction = false,
     inlineAction = true,
+    onVoteFromAnonymous = () => null,
     ...rest
   } = props;
 
@@ -301,7 +302,7 @@ export default function Vote(props: VoteProps): JSX.Element {
           });
       }
     } else {
-      scContext.settings.handleAnonymousAction;
+      scContext.settings.handleAnonymousAction();
     }
   }
 

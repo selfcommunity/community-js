@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useMemo, useState} from 'react';
+import React, {useContext, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
@@ -16,16 +16,15 @@ import {
   http,
   Link,
   Logger,
+  SCCommentType,
+  SCCommentTypologyType,
   SCFeedObjectType,
   SCFeedObjectTypologyType,
   SCRoutingContextType,
   SCUserContext,
   SCUserContextType,
-  SCCommentType,
-  SCCommentTypologyType,
   useSCFetchCommentObject,
   useSCRouting,
-  SCContextType,
   useSCContext
 } from '@selfcommunity/core';
 import {LoadingButton} from '@mui/lab';

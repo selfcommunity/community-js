@@ -963,6 +963,10 @@ export default function Composer(props: ComposerProps): JSX.Element {
     );
   }
 
+  if (!scAuthContext.user) {
+    return null;
+  }
+
   return (
     <Root TransitionComponent={DialogTransition} keepMounted onClose={handleClose} {...rest}>
       {child()}
