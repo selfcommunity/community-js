@@ -25,7 +25,8 @@ import {
   SCUserContextType,
   useSCFetchCommentObject,
   useSCRouting,
-  useSCContext
+  useSCContext,
+  SCContextType
 } from '@selfcommunity/core';
 import {LoadingButton} from '@mui/lab';
 import VoteFilledIcon from '@mui/icons-material/ThumbUpTwoTone';
