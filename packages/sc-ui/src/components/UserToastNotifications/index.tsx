@@ -1,9 +1,10 @@
 import React, {useEffect, useRef} from 'react';
 import {styled} from '@mui/material/styles';
-import {Box, BoxProps, Button, Stack} from '@mui/material';
+import {Box, BoxProps} from '@mui/material';
 import {SCNotificationTopicType, SCNotification, SCNotificationTypologyType} from '@selfcommunity/core';
 import PubSub from 'pubsub-js';
 import {useSnackbar} from 'notistack';
+import CustomSnackMessage from '../../shared/CustomSnackMessage';
 import CollapsedForNotificationToast from './Toast/CollapsedFor';
 import UserNotificationCommentToast from './Toast/Comment';
 import ContributionFollowNotificationToast from './Toast/ContributionFollow';
@@ -17,8 +18,6 @@ import UserBlockedNotificationToast from './Toast/UserBlocked';
 import UserConnectionNotificationToast from './Toast/UserConnection';
 import UserFollowNotificationToast from './Toast/UserFollow';
 import VoteUpNotificationToast from './Toast/VoteUp';
-import {FormattedMessage} from 'react-intl';
-import SnackMessage from './Toast';
 
 const PREFIX = 'SCUserToastNotifications';
 
@@ -157,7 +156,7 @@ export default function UserToastNotifications(props: UserToastNotificationsProp
           {},
           {
             content: (
-              <SnackMessage
+              <CustomSnackMessage
                 id={data.data.feed_serialization_id}
                 message={
                   <div className={classes.toastMessage}>
@@ -167,6 +166,7 @@ export default function UserToastNotifications(props: UserToastNotificationsProp
                 }
               />
             ),
+            preventDuplicate: true,
             key: data.data.feed_serialization_id,
             variant: 'default',
             persist: true,

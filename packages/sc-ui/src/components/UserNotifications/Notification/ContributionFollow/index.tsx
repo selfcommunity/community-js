@@ -21,7 +21,7 @@ const Root = styled(Box, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({}));
 
-export interface NotificationVoteUpProps {
+export interface ContributionFollowProps {
   /**
    * Notification obj
    * @default null
@@ -32,7 +32,8 @@ export interface NotificationVoteUpProps {
    */
   [p: string]: any;
 }
-export default function ContributionFollowNotification(props: NotificationVoteUpProps): JSX.Element {
+
+export default function ContributionFollowNotification(props: ContributionFollowProps): JSX.Element {
   // PROPS
   const {notificationObject = null, ...rest} = props;
 

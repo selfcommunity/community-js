@@ -1,13 +1,11 @@
 import React, {useContext, useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
-import FeedObjectSkeleton from '../Skeleton/FeedObjectSkeleton';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {Avatar, Box, Button, CardContent, CardProps, Grid, ListItem, ListItemAvatar, ListItemText, Tooltip, Typography} from '@mui/material';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import TimeAgo from 'timeago-react';
 import Bullet from '../../shared/Bullet';
-import {SCCommentType} from '@selfcommunity/core/src/types/comment';
 import classNames from 'classnames';
 import Votes from './Votes';
 import {AxiosResponse} from 'axios';
@@ -23,6 +21,7 @@ import {
   SCRoutingContextType,
   SCUserContext,
   SCUserContextType,
+  SCCommentType, SCCommentTypologyType,
   useSCFetchCommentObject,
   useSCRouting
 } from '@selfcommunity/core';
@@ -375,8 +374,8 @@ export default function CommentObject(props: CommentObjectProps): JSX.Element {
     () => (comment) => {
       return http
         .request({
-          url: Endpoints.CommentVote.url({id: comment.id}),
-          method: Endpoints.CommentVote.method
+          url: Endpoints.Vote.url({type: SCCommentTypologyType, id: comment.id}),
+          method: Endpoints.Vote.method
         })
         .then((res: AxiosResponse<any>) => {
           if (res.status >= 300) {

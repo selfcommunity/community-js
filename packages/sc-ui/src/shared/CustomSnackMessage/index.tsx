@@ -5,7 +5,7 @@ import {styled} from '@mui/material/styles';
 import {IconButton} from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 
-const PREFIX = 'SCUserToastNotification';
+const PREFIX = 'SCCustomSnackMessage';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -33,7 +33,15 @@ const Root = styled(SnackbarContent, {
   }
 }));
 
-const SnackMessage = forwardRef<HTMLDivElement, {id: string | number; message: string | React.ReactNode}>((props, ref) => {
+/**
+ * Custom Snackbar for notistack messages
+ * Use this component:
+ *  - pass this component as property 'content' in the 'options' of enqueueSnackbar
+ *
+ * This component add a CloseIcon button on the top-right corner
+ * and attach a close handler that close the snackMessage identified as props.id
+ */
+const CustomSnackMessage = forwardRef<HTMLDivElement, {id: string | number; message: string | React.ReactNode}>((props, ref) => {
   const {closeSnackbar} = useSnackbar();
 
   const handleDismiss = useCallback(() => {
@@ -52,4 +60,4 @@ const SnackMessage = forwardRef<HTMLDivElement, {id: string | number; message: s
   );
 });
 
-export default SnackMessage;
+export default CustomSnackMessage;

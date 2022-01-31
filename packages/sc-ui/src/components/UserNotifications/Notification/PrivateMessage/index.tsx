@@ -58,7 +58,8 @@ export default function UserNotificationPrivateMessage(props: NotificationPMProp
    */
   return (
     <Root {...rest}>
-      <ListItem component={'div'}
+      <ListItem
+        component={'div'}
         secondaryAction={
           <Box>
             <Box component={'span'} sx={{display: {xs: 'none', md: 'inline-block'}, marginRight: '5px', paddingTop: '5px', float: 'left'}}>

@@ -22,7 +22,7 @@ const messages = defineMessages({
   }
 });
 
-const PREFIX = 'SCUserNotificationComment';
+const PREFIX = 'SCCommentNotification';
 
 const Root = styled(Box, {
   name: PREFIX,
@@ -38,7 +38,7 @@ const Root = styled(Box, {
     color: grey[900]
   }
 }));
-export interface UserNotificationCommentProps {
+export interface CommentNotificationProps {
   /**
    * Notification obj
    * @default null
@@ -64,7 +64,7 @@ export interface UserNotificationCommentProps {
    */
   [p: string]: any;
 }
-export default function UserNotificationComment(props: UserNotificationCommentProps): JSX.Element {
+export default function CommentNotification(props: CommentNotificationProps): JSX.Element {
   // PROPS
   const {notificationObject = null, index = null, onVote = null, loadingVote = null, ...rest} = props;
 

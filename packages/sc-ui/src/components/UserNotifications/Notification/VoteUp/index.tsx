@@ -1,11 +1,15 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import {Avatar, Box, Grid, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
+import {Avatar, Box, Grid, ListItem, ListItemAvatar, ListItemText, Tooltip, Typography} from '@mui/material';
 import {Link, SCNotificationVoteUpType, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
-import {defineMessages, useIntl} from 'react-intl';
+import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../../shared/DateTimeAgo';
-import {NotificationVoteUpProps} from '../ContributionFollow';
 import NotificationNewChip from '../../NotificationNewChip';
+import Bullet from '../../../../shared/Bullet';
+import {LoadingButton} from '@mui/lab';
+import VoteFilledIcon from '@mui/icons-material/ThumbUpTwoTone';
+import VoteIcon from '@mui/icons-material/ThumbUpOutlined';
+import { getContributeType } from '../../../../utils/contribute';
 
 const messages = defineMessages({
   appreciated: {
@@ -22,12 +26,43 @@ const Root = styled(Box, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({}));
 
+export interface NotificationVoteUpProps {
+  /**
+   * Notification obj
+   * @default null
+   */
+  notificationObject: SCNotificationVoteUpType;
+  /**
+   * Index
+   * @default null
+   */
+  index: number;
+  /**
+   * Handles action on vote
+   * @default null
+   */
+  onVote: (i, v) => void;
+  /**
+   * The id of the loading vote
+   * @default null
+   */
+  loadingVote: number;
+
+  /**
+   * Any other properties
+   */
+  [p: string]: any;
+}
+
 export default function VoteUpNotification(props: NotificationVoteUpProps): JSX.Element {
   // PROPS
-  const {notificationObject = null, ...rest} = props;
+  const {notificationObject = null, index = null, onVote = null, loadingVote = null, ...rest} = props;
 
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
+
+  // STATE
+  const contributionType = getContributeType(notificationObject);
 
   // INTL
   const intl = useIntl();
@@ -57,7 +92,41 @@ export default function VoteUpNotification(props: NotificationVoteUpProps): JSX.
               })}
             </Typography>
           }
-          secondary={<DateTimeAgo date={notificationObject.active_at} />}
+          secondary={
+            <React.Fragment>
+              <Link to={scRoutingContext.url('comment', {id: notificationObject[contributionType].id})} sx={{textDecoration: 'underline'}}>
+                <Typography variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: notificationObject[contributionType].summary}} />
+              </Link>
+              <Box component="span" sx={{display: 'flex', justifyContent: 'flex-start', p: '2px'}}>
+                <Grid component="span" item={true} sm="auto" container direction="row" alignItems="center">
+                  <DateTimeAgo date={notificationObject.active_at} />
+                  <Bullet sx={{paddingLeft: '10px', paddingTop: '1px'}} />
+                  <LoadingButton
+                    variant={'text'}
+                    sx={{marginTop: '-1px', minWidth: '30px'}}
+                    onClick={() => onVote(index, notificationObject[contributionType])}
+                    disabled={loadingVote !== null}
+                    loading={loadingVote === index}>
+                    {notificationObject[contributionType].voted ? (
+                      <Tooltip
+                        title={
+                          <FormattedMessage id={'ui.userNotifications.comment.voteDown'} defaultMessage={'ui.userNotifications.comment.voteDown'} />
+                        }>
+                        <VoteFilledIcon fontSize={'small'} color={'secondary'} />
+                      </Tooltip>
+                    ) : (
+                      <Tooltip
+                        title={
+                          <FormattedMessage id={'ui.userNotifications.comment.voteUp'} defaultMessage={'ui.userNotifications.comment.voteUp'} />
+                        }>
+                        <VoteIcon fontSize={'small'} />
+                      </Tooltip>
+                    )}
+                  </LoadingButton>
+                </Grid>
+              </Box>
+            </React.Fragment>
+          }
         />
       </ListItem>
     </Root>
