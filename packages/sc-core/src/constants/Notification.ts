@@ -14,8 +14,11 @@ export const SCNotificationMapping = {
   4: SCNotificationTypologyType.NESTED_COMMENT,
   55: SCNotificationTypologyType.CONNECTION_REQUEST,
   56: SCNotificationTypologyType.CONNECTION_ACCEPT,
+  57: SCNotificationTypologyType.CONNECTION_REJECT,
+  58: SCNotificationTypologyType.CONNECTION_CANCEL_REJECT,
   59: SCNotificationTypologyType.CONNECTION_REMOVE,
-  100: SCNotificationTypologyType.MENTION,
+  60: SCNotificationTypologyType.CONNECTION_CANCEL_REQUEST,
+  19: SCNotificationTypologyType.MENTION,
   9: SCNotificationTypologyType.VOTE_UP,
   16: SCNotificationTypologyType.FOLLOW,
   37: SCNotificationTypologyType.PRIVATE_MESSAGE,
@@ -46,4 +49,4 @@ export const SCNotificationMapping = {
 /**
  * Silent Notifications
  */
-export const SCSilentNotifications: number[] = [59, 98, 99];
+export const SCSilentNotifications: number[] = [57, 58, 59, 60, 98, 99];
