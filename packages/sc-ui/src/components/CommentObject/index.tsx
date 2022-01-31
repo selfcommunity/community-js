@@ -21,9 +21,12 @@ import {
   SCRoutingContextType,
   SCUserContext,
   SCUserContextType,
-  SCCommentType, SCCommentTypologyType,
+  SCCommentType,
+  SCCommentTypologyType,
   useSCFetchCommentObject,
-  useSCRouting
+  useSCRouting,
+  SCContextType,
+  useSCContext
 } from '@selfcommunity/core';
 import {LoadingButton} from '@mui/lab';
 import VoteFilledIcon from '@mui/icons-material/ThumbUpTwoTone';
@@ -187,22 +190,10 @@ export interface CommentObjectProps {
   onVote?: (comment: SCCommentType) => void;
 
   /**
-   * Callback on vote from anonymous user
-   * @default () => null
-   */
-  onVoteFromAnonymous?: () => void;
-
-  /**
    * Callback on fecth latest comments
    * @default null
    */
   onFetchLatestComment?: () => void;
-
-  /**
-   * Callback on reply from anonymous user
-   * @default () => null
-   */
-  onReplyFromAnonymous?: () => void;
 
   /**
    * Props to spread to single comment object skeleton
@@ -236,16 +227,19 @@ export default function CommentObject(props: CommentObjectProps): JSX.Element {
     commentReply,
     onOpenReply,
     onVote,
-    onVoteFromAnonymous = () => null,
     onFetchLatestComment,
-    onReplyFromAnonymous = () => null,
     CommentObjectSkeletonProps = {elevation: 0, variant: 'outlined'},
     ReplyCommentObjectProps = {elevation: 0, variant: 'outlined'},
     ...rest
   } = props;
 
+  // CONTEXT
+  const scContext: SCContextType = useSCContext();
   const scUserContext: SCUserContextType = useContext(SCUserContext);
   const scRoutingContext: SCRoutingContextType = useSCRouting();
+  const intl = useIntl();
+
+  // STATE
   const {obj, setObj} = useSCFetchCommentObject({id: commentObjectId, commentObject});
   const [loadingVote, setLoadingVote] = useState(false);
   const [loadingLatestComments, setLoadingLatestComments] = useState(false);
@@ -254,7 +248,6 @@ export default function CommentObject(props: CommentObjectProps): JSX.Element {
   const [isReplying, setIsReplying] = useState<boolean>(false);
   const [editComment, setEditComment] = useState<SCCommentType>(null);
   const [isSavingComment, setIsSavingComment] = useState<boolean>(false);
-  const intl = useIntl();
 
   /**
    * Render added_at of the comment
@@ -280,7 +273,7 @@ export default function CommentObject(props: CommentObjectProps): JSX.Element {
       <LoadingButton
         variant={'text'}
         sx={{minWidth: 30}}
-        onClick={() => (!scUserContext.user ? onVoteFromAnonymous() : vote(comment))}
+        onClick={() => (!scUserContext.user ? scContext.settings.handleAnonymousAction() : vote(comment))}
         disabled={loadingVote}>
         {comment.voted ? (
           <Tooltip title={<FormattedMessage id={'ui.commentObject.voteDown'} defaultMessage={'ui.commentObject.voteDown'} />}>
@@ -301,7 +294,7 @@ export default function CommentObject(props: CommentObjectProps): JSX.Element {
    */
   function renderActionReply(comment) {
     return (
-      <Button variant={'text'} onClick={() => (!scUserContext.user ? onReplyFromAnonymous() : reply(comment))}>
+      <Button variant={'text'} onClick={() => (!scUserContext.user ? scContext.settings.handleAnonymousAction() : reply(comment))}>
         {intl.formatMessage(messages.reply)}
       </Button>
     );

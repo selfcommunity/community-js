@@ -8,10 +8,12 @@ import {
   Endpoints,
   http,
   Logger,
+  SCContextType,
   SCFeedObjectType,
   SCFeedObjectTypologyType,
   SCMediaType,
   SCUserContextType,
+  useSCContext,
   useSCFetchFeedObject,
   useSCUser
 } from '@selfcommunity/core';
@@ -63,36 +65,37 @@ export interface ShareProps {
    * @default null
    */
   className?: string;
+
   /**
    * Feed object id
    * @default null
    */
   id?: number;
+
   /**
    * Feed object
    * @default null
    */
   feedObject?: SCFeedObjectType;
+
   /**
    * Feed object type
    * @default 'post' type
    */
   feedObjectType?: SCFeedObjectTypologyType;
+
   /**
    * Manages action (if present)
    * @default false
    */
   withAction: boolean;
+
   /**
    * Manages inline action
    * @default true
    */
   inlineAction: boolean;
-  /**
-   * Callback on share from anonymous user
-   * @default () => null
-   */
-  onShareFromAnonymous?: () => void;
+
   /**
    * Any other properties
    */
@@ -108,7 +111,6 @@ export default function Share(props: ShareProps): JSX.Element {
     feedObjectType = SCFeedObjectTypologyType.POST,
     withAction = false,
     inlineAction = true,
-    onShareFromAnonymous = () => null,
     ...rest
   } = props;
 
@@ -121,6 +123,7 @@ export default function Share(props: ShareProps): JSX.Element {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   // CONTEXT
+  const scContext: SCContextType = useSCContext();
   const scUserContext: SCUserContextType = useSCUser();
 
   // INTL
@@ -194,7 +197,7 @@ export default function Share(props: ShareProps): JSX.Element {
    */
   function share(inCategories) {
     if (!scUserContext.user) {
-      onShareFromAnonymous && onShareFromAnonymous();
+      scContext.settings.handleAnonymousAction;
     } else {
       setIsSharing(true);
       performCreateMediaShare()

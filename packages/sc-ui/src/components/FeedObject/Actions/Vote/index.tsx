@@ -17,10 +17,12 @@ import {
   Endpoints,
   http,
   Logger,
+  SCContextType,
   SCFeedObjectType,
   SCFeedObjectTypologyType,
   SCTagType,
   SCUserContextType,
+  useSCContext,
   useSCFetchFeedObject,
   useSCUser
 } from '@selfcommunity/core';
@@ -152,36 +154,37 @@ export interface VoteProps {
    * @default null
    */
   className?: string;
+
   /**
    * Feed object id
    * @default null
    */
   id?: number;
+
   /**
    * Feed object
    * @default null
    */
   feedObject?: SCFeedObjectType;
+
   /**
    * Feed object type
    * @default 'post' type
    */
   feedObjectType?: SCFeedObjectTypologyType;
+
   /**
    * Manages action (if present)
    * @default false
    */
   withAction: boolean;
+
   /**
    * Manages inline action
    * @default true
    */
   inlineAction: boolean;
-  /**
-   * Callback on vote from anonymous user
-   * @default () => null
-   */
-  onVoteFromAnonymous?: () => void;
+
   /**
    * Any other properties
    */
@@ -197,7 +200,6 @@ export default function Vote(props: VoteProps): JSX.Element {
     feedObjectType = SCFeedObjectTypologyType.POST,
     withAction = false,
     inlineAction = true,
-    onVoteFromAnonymous = () => null,
     ...rest
   } = props;
 
@@ -206,6 +208,7 @@ export default function Vote(props: VoteProps): JSX.Element {
   const [state, dispatch] = useReducer(votesReducer, {}, () => stateInitializer({id, feedObject, feedObjectType}));
 
   // CONTEXT
+  const scContext: SCContextType = useSCContext();
   const scUserContext: SCUserContextType = useSCUser();
 
   // INTL
@@ -298,7 +301,7 @@ export default function Vote(props: VoteProps): JSX.Element {
           });
       }
     } else {
-      onVoteFromAnonymous && onVoteFromAnonymous();
+      scContext.settings.handleAnonymousAction;
     }
   }
 
