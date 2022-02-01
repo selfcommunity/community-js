@@ -1,39 +1,46 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import {Avatar, Box, Grid, ListItem, ListItemAvatar, ListItemText, Tooltip, Typography} from '@mui/material';
-import {Link, SCNotificationCommentType, SCNotificationTypologyType, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
+import {Avatar, Box, ListItem, ListItemAvatar, ListItemText, Stack, Typography} from '@mui/material';
+import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {grey} from '@mui/material/colors';
 import DateTimeAgo from '../../../../shared/DateTimeAgo';
 
 const messages = defineMessages({
-  comment: {
-    id: 'ui.userNotifications.comment.comment',
-    defaultMessage: 'ui.userNotifications.comment.comment'
-  },
-  nestedComment: {
-    id: 'ui.userNotifications.comment.nestedComment',
-    defaultMessage: 'ui.userNotifications.comment.nestedComment'
+  addedComment: {
+    id: 'ui.userToastNotifications.comment.addedComment',
+    defaultMessage: 'ui.userToastNotifications.comment.addedComment'
   }
 });
 
 const PREFIX = 'SCUserNotificationCommentToast';
+
+const classes = {
+  content: `${PREFIX}-content`
+};
 
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  '& .MuiSvgIcon-root': {
-    width: '0.7em',
-    marginBottom: '0.5px'
-  },
-  '& a': {
-    textDecoration: 'none',
-    color: grey[900]
+  [`& .${PREFIX}-content`]: {
+    padding: '8px 0px 15px 0px'
   }
 }));
+
 export interface UserNotificationCommentToastProps {
+  /**
+   * Id of the feedObject
+   * @default 'tn_<notificationObject.feed_serialization_id>'
+   */
+  id?: string;
+
+  /**
+   * Overrides or extends the styles applied to the component.
+   * @default null
+   */
+  className?: string;
+
   /**
    * Notification obj
    * @default null
@@ -45,9 +52,16 @@ export interface UserNotificationCommentToastProps {
    */
   [p: string]: any;
 }
+
+/**
+ * This component render the content of the
+ * toast notification of type comment/nested_comment
+ * @param props
+ * @constructor
+ */
 export default function UserNotificationCommentToast(props: UserNotificationCommentToastProps): JSX.Element {
   // PROPS
-  const {notificationObject = null, ...rest} = props;
+  const {notificationObject = null, id = `tn_${props.notificationObject['feed_serialization_id']}`, className, ...rest} = props;
 
   // ROUTING
   const scRoutingContext: SCRoutingContextType = useSCRouting();
@@ -58,10 +72,9 @@ export default function UserNotificationCommentToast(props: UserNotificationComm
   /**
    * Renders root object
    */
-  return <div dangerouslySetInnerHTML={{__html: notificationObject.html}} />;
-  /* return (
-    <Root {...rest}>
-      <ListItem alignItems="flex-start" component={'div'}>
+  return (
+    <Root id={id} className={className} {...rest}>
+      <ListItem component={'div'} className={classes.content}>
         <ListItemAvatar>
           <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: notificationObject.comment.author.id})}>
             <Avatar alt={notificationObject.comment.author.username} variant="circular" src={notificationObject.comment.author.avatar} />
@@ -74,29 +87,23 @@ export default function UserNotificationCommentToast(props: UserNotificationComm
               <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: notificationObject.comment.author.id})}>
                 {notificationObject.comment.author.username}
               </Link>{' '}
-              {notificationObject.type === SCNotificationTypologyType.NESTED_COMMENT
-                ? intl.formatMessage(messages.comment, {
-                    b: (...chunks) => <strong>{chunks}</strong>
-                  })
-                : intl.formatMessage(messages.nestedComment, {
-                    b: (...chunks) => <strong>{chunks}</strong>
-                  })}
+              {intl.formatMessage(messages.addedComment, {
+                b: (...chunks) => <span>{chunks}</span>
+              })}
+              :
             </Typography>
           }
-          secondary={
-            <React.Fragment>
-              <Link to={scRoutingContext.url('comment', {id: notificationObject.comment.id})} sx={{textDecoration: 'underline'}}>
-                <Typography variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: notificationObject.comment.summary}} />
-              </Link>
-              <Box component="span" sx={{display: 'flex', justifyContent: 'flex-start', p: '2px'}}>
-                <Grid component="span" item={true} sm="auto" container direction="row" alignItems="center">
-                  <DateTimeAgo date={notificationObject.active_at} />
-                </Grid>
-              </Box>
-            </React.Fragment>
-          }
+          secondary={<Typography variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: notificationObject.comment.summary}} />}
         />
       </ListItem>
+      <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
+        <DateTimeAgo date={notificationObject.active_at} />
+        <Typography color="primary">
+          <Link to={scRoutingContext.url('comment', {id: notificationObject.comment.id})} sx={{textDecoration: 'underline'}}>
+            <FormattedMessage id="ui.userToastNotifications.viewContribution" defaultMessage={'ui.userToastNotifications.viewContribution'} />
+          </Link>
+        </Typography>
+      </Stack>
     </Root>
-  ); */
+  );
 }

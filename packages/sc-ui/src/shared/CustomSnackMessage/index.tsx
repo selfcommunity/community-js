@@ -29,7 +29,8 @@ const Root = styled(SnackbarContent, {
   [`& .${classes.closeAction}`]: {
     position: 'absolute',
     right: 0,
-    top: 0
+    top: 0,
+    zIndex: 1
   }
 }));
 

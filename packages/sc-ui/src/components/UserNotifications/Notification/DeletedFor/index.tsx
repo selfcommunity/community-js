@@ -3,9 +3,8 @@ import {styled} from '@mui/material/styles';
 import {Avatar, Box, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
 import EmojiFlagsIcon from '@mui/icons-material/EmojiFlags';
 import {red} from '@mui/material/colors';
-import {Link, SCNotificationDeletedForType, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
+import {Link, SCNotificationDeletedForType, SCRoutingContextType, useSCRouting, StringUtils} from '@selfcommunity/core';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {camelCase} from '../../../../../../sc-core/src/utils/string';
 import {getContributeType} from '../../../../utils/contribute';
 import DateTimeAgo from '../../../../shared/DateTimeAgo';
 import {NotificationDeletedForProps} from '../CollapsedFor';
@@ -71,7 +70,7 @@ export default function DeletedForNotification(props: NotificationDeletedForProp
           primary={
             <Typography component="span" sx={{display: 'inline'}} color="primary">
               <b>
-                {intl.formatMessage(messages[camelCase(notificationObject.type)], {b: (...chunks) => <strong>{chunks}</strong>})} (
+                {intl.formatMessage(messages[StringUtils.camelCase(notificationObject.type)], {b: (...chunks) => <strong>{chunks}</strong>})} (
                 <FormattedMessage id="ui.userNotifications.viewRules" defaultMessage="ui.userNotifications.viewRules" />
                 ).
               </b>

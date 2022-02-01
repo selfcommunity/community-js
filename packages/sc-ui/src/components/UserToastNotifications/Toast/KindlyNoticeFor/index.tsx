@@ -1,49 +1,86 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import {Avatar, Box, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
+import {Avatar, Box, ListItem, ListItemAvatar, ListItemText, Stack, Typography} from '@mui/material';
 import EmojiFlagsIcon from '@mui/icons-material/EmojiFlags';
 import {red} from '@mui/material/colors';
-import {Link, SCNotificationDeletedForType, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
+import {Link, SCRoutes, SCRoutingContextType, useSCRouting, StringUtils} from '@selfcommunity/core';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {camelCase} from '../../../../../../sc-core/src/utils/string';
 import {getContributeType} from '../../../../utils/contribute';
 import DateTimeAgo from '../../../../shared/DateTimeAgo';
-import {NotificationDeletedForToastProps} from '../CollapsedFor';
 
 const messages = defineMessages({
-  collapsedForAdvertising: {
-    id: 'ui.userNotifications.collapsedFor.collapsedForAdvertising',
-    defaultMessage: 'ui.userNotifications.collapsedFor.collapsedForAdvertising'
+  kindlyNoticeAdvertising: {
+    id: 'ui.userNotifications.kindlyNoticeFor.kindlyNoticeForAdvertising',
+    defaultMessage: 'ui.userNotifications.kindlyNoticeFor.kindlyNoticeForAdvertising'
   },
-  collapsedForAggressive: {
-    id: 'ui.userNotifications.collapsedFor.collapsedForAggressive',
-    defaultMessage: 'ui.userNotifications.collapsedFor.collapsedForAggressive'
+  kindlyNoticeAggressive: {
+    id: 'ui.userNotifications.kindlyNoticeFor.kindlyNoticeForAggressive',
+    defaultMessage: 'ui.userNotifications.kindlyNoticeFor.kindlyNoticeForAggressive'
   },
-  collapsedForVulgar: {
-    id: 'ui.userNotifications.collapsedFor.collapsedForVulgar',
-    defaultMessage: 'ui.userNotifications.collapsedFor.collapsedForVulgar'
+  kindlyNoticeVulgar: {
+    id: 'ui.userNotifications.kindlyNoticeFor.kindlyNoticeForVulgar',
+    defaultMessage: 'ui.userNotifications.kindlyNoticeFor.kindlyNoticeForVulgar'
   },
-  collapsedForPoor: {
-    id: 'ui.userNotifications.collapsedFor.collapsedForPoor',
-    defaultMessage: 'ui.userNotifications.collapsedFor.collapsedForPoor'
+  kindlyNoticePoor: {
+    id: 'ui.userNotifications.kindlyNoticeFor.kindlyNoticeForPoor',
+    defaultMessage: 'ui.userNotifications.kindlyNoticeFor.kindlyNoticeForPoor'
   },
-  collapsedForOfftopic: {
-    id: 'ui.userNotifications.collapsedFor.collapsedForOfftopic',
-    defaultMessage: 'ui.userNotifications.collapsedFor.collapsedForOfftopic'
+  kindlyNoticeOfftopic: {
+    id: 'ui.userNotifications.kindlyNoticeFor.kindlyNoticeForOfftopic',
+    defaultMessage: 'ui.userNotifications.kindlyNoticeFor.kindlyNoticeForOfftopic'
   }
 });
 
 const PREFIX = 'SCKindlyNoticeForNotificationToast';
 
+const classes = {
+  content: `${PREFIX}-content`
+};
+
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+})(({theme}) => ({
+  [`& .${PREFIX}-content`]: {
+    padding: '8px 0px 15px 0px'
+  }
+}));
 
-export default function KindlyNoticeForNotificationToast(props: NotificationDeletedForToastProps): JSX.Element {
+export interface NotificationKindlyNoticeForToastProps {
+  /**
+   * Id of the feedObject
+   * @default 'tn_<notificationObject.feed_serialization_id>'
+   */
+  id?: string;
+
+  /**
+   * Overrides or extends the styles applied to the component.
+   * @default null
+   */
+  className?: string;
+
+  /**
+   * Notification obj
+   * @default null
+   */
+  notificationObject: any;
+
+  /**
+   * Any other properties
+   */
+  [p: string]: any;
+}
+
+/**
+ * This component render the content of the
+ * toast notification of type kindly notice (contribution)
+ * @param props
+ * @constructor
+ */
+export default function KindlyNoticeForNotificationToast(props: NotificationKindlyNoticeForToastProps): JSX.Element {
   // PROPS
-  const {notificationObject = null, ...rest} = props;
+  const {notificationObject = null, id = `tn_${props.notificationObject['feed_serialization_id']}`, className, ...rest} = props;
 
   // ROUTING
   const scRoutingContext: SCRoutingContextType = useSCRouting();
@@ -57,10 +94,9 @@ export default function KindlyNoticeForNotificationToast(props: NotificationDele
   /**
    * Renders root object
    */
-  return <div dangerouslySetInnerHTML={{__html: notificationObject.html}} />;
-  /* return (
-    <Root {...rest}>
-      <ListItem alignItems="flex-start" component={'div'}>
+  return (
+    <Root id={id} className={className} {...rest}>
+      <ListItem component={'div'} className={classes.content}>
         <ListItemAvatar>
           <Avatar variant="circular" sx={{backgroundColor: red[500]}}>
             <EmojiFlagsIcon />
@@ -71,13 +107,12 @@ export default function KindlyNoticeForNotificationToast(props: NotificationDele
           primary={
             <Typography component="span" sx={{display: 'inline'}} color="primary">
               <b>
-                {intl.formatMessage(messages[camelCase(notificationObject.type)], {b: (...chunks) => <strong>{chunks}</strong>})} (
+                {intl.formatMessage(messages[StringUtils.camelCase(notificationObject.type)], {b: (...chunks) => <strong>{chunks}</strong>})} (
                 <FormattedMessage id="ui.userNotifications.viewRules" defaultMessage="ui.userNotifications.viewRules" />
                 ).
               </b>
             </Typography>
           }
-          secondary={<DateTimeAgo date={notificationObject.active_at} />}
         />
       </ListItem>
       <Box sx={{mb: 1, p: 1}}>
@@ -94,6 +129,17 @@ export default function KindlyNoticeForNotificationToast(props: NotificationDele
           />
         </Link>
       </Box>
+      <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
+        <DateTimeAgo date={notificationObject.active_at} />
+        <Typography color="primary">
+          <Link
+            to={scRoutingContext.url(SCRoutes[`${notificationObject[contributionType].type.toUpperCase()}_ROUTE_NAME`], {
+              id: notificationObject[contributionType].id
+            })}>
+            <FormattedMessage id="ui.userToastNotifications.viewContribution" defaultMessage={'ui.userToastNotifications.viewContribution'} />
+          </Link>
+        </Typography>
+      </Stack>
     </Root>
-  ); */
+  );
 }

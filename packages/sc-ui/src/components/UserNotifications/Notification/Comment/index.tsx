@@ -38,6 +38,7 @@ const Root = styled(Box, {
     color: grey[900]
   }
 }));
+
 export interface CommentNotificationProps {
   /**
    * Notification obj
@@ -64,6 +65,7 @@ export interface CommentNotificationProps {
    */
   [p: string]: any;
 }
+
 export default function CommentNotification(props: CommentNotificationProps): JSX.Element {
   // PROPS
   const {notificationObject = null, index = null, onVote = null, loadingVote = null, ...rest} = props;
