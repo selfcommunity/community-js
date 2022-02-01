@@ -22,6 +22,7 @@ export const SCNotificationMapping = {
   9: SCNotificationTypologyType.VOTE_UP,
   16: SCNotificationTypologyType.FOLLOW,
   37: SCNotificationTypologyType.PRIVATE_MESSAGE,
+  105: SCNotificationTypologyType.DELETE_PRIVATE_MESSAGE,
   50: SCNotificationTypologyType.DELETED_FOR_ADVERTISING,
   51: SCNotificationTypologyType.DELETED_FOR_AGGRESSIVE,
   52: SCNotificationTypologyType.DELETED_FOR_VULGAR,
@@ -43,10 +44,11 @@ export const SCNotificationMapping = {
   73: SCNotificationTypologyType.KINDLY_NOTICE_FLAG,
   74: SCNotificationTypologyType.BLOCKED_USER,
   83: SCNotificationTypologyType.UNBLOCKED_USER,
+  96: SCNotificationTypologyType.INCUBATOR_APPROVED,
   99: SCNotificationTypologyType.CUSTOM_NOTIFICATION,
 };
 
 /**
  * Silent Notifications
  */
-export const SCSilentNotifications: number[] = [57, 58, 59, 60, 98, 99];
+export const SCSilentNotifications: number[] = [57, 58, 59, 60, 98, 99, 105];

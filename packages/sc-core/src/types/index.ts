@@ -26,6 +26,7 @@ import {SCContributionLocation, SCLocalityType} from './location';
 import {SCPollChoiceType, SCPollType} from './poll';
 import {SCCommentType, SCCommentTypologyType} from './comment';
 import {SCPrivateMessageType, SCPrivateMessageStatusType} from './privateMessage';
+import {SCIncubatorType} from './incubator';
 import {SCCustomNotificationType} from './customNotification';
 import {SCPrizeType} from './prize';
 import {
@@ -58,6 +59,7 @@ import {
   SCNotificationUnDeletedForType,
   SCNotificationUserFollowType,
   SCNotificationVoteUpType,
+  SCNotificationIncubatorType,
   SCNotificationTopicType,
 } from './notification';
 
@@ -126,5 +128,7 @@ export {
   SCNotificationVoteUpType,
   SCCustomNotificationType,
   SCNotificationTopicType,
+  SCIncubatorType,
+  SCNotificationIncubatorType,
   SCPrizeType,
 };

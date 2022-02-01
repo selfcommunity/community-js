@@ -1,4 +1,4 @@
-import { SCFeedObjectTypologyType, SCUserType } from './index';
+import {SCUserType } from './index';
 
 /**
  * Typology Comment
