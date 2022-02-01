@@ -264,6 +264,15 @@
   "ui.userNotifications.notificationNewChip.label": "New",
 
   "ui.userToastNotifications.dismiss": "Ok",
+  "ui.userToastNotifications.goToProfile": "Vai al profilo",
+  "ui.userToastNotifications.viewContribution": "Vedi contributo",
+  "ui.userToastNotifications.replyMessage": "Rispondi",
+  "ui.userToastNotifications.privateMessage.sentMessage": "ti ha inviato un messaggio",
+  "ui.userToastNotifications.mention.quotedYou": "ti ha citato su",
+  "ui.userToastNotifications.comment.addedComment": "ha aggiunto un commento",
+  "ui.userToastNotifications.contributionFollow.follow": "sta seguendo il tuo post",
+  "ui.userToastNotifications.undeletedFor.restoredContent": "Un tuo contenuto, precedentemente rimosso, è stato ripristinato",
+  "ui.userToastNotifications.undeletedFor.youWrote": "Hai scritto: ",
 
   "ui.Message.dialog.msg": "Sei sicuro di voler eliminare il messaggio selezionato?",
   "ui.Message.dialog.confirm": "Sì",
