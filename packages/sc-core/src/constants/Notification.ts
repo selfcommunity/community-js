@@ -10,7 +10,7 @@ export const SCNotificationTopics = [SCNotificationTopicType.INTERACTION, SCNoti
  * Notification mapping
  */
 export const SCNotificationMapping = {
-  3: SCNotificationTypologyType.COMMENT,
+  2: SCNotificationTypologyType.COMMENT,
   4: SCNotificationTypologyType.NESTED_COMMENT,
   55: SCNotificationTypologyType.CONNECTION_REQUEST,
   56: SCNotificationTypologyType.CONNECTION_ACCEPT,
