@@ -15,7 +15,7 @@ const messages = defineMessages({
   }
 });
 
-const PREFIX = 'SCKindlyNoticeFlagNotification';
+const PREFIX = 'SCKindlyNoticeFlagNotificationToast';
 
 const classes = {
   content: `${PREFIX}-content`
@@ -57,12 +57,13 @@ export interface NotificationKindlyNoticeFlagToastProps {
 }
 
 /**
+ * !IMPORTANT: this component is not used yet because the notification via ws is not launched
  * This component render the content of the
  * toast notification of type kindly notice flag (contribution)
  * @param props
  * @constructor
  */
-export default function KindlyNoticeFlagNotification(props: NotificationKindlyNoticeFlagToastProps): JSX.Element {
+export default function KindlyNoticeFlagNotificationToast(props: NotificationKindlyNoticeFlagToastProps): JSX.Element {
   // PROPS
   const {notificationObject = null, id = `tn_${props.notificationObject['feed_serialization_id']}`, className, ...rest} = props;
 

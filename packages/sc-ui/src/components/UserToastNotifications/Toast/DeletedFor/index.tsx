@@ -80,6 +80,7 @@ export interface NotificationDeletedForToastProps {
 }
 
 /**
+ * !IMPORTANT: this component is not used yet because the notification via ws is not launched
  * This component render the content of the
  * toast notification of type deleted for (contribution)
  * @param props

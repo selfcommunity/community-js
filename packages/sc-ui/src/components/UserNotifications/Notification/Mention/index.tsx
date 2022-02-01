@@ -29,19 +29,37 @@ const Root = styled(Box, {
 
 export interface NotificationMentionProps {
   /**
+   * Id of the feedObject
+   * @default 'n_<notificationObject.sid>'
+   */
+  id?: string;
+
+  /**
+   * Overrides or extends the styles applied to the component.
+   * @default null
+   */
+  className?: string;
+
+  /**
    * Notification obj
    * @default null
    */
   notificationObject: SCNotificationMentionType;
+
   /**
    * Any other properties
    */
   [p: string]: any;
 }
 
+/**
+ * This component render the content of the notification of type mention
+ * @param props
+ * @constructor
+ */
 export default function UserNotificationMention(props: NotificationMentionProps): JSX.Element {
   // PROPS
-  const {notificationObject = null, ...rest} = props;
+  const {notificationObject, id = `n_${props.notificationObject['sid']}`, className, ...rest} = props;
 
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
@@ -56,7 +74,7 @@ export default function UserNotificationMention(props: NotificationMentionProps)
    * Renders root object
    */
   return (
-    <Root {...rest}>
+    <Root id={id} className={className} {...rest}>
       <ListItem alignItems="flex-start" component={'div'}>
         <ListItemAvatar>
           <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: notificationObject[objectType].author.id})}>
@@ -72,23 +90,26 @@ export default function UserNotificationMention(props: NotificationMentionProps)
               </Link>{' '}
               {intl.formatMessage(messages.quotedYouOn, {
                 b: (...chunks) => <strong>{chunks}</strong>
-              })}
+              })}{' '}
+              :
             </Typography>
           }
           secondary={
-            <React.Fragment>
+            <div>
               {notificationObject.is_new && <NotificationNewChip />}
-              <Link to={scRoutingContext.url(objectType, {id: notificationObject[objectType].id})}>
-                <Typography
-                  component={'span'}
-                  variant="body2"
-                  sx={{textDecoration: 'underline'}}
-                  gutterBottom
-                  dangerouslySetInnerHTML={{__html: notificationObject[objectType].summary}}
-                />
-              </Link>
+              <Typography component="div" gutterBottom>
+                <Link to={scRoutingContext.url(objectType, {id: notificationObject[objectType].id})}>
+                  <Typography
+                    component={'span'}
+                    variant="body2"
+                    sx={{textDecoration: 'underline'}}
+                    gutterBottom
+                    dangerouslySetInnerHTML={{__html: notificationObject[objectType].summary}}
+                  />
+                </Link>
+              </Typography>
               <DateTimeAgo date={notificationObject.active_at} />
-            </React.Fragment>
+            </div>
           }
         />
       </ListItem>

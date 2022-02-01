@@ -17,7 +17,7 @@ const Root = styled(Box, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   [`& .${PREFIX}-content`]: {
-    padding: '8px 0px 15px 0px'
+    padding: '8px 0px 10px 0px'
   }
 }));
 
@@ -64,7 +64,7 @@ export default function UserNotificationPrivateMessageToast(props: NotificationP
    */
   return (
     <Root id={id} className={className} {...rest}>
-      <ListItem component={'div'} className={classes.content}>
+      <ListItem alignItems={'flex-start'} component={'div'} className={classes.content}>
         <ListItemAvatar>
           <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: notificationObject.private_message.sender.id})}>
             <Avatar

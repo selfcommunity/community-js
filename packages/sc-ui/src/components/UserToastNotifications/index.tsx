@@ -5,19 +5,22 @@ import {SCNotificationTopicType, SCNotification, SCNotificationTypologyType} fro
 import PubSub from 'pubsub-js';
 import {useSnackbar} from 'notistack';
 import CustomSnackMessage from '../../shared/CustomSnackMessage';
-import CollapsedForNotificationToast from './Toast/CollapsedFor';
 import UserNotificationCommentToast from './Toast/Comment';
 import ContributionFollowNotificationToast from './Toast/ContributionFollow';
-import DeletedForNotificationToast from './Toast/DeletedFor';
-import KindlyNoticeFlagNotificationToast from './Toast/KindlyNoticeFlag';
-import KindlyNoticeForNotificationToast from './Toast/KindlyNoticeFor';
 import UserNotificationMentionToast from './Toast/Mention';
 import UserNotificationPrivateMessageToast from './Toast/PrivateMessage';
-import UndeletedForNotificationToast from './Toast/UndeletedFor';
-import UserBlockedNotificationToast from './Toast/UserBlocked';
 import UserConnectionNotificationToast from './Toast/UserConnection';
 import UserFollowNotificationToast from './Toast/UserFollow';
 import VoteUpNotificationToast from './Toast/VoteUp';
+import IncubatorApprovedNotificationToast from './Toast/IncubatorApproved';
+/*
+import CollapsedForNotificationToast from './Toast/CollapsedFor';
+import DeletedForNotificationToast from './Toast/DeletedFor';
+import KindlyNoticeFlagNotificationToast from './Toast/KindlyNoticeFlag';
+import KindlyNoticeForNotificationToast from './Toast/KindlyNoticeFor';
+import UndeletedForNotificationToast from './Toast/UndeletedFor';
+import UserBlockedNotificationToast from './Toast/UserBlocked';
+*/
 
 const PREFIX = 'SCUserToastNotifications';
 
@@ -48,6 +51,11 @@ export interface UserToastNotificationsProps extends BoxProps {
   ToastMessageProps?: any;
 
   /**
+   * Handle custom notification
+   */
+  handleCustomNotification?: (data) => void;
+
+  /**
    * Other props
    */
   [p: string]: any;
@@ -55,7 +63,7 @@ export interface UserToastNotificationsProps extends BoxProps {
 
 export default function UserToastNotifications(props: UserToastNotificationsProps): JSX.Element {
   // PROPS
-  const {ToastMessageProps = {}} = props;
+  const {ToastMessageProps = {}, handleCustomNotification} = props;
 
   // REFS
   const notificationSubscription = useRef(null);
@@ -79,6 +87,13 @@ export default function UserToastNotifications(props: UserToastNotificationsProp
       return <UserConnectionNotificationToast notificationObject={n} />;
     } else if (type === SCNotificationTypologyType.VOTE_UP) {
       return <VoteUpNotificationToast notificationObject={n} />;
+    } else if (type === SCNotificationTypologyType.PRIVATE_MESSAGE) {
+      return <UserNotificationPrivateMessageToast notificationObject={n} />;
+    } else if (type === SCNotificationTypologyType.MENTION) {
+      return <UserNotificationMentionToast notificationObject={n} />;
+    } else if (type === SCNotificationTypologyType.INCUBATOR_APPROVED) {
+      return <IncubatorApprovedNotificationToast notificationObject={n} />;
+      /*
     } else if (
       type === SCNotificationTypologyType.KINDLY_NOTICE_ADVERTISING ||
       type === SCNotificationTypologyType.KINDLY_NOTICE_AGGRESSIVE ||
@@ -107,33 +122,12 @@ export default function UserToastNotifications(props: UserToastNotificationsProp
       type === SCNotificationTypologyType.COLLAPSED_FOR_OFFTOPIC
     ) {
       return <CollapsedForNotificationToast notificationObject={n} />;
-    } else if (type === SCNotificationTypologyType.PRIVATE_MESSAGE) {
-      return <UserNotificationPrivateMessageToast notificationObject={n} />;
     } else if (type === SCNotificationTypologyType.BLOCKED_USER || type === SCNotificationTypologyType.UNBLOCKED_USER) {
       return <UserBlockedNotificationToast notificationObject={n} />;
-    } else if (type === SCNotificationTypologyType.MENTION) {
-      return <UserNotificationMentionToast notificationObject={n} />;
+    } else if (type === SCNotificationTypologyType.CUSTOM_NOTIFICATION) {
+      handleCustomNotification && handleCustomNotification(n);
+    */
     }
-    return null;
-  };
-
-  /**
-   * Render every single action notification
-   * @param n
-   */
-  const getActions = (n) => {
-    /* return (
-      <Stack spacing={2} justifyContent="center" alignItems="center">
-        <Button
-          variant={'outlined'}
-          size={'small'}
-          onClick={() => {
-            closeSnackbar(n.feed_serialization_id);
-          }}>
-          <FormattedMessage id="ui.userToastNotifications.dismiss" defaultMessage="ui.userToastNotifications.dismiss" />
-        </Button>
-      </Stack>
-    ); */
     return null;
   };
 
@@ -149,7 +143,6 @@ export default function UserToastNotifications(props: UserToastNotificationsProp
       SCNotification.SCNotificationMapping[data.data.activity_type] &&
       !SCNotification.SCSilentNotifications.includes(data.data.activity_type)
     ) {
-      console.log(data);
       enqueueSnackbar(
         null,
         Object.assign(
@@ -161,7 +154,6 @@ export default function UserToastNotifications(props: UserToastNotificationsProp
                 message={
                   <div className={classes.toastMessage}>
                     <div className={classes.toastContent}>{getContent(data.data)}</div>
-                    <div className={classes.toastActions}>{getActions(data.data)}</div>
                   </div>
                 }
               />

@@ -9,7 +9,8 @@ import Bullet from '../../../../shared/Bullet';
 import {LoadingButton} from '@mui/lab';
 import VoteFilledIcon from '@mui/icons-material/ThumbUpTwoTone';
 import VoteIcon from '@mui/icons-material/ThumbUpOutlined';
-import { getContributeType } from '../../../../utils/contribute';
+import {getContributeType} from '../../../../utils/contribute';
+import {grey} from '@mui/material/colors';
 
 const messages = defineMessages({
   appreciated: {
@@ -24,24 +25,48 @@ const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+})(({theme}) => ({
+  '& .MuiSvgIcon-root': {
+    width: '0.7em',
+    marginBottom: '0.5px'
+  },
+  '& a': {
+    textDecoration: 'none',
+    color: grey[900]
+  }
+}));
 
 export interface NotificationVoteUpProps {
+  /**
+   * Id of the feedObject
+   * @default 'n_<notificationObject.sid>'
+   */
+  id?: string;
+
+  /**
+   * Overrides or extends the styles applied to the component.
+   * @default null
+   */
+  className?: string;
+
   /**
    * Notification obj
    * @default null
    */
   notificationObject: SCNotificationVoteUpType;
+
   /**
    * Index
    * @default null
    */
   index: number;
+
   /**
    * Handles action on vote
    * @default null
    */
   onVote: (i, v) => void;
+
   /**
    * The id of the loading vote
    * @default null
@@ -54,9 +79,14 @@ export interface NotificationVoteUpProps {
   [p: string]: any;
 }
 
+/**
+ * This component render the content of the notification of type vote up
+ * @param props
+ * @constructor
+ */
 export default function VoteUpNotification(props: NotificationVoteUpProps): JSX.Element {
   // PROPS
-  const {notificationObject = null, index = null, onVote = null, loadingVote = null, ...rest} = props;
+  const {notificationObject, id = `n_${props.notificationObject['sid']}`, className, index, onVote, loadingVote, ...rest} = props;
 
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
@@ -71,7 +101,7 @@ export default function VoteUpNotification(props: NotificationVoteUpProps): JSX.
    * Renders root object
    */
   return (
-    <Root {...rest}>
+    <Root id={id} className={className} {...rest}>
       <ListItem alignItems="flex-start" component={'div'}>
         <ListItemAvatar>
           <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: notificationObject.user.id})}>

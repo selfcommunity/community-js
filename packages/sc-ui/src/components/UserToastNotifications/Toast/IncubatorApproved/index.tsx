@@ -1,24 +1,19 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
 import {Avatar, Box, ListItem, ListItemAvatar, ListItemText, Stack, Typography} from '@mui/material';
-import {defineMessages, useIntl} from 'react-intl';
+import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
+import {getContributeType} from '../../../../utils/contribute';
 import DateTimeAgo from '../../../../shared/DateTimeAgo';
-import {SCNotificationTypologyType} from '@selfcommunity/core';
-import {green} from '@mui/material/colors';
-import EmojiFlagsIcon from '@mui/icons-material/EmojiFlags';
+import {Link, SCRoutingContextType, useSCRouting, SCRoutes} from '@selfcommunity/core';
 
 const messages = defineMessages({
-  accountBlocked: {
-    id: 'ui.userToastNotifications.userBlocked.accountBlocked',
-    defaultMessage: 'ui.userNotifications.userBlocked.accountBlocked'
-  },
-  accountReactivated: {
-    id: 'ui.userToastNotifications.userBlocked.accountReactivated',
-    defaultMessage: 'ui.userNotifications.userBlocked.accountReactivated'
+  incubatorApproved: {
+    id: 'ui.userToastNotifications.incubatorApproved.approved',
+    defaultMessage: 'ui.userToastNotifications.incubatorApproved.approved'
   }
 });
 
-const PREFIX = 'SCUserBlockedNotificationToast';
+const PREFIX = 'SCIncubatorApprovedNotificationToast';
 
 const classes = {
   content: `${PREFIX}-content`
@@ -34,7 +29,7 @@ const Root = styled(Box, {
   }
 }));
 
-export interface NotificationUserBlockedToastProps {
+export interface NotificationIncubatorApprovedToastProps {
   /**
    * Id of the feedObject
    * @default 'tn_<notificationObject.feed_serialization_id>'
@@ -60,17 +55,22 @@ export interface NotificationUserBlockedToastProps {
 }
 
 /**
- * !IMPORTANT: this component is not used yet because the notification via ws is not launched
  * This component render the content of the
- * toast notification of type user blocked
+ * toast notification of type incubator approved
  * @param props
  * @constructor
  */
-export default function UserBlockedNotificationToast(props: NotificationUserBlockedToastProps): JSX.Element {
+export default function IncubatorApprovedNotificationToast(props: NotificationIncubatorApprovedToastProps): JSX.Element {
   // PROPS
   const {notificationObject = null, id = `tn_${props.notificationObject['feed_serialization_id']}`, className, ...rest} = props;
 
-  // INTL
+  // ROUTING
+  const scRoutingContext: SCRoutingContextType = useSCRouting();
+
+  // STATE
+  const contributionType = getContributeType(notificationObject);
+
+  //INTL
   const intl = useIntl();
 
   /**
@@ -80,18 +80,17 @@ export default function UserBlockedNotificationToast(props: NotificationUserBloc
     <Root id={id} className={className} {...rest}>
       <ListItem component={'div'} className={classes.content}>
         <ListItemAvatar>
-          <Avatar variant="circular" sx={{bgcolor: green[500]}}>
-            <EmojiFlagsIcon />
-          </Avatar>
+          <Avatar alt={notificationObject.incubator.name} src={notificationObject.incubator.image_medium} variant="square" />
         </ListItemAvatar>
         <ListItemText
           disableTypography={true}
           primary={
-            <Typography component="div" sx={{display: 'inline'}} color="primary">
+            <Typography component="span" sx={{display: 'inline'}} color="primary">
               <b>
-                {notificationObject.type === SCNotificationTypologyType.BLOCKED_USER
-                  ? intl.formatMessage(messages.accountBlocked, {b: (...chunks) => <strong>{chunks}</strong>})
-                  : intl.formatMessage(messages.accountReactivated, {b: (...chunks) => <strong>{chunks}</strong>})}
+                {intl.formatMessage(messages.incubatorApproved, {
+                  name: notificationObject.incubator.name,
+                  b: (...chunks) => <strong>{chunks}</strong>
+                })}
               </b>
             </Typography>
           }
@@ -99,6 +98,14 @@ export default function UserBlockedNotificationToast(props: NotificationUserBloc
       </ListItem>
       <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
         <DateTimeAgo date={notificationObject.active_at} />
+        <Typography color="primary">
+          <Link to={scRoutingContext.url(SCRoutes.CATEGORY_ROUTE_NAME, {id: notificationObject.incubator.id})}>
+            <FormattedMessage
+              id="ui.userToastNotifications.incubatorApproved.viewIncubator"
+              defaultMessage={'ui.userToastNotifications.incubatorApproved.viewIncubator'}
+            />
+          </Link>
+        </Typography>
       </Stack>
     </Root>
   );

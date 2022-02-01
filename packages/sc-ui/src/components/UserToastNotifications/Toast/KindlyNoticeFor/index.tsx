@@ -73,6 +73,7 @@ export interface NotificationKindlyNoticeForToastProps {
 }
 
 /**
+ * !IMPORTANT: this component is not used yet because the notification via ws is not launched
  * This component render the content of the
  * toast notification of type kindly notice (contribution)
  * @param props

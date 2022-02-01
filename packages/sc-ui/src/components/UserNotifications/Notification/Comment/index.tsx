@@ -41,34 +41,55 @@ const Root = styled(Box, {
 
 export interface CommentNotificationProps {
   /**
+   * Id of the feedObject
+   * @default 'n_<notificationObject.sid>'
+   */
+  id?: string;
+
+  /**
+   * Overrides or extends the styles applied to the component.
+   * @default null
+   */
+  className?: string;
+
+  /**
    * Notification obj
    * @default null
    */
   notificationObject: SCNotificationCommentType;
+
   /**
    * Index
    * @default null
    */
   index: number;
+
   /**
    * Handles action on vote
    * @default null
    */
   onVote: (i, v) => void;
+
   /**
    * The id of the loading vote
    * @default null
    */
   loadingVote: number;
+
   /**
    * Any other properties
    */
   [p: string]: any;
 }
 
+/**
+ * This component render the content of the notification of type comment/nested comment
+ * @param props
+ * @constructor
+ */
 export default function CommentNotification(props: CommentNotificationProps): JSX.Element {
   // PROPS
-  const {notificationObject = null, index = null, onVote = null, loadingVote = null, ...rest} = props;
+  const {notificationObject, index, onVote, loadingVote, id = `n_${props.notificationObject['sid']}`, className, ...rest} = props;
 
   // ROUTING
   const scRoutingContext: SCRoutingContextType = useSCRouting();
@@ -80,7 +101,7 @@ export default function CommentNotification(props: CommentNotificationProps): JS
    * Renders root object
    */
   return (
-    <Root {...rest}>
+    <Root id={id} className={className} {...rest}>
       <ListItem alignItems="flex-start" component={'div'}>
         <ListItemAvatar>
           <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: notificationObject.comment.author.id})}>

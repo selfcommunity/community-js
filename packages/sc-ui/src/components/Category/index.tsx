@@ -20,7 +20,7 @@ const messages = defineMessages({
 const PREFIX = 'SCCategory';
 
 const classes = {
-  avatar: `${PREFIX}-avatar`,
+  categoryImage: `${PREFIX}-category-image`,
   title: `${PREFIX}-title`,
   actions: `${PREFIX}-actions`
 };
@@ -90,7 +90,7 @@ export default function Category(props: CategoryProps): JSX.Element {
       {scCategory ? (
         <ListItem button={true}>
           <ListItemAvatar>
-            <Avatar alt={scCategory.name} src={scCategory.image_medium} variant="square" className={classes.avatar} />
+            <Avatar alt={scCategory.name} src={scCategory.image_medium} variant="square" className={classes.categoryImage} />
           </ListItemAvatar>
           <ListItemText
             primary={scCategory.name}

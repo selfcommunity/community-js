@@ -66,7 +66,7 @@ export default function UserNotifications(props: UserNotificationsProps): JSX.El
 
   // STATE
   const [notifications, setNotifications] = useState<SCNotificationAggregatedType[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const [next, setNext] = useState<string>(null);
   const [newNotifications, setNewNotifications] = useState<boolean>(false);
 

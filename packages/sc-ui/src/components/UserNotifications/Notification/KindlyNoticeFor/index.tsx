@@ -7,7 +7,6 @@ import {Link, SCNotificationDeletedForType, SCRoutingContextType, useSCRouting, 
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {getContributeType} from '../../../../utils/contribute';
 import DateTimeAgo from '../../../../shared/DateTimeAgo';
-import {NotificationDeletedForProps} from '../CollapsedFor';
 import NotificationNewChip from '../../NotificationNewChip';
 
 const messages = defineMessages({
@@ -41,9 +40,39 @@ const Root = styled(Box, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({}));
 
-export default function KindlyNoticeForNotification(props: NotificationDeletedForProps): JSX.Element {
+export interface NotificationKindlyNoticeForProps {
+  /**
+   * Id of the feedObject
+   * @default 'n_<notificationObject.sid>'
+   */
+  id?: string;
+
+  /**
+   * Overrides or extends the styles applied to the component.
+   * @default null
+   */
+  className?: string;
+
+  /**
+   * Notification obj
+   * @default null
+   */
+  notificationObject: SCNotificationDeletedForType;
+
+  /**
+   * Any other properties
+   */
+  [p: string]: any;
+}
+
+/**
+ * This component render the content of the notification of type kindly notice for
+ * @param props
+ * @constructor
+ */
+export default function KindlyNoticeForNotification(props: NotificationKindlyNoticeForProps): JSX.Element {
   // PROPS
-  const {notificationObject = null, ...rest} = props;
+  const {notificationObject, id = `n_${props.notificationObject['sid']}`, className, ...rest} = props;
 
   // ROUTING
   const scRoutingContext: SCRoutingContextType = useSCRouting();
@@ -58,7 +87,7 @@ export default function KindlyNoticeForNotification(props: NotificationDeletedFo
    * Renders root object
    */
   return (
-    <Root {...rest}>
+    <Root id={id} className={className} {...rest}>
       <ListItem alignItems="flex-start" component={'div'}>
         <ListItemAvatar>
           <Avatar variant="circular" sx={{backgroundColor: red[500]}}>

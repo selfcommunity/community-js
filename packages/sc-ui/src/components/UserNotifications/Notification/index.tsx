@@ -38,6 +38,7 @@ import {
   SCRoutingContextType,
   useSCRouting
 } from '@selfcommunity/core';
+import IncubatorApprovedNotification from './IncubatorApproved';
 
 const messages = defineMessages({
   receivePrivateMessage: {
@@ -105,6 +106,12 @@ export interface UserNotificationProps extends CardProps {
   notificationObject: SCNotificationAggregatedType;
 
   /**
+   * Handle custom notification
+   * @param data
+   */
+  handleCustomNotification?: (data) => JSX.Element;
+
+  /**
    * The max n of results shown
    * @default 2
    */
@@ -123,7 +130,7 @@ export interface UserNotificationProps extends CardProps {
 
 export default function UserNotification(props: UserNotificationProps): JSX.Element {
   // PROPS
-  const {id = `notification_${props.notificationObject.sid}`, className = null, notificationObject = null, showMaxAggregated = 2, ...rest} = props;
+  const {id = `notification_${props.notificationObject.sid}`, className, notificationObject, handleCustomNotification, showMaxAggregated = 2, ...rest} = props;
 
   // ROUTING
   const scRoutingContext: SCRoutingContextType = useSCRouting();
@@ -342,6 +349,10 @@ export default function UserNotification(props: UserNotificationProps): JSX.Elem
       return <UserBlockedNotification notificationObject={n} key={i} />;
     } else if (n.type === SCNotificationTypologyType.MENTION) {
       return <UserNotificationMention notificationObject={n} key={i} />;
+    } else if (n.type === SCNotificationTypologyType.INCUBATOR_APPROVED) {
+      return <IncubatorApprovedNotification notificationObject={n} key={i} />;
+    } else if (n.type === SCNotificationTypologyType.CUSTOM_NOTIFICATION) {
+      handleCustomNotification && handleCustomNotification(n);
     }
     return null;
   }
