@@ -25,21 +25,36 @@ export default function SCRoutingProvider({children = null}: {children: React.Re
   const routes: Record<string, any> = router.routes ? {..._routes, ...router.routes} : defaultRoutes;
 
   /**
+   * Normalize template url (preferences)
+   */
+  function normalizeUrl(url) {
+    let tpl = url;
+    const re = /\{([^/]+)?\}/g;
+    let match = re.exec(url);
+    while (match) {
+      tpl = tpl.replace(match[0], `:${match[1]}`);
+      re.lastIndex = 0;
+      match = re.exec(tpl);
+    }
+    return tpl;
+  }
+
+  /**
    * Get override routes from community preferences
    */
   function getPreferencesRoutes() {
     return {
-      post: scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_POST].value,
-      discussion: scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_DISCUSSION].value,
-      status: scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_STATUS].value,
-      comment: scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_COMMENT].value,
-      category: scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_CATEGORY].value,
-      categories_list: scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_CATEGORIES_LIST].value,
-      user_profile: scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_USER_PROFILE].value,
-      user_profile_settings: scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_USER_PROFILE_SETTINGS].value,
-      user_notifications: scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_USER_NOTIFICATIONS].value,
-      user_private_messages: scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_USER_PRIVATE_MESSAGES].value,
-      incubator: scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_INCUBATOR].value,
+      post: normalizeUrl(scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_POST].value),
+      discussion: normalizeUrl(scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_DISCUSSION].value),
+      status: normalizeUrl(scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_STATUS].value),
+      comment: normalizeUrl(scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_COMMENT].value),
+      category: normalizeUrl(scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_CATEGORY].value),
+      categories_list: normalizeUrl(scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_CATEGORIES_LIST].value),
+      user_profile: normalizeUrl(scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_USER_PROFILE].value),
+      user_profile_settings: normalizeUrl(scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_USER_PROFILE_SETTINGS].value),
+      user_notifications: normalizeUrl(scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_USER_NOTIFICATIONS].value),
+      user_private_messages: normalizeUrl(scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_USER_PRIVATE_MESSAGES].value),
+      incubator: normalizeUrl(scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_INCUBATOR].value),
     };
   }
 
@@ -48,7 +63,7 @@ export default function SCRoutingProvider({children = null}: {children: React.Re
    */
   function url(name = '', params = {}) {
     const replacer = (tpl: string, data: Record<string, any>) => {
-      const re = /\{([^/]+)?\}/g;
+      const re = /:([^/]+)?/g;
       let match = re.exec(tpl);
       while (match) {
         tpl = tpl.replace(match[0], data[match[1]]);
