@@ -1,7 +1,7 @@
 /**
  * Components
  */
-import Category from './components/Category';
+import Category, {CategoryProps, CategorySkeleton} from './components/Category';
 import CategoryHeader from './components/CategoryHeader';
 import CategoriesFollowed from './components/CategoriesFollowed';
 import CategoriesPopular from './components/CategoriesPopular';
@@ -19,21 +19,10 @@ import UserProfileHeader from './components/UserProfileHeader';
 import UserFollowed from './components/UserFollowed';
 import RelatedDiscussion from './components/RelatedDiscussion';
 import CommentObject from './components/CommentObject';
-import CommentsObject from './components/CommentsObject';
+import CommentsObject from './components/Composer/CommentsObject';
 import ReplyComment from './components/CommentObject/ReplyComment';
 import CustomAdv from './components/CustomAdv';
-import {
-  CategoryHeaderSkeleton,
-  CommentObjectSkeleton,
-  ComposerSkeleton,
-  CategoryBoxSkeleton,
-  FeedObjectSkeleton,
-  FeedSkeleton,
-  GenericSkeleton,
-  InlineComposerSkeleton,
-  UserBoxSkeleton,
-  UserProfileHeaderSkeleton
-} from './components/Skeleton';
+import {GenericSkeleton} from './components/Skeleton';
 import {SCFeedWidgetType, FeedObjectTemplateType, CommentsOrderBy, FeedObjectActivitiesType, SCMediaObjectType, SCMediaChunkType} from './types';
 
 /**
@@ -41,27 +30,22 @@ import {SCFeedWidgetType, FeedObjectTemplateType, CommentsOrderBy, FeedObjectAct
  */
 export {
   Category,
+  CategoryProps,
+  CategorySkeleton,
   CategoryHeader,
-  CategoryHeaderSkeleton,
-  CategoryBoxSkeleton,
   CategoriesFollowed,
   CategoriesPopular,
   CategoriesSuggestion,
-  ComposerSkeleton,
   Feed,
   FeedProps,
   StickySidebarProps,
-  FeedSkeleton,
   FeedObject,
   FeedObjectProps,
-  FeedObjectSkeleton,
   GenericSkeleton,
   CommentObject,
-  CommentObjectSkeleton,
   CommentsObject,
   ReplyComment,
   InlineComposer,
-  InlineComposerSkeleton,
   PeopleSuggestion,
   Platform,
   LoyaltyProgram,
@@ -69,9 +53,7 @@ export {
   TrendingPeople,
   RelatedDiscussion,
   UserProfileHeader,
-  UserProfileHeaderSkeleton,
   UserFollowed,
-  UserBoxSkeleton,
   CustomAdv,
   SCUser,
   SCFeedWidgetType,

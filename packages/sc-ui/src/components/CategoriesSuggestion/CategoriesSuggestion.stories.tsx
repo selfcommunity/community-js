@@ -1,12 +1,11 @@
 import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
-
-import CategoriesSuggestion from './index';
+import CategoriesSuggestionSkeleton from './index';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Design System/SC UI/CategoriesSuggestion',
-  component: CategoriesSuggestion,
+  component: CategoriesSuggestionSkeleton,
   argTypes: {
     elevation: {
       control: {type: 'number'},
@@ -24,12 +23,12 @@ export default {
     elevation: 1,
     variant: 'elevation'
   }
-} as ComponentMeta<typeof CategoriesSuggestion>;
+} as ComponentMeta<typeof CategoriesSuggestionSkeleton>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof CategoriesSuggestion> = (args) => (
+const Template: ComponentStory<typeof CategoriesSuggestionSkeleton> = (args) => (
   <div style={{width: 400}}>
-    <CategoriesSuggestion {...args} />
+    <CategoriesSuggestionSkeleton {...args} />
   </div>
 );
 
