@@ -10,7 +10,7 @@ import FeedObject, {FeedObjectProps, FeedObjectSkeleton} from '../FeedObject';
 import {FeedObjectTemplateType} from '../../types/feedObject';
 import {SCFeedWidgetType} from '../../types/Feed';
 import Sticky from 'react-stickynode';
-import {useTheme} from '@mui/styles';
+import {useTheme} from '@mui/material/styles';
 import CustomAdv from '../CustomAdv';
 import {
   http,

@@ -71,7 +71,7 @@
     "draft-js": "^0.11.7",
     "draftjs-to-html": "^0.9.1",
     "emoji-picker-react": "^3.4.8",
-    "mui-rte": "https://github.com/fedetorre/mui-rte.git#d473c78c0dfca55988f6962ecd39b7a7585c3c2c",
+    "mui-rte": "https://github.com/fedetorre/mui-rte.git#8876f957de692cce2ef8ac2a27355f05d63df087",
     "notistack": "^2.0.3",
     "prop-types": "^15.7.2",
     "prop-types-extra": "^1.1.1",
