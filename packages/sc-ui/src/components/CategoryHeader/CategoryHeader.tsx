@@ -181,7 +181,7 @@ export default function CategoryHeader(props: CategoryHeaderProps): JSX.Element 
       <Grid container spacing={2} sx={{mt: 0.5, p: 3}}>
         <Grid item xs={12} sx={{textAlign: 'center'}}>
           <FollowCategoryButton category={scCategory} onFollow={handleFollowCategory} />
-          <Typography sx={{display: 'inline', ml: 1}}>
+          <Typography sx={{display: 'inline', ml: 1}} component="div">
             <FormattedMessage id="ui.categoryHeader.followedBy" defaultMessage="ui.categoryHeader.followedBy" />{' '}
             <Chip icon={<FaceIcon />} label={loading ? '...' : total} />
           </Typography>
@@ -195,7 +195,7 @@ export default function CategoryHeader(props: CategoryHeaderProps): JSX.Element 
                 <Button onClick={handleToggleFollowersDialog} disabled={loading || !scCategory}>
                   <AvatarGroup {...rest}>
                     {followers.map((c: SCUserType) => (
-                      <Avatar alt={c.username} src={c.avatar} />
+                      <Avatar key={c.id} alt={c.username} src={c.avatar} />
                     ))}
                     {[...Array(total - followers.length)].map((x, i) => (
                       <Avatar key={i}></Avatar>
