@@ -1,22 +1,20 @@
 import React from 'react';
 import {ComponentMeta, ComponentStory} from '@storybook/react';
-import UserFeedTemplate from './index';
+import FeedObjectTemplate from './index';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC TEMPLATES/User Feed',
-  component: UserFeedTemplate
-} as ComponentMeta<typeof UserFeedTemplate>;
+  title: 'Design System/SC TEMPLATES/Explore Feed',
+  component: FeedObjectTemplate
+} as ComponentMeta<typeof FeedObjectTemplate>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof UserFeedTemplate> = (args) => (
+const Template: ComponentStory<typeof FeedObjectTemplate> = (args) => (
   <div style={{maxWidth: '1200px', width: '100%', height: '500px'}}>
-    <UserFeedTemplate {...args} />
+    <FeedObjectTemplate {...args} />
   </div>
 );
 
 export const Main = Template.bind({});
 
-Main.args = {
-  userId: 1
-};
+Main.args = {};
