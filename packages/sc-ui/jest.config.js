@@ -3,6 +3,6 @@ module.exports = {
   testRegex: '-test\\.(j|t)sx?$',
   setupFilesAfterEnv: [require.resolve('./test/index.js')],
   transform: {
-    '^.+\\.(js|jsx|ts|tsx)$': ['babel-jest', { rootMode: 'upward' }],
-  },
-}
+    '^.+\\.(js|jsx|ts|tsx)$': ['babel-jest', {rootMode: 'upward'}]
+  }
+};
