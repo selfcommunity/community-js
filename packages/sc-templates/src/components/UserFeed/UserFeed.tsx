@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Box} from '@mui/material';
-import {CategoriesFollowed, Feed, StickySidebarProps, FeedObjectProps, SCFeedWidgetType, UserFollowed} from '@selfcommunity/ui';
+import {CategoriesFollowed, Feed, StickySidebarProps, FeedObjectProps, SCFeedWidgetType, UsersFollowed} from '@selfcommunity/ui';
 import {Endpoints} from '@selfcommunity/core';
 
 const PREFIX = 'SCUserFeedTemplate';
@@ -63,7 +63,7 @@ const WIDGETS: SCFeedWidgetType[] = [
   },
   {
     type: 'widget',
-    component: UserFollowed,
+    component: UsersFollowed,
     componentProps: {variant: 'outlined'},
     column: 'right',
     position: 1
