@@ -29,12 +29,17 @@ export default function SCRoutingProvider({children = null}: {children: React.Re
    */
   function getPreferencesRoutes() {
     return {
-      category: scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_CATEGORY].value,
-      profile: scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_PROFILE].value,
       post: scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_POST].value,
-      status: scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_STATUS].value,
       discussion: scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_DISCUSSION].value,
+      status: scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_STATUS].value,
       comment: scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_COMMENT].value,
+      category: scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_CATEGORY].value,
+      categories_list: scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_CATEGORIES_LIST].value,
+      user_profile: scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_USER_PROFILE].value,
+      user_profile_settings: scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_USER_PROFILE_SETTINGS].value,
+      user_notifications: scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_USER_NOTIFICATIONS].value,
+      user_private_messages: scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_USER_PRIVATE_MESSAGES].value,
+      incubator: scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_INCUBATOR].value,
     };
   }
 
@@ -43,7 +48,7 @@ export default function SCRoutingProvider({children = null}: {children: React.Re
    */
   function url(name = '', params = {}) {
     const replacer = (tpl: string, data: Record<string, any>) => {
-      const re = /:([^/]+)?/g;
+      const re = /\{([^/]+)?\}/g;
       let match = re.exec(tpl);
       while (match) {
         tpl = tpl.replace(match[0], data[match[1]]);
