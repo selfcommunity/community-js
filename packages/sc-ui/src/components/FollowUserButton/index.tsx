@@ -59,9 +59,11 @@ export default function FollowUserButton({
       });
   };
 
-  if (scUserContext.user.id === scUser.id) {
+  // User anonymous || same user
+  if (!scUserContext.user || scUserContext.user.id === scUser.id) {
     return null;
   }
+
   return (
     <FollowButton size="small" variant="outlined" onClick={followCUser} loading={followed === null || scFollowedManager.isLoading(scUser)} {...rest}>
       {followed ? (

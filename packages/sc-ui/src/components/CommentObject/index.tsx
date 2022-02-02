@@ -1,13 +1,11 @@
-import React, {useContext, useEffect, useMemo, useState} from 'react';
+import React, {useContext, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
-import FeedObjectSkeleton from '../Skeleton/FeedObjectSkeleton';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {Avatar, Box, Button, CardContent, CardProps, Grid, ListItem, ListItemAvatar, ListItemText, Tooltip, Typography} from '@mui/material';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import TimeAgo from 'timeago-react';
 import Bullet from '../../shared/Bullet';
-import {SCCommentType} from '@selfcommunity/core/src/types/comment';
 import classNames from 'classnames';
 import Votes from './Votes';
 import {AxiosResponse} from 'axios';
@@ -18,13 +16,17 @@ import {
   http,
   Link,
   Logger,
+  SCCommentType,
+  SCCommentTypologyType,
   SCFeedObjectType,
   SCFeedObjectTypologyType,
   SCRoutingContextType,
   SCUserContext,
   SCUserContextType,
   useSCFetchCommentObject,
-  useSCRouting
+  useSCRouting,
+  useSCContext,
+  SCContextType
 } from '@selfcommunity/core';
 import {LoadingButton} from '@mui/lab';
 import VoteFilledIcon from '@mui/icons-material/ThumbUpTwoTone';
@@ -200,6 +202,12 @@ export interface CommentObjectProps {
   CommentObjectSkeletonProps?: CardProps;
 
   /**
+   * Props to spread to single comment object ReplyCommentObject
+   * @default {elevation: 0}
+   */
+  ReplyCommentObjectProps?: CardProps;
+
+  /**
    * Other props
    */
   [p: string]: any;
@@ -221,11 +229,17 @@ export default function CommentObject(props: CommentObjectProps): JSX.Element {
     onVote,
     onFetchLatestComment,
     CommentObjectSkeletonProps = {elevation: 0, variant: 'outlined'},
+    ReplyCommentObjectProps = {elevation: 0, variant: 'outlined'},
     ...rest
   } = props;
 
-  const scUser: SCUserContextType = useContext(SCUserContext);
+  // CONTEXT
+  const scContext: SCContextType = useSCContext();
+  const scUserContext: SCUserContextType = useContext(SCUserContext);
   const scRoutingContext: SCRoutingContextType = useSCRouting();
+  const intl = useIntl();
+
+  // STATE
   const {obj, setObj} = useSCFetchCommentObject({id: commentObjectId, commentObject});
   const [loadingVote, setLoadingVote] = useState(false);
   const [loadingLatestComments, setLoadingLatestComments] = useState(false);
@@ -234,7 +248,6 @@ export default function CommentObject(props: CommentObjectProps): JSX.Element {
   const [isReplying, setIsReplying] = useState<boolean>(false);
   const [editComment, setEditComment] = useState<SCCommentType>(null);
   const [isSavingComment, setIsSavingComment] = useState<boolean>(false);
-  const intl = useIntl();
 
   /**
    * Render added_at of the comment
@@ -257,7 +270,11 @@ export default function CommentObject(props: CommentObjectProps): JSX.Element {
    */
   function renderActionVote(comment) {
     return (
-      <LoadingButton variant={'text'} sx={{minWidth: 30}} onClick={() => vote(comment)} disabled={loadingVote}>
+      <LoadingButton
+        variant={'text'}
+        sx={{minWidth: 30}}
+        onClick={() => (!scUserContext.user ? scContext.settings.handleAnonymousAction() : vote(comment))}
+        disabled={loadingVote}>
         {comment.voted ? (
           <Tooltip title={<FormattedMessage id={'ui.commentObject.voteDown'} defaultMessage={'ui.commentObject.voteDown'} />}>
             <VoteFilledIcon fontSize={'small'} color={'secondary'} />
@@ -277,7 +294,7 @@ export default function CommentObject(props: CommentObjectProps): JSX.Element {
    */
   function renderActionReply(comment) {
     return (
-      <Button variant={'text'} onClick={() => reply(comment)}>
+      <Button variant={'text'} onClick={() => (!scUserContext.user ? scContext.settings.handleAnonymousAction() : reply(comment))}>
         {intl.formatMessage(messages.reply)}
       </Button>
     );
@@ -321,8 +338,6 @@ export default function CommentObject(props: CommentObjectProps): JSX.Element {
 
   /**
    * fetchVotes
-   *       ? `${Endpoints.Comments.url()}?${feedObjectType}=${feedObjectId ? feedObjectId : feedObject.id}&parent=${commentObject.id}&limit=5`
-
    */
   const fetchLatestComment = useMemo(
     () => () => {
@@ -352,8 +367,8 @@ export default function CommentObject(props: CommentObjectProps): JSX.Element {
     () => (comment) => {
       return http
         .request({
-          url: Endpoints.CommentVote.url({id: comment.id}),
-          method: Endpoints.CommentVote.method
+          url: Endpoints.Vote.url({type: SCCommentTypologyType, id: comment.id}),
+          method: Endpoints.Vote.method
         })
         .then((res: AxiosResponse<any>) => {
           if (res.status >= 300) {
@@ -536,7 +551,10 @@ export default function CommentObject(props: CommentObjectProps): JSX.Element {
    * @param comment
    */
   function renderComment(comment) {
-    if ((comment.deleted && !scUser.user.role) || (scUser.user.role && !scUser.user.role.includes('admin'))) {
+    if (
+      (comment.deleted && scUserContext.user && !scUserContext.user.role) ||
+      (scUserContext.user && scUserContext.user.role && !scUserContext.user.role.includes('admin'))
+    ) {
       // if the logged user isn't an administrator can't view the comment
       return null;
     }
@@ -552,7 +570,7 @@ export default function CommentObject(props: CommentObjectProps): JSX.Element {
             onCancel={handleCancel}
             readOnly={isReplying}
             inline={!comment.parent}
-            {...rest}
+            ReplyBoxProps={ReplyCommentObjectProps}
           />
         ) : (
           <ListItem
@@ -581,17 +599,19 @@ export default function CommentObject(props: CommentObjectProps): JSX.Element {
                         gutterBottom
                         dangerouslySetInnerHTML={{__html: comment.html}}></Typography>
                     </CardContent>
-                    <Box className={classes.commentActionsMenu}>
-                      <CommentActionsMenu
-                        commentObject={comment}
-                        feedObject={feedObject}
-                        feedObjectId={feedObjectId}
-                        feedObjectType={feedObjectType}
-                        onRestore={handleRestore}
-                        onDelete={handleDelete}
-                        onEdit={handleEdit}
-                      />
-                    </Box>
+                    {scUserContext.user && (
+                      <Box className={classes.commentActionsMenu}>
+                        <CommentActionsMenu
+                          commentObject={comment}
+                          feedObject={feedObject}
+                          feedObjectId={feedObjectId}
+                          feedObjectType={feedObjectType}
+                          onRestore={handleRestore}
+                          onDelete={handleDelete}
+                          onEdit={handleEdit}
+                        />
+                      </Box>
+                    )}
                   </Card>
                   <Box component="span" sx={{display: 'flex', justifyContent: 'flex-start', p: '2px'}}>
                     <Grid component="span" item={true} sm="auto" container direction="row" alignItems="center">
@@ -609,7 +629,7 @@ export default function CommentObject(props: CommentObjectProps): JSX.Element {
           </ListItem>
         )}
         {renderLatestComment(comment)}
-        {replyComment && (replyComment.id === comment.id || replyComment.parent === comment.id) && !comment.parent && (
+        {scUserContext.user && replyComment && (replyComment.id === comment.id || replyComment.parent === comment.id) && !comment.parent && (
           <ReplyCommentObject
             text={replyComment.parent ? `@${replyComment.author.username}, ` : ''}
             autoFocus
@@ -641,7 +661,7 @@ export default function CommentObject(props: CommentObjectProps): JSX.Element {
               <Button
                 variant="text"
                 onClick={loadLatestComment}
-                disabled={!feedObjectId && !feedObject}
+                disabled={loadingLatestComments || (!feedObjectId && !feedObject)}
                 classes={{text: classNames(classes.btnViewPreviousComments, classes.commentChild)}}>
                 <FormattedMessage
                   id={'ui.commentObject.viewLatestComment'}

@@ -3,7 +3,7 @@ import {FormattedMessage} from 'react-intl';
 import {Box, List} from '@mui/material';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Typography from '@mui/material/Typography';
-import {Endpoints, http, Logger, SCCommentType, useSCFetchCommentObject} from '@selfcommunity/core';
+import {Endpoints, http, Logger, SCCommentType, useSCFetchCommentObject, SCCommentTypologyType} from '@selfcommunity/core';
 import {AxiosResponse} from 'axios';
 import {SCOPE_SC_UI} from '../../../../constants/Errors';
 import BaseDialog from '../../../../shared/BaseDialog';
@@ -70,8 +70,8 @@ export default function CommentObjectVotesDialog(props: CommentObjectVotesDialog
     setIsLoading(true);
     http
       .request({
-        url: next ? next : `${Endpoints.CommentVotes.url({id: obj.id})}`,
-        method: Endpoints.CommentVotes.method
+        url: next ? next : `${Endpoints.VotesList.url({type: SCCommentTypologyType, id: obj.id})}`,
+        method: Endpoints.VotesList.method
       })
       .then((res: AxiosResponse<any>) => {
         const data: {results: Record<string, any>[]; next?: string} = res.data;

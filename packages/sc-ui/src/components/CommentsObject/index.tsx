@@ -551,7 +551,7 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
    * Render header primary reply
    */
   function renderHeadPrimaryReply() {
-    if (!hidePrimaryReply && commentsOrderBy === CommentsOrderBy.ADDED_AT_DESC) {
+    if (scUserContext.user && !hidePrimaryReply && commentsOrderBy === CommentsOrderBy.ADDED_AT_DESC) {
       return (
         <Box
           className={classNames({[classes.fixedPrimaryReply]: fixedPrimaryReply, [classes.fixedTopPrimaryReply]: fixedPrimaryReply})}
@@ -567,7 +567,7 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
    * Render footer primary reply
    */
   function renderFooterPrimaryReply() {
-    if (!hidePrimaryReply && commentsOrderBy === CommentsOrderBy.ADDED_AT_ASC) {
+    if (scUserContext.user && !hidePrimaryReply && commentsOrderBy === CommentsOrderBy.ADDED_AT_ASC) {
       return (
         <Box
           className={classNames({[classes.fixedPrimaryReply]: fixedPrimaryReply, [classes.fixedBottomPrimaryReply]: fixedPrimaryReply})}

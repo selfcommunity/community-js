@@ -1,8 +1,8 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import { Avatar, Box, Chip, ListItem, ListItemAvatar, ListItemText, Typography } from '@mui/material';
-import {Link, SCNotificationUserFollowType, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
-import {defineMessages, useIntl} from 'react-intl';
+import {Avatar, Box, ListItem, ListItemAvatar, ListItemText, Stack, Typography} from '@mui/material';
+import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
+import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../../shared/DateTimeAgo';
 
 const messages = defineMessages({
@@ -14,26 +14,54 @@ const messages = defineMessages({
 
 const PREFIX = 'SCUserFollowNotification';
 
+const classes = {
+  content: `${PREFIX}-content`
+};
+
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+})(({theme}) => ({
+  [`& .${PREFIX}-content`]: {
+    padding: '8px 0px 15px 0px'
+  }
+}));
 
 export interface NotificationFollowToastProps {
+  /**
+   * Id of the feedObject
+   * @default 'tn_<notificationObject.feed_serialization_id>'
+   */
+  id?: string;
+
+  /**
+   * Overrides or extends the styles applied to the component.
+   * @default null
+   */
+  className?: string;
+
   /**
    * Notification obj
    * @default null
    */
   notificationObject: any;
+
   /**
    * Any other properties
    */
   [p: string]: any;
 }
+
+/**
+ * This component render the content of the
+ * toast notification of type follow (user)
+ * @param props
+ * @constructor
+ */
 export default function UserFollowNotificationToast(props: NotificationFollowToastProps): JSX.Element {
   // PROPS
-  const {notificationObject = null, ...rest} = props;
+  const {notificationObject = null, id = `tn_${props.notificationObject['feed_serialization_id']}`, className, ...rest} = props;
 
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
@@ -44,28 +72,31 @@ export default function UserFollowNotificationToast(props: NotificationFollowToa
   /**
    * Renders root object
    */
-  return <div dangerouslySetInnerHTML={{__html: notificationObject.html}} />;
-  /* return (
-    <Root {...rest}>
-      <ListItem alignItems="flex-start" component={'div'}>
+  return (
+    <Root id={id} className={className} {...rest}>
+      <ListItem component={'div'} className={classes.content}>
         <ListItemAvatar>
           <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: notificationObject.follower.id})}>
             <Avatar alt={notificationObject.follower.username} variant="circular" src={notificationObject.follower.avatar} />
           </Link>
         </ListItemAvatar>
         <ListItemText
-          disableTypography={true}
           primary={
-            <Typography component="div" sx={{display: 'inline'}} color="primary">
-              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: notificationObject.follower.id})}>
-                {notificationObject.follower.username}
-              </Link>{' '}
-              {intl.formatMessage(messages.followUser, {b: (...chunks) => <strong>{chunks}</strong>})}
-            </Typography>
+            <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: notificationObject.follower.id})}>
+              {notificationObject.follower.username}
+            </Link>
           }
-          secondary={<DateTimeAgo date={notificationObject.active_at} />}
+          secondary={<Typography color="primary">{intl.formatMessage(messages.followUser, {b: (...chunks) => <span>{chunks}</span>})}</Typography>}
         />
       </ListItem>
+      <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
+        <DateTimeAgo date={notificationObject.active_at} />
+        <Typography color="primary">
+          <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: notificationObject.follower.id})}>
+            <FormattedMessage id="ui.userToastNotifications.goToProfile" defaultMessage={'ui.userToastNotifications.goToProfile'} />
+          </Link>
+        </Typography>
+      </Stack>
     </Root>
-  ); */
+  );
 }

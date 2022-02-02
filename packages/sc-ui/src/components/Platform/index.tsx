@@ -47,7 +47,7 @@ export default function Platform(props: PlatformProps): JSX.Element {
 
   // CONST
   const language = scLocaleContext.locale;
-  const roles = scUserContext.user.role;
+  const roles = scUserContext.user && scUserContext.user.role;
   const isAdmin = roles && roles.includes('admin');
   const isModerator = roles && roles.includes('moderator');
 

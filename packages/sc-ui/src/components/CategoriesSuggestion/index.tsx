@@ -1,13 +1,12 @@
-import React, {useEffect, useState} from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {styled} from '@mui/material/styles';
 import {Button, Divider, Typography} from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import {Endpoints, http} from '@selfcommunity/core';
+import { Endpoints, http, SCUserContext, SCUserContextType, SCCategoryType} from '@selfcommunity/core';
 import CategoriesSuggestionSkeleton from '../Skeleton/CategoriesSuggestionSkeleton';
 import Category, {CategoryProps} from '../Category';
 import {AxiosResponse} from 'axios';
-import {SCCategoryType} from '@selfcommunity/core/src/types';
 import {FormattedMessage} from 'react-intl';
 
 const PREFIX = 'SCCategoriesSuggestion';
@@ -59,6 +58,9 @@ export default function CategoriesSuggestion(props: CategoriesListProps): JSX.El
   const [openCategoriesSuggestionDialog, setOpenCategoriesSuggestionDialog] = useState<boolean>(false);
   const [total, setTotal] = useState<number>(0);
 
+  // CONTEXT
+  const scUserContext: SCUserContextType = useContext(SCUserContext);
+
   /**
    * Handles list change on category follow
    */
@@ -104,7 +106,9 @@ export default function CategoriesSuggestion(props: CategoriesListProps): JSX.El
    * On mount, fetches categories suggestion list
    */
   useEffect(() => {
-    fetchCategoriesSuggestion();
+    if (scUserContext.user) {
+      fetchCategoriesSuggestion();
+    }
   }, []);
 
   /**
@@ -147,7 +151,7 @@ export default function CategoriesSuggestion(props: CategoriesListProps): JSX.El
   /**
    * Renders root object (if not hidden by autoHide prop)
    */
-  if (!autoHide) {
+  if (!autoHide && scUserContext.user) {
     return (
       <Root className={className} {...rest}>
         {c}

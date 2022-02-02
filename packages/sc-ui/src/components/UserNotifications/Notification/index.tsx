@@ -2,7 +2,7 @@ import React, {useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 
 import CardContent from '@mui/material/CardContent';
-import UserNotificationComment from './Comment';
+import CommentNotification from './Comment';
 import UserFollowNotification from './UserFollow';
 import UndeletedForNotification from './UndeletedFor';
 import DeletedForNotification from './DeletedFor';
@@ -29,7 +29,6 @@ import {
   http,
   Link,
   Logger,
-  SCCommentType,
   SCCommentTypologyType,
   SCNotificationAggregatedType,
   SCNotificationPrivateMessageType,
@@ -39,6 +38,7 @@ import {
   SCRoutingContextType,
   useSCRouting
 } from '@selfcommunity/core';
+import IncubatorApprovedNotification from './IncubatorApproved';
 
 const messages = defineMessages({
   receivePrivateMessage: {
@@ -106,6 +106,12 @@ export interface UserNotificationProps extends CardProps {
   notificationObject: SCNotificationAggregatedType;
 
   /**
+   * Handle custom notification
+   * @param data
+   */
+  handleCustomNotification?: (data) => JSX.Element;
+
+  /**
    * The max n of results shown
    * @default 2
    */
@@ -124,7 +130,7 @@ export interface UserNotificationProps extends CardProps {
 
 export default function UserNotification(props: UserNotificationProps): JSX.Element {
   // PROPS
-  const {id = `notification_${props.notificationObject.sid}`, className = null, notificationObject = null, showMaxAggregated = 2, ...rest} = props;
+  const {id = `notification_${props.notificationObject.sid}`, className, notificationObject, handleCustomNotification, showMaxAggregated = 2, ...rest} = props;
 
   // ROUTING
   const scRoutingContext: SCRoutingContextType = useSCRouting();
@@ -177,14 +183,14 @@ export default function UserNotification(props: UserNotificationProps): JSX.Elem
   }
 
   /**
-   * Performs comment vote
+   * Perform vote
    */
-  const performVoteComment = useMemo(
-    () => (comment) => {
+  const performVote = useMemo(
+    () => (contribution) => {
       return http
         .request({
-          url: Endpoints.CommentVote.url({id: comment.id}),
-          method: Endpoints.CommentVote.method
+          url: Endpoints.Vote.url({type: contribution.type, id: contribution.id}),
+          method: Endpoints.Vote.method
         })
         .then((res: AxiosResponse<any>) => {
           if (res.status >= 300) {
@@ -197,18 +203,20 @@ export default function UserNotification(props: UserNotificationProps): JSX.Elem
   );
 
   /**
-   * Handles comment vote
+   * Handles vote
    * @param comment
    */
-  function handleVote(index, comment) {
+  function handleVote(index, contribution) {
     setLoadingVote(index);
-    performVoteComment(comment)
+    performVote(contribution)
       .then((data) => {
-        const newComment: SCCommentType = comment;
-        newComment.voted = !newComment.voted;
-        newComment.vote_count = newComment.vote_count - (newComment.voted ? -1 : 1);
-        const newObj: SCNotificationAggregatedType = obj;
-        newObj.aggregated[index] = Object.assign({}, newObj.aggregated[index], newComment);
+        const newObj: SCNotificationAggregatedType = Object.assign({}, notificationObject);
+        const _notification: SCNotificationType = Object.assign({}, newObj.aggregated[index]);
+        const _contribution = _notification[contribution.type];
+        _contribution.voted = !_contribution.voted;
+        _contribution.vote_count = _contribution.vote_count - (_contribution.voted ? -1 : 1);
+        _notification[contribution.type] = _contribution;
+        newObj.aggregated[index] = _notification;
         setObj(newObj);
         setLoadingVote(null);
       })
@@ -298,7 +306,7 @@ export default function UserNotification(props: UserNotificationProps): JSX.Elem
    */
   function renderAggregated(n, i) {
     if (n.type === SCNotificationTypologyType.COMMENT || n.type === SCNotificationTypologyType.NESTED_COMMENT) {
-      return <UserNotificationComment notificationObject={n} key={i} index={i} onVote={handleVote} loadingVote={loadingVote} />;
+      return <CommentNotification notificationObject={n} key={i} index={i} onVote={handleVote} loadingVote={loadingVote} />;
     } else if (n.type === SCNotificationTypologyType.FOLLOW) {
       return <ContributionFollowNotification notificationObject={n} key={i} />;
     } else if (n.type === SCNotificationTypologyType.USER_FOLLOW) {
@@ -306,7 +314,7 @@ export default function UserNotification(props: UserNotificationProps): JSX.Elem
     } else if (n.type === SCNotificationTypologyType.CONNECTION_REQUEST || n.type === SCNotificationTypologyType.CONNECTION_ACCEPT) {
       return <UserConnectionNotification notificationObject={n} key={i} />;
     } else if (n.type === SCNotificationTypologyType.VOTE_UP) {
-      return <VoteUpNotification notificationObject={n} key={i} />;
+      return <VoteUpNotification notificationObject={n} key={i} index={i} onVote={handleVote} loadingVote={loadingVote} />;
     } else if (
       n.type === SCNotificationTypologyType.KINDLY_NOTICE_ADVERTISING ||
       n.type === SCNotificationTypologyType.KINDLY_NOTICE_AGGRESSIVE ||
@@ -341,6 +349,10 @@ export default function UserNotification(props: UserNotificationProps): JSX.Elem
       return <UserBlockedNotification notificationObject={n} key={i} />;
     } else if (n.type === SCNotificationTypologyType.MENTION) {
       return <UserNotificationMention notificationObject={n} key={i} />;
+    } else if (n.type === SCNotificationTypologyType.INCUBATOR_APPROVED) {
+      return <IncubatorApprovedNotification notificationObject={n} key={i} />;
+    } else if (n.type === SCNotificationTypologyType.CUSTOM_NOTIFICATION) {
+      handleCustomNotification && handleCustomNotification(n);
     }
     return null;
   }

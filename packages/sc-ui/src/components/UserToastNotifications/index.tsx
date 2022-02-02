@@ -1,28 +1,31 @@
 import React, {useEffect, useRef} from 'react';
 import {styled} from '@mui/material/styles';
-import {Box, BoxProps, Button, Stack} from '@mui/material';
+import {Box, BoxProps} from '@mui/material';
 import {SCNotificationTopicType, SCNotification, SCNotificationTypologyType} from '@selfcommunity/core';
 import PubSub from 'pubsub-js';
 import {useSnackbar} from 'notistack';
-import CollapsedForNotificationToast from './Toast/CollapsedFor';
+import CustomSnackMessage from '../../shared/CustomSnackMessage';
 import UserNotificationCommentToast from './Toast/Comment';
 import ContributionFollowNotificationToast from './Toast/ContributionFollow';
-import DeletedForNotificationToast from './Toast/DeletedFor';
-import KindlyNoticeFlagNotificationToast from './Toast/KindlyNoticeFlag';
-import KindlyNoticeForNotificationToast from './Toast/KindlyNoticeFor';
 import UserNotificationMentionToast from './Toast/Mention';
 import UserNotificationPrivateMessageToast from './Toast/PrivateMessage';
-import UndeletedForNotificationToast from './Toast/UndeletedFor';
-import UserBlockedNotificationToast from './Toast/UserBlocked';
 import UserConnectionNotificationToast from './Toast/UserConnection';
 import UserFollowNotificationToast from './Toast/UserFollow';
 import VoteUpNotificationToast from './Toast/VoteUp';
-import {FormattedMessage} from 'react-intl';
-import SnackMessage from './Toast';
+import IncubatorApprovedNotificationToast from './Toast/IncubatorApproved';
+/*
+import CollapsedForNotificationToast from './Toast/CollapsedFor';
+import DeletedForNotificationToast from './Toast/DeletedFor';
+import KindlyNoticeFlagNotificationToast from './Toast/KindlyNoticeFlag';
+import KindlyNoticeForNotificationToast from './Toast/KindlyNoticeFor';
+import UndeletedForNotificationToast from './Toast/UndeletedFor';
+import UserBlockedNotificationToast from './Toast/UserBlocked';
+*/
 
 const PREFIX = 'SCUserToastNotifications';
 
 const classes = {
+  toastMessage: `${PREFIX}-toast-message`,
   toastContent: `${PREFIX}-toast-content`,
   toastActions: `${PREFIX}-toast-actions`
 };
@@ -32,10 +35,11 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
+  [`& .${classes.toastMessage}`]: {
+    minWidth: 280
+  },
   [`& .${classes.toastContent}`]: {
-    [theme.breakpoints.up('sm')]: {
-      minWidth: '344px !important'
-    }
+    marginBottom: 10
   }
 }));
 
@@ -47,6 +51,11 @@ export interface UserToastNotificationsProps extends BoxProps {
   ToastMessageProps?: any;
 
   /**
+   * Handle custom notification
+   */
+  handleCustomNotification?: (data) => void;
+
+  /**
    * Other props
    */
   [p: string]: any;
@@ -54,7 +63,7 @@ export interface UserToastNotificationsProps extends BoxProps {
 
 export default function UserToastNotifications(props: UserToastNotificationsProps): JSX.Element {
   // PROPS
-  const {ToastMessageProps = {}} = props;
+  const {ToastMessageProps = {}, handleCustomNotification} = props;
 
   // REFS
   const notificationSubscription = useRef(null);
@@ -63,9 +72,8 @@ export default function UserToastNotifications(props: UserToastNotificationsProp
   const {enqueueSnackbar, closeSnackbar} = useSnackbar();
 
   /**
-   * Render every single notification in aggregated group
+   * Render every single notification content
    * @param n
-   * @param i
    */
   const getContent = (n) => {
     const type = SCNotification.SCNotificationMapping[n.activity_type];
@@ -79,6 +87,13 @@ export default function UserToastNotifications(props: UserToastNotificationsProp
       return <UserConnectionNotificationToast notificationObject={n} />;
     } else if (type === SCNotificationTypologyType.VOTE_UP) {
       return <VoteUpNotificationToast notificationObject={n} />;
+    } else if (type === SCNotificationTypologyType.PRIVATE_MESSAGE) {
+      return <UserNotificationPrivateMessageToast notificationObject={n} />;
+    } else if (type === SCNotificationTypologyType.MENTION) {
+      return <UserNotificationMentionToast notificationObject={n} />;
+    } else if (type === SCNotificationTypologyType.INCUBATOR_APPROVED) {
+      return <IncubatorApprovedNotificationToast notificationObject={n} />;
+      /*
     } else if (
       type === SCNotificationTypologyType.KINDLY_NOTICE_ADVERTISING ||
       type === SCNotificationTypologyType.KINDLY_NOTICE_AGGRESSIVE ||
@@ -107,29 +122,13 @@ export default function UserToastNotifications(props: UserToastNotificationsProp
       type === SCNotificationTypologyType.COLLAPSED_FOR_OFFTOPIC
     ) {
       return <CollapsedForNotificationToast notificationObject={n} />;
-    } else if (type === SCNotificationTypologyType.PRIVATE_MESSAGE) {
-      return <UserNotificationPrivateMessageToast notificationObject={n} />;
     } else if (type === SCNotificationTypologyType.BLOCKED_USER || type === SCNotificationTypologyType.UNBLOCKED_USER) {
       return <UserBlockedNotificationToast notificationObject={n} />;
-    } else if (type === SCNotificationTypologyType.MENTION) {
-      return <UserNotificationMentionToast notificationObject={n} />;
+    } else if (type === SCNotificationTypologyType.CUSTOM_NOTIFICATION) {
+      handleCustomNotification && handleCustomNotification(n);
+    */
     }
     return null;
-  };
-
-  const getActions = (n) => {
-    return (
-      <Stack spacing={2} justifyContent="center" alignItems="center">
-        <Button
-          variant={'outlined'}
-          size={'small'}
-          onClick={() => {
-            closeSnackbar(props.key);
-          }}>
-          <FormattedMessage id="ui.userToastNotifications.dismiss" defaultMessage="ui.userToastNotifications.dismiss" />
-        </Button>
-      </Stack>
-    );
   };
 
   /**
@@ -144,23 +143,22 @@ export default function UserToastNotifications(props: UserToastNotificationsProp
       SCNotification.SCNotificationMapping[data.data.activity_type] &&
       !SCNotification.SCSilentNotifications.includes(data.data.activity_type)
     ) {
-      console.log(data);
       enqueueSnackbar(
         null,
         Object.assign(
           {},
           {
             content: (
-              <SnackMessage
+              <CustomSnackMessage
                 id={data.data.feed_serialization_id}
                 message={
-                  <div>
+                  <div className={classes.toastMessage}>
                     <div className={classes.toastContent}>{getContent(data.data)}</div>
-                    <div className={classes.toastActions}>{getActions(data.data)}</div>
                   </div>
                 }
               />
             ),
+            preventDuplicate: true,
             key: data.data.feed_serialization_id,
             variant: 'default',
             persist: true,

@@ -241,8 +241,8 @@ export default function useSCConnectionsManager(user?: SCUserType) {
     [data, loading, cache]
   );
 
-  if (connectionsDisabled) {
-    return null;
+  if (connectionsDisabled || !user) {
+    return {connections: data, loading, isLoading};
   }
   return {connections: data, loading, isLoading, status, requestConnection, acceptConnection, refresh, emptyCache};
 }

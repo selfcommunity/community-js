@@ -97,13 +97,6 @@ export default function UserProfileHeader(props: UserProfileHeaderProps): JSX.El
   const intl = useIntl();
 
   /**
-   * If user not found
-   */
-  if (!scUser) {
-    return null;
-  }
-
-  /**
    * Handles Change Avatar
    * Only if scUser.id === scUserContext.user.id
    * @param avatar
@@ -126,70 +119,69 @@ export default function UserProfileHeader(props: UserProfileHeaderProps): JSX.El
   }
 
   /**
-   * User exist
-   */
-  const _backgroundCover = {
-    ...(scUser.cover
-      ? {background: `url('${scUser.cover}') center / cover`}
-      : {background: `url('${scPreferences.preferences[SCPreferences.IMAGES_USER_DEFAULT_COVER].value}') center / cover`})
-  };
-
-  /**
    * Renders root object
    */
-  return (
-    <Root className={className} {...rest}>
-      <Paper style={_backgroundCover} classes={{root: classes.cover}}>
-        <img src={scUser.avatar ? scUser.avatar : ''} className={classes.avatar} />
-        {scUser.id === scUserContext.user.id && (
-          <>
-            <ChangePicture iconButton={true} onChange={handleChangeAvatar} className={classes.changePicture} />
-            <div className={classes.changeCover}>
-              <ChangeCover onChange={handleChangeCover} />
-            </div>
-          </>
-        )}
-      </Paper>
-      <Typography variant="h5" align={'center'} className={classes.username}>
-        {scUser.username}
-      </Typography>
-      <Grid container spacing={2} sx={{mt: 0.5, p: 3}}>
-        <Grid item xs={6}>
-          <Typography variant="body2">
-            <b>
-              <FormattedMessage id="ui.userProfileHeader.realName" defaultMessage="ui.userProfileHeader.realName" />:
-            </b>{' '}
-            {scUser.real_name ? scUser.real_name : ' - '}
-          </Typography>
-          <Typography variant="body2">
-            <b>
-              <FormattedMessage id="ui.userProfileHeader.dateOfBirth" defaultMessage="ui.userProfileHeader.dateOfBirth" />
-            </b>{' '}
-            {scUser.date_of_birth ? `${intl.formatDate(scUser.date_of_birth, {year: 'numeric', month: 'numeric', day: 'numeric'})}` : ' - '}
-          </Typography>
-          <Typography variant="body2">
-            <b>
-              <FormattedMessage id="ui.userProfileHeader.job" defaultMessage="ui.userProfileHeader.job" />:
-            </b>{' '}
-            {scUser.description ? scUser.description : ' - '}
-          </Typography>
+  if (scUser) {
+    const _backgroundCover = {
+      ...(scUser.cover
+        ? {background: `url('${scUser.cover}') center / cover`}
+        : {background: `url('${scPreferences.preferences[SCPreferences.IMAGES_USER_DEFAULT_COVER].value}') center / cover`})
+    };
+    return (
+      <Root className={className} {...rest}>
+        <Paper style={_backgroundCover} classes={{root: classes.cover}}>
+          <img src={scUser.avatar ? scUser.avatar : ''} className={classes.avatar} />
+          {scUserContext.user && scUser.id === scUserContext.user.id && (
+            <>
+              <ChangePicture iconButton={true} onChange={handleChangeAvatar} className={classes.changePicture} />
+              <div className={classes.changeCover}>
+                <ChangeCover onChange={handleChangeCover} />
+              </div>
+            </>
+          )}
+        </Paper>
+        <Typography variant="h5" align={'center'} className={classes.username}>
+          {scUser.username}
+        </Typography>
+        <Grid container spacing={2} sx={{mt: 0.5, p: 3}}>
+          <Grid item xs={6}>
+            <Typography variant="body2">
+              <b>
+                <FormattedMessage id="ui.userProfileHeader.realName" defaultMessage="ui.userProfileHeader.realName" />:
+              </b>{' '}
+              {scUser.real_name ? scUser.real_name : ' - '}
+            </Typography>
+            <Typography variant="body2">
+              <b>
+                <FormattedMessage id="ui.userProfileHeader.dateOfBirth" defaultMessage="ui.userProfileHeader.dateOfBirth" />
+              </b>{' '}
+              {scUser.date_of_birth ? `${intl.formatDate(scUser.date_of_birth, {year: 'numeric', month: 'numeric', day: 'numeric'})}` : ' - '}
+            </Typography>
+            <Typography variant="body2">
+              <b>
+                <FormattedMessage id="ui.userProfileHeader.job" defaultMessage="ui.userProfileHeader.job" />:
+              </b>{' '}
+              {scUser.description ? scUser.description : ' - '}
+            </Typography>
+          </Grid>
+          <Grid item xs={6}>
+            <Typography variant="body2">
+              <b>
+                <FormattedMessage id="ui.userProfileHeader.dateJoined" defaultMessage="ui.userProfileHeader.dateJoined" />:
+              </b>{' '}
+              {scUser.date_joined ? `${intl.formatDate(scUser.date_joined, {year: 'numeric', month: 'numeric', day: 'numeric'})}` : ' - '}
+            </Typography>
+            <Typography variant="body2">
+              <b>
+                <FormattedMessage id="ui.userProfileHeader.website" defaultMessage="ui.userProfileHeader.website" />:
+              </b>{' '}
+              {scUser.website ? scUser.website : ' - '}
+            </Typography>
+          </Grid>
         </Grid>
-        <Grid item xs={6}>
-          <Typography variant="body2">
-            <b>
-              <FormattedMessage id="ui.userProfileHeader.dateJoined" defaultMessage="ui.userProfileHeader.dateJoined" />:
-            </b>{' '}
-            {scUser.date_joined ? `${intl.formatDate(scUser.date_joined, {year: 'numeric', month: 'numeric', day: 'numeric'})}` : ' - '}
-          </Typography>
-          <Typography variant="body2">
-            <b>
-              <FormattedMessage id="ui.userProfileHeader.website" defaultMessage="ui.userProfileHeader.website" />:
-            </b>{' '}
-            {scUser.website ? scUser.website : ' - '}
-          </Typography>
-        </Grid>
-      </Grid>
-      <Divider />
-    </Root>
-  );
+        <Divider />
+      </Root>
+    );
+  }
+  return null;
 }

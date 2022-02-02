@@ -55,14 +55,6 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/comment/$(id)/vote/'),
     method: 'POST',
   },
-  CommentVotes: {
-    url: urlReplacer('/api/v2/comment/$(id)/vote/'),
-    method: 'GET',
-  },
-  CommentDelete: {
-    url: urlReplacer('/api/v2/comment/$(id)/'),
-    method: 'DELETE',
-  },
   CommentRestore: {
     url: urlReplacer('/api/v2/comment/$(id)/restore'),
     method: 'POST',
@@ -279,7 +271,7 @@ const Endpoints: {[key: string]: EndpointType} = {
     method: 'POST',
   },
   /**
-   * Votes
+   * Manage votes for post, discussion, status and comment
    */
   Vote: {
     url: urlReplacer('/api/v2/$(type)/$(id)/vote/'),

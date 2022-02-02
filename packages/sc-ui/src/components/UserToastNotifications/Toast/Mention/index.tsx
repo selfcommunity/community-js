@@ -1,53 +1,74 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import {Avatar, Box, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
-import {Link, SCNotificationMentionType, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
-import {defineMessages, useIntl} from 'react-intl';
-import {getContributeType} from '../../../../utils/contribute';
+import {Avatar, Box, ListItem, ListItemAvatar, ListItemText, Stack, Typography} from '@mui/material';
+import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
+import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
+import {getContribute} from '../../../../utils/contribute';
 import DateTimeAgo from '../../../../shared/DateTimeAgo';
 
 const messages = defineMessages({
   quotedYouOn: {
-    id: 'ui.userNotifications.mention.quotedYou',
-    defaultMessage: 'ui.userNotifications.mention.quotedYou'
+    id: 'ui.userToastNotifications.mention.quotedYou',
+    defaultMessage: 'ui.userToastNotifications.mention.quotedYou'
   }
 });
 
 const PREFIX = 'SCUserNotificationMentionToast';
+
+const classes = {
+  content: `${PREFIX}-content`
+};
 
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  '& .MuiSvgIcon-root': {
-    width: '0.7em',
-    marginBottom: '0.5px'
+  [`& .${PREFIX}-content`]: {
+    padding: '8px 0px 15px 0px'
   }
 }));
 
 export interface NotificationMentionToastProps {
   /**
+   * Id of the feedObject
+   * @default 'tn_<notificationObject.feed_serialization_id>'
+   */
+  id?: string;
+
+  /**
+   * Overrides or extends the styles applied to the component.
+   * @default null
+   */
+  className?: string;
+
+  /**
    * Notification obj
    * @default null
    */
   notificationObject: any;
+
   /**
    * Any other properties
    */
   [p: string]: any;
 }
 
+/**
+ * This component render the content of the
+ * toast notification of type mention
+ * @param props
+ * @constructor
+ */
 export default function UserNotificationMentionToast(props: NotificationMentionToastProps): JSX.Element {
-
   // PROPS
-  const {notificationObject = null, ...rest} = props;
+  const {notificationObject = null, id = `tn_${props.notificationObject['feed_serialization_id']}`, className, ...rest} = props;
 
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
 
-  // STATE
-  const objectType = getContributeType(notificationObject);
+  // Contribute
+  const contribution = getContribute(notificationObject);
 
   // INTL
   const intl = useIntl();
@@ -55,43 +76,48 @@ export default function UserNotificationMentionToast(props: NotificationMentionT
   /**
    * Renders root object
    */
-  return <div dangerouslySetInnerHTML={{__html: notificationObject.html}} />;
-  /* return (
-    <Root {...rest}>
-      <ListItem alignItems="flex-start" component={'div'}>
+  return (
+    <Root id={id} className={className} {...rest}>
+      <ListItem component={'div'} className={classes.content}>
         <ListItemAvatar>
-          <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: notificationObject[objectType].author.id})}>
-            <Avatar alt={notificationObject[objectType].author.username} variant="circular" src={notificationObject[objectType].author.avatar} />
+          <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: notificationObject.user.id})}>
+            <Avatar alt={notificationObject.user.username} variant="circular" src={notificationObject.user.avatar} />
           </Link>
         </ListItemAvatar>
         <ListItemText
           disableTypography={true}
           primary={
-            <Typography component="span" sx={{display: 'inline'}} color="primary">
-              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: notificationObject[objectType].author.id})}>
-                {notificationObject[objectType].author.username}
+            <Typography>
+              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: notificationObject.user.id})}>
+                {notificationObject.user.username}
               </Link>{' '}
               {intl.formatMessage(messages.quotedYouOn, {
-                b: (...chunks) => <strong>{chunks}</strong>
+                b: (...chunks) => <span>{chunks}</span>
               })}
+              :
             </Typography>
           }
           secondary={
-            <React.Fragment>
-              <Link to={scRoutingContext.url(objectType, {id: notificationObject[objectType].id})}>
-                <Typography
-                  component={'span'}
-                  variant="body2"
-                  sx={{textDecoration: 'underline'}}
-                  gutterBottom
-                  dangerouslySetInnerHTML={{__html: notificationObject[objectType].summary}}
-                />
-              </Link>
-              <DateTimeAgo date={notificationObject.active_at} />
-            </React.Fragment>
+            <Typography color="primary">
+              {contribution.summary ? (
+                contribution.summary
+              ) : (
+                <Link to={scRoutingContext.url(SCRoutes[`${contribution.type.toUpperCase()}_ROUTE_NAME`], {id: contribution.id})}>
+                  <FormattedMessage id="ui.userToastNotifications.viewContribution" defaultMessage={'ui.userToastNotifications.viewContribution'} />
+                </Link>
+              )}
+            </Typography>
           }
         />
       </ListItem>
+      <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
+        <DateTimeAgo date={notificationObject.active_at} />
+        <Typography color="primary">
+          <Link to={scRoutingContext.url(SCRoutes[`${contribution.type.toUpperCase()}_ROUTE_NAME`], {id: contribution.id})}>
+            <FormattedMessage id="ui.userToastNotifications.viewContribution" defaultMessage={'ui.userToastNotifications.viewContribution'} />
+          </Link>
+        </Typography>
+      </Stack>
     </Root>
-  ); */
+  );
 }

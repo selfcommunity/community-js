@@ -32,6 +32,12 @@ export interface SCSettingsType {
   router?: SCRoutingContextType;
 
   /**
+   * Callback to handle anonymous action
+   * Ex. an anonymous user attempt to post a comment
+   */
+  handleAnonymousAction?: () => void;
+
+  /**
    * List of SC context providers to override the default value
    * Default context providers:
    * SCPreferencesProvider, SCRoutingProvider, SCUserProvider,
@@ -78,9 +84,14 @@ export interface SCUserContextType {
   error?: any;
 
   /**
-   * Triggered when the a user logout is performed.
+   * Triggered when logout is performed.
    */
   logout: () => void;
+
+  /**
+   * Triggered when call a refresh session.
+   */
+  refreshSession: () => Promise<any>;
 
   /**
    * Handle change avatar
@@ -127,22 +138,22 @@ export interface SCFollowedManagerType {
   /**
    * Handle user follow/unfollow user
    */
-  follow: (user: SCUserType) => Promise<any>;
+  follow?: (user: SCUserType) => Promise<any>;
 
   /**
    * Handle check if a user follow a user, caching data
    */
-  isFollowed: (user: SCUserType) => boolean;
+  isFollowed?: (user: SCUserType) => boolean;
 
   /**
    * Refresh followed
    */
-  refresh: () => void;
+  refresh?: () => void;
 
   /**
    * Empty cache to revalidate all followed
    */
-  emptyCache: () => void;
+  emptyCache?: () => void;
 }
 
 export interface SCCategoriesManagerType {
@@ -164,22 +175,22 @@ export interface SCCategoriesManagerType {
   /**
    * Handle user follow/unfollow category
    */
-  follow: (category: SCCategoryType) => Promise<any>;
+  follow?: (category: SCCategoryType) => Promise<any>;
 
   /**
    * Handle check if a user follow a category, caching data
    */
-  isFollowed: (category: SCCategoryType) => boolean;
+  isFollowed?: (category: SCCategoryType) => boolean;
 
   /**
    * Refresh categories
    */
-  refresh: () => void;
+  refresh?: () => void;
 
   /**
    * Empty cache to revalidate all categories
    */
-  emptyCache: () => void;
+  emptyCache?: () => void;
 }
 
 export interface SCConnectionsManagerType {
@@ -201,27 +212,27 @@ export interface SCConnectionsManagerType {
   /**
    * Handle request connection
    */
-  requestConnection: (user: SCUserType) => Promise<any>;
+  requestConnection?: (user: SCUserType) => Promise<any>;
 
   /**
    * Handle accept connection
    */
-  acceptConnection: (user: SCUserType) => Promise<any>;
+  acceptConnection?: (user: SCUserType) => Promise<any>;
 
   /**
    * Check user status
    */
-  status: (user: SCUserType) => string;
+  status?: (user: SCUserType) => string;
 
   /**
    * Refresh connections status
    */
-  refresh: () => void;
+  refresh?: () => void;
 
   /**
    * Empty cache to revalidate all categories
    */
-  emptyCache: () => void;
+  emptyCache?: () => void;
 }
 
 /**
@@ -235,7 +246,7 @@ export interface SCSessionType {
 
   /**
    * ClientID: only for OAuth.
-   * It will be passed to refreshTokenCallback
+   * It will be passed to handleRefreshToken
    */
   clientId: string;
 
@@ -247,7 +258,7 @@ export interface SCSessionType {
   /**
    * Callback to refresh the token.
    */
-  refreshTokenCallback?: (currentSession) => Promise<SCAuthTokenType>;
+  handleRefreshToken?: (currentSession) => Promise<SCAuthTokenType>;
 }
 
 /**

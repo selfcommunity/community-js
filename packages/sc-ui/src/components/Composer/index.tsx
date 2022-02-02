@@ -824,7 +824,7 @@ export default function Composer(props: ComposerProps): JSX.Element {
             </FormControl>
           </Box>
           <Box>
-            <Avatar className={classes.avatar} src={scAuthContext.user.avatar}></Avatar>
+            {!scAuthContext.user ? <Avatar className={classes.avatar} /> : <Avatar className={classes.avatar} src={scAuthContext.user.avatar} />}
           </Box>
           <Box>
             <IconButton onClick={handleClose}>
@@ -961,6 +961,10 @@ export default function Composer(props: ComposerProps): JSX.Element {
         <FormattedMessage id="ui.composer.edit.error.content" defaultMessage="ui.composer.edit.error.content" />
       </Alert>
     );
+  }
+
+  if (!scAuthContext.user) {
+    return null;
   }
 
   return (

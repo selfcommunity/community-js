@@ -1,7 +1,7 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
 import {Avatar, Box, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
-import {green} from '@mui/material/colors';
+import {red} from '@mui/material/colors';
 import EmojiFlagsIcon from '@mui/icons-material/EmojiFlags';
 import {SCNotificationBlockedUserType, SCNotificationTypologyType} from '@selfcommunity/core';
 import {defineMessages, useIntl} from 'react-intl';
@@ -29,18 +29,36 @@ const Root = styled(Box, {
 
 export interface NotificationBlockedProps {
   /**
+   * Id of the feedObject
+   * @default 'n_<notificationObject.sid>'
+   */
+  id?: string;
+
+  /**
+   * Overrides or extends the styles applied to the component.
+   * @default null
+   */
+  className?: string;
+
+  /**
    * Notification obj
    * @default null
    */
   notificationObject: SCNotificationBlockedUserType;
+
   /**
    * Any other properties
    */
   [p: string]: any;
 }
+/**
+ * This component render the content of the notification of type user blocked
+ * @param props
+ * @constructor
+ */
 export default function UserBlockedNotification(props: NotificationBlockedProps): JSX.Element {
   // PROPS
-  const {notificationObject = null, ...rest} = props;
+  const {notificationObject = null, id = `n_${props.notificationObject['sid']}`, className, ...rest} = props;
   // INTL
   const intl = useIntl();
 
@@ -48,10 +66,10 @@ export default function UserBlockedNotification(props: NotificationBlockedProps)
    * Renders root object
    */
   return (
-    <Root {...rest}>
+    <Root id={id} className={className} {...rest}>
       <ListItem alignItems="flex-start" component={'div'}>
         <ListItemAvatar>
-          <Avatar variant="circular" sx={{bgcolor: green[500]}}>
+          <Avatar variant="circular" sx={{bgcolor: red[500]}}>
             <EmojiFlagsIcon />
           </Avatar>
         </ListItemAvatar>

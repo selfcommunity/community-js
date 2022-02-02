@@ -104,7 +104,7 @@ export default function Thread(props: ThreadProps): JSX.Element {
   // STATE
   const [loading, setLoading] = useState<boolean>(true);
   const [messages, setMessages] = useState<any[]>([]);
-  const loggedUser = scUserContext['user'].id;
+  const loggedUser = scUserContext.user && scUserContext.user.id;
   const [isHovered, setIsHovered] = useState({});
   const [openDeleteMessageDialog, setOpenDeleteMessageDialog] = useState<boolean>(false);
   const [deletingMsg, setDeletingMsg] = useState(null);
@@ -347,6 +347,11 @@ export default function Thread(props: ThreadProps): JSX.Element {
         )}
       </Box>
     );
+  }
+
+  // Anonymous
+  if (!scUserContext.user) {
+    return null;
   }
 
   /**

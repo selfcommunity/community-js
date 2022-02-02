@@ -1,6 +1,6 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import {Avatar, Box, Grid, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
+import {Avatar, Box, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
 import {Link, SCNotificationVoteUpType, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
 import {defineMessages, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../../shared/DateTimeAgo';
@@ -21,20 +21,39 @@ const Root = styled(Box, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({}));
 
-export interface NotificationVoteUpProps {
+export interface ContributionFollowProps {
+  /**
+   * Id of the feedObject
+   * @default 'n_<notificationObject.sid>'
+   */
+  id?: string;
+
+  /**
+   * Overrides or extends the styles applied to the component.
+   * @default null
+   */
+  className?: string;
+
   /**
    * Notification obj
    * @default null
    */
   notificationObject: SCNotificationVoteUpType;
+
   /**
    * Any other properties
    */
   [p: string]: any;
 }
-export default function ContributionFollowNotification(props: NotificationVoteUpProps): JSX.Element {
+
+/**
+ * This component render the content of the notification of type follow (contribution)
+ * @param props
+ * @constructor
+ */
+export default function ContributionFollowNotification(props: ContributionFollowProps): JSX.Element {
   // PROPS
-  const {notificationObject = null, ...rest} = props;
+  const {notificationObject, id = `n_${props.notificationObject['sid']}`, className, ...rest} = props;
 
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
@@ -46,7 +65,7 @@ export default function ContributionFollowNotification(props: NotificationVoteUp
    * Renders root object
    */
   return (
-    <Root {...rest}>
+    <Root id={id} className={className} {...rest}>
       <ListItem alignItems="flex-start" component={'div'}>
         <ListItemAvatar>
           <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: notificationObject.user.id})}>

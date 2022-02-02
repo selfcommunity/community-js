@@ -2,7 +2,14 @@ import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Box, Collapse, List, ListItem, ListItemButton, ListItemText, Typography} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
-import {Endpoints, http, Logger, SCFeedUnitActivityType, SCFeedUnitActivityTypologyType} from '@selfcommunity/core';
+import {
+  Endpoints,
+  http,
+  SCCommentTypologyType,
+  Logger,
+  SCFeedUnitActivityType,
+  SCFeedUnitActivityTypologyType,
+} from '@selfcommunity/core';
 import {ExpandLess, ExpandMore} from '@mui/icons-material';
 import {SCOPE_SC_UI} from '../../../constants/Errors';
 import {AxiosResponse} from 'axios';
@@ -66,8 +73,8 @@ export default function RelevantActivities(props: RelevantActivitiesProps): JSX.
   const performVoteComment = (comment) => {
     return http
       .request({
-        url: Endpoints.CommentVote.url({id: comment.id}),
-        method: Endpoints.CommentVote.method
+        url: Endpoints.Vote.url({type: SCCommentTypologyType, id: comment.id}),
+        method: Endpoints.Vote.method
       })
       .then((res: AxiosResponse<any>) => {
         if (res.status >= 300) {

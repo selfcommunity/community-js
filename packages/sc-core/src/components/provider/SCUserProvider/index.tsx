@@ -21,7 +21,7 @@ import {
  * SCUserContext (Authentication Context)
  * Consuming this context in one of the following ways:
  *  1. <SCUserContext.Consumer>
- *       {(user, session, error, loading, logout) => (...)}
+ *       {(user, session, error, loading, logout, ...) => (...)}
  *     </SCUserContext.Consumer>
  *  2. const scUserContext: SCUserContextType = useContext(SCUserContext);
  *  3. const scUserContext: SCUserContextType = useSCUser();
@@ -40,7 +40,7 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
    * Refresh token if necessary
    */
   const initialSession: SCSessionType = scContext.settings.session;
-  const {state, dispatch} = useSCAuth(initialSession);
+  const {state, dispatch, helpers} = useSCAuth(initialSession);
 
   /**
    * Managers followed, categories
@@ -55,17 +55,19 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
    * If there is an error, it means there is no session.
    */
   useEffect(() => {
-    dispatch({type: userActionTypes.LOGIN_LOADING});
-    sessionServices
-      .getCurrentUser()
-      .then((user: SCUserType) => {
-        dispatch({type: userActionTypes.LOGIN_SUCCESS, payload: {user}});
-      })
-      .catch((error) => {
-        Logger.error(SCOPE_SC_CORE, 'Unable to retrieve the authenticated user.');
-        dispatch({type: userActionTypes.LOGIN_FAILURE, payload: {error}});
-      });
-  }, []);
+    if (state.session.authToken && state.session.authToken.accessToken) {
+      dispatch({type: userActionTypes.LOGIN_LOADING});
+      sessionServices
+        .getCurrentUser()
+        .then((user: SCUserType) => {
+          dispatch({type: userActionTypes.LOGIN_SUCCESS, payload: {user}});
+        })
+        .catch((error) => {
+          Logger.error(SCOPE_SC_CORE, 'Unable to retrieve the authenticated user.');
+          dispatch({type: userActionTypes.LOGIN_FAILURE, payload: {error}});
+        });
+    }
+  }, [state.session.accessToken]);
 
   /**
    * Controls caching of follow categories, users, etc...
@@ -84,10 +86,10 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
    * Refresh followed categories, users, etc..
    */
   function handleVisibilityChange() {
-    if (!document.hidden) {
-      categoriesManager.refresh();
-      followedManager && followedManager.refresh();
-      connectionsManager && connectionsManager.refresh();
+    if (!document.hidden && state.user) {
+      categoriesManager.refresh && categoriesManager.refresh();
+      followedManager.refresh && followedManager.refresh();
+      connectionsManager.refresh && connectionsManager.refresh();
     }
   }
 
@@ -120,6 +122,13 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
   }
 
   /**
+   * Helper to refresh the session
+   */
+  function refreshSession(): Promise<any> {
+    return helpers.refreshSession();
+  }
+
+  /**
    * Call the logout endpoint and then remove the user
    * from the state.
    */
@@ -143,19 +152,28 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
       user: state.user,
       session: state.session,
       loading: state.loading,
-      error: state.loading,
+      error: state.error,
       setAvatar,
       setCover,
       setUnseenInteractionsCounter,
       setUnseenNotificationBannersCounter,
       logout,
+      refreshSession,
       managers: {
         categories: categoriesManager,
         followed: followedManager,
         connections: connectionsManager,
       },
     }),
-    [state, categoriesManager.loading, categoriesManager.categories, followedManager.loading, followedManager.followed]
+    [
+      state,
+      categoriesManager.loading,
+      categoriesManager.categories,
+      followedManager.loading,
+      followedManager.followed,
+      connectionsManager.loading,
+      connectionsManager.connections,
+    ]
   );
 
   /**

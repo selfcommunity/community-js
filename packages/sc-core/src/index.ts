@@ -59,8 +59,11 @@ import {
   SCNotificationUserFollowType,
   SCNotificationVoteUpType,
   SCCustomNotificationType,
+  SCIncubatorType,
+  SCNotificationIncubatorType,
   SCNotificationTopicType,
   SCAlertMessagesContextType,
+  SCPrizeType,
 } from './types';
 
 /**
@@ -130,7 +133,7 @@ import http, {formatHttpError} from './utils/http';
 /**
  * Endpoint component
  */
-import Endpoints from './constants/Endpoints';
+import Endpoints, {EndpointType} from './constants/Endpoints';
 
 /**
  * Utilities:
@@ -210,6 +213,9 @@ export {
   SCNotificationVoteUpType,
   SCCustomNotificationType,
   SCNotificationTopicType,
+  SCIncubatorType,
+  SCNotificationIncubatorType,
+  SCPrizeType,
   SCContext,
   SCUserContext,
   SCThemeContext,
@@ -244,6 +250,7 @@ export {
   Link,
   SCRoutes,
   Endpoints,
+  EndpointType,
   Logger,
   StringUtils,
   ObjectUtils,

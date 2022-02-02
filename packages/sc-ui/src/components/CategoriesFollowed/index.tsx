@@ -1,10 +1,10 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useContext, useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
 import {Button, Divider, Typography} from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import {Endpoints, http, Logger} from '@selfcommunity/core';
+import {Endpoints, http, Logger, SCUserContext, SCUserContextType} from '@selfcommunity/core';
 import CategoriesSuggestionSkeleton from '../Skeleton/CategoriesSuggestionSkeleton';
 import Category from '../Category';
 import {AxiosResponse} from 'axios';
@@ -149,7 +149,11 @@ export default function CategoriesFollowed(props: CategoriesListProps): JSX.Elem
    * Renders root object (if not hidden by autoHide prop)
    */
   if (!autoHide) {
-    return <Root className={className} {...rest}>{c}</Root>;
+    return (
+      <Root className={className} {...rest}>
+        {c}
+      </Root>
+    );
   }
   return null;
 }

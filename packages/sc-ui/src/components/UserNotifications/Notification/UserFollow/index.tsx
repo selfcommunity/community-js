@@ -1,6 +1,6 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import { Avatar, Box, Chip, ListItem, ListItemAvatar, ListItemText, Typography } from '@mui/material';
+import {Avatar, Box, Chip, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
 import {Link, SCNotificationUserFollowType, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
 import {defineMessages, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../../shared/DateTimeAgo';
@@ -23,18 +23,37 @@ const Root = styled(Box, {
 
 export interface NotificationFollowProps {
   /**
+   * Id of the feedObject
+   * @default 'n_<notificationObject.sid>'
+   */
+  id?: string;
+
+  /**
+   * Overrides or extends the styles applied to the component.
+   * @default null
+   */
+  className?: string;
+
+  /**
    * Notification obj
    * @default null
    */
   notificationObject: SCNotificationUserFollowType;
+
   /**
    * Any other properties
    */
   [p: string]: any;
 }
+
+/**
+ * This component render the content of the notification of type user follow
+ * @param props
+ * @constructor
+ */
 export default function UserFollowNotification(props: NotificationFollowProps): JSX.Element {
   // PROPS
-  const {notificationObject = null, ...rest} = props;
+  const {notificationObject, id = `n_${props.notificationObject['sid']}`, className, ...rest} = props;
 
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
@@ -46,7 +65,7 @@ export default function UserFollowNotification(props: NotificationFollowProps): 
    * Renders root object
    */
   return (
-    <Root {...rest}>
+    <Root id={id} className={className} {...rest}>
       <ListItem alignItems="flex-start" component={'div'}>
         <ListItemAvatar>
           <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: notificationObject.follower.id})}>

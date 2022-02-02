@@ -1,5 +1,13 @@
 import React, {useContext, useMemo, useState} from 'react';
-import {SCPreferences, SCPreferencesContext, SCPreferencesContextType, SCUserContext, SCUserContextType} from '@selfcommunity/core';
+import {
+  SCContext,
+  SCContextType,
+  SCPreferences,
+  SCPreferencesContext,
+  SCPreferencesContextType,
+  SCUserContext,
+  SCUserContextType,
+} from '@selfcommunity/core';
 import {Avatar, Box, Button, IconButton, PaperProps} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {SCMediaObjectType} from '../../types/media';
@@ -10,7 +18,7 @@ import PollIcon from '@mui/icons-material/BarChartOutlined';
 import {FormattedMessage} from 'react-intl';
 import {DistributiveOmit} from '@mui/types';
 import {OverrideProps} from '@mui/material/OverridableComponent';
-import { useSnackbar } from 'notistack';
+import {useSnackbar} from 'notistack';
 
 const PREFIX = 'SCInlineComposer';
 
@@ -78,8 +86,9 @@ export default function InlineComposer(props: InlineComposerProps): JSX.Element 
   const {mediaObjectTypes = [Image, Document, Link], onSuccess = null, ...rest} = props;
 
   // Context
-  const scPrefernces: SCPreferencesContextType = useContext(SCPreferencesContext);
-  const scUser: SCUserContextType = useContext(SCUserContext);
+  const scContext: SCContextType = useContext(SCContext);
+  const scPreferencesContext: SCPreferencesContextType = useContext(SCPreferencesContext);
+  const scUserContext: SCUserContextType = useContext(SCUserContext);
   const {enqueueSnackbar} = useSnackbar();
 
   // State variables
@@ -91,13 +100,19 @@ export default function InlineComposer(props: InlineComposerProps): JSX.Element 
    */
   const preferences = useMemo(() => {
     const _preferences = {};
-    PREFERENCES.map((p) => (_preferences[p] = p in scPrefernces.preferences ? scPrefernces.preferences[p].value : null));
+    PREFERENCES.map((p) => (_preferences[p] = p in scPreferencesContext.preferences ? scPreferencesContext.preferences[p].value : null));
     return _preferences;
-  }, [scPrefernces.preferences]);
+  }, [scPreferencesContext.preferences]);
 
   // Handlers
   const handleOpen = (view) => {
-    return () => setState({view, open: true});
+    return () => {
+      if (scUserContext.user) {
+        setState({view, open: true});
+      } else {
+        scContext.settings.handleAnonymousAction();
+      }
+    };
   };
 
   const handleClose = () => {
@@ -133,7 +148,11 @@ export default function InlineComposer(props: InlineComposerProps): JSX.Element 
           )}
         </Box>
         <Box className={classes.avatar}>
-          <Avatar alt={scUser.user.username} variant="circular" src={scUser.user.avatar} />
+          {!scUserContext.user ? (
+            <Avatar variant="circular" />
+          ) : (
+            <Avatar alt={scUserContext.user.username} variant="circular" src={scUserContext.user.avatar} />
+          )}
         </Box>
       </Root>
       <Composer

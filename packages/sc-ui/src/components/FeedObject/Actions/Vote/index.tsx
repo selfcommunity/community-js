@@ -12,19 +12,20 @@ import {AxiosResponse} from 'axios';
 import CentralProgress from '../../../../shared/CentralProgress';
 import User from '../../../User';
 import {SCOPE_SC_UI} from '../../../../constants/Errors';
+import {styled} from '@mui/material/styles';
 import {
   Endpoints,
   http,
   Logger,
+  SCContextType,
   SCFeedObjectType,
   SCFeedObjectTypologyType,
   SCTagType,
   SCUserContextType,
+  useSCContext,
   useSCFetchFeedObject,
   useSCUser
 } from '@selfcommunity/core';
-import {styled} from '@mui/material/styles';
-import {VoteShareProps} from '../Share';
 
 /**
  * We have complex state logic that involves multiple sub-values,
@@ -147,7 +148,50 @@ const Root = styled(Box, {
   }
 }));
 
-export default function Vote(props: VoteShareProps): JSX.Element {
+export interface VoteProps {
+  /**
+   * Overrides or extends the styles applied to the component.
+   * @default null
+   */
+  className?: string;
+
+  /**
+   * Feed object id
+   * @default null
+   */
+  id?: number;
+
+  /**
+   * Feed object
+   * @default null
+   */
+  feedObject?: SCFeedObjectType;
+
+  /**
+   * Feed object type
+   * @default 'post' type
+   */
+  feedObjectType?: SCFeedObjectTypologyType;
+
+  /**
+   * Manages action (if present)
+   * @default false
+   */
+  withAction: boolean;
+
+  /**
+   * Manages inline action
+   * @default true
+   */
+  inlineAction: boolean;
+
+  /**
+   * Any other properties
+   */
+  [p: string]: any;
+}
+
+export default function Vote(props: VoteProps): JSX.Element {
   // PROPS
   const {
     className = null,
@@ -156,6 +200,7 @@ export default function Vote(props: VoteShareProps): JSX.Element {
     feedObjectType = SCFeedObjectTypologyType.POST,
     withAction = false,
     inlineAction = true,
+    onVoteFromAnonymous = () => null,
     ...rest
   } = props;
 
@@ -164,6 +209,7 @@ export default function Vote(props: VoteShareProps): JSX.Element {
   const [state, dispatch] = useReducer(votesReducer, {}, () => stateInitializer({id, feedObject, feedObjectType}));
 
   // CONTEXT
+  const scContext: SCContextType = useSCContext();
   const scUserContext: SCUserContextType = useSCUser();
 
   // INTL
@@ -243,16 +289,20 @@ export default function Vote(props: VoteShareProps): JSX.Element {
    * Performs voteUp/voteDown
    */
   function vote() {
-    if (obj && !state.voting) {
-      dispatch({type: voteActionTypes.VOTING});
-      performVote()
-        .then((data) => {
-          dispatch({type: voteActionTypes.REQUEST_VOTING_SUCCESS});
-          setObj(Object.assign({}, obj, {voted: !obj.voted, vote_count: obj.voted ? obj.vote_count - 1 : obj.vote_count + 1}));
-        })
-        .catch((error) => {
-          Logger.error(SCOPE_SC_UI, error);
-        });
+    if (scUserContext.user) {
+      if (obj && !state.voting) {
+        dispatch({type: voteActionTypes.VOTING});
+        performVote()
+          .then((data) => {
+            dispatch({type: voteActionTypes.REQUEST_VOTING_SUCCESS});
+            setObj(Object.assign({}, obj, {voted: !obj.voted, vote_count: obj.voted ? obj.vote_count - 1 : obj.vote_count + 1}));
+          })
+          .catch((error) => {
+            Logger.error(SCOPE_SC_UI, error);
+          });
+      }
+    } else {
+      scContext.settings.handleAnonymousAction();
     }
   }
 
@@ -261,7 +311,7 @@ export default function Vote(props: VoteShareProps): JSX.Element {
    * @return {JSX.Element}
    */
   function renderInlineStartVoteBtn() {
-    const canVote = scUserContext.user.id !== obj.author.id;
+    const canVote = scUserContext.user && scUserContext.user.id !== obj.author.id;
     const {loading, voting} = state;
     if (!canVote || (withAction && !inlineAction)) {
       return obj.voted ? (
@@ -366,7 +416,7 @@ export default function Vote(props: VoteShareProps): JSX.Element {
    */
   function renderVoteBtn() {
     const {voting} = state;
-    const canVote = scUserContext.user.id !== obj.author.id;
+    const canVote = scUserContext.user && scUserContext.user.id !== obj.author.id;
     return (
       <React.Fragment>
         {withAction && !inlineAction && (

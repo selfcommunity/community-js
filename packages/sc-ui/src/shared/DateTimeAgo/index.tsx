@@ -26,20 +26,29 @@ const formatter = buildFormatter(itStrings);
 
 export interface DateTimeAgoProps {
   /**
+   * Overrides or extends the styles applied to the component.
+   * @default null
+   */
+  className?: string;
+
+  /**
    * Handles live option
    * @default true
    */
   live?: boolean;
+
   /**
    * Date obj
    * @default null
    */
   date: Date;
+
   /**
    * Handles icon showing
    * @default true
    */
   showStartIcon?: boolean;
+
   /**
    * Any other properties
    */
@@ -47,7 +56,7 @@ export interface DateTimeAgoProps {
 }
 export default function DateTimeAgo(props: DateTimeAgoProps): JSX.Element {
   // PROPS
-  const {live = true, date = null, showStartIcon = true, ...rest} = props;
+  const {className, live = true, date = null, showStartIcon = true, ...rest} = props;
 
   // INTL
   const intl = useIntl();
@@ -58,9 +67,9 @@ export default function DateTimeAgo(props: DateTimeAgoProps): JSX.Element {
 
   if (date) {
     return (
-      <Root {...rest}>
+      <Root className={className} {...rest}>
         {showStartIcon && <AccessTimeIcon sx={{paddingRight: '2px'}} />}
-        <Tooltip title={`${intl.formatDate(date, {year: 'numeric', month: 'numeric', day: 'numeric'})}`}>
+        <Tooltip title={`${intl.formatDate(date, {year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric'})}`}>
           <span>
             <TimeAgo date={date} live={live} formatter={formatter} />
           </span>

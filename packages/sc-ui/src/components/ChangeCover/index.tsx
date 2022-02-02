@@ -47,6 +47,7 @@ export interface ChangecoverProps {
    */
   [p: string]: any;
 }
+
 export default function ChangeCover(props: ChangecoverProps): JSX.Element {
   //PROPS
   const {onChange, autoHide, className, ...rest} = props;
@@ -69,7 +70,7 @@ export default function ChangeCover(props: ChangecoverProps): JSX.Element {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const hasCover = scUserContext.user.cover !== null;
+  const hasCover = scUserContext.user && scUserContext.user.cover !== null;
 
   const handleClickHelpButton = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElPopover(event.currentTarget);
@@ -78,6 +79,11 @@ export default function ChangeCover(props: ChangecoverProps): JSX.Element {
     setAnchorElPopover(null);
   };
   const isOpen = Boolean(anchorElPopover);
+
+  // Anonymous
+  if (!scUserContext.user) {
+    return null;
+  }
 
   /**
    * Handles file upload

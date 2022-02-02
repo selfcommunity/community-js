@@ -3,33 +3,32 @@ import {styled} from '@mui/material/styles';
 import {Avatar, Box, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
 import EmojiFlagsIcon from '@mui/icons-material/EmojiFlags';
 import {red} from '@mui/material/colors';
-import {Link, SCNotificationDeletedForType, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
+import {Link, SCNotificationDeletedForType, SCRoutingContextType, useSCRouting, StringUtils} from '@selfcommunity/core';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {camelCase} from '../../../../../../sc-core/src/utils/string';
 import {getContributeType} from '../../../../utils/contribute';
 import DateTimeAgo from '../../../../shared/DateTimeAgo';
 import NotificationNewChip from '../../NotificationNewChip';
 
 const messages = defineMessages({
-  kindlyNoticeForAdvertising: {
-    id: 'ui.userNotifications.kindlyNoticeFor.kindlyNoticeForAdvertising',
-    defaultMessage: 'ui.userNotifications.kindlyNoticeFor.kindlyNoticeForAdvertising'
+  collapsedForAdvertising: {
+    id: 'ui.userNotifications.collapsedFor.collapsedForAdvertising',
+    defaultMessage: 'ui.userNotifications.collapsedFor.collapsedForAdvertising'
   },
-  kindlyNoticeForAggressive: {
-    id: 'ui.userNotifications.kindlyNoticeFor.kindlyNoticeForAggressive',
-    defaultMessage: 'ui.userNotifications.kindlyNoticeFor.kindlyNoticeForAggressive'
+  collapsedForAggressive: {
+    id: 'ui.userNotifications.collapsedFor.collapsedForAggressive',
+    defaultMessage: 'ui.userNotifications.collapsedFor.collapsedForAggressive'
   },
-  kindlyNoticeForVulgar: {
-    id: 'ui.userNotifications.kindlyNoticeFor.kindlyNoticeForVulgar',
-    defaultMessage: 'ui.userNotifications.kindlyNoticeFor.kindlyNoticeForVulgar'
+  collapsedForVulgar: {
+    id: 'ui.userNotifications.collapsedFor.collapsedForVulgar',
+    defaultMessage: 'ui.userNotifications.collapsedFor.collapsedForVulgar'
   },
-  kindlyNoticeForPoor: {
-    id: 'ui.userNotifications.kindlyNoticeFor.kindlyNoticeForPoor',
-    defaultMessage: 'ui.userNotifications.kindlyNoticeFor.kindlyNoticeForPoor'
+  collapsedForPoor: {
+    id: 'ui.userNotifications.collapsedFor.collapsedForPoor',
+    defaultMessage: 'ui.userNotifications.collapsedFor.collapsedForPoor'
   },
-  kindlyNoticeForOfftopic: {
-    id: 'ui.userNotifications.kindlyNoticeFor.kindlyNoticeForOfftopic',
-    defaultMessage: 'ui.userNotifications.kindlyNoticeFor.kindlyNoticeForOfftopic'
+  collapsedForOfftopic: {
+    id: 'ui.userNotifications.collapsedFor.collapsedForOfftopic',
+    defaultMessage: 'ui.userNotifications.collapsedFor.collapsedForOfftopic'
   }
 });
 
@@ -41,20 +40,39 @@ const Root = styled(Box, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({}));
 
-export interface NotificationDeletedForProps {
+export interface NotificationCollapsedForProps {
+  /**
+   * Id of the feedObject
+   * @default 'n_<notificationObject.sid>'
+   */
+  id?: string;
+
+  /**
+   * Overrides or extends the styles applied to the component.
+   * @default null
+   */
+  className?: string;
+
   /**
    * Notification obj
    * @default null
    */
   notificationObject: SCNotificationDeletedForType;
+
   /**
    * Any other properties
    */
   [p: string]: any;
 }
-export default function CollapsedForNotification(props: NotificationDeletedForProps): JSX.Element {
+
+/**
+ * This component render the content of the notification of type collapsed for
+ * @param props
+ * @constructor
+ */
+export default function CollapsedForNotification(props: NotificationCollapsedForProps): JSX.Element {
   // PROPS
-  const {notificationObject = null, ...rest} = props;
+  const {notificationObject, id = `n_${props.notificationObject['sid']}`, className, ...rest} = props;
 
   // ROUTING
   const scRoutingContext: SCRoutingContextType = useSCRouting();
@@ -69,7 +87,7 @@ export default function CollapsedForNotification(props: NotificationDeletedForPr
    * Renders root object
    */
   return (
-    <Root {...rest}>
+    <Root id={id} className={className} {...rest}>
       <ListItem alignItems="flex-start" component={'div'}>
         <ListItemAvatar>
           <Avatar variant="circular" sx={{backgroundColor: red[500]}}>
@@ -80,8 +98,9 @@ export default function CollapsedForNotification(props: NotificationDeletedForPr
           disableTypography={true}
           primary={
             <Typography component="span" sx={{display: 'inline'}} color="primary">
+              {notificationObject.is_new && <NotificationNewChip />}
               <b>
-                {intl.formatMessage(messages[camelCase(notificationObject.type)], {b: (...chunks) => <strong>{chunks}</strong>})} (
+                {intl.formatMessage(messages[StringUtils.camelCase(notificationObject.type)], {b: (...chunks) => <strong>{chunks}</strong>})} (
                 <FormattedMessage id="ui.userNotifications.viewRules" defaultMessage="ui.userNotifications.viewRules" />
                 ).
               </b>
@@ -91,7 +110,6 @@ export default function CollapsedForNotification(props: NotificationDeletedForPr
         />
       </ListItem>
       <Box sx={{mb: 1}}>
-        {notificationObject.is_new && <NotificationNewChip />}
         <Typography variant={'body2'} color={'primary'} sx={{p: 1}}>
           <FormattedMessage id="ui.userNotifications.undeletedFor.youWrote" defaultMessage="ui.userNotifications.undeletedFor.youWrote" />
         </Typography>

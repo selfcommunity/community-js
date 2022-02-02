@@ -1,11 +1,11 @@
-import React, {FunctionComponent, RefObject, SyntheticEvent, useEffect, useMemo, useRef, useState} from 'react';
+import React, {FunctionComponent, RefObject, SyntheticEvent, useContext, useEffect, useMemo, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {ContentState, convertFromHTML, convertToRaw, EditorState} from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 import {defineMessages, useIntl} from 'react-intl';
 import MUIRichTextEditor, {TAutocompleteItem, TMUIRichTextEditorRef} from 'mui-rte';
 import {Alert, AlertTitle, Avatar, Box, Fade, IconButton, LinearProgress, ListItemAvatar, ListItemText, Popover, Stack} from '@mui/material';
-import {Endpoints, http, SCContextType, SCMediaType, SCUserType, useSCContext} from '@selfcommunity/core';
+import {Endpoints, http, SCContextType, SCMediaType, SCUserContext, SCUserContextType, SCUserType, useSCContext} from '@selfcommunity/core';
 import {AxiosResponse} from 'axios';
 import MediaChunkUploader from '../../shared/MediaChunkUploader';
 import ChunkedUploady from '@rpldy/chunked-uploady';
@@ -153,6 +153,7 @@ export default function Editor(props: EditorProps): JSX.Element {
 
   // Context
   const scContext: SCContextType = useSCContext();
+  const scUserContext: SCUserContextType = useContext(SCUserContext);
 
   // State
   const [uploading, setUploading] = useState({});
@@ -234,66 +235,68 @@ export default function Editor(props: EditorProps): JSX.Element {
 
   return (
     <Root id={id} className={className}>
-      <ChunkedUploady
-        destination={{
-          url: `${scContext.settings.portal}${Endpoints.ComposerChunkUploadMedia.url()}`,
-          headers: {Authorization: `Bearer ${scContext.settings.session.authToken.accessToken}`},
-          method: Endpoints.ComposerChunkUploadMedia.method
-        }}
-        chunkSize={2142880}
-        multiple
-        accept="image/*"
-        fileFilter={handleFileUploadFilter}>
-        <MediaChunkUploader type="eimage" onSuccess={handleUploadSuccess} onProgress={handleUploadProgress} onError={handleUploadError} />
-        <UploadDropZone onDragOverClassName={classes.drop} inputFieldName="image" extraProps={{'data-content': intl.formatMessage(messages.drop)}}>
-          <MUIRichTextEditor
-            id={editorId}
-            readOnly={readOnly}
-            label={intl.formatMessage(messages.placeholder)}
-            onChange={handleChange}
-            ref={editor}
-            defaultValue={content}
-            inlineToolbarControls={['bold', 'italic', 'underline', 'strikethrough', 'highlight', 'link', 'clear']}
-            customControls={[
-              {
-                name: 'sc-image',
-                type: 'atomic',
-                atomicComponent: EditorImage
-              }
-            ]}
-            toolbar={false}
-            inlineToolbar={true}
-            autocomplete={{
-              strategies: [
+      {scUserContext.user && (
+        <ChunkedUploady
+          destination={{
+            url: `${scContext.settings.portal}${Endpoints.ComposerChunkUploadMedia.url()}`,
+            headers: {Authorization: `Bearer ${scContext.settings.session.authToken.accessToken}`},
+            method: Endpoints.ComposerChunkUploadMedia.method
+          }}
+          chunkSize={2142880}
+          multiple
+          accept="image/*"
+          fileFilter={handleFileUploadFilter}>
+          <MediaChunkUploader type="eimage" onSuccess={handleUploadSuccess} onProgress={handleUploadProgress} onError={handleUploadError} />
+          <UploadDropZone onDragOverClassName={classes.drop} inputFieldName="image" extraProps={{'data-content': intl.formatMessage(messages.drop)}}>
+            <MUIRichTextEditor
+              id={editorId}
+              readOnly={readOnly}
+              label={intl.formatMessage(messages.placeholder)}
+              onChange={handleChange}
+              ref={editor}
+              defaultValue={content}
+              inlineToolbarControls={['bold', 'italic', 'underline', 'strikethrough', 'highlight', 'link', 'clear']}
+              customControls={[
                 {
-                  asyncItems: searchMentions,
-                  triggerChar: '@'
+                  name: 'sc-image',
+                  type: 'atomic',
+                  atomicComponent: EditorImage
                 }
-              ]
-            }}
-          />
-          {(uploading || errors) && (
-            <Stack>
-              {Object.values(uploading).map((chunk: SCMediaChunkType) => (
-                <Fade in key={chunk.id}>
-                  <Box>
-                    {chunk.name}
-                    <LinearProgress variant="determinate" value={chunk.completed} />
-                  </Box>
-                </Fade>
-              ))}
-              {Object.keys(errors).map((id: string) => (
-                <Fade in key={id}>
-                  <Alert severity="error" onClose={handleRemoveUploadErrors(id)}>
-                    <AlertTitle>{errors[id].name}</AlertTitle>
-                    {errors[id].error}
-                  </Alert>
-                </Fade>
-              ))}
-            </Stack>
-          )}
-        </UploadDropZone>
-      </ChunkedUploady>
+              ]}
+              toolbar={false}
+              inlineToolbar={true}
+              autocomplete={{
+                strategies: [
+                  {
+                    asyncItems: searchMentions,
+                    triggerChar: '@'
+                  }
+                ]
+              }}
+            />
+            {(uploading || errors) && (
+              <Stack>
+                {Object.values(uploading).map((chunk: SCMediaChunkType) => (
+                  <Fade in key={chunk.id}>
+                    <Box>
+                      {chunk.name}
+                      <LinearProgress variant="determinate" value={chunk.completed} />
+                    </Box>
+                  </Fade>
+                ))}
+                {Object.keys(errors).map((id: string) => (
+                  <Fade in key={id}>
+                    <Alert severity="error" onClose={handleRemoveUploadErrors(id)}>
+                      <AlertTitle>{errors[id].name}</AlertTitle>
+                      {errors[id].error}
+                    </Alert>
+                  </Fade>
+                ))}
+              </Stack>
+            )}
+          </UploadDropZone>
+        </ChunkedUploady>
+      )}
       <Stack className={classes.actions}>
         <div>
           <IconButton size="small" onClick={handleToggleEmoji}>

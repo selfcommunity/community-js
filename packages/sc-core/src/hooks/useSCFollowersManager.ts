@@ -195,8 +195,8 @@ export default function useSCFollowedManager(user?: SCUserType) {
     [data, loading, cache]
   );
 
-  if (!followEnabled) {
-    return null;
+  if (!followEnabled || !user) {
+    return {followed: data, loading, isLoading};
   }
   return {followed: data, loading, isLoading, follow, isFollowed, refresh, emptyCache};
 }

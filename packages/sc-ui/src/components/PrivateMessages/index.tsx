@@ -1,10 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Divider, Typography, Button, Box, Card} from '@mui/material';
 import Snippets from '../Snippets';
 import Thread from '../Thread';
 import {FormattedMessage} from 'react-intl';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import {SCUserContext, SCUserContextType} from '@selfcommunity/core';
 
 const PREFIX = 'SCPrivateMessages';
 
@@ -62,7 +63,9 @@ export default function PrivateMessages(props: PrivateMessagesProps): JSX.Elemen
   // STATE
   const [obj, setObj] = useState(null);
   const [openNewMessage, setOpenNewMessage] = useState<boolean>(false);
-  console.log(obj);
+
+  // CONTEXT
+  const scUserContext: SCUserContextType = useContext(SCUserContext);
 
   //  HANDLERS
   const handleThreadOpening = (i) => {
@@ -78,7 +81,7 @@ export default function PrivateMessages(props: PrivateMessagesProps): JSX.Elemen
   /**
    * Renders the component (if not hidden by autoHide prop)
    */
-  if (!autoHide) {
+  if (!autoHide && scUserContext.user) {
     return (
       <Root {...rest} className={className}>
         <div>

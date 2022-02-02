@@ -19,18 +19,37 @@ const Root = styled(Box, {
 
 export interface NotificationUndeletedProps {
   /**
+   * Id of the feedObject
+   * @default 'n_<notificationObject.sid>'
+   */
+  id?: string;
+
+  /**
+   * Overrides or extends the styles applied to the component.
+   * @default null
+   */
+  className?: string;
+
+  /**
    * Notification obj
    * @default null
    */
   notificationObject: SCNotificationUnDeletedForType;
+
   /**
    * Any other properties
    */
   [p: string]: any;
 }
+
+/**
+ * This component render the content of the notification of type undeleted for
+ * @param props
+ * @constructor
+ */
 export default function UndeletedForNotification(props: NotificationUndeletedProps): JSX.Element {
   // PROPS
-  const {notificationObject = null, ...rest} = props;
+  const {notificationObject, id = `n_${props.notificationObject['sid']}`, className, ...rest} = props;
 
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
@@ -42,7 +61,7 @@ export default function UndeletedForNotification(props: NotificationUndeletedPro
    * Renders root object
    */
   return (
-    <Root {...rest}>
+    <Root id={id} className={className} {...rest}>
       <ListItem alignItems="flex-start" component={'div'}>
         <ListItemAvatar>
           <Avatar variant="circular" sx={{bgcolor: green[500]}}>

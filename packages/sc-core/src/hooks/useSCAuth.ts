@@ -18,6 +18,7 @@ export const userActionTypes = {
   LOGOUT: '_logout',
   REFRESH_TOKEN_SUCCESS: '_refresh_token_success',
   REFRESH_TOKEN_FAILURE: '_invalid_token_failure',
+  REFRESH_SESSION: '_refresh_token',
   CHANGE_AVATAR: '_change_avatar',
   CHANGE_COVER: '_change_cover',
   CHANGE_UNSEEN_INTERACTIONS_COUNTER: '_change_unseen_interactions',
@@ -84,15 +85,17 @@ function userReducer(state, action) {
  */
 function stateInitializer(session: SCSessionType): any {
   let _session: SCSessionType = Object.assign({}, session);
+  let _isLoading = false;
   /**
    * Set http authorization if session type is OAuth or JWT
    * Configure http object (Authorization, etc...)
    */
-  if ([Session.OAUTH_SESSION, Session.JWT_SESSION].includes(_session.type)) {
+  if ([Session.OAUTH_SESSION, Session.JWT_SESSION].includes(_session.type) && _session.authToken && _session.authToken.accessToken) {
     setAuthorizeToken(_session.authToken.accessToken);
+    _isLoading = true;
   }
   setSupportWithCredentials(_session.type === Session.COOKIE_SESSION);
-  return {user: null, session: _session, error: null, loading: true, isSessionRefreshing: false};
+  return {user: null, session: _session, error: null, loading: _isLoading, isSessionRefreshing: false, refreshSession: false};
 }
 
 /**
@@ -105,6 +108,33 @@ export default function useAuth(initialSession: SCSessionType) {
   let authInterceptor = useRef(null);
   let isSessionRefreshing = useRef(false);
   let failedQueue = useRef([]);
+
+  /**
+   * Refresh session
+   */
+  const refreshSession = useMemo(
+    () => () => {
+      const session: SCSessionType = state.session;
+      if (!isSessionRefreshing.current && session.handleRefreshToken) {
+        isSessionRefreshing.current = true;
+        return session
+          .handleRefreshToken(state.session)
+          .then((res: SCAuthTokenType) => {
+            isSessionRefreshing.current = false;
+            dispatch({type: userActionTypes.REFRESH_TOKEN_SUCCESS, payload: {token: res}});
+            return Promise.resolve(res);
+          })
+          .catch((error) => {
+            Logger.error(SCOPE_SC_CORE, 'Unable to refresh user session.');
+            if (error.response && error.response.data) {
+              dispatch({type: userActionTypes.REFRESH_TOKEN_FAILURE, payload: {error: error.response.toString()}});
+            }
+            return Promise.reject(error);
+          });
+      }
+    },
+    [state.session]
+  );
 
   /**
    * Manages multiple request during refresh session
@@ -170,27 +200,20 @@ export default function useAuth(initialSession: SCSessionType) {
                 !isSessionRefreshing.current &&
                 state.user &&
                 session &&
-                session.refreshTokenCallback &&
+                session.handleRefreshToken &&
                 Boolean(authToken && authToken.refreshToken)
               ) {
                 /**
                  * set refreshing mode,
                  * save all concurrent request in the meantime
                  */
-                isSessionRefreshing.current = true;
                 try {
-                  const res = await session.refreshTokenCallback(session);
+                  const res = await refreshSession();
                   originalConfig.headers.Authorization = `Bearer ${res['accessToken']}`;
-                  dispatch({type: userActionTypes.REFRESH_TOKEN_SUCCESS, payload: {token: res}});
-                  isSessionRefreshing.current = false;
-                  // return a request
                   processQueue(null, res['accessToken']);
                   return Promise.resolve(http(originalConfig));
                 } catch (_error) {
-                  Logger.error(SCOPE_SC_CORE, 'Unable to refresh user session.');
-                  isSessionRefreshing.current = false;
                   if (_error.response && _error.response.data) {
-                    dispatch({type: userActionTypes.REFRESH_TOKEN_FAILURE, payload: {error: _error.response.toString()}});
                     processQueue(_error, null);
                     return Promise.reject(_error.response.data);
                   }
@@ -207,7 +230,7 @@ export default function useAuth(initialSession: SCSessionType) {
         http.interceptors.response.eject(authInterceptor.current);
       }
     };
-  }, [state.user, state.session.authToken.accessToken]);
+  }, [state.user, state.session]);
 
-  return {state, dispatch};
+  return {state, dispatch, helpers: {refreshSession}};
 }

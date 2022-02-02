@@ -1,12 +1,12 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
-import {Endpoints, http} from '@selfcommunity/core';
+import {Endpoints, http, SCUserContext, SCUserContextType, SCPrizeType, Logger} from '@selfcommunity/core';
 import {Box, Button, CardActions, CardContent, CardMedia, Grid, Typography} from '@mui/material';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {SCPrizeType} from '@selfcommunity/core/src/types';
 import Chip from '@mui/material/Chip';
 import CardGiftcardOutlinedIcon from '@mui/icons-material/CardGiftcardOutlined';
+import {SCOPE_SC_UI} from '../../../constants/Errors';
 
 const messages = defineMessages({
   points: {
@@ -113,6 +113,9 @@ export default function LoyaltyProgramDetail(props: LoyaltyProgramDetailProps): 
   // STATE
   const [prizes, setPrizes] = useState([]);
 
+  // CONTEXT
+  const scUserContext: SCUserContextType = useContext(SCUserContext);
+
   // INTL
   const intl = useIntl();
 
@@ -129,7 +132,7 @@ export default function LoyaltyProgramDetail(props: LoyaltyProgramDetailProps): 
         setPrizes(res.data.results);
       })
       .catch((error) => {
-        console.log(error);
+        Logger.error(SCOPE_SC_UI, error);
       });
   }
 
@@ -137,7 +140,9 @@ export default function LoyaltyProgramDetail(props: LoyaltyProgramDetailProps): 
    * On mount, fetches prizes
    */
   useEffect(() => {
-    fetchPrizes();
+    if (scUserContext.user) {
+      fetchPrizes();
+    }
   }, []);
 
   /**
@@ -225,10 +230,11 @@ export default function LoyaltyProgramDetail(props: LoyaltyProgramDetailProps): 
       </Grid>
     </React.Fragment>
   );
+
   /**
    * Renders the component (if not hidden by autoHide prop)
    */
-  if (!autoHide) {
+  if (!autoHide && scUserContext.user) {
     return (
       <Root className={className} {...rest}>
         {d}

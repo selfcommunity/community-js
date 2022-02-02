@@ -3,13 +3,11 @@ import {styled} from '@mui/material/styles';
 import {Avatar, Box, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
 import EmojiFlagsIcon from '@mui/icons-material/EmojiFlags';
 import {red} from '@mui/material/colors';
-import {Link, SCNotificationDeletedForType, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {camelCase} from '../../../../../../sc-core/src/utils/string';
 import {getContributeType} from '../../../../utils/contribute';
 import DateTimeAgo from '../../../../shared/DateTimeAgo';
-import {NotificationDeletedForProps} from '../CollapsedFor';
 import NotificationNewChip from '../../NotificationNewChip';
+import {Link, SCRoutingContextType, useSCRouting, StringUtils, SCNotificationDeletedForType} from '@selfcommunity/core';
 
 const messages = defineMessages({
   deletedForAdvertising: {
@@ -42,9 +40,39 @@ const Root = styled(Box, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({}));
 
+export interface NotificationDeletedForProps {
+  /**
+   * Id of the feedObject
+   * @default 'n_<notificationObject.sid>'
+   */
+  id?: string;
+
+  /**
+   * Overrides or extends the styles applied to the component.
+   * @default null
+   */
+  className?: string;
+
+  /**
+   * Notification obj
+   * @default null
+   */
+  notificationObject: SCNotificationDeletedForType;
+
+  /**
+   * Any other properties
+   */
+  [p: string]: any;
+}
+
+/**
+ * This component render the content of the notification of type deleted for
+ * @param props
+ * @constructor
+ */
 export default function DeletedForNotification(props: NotificationDeletedForProps): JSX.Element {
   // PROPS
-  const {notificationObject = null, ...rest} = props;
+  const {notificationObject = null, id = `n_${props.notificationObject['feed_serialization_id']}`, className, ...rest} = props;
 
   // ROUTING
   const scRoutingContext: SCRoutingContextType = useSCRouting();
@@ -59,7 +87,7 @@ export default function DeletedForNotification(props: NotificationDeletedForProp
    * Renders root object
    */
   return (
-    <Root {...rest}>
+    <Root id={id} className={className} {...rest}>
       <ListItem alignItems="flex-start" component={'div'}>
         <ListItemAvatar>
           <Avatar variant="circular" sx={{backgroundColor: red[500]}}>
@@ -71,7 +99,7 @@ export default function DeletedForNotification(props: NotificationDeletedForProp
           primary={
             <Typography component="span" sx={{display: 'inline'}} color="primary">
               <b>
-                {intl.formatMessage(messages[camelCase(notificationObject.type)], {b: (...chunks) => <strong>{chunks}</strong>})} (
+                {intl.formatMessage(messages[StringUtils.camelCase(notificationObject.type)], {b: (...chunks) => <strong>{chunks}</strong>})} (
                 <FormattedMessage id="ui.userNotifications.viewRules" defaultMessage="ui.userNotifications.viewRules" />
                 ).
               </b>

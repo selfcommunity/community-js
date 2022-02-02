@@ -1,7 +1,15 @@
-import {SCCommentType, SCFeedDiscussionType, SCFeedPostType, SCFeedStatusType, SCUserType} from '../index';
+import {
+  SCCategoryType,
+  SCCommentType,
+  SCFeedDiscussionType,
+  SCFeedPostType,
+  SCFeedStatusType,
+  SCUserType,
+} from '../index';
 import {SCPrivateMessageType} from './privateMessage';
 import {SCUserBlockedSettingsType} from './user';
 import {SCCustomNotificationType} from './customNotification';
+import { SCIncubatorType } from './incubator';
 
 /**
  * Notification types
@@ -12,10 +20,14 @@ export enum SCNotificationTypologyType {
   CONNECTION_REQUEST = 'connection_request',
   CONNECTION_ACCEPT = 'connection_accept',
   CONNECTION_REMOVE = 'connection_remove',
+  CONNECTION_REJECT = 'connection_reject',
+  CONNECTION_CANCEL_REJECT = 'connection_cancel_reject',
+  CONNECTION_CANCEL_REQUEST = 'connection_cancel_reject',
   MENTION = 'mention',
   VOTE_UP = 'vote_up',
   FOLLOW = 'follow',
   PRIVATE_MESSAGE = 'private_message',
+  DELETE_PRIVATE_MESSAGE = 'delete_private_message',
   DELETED_FOR_ADVERTISING = 'deleted_for_advertising',
   DELETED_FOR_AGGRESSIVE = 'deleted_for_aggressive',
   DELETED_FOR_VULGAR = 'deleted_for_vulgar',
@@ -37,6 +49,7 @@ export enum SCNotificationTypologyType {
   KINDLY_NOTICE_FLAG = 'kindly_notice_flag',
   BLOCKED_USER = 'blocked_user',
   UNBLOCKED_USER = 'unblocked_user',
+  INCUBATOR_APPROVED = 'incubator_approved',
   CUSTOM_NOTIFICATION = 'custom_notification',
 }
 
@@ -446,6 +459,22 @@ export interface SCNotificationUserFollowType extends SCNotificationType {
    * Follower
    */
   follower: SCUserType;
+}
+
+/**
+ * Interface SCNotificationIncubatorType.
+ * The incubator proposed by the user has been approved
+ */
+export interface SCNotificationIncubatorType extends SCNotificationType {
+  /**
+   * Type Incubator Approved
+   */
+  type: SCNotificationTypologyType.INCUBATOR_APPROVED;
+
+  /**
+   * Incubator
+   */
+  incubator: SCIncubatorType;
 }
 
 /**

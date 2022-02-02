@@ -1,7 +1,7 @@
 import React, {useMemo} from 'react';
 import {styled} from '@mui/material/styles';
 import {Box, Grid, Hidden, Typography} from '@mui/material';
-import {FeedObject, RelatedDiscussion, FeedObjectTemplateType, CommentsObject, CommentsOrderBy, CustomAdv} from '@selfcommunity/ui';
+import {FeedObject, FeedObjectProps, RelatedDiscussion, FeedObjectTemplateType, CommentsObject, CommentsOrderBy, CustomAdv} from '@selfcommunity/ui';
 import Sticky from 'react-stickynode';
 import {
   SCCustomAdvPosition,
@@ -10,11 +10,13 @@ import {
   SCPreferences,
   SCPreferencesContextType,
   SCUserContextType,
+  useSCFetchFeedObject,
   useSCPreferences,
   useSCUser
 } from '@selfcommunity/core';
+import FeedObjectDetailSkeleton from './Skeleton';
 
-const PREFIX = 'SCFeedObjectPage';
+const PREFIX = 'SCFeedObjectDetailTemplate';
 
 const Root = styled(Box, {
   name: PREFIX,
@@ -24,7 +26,7 @@ const Root = styled(Box, {
   marginTop: theme.spacing(2)
 }));
 
-export interface FeedObjectPageProps {
+export interface FeedObjectDetailProps {
   /**
    * Id of the feed object
    * @default 'feed'
@@ -54,17 +56,26 @@ export interface FeedObjectPageProps {
    * @default SCFeedObjectTypologyType.POST
    */
   feedObjectType?: SCFeedObjectTypologyType;
+
+  /**
+   * Props to spread to single feed object
+   * @default empty object
+   */
+  FeedObjectProps?: FeedObjectProps;
 }
 
 const PREFERENCES = [SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED, SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED];
 
-export default function FeedObjectPage(props: FeedObjectPageProps): JSX.Element {
+export default function FeedObjectDetail(props: FeedObjectDetailProps): JSX.Element {
   // PROPS
-  const {id = 'feed_object_page', className, feedObjectId, feedObject, feedObjectType} = props;
+  const {id = 'feed_object_page', className, feedObjectId, feedObject, feedObjectType, FeedObjectProps = {variant: 'outlined'}} = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
   const scPreferences: SCPreferencesContextType = useSCPreferences();
+
+  // RETRIVE OBJECTS
+  const {obj, setObj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
 
   /**
    * Compute preferences
@@ -93,17 +104,15 @@ export default function FeedObjectPage(props: FeedObjectPageProps): JSX.Element 
     return null;
   }
 
+  if (obj === null) {
+    return <FeedObjectDetailSkeleton />;
+  }
+
   return (
     <Root id={id} className={className}>
       <Grid container spacing={2}>
         <Grid item xs={12} md={7}>
-          <FeedObject
-            variant={'outlined'}
-            feedObject={feedObject}
-            feedObjectId={feedObjectId}
-            feedObjectType={feedObjectType}
-            template={FeedObjectTemplateType.DETAIL}
-          />
+          <FeedObject {...FeedObjectProps} feedObject={obj} template={FeedObjectTemplateType.DETAIL} />
           {renderAdvertising()}
           <CommentsObject
             variant={'outlined'}
