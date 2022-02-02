@@ -117,9 +117,7 @@ export default function FeedObjectDetail(props: FeedObjectDetailProps): JSX.Elem
           <CommentsObject
             variant={'outlined'}
             showTitle
-            feedObject={feedObject}
-            feedObjectId={feedObjectId}
-            feedObjectType={feedObjectType}
+            feedObject={obj}
             commentsOrderBy={CommentsOrderBy.ADDED_AT_ASC}
             fixedPrimaryReply
           />

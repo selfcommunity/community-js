@@ -248,7 +248,7 @@ export interface SCSessionType {
    * ClientID: only for OAuth.
    * It will be passed to handleRefreshToken
    */
-  clientId: string;
+  clientId?: string;
 
   /**
    * Access Token.
