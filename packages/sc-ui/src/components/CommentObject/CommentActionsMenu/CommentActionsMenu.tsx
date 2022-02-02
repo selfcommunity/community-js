@@ -276,7 +276,13 @@ export default function CommentActionsMenu(props: CommentActionsMenuProps): JSX.
    * Handle permanent link
    */
   function handlePermanentLink() {
-    copyTextToClipboard(`${location.protocol}//${location.host}${scRoutingContext.url(SCRoutes.COMMENT_ROUTE_NAME, {id: obj.id})}`).then(() => {
+    copyTextToClipboard(
+      `${location.protocol}//${location.host}${scRoutingContext.url(SCRoutes.COMMENT_ROUTE_NAME, {
+        id: obj.id,
+        contribute_type: feedObjectType,
+        contribute_id: feedObjectId ? feedObjectId : feedObject.id
+      })}`
+    ).then(() => {
       setOpen(false);
     });
   }

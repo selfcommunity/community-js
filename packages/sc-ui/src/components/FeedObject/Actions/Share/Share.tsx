@@ -202,7 +202,6 @@ export default function Share(props: ShareProps): JSX.Element {
       setIsSharing(true);
       performCreateMediaShare()
         .then((data: SCMediaType) => {
-          console.log(data);
           setComposerShareProps({medias: [data], ...(inCategories ? {categories: obj.categories} : {})});
           setIsComposerOpen(true);
         })
