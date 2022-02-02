@@ -4,7 +4,7 @@ import List from '@mui/material/List';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import {Avatar, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText, CardProps} from '@mui/material';
-import {SCUserContext, SCUserContextType, useSCFetchCategory} from '@selfcommunity/core';
+import {Link, SCRoutes, SCRoutingContextType, SCUserContext, SCUserContextType, useSCFetchCategory, useSCRouting} from '@selfcommunity/core';
 import CategorySkeleton from './Skeleton';
 import FollowButton from '../FollowCategoryButton';
 import {SCCategoryType} from '@selfcommunity/core';
@@ -75,6 +75,7 @@ export default function Category(props: CategoryProps): JSX.Element {
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
+  const scRoutingContext: SCRoutingContextType = useSCRouting();
 
   // STATE
   const {scCategory, setSCCategory} = useSCFetchCategory({id, category});
@@ -88,7 +89,7 @@ export default function Category(props: CategoryProps): JSX.Element {
   const c = (
     <React.Fragment>
       {scCategory ? (
-        <ListItem button={true}>
+        <ListItem button={true} component={Link} to={scRoutingContext.url(SCRoutes.CATEGORY_ROUTE_NAME, {id: scCategory.id})}>
           <ListItemAvatar>
             <Avatar alt={scCategory.name} src={scCategory.image_medium} variant="square" className={classes.categoryImage} />
           </ListItemAvatar>

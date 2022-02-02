@@ -45,6 +45,9 @@ export default function CategoriesFollowed(props: CategoriesListProps): JSX.Elem
   // PROPS
   const {autoHide, className, CategoryProps = {}, ...rest} = props;
 
+  // CONTEXT
+  const scUserContext: SCUserContextType = useContext(SCUserContext);
+
   // STATE
   const [categories, setCategories] = useState<any[]>([]);
   const [visibleCategories, setVisibleCategories] = useState<number>(limit);
@@ -106,6 +109,7 @@ export default function CategoriesFollowed(props: CategoriesListProps): JSX.Elem
         setLoading(false);
       })
       .catch((error) => {
+        setLoading(false);
         Logger.error(SCOPE_SC_UI, error);
       });
   }, []);
@@ -148,7 +152,7 @@ export default function CategoriesFollowed(props: CategoriesListProps): JSX.Elem
   /**
    * Renders root object (if not hidden by autoHide prop)
    */
-  if (!autoHide) {
+  if (!autoHide && scUserContext.user) {
     return (
       <Root className={className} {...rest}>
         {c}

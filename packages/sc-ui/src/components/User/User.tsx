@@ -11,7 +11,11 @@ import {
   SCUserContextType,
   SCUserType,
   SCPreferencesContextType,
-  useSCFetchUser
+  useSCFetchUser,
+  SCRoutingContextType,
+  useSCRouting,
+  Link,
+  SCRoutes
 } from '@selfcommunity/core';
 import FollowUserButton from '../FollowUserButton';
 
@@ -72,10 +76,16 @@ export interface UserProps extends Pick<CardProps, Exclude<keyof CardProps, 'id'
 }
 
 export default function User(props: UserProps): JSX.Element {
+  // PROPS
   const {id = null, user = null, handleIgnoreAction, className = null, autoHide = false, onFollowProps, ...rest} = props;
+
+  // STATE
   const {scUser, setSCUser} = useSCFetchUser({id, user});
+
+  // CONTEXT
   const scPreferencesContext: SCPreferencesContextType = useContext(SCPreferencesContext);
   const scUserContext: SCUserContextType = useContext(SCUserContext);
+  const scRoutingContext: SCRoutingContextType = useSCRouting();
   const followEnabled =
     SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED in scPreferencesContext.preferences &&
     scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED].value;
@@ -126,25 +136,15 @@ export default function User(props: UserProps): JSX.Element {
     return <React.Fragment>{followEnabled ? renderFollowActions() : renderConnectionActions()}</React.Fragment>;
   }
 
-  /**
-   * Render anonymous actions
-   * @return {JSX.Element}
-   */
-  function renderAnonymousActions() {
-    return <Button size="small">Go to Profile</Button>;
-  }
-
   const u = (
     <React.Fragment>
       {scUser ? (
-        <ListItem button={true}>
+        <ListItem button={true} component={Link} to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: scUser.id})}>
           <ListItemAvatar>
             <Avatar alt={scUser.username} src={scUser.avatar} className={classes.avatar} />
           </ListItemAvatar>
           <ListItemText primary={scUser.username} secondary={scUser.description} />
-          <ListItemSecondaryAction className={classes.actions}>
-            {scUserContext.user ? renderAuthenticatedActions() : renderAnonymousActions()}
-          </ListItemSecondaryAction>
+          <ListItemSecondaryAction className={classes.actions}>{scUserContext.user ? renderAuthenticatedActions() : null}</ListItemSecondaryAction>
         </ListItem>
       ) : (
         <UserSkeleton elevation={0} />
