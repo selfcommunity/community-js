@@ -3,7 +3,7 @@ import Card from '@mui/material/Card';
 import {styled} from '@mui/material/styles';
 import Skeleton from '@mui/material/Skeleton';
 import {FeedObjectTemplateType} from '../../types/feedObject';
-import { Box, CardContent, CardHeader } from '@mui/material';
+import {Box, CardContent, CardHeader} from '@mui/material';
 
 const PREFIX = 'SCFeedObjectSkeleton';
 
@@ -17,7 +17,9 @@ const Root = styled(Card, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   width: '100%',
-  margin: `${theme.spacing(2)} 3px `,
+  marginBottom: theme.spacing(2),
+  marginLeft: 3,
+  marginRight: 3,
   [`& .${classes.media}`]: {
     height: 190
   }
