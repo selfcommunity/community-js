@@ -1,3 +1,4 @@
 import Editor, {EditorProps} from './Editor';
 export default Editor;
-export {EditorProps};
+import EditorSkeleton from './Skeleton';
+export {EditorProps, EditorSkeleton};
