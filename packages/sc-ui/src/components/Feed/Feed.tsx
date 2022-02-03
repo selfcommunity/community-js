@@ -1,18 +1,16 @@
-import React, {useCallback, useContext, useEffect, useMemo, useState} from 'react';
-import {styled} from '@mui/material/styles';
-import {Card, CardContent, Grid, Hidden, Theme, useMediaQuery} from '@mui/material';
-import {AxiosResponse} from 'axios';
-import {SCOPE_SC_UI} from '../../constants/Errors';
-import {FormattedMessage} from 'react-intl';
-import {GenericSkeleton} from '../Skeleton';
+import React, { ReactNode, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { styled, useTheme } from '@mui/material/styles';
+import { Card, CardContent, Grid, Hidden, Theme, useMediaQuery } from '@mui/material';
+import { AxiosResponse } from 'axios';
+import { SCOPE_SC_UI } from '../../constants/Errors';
+import { FormattedMessage } from 'react-intl';
+import { GenericSkeleton } from '../Skeleton';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import FeedObject, {FeedObjectProps, FeedObjectSkeleton} from '../FeedObject';
-import {FeedObjectTemplateType} from '../../types/feedObject';
-import {SCFeedWidgetType} from '../../types/Feed';
+import { SCFeedWidgetType } from '../../types/feed';
 import Sticky from 'react-stickynode';
-import {useTheme} from '@mui/material/styles';
 import CustomAdv from '../CustomAdv';
 import {
+  EndpointType,
   http,
   Logger,
   SCCustomAdvPosition,
@@ -23,12 +21,14 @@ import {
   SCUserContext,
   SCUserContextType,
   useSCPreferences,
-  EndpointType
 } from '@selfcommunity/core';
+import classNames from 'classnames';
+import PubSub from 'pubsub-js';
 
 const PREFIX = 'SCFeed';
 
 const classes = {
+  root: `${PREFIX}-root`,
   left: `${PREFIX}-left`,
   right: `${PREFIX}-right`,
   end: `${PREFIX}-end`,
@@ -49,7 +49,7 @@ const Root = styled(Grid, {
   }
 }));
 
-export interface StickySidebarProps {
+export interface FeedSidebarProps {
   top: string | number;
   bottomBoundary: string | number;
 }
@@ -73,22 +73,55 @@ export interface FeedProps {
   endpoint: EndpointType;
 
   /**
+   * End message, rendered when no more feed item can be displayed
+   * @default <FormattedMessage id="ui.feed.noOtherFeedObject" defaultMessage="ui.feed.noOtherFeedObject" />
+   */
+  endMessage?: ReactNode;
+
+  /**
+   * Refresh message, rendered when no more feed item can be displayed
+   * @default <FormattedMessage id="ui.feed.refreshRelease" defaultMessage="ui.feed.refreshRelease" />
+   */
+  refreshMessage?: ReactNode;
+
+  /**
    * Widgets to insert into the feed
    * @default empty array
    */
   widgets?: SCFeedWidgetType[];
 
   /**
-   * Props to spread to single feed object
+   * Component used to render single feed item retrieved by the endpoint
+   */
+  ItemComponent: React.ElementType;
+
+  /**
+   * Function used to convert the single result returned by the Endpoint into the props necessary to render the ItemComponent
+   */
+  itemPropsGenerator: (item) => any;
+
+  /**
+   * Props to spread to single feed item
    * @default empty object
    */
-  FeedObjectProps?: FeedObjectProps;
+  ItemProps?: any;
+
+  /**
+   * Skeleton used to render loading effect during fetch
+   */
+  ItemSkeleton: React.ElementType;
+
+  /**
+   * Props to spread to single feed item skeleton
+   * @default empty object
+   */
+  ItemSkeletonProps?: any;
 
   /**
    * Props to spread to single feed object
    * @default {top: 0, bottomBoundary: `#${id}`}
    */
-  StickySidebarProps?: StickySidebarProps;
+  FeedSidebarProps?: FeedSidebarProps;
 }
 
 interface FeedData {
@@ -100,7 +133,20 @@ const PREFERENCES = [SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED, SCPreferences
 
 export default function Feed(props: FeedProps): JSX.Element {
   // PROPS
-  const {id = 'feed', className, endpoint, widgets = [], FeedObjectProps = {}, StickySidebarProps = {top: 0, bottomBoundary: `#${id}`}} = props;
+  const {
+    id = 'feed',
+    className,
+    endpoint,
+    endMessage = <FormattedMessage id="ui.feed.noOtherFeedObject" defaultMessage="ui.feed.noOtherFeedObject" />,
+    refreshMessage = <FormattedMessage id="ui.feed.refreshRelease" defaultMessage="ui.feed.refreshRelease" />,
+    widgets = [],
+    ItemComponent,
+    itemPropsGenerator,
+    ItemProps = {},
+    ItemSkeleton,
+    ItemSkeletonProps = {},
+    FeedSidebarProps = {top: 0, bottomBoundary: `#${id}`}
+  } = props;
 
   // STATE
   const [feedData, setFeedData] = useState([]);
@@ -110,6 +156,9 @@ export default function Feed(props: FeedProps): JSX.Element {
   // CONTEXT
   const scPreferences: SCPreferencesContextType = useSCPreferences();
   const scUserContext: SCUserContextType = useContext(SCUserContext);
+
+  // REFS
+  const refreshSubscription = useRef(null);
 
   /**
    * Compute preferences
@@ -183,11 +232,24 @@ export default function Feed(props: FeedProps): JSX.Element {
     fetch();
   };
 
+  const subscriber = (msg, data) => {
+    if (data.refresh) {
+      refresh();
+    }
+  };
+
   /**
    * On mount, fetch first page of notifications
    */
   useEffect(() => {
     fetch();
+  }, []);
+
+  useEffect(() => {
+    refreshSubscription.current = PubSub.subscribe(id, subscriber);
+    return () => {
+      PubSub.unsubscribe(refreshSubscription.current);
+    };
   }, []);
 
   // Main Loop
@@ -223,9 +285,9 @@ export default function Feed(props: FeedProps): JSX.Element {
   const data = getData();
 
   return (
-    <Root container spacing={2} id={id} className={className}>
+    <Root container spacing={2} id={id} className={classNames(classes.root, className)}>
       <Grid item xs={12} md={7}>
-        <React.Suspense fallback={<FeedObjectSkeleton template={FeedObjectTemplateType.PREVIEW} />}>
+        <React.Suspense fallback={<ItemSkeleton {...ItemSkeletonProps} />}>
           <InfiniteScroll
             className={classes.left}
             dataLength={data.left.length}
@@ -234,9 +296,7 @@ export default function Feed(props: FeedProps): JSX.Element {
             loader={false}
             endMessage={
               <Card variant="outlined" className={classes.end}>
-                <CardContent>
-                  <FormattedMessage id="ui.feed.noOtherFeedObject" defaultMessage="ui.feed.noOtherFeedObject" />{' '}
-                </CardContent>
+                <CardContent>{endMessage}</CardContent>
               </Card>
             }
             refreshFunction={refresh}
@@ -245,33 +305,24 @@ export default function Feed(props: FeedProps): JSX.Element {
             pullDownToRefreshContent={null}
             releaseToRefreshContent={
               <Card variant="outlined" className={classes.refresh}>
-                <CardContent>
-                  &#8593; <FormattedMessage id="ui.feed.refreshRelease" defaultMessage="ui.feed.refreshRelease" />{' '}
-                </CardContent>
+                <CardContent>{refreshMessage}</CardContent>
               </Card>
             }>
             {data.left.map((d, i) =>
               d.type === 'widget' ? (
-                <d.component key={i} {...d.componentProps}></d.component>
+                <d.component key={i} {...d.componentProps} publicationChannel={id}></d.component>
               ) : (
-                <FeedObject
-                  key={i}
-                  feedObject={d[d.type]}
-                  feedObjectType={d.type}
-                  feedObjectActivities={d.activities ? d.activities : null}
-                  {...FeedObjectProps}
-                  sx={{width: '100%'}}
-                />
+                <ItemComponent key={i} {...itemPropsGenerator(d)} {...ItemProps} sx={{width: '100%'}} />
               )
             )}
           </InfiniteScroll>
-          {loading && Array.from({length: 5}).map((e, i) => <FeedObjectSkeleton key={i} template={FeedObjectTemplateType.PREVIEW} />)}
+          {loading && Array.from({length: 5}).map((e, i) => <ItemSkeleton key={i} {...ItemSkeletonProps} />)}
         </React.Suspense>
       </Grid>
       {data.right.length > 0 && (
         <Hidden smDown>
           <Grid item xs={12} md={5}>
-            <Sticky enabled className={classes.right} {...StickySidebarProps}>
+            <Sticky enabled className={classes.right} {...FeedSidebarProps}>
               <React.Suspense fallback={<GenericSkeleton />}>
                 {data.right.map((d, i) => (
                   <d.component key={i} {...d.componentProps}></d.component>

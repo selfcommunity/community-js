@@ -12,8 +12,8 @@ import DateTimeAgo from '../../../../shared/DateTimeAgo';
 
 const messages = defineMessages({
   comment: {
-    id: 'ui.userNotifications.comment.comment',
-    defaultMessage: 'ui.userNotifications.comment.comment'
+    id: 'ui.notification.comment.comment',
+    defaultMessage: 'ui.notification.comment.comment'
   }
 });
 
@@ -118,14 +118,14 @@ export default function CommentRelevantActivity(props: CommentRelevantActivityPr
                     {activityObject.comment.voted ? (
                       <Tooltip
                         title={
-                          <FormattedMessage id={'ui.userNotifications.comment.voteDown'} defaultMessage={'ui.userNotifications.comment.voteDown'} />
+                          <FormattedMessage id={'ui.notification.comment.voteDown'} defaultMessage={'ui.notification.comment.voteDown'} />
                         }>
                         <VoteFilledIcon fontSize={'small'} color={'secondary'} />
                       </Tooltip>
                     ) : (
                       <Tooltip
                         title={
-                          <FormattedMessage id={'ui.userNotifications.comment.voteUp'} defaultMessage={'ui.userNotifications.comment.voteUp'} />
+                          <FormattedMessage id={'ui.notification.comment.voteUp'} defaultMessage={'ui.notification.comment.voteUp'} />
                         }>
                         <VoteIcon fontSize={'small'} />
                       </Tooltip>

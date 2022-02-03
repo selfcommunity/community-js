@@ -8,8 +8,8 @@ import {ActionsRelevantActivityProps} from '../FollowActivity';
 
 const messages = defineMessages({
   followUser: {
-    id: 'ui.userNotifications.userFollow.followUser',
-    defaultMessage: 'ui.userNotifications.userFollow.followUser'
+    id: 'ui.notification.userFollow.followUser',
+    defaultMessage: 'ui.notification.userFollow.followUser'
   }
 });
 

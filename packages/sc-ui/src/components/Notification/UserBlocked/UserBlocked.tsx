@@ -1,43 +1,36 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import {Avatar, Box, ListItem, ListItemAvatar, ListItemText, Stack, Typography} from '@mui/material';
-import {defineMessages, useIntl} from 'react-intl';
-import DateTimeAgo from '../../../../shared/DateTimeAgo';
-import {SCNotificationTypologyType} from '@selfcommunity/core';
-import {green} from '@mui/material/colors';
+import {Avatar, Box, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
+import {red} from '@mui/material/colors';
 import EmojiFlagsIcon from '@mui/icons-material/EmojiFlags';
+import {SCNotificationBlockedUserType, SCNotificationTypologyType} from '@selfcommunity/core';
+import {defineMessages, useIntl} from 'react-intl';
+import DateTimeAgo from '../../../shared/DateTimeAgo';
+import NewChip from '../NewChip';
 
 const messages = defineMessages({
   accountBlocked: {
-    id: 'ui.userToastNotifications.userBlocked.accountBlocked',
+    id: 'ui.notification.userBlocked.accountBlocked',
     defaultMessage: 'ui.notification.userBlocked.accountBlocked'
   },
   accountReactivated: {
-    id: 'ui.userToastNotifications.userBlocked.accountReactivated',
+    id: 'ui.notification.userBlocked.accountReactivated',
     defaultMessage: 'ui.notification.userBlocked.accountReactivated'
   }
 });
 
-const PREFIX = 'SCUserBlockedNotificationToast';
-
-const classes = {
-  content: `${PREFIX}-content`
-};
+const PREFIX = 'SCUserBlockedNotification';
 
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  [`& .${PREFIX}-content`]: {
-    padding: '8px 0px 15px 0px'
-  }
-}));
+})(({theme}) => ({}));
 
-export interface NotificationUserBlockedToastProps {
+export interface NotificationBlockedProps {
   /**
    * Id of the feedObject
-   * @default 'tn_<notificationObject.feed_serialization_id>'
+   * @default 'n_<notificationObject.sid>'
    */
   id?: string;
 
@@ -51,25 +44,21 @@ export interface NotificationUserBlockedToastProps {
    * Notification obj
    * @default null
    */
-  notificationObject: any;
+  notificationObject: SCNotificationBlockedUserType;
 
   /**
    * Any other properties
    */
   [p: string]: any;
 }
-
 /**
- * !IMPORTANT: this component is not used yet because the notification via ws is not launched
- * This component render the content of the
- * toast notification of type user blocked
+ * This component render the content of the notification of type user blocked
  * @param props
  * @constructor
  */
-export default function UserBlockedNotificationToast(props: NotificationUserBlockedToastProps): JSX.Element {
+export default function UserBlockedNotification(props: NotificationBlockedProps): JSX.Element {
   // PROPS
-  const {notificationObject = null, id = `tn_${props.notificationObject['feed_serialization_id']}`, className, ...rest} = props;
-
+  const {notificationObject = null, id = `n_${props.notificationObject['sid']}`, className, ...rest} = props;
   // INTL
   const intl = useIntl();
 
@@ -78,9 +67,9 @@ export default function UserBlockedNotificationToast(props: NotificationUserBloc
    */
   return (
     <Root id={id} className={className} {...rest}>
-      <ListItem component={'div'} className={classes.content}>
+      <ListItem alignItems="flex-start" component={'div'}>
         <ListItemAvatar>
-          <Avatar variant="circular" sx={{bgcolor: green[500]}}>
+          <Avatar variant="circular" sx={{bgcolor: red[500]}}>
             <EmojiFlagsIcon />
           </Avatar>
         </ListItemAvatar>
@@ -88,6 +77,7 @@ export default function UserBlockedNotificationToast(props: NotificationUserBloc
           disableTypography={true}
           primary={
             <Typography component="div" sx={{display: 'inline'}} color="primary">
+              {notificationObject.is_new && <NewChip />}
               <b>
                 {notificationObject.type === SCNotificationTypologyType.BLOCKED_USER
                   ? intl.formatMessage(messages.accountBlocked, {b: (...chunks) => <strong>{chunks}</strong>})
@@ -95,11 +85,9 @@ export default function UserBlockedNotificationToast(props: NotificationUserBloc
               </b>
             </Typography>
           }
+          secondary={<DateTimeAgo date={notificationObject.active_at} />}
         />
       </ListItem>
-      <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
-        <DateTimeAgo date={notificationObject.active_at} />
-      </Stack>
     </Root>
   );
 }

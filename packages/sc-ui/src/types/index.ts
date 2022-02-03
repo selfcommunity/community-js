@@ -1,4 +1,4 @@
-import {SCFeedWidgetType} from './Feed';
+import {SCFeedWidgetType} from './feed';
 import {SCMediaObjectType, SCMediaChunkType} from './media';
 import {CommentsOrderBy} from './comments';
 import {FeedObjectActivitiesType, FeedObjectTemplateType} from './feedObject';

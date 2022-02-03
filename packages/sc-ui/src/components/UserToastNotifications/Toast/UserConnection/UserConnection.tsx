@@ -7,12 +7,12 @@ import {Link, SCNotificationTypologyType, SCRoutes, SCRoutingContextType, useSCR
 
 const messages = defineMessages({
   requestConnection: {
-    id: 'ui.userNotifications.userConnection.requestConnection',
-    defaultMessage: 'ui.userNotifications.userConnection.requestConnection'
+    id: 'ui.notification.userConnection.requestConnection',
+    defaultMessage: 'ui.notification.userConnection.requestConnection'
   },
   acceptConnection: {
-    id: 'ui.userNotifications.userConnection.acceptConnection',
-    defaultMessage: 'ui.userNotifications.userConnection.acceptConnection'
+    id: 'ui.notification.userConnection.acceptConnection',
+    defaultMessage: 'ui.notification.userConnection.acceptConnection'
   }
 });
 
