@@ -203,14 +203,14 @@ export default function WSClient(options: WSClientPropTypes) {
    * Send message
    * @param message
    */
-  this.sendMessage = function (message) {
+  function sendMessage(message) {
     ws.send(message);
   };
 
   /**
    * Get the ws state
    */
-  this.getState = function () {
+  function getState() {
     return ws.readyState;
   };
 
@@ -256,6 +256,8 @@ export default function WSClient(options: WSClientPropTypes) {
   /**
    * Attach methods
    */
+  this.getState = getState;
+  this.sendMessage = sendMessage;
   this.isConnecting = isConnecting;
   this.isConnected = isConnected;
   this.isClosing = isClosing;
