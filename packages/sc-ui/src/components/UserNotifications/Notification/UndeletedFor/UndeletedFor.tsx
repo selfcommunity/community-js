@@ -3,9 +3,9 @@ import {styled} from '@mui/material/styles';
 import {Avatar, Box, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
 import EmojiFlagsIcon from '@mui/icons-material/EmojiFlags';
 import {green} from '@mui/material/colors';
-import {Link, SCNotificationUnDeletedForType, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
+import {Link, SCNotificationUnDeletedForType, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
 import {FormattedMessage} from 'react-intl';
-import {getContributeType} from '../../../../utils/contribute';
+import {getContributeType, getRouteData} from '../../../../utils/contribute';
 import DateTimeAgo from '../../../../shared/DateTimeAgo';
 import NotificationNewChip from '../../NotificationNewChip';
 
@@ -88,7 +88,7 @@ export default function UndeletedForNotification(props: NotificationUndeletedPro
         <Typography component={'span'} variant={'body2'} color={'primary'}>
           <FormattedMessage id="ui.userNotifications.undeletedFor.youWrote" defaultMessage="ui.userNotifications.undeletedFor.youWrote" />
         </Typography>
-        <Link to={scRoutingContext.url(contributionType, {id: notificationObject[contributionType].id})}>
+        <Link to={scRoutingContext.url(SCRoutes[`${contributionType.toUpperCase()}_ROUTE_NAME`], getRouteData(notificationObject[contributionType]))}>
           <Typography
             component={'span'}
             variant="body2"

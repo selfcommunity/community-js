@@ -10,6 +10,7 @@ import VoteIcon from '@mui/icons-material/ThumbUpOutlined';
 import {grey} from '@mui/material/colors';
 import DateTimeAgo from '../../../../shared/DateTimeAgo';
 import NotificationNewChip from '../../NotificationNewChip';
+import {getRouteData} from '../../../../utils/contribute';
 
 const messages = defineMessages({
   comment: {
@@ -104,7 +105,7 @@ export default function CommentNotification(props: CommentNotificationProps): JS
     <Root id={id} className={className} {...rest}>
       <ListItem alignItems="flex-start" component={'div'}>
         <ListItemAvatar>
-          <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: notificationObject.comment.author.id})}>
+          <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.comment.author)}>
             <Avatar alt={notificationObject.comment.author.username} variant="circular" src={notificationObject.comment.author.avatar} />
           </Link>
         </ListItemAvatar>
@@ -113,7 +114,7 @@ export default function CommentNotification(props: CommentNotificationProps): JS
           primary={
             <Typography component="span" sx={{display: 'inline'}} color="primary">
               {notificationObject.is_new && <NotificationNewChip />}
-              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: notificationObject.comment.author.id})}>
+              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.comment.author)}>
                 {notificationObject.comment.author.username}
               </Link>{' '}
               {notificationObject.type === SCNotificationTypologyType.NESTED_COMMENT
@@ -127,7 +128,9 @@ export default function CommentNotification(props: CommentNotificationProps): JS
           }
           secondary={
             <React.Fragment>
-              <Link to={scRoutingContext.url('comment', {id: notificationObject.comment.id})} sx={{textDecoration: 'underline'}}>
+              <Link
+                to={scRoutingContext.url(SCRoutes.COMMENT_ROUTE_NAME, getRouteData(notificationObject.comment))}
+                sx={{textDecoration: 'underline'}}>
                 <Typography variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: notificationObject.comment.summary}} />
               </Link>
               <Box component="span" sx={{display: 'flex', justifyContent: 'flex-start', p: '2px'}}>

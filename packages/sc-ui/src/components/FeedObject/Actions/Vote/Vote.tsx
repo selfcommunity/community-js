@@ -344,13 +344,13 @@ export default function Vote(props: VoteProps): JSX.Element {
     let audience;
     if (!obj) {
       audience = (
-        <Button variant="text" size="small" disabled>
+        <Button variant="text" size="small" disabled color="primary">
           <Skeleton animation="wave" height={18} width={50} />
         </Button>
       );
     } else if (obj.vote_count <= 0) {
       audience = (
-        <Button variant="text" size="small" onClick={handleToggleVotesDialog} disabled sx={{height: 32}}>
+        <Button variant="text" size="small" onClick={handleToggleVotesDialog} disabled sx={{height: 32}} color="primary">
           {renderInlineStartVoteBtn()}
           <Typography variant={'body2'} sx={{marginLeft: (theme) => theme.spacing()}}>
             {`${intl.formatMessage(messages.votes, {total: obj.vote_count})}`}
@@ -360,7 +360,7 @@ export default function Vote(props: VoteProps): JSX.Element {
     } else {
       audience = (
         <React.Fragment>
-          <Button variant="text" size="small" onClick={handleToggleVotesDialog} disabled={obj.vote_count === 0} sx={{height: 32}}>
+          <Button variant="text" size="small" onClick={handleToggleVotesDialog} disabled={obj.vote_count === 0} sx={{height: 32}} color="primary">
             {renderInlineStartVoteBtn()}
             <Typography variant={'body2'} sx={{marginLeft: (theme) => theme.spacing()}}>
               {obj.voted ? (

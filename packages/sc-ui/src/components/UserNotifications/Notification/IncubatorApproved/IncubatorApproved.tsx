@@ -93,7 +93,7 @@ export default function IncubatorApprovedNotification(props: NotificationIncubat
       </ListItem>
       <Box sx={{mb: 1, p: '5px 15px'}}>
         <Typography component="div">
-          <Link to={scRoutingContext.url(SCRoutes.CATEGORY_ROUTE_NAME, {id: notificationObject.incubator.id})}>
+          <Link to={scRoutingContext.url(SCRoutes.CATEGORY_ROUTE_NAME, notificationObject.incubator.approved_category)}>
             <FormattedMessage
               id={'ui.userNotifications.incubatorApproved.viewIncubator'}
               defaultMessage={'ui.userNotifications.incubatorApproved.viewIncubator'}
