@@ -8,7 +8,7 @@ import CategoriesPopular, {CategoriesPopularSkeleton} from './components/Categor
 import CategoriesSuggestion, {CategoriesListProps, CategoriesSuggestionSkeleton} from './components/CategoriesSuggestion';
 import ChangeCover, {ChangecoverProps} from './components/ChangeCover';
 import ChangePicture, {ChangePictureProps} from './components/ChangePicture';
-import Connection from './components/Connection';
+import Connection from './components/ConnectionUserButton';
 import Composer, {ComposerProps, ComposerSkeleton} from './components/Composer';
 import Editor, {EditorProps, EditorSkeleton} from './components/Editor';
 import User, {UserProps, UserSkeleton} from './components/User';

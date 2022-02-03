@@ -73,8 +73,8 @@ export default function UsersFollowed(props: UsersFollowedProps): JSX.Element {
   /**
    * Handles list change on user follow
    */
-  function handleClick(clickedId) {
-    setFollowed(followed.filter((u) => u.id !== clickedId));
+  function handleOnFollowUser(user, follow) {
+    setFollowed(followed.filter((u) => u.id !== user.id));
     setTotal((prev) => prev - 1);
     if (visibleUsers < limit && total > 1) {
       loadUsers(1);
@@ -138,7 +138,7 @@ export default function UsersFollowed(props: UsersFollowedProps): JSX.Element {
               <List>
                 {followed.slice(0, visibleUsers).map((user: SCUserType, index) => (
                   <div key={index}>
-                    <User elevation={0} user={user} key={user.id} onFollowProps={() => handleClick(user.id)} {...UserProps} />
+                    <User elevation={0} user={user} key={user.id} followUserButtonProps={{onFollow: handleOnFollowUser}} {...UserProps} />
                   </div>
                 ))}
               </List>

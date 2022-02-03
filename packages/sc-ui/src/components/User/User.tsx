@@ -18,8 +18,10 @@ import {
   SCRoutes
 } from '@selfcommunity/core';
 import FollowUserButton from '../FollowUserButton';
-import Connection from '../Connection';
 import {FormattedMessage} from 'react-intl';
+import {FollowUserButtonProps} from '../FollowUserButton/FollowUserButton';
+import ConnectionUserButton from '../ConnectionUserButton';
+import {ConnectionButtonProps} from '../ConnectionUserButton/ConnectionUserButton';
 
 const PREFIX = 'SCUser';
 
@@ -66,21 +68,19 @@ export interface UserProps extends Pick<CardProps, Exclude<keyof CardProps, 'id'
    * @default null
    */
   handleIgnoreAction?: (u) => void;
-  /**
-   * Callback function on follow action.
-   * @default null
-   */
-  handleFollowAction?: (u) => void;
-  /**
-   * Callback function on connect action.
-   * @default null
-   */
-  handleConnectAction?: (u) => void;
+
   /**
    * Props to spread to follow button
    * @default {}
    */
-  followUserButtonProps?: () => void;
+  followUserButtonProps?: FollowUserButtonProps;
+
+  /**
+   * Props to spread to connection button
+   * @default {}
+   */
+  connectUserButtonProps?: ConnectionButtonProps;
+
   /**
    * Any other properties
    */
@@ -95,9 +95,8 @@ export default function User(props: UserProps): JSX.Element {
     handleIgnoreAction,
     className = null,
     autoHide = false,
-    handleConnectAction,
-    handleFollowAction,
     followUserButtonProps = {},
+    connectUserButtonProps = {},
     ...rest
   } = props;
 
@@ -125,7 +124,7 @@ export default function User(props: UserProps): JSX.Element {
             <FormattedMessage defaultMessage="ui.user.ignore" id="ui.user.ignore" />
           </Button>
         )}
-        <FollowUserButton user={scUser} onFollow={handleFollowAction} />
+        <FollowUserButton user={scUser} {...followUserButtonProps} />
       </React.Fragment>
     );
   }
@@ -143,7 +142,7 @@ export default function User(props: UserProps): JSX.Element {
             <FormattedMessage defaultMessage="ui.user.ignore" id="ui.user.ignore" />
           </Button>
         )}
-        <Connection followed={status === 'Connect'} />
+        <ConnectionUserButton user={scUser} {...connectUserButtonProps} />
       </React.Fragment>
     );
   }

@@ -4,9 +4,9 @@ import {Button} from '@mui/material';
 import {Endpoints, http, SCUserType} from '@selfcommunity/core';
 import {AxiosResponse} from 'axios';
 
-const PREFIX = 'SCConnection';
+const PREFIX = 'SCConnectionUserButton';
 
-const ConnectionButton = styled(Button, {
+const Root = styled(Button, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
@@ -21,8 +21,35 @@ const ConnectionButton = styled(Button, {
   paddingLeft: '16px'
 }));
 
-function Connection({user = null, followed = null}: {user?: SCUserType; followed?: boolean}): JSX.Element {
-  const [status, setStatus] = useState<any>(followed ? 'Remove' : 'Connect');
+export interface ConnectionButtonProps {
+  /**
+   * Id of the user
+   * @default null
+   */
+  userId?: number;
+
+  /**
+   * User
+   * @default null
+   */
+  user?: SCUserType;
+
+  /**
+   * onChangeConnectionStatus callback
+   * @param user
+   * @param status
+   */
+  onChangeConnectionStatus?: (user: SCUserType, status: string) => any;
+
+  /**
+   * Others properties
+   */
+  [p: string]: any;
+}
+
+// TODO: fix component
+function ConnectionUserButton({userId = null, user = null, connected = null}: ConnectionButtonProps): JSX.Element {
+  const [status, setStatus] = useState<any>(connected ? 'Remove' : 'Connect');
 
   function updateStatus(status) {
     if (status === 'Connect') {
@@ -78,17 +105,15 @@ function Connection({user = null, followed = null}: {user?: SCUserType; followed
 
   function handleConnectionStatus() {
     {
-      followed ? removeConnection() : requestConnection();
+      connected ? removeConnection() : requestConnection();
     }
   }
 
   return (
-    <React.Fragment>
-      <ConnectionButton size="small" variant="outlined" onClick={() => handleConnectionStatus()}>
-        {status}
-      </ConnectionButton>
-    </React.Fragment>
+    <Root size="small" variant="outlined" onClick={() => handleConnectionStatus()}>
+      {status}
+    </Root>
   );
 }
 
-export default Connection;
+export default ConnectionUserButton;

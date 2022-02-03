@@ -69,7 +69,7 @@ export default function UserToastNotifications(props: UserToastNotificationsProp
   const notificationSubscription = useRef(null);
 
   // CONTEXT
-  const {enqueueSnackbar, closeSnackbar} = useSnackbar();
+  const {enqueueSnackbar} = useSnackbar();
 
   /**
    * Render every single notification content

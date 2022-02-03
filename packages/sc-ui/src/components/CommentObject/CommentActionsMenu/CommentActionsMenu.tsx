@@ -26,6 +26,7 @@ import {REPORT_AGGRESSIVE, REPORT_OFFTOPIC, REPORT_POORCONTENT, REPORT_SPAM, REP
 import CentralProgress from '../../../shared/CentralProgress';
 import ConfirmDialog from '../../../shared/ConfirmDialog/ConfirmDialog';
 import {copyTextToClipboard} from '../../../utils/string';
+import {useSnackbar} from 'notistack';
 
 const PREFIX = 'SCCommentActionsMenu';
 
@@ -179,6 +180,7 @@ export default function CommentActionsMenu(props: CommentActionsMenuProps): JSX.
   const intl = useIntl();
   const scUser: SCUserContextType = useContext(SCUserContext);
   const scRoutingContext: SCRoutingContextType = useSCRouting();
+  const {enqueueSnackbar} = useSnackbar();
 
   // RETRIVE OBJECTS
   const {obj, setObj} = useSCFetchCommentObject({id: commentObjectId, commentObject});
@@ -284,6 +286,15 @@ export default function CommentActionsMenu(props: CommentActionsMenuProps): JSX.
       })}`
     ).then(() => {
       setOpen(false);
+      enqueueSnackbar(
+        <FormattedMessage
+          id="ui.commentObject.commentActionsMenu.permanentLinkCopied"
+          defaultMessage="ui.commentObject.commentActionsMenu.permanentLinkCopied"
+        />,
+        {
+          variant: 'success'
+        }
+      );
     });
   }
 

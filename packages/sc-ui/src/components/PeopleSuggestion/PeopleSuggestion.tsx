@@ -4,7 +4,18 @@ import List from '@mui/material/List';
 import {Button, Typography} from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import {Endpoints, http, SCUserContext, SCUserContextType, SCUserType} from '@selfcommunity/core';
+import {
+  Endpoints,
+  http,
+  SCPreferences,
+  SCPreferencesContext,
+  SCPreferencesContextType,
+  SCRoutingContextType,
+  SCUserContext,
+  SCUserContextType,
+  SCUserType,
+  useSCRouting
+} from '@selfcommunity/core';
 import PeopleSuggestionSkeleton from './Skeleton';
 import User, {UserProps} from '../User';
 import {FormattedMessage} from 'react-intl';
@@ -60,12 +71,26 @@ export default function PeopleSuggestion(props: PeopleSuggestionProps): JSX.Elem
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
+  const scPreferencesContext: SCPreferencesContextType = useContext(SCPreferencesContext);
+  const followEnabled =
+    SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED in scPreferencesContext.preferences &&
+    scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED].value;
 
   /**
    * Handles list change on user follow
    */
-  function handleClick(clickedId) {
-    setUsers(users.filter((u) => u.id !== clickedId));
+  function handleOnFollowUser(user, follow) {
+    setUsers(users.filter((u) => u.id !== user.id));
+    if (visiblePeople < limit && total > 1) {
+      loadPeople(1);
+    }
+  }
+
+  /**
+   * Handles list change on user connection
+   */
+  function handleOnConnectUser(user, status) {
+    setUsers(users.filter((u) => u.id !== user.id));
     if (visiblePeople < limit && total > 1) {
       loadPeople(1);
     }
@@ -132,7 +157,15 @@ export default function PeopleSuggestion(props: PeopleSuggestionProps): JSX.Elem
               <List>
                 {users.slice(0, visiblePeople).map((user: SCUserType, index) => (
                   <div key={index}>
-                    <User elevation={0} user={user} key={user.id} onFollowProps={() => handleClick(user.id)} {...UserProps} />
+                    <User
+                      elevation={0}
+                      user={user}
+                      key={user.id}
+                      {...(followEnabled
+                        ? {followUserButtonProps: {onFollow: handleOnFollowUser}}
+                        : {connectUserButtonProps: {onChangeConnectionStatus: handleOnConnectUser}})}
+                      {...UserProps}
+                    />
                   </div>
                 ))}
               </List>
