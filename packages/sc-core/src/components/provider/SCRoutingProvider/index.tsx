@@ -1,9 +1,23 @@
 import React, {createContext, useContext, useMemo} from 'react';
 import {SCContextType, SCPreferencesContextType, SCRoutingContextType, SCUserContextType} from '../../../types';
 import {useSCContext} from '../SCContextProvider';
-import {defaultRoutes} from '../../../constants/Routes';
 import {SCPreferencesContext} from '../SCPreferencesProvider';
 import * as SCPreferences from '../../../constants/Preferences';
+import {SCRoutingType} from '../../../types/context';
+import {
+  CATEGORIES_LIST_ROUTE_NAME,
+  CATEGORY_ROUTE_NAME,
+  COMMENT_ROUTE_NAME,
+  DISCUSSION_ROUTE_NAME,
+  INCUBATOR_ROUTE_NAME,
+  POST_ROUTE_NAME,
+  STATUS_ROUTE_NAME,
+  USER_NOTIFICATIONS_ROUTE_NAME,
+  USER_PRIVATE_MESSAGES_ROUTE_NAME,
+  USER_PROFILE_ROUTE_NAME,
+  USER_PROFILE_SETTINGS_ROUTE_NAME,
+  defaultRoutes,
+} from '../../../constants/Routes';
 
 /**
  * Create Global Context
@@ -19,7 +33,7 @@ export const SCRoutingContext = createContext<SCRoutingContextType>({} as SCRout
 export default function SCRoutingProvider({children = null}: {children: React.ReactNode}): JSX.Element {
   const scPreferencesContext: SCPreferencesContextType = useContext(SCPreferencesContext);
   const scContext: SCContextType = useSCContext();
-  const router: SCRoutingContextType = scContext.settings.router ? scContext.settings.router : {};
+  const router: SCRoutingType = scContext.settings.router ? scContext.settings.router : {};
   const routerLink: React.ComponentClass<any> = router.routerLink ? router.routerLink : null;
   const _routes = Object.assign(getPreferencesRoutes(), defaultRoutes);
   const routes: Record<string, any> = router.routes ? {..._routes, ...router.routes} : defaultRoutes;
@@ -44,17 +58,23 @@ export default function SCRoutingProvider({children = null}: {children: React.Re
    */
   function getPreferencesRoutes() {
     return {
-      post: normalizeUrl(scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_POST].value),
-      discussion: normalizeUrl(scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_DISCUSSION].value),
-      status: normalizeUrl(scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_STATUS].value),
-      comment: normalizeUrl(scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_COMMENT].value),
-      category: normalizeUrl(scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_CATEGORY].value),
-      categories_list: normalizeUrl(scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_CATEGORIES_LIST].value),
-      user_profile: normalizeUrl(scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_USER_PROFILE].value),
-      user_profile_settings: normalizeUrl(scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_USER_PROFILE_SETTINGS].value),
-      user_notifications: normalizeUrl(scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_USER_NOTIFICATIONS].value),
-      user_private_messages: normalizeUrl(scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_USER_PRIVATE_MESSAGES].value),
-      incubator: normalizeUrl(scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_INCUBATOR].value),
+      [POST_ROUTE_NAME]: normalizeUrl(scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_POST].value),
+      [DISCUSSION_ROUTE_NAME]: normalizeUrl(scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_DISCUSSION].value),
+      [STATUS_ROUTE_NAME]: normalizeUrl(scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_STATUS].value),
+      [COMMENT_ROUTE_NAME]: normalizeUrl(scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_COMMENT].value),
+      [CATEGORY_ROUTE_NAME]: normalizeUrl(scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_CATEGORY].value),
+      [CATEGORIES_LIST_ROUTE_NAME]: normalizeUrl(scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_CATEGORIES_LIST].value),
+      [USER_PROFILE_ROUTE_NAME]: normalizeUrl(scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_USER_PROFILE].value),
+      [USER_PROFILE_SETTINGS_ROUTE_NAME]: normalizeUrl(
+        scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_USER_PROFILE_SETTINGS].value
+      ),
+      [USER_NOTIFICATIONS_ROUTE_NAME]: normalizeUrl(
+        scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_USER_NOTIFICATIONS].value
+      ),
+      [USER_PRIVATE_MESSAGES_ROUTE_NAME]: normalizeUrl(
+        scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_USER_PRIVATE_MESSAGES].value
+      ),
+      [INCUBATOR_ROUTE_NAME]: normalizeUrl(scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_INCUBATOR].value),
     };
   }
 
@@ -64,13 +84,18 @@ export default function SCRoutingProvider({children = null}: {children: React.Re
   function url(name = '', params = {}) {
     const replacer = (tpl: string, data: Record<string, any>) => {
       const re = /:([^/]+)?/g;
+      let _tpl = tpl;
       let match = re.exec(tpl);
       while (match) {
-        tpl = tpl.replace(match[0], data[match[1]]);
+        _tpl = _tpl.replace(match[0], data[match[1]]);
         re.lastIndex = 0;
-        match = re.exec(tpl);
+        match = re.exec(_tpl);
       }
-      return tpl;
+      if (router.handleRoute) {
+        // Handle override url
+        return router.handleRoute(name, _tpl, params, tpl);
+      }
+      return _tpl;
     };
     return replacer(routes[name], params);
   }

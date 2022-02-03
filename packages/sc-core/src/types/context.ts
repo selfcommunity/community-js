@@ -29,7 +29,7 @@ export interface SCSettingsType {
   /**
    * Object conf of router.
    */
-  router?: SCRoutingContextType;
+  router?: SCRoutingType;
 
   /**
    * Callback to handle anonymous action
@@ -352,6 +352,31 @@ export interface SCThemeContextType {
 }
 
 /**
+ * Interface SCRoutingType
+ */
+export interface SCRoutingType {
+  /**
+   * Component
+   */
+  routerLink?: React.ComponentClass<any>;
+
+  /**
+   * Routes
+   */
+  routes?: Record<string, string>;
+
+  /**
+   * Handle override routes path
+   * @param name
+   * @param templateUrl
+   * @param data
+   * @param defaultUrl
+   * @return string
+   */
+  handleRoute?: (name, templateUrl, data, defaultUrl) => string;
+}
+
+/**
  * Interface SCRoutingContextType
  */
 export interface SCRoutingContextType {
@@ -366,7 +391,7 @@ export interface SCRoutingContextType {
   routes?: Record<string, string>;
 
   /**
-   * Routes
+   * Generate default path
    */
   url?: (string, object) => string;
 }

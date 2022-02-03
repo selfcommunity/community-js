@@ -1,3 +1,4 @@
+import React from 'react';
 import {LOCALES} from '../constants/Locale';
 import {isValidUrl} from './url';
 import * as Session from '../constants/Session';
@@ -179,8 +180,18 @@ export const validateLocale = (v) => {
 export const validateRouter = (value) => {
   const errors = [];
   const warnings = [];
-  if (value && !isObject(value)) {
-    errors.push(ValidationError.ERROR_INVALID_ROUTER);
+  if (value) {
+    if (!isObject(value)) {
+      errors.push(ValidationError.ERROR_INVALID_ROUTER);
+    } else {
+      if (
+        (value.routerLink && !React.isValidElement(value.routerLink)) ||
+        (value.routes && !isObject(value.routes)) ||
+        (value.handleRoute && !isFunc(value.handleRoute))
+      ) {
+        errors.push(ValidationError.ERROR_INVALID_ROUTER);
+      }
+    }
   } else {
     warnings.push(ValidationWarnings.WARNING_ROUTER_FALLBACK);
   }
