@@ -3,6 +3,7 @@ import {ComponentStory, ComponentMeta} from '@storybook/react';
 import Notification from './index';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
+/*
 export default {
   title: 'Design System/SC UI/Notification',
   component: Notification,
@@ -24,8 +25,10 @@ export default {
     variant: 'elevation'
   }
 } as ComponentMeta<typeof Notification>;
+*/
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
+/*
 const Template: ComponentStory<typeof Notification> = (args) => (
   <div style={{width: '600px'}}>
     <Notification {...args} />
@@ -34,6 +37,5 @@ const Template: ComponentStory<typeof Notification> = (args) => (
 
 export const Base = Template.bind({});
 
-Base.args = {
-  /* the args you need here will depend on your component */
-};
+Base.args = {};
+*/
