@@ -3,6 +3,7 @@ import CategoryFeed, {CategoryFeedProps, CategoryFeedSkeleton} from './component
 import ExploreFeed, {ExploreFeedProps, ExploreFeedSkeleton} from './components/ExploreFeed';
 import FeedObjectDetail, {FeedObjectDetailProps, FeedObjectDetailSkeleton} from './components/FeedObjectDetail';
 import MainFeed, {MainFeedProps, MainFeedSkeleton} from './components/MainFeed';
+import NotificationFeed, {NotificationFeedProps, NotificationFeedSkeleton} from './components/NotificationFeed';
 import UserFeed, {UserFeedProps, UserFeedSkeleton} from './components/UserFeed';
 import UserProfile, {UserProfileProps, UserProfileSkeleton} from './components/UserProfile';
 
@@ -22,6 +23,9 @@ export {
   MainFeed,
   MainFeedProps,
   MainFeedSkeleton,
+  NotificationFeed,
+  NotificationFeedProps,
+  NotificationFeedSkeleton,
   UserFeed,
   UserFeedProps,
   UserFeedSkeleton,
