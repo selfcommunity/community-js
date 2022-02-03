@@ -1,7 +1,7 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
 import {Avatar, Box, Grid, ListItem, ListItemAvatar, ListItemText, Tooltip, Typography} from '@mui/material';
-import {Link, SCNotificationVoteUpType, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
+import {Link, SCCommentTypologyType, SCNotificationVoteUpType, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../../shared/DateTimeAgo';
 import NotificationNewChip from '../../NotificationNewChip';
@@ -9,7 +9,7 @@ import Bullet from '../../../../shared/Bullet';
 import {LoadingButton} from '@mui/lab';
 import VoteFilledIcon from '@mui/icons-material/ThumbUpTwoTone';
 import VoteIcon from '@mui/icons-material/ThumbUpOutlined';
-import {getContributeType} from '../../../../utils/contribute';
+import {getRouteData, getContributeType} from '../../../../utils/contribute';
 import {grey} from '@mui/material/colors';
 
 const messages = defineMessages({
@@ -91,8 +91,11 @@ export default function VoteUpNotification(props: NotificationVoteUpProps): JSX.
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
 
-  // STATE
+  // Contribution
   const contributionType = getContributeType(notificationObject);
+  const feedObjectType = contributionType === SCCommentTypologyType ? getContributeType(notificationObject[contributionType]) : contributionType;
+  const feedObjectId =
+    contributionType === SCCommentTypologyType ? notificationObject[SCCommentTypologyType][feedObjectType] : notificationObject[contributionType].id;
 
   // INTL
   const intl = useIntl();
@@ -124,7 +127,12 @@ export default function VoteUpNotification(props: NotificationVoteUpProps): JSX.
           }
           secondary={
             <React.Fragment>
-              <Link to={scRoutingContext.url('comment', {id: notificationObject[contributionType].id})} sx={{textDecoration: 'underline'}}>
+              <Link
+                to={scRoutingContext.url(
+                  SCRoutes[`${contributionType.toUpperCase()}_ROUTE_NAME`],
+                  getRouteData(notificationObject[contributionType])
+                )}
+                sx={{textDecoration: 'underline'}}>
                 <Typography variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: notificationObject[contributionType].summary}} />
               </Link>
               <Box component="span" sx={{display: 'flex', justifyContent: 'flex-start', p: '2px'}}>

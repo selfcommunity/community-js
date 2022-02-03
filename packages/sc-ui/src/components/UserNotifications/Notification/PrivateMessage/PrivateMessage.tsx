@@ -2,7 +2,13 @@ import React from 'react';
 import {styled} from '@mui/material/styles';
 import {Box, Button, ListItem, ListItemText, Typography} from '@mui/material';
 import ReplyIcon from '@mui/icons-material/Send';
-import {Link, SCNotificationPrivateMessageType, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
+import {
+  Link,
+  SCNotificationPrivateMessageType,
+  SCRoutes,
+  SCRoutingContextType,
+  useSCRouting,
+} from '@selfcommunity/core';
 import {grey} from '@mui/material/colors';
 import {FormattedMessage} from 'react-intl';
 import DateTimeAgo from '../../../../shared/DateTimeAgo';
@@ -89,7 +95,7 @@ export default function UserNotificationPrivateMessage(props: NotificationPMProp
               size="small"
               sx={{minWidth: 30}}
               component={Link}
-              to={scRoutingContext.url('messages', {id: notificationObject.message.id})}>
+              to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, {id: notificationObject.message.id})}>
               <Box component={'span'} sx={{display: {xs: 'none', md: 'block'}, marginRight: '2px'}}>
                 <FormattedMessage
                   id="ui.userNotifications.privateMessage.btnReplyLabel"
@@ -106,7 +112,7 @@ export default function UserNotificationPrivateMessage(props: NotificationPMProp
             <>
               {notificationObject.is_new && <NotificationNewChip />}
               <Box sx={{display: 'inline-block'}}>
-                <Link to={scRoutingContext.url('messages', {id: notificationObject.message.id})}>
+                <Link to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, notificationObject.message)}>
                   <Typography variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: notificationObject.message.html}} />
                 </Link>
               </Box>

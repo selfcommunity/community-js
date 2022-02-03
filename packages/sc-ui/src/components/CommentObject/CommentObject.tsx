@@ -262,6 +262,8 @@ export default function CommentObject(props: CommentObjectProps): JSX.Element {
    * @param comment
    */
   function renderTimeAgo(comment) {
+    console.log(comment);
+    console.log(feedObject);
     return (
       <Link
         to={scRoutingContext.url(SCRoutes.COMMENT_ROUTE_NAME, {

@@ -376,7 +376,6 @@ export default function UserNotification(props: UserNotificationProps): JSX.Elem
           <>
             <ListItemButton onClick={() => setOpenOtherAggregated((prev) => !prev)} classes={{root: classes.showOtherAggregated}}>
               <ListItemText
-                disableTypography={true}
                 primary={<FormattedMessage id={'ui.userNotifications.showOthers'} defaultMessage={'ui.userNotifications.showOthers'} />}
               />
               {openOtherAggregated ? <ExpandLess /> : <ExpandMore />}

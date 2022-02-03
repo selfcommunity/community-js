@@ -1,9 +1,9 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
 import {Avatar, Box, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
-import {Link, SCNotificationMentionType, SCNotificationVoteUpType, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
+import {Link, SCCommentTypologyType, SCNotificationMentionType, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
 import {defineMessages, useIntl} from 'react-intl';
-import {getContributeType} from '../../../../utils/contribute';
+import {getRouteData, getContributeType} from '../../../../utils/contribute';
 import DateTimeAgo from '../../../../shared/DateTimeAgo';
 import NotificationNewChip from '../../NotificationNewChip';
 
@@ -98,7 +98,8 @@ export default function UserNotificationMention(props: NotificationMentionProps)
             <div>
               {notificationObject.is_new && <NotificationNewChip />}
               <Typography component="div" gutterBottom>
-                <Link to={scRoutingContext.url(objectType, {id: notificationObject[objectType].id})}>
+                <Link
+                  to={scRoutingContext.url(SCRoutes[`${objectType.toUpperCase()}_ROUTE_NAME`], getRouteData(notificationObject[objectType]))}>
                   <Typography
                     component={'span'}
                     variant="body2"

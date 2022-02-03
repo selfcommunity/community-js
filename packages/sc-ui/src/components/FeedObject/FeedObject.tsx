@@ -525,7 +525,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
               subheader={
                 <Grid component="span" item={true} sm="auto" container direction="row" alignItems="center">
                   <Link to={scRoutingContext.url(feedObjectType, obj)} className={classes.activityAt}>
-                    <DateTimeAgo date={obj.last_activity_at} />
+                    <DateTimeAgo date={obj.added_at} />
                   </Link>
                   <Bullet />
                   <div className={classes.tag}>
@@ -651,7 +651,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
               subheader={
                 <Grid component="span" item={true} sm="auto" container direction="row" alignItems="center">
                   <Link to={scRoutingContext.url(feedObjectType, obj)} className={classes.activityAt}>
-                    <DateTimeAgo date={obj.last_activity_at} />
+                    <DateTimeAgo date={obj.added_at} />
                   </Link>
                 </Grid>
               }
@@ -699,8 +699,9 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
                   </Link>
                   <Box component="span" sx={{display: 'flex', justifyContent: 'flex-start', p: '2px'}}>
                     <Grid component="span" item={true} sm="auto" container direction="row" alignItems="center">
-                      <AccessTimeIcon sx={{paddingRight: '2px'}} />
-                      <TimeAgo datetime={obj.added_at} />
+                      <Link to={scRoutingContext.url(feedObjectType, obj)} className={classes.activityAt}>
+                        <DateTimeAgo date={obj.added_at} />
+                      </Link>
                       <Bullet sx={{paddingLeft: '4px', paddingTop: '1px'}} />
                       <Button component={Link} to={scRoutingContext.url(feedObjectType, obj)} variant={'text'} sx={{marginTop: '-1px'}}>
                         {intl.formatMessage(messages.comment)}
