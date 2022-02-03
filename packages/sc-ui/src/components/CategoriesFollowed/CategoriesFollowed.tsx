@@ -5,13 +5,13 @@ import {Button, Divider, Typography} from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import {Endpoints, http, Logger, SCUserContext, SCUserContextType} from '@selfcommunity/core';
-import Skeleton from '../CategoriesSuggestion/Skeleton';
 import Category from '../Category';
 import {AxiosResponse} from 'axios';
 import {SCCategoryType} from '@selfcommunity/core/src/types';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {defineMessages, useIntl, FormattedMessage} from 'react-intl';
 import {CategoriesListProps} from '../CategoriesSuggestion';
+import Skeleton from './Skeleton';
 
 const messages = defineMessages({
   categoriesFollowed: {

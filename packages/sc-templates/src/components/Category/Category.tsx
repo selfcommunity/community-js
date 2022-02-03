@@ -1,7 +1,7 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
 import {Box} from '@mui/material';
-import {FeedObjectProps, StickySidebarProps, CategoryHeader, SCFeedWidgetType} from '@selfcommunity/ui';
+import {FeedObjectProps, FeedSidebarProps, CategoryHeader, SCFeedWidgetType} from '@selfcommunity/ui';
 import CategoryFeed from '../CategoryFeed';
 import {SCCategoryType, useSCFetchCategory} from '@selfcommunity/core';
 import CategorySkeleton from './Skeleton';
@@ -57,12 +57,12 @@ export interface CategoryProps {
    * Props to spread to single feed object
    * @default {top: 0, bottomBoundary: `#${id}`}
    */
-  StickySidebarProps?: StickySidebarProps;
+  FeedSidebarProps?: FeedSidebarProps;
 }
 
 export default function Category(props: CategoryProps): JSX.Element {
   // PROPS
-  const {id = 'category', className, category, categoryId, widgets, FeedObjectProps, StickySidebarProps} = props;
+  const {id = 'category', className, category, categoryId, widgets, FeedObjectProps, FeedSidebarProps} = props;
 
   // Hooks
   const {scCategory, setSCCategory} = useSCFetchCategory({id: categoryId, category});
@@ -74,7 +74,7 @@ export default function Category(props: CategoryProps): JSX.Element {
   return (
     <Root id={id} className={className}>
       <CategoryHeader category={scCategory} />
-      <CategoryFeed categoryId={scCategory.id} widgets={widgets} FeedObjectProps={FeedObjectProps} StickySidebarProps={StickySidebarProps} />
+      <CategoryFeed categoryId={scCategory.id} widgets={widgets} FeedObjectProps={FeedObjectProps} FeedSidebarProps={FeedSidebarProps} />
     </Root>
   );
 }

@@ -1,12 +1,21 @@
 import React, {useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Box} from '@mui/material';
-import {CategoriesFollowed, Feed, StickySidebarProps, FeedObjectProps, SCFeedWidgetType, UsersFollowed} from '@selfcommunity/ui';
+import {
+  CategoriesFollowed,
+  Feed,
+  FeedObject,
+  FeedObjectProps,
+  FeedObjectSkeleton,
+  FeedObjectTemplateType,
+  FeedSidebarProps,
+  SCFeedWidgetType,
+  UsersFollowed
+} from '@selfcommunity/ui';
 import {Endpoints} from '@selfcommunity/core';
 
 const PREFIX = 'SCUserFeedTemplate';
 
-const Root = styled(Box, {
+const Root = styled(Feed, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
@@ -49,7 +58,7 @@ export interface UserFeedProps {
    * Props to spread to single feed object
    * @default {top: 0, bottomBoundary: `#${id}`}
    */
-  StickySidebarProps?: StickySidebarProps;
+  FeedSidebarProps?: FeedSidebarProps;
 }
 
 // Widgets for feed
@@ -72,7 +81,7 @@ const WIDGETS: SCFeedWidgetType[] = [
 
 export default function UserFeed(props: UserFeedProps): JSX.Element {
   // PROPS
-  const {id = 'user_feed', className, userId, widgets = WIDGETS, FeedObjectProps = {variant: 'outlined'}, StickySidebarProps = null} = props;
+  const {id = 'user_feed', className, userId, widgets = WIDGETS, FeedObjectProps = {variant: 'outlined'}, FeedSidebarProps = null} = props;
 
   // STATE
   const [_widgets, setWidgets] = useState<SCFeedWidgetType[]>(
@@ -93,16 +102,26 @@ export default function UserFeed(props: UserFeedProps): JSX.Element {
   );
 
   return (
-    <Root id={id} className={className}>
-      <Feed
-        endpoint={{
-          ...Endpoints.UserFeed,
-          url: () => Endpoints.UserFeed.url({id: userId})
-        }}
-        widgets={_widgets}
-        FeedObjectProps={FeedObjectProps}
-        StickySidebarProps={StickySidebarProps}
-      />
-    </Root>
+    <Root
+      id={id}
+      className={className}
+      endpoint={{
+        ...Endpoints.UserFeed,
+        url: () => Endpoints.UserFeed.url({id: userId})
+      }}
+      widgets={_widgets}
+      ItemComponent={FeedObject}
+      itemPropsGenerator={(item) => ({
+        feedObject: item[item.type],
+        feedObjectType: item.type,
+        feedObjectActivities: item.activities ? item.activities : null
+      })}
+      ItemProps={FeedObjectProps}
+      ItemSkeleton={FeedObjectSkeleton}
+      ItemSkeletonProps={{
+        template: FeedObjectTemplateType.PREVIEW
+      }}
+      FeedSidebarProps={FeedSidebarProps}
+    />
   );
 }

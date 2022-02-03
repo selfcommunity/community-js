@@ -4,7 +4,7 @@ import List from '@mui/material/List';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import {Avatar, ListItem, ListItemAvatar, ListItemText, CardProps, Typography, Box, IconButton} from '@mui/material';
-import SnippetMessageBoxSkeleton from './Skeleton';
+import MessageSkeleton from './Skeleton';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {SCPrivateMessageType} from '@selfcommunity/core';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
@@ -134,14 +134,41 @@ export default function Message(props: MessageProps): JSX.Element {
   const intl = useIntl();
 
   // STATE
-  const hasFile = message.file;
+  const hasFile = message ? message.file : null;
+
+  if (!message) {
+    return <MessageSkeleton elevation={0} />;
+  }
 
   /**
    * Renders snippet or thread type message object
    */
   const c = (
     <React.Fragment>
-      {message ? (
+      {snippetType ? (
+        <React.Fragment>
+          <ListItemAvatar>
+            <Avatar alt={message.receiver.username} src={message.receiver.avatar} />
+          </ListItemAvatar>
+          <ListItemText
+            primary={
+              <Box className={classes.info}>
+                <Typography component="span">{message.receiver.username}</Typography>
+                <Typography component="span">{`${intl.formatDate(message.last_message_at, {
+                  weekday: 'long',
+                  day: 'numeric'
+                })}`}</Typography>
+              </Box>
+            }
+            secondary={
+              <Box component="span" className={classes.info}>
+                <Typography component="span"> {message.headline}</Typography>
+                <FiberManualRecordIcon fontSize="small" className={unseen ? classes.unread : classes.hide} />
+              </Box>
+            }
+          />
+        </React.Fragment>
+      ) : (
         <ListItem onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} button={true}>
           {!snippetType && isHovering && loggedUser === message.sender_id && message.status !== 'hidden' && (
             <>
@@ -150,53 +177,26 @@ export default function Message(props: MessageProps): JSX.Element {
               </IconButton>
             </>
           )}
-          {snippetType ? (
-            <React.Fragment>
-              <ListItemAvatar>
-                <Avatar alt={message.receiver.username} src={message.receiver.avatar} />
-              </ListItemAvatar>
-              <ListItemText
-                primary={
-                  <Box className={classes.info}>
-                    <Typography component="span">{message.receiver.username}</Typography>
-                    <Typography component="span">{`${intl.formatDate(message.last_message_at, {
-                      weekday: 'long',
-                      day: 'numeric'
-                    })}`}</Typography>
-                  </Box>
-                }
-                secondary={
-                  <Box component="span" className={classes.info}>
-                    <Typography component="span"> {message.headline}</Typography>
-                    <FiberManualRecordIcon fontSize="small" className={unseen ? classes.unread : classes.hide} />
-                  </Box>
-                }
-              />
-            </React.Fragment>
-          ) : (
-            <ListItemText
-              primary={
-                <Box className={classes.messageBox}>
-                  {hasFile ? (
-                    <img className={classes.img} src={message.file.url} loading="lazy" alt={'img'} />
-                  ) : (
-                    <Typography component="span">{message.message}</Typography>
-                  )}
-                </Box>
-              }
-              secondary={
-                <Box component="span" className={classes.messageTime}>
-                  <Typography component="span">{`${intl.formatDate(message.created_at, {
-                    hour: 'numeric',
-                    minute: 'numeric'
-                  })}`}</Typography>
-                </Box>
-              }
-            />
-          )}
+          <ListItemText
+            primary={
+              <Box className={classes.messageBox}>
+                {hasFile ? (
+                  <img className={classes.img} src={message.file.url} loading="lazy" alt={'img'} />
+                ) : (
+                  <Typography component="span">{message.message}</Typography>
+                )}
+              </Box>
+            }
+            secondary={
+              <Box component="span" className={classes.messageTime}>
+                <Typography component="span">{`${intl.formatDate(message.created_at, {
+                  hour: 'numeric',
+                  minute: 'numeric'
+                })}`}</Typography>
+              </Box>
+            }
+          />
         </ListItem>
-      ) : (
-        <SnippetMessageBoxSkeleton elevation={0} />
       )}
     </React.Fragment>
   );

@@ -18,6 +18,10 @@ import {
   SCRoutes
 } from '@selfcommunity/core';
 import FollowUserButton from '../FollowUserButton';
+import {FormattedMessage} from 'react-intl';
+import {FollowUserButtonProps} from '../FollowUserButton/FollowUserButton';
+import ConnectionUserButton from '../ConnectionUserButton';
+import {ConnectionButtonProps} from '../ConnectionUserButton/ConnectionUserButton';
 
 const PREFIX = 'SCUser';
 
@@ -64,11 +68,19 @@ export interface UserProps extends Pick<CardProps, Exclude<keyof CardProps, 'id'
    * @default null
    */
   handleIgnoreAction?: (u) => void;
+
   /**
-   * Callback function on follow action.
-   * @default null
+   * Props to spread to follow button
+   * @default {}
    */
-  onFollowProps?: () => void;
+  followUserButtonProps?: FollowUserButtonProps;
+
+  /**
+   * Props to spread to connection button
+   * @default {}
+   */
+  connectUserButtonProps?: ConnectionButtonProps;
+
   /**
    * Any other properties
    */
@@ -77,7 +89,16 @@ export interface UserProps extends Pick<CardProps, Exclude<keyof CardProps, 'id'
 
 export default function User(props: UserProps): JSX.Element {
   // PROPS
-  const {id = null, user = null, handleIgnoreAction, className = null, autoHide = false, onFollowProps, ...rest} = props;
+  const {
+    id = null,
+    user = null,
+    handleIgnoreAction,
+    className = null,
+    autoHide = false,
+    followUserButtonProps = {},
+    connectUserButtonProps = {},
+    ...rest
+  } = props;
 
   // STATE
   const {scUser, setSCUser} = useSCFetchUser({id, user});
@@ -100,10 +121,10 @@ export default function User(props: UserProps): JSX.Element {
       <React.Fragment>
         {handleIgnoreAction && (
           <Button size="small" onClick={handleIgnoreAction}>
-            Ignore
+            <FormattedMessage defaultMessage="ui.user.ignore" id="ui.user.ignore" />
           </Button>
         )}
-        <FollowUserButton user={scUser} onFollow={onFollowProps} />
+        <FollowUserButton user={scUser} {...followUserButtonProps} />
       </React.Fragment>
     );
   }
@@ -118,12 +139,10 @@ export default function User(props: UserProps): JSX.Element {
       <React.Fragment>
         {handleIgnoreAction && (
           <Button size="small" onClick={handleIgnoreAction}>
-            Ignore
+            <FormattedMessage defaultMessage="ui.user.ignore" id="ui.user.ignore" />
           </Button>
         )}
-        <Button size="small" variant="outlined">
-          Connect
-        </Button>
+        <ConnectionUserButton user={scUser} {...connectUserButtonProps} />
       </React.Fragment>
     );
   }

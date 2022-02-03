@@ -10,8 +10,8 @@ import {Link, SCRoutingContextType, useSCRouting, StringUtils, SCRoutes} from '@
 
 const messages = defineMessages({
   kindlyNoticeFlag: {
-    id: 'ui.userNotifications.kindlyNoticeFlag.kindlyNoticeFlag',
-    defaultMessage: 'ui.userNotifications.kindlyNoticeFlag.kindlyNoticeFlag'
+    id: 'ui.notification.kindlyNoticeFlag.kindlyNoticeFlag',
+    defaultMessage: 'ui.notification.kindlyNoticeFlag.kindlyNoticeFlag'
   }
 });
 
@@ -93,7 +93,7 @@ export default function KindlyNoticeFlagNotificationToast(props: NotificationKin
             <Typography component="span" sx={{display: 'inline'}} color="primary">
               <b>
                 {intl.formatMessage(messages[StringUtils.camelCase(notificationObject.type)], {b: (...chunks) => <strong>{chunks}</strong>})} (
-                <FormattedMessage id="ui.userNotifications.viewRules" defaultMessage="ui.userNotifications.viewRules" />
+                <FormattedMessage id="ui.notification.viewRules" defaultMessage="ui.notification.viewRules" />
                 ).
               </b>
             </Typography>
@@ -102,7 +102,7 @@ export default function KindlyNoticeFlagNotificationToast(props: NotificationKin
       </ListItem>
       <Box sx={{mb: 1, p: 1}}>
         <Typography variant={'body2'} color={'primary'}>
-          <FormattedMessage id="ui.userNotifications.undeletedFor.youWrote" defaultMessage="ui.userNotifications.undeletedFor.youWrote" />
+          <FormattedMessage id="ui.notification.undeletedFor.youWrote" defaultMessage="ui.notification.undeletedFor.youWrote" />
         </Typography>
         <Link to={scRoutingContext.url(contributionType, {id: notificationObject[contributionType].id})}>
           <Typography

@@ -10,24 +10,24 @@ import DateTimeAgo from '../../../../shared/DateTimeAgo';
 
 const messages = defineMessages({
   kindlyNoticeAdvertising: {
-    id: 'ui.userNotifications.kindlyNoticeFor.kindlyNoticeForAdvertising',
-    defaultMessage: 'ui.userNotifications.kindlyNoticeFor.kindlyNoticeForAdvertising'
+    id: 'ui.notification.kindlyNoticeFor.kindlyNoticeForAdvertising',
+    defaultMessage: 'ui.notification.kindlyNoticeFor.kindlyNoticeForAdvertising'
   },
   kindlyNoticeAggressive: {
-    id: 'ui.userNotifications.kindlyNoticeFor.kindlyNoticeForAggressive',
-    defaultMessage: 'ui.userNotifications.kindlyNoticeFor.kindlyNoticeForAggressive'
+    id: 'ui.notification.kindlyNoticeFor.kindlyNoticeForAggressive',
+    defaultMessage: 'ui.notification.kindlyNoticeFor.kindlyNoticeForAggressive'
   },
   kindlyNoticeVulgar: {
-    id: 'ui.userNotifications.kindlyNoticeFor.kindlyNoticeForVulgar',
-    defaultMessage: 'ui.userNotifications.kindlyNoticeFor.kindlyNoticeForVulgar'
+    id: 'ui.notification.kindlyNoticeFor.kindlyNoticeForVulgar',
+    defaultMessage: 'ui.notification.kindlyNoticeFor.kindlyNoticeForVulgar'
   },
   kindlyNoticePoor: {
-    id: 'ui.userNotifications.kindlyNoticeFor.kindlyNoticeForPoor',
-    defaultMessage: 'ui.userNotifications.kindlyNoticeFor.kindlyNoticeForPoor'
+    id: 'ui.notification.kindlyNoticeFor.kindlyNoticeForPoor',
+    defaultMessage: 'ui.notification.kindlyNoticeFor.kindlyNoticeForPoor'
   },
   kindlyNoticeOfftopic: {
-    id: 'ui.userNotifications.kindlyNoticeFor.kindlyNoticeForOfftopic',
-    defaultMessage: 'ui.userNotifications.kindlyNoticeFor.kindlyNoticeForOfftopic'
+    id: 'ui.notification.kindlyNoticeFor.kindlyNoticeForOfftopic',
+    defaultMessage: 'ui.notification.kindlyNoticeFor.kindlyNoticeForOfftopic'
   }
 });
 
@@ -109,7 +109,7 @@ export default function KindlyNoticeForNotificationToast(props: NotificationKind
             <Typography component="span" sx={{display: 'inline'}} color="primary">
               <b>
                 {intl.formatMessage(messages[StringUtils.camelCase(notificationObject.type)], {b: (...chunks) => <strong>{chunks}</strong>})} (
-                <FormattedMessage id="ui.userNotifications.viewRules" defaultMessage="ui.userNotifications.viewRules" />
+                <FormattedMessage id="ui.notification.viewRules" defaultMessage="ui.notification.viewRules" />
                 ).
               </b>
             </Typography>
@@ -118,7 +118,7 @@ export default function KindlyNoticeForNotificationToast(props: NotificationKind
       </ListItem>
       <Box sx={{mb: 1, p: 1}}>
         <Typography variant={'body2'} color={'primary'}>
-          <FormattedMessage id="ui.userNotifications.undeletedFor.youWrote" defaultMessage="ui.userNotifications.undeletedFor.youWrote" />
+          <FormattedMessage id="ui.notification.undeletedFor.youWrote" defaultMessage="ui.notification.undeletedFor.youWrote" />
         </Typography>
         <Link to={scRoutingContext.url(contributionType, {id: notificationObject[contributionType].id})}>
           <Typography

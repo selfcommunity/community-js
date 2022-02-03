@@ -1,12 +1,24 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {styled} from '@mui/material/styles';
-import {Box} from '@mui/material';
-import {CategoriesSuggestion, Feed, InlineComposer, LoyaltyProgram, PeopleSuggestion, Platform, SCFeedWidgetType} from '@selfcommunity/ui';
-import {Endpoints} from '@selfcommunity/core';
+import {
+  CategoriesSuggestion,
+  Feed,
+  FeedObject,
+  FeedObjectProps,
+  FeedObjectSkeleton,
+  FeedObjectTemplateType,
+  FeedSidebarProps,
+  InlineComposer,
+  LoyaltyProgram,
+  PeopleSuggestion,
+  Platform,
+  SCFeedWidgetType
+} from '@selfcommunity/ui';
+import {Endpoints, SCUserContext, SCUserContextType} from '@selfcommunity/core';
 
 const PREFIX = 'SCMainFeedTemplate';
 
-const Root = styled(Box, {
+const Root = styled(Feed, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
@@ -26,6 +38,24 @@ export interface MainFeedProps {
    * @default null
    */
   className?: string;
+
+  /**
+   * Widgets to be rendered into the feed
+   * @default [CategoriesFollowed, UserFollowed]
+   */
+  widgets?: SCFeedWidgetType[] | null;
+
+  /**
+   * Props to spread to single feed object
+   * @default empty object
+   */
+  FeedObjectProps?: FeedObjectProps;
+
+  /**
+   * Props to spread to single feed object
+   * @default {top: 0, bottomBoundary: `#${id}`}
+   */
+  FeedSidebarProps?: FeedSidebarProps;
 }
 
 // Widgets for feed
@@ -69,11 +99,34 @@ const WIDGETS: SCFeedWidgetType[] = [
 
 export default function MainFeed(props: MainFeedProps): JSX.Element {
   // PROPS
-  const {id = 'main_feed', className} = props;
+  const {id = 'main_feed', className, widgets = WIDGETS, FeedObjectProps = {variant: 'outlined'}, FeedSidebarProps = null} = props;
+
+  //CONTEXT
+  const scUserContext: SCUserContextType = useContext(SCUserContext);
+
+  // Ckeck user is authenticated
+  if (!scUserContext.user) {
+    return null;
+  }
 
   return (
-    <Root id={id} className={className}>
-      <Feed endpoint={Endpoints.MainFeed} widgets={WIDGETS} FeedObjectProps={{variant: 'outlined'}} />
-    </Root>
+    <Root
+      id={id}
+      className={className}
+      endpoint={Endpoints.MainFeed}
+      widgets={widgets}
+      ItemComponent={FeedObject}
+      itemPropsGenerator={(item) => ({
+        feedObject: item[item.type],
+        feedObjectType: item.type,
+        feedObjectActivities: item.activities ? item.activities : null
+      })}
+      ItemProps={FeedObjectProps}
+      ItemSkeleton={FeedObjectSkeleton}
+      ItemSkeletonProps={{
+        template: FeedObjectTemplateType.PREVIEW
+      }}
+      FeedSidebarProps={FeedSidebarProps}
+    />
   );
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
 import {Box} from '@mui/material';
-import {FeedObjectProps, StickySidebarProps, SCFeedWidgetType, UserProfileHeader} from '@selfcommunity/ui';
+import {FeedObjectProps, FeedSidebarProps, SCFeedWidgetType, UserProfileHeader} from '@selfcommunity/ui';
 import UserFeed from '../UserFeed';
 import {SCUserType, useSCFetchUser} from '@selfcommunity/core';
 import UserProfileSkeleton from './Skeleton';
@@ -57,12 +57,12 @@ export interface UserProfileProps {
    * Props to spread to single feed object
    * @default {top: 0, bottomBoundary: `#${id}`}
    */
-  StickySidebarProps?: StickySidebarProps;
+  FeedSidebarProps?: FeedSidebarProps;
 }
 
 export default function UserProfile(props: UserProfileProps): JSX.Element {
   // PROPS
-  const {id = 'user', className, user, userId, widgets, FeedObjectProps, StickySidebarProps} = props;
+  const {id = 'user', className, user, userId, widgets, FeedObjectProps, FeedSidebarProps} = props;
 
   // Hooks
   const {scUser, setSCUser} = useSCFetchUser({id: userId, user});
@@ -73,7 +73,7 @@ export default function UserProfile(props: UserProfileProps): JSX.Element {
   return (
     <Root id={id} className={className}>
       <UserProfileHeader user={scUser} />
-      <UserFeed userId={scUser.id} widgets={widgets} FeedObjectProps={FeedObjectProps} StickySidebarProps={StickySidebarProps} />
+      <UserFeed userId={scUser.id} widgets={widgets} FeedObjectProps={FeedObjectProps} FeedSidebarProps={FeedSidebarProps} />
     </Root>
   );
 }

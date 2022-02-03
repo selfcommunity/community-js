@@ -10,11 +10,11 @@ import EmojiFlagsIcon from '@mui/icons-material/EmojiFlags';
 const messages = defineMessages({
   accountBlocked: {
     id: 'ui.userToastNotifications.userBlocked.accountBlocked',
-    defaultMessage: 'ui.userNotifications.userBlocked.accountBlocked'
+    defaultMessage: 'ui.notification.userBlocked.accountBlocked'
   },
   accountReactivated: {
     id: 'ui.userToastNotifications.userBlocked.accountReactivated',
-    defaultMessage: 'ui.userNotifications.userBlocked.accountReactivated'
+    defaultMessage: 'ui.notification.userBlocked.accountReactivated'
   }
 });
 

@@ -26,7 +26,8 @@ import {
   useSCFetchCommentObject,
   useSCRouting,
   useSCContext,
-  SCContextType
+  SCContextType,
+  SCRoutes
 } from '@selfcommunity/core';
 import {LoadingButton} from '@mui/lab';
 import VoteFilledIcon from '@mui/icons-material/ThumbUpTwoTone';
@@ -34,6 +35,7 @@ import VoteIcon from '@mui/icons-material/ThumbUpOutlined';
 import {CommentsOrderBy} from '../../types/comments';
 import ReplyCommentObject from './ReplyComment';
 import CommentActionsMenu from './CommentActionsMenu';
+import DateTimeAgo from '../../shared/DateTimeAgo';
 
 const messages = defineMessages({
   reply: {
@@ -65,7 +67,8 @@ const classes = {
   votes: `${PREFIX}-votes`,
   btnViewPreviousComments: `${PREFIX}-btn-view-previous-comments`,
   commentActionsMenu: `${PREFIX}-comment-actions-menu`,
-  deleted: `${PREFIX}-deleted`
+  deleted: `${PREFIX}-deleted`,
+  activityAt: `${PREFIX}-activity-at`
 };
 
 const Root = styled(Box, {
@@ -118,6 +121,11 @@ const Root = styled(Box, {
   },
   [`& .${classes.deleted}`]: {
     opacity: 0.3
+  },
+  [`& .${classes.activityAt}`]: {
+    display: 'flex',
+    textDecoration: 'none',
+    color: theme.palette.grey[700]
   }
 }));
 
@@ -254,13 +262,17 @@ export default function CommentObject(props: CommentObjectProps): JSX.Element {
    * @param comment
    */
   function renderTimeAgo(comment) {
+    console.log(comment);
+    console.log(feedObject);
     return (
-      <>
-        <AccessTimeIcon sx={{paddingRight: '2px'}} />
-        <Typography variant={'body2'}>
-          <TimeAgo datetime={comment.added_at} />
-        </Typography>
-      </>
+      <Link
+        to={scRoutingContext.url(SCRoutes.COMMENT_ROUTE_NAME, {
+          ...comment,
+          ...{contribution_type: feedObjectType, contribution_id: feedObjectId ? feedObjectId : feedObject.id}
+        })}
+        className={classes.activityAt}>
+        <DateTimeAgo date={comment.added_at} />
+      </Link>
     );
   }
 

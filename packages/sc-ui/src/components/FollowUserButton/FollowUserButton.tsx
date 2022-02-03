@@ -22,21 +22,43 @@ const FollowButton = styled(LoadingButton, {
   paddingLeft: '16px'
 }));
 
-export default function FollowUserButton({
-  userId = null,
-  user = null,
-  onFollow = null,
-  ...rest
-}: {
+export interface FollowUserButtonProps {
+  /**
+   * Id of the user
+   * @default null
+   */
   userId?: number;
+
+  /**
+   * User
+   * @default null
+   */
   user?: SCUserType;
+
+  /**
+   * onFollow callback
+   * @param user
+   * @param followed
+   */
   onFollow?: (user: SCUserType, followed: boolean) => any;
+
+  /**
+   * Others properties
+   */
   [p: string]: any;
-}): JSX.Element {
-  const {scUser, setSCUser} = useSCFetchUser({id: userId, user});
-  const [followed, setFollowed] = useState<boolean>(null);
+}
+
+export default function FollowUserButton(props: FollowUserButtonProps): JSX.Element {
+  // PROPS
+  const {userId, user, onFollow, ...rest} = props;
+
+  // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
   const scFollowedManager: SCFollowedManagerType = scUserContext.managers.followed;
+
+  // STATE
+  const {scUser, setSCUser} = useSCFetchUser({id: userId, user});
+  const [followed, setFollowed] = useState<boolean>(null);
 
   useEffect(() => {
     /**

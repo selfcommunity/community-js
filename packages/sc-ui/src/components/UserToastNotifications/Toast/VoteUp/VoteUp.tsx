@@ -8,8 +8,8 @@ import {getContribute} from '../../../../utils/contribute';
 
 const messages = defineMessages({
   appreciated: {
-    id: 'ui.userNotifications.voteUp.appreciated',
-    defaultMessage: 'ui.userNotifications.voteUp.appreciated'
+    id: 'ui.notification.voteUp.appreciated',
+    defaultMessage: 'ui.notification.voteUp.appreciated'
   }
 });
 

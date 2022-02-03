@@ -31,3 +31,26 @@ export function getContribute(obj) {
     ? obj[SCCommentTypologyType]
     : null;
 }
+
+/**
+ * Get data for scRoutingContext.url()
+ * @param obj (Discussion, Post, Status, Comment)
+ */
+export function getRouteData(obj) {
+  let data = {};
+  if (
+    obj.type === SCFeedObjectTypologyType.DISCUSSION ||
+    obj.type === SCFeedObjectTypologyType.POST ||
+    obj.type === SCFeedObjectTypologyType.STATUS
+  ) {
+    data = obj;
+  } else if (obj.type === SCCommentTypologyType) {
+    const contribution_type = getContributeType(obj);
+    data = {
+      ...obj,
+      contribution_type: contribution_type,
+      contribution_id: obj[contribution_type]
+    };
+  }
+  return data;
+}

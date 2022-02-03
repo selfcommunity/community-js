@@ -30,7 +30,7 @@ export default ({medias = [], adornment = null}: {medias: any[]; GridImageProps?
           <Root>
             {adornment}
             {medias.map((media) => (
-              <Box className={classes.sharePreview}>
+              <Box key={media.id} className={classes.sharePreview}>
                 <FeedObject
                   feedObjectId={media.embed.metadata.id}
                   feedObjectType={media.embed.metadata.type}

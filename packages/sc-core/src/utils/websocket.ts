@@ -97,6 +97,7 @@ export default function WSClient(options: WSClientPropTypes) {
       ws.onclose = onClose;
       timer = null;
     } catch (err) {
+      console.log(err);
       tryToReconnect();
       Logger.error(SCOPE_SC_CORE, err);
     }
@@ -203,15 +204,15 @@ export default function WSClient(options: WSClientPropTypes) {
    * Send message
    * @param message
    */
-  this.sendMessage = function (message) {
-    ws.send(message);
+  function sendMessage(message) {
+    ws && ws.send(message);
   };
 
   /**
    * Get the ws state
    */
-  this.getState = function () {
-    return ws.readyState;
+  function getState() {
+    return ws && ws.readyState;
   };
 
   /**
@@ -256,6 +257,8 @@ export default function WSClient(options: WSClientPropTypes) {
   /**
    * Attach methods
    */
+  this.sendMessage = sendMessage;
+  this.getState = getState;
   this.isConnecting = isConnecting;
   this.isConnected = isConnected;
   this.isClosing = isClosing;

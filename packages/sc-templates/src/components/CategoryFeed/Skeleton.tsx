@@ -1,6 +1,28 @@
 import React from 'react';
-import {FeedSkeleton} from '@selfcommunity/ui';
+import {styled} from '@mui/material/styles';
+import {FeedObjectSkeleton, FeedObjectTemplateType, FeedSkeleton, GenericSkeleton, InlineComposerSkeleton} from '@selfcommunity/ui';
 
-export default function CategoryFeedSkeleton(): JSX.Element {
-  return <FeedSkeleton />;
+const PREFIX = 'SCNotificationFeedSkeleton';
+
+const Root = styled(FeedSkeleton, {
+  name: PREFIX,
+  slot: 'Root',
+  overridesResolver: (props, styles) => styles.root
+})(() => ({}));
+
+export default function NotificationFeedSkeleton(): JSX.Element {
+  return (
+    <Root
+      sidebar={
+        <React.Fragment>
+          <GenericSkeleton sx={{mb: 2}} />
+          <GenericSkeleton sx={{mb: 2}} />
+        </React.Fragment>
+      }>
+      <InlineComposerSkeleton />
+      {Array.from({length: 5}).map((e, i) => (
+        <FeedObjectSkeleton key={i} template={FeedObjectTemplateType.DETAIL} />
+      ))}
+    </Root>
+  );
 }

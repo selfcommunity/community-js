@@ -1,7 +1,11 @@
 import React from 'react';
 import {ComponentMeta, ComponentStory} from '@storybook/react';
 import Feed from './index';
-import {Endpoints} from '@selfcommunity/core';
+import {Endpoints, SCNotificationTopicType} from '@selfcommunity/core';
+import FeedObject, {FeedObjectSkeleton} from '../FeedObject';
+import {FeedObjectTemplateType} from '../../types/feedObject';
+import SCNotification, {NotificationSkeleton} from '../Notification';
+import FeedUpdates from '../FeedUpdates';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -19,11 +23,52 @@ const Template: ComponentStory<typeof Feed> = (args) => (
 export const Main = Template.bind({});
 
 Main.args = {
-  endpoint: Endpoints.MainFeed
+  endpoint: Endpoints.MainFeed,
+  ItemComponent: FeedObject,
+  itemPropsGenerator: (item) => ({
+    feedObject: item[item.type],
+    feedObjectType: item.type,
+    feedObjectActivities: item.activities ? item.activities : null
+  }),
+  ItemSkeleton: FeedObjectSkeleton,
+  ItemSkeletonProps: {
+    template: FeedObjectTemplateType.PREVIEW
+  }
 };
 
 export const Explore = Template.bind({});
 
 Explore.args = {
-  endpoint: Endpoints.ExploreFeed
+  endpoint: Endpoints.ExploreFeed,
+  ItemComponent: FeedObject,
+  itemPropsGenerator: (item) => ({
+    feedObject: item[item.type],
+    feedObjectType: item.type,
+    feedObjectActivities: item.activities ? item.activities : null
+  }),
+  ItemSkeleton: FeedObjectSkeleton,
+  ItemSkeletonProps: {
+    template: FeedObjectTemplateType.PREVIEW
+  }
+};
+
+export const Notification = Template.bind({});
+
+Notification.args = {
+  id: 'notifications_feed',
+  endpoint: Endpoints.UserNotificationList,
+  widgets: [
+    {
+      type: 'widget',
+      component: FeedUpdates,
+      componentProps: {variant: 'outlined', subscriptionChannel: SCNotificationTopicType.INTERACTION, publicationChannel: 'notifications_feed'},
+      column: 'left',
+      position: 0
+    }
+  ],
+  ItemComponent: SCNotification,
+  itemPropsGenerator: (item) => ({
+    notificationObject: item
+  }),
+  ItemSkeleton: NotificationSkeleton
 };

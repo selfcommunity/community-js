@@ -2,6 +2,7 @@ import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
 
 import CommentObject from './index';
+import { SCFeedObjectTypologyType } from '@selfcommunity/core';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -26,7 +27,9 @@ export default {
     }
   },
   args: {
-    commentObjectId: 79
+    commentObjectId: 79,
+    feedObjectType: SCFeedObjectTypologyType.DISCUSSION,
+    feedObjectId: 17
   }
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
 } as ComponentMeta<typeof CommentObject>;
