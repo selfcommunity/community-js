@@ -9,6 +9,8 @@
 
   "ui.button.showMore": "See More",
 
+  "ui.user.ignore": "Ignore",
+
   "ui.peopleSuggestion.title": "People Suggestion",
   "ui.peopleSuggestion.subtitle.noResults": "No People",
   "ui.peopleSuggestion.button.showAll": "Show All",
