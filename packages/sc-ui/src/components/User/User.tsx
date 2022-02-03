@@ -18,6 +18,8 @@ import {
   SCRoutes
 } from '@selfcommunity/core';
 import FollowUserButton from '../FollowUserButton';
+import Connection from '../Connection';
+import {FormattedMessage} from 'react-intl';
 
 const PREFIX = 'SCUser';
 
@@ -68,7 +70,17 @@ export interface UserProps extends Pick<CardProps, Exclude<keyof CardProps, 'id'
    * Callback function on follow action.
    * @default null
    */
-  onFollowProps?: () => void;
+  handleFollowAction?: (u) => void;
+  /**
+   * Callback function on connect action.
+   * @default null
+   */
+  handleConnectAction?: (u) => void;
+  /**
+   * Props to spread to follow button
+   * @default {}
+   */
+  followUserButtonProps?: () => void;
   /**
    * Any other properties
    */
@@ -77,7 +89,17 @@ export interface UserProps extends Pick<CardProps, Exclude<keyof CardProps, 'id'
 
 export default function User(props: UserProps): JSX.Element {
   // PROPS
-  const {id = null, user = null, handleIgnoreAction, className = null, autoHide = false, onFollowProps, ...rest} = props;
+  const {
+    id = null,
+    user = null,
+    handleIgnoreAction,
+    className = null,
+    autoHide = false,
+    handleConnectAction,
+    handleFollowAction,
+    followUserButtonProps = {},
+    ...rest
+  } = props;
 
   // STATE
   const {scUser, setSCUser} = useSCFetchUser({id, user});
@@ -100,10 +122,10 @@ export default function User(props: UserProps): JSX.Element {
       <React.Fragment>
         {handleIgnoreAction && (
           <Button size="small" onClick={handleIgnoreAction}>
-            Ignore
+            <FormattedMessage defaultMessage="ui.user.ignore" id="ui.user.ignore" />
           </Button>
         )}
-        <FollowUserButton user={scUser} onFollow={onFollowProps} />
+        <FollowUserButton user={scUser} onFollow={handleFollowAction} />
       </React.Fragment>
     );
   }
@@ -118,12 +140,10 @@ export default function User(props: UserProps): JSX.Element {
       <React.Fragment>
         {handleIgnoreAction && (
           <Button size="small" onClick={handleIgnoreAction}>
-            Ignore
+            <FormattedMessage defaultMessage="ui.user.ignore" id="ui.user.ignore" />
           </Button>
         )}
-        <Button size="small" variant="outlined">
-          Connect
-        </Button>
+        <Connection followed={status === 'Connect'} />
       </React.Fragment>
     );
   }
