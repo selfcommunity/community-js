@@ -184,11 +184,7 @@ export const validateRouter = (value) => {
     if (!isObject(value)) {
       errors.push(ValidationError.ERROR_INVALID_ROUTER);
     } else {
-      if (
-        (value.routerLink && !React.isValidElement(value.routerLink)) ||
-        (value.routes && !isObject(value.routes)) ||
-        (value.handleRoute && !isFunc(value.handleRoute))
-      ) {
+      if ((value.routes && !isObject(value.routes)) || (value.handleRoute && !isFunc(value.handleRoute))) {
         errors.push(ValidationError.ERROR_INVALID_ROUTER);
       }
     }
