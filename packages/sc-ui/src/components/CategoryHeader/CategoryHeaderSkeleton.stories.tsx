@@ -1,6 +1,6 @@
 import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
-import CategoryHeaderSkeleton from '.';
+import CategoryHeaderSkeleton from './Skeleton';
 
 export default {
   title: 'Design System/SC UI/Skeleton/CategoryHeaderSkeleton',
