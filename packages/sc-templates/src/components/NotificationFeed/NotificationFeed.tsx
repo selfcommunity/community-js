@@ -1,22 +1,23 @@
 import React, {useContext} from 'react';
 import {styled} from '@mui/material/styles';
+import {Box} from '@mui/material';
 import {
   CategoriesSuggestion,
   Feed,
-  FeedObject,
-  FeedObjectProps,
-  FeedObjectSkeleton,
   FeedObjectTemplateType,
   FeedSidebarProps,
-  InlineComposer,
+  FeedUpdates,
   LoyaltyProgram,
+  Notification,
+  NotificationProps,
+  NotificationSkeleton,
   PeopleSuggestion,
   Platform,
   SCFeedWidgetType
 } from '@selfcommunity/ui';
-import {Endpoints, SCUserContext, SCUserContextType} from '@selfcommunity/core';
+import {Endpoints, SCNotificationTopicType, SCUserContext, SCUserContextType} from '@selfcommunity/core';
 
-const PREFIX = 'SCMainFeedTemplate';
+const PREFIX = 'SCNotificationFeedTemplate';
 
 const Root = styled(Feed, {
   name: PREFIX,
@@ -26,10 +27,10 @@ const Root = styled(Feed, {
   marginTop: theme.spacing(2)
 }));
 
-export interface MainFeedProps {
+export interface NotificationFeedProps {
   /**
    * Id of the feed object
-   * @default 'feed'
+   * @default 'notification_feed'
    */
   id?: string;
 
@@ -49,7 +50,7 @@ export interface MainFeedProps {
    * Props to spread to single feed object
    * @default empty object
    */
-  FeedObjectProps?: FeedObjectProps;
+  NotificationProps?: NotificationProps;
 
   /**
    * Props to spread to single feed object
@@ -62,8 +63,8 @@ export interface MainFeedProps {
 const WIDGETS: SCFeedWidgetType[] = [
   {
     type: 'widget',
-    component: InlineComposer,
-    componentProps: {variant: 'outlined'},
+    component: FeedUpdates,
+    componentProps: {variant: 'outlined', subscriptionChannel: SCNotificationTopicType.INTERACTION},
     column: 'left',
     position: 0
   },
@@ -97,9 +98,9 @@ const WIDGETS: SCFeedWidgetType[] = [
   }
 ];
 
-export default function MainFeed(props: MainFeedProps): JSX.Element {
+export default function NotificationFeed(props: NotificationFeedProps): JSX.Element {
   // PROPS
-  const {id = 'main_feed', className, widgets = WIDGETS, FeedObjectProps = {variant: 'outlined'}, FeedSidebarProps = null} = props;
+  const {id = 'notification_feed', className, widgets = WIDGETS, NotificationProps = {variant: 'outlined'}, FeedSidebarProps = null} = props;
 
   //CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
@@ -113,16 +114,14 @@ export default function MainFeed(props: MainFeedProps): JSX.Element {
     <Root
       id={id}
       className={className}
-      endpoint={Endpoints.MainFeed}
+      endpoint={Endpoints.UserNotificationList}
       widgets={widgets}
-      ItemComponent={FeedObject}
+      ItemComponent={Notification}
       itemPropsGenerator={(item) => ({
-        feedObject: item[item.type],
-        feedObjectType: item.type,
-        feedObjectActivities: item.activities ? item.activities : null
+        notificationObject: item
       })}
-      ItemProps={FeedObjectProps}
-      ItemSkeleton={FeedObjectSkeleton}
+      ItemProps={NotificationProps}
+      ItemSkeleton={NotificationSkeleton}
       ItemSkeletonProps={{
         template: FeedObjectTemplateType.PREVIEW
       }}

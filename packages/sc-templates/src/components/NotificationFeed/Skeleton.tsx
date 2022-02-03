@@ -1,6 +1,6 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import {FeedObjectSkeleton, FeedObjectTemplateType, FeedSkeleton, GenericSkeleton, InlineComposerSkeleton} from '@selfcommunity/ui';
+import {FeedSkeleton, GenericSkeleton, NotificationSkeleton} from '@selfcommunity/ui';
 
 const PREFIX = 'SCNotificationFeedSkeleton';
 
@@ -19,9 +19,8 @@ export default function NotificationFeedSkeleton(): JSX.Element {
           <GenericSkeleton sx={{mb: 2}} />
         </React.Fragment>
       }>
-      <InlineComposerSkeleton />
       {Array.from({length: 5}).map((e, i) => (
-        <FeedObjectSkeleton key={i} template={FeedObjectTemplateType.DETAIL} />
+        <NotificationSkeleton key={i} />
       ))}
     </Root>
   );
