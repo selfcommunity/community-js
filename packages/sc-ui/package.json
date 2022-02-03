@@ -46,10 +46,10 @@
     "access": "public"
   },
   "peerDependencies": {
-    "@emotion/react": "^11.7.0",
+    "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
-    "@mui/icons-material": "^5.2.5",
-    "@mui/material": "^5.2.8",
+    "@mui/icons-material": "^5.3.1",
+    "@mui/material": "^5.4.0",
     "react": ">=17.0.2",
     "react-dom": ">=17.0.2",
     "react-intl": "^5.21.0"
@@ -71,7 +71,7 @@
     "draft-js": "^0.11.7",
     "draftjs-to-html": "^0.9.1",
     "emoji-picker-react": "^3.4.8",
-    "mui-rte": "https://github.com/fedetorre/mui-rte.git#6d162ae04a0b98889b24b0229375f218e5d6a961",
+    "mui-rte": "https://github.com/fedetorre/mui-rte.git#8876f957de692cce2ef8ac2a27355f05d63df087",
     "notistack": "^2.0.3",
     "prop-types": "^15.7.2",
     "prop-types-extra": "^1.1.1",

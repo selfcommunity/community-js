@@ -2,7 +2,7 @@ import React from 'react';
 import {Box} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import CategoryFeedSkeleton from '../CategoryFeed/Skeleton';
-import { CategoryHeaderSkeleton } from '@selfcommunity/ui';
+import {Skeleton} from '@selfcommunity/ui';
 
 const PREFIX = 'SCCategoryTemplateSkeleton';
 
@@ -17,7 +17,7 @@ const Root = styled(Box, {
 export default function CategorySkeleton(): JSX.Element {
   return (
     <Root>
-      <CategoryHeaderSkeleton />
+      <Skeleton />
       <CategoryFeedSkeleton />
     </Root>
   );

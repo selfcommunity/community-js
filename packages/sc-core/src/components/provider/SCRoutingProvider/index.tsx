@@ -25,16 +25,36 @@ export default function SCRoutingProvider({children = null}: {children: React.Re
   const routes: Record<string, any> = router.routes ? {..._routes, ...router.routes} : defaultRoutes;
 
   /**
+   * Normalize template url (preferences)
+   */
+  function normalizeUrl(url) {
+    let tpl = url;
+    const re = /\{([^/]+)?\}/g;
+    let match = re.exec(url);
+    while (match) {
+      tpl = tpl.replace(match[0], `:${match[1]}`);
+      re.lastIndex = 0;
+      match = re.exec(tpl);
+    }
+    return tpl;
+  }
+
+  /**
    * Get override routes from community preferences
    */
   function getPreferencesRoutes() {
     return {
-      category: scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_CATEGORY].value,
-      profile: scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_PROFILE].value,
-      post: scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_POST].value,
-      status: scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_STATUS].value,
-      discussion: scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_DISCUSSION].value,
-      comment: scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_COMMENT].value,
+      post: normalizeUrl(scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_POST].value),
+      discussion: normalizeUrl(scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_DISCUSSION].value),
+      status: normalizeUrl(scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_STATUS].value),
+      comment: normalizeUrl(scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_COMMENT].value),
+      category: normalizeUrl(scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_CATEGORY].value),
+      categories_list: normalizeUrl(scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_CATEGORIES_LIST].value),
+      user_profile: normalizeUrl(scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_USER_PROFILE].value),
+      user_profile_settings: normalizeUrl(scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_USER_PROFILE_SETTINGS].value),
+      user_notifications: normalizeUrl(scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_USER_NOTIFICATIONS].value),
+      user_private_messages: normalizeUrl(scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_USER_PRIVATE_MESSAGES].value),
+      incubator: normalizeUrl(scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_INCUBATOR].value),
     };
   }
 

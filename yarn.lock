@@ -11837,9 +11837,9 @@ ms@^2.0.0, ms@^2.1.1:
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.3.tgz#574c8138ce1d2b5861f0b44579dbadd60c6615b2"
   integrity sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==
 
-"mui-rte@https://github.com/fedetorre/mui-rte.git#6d162ae04a0b98889b24b0229375f218e5d6a961":
+"mui-rte@https://github.com/fedetorre/mui-rte.git#8876f957de692cce2ef8ac2a27355f05d63df087":
   version "2.0.1"
-  resolved "https://github.com/fedetorre/mui-rte.git#6d162ae04a0b98889b24b0229375f218e5d6a961"
+  resolved "https://github.com/fedetorre/mui-rte.git#8876f957de692cce2ef8ac2a27355f05d63df087"
   dependencies:
     "@types/draft-js" "^0.11.5"
     classnames "^2.3.1"

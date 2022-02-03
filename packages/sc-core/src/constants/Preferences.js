@@ -87,7 +87,6 @@ export const ANALYTICS_GOOGLE_ANALYTICS_STATS_ID = 'analytics.google_analytics_s
 export const ADVERTISING_CUSTOM_ADV_ENABLED = 'advertising.custom_adv_enabled';
 export const ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED = 'advertising.custom_adv_only_for_anonymous_users_enabled';
 
-
 /**
  * CONFIGURATIONS
  */
@@ -101,6 +100,7 @@ export const CONFIGURATIONS_POST_ONLY_STAFF_ENABLED = 'configurations.post_only_
 export const CONFIGURATIONS_STREAM_QUALITY = 'configurations.stream_quality';
 export const CONFIGURATIONS_CONTENT_AVAILABILITY = 'configurations.content_availability';
 export const CONFIGURATIONS_USERS_APPROVAL_ENABLED = 'configurations.users_approval_enabled';
+export const CONFIGURATIONS_POST_TYPE_ENABLED = 'configurations.post_type_enabled';
 export const CONFIGURATIONS_DISCUSSION_TYPE_ENABLED = 'configurations.discussion_type_enabled';
 export const CONFIGURATIONS_STATUS_TYPE_ENABLED = 'configurations.status_type_enabled';
 export const CONFIGURATIONS_URL_TEMPLATE_POST = 'configurations.url_template_post';
@@ -108,7 +108,12 @@ export const CONFIGURATIONS_URL_TEMPLATE_DISCUSSION = 'configurations.url_templa
 export const CONFIGURATIONS_URL_TEMPLATE_STATUS = 'configurations.url_template_status';
 export const CONFIGURATIONS_URL_TEMPLATE_COMMENT = 'configurations.url_template_comment';
 export const CONFIGURATIONS_URL_TEMPLATE_CATEGORY = 'configurations.url_template_category';
-export const CONFIGURATIONS_URL_TEMPLATE_PROFILE = 'configurations.url_template_profile';
+export const CONFIGURATIONS_URL_TEMPLATE_CATEGORIES_LIST = 'configurations.url_template_categories_list';
+export const CONFIGURATIONS_URL_TEMPLATE_USER_PROFILE = 'configurations.url_template_profile';
+export const CONFIGURATIONS_URL_TEMPLATE_USER_PROFILE_SETTINGS = 'configurations.url_template_profile_settings';
+export const CONFIGURATIONS_URL_TEMPLATE_USER_NOTIFICATIONS = 'configurations.url_template_notifications';
+export const CONFIGURATIONS_URL_TEMPLATE_USER_PRIVATE_MESSAGES = 'configurations.url_template_private_message';
+export const CONFIGURATIONS_URL_TEMPLATE_INCUBATOR = 'configurations.url_template_incubator';
 
 /**
  * PROVIDERS
@@ -216,7 +221,12 @@ export const DATA_TYPES = {
   [CONFIGURATIONS_URL_TEMPLATE_STATUS]: stringType,
   [CONFIGURATIONS_URL_TEMPLATE_COMMENT]: stringType,
   [CONFIGURATIONS_URL_TEMPLATE_CATEGORY]: stringType,
-  [CONFIGURATIONS_URL_TEMPLATE_PROFILE]: stringType,
+  [CONFIGURATIONS_URL_TEMPLATE_CATEGORIES_LIST]: stringType,
+  [CONFIGURATIONS_URL_TEMPLATE_USER_PROFILE]: stringType,
+  [CONFIGURATIONS_URL_TEMPLATE_USER_PROFILE_SETTINGS]: stringType,
+  [CONFIGURATIONS_URL_TEMPLATE_USER_NOTIFICATIONS]: stringType,
+  [CONFIGURATIONS_URL_TEMPLATE_USER_PRIVATE_MESSAGES]: stringType,
+  [CONFIGURATIONS_URL_TEMPLATE_INCUBATOR]: stringType,
   [PROVIDERS_GOOGLE_GEOCODING_API_KEY]: stringType,
   [WEBMASTER_META_ROBOTS]: stringType,
   [WEBMASTER_META_TITLE_HOME_NOT_LOGGED]: stringType,
