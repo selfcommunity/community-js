@@ -191,6 +191,7 @@
   "ui.commentObject.replyComment.cancel": "Cancel",
 
   "ui.commentObject.commentActionsMenu.permanentLink": "Permanent Link",
+  "ui.commentObject.commentActionsMenu.permanentLinkCopied": "Link copied!",
   "ui.commentObject.commentActionsMenu.edit": "Edit",
   "ui.commentObject.commentActionsMenu.restore": "Restore",
   "ui.commentObject.commentActionsMenu.delete": "Delete",

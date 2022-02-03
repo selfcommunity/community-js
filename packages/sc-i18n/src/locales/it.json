@@ -190,6 +190,7 @@
   "ui.commentObject.replyComment.cancel": "Cancel",
 
   "ui.commentObject.commentActionsMenu.permanentLink": "Link permanente",
+  "ui.commentObject.commentActionsMenu.permanentLinkCopied": "Link copiato!",
   "ui.commentObject.commentActionsMenu.edit": "Modifica",
   "ui.commentObject.commentActionsMenu.restore": "Ripristina",
   "ui.commentObject.commentActionsMenu.delete": "Elimina",
