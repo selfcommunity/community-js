@@ -15,13 +15,15 @@
   "ui.peopleSuggestion.subtitle.noResults": "No People",
   "ui.peopleSuggestion.button.showAll": "Show All",
 
-  "ui.TrendingPeople.title": "Trending People",
-  "ui.TrendingPeople.noResults": "No trending people to show",
-  "ui.TrendingPeople.button.showAll": "Show All",
+  "ui.trendingPeople.title": "Trending People",
+  "ui.trendingPeople.noResults": "No trending people to show",
+  "ui.trendingPeople.button.showAll": "Show All",
 
-  "ui.TrendingFeed.title": "Trending Feed",
-  "ui.TrendingFeed.noResults": "Nothing to show",
-  "ui.TrendingFeed.button.showMore": "Show More",
+  "ui.trendingFeed.title": "Trending Feed",
+  "ui.trendingFeed.noResults": "Nothing to show",
+  "ui.trendingFeed.button.showMore": "Show More",
+
+  "ui.trendingPost.noResults": "Nothing to show",
 
   "ui.RelatedDiscussion.title": "Related Discussions",
 
@@ -184,9 +186,9 @@
   "ui.commentsObject.loadPreviousComments": "See previous comments",
   "ui.commentsObject.numberOfComments": "{loaded} of {total}",
 
+  "ui.commentObject.reply": "Reply",
   "ui.commentObject.voteUp": "Like",
   "ui.commentObject.voteDown": "Dislike",
-  "ui.commentObject.reply": "Reply",
   "ui.commentObject.votes": "{total, plural, =0 {# Likes} one {# Like} other {# Likes}}",
   "ui.commentObject.viewLatestComment": "View previous {total, plural, =0 {# Comments} one {# Comment} other {# Comments}} ",
 
