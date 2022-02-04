@@ -167,11 +167,11 @@ export default function RelatedDiscussion(props: RelatedDiscussionProps): JSX.El
       ) : (
         <CardContent>
           <Typography variant="body1">
-            <FormattedMessage id="ui.RelatedDiscussion.title" defaultMessage="ui.RelatedDiscussion.title" />
+            <FormattedMessage id="ui.relatedDiscussion.title" defaultMessage="ui.relatedDiscussion.title" />
           </Typography>
           {!total ? (
             <Typography variant="body2">
-              <FormattedMessage id="ui.TrendingFeed.noResults" defaultMessage="ui.TrendingFeed.noResults" />
+              <FormattedMessage id="ui.relatedDiscussion.noResults" defaultMessage="ui.relatedDiscussion.noResults" />
             </Typography>
           ) : (
             <React.Fragment>

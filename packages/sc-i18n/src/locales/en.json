@@ -23,9 +23,8 @@
   "ui.trendingFeed.noResults": "Nothing to show",
   "ui.trendingFeed.button.showMore": "Show More",
 
-  "ui.trendingPost.noResults": "Nothing to show",
-
-  "ui.RelatedDiscussion.title": "Related Discussions",
+  "ui.relatedDiscussion.title": "Related Discussions",
+  "ui.relatedDiscussion.noResults": "Nothing to show",
 
   "ui.category.categoryFollowers": "{total, plural, =0 {Followed by # people} one {Followed by # person} other {Followed by # people}}",
   "ui.categoriesFollowed.subtitle.noResults": "No Categories Followed",
