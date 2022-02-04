@@ -143,6 +143,7 @@ import {Logger} from './utils/logger';
 import * as StringUtils from './utils/string';
 import * as ObjectUtils from './utils/object';
 import * as UrlUtils from './utils/url';
+import WSClient, {WSClientType, WSClientPropTypes} from './utils/websocket';
 
 /**
  * Constants:
@@ -254,6 +255,9 @@ export {
   Logger,
   StringUtils,
   ObjectUtils,
+  WSClient,
+  WSClientType,
+  WSClientPropTypes,
   UrlUtils,
   Locale,
   useSCFetchUser,

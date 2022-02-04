@@ -15,13 +15,15 @@
   "ui.peopleSuggestion.subtitle.noResults": "Nessuno da mostrare",
   "ui.peopleSuggestion.button.showAll": "Mostra tutti",
 
-  "ui.TrendingPeople.title": "Persone di tendenza",
-  "ui.TrendingPeople.noResults": "Nessuno da mostrare",
-  "ui.TrendingPeople.button.showAll": "Mostra tutti",
+  "ui.trendingPeople.title": "Persone di tendenza",
+  "ui.trendingPeople.noResults": "Nessuno da mostrare",
+  "ui.trendingPeople.button.showAll": "Mostra tutti",
 
-  "ui.TrendingFeed.title": "Post di tendenza",
-  "ui.TrendingFeed.noResults": "Niente da mostrare",
-  "ui.TrendingFeed.button.showMore": "Mostra di piú",
+  "ui.trendingFeed.title": "Post di tendenza",
+  "ui.trendingFeed.noResults": "Niente da mostrare",
+  "ui.trendingFeed.button.showMore": "Mostra di piú",
+
+  "ui.trendingPost.noResults": "Nessun post da mostrare",
 
   "ui.RelatedDiscussion.title": "Post correlati",
 
@@ -177,19 +179,20 @@
   "ui.reportingMenu.offtopic": "Fuori tema",
   "ui.reportingMenu.footer": "La segnalazione è anonima e deve essere conforme al regolamento.",
 
+  "ui.commentsObject.title": "{total, plural, =0 {# Commenti} one {# Commento} other {# Commenti}}",
   "ui.commentsObject.noComments": "Non ci sono ancora commenti al momento.",
   "ui.commentsObject.noOtherComments": "Non ci sono altri commenti.",
   "ui.commentsObject.loadMoreComments": "Vedi altri commenti",
   "ui.commentsObject.loadPreviousComments": "Vedi commenti precedenti",
   "ui.commentsObject.numberOfComments": "{loaded} di {total}",
 
-  "ui.commentsObject.title": "{total, plural, =0 {# Commenti} one {# Commento} other {# Commenti}}",
+  "ui.commentObject.reply": "Commenta",
   "ui.commentObject.voteUp": "Apprezza",
   "ui.commentObject.voteDown": "Non apprezzare",
   "ui.commentObject.votes": "{total, plural, =0 {# Voti} one {# Voto} other {# Voti}}",
   "ui.commentObject.viewLatestComment": "Vedi {total, plural, =0 {# Comments} one {# Comment} other {# Comments}} precedenti",
 
-  "ui.commentObject.replyComment.reply": "Reply",
+  "ui.commentObject.replyComment.reply": "Commenta",
   "ui.commentObject.replyComment.save": "Save",
   "ui.commentObject.replyComment.cancel": "Cancel",
 
@@ -278,7 +281,7 @@
   "ui.userToastNotifications.comment.addedComment": "ha aggiunto un commento",
   "ui.userToastNotifications.contributionFollow.follow": "sta seguendo il tuo post",
   "ui.userToastNotifications.undeletedFor.restoredContent": "Un tuo contenuto, precedentemente rimosso, è stato ripristinato",
-  "ui.notification.incubatorApproved.approved": "Il tuo incubatore {name} è stato <b>approvato</b.",
+  "ui.notification.incubatorApproved.approved": "Il tuo incubatore {name} è stato <b>approvato</b>.",
   "ui.userToastNotifications.undeletedFor.youWrote": "Hai scritto: ",
   "ui.userToastNotifications.newNotificationsLabel": "Ci sono nuove notifiche per te ({count}). Vuoi vederle?",
   "ui.userToastNotifications.incubatorApproved.viewIncubator": "Vedi categoria",
