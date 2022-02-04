@@ -226,7 +226,7 @@ export const validateHandleAnonymousAction = (v) => {
       errors,
       warnings,
       value: () => {
-        Logger.info(SCOPE_SC_CORE, '');
+        Logger.info(SCOPE_SC_CORE, 'Attempting to perform an action that requires a logged user.');
       },
     };
   }
