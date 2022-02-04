@@ -66,7 +66,8 @@ const WIDGETS: SCFeedWidgetType[] = [
     component: FeedUpdates,
     componentProps: {variant: 'outlined', subscriptionChannel: SCNotificationTopicType.INTERACTION},
     column: 'left',
-    position: 0
+    position: 0,
+    publishEvents: true
   },
   {
     type: 'widget',

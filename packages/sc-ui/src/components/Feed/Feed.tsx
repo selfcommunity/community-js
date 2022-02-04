@@ -1,12 +1,12 @@
-import React, { ReactNode, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
-import { styled, useTheme } from '@mui/material/styles';
-import { Card, CardContent, Grid, Hidden, Theme, useMediaQuery } from '@mui/material';
-import { AxiosResponse } from 'axios';
-import { SCOPE_SC_UI } from '../../constants/Errors';
-import { FormattedMessage } from 'react-intl';
-import { GenericSkeleton } from '../Skeleton';
+import React, {ReactNode, useCallback, useContext, useEffect, useMemo, useRef, useState} from 'react';
+import {styled, useTheme} from '@mui/material/styles';
+import {Card, CardContent, Grid, Hidden, Theme, useMediaQuery} from '@mui/material';
+import {AxiosResponse} from 'axios';
+import {SCOPE_SC_UI} from '../../constants/Errors';
+import {FormattedMessage} from 'react-intl';
+import {GenericSkeleton} from '../Skeleton';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { SCFeedWidgetType } from '../../types/feed';
+import {SCFeedWidgetType} from '../../types/feed';
 import Sticky from 'react-stickynode';
 import CustomAdv from '../CustomAdv';
 import {
@@ -20,7 +20,7 @@ import {
   SCPreferencesContextType,
   SCUserContext,
   SCUserContextType,
-  useSCPreferences,
+  useSCPreferences
 } from '@selfcommunity/core';
 import classNames from 'classnames';
 import PubSub from 'pubsub-js';
@@ -310,7 +310,7 @@ export default function Feed(props: FeedProps): JSX.Element {
             }>
             {data.left.map((d, i) =>
               d.type === 'widget' ? (
-                <d.component key={i} {...d.componentProps} publicationChannel={id}></d.component>
+                <d.component key={i} {...d.componentProps} {...(d.publishEvents && {publicationChannel: id})}></d.component>
               ) : (
                 <ItemComponent key={i} {...itemPropsGenerator(d)} {...ItemProps} sx={{width: '100%'}} />
               )
