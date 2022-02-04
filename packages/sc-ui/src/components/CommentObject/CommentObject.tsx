@@ -3,8 +3,6 @@ import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {Avatar, Box, Button, CardContent, CardProps, Grid, ListItem, ListItemAvatar, ListItemText, Tooltip, Typography} from '@mui/material';
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import TimeAgo from 'timeago-react';
 import Bullet from '../../shared/Bullet';
 import classNames from 'classnames';
 import Votes from './Votes';
@@ -262,8 +260,6 @@ export default function CommentObject(props: CommentObjectProps): JSX.Element {
    * @param comment
    */
   function renderTimeAgo(comment) {
-    console.log(comment);
-    console.log(feedObject);
     return (
       <Link
         to={scRoutingContext.url(SCRoutes.COMMENT_ROUTE_NAME, {

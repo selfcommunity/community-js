@@ -171,7 +171,7 @@ export default function RelatedDiscussion(props: RelatedDiscussionProps): JSX.El
           </Typography>
           {!total ? (
             <Typography variant="body2">
-              <FormattedMessage id="ui.TrendingPost.noResults" defaultMessage="ui.TrendingPost.noResults" />
+              <FormattedMessage id="ui.trendingPost.noResults" defaultMessage="ui.trendingPost.noResults" />
             </Typography>
           ) : (
             <React.Fragment>
