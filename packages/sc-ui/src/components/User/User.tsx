@@ -158,7 +158,7 @@ export default function User(props: UserProps): JSX.Element {
   const u = (
     <React.Fragment>
       {scUser ? (
-        <ListItem button={true} component={Link} to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: scUser.id})}>
+        <ListItem button={true} component={Link} to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, scUser)}>
           <ListItemAvatar>
             <Avatar alt={scUser.username} src={scUser.avatar} className={classes.avatar} />
           </ListItemAvatar>

@@ -4,7 +4,7 @@ import {Avatar, Box, ListItem, ListItemAvatar, ListItemText, Stack, Typography} 
 import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../../shared/DateTimeAgo';
-import {getContribute} from '../../../../utils/contribute';
+import { getContribute, getRouteData } from '../../../../utils/contribute';
 
 const messages = defineMessages({
   appreciated: {
@@ -80,7 +80,7 @@ export default function VoteUpNotificationToast(props: NotificationVoteUpToastPr
     <Root id={id} className={className} {...rest}>
       <ListItem component={'div'} className={classes.content}>
         <ListItemAvatar>
-          <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: notificationObject.user.id})}>
+          <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.user)}>
             <Avatar alt={notificationObject.user.username} variant="circular" src={notificationObject.user.avatar} />
           </Link>
         </ListItemAvatar>
@@ -88,7 +88,7 @@ export default function VoteUpNotificationToast(props: NotificationVoteUpToastPr
           disableTypography={true}
           primary={
             <Typography>
-              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: notificationObject.user.id})}>
+              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.user)}>
                 {notificationObject.user.username}
               </Link>{' '}
               {intl.formatMessage(messages.appreciated, {
@@ -103,7 +103,7 @@ export default function VoteUpNotificationToast(props: NotificationVoteUpToastPr
               {contribution.summary ? (
                 contribution.summary
               ) : (
-                <Link to={scRoutingContext.url(SCRoutes[`${contribution.type.toUpperCase()}_ROUTE_NAME`], {id: contribution.id})}>
+                <Link to={scRoutingContext.url(SCRoutes[`${contribution.type.toUpperCase()}_ROUTE_NAME`], getRouteData(contribution))}>
                   <FormattedMessage id="ui.userToastNotifications.viewContribution" defaultMessage={'ui.userToastNotifications.viewContribution'} />
                 </Link>
               )}
@@ -114,7 +114,7 @@ export default function VoteUpNotificationToast(props: NotificationVoteUpToastPr
       <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
         <DateTimeAgo date={notificationObject.active_at} />
         <Typography color="primary">
-          <Link to={scRoutingContext.url(SCRoutes[`${contribution.type.toUpperCase()}_ROUTE_NAME`], {id: contribution.id})}>
+          <Link to={scRoutingContext.url(SCRoutes[`${contribution.type.toUpperCase()}_ROUTE_NAME`], getRouteData(contribution))}>
             <FormattedMessage id="ui.userToastNotifications.viewContribution" defaultMessage={'ui.userToastNotifications.viewContribution'} />
           </Link>
         </Typography>

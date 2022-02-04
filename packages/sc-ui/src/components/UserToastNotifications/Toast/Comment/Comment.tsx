@@ -76,7 +76,7 @@ export default function UserNotificationCommentToast(props: UserNotificationComm
     <Root id={id} className={className} {...rest}>
       <ListItem component={'div'} className={classes.content}>
         <ListItemAvatar>
-          <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: notificationObject.comment.author.id})}>
+          <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.comment.author)}>
             <Avatar alt={notificationObject.comment.author.username} variant="circular" src={notificationObject.comment.author.avatar} />
           </Link>
         </ListItemAvatar>
@@ -84,7 +84,7 @@ export default function UserNotificationCommentToast(props: UserNotificationComm
           disableTypography={true}
           primary={
             <Typography component="span" sx={{display: 'inline'}} color="primary">
-              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: notificationObject.comment.author.id})}>
+              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.comment.author)}>
                 {notificationObject.comment.author.username}
               </Link>{' '}
               {intl.formatMessage(messages.addedComment, {

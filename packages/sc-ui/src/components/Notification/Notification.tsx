@@ -246,7 +246,7 @@ export default function UserNotification(props: NotificationProps): JSX.Element 
       return (
         <ListItem alignItems="flex-start" component={'div'}>
           <ListItemAvatar>
-            <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: messageNotification.message.sender.id})}>
+            <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, messageNotification.message.sender)}>
               <Avatar alt={messageNotification.message.sender.username} variant="circular" src={messageNotification.message.sender.avatar} />
             </Link>
           </ListItemAvatar>
@@ -254,7 +254,7 @@ export default function UserNotification(props: NotificationProps): JSX.Element 
             disableTypography={true}
             primary={
               <Typography component="span" sx={{display: 'inline'}} color="primary">
-                <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: messageNotification.message.sender.id})}>
+                <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, messageNotification.message.sender)}>
                   {messageNotification.message.sender.username}
                 </Link>{' '}
                 {intl.formatMessage(messages.receivePrivateMessage, {

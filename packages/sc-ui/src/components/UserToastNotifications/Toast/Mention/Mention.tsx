@@ -3,7 +3,7 @@ import {styled} from '@mui/material/styles';
 import {Avatar, Box, ListItem, ListItemAvatar, ListItemText, Stack, Typography} from '@mui/material';
 import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {getContribute} from '../../../../utils/contribute';
+import {getContribute, getRouteData} from '../../../../utils/contribute';
 import DateTimeAgo from '../../../../shared/DateTimeAgo';
 
 const messages = defineMessages({
@@ -80,7 +80,7 @@ export default function UserNotificationMentionToast(props: NotificationMentionT
     <Root id={id} className={className} {...rest}>
       <ListItem component={'div'} className={classes.content}>
         <ListItemAvatar>
-          <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: notificationObject.user.id})}>
+          <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.user)}>
             <Avatar alt={notificationObject.user.username} variant="circular" src={notificationObject.user.avatar} />
           </Link>
         </ListItemAvatar>
@@ -88,9 +88,7 @@ export default function UserNotificationMentionToast(props: NotificationMentionT
           disableTypography={true}
           primary={
             <Typography>
-              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: notificationObject.user.id})}>
-                {notificationObject.user.username}
-              </Link>{' '}
+              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.user)}>{notificationObject.user.username}</Link>{' '}
               {intl.formatMessage(messages.quotedYouOn, {
                 b: (...chunks) => <span>{chunks}</span>
               })}
@@ -102,7 +100,7 @@ export default function UserNotificationMentionToast(props: NotificationMentionT
               {contribution.summary ? (
                 contribution.summary
               ) : (
-                <Link to={scRoutingContext.url(SCRoutes[`${contribution.type.toUpperCase()}_ROUTE_NAME`], {id: contribution.id})}>
+                <Link to={scRoutingContext.url(SCRoutes[`${contribution.type.toUpperCase()}_ROUTE_NAME`], getRouteData(contribution))}>
                   <FormattedMessage id="ui.userToastNotifications.viewContribution" defaultMessage={'ui.userToastNotifications.viewContribution'} />
                 </Link>
               )}
@@ -113,7 +111,7 @@ export default function UserNotificationMentionToast(props: NotificationMentionT
       <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
         <DateTimeAgo date={notificationObject.active_at} />
         <Typography color="primary">
-          <Link to={scRoutingContext.url(SCRoutes[`${contribution.type.toUpperCase()}_ROUTE_NAME`], {id: contribution.id})}>
+          <Link to={scRoutingContext.url(SCRoutes[`${contribution.type.toUpperCase()}_ROUTE_NAME`], getRouteData(contribution))}>
             <FormattedMessage id="ui.userToastNotifications.viewContribution" defaultMessage={'ui.userToastNotifications.viewContribution'} />
           </Link>
         </Typography>

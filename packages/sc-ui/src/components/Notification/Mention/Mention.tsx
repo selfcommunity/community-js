@@ -77,7 +77,7 @@ export default function UserNotificationMention(props: NotificationMentionProps)
     <Root id={id} className={className} {...rest}>
       <ListItem alignItems="flex-start" component={'div'}>
         <ListItemAvatar>
-          <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: notificationObject[objectType].author.id})}>
+          <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject[objectType].author)}>
             <Avatar alt={notificationObject[objectType].author.username} variant="circular" src={notificationObject[objectType].author.avatar} />
           </Link>
         </ListItemAvatar>
@@ -85,7 +85,7 @@ export default function UserNotificationMention(props: NotificationMentionProps)
           disableTypography={true}
           primary={
             <Typography component="span" sx={{display: 'inline'}} color="primary">
-              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: notificationObject[objectType].author.id})}>
+              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject[objectType].author)}>
                 {notificationObject[objectType].author.username}
               </Link>{' '}
               {intl.formatMessage(messages.quotedYouOn, {

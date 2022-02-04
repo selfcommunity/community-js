@@ -76,7 +76,7 @@ export default function UserFollowNotificationToast(props: NotificationFollowToa
     <Root id={id} className={className} {...rest}>
       <ListItem component={'div'} className={classes.content}>
         <ListItemAvatar>
-          <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: notificationObject.follower.id})}>
+          <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.follower)}>
             <Avatar alt={notificationObject.follower.username} variant="circular" src={notificationObject.follower.avatar} />
           </Link>
         </ListItemAvatar>

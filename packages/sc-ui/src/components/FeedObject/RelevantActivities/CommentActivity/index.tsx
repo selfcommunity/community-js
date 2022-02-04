@@ -85,14 +85,14 @@ export default function CommentRelevantActivity(props: CommentRelevantActivityPr
     <Root className={className} {...rest}>
       <ListItem alignItems="flex-start">
         <ListItemAvatar>
-          <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: activityObject.author.id})}>
+          <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, activityObject.author)}>
             <Avatar alt={activityObject.author.username} variant="circular" src={activityObject.author.avatar} />
           </Link>
         </ListItemAvatar>
         <ListItemText
           primary={
             <Typography component="span" sx={{display: 'inline'}} color="primary">
-              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: activityObject.author.id})}>
+              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, activityObject.author)}>
                 {activityObject.author.username}
               </Link>{' '}
               {intl.formatMessage(messages.comment, {

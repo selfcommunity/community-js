@@ -89,7 +89,7 @@ export default function Category(props: CategoryProps): JSX.Element {
   const c = (
     <React.Fragment>
       {scCategory ? (
-        <ListItem button={true} component={Link} to={scRoutingContext.url(SCRoutes.CATEGORY_ROUTE_NAME, {id: scCategory.id})}>
+        <ListItem button={true} component={Link} to={scRoutingContext.url(SCRoutes.CATEGORY_ROUTE_NAME, scCategory)}>
           <ListItemAvatar>
             <Avatar alt={scCategory.name} src={scCategory.image_medium} variant="square" className={classes.categoryImage} />
           </ListItemAvatar>

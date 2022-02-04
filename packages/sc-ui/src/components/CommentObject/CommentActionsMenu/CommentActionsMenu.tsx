@@ -27,6 +27,7 @@ import CentralProgress from '../../../shared/CentralProgress';
 import ConfirmDialog from '../../../shared/ConfirmDialog/ConfirmDialog';
 import {copyTextToClipboard} from '../../../utils/string';
 import {useSnackbar} from 'notistack';
+import {getRouteData} from '../../../utils/contribute';
 
 const PREFIX = 'SCCommentActionsMenu';
 
@@ -278,13 +279,7 @@ export default function CommentActionsMenu(props: CommentActionsMenuProps): JSX.
    * Handle permanent link
    */
   function handlePermanentLink() {
-    copyTextToClipboard(
-      `${location.protocol}//${location.host}${scRoutingContext.url(SCRoutes.COMMENT_ROUTE_NAME, {
-        id: obj.id,
-        contribute_type: feedObjectType,
-        contribute_id: feedObjectId ? feedObjectId : feedObject.id
-      })}`
-    ).then(() => {
+    copyTextToClipboard(`${location.protocol}//${location.host}${scRoutingContext.url(SCRoutes.COMMENT_ROUTE_NAME, getRouteData(obj))}`).then(() => {
       setOpen(false);
       enqueueSnackbar(
         <FormattedMessage

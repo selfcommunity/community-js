@@ -4,7 +4,7 @@ import {Avatar, Box, ListItem, ListItemAvatar, ListItemText, Stack, Typography} 
 import EmojiFlagsIcon from '@mui/icons-material/EmojiFlags';
 import {red} from '@mui/material/colors';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {getContributeType} from '../../../../utils/contribute';
+import { getContributeType, getRouteData } from '../../../../utils/contribute';
 import DateTimeAgo from '../../../../shared/DateTimeAgo';
 import {Link, SCRoutingContextType, useSCRouting, StringUtils, SCRoutes} from '@selfcommunity/core';
 
@@ -134,9 +134,9 @@ export default function CollapsedForNotificationToast(props: NotificationCollaps
         <DateTimeAgo date={notificationObject.active_at} />
         <Typography color="primary">
           <Link
-            to={scRoutingContext.url(SCRoutes[`${notificationObject[contributionType].type.toUpperCase()}_ROUTE_NAME`], {
-              id: notificationObject[contributionType].id
-            })}>
+            to={scRoutingContext.url(SCRoutes[`${notificationObject[contributionType].type.toUpperCase()}_ROUTE_NAME`], getRouteData(
+              notificationObject[contributionType]
+            ))}>
             <FormattedMessage id="ui.userToastNotifications.viewContribution" defaultMessage={'ui.userToastNotifications.viewContribution'} />
           </Link>
         </Typography>

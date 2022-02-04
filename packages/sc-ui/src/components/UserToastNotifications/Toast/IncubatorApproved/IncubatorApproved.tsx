@@ -99,7 +99,7 @@ export default function IncubatorApprovedNotificationToast(props: NotificationIn
       <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
         <DateTimeAgo date={notificationObject.active_at} />
         <Typography color="primary">
-          <Link to={scRoutingContext.url(SCRoutes.CATEGORY_ROUTE_NAME, {id: notificationObject.incubator.id})}>
+          <Link to={scRoutingContext.url(SCRoutes.CATEGORY_ROUTE_NAME, notificationObject.incubator)}>
             <FormattedMessage
               id="ui.userToastNotifications.incubatorApproved.viewIncubator"
               defaultMessage={'ui.userToastNotifications.incubatorApproved.viewIncubator'}
