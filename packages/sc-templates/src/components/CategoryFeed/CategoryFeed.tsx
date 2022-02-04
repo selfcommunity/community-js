@@ -9,7 +9,7 @@ import {
   FeedSidebarProps,
   InlineComposer,
   SCFeedWidgetType,
-  TrendingFeedObject,
+  TrendingFeed,
   TrendingPeople
 } from '@selfcommunity/ui';
 import {Endpoints} from '@selfcommunity/core';
@@ -80,7 +80,7 @@ const WIDGETS: SCFeedWidgetType[] = [
   },
   {
     type: 'widget',
-    component: TrendingFeedObject,
+    component: TrendingFeed,
     componentProps: {variant: 'outlined'},
     column: 'right',
     position: 1

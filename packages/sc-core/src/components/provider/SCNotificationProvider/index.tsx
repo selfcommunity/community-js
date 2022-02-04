@@ -3,7 +3,7 @@ import {SCContextType, SCNotificationTopicType, SCUserContextType} from '../../.
 import {useSCContext} from '../SCContextProvider';
 import {SCNotificationContextType} from '../../../types';
 import {useSCUser} from '../SCUserProvider';
-import WSClient from '../../../utils/websocket';
+import WSClient, {WSClientType} from '../../../utils/websocket';
 import PubSub from 'pubsub-js';
 import {WS_FACILITY_NOTIFY, WS_PROTOCOL_PREFIX, WS_HEARTBEAT_MESSAGE} from '../../../constants/WebSocket';
 import {SCNotificationMapping, SCNotificationTopics} from '../../../constants/Notification';
@@ -25,7 +25,7 @@ export const SCNotificationContext = createContext<SCNotificationContextType>({}
 export default function SCNotificationProvider({children = null}: {children: React.ReactNode}): JSX.Element {
   const scContext: SCContextType = useSCContext();
   const scUserContext: SCUserContextType = useSCUser();
-  const [wsInstance, setWsInstance] = useState(null);
+  const [wsInstance, setWsInstance] = useState<WSClientType>(null);
 
   // Websocket uri and protocols
   const _wsUri = `wss://${new URL(scContext.settings.portal).hostname}/ws/${WS_FACILITY_NOTIFY}?subscribe-user`;
@@ -42,7 +42,7 @@ export default function SCNotificationProvider({children = null}: {children: Rea
   useEffect(() => {
     if (scUserContext.user && !wsInstance && _wsUri && _wsProtocol) {
       setWsInstance(
-        WSClient({
+        WSClient.getInstance({
           uri: _wsUri,
           heartbeatMsg: WS_HEARTBEAT_MESSAGE,
           protocols: [_wsProtocol],

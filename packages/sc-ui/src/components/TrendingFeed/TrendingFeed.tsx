@@ -48,7 +48,7 @@ export interface TrendingFeedProps {
    */
   [p: string]: any;
 }
-export default function TrendingFeedObject(props: TrendingFeedProps): JSX.Element {
+export default function TrendingFeed(props: TrendingFeedProps): JSX.Element {
   //CONST
   const limit = 4;
 
@@ -111,11 +111,11 @@ export default function TrendingFeedObject(props: TrendingFeedProps): JSX.Elemen
       ) : (
         <CardContent>
           <Typography variant="body1">
-            <FormattedMessage id="ui.TrendingFeed.title" defaultMessage="ui.TrendingFeed.title" />
+            <FormattedMessage id="ui.trendingFeed.title" defaultMessage="ui.trendingFeed.title" />
           </Typography>
           {!total ? (
             <Typography variant="body2">
-              <FormattedMessage id="ui.TrendingFeed.noResults" defaultMessage="ui.TrendingFeed.noResults" />
+              <FormattedMessage id="ui.trendingFeed.noResults" defaultMessage="ui.trendingFeed.noResults" />
             </Typography>
           ) : (
             <React.Fragment>
@@ -128,7 +128,7 @@ export default function TrendingFeedObject(props: TrendingFeedProps): JSX.Elemen
               </List>
               {hasMore && (
                 <Button size="small" onClick={() => loadMore()}>
-                  <FormattedMessage id="ui.TrendingFeed.button.showMore" defaultMessage="ui.TrendingFeed.button.showMore" />
+                  <FormattedMessage id="ui.trendingFeed.button.showMore" defaultMessage="ui.trendingFeed.button.showMore" />
                 </Button>
               )}
             </React.Fragment>

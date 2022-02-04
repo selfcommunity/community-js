@@ -44,10 +44,10 @@ const withProvider = (Story, context) => {
           }
         }
       },
-      /* handleAnonymousAction: () => {
+      handleAnonymousAction: () => {
         alert('Anonymous action');
       },
-      contextProviders: [
+      /* contextProviders: [
         SCPreferencesProvider,
         SCRoutingProvider,
         SCUserProvider,

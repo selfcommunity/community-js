@@ -20,8 +20,6 @@ import {
   Typography
 } from '@mui/material';
 import FeedObjectSkeleton from './Skeleton';
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import TimeAgo from 'timeago-react';
 import DateTimeAgo from '../../shared/DateTimeAgo';
 import Bullet from '../../shared/Bullet';
 import Tags from '../../shared/Tags';
@@ -40,6 +38,7 @@ import {
   Link,
   Logger,
   SCCommentType,
+  SCContextType,
   SCFeedObjectType,
   SCFeedObjectTypologyType,
   SCPollType,
@@ -47,6 +46,7 @@ import {
   SCRoutingContextType,
   SCTagType,
   SCUserContextType,
+  useSCContext,
   useSCFetchFeedObject,
   useSCRouting,
   useSCUser
@@ -61,6 +61,7 @@ import ReplyCommentObject, {ReplyCommentObjectProps} from '../CommentObject/Repl
 import {LoadingButton} from '@mui/lab';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {AxiosResponse} from 'axios';
+import {Context} from 'react-intl/src/components/injectIntl';
 
 const messages = defineMessages({
   comment: {
@@ -86,7 +87,7 @@ const classes = {
   activitiesContent: `${PREFIX}-activities-content`,
   followButton: `${PREFIX}-follow-button`,
   activityAt: `${PREFIX}-activity-at`,
-  sharedContentFeedObject: `${PREFIX}-shared-content-feed-object`,
+  sharedContentFeedObject: `${PREFIX}-shared-content-feed-object`
 };
 
 const Root = styled(Card, {
@@ -250,6 +251,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
   } = props;
 
   // CONTEXT
+  const scContext: SCContextType = useSCContext();
   const scRoutingContext: SCRoutingContextType = useSCRouting();
   const scUserContext: SCUserContextType = useSCUser();
 
@@ -490,6 +492,17 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
   }
 
   /**
+   * Expand activities if the user is logged
+   */
+  function handleExpandActivities() {
+    if (scUserContext.user) {
+      setExpandedActivities((prev) => !prev);
+    } else {
+      scContext.settings.handleAnonymousAction();
+    }
+  }
+
+  /**
    * Render the obj object
    * Manage variants:
    * SNIPPET, PREVIEW, DETAIL
@@ -594,7 +607,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
                 feedObjectType={feedObjectType}
                 hideShareAction={hideShareAction}
                 hideCommentAction={template === FeedObjectTemplateType.DETAIL}
-                handleExpandActivities={() => setExpandedActivities((prev) => !prev)}
+                handleExpandActivities={handleExpandActivities}
               />
             </CardActions>
             {template === FeedObjectTemplateType.PREVIEW && (
@@ -700,7 +713,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
                   <Box component="span" sx={{display: 'flex', justifyContent: 'flex-start', p: '2px'}}>
                     <Grid component="span" item={true} sm="auto" container direction="row" alignItems="center">
                       <Link to={scRoutingContext.url(feedObjectType, obj)} className={classes.activityAt}>
-                        <DateTimeAgo date={obj.added_at} />
+                        <DateTimeAgo component="span" date={obj.added_at} />
                       </Link>
                       <Bullet sx={{paddingLeft: '4px', paddingTop: '1px'}} />
                       <Button component={Link} to={scRoutingContext.url(feedObjectType, obj)} variant={'text'} sx={{marginTop: '-1px'}}>

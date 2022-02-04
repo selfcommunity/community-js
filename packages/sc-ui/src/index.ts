@@ -22,7 +22,7 @@ import PeopleSuggestion, {PeopleSuggestionProps, PeopleSuggestionSkeleton} from 
 import Platform, {PlatformProps, PlatformSkeleton} from './components/Platform';
 import Snippets, {SnippetsProps, SnippetsSkeleton} from './components/Snippets';
 import LoyaltyProgram, {LoyaltyProgramProps, LoyaltyProgramSkeleton} from './components/LoyaltyProgram';
-import TrendingFeedObject, {TrendingFeedProps, TrendingFeedSkeleton} from './components/TrendingFeedObject';
+import TrendingFeed, {TrendingFeedProps, TrendingFeedSkeleton} from './components/TrendingFeed';
 import TrendingPeople, {TrendingPeopleProps, TrendingPeopleSkeleton} from './components/TrendingPeople';
 import UserProfileHeader, {UserProfileHeaderProps, UserProfileHeaderSkeleton} from './components/UserProfileHeader';
 import UsersFollowed, {UsersFollowedProps, UsersFollowedSkeleton} from './components/UsersFollowed';
@@ -102,7 +102,7 @@ export {
   LoyaltyProgram,
   LoyaltyProgramProps,
   LoyaltyProgramSkeleton,
-  TrendingFeedObject,
+  TrendingFeed,
   TrendingFeedProps,
   TrendingFeedSkeleton,
   TrendingPeople,

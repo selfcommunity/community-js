@@ -66,7 +66,7 @@ export default function UserNotificationPrivateMessageToast(props: NotificationP
     <Root id={id} className={className} {...rest}>
       <ListItem alignItems={'flex-start'} component={'div'} className={classes.content}>
         <ListItemAvatar>
-          <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: notificationObject.private_message.sender.id})}>
+          <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.private_message.sender)}>
             <Avatar
               alt={notificationObject.private_message.sender.username}
               variant="circular"
@@ -78,7 +78,7 @@ export default function UserNotificationPrivateMessageToast(props: NotificationP
           disableTypography={true}
           primary={
             <Typography>
-              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: notificationObject.private_message.sender.id})}>
+              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.private_message.sender)}>
                 {notificationObject.private_message.sender.username}
               </Link>{' '}
               <FormattedMessage

@@ -84,7 +84,7 @@ export default function UserConnectionNotification(props: NotificationConnection
     <Root id={id} className={className} {...rest}>
       <ListItem alignItems="flex-start" component={'div'}>
         <ListItemAvatar>
-          <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: userConnection.id})}>
+          <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, userConnection)}>
             <Avatar alt={userConnection.username} variant="circular" src={userConnection.avatar} />
           </Link>
         </ListItemAvatar>
@@ -93,7 +93,7 @@ export default function UserConnectionNotification(props: NotificationConnection
           primary={
             <Typography component="div" sx={{display: 'inline'}} color="primary">
               {notificationObject.is_new && <NewChip />}
-              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: userConnection.id})}>{userConnection.username}</Link>{' '}
+              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, userConnection)}>{userConnection.username}</Link>{' '}
               {notificationObject.type === SCNotificationTypologyType.CONNECTION_REQUEST
                 ? intl.formatMessage(messages.requestConnection, {b: (...chunks) => <strong>{chunks}</strong>})
                 : intl.formatMessage(messages.requestConnection, {b: (...chunks) => <strong>{chunks}</strong>})}

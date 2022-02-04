@@ -131,7 +131,11 @@ export default function Share(props: ShareProps): JSX.Element {
 
   // HANDLERS
   const handleOpenShareMenu = (event) => {
-    setAnchorEl(event.currentTarget);
+    if (!scUserContext.user) {
+      scContext.settings.handleAnonymousAction();
+    } else {
+      setAnchorEl(event.currentTarget);
+    }
   };
 
   const handleClose = () => {

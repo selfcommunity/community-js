@@ -17,7 +17,7 @@ import {
   useSCPreferences,
   useSCUser
 } from '@selfcommunity/core';
-import TrendingPostSkeleton from '../TrendingFeedObject/Skeleton';
+import TrendingPostSkeleton from '../TrendingFeed/Skeleton';
 import {AxiosResponse} from 'axios';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import FeedObject, {FeedObjectProps} from '../FeedObject';
@@ -167,11 +167,11 @@ export default function RelatedDiscussion(props: RelatedDiscussionProps): JSX.El
       ) : (
         <CardContent>
           <Typography variant="body1">
-            <FormattedMessage id="ui.RelatedDiscussion.title" defaultMessage="ui.RelatedDiscussion.title" />
+            <FormattedMessage id="ui.relatedDiscussion.title" defaultMessage="ui.relatedDiscussion.title" />
           </Typography>
           {!total ? (
             <Typography variant="body2">
-              <FormattedMessage id="ui.TrendingPost.noResults" defaultMessage="ui.TrendingPost.noResults" />
+              <FormattedMessage id="ui.relatedDiscussion.noResults" defaultMessage="ui.relatedDiscussion.noResults" />
             </Typography>
           ) : (
             <React.Fragment>

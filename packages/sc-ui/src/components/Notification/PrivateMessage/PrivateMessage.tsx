@@ -95,7 +95,7 @@ export default function UserNotificationPrivateMessage(props: NotificationPMProp
               size="small"
               sx={{minWidth: 30}}
               component={Link}
-              to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, {id: notificationObject.message.id})}>
+              to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, notificationObject.message)}>
               <Box component={'span'} sx={{display: {xs: 'none', md: 'block'}, marginRight: '2px'}}>
                 <FormattedMessage
                   id="ui.notification.privateMessage.btnReplyLabel"

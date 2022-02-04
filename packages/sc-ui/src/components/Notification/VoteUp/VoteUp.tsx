@@ -107,7 +107,7 @@ export default function VoteUpNotification(props: NotificationVoteUpProps): JSX.
     <Root id={id} className={className} {...rest}>
       <ListItem alignItems="flex-start" component={'div'}>
         <ListItemAvatar>
-          <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: notificationObject.user.id})}>
+          <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.user)}>
             <Avatar alt={notificationObject.user.username} variant="circular" src={notificationObject.user.avatar} />
           </Link>
         </ListItemAvatar>
@@ -116,7 +116,7 @@ export default function VoteUpNotification(props: NotificationVoteUpProps): JSX.
           primary={
             <Typography component="div" sx={{display: 'inline'}} color="primary">
               {notificationObject.is_new && <NewChip />}
-              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: notificationObject.user.id})}>
+              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.user)}>
                 {notificationObject.user.username}
               </Link>{' '}
               {intl.formatMessage(messages.appreciated, {

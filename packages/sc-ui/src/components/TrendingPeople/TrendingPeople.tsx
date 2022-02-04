@@ -116,11 +116,11 @@ export default function TrendingPeople(props: TrendingPeopleProps): JSX.Element 
       ) : (
         <CardContent>
           <Typography variant="body1">
-            <FormattedMessage id="ui.TrendingPeople.title" defaultMessage="ui.TrendingPeople.title" />
+            <FormattedMessage id="ui.trendingPeople.title" defaultMessage="ui.trendingPeople.title" />
           </Typography>
           {!total ? (
             <Typography variant="body2">
-              <FormattedMessage id="ui.TrendingPeople.noResults" defaultMessage="ui.TrendingPeople.noResults" />
+              <FormattedMessage id="ui.trendingPeople.noResults" defaultMessage="ui.trendingPeople.noResults" />
             </Typography>
           ) : (
             <React.Fragment>
@@ -133,7 +133,7 @@ export default function TrendingPeople(props: TrendingPeopleProps): JSX.Element 
           )}
           {hasMore && (
             <Button size="small" onClick={() => loadPeople()}>
-              <FormattedMessage id="ui.TrendingPeople.showAll" defaultMessage="ui.TrendingPeople.showAll" />
+              <FormattedMessage id="ui.trendingPeople.showAll" defaultMessage="ui.trendingPeople.showAll" />
             </Button>
           )}
           {openTrendingPeopleDialog && <></>}

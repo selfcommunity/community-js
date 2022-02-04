@@ -200,7 +200,6 @@ export default function Vote(props: VoteProps): JSX.Element {
     feedObjectType = SCFeedObjectTypologyType.POST,
     withAction = false,
     inlineAction = true,
-    onVoteFromAnonymous = () => null,
     ...rest
   } = props;
 
@@ -424,7 +423,7 @@ export default function Vote(props: VoteProps): JSX.Element {
             <Divider />
             <Tooltip title={voting ? '' : obj.voted ? intl.formatMessage(messages.voteDown) : intl.formatMessage(messages.voteUp)}>
               <span>
-                <LoadingButton loading={voting} disabled={!canVote || !obj} onClick={vote}>
+                <LoadingButton loading={voting} disabled={!obj} onClick={vote}>
                   {obj.voted ? <VoteFilledIcon fontSize={'large'} color={'secondary'} /> : <VoteIcon fontSize={'large'} />}
                 </LoadingButton>
               </span>

@@ -86,12 +86,12 @@ export default function UserConnectionNotificationToast(props: NotificationConne
     <Root id={id} className={className} {...rest}>
       <ListItem component={'div'} className={classes.content}>
         <ListItemAvatar>
-          <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: userConnection.id})}>
+          <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, userConnection)}>
             <Avatar alt={userConnection.username} variant="circular" src={userConnection.avatar} />
           </Link>
         </ListItemAvatar>
         <ListItemText
-          primary={<Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: userConnection.id})}>{userConnection.username}</Link>}
+          primary={<Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, userConnection)}>{userConnection.username}</Link>}
           secondary={
             <Typography component="div" sx={{display: 'inline'}} color="primary">
               {notificationObject.type === SCNotificationTypologyType.CONNECTION_REQUEST
@@ -104,7 +104,7 @@ export default function UserConnectionNotificationToast(props: NotificationConne
       <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
         <DateTimeAgo date={notificationObject.active_at} />
         <Typography color="primary">
-          <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: userConnection.id})}>
+          <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, userConnection)}>
             <FormattedMessage id="ui.userToastNotifications.goToProfile" defaultMessage={'ui.userToastNotifications.goToProfile'} />
           </Link>
         </Typography>
