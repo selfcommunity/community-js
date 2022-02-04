@@ -17,7 +17,7 @@ import {
   useSCPreferences,
   useSCUser
 } from '@selfcommunity/core';
-import TrendingPostSkeleton from '../TrendingFeedObject/Skeleton';
+import TrendingPostSkeleton from '../TrendingFeed/Skeleton';
 import {AxiosResponse} from 'axios';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import FeedObject, {FeedObjectProps} from '../FeedObject';
@@ -171,7 +171,7 @@ export default function RelatedDiscussion(props: RelatedDiscussionProps): JSX.El
           </Typography>
           {!total ? (
             <Typography variant="body2">
-              <FormattedMessage id="ui.TrendingPost.noResults" defaultMessage="ui.TrendingPost.noResults" />
+              <FormattedMessage id="ui.TrendingFeed.noResults" defaultMessage="ui.TrendingFeed.noResults" />
             </Typography>
           ) : (
             <React.Fragment>

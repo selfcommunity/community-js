@@ -86,7 +86,7 @@ const classes = {
   activitiesContent: `${PREFIX}-activities-content`,
   followButton: `${PREFIX}-follow-button`,
   activityAt: `${PREFIX}-activity-at`,
-  sharedContentFeedObject: `${PREFIX}-shared-content-feed-object`,
+  sharedContentFeedObject: `${PREFIX}-shared-content-feed-object`
 };
 
 const Root = styled(Card, {
@@ -700,7 +700,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
                   <Box component="span" sx={{display: 'flex', justifyContent: 'flex-start', p: '2px'}}>
                     <Grid component="span" item={true} sm="auto" container direction="row" alignItems="center">
                       <Link to={scRoutingContext.url(feedObjectType, obj)} className={classes.activityAt}>
-                        <DateTimeAgo date={obj.added_at} />
+                        <DateTimeAgo component="span" date={obj.added_at} />
                       </Link>
                       <Bullet sx={{paddingLeft: '4px', paddingTop: '1px'}} />
                       <Button component={Link} to={scRoutingContext.url(feedObjectType, obj)} variant={'text'} sx={{marginTop: '-1px'}}>

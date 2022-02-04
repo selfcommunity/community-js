@@ -48,7 +48,7 @@ export interface TrendingFeedProps {
    */
   [p: string]: any;
 }
-export default function TrendingFeedObject(props: TrendingFeedProps): JSX.Element {
+export default function TrendingFeed(props: TrendingFeedProps): JSX.Element {
   //CONST
   const limit = 4;
 
