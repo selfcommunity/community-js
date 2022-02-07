@@ -64,8 +64,8 @@ export default function CategoriesSuggestion(props: CategoriesListProps): JSX.El
   /**
    * Handles list change on category follow
    */
-  function handleClick(clickedId) {
-    setCategories(categories.filter((c) => c.id !== clickedId));
+  function handleOnFollowCategory(category, follow) {
+    setCategories(categories.filter((c) => c.id !== category.id));
     if (visibleCategories < limit && total > 1) {
       loadCategories(1);
     }
@@ -131,7 +131,13 @@ export default function CategoriesSuggestion(props: CategoriesListProps): JSX.El
             <React.Fragment>
               {categories.slice(0, visibleCategories).map((category: SCCategoryType, index) => (
                 <div key={index}>
-                  <Category elevation={0} category={category} key={category.id} onFollowProps={() => handleClick(category.id)} {...CategoryProps} />
+                  <Category
+                    elevation={0}
+                    category={category}
+                    key={category.id}
+                    followCategoryButtonProps={{onFollow: handleOnFollowCategory}}
+                    {...CategoryProps}
+                  />
                   {index < visibleCategories - 1 ? <Divider /> : null}
                 </div>
               ))}

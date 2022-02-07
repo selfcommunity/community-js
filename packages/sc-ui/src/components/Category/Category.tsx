@@ -6,7 +6,7 @@ import CardContent from '@mui/material/CardContent';
 import {Avatar, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText, CardProps} from '@mui/material';
 import {Link, SCRoutes, SCRoutingContextType, SCUserContext, SCUserContextType, useSCFetchCategory, useSCRouting} from '@selfcommunity/core';
 import CategorySkeleton from './Skeleton';
-import FollowButton from '../FollowCategoryButton';
+import FollowButton, {FollowCategoryButtonProps} from '../FollowCategoryButton';
 import {SCCategoryType} from '@selfcommunity/core';
 import {defineMessages, useIntl} from 'react-intl';
 
@@ -60,10 +60,10 @@ export interface CategoryProps extends Pick<CardProps, Exclude<keyof CardProps, 
    */
   popular?: boolean;
   /**
-   * Callback function on follow action.
-   * @default null
+   * Props to spread to follow button
+   * @default {}
    */
-  onFollowProps?: () => void;
+  followCategoryButtonProps?: FollowCategoryButtonProps;
   /**
    * Any other properties
    */
@@ -71,7 +71,7 @@ export interface CategoryProps extends Pick<CardProps, Exclude<keyof CardProps, 
 }
 export default function Category(props: CategoryProps): JSX.Element {
   // PROPS
-  const {id = null, category = null, className = null, popular = false, autoHide = false, onFollowProps, ...rest} = props;
+  const {id = null, category = null, className = null, popular = false, autoHide = false, followCategoryButtonProps = {}, ...rest} = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
@@ -100,7 +100,7 @@ export default function Category(props: CategoryProps): JSX.Element {
           />
           {scUserContext.user && (
             <ListItemSecondaryAction className={classes.actions}>
-              <FollowButton category={scCategory} onFollow={onFollowProps} />
+              <FollowButton category={scCategory} {...followCategoryButtonProps} />
             </ListItemSecondaryAction>
           )}
         </ListItem>
