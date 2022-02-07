@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
+import {Endpoints, SCUserType, useSCFetchUser} from '@selfcommunity/core';
 import {
   CategoriesFollowed,
   Feed,
@@ -11,8 +12,7 @@ import {
   SCFeedWidgetType,
   UsersFollowed
 } from '@selfcommunity/ui';
-import { Endpoints, SCUserType, useSCFetchUser } from '@selfcommunity/core';
-import { UserFeedSkeleton } from './index';
+import {UserFeedSkeleton} from './index';
 
 const PREFIX = 'SCUserFeedTemplate';
 
@@ -94,22 +94,19 @@ export default function UserFeed(props: UserFeedProps): JSX.Element {
   const {scUser} = useSCFetchUser({id: userId, user});
 
   // STATE
-  const [_widgets, setWidgets] = useState<SCFeedWidgetType[]>(
-    widgets.map((w) => {
-      return {...w, componentProps: {...w.componentProps, userId}};
-    })
-  );
+  const [_widgets, setWidgets] = useState<SCFeedWidgetType[]>([]);
 
   // Component props update
-  useEffect(
-    () =>
-      setWidgets(
-        widgets.map((w) => {
-          return {...w, componentProps: {...w.componentProps, userId: scUser.id}};
-        })
-      ),
-    [user, widgets]
-  );
+  useEffect(() => {
+    if (scUser === null) {
+      return;
+    }
+    setWidgets(
+      widgets.map((w) => {
+        return {...w, componentProps: {...w.componentProps, userId: scUser.id}};
+      })
+    );
+  }, [scUser, widgets]);
 
   if (scUser === null) {
     return <UserFeedSkeleton />;

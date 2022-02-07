@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { styled } from '@mui/material/styles';
+import React, {useEffect, useState} from 'react';
+import {styled} from '@mui/material/styles';
 import {
   Feed,
   FeedObject,
@@ -10,10 +10,10 @@ import {
   InlineComposer,
   SCFeedWidgetType,
   TrendingFeed,
-  TrendingPeople,
+  TrendingPeople
 } from '@selfcommunity/ui';
-import { Endpoints, SCCategoryType, useSCFetchCategory } from '@selfcommunity/core';
-import { CategoryFeedSkeleton } from './index';
+import {Endpoints, SCCategoryType, useSCFetchCategory} from '@selfcommunity/core';
+import {CategoryFeedSkeleton} from './index';
 
 const PREFIX = 'SCCategoryFeedTemplate';
 
@@ -109,20 +109,23 @@ export default function CategoryFeed(props: CategoryFeedProps): JSX.Element {
   // Hooks
   const {scCategory} = useSCFetchCategory({id: categoryId, category});
 
-  const enrichWidgets = () => {
-    return widgets.map((w) => {
-      if (w.component === InlineComposer) {
-        return {...w, componentProps: {...w.componentProps, defaultValue: {categories: [scCategory]}}};
-      }
-      return {...w, componentProps: {...w.componentProps, categoryId: scCategory.id}};
-    });
-  };
-
   // STATE
-  const [_widgets, setWidgets] = useState<SCFeedWidgetType[]>(enrichWidgets());
+  const [_widgets, setWidgets] = useState<SCFeedWidgetType[]>([]);
 
   // Component props update
-  useEffect(() => setWidgets(enrichWidgets()), [scCategory, widgets]);
+  useEffect(() => {
+    if (scCategory === null) {
+      return;
+    }
+    setWidgets(
+      widgets.map((w) => {
+        if (w.component === InlineComposer) {
+          return {...w, componentProps: {...w.componentProps, defaultValue: {categories: [scCategory]}}};
+        }
+        return {...w, componentProps: {...w.componentProps, categoryId: scCategory.id}};
+      })
+    );
+  }, [scCategory, widgets]);
 
   if (scCategory === null) {
     return <CategoryFeedSkeleton />;
@@ -134,7 +137,7 @@ export default function CategoryFeed(props: CategoryFeedProps): JSX.Element {
       className={className}
       endpoint={{
         ...Endpoints.CategoryFeed,
-        url: () => Endpoints.CategoryFeed.url({id: categoryId})
+        url: () => Endpoints.CategoryFeed.url({id: scCategory.id})
       }}
       widgets={_widgets}
       ItemComponent={FeedObject}

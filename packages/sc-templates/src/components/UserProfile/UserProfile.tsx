@@ -62,10 +62,10 @@ export interface UserProfileProps {
 
 export default function UserProfile(props: UserProfileProps): JSX.Element {
   // PROPS
-  const {id = 'user', className, user, userId, widgets, FeedObjectProps, FeedSidebarProps} = props;
+  const {id = 'user_profile', className, user, userId, widgets, FeedObjectProps, FeedSidebarProps} = props;
 
   // Hooks
-  const {scUser, setSCUser} = useSCFetchUser({id: userId, user});
+  const {scUser} = useSCFetchUser({id: userId, user});
 
   if (scUser === null) {
     return <UserProfileSkeleton />;
