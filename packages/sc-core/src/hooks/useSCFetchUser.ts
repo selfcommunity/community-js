@@ -1,7 +1,10 @@
 import {useEffect, useMemo, useState} from 'react';
 import {AxiosResponse} from 'axios';
 import {SCOPE_SC_CORE} from '../constants/Errors';
-import {http, Endpoints, Logger, SCUserType} from '@selfcommunity/core';
+import {SCUserType} from '../types';
+import http from '../utils/http';
+import {Logger} from '../utils/logger';
+import Endpoints from '../constants/Endpoints';
 
 /**
  * Custom hook 'useSCFetchUser'

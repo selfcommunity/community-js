@@ -1,16 +1,10 @@
-import { useEffect, useMemo, useState } from 'react';
-import {
-  Endpoints,
-  http,
-  Logger,
-  SCFeedDiscussionType,
-  SCFeedObjectType,
-  SCFeedObjectTypologyType,
-  SCFeedPostType,
-  SCFeedStatusType,
-} from '@selfcommunity/core';
-import { AxiosResponse } from 'axios';
-import { SCOPE_SC_CORE } from '../constants/Errors';
+import {useEffect, useMemo, useState} from 'react';
+import http from '../utils/http';
+import {Logger} from '../utils/logger';
+import Endpoints from '../constants/Endpoints';
+import {AxiosResponse} from 'axios';
+import {SCOPE_SC_CORE} from '../constants/Errors';
+import {SCFeedDiscussionType, SCFeedObjectType, SCFeedObjectTypologyType, SCFeedPostType, SCFeedStatusType} from '../types';
 
 /**
  * Custom hook 'useFetchFeedObject'

@@ -9,7 +9,7 @@ import {isObject} from './object';
 import {isString} from './string';
 import {SCLocaleType} from '../types';
 import {DEFAULT_CONTEXT_PROVIDERS} from '../constants/ContextProviders';
-import {Logger} from '@selfcommunity/core';
+import {Logger} from './logger';
 
 /**
  * Validate session option

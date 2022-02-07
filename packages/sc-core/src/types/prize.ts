@@ -1,4 +1,4 @@
-import {SCUserType} from '@selfcommunity/core';
+import {SCUserType} from './user';
 
 /**
  * Interface SCPrizeType.

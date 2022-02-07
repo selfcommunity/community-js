@@ -2,7 +2,9 @@ import {useEffect, useMemo, useState} from 'react';
 import {AxiosResponse} from 'axios';
 import {SCOPE_SC_CORE} from '../constants/Errors';
 import {SCCommentType} from '../types/comment';
-import {http, Endpoints, Logger} from '@selfcommunity/core';
+import http from '../utils/http';
+import {Logger} from '../utils/logger';
+import Endpoints from '../constants/Endpoints';
 
 /**
  * Custom hook 'useSCFetchCommentObject'

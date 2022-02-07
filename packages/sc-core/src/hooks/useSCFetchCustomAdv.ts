@@ -1,8 +1,10 @@
 import {useEffect, useMemo, useState} from 'react';
 import {AxiosResponse} from 'axios';
 import {SCOPE_SC_CORE} from '../constants/Errors';
-import {Endpoints, http, Logger, SCCustomAdvType, SCTagType} from '@selfcommunity/core';
-import {SCCategoryType, SCCustomAdvPosition} from '../types';
+import http from '../utils/http';
+import {Logger} from '../utils/logger';
+import Endpoints from '../constants/Endpoints';
+import {SCCustomAdvPosition, SCCustomAdvType} from '../types';
 
 /**
  * Custom hook 'useSCFetchCustomAdv'

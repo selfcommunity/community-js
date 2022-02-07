@@ -1,4 +1,4 @@
-import {SCTagType} from '@selfcommunity/core';
+import {SCTagType} from './tag';
 
 /**
  * Interface SCCategoryType.
