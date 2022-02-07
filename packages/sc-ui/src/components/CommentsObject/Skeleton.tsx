@@ -3,7 +3,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import List from '@mui/material/List';
 import {styled} from '@mui/material/styles';
-import {CommentObjectSkeleton} from '@selfcommunity/ui';
+import CommentObjectSkeleton from '../CommentObject';
 
 const PREFIX = 'SCCommentsObjectSkeleton';
 
