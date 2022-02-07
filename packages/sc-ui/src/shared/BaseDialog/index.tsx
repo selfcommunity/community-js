@@ -23,6 +23,11 @@ const Root = styled(Dialog, {
 
 export interface BaseDialogProps {
   /**
+   * Overrides or extends the styles applied to the component.
+   * @default null
+   */
+  className?: string;
+  /**
    * Dialog title
    * @default ''
    */
@@ -45,7 +50,7 @@ export interface BaseDialogProps {
 
 export default function BaseDialog(props: BaseDialogProps) {
   // PROPS
-  const {title = '', open = false, onClose = null, ...rest} = props;
+  const {className, title = '', open = false, onClose = null, ...rest} = props;
   const {children} = rest;
 
   // OPTIONS
@@ -55,7 +60,14 @@ export default function BaseDialog(props: BaseDialogProps) {
    * Renders root object
    */
   return (
-    <Root fullScreen={fullScreen} fullWidth open={open} onClose={onClose} maxWidth={rest.maxWidth ? rest.maxWidth : 'sm'} scroll="body">
+    <Root
+      className={className}
+      fullScreen={fullScreen}
+      fullWidth
+      open={open}
+      onClose={onClose}
+      maxWidth={rest.maxWidth ? rest.maxWidth : 'sm'}
+      scroll="body">
       <Title onClose={onClose}>{title}</Title>
       <DialogContent dividers>{children}</DialogContent>
       <DialogActions>

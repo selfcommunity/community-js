@@ -1,2 +1,3 @@
-import FollowCategoryButton from './FollowCategoryButton';
+import FollowCategoryButton, {FollowCategoryButtonProps} from './FollowCategoryButton';
 export default FollowCategoryButton;
+export {FollowCategoryButtonProps};

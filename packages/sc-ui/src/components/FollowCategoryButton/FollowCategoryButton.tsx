@@ -22,17 +22,42 @@ const FollowButton = styled(LoadingButton, {
   paddingLeft: '16px'
 }));
 
-export default function FollowCategoryButton({
-  categoryId = null,
-  category = null,
-  onFollow = null,
-  ...rest
-}: {
+export interface FollowCategoryButtonProps {
+  /**
+   * Overrides or extends the styles applied to the component.
+   * @default null
+   */
+  className?: string;
+
+  /**
+   * Id of the category
+   * @default null
+   */
   categoryId?: number;
+
+  /**
+   * Category Object
+   * @default null
+   */
   category?: SCCategoryType;
+
+  /**
+   * onFollow callback
+   * @param user
+   * @param followed
+   */
   onFollow?: (category: SCCategoryType, followed: boolean) => any;
+
+  /**
+   * Others properties
+   */
   [p: string]: any;
-}): JSX.Element {
+}
+
+export default function FollowCategoryButton(props: FollowCategoryButtonProps): JSX.Element {
+  // PROPS
+  const {className, categoryId, category, onFollow, ...rest} = props;
+
   const {scCategory, setSCCategory} = useSCFetchCategory({id: categoryId, category});
   const [followed, setFollowed] = useState<boolean>(null);
   const scUserContext: SCUserContextType = useContext(SCUserContext);
@@ -65,7 +90,12 @@ export default function FollowCategoryButton({
   }
 
   return (
-    <FollowButton size="small" onClick={followCategory} loading={followed === null || scCategoriesManager.isLoading(scCategory)} {...rest}>
+    <FollowButton
+      size="small"
+      onClick={followCategory}
+      loading={followed === null || scCategoriesManager.isLoading(scCategory)}
+      className={className}
+      {...rest}>
       {followed ? (
         <FormattedMessage defaultMessage="ui.followCategoryButton.unfollow" id="ui.followCategoryButton.unfollow" />
       ) : (

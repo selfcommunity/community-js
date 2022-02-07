@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {styled} from '@mui/material/styles';
+import React, { useEffect, useState } from 'react';
+import { styled } from '@mui/material/styles';
 import {
   Feed,
   FeedObject,
@@ -10,9 +10,10 @@ import {
   InlineComposer,
   SCFeedWidgetType,
   TrendingFeed,
-  TrendingPeople
+  TrendingPeople,
 } from '@selfcommunity/ui';
-import {Endpoints, SCCategoryType, useSCFetchCategory} from '@selfcommunity/core';
+import { Endpoints, SCCategoryType, useSCFetchCategory } from '@selfcommunity/core';
+import { CategoryFeedSkeleton } from './index';
 
 const PREFIX = 'SCCategoryFeedTemplate';
 
@@ -122,6 +123,10 @@ export default function CategoryFeed(props: CategoryFeedProps): JSX.Element {
 
   // Component props update
   useEffect(() => setWidgets(enrichWidgets()), [scCategory, widgets]);
+
+  if (scCategory === null) {
+    return <CategoryFeedSkeleton />;
+  }
 
   return (
     <Root

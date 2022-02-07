@@ -1,9 +1,9 @@
 import React, {useContext, useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Avatar, AvatarGroup, Box, Button, Chip, Divider, Grid, List, Paper, Typography} from '@mui/material';
-import FollowCategoryButton from '../FollowCategoryButton';
+import FollowCategoryButton, {FollowCategoryButtonProps} from '../FollowCategoryButton';
 import {AxiosResponse} from 'axios';
-import BaseDialog from '../../shared/BaseDialog';
+import BaseDialog, {BaseDialogProps} from '../../shared/BaseDialog';
 import {FormattedMessage} from 'react-intl';
 import CentralProgress from '../../shared/CentralProgress';
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -16,8 +16,12 @@ const PREFIX = 'SCCategoryHeader';
 
 const classes = {
   cover: `${PREFIX}-cover`,
-  categoryName: `${PREFIX}-name`,
-  categorySlogan: `${PREFIX}-slogan`
+  name: `${PREFIX}-name`,
+  slogan: `${PREFIX}-slogan`,
+  info: `${PREFIX}-info`,
+  followedByCounter: `${PREFIX}-followed-by-counter`,
+  followedByAvatars: `${PREFIX}-followed-by-avatars`,
+  divider: `${PREFIX}-divider`
 };
 
 const Root = styled(Box, {
@@ -34,13 +38,13 @@ const Root = styled(Box, {
     color: '#FFF',
     background: 'linear-gradient(180deg, rgba(177,177,177,1) 0%, rgba(255,255,255,1) 90%)'
   },
-  [`& .${classes.categoryName}`]: {
+  [`& .${classes.name}`]: {
     display: 'block',
     whiteSpace: 'nowrap',
     overflow: 'hidden',
     textOverflow: 'ellipsis'
   },
-  [`& .${classes.categorySlogan}`]: {
+  [`& .${classes.slogan}`]: {
     display: 'block',
     whiteSpace: 'nowrap',
     overflow: 'hidden',
@@ -50,6 +54,16 @@ const Root = styled(Box, {
     color: '#FFF',
     border: '2px solid #FFF',
     fontSize: 11
+  },
+  [`& .${classes.info}`]: {
+    marginTop: 0.5,
+    padding: 3,
+    flexDirection: 'column',
+    alignItems: 'center'
+  },
+  [`& .${classes.followedByCounter}`]: {
+    display: 'inline',
+    marginLeft: 10
   }
 }));
 
@@ -69,6 +83,19 @@ export interface CategoryHeaderProps {
    * @default null
    */
   categoryId?: number;
+
+  /**
+   * Props to spread category button followed
+   * @default {}
+   */
+  FollowCategoryButtonProps?: FollowCategoryButtonProps;
+
+  /**
+   * Props to spread to followedBy dialog
+   * @default {}
+   */
+  FollowedByDialogProps?: BaseDialogProps;
+
   /**
    * Any other properties
    */
@@ -76,7 +103,7 @@ export interface CategoryHeaderProps {
 }
 export default function CategoryHeader(props: CategoryHeaderProps): JSX.Element {
   // PROPS
-  const {className = null, category = null, categoryId = null, ...rest} = props;
+  const {className, categoryId, category, FollowCategoryButtonProps = {}, FollowedByDialogProps = {}, ...rest} = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
@@ -169,24 +196,24 @@ export default function CategoryHeader(props: CategoryHeaderProps): JSX.Element 
   return (
     <Root className={className} {...rest}>
       <Paper style={_backgroundCover} classes={{root: classes.cover}}>
-        <Typography variant={'h3'} align={'center'} className={classes.categoryName} gutterBottom>
+        <Typography variant={'h3'} align={'center'} className={classes.name} gutterBottom>
           {scCategory.name}
         </Typography>
         {scCategory.slogan && (
-          <Typography variant={'h5'} align={'center'} className={classes.categorySlogan}>
+          <Typography variant={'h5'} align={'center'} className={classes.slogan}>
             {scCategory.slogan}
           </Typography>
         )}
       </Paper>
-      <Grid container spacing={2} sx={{mt: 0.5, p: 3}}>
-        <Grid item xs={12} sx={{textAlign: 'center'}}>
-          <FollowCategoryButton category={scCategory} onFollow={handleFollowCategory} />
-          <Typography sx={{display: 'inline', ml: 1}} component="div">
+      <Grid container spacing={2} className={classes.info}>
+        <Grid item xs={12}>
+          <FollowCategoryButton category={scCategory} onFollow={handleFollowCategory} {...FollowCategoryButtonProps} />
+          <Typography className={classes.followedByCounter} component="div">
             <FormattedMessage id="ui.categoryHeader.followedBy" defaultMessage="ui.categoryHeader.followedBy" />{' '}
             <Chip icon={<FaceIcon />} label={loading ? '...' : total} />
           </Typography>
         </Grid>
-        <Grid item xs={12} sx={{textAlign: 'center'}}>
+        <Grid item xs={12} className={classes.followedByAvatars}>
           {loading && !scCategory ? (
             <AvatarGroupSkeleton {...rest} />
           ) : (
@@ -209,7 +236,7 @@ export default function CategoryHeader(props: CategoryHeaderProps): JSX.Element 
           )}
         </Grid>
       </Grid>
-      <Divider />
+      <Divider className={classes.divider} />
       {openFollowersDialog && (
         <BaseDialog
           title={
@@ -218,7 +245,8 @@ export default function CategoryHeader(props: CategoryHeaderProps): JSX.Element 
             </>
           }
           onClose={handleToggleFollowersDialog}
-          open={openFollowersDialog}>
+          open={openFollowersDialog}
+          {...FollowedByDialogProps}>
           {loading ? (
             <CentralProgress size={50} />
           ) : (
@@ -237,7 +265,7 @@ export default function CategoryHeader(props: CategoryHeaderProps): JSX.Element 
               }>
               <List>
                 {followers.map((follower, index) => (
-                  <User elevation={0} user={follower} key={index} sx={{m: 0}} />
+                  <User elevation={0} user={follower} key={index} />
                 ))}
               </List>
             </InfiniteScroll>
