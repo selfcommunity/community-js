@@ -143,14 +143,14 @@ export default function TrendingPeople(props: TrendingPeopleProps): JSX.Element 
   );
 
   /**
-   * Renders root object (if not hidden by autoHide prop)
+   * Renders root object (if results and autoHide prop is set to false, otherwise component is hidden)
    */
-  if (!autoHide) {
-    return (
-      <Root className={className} {...rest}>
-        {p}
-      </Root>
-    );
+  if (autoHide && !total) {
+    return null;
   }
-  return null;
+  return (
+    <Root className={className} {...rest}>
+      {p}
+    </Root>
+  );
 }

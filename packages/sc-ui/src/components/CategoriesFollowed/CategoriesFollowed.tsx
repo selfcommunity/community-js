@@ -55,7 +55,6 @@ export default function CategoriesFollowed(props: CategoriesListProps): JSX.Elem
   const [hasMore, setHasMore] = useState<boolean>(false);
   const [total, setTotal] = useState<number>(0);
   const [openCategoriesFollowedDialog, setOpenCategoriesFollowedDialog] = useState<boolean>(false);
-
   /**
    * Handles list change on category follow
    */
@@ -123,11 +122,11 @@ export default function CategoriesFollowed(props: CategoriesListProps): JSX.Elem
         <Skeleton elevation={0} />
       ) : (
         <CardContent>
-          <Typography variant="body1">{`${intl.formatMessage(messages.categoriesFollowed, {total: total})}`}</Typography>
           {!total ? (
             <Typography variant="body2">{`${intl.formatMessage(messages.noCategories)}`}</Typography>
           ) : (
             <React.Fragment>
+              <Typography variant="body1">{`${intl.formatMessage(messages.categoriesFollowed, {total: total})}`}</Typography>
               <List>
                 {categories.slice(0, visibleCategories).map((category: SCCategoryType, index) => (
                   <div key={index}>
@@ -150,9 +149,12 @@ export default function CategoriesFollowed(props: CategoriesListProps): JSX.Elem
   );
 
   /**
-   * Renders root object (if not hidden by autoHide prop)
+   * Renders root object (if results and if user is logged, otherwise component is hidden)
    */
-  if (!autoHide && scUserContext.user) {
+  if (autoHide && !total) {
+    return null;
+  }
+  if (scUserContext.user) {
     return (
       <Root className={className} {...rest}>
         {c}

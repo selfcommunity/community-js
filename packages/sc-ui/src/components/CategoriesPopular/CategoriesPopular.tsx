@@ -28,7 +28,7 @@ export default function CategoriesPopular(props: CategoriesListProps): JSX.Eleme
   const limit = 3;
 
   // PROPS
-  const {autoHide, className, CategoryProps = {}, ...rest} = props;
+  const {autoHide = true, className, CategoryProps = {}, ...rest} = props;
 
   // STATE
   const [categories, setCategories] = useState<any[]>([]);
@@ -105,7 +105,6 @@ export default function CategoriesPopular(props: CategoriesListProps): JSX.Eleme
               {categories.slice(0, visibleCategories).map((category: SCCategoryType, index) => (
                 <div key={index}>
                   <Category elevation={0} category={category} key={category.id} popular={true} {...CategoryProps} />
-                  {index < visibleCategories - 1 ? <Divider /> : null}
                 </div>
               ))}
               {hasMore && (
@@ -122,14 +121,14 @@ export default function CategoriesPopular(props: CategoriesListProps): JSX.Eleme
   );
 
   /**
-   * Renders root object (if not hidden by autoHide prop)
+   * Renders root object (if results and autoHide prop is set to false, otherwise component is hidden)
    */
-  if (!autoHide) {
-    return (
-      <Root className={className} {...rest}>
-        {c}
-      </Root>
-    );
+  if (autoHide && !total) {
+    return null;
   }
-  return null;
+  return (
+    <Root className={className} {...rest}>
+      {c}
+    </Root>
+  );
 }

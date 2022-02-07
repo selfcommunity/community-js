@@ -24,7 +24,7 @@ export default function CommentsObjectSkeleton(props): JSX.Element {
     <Root {...props}>
       <CardContent>
         <List className={classes.list}>
-          {[...Array(4)].map((category, index) => (
+          {[...Array(4)].map((comment, index) => (
             <CommentObjectSkeleton key={index} elevation={0} />
           ))}
         </List>

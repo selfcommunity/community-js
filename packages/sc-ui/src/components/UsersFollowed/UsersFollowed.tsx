@@ -130,11 +130,11 @@ export default function UsersFollowed(props: UsersFollowedProps): JSX.Element {
         <PeopleSuggestionSkeleton elevation={0} />
       ) : (
         <CardContent>
-          <Typography variant="body1">{`${intl.formatMessage(messages.usersFollowed, {total: total})}`}</Typography>
           {!total ? (
             <Typography variant="body2">{`${intl.formatMessage(messages.noUsers)}`}</Typography>
           ) : (
             <React.Fragment>
+              <Typography variant="body1">{`${intl.formatMessage(messages.usersFollowed, {total: total})}`}</Typography>
               <List>
                 {followed.slice(0, visibleUsers).map((user: SCUserType, index) => (
                   <div key={index}>
@@ -155,9 +155,12 @@ export default function UsersFollowed(props: UsersFollowedProps): JSX.Element {
   );
 
   /**
-   * Renders root object (if not hidden by autoHide prop)
+   * Renders root object (if results and if user is logged, otherwise component is hidden)
    */
-  if (!autoHide && scUserContext.user) {
+  if (autoHide && !total) {
+    return null;
+  }
+  if (scUserContext.user) {
     return <Root className={className}>{u}</Root>;
   }
   return null;

@@ -181,9 +181,12 @@ export default function PeopleSuggestion(props: PeopleSuggestionProps): JSX.Elem
   );
 
   /**
-   * Renders root object (if not hidden by autoHide prop)
+   * Renders root object (if results and if user is logged, otherwise component is hidden)
    */
-  if (!autoHide && scUserContext.user) {
+  if (autoHide && !total) {
+    return null;
+  }
+  if (scUserContext.user) {
     return (
       <Root className={className} {...rest}>
         {p}

@@ -85,7 +85,7 @@ export default function RelatedDiscussion(props: RelatedDiscussionProps): JSX.El
   const scUserContext: SCUserContextType = useSCUser();
 
   // PROPS
-  const {feedObjectId, feedObjectType, template = FeedObjectTemplateType.SNIPPET, FeedObjectProps = {}, className, autoHide, ...rest} = props;
+  const {feedObjectId, feedObjectType, template = FeedObjectTemplateType.SNIPPET, FeedObjectProps = {}, className, autoHide = true, ...rest} = props;
 
   // STATE
   const [objs, setObjs] = useState<any[]>([]);
@@ -201,14 +201,14 @@ export default function RelatedDiscussion(props: RelatedDiscussionProps): JSX.El
   );
 
   /**
-   * Renders root object (if not hidden by autoHide prop)
+   * Renders root object (if results and autoHide prop is set to false, otherwise component is hidden)
    */
-  if (!autoHide) {
-    return (
-      <Root className={className} {...rest}>
-        {d}
-      </Root>
-    );
+  if (autoHide && !total) {
+    return null;
   }
-  return null;
+  return (
+    <Root className={className} {...rest}>
+      {d}
+    </Root>
+  );
 }
