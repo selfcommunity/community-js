@@ -12,6 +12,7 @@ import {
   UsersFollowed
 } from '@selfcommunity/ui';
 import { Endpoints, SCUserType, useSCFetchUser } from '@selfcommunity/core';
+import { UserFeedSkeleton } from './index';
 
 const PREFIX = 'SCUserFeedTemplate';
 
@@ -109,6 +110,10 @@ export default function UserFeed(props: UserFeedProps): JSX.Element {
       ),
     [user, widgets]
   );
+
+  if (scUser === null) {
+    return <UserFeedSkeleton />;
+  }
 
   return (
     <Root

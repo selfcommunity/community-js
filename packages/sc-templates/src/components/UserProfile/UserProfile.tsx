@@ -73,7 +73,7 @@ export default function UserProfile(props: UserProfileProps): JSX.Element {
   return (
     <Root id={id} className={className}>
       <UserProfileHeader user={scUser} />
-      <UserFeed userId={scUser.id} widgets={widgets} FeedObjectProps={FeedObjectProps} FeedSidebarProps={FeedSidebarProps} />
+      <UserFeed user={scUser} widgets={widgets} FeedObjectProps={FeedObjectProps} FeedSidebarProps={FeedSidebarProps} />
     </Root>
   );
 }
