@@ -74,7 +74,7 @@ export default function Category(props: CategoryProps): JSX.Element {
   return (
     <Root id={id} className={className}>
       <CategoryHeader category={scCategory} />
-      <CategoryFeed categoryId={scCategory.id} widgets={widgets} FeedObjectProps={FeedObjectProps} FeedSidebarProps={FeedSidebarProps} />
+      <CategoryFeed category={scCategory} widgets={widgets} FeedObjectProps={FeedObjectProps} FeedSidebarProps={FeedSidebarProps} />
     </Root>
   );
 }

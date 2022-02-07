@@ -1,12 +1,13 @@
 import React, {useContext, useMemo, useState} from 'react';
 import {
+  SCCategoryType,
   SCContext,
-  SCContextType,
+  SCContextType, SCMediaType, SCPollType,
   SCPreferences,
   SCPreferencesContext,
-  SCPreferencesContextType,
+  SCPreferencesContextType, SCTagType,
   SCUserContext,
-  SCUserContextType
+  SCUserContextType,
 } from '@selfcommunity/core';
 import {Avatar, Box, Button, IconButton, PaperProps} from '@mui/material';
 import {styled} from '@mui/material/styles';
@@ -55,6 +56,20 @@ export interface InlineComposerTypeMap<P = {}, D extends React.ElementType = 'di
        */
       mediaObjectTypes?: SCMediaObjectType[];
       /**
+       * Initialization Data for the Composer, this is a hook to generate custom posts
+       * @default null
+       */
+      defaultValue?: {
+        title?: string;
+        text?: string;
+        categories?: SCCategoryType[];
+        audience?: string;
+        addressing?: SCTagType[];
+        medias?: SCMediaType[];
+        poll?: SCPollType;
+        location?: string;
+      };
+      /**
        * Callback triggered on success contribution creation
        * @default null
        */
@@ -83,7 +98,7 @@ const INITIAL_STATE = {
 
 export default function InlineComposer(props: InlineComposerProps): JSX.Element {
   // PROPS
-  const {mediaObjectTypes = [Image, Document, Link], onSuccess = null, ...rest} = props;
+  const {mediaObjectTypes = [Image, Document, Link], defaultValue, onSuccess = null, ...rest} = props;
 
   // Context
   const scContext: SCContextType = useContext(SCContext);
@@ -159,6 +174,7 @@ export default function InlineComposer(props: InlineComposerProps): JSX.Element 
         open={open}
         view={view}
         mediaObjectTypes={mediaObjectTypes}
+        defaultValue={defaultValue}
         maxWidth="sm"
         fullWidth
         scroll="body"

@@ -2,7 +2,7 @@ import React, {forwardRef, ReactNode, SyntheticEvent, useContext, useEffect, use
 import {
   Endpoints,
   formatHttpError,
-  http,
+  http, SCCategoryType,
   SCFeatures,
   SCFeedDiscussionType,
   SCFeedObjectTypologyType,
@@ -15,7 +15,7 @@ import {
   SCPreferencesContextType,
   SCTagType,
   SCUserContext,
-  SCUserContextType
+  SCUserContextType,
 } from '@selfcommunity/core';
 import {FormattedMessage} from 'react-intl';
 import CloseIcon from '@mui/icons-material/CancelOutlined';
@@ -257,7 +257,7 @@ export interface ComposerTypeMap<P = {}, D extends React.ElementType = 'div'> {
       defaultValue?: {
         title?: string;
         text?: string;
-        categories?: [];
+        categories?: SCCategoryType[];
         audience?: string;
         addressing?: SCTagType[];
         medias?: SCMediaType[];

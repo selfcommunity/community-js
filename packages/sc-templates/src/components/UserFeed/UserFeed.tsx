@@ -11,7 +11,7 @@ import {
   SCFeedWidgetType,
   UsersFollowed
 } from '@selfcommunity/ui';
-import {Endpoints} from '@selfcommunity/core';
+import { Endpoints, SCUserType, useSCFetchUser } from '@selfcommunity/core';
 
 const PREFIX = 'SCUserFeedTemplate';
 
@@ -41,6 +41,12 @@ export interface UserFeedProps {
    * @default null
    */
   userId?: number;
+
+  /**
+   * User Object
+   * @default null
+   */
+  user?: SCUserType;
 
   /**
    * Widgets to be rendered into the feed
@@ -81,7 +87,10 @@ const WIDGETS: SCFeedWidgetType[] = [
 
 export default function UserFeed(props: UserFeedProps): JSX.Element {
   // PROPS
-  const {id = 'user_feed', className, userId, widgets = WIDGETS, FeedObjectProps = {variant: 'outlined'}, FeedSidebarProps = null} = props;
+  const {id = 'user_feed', className, userId, user, widgets = WIDGETS, FeedObjectProps = {variant: 'outlined'}, FeedSidebarProps = null} = props;
+
+  // Hooks
+  const {scUser} = useSCFetchUser({id: userId, user});
 
   // STATE
   const [_widgets, setWidgets] = useState<SCFeedWidgetType[]>(
@@ -95,10 +104,10 @@ export default function UserFeed(props: UserFeedProps): JSX.Element {
     () =>
       setWidgets(
         widgets.map((w) => {
-          return {...w, componentProps: {...w.componentProps, userId}};
+          return {...w, componentProps: {...w.componentProps, userId: scUser.id}};
         })
       ),
-    [userId, widgets]
+    [user, widgets]
   );
 
   return (
@@ -107,7 +116,7 @@ export default function UserFeed(props: UserFeedProps): JSX.Element {
       className={className}
       endpoint={{
         ...Endpoints.UserFeed,
-        url: () => Endpoints.UserFeed.url({id: userId})
+        url: () => Endpoints.UserFeed.url({id: scUser.id})
       }}
       widgets={_widgets}
       ItemComponent={FeedObject}
