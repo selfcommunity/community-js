@@ -280,7 +280,7 @@ export default function Feed(props: FeedProps): JSX.Element {
         right: _widgets.filter((w) => w.column === 'right').sort(widgetSort)
       };
     }
-  }, [oneColLayout, feedData]);
+  }, [oneColLayout, feedData, _widgets]);
 
   const data = getData();
 
