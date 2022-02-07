@@ -26,7 +26,7 @@ const Root = styled(Box, {
   flexWrap: 'wrap'
 }));
 
-export interface ChangecoverProps {
+export interface ChangeCoverProps {
   /**
    * On change function.
    * @default null
@@ -48,7 +48,7 @@ export interface ChangecoverProps {
   [p: string]: any;
 }
 
-export default function ChangeCover(props: ChangecoverProps): JSX.Element {
+export default function ChangeCover(props: ChangeCoverProps): JSX.Element {
   //PROPS
   const {onChange, autoHide, className, ...rest} = props;
 

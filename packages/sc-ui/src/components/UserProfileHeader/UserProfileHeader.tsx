@@ -1,8 +1,8 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
 import {Box, Divider, Grid, Paper, Typography} from '@mui/material';
-import ChangeCover from '../ChangeCover';
-import ChangePicture from '../ChangePicture';
+import ChangeCover, {ChangeCoverProps} from '../ChangeCover';
+import ChangePicture, {ChangePictureProps} from '../ChangePicture';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {
   SCPreferences,
@@ -19,6 +19,7 @@ const PREFIX = 'SCUserProfileHeader';
 const classes = {
   cover: `${PREFIX}-cover`,
   avatar: `${PREFIX}-avatar`,
+  info: `${PREFIX}-info`,
   username: `${PREFIX}-username`,
   changePicture: `${PREFIX}-change-picture`,
   changeCover: `${PREFIX}-change-cover`
@@ -43,6 +44,10 @@ const Root = styled(Box, {
     height: 200,
     borderRadius: 120,
     border: '#FFF solid 5px'
+  },
+  [`& .${classes.info}`]: {
+    marginTop: 0.5,
+    padding: 3
   },
   [`& .${classes.username}`]: {
     marginTop: 50
@@ -70,11 +75,25 @@ export interface UserProfileHeaderProps {
    * @default null
    */
   userId?: number;
+
   /**
    * User Object
    * @default null
    */
   user?: SCUserType;
+
+  /**
+   * Props to spread change picture button
+   * @default {}
+   */
+  ChangePictureProps?: ChangePictureProps;
+
+  /**
+   * Props to spread change cover button
+   * @default {}
+   */
+  ChangeCoverProps?: ChangeCoverProps;
+
   /**
    * Any other properties
    */
@@ -82,7 +101,7 @@ export interface UserProfileHeaderProps {
 }
 export default function UserProfileHeader(props: UserProfileHeaderProps): JSX.Element {
   // PROPS
-  const {className = null, userId = null, user = null, ...rest} = props;
+  const {className = null, userId = null, user = null, ChangePictureProps = {}, ChangeCoverProps = {}, ...rest} = props;
 
   // PREFERENCES
   const scPreferences: SCPreferencesContextType = useSCPreferences();
@@ -133,9 +152,9 @@ export default function UserProfileHeader(props: UserProfileHeaderProps): JSX.El
           <img src={scUser.avatar ? scUser.avatar : ''} className={classes.avatar} />
           {scUserContext.user && scUser.id === scUserContext.user.id && (
             <>
-              <ChangePicture iconButton={true} onChange={handleChangeAvatar} className={classes.changePicture} />
+              <ChangePicture iconButton={true} onChange={handleChangeAvatar} className={classes.changePicture} {...ChangePictureProps} />
               <div className={classes.changeCover}>
-                <ChangeCover onChange={handleChangeCover} />
+                <ChangeCover onChange={handleChangeCover} {...ChangeCoverProps} />
               </div>
             </>
           )}
@@ -143,7 +162,7 @@ export default function UserProfileHeader(props: UserProfileHeaderProps): JSX.El
         <Typography variant="h5" align={'center'} className={classes.username}>
           {scUser.username}
         </Typography>
-        <Grid container spacing={2} sx={{mt: 0.5, p: 3}}>
+        <Grid container spacing={2} className={classes.info}>
           <Grid item xs={6}>
             <Typography variant="body2">
               <b>

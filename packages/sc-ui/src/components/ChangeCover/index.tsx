@@ -1,3 +1,3 @@
-import ChangeCover, {ChangecoverProps} from './ChangeCover';
+import ChangeCover, {ChangeCoverProps} from './ChangeCover';
 export default ChangeCover;
-export {ChangecoverProps};
+export {ChangeCoverProps};

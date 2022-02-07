@@ -6,7 +6,7 @@ import CategoryHeader, {CategoryHeaderProps, CategoryHeaderSkeleton} from './com
 import CategoriesFollowed, {CategoriesFollowedSkeleton} from './components/CategoriesFollowed';
 import CategoriesPopular, {CategoriesPopularSkeleton} from './components/CategoriesPopular';
 import CategoriesSuggestion, {CategoriesListProps, CategoriesSuggestionSkeleton} from './components/CategoriesSuggestion';
-import ChangeCover, {ChangecoverProps} from './components/ChangeCover';
+import ChangeCover, {ChangeCoverProps} from './components/ChangeCover';
 import ChangePicture, {ChangePictureProps} from './components/ChangePicture';
 import Connection from './components/ConnectionUserButton';
 import Composer, {ComposerProps, ComposerSkeleton} from './components/Composer';
@@ -60,7 +60,7 @@ export {
   ChangeCover,
   ChangePicture,
   ChangePictureProps,
-  ChangecoverProps,
+  ChangeCoverProps,
   Composer,
   Connection,
   ComposerProps,
