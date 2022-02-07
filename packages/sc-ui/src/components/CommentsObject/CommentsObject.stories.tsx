@@ -3,7 +3,7 @@ import {ComponentMeta, ComponentStory} from '@storybook/react';
 
 import CommentsObject from './index';
 import {SCFeedObjectTypologyType} from '@selfcommunity/core';
-import {CommentsOrderBy} from '../../../types/comments';
+import {CommentsOrderBy} from '../../types/comments';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {

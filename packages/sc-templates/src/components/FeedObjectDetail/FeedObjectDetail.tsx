@@ -114,13 +114,7 @@ export default function FeedObjectDetail(props: FeedObjectDetailProps): JSX.Elem
         <Grid item xs={12} md={7}>
           <FeedObject {...FeedObjectProps} feedObject={obj} template={FeedObjectTemplateType.DETAIL} />
           {renderAdvertising()}
-          <CommentsObject
-            variant={'outlined'}
-            showTitle
-            feedObject={obj}
-            commentsOrderBy={CommentsOrderBy.ADDED_AT_ASC}
-            fixedPrimaryReply
-          />
+          <CommentsObject variant={'outlined'} showTitle feedObject={obj} commentsOrderBy={CommentsOrderBy.ADDED_AT_ASC} fixedPrimaryReply />
         </Grid>
         <Grid item xs={12} md={5}>
           <Hidden smDown>

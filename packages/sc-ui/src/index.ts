@@ -29,7 +29,7 @@ import UsersFollowed, {UsersFollowedProps, UsersFollowedSkeleton} from './compon
 import RelatedDiscussion, {RelatedDiscussionProps, RelatedDiscussionSkeleton} from './components/RelatedDiscussion';
 import CommentObject, {CommentObjectProps, CommentObjectSkeleton} from './components/CommentObject';
 import PrivateMessages, {PrivateMessagesProps, PrivateMessagesSkeleton} from './components/PrivateMessages';
-import CommentsObject from './components/Composer/CommentsObject';
+import CommentsObject, {CommentsObjectProps, CommentsObjectSkeleton} from './components/CommentsObject';
 import ReplyComment from './components/CommentObject/ReplyComment';
 import CustomAdv, {CustomAdvProps, CustomAdvSkeleton} from './components/CustomAdv';
 import {GenericSkeleton, AvatarGroupSkeleton} from './components/Skeleton';
@@ -84,8 +84,10 @@ export {
   AvatarGroupSkeleton,
   CommentObject,
   CommentsObject,
+  CommentsObjectProps,
   CommentObjectProps,
   CommentObjectSkeleton,
+  CommentsObjectSkeleton,
   ReplyComment,
   InlineComposer,
   InlineComposerProps,

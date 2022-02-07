@@ -52,7 +52,7 @@ import {
   useSCUser
 } from '@selfcommunity/core';
 import Composer from '../Composer';
-import CommentsObject from '../Composer/CommentsObject';
+import CommentsObject from '../CommentsObject';
 import ActivitiesMenu from './ActivitiesMenu';
 import {CommentsOrderBy} from '../../types/comments';
 import {FeedObjectActivitiesType, FeedObjectTemplateType} from '../../types/feedObject';
