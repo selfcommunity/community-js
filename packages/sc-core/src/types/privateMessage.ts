@@ -2,7 +2,7 @@
  * Interface SCPrivateMessageType.
  * Private Message Schema.
  */
-import {SCUserType} from '@selfcommunity/core';
+import {SCUserType} from './user';
 
 export interface SCPrivateMessageType {
   /**

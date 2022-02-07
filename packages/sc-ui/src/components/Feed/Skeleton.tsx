@@ -1,12 +1,7 @@
-import React, {ReactNode} from 'react';
+import React from 'react';
 import {styled} from '@mui/material/styles';
-import {FeedObjectTemplateType} from '../../types/feedObject';
 import {Grid, Hidden} from '@mui/material';
-import FeedObjectSkeleton from '../FeedObject/Skeleton';
 import {GenericSkeleton} from '../Skeleton';
-import InlineComposerSkeleton from '../InlineComposer/Skeleton';
-import {EndpointType} from '@selfcommunity/core';
-import {SCFeedWidgetType} from '@selfcommunity/ui';
 
 const PREFIX = 'SCFeedSkeleton';
 

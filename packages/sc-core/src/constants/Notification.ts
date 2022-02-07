@@ -1,5 +1,4 @@
-import {SCNotificationTypologyType} from '@selfcommunity/core';
-import {SCNotificationTopicType} from '../types/notification';
+import {SCNotificationTopicType, SCNotificationTypologyType} from '../types/notification';
 
 /**
  * List of all possible topics

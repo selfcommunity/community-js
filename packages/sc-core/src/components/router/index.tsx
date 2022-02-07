@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import {SCRoutingContext} from '../provider/SCRoutingProvider';
-import {SCRoutingContextType} from '@selfcommunity/core';
+import {SCRoutingContextType} from '../../types/context';
 
 /**
  *
