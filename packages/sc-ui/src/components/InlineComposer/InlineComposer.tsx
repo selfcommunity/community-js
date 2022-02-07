@@ -146,7 +146,7 @@ export default function InlineComposer(props: InlineComposerProps): JSX.Element 
     <React.Fragment>
       <Root {...rest}>
         <Box className={classes.input}>
-          <Button variant="text" disableFocusRipple disableRipple disableElevation onClick={handleOpen(MAIN_VIEW)} fullWidth>
+          <Button variant="text" disableFocusRipple disableRipple disableElevation onClick={handleOpen(MAIN_VIEW)} fullWidth color="inherit">
             <FormattedMessage id="ui.inlineComposer.label" defaultMessage="ui.inlineComposer.label" />
           </Button>
         </Box>

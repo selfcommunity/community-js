@@ -30,7 +30,7 @@ const getTheme = (options, preferences) => {
     ? {
         palette: {
           ...(isValidPreference(preferences, COLORS_COLORBACK, validateColor) && {background: {default: preferences[COLORS_COLORBACK].value}}),
-          ...(isValidPreference(preferences, COLORS_COLORPRIMARY, validateColor) && {text: {primary: preferences[COLORS_COLORPRIMARY].value}}),
+          ...{text: {primary: '#777'}}, // TODO: add dynamic preferences
           ...(isValidPreference(preferences, COLORS_COLORPRIMARY, validateColor) && {primary: {main: preferences[COLORS_COLORPRIMARY].value}}),
           ...(isValidPreference(preferences, COLORS_COLORSECONDARY, validateColor) && {
             secondary: {main: preferences[COLORS_COLORSECONDARY].value},
