@@ -57,11 +57,10 @@ import ActivitiesMenu from './ActivitiesMenu';
 import {CommentsOrderBy} from '../../types/comments';
 import {FeedObjectActivitiesType, FeedObjectTemplateType} from '../../types/feedObject';
 import RelevantActivities from './RelevantActivities';
-import ReplyCommentObject, {ReplyCommentObjectProps} from '../CommentObject/ReplyComment';
+import ReplyCommentObject from '../CommentObject/ReplyComment';
 import {LoadingButton} from '@mui/lab';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {AxiosResponse} from 'axios';
-import {Context} from 'react-intl/src/components/injectIntl';
 
 const messages = defineMessages({
   comment: {
@@ -570,13 +569,13 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
                   )}
                 </>
               )}
-              <MediasPreview medias={obj.medias} />
               <Typography
                 component="div"
                 gutterBottom
                 className={classes.text}
                 dangerouslySetInnerHTML={{__html: template === FeedObjectTemplateType.PREVIEW ? obj.summary : obj.html}}
               />
+              <MediasPreview medias={obj.medias} />
               {obj['poll'] && <PollObject feedObject={obj} pollObject={obj['poll']} onChange={handleChangePoll} elevation={0} />}
               <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
                 {!hideParticipantsPreview && (
