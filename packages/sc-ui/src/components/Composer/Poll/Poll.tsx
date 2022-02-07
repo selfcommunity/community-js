@@ -109,11 +109,11 @@ export default (props: PollProps): JSX.Element => {
   const {titleError = null} = {...error};
 
   // STATE
-  const [title, setTitle] = useState<string>(value.title);
-  const [multiple, setMultiple] = useState<boolean>(value.multiple_choices);
-  const [expiration, setExpiration] = React.useState<Date | null>(value.expiration_at);
+  const [title, setTitle] = useState<string>(value !== null ? value.title : DEFAULT_POLL.title);
+  const [multiple, setMultiple] = useState<boolean>(value !== null ? value.multiple_choices : DEFAULT_POLL.multiple_choices);
+  const [expiration, setExpiration] = React.useState<Date | null>(value !== null ? value.expiration_at : DEFAULT_POLL.expiration_at);
 
-  const _choicesInitialState: SCPollChoiceType[] = [...value.choices];
+  const _choicesInitialState: SCPollChoiceType[] = [...(value !== null ? value.choices : DEFAULT_POLL.choices)];
   while (_choicesInitialState.length < COMPOSER_POLL_MIN_CHOICES) {
     _choicesInitialState.push({...DEFAULT_CHOICE});
   }

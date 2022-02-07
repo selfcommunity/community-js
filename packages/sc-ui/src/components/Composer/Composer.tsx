@@ -2,7 +2,8 @@ import React, {forwardRef, ReactNode, SyntheticEvent, useContext, useEffect, use
 import {
   Endpoints,
   formatHttpError,
-  http, SCCategoryType,
+  http,
+  SCCategoryType,
   SCFeatures,
   SCFeedDiscussionType,
   SCFeedObjectTypologyType,
@@ -15,7 +16,7 @@ import {
   SCPreferencesContextType,
   SCTagType,
   SCUserContext,
-  SCUserContextType,
+  SCUserContextType
 } from '@selfcommunity/core';
 import {FormattedMessage} from 'react-intl';
 import CloseIcon from '@mui/icons-material/CancelOutlined';
@@ -496,7 +497,7 @@ export default function Composer(props: ComposerProps): JSX.Element {
   };
 
   const handleChangePoll = (poll: SCPollType): void => {
-    dispatch({type: 'text', value: poll});
+    dispatch({type: 'poll', value: poll});
   };
 
   const handleChange =
