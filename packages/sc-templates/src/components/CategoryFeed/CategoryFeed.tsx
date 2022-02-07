@@ -12,7 +12,7 @@ import {
   TrendingFeed,
   TrendingPeople
 } from '@selfcommunity/ui';
-import {Endpoints} from '@selfcommunity/core';
+import {Endpoints, SCCategoryType, useSCFetchCategory} from '@selfcommunity/core';
 
 const PREFIX = 'SCCategoryFeedTemplate';
 
@@ -36,6 +36,12 @@ export interface CategoryFeedProps {
    * @default null
    */
   className?: string;
+
+  /**
+   * Category Object
+   * @default null
+   */
+  category?: SCCategoryType;
 
   /**
    * Id of the category for filter the feed
@@ -89,25 +95,33 @@ const WIDGETS: SCFeedWidgetType[] = [
 
 export default function CategoryFeed(props: CategoryFeedProps): JSX.Element {
   // PROPS
-  const {id = 'category_feed', className, categoryId, widgets = WIDGETS, FeedObjectProps = {variant: 'outlined'}, FeedSidebarProps = null} = props;
+  const {
+    id = 'category_feed',
+    className,
+    category,
+    categoryId,
+    widgets = WIDGETS,
+    FeedObjectProps = {variant: 'outlined'},
+    FeedSidebarProps = null
+  } = props;
+
+  // Hooks
+  const {scCategory} = useSCFetchCategory({id: categoryId, category});
+
+  const enrichWidgets = () => {
+    return widgets.map((w) => {
+      if (w.component === InlineComposer) {
+        return {...w, componentProps: {...w.componentProps, defaultValue: {categories: [scCategory]}}};
+      }
+      return {...w, componentProps: {...w.componentProps, categoryId: scCategory.id}};
+    });
+  };
 
   // STATE
-  const [_widgets, setWidgets] = useState<SCFeedWidgetType[]>(
-    widgets.map((w) => {
-      return {...w, componentProps: {...w.componentProps, categoryId}};
-    })
-  );
+  const [_widgets, setWidgets] = useState<SCFeedWidgetType[]>(enrichWidgets());
 
   // Component props update
-  useEffect(
-    () =>
-      setWidgets(
-        widgets.map((w) => {
-          return {...w, componentProps: {...w.componentProps, categoryId}};
-        })
-      ),
-    [categoryId, widgets]
-  );
+  useEffect(() => setWidgets(enrichWidgets()), [scCategory, widgets]);
 
   return (
     <Root
