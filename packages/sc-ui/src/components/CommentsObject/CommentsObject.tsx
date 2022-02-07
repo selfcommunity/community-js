@@ -17,16 +17,16 @@ import {
   useSCUser
 } from '@selfcommunity/core';
 import {defineMessages, FormattedMessage} from 'react-intl';
-import {SCOPE_SC_UI} from '../../../constants/Errors';
+import {SCOPE_SC_UI} from '../../constants/Errors';
 import {AxiosResponse} from 'axios';
-import CommentObject, {CommentObjectProps, CommentObjectSkeleton} from '../../CommentObject';
-import ReplyCommentObject, {ReplyCommentObjectProps} from '../../CommentObject/ReplyComment';
+import CommentObject, {CommentObjectProps, CommentObjectSkeleton} from '../CommentObject';
+import ReplyCommentObject, {ReplyCommentObjectProps} from '../CommentObject/ReplyComment';
 import Typography from '@mui/material/Typography';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import {Box, Button, CardProps, Stack} from '@mui/material';
-import {CommentsOrderBy} from '../../../types/comments';
+import {CommentsOrderBy} from '../../types/comments';
 import classNames from 'classnames';
-import CustomAdv from '../../CustomAdv';
+import CustomAdv from '../CustomAdv';
 
 const messages = defineMessages({
   noOtherComment: {

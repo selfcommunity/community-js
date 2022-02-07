@@ -10,11 +10,9 @@ import {
   SCPreferences,
   SCPreferencesContext,
   SCPreferencesContextType,
-  SCRoutingContextType,
   SCUserContext,
   SCUserContextType,
-  SCUserType,
-  useSCRouting
+  SCUserType
 } from '@selfcommunity/core';
 import PeopleSuggestionSkeleton from './Skeleton';
 import User, {UserProps} from '../User';

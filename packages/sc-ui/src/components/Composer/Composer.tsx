@@ -3,6 +3,7 @@ import {
   Endpoints,
   formatHttpError,
   http,
+  SCCategoryType,
   SCFeatures,
   SCFeedDiscussionType,
   SCFeedObjectTypologyType,
@@ -257,7 +258,7 @@ export interface ComposerTypeMap<P = {}, D extends React.ElementType = 'div'> {
       defaultValue?: {
         title?: string;
         text?: string;
-        categories?: [];
+        categories?: SCCategoryType[];
         audience?: string;
         addressing?: SCTagType[];
         medias?: SCMediaType[];
@@ -496,7 +497,7 @@ export default function Composer(props: ComposerProps): JSX.Element {
   };
 
   const handleChangePoll = (poll: SCPollType): void => {
-    dispatch({type: 'text', value: poll});
+    dispatch({type: 'poll', value: poll});
   };
 
   const handleChange =

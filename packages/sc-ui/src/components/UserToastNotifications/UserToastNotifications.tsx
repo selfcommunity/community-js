@@ -51,9 +51,14 @@ export interface UserToastNotificationsProps extends BoxProps {
   ToastMessageProps?: any;
 
   /**
-   * Handle custom notification
+   * Handle notification
    */
-  handleCustomNotification?: (data) => void;
+  handleNotification?: (type, data, content) => void;
+
+  /**
+   * Disable Toast Notification
+   */
+  disableToastNotification?: boolean;
 
   /**
    * Other props
@@ -63,7 +68,7 @@ export interface UserToastNotificationsProps extends BoxProps {
 
 export default function UserToastNotifications(props: UserToastNotificationsProps): JSX.Element {
   // PROPS
-  const {ToastMessageProps = {}, handleCustomNotification} = props;
+  const {ToastMessageProps = {}, handleNotification, disableToastNotification = false} = props;
 
   // REFS
   const notificationSubscription = useRef(null);
@@ -77,22 +82,23 @@ export default function UserToastNotifications(props: UserToastNotificationsProp
    */
   const getContent = (n) => {
     const type = SCNotification.SCNotificationMapping[n.activity_type];
+    let content;
     if (type === SCNotificationTypologyType.COMMENT || type === SCNotificationTypologyType.NESTED_COMMENT) {
-      return <UserNotificationCommentToast notificationObject={n} />;
+      content = <UserNotificationCommentToast notificationObject={n} />;
     } else if (type === SCNotificationTypologyType.FOLLOW) {
-      return <ContributionFollowNotificationToast notificationObject={n} />;
+      content = <ContributionFollowNotificationToast notificationObject={n} />;
     } else if (type === SCNotificationTypologyType.USER_FOLLOW) {
-      return <UserFollowNotificationToast notificationObject={n} />;
+      content = <UserFollowNotificationToast notificationObject={n} />;
     } else if (type === SCNotificationTypologyType.CONNECTION_REQUEST || type === SCNotificationTypologyType.CONNECTION_ACCEPT) {
-      return <UserConnectionNotificationToast notificationObject={n} />;
+      content = <UserConnectionNotificationToast notificationObject={n} />;
     } else if (type === SCNotificationTypologyType.VOTE_UP) {
-      return <VoteUpNotificationToast notificationObject={n} />;
+      content = <VoteUpNotificationToast notificationObject={n} />;
     } else if (type === SCNotificationTypologyType.PRIVATE_MESSAGE) {
-      return <UserNotificationPrivateMessageToast notificationObject={n} />;
+      content = <UserNotificationPrivateMessageToast notificationObject={n} />;
     } else if (type === SCNotificationTypologyType.MENTION) {
-      return <UserNotificationMentionToast notificationObject={n} />;
+      content = <UserNotificationMentionToast notificationObject={n} />;
     } else if (type === SCNotificationTypologyType.INCUBATOR_APPROVED) {
-      return <IncubatorApprovedNotificationToast notificationObject={n} />;
+      content = <IncubatorApprovedNotificationToast notificationObject={n} />;
       /*
     } else if (
       type === SCNotificationTypologyType.KINDLY_NOTICE_ADVERTISING ||
@@ -101,9 +107,9 @@ export default function UserToastNotifications(props: UserToastNotificationsProp
       type === SCNotificationTypologyType.KINDLY_NOTICE_VULGAR ||
       type === SCNotificationTypologyType.KINDLY_NOTICE_OFFTOPIC
     ) {
-      return <KindlyNoticeForNotificationToast notificationObject={n} />;
+      content = <KindlyNoticeForNotificationToast notificationObject={n} />;
     } else if (type === SCNotificationTypologyType.KINDLY_NOTICE_FLAG) {
-      return <KindlyNoticeFlagNotificationToast notificationObject={n} />;
+      content = <KindlyNoticeFlagNotificationToast notificationObject={n} />;
     } else if (
       type === SCNotificationTypologyType.DELETED_FOR_ADVERTISING ||
       type === SCNotificationTypologyType.DELETED_FOR_AGGRESSIVE ||
@@ -111,9 +117,9 @@ export default function UserToastNotifications(props: UserToastNotificationsProp
       type === SCNotificationTypologyType.DELETED_FOR_VULGAR ||
       type === SCNotificationTypologyType.DELETED_FOR_OFFTOPIC
     ) {
-      return <DeletedForNotificationToast notificationObject={n} />;
+      content = <DeletedForNotificationToast notificationObject={n} />;
     } else if (type === SCNotificationTypologyType.UNDELETED_FOR) {
-      return <UndeletedForNotificationToast notificationObject={n} />;
+      content = <UndeletedForNotificationToast notificationObject={n} />;
     } else if (
       type === SCNotificationTypologyType.COLLAPSED_FOR_ADVERTISING ||
       type === SCNotificationTypologyType.COLLAPSED_FOR_AGGRESSIVE ||
@@ -121,14 +127,15 @@ export default function UserToastNotifications(props: UserToastNotificationsProp
       type === SCNotificationTypologyType.COLLAPSED_FOR_VULGAR ||
       type === SCNotificationTypologyType.COLLAPSED_FOR_OFFTOPIC
     ) {
-      return <CollapsedForNotificationToast notificationObject={n} />;
+      content = <CollapsedForNotificationToast notificationObject={n} />;
     } else if (type === SCNotificationTypologyType.BLOCKED_USER || type === SCNotificationTypologyType.UNBLOCKED_USER) {
-      return <UserBlockedNotificationToast notificationObject={n} />;
-    } else if (type === SCNotificationTypologyType.CUSTOM_NOTIFICATION) {
-      handleCustomNotification && handleCustomNotification(n);
-    */
+      content = <UserBlockedNotificationToast notificationObject={n} />;
+      */
     }
-    return null;
+    if (handleNotification && type && !SCNotification.SCSilentNotifications.includes(type)) {
+      content = handleNotification(type, n, content);
+    }
+    return content;
   };
 
   /**
@@ -141,7 +148,8 @@ export default function UserToastNotifications(props: UserToastNotificationsProp
       data &&
       data.type === SCNotificationTopicType.INTERACTION &&
       SCNotification.SCNotificationMapping[data.data.activity_type] &&
-      !SCNotification.SCSilentNotifications.includes(data.data.activity_type)
+      !SCNotification.SCSilentNotifications.includes(data.data.activity_type) &&
+      !disableToastNotification
     ) {
       enqueueSnackbar(
         null,
