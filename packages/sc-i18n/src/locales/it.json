@@ -225,6 +225,9 @@
   "ui.usersFollowed.usersFollowed": "{total, plural, =0 {# utenti seguiti} one {# utente seguito} other {# utenti seguiti}}",
   "ui.usersFollowed.subtitle.noResults": "Nessun utente seguito",
 
+  "ui.userFollowers.userFollowers": "{total, plural, =0 {# followers} one {# follower} other {# followers}}",
+  "ui.userFollowers.subtitle.noResults": "Nessun follower",
+
   "ui.categoryHeader.followedBy": "Seguita da ",
   "ui.categoryHeader.followers": "Followers",
   "ui.categoryHeader.noOtherFollowers": "Non ci sono altri followers.",

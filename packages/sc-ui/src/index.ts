@@ -26,6 +26,7 @@ import TrendingFeed, {TrendingFeedProps, TrendingFeedSkeleton} from './component
 import TrendingPeople, {TrendingPeopleProps, TrendingPeopleSkeleton} from './components/TrendingPeople';
 import UserProfileHeader, {UserProfileHeaderProps, UserProfileHeaderSkeleton} from './components/UserProfileHeader';
 import UsersFollowed, {UsersFollowedProps, UsersFollowedSkeleton} from './components/UsersFollowed';
+import UserFollowers, {UserFollowersProps, UserFollowersSkeleton} from './components/UserFollowers';
 import RelatedDiscussion, {RelatedDiscussionProps, RelatedDiscussionSkeleton} from './components/RelatedDiscussion';
 import CommentObject, {CommentObjectProps, CommentObjectSkeleton} from './components/CommentObject';
 import PrivateMessages, {PrivateMessagesProps, PrivateMessagesSkeleton} from './components/PrivateMessages';
@@ -121,6 +122,9 @@ export {
   UsersFollowed,
   UsersFollowedProps,
   UsersFollowedSkeleton,
+  UserFollowers,
+  UserFollowersProps,
+  UserFollowersSkeleton,
   CustomAdv,
   CustomAdvProps,
   CustomAdvSkeleton,
