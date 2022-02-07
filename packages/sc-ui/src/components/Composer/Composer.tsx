@@ -308,6 +308,7 @@ const PREFERENCES = [
 ];
 
 const COMPOSER_INITIAL_STATE = {
+  id: null,
   type: null,
   title: '',
   titleError: null,
@@ -359,7 +360,7 @@ export default function Composer(props: ComposerProps): JSX.Element {
   const [composerTypes, setComposerTypes] = useState([]);
 
   const [state, dispatch] = useReducer(reducer, {...COMPOSER_INITIAL_STATE, ...defaultValue, view, key: random()});
-  const {key, type, title, titleError, text, categories, addressing, audience, medias, poll, pollError, location} = state;
+  const {key, id, type, title, titleError, text, categories, addressing, audience, medias, poll, pollError, location} = state;
 
   const destructureFeedObject = (_feedObject) => {
     if (_feedObject.type === COMPOSER_TYPE_POST) {
@@ -373,6 +374,7 @@ export default function Composer(props: ComposerProps): JSX.Element {
       dispatch({
         type: 'multiple',
         value: {
+          id: _feedObject.id,
           type: _feedObject.type,
           title: _feedObject.title,
           text: _feedObject.html,
@@ -392,7 +394,7 @@ export default function Composer(props: ComposerProps): JSX.Element {
   // Edit state variables
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [loadError, setLoadError] = useState<boolean>(false);
-  const editMode = (feedObjectId && feedObjectType) || feedObject;
+  const editMode = Boolean((feedObjectId && feedObjectType) || feedObject);
 
   // REFS
   const unloadRef = React.useRef<boolean>(false);
@@ -611,8 +613,8 @@ export default function Composer(props: ComposerProps): JSX.Element {
     let url = Endpoints.Composer.url({type});
     let method = Endpoints.Composer.method;
     if (editMode) {
-      let url = Endpoints.ComposerEdit.url({type: feedObjectType, id: feedObjectId});
-      let method = Endpoints.ComposerEdit.method;
+      url = Endpoints.ComposerEdit.url({type, id});
+      method = Endpoints.ComposerEdit.method;
     }
 
     // Perform request
@@ -811,7 +813,7 @@ export default function Composer(props: ComposerProps): JSX.Element {
           <Box>
             <FormControl className={classes.types}>
               <WriteIcon />
-              <Select value={type} onChange={handleChangeType} input={<TypeInput />}>
+              <Select value={type} onChange={handleChangeType} input={<TypeInput />} disabled={editMode}>
                 {composerTypes.map((t) => (
                   <MenuItem value={t} key={t}>
                     {t === 'post' ? (
