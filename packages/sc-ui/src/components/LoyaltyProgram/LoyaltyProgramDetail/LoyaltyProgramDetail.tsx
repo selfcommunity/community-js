@@ -159,9 +159,11 @@ export default function LoyaltyProgramDetail(props: LoyaltyProgramDetailProps): 
         <Box className={classes.icon}>
           <CardGiftcardOutlinedIcon />
         </Box>
-        <Box className={classes.points}>
-          <Chip label={`${intl.formatMessage(messages.yourPoints, {total: points})}`} />
-        </Box>
+        {points && (
+          <Box className={classes.points}>
+            <Chip label={`${intl.formatMessage(messages.yourPoints, {total: points})}`} />
+          </Box>
+        )}
       </Box>
       <Grid container spacing={2}>
         <Grid item xs={12}>
