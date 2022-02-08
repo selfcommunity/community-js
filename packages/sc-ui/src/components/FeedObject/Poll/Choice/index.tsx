@@ -1,7 +1,7 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
-import {SCFeedObjectType, SCPollChoiceType} from '@selfcommunity/core';
+import {SCContextType, SCFeedObjectType, SCPollChoiceType, SCUserContextType, useSCContext, useSCUser} from '@selfcommunity/core';
 import {Box, Typography} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import CheckIcon from '@mui/icons-material/Check';
@@ -109,6 +109,17 @@ export default function Choice(props: ChoiceProps): JSX.Element {
   //PROPS
   const {className = null, choiceObj = null, feedObject = null, vote = null, votes = null, isVoting = null, votable = null, ...rest} = props;
   const disabled = !feedObject;
+  // CONTEXT
+  const scContext: SCContextType = useSCContext();
+  const scUserContext: SCUserContextType = useSCUser();
+
+  const handleVoteAction = () => {
+    if (!scUserContext.user) {
+      scContext.settings.handleAnonymousAction();
+    } else {
+      vote(choiceObj);
+    }
+  };
 
   /**
    * Renders total votes in percentage
@@ -132,7 +143,7 @@ export default function Choice(props: ChoiceProps): JSX.Element {
           size="small"
           disabled={disabled || isVoting !== null || votable}
           className={choiceObj.voted ? classes.voted : classes.vote}
-          onClick={() => vote(choiceObj)}>
+          onClick={handleVoteAction}>
           {choiceObj.voted ? <CheckIcon /> : <FormattedMessage id="ui.feedObject.poll.choice.vote" defaultMessage="ui.feedObject.poll.choice.vote" />}
         </LoadingButton>
         <Typography>{choiceObj.choice}</Typography>
