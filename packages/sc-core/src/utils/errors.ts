@@ -12,14 +12,20 @@ export class ValidationError {
   static ERROR_INVALID_SESSION_TYPE = 4101;
   static ERROR_INVALID_SESSION_AUTH_TOKEN = 4102;
   static ERROR_INVALID_SESSION_CLIENT_ID = 4103;
-  static ERROR_INVALID_SESSION_REFRESH_TOKEN_CALLBACK = 4103;
-  static ERROR_INVALID_PORTAL = 4203;
-  static ERROR_INVALID_LOCALE = 4303;
-  static ERROR_INVALID_TRANSLATIONS = 4304;
-  static ERROR_INVALID_THEME = 4403;
-  static ERROR_INVALID_ROUTER = 4503;
-  static ERROR_INVALID_PROVIDERS = 4603;
-  static ERROR_INVALID_HANDLE_ANONYMOUS_ACTION = 4703;
+  static ERROR_INVALID_SESSION_REFRESH_TOKEN_CALLBACK = 4104;
+  static ERROR_INVALID_PORTAL = 4200;
+  static ERROR_INVALID_LOCALE = 4300;
+  static ERROR_INVALID_TRANSLATIONS = 4400;
+  static ERROR_INVALID_THEME = 4500;
+  static ERROR_INVALID_ROUTER = 4600;
+  static ERROR_INVALID_PROVIDERS = 4700;
+  static ERROR_INVALID_HANDLE_ANONYMOUS_ACTION = 4800;
+  static ERROR_INVALID_NOTIFICATIONS = 4900;
+  static ERROR_INVALID_NOTIFICATIONS_WEBSOCKET = 4901;
+  static ERROR_INVALID_NOTIFICATIONS_WEBSOCKET_DISABLE_TOAST_MESSAGE = 4902;
+  static ERROR_INVALID_NOTIFICATIONS_WEB_PUSH_MESSAGING = 4921;
+  static ERROR_INVALID_NOTIFICATIONS_WEB_PUSH_MESSAGING_DISABLE_TOAST_MESSAGE = 4922;
+  static ERROR_INVALID_NOTIFICATIONS_WEB_PUSH_MESSAGING_APPLICATION_SERVER_KEY = 4923;
   static defaultErrorMessageMap = {
     [ValidationError.ERROR_INVALID_CONF]:
       'Invalid or missing library configuration. Check the configuration that is passed to the SCContextProvider.',
@@ -35,6 +41,15 @@ export class ValidationError {
     [ValidationError.ERROR_INVALID_ROUTER]: 'Invalid router configuration',
     [ValidationError.ERROR_INVALID_PROVIDERS]: `Invalid providers. Check if the list of providers is valid.`,
     [ValidationError.ERROR_INVALID_HANDLE_ANONYMOUS_ACTION]: 'Invalid handle anonymous action callback',
+    [ValidationError.ERROR_INVALID_NOTIFICATIONS]: 'Invalid notifications conf.',
+    [ValidationError.ERROR_INVALID_NOTIFICATIONS_WEBSOCKET]: 'Invalid notifications (websocket) option.',
+    [ValidationError.ERROR_INVALID_NOTIFICATIONS_WEBSOCKET_DISABLE_TOAST_MESSAGE]:
+      'Invalid notifications websocket conf: disableToastMessage must be a boolean value.',
+    [ValidationError.ERROR_INVALID_NOTIFICATIONS_WEB_PUSH_MESSAGING]: 'Invalid notifications (web push messaging) option.',
+    [ValidationError.ERROR_INVALID_NOTIFICATIONS_WEB_PUSH_MESSAGING_DISABLE_TOAST_MESSAGE]:
+      "Invalid notifications web push messaging option. 'disableToastMessage' must be a boolean value.",
+    [ValidationError.ERROR_INVALID_NOTIFICATIONS_WEB_PUSH_MESSAGING_APPLICATION_SERVER_KEY]:
+      "Invalid notifications web push messaging option. 'applicationServerKey' must be a string value.",
   };
 
   errorCode = null;
@@ -54,7 +69,7 @@ export class ValidationError {
  */
 export class ValidationWarnings {
   static WARNING_SESSION_REFRESH_TOKEN_CALLBACK_NOT_FOUND = 3100;
-  static WARNING_LOCALE_FALLBACK = 3303;
+  static WARNING_LOCALE_FALLBACK = 3300;
   static WARNING_ROUTER_FALLBACK = 3500;
   static WARNING_HANDLE_ANONYMOUS_ACTION_FALLBACK = 3700;
 

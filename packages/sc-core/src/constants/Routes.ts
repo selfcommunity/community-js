@@ -1,3 +1,6 @@
+export const PORTAL_OPTION = 'portal';
+export const ROUTER_OPTION = 'router';
+
 /**
  * Routes name
  */

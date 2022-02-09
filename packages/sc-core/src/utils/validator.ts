@@ -1,15 +1,25 @@
 import React from 'react';
-import {LOCALES} from '../constants/Locale';
+import * as Locale from '../constants/Locale';
 import {isValidUrl} from './url';
 import * as Session from '../constants/Session';
-import {SCSessionType, SCSettingsType} from '../types/context';
+import {
+  SCNotificationsType,
+  SCNotificationsWebPushMessagingType,
+  SCNotificationsWebSocketType,
+  SCSessionType,
+  SCSettingsType,
+} from '../types/context';
 import {SCOPE_SC_CORE} from '../constants/Errors';
 import {isFunc, ValidationError, ValidationResult, ValidationWarnings} from './errors';
 import {isObject} from './object';
 import {isString} from './string';
 import {SCLocaleType} from '../types';
-import {DEFAULT_CONTEXT_PROVIDERS} from '../constants/ContextProviders';
+import {DEFAULT_CONTEXT_PROVIDERS, CONTEXT_PROVIDERS_OPTION} from '../constants/ContextProviders';
 import {Logger} from './logger';
+import * as Notifications from '../constants/Notifications';
+import * as Theme from '../constants/Theme';
+import {PORTAL_OPTION, ROUTER_OPTION} from '../constants/Routes';
+import * as Actions from '../constants/Actions';
 
 /**
  * Validate session option
@@ -44,7 +54,7 @@ export function validateSession(v: Record<string, any>) {
 export const validateSessionType = (value, session) => {
   const errors = [];
   const warnings = [];
-  if (!session.type || !Session.sessionTypes.includes(session.type)) {
+  if (!session[Session.SESSION_TYPE_OPTION] || !Session.sessionTypes.includes(session[Session.SESSION_TYPE_OPTION])) {
     errors.push(ValidationError.ERROR_INVALID_SESSION_TYPE);
   }
   return {errors, warnings, value};
@@ -58,8 +68,14 @@ export const validateSessionType = (value, session) => {
 export const validateSessionClientId = (value, session) => {
   const errors = [];
   const warnings = [];
-  if (session.type && (session.type === Session.OAUTH_SESSION || session.type === Session.OAUTH_SESSION)) {
-    if (session.type === Session.OAUTH_SESSION && (!session.clientId || !isString(session.clientId))) {
+  if (
+    session[Session.SESSION_TYPE_OPTION] &&
+    (session[Session.SESSION_TYPE_OPTION] === Session.OAUTH_SESSION || session[Session.SESSION_TYPE_OPTION] === Session.OAUTH_SESSION)
+  ) {
+    if (
+      session[Session.SESSION_TYPE_OPTION] === Session.OAUTH_SESSION &&
+      (!session[Session.SESSION_CLIENT_ID_OPTION] || !isString(session[Session.SESSION_CLIENT_ID_OPTION]))
+    ) {
       errors.push(ValidationError.ERROR_INVALID_SESSION_CLIENT_ID);
     }
   }
@@ -74,8 +90,11 @@ export const validateSessionClientId = (value, session) => {
 export const validateSessionAuthTokenOption = (value, session) => {
   const errors = [];
   const warnings = [];
-  if (session.type && (session.type === Session.OAUTH_SESSION || session.type === Session.JWT_SESSION)) {
-    if (session.authToken && !isObject(session.authToken)) {
+  if (
+    session[Session.SESSION_TYPE_OPTION] &&
+    (session[Session.SESSION_TYPE_OPTION] === Session.OAUTH_SESSION || session[Session.SESSION_TYPE_OPTION] === Session.JWT_SESSION)
+  ) {
+    if (session[Session.SESSION_AUTH_TOKEN_OPTION] && !isObject(session[Session.SESSION_AUTH_TOKEN_OPTION])) {
       errors.push(ValidationError.ERROR_INVALID_SESSION_AUTH_TOKEN);
     }
   }
@@ -90,12 +109,156 @@ export const validateSessionAuthTokenOption = (value, session) => {
 export const validateHandleRefreshToken = (value, session) => {
   const errors = [];
   const warnings = [];
-  if (session.type && (session.type === Session.OAUTH_SESSION || session.type === Session.JWT_SESSION)) {
+  if (
+    session[Session.SESSION_TYPE_OPTION] &&
+    (session[Session.SESSION_TYPE_OPTION] === Session.OAUTH_SESSION || session[Session.SESSION_TYPE_OPTION] === Session.JWT_SESSION)
+  ) {
     if (session.authToken && !session.handleRefreshToken) {
       warnings.push(ValidationWarnings.WARNING_SESSION_REFRESH_TOKEN_CALLBACK_NOT_FOUND);
     }
     if (session.handleRefreshToken && !isFunc(session.handleRefreshToken)) {
       errors.push(ValidationError.ERROR_INVALID_SESSION_REFRESH_TOKEN_CALLBACK);
+    }
+  }
+  return {errors, warnings, value};
+};
+
+/**
+ * Validate notifications option
+ * @param notifications
+ * @return {}
+ */
+export function validateNotifications(v: SCNotificationsType) {
+  const errors = [];
+  const warnings = [];
+  if (!v || !isObject(v)) {
+    return {errors, warnings, value: Notifications.DEFAULT_NOTIFICATIONS};
+  }
+  const _options = Object.keys(notificationsOptions);
+  const value: SCNotificationsType = Object.keys(v)
+    .filter((key) => _options.includes(key))
+    .reduce((obj: SCNotificationsType, key) => {
+      const res = notificationsOptions[key].validator(v[key], v);
+      res.errors.map((error) => errors.push(error));
+      res.warnings.map((warning) => warnings.push(warning));
+      obj[key] = res.value;
+      return obj;
+    }, {} as SCNotificationsType);
+  return {errors, warnings, value: {...Notifications.DEFAULT_NOTIFICATIONS, ...v}};
+}
+
+/**
+ * Validate webSocket
+ * @param value
+ * @param {}
+ */
+export const validateWebSocket = (v) => {
+  const errors = [];
+  const warnings = [];
+  if (v && !isObject(v)) {
+    errors.push(ValidationError.ERROR_INVALID_NOTIFICATIONS_WEBSOCKET);
+    return {errors, warnings, v};
+  }
+  const _options = Object.keys(notificationsWebSocketOptions);
+  const value: SCNotificationsWebSocketType = Object.keys(v)
+    .filter((key) => _options.includes(key))
+    .reduce((obj, key) => {
+      const res = notificationsWebSocketOptions[key].validator(v[key], v);
+      res.errors.map((error) => errors.push(error));
+      res.warnings.map((warning) => warnings.push(warning));
+      obj[key] = res.value;
+      return obj;
+    }, {} as SCNotificationsWebSocketType);
+  return {errors, warnings, value};
+};
+
+/**
+ * Validate default disableToastMessage (webSocket)
+ * @param value
+ * @param {}
+ */
+export const validateWebSocketDisableToastMessage = (value, notifications) => {
+  const errors = [];
+  const warnings = [];
+  if (value) {
+    if (!(typeof value === 'boolean')) {
+      errors.push(ValidationError.ERROR_INVALID_NOTIFICATIONS_WEBSOCKET_DISABLE_TOAST_MESSAGE);
+    }
+  } else {
+    return {
+      errors,
+      warnings,
+      value:
+        Notifications.DEFAULT_NOTIFICATIONS[Notifications.NOTIFICATIONS_WEB_SOCKET_OPTION][Notifications.NOTIFICATIONS_DISABLE_TOAST_MESSAGE_OPTION],
+    };
+  }
+  return {errors, warnings, value};
+};
+
+/**
+ * Validate webPushMessaging
+ * @param value
+ * @param {}
+ */
+export const validateWebPushMessaging = (v) => {
+  const errors = [];
+  const warnings = [];
+  if (v && !isObject(v)) {
+    errors.push(ValidationError.ERROR_INVALID_NOTIFICATIONS_WEB_PUSH_MESSAGING);
+    return {errors, warnings, v};
+  }
+  const _options = Object.keys(notificationsWebSPushMessagingOptions);
+  const value: SCNotificationsWebPushMessagingType = Object.keys(v)
+    .filter((key) => _options.includes(key))
+    .reduce((obj, key) => {
+      const res = notificationsWebSPushMessagingOptions[key].validator(v[key], v);
+      res.errors.map((error) => errors.push(error));
+      res.warnings.map((warning) => warnings.push(warning));
+      obj[key] = res.value;
+      return obj;
+    }, {} as SCNotificationsWebPushMessagingType);
+  return {errors, warnings, value};
+};
+
+/**
+ * Validate default disableToastMessage (webPushMessaging)
+ * @param value
+ * @param {}
+ */
+export const validateWebPushMessagingDisableToastMessage = (value, notifications) => {
+  const errors = [];
+  const warnings = [];
+  if (value !== undefined) {
+    if (!(typeof value === 'boolean')) {
+      errors.push(ValidationError.ERROR_INVALID_NOTIFICATIONS_WEB_PUSH_MESSAGING_DISABLE_TOAST_MESSAGE);
+    }
+    if (!value && !(Notifications.NOTIFICATIONS_APPLICATION_SERVER_KEY_OPTION in notifications)) {
+      errors.push(ValidationError.ERROR_INVALID_NOTIFICATIONS_WEB_PUSH_MESSAGING_APPLICATION_SERVER_KEY);
+    }
+  } else {
+    return {
+      errors,
+      warnings,
+      value:
+        Notifications.DEFAULT_NOTIFICATIONS[Notifications.NOTIFICATIONS_WEB_PUSH_MESSAGING_OPTION][
+          Notifications.NOTIFICATIONS_DISABLE_TOAST_MESSAGE_OPTION
+        ],
+    };
+  }
+  return {errors, warnings, value};
+};
+
+/**
+ * Validate default applicationServerKey (webPushMessaging)
+ * @param value
+ * @param {}
+ */
+export const validateWebPushMessagingApplicationServerKey = (value, notifications) => {
+  const errors = [];
+  const warnings = [];
+  if (value) {
+    if (!isString(value)) {
+      errors.push(ValidationError.ERROR_INVALID_NOTIFICATIONS_WEB_PUSH_MESSAGING_APPLICATION_SERVER_KEY);
     }
   }
   return {errors, warnings, value};
@@ -124,7 +287,7 @@ export const validateLocaleDefault = (value, locale) => {
   const errors = [];
   const warnings = [];
   if (locale.default) {
-    if (!isString(value) || (!locale.messages && !LOCALES.includes(value))) {
+    if (!isString(value) || (!locale[Locale.LOCALE_MESSAGES_OPTION] && !Locale.LOCALES.includes(value))) {
       errors.push(ValidationError.ERROR_INVALID_LOCALE);
     }
   } else {
@@ -260,31 +423,35 @@ export const validateContextProviders = (value) => {
  * Components Widget
  */
 const PortalOption = {
-  name: 'portal',
+  name: PORTAL_OPTION,
   validator: validatePortal,
 };
 const LocaleOption = {
-  name: 'locale',
+  name: Locale.LOCALE_OPTION,
   validator: validateLocale,
 };
 const ThemeOption = {
-  name: 'theme',
+  name: Theme.THEME_OPTION,
   validator: validateTheme,
 };
 const RouterOption = {
-  name: 'router',
+  name: ROUTER_OPTION,
   validator: validateRouter,
 };
+const NotificationsOption = {
+  name: Notifications.NOTIFICATIONS_OPTION,
+  validator: validateNotifications,
+};
 const SessionOption = {
-  name: 'session',
+  name: Session.SESSION_OPTION,
   validator: validateSession,
 };
 const HandleAnonymousActionOption = {
-  name: 'handleAnonymousAction',
+  name: Actions.HANDLE_ANONYMOUS_ACTION_OPTION,
   validator: validateHandleAnonymousAction,
 };
 const ContextProvidersOption = {
-  name: 'contextProviders',
+  name: CONTEXT_PROVIDERS_OPTION,
   validator: validateContextProviders,
 };
 
@@ -292,28 +459,48 @@ const ContextProvidersOption = {
  * Session options
  */
 const SessionTypeOption = {
-  name: 'type',
+  name: Session.SESSION_TYPE_OPTION,
   validator: validateSessionType,
 };
 const SessionClientIdOption = {
-  name: 'clientId',
+  name: Session.SESSION_CLIENT_ID_OPTION,
   validator: validateSessionClientId,
 };
 const SessionAuthTokenOption = {
-  name: 'authToken',
+  name: Session.SESSION_AUTH_TOKEN_OPTION,
   validator: validateSessionAuthTokenOption,
 };
 const SessionHandleRefreshTokenOption = {
-  name: 'handleRefreshToken',
+  name: Session.SESSION_HANDLE_REFRESH_TOKEN_OPTION,
   validator: validateHandleRefreshToken,
 };
 const LocaleDefaultOption = {
-  name: 'default',
+  name: Locale.LOCALE_DEFAULT_OPTION,
   validator: validateLocaleDefault,
 };
 const LocaleMessagesOption = {
-  name: 'messages',
+  name: Locale.LOCALE_MESSAGES_OPTION,
   validator: validateLocaleMessages,
+};
+const NotificationsWebSocketOption = {
+  name: Notifications.NOTIFICATIONS_WEB_SOCKET_OPTION,
+  validator: validateWebSocket,
+};
+const NotificationsWebPushMessagingOption = {
+  name: Notifications.NOTIFICATIONS_WEB_PUSH_MESSAGING_OPTION,
+  validator: validateWebPushMessaging,
+};
+const NotificationsWebSocketDisableToastMessageOption = {
+  name: Notifications.NOTIFICATIONS_DISABLE_TOAST_MESSAGE_OPTION,
+  validator: validateWebSocketDisableToastMessage,
+};
+const NotificationsWebPushMessagingDisableToastMessageOption = {
+  name: Notifications.NOTIFICATIONS_DISABLE_TOAST_MESSAGE_OPTION,
+  validator: validateWebPushMessagingDisableToastMessage,
+};
+const NotificationsWebPushMessagingApplicationServerKeyOption = {
+  name: Notifications.NOTIFICATIONS_APPLICATION_SERVER_KEY_OPTION,
+  validator: validateWebPushMessagingApplicationServerKey,
 };
 
 /**
@@ -324,6 +511,7 @@ export const settingsOptions: Record<string, any> = {
   [PortalOption.name]: PortalOption,
   [LocaleOption.name]: LocaleOption,
   [ThemeOption.name]: ThemeOption,
+  [NotificationsOption.name]: NotificationsOption,
   [RouterOption.name]: RouterOption,
   [SessionOption.name]: SessionOption,
   [HandleAnonymousActionOption.name]: HandleAnonymousActionOption,
@@ -338,6 +526,17 @@ export const sessionOptions: Record<string, any> = {
 export const localeOptions: Record<string, any> = {
   [LocaleDefaultOption.name]: LocaleDefaultOption,
   [LocaleMessagesOption.name]: LocaleMessagesOption,
+};
+export const notificationsOptions: Record<string, any> = {
+  [NotificationsWebSocketOption.name]: NotificationsWebSocketOption,
+  [NotificationsWebPushMessagingOption.name]: NotificationsWebPushMessagingOption,
+};
+export const notificationsWebSocketOptions: Record<string, any> = {
+  [NotificationsWebSocketDisableToastMessageOption.name]: NotificationsWebSocketDisableToastMessageOption,
+};
+export const notificationsWebSPushMessagingOptions: Record<string, any> = {
+  [NotificationsWebPushMessagingDisableToastMessageOption.name]: NotificationsWebPushMessagingDisableToastMessageOption,
+  [NotificationsWebPushMessagingApplicationServerKeyOption.name]: NotificationsWebPushMessagingApplicationServerKeyOption,
 };
 
 export const validOptions = {
