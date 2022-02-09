@@ -44,7 +44,7 @@ export default function useSCWebPushMessaging() {
     } else {
       Logger.info(SCOPE_SC_CORE, 'Add subscription to server');
     }
-    Logger.info(SCOPE_SC_CORE, data);
+    console.log(data);
   };
 
   /**
@@ -80,7 +80,8 @@ export default function useSCWebPushMessaging() {
               // the subscription id from your data store and
               // inform the user that you disabled push
 
-              Logger.info(SCOPE_SC_CORE, `Unsubscription error: ${e}`);
+              Logger.info(SCOPE_SC_CORE, `Unsubscription error.`);
+              console.log(e);
             });
         })
         .catch(function (e) {
@@ -127,22 +128,42 @@ export default function useSCWebPushMessaging() {
    * Request web push notification permission
    * @type {(function(): void)|*}
    */
-  const requestNotificationPermission = useCallback(() => {
+  const requestNotificationPermission = () => {
     if (Notification.permission !== 'granted') {
       Notification.requestPermission().then(function (permission) {
         if (permission === 'granted') {
-          subscribe();
+          navigator.serviceWorker.ready.then((serviceWorkerRegistration) => {
+            // Do we already have a push message subscription?
+            serviceWorkerRegistration.pushManager
+              .getSubscription()
+              .then(function (subscription) {
+                // Enable any UI which subscribes / unsubscribes from
+                // push messages.
+                if (!subscription) {
+                  subscribe();
+                  return;
+                }
+
+                // Keep your server in sync with the latest subscription
+                setWpSubscription(subscription);
+                updateSubscriptionOnServer(subscription, false);
+              })
+              .catch((err) => {
+                Logger.info(SCOPE_SC_CORE, 'Error during getSubscription()');
+                console.log(err);
+              });
+          });
         } else {
           Logger.info(SCOPE_SC_CORE, 'Permission for Notifications was denied');
         }
       });
     }
-  }, [subscribe]);
+  };
 
   /**
    * Initialize state
    */
-  const initialiseState = useCallback(() => {
+  const initialiseState = () => {
     /**
      * Check if Notifications supported in the service worker
      */
@@ -175,10 +196,30 @@ export default function useSCWebPushMessaging() {
         Logger.info(SCOPE_SC_CORE, 'Request permission.');
         requestNotificationPermission();
       } else if (Notification.permission === 'granted') {
-        subscribe();
+        navigator.serviceWorker.ready.then(function (serviceWorkerRegistration) {
+          // Do we already have a push message subscription?
+          serviceWorkerRegistration.pushManager
+            .getSubscription()
+            .then(function (subscription) {
+              // Enable any UI which subscribes / unsubscribes from
+              // push messages.
+              if (!subscription) {
+                subscribe();
+                return;
+              }
+
+              // Keep your server in sync with the latest subscription
+              setWpSubscription(subscription);
+              updateSubscriptionOnServer(subscription, false);
+            })
+            .catch((err) => {
+              Logger.info(SCOPE_SC_CORE, 'Error during getSubscription()');
+              console.log(err);
+            });
+        });
       }
     }
-  }, [requestNotificationPermission, subscribe]);
+  };
 
   useEffect(() => {
     if (scUserContext.user && !scContext.settings.notifications.webPushMessaging.disableToastMessage && applicationServerKey) {
@@ -188,7 +229,7 @@ export default function useSCWebPushMessaging() {
     return () => {
       wpSubscription && unsubscribe();
     };
-  }, [scUserContext.user, initialiseState, scContext.settings.notifications.webPushMessaging]);
+  }, [scUserContext.user, scContext.settings.notifications.webPushMessaging]);
 
   return {wpSubscription};
 }
