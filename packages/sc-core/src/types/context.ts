@@ -32,6 +32,11 @@ export interface SCSettingsType {
   router?: SCRoutingType;
 
   /**
+   * Object conf of notification.
+   */
+  notifications?: SCNotificationsType;
+
+  /**
    * Callback to handle anonymous action
    * Ex. an anonymous user attempt to post a comment
    */
@@ -47,6 +52,9 @@ export interface SCSettingsType {
   contextProviders?: ((children) => JSX.Element)[];
 }
 
+/**
+ * Interface SCLocaleType
+ */
 export interface SCLocaleType {
   /**
    * Default locale.
@@ -377,6 +385,45 @@ export interface SCRoutingType {
 }
 
 /**
+ * Interface SCNotificationsType
+ */
+export interface SCNotificationsType {
+  /**
+   * Web socket notification
+   */
+  webSocket?: SCNotificationsWebSocketType;
+  /**
+   * Web push messaging notification
+   */
+  webPushMessaging?: SCNotificationsWebPushMessagingType;
+}
+
+/**
+ * Interface SCNotificationsWebSocketType
+ */
+export interface SCNotificationsWebSocketType {
+  /**
+   * Disable toast message
+   */
+  disableToastMessage?: boolean;
+}
+
+/**
+ * Interface SCNotificationsWebPushMessagingType
+ */
+export interface SCNotificationsWebPushMessagingType {
+  /**
+   * Disable toast message
+   */
+  disableToastMessage?: boolean;
+
+  /**
+   * applicationServerKey - Public key
+   */
+  applicationServerKey?: boolean;
+}
+
+/**
  * Interface SCRoutingContextType
  */
 export interface SCRoutingContextType {
@@ -404,6 +451,11 @@ export interface SCNotificationContextType {
    * ws instance
    */
   wsInstance: any;
+
+  /**
+   * wp subscription
+   */
+  wpSubscription: any;
 }
 
 /**

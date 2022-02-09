@@ -1,3 +1,4 @@
+export const SESSION_OPTION = 'session';
 export const SESSION_TYPE_OPTION = 'type';
 export const SESSION_CLIENT_ID_OPTION = 'clientId';
 export const SESSION_AUTH_TOKEN_OPTION = 'authToken';

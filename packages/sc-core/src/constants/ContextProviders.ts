@@ -6,6 +6,8 @@ import SCThemeProvider from '../components/provider/SCThemeProvider';
 import SCLocaleProvider from '../components/provider/SCLocaleProvider';
 import SCAlertMessagesProvider from '../components/provider/SCAlertMessagesProvider';
 
+export const CONTEXT_PROVIDERS_OPTION = 'contextProviders';
+
 /**
  * List of all nested providers that are required to run
  */

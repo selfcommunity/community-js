@@ -34,6 +34,15 @@ const withProvider = (Story, context) => {
         authToken: authToken, // Comment this line to test anonymous session
         handleRefreshToken: context.globals.session !== 'Cookie' ? refreshToken(context) : null,
       },
+      notifications: {
+        webSocket: {
+          disableToastMessage: false
+        },
+        webPushMessaging: {
+          disableToastMessage: false,
+          applicationServerKey: 'BOB3nhpXABPWI5sKDs86gA79GXE3pqclgxODGhItbYxKLhWuiXV44E641d-KWYJFsdpPJF4ufRetWEio7PmqJH8',
+        }
+      },
       theme: {
         palette: {
           primary: {
