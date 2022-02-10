@@ -367,6 +367,9 @@ export default function Composer(props: ComposerProps): JSX.Element {
 
   const [state, dispatch] = useReducer(reducer, {...COMPOSER_INITIAL_STATE, ...defaultValue, view, key: random()});
   const {key, id, type, title, titleError, text, categories, addressing, audience, medias, poll, pollError, location} = state;
+  const addMedia: Function = (media: SCMediaType) => {
+    dispatch({type: 'medias', value: [...medias, media]});
+  };
 
   const destructureFeedObject = (_feedObject) => {
     if (_feedObject.type === COMPOSER_TYPE_POST) {
@@ -404,6 +407,10 @@ export default function Composer(props: ComposerProps): JSX.Element {
 
   // REFS
   const unloadRef = React.useRef<boolean>(false);
+
+  // Create a ref for medias becaouse of state update error on chunk upload
+  const mediasRef = React.useRef({medias, addMedia});
+  mediasRef.current = {medias, addMedia};
 
   /*
    * Compute preferences
@@ -583,7 +590,7 @@ export default function Composer(props: ComposerProps): JSX.Element {
   };
 
   const handleAddMedia = (media: SCMediaType) => {
-    dispatch({type: 'medias', value: [...medias, media]});
+    mediasRef.current.addMedia(media);
   };
 
   const handleSortMedia = (newSort: SCMediaType[]) => {

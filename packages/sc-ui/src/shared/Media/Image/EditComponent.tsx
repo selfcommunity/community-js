@@ -11,7 +11,7 @@ import {styled} from '@mui/material/styles';
 import MediaChunkUploader from '../../MediaChunkUploader';
 import {SCMediaChunkType} from '../../../types/media';
 import {EditComponentProps} from '../Document/EditComponent';
-import { ButtonProps } from '@mui/material/Button/Button';
+import {ButtonProps} from '@mui/material/Button/Button';
 
 const PREFIX = 'SCMediaActionImage';
 
