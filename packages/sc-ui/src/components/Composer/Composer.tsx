@@ -66,7 +66,7 @@ import classNames from 'classnames';
 import {TransitionProps} from '@mui/material/transitions';
 import PollPreview from '../FeedObject/Poll';
 import Editor from '../Editor';
-import {SCMediaObjectType} from '../../types/media';
+import {SCMediaChunkType, SCMediaObjectType} from '../../types/media';
 import {Document, Image, Link, Share} from '../../shared/Media';
 import MediasPreview from '../../shared/MediasPreview';
 import Poll from './Poll';
@@ -365,6 +365,8 @@ export default function Composer(props: ComposerProps): JSX.Element {
   const [_view, setView] = useState<string>(view);
   const [composerTypes, setComposerTypes] = useState([]);
 
+  const [mediaChunks, setMediaChunks] = useState<SCMediaChunkType[]>([]);
+
   const [state, dispatch] = useReducer(reducer, {...COMPOSER_INITIAL_STATE, ...defaultValue, view, key: random()});
   const {key, id, type, title, titleError, text, categories, addressing, audience, medias, poll, pollError, location} = state;
   const addMedia: Function = (media: SCMediaType) => {
@@ -409,8 +411,8 @@ export default function Composer(props: ComposerProps): JSX.Element {
   const unloadRef = React.useRef<boolean>(false);
 
   // Create a ref for medias becaouse of state update error on chunk upload
-  const mediasRef = React.useRef({medias, addMedia});
-  mediasRef.current = {medias, addMedia};
+  const mediasRef = React.useRef({medias, mediaChunks, addMedia, setMediaChunks});
+  mediasRef.current = {medias, mediaChunks, addMedia, setMediaChunks};
 
   /*
    * Compute preferences
@@ -589,6 +591,10 @@ export default function Composer(props: ComposerProps): JSX.Element {
     };
   };
 
+  const handleMediaProgress = (chunks: SCMediaChunkType[]) => {
+    mediasRef.current.setMediaChunks(chunks);
+  };
+
   const handleAddMedia = (media: SCMediaType) => {
     mediasRef.current.addMedia(media);
   };
@@ -731,7 +737,7 @@ export default function Composer(props: ComposerProps): JSX.Element {
         <React.Fragment>
           <DialogTitle className={classes.title}>
             <Typography component="div">
-              <IconButton onClick={handleChangeView(MAIN_VIEW)} size="small">
+              <IconButton onClick={handleChangeView(MAIN_VIEW)} size="small" disabled={mediasRef.current.mediaChunks.length > 0}>
                 <BackIcon />
               </IconButton>
               <FormattedMessage
@@ -743,7 +749,7 @@ export default function Composer(props: ComposerProps): JSX.Element {
               <Avatar className={classes.avatar} src={scAuthContext.user.avatar}></Avatar>
             </Box>
             <Box>
-              <Button onClick={handleChangeView(MAIN_VIEW)} variant="text" color="inherit">
+              <Button onClick={handleChangeView(MAIN_VIEW)} variant="text" color="inherit" disabled={mediasRef.current.mediaChunks.length > 0}>
                 <FormattedMessage id="ui.composer.done" defaultMessage="ui.composer.done" />
               </Button>
             </Box>
@@ -752,6 +758,7 @@ export default function Composer(props: ComposerProps): JSX.Element {
             {
               <mediaObjectType.editComponent
                 medias={medias.filter(mediaObjectType.filter)}
+                onProgress={handleMediaProgress}
                 onSuccess={handleAddMedia}
                 onSort={handleSortMedia}
                 onDelete={handleDeleteMedia}
@@ -768,7 +775,7 @@ export default function Composer(props: ComposerProps): JSX.Element {
       <React.Fragment>
         <DialogTitle className={classes.title}>
           <Typography component="div">
-            <IconButton onClick={handleChangeView(MAIN_VIEW)} size="small">
+            <IconButton onClick={handleChangeView(MAIN_VIEW)} size="small" disabled={!hasPoll()}>
               <BackIcon />
             </IconButton>
             <FormattedMessage id="ui.composer.poll.title" defaultMessage="ui.composer.poll.title" />
@@ -777,10 +784,10 @@ export default function Composer(props: ComposerProps): JSX.Element {
             <Avatar className={classes.avatar} src={scAuthContext.user.avatar}></Avatar>
           </Box>
           <Stack spacing={2} direction="row">
-            <Button onClick={handleDeletePoll} variant="outlined">
+            <Button onClick={handleDeletePoll} variant="text" color="inherit">
               <FormattedMessage id="ui.composer.delete" defaultMessage="ui.composer.delete" />
             </Button>
-            <Button onClick={handleChangeView(MAIN_VIEW)} variant="outlined" color="inherit">
+            <Button onClick={handleChangeView(MAIN_VIEW)} variant="text" color="inherit" disabled={!hasPoll()}>
               <FormattedMessage id="ui.composer.done" defaultMessage="ui.composer.done" />
             </Button>
           </Stack>
@@ -806,7 +813,7 @@ export default function Composer(props: ComposerProps): JSX.Element {
             <Avatar className={classes.avatar} src={scAuthContext.user.avatar}></Avatar>
           </Box>
           <Box>
-            <Button onClick={handleChangeView(MAIN_VIEW)} variant="outlined" color="inherit">
+            <Button onClick={handleChangeView(MAIN_VIEW)} variant="text" color="inherit">
               <FormattedMessage id="ui.composer.done" defaultMessage="ui.composer.done" />
             </Button>
           </Box>

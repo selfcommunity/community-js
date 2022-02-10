@@ -11,6 +11,7 @@ import MediaChunkUploader from '../../MediaChunkUploader';
 import {SCMediaChunkType} from '../../../types/media';
 import DocumentIcon from '@mui/icons-material/PictureAsPdfOutlined';
 import {ButtonProps} from '@mui/material/Button/Button';
+import { EditMediaProps } from '../types';
 
 const PREFIX = 'SCMediaActionDocument';
 
@@ -47,28 +48,9 @@ const SortableComponent = forwardRef<HTMLDivElement, any>(({children, ...props},
   );
 });
 
-export interface EditComponentProps {
-  /**
-   * Medias
-   * @default []
-   */
-  medias?: SCMediaType[];
-  /**
-   * Handles on success
-   */
-  onSuccess: (media: SCMediaType) => void;
-  /**
-   * Handles on sort
-   */
-  onSort: (newSort: SCMediaType[]) => void;
-  /**
-   * Handles on delete
-   */
-  onDelete: (id?: number) => (event: SyntheticEvent) => void;
-}
-export default (props: EditComponentProps): JSX.Element => {
+export default (props: EditMediaProps): JSX.Element => {
   //PROPS
-  const {medias = [], onSuccess, onSort, onDelete} = props;
+  const {medias = [], onProgress, onSuccess, onSort, onDelete} = props;
 
   // STATE
   const [uploading, setUploading] = useState({});
@@ -85,6 +67,7 @@ export default (props: EditComponentProps): JSX.Element => {
 
   const handleProgress = (chunks: any) => {
     setUploading({...chunks});
+    onProgress && onProgress(Object.values(chunks));
   };
 
   const handleError = (chunk: SCMediaChunkType, error: string) => {

@@ -22,7 +22,7 @@ import {styled} from '@mui/material/styles';
 import MediaChunkUploader from '../../MediaChunkUploader';
 import {SCMediaChunkType} from '../../../types/media';
 import DocumentIcon from '@mui/icons-material/PictureAsPdfOutlined';
-import {EditComponentProps} from '../Document/EditComponent';
+import {EditMediaProps} from '../types';
 import {ButtonProps} from '@mui/material/Button/Button';
 
 const PREFIX = 'SCMediaActionVideo';
@@ -60,7 +60,7 @@ const SortableComponent = forwardRef<HTMLDivElement, any>(({children, ...props},
   );
 });
 
-export default (props: EditComponentProps): JSX.Element => {
+export default (props: EditMediaProps): JSX.Element => {
   //PROPS
   const {medias = [], onSuccess, onSort, onDelete} = props;
 

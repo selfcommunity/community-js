@@ -6,6 +6,7 @@ import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import {styled} from '@mui/material/styles';
 import Link from './PreviewComponent';
 import UrlTextField from './UrlTextField';
+import { EditMediaProps } from '../types';
 
 const PREFIX = 'SCMediaActionLink';
 
@@ -31,32 +32,9 @@ const Root = styled(Box, {
   }
 }));
 
-export interface EditLinkProps {
-  /**
-   * Medias
-   * @default []
-   */
-  medias?: any[];
-  /**
-   * Handles on success
-   */
-  onSuccess: (media: any) => void;
-  /**
-   * Handles on sort
-   */
-  onSort: (newSort: any[]) => void;
-  /**
-   * Handles on progress
-   */
-  onProgress: (id: number) => void;
-  /**
-   * Handles on delete
-   */
-  onDelete: (id?: number) => (event: SyntheticEvent) => void;
-}
-export default (props: EditLinkProps): JSX.Element => {
+export default (props: EditMediaProps): JSX.Element => {
   // PROPS
-  const {medias = [], onSuccess, onSort, onProgress, onDelete} = props;
+  const {medias = [], onSuccess, onSort, onDelete} = props;
 
   /**
    * Renders root object
