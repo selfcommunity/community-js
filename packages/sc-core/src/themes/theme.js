@@ -53,22 +53,22 @@ const getTheme = (options, preferences) => {
               },
             },
           },
-          MuiButton: {
-            styleOverrides: {
-              root: {
-                textTransform: 'none',
-              },
-            },
-            variants: [
-              {
-                props: {variant: 'outlined'},
-                style: {
-                  border: `1px solid black`,
-                  color: 'black',
-                },
-              },
-            ],
-          },
+          // MuiButton: {
+          //   // styleOverrides: {
+          //   //   root: {
+          //   //     textTransform: 'none',
+          //   //   },
+          //   // },
+          //   // variants: [
+          //   //   {
+          //   //     props: {variant: 'outlined'},
+          //   //     style: {
+          //   //       border: `1px solid black`,
+          //   //       color: 'black',
+          //   //     },
+          //   //   },
+          //   // ],
+          // },
           MuiDivider: {
             styleOverrides: {
               root: {

@@ -43,7 +43,8 @@ const Root = styled(Paper, {
     flexGrow: 2
   },
   [`& .${classes.input} .MuiButton-text`]: {
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
+    textTransform: 'none'
   }
 }));
 

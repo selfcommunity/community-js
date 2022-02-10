@@ -33,7 +33,7 @@ const Root = styled(Box, {
 
 const UploadButton = asUploadButton(
   forwardRef((props: ButtonProps, ref: any) => (
-    <MuiButton {...props} aria-label="upload document" ref={ref} variant="outlined">
+    <MuiButton {...props} aria-label="upload document" ref={ref} variant="outlined" color="inherit">
       <DocumentIcon /> <FormattedMessage id="ui.composer.media.document.add" defaultMessage="ui.composer.media.document.add" />
     </MuiButton>
   ))

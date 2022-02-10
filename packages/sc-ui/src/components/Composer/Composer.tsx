@@ -132,106 +132,112 @@ const Root = styled(Dialog, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  [`& .${classes.title}`]: {
-    borderBottom: '1px solid #D1D1D1',
-    padding: theme.spacing(),
-    paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(2),
-    display: 'flex',
-    flexDirection: 'row',
-    flexWrap: 'nowrap',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    '& > div': {
-      flex: 1,
-      textAlign: 'center'
-    },
-    '& > div:first-of-type': {
-      textAlign: 'left'
-    },
-    '& > div:last-of-type': {
-      textAlign: 'right',
-      display: 'block'
-    }
-  },
-  [`& .${classes.types}`]: {
-    flexDirection: 'row',
-    alignItems: 'center'
-  },
-  [`& .${classes.avatar}`]: {
-    width: theme.spacing(4),
-    height: theme.spacing(4),
-    display: 'inline-block'
-  },
-  [`& .${classes.content}`]: {
-    paddingLeft: 0,
-    paddingRight: 0,
-    paddingBottom: 0,
-    position: 'relative',
-    overflowY: 'visible'
-  },
-  [`& .${classes.mediaContent}, & .${classes.audienceContent}, & .${classes.locationContent}`]: {
-    minHeight: 300
-  },
-  [`& .${classes.block}`]: {
-    padding: theme.spacing(2)
-  },
-  [`& .${classes.editor}`]: {
-    minHeight: 200
-  },
-  [`& .${classes.divider}`]: {
-    borderTop: '1px solid #D1D1D1'
-  },
-  [`& .${classes.medias}`]: {
-    margin: '0 23px'
-  },
-  [`& .${classes.location}, & .${classes.audience}`]: {
-    padding: theme.spacing(2),
-    paddingBottom: 0
-  },
-  [`& .${classes.mediasActions}`]: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    background: hexToRgb(theme.palette.getContrastText(theme.palette.primary.main)).replace(')', ', .8)'),
-    padding: theme.spacing(),
-    zIndex: 1,
-    display: 'flex',
-    flexWrap: 'nowrap',
-    justifyContent: 'space-between'
-  },
-  [`& .${classes.sortableMedia}`]: {
-    position: 'relative'
-  },
-  [`& .${classes.sortableMediaCover}`]: {
-    backgroundSize: 'cover !important',
-    backgroundPosition: 'center !important',
-    backgroundRepeat: 'no-repeat !important',
-    border: '2px solid white',
-    borderRadius: 6,
-    height: 300
-  },
-  [`& .${classes.links}`]: {
-    padding: theme.spacing(2)
-  },
-  [`& .${classes.actions}`]: {
-    margin: 0,
-    borderTop: '1px solid #D1D1D1',
-    padding: theme.spacing(1),
-    display: 'flex',
-    flexDirection: 'row',
-    flexWrap: 'nowrap',
-    justifyContent: 'space-between',
-    alignItems: 'center'
-  },
-  [`& .${classes.actionInput}`]: {
-    display: 'none !important'
-  },
-  [`& .${classes.badgeError} .MuiBadge-badge`]: {
-    padding: 0
+})(({theme}) => {
+  let mediaActionBackground = theme.palette.getContrastText(theme.palette.primary.main);
+  if (mediaActionBackground.startsWith('#')) {
+    mediaActionBackground = hexToRgb(mediaActionBackground).replace(')', ', .8)');
   }
-}));
+  return {
+    [`& .${classes.title}`]: {
+      borderBottom: '1px solid #D1D1D1',
+      padding: theme.spacing(),
+      paddingLeft: theme.spacing(2),
+      paddingRight: theme.spacing(2),
+      display: 'flex',
+      flexDirection: 'row',
+      flexWrap: 'nowrap',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      '& > div': {
+        flex: 1,
+        textAlign: 'center'
+      },
+      '& > div:first-of-type': {
+        textAlign: 'left'
+      },
+      '& > div:last-of-type': {
+        textAlign: 'right',
+        display: 'block'
+      }
+    },
+    [`& .${classes.types}`]: {
+      flexDirection: 'row',
+      alignItems: 'center'
+    },
+    [`& .${classes.avatar}`]: {
+      width: theme.spacing(4),
+      height: theme.spacing(4),
+      display: 'inline-block'
+    },
+    [`& .${classes.content}`]: {
+      paddingLeft: 0,
+      paddingRight: 0,
+      paddingBottom: 0,
+      position: 'relative',
+      overflowY: 'visible'
+    },
+    [`& .${classes.mediaContent}, & .${classes.audienceContent}, & .${classes.locationContent}`]: {
+      minHeight: 300
+    },
+    [`& .${classes.block}`]: {
+      padding: theme.spacing(2)
+    },
+    [`& .${classes.editor}`]: {
+      minHeight: 200
+    },
+    [`& .${classes.divider}`]: {
+      borderTop: '1px solid #D1D1D1'
+    },
+    [`& .${classes.medias}`]: {
+      margin: '0 23px'
+    },
+    [`& .${classes.location}, & .${classes.audience}`]: {
+      padding: theme.spacing(2),
+      paddingBottom: 0
+    },
+    [`& .${classes.mediasActions}`]: {
+      position: 'absolute',
+      left: 0,
+      right: 0,
+      background: mediaActionBackground,
+      padding: theme.spacing(),
+      zIndex: 1,
+      display: 'flex',
+      flexWrap: 'nowrap',
+      justifyContent: 'space-between'
+    },
+    [`& .${classes.sortableMedia}`]: {
+      position: 'relative'
+    },
+    [`& .${classes.sortableMediaCover}`]: {
+      backgroundSize: 'cover !important',
+      backgroundPosition: 'center !important',
+      backgroundRepeat: 'no-repeat !important',
+      border: '2px solid white',
+      borderRadius: 6,
+      height: 300
+    },
+    [`& .${classes.links}`]: {
+      padding: theme.spacing(2)
+    },
+    [`& .${classes.actions}`]: {
+      margin: 0,
+      borderTop: '1px solid #D1D1D1',
+      padding: theme.spacing(1),
+      display: 'flex',
+      flexDirection: 'row',
+      flexWrap: 'nowrap',
+      justifyContent: 'space-between',
+      alignItems: 'center'
+    },
+    [`& .${classes.actionInput}`]: {
+      display: 'none !important'
+    },
+    [`& .${classes.badgeError} .MuiBadge-badge`]: {
+      padding: 0
+    }
+  };
+});
 
 export interface ComposerTypeMap<P = {}, D extends React.ElementType = 'div'> {
   props: P &
@@ -644,8 +650,7 @@ export default function Composer(props: ComposerProps): JSX.Element {
       <Box className={classes.mediasActions} onMouseEnter={handleFadeIn(mediaObjectType.name)} onMouseLeave={handleFadeOut(mediaObjectType.name)}>
         <Fade in={Boolean(fades[mediaObjectType.name])}>
           <Typography align="left">
-            <Button onClick={handleChangeView(mediaObjectType.name)} variant="outlined" color="primary" size="small">
-              <WriteIcon />{' '}
+            <Button onClick={handleChangeView(mediaObjectType.name)} variant="text" size="small">
               <FormattedMessage
                 id={`ui.composer.media.${mediaObjectType.name}.edit`}
                 defaultMessage={`ui.composer.media.${mediaObjectType.name}.edit`}
@@ -676,7 +681,7 @@ export default function Composer(props: ComposerProps): JSX.Element {
             <Avatar className={classes.avatar} src={scAuthContext.user.avatar}></Avatar>
           </Box>
           <Box>
-            <Button onClick={handleChangeView(MAIN_VIEW)} variant="outlined">
+            <Button onClick={handleChangeView(MAIN_VIEW)} variant="text" color="inherit">
               <FormattedMessage id="ui.composer.done" defaultMessage="ui.composer.done" />
             </Button>
           </Box>
@@ -731,7 +736,7 @@ export default function Composer(props: ComposerProps): JSX.Element {
               <Avatar className={classes.avatar} src={scAuthContext.user.avatar}></Avatar>
             </Box>
             <Box>
-              <Button onClick={handleChangeView(MAIN_VIEW)} variant="outlined">
+              <Button onClick={handleChangeView(MAIN_VIEW)} variant="text" color="inherit">
                 <FormattedMessage id="ui.composer.done" defaultMessage="ui.composer.done" />
               </Button>
             </Box>
@@ -768,7 +773,7 @@ export default function Composer(props: ComposerProps): JSX.Element {
             <Button onClick={handleDeletePoll} variant="outlined">
               <FormattedMessage id="ui.composer.delete" defaultMessage="ui.composer.delete" />
             </Button>
-            <Button onClick={handleChangeView(MAIN_VIEW)} variant="outlined">
+            <Button onClick={handleChangeView(MAIN_VIEW)} variant="outlined" color="inherit">
               <FormattedMessage id="ui.composer.done" defaultMessage="ui.composer.done" />
             </Button>
           </Stack>
@@ -794,7 +799,7 @@ export default function Composer(props: ComposerProps): JSX.Element {
             <Avatar className={classes.avatar} src={scAuthContext.user.avatar}></Avatar>
           </Box>
           <Box>
-            <Button onClick={handleChangeView(MAIN_VIEW)} variant="outlined">
+            <Button onClick={handleChangeView(MAIN_VIEW)} variant="outlined" color="inherit">
               <FormattedMessage id="ui.composer.done" defaultMessage="ui.composer.done" />
             </Button>
           </Box>
