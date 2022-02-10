@@ -183,10 +183,11 @@ export default function PollObject(props: PollObjectProps): JSX.Element {
   function getVotes() {
     const choices = pollObject.choices;
     let totalVotes = 0;
+    let defaultVotes = 0;
     for (let i = 0; i < choices.length; i++) {
       totalVotes += choices[i].vote_count;
     }
-    return totalVotes;
+    return totalVotes ? totalVotes : defaultVotes;
   }
 
   /**
