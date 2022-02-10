@@ -1,7 +1,7 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useContext, useEffect, useRef} from 'react';
 import {styled} from '@mui/material/styles';
 import {Box, BoxProps} from '@mui/material';
-import {SCNotificationTopicType, SCNotification, SCNotificationTypologyType} from '@selfcommunity/core';
+import {SCNotificationTopicType, SCNotification, SCNotificationTypologyType, useSCContext, SCContextType} from '@selfcommunity/core';
 import PubSub from 'pubsub-js';
 import {useSnackbar} from 'notistack';
 import CustomSnackMessage from '../../shared/CustomSnackMessage';
@@ -69,6 +69,9 @@ export interface UserToastNotificationsProps extends BoxProps {
 export default function UserToastNotifications(props: UserToastNotificationsProps): JSX.Element {
   // PROPS
   const {ToastMessageProps = {}, handleNotification, disableToastNotification = false} = props;
+
+  // CONTEXT
+  const scContext: SCContextType = useSCContext();
 
   // REFS
   const notificationSubscription = useRef(null);
@@ -149,7 +152,8 @@ export default function UserToastNotifications(props: UserToastNotificationsProp
       data.type === SCNotificationTopicType.INTERACTION &&
       SCNotification.SCNotificationMapping[data.data.activity_type] &&
       !SCNotification.SCSilentNotifications.includes(data.data.activity_type) &&
-      !disableToastNotification
+      !disableToastNotification &&
+      !scContext.settings.notifications.webSocket.disableToastMessage
     ) {
       enqueueSnackbar(
         null,
