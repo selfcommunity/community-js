@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Button, Divider, Typography} from '@mui/material';
+import {Button, Typography} from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import {Endpoints, http, SCUserContext, SCUserContextType, SCCategoryType} from '@selfcommunity/core';
@@ -138,7 +138,6 @@ export default function CategoriesSuggestion(props: CategoriesListProps): JSX.El
                     followCategoryButtonProps={{onFollow: handleOnFollowCategory}}
                     {...CategoryProps}
                   />
-                  {index < visibleCategories - 1 ? <Divider /> : null}
                 </div>
               ))}
               {hasMore && (
