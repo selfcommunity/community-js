@@ -1,10 +1,18 @@
-import {useCallback, useEffect, useState} from 'react';
-import {SCContextType, SCUserContextType} from '../types';
+import {useContext, useEffect, useMemo, useState} from 'react';
+import {SCContextType, SCPreferencesContextType, SCTagType, SCUserContextType} from '../types';
 import {useSCContext} from '../components/provider/SCContextProvider';
 import {useSCUser} from '../components/provider/SCUserProvider';
 import {Logger} from '../utils/logger';
 import {loadVersionBrowser, urlB64ToUint8Array} from '../utils/webPushMessaging';
 import {SCOPE_SC_CORE} from '../constants/Errors';
+import http from '../utils/http';
+import Endpoints from '../constants/Endpoints';
+import {AxiosResponse} from 'axios';
+import {WEB_PUSH_NOTIFICATION_DEVICE_TYPE} from '../constants/Device';
+import {SCPreferencesContext} from '@selfcommunity/core';
+import * as SCPreferences from '../constants/Preferences';
+import * as Notifications from '../constants/Notifications';
+import {ValidationError} from '../utils/errors';
 
 /**
  * Custom hook 'useSCWebPushMessaging'
@@ -14,12 +22,38 @@ export default function useSCWebPushMessaging() {
   // CONTEXT
   const scContext: SCContextType = useSCContext();
   const scUserContext: SCUserContextType = useSCUser();
+  const scPreferencesContext: SCPreferencesContextType = useContext(SCPreferencesContext);
+
+  // STATE
   const [wpSubscription, setWpSubscription] = useState(null);
 
   // CONST
   const applicationServerKey = scContext.settings.notifications.webPushMessaging.applicationServerKey
     ? scContext.settings.notifications.webPushMessaging.applicationServerKey
-    : null;
+    : scPreferencesContext.preferences[SCPreferences.PROVIDERS_WEB_PUSH_PUBLIC_KEY].value;
+  console.log(applicationServerKey);
+
+  const performUpdateSubscription = useMemo(
+    () => (data, remove) => {
+      const url = remove
+        ? Endpoints.DeleteDevice.url({type: WEB_PUSH_NOTIFICATION_DEVICE_TYPE, id: data.registration_id})
+        : Endpoints.NewDevice.url({type: WEB_PUSH_NOTIFICATION_DEVICE_TYPE});
+      const method = remove ? Endpoints.DeleteDevice.method : Endpoints.NewDevice.method;
+      return http
+        .request({
+          url,
+          method,
+          ...(remove ? {} : {data: data}),
+        })
+        .then((res: AxiosResponse<SCTagType>) => {
+          if (res.status >= 300) {
+            return Promise.reject(res);
+          }
+          return Promise.resolve(res.data);
+        });
+    },
+    []
+  );
 
   /**
    * updateSubscriptionOnServer to sync current subscription
@@ -35,16 +69,18 @@ export default function useSCWebPushMessaging() {
       browser: browser.name.toUpperCase(),
       p256dh: btoa(String.fromCharCode.apply(null, new Uint8Array(sub.getKey('p256dh')))),
       auth: btoa(String.fromCharCode.apply(null, new Uint8Array(sub.getKey('auth')))),
-      userId: scUserContext.user.id,
+      user: scUserContext.user.username,
       registration_id: registration_id,
     };
-    if (remove) {
-      Logger.info(SCOPE_SC_CORE, 'Remove subscription to server');
-      setWpSubscription(null);
-    } else {
-      Logger.info(SCOPE_SC_CORE, 'Add subscription to server');
-    }
     console.log(data);
+    performUpdateSubscription(data, remove).then((r: any) => {
+      if (remove) {
+        Logger.info(SCOPE_SC_CORE, 'Subscription remove to server');
+        setWpSubscription(null);
+      } else {
+        Logger.info(SCOPE_SC_CORE, 'Added subscription to server');
+      }
+    });
   };
 
   /**
@@ -192,7 +228,7 @@ export default function useSCWebPushMessaging() {
     } else {
       // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
       // @ts-ignore
-      if (Notification.permission === 'prompt') {
+      if (Notification.permission === 'default' || Notification.permission === 'prompt') {
         Logger.info(SCOPE_SC_CORE, 'Request permission.');
         requestNotificationPermission();
       } else if (Notification.permission === 'granted') {
@@ -222,7 +258,9 @@ export default function useSCWebPushMessaging() {
   };
 
   useEffect(() => {
-    if (scUserContext.user && !scContext.settings.notifications.webPushMessaging.disableToastMessage && applicationServerKey) {
+    if (!scContext.settings.notifications.webPushMessaging.disableToastMessage && !applicationServerKey) {
+      Logger.warn(SCOPE_SC_CORE, 'Invalid or missing applicationServerKey. Check the configuration that is passed to the SCContextProvider.');
+    } else if (scUserContext.user && !scContext.settings.notifications.webPushMessaging.disableToastMessage && applicationServerKey) {
       initialiseState();
     }
     // Remove subscription

@@ -423,6 +423,22 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/pm/$(id)/?hide=1'),
     method: 'DELETE',
   },
+
+  /**
+   * Device
+   */
+  Device: {
+    url: urlReplacer('/api/v2/device/$(type)/$(id)/'),
+    method: 'GET',
+  },
+  NewDevice: {
+    url: urlReplacer('/api/v2/device/$(type)/'),
+    method: 'POST',
+  },
+  DeleteDevice: {
+    url: urlReplacer('/api/v2/device/$(type)/$(id)/'),
+    method: 'DELETE',
+  },
 };
 
 export default Endpoints;

@@ -232,9 +232,6 @@ export const validateWebPushMessagingDisableToastMessage = (value, notifications
     if (!(typeof value === 'boolean')) {
       errors.push(ValidationError.ERROR_INVALID_NOTIFICATIONS_WEB_PUSH_MESSAGING_DISABLE_TOAST_MESSAGE);
     }
-    if (!value && !(Notifications.NOTIFICATIONS_APPLICATION_SERVER_KEY_OPTION in notifications)) {
-      errors.push(ValidationError.ERROR_INVALID_NOTIFICATIONS_WEB_PUSH_MESSAGING_APPLICATION_SERVER_KEY);
-    }
   } else {
     return {
       errors,
