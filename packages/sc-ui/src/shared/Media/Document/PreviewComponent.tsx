@@ -1,40 +1,19 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import LazyLoad from 'react-lazyload';
-import CentralProgress from '../../CentralProgress';
-import Box from '@mui/material/Box';
-import Image from '../Image';
-import ZoomInIcon from '@mui/icons-material/ZoomIn';
+import ImagePreview, {ImagePreviewComponentProps} from '../Image/PreviewComponent';
 import {MAX_GRID_IMAGES} from '../../../constants/Media';
 
 const PREFIX = 'SCPreviewMediaDocument';
 
-const Root = styled(Box, {
+const Root = styled(ImagePreview, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({}));
 
-export interface PreviewComponentProps {
-  /**
-   * Medias
-   * @default []
-   */
-  medias: any[];
-  /**
-   * Grid Image props
-   * @default {}
-   */
-  GridImageProps?: any;
-  /**
-   * Component adornments
-   * @default null
-   */
-  adornment?: React.ReactNode;
-}
-export default (props: PreviewComponentProps): JSX.Element => {
+export default (props: ImagePreviewComponentProps): JSX.Element => {
   // PROPS
-  const {medias = [], GridImageProps = {}, adornment = null} = props;
+  const {medias = [], ...rest} = props;
 
   /**
    * Handles click on pdf
@@ -54,23 +33,8 @@ export default (props: PreviewComponentProps): JSX.Element => {
   /**
    * Renders document preview
    */
-  return (
-    <>
-      {medias.length > 0 && (
-        <LazyLoad height={360} placeholder={<CentralProgress size={20} />}>
-          <Root>
-            {adornment}
-            <Image.previewComponent
-              medias={medias}
-              title
-              renderOverlay={() => <ZoomInIcon />}
-              onClickEach={handleClickOnPdf}
-              {...GridImageProps}
-              adornment={adornment}
-            />
-          </Root>
-        </LazyLoad>
-      )}
-    </>
-  );
+  if (medias.length > 0) {
+    return <Root medias={medias} {...rest} onClick={handleClickOnPdf} />;
+  }
+  return null;
 };

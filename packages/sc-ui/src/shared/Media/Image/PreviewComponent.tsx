@@ -30,7 +30,7 @@ const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(() => ({
+})(({theme}) => ({
   textAlign: 'center',
   margin: 'auto',
   width: '100%',
@@ -118,8 +118,9 @@ const Root = styled(Box, {
     cursor: 'pointer'
   },
 
-  [`& .${classes.title}`]: {
-    color: '#FFF'
+  [`& .${classes.title} .MuiTypography-root`]: {
+    color: '#FFF',
+    backgroundColor: theme.palette.getContrastText('#FFF')
   },
 
   [`& .${classes.iconFile}`]: {
@@ -156,7 +157,6 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
   // STATE
   const [preview, setPreview] = useState(-1);
   const [from, setFrom] = useState(0);
-  const [conditionalRender, setConditionalRender] = useState(false);
 
   // HANDLERS
   const handleClose = () => {
@@ -305,6 +305,9 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
   };
 
   const renderOverlay = (id) => {
+    if (!gallery) {
+      return null;
+    }
     return [
       <div key={`cover-${id}`} className={classNames(classes.cover, classes.slide)}></div>,
       <div key={`cover-text-${id}`} className={classNames(classes.coverText, classes.slide, 'animate-text')} style={{fontSize: '100%'}}>
