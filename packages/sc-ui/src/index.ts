@@ -40,6 +40,7 @@ import Thread, {ThreadProps, ThreadSkeleton} from './components/Thread';
 import UserToastNotifications, {UserToastNotificationsProps, UserToastNotificationsSkeleton} from './components/UserToastNotifications';
 import Notification, {NotificationProps, NotificationSkeleton} from './components/Notification';
 import {SCFeedWidgetType, FeedObjectTemplateType, CommentsOrderBy, FeedObjectActivitiesType, SCMediaObjectType, SCMediaChunkType} from './types';
+import {SCCategoryType} from '@selfcommunity/core';
 
 /**
  * List all exports
@@ -47,6 +48,7 @@ import {SCFeedWidgetType, FeedObjectTemplateType, CommentsOrderBy, FeedObjectAct
 export {
   Category,
   CategoryProps,
+  SCCategoryType,
   Skeleton,
   CategoryHeader,
   CategoryHeaderProps,

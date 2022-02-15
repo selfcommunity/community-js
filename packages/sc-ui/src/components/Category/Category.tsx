@@ -69,6 +69,27 @@ export interface CategoryProps extends Pick<CardProps, Exclude<keyof CardProps, 
    */
   [p: string]: any;
 }
+
+/**
+ > API documentation for the Community-UI Category component. Learn about the available props and the CSS API.
+ * ### Import
+ ```jsx
+ import Category from '@selfcommunity/ui';
+ ```
+ ### Component Name
+ The name `SCCategory` can be used when providing style overrides in the theme.
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCCategory-root|Styles applied to the root element.|
+ |categoryImage|.SCCategory-category-image|Styles applied to category image element.|
+ |title|.SCCategory-title|Styles applied to the title element.|
+ |actions|.SCCategory-actions|Styles applied to action section.|
+
+ * @param props
+ */
 export default function Category(props: CategoryProps): JSX.Element {
   // PROPS
   const {id = null, category = null, className = null, popular = false, autoHide = false, followCategoryButtonProps = {}, ...rest} = props;
