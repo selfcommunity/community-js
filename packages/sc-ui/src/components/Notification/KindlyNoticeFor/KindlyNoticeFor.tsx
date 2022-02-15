@@ -43,7 +43,7 @@ const Root = styled(Box, {
 export interface NotificationKindlyNoticeForProps {
   /**
    * Id of the feedObject
-   * @default 'n_<notificationObject.sid>'
+   * @default `n_<notificationObject.sid>`
    */
   id?: string;
 

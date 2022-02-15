@@ -27,7 +27,7 @@ const Root = styled(Box, {
 export interface NotificationKindlyNoticeFlagProps {
   /**
    * Id of the feedObject
-   * @default 'n_<notificationObject.sid>'
+   * @default `n_<notificationObject.sid>`
    */
   id?: string;
 

@@ -6,9 +6,9 @@ import useSCWebPushMessaging from '../../../hooks/useSCWebPushMessaging';
 /**
  * Create Global Context
  * Consuming this context in one of the following ways:
- *  1. <SCNotificationContext.Consumer>
+ *  1. `<SCNotificationContext.Consumer>
  *       {(wsInstance, wpSubscription,) => (...)}
- *     </SCNotificationContext.Consumer>
+ *     </SCNotificationContext.Consumer>`
  *  2. const scNotificationContext: SCNotificationContextType = useContext(SCNotificationContext);
  *  3. const scNotificationContext: SCNotificationContextType = useSCNotification();
  */

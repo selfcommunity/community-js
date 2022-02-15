@@ -2,13 +2,7 @@ import React from 'react';
 import {styled} from '@mui/material/styles';
 import {Box, Button, ListItem, ListItemText, Typography} from '@mui/material';
 import ReplyIcon from '@mui/icons-material/Send';
-import {
-  Link,
-  SCNotificationPrivateMessageType,
-  SCRoutes,
-  SCRoutingContextType,
-  useSCRouting,
-} from '@selfcommunity/core';
+import {Link, SCNotificationPrivateMessageType, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
 import {grey} from '@mui/material/colors';
 import {FormattedMessage} from 'react-intl';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
@@ -44,7 +38,7 @@ const Root = styled(Box, {
 export interface NotificationPMProps {
   /**
    * Id of the feedObject
-   * @default 'n_<notificationObject.sid>'
+   * @default `n_<notificationObject.sid>`
    */
   id?: string;
 
@@ -97,10 +91,7 @@ export default function UserNotificationPrivateMessage(props: NotificationPMProp
               component={Link}
               to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, notificationObject.message)}>
               <Box component={'span'} sx={{display: {xs: 'none', md: 'block'}, marginRight: '2px'}}>
-                <FormattedMessage
-                  id="ui.notification.privateMessage.btnReplyLabel"
-                  defaultMessage="ui.notification.privateMessage.btnReplyLabel"
-                />
+                <FormattedMessage id="ui.notification.privateMessage.btnReplyLabel" defaultMessage="ui.notification.privateMessage.btnReplyLabel" />
               </Box>
               <ReplyIcon />
             </Button>

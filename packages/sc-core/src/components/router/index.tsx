@@ -9,10 +9,10 @@ import {SCRoutingContextType} from '../../types/context';
  *
  * Example:
  *    const scRoutingContext: SCRoutingContextType = useSCRouting();
- *    <Button component={Link} to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: user.id})}>Go to profile</Button>
+ *    `<Button component={Link} to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: user.id})}>Go to profile</Button>`
  * or
  *    const scRoutingContext: SCRoutingContextType = useSCRouting();
- *    <Link to={scRoutingContext.url('profile', {id: user.id})}>Go to profile</Link>
+ *    `<Link to={scRoutingContext.url('profile', {id: user.id})}>Go to profile</Link>`
  *
  */
 const Link = ({children, ...other}, ref) => {

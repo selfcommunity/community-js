@@ -20,9 +20,9 @@ import {
 /**
  * SCUserContext (Authentication Context)
  * Consuming this context in one of the following ways:
- *  1. <SCUserContext.Consumer>
+ *  1. `<SCUserContext.Consumer>
  *       {(user, session, error, loading, logout, ...) => (...)}
- *     </SCUserContext.Consumer>
+ *     </SCUserContext.Consumer>`
  *  2. const scUserContext: SCUserContextType = useContext(SCUserContext);
  *  3. const scUserContext: SCUserContextType = useSCUser();
  */

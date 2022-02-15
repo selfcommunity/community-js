@@ -6,9 +6,9 @@ import {SCContextProviderType, SCContextType, SCSettingsType} from '../../../typ
 /**
  * Create Global Context
  * Consuming this context in one of the following ways:
- *  1. <SCContext.Consumer>
+ *  1. `<SCContext.Consumer>
  *       {settings => (...)}
- *     </SCContext.Consumer>
+ *     </SCContext.Consumer>`
  *  2. const scContext: SCContextType = useContext(SCContext);
  *  3. const scContext: SCContextType = useSCContext();
  */

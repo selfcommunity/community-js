@@ -202,7 +202,7 @@ export interface FeedObjectProps extends CardProps {
    * Mark the FeedObject as read when enter in viewport
    * @default false
    */
-  markRead: boolean;
+  markRead?: boolean;
 
   /**
    * Feed Object latest activities

@@ -10,9 +10,9 @@ import {useSCPreferences} from '../SCPreferencesProvider';
 /**
  * Create Global Context
  * Consuming this context in one of the following ways:
- *  1. <SCThemeContext.Consumer>
+ *  1. `<SCThemeContext.Consumer>
  *       {(theme,) => (...)}
- *     </SCThemeContext.Consumer>
+ *     </SCThemeContext.Consumer>`
  *  2. const scThemeContext: SCThemeContextType = useContext(SCThemeContext);
  *  3. const scThemeContext: SCThemeContextType = useSCTheme();
  */

@@ -8,9 +8,9 @@ import {SCOPE_SC_CORE} from '../../../constants/Errors';
 /**
  * Create Preferences/Features Context
  * Consuming this context in one of the following ways:
- *  1. <SCPreferencesContext.Consumer>
+ *  1. `<SCPreferencesContext.Consumer>
  *       {(preferences) => (...)}
- *     </SCPreferencesContext.Consumer>
+ *     </SCPreferencesContext.Consumer>`
  *  2. const scPreferences: SCPreferencesType = usePreferencesContext(SCPreferencesContext);
  *  3. const scPreferences: SCPreferencesType = useSCPreferences();
  */

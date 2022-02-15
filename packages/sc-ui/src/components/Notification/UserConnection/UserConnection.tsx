@@ -36,7 +36,7 @@ const Root = styled(Box, {
 export interface NotificationConnectionProps {
   /**
    * Id of the feedObject
-   * @default 'n_<notificationObject.sid>'
+   * @default `n_<notificationObject.sid>`
    */
   id?: string;
 

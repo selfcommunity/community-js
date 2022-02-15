@@ -11,9 +11,9 @@ import {SCOPE_SC_CORE} from '../../../constants/Errors';
 /**
  * Create Global Context
  * Consuming this context in one of the following ways:
- *  1. <SCLocaleContext.Consumer>
+ *  1. `<SCLocaleContext.Consumer>
  *       {(locale,) => (...)}
- *     </SCLocaleContext.Consumer>
+ *     </SCLocaleContext.Consumer>`
  *  2. const scLocaleContext: SCLocaleContextType = useContext(SCLocaleContext);
  *  3. const scLocaleContext: SCLocaleContextType = useSCLocale();
  */

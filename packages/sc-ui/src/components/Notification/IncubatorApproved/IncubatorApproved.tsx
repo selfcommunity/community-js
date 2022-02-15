@@ -28,7 +28,7 @@ const Root = styled(Box, {
 export interface NotificationIncubatorApprovedProps {
   /**
    * Id of the feedObject
-   * @default 'n_<notificationObject.feed_serialization_id>'
+   * @default `n_<notificationObject.feed_serialization_id>`
    */
   id?: string;
 

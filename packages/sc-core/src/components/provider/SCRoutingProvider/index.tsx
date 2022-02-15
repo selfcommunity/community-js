@@ -22,9 +22,9 @@ import {
 /**
  * Create Global Context
  * Consuming this context in one of the following ways:
- *  1. <SCRoutingContext.Consumer>
+ *  1. `<SCRoutingContext.Consumer>
  *       {(routerLink, routes, url) => (...)}
- *     </SCRoutingContext.Consumer>
+ *     </SCRoutingContext.Consumer>`
  *  2. const scRoutingContext: SCRoutingContextType = useContext(SCRoutingContext);
  *  3. const scRoutingContext: SCRoutingContextType = useSCRouting();
  */

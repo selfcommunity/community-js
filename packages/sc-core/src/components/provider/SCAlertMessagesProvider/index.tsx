@@ -5,16 +5,22 @@ import {SnackbarProvider} from 'notistack';
 /**
  * Create Global Context
  * Consuming this context in one of the following ways:
- *  1. <SCAlertMessagesContext.Consumer>
+ *  1. `<SCAlertMessagesContext.Consumer>
  *       {(options,) => (...)}
- *     </SCAlertMessagesContext.Consumer>
+ *     </SCAlertMessagesContext.Consumer>`
  *  2. const scAlertMessagesContext: SCAlertMessagesContextType = useContext(SCAlertMessagesContext);
  *  3. const scAlertMessagesContext: SCAlertMessagesContextType = useSCAlertMessages();
  */
 export const SCAlertMessagesContext = createContext<SCAlertMessagesContextType>({} as SCAlertMessagesContextType);
 
 /**
+ * #### Description:
  * This component makes the `intl` available down the React tree.
+ * @param children
+ * @return
+ * ```jsx
+ * <SCAlertMessagesContext.Provider value={{options}}>
+ * ```
  */
 export default function SCAlertMessagesProvider({children = null}: {children: React.ReactNode}): JSX.Element {
   const [options, setOptions] = useState({maxSnack: 3});
