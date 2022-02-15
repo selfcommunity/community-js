@@ -2,6 +2,7 @@ import React, {useContext} from 'react';
 import {styled} from '@mui/material/styles';
 import {Box} from '@mui/material';
 import {
+  BroadcastMessages,
   CategoriesSuggestion,
   Feed,
   FeedObjectTemplateType,
@@ -13,7 +14,7 @@ import {
   NotificationSkeleton,
   PeopleSuggestion,
   Platform,
-  SCFeedWidgetType
+  SCFeedWidgetType,
 } from '@selfcommunity/ui';
 import {Endpoints, SCNotificationTopicType, SCUserContext, SCUserContextType} from '@selfcommunity/core';
 
@@ -63,10 +64,17 @@ export interface NotificationFeedProps {
 const WIDGETS: SCFeedWidgetType[] = [
   {
     type: 'widget',
+    component: BroadcastMessages,
+    componentProps: {MessageProps: {variant: 'outlined'}},
+    column: 'left',
+    position: 0
+  },
+  {
+    type: 'widget',
     component: FeedUpdates,
     componentProps: {variant: 'outlined', subscriptionChannel: SCNotificationTopicType.INTERACTION},
     column: 'left',
-    position: 0,
+    position: 1,
     publishEvents: true
   },
   {
@@ -118,7 +126,7 @@ export default function NotificationFeed(props: NotificationFeedProps): JSX.Elem
       endpoint={Endpoints.UserNotificationList}
       widgets={widgets}
       ItemComponent={Notification}
-      itemPropsGenerator={(item) => ({
+      itemPropsGenerator={(scUser, item) => ({
         notificationObject: item
       })}
       ItemProps={NotificationProps}

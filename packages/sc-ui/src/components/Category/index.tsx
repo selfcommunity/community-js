@@ -1,4 +1,4 @@
 import Category, {CategoryProps} from './Category';
-import Skeleton from './Skeleton';
+import CategorySkeleton from './Skeleton';
 export default Category;
-export {CategoryProps, Skeleton};
+export {CategoryProps, CategorySkeleton};

@@ -61,6 +61,7 @@ import ReplyCommentObject from '../CommentObject/ReplyComment';
 import {LoadingButton} from '@mui/lab';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {AxiosResponse} from 'axios';
+import MarkRead from '../../shared/MarkRead';
 
 const messages = defineMessages({
   comment: {
@@ -198,6 +199,12 @@ export interface FeedObjectProps extends CardProps {
   feedObjectType?: SCFeedObjectTypologyType;
 
   /**
+   * Mark the FeedObject as read when enter in viewport
+   * @default false
+   */
+  markRead: boolean;
+
+  /**
    * Feed Object latest activities
    * @default null
    */
@@ -242,6 +249,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
     feedObject = null,
     feedObjectType = SCFeedObjectTypologyType.POST,
     feedObjectActivities = null,
+    markRead = false,
     template = FeedObjectTemplateType.PREVIEW,
     hideShareAction = false,
     hideFollowAction = false,
@@ -736,6 +744,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
    */
   return (
     <Root id={id} className={className} {...rest}>
+      {obj && markRead && <MarkRead endpoint={Endpoints.FeedObjectMarkRead} data={{object: [obj.id]}} />}
       <Box className={`${PREFIX}-${template}`}>{objElement}</Box>
     </Root>
   );
