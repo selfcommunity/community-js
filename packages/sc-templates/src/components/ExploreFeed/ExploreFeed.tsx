@@ -112,7 +112,7 @@ export default function ExploreFeed(props: ExploreFeedProps): JSX.Element {
         feedObject: item[item.type],
         feedObjectType: item.type,
         feedObjectActivities: item.activities ? item.activities : null,
-        markRead: !item.seen_by_id.includes(scUser.id)
+        markRead: scUser ? !item.seen_by_id.includes(scUser.id) : null
       })}
       ItemProps={FeedObjectProps}
       ItemSkeleton={FeedObjectSkeleton}
