@@ -122,7 +122,7 @@ export default function UserFeed(props: UserFeedProps): JSX.Element {
       }}
       widgets={_widgets}
       ItemComponent={FeedObject}
-      itemPropsGenerator={(item) => ({
+      itemPropsGenerator={(scUser, item) => ({
         feedObject: item[item.type],
         feedObjectType: item.type,
         feedObjectActivities: item.activities ? item.activities : null

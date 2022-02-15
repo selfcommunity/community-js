@@ -2,6 +2,9 @@
  * Types
  */
 import {
+  SCBroadcastMessageBannerType,
+  SCBannerType,
+  SCBroadcastMessageType,
   SCContextType,
   SCAuthTokenType,
   SCUserContextType,
@@ -155,6 +158,9 @@ import * as Locale from './constants/Locale';
  * List all exports
  */
 export {
+  SCBroadcastMessageBannerType,
+  SCBannerType,
+  SCBroadcastMessageType,
   SCContextProviderType,
   SCCustomAdvPosition,
   SCCustomAdvType,

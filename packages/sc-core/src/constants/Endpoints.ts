@@ -225,6 +225,21 @@ const Endpoints: {[key: string]: EndpointType} = {
   },
 
   /**
+   * Broadcast Messages
+   */
+  BroadcastMessagesList: {
+    url: urlReplacer('/api/v2/notification/banner/'),
+    method: 'GET',
+  },
+  BroadcastMessagesMarkRead: {
+    url: urlReplacer('/api/v2/notification/banner/read/'),
+    method: 'POST',
+  },
+  BroadcastMessagesDispose: {
+    url: urlReplacer('/api/v2/notification/banner/dispose/'),
+    method: 'POST',
+  },
+  /**
    * Notifications
    */
   UserNotificationList: {
@@ -368,7 +383,7 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/feed/unseen/count/'),
     method: 'GET',
   },
-  MarkFeedObjectAsRead: {
+  FeedObjectMarkRead: {
     url: urlReplacer('/api/v2/feed/read/'),
     method: 'POST',
   },

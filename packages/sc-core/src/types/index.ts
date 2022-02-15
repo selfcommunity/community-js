@@ -1,3 +1,4 @@
+import {SCBannerType, SCBroadcastMessageBannerType, SCBroadcastMessageType} from './broadcastMessage';
 import {
   SCUserContextType,
   SCFollowedManagerType,
@@ -67,6 +68,9 @@ import {
  * Exports all types
  */
 export {
+  SCBannerType,
+  SCBroadcastMessageBannerType,
+  SCBroadcastMessageType,
   SCUserContextType,
   SCCategoriesManagerType,
   SCContextProviderType,

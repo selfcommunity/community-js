@@ -1,6 +1,7 @@
 /**
  * TEXT
  */
+export const TEXT_APPLICATION_NAME = 'text.application_name';
 export const TEXT_APPLICATION_SLOGAN1 = 'text.application_slogan1';
 export const TEXT_APPLICATION_SLOGAN2 = 'text.application_slogan2';
 export const TEXT_APPLICATION_COPYRIGHT = 'text.application_copyright';

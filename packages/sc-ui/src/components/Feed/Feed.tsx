@@ -19,8 +19,8 @@ import {
   SCPreferences,
   SCPreferencesContextType,
   SCUserContext,
-  SCUserContextType,
-  useSCPreferences
+  SCUserContextType, SCUserType,
+  useSCPreferences,
 } from '@selfcommunity/core';
 import classNames from 'classnames';
 import PubSub from 'pubsub-js';
@@ -98,7 +98,7 @@ export interface FeedProps {
   /**
    * Function used to convert the single result returned by the Endpoint into the props necessary to render the ItemComponent
    */
-  itemPropsGenerator: (item) => any;
+  itemPropsGenerator: (scUser: SCUserType, item) => any;
 
   /**
    * Props to spread to single feed item
@@ -312,7 +312,7 @@ export default function Feed(props: FeedProps): JSX.Element {
               d.type === 'widget' ? (
                 <d.component key={i} {...d.componentProps} {...(d.publishEvents && {publicationChannel: id})}></d.component>
               ) : (
-                <ItemComponent key={i} {...itemPropsGenerator(d)} {...ItemProps} sx={{width: '100%'}} />
+                <ItemComponent key={i} {...itemPropsGenerator(scUserContext.user, d)} {...ItemProps} sx={{width: '100%'}} />
               )
             )}
           </InfiniteScroll>

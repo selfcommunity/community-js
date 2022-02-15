@@ -108,10 +108,11 @@ export default function ExploreFeed(props: ExploreFeedProps): JSX.Element {
       endpoint={Endpoints.ExploreFeed}
       widgets={widgets}
       ItemComponent={FeedObject}
-      itemPropsGenerator={(item) => ({
+      itemPropsGenerator={(scUser, item) => ({
         feedObject: item[item.type],
         feedObjectType: item.type,
-        feedObjectActivities: item.activities ? item.activities : null
+        feedObjectActivities: item.activities ? item.activities : null,
+        markRead: !item.seen_by_id.includes(scUser.id)
       })}
       ItemProps={FeedObjectProps}
       ItemSkeleton={FeedObjectSkeleton}

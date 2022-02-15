@@ -25,10 +25,11 @@ export const Main = Template.bind({});
 Main.args = {
   endpoint: Endpoints.MainFeed,
   ItemComponent: FeedObject,
-  itemPropsGenerator: (item) => ({
+  itemPropsGenerator: (scUser, item) => ({
     feedObject: item[item.type],
     feedObjectType: item.type,
-    feedObjectActivities: item.activities ? item.activities : null
+    feedObjectActivities: item.activities ? item.activities : null,
+    markRead: !item.seen_by_id.includes(scUser.id)
   }),
   ItemSkeleton: FeedObjectSkeleton,
   ItemSkeletonProps: {
@@ -41,10 +42,11 @@ export const Explore = Template.bind({});
 Explore.args = {
   endpoint: Endpoints.ExploreFeed,
   ItemComponent: FeedObject,
-  itemPropsGenerator: (item) => ({
+  itemPropsGenerator: (scUser, item) => ({
     feedObject: item[item.type],
     feedObjectType: item.type,
-    feedObjectActivities: item.activities ? item.activities : null
+    feedObjectActivities: item.activities ? item.activities : null,
+    markRead: !item.seen_by_id.includes(scUser.id)
   }),
   ItemSkeleton: FeedObjectSkeleton,
   ItemSkeletonProps: {
@@ -67,7 +69,7 @@ Notification.args = {
     }
   ],
   ItemComponent: SCNotification,
-  itemPropsGenerator: (item) => ({
+  itemPropsGenerator: (scUser, item) => ({
     notificationObject: item
   }),
   ItemSkeleton: NotificationSkeleton

@@ -1,7 +1,8 @@
 /**
  * Components
  */
-import Category, {CategoryProps, Skeleton} from './components/Category';
+import BroadcastMessages, {BroadcastMessagesProps, BroadcastMessagesSkeleton} from './components/BroadcastMessages';
+import Category, {CategoryProps, CategorySkeleton} from './components/Category';
 import CategoryHeader, {CategoryHeaderProps, CategoryHeaderSkeleton} from './components/CategoryHeader';
 import CategoriesFollowed, {CategoriesFollowedSkeleton} from './components/CategoriesFollowed';
 import CategoriesPopular, {CategoriesPopularSkeleton} from './components/CategoriesPopular';
@@ -45,9 +46,12 @@ import {SCFeedWidgetType, FeedObjectTemplateType, CommentsOrderBy, FeedObjectAct
  * List all exports
  */
 export {
+  BroadcastMessages,
+  BroadcastMessagesProps,
+  BroadcastMessagesSkeleton,
   Category,
   CategoryProps,
-  Skeleton,
+  CategorySkeleton,
   CategoryHeader,
   CategoryHeaderProps,
   CategoryHeaderSkeleton,
