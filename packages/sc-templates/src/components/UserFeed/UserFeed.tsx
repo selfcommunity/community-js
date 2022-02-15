@@ -10,6 +10,7 @@ import {
   FeedObjectTemplateType,
   FeedSidebarProps,
   SCFeedWidgetType,
+  UserFollowers,
   UsersFollowed
 } from '@selfcommunity/ui';
 import {UserFeedSkeleton} from './index';
@@ -83,6 +84,13 @@ const WIDGETS: SCFeedWidgetType[] = [
     componentProps: {variant: 'outlined'},
     column: 'right',
     position: 1
+  },
+  {
+    type: 'widget',
+    component: UserFollowers,
+    componentProps: {variant: 'outlined'},
+    column: 'right',
+    position: 2
   }
 ];
 
