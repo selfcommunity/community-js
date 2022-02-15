@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Button, Typography} from '@mui/material';
+import {Button, Typography, List} from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import {Endpoints, http, SCUserContext, SCUserContextType, SCCategoryType} from '@selfcommunity/core';
@@ -129,17 +129,19 @@ export default function CategoriesSuggestion(props: CategoriesListProps): JSX.El
             </Typography>
           ) : (
             <React.Fragment>
-              {categories.slice(0, visibleCategories).map((category: SCCategoryType, index) => (
-                <div key={index}>
-                  <Category
-                    elevation={0}
-                    category={category}
-                    key={category.id}
-                    followCategoryButtonProps={{onFollow: handleOnFollowCategory}}
-                    {...CategoryProps}
-                  />
-                </div>
-              ))}
+              <List>
+                {categories.slice(0, visibleCategories).map((category: SCCategoryType, index) => (
+                  <div key={index}>
+                    <Category
+                      elevation={0}
+                      category={category}
+                      key={category.id}
+                      followCategoryButtonProps={{onFollow: handleOnFollowCategory}}
+                      {...CategoryProps}
+                    />
+                  </div>
+                ))}
+              </List>
               {hasMore && (
                 <Button size="small" onClick={() => loadCategories(2)}>
                   <FormattedMessage id="ui.categoriesSuggestion.button.showMore" defaultMessage="ui.categoriesSuggestion.button.showMore" />

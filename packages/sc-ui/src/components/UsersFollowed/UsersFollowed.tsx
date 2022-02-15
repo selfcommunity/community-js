@@ -143,7 +143,7 @@ export default function UsersFollowed(props: UsersFollowedProps): JSX.Element {
                 ))}
               </List>
               {hasMore && (
-                <Button size="small" sx={{color: ' black'}} onClick={() => loadUsers(limit)}>
+                <Button size="small" onClick={() => loadUsers(limit)}>
                   <FormattedMessage id="ui.button.showMore" defaultMessage="ui.button.showMore" />
                 </Button>
               )}

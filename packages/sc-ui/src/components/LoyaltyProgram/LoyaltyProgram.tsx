@@ -45,7 +45,7 @@ const Root = styled(Card, {
     padding: 10,
     '& .MuiSvgIcon-root ': {
       fontSize: '3rem',
-      color: 'darkRed'
+      color: theme.palette.primary.main
     }
   },
   [`& .${classes.actions}`]: {
@@ -53,12 +53,12 @@ const Root = styled(Card, {
     justifyContent: 'space-between'
   },
   [`& .${classes.pointsBox}`]: {
-    backgroundColor: 'darkRed',
+    backgroundColor: theme.palette.primary.main,
     padding: 10,
     marginLeft: '-24px'
   },
   [`& .${classes.points}`]: {
-    color: 'white',
+    color: theme.palette.common.white,
     fontSize: '1rem'
   }
 }));

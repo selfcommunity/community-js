@@ -1,6 +1,6 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Button, Divider, Typography} from '@mui/material';
+import {Button, List, Typography} from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import {Endpoints, http, Logger} from '@selfcommunity/core';
@@ -102,11 +102,13 @@ export default function CategoriesPopular(props: CategoriesListProps): JSX.Eleme
             </Typography>
           ) : (
             <React.Fragment>
-              {categories.slice(0, visibleCategories).map((category: SCCategoryType, index) => (
-                <div key={index}>
-                  <Category elevation={0} category={category} key={category.id} popular={true} {...CategoryProps} />
-                </div>
-              ))}
+              <List>
+                {categories.slice(0, visibleCategories).map((category: SCCategoryType, index) => (
+                  <div key={index}>
+                    <Category elevation={0} category={category} key={category.id} popular={true} {...CategoryProps} />
+                  </div>
+                ))}
+              </List>
               {hasMore && (
                 <Button size="small" onClick={() => loadCategories()}>
                   <FormattedMessage id="ui.categoriesPopular.button.showMore" defaultMessage="ui.categoriesPopular.button.showMore" />

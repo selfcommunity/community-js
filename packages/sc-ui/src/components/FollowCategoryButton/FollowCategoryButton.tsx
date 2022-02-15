@@ -11,16 +11,7 @@ const FollowButton = styled(LoadingButton, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  border: '0px',
-  color: 'black',
-  borderRadius: 20,
-  backgroundColor: '#e2e2e2',
-  paddingTop: '4px',
-  paddingRight: '16px',
-  paddingBottom: '4px',
-  paddingLeft: '16px'
-}));
+})(({theme}) => ({}));
 
 export interface FollowCategoryButtonProps {
   /**
@@ -92,6 +83,7 @@ export default function FollowCategoryButton(props: FollowCategoryButtonProps): 
   return (
     <FollowButton
       size="small"
+      variant="outlined"
       onClick={followCategory}
       loading={followed === null || scCategoriesManager.isLoading(scCategory)}
       className={className}

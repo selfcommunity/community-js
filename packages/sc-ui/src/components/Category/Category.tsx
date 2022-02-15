@@ -137,9 +137,7 @@ export default function Category(props: CategoryProps): JSX.Element {
   if (!autoHide) {
     return (
       <Root className={className} {...rest}>
-        <CardContent>
-          <List>{c}</List>
-        </CardContent>
+        <List>{c}</List>
       </Root>
     );
   }
