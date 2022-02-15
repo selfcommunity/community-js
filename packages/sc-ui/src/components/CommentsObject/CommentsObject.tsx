@@ -650,14 +650,12 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
           endMessage={
             commentsOrderBy === CommentsOrderBy.ADDED_AT_DESC ? (
               <Typography variant="body2" align="center">
-                <b>
-                  <FormattedMessage id="ui.commentsObject.noOtherComments" defaultMessage="ui.commentsObject.noOtherComments" />
-                </b>
+                <FormattedMessage id="ui.commentsObject.noOtherComments" defaultMessage="ui.commentsObject.noOtherComments" />
               </Typography>
             ) : null
           }>
           {previous && !isLoading && (
-            <Button variant="text" onClick={fetchPreviousComments} disabled={isLoading}>
+            <Button variant="text" onClick={fetchPreviousComments} disabled={isLoading} color="inherit">
               <FormattedMessage id="ui.commentsObject.loadPreviousComments" defaultMessage="ui.commentsObject.loadPreviousComments" />
             </Button>
           )}
@@ -688,12 +686,12 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
           {isLoading && commentObj && comments.length === 0 && <CommentObjectSkeleton {...CommentObjectSkeletonProps} />}
           {renderNewComments(CommentsOrderBy.ADDED_AT_DESC)}
           {comment && comments.length === 0 && obj && obj.comment_count > 0 && !isLoading && (
-            <Button variant="text" onClick={fetchNextComments} disabled={isLoading}>
+            <Button variant="text" onClick={fetchNextComments} disabled={isLoading} color="inherit">
               <FormattedMessage id="ui.commentsObject.loadMoreComments" defaultMessage="ui.commentsObject.loadMoreComments" />
             </Button>
           )}
           {previous && !isLoading && (
-            <Button variant="text" onClick={fetchPreviousComments} disabled={isLoading}>
+            <Button variant="text" onClick={fetchPreviousComments} disabled={isLoading} color="inherit">
               <FormattedMessage id="ui.commentsObject.loadPreviousComments" defaultMessage="ui.commentsObject.loadPreviousComments" />
             </Button>
           )}
@@ -719,7 +717,7 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
           })}
           {Boolean(next) && !isLoading && (
             <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
-              <Button variant="text" onClick={fetchNextComments} disabled={isLoading}>
+              <Button variant="text" onClick={fetchNextComments} disabled={isLoading} color="inherit">
                 <FormattedMessage id="ui.commentsObject.loadMoreComments" defaultMessage="ui.commentsObject.loadMoreComments" />
               </Button>
               {total && !commentObj && (

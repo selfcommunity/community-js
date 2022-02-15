@@ -29,7 +29,7 @@ Main.args = {
     feedObject: item[item.type],
     feedObjectType: item.type,
     feedObjectActivities: item.activities ? item.activities : null,
-    markRead: !item.seen_by_id.includes(scUser.id)
+    markRead: scUser ? !item.seen_by_id.includes(scUser.id) : false
   }),
   ItemSkeleton: FeedObjectSkeleton,
   ItemSkeletonProps: {
@@ -46,7 +46,7 @@ Explore.args = {
     feedObject: item[item.type],
     feedObjectType: item.type,
     feedObjectActivities: item.activities ? item.activities : null,
-    markRead: !item.seen_by_id.includes(scUser.id)
+    markRead: scUser ? !item.seen_by_id.includes(scUser.id) : false
   }),
   ItemSkeleton: FeedObjectSkeleton,
   ItemSkeletonProps: {

@@ -2,7 +2,7 @@ import React, {RefObject, useContext, useEffect, useMemo, useState} from 'react'
 import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import {defineMessages, useIntl} from 'react-intl';
-import {Avatar, Box, CardProps, Grid, ListItem, ListItemAvatar, ListItemText} from '@mui/material';
+import { Avatar, Box, CardProps, Grid, ListItem, ListItemAvatar, ListItemText, Stack } from '@mui/material';
 import {SCCommentType} from '@selfcommunity/core/src/types/comment';
 import {SCUserContext, SCUserContextType, useSCFetchCommentObject} from '@selfcommunity/core';
 import Editor from '../../Editor';
@@ -235,34 +235,28 @@ export default function ReplyCommentObject(props: ReplyCommentObjectProps): JSX.
                   defaultValue={html}
                   readOnly={readOnly}
                 />
-              </Card>
-              {!isEditorEmpty() && (
-                <Box component="span" sx={{display: 'flex', justifyContent: 'flex-start'}}>
-                  {onReply && (
-                    <Grid component="span" item={true} sm="auto" container direction="row" alignItems="right">
-                      <LoadingButton variant={'text'} sx={{marginTop: '-1px'}} onClick={handleReply} loading={readOnly}>
+                {!isEditorEmpty() && (
+                  <Stack direction="row" spacing={2} sx={{mb: 1, ml: 1}}>
+                    {onReply && (
+                      <LoadingButton variant="outlined" size="small" onClick={handleReply} loading={readOnly}>
                         {intl.formatMessage(messages.reply)}
                       </LoadingButton>
-                    </Grid>
-                  )}
-                  {onSave && (
-                    <>
-                      <Grid component="span" item={true} sm="auto" container direction="row" alignItems="right">
-                        <LoadingButton variant={'text'} sx={{marginTop: '-1px'}} onClick={handleSave} loading={readOnly}>
-                          {intl.formatMessage(messages.save)}
-                        </LoadingButton>
-                      </Grid>
-                      {onCancel && (
-                        <Grid component="span" item={true} sm="auto" container direction="row" alignItems="right">
-                          <LoadingButton variant={'text'} sx={{marginTop: '-1px'}} onClick={handleCancel} loading={readOnly}>
+                    )}
+                    {onSave && (
+                      <>
+                        {onCancel && (
+                          <LoadingButton variant={'text'} size="small" onClick={handleCancel} loading={readOnly} color="inherit">
                             {intl.formatMessage(messages.cancel)}
                           </LoadingButton>
-                        </Grid>
-                      )}
-                    </>
-                  )}
-                </Box>
-              )}
+                        )}
+                        <LoadingButton variant="outlined" size="small" onClick={handleSave} loading={readOnly}>
+                          {intl.formatMessage(messages.save)}
+                        </LoadingButton>
+                      </>
+                    )}
+                  </Stack>
+                )}
+              </Card>
             </>
           }
         />

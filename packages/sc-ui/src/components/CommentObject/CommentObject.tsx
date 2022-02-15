@@ -66,7 +66,8 @@ const classes = {
   btnViewPreviousComments: `${PREFIX}-btn-view-previous-comments`,
   commentActionsMenu: `${PREFIX}-comment-actions-menu`,
   deleted: `${PREFIX}-deleted`,
-  activityAt: `${PREFIX}-activity-at`
+  activityAt: `${PREFIX}-activity-at`,
+  reply: `${PREFIX}-reply`,
 };
 
 const Root = styled(Box, {
@@ -124,6 +125,10 @@ const Root = styled(Box, {
     display: 'flex',
     textDecoration: 'none',
     color: theme.palette.grey[700]
+  },
+  [`& .${classes.reply}`]: {
+    textTransform: 'lowercase',
+    fontWeight: 'bold'
   }
 }));
 
@@ -282,14 +287,15 @@ export default function CommentObject(props: CommentObjectProps): JSX.Element {
         variant={'text'}
         sx={{minWidth: 30}}
         onClick={() => (!scUserContext.user ? scContext.settings.handleAnonymousAction() : vote(comment))}
-        disabled={loadingVote}>
+        disabled={loadingVote}
+        color="inherit">
         {comment.voted ? (
           <Tooltip title={<FormattedMessage id={'ui.commentObject.voteDown'} defaultMessage={'ui.commentObject.voteDown'} />}>
-            <VoteFilledIcon fontSize={'small'} color={'secondary'} />
+            <VoteFilledIcon fontSize={'small'} color="primary" />
           </Tooltip>
         ) : (
           <Tooltip title={<FormattedMessage id={'ui.commentObject.voteUp'} defaultMessage={'ui.commentObject.voteUp'} />}>
-            <VoteIcon fontSize={'small'} />
+            <VoteIcon fontSize={'small'} color="inherit" />
           </Tooltip>
         )}
       </LoadingButton>
@@ -302,7 +308,7 @@ export default function CommentObject(props: CommentObjectProps): JSX.Element {
    */
   function renderActionReply(comment) {
     return (
-      <Button variant={'text'} onClick={() => (!scUserContext.user ? scContext.settings.handleAnonymousAction() : reply(comment))}>
+      <Button className={classes.reply} variant="text" onClick={() => (!scUserContext.user ? scContext.settings.handleAnonymousAction() : reply(comment))} color="inherit">
         {intl.formatMessage(messages.reply)}
       </Button>
     );
