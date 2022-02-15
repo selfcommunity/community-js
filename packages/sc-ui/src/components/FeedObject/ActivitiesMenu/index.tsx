@@ -49,6 +49,10 @@ const Root = styled(Box, {
     alignItems: 'center',
     textAlign: 'center',
     justifyContent: 'flex-end'
+  },
+  [`& .${classes.selector} .MuiButton-root`]: {
+    textTransform: 'capitalize',
+    fontWeight: 'bold'
   }
 }));
 
@@ -117,12 +121,10 @@ export default function ActivitiesMenu(props: ActivitiesMenuProps) {
       <Box className={classes.selector}>
         <Tooltip
           title={<FormattedMessage id="ui.feedObject.activitiesMenu.tooltipTitle" defaultMessage="ui.feedObject.activitiesMenu.tooltipTitle" />}>
-          <Button variant="text" size="small" onClick={handleClick} endIcon={<ExpandMoreIcon />}>
-            <b>
-              {selectedActivities === FeedObjectActivitiesType.CONNECTIONS_COMMENTS && followEnabled
-                ? intl.formatMessage(messages.followedComments)
-                : intl.formatMessage(messages[`${StringUtils.camelCase(selectedActivities)}`])}
-            </b>
+          <Button variant="text" size="small" onClick={handleClick} endIcon={<ExpandMoreIcon />} color="inherit">
+            {selectedActivities === FeedObjectActivitiesType.CONNECTIONS_COMMENTS && followEnabled
+              ? intl.formatMessage(messages.followedComments)
+              : intl.formatMessage(messages[`${StringUtils.camelCase(selectedActivities)}`])}
           </Button>
         </Tooltip>
       </Box>

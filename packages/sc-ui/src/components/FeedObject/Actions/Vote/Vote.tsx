@@ -343,13 +343,13 @@ export default function Vote(props: VoteProps): JSX.Element {
     let audience;
     if (!obj) {
       audience = (
-        <Button variant="text" size="small" disabled color="primary">
+        <Button variant="text" size="small" disabled color="inherit">
           <Skeleton animation="wave" height={18} width={50} />
         </Button>
       );
     } else if (obj.vote_count <= 0) {
       audience = (
-        <Button variant="text" size="small" onClick={handleToggleVotesDialog} disabled sx={{height: 32}} color="primary">
+        <Button variant="text" size="small" onClick={handleToggleVotesDialog} disabled sx={{height: 32}} color="inherit">
           {renderInlineStartVoteBtn()}
           <Typography variant={'body2'} sx={{marginLeft: (theme) => theme.spacing()}}>
             {`${intl.formatMessage(messages.votes, {total: obj.vote_count})}`}
@@ -359,7 +359,7 @@ export default function Vote(props: VoteProps): JSX.Element {
     } else {
       audience = (
         <React.Fragment>
-          <Button variant="text" size="small" onClick={handleToggleVotesDialog} disabled={obj.vote_count === 0} sx={{height: 32}} color="primary">
+          <Button variant="text" size="small" onClick={handleToggleVotesDialog} disabled={obj.vote_count === 0} sx={{height: 32}} color="inherit">
             {renderInlineStartVoteBtn()}
             <Typography variant={'body2'} sx={{marginLeft: (theme) => theme.spacing()}}>
               {obj.voted ? (
@@ -423,8 +423,8 @@ export default function Vote(props: VoteProps): JSX.Element {
             <Divider />
             <Tooltip title={voting ? '' : obj.voted ? intl.formatMessage(messages.voteDown) : intl.formatMessage(messages.voteUp)}>
               <span>
-                <LoadingButton loading={voting} disabled={!obj} onClick={vote}>
-                  {obj.voted ? <VoteFilledIcon fontSize={'large'} color={'secondary'} /> : <VoteIcon fontSize={'large'} />}
+                <LoadingButton loading={voting} disabled={!obj} onClick={vote} color="inherit">
+                  {obj.voted ? <VoteFilledIcon fontSize={'large'} color="primary" /> : <VoteIcon fontSize={'large'} />}
                 </LoadingButton>
               </span>
             </Tooltip>

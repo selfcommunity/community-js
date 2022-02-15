@@ -108,7 +108,7 @@ export default function Comment(props: CommentProps): JSX.Element {
   return (
     <Root className={className} {...rest}>
       {onViewCommentsAction ? (
-        <Button variant="text" size="small" sx={{height: 32}} onClick={onViewCommentsAction} color="primary">
+        <Button variant="text" size="small" sx={{height: 32}} onClick={onViewCommentsAction} color="inherit">
           <Typography variant={'body2'}>{`${intl.formatMessage(messages.comments, {total: obj.comment_count})}`}</Typography>
         </Button>
       ) : (
@@ -119,7 +119,7 @@ export default function Comment(props: CommentProps): JSX.Element {
             })}`}</Typography>
           ) : (
             <Button
-              color="primary"
+              color="inherit"
               variant="text"
               size="small"
               component={Link}
@@ -134,7 +134,7 @@ export default function Comment(props: CommentProps): JSX.Element {
         <React.Fragment>
           <Divider />
           <Tooltip title={`${intl.formatMessage(messages.comment)}`}>
-            <Button onClick={onCommentAction} color="primary">
+            <Button onClick={onCommentAction} color="inherit">
               <CommentIcon fontSize={'large'} />
             </Button>
           </Tooltip>

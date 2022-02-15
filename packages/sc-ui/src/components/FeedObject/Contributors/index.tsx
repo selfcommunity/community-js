@@ -137,7 +137,7 @@ export default function ContributorsFeedObject(props: ContributorsFeedObjectProp
         <>
           {contributors.length > 0 ? (
             <>
-              <Button variant={'text'} onClick={() => setOpenContributorsDialog(true)} classes={{root: classes.btnParticipants}}>
+              <Button variant={'text'} onClick={() => setOpenContributorsDialog(true)} classes={{root: classes.btnParticipants}} color="inherit">
                 <FormattedMessage id={'ui.feedObject.contributors.participants'} defaultMessage={'ui.feedObject.contributors.participants'} />:
                 <AvatarGroup {...rest}>
                   {contributors.map((c: SCUserType) => (

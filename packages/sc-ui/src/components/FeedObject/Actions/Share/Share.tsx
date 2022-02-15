@@ -252,7 +252,7 @@ export default function Share(props: ShareProps): JSX.Element {
     return (
       <Box>
         {renderInlineStartShareBtn()}
-        <Button variant="text" size="small" onClick={handleToggleSharesDialog} disabled={sharesCount < 1} sx={{height: 32}} color="primary">
+        <Button variant="text" size="small" onClick={handleToggleSharesDialog} disabled={sharesCount < 1} sx={{height: 32}} color="inherit">
           <Typography variant={'body2'}>
             <React.Fragment>{`${intl.formatMessage(messages.shares, {total: sharesCount})}`}</React.Fragment>
           </Typography>
@@ -273,7 +273,7 @@ export default function Share(props: ShareProps): JSX.Element {
           <React.Fragment>
             <Divider />
             <Tooltip title={`${intl.formatMessage(messages.share)}`}>
-              <LoadingButton loading={isSharing} onClick={handleOpenShareMenu} color="primary">
+              <LoadingButton loading={isSharing} onClick={handleOpenShareMenu} color="inherit">
                 <ShareIcon fontSize={'large'} />
               </LoadingButton>
             </Tooltip>
