@@ -1,8 +1,19 @@
-import React, {useMemo, useRef, useState} from 'react';
+import React, {useContext, useMemo, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {defineMessages, useIntl} from 'react-intl';
 import Popper from '@mui/material/Popper';
-import {Endpoints, http, Logger, SCFeedObjectType, SCFeedObjectTypologyType, useSCFetchFeedObject} from '@selfcommunity/core';
+import {
+  Endpoints,
+  http,
+  Logger,
+  SCContext,
+  SCContextType,
+  SCFeedObjectType,
+  SCFeedObjectTypologyType,
+  SCUserContext,
+  SCUserContextType,
+  useSCFetchFeedObject
+} from '@selfcommunity/core';
 import {AxiosResponse} from 'axios';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import SelectedIcon from '@mui/icons-material/CheckCircleOutline';
@@ -113,8 +124,13 @@ export interface ReportingFlagMenuProps {
 export default function ReportingFlagMenu(props: ReportingFlagMenuProps): JSX.Element {
   // PROPS
   const {id = null, feedObject = null, feedObjectType = SCFeedObjectTypologyType.POST, ...rest} = props;
+
   // INTL
   const intl = useIntl();
+
+  // CONTEXT
+  const scContext: SCContextType = useContext(SCContext);
+  const scUserContext: SCUserContextType = useContext(SCUserContext);
 
   // STATE
   const {obj, setObj} = useSCFetchFeedObject({id, feedObject, feedObjectType});
@@ -204,8 +220,12 @@ export default function ReportingFlagMenu(props: ReportingFlagMenuProps): JSX.El
    * Handles open flagging popup, retrive always the flag status (if exist)
    */
   function handleOpen() {
-    setOpen(true);
-    fetchFlagStatus();
+    if (scUserContext.user) {
+      setOpen(true);
+      fetchFlagStatus();
+    } else {
+      scContext.settings.handleAnonymousAction();
+    }
   }
 
   /**
