@@ -1,5 +1,14 @@
 import {addDecorator} from '@storybook/react'
 import decorators from './decorators';
+
+/**
+ * Add this decorator to register a service worker
+ */
+addDecorator(decorators.withServiceWorker);
+
+/**
+ * Add this decorator to wrap the story with SCContextProvider
+ */
 addDecorator(decorators.withProvider);
 
 /**

@@ -40,7 +40,7 @@ const withProvider = (Story, context) => {
         },
         webPushMessaging: {
           disableToastMessage: false,
-          applicationServerKey: 'BOB3nhpXABPWI5sKDs86gA79GXE3pqclgxODGhItbYxKLhWuiXV44E641d-KWYJFsdpPJF4ufRetWEio7PmqJH8',
+          // applicationServerKey: 'BKFRsTZZdL-xO5q8gZumLY5u2ceXM1-1GYZlkMIeXdp7COZ6r1Y28TmpfBFm3rMf9t3lLQZWn4dfDSEoiRWLM8c',
         }
       },
       theme: {
@@ -70,9 +70,25 @@ const withProvider = (Story, context) => {
           <Story {...context} />
         </SCContextProvider>
     );
+};
+
+const withServiceWorker = (Story, context) => {
+
+  /**
+   * Register a sw
+   */
+  if (navigator && navigator.serviceWorker) {
+    navigator.serviceWorker.register('sw.js')
+      .then(r => console.log('Service worker registered!'))
+      .catch(e=>console.log(e));
   }
-;
+
+  return (
+    <Story {...context} />
+  );
+};
 
 export default {
   withProvider,
+  withServiceWorker,
 };
