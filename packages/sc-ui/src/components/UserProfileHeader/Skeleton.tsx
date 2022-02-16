@@ -41,12 +41,6 @@ function UserProfileHeaderSkeleton(): JSX.Element {
       <Typography variant="h5" className={classes.username}>
         <Skeleton animation="wave" sx={{height: 20, width: 100, margin: '0 auto'}} />
       </Typography>
-      <Grid container>
-        <Grid item md={12} sm={12}>
-          <Skeleton animation="wave" sx={{height: 20, width: '100%'}} />
-          <Skeleton animation="wave" sx={{height: 20, width: '100%'}} />
-        </Grid>
-      </Grid>
     </Root>
   );
 }

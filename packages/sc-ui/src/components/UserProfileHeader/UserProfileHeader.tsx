@@ -1,25 +1,25 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import {Box, Divider, Grid, Paper, Typography} from '@mui/material';
+import {Box, Paper, Typography} from '@mui/material';
 import ChangeCover, {ChangeCoverProps} from '../ChangeCover';
 import ChangePicture, {ChangePictureProps} from '../ChangePicture';
-import {FormattedMessage, useIntl} from 'react-intl';
+import {useIntl} from 'react-intl';
 import {
   SCPreferences,
   SCPreferencesContextType,
-  useSCPreferences,
   SCUserContextType,
   SCUserType,
   useSCFetchUser,
+  useSCPreferences,
   useSCUser
 } from '@selfcommunity/core';
+import UserProfileHeaderSkeleton from './Skeleton';
 
 const PREFIX = 'SCUserProfileHeader';
 
 const classes = {
   cover: `${PREFIX}-cover`,
   avatar: `${PREFIX}-avatar`,
-  info: `${PREFIX}-info`,
   username: `${PREFIX}-username`,
   changePicture: `${PREFIX}-change-picture`,
   changeCover: `${PREFIX}-change-cover`
@@ -44,10 +44,6 @@ const Root = styled(Box, {
     height: 200,
     borderRadius: 120,
     border: '#FFF solid 5px'
-  },
-  [`& .${classes.info}`]: {
-    marginTop: 0.5,
-    padding: 3
   },
   [`& .${classes.username}`]: {
     marginTop: 50
@@ -137,70 +133,32 @@ export default function UserProfileHeader(props: UserProfileHeaderProps): JSX.El
     }
   }
 
-  /**
-   * Renders root object
-   */
-  if (scUser) {
-    const _backgroundCover = {
-      ...(scUser.cover
-        ? {background: `url('${scUser.cover}') center / cover`}
-        : {background: `url('${scPreferences.preferences[SCPreferences.IMAGES_USER_DEFAULT_COVER].value}') center / cover`})
-    };
-    return (
-      <Root className={className} {...rest}>
-        <Paper style={_backgroundCover} classes={{root: classes.cover}}>
-          <img src={scUser.avatar ? scUser.avatar : ''} className={classes.avatar} />
-          {scUserContext.user && scUser.id === scUserContext.user.id && (
-            <>
-              <ChangePicture iconButton={true} onChange={handleChangeAvatar} className={classes.changePicture} {...ChangePictureProps} />
-              <div className={classes.changeCover}>
-                <ChangeCover onChange={handleChangeCover} {...ChangeCoverProps} />
-              </div>
-            </>
-          )}
-        </Paper>
-        <Typography variant="h5" align={'center'} className={classes.username}>
-          {scUser.username}
-        </Typography>
-        <Grid container spacing={2} className={classes.info}>
-          <Grid item xs={6}>
-            <Typography variant="body2">
-              <b>
-                <FormattedMessage id="ui.userProfileHeader.realName" defaultMessage="ui.userProfileHeader.realName" />:
-              </b>{' '}
-              {scUser.real_name ? scUser.real_name : ' - '}
-            </Typography>
-            <Typography variant="body2">
-              <b>
-                <FormattedMessage id="ui.userProfileHeader.dateOfBirth" defaultMessage="ui.userProfileHeader.dateOfBirth" />
-              </b>{' '}
-              {scUser.date_of_birth ? `${intl.formatDate(scUser.date_of_birth, {year: 'numeric', month: 'numeric', day: 'numeric'})}` : ' - '}
-            </Typography>
-            <Typography variant="body2">
-              <b>
-                <FormattedMessage id="ui.userProfileHeader.job" defaultMessage="ui.userProfileHeader.job" />:
-              </b>{' '}
-              {scUser.description ? scUser.description : ' - '}
-            </Typography>
-          </Grid>
-          <Grid item xs={6}>
-            <Typography variant="body2">
-              <b>
-                <FormattedMessage id="ui.userProfileHeader.dateJoined" defaultMessage="ui.userProfileHeader.dateJoined" />:
-              </b>{' '}
-              {scUser.date_joined ? `${intl.formatDate(scUser.date_joined, {year: 'numeric', month: 'numeric', day: 'numeric'})}` : ' - '}
-            </Typography>
-            <Typography variant="body2">
-              <b>
-                <FormattedMessage id="ui.userProfileHeader.website" defaultMessage="ui.userProfileHeader.website" />:
-              </b>{' '}
-              {scUser.website ? scUser.website : ' - '}
-            </Typography>
-          </Grid>
-        </Grid>
-        <Divider />
-      </Root>
-    );
+  // RENDER
+  if (!scUser) {
+    return <UserProfileHeaderSkeleton />;
   }
-  return null;
+  const isMe = scUserContext.user && scUser.id === scUserContext.user.id;
+  const _backgroundCover = {
+    ...(scUser.cover
+      ? {background: `url('${scUser.cover}') center / cover`}
+      : {background: `url('${scPreferences.preferences[SCPreferences.IMAGES_USER_DEFAULT_COVER].value}') center / cover`})
+  };
+  return (
+    <Root className={className} {...rest}>
+      <Paper style={_backgroundCover} classes={{root: classes.cover}}>
+        <img src={scUser.avatar ? scUser.avatar : ''} className={classes.avatar} />
+        {isMe && (
+          <>
+            <ChangePicture iconButton={true} onChange={handleChangeAvatar} className={classes.changePicture} {...ChangePictureProps} />
+            <div className={classes.changeCover}>
+              <ChangeCover onChange={handleChangeCover} {...ChangeCoverProps} />
+            </div>
+          </>
+        )}
+      </Paper>
+      <Typography variant="h5" align={'center'} className={classes.username}>
+        {scUser.username}
+      </Typography>
+    </Root>
+  );
 }

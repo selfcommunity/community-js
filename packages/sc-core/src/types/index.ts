@@ -18,7 +18,7 @@ import {
   SCAlertMessagesContextType,
 } from './context';
 import {SCCustomAdvPosition, SCCustomAdvType} from './customAdv';
-import {SCUserType, SCUserBlockedSettingsType} from './user';
+import {SCUserType, SCUserBlockedSettingsType, SCUserFields} from './user';
 import {SCTagType} from './tag';
 import {SCCategoryType} from './category';
 import {SCEmbedType} from './embed';
@@ -78,6 +78,7 @@ export {
   SCSettingsType,
   SCSessionType,
   SCAuthTokenType,
+  SCUserFields,
   SCUserType,
   SCUserBlockedSettingsType,
   SCTagType,

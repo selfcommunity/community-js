@@ -26,6 +26,7 @@ import LoyaltyProgram, {LoyaltyProgramProps, LoyaltyProgramSkeleton} from './com
 import TrendingFeed, {TrendingFeedProps, TrendingFeedSkeleton} from './components/TrendingFeed';
 import TrendingPeople, {TrendingPeopleProps, TrendingPeopleSkeleton} from './components/TrendingPeople';
 import UserProfileHeader, {UserProfileHeaderProps, UserProfileHeaderSkeleton} from './components/UserProfileHeader';
+import UserProfileInfo, {UserProfileInfoProps, UserProfileInfoSkeleton} from './components/UserProfileInfo';
 import UsersFollowed, {UsersFollowedProps, UsersFollowedSkeleton} from './components/UsersFollowed';
 import UserFollowers, {UserFollowersProps, UserFollowersSkeleton} from './components/UserFollowers';
 import RelatedDiscussion, {RelatedDiscussionProps, RelatedDiscussionSkeleton} from './components/RelatedDiscussion';
@@ -125,6 +126,9 @@ export {
   UserProfileHeader,
   UserProfileHeaderProps,
   UserProfileHeaderSkeleton,
+  UserProfileInfo,
+  UserProfileInfoProps,
+  UserProfileInfoSkeleton,
   UsersFollowed,
   UsersFollowedProps,
   UsersFollowedSkeleton,

@@ -1,19 +1,42 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {styled} from '@mui/material/styles';
-import {Box} from '@mui/material';
-import {FeedObjectProps, FeedSidebarProps, SCFeedWidgetType, UserProfileHeader} from '@selfcommunity/ui';
+import {Box, Button, Stack} from '@mui/material';
+import {
+  CategoriesFollowed,
+  FeedObjectProps,
+  FeedSidebarProps,
+  InlineComposer,
+  SCFeedWidgetType,
+  UserFollowers,
+  UserProfileHeaderProps,
+  UserProfileHeader,
+  UserProfileInfoProps,
+  UserProfileInfo,
+  UsersFollowed
+} from '@selfcommunity/ui';
 import UserFeed from '../UserFeed';
-import {SCUserType, useSCFetchUser} from '@selfcommunity/core';
+import {SCUserContext, SCUserContextType, SCUserType, useSCFetchUser} from '@selfcommunity/core';
 import UserProfileSkeleton from './Skeleton';
+import classNames from 'classnames';
+import {FormattedMessage} from 'react-intl';
 
 const PREFIX = 'SCUserProfileTemplate';
+
+const classes = {
+  root: `${PREFIX}-root`,
+  actions: `${PREFIX}-actions`
+};
 
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  marginTop: theme.spacing(2)
+  marginTop: theme.spacing(2),
+  [`& .${classes.actions}`]: {
+    margin: theme.spacing(2),
+    justifyContent: 'space-around'
+  }
 }));
 
 export interface UserProfileProps {
@@ -58,11 +81,91 @@ export interface UserProfileProps {
    * @default {top: 0, bottomBoundary: `#${id}`}
    */
   FeedSidebarProps?: FeedSidebarProps;
+
+  /**
+   * Props to spread to UserProfileHeader component
+   * @default {}
+   */
+  UserProfileHeaderProps?: UserProfileHeaderProps;
+
+  /**
+   * Props to spread to UserProfileInfo component
+   * @default {}
+   */
+  UserProfileInfoProps?: UserProfileInfoProps;
+
+  /**
+   * Click handler for edit button
+   * @default null
+   */
+  onEditClick?: (user: SCUserType) => void;
 }
+
+const WIDGETS = [
+  {
+    type: 'widget',
+    component: CategoriesFollowed,
+    componentProps: {variant: 'outlined'},
+    column: 'right',
+    position: 0
+  },
+  {
+    type: 'widget',
+    component: UsersFollowed,
+    componentProps: {variant: 'outlined'},
+    column: 'right',
+    position: 1
+  }
+];
+
+const MY_PROFILE_WIDGETS = [
+  {
+    type: 'widget',
+    component: InlineComposer,
+    componentProps: {variant: 'outlined'},
+    column: 'left',
+    position: 0
+  },
+  {
+    type: 'widget',
+    component: CategoriesFollowed,
+    componentProps: {variant: 'outlined'},
+    column: 'right',
+    position: 0
+  },
+  {
+    type: 'widget',
+    component: UsersFollowed,
+    componentProps: {variant: 'outlined'},
+    column: 'right',
+    position: 1
+  },
+  {
+    type: 'widget',
+    component: UserFollowers,
+    componentProps: {variant: 'outlined'},
+    column: 'right',
+    position: 2
+  }
+];
 
 export default function UserProfile(props: UserProfileProps): JSX.Element {
   // PROPS
-  const {id = 'user_profile', className, user, userId, widgets, FeedObjectProps, FeedSidebarProps} = props;
+  const {
+    id = 'user_profile',
+    className,
+    user,
+    userId,
+    widgets = null,
+    FeedObjectProps,
+    FeedSidebarProps,
+    UserProfileHeaderProps = {},
+    UserProfileInfoProps = {},
+    onEditClick = null
+  } = props;
+
+  // CONTEXT
+  const scUserContext: SCUserContextType = useContext(SCUserContext);
 
   // Hooks
   const {scUser} = useSCFetchUser({id: userId, user});
@@ -70,10 +173,45 @@ export default function UserProfile(props: UserProfileProps): JSX.Element {
   if (scUser === null) {
     return <UserProfileSkeleton />;
   }
+
+  // Utils
+  const getWidgets = () => {
+    let _widgets = [];
+    if (scUserContext.user === null) {
+      _widgets = [];
+    } else if (scUserContext.user.id === scUser.id) {
+      _widgets = [...MY_PROFILE_WIDGETS];
+    } else {
+      _widgets = [...WIDGETS];
+    }
+    return _widgets;
+  };
+
+  // Choose widgets based on user session
+  let _widgets = widgets;
+  if (_widgets === null) {
+    _widgets = getWidgets();
+  }
+
+  // HANDLERS
+  const handleEdit = () => {
+    onEditClick && onEditClick(scUser);
+  };
+
+  // RENDER
+  const isMe = scUserContext.user && scUser.id === scUserContext.user.id;
   return (
-    <Root id={id} className={className}>
-      <UserProfileHeader user={scUser} />
-      <UserFeed user={scUser} widgets={widgets} FeedObjectProps={FeedObjectProps} FeedSidebarProps={FeedSidebarProps} />
+    <Root id={id} className={classNames(classes.root, className)}>
+      <UserProfileHeader user={scUser} {...UserProfileHeaderProps} />
+      <UserProfileInfo user={scUser} {...UserProfileInfoProps} />
+      <Stack direction="row" spacing={2} className={classes.actions}>
+        {isMe && (
+          <Button variant="outlined" color="secondary" onClick={handleEdit}>
+            <FormattedMessage defaultMessage="templates.userProfile.edit" id="templates.userProfile.edit" />
+          </Button>
+        )}
+      </Stack>
+      <UserFeed user={scUser} widgets={_widgets} FeedObjectProps={FeedObjectProps} FeedSidebarProps={FeedSidebarProps} />
     </Root>
   );
 }

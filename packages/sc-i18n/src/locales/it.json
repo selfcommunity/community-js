@@ -218,11 +218,11 @@
   "ui.followUserButton.follow": "Segui",
   "ui.followUserButton.unfollow": "Non seguire",
 
-  "ui.userProfileHeader.realName": "Nome reale",
-  "ui.userProfileHeader.dateOfBirth": "Data di nascita",
-  "ui.userProfileHeader.job": "Occupazione",
-  "ui.userProfileHeader.dateJoined": "Registrato dal",
-  "ui.userProfileHeader.website": "Website",
+  "ui.userProfileInfo.realName": "Nome reale",
+  "ui.userProfileInfo.dateOfBirth": "Data di nascita",
+  "ui.userProfileInfo.description": "Occupazione",
+  "ui.userProfileInfo.dateJoined": "Registrato dal",
+  "ui.userProfileInfo.website": "Website",
 
   "ui.usersFollowed.usersFollowed": "{total, plural, =0 {# utenti seguiti} one {# utente seguito} other {# utenti seguiti}}",
   "ui.usersFollowed.subtitle.noResults": "Nessun utente seguito",
@@ -296,5 +296,7 @@
   "ui.Message.dialog.confirm": "Sì",
   "ui.NewMessage.new" : "Nuovo Messaggio",
   "ui.NewMessage.to" : "A:",
-  "ui.Thread.emptyBox.message" : "Seleziona o componi un messaggio"
+  "ui.Thread.emptyBox.message" : "Seleziona o componi un messaggio",
+
+  "templates.userProfile.edit": "Modifica"
 }

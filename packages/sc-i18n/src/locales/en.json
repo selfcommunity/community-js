@@ -218,11 +218,11 @@
   "ui.followUserButton.follow": "Follow",
   "ui.followUserButton.unfollow": "Unfollow",
 
-  "ui.userProfileHeader.realName": "Real name",
-  "ui.userProfileHeader.dateOfBirth": "Date of birth",
-  "ui.userProfileHeader.job": "Job",
-  "ui.userProfileHeader.dateJoined": "Date joined",
-  "ui.userProfileHeader.website": "Website",
+  "ui.userProfileInfo.realName": "Real name",
+  "ui.userProfileInfo.dateOfBirth": "Date of birth",
+  "ui.userProfileInfo.description": "Job",
+  "ui.userProfileInfo.dateJoined": "Date joined",
+  "ui.userProfileInfo.website": "Website",
 
   "ui.usersFollowed.usersFollowed": "{total, plural, =0 {# users followed} one {# user followed} other {# users followed}}",
   "ui.usersFollowed.subtitle.noResults": "No users followed",
@@ -296,5 +296,7 @@
   "ui.Message.dialog.confirm": "Yes",
   "ui.NewMessage.new" : "New Message",
   "ui.NewMessage.to" : "To:",
-  "ui.Thread.emptyBox.message" : "Select or compose a message"
+  "ui.Thread.emptyBox.message" : "Select or compose a message",
+
+  "templates.userProfile.edit": "Edit"
 }
