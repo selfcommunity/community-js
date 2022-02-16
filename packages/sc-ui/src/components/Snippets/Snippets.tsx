@@ -9,10 +9,12 @@ import {SCPrivateMessageType} from '@selfcommunity/core/src/types';
 import {FormattedMessage} from 'react-intl';
 import SnippetsSkeleton from './Skeleton';
 import Message from '../Message';
+import classNames from 'classnames';
 
 const PREFIX = 'SCSnippets';
 
 const classes = {
+  root: `${PREFIX}-root`,
   selected: `${PREFIX}-selected`
 };
 
@@ -133,7 +135,7 @@ export default function Snippets(props: SnippetsProps): JSX.Element {
    */
   if (!autoHide) {
     return (
-      <Root {...rest} className={className}>
+      <Root {...rest} className={classNames(classes.root, className)}>
         {c}
       </Root>
     );

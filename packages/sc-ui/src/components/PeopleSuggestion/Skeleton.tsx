@@ -8,6 +8,7 @@ import UserSkeleton from '../User/Skeleton';
 const PREFIX = 'SCPeopleSuggestionSkeleton';
 
 const classes = {
+  root: `${PREFIX}-root`,
   list: `${PREFIX}-list`
 };
 
@@ -21,7 +22,7 @@ const Root = styled(Card)(({theme}) => ({
 
 function PeopleSuggestionSkeleton(props): JSX.Element {
   return (
-    <Root {...props}>
+    <Root className={classes.root} {...props}>
       <CardContent>
         <List className={classes.list}>
           {[...Array(4)].map((user, index) => (

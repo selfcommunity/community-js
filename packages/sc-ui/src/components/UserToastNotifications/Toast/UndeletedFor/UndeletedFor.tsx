@@ -7,10 +7,12 @@ import {FormattedMessage} from 'react-intl';
 import {getContributeType, getRouteData} from '../../../../utils/contribute';
 import DateTimeAgo from '../../../../shared/DateTimeAgo';
 import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
+import classNames from 'classnames';
 
 const PREFIX = 'SCUndeletedForNotification';
 
 const classes = {
+  root: `${PREFIX}-root`,
   content: `${PREFIX}-content`
 };
 
@@ -70,7 +72,7 @@ export default function UndeletedForNotificationToast(props: NotificationUndelet
    * Renders root object
    */
   return (
-    <Root id={id} className={className} {...rest}>
+    <Root id={id} className={classNames(classes.root, className)} {...rest}>
       <ListItem component={'div'} className={classes.content}>
         <ListItemAvatar>
           <Avatar variant="circular" sx={{bgcolor: green[500]}}>

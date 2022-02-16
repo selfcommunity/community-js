@@ -24,8 +24,13 @@ import FeedObject, {FeedObjectProps} from '../FeedObject';
 import {FormattedMessage} from 'react-intl';
 import {FeedObjectTemplateType} from '../../types/feedObject';
 import CustomAdv from '../CustomAdv';
+import classNames from 'classnames';
 
 const PREFIX = 'SCTrendingPost';
+
+const classes = {
+  root: `${PREFIX}-root`
+};
 
 const Root = styled(Card, {
   name: PREFIX,
@@ -207,7 +212,7 @@ export default function RelatedDiscussion(props: RelatedDiscussionProps): JSX.El
     return null;
   }
   return (
-    <Root className={className} {...rest}>
+    <Root className={classNames(classes.root, className)} {...rest}>
       {d}
     </Root>
   );

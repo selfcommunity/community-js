@@ -20,12 +20,14 @@ import {
 import FollowUserButton from '../FollowUserButton';
 import {FormattedMessage} from 'react-intl';
 import {FollowUserButtonProps} from '../FollowUserButton/FollowUserButton';
-import ConnectionUserButton from '../ConnectionUserButton';
-import {ConnectionButtonProps} from '../ConnectionUserButton/ConnectionUserButton';
+import FriendshipUserButton from '../FriendshipUserButton';
+import classNames from 'classnames';
+import {FriendshipButtonProps} from '../FriendshipUserButton/FriendshipUserButton';
 
 const PREFIX = 'SCUser';
 
 const classes = {
+  root: `${PREFIX}-root`,
   avatar: `${PREFIX}-avatar`,
   actions: `${PREFIX}-actions`
 };
@@ -79,7 +81,7 @@ export interface UserProps extends Pick<CardProps, Exclude<keyof CardProps, 'id'
    * Props to spread to connection button
    * @default {}
    */
-  connectUserButtonProps?: ConnectionButtonProps;
+  connectUserButtonProps?: FriendshipButtonProps;
 
   /**
    * Any other properties
@@ -142,7 +144,7 @@ export default function User(props: UserProps): JSX.Element {
             <FormattedMessage defaultMessage="ui.user.ignore" id="ui.user.ignore" />
           </Button>
         )}
-        <ConnectionUserButton user={scUser} {...connectUserButtonProps} />
+        <FriendshipUserButton user={scUser} {...connectUserButtonProps} />
       </React.Fragment>
     );
   }
@@ -171,7 +173,7 @@ export default function User(props: UserProps): JSX.Element {
     </React.Fragment>
   );
   return (
-    <Root {...rest} className={className}>
+    <Root {...rest} className={classNames(classes.root, className)}>
       <List>{u}</List>
     </Root>
   );

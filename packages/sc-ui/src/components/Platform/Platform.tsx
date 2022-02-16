@@ -6,8 +6,13 @@ import {Endpoints, http, SCLocaleContextType, SCUserContext, SCUserContextType, 
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import {AxiosResponse} from 'axios';
 import {FormattedMessage} from 'react-intl';
+import classNames from 'classnames';
 
 const PREFIX = 'SCPlatform';
+
+const classes = {
+  root: `${PREFIX}-root`
+};
 
 const Root = styled(Card, {
   name: PREFIX,
@@ -114,7 +119,7 @@ export default function Platform(props: PlatformProps): JSX.Element {
    */
   if (!autoHide && roles !== null) {
     return (
-      <Root className={className} {...rest}>
+      <Root className={classNames(classes.root, className)} {...rest}>
         {c}
       </Root>
     );

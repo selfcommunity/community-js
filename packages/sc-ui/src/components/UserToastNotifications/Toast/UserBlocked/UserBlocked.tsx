@@ -6,6 +6,7 @@ import DateTimeAgo from '../../../../shared/DateTimeAgo';
 import {SCNotificationTypologyType} from '@selfcommunity/core';
 import {green} from '@mui/material/colors';
 import EmojiFlagsIcon from '@mui/icons-material/EmojiFlags';
+import classNames from 'classnames';
 
 const messages = defineMessages({
   accountBlocked: {
@@ -21,6 +22,7 @@ const messages = defineMessages({
 const PREFIX = 'SCUserBlockedNotificationToast';
 
 const classes = {
+  root: `${PREFIX}-root`,
   content: `${PREFIX}-content`
 };
 
@@ -77,7 +79,7 @@ export default function UserBlockedNotificationToast(props: NotificationUserBloc
    * Renders root object
    */
   return (
-    <Root id={id} className={className} {...rest}>
+    <Root id={id} className={classNames(classes.root, className)} {...rest}>
       <ListItem component={'div'} className={classes.content}>
         <ListItemAvatar>
           <Avatar variant="circular" sx={{bgcolor: green[500]}}>

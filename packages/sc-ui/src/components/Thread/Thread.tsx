@@ -11,10 +11,12 @@ import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
 import MessageEditor from '../MessageEditor';
 import CardContent from '@mui/material/CardContent';
 import Autocomplete from '@mui/material/Autocomplete';
+import classNames from 'classnames';
 
 const PREFIX = 'SCThread';
 
 const classes = {
+  root: `${PREFIX}-root`,
   emptyBox: `${PREFIX}-emptyBox`,
   sender: `${PREFIX}-sender`,
   receiver: `${PREFIX}-receiver`,
@@ -359,7 +361,7 @@ export default function Thread(props: ThreadProps): JSX.Element {
    */
   if (!autoHide) {
     return (
-      <Root {...rest} className={className}>
+      <Root {...rest} className={classNames(classes.root, className)}>
         {id ? renderThread() : renderEmptyBox()}
       </Root>
     );

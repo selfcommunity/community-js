@@ -4,7 +4,11 @@ import {Button} from '@mui/material';
 import {Endpoints, http, SCUserType} from '@selfcommunity/core';
 import {AxiosResponse} from 'axios';
 
-const PREFIX = 'SCConnectionUserButton';
+const PREFIX = 'SCFriendshipUserButton';
+
+const classes = {
+  root: `${PREFIX}-root`
+};
 
 const Root = styled(Button, {
   name: PREFIX,
@@ -21,7 +25,7 @@ const Root = styled(Button, {
   paddingLeft: '16px'
 }));
 
-export interface ConnectionButtonProps {
+export interface FriendshipButtonProps {
   /**
    * Id of the user
    * @default null
@@ -48,7 +52,7 @@ export interface ConnectionButtonProps {
 }
 
 // TODO: fix component
-function ConnectionUserButton({userId = null, user = null, connected = null}: ConnectionButtonProps): JSX.Element {
+function FriendshipUserButton({userId = null, user = null, connected = null}: FriendshipButtonProps): JSX.Element {
   const [status, setStatus] = useState<any>(connected ? 'Remove' : 'Connect');
 
   function updateStatus(status) {
@@ -110,10 +114,10 @@ function ConnectionUserButton({userId = null, user = null, connected = null}: Co
   }
 
   return (
-    <Root size="small" variant="outlined" onClick={() => handleConnectionStatus()}>
+    <Root size="small" variant="outlined" onClick={() => handleConnectionStatus()} className={classes.root}>
       {status}
     </Root>
   );
 }
 
-export default ConnectionUserButton;
+export default FriendshipUserButton;

@@ -14,10 +14,12 @@ import UploadDropZone from '@rpldy/upload-drop-zone';
 import EmojiIcon from '@mui/icons-material/SentimentSatisfiedOutlined';
 import Picker from 'emoji-picker-react';
 import {random} from '../../utils/string';
+import classNames from 'classnames';
 
 const PREFIX = 'SCEditor';
 
 const classes = {
+  root: `${PREFIX}-root`,
   drop: `${PREFIX}-drop`,
   actions: `${PREFIX}-actions`
 };
@@ -234,7 +236,7 @@ export default function Editor(props: EditorProps): JSX.Element {
   };
 
   return (
-    <Root id={id} className={className}>
+    <Root id={id} className={classNames(classes.root, className)}>
       {scUserContext.user && (
         <ChunkedUploady
           destination={{

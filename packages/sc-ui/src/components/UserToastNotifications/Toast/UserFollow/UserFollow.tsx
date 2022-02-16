@@ -4,6 +4,7 @@ import {Avatar, Box, ListItem, ListItemAvatar, ListItemText, Stack, Typography} 
 import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../../shared/DateTimeAgo';
+import classNames from 'classnames';
 
 const messages = defineMessages({
   followUser: {
@@ -15,6 +16,7 @@ const messages = defineMessages({
 const PREFIX = 'SCUserFollowNotification';
 
 const classes = {
+  root: `${PREFIX}-root`,
   content: `${PREFIX}-content`
 };
 
@@ -73,7 +75,7 @@ export default function UserFollowNotificationToast(props: NotificationFollowToa
    * Renders root object
    */
   return (
-    <Root id={id} className={className} {...rest}>
+    <Root id={id} className={classNames(classes.root, className)} {...rest}>
       <ListItem component={'div'} className={classes.content}>
         <ListItemAvatar>
           <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.follower)}>

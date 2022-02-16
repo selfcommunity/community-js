@@ -2,10 +2,12 @@ import React from 'react';
 import {styled} from '@mui/material/styles';
 import {Box} from '@mui/material';
 import {SCCustomAdvPosition, useSCFetchCustomAdv} from '@selfcommunity/core';
+import classNames from 'classnames';
 
 const PREFIX = 'SCCustomAdv';
 
 const classes = {
+  root: `${PREFIX}-root`,
   image: `${PREFIX}-image`
 };
 
@@ -63,7 +65,7 @@ export default function CustomAdv(props: CustomAdvProps): JSX.Element {
   );
 
   return (
-    <Root id={id} className={className}>
+    <Root id={id} className={classNames(classes.root, className)}>
       {scCustomAdv.link ? (
         <a href={scCustomAdv.link} title={scCustomAdv.title}>
           {adv}

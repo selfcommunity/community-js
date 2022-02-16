@@ -2,12 +2,15 @@ import React, {useContext, useMemo, useState} from 'react';
 import {
   SCCategoryType,
   SCContext,
-  SCContextType, SCMediaType, SCPollType,
+  SCContextType,
+  SCMediaType,
+  SCPollType,
   SCPreferences,
   SCPreferencesContext,
-  SCPreferencesContextType, SCTagType,
+  SCPreferencesContextType,
+  SCTagType,
   SCUserContext,
-  SCUserContextType,
+  SCUserContextType
 } from '@selfcommunity/core';
 import {Avatar, Box, Button, IconButton, PaperProps} from '@mui/material';
 import {styled} from '@mui/material/styles';
@@ -24,6 +27,7 @@ import {useSnackbar} from 'notistack';
 const PREFIX = 'SCInlineComposer';
 
 const classes = {
+  root: `${PREFIX}-root`,
   input: `${PREFIX}-input`,
   actions: `${PREFIX}-actions`,
   avatar: `${PREFIX}-avatar`
@@ -145,7 +149,7 @@ export default function InlineComposer(props: InlineComposerProps): JSX.Element 
 
   return (
     <React.Fragment>
-      <Root {...rest}>
+      <Root className={classes.root} {...rest}>
         <Box className={classes.input}>
           <Button variant="text" disableFocusRipple disableRipple disableElevation onClick={handleOpen(MAIN_VIEW)} fullWidth color="inherit">
             <FormattedMessage id="ui.inlineComposer.label" defaultMessage="ui.inlineComposer.label" />

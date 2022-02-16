@@ -25,6 +25,7 @@ import UserBlockedNotificationToast from './Toast/UserBlocked';
 const PREFIX = 'SCUserToastNotifications';
 
 const classes = {
+  root: `${PREFIX}-root`,
   toastMessage: `${PREFIX}-toast-message`,
   toastContent: `${PREFIX}-toast-content`,
   toastActions: `${PREFIX}-toast-actions`

@@ -7,6 +7,7 @@ import {Link, SCRoutes, SCRoutingContextType, useSCRouting, StringUtils} from '@
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {getContributeType, getRouteData} from '../../../../utils/contribute';
 import DateTimeAgo from '../../../../shared/DateTimeAgo';
+import classNames from 'classnames';
 
 const messages = defineMessages({
   kindlyNoticeAdvertising: {
@@ -34,6 +35,7 @@ const messages = defineMessages({
 const PREFIX = 'SCKindlyNoticeForNotificationToast';
 
 const classes = {
+  root: `${PREFIX}-root`,
   content: `${PREFIX}-content`
 };
 
@@ -96,7 +98,7 @@ export default function KindlyNoticeForNotificationToast(props: NotificationKind
    * Renders root object
    */
   return (
-    <Root id={id} className={className} {...rest}>
+    <Root id={id} className={classNames(classes.root, className)} {...rest}>
       <ListItem component={'div'} className={classes.content}>
         <ListItemAvatar>
           <Avatar variant="circular" sx={{backgroundColor: red[500]}}>

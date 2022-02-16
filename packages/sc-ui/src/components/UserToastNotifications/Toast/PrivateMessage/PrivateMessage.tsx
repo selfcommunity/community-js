@@ -4,10 +4,12 @@ import {Avatar, Box, ListItem, ListItemAvatar, ListItemText, Stack, Typography} 
 import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
 import {FormattedMessage} from 'react-intl';
 import DateTimeAgo from '../../../../shared/DateTimeAgo';
+import classNames from 'classnames';
 
 const PREFIX = 'SCUserNotificationPrivateMessage';
 
 const classes = {
+  root: `${PREFIX}-root`,
   content: `${PREFIX}-content`
 };
 
@@ -63,7 +65,7 @@ export default function UserNotificationPrivateMessageToast(props: NotificationP
    * Renders root object
    */
   return (
-    <Root id={id} className={className} {...rest}>
+    <Root id={id} className={classNames(classes.root, className)} {...rest}>
       <ListItem alignItems={'flex-start'} component={'div'} className={classes.content}>
         <ListItemAvatar>
           <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.private_message.sender)}>

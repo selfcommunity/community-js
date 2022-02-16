@@ -9,6 +9,7 @@ import PeopleSuggestionSkeleton from '../PeopleSuggestion/Skeleton';
 import User, {UserProps} from '../User';
 import {AxiosResponse} from 'axios';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
+import classNames from 'classnames';
 
 const messages = defineMessages({
   usersFollowed: {
@@ -22,6 +23,10 @@ const messages = defineMessages({
 });
 
 const PREFIX = 'SCUsersFollowed';
+
+const classes = {
+  root: `${PREFIX}-root`
+};
 
 const Root = styled(Card, {
   name: PREFIX,
@@ -168,7 +173,7 @@ export default function UsersFollowed(props: UsersFollowedProps): JSX.Element {
     return null;
   }
   if (scUserContext.user) {
-    return <Root className={className}>{u}</Root>;
+    return <Root className={classNames(classes.root, className)}>{u}</Root>;
   }
   return null;
 }

@@ -4,9 +4,10 @@ import {Avatar, Box, ListItem, ListItemAvatar, ListItemText, Stack, Typography} 
 import EmojiFlagsIcon from '@mui/icons-material/EmojiFlags';
 import {red} from '@mui/material/colors';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import { getContributeType, getRouteData } from '../../../../utils/contribute';
+import {getContributeType, getRouteData} from '../../../../utils/contribute';
 import DateTimeAgo from '../../../../shared/DateTimeAgo';
 import {Link, SCRoutingContextType, useSCRouting, StringUtils, SCRoutes} from '@selfcommunity/core';
+import classNames from 'classnames';
 
 const messages = defineMessages({
   collapsedForAdvertising: {
@@ -34,6 +35,7 @@ const messages = defineMessages({
 const PREFIX = 'SCCollapsedForNotificationToast';
 
 const classes = {
+  root: `${PREFIX}-root`,
   content: `${PREFIX}-content`
 };
 
@@ -96,7 +98,7 @@ export default function CollapsedForNotificationToast(props: NotificationCollaps
    * Renders root object
    */
   return (
-    <Root id={id} className={className} {...rest}>
+    <Root id={id} className={classNames(classes.root, className)} {...rest}>
       <ListItem component={'div'} className={classes.content}>
         <ListItemAvatar>
           <Avatar variant="circular" sx={{backgroundColor: red[500]}}>

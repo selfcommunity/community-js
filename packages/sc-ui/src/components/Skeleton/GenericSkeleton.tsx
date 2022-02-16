@@ -7,6 +7,7 @@ import Skeleton from '@mui/material/Skeleton';
 const PREFIX = 'SCGenericSkeleton';
 
 const classes = {
+  root: `${PREFIX}-root`,
   list: `${PREFIX}-list`
 };
 
@@ -20,7 +21,7 @@ const Root = styled(Card)(({theme}) => ({
 
 function GenericSkeleton(props): JSX.Element {
   return (
-    <Root {...props}>
+    <Root className={classes.root} {...props}>
       <CardContent>
         <React.Fragment>
           <Skeleton animation="wave" height={10} style={{marginBottom: 10}} />

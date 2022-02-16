@@ -4,8 +4,13 @@ import {Logger, SCCategoriesManagerType, SCCategoryType, SCUserContext, SCUserCo
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {LoadingButton} from '@mui/lab';
 import {FormattedMessage} from 'react-intl';
+import classNames from 'classnames';
 
 const PREFIX = 'SCFollowCategoryButton';
+
+const classes = {
+  root: `${PREFIX}-root`
+};
 
 const FollowButton = styled(LoadingButton, {
   name: PREFIX,
@@ -19,7 +24,6 @@ export interface FollowCategoryButtonProps {
    * @default null
    */
   className?: string;
-
   /**
    * Id of the category
    * @default null
@@ -86,7 +90,7 @@ export default function FollowCategoryButton(props: FollowCategoryButtonProps): 
       variant="outlined"
       onClick={followCategory}
       loading={followed === null || scCategoriesManager.isLoading(scCategory)}
-      className={className}
+      className={classNames(classes.root, className)}
       {...rest}>
       {followed ? (
         <FormattedMessage defaultMessage="ui.followCategoryButton.unfollow" id="ui.followCategoryButton.unfollow" />

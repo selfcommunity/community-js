@@ -6,10 +6,12 @@ import Thread from '../Thread';
 import {FormattedMessage} from 'react-intl';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import {SCUserContext, SCUserContextType} from '@selfcommunity/core';
+import classNames from 'classnames';
 
 const PREFIX = 'SCPrivateMessages';
 
 const classes = {
+  root: `${PREFIX}-root`,
   newMessage: `${PREFIX}-newMessage`,
   selected: `${PREFIX}-selected`
 };
@@ -83,7 +85,7 @@ export default function PrivateMessages(props: PrivateMessagesProps): JSX.Elemen
    */
   if (!autoHide && scUserContext.user) {
     return (
-      <Root {...rest} className={className}>
+      <Root {...rest} className={classNames(classes.root, className)}>
         <div>
           <Button className={openNewMessage ? classes.selected : classes.newMessage} onClick={handleOpenNewMessage}>
             <AddCircleOutlineIcon />

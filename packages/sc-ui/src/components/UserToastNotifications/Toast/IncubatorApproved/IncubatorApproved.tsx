@@ -5,6 +5,7 @@ import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {getContributeType} from '../../../../utils/contribute';
 import DateTimeAgo from '../../../../shared/DateTimeAgo';
 import {Link, SCRoutingContextType, useSCRouting, SCRoutes} from '@selfcommunity/core';
+import classNames from 'classnames';
 
 const messages = defineMessages({
   incubatorApproved: {
@@ -16,6 +17,7 @@ const messages = defineMessages({
 const PREFIX = 'SCIncubatorApprovedNotificationToast';
 
 const classes = {
+  root: `${PREFIX}-root`,
   content: `${PREFIX}-content`
 };
 
@@ -77,7 +79,7 @@ export default function IncubatorApprovedNotificationToast(props: NotificationIn
    * Renders root object
    */
   return (
-    <Root id={id} className={className} {...rest}>
+    <Root id={id} className={classNames(classes.root, className)} {...rest}>
       <ListItem component={'div'} className={classes.content}>
         <ListItemAvatar>
           <Avatar alt={notificationObject.incubator.name} src={notificationObject.incubator.image_medium} variant="square" />

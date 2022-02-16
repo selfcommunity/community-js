@@ -12,6 +12,7 @@ import Skeleton from '@mui/material/Skeleton';
 const PREFIX = 'SCUserSkeleton';
 
 const classes = {
+  root: `${PREFIX}-root`,
   list: `${PREFIX}-list`
 };
 
@@ -41,7 +42,7 @@ export default function UserSkeleton(props): JSX.Element {
     </ListItem>
   );
   return (
-    <Root {...props}>
+    <Root className={classes.root} {...props}>
       <List>{user}</List>
     </Root>
   );

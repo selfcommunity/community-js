@@ -17,8 +17,13 @@ import {
 import PeopleSuggestionSkeleton from './Skeleton';
 import User, {UserProps} from '../User';
 import {FormattedMessage} from 'react-intl';
+import classNames from 'classnames';
 
 const PREFIX = 'SCPeopleSuggestion';
+
+const classes = {
+  root: `${PREFIX}-root`
+};
 
 const Root = styled(Card, {
   name: PREFIX,
@@ -188,7 +193,7 @@ export default function PeopleSuggestion(props: PeopleSuggestionProps): JSX.Elem
   }
   if (scUserContext.user) {
     return (
-      <Root className={className} {...rest}>
+      <Root className={classNames(classes.root, className)} {...rest}>
         {p}
       </Root>
     );

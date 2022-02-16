@@ -11,8 +11,13 @@ import {SCOPE_SC_UI} from '../../constants/Errors';
 import FeedObject from '../FeedObject';
 import {FormattedMessage} from 'react-intl';
 import {FeedObjectTemplateType} from '../../types/feedObject';
+import classNames from 'classnames';
 
 const PREFIX = 'SCTrendingFeed';
+
+const classes = {
+  root: `${PREFIX}-root`
+};
 
 const Root = styled(Card, {
   name: PREFIX,
@@ -146,7 +151,7 @@ export default function TrendingFeed(props: TrendingFeedProps): JSX.Element {
     return null;
   }
   return (
-    <Root className={className} {...rest}>
+    <Root className={classNames(classes.root, className)} {...rest}>
       {f}
     </Root>
   );

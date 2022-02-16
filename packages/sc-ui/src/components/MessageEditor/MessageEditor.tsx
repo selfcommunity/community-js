@@ -7,10 +7,12 @@ import SendIcon from '@mui/icons-material/Send';
 import EmojiIcon from '@mui/icons-material/SentimentSatisfiedOutlined';
 import Picker from 'emoji-picker-react';
 import {TMUIRichTextEditorRef} from 'mui-rte';
+import classNames from 'classnames';
 
 const PREFIX = 'SCMessageEditor';
 
 const classes = {
+  root: `${PREFIX}-root`,
   messageInput: `${PREFIX}-message-input`
 };
 
@@ -98,7 +100,7 @@ export default function MessageEditor(props: MessageEditorProps): JSX.Element {
 
   if (!autoHide) {
     return (
-      <Root {...rest} className={className}>
+      <Root {...rest} className={classNames(classes.root, className)}>
         <TextField
           size="small"
           ref={ref}

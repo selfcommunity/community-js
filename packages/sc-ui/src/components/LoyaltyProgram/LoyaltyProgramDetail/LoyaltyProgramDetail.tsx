@@ -7,6 +7,7 @@ import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import Chip from '@mui/material/Chip';
 import CardGiftcardOutlinedIcon from '@mui/icons-material/CardGiftcardOutlined';
 import {SCOPE_SC_UI} from '../../../constants/Errors';
+import classNames from 'classnames';
 
 const messages = defineMessages({
   points: {
@@ -22,6 +23,7 @@ const messages = defineMessages({
 const PREFIX = 'SCLoyaltyProgramDetail';
 
 const classes = {
+  root: `${PREFIX}-root`,
   header: `${PREFIX}-header`,
   intro: `${PREFIX}-intro`,
   icon: `${PREFIX}-icon`,
@@ -238,7 +240,7 @@ export default function LoyaltyProgramDetail(props: LoyaltyProgramDetailProps): 
    */
   if (!autoHide && scUserContext.user) {
     return (
-      <Root className={className} {...rest}>
+      <Root className={classNames(classes.root, className)} {...rest}>
         {d}
       </Root>
     );

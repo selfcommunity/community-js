@@ -4,14 +4,13 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemText from '@mui/material/ListItemText';
-import {Button} from '@mui/material';
-import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
 import {styled} from '@mui/material/styles';
 import Skeleton from '@mui/material/Skeleton';
 
 const PREFIX = 'SCMessageSkeleton';
 
 const classes = {
+  root: `${PREFIX}-root`,
   list: `${PREFIX}-list`
 };
 
@@ -36,7 +35,7 @@ export default function MessageSkeleton(props): JSX.Element {
     </ListItem>
   );
   return (
-    <Root {...props}>
+    <Root className={classes.root} {...props}>
       <List>{m}</List>
     </Root>
   );

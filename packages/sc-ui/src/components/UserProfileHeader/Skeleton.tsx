@@ -1,5 +1,5 @@
 import React from 'react';
-import {Box, Divider, Grid, Paper, Typography} from '@mui/material';
+import {Box, Typography} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import Skeleton from '@mui/material/Skeleton';
 
@@ -7,7 +7,8 @@ const PREFIX = 'SCUserProfileHeaderSkeleton';
 
 const classes = {
   avatar: `${PREFIX}-avatar`,
-  username: `${PREFIX}-username`
+  username: `${PREFIX}-username`,
+  root: `${PREFIX}-root`
 };
 
 const Root = styled(Box, {
@@ -33,7 +34,7 @@ const Root = styled(Box, {
 
 function UserProfileHeaderSkeleton(): JSX.Element {
   return (
-    <Root>
+    <Root className={classes.root}>
       <Skeleton sx={{height: 350}} animation="wave" variant="rectangular" />
       <Box className={classes.avatar}>
         <Skeleton animation="wave" variant="circular" width={200} height={200} />

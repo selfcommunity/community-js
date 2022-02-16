@@ -4,7 +4,7 @@ import List from '@mui/material/List';
 import {Button, Typography} from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import {Endpoints, http, Logger, SCUserContext, SCUserContextType} from '@selfcommunity/core';
+import {Endpoints, http, Logger, SCUserContext, SCUserContextType, useSCFetchUser} from '@selfcommunity/core';
 import Category from '../Category';
 import {AxiosResponse} from 'axios';
 import {SCCategoryType} from '@selfcommunity/core/src/types';
@@ -43,7 +43,9 @@ export default function CategoriesFollowed(props: CategoriesListProps): JSX.Elem
   const intl = useIntl();
 
   // PROPS
-  const {autoHide, className, CategoryProps = {}, ...rest} = props;
+  const {userId, user, autoHide, className, CategoryProps = {}, ...rest} = props;
+
+  const {scUser} = useSCFetchUser({id: userId, user});
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
@@ -60,10 +62,12 @@ export default function CategoriesFollowed(props: CategoriesListProps): JSX.Elem
    * Handles list change on category follow
    */
   function handleOnFollowCategory(category, follow) {
-    setCategories(categories.filter((c) => c.id !== category.id));
-    setTotal((prev) => prev - 1);
-    if (visibleCategories < limit && total > 1) {
-      loadCategories(1);
+    if (scUserContext.user['id'] === userId) {
+      setCategories(categories.filter((c) => c.id !== category.id));
+      setTotal((prev) => prev - 1);
+      if (visibleCategories < limit && total > 1) {
+        loadCategories(1);
+      }
     }
   }
 

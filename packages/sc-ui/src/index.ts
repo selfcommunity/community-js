@@ -9,7 +9,7 @@ import CategoriesPopular, {CategoriesPopularSkeleton} from './components/Categor
 import CategoriesSuggestion, {CategoriesListProps, CategoriesSuggestionSkeleton} from './components/CategoriesSuggestion';
 import ChangeCover, {ChangeCoverProps} from './components/ChangeCover';
 import ChangePicture, {ChangePictureProps} from './components/ChangePicture';
-import Connection from './components/ConnectionUserButton';
+import FriendshipUserButton, {FriendshipButtonProps} from './components/FriendshipUserButton';
 import Composer, {ComposerProps, ComposerSkeleton} from './components/Composer';
 import Editor, {EditorProps, EditorSkeleton} from './components/Editor';
 import User, {UserProps, UserSkeleton} from './components/User';
@@ -70,7 +70,8 @@ export {
   ChangePictureProps,
   ChangeCoverProps,
   Composer,
-  Connection,
+  FriendshipUserButton,
+  FriendshipButtonProps,
   ComposerProps,
   ComposerSkeleton,
   Editor,

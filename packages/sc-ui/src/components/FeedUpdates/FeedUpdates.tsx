@@ -3,10 +3,12 @@ import {styled} from '@mui/material/styles';
 import {Button, Card, CardContent} from '@mui/material';
 import PubSub from 'pubsub-js';
 import {FormattedMessage} from 'react-intl';
+import classNames from 'classnames';
 
 const PREFIX = 'SCFeedUpdates';
 
 const classes = {
+  root: `${PREFIX}-root`,
   image: `${PREFIX}-image`
 };
 
@@ -109,7 +111,7 @@ export default function FeedUpdates(props: FeedUpdatesProps): JSX.Element {
   };
 
   return (
-    <Root id={id} className={className} {...rest}>
+    <Root id={id} className={classNames(classes.root, className)} {...rest}>
       <CardContent>
         {message}
         {publicationChannel && (

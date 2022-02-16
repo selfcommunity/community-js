@@ -4,8 +4,13 @@ import {SCOPE_SC_UI} from '../../constants/Errors';
 import {LoadingButton} from '@mui/lab';
 import {FormattedMessage} from 'react-intl';
 import {Logger, SCFollowedManagerType, SCUserContext, SCUserContextType, SCUserType, useSCFetchUser} from '@selfcommunity/core';
+import classNames from 'classnames';
 
 const PREFIX = 'SCFollowUserButton';
+
+const classes = {
+  root: `${PREFIX}-root`
+};
 
 const FollowButton = styled(LoadingButton, {
   name: PREFIX,
@@ -14,6 +19,11 @@ const FollowButton = styled(LoadingButton, {
 })(({theme}) => ({}));
 
 export interface FollowUserButtonProps {
+  /**
+   * Overrides or extends the styles applied to the component.
+   * @default null
+   */
+  className?: string;
   /**
    * Id of the user
    * @default null
@@ -41,7 +51,7 @@ export interface FollowUserButtonProps {
 
 export default function FollowUserButton(props: FollowUserButtonProps): JSX.Element {
   // PROPS
-  const {userId, user, onFollow, ...rest} = props;
+  const {className, userId, user, onFollow, ...rest} = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
@@ -78,7 +88,13 @@ export default function FollowUserButton(props: FollowUserButtonProps): JSX.Elem
   }
 
   return (
-    <FollowButton size="small" variant="outlined" onClick={followCUser} loading={followed === null || scFollowedManager.isLoading(scUser)} {...rest}>
+    <FollowButton
+      size="small"
+      variant="outlined"
+      onClick={followCUser}
+      loading={followed === null || scFollowedManager.isLoading(scUser)}
+      className={classNames(classes.root, className)}
+      {...rest}>
       {followed ? (
         <FormattedMessage defaultMessage="ui.followUserButton.unfollow" id="ui.followUserButton.unfollow" />
       ) : (

@@ -9,8 +9,13 @@ import {AxiosResponse} from 'axios';
 import {PeopleSuggestionSkeleton} from '../PeopleSuggestion';
 import {FormattedMessage} from 'react-intl';
 import User, {UserProps} from '../User';
+import classNames from 'classnames';
 
 const PREFIX = 'SCTrendingPeople';
+
+const classes = {
+  root: `${PREFIX}-root`
+};
 
 const Root = styled(Card, {
   name: PREFIX,
@@ -149,7 +154,7 @@ export default function TrendingPeople(props: TrendingPeopleProps): JSX.Element 
     return null;
   }
   return (
-    <Root className={className} {...rest}>
+    <Root className={classNames(classes.root, className)} {...rest}>
       {p}
     </Root>
   );

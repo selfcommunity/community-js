@@ -6,6 +6,7 @@ import {GenericSkeleton} from '../Skeleton';
 const PREFIX = 'SCFeedSkeleton';
 
 const classes = {
+  root: `${PREFIX}-root`,
   left: `${PREFIX}-left`,
   right: `${PREFIX}-right`
 };
@@ -44,7 +45,7 @@ export default function FeedSkeleton(props: FeedSkeletonProps): JSX.Element {
     sidebar = <GenericSkeleton />
   } = props;
   return (
-    <Root container spacing={2}>
+    <Root container spacing={2} className={classes.root}>
       <Grid item xs={12} md={7}>
         {children}
       </Grid>

@@ -8,6 +8,7 @@ import UserSkeleton from '../User/Skeleton';
 const PREFIX = 'SCTrendingPeopleSkeleton';
 
 const classes = {
+  root: `${PREFIX}-root`,
   list: `${PREFIX}-list`
 };
 
@@ -23,7 +24,7 @@ const Root = styled(Card)(({theme}) => ({
 
 export default function TrendingPeopleSkeleton(): JSX.Element {
   return (
-    <Root variant={'outlined'}>
+    <Root variant={'outlined'} className={classes.root}>
       <CardContent>
         <List className={classes.list}>
           {[...Array(4)].map((person, index) => (

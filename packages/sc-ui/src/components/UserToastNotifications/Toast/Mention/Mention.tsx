@@ -5,6 +5,7 @@ import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {getContribute, getRouteData} from '../../../../utils/contribute';
 import DateTimeAgo from '../../../../shared/DateTimeAgo';
+import classNames from 'classnames';
 
 const messages = defineMessages({
   quotedYouOn: {
@@ -16,6 +17,7 @@ const messages = defineMessages({
 const PREFIX = 'SCUserNotificationMentionToast';
 
 const classes = {
+  root: `${PREFIX}-root`,
   content: `${PREFIX}-content`
 };
 
@@ -77,7 +79,7 @@ export default function UserNotificationMentionToast(props: NotificationMentionT
    * Renders root object
    */
   return (
-    <Root id={id} className={className} {...rest}>
+    <Root id={id} className={classNames(classes.root, className)} {...rest}>
       <ListItem component={'div'} className={classes.content}>
         <ListItemAvatar>
           <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.user)}>

@@ -4,6 +4,10 @@ import {Avatar, AvatarGroup, Skeleton} from '@mui/material';
 
 const PREFIX = 'SCAvatarGroupSkeleton';
 
+const classes = {
+  root: `${PREFIX}-root`
+};
+
 const Root = styled(AvatarGroup, {
   name: PREFIX,
   slot: 'Root',
@@ -23,7 +27,7 @@ const Root = styled(AvatarGroup, {
 
 export default function AvatarGroupSkeleton(props): JSX.Element {
   return (
-    <Root {...props}>
+    <Root className={classes.root} {...props}>
       {[...Array(props.max ? props.max + 1 : 5)].map((x, i) => (
         <Avatar key={i}>
           <Skeleton variant="circular" width={24} height={24} />

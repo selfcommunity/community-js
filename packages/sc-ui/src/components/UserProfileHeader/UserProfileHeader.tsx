@@ -14,10 +14,12 @@ import {
   useSCUser
 } from '@selfcommunity/core';
 import UserProfileHeaderSkeleton from './Skeleton';
+import classNames from 'classnames';
 
 const PREFIX = 'SCUserProfileHeader';
 
 const classes = {
+  root: `${PREFIX}-root`,
   cover: `${PREFIX}-cover`,
   avatar: `${PREFIX}-avatar`,
   username: `${PREFIX}-username`,
@@ -144,7 +146,7 @@ export default function UserProfileHeader(props: UserProfileHeaderProps): JSX.El
       : {background: `url('${scPreferences.preferences[SCPreferences.IMAGES_USER_DEFAULT_COVER].value}') center / cover`})
   };
   return (
-    <Root className={className} {...rest}>
+    <Root className={classNames(classes.root, className)} {...rest}>
       <Paper style={_backgroundCover} classes={{root: classes.cover}}>
         <img src={scUser.avatar ? scUser.avatar : ''} className={classes.avatar} />
         {isMe && (

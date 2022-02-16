@@ -7,6 +7,7 @@ import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {getContributeType, getRouteData} from '../../../../utils/contribute';
 import DateTimeAgo from '../../../../shared/DateTimeAgo';
 import {Link, SCRoutingContextType, useSCRouting, StringUtils, SCRoutes} from '@selfcommunity/core';
+import classNames from 'classnames';
 
 const messages = defineMessages({
   kindlyNoticeFlag: {
@@ -18,6 +19,7 @@ const messages = defineMessages({
 const PREFIX = 'SCKindlyNoticeFlagNotificationToast';
 
 const classes = {
+  root: `${PREFIX}-root`,
   content: `${PREFIX}-content`
 };
 
@@ -80,7 +82,7 @@ export default function KindlyNoticeFlagNotificationToast(props: NotificationKin
    * Renders root object
    */
   return (
-    <Root id={id} className={className} {...rest}>
+    <Root id={id} className={classNames(classes.root, className)} {...rest}>
       <ListItem component={'div'} className={classes.content}>
         <ListItemAvatar>
           <Avatar variant="circular" sx={{backgroundColor: red[500]}}>

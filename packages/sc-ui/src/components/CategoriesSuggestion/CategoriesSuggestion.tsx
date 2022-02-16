@@ -3,7 +3,7 @@ import {styled} from '@mui/material/styles';
 import {Button, Typography, List} from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import {Endpoints, http, SCUserContext, SCUserContextType, SCCategoryType} from '@selfcommunity/core';
+import {Endpoints, http, SCUserContext, SCUserContextType, SCCategoryType, SCUserType} from '@selfcommunity/core';
 import Skeleton from './Skeleton';
 import Category, {CategoryProps} from '../Category';
 import {AxiosResponse} from 'axios';
@@ -21,6 +21,12 @@ const Root = styled(Card, {
 }));
 
 export interface CategoriesListProps {
+  user?: SCUserType;
+  /**
+   * The user id
+   * @default null
+   */
+  userId?: number;
   /**
    * Hides this component
    * @default false

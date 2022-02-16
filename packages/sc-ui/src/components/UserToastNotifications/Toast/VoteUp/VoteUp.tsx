@@ -4,7 +4,8 @@ import {Avatar, Box, ListItem, ListItemAvatar, ListItemText, Stack, Typography} 
 import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../../shared/DateTimeAgo';
-import { getContribute, getRouteData } from '../../../../utils/contribute';
+import {getContribute, getRouteData} from '../../../../utils/contribute';
+import classNames from 'classnames';
 
 const messages = defineMessages({
   appreciated: {
@@ -16,6 +17,7 @@ const messages = defineMessages({
 const PREFIX = 'SCVoteUpNotificationToast';
 
 const classes = {
+  root: `${PREFIX}-root`,
   content: `${PREFIX}-content`
 };
 
@@ -77,7 +79,7 @@ export default function VoteUpNotificationToast(props: NotificationVoteUpToastPr
    * Renders root object
    */
   return (
-    <Root id={id} className={className} {...rest}>
+    <Root id={id} className={classNames(classes.root, className)} {...rest}>
       <ListItem component={'div'} className={classes.content}>
         <ListItemAvatar>
           <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.user)}>
@@ -88,9 +90,7 @@ export default function VoteUpNotificationToast(props: NotificationVoteUpToastPr
           disableTypography={true}
           primary={
             <Typography>
-              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.user)}>
-                {notificationObject.user.username}
-              </Link>{' '}
+              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.user)}>{notificationObject.user.username}</Link>{' '}
               {intl.formatMessage(messages.appreciated, {
                 username: notificationObject.user.username,
                 b: (...chunks) => <span>{chunks}</span>

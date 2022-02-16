@@ -4,6 +4,7 @@ import {Avatar, Box, ListItem, ListItemAvatar, ListItemText, Stack, Typography} 
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../../shared/DateTimeAgo';
 import {Link, SCNotificationTypologyType, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
+import classNames from 'classnames';
 
 const messages = defineMessages({
   requestConnection: {
@@ -19,6 +20,7 @@ const messages = defineMessages({
 const PREFIX = 'SCUserConnectionNotificationToast';
 
 const classes = {
+  root: `${PREFIX}-root`,
   content: `${PREFIX}-content`
 };
 
@@ -83,7 +85,7 @@ export default function UserConnectionNotificationToast(props: NotificationConne
    * Renders root object
    */
   return (
-    <Root id={id} className={className} {...rest}>
+    <Root id={id} className={classNames(classes.root, className)} {...rest}>
       <ListItem component={'div'} className={classes.content}>
         <ListItemAvatar>
           <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, userConnection)}>

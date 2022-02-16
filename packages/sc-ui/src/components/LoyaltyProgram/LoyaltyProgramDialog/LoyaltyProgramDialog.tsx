@@ -3,8 +3,13 @@ import {styled} from '@mui/material/styles';
 import {FormattedMessage} from 'react-intl';
 import BaseDialog from '../../../shared/BaseDialog';
 import LoyaltyProgramDetail from '../LoyaltyProgramDetail';
+import classNames from 'classnames';
 
 const PREFIX = 'SCLoyaltyProgramDialog';
+
+const classes = {
+  root: `${PREFIX}-root`
+};
 
 const Root = styled(BaseDialog, {
   name: PREFIX,
@@ -49,7 +54,7 @@ export default function LoyaltyProgramDialog(props: LoyaltyProgramDialogProps): 
       title={<FormattedMessage id="ui.loyaltyProgram.lp" defaultMessage="ui.loyaltyProgram.lp" />}
       open={open}
       onClose={onClose}
-      className={className}
+      className={classNames(classes.root, className)}
       {...rest}>
       <LoyaltyProgramDetail points={points} cardType={false} />
     </Root>

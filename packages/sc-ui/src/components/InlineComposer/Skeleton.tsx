@@ -7,6 +7,7 @@ import Paper from '@mui/material/Paper';
 const PREFIX = 'SCInlineComposerSkeleton';
 
 const classes = {
+  root: `${PREFIX}-root`,
   input: `${PREFIX}-input`,
   actions: `${PREFIX}-actions`,
   avatar: `${PREFIX}-avatar`
@@ -32,7 +33,7 @@ const Root = styled(Paper, {
 
 export default function InlineComposerSkeleton(): JSX.Element {
   return (
-    <Root>
+    <Root className={classes.root}>
       <Box className={classes.input}>
         <Skeleton sx={{height: 40}} animation="wave" variant="rectangular" />
       </Box>

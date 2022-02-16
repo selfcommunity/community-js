@@ -10,6 +10,7 @@ import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import LoyaltyProgramDialog from './LoyaltyProgramDialog';
 import {SCRoutingContextType, useSCRouting, Link, SCRoutes} from '@selfcommunity/core';
 import LoyaltyProgramDetail from './LoyaltyProgramDetail';
+import classNames from 'classnames';
 
 const messages = defineMessages({
   points: {
@@ -21,6 +22,7 @@ const messages = defineMessages({
 const PREFIX = 'SCLoyaltyProgram';
 
 const classes = {
+  root: `${PREFIX}-root`,
   cardHeader: `${PREFIX}-card-header`,
   pointsIcon: `${PREFIX}-pointsIcon`,
   actions: `${PREFIX}-actions`,
@@ -179,7 +181,7 @@ export default function LoyaltyProgram(props: LoyaltyProgramProps): JSX.Element 
    */
   if (!autoHide && scUserContext.user) {
     return (
-      <Root {...props} className={className}>
+      <Root {...props} className={classNames(classes.root, className)}>
         <CardContent>{l}</CardContent>
       </Root>
     );
