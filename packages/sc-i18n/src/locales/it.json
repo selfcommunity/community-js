@@ -7,19 +7,17 @@
 
   "ui.baseDialog.button.close": "Chiudi",
 
-  "ui.button.showMore": "Mostra di piú",
-
   "ui.broadcastMessages.message.chip": "INFO",
 
   "ui.user.ignore": "Ignora",
 
   "ui.peopleSuggestion.title": "Persone che potresti conoscere",
   "ui.peopleSuggestion.subtitle.noResults": "Nessuno da mostrare",
-  "ui.peopleSuggestion.button.showAll": "Mostra tutti",
+  "ui.peopleSuggestion.button.showMore": "Mostra di piú",
 
   "ui.trendingPeople.title": "Persone di tendenza",
   "ui.trendingPeople.noResults": "Nessuno da mostrare",
-  "ui.trendingPeople.button.showAll": "Mostra tutti",
+  "ui.trendingPeople.button.showMore": "Mostra tutti",
 
   "ui.trendingFeed.title": "Post di tendenza",
   "ui.trendingFeed.noResults": "Niente da mostrare",
@@ -27,14 +25,18 @@
 
   "ui.relatedDiscussion.title": "Post correlati",
   "ui.relatedDiscussion.noResults": "Nessun post da mostrare",
+  "ui.relatedDiscussion.button.showMore": "Mostra di piú",
 
   "ui.category.categoryFollowers": "{total, plural, =0 {Seguita da # persone} one {Seguita da # persona} other {Seguita da # persone}}",
+
   "ui.categoriesFollowed.subtitle.noResults": "Nessuna Categoria Seguita",
   "ui.categoriesFollowed.categoriesFollowed": "{total, plural, =0 {# Categorie Seguite} one {# Categoria Seguita} other {# Categorie Seguite}}",
   "ui.categoriesFollowed.button.showMore": "Mostra di piú",
+
   "ui.categoriesPopular.title": "Categorie Popolari",
   "ui.categoriesPopular.noResults": "Nessuna Categoria",
   "ui.categoriesPopular.button.showMore": "Mostra di piú",
+
   "ui.categoriesSuggestion.title": "Esplora Categorie",
   "ui.categoriesSuggestion.noResults": "Nessuna Categoria",
   "ui.categoriesSuggestion.button.showMore": "Mostra di piú",
@@ -226,9 +228,11 @@
 
   "ui.usersFollowed.usersFollowed": "{total, plural, =0 {# utenti seguiti} one {# utente seguito} other {# utenti seguiti}}",
   "ui.usersFollowed.subtitle.noResults": "Nessun utente seguito",
+  "ui.usersFollowed.button.showMore": "Mostra di piú",
 
   "ui.userFollowers.userFollowers": "{total, plural, =0 {# followers} one {# follower} other {# followers}}",
   "ui.userFollowers.subtitle.noResults": "Nessun follower",
+  "ui.userFollowers.button.showMore": "Mostra di piú",
 
   "ui.categoryHeader.followedBy": "Seguita da ",
   "ui.categoryHeader.followers": "Followers",

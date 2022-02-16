@@ -133,7 +133,7 @@ export default function TrendingPeople(props: TrendingPeopleProps): JSX.Element 
           )}
           {hasMore && (
             <Button size="small" onClick={() => loadPeople()}>
-              <FormattedMessage id="ui.trendingPeople.showAll" defaultMessage="ui.trendingPeople.showAll" />
+              <FormattedMessage id="ui.trendingPeople.button.showMore" defaultMessage="ui.trendingPeople.button.showMore" />
             </Button>
           )}
           {openTrendingPeopleDialog && <></>}

@@ -189,7 +189,7 @@ export default function RelatedDiscussion(props: RelatedDiscussionProps): JSX.El
               </List>
               {hasMore && (
                 <Button size="small" onClick={() => loadDiscussions()}>
-                  <FormattedMessage id="ui.button.showMore" defaultMessage="ui.button.showMore" />
+                  <FormattedMessage id="ui.relatedDiscussion.button.showMore" defaultMessage="ui.relatedDiscussion.button.showMore" />
                 </Button>
               )}
             </React.Fragment>

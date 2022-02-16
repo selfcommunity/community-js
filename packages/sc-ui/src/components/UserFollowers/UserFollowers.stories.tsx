@@ -5,7 +5,17 @@ import UserFollowers from './index';
 
 export default {
   title: 'Design System/SC UI/UserFollowers',
-  component: UserFollowers
+  component: UserFollowers,
+  argTypes: {
+    userId: {
+      control: {type: 'number'},
+      description: 'User Id',
+      table: {defaultValue: {summary: 1}}
+    }
+  },
+  args: {
+    userId: 1
+  }
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
 } as ComponentMeta<typeof UserFollowers>;
 

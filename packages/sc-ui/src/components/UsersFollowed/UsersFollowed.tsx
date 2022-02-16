@@ -34,6 +34,11 @@ const Root = styled(Card, {
 
 export interface UsersFollowedProps {
   /**
+   * The user id
+   * @default null
+   */
+  userId?: number;
+  /**
    * Hides this component
    * @default false
    */
@@ -61,7 +66,7 @@ export default function UsersFollowed(props: UsersFollowedProps): JSX.Element {
   const scUserContext: SCUserContextType = useContext(SCUserContext);
 
   // PROPS
-  const {autoHide, className, UserProps = {}} = props;
+  const {userId, autoHide, className, UserProps = {}} = props;
 
   // STATE
   const [followed, setFollowed] = useState<any[]>([]);
@@ -74,10 +79,12 @@ export default function UsersFollowed(props: UsersFollowedProps): JSX.Element {
    * Handles list change on user follow
    */
   function handleOnFollowUser(user, follow) {
-    setFollowed(followed.filter((u) => u.id !== user.id));
-    setTotal((prev) => prev - 1);
-    if (visibleUsers < limit && total > 1) {
-      loadUsers(1);
+    if (scUserContext.user['id'] === userId) {
+      setFollowed(followed.filter((u) => u.id !== user.id));
+      setTotal((prev) => prev - 1);
+      if (visibleUsers < limit && total > 1) {
+        loadUsers(1);
+      }
     }
   }
 
@@ -87,7 +94,7 @@ export default function UsersFollowed(props: UsersFollowedProps): JSX.Element {
   function fetchFollowed() {
     http
       .request({
-        url: Endpoints.UsersFollowed.url({id: scUserContext.user['id']}),
+        url: Endpoints.UsersFollowed.url({id: userId ?? scUserContext.user['id']}),
         method: Endpoints.UsersFollowed.method
       })
       .then((res: AxiosResponse<any>) => {
@@ -144,7 +151,7 @@ export default function UsersFollowed(props: UsersFollowedProps): JSX.Element {
               </List>
               {hasMore && (
                 <Button size="small" onClick={() => loadUsers(limit)}>
-                  <FormattedMessage id="ui.button.showMore" defaultMessage="ui.button.showMore" />
+                  <FormattedMessage id="ui.usersFollowed.button.showMore" defaultMessage="ui.usersFollowed.button.showMore" />
                 </Button>
               )}
             </React.Fragment>

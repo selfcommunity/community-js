@@ -34,6 +34,11 @@ const Root = styled(Card, {
 
 export interface UserFollowersProps {
   /**
+   * The user id
+   * @default null
+   */
+  userId?: number;
+  /**
    * Hides this component
    * @default false
    */
@@ -61,7 +66,7 @@ export default function UserFollowers(props: UserFollowersProps): JSX.Element {
   const scUserContext: SCUserContextType = useContext(SCUserContext);
 
   // PROPS
-  const {autoHide, className, UserProps = {}} = props;
+  const {userId, autoHide, className, UserProps = {}} = props;
 
   // STATE
   const [followers, setFollowers] = useState<any[]>([]);
@@ -76,7 +81,7 @@ export default function UserFollowers(props: UserFollowersProps): JSX.Element {
   function fetchFollowers() {
     http
       .request({
-        url: Endpoints.UserFollowers.url({id: scUserContext.user['id']}),
+        url: Endpoints.UserFollowers.url({id: userId ?? scUserContext.user['id']}),
         method: Endpoints.UserFollowers.method
       })
       .then((res: AxiosResponse<any>) => {
@@ -133,7 +138,7 @@ export default function UserFollowers(props: UserFollowersProps): JSX.Element {
               </List>
               {hasMore && (
                 <Button size="small" onClick={() => loadUsers(limit)}>
-                  <FormattedMessage id="ui.button.showMore" defaultMessage="ui.button.showMore" />
+                  <FormattedMessage id="ui.userFollowers.button.showMore" defaultMessage="ui.userFollowers.button.showMore" />
                 </Button>
               )}
             </React.Fragment>

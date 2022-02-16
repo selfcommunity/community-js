@@ -169,7 +169,7 @@ export default function PeopleSuggestion(props: PeopleSuggestionProps): JSX.Elem
               </List>
               {hasMore && (
                 <Button color="secondary" size="small" onClick={() => loadPeople(limit)}>
-                  <FormattedMessage id="ui.button.showMore" defaultMessage="ui.button.showMore" />
+                  <FormattedMessage id="ui.peopleSuggestion.button.showMore" defaultMessage="ui.peopleSuggestion.button.showMore" />
                 </Button>
               )}
             </React.Fragment>
