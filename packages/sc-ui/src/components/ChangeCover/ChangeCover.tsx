@@ -125,7 +125,7 @@ export default function ChangeCover(props: ChangeCoverProps): JSX.Element {
         data: formData
       })
       .then((res: AxiosResponse<SCUserType>) => {
-        scUserContext.setCover(res.data.cover);
+        scUserContext.updateUser({cover: res.data.cover});
         onChange && onChange(res.data.cover);
         setAnchorEl(null);
         if (performDelete) {

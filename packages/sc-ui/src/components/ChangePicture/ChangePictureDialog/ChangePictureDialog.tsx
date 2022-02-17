@@ -167,7 +167,7 @@ export default function ChangePictureDialog(props: CPDialogProps): JSX.Element {
           }
         })
         .then(() => {
-          scUserContext.setAvatar(avatar.avatar);
+          scUserContext.updateUser({avatar: avatar.avatar});
           setPrimary(avatar.id);
           onChange && onChange(avatar);
         })
