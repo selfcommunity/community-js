@@ -32,7 +32,7 @@ const withProvider = (Story, context) => {
         type: context.globals.session,
         clientId: context.globals.clientId,
         authToken: authToken, // Comment this line to test anonymous session
-        handleRefreshToken: context.globals.session !== 'Cookie' ? refreshToken(context) : null,
+        handleRefreshToken: context.globals.session !== 'Cookie' ? refreshToken(context) : null
       },
       notifications: {
         webSocket: {
@@ -40,7 +40,7 @@ const withProvider = (Story, context) => {
         },
         webPushMessaging: {
           disableToastMessage: false,
-          // applicationServerKey: 'BKFRsTZZdL-xO5q8gZumLY5u2ceXM1-1GYZlkMIeXdp7COZ6r1Y28TmpfBFm3rMf9t3lLQZWn4dfDSEoiRWLM8c',
+          // applicationServerKey: 'BD9Ic3IqC5Uom1NiC46fjOFYCvQcDPA2emgmyBx25oTXySeA25C0cJsWfK1Dxr4zDYeQ-MUwV9vOqz8aIGMeLAI',
         }
       },
       theme: {
@@ -64,6 +64,7 @@ const withProvider = (Story, context) => {
         SCAlertMessagesProvider
       ] */
     };
+    console.log('decorators');
 
     return (
         <SCContextProvider conf={_conf}>
@@ -75,10 +76,11 @@ const withProvider = (Story, context) => {
 const withServiceWorker = (Story, context) => {
 
   /**
-   * Register a sw
+   * Register a service worker
    */
   if (navigator && navigator.serviceWorker) {
-    navigator.serviceWorker.register('sw.js')
+    console.log('Register service worker');
+    navigator.serviceWorker.register('service-worker.js')
       .then(r => console.log('Service worker registered!'))
       .catch(e=>console.log(e));
   }

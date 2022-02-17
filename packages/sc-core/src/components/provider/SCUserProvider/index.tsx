@@ -86,6 +86,7 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
    * Refresh followed categories, users, etc..
    */
   function handleVisibilityChange() {
+    Logger.info(SCOPE_SC_CORE, 'Refresh info cached in the user context');
     if (!document.hidden && state.user) {
       categoriesManager.refresh && categoriesManager.refresh();
       followedManager.refresh && followedManager.refresh();
@@ -94,17 +95,10 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
   }
 
   /**
-   * Handle change avatar
+   * Handle change user
    */
-  function setAvatar(avatar): void {
-    dispatch({type: userActionTypes.CHANGE_AVATAR, payload: {avatar}});
-  }
-
-  /**
-   * Handle change cover
-   */
-  function setCover(cover): void {
-    dispatch({type: userActionTypes.CHANGE_COVER, payload: {cover}});
+  function updateUser(info): void {
+    dispatch({type: userActionTypes.UPDATE_USER, payload: info});
   }
 
   /**
@@ -153,8 +147,7 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
       session: state.session,
       loading: state.loading,
       error: state.error,
-      setAvatar,
-      setCover,
+      updateUser,
       setUnseenInteractionsCounter,
       setUnseenNotificationBannersCounter,
       logout,

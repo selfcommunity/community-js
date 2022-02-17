@@ -48,7 +48,7 @@ export default function useSCWebSocket() {
     return () => {
       wsInstance && wsInstance.close();
     };
-  }, [scContext.settings.session.authToken]);
+  }, [scUserContext.user]);
 
   /**
    * Receive a message from wsInstance.

@@ -121,6 +121,7 @@ export const CONFIGURATIONS_URL_TEMPLATE_INCUBATOR = 'configurations.url_templat
  */
 export const PROVIDERS_GOOGLE_GEOCODING_API_KEY = 'providers.google_geocoding_api_key';
 export const PROVIDERS_WEB_PUSH_PUBLIC_KEY = 'providers.web_push_public_key';
+export const PROVIDERS_WEB_PUSH_ENABLED = 'providers.web_push_enabled';
 
 /**
  * WEBMASTERS
@@ -231,6 +232,7 @@ export const DATA_TYPES = {
   [CONFIGURATIONS_URL_TEMPLATE_INCUBATOR]: stringType,
   [PROVIDERS_GOOGLE_GEOCODING_API_KEY]: stringType,
   [PROVIDERS_WEB_PUSH_PUBLIC_KEY]: stringType,
+  [PROVIDERS_WEB_PUSH_ENABLED]: booleanType,
   [WEBMASTER_META_ROBOTS]: stringType,
   [WEBMASTER_META_TITLE_HOME_NOT_LOGGED]: stringType,
   [WEBMASTER_META_DESCRIPTION]: stringType,

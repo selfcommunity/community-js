@@ -19,8 +19,7 @@ export const userActionTypes = {
   REFRESH_TOKEN_SUCCESS: '_refresh_token_success',
   REFRESH_TOKEN_FAILURE: '_invalid_token_failure',
   REFRESH_SESSION: '_refresh_token',
-  CHANGE_AVATAR: '_change_avatar',
-  CHANGE_COVER: '_change_cover',
+  UPDATE_USER: '_change_user',
   CHANGE_UNSEEN_INTERACTIONS_COUNTER: '_change_unseen_interactions',
   CHANGE_UNSEEN_NOTIFICATION_BANNERS_COUNTER: '_change_unseen_notification_banners',
 };
@@ -62,11 +61,8 @@ function userReducer(state, action) {
     case userActionTypes.LOGOUT:
       return {user: null, session: null, error: null, loading: null};
 
-    case userActionTypes.CHANGE_AVATAR:
-      return {...state, user: {...state.user, ...{avatar: action.payload.avatar}}};
-
-    case userActionTypes.CHANGE_COVER:
-      return {...state, user: {...state.user, ...{cover: action.payload.cover}}};
+    case userActionTypes.UPDATE_USER:
+      return {...state, user: {...state.user, ...action.payload}};
 
     case userActionTypes.CHANGE_UNSEEN_INTERACTIONS_COUNTER:
       return {...state, user: {...state.user, ...{unseen_interactions_counter: action.payload.counter}}};

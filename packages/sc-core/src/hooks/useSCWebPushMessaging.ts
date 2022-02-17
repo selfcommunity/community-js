@@ -1,4 +1,4 @@
-import {useContext, useEffect, useMemo, useState} from 'react';
+import {useContext, useEffect, useMemo, useRef, useState} from 'react';
 import {SCContextType, SCPreferencesContextType, SCTagType, SCUserContextType} from '../types';
 import {useSCContext} from '../components/provider/SCContextProvider';
 import {useSCUser} from '../components/provider/SCUserProvider';
@@ -11,8 +11,6 @@ import {AxiosResponse} from 'axios';
 import {WEB_PUSH_NOTIFICATION_DEVICE_TYPE} from '../constants/Device';
 import {SCPreferencesContext} from '@selfcommunity/core';
 import * as SCPreferences from '../constants/Preferences';
-import * as Notifications from '../constants/Notifications';
-import {ValidationError} from '../utils/errors';
 
 /**
  * Custom hook 'useSCWebPushMessaging'
@@ -27,16 +25,29 @@ export default function useSCWebPushMessaging() {
   // STATE
   const [wpSubscription, setWpSubscription] = useState(null);
 
-  // CONST
-  const applicationServerKey = scContext.settings.notifications.webPushMessaging.applicationServerKey
-    ? scContext.settings.notifications.webPushMessaging.applicationServerKey
-    : scPreferencesContext.preferences[SCPreferences.PROVIDERS_WEB_PUSH_PUBLIC_KEY].value;
-  console.log(applicationServerKey);
+  // REFS
+  const subAttempts = useRef(0);
 
+  // CONST
+  const applicationServerKey =
+    scContext.settings.notifications.webPushMessaging.applicationServerKey !== undefined
+      ? scContext.settings.notifications.webPushMessaging.applicationServerKey
+      : SCPreferences.PROVIDERS_WEB_PUSH_PUBLIC_KEY in scPreferencesContext.preferences
+      ? scPreferencesContext.preferences[SCPreferences.PROVIDERS_WEB_PUSH_PUBLIC_KEY].value
+      : null;
+  const webPushEnabled =
+    SCPreferences.PROVIDERS_WEB_PUSH_ENABLED in scPreferencesContext.preferences &&
+    scPreferencesContext.preferences[SCPreferences.PROVIDERS_WEB_PUSH_ENABLED].value
+      ? scPreferencesContext.preferences[SCPreferences.PROVIDERS_WEB_PUSH_ENABLED].value
+      : !scContext.settings.notifications.webPushMessaging.disableToastMessage;
+
+  /**
+   * perform update the Subscription
+   */
   const performUpdateSubscription = useMemo(
     () => (data, remove) => {
       const url = remove
-        ? Endpoints.DeleteDevice.url({type: WEB_PUSH_NOTIFICATION_DEVICE_TYPE, id: data.registration_id})
+        ? Endpoints.DeleteDevice.url({type: WEB_PUSH_NOTIFICATION_DEVICE_TYPE, id: wpSubscription.registration_id})
         : Endpoints.NewDevice.url({type: WEB_PUSH_NOTIFICATION_DEVICE_TYPE});
       const method = remove ? Endpoints.DeleteDevice.method : Endpoints.NewDevice.method;
       return http
@@ -60,8 +71,7 @@ export default function useSCWebPushMessaging() {
    * @param sub
    */
   const updateSubscriptionOnServer = (sub, remove) => {
-    Logger.info(SCOPE_SC_CORE, 'Subscription');
-    Logger.info(SCOPE_SC_CORE, sub);
+    Logger.info(SCOPE_SC_CORE, 'updateSubscriptionOnServer');
     const browser = loadVersionBrowser();
     const endpointParts = sub.endpoint.split('/');
     const registration_id = endpointParts[endpointParts.length - 1];
@@ -73,12 +83,13 @@ export default function useSCWebPushMessaging() {
       registration_id: registration_id,
     };
     console.log(data);
-    performUpdateSubscription(data, remove).then((r: any) => {
+    return performUpdateSubscription(data, remove).then((r: any) => {
       if (remove) {
         Logger.info(SCOPE_SC_CORE, 'Subscription remove to server');
         setWpSubscription(null);
       } else {
         Logger.info(SCOPE_SC_CORE, 'Added subscription to server');
+        setWpSubscription(data);
       }
     });
   };
@@ -86,7 +97,7 @@ export default function useSCWebPushMessaging() {
   /**
    * Unsubscribe
    */
-  const unsubscribe = () => {
+  const unsubscribe = (callback = null) => {
     navigator.serviceWorker.ready.then(function (serviceWorkerRegistration) {
       // To unsubscribe from push messaging, you need get the
       // subcription object, which you can call unsubscribe() on.
@@ -108,14 +119,15 @@ export default function useSCWebPushMessaging() {
               // Request to server to remove
               // the users data from your data store so you
               // don't attempt to send them push messages anymore
-              updateSubscriptionOnServer(wpSubscription, true);
+              updateSubscriptionOnServer(pushSubscription, true).then(() => {
+                callback && callback();
+              });
             })
             .catch(function (e) {
               // We failed to unsubscribe, this can lead to
               // an unusual state, so may be best to remove
               // the subscription id from your data store and
               // inform the user that you disabled push
-
               Logger.info(SCOPE_SC_CORE, `Unsubscription error.`);
               console.log(e);
             });
@@ -138,12 +150,11 @@ export default function useSCWebPushMessaging() {
           if (!subscription) {
             Logger.info(SCOPE_SC_CORE, 'We aren’t subscribed to push.');
           } else {
-            setWpSubscription(subscription);
             updateSubscriptionOnServer(subscription, false);
           }
         })
         .catch(function (e) {
-          Logger.info(SCOPE_SC_CORE, `Error during getSubscription() ${e}`);
+          // Logger.info(SCOPE_SC_CORE, `Error during getSubscription() ${e}`);
           if (Notification.permission === 'denied') {
             // The user denied the notification permission which
             // means we failed to subscribe and the user will need
@@ -151,10 +162,14 @@ export default function useSCWebPushMessaging() {
             // subscribe to push messages
             Logger.info(SCOPE_SC_CORE, 'Permission for Notifications was denied');
           } else {
-            // A problem occurred with the subscription, this can
-            // often be down to an issue or lack of the gcm_sender_id
-            // and / or gcm_user_visible_only
-            Logger.info(SCOPE_SC_CORE, `Unable to subscribe to push. ${e}`);
+            // A problem occurred with the subscription
+            subAttempts.current += 1;
+            Logger.info(SCOPE_SC_CORE, `Unable to subscribe(${subAttempts.current}) to push. ${e}`);
+            if (subAttempts.current < 3) {
+              unsubscribe(() => subscribe());
+            } else {
+              Logger.info(SCOPE_SC_CORE, `Unable to subscribe to push. ${e}`);
+            }
           }
         });
     });
@@ -226,48 +241,32 @@ export default function useSCWebPushMessaging() {
       Logger.info(SCOPE_SC_CORE, 'The user has blocked notifications.');
       return;
     } else {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-      // @ts-ignore
-      if (Notification.permission === 'default' || Notification.permission === 'prompt') {
+      if (Notification.permission === 'default') {
         Logger.info(SCOPE_SC_CORE, 'Request permission.');
         requestNotificationPermission();
       } else if (Notification.permission === 'granted') {
-        navigator.serviceWorker.ready.then(function (serviceWorkerRegistration) {
-          // Do we already have a push message subscription?
-          serviceWorkerRegistration.pushManager
-            .getSubscription()
-            .then(function (subscription) {
-              // Enable any UI which subscribes / unsubscribes from
-              // push messages.
-              if (!subscription) {
-                subscribe();
-                return;
-              }
-
-              // Keep your server in sync with the latest subscription
-              setWpSubscription(subscription);
-              updateSubscriptionOnServer(subscription, false);
-            })
-            .catch((err) => {
-              Logger.info(SCOPE_SC_CORE, 'Error during getSubscription()');
-              console.log(err);
-            });
-        });
+        subscribe();
       }
     }
   };
 
+  /**
+   * Init state web push subscription
+   * If web push enabled, applicationServerKey and user is logged, check subscription
+   */
   useEffect(() => {
-    if (!scContext.settings.notifications.webPushMessaging.disableToastMessage && !applicationServerKey) {
-      Logger.warn(SCOPE_SC_CORE, 'Invalid or missing applicationServerKey. Check the configuration that is passed to the SCContextProvider.');
-    } else if (scUserContext.user && !scContext.settings.notifications.webPushMessaging.disableToastMessage && applicationServerKey) {
-      initialiseState();
+    if (webPushEnabled && !wpSubscription && scUserContext.user) {
+      if (!applicationServerKey) {
+        Logger.warn(SCOPE_SC_CORE, 'Invalid or missing applicationServerKey. Check the configuration that is passed to the SCContextProvider.');
+      } else {
+        initialiseState();
+      }
     }
     // Remove subscription
     return () => {
       wpSubscription && unsubscribe();
     };
-  }, [scUserContext.user, scContext.settings.notifications.webPushMessaging]);
+  }, [scUserContext.user, scContext.settings.notifications.webPushMessaging, wpSubscription]);
 
   return {wpSubscription};
 }

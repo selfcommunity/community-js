@@ -102,14 +102,9 @@ export interface SCUserContextType {
   refreshSession: () => Promise<any>;
 
   /**
-   * Handle change avatar
+   * Handle change user info
    */
-  setAvatar: (avatar: string) => void;
-
-  /**
-   * Handle change cover
-   */
-  setCover: (cover: string) => void;
+  updateUser: (info: Record<string, any>) => void;
 
   /**
    * Handle change unseen interactions counter

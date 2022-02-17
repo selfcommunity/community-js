@@ -2994,6 +2994,53 @@
     "@rpldy/shared-ui" "^0.14.2"
     "@rpldy/uploader" "^0.14.2"
 
+"@selfcommunity/core@file:packages/sc-core":
+  version "0.1.0-alpha.13"
+  dependencies:
+    "@selfcommunity/i18n" "file:../../Library/Caches/Yarn/v6/npm-@selfcommunity-core-0.1.0-alpha.13-1d6d35c5-c201-4e56-b672-714e3396e53e-1644568766575/node_modules/@selfcommunity/sc-i18n"
+    axios "^0.23.0"
+    pubsub-js "^1.9.4"
+    validate-color "^2.2.1"
+
+"@selfcommunity/i18n@file:packages/sc-i18n":
+  version "0.1.0-alpha.13"
+
+"@selfcommunity/ui@file:packages/sc-ui":
+  version "0.1.0-alpha.13"
+  dependencies:
+    "@mui/lab" "~5.0.0-alpha.68"
+    "@rpldy/chunked-sender" "^0.14.1"
+    "@rpldy/chunked-uploady" "^0.14.1"
+    "@rpldy/upload-button" "^0.14.1"
+    "@rpldy/upload-drop-zone" "^0.14.1"
+    "@rpldy/upload-preview" "^0.14.1"
+    "@rpldy/uploady" "^0.14.1"
+    "@selfcommunity/core" "file:../../Library/Caches/Yarn/v6/npm-@selfcommunity-ui-0.1.0-alpha.13-1d0d9f33-8067-4aa7-b46b-4b49c02fe43e-1644568766571/node_modules/@selfcommunity/sc-core"
+    "@selfcommunity/i18n" "file:../../Library/Caches/Yarn/v6/npm-@selfcommunity-ui-0.1.0-alpha.13-1d0d9f33-8067-4aa7-b46b-4b49c02fe43e-1644568766571/node_modules/@selfcommunity/sc-i18n"
+    "@types/classnames" "^2.2.11"
+    autosuggest-highlight "^3.1.1"
+    classnames "^2.2.6"
+    date-fns "^2.26.0"
+    draft-js "^0.11.7"
+    draftjs-to-html "^0.9.1"
+    emoji-picker-react "^3.4.8"
+    mui-rte "https://github.com/fedetorre/mui-rte.git#8876f957de692cce2ef8ac2a27355f05d63df087"
+    notistack "^2.0.3"
+    prop-types "^15.7.2"
+    prop-types-extra "^1.1.1"
+    pubsub-js "^1.9.4"
+    react-image-lightbox "^5.1.4"
+    react-infinite-scroll-component "^6.1.0"
+    react-lazyload "^3.2.0"
+    react-player "^2.9.0"
+    react-sortablejs "^6.0.0"
+    react-stickynode "^4.0.0"
+    react-timeago "^5.2.0"
+    react-waypoint "^10.1.0"
+    sortablejs "^1.14.0"
+    spark-md5 "~3.0.2"
+    timeago-react "^3.0.4"
+
 "@sinonjs/commons@^1.6.0", "@sinonjs/commons@^1.7.0", "@sinonjs/commons@^1.8.1":
   version "1.8.3"
   resolved "https://registry.yarnpkg.com/@sinonjs/commons/-/commons-1.8.3.tgz#3802ddd21a50a949b6721ddd72da36e67e7f1b2d"
