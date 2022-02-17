@@ -18,7 +18,7 @@
     "clean:node_modules": "lerna exec yarn clean:node_modules && rimraf node_modules",
     "clean:libs": "lerna exec yarn clean:lib",
     "storybook": "start-storybook -p 6006",
-    "storybook-https": "node ./scripts/devcert/generate;start-storybook -p 6006 --https --ssl-cert=./certs/tls.cert --ssl-key=./certs/tls.key",
+    "storybook-https": "node ./scripts/devcert/generate;start-storybook -p 6006 --https --ssl-cert=./certs/tls.cert --ssl-key=./certs/tls.key -s ./public",
     "build-storybook": "build-storybook"
   },
   "author": "SelfCommunity (https://www.selfcommunity.com)",

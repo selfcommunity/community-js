@@ -25,6 +25,14 @@ export default function useSCWebSocket() {
       : null;
 
   /**
+   * Before document unload handler
+   * Close webSocket
+   */
+  const handleBeforeUnload = () => {
+    wsInstance && wsInstance.close();
+  };
+
+  /**
    * Check if there is a currently active session and a
    * wsInstance connection when the provider is mounted for the first time.
    * If there is an error, it means there is no session.
@@ -40,12 +48,11 @@ export default function useSCWebSocket() {
         })
       );
       // Close the socket channel before window unload
-      window.addEventListener('beforeunload', function (event) {
-        wsInstance && wsInstance.close();
-      });
+      window.addEventListener('beforeunload', handleBeforeUnload);
     }
     // Disconnect the socket
     return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
       wsInstance && wsInstance.close();
     };
   }, [scUserContext.user]);

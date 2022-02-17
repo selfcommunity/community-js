@@ -1,12 +1,14 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import {Accordion, AccordionProps, AccordionDetails, AccordionSummary, Box, Grid, Typography} from '@mui/material';
-import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {SCUserFields, StringUtils} from '@selfcommunity/core';
+import {Accordion, AccordionDetails, AccordionProps as MUIAccordionProps, AccordionSummary, Box, Typography} from '@mui/material';
+import {defineMessages, FormattedMessage} from 'react-intl';
+import {SCUserFields} from '@selfcommunity/core';
 import {DEFAULT_FIELDS} from '../../constants/UserProfile';
 import PublicInfo from './Section/PublicInfo';
 import Notification from './Section/Settings';
 import classNames from 'classnames';
+import {DistributiveOmit} from '@mui/types';
+import {OverrideProps} from '@mui/material/OverridableComponent';
 
 const messages = defineMessages({
   realName: {
@@ -59,6 +61,13 @@ const Root = styled(Box, {
     fontWeight: 'bold'
   }
 }));
+
+interface AccordionTypeMap<P = {}, D extends React.ElementType = 'div'> {
+  props: P & DistributiveOmit<MUIAccordionProps, 'children'> & {};
+  defaultComponent: D;
+}
+
+type AccordionProps<D extends React.ElementType = AccordionTypeMap['defaultComponent'], P = {}> = OverrideProps<AccordionTypeMap<P, D>, D>;
 
 export interface UserProfileEditProps {
   /**

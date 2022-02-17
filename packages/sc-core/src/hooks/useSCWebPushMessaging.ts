@@ -39,7 +39,7 @@ export default function useSCWebPushMessaging() {
     SCPreferences.PROVIDERS_WEB_PUSH_ENABLED in scPreferencesContext.preferences &&
     scPreferencesContext.preferences[SCPreferences.PROVIDERS_WEB_PUSH_ENABLED].value
       ? scPreferencesContext.preferences[SCPreferences.PROVIDERS_WEB_PUSH_ENABLED].value
-      : !scContext.settings.notifications.webPushMessaging.disableToastMessage;
+      : false;
 
   /**
    * perform update the Subscription
@@ -252,17 +252,15 @@ export default function useSCWebPushMessaging() {
    * If web push enabled, applicationServerKey and user is logged, check subscription
    */
   useEffect(() => {
-    if (webPushEnabled && !wpSubscription && scUserContext.user) {
-      if (!applicationServerKey) {
+    if (!wpSubscription && !scContext.settings.notifications.webPushMessaging.disableToastMessage && scUserContext.user) {
+      if (!webPushEnabled) {
+        Logger.warn(SCOPE_SC_CORE, 'This instance not support web push notification. Enable this feature.');
+      } else if (!applicationServerKey) {
         Logger.warn(SCOPE_SC_CORE, 'Invalid or missing applicationServerKey. Check the configuration that is passed to the SCContextProvider.');
       } else {
         initialiseState();
       }
     }
-    // Remove subscription
-    return () => {
-      wpSubscription && unsubscribe();
-    };
   }, [scUserContext.user, scContext.settings.notifications.webPushMessaging, wpSubscription]);
 
   return {wpSubscription};
