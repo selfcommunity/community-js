@@ -64,7 +64,6 @@ const withProvider = (Story, context) => {
         SCAlertMessagesProvider
       ] */
     };
-    console.log('decorators');
 
     return (
         <SCContextProvider conf={_conf}>
@@ -79,7 +78,6 @@ const withServiceWorker = (Story, context) => {
    * Register a service worker
    */
   if (navigator && navigator.serviceWorker) {
-    console.log('Register service worker');
     navigator.serviceWorker.register('service-worker.js')
       .then(r => console.log('Service worker registered!'))
       .catch(e=>console.log(e));

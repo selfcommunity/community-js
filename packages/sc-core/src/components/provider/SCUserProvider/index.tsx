@@ -86,7 +86,6 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
    * Refresh followed categories, users, etc..
    */
   function handleVisibilityChange() {
-    Logger.info(SCOPE_SC_CORE, 'Refresh info cached in the user context');
     if (!document.hidden && state.user) {
       categoriesManager.refresh && categoriesManager.refresh();
       followedManager.refresh && followedManager.refresh();
