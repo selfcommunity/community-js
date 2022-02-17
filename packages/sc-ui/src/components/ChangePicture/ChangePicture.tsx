@@ -5,8 +5,13 @@ import ChangePictureDialog from './ChangePictureDialog/ChangePictureDialog';
 import {FormattedMessage} from 'react-intl';
 import PhotoCameraOutlinedIcon from '@mui/icons-material/PhotoCameraOutlined';
 import {SCUserContext, SCUserContextType} from '@selfcommunity/core';
+import classNames from 'classnames';
 
 const PREFIX = 'SCChangePictureButton';
+
+const classes = {
+  root: `${PREFIX}-root`
+};
 
 const CPButton = styled(Button, {
   name: PREFIX,
@@ -63,7 +68,7 @@ export default function ChangePicture(props: ChangePictureProps): JSX.Element {
     return (
       <React.Fragment>
         <CPButton
-          className={className}
+          className={classNames(classes.root, className)}
           size="small"
           variant="contained"
           onClick={() => setOpenChangePictureDialog(true)}

@@ -1,9 +1,9 @@
 import React, {useContext} from 'react';
 import {styled} from '@mui/material/styles';
-import {SCPreferences, SCPreferencesContext, SCPreferencesContextType} from '@selfcommunity/core';
+import {SCPreferences, SCPreferencesContext, SCPreferencesContextType, SCUserType} from '@selfcommunity/core';
 import {Box} from '@mui/material';
-import FollowUserButton from '../FollowUserButton';
-import FriendshipUserButton from '../FriendshipUserButton';
+import FollowUserButton, {FollowUserButtonProps} from '../FollowUserButton';
+import FriendshipUserButton, {FriendshipButtonProps} from '../FriendshipUserButton';
 
 const PREFIX = 'SCConnectionUserButton';
 
@@ -17,7 +17,25 @@ const Root = styled(Box, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({}));
 
-export default function ConnectionUserButton(props): JSX.Element {
+export interface ConnectionUserButtonProps {
+  /**
+   * User Object
+   * @default null
+   */
+  user?: SCUserType;
+  /**
+   * Props to spread to follow/friendship button
+   * @default {}
+   */
+  followConnectUserButtonProps?: FollowUserButtonProps | FriendshipButtonProps;
+
+  /**
+   * Any other properties
+   */
+  [p: string]: any;
+}
+
+export default function ConnectionUserButton(props: ConnectionUserButtonProps): JSX.Element {
   // PROPS
   const {user = null, followConnectUserButtonProps = {}, ...rest} = props;
 

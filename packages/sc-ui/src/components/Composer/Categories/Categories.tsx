@@ -17,6 +17,10 @@ import {AxiosResponse} from 'axios';
 
 const PREFIX = 'SCComposerCategories';
 
+const classes = {
+  root: `${PREFIX}-root`
+};
+
 const Root = styled(Autocomplete, {
   name: PREFIX,
   slot: 'Root',
@@ -139,6 +143,7 @@ export default function ({
 
   return (
     <Root
+      className={classes.root}
       open={open}
       onOpen={handleOpen}
       onClose={handleClose}

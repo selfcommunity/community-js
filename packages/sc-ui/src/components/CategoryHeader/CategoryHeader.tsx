@@ -11,10 +11,12 @@ import User from '../User';
 import FaceIcon from '@mui/icons-material/Face';
 import {Endpoints, http, SCCategoryType, SCUserContext, SCUserContextType, SCUserType, useSCFetchCategory} from '@selfcommunity/core';
 import AvatarGroupSkeleton from '../Skeleton/AvatarGroupSkeleton';
+import classNames from 'classnames';
 
 const PREFIX = 'SCCategoryHeader';
 
 const classes = {
+  root: `${PREFIX}-root`,
   cover: `${PREFIX}-cover`,
   name: `${PREFIX}-name`,
   slogan: `${PREFIX}-slogan`,
@@ -194,7 +196,7 @@ export default function CategoryHeader(props: CategoryHeaderProps): JSX.Element 
    * Renders root object
    */
   return (
-    <Root className={className} {...rest}>
+    <Root className={classNames(classes.root, className)} {...rest}>
       <Paper style={_backgroundCover} classes={{root: classes.cover}}>
         <Typography variant={'h3'} align={'center'} className={classes.name} gutterBottom>
           {scCategory.name}

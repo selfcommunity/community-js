@@ -106,6 +106,7 @@ const TypeInput = styled(InputBase, {
 const PREFIX = 'SCComposer';
 
 const classes = {
+  root: `${PREFIX}-root`,
   title: `${PREFIX}-title`,
   types: `${PREFIX}-types`,
   avatar: `${PREFIX}-avatar`,
@@ -990,7 +991,7 @@ export default function Composer(props: ComposerProps): JSX.Element {
   }
 
   return (
-    <Root TransitionComponent={DialogTransition} keepMounted onClose={handleClose} {...rest}>
+    <Root TransitionComponent={DialogTransition} keepMounted onClose={handleClose} {...rest} className={classes.root}>
       {child()}
     </Root>
   );

@@ -32,6 +32,7 @@ import {getRouteData} from '../../../utils/contribute';
 const PREFIX = 'SCCommentActionsMenu';
 
 const classes = {
+  root: `${PREFIX}-root`,
   button: `${PREFIX}-button`,
   popper: `${PREFIX}-popper`,
   paper: `${PREFIX}-paper`,

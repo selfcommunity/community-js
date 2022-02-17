@@ -10,6 +10,7 @@ import Skeleton from '@mui/material/Skeleton';
 const PREFIX = 'SCCategorySkeleton';
 
 const classes = {
+  root: `${PREFIX}-root`,
   list: `${PREFIX}-list`
 };
 
@@ -34,7 +35,7 @@ export default function CategorySkeleton(props): JSX.Element {
     </ListItem>
   );
   return (
-    <Root {...props}>
+    <Root className={classes.root} {...props}>
       <List>{category}</List>
     </Root>
   );

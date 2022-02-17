@@ -1,11 +1,12 @@
 import React from 'react';
-import {Box, Divider, Grid, Paper, Typography} from '@mui/material';
+import {Box} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import Skeleton from '@mui/material/Skeleton';
 
 const PREFIX = 'SCCategoryHeaderSkeleton';
 
 const classes = {
+  root: `${PREFIX}-root`,
   avatar: `${PREFIX}-avatar`,
   username: `${PREFIX}-username`
 };
@@ -33,7 +34,7 @@ const Root = styled(Box, {
 
 export default function CategoryHeaderSkeleton(): JSX.Element {
   return (
-    <Root>
+    <Root className={classes.root}>
       <Skeleton sx={{height: 270}} animation="wave" variant="rectangular" />
       <Box>
         <Skeleton animation="wave" sx={{height: 20, maxWidth: 300, width: '100%', margin: '0 auto'}} />

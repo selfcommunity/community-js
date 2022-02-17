@@ -5,6 +5,7 @@ import {styled} from '@mui/material/styles';
 const MESSAGE_PREFIX = 'SCBroadcastMessageSkeleton';
 
 const messageClasses = {
+  root: `${MESSAGE_PREFIX}-root`,
   header: `${MESSAGE_PREFIX}-header`,
   title: `${MESSAGE_PREFIX}-title`,
   media: `${MESSAGE_PREFIX}-media`,
@@ -21,7 +22,7 @@ const MessageRoot = styled(Card, {
 
 export function MessageSkeleton(props): JSX.Element {
   return (
-    <MessageRoot>
+    <MessageRoot className={classes.root}>
       <CardHeader
         className={messageClasses.header}
         avatar={<Skeleton animation="wave" variant="circular" width={40} height={40} />}
@@ -46,6 +47,11 @@ export function MessageSkeleton(props): JSX.Element {
 }
 
 const PREFIX = 'SCBroadcastMessagesSkeleton';
+
+const classes = {
+  root: `${PREFIX}-root`
+};
+
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
@@ -54,7 +60,7 @@ const Root = styled(Box, {
 
 export default function BroadcastMessagesSkeleton(props): JSX.Element {
   return (
-    <Root {...props}>
+    <Root className={classes.root} {...props}>
       <MessageSkeleton />
       <MessageSkeleton />
       <MessageSkeleton />

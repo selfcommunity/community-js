@@ -11,8 +11,13 @@ import {SCOPE_SC_UI} from '../../constants/Errors';
 import {FormattedMessage} from 'react-intl';
 import Category from '../Category';
 import {CategoriesListProps} from '../CategoriesSuggestion';
+import classNames from 'classnames';
 
 const PREFIX = 'SCCategoriesPopular';
+
+const classes = {
+  root: `${PREFIX}-root`
+};
 
 const Root = styled(Card, {
   name: PREFIX,
@@ -129,7 +134,7 @@ export default function CategoriesPopular(props: CategoriesListProps): JSX.Eleme
     return null;
   }
   return (
-    <Root className={className} {...rest}>
+    <Root className={classNames(classes.root, className)} {...rest}>
       {c}
     </Root>
   );

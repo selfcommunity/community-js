@@ -8,10 +8,12 @@ import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOu
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import {FormattedMessage} from 'react-intl';
 import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
+import classNames from 'classnames';
 
 const PREFIX = 'SCChangeCoverButton';
 
 const classes = {
+  root: `${PREFIX}-root`,
   helpPopover: `${PREFIX}-help-popover`,
   menuItem: `${PREFIX}-menu-item`
 };
@@ -216,7 +218,7 @@ export default function ChangeCover(props: ChangeCoverProps): JSX.Element {
    */
   if (!autoHide) {
     return (
-      <Root {...rest} className={className}>
+      <Root {...rest} className={classNames(classes.root, className)}>
         {cc}
       </Root>
     );

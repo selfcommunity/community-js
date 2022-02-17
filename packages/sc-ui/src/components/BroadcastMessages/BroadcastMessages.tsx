@@ -5,8 +5,13 @@ import {Endpoints, http, Logger, SCBroadcastMessageType} from '@selfcommunity/co
 import {AxiosResponse} from 'axios';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import Message, {MessageProps} from './Message';
+import classNames from 'classnames';
 
 const PREFIX = 'SCBroadcastMessages';
+
+const classes = {
+  root: `${PREFIX}-root`
+};
 
 const Root = styled(Box, {
   name: PREFIX,
@@ -78,7 +83,7 @@ export default function BroadcastMessages(props: BroadcastMessagesProps): JSX.El
   }
 
   return (
-    <Root id={id} className={className} {...rest}>
+    <Root id={id} className={classNames(classes.root, className)} {...rest}>
       {messages.map((message) => (
         <Message key={message.id} message={message} {...MessageProps} />
       ))}
