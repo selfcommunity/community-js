@@ -43,35 +43,33 @@ export default function useSCWebPushMessaging() {
 
   /**
    * perform update the Subscription
+   * @param data
+   * @param remove
    */
-  const performUpdateSubscription = useMemo(
-    () => (data, remove) => {
-      const url = remove
-        ? Endpoints.DeleteDevice.url({type: WEB_PUSH_NOTIFICATION_DEVICE_TYPE, id: wpSubscription.registration_id})
-        : Endpoints.NewDevice.url({type: WEB_PUSH_NOTIFICATION_DEVICE_TYPE});
-      const method = remove ? Endpoints.DeleteDevice.method : Endpoints.NewDevice.method;
-      return http
-        .request({
-          url,
-          method,
-          ...(remove ? {} : {data: data}),
-        })
-        .then((res: AxiosResponse<SCTagType>) => {
-          if (res.status >= 300) {
-            return Promise.reject(res);
-          }
-          return Promise.resolve(res.data);
-        });
-    },
-    []
-  );
+  const performUpdateSubscription = (data, remove) => {
+    const url = remove
+      ? Endpoints.DeleteDevice.url({type: WEB_PUSH_NOTIFICATION_DEVICE_TYPE, id: wpSubscription.registration_id})
+      : Endpoints.NewDevice.url({type: WEB_PUSH_NOTIFICATION_DEVICE_TYPE});
+    const method = remove ? Endpoints.DeleteDevice.method : Endpoints.NewDevice.method;
+    return http
+      .request({
+        url,
+        method,
+        ...(remove ? {} : {data: data}),
+      })
+      .then((res: AxiosResponse<SCTagType>) => {
+        if (res.status >= 300) {
+          return Promise.reject(res);
+        }
+        return Promise.resolve(res.data);
+      });
+  };
 
   /**
    * updateSubscriptionOnServer to sync current subscription
    * @param sub
    */
   const updateSubscriptionOnServer = (sub, remove) => {
-    Logger.info(SCOPE_SC_CORE, 'updateSubscriptionOnServer');
     const browser = loadVersionBrowser();
     const endpointParts = sub.endpoint.split('/');
     const registration_id = endpointParts[endpointParts.length - 1];
@@ -82,20 +80,22 @@ export default function useSCWebPushMessaging() {
       user: scUserContext.user.username,
       registration_id: registration_id,
     };
-    console.log(data);
-    return performUpdateSubscription(data, remove).then((r: any) => {
-      if (remove) {
-        Logger.info(SCOPE_SC_CORE, 'Subscription remove to server');
-        setWpSubscription(null);
-      } else {
-        Logger.info(SCOPE_SC_CORE, 'Added subscription to server');
-        setWpSubscription(data);
-      }
-    });
+    return performUpdateSubscription(data, remove)
+      .then((res: any) => {
+        if (remove) {
+          setWpSubscription(null);
+        } else {
+          setWpSubscription(res);
+        }
+      })
+      .catch((e) => {
+        Logger.error(SCOPE_SC_CORE, e);
+      });
   };
 
   /**
    * Unsubscribe
+   * @param callback
    */
   const unsubscribe = (callback = null) => {
     navigator.serviceWorker.ready.then(function (serviceWorkerRegistration) {
@@ -141,7 +141,6 @@ export default function useSCWebPushMessaging() {
   /**
    * Get subscription
    */
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const subscribe = () => {
     navigator.serviceWorker.ready.then(function (serviceWorkerRegistration) {
       serviceWorkerRegistration.pushManager
@@ -154,7 +153,6 @@ export default function useSCWebPushMessaging() {
           }
         })
         .catch(function (e) {
-          // Logger.info(SCOPE_SC_CORE, `Error during getSubscription() ${e}`);
           if (Notification.permission === 'denied') {
             // The user denied the notification permission which
             // means we failed to subscribe and the user will need
@@ -196,7 +194,6 @@ export default function useSCWebPushMessaging() {
                 }
 
                 // Keep your server in sync with the latest subscription
-                setWpSubscription(subscription);
                 updateSubscriptionOnServer(subscription, false);
               })
               .catch((err) => {
