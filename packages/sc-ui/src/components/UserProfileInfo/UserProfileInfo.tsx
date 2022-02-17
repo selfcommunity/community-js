@@ -1,17 +1,9 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
 import {Box, Grid, Typography} from '@mui/material';
-import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {
-  SCPreferencesContextType,
-  SCUserContextType,
-  SCUserFields,
-  SCUserType,
-  useSCFetchUser,
-  useSCPreferences,
-  useSCUser,
-  StringUtils
-} from '@selfcommunity/core';
+import {defineMessages, useIntl} from 'react-intl';
+import {SCUserFields, SCUserType, StringUtils, useSCFetchUser} from '@selfcommunity/core';
+import {DEFAULT_FIELDS} from '../../constants/UserProfile';
 import UserProfileInfoSkeleton from './Skeleton';
 import classNames from 'classnames';
 
@@ -67,15 +59,6 @@ const Root = styled(Box, {
     fontWeight: 'bold'
   }
 }));
-
-const DEFAULT_FIELDS = [
-  SCUserFields.REAL_NAME,
-  SCUserFields.DATE_JOINED,
-  SCUserFields.DATE_OF_BIRTH,
-  SCUserFields.DESCRIPTION,
-  SCUserFields.WEBSITE,
-  SCUserFields.BIO
-];
 
 export interface UserProfileInfoProps {
   /**

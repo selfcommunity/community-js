@@ -131,6 +131,18 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/user/$(id)/'),
     method: 'GET',
   },
+  UserPatch: {
+    url: urlReplacer('/api/v2/user/$(id)/'),
+    method: 'PATCH',
+  },
+  UserSettings: {
+    url: urlReplacer('/api/v2/user/$(id)/settings/'),
+    method: 'GET',
+  },
+  UserSettingsPatch: {
+    url: urlReplacer('/api/v2/user/$(id)/settings/'),
+    method: 'PATCH',
+  },
   GetUserLoyaltyPoints: {
     url: urlReplacer('/api/v2/user/$(id)/loyalty/points/'),
     method: 'GET',

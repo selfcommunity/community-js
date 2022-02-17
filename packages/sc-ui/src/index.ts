@@ -27,6 +27,13 @@ import TrendingFeed, {TrendingFeedProps, TrendingFeedSkeleton} from './component
 import TrendingPeople, {TrendingPeopleProps, TrendingPeopleSkeleton} from './components/TrendingPeople';
 import UserProfileHeader, {UserProfileHeaderProps, UserProfileHeaderSkeleton} from './components/UserProfileHeader';
 import UserProfileInfo, {UserProfileInfoProps, UserProfileInfoSkeleton} from './components/UserProfileInfo';
+import UserProfileEdit, {
+  UserProfileEditProps,
+  UserProfileEditSectionPublicInfo,
+  UserProfileEditSectionPublicInfoProps,
+  UserProfileEditSectionSettings,
+  UserProfileEditSectionSettingsProps
+} from './components/UserProfileEdit';
 import UsersFollowed, {UsersFollowedProps, UsersFollowedSkeleton} from './components/UsersFollowed';
 import UserFollowers, {UserFollowersProps, UserFollowersSkeleton} from './components/UserFollowers';
 import RelatedDiscussion, {RelatedDiscussionProps, RelatedDiscussionSkeleton} from './components/RelatedDiscussion';
@@ -130,6 +137,12 @@ export {
   UserProfileInfo,
   UserProfileInfoProps,
   UserProfileInfoSkeleton,
+  UserProfileEdit,
+  UserProfileEditProps,
+  UserProfileEditSectionPublicInfo,
+  UserProfileEditSectionPublicInfoProps,
+  UserProfileEditSectionSettings,
+  UserProfileEditSectionSettingsProps,
   UsersFollowed,
   UsersFollowedProps,
   UsersFollowedSkeleton,

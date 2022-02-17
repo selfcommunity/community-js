@@ -72,6 +72,16 @@ export interface UserProfileHeaderProps {
    * Id of user object
    * @default null
    */
+  id?: string;
+  /**
+   * Overrides or extends the styles applied to the component.
+   * @default null
+   */
+  className?: string;
+  /**
+   * Id of user object
+   * @default null
+   */
   userId?: number;
 
   /**
@@ -99,7 +109,7 @@ export interface UserProfileHeaderProps {
 }
 export default function UserProfileHeader(props: UserProfileHeaderProps): JSX.Element {
   // PROPS
-  const {className = null, userId = null, user = null, ChangePictureProps = {}, ChangeCoverProps = {}, ...rest} = props;
+  const {id = null, className = null, userId = null, user = null, ChangePictureProps = {}, ChangeCoverProps = {}, ...rest} = props;
 
   // PREFERENCES
   const scPreferences: SCPreferencesContextType = useSCPreferences();
@@ -146,7 +156,7 @@ export default function UserProfileHeader(props: UserProfileHeaderProps): JSX.El
       : {background: `url('${scPreferences.preferences[SCPreferences.IMAGES_USER_DEFAULT_COVER].value}') center / cover`})
   };
   return (
-    <Root className={classNames(classes.root, className)} {...rest}>
+    <Root id={id} className={classNames(classes.root, className)} {...rest}>
       <Paper style={_backgroundCover} classes={{root: classes.cover}}>
         <img src={scUser.avatar ? scUser.avatar : ''} className={classes.avatar} />
         {isMe && (
