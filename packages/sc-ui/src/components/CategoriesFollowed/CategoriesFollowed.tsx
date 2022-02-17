@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useMemo, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
 import {Button, Typography} from '@mui/material';
@@ -12,6 +12,7 @@ import {SCOPE_SC_UI} from '../../constants/Errors';
 import {defineMessages, useIntl, FormattedMessage} from 'react-intl';
 import {CategoriesListProps} from '../CategoriesSuggestion';
 import Skeleton from './Skeleton';
+import classNames from 'classnames';
 
 const messages = defineMessages({
   categoriesFollowed: {
@@ -25,6 +26,10 @@ const messages = defineMessages({
 });
 
 const PREFIX = 'SCCategoriesFollowed';
+
+const classes = {
+  root: `${PREFIX}-root`
+};
 
 const Root = styled(Card, {
   name: PREFIX,
@@ -42,13 +47,11 @@ export default function CategoriesFollowed(props: CategoriesListProps): JSX.Elem
   // INTL
   const intl = useIntl();
 
-  // PROPS
-  const {userId, user, autoHide, className, CategoryProps = {}, ...rest} = props;
-
-  const {scUser} = useSCFetchUser({id: userId, user});
-
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
+
+  // PROPS
+  const {userId, autoHide, className, CategoryProps = {}} = props;
 
   // STATE
   const [categories, setCategories] = useState<any[]>([]);
@@ -56,7 +59,6 @@ export default function CategoriesFollowed(props: CategoriesListProps): JSX.Elem
   const [loading, setLoading] = useState<boolean>(true);
   const [hasMore, setHasMore] = useState<boolean>(false);
   const [total, setTotal] = useState<number>(0);
-  const [openCategoriesFollowedDialog, setOpenCategoriesFollowedDialog] = useState<boolean>(false);
 
   /**
    * Handles list change on category follow
@@ -74,22 +76,24 @@ export default function CategoriesFollowed(props: CategoriesListProps): JSX.Elem
   /**
    * fetches Categories Followed
    */
-  const fetchCategoriesFollower = useMemo(
-    () => () => {
-      return http
-        .request({
-          url: Endpoints.CategoriesFollowed.url(),
-          method: Endpoints.CategoriesFollowed.method
-        })
-        .then((res: AxiosResponse<any>) => {
-          if (res.status >= 300) {
-            return Promise.reject(res);
-          }
-          return Promise.resolve(res.data);
-        });
-    },
-    []
-  );
+  function fetchCategoriesFollowed() {
+    http
+      .request({
+        url: Endpoints.FollowedCategories.url({id: userId ?? scUserContext.user['id']}),
+        method: Endpoints.FollowedCategories.method
+      })
+      .then((res: AxiosResponse<any>) => {
+        const data = res.data;
+        setCategories(data);
+        setTotal(data.length);
+        setHasMore(data.length > visibleCategories);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setLoading(false);
+        Logger.error(SCOPE_SC_UI, error);
+      });
+  }
 
   /**
    * Loads more categories on "see more" button click
@@ -105,17 +109,9 @@ export default function CategoriesFollowed(props: CategoriesListProps): JSX.Elem
    * On mount, fetches the list of categories followed
    */
   useEffect(() => {
-    fetchCategoriesFollower()
-      .then((data: AxiosResponse<any>) => {
-        setCategories(data['results']);
-        setTotal(data['count']);
-        setHasMore(data['count'] > visibleCategories);
-        setLoading(false);
-      })
-      .catch((error) => {
-        setLoading(false);
-        Logger.error(SCOPE_SC_UI, error);
-      });
+    if (scUserContext.user) {
+      fetchCategoriesFollowed();
+    }
   }, []);
 
   /**
@@ -152,7 +148,6 @@ export default function CategoriesFollowed(props: CategoriesListProps): JSX.Elem
               )}
             </React.Fragment>
           )}
-          {openCategoriesFollowedDialog && <></>}
         </CardContent>
       )}
     </React.Fragment>
@@ -165,11 +160,7 @@ export default function CategoriesFollowed(props: CategoriesListProps): JSX.Elem
     return null;
   }
   if (scUserContext.user) {
-    return (
-      <Root className={className} {...rest}>
-        {c}
-      </Root>
-    );
+    return <Root className={classNames(classes.root, className)}>{c}</Root>;
   }
   return null;
 }

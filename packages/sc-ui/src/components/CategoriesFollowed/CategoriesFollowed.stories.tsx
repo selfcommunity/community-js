@@ -8,6 +8,11 @@ export default {
   title: 'Design System/SC UI/Categories Followed',
   component: CategoriesFollowed,
   argTypes: {
+    userId: {
+      control: {type: 'number'},
+      description: 'User Id',
+      table: {defaultValue: {summary: 1}}
+    },
     elevation: {
       control: {type: 'number'},
       description: 'Used only if variant="elevation". Shadow depth, corresponds to dp in the spec. It accepts values between 0 and 24 inclusive.',
@@ -21,6 +26,7 @@ export default {
     }
   },
   args: {
+    userId: 1,
     elevation: 1,
     variant: 'elevation'
   }

@@ -21,7 +21,6 @@ const Root = styled(Card, {
 }));
 
 export interface CategoriesListProps {
-  user?: SCUserType;
   /**
    * The user id
    * @default null

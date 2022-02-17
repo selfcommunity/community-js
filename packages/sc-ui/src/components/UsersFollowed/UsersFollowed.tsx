@@ -4,12 +4,13 @@ import List from '@mui/material/List';
 import {Button, Typography} from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import {Endpoints, http, SCUserContext, SCUserContextType, SCUserType} from '@selfcommunity/core';
+import {Endpoints, http, Logger, SCUserContext, SCUserContextType, SCUserType} from '@selfcommunity/core';
 import PeopleSuggestionSkeleton from '../PeopleSuggestion/Skeleton';
 import User, {UserProps} from '../User';
 import {AxiosResponse} from 'axios';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import classNames from 'classnames';
+import {SCOPE_SC_UI} from '../../constants/Errors';
 
 const messages = defineMessages({
   usersFollowed: {
@@ -110,7 +111,8 @@ export default function UsersFollowed(props: UsersFollowedProps): JSX.Element {
         setTotal(data.count);
       })
       .catch((error) => {
-        console.log(error);
+        setLoading(false);
+        Logger.error(SCOPE_SC_UI, error);
       });
   }
 

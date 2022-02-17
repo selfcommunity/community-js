@@ -3,7 +3,16 @@ import {styled} from '@mui/material/styles';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {LoadingButton} from '@mui/lab';
 import {FormattedMessage} from 'react-intl';
-import {Logger, SCFollowedManagerType, SCUserContext, SCUserContextType, SCUserType, useSCFetchUser} from '@selfcommunity/core';
+import {
+  Logger,
+  SCContextType,
+  SCFollowedManagerType,
+  SCUserContext,
+  SCUserContextType,
+  SCUserType,
+  useSCContext,
+  useSCFetchUser
+} from '@selfcommunity/core';
 import classNames from 'classnames';
 
 const PREFIX = 'SCFollowUserButton';
@@ -54,6 +63,7 @@ export default function FollowUserButton(props: FollowUserButtonProps): JSX.Elem
   const {className, userId, user, onFollow, ...rest} = props;
 
   // CONTEXT
+  const scContext: SCContextType = useSCContext();
   const scUserContext: SCUserContextType = useContext(SCUserContext);
   const scFollowedManager: SCFollowedManagerType = scUserContext.managers.followed;
 
@@ -82,8 +92,16 @@ export default function FollowUserButton(props: FollowUserButtonProps): JSX.Elem
       });
   };
 
-  // User anonymous || same user
-  if (!scUserContext.user || scUserContext.user.id === scUser.id) {
+  const handleFollowAction = () => {
+    if (!scUserContext.user) {
+      scContext.settings.handleAnonymousAction();
+    } else {
+      followCUser();
+    }
+  };
+
+  // same user
+  if (scUserContext.user.id === scUser.id) {
     return null;
   }
 
@@ -91,7 +109,7 @@ export default function FollowUserButton(props: FollowUserButtonProps): JSX.Elem
     <FollowButton
       size="small"
       variant="outlined"
-      onClick={followCUser}
+      onClick={handleFollowAction}
       loading={followed === null || scFollowedManager.isLoading(scUser)}
       className={classNames(classes.root, className)}
       {...rest}>
