@@ -30,6 +30,5 @@ jobs:
         destination_branch: "prerelease"
         pr_title: "Pulling ${{ github.ref }} from main into prerelease"
         pr_body: "👑 *An automated PR*"
-        pr_reviewer: "fedetorre"
         pr_draft: true
         github_token: ${{ secrets.GITHUB_TOKEN }}
