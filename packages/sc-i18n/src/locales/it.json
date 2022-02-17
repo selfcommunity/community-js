@@ -1,4 +1,6 @@
 {
+  "ui.common.yes": "Si",
+  "ui.common.no": "No",
   "ui.common.error": "Error",
   "ui.common.error.url": "The url is not valid",
 
@@ -59,6 +61,16 @@
   "ui.changePicture.dialog.msg": "Sei sicuro di voler rimuovere questa immagine?",
   "ui.changePicture.dialog.close": "Chiudi",
   "ui.changePicture.dialog.confirm": "Conferma",
+
+  "ui.changePicture.title": "Change Profile Image",
+  "ui.changePicture.button.change": "Change Picture",
+  "ui.changePicture.button.upload": "Upload new Image",
+  "ui.changePicture.listF": "Allowed formats: gif,png,jpg,jpeg",
+  "ui.changePicture.listS": "Maximum size: 3 MB",
+  "ui.changePicture.button.finished": "Finished",
+  "ui.changePicture.dialog.msg": "Are you sure you want to delete this picture?",
+  "ui.changePicture.dialog.close": "Close",
+  "ui.changePicture.dialog.confirm": "Confirm",
 
   "ui.platformAccess.title": "Accesso alla Piattaforma",
   "ui.platformAccess.adm": "Amministrazione",
@@ -225,6 +237,32 @@
   "ui.userProfileInfo.description": "Occupazione",
   "ui.userProfileInfo.dateJoined": "Registrato dal",
   "ui.userProfileInfo.website": "Website",
+  "ui.userProfileInfo.bio": "Biografia",
+  "ui.userProfileInfo.location": "Località",
+  "ui.userProfileInfo.gender": "Genere",
+
+  "ui.userProfileEditPublicInfo.genderMale": "Maschile",
+  "ui.userProfileEditPublicInfo.genderFemale": "Femminile",
+  "ui.userProfileEditPublicInfo.genderUnspecified": "Non specificato",
+
+  "ui.userProfileEditSettings.notification.title": "Quando ricevi una notifica",
+  "ui.userProfileEditSettings.notification.label": "mostra un messaggio in basso a destra:",
+  "ui.userProfileEditSettings.notificationSound.label": "emetti un suono:",
+
+  "ui.userProfileEditSettings.interaction.title": "Quando qualcuno interagisce con me",
+  "ui.userProfileEditSettings.interaction.label": "voglio essere avvisato via email:",
+  "ui.userProfileEditSettings.interaction.immediatly": "Immediatamente",
+  "ui.userProfileEditSettings.interaction.daily": "Una volta al giorno",
+  "ui.userProfileEditSettings.interaction.never": "Mai",
+
+  "ui.userProfileEditSettings.privateMessage.title": "Quando ricevo un messaggio privato",
+  "ui.userProfileEditSettings.privateMessage.label": "voglio essere avvisato:",
+  "ui.userProfileEditSettings.privateMessage.email": "Anche via mail",
+  "ui.userProfileEditSettings.privateMessage.frontend": "Solo qui",
+  "ui.userProfileEditSettings.saved": "Impostazioni salvate",
+
+  "ui.userProfileEdit.info": "Informazioni pubbliche",
+  "ui.userProfileEdit.notification": "Impostazioni di notifica",
 
   "ui.usersFollowed.usersFollowed": "{total, plural, =0 {# utenti seguiti} one {# utente seguito} other {# utenti seguiti}}",
   "ui.usersFollowed.subtitle.noResults": "Nessun utente seguito",
@@ -277,6 +315,7 @@
   "ui.notification.kindlyNoticeFor.kindlyNoticeForOfftopic": "La community ha segnalato un tuo contributo come \"fuori tema\". Un post è \"fuori tema\" quando l'interesse associato non è pertinente. Ti chiediamo di modificare il tuo post, verificando che l'associazione dell'interesse sia coerente.<br/>Associando al tuo post interessi pertinenti regalerai allo stesso maggiore visibilità e ci aiuterai a preservare la qualità delle interazioni.<br/>Se il tuo post non verrà modificato, sarà rimosso. Per maggiori informazioni, consulta il",
   "ui.notification.kindlyNoticeFlag.kindlyNoticeFlag": "Il contenuto da te segnalato non rientra nella casitica dei contenuti ritenuti irregolari. Ti preghiamo di leggere con attenzione il regolamento prima di effettuare ulteriori segnalazioni",
   "ui.notification.newNotificationsLabel": "Ci sono nuove notifiche per te ({count}). Vuoi vederle?",
+  "ui.notification.incubatorApproved.approved": "Your incubator {name} has been <b>approved</b>.",
   "ui.notification.incubatorApproved.viewIncubator": "Vedi categoria",
   "ui.notification.notificationNewChip.label": "New",
 

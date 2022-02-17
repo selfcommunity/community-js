@@ -15,7 +15,7 @@ import {
   UsersFollowed
 } from '@selfcommunity/ui';
 import UserFeed from '../UserFeed';
-import {SCUserContext, SCUserContextType, SCUserType, useSCFetchUser} from '@selfcommunity/core';
+import {SCContextType, SCUserContext, SCUserContextType, SCUserType, useSCContext, useSCFetchUser, useSCUser} from '@selfcommunity/core';
 import UserProfileSkeleton from './Skeleton';
 import classNames from 'classnames';
 import {FormattedMessage} from 'react-intl';
@@ -165,7 +165,8 @@ export default function UserProfile(props: UserProfileProps): JSX.Element {
   } = props;
 
   // CONTEXT
-  const scUserContext: SCUserContextType = useContext(SCUserContext);
+  const scContext: SCContextType = useSCContext();
+  const scUserContext: SCUserContextType = useSCUser();
 
   // Hooks
   const {scUser} = useSCFetchUser({id: userId, user});
@@ -200,6 +201,8 @@ export default function UserProfile(props: UserProfileProps): JSX.Element {
 
   // RENDER
   const isMe = scUserContext.user && scUser.id === scUserContext.user.id;
+  const roles = scUserContext.user && scUserContext.user.role;
+  const canModerate = roles && (roles.includes('admin') || roles.includes('moderator'));
   return (
     <Root id={id} className={classNames(classes.root, className)}>
       <UserProfileHeader user={scUser} {...UserProfileHeaderProps} />
@@ -207,6 +210,16 @@ export default function UserProfile(props: UserProfileProps): JSX.Element {
       <Stack direction="row" spacing={2} className={classes.actions}>
         {isMe && (
           <Button variant="outlined" color="secondary" onClick={handleEdit}>
+            <FormattedMessage defaultMessage="templates.userProfile.edit" id="templates.userProfile.edit" />
+          </Button>
+        )}
+        {canModerate && (
+          <Button
+            variant="contained"
+            color="secondary"
+            component="a"
+            href={`${scContext.settings.portal}/platform/access?next=/moderation/user/?username=${scUser.username}`}
+            target="_blank">
             <FormattedMessage defaultMessage="templates.userProfile.edit" id="templates.userProfile.edit" />
           </Button>
         )}

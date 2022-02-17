@@ -15,7 +15,7 @@ export enum SCUserFields {
   DATE_OF_BIRTH = 'date_of_birth',
   DESCRIPTION = 'description',
   GENDER = 'gender',
-  WEBSITE = 'website'
+  WEBSITE = 'website',
 }
 
 export interface SCUserType {
@@ -189,6 +189,37 @@ export interface SCUserType {
    */
   unseen_notification_banners_counter?: number;
 }
+
+/**
+ * User Settings
+ */
+export interface SCUserSettingsType {
+  /**
+   * Frequency of the email notifications for all interactions (except for private messages notifications)
+   */
+  qa_frequency: number;
+
+  /**
+   * Enable private messages notifications also via mail
+   */
+  email_notification_not_qa: number;
+
+  /**
+   * Enable mobile app/PWA notifications
+   */
+  mobile_notifications_scmty: number;
+
+  /**
+   * Shows a popup when the user receive a notification
+   */
+  show_toast_notifications: number;
+
+  /**
+   * Emit a sound when the notification popup is shown. See 'show_toast_notifications'
+   */
+  toast_notifications_emit_sound: number;
+}
+
 
 /**
  * User Blocked Settings

@@ -1,4 +1,6 @@
 {
+  "ui.common.yes": "Yes",
+  "ui.common.no": "No",
   "ui.common.error": "Error",
   "ui.common.error.url": "The url is not valid",
 
@@ -42,6 +44,7 @@
   "ui.categoriesSuggestion.noResults": "No Categories",
   "ui.categoriesSuggestion.button.showMore": "Show More",
 
+  "ui.changePicture.title": "Chanage profile image",
   "ui.changeCover.button.change": "Change Cover",
   "ui.changeCover.button.delete": "Delete Cover",
   "ui.changeCover.button.upload": "Upload New Cover",
@@ -226,6 +229,32 @@
   "ui.userProfileInfo.description": "Job",
   "ui.userProfileInfo.dateJoined": "Date joined",
   "ui.userProfileInfo.website": "Website",
+  "ui.userProfileInfo.bio": "Bio",
+  "ui.userProfileInfo.location": "Location",
+  "ui.userProfileInfo.gender": "Gender",
+
+  "ui.userProfileEditPublicInfo.genderMale": "Male",
+  "ui.userProfileEditPublicInfo.genderFemale": "Female",
+  "ui.userProfileEditPublicInfo.genderUnspecified": "Unspecified",
+
+  "ui.userProfileEditSettings.notification.title": "When receive a notification",
+  "ui.userProfileEditSettings.notification.label": "show a toast message in the bottom right corner:",
+  "ui.userProfileEditSettings.notificationSound.label": "emit a sound:",
+
+  "ui.userProfileEditSettings.interaction.title": "When someone interact with me",
+  "ui.userProfileEditSettings.interaction.label": "I want an email:",
+  "ui.userProfileEditSettings.interaction.immediatly": "Immediately",
+  "ui.userProfileEditSettings.interaction.daily": "One time per day",
+  "ui.userProfileEditSettings.interaction.never": "Never",
+
+  "ui.userProfileEditSettings.privateMessage.title": "When I receive a private message",
+  "ui.userProfileEditSettings.privateMessage.label": "I want to be advised:",
+  "ui.userProfileEditSettings.privateMessage.email": "Also via email",
+  "ui.userProfileEditSettings.privateMessage.frontend": "Only here",
+  "ui.userProfileEditSettings.saved": "Settings saved",
+
+  "ui.userProfileEdit.info": "Public informations",
+  "ui.userProfileEdit.notification": "Notification settings",
 
   "ui.usersFollowed.usersFollowed": "{total, plural, =0 {# users followed} one {# user followed} other {# users followed}}",
   "ui.usersFollowed.subtitle.noResults": "No users followed",
