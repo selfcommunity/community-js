@@ -12,7 +12,8 @@ import {
   UserProfileHeader,
   UserProfileInfoProps,
   UserProfileInfo,
-  UsersFollowed
+  UsersFollowed,
+  ConnectionUserButton
 } from '@selfcommunity/ui';
 import UserFeed from '../UserFeed';
 import {SCContextType, SCUserContext, SCUserContextType, SCUserType, useSCContext, useSCFetchUser, useSCUser} from '@selfcommunity/core';
@@ -208,10 +209,12 @@ export default function UserProfile(props: UserProfileProps): JSX.Element {
       <UserProfileHeader user={scUser} {...UserProfileHeaderProps} />
       <UserProfileInfo user={scUser} {...UserProfileInfoProps} />
       <Stack direction="row" spacing={2} className={classes.actions}>
-        {isMe && (
+        {isMe ? (
           <Button variant="outlined" color="secondary" onClick={handleEdit}>
             <FormattedMessage defaultMessage="templates.userProfile.edit" id="templates.userProfile.edit" />
           </Button>
+        ) : (
+          <ConnectionUserButton user={scUser} />
         )}
         {canModerate && (
           <Button
