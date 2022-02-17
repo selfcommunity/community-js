@@ -1,6 +1,6 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import {Box, Grid, Typography} from '@mui/material';
+import {Accordion, AccordionProps, AccordionDetails, AccordionSummary, Box, Grid, Typography} from '@mui/material';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {SCUserFields, StringUtils} from '@selfcommunity/core';
 import {DEFAULT_FIELDS} from '../../constants/UserProfile';
@@ -55,7 +55,6 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  margin: theme.spacing(2),
   [`& .${classes.field}`]: {
     fontWeight: 'bold'
   }
@@ -77,6 +76,11 @@ export interface UserProfileEditProps {
    * @default [real_name, date_joined, date_of_birth, website, description, bio]
    */
   fields?: SCUserFields[];
+  /**
+   * Props to apply to the accordion component
+   * @default null
+   */
+  AccordionProps?: AccordionProps;
 
   /**
    * Any other properties
@@ -86,19 +90,31 @@ export interface UserProfileEditProps {
 
 export default function UserProfileEdit(props: UserProfileEditProps): JSX.Element {
   // PROPS
-  const {id = null, className = null, fields = [...DEFAULT_FIELDS], ...rest} = props;
+  const {id = null, className = null, fields = [...DEFAULT_FIELDS], AccordionProps = {}, ...rest} = props;
 
   // RENDER
   return (
     <Root id={id} className={classNames(classes.root, className)} {...rest}>
-      <Typography variant="h5" gutterBottom>
-        <FormattedMessage id="ui.userProfileEdit.info" defaultMessage="ui.userProfileEdit.info" />
-      </Typography>
-      <PublicInfo fields={fields} />
-      <Typography variant="h5" gutterBottom>
-        <FormattedMessage id="ui.userProfileEdit.notification" defaultMessage="ui.userProfileEdit.notification" />
-      </Typography>
-      <Notification fields={fields} />
+      <Accordion defaultExpanded {...AccordionProps}>
+        <AccordionSummary aria-controls="profile information">
+          <Typography variant="body1">
+            <FormattedMessage id="ui.userProfileEdit.info" defaultMessage="ui.userProfileEdit.info" />
+          </Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <PublicInfo fields={fields} />
+        </AccordionDetails>
+      </Accordion>
+      <Accordion {...AccordionProps}>
+        <AccordionSummary aria-controls="profile settings">
+          <Typography variant="body1">
+            <FormattedMessage id="ui.userProfileEdit.notification" defaultMessage="ui.userProfileEdit.notification" />
+          </Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Notification fields={fields} />
+        </AccordionDetails>
+      </Accordion>
     </Root>
   );
 }
