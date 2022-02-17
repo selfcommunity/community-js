@@ -165,8 +165,8 @@ export default function PeopleSuggestion(props: PeopleSuggestionProps): JSX.Elem
                       user={user}
                       key={user.id}
                       {...(followEnabled
-                        ? {followUserButtonProps: {onFollow: handleOnFollowUser}}
-                        : {connectUserButtonProps: {onChangeConnectionStatus: handleOnConnectUser}})}
+                        ? {followConnectUserButtonProps: {onFollow: handleOnFollowUser}}
+                        : {followConnectUserButtonProps: {onChangeConnectionStatus: handleOnConnectUser}})}
                       {...UserProps}
                     />
                   </div>

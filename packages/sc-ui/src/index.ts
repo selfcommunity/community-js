@@ -18,6 +18,7 @@ import FeedObject, {FeedObjectProps, FeedObjectSkeleton} from './components/Feed
 import FeedUpdates, {FeedUpdatesProps, FeedUpdatesSkeleton} from './components/FeedUpdates';
 import FollowCategoryButton, {FollowCategoryButtonProps} from './components/FollowCategoryButton';
 import FollowUserButton, {FollowUserButtonProps} from './components/FollowUserButton';
+import ConnectionUserButton from './components/ConnectionUserButton';
 import InlineComposer, {InlineComposerProps, InlineComposerSkeleton} from './components/InlineComposer';
 import PeopleSuggestion, {PeopleSuggestionProps, PeopleSuggestionSkeleton} from './components/PeopleSuggestion';
 import Platform, {PlatformProps, PlatformSkeleton} from './components/Platform';
@@ -85,6 +86,7 @@ export {
   FollowCategoryButtonProps,
   FollowUserButton,
   FollowUserButtonProps,
+  ConnectionUserButton,
   FeedObject,
   FeedObjectProps,
   FeedObjectSkeleton,

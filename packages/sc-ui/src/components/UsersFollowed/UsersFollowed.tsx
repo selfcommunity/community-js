@@ -152,7 +152,7 @@ export default function UsersFollowed(props: UsersFollowedProps): JSX.Element {
               <List>
                 {followed.slice(0, visibleUsers).map((user: SCUserType, index) => (
                   <div key={index}>
-                    <User elevation={0} user={user} key={user.id} followUserButtonProps={{onFollow: handleOnFollowUser}} {...UserProps} />
+                    <User elevation={0} user={user} key={user.id} followConnectUserButtonProps={{onFollow: handleOnFollowUser}} {...UserProps} />
                   </div>
                 ))}
               </List>

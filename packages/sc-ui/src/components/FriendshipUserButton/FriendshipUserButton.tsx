@@ -1,8 +1,9 @@
 import React, {useContext, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Button} from '@mui/material';
-import {Endpoints, http, SCUserType} from '@selfcommunity/core';
+import {Endpoints, http, SCContextType, SCUserContext, SCUserContextType, SCUserType, useSCContext, useSCFetchUser} from '@selfcommunity/core';
 import {AxiosResponse} from 'axios';
+import classNames from 'classnames';
 
 const PREFIX = 'SCFriendshipUserButton';
 
@@ -26,6 +27,11 @@ const Root = styled(Button, {
 }));
 
 export interface FriendshipButtonProps {
+  /**
+   * Overrides or extends the styles applied to the component.
+   * @default null
+   */
+  className?: string;
   /**
    * Id of the user
    * @default null
@@ -52,8 +58,17 @@ export interface FriendshipButtonProps {
 }
 
 // TODO: fix component
-function FriendshipUserButton({userId = null, user = null, connected = null}: FriendshipButtonProps): JSX.Element {
+export default function FriendshipUserButton(props: FriendshipButtonProps): JSX.Element {
+  // PROPS
+  const {className, userId, user, connected, ...rest} = props;
+
+  // STATE
   const [status, setStatus] = useState<any>(connected ? 'Remove' : 'Connect');
+  const {scUser, setSCUser} = useSCFetchUser({id: userId, user});
+
+  // CONTEXT
+  const scContext: SCContextType = useSCContext();
+  const scUserContext: SCUserContextType = useContext(SCUserContext);
 
   function updateStatus(status) {
     if (status === 'Connect') {
@@ -108,16 +123,21 @@ function FriendshipUserButton({userId = null, user = null, connected = null}: Fr
   }
 
   function handleConnectionStatus() {
-    {
+    if (!scUserContext.user) {
+      scContext.settings.handleAnonymousAction();
+    } else {
       connected ? removeConnection() : requestConnection();
     }
   }
 
+  // same user
+  if (scUserContext.user.id === scUser.id) {
+    return null;
+  }
+
   return (
-    <Root size="small" variant="outlined" onClick={() => handleConnectionStatus()} className={classes.root}>
+    <Root size="small" variant="outlined" onClick={() => handleConnectionStatus()} className={classNames(classes.root, className)}>
       {status}
     </Root>
   );
 }
-
-export default FriendshipUserButton;

@@ -4,25 +4,12 @@ import List from '@mui/material/List';
 import Card from '@mui/material/Card';
 import UserSkeleton from './Skeleton';
 import {Avatar, Button, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText, CardProps} from '@mui/material';
-import {
-  SCUserContext,
-  SCPreferencesContext,
-  SCPreferences,
-  SCUserContextType,
-  SCUserType,
-  SCPreferencesContextType,
-  useSCFetchUser,
-  SCRoutingContextType,
-  useSCRouting,
-  Link,
-  SCRoutes
-} from '@selfcommunity/core';
-import FollowUserButton from '../FollowUserButton';
+import {SCUserContext, SCUserContextType, SCUserType, useSCFetchUser, SCRoutingContextType, useSCRouting, Link, SCRoutes} from '@selfcommunity/core';
 import {FormattedMessage} from 'react-intl';
 import {FollowUserButtonProps} from '../FollowUserButton/FollowUserButton';
-import FriendshipUserButton from '../FriendshipUserButton';
 import classNames from 'classnames';
 import {FriendshipButtonProps} from '../FriendshipUserButton/FriendshipUserButton';
+import ConnectionUserButton from '../ConnectionUserButton';
 
 const PREFIX = 'SCUser';
 
@@ -72,16 +59,10 @@ export interface UserProps extends Pick<CardProps, Exclude<keyof CardProps, 'id'
   handleIgnoreAction?: (u) => void;
 
   /**
-   * Props to spread to follow button
+   * Props to spread to follow/friendship button
    * @default {}
    */
-  followUserButtonProps?: FollowUserButtonProps;
-
-  /**
-   * Props to spread to connection button
-   * @default {}
-   */
-  connectUserButtonProps?: FriendshipButtonProps;
+  followConnectUserButtonProps?: FollowUserButtonProps | FriendshipButtonProps;
 
   /**
    * Any other properties
@@ -91,72 +72,35 @@ export interface UserProps extends Pick<CardProps, Exclude<keyof CardProps, 'id'
 
 export default function User(props: UserProps): JSX.Element {
   // PROPS
-  const {
-    id = null,
-    user = null,
-    handleIgnoreAction,
-    className = null,
-    autoHide = false,
-    followUserButtonProps = {},
-    connectUserButtonProps = {},
-    ...rest
-  } = props;
+  const {id = null, user = null, handleIgnoreAction, className = null, autoHide = false, followConnectUserButtonProps = {}, ...rest} = props;
 
   // STATE
   const {scUser, setSCUser} = useSCFetchUser({id, user});
 
   // CONTEXT
-  const scPreferencesContext: SCPreferencesContextType = useContext(SCPreferencesContext);
   const scUserContext: SCUserContextType = useContext(SCUserContext);
   const scRoutingContext: SCRoutingContextType = useSCRouting();
-  const followEnabled =
-    SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED in scPreferencesContext.preferences &&
-    scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED].value;
-
-  /**
-   * Render follow action
-   * @return {JSX.Element}
-   */
-  function renderFollowActions() {
-    /* TODO: render proper action based on redux connection (follow) store */
-    return (
-      <React.Fragment>
-        {handleIgnoreAction && (
-          <Button size="small" onClick={handleIgnoreAction}>
-            <FormattedMessage defaultMessage="ui.user.ignore" id="ui.user.ignore" />
-          </Button>
-        )}
-        <FollowUserButton user={scUser} {...followUserButtonProps} />
-      </React.Fragment>
-    );
-  }
-
-  /**
-   * Render connection actions
-   * @return {JSX.Element}
-   */
-  function renderConnectionActions() {
-    /* TODO: render proper action based on redux connection (friendship) store */
-    return (
-      <React.Fragment>
-        {handleIgnoreAction && (
-          <Button size="small" onClick={handleIgnoreAction}>
-            <FormattedMessage defaultMessage="ui.user.ignore" id="ui.user.ignore" />
-          </Button>
-        )}
-        <FriendshipUserButton user={scUser} {...connectUserButtonProps} />
-      </React.Fragment>
-    );
-  }
 
   /**
    * Render authenticated actions
    * @return {JSX.Element}
    */
   function renderAuthenticatedActions() {
-    return <React.Fragment>{followEnabled ? renderFollowActions() : renderConnectionActions()}</React.Fragment>;
+    return (
+      <React.Fragment>
+        {handleIgnoreAction && (
+          <Button size="small" onClick={handleIgnoreAction}>
+            <FormattedMessage defaultMessage="ui.user.ignore" id="ui.user.ignore" />
+          </Button>
+        )}
+        <ConnectionUserButton user={scUser} {...followConnectUserButtonProps} />
+      </React.Fragment>
+    );
   }
 
+  /**
+   * Renders user object
+   */
   const u = (
     <React.Fragment>
       {scUser ? (
@@ -172,6 +116,10 @@ export default function User(props: UserProps): JSX.Element {
       )}
     </React.Fragment>
   );
+
+  /**
+   * Renders root object
+   */
   return (
     <Root {...rest} className={classNames(classes.root, className)}>
       <List>{u}</List>
