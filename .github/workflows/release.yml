@@ -23,4 +23,13 @@ jobs:
     - run: git config --global user.email "fede.torre@gmail.com"
     - run: git config --global user.name "fedetorre"
     - run: yarn build
-    - run: yarn prerelease
+    - run: yarn release
+    - uses: repo-sync/pull-request@v2
+      name: pull-request
+      with:
+        destination_branch: "prerelease"
+        pr_title: "Pulling ${{ github.ref }} from main into prerelease"
+        pr_body: "👑 *An automated PR*"
+        pr_reviewer: "fedetorre"
+        pr_draft: true
+        github_token: ${{ secrets.GITHUB_TOKEN }}
