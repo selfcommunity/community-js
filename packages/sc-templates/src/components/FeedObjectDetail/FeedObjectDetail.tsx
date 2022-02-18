@@ -97,7 +97,8 @@ export default function FeedObjectDetail(props: FeedObjectDetailProps): JSX.Elem
     ) {
       return (
         <CustomAdv
-          position={SCCustomAdvPosition.POSITION_BELOW_FEED_OBJECT} /*{...(obj.categories.length ? {categoryId: obj.categories[0].id} : {})}*/
+          position={SCCustomAdvPosition.POSITION_BELOW_FEED_OBJECT}
+          {...(obj.categories.length && {categoriesId: obj.categories.map((c) => c.id)})}
         />
       );
     }
