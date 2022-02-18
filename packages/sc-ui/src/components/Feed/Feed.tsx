@@ -229,6 +229,7 @@ export default function Feed(props: FeedProps): JSX.Element {
 
   const refresh = () => {
     setNext(endpoint.url({}));
+    setFeedData([]);
     fetch();
   };
 
