@@ -5,6 +5,7 @@ import {Link, SCRoutingContextType, useSCRouting, SCNotificationIncubatorType, S
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
 import NewChip from '../NewChip';
+import classNames from 'classnames';
 
 const messages = defineMessages({
   incubatorApproved: {
@@ -16,6 +17,7 @@ const messages = defineMessages({
 const PREFIX = 'SCIncubatorApprovedNotification';
 
 const classes = {
+  root: `${PREFIX}-root`,
   categoryImage: `${PREFIX}-category-image`
 };
 
@@ -64,7 +66,7 @@ export default function IncubatorApprovedNotification(props: NotificationIncubat
    * Renders root object
    */
   return (
-    <Root id={id} className={className} {...rest}>
+    <Root id={id} className={classNames(classes.root, className)} {...rest}>
       <ListItem alignItems="flex-start" component={'div'}>
         <ListItemAvatar>
           <Avatar

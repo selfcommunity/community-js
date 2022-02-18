@@ -62,6 +62,7 @@ import {LoadingButton} from '@mui/lab';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {AxiosResponse} from 'axios';
 import MarkRead from '../../shared/MarkRead';
+import classNames from 'classnames';
 
 const messages = defineMessages({
   comment: {
@@ -77,6 +78,7 @@ const messages = defineMessages({
 const PREFIX = 'SCFeedObject';
 
 const classes = {
+  root: `${PREFIX}-root`,
   title: `${PREFIX}-title`,
   username: `${PREFIX}-username`,
   category: `${PREFIX}-category`,
@@ -743,7 +745,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
    * Renders root object
    */
   return (
-    <Root id={id} className={className} {...rest}>
+    <Root id={id} className={classNames(classes.root, className)} {...rest}>
       {obj && markRead && <MarkRead endpoint={Endpoints.FeedObjectMarkRead} data={{object: [obj.id]}} />}
       <Box className={`${PREFIX}-${template}`}>{objElement}</Box>
     </Root>

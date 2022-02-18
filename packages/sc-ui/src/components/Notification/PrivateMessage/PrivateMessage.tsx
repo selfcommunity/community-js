@@ -7,8 +7,13 @@ import {grey} from '@mui/material/colors';
 import {FormattedMessage} from 'react-intl';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
 import NewChip from '../NewChip';
+import classNames from 'classnames';
 
 const PREFIX = 'SCUserNotificationPrivateMessage';
+
+const classes = {
+  root: `${PREFIX}-root`
+};
 
 const Root = styled(Box, {
   name: PREFIX,
@@ -76,7 +81,7 @@ export default function UserNotificationPrivateMessage(props: NotificationPMProp
    * Renders root object
    */
   return (
-    <Root id={id} className={className} {...rest}>
+    <Root id={id} className={classNames(classes.root, className)} {...rest}>
       <ListItem
         component={'div'}
         secondaryAction={

@@ -13,6 +13,7 @@ import {
   SCRoutingContextType,
   useSCRouting
 } from '@selfcommunity/core';
+import classNames from 'classnames';
 
 const messages = defineMessages({
   requestConnection: {
@@ -26,6 +27,10 @@ const messages = defineMessages({
 });
 
 const PREFIX = 'SCUserConnectionNotification';
+
+const classes = {
+  root: `${PREFIX}-root`
+};
 
 const Root = styled(Box, {
   name: PREFIX,
@@ -81,7 +86,7 @@ export default function UserConnectionNotification(props: NotificationConnection
    * Renders root object
    */
   return (
-    <Root id={id} className={className} {...rest}>
+    <Root id={id} className={classNames(classes.root, className)} {...rest}>
       <ListItem alignItems="flex-start" component={'div'}>
         <ListItemAvatar>
           <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, userConnection)}>

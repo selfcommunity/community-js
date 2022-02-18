@@ -39,6 +39,7 @@ import {
   useSCRouting
 } from '@selfcommunity/core';
 import IncubatorApprovedNotification from './IncubatorApproved';
+import classNames from 'classnames';
 
 const messages = defineMessages({
   receivePrivateMessage: {
@@ -50,6 +51,7 @@ const messages = defineMessages({
 const PREFIX = 'SCUserNotification';
 
 const classes = {
+  root: `${PREFIX}-root`,
   title: `${PREFIX}-title`,
   stopNotificationButton: `${PREFIX}-stop-notification-button`,
   showOtherAggregated: `${PREFIX}-show-other-aggregated`
@@ -368,7 +370,7 @@ export default function UserNotification(props: NotificationProps): JSX.Element 
    * Renders root object
    */
   return (
-    <Root id={id} className={className} {...rest}>
+    <Root id={id} className={classNames(classes.root, className)} {...rest}>
       <CardContent sx={{paddingBottom: 1}}>
         {renderNotificationHeader()}
         {notificationObject.aggregated.slice(0, showMaxAggregated).map((n: SCNotificationType, i) => renderAggregated(n, i))}

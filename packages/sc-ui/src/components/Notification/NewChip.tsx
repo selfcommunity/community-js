@@ -5,6 +5,10 @@ import {FormattedMessage} from 'react-intl';
 
 const PREFIX = 'SCNotificationNewChip';
 
+const classes = {
+  root: `${PREFIX}-root`
+};
+
 const Root = styled(Chip, {
   name: PREFIX,
   slot: 'Root',
@@ -30,6 +34,7 @@ export default function NewChip(props: NotificationNewChipProps): JSX.Element {
    */
   return (
     <Root
+      className={classes.root}
       label={<FormattedMessage id="ui.notification.notificationNewChip.label" defaultMessage="ui.notification.notificationNewChip.label" />}
       size="small"
       color="error"

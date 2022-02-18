@@ -5,6 +5,7 @@ import {Link, SCNotificationVoteUpType, SCRoutes, SCRoutingContextType, useSCRou
 import {defineMessages, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
 import NewChip from '../NewChip';
+import classNames from 'classnames';
 
 const messages = defineMessages({
   contributionFollow: {
@@ -14,6 +15,10 @@ const messages = defineMessages({
 });
 
 const PREFIX = 'SCContributionFollowNotification';
+
+const classes = {
+  root: `${PREFIX}-root`
+};
 
 const Root = styled(Box, {
   name: PREFIX,
@@ -65,7 +70,7 @@ export default function ContributionFollowNotification(props: ContributionFollow
    * Renders root object
    */
   return (
-    <Root id={id} className={className} {...rest}>
+    <Root id={id} className={classNames(classes.root, className)} {...rest}>
       <ListItem alignItems="flex-start" component={'div'}>
         <ListItemAvatar>
           <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.user)}>

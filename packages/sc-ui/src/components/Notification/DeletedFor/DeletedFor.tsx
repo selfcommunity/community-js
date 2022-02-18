@@ -8,6 +8,7 @@ import {getContributeType, getRouteData} from '../../../utils/contribute';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
 import NewChip from '../NewChip';
 import {Link, SCRoutingContextType, useSCRouting, StringUtils, SCNotificationDeletedForType, SCRoutes} from '@selfcommunity/core';
+import classNames from 'classnames';
 
 const messages = defineMessages({
   deletedForAdvertising: {
@@ -33,6 +34,10 @@ const messages = defineMessages({
 });
 
 const PREFIX = 'SCDeletedForNotification';
+
+const classes = {
+  root: `${PREFIX}-root`
+};
 
 const Root = styled(Box, {
   name: PREFIX,
@@ -87,7 +92,7 @@ export default function DeletedForNotification(props: NotificationDeletedForProp
    * Renders root object
    */
   return (
-    <Root id={id} className={className} {...rest}>
+    <Root id={id} className={classNames(classes.root, className)} {...rest}>
       <ListItem alignItems="flex-start" component={'div'}>
         <ListItemAvatar>
           <Avatar variant="circular" sx={{backgroundColor: red[500]}}>

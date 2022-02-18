@@ -6,6 +6,7 @@ import {defineMessages, useIntl} from 'react-intl';
 import {getRouteData, getContributeType} from '../../../utils/contribute';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
 import NewChip from '../NewChip';
+import classNames from 'classnames';
 
 const messages = defineMessages({
   quotedYouOn: {
@@ -15,6 +16,10 @@ const messages = defineMessages({
 });
 
 const PREFIX = 'SCUserNotificationMention';
+
+const classes = {
+  root: `${PREFIX}-root`
+};
 
 const Root = styled(Box, {
   name: PREFIX,
@@ -74,7 +79,7 @@ export default function UserNotificationMention(props: NotificationMentionProps)
    * Renders root object
    */
   return (
-    <Root id={id} className={className} {...rest}>
+    <Root id={id} className={classNames(classes.root, className)} {...rest}>
       <ListItem alignItems="flex-start" component={'div'}>
         <ListItemAvatar>
           <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject[objectType].author)}>

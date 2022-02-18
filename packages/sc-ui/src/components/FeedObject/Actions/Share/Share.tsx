@@ -27,6 +27,7 @@ import Composer from '../../../Composer';
 import {AxiosResponse} from 'axios';
 import {MEDIA_TYPE_SHARE} from '../../../../constants/Media';
 import {SCOPE_SC_UI} from '../../../../constants/Errors';
+import classNames from 'classnames';
 
 const messages = defineMessages({
   shares: {
@@ -46,6 +47,7 @@ const messages = defineMessages({
 const PREFIX = 'SCShareObject';
 
 const classes = {
+  root: `${PREFIX}-root`,
   shareMenuIcon: `${PREFIX}-share-Menu-icon`
 };
 
@@ -342,7 +344,7 @@ export default function Share(props: ShareProps): JSX.Element {
    * Renders share action
    */
   return (
-    <Root className={className} {...rest}>
+    <Root className={classNames(classes.root, className)} {...rest}>
       {renderAudience()}
       {renderShareBtn()}
     </Root>

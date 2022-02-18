@@ -8,8 +8,13 @@ import {FormattedMessage} from 'react-intl';
 import {getContributeType, getRouteData} from '../../../utils/contribute';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
 import NewChip from '../NewChip';
+import classNames from 'classnames';
 
 const PREFIX = 'SCUndeletedForNotification';
+
+const classes = {
+  root: `${PREFIX}-root`
+};
 
 const Root = styled(Box, {
   name: PREFIX,
@@ -61,7 +66,7 @@ export default function UndeletedForNotification(props: NotificationUndeletedPro
    * Renders root object
    */
   return (
-    <Root id={id} className={className} {...rest}>
+    <Root id={id} className={classNames(classes.root, className)} {...rest}>
       <ListItem alignItems="flex-start" component={'div'}>
         <ListItemAvatar>
           <Avatar variant="circular" sx={{bgcolor: green[500]}}>

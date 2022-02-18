@@ -8,6 +8,7 @@ import {Box, CardContent, CardHeader} from '@mui/material';
 const PREFIX = 'SCFeedObjectSkeleton';
 
 const classes = {
+  root: `${PREFIX}-root`,
   media: `${PREFIX}-media`
 };
 
@@ -65,7 +66,7 @@ export default function FeedObjectSkeleton(props: {template?: FeedObjectTemplate
   }
 
   return (
-    <Root {...rest}>
+    <Root className={classes.root} {...rest}>
       <Box className={`${PREFIX}-${_template}`}>{obj}</Box>
     </Root>
   );
