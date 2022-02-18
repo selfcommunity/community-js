@@ -19,11 +19,20 @@ import {SCNotificationMapping} from '../constants/Notification';
 const STATUS_FOLLOWED = 'followed';
 
 /**
- * Custom hook 'useSCFollowedManager'
- * Use this hook to manage followed users:
- * 1. const scUserContext: SCUserContextType = useSCUser();
- * 2. const scFollowedManager: SCFollowedManagerType = scUserContext.manager.followed;
- * 3. scFollowedManager.isFollowed(user)
+ :::info
+ This custom hook is used to manage to manage followed users.
+ :::
+ :::tipHow to use it:
+
+ Follow these steps:
+ ```jsx
+ 1. const scUserContext: SCUserContextType = useSCUser();
+ 2. const scFollowedManager: SCFollowedManagerType = scUserContext.manager.followed;
+ 3. scFollowedManager.isFollowed(user)
+ ```
+ :::
+
+ @param user
  */
 export default function useSCFollowedManager(user?: SCUserType) {
   const {cache, updateCache, emptyCache, data, setData, loading, setLoading, isLoading} = useSCCachingManager();

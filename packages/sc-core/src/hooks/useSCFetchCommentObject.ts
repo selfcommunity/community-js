@@ -7,8 +7,10 @@ import {Logger} from '../utils/logger';
 import Endpoints from '../constants/Endpoints';
 
 /**
- * Custom hook 'useSCFetchCommentObject'
- * Use this hook to fetch a comment
+ :::info
+ This custom hooks is used to fetch a comment.
+ :::
+
  * @param id
  * @param commentObject
  */

@@ -1,9 +1,9 @@
 import {useMemo, useRef, useState} from 'react';
 
 /**
- * Custom hook 'useSCCachingManager'
- * Helpers hook useful to manage cached data
- * Manage cached data and the loading state
+ :::info
+ This custom hook manages cached data and the loading state.
+ :::
  */
 export default function useSCCachingManager() {
   const cache = useRef<number[]>([]);

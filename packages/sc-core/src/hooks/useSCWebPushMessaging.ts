@@ -13,8 +13,9 @@ import {SCPreferencesContext} from '@selfcommunity/core';
 import * as SCPreferences from '../constants/Preferences';
 
 /**
- * Custom hook 'useSCWebPushMessaging'
- * Use this hook to init web push messaging
+ :::info
+ This custom hook is used to to init web push messaging.
+ :::
  */
 export default function useSCWebPushMessaging() {
   // CONTEXT

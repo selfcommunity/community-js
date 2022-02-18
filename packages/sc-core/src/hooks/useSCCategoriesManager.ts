@@ -8,11 +8,21 @@ import {SCOPE_SC_CORE} from '../constants/Errors';
 import {Logger} from '../utils/logger';
 
 /**
- * Custom hook 'useSCCategoriesManager'
- * Use this hook to manage categories followed:
- * 1. const scUserContext: SCUserContextType = useSCUser();
- * 2. const scCategoriesManager: SCCategoriesManagerType = scUserContext.manager.categories;
- * 3. scCategoriesManager.isFollowed(category)
+ :::info
+ This custom hook is used to manage the categories followed.
+ :::
+
+ :::tipHow to use it:
+
+ Follow these steps:
+ ```jsx
+ 1. const scUserContext: SCUserContextType = useSCUser();
+ 2. const scCategoriesManager: SCCategoriesManagerType = scUserContext.manager.categories;
+ 3. scCategoriesManager.isFollowed(category)
+ ```
+ :::
+
+ @param user
  */
 export default function useSCCategoriesManager(user?: SCUserType) {
   const {cache, updateCache, emptyCache, data, setData, loading, setLoading, isLoading} = useSCCachingManager();

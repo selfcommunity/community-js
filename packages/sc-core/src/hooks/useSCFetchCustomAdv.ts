@@ -7,10 +7,12 @@ import Endpoints from '../constants/Endpoints';
 import {SCCustomAdvPosition, SCCustomAdvType} from '../types';
 
 /**
- * Custom hook 'useSCFetchCustomAdv'
- * Use this hook to fetch a custom adv object
+ :::info
+ This custom hook is used to fetch a custom adv object.
+ :::
+
  * @param position
- * @param category
+ * @param categoryId
  */
 export default function useSCFetchCustomAdv({position = null, categoryId = null}: {position: SCCustomAdvPosition; categoryId?: number}) {
   const [scCustomAdv, setSCCustomAdv] = useState<SCCustomAdvType | null>(null);

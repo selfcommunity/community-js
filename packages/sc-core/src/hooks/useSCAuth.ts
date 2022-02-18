@@ -6,6 +6,7 @@ import {Logger} from '../utils/logger';
 import {SCOPE_SC_CORE} from '../constants/Errors';
 
 /**
+ * @hidden
  * We have complex state logic that involves multiple sub-values,
  * so useReducer is preferable to useState.
  * Define all possible auth action types label
@@ -95,8 +96,31 @@ function stateInitializer(session: SCSessionType): any {
 }
 
 /**
- * Custom hook 'useAuth'
- * Use this hook to manage the session in AuthContextProvider
+ :::info
+ This component is used to navigate through the application.
+ :::
+
+ #### Usage
+
+ In order to use router you need to import this components first:
+
+ ```jsx
+ import {SCRoutingContextType, useSCRouting, Link, SCRoutes} from '@selfcommunity/core';
+ ````
+
+ :::tipUsage Example:
+
+ ```jsx
+ const scRoutingContext: SCRoutingContextType = useSCRouting();
+ <Button component={Link} to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: user.id})>Go to profile</Button>
+````
+or
+
+```jsx
+const scRoutingContext: SCRoutingContextType = useSCRouting();
+<Link to={scRoutingContext.url('profile', {id: user.id})}>Go to profile</Link>
+````
+:::
  * @param initialSession
  */
 export default function useAuth(initialSession: SCSessionType) {
