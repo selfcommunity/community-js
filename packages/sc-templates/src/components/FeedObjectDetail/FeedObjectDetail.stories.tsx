@@ -1,6 +1,7 @@
 import React from 'react';
 import {ComponentMeta, ComponentStory} from '@storybook/react';
 import FeedObjectDetailTemplate from './index';
+import { SCFeedObjectTypologyType } from '@selfcommunity/core';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -17,4 +18,7 @@ const Template: ComponentStory<typeof FeedObjectDetailTemplate> = (args) => (
 
 export const Main = Template.bind({});
 
-Main.args = {};
+Main.args = {
+  feedObjectId: 7629,
+  feedObjectType: SCFeedObjectTypologyType.DISCUSSION
+};

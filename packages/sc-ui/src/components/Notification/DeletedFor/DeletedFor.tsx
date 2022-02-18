@@ -102,7 +102,7 @@ export default function DeletedForNotification(props: NotificationDeletedForProp
         <ListItemText
           disableTypography={true}
           primary={
-            <Typography component="span" sx={{display: 'inline'}} color="primary">
+            <Typography component="span" sx={{display: 'inline'}} color="inherit">
               <b>
                 {intl.formatMessage(messages[StringUtils.camelCase(notificationObject.type)], {b: (...chunks) => <strong>{chunks}</strong>})} (
                 <FormattedMessage id="ui.notification.viewRules" defaultMessage="ui.notification.viewRules" />
@@ -115,13 +115,13 @@ export default function DeletedForNotification(props: NotificationDeletedForProp
       </ListItem>
       <Box sx={{mb: 1, p: 1}}>
         {notificationObject.is_new && <NewChip />}
-        <Typography variant={'body2'} color={'primary'} component={'span'}>
+        <Typography variant={'body2'} color={'inherit'} component={'span'}>
           <FormattedMessage id="ui.notification.undeletedFor.youWrote" defaultMessage="ui.notification.undeletedFor.youWrote" />
         </Typography>
         <Link to={scRoutingContext.url(SCRoutes[`${contributionType.toUpperCase()}_ROUTE_NAME`], getRouteData(notificationObject[contributionType]))}>
           <Typography
             component={'span'}
-            color={'primary'}
+            color={'inherit'}
             variant="body2"
             gutterBottom
             sx={{textDecoration: 'underline'}}

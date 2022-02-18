@@ -27,7 +27,8 @@ const messages = defineMessages({
 const PREFIX = 'SCCommentNotification';
 
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-root`,
+  voteButton: `${PREFIX}-vote-button`,
 };
 
 const Root = styled(Box, {
@@ -35,6 +36,10 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
+  [`& .${classes.voteButton}`]: {
+    marginTop: '-1px',
+    minWidth: '30px'
+  },
   '& .MuiSvgIcon-root': {
     width: '0.7em',
     marginBottom: '0.5px'
@@ -117,7 +122,7 @@ export default function CommentNotification(props: CommentNotificationProps): JS
         <ListItemText
           disableTypography={true}
           primary={
-            <Typography component="span" sx={{display: 'inline'}} color="primary">
+            <Typography component="span" sx={{display: 'inline'}} color="inherit">
               {notificationObject.is_new && <NewChip />}
               <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.comment.author)}>
                 {notificationObject.comment.author.username}
@@ -143,10 +148,11 @@ export default function CommentNotification(props: CommentNotificationProps): JS
                   <DateTimeAgo date={notificationObject.active_at} />
                   <Bullet sx={{paddingLeft: '10px', paddingTop: '1px'}} />
                   <LoadingButton
+                    color={'inherit'}
+                    classes={{root: classes.voteButton}}
                     variant={'text'}
-                    sx={{marginTop: '-1px', minWidth: '30px'}}
                     onClick={() => onVote(index, notificationObject.comment)}
-                    disabled={loadingVote !== null}
+                    disabled={loadingVote === index}
                     loading={loadingVote === index}>
                     {notificationObject.comment.voted ? (
                       <Tooltip
@@ -155,7 +161,7 @@ export default function CommentNotification(props: CommentNotificationProps): JS
                       </Tooltip>
                     ) : (
                       <Tooltip title={<FormattedMessage id={'ui.notification.comment.voteUp'} defaultMessage={'ui.notification.comment.voteUp'} />}>
-                        <VoteIcon fontSize={'small'} />
+                        <VoteIcon fontSize={'small'} color="inherit" />
                       </Tooltip>
                     )}
                   </LoadingButton>

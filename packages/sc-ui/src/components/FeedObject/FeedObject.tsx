@@ -623,7 +623,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
               <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
                 {!hideParticipantsPreview && (
                   <LazyLoad once>
-                    <ContributorsFeedObject feedObject={obj} feedObjectType={feedObjectType} sx={{padding: '6px'}} />
+                    <ContributorsFeedObject feedObject={obj} feedObjectType={obj.type} sx={{padding: '6px'}} />
                   </LazyLoad>
                 )}
                 {scUserContext.user && obj.author.id !== scUserContext.user.id && !hideFollowAction && (

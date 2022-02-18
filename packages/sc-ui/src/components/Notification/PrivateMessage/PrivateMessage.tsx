@@ -90,15 +90,16 @@ export default function UserNotificationPrivateMessage(props: NotificationPMProp
               <DateTimeAgo date={notificationObject.active_at} />
             </Box>
             <Button
+              color={'primary'}
               variant="outlined"
               size="small"
               sx={{minWidth: 30}}
               component={Link}
-              to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, notificationObject.message)}>
+              to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, notificationObject.message)}
+              endIcon={<ReplyIcon />}>
               <Box component={'span'} sx={{display: {xs: 'none', md: 'block'}, marginRight: '2px'}}>
                 <FormattedMessage id="ui.notification.privateMessage.btnReplyLabel" defaultMessage="ui.notification.privateMessage.btnReplyLabel" />
               </Box>
-              <ReplyIcon />
             </Button>
           </Box>
         }>

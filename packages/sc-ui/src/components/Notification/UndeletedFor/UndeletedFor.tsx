@@ -76,7 +76,7 @@ export default function UndeletedForNotification(props: NotificationUndeletedPro
         <ListItemText
           disableTypography={true}
           primary={
-            <Typography component="span" sx={{display: 'inline'}} color="primary">
+            <Typography component="span" sx={{display: 'inline'}} color="inherit">
               <b>
                 <FormattedMessage id="ui.notification.undeletedFor.restoredContent" defaultMessage="ui.notification.undeletedFor.restoredContent" />
               </b>
@@ -87,7 +87,7 @@ export default function UndeletedForNotification(props: NotificationUndeletedPro
       </ListItem>
       <Box sx={{mb: 1, p: 1}}>
         {notificationObject.is_new && <NewChip />}
-        <Typography component={'span'} variant={'body2'} color={'primary'}>
+        <Typography component={'span'} variant={'body2'} color={'inherit'}>
           <FormattedMessage id="ui.notification.undeletedFor.youWrote" defaultMessage="ui.notification.undeletedFor.youWrote" />
         </Typography>
         <Link to={scRoutingContext.url(SCRoutes[`${contributionType.toUpperCase()}_ROUTE_NAME`], getRouteData(notificationObject[contributionType]))}>
@@ -95,7 +95,7 @@ export default function UndeletedForNotification(props: NotificationUndeletedPro
             component={'span'}
             variant="body2"
             sx={{textDecoration: 'underline'}}
-            color={'primary'}
+            color={'inherit'}
             gutterBottom
             dangerouslySetInnerHTML={{__html: notificationObject[contributionType].summary}}
           />

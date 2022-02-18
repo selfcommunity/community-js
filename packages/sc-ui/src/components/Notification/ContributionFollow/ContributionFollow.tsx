@@ -80,7 +80,7 @@ export default function ContributionFollowNotification(props: ContributionFollow
         <ListItemText
           disableTypography={true}
           primary={
-            <Typography component="div" sx={{display: 'inline'}} color="primary">
+            <Typography component="div" sx={{display: 'inline'}} color="inherit">
               {notificationObject.is_new && <NewChip />}
               <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.user)}>
                 {notificationObject.user.username}
