@@ -128,7 +128,8 @@ export default function FeedUpdates(props: FeedUpdatesProps): JSX.Element {
 
   // HANDLERS
   const handleClick = () => {
-    PubSub.publish(publicationChannel, {refresh: true});
+    PubSub.publishSync(publicationChannel, {refresh: true});
+    setUpdates(false);
   };
 
   return (

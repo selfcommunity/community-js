@@ -254,7 +254,7 @@ export default function useSCWebPushMessaging() {
   useEffect(() => {
     if (!wpSubscription && !scContext.settings.notifications.webPushMessaging.disableToastMessage && scUserContext.user) {
       if (!webPushEnabled) {
-        Logger.warn(SCOPE_SC_CORE, 'This instance not support web push notification. Enable this feature.');
+        Logger.warn(SCOPE_SC_CORE, 'This instance is not configured to support notifications. Enable this feature.');
       } else if (!applicationServerKey) {
         Logger.warn(SCOPE_SC_CORE, 'Invalid or missing applicationServerKey. Check the configuration that is passed to the SCContextProvider.');
       } else {
