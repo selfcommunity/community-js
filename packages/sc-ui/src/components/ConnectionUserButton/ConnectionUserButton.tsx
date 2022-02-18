@@ -35,6 +35,24 @@ export interface ConnectionUserButtonProps {
   [p: string]: any;
 }
 
+/**
+ > API documentation for the Community-UI ConnectionUserButton component. Learn about the available props and the CSS API.
+ *
+ #### Import
+ ```jsx
+ import ConnectionUserButton from '@selfcommunity/ui';
+ ```
+ #### Component Name
+ The name `SCConnectionUserButton` can be used when providing style overrides in the theme.
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCConnectionUserButton-root|Styles applied to the root element.|
+
+ * @param props
+ */
 export default function ConnectionUserButton(props: ConnectionUserButtonProps): JSX.Element {
   // PROPS
   const {user = null, followConnectUserButtonProps = {}, ...rest} = props;

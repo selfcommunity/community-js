@@ -39,7 +39,24 @@ const Root = styled(Card, {
   maxWidth: 700,
   marginBottom: theme.spacing(2)
 }));
+/**
+ > API documentation for the Community-UI Categories Followed component. Learn about the available props and the CSS API.
+ *
+ #### Import
+ ```jsx
+ import CategoriesFollowed from '@selfcommunity/ui';
+ ```
+ #### Component Name
+ The name `SCCategoriesFollowed` can be used when providing style overrides in the theme.
 
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCCategoryFollowed-root|Styles applied to the root element.|
+
+ * @param props
+ */
 export default function CategoriesFollowed(props: CategoriesListProps): JSX.Element {
   // CONST
   const limit = 3;

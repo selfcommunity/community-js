@@ -96,6 +96,33 @@ export interface ThreadProps {
    */
   openNewMessage?: boolean;
 }
+/**
+ *
+ > API documentation for the Community-UI Thread component. Learn about the available props and the CSS API.
+
+ #### Import
+
+ ```jsx
+ import Thread from '@selfcommunity/ui';
+ ```
+
+ #### Component Name
+
+ The name `SCThread` can be used when providing style overrides in the theme.
+
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCThread-root|Styles applied to the root element.|
+ |emptyBox|.SCThread-emptyBox|Styles applied to the empty box element.|
+ |sender|.SCThread-sender|Styles applied to the sender element.|
+ |receiver|.SCThread-receiver|Styles applied to the receiver element.|
+ |center|.SCThread-center|Styles applied to the center section.|
+
+ * @param props
+ */
 export default function Thread(props: ThreadProps): JSX.Element {
   // PROPS
   const {id, receiverId, autoHide, className, openNewMessage, ...rest} = props;

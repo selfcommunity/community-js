@@ -82,7 +82,33 @@ export interface LoyaltyProgramProps {
    */
   cardType?: boolean;
 }
+/**
+ * > API documentation for the Community-UI LoyaltyProgram component. Learn about the available props and the CSS API.
 
+ #### Import
+
+ ```jsx
+ import LoyaltyProgram from '@selfcommunity/ui';
+ ```
+
+ #### Component Name
+
+ The name `SCLoyaltyProgram` can be used when providing style overrides in the theme.
+
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCLoyaltyProgram-root|Styles applied to the root element.|
+ |cardHeader|.SCLoyaltyProgram-card-header|Styles applied to the card header element.|
+ |pointsIcon|.SCLoyaltyProgram-pointsIcon|Styles applied to the points icon element.|
+ |actions|.SCLoyaltyProgram-actions|Styles applied to the actions section.|
+ |points|.SCLoyaltyProgram-points|Styles applied to the points section.|
+ |pointsBox|.SCLoyaltyProgram-points-box|Styles applied to the points box element.|
+ *
+ * @param props
+ */
 export default function LoyaltyProgram(props: LoyaltyProgramProps): JSX.Element {
   // PROPS
   const {autoHide, className, cardType} = props;

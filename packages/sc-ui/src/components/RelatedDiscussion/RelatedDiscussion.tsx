@@ -80,7 +80,27 @@ export interface RelatedDiscussionProps {
 }
 
 const PREFERENCES = [SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED, SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED];
+/**
+ *> API documentation for the Community-UI Related Discussion component. Learn about the available props and the CSS API.
 
+ #### Import
+
+ ```jsx
+ import Related Discussion from '@selfcommunity/ui';
+ ```
+
+ #### Component Name
+
+ The name `SCRelatedDiscussion` can be used when providing style overrides in the theme.
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCRelatedDiscussion-root|Styles applied to the root element.|
+ *
+ * @param props
+ */
 export default function RelatedDiscussion(props: RelatedDiscussionProps): JSX.Element {
   // CONST
   const limit = 4;

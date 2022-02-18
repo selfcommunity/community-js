@@ -50,7 +50,7 @@ const messages = defineMessages({
   }
 });
 
-const PREFIX = 'SCCommentsObject';
+const PREFIX = 'SCCommentObject';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -67,7 +67,7 @@ const classes = {
   commentActionsMenu: `${PREFIX}-comment-actions-menu`,
   deleted: `${PREFIX}-deleted`,
   activityAt: `${PREFIX}-activity-at`,
-  reply: `${PREFIX}-reply`,
+  reply: `${PREFIX}-reply`
 };
 
 const Root = styled(Box, {
@@ -224,6 +224,41 @@ export interface CommentObjectProps {
   [p: string]: any;
 }
 
+/**
+ *> API documentation for the Community-UI Comment Object component. Learn about the available props and the CSS API.
+
+ #### Import
+
+ ```jsx
+ import CommentObject from '@selfcommunity/ui';
+ ```
+
+ #### Component Name
+
+ The name `SCCommentObject` can be used when providing style overrides in the theme.
+
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCCommentObject-root|Styles applied to the root element.|
+ |comment|.SCCommentObject-comment|Styles applied to comment element.|
+ |avatarWrap|.SCCommentObject-avatar-wrap|Styles applied to avatar wrap.|
+ |avatar|.SCCommentObject-avatar|Styles applied to the avatar element.|
+ |author|.SCCommentObject-author|Styles applied to the author section.|
+ |content|.SCCommentObject-content|Styles applied to content section.|
+ |textContent|.SCCommentObject-text-content|Styles applied to text content section.|
+ |commentChild|.SCCommentObject-comment-child|Styles applied to the comment child element.|
+ |btnVotes|.SCCommentObject-btn-votes|Styles applied to the vote button element.|
+ |votes|.SCCommentObject-votes|Styles applied to the votes section.|
+ |btnViewPreviousComments|.SCCommentObject-btn-view-previous-comments|Styles applied to previous comment button element|
+ |commentActionsMenu|.SCCommentObject-comment-actions-menu|Styles applied to comment action menu element.|
+ |deleted|.SCCommentObject-deleted|Styles applied to tdeleted element.|
+ |activityAt|.SCCommentObject-activity-at|Styles applied to activity at section.|
+
+ * @param props
+ */
 export default function CommentObject(props: CommentObjectProps): JSX.Element {
   // PROPS
   const {
@@ -308,7 +343,11 @@ export default function CommentObject(props: CommentObjectProps): JSX.Element {
    */
   function renderActionReply(comment) {
     return (
-      <Button className={classes.reply} variant="text" onClick={() => (!scUserContext.user ? scContext.settings.handleAnonymousAction() : reply(comment))} color="inherit">
+      <Button
+        className={classes.reply}
+        variant="text"
+        onClick={() => (!scUserContext.user ? scContext.settings.handleAnonymousAction() : reply(comment))}
+        color="inherit">
         {intl.formatMessage(messages.reply)}
       </Button>
     );

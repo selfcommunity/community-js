@@ -50,6 +50,27 @@ export interface ChangeCoverProps {
   [p: string]: any;
 }
 
+/**
+ *> API documentation for the Community-UI ChangeCover component. Learn about the available props and the CSS API.
+ *
+ #### Import
+ ```jsx
+ import ChangeCover from '@selfcommunity/ui';
+ ```
+
+ #### Component Name
+ The name `SCChangeCoverButton` can be used when providing style overrides in the theme.
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCChangeCoverButton-root|Styles applied to the root element.|
+ |helpPopover|.SCChangeCoverButton-help-popover|Styles applied to the help popover element.|
+ |menuItem|.SCChangeCoverButton-menu-item|Styles applied to the menu element.|
+
+ * @param props
+ */
 export default function ChangeCover(props: ChangeCoverProps): JSX.Element {
   //PROPS
   const {onChange, autoHide, className, ...rest} = props;

@@ -61,6 +61,28 @@ export interface UsersFollowedProps {
   UserProps?: UserProps;
 }
 
+/**
+ * > API documentation for the Community-UI Users Followed component. Learn about the available props and the CSS API.
+
+ #### Import
+
+ ```jsx
+ import UsersFollowed from '@selfcommunity/ui';
+ ```
+
+ #### Component Name
+
+ The name `SCUsersFollowed` can be used when providing style overrides in the theme.
+
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCUsersFollowed-root|Styles applied to the root element.|
+
+ * @param props
+ */
 export default function UsersFollowed(props: UsersFollowedProps): JSX.Element {
   // CONST
   const limit = 3;

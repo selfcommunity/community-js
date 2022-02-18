@@ -61,6 +61,28 @@ export interface UserFollowersProps {
   UserProps?: UserProps;
 }
 
+/**
+ * > API documentation for the Community-UI User Followers component. Learn about the available props and the CSS API.
+
+ #### Import
+
+ ```jsx
+ import UserFollowers from '@selfcommunity/ui';
+ ```
+
+ #### Component Name
+
+ The name `SCUserFollowers` can be used when providing style overrides in the theme.
+
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCUserFollowers-root|Styles applied to the root element.|
+
+ * @param props
+ */
 export default function UserFollowers(props: UserFollowersProps): JSX.Element {
   // CONST
   const limit = 3;

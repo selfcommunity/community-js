@@ -63,8 +63,29 @@ export interface FeedUpdatesProps {
 }
 
 /**
- * This Component subscribe to updates from PubSub channel (eg. websocket) and tell the feed to updates if necessary
- * */
+ * > API documentation for the Community-UI FeedUpdates component. Learn about the available props and the CSS API.
+ * This Component subscribe to updates from PubSub channel (eg. websocket) and tell the feed to updates if necessary.
+
+ #### Import
+
+ ```jsx
+ import FeedUpdates from '@selfcommunity/ui';
+ ```
+
+ #### Component Name
+
+ The name `SCFeedUpdates` can be used when providing style overrides in the theme.
+
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCFeedUpdates-root|Styles applied to the root element.|
+ |image|.SCFeedUpdates-image|Styles applied to the image element.|
+ *
+ * @param props
+ */
 export default function FeedUpdates(props: FeedUpdatesProps): JSX.Element {
   // PROPS
   const {

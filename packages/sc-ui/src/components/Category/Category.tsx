@@ -72,12 +72,13 @@ export interface CategoryProps extends Pick<CardProps, Exclude<keyof CardProps, 
 }
 
 /**
- > API documentation for the Community-UI Category component. Learn about the available props and the CSS API.
- * ### Import
+ * > API documentation for the Community-UI Category component. Learn about the available props and the CSS API.
+ *
+ * #### Import
  ```jsx
  import Category from '@selfcommunity/ui';
  ```
- ### Component Name
+ #### Component Name
  The name `SCCategory` can be used when providing style overrides in the theme.
 
  #### CSS

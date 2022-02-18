@@ -9,10 +9,12 @@ import {FormattedMessage, useIntl} from 'react-intl';
 import {SCPrivateMessageType} from '@selfcommunity/core';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import DeleteIcon from '@mui/icons-material/Delete';
+import classNames from 'classnames';
 
 const PREFIX = 'SCMessage';
 
 const classes = {
+  root: `${PREFIX}-root`,
   card: `${PREFIX}-card`,
   selected: `${PREFIX}-selected`,
   info: `${PREFIX}-info`,
@@ -113,6 +115,38 @@ export interface MessageProps extends Pick<CardProps, Exclude<keyof CardProps, '
   onDeleteIconClick?: () => void;
 }
 
+/**
+ *
+ > API documentation for the Community-UI Message component. Learn about the available props and the CSS API.
+
+ #### Import
+
+ ```jsx
+ import Message from '@selfcommunity/ui';
+ ```
+
+ #### Component Name
+
+ The name `SCMessage` can be used when providing style overrides in the theme.
+
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCMessage-root|Styles applied to the root element.|
+ |card|.SCMessage-card|Styles applied to the card element.|
+ |selected|.SCMessage-selected|Styles applied to the selected element.|
+ |info|.SCMessage-info|Styles applied to the info section.|
+ |messageBox|.SCMessage-messageBox|Styles applied to the message box element.|
+ |messageTime|.SCMessage-messageTime|Styles applied to the message time element.|
+ |unread|.SCMessage-unread|Styles applied to the unread element.|
+ |hide|.SCMessage-hide|Styles applied to the hidden element.|
+ |img|.SCMessage-img|Styles applied to the img element.|
+
+
+ * @param props
+ */
 export default function Message(props: MessageProps): JSX.Element {
   // PROPS
   const {
@@ -206,7 +240,7 @@ export default function Message(props: MessageProps): JSX.Element {
    */
   if (!autoHide) {
     return (
-      <Root className={className} {...rest}>
+      <Root className={classNames(classes.root, className)} {...rest}>
         <CardContent className={classes.card}>
           <List>{c}</List>
         </CardContent>

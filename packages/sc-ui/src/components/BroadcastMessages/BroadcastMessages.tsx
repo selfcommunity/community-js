@@ -43,7 +43,24 @@ export interface BroadcastMessagesProps {
    */
   [p: string]: any;
 }
+/**
+ > API documentation for the Community-UI BroadcastMessages component. Learn about the available props and the CSS API.
+ *
+ #### Import
+ ```jsx
+ import BroadcastMessages from '@selfcommunity/ui';
+ ```
+ #### Component Name
+ The name `SCBroadcastMessages` can be used when providing style overrides in the theme.
 
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCBroadcastMessages-root|Styles applied to the root element.|
+
+ * @param props
+ */
 export default function BroadcastMessages(props: BroadcastMessagesProps): JSX.Element {
   // PROPS
   const {id = 'broadcast_messages', className = null, MessageProps = {}, ...rest} = props;

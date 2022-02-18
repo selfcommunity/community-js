@@ -103,6 +103,26 @@ export interface CategoryHeaderProps {
    */
   [p: string]: any;
 }
+
+/**
+ *> API documentation for the Community-UI Category Header component. Learn about the available props and the CSS API.
+ *
+ #### Import
+ ```jsx
+ import CategoryHeader from '@selfcommunity/ui';
+ ```
+ #### Component Name
+
+ The name `SCCategoryHeader` can be used when providing style overrides in the theme.
+
+ * #### CSS
+ *
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCCategoryHeader-root|Styles applied to the root element.|
+
+ * @param props
+ */
 export default function CategoryHeader(props: CategoryHeaderProps): JSX.Element {
   // PROPS
   const {className, categoryId, category, FollowCategoryButtonProps = {}, FollowedByDialogProps = {}, ...rest} = props;

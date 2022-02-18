@@ -130,6 +130,32 @@ export interface NotificationProps extends CardProps {
   [p: string]: any;
 }
 
+/**
+ *
+ > API documentation for the Community-UI UserNotification component. Learn about the available props and the CSS API.
+
+ #### Import
+
+ ```jsx
+ import UserNotification from '@selfcommunity/ui';
+ ```
+
+ #### Component Name
+
+ The name `SCUserNotification` can be used when providing style overrides in the theme.
+
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCUserNotification-root|Styles applied to the root element.|
+ |title|.SCUserNotification-title|Styles applied to the title element.|
+ |stopNotificationButton|.SCUserNotification-stop-notification-button|Styles applied to the stop notification button.|
+ |showOtherAggregated|.SCUserNotification-show-other-aggregated|Styles applied to the show other aggregated element.|
+
+ * @param props
+ */
 export default function UserNotification(props: NotificationProps): JSX.Element {
   // PROPS
   const {

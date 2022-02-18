@@ -141,6 +141,29 @@ export interface EditorProps {
   onRef?: (editor: RefObject<TMUIRichTextEditorRef>) => void;
 }
 
+/**
+ * > API documentation for the Community-UI Editor component. Learn about the available props and the CSS API.
+
+ #### Import
+
+ ```jsx
+ import Editor from '@selfcommunity/ui';
+ ```
+
+ #### Component Name
+
+ The name `SCEditor` can be used when providing style overrides in the theme.
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCEditor-root|Styles applied to the root element.|
+ |drop|.SCEditor-drop|Styles applied to the drop element.|
+ |actions|.SCEditor-actions|Styles applied to the actions section.|
+
+ * @param props
+ */
 export default function Editor(props: EditorProps): JSX.Element {
   const editorId = useMemo(() => `editor${random()}`, []);
 

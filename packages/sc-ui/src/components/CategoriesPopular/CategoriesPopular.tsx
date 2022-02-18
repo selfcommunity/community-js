@@ -28,6 +28,25 @@ const Root = styled(Card, {
   marginBottom: theme.spacing(2)
 }));
 
+/**
+ > API documentation for the Community-UI Categories Popular component. Learn about the available props and the CSS API.
+ *
+ #### Import
+ ```jsx
+ import CategoriesPopular from '@selfcommunity/ui';
+ ```
+
+ #### Component Name
+ The name `SCCategoriesPopular` can be used when providing style overrides in the theme.
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCCategoriesPopular-root|Styles applied to the root element.|
+
+ * @param props
+ */
 export default function CategoriesPopular(props: CategoriesListProps): JSX.Element {
   // CONST
   const limit = 3;
