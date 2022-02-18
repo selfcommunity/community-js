@@ -115,7 +115,7 @@ export default function CollapsedForNotification(props: NotificationCollapsedFor
         />
       </ListItem>
       <Box sx={{mb: 1}}>
-        <Typography variant={'body2'} color={'primary'} sx={{p: 1}}>
+        <Typography variant={'body2'} color={'inherit'} sx={{p: 1}}>
           <FormattedMessage id="ui.notification.undeletedFor.youWrote" defaultMessage="ui.notification.undeletedFor.youWrote" />
         </Typography>
         <Link to={scRoutingContext.url(SCRoutes[`${contributionType.toUpperCase()}_ROUTE_NAME`], getRouteData(notificationObject[contributionType]))}>

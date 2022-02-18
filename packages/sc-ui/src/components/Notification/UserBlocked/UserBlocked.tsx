@@ -81,7 +81,7 @@ export default function UserBlockedNotification(props: NotificationBlockedProps)
         <ListItemText
           disableTypography={true}
           primary={
-            <Typography component="div" sx={{display: 'inline'}} color="primary">
+            <Typography component="div" sx={{display: 'inline'}} color="inherit">
               {notificationObject.is_new && <NewChip />}
               <b>
                 {notificationObject.type === SCNotificationTypologyType.BLOCKED_USER

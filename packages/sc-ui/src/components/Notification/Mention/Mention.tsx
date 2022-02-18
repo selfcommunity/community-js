@@ -89,7 +89,7 @@ export default function UserNotificationMention(props: NotificationMentionProps)
         <ListItemText
           disableTypography={true}
           primary={
-            <Typography component="span" sx={{display: 'inline'}} color="primary">
+            <Typography component="span" sx={{display: 'inline'}} color="inherit">
               <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject[objectType].author)}>
                 {notificationObject[objectType].author.username}
               </Link>{' '}

@@ -79,7 +79,7 @@ export default function IncubatorApprovedNotification(props: NotificationIncubat
         <ListItemText
           disableTypography={true}
           primary={
-            <Typography component="span" sx={{display: 'inline'}} color="primary">
+            <Typography component="span" sx={{display: 'inline'}} color="inherit">
               {notificationObject.is_new && <NewChip />}
               <b>
                 {intl.formatMessage(messages.incubatorApproved, {

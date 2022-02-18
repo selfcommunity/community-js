@@ -1,6 +1,5 @@
 import React, {useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
-
 import CardContent from '@mui/material/CardContent';
 import CommentNotification from './Comment';
 import UserFollowNotification from './UserFollow';
@@ -23,7 +22,20 @@ import {AxiosResponse} from 'axios';
 import {ExpandLess, ExpandMore} from '@mui/icons-material';
 import {getContribute} from '../../utils/contribute';
 import ContributionFollowNotification from './ContributionFollow';
-import {Avatar, Button, Card, CardProps, Collapse, ListItem, ListItemAvatar, ListItemButton, ListItemText, Stack, Typography} from '@mui/material';
+import {
+  Avatar,
+  Button,
+  Card,
+  CardProps,
+  Collapse,
+  ListItem,
+  ListItemAvatar,
+  ListItemButton,
+  ListItemText,
+  Stack,
+  Tooltip,
+  Typography
+} from '@mui/material';
 import {
   Endpoints,
   http,
@@ -40,6 +52,7 @@ import {
 } from '@selfcommunity/core';
 import IncubatorApprovedNotification from './IncubatorApproved';
 import classNames from 'classnames';
+import LoadingButton from '@mui/lab/LoadingButton';
 
 const messages = defineMessages({
   receivePrivateMessage: {
@@ -281,7 +294,7 @@ export default function UserNotification(props: NotificationProps): JSX.Element 
           <ListItemText
             disableTypography={true}
             primary={
-              <Typography component="span" sx={{display: 'inline'}} color="primary">
+              <Typography component="span" sx={{display: 'inline'}} color="inherit">
                 <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, messageNotification.message.sender)}>
                   {messageNotification.message.sender.username}
                 </Link>{' '}
@@ -313,18 +326,28 @@ export default function UserNotification(props: NotificationProps): JSX.Element 
                 <Typography variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: contribution.summary}} classes={{root: classes.title}} />
               </Link>
               {contribution && (
-                <Button
-                  variant="outlined"
-                  size="small"
-                  color={'secondary'}
-                  classes={{root: classes.stopNotificationButton}}
-                  onClick={() => handleStopContentNotification(contribution)}>
-                  {contribution.notification_suspended ? (
-                    <NotificationsOffOutlinedIcon fontSize="small" />
-                  ) : (
-                    <NotificationsOnOutlinedIcon fontSize="small" />
-                  )}
-                </Button>
+                <Tooltip
+                  title={
+                    contribution.suspended ? (
+                      <FormattedMessage id={'ui.notification.notificationSuspended'} defaultMessage={'ui.notification.notificationSuspended'} />
+                    ) : (
+                      <FormattedMessage id={'ui.notification.notificationSuspend'} defaultMessage={'ui.notification.notificationSuspend'} />
+                    )
+                  }>
+                  <LoadingButton
+                    variant="outlined"
+                    size="small"
+                    loading={loadingSuspendNotification}
+                    color={'inherit'}
+                    classes={{root: classes.stopNotificationButton}}
+                    onClick={() => handleStopContentNotification(contribution)}>
+                    {contribution.suspended ? (
+                      <NotificationsOffOutlinedIcon fontSize="small" color={'primary'} />
+                    ) : (
+                      <NotificationsOnOutlinedIcon fontSize="small" color={'inherit'} />
+                    )}
+                  </LoadingButton>
+                </Tooltip>
               )}
             </Stack>
           )}
@@ -339,7 +362,7 @@ export default function UserNotification(props: NotificationProps): JSX.Element 
    * @param n
    * @param i
    */
-  function renderAggregated(n, i) {
+  function renderAggregatedItem(n, i) {
     if (n.type === SCNotificationTypologyType.COMMENT || n.type === SCNotificationTypologyType.NESTED_COMMENT) {
       return <CommentNotification notificationObject={n} key={i} index={i} onVote={handleVote} loadingVote={loadingVote} />;
     } else if (n.type === SCNotificationTypologyType.FOLLOW) {
@@ -349,7 +372,7 @@ export default function UserNotification(props: NotificationProps): JSX.Element 
     } else if (n.type === SCNotificationTypologyType.CONNECTION_REQUEST || n.type === SCNotificationTypologyType.CONNECTION_ACCEPT) {
       return <UserConnectionNotification notificationObject={n} key={i} />;
     } else if (n.type === SCNotificationTypologyType.VOTE_UP) {
-      return <VoteUpNotification notificationObject={n} key={i} index={i} onVote={handleVote} loadingVote={loadingVote} />;
+      return <VoteUpNotification notificationObject={n} key={i} />;
     } else if (
       n.type === SCNotificationTypologyType.KINDLY_NOTICE_ADVERTISING ||
       n.type === SCNotificationTypologyType.KINDLY_NOTICE_AGGRESSIVE ||
@@ -399,7 +422,7 @@ export default function UserNotification(props: NotificationProps): JSX.Element 
     <Root id={id} className={classNames(classes.root, className)} {...rest}>
       <CardContent sx={{paddingBottom: 1}}>
         {renderNotificationHeader()}
-        {notificationObject.aggregated.slice(0, showMaxAggregated).map((n: SCNotificationType, i) => renderAggregated(n, i))}
+        {notificationObject.aggregated.slice(0, showMaxAggregated).map((n: SCNotificationType, i) => renderAggregatedItem(n, i))}
         {notificationObject.aggregated.length > showMaxAggregated && (
           <>
             <ListItemButton onClick={() => setOpenOtherAggregated((prev) => !prev)} classes={{root: classes.showOtherAggregated}}>
@@ -407,7 +430,7 @@ export default function UserNotification(props: NotificationProps): JSX.Element 
               {openOtherAggregated ? <ExpandLess /> : <ExpandMore />}
             </ListItemButton>
             <Collapse in={openOtherAggregated} timeout="auto" unmountOnExit>
-              {notificationObject.aggregated.slice(showMaxAggregated).map((n: SCNotificationType, i) => renderAggregated(n, i))}
+              {notificationObject.aggregated.slice(showMaxAggregated).map((n: SCNotificationType, i) => renderAggregatedItem(n, i))}
             </Collapse>
           </>
         )}

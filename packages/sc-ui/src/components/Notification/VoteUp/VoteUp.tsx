@@ -1,14 +1,10 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import {Avatar, Box, Grid, ListItem, ListItemAvatar, ListItemText, Tooltip, Typography} from '@mui/material';
+import {Avatar, Box, Grid, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
 import {Link, SCCommentTypologyType, SCNotificationVoteUpType, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
-import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
+import {defineMessages, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
 import NewChip from '../NewChip';
-import Bullet from '../../../shared/Bullet';
-import {LoadingButton} from '@mui/lab';
-import VoteFilledIcon from '@mui/icons-material/ThumbUpTwoTone';
-import VoteIcon from '@mui/icons-material/ThumbUpOutlined';
 import {getRouteData, getContributeType} from '../../../utils/contribute';
 import {grey} from '@mui/material/colors';
 import classNames from 'classnames';
@@ -61,24 +57,6 @@ export interface NotificationVoteUpProps {
   notificationObject: SCNotificationVoteUpType;
 
   /**
-   * Index
-   * @default null
-   */
-  index: number;
-
-  /**
-   * Handles action on vote
-   * @default null
-   */
-  onVote: (i, v) => void;
-
-  /**
-   * The id of the loading vote
-   * @default null
-   */
-  loadingVote: number;
-
-  /**
    * Any other properties
    */
   [p: string]: any;
@@ -119,7 +97,7 @@ export default function VoteUpNotification(props: NotificationVoteUpProps): JSX.
         <ListItemText
           disableTypography={true}
           primary={
-            <Typography component="div" sx={{display: 'inline'}} color="primary">
+            <Typography component="div" sx={{display: 'inline'}} color="inherit">
               {notificationObject.is_new && <NewChip />}
               <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.user)}>
                 {notificationObject.user.username}
@@ -143,24 +121,6 @@ export default function VoteUpNotification(props: NotificationVoteUpProps): JSX.
               <Box component="span" sx={{display: 'flex', justifyContent: 'flex-start', p: '2px'}}>
                 <Grid component="span" item={true} sm="auto" container direction="row" alignItems="center">
                   <DateTimeAgo date={notificationObject.active_at} />
-                  <Bullet sx={{paddingLeft: '10px', paddingTop: '1px'}} />
-                  <LoadingButton
-                    variant={'text'}
-                    sx={{marginTop: '-1px', minWidth: '30px'}}
-                    onClick={() => onVote(index, notificationObject[contributionType])}
-                    disabled={loadingVote !== null}
-                    loading={loadingVote === index}>
-                    {notificationObject[contributionType].voted ? (
-                      <Tooltip
-                        title={<FormattedMessage id={'ui.notification.comment.voteDown'} defaultMessage={'ui.notification.comment.voteDown'} />}>
-                        <VoteFilledIcon fontSize={'small'} color={'secondary'} />
-                      </Tooltip>
-                    ) : (
-                      <Tooltip title={<FormattedMessage id={'ui.notification.comment.voteUp'} defaultMessage={'ui.notification.comment.voteUp'} />}>
-                        <VoteIcon fontSize={'small'} />
-                      </Tooltip>
-                    )}
-                  </LoadingButton>
                 </Grid>
               </Box>
             </React.Fragment>

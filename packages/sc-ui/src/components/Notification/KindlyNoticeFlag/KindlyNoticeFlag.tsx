@@ -86,7 +86,7 @@ export default function KindlyNoticeFlagNotification(props: NotificationKindlyNo
         <ListItemText
           disableTypography={true}
           primary={
-            <Typography component="span" sx={{display: 'inline'}} color="primary">
+            <Typography component="span" sx={{display: 'inline'}} color="inherit">
               {notificationObject.is_new && <NewChip />}
               <b>
                 {intl.formatMessage(messages[StringUtils.camelCase(notificationObject.type)], {b: (...chunks) => <strong>{chunks}</strong>})} (
@@ -99,7 +99,7 @@ export default function KindlyNoticeFlagNotification(props: NotificationKindlyNo
         />
       </ListItem>
       <Box sx={{mb: 1, p: 1}}>
-        <Typography variant={'body2'} color={'primary'}>
+        <Typography variant={'body2'} color={'inherit'}>
           <FormattedMessage id="ui.notification.undeletedFor.youWrote" defaultMessage="ui.notification.undeletedFor.youWrote" />
         </Typography>
         <Link to={scRoutingContext.url(SCRoutes[`${contributionType.toUpperCase()}_ROUTE_NAME`], getRouteData(notificationObject[contributionType]))}>
