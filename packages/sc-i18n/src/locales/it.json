@@ -281,6 +281,8 @@
   "ui.feed.noOtherFeedObject": "Non ci sono altri contenuti",
 
   "ui.notification.showOthers": "Vedi altro",
+  "ui.notification.notificationSuspended": "Notifiche sospese. Clicca per riattivarle.",
+  "ui.notification.notificationSuspend": "Notifiche attive. Clicca per disattivarle.",
   "ui.notification.receivePrivateMessage": "<b>ti ha inviato {total, plural, =0 {# messaggi} one {# messaggio} other {# messaggi}}</b>",
   "ui.notification.userFollow.followUser": "<b>ti sta seguendo</b>",
   "ui.notification.comment.comment": "<b>ha commentato il tuo contenuto:</b> ",
