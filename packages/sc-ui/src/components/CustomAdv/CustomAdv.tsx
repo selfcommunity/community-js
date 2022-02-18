@@ -41,9 +41,9 @@ export interface CustomAdvProps {
   position: SCCustomAdvPosition;
 
   /**
-   * Category id if the adv must be related to a specific category
+   * Category ids if the adv must be related to specific categories
    */
-  categoryId?: number | null;
+  categoriesId?: Array<number> | null
 }
 /**
  > API documentation for the Community-UI CustomAdv component. Learn about the available props and the CSS API.
@@ -66,10 +66,10 @@ export interface CustomAdvProps {
  */
 export default function CustomAdv(props: CustomAdvProps): JSX.Element {
   // PROPS
-  const {id = 'custom_adv', className = null, position, categoryId = null} = props;
+  const {id = 'custom_adv', className = null, position, categoriesId = []} = props;
 
   // retrieve adv
-  const {scCustomAdv} = useSCFetchCustomAdv({position, categoryId});
+  const {scCustomAdv} = useSCFetchCustomAdv({position, categoriesId});
 
   if (!scCustomAdv) {
     return null;

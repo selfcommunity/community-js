@@ -111,7 +111,8 @@ const Root = styled(Box, {
     paddingLeft: '70px'
   },
   [`& .${classes.btnViewPreviousComments}`]: {
-    paddingLeft: '70px'
+    paddingLeft: '70px',
+    textTransform: 'capitalize'
   },
   [`& .${classes.commentActionsMenu}`]: {
     position: 'absolute',
@@ -642,7 +643,7 @@ export default function CommentObject(props: CommentObjectProps): JSX.Element {
                   <Card classes={{root: classes.content}} {...rest}>
                     <CardContent classes={{root: classNames({[classes.deleted]: obj.deleted})}}>
                       <Link className={classes.author} to={scRoutingContext.url('profile', {id: comment.author.id})}>
-                        <Typography component="span" sx={{display: 'inline'}} gutterBottom color="primary">
+                        <Typography component="span" sx={{display: 'inline'}} gutterBottom color="inherit">
                           {comment.author.username}
                         </Typography>
                       </Link>
@@ -712,6 +713,7 @@ export default function CommentObject(props: CommentObjectProps): JSX.Element {
               </Box>
             ) : (
               <Button
+                color="inherit"
                 variant="text"
                 onClick={loadLatestComment}
                 disabled={loadingLatestComments || (!feedObjectId && !feedObject)}
@@ -725,7 +727,7 @@ export default function CommentObject(props: CommentObjectProps): JSX.Element {
             )}
           </>
         )}
-        {comment.latest_comments?.map((lc: SCCommentType, index) => (
+        {comment.latest_comments?.map((lc: SCCommentType) => (
           <React.Fragment key={lc.id}>{renderComment(lc)}</React.Fragment>
         ))}
       </>

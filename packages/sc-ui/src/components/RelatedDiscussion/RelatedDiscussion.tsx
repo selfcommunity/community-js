@@ -14,6 +14,7 @@ import {
   SCPreferences,
   SCPreferencesContextType,
   SCUserContextType,
+  useSCFetchFeedObject,
   useSCPreferences,
   useSCUser
 } from '@selfcommunity/core';
@@ -113,6 +114,7 @@ export default function RelatedDiscussion(props: RelatedDiscussionProps): JSX.El
   const {feedObjectId, feedObjectType, template = FeedObjectTemplateType.SNIPPET, FeedObjectProps = {}, className, autoHide = true, ...rest} = props;
 
   // STATE
+  const {obj, setObj} = useSCFetchFeedObject({id: feedObjectId, feedObject: null, feedObjectType});
   const [objs, setObjs] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [hasMore, setHasMore] = useState<boolean>(false);
@@ -138,7 +140,12 @@ export default function RelatedDiscussion(props: RelatedDiscussionProps): JSX.El
       ((preferences[SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED] && scUserContext.user === null) ||
         !preferences[SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED])
     ) {
-      return <CustomAdv position={SCCustomAdvPosition.POSITION_RELATED_POSTS_COLUMN} />;
+      return (
+        <CustomAdv
+          position={SCCustomAdvPosition.POSITION_RELATED_POSTS_COLUMN}
+          {...(obj.categories.length && {categoriesId: obj.categories.map((c) => c.id)})}
+        />
+      );
     }
     return null;
   }
