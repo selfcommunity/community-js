@@ -3,6 +3,8 @@
   "ui.common.no": "No",
   "ui.common.error": "Error",
   "ui.common.error.url": "The url is not valid",
+  "ui.common.error.email": "Invalid email",
+  "ui.common.error.username": "Invalid username",
   "ui.common.discussionWithoutText": "View discussion",
   "ui.common.postWithoutText": "View post",
   "ui.common.statusWithoutText": "View status",
@@ -337,6 +339,12 @@
   "ui.NewMessage.new" : "New Message",
   "ui.NewMessage.to" : "To:",
   "ui.Thread.emptyBox.message" : "Select or compose a message",
+
+  "ui.signIn.username.label": "Username",
+  "ui.signIn.password.label": "Password",
+  "ui.signIn.submit": "Sign In",
+  "ui.signIn.recover": "Forgot password?",
+  "ui.signIn.signUp": "Not registered? Sign Up",
 
   "templates.userProfile.edit": "Edit"
 }

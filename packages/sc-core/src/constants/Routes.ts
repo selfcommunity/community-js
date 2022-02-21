@@ -16,6 +16,9 @@ export const USER_NOTIFICATIONS_ROUTE_NAME = 'user_notifications';
 export const USER_PRIVATE_MESSAGES_ROUTE_NAME = 'user_messages';
 export const LOYALTY_ROUTE_NAME = 'loyalty';
 export const INCUBATOR_ROUTE_NAME = 'incubator';
+export const SIGNIN_ROUTE_NAME = 'signin';
+export const SIGNUP_ROUTE_NAME = 'signup';
+export const RECOVER_ROUTE_NAME = 'recover';
 
 /**
  * Default Routes
@@ -34,4 +37,7 @@ export const defaultRoutes: {[k: string]: string} = {
   [USER_PRIVATE_MESSAGES_ROUTE_NAME]: '/messages/:id/',
   [LOYALTY_ROUTE_NAME]: '/loyalty/',
   [INCUBATOR_ROUTE_NAME]: '/incubator/:id/',
+  [SIGNIN_ROUTE_NAME]: '/signin/',
+  [SIGNUP_ROUTE_NAME]: '/signup/',
+  [RECOVER_ROUTE_NAME]: '/recover/',
 };
