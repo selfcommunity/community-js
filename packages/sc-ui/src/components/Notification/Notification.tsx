@@ -20,22 +20,9 @@ import NotificationsOnOutlinedIcon from '@mui/icons-material/NotificationsOutlin
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {AxiosResponse} from 'axios';
 import {ExpandLess, ExpandMore} from '@mui/icons-material';
-import {getContribute} from '../../utils/contribute';
+import {getContribute, getContributionSnippet} from '../../utils/contribute';
 import ContributionFollowNotification from './ContributionFollow';
-import {
-  Avatar,
-  Button,
-  Card,
-  CardProps,
-  Collapse,
-  ListItem,
-  ListItemAvatar,
-  ListItemButton,
-  ListItemText,
-  Stack,
-  Tooltip,
-  Typography
-} from '@mui/material';
+import {Avatar, Card, CardProps, Collapse, ListItem, ListItemAvatar, ListItemButton, ListItemText, Stack, Tooltip, Typography} from '@mui/material';
 import {
   Endpoints,
   http,
@@ -315,15 +302,18 @@ export default function UserNotification(props: NotificationProps): JSX.Element 
       notificationObject.aggregated &&
       (notificationObject.aggregated[0].type === SCNotificationTypologyType.COMMENT ||
         notificationObject.aggregated[0].type === SCNotificationTypologyType.NESTED_COMMENT ||
-        notificationObject.aggregated[0].type === SCNotificationTypologyType.FOLLOW)
+        notificationObject.aggregated[0].type === SCNotificationTypologyType.FOLLOW ||
+        notificationObject.aggregated[0].type === SCNotificationTypologyType.VOTE_UP)
     ) {
       const contribution = getContribute(notificationObject);
       return (
         <>
-          {contribution && contribution.type !== SCCommentTypologyType && contribution.summary && (
+          {contribution && contribution.type !== SCCommentTypologyType && (
             <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
               <Link to={scRoutingContext.url(contribution.type, {id: notificationObject[contribution.type].id})}>
-                <Typography variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: contribution.summary}} classes={{root: classes.title}} />
+                <Typography variant="body2" gutterBottom classes={{root: classes.title}}>
+                  {getContributionSnippet(contribution)}
+                </Typography>
               </Link>
               {contribution && (
                 <Tooltip

@@ -5,7 +5,7 @@ import EmojiFlagsIcon from '@mui/icons-material/EmojiFlags';
 import {green} from '@mui/material/colors';
 import {Link, SCNotificationUnDeletedForType, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
 import {FormattedMessage} from 'react-intl';
-import {getContributeType, getRouteData} from '../../../utils/contribute';
+import { getContributeType, getContributionSnippet, getRouteData } from '../../../utils/contribute';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
 import NewChip from '../NewChip';
 import classNames from 'classnames';
@@ -97,8 +97,9 @@ export default function UndeletedForNotification(props: NotificationUndeletedPro
             sx={{textDecoration: 'underline'}}
             color={'inherit'}
             gutterBottom
-            dangerouslySetInnerHTML={{__html: notificationObject[contributionType].summary}}
-          />
+          >
+            {getContributionSnippet(notificationObject[contributionType])}
+          </Typography>
         </Link>
       </Box>
     </Root>

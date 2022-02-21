@@ -34,6 +34,7 @@ import {CommentsOrderBy} from '../../types/comments';
 import ReplyCommentObject from './ReplyComment';
 import CommentActionsMenu from './CommentActionsMenu';
 import DateTimeAgo from '../../shared/DateTimeAgo';
+import {getRouteData} from '../../utils/contribute';
 
 const messages = defineMessages({
   reply: {
@@ -302,12 +303,7 @@ export default function CommentObject(props: CommentObjectProps): JSX.Element {
    */
   function renderTimeAgo(comment) {
     return (
-      <Link
-        to={scRoutingContext.url(SCRoutes.COMMENT_ROUTE_NAME, {
-          ...comment,
-          ...{contribution_type: feedObjectType, contribution_id: feedObjectId ? feedObjectId : feedObject.id}
-        })}
-        className={classes.activityAt}>
+      <Link to={scRoutingContext.url(SCRoutes.COMMENT_ROUTE_NAME, getRouteData(comment))} className={classes.activityAt}>
         <DateTimeAgo date={comment.added_at} />
       </Link>
     );

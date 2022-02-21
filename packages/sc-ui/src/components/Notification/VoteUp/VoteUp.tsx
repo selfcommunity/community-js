@@ -5,7 +5,7 @@ import {Link, SCCommentTypologyType, SCNotificationVoteUpType, SCRoutes, SCRouti
 import {defineMessages, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
 import NewChip from '../NewChip';
-import {getRouteData, getContributeType} from '../../../utils/contribute';
+import {getRouteData, getContributeType, getContributionSnippet} from '../../../utils/contribute';
 import {grey} from '@mui/material/colors';
 import classNames from 'classnames';
 
@@ -116,7 +116,9 @@ export default function VoteUpNotification(props: NotificationVoteUpProps): JSX.
                   getRouteData(notificationObject[contributionType])
                 )}
                 sx={{textDecoration: 'underline'}}>
-                <Typography variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: notificationObject[contributionType].summary}} />
+                <Typography variant="body2" gutterBottom>
+                  {getContributionSnippet(notificationObject[contributionType])}
+                </Typography>
               </Link>
               <Box component="span" sx={{display: 'flex', justifyContent: 'flex-start', p: '2px'}}>
                 <Grid component="span" item={true} sm="auto" container direction="row" alignItems="center">
