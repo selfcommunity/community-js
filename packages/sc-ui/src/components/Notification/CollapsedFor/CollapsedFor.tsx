@@ -5,7 +5,7 @@ import EmojiFlagsIcon from '@mui/icons-material/EmojiFlags';
 import {red} from '@mui/material/colors';
 import {Link, SCNotificationDeletedForType, SCRoutingContextType, useSCRouting, StringUtils, SCRoutes} from '@selfcommunity/core';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {getContributeType, getRouteData} from '../../../utils/contribute';
+import {getContributeType, getContributionSnippet, getRouteData} from '../../../utils/contribute';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
 import NewChip from '../NewChip';
 import classNames from 'classnames';
@@ -119,13 +119,9 @@ export default function CollapsedForNotification(props: NotificationCollapsedFor
           <FormattedMessage id="ui.notification.undeletedFor.youWrote" defaultMessage="ui.notification.undeletedFor.youWrote" />
         </Typography>
         <Link to={scRoutingContext.url(SCRoutes[`${contributionType.toUpperCase()}_ROUTE_NAME`], getRouteData(notificationObject[contributionType]))}>
-          <Typography
-            component={'span'}
-            variant="body2"
-            sx={{textDecoration: 'underline'}}
-            gutterBottom
-            dangerouslySetInnerHTML={{__html: notificationObject[contributionType].summary}}
-          />
+          <Typography component={'span'} variant="body2" sx={{textDecoration: 'underline'}} gutterBottom>
+            {getContributionSnippet(notificationObject[contributionType].summary)}
+          </Typography>
         </Link>
       </Box>
     </Root>

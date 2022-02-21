@@ -10,7 +10,7 @@ import VoteIcon from '@mui/icons-material/ThumbUpOutlined';
 import {grey} from '@mui/material/colors';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
 import NewChip from '../NewChip';
-import {getRouteData} from '../../../utils/contribute';
+import { getContributionSnippet, getRouteData } from '../../../utils/contribute';
 import classNames from 'classnames';
 
 const messages = defineMessages({
@@ -141,7 +141,9 @@ export default function CommentNotification(props: CommentNotificationProps): JS
               <Link
                 to={scRoutingContext.url(SCRoutes.COMMENT_ROUTE_NAME, getRouteData(notificationObject.comment))}
                 sx={{textDecoration: 'underline'}}>
-                <Typography variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: notificationObject.comment.summary}} />
+                <Typography variant="body2" gutterBottom>
+                  {getContributionSnippet(notificationObject.comment)}
+                </Typography>
               </Link>
               <Box component="span" sx={{display: 'flex', justifyContent: 'flex-start', p: '2px'}}>
                 <Grid component="span" item={true} sm="auto" container direction="row" alignItems="center">

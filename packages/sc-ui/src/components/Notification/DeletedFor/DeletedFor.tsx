@@ -4,7 +4,7 @@ import {Avatar, Box, ListItem, ListItemAvatar, ListItemText, Typography} from '@
 import EmojiFlagsIcon from '@mui/icons-material/EmojiFlags';
 import {red} from '@mui/material/colors';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {getContributeType, getRouteData} from '../../../utils/contribute';
+import {getContributeType, getContributionSnippet, getRouteData} from '../../../utils/contribute';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
 import NewChip from '../NewChip';
 import {Link, SCRoutingContextType, useSCRouting, StringUtils, SCNotificationDeletedForType, SCRoutes} from '@selfcommunity/core';
@@ -119,14 +119,9 @@ export default function DeletedForNotification(props: NotificationDeletedForProp
           <FormattedMessage id="ui.notification.undeletedFor.youWrote" defaultMessage="ui.notification.undeletedFor.youWrote" />
         </Typography>
         <Link to={scRoutingContext.url(SCRoutes[`${contributionType.toUpperCase()}_ROUTE_NAME`], getRouteData(notificationObject[contributionType]))}>
-          <Typography
-            component={'span'}
-            color={'inherit'}
-            variant="body2"
-            gutterBottom
-            sx={{textDecoration: 'underline'}}
-            dangerouslySetInnerHTML={{__html: notificationObject[contributionType].summary}}
-          />
+          <Typography component={'span'} color={'inherit'} variant="body2" gutterBottom sx={{textDecoration: 'underline'}}>
+            {getContributionSnippet(notificationObject[contributionType])}
+          </Typography>
         </Link>
       </Box>
     </Root>

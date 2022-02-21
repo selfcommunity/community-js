@@ -1,9 +1,9 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
 import {Avatar, Box, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
-import {Link, SCCommentTypologyType, SCNotificationMentionType, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
+import {Link, SCNotificationMentionType, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
 import {defineMessages, useIntl} from 'react-intl';
-import {getRouteData, getContributeType} from '../../../utils/contribute';
+import {getRouteData, getContributeType, getContributionSnippet} from '../../../utils/contribute';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
 import NewChip from '../NewChip';
 import classNames from 'classnames';
@@ -96,7 +96,6 @@ export default function UserNotificationMention(props: NotificationMentionProps)
               {intl.formatMessage(messages.quotedYouOn, {
                 b: (...chunks) => <strong>{chunks}</strong>
               })}{' '}
-              :
             </Typography>
           }
           secondary={
@@ -104,13 +103,9 @@ export default function UserNotificationMention(props: NotificationMentionProps)
               {notificationObject.is_new && <NewChip />}
               <Typography component="div" gutterBottom>
                 <Link to={scRoutingContext.url(SCRoutes[`${objectType.toUpperCase()}_ROUTE_NAME`], getRouteData(notificationObject[objectType]))}>
-                  <Typography
-                    component={'span'}
-                    variant="body2"
-                    sx={{textDecoration: 'underline'}}
-                    gutterBottom
-                    dangerouslySetInnerHTML={{__html: notificationObject[objectType].summary}}
-                  />
+                  <Typography component={'span'} variant="body2" sx={{textDecoration: 'underline'}} gutterBottom>
+                    {getContributionSnippet(notificationObject[objectType])}
+                  </Typography>
                 </Link>
               </Typography>
               <DateTimeAgo date={notificationObject.active_at} />
