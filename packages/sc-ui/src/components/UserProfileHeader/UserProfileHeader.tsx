@@ -109,12 +109,12 @@ export interface UserProfileHeaderProps {
 }
 
 /**
- * > API documentation for the Community-UI component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-UI User Profile Header component. Learn about the available props and the CSS API.
 
  #### Import
 
  ```jsx
- import UserProfileHeader from '@selfcommunity/ui';
+ import {UserProfileHeader} from '@selfcommunity/ui';
  ```
 
  #### Component Name

@@ -230,7 +230,7 @@ const PREFERENCES = [SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED, SCPreferences
  #### Import
 
  ```jsx
- import CommentsObject from '@selfcommunity/ui';
+ import {CommentsObject} from '@selfcommunity/ui';
  ```
 
  #### Component Name

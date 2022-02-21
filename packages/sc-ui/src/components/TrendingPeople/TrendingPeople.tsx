@@ -63,7 +63,7 @@ export interface TrendingPeopleProps {
  #### Import
 
  ```jsx
- import Trending People from '@selfcommunity/ui';
+ import {TrendingPeople} from '@selfcommunity/ui';
  ```
 
  #### Component Name

@@ -44,11 +44,11 @@ export interface BroadcastMessagesProps {
   [p: string]: any;
 }
 /**
- > API documentation for the Community-UI BroadcastMessages component. Learn about the available props and the CSS API.
+ > API documentation for the Community-UI Broadcast Messages component. Learn about the available props and the CSS API.
  *
  #### Import
  ```jsx
- import BroadcastMessages from '@selfcommunity/ui';
+ import {BroadcastMessages} from '@selfcommunity/ui';
  ```
  #### Component Name
  The name `SCBroadcastMessages` can be used when providing style overrides in the theme.

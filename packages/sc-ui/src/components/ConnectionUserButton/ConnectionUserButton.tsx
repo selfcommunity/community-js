@@ -36,11 +36,11 @@ export interface ConnectionUserButtonProps {
 }
 
 /**
- > API documentation for the Community-UI ConnectionUserButton component. Learn about the available props and the CSS API.
+ > API documentation for the Community-UI Connection User Button component. Learn about the available props and the CSS API.
  *
  #### Import
  ```jsx
- import ConnectionUserButton from '@selfcommunity/ui';
+ import {ConnectionUserButton} from '@selfcommunity/ui';
  ```
  #### Component Name
  The name `SCConnectionUserButton` can be used when providing style overrides in the theme.

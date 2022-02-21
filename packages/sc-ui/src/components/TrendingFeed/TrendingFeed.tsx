@@ -60,7 +60,7 @@ export interface TrendingFeedProps {
  #### Import
 
  ```jsx
- import TrendingFeedObject from '@selfcommunity/ui';
+ import {TrendingFeed} from '@selfcommunity/ui';
  ```
 
  #### Component Name

@@ -137,7 +137,7 @@ export interface NotificationProps extends CardProps {
  #### Import
 
  ```jsx
- import UserNotification from '@selfcommunity/ui';
+ import {UserNotification} from '@selfcommunity/ui';
  ```
 
  #### Component Name

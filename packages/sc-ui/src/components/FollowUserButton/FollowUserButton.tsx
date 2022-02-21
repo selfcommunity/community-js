@@ -59,12 +59,12 @@ export interface FollowUserButtonProps {
 }
 
 /**
- * > API documentation for the Community-UI FollowUserButton component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-UI Follow User Button component. Learn about the available props and the CSS API.
 
  #### Import
 
  ```jsx
- import FollowUserButton from '@selfcommunity/ui';
+ import {FollowUserButton} from '@selfcommunity/ui';
  ```
 
  #### Component Name

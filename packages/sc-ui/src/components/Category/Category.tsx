@@ -76,7 +76,7 @@ export interface CategoryProps extends Pick<CardProps, Exclude<keyof CardProps, 
  *
  * #### Import
  ```jsx
- import Category from '@selfcommunity/ui';
+ import {Category} from '@selfcommunity/ui';
  ```
  #### Component Name
  The name `SCCategory` can be used when providing style overrides in the theme.

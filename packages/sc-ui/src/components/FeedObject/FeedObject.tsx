@@ -248,7 +248,7 @@ export interface FeedObjectProps extends CardProps {
  #### Import
 
  ```jsx
- import FeedObject from '@selfcommunity/ui';
+ import {FeedObject} from '@selfcommunity/ui';
  ```
 
  #### Component Name

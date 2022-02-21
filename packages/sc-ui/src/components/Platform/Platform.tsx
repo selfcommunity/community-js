@@ -48,7 +48,7 @@ export interface PlatformProps {
  #### Import
 
  ```jsx
- import Platform from '@selfcommunity/ui';
+ import {Platform} from '@selfcommunity/ui';
  ```
 
  #### Component Name

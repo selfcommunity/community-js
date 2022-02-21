@@ -68,12 +68,12 @@ export interface UserToastNotificationsProps extends BoxProps {
 }
 /**
  *
- > API documentation for the Community-UI UserToastNotifications component. Learn about the available props and the CSS API.
+ > API documentation for the Community-UI User Toast Notifications component. Learn about the available props and the CSS API.
 
  #### Import
 
  ```jsx
- import UserToastNotifications from '@selfcommunity/ui';
+ import {UserToastNotifications} from '@selfcommunity/ui';
  ```
 
  #### Component Name

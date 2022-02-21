@@ -64,7 +64,7 @@ export interface PeopleSuggestionProps {
  #### Import
 
  ```jsx
- import PeopleSuggestion from '@selfcommunity/ui';
+ import {PeopleSuggestion} from '@selfcommunity/ui';
  ```
 
  #### Component Name

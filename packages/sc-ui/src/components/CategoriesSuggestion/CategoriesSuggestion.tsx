@@ -58,7 +58,7 @@ export interface CategoriesListProps {
  *
  #### Import
  ```jsx
- import CategoriesSuggestion from '@selfcommunity/ui';
+ import {CategoriesSuggestion} from '@selfcommunity/ui';
  ```
  #### Component Name
  The name `SCCategoriesSuggestion` can be used when providing style overrides in the theme.

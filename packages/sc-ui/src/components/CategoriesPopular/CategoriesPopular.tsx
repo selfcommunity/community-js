@@ -33,7 +33,7 @@ const Root = styled(Card, {
  *
  #### Import
  ```jsx
- import CategoriesPopular from '@selfcommunity/ui';
+ import {CategoriesPopular} from '@selfcommunity/ui';
  ```
 
  #### Component Name

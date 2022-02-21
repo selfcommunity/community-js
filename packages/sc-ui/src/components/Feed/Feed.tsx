@@ -137,7 +137,7 @@ const PREFERENCES = [SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED, SCPreferences
  #### Import
 
  ```jsx
- import Feed from '@selfcommunity/ui';
+ import {Feed} from '@selfcommunity/ui';
  ```
 
  #### Component Name

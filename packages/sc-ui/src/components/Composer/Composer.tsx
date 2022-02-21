@@ -346,7 +346,7 @@ const reducer = (state, action) => {
  *
  #### Import
  ```jsx
- import Composer from '@selfcommunity/ui';
+ import {Composer} from '@selfcommunity/ui';
  ```
  #### Component Name
  The name `SCComposer` can be used when providing style overrides in the theme.

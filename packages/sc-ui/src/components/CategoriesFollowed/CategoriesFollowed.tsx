@@ -44,7 +44,7 @@ const Root = styled(Card, {
  *
  #### Import
  ```jsx
- import CategoriesFollowed from '@selfcommunity/ui';
+ import {CategoriesFollowed} from '@selfcommunity/ui';
  ```
  #### Component Name
  The name `SCCategoriesFollowed` can be used when providing style overrides in the theme.

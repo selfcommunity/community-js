@@ -67,7 +67,7 @@ export interface UsersFollowedProps {
  #### Import
 
  ```jsx
- import UsersFollowed from '@selfcommunity/ui';
+ import {UsersFollowed} from '@selfcommunity/ui';
  ```
 
  #### Component Name

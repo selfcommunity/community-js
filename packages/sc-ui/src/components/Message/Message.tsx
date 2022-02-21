@@ -122,7 +122,7 @@ export interface MessageProps extends Pick<CardProps, Exclude<keyof CardProps, '
  #### Import
 
  ```jsx
- import Message from '@selfcommunity/ui';
+ import {Message} from '@selfcommunity/ui';
  ```
 
  #### Component Name

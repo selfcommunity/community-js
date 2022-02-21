@@ -52,7 +52,7 @@ export interface ChangePictureProps {
  #### Import
 
  ```jsx
- import ChangePicture from '@selfcommunity/ui';
+ import {ChangePicture} from '@selfcommunity/ui';
  ```
 
  #### Component Name

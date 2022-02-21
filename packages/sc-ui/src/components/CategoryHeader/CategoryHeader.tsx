@@ -109,7 +109,7 @@ export interface CategoryHeaderProps {
  *
  #### Import
  ```jsx
- import CategoryHeader from '@selfcommunity/ui';
+ import {CategoryHeader} from '@selfcommunity/ui';
  ```
  #### Component Name
 

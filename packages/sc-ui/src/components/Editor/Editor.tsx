@@ -147,7 +147,7 @@ export interface EditorProps {
  #### Import
 
  ```jsx
- import Editor from '@selfcommunity/ui';
+ import {Editor} from '@selfcommunity/ui';
  ```
 
  #### Component Name

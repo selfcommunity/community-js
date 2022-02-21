@@ -59,12 +59,12 @@ export interface FriendshipButtonProps {
 
 // TODO: fix component
 /**
- * > API documentation for the Community-UI FriendshipUserButton component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-UI Friendship User Button component. Learn about the available props and the CSS API.
 
  #### Import
 
  ```jsx
- import FriendshipUserButton from '@selfcommunity/ui';
+ import {FriendshipUserButton} from '@selfcommunity/ui';
  ```
 
  #### Component Name

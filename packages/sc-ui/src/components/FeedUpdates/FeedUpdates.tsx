@@ -69,7 +69,7 @@ export interface FeedUpdatesProps {
  #### Import
 
  ```jsx
- import FeedUpdates from '@selfcommunity/ui';
+ import {FeedUpdates} from '@selfcommunity/ui';
  ```
 
  #### Component Name

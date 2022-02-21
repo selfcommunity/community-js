@@ -86,12 +86,12 @@ export interface UserProfileInfoProps {
 }
 /**
  *
- > API documentation for the Community-UI UserProfileInfo component. Learn about the available props and the CSS API.
+ > API documentation for the Community-UI User Profile Info component. Learn about the available props and the CSS API.
 
  #### Import
 
  ```jsx
- import UserProfileInfo from '@selfcommunity/ui';
+ import {UserProfileInfo} from '@selfcommunity/ui';
  ```
 
  #### Component Name

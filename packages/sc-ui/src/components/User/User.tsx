@@ -76,7 +76,7 @@ export interface UserProps extends Pick<CardProps, Exclude<keyof CardProps, 'id'
  #### Import
 
  ```jsx
- import User from '@selfcommunity/ui';
+ import {User} from '@selfcommunity/ui';
  ```
 
  #### Component Name

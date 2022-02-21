@@ -87,7 +87,7 @@ const PREFERENCES = [SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED, SCPreferences
  #### Import
 
  ```jsx
- import Related Discussion from '@selfcommunity/ui';
+ import {RelatedDiscussion} from '@selfcommunity/ui';
  ```
 
  #### Component Name

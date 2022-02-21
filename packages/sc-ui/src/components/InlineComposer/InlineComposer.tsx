@@ -101,11 +101,11 @@ const INITIAL_STATE = {
   view: null
 };
 /**
- > API documentation for the Community-UI InlineComposer component. Learn about the available props and the CSS API.
+ > API documentation for the Community-UI Inline Composer component. Learn about the available props and the CSS API.
  *
  #### Import
  ```jsx
- import InlineComposer from '@selfcommunity/ui';
+ import {InlineComposer} from '@selfcommunity/ui';
  ```
  #### Component Name
  The name `SCInlineComposer` can be used when providing style overrides in the theme.

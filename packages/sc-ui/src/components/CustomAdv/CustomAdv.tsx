@@ -43,14 +43,14 @@ export interface CustomAdvProps {
   /**
    * Category ids if the adv must be related to specific categories
    */
-  categoriesId?: Array<number> | null
+  categoriesId?: Array<number> | null;
 }
 /**
  > API documentation for the Community-UI CustomAdv component. Learn about the available props and the CSS API.
  *
  #### Import
  ```jsx
- import CustomAdv from '@selfcommunity/ui';
+ import {CustomAdv} from '@selfcommunity/ui';
  ```
  #### Component Name
  The name `SCCustomAdv` can be used when providing style overrides in the theme.

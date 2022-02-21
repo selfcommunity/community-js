@@ -98,12 +98,12 @@ export interface UserProfileEditProps {
 }
 /**
  *
- > API documentation for the Community-UI UserProfileEdit component. Learn about the available props and the CSS API.
+ > API documentation for the Community-UI User Profile Edit component. Learn about the available props and the CSS API.
 
  #### Import
 
  ```jsx
- import UserProfileEdit from '@selfcommunity/ui';
+ import {UserProfileEdit} from '@selfcommunity/ui';
  ```
 
  #### Component Name

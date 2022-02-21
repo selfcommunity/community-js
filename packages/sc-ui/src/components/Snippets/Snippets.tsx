@@ -57,7 +57,7 @@ export interface SnippetsProps {
  #### Import
 
  ```jsx
- import Snippets from '@selfcommunity/ui';
+ import {Snippets} from '@selfcommunity/ui';
  ```
 
  #### Component Name

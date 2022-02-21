@@ -232,7 +232,7 @@ export interface CommentObjectProps {
  #### Import
 
  ```jsx
- import CommentObject from '@selfcommunity/ui';
+ import {CommentObject} from '@selfcommunity/ui';
  ```
 
  #### Component Name

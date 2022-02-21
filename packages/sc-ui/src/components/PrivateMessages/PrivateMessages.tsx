@@ -59,12 +59,12 @@ export interface PrivateMessagesProps {
 }
 /**
  *
- > API documentation for the Community-UI PrivateMessages component. Learn about the available props and the CSS API.
+ > API documentation for the Community-UI Private Messages component. Learn about the available props and the CSS API.
 
  #### Import
 
  ```jsx
- import PrivateMessages from '@selfcommunity/ui';
+ import {PrivateMessages} from '@selfcommunity/ui';
  ```
 
  #### Component Name

@@ -103,7 +103,7 @@ export interface ThreadProps {
  #### Import
 
  ```jsx
- import Thread from '@selfcommunity/ui';
+ import {Thread} from '@selfcommunity/ui';
  ```
 
  #### Component Name
