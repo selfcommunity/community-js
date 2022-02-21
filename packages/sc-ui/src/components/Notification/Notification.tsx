@@ -52,6 +52,10 @@ const PREFIX = 'SCUserNotification';
 
 const classes = {
   root: `${PREFIX}-root`,
+  notificationWrap: `${PREFIX}-notification-wrap`,
+  notificationHeader: `${PREFIX}-notification-header`,
+  notificationUnCollapsed: `${PREFIX}-notification-uncollapsed`,
+  notificationCollapsed: `${PREFIX}-notification-collapsed`,
   title: `${PREFIX}-title`,
   stopNotificationButton: `${PREFIX}-stop-notification-button`,
   showOtherAggregated: `${PREFIX}-show-other-aggregated`
@@ -70,6 +74,9 @@ const Root = styled(Card, {
     fontSize: 15,
     padding: '10px 8px 2px 8px',
     textDecoration: 'underline'
+  },
+  [`& .${classes.notificationWrap}`]: {
+    paddingBottom: 1
   },
   ['& .MuiCardContent-root']: {
     padding: 0
@@ -272,7 +279,7 @@ export default function UserNotification(props: NotificationProps): JSX.Element 
     if (notificationObject.aggregated && notificationObject.aggregated[0].type === SCNotificationTypologyType.PRIVATE_MESSAGE) {
       let messageNotification: SCNotificationPrivateMessageType = notificationObject.aggregated[0] as SCNotificationPrivateMessageType;
       return (
-        <ListItem alignItems="flex-start" component={'div'}>
+        <ListItem component={'div'} classes={{root: classes.notificationHeader}}>
           <ListItemAvatar>
             <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, messageNotification.message.sender)}>
               <Avatar alt={messageNotification.message.sender.username} variant="circular" src={messageNotification.message.sender.avatar} />
@@ -281,7 +288,7 @@ export default function UserNotification(props: NotificationProps): JSX.Element 
           <ListItemText
             disableTypography={true}
             primary={
-              <Typography component="span" sx={{display: 'inline'}} color="inherit">
+              <Typography component="span" color="inherit">
                 <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, messageNotification.message.sender)}>
                   {messageNotification.message.sender.username}
                 </Link>{' '}
@@ -307,7 +314,7 @@ export default function UserNotification(props: NotificationProps): JSX.Element 
     ) {
       const contribution = getContribute(notificationObject);
       return (
-        <>
+        <div className={classes.notificationHeader}>
           {contribution && contribution.type !== SCCommentTypologyType && (
             <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
               <Link to={scRoutingContext.url(contribution.type, {id: notificationObject[contribution.type].id})}>
@@ -341,7 +348,7 @@ export default function UserNotification(props: NotificationProps): JSX.Element 
               )}
             </Stack>
           )}
-        </>
+        </div>
       );
     }
     return null;
@@ -410,16 +417,18 @@ export default function UserNotification(props: NotificationProps): JSX.Element 
    */
   return (
     <Root id={id} className={classNames(classes.root, className)} {...rest}>
-      <CardContent sx={{paddingBottom: 1}}>
+      <CardContent classes={{root: classes.notificationWrap}}>
         {renderNotificationHeader()}
-        {notificationObject.aggregated.slice(0, showMaxAggregated).map((n: SCNotificationType, i) => renderAggregatedItem(n, i))}
+        <div className={classes.notificationUnCollapsed}>
+          {notificationObject.aggregated.slice(0, showMaxAggregated).map((n: SCNotificationType, i) => renderAggregatedItem(n, i))}
+        </div>
         {notificationObject.aggregated.length > showMaxAggregated && (
           <>
             <ListItemButton onClick={() => setOpenOtherAggregated((prev) => !prev)} classes={{root: classes.showOtherAggregated}}>
               <ListItemText primary={<FormattedMessage id={'ui.notification.showOthers'} defaultMessage={'ui.notification.showOthers'} />} />
               {openOtherAggregated ? <ExpandLess /> : <ExpandMore />}
             </ListItemButton>
-            <Collapse in={openOtherAggregated} timeout="auto" unmountOnExit>
+            <Collapse in={openOtherAggregated} timeout="auto" unmountOnExit classes={{root: classes.notificationCollapsed}}>
               {notificationObject.aggregated.slice(showMaxAggregated).map((n: SCNotificationType, i) => renderAggregatedItem(n, i))}
             </Collapse>
           </>
