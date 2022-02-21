@@ -10,10 +10,10 @@ import {SCFeedDiscussionType, SCFeedObjectType, SCFeedObjectTypologyType, SCFeed
  :::info
  This custom hook is used to fetch a feed object.
  :::
-
- * @param id
- * @param feedObject
- * @param feedObjectType
+ * @param object
+ * @param object.id
+ * @param object.feedObject
+ * @param object.feedObjectType
  */
 export default function useSCFetchFeedObject({
   id = null,

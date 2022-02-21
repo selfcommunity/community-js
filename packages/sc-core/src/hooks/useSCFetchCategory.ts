@@ -10,9 +10,9 @@ import Endpoints from '../constants/Endpoints';
  :::info
  This custom hook is used to fetch a category object.
  :::
-
- * @param id
- * @param category
+ * @param object
+ * @param object.id
+ * @param object.category
  */
 export default function useSCFetchCategory({id = null, category = null}: {id?: number; category?: SCCategoryType}) {
   const [scCategory, setSCCategory] = useState<SCCategoryType>(category);

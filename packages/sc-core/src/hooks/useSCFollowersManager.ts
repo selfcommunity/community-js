@@ -31,8 +31,6 @@ const STATUS_FOLLOWED = 'followed';
  3. scFollowedManager.isFollowed(user)
  ```
  :::
-
- @param user
  */
 export default function useSCFollowedManager(user?: SCUserType) {
   const {cache, updateCache, emptyCache, data, setData, loading, setLoading, isLoading} = useSCCachingManager();

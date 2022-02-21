@@ -10,9 +10,9 @@ import Endpoints from '../constants/Endpoints';
  :::info
  This custom hook is used to fetch a tag object.
  :::
-
- * @param id
- * @param tag
+*  @param object
+ * @param object.id
+ * @param object.tag
  */
 export default function useSCFetchTag({id = null, tag = null}: {id?: number; tag?: SCTagType}) {
   const [scTag, setSCTag] = useState<SCTagType>(tag);

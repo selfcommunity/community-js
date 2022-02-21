@@ -10,9 +10,9 @@ import {SCCustomAdvPosition, SCCustomAdvType} from '../types';
  :::info
  This custom hook is used to fetch a custom adv object.
  :::
-
- * @param position
- * @param categoryId
+ * @param object
+ * @param object.position
+ * @param object.categoryId
  */
 export default function useSCFetchCustomAdv({position = null, categoriesId = []}: {position: SCCustomAdvPosition; categoriesId?: Array<number>}) {
   const [scCustomAdv, setSCCustomAdv] = useState<SCCustomAdvType | null>(null);

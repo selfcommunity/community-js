@@ -13,7 +13,6 @@ import {Logger} from '../utils/logger';
  :::
 
  :::tipHow to use it:
-
  Follow these steps:
  ```jsx
  1. const scUserContext: SCUserContextType = useSCUser();
@@ -21,8 +20,6 @@ import {Logger} from '../utils/logger';
  3. scCategoriesManager.isFollowed(category)
  ```
  :::
-
- @param user
  */
 export default function useSCCategoriesManager(user?: SCUserType) {
   const {cache, updateCache, emptyCache, data, setData, loading, setLoading, isLoading} = useSCCachingManager();

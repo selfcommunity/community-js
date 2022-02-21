@@ -10,9 +10,9 @@ import Endpoints from '../constants/Endpoints';
  :::info
  This custom hook is used to fetch a user object.
  :::
-
- * @param id
- * @param user
+ * @param object
+ * @param object.id
+ * @param object.user
  */
 export default function useSCFetchUser({id = null, user = null}: {id?: number; user?: SCUserType}) {
   const [scUser, setSCUser] = useState<SCUserType>(user);

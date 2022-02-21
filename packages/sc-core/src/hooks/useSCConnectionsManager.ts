@@ -35,8 +35,6 @@ const STATUS_CONNECTION_REQUEST_RECEIVED = 'received_connection_request';
  3. scConnectionsManager.status(user)
  ```
  :::
-
- @param user
  */
 export default function useSCConnectionsManager(user?: SCUserType) {
   const {cache, updateCache, emptyCache, data, setData, loading, setLoading, isLoading} = useSCCachingManager();
