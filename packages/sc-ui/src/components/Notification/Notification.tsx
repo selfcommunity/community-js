@@ -121,7 +121,7 @@ export interface NotificationProps extends CardProps {
   handleCustomNotification?: (data) => JSX.Element;
 
   /**
-   * The max n of results shown
+   * The max n of results uncollapsed shown
    * @default 2
    */
   showMaxAggregated?: number;
@@ -157,6 +157,10 @@ export interface NotificationProps extends CardProps {
  |Rule Name|Global class|Description|
  |---|---|---|
  |root|.SCUserNotification-root|Styles applied to the root element.|
+ |notificationWrap|.SCUserNotification-notification-wrap|Styles applied to the element wrap.|
+ |notificationHeader|.SCUserNotification-notification-wrap|Styles applied to the notification header.|
+ |notificationUnCollapsed|.SCUserNotification-notification-wrap|Styles applied to the uncollapsed elements.|
+ |notificationUnCollapsed|.SCUserNotification-notification-wrap|Styles applied to the collapsed elements.|
  |title|.SCUserNotification-title|Styles applied to the title element.|
  |stopNotificationButton|.SCUserNotification-stop-notification-button|Styles applied to the stop notification button.|
  |showOtherAggregated|.SCUserNotification-show-other-aggregated|Styles applied to the show other aggregated element.|
