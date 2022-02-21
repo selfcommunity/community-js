@@ -9,7 +9,7 @@ import VoteFilledIcon from '@mui/icons-material/ThumbUpTwoTone';
 import VoteIcon from '@mui/icons-material/ThumbUpOutlined';
 import {grey, red} from '@mui/material/colors';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
-import NewChip from '../NewChip';
+import NewChip from '../../../shared/NewChip/NewChip';
 import {getContributionSnippet, getRouteData} from '../../../utils/contribute';
 import classNames from 'classnames';
 

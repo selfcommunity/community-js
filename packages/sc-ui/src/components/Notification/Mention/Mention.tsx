@@ -5,7 +5,7 @@ import {Link, SCNotificationMentionType, SCRoutes, SCRoutingContextType, useSCRo
 import {defineMessages, useIntl} from 'react-intl';
 import {getRouteData, getContributeType, getContributionSnippet} from '../../../utils/contribute';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
-import NewChip from '../NewChip';
+import NewChip from '../../../shared/NewChip/NewChip';
 import classNames from 'classnames';
 import {red} from '@mui/material/colors';
 

@@ -75,11 +75,11 @@ const Root = styled(Card, {
     padding: '10px 8px 2px 8px',
     textDecoration: 'underline'
   },
-  [`& .${classes.notificationWrap}`]: {
-    paddingBottom: 1
-  },
   ['& .MuiCardContent-root']: {
-    padding: 0
+    padding: 0,
+    [`&.${classes.notificationWrap}`]: {
+      paddingBottom: 0
+    }
   },
   [`& .${classes.stopNotificationButton}`]: {
     margin: '5px 10px',

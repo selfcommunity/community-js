@@ -3,7 +3,7 @@ import {styled} from '@mui/material/styles';
 import {Avatar, Box, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
 import {defineMessages, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
-import NewChip from '../NewChip';
+import NewChip from '../../../shared/NewChip/NewChip';
 import {
   Link,
   SCNotificationConnectionAcceptType,

@@ -4,7 +4,7 @@ import {Avatar, Box, ListItem, ListItemAvatar, ListItemText, Typography} from '@
 import {Link, SCRoutingContextType, useSCRouting, SCNotificationIncubatorType, SCRoutes} from '@selfcommunity/core';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
-import NewChip from '../NewChip';
+import NewChip from '../../../shared/NewChip/NewChip';
 import classNames from 'classnames';
 import {red} from '@mui/material/colors';
 

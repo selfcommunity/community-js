@@ -6,7 +6,7 @@ import {Link, SCNotificationPrivateMessageType, SCRoutes, SCRoutingContextType, 
 import {grey} from '@mui/material/colors';
 import {FormattedMessage} from 'react-intl';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
-import NewChip from '../NewChip';
+import NewChip from '../../../shared/NewChip/NewChip';
 import classNames from 'classnames';
 
 const PREFIX = 'SCUserNotificationPrivateMessage';

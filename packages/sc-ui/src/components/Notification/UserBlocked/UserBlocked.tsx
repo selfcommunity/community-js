@@ -6,7 +6,7 @@ import EmojiFlagsIcon from '@mui/icons-material/EmojiFlags';
 import {SCNotificationBlockedUserType, SCNotificationTypologyType} from '@selfcommunity/core';
 import {defineMessages, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
-import NewChip from '../NewChip';
+import NewChip from '../../../shared/NewChip/NewChip';
 import classNames from 'classnames';
 
 const messages = defineMessages({
