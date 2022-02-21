@@ -3,6 +3,8 @@
   "ui.common.no": "No",
   "ui.common.error": "Error",
   "ui.common.error.url": "The url is not valid",
+  "ui.common.error.email": "L'email non è valida",
+  "ui.common.error.username": "Il campo username può essere composto da caratteri alfanumerici _ e -",
   "ui.common.discussionWithoutText": "Vedi la discussione",
   "ui.common.postWithoutText": "Vedi il post",
   "ui.common.statusWithoutText": "Vedi lo status",
@@ -346,6 +348,18 @@
   "ui.NewMessage.new" : "Nuovo Messaggio",
   "ui.NewMessage.to" : "A:",
   "ui.Thread.emptyBox.message" : "Seleziona o componi un messaggio",
+
+  "ui.signIn.username.label": "Username",
+  "ui.signIn.password.label": "Password",
+  "ui.signIn.submit": "Accedi",
+  "ui.signIn.recover": "Hai dimenticato la password?",
+  "ui.signIn.signUp": "Non sei ancora iscritto? Iscriviti",
+
+  "ui.signUp.email.label": "Email",
+  "ui.signUp.username.label": "Username",
+  "ui.signUp.password.label": "Password",
+  "ui.signUp.submit": "Registrati",
+  "ui.signUp.signUp": "Sei già iscritto? Accedi",
 
   "templates.userProfile.edit": "Modifica"
 }
