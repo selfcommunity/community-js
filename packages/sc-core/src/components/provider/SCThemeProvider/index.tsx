@@ -8,20 +8,38 @@ import {SCPreferencesContextType} from '../../../types/context';
 import {useSCPreferences} from '../SCPreferencesProvider';
 
 /**
- * Create Global Context
- * Consuming this context in one of the following ways:
- *  1. `<SCThemeContext.Consumer>
- *       {(theme,) => (...)}
- *     </SCThemeContext.Consumer>`
- *  2. const scThemeContext: SCThemeContextType = useContext(SCThemeContext);
- *  3. const scThemeContext: SCThemeContextType = useSCTheme();
+ * Creates Global Context
+ *
+ :::tipContext can be consumed in one of the following ways:
+
+ ```jsx
+ 1. <SCThemeContext.Consumer>{(theme,) => (...)}</SCThemeContext.Consumer>
+ ```
+ ```jsx
+ 2. const scThemeContext: SCThemeContextType = useContext(SCThemeContext);
+ ```
+ ```jsx
+ 3. const scThemeContext: SCThemeContextType = useSCTheme();
+ ````
+
+ :::
+
  */
 export const SCThemeContext = createContext<SCThemeContextType>({} as SCThemeContextType);
 
 /**
+ * #### Description:
  * This component makes the `theme` available down the React tree.
  * It should preferably be used at **the root of your component tree**.
  * See: https://mui.com/system/styled/
+ *
+ * @param children
+ * @return
+ * ```jsx
+ * <SCThemeContext.Provider value={{theme, setTheme: setCustomTheme}}>
+ * <ThemeProvider theme={theme}>{children}</ThemeProvider>
+ * </SCThemeContext.Provider>
+ * ```
  */
 export default function SCThemeProvider({children = null}: {children: React.ReactNode}): JSX.Element {
   const scContext: SCContextType = useSCContext();
