@@ -1,16 +1,16 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import {Avatar, Box, Grid, ListItem, ListItemAvatar, ListItemText, Tooltip, Typography} from '@mui/material';
+import {Avatar, Box, Grid, ListItem, ListItemAvatar, ListItemText, Stack, Tooltip, Typography} from '@mui/material';
 import {Link, SCNotificationCommentType, SCNotificationTypologyType, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import Bullet from '../../../shared/Bullet';
 import {LoadingButton} from '@mui/lab';
 import VoteFilledIcon from '@mui/icons-material/ThumbUpTwoTone';
 import VoteIcon from '@mui/icons-material/ThumbUpOutlined';
-import {grey} from '@mui/material/colors';
+import {grey, red} from '@mui/material/colors';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
 import NewChip from '../NewChip';
-import { getContributionSnippet, getRouteData } from '../../../utils/contribute';
+import {getContributionSnippet, getRouteData} from '../../../utils/contribute';
 import classNames from 'classnames';
 
 const messages = defineMessages({
@@ -28,7 +28,13 @@ const PREFIX = 'SCCommentNotification';
 
 const classes = {
   root: `${PREFIX}-root`,
+  avatarWrap: `${PREFIX}-avatar-wrap`,
+  avatar: `${PREFIX}-avatar`,
   voteButton: `${PREFIX}-vote-button`,
+  commentText: `${PREFIX}-comment-text`,
+  contributionText: `${PREFIX}-contribution-text`,
+  activeAt: `${PREFIX}-active-at`,
+  bullet: `${PREFIX}-bullet`,
 };
 
 const Root = styled(Box, {
@@ -36,17 +42,21 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
+  [`& .${classes.avatar}`]: {
+    backgroundColor: red[500],
+    color: '#FFF'
+  },
   [`& .${classes.voteButton}`]: {
-    marginTop: '-1px',
-    minWidth: '30px'
+    marginLeft: '-1px',
+    minWidth: '30px',
+    paddingTop: 3
   },
-  '& .MuiSvgIcon-root': {
-    width: '0.7em',
-    marginBottom: '0.5px'
+  [`& .${classes.commentText}`]: {
+    display: 'inline',
+    fontWeight: '600'
   },
-  '& a': {
-    textDecoration: 'none',
-    color: grey[900]
+  [`& .${classes.contributionText}`]: {
+    textDecoration: 'underline'
   }
 }));
 
@@ -114,62 +124,64 @@ export default function CommentNotification(props: CommentNotificationProps): JS
   return (
     <Root id={id} className={classNames(classes.root, className)} {...rest}>
       <ListItem alignItems="flex-start" component={'div'}>
-        <ListItemAvatar>
+        <ListItemAvatar classes={{root: classes.avatarWrap}}>
           <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.comment.author)}>
-            <Avatar alt={notificationObject.comment.author.username} variant="circular" src={notificationObject.comment.author.avatar} />
+            <Avatar
+              alt={notificationObject.comment.author.username}
+              variant="circular"
+              src={notificationObject.comment.author.avatar}
+              classes={{root: classes.avatar}}
+            />
           </Link>
         </ListItemAvatar>
         <ListItemText
           disableTypography={true}
           primary={
-            <Typography component="span" sx={{display: 'inline'}} color="inherit">
+            <>
               {notificationObject.is_new && <NewChip />}
-              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.comment.author)}>
-                {notificationObject.comment.author.username}
-              </Link>{' '}
-              {notificationObject.type === SCNotificationTypologyType.NESTED_COMMENT
-                ? intl.formatMessage(messages.comment, {
-                    b: (...chunks) => <strong>{chunks}</strong>
-                  })
-                : intl.formatMessage(messages.nestedComment, {
-                    b: (...chunks) => <strong>{chunks}</strong>
-                  })}
-            </Typography>
+              <Typography component="span" className={classes.commentText} color="inherit">
+                <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.comment.author)}>
+                  {notificationObject.comment.author.username}
+                </Link>{' '}
+                {notificationObject.type === SCNotificationTypologyType.NESTED_COMMENT
+                  ? intl.formatMessage(messages.comment, {
+                      b: (...chunks) => <strong>{chunks}</strong>
+                    })
+                  : intl.formatMessage(messages.nestedComment, {
+                      b: (...chunks) => <strong>{chunks}</strong>
+                    })}
+              </Typography>
+            </>
           }
           secondary={
-            <React.Fragment>
-              <Link
-                to={scRoutingContext.url(SCRoutes.COMMENT_ROUTE_NAME, getRouteData(notificationObject.comment))}
-                sx={{textDecoration: 'underline'}}>
-                <Typography variant="body2" gutterBottom>
+            <>
+              <Link to={scRoutingContext.url(SCRoutes.COMMENT_ROUTE_NAME, getRouteData(notificationObject.comment))}>
+                <Typography variant="body2" gutterBottom className={classes.contributionText}>
                   {getContributionSnippet(notificationObject.comment)}
                 </Typography>
               </Link>
-              <Box component="span" sx={{display: 'flex', justifyContent: 'flex-start', p: '2px'}}>
-                <Grid component="span" item={true} sm="auto" container direction="row" alignItems="center">
-                  <DateTimeAgo date={notificationObject.active_at} />
-                  <Bullet sx={{paddingLeft: '10px', paddingTop: '1px'}} />
-                  <LoadingButton
-                    color={'inherit'}
-                    classes={{root: classes.voteButton}}
-                    variant={'text'}
-                    onClick={() => onVote(index, notificationObject.comment)}
-                    disabled={loadingVote === index}
-                    loading={loadingVote === index}>
-                    {notificationObject.comment.voted ? (
-                      <Tooltip
-                        title={<FormattedMessage id={'ui.notification.comment.voteDown'} defaultMessage={'ui.notification.comment.voteDown'} />}>
-                        <VoteFilledIcon fontSize={'small'} color={'secondary'} />
-                      </Tooltip>
-                    ) : (
-                      <Tooltip title={<FormattedMessage id={'ui.notification.comment.voteUp'} defaultMessage={'ui.notification.comment.voteUp'} />}>
-                        <VoteIcon fontSize={'small'} color="inherit" />
-                      </Tooltip>
-                    )}
-                  </LoadingButton>
-                </Grid>
-              </Box>
-            </React.Fragment>
+              <Stack direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
+                <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
+                <Bullet className={classes.bullet} />
+                <LoadingButton
+                  color={'inherit'}
+                  classes={{root: classes.voteButton}}
+                  variant={'text'}
+                  onClick={() => onVote(index, notificationObject.comment)}
+                  disabled={loadingVote === index}
+                  loading={loadingVote === index}>
+                  {notificationObject.comment.voted ? (
+                    <Tooltip title={<FormattedMessage id={'ui.notification.comment.voteDown'} defaultMessage={'ui.notification.comment.voteDown'} />}>
+                      <VoteFilledIcon fontSize={'small'} color={'secondary'} />
+                    </Tooltip>
+                  ) : (
+                    <Tooltip title={<FormattedMessage id={'ui.notification.comment.voteUp'} defaultMessage={'ui.notification.comment.voteUp'} />}>
+                      <VoteIcon fontSize={'small'} color="inherit" />
+                    </Tooltip>
+                  )}
+                </LoadingButton>
+              </Stack>
+            </>
           }
         />
       </ListItem>

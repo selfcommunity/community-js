@@ -36,14 +36,37 @@ const messages = defineMessages({
 const PREFIX = 'SCCollapsedForNotification';
 
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-root`,
+  flagIconWrap: `${PREFIX}-flag-icon-wrap`,
+  flagIcon: `${PREFIX}-flag-icon`,
+  flagText: `${PREFIX}-flag-text`,
+  activeAt: `${PREFIX}-active-at`,
+  contributionWrap: `${PREFIX}-contribution-wrap`,
+  contributionYouWroteLabel: `${PREFIX}-contribution-you-wrote-label`,
+  contributionText: `${PREFIX}-contribution-text`
 };
 
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+})(({theme}) => ({
+  [`& .${classes.flagIcon}`]: {
+    backgroundColor: red[500],
+    color: '#FFF'
+  },
+  [`& .${classes.flagText}`]: {
+    display: 'inline',
+    fontWeight: '600'
+  },
+  [`& .${classes.contributionWrap}`]: {
+    marginBottom: theme.spacing(1),
+    padding: theme.spacing(2)
+  },
+  [`& .${classes.contributionText}`]: {
+    textDecoration: 'underline'
+  }
+}));
 
 export interface NotificationCollapsedForProps {
   /**
@@ -94,32 +117,32 @@ export default function CollapsedForNotification(props: NotificationCollapsedFor
   return (
     <Root id={id} className={classNames(classes.root, className)} {...rest}>
       <ListItem alignItems="flex-start" component={'div'}>
-        <ListItemAvatar>
-          <Avatar variant="circular" sx={{backgroundColor: red[500]}}>
+        <ListItemAvatar classes={{root: classes.flagIconWrap}}>
+          <Avatar variant="circular" classes={{root: classes.flagIcon}}>
             <EmojiFlagsIcon />
           </Avatar>
         </ListItemAvatar>
         <ListItemText
           disableTypography={true}
           primary={
-            <Typography component="span" sx={{display: 'inline'}} color="primary">
+            <>
               {notificationObject.is_new && <NewChip />}
-              <b>
-                {intl.formatMessage(messages[StringUtils.camelCase(notificationObject.type)], {b: (...chunks) => <strong>{chunks}</strong>})} (
-                <FormattedMessage id="ui.notification.viewRules" defaultMessage="ui.notification.viewRules" />
-                ).
-              </b>
-            </Typography>
+              <Typography component="span" color="inherit" className={classes.flagText}>
+                {intl.formatMessage(messages[StringUtils.camelCase(notificationObject.type)], {b: (...chunks) => <strong>{chunks}</strong>})}
+              </Typography>
+            </>
           }
-          secondary={<DateTimeAgo date={notificationObject.active_at} />}
+          secondary={<DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />}
         />
       </ListItem>
-      <Box sx={{mb: 1}}>
-        <Typography variant={'body2'} color={'inherit'} sx={{p: 1}}>
+      <Box className={classes.contributionWrap}>
+        <Typography variant={'body2'} color={'inherit'} component={'span'} classes={{root: classes.contributionYouWroteLabel}}>
           <FormattedMessage id="ui.notification.undeletedFor.youWrote" defaultMessage="ui.notification.undeletedFor.youWrote" />
         </Typography>
-        <Link to={scRoutingContext.url(SCRoutes[`${contributionType.toUpperCase()}_ROUTE_NAME`], getRouteData(notificationObject[contributionType]))}>
-          <Typography component={'span'} variant="body2" sx={{textDecoration: 'underline'}} gutterBottom>
+        <Link
+          to={scRoutingContext.url(SCRoutes[`${contributionType.toUpperCase()}_ROUTE_NAME`], getRouteData(notificationObject[contributionType]))}
+          className={classes.contributionText}>
+          <Typography component={'span'} variant="body2" gutterBottom>
             {getContributionSnippet(notificationObject[contributionType].summary)}
           </Typography>
         </Link>

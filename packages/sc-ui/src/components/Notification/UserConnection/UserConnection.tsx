@@ -14,6 +14,7 @@ import {
   useSCRouting
 } from '@selfcommunity/core';
 import classNames from 'classnames';
+import {red} from '@mui/material/colors';
 
 const messages = defineMessages({
   requestConnection: {
@@ -29,14 +30,27 @@ const messages = defineMessages({
 const PREFIX = 'SCUserConnectionNotification';
 
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-root`,
+  avatarWrap: `${PREFIX}-avatar-wrap`,
+  avatar: `${PREFIX}-avatar`,
+  connectionText: `${PREFIX}-connection-text`,
+  activeAt: `${PREFIX}-active-at`
 };
 
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+})(({theme}) => ({
+  [`& .${classes.avatar}`]: {
+    backgroundColor: red[500],
+    color: '#FFF'
+  },
+  [`& .${classes.connectionText}`]: {
+    display: 'inline',
+    fontWeight: '600'
+  }
+}));
 
 export interface NotificationConnectionProps {
   /**
@@ -88,23 +102,25 @@ export default function UserConnectionNotification(props: NotificationConnection
   return (
     <Root id={id} className={classNames(classes.root, className)} {...rest}>
       <ListItem alignItems="flex-start" component={'div'}>
-        <ListItemAvatar>
+        <ListItemAvatar classes={{root: classes.avatarWrap}}>
           <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, userConnection)}>
-            <Avatar alt={userConnection.username} variant="circular" src={userConnection.avatar} />
+            <Avatar alt={userConnection.username} variant="circular" src={userConnection.avatar} classes={{root: classes.avatar}} />
           </Link>
         </ListItemAvatar>
         <ListItemText
           disableTypography={true}
           primary={
-            <Typography component="div" sx={{display: 'inline'}} color="inherit">
+            <>
               {notificationObject.is_new && <NewChip />}
-              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, userConnection)}>{userConnection.username}</Link>{' '}
-              {notificationObject.type === SCNotificationTypologyType.CONNECTION_REQUEST
-                ? intl.formatMessage(messages.requestConnection, {b: (...chunks) => <strong>{chunks}</strong>})
-                : intl.formatMessage(messages.requestConnection, {b: (...chunks) => <strong>{chunks}</strong>})}
-            </Typography>
+              <Typography component="div" className={classes.connectionText} color="inherit">
+                <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, userConnection)}>{userConnection.username}</Link>{' '}
+                {notificationObject.type === SCNotificationTypologyType.CONNECTION_REQUEST
+                  ? intl.formatMessage(messages.requestConnection, {b: (...chunks) => <strong>{chunks}</strong>})
+                  : intl.formatMessage(messages.requestConnection, {b: (...chunks) => <strong>{chunks}</strong>})}
+              </Typography>
+            </>
           }
-          secondary={<DateTimeAgo date={notificationObject.active_at} />}
+          secondary={<DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />}
         />
       </ListItem>
     </Root>

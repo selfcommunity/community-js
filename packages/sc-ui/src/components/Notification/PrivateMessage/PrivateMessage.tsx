@@ -1,6 +1,6 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import {Box, Button, ListItem, ListItemText, Typography} from '@mui/material';
+import {Box, Button, ListItem, ListItemText, Stack, Typography} from '@mui/material';
 import ReplyIcon from '@mui/icons-material/Send';
 import {Link, SCNotificationPrivateMessageType, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
 import {grey} from '@mui/material/colors';
@@ -12,7 +12,13 @@ import classNames from 'classnames';
 const PREFIX = 'SCUserNotificationPrivateMessage';
 
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-root`,
+  actions: `${PREFIX}-actions`,
+  replyButton: `${PREFIX}-reply-button`,
+  replyButtonIcon: `${PREFIX}-reply-button-icon`,
+  activeAt: `${PREFIX}-active-at`,
+  messageWrap: `${PREFIX}-message-wrap`,
+  message: `${PREFIX}-message`
 };
 
 const Root = styled(Box, {
@@ -20,23 +26,25 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  '& .MuiSvgIcon-root': {
-    width: '0.7em',
-    marginBottom: '0.5px',
-    float: 'left'
+  [`& .${classes.replyButton}`]: {
+    minWidth: 30
   },
-  '& .MuiListItemText-root': {
-    color: grey[600],
-    maxWidth: '60%'
+  [`& .${classes.activeAt}`]: {
+    minWidth: 30,
+    [theme.breakpoints.down('md')]: {
+      display: 'none'
+    }
   },
-  '& .MuiListItemSecondaryAction-root': {
+  [`& .${classes.messageWrap}`]: {
+    display: 'inline-block'
+  },
+  [`& .${classes.messageWrap}`]: {
+    height: 20
+  },
+  [`& .${classes.actions}`]: {
     color: grey[600],
     fontSize: '13px',
     maxWidth: '40%'
-  },
-  '& .MuiButton-root': {
-    paddingTop: 1,
-    paddingBottom: 1
   }
 }));
 
@@ -84,32 +92,29 @@ export default function UserNotificationPrivateMessage(props: NotificationPMProp
     <Root id={id} className={classNames(classes.root, className)} {...rest}>
       <ListItem
         component={'div'}
+        classes={{secondaryAction: classes.actions}}
         secondaryAction={
-          <Box>
-            <Box component={'span'} sx={{display: {xs: 'none', md: 'inline-block'}, marginRight: '5px', paddingTop: '5px', float: 'left'}}>
-              <DateTimeAgo date={notificationObject.active_at} />
-            </Box>
+          <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
+            <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
             <Button
               color={'primary'}
               variant="outlined"
               size="small"
-              sx={{minWidth: 30}}
+              classes={{root: classes.replyButton}}
               component={Link}
               to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, notificationObject.message)}
-              endIcon={<ReplyIcon />}>
-              <Box component={'span'} sx={{display: {xs: 'none', md: 'block'}, marginRight: '2px'}}>
-                <FormattedMessage id="ui.notification.privateMessage.btnReplyLabel" defaultMessage="ui.notification.privateMessage.btnReplyLabel" />
-              </Box>
+              endIcon={<ReplyIcon className={classes.replyButtonIcon} />}>
+              <FormattedMessage id="ui.notification.privateMessage.btnReplyLabel" defaultMessage="ui.notification.privateMessage.btnReplyLabel" />
             </Button>
-          </Box>
+          </Stack>
         }>
         <ListItemText
           disableTypography={true}
           primary={
             <>
               {notificationObject.is_new && <NewChip />}
-              <Box sx={{display: 'inline-block'}}>
-                <Link to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, notificationObject.message)}>
+              <Box className={classes.messageWrap}>
+                <Link to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, notificationObject.message)} className={classes.message}>
                   <Typography variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: notificationObject.message.html}} />
                 </Link>
               </Box>

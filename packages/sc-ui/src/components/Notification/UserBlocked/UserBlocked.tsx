@@ -23,14 +23,27 @@ const messages = defineMessages({
 const PREFIX = 'SCUserBlockedNotification';
 
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-root`,
+  blockedIconWrap: `${PREFIX}-flag-icon-wrap`,
+  blockedIcon: `${PREFIX}-blocked-icon`,
+  blockedText: `${PREFIX}-blocked-text`,
+  activeAt: `${PREFIX}-active-at`
 };
 
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+})(({theme}) => ({
+  [`& .${classes.blockedIcon}`]: {
+    backgroundColor: red[500],
+    color: '#FFF'
+  },
+  [`& .${classes.blockedText}`]: {
+    display: 'inline',
+    fontWeight: '600'
+  }
+}));
 
 export interface NotificationBlockedProps {
   /**
@@ -73,24 +86,24 @@ export default function UserBlockedNotification(props: NotificationBlockedProps)
   return (
     <Root id={id} className={classNames(classes.root, className)} {...rest}>
       <ListItem alignItems="flex-start" component={'div'}>
-        <ListItemAvatar>
-          <Avatar variant="circular" sx={{bgcolor: red[500]}}>
+        <ListItemAvatar classes={{root: classes.blockedIconWrap}}>
+          <Avatar variant="circular" classes={{root: classes.blockedIcon}}>
             <EmojiFlagsIcon />
           </Avatar>
         </ListItemAvatar>
         <ListItemText
           disableTypography={true}
           primary={
-            <Typography component="div" sx={{display: 'inline'}} color="inherit">
+            <>
               {notificationObject.is_new && <NewChip />}
-              <b>
+              <Typography component="div" color="inherit" className={classes.blockedText}>
                 {notificationObject.type === SCNotificationTypologyType.BLOCKED_USER
                   ? intl.formatMessage(messages.accountBlocked, {b: (...chunks) => <strong>{chunks}</strong>})
                   : intl.formatMessage(messages.accountReactivated, {b: (...chunks) => <strong>{chunks}</strong>})}
-              </b>
-            </Typography>
+              </Typography>
+            </>
           }
-          secondary={<DateTimeAgo date={notificationObject.active_at} />}
+          secondary={<DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />}
         />
       </ListItem>
     </Root>

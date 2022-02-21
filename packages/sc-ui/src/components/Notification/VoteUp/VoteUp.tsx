@@ -1,12 +1,12 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import {Avatar, Box, Grid, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
+import {Avatar, Box, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
 import {Link, SCCommentTypologyType, SCNotificationVoteUpType, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
 import {defineMessages, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
 import NewChip from '../NewChip';
 import {getRouteData, getContributeType, getContributionSnippet} from '../../../utils/contribute';
-import {grey} from '@mui/material/colors';
+import {red} from '@mui/material/colors';
 import classNames from 'classnames';
 
 const messages = defineMessages({
@@ -19,7 +19,13 @@ const messages = defineMessages({
 const PREFIX = 'SCVoteUpNotification';
 
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-root`,
+  avatarWrap: `${PREFIX}-avatar-wrap`,
+  avatar: `${PREFIX}-avatar`,
+  voteUpText: `${PREFIX}-vote-up-text`,
+  activeAt: `${PREFIX}-active-at`,
+  contributionWrap: `${PREFIX}-contribution-wrap`,
+  contributionText: `${PREFIX}-contribution-text`
 };
 
 const Root = styled(Box, {
@@ -27,13 +33,16 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  '& .MuiSvgIcon-root': {
-    width: '0.7em',
-    marginBottom: '0.5px'
+  [`& .${classes.avatar}`]: {
+    backgroundColor: red[500],
+    color: '#FFF'
   },
-  '& a': {
-    textDecoration: 'none',
-    color: grey[900]
+  [`& .${classes.voteUpText}`]: {
+    display: 'inline',
+    fontWeight: '600'
+  },
+  [`& .${classes.contributionText}`]: {
+    textDecoration: 'underline'
   }
 }));
 
@@ -89,43 +98,38 @@ export default function VoteUpNotification(props: NotificationVoteUpProps): JSX.
   return (
     <Root id={id} className={classNames(classes.root, className)} {...rest}>
       <ListItem alignItems="flex-start" component={'div'}>
-        <ListItemAvatar>
+        <ListItemAvatar classes={{root: classes.avatarWrap}}>
           <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.user)}>
-            <Avatar alt={notificationObject.user.username} variant="circular" src={notificationObject.user.avatar} />
+            <Avatar alt={notificationObject.user.username} variant="circular" src={notificationObject.user.avatar} classes={{root: classes.avatar}} />
           </Link>
         </ListItemAvatar>
         <ListItemText
           disableTypography={true}
           primary={
-            <Typography component="div" sx={{display: 'inline'}} color="inherit">
+            <>
               {notificationObject.is_new && <NewChip />}
-              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.user)}>
-                {notificationObject.user.username}
-              </Link>{' '}
-              {intl.formatMessage(messages.appreciated, {
-                username: notificationObject.user.username,
-                b: (...chunks) => <strong>{chunks}</strong>
-              })}
-            </Typography>
+              <Typography component="div" className={classes.voteUpText} color="inherit">
+                <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.user)}>{notificationObject.user.username}</Link>{' '}
+                {intl.formatMessage(messages.appreciated, {
+                  username: notificationObject.user.username,
+                  b: (...chunks) => <strong>{chunks}</strong>
+                })}
+              </Typography>
+            </>
           }
           secondary={
-            <React.Fragment>
+            <Box className={classes.contributionWrap}>
               <Link
                 to={scRoutingContext.url(
                   SCRoutes[`${contributionType.toUpperCase()}_ROUTE_NAME`],
                   getRouteData(notificationObject[contributionType])
-                )}
-                sx={{textDecoration: 'underline'}}>
-                <Typography variant="body2" gutterBottom>
+                )}>
+                <Typography variant="body2" className={classes.contributionText} gutterBottom>
                   {getContributionSnippet(notificationObject[contributionType])}
                 </Typography>
               </Link>
-              <Box component="span" sx={{display: 'flex', justifyContent: 'flex-start', p: '2px'}}>
-                <Grid component="span" item={true} sm="auto" container direction="row" alignItems="center">
-                  <DateTimeAgo date={notificationObject.active_at} />
-                </Grid>
-              </Box>
-            </React.Fragment>
+              <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
+            </Box>
           }
         />
       </ListItem>

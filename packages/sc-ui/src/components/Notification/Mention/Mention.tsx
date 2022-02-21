@@ -7,6 +7,7 @@ import {getRouteData, getContributeType, getContributionSnippet} from '../../../
 import DateTimeAgo from '../../../shared/DateTimeAgo';
 import NewChip from '../NewChip';
 import classNames from 'classnames';
+import {red} from '@mui/material/colors';
 
 const messages = defineMessages({
   quotedYouOn: {
@@ -18,7 +19,12 @@ const messages = defineMessages({
 const PREFIX = 'SCUserNotificationMention';
 
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-root`,
+  avatarWrap: `${PREFIX}-avatar-wrap`,
+  avatar: `${PREFIX}-avatar`,
+  mentionText: `${PREFIX}-mention-text`,
+  activeAt: `${PREFIX}-active-at`,
+  contributionText: `${PREFIX}-contribution-text`
 };
 
 const Root = styled(Box, {
@@ -26,9 +32,16 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  '& .MuiSvgIcon-root': {
-    width: '0.7em',
-    marginBottom: '0.5px'
+  [`& .${classes.avatar}`]: {
+    backgroundColor: red[500],
+    color: '#FFF'
+  },
+  [`& .${classes.mentionText}`]: {
+    display: 'inline',
+    fontWeight: '600'
+  },
+  [`& .${classes.contributionText}`]: {
+    textDecoration: 'underline'
   }
 }));
 
@@ -81,34 +94,39 @@ export default function UserNotificationMention(props: NotificationMentionProps)
   return (
     <Root id={id} className={classNames(classes.root, className)} {...rest}>
       <ListItem alignItems="flex-start" component={'div'}>
-        <ListItemAvatar>
+        <ListItemAvatar classes={{root: classes.avatarWrap}}>
           <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject[objectType].author)}>
-            <Avatar alt={notificationObject[objectType].author.username} variant="circular" src={notificationObject[objectType].author.avatar} />
+            <Avatar
+              alt={notificationObject[objectType].author.username}
+              variant="circular"
+              src={notificationObject[objectType].author.avatar}
+              classes={{root: classes.avatar}}
+            />
           </Link>
         </ListItemAvatar>
         <ListItemText
           disableTypography={true}
           primary={
-            <Typography component="span" sx={{display: 'inline'}} color="inherit">
-              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject[objectType].author)}>
-                {notificationObject[objectType].author.username}
-              </Link>{' '}
-              {intl.formatMessage(messages.quotedYouOn, {
-                b: (...chunks) => <strong>{chunks}</strong>
-              })}{' '}
-            </Typography>
+            <>
+              {notificationObject.is_new && <NewChip />}
+              <Typography component="span" className={classes.mentionText} color="inherit">
+                <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject[objectType].author)}>
+                  {notificationObject[objectType].author.username}
+                </Link>{' '}
+                {intl.formatMessage(messages.quotedYouOn, {
+                  b: (...chunks) => <strong>{chunks}</strong>
+                })}{' '}
+              </Typography>
+            </>
           }
           secondary={
             <div>
-              {notificationObject.is_new && <NewChip />}
-              <Typography component="div" gutterBottom>
-                <Link to={scRoutingContext.url(SCRoutes[`${objectType.toUpperCase()}_ROUTE_NAME`], getRouteData(notificationObject[objectType]))}>
-                  <Typography component={'span'} variant="body2" sx={{textDecoration: 'underline'}} gutterBottom>
-                    {getContributionSnippet(notificationObject[objectType])}
-                  </Typography>
-                </Link>
-              </Typography>
-              <DateTimeAgo date={notificationObject.active_at} />
+              <Link to={scRoutingContext.url(SCRoutes[`${objectType.toUpperCase()}_ROUTE_NAME`], getRouteData(notificationObject[objectType]))}>
+                <Typography component={'span'} variant="body2" className={classes.contributionText} gutterBottom>
+                  {getContributionSnippet(notificationObject[objectType])}
+                </Typography>
+              </Link>
+              <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt}/>
             </div>
           }
         />
