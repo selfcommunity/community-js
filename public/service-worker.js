@@ -64,7 +64,6 @@ function isOriginFocused(url) {
         let clientOrigin = new URL(client.url).origin;
         isFocused = isFocused || (clientOrigin === url && 'focus' in client);
       }
-      isFocused = true;
       return Promise.resolve(isFocused);
     })
     .catch((e) => {
