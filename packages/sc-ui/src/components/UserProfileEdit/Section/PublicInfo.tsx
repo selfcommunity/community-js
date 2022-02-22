@@ -188,7 +188,7 @@ export default function PublicInfo(props: PublicInfoProps): JSX.Element {
         return null;
       case SCUserFields.DATE_OF_BIRTH:
         return (
-          <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <LocalizationProvider dateAdapter={AdapterDateFns} key={field}>
             <DatePicker
               label={intl.formatMessage(messages[StringUtils.camelCase(field)])}
               value={user[field]}
@@ -231,6 +231,7 @@ export default function PublicInfo(props: PublicInfoProps): JSX.Element {
     }
     return (
       <TextField
+        key={field}
         {...props}
         className={classes.field}
         name={field}
