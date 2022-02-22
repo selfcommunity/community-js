@@ -19,18 +19,31 @@ import {
 
 /**
  * SCUserContext (Authentication Context)
- * Consuming this context in one of the following ways:
- *  1. `<SCUserContext.Consumer>
- *       {(user, session, error, loading, logout, ...) => (...)}
- *     </SCUserContext.Consumer>`
- *  2. const scUserContext: SCUserContextType = useContext(SCUserContext);
- *  3. const scUserContext: SCUserContextType = useSCUser();
+ *
+ :::tipContext can be consumed in one of the following ways:
+
+
+ ```jsx
+ 1. <SCUserContext.Consumer>{(user, session, error, loading, logout) => (...)}</SCUserContext.Consumer>
+ ```
+ ```jsx
+ 2. const scUserContext: SCUserContextType = useContext(SCUserContext);
+ ```
+ ```jsx
+ 3. const scUserContext: SCUserContextType = useSCUser();
+ ````
+ :::
  */
 export const SCUserContext = createContext<SCUserContextType>({} as SCUserContextType);
 
 /**
- * Export the provider as we need to wrap the entire app with it
- * This provider keeps current user logged and session
+ * #### Description:
+ * This component keeps current user logged and session; it is exported as we need to wrap the entire app with it
+ * @param children
+ * @return
+ * ```jsx
+ * <SCUserContext.Provider value={contextValue}>{!state.loading && children}</SCUserContext.Provider>
+ * ```
  */
 export default function SCUserProvider({children}: {children: React.ReactNode}): JSX.Element {
   const scContext: SCContextType = useContext(SCContext);

@@ -2,13 +2,13 @@ import React, {useContext} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
 import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
 import {Avatar, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText, CardProps} from '@mui/material';
 import {Link, SCRoutes, SCRoutingContextType, SCUserContext, SCUserContextType, useSCFetchCategory, useSCRouting} from '@selfcommunity/core';
 import CategorySkeleton from './Skeleton';
 import FollowButton, {FollowCategoryButtonProps} from '../FollowCategoryButton';
 import {SCCategoryType} from '@selfcommunity/core';
 import {defineMessages, useIntl} from 'react-intl';
+import classNames from 'classnames';
 
 const messages = defineMessages({
   categoryFollowers: {
@@ -20,6 +20,7 @@ const messages = defineMessages({
 const PREFIX = 'SCCategory';
 
 const classes = {
+  root: `${PREFIX}-root`,
   categoryImage: `${PREFIX}-category-image`,
   title: `${PREFIX}-title`,
   actions: `${PREFIX}-actions`
@@ -71,12 +72,13 @@ export interface CategoryProps extends Pick<CardProps, Exclude<keyof CardProps, 
 }
 
 /**
- > API documentation for the Community-UI Category component. Learn about the available props and the CSS API.
- * ### Import
+ * > API documentation for the Community-UI Category component. Learn about the available props and the CSS API.
+ *
+ * #### Import
  ```jsx
- import Category from '@selfcommunity/ui';
+ import {Category} from '@selfcommunity/ui';
  ```
- ### Component Name
+ #### Component Name
  The name `SCCategory` can be used when providing style overrides in the theme.
 
  #### CSS
@@ -136,7 +138,7 @@ export default function Category(props: CategoryProps): JSX.Element {
    */
   if (!autoHide) {
     return (
-      <Root className={className} {...rest}>
+      <Root className={classNames(classes.root, className)} {...rest}>
         <List>{c}</List>
       </Root>
     );

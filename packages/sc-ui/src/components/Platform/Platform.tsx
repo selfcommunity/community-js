@@ -42,6 +42,28 @@ export interface PlatformProps {
   [p: string]: any;
 }
 
+/**
+ * > API documentation for the Community-UI Platform component. Learn about the available props and the CSS API.
+
+ #### Import
+
+ ```jsx
+ import {Platform} from '@selfcommunity/ui';
+ ```
+
+ #### Component Name
+
+ The name `SCPlatform` can be used when providing style overrides in the theme.
+
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCPlatform-root|Styles applied to the root element.|
+ *
+ * @param props
+ */
 export default function Platform(props: PlatformProps): JSX.Element {
   // PROPS
   const {autoHide, className, ...rest} = props;

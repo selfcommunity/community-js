@@ -6,6 +6,7 @@ import {Box, DialogActions, DialogContent, DialogTitle} from '@mui/material';
 const PREFIX = 'SCComposerSkeleton';
 
 const classes = {
+  root: `${PREFIX}-root`,
   title: `${PREFIX}-title`,
   avatar: `${PREFIX}-avatar`,
   content: `${PREFIX}-content`,
@@ -65,7 +66,7 @@ const Root = styled(Box, {
 
 export default function ComposerSkeleton(): JSX.Element {
   return (
-    <Root>
+    <Root className={classes.root}>
       <DialogTitle className={classes.title}>
         <Box>
           <Skeleton animation="wave" height={10} width="100%" />

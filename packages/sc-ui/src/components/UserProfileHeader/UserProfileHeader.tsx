@@ -107,6 +107,35 @@ export interface UserProfileHeaderProps {
    */
   [p: string]: any;
 }
+
+/**
+ * > API documentation for the Community-UI User Profile Header component. Learn about the available props and the CSS API.
+
+ #### Import
+
+ ```jsx
+ import {UserProfileHeader} from '@selfcommunity/ui';
+ ```
+
+ #### Component Name
+
+ The name `SCUserProfileHeader` can be used when providing style overrides in the theme.
+
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCUserProfileHeader-root|Styles applied to the root element.|
+ |cover|.SCUserProfileHeader-cover|Styles applied to the cover element.|
+ |avatar|.SCUserProfileHeader-avatar|Styles applied to the avatar element.|
+ |info|SCUserProfileHeader-info|Styles applied to the info element.|
+ |username|SCUserProfileHeader-username|Styles applied to the username element.|
+ |changePicture|.SCUserProfileHeader-change-picture|Styles applied to changePicture element.|
+ |changeCover|.SCUserProfileHeader-change-cover`|Styles applied to changeCover element.|
+
+ * @param props
+ */
 export default function UserProfileHeader(props: UserProfileHeaderProps): JSX.Element {
   // PROPS
   const {id = null, className = null, userId = null, user = null, ChangePictureProps = {}, ChangeCoverProps = {}, ...rest} = props;

@@ -100,7 +100,28 @@ const INITIAL_STATE = {
   open: false,
   view: null
 };
+/**
+ > API documentation for the Community-UI Inline Composer component. Learn about the available props and the CSS API.
+ *
+ #### Import
+ ```jsx
+ import {InlineComposer} from '@selfcommunity/ui';
+ ```
+ #### Component Name
+ The name `SCInlineComposer` can be used when providing style overrides in the theme.
 
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCInlineComposer-root|Styles applied to the root element.|
+ |input|.SCInlineComposer-input|Styles applied to the input element.|
+ |actions|.SCInlineComposer-actions|Styles applied to the actions section.|
+ |avatar|.SCInlineComposer-avatar|Styles applied to the avatar element.|
+
+
+ * @param props
+ */
 export default function InlineComposer(props: InlineComposerProps): JSX.Element {
   // PROPS
   const {mediaObjectTypes = [Image, Document, Link], defaultValue, onSuccess = null, ...rest} = props;

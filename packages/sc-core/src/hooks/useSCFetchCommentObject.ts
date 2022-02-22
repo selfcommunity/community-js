@@ -7,10 +7,12 @@ import {Logger} from '../utils/logger';
 import Endpoints from '../constants/Endpoints';
 
 /**
- * Custom hook 'useSCFetchCommentObject'
- * Use this hook to fetch a comment
- * @param id
- * @param commentObject
+ :::info
+ This custom hooks is used to fetch a comment.
+ :::
+ * @param object
+ * @param object.id
+ * @param object.commentObject
  */
 export default function useSCFetchCommentObject({id = null, commentObject = null}: {id?: number; commentObject?: SCCommentType}) {
   const [obj, setObj] = useState<SCCommentType>(commentObject);

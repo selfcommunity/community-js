@@ -3,13 +3,20 @@ import {SCAlertMessagesContextType} from '../../../types';
 import {SnackbarProvider} from 'notistack';
 
 /**
- * Create Global Context
- * Consuming this context in one of the following ways:
- *  1. `<SCAlertMessagesContext.Consumer>
- *       {(options,) => (...)}
- *     </SCAlertMessagesContext.Consumer>`
- *  2. const scAlertMessagesContext: SCAlertMessagesContextType = useContext(SCAlertMessagesContext);
- *  3. const scAlertMessagesContext: SCAlertMessagesContextType = useSCAlertMessages();
+ * Creates Global Context
+ *
+ :::tipContext can be consumed in one of the following ways:
+ ```jsx
+ 1. <SCAlertMessagesContext.Consumer>{(options,) => (...)}</SCAlertMessagesContext.Consumer>
+ ```
+ ```jsx
+ 2. const scAlertMessagesContext: SCAlertMessagesContextType = useContext(SCAlertMessagesContext)
+ ```
+ ```jsx
+ 3. const scAlertMessagesContext: SCAlertMessagesContextType = useSCAlertMessages();
+ ````
+ :::
+
  */
 export const SCAlertMessagesContext = createContext<SCAlertMessagesContextType>({} as SCAlertMessagesContextType);
 

@@ -7,6 +7,10 @@ import Skeleton from '@mui/material/Skeleton';
 
 const PREFIX = 'SCNotificationSkeleton';
 
+const classes = {
+  root: `${PREFIX}-root`
+};
+
 const Root = styled(Card)(({theme}) => ({
   marginBottom: theme.spacing(2)
 }));
@@ -23,7 +27,7 @@ export default function NotificationSkeleton(props): JSX.Element {
   );
 
   return (
-    <Root {...props}>
+    <Root className={classes.root} {...props}>
       <CardContent sx={{paddingBottom: 1}}>
         <Skeleton animation="wave" height={20} style={{marginBottom: 0}} />
         <Skeleton animation="wave" height={15} width="60%" style={{marginBottom: 0}} />

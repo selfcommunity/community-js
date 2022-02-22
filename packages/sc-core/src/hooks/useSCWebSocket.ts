@@ -9,8 +9,9 @@ import {WS_FACILITY_NOTIFY, WS_PROTOCOL_PREFIX, WS_HEARTBEAT_MESSAGE} from '../c
 import PubSub from 'pubsub-js';
 
 /**
- * Custom hook 'useSCWebSocket'
- * Use this hook to init web socket
+ :::info
+ This custom hook is used to to init web socket.
+ :::
  */
 export default function useSCWebSocket() {
   const scContext: SCContextType = useSCContext();

@@ -19,8 +19,9 @@ import {
   SCPreferences,
   SCPreferencesContextType,
   SCUserContext,
-  SCUserContextType, SCUserType,
-  useSCPreferences,
+  SCUserContextType,
+  SCUserType,
+  useSCPreferences
 } from '@selfcommunity/core';
 import classNames from 'classnames';
 import PubSub from 'pubsub-js';
@@ -41,9 +42,6 @@ const Root = styled(Grid, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   marginTop: theme.spacing(2),
-  [`& .${classes.left}`]: {
-    padding: '3px'
-  },
   [`& .${classes.end}, & .${classes.refresh}`]: {
     textAlign: 'center'
   }
@@ -130,7 +128,31 @@ interface FeedData {
 }
 
 const PREFERENCES = [SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED, SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED];
+/**
+ * > API documentation for the Community-UI Feed component. Learn about the available props and the CSS API.
 
+ #### Import
+
+ ```jsx
+ import {Feed} from '@selfcommunity/ui';
+ ```
+
+ #### Component Name
+
+ The name `SCFeed` can be used when providing style overrides in the theme.
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCFeed-root|Styles applied to the root element.|
+ |left|.SCFeed-left|Styles applied to the left element.|
+ |right|.SCFeed-right|Styles applied to the right element.|
+ |end|.SCFeed-end|Styles applied to the end element.|
+ |refresh|.SCFeed-refresh|Styles applied to the refresh section.|
+ *
+ * @param props
+ */
 export default function Feed(props: FeedProps): JSX.Element {
   // PROPS
   const {
@@ -229,6 +251,7 @@ export default function Feed(props: FeedProps): JSX.Element {
 
   const refresh = () => {
     setNext(endpoint.url({}));
+    setFeedData([]);
     fetch();
   };
 

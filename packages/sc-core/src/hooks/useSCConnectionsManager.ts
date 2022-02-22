@@ -22,11 +22,19 @@ const STATUS_CONNECTION_REQUEST_SENT = 'sent_connection_request';
 const STATUS_CONNECTION_REQUEST_RECEIVED = 'received_connection_request';
 
 /**
- * Custom hook 'useSCConnectionsManager'
- * Use this hook to manage friends:
- * 1. const scUserContext: SCUserContextType = useSCUser();
- * 2. const scConnectionsManager: SCConnectionsManagerType = scUserContext.manager.connections;
- * 3. scConnectionsManager.status(user)
+ :::info
+ This custom hook is used to manage to manage friends.
+ :::
+
+ :::tipHow to use it:
+
+ Follow these steps:
+ ```jsx
+ 1. const scUserContext: SCUserContextType = useSCUser();
+ 2. const scConnectionsManager: SCConnectionsManagerType = scUserContext.manager.connections;
+ 3. scConnectionsManager.status(user)
+ ```
+ :::
  */
 export default function useSCConnectionsManager(user?: SCUserType) {
   const {cache, updateCache, emptyCache, data, setData, loading, setLoading, isLoading} = useSCCachingManager();

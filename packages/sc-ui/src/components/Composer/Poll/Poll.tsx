@@ -14,6 +14,7 @@ import itLocale from 'date-fns/locale/it';
 import enLocale from 'date-fns/locale/en-US';
 import {SCFeedWidgetType} from '../../../types/feed';
 import {SCPollChoiceType, SCPollType} from '@selfcommunity/core';
+import classNames from 'classnames';
 
 const localeMap = {
   en: enLocale,
@@ -23,6 +24,7 @@ const localeMap = {
 const PREFIX = 'SCComposerPoll';
 
 const classes = {
+  root: `${PREFIX}-root`,
   title: `${PREFIX}-title`,
   choices: `${PREFIX}-choices`,
   choiceNew: `${PREFIX}-choice-new`,
@@ -166,7 +168,7 @@ export default (props: PollProps): JSX.Element => {
   minDate.setDate(minDate.getDate() + COMPOSER_POLL_MIN_CLOSE_DATE_DELTA);
 
   return (
-    <Root id={id} className={className}>
+    <Root id={id} className={classNames(classes.root, className)}>
       <Box className={classes.title}>
         <TextField
           label={<FormattedMessage id="ui.composer.poll.title" defaultMessage="ui.composer.poll.title" />}

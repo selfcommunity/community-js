@@ -5,8 +5,13 @@ import ChangePictureDialog from './ChangePictureDialog/ChangePictureDialog';
 import {FormattedMessage} from 'react-intl';
 import PhotoCameraOutlinedIcon from '@mui/icons-material/PhotoCameraOutlined';
 import {SCUserContext, SCUserContextType} from '@selfcommunity/core';
+import classNames from 'classnames';
 
 const PREFIX = 'SCChangePictureButton';
+
+const classes = {
+  root: `${PREFIX}-root`
+};
 
 const CPButton = styled(Button, {
   name: PREFIX,
@@ -41,6 +46,27 @@ export interface ChangePictureProps {
   [p: string]: any;
 }
 
+/**
+ * > API documentation for the Community-UI Change Picture component. Learn about the available props and the CSS API.
+
+ #### Import
+
+ ```jsx
+ import {ChangePicture} from '@selfcommunity/ui';
+ ```
+
+ #### Component Name
+
+ The name `SCChangePictureButton` can be used when providing style overrides in the theme.
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCChangePictureButton-root|Styles applied to the root element.|
+
+ * @param props
+ */
 export default function ChangePicture(props: ChangePictureProps): JSX.Element {
   //PROPS
   const {iconButton, onChange, autoHide, className, ...rest} = props;
@@ -63,7 +89,7 @@ export default function ChangePicture(props: ChangePictureProps): JSX.Element {
     return (
       <React.Fragment>
         <CPButton
-          className={className}
+          className={classNames(classes.root, className)}
           size="small"
           variant="contained"
           onClick={() => setOpenChangePictureDialog(true)}

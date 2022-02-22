@@ -34,6 +34,7 @@ import {CommentsOrderBy} from '../../types/comments';
 import ReplyCommentObject from './ReplyComment';
 import CommentActionsMenu from './CommentActionsMenu';
 import DateTimeAgo from '../../shared/DateTimeAgo';
+import {getRouteData} from '../../utils/contribute';
 
 const messages = defineMessages({
   reply: {
@@ -50,7 +51,7 @@ const messages = defineMessages({
   }
 });
 
-const PREFIX = 'SCCommentsObject';
+const PREFIX = 'SCCommentObject';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -67,7 +68,7 @@ const classes = {
   commentActionsMenu: `${PREFIX}-comment-actions-menu`,
   deleted: `${PREFIX}-deleted`,
   activityAt: `${PREFIX}-activity-at`,
-  reply: `${PREFIX}-reply`,
+  reply: `${PREFIX}-reply`
 };
 
 const Root = styled(Box, {
@@ -111,7 +112,8 @@ const Root = styled(Box, {
     paddingLeft: '70px'
   },
   [`& .${classes.btnViewPreviousComments}`]: {
-    paddingLeft: '70px'
+    paddingLeft: '70px',
+    textTransform: 'capitalize'
   },
   [`& .${classes.commentActionsMenu}`]: {
     position: 'absolute',
@@ -224,6 +226,41 @@ export interface CommentObjectProps {
   [p: string]: any;
 }
 
+/**
+ *> API documentation for the Community-UI Comment Object component. Learn about the available props and the CSS API.
+
+ #### Import
+
+ ```jsx
+ import {CommentObject} from '@selfcommunity/ui';
+ ```
+
+ #### Component Name
+
+ The name `SCCommentObject` can be used when providing style overrides in the theme.
+
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCCommentObject-root|Styles applied to the root element.|
+ |comment|.SCCommentObject-comment|Styles applied to comment element.|
+ |avatarWrap|.SCCommentObject-avatar-wrap|Styles applied to avatar wrap.|
+ |avatar|.SCCommentObject-avatar|Styles applied to the avatar element.|
+ |author|.SCCommentObject-author|Styles applied to the author section.|
+ |content|.SCCommentObject-content|Styles applied to content section.|
+ |textContent|.SCCommentObject-text-content|Styles applied to text content section.|
+ |commentChild|.SCCommentObject-comment-child|Styles applied to the comment child element.|
+ |btnVotes|.SCCommentObject-btn-votes|Styles applied to the vote button element.|
+ |votes|.SCCommentObject-votes|Styles applied to the votes section.|
+ |btnViewPreviousComments|.SCCommentObject-btn-view-previous-comments|Styles applied to previous comment button element|
+ |commentActionsMenu|.SCCommentObject-comment-actions-menu|Styles applied to comment action menu element.|
+ |deleted|.SCCommentObject-deleted|Styles applied to tdeleted element.|
+ |activityAt|.SCCommentObject-activity-at|Styles applied to activity at section.|
+
+ * @param props
+ */
 export default function CommentObject(props: CommentObjectProps): JSX.Element {
   // PROPS
   const {
@@ -266,12 +303,7 @@ export default function CommentObject(props: CommentObjectProps): JSX.Element {
    */
   function renderTimeAgo(comment) {
     return (
-      <Link
-        to={scRoutingContext.url(SCRoutes.COMMENT_ROUTE_NAME, {
-          ...comment,
-          ...{contribution_type: feedObjectType, contribution_id: feedObjectId ? feedObjectId : feedObject.id}
-        })}
-        className={classes.activityAt}>
+      <Link to={scRoutingContext.url(SCRoutes.COMMENT_ROUTE_NAME, getRouteData(comment))} className={classes.activityAt}>
         <DateTimeAgo date={comment.added_at} />
       </Link>
     );
@@ -308,7 +340,11 @@ export default function CommentObject(props: CommentObjectProps): JSX.Element {
    */
   function renderActionReply(comment) {
     return (
-      <Button className={classes.reply} variant="text" onClick={() => (!scUserContext.user ? scContext.settings.handleAnonymousAction() : reply(comment))} color="inherit">
+      <Button
+        className={classes.reply}
+        variant="text"
+        onClick={() => (!scUserContext.user ? scContext.settings.handleAnonymousAction() : reply(comment))}
+        color="inherit">
         {intl.formatMessage(messages.reply)}
       </Button>
     );
@@ -603,7 +639,7 @@ export default function CommentObject(props: CommentObjectProps): JSX.Element {
                   <Card classes={{root: classes.content}} {...rest}>
                     <CardContent classes={{root: classNames({[classes.deleted]: obj.deleted})}}>
                       <Link className={classes.author} to={scRoutingContext.url('profile', {id: comment.author.id})}>
-                        <Typography component="span" sx={{display: 'inline'}} gutterBottom color="primary">
+                        <Typography component="span" sx={{display: 'inline'}} gutterBottom color="inherit">
                           {comment.author.username}
                         </Typography>
                       </Link>
@@ -673,6 +709,7 @@ export default function CommentObject(props: CommentObjectProps): JSX.Element {
               </Box>
             ) : (
               <Button
+                color="inherit"
                 variant="text"
                 onClick={loadLatestComment}
                 disabled={loadingLatestComments || (!feedObjectId && !feedObject)}
@@ -686,7 +723,7 @@ export default function CommentObject(props: CommentObjectProps): JSX.Element {
             )}
           </>
         )}
-        {comment.latest_comments?.map((lc: SCCommentType, index) => (
+        {comment.latest_comments?.map((lc: SCCommentType) => (
           <React.Fragment key={lc.id}>{renderComment(lc)}</React.Fragment>
         ))}
       </>

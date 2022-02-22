@@ -66,7 +66,32 @@ export interface UserToastNotificationsProps extends BoxProps {
    */
   [p: string]: any;
 }
+/**
+ *
+ > API documentation for the Community-UI User Toast Notifications component. Learn about the available props and the CSS API.
 
+ #### Import
+
+ ```jsx
+ import {UserToastNotifications} from '@selfcommunity/ui';
+ ```
+
+ #### Component Name
+
+ The name `SCUserToastNotifications` can be used when providing style overrides in the theme.
+
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCUserToastNotifications-root|Styles applied to the root element.|
+ |toastMessage|.SCUserToastNotifications-toast-message|Styles applied to the toast message element.|
+ |toastContent|.SCUserToastNotifications-toast-content|Styles applied to the toast content element.|
+ |toastActions|.SCUserToastNotifications-toast-actions|Styles applied to the toast actions section.|
+
+ * @param props
+ */
 export default function UserToastNotifications(props: UserToastNotificationsProps): JSX.Element {
   // PROPS
   const {ToastMessageProps = {}, handleNotification, disableToastNotification = false} = props;

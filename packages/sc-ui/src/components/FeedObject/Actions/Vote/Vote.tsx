@@ -26,6 +26,7 @@ import {
   useSCFetchFeedObject,
   useSCUser
 } from '@selfcommunity/core';
+import classNames from 'classnames';
 
 /**
  * We have complex state logic that involves multiple sub-values,
@@ -438,7 +439,7 @@ export default function Vote(props: VoteProps): JSX.Element {
    * Renders vote action and audience section
    */
   return (
-    <Root className={className} {...rest}>
+    <Root className={classNames(classes.root, className)} {...rest}>
       {renderAudience()}
       {renderVoteBtn()}
     </Root>

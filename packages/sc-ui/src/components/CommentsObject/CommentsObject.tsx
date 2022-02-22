@@ -41,7 +41,8 @@ const classes = {
   root: `${PREFIX}-root`,
   fixedPrimaryReply: `${PREFIX}-fixed-primary-reply`,
   fixedTopPrimaryReply: `${PREFIX}-fixed-top-primary-reply`,
-  fixedBottomPrimaryReply: `${PREFIX}-fixed-bottom-primary-reply`
+  fixedBottomPrimaryReply: `${PREFIX}-fixed-bottom-primary-reply`,
+  loadMoreCommentsButton: `${PREFIX}-load-more-comments-button`
 };
 
 const Root = styled(Box, {
@@ -69,6 +70,9 @@ const Root = styled(Box, {
   [`& .${classes.fixedBottomPrimaryReply}`]: {
     bottom: 0,
     boxShadow: 'rgb(0 0 0 / 5%) 0px -1px 0px 0px, rgb(0 0 0 / 4%) 0px -1px 1px'
+  },
+  [`& .${classes.loadMoreCommentsButton}`]: {
+    textTransform: 'capitalize'
   }
 }));
 
@@ -220,7 +224,29 @@ export interface CommentsObjectProps {
 }
 
 const PREFERENCES = [SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED, SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED];
+/**
+ *> API documentation for the Community-UI Comments Object component. Learn about the available props and the CSS API.
 
+ #### Import
+
+ ```jsx
+ import {CommentsObject} from '@selfcommunity/ui';
+ ```
+
+ #### Component Name
+
+ The name `SCCommentsObject` can be used when providing style overrides in the theme.
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCCommentsObject-root|Styles applied to the root element.|
+ |fixedPrimaryReply|.SCCommentsObject-fixed-primary-reply|Styles applied to the comment primary reply element.|
+ |fixedTopPrimaryReply|.SCCommentsObject-fixed-top-primary-reply|Styles applied to the comment top primary reply element.|
+ |fixedBottomPrimaryReply|.SCCommentsObject-fixed-bottom-primary-reply|Styles applied to the comment bottom primary reply  element.|
+ * @param props
+ */
 export default function CommentsObject(props: CommentsObjectProps): JSX.Element {
   // PROPS
   const {
@@ -323,7 +349,12 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
       ((preferences[SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED] && scUserContext.user === null) ||
         !preferences[SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED])
     ) {
-      return <CustomAdv position={SCCustomAdvPosition.POSITION_IN_COMMENTS} />;
+      return (
+        <CustomAdv
+          position={SCCustomAdvPosition.POSITION_IN_COMMENTS}
+          {...(obj.categories.length && {categoriesId: obj.categories.map((c) => c.id)})}
+        />
+      );
     }
     return null;
   }
@@ -717,7 +748,12 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
           })}
           {Boolean(next) && !isLoading && (
             <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
-              <Button variant="text" onClick={fetchNextComments} disabled={isLoading} color="inherit">
+              <Button
+                variant="text"
+                onClick={fetchNextComments}
+                disabled={isLoading}
+                color="inherit"
+                classes={{root: classes.loadMoreCommentsButton}}>
                 <FormattedMessage id="ui.commentsObject.loadMoreComments" defaultMessage="ui.commentsObject.loadMoreComments" />
               </Button>
               {total && !commentObj && (

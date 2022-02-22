@@ -7,9 +7,12 @@ import {Logger} from '../utils/logger';
 import Endpoints from '../constants/Endpoints';
 
 /**
- * Custom hook 'useSCFetchUser'
- * Use this hook to fetch a user object
- * @param initialSession
+ :::info
+ This custom hook is used to fetch a user object.
+ :::
+ * @param object
+ * @param object.id
+ * @param object.user
  */
 export default function useSCFetchUser({id = null, user = null}: {id?: number; user?: SCUserType}) {
   const [scUser, setSCUser] = useState<SCUserType>(user);

@@ -1,6 +1,5 @@
 import React, {useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
-
 import CardContent from '@mui/material/CardContent';
 import CommentNotification from './Comment';
 import UserFollowNotification from './UserFollow';
@@ -21,9 +20,9 @@ import NotificationsOnOutlinedIcon from '@mui/icons-material/NotificationsOutlin
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {AxiosResponse} from 'axios';
 import {ExpandLess, ExpandMore} from '@mui/icons-material';
-import {getContribute} from '../../utils/contribute';
+import {getContribute, getContributionSnippet} from '../../utils/contribute';
 import ContributionFollowNotification from './ContributionFollow';
-import {Avatar, Button, Card, CardProps, Collapse, ListItem, ListItemAvatar, ListItemButton, ListItemText, Stack, Typography} from '@mui/material';
+import {Avatar, Card, CardProps, Collapse, ListItem, ListItemAvatar, ListItemButton, ListItemText, Stack, Tooltip, Typography} from '@mui/material';
 import {
   Endpoints,
   http,
@@ -39,6 +38,8 @@ import {
   useSCRouting
 } from '@selfcommunity/core';
 import IncubatorApprovedNotification from './IncubatorApproved';
+import classNames from 'classnames';
+import LoadingButton from '@mui/lab/LoadingButton';
 
 const messages = defineMessages({
   receivePrivateMessage: {
@@ -50,6 +51,11 @@ const messages = defineMessages({
 const PREFIX = 'SCUserNotification';
 
 const classes = {
+  root: `${PREFIX}-root`,
+  notificationWrap: `${PREFIX}-notification-wrap`,
+  notificationHeader: `${PREFIX}-notification-header`,
+  notificationUnCollapsed: `${PREFIX}-notification-uncollapsed`,
+  notificationCollapsed: `${PREFIX}-notification-collapsed`,
   title: `${PREFIX}-title`,
   stopNotificationButton: `${PREFIX}-stop-notification-button`,
   showOtherAggregated: `${PREFIX}-show-other-aggregated`
@@ -70,7 +76,10 @@ const Root = styled(Card, {
     textDecoration: 'underline'
   },
   ['& .MuiCardContent-root']: {
-    padding: 0
+    padding: 0,
+    [`&.${classes.notificationWrap}`]: {
+      paddingBottom: 0
+    }
   },
   [`& .${classes.stopNotificationButton}`]: {
     margin: '5px 10px',
@@ -112,7 +121,7 @@ export interface NotificationProps extends CardProps {
   handleCustomNotification?: (data) => JSX.Element;
 
   /**
-   * The max n of results shown
+   * The max n of results uncollapsed shown
    * @default 2
    */
   showMaxAggregated?: number;
@@ -128,6 +137,36 @@ export interface NotificationProps extends CardProps {
   [p: string]: any;
 }
 
+/**
+ *
+ > API documentation for the Community-UI UserNotification component. Learn about the available props and the CSS API.
+
+ #### Import
+
+ ```jsx
+ import {UserNotification} from '@selfcommunity/ui';
+ ```
+
+ #### Component Name
+
+ The name `SCUserNotification` can be used when providing style overrides in the theme.
+
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCUserNotification-root|Styles applied to the root element.|
+ |notificationWrap|.SCUserNotification-notification-wrap|Styles applied to the element wrap.|
+ |notificationHeader|.SCUserNotification-notification-wrap|Styles applied to the notification header.|
+ |notificationUnCollapsed|.SCUserNotification-notification-wrap|Styles applied to the uncollapsed elements.|
+ |notificationUnCollapsed|.SCUserNotification-notification-wrap|Styles applied to the collapsed elements.|
+ |title|.SCUserNotification-title|Styles applied to the title element.|
+ |stopNotificationButton|.SCUserNotification-stop-notification-button|Styles applied to the stop notification button.|
+ |showOtherAggregated|.SCUserNotification-show-other-aggregated|Styles applied to the show other aggregated element.|
+
+ * @param props
+ */
 export default function UserNotification(props: NotificationProps): JSX.Element {
   // PROPS
   const {
@@ -244,7 +283,7 @@ export default function UserNotification(props: NotificationProps): JSX.Element 
     if (notificationObject.aggregated && notificationObject.aggregated[0].type === SCNotificationTypologyType.PRIVATE_MESSAGE) {
       let messageNotification: SCNotificationPrivateMessageType = notificationObject.aggregated[0] as SCNotificationPrivateMessageType;
       return (
-        <ListItem alignItems="flex-start" component={'div'}>
+        <ListItem component={'div'} classes={{root: classes.notificationHeader}}>
           <ListItemAvatar>
             <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, messageNotification.message.sender)}>
               <Avatar alt={messageNotification.message.sender.username} variant="circular" src={messageNotification.message.sender.avatar} />
@@ -253,7 +292,7 @@ export default function UserNotification(props: NotificationProps): JSX.Element 
           <ListItemText
             disableTypography={true}
             primary={
-              <Typography component="span" sx={{display: 'inline'}} color="primary">
+              <Typography component="span" color="inherit">
                 <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, messageNotification.message.sender)}>
                   {messageNotification.message.sender.username}
                 </Link>{' '}
@@ -274,33 +313,46 @@ export default function UserNotification(props: NotificationProps): JSX.Element 
       notificationObject.aggregated &&
       (notificationObject.aggregated[0].type === SCNotificationTypologyType.COMMENT ||
         notificationObject.aggregated[0].type === SCNotificationTypologyType.NESTED_COMMENT ||
-        notificationObject.aggregated[0].type === SCNotificationTypologyType.FOLLOW)
+        notificationObject.aggregated[0].type === SCNotificationTypologyType.FOLLOW ||
+        notificationObject.aggregated[0].type === SCNotificationTypologyType.VOTE_UP)
     ) {
       const contribution = getContribute(notificationObject);
       return (
-        <>
-          {contribution && contribution.type !== SCCommentTypologyType && contribution.summary && (
+        <div className={classes.notificationHeader}>
+          {contribution && contribution.type !== SCCommentTypologyType && (
             <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
               <Link to={scRoutingContext.url(contribution.type, {id: notificationObject[contribution.type].id})}>
-                <Typography variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: contribution.summary}} classes={{root: classes.title}} />
+                <Typography variant="body2" gutterBottom classes={{root: classes.title}}>
+                  {getContributionSnippet(contribution)}
+                </Typography>
               </Link>
               {contribution && (
-                <Button
-                  variant="outlined"
-                  size="small"
-                  color={'secondary'}
-                  classes={{root: classes.stopNotificationButton}}
-                  onClick={() => handleStopContentNotification(contribution)}>
-                  {contribution.notification_suspended ? (
-                    <NotificationsOffOutlinedIcon fontSize="small" />
-                  ) : (
-                    <NotificationsOnOutlinedIcon fontSize="small" />
-                  )}
-                </Button>
+                <Tooltip
+                  title={
+                    contribution.suspended ? (
+                      <FormattedMessage id={'ui.notification.notificationSuspended'} defaultMessage={'ui.notification.notificationSuspended'} />
+                    ) : (
+                      <FormattedMessage id={'ui.notification.notificationSuspend'} defaultMessage={'ui.notification.notificationSuspend'} />
+                    )
+                  }>
+                  <LoadingButton
+                    variant="outlined"
+                    size="small"
+                    loading={loadingSuspendNotification}
+                    color={'inherit'}
+                    classes={{root: classes.stopNotificationButton}}
+                    onClick={() => handleStopContentNotification(contribution)}>
+                    {contribution.suspended ? (
+                      <NotificationsOffOutlinedIcon fontSize="small" color={'primary'} />
+                    ) : (
+                      <NotificationsOnOutlinedIcon fontSize="small" color={'inherit'} />
+                    )}
+                  </LoadingButton>
+                </Tooltip>
               )}
             </Stack>
           )}
-        </>
+        </div>
       );
     }
     return null;
@@ -311,7 +363,7 @@ export default function UserNotification(props: NotificationProps): JSX.Element 
    * @param n
    * @param i
    */
-  function renderAggregated(n, i) {
+  function renderAggregatedItem(n, i) {
     if (n.type === SCNotificationTypologyType.COMMENT || n.type === SCNotificationTypologyType.NESTED_COMMENT) {
       return <CommentNotification notificationObject={n} key={i} index={i} onVote={handleVote} loadingVote={loadingVote} />;
     } else if (n.type === SCNotificationTypologyType.FOLLOW) {
@@ -321,7 +373,7 @@ export default function UserNotification(props: NotificationProps): JSX.Element 
     } else if (n.type === SCNotificationTypologyType.CONNECTION_REQUEST || n.type === SCNotificationTypologyType.CONNECTION_ACCEPT) {
       return <UserConnectionNotification notificationObject={n} key={i} />;
     } else if (n.type === SCNotificationTypologyType.VOTE_UP) {
-      return <VoteUpNotification notificationObject={n} key={i} index={i} onVote={handleVote} loadingVote={loadingVote} />;
+      return <VoteUpNotification notificationObject={n} key={i} />;
     } else if (
       n.type === SCNotificationTypologyType.KINDLY_NOTICE_ADVERTISING ||
       n.type === SCNotificationTypologyType.KINDLY_NOTICE_AGGRESSIVE ||
@@ -368,18 +420,20 @@ export default function UserNotification(props: NotificationProps): JSX.Element 
    * Renders root object
    */
   return (
-    <Root id={id} className={className} {...rest}>
-      <CardContent sx={{paddingBottom: 1}}>
+    <Root id={id} className={classNames(classes.root, className)} {...rest}>
+      <CardContent classes={{root: classes.notificationWrap}}>
         {renderNotificationHeader()}
-        {notificationObject.aggregated.slice(0, showMaxAggregated).map((n: SCNotificationType, i) => renderAggregated(n, i))}
+        <div className={classes.notificationUnCollapsed}>
+          {notificationObject.aggregated.slice(0, showMaxAggregated).map((n: SCNotificationType, i) => renderAggregatedItem(n, i))}
+        </div>
         {notificationObject.aggregated.length > showMaxAggregated && (
           <>
             <ListItemButton onClick={() => setOpenOtherAggregated((prev) => !prev)} classes={{root: classes.showOtherAggregated}}>
               <ListItemText primary={<FormattedMessage id={'ui.notification.showOthers'} defaultMessage={'ui.notification.showOthers'} />} />
               {openOtherAggregated ? <ExpandLess /> : <ExpandMore />}
             </ListItemButton>
-            <Collapse in={openOtherAggregated} timeout="auto" unmountOnExit>
-              {notificationObject.aggregated.slice(showMaxAggregated).map((n: SCNotificationType, i) => renderAggregated(n, i))}
+            <Collapse in={openOtherAggregated} timeout="auto" unmountOnExit classes={{root: classes.notificationCollapsed}}>
+              {notificationObject.aggregated.slice(showMaxAggregated).map((n: SCNotificationType, i) => renderAggregatedItem(n, i))}
             </Collapse>
           </>
         )}

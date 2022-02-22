@@ -4,7 +4,9 @@ import {Avatar, Box, ListItem, ListItemAvatar, ListItemText, Typography} from '@
 import {Link, SCRoutingContextType, useSCRouting, SCNotificationIncubatorType, SCRoutes} from '@selfcommunity/core';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
-import NewChip from '../NewChip';
+import NewChip from '../../../shared/NewChip/NewChip';
+import classNames from 'classnames';
+import {red} from '@mui/material/colors';
 
 const messages = defineMessages({
   incubatorApproved: {
@@ -16,14 +18,28 @@ const messages = defineMessages({
 const PREFIX = 'SCIncubatorApprovedNotification';
 
 const classes = {
-  categoryImage: `${PREFIX}-category-image`
+  root: `${PREFIX}-root`,
+  categoryWrap: `${PREFIX}-category-wrap`,
+  category: `${PREFIX}-category`,
+  categoryApprovedText: `${PREFIX}-category-approved-text`,
+  activeAt: `${PREFIX}-active-at`,
+  viewIncubatorWrap: `${PREFIX}-view-incubator-wrap`,
+  viewIncubatorLink: `${PREFIX}-view-incubator-link`
 };
 
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+})(({theme}) => ({
+  [`& .${classes.category}`]: {
+    backgroundColor: red[500],
+    color: '#FFF'
+  },
+  [`& .${classes.categoryApprovedText}`]: {
+    display: 'inline'
+  }
+}));
 
 export interface NotificationIncubatorApprovedProps {
   /**
@@ -64,42 +80,41 @@ export default function IncubatorApprovedNotification(props: NotificationIncubat
    * Renders root object
    */
   return (
-    <Root id={id} className={className} {...rest}>
+    <Root id={id} className={classNames(classes.root, className)} {...rest}>
       <ListItem alignItems="flex-start" component={'div'}>
-        <ListItemAvatar>
+        <ListItemAvatar classes={{root: classes.categoryWrap}}>
           <Avatar
             alt={notificationObject.incubator.approved_category.name}
             src={notificationObject.incubator.approved_category.image_medium}
             variant="square"
-            className={classes.categoryImage}
+            classes={{root: classes.category}}
           />
         </ListItemAvatar>
         <ListItemText
           disableTypography={true}
           primary={
-            <Typography component="span" sx={{display: 'inline'}} color="primary">
+            <>
               {notificationObject.is_new && <NewChip />}
-              <b>
+              <Typography component="span" className={classes.categoryApprovedText} color="inherit">
                 {intl.formatMessage(messages.incubatorApproved, {
                   name: notificationObject.incubator.name,
                   b: (...chunks) => <strong>{chunks}</strong>
                 })}
-              </b>
-              <br />
-            </Typography>
+              </Typography>
+            </>
           }
-          secondary={<DateTimeAgo date={notificationObject.active_at} />}
+          secondary={<DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />}
         />
       </ListItem>
-      <Box sx={{mb: 1, p: '5px 15px'}}>
-        <Typography component="div">
-          <Link to={scRoutingContext.url(SCRoutes.CATEGORY_ROUTE_NAME, notificationObject.incubator.approved_category)}>
+      <Box className={classes.viewIncubatorWrap}>
+        <Link to={scRoutingContext.url(SCRoutes.CATEGORY_ROUTE_NAME, notificationObject.incubator.approved_category)}>
+          <Typography component="div" className={classes.viewIncubatorLink}>
             <FormattedMessage
               id={'ui.notification.incubatorApproved.viewIncubator'}
               defaultMessage={'ui.notification.incubatorApproved.viewIncubator'}
             />
-          </Link>
-        </Typography>
+          </Typography>
+        </Link>
       </Box>
     </Root>
   );

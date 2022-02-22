@@ -4,10 +4,11 @@ import {Avatar, Box, ListItem, ListItemAvatar, ListItemText, Typography} from '@
 import EmojiFlagsIcon from '@mui/icons-material/EmojiFlags';
 import {red} from '@mui/material/colors';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {getContributeType, getRouteData} from '../../../utils/contribute';
+import {getContributeType, getContributionSnippet, getRouteData} from '../../../utils/contribute';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
-import NewChip from '../NewChip';
+import NewChip from '../../../shared/NewChip/NewChip';
 import {Link, SCRoutingContextType, useSCRouting, StringUtils, SCNotificationDeletedForType, SCRoutes} from '@selfcommunity/core';
+import classNames from 'classnames';
 
 const messages = defineMessages({
   deletedForAdvertising: {
@@ -34,11 +35,38 @@ const messages = defineMessages({
 
 const PREFIX = 'SCDeletedForNotification';
 
+const classes = {
+  root: `${PREFIX}-root`,
+  flagIconWrap: `${PREFIX}-flag-icon-wrap`,
+  flagIcon: `${PREFIX}-flag-icon`,
+  flagText: `${PREFIX}-flag-text`,
+  activeAt: `${PREFIX}-active-at`,
+  contributionWrap: `${PREFIX}-contribution-wrap`,
+  contributionYouWroteLabel: `${PREFIX}-contribution-you-wrote-label`,
+  contributionText: `${PREFIX}-contribution-text`
+};
+
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+})(({theme}) => ({
+  [`& .${classes.flagIcon}`]: {
+    backgroundColor: red[500],
+    color: '#FFF'
+  },
+  [`& .${classes.flagText}`]: {
+    display: 'inline',
+    fontWeight: '600'
+  },
+  [`& .${classes.contributionWrap}`]: {
+    marginBottom: theme.spacing(1),
+    padding: theme.spacing(2)
+  },
+  [`& .${classes.contributionText}`]: {
+    textDecoration: 'underline'
+  }
+}));
 
 export interface NotificationDeletedForProps {
   /**
@@ -87,41 +115,36 @@ export default function DeletedForNotification(props: NotificationDeletedForProp
    * Renders root object
    */
   return (
-    <Root id={id} className={className} {...rest}>
+    <Root id={id} className={classNames(classes.root, className)} {...rest}>
       <ListItem alignItems="flex-start" component={'div'}>
-        <ListItemAvatar>
-          <Avatar variant="circular" sx={{backgroundColor: red[500]}}>
+        <ListItemAvatar classes={{root: classes.flagIconWrap}}>
+          <Avatar variant="circular" classes={{root: classes.flagIcon}}>
             <EmojiFlagsIcon />
           </Avatar>
         </ListItemAvatar>
         <ListItemText
           disableTypography={true}
           primary={
-            <Typography component="span" sx={{display: 'inline'}} color="primary">
-              <b>
-                {intl.formatMessage(messages[StringUtils.camelCase(notificationObject.type)], {b: (...chunks) => <strong>{chunks}</strong>})} (
-                <FormattedMessage id="ui.notification.viewRules" defaultMessage="ui.notification.viewRules" />
-                ).
-              </b>
-            </Typography>
+            <>
+              {notificationObject.is_new && <NewChip />}
+              <Typography component="span" color="inherit" className={classes.flagText}>
+                {intl.formatMessage(messages[StringUtils.camelCase(notificationObject.type)], {b: (...chunks) => <strong>{chunks}</strong>})}
+              </Typography>
+            </>
           }
-          secondary={<DateTimeAgo date={notificationObject.active_at} />}
+          secondary={<DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />}
         />
       </ListItem>
-      <Box sx={{mb: 1, p: 1}}>
-        {notificationObject.is_new && <NewChip />}
-        <Typography variant={'body2'} color={'primary'} component={'span'}>
+      <Box className={classes.contributionWrap}>
+        <Typography variant={'body2'} color={'inherit'} classes={{root: classes.contributionYouWroteLabel}}>
           <FormattedMessage id="ui.notification.undeletedFor.youWrote" defaultMessage="ui.notification.undeletedFor.youWrote" />
         </Typography>
-        <Link to={scRoutingContext.url(SCRoutes[`${contributionType.toUpperCase()}_ROUTE_NAME`], getRouteData(notificationObject[contributionType]))}>
-          <Typography
-            component={'span'}
-            color={'primary'}
-            variant="body2"
-            gutterBottom
-            sx={{textDecoration: 'underline'}}
-            dangerouslySetInnerHTML={{__html: notificationObject[contributionType].summary}}
-          />
+        <Link
+          to={scRoutingContext.url(SCRoutes[`${contributionType.toUpperCase()}_ROUTE_NAME`], getRouteData(notificationObject[contributionType]))}
+          className={classes.contributionText}>
+          <Typography component={'span'} color={'inherit'} variant="body2" gutterBottom>
+            {getContributionSnippet(notificationObject[contributionType])}
+          </Typography>
         </Link>
       </Box>
     </Root>

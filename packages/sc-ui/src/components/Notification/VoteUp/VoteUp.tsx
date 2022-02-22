@@ -1,16 +1,13 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import {Avatar, Box, Grid, ListItem, ListItemAvatar, ListItemText, Tooltip, Typography} from '@mui/material';
+import {Avatar, Box, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
 import {Link, SCCommentTypologyType, SCNotificationVoteUpType, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
-import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
+import {defineMessages, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
-import NewChip from '../NewChip';
-import Bullet from '../../../shared/Bullet';
-import {LoadingButton} from '@mui/lab';
-import VoteFilledIcon from '@mui/icons-material/ThumbUpTwoTone';
-import VoteIcon from '@mui/icons-material/ThumbUpOutlined';
-import {getRouteData, getContributeType} from '../../../utils/contribute';
-import {grey} from '@mui/material/colors';
+import NewChip from '../../../shared/NewChip/NewChip';
+import {getRouteData, getContributeType, getContributionSnippet} from '../../../utils/contribute';
+import {red} from '@mui/material/colors';
+import classNames from 'classnames';
 
 const messages = defineMessages({
   appreciated: {
@@ -21,18 +18,31 @@ const messages = defineMessages({
 
 const PREFIX = 'SCVoteUpNotification';
 
+const classes = {
+  root: `${PREFIX}-root`,
+  avatarWrap: `${PREFIX}-avatar-wrap`,
+  avatar: `${PREFIX}-avatar`,
+  voteUpText: `${PREFIX}-vote-up-text`,
+  activeAt: `${PREFIX}-active-at`,
+  contributionWrap: `${PREFIX}-contribution-wrap`,
+  contributionText: `${PREFIX}-contribution-text`
+};
+
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  '& .MuiSvgIcon-root': {
-    width: '0.7em',
-    marginBottom: '0.5px'
+  [`& .${classes.avatar}`]: {
+    backgroundColor: red[500],
+    color: '#FFF'
   },
-  '& a': {
-    textDecoration: 'none',
-    color: grey[900]
+  [`& .${classes.voteUpText}`]: {
+    display: 'inline',
+    fontWeight: '600'
+  },
+  [`& .${classes.contributionText}`]: {
+    textDecoration: 'underline'
   }
 }));
 
@@ -54,24 +64,6 @@ export interface NotificationVoteUpProps {
    * @default null
    */
   notificationObject: SCNotificationVoteUpType;
-
-  /**
-   * Index
-   * @default null
-   */
-  index: number;
-
-  /**
-   * Handles action on vote
-   * @default null
-   */
-  onVote: (i, v) => void;
-
-  /**
-   * The id of the loading vote
-   * @default null
-   */
-  loadingVote: number;
 
   /**
    * Any other properties
@@ -104,61 +96,40 @@ export default function VoteUpNotification(props: NotificationVoteUpProps): JSX.
    * Renders root object
    */
   return (
-    <Root id={id} className={className} {...rest}>
+    <Root id={id} className={classNames(classes.root, className)} {...rest}>
       <ListItem alignItems="flex-start" component={'div'}>
-        <ListItemAvatar>
+        <ListItemAvatar classes={{root: classes.avatarWrap}}>
           <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.user)}>
-            <Avatar alt={notificationObject.user.username} variant="circular" src={notificationObject.user.avatar} />
+            <Avatar alt={notificationObject.user.username} variant="circular" src={notificationObject.user.avatar} classes={{root: classes.avatar}} />
           </Link>
         </ListItemAvatar>
         <ListItemText
           disableTypography={true}
           primary={
-            <Typography component="div" sx={{display: 'inline'}} color="primary">
+            <>
               {notificationObject.is_new && <NewChip />}
-              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.user)}>
-                {notificationObject.user.username}
-              </Link>{' '}
-              {intl.formatMessage(messages.appreciated, {
-                username: notificationObject.user.username,
-                b: (...chunks) => <strong>{chunks}</strong>
-              })}
-            </Typography>
+              <Typography component="div" className={classes.voteUpText} color="inherit">
+                <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.user)}>{notificationObject.user.username}</Link>{' '}
+                {intl.formatMessage(messages.appreciated, {
+                  username: notificationObject.user.username,
+                  b: (...chunks) => <strong>{chunks}</strong>
+                })}
+              </Typography>
+            </>
           }
           secondary={
-            <React.Fragment>
+            <Box className={classes.contributionWrap}>
               <Link
                 to={scRoutingContext.url(
                   SCRoutes[`${contributionType.toUpperCase()}_ROUTE_NAME`],
                   getRouteData(notificationObject[contributionType])
-                )}
-                sx={{textDecoration: 'underline'}}>
-                <Typography variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: notificationObject[contributionType].summary}} />
+                )}>
+                <Typography variant="body2" className={classes.contributionText} gutterBottom>
+                  {getContributionSnippet(notificationObject[contributionType])}
+                </Typography>
               </Link>
-              <Box component="span" sx={{display: 'flex', justifyContent: 'flex-start', p: '2px'}}>
-                <Grid component="span" item={true} sm="auto" container direction="row" alignItems="center">
-                  <DateTimeAgo date={notificationObject.active_at} />
-                  <Bullet sx={{paddingLeft: '10px', paddingTop: '1px'}} />
-                  <LoadingButton
-                    variant={'text'}
-                    sx={{marginTop: '-1px', minWidth: '30px'}}
-                    onClick={() => onVote(index, notificationObject[contributionType])}
-                    disabled={loadingVote !== null}
-                    loading={loadingVote === index}>
-                    {notificationObject[contributionType].voted ? (
-                      <Tooltip
-                        title={<FormattedMessage id={'ui.notification.comment.voteDown'} defaultMessage={'ui.notification.comment.voteDown'} />}>
-                        <VoteFilledIcon fontSize={'small'} color={'secondary'} />
-                      </Tooltip>
-                    ) : (
-                      <Tooltip title={<FormattedMessage id={'ui.notification.comment.voteUp'} defaultMessage={'ui.notification.comment.voteUp'} />}>
-                        <VoteIcon fontSize={'small'} />
-                      </Tooltip>
-                    )}
-                  </LoadingButton>
-                </Grid>
-              </Box>
-            </React.Fragment>
+              <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
+            </Box>
           }
         />
       </ListItem>

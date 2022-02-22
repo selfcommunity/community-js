@@ -6,8 +6,13 @@ import Comment from './Comment';
 import Share from './Share';
 import {SCFeedObjectType, SCFeedObjectTypologyType, useSCFetchFeedObject} from '@selfcommunity/core';
 import {FeedObjectTemplateType} from '../../../types/feedObject';
+import classNames from 'classnames';
 
 const PREFIX = 'SCFeedObjectActions';
+
+const classes = {
+  root: `${PREFIX}-root`
+};
 
 const Root = styled(Grid, {
   name: PREFIX,
@@ -100,7 +105,7 @@ export default function Actions(props: ActionsProps): JSX.Element {
    */
   const columnWidth = getColumnWidth();
   return (
-    <Root container className={className}>
+    <Root container className={classNames(classes.root, className)}>
       <Grid item xs={columnWidth} sx={{textAlign: 'center'}}>
         <Vote feedObject={obj} feedObjectType={feedObjectType} id={feedObjectId} withAction={true} inlineAction={false} />
       </Grid>

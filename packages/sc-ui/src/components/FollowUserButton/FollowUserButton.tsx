@@ -58,6 +58,28 @@ export interface FollowUserButtonProps {
   [p: string]: any;
 }
 
+/**
+ * > API documentation for the Community-UI Follow User Button component. Learn about the available props and the CSS API.
+
+ #### Import
+
+ ```jsx
+ import {FollowUserButton} from '@selfcommunity/ui';
+ ```
+
+ #### Component Name
+
+ The name `SCFollowUserButton` can be used when providing style overrides in the theme.
+
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCFollowUserButton-root|Styles applied to the root element.|
+
+ * @param props
+ */
 export default function FollowUserButton(props: FollowUserButtonProps): JSX.Element {
   // PROPS
   const {className, userId, user, onFollow, ...rest} = props;
@@ -76,7 +98,7 @@ export default function FollowUserButton(props: FollowUserButtonProps): JSX.Elem
      * Call scFollowedManager.isFollowed inside an effect
      * to avoid warning rendering child during update parent state
      */
-    if (scUserContext.user.id !== scUser.id) {
+    if (scUserContext.user && scUserContext.user.id !== scUser.id) {
       setFollowed(scFollowedManager.isFollowed(scUser));
     }
   });
@@ -100,8 +122,8 @@ export default function FollowUserButton(props: FollowUserButtonProps): JSX.Elem
     }
   };
 
-  // same user
-  if (scUserContext.user.id === scUser.id) {
+  //same user
+  if (scUserContext.user && scUserContext.user.id === scUser.id) {
     return null;
   }
 

@@ -8,6 +8,7 @@ import CategorySkeleton from '../Category/Skeleton';
 const PREFIX = 'SCCategoriesSuggestionSkeleton';
 
 const classes = {
+  root: `${PREFIX}-root`,
   list: `${PREFIX}-list`
 };
 
@@ -21,7 +22,7 @@ const Root = styled(Card)(({theme}) => ({
 
 export default function CategoriesSuggestionSkeleton(props): JSX.Element {
   return (
-    <Root {...props}>
+    <Root className={classes.root} {...props}>
       <CardContent>
         <List className={classes.list}>
           {[...Array(4)].map((category, index) => (

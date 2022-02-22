@@ -57,7 +57,32 @@ export interface PrivateMessagesProps {
    */
   [p: string]: any;
 }
+/**
+ *
+ > API documentation for the Community-UI Private Messages component. Learn about the available props and the CSS API.
 
+ #### Import
+
+ ```jsx
+ import {PrivateMessages} from '@selfcommunity/ui';
+ ```
+
+ #### Component Name
+
+ The name `SCPrivateMessages` can be used when providing style overrides in the theme.
+
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCPrivateMessages-root|Styles applied to the root element.|
+ |newMessage|.SCPrivateMessages-newMessage|Styles applied to the new message element.|
+ |selected|.SCPrivateMessages-selected|Styles applied to the selected element.|
+
+
+ * @param props
+ */
 export default function PrivateMessages(props: PrivateMessagesProps): JSX.Element {
   //PROPS
   const {autoHide = false, className = null, ...rest} = props;

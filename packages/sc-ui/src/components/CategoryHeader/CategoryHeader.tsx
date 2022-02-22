@@ -11,10 +11,12 @@ import User from '../User';
 import FaceIcon from '@mui/icons-material/Face';
 import {Endpoints, http, SCCategoryType, SCUserContext, SCUserContextType, SCUserType, useSCFetchCategory} from '@selfcommunity/core';
 import AvatarGroupSkeleton from '../Skeleton/AvatarGroupSkeleton';
+import classNames from 'classnames';
 
 const PREFIX = 'SCCategoryHeader';
 
 const classes = {
+  root: `${PREFIX}-root`,
   cover: `${PREFIX}-cover`,
   name: `${PREFIX}-name`,
   slogan: `${PREFIX}-slogan`,
@@ -101,6 +103,26 @@ export interface CategoryHeaderProps {
    */
   [p: string]: any;
 }
+
+/**
+ *> API documentation for the Community-UI Category Header component. Learn about the available props and the CSS API.
+ *
+ #### Import
+ ```jsx
+ import {CategoryHeader} from '@selfcommunity/ui';
+ ```
+ #### Component Name
+
+ The name `SCCategoryHeader` can be used when providing style overrides in the theme.
+
+ * #### CSS
+ *
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCCategoryHeader-root|Styles applied to the root element.|
+
+ * @param props
+ */
 export default function CategoryHeader(props: CategoryHeaderProps): JSX.Element {
   // PROPS
   const {className, categoryId, category, FollowCategoryButtonProps = {}, FollowedByDialogProps = {}, ...rest} = props;
@@ -194,7 +216,7 @@ export default function CategoryHeader(props: CategoryHeaderProps): JSX.Element 
    * Renders root object
    */
   return (
-    <Root className={className} {...rest}>
+    <Root className={classNames(classes.root, className)} {...rest}>
       <Paper style={_backgroundCover} classes={{root: classes.cover}}>
         <Typography variant={'h3'} align={'center'} className={classes.name} gutterBottom>
           {scCategory.name}

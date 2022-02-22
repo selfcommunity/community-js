@@ -84,6 +84,30 @@ export interface UserProfileInfoProps {
    */
   [p: string]: any;
 }
+/**
+ *
+ > API documentation for the Community-UI User Profile Info component. Learn about the available props and the CSS API.
+
+ #### Import
+
+ ```jsx
+ import {UserProfileInfo} from '@selfcommunity/ui';
+ ```
+
+ #### Component Name
+
+ The name `SCUserProfileInfo` can be used when providing style overrides in the theme.
+
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCUserProfileInfo-root|Styles applied to the root element.|
+ |field|.SCUserProfileInfo-field|Styles applied to the field element.|
+
+ * @param props
+ */
 export default function UserProfileInfo(props: UserProfileInfoProps): JSX.Element {
   // PROPS
   const {className = null, userId = null, user = null, fields = [...DEFAULT_FIELDS], ...rest} = props;

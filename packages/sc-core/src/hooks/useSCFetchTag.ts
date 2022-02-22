@@ -7,10 +7,12 @@ import {Logger} from '../utils/logger';
 import Endpoints from '../constants/Endpoints';
 
 /**
- * Custom hook 'useSCFetchTag'
- * Use this hook to fetch a tag object
- * @param id
- * @param tag
+ :::info
+ This custom hook is used to fetch a tag object.
+ :::
+*  @param object
+ * @param object.id
+ * @param object.tag
  */
 export default function useSCFetchTag({id = null, tag = null}: {id?: number; tag?: SCTagType}) {
   const [scTag, setSCTag] = useState<SCTagType>(tag);

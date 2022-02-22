@@ -8,10 +8,12 @@ import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOu
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import {FormattedMessage} from 'react-intl';
 import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
+import classNames from 'classnames';
 
 const PREFIX = 'SCChangeCoverButton';
 
 const classes = {
+  root: `${PREFIX}-root`,
   helpPopover: `${PREFIX}-help-popover`,
   menuItem: `${PREFIX}-menu-item`
 };
@@ -48,6 +50,27 @@ export interface ChangeCoverProps {
   [p: string]: any;
 }
 
+/**
+ *> API documentation for the Community-UI Change Cover component. Learn about the available props and the CSS API.
+ *
+ #### Import
+ ```jsx
+ import {ChangeCover} from '@selfcommunity/ui';
+ ```
+
+ #### Component Name
+ The name `SCChangeCoverButton` can be used when providing style overrides in the theme.
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCChangeCoverButton-root|Styles applied to the root element.|
+ |helpPopover|.SCChangeCoverButton-help-popover|Styles applied to the help popover element.|
+ |menuItem|.SCChangeCoverButton-menu-item|Styles applied to the menu element.|
+
+ * @param props
+ */
 export default function ChangeCover(props: ChangeCoverProps): JSX.Element {
   //PROPS
   const {onChange, autoHide, className, ...rest} = props;
@@ -216,7 +239,7 @@ export default function ChangeCover(props: ChangeCoverProps): JSX.Element {
    */
   if (!autoHide) {
     return (
-      <Root {...rest} className={className}>
+      <Root {...rest} className={classNames(classes.root, className)}>
         {cc}
       </Root>
     );

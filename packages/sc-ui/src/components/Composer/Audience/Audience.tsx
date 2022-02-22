@@ -6,7 +6,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Checkbox from '@mui/material/Checkbox';
 import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
-import {Chip, InternalStandardProps as StandardProps} from '@mui/material';
+import {InternalStandardProps as StandardProps} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {AutocompleteClasses} from '@mui/material/Autocomplete/autocompleteClasses';
 import {OverridableStringUnion} from '@mui/types';
@@ -17,6 +17,10 @@ import {AxiosResponse} from 'axios';
 import TagChip from '../../../shared/TagChip';
 
 const PREFIX = 'SCComposerAudience';
+
+const classes = {
+  root: `${PREFIX}-root`
+};
 
 const Root = styled(Autocomplete, {
   name: PREFIX,
@@ -53,7 +57,7 @@ export interface AudienceProps extends StandardProps<React.HTMLAttributes<HTMLDi
    */
   disableCloseOnSelect?: boolean;
   /**
-   * If `true`, the autocomplede will be disabled.
+   * If `true`, the autocomplete will be disabled.
    * @default false
    */
   disabled?: boolean;
@@ -131,6 +135,7 @@ export default function ({
 
   return (
     <Root
+      className={classes.root}
       open={open}
       onOpen={handleOpen}
       onClose={handleClose}

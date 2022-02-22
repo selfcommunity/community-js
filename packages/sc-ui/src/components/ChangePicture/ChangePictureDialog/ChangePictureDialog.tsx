@@ -12,10 +12,12 @@ import ImageListItem from '@mui/material/ImageListItem';
 import BaseDialog from '../../../shared/BaseDialog';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import ConfirmDialog from '../../../shared/ConfirmDialog/ConfirmDialog';
+import classNames from 'classnames';
 
 const PREFIX = 'SCChangePictureDialog';
 
 const classes = {
+  root: `${PREFIX}-root`,
   actions: `${PREFIX}-actions`,
   upload: `${PREFIX}-upload`,
   imageItem: `${PREFIX}-imageItem`
@@ -216,7 +218,7 @@ export default function ChangePictureDialog(props: CPDialogProps): JSX.Element {
   }, []);
 
   return (
-    <Root className={className} {...rest}>
+    <Root className={classNames(classes.root, className)} {...rest}>
       {openDeleteAvatarDialog && (
         <ConfirmDialog
           open={openDeleteAvatarDialog}

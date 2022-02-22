@@ -5,6 +5,7 @@ import CommentIcon from '@mui/icons-material/ChatBubbleOutline';
 import {SCFeedObjectType, SCFeedObjectTypologyType, SCRoutingContextType, useSCFetchFeedObject, useSCRouting, Link} from '@selfcommunity/core';
 import {styled} from '@mui/material/styles';
 import {FeedObjectTemplateType} from '../../../../types/feedObject';
+import classNames from 'classnames';
 
 const messages = defineMessages({
   comments: {
@@ -18,6 +19,10 @@ const messages = defineMessages({
 });
 
 const PREFIX = 'SCCommentObject';
+
+const classes = {
+  root: `${PREFIX}-root`
+};
 
 const Root = styled(Box, {
   name: PREFIX,
@@ -106,7 +111,7 @@ export default function Comment(props: CommentProps): JSX.Element {
    * Renders comment action
    */
   return (
-    <Root className={className} {...rest}>
+    <Root className={classNames(classes.root, className)} {...rest}>
       {onViewCommentsAction ? (
         <Button variant="text" size="small" sx={{height: 32}} onClick={onViewCommentsAction} color="inherit">
           <Typography variant={'body2'}>{`${intl.formatMessage(messages.comments, {total: obj.comment_count})}`}</Typography>

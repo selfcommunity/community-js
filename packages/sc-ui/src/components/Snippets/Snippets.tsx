@@ -50,6 +50,30 @@ export interface SnippetsProps {
   onSnippetClick?: (msg) => void;
   threadId?: number;
 }
+/**
+ *
+ > API documentation for the Community-UI Snippets component. Learn about the available props and the CSS API.
+
+ #### Import
+
+ ```jsx
+ import {Snippets} from '@selfcommunity/ui';
+ ```
+
+ #### Component Name
+
+ The name `SCSnippets` can be used when providing style overrides in the theme.
+
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCSnippets-root|Styles applied to the root element.|
+ |selected|.SCSnippets-selected|Styles applied to the selected element.|
+
+ * @param props
+ */
 export default function Snippets(props: SnippetsProps): JSX.Element {
   // PROPS
   const {autoHide = false, className = null, onSnippetClick, threadId, ...rest} = props;

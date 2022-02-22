@@ -70,6 +70,30 @@ export interface UserProps extends Pick<CardProps, Exclude<keyof CardProps, 'id'
   [p: string]: any;
 }
 
+/**
+ * > API documentation for the Community-UI User component. Learn about the available props and the CSS API.
+
+ #### Import
+
+ ```jsx
+ import {User} from '@selfcommunity/ui';
+ ```
+
+ #### Component Name
+
+ The name `SCUser` can be used when providing style overrides in the theme.
+
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCUser-root|Styles applied to the root element.|
+ |avatar|.SCUser-avatar|Styles applied to the avatar element.|
+ |actions|.SCUser-actions|Styles applied to actions section.|
+
+ * @param props
+ */
 export default function User(props: UserProps): JSX.Element {
   // PROPS
   const {id = null, user = null, handleIgnoreAction, className = null, autoHide = false, followConnectUserButtonProps = {}, ...rest} = props;

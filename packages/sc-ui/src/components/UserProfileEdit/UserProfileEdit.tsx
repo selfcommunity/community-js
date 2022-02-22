@@ -96,7 +96,30 @@ export interface UserProfileEditProps {
    */
   [p: string]: any;
 }
+/**
+ *
+ > API documentation for the Community-UI User Profile Edit component. Learn about the available props and the CSS API.
 
+ #### Import
+
+ ```jsx
+ import {UserProfileEdit} from '@selfcommunity/ui';
+ ```
+
+ #### Component Name
+
+ The name `SCUserProfileEdit` can be used when providing style overrides in the theme.
+
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCUserProfileEdit-root|Styles applied to the root element.|
+ |field|.SCUserProfileEdit-field|Styles applied to the field element.|
+
+ * @param props
+ */
 export default function UserProfileEdit(props: UserProfileEditProps): JSX.Element {
   // PROPS
   const {id = null, className = null, fields = [...DEFAULT_FIELDS], AccordionProps = {}, ...rest} = props;

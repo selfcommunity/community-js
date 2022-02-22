@@ -15,6 +15,10 @@ import match from 'autosuggest-highlight/match';
 
 const PREFIX = 'SCComposerLocation';
 
+const classes = {
+  root: `${PREFIX}-root`
+};
+
 const Root = styled(Autocomplete, {
   name: PREFIX,
   slot: 'Root',
@@ -112,6 +116,7 @@ export default function ({
   // Render
   return (
     <Root
+      className={classes.root}
       options={locations || []}
       getOptionLabel={(option: SCLocalityType) => option.full_address || ''}
       filterOptions={(x) => x}

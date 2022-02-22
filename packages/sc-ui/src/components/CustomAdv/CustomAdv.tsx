@@ -41,17 +41,35 @@ export interface CustomAdvProps {
   position: SCCustomAdvPosition;
 
   /**
-   * Category id if the adv must be related to a specific category
+   * Category ids if the adv must be related to specific categories
    */
-  categoryId?: number | null;
+  categoriesId?: Array<number> | null;
 }
+/**
+ > API documentation for the Community-UI CustomAdv component. Learn about the available props and the CSS API.
+ *
+ #### Import
+ ```jsx
+ import {CustomAdv} from '@selfcommunity/ui';
+ ```
+ #### Component Name
+ The name `SCCustomAdv` can be used when providing style overrides in the theme.
 
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCCustomAdv-root|Styles applied to the root element.|
+ |image|.SCCustomAdv-image|Styles applied to the image element.|
+
+ * @param props
+ */
 export default function CustomAdv(props: CustomAdvProps): JSX.Element {
   // PROPS
-  const {id = 'custom_adv', className = null, position, categoryId = null} = props;
+  const {id = 'custom_adv', className = null, position, categoriesId = []} = props;
 
   // retrieve adv
-  const {scCustomAdv} = useSCFetchCustomAdv({position, categoryId});
+  const {scCustomAdv} = useSCFetchCustomAdv({position, categoriesId});
 
   if (!scCustomAdv) {
     return null;

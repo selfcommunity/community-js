@@ -7,11 +7,13 @@ import {SCOPE_SC_CORE} from '../constants/Errors';
 import {SCFeedDiscussionType, SCFeedObjectType, SCFeedObjectTypologyType, SCFeedPostType, SCFeedStatusType} from '../types';
 
 /**
- * Custom hook 'useFetchFeedObject'
- * Use this hook to fetch a feed object
- * @param id
- * @param feedObject
- * @param feedObjectType
+ :::info
+ This custom hook is used to fetch a feed object.
+ :::
+ * @param object
+ * @param object.id
+ * @param object.feedObject
+ * @param object.feedObjectType
  */
 export default function useSCFetchFeedObject({
   id = null,

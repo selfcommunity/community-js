@@ -58,6 +58,28 @@ export interface FriendshipButtonProps {
 }
 
 // TODO: fix component
+/**
+ * > API documentation for the Community-UI Friendship User Button component. Learn about the available props and the CSS API.
+
+ #### Import
+
+ ```jsx
+ import {FriendshipUserButton} from '@selfcommunity/ui';
+ ```
+
+ #### Component Name
+
+ The name `SCFriendshipUserButton` can be used when providing style overrides in the theme.
+
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCFriendshipUserButton-root|Styles applied to the root element.|
+
+ * @param props
+ */
 export default function FriendshipUserButton(props: FriendshipButtonProps): JSX.Element {
   // PROPS
   const {className, userId, user, connected, ...rest} = props;
@@ -131,7 +153,7 @@ export default function FriendshipUserButton(props: FriendshipButtonProps): JSX.
   }
 
   // same user
-  if (scUserContext.user.id === scUser.id) {
+  if (scUserContext.user && scUserContext.user.id === scUser.id) {
     return null;
   }
 

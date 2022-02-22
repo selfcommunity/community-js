@@ -3,13 +3,18 @@ import {styled} from '@mui/material/styles';
 import {Button, Typography, List} from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import {Endpoints, http, SCUserContext, SCUserContextType, SCCategoryType, SCUserType} from '@selfcommunity/core';
+import {Endpoints, http, SCUserContext, SCUserContextType, SCCategoryType} from '@selfcommunity/core';
 import Skeleton from './Skeleton';
 import Category, {CategoryProps} from '../Category';
 import {AxiosResponse} from 'axios';
 import {FormattedMessage} from 'react-intl';
+import classNames from 'classnames';
 
 const PREFIX = 'SCCategoriesSuggestion';
+
+const classes = {
+  root: `${PREFIX}-root`
+};
 
 const Root = styled(Card, {
   name: PREFIX,
@@ -48,6 +53,24 @@ export interface CategoriesListProps {
   [p: string]: any;
 }
 
+/**
+ * > API documentation for the Community-UI Categories Suggestion component. Learn about the available props and the CSS API.
+ *
+ #### Import
+ ```jsx
+ import {CategoriesSuggestion} from '@selfcommunity/ui';
+ ```
+ #### Component Name
+ The name `SCCategoriesSuggestion` can be used when providing style overrides in the theme.
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCCategoriesSuggestion-root|Styles applied to the root element.|
+
+ * @param props
+ */
 export default function CategoriesSuggestion(props: CategoriesListProps): JSX.Element {
   // CONST
   const limit = 3;
@@ -168,7 +191,7 @@ export default function CategoriesSuggestion(props: CategoriesListProps): JSX.El
   }
   if (scUserContext.user) {
     return (
-      <Root className={className} {...rest}>
+      <Root className={classNames(classes.root, className)} {...rest}>
         {c}
       </Root>
     );

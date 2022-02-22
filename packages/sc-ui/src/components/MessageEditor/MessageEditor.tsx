@@ -59,6 +59,30 @@ export interface MessageEditorProps {
   getMessage?: (message) => void;
 }
 
+/**
+ *
+ > API documentation for the Community-UI Message Editor component. Learn about the available props and the CSS API.
+
+ #### Import
+
+ ```jsx
+ import {MessageEditor} from '@selfcommunity/ui';
+ ```
+
+ #### Component Name
+
+ The name `SCMessageEditor` can be used when providing style overrides in the theme.
+
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCMessageEditor-root|Styles applied to the root element.|
+ |messageInput|.SCMessageEditor-card|Styles applied to the message input element.|
+
+ * @param props
+ */
 export default function MessageEditor(props: MessageEditorProps): JSX.Element {
   // PROPS
   const {autoHide = null, className = null, onRef = null, send = null, isSending = null, getMessage = null, ...rest} = props;

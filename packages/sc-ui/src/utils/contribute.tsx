@@ -1,4 +1,7 @@
+import React from 'react';
 import {SCCommentTypologyType, SCFeedObjectTypologyType} from '@selfcommunity/core';
+import {FormattedMessage} from 'react-intl';
+import {Typography} from '@mui/material';
 
 /**
  * From obj extract type of the contribution
@@ -30,6 +33,22 @@ export function getContribute(obj) {
     : SCCommentTypologyType in obj
     ? obj[SCCommentTypologyType]
     : null;
+}
+
+/**
+ * Get a snippet for a contribution
+ * @param obj (Discussion, Post, Status, Comment)
+ */
+export function getContributionSnippet(obj) {
+  if (obj.type === SCFeedObjectTypologyType.DISCUSSION) {
+    return obj.summary ? <span dangerouslySetInnerHTML={{__html: obj.summary}}></span> : obj.title;
+  } else {
+    return obj.summary ? (
+      <span dangerouslySetInnerHTML={{__html: obj.summary}}></span>
+    ) : (
+      <FormattedMessage id={`ui.common.${obj.type.toLowerCase()}WithoutText`} defaultMessage={`ui.common.${obj.type.toLowerCase()}WithoutText`} />
+    );
+  }
 }
 
 /**

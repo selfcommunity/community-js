@@ -53,6 +53,29 @@ export interface TrendingFeedProps {
    */
   [p: string]: any;
 }
+
+/**
+ * > API documentation for the Community-UI Trending Feed component. Learn about the available props and the CSS API.
+
+ #### Import
+
+ ```jsx
+ import {TrendingFeed} from '@selfcommunity/ui';
+ ```
+
+ #### Component Name
+
+ The name `SCTrendingFeed` can be used when providing style overrides in the theme.
+
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCTrendingFeed-root|Styles applied to the root element.|
+
+ * @param props
+ */
 export default function TrendingFeed(props: TrendingFeedProps): JSX.Element {
   //CONST
   const limit = 4;

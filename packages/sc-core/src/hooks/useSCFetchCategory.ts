@@ -7,10 +7,12 @@ import {Logger} from '../utils/logger';
 import Endpoints from '../constants/Endpoints';
 
 /**
- * Custom hook 'useSCFetchCategory'
- * Use this hook to fetch a category object
- * @param id
- * @param tag
+ :::info
+ This custom hook is used to fetch a category object.
+ :::
+ * @param object
+ * @param object.id
+ * @param object.category
  */
 export default function useSCFetchCategory({id = null, category = null}: {id?: number; category?: SCCategoryType}) {
   const [scCategory, setSCCategory] = useState<SCCategoryType>(category);
