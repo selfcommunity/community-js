@@ -1,13 +1,14 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
 import {Avatar, Box, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
-import {Link, SCCommentTypologyType, SCNotificationVoteUpType, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
+import {Link, SCNotificationVoteUpType, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
 import {defineMessages, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
 import NewChip from '../../../shared/NewChip/NewChip';
-import {getRouteData, getContributeType, getContributionSnippet} from '../../../utils/contribute';
-import {red} from '@mui/material/colors';
+import {getContributeType, getContributionSnippet, getRouteData} from '../../../utils/contribute';
+import { grey, red } from '@mui/material/colors';
 import classNames from 'classnames';
+import {NotificationObjectTemplateType} from '../../../types/notification';
 
 const messages = defineMessages({
   appreciated: {
@@ -20,8 +21,11 @@ const PREFIX = 'SCVoteUpNotification';
 
 const classes = {
   root: `${PREFIX}-root`,
+  listItemSnippet: `${PREFIX}-list-item-snippet`,
+  listItemSnippetNew: `${PREFIX}-list-item-snippet-new`,
   avatarWrap: `${PREFIX}-avatar-wrap`,
   avatar: `${PREFIX}-avatar`,
+  avatarSnippet: `${PREFIX}-avatar-snippet`,
   voteUpText: `${PREFIX}-vote-up-text`,
   activeAt: `${PREFIX}-active-at`,
   contributionWrap: `${PREFIX}-contribution-wrap`,
@@ -33,13 +37,30 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
+  display: 'flex',
+  [`& .${classes.listItemSnippet}`]: {
+    padding: '0px 5px',
+    alignItems: 'center'
+  },
+  [`& .${classes.listItemSnippetNew}`]: {
+    borderLeft: '2px solid red'
+  },
+  [`& .${classes.avatarWrap}`]: {
+    minWidth: 'auto',
+    paddingRight: 10
+  },
   [`& .${classes.avatar}`]: {
     backgroundColor: red[500],
     color: '#FFF'
   },
+  [`& .${classes.avatarSnippet}`]: {
+    width: 30,
+    height: 30
+  },
   [`& .${classes.voteUpText}`]: {
     display: 'inline',
-    fontWeight: '600'
+    fontWeight: '600',
+    color: grey[600]
   },
   [`& .${classes.contributionText}`]: {
     textDecoration: 'underline'
@@ -66,6 +87,12 @@ export interface NotificationVoteUpProps {
   notificationObject: SCNotificationVoteUpType;
 
   /**
+   * Notification Object template type
+   * @default 'preview'
+   */
+  template?: NotificationObjectTemplateType;
+
+  /**
    * Any other properties
    */
   [p: string]: any;
@@ -78,16 +105,23 @@ export interface NotificationVoteUpProps {
  */
 export default function VoteUpNotification(props: NotificationVoteUpProps): JSX.Element {
   // PROPS
-  const {notificationObject, id = `n_${props.notificationObject['sid']}`, className, index, onVote, loadingVote, ...rest} = props;
+  const {
+    notificationObject,
+    id = `n_${props.notificationObject['sid']}`,
+    className,
+    template = NotificationObjectTemplateType.DETAIL,
+    index,
+    onVote,
+    loadingVote,
+    ...rest
+  } = props;
 
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
 
-  // Contribution
+  // CONST
+  const isSnippetTemplate = template === NotificationObjectTemplateType.SNIPPET;
   const contributionType = getContributeType(notificationObject);
-  const feedObjectType = contributionType === SCCommentTypologyType ? getContributeType(notificationObject[contributionType]) : contributionType;
-  const feedObjectId =
-    contributionType === SCCommentTypologyType ? notificationObject[SCCommentTypologyType][feedObjectType] : notificationObject[contributionType].id;
 
   // INTL
   const intl = useIntl();
@@ -96,18 +130,26 @@ export default function VoteUpNotification(props: NotificationVoteUpProps): JSX.
    * Renders root object
    */
   return (
-    <Root id={id} className={classNames(classes.root, className)} {...rest}>
-      <ListItem alignItems="flex-start" component={'div'}>
+    <Root id={id} className={classNames(classes.root, className, `${PREFIX}-${template}`)} {...rest}>
+      <ListItem
+        alignItems={isSnippetTemplate ? 'center' : 'flex-start'}
+        component={'div'}
+        classes={{root: classNames({[classes.listItemSnippet]: isSnippetTemplate, [classes.listItemSnippetNew]: notificationObject.is_new})}}>
         <ListItemAvatar classes={{root: classes.avatarWrap}}>
           <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.user)}>
-            <Avatar alt={notificationObject.user.username} variant="circular" src={notificationObject.user.avatar} classes={{root: classes.avatar}} />
+            <Avatar
+              alt={notificationObject.user.username}
+              variant="circular"
+              src={notificationObject.user.avatar}
+              classes={{root: classNames(classes.avatar, {[classes.avatarSnippet]: isSnippetTemplate})}}
+            />
           </Link>
         </ListItemAvatar>
         <ListItemText
           disableTypography={true}
           primary={
             <>
-              {notificationObject.is_new && <NewChip />}
+              {!isSnippetTemplate && notificationObject.is_new && <NewChip />}
               <Typography component="div" className={classes.voteUpText} color="inherit">
                 <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.user)}>{notificationObject.user.username}</Link>{' '}
                 {intl.formatMessage(messages.appreciated, {
@@ -128,7 +170,7 @@ export default function VoteUpNotification(props: NotificationVoteUpProps): JSX.
                   {getContributionSnippet(notificationObject[contributionType])}
                 </Typography>
               </Link>
-              <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
+              {!isSnippetTemplate && <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />}
             </Box>
           }
         />
