@@ -42,9 +42,6 @@ const Root = styled(Grid, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   marginTop: theme.spacing(2),
-  [`& .${classes.left}`]: {
-    padding: '3px'
-  },
   [`& .${classes.end}, & .${classes.refresh}`]: {
     textAlign: 'center'
   }
