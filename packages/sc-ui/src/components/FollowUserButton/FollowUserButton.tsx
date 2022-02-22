@@ -132,7 +132,7 @@ export default function FollowUserButton(props: FollowUserButtonProps): JSX.Elem
       size="small"
       variant="outlined"
       onClick={handleFollowAction}
-      loading={followed === null || scFollowedManager.isLoading(scUser)}
+      loading={scUserContext.user ? followed === null || scFollowedManager.isLoading(scUser) : null}
       className={classNames(classes.root, className)}
       {...rest}>
       {followed ? (
