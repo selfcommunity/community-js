@@ -153,7 +153,7 @@ export default function FriendshipUserButton(props: FriendshipButtonProps): JSX.
   }
 
   // same user
-  if (scUserContext.user.id === scUser.id) {
+  if (scUserContext.user && scUserContext.user.id === scUser.id) {
     return null;
   }
 
