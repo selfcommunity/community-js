@@ -1,19 +1,32 @@
-import React, {useState} from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Link, SCRoutes, SCRoutingContextType, SCUserContextType, SCUserType, useSCRouting, useSCUser} from '@selfcommunity/core';
-import {ButtonProps, Divider, TextField, TextFieldProps, Typography} from '@mui/material';
+import {ButtonProps, TextFieldProps, Typography} from '@mui/material';
 import classNames from 'classnames';
-import {FormattedMessage} from 'react-intl';
+import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {LoadingButton} from '@mui/lab';
 import PasswordTextField from '../../shared/PasswordTextField';
+import EmailTextField from '../../shared/EmailTextField';
+import UsernameTextField from '../../shared/UsernameTextField';
 
-const PREFIX = 'SCSignIn';
+const messages = defineMessages({
+  emailError: {
+    id: 'ui.common.error.email',
+    defaultMessage: 'ui.common.error.email'
+  },
+  usernameError: {
+    id: 'ui.common.error.username',
+    defaultMessage: 'ui.common.error.username'
+  }
+});
+
+const PREFIX = 'SCAccountSignUp';
 
 const classes = {
   root: `${PREFIX}-root`,
+  email: `${PREFIX}-email`,
   username: `${PREFIX}-username`,
   password: `${PREFIX}-password`,
-  recover: `${PREFIX}-recover`,
   signUp: `${PREFIX}-signUp`
 };
 
@@ -22,7 +35,7 @@ const Root = styled('form', {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  [`&.${classes.root} .MuiTextField-root, &.SCSignIn-root .MuiButton-root`]: {
+  [`&.${classes.root} .MuiTextField-root, &.${classes.root} .MuiButton-root`]: {
     margin: theme.spacing(1, 0, 1, 0)
   },
   [`&.${classes.root} .MuiTypography-root`]: {
@@ -30,7 +43,7 @@ const Root = styled('form', {
   }
 }));
 
-export interface SignInProps {
+export interface AccountSignUpProps {
   /**
    * Overrides or extends the styles applied to the component.
    * @default null
@@ -62,38 +75,41 @@ export interface SignInProps {
 }
 
 /**
- * > API documentation for the Community-UI SignIn component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-UI AccountSignUp component. Learn about the available props and the CSS API.
 
  #### Import
 
  ```jsx
- import {SignIn} from '@selfcommunity/ui';
+ import {AccountSignUp} from '@selfcommunity/ui';
  ```
 
  #### Component Name
 
- The name `SCSignIn` can be used when providing style overrides in the theme.
+ The name `SCAccountSignUp` can be used when providing style overrides in the theme.
 
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCSignIn-root|Styles applied to the root element.|
- |username|.SCSignIn-username|Styles applied to the username TextField.|
- |password|.SCSignIn-password|Styles applied to the password TextField.|
- |recover|.SCSignIn-recover|Styles applied to the recover element.|
- |signUp|.SCSignIn-signUp|Styles applied to the signUp element.|
+ |root|.SCAccountSignUp-root|Styles applied to the root element.|
+ |email|.SCAccountSignUp-email|Styles applied to the email TextField.|
+ |username|.SCAccountSignUp-username|Styles applied to the username TextField.|
+ |password|.SCAccountSignUp-password|Styles applied to the password TextField.|
+ |signUp|.SCAccountSignUp-signUp|Styles applied to the signUp element.|
 
  *
  * @param props
  */
-export default function SignIn(props: SignInProps): JSX.Element {
+export default function AccountSignUp(props: AccountSignUpProps): JSX.Element {
   // PROPS
   const {className, onSuccess = null, TextFieldProps = {variant: 'outlined', fullWidth: true}, ButtonProps = {variant: 'contained'}, ...rest} = props;
 
   // STATE
+  const [email, setEmail] = useState<string>('');
+  const [emailError, setEmailError] = useState<string | null>(null);
   const [username, setUsername] = useState<string>('');
+  const [usernameError, setUsernameError] = useState<string | null>(null);
   const [password, setPassword] = useState<string>('');
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
@@ -101,13 +117,16 @@ export default function SignIn(props: SignInProps): JSX.Element {
   const scUserContext: SCUserContextType = useSCUser();
   const scRoutingContext: SCRoutingContextType = useSCRouting();
 
+  // HOOKS
+  const intl = useIntl();
+
   // HANDLERS
   const handleSubmit = (event: React.SyntheticEvent<HTMLFormElement>) => {
     event.preventDefault();
     event.stopPropagation();
     setIsSubmitting(true);
 
-    // TODO: signin API call
+    // TODO: signup API call
     onSuccess && onSuccess(null);
 
     return false;
@@ -121,32 +140,37 @@ export default function SignIn(props: SignInProps): JSX.Element {
   // RENDER
   return (
     <Root className={classNames(classes.root, className)} {...rest} onSubmit={handleSubmit}>
-      <TextField
-        className={classes.username}
-        label={<FormattedMessage id="ui.signIn.username.label" defaultMessage="ui.signIn.username.label" />}
+      <EmailTextField
+        className={classes.email}
+        label={<FormattedMessage id="ui.accountSignup.email.label" defaultMessage="ui.accountSignup.email.label" />}
         {...TextFieldProps}
+        error={Boolean(emailError)}
+        helperText={emailError}
+        value={email}
+        onChange={(event: ChangeEvent<HTMLInputElement>) => setEmail(event.target.value)}
+      />
+      <UsernameTextField
+        className={classes.username}
+        label={<FormattedMessage id="ui.accountSignup.username.label" defaultMessage="ui.accountSignup.username.label" />}
+        {...TextFieldProps}
+        error={Boolean(usernameError)}
+        helperText={usernameError}
         value={username}
-        onChange={(event: React.ChangeEvent<HTMLInputElement>) => setUsername(event.target.value)}
+        onChange={(event: ChangeEvent<HTMLInputElement>) => setUsername(event.target.value)}
       />
       <PasswordTextField
         className={classes.password}
-        label={<FormattedMessage id="ui.signIn.password.label" defaultMessage="ui.signIn.password.label" />}
+        label={<FormattedMessage id="ui.accountSignup.password.label" defaultMessage="ui.accountSignup.password.label" />}
         {...TextFieldProps}
         value={password}
         onChange={(event: React.ChangeEvent<HTMLInputElement>) => setPassword(event.target.value)}
       />
       <LoadingButton type="submit" {...ButtonProps} loading={isSubmitting}>
-        <FormattedMessage id="ui.signIn.submit" defaultMessage="ui.signIn.submit" />
+        <FormattedMessage id="ui.accountSignup.submit" defaultMessage="ui.accountSignup.submit" />
       </LoadingButton>
-      <Typography variant="body2" className={classes.recover}>
-        <Link to={scRoutingContext.url(SCRoutes.RECOVER_ROUTE_NAME, {})}>
-          <FormattedMessage id="ui.signIn.recover" defaultMessage="ui.signIn.recover" />
-        </Link>
-      </Typography>
-      <Divider />
       <Typography variant="body2" className={classes.signUp}>
-        <Link to={scRoutingContext.url(SCRoutes.SIGNUP_ROUTE_NAME, {})}>
-          <FormattedMessage id="ui.signIn.signUp" defaultMessage="ui.signIn.signUp" />
+        <Link to={scRoutingContext.url(SCRoutes.SIGNIN_ROUTE_NAME, {})}>
+          <FormattedMessage id="ui.accountSignup.signIn" defaultMessage="ui.accountSignup.signIn" />
         </Link>
       </Typography>
     </Root>

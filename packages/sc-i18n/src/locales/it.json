@@ -238,6 +238,7 @@
   "ui.followUserButton.follow": "Segui",
   "ui.followUserButton.unfollow": "Non seguire",
 
+  "ui.userProfileInfo.username": "Username",
   "ui.userProfileInfo.realName": "Nome reale",
   "ui.userProfileInfo.dateOfBirth": "Data di nascita",
   "ui.userProfileInfo.description": "Occupazione",
@@ -373,17 +374,27 @@
   "ui.NewMessage.to" : "A:",
   "ui.Thread.emptyBox.message" : "Seleziona o componi un messaggio",
 
-  "ui.signIn.username.label": "Username",
-  "ui.signIn.password.label": "Password",
-  "ui.signIn.submit": "Accedi",
-  "ui.signIn.recover": "Hai dimenticato la password?",
-  "ui.signIn.signUp": "Non sei ancora iscritto? Iscriviti",
+  "ui.accountSignin.username.label": "Username",
+  "ui.accountSignin.password.label": "Password",
+  "ui.accountSignin.submit": "Accedi",
+  "ui.accountSignin.recover": "Hai dimenticato la password?",
+  "ui.accountSignin.signUp": "Non sei ancora iscritto? Iscriviti",
 
-  "ui.signUp.email.label": "Email",
-  "ui.signUp.username.label": "Username",
-  "ui.signUp.password.label": "Password",
-  "ui.signUp.submit": "Registrati",
-  "ui.signUp.signUp": "Sei già iscritto? Accedi",
+  "ui.accountSignup.email.label": "Email",
+  "ui.accountSignup.username.label": "Username",
+  "ui.accountSignup.password.label": "Password",
+  "ui.accountSignup.submit": "Registrati",
+  "ui.accountSignup.signIn": "Sei già iscritto? Accedi",
+
+  "ui.accountSignup.email.label": "Email",
+  "ui.accountSignup.username.label": "Username",
+  "ui.accountSignup.password.label": "Password",
+  "ui.accountSignup.submit": "Registrati",
+  "ui.accountSignup.signIn": "Sei già iscritto? Accedi",
+
+  "ui.accountRecover.email.label": "Email",
+  "ui.accountRecover.submit": "Recupera Account",
+  "ui.accountRecover.signIn": "Sei già iscritto? Accedi",
 
   "templates.userProfile.edit": "Modifica"
 }

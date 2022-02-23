@@ -49,7 +49,9 @@ import MessageEditor, {MessageEditorProps, MessageEditorSkeleton} from './compon
 import Thread, {ThreadProps, ThreadSkeleton} from './components/Thread';
 import UserToastNotifications, {UserToastNotificationsProps, UserToastNotificationsSkeleton} from './components/UserToastNotifications';
 import Notification, {NotificationProps, NotificationSkeleton} from './components/Notification';
-import SignIn, {SignInProps} from './components/SignIn';
+import AccountSignIn, {AccountSignInProps} from './components/AccountSignIn';
+import AccountSignUp, {AccountSignUpProps} from './components/AccountSignUp';
+import AccountRecover, {AccountRecoverProps} from './components/AccountRecover';
 import {SCFeedWidgetType, FeedObjectTemplateType, CommentsOrderBy, FeedObjectActivitiesType, SCMediaObjectType, SCMediaChunkType} from './types';
 import {SCCategoryType} from '@selfcommunity/core';
 
@@ -57,6 +59,12 @@ import {SCCategoryType} from '@selfcommunity/core';
  * List all exports
  */
 export {
+  AccountSignIn,
+  AccountSignInProps,
+  AccountSignUp,
+  AccountSignUpProps,
+  AccountRecover,
+  AccountRecoverProps,
   BroadcastMessages,
   BroadcastMessagesProps,
   BroadcastMessagesSkeleton,
@@ -169,8 +177,6 @@ export {
   Snippets,
   SnippetsProps,
   SnippetsSkeleton,
-  SignIn,
-  SignInProps,
   MessageSkeleton,
   UserToastNotifications,
   UserToastNotificationsProps,

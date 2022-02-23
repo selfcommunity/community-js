@@ -8,6 +8,7 @@ import {SCTagType} from './tag';
  * User Fields
  */
 export enum SCUserFields {
+  USERNAME = 'username',
   REAL_NAME = 'real_name',
   DATE_JOINED = 'date_joined',
   BIO = 'bio',
@@ -219,7 +220,6 @@ export interface SCUserSettingsType {
    */
   toast_notifications_emit_sound: number;
 }
-
 
 /**
  * User Blocked Settings

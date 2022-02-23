@@ -230,6 +230,7 @@
   "ui.followUserButton.follow": "Follow",
   "ui.followUserButton.unfollow": "Unfollow",
 
+  "ui.userProfileInfo.username": "Username",
   "ui.userProfileInfo.realName": "Real name",
   "ui.userProfileInfo.dateOfBirth": "Date of birth",
   "ui.userProfileInfo.description": "Job",
@@ -365,11 +366,15 @@
   "ui.NewMessage.to" : "To:",
   "ui.Thread.emptyBox.message" : "Select or compose a message",
 
-  "ui.signIn.username.label": "Username",
-  "ui.signIn.password.label": "Password",
-  "ui.signIn.submit": "Sign In",
-  "ui.signIn.recover": "Forgot password?",
-  "ui.signIn.signUp": "Not registered? Sign Up",
+  "ui.accountSignin.username.label": "Username",
+  "ui.accountSignin.password.label": "Password",
+  "ui.accountSignin.submit": "Sign In",
+  "ui.accountSignin.recover": "Forgot password?",
+  "ui.accountSignin.signUp": "Not registered? Sign Up",
+
+  "ui.accountRecover.email.label": "Email",
+  "ui.accountRecover.submit": "Recover account",
+  "ui.accountRecover.signIn": "Already registered? Sign In",
 
   "templates.userProfile.edit": "Edit"
 }

@@ -1,19 +1,19 @@
 import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
 
-import SignUp from './index';
+import AccountRecover from './index';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC UI/Sign Up ',
-  component: SignUp
+  title: 'Design System/SC UI/Account Recover',
+  component: AccountRecover
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
-} as ComponentMeta<typeof SignUp>;
+} as ComponentMeta<typeof AccountRecover>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof SignUp> = (args) => (
+const Template: ComponentStory<typeof AccountRecover> = (args) => (
   <div style={{width: 400}}>
-    <SignUp {...args} />
+    <AccountRecover {...args} />
   </div>
 );
 

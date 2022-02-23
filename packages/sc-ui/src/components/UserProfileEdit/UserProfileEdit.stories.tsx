@@ -33,6 +33,7 @@ export const Base = Template.bind({});
 Base.args = {
   /* the args you need here will depend on your component */
   fields: [
+    SCUserFields.USERNAME,
     SCUserFields.REAL_NAME,
     SCUserFields.DATE_JOINED,
     SCUserFields.DATE_OF_BIRTH,
