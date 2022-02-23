@@ -12,7 +12,7 @@ import {
   TrendingFeed,
   TrendingPeople
 } from '@selfcommunity/ui';
-import {Endpoints, SCCategoryType, useSCFetchCategory} from '@selfcommunity/core';
+import {Endpoints, SCCategoryType, SCCustomAdvPosition, useSCFetchCategory} from '@selfcommunity/core';
 import {CategoryFeedSkeleton} from './index';
 
 const PREFIX = 'SCCategoryFeedTemplate';
@@ -153,7 +153,7 @@ export default function CategoryFeed(props: CategoryFeedProps): JSX.Element {
         template: FeedObjectTemplateType.PREVIEW
       }}
       FeedSidebarProps={FeedSidebarProps}
-      CustomAdvProps={{categoriesId: [scCategory.id]}}
+      CustomAdvProps={{position: SCCustomAdvPosition.POSITION_FEED, categoriesId: [scCategory.id]}}
     />
   );
 }
