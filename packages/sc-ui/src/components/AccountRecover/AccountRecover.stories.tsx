@@ -1,17 +1,21 @@
 import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
-import UserToastNotifications from './index';
+
+import AccountRecover from './index';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC UI/UserToastNotifications',
-  component: UserToastNotifications,
-  argTypes: {},
-  args: {}
-} as ComponentMeta<typeof UserToastNotifications>;
+  title: 'Design System/SC UI/Account Recover',
+  component: AccountRecover
+  // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
+} as ComponentMeta<typeof AccountRecover>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof UserToastNotifications> = (args) => <UserToastNotifications {...args} />;
+const Template: ComponentStory<typeof AccountRecover> = (args) => (
+  <div style={{width: 400}}>
+    <AccountRecover {...args} />
+  </div>
+);
 
 export const Base = Template.bind({});
 

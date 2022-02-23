@@ -49,7 +49,7 @@ export default function useSCWebPushMessaging() {
    */
   const performUpdateSubscription = (data, remove) => {
     const url = remove
-      ? Endpoints.DeleteDevice.url({type: WEB_PUSH_NOTIFICATION_DEVICE_TYPE, id: wpSubscription.registration_id})
+      ? Endpoints.DeleteDevice.url({type: WEB_PUSH_NOTIFICATION_DEVICE_TYPE, id: data.registration_id})
       : Endpoints.NewDevice.url({type: WEB_PUSH_NOTIFICATION_DEVICE_TYPE});
     const method = remove ? Endpoints.DeleteDevice.method : Endpoints.NewDevice.method;
     return http
@@ -78,7 +78,7 @@ export default function useSCWebPushMessaging() {
       browser: browser.name.toUpperCase(),
       p256dh: btoa(String.fromCharCode.apply(null, new Uint8Array(sub.getKey('p256dh')))),
       auth: btoa(String.fromCharCode.apply(null, new Uint8Array(sub.getKey('auth')))),
-      user: scUserContext.user.username,
+      user: scUserContext.user ? scUserContext.user.username : '',
       registration_id: registration_id,
     };
     return performUpdateSubscription(data, remove)
@@ -261,6 +261,10 @@ export default function useSCWebPushMessaging() {
       } else {
         initialiseState();
       }
+    }
+    if (!scUserContext.user) {
+      // Unsubscribe if user not in session
+      unsubscribe();
     }
   }, [scUserContext.user, scContext.settings.notifications.webPushMessaging, wpSubscription]);
 

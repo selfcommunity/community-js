@@ -66,7 +66,7 @@ export interface CustomAdvProps {
  */
 export default function CustomAdv(props: CustomAdvProps): JSX.Element {
   // PROPS
-  const {id = 'custom_adv', className = null, position, categoriesId = []} = props;
+  const {id = 'custom_adv', className = null, position, categoriesId = null} = props;
 
   // retrieve adv
   const {scCustomAdv} = useSCFetchCustomAdv({position, categoriesId});

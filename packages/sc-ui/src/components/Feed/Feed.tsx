@@ -8,7 +8,7 @@ import {GenericSkeleton} from '../Skeleton';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import {SCFeedWidgetType} from '../../types/feed';
 import Sticky from 'react-stickynode';
-import CustomAdv from '../CustomAdv';
+import CustomAdv, {CustomAdvProps} from '../CustomAdv';
 import {
   EndpointType,
   http,
@@ -42,6 +42,9 @@ const Root = styled(Grid, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   marginTop: theme.spacing(2),
+  [`& .${classes.left}`]: {
+    padding: '0 2px 0 2px'
+  },
   [`& .${classes.end}, & .${classes.refresh}`]: {
     textAlign: 'center'
   }
@@ -120,6 +123,12 @@ export interface FeedProps {
    * @default {top: 0, bottomBoundary: `#${id}`}
    */
   FeedSidebarProps?: FeedSidebarProps;
+
+  /**
+   * Props to spread to single custom adv element (this props can be used only if Custom Adv are enabled)
+   * @default {}
+   */
+  CustomAdvProps?: CustomAdvProps;
 }
 
 interface FeedData {
@@ -167,7 +176,8 @@ export default function Feed(props: FeedProps): JSX.Element {
     ItemProps = {},
     ItemSkeleton,
     ItemSkeletonProps = {},
-    FeedSidebarProps = {top: 0, bottomBoundary: `#${id}`}
+    FeedSidebarProps = {top: 0, bottomBoundary: `#${id}`},
+    CustomAdvProps = {}
   } = props;
 
   // STATE
@@ -206,7 +216,8 @@ export default function Feed(props: FeedProps): JSX.Element {
           type: 'widget',
           component: CustomAdv,
           componentProps: {
-            position: SCCustomAdvPosition.POSITION_FEED_SIDEBAR
+            position: SCCustomAdvPosition.POSITION_FEED_SIDEBAR,
+            ...CustomAdvProps
           },
           column: 'right',
           position: 0
@@ -216,7 +227,8 @@ export default function Feed(props: FeedProps): JSX.Element {
             type: 'widget',
             component: CustomAdv,
             componentProps: {
-              position: SCCustomAdvPosition.POSITION_FEED
+              position: SCCustomAdvPosition.POSITION_FEED,
+              ...CustomAdvProps
             },
             column: 'left',
             position

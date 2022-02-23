@@ -65,10 +65,12 @@ export function getRouteData(obj) {
     data = obj;
   } else if (obj.type === SCCommentTypologyType) {
     const contribution_type = getContributeType(obj);
+    const isContributionTypeObj = obj[contribution_type] && typeof obj[contribution_type] === 'object';
     data = {
       ...obj,
-      contribution_type: contribution_type,
-      contribution_id: obj[contribution_type]
+      contribution_type,
+      contribution_id: isContributionTypeObj ? obj[contribution_type].id : obj[contribution_type],
+      contribution_slug: isContributionTypeObj ? obj[contribution_type].slug : contribution_type
     };
   }
   return data;

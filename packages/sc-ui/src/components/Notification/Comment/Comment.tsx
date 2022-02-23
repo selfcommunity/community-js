@@ -12,6 +12,7 @@ import DateTimeAgo from '../../../shared/DateTimeAgo';
 import NewChip from '../../../shared/NewChip/NewChip';
 import {getContributionSnippet, getRouteData} from '../../../utils/contribute';
 import classNames from 'classnames';
+import {NotificationObjectTemplateType} from '../../../types';
 
 const messages = defineMessages({
   comment: {
@@ -28,13 +29,17 @@ const PREFIX = 'SCCommentNotification';
 
 const classes = {
   root: `${PREFIX}-root`,
+  listItemSnippet: `${PREFIX}-list-item-snippet`,
+  listItemSnippetNew: `${PREFIX}-list-item-snippet-new`,
   avatarWrap: `${PREFIX}-avatar-wrap`,
   avatar: `${PREFIX}-avatar`,
+  avatarSnippet: `${PREFIX}-avatar-snippet`,
   voteButton: `${PREFIX}-vote-button`,
   commentText: `${PREFIX}-comment-text`,
   contributionText: `${PREFIX}-contribution-text`,
   activeAt: `${PREFIX}-active-at`,
   bullet: `${PREFIX}-bullet`,
+  toastInfo: `${PREFIX}-toast-info`
 };
 
 const Root = styled(Box, {
@@ -42,9 +47,25 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
+  display: 'flex',
+  [`& .${classes.listItemSnippet}`]: {
+    padding: '0px 5px',
+    alignItems: 'center'
+  },
+  [`& .${classes.listItemSnippetNew}`]: {
+    borderLeft: '2px solid red'
+  },
+  [`& .${classes.avatarWrap}`]: {
+    minWidth: 'auto',
+    paddingRight: 10
+  },
   [`& .${classes.avatar}`]: {
     backgroundColor: red[500],
     color: '#FFF'
+  },
+  [`& .${classes.avatarSnippet}`]: {
+    width: 30,
+    height: 30
   },
   [`& .${classes.voteButton}`]: {
     marginLeft: '-1px',
@@ -53,10 +74,13 @@ const Root = styled(Box, {
   },
   [`& .${classes.commentText}`]: {
     display: 'inline',
-    fontWeight: '600'
+    color: theme.palette.text.primary
   },
   [`& .${classes.contributionText}`]: {
     textDecoration: 'underline'
+  },
+  [`& .${classes.toastInfo}`]: {
+    marginTop: 10
   }
 }));
 
@@ -80,6 +104,12 @@ export interface CommentNotificationProps {
   notificationObject: SCNotificationCommentType;
 
   /**
+   * Notification Object template type
+   * @default 'preview'
+   */
+  template?: NotificationObjectTemplateType;
+
+  /**
    * Index
    * @default null
    */
@@ -89,13 +119,13 @@ export interface CommentNotificationProps {
    * Handles action on vote
    * @default null
    */
-  onVote: (i, v) => void;
+  onVote?: (i, v) => void;
 
   /**
    * The id of the loading vote
    * @default null
    */
-  loadingVote: number;
+  loadingVote?: number;
 
   /**
    * Any other properties
@@ -110,10 +140,23 @@ export interface CommentNotificationProps {
  */
 export default function CommentNotification(props: CommentNotificationProps): JSX.Element {
   // PROPS
-  const {notificationObject, index, onVote, loadingVote, id = `n_${props.notificationObject['sid']}`, className, ...rest} = props;
+  const {
+    notificationObject,
+    index,
+    onVote,
+    loadingVote,
+    id = `n_${props.notificationObject['sid']}`,
+    template = NotificationObjectTemplateType.DETAIL,
+    className,
+    ...rest
+  } = props;
 
   // ROUTING
   const scRoutingContext: SCRoutingContextType = useSCRouting();
+
+  // CONST
+  const isSnippetTemplate = template === NotificationObjectTemplateType.SNIPPET;
+  const isToastTemplate = template === NotificationObjectTemplateType.TOAST;
 
   //INTL
   const intl = useIntl();
@@ -122,15 +165,23 @@ export default function CommentNotification(props: CommentNotificationProps): JS
    * Renders root object
    */
   return (
-    <Root id={id} className={classNames(classes.root, className)} {...rest}>
-      <ListItem alignItems="flex-start" component={'div'}>
+    <Root id={id} className={classNames(classes.root, className, `${PREFIX}-${template}`)} {...rest}>
+      <ListItem
+        alignItems={isSnippetTemplate ? 'center' : 'flex-start'}
+        component={'div'}
+        classes={{
+          root: classNames({
+            [classes.listItemSnippet]: isToastTemplate || isSnippetTemplate,
+            [classes.listItemSnippetNew]: isSnippetTemplate && notificationObject.is_new
+          })
+        }}>
         <ListItemAvatar classes={{root: classes.avatarWrap}}>
           <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.comment.author)}>
             <Avatar
               alt={notificationObject.comment.author.username}
               variant="circular"
               src={notificationObject.comment.author.avatar}
-              classes={{root: classes.avatar}}
+              classes={{root: classNames(classes.avatar, {[classes.avatarSnippet]: isSnippetTemplate})}}
             />
           </Link>
         </ListItemAvatar>
@@ -138,7 +189,7 @@ export default function CommentNotification(props: CommentNotificationProps): JS
           disableTypography={true}
           primary={
             <>
-              {notificationObject.is_new && <NewChip />}
+              {template === NotificationObjectTemplateType.DETAIL && notificationObject.is_new && <NewChip />}
               <Typography component="span" className={classes.commentText} color="inherit">
                 <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.comment.author)}>
                   {notificationObject.comment.author.username}
@@ -160,31 +211,46 @@ export default function CommentNotification(props: CommentNotificationProps): JS
                   {getContributionSnippet(notificationObject.comment)}
                 </Typography>
               </Link>
-              <Stack direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
-                <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
-                <Bullet className={classes.bullet} />
-                <LoadingButton
-                  color={'inherit'}
-                  classes={{root: classes.voteButton}}
-                  variant={'text'}
-                  onClick={() => onVote(index, notificationObject.comment)}
-                  disabled={loadingVote === index}
-                  loading={loadingVote === index}>
-                  {notificationObject.comment.voted ? (
-                    <Tooltip title={<FormattedMessage id={'ui.notification.comment.voteDown'} defaultMessage={'ui.notification.comment.voteDown'} />}>
-                      <VoteFilledIcon fontSize={'small'} color={'secondary'} />
-                    </Tooltip>
-                  ) : (
-                    <Tooltip title={<FormattedMessage id={'ui.notification.comment.voteUp'} defaultMessage={'ui.notification.comment.voteUp'} />}>
-                      <VoteIcon fontSize={'small'} color="inherit" />
-                    </Tooltip>
-                  )}
-                </LoadingButton>
-              </Stack>
+              {template === NotificationObjectTemplateType.DETAIL && (
+                <Stack direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
+                  <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
+                  <Bullet className={classes.bullet} />
+                  <LoadingButton
+                    color={'inherit'}
+                    classes={{root: classes.voteButton}}
+                    variant={'text'}
+                    onClick={() => {
+                      onVote && onVote(index, notificationObject.comment);
+                    }}
+                    disabled={loadingVote === index}
+                    loading={loadingVote === index}>
+                    {notificationObject.comment.voted ? (
+                      <Tooltip
+                        title={<FormattedMessage id={'ui.notification.comment.voteDown'} defaultMessage={'ui.notification.comment.voteDown'} />}>
+                        <VoteFilledIcon fontSize={'small'} color={'secondary'} />
+                      </Tooltip>
+                    ) : (
+                      <Tooltip title={<FormattedMessage id={'ui.notification.comment.voteUp'} defaultMessage={'ui.notification.comment.voteUp'} />}>
+                        <VoteIcon fontSize={'small'} color="inherit" />
+                      </Tooltip>
+                    )}
+                  </LoadingButton>
+                </Stack>
+              )}
             </>
           }
         />
       </ListItem>
+      {template === NotificationObjectTemplateType.TOAST && (
+        <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
+          <DateTimeAgo date={notificationObject.active_at} />
+          <Typography color="primary">
+            <Link to={scRoutingContext.url('comment', {id: notificationObject.comment.id})} sx={{textDecoration: 'underline'}}>
+              <FormattedMessage id="ui.userToastNotifications.viewContribution" defaultMessage={'ui.userToastNotifications.viewContribution'} />
+            </Link>
+          </Typography>
+        </Stack>
+      )}
     </Root>
   );
 }

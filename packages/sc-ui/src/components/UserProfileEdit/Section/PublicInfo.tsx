@@ -10,8 +10,13 @@ import classNames from 'classnames';
 import {AxiosResponse} from 'axios';
 import {DatePicker, LocalizationProvider} from '@mui/lab';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import UsernameTextField from '../../../shared/UsernameTextField';
 
 const messages = defineMessages({
+  username: {
+    id: 'ui.userProfileInfo.username',
+    defaultMessage: 'ui.userProfileInfo.username'
+  },
   realName: {
     id: 'ui.userProfileInfo.realName',
     defaultMessage: 'ui.userProfileInfo.realName'
@@ -162,6 +167,7 @@ export default function PublicInfo(props: PublicInfoProps): JSX.Element {
   const renderField = (field) => {
     const isEditing = editing.includes(field);
     const isSaving = saving.includes(field);
+    const component = {element: TextField};
     const props: any = {
       InputProps: {
         endAdornment: (
@@ -184,11 +190,14 @@ export default function PublicInfo(props: PublicInfoProps): JSX.Element {
     let content = null;
 
     switch (field) {
+      case SCUserFields.USERNAME:
+        component.element = UsernameTextField;
+        break;
       case SCUserFields.DATE_JOINED:
         return null;
       case SCUserFields.DATE_OF_BIRTH:
         return (
-          <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <LocalizationProvider dateAdapter={AdapterDateFns} key={field}>
             <DatePicker
               label={intl.formatMessage(messages[StringUtils.camelCase(field)])}
               value={user[field]}
@@ -230,7 +239,8 @@ export default function PublicInfo(props: PublicInfoProps): JSX.Element {
         break;
     }
     return (
-      <TextField
+      <component.element
+        key={field}
         {...props}
         className={classes.field}
         name={field}
@@ -240,7 +250,7 @@ export default function PublicInfo(props: PublicInfoProps): JSX.Element {
         onChange={handleChange}
         disabled={!isEditing || isSaving}>
         {content}
-      </TextField>
+      </component.element>
     );
   };
 

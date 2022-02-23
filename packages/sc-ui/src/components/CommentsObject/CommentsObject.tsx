@@ -341,23 +341,27 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
   /**
    * Render advertising above FeedObject Detail
    */
-  function renderAdvertising() {
-    if (
-      isComponentMounted.current &&
-      !hideAdvertising &&
-      preferences[SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED] &&
-      ((preferences[SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED] && scUserContext.user === null) ||
-        !preferences[SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED])
-    ) {
-      return (
-        <CustomAdv
-          position={SCCustomAdvPosition.POSITION_IN_COMMENTS}
-          {...(obj.categories.length && {categoriesId: obj.categories.map((c) => c.id)})}
-        />
-      );
-    }
-    return null;
-  }
+  const renderAdvertising = useMemo(
+    () => () => {
+      if (
+        obj &&
+        isComponentMounted.current &&
+        !hideAdvertising &&
+        preferences[SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED] &&
+        ((preferences[SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED] && scUserContext.user === null) ||
+          !preferences[SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED])
+      ) {
+        return (
+          <CustomAdv
+            position={SCCustomAdvPosition.POSITION_IN_COMMENTS}
+            {...(obj.categories.length && {categoriesId: obj.categories.map((c) => c.id)})}
+          />
+        );
+      }
+      return null;
+    },
+    [JSON.stringify(obj)]
+  );
 
   /**
    * Remove commentObj or comments from newComments
@@ -646,7 +650,7 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
    */
   const advPosition = Math.floor(Math.random() * (Math.min(total, 5) - 1 + 1) + 1);
   let commentsRendered = <></>;
-  if (comments.length === 0 && isLoading) {
+  if ((comments.length === 0 && isLoading) || !obj) {
     commentsRendered = (
       <>
         {[...Array(commentsLoadingBoxCount)].map((x, i) => (

@@ -8,6 +8,13 @@ export interface EndpointType {
 
 const Endpoints: {[key: string]: EndpointType} = {
   /**
+   * OAuth2 Endpoints
+   */
+  OAuthToken: {
+    url: urlReplacer('/oauth/token/'),
+    method: 'POST',
+  },
+  /**
    * Preferences Endpoints
    */
   Preferences: {

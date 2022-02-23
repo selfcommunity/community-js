@@ -1,18 +1,18 @@
 import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
-import UserToastNotificationsSkeleton from './Skeleton';
+import ToastNotificationsSkeleton from './Skeleton';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC UI/Skeleton/UserToastNotifications',
-  component: UserToastNotificationsSkeleton
+  title: 'Design System/SC UI/Skeleton/ToastNotifications',
+  component: ToastNotificationsSkeleton
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
-} as ComponentMeta<typeof UserToastNotificationsSkeleton>;
+} as ComponentMeta<typeof ToastNotificationsSkeleton>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof UserToastNotificationsSkeleton> = (args) => (
+const Template: ComponentStory<typeof ToastNotificationsSkeleton> = (args) => (
   <div style={{width: 400}}>
-    <UserToastNotificationsSkeleton {...args} />
+    <ToastNotificationsSkeleton {...args} />
   </div>
 );
 

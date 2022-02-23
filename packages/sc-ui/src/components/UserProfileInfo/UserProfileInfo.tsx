@@ -143,7 +143,7 @@ export default function UserProfileInfo(props: UserProfileInfoProps): JSX.Elemen
         {fields.map((field) => {
           if (scUser[field]) {
             return (
-              <Grid item xs={6}>
+              <Grid item xs={6} key={field}>
                 <Typography variant="body2">
                   <span className={classes.field}>{intl.formatMessage(messages[StringUtils.camelCase(field)])}:</span> {renderField(scUser, field)}
                 </Typography>
