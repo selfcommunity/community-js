@@ -153,6 +153,7 @@ export default function CategoryFeed(props: CategoryFeedProps): JSX.Element {
         template: FeedObjectTemplateType.PREVIEW
       }}
       FeedSidebarProps={FeedSidebarProps}
+      CustomAdvProps={{categoriesId: [scCategory.id]}}
     />
   );
 }
