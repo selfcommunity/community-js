@@ -369,12 +369,14 @@
   "ui.accountSignin.username.label": "Username",
   "ui.accountSignin.password.label": "Password",
   "ui.accountSignin.submit": "Sign In",
-  "ui.accountSignin.recover": "Forgot password?",
-  "ui.accountSignin.signUp": "Not registered? Sign Up",
+
+  "ui.accountSignup.email.label": "Email",
+  "ui.accountSignup.username.label": "Username",
+  "ui.accountSignup.password.label": "Password",
+  "ui.accountSignup.submit": "Register",
 
   "ui.accountRecover.email.label": "Email",
-  "ui.accountRecover.submit": "Recover account",
-  "ui.accountRecover.signIn": "Already registered? Sign In",
+  "ui.accountRecover.submit": "Recover Account",
 
   "templates.userProfile.edit": "Edit"
 }

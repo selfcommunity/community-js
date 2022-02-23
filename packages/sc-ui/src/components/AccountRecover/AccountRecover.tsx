@@ -11,8 +11,7 @@ const PREFIX = 'SCAccountRecover';
 
 const classes = {
   root: `${PREFIX}-root`,
-  email: `${PREFIX}-email`,
-  signIn: `${PREFIX}-signIn`
+  email: `${PREFIX}-email`
 };
 
 const Root = styled('form', {
@@ -79,7 +78,6 @@ export interface AccountRecoverProps {
  |---|---|---|
  |root|.SCAccountRecover-root|Styles applied to the root element.|
  |email|.SCAccountRecover-email|Styles applied to the email TextField.|
- |signIn|.SCAccountRecover-signIn|Styles applied to the signIn element.|
 
  *
  * @param props
@@ -129,11 +127,6 @@ export default function AccountRecover(props: AccountRecoverProps): JSX.Element 
       <LoadingButton type="submit" {...ButtonProps} loading={isSubmitting}>
         <FormattedMessage id="ui.accountRecover.submit" defaultMessage="ui.accountRecover.submit" />
       </LoadingButton>
-      <Typography variant="body2" className={classes.signIn}>
-        <Link to={scRoutingContext.url(SCRoutes.SIGNIN_ROUTE_NAME, {})}>
-          <FormattedMessage id="ui.accountRecover.signIn" defaultMessage="ui.accountRecover.signIn" />
-        </Link>
-      </Typography>
     </Root>
   );
 }

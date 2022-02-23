@@ -12,9 +12,7 @@ const PREFIX = 'SCAccountSignIn';
 const classes = {
   root: `${PREFIX}-root`,
   username: `${PREFIX}-username`,
-  password: `${PREFIX}-password`,
-  recover: `${PREFIX}-recover`,
-  signUp: `${PREFIX}-signUp`
+  password: `${PREFIX}-password`
 };
 
 const Root = styled('form', {
@@ -23,9 +21,6 @@ const Root = styled('form', {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   [`&.${classes.root} .MuiTextField-root, &.${classes.root} .MuiButton-root`]: {
-    margin: theme.spacing(1, 0, 1, 0)
-  },
-  [`&.${classes.root} .MuiTypography-root`]: {
     margin: theme.spacing(1, 0, 1, 0)
   }
 }));
@@ -82,8 +77,6 @@ export interface AccountSignInProps {
  |root|.SCAccountSignIn-root|Styles applied to the root element.|
  |username|.SCAccountSignIn-username|Styles applied to the username TextField.|
  |password|.SCAccountSignIn-password|Styles applied to the password TextField.|
- |recover|.SCAccountSignIn-recover|Styles applied to the recover element.|
- |signUp|.SCAccountSignIn-signUp|Styles applied to the signUp element.|
 
  *
  * @param props
@@ -138,17 +131,6 @@ export default function AccountSignIn(props: AccountSignInProps): JSX.Element {
       <LoadingButton type="submit" {...ButtonProps} loading={isSubmitting}>
         <FormattedMessage id="ui.accountSignin.submit" defaultMessage="ui.accountSignin.submit" />
       </LoadingButton>
-      <Typography variant="body2" className={classes.recover}>
-        <Link to={scRoutingContext.url(SCRoutes.RECOVER_ROUTE_NAME, {})}>
-          <FormattedMessage id="ui.accountSignin.recover" defaultMessage="ui.accountSignin.recover" />
-        </Link>
-      </Typography>
-      <Divider />
-      <Typography variant="body2" className={classes.signUp}>
-        <Link to={scRoutingContext.url(SCRoutes.SIGNUP_ROUTE_NAME, {})}>
-          <FormattedMessage id="ui.accountSignin.signUp" defaultMessage="ui.accountSignin.signUp" />
-        </Link>
-      </Typography>
     </Root>
   );
 }

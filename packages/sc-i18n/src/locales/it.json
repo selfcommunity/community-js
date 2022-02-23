@@ -377,24 +377,14 @@
   "ui.accountSignin.username.label": "Username",
   "ui.accountSignin.password.label": "Password",
   "ui.accountSignin.submit": "Accedi",
-  "ui.accountSignin.recover": "Hai dimenticato la password?",
-  "ui.accountSignin.signUp": "Non sei ancora iscritto? Iscriviti",
 
   "ui.accountSignup.email.label": "Email",
   "ui.accountSignup.username.label": "Username",
   "ui.accountSignup.password.label": "Password",
   "ui.accountSignup.submit": "Registrati",
-  "ui.accountSignup.signIn": "Sei già iscritto? Accedi",
-
-  "ui.accountSignup.email.label": "Email",
-  "ui.accountSignup.username.label": "Username",
-  "ui.accountSignup.password.label": "Password",
-  "ui.accountSignup.submit": "Registrati",
-  "ui.accountSignup.signIn": "Sei già iscritto? Accedi",
 
   "ui.accountRecover.email.label": "Email",
   "ui.accountRecover.submit": "Recupera Account",
-  "ui.accountRecover.signIn": "Sei già iscritto? Accedi",
 
   "templates.userProfile.edit": "Modifica"
 }

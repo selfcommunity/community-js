@@ -3,22 +3,11 @@ import {styled} from '@mui/material/styles';
 import {Link, SCRoutes, SCRoutingContextType, SCUserContextType, SCUserType, useSCRouting, useSCUser} from '@selfcommunity/core';
 import {ButtonProps, TextFieldProps, Typography} from '@mui/material';
 import classNames from 'classnames';
-import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
+import {FormattedMessage, useIntl} from 'react-intl';
 import {LoadingButton} from '@mui/lab';
 import PasswordTextField from '../../shared/PasswordTextField';
 import EmailTextField from '../../shared/EmailTextField';
 import UsernameTextField from '../../shared/UsernameTextField';
-
-const messages = defineMessages({
-  emailError: {
-    id: 'ui.common.error.email',
-    defaultMessage: 'ui.common.error.email'
-  },
-  usernameError: {
-    id: 'ui.common.error.username',
-    defaultMessage: 'ui.common.error.username'
-  }
-});
 
 const PREFIX = 'SCAccountSignUp';
 
@@ -26,8 +15,7 @@ const classes = {
   root: `${PREFIX}-root`,
   email: `${PREFIX}-email`,
   username: `${PREFIX}-username`,
-  password: `${PREFIX}-password`,
-  signUp: `${PREFIX}-signUp`
+  password: `${PREFIX}-password`
 };
 
 const Root = styled('form', {
@@ -96,7 +84,6 @@ export interface AccountSignUpProps {
  |email|.SCAccountSignUp-email|Styles applied to the email TextField.|
  |username|.SCAccountSignUp-username|Styles applied to the username TextField.|
  |password|.SCAccountSignUp-password|Styles applied to the password TextField.|
- |signUp|.SCAccountSignUp-signUp|Styles applied to the signUp element.|
 
  *
  * @param props
@@ -116,9 +103,6 @@ export default function AccountSignUp(props: AccountSignUpProps): JSX.Element {
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
   const scRoutingContext: SCRoutingContextType = useSCRouting();
-
-  // HOOKS
-  const intl = useIntl();
 
   // HANDLERS
   const handleSubmit = (event: React.SyntheticEvent<HTMLFormElement>) => {
@@ -168,11 +152,6 @@ export default function AccountSignUp(props: AccountSignUpProps): JSX.Element {
       <LoadingButton type="submit" {...ButtonProps} loading={isSubmitting}>
         <FormattedMessage id="ui.accountSignup.submit" defaultMessage="ui.accountSignup.submit" />
       </LoadingButton>
-      <Typography variant="body2" className={classes.signUp}>
-        <Link to={scRoutingContext.url(SCRoutes.SIGNIN_ROUTE_NAME, {})}>
-          <FormattedMessage id="ui.accountSignup.signIn" defaultMessage="ui.accountSignup.signIn" />
-        </Link>
-      </Typography>
     </Root>
   );
 }
