@@ -14,7 +14,7 @@ import {SCCustomAdvPosition, SCCustomAdvType} from '../types';
  * @param object.position
  * @param object.categoryId
  */
-export default function useSCFetchCustomAdv({position = null, categoriesId = null}: {position: SCCustomAdvPosition; categoriesId?: Array<number>}) {
+export default function useSCFetchCustomAdv({position = null, categoriesId = null}: {position?: SCCustomAdvPosition; categoriesId?: Array<number>}) {
   const [scCustomAdv, setSCCustomAdv] = useState<SCCustomAdvType | null>(null);
 
   /**
@@ -27,7 +27,7 @@ export default function useSCFetchCustomAdv({position = null, categoriesId = nul
           url: Endpoints.CustomAdvSearch.url(),
           method: Endpoints.CustomAdvSearch.method,
           params: {
-            position,
+            ...(position && {position: position}),
             ...(categoriesId && {categories: `[${categoriesId.toString()}]`}),
           },
         })

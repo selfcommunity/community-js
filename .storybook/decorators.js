@@ -31,7 +31,7 @@ const withProvider = (Story, context) => {
       session: {
         type: context.globals.session,
         clientId: context.globals.clientId,
-        authToken: null, // authToken, // Comment this line to test anonymous session
+        authToken: authToken, // Comment this line to test anonymous session
         handleRefreshToken: context.globals.session !== 'Cookie' ? refreshToken(context) : null
       },
       notifications: {
