@@ -1,17 +1,17 @@
 import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
-import UserPopupNotifications from './index';
+import SnippetNotifications from './index';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC UI/UserPopupNotifications',
-  component: UserPopupNotifications,
-} as ComponentMeta<typeof UserPopupNotifications>;
+  title: 'Design System/SC UI/SnippetNotifications',
+  component: SnippetNotifications,
+} as ComponentMeta<typeof SnippetNotifications>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof UserPopupNotifications> = (args) => (
+const Template: ComponentStory<typeof SnippetNotifications> = (args) => (
   <div style={{width: '280px', height: '700px'}}>
-    <UserPopupNotifications {...args} />
+    <SnippetNotifications {...args} />
   </div>
 );
 

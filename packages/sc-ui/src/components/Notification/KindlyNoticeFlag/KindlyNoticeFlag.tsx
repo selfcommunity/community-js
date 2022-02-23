@@ -60,8 +60,7 @@ const Root = styled(Box, {
   },
   [`& .${classes.flagText}`]: {
     display: 'inline',
-    fontWeight: '600',
-    color: grey[600]
+    color: theme.palette.text.primary
   },
   [`& .${classes.contributionWrap}`]: {
     marginBottom: theme.spacing(1),
@@ -132,7 +131,7 @@ export default function KindlyNoticeFlagNotification(props: NotificationKindlyNo
    * Renders root object
    */
   return (
-    <Root id={id} className={classNames(classes.root, className)} {...rest}>
+    <Root id={id} className={classNames(classes.root, className, `${PREFIX}-${template}`)} {...rest}>
       <ListItem
         alignItems={isSnippetTemplate ? 'center' : 'flex-start'}
         component={'div'}

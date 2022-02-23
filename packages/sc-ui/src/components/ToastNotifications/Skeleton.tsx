@@ -1,6 +1,6 @@
 import React from 'react';
 import {NotificationSkeleton} from '../Notification';
 
-export default function UserToastNotificationsSkeleton(): JSX.Element {
+export default function ToastNotificationsSkeleton(): JSX.Element {
   return <NotificationSkeleton />;
 }

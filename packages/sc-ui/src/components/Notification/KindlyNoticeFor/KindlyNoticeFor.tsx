@@ -1,6 +1,6 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import {Avatar, Box, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
+import {Avatar, Box, ListItem, ListItemAvatar, ListItemText, Stack, Typography} from '@mui/material';
 import EmojiFlagsIcon from '@mui/icons-material/EmojiFlags';
 import {grey, red} from '@mui/material/colors';
 import {Link, SCNotificationDeletedForType, SCRoutingContextType, useSCRouting, StringUtils, SCRoutes} from '@selfcommunity/core';
@@ -47,7 +47,8 @@ const classes = {
   activeAt: `${PREFIX}-active-at`,
   contributionWrap: `${PREFIX}-contribution-wrap`,
   contributionYouWroteLabel: `${PREFIX}-contribution-you-wrote-label`,
-  contributionText: `${PREFIX}-contribution-text`
+  contributionText: `${PREFIX}-contribution-text`,
+  toastInfo: `${PREFIX}-toast-info`
 };
 
 const Root = styled(Box, {
@@ -76,8 +77,7 @@ const Root = styled(Box, {
   },
   [`& .${classes.flagText}`]: {
     display: 'inline',
-    fontWeight: '600',
-    color: grey[600]
+    color: theme.palette.text.primary
   },
   [`& .${classes.contributionWrap}`]: {
     marginBottom: theme.spacing(1),
@@ -85,6 +85,9 @@ const Root = styled(Box, {
   },
   [`& .${classes.contributionText}`]: {
     textDecoration: 'underline'
+  },
+  [`& .${classes.toastInfo}`]: {
+    marginTop: 10
   }
 }));
 
@@ -139,6 +142,7 @@ export default function KindlyNoticeForNotification(props: NotificationKindlyNot
 
   // CONST
   const isSnippetTemplate = template === NotificationObjectTemplateType.SNIPPET;
+  const isToastTemplate = template === NotificationObjectTemplateType.TOAST;
   const contributionType = getContributeType(notificationObject);
 
   //INTL
@@ -148,11 +152,16 @@ export default function KindlyNoticeForNotification(props: NotificationKindlyNot
    * Renders root object
    */
   return (
-    <Root id={id} className={classNames(classes.root, className)} {...rest}>
+    <Root id={id} className={classNames(classes.root, className, `${PREFIX}-${template}`)} {...rest}>
       <ListItem
-        alignItems={isSnippetTemplate ? 'center' : 'flex-start'}
+        alignItems={isToastTemplate || isSnippetTemplate ? 'center' : 'flex-start'}
         component={'div'}
-        classes={{root: classNames({[classes.listItemSnippet]: isSnippetTemplate, [classes.listItemSnippetNew]: notificationObject.is_new})}}>
+        classes={{
+          root: classNames({
+            [classes.listItemSnippet]: isToastTemplate || isSnippetTemplate,
+            [classes.listItemSnippetNew]: isSnippetTemplate && notificationObject.is_new
+          })
+        }}>
         <ListItemAvatar classes={{root: classes.flagIconWrap}}>
           <Avatar variant="circular" classes={{root: classNames(classes.flagIcon, {[classes.flagIconSnippet]: isSnippetTemplate})}}>
             <EmojiFlagsIcon />
@@ -177,7 +186,7 @@ export default function KindlyNoticeForNotification(props: NotificationKindlyNot
                 </Link>
               ) : (
                 <>
-                  {notificationObject.is_new && <NewChip />}
+                  {template === NotificationObjectTemplateType.DETAIL && notificationObject.is_new && <NewChip />}
                   <Typography component="span" color="inherit" className={classes.flagText}>
                     {intl.formatMessage(messages[StringUtils.camelCase(notificationObject.type)], {b: (...chunks) => <strong>{chunks}</strong>})}
                   </Typography>
@@ -185,7 +194,11 @@ export default function KindlyNoticeForNotification(props: NotificationKindlyNot
               )}
             </>
           }
-          secondary={<> {!isSnippetTemplate && <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />}</>}
+          secondary={
+            <>
+              {template === NotificationObjectTemplateType.DETAIL && <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />}
+            </>
+          }
         />
       </ListItem>
       {!isSnippetTemplate && (
@@ -201,6 +214,20 @@ export default function KindlyNoticeForNotification(props: NotificationKindlyNot
             </Typography>
           </Link>
         </Box>
+      )}
+      {template === NotificationObjectTemplateType.TOAST && (
+        <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2} className={classes.toastInfo}>
+          <DateTimeAgo date={notificationObject.active_at} />
+          <Typography color="primary">
+            <Link
+              to={scRoutingContext.url(
+                SCRoutes[`${notificationObject[contributionType]['type'].toUpperCase()}_ROUTE_NAME`],
+                getRouteData(notificationObject[contributionType])
+              )}>
+              <FormattedMessage id="ui.userToastNotifications.viewContribution" defaultMessage={'ui.userToastNotifications.viewContribution'} />
+            </Link>
+          </Typography>
+        </Stack>
       )}
     </Root>
   );

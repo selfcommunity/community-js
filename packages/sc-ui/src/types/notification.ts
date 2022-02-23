@@ -3,5 +3,6 @@
  */
 export enum NotificationObjectTemplateType {
   SNIPPET = 'snippet',
-  DETAIL = 'detail'
+  DETAIL = 'detail',
+  TOAST = 'toast'
 }

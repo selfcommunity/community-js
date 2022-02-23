@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useRef} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {styled} from '@mui/material/styles';
 import {Box, BoxProps} from '@mui/material';
 import {SCNotificationTopicType, SCNotification, SCNotificationTypologyType, useSCContext, SCContextType} from '@selfcommunity/core';
@@ -22,7 +22,7 @@ import UndeletedForNotificationToast from './Toast/UndeletedFor';
 import UserBlockedNotificationToast from './Toast/UserBlocked';
 */
 
-const PREFIX = 'SCUserToastNotifications';
+const PREFIX = 'SCToastNotifications';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -40,11 +40,12 @@ const Root = styled(Box, {
     minWidth: 280
   },
   [`& .${classes.toastContent}`]: {
-    marginBottom: 10
+    marginBottom: 10,
+    padding: '8px 0px 15px 0px'
   }
 }));
 
-export interface UserToastNotificationsProps extends BoxProps {
+export interface ToastNotificationsProps extends BoxProps {
   /**
    * Props for toast message
    * @default null
@@ -68,31 +69,31 @@ export interface UserToastNotificationsProps extends BoxProps {
 }
 /**
  *
- > API documentation for the Community-UI User Toast Notifications component. Learn about the available props and the CSS API.
+ > API documentation for the Community-UI Toast Notifications component. Learn about the available props and the CSS API.
 
  #### Import
 
  ```jsx
- import {UserToastNotifications} from '@selfcommunity/ui';
+ import {ToastNotifications} from '@selfcommunity/ui';
  ```
 
  #### Component Name
 
- The name `SCUserToastNotifications` can be used when providing style overrides in the theme.
+ The name `SCToastNotifications` can be used when providing style overrides in the theme.
 
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCUserToastNotifications-root|Styles applied to the root element.|
+ |root|.SCUserNotifications-root|Styles applied to the root element.|
  |toastMessage|.SCUserToastNotifications-toast-message|Styles applied to the toast message element.|
  |toastContent|.SCUserToastNotifications-toast-content|Styles applied to the toast content element.|
  |toastActions|.SCUserToastNotifications-toast-actions|Styles applied to the toast actions section.|
 
  * @param props
  */
-export default function UserToastNotifications(props: UserToastNotificationsProps): JSX.Element {
+export default function UserToastNotifications(props: ToastNotificationsProps): JSX.Element {
   // PROPS
   const {ToastMessageProps = {}, handleNotification, disableToastNotification = false} = props;
 

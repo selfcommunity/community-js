@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import CommentNotification from '../Notification/Comment';
 import UserFollowNotification from '../Notification/UserFollow';
@@ -10,10 +10,11 @@ import UserBlockedNotification from '../Notification/UserBlocked';
 import UserNotificationMention from '../Notification/Mention';
 import CollapsedForNotification from '../Notification/CollapsedFor';
 import KindlyNoticeForNotification from '../Notification/KindlyNoticeFor';
-import {defineMessages, FormattedMessage} from 'react-intl';
+import {FormattedMessage} from 'react-intl';
 import KindlyNoticeFlagNotification from '../Notification/KindlyNoticeFlag';
 import VoteUpNotification from '../Notification/VoteUp';
 import {SCOPE_SC_UI} from '../../constants/Errors';
+import PubSub from 'pubsub-js';
 import {AxiosResponse} from 'axios';
 import ContributionFollowNotification from '../Notification/ContributionFollow';
 import {Box, Button, CardProps, MenuItem, MenuList} from '@mui/material';
@@ -27,7 +28,9 @@ import {
   http,
   Link,
   Logger,
+  SCNotification,
   SCNotificationAggregatedType,
+  SCNotificationTopicType,
   SCNotificationType,
   SCNotificationTypologyType,
   SCRoutes,
@@ -37,7 +40,7 @@ import {
   useSCUser
 } from '@selfcommunity/core';
 
-const PREFIX = 'SCUserPopupNotifications';
+const PREFIX = 'SCSnippetNotifications';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -77,7 +80,7 @@ const Root = styled(Box, {
   }
 }));
 
-export interface UserPopupNotificationsProps extends CardProps {
+export interface SnippetNotificationsProps extends CardProps {
   /**
    * Id of the UserNotification
    * @default `notification_<notificationObject.sid>`
@@ -115,24 +118,24 @@ export interface UserPopupNotificationsProps extends CardProps {
 
 /**
  *
- > API documentation for the Community-UI UserPopupNotifications component. Learn about the available props and the CSS API.
+ > API documentation for the Community-UI SnippetNotifications component. Learn about the available props and the CSS API.
 
  #### Import
 
  ```jsx
- import {UserPopupNotifications} from '@selfcommunity/ui';
+ import {SnippetNotifications} from '@selfcommunity/ui';
  ```
 
  #### Component Name
 
- The name `SCUserPopupNotifications` can be used when providing style overrides in the theme.
+ The name `SCSnippetNotifications` can be used when providing style overrides in the theme.
 
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCUserNotification-root|Styles applied to the root element.|
+ |root|.SCSnippetNotification-root|Styles applied to the root element.|
  |notificationsWrap|.SCUserNotification-notification-wrap|Styles applied to the notifications wrap.|
  |notificationItemWrap|.SCUserNotification-notification-item-wrap|Styles applied to the single notification.|
  |viewOthersButtonWrap|.SCUserNotification-view-others-button-wrap|Styles applied to the element button wrap.|
@@ -140,9 +143,9 @@ export interface UserPopupNotificationsProps extends CardProps {
 
  * @param props
  */
-export default function UserPopupNotifications(props: UserPopupNotificationsProps): JSX.Element {
+export default function SnippetNotifications(props: SnippetNotificationsProps): JSX.Element {
   // PROPS
-  const {id = `userPopupNotifications`, className, showMax = 20, handleCustomNotification, ...rest} = props;
+  const {id = `snippetNotifications`, className, showMax = 20, handleCustomNotification, ...rest} = props;
 
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
@@ -151,6 +154,9 @@ export default function UserPopupNotifications(props: UserPopupNotificationsProp
   // STATE
   const [notifications, setNotifications] = useState<SCNotificationAggregatedType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+
+  // REFS
+  const notificationSubscription = useRef(null);
 
   /**
    * Perform vote
@@ -196,6 +202,38 @@ export default function UserPopupNotifications(props: UserPopupNotificationsProp
       fetchNotifications();
     }
   }, [scUserContext.user]);
+
+  /**
+   * Notification subscriber
+   * @param msg
+   * @param data
+   */
+  const notificationSubscriber = (msg, data) => {
+    if (
+      data &&
+      data.type === SCNotificationTopicType.INTERACTION &&
+      SCNotification.SCNotificationMapping[data.data.activity_type] &&
+      !SCNotification.SCSilentNotifications.includes(data.data.activity_type)
+    ) {
+      console.log(data);
+      if (data.data.notificationObject) {
+        setNotifications([...[{is_new: true, sid: '', aggregated: [data.data.notificationObject]}], ...notifications]);
+      }
+    }
+  };
+
+  /**
+   * On mount, fetches first page of notifications
+   * On mount, subscribe to receive notification updates
+   */
+  useEffect(() => {
+    if (!loading) {
+      notificationSubscription.current = PubSub.subscribe(SCNotificationTopicType.INTERACTION, notificationSubscriber);
+    }
+    return () => {
+      notificationSubscription.current && PubSub.unsubscribe(notificationSubscription.current);
+    };
+  }, [loading]);
 
   /**
    * Render every single notification in aggregated group

@@ -16,7 +16,7 @@ const Root = styled(Box)(({theme}) => ({
   marginBottom: theme.spacing(2)
 }));
 
-export default function NotificationSkeleton(props): JSX.Element {
+export default function SnippetNotificationSkeleton(props): JSX.Element {
   const notificationSkeleton = (
     <ListItem>
       <ListItemAvatar>

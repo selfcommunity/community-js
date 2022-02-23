@@ -1,6 +1,6 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import {Avatar, Box, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
+import { Avatar, Box, ListItem, ListItemAvatar, ListItemText, Stack, Typography } from '@mui/material';
 import EmojiFlagsIcon from '@mui/icons-material/EmojiFlags';
 import {green, grey, red} from '@mui/material/colors';
 import {Link, SCNotificationUnDeletedForType, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
@@ -24,7 +24,8 @@ const classes = {
   activeAt: `${PREFIX}-active-at`,
   contributionWrap: `${PREFIX}-contribution-wrap`,
   contributionYouWroteLabel: `${PREFIX}-contribution-you-wrote-label`,
-  contributionText: `${PREFIX}-contribution-text`
+  contributionText: `${PREFIX}-contribution-text`,
+  toastInfo: `${PREFIX}-toast-info`
 };
 
 const Root = styled(Box, {
@@ -53,8 +54,7 @@ const Root = styled(Box, {
   },
   [`& .${classes.undeletedText}`]: {
     display: 'inline',
-    fontWeight: '600',
-    color: grey[600]
+    color: theme.palette.text.primary
   },
   [`& .${classes.contributionWrap}`]: {
     marginBottom: theme.spacing(1),
@@ -62,6 +62,9 @@ const Root = styled(Box, {
   },
   [`& .${classes.contributionText}`]: {
     textDecoration: 'underline'
+  },
+  [`& .${classes.toastInfo}`]: {
+    marginTop: 10
   }
 }));
 
@@ -116,18 +119,23 @@ export default function UndeletedForNotification(props: NotificationUndeletedPro
 
   // CONST
   const isSnippetTemplate = template === NotificationObjectTemplateType.SNIPPET;
+  const isToastTemplate = template === NotificationObjectTemplateType.TOAST;
   const contributionType = getContributeType(notificationObject);
 
   /**
    * Renders root object
    */
   return (
-    <Root id={id} className={classNames(classes.root, className)} {...rest}>
+    <Root id={id} className={classNames(classes.root, className, `${PREFIX}-${template}`)} {...rest}>
       <ListItem
         alignItems={isSnippetTemplate ? 'center' : 'flex-start'}
         component={'div'}
-        classes={{root: classNames({[classes.listItemSnippet]: isSnippetTemplate, [classes.listItemSnippetNew]: notificationObject.is_new})}}>
-        <ListItemAvatar classes={{root: classes.undeletedIconWrap}}>
+        classes={{
+          root: classNames({
+            [classes.listItemSnippet]: isToastTemplate || isSnippetTemplate,
+            [classes.listItemSnippetNew]: isSnippetTemplate && notificationObject.is_new
+          })
+        }}>        <ListItemAvatar classes={{root: classes.undeletedIconWrap}}>
           <Avatar variant="circular" classes={{root: classNames(classes.undeletedIcon, {[classes.undeletedIconSnippet]: isSnippetTemplate})}}>
             <EmojiFlagsIcon />
           </Avatar>
@@ -151,7 +159,7 @@ export default function UndeletedForNotification(props: NotificationUndeletedPro
                 </Link>
               ) : (
                 <>
-                  {notificationObject.is_new && <NewChip />}
+                  {template === NotificationObjectTemplateType.DETAIL && notificationObject.is_new && <NewChip />}
                   <Typography component="span" color="inherit" className={classes.undeletedText}>
                     <FormattedMessage
                       id="ui.notification.undeletedFor.restoredContent"
@@ -162,7 +170,7 @@ export default function UndeletedForNotification(props: NotificationUndeletedPro
               )}
             </>
           }
-          secondary={<>{!isSnippetTemplate && <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />}</>}
+          secondary={<>{template === NotificationObjectTemplateType.DETAIL && <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />}</>}
         />
       </ListItem>
       {!isSnippetTemplate && (
@@ -178,6 +186,20 @@ export default function UndeletedForNotification(props: NotificationUndeletedPro
             </Typography>
           </Link>
         </Box>
+      )}
+      {template === NotificationObjectTemplateType.TOAST && (
+        <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2} className={classes.toastInfo}>
+          <DateTimeAgo date={notificationObject.active_at} />
+          <Typography color="primary">
+            <Link
+              to={scRoutingContext.url(
+                SCRoutes[`${notificationObject[contributionType]['type'].toUpperCase()}_ROUTE_NAME`],
+                getRouteData(notificationObject[contributionType])
+              )}>
+              <FormattedMessage id="ui.userToastNotifications.viewContribution" defaultMessage={'ui.userToastNotifications.viewContribution'} />
+            </Link>
+          </Typography>
+        </Stack>
       )}
     </Root>
   );

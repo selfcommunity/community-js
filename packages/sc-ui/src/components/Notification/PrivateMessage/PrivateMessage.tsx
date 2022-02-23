@@ -76,8 +76,7 @@ const Root = styled(Box, {
   },
   [`& .${classes.messageLabel}`]: {
     display: 'inline',
-    fontWeight: '600',
-    color: `${grey[700]} !important`
+    color: theme.palette.text.primary
   },
   [`& .${classes.messageWrap}`]: {
     display: 'inline-block',
@@ -141,6 +140,7 @@ export default function UserNotificationPrivateMessage(props: NotificationPMProp
 
   // CONST
   const isSnippetTemplate = template === NotificationObjectTemplateType.SNIPPET;
+  const isToastTemplate = template === NotificationObjectTemplateType.TOAST;
 
   //INTL
   const intl = useIntl();
@@ -154,7 +154,12 @@ export default function UserNotificationPrivateMessage(props: NotificationPMProp
       <>
         <ListItem
           component={'div'}
-          classes={{root: classNames({[classes.listItemSnippet]: isSnippetTemplate, [classes.listItemSnippetNew]: notificationObject.is_new})}}>
+          classes={{
+            root: classNames({
+              [classes.listItemSnippet]: isSnippetTemplate,
+              [classes.listItemSnippetNew]: notificationObject.is_new
+            })
+          }}>
           <ListItemAvatar classes={{root: classes.avatarWrap}}>
             <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: notificationObject.message.sender.id})}>
               <Avatar
@@ -188,6 +193,42 @@ export default function UserNotificationPrivateMessage(props: NotificationPMProp
         </ListItem>
       </>
     );
+  } else if (isToastTemplate) {
+    content = (
+      <>
+        <ListItem alignItems={'flex-start'} component={'div'}>
+          <ListItemAvatar>
+            <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.message.sender)}>
+              <Avatar alt={notificationObject.message.sender.username} variant="circular" src={notificationObject.message.sender.avatar} />
+            </Link>
+          </ListItemAvatar>
+          <ListItemText
+            disableTypography={true}
+            primary={
+              <Typography>
+                <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.message.sender)}>
+                  {notificationObject.message.sender.username}
+                </Link>{' '}
+                <FormattedMessage
+                  id={'ui.userToastNotifications.privateMessage.sentMessage'}
+                  defaultMessage={'ui.userToastNotifications.privateMessage.sentMessage'}
+                />
+                :
+              </Typography>
+            }
+            secondary={<Typography color="primary" gutterBottom dangerouslySetInnerHTML={{__html: notificationObject.message.html}} />}
+          />
+        </ListItem>
+        <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
+          <DateTimeAgo date={notificationObject.active_at} />
+          <Typography color="primary">
+            <Link to={scRoutingContext.url('messages', {id: notificationObject.message.id})}>
+              <FormattedMessage id="ui.userToastNotifications.replyMessage" defaultMessage={'ui.userToastNotifications.replyMessage'} />
+            </Link>
+          </Typography>
+        </Stack>
+      </>
+    );
   } else {
     content = (
       <>
@@ -195,26 +236,19 @@ export default function UserNotificationPrivateMessage(props: NotificationPMProp
           component={'div'}
           classes={{root: classNames({[classes.listItemSnippet]: isSnippetTemplate}), secondaryAction: classes.actions}}
           secondaryAction={
-            <>
-              {!isSnippetTemplate && (
-                <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
-                  <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
-                  <Button
-                    color={'primary'}
-                    variant="outlined"
-                    size="small"
-                    classes={{root: classes.replyButton}}
-                    component={Link}
-                    to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, notificationObject.message)}
-                    endIcon={<ReplyIcon className={classes.replyButtonIcon} />}>
-                    <FormattedMessage
-                      id="ui.notification.privateMessage.btnReplyLabel"
-                      defaultMessage="ui.notification.privateMessage.btnReplyLabel"
-                    />
-                  </Button>
-                </Stack>
-              )}
-            </>
+            <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
+              <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
+              <Button
+                color={'primary'}
+                variant="outlined"
+                size="small"
+                classes={{root: classes.replyButton}}
+                component={Link}
+                to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, notificationObject.message)}
+                endIcon={<ReplyIcon className={classes.replyButtonIcon} />}>
+                <FormattedMessage id="ui.notification.privateMessage.btnReplyLabel" defaultMessage="ui.notification.privateMessage.btnReplyLabel" />
+              </Button>
+            </Stack>
           }>
           <ListItemText
             disableTypography={true}
@@ -238,7 +272,7 @@ export default function UserNotificationPrivateMessage(props: NotificationPMProp
    * Renders root object
    */
   return (
-    <Root id={id} className={classNames(classes.root, className)} {...rest}>
+    <Root id={id} className={classNames(classes.root, className, `${PREFIX}-${template}`)} {...rest}>
       {content}
     </Root>
   );

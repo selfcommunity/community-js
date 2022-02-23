@@ -1,7 +1,7 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import {Avatar, Box, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
-import {defineMessages, useIntl} from 'react-intl';
+import {Avatar, Box, ListItem, ListItemAvatar, ListItemText, Stack, Typography} from '@mui/material';
+import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
 import NewChip from '../../../shared/NewChip/NewChip';
 import {
@@ -14,7 +14,7 @@ import {
   useSCRouting
 } from '@selfcommunity/core';
 import classNames from 'classnames';
-import { grey, red } from '@mui/material/colors';
+import {grey, red} from '@mui/material/colors';
 import {NotificationObjectTemplateType} from '../../../types';
 
 const messages = defineMessages({
@@ -38,7 +38,8 @@ const classes = {
   avatar: `${PREFIX}-avatar`,
   avatarSnippet: `${PREFIX}-avatar-snippet`,
   connectionText: `${PREFIX}-connection-text`,
-  activeAt: `${PREFIX}-active-at`
+  activeAt: `${PREFIX}-active-at`,
+  toastInfo: `${PREFIX}-toast-info`
 };
 
 const Root = styled(Box, {
@@ -68,8 +69,10 @@ const Root = styled(Box, {
   },
   [`& .${classes.connectionText}`]: {
     display: 'inline',
-    fontWeight: '600',
-    color: grey[600]
+    color: theme.palette.text.primary
+  },
+  [`& .${classes.toastInfo}`]: {
+    marginTop: 10
   }
 }));
 
@@ -127,6 +130,7 @@ export default function UserConnectionNotification(props: NotificationConnection
 
   // CONST
   const isSnippetTemplate = template === NotificationObjectTemplateType.SNIPPET;
+  const isToastTemplate = template === NotificationObjectTemplateType.TOAST;
   const userConnection =
     notificationObject.type === SCNotificationTypologyType.CONNECTION_REQUEST ? notificationObject.request_user : notificationObject.accept_user;
 
@@ -134,11 +138,16 @@ export default function UserConnectionNotification(props: NotificationConnection
    * Renders root object
    */
   return (
-    <Root id={id} className={classNames(classes.root, className)} {...rest}>
+    <Root id={id} className={classNames(classes.root, className, `${PREFIX}-${template}`)} {...rest}>
       <ListItem
         alignItems={isSnippetTemplate ? 'center' : 'flex-start'}
         component={'div'}
-        classes={{root: classNames({[classes.listItemSnippet]: isSnippetTemplate, [classes.listItemSnippetNew]: notificationObject.is_new})}}>
+        classes={{
+          root: classNames({
+            [classes.listItemSnippet]: isToastTemplate || isSnippetTemplate,
+            [classes.listItemSnippetNew]: isSnippetTemplate && notificationObject.is_new
+          })
+        }}>
         <ListItemAvatar classes={{root: classes.avatarWrap}}>
           <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, userConnection)}>
             <Avatar
@@ -153,7 +162,7 @@ export default function UserConnectionNotification(props: NotificationConnection
           disableTypography={true}
           primary={
             <>
-              {!isSnippetTemplate && notificationObject.is_new && <NewChip />}
+              {template === NotificationObjectTemplateType.DETAIL && notificationObject.is_new && <NewChip />}
               <Typography component="div" className={classes.connectionText} color="inherit">
                 <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, userConnection)}>{userConnection.username}</Link>{' '}
                 {notificationObject.type === SCNotificationTypologyType.CONNECTION_REQUEST
@@ -162,9 +171,23 @@ export default function UserConnectionNotification(props: NotificationConnection
               </Typography>
             </>
           }
-          secondary={<>{!isSnippetTemplate && <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />}</>}
+          secondary={
+            <>
+              {template === NotificationObjectTemplateType.DETAIL && <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />}
+            </>
+          }
         />
       </ListItem>
+      {template === NotificationObjectTemplateType.TOAST && (
+        <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2} className={classes.toastInfo}>
+          <DateTimeAgo date={notificationObject.active_at} />
+          <Typography color="primary">
+            <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, userConnection)}>
+              <FormattedMessage id="ui.userToastNotifications.goToProfile" defaultMessage={'ui.userToastNotifications.goToProfile'} />
+            </Link>
+          </Typography>
+        </Stack>
+      )}
     </Root>
   );
 }

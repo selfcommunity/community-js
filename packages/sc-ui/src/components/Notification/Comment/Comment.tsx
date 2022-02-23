@@ -38,7 +38,8 @@ const classes = {
   commentText: `${PREFIX}-comment-text`,
   contributionText: `${PREFIX}-contribution-text`,
   activeAt: `${PREFIX}-active-at`,
-  bullet: `${PREFIX}-bullet`
+  bullet: `${PREFIX}-bullet`,
+  toastInfo: `${PREFIX}-toast-info`
 };
 
 const Root = styled(Box, {
@@ -73,10 +74,13 @@ const Root = styled(Box, {
   },
   [`& .${classes.commentText}`]: {
     display: 'inline',
-    fontWeight: '600'
+    color: theme.palette.text.primary
   },
   [`& .${classes.contributionText}`]: {
     textDecoration: 'underline'
+  },
+  [`& .${classes.toastInfo}`]: {
+    marginTop: 10
   }
 }));
 
@@ -152,6 +156,7 @@ export default function CommentNotification(props: CommentNotificationProps): JS
 
   // CONST
   const isSnippetTemplate = template === NotificationObjectTemplateType.SNIPPET;
+  const isToastTemplate = template === NotificationObjectTemplateType.TOAST;
 
   //INTL
   const intl = useIntl();
@@ -160,11 +165,16 @@ export default function CommentNotification(props: CommentNotificationProps): JS
    * Renders root object
    */
   return (
-    <Root id={id} className={classNames(classes.root, className)} {...rest}>
+    <Root id={id} className={classNames(classes.root, className, `${PREFIX}-${template}`)} {...rest}>
       <ListItem
         alignItems={isSnippetTemplate ? 'center' : 'flex-start'}
         component={'div'}
-        classes={{root: classNames({[classes.listItemSnippet]: isSnippetTemplate, [classes.listItemSnippetNew]: notificationObject.is_new})}}>
+        classes={{
+          root: classNames({
+            [classes.listItemSnippet]: isToastTemplate || isSnippetTemplate,
+            [classes.listItemSnippetNew]: isSnippetTemplate && notificationObject.is_new
+          })
+        }}>
         <ListItemAvatar classes={{root: classes.avatarWrap}}>
           <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.comment.author)}>
             <Avatar
@@ -179,7 +189,7 @@ export default function CommentNotification(props: CommentNotificationProps): JS
           disableTypography={true}
           primary={
             <>
-              {!isSnippetTemplate && notificationObject.is_new && <NewChip />}
+              {template === NotificationObjectTemplateType.DETAIL && notificationObject.is_new && <NewChip />}
               <Typography component="span" className={classes.commentText} color="inherit">
                 <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.comment.author)}>
                   {notificationObject.comment.author.username}
@@ -201,7 +211,7 @@ export default function CommentNotification(props: CommentNotificationProps): JS
                   {getContributionSnippet(notificationObject.comment)}
                 </Typography>
               </Link>
-              {!isSnippetTemplate && (
+              {template === NotificationObjectTemplateType.DETAIL && (
                 <Stack direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
                   <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
                   <Bullet className={classes.bullet} />
@@ -231,6 +241,16 @@ export default function CommentNotification(props: CommentNotificationProps): JS
           }
         />
       </ListItem>
+      {template === NotificationObjectTemplateType.TOAST && (
+        <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
+          <DateTimeAgo date={notificationObject.active_at} />
+          <Typography color="primary">
+            <Link to={scRoutingContext.url('comment', {id: notificationObject.comment.id})} sx={{textDecoration: 'underline'}}>
+              <FormattedMessage id="ui.userToastNotifications.viewContribution" defaultMessage={'ui.userToastNotifications.viewContribution'} />
+            </Link>
+          </Typography>
+        </Stack>
+      )}
     </Root>
   );
 }

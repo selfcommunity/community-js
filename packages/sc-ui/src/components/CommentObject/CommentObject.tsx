@@ -129,8 +129,8 @@ const Root = styled(Box, {
     color: theme.palette.grey[700]
   },
   [`& .${classes.reply}`]: {
-    textTransform: 'lowercase',
-    fontWeight: 'bold'
+    textTransform: 'capitalize',
+    color: theme.palette.text.primary
   }
 }));
 
