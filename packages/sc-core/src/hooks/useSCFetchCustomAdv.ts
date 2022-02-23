@@ -14,7 +14,7 @@ import {SCCustomAdvPosition, SCCustomAdvType} from '../types';
  * @param object.position
  * @param object.categoryId
  */
-export default function useSCFetchCustomAdv({position = null, categoriesId = []}: {position: SCCustomAdvPosition; categoriesId?: Array<number>}) {
+export default function useSCFetchCustomAdv({position = null, categoriesId = null}: {position: SCCustomAdvPosition; categoriesId?: Array<number>}) {
   const [scCustomAdv, setSCCustomAdv] = useState<SCCustomAdvType | null>(null);
 
   /**
@@ -28,7 +28,7 @@ export default function useSCFetchCustomAdv({position = null, categoriesId = []}
           method: Endpoints.CustomAdvSearch.method,
           params: {
             position,
-            categories: categoriesId,
+            ...(categoriesId && {categories: `[${categoriesId.toString()}]`}),
           },
         })
         .then((res: AxiosResponse<any>) => {
@@ -38,7 +38,7 @@ export default function useSCFetchCustomAdv({position = null, categoriesId = []}
           return Promise.resolve(res.data.results);
         });
     },
-    [position, categoriesId]
+    [position, `${categoriesId}`]
   );
 
   /**
@@ -53,7 +53,7 @@ export default function useSCFetchCustomAdv({position = null, categoriesId = []}
         Logger.error(SCOPE_SC_CORE, `Custom ADV with position ${position} not found`);
         Logger.error(SCOPE_SC_CORE, err.message);
       });
-  }, [position, categoriesId]);
+  }, [position, `${categoriesId}`]);
 
   return {scCustomAdv, setSCCustomAdv};
 }
