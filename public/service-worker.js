@@ -4,8 +4,13 @@
  * @return {Promise<void>}
  */
 function displayNotification(notification) {
-  self.registration.showNotification(notification.title, notification.options);
-  return Promise.resolve();
+  console.log(`[Service Worker] Show notification`);
+  console.log(notification.title);
+  console.log(notification.options);
+  return self.registration.showNotification(
+    notification.title,
+    notification.options,
+  );
 }
 
 /**
@@ -85,6 +90,7 @@ self.addEventListener('push', function (event) {
     const isFocused = await isOriginFocused(
       getNotificationLocation(notification),
     );
+    console.log(`[Service Worker] Tab with origin is focused? "${isFocused}"`);
     return isFocused ? Promise.resolve() : displayNotification(notification);
   };
   event.waitUntil(notify());
