@@ -1,11 +1,13 @@
 import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Link, SCRoutes, SCRoutingContextType, SCUserContextType, SCUserType, useSCRouting, useSCUser} from '@selfcommunity/core';
-import {ButtonProps, Divider, TextField, TextFieldProps, Typography} from '@mui/material';
+import {Endpoints, http, Logger, SCAuthTokenType, SCUserContextType, useSCUser} from '@selfcommunity/core';
+import {ButtonProps, TextField, TextFieldProps} from '@mui/material';
 import classNames from 'classnames';
 import {FormattedMessage} from 'react-intl';
 import {LoadingButton} from '@mui/lab';
 import PasswordTextField from '../../shared/PasswordTextField';
+import {SCOPE_SC_UI} from '../../constants/Errors';
+import {AxiosResponse} from 'axios';
 
 const PREFIX = 'SCAccountSignIn';
 
@@ -33,10 +35,19 @@ export interface AccountSignInProps {
   className?: string;
 
   /**
-   * Callback triggered on success sign in
+   * Callback triggered for handling custom signin process instead of the default one
+   * @param username
+   * @param password
    * @default null
    */
-  onSuccess?: (user: SCUserType) => void;
+  onSubmit?: (username: string, password: string) => void;
+
+  /**
+   * Callback triggered on success sign in
+   * @param user
+   * @default null
+   */
+  onSuccess?: (token: SCAuthTokenType) => void;
 
   /**
    * Default props to TextField Input
@@ -58,6 +69,7 @@ export interface AccountSignInProps {
 
 /**
  * > API documentation for the Community-UI AccountSignIn component. Learn about the available props and the CSS API.
+ * > This component support [OAuth2 authentication](https://developers.selfcommunity.com/docs/api/authentication/oauth#password) protocol with grant_type password
 
  #### Import
 
@@ -83,7 +95,14 @@ export interface AccountSignInProps {
  */
 export default function AccountSignIn(props: AccountSignInProps): JSX.Element {
   // PROPS
-  const {className, onSuccess = null, TextFieldProps = {variant: 'outlined', fullWidth: true}, ButtonProps = {variant: 'contained'}, ...rest} = props;
+  const {
+    className,
+    onSubmit = null,
+    onSuccess = null,
+    TextFieldProps = {variant: 'outlined', fullWidth: true},
+    ButtonProps = {variant: 'contained'},
+    ...rest
+  } = props;
 
   // STATE
   const [username, setUsername] = useState<string>('');
@@ -92,17 +111,38 @@ export default function AccountSignIn(props: AccountSignInProps): JSX.Element {
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
-  const scRoutingContext: SCRoutingContextType = useSCRouting();
 
   // HANDLERS
   const handleSubmit = (event: React.SyntheticEvent<HTMLFormElement>) => {
     event.preventDefault();
     event.stopPropagation();
     setIsSubmitting(true);
-
-    // TODO: signin API call
-    onSuccess && onSuccess(null);
-
+    if (onSubmit) {
+      onSubmit(username, password);
+    } else if (scUserContext.session.clientId) {
+      const formData = new FormData();
+      formData.append('client_id', scUserContext.session.clientId);
+      formData.append('grant_type', 'password');
+      formData.append('username', username);
+      formData.append('password', password);
+      http
+        .request({
+          url: Endpoints.OAuthToken.url({}),
+          method: Endpoints.OAuthToken.method,
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          },
+          data: formData
+        })
+        .then((res: AxiosResponse<SCAuthTokenType>) => {
+          onSuccess && onSuccess(res.data);
+          setIsSubmitting(false);
+        })
+        .catch((error) => {
+          setIsSubmitting(false);
+          Logger.error(SCOPE_SC_UI, error);
+        });
+    }
     return false;
   };
 
@@ -128,7 +168,7 @@ export default function AccountSignIn(props: AccountSignInProps): JSX.Element {
         value={password}
         onChange={(event: React.ChangeEvent<HTMLInputElement>) => setPassword(event.target.value)}
       />
-      <LoadingButton type="submit" {...ButtonProps} loading={isSubmitting}>
+      <LoadingButton type="submit" {...ButtonProps} loading={isSubmitting} disabled={!username || !password}>
         <FormattedMessage id="ui.accountSignin.submit" defaultMessage="ui.accountSignin.submit" />
       </LoadingButton>
     </Root>

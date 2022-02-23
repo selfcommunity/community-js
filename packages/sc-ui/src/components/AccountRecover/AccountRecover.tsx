@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Link, SCRoutes, SCRoutingContextType, SCUserContextType, SCUserType, useSCRouting, useSCUser} from '@selfcommunity/core';
-import {ButtonProps, TextFieldProps, Typography} from '@mui/material';
+import {SCRoutingContextType, SCUserContextType, SCUserType, useSCRouting, useSCUser} from '@selfcommunity/core';
+import {ButtonProps, TextFieldProps} from '@mui/material';
 import classNames from 'classnames';
 import {FormattedMessage} from 'react-intl';
 import {LoadingButton} from '@mui/lab';
@@ -124,7 +124,7 @@ export default function AccountRecover(props: AccountRecoverProps): JSX.Element 
         error={Boolean(emailError)}
         helperText={emailError}
       />
-      <LoadingButton type="submit" {...ButtonProps} loading={isSubmitting}>
+      <LoadingButton type="submit" {...ButtonProps} loading={isSubmitting} disabled={!email}>
         <FormattedMessage id="ui.accountRecover.submit" defaultMessage="ui.accountRecover.submit" />
       </LoadingButton>
     </Root>

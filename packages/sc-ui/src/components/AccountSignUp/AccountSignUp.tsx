@@ -149,7 +149,7 @@ export default function AccountSignUp(props: AccountSignUpProps): JSX.Element {
         value={password}
         onChange={(event: React.ChangeEvent<HTMLInputElement>) => setPassword(event.target.value)}
       />
-      <LoadingButton type="submit" {...ButtonProps} loading={isSubmitting}>
+      <LoadingButton type="submit" {...ButtonProps} loading={isSubmitting} disabled={!email || !username || !password}>
         <FormattedMessage id="ui.accountSignup.submit" defaultMessage="ui.accountSignup.submit" />
       </LoadingButton>
     </Root>
