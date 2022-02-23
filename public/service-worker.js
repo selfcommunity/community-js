@@ -5,8 +5,6 @@
  */
 function displayNotification(notification) {
   console.log(`[Service Worker] Show notification`);
-  console.log(notification.title);
-  console.log(notification.options);
   return self.registration.showNotification(
     notification.title,
     notification.options,
