@@ -51,11 +51,11 @@ export default function useSCWebSocket() {
       // Close the socket channel before window unload
       window.addEventListener('beforeunload', handleBeforeUnload);
     }
-    // Disconnect the socket
-    return () => {
+    if (!scUserContext.user && wsInstance) {
+      // Disconnect the socket
       window.removeEventListener('beforeunload', handleBeforeUnload);
       wsInstance && wsInstance.close();
-    };
+    }
   }, [scUserContext.user]);
 
   /**

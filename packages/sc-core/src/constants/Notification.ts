@@ -48,6 +48,11 @@ export const SCNotificationMapping = {
 };
 
 /**
- * Silent Notifications
+ * Silent Snippet Notifications
  */
-export const SCSilentNotifications: number[] = [57, 58, 59, 60, 98, 99, 105];
+export const SCSilentSnippetNotifications: number[] = [57, 58, 59, 60, 98, 99, 105];
+
+/**
+ * Silent Toast Notifications
+ */
+export const SCSilentToastNotifications: number[] = [50, 51, 52, 57, 58, 59, 60, 65, 66, 67, 68, 69, 70, 71, 73, 75, 76, 77, 78, 79, 83, 98, 99, 105];
