@@ -6,9 +6,9 @@ import UserFollowNotification from './UserFollow';
 import UndeletedForNotification from './UndeletedFor';
 import DeletedForNotification from './DeletedFor';
 import UserConnectionNotification from './UserConnection';
-import UserNotificationPrivateMessage from './PrivateMessage';
+import PrivateMessageNotification from './PrivateMessage';
 import UserBlockedNotification from './UserBlocked';
-import UserNotificationMention from './Mention';
+import MentionNotification from './Mention';
 import CollapsedForNotification from './CollapsedFor';
 import KindlyNoticeForNotification from './KindlyNoticeFor';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
@@ -23,6 +23,9 @@ import {ExpandLess, ExpandMore} from '@mui/icons-material';
 import {getContribute, getContributionSnippet} from '../../utils/contribute';
 import ContributionFollowNotification from './ContributionFollow';
 import {Avatar, Card, CardProps, Collapse, ListItem, ListItemAvatar, ListItemButton, ListItemText, Stack, Tooltip, Typography} from '@mui/material';
+import IncubatorApprovedNotification from './IncubatorApproved';
+import classNames from 'classnames';
+import LoadingButton from '@mui/lab/LoadingButton';
 import {
   Endpoints,
   http,
@@ -37,9 +40,6 @@ import {
   SCRoutingContextType,
   useSCRouting
 } from '@selfcommunity/core';
-import IncubatorApprovedNotification from './IncubatorApproved';
-import classNames from 'classnames';
-import LoadingButton from '@mui/lab/LoadingButton';
 
 const messages = defineMessages({
   receivePrivateMessage: {
@@ -91,7 +91,7 @@ const Root = styled(Card, {
   },
   '& a': {
     textDecoration: 'none',
-    color: grey[900]
+    color: theme.palette.text.primary
   }
 }));
 
@@ -403,11 +403,11 @@ export default function UserNotification(props: NotificationProps): JSX.Element 
     ) {
       return <CollapsedForNotification notificationObject={n} key={i} />;
     } else if (n.type === SCNotificationTypologyType.PRIVATE_MESSAGE) {
-      return <UserNotificationPrivateMessage notificationObject={n} key={i} />;
+      return <PrivateMessageNotification notificationObject={n} key={i} />;
     } else if (n.type === SCNotificationTypologyType.BLOCKED_USER || n.type === SCNotificationTypologyType.UNBLOCKED_USER) {
       return <UserBlockedNotification notificationObject={n} key={i} />;
     } else if (n.type === SCNotificationTypologyType.MENTION) {
-      return <UserNotificationMention notificationObject={n} key={i} />;
+      return <MentionNotification notificationObject={n} key={i} />;
     } else if (n.type === SCNotificationTypologyType.INCUBATOR_APPROVED) {
       return <IncubatorApprovedNotification notificationObject={n} key={i} />;
     } else if (n.type === SCNotificationTypologyType.CUSTOM_NOTIFICATION) {

@@ -1,3 +1,3 @@
-import UserNotificationMention, {NotificationMentionProps} from './Mention';
-export default UserNotificationMention;
-export {NotificationMentionProps};
+import MentionNotification, {MentionNotificationProps} from './Mention';
+export default MentionNotification;
+export {MentionNotificationProps};

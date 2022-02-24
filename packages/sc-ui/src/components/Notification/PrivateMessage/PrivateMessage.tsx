@@ -41,7 +41,6 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  display: 'flex',
   [`& .${classes.listItemSnippet}`]: {
     padding: '0px 5px',
     alignItems: 'center'
@@ -89,7 +88,7 @@ const Root = styled(Box, {
   }
 }));
 
-export interface NotificationPMProps {
+export interface NotificationPrivateMessageProps {
   /**
    * Id of the feedObject
    * @default `n_<notificationObject.sid>`
@@ -125,7 +124,7 @@ export interface NotificationPMProps {
  * @param props
  * @constructor
  */
-export default function UserNotificationPrivateMessage(props: NotificationPMProps): JSX.Element {
+export default function PrivateMessageNotification(props: NotificationPrivateMessageProps): JSX.Element {
   // PROPS
   const {
     notificationObject,

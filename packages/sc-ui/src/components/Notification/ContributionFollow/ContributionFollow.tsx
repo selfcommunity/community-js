@@ -37,7 +37,6 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  display: 'flex',
   [`& .${classes.listItemSnippet}`]: {
     padding: '0px 5px',
     alignItems: 'center'

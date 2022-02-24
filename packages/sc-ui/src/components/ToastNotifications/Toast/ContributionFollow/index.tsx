@@ -1,3 +1,0 @@
-import ContributionFollowNotificationToast, {NotificationContributionFollowToastProps} from './ContributionFollow';
-export default ContributionFollowNotificationToast;
-export {NotificationContributionFollowToastProps};

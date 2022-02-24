@@ -5,9 +5,9 @@ import UserFollowNotification from '../Notification/UserFollow';
 import UndeletedForNotification from '../Notification/UndeletedFor';
 import DeletedForNotification from '../Notification/DeletedFor';
 import UserConnectionNotification from '../Notification/UserConnection';
-import UserNotificationPrivateMessage from '../Notification/PrivateMessage';
+import PrivateMessageNotification from '../Notification/PrivateMessage';
 import UserBlockedNotification from '../Notification/UserBlocked';
-import UserNotificationMention from '../Notification/Mention';
+import MentionNotification from '../Notification/Mention';
 import CollapsedForNotification from '../Notification/CollapsedFor';
 import KindlyNoticeForNotification from '../Notification/KindlyNoticeFor';
 import {FormattedMessage} from 'react-intl';
@@ -22,7 +22,6 @@ import IncubatorApprovedNotification from '../Notification/IncubatorApproved';
 import classNames from 'classnames';
 import Skeleton from './Skeleton';
 import {NotificationObjectTemplateType} from '../../types';
-import {grey} from '@mui/material/colors';
 import {
   Endpoints,
   http,
@@ -76,7 +75,7 @@ const Root = styled(Box, {
   },
   '& a': {
     textDecoration: 'none',
-    color: grey[900]
+    color: theme.palette.text.primary
   }
 }));
 
@@ -213,11 +212,12 @@ export default function SnippetNotifications(props: SnippetNotificationsProps): 
       data &&
       data.type === SCNotificationTopicType.INTERACTION &&
       SCNotification.SCNotificationMapping[data.data.activity_type] &&
-      !SCNotification.SCSilentNotifications.includes(data.data.activity_type)
+      !SCNotification.SCSilentSnippetNotifications.includes(data.data.activity_type)
     ) {
       console.log(data);
-      if (data.data.notificationObject) {
-        setNotifications([...[{is_new: true, sid: '', aggregated: [data.data.notificationObject]}], ...notifications]);
+      if (data.data.notification_obj) {
+        console.log(data.data.notification_obj.type);
+        setNotifications([...[{is_new: true, sid: '', aggregated: [data.data.notification_obj]}], ...notifications]);
       }
     }
   };
@@ -280,11 +280,11 @@ export default function SnippetNotifications(props: SnippetNotificationsProps): 
     ) {
       return <CollapsedForNotification notificationObject={n} key={i} template={NotificationObjectTemplateType.SNIPPET} />;
     } else if (n.type === SCNotificationTypologyType.PRIVATE_MESSAGE) {
-      return <UserNotificationPrivateMessage notificationObject={n} key={i} template={NotificationObjectTemplateType.SNIPPET} />;
+      return <PrivateMessageNotification notificationObject={n} key={i} template={NotificationObjectTemplateType.SNIPPET} />;
     } else if (n.type === SCNotificationTypologyType.BLOCKED_USER || n.type === SCNotificationTypologyType.UNBLOCKED_USER) {
       return <UserBlockedNotification notificationObject={n} key={i} template={NotificationObjectTemplateType.SNIPPET} />;
     } else if (n.type === SCNotificationTypologyType.MENTION) {
-      return <UserNotificationMention notificationObject={n} key={i} template={NotificationObjectTemplateType.SNIPPET} />;
+      return <MentionNotification notificationObject={n} key={i} template={NotificationObjectTemplateType.SNIPPET} />;
     } else if (n.type === SCNotificationTypologyType.INCUBATOR_APPROVED) {
       return <IncubatorApprovedNotification notificationObject={n} key={i} template={NotificationObjectTemplateType.SNIPPET} />;
     } else if (n.type === SCNotificationTypologyType.CUSTOM_NOTIFICATION) {
