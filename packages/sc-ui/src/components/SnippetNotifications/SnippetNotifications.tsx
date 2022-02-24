@@ -214,9 +214,7 @@ export default function SnippetNotifications(props: SnippetNotificationsProps): 
       SCNotification.SCNotificationMapping[data.data.activity_type] &&
       !SCNotification.SCSilentSnippetNotifications.includes(data.data.activity_type)
     ) {
-      console.log(data);
       if (data.data.notification_obj) {
-        console.log(data.data.notification_obj.type);
         setNotifications([...[{is_new: true, sid: '', aggregated: [data.data.notification_obj]}], ...notifications]);
       }
     }
