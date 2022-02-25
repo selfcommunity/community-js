@@ -282,7 +282,7 @@ export default function Thread(props: ThreadProps): JSX.Element {
 
   /**
    * On mount, fetches thread
-   * if openNewMessage is true, fetches user follwers too.
+   * if openNewMessage is true, fetches user followers too.
    */
   useEffect(() => {
     if (openNewMessage) {

@@ -24,7 +24,7 @@ const Root = styled(Card, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   [`& .${classes.selected}`]: {
-    background: '#9dd4af'
+    background: theme.palette.grey['A200']
   }
 }));
 

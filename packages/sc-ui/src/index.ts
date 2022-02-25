@@ -39,7 +39,6 @@ import UsersFollowed, {UsersFollowedProps, UsersFollowedSkeleton} from './compon
 import UserFollowers, {UserFollowersProps, UserFollowersSkeleton} from './components/UserFollowers';
 import RelatedDiscussion, {RelatedDiscussionProps, RelatedDiscussionSkeleton} from './components/RelatedDiscussion';
 import CommentObject, {CommentObjectProps, CommentObjectSkeleton} from './components/CommentObject';
-import PrivateMessages, {PrivateMessagesProps, PrivateMessagesSkeleton} from './components/PrivateMessages';
 import CommentsObject, {CommentsObjectProps, CommentsObjectSkeleton} from './components/CommentsObject';
 import ReplyComment from './components/CommentObject/ReplyComment';
 import CustomAdv, {CustomAdvProps, CustomAdvSkeleton} from './components/CustomAdv';
@@ -185,9 +184,6 @@ export {
   SnippetNotifications,
   SnippetNotificationsProps,
   SnippetNotificationsSkeleton,
-  PrivateMessages,
-  PrivateMessagesProps,
-  PrivateMessagesSkeleton,
   SCFeedWidgetType,
   FeedObjectTemplateType,
   CommentsOrderBy,

@@ -1,20 +1,23 @@
 import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
-
-import PrivateMessages from './index';
+import PrivateMessagesSkeleton from './Skeleton';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC UI/PrivateMessages',
-  component: PrivateMessages
+  title: 'Design System/SC TEMPLATES/Skeleton/PrivateMessages',
+  component: PrivateMessagesSkeleton
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
-} as ComponentMeta<typeof PrivateMessages>;
+} as ComponentMeta<typeof PrivateMessagesSkeleton>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof PrivateMessages> = (args) => <PrivateMessages {...args} />;
+const Template: ComponentStory<typeof PrivateMessagesSkeleton> = (args) => (
+  <div style={{width: 400}}>
+    <PrivateMessagesSkeleton {...args} />
+  </div>
+);
 
 export const Base = Template.bind({});
 
 Base.args = {
-  /* the args you need here will depend on your component */
+  contained: true
 };

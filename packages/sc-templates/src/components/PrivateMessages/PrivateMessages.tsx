@@ -1,8 +1,8 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Divider, Typography, Button, Box, Card} from '@mui/material';
-import Snippets from '../Snippets';
-import Thread from '../Thread';
+import {Button, Box} from '@mui/material';
+import {Snippets} from '@selfcommunity/ui';
+import {Thread} from '@selfcommunity/ui';
 import {FormattedMessage} from 'react-intl';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import {SCUserContext, SCUserContextType} from '@selfcommunity/core';
@@ -32,7 +32,7 @@ const Root = styled(Box, {
     }
   },
   [`& .${classes.selected}`]: {
-    background: '#9dd4af',
+    background: theme.palette.grey['A200'],
     justifyContent: 'flex-start',
     width: '100%',
     '& .MuiSvgIcon-root': {
