@@ -1,17 +1,17 @@
 import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
-import UserProfileHeaderSkeleton from './Skeleton';
+import UserProfileEditSkeleton from './Skeleton';
 
 export default {
-  title: 'Design System/SC UI/Skeleton/User Profile Header',
-  component: UserProfileHeaderSkeleton,
+  title: 'Design System/SC UI/Skeleton/User Profile Edit',
+  component: UserProfileEditSkeleton,
   argTypes: {},
   args: {}
-} as ComponentMeta<typeof UserProfileHeaderSkeleton>;
+} as ComponentMeta<typeof UserProfileEditSkeleton>;
 
-const Template: ComponentStory<typeof UserProfileHeaderSkeleton> = (args) => (
+const Template: ComponentStory<typeof UserProfileEditSkeleton> = (args) => (
   <div style={{width: '100%'}}>
-    <UserProfileHeaderSkeleton {...args} />
+    <UserProfileEditSkeleton {...args} />
   </div>
 );
 

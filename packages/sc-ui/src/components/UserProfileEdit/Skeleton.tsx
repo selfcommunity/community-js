@@ -1,9 +1,9 @@
 import React from 'react';
-import {Box, Grid, Typography} from '@mui/material';
+import {Box, Grid} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import Skeleton from '@mui/material/Skeleton';
 
-const PREFIX = 'SCUserProfileInfoSkeleton';
+const PREFIX = 'SCUserProfileEditSkeleton';
 
 const classes = {
   root: `${PREFIX}-root`
@@ -15,7 +15,7 @@ const Root = styled(Box, {
   overridesResolver: (props, styles) => styles.root
 })(() => ({}));
 
-function UserProfileInfoSkeleton(): JSX.Element {
+function UserProfileEditSkeleton(): JSX.Element {
   return (
     <Root className={classes.root}>
       <Grid container>
@@ -28,4 +28,4 @@ function UserProfileInfoSkeleton(): JSX.Element {
   );
 }
 
-export default UserProfileInfoSkeleton;
+export default UserProfileEditSkeleton;
