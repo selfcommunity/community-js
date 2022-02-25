@@ -4,7 +4,7 @@ import List from '@mui/material/List';
 import {Button, Typography} from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import {Endpoints, http, Logger, SCUserContext, SCUserContextType, useSCFetchUser} from '@selfcommunity/core';
+import {Endpoints, http, Logger, SCUserContext, SCUserContextType} from '@selfcommunity/core';
 import Category from '../Category';
 import {AxiosResponse} from 'axios';
 import {SCCategoryType} from '@selfcommunity/core/src/types';
@@ -13,6 +13,9 @@ import {defineMessages, useIntl, FormattedMessage} from 'react-intl';
 import {CategoriesListProps} from '../CategoriesSuggestion';
 import Skeleton from './Skeleton';
 import classNames from 'classnames';
+import BaseDialog from '../../shared/BaseDialog';
+import CentralProgress from '../../shared/CentralProgress';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 const messages = defineMessages({
   categoriesFollowed: {
@@ -76,6 +79,8 @@ export default function CategoriesFollowed(props: CategoriesListProps): JSX.Elem
   const [loading, setLoading] = useState<boolean>(true);
   const [hasMore, setHasMore] = useState<boolean>(false);
   const [total, setTotal] = useState<number>(0);
+  const [openCategoriesFollowedDialog, setOpenCategoriesFollowedDialog] = useState<boolean>(false);
+  const [next, setNext] = useState<string>(`${Endpoints.FollowedCategories.url({id: userId ?? scUserContext.user['id']})}?limit=10`);
 
   /**
    * Handles list change on category follow
@@ -94,26 +99,29 @@ export default function CategoriesFollowed(props: CategoriesListProps): JSX.Elem
    * fetches Categories Followed
    */
   function fetchCategoriesFollowed() {
-    http
-      .request({
-        url: Endpoints.FollowedCategories.url({id: userId ?? scUserContext.user['id']}),
-        method: Endpoints.FollowedCategories.method
-      })
-      .then((res: AxiosResponse<any>) => {
-        const data = res.data;
-        setCategories(data);
-        setTotal(data.length);
-        setHasMore(data.length > visibleCategories);
-        setLoading(false);
-      })
-      .catch((error) => {
-        setLoading(false);
-        Logger.error(SCOPE_SC_UI, error);
-      });
+    if (next) {
+      http
+        .request({
+          url: next,
+          method: Endpoints.FollowedCategories.method
+        })
+        .then((res: AxiosResponse<any>) => {
+          const data = res.data;
+          setCategories([...categories, ...data]);
+          setTotal(data.length);
+          setNext(data['next']);
+          setHasMore(data.length > visibleCategories);
+          setLoading(false);
+        })
+        .catch((error) => {
+          setLoading(false);
+          Logger.error(SCOPE_SC_UI, error);
+        });
+    }
   }
 
   /**
-   * Loads more categories on "see more" button click
+   * Loads more categories when followed list changes
    */
   function loadCategories(n) {
     const newIndex = visibleCategories + n;
@@ -159,11 +167,48 @@ export default function CategoriesFollowed(props: CategoriesListProps): JSX.Elem
                 ))}
               </List>
               {hasMore && (
-                <Button size="small" onClick={() => loadCategories(2)}>
-                  <FormattedMessage id="ui.categoriesFollowed.button.showMore" defaultMessage="ui.categoriesFollowed.button.showMore" />
+                <Button size="small" onClick={() => setOpenCategoriesFollowedDialog(true)}>
+                  <FormattedMessage id="ui.categoriesFollowed.button.showAll" defaultMessage="ui.categoriesFollowed.button.showAll" />
                 </Button>
               )}
             </React.Fragment>
+          )}
+          {openCategoriesFollowedDialog && (
+            <BaseDialog
+              title={<FormattedMessage defaultMessage="ui.categoriesFollowed.title" id="ui.categoriesFollowed.title" />}
+              onClose={() => setOpenCategoriesFollowedDialog(false)}
+              open={openCategoriesFollowedDialog}>
+              {loading ? (
+                <CentralProgress size={50} />
+              ) : (
+                <InfiniteScroll
+                  dataLength={categories.length}
+                  next={fetchCategoriesFollowed}
+                  hasMore={Boolean(next)}
+                  loader={<CentralProgress size={30} />}
+                  height={400}
+                  endMessage={
+                    <p style={{textAlign: 'center'}}>
+                      <b>
+                        <FormattedMessage id="ui.categoriesFollowed.noMoreCategories" defaultMessage="ui.categoriesFollowed.noMoreCategories" />
+                      </b>
+                    </p>
+                  }>
+                  <List>
+                    {categories.map((c, index) => (
+                      <Category
+                        elevation={0}
+                        category={c}
+                        key={c.id}
+                        sx={{m: 0}}
+                        followCategoryButtonProps={{onFollow: handleOnFollowCategory}}
+                        {...CategoryProps}
+                      />
+                    ))}
+                  </List>
+                </InfiniteScroll>
+              )}
+            </BaseDialog>
           )}
         </CardContent>
       )}

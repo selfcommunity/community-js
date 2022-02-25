@@ -10,6 +10,9 @@ import {PeopleSuggestionSkeleton} from '../PeopleSuggestion';
 import {FormattedMessage} from 'react-intl';
 import User, {UserProps} from '../User';
 import classNames from 'classnames';
+import BaseDialog from '../../shared/BaseDialog';
+import CentralProgress from '../../shared/CentralProgress';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 const PREFIX = 'SCTrendingPeople';
 
@@ -93,37 +96,32 @@ export default function TrendingPeople(props: TrendingPeopleProps): JSX.Element 
   const [hasMore, setHasMore] = useState<boolean>(false);
   const [openTrendingPeopleDialog, setOpenTrendingPeopleDialog] = useState<boolean>(false);
   const [total, setTotal] = useState<number>(0);
+  const [next, setNext] = useState<string>(`${Endpoints.CategoryTrendingPeople.url({id: categoryId})}?limit=10`);
 
   /**
    * Fetches trending people list
    */
   function fetchTrendingPeople() {
     setLoading(true);
-    http
-      .request({
-        url: Endpoints.CategoryTrendingPeople.url({id: categoryId}),
-        method: Endpoints.CategoryTrendingPeople.method
-      })
-      .then((res: AxiosResponse<any>) => {
-        const data = res.data;
-        setPeople(data.results);
-        setHasMore(data.count > visiblePeople);
-        setLoading(false);
-        setTotal(data.count);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-
-  /**
-   * Loads more people on "see more" button click
-   */
-  function loadPeople() {
-    const newIndex = visiblePeople + limit;
-    const newHasMore = newIndex < people.length - 1;
-    setVisiblePeople(newIndex);
-    setHasMore(newHasMore);
+    if (next) {
+      http
+        .request({
+          url: next,
+          method: Endpoints.CategoryTrendingPeople.method
+        })
+        .then((res: AxiosResponse<any>) => {
+          const data = res.data;
+          setPeople([...people, ...data.results]);
+          setHasMore(data.count > visiblePeople);
+          setNext(data['next']);
+          setLoading(false);
+          setTotal(data.count);
+        })
+        .catch((error) => {
+          setLoading(false);
+          console.log(error);
+        });
+    }
   }
 
   /**
@@ -159,11 +157,40 @@ export default function TrendingPeople(props: TrendingPeopleProps): JSX.Element 
             </React.Fragment>
           )}
           {hasMore && (
-            <Button size="small" onClick={() => loadPeople()}>
-              <FormattedMessage id="ui.trendingPeople.button.showMore" defaultMessage="ui.trendingPeople.button.showMore" />
+            <Button size="small" onClick={() => setOpenTrendingPeopleDialog(true)}>
+              <FormattedMessage id="ui.trendingPeople.button.showAll" defaultMessage="ui.trendingPeople.button.showAll" />
             </Button>
           )}
-          {openTrendingPeopleDialog && <></>}
+          {openTrendingPeopleDialog && (
+            <BaseDialog
+              title={<FormattedMessage defaultMessage="ui.trendingPeople.title" id="ui.trendingPeople.title" />}
+              onClose={() => setOpenTrendingPeopleDialog(false)}
+              open={openTrendingPeopleDialog}>
+              {loading ? (
+                <CentralProgress size={50} />
+              ) : (
+                <InfiniteScroll
+                  dataLength={people.length}
+                  next={fetchTrendingPeople}
+                  hasMore={Boolean(next)}
+                  loader={<CentralProgress size={30} />}
+                  height={400}
+                  endMessage={
+                    <p style={{textAlign: 'center'}}>
+                      <b>
+                        <FormattedMessage id="ui.trendingPeople.noOtherResults" defaultMessage="ui.trendingPeople.noOtherResults" />
+                      </b>
+                    </p>
+                  }>
+                  <List>
+                    {people.map((p, index) => (
+                      <User elevation={0} user={p} key={p.id} sx={{m: 0}} {...UserProps} />
+                    ))}
+                  </List>
+                </InfiniteScroll>
+              )}
+            </BaseDialog>
+          )}
         </CardContent>
       )}
     </React.Fragment>
