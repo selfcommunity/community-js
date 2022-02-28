@@ -9,7 +9,7 @@ import http from '../utils/http';
 import Endpoints from '../constants/Endpoints';
 import {AxiosResponse} from 'axios';
 import {WEB_PUSH_NOTIFICATION_DEVICE_TYPE} from '../constants/Device';
-import {SCPreferencesContext} from '@selfcommunity/core';
+import {SCPreferencesContext} from '../components/provider/SCPreferencesProvider';
 import * as SCPreferences from '../constants/Preferences';
 
 /**
