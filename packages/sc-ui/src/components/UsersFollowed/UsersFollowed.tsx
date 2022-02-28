@@ -11,6 +11,9 @@ import {AxiosResponse} from 'axios';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import classNames from 'classnames';
 import {SCOPE_SC_UI} from '../../constants/Errors';
+import BaseDialog from '../../shared/BaseDialog';
+import CentralProgress from '../../shared/CentralProgress';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 const messages = defineMessages({
   usersFollowed: {
@@ -102,6 +105,8 @@ export default function UsersFollowed(props: UsersFollowedProps): JSX.Element {
   const [loading, setLoading] = useState<boolean>(true);
   const [hasMore, setHasMore] = useState<boolean>(false);
   const [total, setTotal] = useState<number>(0);
+  const [openUsersFollowedDialog, setOpenUsersFollowedDialog] = useState<boolean>(false);
+  const [next, setNext] = useState<string>(`${Endpoints.UsersFollowed.url({id: userId ?? scUserContext.user['id']})}?limit=10`);
 
   /**
    * Handles list change on user follow
@@ -120,26 +125,29 @@ export default function UsersFollowed(props: UsersFollowedProps): JSX.Element {
    * Fetches the list of users followed
    */
   function fetchFollowed() {
-    http
-      .request({
-        url: Endpoints.UsersFollowed.url({id: userId ?? scUserContext.user['id']}),
-        method: Endpoints.UsersFollowed.method
-      })
-      .then((res: AxiosResponse<any>) => {
-        const data = res.data;
-        setFollowed(data.results);
-        setHasMore(data.count > visibleUsers);
-        setLoading(false);
-        setTotal(data.count);
-      })
-      .catch((error) => {
-        setLoading(false);
-        Logger.error(SCOPE_SC_UI, error);
-      });
+    if (next) {
+      http
+        .request({
+          url: next,
+          method: Endpoints.UsersFollowed.method
+        })
+        .then((res: AxiosResponse<any>) => {
+          const data = res.data;
+          setFollowed([...followed, ...data.results]);
+          setHasMore(data.count > visibleUsers);
+          setNext(data['next']);
+          setLoading(false);
+          setTotal(data.count);
+        })
+        .catch((error) => {
+          setLoading(false);
+          Logger.error(SCOPE_SC_UI, error);
+        });
+    }
   }
 
   /**
-   * Loads more users on "see more" button click
+   * Loads more users when followed list changes
    */
   function loadUsers(n) {
     const newIndex = visibleUsers + n;
@@ -179,9 +187,39 @@ export default function UsersFollowed(props: UsersFollowedProps): JSX.Element {
                 ))}
               </List>
               {hasMore && (
-                <Button size="small" onClick={() => loadUsers(limit)}>
-                  <FormattedMessage id="ui.usersFollowed.button.showMore" defaultMessage="ui.usersFollowed.button.showMore" />
+                <Button size="small" onClick={() => setOpenUsersFollowedDialog(true)}>
+                  <FormattedMessage id="ui.usersFollowed.button.showAll" defaultMessage="ui.usersFollowed.button.showAll" />
                 </Button>
+              )}
+              {openUsersFollowedDialog && (
+                <BaseDialog
+                  title={<FormattedMessage defaultMessage="ui.usersFollowed.title" id="ui.usersFollowed.title" />}
+                  onClose={() => setOpenUsersFollowedDialog(false)}
+                  open={openUsersFollowedDialog}>
+                  {loading ? (
+                    <CentralProgress size={50} />
+                  ) : (
+                    <InfiniteScroll
+                      dataLength={followed.length}
+                      next={fetchFollowed}
+                      hasMore={Boolean(next)}
+                      loader={<CentralProgress size={30} />}
+                      height={400}
+                      endMessage={
+                        <p style={{textAlign: 'center'}}>
+                          <b>
+                            <FormattedMessage id="ui.usersFollowed.noMoreFollowed" defaultMessage="ui.usersFollowed.noMoreFollowed" />
+                          </b>
+                        </p>
+                      }>
+                      <List>
+                        {followed.map((f, index) => (
+                          <User elevation={0} user={f} key={f.id} sx={{m: 0}} {...UserProps} />
+                        ))}
+                      </List>
+                    </InfiniteScroll>
+                  )}
+                </BaseDialog>
               )}
             </React.Fragment>
           )}

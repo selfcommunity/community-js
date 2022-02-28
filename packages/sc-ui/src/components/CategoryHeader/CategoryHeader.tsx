@@ -196,9 +196,9 @@ export default function CategoryHeader(props: CategoryHeaderProps): JSX.Element 
         _followers = [..._pFollowers, ...followers.slice(5)];
       }
     }
+    setTotal((prev) => prev + (follow ? 1 : -1));
     setFollowers(_followers);
     setNext(null);
-    setTotal((prev) => prev + (follow ? 1 : -1));
   }
 
   /**
@@ -246,7 +246,7 @@ export default function CategoryHeader(props: CategoryHeaderProps): JSX.Element 
                     {followers.map((c: SCUserType) => (
                       <Avatar key={c.id} alt={c.username} src={c.avatar} />
                     ))}
-                    {[...Array(total - followers.length)].map((x, i) => (
+                    {[...Array(Math.max(0, total - followers.length))].map((x, i) => ( // Add max to 0 to prevent creation of array with negative index during state update
                       <Avatar key={i}></Avatar>
                     ))}
                   </AvatarGroup>

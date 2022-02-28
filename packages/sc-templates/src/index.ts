@@ -6,6 +6,7 @@ import MainFeed, {MainFeedProps, MainFeedSkeleton} from './components/MainFeed';
 import NotificationFeed, {NotificationFeedProps, NotificationFeedSkeleton} from './components/NotificationFeed';
 import UserFeed, {UserFeedProps, UserFeedSkeleton} from './components/UserFeed';
 import UserProfile, {UserProfileProps, UserProfileSkeleton} from './components/UserProfile';
+import PrivateMessages, {PrivateMessagesProps, PrivateMessagesSkeleton} from './components/PrivateMessages';
 
 export {
   Category,
@@ -31,5 +32,8 @@ export {
   UserFeedSkeleton,
   UserProfile,
   UserProfileProps,
-  UserProfileSkeleton
+  UserProfileSkeleton,
+  PrivateMessages,
+  PrivateMessagesProps,
+  PrivateMessagesSkeleton
 };

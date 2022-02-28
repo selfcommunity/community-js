@@ -11,6 +11,9 @@ import {AxiosResponse} from 'axios';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import classNames from 'classnames';
 import {SCOPE_SC_UI} from '../../constants/Errors';
+import BaseDialog from '../../shared/BaseDialog';
+import CentralProgress from '../../shared/CentralProgress';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 const messages = defineMessages({
   userFollowers: {
@@ -102,37 +105,31 @@ export default function UserFollowers(props: UserFollowersProps): JSX.Element {
   const [loading, setLoading] = useState<boolean>(true);
   const [hasMore, setHasMore] = useState<boolean>(false);
   const [total, setTotal] = useState<number>(0);
-
+  const [openUserFollowersDialog, setOpenUserFollowersDialog] = useState<boolean>(false);
+  const [next, setNext] = useState<string>(`${Endpoints.UserFollowers.url({id: userId ?? scUserContext.user['id']})}?limit=10`);
   /**
    * Fetches the list of users followers
    */
   function fetchFollowers() {
-    http
-      .request({
-        url: Endpoints.UserFollowers.url({id: userId ?? scUserContext.user['id']}),
-        method: Endpoints.UserFollowers.method
-      })
-      .then((res: AxiosResponse<any>) => {
-        const data = res.data;
-        setFollowers(data.results);
-        setHasMore(data.count > visibleUsers);
-        setLoading(false);
-        setTotal(data.count);
-      })
-      .catch((error) => {
-        setLoading(false);
-        Logger.error(SCOPE_SC_UI, error);
-      });
-  }
-
-  /**
-   * Loads more users on "see more" button click
-   */
-  function loadUsers(n) {
-    const newIndex = visibleUsers + n;
-    const newHasMore = newIndex < followers.length - 1;
-    setVisibleUsers(newIndex);
-    setHasMore(newHasMore);
+    if (next) {
+      http
+        .request({
+          url: next,
+          method: Endpoints.UserFollowers.method
+        })
+        .then((res: AxiosResponse<any>) => {
+          const data = res.data;
+          setFollowers([...followers, ...data.results]);
+          setHasMore(data.count > visibleUsers);
+          setNext(data['next']);
+          setLoading(false);
+          setTotal(data.count);
+        })
+        .catch((error) => {
+          setLoading(false);
+          Logger.error(SCOPE_SC_UI, error);
+        });
+    }
   }
 
   /**
@@ -166,9 +163,39 @@ export default function UserFollowers(props: UserFollowersProps): JSX.Element {
                 ))}
               </List>
               {hasMore && (
-                <Button size="small" onClick={() => loadUsers(limit)}>
-                  <FormattedMessage id="ui.userFollowers.button.showMore" defaultMessage="ui.userFollowers.button.showMore" />
+                <Button size="small" onClick={() => setOpenUserFollowersDialog(true)}>
+                  <FormattedMessage id="ui.userFollowers.button.showAll" defaultMessage="ui.userFollowers.button.showAll" />
                 </Button>
+              )}
+              {openUserFollowersDialog && (
+                <BaseDialog
+                  title={<FormattedMessage defaultMessage="ui.userFollowers.title" id="ui.userFollowers.title" />}
+                  onClose={() => setOpenUserFollowersDialog(false)}
+                  open={openUserFollowersDialog}>
+                  {loading ? (
+                    <CentralProgress size={50} />
+                  ) : (
+                    <InfiniteScroll
+                      dataLength={followers.length}
+                      next={fetchFollowers}
+                      hasMore={Boolean(next)}
+                      loader={<CentralProgress size={30} />}
+                      height={400}
+                      endMessage={
+                        <p style={{textAlign: 'center'}}>
+                          <b>
+                            <FormattedMessage id="ui.userFollowers.noMoreFollowers" defaultMessage="ui.userFollowers.noMoreFollowers" />
+                          </b>
+                        </p>
+                      }>
+                      <List>
+                        {followers.map((f, index) => (
+                          <User elevation={0} user={f} key={f.id} sx={{m: 0}} {...UserProps} />
+                        ))}
+                      </List>
+                    </InfiniteScroll>
+                  )}
+                </BaseDialog>
               )}
             </React.Fragment>
           )}

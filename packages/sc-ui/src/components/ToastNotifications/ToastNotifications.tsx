@@ -1,26 +1,19 @@
 import React, {useEffect, useRef} from 'react';
 import {styled} from '@mui/material/styles';
 import {Box, BoxProps} from '@mui/material';
-import {SCNotificationTopicType, SCNotification, SCNotificationTypologyType, useSCContext, SCContextType} from '@selfcommunity/core';
+import {SCNotificationTopicType, SCNotification, SCNotificationTypologyType, useSCContext, SCContextType, Logger} from '@selfcommunity/core';
 import PubSub from 'pubsub-js';
 import {useSnackbar} from 'notistack';
 import CustomSnackMessage from '../../shared/CustomSnackMessage';
-import UserNotificationCommentToast from './Toast/Comment';
-import ContributionFollowNotificationToast from './Toast/ContributionFollow';
-import UserNotificationMentionToast from './Toast/Mention';
-import UserNotificationPrivateMessageToast from './Toast/PrivateMessage';
-import UserConnectionNotificationToast from './Toast/UserConnection';
-import UserFollowNotificationToast from './Toast/UserFollow';
-import VoteUpNotificationToast from './Toast/VoteUp';
-import IncubatorApprovedNotificationToast from './Toast/IncubatorApproved';
-/*
-import CollapsedForNotificationToast from './Toast/CollapsedFor';
-import DeletedForNotificationToast from './Toast/DeletedFor';
-import KindlyNoticeFlagNotificationToast from './Toast/KindlyNoticeFlag';
-import KindlyNoticeForNotificationToast from './Toast/KindlyNoticeFor';
-import UndeletedForNotificationToast from './Toast/UndeletedFor';
-import UserBlockedNotificationToast from './Toast/UserBlocked';
-*/
+import {NotificationObjectTemplateType} from '../../types';
+import CommentNotification from '../Notification/Comment';
+import ContributionFollowNotification from '../Notification/ContributionFollow';
+import UserFollowNotification from '../Notification/UserFollow';
+import UserConnectionNotification from '../Notification/UserConnection';
+import VoteUpNotification from '../Notification/VoteUp';
+import PrivateMessageNotification from '../Notification/PrivateMessage';
+import MentionNotification from '../Notification/Mention';
+import IncubatorApprovedNotification from '../Notification/IncubatorApproved';
 
 const PREFIX = 'SCToastNotifications';
 
@@ -35,15 +28,7 @@ const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  [`& .${classes.toastMessage}`]: {
-    minWidth: 280
-  },
-  [`& .${classes.toastContent}`]: {
-    marginBottom: 10,
-    padding: '8px 0px 15px 0px'
-  }
-}));
+})(({theme}) => ({}));
 
 export interface ToastNotificationsProps extends BoxProps {
   /**
@@ -111,58 +96,29 @@ export default function UserToastNotifications(props: ToastNotificationsProps): 
    * @param n
    */
   const getContent = (n) => {
-    const type = SCNotification.SCNotificationMapping[n.activity_type];
     let content;
-    if (type === SCNotificationTypologyType.COMMENT || type === SCNotificationTypologyType.NESTED_COMMENT) {
-      content = <UserNotificationCommentToast notificationObject={n} />;
-    } else if (type === SCNotificationTypologyType.FOLLOW) {
-      content = <ContributionFollowNotificationToast notificationObject={n} />;
-    } else if (type === SCNotificationTypologyType.USER_FOLLOW) {
-      content = <UserFollowNotificationToast notificationObject={n} />;
-    } else if (type === SCNotificationTypologyType.CONNECTION_REQUEST || type === SCNotificationTypologyType.CONNECTION_ACCEPT) {
-      content = <UserConnectionNotificationToast notificationObject={n} />;
-    } else if (type === SCNotificationTypologyType.VOTE_UP) {
-      content = <VoteUpNotificationToast notificationObject={n} />;
-    } else if (type === SCNotificationTypologyType.PRIVATE_MESSAGE) {
-      content = <UserNotificationPrivateMessageToast notificationObject={n} />;
-    } else if (type === SCNotificationTypologyType.MENTION) {
-      content = <UserNotificationMentionToast notificationObject={n} />;
-    } else if (type === SCNotificationTypologyType.INCUBATOR_APPROVED) {
-      content = <IncubatorApprovedNotificationToast notificationObject={n} />;
-      /*
-    } else if (
-      type === SCNotificationTypologyType.KINDLY_NOTICE_ADVERTISING ||
-      type === SCNotificationTypologyType.KINDLY_NOTICE_AGGRESSIVE ||
-      type === SCNotificationTypologyType.KINDLY_NOTICE_POOR ||
-      type === SCNotificationTypologyType.KINDLY_NOTICE_VULGAR ||
-      type === SCNotificationTypologyType.KINDLY_NOTICE_OFFTOPIC
-    ) {
-      content = <KindlyNoticeForNotificationToast notificationObject={n} />;
-    } else if (type === SCNotificationTypologyType.KINDLY_NOTICE_FLAG) {
-      content = <KindlyNoticeFlagNotificationToast notificationObject={n} />;
-    } else if (
-      type === SCNotificationTypologyType.DELETED_FOR_ADVERTISING ||
-      type === SCNotificationTypologyType.DELETED_FOR_AGGRESSIVE ||
-      type === SCNotificationTypologyType.DELETED_FOR_POOR ||
-      type === SCNotificationTypologyType.DELETED_FOR_VULGAR ||
-      type === SCNotificationTypologyType.DELETED_FOR_OFFTOPIC
-    ) {
-      content = <DeletedForNotificationToast notificationObject={n} />;
-    } else if (type === SCNotificationTypologyType.UNDELETED_FOR) {
-      content = <UndeletedForNotificationToast notificationObject={n} />;
-    } else if (
-      type === SCNotificationTypologyType.COLLAPSED_FOR_ADVERTISING ||
-      type === SCNotificationTypologyType.COLLAPSED_FOR_AGGRESSIVE ||
-      type === SCNotificationTypologyType.COLLAPSED_FOR_POOR ||
-      type === SCNotificationTypologyType.COLLAPSED_FOR_VULGAR ||
-      type === SCNotificationTypologyType.COLLAPSED_FOR_OFFTOPIC
-    ) {
-      content = <CollapsedForNotificationToast notificationObject={n} />;
-    } else if (type === SCNotificationTypologyType.BLOCKED_USER || type === SCNotificationTypologyType.UNBLOCKED_USER) {
-      content = <UserBlockedNotificationToast notificationObject={n} />;
-      */
+    let type;
+    if (n.notification_obj) {
+      type = SCNotification.SCNotificationMapping[n.activity_type];
+      if (type === SCNotificationTypologyType.COMMENT || type === SCNotificationTypologyType.NESTED_COMMENT) {
+        content = <CommentNotification notificationObject={n.notification_obj} template={NotificationObjectTemplateType.TOAST} />;
+      } else if (type === SCNotificationTypologyType.FOLLOW) {
+        content = <ContributionFollowNotification notificationObject={n.notification_obj} template={NotificationObjectTemplateType.TOAST} />;
+      } else if (type === SCNotificationTypologyType.USER_FOLLOW) {
+        content = <UserFollowNotification notificationObject={n.notification_obj} template={NotificationObjectTemplateType.TOAST} />;
+      } else if (type === SCNotificationTypologyType.CONNECTION_REQUEST || type === SCNotificationTypologyType.CONNECTION_ACCEPT) {
+        content = <UserConnectionNotification notificationObject={n.notification_obj} template={NotificationObjectTemplateType.TOAST} />;
+      } else if (type === SCNotificationTypologyType.VOTE_UP) {
+        content = <VoteUpNotification notificationObject={n.notification_obj} template={NotificationObjectTemplateType.TOAST} />;
+      } else if (type === SCNotificationTypologyType.PRIVATE_MESSAGE) {
+        content = <PrivateMessageNotification notificationObject={n.notification_obj} template={NotificationObjectTemplateType.TOAST} />;
+      } else if (type === SCNotificationTypologyType.MENTION) {
+        content = <MentionNotification notificationObject={n.notification_obj} template={NotificationObjectTemplateType.TOAST} />;
+      } else if (type === SCNotificationTypologyType.INCUBATOR_APPROVED) {
+        content = <IncubatorApprovedNotification notificationObject={n.notification_obj} template={NotificationObjectTemplateType.TOAST} />;
+      }
     }
-    if (handleNotification && type && !SCNotification.SCSilentNotifications.includes(type)) {
+    if (handleNotification && type) {
       content = handleNotification(type, n, content);
     }
     return content;
@@ -178,7 +134,7 @@ export default function UserToastNotifications(props: ToastNotificationsProps): 
       data &&
       data.type === SCNotificationTopicType.INTERACTION &&
       SCNotification.SCNotificationMapping[data.data.activity_type] &&
-      !SCNotification.SCSilentNotifications.includes(data.data.activity_type) &&
+      !SCNotification.SCSilentToastNotifications.includes(data.data.activity_type) &&
       !disableToastNotification &&
       !scContext.settings.notifications.webSocket.disableToastMessage
     ) {

@@ -47,7 +47,6 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  display: 'flex',
   [`& .${classes.listItemSnippet}`]: {
     padding: '0px 5px',
     alignItems: 'center'
@@ -113,7 +112,7 @@ export interface CommentNotificationProps {
    * Index
    * @default null
    */
-  index: number;
+  index?: number;
 
   /**
    * Handles action on vote
@@ -220,7 +219,7 @@ export default function CommentNotification(props: CommentNotificationProps): JS
                     classes={{root: classes.voteButton}}
                     variant={'text'}
                     onClick={() => {
-                      onVote && onVote(index, notificationObject.comment);
+                      onVote && index && onVote(index, notificationObject.comment);
                     }}
                     disabled={loadingVote === index}
                     loading={loadingVote === index}>

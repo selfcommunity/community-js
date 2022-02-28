@@ -1,3 +1,3 @@
-import UserNotificationPrivateMessage, {NotificationPMProps} from './PrivateMessage';
-export default UserNotificationPrivateMessage;
-export {NotificationPMProps};
+import PrivateMessageNotification , {NotificationPrivateMessageProps} from './PrivateMessage';
+export default PrivateMessageNotification;
+export {NotificationPrivateMessageProps};

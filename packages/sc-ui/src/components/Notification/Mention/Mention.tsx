@@ -37,7 +37,6 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  display: 'flex',
   [`& .${classes.listItemSnippet}`]: {
     padding: '0px 5px',
     alignItems: 'center'
@@ -69,7 +68,7 @@ const Root = styled(Box, {
   }
 }));
 
-export interface NotificationMentionProps {
+export interface MentionNotificationProps {
   /**
    * Id of the feedObject
    * @default `n_<notificationObject.sid>`
@@ -105,7 +104,7 @@ export interface NotificationMentionProps {
  * @param props
  * @constructor
  */
-export default function UserNotificationMention(props: NotificationMentionProps): JSX.Element {
+export default function MentionNotification(props: MentionNotificationProps): JSX.Element {
   // PROPS
   const {
     notificationObject,
@@ -155,7 +154,7 @@ export default function UserNotificationMention(props: NotificationMentionProps)
           disableTypography={true}
           primary={
             <>
-              {!isSnippetTemplate && notificationObject.is_new && <NewChip />}
+              {template === NotificationObjectTemplateType.DETAIL && notificationObject.is_new && <NewChip />}
               <Typography component="span" className={classes.mentionText} color="inherit">
                 <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject[objectType].author)}>
                   {notificationObject[objectType].author.username}

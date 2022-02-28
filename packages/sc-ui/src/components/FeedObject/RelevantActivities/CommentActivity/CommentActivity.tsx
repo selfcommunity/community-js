@@ -121,7 +121,7 @@ export default function CommentRelevantActivity(props: CommentRelevantActivityPr
                     {activityObject.comment.voted ? (
                       <Tooltip
                         title={<FormattedMessage id={'ui.notification.comment.voteDown'} defaultMessage={'ui.notification.comment.voteDown'} />}>
-                        <VoteFilledIcon fontSize={'small'} color={'secondary'} />
+                        <VoteFilledIcon fontSize={'small'} color="primary" />
                       </Tooltip>
                     ) : (
                       <Tooltip title={<FormattedMessage id={'ui.notification.comment.voteUp'} defaultMessage={'ui.notification.comment.voteUp'} />}>

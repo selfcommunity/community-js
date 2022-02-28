@@ -31,6 +31,10 @@ const Root = styled(SnackbarContent, {
     right: 0,
     top: 0,
     zIndex: 1
+  },
+  '& a': {
+    textDecoration: 'none',
+    color: theme.palette.text.primary
   }
 }));
 

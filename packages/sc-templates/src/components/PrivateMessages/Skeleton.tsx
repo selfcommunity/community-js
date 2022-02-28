@@ -1,5 +1,5 @@
 import React from 'react';
-import {GenericSkeleton} from '../Skeleton';
+import {GenericSkeleton} from '@selfcommunity/ui';
 
 export default function PrivateMessagesSkeleton(): JSX.Element {
   return <GenericSkeleton />;

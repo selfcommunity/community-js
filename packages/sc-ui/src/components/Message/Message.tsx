@@ -181,26 +181,28 @@ export default function Message(props: MessageProps): JSX.Element {
     <React.Fragment>
       {snippetType ? (
         <React.Fragment>
-          <ListItemAvatar>
-            <Avatar alt={message.receiver.username} src={message.receiver.avatar} />
-          </ListItemAvatar>
-          <ListItemText
-            primary={
-              <Box className={classes.info}>
-                <Typography component="span">{message.receiver.username}</Typography>
-                <Typography component="span">{`${intl.formatDate(message.last_message_at, {
-                  weekday: 'long',
-                  day: 'numeric'
-                })}`}</Typography>
-              </Box>
-            }
-            secondary={
-              <Box component="span" className={classes.info}>
-                <Typography component="span"> {message.headline}</Typography>
-                <FiberManualRecordIcon fontSize="small" className={unseen ? classes.unread : classes.hide} />
-              </Box>
-            }
-          />
+          <ListItem>
+            <ListItemAvatar>
+              <Avatar alt={message.receiver.username} src={message.receiver.avatar} />
+            </ListItemAvatar>
+            <ListItemText
+              primary={
+                <Box className={classes.info}>
+                  <Typography component="span">{message.receiver.username}</Typography>
+                  <Typography component="span">{`${intl.formatDate(message.last_message_at, {
+                    weekday: 'long',
+                    day: 'numeric'
+                  })}`}</Typography>
+                </Box>
+              }
+              secondary={
+                <Box component="span" className={classes.info}>
+                  <Typography component="span"> {message.headline}</Typography>
+                  <FiberManualRecordIcon fontSize="small" className={unseen ? classes.unread : classes.hide} />
+                </Box>
+              }
+            />
+          </ListItem>
         </React.Fragment>
       ) : (
         <ListItem onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} button={true}>

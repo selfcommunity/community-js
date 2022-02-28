@@ -12,6 +12,9 @@ import {FormattedMessage} from 'react-intl';
 import Category from '../Category';
 import {CategoriesListProps} from '../CategoriesSuggestion';
 import classNames from 'classnames';
+import BaseDialog from '../../shared/BaseDialog';
+import CentralProgress from '../../shared/CentralProgress';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 const PREFIX = 'SCCategoriesPopular';
 
@@ -61,51 +64,42 @@ export default function CategoriesPopular(props: CategoriesListProps): JSX.Eleme
   const [hasMore, setHasMore] = useState<boolean>(false);
   const [total, setTotal] = useState<number>(0);
   const [openPopularCategoriesDialog, setOpenPopularCategoriesDialog] = useState<boolean>(false);
-
+  const [next, setNext] = useState<string>(`${Endpoints.PopularCategories.url()}?limit=10`);
   /**
    * Fetches popular categories list
    */
   const fetchPopularCategories = useMemo(
     () => () => {
-      return http
-        .request({
-          url: Endpoints.PopularCategories.url(),
-          method: Endpoints.PopularCategories.method
-        })
-        .then((res: AxiosResponse<any>) => {
-          if (res.status >= 300) {
-            return Promise.reject(res);
-          }
-          return Promise.resolve(res.data);
-        });
+      if (next) {
+        http
+          .request({
+            url: next,
+            method: Endpoints.PopularCategories.method
+          })
+          .then((res: AxiosResponse<any>) => {
+            if (res.status < 300) {
+              const data = res.data;
+              setCategories([...categories, ...data['results']]);
+              setHasMore(data['count'] > visibleCategories);
+              setNext(data['next']);
+              setLoading(false);
+              setTotal(data['count']);
+            }
+          })
+          .catch((error) => {
+            setLoading(false);
+            Logger.error(SCOPE_SC_UI, error);
+          });
+      }
     },
-    []
+    [categories, next, loading]
   );
-
-  /**
-   * Loads more categories on "see more" button click
-   */
-  function loadCategories() {
-    const newIndex = visibleCategories + limit;
-    const newHasMore = newIndex < categories.length - 1;
-    setVisibleCategories(newIndex);
-    setHasMore(newHasMore);
-  }
 
   /**
    * On mount, fetches popular categories list
    */
   useEffect(() => {
-    fetchPopularCategories()
-      .then((data: AxiosResponse<any>) => {
-        setCategories(data['results']);
-        setHasMore(data['count'] > visibleCategories);
-        setLoading(false);
-        setTotal(data['count']);
-      })
-      .catch((error) => {
-        Logger.error(SCOPE_SC_UI, error);
-      });
+    fetchPopularCategories();
   }, []);
 
   /**
@@ -134,13 +128,42 @@ export default function CategoriesPopular(props: CategoriesListProps): JSX.Eleme
                 ))}
               </List>
               {hasMore && (
-                <Button size="small" onClick={() => loadCategories()}>
-                  <FormattedMessage id="ui.categoriesPopular.button.showMore" defaultMessage="ui.categoriesPopular.button.showMore" />
+                <Button size="small" onClick={() => setOpenPopularCategoriesDialog(true)}>
+                  <FormattedMessage id="ui.categoriesPopular.button.showAll" defaultMessage="ui.categoriesPopular.button.showAll" />
                 </Button>
               )}
             </React.Fragment>
           )}
-          {openPopularCategoriesDialog && <></>}
+          {openPopularCategoriesDialog && (
+            <BaseDialog
+              title={<FormattedMessage defaultMessage="ui.categoriesPopular.title" id="ui.categoriesPopular.title" />}
+              onClose={() => setOpenPopularCategoriesDialog(false)}
+              open={openPopularCategoriesDialog}>
+              {loading ? (
+                <CentralProgress size={50} />
+              ) : (
+                <InfiniteScroll
+                  dataLength={categories.length}
+                  next={fetchPopularCategories}
+                  hasMore={Boolean(next)}
+                  loader={<CentralProgress size={30} />}
+                  height={400}
+                  endMessage={
+                    <p style={{textAlign: 'center'}}>
+                      <b>
+                        <FormattedMessage id="ui.categoriesPopular.noMoreCategories" defaultMessage="ui.categoriesPopular.noMoreCategories" />
+                      </b>
+                    </p>
+                  }>
+                  <List>
+                    {categories.map((c, index) => (
+                      <Category elevation={0} category={c} key={c.id} sx={{m: 0}} {...CategoryProps} />
+                    ))}
+                  </List>
+                </InfiniteScroll>
+              )}
+            </BaseDialog>
+          )}
         </CardContent>
       )}
     </React.Fragment>
