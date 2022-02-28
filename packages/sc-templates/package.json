@@ -1,6 +1,6 @@
 {
   "name": "@selfcommunity/templates",
-  "version": "0.0.1-alpha.18",
+  "version": "0.0.1-alpha.19",
   "license": "MIT",
   "private": false,
   "main": "./lib/cjs/index.js",
@@ -54,9 +54,9 @@
     "react-stickynode": "^4.0.0"
   },
   "dependencies": {
-    "@selfcommunity/core": "^0.1.0-alpha.18",
-    "@selfcommunity/i18n": "^0.1.0-alpha.18",
-    "@selfcommunity/ui": "^0.1.0-alpha.18",
+    "@selfcommunity/core": "^0.1.0-alpha.19",
+    "@selfcommunity/i18n": "^0.1.0-alpha.19",
+    "@selfcommunity/ui": "^0.1.0-alpha.19",
     "@types/classnames": "^2.2.11",
     "classnames": "^2.2.6"
   },
