@@ -315,7 +315,7 @@ export default function Vote(props: VoteProps): JSX.Element {
     const {loading, voting} = state;
     if (!canVote || (withAction && !inlineAction)) {
       return obj.voted ? (
-        <VoteFilledIcon fontSize="medium" color={'secondary'} className={classes.inlineVoteButton} />
+        <VoteFilledIcon fontSize="medium" color="primary" className={classes.inlineVoteButton} />
       ) : (
         <VoteIcon fontSize="medium" sx={{marginTop: '-1px'}} />
       );
