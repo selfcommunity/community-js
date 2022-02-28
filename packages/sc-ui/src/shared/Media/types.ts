@@ -1,5 +1,5 @@
 import {SCMediaType} from '@selfcommunity/core';
-import {SCMediaChunkType} from '@selfcommunity/ui';
+import {SCMediaChunkType} from '../../types';
 import {SyntheticEvent} from 'react';
 
 export interface EditMediaProps {
