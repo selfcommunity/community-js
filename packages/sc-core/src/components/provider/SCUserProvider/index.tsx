@@ -80,7 +80,7 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
           dispatch({type: userActionTypes.LOGIN_FAILURE, payload: {error}});
         });
     }
-  }, [state.session.accessToken]);
+  }, [state.session.authToken]);
 
   /**
    * Controls caching of follow categories, users, etc...
