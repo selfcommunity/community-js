@@ -67,7 +67,7 @@ export default function SCContextProvider({conf, children}: SCContextProviderTyp
        */
       setSettings(settings);
     }
-  }, [conf]);
+  }, [`${conf}`]);
 
   /**
    * Nesting all necessary providers
