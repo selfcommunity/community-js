@@ -4,6 +4,7 @@ import {SCContext} from '../SCContextProvider';
 import useSCAuth, {userActionTypes} from '../../../hooks/useSCAuth';
 import {Logger} from '../../../utils/logger';
 import {SCOPE_SC_CORE} from '../../../constants/Errors';
+import useDeepCompareEffect from 'use-deep-compare-effect';
 import useSCCategoriesManager from '../../../hooks/useSCCategoriesManager';
 import useSCFollowedManager from '../../../hooks/useSCFollowersManager';
 import useSCConnectionsManager from '../../../hooks/useSCConnectionsManager';
@@ -67,7 +68,7 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
    * when the provider is mounted for the first time.
    * If there is an error, it means there is no session.
    */
-  useEffect(() => {
+  useDeepCompareEffect(() => {
     if (state.session.authToken && state.session.authToken.accessToken) {
       dispatch({type: userActionTypes.LOGIN_LOADING});
       sessionServices
@@ -80,7 +81,7 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
           dispatch({type: userActionTypes.LOGIN_FAILURE, payload: {error}});
         });
     }
-  }, [state.session.authToken]);
+  }, [state.session]);
 
   /**
    * Controls caching of follow categories, users, etc...

@@ -1,5 +1,6 @@
-import React, {createContext, ReactNode, useContext, useEffect, useState} from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import {setBasePortal} from '../../../utils/http';
+import useDeepCompareEffect from 'use-deep-compare-effect';
 import {validateOptions, validOptions} from '../../../utils/validator';
 import {SCContextProviderType, SCContextType, SCSettingsType} from '../../../types';
 
@@ -37,7 +38,7 @@ export default function SCContextProvider({conf, children}: SCContextProviderTyp
    * Export the provider as we need to wrap the entire app with it
    * This provider keeps current user logged and session
    */
-  useEffect(() => {
+  useDeepCompareEffect(() => {
     /**
      * Validate initial settings
      */
@@ -67,7 +68,7 @@ export default function SCContextProvider({conf, children}: SCContextProviderTyp
        */
       setSettings(settings);
     }
-  }, [`${conf}`]);
+  }, [conf]);
 
   /**
    * Nesting all necessary providers

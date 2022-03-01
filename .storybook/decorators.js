@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import {SCContextProvider} from '../packages/sc-core/src';
 import { getJWTSession, getOAuthSession, refreshToken } from './sessionHelpers';
+import { Box, Button } from '@mui/material';
 
 const withProvider = (Story, context) => {
     const [authToken, setAuthToken] = useState(undefined);
 
     /**
-     * Get initial session for testing
-     * OAuth2 and JWT create initial session
+     * Get auth token
      */
-    useEffect(() => {
+    const getToken = () => {
       if (context.globals.session === 'OAuth') {
         getOAuthSession(context).then((res) => {
           setAuthToken(res);
@@ -21,19 +21,38 @@ const withProvider = (Story, context) => {
       } else {
         setAuthToken({});
       }
+    };
+
+    /**
+     * Get initial session for testing
+     * OAuth2 and JWT create initial session
+     */
+    useEffect(() => {
+      getToken();
     }, []);
 
-    if (!authToken) return null;
-
-    const _conf = {
-      portal: context.globals.portal,
-      locale: {default: context.globals.locale},
-      session: {
+    /**
+     * Auth session
+     */
+    let session;
+    if (authToken) {
+      session = {
         type: context.globals.session,
         clientId: context.globals.clientId,
         authToken: authToken, // Comment this line to test anonymous session
         handleRefreshToken: context.globals.session !== 'Cookie' ? refreshToken(context) : null
-      },
+      };
+    }else{
+      session = {
+        type: context.globals.session,
+        clientId: context.globals.clientId
+      };
+    }
+
+    const _conf = {
+      portal: context.globals.portal,
+      locale: {default: context.globals.locale},
+      session: session,
       notifications: {
         webSocket: {
           disableToastMessage: false
@@ -65,10 +84,25 @@ const withProvider = (Story, context) => {
       ] */
     };
 
+    // Handle to test
+    const changeCommunityConf = (logged) => {
+      if (logged) {
+        getToken();
+      }else{
+        setAuthToken(null);
+      }
+    }
+
     return (
+      <React.Fragment>
+        <Box style={{textAlign: 'right'}}>
+          {!authToken && <Button variant="contained" onClick={() => changeCommunityConf(true)}>Login</Button>}
+          {authToken && <Button variant="contained" onClick={() => changeCommunityConf(false)}>Logout</Button>}
+        </Box>
         <SCContextProvider conf={_conf}>
           <Story {...context} />
         </SCContextProvider>
+      </React.Fragment>
     );
 };
 

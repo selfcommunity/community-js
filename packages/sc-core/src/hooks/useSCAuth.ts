@@ -2,6 +2,7 @@ import http, {setAuthorizeToken, setSupportWithCredentials} from '../utils/http'
 import {useEffect, useMemo, useReducer, useRef} from 'react';
 import {SCAuthTokenType, SCSessionType} from '../types';
 import * as Session from '../constants/Session';
+import useDeepCompareEffect from 'use-deep-compare-effect';
 import {Logger} from '../utils/logger';
 import {SCOPE_SC_CORE} from '../constants/Errors';
 
@@ -71,6 +72,9 @@ function userReducer(state, action) {
     case userActionTypes.CHANGE_UNSEEN_NOTIFICATION_BANNERS_COUNTER:
       return {...state, user: {...state.user, ...{unseen_notification_banners_counter: action.payload.counter}}};
 
+    case userActionTypes.REFRESH_SESSION:
+      return action.payload.conf;
+
     default:
       throw new Error(`Unhandled type: ${action.type}`);
   }
@@ -128,6 +132,13 @@ export default function useAuth(initialSession: SCSessionType) {
   let authInterceptor = useRef(null);
   let isSessionRefreshing = useRef(false);
   let failedQueue = useRef([]);
+
+  /**
+   * Reset session if initial conf changed
+   */
+  useDeepCompareEffect(() => {
+    dispatch({type: userActionTypes.REFRESH_SESSION, payload: {conf: stateInitializer(initialSession)}});
+  }, [initialSession]);
 
   /**
    * Refresh session

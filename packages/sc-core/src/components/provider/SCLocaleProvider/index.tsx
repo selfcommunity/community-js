@@ -1,4 +1,4 @@
-import React, {createContext, useContext, useMemo, useState} from 'react';
+import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import {SCContextType} from '../../../types';
 import {useSCContext} from '../SCContextProvider';
 import {SCLocaleContextType} from '../../../types';
@@ -7,6 +7,7 @@ import {DEFAULT_LANGUAGE_UI} from '../../../constants/Locale';
 import {IntlProvider} from 'react-intl';
 import {Logger} from '../../../utils/logger';
 import {SCOPE_SC_CORE} from '../../../constants/Errors';
+import useDeepCompareEffect from 'use-deep-compare-effect';
 
 /**
  * Creates Global Context
@@ -42,11 +43,18 @@ export default function SCLocaleProvider({children = null}: {children: React.Rea
   const [locale, setLocale] = useState(initial.locale);
   const [messages, setMessages] = useState(initial.messages);
 
+  /**
+   * Update current locale state
+   * @param _intl
+   */
   const updateLocale = (_intl) => {
     setLocale(_intl.locale);
     setMessages(_intl.messages);
   };
 
+  /**
+   * Select locale loading data
+   */
   const selectLocale = useMemo(
     () => (l) => {
       const {messages, locale} = loadLocaleData(l, scContext.settings);
@@ -54,6 +62,13 @@ export default function SCLocaleProvider({children = null}: {children: React.Rea
     },
     [locale]
   );
+
+  /**
+   * Update locale and messages if initial conf changes
+   */
+  useDeepCompareEffect(() => {
+    selectLocale(scContext.settings.locale?.default ? scContext.settings.locale.default : DEFAULT_LANGUAGE_UI);
+  }, [scContext.settings.locale]);
 
   /**
    * handleIntlError

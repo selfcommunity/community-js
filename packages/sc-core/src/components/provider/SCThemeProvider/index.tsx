@@ -6,6 +6,7 @@ import {useSCContext} from '../SCContextProvider';
 import {SCThemeContextType} from '../../../types';
 import {SCPreferencesContextType} from '../../../types/context';
 import {useSCPreferences} from '../SCPreferencesProvider';
+import useDeepCompareEffect from 'use-deep-compare-effect';
 
 /**
  * Creates Global Context
@@ -46,9 +47,21 @@ export default function SCThemeProvider({children = null}: {children: React.Reac
   const scPreferencesContext: SCPreferencesContextType = useSCPreferences();
   const [theme, setTheme] = useState<Record<string, any>>(getTheme(scContext.settings.theme, scPreferencesContext.preferences));
 
+  /**
+   * Set custom theme
+   * Merge with scPreferencesContext.preferences
+   * @param theme
+   */
   const setCustomTheme = (theme) => {
     setTheme(getTheme(theme, scPreferencesContext.preferences));
   };
+
+  /**
+   * Update theme if initial conf changes
+   */
+  useDeepCompareEffect(() => {
+    setCustomTheme(theme);
+  }, [scContext.settings.theme]);
 
   return (
     <StyledEngineProvider injectFirst>
