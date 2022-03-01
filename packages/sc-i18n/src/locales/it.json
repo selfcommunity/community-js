@@ -10,6 +10,7 @@
   "ui.common.statusWithoutText": "Vedi lo status",
   "ui.common.commentWithoutText": "Vedi il commento",
 
+  "ui.confirmDialog.title": "Sei sicuro di voler procedere?",
   "ui.confirmDialog.btnConfirm": "Si",
   "ui.confirmDialog.btnCancel": "No",
 
@@ -384,6 +385,18 @@
 
   "ui.accountRecover.email.label": "Email",
   "ui.accountRecover.submit": "Recupera Account",
+
+  "ui.contributionActionMenu.permanentLink": "Link permanente",
+  "ui.contributionActionMenu.editContribution": "Modifica",
+  "ui.contributionActionMenu.restoreContribution": "Ripristina",
+  "ui.contributionActionMenu.deleteContribution": "Elimina",
+  "ui.contributionActionMenu.enableNotificationContribution": "Riattiva le notifiche",
+  "ui.contributionActionMenu.suspendNotificationContribution": "Sospendi notifiche",
+  "ui.contributionActionMenu.flagContributionWithMotivation": "Segnala con motivazione",
+  "ui.contributionActionMenu.hideContributionWithMotivation": "Nascondi con motivazione",
+  "ui.contributionActionMenu.deleteContributionWithMotivation": "Cancella con motivazione",
+  "ui.contributionActionMenu.actionSuccess": "Operation completata!",
+  "ui.contributionActionMenu.actionError": "Si è verificato un problema. Riprova più tardi!",
 
   "templates.userProfile.edit": "Modifica"
 }

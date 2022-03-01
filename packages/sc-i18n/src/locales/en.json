@@ -10,6 +10,7 @@
   "ui.common.statusWithoutText": "View status",
   "ui.common.commentWithoutText": "View comment",
 
+  "ui.confirmDialog.title": "Are you sure you want to proceed?",
   "ui.confirmDialog.btnConfirm": "Yes",
   "ui.confirmDialog.btnCancel": "No",
 
@@ -384,6 +385,18 @@
 
   "ui.accountRecover.email.label": "Email",
   "ui.accountRecover.submit": "Recover Account",
+
+  "ui.contributionActionMenu.permanentLink": "Permanent link",
+  "ui.contributionActionMenu.editContribution": "Edit",
+  "ui.contributionActionMenu.restoreContribution": "Restore",
+  "ui.contributionActionMenu.deleteContribution": "Delete",
+  "ui.contributionActionMenu.enableNotificationContribution": "Enable notifications",
+  "ui.contributionActionMenu.suspendNotificationContribution": "Suspend notifications",
+  "ui.contributionActionMenu.flagContributionWithMotivation": "Flag with motivation",
+  "ui.contributionActionMenu.hideContributionWithMotivation": "Hide with motivation",
+  "ui.contributionActionMenu.deleteContributionWithMotivation": "Delete with motivation",
+  "ui.contributionActionMenu.actionSuccess": "Operation successfully complete!",
+  "ui.contributionActionMenu.actionError": "There was a problem during the operation. Try later!",
 
   "templates.userProfile.edit": "Edit"
 }
