@@ -1,5 +1,5 @@
 import React from 'react';
-import {SCCommentTypologyType, SCFeedObjectTypologyType} from '@selfcommunity/core';
+import { SCCommentTypologyType, SCFeedObjectTypologyType, SCRoutes } from '@selfcommunity/core';
 import {FormattedMessage} from 'react-intl';
 import {Typography} from '@mui/material';
 
@@ -50,6 +50,17 @@ export function getContributionSnippet(obj) {
     );
   }
 }
+
+/**
+ * Get route name for a contribution
+ * @param obj
+ */
+export function getRouteName(obj) {
+  if (obj.type) {
+    return SCRoutes[`${obj.type.toUpperCase()}_ROUTE_NAME`];
+  }
+}
+
 
 /**
  * Get data for scRoutingContext.url()

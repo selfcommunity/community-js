@@ -32,7 +32,7 @@ import VoteFilledIcon from '@mui/icons-material/ThumbUpTwoTone';
 import VoteIcon from '@mui/icons-material/ThumbUpOutlined';
 import {CommentsOrderBy} from '../../types/comments';
 import ReplyCommentObject from './ReplyComment';
-import CommentActionsMenu from './CommentActionsMenu';
+import ContributionActionsMenu from '../../shared/ContributionActionsMenu';
 import DateTimeAgo from '../../shared/DateTimeAgo';
 import {getRouteData} from '../../utils/contribute';
 
@@ -651,14 +651,11 @@ export default function CommentObject(props: CommentObjectProps): JSX.Element {
                     </CardContent>
                     {scUserContext.user && (
                       <Box className={classes.commentActionsMenu}>
-                        <CommentActionsMenu
+                        <ContributionActionsMenu
                           commentObject={comment}
-                          feedObject={feedObject}
-                          feedObjectId={feedObjectId}
-                          feedObjectType={feedObjectType}
-                          onRestore={handleRestore}
-                          onDelete={handleDelete}
-                          onEdit={handleEdit}
+                          onRestoreContribution={handleRestore}
+                          onDeleteContribution={handleDelete}
+                          onEditContribution={handleEdit}
                         />
                       </Box>
                     )}

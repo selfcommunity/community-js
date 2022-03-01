@@ -63,6 +63,9 @@ import {SCOPE_SC_UI} from '../../constants/Errors';
 import {AxiosResponse} from 'axios';
 import MarkRead from '../../shared/MarkRead';
 import classNames from 'classnames';
+import ContributionActionsMenu from '../../shared/ContributionActionsMenu';
+import {grey} from '@mui/material/colors';
+import ShareIcon from '@mui/icons-material/ShareOutlined';
 
 const messages = defineMessages({
   comment: {
@@ -89,7 +92,8 @@ const classes = {
   activitiesContent: `${PREFIX}-activities-content`,
   followButton: `${PREFIX}-follow-button`,
   activityAt: `${PREFIX}-activity-at`,
-  sharedContentFeedObject: `${PREFIX}-shared-content-feed-object`
+  sharedContentFeedObject: `${PREFIX}-shared-content-feed-object`,
+  deleted: `${PREFIX}-deleted`
 };
 
 const Root = styled(Card, {
@@ -163,6 +167,12 @@ const Root = styled(Card, {
   [`& .${classes.sharedContentFeedObject}`]: {
     textDecoration: 'none',
     color: theme.palette.grey[700]
+  },
+  [`& .${classes.deleted}`]: {
+    opacity: 0.3,
+    '&:hover': {
+      opacity: 1
+    }
   },
   '& .MuiSvgIcon-root': {
     width: '0.7em',
@@ -355,14 +365,37 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
    * else render ReportingMenu
    */
   function renderHeaderAction() {
-    if (scUserContext.user && scUserContext.user.id === obj.author.id) {
-      return (
-        <IconButton aria-haspopup="true" onClick={handleToggleEdit} size="medium">
-          <EditOutlinedIcon />
-        </IconButton>
-      );
-    }
-    return <ReportingFlagMenu feedObject={obj} feedObjectType={feedObjectType} />;
+    return (
+      <ContributionActionsMenu
+        feedObject={obj}
+        feedObjectType={feedObjectType}
+        onEditContribution={handleToggleEdit}
+        onDeleteContribution={handleDelete}
+        onRestoreContribution={handleRestore}
+        onSuspendNotificationContribution={handleSuspendNotification}
+      />
+    );
+  }
+
+  /**
+   * Handle restore obj
+   */
+  function handleRestore() {
+    setObj((prev) => ({...prev, ...{deleted: false}}));
+  }
+
+  /**
+   * Handle delete obj
+   */
+  function handleDelete() {
+    setObj((prev) => ({...prev, ...{deleted: true}}));
+  }
+
+  /**
+   * Handle suspend notification obj
+   */
+  function handleSuspendNotification() {
+    setObj((prev) => ({...prev, ...{suspended: !prev.suspended}}));
   }
 
   /**
@@ -554,7 +587,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
     objElement = (
       <React.Fragment>
         {obj ? (
-          <React.Fragment>
+          <Box className={classNames({[classes.deleted]: obj && obj.deleted})}>
             {obj.categories.length > 0 && (
               <div className={classes.category}>
                 {obj.categories.map((c) => (
@@ -670,7 +703,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
                 scroll="body"
               />
             )}
-          </React.Fragment>
+          </Box>
         ) : (
           <FeedObjectSkeleton template={template} elevation={0} />
         )}

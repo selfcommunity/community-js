@@ -39,8 +39,8 @@ export default {
     }
   },
   args: {
-    feedObjectId: 9,
-    feedObjectType: SCFeedObjectTypologyType.DISCUSSION,
+    feedObjectId: 364, // 9,
+    feedObjectType: SCFeedObjectTypologyType.POST,
     template: FeedObjectTemplateType.PREVIEW,
     elevation: 0,
     variant: 'outlined',
