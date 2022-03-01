@@ -35,6 +35,14 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/$(type)/$(id)/'),
     method: 'GET',
   },
+  DeleteFeedObject: {
+    url: urlReplacer('/api/v2/$(type)/$(id)/'),
+    method: 'DELETE',
+  },
+  RestoreFeedObject: {
+    url: urlReplacer('/api/v2/$(type)/$(id)/restore/'),
+    method: 'POST',
+  },
   RelatedDiscussion: {
     url: urlReplacer('/api/v2/$(type)/$(id)/related/'),
     method: 'GET',
@@ -53,6 +61,14 @@ const Endpoints: {[key: string]: EndpointType} = {
   UpdateComment: {
     url: urlReplacer('/api/v2/comment/$(id)/'),
     method: 'PUT',
+  },
+  DeleteComment: {
+    url: urlReplacer('/api/v2/comment/$(id)/'),
+    method: 'DELETE',
+  },
+  RestoreComment: {
+    url: urlReplacer('/api/v2/comment/restore/'),
+    method: 'POST',
   },
   Comments: {
     url: urlReplacer('/api/v2/comment/'),
@@ -472,6 +488,14 @@ const Endpoints: {[key: string]: EndpointType} = {
   DeleteDevice: {
     url: urlReplacer('/api/v2/device/$(type)/$(id)/'),
     method: 'DELETE',
+  },
+
+  /**
+   * Moderation
+   */
+  ModerateContribution: {
+    url: urlReplacer('/api/v2/moderation/contribution/$(id)/'),
+    method: 'PATCH',
   },
 };
 

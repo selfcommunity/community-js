@@ -176,9 +176,9 @@ export interface SCUserType {
   polls_counter?: number;
 
   /**
-   *  User roles
+   *  User role
    */
-  role: string[];
+  role: string;
 
   /**
    * interactions counter
