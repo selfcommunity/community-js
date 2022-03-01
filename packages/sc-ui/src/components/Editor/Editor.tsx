@@ -264,7 +264,12 @@ export default function Editor(props: EditorProps): JSX.Element {
         <ChunkedUploady
           destination={{
             url: `${scContext.settings.portal}${Endpoints.ComposerChunkUploadMedia.url()}`,
-            headers: {Authorization: `Bearer ${scContext.settings.session.authToken.accessToken}`},
+            headers: {
+              ...(scContext.settings.session &&
+                scContext.settings.session.authToken && {
+                  Authorization: `Bearer ${scContext.settings.session.authToken.accessToken}`
+                })
+            },
             method: Endpoints.ComposerChunkUploadMedia.method
           }}
           chunkSize={2142880}
