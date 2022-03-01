@@ -1060,7 +1060,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
                 ) : (
                   <MenuList>
                     {renderGeneralSection()}
-                    {extraSections.length && <Divider />}
+                    {Boolean(extraSections.length) && <Divider />}
                     {extraSections.map((s) => eval(`render${capitalize(camelCase(s))}`)())}
                   </MenuList>
                 )}
