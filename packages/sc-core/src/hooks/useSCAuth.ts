@@ -73,7 +73,7 @@ function userReducer(state, action) {
       return {...state, user: {...state.user, ...{unseen_notification_banners_counter: action.payload.counter}}};
 
     case userActionTypes.REFRESH_SESSION:
-      return action.payload.conf;
+      return {...state, ...action.payload.conf};
 
     default:
       throw new Error(`Unhandled type: ${action.type}`);

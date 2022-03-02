@@ -22,7 +22,7 @@ const Template: ComponentStory<typeof UserProfileTemplate> = (args) => {
 
   let _userId = userId;
   let isMe = false;
-  if (userId === -1) {
+  if (userId === -1 && scUserContext.user) {
     _userId = scUserContext.user.id;
     isMe = true;
   }
