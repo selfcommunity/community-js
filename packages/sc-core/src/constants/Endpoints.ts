@@ -497,6 +497,13 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/moderation/contribution/$(id)/'),
     method: 'PATCH',
   },
+  /**
+   * Moderation
+   */
+  ModerateContributionStatus: {
+    url: urlReplacer('/api/v2/moderation/contribution/$(id)/status/?contribution_type=$(contribution_type)'),
+    method: 'GET',
+  },
 };
 
 export default Endpoints;
