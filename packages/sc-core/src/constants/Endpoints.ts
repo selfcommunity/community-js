@@ -67,7 +67,7 @@ const Endpoints: {[key: string]: EndpointType} = {
     method: 'DELETE',
   },
   RestoreComment: {
-    url: urlReplacer('/api/v2/comment/restore/'),
+    url: urlReplacer('/api/v2/comment/$(id)/restore/'),
     method: 'POST',
   },
   Comments: {
