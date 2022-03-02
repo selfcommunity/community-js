@@ -16,6 +16,9 @@ import LinkOutlinedIcon from '@mui/icons-material/LinkOutlined';
 import HideOutlinedIcon from '@mui/icons-material/HideImageOutlined';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
+import RestoreFromTrashOutlinedIcon from '@mui/icons-material/RestoreFromTrashOutlined';
+import RestoreOutlinedIcon from '@mui/icons-material/RestoreOutlined';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import {copyTextToClipboard} from '../../utils/string';
 import {useSnackbar} from 'notistack';
 import {getRouteData, getRouteName} from '../../utils/contribute';
@@ -47,7 +50,9 @@ import {
   REPORT_VULGAR,
   REPORTS,
   MODERATION_TYPE_ACTION_HIDE,
-  MODERATION_TYPE_ACTION_DELETE
+  MODERATION_TYPE_ACTION_DELETE,
+  MODERATION_CONTRIBUTION_STATE_HIDDEN,
+  MODERATION_CONTRIBUTION_STATE_DELETED
 } from '../../constants/Flagging';
 import {
   Endpoints,
@@ -76,7 +81,9 @@ import {
   GET_CONTRIBUTION_PERMALINK,
   HIDE_CONTRIBUTION_SECTION,
   RESTORE_CONTRIBUTION,
-  SUSPEND_NOTIFICATION_CONTRIBUTION
+  SUSPEND_NOTIFICATION_CONTRIBUTION,
+  MODERATE_CONTRIBUTION_HIDDEN,
+  MODERATE_CONTRIBUTION_DELETED
 } from '../../constants/ContributionsActionsMenu';
 
 const PREFIX = 'SCContributionActionsMenu';
@@ -93,7 +100,8 @@ const classes = {
   footerSubItems: `${PREFIX}-footer-sub-items`,
   selectedIcon: `${PREFIX}-selected-icon`,
   sectionBadge: `${PREFIX}-section-badge`,
-  sectionWithSelectionIcon: `${PREFIX}-section-with-selection-icon`
+  sectionWithSelectionIcon: `${PREFIX}-section-with-selection-icon`,
+  visibilityBadge: `${PREFIX}-visibility-badge`
 };
 
 const PopperRoot = styled(Popper, {
@@ -123,7 +131,7 @@ const PopperRoot = styled(Popper, {
       width: '10px'
     },
     '& svg': {
-      fontSize: '1.2rem'
+      fontSize: '1.4rem'
     }
   },
   [`& .${classes.sectionBadge}`]: {
@@ -142,7 +150,18 @@ const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(() => ({}));
+})(() => ({
+  [`& .${classes.visibilityBadge}`]: {
+    padding: '0px',
+    marginLeft: 2,
+    '&.MuiListItemIcon-root': {
+      width: '9px'
+    },
+    '& svg': {
+      fontSize: '1.1rem'
+    }
+  }
+}));
 
 const messages = defineMessages({
   title: {
@@ -218,6 +237,11 @@ export interface ContributionActionsMenuProps {
   onEditContribution?: (obj: SCCommentType | SCFeedObjectType) => void;
 
   /**
+   * Handle hide obj
+   */
+  onHideContribution?: (obj: SCCommentType | SCFeedObjectType) => void;
+
+  /**
    * Handle delete obj
    */
   onDeleteContribution?: (obj: SCCommentType | SCFeedObjectType) => void;
@@ -254,6 +278,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
     commentObjectId,
     commentObject,
     onEditContribution,
+    onHideContribution,
     onDeleteContribution,
     onRestoreContribution,
     onSuspendNotificationContribution,
@@ -285,11 +310,11 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
 
   // MODERATION HIDE STATE
   const [hideType, setHideType] = useState<string>(null);
-  const [isHiding, setIsHiding] = useState<boolean>(false);
+  const [hideFlagType, setHideFlagType] = useState<string>(null);
 
   // MODERATION DELETE STATE
   const [deleteType, setDeleteType] = useState<string>(null);
-  const [isDeleting, setIsDeleting] = useState<boolean>(false);
+  const [deleteFlagType, setDeleteFlagType] = useState<string>(null);
 
   // CONFIRM ACTION DIALOG STATE
   const [openConfirmDialog, setOpenConfirmDialog] = useState<boolean>(false);
@@ -445,8 +470,8 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
     () => () => {
       return http
         .request({
-          url: Endpoints.FlagStatus.url({type: contributionObj.type, id: contributionObj.id}),
-          method: Endpoints.FlagStatus.method
+          url: Endpoints.ModerateContributionStatus.url({contribution_type: contributionObj.type, id: contributionObj.id}),
+          method: Endpoints.ModerateContributionStatus.method
         })
         .then((res: AxiosResponse<any>) => {
           if (res.status >= 300) {
@@ -516,6 +541,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
           setFlagType(data['flag_type']);
         })
         .catch((error) => {
+          console.dir(error);
           Logger.error(SCOPE_SC_UI, error);
         });
     }
@@ -529,7 +555,11 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
     if (contributionObj && (extraSections.includes(HIDE_CONTRIBUTION_SECTION) || extraSections.includes(DELETE_CONTRIBUTION_SECTION))) {
       return performFetchModerationStatus()
         .then((data) => {
-          // setFlagType(data['flag_type']);
+          if (data.status === MODERATION_CONTRIBUTION_STATE_DELETED) {
+            setDeleteType(data['flag_type']);
+          } else if (data.status === MODERATION_CONTRIBUTION_STATE_HIDDEN) {
+            setHideType(data['flag_type']);
+          }
         })
         .catch((error) => {
           Logger.error(SCOPE_SC_UI, error);
@@ -565,7 +595,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
         .request({
           url: Endpoints.ModerateContribution.url({id: contributionObj.id}),
           method: Endpoints.ModerateContribution.method,
-          data: {contribution_type: contributionObj.type, moderation_type: type, action: action}
+          data: {contribution_type: contributionObj.type, ...(type ? {moderation_type: type} : {}), action: action}
         })
         .then((res: AxiosResponse<any>) => {
           if (res.status >= 300) {
@@ -582,21 +612,8 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
    * @param type
    */
   function handleHideContribution(type) {
-    if (contributionObj && !isLoading && !isHiding && type !== 'undefined') {
-      setIsHiding(true);
-      performModerationContribution(MODERATION_TYPE_ACTION_HIDE, type)
-        .then((data) => {
-          setHideType(hideType === type ? null : type);
-          setIsHiding(false);
-        })
-        .catch((error) => {
-          Logger.error(SCOPE_SC_UI, error);
-          setIsHiding(false);
-          enqueueSnackbar(<FormattedMessage id="ui.contributionActionMenu.actionError" defaultMessage="ui.contributionActionMenu.actionError" />, {
-            variant: 'error'
-          });
-        });
-    }
+    setHideFlagType(type);
+    handleAction(MODERATE_CONTRIBUTION_HIDDEN);
   }
 
   /**
@@ -604,27 +621,14 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
    * @param type
    */
   function handleDeleteContribution(type) {
-    if (contributionObj && !isLoading && !isHiding && type !== 'undefined') {
-      setIsDeleting(true);
-      performModerationContribution(MODERATION_TYPE_ACTION_DELETE, type)
-        .then((data) => {
-          setDeleteType(deleteType === type ? null : type);
-          setIsDeleting(false);
-        })
-        .catch((error) => {
-          Logger.error(SCOPE_SC_UI, error);
-          setIsDeleting(false);
-          enqueueSnackbar(<FormattedMessage id="ui.contributionActionMenu.actionError" defaultMessage="ui.contributionActionMenu.actionError" />, {
-            variant: 'error'
-          });
-        });
-    }
+    setDeleteFlagType(type);
+    handleAction(MODERATE_CONTRIBUTION_DELETED);
   }
 
   /**
    * handle action
    */
-  function handleGeneralAction(action) {
+  function handleAction(action) {
     if (action === GET_CONTRIBUTION_PERMALINK) {
       copyTextToClipboard(
         `${location.protocol}//${location.host}${scRoutingContext.url(getRouteName(contributionObj), getRouteData(contributionObj))}`
@@ -649,6 +653,14 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
     } else if (action === SUSPEND_NOTIFICATION_CONTRIBUTION) {
       setCurrentAction(SUSPEND_NOTIFICATION_CONTRIBUTION);
       handleSuspendContentNotification();
+    } else if (action === MODERATE_CONTRIBUTION_HIDDEN) {
+      setCurrentAction(MODERATE_CONTRIBUTION_HIDDEN);
+      setOpenConfirmDialog(true);
+      handleClose();
+    } else if (action === MODERATE_CONTRIBUTION_DELETED) {
+      setCurrentAction(MODERATE_CONTRIBUTION_DELETED);
+      setOpenConfirmDialog(true);
+      handleClose();
     }
   }
 
@@ -657,9 +669,17 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
    */
   function performPostConfirmAction(success) {
     if (success) {
-      commentObj
-        ? setCommentObj({...commentObj, ...{deleted: currentAction === DELETE_CONTRIBUTION}})
-        : setFeedObj({...feedObj, ...{deleted: currentAction === DELETE_CONTRIBUTION}});
+      if ([DELETE_CONTRIBUTION, RESTORE_CONTRIBUTION].includes(currentAction)) {
+        commentObj
+          ? setCommentObj({...commentObj, ...{deleted: currentAction === DELETE_CONTRIBUTION}})
+          : setFeedObj({...feedObj, ...{deleted: currentAction === DELETE_CONTRIBUTION}});
+      } else if (currentAction === MODERATE_CONTRIBUTION_HIDDEN) {
+        commentObj
+          ? setCommentObj({...commentObj, ...{collapsed: !commentObj.collapsed}})
+          : setFeedObj({...feedObj, ...{collapsed: !feedObj.collapsed}});
+      } else if (currentAction === MODERATE_CONTRIBUTION_DELETED) {
+        commentObj ? setCommentObj({...commentObj, ...{deleted: !commentObj.deleted}}) : setFeedObj({...feedObj, ...{deleted: !feedObj.deleted}});
+      }
       setCurrentActionLoading(null);
       setCurrentAction(null);
       setOpenConfirmDialog(false);
@@ -695,6 +715,32 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
         performRestoreContribution()
           .then((data) => {
             onRestoreContribution && onRestoreContribution(contributionObj);
+            performPostConfirmAction(true);
+          })
+          .catch((error) => {
+            Logger.error(SCOPE_SC_UI, error);
+            performPostConfirmAction(false);
+          });
+      } else if (currentAction === MODERATE_CONTRIBUTION_HIDDEN) {
+        setCurrentActionLoading(MODERATE_CONTRIBUTION_HIDDEN);
+        performModerationContribution(MODERATION_TYPE_ACTION_HIDE, hideFlagType)
+          .then((data) => {
+            setHideType(hideType === hideFlagType ? null : hideFlagType);
+            setHideFlagType(null);
+            onHideContribution && onHideContribution(contributionObj);
+            performPostConfirmAction(true);
+          })
+          .catch((error) => {
+            Logger.error(SCOPE_SC_UI, error);
+            performPostConfirmAction(false);
+          });
+      } else if (currentAction === MODERATE_CONTRIBUTION_DELETED) {
+        setCurrentActionLoading(MODERATE_CONTRIBUTION_DELETED);
+        performModerationContribution(MODERATION_TYPE_ACTION_DELETE, deleteFlagType)
+          .then((data) => {
+            setDeleteType(deleteType === deleteFlagType ? null : deleteFlagType);
+            setDeleteFlagType(null);
+            onDeleteContribution && onDeleteContribution(contributionObj);
             performPostConfirmAction(true);
           })
           .catch((error) => {
@@ -778,35 +824,39 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
     const open = openSection === FLAG_CONTRIBUTION_SECTION;
     return (
       <Box>
-        <MenuItem className={classes.subItem} disabled={isFlagging} onClick={() => handleOpenSection(FLAG_CONTRIBUTION_SECTION)}>
-          <ListItemIcon>
-            {flagType !== undefined && flagType !== null ? (
-              <Badge
-                classes={{badge: classes.sectionBadge}}
-                badgeContent={<SelectedIcon className={classes.sectionWithSelectionIcon} />}
-                color="primary">
-                <FlagOutlinedIcon />
-              </Badge>
-            ) : (
-              <FlagOutlinedIcon />
-            )}
-          </ListItemIcon>
-          <ListItemText
-            primary={
-              <FormattedMessage
-                id="ui.contributionActionMenu.flagContributionWithMotivation"
-                defaultMessage="ui.contributionActionMenu.flagContributionWithMotivation"
+        {!contributionObj.deleted && !contributionObj.collapsed && (
+          <Box>
+            <MenuItem className={classes.subItem} disabled={isFlagging} onClick={() => handleOpenSection(FLAG_CONTRIBUTION_SECTION)}>
+              <ListItemIcon>
+                {flagType !== undefined && flagType !== null ? (
+                  <Badge
+                    classes={{badge: classes.sectionBadge}}
+                    badgeContent={<SelectedIcon className={classes.sectionWithSelectionIcon} />}
+                    color="primary">
+                    <FlagOutlinedIcon />
+                  </Badge>
+                ) : (
+                  <FlagOutlinedIcon />
+                )}
+              </ListItemIcon>
+              <ListItemText
+                primary={
+                  <FormattedMessage
+                    id="ui.contributionActionMenu.flagContributionWithMotivation"
+                    defaultMessage="ui.contributionActionMenu.flagContributionWithMotivation"
+                  />
+                }
               />
-            }
-          />
-          {open ? <ExpandLess /> : <ExpandMore />}
-        </MenuItem>
-        <Collapse in={open} timeout="auto" unmountOnExit>
-          {renderReports(FLAG_CONTRIBUTION_SECTION)}
-          <Typography variant={'caption'} component={'div'} className={classes.footerSubItems}>
-            {intl.formatMessage(messages.footer)}
-          </Typography>
-        </Collapse>
+              {open ? <ExpandLess /> : <ExpandMore />}
+            </MenuItem>
+            <Collapse in={open} timeout="auto" unmountOnExit>
+              {renderReports(FLAG_CONTRIBUTION_SECTION)}
+              <Typography variant={'caption'} component={'div'} className={classes.footerSubItems}>
+                {intl.formatMessage(messages.footer)}
+              </Typography>
+            </Collapse>
+          </Box>
+        )}
       </Box>
     );
   }
@@ -818,32 +868,50 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
     const open = openSection === HIDE_CONTRIBUTION_SECTION;
     return (
       <Box key={HIDE_CONTRIBUTION_SECTION}>
-        <MenuItem className={classes.subItem} disabled={isHiding} onClick={() => handleOpenSection(HIDE_CONTRIBUTION_SECTION)}>
-          <ListItemIcon>
+        {!contributionObj.deleted && (
+          <Box>
             {hideType !== undefined && hideType !== null ? (
-              <Badge
-                classes={{badge: classes.sectionBadge}}
-                badgeContent={<SelectedIcon className={classes.sectionWithSelectionIcon} />}
-                color="primary">
-                <HideOutlinedIcon />
-              </Badge>
+              <>
+                <MenuItem className={classes.subItem} disabled={Boolean(currentAction)} onClick={() => handleAction(MODERATE_CONTRIBUTION_HIDDEN)}>
+                  <ListItemIcon>
+                    <RestoreOutlinedIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={
+                      <>
+                        <FormattedMessage
+                          id="ui.contributionActionMenu.restoreFromHidden"
+                          defaultMessage="ui.contributionActionMenu.restoreFromHidden"
+                        />{' '}
+                        ({getReportName(hideType)})
+                      </>
+                    }
+                  />
+                </MenuItem>
+              </>
             ) : (
-              <HideOutlinedIcon />
+              <>
+                <MenuItem className={classes.subItem} disabled={Boolean(currentAction)} onClick={() => handleOpenSection(HIDE_CONTRIBUTION_SECTION)}>
+                  <ListItemIcon>
+                    <HideOutlinedIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={
+                      <FormattedMessage
+                        id="ui.contributionActionMenu.hideContributionWithMotivation"
+                        defaultMessage="ui.contributionActionMenu.hideContributionWithMotivation"
+                      />
+                    }
+                  />
+                  {open ? <ExpandLess /> : <ExpandMore />}
+                </MenuItem>
+                <Collapse in={open} timeout="auto" unmountOnExit>
+                  {renderReports(HIDE_CONTRIBUTION_SECTION)}
+                </Collapse>
+              </>
             )}
-          </ListItemIcon>
-          <ListItemText
-            primary={
-              <FormattedMessage
-                id="ui.contributionActionMenu.hideContributionWithMotivation"
-                defaultMessage="ui.contributionActionMenu.hideContributionWithMotivation"
-              />
-            }
-          />
-          {open ? <ExpandLess /> : <ExpandMore />}
-        </MenuItem>
-        <Collapse in={open} timeout="auto" unmountOnExit>
-          {renderReports(HIDE_CONTRIBUTION_SECTION)}
-        </Collapse>
+          </Box>
+        )}
       </Box>
     );
   }
@@ -855,32 +923,53 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
     const open = openSection === DELETE_CONTRIBUTION_SECTION;
     return (
       <Box key={DELETE_CONTRIBUTION_SECTION}>
-        <MenuItem className={classes.subItem} disabled={isDeleting} onClick={() => handleOpenSection(DELETE_CONTRIBUTION_SECTION)}>
-          <ListItemIcon>
-            {deleteType !== null && deleteType !== undefined ? (
-              <Badge
-                classes={{badge: classes.sectionBadge}}
-                badgeContent={<SelectedIcon className={classes.sectionWithSelectionIcon} />}
-                color="primary">
-                <DeleteOutlineOutlinedIcon />
-              </Badge>
+        {!contributionObj.collapsed && !(contributionObj.deleted && !deleteType) && (
+          <Box>
+            {deleteType !== undefined && deleteType !== null ? (
+              <>
+                <MenuItem className={classes.subItem} disabled={Boolean(currentAction)} onClick={() => handleAction(MODERATE_CONTRIBUTION_DELETED)}>
+                  <ListItemIcon>
+                    <RestoreFromTrashOutlinedIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={
+                      <>
+                        <FormattedMessage
+                          id="ui.contributionActionMenu.restoreFromDeleted"
+                          defaultMessage="ui.contributionActionMenu.restoreFromDeleted"
+                        />{' '}
+                        ({getReportName(deleteType)})
+                      </>
+                    }
+                  />
+                </MenuItem>
+              </>
             ) : (
-              <DeleteOutlineOutlinedIcon />
+              <>
+                <MenuItem
+                  className={classes.subItem}
+                  disabled={Boolean(currentAction)}
+                  onClick={() => handleOpenSection(DELETE_CONTRIBUTION_SECTION)}>
+                  <ListItemIcon>
+                    <DeleteOutlineOutlinedIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={
+                      <FormattedMessage
+                        id="ui.contributionActionMenu.deleteContributionWithMotivation"
+                        defaultMessage="ui.contributionActionMenu.deleteContributionWithMotivation"
+                      />
+                    }
+                  />
+                  {open ? <ExpandLess /> : <ExpandMore />}
+                </MenuItem>
+                <Collapse in={open} timeout="auto" unmountOnExit>
+                  {renderReports(DELETE_CONTRIBUTION_SECTION)}
+                </Collapse>
+              </>
             )}
-          </ListItemIcon>
-          <ListItemText
-            primary={
-              <FormattedMessage
-                id="ui.contributionActionMenu.deleteContributionWithMotivation"
-                defaultMessage="ui.contributionActionMenu.deleteContributionWithMotivation"
-              />
-            }
-          />
-          {open ? <ExpandLess /> : <ExpandMore />}
-        </MenuItem>
-        <Collapse in={open} timeout="auto" unmountOnExit>
-          {renderReports(DELETE_CONTRIBUTION_SECTION)}
-        </Collapse>
+          </Box>
+        )}
       </Box>
     );
   }
@@ -896,7 +985,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
    * Can authenticated user delete the contribution
    */
   function canDeleteContribution(): boolean {
-    return scUserContext.user && scUserContext.user.id === contributionObj.author.id;
+    return scUserContext.user && scUserContext.user.id === contributionObj.author.id && !deleteType;
   }
 
   /**
@@ -920,7 +1009,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
           </ListItemIcon>
           <ListItemText
             primary={<FormattedMessage id="ui.contributionActionMenu.permanentLink" defaultMessage="ui.contributionActionMenu.permanentLink" />}
-            onClick={() => handleGeneralAction(GET_CONTRIBUTION_PERMALINK)}
+            onClick={() => handleAction(GET_CONTRIBUTION_PERMALINK)}
             classes={{root: classes.itemText}}
           />
         </MenuItem>
@@ -933,7 +1022,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
               primary={
                 <FormattedMessage id="ui.contributionActionMenu.editContribution" defaultMessage="ui.contributionActionMenu.editContribution" />
               }
-              onClick={() => handleGeneralAction(EDIT_CONTRIBUTION)}
+              onClick={() => handleAction(EDIT_CONTRIBUTION)}
               classes={{root: classes.itemText}}
             />
           </MenuItem>
@@ -955,7 +1044,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
                     defaultMessage="ui.contributionActionMenu.restoreContribution"
                   />
                 }
-                onClick={() => handleGeneralAction(RESTORE_CONTRIBUTION)}
+                onClick={() => handleAction(RESTORE_CONTRIBUTION)}
                 classes={{root: classes.itemText}}
               />
             ) : (
@@ -963,7 +1052,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
                 primary={
                   <FormattedMessage id="ui.contributionActionMenu.deleteContribution" defaultMessage="ui.contributionActionMenu.deleteContribution" />
                 }
-                onClick={() => handleGeneralAction(DELETE_CONTRIBUTION)}
+                onClick={() => handleAction(DELETE_CONTRIBUTION)}
                 classes={{root: classes.itemText}}
               />
             )}
@@ -994,7 +1083,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
                   />
                 )
               }
-              onClick={() => handleGeneralAction(SUSPEND_NOTIFICATION_CONTRIBUTION)}
+              onClick={() => handleAction(SUSPEND_NOTIFICATION_CONTRIBUTION)}
               classes={{root: classes.itemText}}
             />
           </MenuItem>
@@ -1016,7 +1105,16 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
         onClick={handleOpen}
         className={classes.button}
         size="medium">
-        <MoreVertIcon />
+        {contributionObj.collapsed || contributionObj.deleted ? (
+          <Badge
+            badgeContent={contributionObj.collapsed ? <VisibilityOffIcon /> : <DeleteOutlineOutlinedIcon />}
+            classes={{badge: classes.visibilityBadge}}
+            color="error">
+            <MoreVertIcon />
+          </Badge>
+        ) : (
+          <MoreVertIcon />
+        )}
       </IconButton>
       <PopperRoot
         open={open}
