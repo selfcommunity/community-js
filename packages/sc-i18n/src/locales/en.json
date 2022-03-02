@@ -380,13 +380,13 @@
   "ui.contributionActionMenu.deleteContributionWithMotivation": "Delete with motivation",
   "ui.contributionActionMenu.actionSuccess": "Operation successfully complete!",
   "ui.contributionActionMenu.actionError": "There was a problem during the operation. Try later!",
-  "ui.reportingMenu.title": "This content is:",
-  "ui.reportingMenu.spam": "Spam",
-  "ui.reportingMenu.aggressive": "Aggressive",
-  "ui.reportingMenu.vulgar": "Vulgar",
-  "ui.reportingMenu.poorContent": "Poor content",
-  "ui.reportingMenu.offtopic": "Offtopic",
-  "ui.reportingMenu.footer": "Reporting is anonymous and must be compliant with rules.",
+  "ui.contributionActionMenu.title": "This content is:",
+  "ui.contributionActionMenu.spam": "Spam",
+  "ui.contributionActionMenu.aggressive": "Aggressive",
+  "ui.contributionActionMenu.vulgar": "Vulgar",
+  "ui.contributionActionMenu.poorContent": "Poor content",
+  "ui.contributionActionMenu.offtopic": "Offtopic",
+  "ui.contributionActionMenu.footer": "Reporting is anonymous and must be compliant with rules.",
 
   "templates.userProfile.edit": "Edit"
 }

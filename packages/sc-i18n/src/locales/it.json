@@ -380,13 +380,13 @@
   "ui.contributionActionMenu.deleteContributionWithMotivation": "Cancella con motivazione",
   "ui.contributionActionMenu.actionSuccess": "Operation completata!",
   "ui.contributionActionMenu.actionError": "Si è verificato un problema. Riprova più tardi!",
-  "ui.reportingMenu.title": "Questo contenuto è:",
-  "ui.reportingMenu.spam": "Spam",
-  "ui.reportingMenu.aggressive": "Aggressivo",
-  "ui.reportingMenu.vulgar": "Volgare",
-  "ui.reportingMenu.poorContent": "Scadente",
-  "ui.reportingMenu.offtopic": "Fuori tema",
-  "ui.reportingMenu.footer": "La segnalazione è anonima e deve essere conforme al regolamento.",
+  "ui.contributionActionMenu.title": "Questo contenuto è:",
+  "ui.contributionActionMenu.spam": "Spam",
+  "ui.contributionActionMenu.aggressive": "Aggressivo",
+  "ui.contributionActionMenu.vulgar": "Volgare",
+  "ui.contributionActionMenu.poorContent": "Scadente",
+  "ui.contributionActionMenu.offtopic": "Fuori tema",
+  "ui.contributionActionMenu.footer": "La segnalazione è anonima e deve essere conforme al regolamento.",
 
   "templates.userProfile.edit": "Modifica"
 }
