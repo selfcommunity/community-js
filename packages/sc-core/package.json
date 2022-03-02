@@ -1,6 +1,6 @@
 {
   "name": "@selfcommunity/core",
-  "version": "0.1.0-alpha.22",
+  "version": "0.1.0-alpha.23",
   "description": "React Core Components useful for integrating UI Community components (sc-ui).",
   "author": "mirk8xr <mirk8xr@gmail.com>",
   "homepage": "https://www.selfcommunity.com",
@@ -52,7 +52,7 @@
     "react-intl": "^5.21.0"
   },
   "dependencies": {
-    "@selfcommunity/i18n": "^0.1.0-alpha.22",
+    "@selfcommunity/i18n": "^0.1.0-alpha.23",
     "axios": "^0.23.0",
     "pubsub-js": "^1.9.4",
     "validate-color": "^2.2.1",
