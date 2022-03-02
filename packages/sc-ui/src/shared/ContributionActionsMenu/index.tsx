@@ -146,32 +146,32 @@ const Root = styled(Box, {
 
 const messages = defineMessages({
   title: {
-    id: 'ui.reportingMenu.title',
-    defaultMessage: 'ui.reportingMenu.title'
+    id: 'ui.contributionActionMenu.title',
+    defaultMessage: 'ui.contributionActionMenu.title'
   },
   spam: {
-    id: 'ui.reportingMenu.spam',
-    defaultMessage: 'ui.reportingMenu.spam'
+    id: 'ui.contributionActionMenu.spam',
+    defaultMessage: 'ui.contributionActionMenu.spam'
   },
   aggressive: {
-    id: 'ui.reportingMenu.aggressive',
-    defaultMessage: 'ui.reportingMenu.aggressive'
+    id: 'ui.contributionActionMenu.aggressive',
+    defaultMessage: 'ui.contributionActionMenu.aggressive'
   },
   vulgar: {
-    id: 'ui.reportingMenu.vulgar',
-    defaultMessage: 'ui.reportingMenu.vulgar'
+    id: 'ui.contributionActionMenu.vulgar',
+    defaultMessage: 'ui.contributionActionMenu.vulgar'
   },
   poorContent: {
-    id: 'ui.reportingMenu.poorContent',
-    defaultMessage: 'ui.reportingMenu.poorContent'
+    id: 'ui.contributionActionMenu.poorContent',
+    defaultMessage: 'ui.contributionActionMenu.poorContent'
   },
   offtopic: {
-    id: 'ui.reportingMenu.offtopic',
-    defaultMessage: 'ui.reportingMenu.offtopic'
+    id: 'ui.contributionActionMenu.offtopic',
+    defaultMessage: 'ui.contributionActionMenu.offtopic'
   },
   footer: {
-    id: 'ui.reportingMenu.footer',
-    defaultMessage: 'ui.reportingMenu.footer'
+    id: 'ui.contributionActionMenu.footer',
+    defaultMessage: 'ui.contributionActionMenu.footer'
   }
 });
 
