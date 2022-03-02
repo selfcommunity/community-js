@@ -9,6 +9,7 @@
   "ui.common.postWithoutText": "Vedi il post",
   "ui.common.statusWithoutText": "Vedi lo status",
   "ui.common.commentWithoutText": "Vedi il commento",
+  "ui.common.permanentLinkCopied": "Link copiato!",
 
   "ui.confirmDialog.title": "Sei sicuro di voler procedere?",
   "ui.confirmDialog.btnConfirm": "Si",
@@ -188,14 +189,6 @@
   "ui.feedUpdates.message": "C'è un aggiornamento per te!",
   "ui.feedUpdates.reload": "Aggiorna",
 
-  "ui.reportingMenu.title": "Questo contenuto è:",
-  "ui.reportingMenu.spam": "Spam",
-  "ui.reportingMenu.aggressive": "Aggressivo",
-  "ui.reportingMenu.vulgar": "Volgare",
-  "ui.reportingMenu.poorContent": "Scadente",
-  "ui.reportingMenu.offtopic": "Fuori tema",
-  "ui.reportingMenu.footer": "La segnalazione è anonima e deve essere conforme al regolamento.",
-
   "ui.commentsObject.title": "{total, plural, =0 {# Commenti} one {# Commento} other {# Commenti}}",
   "ui.commentsObject.noComments": "Non ci sono ancora commenti al momento.",
   "ui.commentsObject.noOtherComments": "Non ci sono altri commenti.",
@@ -212,16 +205,6 @@
   "ui.commentObject.replyComment.reply": "Commenta",
   "ui.commentObject.replyComment.save": "Save",
   "ui.commentObject.replyComment.cancel": "Cancel",
-
-  "ui.commentObject.commentActionsMenu.permanentLink": "Link permanente",
-  "ui.commentObject.commentActionsMenu.permanentLinkCopied": "Link copiato!",
-  "ui.commentObject.commentActionsMenu.edit": "Modifica",
-  "ui.commentObject.commentActionsMenu.restore": "Ripristina",
-  "ui.commentObject.commentActionsMenu.delete": "Elimina",
-  "ui.commentObject.commentActionsMenu.restoreCommentTitleDialog": "Ripristina questo commento",
-  "ui.commentObject.commentActionsMenu.restoreCommentContentDialog": "Sei sicuro di voler ripristinare questo commento?",
-  "ui.commentObject.commentActionsMenu.deleteCommentTitleDialog": "Elimina questo commento",
-  "ui.commentObject.commentActionsMenu.deleteCommentContentDialog": "Sei sicuro di voler eliminare questo commento?",
 
   "ui.commentObjectVotesDialog.title": "Voti",
   "ui.commentObjectVotesDialog.noOtherVotes": "Non ci sono altri voti.",

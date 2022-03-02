@@ -9,6 +9,7 @@
   "ui.common.postWithoutText": "View post",
   "ui.common.statusWithoutText": "View status",
   "ui.common.commentWithoutText": "View comment",
+  "ui.common.permanentLinkCopied": "Link copied!",
 
   "ui.confirmDialog.title": "Are you sure you want to proceed?",
   "ui.confirmDialog.btnConfirm": "Yes",
@@ -188,14 +189,6 @@
   "ui.feedUpdates.message": "There is an update for you!",
   "ui.feedUpdates.reload": "Reload",
 
-  "ui.reportingMenu.title": "This content is:",
-  "ui.reportingMenu.spam": "Spam",
-  "ui.reportingMenu.aggressive": "Aggressive",
-  "ui.reportingMenu.vulgar": "Vulgar",
-  "ui.reportingMenu.poorContent": "Poor content",
-  "ui.reportingMenu.offtopic": "Offtopic",
-  "ui.reportingMenu.footer": "Reporting is anonymous and must be compliant with rules.",
-
   "ui.commentsObject.title": "{total, plural, =0 {# Comments} one {# Comment} other {# Comments}}",
   "ui.commentsObject.noComments": "No comments at the moment.",
   "ui.commentsObject.noOtherComments": "No other comments.",
@@ -212,16 +205,6 @@
   "ui.commentObject.replyComment.reply": "Reply",
   "ui.commentObject.replyComment.save": "Save",
   "ui.commentObject.replyComment.cancel": "Cancel",
-
-  "ui.commentObject.commentActionsMenu.permanentLink": "Permanent Link",
-  "ui.commentObject.commentActionsMenu.permanentLinkCopied": "Link copied!",
-  "ui.commentObject.commentActionsMenu.edit": "Edit",
-  "ui.commentObject.commentActionsMenu.restore": "Restore",
-  "ui.commentObject.commentActionsMenu.delete": "Delete",
-  "ui.commentObject.commentActionsMenu.restoreCommentTitleDialog": "Restore this comment",
-  "ui.commentObject.commentActionsMenu.restoreCommentContentDialog": "Are you sure you want to restore this comment?",
-  "ui.commentObject.commentActionsMenu.deleteCommentTitleDialog": "Delete this comment",
-  "ui.commentObject.commentActionsMenu.deleteCommentContentDialog": "Are you sure you want to delete this comment?",
 
   "ui.commentObjectVotesDialog.title": "Votes",
   "ui.commentObjectVotesDialog.noOtherVotes": "No other votes.",
