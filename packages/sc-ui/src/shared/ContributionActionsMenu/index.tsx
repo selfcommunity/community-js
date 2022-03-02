@@ -1036,15 +1036,19 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
           <Grow {...TransitionProps} style={{transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom'}}>
             <Paper variant={'outlined'} className={classes.paper}>
               <ClickAwayListener onClickAway={handleClose}>
-                {isLoading || (!feedObj && !commentObj) ? (
-                  <CentralProgress size={30} />
-                ) : (
-                  <MenuList>
-                    {renderGeneralSection()}
-                    {Boolean(extraSections.length) && <Divider />}
-                    {extraSections.map((s) => eval(`render${capitalize(camelCase(s))}`)())}
-                  </MenuList>
-                )}
+                <Box>
+                  {isLoading || (!feedObj && !commentObj) ? (
+                    <CentralProgress size={30} />
+                  ) : (
+                    <MenuList>
+                      {renderGeneralSection()}
+                      {Boolean(extraSections.length) && <Divider />}
+                      {extraSections.map((s, i) => (
+                        <Box key={`es_${i}`}>{eval(`render${capitalize(camelCase(s))}`)()}</Box>
+                      ))}
+                    </MenuList>
+                  )}
+                </Box>
               </ClickAwayListener>
             </Paper>
           </Grow>
