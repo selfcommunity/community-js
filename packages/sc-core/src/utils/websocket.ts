@@ -339,7 +339,6 @@ export default class WSClient implements WSClientType {
    * Close the connection
    */
   public close() {
-    console.log('close inside');
     clearInterval(this._heartbeatInterval);
     this._cfg.mustReconnect = false;
     if (!this.isClosing() || !this.isClosed()) {

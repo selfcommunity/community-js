@@ -1,0 +1,1061 @@
+import React, {useContext, useMemo, useRef, useState} from 'react';
+import {styled} from '@mui/material/styles';
+import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
+import Popper from '@mui/material/Popper';
+import SelectedIcon from '@mui/icons-material/Check';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import CentralProgress from '../CentralProgress';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import FlagOutlinedIcon from '@mui/icons-material/FlagOutlined';
+import NotificationsOffOutlinedIcon from '@mui/icons-material/NotificationsOffOutlined';
+import NotificationsOnOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
+import {SCOPE_SC_UI} from '../../constants/Errors';
+import {AxiosResponse} from 'axios';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import LinkOutlinedIcon from '@mui/icons-material/LinkOutlined';
+import HideOutlinedIcon from '@mui/icons-material/HideImageOutlined';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
+import {copyTextToClipboard} from '../../utils/string';
+import {useSnackbar} from 'notistack';
+import {getRouteData, getRouteName} from '../../utils/contribute';
+import classNames from 'classnames';
+import ConfirmDialog from '../ConfirmDialog/ConfirmDialog';
+import {camelCase} from 'lodash';
+import {
+  Badge,
+  Box,
+  capitalize,
+  CircularProgress,
+  ClickAwayListener,
+  Collapse,
+  Divider,
+  Grow,
+  IconButton,
+  ListItemIcon,
+  ListItemText,
+  MenuItem,
+  MenuList,
+  Paper,
+  Typography
+} from '@mui/material';
+import {
+  REPORT_AGGRESSIVE,
+  REPORT_OFFTOPIC,
+  REPORT_POORCONTENT,
+  REPORT_SPAM,
+  REPORT_VULGAR,
+  REPORTS,
+  MODERATION_TYPE_ACTION_HIDE,
+  MODERATION_TYPE_ACTION_DELETE
+} from '../../constants/Flagging';
+import {
+  Endpoints,
+  http,
+  Logger,
+  SCCommentType,
+  SCCommentTypologyType,
+  SCContext,
+  SCContextType,
+  SCFeedObjectType,
+  SCFeedObjectTypologyType,
+  SCRoutingContextType,
+  SCUserContext,
+  SCUserContextType,
+  UserUtils,
+  useSCFetchCommentObject,
+  useSCFetchFeedObject,
+  useSCRouting
+} from '@selfcommunity/core';
+import {
+  GENERAL_SECTION,
+  DELETE_CONTRIBUTION,
+  DELETE_CONTRIBUTION_SECTION,
+  EDIT_CONTRIBUTION,
+  FLAG_CONTRIBUTION_SECTION,
+  GET_CONTRIBUTION_PERMALINK,
+  HIDE_CONTRIBUTION_SECTION,
+  RESTORE_CONTRIBUTION,
+  SUSPEND_NOTIFICATION_CONTRIBUTION
+} from '../../constants/ContributionsActionsMenu';
+
+const PREFIX = 'SCContributionActionsMenu';
+
+const classes = {
+  root: `${PREFIX}-root`,
+  button: `${PREFIX}-button`,
+  popper: `${PREFIX}-popper`,
+  paper: `${PREFIX}-paper`,
+  item: `${PREFIX}-item`,
+  itemText: `${PREFIX}-item-text`,
+  subItem: `${PREFIX}-sub-item`,
+  subItemText: `${PREFIX}-sub-item-text`,
+  footerSubItems: `${PREFIX}-footer-sub-items`,
+  selectedIcon: `${PREFIX}-selected-icon`,
+  sectionBadge: `${PREFIX}-section-badge`,
+  sectionWithSelectionIcon: `${PREFIX}-section-with-selection-icon`
+};
+
+const PopperRoot = styled(Popper, {
+  name: PREFIX,
+  slot: 'Root',
+  overridesResolver: (props, styles) => styles.root
+})(({theme}) => ({
+  zIndex: 2,
+  [`&.${classes.popper}`]: {
+    overflow: 'visible',
+    filter: 'drop-shadow(0px -1px 5px rgba(0,0,0,0.10))',
+    mt: 1.5
+  },
+  [`& .${classes.paper}`]: {
+    width: 280
+  },
+  [`& .${classes.footerSubItems}`]: {
+    margin: '10px 10px 10px 17px',
+    border: '1px solid #dddddd',
+    padding: 5,
+    borderRadius: 3,
+    fontSize: 11
+  },
+  [`& .${classes.selectedIcon}`]: {
+    marginLeft: 2,
+    '&.MuiListItemIcon-root': {
+      width: '10px'
+    },
+    '& svg': {
+      fontSize: '1.2rem'
+    }
+  },
+  [`& .${classes.sectionBadge}`]: {
+    padding: 0,
+    minWidth: 15,
+    height: 15,
+    top: 3
+  },
+  [`& .${classes.sectionWithSelectionIcon}`]: {
+    fontSize: 12,
+    color: '#FFF'
+  }
+}));
+
+const Root = styled(Box, {
+  name: PREFIX,
+  slot: 'Root',
+  overridesResolver: (props, styles) => styles.root
+})(() => ({}));
+
+const messages = defineMessages({
+  title: {
+    id: 'ui.contributionActionMenu.title',
+    defaultMessage: 'ui.contributionActionMenu.title'
+  },
+  spam: {
+    id: 'ui.contributionActionMenu.spam',
+    defaultMessage: 'ui.contributionActionMenu.spam'
+  },
+  aggressive: {
+    id: 'ui.contributionActionMenu.aggressive',
+    defaultMessage: 'ui.contributionActionMenu.aggressive'
+  },
+  vulgar: {
+    id: 'ui.contributionActionMenu.vulgar',
+    defaultMessage: 'ui.contributionActionMenu.vulgar'
+  },
+  poorContent: {
+    id: 'ui.contributionActionMenu.poorContent',
+    defaultMessage: 'ui.contributionActionMenu.poorContent'
+  },
+  offtopic: {
+    id: 'ui.contributionActionMenu.offtopic',
+    defaultMessage: 'ui.contributionActionMenu.offtopic'
+  },
+  footer: {
+    id: 'ui.contributionActionMenu.footer',
+    defaultMessage: 'ui.contributionActionMenu.footer'
+  }
+});
+
+export interface ContributionActionsMenuProps {
+  /**
+   * Overrides or extends the styles applied to the component.
+   * @default null
+   */
+  className?: string;
+
+  /**
+   * FeedObject id
+   * @default null
+   */
+  feedObjectId?: number;
+
+  /**
+   * Feed obj
+   * @default null
+   */
+  feedObject?: SCFeedObjectType;
+
+  /**
+   * Feed obj type
+   * @default 'post'
+   */
+  feedObjectType?: SCFeedObjectTypologyType;
+
+  /**
+   * CommentObject id
+   * @default null
+   */
+  commentObjectId?: number;
+
+  /**
+   * Comment obj
+   * @default null
+   */
+  commentObject?: SCCommentType;
+
+  /**
+   * Handle edit obj
+   */
+  onEditContribution?: (obj: SCCommentType | SCFeedObjectType) => void;
+
+  /**
+   * Handle delete obj
+   */
+  onDeleteContribution?: (obj: SCCommentType | SCFeedObjectType) => void;
+
+  /**
+   * Handle restore obj
+   */
+  onRestoreContribution?: (obj: SCCommentType | SCFeedObjectType) => void;
+
+  /**
+   * Handle suspend notification obj
+   */
+  onSuspendNotificationContribution?: (obj: SCCommentType | SCFeedObjectType) => void;
+
+  /**
+   * Props to spread to popper
+   * @default empty object
+   */
+  PopperProps?: any;
+
+  /**
+   * Any other properties
+   */
+  [p: string]: any;
+}
+
+export default function ContributionActionsMenu(props: ContributionActionsMenuProps): JSX.Element {
+  // PROPS
+  const {
+    className,
+    feedObjectId,
+    feedObject,
+    feedObjectType = SCFeedObjectTypologyType.POST,
+    commentObjectId,
+    commentObject,
+    onEditContribution,
+    onDeleteContribution,
+    onRestoreContribution,
+    onSuspendNotificationContribution,
+    PopperProps = {},
+    ...rest
+  } = props;
+
+  // INTL
+  const intl = useIntl();
+
+  // CONTEXT
+  const scContext: SCContextType = useContext(SCContext);
+  const scUserContext: SCUserContextType = useContext(SCUserContext);
+  const scRoutingContext: SCRoutingContextType = useSCRouting();
+  const {enqueueSnackbar} = useSnackbar();
+
+  // CONTRIBUTION STATE
+  const {obj: feedObj, setObj: setFeedObj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
+  const {obj: commentObj, setObj: setCommentObj} = useSCFetchCommentObject({id: commentObjectId, commentObject});
+
+  // GENERAL POPPER STATE
+  const [open, setOpen] = useState<boolean>(false);
+  const [openSection, setOpenSection] = useState<string>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  // MODERATION FLAGS STATE
+  const [flagType, setFlagType] = useState<string>(null);
+  const [isFlagging, setIsFlagging] = useState<boolean>(false);
+
+  // MODERATION HIDE STATE
+  const [hideType, setHideType] = useState<string>(null);
+  const [isHiding, setIsHiding] = useState<boolean>(false);
+
+  // MODERATION DELETE STATE
+  const [deleteType, setDeleteType] = useState<string>(null);
+  const [isDeleting, setIsDeleting] = useState<boolean>(false);
+
+  // CONFIRM ACTION DIALOG STATE
+  const [openConfirmDialog, setOpenConfirmDialog] = useState<boolean>(false);
+  const [currentAction, setCurrentAction] = useState<string>(null);
+  const [currentActionLoading, setCurrentActionLoading] = useState<string>(null);
+
+  // CONST
+  const contributionObj: SCFeedObjectType | SCCommentType = commentObj ? commentObj : feedObj;
+  let popperRef = useRef(null);
+
+  /**
+   * Intial extra sections to render, in addition to the GENERAL_SECTION
+   * @return {array}
+   */
+  const getExtraSections = useMemo(
+    () => () => {
+      let _extra = [];
+      if (scUserContext.user && Boolean(contributionObj) && scUserContext.user.id !== contributionObj.author.id) {
+        _extra.push(FLAG_CONTRIBUTION_SECTION);
+      }
+      // Enable when backend is ready
+      if (UserUtils.isStaff(scUserContext.user)) {
+        // admin or moderator
+        _extra.push(HIDE_CONTRIBUTION_SECTION);
+        _extra.push(DELETE_CONTRIBUTION_SECTION);
+      }
+      return _extra;
+    },
+    [contributionObj]
+  );
+
+  /**
+   * Extra sections to render in the popup
+   */
+  const extraSections = getExtraSections();
+
+  /**
+   * Handles open popup
+   */
+  function handleOpen() {
+    if (scUserContext.user) {
+      setIsLoading(true);
+      Promise.all([fetchFlagStatus(), fetchModerationStatus()]).then(() => {
+        setIsLoading(false);
+      });
+      setOpen(true);
+    } else {
+      scContext.settings.handleAnonymousAction();
+    }
+  }
+
+  /**
+   * Closes popup
+   */
+  function handleClose() {
+    if (popperRef.current && popperRef.current.contains(event.target)) {
+      return;
+    }
+    setOpen(false);
+    if (rest.onClose) {
+      rest.onClose();
+    }
+  }
+
+  /**
+   * Performs  notification suspension
+   */
+  const performSuspendNotification = useMemo(
+    () => () => {
+      return http
+        .request({
+          url: Endpoints.UserSuspendContributionNotification.url({type: contributionObj.type, id: contributionObj.id}),
+          method: Endpoints.UserSuspendContributionNotification.method
+        })
+        .then((res: AxiosResponse<any>) => {
+          if (res.status >= 300) {
+            return Promise.reject(res);
+          }
+          return Promise.resolve(res.data);
+        });
+    },
+    [contributionObj]
+  );
+
+  /**
+   * Handles stop notification for contributionObj
+   * @param contribution
+   */
+  function handleSuspendContentNotification() {
+    setCurrentActionLoading(SUSPEND_NOTIFICATION_CONTRIBUTION);
+    performSuspendNotification()
+      .then((data) => {
+        const _feedObj = Object.assign(feedObj, {suspended: !feedObj.suspended});
+        setFeedObj(_feedObj);
+        onSuspendNotificationContribution && onSuspendNotificationContribution(_feedObj);
+        setCurrentActionLoading(null);
+      })
+      .catch((error) => {
+        Logger.error(SCOPE_SC_UI, error);
+        setCurrentAction(null);
+        setCurrentActionLoading(null);
+        enqueueSnackbar(<FormattedMessage id="ui.contributionActionMenu.actionError" defaultMessage="ui.contributionActionMenu.actionError" />, {
+          variant: 'error'
+        });
+      });
+  }
+
+  /**
+   * Get Status Flag
+   */
+  const performFetchFlagStatus = useMemo(
+    () => () => {
+      return http
+        .request({
+          url: Endpoints.FlagStatus.url({type: contributionObj.type, id: contributionObj.id}),
+          method: Endpoints.FlagStatus.method
+        })
+        .then((res: AxiosResponse<any>) => {
+          if (res.status >= 300) {
+            return Promise.reject(res);
+          }
+          return Promise.resolve(res.data);
+        });
+    },
+    [contributionObj]
+  );
+
+  /**
+   * Perform Flag
+   */
+  const performFlag = useMemo(
+    () => (type) => {
+      return http
+        .request({
+          url: Endpoints.Flag.url({type: contributionObj.type, id: contributionObj.id}),
+          method: Endpoints.Flag.method,
+          data: {flag_type: type}
+        })
+        .then((res: AxiosResponse<any>) => {
+          if (res.status >= 300) {
+            return Promise.reject(res);
+          }
+          return Promise.resolve(res.data);
+        });
+    },
+    [contributionObj]
+  );
+
+  /**
+   * Get Status Flag
+   */
+  const performFetchModerationStatus = useMemo(
+    () => () => {
+      return http
+        .request({
+          url: Endpoints.FlagStatus.url({type: contributionObj.type, id: contributionObj.id}),
+          method: Endpoints.FlagStatus.method
+        })
+        .then((res: AxiosResponse<any>) => {
+          if (res.status >= 300) {
+            return Promise.reject(res);
+          }
+          return Promise.resolve(res.data);
+        });
+    },
+    [contributionObj]
+  );
+
+  /**
+   * Perform delete contribution
+   */
+  const performDeleteContribution = useMemo(
+    () => () => {
+      const contributionType: string = contributionObj.type;
+      return http
+        .request({
+          url:
+            contributionType === SCCommentTypologyType
+              ? Endpoints.DeleteComment.url({id: contributionObj.id})
+              : Endpoints.DeleteFeedObject.url({type: contributionType, id: contributionObj.id}),
+          method: contributionType === SCCommentTypologyType ? Endpoints.DeleteComment.method : Endpoints.DeleteFeedObject.method
+        })
+        .then((res: AxiosResponse<any>) => {
+          if (res.status >= 300) {
+            return Promise.reject(res);
+          }
+          return Promise.resolve(res.data);
+        });
+    },
+    [contributionObj]
+  );
+
+  /**
+   * Perform restore contribution
+   */
+  const performRestoreContribution = useMemo(
+    () => () => {
+      const contributionType: string = contributionObj.type;
+      return http
+        .request({
+          url:
+            contributionType === SCCommentTypologyType
+              ? Endpoints.RestoreComment.url({id: contributionObj.id})
+              : Endpoints.RestoreFeedObject.url({type: contributionType, id: contributionObj.id}),
+          method: contributionType === SCCommentTypologyType ? Endpoints.RestoreComment.method : Endpoints.RestoreFeedObject.method
+        })
+        .then((res: AxiosResponse<any>) => {
+          if (res.status >= 300) {
+            return Promise.reject(res);
+          }
+          return Promise.resolve(res.data);
+        });
+    },
+    [contributionObj]
+  );
+
+  /**
+   * Fetch initial flag status
+   */
+  function fetchFlagStatus() {
+    if (contributionObj && extraSections.includes(FLAG_CONTRIBUTION_SECTION)) {
+      return performFetchFlagStatus()
+        .then((data) => {
+          setFlagType(data['flag_type']);
+        })
+        .catch((error) => {
+          Logger.error(SCOPE_SC_UI, error);
+        });
+    }
+    return Promise.resolve();
+  }
+
+  /**
+   * Fetch initial moderation status
+   */
+  function fetchModerationStatus() {
+    if (contributionObj && (extraSections.includes(HIDE_CONTRIBUTION_SECTION) || extraSections.includes(DELETE_CONTRIBUTION_SECTION))) {
+      return performFetchModerationStatus()
+        .then((data) => {
+          // setFlagType(data['flag_type']);
+        })
+        .catch((error) => {
+          Logger.error(SCOPE_SC_UI, error);
+        });
+    }
+    return Promise.resolve();
+  }
+
+  /**
+   * Perform contribute flagging by authenticated user
+   * @param type
+   */
+  function handleFlagContribution(type) {
+    if (contributionObj && !isLoading && !isFlagging && type !== 'undefined') {
+      setIsFlagging(true);
+      performFlag(type)
+        .then((data) => {
+          setFlagType(flagType === type ? null : type);
+          setIsFlagging(false);
+        })
+        .catch((error) => {
+          Logger.error(SCOPE_SC_UI, error);
+        });
+    }
+  }
+
+  /**
+   * Perform moderation
+   */
+  const performModerationContribution = useMemo(
+    () => (action, type) => {
+      return http
+        .request({
+          url: Endpoints.ModerateContribution.url({id: contributionObj.id}),
+          method: Endpoints.ModerateContribution.method,
+          data: {contribution_type: contributionObj.type, moderation_type: type, action: action}
+        })
+        .then((res: AxiosResponse<any>) => {
+          if (res.status >= 300) {
+            return Promise.reject(res);
+          }
+          return Promise.resolve(res.data);
+        });
+    },
+    [contributionObj]
+  );
+
+  /**
+   * Perform contribute moderation hide
+   * @param type
+   */
+  function handleHideContribution(type) {
+    if (contributionObj && !isLoading && !isHiding && type !== 'undefined') {
+      setIsHiding(true);
+      performModerationContribution(MODERATION_TYPE_ACTION_HIDE, type)
+        .then((data) => {
+          setHideType(hideType === type ? null : type);
+          setIsHiding(false);
+        })
+        .catch((error) => {
+          Logger.error(SCOPE_SC_UI, error);
+          setIsHiding(false);
+          enqueueSnackbar(<FormattedMessage id="ui.contributionActionMenu.actionError" defaultMessage="ui.contributionActionMenu.actionError" />, {
+            variant: 'error'
+          });
+        });
+    }
+  }
+
+  /**
+   * Perform contribute moderation delete
+   * @param type
+   */
+  function handleDeleteContribution(type) {
+    if (contributionObj && !isLoading && !isHiding && type !== 'undefined') {
+      setIsDeleting(true);
+      performModerationContribution(MODERATION_TYPE_ACTION_DELETE, type)
+        .then((data) => {
+          setDeleteType(deleteType === type ? null : type);
+          setIsDeleting(false);
+        })
+        .catch((error) => {
+          Logger.error(SCOPE_SC_UI, error);
+          setIsDeleting(false);
+          enqueueSnackbar(<FormattedMessage id="ui.contributionActionMenu.actionError" defaultMessage="ui.contributionActionMenu.actionError" />, {
+            variant: 'error'
+          });
+        });
+    }
+  }
+
+  /**
+   * handle action
+   */
+  function handleGeneralAction(action) {
+    if (action === GET_CONTRIBUTION_PERMALINK) {
+      copyTextToClipboard(
+        `${location.protocol}//${location.host}${scRoutingContext.url(getRouteName(contributionObj), getRouteData(contributionObj))}`
+      ).then(() => {
+        setOpen(false);
+        enqueueSnackbar(<FormattedMessage id="ui.common.permanentLinkCopied" defaultMessage="ui.common.permanentLinkCopied" />, {
+          variant: 'success'
+        });
+      });
+      handleClose();
+    } else if (action === EDIT_CONTRIBUTION) {
+      onEditContribution && onEditContribution(contributionObj);
+      handleClose();
+    } else if (action === DELETE_CONTRIBUTION) {
+      setCurrentAction(DELETE_CONTRIBUTION);
+      setOpenConfirmDialog(true);
+      handleClose();
+    } else if (action === RESTORE_CONTRIBUTION) {
+      setCurrentAction(RESTORE_CONTRIBUTION);
+      setOpenConfirmDialog(true);
+      handleClose();
+    } else if (action === SUSPEND_NOTIFICATION_CONTRIBUTION) {
+      setCurrentAction(SUSPEND_NOTIFICATION_CONTRIBUTION);
+      handleSuspendContentNotification();
+    }
+  }
+
+  /**
+   * Perform additional operations at the end of single action
+   */
+  function performPostConfirmAction(success) {
+    if (success) {
+      commentObj
+        ? setCommentObj({...commentObj, ...{deleted: currentAction === DELETE_CONTRIBUTION}})
+        : setFeedObj({...feedObj, ...{deleted: currentAction === DELETE_CONTRIBUTION}});
+      setCurrentActionLoading(null);
+      setCurrentAction(null);
+      setOpenConfirmDialog(false);
+      enqueueSnackbar(<FormattedMessage id="ui.contributionActionMenu.actionSuccess" defaultMessage="ui.contributionActionMenu.actionSuccess" />, {
+        variant: 'success'
+      });
+    } else {
+      setCurrentActionLoading(null);
+      enqueueSnackbar(<FormattedMessage id="ui.contributionActionMenu.actionError" defaultMessage="ui.contributionActionMenu.actionError" />, {
+        variant: 'error'
+      });
+    }
+  }
+
+  /**
+   * Delete a contribution
+   */
+  function handleConfirmedAction() {
+    if (contributionObj && !isLoading && !currentActionLoading) {
+      if (currentAction === DELETE_CONTRIBUTION) {
+        setCurrentActionLoading(RESTORE_CONTRIBUTION);
+        performDeleteContribution()
+          .then((data) => {
+            onDeleteContribution && onDeleteContribution(contributionObj);
+            performPostConfirmAction(true);
+          })
+          .catch((error) => {
+            Logger.error(SCOPE_SC_UI, error);
+            performPostConfirmAction(false);
+          });
+      } else if (currentAction === RESTORE_CONTRIBUTION) {
+        setCurrentActionLoading(RESTORE_CONTRIBUTION);
+        performRestoreContribution()
+          .then((data) => {
+            onRestoreContribution && onRestoreContribution(contributionObj);
+            performPostConfirmAction(true);
+          })
+          .catch((error) => {
+            Logger.error(SCOPE_SC_UI, error);
+            performPostConfirmAction(false);
+          });
+      }
+    }
+  }
+
+  /**
+   * Returns flag label based on type
+   * @param flagType
+   * @return {*}
+   */
+  function getReportName(flagType) {
+    let name;
+    switch (flagType) {
+      case REPORT_SPAM:
+        name = intl.formatMessage(messages.spam);
+        break;
+      case REPORT_AGGRESSIVE:
+        name = intl.formatMessage(messages.aggressive);
+        break;
+      case REPORT_VULGAR:
+        name = intl.formatMessage(messages.vulgar);
+        break;
+      case REPORT_POORCONTENT:
+        name = intl.formatMessage(messages.poorContent);
+        break;
+      case REPORT_OFFTOPIC:
+        name = intl.formatMessage(messages.offtopic);
+        break;
+      default:
+        break;
+    }
+    return name;
+  }
+
+  /**
+   * action
+   * @param actionId
+   */
+  function handleOpenSection(sectionId) {
+    if (sectionId) {
+      if (sectionId === openSection) {
+        setOpenSection(null);
+      } else {
+        setOpenSection(sectionId);
+      }
+    } else {
+      setOpenSection(null);
+    }
+  }
+
+  /**
+   * Renders single flag item
+   * @return {[{REPORTS}]}
+   */
+  function renderReports(section) {
+    const handlerFunc =
+      section === FLAG_CONTRIBUTION_SECTION
+        ? handleFlagContribution
+        : section === HIDE_CONTRIBUTION_SECTION
+        ? handleHideContribution
+        : handleDeleteContribution;
+    return REPORTS.map((report, index) => (
+      <MenuItem key={`${section}_${index}`} className={classes.subItem} disabled={isFlagging}>
+        <ListItemIcon classes={{root: classes.selectedIcon}}>
+          {eval(`${section.split('_')[1]}Type`) === report && <SelectedIcon color="secondary" />}
+        </ListItemIcon>
+        <ListItemText primary={getReportName(report)} onClick={() => handlerFunc(report)} classes={{root: classes.subItemText}} />
+      </MenuItem>
+    ));
+  }
+
+  /**
+   * Renders section flags actions
+   */
+  function renderFlagContributionSection() {
+    const open = openSection === FLAG_CONTRIBUTION_SECTION;
+    return (
+      <Box>
+        <MenuItem className={classes.subItem} disabled={isFlagging} onClick={() => handleOpenSection(FLAG_CONTRIBUTION_SECTION)}>
+          <ListItemIcon>
+            {flagType !== undefined && flagType !== null ? (
+              <Badge
+                classes={{badge: classes.sectionBadge}}
+                badgeContent={<SelectedIcon className={classes.sectionWithSelectionIcon} />}
+                color="primary">
+                <FlagOutlinedIcon />
+              </Badge>
+            ) : (
+              <FlagOutlinedIcon />
+            )}
+          </ListItemIcon>
+          <ListItemText
+            primary={
+              <FormattedMessage
+                id="ui.contributionActionMenu.flagContributionWithMotivation"
+                defaultMessage="ui.contributionActionMenu.flagContributionWithMotivation"
+              />
+            }
+          />
+          {open ? <ExpandLess /> : <ExpandMore />}
+        </MenuItem>
+        <Collapse in={open} timeout="auto" unmountOnExit>
+          {renderReports(FLAG_CONTRIBUTION_SECTION)}
+          <Typography variant={'caption'} component={'div'} className={classes.footerSubItems}>
+            {intl.formatMessage(messages.footer)}
+          </Typography>
+        </Collapse>
+      </Box>
+    );
+  }
+
+  /**
+   * Renders section hide actions
+   */
+  function renderHideContributionSection() {
+    const open = openSection === HIDE_CONTRIBUTION_SECTION;
+    return (
+      <Box key={HIDE_CONTRIBUTION_SECTION}>
+        <MenuItem className={classes.subItem} disabled={isHiding} onClick={() => handleOpenSection(HIDE_CONTRIBUTION_SECTION)}>
+          <ListItemIcon>
+            {hideType !== undefined && hideType !== null ? (
+              <Badge
+                classes={{badge: classes.sectionBadge}}
+                badgeContent={<SelectedIcon className={classes.sectionWithSelectionIcon} />}
+                color="primary">
+                <HideOutlinedIcon />
+              </Badge>
+            ) : (
+              <HideOutlinedIcon />
+            )}
+          </ListItemIcon>
+          <ListItemText
+            primary={
+              <FormattedMessage
+                id="ui.contributionActionMenu.hideContributionWithMotivation"
+                defaultMessage="ui.contributionActionMenu.hideContributionWithMotivation"
+              />
+            }
+          />
+          {open ? <ExpandLess /> : <ExpandMore />}
+        </MenuItem>
+        <Collapse in={open} timeout="auto" unmountOnExit>
+          {renderReports(HIDE_CONTRIBUTION_SECTION)}
+        </Collapse>
+      </Box>
+    );
+  }
+
+  /**
+   * Renders section hidden actions
+   */
+  function renderDeleteContributionSection() {
+    const open = openSection === DELETE_CONTRIBUTION_SECTION;
+    return (
+      <Box key={DELETE_CONTRIBUTION_SECTION}>
+        <MenuItem className={classes.subItem} disabled={isDeleting} onClick={() => handleOpenSection(DELETE_CONTRIBUTION_SECTION)}>
+          <ListItemIcon>
+            {deleteType !== null && deleteType !== undefined ? (
+              <Badge
+                classes={{badge: classes.sectionBadge}}
+                badgeContent={<SelectedIcon className={classes.sectionWithSelectionIcon} />}
+                color="primary">
+                <DeleteOutlineOutlinedIcon />
+              </Badge>
+            ) : (
+              <DeleteOutlineOutlinedIcon />
+            )}
+          </ListItemIcon>
+          <ListItemText
+            primary={
+              <FormattedMessage
+                id="ui.contributionActionMenu.deleteContributionWithMotivation"
+                defaultMessage="ui.contributionActionMenu.deleteContributionWithMotivation"
+              />
+            }
+          />
+          {open ? <ExpandLess /> : <ExpandMore />}
+        </MenuItem>
+        <Collapse in={open} timeout="auto" unmountOnExit>
+          {renderReports(DELETE_CONTRIBUTION_SECTION)}
+        </Collapse>
+      </Box>
+    );
+  }
+
+  /**
+   * Can authenticated user modify the contribution
+   */
+  function canModifyContribution(): boolean {
+    return scUserContext.user && scUserContext.user.id === contributionObj.author.id && !contributionObj.deleted;
+  }
+
+  /**
+   * Can authenticated user delete the contribution
+   */
+  function canDeleteContribution(): boolean {
+    return scUserContext.user && scUserContext.user.id === contributionObj.author.id;
+  }
+
+  /**
+   * Can authenticated user suspend notification for the contribution
+   */
+  function canSuspendNotificationContribution(): boolean {
+    return (
+      scUserContext.user && scUserContext.user.id !== contributionObj.author.id && contributionObj && contributionObj.type !== SCCommentTypologyType
+    );
+  }
+
+  /**
+   * Renders section general
+   */
+  function renderGeneralSection() {
+    return (
+      <Box key={GENERAL_SECTION}>
+        <MenuItem className={classes.subItem} disabled={isFlagging}>
+          <ListItemIcon>
+            <LinkOutlinedIcon />
+          </ListItemIcon>
+          <ListItemText
+            primary={<FormattedMessage id="ui.contributionActionMenu.permanentLink" defaultMessage="ui.contributionActionMenu.permanentLink" />}
+            onClick={() => handleGeneralAction(GET_CONTRIBUTION_PERMALINK)}
+            classes={{root: classes.itemText}}
+          />
+        </MenuItem>
+        {canModifyContribution() && (
+          <MenuItem className={classes.subItem} disabled={isFlagging}>
+            <ListItemIcon>
+              <EditOutlinedIcon />
+            </ListItemIcon>
+            <ListItemText
+              primary={
+                <FormattedMessage id="ui.contributionActionMenu.editContribution" defaultMessage="ui.contributionActionMenu.editContribution" />
+              }
+              onClick={() => handleGeneralAction(EDIT_CONTRIBUTION)}
+              classes={{root: classes.itemText}}
+            />
+          </MenuItem>
+        )}
+        {canDeleteContribution() && (
+          <MenuItem className={classes.subItem} disabled={isFlagging}>
+            <ListItemIcon>
+              {currentActionLoading === DELETE_CONTRIBUTION || currentActionLoading === RESTORE_CONTRIBUTION ? (
+                <CircularProgress size={20} />
+              ) : (
+                <DeleteOutlineOutlinedIcon />
+              )}
+            </ListItemIcon>
+            {contributionObj.deleted ? (
+              <ListItemText
+                primary={
+                  <FormattedMessage
+                    id="ui.contributionActionMenu.restoreContribution"
+                    defaultMessage="ui.contributionActionMenu.restoreContribution"
+                  />
+                }
+                onClick={() => handleGeneralAction(RESTORE_CONTRIBUTION)}
+                classes={{root: classes.itemText}}
+              />
+            ) : (
+              <ListItemText
+                primary={
+                  <FormattedMessage id="ui.contributionActionMenu.deleteContribution" defaultMessage="ui.contributionActionMenu.deleteContribution" />
+                }
+                onClick={() => handleGeneralAction(DELETE_CONTRIBUTION)}
+                classes={{root: classes.itemText}}
+              />
+            )}
+          </MenuItem>
+        )}
+        {canSuspendNotificationContribution() && (
+          <MenuItem className={classes.subItem} disabled={isFlagging}>
+            <ListItemIcon>
+              {currentActionLoading === SUSPEND_NOTIFICATION_CONTRIBUTION ? (
+                <CircularProgress size={20} />
+              ) : contributionObj['suspended'] ? (
+                <NotificationsOnOutlinedIcon />
+              ) : (
+                <NotificationsOffOutlinedIcon />
+              )}
+            </ListItemIcon>
+            <ListItemText
+              primary={
+                contributionObj['suspended'] ? (
+                  <FormattedMessage
+                    id="ui.contributionActionMenu.enableNotificationContribution"
+                    defaultMessage="ui.contributionActionMenu.enableNotificationContribution"
+                  />
+                ) : (
+                  <FormattedMessage
+                    id="ui.contributionActionMenu.suspendNotificationContribution"
+                    defaultMessage="ui.contributionActionMenu.suspendNotificationContribution"
+                  />
+                )
+              }
+              onClick={() => handleGeneralAction(SUSPEND_NOTIFICATION_CONTRIBUTION)}
+              classes={{root: classes.itemText}}
+            />
+          </MenuItem>
+        )}
+      </Box>
+    );
+  }
+
+  /**
+   * Renders component
+   */
+  return (
+    <Root className={classNames(classes.root, className)}>
+      <IconButton
+        ref={(ref) => {
+          popperRef.current = ref;
+        }}
+        aria-haspopup="true"
+        onClick={handleOpen}
+        className={classes.button}
+        size="medium">
+        <MoreVertIcon />
+      </IconButton>
+      <PopperRoot
+        open={open}
+        anchorEl={popperRef.current}
+        role={undefined}
+        transition
+        className={classes.popper}
+        {...PopperProps}
+        placement="bottom-end">
+        {({TransitionProps, placement}) => (
+          <Grow {...TransitionProps} style={{transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom'}}>
+            <Paper variant={'outlined'} className={classes.paper}>
+              <ClickAwayListener onClickAway={handleClose}>
+                <Box>
+                  {isLoading || (!feedObj && !commentObj) ? (
+                    <CentralProgress size={30} />
+                  ) : (
+                    <MenuList>
+                      {renderGeneralSection()}
+                      {Boolean(extraSections.length) && <Divider />}
+                      {extraSections.map((s, i) => (
+                        <Box key={`es_${i}`}>{eval(`render${capitalize(camelCase(s))}`)()}</Box>
+                      ))}
+                    </MenuList>
+                  )}
+                </Box>
+              </ClickAwayListener>
+            </Paper>
+          </Grow>
+        )}
+      </PopperRoot>
+      {openConfirmDialog && (
+        <ConfirmDialog
+          open={openConfirmDialog}
+          onConfirm={handleConfirmedAction}
+          isUpdating={Boolean(currentActionLoading)}
+          onClose={() => setOpenConfirmDialog(false)}
+        />
+      )}
+    </Root>
+  );
+}

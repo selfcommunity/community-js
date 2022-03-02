@@ -99,4 +99,9 @@ export interface SCCommentType {
    * Comments childs
    */
   latest_comments?: SCCommentType[];
+
+  /**
+   * Type: comment
+   */
+  type: string;
 }

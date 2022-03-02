@@ -55,7 +55,8 @@
     "@selfcommunity/i18n": "^0.1.0-alpha.23",
     "axios": "^0.23.0",
     "pubsub-js": "^1.9.4",
-    "validate-color": "^2.2.1"
+    "validate-color": "^2.2.1",
+    "use-deep-compare-effect": "^1.8.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.13",

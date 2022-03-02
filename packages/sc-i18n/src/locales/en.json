@@ -9,7 +9,9 @@
   "ui.common.postWithoutText": "View post",
   "ui.common.statusWithoutText": "View status",
   "ui.common.commentWithoutText": "View comment",
+  "ui.common.permanentLinkCopied": "Link copied!",
 
+  "ui.confirmDialog.title": "Are you sure you want to proceed?",
   "ui.confirmDialog.btnConfirm": "Yes",
   "ui.confirmDialog.btnCancel": "No",
 
@@ -187,14 +189,6 @@
   "ui.feedUpdates.message": "There is an update for you!",
   "ui.feedUpdates.reload": "Reload",
 
-  "ui.reportingMenu.title": "This content is:",
-  "ui.reportingMenu.spam": "Spam",
-  "ui.reportingMenu.aggressive": "Aggressive",
-  "ui.reportingMenu.vulgar": "Vulgar",
-  "ui.reportingMenu.poorContent": "Poor content",
-  "ui.reportingMenu.offtopic": "Offtopic",
-  "ui.reportingMenu.footer": "Reporting is anonymous and must be compliant with rules.",
-
   "ui.commentsObject.title": "{total, plural, =0 {# Comments} one {# Comment} other {# Comments}}",
   "ui.commentsObject.noComments": "No comments at the moment.",
   "ui.commentsObject.noOtherComments": "No other comments.",
@@ -211,16 +205,6 @@
   "ui.commentObject.replyComment.reply": "Reply",
   "ui.commentObject.replyComment.save": "Save",
   "ui.commentObject.replyComment.cancel": "Cancel",
-
-  "ui.commentObject.commentActionsMenu.permanentLink": "Permanent Link",
-  "ui.commentObject.commentActionsMenu.permanentLinkCopied": "Link copied!",
-  "ui.commentObject.commentActionsMenu.edit": "Edit",
-  "ui.commentObject.commentActionsMenu.restore": "Restore",
-  "ui.commentObject.commentActionsMenu.delete": "Delete",
-  "ui.commentObject.commentActionsMenu.restoreCommentTitleDialog": "Restore this comment",
-  "ui.commentObject.commentActionsMenu.restoreCommentContentDialog": "Are you sure you want to restore this comment?",
-  "ui.commentObject.commentActionsMenu.deleteCommentTitleDialog": "Delete this comment",
-  "ui.commentObject.commentActionsMenu.deleteCommentContentDialog": "Are you sure you want to delete this comment?",
 
   "ui.commentObjectVotesDialog.title": "Votes",
   "ui.commentObjectVotesDialog.noOtherVotes": "No other votes.",
@@ -384,6 +368,25 @@
 
   "ui.accountRecover.email.label": "Email",
   "ui.accountRecover.submit": "Recover Account",
+
+  "ui.contributionActionMenu.permanentLink": "Permanent link",
+  "ui.contributionActionMenu.editContribution": "Edit",
+  "ui.contributionActionMenu.restoreContribution": "Restore",
+  "ui.contributionActionMenu.deleteContribution": "Delete",
+  "ui.contributionActionMenu.enableNotificationContribution": "Enable notifications",
+  "ui.contributionActionMenu.suspendNotificationContribution": "Suspend notifications",
+  "ui.contributionActionMenu.flagContributionWithMotivation": "Flag with motivation",
+  "ui.contributionActionMenu.hideContributionWithMotivation": "Hide with motivation",
+  "ui.contributionActionMenu.deleteContributionWithMotivation": "Delete with motivation",
+  "ui.contributionActionMenu.actionSuccess": "Operation successfully complete!",
+  "ui.contributionActionMenu.actionError": "There was a problem during the operation. Try later!",
+  "ui.contributionActionMenu.title": "This content is:",
+  "ui.contributionActionMenu.spam": "Spam",
+  "ui.contributionActionMenu.aggressive": "Aggressive",
+  "ui.contributionActionMenu.vulgar": "Vulgar",
+  "ui.contributionActionMenu.poorContent": "Poor content",
+  "ui.contributionActionMenu.offtopic": "Offtopic",
+  "ui.contributionActionMenu.footer": "Reporting is anonymous and must be compliant with rules.",
 
   "templates.userProfile.edit": "Edit"
 }

@@ -26,7 +26,7 @@ export interface ConfirmDialogProps {
   /**
    * Confirm dialog title
    */
-  title: React.ReactNode;
+  title?: React.ReactNode;
   /**
    * Confirm dialog content
    * @default null
@@ -111,7 +111,7 @@ export default function ConfirmDialog(props: ConfirmDialogProps): JSX.Element {
   return (
     <Root>
       <Dialog open={open} onClose={handleClose} {...rest}>
-        <DialogTitle>{title}</DialogTitle>
+        <DialogTitle>{title ? title : <FormattedMessage id="ui.confirmDialog.title" defaultMessage="ui.confirmDialog.title" />}</DialogTitle>
         {content && (
           <DialogContent>
             <DialogContentText component="div">{content}</DialogContentText>
