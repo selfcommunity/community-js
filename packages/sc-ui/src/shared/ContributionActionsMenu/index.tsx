@@ -106,23 +106,6 @@ const PopperRoot = styled(Popper, {
     overflow: 'visible',
     filter: 'drop-shadow(0px -1px 5px rgba(0,0,0,0.10))',
     mt: 1.5
-    /*
-    '&:before': {
-      content: '""',
-      display: 'block',
-      position: 'absolute',
-      top: 0,
-      right: 12,
-      width: 10,
-      height: 10,
-      backgroundColor: '#FFF',
-      transform: 'translateY(-50%) rotate(45deg)',
-      transition: theme.transitions.create(['all'], {
-        duration: theme.transitions.duration.enteringScreen,
-        delay: 2
-      }),
-      zIndex: 10
-    } */
   },
   [`& .${classes.paper}`]: {
     width: 280
@@ -327,14 +310,12 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
       if (scUserContext.user && Boolean(contributionObj) && scUserContext.user.id !== contributionObj.author.id) {
         _extra.push(FLAG_CONTRIBUTION_SECTION);
       }
-      /*
       // Enable when backend is ready
       if (UserUtils.isStaff(scUserContext.user)) {
         // admin or moderator
         _extra.push(HIDE_CONTRIBUTION_SECTION);
         _extra.push(DELETE_CONTRIBUTION_SECTION);
       }
-      */
       return _extra;
     },
     [contributionObj]
@@ -1055,7 +1036,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
           <Grow {...TransitionProps} style={{transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom'}}>
             <Paper variant={'outlined'} className={classes.paper}>
               <ClickAwayListener onClickAway={handleClose}>
-                {isLoading || (!feedObject && !commentObj) ? (
+                {isLoading || (!feedObj && !commentObj) ? (
                   <CentralProgress size={30} />
                 ) : (
                   <MenuList>

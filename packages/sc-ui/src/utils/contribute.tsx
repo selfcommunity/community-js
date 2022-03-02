@@ -1,7 +1,6 @@
 import React from 'react';
-import { SCCommentTypologyType, SCFeedObjectTypologyType, SCRoutes } from '@selfcommunity/core';
+import {SCCommentTypologyType, SCFeedObjectTypologyType, SCRoutes} from '@selfcommunity/core';
 import {FormattedMessage} from 'react-intl';
-import {Typography} from '@mui/material';
 
 /**
  * From obj extract type of the contribution
@@ -52,6 +51,16 @@ export function getContributionSnippet(obj) {
 }
 
 /**
+ * Get contribution text
+ * Hydrate text with mention, etc.
+ * @param obj (Discussion, Post, Status, Comment)
+ */
+export function getContributionHtml(obj, handleUrl) {
+  // return obj.html.replace(/@([a-z\d_]+)/gi, `<a target='_blank' href='${handleUrl(SCRoutes.USER_PROFILE_ROUTE_NAME, {username: $1})}'>@$1</a>`);
+  return obj.html;
+}
+
+/**
  * Get route name for a contribution
  * @param obj
  */
@@ -60,7 +69,6 @@ export function getRouteName(obj) {
     return SCRoutes[`${obj.type.toUpperCase()}_ROUTE_NAME`];
   }
 }
-
 
 /**
  * Get data for scRoutingContext.url()

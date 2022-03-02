@@ -10,7 +10,7 @@ export default {
     feedObjectId: {
       control: {type: 'number'},
       description: 'FeedObject Id',
-      table: {defaultValue: {summary: 7604}}
+      table: {defaultValue: {summary: 379}}
     },
     feedObjectType: {
       options: [SCFeedObjectTypologyType.POST, SCFeedObjectTypologyType.DISCUSSION, SCFeedObjectTypologyType.STATUS],
@@ -19,7 +19,7 @@ export default {
     }
   },
   args: {
-    feedObjectId: 364, // 9,
+    feedObjectId: 379, // 9,
     feedObjectType: SCFeedObjectTypologyType.POST
   }
 } as ComponentMeta<typeof ContributionActionsMenu>;

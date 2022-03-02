@@ -9,6 +9,14 @@ import Votes from './Votes';
 import {AxiosResponse} from 'axios';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import CommentObjectSkeleton from './Skeleton';
+import {LoadingButton} from '@mui/lab';
+import VoteFilledIcon from '@mui/icons-material/ThumbUpTwoTone';
+import VoteIcon from '@mui/icons-material/ThumbUpOutlined';
+import {CommentsOrderBy} from '../../types/comments';
+import ReplyCommentObject from './ReplyComment';
+import ContributionActionsMenu from '../../shared/ContributionActionsMenu';
+import DateTimeAgo from '../../shared/DateTimeAgo';
+import {getContributionHtml, getRouteData} from '../../utils/contribute';
 import {
   Endpoints,
   http,
@@ -27,14 +35,6 @@ import {
   SCContextType,
   SCRoutes
 } from '@selfcommunity/core';
-import {LoadingButton} from '@mui/lab';
-import VoteFilledIcon from '@mui/icons-material/ThumbUpTwoTone';
-import VoteIcon from '@mui/icons-material/ThumbUpOutlined';
-import {CommentsOrderBy} from '../../types/comments';
-import ReplyCommentObject from './ReplyComment';
-import ContributionActionsMenu from '../../shared/ContributionActionsMenu';
-import DateTimeAgo from '../../shared/DateTimeAgo';
-import {getRouteData} from '../../utils/contribute';
 
 const messages = defineMessages({
   reply: {
@@ -647,7 +647,7 @@ export default function CommentObject(props: CommentObjectProps): JSX.Element {
                         className={classes.textContent}
                         variant="body2"
                         gutterBottom
-                        dangerouslySetInnerHTML={{__html: comment.html}}></Typography>
+                        dangerouslySetInnerHTML={{__html: getContributionHtml(comment, scRoutingContext.url)}}></Typography>
                     </CardContent>
                     {scUserContext.user && (
                       <Box className={classes.commentActionsMenu}>

@@ -24,7 +24,6 @@ import DateTimeAgo from '../../shared/DateTimeAgo';
 import Bullet from '../../shared/Bullet';
 import Tags from '../../shared/Tags';
 import MediasPreview from '../../shared/MediasPreview';
-import ReportingFlagMenu from '../../shared/ReportingFlagMenu';
 import Actions from './Actions';
 import WorldIcon from '@mui/icons-material/Public';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
@@ -64,8 +63,7 @@ import {AxiosResponse} from 'axios';
 import MarkRead from '../../shared/MarkRead';
 import classNames from 'classnames';
 import ContributionActionsMenu from '../../shared/ContributionActionsMenu';
-import {grey} from '@mui/material/colors';
-import ShareIcon from '@mui/icons-material/ShareOutlined';
+import {getContributionHtml} from '../../utils/contribute';
 
 const messages = defineMessages({
   comment: {
@@ -649,7 +647,9 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
                 component="div"
                 gutterBottom
                 className={classes.text}
-                dangerouslySetInnerHTML={{__html: template === FeedObjectTemplateType.PREVIEW ? obj.summary : obj.html}}
+                dangerouslySetInnerHTML={{
+                  __html: template === FeedObjectTemplateType.PREVIEW ? obj.summary : getContributionHtml(obj, scRoutingContext.url)
+                }}
               />
               <MediasPreview medias={obj.medias} />
               {obj['poll'] && <PollObject feedObject={obj} pollObject={obj['poll']} onChange={handleChangePoll} elevation={0} />}
