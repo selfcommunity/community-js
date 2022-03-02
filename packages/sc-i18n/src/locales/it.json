@@ -387,6 +387,9 @@
   "ui.contributionActionMenu.poorContent": "Scadente",
   "ui.contributionActionMenu.offtopic": "Fuori tema",
   "ui.contributionActionMenu.footer": "La segnalazione è anonima e deve essere conforme al regolamento.",
+  "ui.contributionActionMenu.restoreFromHidden": "Ripristina da nascosto",
+  "ui.contributionActionMenu.restoreFromDeleted": "Ripristina da cancellato",
+  "ui.contributionActionMenu.moderatedMotivation": "Motivazione:",
 
   "templates.userProfile.edit": "Modifica"
 }
