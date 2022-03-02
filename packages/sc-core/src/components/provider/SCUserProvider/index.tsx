@@ -186,7 +186,7 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
    * We only want to render the underlying app after we
    * assert for the presence of a current user.
    */
-  return <SCUserContext.Provider value={contextValue}>{!state.loading && children}</SCUserContext.Provider>;
+  return <SCUserContext.Provider value={contextValue}>{children}</SCUserContext.Provider>;
 }
 
 /**
