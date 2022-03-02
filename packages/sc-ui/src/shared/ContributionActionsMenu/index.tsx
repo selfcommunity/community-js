@@ -630,15 +630,9 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
         `${location.protocol}//${location.host}${scRoutingContext.url(getRouteName(contributionObj), getRouteData(contributionObj))}`
       ).then(() => {
         setOpen(false);
-        enqueueSnackbar(
-          <FormattedMessage
-            id="ui.commentObject.commentActionsMenu.permanentLinkCopied"
-            defaultMessage="ui.commentObject.commentActionsMenu.permanentLinkCopied"
-          />,
-          {
-            variant: 'success'
-          }
-        );
+        enqueueSnackbar(<FormattedMessage id="ui.common.permanentLinkCopied" defaultMessage="ui.common.permanentLinkCopied" />, {
+          variant: 'success'
+        });
       });
       handleClose();
     } else if (action === EDIT_CONTRIBUTION) {

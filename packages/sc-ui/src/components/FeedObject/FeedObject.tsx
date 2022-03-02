@@ -360,7 +360,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
   /**
    * Render header action
    * if author = authenticated user -> render edit action
-   * else render ReportingMenu
+   * else render ContributionActionsMenu
    */
   function renderHeaderAction() {
     return (
