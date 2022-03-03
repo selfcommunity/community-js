@@ -274,6 +274,10 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/notification/banner/dispose/'),
     method: 'POST',
   },
+  BroadcastMessagesUnseenCount: {
+    url: urlReplacer('/api/v2/notification/banner/unseen/count/'),
+    method: 'GET',
+  },
   /**
    * Notifications
    */

@@ -48,7 +48,53 @@ function getUser(id) {
     });
 }
 
+/**
+ * Get user unseen notifications counter
+ */
+function getUnseenNotificationsCounter() {
+  return http
+    .request({
+      url: endpoints.UserUnseenNotificationCount.url(),
+      method: endpoints.UserUnseenNotificationCount.method,
+    })
+    .then((res) => {
+      if (res.status >= 300) {
+        Logger.error(SCOPE_SC_CORE, `Unable to retrieve unseen notifications counter (Response code: ${res.status}).`);
+        return Promise.reject(res);
+      }
+      return Promise.resolve(res.data);
+    })
+    .catch((error) => {
+      Logger.error(SCOPE_SC_CORE, 'Unable to retrieve unseen notifications counter.');
+      return Promise.reject(error);
+    });
+}
+
+/**
+ * Get broadcast messages unseen counter
+ */
+function getUnseenBroadcastMessagesCounter() {
+  return http
+    .request({
+      url: endpoints.BroadcastMessagesUnseenCount.url(),
+      method: endpoints.BroadcastMessagesUnseenCount.method,
+    })
+    .then((res) => {
+      if (res.status >= 300) {
+        Logger.error(SCOPE_SC_CORE, `Unable to retrieve unseen broadcast messages counter (Response code: ${res.status}).`);
+        return Promise.reject(res);
+      }
+      return Promise.resolve(res.data);
+    })
+    .catch((error) => {
+      Logger.error(SCOPE_SC_CORE, 'Unable to retrieve unseen broadcast messages counter.');
+      return Promise.reject(error);
+    });
+}
+
 export default {
   getCurrentUser,
   getUser,
+  getUnseenNotificationsCounter,
+  getUnseenBroadcastMessagesCounter,
 };

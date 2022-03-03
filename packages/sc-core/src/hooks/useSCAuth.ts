@@ -22,8 +22,6 @@ export const userActionTypes = {
   REFRESH_TOKEN_FAILURE: '_invalid_token_failure',
   REFRESH_SESSION: '_refresh_token',
   UPDATE_USER: '_change_user',
-  CHANGE_UNSEEN_INTERACTIONS_COUNTER: '_change_unseen_interactions',
-  CHANGE_UNSEEN_NOTIFICATION_BANNERS_COUNTER: '_change_unseen_notification_banners',
 };
 
 /**
@@ -65,12 +63,6 @@ function userReducer(state, action) {
 
     case userActionTypes.UPDATE_USER:
       return {...state, user: {...state.user, ...action.payload}};
-
-    case userActionTypes.CHANGE_UNSEEN_INTERACTIONS_COUNTER:
-      return {...state, user: {...state.user, ...{unseen_interactions_counter: action.payload.counter}}};
-
-    case userActionTypes.CHANGE_UNSEEN_NOTIFICATION_BANNERS_COUNTER:
-      return {...state, user: {...state.user, ...{unseen_notification_banners_counter: action.payload.counter}}};
 
     case userActionTypes.REFRESH_SESSION:
       return {...state, ...action.payload.conf};
@@ -163,6 +155,7 @@ export default function useAuth(initialSession: SCSessionType) {
             return Promise.reject(error);
           });
       }
+      return Promise.reject();
     },
     [state.session]
   );

@@ -538,7 +538,10 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
     if (contributionObj && extraSections.includes(FLAG_CONTRIBUTION_SECTION)) {
       return performFetchFlagStatus()
         .then((data) => {
-          setFlagType(data['flag_type']);
+          // It could also be spam (=0)
+          if (data['flag_type'] !== undefined && data['flag_type'] !== null) {
+            setFlagType(data['flag_type']);
+          }
         })
         .catch((error) => {
           console.dir(error);
@@ -555,10 +558,13 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
     if (contributionObj && (extraSections.includes(HIDE_CONTRIBUTION_SECTION) || extraSections.includes(DELETE_CONTRIBUTION_SECTION))) {
       return performFetchModerationStatus()
         .then((data) => {
-          if (data.status === MODERATION_CONTRIBUTION_STATE_DELETED) {
-            setDeleteType(data['flag_type']);
-          } else if (data.status === MODERATION_CONTRIBUTION_STATE_HIDDEN) {
-            setHideType(data['flag_type']);
+          // It could also be spam (=0)
+          if (data['flag_type'] !== undefined && data['flag_type'] !== null) {
+            if (data.status === MODERATION_CONTRIBUTION_STATE_DELETED) {
+              setDeleteType(data['flag_type']);
+            } else if (data.status === MODERATION_CONTRIBUTION_STATE_HIDDEN) {
+              setHideType(data['flag_type']);
+            }
           }
         })
         .catch((error) => {

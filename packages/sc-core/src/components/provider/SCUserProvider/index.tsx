@@ -16,6 +16,7 @@ import {
   SCCategoriesManagerType,
   SCFollowedManagerType,
   SCConnectionsManagerType,
+  SCAuthTokenType,
 } from '../../../types';
 
 /**
@@ -118,14 +119,14 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
    * Handle change unseen interactions counter
    */
   function setUnseenInteractionsCounter(counter): void {
-    dispatch({type: userActionTypes.CHANGE_UNSEEN_INTERACTIONS_COUNTER, payload: {counter}});
+    dispatch({type: userActionTypes.UPDATE_USER, payload: {unseen_interactions_counter: counter}});
   }
 
   /**
    * Handle change unseen notification banners counter
    */
   function setUnseenNotificationBannersCounter(counter): void {
-    dispatch({type: userActionTypes.CHANGE_UNSEEN_NOTIFICATION_BANNERS_COUNTER, payload: {counter}});
+    dispatch({type: userActionTypes.UPDATE_USER, payload: {unseen_notification_banners_counter: counter}});
   }
 
   /**
@@ -134,6 +135,33 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
   function refreshSession(): Promise<any> {
     return helpers.refreshSession();
   }
+
+  /**
+   * Helper to refresh the notification counter
+   * Use getCurrentUser service since the notification counters
+   * have been inserted into the serialized user object
+   */
+  const refreshNotificationCounters = useMemo(
+    () => () => {
+      if (state.user) {
+        // use thie services
+        return sessionServices
+          .getCurrentUser()
+          .then((user: SCUserType) => {
+            const payload = {
+              unseen_interactions_counter: user.unseen_interactions_counter,
+              unseen_notification_banners_counter: user.unseen_notification_banners_counter,
+            };
+            Logger.error(SCOPE_SC_CORE, 'Unable to refresh notification counters.');
+          })
+          .catch((error) => {
+            Logger.error(SCOPE_SC_CORE, `Unable to refresh notification counters. Error: ${error.response.toString()}`);
+          });
+      }
+      return Promise.reject();
+    },
+    []
+  );
 
   /**
    * Call the logout endpoint and then remove the user
@@ -163,6 +191,7 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
       updateUser,
       setUnseenInteractionsCounter,
       setUnseenNotificationBannersCounter,
+      refreshNotificationCounters,
       logout,
       refreshSession,
       managers: {

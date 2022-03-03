@@ -119,6 +119,11 @@ export interface FeedProps {
   ItemSkeletonProps?: any;
 
   /**
+   * Callback invoked whenever data is loaded during paging
+   */
+  onFetchData?: (data) => any;
+
+  /**
    * Props to spread to single feed object
    * @default {top: 0, bottomBoundary: `#${id}`}
    */
@@ -176,6 +181,7 @@ export default function Feed(props: FeedProps): JSX.Element {
     ItemProps = {},
     ItemSkeleton,
     ItemSkeletonProps = {},
+    onFetchData,
     FeedSidebarProps = {top: 0, bottomBoundary: `#${id}`},
     CustomAdvProps = {}
   } = props;
@@ -254,6 +260,7 @@ export default function Feed(props: FeedProps): JSX.Element {
         const data = res.data;
         setFeedData([...feedData, ...data.results]);
         setNext(data.next);
+        onFetchData && onFetchData(res.data);
       })
       .catch((error) => {
         Logger.error(SCOPE_SC_UI, error);
