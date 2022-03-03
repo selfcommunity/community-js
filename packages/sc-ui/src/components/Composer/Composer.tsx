@@ -136,7 +136,7 @@ const Root = styled(Dialog, {
 })(({theme}) => {
   let mediaActionBackground = theme.palette.getContrastText(theme.palette.primary.main);
   if (mediaActionBackground.startsWith('#')) {
-    mediaActionBackground = hexToRgb(mediaActionBackground).replace(')', ', .8)');
+    mediaActionBackground = hexToRgb(mediaActionBackground).replace(')', ', .5)');
   }
   return {
     [`& .${classes.title}`]: {
