@@ -10,14 +10,13 @@ import UserBlockedNotification from '../Notification/UserBlocked';
 import MentionNotification from '../Notification/Mention';
 import CollapsedForNotification from '../Notification/CollapsedFor';
 import KindlyNoticeForNotification from '../Notification/KindlyNoticeFor';
-import {FormattedMessage} from 'react-intl';
 import KindlyNoticeFlagNotification from '../Notification/KindlyNoticeFlag';
 import VoteUpNotification from '../Notification/VoteUp';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import PubSub from 'pubsub-js';
 import {AxiosResponse} from 'axios';
 import ContributionFollowNotification from '../Notification/ContributionFollow';
-import {Box, Button, CardProps, MenuItem, MenuList} from '@mui/material';
+import {Box, CardProps, MenuItem, MenuList} from '@mui/material';
 import IncubatorApprovedNotification from '../Notification/IncubatorApproved';
 import classNames from 'classnames';
 import Skeleton from './Skeleton';
@@ -25,17 +24,14 @@ import {NotificationObjectTemplateType} from '../../types';
 import {
   Endpoints,
   http,
-  Link,
   Logger,
   SCNotification,
   SCNotificationAggregatedType,
   SCNotificationTopicType,
   SCNotificationType,
   SCNotificationTypologyType,
-  SCRoutes,
   SCRoutingContextType,
   SCUserContextType,
-  useSCRouting,
   useSCUser
 } from '@selfcommunity/core';
 
@@ -43,11 +39,8 @@ const PREFIX = 'SCSnippetNotifications';
 
 const classes = {
   root: `${PREFIX}-root`,
-  content: `${PREFIX}-content`,
   notificationsWrap: `${PREFIX}-notifications-wrap`,
-  notificationItemWrap: `${PREFIX}-notification-item-wrap`,
-  viewOthersButtonWrap: `${PREFIX}-view-others-button-wrap`,
-  viewOthersButton: `${PREFIX}-view-others-button`
+  notificationItemWrap: `${PREFIX}-notification-item-wrap`
 };
 
 const Root = styled(Box, {
@@ -57,9 +50,6 @@ const Root = styled(Box, {
 })(({theme}) => ({
   width: '100%',
   marginBottom: theme.spacing(1),
-  [`& .${classes.content}`]: {
-    padding: '0px !important'
-  },
   [`& .${classes.notificationsWrap}`]: {
     maxHeight: 370,
     overflowY: 'auto',
@@ -69,9 +59,6 @@ const Root = styled(Box, {
   [`& .${classes.notificationItemWrap}`]: {
     padding: 5,
     whiteSpace: 'normal'
-  },
-  [`& .${classes.viewOthersButtonWrap}`]: {
-    padding: '10px 20px !important'
   },
   '& a': {
     textDecoration: 'none',
@@ -137,8 +124,6 @@ export interface SnippetNotificationsProps extends CardProps {
  |root|.SCSnippetNotification-root|Styles applied to the root element.|
  |notificationsWrap|.SCUserNotification-notification-wrap|Styles applied to the notifications wrap.|
  |notificationItemWrap|.SCUserNotification-notification-item-wrap|Styles applied to the single notification.|
- |viewOthersButtonWrap|.SCUserNotification-view-others-button-wrap|Styles applied to the element button wrap.|
- |viewOthersButton|.SCUserNotification-view-others-button|Styles applied to the element button.|
 
  * @param props
  */
@@ -147,7 +132,6 @@ export default function SnippetNotifications(props: SnippetNotificationsProps): 
   const {id = `snippetNotifications`, className, showMax = 20, handleCustomNotification, ...rest} = props;
 
   // CONTEXT
-  const scRoutingContext: SCRoutingContextType = useSCRouting();
   const scUserContext: SCUserContextType = useSCUser();
 
   // STATE
@@ -187,6 +171,7 @@ export default function SnippetNotifications(props: SnippetNotificationsProps): 
       .then((data) => {
         setNotifications(data.results);
         setLoading(false);
+        scUserContext.refreshNotificationCounters();
       })
       .catch((error) => {
         Logger.error(SCOPE_SC_UI, error);
@@ -296,36 +281,22 @@ export default function SnippetNotifications(props: SnippetNotificationsProps): 
    */
   return (
     <Root id={id} className={classNames(classes.root, className)} {...rest}>
-      <Box classes={{root: classes.content}}>
-        <Box className={classes.notificationsWrap}>
-          {loading ? (
-            <Skeleton elevation={0} />
-          ) : (
-            <MenuList>
-              {notifications.slice(0, showMax).map((notificationObject: SCNotificationAggregatedType, i) => (
-                <Box key={i}>
-                  {notificationObject.aggregated.map((n: SCNotificationType, k) => (
-                    <MenuItem className={classes.notificationItemWrap} key={k}>
-                      {renderAggregatedItem(n, i)}
-                    </MenuItem>
-                  ))}
-                </Box>
-              ))}
-            </MenuList>
-          )}
-        </Box>
-        <Box className={classes.viewOthersButtonWrap}>
-          <Button
-            fullWidth
-            component={Link}
-            to={scRoutingContext.url(SCRoutes.USER_NOTIFICATIONS_ROUTE_NAME, {})}
-            variant="text"
-            color="primary"
-            classes={{root: classes.viewOthersButton}}
-            disabled={loading}>
-            <FormattedMessage id="ui.userPopupNotification.viewOther" defaultMessage="ui.userPopupNotification.viewOther" />
-          </Button>
-        </Box>
+      <Box className={classes.notificationsWrap}>
+        {loading ? (
+          <Skeleton elevation={0} />
+        ) : (
+          <MenuList>
+            {notifications.slice(0, showMax).map((notificationObject: SCNotificationAggregatedType, i) => (
+              <Box key={i}>
+                {notificationObject.aggregated.map((n: SCNotificationType, k) => (
+                  <MenuItem className={classes.notificationItemWrap} key={k}>
+                    {renderAggregatedItem(n, i)}
+                  </MenuItem>
+                ))}
+              </Box>
+            ))}
+          </MenuList>
+        )}
       </Box>
     </Root>
   );
