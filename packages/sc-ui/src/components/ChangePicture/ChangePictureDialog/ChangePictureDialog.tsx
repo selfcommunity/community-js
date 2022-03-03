@@ -13,6 +13,7 @@ import BaseDialog from '../../../shared/BaseDialog';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import ConfirmDialog from '../../../shared/ConfirmDialog/ConfirmDialog';
 import classNames from 'classnames';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const PREFIX = 'SCChangePictureDialog';
 
@@ -77,7 +78,7 @@ export default function ChangePictureDialog(props: CPDialogProps): JSX.Element {
   let fileInput = useRef(null);
   const [openDeleteAvatarDialog, setOpenDeleteAvatarDialog] = useState<boolean>(false);
   const [isDeletingAvatar, setIsDeletingAvatar] = useState<boolean>(false);
-
+  const [loading, setLoading] = useState<boolean>(false);
   /**
    * Handles open confirm delete avatar dialog
    * @param id
@@ -101,6 +102,7 @@ export default function ChangePictureDialog(props: CPDialogProps): JSX.Element {
    * Performs save avatar after upload
    */
   function handleSave() {
+    setLoading(true);
     const formData = new FormData();
     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore
@@ -117,6 +119,7 @@ export default function ChangePictureDialog(props: CPDialogProps): JSX.Element {
       .then((res) => {
         setAvatars((prev) => [...prev, res.data]);
         selectPrimaryAvatar(res.data);
+        setLoading(false);
       })
       .catch((error) => {
         console.log(error);
@@ -233,7 +236,7 @@ export default function ChangePictureDialog(props: CPDialogProps): JSX.Element {
         <Box className={classes.upload}>
           <input type="file" onChange={() => handleUpload(event)} ref={fileInput} hidden />
           <Button variant="outlined" onClick={() => fileInput.current.click()}>
-            <FolderOpenIcon fontSize="small" />
+            {loading ? <CircularProgress size={15} /> : <FolderOpenIcon fontSize="small" />}
             <FormattedMessage id="ui.changePicture.button.upload" defaultMessage="ui.changePicture.button.upload" />
           </Button>
           <Typography sx={{fontSize: 10}} color="text.secondary" gutterBottom>
