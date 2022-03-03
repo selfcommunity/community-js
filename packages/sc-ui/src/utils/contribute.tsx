@@ -51,13 +51,15 @@ export function getContributionSnippet(obj) {
 }
 
 /**
- * Get contribution text
+ * Get the contribution text
  * Hydrate text with mention, etc.
- * @param obj (Discussion, Post, Status, Comment)
+ * @param obj Object of types: Discussion, Post, Status, Comment
+ * @param handleUrl Func that handle urls
  */
 export function getContributionHtml(obj, handleUrl) {
-  // return obj.html.replace(/@([a-z\d_]+)/gi, `<a target='_blank' href='${handleUrl(SCRoutes.USER_PROFILE_ROUTE_NAME, {username: $1})}'>@$1</a>`);
-  return obj.html;
+  return obj.html.replace(/<mention id="([0-9]+)">@([a-z\d_]+)<\/mention>/gi, (match, id, username) => {
+    return `<a target='_blank' href='${handleUrl(SCRoutes.USER_PROFILE_ROUTE_NAME, {id, username})}'>@${username}</a>`;
+  });
 }
 
 /**

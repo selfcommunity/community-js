@@ -9,6 +9,7 @@ import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import {FormattedMessage} from 'react-intl';
 import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
 import classNames from 'classnames';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const PREFIX = 'SCChangeCoverButton';
 
@@ -85,6 +86,7 @@ export default function ChangeCover(props: ChangeCoverProps): JSX.Element {
   const [anchorElPopover, setAnchorElPopover] = React.useState<null | HTMLElement>(null);
   const [openDeleteCoverDialog, setOpenDeleteCoverDialog] = useState<boolean>(false);
   const [isDeletingCover, setIsDeletingCover] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   // HANDLERS
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -130,6 +132,7 @@ export default function ChangeCover(props: ChangeCoverProps): JSX.Element {
    * Handles cover saving after upload and delete actions
    */
   function handleSave(performDelete = false) {
+    setLoading(true);
     const formData = new FormData();
     if (!performDelete) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
@@ -151,6 +154,7 @@ export default function ChangeCover(props: ChangeCoverProps): JSX.Element {
         scUserContext.updateUser({cover: res.data.cover});
         onChange && onChange(res.data.cover);
         setAnchorEl(null);
+        setLoading(false);
         if (performDelete) {
           setIsDeletingCover(false);
           setOpenDeleteCoverDialog(false);
@@ -180,9 +184,13 @@ export default function ChangeCover(props: ChangeCoverProps): JSX.Element {
         )}
         <input type="file" onChange={() => handleUpload(event)} ref={fileInput} hidden />
         <MenuItem onClick={() => fileInput.current.click()} className={classes.menuItem}>
-          <ListItemIcon>
-            <AddCircleOutlineOutlinedIcon fontSize="small" />
-          </ListItemIcon>
+          {loading ? (
+            <CircularProgress size={15} />
+          ) : (
+            <ListItemIcon>
+              <AddCircleOutlineOutlinedIcon fontSize="small" />
+            </ListItemIcon>
+          )}
           <FormattedMessage id="ui.changeCover.button.upload" defaultMessage="ui.changeCover.button.upload" />
         </MenuItem>
       </Menu>

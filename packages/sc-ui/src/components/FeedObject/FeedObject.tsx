@@ -134,6 +134,9 @@ const Root = styled(Card, {
     paddingBottom: 0
   },
   [`& .${classes.text}`]: {
+    '& a': {
+      color: theme.palette.text.primary
+    },
     padding: '5px 1px',
     marginBottom: 0
   },
@@ -368,6 +371,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
         feedObject={obj}
         feedObjectType={feedObjectType}
         onEditContribution={handleToggleEdit}
+        onHideContribution={handleHide}
         onDeleteContribution={handleDelete}
         onRestoreContribution={handleRestore}
         onSuspendNotificationContribution={handleSuspendNotification}
@@ -383,10 +387,17 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
   }
 
   /**
+   * Handle restore obj
+   */
+  function handleHide() {
+    setObj((prev) => ({...prev, ...{collapsed: !prev.collapsed}}));
+  }
+
+  /**
    * Handle delete obj
    */
   function handleDelete() {
-    setObj((prev) => ({...prev, ...{deleted: true}}));
+    setObj((prev) => ({...prev, ...{deleted: !prev.deleted}}));
   }
 
   /**
@@ -659,7 +670,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
                     <ContributorsFeedObject feedObject={obj} feedObjectType={obj.type} sx={{padding: '6px'}} />
                   </LazyLoad>
                 )}
-                {scUserContext.user && obj.author.id !== scUserContext.user.id && !hideFollowAction && (
+                {scUserContext.user && obj.author.id !== scUserContext.user.id && !hideFollowAction && !obj.deleted && (
                   <LoadingButton
                     classes={{root: classes.followButton}}
                     loading={isFollowing}

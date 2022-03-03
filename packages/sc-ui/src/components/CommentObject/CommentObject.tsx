@@ -103,6 +103,9 @@ const Root = styled(Box, {
     }
   },
   [`& .${classes.textContent}`]: {
+    '& a': {
+      color: theme.palette.text.primary
+    },
     '& p': {
       marginBlockStart: '0.3em',
       marginBlockEnd: '0.3em'
@@ -514,13 +517,30 @@ export default function CommentObject(props: CommentObjectProps): JSX.Element {
     if (comment.parent) {
       const _latestComment = obj.latest_comments.map((c) => {
         if (c.id === comment.id) {
-          c.deleted = true;
+          c.deleted = !c.deleted;
         }
         return c;
       });
       setObj(Object.assign({}, obj, {latest_comments: _latestComment}));
     } else {
-      setObj(Object.assign({}, obj, {deleted: true}));
+      setObj(Object.assign({}, obj, {deleted: !obj.deleted}));
+    }
+  }
+
+  /**
+   * Handle comment delete
+   */
+  function handleHide(comment) {
+    if (comment.parent) {
+      const _latestComment = obj.latest_comments.map((c) => {
+        if (c.id === comment.id) {
+          c.collapsed = !c.collapsed;
+        }
+        return c;
+      });
+      setObj(Object.assign({}, obj, {latest_comments: _latestComment}));
+    } else {
+      setObj(Object.assign({}, obj, {collapsed: !obj.collapsed}));
     }
   }
 
@@ -637,7 +657,7 @@ export default function CommentObject(props: CommentObjectProps): JSX.Element {
               secondary={
                 <>
                   <Card classes={{root: classes.content}} {...rest}>
-                    <CardContent classes={{root: classNames({[classes.deleted]: obj.deleted})}}>
+                    <CardContent classes={{root: classNames({[classes.deleted]: obj && obj.deleted})}}>
                       <Link className={classes.author} to={scRoutingContext.url('profile', {id: comment.author.id})}>
                         <Typography component="span" sx={{display: 'inline'}} gutterBottom color="inherit">
                           {comment.author.username}
@@ -654,6 +674,7 @@ export default function CommentObject(props: CommentObjectProps): JSX.Element {
                         <ContributionActionsMenu
                           commentObject={comment}
                           onRestoreContribution={handleRestore}
+                          onHideContribution={handleHide}
                           onDeleteContribution={handleDelete}
                           onEditContribution={handleEdit}
                         />

@@ -117,6 +117,12 @@ export interface SCUserContextType {
   setUnseenNotificationBannersCounter: (counter: number) => void;
 
   /**
+   * Handle refresh user notification counters
+   * Interactions, BroadcastMessages
+   */
+  refreshNotificationCounters: () => Promise<any>;
+
+  /**
    * Managers: followed, connections, categories, etc...
    */
   managers: {followed?: SCFollowedManagerType; connections?: SCConnectionsManagerType; categories: SCCategoriesManagerType};

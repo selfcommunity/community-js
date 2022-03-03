@@ -387,6 +387,9 @@
   "ui.contributionActionMenu.poorContent": "Poor content",
   "ui.contributionActionMenu.offtopic": "Offtopic",
   "ui.contributionActionMenu.footer": "Reporting is anonymous and must be compliant with rules.",
+  "ui.contributionActionMenu.restoreFromHidden": "Restore from hidden",
+  "ui.contributionActionMenu.restoreFromDeleted": "Restore from deleted",
+  "ui.contributionActionMenu.moderatedMotivation": "Motivation:",
 
   "templates.userProfile.edit": "Edit"
 }
