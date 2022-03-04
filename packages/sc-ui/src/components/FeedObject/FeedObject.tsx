@@ -18,16 +18,16 @@ import {
   Tooltip,
   Typography
 } from '@mui/material';
-import FeedObjectSkeleton from './Skeleton';
+import FeedObjectSkeleton, {FeedObjectSkeletonProps} from './Skeleton';
 import DateTimeAgo from '../../shared/DateTimeAgo';
 import Bullet from '../../shared/Bullet';
 import Tags from '../../shared/Tags';
-import MediasPreview from '../../shared/MediasPreview';
+import MediasPreview, {MediaPreviewProps} from '../../shared/MediasPreview';
 import Actions from './Actions';
 import WorldIcon from '@mui/icons-material/Public';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import PollObject from './Poll';
-import ContributorsFeedObject from './Contributors';
+import PollObject, {PollObjectProps} from './Poll';
+import ContributorsFeedObject, {ContributorsFeedObjectProps} from './Contributors';
 import LazyLoad from 'react-lazyload';
 import {
   Endpoints,
@@ -60,8 +60,9 @@ import {SCOPE_SC_UI} from '../../constants/Errors';
 import {AxiosResponse} from 'axios';
 import MarkRead from '../../shared/MarkRead';
 import classNames from 'classnames';
-import ContributionActionsMenu from '../../shared/ContributionActionsMenu';
+import ContributionActionsMenu, {ContributionActionsMenuProps} from '../../shared/ContributionActionsMenu';
 import {getContributionHtml} from '../../utils/contribute';
+import {useSnackbar} from 'notistack';
 
 const messages = defineMessages({
   comment: {
@@ -83,7 +84,7 @@ const classes = {
   username: `${PREFIX}-username`,
   category: `${PREFIX}-category`,
   content: `${PREFIX}-content`,
-  subContent: `${PREFIX}-subcontent`,
+  subContent: `${PREFIX}-sub-content`,
   text: `${PREFIX}-text`,
   snippetContent: `${PREFIX}-snippet-content`,
   tag: `${PREFIX}-tag`,
@@ -259,6 +260,36 @@ export interface FeedObjectProps extends CardProps {
   hideParticipantsPreview?: boolean;
 
   /**
+   * Props to spread to ContributionActionsMenu component
+   * @default {elevation: 0}
+   */
+  FeedObjectSkeletonProps?: FeedObjectSkeletonProps;
+
+  /**
+   * Props to spread to ContributionActionsMenu component
+   * @default {}
+   */
+  ContributionActionsMenuProps?: ContributionActionsMenuProps;
+
+  /**
+   * Props to spread to MediasPreview component
+   * @default {}
+   */
+  MediasPreviewProps?: MediaPreviewProps;
+
+  /**
+   * Props to spread to PollObject component
+   * @default {}
+   */
+  PollObjectProps?: PollObjectProps;
+
+  /**
+   * Props to spread to ContributorsFeedObject component
+   * @default {{elevation: 0}}
+   */
+  ContributorsFeedObjectProps?: ContributorsFeedObjectProps;
+
+  /**
    * Other props
    */
   [p: string]: any;
@@ -284,20 +315,20 @@ export interface FeedObjectProps extends CardProps {
  |---|---|---|
  |root|.SCFeedObject-root|Styles applied to the root element.|
  |header|.SCFeedObject-header|Styles applied to the header of the card.|
+ |tag|.SCFeedObject-tag|Styles applied to the tag element.|
  |title|.SCFeedObject-title|Styles applied to the title element.|
  |username|.SCFeedObject-username|Styles applied to the username element.|
  |category|.SCFeedObject-category|Styles applied to the category element.|
- |content|.SCFeedObject-content|Styles applied to the content section.|
- |subcontent|.SCFeedObject-subcontent|Styles applied to the sub content container.|
+ |content|.SCFeedObject-content|Styles applied to the content section. Content section include: title, snippetContent, text|
  |text|.SCFeedObject-text|Styles applied to the text element.|
  |snippetContent|.SCFeedObject-snippet-content|Styles applied to snippet content element.|
- |tag|.SCFeedObject-tag|Styles applied to the tag element.|
- |activitiesContent|.SCFeedObject-activities-content|Styles applied to the activities content element.|
- |followButton|.SCFeedObject-follow-button|Styles applied to the follow button element.|
- |activityAt|.SCFeedObject-activity-at|Styles applied to the activity at section.|
  |sharedContent|.SCFeedObject-shared-content|Styles applied to the feed obj shared content element.|
- |deleted|.SCFeedObject-deleted|Styles applied to the feed obj when is deleted (visible only for admin and moderator).|
+ |subContent|.SCFeedObject-sub-content|Styles applied to the sub content (container placed immediately after the content, similar to a footer). Wrap the contributors and the follow button.|
+ |followButton|.SCFeedObject-follow-button|Styles applied to the follow button element.|
  |actions|.SCFeedObject-actions|Styles applied to the actions container.|
+ |activitiesContent|.SCFeedObject-activities-content|Styles applied to the activities content element.|
+ |activityAt|.SCFeedObject-activity-at|Styles applied to the activity at section.|
+ |deleted|.SCFeedObject-deleted|Styles applied to the feed obj when is deleted (visible only for admin and moderator).|
 
  * @param props
  */
@@ -315,6 +346,11 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
     hideShareAction = false,
     hideFollowAction = false,
     hideParticipantsPreview = false,
+    FeedObjectSkeletonProps = {elevation: 0},
+    ContributionActionsMenuProps = {},
+    MediasPreviewProps = {},
+    PollObjectProps = {elevation: 0},
+    ContributorsFeedObjectProps = {},
     ...rest
   } = props;
 
@@ -322,6 +358,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
   const scContext: SCContextType = useSCContext();
   const scRoutingContext: SCRoutingContextType = useSCRouting();
   const scUserContext: SCUserContextType = useSCUser();
+  const {enqueueSnackbar} = useSnackbar();
 
   // RETRIVE OBJECTS
   const {obj, setObj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
@@ -390,6 +427,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
         onDeleteContribution={handleDelete}
         onRestoreContribution={handleRestore}
         onSuspendNotificationContribution={handleSuspendNotification}
+        {...ContributionActionsMenuProps}
       />
     );
   }
@@ -471,6 +509,9 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
       })
       .catch((error) => {
         Logger.error(SCOPE_SC_UI, error);
+        enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
+          variant: 'error'
+        });
       });
   }
 
@@ -526,6 +567,9 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
       })
       .catch((error) => {
         Logger.error(SCOPE_SC_UI, error);
+        enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
+          variant: 'error'
+        });
       });
   }
 
@@ -678,12 +722,12 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
                   __html: template === FeedObjectTemplateType.PREVIEW ? obj.summary : getContributionHtml(obj, scRoutingContext.url)
                 }}
               />
-              <MediasPreview medias={obj.medias} />
-              {obj['poll'] && <PollObject feedObject={obj} pollObject={obj['poll']} onChange={handleChangePoll} elevation={0} />}
+              <MediasPreview medias={obj.medias} {...PollObjectProps} />
+              {obj['poll'] && <PollObject feedObject={obj} pollObject={obj['poll']} onChange={handleChangePoll} {...PollObjectProps} />}
               <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2} className={classes.subContent}>
                 {!hideParticipantsPreview && (
                   <LazyLoad once>
-                    <ContributorsFeedObject feedObject={obj} feedObjectType={obj.type} />
+                    <ContributorsFeedObject feedObject={obj} feedObjectType={obj.type} {...ContributorsFeedObjectProps} />
                   </LazyLoad>
                 )}
                 {scUserContext.user && obj.author.id !== scUserContext.user.id && !hideFollowAction && !obj.deleted && (
@@ -732,7 +776,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
             )}
           </Box>
         ) : (
-          <FeedObjectSkeleton template={template} elevation={0} />
+          <FeedObjectSkeleton template={template} {...FeedObjectSkeletonProps} />
         )}
       </React.Fragment>
     );
@@ -780,15 +824,15 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
                   </Typography>
                 </Link>
               )}
-              <MediasPreview medias={obj.medias} />
+              <MediasPreview medias={obj.medias} {...PollObjectProps} />
               <Link to={scRoutingContext.url(feedObjectType, obj)} className={classes.sharedContent}>
                 <Typography component="div" className={classes.text} variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: obj.html}} />
               </Link>
-              {obj['poll'] && <PollObject feedObject={obj} pollObject={obj['poll']} onChange={handleChangePoll} elevation={0} />}
+              {obj['poll'] && <PollObject feedObject={obj} pollObject={obj['poll']} onChange={handleChangePoll} {...PollObjectProps} />}
             </CardContent>
           </React.Fragment>
         ) : (
-          <FeedObjectSkeleton template={template} elevation={0} />
+          <FeedObjectSkeleton template={template} {...FeedObjectSkeletonProps} />
         )}
       </React.Fragment>
     );
@@ -829,7 +873,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
             />
           </ListItem>
         ) : (
-          <FeedObjectSkeleton elevation={0} />
+          <FeedObjectSkeleton {...FeedObjectSkeletonProps} />
         )}
       </React.Fragment>
     );

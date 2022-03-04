@@ -36,7 +36,6 @@ const Root = styled(Card, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   marginBottom: theme.spacing(2),
-  padding: 2,
   [`& .${classes.cardHeader}`]: {
     display: 'flex',
     alignItems: 'start',
