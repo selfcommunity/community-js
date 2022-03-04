@@ -101,11 +101,6 @@ export default function FollowCategoryButton(props: FollowCategoryButtonProps): 
       });
   };
 
-  // User anonymous
-  if (!scUserContext.user) {
-    return null;
-  }
-
   return (
     <FollowButton
       size="small"

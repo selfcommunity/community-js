@@ -134,9 +134,7 @@ export default function CategoriesFollowed(props: CategoriesListProps): JSX.Elem
    * On mount, fetches the list of categories followed
    */
   useEffect(() => {
-    if (scUserContext.user) {
-      fetchCategoriesFollowed();
-    }
+    fetchCategoriesFollowed();
   }, []);
 
   /**
@@ -221,8 +219,5 @@ export default function CategoriesFollowed(props: CategoriesListProps): JSX.Elem
   if (autoHide && !total) {
     return null;
   }
-  if (scUserContext.user) {
-    return <Root className={classNames(classes.root, className)}>{c}</Root>;
-  }
-  return null;
+  return <Root className={classNames(classes.root, className)}>{c}</Root>;
 }
