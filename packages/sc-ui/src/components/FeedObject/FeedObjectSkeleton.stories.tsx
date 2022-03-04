@@ -38,7 +38,7 @@ export default {
   args: {
     elevation: 1,
     variant: 'elevation',
-    template: FeedObjectTemplateType.SNIPPET
+    template: FeedObjectTemplateType.DETAIL
   }
 } as ComponentMeta<typeof FeedObjectSkeleton>;
 

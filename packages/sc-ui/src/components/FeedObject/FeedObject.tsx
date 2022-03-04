@@ -11,7 +11,6 @@ import {
   CardProps,
   Collapse,
   Grid,
-  IconButton,
   ListItem,
   ListItemAvatar,
   ListItemText,
@@ -30,7 +29,6 @@ import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import PollObject from './Poll';
 import ContributorsFeedObject from './Contributors';
 import LazyLoad from 'react-lazyload';
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import {
   Endpoints,
   http,
@@ -80,18 +78,21 @@ const PREFIX = 'SCFeedObject';
 
 const classes = {
   root: `${PREFIX}-root`,
+  header: `${PREFIX}-header`,
   title: `${PREFIX}-title`,
   username: `${PREFIX}-username`,
   category: `${PREFIX}-category`,
   content: `${PREFIX}-content`,
+  subContent: `${PREFIX}-subcontent`,
   text: `${PREFIX}-text`,
   snippetContent: `${PREFIX}-snippet-content`,
   tag: `${PREFIX}-tag`,
   activitiesContent: `${PREFIX}-activities-content`,
   followButton: `${PREFIX}-follow-button`,
   activityAt: `${PREFIX}-activity-at`,
-  sharedContentFeedObject: `${PREFIX}-shared-content-feed-object`,
-  deleted: `${PREFIX}-deleted`
+  sharedContent: `${PREFIX}-shared-content`,
+  deleted: `${PREFIX}-deleted`,
+  actions: `${PREFIX}-actions`
 };
 
 const Root = styled(Card, {
@@ -101,11 +102,15 @@ const Root = styled(Card, {
 })(({theme}) => ({
   marginBottom: theme.spacing(2),
   [`& .${PREFIX}-share`]: {
-    backgroundColor: '#f8f8f8'
+    margin: '0px ${theme.spacing(2)}'
+  },
+  [`& .${classes.header}`]: {
+    paddingBottom: 0
   },
   [`& .${classes.title}`]: {
     fontWeight: 600,
-    color: '#3e3e3e'
+    color: '#3e3e3e',
+    padding: `0px ${theme.spacing(2)}`
   },
   [`& .${classes.username}`]: {
     color: '#000',
@@ -130,15 +135,14 @@ const Root = styled(Card, {
     }
   },
   [`& .${classes.content}`]: {
-    paddingTop: 0,
-    paddingBottom: 0
+    padding: `${theme.spacing()} 0px`
   },
   [`& .${classes.text}`]: {
+    padding: `${theme.spacing()} ${theme.spacing(2)}`,
+    marginBottom: 0,
     '& a': {
       color: theme.palette.text.primary
-    },
-    padding: '5px 1px',
-    marginBottom: 0
+    }
   },
   [`& .${classes.snippetContent}`]: {
     textDecoration: 'none',
@@ -151,6 +155,9 @@ const Root = styled(Card, {
   },
   [`& .${classes.activitiesContent}`]: {
     paddingBottom: '3px'
+  },
+  [`& .${classes.subContent}`]: {
+    padding: `0px ${theme.spacing(2)}`
   },
   [`& .${classes.followButton}`]: {
     backgroundColor: theme.palette.grey[100],
@@ -165,8 +172,9 @@ const Root = styled(Card, {
     textDecoration: 'none',
     color: '#939598'
   },
-  [`& .${classes.sharedContentFeedObject}`]: {
+  [`& .${classes.sharedContent}`]: {
     textDecoration: 'none',
+    padding: theme.spacing(),
     color: theme.palette.grey[700]
   },
   [`& .${classes.deleted}`]: {
@@ -174,6 +182,9 @@ const Root = styled(Card, {
     '&:hover': {
       opacity: 1
     }
+  },
+  [`& .${classes.actions}`]: {
+    padding: '1px 0px'
   },
   '& .MuiSvgIcon-root': {
     width: '0.7em',
@@ -272,17 +283,21 @@ export interface FeedObjectProps extends CardProps {
  |Rule Name|Global class|Description|
  |---|---|---|
  |root|.SCFeedObject-root|Styles applied to the root element.|
+ |header|.SCFeedObject-header|Styles applied to the header of the card.|
  |title|.SCFeedObject-title|Styles applied to the title element.|
  |username|.SCFeedObject-username|Styles applied to the username element.|
  |category|.SCFeedObject-category|Styles applied to the category element.|
  |content|.SCFeedObject-content|Styles applied to the content section.|
+ |subcontent|.SCFeedObject-subcontent|Styles applied to the sub content container.|
  |text|.SCFeedObject-text|Styles applied to the text element.|
  |snippetContent|.SCFeedObject-snippet-content|Styles applied to snippet content element.|
  |tag|.SCFeedObject-tag|Styles applied to the tag element.|
  |activitiesContent|.SCFeedObject-activities-content|Styles applied to the activities content element.|
  |followButton|.SCFeedObject-follow-button|Styles applied to the follow button element.|
  |activityAt|.SCFeedObject-activity-at|Styles applied to the activity at section.|
- |sharedContentFeedObject|.SCFeedObject-shared-content-feed-object|Styles applied to the feed obj shared content element.|
+ |sharedContent|.SCFeedObject-shared-content|Styles applied to the feed obj shared content element.|
+ |deleted|.SCFeedObject-deleted|Styles applied to the feed obj when is deleted (visible only for admin and moderator).|
+ |actions|.SCFeedObject-actions|Styles applied to the actions container.|
 
  * @param props
  */
@@ -607,6 +622,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
               </div>
             )}
             <CardHeader
+              classes={{root: classes.header}}
               avatar={
                 <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, obj.author)}>
                   <Avatar aria-label="recipe" src={obj.author.avatar}>
@@ -664,10 +680,10 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
               />
               <MediasPreview medias={obj.medias} />
               {obj['poll'] && <PollObject feedObject={obj} pollObject={obj['poll']} onChange={handleChangePoll} elevation={0} />}
-              <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
+              <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2} className={classes.subContent}>
                 {!hideParticipantsPreview && (
                   <LazyLoad once>
-                    <ContributorsFeedObject feedObject={obj} feedObjectType={obj.type} sx={{padding: '6px'}} />
+                    <ContributorsFeedObject feedObject={obj} feedObjectType={obj.type} />
                   </LazyLoad>
                 )}
                 {scUserContext.user && obj.author.id !== scUserContext.user.id && !hideFollowAction && !obj.deleted && (
@@ -687,7 +703,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
                 )}
               </Stack>
             </CardContent>
-            <CardActions sx={{padding: '1px 8px'}}>
+            <CardActions className={classes.actions}>
               <Actions
                 feedObject={obj}
                 feedObjectType={feedObjectType}
@@ -725,7 +741,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
       <React.Fragment>
         {obj ? (
           <React.Fragment>
-            {obj.categories && (
+            {obj.categories.length > 0 && (
               <div className={classes.category}>
                 {obj.categories.map((c) => (
                   <Link to={scRoutingContext.url(SCRoutes.CATEGORY_ROUTE_NAME, c)} key={c.id}>
@@ -735,6 +751,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
               </div>
             )}
             <CardHeader
+              classes={{root: classes.header}}
               avatar={
                 <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, obj.author)} className={classes.username}>
                   <Avatar aria-label="recipe" src={obj.author.avatar}>
@@ -764,7 +781,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
                 </Link>
               )}
               <MediasPreview medias={obj.medias} />
-              <Link to={scRoutingContext.url(feedObjectType, obj)} className={classes.sharedContentFeedObject}>
+              <Link to={scRoutingContext.url(feedObjectType, obj)} className={classes.sharedContent}>
                 <Typography component="div" className={classes.text} variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: obj.html}} />
               </Link>
               {obj['poll'] && <PollObject feedObject={obj} pollObject={obj['poll']} onChange={handleChangePoll} elevation={0} />}

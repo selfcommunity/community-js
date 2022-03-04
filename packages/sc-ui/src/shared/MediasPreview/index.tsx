@@ -17,8 +17,8 @@ const Root = styled(Box, {
   position: 'relative',
   marginTop: 0,
   marginBottom: theme.spacing(),
-  marginLeft: -23,
-  marginRight: -23
+  marginLeft: -2,
+  marginRight: -2
 }));
 export interface MediaPreviewProps {
   /**
