@@ -5,11 +5,13 @@
   "ui.common.error.url": "The url is not valid",
   "ui.common.error.email": "L'email non è valida",
   "ui.common.error.username": "Il campo username può essere composto da caratteri alfanumerici _ e -",
+  "ui.common.error.action": "Si è verificato un'errore. Riprova più tardi!",
   "ui.common.discussionWithoutText": "Vedi la discussione",
   "ui.common.postWithoutText": "Vedi il post",
   "ui.common.statusWithoutText": "Vedi lo status",
   "ui.common.commentWithoutText": "Vedi il commento",
   "ui.common.permanentLinkCopied": "Link copiato!",
+
 
   "ui.confirmDialog.title": "Sei sicuro di voler procedere?",
   "ui.confirmDialog.btnConfirm": "Si",
