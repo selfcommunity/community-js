@@ -57,6 +57,7 @@ const Root = styled(Card, {
   marginBottom: theme.spacing(1),
   borderTop: `1px solid ${theme.palette.grey['A200']}`,
   borderBottom: `1px solid ${theme.palette.grey['A200']}`,
+  boxShadow: 'none',
   '& .MuiCardHeader-root': {
     textAlign: 'center',
     marginLeft: '-11px',
@@ -147,7 +148,7 @@ export default function PollObject(props: PollObjectProps): JSX.Element {
   const [choices, setChoices] = useState(pollObject.choices);
   const [isVoting, setIsVoting] = useState<number>(null);
   const [collapsed, setCollapsed] = useState<boolean>(
-    Boolean(feedObject.type === SCFeedObjectTypologyType.DISCUSSION || feedObject.html || feedObject.medias.length)
+    Boolean(feedObject && (feedObject.type === SCFeedObjectTypologyType.DISCUSSION || feedObject.html || feedObject.medias.length))
   );
 
   // CONST
