@@ -111,6 +111,8 @@ const PREFIX = 'SCVoteObject';
 
 const classes = {
   root: `${PREFIX}-root`,
+  divider: `${PREFIX}-divider`,
+  viewVotesButton: `${PREFIX}-view-votes-button`,
   inlineVoteButton: `${PREFIX}-inlineVoteButton`
 };
 
@@ -142,6 +144,17 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
+  [`& .${classes.divider}`]: {
+    borderBottom: 0
+  },
+  [`& .${classes.viewVotesButton}`]: {
+    height: 32,
+    fontSize: 15,
+    textTransform: 'capitalize',
+    '& p': {
+      fontSize: '0.9rem'
+    }
+  },
   [`& .${classes.inlineVoteButton}`]: {
     backgroundColor: '#d5d5d5',
     padding: '0 3px',
@@ -350,7 +363,7 @@ export default function Vote(props: VoteProps): JSX.Element {
       );
     } else if (obj.vote_count <= 0) {
       audience = (
-        <Button variant="text" size="small" onClick={handleToggleVotesDialog} disabled sx={{height: 32}} color="inherit">
+        <Button variant="text" size="small" onClick={handleToggleVotesDialog} disabled color="inherit" classes={{root: classes.viewVotesButton}}>
           {renderInlineStartVoteBtn()}
           <Typography variant={'body2'} sx={{marginLeft: (theme) => theme.spacing()}}>
             {`${intl.formatMessage(messages.votes, {total: obj.vote_count})}`}
@@ -360,7 +373,7 @@ export default function Vote(props: VoteProps): JSX.Element {
     } else {
       audience = (
         <React.Fragment>
-          <Button variant="text" size="small" onClick={handleToggleVotesDialog} disabled={obj.vote_count === 0} sx={{height: 32}} color="inherit">
+          <Button variant="text" size="small" onClick={handleToggleVotesDialog} disabled={obj.vote_count === 0} color="inherit" classes={{root: classes.viewVotesButton}}>
             {renderInlineStartVoteBtn()}
             <Typography variant={'body2'} sx={{marginLeft: (theme) => theme.spacing()}}>
               {obj.voted ? (
@@ -421,7 +434,7 @@ export default function Vote(props: VoteProps): JSX.Element {
       <React.Fragment>
         {withAction && !inlineAction && (
           <React.Fragment>
-            <Divider />
+            <Divider className={classes.divider} />
             <Tooltip title={voting ? '' : obj.voted ? intl.formatMessage(messages.voteDown) : intl.formatMessage(messages.voteUp)}>
               <span>
                 <LoadingButton loading={voting} disabled={!obj} onClick={vote} color="inherit">

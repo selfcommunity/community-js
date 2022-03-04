@@ -160,7 +160,7 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
       }
       return Promise.reject();
     },
-    []
+    [state.user]
   );
 
   /**

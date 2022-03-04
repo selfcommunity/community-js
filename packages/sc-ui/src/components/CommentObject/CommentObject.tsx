@@ -59,6 +59,7 @@ const classes = {
   avatarWrap: `${PREFIX}-avatar-wrap`,
   avatar: `${PREFIX}-avatar`,
   author: `${PREFIX}-author`,
+  contentWrap: `${PREFIX}-content-wrap`,
   content: `${PREFIX}-content`,
   textContent: `${PREFIX}-text-content`,
   commentChild: `${PREFIX}-comment-child`,
@@ -97,6 +98,9 @@ const Root = styled(Box, {
       fontWeight: '600'
     }
   },
+  [`& .${classes.contentWrap}`]: {
+    marginBottom: 0
+  },
   [`& .${classes.content}`]: {
     '& .MuiCardContent-root': {
       padding: '7px 13px 7px 13px'
@@ -115,7 +119,6 @@ const Root = styled(Box, {
     paddingLeft: '70px'
   },
   [`& .${classes.btnViewPreviousComments}`]: {
-    paddingLeft: '70px',
     textTransform: 'capitalize'
   },
   [`& .${classes.commentActionsMenu}`]: {
@@ -133,6 +136,8 @@ const Root = styled(Box, {
   },
   [`& .${classes.reply}`]: {
     textTransform: 'capitalize',
+    textDecoration: 'underline',
+    textDecorationStyle: 'dotted',
     color: theme.palette.text.primary
   }
 }));
@@ -653,6 +658,7 @@ export default function CommentObject(props: CommentObjectProps): JSX.Element {
               </Link>
             </ListItemAvatar>
             <ListItemText
+              classes={{root: classes.contentWrap}}
               disableTypography
               secondary={
                 <>
@@ -726,18 +732,20 @@ export default function CommentObject(props: CommentObjectProps): JSX.Element {
                 <CommentObjectSkeleton {...rest} />
               </Box>
             ) : (
-              <Button
-                color="inherit"
-                variant="text"
-                onClick={loadLatestComment}
-                disabled={loadingLatestComments || (!feedObjectId && !feedObject)}
-                classes={{text: classNames(classes.btnViewPreviousComments, classes.commentChild)}}>
-                <FormattedMessage
-                  id={'ui.commentObject.viewLatestComment'}
-                  defaultMessage={'ui.commentObject.viewLatestComment'}
-                  values={{total: comment.comment_count - comment.latest_comments?.length}}
-                />
-              </Button>
+              <Box className={classes.commentChild}>
+                <Button
+                  color="inherit"
+                  variant="text"
+                  onClick={loadLatestComment}
+                  disabled={loadingLatestComments || (!feedObjectId && !feedObject)}
+                  classes={{text: classNames(classes.btnViewPreviousComments)}}>
+                  <FormattedMessage
+                    id={'ui.commentObject.viewLatestComment'}
+                    defaultMessage={'ui.commentObject.viewLatestComment'}
+                    values={{total: comment.comment_count - comment.latest_comments?.length}}
+                  />
+                </Button>
+              </Box>
             )}
           </>
         )}

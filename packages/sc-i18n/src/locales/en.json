@@ -162,7 +162,8 @@
   "ui.feedObject.follow": "Follow",
   "ui.feedObject.unfollow": "Unfollow",
 
-  "ui.feedObject.poll.title": "Related Poll",
+  "ui.feedObject.poll.showPoll": "View Poll",
+  "ui.feedObject.poll.hidePoll": "Hide Poll",
   "ui.feedObject.poll.expDate": "Vote one of the following choices by ",
   "ui.feedObject.poll.closed": "Closed",
   "ui.feedObject.poll.voters": "{total, plural, =0 {# voters} one {# voter} other {# voters}}",

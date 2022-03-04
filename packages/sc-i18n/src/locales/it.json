@@ -157,12 +157,13 @@
   "ui.feedObject.votesDialog.noOtherLikes": "Non ci sono altri voti.",
   "ui.feedObject.sharesDialog.title": "Condivisioni",
   "ui.feedObject.sharesDialog.noOtherLikes": "Non ci sono altre condivisioni.",
-  "ui.feedObject.contributors.title": "{total, plural, =0 {# Partecipanti} one {# Partecipante} other {# ContribuPartecipantitors}}",
+  "ui.feedObject.contributors.title": "{total, plural, =0 {# Partecipanti} one {# Partecipante} other {# Partecipanti}}",
   "ui.feedObject.contributors.noOtherContributors": "Non ci sono altri partecipanti.",
   "ui.feedObject.follow": "Segui",
   "ui.feedObject.unfollow": "Non seguire più",
 
-  "ui.feedObject.poll.title": "Sondaggio Correlato",
+  "ui.feedObject.poll.showPoll": "Vedi Sondaggio",
+  "ui.feedObject.poll.hidePoll": "Nascondi Sondaggio",
   "ui.feedObject.poll.expDate": "Vota una delle seguenti scelte entro il ",
   "ui.feedObject.poll.closed": "Chiuso",
   "ui.feedObject.poll.voters": "{total, plural, =0 {# votanti} one {# votante} other {# votanti}}",
@@ -196,13 +197,13 @@
   "ui.commentsObject.loadPreviousComments": "Vedi commenti precedenti",
   "ui.commentsObject.numberOfComments": "{loaded} di {total}",
 
-  "ui.commentObject.reply": "Commenta",
+  "ui.commentObject.reply": "Replica",
   "ui.commentObject.voteUp": "Apprezza",
   "ui.commentObject.voteDown": "Non apprezzare",
   "ui.commentObject.votes": "{total, plural, =0 {# Voti} one {# Voto} other {# Voti}}",
-  "ui.commentObject.viewLatestComment": "Vedi {total, plural, =0 {# Comments} one {# Comment} other {# Comments}} precedenti",
+  "ui.commentObject.viewLatestComment": "Vedi {total, plural, =0 {# Commenti} un {# Commento} other {# Commenti}} precedenti",
 
-  "ui.commentObject.replyComment.reply": "Commenta",
+  "ui.commentObject.replyComment.reply": "Replica",
   "ui.commentObject.replyComment.save": "Save",
   "ui.commentObject.replyComment.cancel": "Cancel",
 
