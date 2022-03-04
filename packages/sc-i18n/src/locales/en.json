@@ -5,6 +5,7 @@
   "ui.common.error.url": "The url is not valid",
   "ui.common.error.email": "Invalid email",
   "ui.common.error.username": "Invalid username",
+  "ui.common.error.action": "An error has occurred. Try later!",
   "ui.common.discussionWithoutText": "View discussion",
   "ui.common.postWithoutText": "View post",
   "ui.common.statusWithoutText": "View status",

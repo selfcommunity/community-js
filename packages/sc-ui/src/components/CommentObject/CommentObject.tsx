@@ -35,6 +35,7 @@ import {
   SCContextType,
   SCRoutes
 } from '@selfcommunity/core';
+import {useSnackbar} from 'notistack';
 
 const messages = defineMessages({
   reply: {
@@ -293,6 +294,7 @@ export default function CommentObject(props: CommentObjectProps): JSX.Element {
   const scContext: SCContextType = useSCContext();
   const scUserContext: SCUserContextType = useContext(SCUserContext);
   const scRoutingContext: SCRoutingContextType = useSCRouting();
+  const {enqueueSnackbar} = useSnackbar();
   const intl = useIntl();
 
   // STATE
@@ -468,6 +470,9 @@ export default function CommentObject(props: CommentObjectProps): JSX.Element {
       })
       .catch((error) => {
         Logger.error(SCOPE_SC_UI, error);
+        enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
+          variant: 'error'
+        });
       });
   }
 
@@ -512,6 +517,9 @@ export default function CommentObject(props: CommentObjectProps): JSX.Element {
       })
       .catch((error) => {
         Logger.error(SCOPE_SC_UI, error);
+        enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
+          variant: 'error'
+        });
       });
   }
 
@@ -618,6 +626,9 @@ export default function CommentObject(props: CommentObjectProps): JSX.Element {
       })
       .catch((error) => {
         Logger.error(SCOPE_SC_UI, error);
+        enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
+          variant: 'error'
+        });
       });
   }
 

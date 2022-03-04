@@ -27,6 +27,7 @@ import {Box, Button, CardProps, Stack} from '@mui/material';
 import {CommentsOrderBy} from '../../types/comments';
 import classNames from 'classnames';
 import CustomAdv from '../CustomAdv';
+import { useSnackbar } from 'notistack';
 
 const messages = defineMessages({
   noOtherComment: {
@@ -279,6 +280,7 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
   const scPreferences: SCPreferencesContextType = useSCPreferences();
+  const {enqueueSnackbar} = useSnackbar();
 
   // STATE
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -578,6 +580,9 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
       })
       .catch((error) => {
         Logger.error(SCOPE_SC_UI, error);
+        enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
+          variant: 'error'
+        });
       });
   }
 
