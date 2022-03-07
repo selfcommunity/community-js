@@ -48,12 +48,12 @@ export default function SCPreferencesProvider({children = null}: {children: Reac
       .then(function (results) {
         setPreferences(results[0]);
         setFeatures(results[1]);
+        setLoading(false);
       })
       .catch((_error) => {
         Logger.error(SCOPE_SC_CORE, _error);
         setError(_error);
-      })
-      .finally(() => setLoading(false));
+      });
   }, []);
 
   /**
