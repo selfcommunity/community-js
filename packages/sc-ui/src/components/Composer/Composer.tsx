@@ -58,6 +58,7 @@ import {
 } from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {COMPOSER_POLL_MIN_CHOICES, COMPOSER_TITLE_MAX_LENGTH, COMPOSER_TYPE_DISCUSSION, COMPOSER_TYPE_POST} from '../../constants/Composer';
+import {MEDIA_TYPE_SHARE} from '../../constants/Media';
 import LoadingButton from '@mui/lab/LoadingButton';
 import Audience from './Audience';
 import Categories from './Categories';
@@ -328,7 +329,8 @@ const COMPOSER_INITIAL_STATE = {
   addressingError: null,
   medias: [],
   poll: null,
-  location: null
+  location: null,
+  error: null
 };
 
 const reducer = (state, action) => {
@@ -343,6 +345,7 @@ const reducer = (state, action) => {
 };
 /**
  > API documentation for the Community-UI Composer component. Learn about the available props and the CSS API.
+ > The Composer component contains the logic around the creation of [Post](https://developers.selfcommunity.com/docs/apireference/v2/post/create_a_post) and [Discussion](https://developers.selfcommunity.com/docs/apireference/v2/discussion/create_a_discussion) objects.
  *
  #### Import
  ```jsx
@@ -407,7 +410,7 @@ export default function Composer(props: ComposerProps): JSX.Element {
   const [mediaChunks, setMediaChunks] = useState<SCMediaChunkType[]>([]);
 
   const [state, dispatch] = useReducer(reducer, {...COMPOSER_INITIAL_STATE, ...defaultValue, view, key: random()});
-  const {key, id, type, title, titleError, text, categories, addressing, audience, medias, poll, pollError, location} = state;
+  const {key, id, type, title, titleError, text, categories, addressing, audience, medias, poll, pollError, location, error} = state;
   const addMedia: Function = (media: SCMediaType) => {
     dispatch({type: 'medias', value: [...medias, media]});
   };
@@ -696,6 +699,7 @@ export default function Composer(props: ComposerProps): JSX.Element {
   };
 
   /* Renderers */
+  const hasMediaShare = useMemo(() => medias.findIndex((m) => m.type === MEDIA_TYPE_SHARE) !== -1, [medias]);
 
   const renderMediaAdornment = (mediaObjectType: SCMediaObjectType): JSX.Element => {
     return (
@@ -944,6 +948,11 @@ export default function Composer(props: ComposerProps): JSX.Element {
           <div className={classes.block}>
             <Categories key={`${key}-categories`} onChange={handleChange('categories')} defaultValue={categories} disabled={isSubmitting} />
           </div>
+          {error && (
+            <Typography className={classes.block} color="error">
+              {error}
+            </Typography>
+          )}
         </DialogContent>
         <DialogActions className={classes.actions}>
           <Typography align="left">
@@ -953,15 +962,15 @@ export default function Composer(props: ComposerProps): JSX.Element {
                 <mediaObjectType.editButton
                   key={mediaObjectType.name}
                   onClick={handleChangeView(mediaObjectType.name)}
-                  disabled={isSubmitting}
+                  disabled={isSubmitting || hasMediaShare}
                   color={medias.filter(mediaObjectType.filter).length > 0 ? 'primary' : 'default'}
                 />
               ))}
-            {preferences[SCPreferences.ADDONS_VIDEO_UPLOAD_ENABLED] && (
-              <IconButton aria-label="add video" size="medium">
-                <VideoIcon />
-              </IconButton>
-            )}
+            {/*{preferences[SCPreferences.ADDONS_VIDEO_UPLOAD_ENABLED] && (*/}
+            {/*  <IconButton aria-label="add video" size="medium">*/}
+            {/*    <VideoIcon />*/}
+            {/*  </IconButton>*/}
+            {/*)}*/}
             {preferences[SCPreferences.ADDONS_POLLS_ENABLED] && (
               <IconButton aria-label="add poll" color={poll ? 'primary' : 'default'} disabled={isSubmitting} onClick={handleChangeView(POLL_VIEW)}>
                 <Badge className={classes.badgeError} badgeContent={pollError ? <ErrorIcon fontSize="small" /> : null} color="error">
