@@ -45,7 +45,7 @@ const Template: ComponentStory<typeof UserProfileTemplate> = (args) => {
 export const Main = Template.bind({});
 
 Main.args = {
-  userId: 1
+  userId: 115
 };
 
 export const Me = Template.bind({});

@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Menu from '@mui/material/Menu';
 import Tooltip from '@mui/material/Tooltip';
 import {Button, ListItem, ListItemText} from '@mui/material';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import Icon from '@mui/material/Icon';
 import {styled} from '@mui/material/styles';
 import {FeedObjectActivitiesType} from '../../../types/feedObject';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
@@ -124,7 +124,7 @@ export default function ActivitiesMenu(props: ActivitiesMenuProps) {
       <Box className={classes.selector}>
         <Tooltip
           title={<FormattedMessage id="ui.feedObject.activitiesMenu.tooltipTitle" defaultMessage="ui.feedObject.activitiesMenu.tooltipTitle" />}>
-          <Button variant="text" size="small" onClick={handleClick} endIcon={<ExpandMoreIcon />} color="inherit">
+          <Button variant="text" size="small" onClick={handleClick} endIcon={<Icon>expand_more</Icon>} color="inherit">
             {selectedActivities === FeedObjectActivitiesType.CONNECTIONS_COMMENTS && followEnabled
               ? intl.formatMessage(messages.followedComments)
               : intl.formatMessage(messages[`${StringUtils.camelCase(selectedActivities)}`])}

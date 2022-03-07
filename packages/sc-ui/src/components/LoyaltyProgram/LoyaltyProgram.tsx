@@ -4,7 +4,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import {Button, CardActions, Box, Typography, Grid} from '@mui/material';
 import {Endpoints, http, SCUserContext, SCUserContextType} from '@selfcommunity/core';
-import CardMembershipOutlinedIcon from '@mui/icons-material/CardMembershipOutlined';
+import Icon from '@mui/material/Icon';
 import {AxiosResponse} from 'axios';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import LoyaltyProgramDialog from './LoyaltyProgramDialog';
@@ -168,7 +168,7 @@ export default function LoyaltyProgram(props: LoyaltyProgramProps): JSX.Element 
         <Grid container spacing={2} className={classes.cardHeader}>
           <Grid item>
             <Box className={classes.pointsIcon}>
-              <CardMembershipOutlinedIcon />
+              <Icon>card_membership</Icon>
             </Box>
           </Grid>
           <Grid item xs={12} sm container>

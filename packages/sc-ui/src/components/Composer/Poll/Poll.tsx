@@ -2,9 +2,7 @@ import React, {forwardRef, useEffect, useState} from 'react';
 import {Box, Button, Checkbox, Divider, FormControlLabel, FormGroup, IconButton, TextField, Tooltip, Typography} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import DeleteIcon from '@mui/icons-material/DeleteOutlined';
-import ChoiceIcon from '@mui/icons-material/CheckOutlined';
-import AddIcon from '@mui/icons-material/AddOutlined';
+import Icon from '@mui/material/Icon';
 import {ReactSortable} from 'react-sortablejs';
 import InputAdornment from '@mui/material/InputAdornment';
 import {DatePicker, LocalizationProvider} from '@mui/lab';
@@ -195,7 +193,7 @@ export default (props: PollProps): JSX.Element => {
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <ChoiceIcon />
+                    <Icon>check</Icon>
                   </InputAdornment>
                 ),
                 endAdornment: (
@@ -210,7 +208,7 @@ export default (props: PollProps): JSX.Element => {
                       }>
                       <span>
                         <IconButton onClick={handleDeleteChoice(index)} disabled={choices.length <= COMPOSER_POLL_MIN_CHOICES}>
-                          <DeleteIcon />
+                          <Icon>delete_outline</Icon>
                         </IconButton>
                       </span>
                     </Tooltip>
@@ -223,7 +221,7 @@ export default (props: PollProps): JSX.Element => {
       </Box>
       <Box className={classes.choiceNew}>
         <Button variant="outlined" onClick={handleAddChoice}>
-          <AddIcon />
+          <Icon>add</Icon>
           <FormattedMessage id="ui.composer.poll.choice.add" defaultMessage="ui.composer.choice.add" />
         </Button>
       </Box>

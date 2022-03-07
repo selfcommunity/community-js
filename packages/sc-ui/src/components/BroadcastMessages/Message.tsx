@@ -1,7 +1,7 @@
 import React, {useContext, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Avatar, Card, CardContent, CardHeader, CardMedia, CardProps, Chip, CircularProgress, Fade, IconButton, Typography} from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
+import Icon from '@mui/material/Icon';
 import {
   Endpoints,
   http,
@@ -126,7 +126,7 @@ export default function Message(props: MessageProps): JSX.Element {
           avatar={<Avatar alt={preferences[SCPreferences.TEXT_APPLICATION_NAME]} src={preferences[SCPreferences.LOGO_NAVBAR_LOGO]} />}
           action={
             <IconButton aria-label="close" onClick={handleClose} disabled={closing}>
-              {closing ? <CircularProgress size={20} /> : <CloseIcon />}
+              {closing ? <CircularProgress size={20} /> : <Icon>close</Icon>}
             </IconButton>
           }
           title={

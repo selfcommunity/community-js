@@ -3,9 +3,7 @@ import {styled} from '@mui/material/styles';
 import {Menu, MenuItem, ListItemIcon, Typography, Button, Popover, Divider, IconButton, Box} from '@mui/material';
 import {Endpoints, http, SCUserContext, SCUserContextType, SCUserType} from '@selfcommunity/core';
 import {AxiosResponse} from 'axios';
-import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
-import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
+import Icon from '@mui/material/Icon';
 import {FormattedMessage} from 'react-intl';
 import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
 import classNames from 'classnames';
@@ -177,7 +175,7 @@ export default function ChangeCover(props: ChangeCoverProps): JSX.Element {
         {hasCover && (
           <MenuItem className={classes.menuItem} onClick={() => setOpenDeleteCoverDialog(true)}>
             <ListItemIcon>
-              <DeleteOutlineOutlinedIcon fontSize="small" />
+              <Icon fontSize="small">delete_outline</Icon>
             </ListItemIcon>
             <FormattedMessage id="ui.changeCover.button.delete" defaultMessage="ui.changeCover.button.delete" />
           </MenuItem>
@@ -188,14 +186,14 @@ export default function ChangeCover(props: ChangeCoverProps): JSX.Element {
             <CircularProgress size={15} />
           ) : (
             <ListItemIcon>
-              <AddCircleOutlineOutlinedIcon fontSize="small" />
+              <Icon fontSize="small">add_circle_outline</Icon>
             </ListItemIcon>
           )}
           <FormattedMessage id="ui.changeCover.button.upload" defaultMessage="ui.changeCover.button.upload" />
         </MenuItem>
       </Menu>
       <IconButton className={classes.helpPopover} color="primary" aria-label="upload picture" component="span" onClick={handleClickHelpButton}>
-        <HelpOutlineOutlinedIcon />
+        <Icon fontSize="small">help_outline</Icon>
       </IconButton>
       {isOpen && (
         <Popover

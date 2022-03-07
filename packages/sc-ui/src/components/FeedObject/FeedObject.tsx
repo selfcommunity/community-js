@@ -24,7 +24,7 @@ import Bullet from '../../shared/Bullet';
 import Tags from '../../shared/Tags';
 import MediasPreview, {MediaPreviewProps} from '../../shared/MediasPreview';
 import Actions from './Actions';
-import WorldIcon from '@mui/icons-material/Public';
+import Icon from '@mui/material/Icon';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import PollObject, {PollObjectProps} from './Poll';
 import ContributorsFeedObject, {ContributorsFeedObjectProps} from './Contributors';
@@ -708,7 +708,9 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
                       <Tags tags={obj.addressing} />
                     ) : (
                       <Tooltip title={`${intl.formatMessage(messages.visibleToAll)}`}>
-                        <WorldIcon color="disabled" fontSize="small" />
+                        <Icon color="disabled" fontSize="small">
+                          public
+                        </Icon>
                       </Tooltip>
                     )}
                   </div>

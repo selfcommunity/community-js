@@ -3,8 +3,7 @@ import BaseDialog from '../../../../shared/BaseDialog';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {Box, Button, Divider, IconButton, List, Tooltip, Typography} from '@mui/material';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import VoteIcon from '@mui/icons-material/ThumbUpOutlined';
-import VoteFilledIcon from '@mui/icons-material/ThumbUpTwoTone';
+import Icon from '@mui/material/Icon';
 import Skeleton from '@mui/material/Skeleton';
 import CircularProgress from '@mui/material/CircularProgress';
 import LoadingButton from '@mui/lab/LoadingButton';
@@ -328,9 +327,13 @@ export default function Vote(props: VoteProps): JSX.Element {
     const {loading, voting} = state;
     if (!canVote || (withAction && !inlineAction)) {
       return obj.voted ? (
-        <VoteFilledIcon fontSize="medium" color="primary" className={classes.inlineVoteButton} />
+        <Icon fontSize="medium" color="primary" className={classes.inlineVoteButton}>
+          thumb_up
+        </Icon>
       ) : (
-        <VoteIcon fontSize="medium" sx={{marginTop: '-1px'}} />
+        <Icon fontSize="medium" sx={{marginTop: '-1px'}}>
+          thumb_up_off_alt
+        </Icon>
       );
     }
     return (
@@ -340,7 +343,7 @@ export default function Vote(props: VoteProps): JSX.Element {
             {voting ? (
               <CircularProgress size={14} style={{marginTop: -7}} />
             ) : (
-              <React.Fragment>{obj.voted ? <VoteFilledIcon fontSize="small" /> : <VoteIcon fontSize="small" />}</React.Fragment>
+              <React.Fragment>{obj.voted ? <Icon fontSize="small">thumb_up</Icon> : <Icon fontSize="small">thumb_up_off_alt</Icon>}</React.Fragment>
             )}
           </IconButton>
         </span>
@@ -373,7 +376,13 @@ export default function Vote(props: VoteProps): JSX.Element {
     } else {
       audience = (
         <React.Fragment>
-          <Button variant="text" size="small" onClick={handleToggleVotesDialog} disabled={obj.vote_count === 0} color="inherit" classes={{root: classes.viewVotesButton}}>
+          <Button
+            variant="text"
+            size="small"
+            onClick={handleToggleVotesDialog}
+            disabled={obj.vote_count === 0}
+            color="inherit"
+            classes={{root: classes.viewVotesButton}}>
             {renderInlineStartVoteBtn()}
             <Typography variant={'body2'} sx={{marginLeft: (theme) => theme.spacing()}}>
               {obj.voted ? (
@@ -438,7 +447,13 @@ export default function Vote(props: VoteProps): JSX.Element {
             <Tooltip title={voting ? '' : obj.voted ? intl.formatMessage(messages.voteDown) : intl.formatMessage(messages.voteUp)}>
               <span>
                 <LoadingButton loading={voting} disabled={!obj} onClick={vote} color="inherit">
-                  {obj.voted ? <VoteFilledIcon fontSize={'large'} color="primary" /> : <VoteIcon fontSize={'large'} />}
+                  {obj.voted ? (
+                    <Icon fontSize={'large'} color="primary">
+                      thumb_up
+                    </Icon>
+                  ) : (
+                    <Icon fontSize={'large'}>thumb_up_off_alt</Icon>
+                  )}
                 </LoadingButton>
               </span>
             </Tooltip>

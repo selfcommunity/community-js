@@ -8,7 +8,7 @@ import {FormattedMessage} from 'react-intl';
 import CentralProgress from '../../shared/CentralProgress';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import User from '../User';
-import FaceIcon from '@mui/icons-material/Face';
+import Icon from '@mui/material/Icon';
 import {Endpoints, http, SCCategoryType, SCUserContext, SCUserContextType, SCUserType, useSCFetchCategory} from '@selfcommunity/core';
 import AvatarGroupSkeleton from '../Skeleton/AvatarGroupSkeleton';
 import classNames from 'classnames';
@@ -232,7 +232,7 @@ export default function CategoryHeader(props: CategoryHeaderProps): JSX.Element 
           <FollowCategoryButton category={scCategory} onFollow={handleFollowCategory} {...FollowCategoryButtonProps} />
           <Typography className={classes.followedByCounter} component="div">
             <FormattedMessage id="ui.categoryHeader.followedBy" defaultMessage="ui.categoryHeader.followedBy" />{' '}
-            <Chip icon={<FaceIcon />} label={loading ? '...' : total} />
+            <Chip icon={<Icon>face</Icon>} label={loading ? '...' : total} />
           </Typography>
         </Grid>
         <Grid item xs={12} className={classes.followedByAvatars}>
@@ -246,9 +246,14 @@ export default function CategoryHeader(props: CategoryHeaderProps): JSX.Element 
                     {followers.map((c: SCUserType) => (
                       <Avatar key={c.id} alt={c.username} src={c.avatar} />
                     ))}
-                    {[...Array(Math.max(0, total - followers.length))].map((x, i) => ( // Add max to 0 to prevent creation of array with negative index during state update
-                      <Avatar key={i}></Avatar>
-                    ))}
+                    {[...Array(Math.max(0, total - followers.length))].map(
+                      (
+                        x,
+                        i // Add max to 0 to prevent creation of array with negative index during state update
+                      ) => (
+                        <Avatar key={i}></Avatar>
+                      )
+                    )}
                   </AvatarGroup>
                 </Button>
               ) : (

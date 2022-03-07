@@ -11,7 +11,7 @@ import MediaChunkUploader from '../../shared/MediaChunkUploader';
 import ChunkedUploady from '@rpldy/chunked-uploady';
 import {SCMediaChunkType} from '../../types/media';
 import UploadDropZone from '@rpldy/upload-drop-zone';
-import EmojiIcon from '@mui/icons-material/SentimentSatisfiedOutlined';
+import Icon from '@mui/material/Icon';
 import Picker from 'emoji-picker-react';
 import {random} from '../../utils/string';
 import classNames from 'classnames';
@@ -330,7 +330,7 @@ export default function Editor(props: EditorProps): JSX.Element {
       <Stack className={classes.actions}>
         <div>
           <IconButton size="small" onClick={handleToggleEmoji}>
-            <EmojiIcon />
+            <Icon>sentiment_satisfied_alt</Icon>
           </IconButton>
           <Popover
             open={Boolean(emojiAnchorEl)}

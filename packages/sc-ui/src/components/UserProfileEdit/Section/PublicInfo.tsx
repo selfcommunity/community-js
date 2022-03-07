@@ -1,8 +1,7 @@
 import React, {ChangeEvent, useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Box, CircularProgress, IconButton, InputAdornment, MenuItem, TextField} from '@mui/material';
-import EditIcon from '@mui/icons-material/EditOutlined';
-import SaveIcon from '@mui/icons-material/CheckOutlined';
+import Icon from '@mui/material/Icon';
 import {defineMessages, useIntl} from 'react-intl';
 import {Endpoints, http, SCUserContextType, SCUserFields, SCUserType, StringUtils, useSCUser} from '@selfcommunity/core';
 import {DEFAULT_FIELDS} from '../../../constants/UserProfile';
@@ -174,13 +173,13 @@ export default function PublicInfo(props: PublicInfoProps): JSX.Element {
           <InputAdornment position="end">
             {!isEditing ? (
               <IconButton onClick={handleEdit(field)} edge="end">
-                <EditIcon />
+                <Icon>edit</Icon>
               </IconButton>
             ) : isSaving ? (
               <CircularProgress size={10} />
             ) : (
               <IconButton onClick={handleSave(field)} edge="end" color={user[field] === scUserContext.user[field] ? 'default' : 'primary'}>
-                <SaveIcon />
+                <Icon>check</Icon>
               </IconButton>
             )}
           </InputAdornment>

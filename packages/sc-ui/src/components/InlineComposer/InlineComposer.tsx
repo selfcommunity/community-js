@@ -18,7 +18,7 @@ import {SCMediaObjectType} from '../../types/media';
 import Paper from '@mui/material/Paper';
 import {Document, Image, Link} from '../../shared/Media';
 import Composer, {MAIN_VIEW, POLL_VIEW} from '../Composer';
-import PollIcon from '@mui/icons-material/BarChartOutlined';
+import Icon from '@mui/material/Icon';
 import {FormattedMessage} from 'react-intl';
 import {DistributiveOmit} from '@mui/types';
 import {OverrideProps} from '@mui/material/OverridableComponent';
@@ -184,7 +184,7 @@ export default function InlineComposer(props: InlineComposerProps): JSX.Element 
             ))}
           {preferences[SCPreferences.ADDONS_POLLS_ENABLED] && (
             <IconButton onClick={handleOpen(POLL_VIEW)}>
-              <PollIcon />
+              <Icon>bar_chart</Icon>
             </IconButton>
           )}
         </Box>

@@ -10,8 +10,7 @@ import {AxiosResponse} from 'axios';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import CommentObjectSkeleton from './Skeleton';
 import {LoadingButton} from '@mui/lab';
-import VoteFilledIcon from '@mui/icons-material/ThumbUpTwoTone';
-import VoteIcon from '@mui/icons-material/ThumbUpOutlined';
+import Icon from '@mui/material/Icon';
 import {CommentsOrderBy} from '../../types/comments';
 import ReplyCommentObject from './ReplyComment';
 import ContributionActionsMenu from '../../shared/ContributionActionsMenu';
@@ -334,11 +333,15 @@ export default function CommentObject(props: CommentObjectProps): JSX.Element {
         color="inherit">
         {comment.voted ? (
           <Tooltip title={<FormattedMessage id={'ui.commentObject.voteDown'} defaultMessage={'ui.commentObject.voteDown'} />}>
-            <VoteFilledIcon fontSize={'small'} color="primary" />
+            <Icon fontSize={'small'} color="primary">
+              thumb_up_alt
+            </Icon>
           </Tooltip>
         ) : (
           <Tooltip title={<FormattedMessage id={'ui.commentObject.voteUp'} defaultMessage={'ui.commentObject.voteUp'} />}>
-            <VoteIcon fontSize={'small'} color="inherit" />
+            <Icon fontSize={'small'} color="inherit">
+              thumb_up_off_alt
+            </Icon>
           </Tooltip>
         )}
       </LoadingButton>

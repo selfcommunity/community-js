@@ -1,8 +1,8 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
 import {Avatar, Box, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
-import EmojiFlagsIcon from '@mui/icons-material/EmojiFlags';
-import {grey, red} from '@mui/material/colors';
+import Icon from '@mui/material/Icon';
+import {red} from '@mui/material/colors';
 import {Link, SCNotificationDeletedForType, SCRoutingContextType, useSCRouting, StringUtils, SCRoutes} from '@selfcommunity/core';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {getContributeType, getContributionSnippet, getRouteData} from '../../../utils/contribute';
@@ -138,7 +138,7 @@ export default function KindlyNoticeFlagNotification(props: NotificationKindlyNo
         classes={{root: classNames({[classes.listItemSnippet]: isSnippetTemplate, [classes.listItemSnippetNew]: notificationObject.is_new})}}>
         <ListItemAvatar classes={{root: classes.flagIconWrap}}>
           <Avatar variant="circular" classes={{root: classNames(classes.flagIcon, {[classes.flagIconSnippet]: isSnippetTemplate})}}>
-            <EmojiFlagsIcon />
+            <Icon>outlined_flag</Icon>
           </Avatar>
         </ListItemAvatar>
         <ListItemText

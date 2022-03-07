@@ -1,7 +1,7 @@
 import React from 'react';
-import {defineMessages, injectIntl, useIntl} from 'react-intl';
+import {defineMessages, useIntl} from 'react-intl';
 import {Box, Button, Divider, Tooltip, Typography} from '@mui/material';
-import CommentIcon from '@mui/icons-material/ChatBubbleOutline';
+import Icon from '@mui/material/Icon';
 import {SCFeedObjectType, SCFeedObjectTypologyType, SCRoutingContextType, useSCFetchFeedObject, useSCRouting, Link} from '@selfcommunity/core';
 import {styled} from '@mui/material/styles';
 import {FeedObjectTemplateType} from '../../../../types/feedObject';
@@ -23,7 +23,7 @@ const PREFIX = 'SCCommentObject';
 const classes = {
   root: `${PREFIX}-root`,
   divider: `${PREFIX}-divider`,
-  viewCommentsButton: `${PREFIX}-view-comments-button`,
+  viewCommentsButton: `${PREFIX}-view-comments-button`
 };
 
 const Root = styled(Box, {
@@ -154,7 +154,7 @@ export default function Comment(props: CommentProps): JSX.Element {
           <Divider className={classes.divider} />
           <Tooltip title={`${intl.formatMessage(messages.comment)}`}>
             <Button onClick={onCommentAction} color="inherit">
-              <CommentIcon fontSize={'large'} />
+              <Icon fontSize={'large'}>chat_bubble_outline</Icon>
             </Button>
           </Tooltip>
         </React.Fragment>

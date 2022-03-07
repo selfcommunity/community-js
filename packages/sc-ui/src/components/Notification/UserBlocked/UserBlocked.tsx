@@ -2,7 +2,7 @@ import React from 'react';
 import {styled} from '@mui/material/styles';
 import {Avatar, Box, ListItem, ListItemAvatar, ListItemText, Stack, Typography} from '@mui/material';
 import {green, grey, red} from '@mui/material/colors';
-import EmojiFlagsIcon from '@mui/icons-material/EmojiFlags';
+import Icon from '@mui/material/Icon';
 import {SCNotificationBlockedUserType, SCNotificationTypologyType} from '@selfcommunity/core';
 import {defineMessages, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
@@ -148,7 +148,7 @@ export default function UserBlockedNotification(props: NotificationBlockedProps)
                 [classes.blockedIconSnippet]: isSnippetTemplate
               })
             }}>
-            <EmojiFlagsIcon />
+            <Icon>outlined_flag</Icon>
           </Avatar>
         </ListItemAvatar>
         <ListItemText

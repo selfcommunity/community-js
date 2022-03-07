@@ -1,6 +1,6 @@
 import React, {useMemo, useState} from 'react';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import ShareIcon from '@mui/icons-material/ShareOutlined';
+import Icon from '@mui/material/Icon';
 import CircularProgress from '@mui/material/CircularProgress';
 import LoadingButton from '@mui/lab/LoadingButton';
 import SharesDialog from './SharesDialog';
@@ -18,8 +18,6 @@ import {
   useSCUser
 } from '@selfcommunity/core';
 import {styled} from '@mui/material/styles';
-import ShareMenuIcon from '@mui/icons-material/RedoOutlined';
-import ShareMenuInCategoriesIcon from '@mui/icons-material/ShareOutlined';
 import {Box, Button, Divider, IconButton, ListItemText, Menu, Tooltip, Typography} from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -247,7 +245,7 @@ export default function Share(props: ShareProps): JSX.Element {
                 </Box>
               ) : (
                 <React.Fragment>
-                  <ShareIcon fontSize="small" />
+                  <Icon fontSize="small">share</Icon>
                 </React.Fragment>
               )}
             </IconButton>
@@ -295,7 +293,7 @@ export default function Share(props: ShareProps): JSX.Element {
             <Divider className={classes.divider} />
             <Tooltip title={`${intl.formatMessage(messages.share)}`}>
               <LoadingButton loading={isSharing} onClick={handleOpenShareMenu} color="inherit">
-                <ShareIcon fontSize={'large'} />
+                <Icon fontSize={'large'}>share</Icon>
               </LoadingButton>
             </Tooltip>
             <Menu
@@ -327,14 +325,14 @@ export default function Share(props: ShareProps): JSX.Element {
               anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}>
               <MenuItem onClick={() => share(false)}>
                 <ListItemIcon classes={{root: classes.shareMenuIcon}}>
-                  <ShareMenuIcon fontSize="small" />
+                  <Icon fontSize="small">redo</Icon>
                 </ListItemIcon>
                 <ListItemText primary={<FormattedMessage id="ui.feedObject.share.shareNow" defaultMessage="ui.feedObject.share.shareNow" />} />
               </MenuItem>
               {obj.categories.length > 0 && (
                 <MenuItem onClick={() => share(true)}>
                   <ListItemIcon classes={{root: classes.shareMenuIcon}}>
-                    <ShareMenuInCategoriesIcon fontSize="small" />
+                    <Icon fontSize="small">share</Icon>
                   </ListItemIcon>
                   <ListItemText
                     primary={intl.formatMessage(messages.shareInCategories, {categories: obj.categories.map((c) => c.name).join(', ')})}

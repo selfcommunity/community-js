@@ -4,13 +4,12 @@ import Card from '@mui/material/Card';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import {Box, IconButton, ImageListItemBar} from '@mui/material';
-import FolderOpenIcon from '@mui/icons-material/FolderOpen';
+import Icon from '@mui/material/Icon';
 import {Endpoints, http, SCUserContext, SCUserContextType} from '@selfcommunity/core';
 import {FormattedMessage} from 'react-intl';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import BaseDialog from '../../../shared/BaseDialog';
-import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import ConfirmDialog from '../../../shared/ConfirmDialog/ConfirmDialog';
 import classNames from 'classnames';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -236,7 +235,7 @@ export default function ChangePictureDialog(props: CPDialogProps): JSX.Element {
         <Box className={classes.upload}>
           <input type="file" onChange={() => handleUpload(event)} ref={fileInput} hidden />
           <Button variant="outlined" onClick={() => fileInput.current.click()}>
-            {loading ? <CircularProgress size={15} /> : <FolderOpenIcon fontSize="small" />}
+            {loading ? <CircularProgress size={15} /> : <Icon fontSize="small">folder_open</Icon>}
             <FormattedMessage id="ui.changePicture.button.upload" defaultMessage="ui.changePicture.button.upload" />
           </Button>
           <Typography sx={{fontSize: 10}} color="text.secondary" gutterBottom>
@@ -253,7 +252,7 @@ export default function ChangePictureDialog(props: CPDialogProps): JSX.Element {
                   position="top"
                   actionIcon={
                     <IconButton onClick={() => handleOpen(avatar.id)} size="small" sx={{color: 'rgba(255, 255, 255, 0.54)'}}>
-                      <DeleteIcon />
+                      <Icon>delete</Icon>
                     </IconButton>
                   }
                 />
