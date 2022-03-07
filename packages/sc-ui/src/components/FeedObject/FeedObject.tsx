@@ -79,9 +79,11 @@ const PREFIX = 'SCFeedObject';
 
 const classes = {
   root: `${PREFIX}-root`,
+  deleted: `${PREFIX}-deleted`,
   header: `${PREFIX}-header`,
   category: `${PREFIX}-category`,
   username: `${PREFIX}-username`,
+  activityAt: `${PREFIX}-activity-at`,
   tag: `${PREFIX}-tag`,
   content: `${PREFIX}-content`,
   titleSection: `${PREFIX}-title-section`,
@@ -92,12 +94,10 @@ const classes = {
   mediasSection: `${PREFIX}-medias-section`,
   pollsSection: `${PREFIX}-polls-section`,
   infoSection: `${PREFIX}-info-section`,
+  actions: `${PREFIX}-actions`,
+  activities: `${PREFIX}-activities`,
   activitiesContent: `${PREFIX}-activities-content`,
-  followButton: `${PREFIX}-follow-button`,
-  activityAt: `${PREFIX}-activity-at`,
-  sharedTextContent: `${PREFIX}-shared-content`,
-  deleted: `${PREFIX}-deleted`,
-  actions: `${PREFIX}-actions`
+  followButton: `${PREFIX}-follow-button`
 };
 
 const Root = styled(Card, {
@@ -190,11 +190,6 @@ const Root = styled(Card, {
   [`& .${classes.activityAt}`]: {
     textDecoration: 'none',
     color: '#939598'
-  },
-  [`& .${classes.sharedTextContent}`]: {
-    textDecoration: 'none',
-    padding: theme.spacing(),
-    color: theme.palette.grey[700]
   },
   [`& .${classes.deleted}`]: {
     opacity: 0.3,
@@ -791,7 +786,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
               />
             </CardActions>
             {template === FeedObjectTemplateType.PREVIEW && (
-              <Collapse in={expandedActivities} timeout="auto" unmountOnExit>
+              <Collapse in={expandedActivities} timeout="auto" unmountOnExit classes={{root: classes.activities}}>
                 <CardContent className={classes.activitiesContent} sx={{paddingTop: 0}}>
                   {renderActivities()}
                 </CardContent>
@@ -861,7 +856,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
                 )}
               </Box>
               <Box className={classes.textSection}>
-                <Link to={scRoutingContext.url(feedObjectType, obj)} className={classes.sharedTextContent}>
+                <Link to={scRoutingContext.url(feedObjectType, obj)} className={classes.text}>
                   <Typography component="div" className={classes.text} variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: obj.html}} />
                 </Link>
               </Box>
