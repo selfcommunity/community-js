@@ -63,7 +63,7 @@ export default function SharesDialog(props: ShareDialogProps): JSX.Element {
     if (obj && next) {
       fetchShares();
     }
-  }, [obj.id]);
+  }, [`${obj}`]);
 
   /**
    * Fetches shares
