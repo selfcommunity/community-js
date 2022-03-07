@@ -203,7 +203,7 @@
   "ui.commentObject.voteUp": "Like",
   "ui.commentObject.voteDown": "Dislike",
   "ui.commentObject.votes": "{total, plural, =0 {# Likes} one {# Like} other {# Likes}}",
-  "ui.commentObject.viewLatestComment": "View previous {total, plural, =0 {# Comments} one {# Comment} other {# Comments}} ",
+  "ui.commentObject.viewLatestComment": "{total, plural, =0{No previous comments} one {View previous comment} other {View previous # comments}} ",
 
   "ui.commentObject.replyComment.reply": "Reply",
   "ui.commentObject.replyComment.save": "Save",
