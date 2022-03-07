@@ -238,7 +238,7 @@ export default function Share(props: ShareProps): JSX.Element {
   function renderInlineStartShareBtn() {
     if (withAction && inlineAction) {
       return (
-        <Tooltip title={isSharing ? '' : 'Share'}>
+        <Tooltip title={isSharing ? '' : <FormattedMessage id="ui.feedObject.share.shareNow" defaultMessage="ui.feedObject.share.shareNow" />}>
           <span>
             <IconButton disabled={isSharing} onClick={share} edge={isSharing ? false : 'end'} size="large">
               {isSharing ? (
@@ -278,7 +278,9 @@ export default function Share(props: ShareProps): JSX.Element {
             <React.Fragment>{`${intl.formatMessage(messages.shares, {total: sharesCount})}`}</React.Fragment>
           </Typography>
         </Button>
-        {openSharesDialog && sharesCount > 0 && <SharesDialog object={obj} open={openSharesDialog} onClose={handleToggleSharesDialog} />}
+        {openSharesDialog && sharesCount > 0 && (
+          <SharesDialog feedObject={obj} open={openSharesDialog} onClose={handleToggleSharesDialog} />
+        )}
       </Box>
     );
   }
