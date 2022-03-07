@@ -43,7 +43,8 @@ const classes = {
   fixedPrimaryReply: `${PREFIX}-fixed-primary-reply`,
   fixedTopPrimaryReply: `${PREFIX}-fixed-top-primary-reply`,
   fixedBottomPrimaryReply: `${PREFIX}-fixed-bottom-primary-reply`,
-  loadMoreCommentsButton: `${PREFIX}-load-more-comments-button`
+  loadMoreCommentsButton: `${PREFIX}-load-more-comments-button`,
+  commentsCounter: `${PREFIX}-comments-counter`
 };
 
 const Root = styled(Box, {
@@ -73,7 +74,10 @@ const Root = styled(Box, {
     boxShadow: 'rgb(0 0 0 / 5%) 0px -1px 0px 0px, rgb(0 0 0 / 4%) 0px -1px 1px'
   },
   [`& .${classes.loadMoreCommentsButton}`]: {
-    textTransform: 'capitalize'
+    textTransform: 'initial'
+  },
+  [`& .${classes.commentsCounter}`]: {
+    paddingRight: theme.spacing()
   }
 }));
 
@@ -766,7 +770,7 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
                 <FormattedMessage id="ui.commentsObject.loadMoreComments" defaultMessage="ui.commentsObject.loadMoreComments" />
               </Button>
               {total && !commentObj && (
-                <Typography variant="body1">
+                <Typography variant="body1" classes={{root: classes.commentsCounter}}>
                   <FormattedMessage
                     id="ui.commentsObject.numberOfComments"
                     defaultMessage="ui.commentsObject.numberOfComments"

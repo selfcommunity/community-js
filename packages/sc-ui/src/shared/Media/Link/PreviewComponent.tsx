@@ -79,38 +79,29 @@ export default (props: LinkPreviewProps): JSX.Element => {
    * @param(key)
    */
   const renderPreview = (link, key) => {
-    if (fullWidth) {
-      return (
-        <div className={classes.preview} key={key}>
-          <img src={link.embed.metadata.images[0].url} className={classes.image} />
-          <div className={classes.snippet}>
-            <b className={classes.snippetTitle}>{link.embed.metadata.title}</b>
-            <br />
-            <p className={classes.snippetDescription}>{link.embed.metadata.description}</p>
-            <a href={link.embed.metadata.url} target={'_blank'}>
-              {link.embed.metadata.url}
-            </a>
-          </div>
-          <div style={{clear: 'both'}}></div>
-        </div>
-      );
-    }
-
     return (
-      <div className={classes.preview} key={key}>
-        <div className={classes.thumbnail}>
-          <img src={link.embed.metadata.images[0].url} className={classes.image} />
-        </div>
-        <div className={classes.snippet}>
+      <Box className={classes.preview} key={key}>
+        {link.embed.metadata.images.length > 0 && (
+          <Box>
+            {fullWidth ? (
+              <img src={link.embed.metadata.images[0].url} className={classes.image} />
+            ) : (
+              <Box className={classes.thumbnail}>
+                <img src={link.embed.metadata.images[0].url} className={classes.image} />
+              </Box>
+            )}
+          </Box>
+        )}
+        <Box className={classes.snippet}>
           <b className={classes.snippetTitle}>{link.embed.metadata.title}</b>
           <br />
           <p className={classes.snippetDescription}>{link.embed.metadata.description}</p>
           <a href={link.embed.metadata.url} target={'_blank'}>
             {link.embed.metadata.url}
           </a>
-        </div>
+        </Box>
         <div style={{clear: 'both'}}></div>
-      </div>
+      </Box>
     );
   };
 

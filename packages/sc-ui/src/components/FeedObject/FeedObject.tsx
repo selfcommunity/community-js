@@ -80,18 +80,22 @@ const PREFIX = 'SCFeedObject';
 const classes = {
   root: `${PREFIX}-root`,
   header: `${PREFIX}-header`,
-  title: `${PREFIX}-title`,
-  username: `${PREFIX}-username`,
   category: `${PREFIX}-category`,
+  username: `${PREFIX}-username`,
+  tag: `${PREFIX}-tag`,
   content: `${PREFIX}-content`,
-  subContent: `${PREFIX}-sub-content`,
+  titleSection: `${PREFIX}-title-section`,
+  title: `${PREFIX}-title`,
+  textSection: `${PREFIX}-text-section`,
   text: `${PREFIX}-text`,
   snippetContent: `${PREFIX}-snippet-content`,
-  tag: `${PREFIX}-tag`,
+  mediasSection: `${PREFIX}-medias-section`,
+  pollsSection: `${PREFIX}-polls-section`,
+  infoSection: `${PREFIX}-info-section`,
   activitiesContent: `${PREFIX}-activities-content`,
   followButton: `${PREFIX}-follow-button`,
   activityAt: `${PREFIX}-activity-at`,
-  sharedContent: `${PREFIX}-shared-content`,
+  sharedTextContent: `${PREFIX}-shared-content`,
   deleted: `${PREFIX}-deleted`,
   actions: `${PREFIX}-actions`
 };
@@ -107,6 +111,14 @@ const Root = styled(Card, {
   },
   [`& .${classes.header}`]: {
     paddingBottom: 0
+  },
+  [`& .${classes.titleSection}`]: {
+    '& a': {
+      textDecoration: 'none'
+    },
+    '& a:hover': {
+      textDecoration: 'underline'
+    }
   },
   [`& .${classes.title}`]: {
     fontWeight: 600,
@@ -138,6 +150,12 @@ const Root = styled(Card, {
   [`& .${classes.content}`]: {
     padding: `${theme.spacing()} 0px`
   },
+  [`& .${classes.textSection}`]: {
+    '& a': {
+      color: theme.palette.text.primary,
+      textDecoration: 'none'
+    }
+  },
   [`& .${classes.text}`]: {
     padding: `${theme.spacing()} ${theme.spacing(2)}`,
     marginBottom: 0,
@@ -157,7 +175,7 @@ const Root = styled(Card, {
   [`& .${classes.activitiesContent}`]: {
     paddingBottom: '3px'
   },
-  [`& .${classes.subContent}`]: {
+  [`& .${classes.infoSection}`]: {
     padding: `0px ${theme.spacing(2)}`
   },
   [`& .${classes.followButton}`]: {
@@ -173,7 +191,7 @@ const Root = styled(Card, {
     textDecoration: 'none',
     color: '#939598'
   },
-  [`& .${classes.sharedContent}`]: {
+  [`& .${classes.sharedTextContent}`]: {
     textDecoration: 'none',
     padding: theme.spacing(),
     color: theme.palette.grey[700]
@@ -322,7 +340,7 @@ export interface FeedObjectProps extends CardProps {
  |content|.SCFeedObject-content|Styles applied to the content section. Content section include: title, snippetContent, text|
  |text|.SCFeedObject-text|Styles applied to the text element.|
  |snippetContent|.SCFeedObject-snippet-content|Styles applied to snippet content element.|
- |sharedContent|.SCFeedObject-shared-content|Styles applied to the feed obj shared content element.|
+ |sharedTextContent|.SCFeedObject-shared-content|Styles applied to the feed obj shared content element.|
  |subContent|.SCFeedObject-sub-content|Styles applied to the sub content (container placed immediately after the content, similar to a footer). Wrap the contributors and the follow button.|
  |followButton|.SCFeedObject-follow-button|Styles applied to the follow button element.|
  |actions|.SCFeedObject-actions|Styles applied to the actions container.|
@@ -699,53 +717,69 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
               action={renderHeaderAction()}
             />
             <CardContent classes={{root: classes.content}}>
-              {'title' in obj && (
-                <>
-                  {template === FeedObjectTemplateType.DETAIL ? (
-                    <Typography variant="body1" gutterBottom className={classes.title}>
-                      {obj.title}
-                    </Typography>
-                  ) : (
-                    <Link to={scRoutingContext.url(feedObjectType, obj)}>
+              <Box className={classes.titleSection}>
+                {'title' in obj && (
+                  <>
+                    {template === FeedObjectTemplateType.DETAIL ? (
                       <Typography variant="body1" gutterBottom className={classes.title}>
                         {obj.title}
                       </Typography>
-                    </Link>
-                  )}
-                </>
-              )}
-              <Typography
-                component="div"
-                gutterBottom
-                className={classes.text}
-                dangerouslySetInnerHTML={{
-                  __html: template === FeedObjectTemplateType.PREVIEW ? obj.summary : getContributionHtml(obj, scRoutingContext.url)
-                }}
-              />
-              <MediasPreview medias={obj.medias} {...PollObjectProps} />
-              {obj['poll'] && <PollObject feedObject={obj} pollObject={obj['poll']} onChange={handleChangePoll} {...PollObjectProps} />}
-              <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2} className={classes.subContent}>
-                {!hideParticipantsPreview && (
-                  <LazyLoad once>
-                    <ContributorsFeedObject feedObject={obj} feedObjectType={obj.type} {...ContributorsFeedObjectProps} />
-                  </LazyLoad>
-                )}
-                {scUserContext.user && obj.author.id !== scUserContext.user.id && !hideFollowAction && !obj.deleted && (
-                  <LoadingButton
-                    classes={{root: classes.followButton}}
-                    loading={isFollowing}
-                    variant="contained"
-                    size="small"
-                    disabled={isFollowing}
-                    onClick={handleFollow}>
-                    {obj.followed ? (
-                      <FormattedMessage id="ui.feedObject.unfollow" defaultMessage="ui.feedObject.unfollow" />
                     ) : (
-                      <FormattedMessage id="ui.feedObject.follow" defaultMessage="ui.feedObject.follow" />
+                      <Link to={scRoutingContext.url(feedObjectType, obj)}>
+                        <Typography variant="body1" gutterBottom className={classes.title}>
+                          {obj.title}
+                        </Typography>
+                      </Link>
                     )}
-                  </LoadingButton>
+                  </>
                 )}
-              </Stack>
+              </Box>
+              <Box className={classes.textSection}>
+                {template === FeedObjectTemplateType.DETAIL ? (
+                  <Typography
+                    component="div"
+                    gutterBottom
+                    className={classes.text}
+                    dangerouslySetInnerHTML={{
+                      __html: getContributionHtml(obj, scRoutingContext.url)
+                    }}
+                  />
+                ) : (
+                  <Link to={scRoutingContext.url(feedObjectType, obj)}>
+                    <Typography component="div" gutterBottom className={classes.text} dangerouslySetInnerHTML={{__html: obj.summary}} />
+                  </Link>
+                )}
+              </Box>
+              <Box className={classes.mediasSection}>
+                <MediasPreview medias={obj.medias} {...PollObjectProps} />
+              </Box>
+              <Box className={classes.pollsSection}>
+                {obj['poll'] && <PollObject feedObject={obj} pollObject={obj['poll']} onChange={handleChangePoll} {...PollObjectProps} />}
+              </Box>
+              <Box className={classes.infoSection}>
+                <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
+                  {!hideParticipantsPreview && (
+                    <LazyLoad once>
+                      <ContributorsFeedObject feedObject={obj} feedObjectType={obj.type} {...ContributorsFeedObjectProps} />
+                    </LazyLoad>
+                  )}
+                  {scUserContext.user && obj.author.id !== scUserContext.user.id && !hideFollowAction && !obj.deleted && (
+                    <LoadingButton
+                      classes={{root: classes.followButton}}
+                      loading={isFollowing}
+                      variant="contained"
+                      size="small"
+                      disabled={isFollowing}
+                      onClick={handleFollow}>
+                      {obj.followed ? (
+                        <FormattedMessage id="ui.feedObject.unfollow" defaultMessage="ui.feedObject.unfollow" />
+                      ) : (
+                        <FormattedMessage id="ui.feedObject.follow" defaultMessage="ui.feedObject.follow" />
+                      )}
+                    </LoadingButton>
+                  )}
+                </Stack>
+              </Box>
             </CardContent>
             <CardActions className={classes.actions}>
               <Actions
@@ -817,18 +851,26 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
               }
             />
             <CardContent classes={{root: classes.content}}>
-              {'title' in obj && (
-                <Link to={scRoutingContext.url(feedObjectType, obj)}>
-                  <Typography variant="body1" gutterBottom className={classes.title}>
-                    {obj.title}
-                  </Typography>
+              <Box className={classes.titleSection}>
+                {'title' in obj && (
+                  <Link to={scRoutingContext.url(feedObjectType, obj)}>
+                    <Typography variant="body1" gutterBottom className={classes.title}>
+                      {obj.title}
+                    </Typography>
+                  </Link>
+                )}
+              </Box>
+              <Box className={classes.textSection}>
+                <Link to={scRoutingContext.url(feedObjectType, obj)} className={classes.sharedTextContent}>
+                  <Typography component="div" className={classes.text} variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: obj.html}} />
                 </Link>
-              )}
-              <MediasPreview medias={obj.medias} {...PollObjectProps} />
-              <Link to={scRoutingContext.url(feedObjectType, obj)} className={classes.sharedContent}>
-                <Typography component="div" className={classes.text} variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: obj.html}} />
-              </Link>
-              {obj['poll'] && <PollObject feedObject={obj} pollObject={obj['poll']} onChange={handleChangePoll} {...PollObjectProps} />}
+              </Box>
+              <Box className={classes.mediasSection}>
+                <MediasPreview medias={obj.medias} {...PollObjectProps} />
+              </Box>
+              <Box className={classes.pollsSection}>
+                {obj['poll'] && <PollObject feedObject={obj} pollObject={obj['poll']} onChange={handleChangePoll} {...PollObjectProps} />}
+              </Box>
             </CardContent>
           </React.Fragment>
         ) : (
