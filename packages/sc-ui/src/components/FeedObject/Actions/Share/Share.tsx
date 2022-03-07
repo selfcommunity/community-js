@@ -48,6 +48,8 @@ const PREFIX = 'SCShareObject';
 
 const classes = {
   root: `${PREFIX}-root`,
+  divider: `${PREFIX}-divider`,
+  viewSharesButton: `${PREFIX}-view-shares-button`,
   shareMenuIcon: `${PREFIX}-share-Menu-icon`
 };
 
@@ -56,6 +58,17 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
+  [`& .${classes.divider}`]: {
+    borderBottom: 0
+  },
+  [`& .${classes.viewSharesButton}`]: {
+    height: 32,
+    fontSize: 15,
+    textTransform: 'capitalize',
+    '& p': {
+      fontSize: '0.9rem'
+    }
+  },
   [`&.${classes.shareMenuIcon}`]: {
     minWidth: 30
   }
@@ -254,7 +267,13 @@ export default function Share(props: ShareProps): JSX.Element {
     return (
       <Box>
         {renderInlineStartShareBtn()}
-        <Button variant="text" size="small" onClick={handleToggleSharesDialog} disabled={sharesCount < 1} sx={{height: 32}} color="inherit">
+        <Button
+          variant="text"
+          size="small"
+          onClick={handleToggleSharesDialog}
+          disabled={sharesCount < 1}
+          color="inherit"
+          classes={{root: classes.viewSharesButton}}>
           <Typography variant={'body2'}>
             <React.Fragment>{`${intl.formatMessage(messages.shares, {total: sharesCount})}`}</React.Fragment>
           </Typography>
@@ -273,7 +292,7 @@ export default function Share(props: ShareProps): JSX.Element {
       <React.Fragment>
         {withAction && !inlineAction && (
           <React.Fragment>
-            <Divider />
+            <Divider className={classes.divider} />
             <Tooltip title={`${intl.formatMessage(messages.share)}`}>
               <LoadingButton loading={isSharing} onClick={handleOpenShareMenu} color="inherit">
                 <ShareIcon fontSize={'large'} />

@@ -5,6 +5,7 @@
   "ui.common.error.url": "The url is not valid",
   "ui.common.error.email": "Invalid email",
   "ui.common.error.username": "Invalid username",
+  "ui.common.error.action": "An error has occurred. Try later!",
   "ui.common.discussionWithoutText": "View discussion",
   "ui.common.postWithoutText": "View post",
   "ui.common.statusWithoutText": "View status",
@@ -162,7 +163,8 @@
   "ui.feedObject.follow": "Follow",
   "ui.feedObject.unfollow": "Unfollow",
 
-  "ui.feedObject.poll.title": "Related Poll",
+  "ui.feedObject.poll.showPoll": "View Poll",
+  "ui.feedObject.poll.hidePoll": "Hide Poll",
   "ui.feedObject.poll.expDate": "Vote one of the following choices by ",
   "ui.feedObject.poll.closed": "Closed",
   "ui.feedObject.poll.voters": "{total, plural, =0 {# voters} one {# voter} other {# voters}}",

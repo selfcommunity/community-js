@@ -1,21 +1,26 @@
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
-import {Endpoints, http, Logger, SCFeedObjectType, SCPollChoiceType, SCPollType} from '@selfcommunity/core';
-import {CardContent, CardHeader, Typography} from '@mui/material';
+import {Endpoints, http, Logger, SCFeedObjectType, SCFeedObjectTypologyType, SCPollChoiceType, SCPollType} from '@selfcommunity/core';
+import {Button, CardContent, CardHeader, Collapse, Typography} from '@mui/material';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import List from '@mui/material/List';
 import Choice from './Choice';
 import PeopleAltOutlinedIcon from '@mui/icons-material/PeopleAltOutlined';
 import ListOutlinedIcon from '@mui/icons-material/ListOutlined';
+import CollapsedIcon from '@mui/icons-material/ArrowUpward';
 import {SCOPE_SC_UI} from '../../../constants/Errors';
 import {AxiosResponse} from 'axios';
 import classNames from 'classnames';
 
 const messages = defineMessages({
-  title: {
-    id: 'ui.feedObject.poll.title',
-    defaultMessage: 'ui.feedObject.poll.title'
+  showPoll: {
+    id: 'ui.feedObject.poll.showPoll',
+    defaultMessage: 'ui.feedObject.poll.showPoll'
+  },
+  hidePoll: {
+    id: 'ui.feedObject.poll.hidePoll',
+    defaultMessage: 'ui.feedObject.poll.hidePoll'
   },
   expDate: {
     id: 'ui.feedObject.poll.expDate',
@@ -38,7 +43,9 @@ const classes = {
   poll: `${PREFIX}-poll`,
   voters: `${PREFIX}-voters`,
   votes: `${PREFIX}-votes`,
-  title: `${PREFIX}-title`
+  title: `${PREFIX}-title`,
+  expandIcon: `${PREFIX}-expand-icon`,
+  collapsedIcon: `${PREFIX}-collapsed-icon`
 };
 
 const Root = styled(Card, {
@@ -46,17 +53,16 @@ const Root = styled(Card, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  background: theme.palette.grey['A100'],
   marginTop: theme.spacing(1),
-  marginBottom: theme.spacing(2),
-  padding: theme.spacing(1),
+  marginBottom: theme.spacing(1),
+  borderTop: `1px solid ${theme.palette.grey['A200']}`,
+  borderBottom: `1px solid ${theme.palette.grey['A200']}`,
+  boxShadow: 'none',
   '& .MuiCardHeader-root': {
     textAlign: 'center',
-    marginTop: '-11px',
     marginLeft: '-11px',
     width: '100%',
-    maxHeight: '10px',
-    background: theme.palette.grey['A200']
+    maxHeight: '10px'
   },
   [`& .${classes.poll}`]: {
     textAlign: 'center'
@@ -83,6 +89,16 @@ const Root = styled(Card, {
   },
   [`& .${classes.title}`]: {
     textTransform: 'uppercase'
+  },
+  [`& .${classes.expandIcon}`]: {
+    marginBottom: 2,
+    marginLeft: -2,
+    transition: theme.transitions.create('transform', {
+      duration: theme.transitions.duration.shortest
+    })
+  },
+  [`& .${classes.collapsedIcon}`]: {
+    transform: 'rotate(180deg)'
   },
   '& .MuiTypography-root': {
     fontSize: '1rem'
@@ -121,7 +137,7 @@ export interface PollObjectProps {
 
 export default function PollObject(props: PollObjectProps): JSX.Element {
   //  PROPS
-  const {className = null, feedObject = null, pollObject = null, disabled = null, onChange = null, ...rest} = props;
+  const {className, feedObject, pollObject, disabled, onChange, ...rest} = props;
 
   // INTL
   const intl = useIntl();
@@ -130,8 +146,13 @@ export default function PollObject(props: PollObjectProps): JSX.Element {
   const [obj, setObj] = useState<SCPollType>(pollObject);
   const [votes, setVotes] = useState(getVotes());
   const [choices, setChoices] = useState(pollObject.choices);
-  const multipleChoices = pollObject['multiple_choices'];
   const [isVoting, setIsVoting] = useState<number>(null);
+  const [collapsed, setCollapsed] = useState<boolean>(
+    Boolean(feedObject && (feedObject.type === SCFeedObjectTypologyType.DISCUSSION || feedObject.html || feedObject.medias.length))
+  );
+
+  // CONST
+  const multipleChoices = pollObject['multiple_choices'];
   const votable = pollObject['closed'];
 
   /**
@@ -218,53 +239,77 @@ export default function PollObject(props: PollObjectProps): JSX.Element {
   }
 
   /**
+   * Handle toggle collapsed/uncollapsed poll
+   */
+  const handleToggleCollapsedClick = useMemo(
+    () => () => {
+      setCollapsed((prev) => !prev);
+    },
+    [collapsed]
+  );
+
+  /**
    * Renders the poll object
    */
   let objElement = <></>;
   if (pollObject) {
     objElement = (
       <>
-        <CardHeader title={`${intl.formatMessage(messages.title)}`} className={classes.title} />
-        <CardContent>
-          <Typography variant="body1" gutterBottom align={'center'}>
-            {obj.title}
-          </Typography>
-          {obj.expiration_at && Date.parse(obj.expiration_at as string) >= new Date().getTime() ? (
-            <Typography variant="body2" gutterBottom align={'center'}>
-              {`${intl.formatMessage(messages.expDate)}`}
-              {`${intl.formatDate(Date.parse(obj.expiration_at as string), {year: 'numeric', month: 'numeric', day: 'numeric'})}`}
+        <CardHeader
+          title={
+            <>
+              <Button
+                onClick={handleToggleCollapsedClick}
+                aria-expanded={collapsed}
+                endIcon={<CollapsedIcon className={classNames(classes.expandIcon, {[classes.collapsedIcon]: collapsed})} />}>
+                {collapsed ? intl.formatMessage(messages.showPoll) : intl.formatMessage(messages.hidePoll)}
+              </Button>
+            </>
+          }
+          className={classes.title}
+        />
+        <Collapse in={!collapsed} timeout="auto" unmountOnExit>
+          <CardContent>
+            <Typography variant="body1" gutterBottom align={'center'}>
+              {obj.title}
             </Typography>
-          ) : (
-            <Typography variant="body2" gutterBottom align={'center'}>
-              <FormattedMessage id="ui.feedObject.poll.closed" defaultMessage="ui.feedObject.poll.closed" />
-            </Typography>
-          )}
-          <List>
-            {choices.map((choice: SCPollChoiceType, index) => (
-              <Choice
-                elevation={0}
-                choiceObj={choice}
-                key={index}
-                feedObject={disabled ? null : feedObject}
-                votes={votes}
-                vote={vote}
-                isVoting={isVoting}
-                votable={votable}
-              />
-            ))}
-          </List>
-          {multipleChoices ? (
-            <div className={classes.votes}>
-              <ListOutlinedIcon />
-              <Typography>{`${intl.formatMessage(messages.votes, {total: votes})}`}</Typography>
-            </div>
-          ) : (
-            <div className={classes.voters}>
-              <PeopleAltOutlinedIcon />
-              <Typography>{`${intl.formatMessage(messages.voters, {total: votes})}`}</Typography>
-            </div>
-          )}
-        </CardContent>
+            {obj.expiration_at && Date.parse(obj.expiration_at as string) >= new Date().getTime() ? (
+              <Typography variant="body2" gutterBottom align={'center'}>
+                {`${intl.formatMessage(messages.expDate)}`}
+                {`${intl.formatDate(Date.parse(obj.expiration_at as string), {year: 'numeric', month: 'numeric', day: 'numeric'})}`}
+              </Typography>
+            ) : (
+              <Typography variant="body2" gutterBottom align={'center'}>
+                <FormattedMessage id="ui.feedObject.poll.closed" defaultMessage="ui.feedObject.poll.closed" />
+              </Typography>
+            )}
+            <List>
+              {choices.map((choice: SCPollChoiceType, index) => (
+                <Choice
+                  elevation={0}
+                  choiceObj={choice}
+                  key={index}
+                  feedObject={disabled ? null : feedObject}
+                  votes={votes}
+                  vote={vote}
+                  isVoting={isVoting}
+                  votable={votable}
+                />
+              ))}
+            </List>
+            {multipleChoices ? (
+              <div className={classes.votes}>
+                <ListOutlinedIcon />
+                <Typography>{`${intl.formatMessage(messages.votes, {total: votes})}`}</Typography>
+              </div>
+            ) : (
+              <div className={classes.voters}>
+                <PeopleAltOutlinedIcon />
+                <Typography>{`${intl.formatMessage(messages.voters, {total: votes})}`}</Typography>
+              </div>
+            )}
+          </CardContent>
+        </Collapse>
       </>
     );
   }

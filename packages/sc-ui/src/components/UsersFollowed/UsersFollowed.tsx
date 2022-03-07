@@ -4,7 +4,17 @@ import List from '@mui/material/List';
 import {Button, Typography} from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import {Endpoints, http, Logger, SCUserContext, SCUserContextType, SCUserType} from '@selfcommunity/core';
+import {
+  Endpoints,
+  http,
+  Logger,
+  SCPreferences,
+  SCPreferencesContext,
+  SCPreferencesContextType,
+  SCUserContext,
+  SCUserContextType,
+  SCUserType
+} from '@selfcommunity/core';
 import PeopleSuggestionSkeleton from '../PeopleSuggestion/Skeleton';
 import User, {UserProps} from '../User';
 import {AxiosResponse} from 'axios';
@@ -95,6 +105,10 @@ export default function UsersFollowed(props: UsersFollowedProps): JSX.Element {
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
+  const scPreferencesContext: SCPreferencesContextType = useContext(SCPreferencesContext);
+  const contentAvailability =
+    SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY in scPreferencesContext.preferences &&
+    scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY].value;
 
   // PROPS
   const {userId, autoHide, className, UserProps = {}} = props;
@@ -160,10 +174,11 @@ export default function UsersFollowed(props: UsersFollowedProps): JSX.Element {
    * On mount, fetches the list of users followed
    */
   useEffect(() => {
-    if (scUserContext.user) {
-      fetchFollowed();
+    if (!contentAvailability && !scUserContext.user) {
+      return;
     }
-  }, []);
+    fetchFollowed();
+  }, [scUserContext.user]);
 
   /**
    * Renders the list of users followed
@@ -234,8 +249,8 @@ export default function UsersFollowed(props: UsersFollowedProps): JSX.Element {
   if (autoHide && !total) {
     return null;
   }
-  if (scUserContext.user) {
-    return <Root className={classNames(classes.root, className)}>{u}</Root>;
+  if (!contentAvailability && !scUserContext.user) {
+    return null;
   }
-  return null;
+  return <Root className={classNames(classes.root, className)}>{u}</Root>;
 }

@@ -4,7 +4,17 @@ import List from '@mui/material/List';
 import {Button, Typography} from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import {Endpoints, http, Logger, SCUserContext, SCUserContextType, SCUserType} from '@selfcommunity/core';
+import {
+  Endpoints,
+  http,
+  Logger,
+  SCPreferences,
+  SCPreferencesContext,
+  SCPreferencesContextType,
+  SCUserContext,
+  SCUserContextType,
+  SCUserType
+} from '@selfcommunity/core';
 import PeopleSuggestionSkeleton from '../PeopleSuggestion/Skeleton';
 import User, {UserProps} from '../User';
 import {AxiosResponse} from 'axios';
@@ -95,6 +105,10 @@ export default function UserFollowers(props: UserFollowersProps): JSX.Element {
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
+  const scPreferencesContext: SCPreferencesContextType = useContext(SCPreferencesContext);
+  const contentAvailability =
+    SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY in scPreferencesContext.preferences &&
+    scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY].value;
 
   // PROPS
   const {userId, autoHide, className, UserProps = {}} = props;
@@ -107,6 +121,7 @@ export default function UserFollowers(props: UserFollowersProps): JSX.Element {
   const [total, setTotal] = useState<number>(0);
   const [openUserFollowersDialog, setOpenUserFollowersDialog] = useState<boolean>(false);
   const [next, setNext] = useState<string>(`${Endpoints.UserFollowers.url({id: userId ?? scUserContext.user['id']})}?limit=10`);
+
   /**
    * Fetches the list of users followers
    */
@@ -136,10 +151,11 @@ export default function UserFollowers(props: UserFollowersProps): JSX.Element {
    * On mount, fetches the list of users followers
    */
   useEffect(() => {
-    if (scUserContext.user) {
-      fetchFollowers();
+    if (!contentAvailability && !scUserContext.user) {
+      return;
     }
-  }, []);
+    fetchFollowers();
+  }, [scUserContext.user]);
 
   /**
    * Renders the list of users followers
@@ -205,13 +221,13 @@ export default function UserFollowers(props: UserFollowersProps): JSX.Element {
   );
 
   /**
-   * Renders root object (if results and if user is logged, otherwise component is hidden)
+   * Renders root object
    */
   if (autoHide && !total) {
     return null;
   }
-  if (scUserContext.user) {
-    return <Root className={classNames(classes.root, className)}>{u}</Root>;
+  if (!contentAvailability && !scUserContext.user) {
+    return null;
   }
-  return null;
+  return <Root className={classNames(classes.root, className)}>{u}</Root>;
 }

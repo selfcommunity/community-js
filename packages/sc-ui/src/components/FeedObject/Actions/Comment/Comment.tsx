@@ -21,14 +21,28 @@ const messages = defineMessages({
 const PREFIX = 'SCCommentObject';
 
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-root`,
+  divider: `${PREFIX}-divider`,
+  viewCommentsButton: `${PREFIX}-view-comments-button`,
 };
 
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+})(({theme}) => ({
+  [`& .${classes.divider}`]: {
+    borderBottom: 0
+  },
+  [`& .${classes.viewCommentsButton}`]: {
+    height: 32,
+    fontSize: 15,
+    textTransform: 'capitalize',
+    '& p': {
+      fontSize: '0.9rem'
+    }
+  }
+}));
 
 export interface CommentProps {
   /**
@@ -119,9 +133,9 @@ export default function Comment(props: CommentProps): JSX.Element {
       ) : (
         <>
           {feedObjectTemplate === FeedObjectTemplateType.DETAIL ? (
-            <Typography variant={'body2'} sx={{mt: '7px', mb: '6px'}}>{`${intl.formatMessage(messages.comments, {
-              total: obj.comment_count
-            })}`}</Typography>
+            <Typography variant={'body2'} sx={{mt: '7px', mb: '6px'}}>
+              {`${intl.formatMessage(messages.comments, {total: obj.comment_count})}`}
+            </Typography>
           ) : (
             <Button
               color="inherit"
@@ -129,7 +143,7 @@ export default function Comment(props: CommentProps): JSX.Element {
               size="small"
               component={Link}
               to={scRoutingContext.url(feedObjectType.toLowerCase(), {id: obj.id})}
-              sx={{height: 32}}>
+              classes={{root: classes.viewCommentsButton}}>
               <Typography variant={'body2'}>{`${intl.formatMessage(messages.comments, {total: obj.comment_count})}`}</Typography>
             </Button>
           )}
@@ -137,7 +151,7 @@ export default function Comment(props: CommentProps): JSX.Element {
       )}
       {withAction && (
         <React.Fragment>
-          <Divider />
+          <Divider className={classes.divider} />
           <Tooltip title={`${intl.formatMessage(messages.comment)}`}>
             <Button onClick={onCommentAction} color="inherit">
               <CommentIcon fontSize={'large'} />
