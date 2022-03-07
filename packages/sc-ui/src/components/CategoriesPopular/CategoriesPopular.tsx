@@ -123,7 +123,7 @@ export default function CategoriesPopular(props: CategoriesListProps): JSX.Eleme
               <List>
                 {categories.slice(0, visibleCategories).map((category: SCCategoryType, index) => (
                   <div key={index}>
-                    <Category elevation={0} category={category} key={category.id} popular={true} {...CategoryProps} />
+                    <Category elevation={0} category={category} key={category.id} {...CategoryProps} />
                   </div>
                 ))}
               </List>

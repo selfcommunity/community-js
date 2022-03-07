@@ -56,11 +56,6 @@ export interface CategoryProps extends Pick<CardProps, Exclude<keyof CardProps, 
    */
   autoHide?: boolean;
   /**
-   * Renders different section for popular categories list
-   * @default false
-   */
-  popular?: boolean;
-  /**
    * Props to spread to follow button
    * @default {}
    */
@@ -94,7 +89,7 @@ export interface CategoryProps extends Pick<CardProps, Exclude<keyof CardProps, 
  */
 export default function Category(props: CategoryProps): JSX.Element {
   // PROPS
-  const {id = null, category = null, className = null, popular = false, autoHide = false, followCategoryButtonProps = {}, ...rest} = props;
+  const {id = null, category = null, className = null, autoHide = false, followCategoryButtonProps = {}, ...rest} = props;
 
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
@@ -116,8 +111,9 @@ export default function Category(props: CategoryProps): JSX.Element {
             <Avatar alt={scCategory.name} src={scCategory.image_medium} variant="square" className={classes.categoryImage} />
           </ListItemAvatar>
           <ListItemText
+            secondaryTypographyProps={{style: {whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'}}}
             primary={scCategory.name}
-            secondary={popular ? `${intl.formatMessage(messages.categoryFollowers, {total: category.followers_count})}` : scCategory.slogan}
+            secondary={category.followers_count ? `${intl.formatMessage(messages.categoryFollowers, {total: category.followers_count})}` : null}
             className={classes.title}
           />
           <ListItemSecondaryAction className={classes.actions}>
