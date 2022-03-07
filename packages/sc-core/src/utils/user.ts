@@ -9,8 +9,8 @@ export const MODERATOR_ROLE = 'moderator';
 
 /**
  * Get user role from roles(set)
- * @param roles
- * @returns {*}
+ * @param user
+ * @returns role or null
  */
 export function getUserRole(user: SCUserType): string | null {
   if (user && user.role) {
@@ -26,8 +26,8 @@ export function getUserRole(user: SCUserType): string | null {
 
 /**
  * Check if user is admin
- * @param roles
- * @returns {*}
+ * @param user
+ * @returns boolean
  */
 export function isAdmin(user: SCUserType) {
   return getUserRole(user) === ADMIN_ROLE;
@@ -35,18 +35,30 @@ export function isAdmin(user: SCUserType) {
 
 /**
  * Check if user is moderator
- * @param roles
- * @returns {*}
+ * @param user
+ * @returns boolean
  */
 export function isModerator(user: SCUserType) {
   return getUserRole(user) === MODERATOR_ROLE;
 }
 
 /**
- * Check if user is admin or moderato
- * @param roles
- * @returns {*}
+ * Check if user is admin or moderator
+ * @param user
+ * @returns boolean
  */
 export function isStaff(user: SCUserType) {
   return isAdmin(user) || isModerator(user);
+}
+
+/**
+ * Check if user is blocked/banned
+ * User status values:
+ *  a (approved), b (blocked), d (deleted; soft deleted),
+ *  u (unregistered; hard deleted). Default: a.
+ * @param user
+ * @returns {*}
+ */
+export function isBlocked(user: SCUserType) {
+  return user && user.status && user.status === 'b';
 }
