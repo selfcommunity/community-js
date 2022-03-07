@@ -148,11 +148,13 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
         return sessionServices
           .getCurrentUser()
           .then((user: SCUserType) => {
-            const payload = {
-              unseen_interactions_counter: user.unseen_interactions_counter,
-              unseen_notification_banners_counter: user.unseen_notification_banners_counter,
-            };
-            Logger.error(SCOPE_SC_CORE, 'Unable to refresh notification counters.');
+            dispatch({
+              type: userActionTypes.UPDATE_USER,
+              payload: {
+                unseen_interactions_counter: user.unseen_interactions_counter,
+                unseen_notification_banners_counter: user.unseen_notification_banners_counter,
+              },
+            });
           })
           .catch((error) => {
             Logger.error(SCOPE_SC_CORE, `Unable to refresh notification counters. Error: ${error.response.toString()}`);
