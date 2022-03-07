@@ -16,7 +16,7 @@ import {
   SCPreferencesContextType,
   SCTagType,
   SCUserContext,
-  SCUserContextType
+  SCUserContextType, UserUtils,
 } from '@selfcommunity/core';
 import {FormattedMessage} from 'react-intl';
 import Icon from '@mui/material/Icon';
@@ -68,6 +68,7 @@ import {AxiosResponse} from 'axios';
 import {DistributiveOmit} from '@mui/types';
 import {OverrideProps} from '@mui/material/OverridableComponent';
 import {ComposerSkeleton} from './index';
+import { useSnackbar } from 'notistack';
 
 const DialogTransition = forwardRef(function Transition(
   props: TransitionProps & {
@@ -391,6 +392,7 @@ export default function Composer(props: ComposerProps): JSX.Element {
   // Context
   const scPrefernces: SCPreferencesContextType = useContext(SCPreferencesContext);
   const scAuthContext: SCUserContextType = useContext(SCUserContext);
+  const {enqueueSnackbar} = useSnackbar();
 
   // State variables
   const [fades, setFades] = useState({});
@@ -640,6 +642,13 @@ export default function Composer(props: ComposerProps): JSX.Element {
   };
 
   const handleSubmit = (event: SyntheticEvent): void => {
+    if (UserUtils.isBlocked(scAuthContext.user)) {
+      // deny submit action if authenticated user is blocked
+      enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
+        variant: 'warning'
+      });
+      return;
+    }
     const data: any = {
       title,
       text,

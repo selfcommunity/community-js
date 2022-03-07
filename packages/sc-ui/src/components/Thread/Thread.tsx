@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
-import {Endpoints, http, SCPrivateMessageType, SCUserContext, SCUserContextType} from '@selfcommunity/core';
+import {Endpoints, http, SCPrivateMessageType, SCUserContext, SCUserContextType, UserUtils} from '@selfcommunity/core';
 import {AxiosResponse} from 'axios';
 import Message from '../Message';
 import _ from 'lodash';
@@ -12,6 +12,7 @@ import MessageEditor from '../MessageEditor';
 import CardContent from '@mui/material/CardContent';
 import Autocomplete from '@mui/material/Autocomplete';
 import classNames from 'classnames';
+import {useSnackbar} from 'notistack';
 
 const PREFIX = 'SCThread';
 
@@ -127,8 +128,9 @@ export default function Thread(props: ThreadProps): JSX.Element {
   // PROPS
   const {id, receiverId, autoHide, className, openNewMessage, ...rest} = props;
 
-  //CONTEXT
+  // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
+  const {enqueueSnackbar} = useSnackbar();
 
   // STATE
   const [loading, setLoading] = useState<boolean>(true);
@@ -221,23 +223,29 @@ export default function Thread(props: ThreadProps): JSX.Element {
   }
 
   function sendMessage() {
-    setSending(true);
-    http
-      .request({
-        url: Endpoints.SendMessage.url(),
-        method: Endpoints.SendMessage.method,
-        data: {
-          recipients: openNewMessage ? ids : [receiverId],
-          message: message
-        }
-      })
-      .then((res) => {
-        setMessages((prev) => [...prev, res.data]);
-        setSending(false);
-      })
-      .catch((error) => {
-        console.log(error);
+    if (UserUtils.isBlocked(scUserContext.user)) {
+      enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
+        variant: 'warning'
       });
+    } else {
+      setSending(true);
+      http
+        .request({
+          url: Endpoints.SendMessage.url(),
+          method: Endpoints.SendMessage.method,
+          data: {
+            recipients: openNewMessage ? ids : [receiverId],
+            message: message
+          }
+        })
+        .then((res) => {
+          setMessages((prev) => [...prev, res.data]);
+          setSending(false);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   }
 
   /**

@@ -13,6 +13,7 @@ import {
   SCFeedObjectTypologyType,
   SCMediaType,
   SCUserContextType,
+  UserUtils,
   useSCContext,
   useSCFetchFeedObject,
   useSCUser
@@ -26,6 +27,7 @@ import {AxiosResponse} from 'axios';
 import {MEDIA_TYPE_SHARE} from '../../../../constants/Media';
 import {SCOPE_SC_UI} from '../../../../constants/Errors';
 import classNames from 'classnames';
+import {useSnackbar} from 'notistack';
 
 const messages = defineMessages({
   shares: {
@@ -138,6 +140,7 @@ export default function Share(props: ShareProps): JSX.Element {
   // CONTEXT
   const scContext: SCContextType = useSCContext();
   const scUserContext: SCUserContextType = useSCUser();
+  const {enqueueSnackbar} = useSnackbar();
 
   // INTL
   const intl = useIntl();
@@ -216,16 +219,22 @@ export default function Share(props: ShareProps): JSX.Element {
     if (!scUserContext.user) {
       scContext.settings.handleAnonymousAction();
     } else {
-      setIsSharing(true);
-      performCreateMediaShare()
-        .then((data: SCMediaType) => {
-          setComposerShareProps({medias: [data], ...(inCategories ? {categories: obj.categories} : {})});
-          setIsComposerOpen(true);
-        })
-        .catch((error) => {
-          Logger.error(SCOPE_SC_UI, error);
-          setIsSharing(false);
+      if (UserUtils.isBlocked(scUserContext.user)) {
+        enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
+          variant: 'warning'
         });
+      } else {
+        setIsSharing(true);
+        performCreateMediaShare()
+          .then((data: SCMediaType) => {
+            setComposerShareProps({medias: [data], ...(inCategories ? {categories: obj.categories} : {})});
+            setIsComposerOpen(true);
+          })
+          .catch((error) => {
+            Logger.error(SCOPE_SC_UI, error);
+            setIsSharing(false);
+          });
+      }
     }
   }
 
@@ -276,9 +285,7 @@ export default function Share(props: ShareProps): JSX.Element {
             <React.Fragment>{`${intl.formatMessage(messages.shares, {total: sharesCount})}`}</React.Fragment>
           </Typography>
         </Button>
-        {openSharesDialog && sharesCount > 0 && (
-          <SharesDialog feedObject={obj} open={openSharesDialog} onClose={handleToggleSharesDialog} />
-        )}
+        {openSharesDialog && sharesCount > 0 && <SharesDialog feedObject={obj} open={openSharesDialog} onClose={handleToggleSharesDialog} />}
       </Box>
     );
   }

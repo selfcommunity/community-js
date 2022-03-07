@@ -16,6 +16,7 @@ import ReplyCommentObject from './ReplyComment';
 import ContributionActionsMenu from '../../shared/ContributionActionsMenu';
 import DateTimeAgo from '../../shared/DateTimeAgo';
 import {getContributionHtml, getRouteData} from '../../utils/contribute';
+import {useSnackbar} from 'notistack';
 import {
   Endpoints,
   http,
@@ -35,7 +36,6 @@ import {
   UserUtils,
   SCRoutes
 } from '@selfcommunity/core';
-import {useSnackbar} from 'notistack';
 
 const messages = defineMessages({
   reply: {
@@ -120,7 +120,7 @@ const Root = styled(Box, {
     paddingLeft: '70px'
   },
   [`& .${classes.btnViewPreviousComments}`]: {
-    textTransform: 'capitalize'
+    textTransform: 'initial'
   },
   [`& .${classes.commentActionsMenu}`]: {
     position: 'absolute',
@@ -449,35 +449,41 @@ export default function CommentObject(props: CommentObjectProps): JSX.Element {
    * @param comment
    */
   function vote(comment) {
-    setLoadingVote(true);
-    performVoteComment(comment)
-      .then((data) => {
-        const newObj = obj;
-        if (comment.parent) {
-          // 2° comment level
-          const newLatestComments: SCCommentType[] = obj.latest_comments.map((lc) => {
-            if (lc.id === comment.id) {
-              lc.voted = !lc.voted;
-              lc.vote_count = lc.vote_count - (lc.voted ? -1 : 1);
-            }
-            return lc;
-          });
-          obj.latest_comments = newLatestComments;
-        } else {
-          // 1° comment level
-          obj.voted = !obj.voted;
-          obj.vote_count = obj.vote_count - (obj.voted ? -1 : 1);
-        }
-        setObj(newObj);
-        setLoadingVote(false);
-        onVote && onVote(comment);
-      })
-      .catch((error) => {
-        Logger.error(SCOPE_SC_UI, error);
-        enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
-          variant: 'error'
-        });
+    if (UserUtils.isBlocked(scUserContext.user)) {
+      enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
+        variant: 'warning'
       });
+    } else {
+      setLoadingVote(true);
+      performVoteComment(comment)
+        .then((data) => {
+          const newObj = obj;
+          if (comment.parent) {
+            // 2° comment level
+            const newLatestComments: SCCommentType[] = obj.latest_comments.map((lc) => {
+              if (lc.id === comment.id) {
+                lc.voted = !lc.voted;
+                lc.vote_count = lc.vote_count - (lc.voted ? -1 : 1);
+              }
+              return lc;
+            });
+            obj.latest_comments = newLatestComments;
+          } else {
+            // 1° comment level
+            obj.voted = !obj.voted;
+            obj.vote_count = obj.vote_count - (obj.voted ? -1 : 1);
+          }
+          setObj(newObj);
+          setLoadingVote(false);
+          onVote && onVote(comment);
+        })
+        .catch((error) => {
+          Logger.error(SCOPE_SC_UI, error);
+          enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
+            variant: 'error'
+          });
+        });
+    }
   }
 
   /**
@@ -508,23 +514,29 @@ export default function CommentObject(props: CommentObjectProps): JSX.Element {
    * Handle comment of 2° level
    */
   function handleReply(comment) {
-    setIsReplying(true);
-    performReply(comment)
-      .then((data: SCCommentType) => {
-        setObj(
-          Object.assign({}, obj, {
-            latest_comments: [...obj.latest_comments, ...[data]]
-          })
-        );
-        setReplyComment(null);
-        setIsReplying(false);
-      })
-      .catch((error) => {
-        Logger.error(SCOPE_SC_UI, error);
-        enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
-          variant: 'error'
-        });
+    if (UserUtils.isBlocked(scUserContext.user)) {
+      enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
+        variant: 'warning'
       });
+    } else {
+      setIsReplying(true);
+      performReply(comment)
+        .then((data: SCCommentType) => {
+          setObj(
+            Object.assign({}, obj, {
+              latest_comments: [...obj.latest_comments, ...[data]]
+            })
+          );
+          setReplyComment(null);
+          setIsReplying(false);
+        })
+        .catch((error) => {
+          Logger.error(SCOPE_SC_UI, error);
+          enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
+            variant: 'error'
+          });
+        });
+    }
   }
 
   /**
@@ -611,29 +623,42 @@ export default function CommentObject(props: CommentObjectProps): JSX.Element {
    * Handle save comment
    */
   function handleSave(comment) {
-    setIsSavingComment(true);
-    performSave(comment)
-      .then((data: SCCommentType) => {
-        if (data.parent) {
-          const _latestComment = obj.latest_comments.map((c) => {
-            if (c.id === data.id) {
-              return data;
-            }
-            return c;
-          });
-          setObj(Object.assign({}, obj, {latest_comments: _latestComment}));
-        } else {
-          setObj(Object.assign({}, obj, {text: data.text, html: data.html, summary: data.summary, added_at: data.added_at}));
-        }
-        setEditComment(null);
-        setIsSavingComment(false);
-      })
-      .catch((error) => {
-        Logger.error(SCOPE_SC_UI, error);
-        enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
-          variant: 'error'
-        });
+    if (UserUtils.isBlocked(scUserContext.user)) {
+      enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
+        variant: 'warning'
       });
+    } else {
+      setIsSavingComment(true);
+      performSave(comment)
+        .then((data: SCCommentType) => {
+          if (data.parent) {
+            const _latestComment = obj.latest_comments.map((c) => {
+              if (c.id === data.id) {
+                return data;
+              }
+              return c;
+            });
+            setObj(Object.assign({}, obj, {latest_comments: _latestComment}));
+          } else {
+            setObj(
+              Object.assign({}, obj, {
+                text: data.text,
+                html: data.html,
+                summary: data.summary,
+                added_at: data.added_at
+              })
+            );
+          }
+          setEditComment(null);
+          setIsSavingComment(false);
+        })
+        .catch((error) => {
+          Logger.error(SCOPE_SC_UI, error);
+          enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
+            variant: 'error'
+          });
+        });
+    }
   }
 
   /**
@@ -641,8 +666,12 @@ export default function CommentObject(props: CommentObjectProps): JSX.Element {
    * @param comment
    */
   function renderComment(comment) {
-    if (comment.deleted && (!scUserContext.user || (scUserContext.user && !UserUtils.isStaff(scUserContext.user)))) {
+    if (
+      comment.deleted &&
+      (!scUserContext.user || (scUserContext.user && (!UserUtils.isStaff(scUserContext.user) || scUserContext.user.id !== comment.author.id)))
+    ) {
       // render the comment if user is logged and is staff (admin, moderator)
+      // or the comment author is the logged user
       return null;
     }
     return (

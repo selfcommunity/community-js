@@ -21,11 +21,13 @@ import {
   SCFeedObjectTypologyType,
   SCTagType,
   SCUserContextType,
+  UserUtils,
   useSCContext,
   useSCFetchFeedObject,
   useSCUser
 } from '@selfcommunity/core';
 import classNames from 'classnames';
+import {useSnackbar} from 'notistack';
 
 /**
  * We have complex state logic that involves multiple sub-values,
@@ -223,6 +225,7 @@ export default function Vote(props: VoteProps): JSX.Element {
   // CONTEXT
   const scContext: SCContextType = useSCContext();
   const scUserContext: SCUserContextType = useSCUser();
+  const {enqueueSnackbar} = useSnackbar();
 
   // INTL
 
@@ -302,16 +305,27 @@ export default function Vote(props: VoteProps): JSX.Element {
    */
   function vote() {
     if (scUserContext.user) {
-      if (obj && !state.voting) {
-        dispatch({type: voteActionTypes.VOTING});
-        performVote()
-          .then((data) => {
-            dispatch({type: voteActionTypes.REQUEST_VOTING_SUCCESS});
-            setObj(Object.assign({}, obj, {voted: !obj.voted, vote_count: obj.voted ? obj.vote_count - 1 : obj.vote_count + 1}));
-          })
-          .catch((error) => {
-            Logger.error(SCOPE_SC_UI, error);
-          });
+      if (UserUtils.isBlocked(scUserContext.user)) {
+        enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
+          variant: 'warning'
+        });
+      } else {
+        if (obj && !state.voting) {
+          dispatch({type: voteActionTypes.VOTING});
+          performVote()
+            .then((data) => {
+              dispatch({type: voteActionTypes.REQUEST_VOTING_SUCCESS});
+              setObj(
+                Object.assign({}, obj, {
+                  voted: !obj.voted,
+                  vote_count: obj.voted ? obj.vote_count - 1 : obj.vote_count + 1
+                })
+              );
+            })
+            .catch((error) => {
+              Logger.error(SCOPE_SC_UI, error);
+            });
+        }
       }
     } else {
       scContext.settings.handleAnonymousAction();

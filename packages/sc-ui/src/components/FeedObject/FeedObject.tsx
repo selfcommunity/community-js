@@ -43,6 +43,7 @@ import {
   SCRoutingContextType,
   SCTagType,
   SCUserContextType,
+  UserUtils,
   useSCContext,
   useSCFetchFeedObject,
   useSCRouting,
@@ -512,6 +513,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
 
   /**
    * Handle follow object
+   * Even if a user is blocked, can perform this action
    */
   function handleFollow() {
     setIsFollowing(true);
@@ -566,24 +568,30 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
    * Handle comment
    */
   function handleReply(comment) {
-    setIsReplying(true);
-    performReply(comment)
-      .then((data: SCCommentType) => {
-        if (selectedActivities !== FeedObjectActivitiesType.RECENT_COMMENTS || obj.comment_count === 0) {
-          setObj(Object.assign({}, obj, {comment_count: obj.comment_count + 1}));
-          setComments([]);
-          setSelectedActivities(FeedObjectActivitiesType.RECENT_COMMENTS);
-        } else {
-          setComments([...[data], ...comments]);
-        }
-        setIsReplying(false);
-      })
-      .catch((error) => {
-        Logger.error(SCOPE_SC_UI, error);
-        enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
-          variant: 'error'
-        });
+    if (UserUtils.isBlocked(scUserContext.user)) {
+      enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
+        variant: 'warning'
       });
+    } else {
+      setIsReplying(true);
+      performReply(comment)
+        .then((data: SCCommentType) => {
+          if (selectedActivities !== FeedObjectActivitiesType.RECENT_COMMENTS || obj.comment_count === 0) {
+            setObj(Object.assign({}, obj, {comment_count: obj.comment_count + 1}));
+            setComments([]);
+            setSelectedActivities(FeedObjectActivitiesType.RECENT_COMMENTS);
+          } else {
+            setComments([...[data], ...comments]);
+          }
+          setIsReplying(false);
+        })
+        .catch((error) => {
+          Logger.error(SCOPE_SC_UI, error);
+          enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
+            variant: 'error'
+          });
+        });
+    }
   }
 
   /**

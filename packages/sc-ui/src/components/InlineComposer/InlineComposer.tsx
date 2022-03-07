@@ -10,7 +10,8 @@ import {
   SCPreferencesContextType,
   SCTagType,
   SCUserContext,
-  SCUserContextType
+  SCUserContextType,
+  UserUtils
 } from '@selfcommunity/core';
 import {Avatar, Box, Button, IconButton, PaperProps} from '@mui/material';
 import {styled} from '@mui/material/styles';
@@ -149,7 +150,13 @@ export default function InlineComposer(props: InlineComposerProps): JSX.Element 
   const handleOpen = (view) => {
     return () => {
       if (scUserContext.user) {
-        setState({view, open: true});
+        if (UserUtils.isBlocked(scUserContext.user)) {
+          enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
+            variant: 'warning'
+          });
+        } else {
+          setState({view, open: true});
+        }
       } else {
         scContext.settings.handleAnonymousAction();
       }

@@ -576,10 +576,15 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
 
   /**
    * Perform contribute flagging by authenticated user
+   * If the user authenticated is blocked, deny this action
    * @param type
    */
   function handleFlagContribution(type) {
-    if (contributionObj && !isLoading && !isFlagging && type !== 'undefined') {
+    if (UserUtils.isBlocked(scUserContext.user)) {
+      enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
+        variant: 'warning'
+      });
+    } else if (contributionObj && !isLoading && !isFlagging && type !== 'undefined') {
       setIsFlagging(true);
       performFlag(type)
         .then((data) => {
@@ -635,6 +640,16 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
    * handle action
    */
   function handleAction(action) {
+    if (
+      UserUtils.isBlocked(scUserContext.user) &&
+      [EDIT_CONTRIBUTION, MODERATE_CONTRIBUTION_HIDDEN, MODERATE_CONTRIBUTION_DELETED].includes(action)
+    ) {
+      // if user is blocked, deny edit and moderate
+      enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
+        variant: 'warning'
+      });
+      return;
+    }
     if (action === GET_CONTRIBUTION_PERMALINK) {
       copyTextToClipboard(
         `${location.protocol}//${location.host}${scRoutingContext.url(getRouteName(contributionObj), getRouteData(contributionObj))}`

@@ -98,7 +98,6 @@ export default function MessageEditor(props: MessageEditorProps): JSX.Element {
   const ref = useRef(null);
 
   // HANDLERS
-
   const handleMessageSend = () => {
     send();
     setMessage('');
