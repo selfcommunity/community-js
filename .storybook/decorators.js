@@ -13,10 +13,14 @@ const withProvider = (Story, context) => {
       if (context.globals.session === 'OAuth') {
         getOAuthSession(context).then((res) => {
           setAuthToken(res);
+        }).catch(() => {
+          console.log('Unable to get user session. Check username & password.')
         });
       } else if (context.globals.session === 'JWT') {
         getJWTSession(context).then((res) => {
           setAuthToken(res);
+        }).catch(() => {
+          console.log('Unable to get user session. Check username & password.')
         });
       } else {
         setAuthToken({});

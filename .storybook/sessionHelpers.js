@@ -84,7 +84,7 @@ export function getOAuthSession(context) {
         'expiresIn': res.expires_in
       };
     }).catch((error) => {
-      return error;
+      console.log('Unable to get an access token.');
     });
 }
 
