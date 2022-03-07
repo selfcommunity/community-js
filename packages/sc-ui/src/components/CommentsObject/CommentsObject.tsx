@@ -27,7 +27,7 @@ import {Box, Button, CardProps, Stack} from '@mui/material';
 import {CommentsOrderBy} from '../../types/comments';
 import classNames from 'classnames';
 import CustomAdv from '../CustomAdv';
-import { useSnackbar } from 'notistack';
+import {useSnackbar} from 'notistack';
 
 const messages = defineMessages({
   noOtherComment: {

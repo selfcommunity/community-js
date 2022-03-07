@@ -33,6 +33,7 @@ import {
   useSCRouting,
   useSCContext,
   SCContextType,
+  UserUtils,
   SCRoutes
 } from '@selfcommunity/core';
 import {useSnackbar} from 'notistack';
@@ -194,7 +195,7 @@ export interface CommentObjectProps {
 
   /**
    * comment to reply
-   * Used to intial open reply box for that comment
+   * Used to initial open reply box for that comment
    * @default null
    */
   commentReply?: SCCommentType;
@@ -637,11 +638,8 @@ export default function CommentObject(props: CommentObjectProps): JSX.Element {
    * @param comment
    */
   function renderComment(comment) {
-    if (
-      (comment.deleted && scUserContext.user && !scUserContext.user.role) ||
-      (scUserContext.user && scUserContext.user.role && !scUserContext.user.role.includes('admin'))
-    ) {
-      // if the logged user isn't an administrator can't view the comment
+    if (comment.deleted && (!scUserContext.user || (scUserContext.user && !UserUtils.isStaff(scUserContext.user)))) {
+      // render the comment if user is logged and is staff (admin, moderator)
       return null;
     }
     return (
