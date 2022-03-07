@@ -1,9 +1,9 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
 import Card from '@mui/material/Card';
 import {Avatar, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText, CardProps} from '@mui/material';
-import {Link, SCRoutes, SCRoutingContextType, SCUserContext, SCUserContextType, useSCFetchCategory, useSCRouting} from '@selfcommunity/core';
+import {Link, SCRoutes, SCRoutingContextType, useSCFetchCategory, useSCRouting} from '@selfcommunity/core';
 import CategorySkeleton from './Skeleton';
 import FollowButton, {FollowCategoryButtonProps} from '../FollowCategoryButton';
 import {SCCategoryType} from '@selfcommunity/core';
@@ -97,7 +97,6 @@ export default function Category(props: CategoryProps): JSX.Element {
   const {id = null, category = null, className = null, popular = false, autoHide = false, followCategoryButtonProps = {}, ...rest} = props;
 
   // CONTEXT
-  const scUserContext: SCUserContextType = useContext(SCUserContext);
   const scRoutingContext: SCRoutingContextType = useSCRouting();
 
   // STATE
@@ -121,11 +120,9 @@ export default function Category(props: CategoryProps): JSX.Element {
             secondary={popular ? `${intl.formatMessage(messages.categoryFollowers, {total: category.followers_count})}` : scCategory.slogan}
             className={classes.title}
           />
-          {scUserContext.user && (
-            <ListItemSecondaryAction className={classes.actions}>
-              <FollowButton category={scCategory} {...followCategoryButtonProps} />
-            </ListItemSecondaryAction>
-          )}
+          <ListItemSecondaryAction className={classes.actions}>
+            <FollowButton category={scCategory} {...followCategoryButtonProps} />
+          </ListItemSecondaryAction>
         </ListItem>
       ) : (
         <CategorySkeleton elevation={0} />

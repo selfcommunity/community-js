@@ -1,6 +1,15 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Logger, SCCategoriesManagerType, SCCategoryType, SCUserContext, SCUserContextType, useSCFetchCategory} from '@selfcommunity/core';
+import {
+  Logger,
+  SCCategoriesManagerType,
+  SCCategoryType,
+  SCContextType,
+  SCUserContext,
+  SCUserContextType,
+  useSCContext,
+  useSCFetchCategory
+} from '@selfcommunity/core';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {LoadingButton} from '@mui/lab';
 import {FormattedMessage} from 'react-intl';
@@ -77,6 +86,9 @@ export default function FollowCategoryButton(props: FollowCategoryButtonProps): 
 
   const {scCategory, setSCCategory} = useSCFetchCategory({id: categoryId, category});
   const [followed, setFollowed] = useState<boolean>(null);
+
+  // CONTEXT
+  const scContext: SCContextType = useSCContext();
   const scUserContext: SCUserContextType = useContext(SCUserContext);
   const scCategoriesManager: SCCategoriesManagerType = scUserContext.managers.categories;
 
@@ -101,12 +113,20 @@ export default function FollowCategoryButton(props: FollowCategoryButtonProps): 
       });
   };
 
+  const handleFollowAction = () => {
+    if (!scUserContext.user) {
+      scContext.settings.handleAnonymousAction();
+    } else {
+      followCategory();
+    }
+  };
+
   return (
     <FollowButton
       size="small"
       variant="outlined"
-      onClick={followCategory}
-      loading={followed === null || scCategoriesManager.isLoading(scCategory)}
+      onClick={handleFollowAction}
+      loading={scUserContext.user ? followed === null || scCategoriesManager.isLoading(scCategory) : null}
       className={classNames(classes.root, className)}
       {...rest}>
       {followed ? (
