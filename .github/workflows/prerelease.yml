@@ -37,5 +37,5 @@ jobs:
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         repository: selfcommunity/developers-doc
-        event-type: prerelease
+        event-type: community-ui-prerelease
         client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
