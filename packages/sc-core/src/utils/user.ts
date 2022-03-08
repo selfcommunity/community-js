@@ -1,4 +1,4 @@
-import {SCUserType} from '../types/user';
+import {SCUserStatus, SCUserType} from '../types/user';
 
 /**
  * Staff Roles
@@ -60,5 +60,5 @@ export function isStaff(user: SCUserType) {
  * @returns {*}
  */
 export function isBlocked(user: SCUserType) {
-  return user && user.status && user.status === 'b';
+  return user && user.status && user.status === SCUserStatus.BLOCKED;
 }

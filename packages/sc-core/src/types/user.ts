@@ -19,6 +19,16 @@ export enum SCUserFields {
   WEBSITE = 'website',
 }
 
+/**
+ * User status
+ */
+export enum SCUserStatus {
+  APPROVED = 'a',
+  BLOCKED = 'b',
+  DELETED = 'd',
+  UNREGISTERED = 'u',
+}
+
 export interface SCUserType {
   /**
    * The ID of the user.
@@ -97,7 +107,7 @@ export interface SCUserType {
    *    - flag a contribution
    *    - send a private message
    *    - edit info profile
-   * but but he can't:
+   * but he can't:
    *    - follow/unfollow a post/discussion/status
    *    - follow/unfollow a category
    *    - unfollow user
