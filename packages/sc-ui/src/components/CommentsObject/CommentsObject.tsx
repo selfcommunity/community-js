@@ -1,5 +1,17 @@
 import React, {useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
+import {defineMessages, FormattedMessage} from 'react-intl';
+import {SCOPE_SC_UI} from '../../constants/Errors';
+import {AxiosResponse} from 'axios';
+import CommentObject, {CommentObjectProps, CommentObjectSkeleton} from '../CommentObject';
+import ReplyCommentObject, {ReplyCommentObjectProps} from '../CommentObject/ReplyComment';
+import Typography from '@mui/material/Typography';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import {Box, Button, CardProps, Stack} from '@mui/material';
+import {CommentsOrderBy} from '../../types/comments';
+import classNames from 'classnames';
+import CustomAdv from '../CustomAdv';
+import {useSnackbar} from 'notistack';
 import {
   Endpoints,
   http,
@@ -16,18 +28,6 @@ import {
   useSCPreferences,
   useSCUser
 } from '@selfcommunity/core';
-import {defineMessages, FormattedMessage} from 'react-intl';
-import {SCOPE_SC_UI} from '../../constants/Errors';
-import {AxiosResponse} from 'axios';
-import CommentObject, {CommentObjectProps, CommentObjectSkeleton} from '../CommentObject';
-import ReplyCommentObject, {ReplyCommentObjectProps} from '../CommentObject/ReplyComment';
-import Typography from '@mui/material/Typography';
-import InfiniteScroll from 'react-infinite-scroll-component';
-import {Box, Button, CardProps, Stack} from '@mui/material';
-import {CommentsOrderBy} from '../../types/comments';
-import classNames from 'classnames';
-import CustomAdv from '../CustomAdv';
-import {useSnackbar} from 'notistack';
 
 const messages = defineMessages({
   noOtherComment: {
@@ -325,7 +325,7 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
     () => () => {
       if (showTitle) {
         return (
-          <Typography variant="h6" gutterBottom>
+          <Typography variant="h6" gutterBottom color={'inherit'}>
             <FormattedMessage id="ui.commentsObject.title" defaultMessage="ui.commentsObject.title" values={{total: total}} />
           </Typography>
         );
