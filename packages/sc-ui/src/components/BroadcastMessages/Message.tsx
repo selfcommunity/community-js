@@ -7,6 +7,7 @@ import {
   http,
   Link,
   Logger,
+  SCBroadcastMessageBannerType,
   SCBroadcastMessageType,
   SCPreferences,
   SCPreferencesContext,
@@ -114,6 +115,32 @@ export default function Message(props: MessageProps): JSX.Element {
       .then(() => setClosing(false));
   };
 
+  // RENDER
+  const renderContent = (banner) => {
+    switch (banner.type_banner) {
+      case SCBroadcastMessageBannerType.NOTIFICATION:
+        return (
+          <>
+            <CardContent className={classes.title}>
+              <Typography variant="h6">{banner.title}</Typography>
+            </CardContent>
+            {banner.image && <CardMedia className={classes.media} component="img" image={banner.image} alt={banner.title} />}
+            <CardContent className={classes.content}>
+              <Typography variant="body2" color="text.secondary">
+                {banner.body_text}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                <Link to={banner.link} target={banner.open_in_new_tab ? '_blank' : '_self'}>
+                  {banner.link_text}
+                </Link>
+              </Typography>
+            </CardContent>
+          </>
+        );
+      default:
+        return null;
+    }
+  };
   // Banner
   const {banner} = message;
 
@@ -137,20 +164,7 @@ export default function Message(props: MessageProps): JSX.Element {
             />
           }
         />
-        <CardContent className={classes.title}>
-          <Typography variant="h6">{banner.title}</Typography>
-        </CardContent>
-        {banner.image && <CardMedia className={classes.media} component="img" image={banner.image} alt={banner.title} />}
-        <CardContent className={classes.content}>
-          <Typography variant="body2" color="text.secondary">
-            {banner.body_text}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            <Link to={banner.link} target={banner.open_in_new_tab ? '_blank' : '_self'}>
-              {banner.link_text}
-            </Link>
-          </Typography>
-        </CardContent>
+        {renderContent(banner)}
       </Root>
     </Fade>
   );
