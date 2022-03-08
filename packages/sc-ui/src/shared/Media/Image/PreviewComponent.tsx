@@ -61,7 +61,7 @@ const Root = styled(Box, {
   },
 
   [`& .${classes.cover}`]: {
-    backgroundColor: 'rgba(102,102,102,0.7)',
+    backgroundColor: 'rgba(102,102,102,0.2)',
     opacity: 0.8,
     position: 'absolute',
     right: 0,
