@@ -1,11 +1,11 @@
 import React from 'react';
 import {IconButton as MUIIconButton} from '@mui/material';
-import LinkIcon from '@mui/icons-material/LinkOutlined';
+import Icon from '@mui/material/Icon';
 
 export default (props: any): JSX.Element => {
   return (
     <MUIIconButton {...props} aria-label="add link">
-      <LinkIcon />
+      <Icon>link</Icon>
     </MUIIconButton>
   );
 };

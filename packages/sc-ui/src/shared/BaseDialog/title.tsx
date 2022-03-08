@@ -1,7 +1,7 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
+import Icon from '@mui/material/Icon';
 import DialogTitle from '@mui/material/DialogTitle';
 
 const PREFIX = 'SCBaseDialogTitle';
@@ -31,7 +31,7 @@ export default function ({children = null, onClose = null}) {
             top: 5,
             color: (theme) => theme.palette.grey[500]
           }}>
-          <CloseIcon />
+          <Icon>close</Icon>
         </IconButton>
       ) : null}
     </Root>

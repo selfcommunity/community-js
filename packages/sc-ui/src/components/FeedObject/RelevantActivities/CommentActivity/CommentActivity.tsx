@@ -28,8 +28,8 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  '& .MuiSvgIcon-root': {
-    width: '0.7em',
+  '& .MuiIcon-root': {
+    fontSize: '18px',
     marginBottom: '0.5px'
   },
   '& a': {

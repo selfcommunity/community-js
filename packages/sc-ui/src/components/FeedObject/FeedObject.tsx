@@ -201,8 +201,8 @@ const Root = styled(Card, {
   [`& .${classes.actions}`]: {
     padding: '1px 0px'
   },
-  '& .MuiSvgIcon-root': {
-    width: '0.7em',
+  '& .MuiIcon-root': {
+    fontSize: '18px',
     marginBottom: '0.5px'
   }
 }));

@@ -70,7 +70,7 @@ const Root = styled(Card, {
     margin: theme.spacing(1),
     alignItems: 'center',
     justifyContent: 'center',
-    '& .MuiSvgIcon-root': {
+    '& .MuiIcon-root': {
       width: '0.7em',
       marginRight: '5px'
     }
@@ -80,7 +80,7 @@ const Root = styled(Card, {
     margin: theme.spacing(1),
     alignItems: 'center',
     justifyContent: 'center',
-    '& .MuiSvgIcon-root': {
+    '& .MuiIcon-root': {
       width: '1em',
       marginRight: '5px'
     }

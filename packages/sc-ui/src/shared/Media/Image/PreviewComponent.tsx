@@ -1,11 +1,9 @@
-import React, {Component, useState} from 'react';
+import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
 import PreviewImage from './PreviewImage';
 import {Grid, Typography, Box} from '@mui/material';
 import classNames from 'classnames';
-import ZoomOut from '@mui/icons-material/ZoomOutMap';
-import IconPdf from '@mui/icons-material/PictureAsPdf';
-import IconGenericsFile from '@mui/icons-material/InsertDriveFileOutlined';
+import Icon from '@mui/material/Icon';
 import CentralProgress from '../../CentralProgress';
 import LazyLoad from 'react-lazyload';
 
@@ -194,10 +192,10 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
     if (o.type) {
       switch (o.type) {
         case 'doc':
-          startAdornment = <IconPdf className={classes.iconFile} />;
+          startAdornment = <Icon className={classes.iconFile}>picture_as_pdf</Icon>;
           break;
         default:
-          startAdornment = <IconGenericsFile className={classes.iconFile} />;
+          startAdornment = <Icon className={classes.iconFile}>insert_drive_file</Icon>;
           break;
       }
     }
@@ -311,7 +309,7 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
     return [
       <div key={`cover-${id}`} className={classNames(classes.cover, classes.slide)}></div>,
       <div key={`cover-text-${id}`} className={classNames(classes.coverText, classes.slide, 'animate-text')} style={{fontSize: '100%'}}>
-        <ZoomOut />
+        <Icon>zoom_out_map</Icon>
       </div>
     ];
   };

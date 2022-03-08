@@ -84,8 +84,7 @@ const getTheme = (options, preferences) => {
           SCTrendingFeed: {
             styleOverrides: {
               root: {
-                '& .MuiSvgIcon-root': {
-                  width: '0.7em',
+                '& .MuiIcon-root': {
                   marginBottom: '0.5px',
                 },
               },
@@ -94,8 +93,8 @@ const getTheme = (options, preferences) => {
           SCPlatform: {
             styleOverrides: {
               root: {
-                '& .MuiSvgIcon-root': {
-                  width: '0.8em',
+                '& .MuiIcon-root': {
+                  fontSize: '18px',
                   marginLeft: '2px',
                   marginBottom: '-3px',
                 },

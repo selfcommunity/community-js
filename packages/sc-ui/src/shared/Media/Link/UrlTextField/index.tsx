@@ -1,7 +1,7 @@
 import React, {SyntheticEvent, useEffect, useState} from 'react';
 import InputAdornment from '@mui/material/InputAdornment';
+import Icon from '@mui/material/Icon';
 import IconButton from '@mui/material/IconButton';
-import SubmitIcon from '@mui/icons-material/PlayArrowOutlined';
 import TextField from '@mui/material/TextField';
 import {Endpoints, formatHttpError, http, UrlUtils, SCMediaType} from '@selfcommunity/core';
 import {MEDIA_TYPE_URL} from '../../../../constants/Media';
@@ -182,7 +182,7 @@ export default (props: UrlTextFieldProps): JSX.Element => {
             <InputAdornment position="end">
               <Fade in={urlError === null && url !== ''}>
                 <IconButton size="small" disabled={isCreating} type="submit">
-                  {isCreating ? <CircularProgress color="primary" size={20} /> : <SubmitIcon />}
+                  {isCreating ? <CircularProgress color="primary" size={20} /> : <Icon>play_arrow</Icon>}
                 </IconButton>
               </Fade>
             </InputAdornment>

@@ -46,7 +46,7 @@ const Root = styled(Card, {
   [`& .${classes.result}`]: {
     marginLeft: theme.spacing(2)
   },
-  '& .MuiSvgIcon-root': {
+  '& .MuiIcon-root': {
     color: theme.palette.common.white
   },
   '& .MuiLinearProgress-bar': {

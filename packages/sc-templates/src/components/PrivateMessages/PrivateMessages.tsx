@@ -27,7 +27,7 @@ const Root = styled(Box, {
   [`& .${classes.newMessage}`]: {
     width: '100%',
     justifyContent: 'flex-start',
-    '& .MuiSvgIcon-root': {
+    '& .MuiIcon-root': {
       marginRight: '5px'
     }
   },
@@ -35,7 +35,7 @@ const Root = styled(Box, {
     background: theme.palette.grey['A200'],
     justifyContent: 'flex-start',
     width: '100%',
-    '& .MuiSvgIcon-root': {
+    '& .MuiIcon-root': {
       marginRight: '5px'
     }
   }

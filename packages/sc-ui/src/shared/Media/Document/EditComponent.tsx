@@ -3,15 +3,14 @@ import React, {forwardRef, SyntheticEvent, useContext, useState} from 'react';
 import {Alert, AlertTitle, Box, Button as MuiButton, Fade, IconButton, ImageList, ImageListItem, ImageListItemBar, Typography} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import {ReactSortable} from 'react-sortablejs';
-import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import ChunkedUploady from '@rpldy/chunked-uploady';
 import {Endpoints, SCContext, SCContextType, SCMediaType} from '@selfcommunity/core';
 import {styled} from '@mui/material/styles';
 import MediaChunkUploader from '../../MediaChunkUploader';
 import {SCMediaChunkType} from '../../../types/media';
-import DocumentIcon from '@mui/icons-material/PictureAsPdfOutlined';
+import Icon from '@mui/material/Icon';
 import {ButtonProps} from '@mui/material/Button/Button';
-import { EditMediaProps } from '../types';
+import {EditMediaProps} from '../types';
 
 const PREFIX = 'SCMediaActionDocument';
 
@@ -35,7 +34,7 @@ const Root = styled(Box, {
 const UploadButton = asUploadButton(
   forwardRef((props: ButtonProps, ref: any) => (
     <MuiButton {...props} aria-label="upload document" ref={ref} variant="outlined" color="inherit">
-      <DocumentIcon /> <FormattedMessage id="ui.composer.media.document.add" defaultMessage="ui.composer.media.document.add" />
+      <Icon>picture_as_pdf</Icon> <FormattedMessage id="ui.composer.media.document.add" defaultMessage="ui.composer.media.document.add" />
     </MuiButton>
   ))
 );
@@ -98,7 +97,7 @@ export default (props: EditMediaProps): JSX.Element => {
                 position="top"
                 actionIcon={
                   <IconButton onClick={onDelete(media.id)} size="small" sx={{color: 'rgba(255, 255, 255, 0.54)'}}>
-                    <DeleteIcon />
+                    <Icon>delete_outline</Icon>
                   </IconButton>
                 }
               />
@@ -107,7 +106,7 @@ export default (props: EditMediaProps): JSX.Element => {
           {Object.values(uploading).map((media: SCMediaChunkType) => (
             <ImageListItem key={media.id} className={'ignore-elements'}>
               <Box className={classes.preview} sx={{backgroundImage: `url(${media.image})`}}>
-                <DocumentIcon style={{position: 'absolute', left: 0, top: 0, width: '100%', height: '100%'}} />
+                <Icon sx={{position: 'absolute', left: 0, top: 0, width: '100%', height: '100%'}}>picture_as_pdf</Icon>
               </Box>
               <ImageListItemBar title={<Typography align="center">{`${Math.round(media.completed)}%`}</Typography>} position="top" />
             </ImageListItem>

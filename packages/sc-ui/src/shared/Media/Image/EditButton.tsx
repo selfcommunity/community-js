@@ -1,11 +1,11 @@
 import React from 'react';
 import {IconButton as MUIIconButton} from '@mui/material';
-import ImageIcon from '@mui/icons-material/ImageOutlined';
+import Icon from '@mui/material/Icon';
 
 export default (props: any): JSX.Element => {
   return (
     <MUIIconButton {...props} aria-label="upload image">
-      <ImageIcon />
+      <Icon>image</Icon>
     </MUIIconButton>
   );
 };

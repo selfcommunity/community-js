@@ -2,23 +2,10 @@ import React, {useContext, useMemo, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import Popper from '@mui/material/Popper';
-import SelectedIcon from '@mui/icons-material/Check';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+import Icon from '@mui/material/Icon';
 import CentralProgress from '../CentralProgress';
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import FlagOutlinedIcon from '@mui/icons-material/FlagOutlined';
-import NotificationsOffOutlinedIcon from '@mui/icons-material/NotificationsOffOutlined';
-import NotificationsOnOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {AxiosResponse} from 'axios';
-import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import LinkOutlinedIcon from '@mui/icons-material/LinkOutlined';
-import HideOutlinedIcon from '@mui/icons-material/HideImageOutlined';
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
-import RestoreFromTrashOutlinedIcon from '@mui/icons-material/RestoreFromTrashOutlined';
-import RestoreOutlinedIcon from '@mui/icons-material/RestoreOutlined';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import {copyTextToClipboard} from '../../utils/string';
 import {useSnackbar} from 'notistack';
 import {getRouteData, getRouteName} from '../../utils/contribute';
@@ -831,7 +818,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
     return REPORTS.map((report, index) => (
       <MenuItem key={`${section}_${index}`} className={classes.subItem} disabled={isFlagging}>
         <ListItemIcon classes={{root: classes.selectedIcon}}>
-          {eval(`${section.split('_')[1]}Type`) === report && <SelectedIcon color="secondary" />}
+          {eval(`${section.split('_')[1]}Type`) === report && <Icon color="secondary">check</Icon>}
         </ListItemIcon>
         <ListItemText primary={getReportName(report)} onClick={() => handlerFunc(report)} classes={{root: classes.subItemText}} />
       </MenuItem>
@@ -852,12 +839,12 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
                 {flagType !== undefined && flagType !== null ? (
                   <Badge
                     classes={{badge: classes.sectionBadge}}
-                    badgeContent={<SelectedIcon className={classes.sectionWithSelectionIcon} />}
+                    badgeContent={<Icon className={classes.sectionWithSelectionIcon}>check</Icon>}
                     color="primary">
-                    <FlagOutlinedIcon />
+                    <Icon>outlined_flag</Icon>
                   </Badge>
                 ) : (
-                  <FlagOutlinedIcon />
+                  <Icon>outlined_flag</Icon>
                 )}
               </ListItemIcon>
               <ListItemText
@@ -868,7 +855,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
                   />
                 }
               />
-              {open ? <ExpandLess /> : <ExpandMore />}
+              {open ? <Icon>expand_less</Icon> : <Icon>expand_more</Icon>}
             </MenuItem>
             <Collapse in={open} timeout="auto" unmountOnExit>
               {renderReports(FLAG_CONTRIBUTION_SECTION)}
@@ -895,7 +882,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
               <>
                 <MenuItem className={classes.subItem} disabled={Boolean(currentAction)} onClick={() => handleAction(MODERATE_CONTRIBUTION_HIDDEN)}>
                   <ListItemIcon>
-                    <RestoreOutlinedIcon />
+                    <Icon>restore</Icon>
                   </ListItemIcon>
                   <ListItemText
                     primary={
@@ -914,7 +901,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
               <>
                 <MenuItem className={classes.subItem} disabled={Boolean(currentAction)} onClick={() => handleOpenSection(HIDE_CONTRIBUTION_SECTION)}>
                   <ListItemIcon>
-                    <HideOutlinedIcon />
+                    <Icon>hide_image</Icon>
                   </ListItemIcon>
                   <ListItemText
                     primary={
@@ -924,7 +911,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
                       />
                     }
                   />
-                  {open ? <ExpandLess /> : <ExpandMore />}
+                  {open ? <Icon>expand_less</Icon> : <Icon>expand_more</Icon>}
                 </MenuItem>
                 <Collapse in={open} timeout="auto" unmountOnExit>
                   {renderReports(HIDE_CONTRIBUTION_SECTION)}
@@ -950,7 +937,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
               <>
                 <MenuItem className={classes.subItem} disabled={Boolean(currentAction)} onClick={() => handleAction(MODERATE_CONTRIBUTION_DELETED)}>
                   <ListItemIcon>
-                    <RestoreFromTrashOutlinedIcon />
+                    <Icon>restore_from_trash</Icon>
                   </ListItemIcon>
                   <ListItemText
                     primary={
@@ -972,7 +959,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
                   disabled={Boolean(currentAction)}
                   onClick={() => handleOpenSection(DELETE_CONTRIBUTION_SECTION)}>
                   <ListItemIcon>
-                    <DeleteOutlineOutlinedIcon />
+                    <Icon>delete_outline</Icon>
                   </ListItemIcon>
                   <ListItemText
                     primary={
@@ -982,7 +969,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
                       />
                     }
                   />
-                  {open ? <ExpandLess /> : <ExpandMore />}
+                  {open ? <Icon>expand_less</Icon> : <Icon>expand_more</Icon>}
                 </MenuItem>
                 <Collapse in={open} timeout="auto" unmountOnExit>
                   {renderReports(DELETE_CONTRIBUTION_SECTION)}
@@ -1026,7 +1013,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
       <Box key={GENERAL_SECTION}>
         <MenuItem className={classes.subItem} disabled={isFlagging}>
           <ListItemIcon>
-            <LinkOutlinedIcon />
+            <Icon>link</Icon>
           </ListItemIcon>
           <ListItemText
             primary={<FormattedMessage id="ui.contributionActionMenu.permanentLink" defaultMessage="ui.contributionActionMenu.permanentLink" />}
@@ -1037,7 +1024,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
         {canModifyContribution() && (
           <MenuItem className={classes.subItem} disabled={isFlagging}>
             <ListItemIcon>
-              <EditOutlinedIcon />
+              <Icon>edit</Icon>
             </ListItemIcon>
             <ListItemText
               primary={
@@ -1054,7 +1041,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
               {currentActionLoading === DELETE_CONTRIBUTION || currentActionLoading === RESTORE_CONTRIBUTION ? (
                 <CircularProgress size={20} />
               ) : (
-                <DeleteOutlineOutlinedIcon />
+                <Icon>delete_outline</Icon>
               )}
             </ListItemIcon>
             {contributionObj.deleted ? (
@@ -1085,9 +1072,9 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
               {currentActionLoading === SUSPEND_NOTIFICATION_CONTRIBUTION ? (
                 <CircularProgress size={20} />
               ) : contributionObj['suspended'] ? (
-                <NotificationsOnOutlinedIcon />
+                <Icon>notifications</Icon>
               ) : (
-                <NotificationsOffOutlinedIcon />
+                <Icon>notifications_off</Icon>
               )}
             </ListItemIcon>
             <ListItemText
@@ -1128,13 +1115,13 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
         size="medium">
         {contributionObj.collapsed || contributionObj.deleted ? (
           <Badge
-            badgeContent={contributionObj.collapsed ? <VisibilityOffIcon /> : <DeleteOutlineOutlinedIcon />}
+            badgeContent={contributionObj.collapsed ? <Icon>visibility_off</Icon> : <Icon>delete_outline</Icon>}
             classes={{badge: classes.visibilityBadge}}
             color="error">
-            <MoreVertIcon />
+            <Icon>more_vert</Icon>
           </Badge>
         ) : (
-          <MoreVertIcon />
+          <Icon>more_vert</Icon>
         )}
       </IconButton>
       <PopperRoot

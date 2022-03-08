@@ -1,10 +1,9 @@
 import {asUploadButton} from '@rpldy/upload-button';
 import React, {forwardRef, SyntheticEvent, useContext, useState} from 'react';
 import {Alert, AlertTitle, Box, Button as MuiButton, Fade, IconButton, ImageList, ImageListItem, ImageListItemBar, Typography} from '@mui/material';
-import ImageIcon from '@mui/icons-material/ImageOutlined';
+import Icon from '@mui/material/Icon';
 import {FormattedMessage} from 'react-intl';
 import {ReactSortable} from 'react-sortablejs';
-import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import ChunkedUploady from '@rpldy/chunked-uploady';
 import {Endpoints, SCContext, SCContextType, SCMediaType} from '@selfcommunity/core';
 import {styled} from '@mui/material/styles';
@@ -52,7 +51,7 @@ const Root = styled(Box, {
 const UploadButton = asUploadButton(
   forwardRef((props: ButtonProps, ref: any) => (
     <MuiButton {...props} aria-label="upload image" ref={ref} variant="outlined" color="inherit">
-      <ImageIcon /> <FormattedMessage id="ui.composer.media.image.add" defaultMessage="ui.composer.media.image.add" />
+      <Icon>image</Icon> <FormattedMessage id="ui.composer.media.image.add" defaultMessage="ui.composer.media.image.add" />
     </MuiButton>
   ))
 );
@@ -115,7 +114,7 @@ export default (props: EditMediaProps): JSX.Element => {
                 position="top"
                 actionIcon={
                   <IconButton onClick={onDelete(media.id)} size="small" sx={{color: 'rgba(255, 255, 255, 0.54)'}}>
-                    <DeleteIcon />
+                    <Icon>delete_outline</Icon>
                   </IconButton>
                 }
               />
