@@ -23,7 +23,7 @@ import DateTimeAgo from '../../shared/DateTimeAgo';
 import Bullet from '../../shared/Bullet';
 import Tags from '../../shared/Tags';
 import MediasPreview, {MediaPreviewProps} from '../../shared/MediasPreview';
-import Actions, { ActionsProps } from './Actions';
+import Actions, {ActionsProps} from './Actions';
 import Icon from '@mui/material/Icon';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import PollObject, {PollObjectProps} from './Poll';
@@ -56,7 +56,6 @@ import {CommentsOrderBy} from '../../types/comments';
 import {FeedObjectActivitiesType, FeedObjectTemplateType} from '../../types/feedObject';
 import RelevantActivities from './RelevantActivities';
 import ReplyCommentObject from '../CommentObject/ReplyComment';
-import {LoadingButton} from '@mui/lab';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {AxiosResponse} from 'axios';
 import MarkRead from '../../shared/MarkRead';
@@ -64,6 +63,7 @@ import classNames from 'classnames';
 import ContributionActionsMenu, {ContributionActionsMenuProps} from '../../shared/ContributionActionsMenu';
 import {getContributionHtml} from '../../utils/contribute';
 import {useSnackbar} from 'notistack';
+import Follow, {FollowProps} from './Actions/Follow';
 
 const messages = defineMessages({
   comment: {
@@ -179,15 +179,6 @@ const Root = styled(Card, {
   [`& .${classes.infoSection}`]: {
     padding: `0px ${theme.spacing(2)}`
   },
-  [`& .${classes.followButton}`]: {
-    backgroundColor: theme.palette.grey[100],
-    color: theme.palette.grey[700],
-    boxShadow: 'none',
-    '&:hover': {
-      backgroundColor: theme.palette.grey[300],
-      boxShadow: 'none'
-    }
-  },
   [`& .${classes.activityAt}`]: {
     textDecoration: 'none',
     color: '#939598'
@@ -280,6 +271,12 @@ export interface FeedObjectProps extends CardProps {
   FeedObjectSkeletonProps?: FeedObjectSkeletonProps;
 
   /**
+   * Props to spread to Follow button component
+   * @default {}
+   */
+  FollowButtonProps?: FollowProps;
+
+  /**
    * Props to spread to Actions component
    * @default {}
    */
@@ -344,7 +341,6 @@ export interface FeedObjectProps extends CardProps {
  |snippetContent|.SCFeedObject-snippet-content|Styles applied to snippet content element.|
  |sharedTextContent|.SCFeedObject-shared-content|Styles applied to the feed obj shared content element.|
  |subContent|.SCFeedObject-sub-content|Styles applied to the sub content (container placed immediately after the content, similar to a footer). Wrap the contributors and the follow button.|
- |followButton|.SCFeedObject-follow-button|Styles applied to the follow button element.|
  |actions|.SCFeedObject-actions|Styles applied to the actions container.|
  |activitiesContent|.SCFeedObject-activities-content|Styles applied to the activities content element.|
  |activityAt|.SCFeedObject-activity-at|Styles applied to the activity at section.|
@@ -366,6 +362,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
     hideShareAction = false,
     hideFollowAction = false,
     hideParticipantsPreview = false,
+    FollowButtonProps = {},
     FeedObjectSkeletonProps = {elevation: 0},
     ActionsProps = {},
     ContributionActionsMenuProps = {},
@@ -390,7 +387,6 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
   const [expandedActivities, setExpandedActivities] = useState<boolean>(getInitialExpandedActivities());
   const [selectedActivities, setSelectedActivities] = useState<string>(getInitialSelectedActivitiesType());
   const [isReplying, setIsReplying] = useState<boolean>(false);
-  const [isFollowing, setIsFollowing] = useState<boolean>(false);
 
   // INTL
   const intl = useIntl();
@@ -498,43 +494,10 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
   }
 
   /**
-   * Perform follow/unfollow
-   * Post, Discussion, Status
+   * Handle follow obj
    */
-  const performFollow = useMemo(
-    () => () => {
-      return http
-        .request({
-          url: Endpoints.FollowContribution.url({type: obj.type, id: obj.id}),
-          method: Endpoints.FollowContribution.method
-        })
-        .then((res: AxiosResponse<SCTagType>) => {
-          if (res.status >= 300) {
-            return Promise.reject(res);
-          }
-          return Promise.resolve(res.data);
-        });
-    },
-    [obj]
-  );
-
-  /**
-   * Handle follow object
-   * Even if a user is blocked, can perform this action
-   */
-  function handleFollow() {
-    setIsFollowing(true);
-    performFollow()
-      .then((data) => {
-        setObj(Object.assign({}, obj, {followed: !obj.followed}));
-        setIsFollowing(false);
-      })
-      .catch((error) => {
-        Logger.error(SCOPE_SC_UI, error);
-        enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
-          variant: 'error'
-        });
-      });
+  function handleFollow(isFollow) {
+    setObj((prev) => ({...prev, ...{followed: isFollow}}));
   }
 
   /**
@@ -775,21 +738,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
                       <ContributorsFeedObject feedObject={obj} feedObjectType={obj.type} {...ContributorsFeedObjectProps} />
                     </LazyLoad>
                   )}
-                  {scUserContext.user && obj.author.id !== scUserContext.user.id && !hideFollowAction && !obj.deleted && (
-                    <LoadingButton
-                      classes={{root: classes.followButton}}
-                      loading={isFollowing}
-                      variant="contained"
-                      size="small"
-                      disabled={isFollowing}
-                      onClick={handleFollow}>
-                      {obj.followed ? (
-                        <FormattedMessage id="ui.feedObject.unfollow" defaultMessage="ui.feedObject.unfollow" />
-                      ) : (
-                        <FormattedMessage id="ui.feedObject.follow" defaultMessage="ui.feedObject.follow" />
-                      )}
-                    </LoadingButton>
-                  )}
+                  {!hideFollowAction && <Follow feedObject={obj} feedObjectType={obj.type} handleFollow={handleFollow} {...FollowButtonProps} />}
                 </Stack>
               </Box>
             </CardContent>

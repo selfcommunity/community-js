@@ -99,7 +99,7 @@ export interface ShareProps {
    * Feed object id
    * @default null
    */
-  id?: number;
+  feedObjectId?: number;
 
   /**
    * Feed object
@@ -142,7 +142,7 @@ export default function Share(props: ShareProps): JSX.Element {
   // PROPS
   const {
     className = null,
-    id = null,
+    feedObjectId = null,
     feedObject = null,
     feedObjectType = SCFeedObjectTypologyType.POST,
     withAction = true,
@@ -152,7 +152,7 @@ export default function Share(props: ShareProps): JSX.Element {
   } = props;
 
   // STATE
-  const {obj, setObj} = useSCFetchFeedObject({id, feedObject, feedObjectType});
+  const {obj, setObj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
   const [isSharing, setIsSharing] = useState<boolean>(false);
   const [isComposerOpen, setIsComposerOpen] = useState<boolean>(false);
   const [composerShareProps, setComposerShareProps] = useState<any>(null);
