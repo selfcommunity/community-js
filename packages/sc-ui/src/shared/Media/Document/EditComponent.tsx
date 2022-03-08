@@ -97,7 +97,7 @@ export default (props: EditMediaProps): JSX.Element => {
                 position="top"
                 actionIcon={
                   <IconButton onClick={onDelete(media.id)} size="small" sx={{color: 'rgba(255, 255, 255, 0.54)'}}>
-                    <Icon>delete_outline</Icon>
+                    <Icon>delete</Icon>
                   </IconButton>
                 }
               />

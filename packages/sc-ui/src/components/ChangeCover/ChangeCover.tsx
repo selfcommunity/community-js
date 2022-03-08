@@ -175,7 +175,7 @@ export default function ChangeCover(props: ChangeCoverProps): JSX.Element {
         {hasCover && (
           <MenuItem className={classes.menuItem} onClick={() => setOpenDeleteCoverDialog(true)}>
             <ListItemIcon>
-              <Icon fontSize="small">delete_outline</Icon>
+              <Icon fontSize="small">delete</Icon>
             </ListItemIcon>
             <FormattedMessage id="ui.changeCover.button.delete" defaultMessage="ui.changeCover.button.delete" />
           </MenuItem>

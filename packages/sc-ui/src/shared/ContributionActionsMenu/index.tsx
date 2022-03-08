@@ -959,7 +959,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
                   disabled={Boolean(currentAction)}
                   onClick={() => handleOpenSection(DELETE_CONTRIBUTION_SECTION)}>
                   <ListItemIcon>
-                    <Icon>delete_outline</Icon>
+                    <Icon>delete</Icon>
                   </ListItemIcon>
                   <ListItemText
                     primary={
@@ -1041,7 +1041,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
               {currentActionLoading === DELETE_CONTRIBUTION || currentActionLoading === RESTORE_CONTRIBUTION ? (
                 <CircularProgress size={20} />
               ) : (
-                <Icon>delete_outline</Icon>
+                <Icon>delete</Icon>
               )}
             </ListItemIcon>
             {contributionObj.deleted ? (
@@ -1115,7 +1115,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
         size="medium">
         {contributionObj.collapsed || contributionObj.deleted ? (
           <Badge
-            badgeContent={contributionObj.collapsed ? <Icon>visibility_off</Icon> : <Icon>delete_outline</Icon>}
+            badgeContent={contributionObj.collapsed ? <Icon>visibility_off</Icon> : <Icon>delete</Icon>}
             classes={{badge: classes.visibilityBadge}}
             color="error">
             <Icon>more_vert</Icon>

@@ -57,7 +57,7 @@ export default (props: EditMediaProps): JSX.Element => {
               <Link medias={[media]} />
               <Box className={classes.close}>
                 <IconButton onClick={onDelete(media.id)} size="small">
-                  <Icon>delete_outline</Icon>
+                  <Icon>delete</Icon>
                 </IconButton>
               </Box>
             </Box>

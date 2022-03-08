@@ -16,7 +16,8 @@ import {
   SCPreferencesContextType,
   SCTagType,
   SCUserContext,
-  SCUserContextType, UserUtils,
+  SCUserContextType,
+  UserUtils
 } from '@selfcommunity/core';
 import {FormattedMessage} from 'react-intl';
 import Icon from '@mui/material/Icon';
@@ -68,7 +69,7 @@ import {AxiosResponse} from 'axios';
 import {DistributiveOmit} from '@mui/types';
 import {OverrideProps} from '@mui/material/OverridableComponent';
 import {ComposerSkeleton} from './index';
-import { useSnackbar } from 'notistack';
+import {useSnackbar} from 'notistack';
 
 const DialogTransition = forwardRef(function Transition(
   props: TransitionProps & {
@@ -716,7 +717,7 @@ export default function Composer(props: ComposerProps): JSX.Element {
         </Fade>
         <Typography align="right">
           <IconButton onClick={handleDeleteMedia(null, mediaObjectType)} size="small" color="primary">
-            <Icon>delete_outline</Icon>
+            <Icon>delete</Icon>
           </IconButton>
         </Typography>
       </Box>

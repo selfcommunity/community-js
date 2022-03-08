@@ -208,7 +208,7 @@ export default (props: PollProps): JSX.Element => {
                       }>
                       <span>
                         <IconButton onClick={handleDeleteChoice(index)} disabled={choices.length <= COMPOSER_POLL_MIN_CHOICES}>
-                          <Icon>delete_outline</Icon>
+                          <Icon>delete</Icon>
                         </IconButton>
                       </span>
                     </Tooltip>
