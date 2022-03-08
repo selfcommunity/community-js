@@ -16,6 +16,7 @@ import Endpoints from '../constants/Endpoints';
  */
 export default function useSCFetchCategory({id = null, category = null}: {id?: number; category?: SCCategoryType}) {
   const [scCategory, setSCCategory] = useState<SCCategoryType>(category);
+  const [error, setError] = useState<string>(null);
 
   /**
    * Memoized fetchTag
@@ -47,11 +48,12 @@ export default function useSCFetchCategory({id = null, category = null}: {id?: n
           setSCCategory(obj);
         })
         .catch((err) => {
+          setError(`Category with id ${id} not found`);
           Logger.error(SCOPE_SC_CORE, `Category with id ${id} not found`);
           Logger.error(SCOPE_SC_CORE, err.message);
         });
     }
   }, [id]);
 
-  return {scCategory, setSCCategory};
+  return {scCategory, setSCCategory, error};
 }

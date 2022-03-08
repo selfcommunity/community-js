@@ -16,6 +16,7 @@ import Endpoints from '../constants/Endpoints';
  */
 export default function useSCFetchTag({id = null, tag = null}: {id?: number; tag?: SCTagType}) {
   const [scTag, setSCTag] = useState<SCTagType>(tag);
+  const [error, setError] = useState<string>(null);
 
   /**
    * Memoized fetchTag
@@ -47,11 +48,12 @@ export default function useSCFetchTag({id = null, tag = null}: {id?: number; tag
           setSCTag(obj);
         })
         .catch((err) => {
+          setError(`Tag with id ${id} not found`);
           Logger.error(SCOPE_SC_CORE, `Tag with id ${id} not found`);
           Logger.error(SCOPE_SC_CORE, err.message);
         });
     }
   }, [id]);
 
-  return {scTag, setSCTag};
+  return {scTag, setSCTag, error};
 }

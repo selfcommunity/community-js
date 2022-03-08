@@ -25,6 +25,7 @@ export default function useSCFetchFeedObject({
   feedObjectType: SCFeedObjectTypologyType;
 }) {
   const [obj, setObj] = useState<SCFeedDiscussionType | SCFeedPostType | SCFeedStatusType>(feedObject);
+  const [error, setError] = useState<string>(null);
 
   /**
    * Memoized fetchFeedObject
@@ -56,11 +57,12 @@ export default function useSCFetchFeedObject({
           setObj(obj);
         })
         .catch((err) => {
+          setError(`FeedObject with id ${id} not found`);
           Logger.error(SCOPE_SC_CORE, `FeedObject with id ${id} not found`);
           Logger.error(SCOPE_SC_CORE, err.message);
         });
     }
   }, [id]);
 
-  return {obj, setObj};
+  return {obj, setObj, error};
 }

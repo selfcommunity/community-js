@@ -16,6 +16,7 @@ import Endpoints from '../constants/Endpoints';
  */
 export default function useSCFetchUser({id = null, user = null}: {id?: number; user?: SCUserType}) {
   const [scUser, setSCUser] = useState<SCUserType>(user);
+  const [error, setError] = useState<string>(null);
 
   /**
    * Memoized fetchUser
@@ -47,11 +48,12 @@ export default function useSCFetchUser({id = null, user = null}: {id?: number; u
           setSCUser(obj);
         })
         .catch((err) => {
+          setError(`User with id ${id} not found`);
           Logger.error(SCOPE_SC_CORE, `User with id ${id} not found`);
           Logger.error(SCOPE_SC_CORE, err.message);
         });
     }
   }, [id]);
 
-  return {scUser, setSCUser};
+  return {scUser, setSCUser, error};
 }

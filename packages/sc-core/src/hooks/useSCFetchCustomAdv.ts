@@ -16,6 +16,7 @@ import {SCCustomAdvPosition, SCCustomAdvType} from '../types';
  */
 export default function useSCFetchCustomAdv({position = null, categoriesId = null}: {position?: SCCustomAdvPosition; categoriesId?: Array<number>}) {
   const [scCustomAdv, setSCCustomAdv] = useState<SCCustomAdvType | null>(null);
+  const [error, setError] = useState<string>(null);
 
   /**
    * Memoized fetchCustomAdv
@@ -50,10 +51,11 @@ export default function useSCFetchCustomAdv({position = null, categoriesId = nul
         setSCCustomAdv(objects[Math.floor(Math.random() * objects.length)]);
       })
       .catch((err) => {
+        setError(`Custom ADV with position ${position} not found`);
         Logger.error(SCOPE_SC_CORE, `Custom ADV with position ${position} not found`);
         Logger.error(SCOPE_SC_CORE, err.message);
       });
   }, [position, `${categoriesId}`]);
 
-  return {scCustomAdv, setSCCustomAdv};
+  return {scCustomAdv, setSCCustomAdv, error};
 }
