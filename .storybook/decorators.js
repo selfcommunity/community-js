@@ -74,6 +74,14 @@ const withProvider = (Story, context) => {
           secondary: {
             main: '#4a8f62'
           }
+        },
+        components: {
+          MuiIcon: {
+            defaultProps: {
+              // Replace the `material-icons` default value.
+              baseClassName: 'material-icons-outlined',
+            },
+          },
         }
       },
       handleAnonymousAction: () => {

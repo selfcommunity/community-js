@@ -53,12 +53,6 @@ const getTheme = (options, preferences) => {
               },
             },
           },
-          MuiIcon: {
-            defaultProps: {
-              // Replace the `material-icons` default value.
-              baseClassName: 'material-icons-outlined',
-            },
-          },
           MuiDivider: {
             styleOverrides: {
               root: {
