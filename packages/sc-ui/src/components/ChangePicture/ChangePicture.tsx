@@ -3,7 +3,7 @@ import {styled} from '@mui/material/styles';
 import {Button} from '@mui/material';
 import ChangePictureDialog from './ChangePictureDialog/ChangePictureDialog';
 import {FormattedMessage} from 'react-intl';
-import PhotoCameraOutlinedIcon from '@mui/icons-material/PhotoCameraOutlined';
+import Icon from '@mui/material/Icon';
 import {SCUserContext, SCUserContextType} from '@selfcommunity/core';
 import classNames from 'classnames';
 
@@ -96,7 +96,7 @@ export default function ChangePicture(props: ChangePictureProps): JSX.Element {
           style={iconButton ? {padding: 6, borderRadius: 50, minWidth: 'auto'} : {}}
           {...rest}>
           {iconButton ? (
-            <PhotoCameraOutlinedIcon />
+            <Icon>photo_camera</Icon>
           ) : (
             <FormattedMessage id="ui.changePicture.button.change" defaultMessage="ui.changePicture.button.change" />
           )}

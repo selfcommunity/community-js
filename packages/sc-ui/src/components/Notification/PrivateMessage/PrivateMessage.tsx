@@ -1,7 +1,7 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
 import {Avatar, Box, Button, ListItem, ListItemAvatar, ListItemText, Stack, Typography} from '@mui/material';
-import ReplyIcon from '@mui/icons-material/Send';
+import Icon from '@mui/material/Icon';
 import {Link, SCNotificationPrivateMessageType, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
 import {grey, red} from '@mui/material/colors';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
@@ -244,7 +244,7 @@ export default function PrivateMessageNotification(props: NotificationPrivateMes
                 classes={{root: classes.replyButton}}
                 component={Link}
                 to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, notificationObject.message)}
-                endIcon={<ReplyIcon className={classes.replyButtonIcon} />}>
+                endIcon={<Icon className={classes.replyButtonIcon}>reply</Icon>}>
                 <FormattedMessage id="ui.notification.privateMessage.btnReplyLabel" defaultMessage="ui.notification.privateMessage.btnReplyLabel" />
               </Button>
             </Stack>

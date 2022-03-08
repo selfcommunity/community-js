@@ -1,10 +1,10 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import Grow from '@mui/material/Grow';
 import Paper from '@mui/material/Paper';
 import Popper from '@mui/material/Popper';
-import TagOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
+import Icon from '@mui/material/Icon';
 import TagChip from '../TagChip';
 import {SCTagType} from '@selfcommunity/core';
 import {Box, Divider, Stack, Typography} from '@mui/material';
@@ -165,7 +165,9 @@ export default function Tags(props: TagsProps): JSX.Element {
         <React.Fragment>
           {type === TagsComponentType.POPPER ? (
             <TagsPopperRoot {...rest}>
-              <TagOutlinedIcon ref={popperRef} fontSize="small" onClick={handleToggle} aria-haspopup="true" />
+              <Icon ref={popperRef} fontSize="small" onClick={handleToggle} aria-haspopup="true">
+                local_offer
+              </Icon>
               <TagsPopper
                 open={open}
                 anchorEl={popperRef.current}

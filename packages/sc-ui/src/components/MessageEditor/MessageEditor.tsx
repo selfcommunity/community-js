@@ -1,10 +1,9 @@
 import React, {RefObject, useContext, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
-import {Box, IconButton, InputAdornment, Popover, Stack, TextField} from '@mui/material';
-import {Endpoints, http, SCUserContext, SCUserContextType} from '@selfcommunity/core';
-import SendIcon from '@mui/icons-material/Send';
-import EmojiIcon from '@mui/icons-material/SentimentSatisfiedOutlined';
+import {IconButton, InputAdornment, Popover, Stack, TextField} from '@mui/material';
+import {SCUserContext, SCUserContextType} from '@selfcommunity/core';
+import Icon from '@mui/material/Icon';
 import Picker from 'emoji-picker-react';
 import {TMUIRichTextEditorRef} from 'mui-rte';
 import classNames from 'classnames';
@@ -99,7 +98,6 @@ export default function MessageEditor(props: MessageEditorProps): JSX.Element {
   const ref = useRef(null);
 
   // HANDLERS
-
   const handleMessageSend = () => {
     send();
     setMessage('');
@@ -139,7 +137,7 @@ export default function MessageEditor(props: MessageEditorProps): JSX.Element {
                 <Stack>
                   <div>
                     <IconButton size="small" onClick={handleToggleEmoji}>
-                      <EmojiIcon />
+                      <Icon>sentiment_satisfied_alt</Icon>
                     </IconButton>
                     <Popover
                       open={Boolean(emojiAnchorEl)}
@@ -161,7 +159,7 @@ export default function MessageEditor(props: MessageEditorProps): JSX.Element {
                   </div>
                 </Stack>
                 <IconButton disabled={isSending} onClick={handleMessageSend}>
-                  {show && <SendIcon />}
+                  {show && <Icon>send</Icon>}
                 </IconButton>
               </InputAdornment>
             )

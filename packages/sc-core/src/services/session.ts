@@ -20,7 +20,7 @@ function getCurrentUser() {
       return Promise.resolve(res.data);
     })
     .catch((error) => {
-      Logger.error(SCOPE_SC_CORE, 'Unable to retrieve user.');
+      Logger.error(SCOPE_SC_CORE, 'Unable to retrieve user profile.');
       return Promise.reject(error);
     });
 }

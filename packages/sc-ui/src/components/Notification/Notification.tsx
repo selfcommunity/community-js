@@ -15,11 +15,9 @@ import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {grey} from '@mui/material/colors';
 import KindlyNoticeFlagNotification from './KindlyNoticeFlag';
 import VoteUpNotification from './VoteUp';
-import NotificationsOffOutlinedIcon from '@mui/icons-material/NotificationsOffOutlined';
-import NotificationsOnOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
+import Icon from '@mui/material/Icon';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {AxiosResponse} from 'axios';
-import {ExpandLess, ExpandMore} from '@mui/icons-material';
 import {getContribute, getContributionSnippet} from '../../utils/contribute';
 import ContributionFollowNotification from './ContributionFollow';
 import {Avatar, Card, CardProps, Collapse, ListItem, ListItemAvatar, ListItemButton, ListItemText, Stack, Tooltip, Typography} from '@mui/material';
@@ -343,9 +341,13 @@ export default function UserNotification(props: NotificationProps): JSX.Element 
                     classes={{root: classes.stopNotificationButton}}
                     onClick={() => handleStopContentNotification(contribution)}>
                     {contribution.suspended ? (
-                      <NotificationsOffOutlinedIcon fontSize="small" color={'primary'} />
+                      <Icon fontSize="small" color={'primary'}>
+                        notifications_off
+                      </Icon>
                     ) : (
-                      <NotificationsOnOutlinedIcon fontSize="small" color={'inherit'} />
+                      <Icon fontSize="small" color={'inherit'}>
+                        notifications
+                      </Icon>
                     )}
                   </LoadingButton>
                 </Tooltip>
@@ -430,7 +432,7 @@ export default function UserNotification(props: NotificationProps): JSX.Element 
           <>
             <ListItemButton onClick={() => setOpenOtherAggregated((prev) => !prev)} classes={{root: classes.showOtherAggregated}}>
               <ListItemText primary={<FormattedMessage id={'ui.notification.showOthers'} defaultMessage={'ui.notification.showOthers'} />} />
-              {openOtherAggregated ? <ExpandLess /> : <ExpandMore />}
+              {openOtherAggregated ? <Icon>expand_less</Icon> : <Icon>expand_more</Icon>}
             </ListItemButton>
             <Collapse in={openOtherAggregated} timeout="auto" unmountOnExit classes={{root: classes.notificationCollapsed}}>
               {notificationObject.aggregated.slice(showMaxAggregated).map((n: SCNotificationType, i) => renderAggregatedItem(n, i))}

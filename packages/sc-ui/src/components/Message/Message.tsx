@@ -5,10 +5,9 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import {Avatar, ListItem, ListItemAvatar, ListItemText, CardProps, Typography, Box, IconButton} from '@mui/material';
 import MessageSkeleton from './Skeleton';
-import {FormattedMessage, useIntl} from 'react-intl';
+import {useIntl} from 'react-intl';
 import {SCPrivateMessageType} from '@selfcommunity/core';
-import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
-import DeleteIcon from '@mui/icons-material/Delete';
+import Icon from '@mui/material/Icon';
 import classNames from 'classnames';
 
 const PREFIX = 'SCMessage';
@@ -198,7 +197,9 @@ export default function Message(props: MessageProps): JSX.Element {
               secondary={
                 <Box component="span" className={classes.info}>
                   <Typography component="span"> {message.headline}</Typography>
-                  <FiberManualRecordIcon fontSize="small" className={unseen ? classes.unread : classes.hide} />
+                  <Icon fontSize="small" className={unseen ? classes.unread : classes.hide}>
+                    fiber_manual_record
+                  </Icon>
                 </Box>
               }
             />
@@ -209,7 +210,7 @@ export default function Message(props: MessageProps): JSX.Element {
           {!snippetType && isHovering && loggedUser === message.sender_id && message.status !== 'hidden' && (
             <>
               <IconButton sx={{marginBottom: '25px'}} onClick={onDeleteIconClick}>
-                <DeleteIcon fontSize="small" />
+                <Icon fontSize="small">delete</Icon>
               </IconButton>
             </>
           )}

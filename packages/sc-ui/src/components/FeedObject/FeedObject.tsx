@@ -23,8 +23,8 @@ import DateTimeAgo from '../../shared/DateTimeAgo';
 import Bullet from '../../shared/Bullet';
 import Tags from '../../shared/Tags';
 import MediasPreview, {MediaPreviewProps} from '../../shared/MediasPreview';
-import Actions from './Actions';
-import WorldIcon from '@mui/icons-material/Public';
+import Actions, {ActionsProps} from './Actions';
+import Icon from '@mui/material/Icon';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import PollObject, {PollObjectProps} from './Poll';
 import ContributorsFeedObject, {ContributorsFeedObjectProps} from './Contributors';
@@ -43,6 +43,7 @@ import {
   SCRoutingContextType,
   SCTagType,
   SCUserContextType,
+  UserUtils,
   useSCContext,
   useSCFetchFeedObject,
   useSCRouting,
@@ -55,7 +56,6 @@ import {CommentsOrderBy} from '../../types/comments';
 import {FeedObjectActivitiesType, FeedObjectTemplateType} from '../../types/feedObject';
 import RelevantActivities from './RelevantActivities';
 import ReplyCommentObject from '../CommentObject/ReplyComment';
-import {LoadingButton} from '@mui/lab';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {AxiosResponse} from 'axios';
 import MarkRead from '../../shared/MarkRead';
@@ -63,6 +63,7 @@ import classNames from 'classnames';
 import ContributionActionsMenu, {ContributionActionsMenuProps} from '../../shared/ContributionActionsMenu';
 import {getContributionHtml} from '../../utils/contribute';
 import {useSnackbar} from 'notistack';
+import Follow, {FollowProps} from './Actions/Follow';
 
 const messages = defineMessages({
   comment: {
@@ -79,9 +80,11 @@ const PREFIX = 'SCFeedObject';
 
 const classes = {
   root: `${PREFIX}-root`,
+  deleted: `${PREFIX}-deleted`,
   header: `${PREFIX}-header`,
   category: `${PREFIX}-category`,
   username: `${PREFIX}-username`,
+  activityAt: `${PREFIX}-activity-at`,
   tag: `${PREFIX}-tag`,
   content: `${PREFIX}-content`,
   titleSection: `${PREFIX}-title-section`,
@@ -92,12 +95,10 @@ const classes = {
   mediasSection: `${PREFIX}-medias-section`,
   pollsSection: `${PREFIX}-polls-section`,
   infoSection: `${PREFIX}-info-section`,
+  actions: `${PREFIX}-actions`,
+  activities: `${PREFIX}-activities`,
   activitiesContent: `${PREFIX}-activities-content`,
-  followButton: `${PREFIX}-follow-button`,
-  activityAt: `${PREFIX}-activity-at`,
-  sharedTextContent: `${PREFIX}-shared-content`,
-  deleted: `${PREFIX}-deleted`,
-  actions: `${PREFIX}-actions`
+  followButton: `${PREFIX}-follow-button`
 };
 
 const Root = styled(Card, {
@@ -178,23 +179,9 @@ const Root = styled(Card, {
   [`& .${classes.infoSection}`]: {
     padding: `0px ${theme.spacing(2)}`
   },
-  [`& .${classes.followButton}`]: {
-    backgroundColor: theme.palette.grey[100],
-    color: theme.palette.grey[700],
-    boxShadow: 'none',
-    '&:hover': {
-      backgroundColor: theme.palette.grey[300],
-      boxShadow: 'none'
-    }
-  },
   [`& .${classes.activityAt}`]: {
     textDecoration: 'none',
     color: '#939598'
-  },
-  [`& .${classes.sharedTextContent}`]: {
-    textDecoration: 'none',
-    padding: theme.spacing(),
-    color: theme.palette.grey[700]
   },
   [`& .${classes.deleted}`]: {
     opacity: 0.3,
@@ -205,8 +192,8 @@ const Root = styled(Card, {
   [`& .${classes.actions}`]: {
     padding: '1px 0px'
   },
-  '& .MuiSvgIcon-root': {
-    width: '0.7em',
+  '& .MuiIcon-root': {
+    fontSize: '18px',
     marginBottom: '0.5px'
   }
 }));
@@ -284,6 +271,18 @@ export interface FeedObjectProps extends CardProps {
   FeedObjectSkeletonProps?: FeedObjectSkeletonProps;
 
   /**
+   * Props to spread to Follow button component
+   * @default {}
+   */
+  FollowButtonProps?: FollowProps;
+
+  /**
+   * Props to spread to Actions component
+   * @default {}
+   */
+  ActionsProps?: ActionsProps;
+
+  /**
    * Props to spread to ContributionActionsMenu component
    * @default {}
    */
@@ -342,7 +341,6 @@ export interface FeedObjectProps extends CardProps {
  |snippetContent|.SCFeedObject-snippet-content|Styles applied to snippet content element.|
  |sharedTextContent|.SCFeedObject-shared-content|Styles applied to the feed obj shared content element.|
  |subContent|.SCFeedObject-sub-content|Styles applied to the sub content (container placed immediately after the content, similar to a footer). Wrap the contributors and the follow button.|
- |followButton|.SCFeedObject-follow-button|Styles applied to the follow button element.|
  |actions|.SCFeedObject-actions|Styles applied to the actions container.|
  |activitiesContent|.SCFeedObject-activities-content|Styles applied to the activities content element.|
  |activityAt|.SCFeedObject-activity-at|Styles applied to the activity at section.|
@@ -364,7 +362,9 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
     hideShareAction = false,
     hideFollowAction = false,
     hideParticipantsPreview = false,
+    FollowButtonProps = {},
     FeedObjectSkeletonProps = {elevation: 0},
+    ActionsProps = {},
     ContributionActionsMenuProps = {},
     MediasPreviewProps = {},
     PollObjectProps = {elevation: 0},
@@ -387,7 +387,6 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
   const [expandedActivities, setExpandedActivities] = useState<boolean>(getInitialExpandedActivities());
   const [selectedActivities, setSelectedActivities] = useState<string>(getInitialSelectedActivitiesType());
   const [isReplying, setIsReplying] = useState<boolean>(false);
-  const [isFollowing, setIsFollowing] = useState<boolean>(false);
 
   // INTL
   const intl = useIntl();
@@ -495,42 +494,10 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
   }
 
   /**
-   * Perform follow/unfollow
-   * Post, Discussion, Status
+   * Handle follow obj
    */
-  const performFollow = useMemo(
-    () => () => {
-      return http
-        .request({
-          url: Endpoints.FollowContribution.url({type: feedObjectType, id: obj.id}),
-          method: Endpoints.FollowContribution.method
-        })
-        .then((res: AxiosResponse<SCTagType>) => {
-          if (res.status >= 300) {
-            return Promise.reject(res);
-          }
-          return Promise.resolve(res.data);
-        });
-    },
-    [obj]
-  );
-
-  /**
-   * Handle follow object
-   */
-  function handleFollow() {
-    setIsFollowing(true);
-    performFollow()
-      .then((data) => {
-        setObj(Object.assign({}, obj, {followed: !obj.followed}));
-        setIsFollowing(false);
-      })
-      .catch((error) => {
-        Logger.error(SCOPE_SC_UI, error);
-        enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
-          variant: 'error'
-        });
-      });
+  function handleFollow(isFollow) {
+    setObj((prev) => ({...prev, ...{followed: isFollow}}));
   }
 
   /**
@@ -571,24 +538,30 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
    * Handle comment
    */
   function handleReply(comment) {
-    setIsReplying(true);
-    performReply(comment)
-      .then((data: SCCommentType) => {
-        if (selectedActivities !== FeedObjectActivitiesType.RECENT_COMMENTS || obj.comment_count === 0) {
-          setObj(Object.assign({}, obj, {comment_count: obj.comment_count + 1}));
-          setComments([]);
-          setSelectedActivities(FeedObjectActivitiesType.RECENT_COMMENTS);
-        } else {
-          setComments([...[data], ...comments]);
-        }
-        setIsReplying(false);
-      })
-      .catch((error) => {
-        Logger.error(SCOPE_SC_UI, error);
-        enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
-          variant: 'error'
-        });
+    if (UserUtils.isBlocked(scUserContext.user)) {
+      enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
+        variant: 'warning'
       });
+    } else {
+      setIsReplying(true);
+      performReply(comment)
+        .then((data: SCCommentType) => {
+          if (selectedActivities !== FeedObjectActivitiesType.RECENT_COMMENTS || obj.comment_count === 0) {
+            setObj(Object.assign({}, obj, {comment_count: obj.comment_count + 1}));
+            setComments([]);
+            setSelectedActivities(FeedObjectActivitiesType.RECENT_COMMENTS);
+          } else {
+            setComments([...[data], ...comments]);
+          }
+          setIsReplying(false);
+        })
+        .catch((error) => {
+          Logger.error(SCOPE_SC_UI, error);
+          enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
+            variant: 'error'
+          });
+        });
+    }
   }
 
   /**
@@ -708,7 +681,9 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
                       <Tags tags={obj.addressing} />
                     ) : (
                       <Tooltip title={`${intl.formatMessage(messages.visibleToAll)}`}>
-                        <WorldIcon color="disabled" fontSize="small" />
+                        <Icon color="disabled" fontSize="small">
+                          public
+                        </Icon>
                       </Tooltip>
                     )}
                   </div>
@@ -763,21 +738,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
                       <ContributorsFeedObject feedObject={obj} feedObjectType={obj.type} {...ContributorsFeedObjectProps} />
                     </LazyLoad>
                   )}
-                  {scUserContext.user && obj.author.id !== scUserContext.user.id && !hideFollowAction && !obj.deleted && (
-                    <LoadingButton
-                      classes={{root: classes.followButton}}
-                      loading={isFollowing}
-                      variant="contained"
-                      size="small"
-                      disabled={isFollowing}
-                      onClick={handleFollow}>
-                      {obj.followed ? (
-                        <FormattedMessage id="ui.feedObject.unfollow" defaultMessage="ui.feedObject.unfollow" />
-                      ) : (
-                        <FormattedMessage id="ui.feedObject.follow" defaultMessage="ui.feedObject.follow" />
-                      )}
-                    </LoadingButton>
-                  )}
+                  {!hideFollowAction && <Follow feedObject={obj} feedObjectType={obj.type} handleFollow={handleFollow} {...FollowButtonProps} />}
                 </Stack>
               </Box>
             </CardContent>
@@ -788,10 +749,11 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
                 hideShareAction={hideShareAction}
                 hideCommentAction={template === FeedObjectTemplateType.DETAIL}
                 handleExpandActivities={handleExpandActivities}
+                {...ActionsProps}
               />
             </CardActions>
             {template === FeedObjectTemplateType.PREVIEW && (
-              <Collapse in={expandedActivities} timeout="auto" unmountOnExit>
+              <Collapse in={expandedActivities} timeout="auto" unmountOnExit classes={{root: classes.activities}}>
                 <CardContent className={classes.activitiesContent} sx={{paddingTop: 0}}>
                   {renderActivities()}
                 </CardContent>
@@ -861,7 +823,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
                 )}
               </Box>
               <Box className={classes.textSection}>
-                <Link to={scRoutingContext.url(feedObjectType, obj)} className={classes.sharedTextContent}>
+                <Link to={scRoutingContext.url(feedObjectType, obj)} className={classes.text}>
                   <Typography component="div" className={classes.text} variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: obj.html}} />
                 </Link>
               </Box>

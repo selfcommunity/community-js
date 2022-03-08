@@ -3,7 +3,7 @@ import {useSnackbar, SnackbarContent} from 'notistack';
 import Card from '@mui/material/Card';
 import {styled} from '@mui/material/styles';
 import {IconButton} from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
+import Icon from '@mui/material/Icon';
 
 const PREFIX = 'SCCustomSnackMessage';
 
@@ -57,7 +57,7 @@ const CustomSnackMessage = forwardRef<HTMLDivElement, {id: string | number; mess
     <Root ref={ref} className={classes.root} key={props.id}>
       <Card className={classes.card} elevation={1}>
         <IconButton className={classes.closeAction} onClick={handleDismiss}>
-          <CloseIcon />
+          <Icon>close</Icon>
         </IconButton>
         {props.message}
       </Card>

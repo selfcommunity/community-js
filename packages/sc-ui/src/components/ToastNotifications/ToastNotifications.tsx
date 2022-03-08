@@ -14,6 +14,7 @@ import VoteUpNotification from '../Notification/VoteUp';
 import PrivateMessageNotification from '../Notification/PrivateMessage';
 import MentionNotification from '../Notification/Mention';
 import IncubatorApprovedNotification from '../Notification/IncubatorApproved';
+import UserBlockedNotification from '../Notification/UserBlocked';
 
 const PREFIX = 'SCToastNotifications';
 
@@ -112,6 +113,8 @@ export default function UserToastNotifications(props: ToastNotificationsProps): 
         content = <VoteUpNotification notificationObject={n.notification_obj} template={NotificationObjectTemplateType.TOAST} />;
       } else if (type === SCNotificationTypologyType.PRIVATE_MESSAGE) {
         content = <PrivateMessageNotification notificationObject={n.notification_obj} template={NotificationObjectTemplateType.TOAST} />;
+      } else if (n.type === SCNotificationTypologyType.BLOCKED_USER || n.type === SCNotificationTypologyType.UNBLOCKED_USER) {
+        return <UserBlockedNotification notificationObject={n.notification_obj} template={NotificationObjectTemplateType.TOAST} />;
       } else if (type === SCNotificationTypologyType.MENTION) {
         content = <MentionNotification notificationObject={n.notification_obj} template={NotificationObjectTemplateType.TOAST} />;
       } else if (type === SCNotificationTypologyType.INCUBATOR_APPROVED) {

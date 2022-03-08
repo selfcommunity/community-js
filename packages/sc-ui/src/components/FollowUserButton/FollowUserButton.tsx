@@ -3,6 +3,8 @@ import {styled} from '@mui/material/styles';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {LoadingButton} from '@mui/lab';
 import {FormattedMessage} from 'react-intl';
+import {useSnackbar} from 'notistack';
+import classNames from 'classnames';
 import {
   Logger,
   SCContextType,
@@ -10,10 +12,10 @@ import {
   SCUserContext,
   SCUserContextType,
   SCUserType,
+  UserUtils,
   useSCContext,
   useSCFetchUser
 } from '@selfcommunity/core';
-import classNames from 'classnames';
 
 const PREFIX = 'SCFollowUserButton';
 
@@ -88,6 +90,7 @@ export default function FollowUserButton(props: FollowUserButtonProps): JSX.Elem
   const scContext: SCContextType = useSCContext();
   const scUserContext: SCUserContextType = useContext(SCUserContext);
   const scFollowedManager: SCFollowedManagerType = scUserContext.managers.followed;
+  const {enqueueSnackbar} = useSnackbar();
 
   // STATE
   const {scUser, setSCUser} = useSCFetchUser({id: userId, user});
@@ -103,22 +106,28 @@ export default function FollowUserButton(props: FollowUserButtonProps): JSX.Elem
     }
   });
 
-  const followCUser = () => {
-    scFollowedManager
-      .follow(scUser)
-      .then(() => {
-        onFollow && onFollow(scUser, !followed);
-      })
-      .catch((e) => {
-        Logger.error(SCOPE_SC_UI, e);
+  const followUser = () => {
+    if (!followed && UserUtils.isBlocked(scUserContext.user)) {
+      enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
+        variant: 'warning'
       });
+    } else {
+      scFollowedManager
+        .follow(scUser)
+        .then(() => {
+          onFollow && onFollow(scUser, !followed);
+        })
+        .catch((e) => {
+          Logger.error(SCOPE_SC_UI, e);
+        });
+    }
   };
 
   const handleFollowAction = () => {
     if (!scUserContext.user) {
       scContext.settings.handleAnonymousAction();
     } else {
-      followCUser();
+      followUser();
     }
   };
 

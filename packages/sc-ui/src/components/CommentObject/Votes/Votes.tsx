@@ -2,8 +2,7 @@ import React, {useState} from 'react';
 import {Box, Button, Typography} from '@mui/material';
 import {SCCommentType, useSCFetchCommentObject} from '@selfcommunity/core';
 import {styled} from '@mui/material/styles';
-import VoteFilledIcon from '@mui/icons-material/ThumbUpTwoTone';
-import VoteIcon from '@mui/icons-material/ThumbUpOutlined';
+import Icon from '@mui/material/Icon';
 import CommentObjectVotesDialog from './VotesDialog';
 
 const PREFIX = 'SCCommentObjectVotes';
@@ -78,9 +77,13 @@ export default function Votes(props: VotesProps): JSX.Element {
       <>
         <Button variant="text" size="small" disabled={obj.vote_count <= 0} className={classes.btnViewVotes} onClick={handleToggleSharesDialog}>
           {obj.voted ? (
-            <VoteFilledIcon fontSize="medium" color={'secondary'} className={classes.votes} />
+            <Icon fontSize="medium" color={'secondary'} className={classes.votes}>
+              thumb_up_alt
+            </Icon>
           ) : (
-            <VoteIcon fontSize="medium" sx={{marginTop: '-1px'}} />
+            <Icon fontSize="medium" sx={{marginTop: '-1px'}}>
+              thumb_up_off_alt
+            </Icon>
           )}
           <Typography variant={'body2'} sx={{marginLeft: '5px'}}>
             {obj.vote_count}

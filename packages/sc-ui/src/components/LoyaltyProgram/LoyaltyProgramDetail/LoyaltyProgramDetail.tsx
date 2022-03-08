@@ -5,7 +5,7 @@ import {Endpoints, http, SCUserContext, SCUserContextType, SCPrizeType, Logger} 
 import {Box, Button, CardActions, CardContent, CardMedia, Grid, Typography} from '@mui/material';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import Chip from '@mui/material/Chip';
-import CardGiftcardOutlinedIcon from '@mui/icons-material/CardGiftcardOutlined';
+import Icon from '@mui/material/Icon';
 import {SCOPE_SC_UI} from '../../../constants/Errors';
 import classNames from 'classnames';
 
@@ -159,7 +159,7 @@ export default function LoyaltyProgramDetail(props: LoyaltyProgramDetailProps): 
       )}
       <Box className={classes.intro}>
         <Box className={classes.icon}>
-          <CardGiftcardOutlinedIcon />
+          <Icon>card_giftcard</Icon>
         </Box>
         {points && (
           <Box className={classes.points}>

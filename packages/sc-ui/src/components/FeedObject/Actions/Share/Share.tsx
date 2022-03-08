@@ -1,9 +1,19 @@
 import React, {useMemo, useState} from 'react';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import ShareIcon from '@mui/icons-material/ShareOutlined';
-import CircularProgress from '@mui/material/CircularProgress';
+import Icon from '@mui/material/Icon';
 import LoadingButton from '@mui/lab/LoadingButton';
 import SharesDialog from './SharesDialog';
+import {styled} from '@mui/material/styles';
+import {Box, Button, Divider, ListItemText, Menu, Tooltip} from '@mui/material';
+import MenuItem from '@mui/material/MenuItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import Composer from '../../../Composer';
+import {AxiosResponse} from 'axios';
+import {MEDIA_TYPE_SHARE} from '../../../../constants/Media';
+import {SCOPE_SC_UI} from '../../../../constants/Errors';
+import classNames from 'classnames';
+import {useSnackbar} from 'notistack';
+import Skeleton from '@mui/material/Skeleton';
 import {
   Endpoints,
   http,
@@ -13,21 +23,11 @@ import {
   SCFeedObjectTypologyType,
   SCMediaType,
   SCUserContextType,
+  UserUtils,
   useSCContext,
   useSCFetchFeedObject,
   useSCUser
 } from '@selfcommunity/core';
-import {styled} from '@mui/material/styles';
-import ShareMenuIcon from '@mui/icons-material/RedoOutlined';
-import ShareMenuInCategoriesIcon from '@mui/icons-material/ShareOutlined';
-import {Box, Button, Divider, IconButton, ListItemText, Menu, Tooltip, Typography} from '@mui/material';
-import MenuItem from '@mui/material/MenuItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import Composer from '../../../Composer';
-import {AxiosResponse} from 'axios';
-import {MEDIA_TYPE_SHARE} from '../../../../constants/Media';
-import {SCOPE_SC_UI} from '../../../../constants/Errors';
-import classNames from 'classnames';
 
 const messages = defineMessages({
   shares: {
@@ -49,7 +49,10 @@ const PREFIX = 'SCShareObject';
 const classes = {
   root: `${PREFIX}-root`,
   divider: `${PREFIX}-divider`,
-  viewSharesButton: `${PREFIX}-view-shares-button`,
+  inline: `${PREFIX}-inline`,
+  actionButton: `${PREFIX}-action-button`,
+  inlineActionButton: `${PREFIX}-inline-action-button`,
+  viewAudienceButton: `${PREFIX}-view-audience-button`,
   shareMenuIcon: `${PREFIX}-share-Menu-icon`
 };
 
@@ -58,10 +61,21 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  flexDirection: 'column',
+  [`&.${classes.inline}`]: {
+    flexDirection: 'row-reverse'
+  },
+  [`& .${classes.inlineActionButton}`]: {
+    minWidth: 30
+  },
   [`& .${classes.divider}`]: {
+    width: '100%',
     borderBottom: 0
   },
-  [`& .${classes.viewSharesButton}`]: {
+  [`& .${classes.viewAudienceButton}`]: {
     height: 32,
     fontSize: 15,
     textTransform: 'capitalize',
@@ -85,7 +99,7 @@ export interface ShareProps {
    * Feed object id
    * @default null
    */
-  id?: number;
+  feedObjectId?: number;
 
   /**
    * Feed object
@@ -100,16 +114,23 @@ export interface ShareProps {
   feedObjectType?: SCFeedObjectTypologyType;
 
   /**
-   * Manages action (if present)
-   * @default false
-   */
-  withAction: boolean;
-
-  /**
-   * Manages inline action
+   * Show audience
    * @default true
    */
-  inlineAction: boolean;
+  withAudience?: boolean;
+
+  /**
+   * Show action
+   * @default true
+   */
+  withAction?: boolean;
+
+  /**
+   * Inline action layout.
+   * Action will be align with the audience button.
+   * @default true
+   */
+  inlineAction?: boolean;
 
   /**
    * Any other properties
@@ -121,16 +142,17 @@ export default function Share(props: ShareProps): JSX.Element {
   // PROPS
   const {
     className = null,
-    id = null,
+    feedObjectId = null,
     feedObject = null,
     feedObjectType = SCFeedObjectTypologyType.POST,
-    withAction = false,
+    withAction = true,
+    withAudience = true,
     inlineAction = true,
     ...rest
   } = props;
 
   // STATE
-  const {obj, setObj} = useSCFetchFeedObject({id, feedObject, feedObjectType});
+  const {obj, setObj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
   const [isSharing, setIsSharing] = useState<boolean>(false);
   const [isComposerOpen, setIsComposerOpen] = useState<boolean>(false);
   const [composerShareProps, setComposerShareProps] = useState<any>(null);
@@ -140,6 +162,7 @@ export default function Share(props: ShareProps): JSX.Element {
   // CONTEXT
   const scContext: SCContextType = useSCContext();
   const scUserContext: SCUserContextType = useSCUser();
+  const {enqueueSnackbar} = useSnackbar();
 
   // INTL
   const intl = useIntl();
@@ -218,44 +241,23 @@ export default function Share(props: ShareProps): JSX.Element {
     if (!scUserContext.user) {
       scContext.settings.handleAnonymousAction();
     } else {
-      setIsSharing(true);
-      performCreateMediaShare()
-        .then((data: SCMediaType) => {
-          setComposerShareProps({medias: [data], ...(inCategories ? {categories: obj.categories} : {})});
-          setIsComposerOpen(true);
-        })
-        .catch((error) => {
-          Logger.error(SCOPE_SC_UI, error);
-          setIsSharing(false);
+      if (UserUtils.isBlocked(scUserContext.user)) {
+        enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
+          variant: 'warning'
         });
+      } else {
+        setIsSharing(true);
+        performCreateMediaShare()
+          .then((data: SCMediaType) => {
+            setComposerShareProps({medias: [data], ...(inCategories ? {categories: obj.categories} : {})});
+            setIsComposerOpen(true);
+          })
+          .catch((error) => {
+            Logger.error(SCOPE_SC_UI, error);
+            setIsSharing(false);
+          });
+      }
     }
-  }
-
-  /**
-   * Renders inline action (as button if withAction==true && inlineAction==true)
-   * @return {JSX.Element}
-   */
-  function renderInlineStartShareBtn() {
-    if (withAction && inlineAction) {
-      return (
-        <Tooltip title={isSharing ? '' : 'Share'}>
-          <span>
-            <IconButton disabled={isSharing} onClick={share} edge={isSharing ? false : 'end'} size="large">
-              {isSharing ? (
-                <Box style={{padding: 10}}>
-                  <CircularProgress size={14} style={{marginTop: -2}} />
-                </Box>
-              ) : (
-                <React.Fragment>
-                  <ShareIcon fontSize="small" />
-                </React.Fragment>
-              )}
-            </IconButton>
-          </span>
-        </Tooltip>
-      );
-    }
-    return null;
   }
 
   /**
@@ -264,23 +266,32 @@ export default function Share(props: ShareProps): JSX.Element {
    */
   function renderAudience() {
     const sharesCount = obj.share_count;
-    return (
-      <Box>
-        {renderInlineStartShareBtn()}
-        <Button
-          variant="text"
-          size="small"
-          onClick={handleToggleSharesDialog}
-          disabled={sharesCount < 1}
-          color="inherit"
-          classes={{root: classes.viewSharesButton}}>
-          <Typography variant={'body2'}>
-            <React.Fragment>{`${intl.formatMessage(messages.shares, {total: sharesCount})}`}</React.Fragment>
-          </Typography>
-        </Button>
-        {openSharesDialog && sharesCount > 0 && <SharesDialog object={obj} open={openSharesDialog} onClose={handleToggleSharesDialog} />}
-      </Box>
-    );
+    let audience;
+    if (withAudience) {
+      if (!obj) {
+        audience = (
+          <Button variant="text" size="small" disabled color="inherit">
+            <Skeleton animation="wave" height={18} width={50} />
+          </Button>
+        );
+      } else {
+        audience = (
+          <>
+            <Button
+              variant="text"
+              size="small"
+              onClick={handleToggleSharesDialog}
+              disabled={sharesCount < 1}
+              color="inherit"
+              classes={{root: classes.viewAudienceButton}}>
+              {`${intl.formatMessage(messages.shares, {total: sharesCount})}`}
+            </Button>
+            {openSharesDialog && sharesCount > 0 && <SharesDialog feedObject={obj} open={openSharesDialog} onClose={handleToggleSharesDialog} />}
+          </>
+        );
+      }
+    }
+    return audience;
   }
 
   /**
@@ -290,12 +301,16 @@ export default function Share(props: ShareProps): JSX.Element {
   function renderShareBtn() {
     return (
       <React.Fragment>
-        {withAction && !inlineAction && (
+        {withAction && (
           <React.Fragment>
-            <Divider className={classes.divider} />
+            {!inlineAction && withAudience && <Divider className={classes.divider} />}
             <Tooltip title={`${intl.formatMessage(messages.share)}`}>
-              <LoadingButton loading={isSharing} onClick={handleOpenShareMenu} color="inherit">
-                <ShareIcon fontSize={'large'} />
+              <LoadingButton
+                loading={isSharing}
+                onClick={handleOpenShareMenu}
+                color="inherit"
+                classes={{root: classNames(classes.actionButton, {[classes.inlineActionButton]: inlineAction})}}>
+                <Icon fontSize={'large'}>share</Icon>
               </LoadingButton>
             </Tooltip>
             <Menu
@@ -327,14 +342,14 @@ export default function Share(props: ShareProps): JSX.Element {
               anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}>
               <MenuItem onClick={() => share(false)}>
                 <ListItemIcon classes={{root: classes.shareMenuIcon}}>
-                  <ShareMenuIcon fontSize="small" />
+                  <Icon fontSize="small">redo</Icon>
                 </ListItemIcon>
                 <ListItemText primary={<FormattedMessage id="ui.feedObject.share.shareNow" defaultMessage="ui.feedObject.share.shareNow" />} />
               </MenuItem>
               {obj.categories.length > 0 && (
                 <MenuItem onClick={() => share(true)}>
                   <ListItemIcon classes={{root: classes.shareMenuIcon}}>
-                    <ShareMenuInCategoriesIcon fontSize="small" />
+                    <Icon fontSize="small">share</Icon>
                   </ListItemIcon>
                   <ListItemText
                     primary={intl.formatMessage(messages.shareInCategories, {categories: obj.categories.map((c) => c.name).join(', ')})}
@@ -363,7 +378,7 @@ export default function Share(props: ShareProps): JSX.Element {
    * Renders share action
    */
   return (
-    <Root className={classNames(classes.root, className)} {...rest}>
+    <Root className={classNames(classes.root, className, {[classes.inline]: inlineAction})} {...rest}>
       {renderAudience()}
       {renderShareBtn()}
     </Root>

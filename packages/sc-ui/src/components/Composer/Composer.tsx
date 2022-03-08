@@ -16,19 +16,11 @@ import {
   SCPreferencesContextType,
   SCTagType,
   SCUserContext,
-  SCUserContextType
+  SCUserContextType,
+  UserUtils
 } from '@selfcommunity/core';
 import {FormattedMessage} from 'react-intl';
-import CloseIcon from '@mui/icons-material/CancelOutlined';
-import DeleteIcon from '@mui/icons-material/DeleteOutlined';
-import WriteIcon from '@mui/icons-material/CreateOutlined';
-import PublicIcon from '@mui/icons-material/PublicOutlined';
-import TagIcon from '@mui/icons-material/LabelOutlined';
-import BackIcon from '@mui/icons-material/ArrowBackOutlined';
-import VideoIcon from '@mui/icons-material/PlayCircleOutlineOutlined';
-import PollIcon from '@mui/icons-material/BarChartOutlined';
-import LocationIcon from '@mui/icons-material/AddLocationAltOutlined';
-import ErrorIcon from '@mui/icons-material/ErrorOutlineOutlined';
+import Icon from '@mui/material/Icon';
 import {
   Alert,
   AlertTitle,
@@ -58,6 +50,7 @@ import {
 } from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {COMPOSER_POLL_MIN_CHOICES, COMPOSER_TITLE_MAX_LENGTH, COMPOSER_TYPE_DISCUSSION, COMPOSER_TYPE_POST} from '../../constants/Composer';
+import {MEDIA_TYPE_SHARE} from '../../constants/Media';
 import LoadingButton from '@mui/lab/LoadingButton';
 import Audience from './Audience';
 import Categories from './Categories';
@@ -76,6 +69,7 @@ import {AxiosResponse} from 'axios';
 import {DistributiveOmit} from '@mui/types';
 import {OverrideProps} from '@mui/material/OverridableComponent';
 import {ComposerSkeleton} from './index';
+import {useSnackbar} from 'notistack';
 
 const DialogTransition = forwardRef(function Transition(
   props: TransitionProps & {
@@ -328,7 +322,8 @@ const COMPOSER_INITIAL_STATE = {
   addressingError: null,
   medias: [],
   poll: null,
-  location: null
+  location: null,
+  error: null
 };
 
 const reducer = (state, action) => {
@@ -343,6 +338,7 @@ const reducer = (state, action) => {
 };
 /**
  > API documentation for the Community-UI Composer component. Learn about the available props and the CSS API.
+ > The Composer component contains the logic around the creation of [Post](https://developers.selfcommunity.com/docs/apireference/v2/post/create_a_post) and [Discussion](https://developers.selfcommunity.com/docs/apireference/v2/discussion/create_a_discussion) objects.
  *
  #### Import
  ```jsx
@@ -397,6 +393,7 @@ export default function Composer(props: ComposerProps): JSX.Element {
   // Context
   const scPrefernces: SCPreferencesContextType = useContext(SCPreferencesContext);
   const scAuthContext: SCUserContextType = useContext(SCUserContext);
+  const {enqueueSnackbar} = useSnackbar();
 
   // State variables
   const [fades, setFades] = useState({});
@@ -407,7 +404,7 @@ export default function Composer(props: ComposerProps): JSX.Element {
   const [mediaChunks, setMediaChunks] = useState<SCMediaChunkType[]>([]);
 
   const [state, dispatch] = useReducer(reducer, {...COMPOSER_INITIAL_STATE, ...defaultValue, view, key: random()});
-  const {key, id, type, title, titleError, text, categories, addressing, audience, medias, poll, pollError, location} = state;
+  const {key, id, type, title, titleError, text, categories, addressing, audience, medias, poll, pollError, location, error} = state;
   const addMedia: Function = (media: SCMediaType) => {
     dispatch({type: 'medias', value: [...medias, media]});
   };
@@ -646,6 +643,13 @@ export default function Composer(props: ComposerProps): JSX.Element {
   };
 
   const handleSubmit = (event: SyntheticEvent): void => {
+    if (UserUtils.isBlocked(scAuthContext.user)) {
+      // deny submit action if authenticated user is blocked
+      enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
+        variant: 'warning'
+      });
+      return;
+    }
     const data: any = {
       title,
       text,
@@ -696,6 +700,7 @@ export default function Composer(props: ComposerProps): JSX.Element {
   };
 
   /* Renderers */
+  const hasMediaShare = useMemo(() => medias.findIndex((m) => m.type === MEDIA_TYPE_SHARE) !== -1, [medias]);
 
   const renderMediaAdornment = (mediaObjectType: SCMediaObjectType): JSX.Element => {
     return (
@@ -712,7 +717,7 @@ export default function Composer(props: ComposerProps): JSX.Element {
         </Fade>
         <Typography align="right">
           <IconButton onClick={handleDeleteMedia(null, mediaObjectType)} size="small" color="primary">
-            <DeleteIcon />
+            <Icon>delete</Icon>
           </IconButton>
         </Typography>
       </Box>
@@ -725,7 +730,7 @@ export default function Composer(props: ComposerProps): JSX.Element {
         <DialogTitle className={classes.title}>
           <Typography component="div">
             <IconButton onClick={handleChangeView(MAIN_VIEW)} size="small">
-              <BackIcon />
+              <Icon>arrow_back</Icon>
             </IconButton>
             <FormattedMessage id="ui.composer.audience.title" defaultMessage="ui.composer.audience.title" />
           </Typography>
@@ -742,11 +747,11 @@ export default function Composer(props: ComposerProps): JSX.Element {
           <Box sx={{textAlign: 'center'}} className={classes.block}>
             <ToggleButtonGroup value={audience} exclusive onChange={handleChange('audience')}>
               <ToggleButton value={AUDIENCE_ALL} size="small">
-                <PublicIcon />
+                <Icon>public</Icon>
                 <FormattedMessage id="ui.composer.audience.all" defaultMessage="ui.composer.audience.all" />
               </ToggleButton>
               <ToggleButton value={AUDIENCE_TAG} size="small">
-                <TagIcon /> <FormattedMessage id="ui.composer.audience.tag" defaultMessage="ui.composer.audience.tag" />
+                <Icon>label</Icon> <FormattedMessage id="ui.composer.audience.tag" defaultMessage="ui.composer.audience.tag" />
               </ToggleButton>
             </ToggleButtonGroup>
           </Box>
@@ -777,7 +782,7 @@ export default function Composer(props: ComposerProps): JSX.Element {
           <DialogTitle className={classes.title}>
             <Typography component="div">
               <IconButton onClick={handleChangeView(MAIN_VIEW)} size="small" disabled={mediasRef.current.mediaChunks.length > 0}>
-                <BackIcon />
+                <Icon>arrow_back</Icon>
               </IconButton>
               <FormattedMessage
                 id={`ui.composer.media.${mediaObjectType.name}.edit`}
@@ -815,7 +820,7 @@ export default function Composer(props: ComposerProps): JSX.Element {
         <DialogTitle className={classes.title}>
           <Typography component="div">
             <IconButton onClick={handleChangeView(MAIN_VIEW)} size="small" disabled={!hasPoll()}>
-              <BackIcon />
+              <Icon>arrow_back</Icon>
             </IconButton>
             <FormattedMessage id="ui.composer.poll.title" defaultMessage="ui.composer.poll.title" />
           </Typography>
@@ -844,7 +849,7 @@ export default function Composer(props: ComposerProps): JSX.Element {
         <DialogTitle className={classes.title}>
           <Typography component="div">
             <IconButton onClick={handleChangeView(MAIN_VIEW)} size="small">
-              <BackIcon />
+              <Icon>arrow_back</Icon>
             </IconButton>
             <FormattedMessage id="ui.composer.location.title" defaultMessage="ui.composer.location.title" />
           </Typography>
@@ -870,7 +875,7 @@ export default function Composer(props: ComposerProps): JSX.Element {
         <DialogTitle className={classes.title}>
           <Box>
             <FormControl className={classes.types}>
-              <WriteIcon />
+              <Icon>create</Icon>
               <Select value={type} onChange={handleChangeType} input={<TypeInput />} disabled={editMode}>
                 {composerTypes.map((t) => (
                   <MenuItem value={t} key={t}>
@@ -889,7 +894,7 @@ export default function Composer(props: ComposerProps): JSX.Element {
           </Box>
           <Box>
             <IconButton onClick={handleClose}>
-              <CloseIcon />
+              <Icon>highlight_off</Icon>
             </IconButton>
           </Box>
         </DialogTitle>
@@ -933,17 +938,27 @@ export default function Composer(props: ComposerProps): JSX.Element {
           {poll && <PollPreview pollObject={poll} />}
           <Stack spacing={2} className={classes.audience} direction="row">
             {location && (
-              <Chip icon={<LocationIcon />} label={location.full_address} onDelete={handleDeleteLocation} onClick={handleChangeView(LOCATION_VIEW)} />
+              <Chip
+                icon={<Icon>add_location_alt</Icon>}
+                label={location.full_address}
+                onDelete={handleDeleteLocation}
+                onClick={handleChangeView(LOCATION_VIEW)}
+              />
             )}
             {audience === AUDIENCE_TAG &&
               addressing &&
               addressing.map((t: SCTagType) => (
-                <TagChip key={t.id} tag={t} onDelete={handleDeleteTag(t.id)} icon={<TagIcon />} onClick={handleChangeView(AUDIENCE_VIEW)} />
+                <TagChip key={t.id} tag={t} onDelete={handleDeleteTag(t.id)} icon={<Icon>label</Icon>} onClick={handleChangeView(AUDIENCE_VIEW)} />
               ))}
           </Stack>
           <div className={classes.block}>
             <Categories key={`${key}-categories`} onChange={handleChange('categories')} defaultValue={categories} disabled={isSubmitting} />
           </div>
+          {error && (
+            <Typography className={classes.block} color="error">
+              {error}
+            </Typography>
+          )}
         </DialogContent>
         <DialogActions className={classes.actions}>
           <Typography align="left">
@@ -953,19 +968,19 @@ export default function Composer(props: ComposerProps): JSX.Element {
                 <mediaObjectType.editButton
                   key={mediaObjectType.name}
                   onClick={handleChangeView(mediaObjectType.name)}
-                  disabled={isSubmitting}
+                  disabled={isSubmitting || hasMediaShare}
                   color={medias.filter(mediaObjectType.filter).length > 0 ? 'primary' : 'default'}
                 />
               ))}
-            {preferences[SCPreferences.ADDONS_VIDEO_UPLOAD_ENABLED] && (
-              <IconButton aria-label="add video" size="medium">
-                <VideoIcon />
-              </IconButton>
-            )}
+            {/*{preferences[SCPreferences.ADDONS_VIDEO_UPLOAD_ENABLED] && (*/}
+            {/*  <IconButton aria-label="add video" size="medium">*/}
+            {/*    <Icon>play_circle_outline</Icon>*/}
+            {/*  </IconButton>*/}
+            {/*)}*/}
             {preferences[SCPreferences.ADDONS_POLLS_ENABLED] && (
               <IconButton aria-label="add poll" color={poll ? 'primary' : 'default'} disabled={isSubmitting} onClick={handleChangeView(POLL_VIEW)}>
-                <Badge className={classes.badgeError} badgeContent={pollError ? <ErrorIcon fontSize="small" /> : null} color="error">
-                  <PollIcon />
+                <Badge className={classes.badgeError} badgeContent={pollError ? <Icon fontSize="small">error_outline</Icon> : null} color="error">
+                  <Icon>bar_chart</Icon>
                 </Badge>
               </IconButton>
             )}
@@ -973,12 +988,12 @@ export default function Composer(props: ComposerProps): JSX.Element {
           <Typography align="right">
             {preferences[SCPreferences.ADDONS_POST_GEOLOCATION_ENABLED] && (
               <IconButton disabled={isSubmitting} onClick={handleChangeView(LOCATION_VIEW)} color={location !== null ? 'primary' : 'default'}>
-                <LocationIcon />
+                <Icon>add_location_alt</Icon>
               </IconButton>
             )}
             {scPrefernces.features.includes(SCFeatures.USER_TAGGING) && (
               <IconButton disabled={isSubmitting} onClick={handleChangeView(AUDIENCE_VIEW)}>
-                {audience === AUDIENCE_TAG ? <TagIcon /> : <PublicIcon />}
+                {audience === AUDIENCE_TAG ? <Icon>label</Icon> : <Icon>public</Icon>}
               </IconButton>
             )}
             <LoadingButton onClick={handleSubmit} color="primary" variant="contained" disabled={!canSubmit()} loading={isSubmitting}>

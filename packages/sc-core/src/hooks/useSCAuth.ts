@@ -155,7 +155,7 @@ export default function useAuth(initialSession: SCSessionType) {
             return Promise.reject(error);
           });
       }
-      return Promise.reject();
+      return Promise.reject(new Error('Unable to refresh session. Unauthenticated user.'));
     },
     [state.session]
   );

@@ -1,8 +1,7 @@
 import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {IconButton, InputAdornment, TextField, TextFieldProps} from '@mui/material';
-import VisibilityIcon from '@mui/icons-material/VisibilityOutlined';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOffOutlined';
+import Icon from '@mui/material/Icon';
 
 const PREFIX = 'SCPasswordTextField';
 
@@ -30,7 +29,7 @@ export default function PasswordTextField(props: TextFieldProps): JSX.Element {
         endAdornment: (
           <InputAdornment position="end">
             <IconButton aria-label="toggle password visibility" onClick={handleClick} onMouseDown={handleClick} edge="end">
-              {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+              {showPassword ? <Icon>visibility_off</Icon> : <Icon>visibility</Icon>}
             </IconButton>
           </InputAdornment>
         )

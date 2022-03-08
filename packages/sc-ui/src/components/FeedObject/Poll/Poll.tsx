@@ -6,9 +6,7 @@ import {Button, CardContent, CardHeader, Collapse, Typography} from '@mui/materi
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import List from '@mui/material/List';
 import Choice from './Choice';
-import PeopleAltOutlinedIcon from '@mui/icons-material/PeopleAltOutlined';
-import ListOutlinedIcon from '@mui/icons-material/ListOutlined';
-import CollapsedIcon from '@mui/icons-material/ArrowUpward';
+import Icon from '@mui/material/Icon';
 import {SCOPE_SC_UI} from '../../../constants/Errors';
 import {AxiosResponse} from 'axios';
 import classNames from 'classnames';
@@ -72,7 +70,7 @@ const Root = styled(Card, {
     margin: theme.spacing(1),
     alignItems: 'center',
     justifyContent: 'center',
-    '& .MuiSvgIcon-root': {
+    '& .MuiIcon-root': {
       width: '0.7em',
       marginRight: '5px'
     }
@@ -82,7 +80,7 @@ const Root = styled(Card, {
     margin: theme.spacing(1),
     alignItems: 'center',
     justifyContent: 'center',
-    '& .MuiSvgIcon-root': {
+    '& .MuiIcon-root': {
       width: '1em',
       marginRight: '5px'
     }
@@ -261,7 +259,7 @@ export default function PollObject(props: PollObjectProps): JSX.Element {
               <Button
                 onClick={handleToggleCollapsedClick}
                 aria-expanded={collapsed}
-                endIcon={<CollapsedIcon className={classNames(classes.expandIcon, {[classes.collapsedIcon]: collapsed})} />}>
+                endIcon={<Icon className={classNames(classes.expandIcon, {[classes.collapsedIcon]: collapsed})}>arrow_upward</Icon>}>
                 {collapsed ? intl.formatMessage(messages.showPoll) : intl.formatMessage(messages.hidePoll)}
               </Button>
             </>
@@ -299,12 +297,12 @@ export default function PollObject(props: PollObjectProps): JSX.Element {
             </List>
             {multipleChoices ? (
               <div className={classes.votes}>
-                <ListOutlinedIcon />
+                <Icon>list</Icon>
                 <Typography>{`${intl.formatMessage(messages.votes, {total: votes})}`}</Typography>
               </div>
             ) : (
               <div className={classes.voters}>
-                <PeopleAltOutlinedIcon />
+                <Icon>people_alt</Icon>
                 <Typography>{`${intl.formatMessage(messages.voters, {total: votes})}`}</Typography>
               </div>
             )}

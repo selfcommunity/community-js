@@ -1,7 +1,7 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
 import {Avatar, Box, ListItem, ListItemAvatar, ListItemText, Stack, Typography} from '@mui/material';
-import EmojiFlagsIcon from '@mui/icons-material/EmojiFlags';
+import Icon from '@mui/material/Icon';
 import {grey, red} from '@mui/material/colors';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {getContributeType, getContributionSnippet, getRouteData} from '../../../utils/contribute';
@@ -164,7 +164,7 @@ export default function DeletedForNotification(props: NotificationDeletedForProp
         }}>
         <ListItemAvatar classes={{root: classes.flagIconWrap}}>
           <Avatar variant="circular" classes={{root: classNames(classes.flagIcon, {[classes.flagIconSnippet]: isSnippetTemplate})}}>
-            <EmojiFlagsIcon />
+            <Icon>outlined_flag</Icon>
           </Avatar>
         </ListItemAvatar>
         <ListItemText

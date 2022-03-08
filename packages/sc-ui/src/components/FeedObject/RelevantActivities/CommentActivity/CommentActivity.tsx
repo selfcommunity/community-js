@@ -5,8 +5,7 @@ import {Link, SCFeedUnitActivityType, SCRoutes, SCRoutingContextType, useSCRouti
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import Bullet from '../../../../shared/Bullet';
 import {LoadingButton} from '@mui/lab';
-import VoteFilledIcon from '@mui/icons-material/ThumbUpTwoTone';
-import VoteIcon from '@mui/icons-material/ThumbUpOutlined';
+import Icon from '@mui/material/Icon';
 import {grey} from '@mui/material/colors';
 import DateTimeAgo from '../../../../shared/DateTimeAgo';
 import classNames from 'classnames';
@@ -29,8 +28,8 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  '& .MuiSvgIcon-root': {
-    width: '0.7em',
+  '& .MuiIcon-root': {
+    fontSize: '18px',
     marginBottom: '0.5px'
   },
   '& a': {
@@ -121,11 +120,13 @@ export default function CommentRelevantActivity(props: CommentRelevantActivityPr
                     {activityObject.comment.voted ? (
                       <Tooltip
                         title={<FormattedMessage id={'ui.notification.comment.voteDown'} defaultMessage={'ui.notification.comment.voteDown'} />}>
-                        <VoteFilledIcon fontSize={'small'} color="primary" />
+                        <Icon fontSize={'small'} color="primary">
+                          thumb_up_alt
+                        </Icon>
                       </Tooltip>
                     ) : (
                       <Tooltip title={<FormattedMessage id={'ui.notification.comment.voteUp'} defaultMessage={'ui.notification.comment.voteUp'} />}>
-                        <VoteIcon fontSize={'small'} />
+                        <Icon fontSize={'small'}>thumb_up_off_alt</Icon>
                       </Tooltip>
                     )}
                   </LoadingButton>

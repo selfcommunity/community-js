@@ -2,11 +2,11 @@ import React, {SyntheticEvent} from 'react';
 import {Box, IconButton} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import {ReactSortable} from 'react-sortablejs';
-import DeleteIcon from '@mui/icons-material/DeleteOutlined';
+import Icon from '@mui/material/Icon';
 import {styled} from '@mui/material/styles';
 import Link from './PreviewComponent';
 import UrlTextField from './UrlTextField';
-import { EditMediaProps } from '../types';
+import {EditMediaProps} from '../types';
 
 const PREFIX = 'SCMediaActionLink';
 
@@ -57,7 +57,7 @@ export default (props: EditMediaProps): JSX.Element => {
               <Link medias={[media]} />
               <Box className={classes.close}>
                 <IconButton onClick={onDelete(media.id)} size="small">
-                  <DeleteIcon />
+                  <Icon>delete</Icon>
                 </IconButton>
               </Box>
             </Box>

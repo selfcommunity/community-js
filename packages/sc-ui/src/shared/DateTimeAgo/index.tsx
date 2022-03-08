@@ -4,7 +4,7 @@ import itStrings from 'react-timeago/lib/language-strings/it';
 import buildFormatter from 'react-timeago/lib/formatters/buildFormatter';
 import {styled} from '@mui/material/styles';
 import {Box, Tooltip, Typography} from '@mui/material';
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import Icon from '@mui/material/Icon';
 import {useIntl} from 'react-intl';
 
 const PREFIX = 'SCDateTimeAgo';
@@ -17,9 +17,8 @@ const Root = styled(Box, {
   width: 'auto',
   display: 'flex',
   marginTop: 3,
-  '& .MuiSvgIcon-root': {
-    width: '0.6em',
-    marginTop: -4
+  '& .MuiIcon-root': {
+    fontSize: '18px'
   }
 }));
 
@@ -69,7 +68,7 @@ export default function DateTimeAgo(props: DateTimeAgoProps): JSX.Element {
   if (date) {
     return (
       <Root className={className} {...rest}>
-        {showStartIcon && <AccessTimeIcon sx={{paddingRight: '2px'}} />}
+        {showStartIcon && <Icon sx={{paddingRight: '2px'}}>access_time</Icon>}
         <Tooltip title={`${intl.formatDate(date, {year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric'})}`}>
           <Typography variant={'body2'} component={'span'}>
             <TimeAgo date={date} live={live} formatter={formatter} />

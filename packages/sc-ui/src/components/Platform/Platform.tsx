@@ -3,7 +3,7 @@ import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import {Button, Grid, Typography} from '@mui/material';
 import {Endpoints, http, SCLocaleContextType, SCUserContext, SCUserContextType, useSCLocale} from '@selfcommunity/core';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Icon from '@mui/material/Icon';
 import {AxiosResponse} from 'axios';
 import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
@@ -108,7 +108,7 @@ export default function Platform(props: PlatformProps): JSX.Element {
         <Grid item xs={12}>
           <Typography component="h3" align="center">
             <FormattedMessage id="ui.platformAccess.title" defaultMessage="ui.platformAccess.title" />
-            <LockOutlinedIcon fontSize="small" />
+            <Icon fontSize="small">lock</Icon>
           </Typography>
         </Grid>
         {isAdmin && (

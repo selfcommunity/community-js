@@ -1,11 +1,12 @@
 import React from 'react';
-import {defineMessages, injectIntl, useIntl} from 'react-intl';
+import {defineMessages, useIntl} from 'react-intl';
 import {Box, Button, Divider, Tooltip, Typography} from '@mui/material';
-import CommentIcon from '@mui/icons-material/ChatBubbleOutline';
+import Icon from '@mui/material/Icon';
 import {SCFeedObjectType, SCFeedObjectTypologyType, SCRoutingContextType, useSCFetchFeedObject, useSCRouting, Link} from '@selfcommunity/core';
 import {styled} from '@mui/material/styles';
 import {FeedObjectTemplateType} from '../../../../types/feedObject';
 import classNames from 'classnames';
+import Skeleton from '@mui/material/Skeleton';
 
 const messages = defineMessages({
   comments: {
@@ -23,7 +24,10 @@ const PREFIX = 'SCCommentObject';
 const classes = {
   root: `${PREFIX}-root`,
   divider: `${PREFIX}-divider`,
-  viewCommentsButton: `${PREFIX}-view-comments-button`,
+  inline: `${PREFIX}-inline`,
+  actionButton: `${PREFIX}-action-button`,
+  inlineActionButton: `${PREFIX}-inline-action-button`,
+  viewAudienceButton: `${PREFIX}-view-audience-button`
 };
 
 const Root = styled(Box, {
@@ -31,10 +35,21 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  flexDirection: 'column',
+  [`&.${classes.inline}`]: {
+    flexDirection: 'row-reverse'
+  },
+  [`& .${classes.inlineActionButton}`]: {
+    minWidth: 30
+  },
   [`& .${classes.divider}`]: {
+    width: '100%',
     borderBottom: 0
   },
-  [`& .${classes.viewCommentsButton}`]: {
+  [`& .${classes.viewAudienceButton}`]: {
     height: 32,
     fontSize: 15,
     textTransform: 'capitalize',
@@ -55,7 +70,7 @@ export interface CommentProps {
    * Feed object id
    * @default null
    */
-  id?: number;
+  feedObjectId?: number;
 
   /**
    * Feed object
@@ -76,10 +91,23 @@ export interface CommentProps {
   feedObjectTemplate?: FeedObjectTemplateType;
 
   /**
-   * Manages action (if present)
-   * @default false
+   * Show audience
+   * @default true
    */
-  withAction: boolean;
+  withAudience?: boolean;
+
+  /**
+   * Show action
+   * @default true
+   */
+  withAction?: boolean;
+
+  /**
+   * Inline action layout.
+   * Action will be align with the audience button.
+   * @default true
+   */
+  inlineAction?: boolean;
 
   /**
    * Handles action view all comments click
@@ -98,22 +126,25 @@ export interface CommentProps {
    */
   [p: string]: any;
 }
+
 export default function Comment(props: CommentProps): JSX.Element {
   // PROPS
   const {
     className,
-    id,
+    feedObjectId,
     feedObject,
     feedObjectType = SCFeedObjectTypologyType.POST,
     feedObjectTemplate = FeedObjectTemplateType,
-    withAction = false,
+    withAction = true,
+    withAudience = true,
+    inlineAction = true,
     onViewCommentsAction,
     onCommentAction,
     ...rest
   } = props;
 
   // STATE
-  const {obj, setObj} = useSCFetchFeedObject({id, feedObject, feedObjectType});
+  const {obj, setObj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
 
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
@@ -122,43 +153,80 @@ export default function Comment(props: CommentProps): JSX.Element {
   const intl = useIntl();
 
   /**
+   * Renders comments counter
+   * @return {JSX.Element}
+   */
+  function renderAudience() {
+    let audience;
+    if (withAudience) {
+      if (!obj) {
+        audience = (
+          <Button variant="text" size="small" disabled color="inherit">
+            <Skeleton animation="wave" height={18} width={50} />
+          </Button>
+        );
+      } else {
+        audience = (
+          <>
+            {onViewCommentsAction ? (
+              <Button variant="text" size="small" onClick={onViewCommentsAction} color="inherit">
+                {`${intl.formatMessage(messages.comments, {total: obj.comment_count})}`}
+              </Button>
+            ) : (
+              <>
+                {feedObjectTemplate === FeedObjectTemplateType.DETAIL ? (
+                  <Typography variant={'body2'}>{`${intl.formatMessage(messages.comments, {total: obj.comment_count})}`}</Typography>
+                ) : (
+                  <Button
+                    color="inherit"
+                    variant="text"
+                    size="small"
+                    component={Link}
+                    to={scRoutingContext.url(feedObjectType.toLowerCase(), {id: obj.id})}
+                    classes={{root: classes.viewAudienceButton}}>
+                    {`${intl.formatMessage(messages.comments, {total: obj.comment_count})}`}
+                  </Button>
+                )}
+              </>
+            )}
+          </>
+        );
+      }
+    }
+    return audience;
+  }
+
+  /**
+   * Renders commentsCounter
+   * @return {JSX.Element}
+   */
+  function renderCommentButton() {
+    return (
+      <>
+        {withAction && (
+          <React.Fragment>
+            {!inlineAction && withAudience && <Divider className={classes.divider} />}
+            <Tooltip title={`${intl.formatMessage(messages.comment)}`}>
+              <Button
+                onClick={onCommentAction}
+                color="inherit"
+                classes={{root: classNames(classes.actionButton, {[classes.inlineActionButton]: inlineAction})}}>
+                <Icon fontSize={'large'}>chat_bubble_outline</Icon>
+              </Button>
+            </Tooltip>
+          </React.Fragment>
+        )}
+      </>
+    );
+  }
+
+  /**
    * Renders comment action
    */
   return (
-    <Root className={classNames(classes.root, className)} {...rest}>
-      {onViewCommentsAction ? (
-        <Button variant="text" size="small" sx={{height: 32}} onClick={onViewCommentsAction} color="inherit">
-          <Typography variant={'body2'}>{`${intl.formatMessage(messages.comments, {total: obj.comment_count})}`}</Typography>
-        </Button>
-      ) : (
-        <>
-          {feedObjectTemplate === FeedObjectTemplateType.DETAIL ? (
-            <Typography variant={'body2'} sx={{mt: '7px', mb: '6px'}}>
-              {`${intl.formatMessage(messages.comments, {total: obj.comment_count})}`}
-            </Typography>
-          ) : (
-            <Button
-              color="inherit"
-              variant="text"
-              size="small"
-              component={Link}
-              to={scRoutingContext.url(feedObjectType.toLowerCase(), {id: obj.id})}
-              classes={{root: classes.viewCommentsButton}}>
-              <Typography variant={'body2'}>{`${intl.formatMessage(messages.comments, {total: obj.comment_count})}`}</Typography>
-            </Button>
-          )}
-        </>
-      )}
-      {withAction && (
-        <React.Fragment>
-          <Divider className={classes.divider} />
-          <Tooltip title={`${intl.formatMessage(messages.comment)}`}>
-            <Button onClick={onCommentAction} color="inherit">
-              <CommentIcon fontSize={'large'} />
-            </Button>
-          </Tooltip>
-        </React.Fragment>
-      )}
+    <Root className={classNames(classes.root, className, {[classes.inline]: inlineAction})} {...rest}>
+      {renderAudience()}
+      {renderCommentButton()}
     </Root>
   );
 }

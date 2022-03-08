@@ -1,8 +1,8 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import { Avatar, Box, ListItem, ListItemAvatar, ListItemText, Stack, Typography } from '@mui/material';
-import EmojiFlagsIcon from '@mui/icons-material/EmojiFlags';
-import {green, grey, red} from '@mui/material/colors';
+import {Avatar, Box, ListItem, ListItemAvatar, ListItemText, Stack, Typography} from '@mui/material';
+import Icon from '@mui/material/Icon';
+import {red} from '@mui/material/colors';
 import {Link, SCNotificationUnDeletedForType, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
 import {FormattedMessage} from 'react-intl';
 import {getContributeType, getContributionSnippet, getRouteData} from '../../../utils/contribute';
@@ -135,9 +135,10 @@ export default function UndeletedForNotification(props: NotificationUndeletedPro
             [classes.listItemSnippet]: isToastTemplate || isSnippetTemplate,
             [classes.listItemSnippetNew]: isSnippetTemplate && notificationObject.is_new
           })
-        }}>        <ListItemAvatar classes={{root: classes.undeletedIconWrap}}>
+        }}>
+        <ListItemAvatar classes={{root: classes.undeletedIconWrap}}>
           <Avatar variant="circular" classes={{root: classNames(classes.undeletedIcon, {[classes.undeletedIconSnippet]: isSnippetTemplate})}}>
-            <EmojiFlagsIcon />
+            <Icon>outlined_flag</Icon>
           </Avatar>
         </ListItemAvatar>
         <ListItemText
@@ -170,7 +171,11 @@ export default function UndeletedForNotification(props: NotificationUndeletedPro
               )}
             </>
           }
-          secondary={<>{template === NotificationObjectTemplateType.DETAIL && <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />}</>}
+          secondary={
+            <>
+              {template === NotificationObjectTemplateType.DETAIL && <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />}
+            </>
+          }
         />
       </ListItem>
       {!isSnippetTemplate && (

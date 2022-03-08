@@ -1,12 +1,13 @@
 import React, {useContext, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Avatar, Card, CardContent, CardHeader, CardMedia, CardProps, Chip, CircularProgress, Fade, IconButton, Typography} from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
+import Icon from '@mui/material/Icon';
 import {
   Endpoints,
   http,
   Link,
   Logger,
+  SCBroadcastMessageBannerType,
   SCBroadcastMessageType,
   SCPreferences,
   SCPreferencesContext,
@@ -114,6 +115,32 @@ export default function Message(props: MessageProps): JSX.Element {
       .then(() => setClosing(false));
   };
 
+  // RENDER
+  const renderContent = (banner) => {
+    switch (banner.type_banner) {
+      case SCBroadcastMessageBannerType.NOTIFICATION:
+        return (
+          <>
+            <CardContent className={classes.title}>
+              <Typography variant="h6">{banner.title}</Typography>
+            </CardContent>
+            {banner.image && <CardMedia className={classes.media} component="img" image={banner.image} alt={banner.title} />}
+            <CardContent className={classes.content}>
+              <Typography variant="body2" color="text.secondary">
+                {banner.body_text}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                <Link to={banner.link} target={banner.open_in_new_tab ? '_blank' : '_self'}>
+                  {banner.link_text}
+                </Link>
+              </Typography>
+            </CardContent>
+          </>
+        );
+      default:
+        return null;
+    }
+  };
   // Banner
   const {banner} = message;
 
@@ -126,7 +153,7 @@ export default function Message(props: MessageProps): JSX.Element {
           avatar={<Avatar alt={preferences[SCPreferences.TEXT_APPLICATION_NAME]} src={preferences[SCPreferences.LOGO_NAVBAR_LOGO]} />}
           action={
             <IconButton aria-label="close" onClick={handleClose} disabled={closing}>
-              {closing ? <CircularProgress size={20} /> : <CloseIcon />}
+              {closing ? <CircularProgress size={20} /> : <Icon>close</Icon>}
             </IconButton>
           }
           title={
@@ -137,20 +164,7 @@ export default function Message(props: MessageProps): JSX.Element {
             />
           }
         />
-        <CardContent className={classes.title}>
-          <Typography variant="h6">{banner.title}</Typography>
-        </CardContent>
-        {banner.image && <CardMedia className={classes.media} component="img" image={banner.image} alt={banner.title} />}
-        <CardContent className={classes.content}>
-          <Typography variant="body2" color="text.secondary">
-            {banner.body_text}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            <Link to={banner.link} target={banner.open_in_new_tab ? '_blank' : '_self'}>
-              {banner.link_text}
-            </Link>
-          </Typography>
-        </CardContent>
+        {renderContent(banner)}
       </Root>
     </Fade>
   );

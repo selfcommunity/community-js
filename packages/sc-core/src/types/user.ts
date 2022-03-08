@@ -19,6 +19,16 @@ export enum SCUserFields {
   WEBSITE = 'website',
 }
 
+/**
+ * User status
+ */
+export enum SCUserStatus {
+  APPROVED = 'a',
+  BLOCKED = 'b',
+  DELETED = 'd',
+  UNREGISTERED = 'u',
+}
+
 export interface SCUserType {
   /**
    * The ID of the user.
@@ -87,6 +97,20 @@ export interface SCUserType {
 
   /**
    * User status. Values: a (approved), b (blocked), d (deleted; soft deleted), u (unregistered). Default: a.
+   * A blocked user can't:
+   *    - create contribution (post/discussion/status)
+   *    - create comment
+   *    - vote/unvote contribution
+   *    - follow/connect user
+   *    - edit contribution
+   *    - suggest an incubator
+   *    - flag a contribution
+   *    - send a private message
+   *    - edit info profile
+   * but he can't:
+   *    - follow/unfollow a post/discussion/status
+   *    - follow/unfollow a category
+   *    - unfollow user
    */
   status: string;
 

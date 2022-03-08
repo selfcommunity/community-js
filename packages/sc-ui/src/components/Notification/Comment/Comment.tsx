@@ -5,9 +5,8 @@ import {Link, SCNotificationCommentType, SCNotificationTypologyType, SCRoutes, S
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import Bullet from '../../../shared/Bullet';
 import {LoadingButton} from '@mui/lab';
-import VoteFilledIcon from '@mui/icons-material/ThumbUpTwoTone';
-import VoteIcon from '@mui/icons-material/ThumbUpOutlined';
-import {grey, red} from '@mui/material/colors';
+import Icon from '@mui/material/Icon';
+import {red} from '@mui/material/colors';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
 import NewChip from '../../../shared/NewChip/NewChip';
 import {getContributionSnippet, getRouteData} from '../../../utils/contribute';
@@ -226,11 +225,15 @@ export default function CommentNotification(props: CommentNotificationProps): JS
                     {notificationObject.comment.voted ? (
                       <Tooltip
                         title={<FormattedMessage id={'ui.notification.comment.voteDown'} defaultMessage={'ui.notification.comment.voteDown'} />}>
-                        <VoteFilledIcon fontSize={'small'} color={'secondary'} />
+                        <Icon fontSize={'small'} color={'secondary'}>
+                          thumb_up_alt
+                        </Icon>
                       </Tooltip>
                     ) : (
                       <Tooltip title={<FormattedMessage id={'ui.notification.comment.voteUp'} defaultMessage={'ui.notification.comment.voteUp'} />}>
-                        <VoteIcon fontSize={'small'} color="inherit" />
+                        <Icon fontSize={'small'} color="inherit">
+                          thumb_up_off_alt
+                        </Icon>
                       </Tooltip>
                     )}
                   </LoadingButton>

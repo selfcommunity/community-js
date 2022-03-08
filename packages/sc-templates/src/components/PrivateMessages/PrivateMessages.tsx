@@ -4,7 +4,7 @@ import {Button, Box} from '@mui/material';
 import {Snippets} from '@selfcommunity/ui';
 import {Thread} from '@selfcommunity/ui';
 import {FormattedMessage} from 'react-intl';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import Icon from '@mui/material/Icon';
 import {SCUserContext, SCUserContextType} from '@selfcommunity/core';
 import classNames from 'classnames';
 
@@ -27,7 +27,7 @@ const Root = styled(Box, {
   [`& .${classes.newMessage}`]: {
     width: '100%',
     justifyContent: 'flex-start',
-    '& .MuiSvgIcon-root': {
+    '& .MuiIcon-root': {
       marginRight: '5px'
     }
   },
@@ -35,7 +35,7 @@ const Root = styled(Box, {
     background: theme.palette.grey['A200'],
     justifyContent: 'flex-start',
     width: '100%',
-    '& .MuiSvgIcon-root': {
+    '& .MuiIcon-root': {
       marginRight: '5px'
     }
   }
@@ -113,7 +113,7 @@ export default function PrivateMessages(props: PrivateMessagesProps): JSX.Elemen
       <Root {...rest} className={classNames(classes.root, className)}>
         <div>
           <Button className={openNewMessage ? classes.selected : classes.newMessage} onClick={handleOpenNewMessage}>
-            <AddCircleOutlineIcon />
+            <Icon>add_circle_outline</Icon>
             <FormattedMessage id="ui.NewMessage.new" defaultMessage="ui.NewMessage.new" />
           </Button>
           <Snippets onSnippetClick={handleThreadOpening} threadId={obj ? obj.id : null} />

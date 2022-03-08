@@ -63,8 +63,8 @@ const Root = styled(Box, {
   [`& .${classes.contributionText}`]: {
     textDecoration: 'underline'
   },
-  '& .MuiSvgIcon-root': {
-    width: '0.7em',
+  '& .MuiIcon-root': {
+    fontSize: '18px',
     marginBottom: '0.5px'
   },
   [`& .${classes.toastInfo}`]: {

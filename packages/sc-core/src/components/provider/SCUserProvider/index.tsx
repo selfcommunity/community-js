@@ -1,8 +1,9 @@
-import React, {createContext, useContext, useEffect, useMemo} from 'react';
+import React, {createContext, useContext, useEffect, useMemo, useRef} from 'react';
 import sessionServices from '../../../services/session';
 import {SCContext} from '../SCContextProvider';
 import useSCAuth, {userActionTypes} from '../../../hooks/useSCAuth';
 import {Logger} from '../../../utils/logger';
+import PubSub from 'pubsub-js';
 import {SCOPE_SC_CORE} from '../../../constants/Errors';
 import useDeepCompareEffect from 'use-deep-compare-effect';
 import useSCCategoriesManager from '../../../hooks/useSCCategoriesManager';
@@ -16,7 +17,9 @@ import {
   SCCategoriesManagerType,
   SCFollowedManagerType,
   SCConnectionsManagerType,
-  SCAuthTokenType,
+  SCNotificationTopicType,
+  SCNotificationTypologyType,
+  SCUserStatus,
 } from '../../../types';
 
 /**
@@ -65,6 +68,12 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
   const categoriesManager: SCCategoriesManagerType = useSCCategoriesManager(state.user);
 
   /**
+   * Ref notifications subscribers: BLOCKED_USER, UNBLOCKED_USER
+   */
+  const notificationUserBlockedSubscription = useRef(null);
+  const notificationUserUnBlockedSubscription = useRef(null);
+
+  /**
    * Check if there is a currently active session
    * when the provider is mounted for the first time.
    * If there is an error, it means there is no session.
@@ -107,6 +116,29 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
       connectionsManager.refresh && connectionsManager.refresh();
     }
   }
+
+  /**
+   * Subscribes to handle notifications of type BLOCKED_USER, UNBLOCKED_USER.
+   * When receive this type of notifications, the user.status must be update.
+   */
+  useEffect(() => {
+    notificationUserBlockedSubscription.current = PubSub.subscribe(
+      `${SCNotificationTopicType.INTERACTION}.${SCNotificationTypologyType.BLOCKED_USER}`,
+      () => {
+        dispatch({type: userActionTypes.UPDATE_USER, payload: {status: SCUserStatus.BLOCKED}});
+      }
+    );
+    notificationUserUnBlockedSubscription.current = PubSub.subscribe(
+      `${SCNotificationTopicType.INTERACTION}.${SCNotificationTypologyType.UNBLOCKED_USER}`,
+      () => {
+        dispatch({type: userActionTypes.UPDATE_USER, payload: {status: SCUserStatus.APPROVED}});
+      }
+    );
+    return () => {
+      PubSub.unsubscribe(notificationUserBlockedSubscription.current);
+      PubSub.unsubscribe(notificationUserUnBlockedSubscription.current);
+    };
+  }, []);
 
   /**
    * Handle change user

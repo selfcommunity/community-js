@@ -6,12 +6,12 @@
   "ui.common.error.email": "L'email non è valida",
   "ui.common.error.username": "Il campo username può essere composto da caratteri alfanumerici _ e -",
   "ui.common.error.action": "Si è verificato un'errore. Riprova più tardi!",
+  "ui.common.userBlocked": "Siamo spiacenti, non puoi segnalare un intervento perché il tuo account è bloccato",
   "ui.common.discussionWithoutText": "Vedi la discussione",
   "ui.common.postWithoutText": "Vedi il post",
   "ui.common.statusWithoutText": "Vedi lo status",
   "ui.common.commentWithoutText": "Vedi il commento",
   "ui.common.permanentLinkCopied": "Link copiato!",
-
 
   "ui.confirmDialog.title": "Sei sicuro di voler procedere?",
   "ui.confirmDialog.btnConfirm": "Si",
@@ -203,7 +203,7 @@
   "ui.commentObject.voteUp": "Apprezza",
   "ui.commentObject.voteDown": "Non apprezzare",
   "ui.commentObject.votes": "{total, plural, =0 {# Voti} one {# Voto} other {# Voti}}",
-  "ui.commentObject.viewLatestComment": "Vedi {total, plural, =0 {# Commenti} un {# Commento} other {# Commenti}} precedenti",
+  "ui.commentObject.viewLatestComment": "{total, plural, =0{Nessun commento precedente} one{Vedi un commento precedente} other{Vedi # commenti precedenti}} ",
 
   "ui.commentObject.replyComment.reply": "Replica",
   "ui.commentObject.replyComment.save": "Save",

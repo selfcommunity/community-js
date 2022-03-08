@@ -4,7 +4,7 @@ import Card from '@mui/material/Card';
 import {SCContextType, SCFeedObjectType, SCPollChoiceType, SCUserContextType, useSCContext, useSCUser} from '@selfcommunity/core';
 import {Box, Typography} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
-import CheckIcon from '@mui/icons-material/Check';
+import Icon from '@mui/material/Icon';
 import LinearProgress, {LinearProgressProps} from '@mui/material/LinearProgress';
 import {LoadingButton} from '@mui/lab';
 import classNames from 'classnames';
@@ -46,7 +46,7 @@ const Root = styled(Card, {
   [`& .${classes.result}`]: {
     marginLeft: theme.spacing(2)
   },
-  '& .MuiSvgIcon-root': {
+  '& .MuiIcon-root': {
     color: theme.palette.common.white
   },
   '& .MuiLinearProgress-bar': {
@@ -145,7 +145,11 @@ export default function Choice(props: ChoiceProps): JSX.Element {
           disabled={disabled || isVoting !== null || votable}
           className={choiceObj.voted ? classes.voted : classes.vote}
           onClick={handleVoteAction}>
-          {choiceObj.voted ? <CheckIcon /> : <FormattedMessage id="ui.feedObject.poll.choice.vote" defaultMessage="ui.feedObject.poll.choice.vote" />}
+          {choiceObj.voted ? (
+            <Icon>check</Icon>
+          ) : (
+            <FormattedMessage id="ui.feedObject.poll.choice.vote" defaultMessage="ui.feedObject.poll.choice.vote" />
+          )}
         </LoadingButton>
         <Typography>{choiceObj.choice}</Typography>
       </Box>

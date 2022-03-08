@@ -77,7 +77,7 @@ export default function SharesDialog(props: ShareDialogProps): JSX.Element {
       })
       .then((res: AxiosResponse<any>) => {
         const data: {results: Record<string, any>[]; next?: string} = res.data;
-        setShares([...data.results, ...shares]);
+        setShares([...shares, ...data.results]);
         setIsLoading(false);
         setNext(data.next !== null ? data.next : null);
       })
@@ -112,8 +112,8 @@ export default function SharesDialog(props: ShareDialogProps): JSX.Element {
             </Typography>
           }>
           <List>
-            {shares.slice(0, 4).map((like, index) => (
-              <User elevation={0} user={like.user} key={index} />
+            {shares.slice(0, 4).map((user, index) => (
+              <User elevation={0} user={user} key={index} />
             ))}
           </List>
         </InfiniteScroll>
