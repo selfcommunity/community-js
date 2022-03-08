@@ -32,3 +32,10 @@ jobs:
         pr_body: "👑 *An automated PR*"
         pr_draft: true
         github_token: ${{ secrets.GITHUB_TOKEN }}
+    - uses: peter-evans/repository-dispatch@v1
+      name: Repository Dispatch
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        repository: selfcommunity/developers-doc
+        event-type: prerelease
+        client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
