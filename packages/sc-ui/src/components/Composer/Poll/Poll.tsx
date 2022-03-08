@@ -207,7 +207,7 @@ export default (props: PollProps): JSX.Element => {
                         )
                       }>
                       <span>
-                        <IconButton onClick={handleDeleteChoice(index)} disabled={choices.length <= COMPOSER_POLL_MIN_CHOICES}>
+                        <IconButton onClick={handleDeleteChoice(index)} disabled={choices.length <= COMPOSER_POLL_MIN_CHOICES} edge="end">
                           <Icon>delete</Icon>
                         </IconButton>
                       </span>
@@ -220,7 +220,7 @@ export default (props: PollProps): JSX.Element => {
         </ReactSortable>
       </Box>
       <Box className={classes.choiceNew}>
-        <Button variant="outlined" onClick={handleAddChoice}>
+        <Button color="inherit" variant="text" onClick={handleAddChoice}>
           <Icon>add</Icon>
           <FormattedMessage id="ui.composer.poll.choice.add" defaultMessage="ui.composer.choice.add" />
         </Button>
