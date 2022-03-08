@@ -55,7 +55,7 @@ const Root = styled(Box, {
   [`& .${classes.actions}`]: {
     position: 'absolute',
     bottom: 0,
-    right: 0
+    right: theme.spacing()
   }
 }));
 
