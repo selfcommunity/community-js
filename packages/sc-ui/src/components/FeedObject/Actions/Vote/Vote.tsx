@@ -1,17 +1,18 @@
 import React, {useEffect, useMemo, useReducer} from 'react';
 import BaseDialog from '../../../../shared/BaseDialog';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {Box, Button, Divider, IconButton, List, Tooltip, Typography} from '@mui/material';
+import {Box, Button, Divider, IconButton, List, Tooltip} from '@mui/material';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Icon from '@mui/material/Icon';
 import Skeleton from '@mui/material/Skeleton';
-import CircularProgress from '@mui/material/CircularProgress';
 import LoadingButton from '@mui/lab/LoadingButton';
 import {AxiosResponse} from 'axios';
 import CentralProgress from '../../../../shared/CentralProgress';
 import User from '../../../User';
 import {SCOPE_SC_UI} from '../../../../constants/Errors';
 import {styled} from '@mui/material/styles';
+import classNames from 'classnames';
+import {useSnackbar} from 'notistack';
 import {
   Endpoints,
   http,
@@ -26,8 +27,6 @@ import {
   useSCFetchFeedObject,
   useSCUser
 } from '@selfcommunity/core';
-import classNames from 'classnames';
-import {useSnackbar} from 'notistack';
 
 /**
  * We have complex state logic that involves multiple sub-values,
@@ -85,17 +84,17 @@ function votesReducer(state, action) {
  * Defines initial state
  */
 function stateInitializer({
-  id = null,
+  feedObjectId = null,
   feedObject = null,
   feedObjectType = SCFeedObjectTypologyType.POST
 }: {
-  id?: number;
+  feedObjectId?: number;
   feedObject?: SCFeedObjectType;
   feedObjectType?: SCFeedObjectTypologyType;
 }): any {
   const next =
-    id && feedObjectType
-      ? `${Endpoints.VotesList.url({type: feedObjectType, id: id})}`
+    feedObjectId && feedObjectType
+      ? `${Endpoints.VotesList.url({type: feedObjectType, id: feedObjectId})}`
       : `${Endpoints.VotesList.url({type: feedObjectType, id: feedObject.id})}`;
   return {
     votes: [],
@@ -113,8 +112,10 @@ const PREFIX = 'SCVoteObject';
 const classes = {
   root: `${PREFIX}-root`,
   divider: `${PREFIX}-divider`,
-  viewVotesButton: `${PREFIX}-view-votes-button`,
-  inlineVoteButton: `${PREFIX}-inlineVoteButton`
+  actionButton: `${PREFIX}-action-button`,
+  inline: `${PREFIX}-inline`,
+  inlineActionButton: `${PREFIX}-inline-action-button`,
+  viewAudienceButton: `${PREFIX}-view-audience-button`
 };
 
 const messages = defineMessages({
@@ -145,21 +146,27 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  flexDirection: 'column',
+  [`&.${classes.inline}`]: {
+    flexDirection: 'row-reverse'
+  },
+  [`& .${classes.inlineActionButton}`]: {
+    minWidth: 30
+  },
   [`& .${classes.divider}`]: {
+    width: '100%',
     borderBottom: 0
   },
-  [`& .${classes.viewVotesButton}`]: {
+  [`& .${classes.viewAudienceButton}`]: {
     height: 32,
     fontSize: 15,
     textTransform: 'capitalize',
     '& p': {
       fontSize: '0.9rem'
     }
-  },
-  [`& .${classes.inlineVoteButton}`]: {
-    backgroundColor: '#d5d5d5',
-    padding: '0 3px',
-    borderRadius: 10
   }
 }));
 
@@ -174,7 +181,7 @@ export interface VoteProps {
    * Feed object id
    * @default null
    */
-  id?: number;
+  feedObjectId?: number;
 
   /**
    * Feed object
@@ -189,16 +196,23 @@ export interface VoteProps {
   feedObjectType?: SCFeedObjectTypologyType;
 
   /**
-   * Manages action (if present)
-   * @default false
-   */
-  withAction: boolean;
-
-  /**
-   * Manages inline action
+   * Show audience.
    * @default true
    */
-  inlineAction: boolean;
+  withAudience?: boolean;
+
+  /**
+   * Show action
+   * @default true
+   */
+  withAction?: boolean;
+
+  /**
+   * Inline action layout.
+   * Action will be align with the audience button.
+   * @default true
+   */
+  inlineAction?: boolean;
 
   /**
    * Any other properties
@@ -210,17 +224,18 @@ export default function Vote(props: VoteProps): JSX.Element {
   // PROPS
   const {
     className = null,
-    id = null,
+    feedObjectId = null,
     feedObject = null,
     feedObjectType = SCFeedObjectTypologyType.POST,
-    withAction = false,
+    withAudience = true,
+    withAction = true,
     inlineAction = true,
     ...rest
   } = props;
 
   // STATE
-  const {obj, setObj} = useSCFetchFeedObject({id, feedObject, feedObjectType});
-  const [state, dispatch] = useReducer(votesReducer, {}, () => stateInitializer({id, feedObject, feedObjectType}));
+  const {obj, setObj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
+  const [state, dispatch] = useReducer(votesReducer, {}, () => stateInitializer({feedObjectId, feedObject, feedObjectType}));
 
   // CONTEXT
   const scContext: SCContextType = useSCContext();
@@ -228,7 +243,6 @@ export default function Vote(props: VoteProps): JSX.Element {
   const {enqueueSnackbar} = useSnackbar();
 
   // INTL
-
   const intl = useIntl();
 
   /**
@@ -287,7 +301,7 @@ export default function Vote(props: VoteProps): JSX.Element {
     () => () => {
       return http
         .request({
-          url: Endpoints.Vote.url({type: feedObjectType, id: obj.id}),
+          url: Endpoints.Vote.url({type: obj.type, id: obj.id}),
           method: Endpoints.Vote.method
         })
         .then((res: AxiosResponse<SCTagType>) => {
@@ -297,7 +311,7 @@ export default function Vote(props: VoteProps): JSX.Element {
           return Promise.resolve(res.data);
         });
     },
-    [feedObject.id]
+    [obj]
   );
 
   /**
@@ -333,72 +347,44 @@ export default function Vote(props: VoteProps): JSX.Element {
   }
 
   /**
-   * Renders inline action (as button if withAction==true && inlineAction==true)
-   * @return {JSX.Element}
-   */
-  function renderInlineStartVoteBtn() {
-    const canVote = scUserContext.user && scUserContext.user.id !== obj.author.id;
-    const {loading, voting} = state;
-    if (!canVote || (withAction && !inlineAction)) {
-      return obj.voted ? (
-        <Icon fontSize="medium" color="primary" className={classes.inlineVoteButton}>
-          thumb_up
-        </Icon>
-      ) : (
-        <Icon fontSize="medium" sx={{marginTop: '-1px'}}>
-          thumb_up_off_alt
-        </Icon>
-      );
-    }
-    return (
-      <Tooltip title={loading || voting ? '' : obj.voted ? 'Vote down' : 'Vote up'}>
-        <span>
-          <IconButton disabled={loading || voting} onClick={vote} edge={loading ? false : 'end'} size="large">
-            {voting ? (
-              <CircularProgress size={14} style={{marginTop: -7}} />
-            ) : (
-              <React.Fragment>{obj.voted ? <Icon fontSize="small">thumb_up</Icon> : <Icon fontSize="small">thumb_up_off_alt</Icon>}</React.Fragment>
-            )}
-          </IconButton>
-        </span>
-      </Tooltip>
-    );
-  }
-
-  /**
    * Renders audience with detail dialog
    * @return {JSX.Element}
    */
   function renderAudience() {
     const {loadingVotes, votes, openVotesDialog} = state;
     let audience;
-    if (!obj) {
-      audience = (
-        <Button variant="text" size="small" disabled color="inherit">
-          <Skeleton animation="wave" height={18} width={50} />
-        </Button>
-      );
-    } else if (obj.vote_count <= 0) {
-      audience = (
-        <Button variant="text" size="small" onClick={handleToggleVotesDialog} disabled color="inherit" classes={{root: classes.viewVotesButton}}>
-          {renderInlineStartVoteBtn()}
-          <Typography variant={'body2'} sx={{marginLeft: (theme) => theme.spacing()}}>
-            {`${intl.formatMessage(messages.votes, {total: obj.vote_count})}`}
-          </Typography>
-        </Button>
-      );
-    } else {
-      audience = (
-        <React.Fragment>
-          <Button
-            variant="text"
-            size="small"
-            onClick={handleToggleVotesDialog}
-            disabled={obj.vote_count === 0}
-            color="inherit"
-            classes={{root: classes.viewVotesButton}}>
-            {renderInlineStartVoteBtn()}
-            <Typography variant={'body2'} sx={{marginLeft: (theme) => theme.spacing()}}>
+    if (withAudience) {
+      if (!obj) {
+        audience = (
+          <Button variant="text" size="small" disabled color="inherit">
+            <Skeleton animation="wave" height={18} width={50} />
+          </Button>
+        );
+      } else {
+        audience = (
+          <>
+            <Button
+              variant="text"
+              size="small"
+              onClick={handleToggleVotesDialog}
+              disabled={obj.vote_count === 0}
+              color="inherit"
+              classes={{root: classes.viewAudienceButton}}
+              startIcon={
+                <>
+                  {!inlineAction && (
+                    <>
+                      {obj.voted ? (
+                        <Icon fontSize="small" color="primary">
+                          thumb_up
+                        </Icon>
+                      ) : (
+                        <Icon fontSize="small">thumb_up_off_alt</Icon>
+                      )}
+                    </>
+                  )}
+                </>
+              }>
               {obj.voted ? (
                 <React.Fragment>
                   {obj.vote_count === 1
@@ -408,40 +394,40 @@ export default function Vote(props: VoteProps): JSX.Element {
               ) : (
                 <React.Fragment>{`${intl.formatMessage(messages.votes, {total: obj.vote_count})}`}</React.Fragment>
               )}
-            </Typography>
-          </Button>
-          {openVotesDialog && (
-            <BaseDialog
-              title={<FormattedMessage defaultMessage="ui.feedObject.votesDialog.title" id="ui.feedObject.votesDialog.title" />}
-              onClose={handleToggleVotesDialog}
-              open={openVotesDialog}>
-              {loadingVotes ? (
-                <CentralProgress size={50} />
-              ) : (
-                <InfiniteScroll
-                  dataLength={votes.length}
-                  next={fetchVotes}
-                  hasMore={Boolean(state.next)}
-                  loader={<CentralProgress size={30} />}
-                  height={400}
-                  endMessage={
-                    <p style={{textAlign: 'center'}}>
-                      <b>
-                        <FormattedMessage id="ui.feedObject.votesDialog.noOtherLikes" defaultMessage="ui.feedObject.votesDialog.noOtherLikes" />
-                      </b>
-                    </p>
-                  }>
-                  <List>
-                    {votes.map((vote, index) => (
-                      <User elevation={0} user={vote.user} key={index} sx={{m: 0}} />
-                    ))}
-                  </List>
-                </InfiniteScroll>
-              )}
-            </BaseDialog>
-          )}
-        </React.Fragment>
-      );
+            </Button>
+            {openVotesDialog && (
+              <BaseDialog
+                title={<FormattedMessage defaultMessage="ui.feedObject.votesDialog.title" id="ui.feedObject.votesDialog.title" />}
+                onClose={handleToggleVotesDialog}
+                open={openVotesDialog}>
+                {loadingVotes ? (
+                  <CentralProgress size={50} />
+                ) : (
+                  <InfiniteScroll
+                    dataLength={votes.length}
+                    next={fetchVotes}
+                    hasMore={Boolean(state.next)}
+                    loader={<CentralProgress size={30} />}
+                    height={400}
+                    endMessage={
+                      <p style={{textAlign: 'center'}}>
+                        <b>
+                          <FormattedMessage id="ui.feedObject.votesDialog.noOtherLikes" defaultMessage="ui.feedObject.votesDialog.noOtherLikes" />
+                        </b>
+                      </p>
+                    }>
+                    <List>
+                      {votes.map((vote, index) => (
+                        <User elevation={0} user={vote.user} key={index} sx={{m: 0}} />
+                      ))}
+                    </List>
+                  </InfiniteScroll>
+                )}
+              </BaseDialog>
+            )}
+          </>
+        );
+      }
     }
     return audience;
   }
@@ -450,17 +436,21 @@ export default function Vote(props: VoteProps): JSX.Element {
    * Renders vote action if withAction==true
    * @return {JSX.Element}
    */
-  function renderVoteBtn() {
+  function renderVoteButton() {
     const {voting} = state;
-    const canVote = scUserContext.user && scUserContext.user.id !== obj.author.id;
     return (
       <React.Fragment>
-        {withAction && !inlineAction && (
+        {withAction && (
           <React.Fragment>
-            <Divider className={classes.divider} />
+            {!inlineAction && withAudience && <Divider className={classes.divider} />}
             <Tooltip title={voting ? '' : obj.voted ? intl.formatMessage(messages.voteDown) : intl.formatMessage(messages.voteUp)}>
               <span>
-                <LoadingButton loading={voting} disabled={!obj} onClick={vote} color="inherit">
+                <LoadingButton
+                  loading={voting}
+                  disabled={!obj}
+                  onClick={vote}
+                  color="inherit"
+                  classes={{root: classNames(classes.actionButton, {[classes.inlineActionButton]: inlineAction})}}>
                   {obj.voted ? (
                     <Icon fontSize={'large'} color="primary">
                       thumb_up
@@ -481,9 +471,9 @@ export default function Vote(props: VoteProps): JSX.Element {
    * Renders vote action and audience section
    */
   return (
-    <Root className={classNames(classes.root, className)} {...rest}>
+    <Root className={classNames(classes.root, className, {[classes.inline]: inlineAction})} {...rest}>
       {renderAudience()}
-      {renderVoteBtn()}
+      {renderVoteButton()}
     </Root>
   );
 }

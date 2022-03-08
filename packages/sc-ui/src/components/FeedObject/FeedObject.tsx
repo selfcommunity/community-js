@@ -23,7 +23,7 @@ import DateTimeAgo from '../../shared/DateTimeAgo';
 import Bullet from '../../shared/Bullet';
 import Tags from '../../shared/Tags';
 import MediasPreview, {MediaPreviewProps} from '../../shared/MediasPreview';
-import Actions from './Actions';
+import Actions, { ActionsProps } from './Actions';
 import Icon from '@mui/material/Icon';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import PollObject, {PollObjectProps} from './Poll';
@@ -280,6 +280,12 @@ export interface FeedObjectProps extends CardProps {
   FeedObjectSkeletonProps?: FeedObjectSkeletonProps;
 
   /**
+   * Props to spread to Actions component
+   * @default {}
+   */
+  ActionsProps?: ActionsProps;
+
+  /**
    * Props to spread to ContributionActionsMenu component
    * @default {}
    */
@@ -361,6 +367,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
     hideFollowAction = false,
     hideParticipantsPreview = false,
     FeedObjectSkeletonProps = {elevation: 0},
+    ActionsProps = {},
     ContributionActionsMenuProps = {},
     MediasPreviewProps = {},
     PollObjectProps = {elevation: 0},
@@ -498,7 +505,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
     () => () => {
       return http
         .request({
-          url: Endpoints.FollowContribution.url({type: feedObjectType, id: obj.id}),
+          url: Endpoints.FollowContribution.url({type: obj.type, id: obj.id}),
           method: Endpoints.FollowContribution.method
         })
         .then((res: AxiosResponse<SCTagType>) => {
@@ -793,6 +800,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
                 hideShareAction={hideShareAction}
                 hideCommentAction={template === FeedObjectTemplateType.DETAIL}
                 handleExpandActivities={handleExpandActivities}
+                {...ActionsProps}
               />
             </CardActions>
             {template === FeedObjectTemplateType.PREVIEW && (
