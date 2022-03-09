@@ -122,6 +122,7 @@ export default function MainFeed(props: MainFeedProps): JSX.Element {
         feedObjectActivities: item.activities ? item.activities : null,
         markRead: scUser ? !item.seen_by_id.includes(scUser.id) : null
       })}
+      itemIdGenerator={(item) => item[item.type].id}
       ItemProps={FeedObjectProps}
       ItemSkeleton={FeedObjectSkeleton}
       ItemSkeletonProps={{

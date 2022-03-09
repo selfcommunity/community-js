@@ -31,6 +31,7 @@ Main.args = {
     feedObjectActivities: item.activities ? item.activities : null,
     markRead: scUser ? !item.seen_by_id.includes(scUser.id) : false
   }),
+  itemIdGenerator: (item) => item[item.type].id,
   ItemSkeleton: FeedObjectSkeleton,
   ItemSkeletonProps: {
     template: FeedObjectTemplateType.PREVIEW
@@ -48,6 +49,7 @@ Explore.args = {
     feedObjectActivities: item.activities ? item.activities : null,
     markRead: scUser ? !item.seen_by_id.includes(scUser.id) : false
   }),
+  itemIdGenerator: (item) => item[item.type].id,
   ItemSkeleton: FeedObjectSkeleton,
   ItemSkeletonProps: {
     template: FeedObjectTemplateType.PREVIEW
@@ -72,5 +74,6 @@ Notification.args = {
   itemPropsGenerator: (scUser, item) => ({
     notificationObject: item
   }),
+  itemIdGenerator: (item) => item.sid,
   ItemSkeleton: NotificationSkeleton
 };

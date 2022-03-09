@@ -13,7 +13,7 @@ import FriendshipUserButton, {FriendshipButtonProps} from './components/Friendsh
 import Composer, {ComposerProps, ComposerSkeleton} from './components/Composer';
 import Editor, {EditorProps, EditorSkeleton} from './components/Editor';
 import User, {UserProps, UserSkeleton} from './components/User';
-import Feed, {FeedProps, FeedSidebarProps, FeedSkeleton} from './components/Feed';
+import Feed, {FeedRef, FeedProps, FeedSidebarProps, FeedSkeleton} from './components/Feed';
 import FeedObject, {FeedObjectProps, FeedObjectSkeleton} from './components/FeedObject';
 import FeedUpdates, {FeedUpdatesProps, FeedUpdatesSkeleton} from './components/FeedUpdates';
 import FollowCategoryButton, {FollowCategoryButtonProps} from './components/FollowCategoryButton';
@@ -95,6 +95,7 @@ export {
   EditorProps,
   EditorSkeleton,
   Feed,
+  FeedRef,
   FeedProps,
   FeedSidebarProps,
   FeedSkeleton,

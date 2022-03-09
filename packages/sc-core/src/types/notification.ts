@@ -1,15 +1,8 @@
-import {
-  SCCategoryType,
-  SCCommentType,
-  SCFeedDiscussionType,
-  SCFeedPostType,
-  SCFeedStatusType,
-  SCUserType,
-} from '../index';
+import {SCCategoryType, SCCommentType, SCFeedDiscussionType, SCFeedPostType, SCFeedStatusType, SCUserType} from '../index';
 import {SCPrivateMessageType} from './privateMessage';
 import {SCUserBlockedSettingsType} from './user';
 import {SCCustomNotificationType} from './customNotification';
-import { SCIncubatorType } from './incubator';
+import {SCIncubatorType} from './incubator';
 
 /**
  * Notification types

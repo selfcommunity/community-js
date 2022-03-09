@@ -1,4 +1,4 @@
-import Feed, {FeedProps, FeedSidebarProps} from './Feed';
+import Feed, {FeedRef, FeedProps, FeedSidebarProps} from './Feed';
 import FeedSkeleton from './Skeleton';
 export default Feed;
-export {FeedProps, FeedSkeleton, FeedSidebarProps};
+export {FeedRef, FeedProps, FeedSkeleton, FeedSidebarProps};
