@@ -243,7 +243,7 @@ const findDecoWithRegex = (regex: RegExp, contentBlock: any, callback: any) => {
   }
 };
 
-const useEditorState = (props: IRichTextEditorProps) => {
+const getEditorState = (props: IRichTextEditorProps) => {
   const decorators: DraftDecorator[] = [
     {
       strategy: findLinkEntities,
@@ -273,8 +273,7 @@ const RichTextEditor: ForwardRefRenderFunction<TRichTextEditorRef, IRichTextEdit
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const [autocompleteItems, setAutocompleteItems] = useState<TAutocompleteItem[]>([]);
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const [editorState, setEditorState] = useState(() => useEditorState(props));
+  const [editorState, setEditorState] = useState(() => getEditorState(props));
   const [focusMediaKey, setFocusMediaKey] = useState('');
 
   const editorRef = useRef<Editor>(null);
@@ -319,8 +318,7 @@ const RichTextEditor: ForwardRefRenderFunction<TRichTextEditorRef, IRichTextEdit
   }));
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const editorState = useEditorState(props);
+    const editorState = getEditorState(props);
     setEditorState(editorState);
     toggleMouseUpListener(true);
     return () => {
