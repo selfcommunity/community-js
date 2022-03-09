@@ -5,7 +5,6 @@ import {IconButton, InputAdornment, Popover, Stack, TextField} from '@mui/materi
 import {SCUserContext, SCUserContextType} from '@selfcommunity/core';
 import Icon from '@mui/material/Icon';
 import Picker from 'emoji-picker-react';
-import {TMUIRichTextEditorRef} from 'mui-rte';
 import classNames from 'classnames';
 
 const PREFIX = 'SCMessageEditor';
@@ -38,11 +37,6 @@ export interface MessageEditorProps {
    * @default null
    */
   className?: string;
-  /**
-   * Handles emoji editor
-   * @default null
-   */
-  onRef?: (ref: RefObject<TMUIRichTextEditorRef>) => void;
   /**
    * Any other properties
    */
@@ -84,10 +78,7 @@ export interface MessageEditorProps {
  */
 export default function MessageEditor(props: MessageEditorProps): JSX.Element {
   // PROPS
-  const {autoHide = null, className = null, onRef = null, send = null, isSending = null, getMessage = null, ...rest} = props;
-
-  // CONTEXT
-  const scUserContext: SCUserContextType = useContext(SCUserContext);
+  const {autoHide = null, className = null, send = null, isSending = null, getMessage = null, ...rest} = props;
 
   // STATE
   const [message, setMessage] = useState<string>('');

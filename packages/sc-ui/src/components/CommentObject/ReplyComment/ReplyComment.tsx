@@ -2,11 +2,10 @@ import React, {RefObject, useContext, useEffect, useMemo, useState} from 'react'
 import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import {defineMessages, useIntl} from 'react-intl';
-import { Avatar, Box, CardProps, Grid, ListItem, ListItemAvatar, ListItemText, Stack } from '@mui/material';
+import {Avatar, Box, CardProps, Grid, ListItem, ListItemAvatar, ListItemText, Stack} from '@mui/material';
 import {SCCommentType} from '@selfcommunity/core/src/types/comment';
 import {SCUserContext, SCUserContextType, useSCFetchCommentObject} from '@selfcommunity/core';
-import Editor from '../../Editor';
-import {TMUIRichTextEditorRef} from 'mui-rte';
+import Editor, {TRichTextEditorRef} from '../../Editor';
 import classNames from 'classnames';
 import {LoadingButton} from '@mui/lab';
 
@@ -41,7 +40,7 @@ const Root = styled(Box, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   padding: '1px',
-  overflow: 'auto',
+  overflow: 'visible',
   [`& .${classes.comment}`]: {
     overflow: 'visible'
   },
@@ -150,7 +149,7 @@ export default function ReplyCommentObject(props: ReplyCommentObjectProps): JSX.
   const [html, setHtml] = useState(text);
 
   // REFS
-  let editor: RefObject<TMUIRichTextEditorRef> = React.createRef();
+  let editor: RefObject<TRichTextEditorRef> = React.createRef();
 
   /**
    * When ReplyCommentObject is mount
