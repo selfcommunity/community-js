@@ -35,7 +35,7 @@ jobs:
     - uses: peter-evans/repository-dispatch@v1
       name: Repository Dispatch
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{ secrets.DOCS_ACCESS_TOKEN }}
         repository: selfcommunity/developers-doc
         event-type: community-ui-prerelease
         client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
