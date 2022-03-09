@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {
   Feed,
@@ -6,13 +6,24 @@ import {
   FeedObjectProps,
   FeedObjectSkeleton,
   FeedObjectTemplateType,
+  FeedRef,
   FeedSidebarProps,
   InlineComposer,
   SCFeedWidgetType,
   TrendingFeed,
   TrendingPeople
 } from '@selfcommunity/ui';
-import {Endpoints, SCCategoryType, SCCustomAdvPosition, useSCFetchCategory} from '@selfcommunity/core';
+import {
+  Endpoints,
+  SCCategoryType,
+  SCCustomAdvPosition,
+  SCFeedDiscussionType,
+  SCFeedObjectTypologyType,
+  SCFeedPostType,
+  SCFeedStatusType,
+  SCFeedUnitActivityType,
+  useSCFetchCategory
+} from '@selfcommunity/core';
 import {CategoryFeedSkeleton} from './index';
 
 const PREFIX = 'SCCategoryFeedTemplate';
@@ -106,13 +117,16 @@ export default function CategoryFeed(props: CategoryFeedProps): JSX.Element {
     FeedSidebarProps = null
   } = props;
 
+  // REF
+  const feedRef = useRef<FeedRef>();
+
   // Hooks
   const {scCategory} = useSCFetchCategory({id: categoryId, category});
 
   // STATE
   const [_widgets, setWidgets] = useState<SCFeedWidgetType[]>([]);
 
-  // Component props update
+  // EFFECTS
   useEffect(() => {
     if (scCategory === null) {
       return;
@@ -120,12 +134,29 @@ export default function CategoryFeed(props: CategoryFeedProps): JSX.Element {
     setWidgets(
       widgets.map((w) => {
         if (w.component === InlineComposer) {
-          return {...w, componentProps: {...w.componentProps, defaultValue: {categories: [scCategory]}}};
+          return {...w, componentProps: {...w.componentProps, defaultValue: {categories: [scCategory]}, onSuccess: handleComposerSuccess}};
         }
         return {...w, componentProps: {...w.componentProps, categoryId: scCategory.id}};
       })
     );
   }, [scCategory, widgets]);
+
+  // HANDLERS
+  const handleComposerSuccess = (feedObject) => {
+    // Not insert if the category does not match
+    if (feedObject.categories.findIndex((c) => c.id === scCategory.id) === -1) {
+      return;
+    }
+
+    // Hydrate feedUnit
+    const feedUnit = {
+      type: feedObject.type,
+      [feedObject.type]: feedObject,
+      seen_by_id: [],
+      has_boost: false
+    };
+    feedRef && feedRef.current && feedRef.current.addFeedData(feedUnit);
+  };
 
   if (scCategory === null) {
     return <CategoryFeedSkeleton />;
@@ -135,6 +166,7 @@ export default function CategoryFeed(props: CategoryFeedProps): JSX.Element {
     <Root
       id={id}
       className={className}
+      ref={feedRef}
       endpoint={{
         ...Endpoints.CategoryFeed,
         url: () => Endpoints.CategoryFeed.url({id: scCategory.id})
@@ -147,6 +179,7 @@ export default function CategoryFeed(props: CategoryFeedProps): JSX.Element {
         feedObjectActivities: item.activities ? item.activities : null,
         markRead: scUser ? !item.seen_by_id.includes(scUser.id) : null
       })}
+      itemIdGenerator={(item) => item[item.type].id}
       ItemProps={FeedObjectProps}
       ItemSkeleton={FeedObjectSkeleton}
       ItemSkeletonProps={{

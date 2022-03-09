@@ -1,4 +1,15 @@
-import React, {ReactNode, useCallback, useContext, useEffect, useMemo, useRef, useState} from 'react';
+import React, {
+  forwardRef,
+  ForwardRefRenderFunction,
+  ReactNode,
+  useCallback,
+  useContext,
+  useEffect,
+  useImperativeHandle,
+  useMemo,
+  useRef,
+  useState
+} from 'react';
 import {styled, useTheme} from '@mui/material/styles';
 import {Card, CardContent, Grid, Hidden, Theme, useMediaQuery} from '@mui/material';
 import {AxiosResponse} from 'axios';
@@ -55,6 +66,10 @@ export interface FeedSidebarProps {
   bottomBoundary: string | number;
 }
 
+export type FeedRef = {
+  addFeedData: (obj: any) => void;
+};
+
 export interface FeedProps {
   /**
    * Id of the feed object
@@ -100,6 +115,11 @@ export interface FeedProps {
    * Function used to convert the single result returned by the Endpoint into the props necessary to render the ItemComponent
    */
   itemPropsGenerator: (scUser: SCUserType, item) => any;
+
+  /**
+   * Function used to generate an id from the single result returned by the Endpoint
+   */
+  itemIdGenerator: (item) => any;
 
   /**
    * Props to spread to single feed item
@@ -167,7 +187,7 @@ const PREFERENCES = [SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED, SCPreferences
  *
  * @param props
  */
-export default function Feed(props: FeedProps): JSX.Element {
+const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (props: FeedProps, ref): JSX.Element => {
   // PROPS
   const {
     id = 'feed',
@@ -178,6 +198,7 @@ export default function Feed(props: FeedProps): JSX.Element {
     widgets = [],
     ItemComponent,
     itemPropsGenerator,
+    itemIdGenerator,
     ItemProps = {},
     ItemSkeleton,
     ItemSkeletonProps = {},
@@ -280,9 +301,7 @@ export default function Feed(props: FeedProps): JSX.Element {
     }
   };
 
-  /**
-   * On mount, fetch first page of notifications
-   */
+  // EFFECTS
   useEffect(() => {
     fetch();
   }, []);
@@ -294,8 +313,14 @@ export default function Feed(props: FeedProps): JSX.Element {
     };
   }, []);
 
-  // Main Loop
+  // EXPOSED METHODS
+  useImperativeHandle(ref, () => ({
+    addFeedData: (data: any) => {
+      setFeedData([data, ...feedData]);
+    }
+  }));
 
+  // RENDER
   const theme: Theme = useTheme();
   const oneColLayout = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -352,9 +377,14 @@ export default function Feed(props: FeedProps): JSX.Element {
             }>
             {data.left.map((d, i) =>
               d.type === 'widget' ? (
-                <d.component key={i} {...d.componentProps} {...(d.publishEvents && {publicationChannel: id})}></d.component>
+                <d.component key={`widget_left_${i}`} {...d.componentProps} {...(d.publishEvents && {publicationChannel: id})}></d.component>
               ) : (
-                <ItemComponent key={i} {...itemPropsGenerator(scUserContext.user, d)} {...ItemProps} sx={{width: '100%'}} />
+                <ItemComponent
+                  key={`item_${itemIdGenerator(d)}`}
+                  {...itemPropsGenerator(scUserContext.user, d)}
+                  {...ItemProps}
+                  sx={{width: '100%'}}
+                />
               )
             )}
           </InfiniteScroll>
@@ -376,4 +406,6 @@ export default function Feed(props: FeedProps): JSX.Element {
       )}
     </Root>
   );
-}
+};
+
+export default forwardRef(Feed);

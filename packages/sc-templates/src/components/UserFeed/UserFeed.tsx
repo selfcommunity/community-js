@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Endpoints, SCUserType, useSCFetchUser} from '@selfcommunity/core';
 import {
@@ -8,7 +8,9 @@ import {
   FeedObjectProps,
   FeedObjectSkeleton,
   FeedObjectTemplateType,
+  FeedRef,
   FeedSidebarProps,
+  InlineComposer,
   SCFeedWidgetType,
   UserFollowers,
   UsersFollowed
@@ -104,6 +106,9 @@ export default function UserFeed(props: UserFeedProps): JSX.Element {
   // STATE
   const [_widgets, setWidgets] = useState<SCFeedWidgetType[]>([]);
 
+  // REF
+  const feedRef = useRef<FeedRef>();
+
   // Component props update
   useEffect(() => {
     if (scUser === null) {
@@ -111,10 +116,25 @@ export default function UserFeed(props: UserFeedProps): JSX.Element {
     }
     setWidgets(
       widgets.map((w) => {
+        if (w.component === InlineComposer) {
+          return {...w, componentProps: {...w.componentProps, onSuccess: handleComposerSuccess}};
+        }
         return {...w, componentProps: {...w.componentProps, userId: scUser.id}};
       })
     );
   }, [scUser, widgets]);
+
+  // HANDLERS
+  const handleComposerSuccess = (feedObject) => {
+    // Hydrate feedUnit
+    const feedUnit = {
+      type: feedObject.type,
+      [feedObject.type]: feedObject,
+      seen_by_id: [],
+      has_boost: false
+    };
+    feedRef && feedRef.current && feedRef.current.addFeedData(feedUnit);
+  };
 
   if (scUser === null) {
     return <UserFeedSkeleton />;
@@ -124,6 +144,7 @@ export default function UserFeed(props: UserFeedProps): JSX.Element {
     <Root
       id={id}
       className={className}
+      ref={feedRef}
       endpoint={{
         ...Endpoints.UserFeed,
         url: () => Endpoints.UserFeed.url({id: scUser.id})
@@ -135,6 +156,7 @@ export default function UserFeed(props: UserFeedProps): JSX.Element {
         feedObjectType: item.type,
         feedObjectActivities: item.activities ? item.activities : null
       })}
+      itemIdGenerator={(item) => item[item.type].id}
       ItemProps={FeedObjectProps}
       ItemSkeleton={FeedObjectSkeleton}
       ItemSkeletonProps={{

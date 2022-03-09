@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {
   CategoriesPopular,
@@ -7,6 +7,7 @@ import {
   FeedObjectProps,
   FeedObjectSkeleton,
   FeedObjectTemplateType,
+  FeedRef,
   FeedSidebarProps,
   InlineComposer,
   LoyaltyProgram,
@@ -101,12 +102,43 @@ export default function ExploreFeed(props: ExploreFeedProps): JSX.Element {
   // PROPS
   const {id = 'explore_feed', className, widgets = WIDGETS, FeedObjectProps = {variant: 'outlined'}, FeedSidebarProps = null} = props;
 
+  // STATE
+  const [_widgets, setWidgets] = useState<SCFeedWidgetType[]>([]);
+
+  // REF
+  const feedRef = useRef<FeedRef>();
+
+  // EFFECTS
+  useEffect(() => {
+    setWidgets(
+      widgets.map((w) => {
+        if (w.component === InlineComposer) {
+          return {...w, componentProps: {...w.componentProps, onSuccess: handleComposerSuccess}};
+        }
+        return {...w, componentProps: {...w.componentProps}};
+      })
+    );
+  }, [widgets]);
+
+  // HANDLERS
+  const handleComposerSuccess = (feedObject) => {
+    // Hydrate feedUnit
+    const feedUnit = {
+      type: feedObject.type,
+      [feedObject.type]: feedObject,
+      seen_by_id: [],
+      has_boost: false
+    };
+    feedRef && feedRef.current && feedRef.current.addFeedData(feedUnit);
+  };
+
   return (
     <Root
       id={id}
       className={className}
+      ref={feedRef}
       endpoint={Endpoints.ExploreFeed}
-      widgets={widgets}
+      widgets={_widgets}
       ItemComponent={FeedObject}
       itemPropsGenerator={(scUser, item) => ({
         feedObject: item[item.type],
@@ -114,6 +146,7 @@ export default function ExploreFeed(props: ExploreFeedProps): JSX.Element {
         feedObjectActivities: item.activities ? item.activities : null,
         markRead: scUser ? !item.seen_by_id.includes(scUser.id) : null
       })}
+      itemIdGenerator={(item) => item[item.type].id}
       ItemProps={FeedObjectProps}
       ItemSkeleton={FeedObjectSkeleton}
       ItemSkeletonProps={{

@@ -168,7 +168,9 @@ export default function InlineComposer(props: InlineComposerProps): JSX.Element 
   };
 
   const handleSuccess = (feedObject) => {
-    onSuccess && onSuccess(feedObject);
+    if (onSuccess) {
+      onSuccess(feedObject);
+    }
     enqueueSnackbar(<FormattedMessage id="ui.inlineComposer.success" defaultMessage="ui.inlineComposer.success" />, {
       variant: 'success'
     });

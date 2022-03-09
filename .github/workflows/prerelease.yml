@@ -32,10 +32,34 @@ jobs:
         pr_body: "👑 *An automated PR*"
         pr_draft: true
         github_token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Get @selfcommunity/i18n version
+      id: i18n
+      uses: martinbeentjes/npm-get-version-action@master
+      with:
+        path: packages/sc-i18n
+    - run: echo "@selfcommunity/i18n - ${{ steps.i18n.outputs.current-version }}"
+    - name: Get @selfcommunity/core version
+      id: core
+      uses: martinbeentjes/npm-get-version-action@master
+      with:
+        path: packages/sc-core
+    - run: echo "@selfcommunity/core - ${{ steps.core.outputs.current-version }}"
+    - name: Get @selfcommunity/ui version
+      id: ui
+      uses: martinbeentjes/npm-get-version-action@master
+      with:
+        path: packages/sc-ui
+    - run: echo "@selfcommunity/ui - ${{ steps.ui.outputs.current-version }}"
+    - name: Get @selfcommunity/templates version
+      id: templates
+      uses: martinbeentjes/npm-get-version-action@master
+      with:
+        path: packages/sc-templates
+    - run: echo "@selfcommunity/templates - ${{ steps.templates.outputs.current-version }}"
     - uses: peter-evans/repository-dispatch@v1
       name: Repository Dispatch
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{ secrets.DOCS_ACCESS_TOKEN }}
         repository: selfcommunity/developers-doc
         event-type: community-ui-prerelease
-        client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
+        client-payload: '{"@selfcommunity/i18n": "${{ steps.i18n.outputs.current-version }}", "@selfcommunity/core": "${{ steps.core.outputs.current-version }}", "@selfcommunity/ui": "${{ steps.ui.outputs.current-version }}", "@selfcommunity/templates": "${{ steps.templates.outputs.current-version }}"}'

@@ -1,7 +1,7 @@
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 import {ComponentMeta, ComponentStory} from '@storybook/react';
 import UserProfileTemplate from './index';
-import {SCUserContext, SCUserContextType} from '@selfcommunity/core';
+import {SCUserContextType, useSCUser} from '@selfcommunity/core';
 import {UserProfileEdit} from '@selfcommunity/ui';
 import DialogContent from '@mui/material/DialogContent';
 import {Dialog, DialogTitle} from '@mui/material';
@@ -15,15 +15,15 @@ export default {
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const Template: ComponentStory<typeof UserProfileTemplate> = (args) => {
   const {userId, ...rest} = args;
-  const scUserContext: SCUserContextType = useContext(SCUserContext);
+  const scUserContext: SCUserContextType = useSCUser();
 
   // STATE
   const [edit, setEdit] = useState<boolean>(false);
 
   let _userId = userId;
   let isMe = false;
-  if (userId === -1 && scUserContext.user) {
-    _userId = scUserContext.user.id;
+  if (userId === -1) {
+    _userId = scUserContext.user ? scUserContext.user.id : 1;
     isMe = true;
   }
 

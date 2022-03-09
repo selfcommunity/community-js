@@ -14,7 +14,7 @@ import {
   NotificationSkeleton,
   PeopleSuggestion,
   Platform,
-  SCFeedWidgetType,
+  SCFeedWidgetType
 } from '@selfcommunity/ui';
 import {Endpoints, SCNotificationTopicType, SCUserContext, SCUserContextType} from '@selfcommunity/core';
 
@@ -129,6 +129,7 @@ export default function NotificationFeed(props: NotificationFeedProps): JSX.Elem
       itemPropsGenerator={(scUser, item) => ({
         notificationObject: item
       })}
+      itemIdGenerator={(item) => item.sid}
       ItemProps={NotificationProps}
       ItemSkeleton={NotificationSkeleton}
       ItemSkeletonProps={{
