@@ -247,12 +247,6 @@ export interface FeedObjectProps extends CardProps {
   template?: FeedObjectTemplateType;
 
   /**
-   * Hide share action object
-   * @default false
-   */
-  hideShareAction?: boolean;
-
-  /**
    * Hide follow action object
    * @default false
    */
@@ -302,7 +296,7 @@ export interface FeedObjectProps extends CardProps {
 
   /**
    * Props to spread to ContributorsFeedObject component
-   * @default {{elevation: 0}}
+   * @default {elevation: 0}
    */
   ContributorsFeedObjectProps?: ContributorsFeedObjectProps;
 
@@ -333,13 +327,17 @@ export interface FeedObjectProps extends CardProps {
  |root|.SCFeedObject-root|Styles applied to the root element.|
  |header|.SCFeedObject-header|Styles applied to the header of the card.|
  |tag|.SCFeedObject-tag|Styles applied to the tag element.|
+ |title-section|.SCFeedObject-title-section|Styles applied to the title section.|
  |title|.SCFeedObject-title|Styles applied to the title element.|
  |username|.SCFeedObject-username|Styles applied to the username element.|
  |category|.SCFeedObject-category|Styles applied to the category element.|
- |content|.SCFeedObject-content|Styles applied to the content section. Content section include: title, snippetContent, text|
+ |content|.SCFeedObject-content|Styles applied to the content section. Content section include: title-section, text-section, snippetContent, subContent, medias-section, polls-section, info-section.|
+ |text-section|.SCFeedObject-text-section|Styles applied to the text section.|
  |text|.SCFeedObject-text|Styles applied to the text element.|
  |snippetContent|.SCFeedObject-snippet-content|Styles applied to snippet content element.|
- |sharedTextContent|.SCFeedObject-shared-content|Styles applied to the feed obj shared content element.|
+ |medias-section|.SCFeedObject-medias-section|Styles applied to the medias section.|
+ |polls-section|.SCFeedObject-polls-section|Styles applied to the polls section.|
+ |info-section|.SCFeedObject-info-section|Styles applied to the info section.|
  |subContent|.SCFeedObject-sub-content|Styles applied to the sub content (container placed immediately after the content, similar to a footer). Wrap the contributors and the follow button.|
  |actions|.SCFeedObject-actions|Styles applied to the actions container.|
  |activitiesContent|.SCFeedObject-activities-content|Styles applied to the activities content element.|
@@ -359,7 +357,6 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
     feedObjectActivities = null,
     markRead = false,
     template = FeedObjectTemplateType.PREVIEW,
-    hideShareAction = false,
     hideFollowAction = false,
     hideParticipantsPreview = false,
     FollowButtonProps = {},
@@ -746,7 +743,6 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
               <Actions
                 feedObject={obj}
                 feedObjectType={feedObjectType}
-                hideShareAction={hideShareAction}
                 hideCommentAction={template === FeedObjectTemplateType.DETAIL}
                 handleExpandActivities={handleExpandActivities}
                 {...ActionsProps}

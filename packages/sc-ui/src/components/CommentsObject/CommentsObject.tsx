@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {defineMessages, FormattedMessage} from 'react-intl';
 import {SCOPE_SC_UI} from '../../constants/Errors';
@@ -7,7 +7,7 @@ import CommentObject, {CommentObjectProps, CommentObjectSkeleton} from '../Comme
 import ReplyCommentObject, {ReplyCommentObjectProps} from '../CommentObject/ReplyComment';
 import Typography from '@mui/material/Typography';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import {Box, Button, CardProps, Stack} from '@mui/material';
+import {Alert, Box, Button, CardProps, Stack} from '@mui/material';
 import {CommentsOrderBy} from '../../types/comments';
 import classNames from 'classnames';
 import CustomAdv from '../CustomAdv';
@@ -306,7 +306,7 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
 
   // RETRIVE OBJECTS
   const {obj, setObj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
-  const {obj: commentObj, setObj: setCommentObj} = useSCFetchCommentObject({id: commentObjectId, commentObject});
+  const {obj: commentObj, setObj: setCommentObj, error: errorCommentObj} = useSCFetchCommentObject({id: commentObjectId, commentObject});
 
   /**
    * Define root width to set primary reply width
@@ -485,9 +485,9 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
    * and comment parent (if need it)
    */
   function fetchComment() {
-    setIsLoading(true);
     if (commentObj) {
       if (commentObj.parent) {
+        setIsLoading(true);
         performFetchComment(commentObj.parent)
           .then((parent) => {
             const _parent = Object.assign({}, parent);
@@ -496,12 +496,16 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
             setIsLoading(false);
           })
           .catch((error) => {
+            // Comment not found
+            setIsLoading(false);
             Logger.error(SCOPE_SC_UI, error);
           });
       } else {
         setComment(commentObj);
         setIsLoading(false);
       }
+    } else if (errorCommentObj) {
+      setIsLoading(false);
     }
   }
 
@@ -530,7 +534,7 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
     return () => {
       isComponentMounted.current = false;
     };
-  }, [obj, commentObj]);
+  }, [obj, commentObj, errorCommentObj]);
 
   /**
    * Handle open reply box
@@ -667,7 +671,7 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
         ))}
       </>
     );
-  } else if (comments.length === 0 && !comment && !isLoading) {
+  } else if (comments.length === 0 && !comment && !isLoading && !errorCommentObj) {
     commentsRendered = (
       <>
         {renderNoComments ? (
@@ -692,7 +696,7 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
           loader={<CommentObjectSkeleton {...CommentObjectSkeletonProps} />}
           style={wrapperStyles}
           endMessage={
-            commentsOrderBy === CommentsOrderBy.ADDED_AT_DESC ? (
+            !errorCommentObj && commentsOrderBy === CommentsOrderBy.ADDED_AT_DESC ? (
               <Typography variant="body2" align="center">
                 <FormattedMessage id="ui.commentsObject.noOtherComments" defaultMessage="ui.commentsObject.noOtherComments" />
               </Typography>
@@ -738,6 +742,16 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
             <Button variant="text" onClick={fetchPreviousComments} disabled={isLoading} color="inherit">
               <FormattedMessage id="ui.commentsObject.loadPreviousComments" defaultMessage="ui.commentsObject.loadPreviousComments" />
             </Button>
+          )}
+          {(errorCommentObj || (commentObjectId && !comment && !isLoading)) && comments.length === 0 && (
+            <>
+              <Alert icon={false} variant="outlined" severity="error">
+                <FormattedMessage id="ui.commentsObject.commentNotFound" defaultMessage="ui.commentsObject.commentNotFound" />
+              </Alert>
+              <Button variant="text" onClick={fetchNextComments} disabled={isLoading} color="inherit">
+                <FormattedMessage id="ui.commentsObject.loadMoreComments" defaultMessage="ui.commentsObject.loadMoreComments" />
+              </Button>
+            </>
           )}
           {[...additionalHeaderComments, ...comments].map((comment: SCCommentType, index) => {
             return (

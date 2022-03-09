@@ -11,7 +11,8 @@ import classNames from 'classnames';
 const PREFIX = 'SCFeedObjectActions';
 
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-root`,
+  action: `${PREFIX}-action`
 };
 
 const Root = styled(Grid, {
@@ -20,7 +21,10 @@ const Root = styled(Grid, {
   overridesResolver: (props, styles) => styles.root
 })(() => ({
   margin: '0px 0px',
-  color: '#3A3A3A'
+  color: '#3A3A3A',
+  [`& .${classes.action}`]: {
+    textAlign: 'center'
+  }
 }));
 
 export interface ActionsProps {
@@ -50,6 +54,12 @@ export interface ActionsProps {
    * @default 'preview'
    */
   feedObjectTemplate?: FeedObjectTemplateType;
+
+  /**
+   * Hides vote action
+   * @default false
+   */
+  hideVoteAction?: boolean;
 
   /**
    * Hides share action
@@ -96,6 +106,7 @@ export default function Actions(props: ActionsProps): JSX.Element {
     feedObject,
     feedObjectType = SCFeedObjectTypologyType.POST,
     feedObjectTemplate = FeedObjectTemplateType.PREVIEW,
+    hideVoteAction = false,
     hideShareAction = false,
     hideCommentAction = false,
     handleExpandActivities,
@@ -130,11 +141,13 @@ export default function Actions(props: ActionsProps): JSX.Element {
   const columnWidth = getColumnWidth();
   return (
     <Root container className={classNames(classes.root, className)}>
-      <Grid item xs={columnWidth} sx={{textAlign: 'center'}}>
-        <Vote feedObject={obj} feedObjectType={feedObjectType} {...VoteActionProps} />
-      </Grid>
+      {!hideVoteAction && (
+        <Grid item xs={columnWidth} className={classes.action}>
+          <Vote feedObject={obj} feedObjectType={feedObjectType} {...VoteActionProps} />
+        </Grid>
+      )}
       {!hideCommentAction && (
-        <Grid item xs={columnWidth} sx={{textAlign: 'center'}}>
+        <Grid item xs={columnWidth} className={classes.action}>
           <Comment
             feedObject={obj}
             feedObjectType={feedObjectType}
@@ -145,7 +158,7 @@ export default function Actions(props: ActionsProps): JSX.Element {
         </Grid>
       )}
       {!hideShareAction && (
-        <Grid item xs={columnWidth} sx={{textAlign: 'center'}}>
+        <Grid item xs={columnWidth} className={classes.action}>
           <Share feedObject={obj} feedObjectType={feedObjectType} id={feedObjectId} {...ShareActionProps} />
         </Grid>
       )}

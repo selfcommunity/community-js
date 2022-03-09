@@ -16,6 +16,7 @@ import Endpoints from '../constants/Endpoints';
  */
 export default function useSCFetchCommentObject({id = null, commentObject = null}: {id?: number; commentObject?: SCCommentType}) {
   const [obj, setObj] = useState<SCCommentType>(commentObject);
+  const [error, setError] = useState<string>(null);
 
   /**
    * Memoized fetchCommentObject
@@ -47,11 +48,12 @@ export default function useSCFetchCommentObject({id = null, commentObject = null
           setObj(obj);
         })
         .catch((err) => {
+          setError(`CommentObject with id ${id} not found`);
           Logger.error(SCOPE_SC_CORE, `CommentObject with id ${id} not found`);
           Logger.error(SCOPE_SC_CORE, err.message);
         });
     }
   }, [id]);
 
-  return {obj, setObj};
+  return {obj, setObj, error};
 }

@@ -3,7 +3,7 @@ import {styled} from '@mui/material/styles';
 import {ContentState, convertFromHTML, convertToRaw, EditorState} from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 import {defineMessages, useIntl} from 'react-intl';
-import MUIRichTextEditor, {TAutocompleteItem, TMUIRichTextEditorRef} from 'mui-rte';
+import RichTextEditor, {TAutocompleteItem, TRichTextEditorProps, TRichTextEditorRef} from './RichTextEditor';
 import {Alert, AlertTitle, Avatar, Box, Fade, IconButton, LinearProgress, ListItemAvatar, ListItemText, Popover, Stack} from '@mui/material';
 import {Endpoints, http, SCContextType, SCMediaType, SCUserContext, SCUserContextType, SCUserType, useSCContext} from '@selfcommunity/core';
 import {AxiosResponse} from 'axios';
@@ -55,7 +55,7 @@ const Root = styled(Box, {
   [`& .${classes.actions}`]: {
     position: 'absolute',
     bottom: 0,
-    right: 0
+    right: theme.spacing()
   }
 }));
 
@@ -138,7 +138,7 @@ export interface EditorProps {
    * Handler for ref forwarding of the MUIRichTextEditor
    * @default null
    */
-  onRef?: (editor: RefObject<TMUIRichTextEditorRef>) => void;
+  onRef?: (editor: RefObject<TRichTextEditorRef>) => void;
 }
 
 /**
@@ -171,7 +171,7 @@ export default function Editor(props: EditorProps): JSX.Element {
   const {id = 'editor', className = null, defaultValue = '', readOnly = false, onChange = null, onRef = null} = props;
 
   // Refs
-  const editor = useRef<TMUIRichTextEditorRef>(null);
+  const editor = useRef<TRichTextEditorRef>(null);
 
   // INTL
   const intl = useIntl();
@@ -278,7 +278,7 @@ export default function Editor(props: EditorProps): JSX.Element {
           fileFilter={handleFileUploadFilter}>
           <MediaChunkUploader type="eimage" onSuccess={handleUploadSuccess} onProgress={handleUploadProgress} onError={handleUploadError} />
           <UploadDropZone onDragOverClassName={classes.drop} inputFieldName="image" extraProps={{'data-content': intl.formatMessage(messages.drop)}}>
-            <MUIRichTextEditor
+            <RichTextEditor
               id={editorId}
               readOnly={readOnly}
               label={intl.formatMessage(messages.placeholder)}
