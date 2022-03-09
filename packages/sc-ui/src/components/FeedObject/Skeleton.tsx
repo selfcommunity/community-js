@@ -17,7 +17,6 @@ const Root = styled(Card, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  width: '100%',
   marginBottom: theme.spacing(2),
   [`& .${classes.media}`]: {
     height: 190
