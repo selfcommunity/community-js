@@ -16,7 +16,9 @@ import classNames from 'classnames';
 const PREFIX = 'SCTrendingFeed';
 
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-root`,
+  title: `${PREFIX}-title`,
+  noResults: `${PREFIX}-noResults`
 };
 
 const Root = styled(Card, {
@@ -138,11 +140,11 @@ export default function TrendingFeed(props: TrendingFeedProps): JSX.Element {
         <TrendingPostSkeleton elevation={0} />
       ) : (
         <CardContent>
-          <Typography variant="body1">
+          <Typography className={classes.title} variant="body1">
             <FormattedMessage id="ui.trendingFeed.title" defaultMessage="ui.trendingFeed.title" />
           </Typography>
           {!total ? (
-            <Typography variant="body2">
+            <Typography className={classes.noResults} variant="body2">
               <FormattedMessage id="ui.trendingFeed.noResults" defaultMessage="ui.trendingFeed.noResults" />
             </Typography>
           ) : (

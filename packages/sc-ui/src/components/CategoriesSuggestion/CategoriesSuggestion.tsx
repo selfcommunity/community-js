@@ -13,7 +13,9 @@ import classNames from 'classnames';
 const PREFIX = 'SCCategoriesSuggestion';
 
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-root`,
+  title: `${PREFIX}-title`,
+  noResults: `${PREFIX}-noResults`
 };
 
 const Root = styled(Card, {
@@ -148,11 +150,11 @@ export default function CategoriesSuggestion(props: CategoriesListProps): JSX.El
         <Skeleton elevation={0} />
       ) : (
         <CardContent>
-          <Typography variant="body1">
+          <Typography className={classes.title} variant="body1">
             <FormattedMessage id="ui.categoriesSuggestion.title" defaultMessage="ui.categoriesSuggestion.title" />
           </Typography>
           {!total ? (
-            <Typography variant="body2">
+            <Typography className={classes.noResults} variant="body2">
               <FormattedMessage id="ui.categoriesSuggestion.noResults" defaultMessage="ui.categoriesSuggestion.noResults" />
             </Typography>
           ) : (

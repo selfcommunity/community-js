@@ -17,7 +17,9 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 const PREFIX = 'SCTrendingPeople';
 
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-root`,
+  title: `${PREFIX}-title`,
+  noResults: `${PREFIX}-noResults`
 };
 
 const Root = styled(Card, {
@@ -140,11 +142,11 @@ export default function TrendingPeople(props: TrendingPeopleProps): JSX.Element 
         <PeopleSuggestionSkeleton />
       ) : (
         <CardContent>
-          <Typography variant="body1">
+          <Typography className={classes.title} variant="body1">
             <FormattedMessage id="ui.trendingPeople.title" defaultMessage="ui.trendingPeople.title" />
           </Typography>
           {!total ? (
-            <Typography variant="body2">
+            <Typography className={classes.noResults} variant="body2">
               <FormattedMessage id="ui.trendingPeople.noResults" defaultMessage="ui.trendingPeople.noResults" />
             </Typography>
           ) : (

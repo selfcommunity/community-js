@@ -39,7 +39,9 @@ const messages = defineMessages({
 const PREFIX = 'SCUsersFollowed';
 
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-root`,
+  title: `${PREFIX}-title`,
+  noResults: `${PREFIX}-noResults`
 };
 
 const Root = styled(Card, {
@@ -167,10 +169,10 @@ export default function UserFollowers(props: UserFollowersProps): JSX.Element {
       ) : (
         <CardContent>
           {!total ? (
-            <Typography variant="body2">{`${intl.formatMessage(messages.noFollowers)}`}</Typography>
+            <Typography className={classes.noResults} variant="body2">{`${intl.formatMessage(messages.noFollowers)}`}</Typography>
           ) : (
             <React.Fragment>
-              <Typography variant="body1">{`${intl.formatMessage(messages.userFollowers, {total: total})}`}</Typography>
+              <Typography className={classes.title} variant="body1">{`${intl.formatMessage(messages.userFollowers, {total: total})}`}</Typography>
               <List>
                 {followers.slice(0, visibleUsers).map((user: SCUserType, index) => (
                   <div key={index}>
