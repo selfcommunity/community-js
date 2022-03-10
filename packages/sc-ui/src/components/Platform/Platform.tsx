@@ -11,7 +11,8 @@ import classNames from 'classnames';
 const PREFIX = 'SCPlatform';
 
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-root`,
+  title: `${PREFIX}-title`
 };
 
 const Root = styled(Card, {
@@ -106,7 +107,7 @@ export default function Platform(props: PlatformProps): JSX.Element {
     <React.Fragment>
       <Grid container spacing={isAdmin ? 1 : 3} justifyContent="center">
         <Grid item xs={12}>
-          <Typography component="h3" align="center">
+          <Typography className={classes.title} component="h3" align="center">
             <FormattedMessage id="ui.platformAccess.title" defaultMessage="ui.platformAccess.title" />
             <Icon fontSize="small">lock</Icon>
           </Typography>

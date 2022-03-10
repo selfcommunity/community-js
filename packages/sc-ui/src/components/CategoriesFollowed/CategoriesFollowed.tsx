@@ -31,7 +31,9 @@ const messages = defineMessages({
 const PREFIX = 'SCCategoriesFollowed';
 
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-root`,
+  title: `${PREFIX}-title`,
+  noResults: `${PREFIX}-noResults`
 };
 
 const Root = styled(Card, {
@@ -147,10 +149,12 @@ export default function CategoriesFollowed(props: CategoriesListProps): JSX.Elem
       ) : (
         <CardContent>
           {!total ? (
-            <Typography variant="body2">{`${intl.formatMessage(messages.noCategories)}`}</Typography>
+            <Typography className={classes.noResults} variant="body2">{`${intl.formatMessage(messages.noCategories)}`}</Typography>
           ) : (
             <React.Fragment>
-              <Typography variant="body1">{`${intl.formatMessage(messages.categoriesFollowed, {total: total})}`}</Typography>
+              <Typography className={classes.title} variant="body1">{`${intl.formatMessage(messages.categoriesFollowed, {
+                total: total
+              })}`}</Typography>
               <List>
                 {categories.slice(0, visibleCategories).map((category: SCCategoryType, index) => (
                   <div key={index}>

@@ -12,6 +12,8 @@ const PREFIX = 'SCPrivateMessages';
 
 const classes = {
   root: `${PREFIX}-root`,
+  snippetsBox: `${PREFIX}-snippetsBox`,
+  threadBox: `${PREFIX}-threadBox`,
   newMessage: `${PREFIX}-newMessage`,
   selected: `${PREFIX}-selected`
 };
@@ -23,7 +25,17 @@ const Root = styled(Box, {
 })(({theme}) => ({
   height: '100%',
   display: 'flex',
-  flexDirection: 'row',
+  flexFlow: 'row',
+  [`& .${classes.snippetsBox}`]: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 'auto'
+  },
+  [`& .${classes.threadBox}`]: {
+    flexGrow: 1,
+    flexShrink: 1,
+    flexBasis: 'auto'
+  },
   [`& .${classes.newMessage}`]: {
     width: '100%',
     justifyContent: 'flex-start',
@@ -111,16 +123,21 @@ export default function PrivateMessages(props: PrivateMessagesProps): JSX.Elemen
   if (!autoHide && scUserContext.user) {
     return (
       <Root {...rest} className={classNames(classes.root, className)}>
-        <div>
+        <Box className={classes.snippetsBox}>
           <Button className={openNewMessage ? classes.selected : classes.newMessage} onClick={handleOpenNewMessage}>
             <Icon>add_circle_outline</Icon>
             <FormattedMessage id="ui.NewMessage.new" defaultMessage="ui.NewMessage.new" />
           </Button>
           <Snippets onSnippetClick={handleThreadOpening} threadId={obj ? obj.id : null} />
-        </div>
-        <div style={{overflow: 'auto', maxHeight: '500px'}}>
-          <Thread id={obj ? obj.id : null} receiverId={obj ? obj.receiver.id : null} openNewMessage={openNewMessage} />
-        </div>
+        </Box>
+        <Box className={classes.threadBox}>
+          <Thread
+            id={obj ? obj.id : null}
+            receiverId={obj && !openNewMessage ? obj.receiver.id : null}
+            openNewMessage={openNewMessage}
+            onNewMessageSent={openNewMessage ? setObj : null}
+          />
+        </Box>
       </Root>
     );
   }

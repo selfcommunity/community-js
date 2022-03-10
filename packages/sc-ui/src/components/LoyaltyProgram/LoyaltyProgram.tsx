@@ -23,6 +23,7 @@ const PREFIX = 'SCLoyaltyProgram';
 
 const classes = {
   root: `${PREFIX}-root`,
+  title: `${PREFIX}-title`,
   cardHeader: `${PREFIX}-card-header`,
   pointsIcon: `${PREFIX}-pointsIcon`,
   actions: `${PREFIX}-actions`,
@@ -161,7 +162,7 @@ export default function LoyaltyProgram(props: LoyaltyProgramProps): JSX.Element 
    */
   const l = (
     <React.Fragment>
-      <Typography component="h3" align="left">
+      <Typography className={classes.title} component="h3" align="left">
         <FormattedMessage id="ui.loyaltyProgram.title" defaultMessage="ui.loyaltyProgram.title" />
       </Typography>
       <CardContent>

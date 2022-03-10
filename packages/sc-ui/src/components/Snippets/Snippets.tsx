@@ -23,6 +23,12 @@ const Root = styled(Card, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
+  width: '500px',
+  ['& .MuiCardContent-root']: {
+    '&:last-child': {
+      paddingBottom: 0
+    }
+  },
   [`& .${classes.selected}`]: {
     background: theme.palette.grey['A200']
   }

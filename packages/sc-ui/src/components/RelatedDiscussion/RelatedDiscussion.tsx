@@ -30,7 +30,9 @@ import classNames from 'classnames';
 const PREFIX = 'SCTrendingPost';
 
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-root`,
+  title: `${PREFIX}-title`,
+  noResults: `${PREFIX}-noResults`
 };
 
 const Root = styled(Card, {
@@ -198,11 +200,11 @@ export default function RelatedDiscussion(props: RelatedDiscussionProps): JSX.El
         <TrendingPostSkeleton elevation={0} />
       ) : (
         <CardContent>
-          <Typography variant="body1">
+          <Typography className={classes.title} variant="body1">
             <FormattedMessage id="ui.relatedDiscussion.title" defaultMessage="ui.relatedDiscussion.title" />
           </Typography>
           {!total ? (
-            <Typography variant="body2">
+            <Typography className={classes.noResults} variant="body2">
               <FormattedMessage id="ui.relatedDiscussion.noResults" defaultMessage="ui.relatedDiscussion.noResults" />
             </Typography>
           ) : (

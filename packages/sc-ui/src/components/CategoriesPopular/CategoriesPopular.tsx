@@ -19,7 +19,9 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 const PREFIX = 'SCCategoriesPopular';
 
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-root`,
+  title: `${PREFIX}-title`,
+  noResults: `${PREFIX}-noResults`
 };
 
 const Root = styled(Card, {
@@ -111,11 +113,11 @@ export default function CategoriesPopular(props: CategoriesListProps): JSX.Eleme
         <Skeleton elevation={0} />
       ) : (
         <CardContent>
-          <Typography variant="body1">
+          <Typography className={classes.title} variant="body1">
             <FormattedMessage id="ui.categoriesPopular.title" defaultMessage="ui.categoriesPopular.title" />
           </Typography>
           {!total ? (
-            <Typography variant="body2">
+            <Typography className={classes.noResults} variant="body2">
               <FormattedMessage id="ui.categoriesPopular.noResults" defaultMessage="ui.categoriesPopular.noResults" />
             </Typography>
           ) : (
