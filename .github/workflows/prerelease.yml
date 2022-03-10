@@ -62,4 +62,4 @@ jobs:
         token: ${{ secrets.DOCS_ACCESS_TOKEN }}
         repository: selfcommunity/developers-doc
         event-type: community-ui-prerelease
-        client-payload: '{"@selfcommunity/i18n": "${{ steps.i18n.outputs.current-version }}", "@selfcommunity/core": "${{ steps.core.outputs.current-version }}", "@selfcommunity/ui": "${{ steps.ui.outputs.current-version }}", "@selfcommunity/templates": "${{ steps.templates.outputs.current-version }}"}'
+        client-payload: '{"i18n": "${{ steps.i18n.outputs.current-version }}", "core": "${{ steps.core.outputs.current-version }}", "ui": "${{ steps.ui.outputs.current-version }}", "templates": "${{ steps.templates.outputs.current-version }}"}'
