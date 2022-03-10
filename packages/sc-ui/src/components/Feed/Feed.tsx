@@ -11,7 +11,7 @@ import React, {
   useState
 } from 'react';
 import {styled, useTheme} from '@mui/material/styles';
-import {Card, CardContent, Grid, Hidden, Theme, useMediaQuery} from '@mui/material';
+import {Box, Card, CardContent, Grid, Hidden, Theme, useMediaQuery} from '@mui/material';
 import {AxiosResponse} from 'axios';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {FormattedMessage} from 'react-intl';
