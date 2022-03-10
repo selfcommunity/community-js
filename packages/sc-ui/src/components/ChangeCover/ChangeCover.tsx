@@ -159,6 +159,7 @@ export default function ChangeCover(props: ChangeCoverProps): JSX.Element {
         }
       })
       .catch((error) => {
+        setLoading(false);
         console.log(error);
       });
   }
@@ -168,7 +169,7 @@ export default function ChangeCover(props: ChangeCoverProps): JSX.Element {
    */
   const cc = (
     <React.Fragment>
-      <Button size="small" variant="contained" onClick={handleClick} {...rest}>
+      <Button size="small" variant="contained" disabled={loading} onClick={handleClick} {...rest}>
         <FormattedMessage id="ui.changeCover.button.change" defaultMessage="ui.changeCover.button.change" />
       </Button>
       <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
@@ -181,15 +182,19 @@ export default function ChangeCover(props: ChangeCoverProps): JSX.Element {
           </MenuItem>
         )}
         <input type="file" onChange={() => handleUpload(event)} ref={fileInput} hidden />
-        <MenuItem onClick={() => fileInput.current.click()} className={classes.menuItem}>
+        <MenuItem disabled={loading} onClick={() => fileInput.current.click()} className={classes.menuItem}>
           {loading ? (
-            <CircularProgress size={15} />
+            <React.Fragment>
+              <CircularProgress size={15} />
+            </React.Fragment>
           ) : (
-            <ListItemIcon>
-              <Icon fontSize="small">add_circle_outline</Icon>
-            </ListItemIcon>
+            <React.Fragment>
+              <ListItemIcon>
+                <Icon fontSize="small">add_circle_outline</Icon>
+              </ListItemIcon>
+              <FormattedMessage id="ui.changeCover.button.upload" defaultMessage="ui.changeCover.button.upload" />
+            </React.Fragment>
           )}
-          <FormattedMessage id="ui.changeCover.button.upload" defaultMessage="ui.changeCover.button.upload" />
         </MenuItem>
       </Menu>
       <IconButton className={classes.helpPopover} color="primary" aria-label="upload picture" component="span" onClick={handleClickHelpButton}>
