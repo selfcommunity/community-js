@@ -55,8 +55,8 @@ const Root = styled(Card, {
     display: 'none'
   },
   [`& .${classes.img}`]: {
-    height: '100%',
-    width: '100%'
+    width: 250,
+    height: 200
   }
 }));
 
@@ -218,7 +218,9 @@ export default function Message(props: MessageProps): JSX.Element {
             primary={
               <Box className={classes.messageBox}>
                 {hasFile ? (
-                  <img className={classes.img} src={message.file.url} loading="lazy" alt={'img'} />
+                  <Box className={classes.img}>
+                    <img style={{height: '100%', width: '100%'}} src={message.file.url} loading="lazy" alt={'img'} />
+                  </Box>
                 ) : (
                   <Typography component="span">{message.message}</Typography>
                 )}

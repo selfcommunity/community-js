@@ -9,7 +9,6 @@ import {FormattedMessage, useIntl} from 'react-intl';
 import {Box, Divider, Grid, ListSubheader, TextField, Typography} from '@mui/material';
 import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
 import MessageEditor from '../MessageEditor';
-import CardContent from '@mui/material/CardContent';
 import Autocomplete from '@mui/material/Autocomplete';
 import classNames from 'classnames';
 import {useSnackbar} from 'notistack';
@@ -18,7 +17,11 @@ const PREFIX = 'SCThread';
 
 const classes = {
   root: `${PREFIX}-root`,
+  threadBox: `${PREFIX}-threadBox`,
   emptyBox: `${PREFIX}-emptyBox`,
+  newMessageBox: `${PREFIX}-newMessageBox`,
+  newMessageEditor: `${PREFIX}-newMessageEditor`,
+  newMessageEmptyBox: `${PREFIX}-newMessageEmptyBox`,
   sender: `${PREFIX}-sender`,
   receiver: `${PREFIX}-receiver`,
   center: `${PREFIX}-center`
@@ -29,9 +32,14 @@ const Root = styled(Card, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  width: '500px',
-  maxWidth: '500px',
-  display: 'inline-block',
+  width: '600px',
+  height: '100%',
+  [`& .${classes.threadBox}`]: {
+    display: 'inline-block',
+    maxHeight: '600px',
+    width: 'inherit',
+    overflow: 'auto'
+  },
   [`& .${classes.emptyBox}`]: {
     display: 'flex',
     height: '100%',
@@ -41,6 +49,21 @@ const Root = styled(Card, {
     '& .MuiTypography-root': {
       fontSize: '1.5rem'
     }
+  },
+  [`& .${classes.newMessageBox}`]: {
+    display: 'flex',
+    flexFlow: 'column',
+    height: '100%'
+  },
+  [`& .${classes.newMessageEditor}`]: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: '40px'
+  },
+  [`& .${classes.newMessageEmptyBox}`]: {
+    flexGrow: 1,
+    flexShrink: 1,
+    flexBasis: 'auto'
   },
   [`& .${classes.sender}`]: {
     display: 'flex',
@@ -96,6 +119,11 @@ export interface ThreadProps {
    * @default false
    */
   openNewMessage?: boolean;
+  /**
+   * Callback fired when a new message is sent
+   * @default null
+   */
+  onNewMessageSent?: (dispatch: any) => void;
 }
 /**
  *
@@ -126,7 +154,7 @@ export interface ThreadProps {
  */
 export default function Thread(props: ThreadProps): JSX.Element {
   // PROPS
-  const {id, receiverId, autoHide, className, openNewMessage, ...rest} = props;
+  const {id, receiverId, autoHide, className, openNewMessage, onNewMessageSent, ...rest} = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
@@ -228,7 +256,6 @@ export default function Thread(props: ThreadProps): JSX.Element {
         variant: 'warning'
       });
     } else {
-      setSending(true);
       http
         .request({
           url: Endpoints.SendMessage.url(),
@@ -240,6 +267,7 @@ export default function Thread(props: ThreadProps): JSX.Element {
         })
         .then((res) => {
           setMessages((prev) => [...prev, res.data]);
+          onNewMessageSent(res.data);
           setSending(false);
         })
         .catch((error) => {
@@ -305,7 +333,7 @@ export default function Thread(props: ThreadProps): JSX.Element {
    */
   function renderThread() {
     return (
-      <React.Fragment>
+      <Box className={classes.threadBox}>
         {openDeleteMessageDialog && (
           <ConfirmDialog
             open={openDeleteMessageDialog}
@@ -336,53 +364,60 @@ export default function Thread(props: ThreadProps): JSX.Element {
           </div>
         ))}
         <MessageEditor send={() => sendMessage()} isSending={sending} getMessage={handleMessage} />
-      </React.Fragment>
+      </Box>
     );
   }
 
   /**
-   * Renders empty box (when there is no thread open)
+   * Renders empty box (when there is no thread open) or new message box
    * @return {JSX.Element}
    */
-  function renderEmptyBox() {
+  function renderNewOrNoMessageBox() {
     return (
-      <Box className={classes.emptyBox}>
+      <React.Fragment>
         {openNewMessage ? (
-          <CardContent>
-            <Grid container spacing={2}>
-              <Grid item xs={4}>
-                <b>
-                  <FormattedMessage defaultMessage="ui.NewMessage.to" id="ui.NewMessage.to" />
-                </b>
+          <Box className={classes.newMessageBox}>
+            <Box sx={{flexGrow: 0, flexShrink: 1, flexBasis: 'auto'}}>
+              <Grid container spacing={2}>
+                <Grid item xs={4}>
+                  <b>
+                    <FormattedMessage defaultMessage="ui.NewMessage.to" id="ui.NewMessage.to" />
+                  </b>
+                </Grid>
+                <Grid item xs={8}>
+                  <Autocomplete
+                    multiple
+                    freeSolo
+                    options={followers}
+                    getOptionLabel={(option) => option.username}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        variant="standard"
+                        InputProps={{
+                          ...params.InputProps,
+                          disableUnderline: true
+                        }}
+                      />
+                    )}
+                    onChange={selectRecipients}
+                  />
+                </Grid>
               </Grid>
-              <Grid item xs={8}>
-                <Autocomplete
-                  multiple
-                  freeSolo
-                  options={followers}
-                  getOptionLabel={(option) => option.username}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      variant="standard"
-                      InputProps={{
-                        ...params.InputProps,
-                        disableUnderline: true
-                      }}
-                    />
-                  )}
-                  onChange={selectRecipients}
-                />
-              </Grid>
-            </Grid>
-            <MessageEditor send={() => sendMessage()} isSending={sending} getMessage={handleMessage} />
-          </CardContent>
+            </Box>
+            <Box className={classes.newMessageEmptyBox} />
+            <Box className={classes.newMessageEditor}>
+              <MessageEditor send={() => sendMessage()} isSending={sending} getMessage={handleMessage} />
+            </Box>
+          </Box>
         ) : (
-          <Typography component="h3">
-            <FormattedMessage id="ui.Thread.emptyBox.message" defaultMessage="ui.Thread.emptyBox.message" />
-          </Typography>
+          <Box className={classes.emptyBox}>
+            <Typography component="h3">
+              <FormattedMessage id="ui.Thread.emptyBox.message" defaultMessage="ui.Thread.emptyBox.message" />
+            </Typography>
+          </Box>
         )}
-      </Box>
+      </React.Fragment>
     );
   }
 
@@ -397,7 +432,7 @@ export default function Thread(props: ThreadProps): JSX.Element {
   if (!autoHide) {
     return (
       <Root {...rest} className={classNames(classes.root, className)}>
-        {id ? renderThread() : renderEmptyBox()}
+        {id ? renderThread() : renderNewOrNoMessageBox()}
       </Root>
     );
   }
