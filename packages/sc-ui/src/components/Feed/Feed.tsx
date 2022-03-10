@@ -52,7 +52,7 @@ const Root = styled(Grid, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  marginTop: theme.spacing(2),
+  marginTop: theme.spacing(-2),
   [`& .${classes.left}`]: {
     padding: '0 2px 0 2px'
   },
