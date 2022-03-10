@@ -77,7 +77,7 @@ export default function Votes(props: VotesProps): JSX.Element {
       <>
         <Button variant="text" size="small" disabled={obj.vote_count <= 0} className={classes.btnViewVotes} onClick={handleToggleSharesDialog}>
           {obj.voted ? (
-            <Icon fontSize="medium" color={'secondary'} className={classes.votes}>
+            <Icon fontSize="medium" color="primary" className={classes.votes}>
               thumb_up_alt
             </Icon>
           ) : (

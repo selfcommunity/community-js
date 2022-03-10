@@ -11,7 +11,7 @@ import React, {
   useState
 } from 'react';
 import {styled, useTheme} from '@mui/material/styles';
-import {Card, CardContent, Grid, Hidden, Theme, useMediaQuery} from '@mui/material';
+import {Box, Card, CardContent, Grid, Hidden, Theme, useMediaQuery} from '@mui/material';
 import {AxiosResponse} from 'axios';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {FormattedMessage} from 'react-intl';
@@ -52,7 +52,7 @@ const Root = styled(Grid, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  marginTop: theme.spacing(2),
+  marginTop: theme.spacing(-2),
   [`& .${classes.left}`]: {
     padding: '0 2px 0 2px'
   },
@@ -388,7 +388,13 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (props: FeedProps, re
               )
             )}
           </InfiniteScroll>
-          {loading && Array.from({length: 5}).map((e, i) => <ItemSkeleton key={i} {...ItemSkeletonProps} />)}
+          {loading && (
+            <Box className={classes.left}>
+              {Array.from({length: 5}).map((e, i) => (
+                <ItemSkeleton key={i} {...ItemSkeletonProps} />
+              ))}
+            </Box>
+          )}
         </React.Suspense>
       </Grid>
       {data.right.length > 0 && (
