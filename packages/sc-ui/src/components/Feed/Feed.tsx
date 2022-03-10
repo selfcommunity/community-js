@@ -388,7 +388,13 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (props: FeedProps, re
               )
             )}
           </InfiniteScroll>
-          {loading && Array.from({length: 5}).map((e, i) => <ItemSkeleton key={i} {...ItemSkeletonProps} />)}
+          {loading && (
+            <Box className={classes.left}>
+              {Array.from({length: 5}).map((e, i) => (
+                <ItemSkeleton key={i} {...ItemSkeletonProps} />
+              ))}
+            </Box>
+          )}
         </React.Suspense>
       </Grid>
       {data.right.length > 0 && (
