@@ -442,6 +442,10 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/user/$(id)/feed/'),
     method: 'GET',
   },
+  EmbedFeed: {
+    url: urlReplacer('/api/v2/embed/feed/'),
+    method: 'GET',
+  },
   /**
    * Private Messages Endpoints
    */
