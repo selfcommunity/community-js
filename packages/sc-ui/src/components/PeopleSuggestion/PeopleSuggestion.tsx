@@ -104,6 +104,9 @@ export default function PeopleSuggestion(props: PeopleSuggestionProps): JSX.Elem
     SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED in scPreferencesContext.preferences &&
     scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED].value;
 
+  // CONST
+  const authUserId = scUserContext.user ? scUserContext.user.id : null;
+
   /**
    * Handles list change on user follow
    */
@@ -162,7 +165,7 @@ export default function PeopleSuggestion(props: PeopleSuggestionProps): JSX.Elem
     if (scUserContext.user) {
       fetchUserSuggestion();
     }
-  }, []);
+  }, [authUserId]);
 
   /**
    * Renders people suggestion list
