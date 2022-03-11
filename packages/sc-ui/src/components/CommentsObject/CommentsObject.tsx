@@ -7,7 +7,7 @@ import CommentObject, {CommentObjectProps, CommentObjectSkeleton} from '../Comme
 import ReplyCommentObject, {ReplyCommentObjectProps} from '../CommentObject/ReplyComment';
 import Typography from '@mui/material/Typography';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import {Alert, Box, Button, CardProps, Stack} from '@mui/material';
+import {Box, Button, CardProps, Stack} from '@mui/material';
 import {CommentsOrderBy} from '../../types/comments';
 import classNames from 'classnames';
 import CustomAdv from '../CustomAdv';
@@ -15,6 +15,7 @@ import {useSnackbar} from 'notistack';
 import {
   Endpoints,
   http,
+  Link,
   Logger,
   SCCommentType,
   SCCustomAdvPosition,
@@ -44,6 +45,7 @@ const classes = {
   fixedTopPrimaryReply: `${PREFIX}-fixed-top-primary-reply`,
   fixedBottomPrimaryReply: `${PREFIX}-fixed-bottom-primary-reply`,
   loadMoreCommentsButton: `${PREFIX}-load-more-comments-button`,
+  paginationLink: `${PREFIX}-pagination-link`,
   paginationFooter: `${PREFIX}-pagination-footer`,
   commentsCounter: `${PREFIX}-comments-counter`,
   commentNotFound: `${PREFIX}-comment-not-found`,
@@ -85,6 +87,9 @@ const Root = styled(Box, {
   [`& .${classes.commentNotFound}`]: {
     padding: theme.spacing(1),
     fontWeight: '500'
+  },
+  [`& .${classes.paginationLink}`]: {
+    display: 'none'
   }
 }));
 
@@ -682,9 +687,38 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
     return (
       <>
         {((previous && !isLoading) || (comment && comments.length === 0 && obj && obj.comment_count > 0 && !isLoading)) && (
-          <Button variant="text" onClick={fetchPreviousComments} disabled={isLoading} color="inherit">
-            <FormattedMessage id="ui.commentsObject.loadPreviousComments" defaultMessage="ui.commentsObject.loadPreviousComments" />
-          </Button>
+          <>
+            {renderCrawlablePreviousLink()}
+            <Button variant="text" onClick={fetchPreviousComments} disabled={isLoading} color="inherit">
+              <FormattedMessage id="ui.commentsObject.loadPreviousComments" defaultMessage="ui.commentsObject.loadPreviousComments" />
+            </Button>
+          </>
+        )}
+      </>
+    );
+  }
+
+  /**
+   * Helpers to render SEO crawlable links when paginate results
+   */
+  function renderCrawlableNextLink() {
+    return (
+      <>
+        {next && (
+          <Link to={next} className={classes.paginationLink}>
+            Next page
+          </Link>
+        )}
+      </>
+    );
+  }
+  function renderCrawlablePreviousLink() {
+    return (
+      <>
+        {previous && (
+          <Link to={previous} className={classes.paginationLink}>
+            Previous page
+          </Link>
         )}
       </>
     );
@@ -717,6 +751,7 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
             </React.Fragment>
           );
         })}
+        {renderCrawlableNextLink()}
       </InfiniteScroll>
     );
   }
@@ -816,6 +851,7 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
         {isLoading && (!commentObj || (commentObj && comments.length > 0)) && <CommentObjectSkeleton {...CommentObjectSkeletonProps} />}
         {renderNewComments(CommentsOrderBy.ADDED_AT_ASC)}
         {renderSingleComment(comment)}
+        {renderCrawlableNextLink()}
       </Box>
     );
   }
