@@ -268,7 +268,7 @@
   "ui.userFollowers.button.showAll": "Mostra tutti",
   "ui.userFollowers.noMoreFollowers": "Non ci sono altri followers",
 
-  "ui.categoryHeader.followedBy": "Seguita da ",
+  "ui.categoryHeader.followedBy": "{total, plural, =0 {Seguita da # persone} one {Seguita da # persona} other {Seguita da # persone}}",
   "ui.categoryHeader.followers": "Followers",
   "ui.categoryHeader.noOtherFollowers": "Non ci sono altri followers.",
 
