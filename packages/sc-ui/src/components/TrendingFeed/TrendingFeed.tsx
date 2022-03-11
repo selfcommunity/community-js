@@ -12,6 +12,10 @@ import FeedObject from '../FeedObject';
 import {FormattedMessage} from 'react-intl';
 import {FeedObjectTemplateType} from '../../types/feedObject';
 import classNames from 'classnames';
+import BaseDialog from '../../shared/BaseDialog';
+import CentralProgress from '../../shared/CentralProgress';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import User from '../User';
 
 const PREFIX = 'SCTrendingFeed';
 
@@ -92,36 +96,31 @@ export default function TrendingFeed(props: TrendingFeedProps): JSX.Element {
   const [openTrendingPostDialog, setOpenTrendingPostDialog] = useState<boolean>(false);
   const [total, setTotal] = useState<number>(0);
   const [visible, setVisible] = useState<number>(limit);
+  const [next, setNext] = useState<string>(`${Endpoints.CategoryTrendingFeed.url({id: categoryId})}?limit=10`);
 
   /**
    * Fetches a list of trending posts
    */
   function fetchTrendingPost() {
-    http
-      .request({
-        url: Endpoints.CategoryTrendingFeed.url({id: categoryId}),
-        method: Endpoints.CategoryTrendingFeed.method
-      })
-      .then((res: AxiosResponse<any>) => {
-        const data = res.data;
-        setPosts(data.results);
-        setHasMore(data.count > visible);
-        setLoading(false);
-        setTotal(data.count);
-      })
-      .catch((error) => {
-        Logger.error(SCOPE_SC_UI, error);
-      });
-  }
-
-  /**
-   * Loads more posts
-   */
-  function loadMore() {
-    const newIndex = visible + limit;
-    const newHasMore = newIndex < posts.length - 1;
-    setVisible(newIndex);
-    setHasMore(newHasMore);
+    if (next) {
+      http
+        .request({
+          url: next,
+          method: Endpoints.CategoryTrendingFeed.method
+        })
+        .then((res: AxiosResponse<any>) => {
+          const data = res.data;
+          setPosts([...posts, ...data.results]);
+          setHasMore(data.count > visible);
+          setLoading(false);
+          setTotal(data.count);
+          setNext(data['next']);
+        })
+        .catch((error) => {
+          setLoading(false);
+          Logger.error(SCOPE_SC_UI, error);
+        });
+    }
   }
 
   /**
@@ -157,13 +156,44 @@ export default function TrendingFeed(props: TrendingFeedProps): JSX.Element {
                 ))}
               </List>
               {hasMore && (
-                <Button size="small" onClick={() => loadMore()}>
+                <Button size="small" onClick={() => setOpenTrendingPostDialog(true)}>
                   <FormattedMessage id="ui.trendingFeed.button.showMore" defaultMessage="ui.trendingFeed.button.showMore" />
                 </Button>
               )}
             </React.Fragment>
           )}
-          {openTrendingPostDialog && <></>}
+          {openTrendingPostDialog && (
+            <BaseDialog
+              title={<FormattedMessage id="ui.trendingFeed.title" defaultMessage="ui.trendingFeed.title" />}
+              onClose={() => setOpenTrendingPostDialog(false)}
+              open={openTrendingPostDialog}>
+              {loading ? (
+                <CentralProgress size={50} />
+              ) : (
+                <InfiniteScroll
+                  dataLength={posts.length}
+                  next={fetchTrendingPost}
+                  hasMore={Boolean(next)}
+                  loader={<CentralProgress size={30} />}
+                  height={400}
+                  endMessage={
+                    <p style={{textAlign: 'center'}}>
+                      <b>
+                        <FormattedMessage id="ui.trendingFeed.noOtherResults" defaultMessage="ui.trendingFeed.noOtherResults" />
+                      </b>
+                    </p>
+                  }>
+                  <List>
+                    {posts.map((obj: SCFeedObjectType, index) => (
+                      <div key={index}>
+                        <FeedObject elevation={0} feedObject={obj[obj.type]} key={obj.id} template={template} />
+                      </div>
+                    ))}
+                  </List>
+                </InfiniteScroll>
+              )}
+            </BaseDialog>
+          )}
         </CardContent>
       )}
     </React.Fragment>

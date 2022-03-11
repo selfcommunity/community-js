@@ -26,6 +26,9 @@ import {FormattedMessage} from 'react-intl';
 import {FeedObjectTemplateType} from '../../types/feedObject';
 import CustomAdv from '../CustomAdv';
 import classNames from 'classnames';
+import BaseDialog from '../../shared/BaseDialog';
+import CentralProgress from '../../shared/CentralProgress';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 const PREFIX = 'SCTrendingPost';
 
@@ -122,8 +125,8 @@ export default function RelatedDiscussion(props: RelatedDiscussionProps): JSX.El
   const [hasMore, setHasMore] = useState<boolean>(false);
   const [total, setTotal] = useState<number>(0);
   const [visibleDiscussions, setVisibleDiscussions] = useState<number>(limit);
-  const [openTrendingPostDialog, setOpenTrendingPostDialog] = useState<boolean>(false);
-
+  const [openRelatedDiscussionDialog, setOpenRelatedDiscussionDialog] = useState<boolean>(false);
+  const [next, setNext] = useState<string>(`${Endpoints.RelatedDiscussion.url({type: feedObjectType, id: feedObjectId})}?limit=10`);
   /**
    * Compute preferences
    */
@@ -156,31 +159,24 @@ export default function RelatedDiscussion(props: RelatedDiscussionProps): JSX.El
    * Fetches related discussions list
    */
   function fetchRelated() {
-    http
-      .request({
-        url: Endpoints.RelatedDiscussion.url({type: feedObjectType, id: feedObjectId}),
-        method: Endpoints.RelatedDiscussion.method
-      })
-      .then((res: AxiosResponse<any>) => {
-        const data = res.data;
-        setObjs(data.results);
-        setHasMore(data.count > visibleDiscussions);
-        setLoading(false);
-        setTotal(data.count);
-      })
-      .catch((error) => {
-        Logger.error(SCOPE_SC_UI, error);
-      });
-  }
-
-  /**
-   * Loads more discussions on "see more" button click
-   */
-  function loadDiscussions() {
-    const newIndex = visibleDiscussions + limit;
-    const newHasMore = newIndex < objs.length - 1;
-    setVisibleDiscussions(newIndex);
-    setHasMore(newHasMore);
+    if (next) {
+      http
+        .request({
+          url: next,
+          method: Endpoints.RelatedDiscussion.method
+        })
+        .then((res: AxiosResponse<any>) => {
+          const data = res.data;
+          setObjs([...objs, ...data.results]);
+          setHasMore(data.count > visibleDiscussions);
+          setLoading(false);
+          setTotal(data.count);
+          setNext(data['next']);
+        })
+        .catch((error) => {
+          Logger.error(SCOPE_SC_UI, error);
+        });
+    }
   }
 
   /**
@@ -222,13 +218,44 @@ export default function RelatedDiscussion(props: RelatedDiscussionProps): JSX.El
                 })}
               </List>
               {hasMore && (
-                <Button size="small" onClick={() => loadDiscussions()}>
+                <Button size="small" onClick={() => setOpenRelatedDiscussionDialog(true)}>
                   <FormattedMessage id="ui.relatedDiscussion.button.showMore" defaultMessage="ui.relatedDiscussion.button.showMore" />
                 </Button>
               )}
             </React.Fragment>
           )}
-          {openTrendingPostDialog && <></>}
+          {openRelatedDiscussionDialog && (
+            <BaseDialog
+              title={<FormattedMessage id="ui.relatedDiscussion.title" defaultMessage="ui.relatedDiscussion.title" />}
+              onClose={() => setOpenRelatedDiscussionDialog(false)}
+              open={openRelatedDiscussionDialog}>
+              {loading ? (
+                <CentralProgress size={50} />
+              ) : (
+                <InfiniteScroll
+                  dataLength={objs.length}
+                  next={fetchRelated}
+                  hasMore={Boolean(next)}
+                  loader={<CentralProgress size={30} />}
+                  height={400}
+                  endMessage={
+                    <p style={{textAlign: 'center'}}>
+                      <b>
+                        <FormattedMessage id="ui.relatedDiscussion.noOtherResults" defaultMessage="ui.relatedDiscussion.noOtherResults" />
+                      </b>
+                    </p>
+                  }>
+                  <List>
+                    {objs.map((obj: SCFeedDiscussionType, index) => (
+                      <div key={index}>
+                        <FeedObject elevation={0} feedObject={obj} key={obj.id} template={template} />
+                      </div>
+                    ))}
+                  </List>
+                </InfiniteScroll>
+              )}
+            </BaseDialog>
+          )}
         </CardContent>
       )}
     </React.Fragment>
