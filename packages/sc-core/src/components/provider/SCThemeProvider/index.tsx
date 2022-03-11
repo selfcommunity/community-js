@@ -6,7 +6,7 @@ import {useSCContext} from '../SCContextProvider';
 import {SCThemeContextType} from '../../../types';
 import {SCPreferencesContextType} from '../../../types/context';
 import {useSCPreferences} from '../SCPreferencesProvider';
-import useDeepCompareEffect from 'use-deep-compare-effect';
+import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
 
 /**
  * Creates Global Context
@@ -59,7 +59,7 @@ export default function SCThemeProvider({children = null}: {children: React.Reac
   /**
    * Update theme if initial conf changes
    */
-  useDeepCompareEffect(() => {
+  useDeepCompareEffectNoCheck(() => {
     setCustomTheme(theme);
   }, [scContext.settings.theme]);
 

@@ -113,7 +113,7 @@ export default function Category(props: CategoryProps): JSX.Element {
           <ListItemText
             secondaryTypographyProps={{style: {whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'}}}
             primary={scCategory.name}
-            secondary={category.followers_count ? `${intl.formatMessage(messages.categoryFollowers, {total: category.followers_count})}` : null}
+            secondary={scCategory.followers_count ? `${intl.formatMessage(messages.categoryFollowers, {total: scCategory.followers_count})}` : null}
             className={classes.title}
           />
           <ListItemSecondaryAction className={classes.actions}>

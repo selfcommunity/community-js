@@ -234,9 +234,17 @@ export default function ChangePictureDialog(props: CPDialogProps): JSX.Element {
       <BaseDialog title={<FormattedMessage defaultMessage="ui.changePicture.title" id="ui.changePicture.title" />} onClose={onClose} open={open}>
         <Box className={classes.upload}>
           <input type="file" onChange={() => handleUpload(event)} ref={fileInput} hidden />
-          <Button variant="outlined" onClick={() => fileInput.current.click()}>
-            {loading ? <CircularProgress size={15} /> : <Icon fontSize="small">folder_open</Icon>}
-            <FormattedMessage id="ui.changePicture.button.upload" defaultMessage="ui.changePicture.button.upload" />
+          <Button disabled={loading} variant="outlined" onClick={() => fileInput.current.click()}>
+            {loading ? (
+              <React.Fragment>
+                <CircularProgress size={15} />
+              </React.Fragment>
+            ) : (
+              <React.Fragment>
+                <Icon fontSize="small">folder_open</Icon>
+                <FormattedMessage id="ui.changePicture.button.upload" defaultMessage="ui.changePicture.button.upload" />
+              </React.Fragment>
+            )}
           </Button>
           <Typography sx={{fontSize: 10}} color="text.secondary" gutterBottom>
             <FormattedMessage id="ui.changePicture.listF" defaultMessage="ui.changePicture.listF" /> <br />

@@ -33,12 +33,12 @@ export default {
     }
   },
   args: {
-    feedObjectId: 17, // 1064,
+    feedObjectId: 50, // 1064,
     feedObjectType: SCFeedObjectTypologyType.DISCUSSION,
     infiniteScrolling: true,
     commentsOrderBy: CommentsOrderBy.ADDED_AT_ASC,
     fixedPrimaryReply: true,
-    commentsPageCount: 10
+    commentsPageCount: 5
   }
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
 } as ComponentMeta<typeof CommentsObject>;
@@ -57,7 +57,7 @@ Base.args = {};
 export const CommentFirstLevel = Template.bind({});
 
 CommentFirstLevel.args = {
-  commentObjectId: 32022 // 81
+  commentObjectId: 132 // 81
 };
 
 export const CommentSecondLevel = Template.bind({});

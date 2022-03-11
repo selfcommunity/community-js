@@ -17,7 +17,7 @@ function displayNotification(notification) {
  * @return {{options: ({title}|*), title: *}}
  */
 function getNotificationData(event) {
-  let title = '';
+  let title;
   let options;
   try {
     options = JSON.parse(event.data.text());
@@ -63,8 +63,8 @@ function isOriginFocused(url) {
     .then(function (clientList) {
       let isFocused = false;
       for (let i = 0; i < clientList.length; i++) {
-        let client = clientList[i];
-        let clientOrigin = new URL(client.url).origin;
+        const client = clientList[i];
+        const clientOrigin = new URL(client.url).origin;
         isFocused = isFocused || (clientOrigin === url && 'focus' in client);
       }
       return Promise.resolve(isFocused);

@@ -4,7 +4,7 @@ import {Avatar, AvatarGroup, Box, Button, Chip, Divider, Grid, List, Paper, Typo
 import FollowCategoryButton, {FollowCategoryButtonProps} from '../FollowCategoryButton';
 import {AxiosResponse} from 'axios';
 import BaseDialog, {BaseDialogProps} from '../../shared/BaseDialog';
-import {FormattedMessage} from 'react-intl';
+import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import CentralProgress from '../../shared/CentralProgress';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import User from '../User';
@@ -12,6 +12,13 @@ import Icon from '@mui/material/Icon';
 import {Endpoints, http, SCCategoryType, SCUserContext, SCUserContextType, SCUserType, useSCFetchCategory} from '@selfcommunity/core';
 import AvatarGroupSkeleton from '../Skeleton/AvatarGroupSkeleton';
 import classNames from 'classnames';
+
+const messages = defineMessages({
+  followedBy: {
+    id: 'ui.categoryHeader.followedBy',
+    defaultMessage: 'ui.categoryHeader.followedBy'
+  }
+});
 
 const PREFIX = 'SCCategoryHeader';
 
@@ -138,6 +145,9 @@ export default function CategoryHeader(props: CategoryHeaderProps): JSX.Element 
   const [followers, setFollowers] = useState<SCUserType[]>([]);
   const [openFollowersDialog, setOpenFollowersDialog] = useState<boolean>(false);
 
+  // INTL
+  const intl = useIntl();
+
   /**
    * If id attempts to get the category by id
    */
@@ -217,25 +227,22 @@ export default function CategoryHeader(props: CategoryHeaderProps): JSX.Element 
    */
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
-      <Paper style={_backgroundCover} classes={{root: classes.cover}}>
-        <Typography variant={'h3'} align={'center'} className={classes.name} gutterBottom>
-          {scCategory.name}
-        </Typography>
-        {scCategory.slogan && (
-          <Typography variant={'h5'} align={'center'} className={classes.slogan}>
-            {scCategory.slogan}
-          </Typography>
-        )}
-      </Paper>
+      <Paper style={_backgroundCover} classes={{root: classes.cover}} />
       <Grid container spacing={2} className={classes.info}>
-        <Grid item xs={12}>
-          <FollowCategoryButton category={scCategory} onFollow={handleFollowCategory} {...FollowCategoryButtonProps} />
-          <Typography className={classes.followedByCounter} component="div">
-            <FormattedMessage id="ui.categoryHeader.followedBy" defaultMessage="ui.categoryHeader.followedBy" />{' '}
-            <Chip icon={<Icon>face</Icon>} label={loading ? '...' : total} />
+        <Grid item xs={6}>
+          <Typography variant={'h3'} align={'center'} className={classes.name} gutterBottom>
+            {scCategory.name}
           </Typography>
+          {scCategory.slogan && (
+            <Typography variant={'h5'} align={'center'} className={classes.slogan}>
+              {scCategory.slogan}
+            </Typography>
+          )}
         </Grid>
         <Grid item xs={12} className={classes.followedByAvatars}>
+          <Typography className={classes.followedByCounter} component="div">
+            {intl.formatMessage(messages.followedBy, {total: total})}
+          </Typography>
           {loading && !scCategory ? (
             <AvatarGroupSkeleton {...rest} />
           ) : (
@@ -261,6 +268,9 @@ export default function CategoryHeader(props: CategoryHeaderProps): JSX.Element 
               )}
             </>
           )}
+        </Grid>
+        <Grid item xs={6}>
+          <FollowCategoryButton category={scCategory} onFollow={handleFollowCategory} {...FollowCategoryButtonProps} />
         </Grid>
       </Grid>
       <Divider className={classes.divider} />

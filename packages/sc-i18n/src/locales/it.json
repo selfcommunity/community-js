@@ -35,10 +35,12 @@
   "ui.trendingFeed.title": "Post di tendenza",
   "ui.trendingFeed.noResults": "Niente da mostrare",
   "ui.trendingFeed.button.showMore": "Mostra di piú",
+  "ui.trendingFeed.noOtherResults": "Nient'altro da mostrare",
 
   "ui.relatedDiscussion.title": "Post correlati",
   "ui.relatedDiscussion.noResults": "Nessun post da mostrare",
   "ui.relatedDiscussion.button.showMore": "Mostra di piú",
+  "ui.relatedDiscussion.noOtherResults": "Nient'altro da mostrare",
 
   "ui.category.categoryFollowers": "{total, plural, =0 {Seguita da # persone} one {Seguita da # persona} other {Seguita da # persone}}",
 
@@ -266,7 +268,7 @@
   "ui.userFollowers.button.showAll": "Mostra tutti",
   "ui.userFollowers.noMoreFollowers": "Non ci sono altri followers",
 
-  "ui.categoryHeader.followedBy": "Seguita da ",
+  "ui.categoryHeader.followedBy": "{total, plural, =0 {Seguita da # persone} one {Seguita da # persona} other {Seguita da # persone}}",
   "ui.categoryHeader.followers": "Followers",
   "ui.categoryHeader.noOtherFollowers": "Non ci sono altri followers.",
 

@@ -91,6 +91,9 @@ export default function CategoriesSuggestion(props: CategoriesListProps): JSX.El
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
 
+  // CONST
+  const authUserId = scUserContext.user ? scUserContext.user.id : null;
+
   /**
    * Handles list change on category follow
    */
@@ -139,7 +142,7 @@ export default function CategoriesSuggestion(props: CategoriesListProps): JSX.El
     if (scUserContext.user) {
       fetchCategoriesSuggestion();
     }
-  }, []);
+  }, [authUserId]);
 
   /**
    * Renders categories suggestion list
