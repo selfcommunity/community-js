@@ -262,7 +262,7 @@ export default function useSCWebPushMessaging() {
         initialiseState();
       }
     }
-    if (!scUserContext.user) {
+    if (!scUserContext.user && wpSubscription) {
       // Unsubscribe if user not in session
       unsubscribe();
     }
