@@ -95,13 +95,13 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
 
   /**
    * Controls caching of follow categories, users, etc...
-   * To avoid multi-tab problems, on visibility change and document
-   * is in foreground refresh the cache
+   * To avoid multi-tab problems (only for client side), on visibility change
+   * and document is in foreground refresh the cache
    */
   useEffect(() => {
-    document.addEventListener('visibilitychange', handleVisibilityChange);
+    typeof window !== 'undefined' && document.addEventListener('visibilitychange', handleVisibilityChange);
     return () => {
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      typeof window !== 'undefined' && document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
   });
 
@@ -110,7 +110,7 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
    * Refresh followed categories, users, etc..
    */
   function handleVisibilityChange() {
-    if (!document.hidden && state.user) {
+    if (typeof window !== 'undefined' && !window.document.hidden && state.user) {
       categoriesManager.refresh && categoriesManager.refresh();
       followedManager.refresh && followedManager.refresh();
       connectionsManager.refresh && connectionsManager.refresh();
