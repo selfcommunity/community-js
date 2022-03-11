@@ -44,7 +44,10 @@ const classes = {
   fixedTopPrimaryReply: `${PREFIX}-fixed-top-primary-reply`,
   fixedBottomPrimaryReply: `${PREFIX}-fixed-bottom-primary-reply`,
   loadMoreCommentsButton: `${PREFIX}-load-more-comments-button`,
-  commentsCounter: `${PREFIX}-comments-counter`
+  paginationFooter: `${PREFIX}-pagination-footer`,
+  commentsCounter: `${PREFIX}-comments-counter`,
+  commentNotFound: `${PREFIX}-comment-not-found`,
+  noOtherComments: `${PREFIX}-no-other-comment`
 };
 
 const Root = styled(Box, {
@@ -78,6 +81,10 @@ const Root = styled(Box, {
   },
   [`& .${classes.commentsCounter}`]: {
     paddingRight: theme.spacing()
+  },
+  [`& .${classes.commentNotFound}`]: {
+    padding: theme.spacing(1),
+    fontWeight: '500'
   }
 }));
 
@@ -205,6 +212,8 @@ export interface CommentsObjectProps {
 
   /**
    * additional comments to show in the header
+   * usefull when from a feedObject publish a comment
+   * and this component show recent comments
    * @default []
    */
   additionalHeaderComments?: SCCommentType[];
@@ -249,7 +258,10 @@ const PREFERENCES = [SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED, SCPreferences
  |root|.SCCommentsObject-root|Styles applied to the root element.|
  |fixedPrimaryReply|.SCCommentsObject-fixed-primary-reply|Styles applied to the comment primary reply element.|
  |fixedTopPrimaryReply|.SCCommentsObject-fixed-top-primary-reply|Styles applied to the comment top primary reply element.|
- |fixedBottomPrimaryReply|.SCCommentsObject-fixed-bottom-primary-reply|Styles applied to the comment bottom primary reply  element.|
+ |fixedBottomPrimaryReply|.SCCommentsObject-fixed-bottom-primary-reply|Styles applied to the comment bottom primary reply element.|
+ |commentNotFound|.SCCommentsObject-comment-not-found|Styles applied to the label 'Comment not found'.|
+ |noOtherComments|.SCCommentsObject-no-other-comments|Styles applied to the label 'No other comments'.|
+
  * @param props
  */
 export default function CommentsObject(props: CommentsObjectProps): JSX.Element {
@@ -307,6 +319,11 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
   // RETRIVE OBJECTS
   const {obj, setObj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
   const {obj: commentObj, setObj: setCommentObj, error: errorCommentObj} = useSCFetchCommentObject({id: commentObjectId, commentObject});
+
+  // CONST
+  const wrapperStyles = {
+    ...(fixedPrimaryReply ? (commentsOrderBy === CommentsOrderBy.ADDED_AT_DESC ? {paddingTop: 100} : {paddingBottom: 100}) : {})
+  };
 
   /**
    * Define root width to set primary reply width
@@ -659,20 +676,168 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
   }
 
   /**
-   * Render comments
+   * Render button load previous comments
    */
-  const advPosition = Math.floor(Math.random() * (Math.min(total, 5) - 1 + 1) + 1);
-  let commentsRendered = <></>;
-  if ((comments.length === 0 && isLoading) || !obj) {
-    commentsRendered = (
+  function renderLoadPreviousComments() {
+    return (
+      <>
+        {((previous && !isLoading) || (comment && comments.length === 0 && obj && obj.comment_count > 0 && !isLoading)) && (
+          <Button variant="text" onClick={fetchPreviousComments} disabled={isLoading} color="inherit">
+            <FormattedMessage id="ui.commentsObject.loadPreviousComments" defaultMessage="ui.commentsObject.loadPreviousComments" />
+          </Button>
+        )}
+      </>
+    );
+  }
+
+  /**
+   * Render comments and load others in infinite scrolling mode
+   */
+  function renderInfiniteScrollContent() {
+    return (
+      <InfiniteScroll
+        dataLength={comments.length}
+        next={fetchNextComments}
+        hasMore={next !== null}
+        loader={<CommentObjectSkeleton {...CommentObjectSkeletonProps} />}
+        style={wrapperStyles}
+        endMessage={
+          !errorCommentObj && commentsOrderBy === CommentsOrderBy.ADDED_AT_DESC ? (
+            <Typography variant="body2" align="center" className={classes.noOtherComments}>
+              <FormattedMessage id="ui.commentsObject.noOtherComments" defaultMessage="ui.commentsObject.noOtherComments" />
+            </Typography>
+          ) : null
+        }>
+        {renderLoadPreviousComments()}
+        {[...additionalHeaderComments, ...newComments, ...comments, ...(comment ? [comment] : [])].map((c: SCCommentType, index) => {
+          return (
+            <React.Fragment key={c.id}>
+              {renderSingleComment(c)}
+              {advPosition === index && renderAdvertising()}
+            </React.Fragment>
+          );
+        })}
+      </InfiniteScroll>
+    );
+  }
+
+  /**
+   * Render a single comment if found
+   */
+  function renderSingleComment(comment) {
+    return (
+      <>
+        {comment && (
+          <React.Fragment key={comment.id}>
+            {renderComment ? (
+              renderComment(comment)
+            ) : (
+              <CommentObject
+                id={comment.id}
+                commentObject={comment}
+                onOpenReply={openReplyBox}
+                feedObject={obj}
+                feedObjectType={feedObjectType}
+                commentReply={commentObj}
+                {...CommentObjectProps}
+              />
+            )}
+          </React.Fragment>
+        )}
+      </>
+    );
+  }
+
+  /**
+   * Render not found comment box
+   */
+  function renderCommentNotFound() {
+    return (
+      <>
+        {(errorCommentObj || (commentObjectId && !comment && !isLoading)) && comments.length === 0 && (
+          <>
+            <Typography className={classes.commentNotFound}>
+              <FormattedMessage id="ui.commentsObject.commentNotFound" defaultMessage="ui.commentsObject.commentNotFound" />
+            </Typography>
+            <Button variant="text" onClick={fetchNextComments} disabled={isLoading} color="inherit">
+              <FormattedMessage id="ui.commentsObject.loadMoreComments" defaultMessage="ui.commentsObject.loadMoreComments" />
+            </Button>
+          </>
+        )}
+      </>
+    );
+  }
+
+  /**
+   * Footer with n comments of, only for load more pagination mode
+   */
+  function renderLoadMorePaginationFooter() {
+    return (
+      <Box className={classes.paginationFooter}>
+        {Boolean(next) && !isLoading && (
+          <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
+            <Button variant="text" onClick={fetchNextComments} disabled={isLoading} color="inherit" classes={{root: classes.loadMoreCommentsButton}}>
+              <FormattedMessage id="ui.commentsObject.loadMoreComments" defaultMessage="ui.commentsObject.loadMoreComments" />
+            </Button>
+            {total && !commentObj && (
+              <Typography variant="body1" classes={{root: classes.commentsCounter}}>
+                <FormattedMessage
+                  id="ui.commentsObject.numberOfComments"
+                  defaultMessage="ui.commentsObject.numberOfComments"
+                  values={{loaded: comments.length, total: total}}
+                />
+              </Typography>
+            )}
+          </Stack>
+        )}
+      </Box>
+    );
+  }
+
+  /**
+   * Render comments and load others with load more button
+   */
+  function renderLoadMorePaginationContent() {
+    return (
+      <Box style={wrapperStyles}>
+        {isLoading && commentObj && comments.length === 0 && <CommentObjectSkeleton {...CommentObjectSkeletonProps} />}
+        {renderNewComments(CommentsOrderBy.ADDED_AT_DESC)}
+        {renderLoadPreviousComments()}
+        {renderCommentNotFound()}
+        {[...additionalHeaderComments, ...comments].map((comment: SCCommentType, index) => {
+          return (
+            <React.Fragment key={comment.id}>
+              {renderSingleComment(comment)}
+              {advPosition === index && renderAdvertising()}
+            </React.Fragment>
+          );
+        })}
+        {renderLoadMorePaginationFooter()}
+        {isLoading && (!commentObj || (commentObj && comments.length > 0)) && <CommentObjectSkeleton {...CommentObjectSkeletonProps} />}
+        {renderNewComments(CommentsOrderBy.ADDED_AT_ASC)}
+        {renderSingleComment(comment)}
+      </Box>
+    );
+  }
+
+  /**
+   * Render loading skeletons
+   */
+  function renderLoadingSkeletons() {
+    return (
       <>
         {[...Array(commentsLoadingBoxCount)].map((x, i) => (
           <CommentObjectSkeleton key={i} {...CommentObjectSkeletonProps} />
         ))}
       </>
     );
-  } else if (comments.length === 0 && !comment && !isLoading && !errorCommentObj) {
-    commentsRendered = (
+  }
+
+  /**
+   * Render no comments
+   */
+  function renderNoCommentsFound() {
+    return (
       <>
         {renderNoComments ? (
           renderNoComments()
@@ -683,138 +848,40 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
         )}
       </>
     );
+  }
+
+  /**
+   * Render comments
+   */
+  const advPosition = Math.floor(Math.random() * (Math.min(total, 5) - 1 + 1) + 1);
+  let commentsRendered = <></>;
+
+  if (!obj || (comments.length === 0 && isLoading)) {
+    /**
+     * Until the contribution has not been founded and there are
+     * no comments during loading render the skeletons
+     */
+    commentsRendered = renderLoadingSkeletons();
+  } else if (comments.length === 0 && !isLoading && !comment && !errorCommentObj) {
+    /**
+     * If comments were not found and loading is finished
+     * and the componet and the component was not looking
+     * for a particular comment render no comments message
+     */
+    commentsRendered = renderNoCommentsFound();
   } else {
-    const wrapperStyles = {
-      ...(fixedPrimaryReply ? (commentsOrderBy === CommentsOrderBy.ADDED_AT_DESC ? {paddingTop: 100} : {paddingBottom: 100}) : {})
-    };
+    /**
+     * Two modes available:
+     *  - infinite scroll
+     *  - load pagination with load more button
+     *  !IMPORTANT:
+     *  the component will switch to 'load more pagination' mode automatically
+     *  in case it needs to display a single comment
+     */
     if (infiniteScrollingEnabled) {
-      commentsRendered = (
-        <InfiniteScroll
-          dataLength={comments.length}
-          next={fetchNextComments}
-          hasMore={next !== null}
-          loader={<CommentObjectSkeleton {...CommentObjectSkeletonProps} />}
-          style={wrapperStyles}
-          endMessage={
-            !errorCommentObj && commentsOrderBy === CommentsOrderBy.ADDED_AT_DESC ? (
-              <Typography variant="body2" align="center">
-                <FormattedMessage id="ui.commentsObject.noOtherComments" defaultMessage="ui.commentsObject.noOtherComments" />
-              </Typography>
-            ) : null
-          }>
-          {previous && !isLoading && (
-            <Button variant="text" onClick={fetchPreviousComments} disabled={isLoading} color="inherit">
-              <FormattedMessage id="ui.commentsObject.loadPreviousComments" defaultMessage="ui.commentsObject.loadPreviousComments" />
-            </Button>
-          )}
-          {[...additionalHeaderComments, ...newComments, ...comments, ...(comment ? [comment] : [])].map((c: SCCommentType, index) => {
-            return (
-              <React.Fragment key={c.id}>
-                {renderComment ? (
-                  renderComment(c)
-                ) : (
-                  <CommentObject
-                    id={c.id}
-                    commentObject={c}
-                    onOpenReply={openReplyBox}
-                    feedObject={obj}
-                    feedObjectType={feedObjectType}
-                    {...CommentObjectProps}
-                  />
-                )}
-                {advPosition === index && renderAdvertising()}
-              </React.Fragment>
-            );
-          })}
-        </InfiniteScroll>
-      );
+      commentsRendered = renderInfiniteScrollContent();
     } else {
-      commentsRendered = (
-        <Box style={wrapperStyles}>
-          {isLoading && commentObj && comments.length === 0 && <CommentObjectSkeleton {...CommentObjectSkeletonProps} />}
-          {renderNewComments(CommentsOrderBy.ADDED_AT_DESC)}
-          {comment && comments.length === 0 && obj && obj.comment_count > 0 && !isLoading && (
-            <Button variant="text" onClick={fetchNextComments} disabled={isLoading} color="inherit">
-              <FormattedMessage id="ui.commentsObject.loadMoreComments" defaultMessage="ui.commentsObject.loadMoreComments" />
-            </Button>
-          )}
-          {previous && !isLoading && (
-            <Button variant="text" onClick={fetchPreviousComments} disabled={isLoading} color="inherit">
-              <FormattedMessage id="ui.commentsObject.loadPreviousComments" defaultMessage="ui.commentsObject.loadPreviousComments" />
-            </Button>
-          )}
-          {(errorCommentObj || (commentObjectId && !comment && !isLoading)) && comments.length === 0 && (
-            <>
-              <Alert icon={false} variant="outlined" severity="error">
-                <FormattedMessage id="ui.commentsObject.commentNotFound" defaultMessage="ui.commentsObject.commentNotFound" />
-              </Alert>
-              <Button variant="text" onClick={fetchNextComments} disabled={isLoading} color="inherit">
-                <FormattedMessage id="ui.commentsObject.loadMoreComments" defaultMessage="ui.commentsObject.loadMoreComments" />
-              </Button>
-            </>
-          )}
-          {[...additionalHeaderComments, ...comments].map((comment: SCCommentType, index) => {
-            return (
-              <React.Fragment key={comment.id}>
-                {renderComment ? (
-                  renderComment(comment)
-                ) : (
-                  <CommentObject
-                    id={comment.id}
-                    commentObject={comment}
-                    onOpenReply={openReplyBox}
-                    feedObject={obj}
-                    feedObjectType={feedObjectType}
-                    commentReply={commentObj}
-                    {...CommentObjectProps}
-                  />
-                )}
-                {advPosition === index && renderAdvertising()}
-              </React.Fragment>
-            );
-          })}
-          {Boolean(next) && !isLoading && (
-            <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
-              <Button
-                variant="text"
-                onClick={fetchNextComments}
-                disabled={isLoading}
-                color="inherit"
-                classes={{root: classes.loadMoreCommentsButton}}>
-                <FormattedMessage id="ui.commentsObject.loadMoreComments" defaultMessage="ui.commentsObject.loadMoreComments" />
-              </Button>
-              {total && !commentObj && (
-                <Typography variant="body1" classes={{root: classes.commentsCounter}}>
-                  <FormattedMessage
-                    id="ui.commentsObject.numberOfComments"
-                    defaultMessage="ui.commentsObject.numberOfComments"
-                    values={{loaded: comments.length, total: total}}
-                  />
-                </Typography>
-              )}
-            </Stack>
-          )}
-          {isLoading && (!commentObj || (commentObj && comments.length > 0)) && <CommentObjectSkeleton {...CommentObjectSkeletonProps} />}
-          {renderNewComments(CommentsOrderBy.ADDED_AT_ASC)}
-          {comment && (
-            <React.Fragment key={comment.id}>
-              {renderComment ? (
-                renderComment(comment)
-              ) : (
-                <CommentObject
-                  id={comment.id}
-                  commentObject={comment}
-                  onOpenReply={openReplyBox}
-                  feedObject={obj}
-                  feedObjectType={feedObjectType}
-                  commentReply={commentObj}
-                  {...CommentObjectProps}
-                />
-              )}
-            </React.Fragment>
-          )}
-        </Box>
-      );
+      commentsRendered = renderLoadMorePaginationContent();
     }
   }
 

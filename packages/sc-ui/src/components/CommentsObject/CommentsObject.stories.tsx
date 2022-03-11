@@ -33,7 +33,7 @@ export default {
     }
   },
   args: {
-    feedObjectId: 17, // 1064,
+    feedObjectId: 12, // 1064,
     feedObjectType: SCFeedObjectTypologyType.DISCUSSION,
     infiniteScrolling: true,
     commentsOrderBy: CommentsOrderBy.ADDED_AT_ASC,
@@ -57,7 +57,7 @@ Base.args = {};
 export const CommentFirstLevel = Template.bind({});
 
 CommentFirstLevel.args = {
-  commentObjectId: 32022 // 81
+  commentObjectId: 132 // 81
 };
 
 export const CommentSecondLevel = Template.bind({});
