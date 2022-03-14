@@ -60,6 +60,9 @@ const Root = styled(Box, {
     padding: '0px 5px',
     alignItems: 'center'
   },
+  [`& .${classes.listItemSnippetNew}`]: {
+    borderLeft: '2px solid red'
+  },
   [`& .${classes.flagIconWrap}`]: {
     minWidth: 'auto',
     paddingRight: 10
@@ -207,7 +210,7 @@ export default function CollapsedForNotification(props: NotificationCollapsedFor
             to={scRoutingContext.url(SCRoutes[`${contributionType.toUpperCase()}_ROUTE_NAME`], getRouteData(notificationObject[contributionType]))}
             className={classes.contributionText}>
             <Typography component={'span'} variant="body2" gutterBottom>
-              {getContributionSnippet(notificationObject[contributionType].summary)}
+              {getContributionSnippet(notificationObject[contributionType])}
             </Typography>
           </Link>
         </Box>

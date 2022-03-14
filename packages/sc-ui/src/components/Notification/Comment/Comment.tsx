@@ -33,6 +33,7 @@ const classes = {
   avatarWrap: `${PREFIX}-avatar-wrap`,
   avatar: `${PREFIX}-avatar`,
   avatarSnippet: `${PREFIX}-avatar-snippet`,
+  username: `${PREFIX}-username`,
   voteButton: `${PREFIX}-vote-button`,
   commentText: `${PREFIX}-comment-text`,
   contributionText: `${PREFIX}-contribution-text`,
@@ -189,7 +190,7 @@ export default function CommentNotification(props: CommentNotificationProps): JS
             <>
               {template === NotificationObjectTemplateType.DETAIL && notificationObject.is_new && <NewChip />}
               <Typography component="span" className={classes.commentText} color="inherit">
-                <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.comment.author)}>
+                <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.comment.author)} className={classes.username}>
                   {notificationObject.comment.author.username}
                 </Link>{' '}
                 {notificationObject.type === SCNotificationTypologyType.NESTED_COMMENT

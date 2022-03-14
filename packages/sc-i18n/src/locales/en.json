@@ -357,6 +357,8 @@
   "ui.userToastNotifications.userBlocked.accountBlocked": "Your account has been <b>blocked</b>",
   "ui.userToastNotifications.userBlocked.accountReactivated": "Your account has been <b>reactivated</b>",
 
+  "ui.snippetNotifications.noNotifications": "At the moment, you don't have any notifications to see",
+
   "ui.Message.dialog.msg": "Are you sure you want to delete this message?",
   "ui.Message.dialog.confirm": "Yes",
   "ui.NewMessage.new" : "New Message",

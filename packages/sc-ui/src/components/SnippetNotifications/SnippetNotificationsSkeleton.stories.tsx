@@ -8,7 +8,7 @@ export default {
 } as ComponentMeta<typeof NotificationPopupSkeleton>;
 
 const Template: ComponentStory<typeof NotificationPopupSkeleton> = (args) => (
-  <div style={{width: 400, height: '600px'}}>
+  <div style={{width: 280}}>
     <NotificationPopupSkeleton {...args} />
   </div>
 );

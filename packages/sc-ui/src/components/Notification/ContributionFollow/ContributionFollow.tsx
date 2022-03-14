@@ -26,6 +26,7 @@ const classes = {
   avatarWrap: `${PREFIX}-avatar-wrap`,
   avatar: `${PREFIX}-avatar`,
   avatarSnippet: `${PREFIX}-avatar-snippet`,
+  username: `${PREFIX}-username`,
   followText: `${PREFIX}-mention-text`,
   activeAt: `${PREFIX}-active-at`,
   contributionText: `${PREFIX}-contribution-text`,
@@ -159,7 +160,9 @@ export default function ContributionFollowNotification(props: ContributionFollow
             <>
               {template === NotificationObjectTemplateType.DETAIL && notificationObject.is_new && <NewChip />}
               <Typography component="div" className={classes.followText} color="inherit">
-                <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.user)}>{notificationObject.user.username}</Link>{' '}
+                <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.user)} className={classes.username}>
+                  {notificationObject.user.username}
+                </Link>{' '}
                 {intl.formatMessage(messages.contributionFollow, {
                   username: notificationObject.user.username,
                   b: (...chunks) => <strong>{chunks}</strong>

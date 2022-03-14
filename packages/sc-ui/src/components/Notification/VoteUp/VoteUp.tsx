@@ -26,6 +26,7 @@ const classes = {
   avatarWrap: `${PREFIX}-avatar-wrap`,
   avatar: `${PREFIX}-avatar`,
   avatarSnippet: `${PREFIX}-avatar-snippet`,
+  username: `${PREFIX}-username`,
   voteUpText: `${PREFIX}-vote-up-text`,
   activeAt: `${PREFIX}-active-at`,
   contributionWrap: `${PREFIX}-contribution-wrap`,
@@ -160,7 +161,9 @@ export default function VoteUpNotification(props: NotificationVoteUpProps): JSX.
             <>
               {template === NotificationObjectTemplateType.DETAIL && notificationObject.is_new && <NewChip />}
               <Typography component="div" className={classes.voteUpText} color="inherit">
-                <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.user)}>{notificationObject.user.username}</Link>{' '}
+                <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.user)} className={classes.username}>
+                  {notificationObject.user.username}
+                </Link>{' '}
                 {intl.formatMessage(messages.appreciated, {
                   username: notificationObject.user.username,
                   b: (...chunks) => <strong>{chunks}</strong>

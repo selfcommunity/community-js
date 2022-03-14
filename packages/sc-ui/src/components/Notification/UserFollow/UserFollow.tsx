@@ -24,6 +24,7 @@ const classes = {
   listItemSnippetNew: `${PREFIX}-list-item-snippet-new`,
   avatarWrap: `${PREFIX}-avatar-wrap`,
   avatar: `${PREFIX}-avatar`,
+  username: `${PREFIX}-username`,
   avatarSnippet: `${PREFIX}-avatar-snippet`,
   followText: `${PREFIX}-follow-text`,
   activeAt: `${PREFIX}-active-at`,
@@ -149,7 +150,7 @@ export default function UserFollowNotification(props: NotificationFollowProps): 
             <>
               {template === NotificationObjectTemplateType.DETAIL && notificationObject.is_new && <NewChip />}
               <Typography component="div" className={classes.followText} color="inherit">
-                <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: notificationObject.follower.id})}>
+                <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.follower)} className={classes.username}>
                   {notificationObject.follower.username}
                 </Link>{' '}
                 {intl.formatMessage(messages.followUser, {b: (...chunks) => <strong>{chunks}</strong>})}
