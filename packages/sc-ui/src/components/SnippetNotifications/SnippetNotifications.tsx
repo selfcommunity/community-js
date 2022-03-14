@@ -30,7 +30,6 @@ import {
   SCNotificationTopicType,
   SCNotificationType,
   SCNotificationTypologyType,
-  SCRoutingContextType,
   SCUserContextType,
   useSCUser
 } from '@selfcommunity/core';
@@ -40,7 +39,8 @@ const PREFIX = 'SCSnippetNotifications';
 const classes = {
   root: `${PREFIX}-root`,
   notificationsWrap: `${PREFIX}-notifications-wrap`,
-  notificationItemWrap: `${PREFIX}-notification-item-wrap`
+  notificationsList: `${PREFIX}-notifications-list`,
+  notificationItem: `${PREFIX}-notification-item`
 };
 
 const Root = styled(Box, {
@@ -56,7 +56,7 @@ const Root = styled(Box, {
     overflowX: 'hidden',
     borderBottom: '#e8e7e7 solid 1px'
   },
-  [`& .${classes.notificationItemWrap}`]: {
+  [`& .${classes.notificationItem}`]: {
     padding: 5,
     whiteSpace: 'normal'
   },
@@ -122,8 +122,9 @@ export interface SnippetNotificationsProps extends CardProps {
  |Rule Name|Global class|Description|
  |---|---|---|
  |root|.SCSnippetNotification-root|Styles applied to the root element.|
- |notificationsWrap|.SCUserNotification-notification-wrap|Styles applied to the notifications wrap.|
- |notificationItemWrap|.SCUserNotification-notification-item-wrap|Styles applied to the single notification.|
+ |notificationsWrap|.SCSnippetNotification-notification-wrap|Styles applied to the notifications wrap.|
+ |notificationsList|.SCSnippetNotification-notifications-list|Styles applied to the list of notifications.|
+ |notificationItem|.SCSnippetNotification-notification-item|Styles applied to the single notification.|
 
  * @param props
  */
@@ -285,15 +286,15 @@ export default function SnippetNotifications(props: SnippetNotificationsProps): 
         {loading ? (
           <Skeleton elevation={0} />
         ) : (
-          <MenuList>
+          <MenuList className={classes.notificationsList}>
             {notifications.slice(0, showMax).map((notificationObject: SCNotificationAggregatedType, i) => (
-              <Box key={i}>
+              <React.Fragment key={i}>
                 {notificationObject.aggregated.map((n: SCNotificationType, k) => (
-                  <MenuItem className={classes.notificationItemWrap} key={k}>
+                  <MenuItem className={classes.notificationItem} key={k}>
                     {renderAggregatedItem(n, i)}
                   </MenuItem>
                 ))}
-              </Box>
+              </React.Fragment>
             ))}
           </MenuList>
         )}

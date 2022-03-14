@@ -37,6 +37,7 @@ const classes = {
   avatarWrap: `${PREFIX}-avatar-wrap`,
   avatar: `${PREFIX}-avatar`,
   avatarSnippet: `${PREFIX}-avatar-snippet`,
+  username: `${PREFIX}-username`,
   connectionText: `${PREFIX}-connection-text`,
   activeAt: `${PREFIX}-active-at`,
   toastInfo: `${PREFIX}-toast-info`
@@ -163,7 +164,9 @@ export default function UserConnectionNotification(props: NotificationConnection
             <>
               {template === NotificationObjectTemplateType.DETAIL && notificationObject.is_new && <NewChip />}
               <Typography component="div" className={classes.connectionText} color="inherit">
-                <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, userConnection)}>{userConnection.username}</Link>{' '}
+                <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, userConnection)} className={classes.username}>
+                  {userConnection.username}
+                </Link>{' '}
                 {notificationObject.type === SCNotificationTypologyType.CONNECTION_REQUEST
                   ? intl.formatMessage(messages.requestConnection, {b: (...chunks) => <strong>{chunks}</strong>})
                   : intl.formatMessage(messages.requestConnection, {b: (...chunks) => <strong>{chunks}</strong>})}

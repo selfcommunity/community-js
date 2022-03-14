@@ -26,6 +26,7 @@ const classes = {
   avatarWrap: `${PREFIX}-avatar-wrap`,
   avatar: `${PREFIX}-avatar`,
   avatarSnippet: `${PREFIX}-avatar-snippet`,
+  username: `${PREFIX}-username`,
   mentionText: `${PREFIX}-mention-text`,
   activeAt: `${PREFIX}-active-at`,
   contributionText: `${PREFIX}-contribution-text`,
@@ -156,7 +157,7 @@ export default function MentionNotification(props: MentionNotificationProps): JS
             <>
               {template === NotificationObjectTemplateType.DETAIL && notificationObject.is_new && <NewChip />}
               <Typography component="span" className={classes.mentionText} color="inherit">
-                <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject[objectType].author)}>
+                <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject[objectType].author)} className={classes.username}>
                   {notificationObject[objectType].author.username}
                 </Link>{' '}
                 {intl.formatMessage(messages.quotedYouOn, {
