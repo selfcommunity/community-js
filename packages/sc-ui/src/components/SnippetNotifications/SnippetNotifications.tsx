@@ -54,8 +54,7 @@ const Root = styled(Box, {
   width: '100%',
   [`& .${classes.notificationsWrap}`]: {
     height: 330,
-    overflowY: 'hidden',
-    borderBottom: '#e8e7e7 solid 1px'
+    overflowY: 'hidden'
   },
   [`& .${classes.notificationItem}`]: {
     padding: 5,
