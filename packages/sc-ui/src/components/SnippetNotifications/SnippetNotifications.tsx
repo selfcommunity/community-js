@@ -21,6 +21,7 @@ import IncubatorApprovedNotification from '../Notification/IncubatorApproved';
 import classNames from 'classnames';
 import Skeleton from './Skeleton';
 import {NotificationObjectTemplateType} from '../../types';
+import ScrollContainer from '../../shared/ScrollContainer';
 import {
   Endpoints,
   http,
@@ -33,12 +34,14 @@ import {
   SCUserContextType,
   useSCUser
 } from '@selfcommunity/core';
+import {FormattedMessage} from 'react-intl';
 
 const PREFIX = 'SCSnippetNotifications';
 
 const classes = {
   root: `${PREFIX}-root`,
   notificationsWrap: `${PREFIX}-notifications-wrap`,
+  emptyBoxNotifications: `${PREFIX}-empty-box-notifications`,
   notificationsList: `${PREFIX}-notifications-list`,
   notificationItem: `${PREFIX}-notification-item`
 };
@@ -49,16 +52,17 @@ const Root = styled(Box, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   width: '100%',
-  marginBottom: theme.spacing(1),
   [`& .${classes.notificationsWrap}`]: {
-    maxHeight: 370,
-    overflowY: 'auto',
-    overflowX: 'hidden',
+    height: 330,
+    overflowY: 'hidden',
     borderBottom: '#e8e7e7 solid 1px'
   },
   [`& .${classes.notificationItem}`]: {
     padding: 5,
-    whiteSpace: 'normal'
+    whiteSpace: 'normal',
+    '&:hover': {
+      backgroundColor: 'rgba(0, 0, 0, 0.05)'
+    }
   },
   '& a': {
     textDecoration: 'none',
@@ -123,6 +127,7 @@ export interface SnippetNotificationsProps extends CardProps {
  |---|---|---|
  |root|.SCSnippetNotification-root|Styles applied to the root element.|
  |notificationsWrap|.SCSnippetNotification-notification-wrap|Styles applied to the notifications wrap.|
+ |emptyBoxNotifications|.SCSnippetNotification-empty-box-notifications|Styles applied to the box indicating that there are no notifications.|
  |notificationsList|.SCSnippetNotification-notifications-list|Styles applied to the list of notifications.|
  |notificationItem|.SCSnippetNotification-notification-item|Styles applied to the single notification.|
 
@@ -286,17 +291,29 @@ export default function SnippetNotifications(props: SnippetNotificationsProps): 
         {loading ? (
           <Skeleton elevation={0} />
         ) : (
-          <MenuList className={classes.notificationsList}>
-            {notifications.slice(0, showMax).map((notificationObject: SCNotificationAggregatedType, i) => (
-              <React.Fragment key={i}>
-                {notificationObject.aggregated.map((n: SCNotificationType, k) => (
-                  <MenuItem className={classes.notificationItem} key={k}>
-                    {renderAggregatedItem(n, i)}
-                  </MenuItem>
-                ))}
-              </React.Fragment>
-            ))}
-          </MenuList>
+          <>
+            {notifications.length === 0 ? (
+              <Box className={classes.emptyBoxNotifications}>
+                <FormattedMessage
+                  id="ui.snippetNotifications.noNotifications"
+                  defaultMessage="ui.snippetNotifications.noNotifications"></FormattedMessage>
+              </Box>
+            ) : (
+              <ScrollContainer>
+                <MenuList className={classes.notificationsList}>
+                  {notifications.slice(0, showMax).map((notificationObject: SCNotificationAggregatedType, i) => (
+                    <Box key={i}>
+                      {notificationObject.aggregated.map((n: SCNotificationType, k) => (
+                        <MenuItem className={classes.notificationItem} key={k}>
+                          {renderAggregatedItem(n, i)}
+                        </MenuItem>
+                      ))}
+                    </Box>
+                  ))}
+                </MenuList>
+              </ScrollContainer>
+            )}
+          </>
         )}
       </Box>
     </Root>
