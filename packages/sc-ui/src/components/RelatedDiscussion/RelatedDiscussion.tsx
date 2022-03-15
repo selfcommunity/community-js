@@ -104,6 +104,8 @@ const PREFERENCES = [SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED, SCPreferences
  |Rule Name|Global class|Description|
  |---|---|---|
  |root|.SCRelatedDiscussion-root|Styles applied to the root element.|
+ |title|.SCRelatedDiscussion-title|Styles applied to the title element.|
+ |noResults|.SCRelatedDiscussion-noResults|Styles applied to noResults section.|
  *
  * @param props
  */
@@ -241,7 +243,7 @@ export default function RelatedDiscussion(props: RelatedDiscussionProps): JSX.El
                   endMessage={
                     <p style={{textAlign: 'center'}}>
                       <b>
-                        <FormattedMessage id="ui.relatedDiscussion.noOtherResults" defaultMessage="ui.relatedDiscussion.noOtherResults" />
+                        <FormattedMessage id="ui.relatedDiscussion.noMoreResults" defaultMessage="ui.relatedDiscussion.noMoreResults" />
                       </b>
                     </p>
                   }>

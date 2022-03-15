@@ -79,6 +79,8 @@ export interface TrendingFeedProps {
  |Rule Name|Global class|Description|
  |---|---|---|
  |root|.SCTrendingFeed-root|Styles applied to the root element.|
+ |title|.SCTrendingFeed-title|Styles applied to the title element.|
+ |noResults|.SCTrendingFeed-noResults|Styles applied to noResults section.|
 
  * @param props
  */
@@ -179,7 +181,7 @@ export default function TrendingFeed(props: TrendingFeedProps): JSX.Element {
                   endMessage={
                     <p style={{textAlign: 'center'}}>
                       <b>
-                        <FormattedMessage id="ui.trendingFeed.noOtherResults" defaultMessage="ui.trendingFeed.noOtherResults" />
+                        <FormattedMessage id="ui.trendingFeed.noMoreResults" defaultMessage="ui.trendingFeed.noMoreResults" />
                       </b>
                     </p>
                   }>

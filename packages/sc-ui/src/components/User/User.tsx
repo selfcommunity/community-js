@@ -133,7 +133,7 @@ export default function User(props: UserProps): JSX.Element {
             <Avatar alt={scUser.username} src={scUser.avatar} className={classes.avatar} />
           </ListItemAvatar>
           <ListItemText primary={scUser.username} secondary={scUser.description} />
-          <ListItemSecondaryAction className={classes.actions}>{scUserContext.user ? renderAuthenticatedActions() : null}</ListItemSecondaryAction>
+          <ListItemSecondaryAction className={classes.actions}>{renderAuthenticatedActions()}</ListItemSecondaryAction>
         </ListItem>
       ) : (
         <UserSkeleton elevation={0} />

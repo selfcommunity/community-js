@@ -70,6 +70,9 @@ export interface CategoriesListProps {
  |Rule Name|Global class|Description|
  |---|---|---|
  |root|.SCCategoriesSuggestion-root|Styles applied to the root element.|
+ |title|.SCCategoriesSuggestion-title|Styles applied to the title element.|
+ |noResults|.SCCategoriesSuggestion-noResults|Styles applied to noResults section.|
+
 
  * @param props
  */
