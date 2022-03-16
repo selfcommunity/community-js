@@ -19,7 +19,7 @@ const init = {categories: null, isLoading: true};
  ```
  :::
  */
-export default useSCFetchCategories = singletonHook(init, () => {
+const useSCFetchCategories = singletonHook(init, () => {
   const [data, setData] = useState<{categories: SCCategoryType[]; isLoading: boolean}>(init);
 
   /**
@@ -53,3 +53,5 @@ export default useSCFetchCategories = singletonHook(init, () => {
 
   return data;
 });
+
+export default useSCFetchCategories;
