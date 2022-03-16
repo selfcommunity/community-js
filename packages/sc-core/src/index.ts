@@ -10,7 +10,7 @@ import {
   SCUserContextType,
   SCFollowedManagerType,
   SCConnectionsManagerType,
-  SCCategoriesManagerType,
+  SCFollowedCategoriesManagerType,
   SCContextProviderType,
   SCCustomAdvPosition,
   SCCustomAdvType,
@@ -125,6 +125,7 @@ import useSCFetchCommentObject from './hooks/useSCFetchCommentObject';
 import useSCFetchCustomAdv from './hooks/useSCFetchCustomAdv';
 import useSCFetchTag from './hooks/useSCFetchTag';
 import useSCFetchCategory from './hooks/useSCFetchCategory';
+import useSCFetchCategories from './hooks/useSCFetchCategories';
 
 /**
  * Routing component
@@ -176,7 +177,7 @@ export {
   SCUserContextType,
   SCFollowedManagerType,
   SCConnectionsManagerType,
-  SCCategoriesManagerType,
+  SCFollowedCategoriesManagerType,
   SCThemeContextType,
   SCRoutingContextType,
   SCLocaleContextType,
@@ -282,4 +283,5 @@ export {
   useSCFetchCustomAdv,
   useSCFetchTag,
   useSCFetchCategory,
+  useSCFetchCategories,
 };

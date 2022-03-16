@@ -70,6 +70,7 @@
     "pubsub-js": "^1.9.4",
     "react-infinite-scroll-component": "^6.1.0",
     "react-lazyload": "^3.2.0",
+    "react-singleton-hook": "^3.2.3",
     "react-timeago": "^5.2.0",
     "use-deep-compare-effect": "^1.8.1",
     "validate-color": "^2.2.1"

@@ -6,7 +6,7 @@ import {Logger} from '../../../utils/logger';
 import PubSub from 'pubsub-js';
 import {SCOPE_SC_CORE} from '../../../constants/Errors';
 import useDeepCompareEffect from 'use-deep-compare-effect';
-import useSCCategoriesManager from '../../../hooks/useSCCategoriesManager';
+import useSCFollowedCategoriesManager from '../../../hooks/useSCFollowedCategoriesManager';
 import useSCFollowedManager from '../../../hooks/useSCFollowersManager';
 import useSCConnectionsManager from '../../../hooks/useSCConnectionsManager';
 import {
@@ -14,7 +14,7 @@ import {
   SCContextType,
   SCSessionType,
   SCUserType,
-  SCCategoriesManagerType,
+  SCFollowedCategoriesManagerType,
   SCFollowedManagerType,
   SCConnectionsManagerType,
   SCNotificationTopicType,
@@ -65,7 +65,7 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
    */
   const followedManager: SCFollowedManagerType = useSCFollowedManager(state.user);
   const connectionsManager: SCConnectionsManagerType = useSCConnectionsManager(state.user);
-  const categoriesManager: SCCategoriesManagerType = useSCCategoriesManager(state.user);
+  const categoriesManager: SCFollowedCategoriesManagerType = useSCFollowedCategoriesManager(state.user);
 
   /**
    * Ref notifications subscribers: BLOCKED_USER, UNBLOCKED_USER
