@@ -6,7 +6,7 @@ import {Logger} from '../utils/logger';
 import Endpoints from '../constants/Endpoints';
 import {singletonHook} from 'react-singleton-hook';
 
-const init = [];
+const init = {categories: null, isLoading: true};
 
 /**
  :::info
@@ -15,12 +15,12 @@ const init = [];
  :::tipContext can be consumed in this way:
 
  ```jsx
- const categories = useSCFetchCategories();
+ const {categories, isLoading} = useSCFetchCategories();
  ```
  :::
  */
 export default useSCFetchCategories = singletonHook(init, () => {
-  const [scCategories, setSCCategories] = useState<SCCategoryType[]>(init);
+  const [data, setData] = useState<{categories: SCCategoryType[]; isLoading: boolean}>(init);
 
   /**
    * Fetch categories
@@ -41,10 +41,9 @@ export default useSCFetchCategories = singletonHook(init, () => {
    * Get categories
    */
   useEffect(() => {
-    console.log('Prefetch categories');
     fetchCategories()
       .then((data) => {
-        setSCCategories(data);
+        setData({categories: data, isLoading: false});
       })
       .catch((error) => {
         console.log(error);
@@ -52,5 +51,5 @@ export default useSCFetchCategories = singletonHook(init, () => {
       });
   }, []);
 
-  return scCategories;
+  return data;
 });
