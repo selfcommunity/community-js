@@ -400,5 +400,12 @@
   "ui.contributionActionMenu.restoreFromDeleted": "Restore from deleted",
   "ui.contributionActionMenu.moderatedMotivation": "Motivation:",
 
+  "ui.lightbox.closeLabel": "Close",
+  "ui.lightbox.nextLabel": "Next image",
+  "ui.lightbox.prevLabel": "Previous image",
+  "ui.lightbox.zoomInLabel": "Zoom in",
+  "ui.lightbox.zoomOutLabel": "Zoom out",
+  "ui.lightbox.imageLoadErrorMessage": "This image failed to load",
+
   "templates.userProfile.edit": "Edit"
 }
