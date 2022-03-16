@@ -2141,4 +2141,5 @@ export interface ReactImageLightboxState {
   loadErrorStatus: Record<string, any>;
 }
 
-export default injectIntl(ReactImageLightbox);
+// export default injectIntl(ReactImageLightbox);
+export default null;
