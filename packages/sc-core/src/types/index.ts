@@ -2,7 +2,7 @@ import {SCBannerType, SCBroadcastMessageBannerType, SCBroadcastMessageType} from
 import {
   SCUserContextType,
   SCFollowedManagerType,
-  SCCategoriesManagerType,
+  SCFollowedCategoriesManagerType,
   SCConnectionsManagerType,
   SCContextProviderType,
   SCContextType,
@@ -72,7 +72,7 @@ export {
   SCBroadcastMessageBannerType,
   SCBroadcastMessageType,
   SCUserContextType,
-  SCCategoriesManagerType,
+  SCFollowedCategoriesManagerType,
   SCContextProviderType,
   SCContextType,
   SCSettingsType,

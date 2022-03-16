@@ -125,7 +125,7 @@ export interface SCUserContextType {
   /**
    * Managers: followed, connections, categories, etc...
    */
-  managers: {followed?: SCFollowedManagerType; connections?: SCConnectionsManagerType; categories: SCCategoriesManagerType};
+  managers: {followed?: SCFollowedManagerType; connections?: SCConnectionsManagerType; categories: SCFollowedCategoriesManagerType};
 }
 
 export interface SCFollowedManagerType {
@@ -165,7 +165,7 @@ export interface SCFollowedManagerType {
   emptyCache?: () => void;
 }
 
-export interface SCCategoriesManagerType {
+export interface SCFollowedCategoriesManagerType {
   /**
    * List of all categories ids followed by the authenticated user
    */
