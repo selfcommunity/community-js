@@ -86,7 +86,7 @@ export default function ({
   const [value, setValue] = useState(defaultValue);
 
   // HOOKS
-  const [categories, isLoading] = useSCFetchCategories();
+  const {categories, isLoading} = useSCFetchCategories();
 
   useEffect(() => {
     onChange && onChange(value);
