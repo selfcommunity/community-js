@@ -2,13 +2,13 @@ import React, {useContext, useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {
   Logger,
-  SCCategoriesManagerType,
   SCCategoryType,
   SCContextType,
   SCUserContext,
   SCUserContextType,
   useSCContext,
-  useSCFetchCategory
+  useSCFetchCategory,
+  SCFollowedCategoriesManagerType
 } from '@selfcommunity/core';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {LoadingButton} from '@mui/lab';
@@ -90,7 +90,7 @@ export default function FollowCategoryButton(props: FollowCategoryButtonProps): 
   // CONTEXT
   const scContext: SCContextType = useSCContext();
   const scUserContext: SCUserContextType = useContext(SCUserContext);
-  const scCategoriesManager: SCCategoriesManagerType = scUserContext.managers.categories;
+  const scCategoriesManager: SCFollowedCategoriesManagerType = scUserContext.managers.categories;
 
   useEffect(() => {
     /**
