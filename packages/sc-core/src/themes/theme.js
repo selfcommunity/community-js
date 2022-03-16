@@ -78,17 +78,17 @@ const getTheme = (options, preferences) => {
             styleOverrides: {
               root: {
                 '& .SCSnippetNotifications-notifications-list': {
-                  // notification list (ul)
+                  // wrap notifications list (ul)
                   // (ex. background-color: 'red'),
                 },
                 '& .SCSnippetNotifications-notification-item': {
-                  // single notification (li)
+                  // single notification item (li)
                   // (ex. background-color: 'red'),
                 },
                 ['& .SCUserFollowNotification-username, .SCUserFollowNotification-username, .SCCommentNotification-username,' +
                 'SCContributionFollowNotification-username, .SCContributionFollowNotification-username, .SCUserNotificationMention-username,' +
                 '.SCUserNotificationMention-username, .SCUserNotificationPrivateMessage-message-sender, .SCVoteUpNotification-username']: {
-                  // username for notification type user follow, comment/nested comment,
+                  // username for notification types: user follow, comment/nested comment,
                   // follow contribution, mention, private message, vote up
                   // (ex. color: 'red'),
                 },
@@ -99,7 +99,7 @@ const getTheme = (options, preferences) => {
                 '.SCIncubatorApprovedNotification-list-item-snippet-new, .SCDeletedForNotification-list-item-snippet-new,' +
                 '.SCContributionFollowNotification-list-item-snippet-new, .SCCommentNotification-list-item-snippet-new,' +
                 '.SCCollapsedForNotification-list-item-snippet-new']: {
-                  // border left indicate new notification
+                  // border left indicate new notification of various type
                   // (ex. borderLeft: '2px solid grey !important'),
                 },
               },

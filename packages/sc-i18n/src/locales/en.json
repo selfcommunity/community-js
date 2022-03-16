@@ -24,40 +24,41 @@
   "ui.user.ignore": "Ignore",
 
   "ui.peopleSuggestion.title": "People Suggestion",
-  "ui.peopleSuggestion.subtitle.noResults": "No People",
+  "ui.peopleSuggestion.subtitle.noResults": "Nothing to show",
   "ui.peopleSuggestion.button.showMore": "Show More",
 
   "ui.trendingPeople.title": "Trending People",
-  "ui.trendingPeople.noResults": "No trending people to show",
+  "ui.trendingPeople.noResults": "Nothing to show",
   "ui.trendingPeople.button.showAll": "Show All",
-  "ui.trendingPeople.noOtherResults": "No other results",
+  "ui.trendingPeople.noMoreResults": "No more results",
 
   "ui.trendingFeed.title": "Trending Feed",
   "ui.trendingFeed.noResults": "Nothing to show",
   "ui.trendingFeed.button.showMore": "Show More",
-  "ui.trendingFeed.noOtherResults": "No other results",
+  "ui.trendingFeed.noMoreResults": "No more results",
 
   "ui.relatedDiscussion.title": "Related Discussions",
   "ui.relatedDiscussion.noResults": "Nothing to show",
   "ui.relatedDiscussion.button.showMore": "Show More",
-  "ui.relatedDiscussion.noOtherResults": "No other results",
+  "ui.relatedDiscussion.noMoreResults": "No more results",
 
 
   "ui.category.categoryFollowers": "{total, plural, =0 {Followed by # people} one {Followed by # person} other {Followed by # people}}",
 
-  "ui.categoriesFollowed.title": "Followed Categories",
-  "ui.categoriesFollowed.subtitle.noResults": "No Categories Followed",
-  "ui.categoriesFollowed.categoriesFollowed": "{total, plural, =0 {# Categories Followed} one {# Category Followed} other {# Categories Followed}}",
+
+  "ui.categoriesFollowed.title": "{total, plural, =0 {# Lifestyles followed} one {# Lifestyle followed} other {# Lifestyles followed}}",
+  "ui.categoriesFollowed.modal.title": "Followed Lifestyles",
+  "ui.categoriesFollowed.subtitle.noResults": "Nothing to show",
   "ui.categoriesFollowed.button.showAll": "Show All",
-  "ui.categoriesFollowed.noMoreCategories": "No more categories",
+  "ui.categoriesFollowed.noMoreResults": "No more results",
 
-  "ui.categoriesPopular.title": "Popular Categories",
-  "ui.categoriesPopular.noResults": "No Categories",
+  "ui.categoriesPopular.title": "Popular Lifestyles",
+  "ui.categoriesPopular.noResults": "Nothing to show",
   "ui.categoriesPopular.button.showAll": "Show All",
-  "ui.categoriesPopular.noMoreCategories": "No more categories",
+  "ui.categoriesPopular.noMoreResults": "No more results",
 
-  "ui.categoriesSuggestion.title": "Explore Categories",
-  "ui.categoriesSuggestion.noResults": "No Categories",
+  "ui.categoriesSuggestion.title": "Explore Lifestyles",
+  "ui.categoriesSuggestion.noResults": "Nothing to show",
   "ui.categoriesSuggestion.button.showMore": "Show More",
 
   "ui.changeCover.button.change": "Change Cover",
@@ -256,17 +257,17 @@
   "ui.userProfileEdit.info": "Public informations",
   "ui.userProfileEdit.notification": "Notification settings",
 
-  "ui.usersFollowed.title": "Users Followed",
-  "ui.usersFollowed.usersFollowed": "{total, plural, =0 {# users followed} one {# user followed} other {# users followed}}",
-  "ui.usersFollowed.subtitle.noResults": "No users followed",
+  "ui.usersFollowed.title": "{total, plural, =0 {# users followed} one {# user followed} other {# users followed}}",
+  "ui.usersFollowed.modal.title": "Users Followed",
+  "ui.usersFollowed.subtitle.noResults": "Nothing to show",
   "ui.usersFollowed.button.showAll": "Show All",
-  "ui.usersFollowed.noMoreFollowed": "No more followed",
+  "ui.usersFollowed.noMoreResults": "No more results",
 
-  "ui.userFollowers.title": "Followers",
-  "ui.userFollowers.userFollowers": "{total, plural, =0 {# followers} one {# follower} other {# followers}}",
-  "ui.userFollowers.subtitle.noResults": "No followers",
+  "ui.userFollowers.title": "{total, plural, =0 {# followers} one {# follower} other {# followers}}",
+  "ui.userFollowers.modal.title": "Followers",
+  "ui.userFollowers.subtitle.noResults": "Nothing to show",
   "ui.userFollowers.button.showAll": "Show All",
-  "ui.userFollowers.noMoreFollowers": "No more followers",
+  "ui.userFollowers.noMoreResults": "No more results",
 
   "ui.categoryHeader.followedBy": "{total, plural, =0 {Followed by # people} one {Followed by # person} other {Followed by # people}}",
   "ui.categoryHeader.followers": "Followers",
@@ -398,6 +399,13 @@
   "ui.contributionActionMenu.restoreFromHidden": "Restore from hidden",
   "ui.contributionActionMenu.restoreFromDeleted": "Restore from deleted",
   "ui.contributionActionMenu.moderatedMotivation": "Motivation:",
+
+  "ui.lightbox.closeLabel": "Close",
+  "ui.lightbox.nextLabel": "Next image",
+  "ui.lightbox.prevLabel": "Previous image",
+  "ui.lightbox.zoomInLabel": "Zoom in",
+  "ui.lightbox.zoomOutLabel": "Zoom out",
+  "ui.lightbox.imageLoadErrorMessage": "This image failed to load",
 
   "templates.userProfile.edit": "Edit"
 }

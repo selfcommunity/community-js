@@ -24,41 +24,42 @@
   "ui.user.ignore": "Ignora",
 
   "ui.peopleSuggestion.title": "Persone che potresti conoscere",
-  "ui.peopleSuggestion.subtitle.noResults": "Nessuno da mostrare",
-  "ui.peopleSuggestion.button.showMore": "Mostra di piú",
+  "ui.peopleSuggestion.subtitle.noResults": "Nessun risultato",
+  "ui.peopleSuggestion.button.showMore": "Vedi di più",
 
-  "ui.trendingPeople.title": "Persone di tendenza",
-  "ui.trendingPeople.noResults": "Nessuno da mostrare",
-  "ui.trendingPeople.button.showAll": "Mostra tutti",
-  "ui.trendingPeople.noOtherResults": "Nient'altro da mostrare",
+  "ui.trendingPeople.title": "Gli utenti più apprezzati",
+  "ui.trendingPeople.noResults": "Nessun risultato",
+  "ui.trendingPeople.button.showAll": "Vedi di più",
+  "ui.trendingPeople.noMoreResults": "Nient'altro da mostrare",
 
-  "ui.trendingFeed.title": "Post di tendenza",
-  "ui.trendingFeed.noResults": "Niente da mostrare",
-  "ui.trendingFeed.button.showMore": "Mostra di piú",
-  "ui.trendingFeed.noOtherResults": "Nient'altro da mostrare",
+  "ui.trendingFeed.title": "I post più partecipati",
+  "ui.trendingFeed.noResults": "Nessun risultato",
+  "ui.trendingFeed.button.showMore": "Vedi di più",
+  "ui.trendingFeed.noMoreResults": "Nient'altro da mostrare",
 
   "ui.relatedDiscussion.title": "Post correlati",
-  "ui.relatedDiscussion.noResults": "Nessun post da mostrare",
-  "ui.relatedDiscussion.button.showMore": "Mostra di piú",
-  "ui.relatedDiscussion.noOtherResults": "Nient'altro da mostrare",
+  "ui.relatedDiscussion.noResults": "Nessun risultato",
+  "ui.relatedDiscussion.button.showMore": "Vedi di più",
+  "ui.relatedDiscussion.noMoreResults": "Nient'altro da mostrare",
 
-  "ui.category.categoryFollowers": "{total, plural, =0 {Seguita da # persone} one {Seguita da # persona} other {Seguita da # persone}}",
-
-  "ui.categoriesFollowed.title": "Categorie Seguite",
-  "ui.categoriesFollowed.subtitle.noResults": "Nessuna Categoria Seguita",
-  "ui.categoriesFollowed.categoriesFollowed": "{total, plural, =0 {# Categorie Seguite} one {# Categoria Seguita} other {# Categorie Seguite}}",
-  "ui.categoriesFollowed.button.showAll": "Mostra tutti",
-  "ui.categoriesFollowed.noMoreCategories": "Nessun altra categoria",
-
-  "ui.categoriesPopular.title": "Categorie Popolari",
-  "ui.categoriesPopular.noResults": "Nessuna Categoria",
-  "ui.categoriesPopular.button.showAll": "Mostra tutti",
-  "ui.categoriesPopular.noMoreCategories": "Nessun altra categoria",
+  "ui.category.categoryFollowers": "{total, plural, =0 {Seguito da # persone} one {Seguito da # persona} other {Seguito da # persone}}",
 
 
-  "ui.categoriesSuggestion.title": "Esplora Categorie",
-  "ui.categoriesSuggestion.noResults": "Nessuna Categoria",
-  "ui.categoriesSuggestion.button.showMore": "Mostra di piú",
+  "ui.categoriesFollowed.title": "{total, plural, =0 {Segue # stili di vita} one {Segue # stile di vita} other {Segue # stili di vita}}",
+  "ui.categoriesFollowed.modal.title": "Stili di vita seguiti",
+  "ui.categoriesFollowed.subtitle.noResults": "Nessun risultato",
+  "ui.categoriesFollowed.button.showAll": "Vedi di più",
+  "ui.categoriesFollowed.noMoreResults": "Nient'altro da mostrare",
+
+  "ui.categoriesPopular.title": "Stili di vita più popolari",
+  "ui.categoriesPopular.noResults": "Nessun risultato",
+  "ui.categoriesPopular.button.showAll": "Vedi di più",
+  "ui.categoriesPopular.noMoreResults": "Nient'altro da mostrare",
+
+
+  "ui.categoriesSuggestion.title": "Segui uno stile di vita",
+  "ui.categoriesSuggestion.noResults": "Nessun risultato",
+  "ui.categoriesSuggestion.button.showMore": "Vedi di più",
 
   "ui.changeCover.button.change": "Cambia Copertina",
   "ui.changeCover.button.delete": "Elimina Copertina",
@@ -256,19 +257,19 @@
   "ui.userProfileEdit.info": "Informazioni pubbliche",
   "ui.userProfileEdit.notification": "Impostazioni di notifica",
 
-  "ui.usersFollowed.title": "Utenti Seguiti",
-  "ui.usersFollowed.usersFollowed": "{total, plural, =0 {# utenti seguiti} one {# utente seguito} other {# utenti seguiti}}",
-  "ui.usersFollowed.subtitle.noResults": "Nessun utente seguito",
-  "ui.usersFollowed.button.showAll": "Mostra tutti",
-  "ui.usersFollowed.noMoreFollowed": "Non ci sono altri utenti seguiti",
+  "ui.usersFollowed.title": "{total, plural, =0 {Segue # persone} one {Segue # persona} other {Segue # persone}}",
+  "ui.usersFollowed.modal.title": "Utenti Seguiti",
+  "ui.usersFollowed.subtitle.noResults": "Nessun risultato",
+  "ui.usersFollowed.button.showAll": "Vedi di più",
+  "ui.usersFollowed.noMoreResults": "Nient'altro da mostrare",
 
-  "ui.userFollowers.title": "Followers",
-  "ui.userFollowers.userFollowers": "{total, plural, =0 {# followers} one {# follower} other {# followers}}",
-  "ui.userFollowers.subtitle.noResults": "Nessun follower",
-  "ui.userFollowers.button.showAll": "Mostra tutti",
-  "ui.userFollowers.noMoreFollowers": "Non ci sono altri followers",
+  "ui.userFollowers.title": "{total, plural, =0 {Seguito da # persone} one {Seguito da # persona} other {Seguito da # persone}}",
+  "ui.userFollowers.modal.title": "Followers",
+  "ui.userFollowers.subtitle.noResults": "Nessun risultato",
+  "ui.userFollowers.button.showAll": "Vedi di più",
+  "ui.userFollowers.noMoreResults": "Nient'altro da mostrare",
 
-  "ui.categoryHeader.followedBy": "{total, plural, =0 {Seguita da # persone} one {Seguita da # persona} other {Seguita da # persone}}",
+  "ui.categoryHeader.followedBy": "{total, plural, =0 {Seguito da # persone} one {Seguito da # persona} other {Seguito da # persone}}",
   "ui.categoryHeader.followers": "Followers",
   "ui.categoryHeader.noOtherFollowers": "Non ci sono altri followers.",
 
@@ -398,6 +399,13 @@
   "ui.contributionActionMenu.restoreFromHidden": "Ripristina da nascosto",
   "ui.contributionActionMenu.restoreFromDeleted": "Ripristina da cancellato",
   "ui.contributionActionMenu.moderatedMotivation": "Motivazione:",
+
+  "ui.lightbox.closeLabel": "Chiudi",
+  "ui.lightbox.nextLabel": "Prossima immagine",
+  "ui.lightbox.prevLabel": "Immagine precedente",
+  "ui.lightbox.zoomInLabel": "Ingrandisci",
+  "ui.lightbox.zoomOutLabel": "Rimpicciolisci",
+  "ui.lightbox.imageLoadErrorMessage": "Non è stato possibile caricare l'immagine",
 
   "templates.userProfile.edit": "Modifica"
 }

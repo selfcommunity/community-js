@@ -117,5 +117,5 @@ export interface SCCategoryType {
   /**
    * Followers counter for the category.
    */
-  followers_count?: number;
+  followers_counter?: number;
 }

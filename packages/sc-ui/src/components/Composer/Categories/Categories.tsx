@@ -7,13 +7,12 @@ import Checkbox from '@mui/material/Checkbox';
 import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
 import {Chip, InternalStandardProps as StandardProps} from '@mui/material';
-import {Endpoints, http} from '@selfcommunity/core';
+import {useSCFetchCategories} from '@selfcommunity/core';
 import {styled} from '@mui/material/styles';
 import {AutocompleteClasses} from '@mui/material/Autocomplete/autocompleteClasses';
 import {OverridableStringUnion} from '@mui/types';
 import {AutocompletePropsSizeOverrides} from '@mui/material/Autocomplete/Autocomplete';
 import {SCCategoryType} from '@selfcommunity/core/src/types';
-import {AxiosResponse} from 'axios';
 
 const PREFIX = 'SCComposerCategories';
 
@@ -83,36 +82,11 @@ export default function ({
   const {onChange, ...rest} = props;
 
   // State
-  const [isLoading, setIsLoading] = useState(false);
   const [open, setOpen] = useState(false);
-  const [categories, setCategories] = useState([]);
   const [value, setValue] = useState(defaultValue);
 
-  const load = (offset = 0, limit = 20) => {
-    http
-      .request({
-        url: Endpoints.CategoryList.url(),
-        method: Endpoints.CategoryList.method,
-        params: {
-          offset,
-          limit
-        }
-      })
-      .then((res: AxiosResponse<any>) => {
-        setCategories(res.data.results);
-        if (res.data.count > limit) {
-          load(offset + res.data.results.length, res.data.count);
-        }
-      })
-      .then(() => setIsLoading(false));
-  };
-
-  // Component update
-  useEffect(() => {
-    if (!isLoading && open && categories.length === 0) {
-      load();
-    }
-  }, [open]);
+  // HOOKS
+  const {categories, isLoading} = useSCFetchCategories();
 
   useEffect(() => {
     onChange && onChange(value);

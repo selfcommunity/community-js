@@ -26,9 +26,9 @@ import CentralProgress from '../../shared/CentralProgress';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 const messages = defineMessages({
-  usersFollowed: {
-    id: 'ui.usersFollowed.usersFollowed',
-    defaultMessage: 'ui.usersFollowed.usersFollowed'
+  title: {
+    id: 'ui.usersFollowed.title',
+    defaultMessage: 'ui.usersFollowed.title'
   },
   noUsers: {
     id: 'ui.usersFollowed.subtitle.noResults',
@@ -95,6 +95,8 @@ export interface UsersFollowedProps {
  |Rule Name|Global class|Description|
  |---|---|---|
  |root|.SCUsersFollowed-root|Styles applied to the root element.|
+ |title|.SCUsersFollowed-title|Styles applied to the title element.|
+ |noResults|.SCUsersFollowed-noResults|Styles applied to noResults section.|
 
  * @param props
  */
@@ -195,7 +197,7 @@ export default function UsersFollowed(props: UsersFollowedProps): JSX.Element {
             <Typography className={classes.noResults} variant="body2">{`${intl.formatMessage(messages.noUsers)}`}</Typography>
           ) : (
             <React.Fragment>
-              <Typography className={classes.title} variant="body1">{`${intl.formatMessage(messages.usersFollowed, {total: total})}`}</Typography>
+              <Typography className={classes.title} variant="body1">{`${intl.formatMessage(messages.title, {total: total})}`}</Typography>
               <List>
                 {followed.slice(0, visibleUsers).map((user: SCUserType, index) => (
                   <div key={index}>
@@ -210,7 +212,7 @@ export default function UsersFollowed(props: UsersFollowedProps): JSX.Element {
               )}
               {openUsersFollowedDialog && (
                 <BaseDialog
-                  title={<FormattedMessage defaultMessage="ui.usersFollowed.title" id="ui.usersFollowed.title" />}
+                  title={`${intl.formatMessage(messages.title, {total: total})}`}
                   onClose={() => setOpenUsersFollowedDialog(false)}
                   open={openUsersFollowedDialog}>
                   {loading ? (
@@ -225,7 +227,7 @@ export default function UsersFollowed(props: UsersFollowedProps): JSX.Element {
                       endMessage={
                         <p style={{textAlign: 'center'}}>
                           <b>
-                            <FormattedMessage id="ui.usersFollowed.noMoreFollowed" defaultMessage="ui.usersFollowed.noMoreFollowed" />
+                            <FormattedMessage id="ui.usersFollowed.noMoreResults" defaultMessage="ui.usersFollowed.noMoreResults" />
                           </b>
                         </p>
                       }>
@@ -246,13 +248,19 @@ export default function UsersFollowed(props: UsersFollowedProps): JSX.Element {
   );
 
   /**
-   * Renders root object (if results and if user is logged, otherwise component is hidden)
+   * if there are no results and autoHide prop is set to true ,component is hidden
    */
   if (autoHide && !total) {
     return null;
   }
+  /**
+   * If content availability community option is false and user is anonymous , component is hidden.
+   */
   if (!contentAvailability && !scUserContext.user) {
     return null;
   }
+  /**
+   * Renders root object
+   */
   return <Root className={classNames(classes.root, className)}>{u}</Root>;
 }

@@ -81,6 +81,8 @@ export interface TrendingPeopleProps {
  |Rule Name|Global class|Description|
  |---|---|---|
  |root|.SCTrendingPeople-root|Styles applied to the root element.|
+ |title|.SCTrendingPeople-title|Styles applied to the title element.|
+ |noResults|.SCTrendingPeople-noResults|Styles applied to noResults section.|
 
  * @param props
  */
@@ -180,7 +182,7 @@ export default function TrendingPeople(props: TrendingPeopleProps): JSX.Element 
                   endMessage={
                     <p style={{textAlign: 'center'}}>
                       <b>
-                        <FormattedMessage id="ui.trendingPeople.noOtherResults" defaultMessage="ui.trendingPeople.noOtherResults" />
+                        <FormattedMessage id="ui.trendingPeople.noMoreResults" defaultMessage="ui.trendingPeople.noMoreResults" />
                       </b>
                     </p>
                   }>

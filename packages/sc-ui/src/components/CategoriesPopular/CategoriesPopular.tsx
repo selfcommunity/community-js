@@ -49,6 +49,8 @@ const Root = styled(Card, {
  |Rule Name|Global class|Description|
  |---|---|---|
  |root|.SCCategoriesPopular-root|Styles applied to the root element.|
+ |title|.SCCategoriesPopular-title|Styles applied to the title element.|
+ |noResults|.SCCategoriesPopular-noResults|Styles applied to noResults section.|
 
  * @param props
  */
@@ -153,7 +155,7 @@ export default function CategoriesPopular(props: CategoriesListProps): JSX.Eleme
                   endMessage={
                     <p style={{textAlign: 'center'}}>
                       <b>
-                        <FormattedMessage id="ui.categoriesPopular.noMoreCategories" defaultMessage="ui.categoriesPopular.noMoreCategories" />
+                        <FormattedMessage id="ui.categoriesPopular.noMoreResults" defaultMessage="ui.categoriesPopular.noMoreResults" />
                       </b>
                     </p>
                   }>

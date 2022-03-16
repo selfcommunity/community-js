@@ -61,6 +61,10 @@ const Root = styled(Box, {
     display: 'inline',
     color: theme.palette.text.primary
   },
+  [`& .${classes.viewIncubatorLink}`]: {
+    paddingLeft: theme.spacing(2),
+    paddingBottom: theme.spacing()
+  },
   [`& .${classes.toastInfo}`]: {
     marginTop: 10
   }

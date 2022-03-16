@@ -1,4 +1,4 @@
-import {useEffect, useMemo, useRef, useState} from 'react';
+import {useMemo} from 'react';
 import {AxiosResponse} from 'axios';
 import http from '../utils/http';
 import Endpoints from '../constants/Endpoints';
@@ -16,12 +16,12 @@ import {Logger} from '../utils/logger';
  Follow these steps:
  ```jsx
  1. const scUserContext: SCUserContextType = useSCUser();
- 2. const scCategoriesManager: SCCategoriesManagerType = scUserContext.manager.categories;
- 3. scCategoriesManager.isFollowed(category)
+ 2. const scFollowedCategoriesManager: SCFollowedCategoriesManagerType = scUserContext.manager.categories;
+ 3. scFollowedCategoriesManager.isFollowed(category)
  ```
  :::
  */
-export default function useSCCategoriesManager(user?: SCUserType) {
+export default function useSCFollowedCategoriesManager(user?: SCUserType) {
   const {cache, updateCache, emptyCache, data, setData, loading, setLoading, isLoading} = useSCCachingManager();
 
   /**
@@ -33,7 +33,7 @@ export default function useSCCategoriesManager(user?: SCUserType) {
   const refresh = useMemo(
     () => (): void => {
       emptyCache();
-      if (user && cache.length > 0) {
+      if (user) {
         // Only if user is authenticated
         http
           .request({

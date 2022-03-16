@@ -512,6 +512,26 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/moderation/contribution/$(id)/status/?contribution_type=$(contribution_type)'),
     method: 'GET',
   },
+
+  /**
+   * Insights
+   **/
+  InsightBestEmbed: {
+    url: urlReplacer('/api/v2/insight/embed/'),
+    method: 'GET',
+  },
+  InsightBestUser: {
+    url: urlReplacer('/api/v2/insight/user/'),
+    method: 'GET',
+  },
+  InsightEmbedCounter: {
+    url: urlReplacer('/api/v2/insight/embed/counters/?embed_type=$(type)&embed_id=$(id)'),
+    method: 'GET',
+  },
+  InsightUserCounter: {
+    url: urlReplacer('/api/v2/insight/user/counters/?user_id=$(id)'),
+    method: 'GET',
+  },
 };
 
 export default Endpoints;

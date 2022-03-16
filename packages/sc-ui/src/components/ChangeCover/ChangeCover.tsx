@@ -14,7 +14,8 @@ const PREFIX = 'SCChangeCoverButton';
 const classes = {
   root: `${PREFIX}-root`,
   helpPopover: `${PREFIX}-help-popover`,
-  menuItem: `${PREFIX}-menu-item`
+  addMenuItem: `${PREFIX}-add-menuItem`,
+  delMenuItem: `${PREFIX}-del-menuItem`
 };
 
 const Root = styled(Box, {
@@ -66,7 +67,8 @@ export interface ChangeCoverProps {
  |---|---|---|
  |root|.SCChangeCoverButton-root|Styles applied to the root element.|
  |helpPopover|.SCChangeCoverButton-help-popover|Styles applied to the help popover element.|
- |menuItem|.SCChangeCoverButton-menu-item|Styles applied to the menu element.|
+ |addMenuItem|.SCChangeCoverButton-add-menuItem|Styles applied to the add menu element.|
+ |delMenuItem|.SCChangeCoverButton-del-menuItem|Styles applied to the del menu element.|
 
  * @param props
  */
@@ -173,29 +175,29 @@ export default function ChangeCover(props: ChangeCoverProps): JSX.Element {
         <FormattedMessage id="ui.changeCover.button.change" defaultMessage="ui.changeCover.button.change" />
       </Button>
       <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
-        {hasCover && (
-          <MenuItem className={classes.menuItem} onClick={() => setOpenDeleteCoverDialog(true)}>
-            <ListItemIcon>
-              <Icon fontSize="small">delete</Icon>
-            </ListItemIcon>
-            <FormattedMessage id="ui.changeCover.button.delete" defaultMessage="ui.changeCover.button.delete" />
+        {loading ? (
+          <MenuItem sx={{justifyContent: 'center'}}>
+            <CircularProgress size={15} />
           </MenuItem>
-        )}
-        <input type="file" onChange={() => handleUpload(event)} ref={fileInput} hidden />
-        <MenuItem disabled={loading} onClick={() => fileInput.current.click()} className={classes.menuItem}>
-          {loading ? (
-            <React.Fragment>
-              <CircularProgress size={15} />
-            </React.Fragment>
-          ) : (
-            <React.Fragment>
+        ) : (
+          <>
+            <input type="file" onChange={() => handleUpload(event)} ref={fileInput} hidden />
+            <MenuItem disabled={loading} onClick={() => fileInput.current.click()} className={classes.addMenuItem}>
               <ListItemIcon>
                 <Icon fontSize="small">add_circle_outline</Icon>
               </ListItemIcon>
               <FormattedMessage id="ui.changeCover.button.upload" defaultMessage="ui.changeCover.button.upload" />
-            </React.Fragment>
-          )}
-        </MenuItem>
+            </MenuItem>
+            {hasCover && (
+              <MenuItem className={classes.delMenuItem} onClick={() => setOpenDeleteCoverDialog(true)}>
+                <ListItemIcon>
+                  <Icon fontSize="small">delete</Icon>
+                </ListItemIcon>
+                <FormattedMessage id="ui.changeCover.button.delete" defaultMessage="ui.changeCover.button.delete" />
+              </MenuItem>
+            )}
+          </>
+        )}
       </Menu>
       <IconButton className={classes.helpPopover} color="primary" aria-label="upload picture" component="span" onClick={handleClickHelpButton}>
         <Icon fontSize="small">help_outline</Icon>

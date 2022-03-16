@@ -18,9 +18,9 @@ import CentralProgress from '../../shared/CentralProgress';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 const messages = defineMessages({
-  categoriesFollowed: {
-    id: 'ui.categoriesFollowed.categoriesFollowed',
-    defaultMessage: 'ui.categoriesFollowed.categoriesFollowed'
+  title: {
+    id: 'ui.categoriesFollowed.title',
+    defaultMessage: 'ui.categoriesFollowed.title'
   },
   noCategories: {
     id: 'ui.categoriesFollowed.subtitle.noResults',
@@ -59,6 +59,8 @@ const Root = styled(Card, {
  |Rule Name|Global class|Description|
  |---|---|---|
  |root|.SCCategoryFollowed-root|Styles applied to the root element.|
+ |title|.SCCategoryFollowed-title|Styles applied to the title element.|
+ |noResults|.SCCategoryFollowed-noResults|Styles applied to noResults section.|
 
  * @param props
  */
@@ -152,7 +154,7 @@ export default function CategoriesFollowed(props: CategoriesListProps): JSX.Elem
             <Typography className={classes.noResults} variant="body2">{`${intl.formatMessage(messages.noCategories)}`}</Typography>
           ) : (
             <React.Fragment>
-              <Typography className={classes.title} variant="body1">{`${intl.formatMessage(messages.categoriesFollowed, {
+              <Typography className={classes.title} variant="body1">{`${intl.formatMessage(messages.title, {
                 total: total
               })}`}</Typography>
               <List>
@@ -177,7 +179,7 @@ export default function CategoriesFollowed(props: CategoriesListProps): JSX.Elem
           )}
           {openCategoriesFollowedDialog && (
             <BaseDialog
-              title={<FormattedMessage defaultMessage="ui.categoriesFollowed.title" id="ui.categoriesFollowed.title" />}
+              title={`${intl.formatMessage(messages.title, {total: total})}`}
               onClose={() => setOpenCategoriesFollowedDialog(false)}
               open={openCategoriesFollowedDialog}>
               {loading ? (
@@ -192,7 +194,7 @@ export default function CategoriesFollowed(props: CategoriesListProps): JSX.Elem
                   endMessage={
                     <p style={{textAlign: 'center'}}>
                       <b>
-                        <FormattedMessage id="ui.categoriesFollowed.noMoreCategories" defaultMessage="ui.categoriesFollowed.noMoreCategories" />
+                        <FormattedMessage id="ui.categoriesFollowed.noMoreResults" defaultMessage="ui.categoriesFollowed.noMoreResults" />
                       </b>
                     </p>
                   }>
