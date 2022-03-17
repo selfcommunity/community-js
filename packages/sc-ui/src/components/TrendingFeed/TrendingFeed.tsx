@@ -2,8 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
 import {Button, Typography} from '@mui/material';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
+import Widget from '../Widget';
 import {Endpoints, http, Logger, SCFeedObjectType} from '@selfcommunity/core';
 import TrendingPostSkeleton from './Skeleton';
 import {AxiosResponse} from 'axios';
@@ -25,13 +24,15 @@ const classes = {
   noResults: `${PREFIX}-noResults`
 };
 
-const Root = styled(Card, {
+const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   maxWidth: 700,
-  marginBottom: theme.spacing(2)
+  marginBottom: theme.spacing(2),
+  padding: 16,
+  paddingBottom: 24
 }));
 export interface TrendingFeedProps {
   /**
@@ -140,7 +141,7 @@ export default function TrendingFeed(props: TrendingFeedProps): JSX.Element {
       {loading ? (
         <TrendingPostSkeleton elevation={0} />
       ) : (
-        <CardContent>
+        <>
           <Typography className={classes.title} variant="body1">
             <FormattedMessage id="ui.trendingFeed.title" defaultMessage="ui.trendingFeed.title" />
           </Typography>
@@ -196,7 +197,7 @@ export default function TrendingFeed(props: TrendingFeedProps): JSX.Element {
               )}
             </BaseDialog>
           )}
-        </CardContent>
+        </>
       )}
     </React.Fragment>
   );

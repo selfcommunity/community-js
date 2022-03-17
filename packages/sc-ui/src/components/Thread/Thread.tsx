@@ -1,12 +1,12 @@
 import React, {useContext, useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import Card from '@mui/material/Card';
+import Widget from '../Widget';
 import {Endpoints, http, SCPrivateMessageType, SCUserContext, SCUserContextType, UserUtils} from '@selfcommunity/core';
 import {AxiosResponse} from 'axios';
 import Message from '../Message';
 import _ from 'lodash';
 import {FormattedMessage, useIntl} from 'react-intl';
-import {Box, Divider, Grid, ListSubheader, TextField, Typography} from '@mui/material';
+import {Box, Grid, ListSubheader, TextField, Typography} from '@mui/material';
 import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
 import MessageEditor from '../MessageEditor';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -27,7 +27,7 @@ const classes = {
   center: `${PREFIX}-center`
 };
 
-const Root = styled(Card, {
+const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root

@@ -1,6 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
+import Widget from '../../Widget';
 import {Endpoints, http, SCUserContext, SCUserContextType, SCPrizeType, Logger} from '@selfcommunity/core';
 import {Box, Button, CardActions, CardContent, CardMedia, Grid, Typography} from '@mui/material';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
@@ -35,7 +36,7 @@ const classes = {
   chip: `${PREFIX}-chip`
 };
 
-const Root = styled(Card, {
+const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root

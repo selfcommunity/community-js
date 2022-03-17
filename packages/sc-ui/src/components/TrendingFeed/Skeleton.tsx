@@ -1,6 +1,5 @@
 import React from 'react';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
+import Widget from '../Widget';
 import List from '@mui/material/List';
 import {styled} from '@mui/material/styles';
 import FeedObjectSkeleton from '../FeedObject/Skeleton';
@@ -12,7 +11,7 @@ const classes = {
   list: `${PREFIX}-list`
 };
 
-const Root = styled(Card)(({theme}) => ({
+const Root = styled(Widget)(({theme}) => ({
   maxWidth: 700,
   marginBottom: theme.spacing(2),
 
@@ -25,13 +24,11 @@ const Root = styled(Card)(({theme}) => ({
 export default function TrendingFeedSkeleton(props): JSX.Element {
   return (
     <Root className={classes.root} {...props}>
-      <CardContent>
-        <List className={classes.list}>
-          {[...Array(4)].map((post, index) => (
-            <FeedObjectSkeleton key={index} elevation={0} />
-          ))}
-        </List>
-      </CardContent>
+      <List className={classes.list}>
+        {[...Array(4)].map((post, index) => (
+          <FeedObjectSkeleton key={index} elevation={0} />
+        ))}
+      </List>
     </Root>
   );
 }

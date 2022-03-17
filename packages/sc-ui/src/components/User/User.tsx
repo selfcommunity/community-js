@@ -1,7 +1,6 @@
 import React, {useContext} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
-import Card from '@mui/material/Card';
 import UserSkeleton from './Skeleton';
 import {Avatar, Button, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText, CardProps} from '@mui/material';
 import {SCUserContext, SCUserContextType, SCUserType, useSCFetchUser, SCRoutingContextType, useSCRouting, Link, SCRoutes} from '@selfcommunity/core';
@@ -10,6 +9,7 @@ import {FollowUserButtonProps} from '../FollowUserButton/FollowUserButton';
 import classNames from 'classnames';
 import {FriendshipButtonProps} from '../FriendshipUserButton/FriendshipUserButton';
 import ConnectionUserButton from '../ConnectionUserButton';
+import Widget from '../Widget';
 
 const PREFIX = 'SCUser';
 
@@ -19,7 +19,7 @@ const classes = {
   actions: `${PREFIX}-actions`
 };
 
-const Root = styled(Card, {
+const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root

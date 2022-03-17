@@ -1,11 +1,11 @@
 import React from 'react';
-import Card from '@mui/material/Card';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemText from '@mui/material/ListItemText';
 import {styled} from '@mui/material/styles';
 import Skeleton from '@mui/material/Skeleton';
+import Widget from '../Widget';
 
 const PREFIX = 'SCCategorySkeleton';
 
@@ -14,7 +14,7 @@ const classes = {
   list: `${PREFIX}-list`
 };
 
-const Root = styled(Card)(({theme}) => ({
+const Root = styled(Widget)(({theme}) => ({
   maxWidth: 700,
   [`& .${classes.list}`]: {
     marginLeft: -16,

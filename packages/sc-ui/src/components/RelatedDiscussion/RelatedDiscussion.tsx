@@ -2,8 +2,6 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
 import {Button, Typography} from '@mui/material';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
 import {
   Endpoints,
   http,
@@ -29,6 +27,7 @@ import classNames from 'classnames';
 import BaseDialog from '../../shared/BaseDialog';
 import CentralProgress from '../../shared/CentralProgress';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import Widget from '../Widget';
 
 const PREFIX = 'SCTrendingPost';
 
@@ -38,13 +37,15 @@ const classes = {
   noResults: `${PREFIX}-noResults`
 };
 
-const Root = styled(Card, {
+const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   maxWidth: 500,
-  marginBottom: theme.spacing(2)
+  marginBottom: theme.spacing(2),
+  padding: 16,
+  paddingBottom: 24
 }));
 
 export interface RelatedDiscussionProps {
@@ -197,7 +198,7 @@ export default function RelatedDiscussion(props: RelatedDiscussionProps): JSX.El
       {loading ? (
         <TrendingPostSkeleton elevation={0} />
       ) : (
-        <CardContent>
+        <>
           <Typography className={classes.title} variant="body1">
             <FormattedMessage id="ui.relatedDiscussion.title" defaultMessage="ui.relatedDiscussion.title" />
           </Typography>
@@ -258,7 +259,7 @@ export default function RelatedDiscussion(props: RelatedDiscussionProps): JSX.El
               )}
             </BaseDialog>
           )}
-        </CardContent>
+        </>
       )}
     </React.Fragment>
   );

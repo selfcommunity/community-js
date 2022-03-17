@@ -2,8 +2,6 @@ import React, {useContext, useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
 import {Button, Typography} from '@mui/material';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
 import {
   Endpoints,
   http,
@@ -18,6 +16,7 @@ import PeopleSuggestionSkeleton from './Skeleton';
 import User, {UserProps} from '../User';
 import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
+import Widget from '../Widget';
 
 const PREFIX = 'SCPeopleSuggestion';
 
@@ -27,13 +26,15 @@ const classes = {
   noResults: `${PREFIX}-noResults`
 };
 
-const Root = styled(Card, {
+const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   maxWidth: 700,
-  marginBottom: theme.spacing(2)
+  marginBottom: theme.spacing(2),
+  padding: 16,
+  paddingBottom: 24
 }));
 
 export interface PeopleSuggestionProps {
@@ -175,7 +176,7 @@ export default function PeopleSuggestion(props: PeopleSuggestionProps): JSX.Elem
       {loading ? (
         <PeopleSuggestionSkeleton elevation={0} />
       ) : (
-        <CardContent>
+        <>
           <Typography className={classes.title} variant="body1">
             <FormattedMessage id="ui.peopleSuggestion.title" defaultMessage="ui.peopleSuggestion.title" />
           </Typography>
@@ -208,7 +209,7 @@ export default function PeopleSuggestion(props: PeopleSuggestionProps): JSX.Elem
             </React.Fragment>
           )}
           {openPeopleSuggestionDialog && <></>}
-        </CardContent>
+        </>
       )}
     </React.Fragment>
   );

@@ -1,14 +1,13 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Button, Typography, List} from '@mui/material';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
 import {Endpoints, http, SCUserContext, SCUserContextType, SCCategoryType} from '@selfcommunity/core';
 import Skeleton from './Skeleton';
 import Category, {CategoryProps} from '../Category';
 import {AxiosResponse} from 'axios';
 import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
+import Widget from '../Widget';
 
 const PREFIX = 'SCCategoriesSuggestion';
 
@@ -18,13 +17,15 @@ const classes = {
   noResults: `${PREFIX}-noResults`
 };
 
-const Root = styled(Card, {
+const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   maxWidth: 700,
-  marginBottom: theme.spacing(2)
+  marginBottom: theme.spacing(2),
+  padding: 16,
+  paddingBottom: 24
 }));
 
 export interface CategoriesListProps {
@@ -155,7 +156,7 @@ export default function CategoriesSuggestion(props: CategoriesListProps): JSX.El
       {loading ? (
         <Skeleton elevation={0} />
       ) : (
-        <CardContent>
+        <>
           <Typography className={classes.title} variant="body1">
             <FormattedMessage id="ui.categoriesSuggestion.title" defaultMessage="ui.categoriesSuggestion.title" />
           </Typography>
@@ -186,7 +187,7 @@ export default function CategoriesSuggestion(props: CategoriesListProps): JSX.El
             </React.Fragment>
           )}
           {openCategoriesSuggestionDialog && <></>}
-        </CardContent>
+        </>
       )}
     </React.Fragment>
   );

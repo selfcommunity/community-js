@@ -2,8 +2,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
 import {Button, Typography} from '@mui/material';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
+import Widget from '../Widget';
 import {
   Endpoints,
   http,
@@ -44,13 +43,15 @@ const classes = {
   noResults: `${PREFIX}-noResults`
 };
 
-const Root = styled(Card, {
+const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   maxWidth: 700,
-  marginBottom: theme.spacing(2)
+  marginBottom: theme.spacing(2),
+  padding: 16,
+  paddingBottom: 24
 }));
 
 export interface UserFollowersProps {
@@ -169,7 +170,7 @@ export default function UserFollowers(props: UserFollowersProps): JSX.Element {
       {loading ? (
         <PeopleSuggestionSkeleton elevation={0} />
       ) : (
-        <CardContent>
+        <>
           {!total ? (
             <Typography className={classes.noResults} variant="body2">{`${intl.formatMessage(messages.noFollowers)}`}</Typography>
           ) : (
@@ -219,7 +220,7 @@ export default function UserFollowers(props: UserFollowersProps): JSX.Element {
               )}
             </React.Fragment>
           )}
-        </CardContent>
+        </>
       )}
     </React.Fragment>
   );

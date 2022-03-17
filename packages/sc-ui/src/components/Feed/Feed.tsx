@@ -11,7 +11,8 @@ import React, {
   useState
 } from 'react';
 import {styled, useTheme} from '@mui/material/styles';
-import {Box, Card, CardContent, Grid, Hidden, Theme, useMediaQuery} from '@mui/material';
+import Widget from '../Widget';
+import {Box, Grid, Hidden, Theme, useMediaQuery} from '@mui/material';
 import {AxiosResponse} from 'axios';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {FormattedMessage} from 'react-intl';
@@ -57,7 +58,10 @@ const Root = styled(Grid, {
     padding: '0 2px 0 2px'
   },
   [`& .${classes.end}, & .${classes.refresh}`]: {
-    textAlign: 'center'
+    textAlign: 'center',
+    border: 'solid',
+    borderWidth: '0.5px',
+    padding: 16
   }
 }));
 
@@ -362,18 +366,18 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (props: FeedProps, re
             hasMore={Boolean(next)}
             loader={false}
             endMessage={
-              <Card variant="outlined" className={classes.end}>
-                <CardContent>{endMessage}</CardContent>
-              </Card>
+              <Widget className={classes.end}>
+                <>{endMessage}</>
+              </Widget>
             }
             refreshFunction={refresh}
             pullDownToRefresh
             pullDownToRefreshThreshold={1000}
             pullDownToRefreshContent={null}
             releaseToRefreshContent={
-              <Card variant="outlined" className={classes.refresh}>
-                <CardContent>{refreshMessage}</CardContent>
-              </Card>
+              <Widget variant="outlined" className={classes.refresh}>
+                <>{refreshMessage}</>
+              </Widget>
             }>
             {data.left.map((d, i) =>
               d.type === 'widget' ? (

@@ -2,8 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
 import {Button, Typography} from '@mui/material';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
+import Widget from '../Widget';
 import {Endpoints, http} from '@selfcommunity/core';
 import {AxiosResponse} from 'axios';
 import {PeopleSuggestionSkeleton} from '../PeopleSuggestion';
@@ -22,13 +21,14 @@ const classes = {
   noResults: `${PREFIX}-noResults`
 };
 
-const Root = styled(Card, {
+const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   maxWidth: 700,
-  marginBottom: theme.spacing(2)
+  marginBottom: theme.spacing(2),
+  padding: 16
 }));
 
 export interface TrendingPeopleProps {
@@ -143,7 +143,7 @@ export default function TrendingPeople(props: TrendingPeopleProps): JSX.Element 
       {loading ? (
         <PeopleSuggestionSkeleton />
       ) : (
-        <CardContent>
+        <>
           <Typography className={classes.title} variant="body1">
             <FormattedMessage id="ui.trendingPeople.title" defaultMessage="ui.trendingPeople.title" />
           </Typography>
@@ -195,7 +195,7 @@ export default function TrendingPeople(props: TrendingPeopleProps): JSX.Element 
               )}
             </BaseDialog>
           )}
-        </CardContent>
+        </>
       )}
     </React.Fragment>
   );

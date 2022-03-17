@@ -1,6 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import {Button, CardActions, Box, Typography, Grid} from '@mui/material';
 import {Endpoints, http, SCUserContext, SCUserContextType} from '@selfcommunity/core';
@@ -11,6 +10,7 @@ import LoyaltyProgramDialog from './LoyaltyProgramDialog';
 import {SCRoutingContextType, useSCRouting, Link, SCRoutes} from '@selfcommunity/core';
 import LoyaltyProgramDetail from './LoyaltyProgramDetail';
 import classNames from 'classnames';
+import Widget from '../Widget';
 
 const messages = defineMessages({
   points: {
@@ -31,12 +31,13 @@ const classes = {
   pointsBox: `${PREFIX}-points-box`
 };
 
-const Root = styled(Card, {
+const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   marginBottom: theme.spacing(2),
+  padding: 8,
   [`& .${classes.cardHeader}`]: {
     display: 'flex',
     alignItems: 'start',
