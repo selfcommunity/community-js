@@ -2,7 +2,7 @@
 import React from 'react';
 import Modal from 'react-modal';
 import {keyframes} from '@emotion/react';
-import {translate, getWindowWidth, getWindowHeight, getHighestSafeWindowContext} from '../../utils/window.js';
+import {getWindowWidth, getWindowHeight, getHighestSafeWindowContext} from '../../utils/window.js';
 import {
   KEYS,
   MIN_ZOOM_LEVEL,
@@ -21,15 +21,21 @@ import {
   SOURCE_POINTER,
   MIN_SWIPE_DISTANCE
 } from '../../constants/Lightbox';
-// import './styles.css';
 import {styled} from '@mui/material/styles';
-import Lightbox from './index';
 import Icon from '@mui/material/Icon';
 import {IconButton} from '@mui/material';
 import {defineMessages, injectIntl, WrappedComponentProps} from 'react-intl';
 import classNames from 'classnames';
 
 const messages = defineMessages({
+  image: {
+    id: 'ui.lightbox.image',
+    defaultMessage: 'ui.lightbox.image'
+  },
+  contentLabel: {
+    id: 'ui.lightbox.contentLabel',
+    defaultMessage: 'ui.lightbox.contentLabel'
+  },
   closeLabel: {
     id: 'ui.lightbox.closeLabel',
     defaultMessage: 'ui.lightbox.closeLabel'
@@ -1802,7 +1808,7 @@ class ReactImageLightbox extends React.Component<ReactImageLightboxProps, ReactI
             style={imageStyle}
             src={imageSrc}
             key={imageSrc + keyEndings[srcType]}
-            alt={typeof imageTitle === 'string' ? imageTitle : translate('Image')}
+            alt={typeof imageTitle === 'string' ? imageTitle : this.props.intl.formatMessage(messages.image)}
             draggable={false}
           />
         );
@@ -1871,7 +1877,7 @@ class ReactImageLightbox extends React.Component<ReactImageLightboxProps, ReactI
           onAfterOpen();
         }}
         style={modalStyle}
-        contentLabel={translate('Lightbox')}
+        contentLabel={this.props.intl.formatMessage(messages.contentLabel)}
         appElement={typeof global.window !== 'undefined' ? global.window.document.body : undefined}
         {...reactModalProps}>
         <div
