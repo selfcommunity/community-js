@@ -6,7 +6,7 @@ import {Logger} from '../utils/logger';
 import Endpoints from '../constants/Endpoints';
 import {singletonHook} from 'react-singleton-hook';
 
-const init = {categories: null, isLoading: true};
+const init = {categories: [], isLoading: true};
 
 /**
  :::info
