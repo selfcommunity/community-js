@@ -5,6 +5,7 @@ import Icon from '@mui/material/Icon';
 import {SCFeedObjectType, SCFeedObjectTypologyType, SCRoutingContextType, useSCFetchFeedObject, useSCRouting, Link} from '@selfcommunity/core';
 import {styled} from '@mui/material/styles';
 import {FeedObjectTemplateType} from '../../../../types/feedObject';
+import {getContributionRouteName, getRouteData} from '../../../../utils/contribute';
 import classNames from 'classnames';
 import Skeleton from '@mui/material/Skeleton';
 
@@ -182,7 +183,7 @@ export default function Comment(props: CommentProps): JSX.Element {
                     variant="text"
                     size="small"
                     component={Link}
-                    to={scRoutingContext.url(feedObjectType.toLowerCase(), {id: obj.id})}
+                    to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))}
                     classes={{root: classes.viewAudienceButton}}>
                     {`${intl.formatMessage(messages.comments, {total: obj.comment_count})}`}
                   </Button>
