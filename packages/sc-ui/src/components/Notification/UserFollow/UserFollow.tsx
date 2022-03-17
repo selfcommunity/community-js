@@ -1,12 +1,12 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import {Avatar, Box, Chip, ListItem, ListItemAvatar, ListItemText, Stack, Typography} from '@mui/material';
+import {Avatar, Box, ListItem, ListItemAvatar, ListItemText, Stack, Typography} from '@mui/material';
 import {Link, SCNotificationUserFollowType, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
 import NewChip from '../../../shared/NewChip/NewChip';
 import classNames from 'classnames';
-import {grey, red} from '@mui/material/colors';
+import {red} from '@mui/material/colors';
 import {NotificationObjectTemplateType} from '../../../types';
 
 const messages = defineMessages({
@@ -135,7 +135,7 @@ export default function UserFollowNotification(props: NotificationFollowProps): 
           })
         }}>
         <ListItemAvatar classes={{root: classes.avatarWrap}}>
-          <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: notificationObject.follower.id})}>
+          <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.follower)}>
             <Avatar
               alt={notificationObject.follower.username}
               variant="circular"
@@ -168,7 +168,7 @@ export default function UserFollowNotification(props: NotificationFollowProps): 
         <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2} className={classes.toastInfo}>
           <DateTimeAgo date={notificationObject.active_at} />
           <Typography color="primary">
-            <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: notificationObject.follower.id})}>
+            <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.follower)}>
               <FormattedMessage id="ui.userToastNotifications.goToProfile" defaultMessage={'ui.userToastNotifications.goToProfile'} />
             </Link>
           </Typography>

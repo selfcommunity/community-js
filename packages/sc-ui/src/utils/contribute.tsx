@@ -66,10 +66,11 @@ export function getContributionHtml(obj, handleUrl) {
  * Get route name for a contribution
  * @param obj
  */
-export function getRouteName(obj) {
+export function getContributionRouteName(obj) {
   if (obj.type) {
     return SCRoutes[`${obj.type.toUpperCase()}_ROUTE_NAME`];
   }
+  return obj.type;
 }
 
 /**

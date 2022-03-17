@@ -160,7 +160,7 @@ export default function PrivateMessageNotification(props: NotificationPrivateMes
             })
           }}>
           <ListItemAvatar classes={{root: classes.avatarWrap}}>
-            <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: notificationObject.message.sender.id})}>
+            <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.message.sender)}>
               <Avatar
                 alt={notificationObject.message.sender.username}
                 variant="circular"
@@ -221,7 +221,7 @@ export default function PrivateMessageNotification(props: NotificationPrivateMes
         <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
           <DateTimeAgo date={notificationObject.active_at} />
           <Typography color="primary">
-            <Link to={scRoutingContext.url('messages', {id: notificationObject.message.id})}>
+            <Link to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, notificationObject.message)}>
               <FormattedMessage id="ui.userToastNotifications.replyMessage" defaultMessage={'ui.userToastNotifications.replyMessage'} />
             </Link>
           </Typography>

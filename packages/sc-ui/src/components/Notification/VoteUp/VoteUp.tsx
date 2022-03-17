@@ -5,8 +5,8 @@ import {Link, SCNotificationVoteUpType, SCRoutes, SCRoutingContextType, useSCRou
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
 import NewChip from '../../../shared/NewChip/NewChip';
-import {getContribute, getContributeType, getContributionSnippet, getRouteData} from '../../../utils/contribute';
-import {grey, red} from '@mui/material/colors';
+import {getContribute, getContributeType, getContributionSnippet, getRouteData, getContributionRouteName} from '../../../utils/contribute';
+import {red} from '@mui/material/colors';
 import classNames from 'classnames';
 import {NotificationObjectTemplateType} from '../../../types/notification';
 
@@ -191,7 +191,7 @@ export default function VoteUpNotification(props: NotificationVoteUpProps): JSX.
         <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
           <DateTimeAgo date={notificationObject.active_at} />
           <Typography color="primary">
-            <Link to={scRoutingContext.url(SCRoutes[`${contribution.type.toUpperCase()}_ROUTE_NAME`], getRouteData(contribution))}>
+            <Link to={scRoutingContext.url(getContributionRouteName(contribution), getRouteData(contribution))}>
               <FormattedMessage id="ui.userToastNotifications.viewContribution" defaultMessage={'ui.userToastNotifications.viewContribution'} />
             </Link>
           </Typography>

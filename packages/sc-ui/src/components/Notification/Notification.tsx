@@ -18,7 +18,7 @@ import VoteUpNotification from './VoteUp';
 import Icon from '@mui/material/Icon';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {AxiosResponse} from 'axios';
-import {getContribute, getContributionSnippet} from '../../utils/contribute';
+import {getContribute, getContributionRouteName, getContributionSnippet} from '../../utils/contribute';
 import ContributionFollowNotification from './ContributionFollow';
 import {Avatar, Card, CardProps, Collapse, ListItem, ListItemAvatar, ListItemButton, ListItemText, Stack, Tooltip, Typography} from '@mui/material';
 import IncubatorApprovedNotification from './IncubatorApproved';
@@ -319,7 +319,7 @@ export default function UserNotification(props: NotificationProps): JSX.Element 
         <div className={classes.notificationHeader}>
           {contribution && contribution.type !== SCCommentTypologyType && (
             <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
-              <Link to={scRoutingContext.url(contribution.type, {id: notificationObject[contribution.type].id})}>
+              <Link to={scRoutingContext.url(getContributionRouteName(contribution), notificationObject[contribution.type])}>
                 <Typography variant="body2" gutterBottom classes={{root: classes.title}}>
                   {getContributionSnippet(contribution)}
                 </Typography>

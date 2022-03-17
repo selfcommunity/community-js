@@ -694,7 +694,7 @@ export default function CommentObject(props: CommentObjectProps): JSX.Element {
             alignItems="flex-start"
             classes={{root: classNames(classes.comment, {[classes.commentChild]: Boolean(comment.parent)})}}>
             <ListItemAvatar classes={{root: classes.avatarWrap}}>
-              <Link to={scRoutingContext.url('profile', {id: comment.author.id})}>
+              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, comment.author)}>
                 <Avatar alt={obj.author.username} variant="circular" src={comment.author.avatar} classes={{root: classes.avatar}} />
               </Link>
             </ListItemAvatar>
@@ -705,7 +705,7 @@ export default function CommentObject(props: CommentObjectProps): JSX.Element {
                 <>
                   <Card classes={{root: classes.content}} {...rest}>
                     <CardContent classes={{root: classNames({[classes.deleted]: obj && obj.deleted})}}>
-                      <Link className={classes.author} to={scRoutingContext.url('profile', {id: comment.author.id})}>
+                      <Link className={classes.author} to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, comment.author)}>
                         <Typography component="span" sx={{display: 'inline'}} gutterBottom color="inherit">
                           {comment.author.username}
                         </Typography>
