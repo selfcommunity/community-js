@@ -400,6 +400,8 @@
   "ui.contributionActionMenu.restoreFromDeleted": "Restore from deleted",
   "ui.contributionActionMenu.moderatedMotivation": "Motivation:",
 
+  "ui.lightbox.image": "Image",
+  "ui.lightbox.contentLabel": "Lightbox",
   "ui.lightbox.closeLabel": "Close",
   "ui.lightbox.nextLabel": "Next image",
   "ui.lightbox.prevLabel": "Previous image",
