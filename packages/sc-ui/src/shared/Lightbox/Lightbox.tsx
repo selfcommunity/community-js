@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React from 'react';
 import Modal from 'react-modal';
+import {keyframes} from '@emotion/react';
 import {translate, getWindowWidth, getWindowHeight, getHighestSafeWindowContext} from '../../utils/window.js';
 import {
   KEYS,
@@ -20,7 +21,7 @@ import {
   SOURCE_POINTER,
   MIN_SWIPE_DISTANCE
 } from '../../constants/Lightbox';
-import './styles.css';
+// import './styles.css';
 import {styled} from '@mui/material/styles';
 import Lightbox from './index';
 import Icon from '@mui/material/Icon';
@@ -90,6 +91,23 @@ const classes = {
   rilLoadingContainerIcon: `${PREFIX}-ril-loading-container-icon`
 };
 
+const closeWindow = keyframes`
+  0% {
+    opacity: 1
+  }
+  100% {
+    opacity: 0;
+  }`;
+
+const pointFade = keyframes`
+  0%, 19.999%,
+  100% { {
+    opacity: 1
+  }
+  20% {
+    opacity: 0;
+  }`;
+
 const Root = styled(Modal, {
   name: PREFIX,
   slot: 'Root',
@@ -105,10 +123,10 @@ const Root = styled(Modal, {
     zIndex: 1000,
     width: '100%',
     height: '100vh',
-    '-ms-content-zooming': 'none',
-    '-ms-user-select': 'none',
-    '-ms-touch-select': 'none',
-    'touch-action': 'none'
+    msContentZooming: 'none',
+    msUserSelect: 'none',
+    msTouchSelect: 'none',
+    touchAction: 'none'
   },
   [`& .${classes.rilOuterClosing}`]: {
     opacity: 0
@@ -128,10 +146,10 @@ const Root = styled(Modal, {
     bottom: 0,
     margin: 'auto',
     maxWidth: 'none',
-    '-ms-content-zooming': 'none',
-    '-ms-user-select': 'none',
-    '-ms-touch-select': 'none',
-    'touch-action': 'none'
+    msContentZooming: 'none',
+    msUserSelect: 'none',
+    msTouchSelect: 'none',
+    touchAction: 'none'
   },
   [`& .${classes.rilImagePrev}`]: {
     position: 'absolute',
@@ -141,10 +159,10 @@ const Root = styled(Modal, {
     bottom: 0,
     margin: 'auto',
     maxWidth: 'none',
-    '-ms-content-zooming': 'none',
-    '-ms-user-select': 'none',
-    '-ms-touch-select': 'none',
-    'touch-action': 'none'
+    msContentZooming: 'none',
+    msUserSelect: 'none',
+    msTouchSelect: 'none',
+    touchAction: 'none'
   },
   [`& .${classes.rilImageNext}`]: {
     position: 'absolute',
@@ -154,10 +172,10 @@ const Root = styled(Modal, {
     bottom: 0,
     margin: 'auto',
     maxWidth: 'none',
-    '-ms-content-zooming': 'none',
-    '-ms-user-select': 'none',
-    '-ms-touch-select': 'none',
-    'touch-action': 'none'
+    msContentZooming: 'none',
+    msUserSelect: 'none',
+    msTouchSelect: 'none',
+    touchAction: 'none'
   },
   [`& .${classes.rilImageDiscourager}`]: {
     backgroundRepeat: 'no-repeat',
@@ -182,6 +200,7 @@ const Root = styled(Modal, {
       opacity: 1
     }
   },
+
   [`& .${classes.rilNavButtonPrev}`]: {
     left: 0,
     background: 'rgba(0, 0, 0, 0.2)',
@@ -191,6 +210,7 @@ const Root = styled(Modal, {
       fontSize: 39
     }
   },
+
   [`& .${classes.rilNavButtonNext}`]: {
     right: 0,
     background: 'rgba(0, 0, 0, 0.2)',
@@ -200,6 +220,7 @@ const Root = styled(Modal, {
       fontSize: 39
     }
   },
+
   [`& .${classes.rilDownloadBlocker}`]: {
     position: 'absolute',
     top: 0,
@@ -306,14 +327,14 @@ const Root = styled(Modal, {
     }
   },
   [`& .${classes.rilOuterAnimating}`]: {
-    opacity: 0,
-    transition: 'opacity 2s linear'
+    animationName: `${closeWindow}`
   },
   [`& .${classes.rilLoadingCircle}`]: {
     width: 60,
     height: 60,
     position: 'relative'
   },
+
   [`& .${classes.rilLoadingCirclePoint}`]: {
     width: '100%',
     height: '100%',
@@ -321,19 +342,14 @@ const Root = styled(Modal, {
     left: 0,
     top: 0,
     '&:before': {
-      content: '',
+      content: '""',
       display: 'block',
       margin: '0 auto',
       width: '11%',
       height: '30%',
       backgroundColor: '#fff',
       borderRadius: '30%',
-      animation: 'pointFade 800ms infinite ease-in-out both',
-      '-webkit-transition': 'opacity 3s ease-in-out',
-      '-moz-transition': 'opacity 3s ease-in-out',
-      '-ms-transition': 'opacity 3s ease-in-out',
-      '-o-transition': 'opacity 3s ease-in-out',
-      opacity: 1
+      animation: `${pointFade} 800ms infinite ease-in-out both`
     },
     '&:nth-of-type(1)': {
       transform: 'rotate(0deg)',
@@ -1475,10 +1491,7 @@ class ReactImageLightbox extends React.Component<ReactImageLightboxProps, ReactI
   }
 
   handleZoomInButtonClick() {
-    console.log('handleZoomInButtonClick');
-    console.log(this.state.zoomLevel);
     const nextZoomLevel = this.state.zoomLevel + ZOOM_BUTTON_INCREMENT_SIZE;
-    console.log(nextZoomLevel);
     this.changeZoom(nextZoomLevel, null, null);
     if (nextZoomLevel === MAX_ZOOM_LEVEL) {
       this.zoomOutBtn.current.focus();
@@ -1715,8 +1728,12 @@ class ReactImageLightbox extends React.Component<ReactImageLightboxProps, ReactI
       // when error on one of the loads then push custom error stuff
       if (bestImageInfo === null && hasTrueValue(loadErrorStatus)) {
         images.push(
-          <div className={`${imageClass} ril__image ril-errored`} style={imageStyle} key={this.props[srcType] + keyEndings[srcType]}>
-            <div className="ril__errorContainer">
+          <div
+            className={classNames(`${imageClass}`, classes.rilImage, 'ril-errored')}
+            /* className={`${imageClass} ril__image ril-errored`}*/
+            style={imageStyle}
+            key={this.props[srcType] + keyEndings[srcType]}>
+            <div className={classes.rilErrorContainer} /*className="ril__errorContainer"*/>
               {this.props.imageLoadErrorMessage || this.props.intl.formatMessage(messages.imageLoadErrorMessage)}
             </div>
           </div>
@@ -1729,17 +1746,28 @@ class ReactImageLightbox extends React.Component<ReactImageLightboxProps, ReactI
           loader !== undefined ? (
             loader
           ) : (
-            <div className="ril-loading-circle ril__loadingCircle ril__loadingContainer__icon">
+            <div
+              className={classNames(`ril-loading-circle`, classes.rilLoadingCircle, classes.rilLoadingContainerIcon)}
+              /* className="ril-loading-circle ril__loadingCircle ril__loadingContainer__icon"*/
+            >
               {[...new Array(12)].map((_, index) => (
-                <div key={index} className="ril-loading-circle-point ril__loadingCirclePoint" />
+                <div
+                  key={index}
+                  className={classNames('ril-loading-circle-point', classes.rilLoadingCirclePoint)}
+                  /*className="ril-loading-circle-point ril__loadingCirclePoint"*/
+                />
               ))}
             </div>
           );
 
         // Fall back to loading icon if the thumbnail has not been loaded
         images.push(
-          <div className={`${imageClass} ril__image ril-not-loaded`} style={imageStyle} key={this.props[srcType] + keyEndings[srcType]}>
-            <div className="ril__loadingContainer">{loadingIcon}</div>
+          <div
+            className={classNames(`${imageClass}`, 'ril-not-loaded', classes.rilImage)}
+            /* className={`${imageClass} ril__image ril-not-loaded`}*/
+            style={imageStyle}
+            key={this.props[srcType] + keyEndings[srcType]}>
+            <div className={classes.rilLoadingContainer} /*className="ril__loadingContainer"*/>{loadingIcon}</div>
           </div>
         );
 
@@ -1751,12 +1779,13 @@ class ReactImageLightbox extends React.Component<ReactImageLightboxProps, ReactI
         imageStyle['backgroundImage'] = `url('${imageSrc}')`;
         images.push(
           <div
-            className={`${imageClass} ril__image ril__imageDiscourager`}
+            className={classNames(`${imageClass}`, classes.rilImage, classes.rilImageDiscourager)}
+            // className={`${imageClass} ril__image ril__imageDiscourager`}
             onDoubleClick={this.handleImageDoubleClick}
             onWheel={this.handleImageMouseWheel}
             style={imageStyle}
             key={imageSrc + keyEndings[srcType]}>
-            <div className="ril-download-blocker ril__downloadBlocker">
+            <div className={classNames('ril-download-blocker', classes.rilDownloadBlocker)} /*className="ril-download-blocker ril__downloadBlocker"*/>
               <Icon>download</Icon>
             </div>
           </div>
@@ -1765,7 +1794,8 @@ class ReactImageLightbox extends React.Component<ReactImageLightboxProps, ReactI
         images.push(
           <img
             /*{...(imageCrossOrigin ? {crossOrigin: imageCrossOrigin} : {})}*/
-            className={`${imageClass} ril__image`}
+            className={classNames(`${imageClass}`, classes.rilImage)}
+            /*className={`${imageClass} ril__image`} */
             onDoubleClick={this.handleImageDoubleClick}
             onWheel={this.handleImageMouseWheel}
             onDragStart={(e) => e.preventDefault()}
@@ -1781,7 +1811,7 @@ class ReactImageLightbox extends React.Component<ReactImageLightboxProps, ReactI
 
     const zoomMultiplier = this.getZoomMultiplier();
     // Next Image (displayed on the right)
-    addImage('nextSrc', 'ril-image-next ril__imageNext', {
+    /*addImage('nextSrc', 'ril-image-next ril__imageNext', {
       x: boxSize.width
     });
     // Main Image
@@ -1792,6 +1822,19 @@ class ReactImageLightbox extends React.Component<ReactImageLightboxProps, ReactI
     });
     // Previous Image (displayed on the left)
     addImage('prevSrc', 'ril-image-prev ril__imagePrev', {
+      x: -1 * boxSize.width
+    });
+    */
+    addImage('nextSrc', classNames('ril-image-next', classes.rilImageNext), {
+      x: boxSize.width
+    });
+    addImage('mainSrc', 'ril-image-current', {
+      x: -1 * offsetX,
+      y: -1 * offsetY,
+      zoom: zoomMultiplier
+    });
+    // Previous Image (displayed on the left)
+    addImage('prevSrc', classNames('ril-image-prev', classes.rilImagePrev), {
       x: -1 * boxSize.width
     });
 
@@ -1833,8 +1876,10 @@ class ReactImageLightbox extends React.Component<ReactImageLightboxProps, ReactI
         {...reactModalProps}>
         <div
           // Floating modal with closing animations
-          className={classNames('ril-outer', classes.rilOuter, classes.rilOuterAnimating, `${this.props.wrapperClassName}`, {
-            [classes.rilCloseButton]: isClosing,
+          // className={`ril-outer ril__outer ril__outerAnimating ${this.props.wrapperClassName} ${isClosing ? 'ril-closing ril__outerClosing' : ''}`}
+          className={classNames('ril-outer', classes.rilOuter, classes.rilOuterAnimating, {
+            [`${this.props.wrapperClassName}`]: Boolean(this.props.wrapperClassName),
+            ['ril-closing']: isClosing,
             [classes.rilOuterClosing]: isClosing
           })}
           style={{
@@ -1853,7 +1898,8 @@ class ReactImageLightbox extends React.Component<ReactImageLightboxProps, ReactI
           onKeyUp={this.handleKeyInput}>
           <div
             // Image holder
-            className="ril-inner ril__inner"
+            // className="ril-inner ril__inner"
+            className={classNames('ril-inner', classes.rilInner)}
             onClick={clickOutsideToClose ? this.closeIfClickInner : undefined}>
             {images}
           </div>
@@ -1861,7 +1907,8 @@ class ReactImageLightbox extends React.Component<ReactImageLightboxProps, ReactI
           {prevSrc && (
             <button // Move to previous image button
               type="button"
-              className="ril-prev-button ril__navButtons ril__navButtonPrev"
+              // className="ril-prev-button ril__navButtons ril__navButtonPrev"
+              className={classNames('ril-prev-button', classes.rilNavButtons, classes.rilNavButtonPrev)}
               key="prev"
               aria-label={this.props.prevLabel || this.props.intl.formatMessage(messages.prevLabel)}
               title={this.props.prevLabel || this.props.intl.formatMessage(messages.prevLabel)}
@@ -1871,7 +1918,8 @@ class ReactImageLightbox extends React.Component<ReactImageLightboxProps, ReactI
 
           {nextSrc && (
             <IconButton
-              className="ril-next-button ril__navButtons ril__navButtonNext"
+              className={classNames('ril-next-button', classes.rilNavButtons, classes.rilNavButtonNext)}
+              // className="ril-next-button ril__navButtons ril__navButtonNext"
               key="next"
               aria-label={this.props.nextLabel || this.props.intl.formatMessage(messages.nextLabel)}
               title={this.props.nextLabel || this.props.intl.formatMessage(messages.nextLabel)}
@@ -1881,34 +1929,59 @@ class ReactImageLightbox extends React.Component<ReactImageLightboxProps, ReactI
             </IconButton>
           )}
 
-          <div className="ril-toolbar ril__toolbar">
-            <ul className="ril-toolbar-left ril__toolbarSide ril__toolbarLeftSide">
-              <li className="ril-toolbar__item ril__toolbarItem">
-                <span className="ril-toolbar__item__child ril__toolbarItemChild">{imageTitle}</span>
+          <div className={classNames('ril-ril-toolbar', classes.rilToolbar)} /*className="ril-toolbar ril__toolbar" */>
+            <ul
+              className={classNames(
+                'ril-toolbar-left',
+                classes.rilToolbarSide,
+                classes.rilToolbarLeftSide
+              )} /*className="ril-toolbar-left ril__toolbarSide ril__toolbarLeftSide"*/
+            >
+              <li className={classNames('ril-toolbar__item', classes.rilToolbarItem)} /*className="ril-toolbar__item ril__toolbarItem"*/>
+                <span
+                  className={classNames(
+                    'ril-toolbar__item__child',
+                    classes.rilToolbarItemChild
+                  )} /*className="ril-toolbar__item__child ril__toolbarItemChild"*/
+                >
+                  {imageTitle}
+                </span>
               </li>
             </ul>
 
-            <ul className="ril-toolbar-right ril__toolbarSide ril__toolbarRightSide">
+            <ul
+              className={classNames(
+                'ril-toolbar-right',
+                classes.rilToolbarSide,
+                classes.rilToolbarRightSide
+              )} /* className="ril-toolbar-right ril__toolbarSide ril__toolbarRightSide"*/
+            >
               {toolbarButtons &&
                 toolbarButtons.map((button, i) => (
-                  <li key={`button_${i + 1}`} className="ril-toolbar__item ril__toolbarItem">
+                  <li
+                    key={`button_${i + 1}`}
+                    className={classNames('ril-toolbar', classes.rilToolbarItem)} /*className="ril-toolbar__item ril__toolbarItem"*/
+                  >
                     {button}
                   </li>
                 ))}
 
               {enableZoom && (
-                <li className="ril-toolbar__item ril__toolbarItem">
+                <li className={classNames('ril-toolbar__item', classes.rilToolbarItem)} /*className="ril-toolbar__item ril__toolbarItem"*/>
                   <IconButton
                     key="zoom-in"
                     aria-label={this.props.zoomInLabel || this.props.intl.formatMessage(messages.zoomInLabel)}
                     title={this.props.zoomInLabel || this.props.intl.formatMessage(messages.zoomInLabel)}
-                    className={[
+                    className={classNames('ril-zoom-in', classes.rilToolbarItemChild, classes.rilBuiltinButton, classes.rilZoomInButton, {
+                      [classes.rilBuiltinButtonDisabled]: zoomLevel === MAX_ZOOM_LEVEL
+                    })}
+                    /* className={[
                       'ril-zoom-in',
                       'ril__toolbarItemChild',
                       'ril__builtinButton',
                       'ril__zoomInButton',
                       ...(zoomLevel === MAX_ZOOM_LEVEL ? ['ril__builtinButtonDisabled'] : [])
-                    ].join(' ')}
+                    ].join(' ')} */
                     ref={this.zoomInBtn}
                     disabled={this.isAnimating() || zoomLevel === MAX_ZOOM_LEVEL}
                     onClick={!this.isAnimating() && zoomLevel !== MAX_ZOOM_LEVEL ? this.handleZoomInButtonClick : undefined}>
@@ -1918,18 +1991,21 @@ class ReactImageLightbox extends React.Component<ReactImageLightboxProps, ReactI
               )}
 
               {enableZoom && (
-                <li className="ril-toolbar__item ril__toolbarItem">
+                <li className={classNames('ril-toolbar__item', classes.rilToolbarItem)} /**className="ril-toolbar__item ril__toolbarItem"*/>
                   <IconButton
                     key="zoom-out"
                     aria-label={this.props.zoomOutLabel || this.props.intl.formatMessage(messages.zoomOutLabel)}
                     title={this.props.zoomOutLabel || this.props.intl.formatMessage(messages.zoomOutLabel)}
-                    className={[
+                    className={classNames('ril-zoom-out', classes.rilToolbarItemChild, classes.rilBuiltinButton, classes.rilZoomOutButton, {
+                      [classes.rilBuiltinButtonDisabled]: zoomLevel === MIN_ZOOM_LEVEL
+                    })}
+                    /* className={[
                       'ril-zoom-out',
                       'ril__toolbarItemChild',
                       'ril__builtinButton',
                       'ril__zoomOutButton',
                       ...(zoomLevel === MIN_ZOOM_LEVEL ? ['ril__builtinButtonDisabled'] : [])
-                    ].join(' ')}
+                    ].join(' ')} */
                     ref={this.zoomOutBtn}
                     disabled={this.isAnimating() || zoomLevel === MIN_ZOOM_LEVEL}
                     onClick={!this.isAnimating() && zoomLevel !== MIN_ZOOM_LEVEL ? this.handleZoomOutButtonClick : undefined}>
@@ -1938,12 +2014,13 @@ class ReactImageLightbox extends React.Component<ReactImageLightboxProps, ReactI
                 </li>
               )}
 
-              <li className="ril-toolbar__item ril__toolbarItem">
+              <li className={classNames('ril-toolbar__item', classes.rilToolbarItem)} /**className="ril-toolbar__item ril__toolbarItem"*/>
                 <IconButton
                   key="close"
                   aria-label={this.props.closeLabel || this.props.intl.formatMessage(messages.closeLabel)}
                   title={this.props.closeLabel || this.props.intl.formatMessage(messages.closeLabel)}
-                  className="ril-close ril-toolbar__item__child ril__toolbarItemChild ril__builtinButton ril__closeButton"
+                  className={classNames('ril-close', classes.rilToolbarItemChild, classes.rilBuiltinButton, classes.rilCloseButton)}
+                  /* className="ril-close ril-toolbar__item__child ril__toolbarItemChild ril__builtinButton ril__closeButton"*/
                   onClick={!this.isAnimating() ? this.requestClose : undefined} // Ignore clicks during animation
                 >
                   <Icon fontSize={'large'}>close</Icon>
@@ -1956,7 +2033,8 @@ class ReactImageLightbox extends React.Component<ReactImageLightboxProps, ReactI
             <div // Image caption
               onWheel={this.handleCaptionMousewheel}
               onMouseDown={(event) => event.stopPropagation()}
-              className="ril-caption ril__caption"
+              className={classNames('ril-caption', classes.rilCaption)}
+              /* className="ril-caption ril__caption" */
               ref={this.caption}>
               <div className="ril-caption-content ril__captionContent">{this.props.imageCaption}</div>
             </div>
@@ -2108,7 +2186,7 @@ export interface ReactImageLightboxProps extends WrappedComponentProps {
 
   // custom loader
   loader?: React.ReactNode;
-};
+}
 
 export interface ReactImageLightboxState {
   //-----------------------------
