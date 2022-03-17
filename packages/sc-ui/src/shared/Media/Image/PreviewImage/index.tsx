@@ -1,7 +1,5 @@
 import React, {useState} from 'react';
-import Lightbox from 'react-image-lightbox';
-import 'react-image-lightbox/style.css';
-// import Lightbox from '../../../Lightbox';
+import Lightbox from '../../../Lightbox';
 import {styled} from '@mui/material/styles';
 
 const PREFIX = 'SCPreviewImage';
