@@ -462,7 +462,7 @@ const Root = styled(Modal, {
   }
 }));
 
-class ReactImageLightbox extends React.Component<ReactImageLightboxProps & WrappedComponentProps, ReactImageLightboxState> {
+class ReactImageLightbox extends React.Component<ReactImageLightboxProps, ReactImageLightboxState> {
   // Refs
   private outerEl = React.createRef<HTMLDivElement>();
   private zoomInBtn = React.createRef<HTMLButtonElement>();
@@ -1967,7 +1967,7 @@ class ReactImageLightbox extends React.Component<ReactImageLightboxProps & Wrapp
   }
 }
 
-export interface ReactImageLightboxProps {
+export interface ReactImageLightboxProps extends WrappedComponentProps {
   //-----------------------------
   // Image sources
   //-----------------------------
@@ -2108,7 +2108,7 @@ export interface ReactImageLightboxProps {
 
   // custom loader
   loader?: React.ReactNode;
-}
+};
 
 export interface ReactImageLightboxState {
   //-----------------------------
@@ -2141,5 +2141,5 @@ export interface ReactImageLightboxState {
   loadErrorStatus: Record<string, any>;
 }
 
-// export default injectIntl(ReactImageLightbox);
-export default null;
+const ReactImageLightboxIntl: any = injectIntl(ReactImageLightbox);
+export default ReactImageLightboxIntl;
