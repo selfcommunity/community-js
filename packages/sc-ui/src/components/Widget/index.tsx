@@ -1,6 +1,6 @@
 import React, {ComponentPropsWithRef, forwardRef, ForwardRefRenderFunction} from 'react';
 import {styled} from '@mui/material/styles';
-import { Card, CardProps } from '@mui/material';
+import {Card, CardProps} from '@mui/material';
 import classNames from 'classnames';
 
 const PREFIX = 'SCWidget';
