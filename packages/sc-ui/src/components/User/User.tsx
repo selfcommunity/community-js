@@ -73,7 +73,7 @@ export interface UserProps extends Pick<CardProps, Exclude<keyof CardProps, 'id'
    *  Prop to show user followers as secondary text
    * @default false
    */
-  showFollowers: boolean;
+  showFollowers?: boolean;
   /**
    * Any other properties
    */

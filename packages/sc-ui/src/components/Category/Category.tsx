@@ -64,7 +64,7 @@ export interface CategoryProps {
    * Prop to show category followers as secondary text
    * @default true
    */
-  showFollowers: boolean;
+  showFollowers?: boolean;
   /**
    * Any other properties
    */
