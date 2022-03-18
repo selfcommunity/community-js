@@ -9,6 +9,7 @@ After Storybook fix the problem remove "webpackFinal" in the following export
  */
 
 module.exports = {
+  staticDirs: ['../public'],
   "reactOptions": {
     "fastRefresh": true
   },
