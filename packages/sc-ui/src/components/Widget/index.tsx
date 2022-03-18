@@ -1,4 +1,4 @@
-import React, {ComponentPropsWithRef, forwardRef, ForwardRefRenderFunction} from 'react';
+import React, {ComponentRef, forwardRef, ForwardRefRenderFunction} from 'react';
 import {styled} from '@mui/material/styles';
 import {Card, CardProps} from '@mui/material';
 import classNames from 'classnames';
@@ -49,7 +49,7 @@ export interface WidgetProps extends CardProps {
   [p: string]: any;
 }
 
-const Widget: ForwardRefRenderFunction<ComponentPropsWithRef<any>, WidgetProps> = (props: WidgetProps, ref): JSX.Element => {
+const Widget: ForwardRefRenderFunction<ComponentRef<'div'>, WidgetProps> = (props, ref) => {
   const {className, ...rest} = props;
   return <Root className={classNames(classes.root, className)} {...rest} ref={ref} />;
 };
