@@ -1,8 +1,6 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Button, List, Typography} from '@mui/material';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
 import {Endpoints, http, Logger} from '@selfcommunity/core';
 import Skeleton from './Skeleton';
 import {AxiosResponse} from 'axios';
@@ -15,6 +13,7 @@ import classNames from 'classnames';
 import BaseDialog from '../../shared/BaseDialog';
 import CentralProgress from '../../shared/CentralProgress';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import Widget from '../Widget';
 
 const PREFIX = 'SCCategoriesPopular';
 
@@ -24,7 +23,7 @@ const classes = {
   noResults: `${PREFIX}-noResults`
 };
 
-const Root = styled(Card, {
+const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
@@ -114,7 +113,7 @@ export default function CategoriesPopular(props: CategoriesListProps): JSX.Eleme
       {loading ? (
         <Skeleton elevation={0} />
       ) : (
-        <CardContent>
+        <>
           <Typography className={classes.title} variant="body1">
             <FormattedMessage id="ui.categoriesPopular.title" defaultMessage="ui.categoriesPopular.title" />
           </Typography>
@@ -168,7 +167,7 @@ export default function CategoriesPopular(props: CategoriesListProps): JSX.Eleme
               )}
             </BaseDialog>
           )}
-        </CardContent>
+        </>
       )}
     </React.Fragment>
   );

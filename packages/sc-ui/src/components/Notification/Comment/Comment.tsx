@@ -1,6 +1,6 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import {Avatar, Box, Grid, ListItem, ListItemAvatar, ListItemText, Stack, Tooltip, Typography} from '@mui/material';
+import {Avatar, Box, ListItem, ListItemAvatar, ListItemText, Stack, Tooltip, Typography} from '@mui/material';
 import {Link, SCNotificationCommentType, SCNotificationTypologyType, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import Bullet from '../../../shared/Bullet';
@@ -248,7 +248,7 @@ export default function CommentNotification(props: CommentNotificationProps): JS
         <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
           <DateTimeAgo date={notificationObject.active_at} />
           <Typography color="primary">
-            <Link to={scRoutingContext.url('comment', {id: notificationObject.comment.id})} sx={{textDecoration: 'underline'}}>
+            <Link to={scRoutingContext.url(SCRoutes.COMMENT_ROUTE_NAME, getRouteData(notificationObject.comment))} sx={{textDecoration: 'underline'}}>
               <FormattedMessage id="ui.userToastNotifications.viewContribution" defaultMessage={'ui.userToastNotifications.viewContribution'} />
             </Link>
           </Typography>

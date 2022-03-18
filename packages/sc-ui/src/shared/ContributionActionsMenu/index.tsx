@@ -8,7 +8,7 @@ import {SCOPE_SC_UI} from '../../constants/Errors';
 import {AxiosResponse} from 'axios';
 import {copyTextToClipboard} from '../../utils/string';
 import {useSnackbar} from 'notistack';
-import {getRouteData, getRouteName} from '../../utils/contribute';
+import {getRouteData, getContributionRouteName} from '../../utils/contribute';
 import classNames from 'classnames';
 import ConfirmDialog from '../ConfirmDialog/ConfirmDialog';
 import {camelCase} from 'lodash';
@@ -639,7 +639,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
     }
     if (action === GET_CONTRIBUTION_PERMALINK) {
       copyTextToClipboard(
-        `${location.protocol}//${location.host}${scRoutingContext.url(getRouteName(contributionObj), getRouteData(contributionObj))}`
+        `${location.protocol}//${location.host}${scRoutingContext.url(getContributionRouteName(contributionObj), getRouteData(contributionObj))}`
       ).then(() => {
         setOpen(false);
         enqueueSnackbar(<FormattedMessage id="ui.common.permanentLinkCopied" defaultMessage="ui.common.permanentLinkCopied" />, {

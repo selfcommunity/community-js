@@ -1,9 +1,8 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
-import {Button, Typography} from '@mui/material';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
+import {Button, CardContent, Typography} from '@mui/material';
+import Widget from '../Widget';
 import {
   Endpoints,
   http,
@@ -15,7 +14,7 @@ import {
   SCUserContextType,
   SCUserType
 } from '@selfcommunity/core';
-import PeopleSuggestionSkeleton from '../PeopleSuggestion/Skeleton';
+import Skeleton from './Skeleton';
 import User, {UserProps} from '../User';
 import {AxiosResponse} from 'axios';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
@@ -44,7 +43,7 @@ const classes = {
   noResults: `${PREFIX}-noResults`
 };
 
-const Root = styled(Card, {
+const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
@@ -167,7 +166,7 @@ export default function UserFollowers(props: UserFollowersProps): JSX.Element {
   const u = (
     <React.Fragment>
       {loading ? (
-        <PeopleSuggestionSkeleton elevation={0} />
+        <Skeleton elevation={0} />
       ) : (
         <CardContent>
           {!total ? (

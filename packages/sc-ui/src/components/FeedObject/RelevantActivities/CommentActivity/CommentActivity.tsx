@@ -9,6 +9,7 @@ import Icon from '@mui/material/Icon';
 import {grey} from '@mui/material/colors';
 import DateTimeAgo from '../../../../shared/DateTimeAgo';
 import classNames from 'classnames';
+import {getRouteData} from '../../../../utils/contribute';
 
 const messages = defineMessages({
   comment: {
@@ -104,7 +105,7 @@ export default function CommentRelevantActivity(props: CommentRelevantActivityPr
           }
           secondary={
             <React.Fragment>
-              <Link to={scRoutingContext.url('comment', {id: activityObject.comment.id})} sx={{textDecoration: 'underline'}}>
+              <Link to={scRoutingContext.url(SCRoutes.COMMENT_ROUTE_NAME, getRouteData(activityObject.comment))} sx={{textDecoration: 'underline'}}>
                 <Typography variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: activityObject.comment.summary}} />
               </Link>
               <Box component="span" sx={{display: 'flex', justifyContent: 'flex-start', p: '2px'}}>

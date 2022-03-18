@@ -1,18 +1,17 @@
 import React, {useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
-import {Button, Typography} from '@mui/material';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
+import {Button, CardContent, Typography} from '@mui/material';
+import Widget from '../Widget';
 import {Endpoints, http} from '@selfcommunity/core';
 import {AxiosResponse} from 'axios';
-import {PeopleSuggestionSkeleton} from '../PeopleSuggestion';
 import {FormattedMessage} from 'react-intl';
 import User, {UserProps} from '../User';
 import classNames from 'classnames';
 import BaseDialog from '../../shared/BaseDialog';
 import CentralProgress from '../../shared/CentralProgress';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import Skeleton from './Skeleton';
 
 const PREFIX = 'SCTrendingPeople';
 
@@ -22,7 +21,7 @@ const classes = {
   noResults: `${PREFIX}-noResults`
 };
 
-const Root = styled(Card, {
+const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
@@ -141,7 +140,7 @@ export default function TrendingPeople(props: TrendingPeopleProps): JSX.Element 
   const p = (
     <React.Fragment>
       {loading ? (
-        <PeopleSuggestionSkeleton />
+        <Skeleton elevation={0} />
       ) : (
         <CardContent>
           <Typography className={classes.title} variant="body1">

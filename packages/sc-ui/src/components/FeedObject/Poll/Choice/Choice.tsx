@@ -1,8 +1,7 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import Card from '@mui/material/Card';
 import {SCContextType, SCFeedObjectType, SCPollChoiceType, SCUserContextType, useSCContext, useSCUser} from '@selfcommunity/core';
-import {Box, Typography} from '@mui/material';
+import {Box, Card, Typography} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import Icon from '@mui/material/Icon';
 import LinearProgress, {LinearProgressProps} from '@mui/material/LinearProgress';

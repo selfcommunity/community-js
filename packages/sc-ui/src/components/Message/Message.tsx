@@ -1,20 +1,18 @@
 import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
 import {Avatar, ListItem, ListItemAvatar, ListItemText, CardProps, Typography, Box, IconButton} from '@mui/material';
 import MessageSkeleton from './Skeleton';
 import {useIntl} from 'react-intl';
 import {SCPrivateMessageType} from '@selfcommunity/core';
 import Icon from '@mui/material/Icon';
 import classNames from 'classnames';
+import Widget from '../Widget';
 
 const PREFIX = 'SCMessage';
 
 const classes = {
   root: `${PREFIX}-root`,
-  card: `${PREFIX}-card`,
   selected: `${PREFIX}-selected`,
   info: `${PREFIX}-info`,
   messageBox: `${PREFIX}-messageBox`,
@@ -24,15 +22,12 @@ const classes = {
   img: `${PREFIX}-img`
 };
 
-const Root = styled(Card, {
+const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   maxWidth: 700,
-  [`& .${classes.card}`]: {
-    padding: '0px'
-  },
   [`& .${classes.info}`]: {
     display: 'flex',
     justifyContent: 'space-between'
@@ -246,9 +241,7 @@ export default function Message(props: MessageProps): JSX.Element {
   if (!autoHide) {
     return (
       <Root className={classNames(classes.root, className)} {...rest}>
-        <CardContent className={classes.card}>
-          <List>{c}</List>
-        </CardContent>
+        <List>{c}</List>
       </Root>
     );
   }

@@ -39,13 +39,13 @@ export default {
     }
   },
   args: {
-    feedObjectId: 378, // 9,
+    feedObjectId: 356,
     feedObjectType: SCFeedObjectTypologyType.POST,
     template: FeedObjectTemplateType.PREVIEW,
     elevation: 0,
     variant: 'outlined',
     hideShareAction: false
-  },
+  }
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
 } as ComponentMeta<typeof FeedObject>;
 

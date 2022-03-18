@@ -54,6 +54,7 @@ import AccountSignUp, {AccountSignUpProps} from './components/AccountSignUp';
 import AccountRecover, {AccountRecoverProps} from './components/AccountRecover';
 import {SCFeedWidgetType, FeedObjectTemplateType, CommentsOrderBy, FeedObjectActivitiesType, SCMediaObjectType, SCMediaChunkType} from './types';
 import {SCCategoryType} from '@selfcommunity/core';
+import Widget from './components/Widget';
 
 /**
  * List all exports
@@ -190,5 +191,6 @@ export {
   CommentsOrderBy,
   FeedObjectActivitiesType,
   SCMediaObjectType,
-  SCMediaChunkType
+  SCMediaChunkType,
+  Widget
 };

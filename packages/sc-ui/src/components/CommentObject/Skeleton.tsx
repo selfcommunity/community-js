@@ -1,5 +1,5 @@
 import React from 'react';
-import Card from '@mui/material/Card';
+import Widget from '../Widget';
 import {styled} from '@mui/material/styles';
 import Skeleton from '@mui/material/Skeleton';
 import {Box, CardContent, ListItem, ListItemAvatar, ListItemText} from '@mui/material';
@@ -33,12 +33,12 @@ export default function CommentObjectSkeleton(props): JSX.Element {
           disableTypography
           secondary={
             <>
-              <Card {...props}>
+              <Widget {...props}>
                 <CardContent>
                   <Skeleton animation="wave" height={10} width="80%" style={{marginBottom: 6}} />
                   <Skeleton animation="wave" height={10} width="40%" />
                 </CardContent>
-              </Card>
+              </Widget>
             </>
           }
         />

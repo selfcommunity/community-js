@@ -1,9 +1,8 @@
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import Card from '@mui/material/Card';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import {Box, IconButton, ImageListItemBar} from '@mui/material';
+import {Box, Card, IconButton, ImageListItemBar} from '@mui/material';
 import Icon from '@mui/material/Icon';
 import {Endpoints, http, SCUserContext, SCUserContextType} from '@selfcommunity/core';
 import {FormattedMessage} from 'react-intl';

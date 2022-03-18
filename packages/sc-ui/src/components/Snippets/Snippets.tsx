@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Divider, Typography, List} from '@mui/material';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
+import Widget from '../Widget';
 import {Endpoints, http} from '@selfcommunity/core';
 import {AxiosResponse} from 'axios';
 import {SCPrivateMessageType} from '@selfcommunity/core/src/types';
@@ -18,7 +17,7 @@ const classes = {
   selected: `${PREFIX}-selected`
 };
 
-const Root = styled(Card, {
+const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
@@ -133,7 +132,7 @@ export default function Snippets(props: SnippetsProps): JSX.Element {
       {loading ? (
         <SnippetsSkeleton elevation={0} />
       ) : (
-        <CardContent>
+        <>
           {!total ? (
             <Typography variant="body2">
               <FormattedMessage id="ui.categoriesSuggestion.noResults" defaultMessage="ui.categoriesSuggestion.noResults" />
@@ -155,7 +154,7 @@ export default function Snippets(props: SnippetsProps): JSX.Element {
               ))}
             </List>
           )}
-        </CardContent>
+        </>
       )}
     </React.Fragment>
   );

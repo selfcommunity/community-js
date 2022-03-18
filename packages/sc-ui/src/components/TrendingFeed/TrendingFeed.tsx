@@ -1,11 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
-import {Button, Typography} from '@mui/material';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
+import {Button, CardContent, Typography} from '@mui/material';
+import Widget from '../Widget';
 import {Endpoints, http, Logger, SCFeedObjectType} from '@selfcommunity/core';
-import TrendingPostSkeleton from './Skeleton';
 import {AxiosResponse} from 'axios';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import FeedObject from '../FeedObject';
@@ -15,7 +13,7 @@ import classNames from 'classnames';
 import BaseDialog from '../../shared/BaseDialog';
 import CentralProgress from '../../shared/CentralProgress';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import User from '../User';
+import Skeleton from './Skeleton';
 
 const PREFIX = 'SCTrendingFeed';
 
@@ -25,7 +23,7 @@ const classes = {
   noResults: `${PREFIX}-noResults`
 };
 
-const Root = styled(Card, {
+const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
@@ -138,7 +136,7 @@ export default function TrendingFeed(props: TrendingFeedProps): JSX.Element {
   const f = (
     <React.Fragment>
       {loading ? (
-        <TrendingPostSkeleton elevation={0} />
+        <Skeleton elevation={0} />
       ) : (
         <CardContent>
           <Typography className={classes.title} variant="body1">

@@ -1,14 +1,14 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
-import Card from '@mui/material/Card';
-import {Avatar, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText, CardProps} from '@mui/material';
+import {Avatar, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText} from '@mui/material';
 import {Link, SCRoutes, SCRoutingContextType, useSCFetchCategory, useSCRouting} from '@selfcommunity/core';
 import CategorySkeleton from './Skeleton';
 import FollowButton, {FollowCategoryButtonProps} from '../FollowCategoryButton';
 import {SCCategoryType} from '@selfcommunity/core';
 import {defineMessages, useIntl} from 'react-intl';
 import classNames from 'classnames';
+import Widget from '../Widget';
 
 const messages = defineMessages({
   categoryFollowers: {
@@ -26,7 +26,7 @@ const classes = {
   actions: `${PREFIX}-actions`
 };
 
-const Root = styled(Card, {
+const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
@@ -34,7 +34,7 @@ const Root = styled(Card, {
   maxWidth: 700
 }));
 
-export interface CategoryProps extends Pick<CardProps, Exclude<keyof CardProps, 'id'>> {
+export interface CategoryProps {
   /**
    * Id of category object
    * @default null
@@ -60,6 +60,11 @@ export interface CategoryProps extends Pick<CardProps, Exclude<keyof CardProps, 
    * @default {}
    */
   followCategoryButtonProps?: FollowCategoryButtonProps;
+  /**
+   * Prop to show category followers as secondary text
+   * @default true
+   */
+  showFollowers?: boolean;
   /**
    * Any other properties
    */
@@ -89,7 +94,7 @@ export interface CategoryProps extends Pick<CardProps, Exclude<keyof CardProps, 
  */
 export default function Category(props: CategoryProps): JSX.Element {
   // PROPS
-  const {id = null, category = null, className = null, autoHide = false, followCategoryButtonProps = {}, ...rest} = props;
+  const {id = null, category = null, className = null, autoHide = false, followCategoryButtonProps = {}, showFollowers = true, ...rest} = props;
 
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
@@ -113,7 +118,7 @@ export default function Category(props: CategoryProps): JSX.Element {
           <ListItemText
             secondaryTypographyProps={{style: {whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'}}}
             primary={scCategory.name}
-            secondary={`${intl.formatMessage(messages.categoryFollowers, {total: scCategory.followers_counter ?? 0})}`}
+            secondary={showFollowers ? `${intl.formatMessage(messages.categoryFollowers, {total: scCategory.followers_counter})}` : scCategory.slogan}
             className={classes.title}
           />
           <ListItemSecondaryAction className={classes.actions}>

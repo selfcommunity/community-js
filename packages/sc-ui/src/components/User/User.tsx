@@ -1,15 +1,22 @@
 import React, {useContext} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
-import Card from '@mui/material/Card';
 import UserSkeleton from './Skeleton';
 import {Avatar, Button, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText, CardProps} from '@mui/material';
 import {SCUserContext, SCUserContextType, SCUserType, useSCFetchUser, SCRoutingContextType, useSCRouting, Link, SCRoutes} from '@selfcommunity/core';
-import {FormattedMessage} from 'react-intl';
+import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {FollowUserButtonProps} from '../FollowUserButton/FollowUserButton';
 import classNames from 'classnames';
 import {FriendshipButtonProps} from '../FriendshipUserButton/FriendshipUserButton';
 import ConnectionUserButton from '../ConnectionUserButton';
+import Widget from '../Widget';
+
+const messages = defineMessages({
+  userFollowers: {
+    id: 'ui.user.userFollowers',
+    defaultMessage: 'ui.user.userFollowers'
+  }
+});
 
 const PREFIX = 'SCUser';
 
@@ -19,7 +26,7 @@ const classes = {
   actions: `${PREFIX}-actions`
 };
 
-const Root = styled(Card, {
+const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
@@ -57,13 +64,16 @@ export interface UserProps extends Pick<CardProps, Exclude<keyof CardProps, 'id'
    * @default null
    */
   handleIgnoreAction?: (u) => void;
-
   /**
    * Props to spread to follow/friendship button
    * @default {}
    */
   followConnectUserButtonProps?: FollowUserButtonProps | FriendshipButtonProps;
-
+  /**
+   *  Prop to show user followers as secondary text
+   * @default false
+   */
+  showFollowers?: boolean;
   /**
    * Any other properties
    */
@@ -96,7 +106,16 @@ export interface UserProps extends Pick<CardProps, Exclude<keyof CardProps, 'id'
  */
 export default function User(props: UserProps): JSX.Element {
   // PROPS
-  const {id = null, user = null, handleIgnoreAction, className = null, autoHide = false, followConnectUserButtonProps = {}, ...rest} = props;
+  const {
+    id = null,
+    user = null,
+    handleIgnoreAction,
+    className = null,
+    autoHide = false,
+    followConnectUserButtonProps = {},
+    showFollowers = false,
+    ...rest
+  } = props;
 
   // STATE
   const {scUser, setSCUser} = useSCFetchUser({id, user});
@@ -104,6 +123,9 @@ export default function User(props: UserProps): JSX.Element {
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
   const scRoutingContext: SCRoutingContextType = useSCRouting();
+
+  // INTL
+  const intl = useIntl();
 
   /**
    * Render authenticated actions
@@ -132,7 +154,10 @@ export default function User(props: UserProps): JSX.Element {
           <ListItemAvatar>
             <Avatar alt={scUser.username} src={scUser.avatar} className={classes.avatar} />
           </ListItemAvatar>
-          <ListItemText primary={scUser.username} secondary={scUser.description} />
+          <ListItemText
+            primary={scUser.username}
+            secondary={showFollowers ? `${intl.formatMessage(messages.userFollowers, {total: scUser.followers_counter})}` : scUser.description}
+          />
           <ListItemSecondaryAction className={classes.actions}>{renderAuthenticatedActions()}</ListItemSecondaryAction>
         </ListItem>
       ) : (

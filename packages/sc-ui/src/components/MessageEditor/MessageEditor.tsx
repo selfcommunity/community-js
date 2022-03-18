@@ -1,8 +1,6 @@
-import React, {RefObject, useContext, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import Card from '@mui/material/Card';
-import {IconButton, InputAdornment, Popover, Stack, TextField} from '@mui/material';
-import {SCUserContext, SCUserContextType} from '@selfcommunity/core';
+import {Box, IconButton, InputAdornment, Popover, Stack, TextField} from '@mui/material';
 import Icon from '@mui/material/Icon';
 import Picker from 'emoji-picker-react';
 import classNames from 'classnames';
@@ -14,7 +12,7 @@ const classes = {
   messageInput: `${PREFIX}-message-input`
 };
 
-const Root = styled(Card, {
+const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root

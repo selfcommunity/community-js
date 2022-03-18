@@ -1,9 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
-import {Button, Typography} from '@mui/material';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
+import {Button, CardContent, Typography} from '@mui/material';
 import {
   Endpoints,
   http,
@@ -18,6 +16,7 @@ import PeopleSuggestionSkeleton from './Skeleton';
 import User, {UserProps} from '../User';
 import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
+import Widget from '../Widget';
 
 const PREFIX = 'SCPeopleSuggestion';
 
@@ -27,7 +26,7 @@ const classes = {
   noResults: `${PREFIX}-noResults`
 };
 
-const Root = styled(Card, {
+const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root

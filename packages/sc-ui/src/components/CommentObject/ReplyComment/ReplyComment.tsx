@@ -1,6 +1,6 @@
 import React, {RefObject, useContext, useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import Card from '@mui/material/Card';
+import Widget from '../../Widget';
 import {defineMessages, useIntl} from 'react-intl';
 import {Avatar, Box, CardProps, Grid, ListItem, ListItemAvatar, ListItemText, Stack} from '@mui/material';
 import {SCCommentType} from '@selfcommunity/core/src/types/comment';
@@ -225,7 +225,7 @@ export default function ReplyCommentObject(props: ReplyCommentObjectProps): JSX.
           disableTypography
           secondary={
             <>
-              <Card classes={{root: classes.comment}} {...ReplyBoxProps}>
+              <Widget classes={{root: classes.comment}} {...ReplyBoxProps}>
                 <Editor
                   onRef={(e) => {
                     editor = e;
@@ -255,7 +255,7 @@ export default function ReplyCommentObject(props: ReplyCommentObjectProps): JSX.
                     )}
                   </Stack>
                 )}
-              </Card>
+              </Widget>
             </>
           }
         />

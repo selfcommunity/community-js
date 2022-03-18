@@ -1,12 +1,12 @@
 import React, {useContext} from 'react';
 import {styled} from '@mui/material/styles';
-import Card from '@mui/material/Card';
 import {Button, Grid, Typography} from '@mui/material';
 import {Endpoints, http, SCLocaleContextType, SCUserContext, SCUserContextType, useSCLocale} from '@selfcommunity/core';
 import Icon from '@mui/material/Icon';
 import {AxiosResponse} from 'axios';
 import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
+import Widget from '../Widget';
 
 const PREFIX = 'SCPlatform';
 
@@ -15,7 +15,7 @@ const classes = {
   title: `${PREFIX}-title`
 };
 
-const Root = styled(Card, {
+const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root

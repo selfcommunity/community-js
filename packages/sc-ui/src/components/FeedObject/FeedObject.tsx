@@ -1,6 +1,5 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import {
   Avatar,
@@ -41,7 +40,6 @@ import {
   SCPollType,
   SCRoutes,
   SCRoutingContextType,
-  SCTagType,
   SCUserContextType,
   UserUtils,
   useSCContext,
@@ -61,9 +59,10 @@ import {AxiosResponse} from 'axios';
 import MarkRead from '../../shared/MarkRead';
 import classNames from 'classnames';
 import ContributionActionsMenu, {ContributionActionsMenuProps} from '../../shared/ContributionActionsMenu';
-import {getContributionHtml} from '../../utils/contribute';
+import {getContributionHtml, getContributionRouteName, getRouteData} from '../../utils/contribute';
 import {useSnackbar} from 'notistack';
 import Follow, {FollowProps} from './Actions/Follow';
+import Widget from '../Widget';
 
 const messages = defineMessages({
   comment: {
@@ -101,7 +100,7 @@ const classes = {
   followButton: `${PREFIX}-follow-button`
 };
 
-const Root = styled(Card, {
+const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
@@ -669,7 +668,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
               }
               subheader={
                 <Grid component="span" item={true} sm="auto" container direction="row" alignItems="center">
-                  <Link to={scRoutingContext.url(feedObjectType, obj)} className={classes.activityAt}>
+                  <Link to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))} className={classes.activityAt}>
                     <DateTimeAgo date={obj.added_at} />
                   </Link>
                   <Bullet />
@@ -697,7 +696,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
                         {obj.title}
                       </Typography>
                     ) : (
-                      <Link to={scRoutingContext.url(feedObjectType, obj)}>
+                      <Link to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))}>
                         <Typography variant="body1" gutterBottom className={classes.title}>
                           {obj.title}
                         </Typography>
@@ -717,7 +716,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
                     }}
                   />
                 ) : (
-                  <Link to={scRoutingContext.url(feedObjectType, obj)}>
+                  <Link to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))}>
                     <Typography component="div" gutterBottom className={classes.text} dangerouslySetInnerHTML={{__html: obj.summary}} />
                   </Link>
                 )}
@@ -802,7 +801,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
               }
               subheader={
                 <Grid component="span" item={true} sm="auto" container direction="row" alignItems="center">
-                  <Link to={scRoutingContext.url(feedObjectType, obj)} className={classes.activityAt}>
+                  <Link to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))} className={classes.activityAt}>
                     <DateTimeAgo date={obj.added_at} />
                   </Link>
                 </Grid>
@@ -811,7 +810,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
             <CardContent classes={{root: classes.content}}>
               <Box className={classes.titleSection}>
                 {'title' in obj && (
-                  <Link to={scRoutingContext.url(feedObjectType, obj)}>
+                  <Link to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))}>
                     <Typography variant="body1" gutterBottom className={classes.title}>
                       {obj.title}
                     </Typography>
@@ -819,7 +818,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
                 )}
               </Box>
               <Box className={classes.textSection}>
-                <Link to={scRoutingContext.url(feedObjectType, obj)} className={classes.text}>
+                <Link to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))} className={classes.text}>
                   <Typography component="div" className={classes.text} variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: obj.html}} />
                 </Link>
               </Box>
@@ -854,16 +853,20 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
               }
               secondary={
                 <React.Fragment>
-                  <Link to={scRoutingContext.url(feedObjectType, obj)} className={classes.snippetContent}>
+                  <Link to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))} className={classes.snippetContent}>
                     {obj.summary}
                   </Link>
                   <Box component="span" sx={{display: 'flex', justifyContent: 'flex-start', p: '2px'}}>
                     <Grid component="span" item={true} sm="auto" container direction="row" alignItems="center">
-                      <Link to={scRoutingContext.url(feedObjectType, obj)} className={classes.activityAt}>
+                      <Link to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))} className={classes.activityAt}>
                         <DateTimeAgo component="span" date={obj.added_at} />
                       </Link>
                       <Bullet sx={{paddingLeft: '4px', paddingTop: '1px'}} />
-                      <Button component={Link} to={scRoutingContext.url(feedObjectType, obj)} variant={'text'} sx={{marginTop: '-1px'}}>
+                      <Button
+                        component={Link}
+                        to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))}
+                        variant={'text'}
+                        sx={{marginTop: '-1px'}}>
                         {intl.formatMessage(messages.comment)}
                       </Button>
                     </Grid>

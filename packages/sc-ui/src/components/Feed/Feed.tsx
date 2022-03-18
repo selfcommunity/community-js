@@ -11,7 +11,8 @@ import React, {
   useState
 } from 'react';
 import {styled, useTheme} from '@mui/material/styles';
-import {Box, Card, CardContent, Grid, Hidden, Theme, useMediaQuery} from '@mui/material';
+import Widget from '../Widget';
+import {Box, CardContent, Grid, Hidden, Theme, useMediaQuery} from '@mui/material';
 import {AxiosResponse} from 'axios';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {FormattedMessage} from 'react-intl';
@@ -362,18 +363,18 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (props: FeedProps, re
             hasMore={Boolean(next)}
             loader={false}
             endMessage={
-              <Card variant="outlined" className={classes.end}>
+              <Widget className={classes.end}>
                 <CardContent>{endMessage}</CardContent>
-              </Card>
+              </Widget>
             }
             refreshFunction={refresh}
             pullDownToRefresh
             pullDownToRefreshThreshold={1000}
             pullDownToRefreshContent={null}
             releaseToRefreshContent={
-              <Card variant="outlined" className={classes.refresh}>
+              <Widget variant="outlined" className={classes.refresh}>
                 <CardContent>{refreshMessage}</CardContent>
-              </Card>
+              </Widget>
             }>
             {data.left.map((d, i) =>
               d.type === 'widget' ? (
