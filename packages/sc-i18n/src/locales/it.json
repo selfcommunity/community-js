@@ -23,6 +23,8 @@
 
   "ui.user.ignore": "Ignora",
 
+  "ui.user.userFollowers": "{total, plural, =0 {Seguito da # persone} one {Seguito da # persona} other {Seguito da # persone}}",
+
   "ui.peopleSuggestion.title": "Persone che potresti conoscere",
   "ui.peopleSuggestion.subtitle.noResults": "Nessun risultato",
   "ui.peopleSuggestion.button.showMore": "Vedi di più",

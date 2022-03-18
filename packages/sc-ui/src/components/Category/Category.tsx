@@ -61,6 +61,11 @@ export interface CategoryProps {
    */
   followCategoryButtonProps?: FollowCategoryButtonProps;
   /**
+   * Prop to show category followers as secondary text
+   * @default true
+   */
+  showFollowers: boolean;
+  /**
    * Any other properties
    */
   [p: string]: any;
@@ -89,7 +94,7 @@ export interface CategoryProps {
  */
 export default function Category(props: CategoryProps): JSX.Element {
   // PROPS
-  const {id = null, category = null, className = null, autoHide = false, followCategoryButtonProps = {}, ...rest} = props;
+  const {id = null, category = null, className = null, autoHide = false, followCategoryButtonProps = {}, showFollowers = true, ...rest} = props;
 
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
@@ -113,7 +118,7 @@ export default function Category(props: CategoryProps): JSX.Element {
           <ListItemText
             secondaryTypographyProps={{style: {whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'}}}
             primary={scCategory.name}
-            secondary={`${intl.formatMessage(messages.categoryFollowers, {total: scCategory.followers_counter ?? 0})}`}
+            secondary={showFollowers ? `${intl.formatMessage(messages.categoryFollowers, {total: scCategory.followers_counter})}` : scCategory.slogan}
             className={classes.title}
           />
           <ListItemSecondaryAction className={classes.actions}>

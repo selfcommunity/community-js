@@ -224,6 +224,8 @@
   "ui.followUserButton.follow": "Follow",
   "ui.followUserButton.unfollow": "Unfollow",
 
+  "ui.user.userFollowers": "{total, plural, =0 {Followed by # people} one {Followed by # person} other {Followed by # people}}",
+
   "ui.userProfileInfo.username": "Username",
   "ui.userProfileInfo.realName": "Real name",
   "ui.userProfileInfo.dateOfBirth": "Date of birth",
