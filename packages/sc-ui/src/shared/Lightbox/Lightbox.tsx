@@ -1272,7 +1272,7 @@ class ReactImageLightbox extends React.Component<ReactImageLightboxProps, ReactI
   }
 
   multiPointerStart(event) {
-    this.handleEnd(null);
+    this.handleEnd(event);
     switch (this.pointerList.length) {
       case 1: {
         event.preventDefault();
@@ -1785,7 +1785,7 @@ class ReactImageLightbox extends React.Component<ReactImageLightboxProps, ReactI
             onWheel={this.handleImageMouseWheel}
             style={imageStyle}
             key={imageSrc + keyEndings[srcType]}>
-            <div className={classNames('ril-download-blocker', classes.rilDownloadBlocker)} /*className="ril-download-blocker ril__downloadBlocker"*/>
+            <div className={classNames('ril-download-blocker', classes.rilDownloadBlocker)}>
               <Icon>download</Icon>
             </div>
           </div>
@@ -1810,20 +1810,6 @@ class ReactImageLightbox extends React.Component<ReactImageLightboxProps, ReactI
 
     const zoomMultiplier = this.getZoomMultiplier();
     // Next Image (displayed on the right)
-    /*addImage('nextSrc', 'ril-image-next ril__imageNext', {
-      x: boxSize.width
-    });
-    // Main Image
-    addImage('mainSrc', 'ril-image-current', {
-      x: -1 * offsetX,
-      y: -1 * offsetY,
-      zoom: zoomMultiplier
-    });
-    // Previous Image (displayed on the left)
-    addImage('prevSrc', 'ril-image-prev ril__imagePrev', {
-      x: -1 * boxSize.width
-    });
-    */
     addImage('nextSrc', classNames('ril-image-next', classes.rilImageNext), {
       x: boxSize.width
     });
