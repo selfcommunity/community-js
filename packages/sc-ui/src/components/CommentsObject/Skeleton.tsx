@@ -3,6 +3,7 @@ import List from '@mui/material/List';
 import {styled} from '@mui/material/styles';
 import CommentObjectSkeleton from '../CommentObject';
 import Widget from '../Widget';
+import {CardContent} from '@mui/material';
 
 const PREFIX = 'SCCommentsObjectSkeleton';
 
@@ -22,13 +23,13 @@ const Root = styled(Widget)(({theme}) => ({
 export default function CommentsObjectSkeleton(props): JSX.Element {
   return (
     <Root className={classes.root} {...props}>
-      <>
+      <CardContent>
         <List className={classes.list}>
           {[...Array(4)].map((comment, index) => (
             <CommentObjectSkeleton key={index} elevation={0} />
           ))}
         </List>
-      </>
+      </CardContent>
     </Root>
   );
 }

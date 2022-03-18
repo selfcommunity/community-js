@@ -1,9 +1,9 @@
 import React from 'react';
-import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import {styled} from '@mui/material/styles';
-import {Avatar, CardHeader} from '@mui/material';
+import {CardHeader} from '@mui/material';
 import Skeleton from '@mui/material/Skeleton';
+import Widget from '../Widget';
 
 const PREFIX = 'SCNotificationSkeleton';
 
@@ -11,7 +11,7 @@ const classes = {
   root: `${PREFIX}-root`
 };
 
-const Root = styled(Card)(({theme}) => ({
+const Root = styled(Widget)(({theme}) => ({
   marginBottom: theme.spacing(2)
 }));
 

@@ -29,9 +29,7 @@ const Root = styled(Widget, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   maxWidth: 700,
-  marginBottom: theme.spacing(2),
-  padding: 16,
-  paddingBottom: 24
+  marginBottom: theme.spacing(2)
 }));
 
 /**

@@ -3,6 +3,7 @@ import Widget from '../Widget';
 import List from '@mui/material/List';
 import {styled} from '@mui/material/styles';
 import SnippetMessageBoxSkeleton from '../Message/Skeleton';
+import {CardContent} from '@mui/material';
 
 const PREFIX = 'SCSnippetsSkeleton';
 
@@ -22,11 +23,13 @@ const Root = styled(Widget)(({theme}) => ({
 export default function SnippetsSkeleton(props): JSX.Element {
   return (
     <Root className={classes.root} {...props}>
-      <List className={classes.list}>
-        {[...Array(4)].map((category, index) => (
-          <SnippetMessageBoxSkeleton key={index} elevation={0} />
-        ))}
-      </List>
+      <CardContent>
+        <List className={classes.list}>
+          {[...Array(4)].map((category, index) => (
+            <SnippetMessageBoxSkeleton key={index} elevation={0} />
+          ))}
+        </List>
+      </CardContent>
     </Root>
   );
 }

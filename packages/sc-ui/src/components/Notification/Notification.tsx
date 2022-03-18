@@ -20,10 +20,11 @@ import {SCOPE_SC_UI} from '../../constants/Errors';
 import {AxiosResponse} from 'axios';
 import {getContribute, getContributionRouteName, getContributionSnippet} from '../../utils/contribute';
 import ContributionFollowNotification from './ContributionFollow';
-import {Avatar, Card, CardProps, Collapse, ListItem, ListItemAvatar, ListItemButton, ListItemText, Stack, Tooltip, Typography} from '@mui/material';
+import {Avatar, CardProps, Collapse, ListItem, ListItemAvatar, ListItemButton, ListItemText, Stack, Tooltip, Typography} from '@mui/material';
 import IncubatorApprovedNotification from './IncubatorApproved';
 import classNames from 'classnames';
 import LoadingButton from '@mui/lab/LoadingButton';
+import Widget from '../Widget';
 import {
   Endpoints,
   http,
@@ -59,7 +60,7 @@ const classes = {
   showOtherAggregated: `${PREFIX}-show-other-aggregated`
 };
 
-const Root = styled(Card, {
+const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root

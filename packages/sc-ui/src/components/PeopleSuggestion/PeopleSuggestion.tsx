@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
-import {Button, Typography} from '@mui/material';
+import {Button, CardContent, Typography} from '@mui/material';
 import {
   Endpoints,
   http,
@@ -32,9 +32,7 @@ const Root = styled(Widget, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   maxWidth: 700,
-  marginBottom: theme.spacing(2),
-  padding: 16,
-  paddingBottom: 24
+  marginBottom: theme.spacing(2)
 }));
 
 export interface PeopleSuggestionProps {
@@ -176,7 +174,7 @@ export default function PeopleSuggestion(props: PeopleSuggestionProps): JSX.Elem
       {loading ? (
         <PeopleSuggestionSkeleton elevation={0} />
       ) : (
-        <>
+        <CardContent>
           <Typography className={classes.title} variant="body1">
             <FormattedMessage id="ui.peopleSuggestion.title" defaultMessage="ui.peopleSuggestion.title" />
           </Typography>
@@ -209,7 +207,7 @@ export default function PeopleSuggestion(props: PeopleSuggestionProps): JSX.Elem
             </React.Fragment>
           )}
           {openPeopleSuggestionDialog && <></>}
-        </>
+        </CardContent>
       )}
     </React.Fragment>
   );

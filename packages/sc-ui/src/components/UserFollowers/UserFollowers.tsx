@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
-import {Button, Typography} from '@mui/material';
+import {Button, CardContent, Typography} from '@mui/material';
 import Widget from '../Widget';
 import {
   Endpoints,
@@ -14,7 +14,7 @@ import {
   SCUserContextType,
   SCUserType
 } from '@selfcommunity/core';
-import PeopleSuggestionSkeleton from '../PeopleSuggestion/Skeleton';
+import Skeleton from './Skeleton';
 import User, {UserProps} from '../User';
 import {AxiosResponse} from 'axios';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
@@ -49,9 +49,7 @@ const Root = styled(Widget, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   maxWidth: 700,
-  marginBottom: theme.spacing(2),
-  padding: 16,
-  paddingBottom: 24
+  marginBottom: theme.spacing(2)
 }));
 
 export interface UserFollowersProps {
@@ -168,9 +166,9 @@ export default function UserFollowers(props: UserFollowersProps): JSX.Element {
   const u = (
     <React.Fragment>
       {loading ? (
-        <PeopleSuggestionSkeleton elevation={0} />
+        <Skeleton elevation={0} />
       ) : (
-        <>
+        <CardContent>
           {!total ? (
             <Typography className={classes.noResults} variant="body2">{`${intl.formatMessage(messages.noFollowers)}`}</Typography>
           ) : (
@@ -220,7 +218,7 @@ export default function UserFollowers(props: UserFollowersProps): JSX.Element {
               )}
             </React.Fragment>
           )}
-        </>
+        </CardContent>
       )}
     </React.Fragment>
   );

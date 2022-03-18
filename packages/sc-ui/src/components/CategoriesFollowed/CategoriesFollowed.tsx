@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
-import {Button, Typography} from '@mui/material';
+import {Button, CardContent, Typography} from '@mui/material';
 import {Endpoints, http, Logger, SCUserContext, SCUserContextType} from '@selfcommunity/core';
 import Category from '../Category';
 import {AxiosResponse} from 'axios';
@@ -41,9 +41,7 @@ const Root = styled(Widget, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   maxWidth: 700,
-  marginBottom: theme.spacing(2),
-  padding: 16,
-  paddingBottom: 24
+  marginBottom: theme.spacing(2)
 }));
 /**
  > API documentation for the Community-UI Categories Followed component. Learn about the available props and the CSS API.
@@ -150,7 +148,7 @@ export default function CategoriesFollowed(props: CategoriesListProps): JSX.Elem
       {loading ? (
         <Skeleton elevation={0} />
       ) : (
-        <>
+        <CardContent>
           {!total ? (
             <Typography className={classes.noResults} variant="body2">{`${intl.formatMessage(messages.noCategories)}`}</Typography>
           ) : (
@@ -215,7 +213,7 @@ export default function CategoriesFollowed(props: CategoriesListProps): JSX.Elem
               )}
             </BaseDialog>
           )}
-        </>
+        </CardContent>
       )}
     </React.Fragment>
   );

@@ -3,6 +3,7 @@ import List from '@mui/material/List';
 import {styled} from '@mui/material/styles';
 import UserSkeleton from '../User/Skeleton';
 import Widget from '../Widget';
+import {CardContent} from '@mui/material';
 
 const PREFIX = 'SCPeopleSuggestionSkeleton';
 
@@ -22,11 +23,13 @@ const Root = styled(Widget)(({theme}) => ({
 function PeopleSuggestionSkeleton(props): JSX.Element {
   return (
     <Root className={classes.root} {...props}>
-      <List className={classes.list}>
-        {[...Array(4)].map((user, index) => (
-          <UserSkeleton key={index} elevation={0} />
-        ))}
-      </List>
+      <CardContent>
+        <List className={classes.list}>
+          {[...Array(4)].map((user, index) => (
+            <UserSkeleton key={index} elevation={0} />
+          ))}
+        </List>
+      </CardContent>
     </Root>
   );
 }

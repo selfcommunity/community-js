@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import {Box, IconButton, ImageListItemBar} from '@mui/material';
+import {Box, Card, IconButton, ImageListItemBar} from '@mui/material';
 import Icon from '@mui/material/Icon';
 import {Endpoints, http, SCUserContext, SCUserContextType} from '@selfcommunity/core';
 import {FormattedMessage} from 'react-intl';
@@ -12,7 +12,6 @@ import BaseDialog from '../../../shared/BaseDialog';
 import ConfirmDialog from '../../../shared/ConfirmDialog/ConfirmDialog';
 import classNames from 'classnames';
 import CircularProgress from '@mui/material/CircularProgress';
-import Widget from '../../Widget';
 
 const PREFIX = 'SCChangePictureDialog';
 
@@ -23,7 +22,7 @@ const classes = {
   imageItem: `${PREFIX}-imageItem`
 };
 
-const Root = styled(Widget, {
+const Root = styled(Card, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root

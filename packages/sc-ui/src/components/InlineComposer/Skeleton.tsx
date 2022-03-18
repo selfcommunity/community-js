@@ -2,7 +2,7 @@ import React from 'react';
 import {styled} from '@mui/material/styles';
 import Skeleton from '@mui/material/Skeleton';
 import {Box, Stack} from '@mui/material';
-import Paper from '@mui/material/Paper';
+import Widget from '../Widget';
 
 const PREFIX = 'SCInlineComposerSkeleton';
 
@@ -14,7 +14,7 @@ const classes = {
   avatar: `${PREFIX}-avatar`
 };
 
-const Root = styled(Paper, {
+const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root

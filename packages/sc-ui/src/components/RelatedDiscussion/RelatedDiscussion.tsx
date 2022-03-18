@@ -1,7 +1,7 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
-import {Button, Typography} from '@mui/material';
+import {Button, CardContent, Typography} from '@mui/material';
 import {
   Endpoints,
   http,
@@ -43,9 +43,7 @@ const Root = styled(Widget, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   maxWidth: 500,
-  marginBottom: theme.spacing(2),
-  padding: 16,
-  paddingBottom: 24
+  marginBottom: theme.spacing(2)
 }));
 
 export interface RelatedDiscussionProps {
@@ -198,7 +196,7 @@ export default function RelatedDiscussion(props: RelatedDiscussionProps): JSX.El
       {loading ? (
         <TrendingPostSkeleton elevation={0} />
       ) : (
-        <>
+        <CardContent>
           <Typography className={classes.title} variant="body1">
             <FormattedMessage id="ui.relatedDiscussion.title" defaultMessage="ui.relatedDiscussion.title" />
           </Typography>
@@ -259,7 +257,7 @@ export default function RelatedDiscussion(props: RelatedDiscussionProps): JSX.El
               )}
             </BaseDialog>
           )}
-        </>
+        </CardContent>
       )}
     </React.Fragment>
   );

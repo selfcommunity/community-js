@@ -13,10 +13,9 @@ import {
   SCUserContextType,
   UserUtils
 } from '@selfcommunity/core';
-import {Avatar, Box, Button, IconButton, PaperProps} from '@mui/material';
+import {Avatar, Box, Button, IconButton, CardProps} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {SCMediaObjectType} from '../../types/media';
-import Paper from '@mui/material/Paper';
 import {Document, Image, Link} from '../../shared/Media';
 import Composer, {MAIN_VIEW, POLL_VIEW} from '../Composer';
 import Icon from '@mui/material/Icon';
@@ -24,6 +23,7 @@ import {FormattedMessage} from 'react-intl';
 import {DistributiveOmit} from '@mui/types';
 import {OverrideProps} from '@mui/material/OverridableComponent';
 import {useSnackbar} from 'notistack';
+import Widget from '../Widget';
 
 const PREFIX = 'SCInlineComposer';
 
@@ -34,7 +34,7 @@ const classes = {
   avatar: `${PREFIX}-avatar`
 };
 
-const Root = styled(Paper, {
+const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
@@ -55,7 +55,7 @@ const Root = styled(Paper, {
 
 export interface InlineComposerTypeMap<P = {}, D extends React.ElementType = 'div'> {
   props: P &
-    DistributiveOmit<PaperProps, 'defaultValue'> & {
+    DistributiveOmit<CardProps, 'defaultValue'> & {
       /**
        * Media objects available
        * @default Image, Document, Link

@@ -1,6 +1,6 @@
-import React from 'react';
+import React, {ComponentPropsWithRef, forwardRef, ForwardRefRenderFunction} from 'react';
 import {styled} from '@mui/material/styles';
-import {Paper} from '@mui/material';
+import { Card, CardProps } from '@mui/material';
 import classNames from 'classnames';
 
 const PREFIX = 'SCWidget';
@@ -9,7 +9,7 @@ const classes = {
   root: `${PREFIX}-root`
 };
 
-const Root = styled(Paper, {
+const Root = styled(Card, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
@@ -37,7 +37,7 @@ const Root = styled(Paper, {
  *
  */
 
-export interface WidgetProps {
+export interface WidgetProps extends CardProps {
   /**
    * Overrides or extends the styles applied to the component.
    * @default null
@@ -49,7 +49,9 @@ export interface WidgetProps {
   [p: string]: any;
 }
 
-export default function Widget(props: WidgetProps): JSX.Element {
+const Widget: ForwardRefRenderFunction<ComponentPropsWithRef<any>, WidgetProps> = (props: WidgetProps, ref): JSX.Element => {
   const {className, ...rest} = props;
-  return <Root className={classNames(classes.root, className)} {...rest} />;
-}
+  return <Root className={classNames(classes.root, className)} {...rest} ref={ref} />;
+};
+
+export default forwardRef(Widget);

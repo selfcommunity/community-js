@@ -1,7 +1,11 @@
 import React, {useContext, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Avatar, Card, CardContent, CardHeader, CardMedia, CardProps, Chip, CircularProgress, Fade, IconButton, Typography} from '@mui/material';
+import {Avatar, Box, CardContent, CardHeader, CardMedia, CardProps, Chip, CircularProgress, Fade, IconButton, Typography} from '@mui/material';
 import Icon from '@mui/material/Icon';
+import {FormattedMessage} from 'react-intl';
+import {SCOPE_SC_UI} from '../../constants/Errors';
+import MarkRead from '../../shared/MarkRead';
+import Widget from '../Widget';
 import {
   Endpoints,
   http,
@@ -13,9 +17,6 @@ import {
   SCPreferencesContext,
   SCPreferencesContextType
 } from '@selfcommunity/core';
-import {FormattedMessage} from 'react-intl';
-import {SCOPE_SC_UI} from '../../constants/Errors';
-import MarkRead from '../../shared/MarkRead';
 
 const PREFIX = 'SCBroadcastMessage';
 
@@ -26,7 +27,7 @@ const classes = {
   content: `${PREFIX}-content`
 };
 
-const Root = styled(Card, {
+const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root

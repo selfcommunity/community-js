@@ -1,6 +1,5 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import {
   Avatar,
@@ -63,6 +62,7 @@ import ContributionActionsMenu, {ContributionActionsMenuProps} from '../../share
 import {getContributionHtml, getContributionRouteName, getRouteData} from '../../utils/contribute';
 import {useSnackbar} from 'notistack';
 import Follow, {FollowProps} from './Actions/Follow';
+import Widget from '../Widget';
 
 const messages = defineMessages({
   comment: {
@@ -100,7 +100,7 @@ const classes = {
   followButton: `${PREFIX}-follow-button`
 };
 
-const Root = styled(Card, {
+const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root

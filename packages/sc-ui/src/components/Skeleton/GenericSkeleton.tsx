@@ -2,6 +2,7 @@ import React from 'react';
 import Widget from '../Widget';
 import {styled} from '@mui/material/styles';
 import Skeleton from '@mui/material/Skeleton';
+import {CardContent} from '@mui/material';
 
 const PREFIX = 'SCGenericSkeleton';
 
@@ -12,8 +13,6 @@ const classes = {
 
 const Root = styled(Widget)(({theme}) => ({
   maxWidth: 700,
-  padding: 16,
-  paddingBottom: 24,
   [`& .${classes.list}`]: {
     marginLeft: -16,
     marginRight: -16
@@ -23,11 +22,11 @@ const Root = styled(Widget)(({theme}) => ({
 function GenericSkeleton(props): JSX.Element {
   return (
     <Root className={classes.root} {...props}>
-      <React.Fragment>
+      <CardContent>
         <Skeleton animation="wave" height={10} style={{marginBottom: 10}} />
         <Skeleton animation="wave" height={10} width="80%" style={{marginBottom: 5}} />
         <Skeleton animation="wave" height={10} width="60%" style={{marginBottom: 5}} />
-      </React.Fragment>
+      </CardContent>
     </Root>
   );
 }

@@ -1,6 +1,6 @@
 import React, {useContext, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import Card from '@mui/material/Card';
+import Widget from '../Widget';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {Avatar, Box, Button, CardContent, CardProps, Grid, ListItem, ListItemAvatar, ListItemText, Tooltip, Typography} from '@mui/material';
 import Bullet from '../../shared/Bullet';
@@ -703,7 +703,7 @@ export default function CommentObject(props: CommentObjectProps): JSX.Element {
               disableTypography
               secondary={
                 <>
-                  <Card classes={{root: classes.content}} {...rest}>
+                  <Widget classes={{root: classes.content}} {...rest}>
                     <CardContent classes={{root: classNames({[classes.deleted]: obj && obj.deleted})}}>
                       <Link className={classes.author} to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, comment.author)}>
                         <Typography component="span" sx={{display: 'inline'}} gutterBottom color="inherit">
@@ -727,7 +727,7 @@ export default function CommentObject(props: CommentObjectProps): JSX.Element {
                         />
                       </Box>
                     )}
-                  </Card>
+                  </Widget>
                   <Box component="span" sx={{display: 'flex', justifyContent: 'flex-start', p: '2px'}}>
                     <Grid component="span" item={true} sm="auto" container direction="row" alignItems="center">
                       {renderTimeAgo(comment)}

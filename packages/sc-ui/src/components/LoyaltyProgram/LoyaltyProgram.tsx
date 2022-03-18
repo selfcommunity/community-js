@@ -37,7 +37,6 @@ const Root = styled(Widget, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   marginBottom: theme.spacing(2),
-  padding: 8,
   [`& .${classes.cardHeader}`]: {
     display: 'flex',
     alignItems: 'start',

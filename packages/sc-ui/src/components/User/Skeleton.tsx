@@ -7,7 +7,7 @@ import {Button} from '@mui/material';
 import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
 import {styled} from '@mui/material/styles';
 import Skeleton from '@mui/material/Skeleton';
-import Widget from '../Widget';
+import Widget, {WidgetProps} from '../Widget';
 
 const PREFIX = 'SCUserSkeleton';
 
@@ -24,7 +24,7 @@ const Root = styled(Widget)(({theme}) => ({
   }
 }));
 
-export default function UserSkeleton(props): JSX.Element {
+export default function UserSkeleton(props: WidgetProps): JSX.Element {
   const user = (
     <ListItem>
       <ListItemAvatar>

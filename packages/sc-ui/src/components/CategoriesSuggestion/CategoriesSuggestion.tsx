@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Button, Typography, List} from '@mui/material';
+import {Button, Typography, List, CardContent} from '@mui/material';
 import {Endpoints, http, SCUserContext, SCUserContextType, SCCategoryType} from '@selfcommunity/core';
 import Skeleton from './Skeleton';
 import Category, {CategoryProps} from '../Category';
@@ -23,9 +23,7 @@ const Root = styled(Widget, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   maxWidth: 700,
-  marginBottom: theme.spacing(2),
-  padding: 16,
-  paddingBottom: 24
+  marginBottom: theme.spacing(2)
 }));
 
 export interface CategoriesListProps {
@@ -156,7 +154,7 @@ export default function CategoriesSuggestion(props: CategoriesListProps): JSX.El
       {loading ? (
         <Skeleton elevation={0} />
       ) : (
-        <>
+        <CardContent>
           <Typography className={classes.title} variant="body1">
             <FormattedMessage id="ui.categoriesSuggestion.title" defaultMessage="ui.categoriesSuggestion.title" />
           </Typography>
@@ -187,7 +185,7 @@ export default function CategoriesSuggestion(props: CategoriesListProps): JSX.El
             </React.Fragment>
           )}
           {openCategoriesSuggestionDialog && <></>}
-        </>
+        </CardContent>
       )}
     </React.Fragment>
   );

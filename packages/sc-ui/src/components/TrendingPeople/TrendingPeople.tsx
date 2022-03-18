@@ -1,17 +1,17 @@
 import React, {useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
-import {Button, Typography} from '@mui/material';
+import {Button, CardContent, Typography} from '@mui/material';
 import Widget from '../Widget';
 import {Endpoints, http} from '@selfcommunity/core';
 import {AxiosResponse} from 'axios';
-import {PeopleSuggestionSkeleton} from '../PeopleSuggestion';
 import {FormattedMessage} from 'react-intl';
 import User, {UserProps} from '../User';
 import classNames from 'classnames';
 import BaseDialog from '../../shared/BaseDialog';
 import CentralProgress from '../../shared/CentralProgress';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import Skeleton from './Skeleton';
 
 const PREFIX = 'SCTrendingPeople';
 
@@ -27,8 +27,7 @@ const Root = styled(Widget, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   maxWidth: 700,
-  marginBottom: theme.spacing(2),
-  padding: 16
+  marginBottom: theme.spacing(2)
 }));
 
 export interface TrendingPeopleProps {
@@ -141,9 +140,9 @@ export default function TrendingPeople(props: TrendingPeopleProps): JSX.Element 
   const p = (
     <React.Fragment>
       {loading ? (
-        <PeopleSuggestionSkeleton />
+        <Skeleton elevation={0} />
       ) : (
-        <>
+        <CardContent>
           <Typography className={classes.title} variant="body1">
             <FormattedMessage id="ui.trendingPeople.title" defaultMessage="ui.trendingPeople.title" />
           </Typography>
@@ -195,7 +194,7 @@ export default function TrendingPeople(props: TrendingPeopleProps): JSX.Element 
               )}
             </BaseDialog>
           )}
-        </>
+        </CardContent>
       )}
     </React.Fragment>
   );

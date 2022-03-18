@@ -1,10 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
-import {Button, Typography} from '@mui/material';
+import {Button, CardContent, Typography} from '@mui/material';
 import Widget from '../Widget';
 import {Endpoints, http, Logger, SCFeedObjectType} from '@selfcommunity/core';
-import TrendingPostSkeleton from './Skeleton';
 import {AxiosResponse} from 'axios';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import FeedObject from '../FeedObject';
@@ -14,7 +13,7 @@ import classNames from 'classnames';
 import BaseDialog from '../../shared/BaseDialog';
 import CentralProgress from '../../shared/CentralProgress';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import User from '../User';
+import Skeleton from './Skeleton';
 
 const PREFIX = 'SCTrendingFeed';
 
@@ -30,9 +29,7 @@ const Root = styled(Widget, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   maxWidth: 700,
-  marginBottom: theme.spacing(2),
-  padding: 16,
-  paddingBottom: 24
+  marginBottom: theme.spacing(2)
 }));
 export interface TrendingFeedProps {
   /**
@@ -139,9 +136,9 @@ export default function TrendingFeed(props: TrendingFeedProps): JSX.Element {
   const f = (
     <React.Fragment>
       {loading ? (
-        <TrendingPostSkeleton elevation={0} />
+        <Skeleton elevation={0} />
       ) : (
-        <>
+        <CardContent>
           <Typography className={classes.title} variant="body1">
             <FormattedMessage id="ui.trendingFeed.title" defaultMessage="ui.trendingFeed.title" />
           </Typography>
@@ -197,7 +194,7 @@ export default function TrendingFeed(props: TrendingFeedProps): JSX.Element {
               )}
             </BaseDialog>
           )}
-        </>
+        </CardContent>
       )}
     </React.Fragment>
   );

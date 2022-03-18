@@ -12,7 +12,7 @@ import React, {
 } from 'react';
 import {styled, useTheme} from '@mui/material/styles';
 import Widget from '../Widget';
-import {Box, Grid, Hidden, Theme, useMediaQuery} from '@mui/material';
+import {Box, CardContent, Grid, Hidden, Theme, useMediaQuery} from '@mui/material';
 import {AxiosResponse} from 'axios';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {FormattedMessage} from 'react-intl';
@@ -58,10 +58,7 @@ const Root = styled(Grid, {
     padding: '0 2px 0 2px'
   },
   [`& .${classes.end}, & .${classes.refresh}`]: {
-    textAlign: 'center',
-    border: 'solid',
-    borderWidth: '0.5px',
-    padding: 16
+    textAlign: 'center'
   }
 }));
 
@@ -367,7 +364,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (props: FeedProps, re
             loader={false}
             endMessage={
               <Widget className={classes.end}>
-                <>{endMessage}</>
+                <CardContent>{endMessage}</CardContent>
               </Widget>
             }
             refreshFunction={refresh}
@@ -376,7 +373,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (props: FeedProps, re
             pullDownToRefreshContent={null}
             releaseToRefreshContent={
               <Widget variant="outlined" className={classes.refresh}>
-                <>{refreshMessage}</>
+                <CardContent>{refreshMessage}</CardContent>
               </Widget>
             }>
             {data.left.map((d, i) =>

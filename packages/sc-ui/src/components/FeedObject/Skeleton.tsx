@@ -1,5 +1,5 @@
 import React from 'react';
-import Card from '@mui/material/Card';
+import Widget from '../Widget';
 import {styled} from '@mui/material/styles';
 import Skeleton from '@mui/material/Skeleton';
 import {FeedObjectTemplateType} from '../../types/feedObject';
@@ -12,7 +12,7 @@ const classes = {
   media: `${PREFIX}-media`
 };
 
-const Root = styled(Card, {
+const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root

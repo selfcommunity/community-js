@@ -1,13 +1,12 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
 import {SCContextType, SCFeedObjectType, SCPollChoiceType, SCUserContextType, useSCContext, useSCUser} from '@selfcommunity/core';
-import {Box, Typography} from '@mui/material';
+import {Box, Card, Typography} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import Icon from '@mui/material/Icon';
 import LinearProgress, {LinearProgressProps} from '@mui/material/LinearProgress';
 import {LoadingButton} from '@mui/lab';
 import classNames from 'classnames';
-import Widget from '../../../Widget';
 
 const PREFIX = 'SCChoices';
 
@@ -20,7 +19,7 @@ const classes = {
   progress: `${PREFIX}-progress`
 };
 
-const Root = styled(Widget, {
+const Root = styled(Card, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root

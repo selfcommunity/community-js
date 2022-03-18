@@ -3,6 +3,7 @@ import List from '@mui/material/List';
 import {styled} from '@mui/material/styles';
 import CategorySkeleton from '../Category/Skeleton';
 import Widget from '../Widget';
+import {CardContent} from '@mui/material';
 
 const PREFIX = 'SCCategoriesSuggestionSkeleton';
 
@@ -22,11 +23,13 @@ const Root = styled(Widget)(({theme}) => ({
 export default function CategoriesSuggestionSkeleton(props): JSX.Element {
   return (
     <Root className={classes.root} {...props}>
-      <List className={classes.list}>
-        {[...Array(4)].map((category, index) => (
-          <CategorySkeleton key={index} elevation={0} />
-        ))}
-      </List>
+      <CardContent>
+        <List className={classes.list}>
+          {[...Array(4)].map((category, index) => (
+            <CategorySkeleton key={index} elevation={0} />
+          ))}
+        </List>
+      </CardContent>
     </Root>
   );
 }
