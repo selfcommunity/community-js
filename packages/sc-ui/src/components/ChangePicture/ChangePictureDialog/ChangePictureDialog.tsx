@@ -92,6 +92,8 @@ export default function ChangePictureDialog(props: CPDialogProps): JSX.Element {
    */
   function handleUpload(event) {
     fileInput = event.target.files[0];
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
     setFile(URL.createObjectURL(fileInput));
     handleSave();
   }
