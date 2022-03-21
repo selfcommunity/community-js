@@ -2,6 +2,16 @@ import React, { useEffect, useState } from 'react';
 import {SCContextProvider} from '../packages/sc-core/src';
 import { getJWTSession, getOAuthSession, refreshToken } from './sessionHelpers';
 import { Box, Button } from '@mui/material';
+import {createTheme } from "@mui/material/styles";
+import { ThemeProvider as EmotionThemeProvider } from "emotion-theming";
+
+/**
+ * Fix Storybook v6.3.10 with mui v5
+ * Wrap stories with EmotionThemeProvider, to fix problem of storybook 6.4.19 with mui_v5
+ * Check this issue to resolve mui problems in DOCs tab of storybook
+ * https://github.com/mui-org/material-ui/issues/28716
+ */
+const defaultTheme = createTheme();
 
 const withProvider = (Story, context) => {
     const [authToken, setAuthToken] = useState(undefined);
@@ -106,7 +116,7 @@ const withProvider = (Story, context) => {
     }
 
     return (
-      <React.Fragment>
+      <EmotionThemeProvider theme={defaultTheme}>
         <Box style={{textAlign: 'right'}}>
           {!authToken && <Button variant="contained" onClick={() => changeCommunityConf(true)}>Login</Button>}
           {authToken && <Button variant="contained" onClick={() => changeCommunityConf(false)}>Logout</Button>}
@@ -114,7 +124,7 @@ const withProvider = (Story, context) => {
         <SCContextProvider conf={_conf}>
           <Story {...context} />
         </SCContextProvider>
-      </React.Fragment>
+      </EmotionThemeProvider>
     );
 };
 

@@ -1,13 +1,6 @@
 const path = require("path");
 const toPath = (filePath) => path.join(process.cwd(), filePath);
 
-/*
-Fix Storybook v6.3.10 with mui v5
-Check this issue to resolve mui problems in DOCs tab of storybook
-https://github.com/mui-org/material-ui/issues/28716
-After Storybook fix the problem remove "webpackFinal" in the following export
- */
-
 module.exports = {
   staticDirs: ['../public'],
   "reactOptions": {
@@ -22,9 +15,10 @@ module.exports = {
     "../stories/**/*.stories.@(js|jsx|ts|tsx)"
   ],
   "addons": [
-    // "@storybook/addon-docs",
-    // "@storybook/addon-links",
-    "@storybook/addon-toolbars"
+    "@storybook/addon-links",
+    "@storybook/addon-essentials",
+    "@storybook/addon-docs",
+    "@storybook/addon-toolbars",
   ],
   "features": {
     "postcss": false

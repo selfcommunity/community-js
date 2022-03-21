@@ -136,7 +136,7 @@ export default function ReplyCommentObject(props: ReplyCommentObjectProps): JSX.
     onCancel,
     readOnly = false,
     text = '',
-    ReplyBoxProps = {variant: 'outlined'},
+    ReplyBoxProps = {},
     ...rest
   } = props;
 
