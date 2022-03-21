@@ -18,3 +18,9 @@ const Template: ComponentStory<typeof SnippetNotifications> = (args) => (
 export const Base = Template.bind({});
 
 Base.args = {};
+
+export const FewNotifications = Template.bind({});
+
+FewNotifications.args = {
+  showMax: 3
+};
