@@ -1,7 +1,16 @@
 import React, {useMemo} from 'react';
 import {styled} from '@mui/material/styles';
 import {Box, Grid, Hidden, Typography} from '@mui/material';
-import {FeedObject, FeedObjectProps, RelatedDiscussion, FeedObjectTemplateType, CommentsObject, CommentsOrderBy, CustomAdv} from '@selfcommunity/ui';
+import {
+  FeedObject,
+  FeedObjectProps,
+  RelatedDiscussion,
+  FeedObjectTemplateType,
+  CommentsObject,
+  CommentsOrderBy,
+  CustomAdv,
+  CommentsObjectProps
+} from '@selfcommunity/ui';
 import Sticky from 'react-stickynode';
 import {
   SCCustomAdvPosition,
@@ -62,13 +71,19 @@ export interface FeedObjectDetailProps {
    * @default empty object
    */
   FeedObjectProps?: FeedObjectProps;
+
+  /**
+   * Props to spread to CommentsObject
+   * @default empty object
+   */
+  CommentsObjectProps?: CommentsObjectProps;
 }
 
 const PREFERENCES = [SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED, SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED];
 
 export default function FeedObjectDetail(props: FeedObjectDetailProps): JSX.Element {
   // PROPS
-  const {id = 'feed_object_page', className, feedObjectId, feedObject, feedObjectType, FeedObjectProps = {}} = props;
+  const {id = 'feed_object_page', className, feedObjectId, feedObject, feedObjectType, FeedObjectProps = {}, CommentsObjectProps = {}} = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
@@ -115,12 +130,12 @@ export default function FeedObjectDetail(props: FeedObjectDetailProps): JSX.Elem
         <Grid item xs={12} md={7}>
           <FeedObject {...FeedObjectProps} feedObject={obj} template={FeedObjectTemplateType.DETAIL} />
           {renderAdvertising()}
-          <CommentsObject variant={'outlined'} showTitle feedObject={obj} commentsOrderBy={CommentsOrderBy.ADDED_AT_ASC} fixedPrimaryReply />
+          <CommentsObject showTitle feedObject={obj} commentsOrderBy={CommentsOrderBy.ADDED_AT_ASC} fixedPrimaryReply {...CommentsObjectProps} />
         </Grid>
         <Grid item xs={12} md={5}>
           <Hidden smDown>
             <Sticky enabled top={15}>
-              <RelatedDiscussion variant={'outlined'} feedObjectId={feedObjectId} feedObjectType={feedObjectType} />
+              <RelatedDiscussion feedObjectId={feedObjectId} feedObjectType={feedObjectType} />
             </Sticky>
           </Hidden>
         </Grid>

@@ -107,15 +107,7 @@ const WIDGETS: SCFeedWidgetType[] = [
 
 export default function CategoryFeed(props: CategoryFeedProps): JSX.Element {
   // PROPS
-  const {
-    id = 'category_feed',
-    className,
-    category,
-    categoryId,
-    widgets = WIDGETS,
-    FeedObjectProps = {},
-    FeedSidebarProps = null
-  } = props;
+  const {id = 'category_feed', className, category, categoryId, widgets = WIDGETS, FeedObjectProps = {}, FeedSidebarProps = null} = props;
 
   // REF
   const feedRef = useRef<FeedRef>();
