@@ -153,7 +153,7 @@ export default function UsersFollowed(props: UsersFollowedProps): JSX.Element {
           setFollowed([...followed, ...data.results]);
           setHasMore(data.count > visibleUsers);
           setNext(data['next']);
-          setLoading(false);
+          // setLoading(false);
           setTotal(data.count);
         })
         .catch((error) => {
