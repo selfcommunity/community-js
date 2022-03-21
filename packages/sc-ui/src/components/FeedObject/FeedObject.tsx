@@ -200,7 +200,7 @@ const Root = styled(Widget, {
 export interface FeedObjectProps extends CardProps {
   /**
    * Id of the feedObject
-   * @default `feed_object_<feedObjectType>_<feedObjectId | feedObject.id>`
+   * @default `feed_object_<feedObjectId | feedObject.id>`
    */
   id?: string;
 
@@ -348,7 +348,7 @@ export interface FeedObjectProps extends CardProps {
 export default function FeedObject(props: FeedObjectProps): JSX.Element {
   // PROPS
   const {
-    id = `feed_object_${props.feedObjectType}_${props.feedObjectId ? props.feedObjectId : props.feedObject ? props.feedObject.id : ''}`,
+    id = `feed_object_${props.feedObjectId ? props.feedObjectId : props.feedObject ? props.feedObject.id : ''}`,
     className = null,
     feedObjectId = null,
     feedObject = null,
@@ -567,7 +567,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
     return (
       <>
         {scUserContext.user && (
-          <ReplyCommentObject inline variant={'outlined'} onReply={handleReply} isLoading={isReplying} key={Number(isReplying)} />
+          <ReplyCommentObject inline ReplyBoxProps={{variant: 'outlined'}} onReply={handleReply} isLoading={isReplying} key={Number(isReplying)} />
         )}
         {(obj.comment_count || feedObjectActivities || comments.length > 0) && (
           <ActivitiesMenu
@@ -888,9 +888,9 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
    * Renders root object
    */
   return (
-    <Root id={id} className={classNames(classes.root, className)} {...rest}>
+    <Root id={id} className={classNames(classes.root, className, `${PREFIX}-${template}`)} {...rest}>
       {obj && markRead && <MarkRead endpoint={Endpoints.FeedObjectMarkRead} data={{object: [obj.id]}} />}
-      <Box className={`${PREFIX}-${template}`}>{objElement}</Box>
+      {objElement}
     </Root>
   );
 }

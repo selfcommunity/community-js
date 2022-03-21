@@ -23,6 +23,7 @@ const PREFIX = 'SCPeopleSuggestion';
 const classes = {
   root: `${PREFIX}-root`,
   title: `${PREFIX}-title`,
+  suggestedUserItem: `${PREFIX}-suggested-user-item`,
   noResults: `${PREFIX}-noResults`
 };
 
@@ -32,7 +33,10 @@ const Root = styled(Widget, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   maxWidth: 700,
-  marginBottom: theme.spacing(2)
+  marginBottom: theme.spacing(2),
+  [`& .${classes.suggestedUserItem}`]: {
+    marginBottom: theme.spacing()
+  }
 }));
 
 export interface PeopleSuggestionProps {
@@ -194,6 +198,7 @@ export default function PeopleSuggestion(props: PeopleSuggestionProps): JSX.Elem
                       {...(followEnabled
                         ? {followConnectUserButtonProps: {onFollow: handleOnFollowUser}}
                         : {followConnectUserButtonProps: {onChangeConnectionStatus: handleOnConnectUser}})}
+                      className={classes.suggestedUserItem}
                       {...UserProps}
                     />
                   </div>

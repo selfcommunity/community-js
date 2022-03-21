@@ -34,7 +34,8 @@ const PREFIX = 'SCTrendingPost';
 const classes = {
   root: `${PREFIX}-root`,
   title: `${PREFIX}-title`,
-  noResults: `${PREFIX}-noResults`
+  noResults: `${PREFIX}-noResults`,
+  relatedItem: `${PREFIX}-related-item`
 };
 
 const Root = styled(Widget, {
@@ -43,7 +44,10 @@ const Root = styled(Widget, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   maxWidth: 500,
-  marginBottom: theme.spacing(2)
+  marginBottom: theme.spacing(2),
+  [`& .${classes.relatedItem}`]: {
+    marginBottom: 0
+  }
 }));
 
 export interface RelatedDiscussionProps {
@@ -211,7 +215,14 @@ export default function RelatedDiscussion(props: RelatedDiscussionProps): JSX.El
                   return (
                     <React.Fragment key={index}>
                       <div>
-                        <FeedObject elevation={0} feedObject={obj} key={obj.id} template={template} />
+                        <FeedObject
+                          elevation={0}
+                          feedObject={obj}
+                          key={obj.id}
+                          template={template}
+                          className={classes.relatedItem}
+                          {...FeedObjectProps}
+                        />
                       </div>
                       {advPosition === index && renderAdvertising()}
                     </React.Fragment>
@@ -249,7 +260,14 @@ export default function RelatedDiscussion(props: RelatedDiscussionProps): JSX.El
                   <List>
                     {objs.map((obj: SCFeedDiscussionType, index) => (
                       <div key={index}>
-                        <FeedObject elevation={0} feedObject={obj} key={obj.id} template={template} />
+                        <FeedObject
+                          elevation={0}
+                          feedObject={obj}
+                          key={obj.id}
+                          template={template}
+                          className={classes.relatedItem}
+                          {...FeedObjectProps}
+                        />
                       </div>
                     ))}
                   </List>
