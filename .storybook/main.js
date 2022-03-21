@@ -9,6 +9,7 @@ After Storybook fix the problem remove "webpackFinal" in the following export
  */
 
 module.exports = {
+  staticDirs: ['../public'],
   "reactOptions": {
     "fastRefresh": true
   },
@@ -21,8 +22,8 @@ module.exports = {
     "../stories/**/*.stories.@(js|jsx|ts|tsx)"
   ],
   "addons": [
-    "@storybook/addon-docs",
-    "@storybook/addon-links",
+    // "@storybook/addon-docs",
+    // "@storybook/addon-links",
     "@storybook/addon-toolbars"
   ],
   "features": {

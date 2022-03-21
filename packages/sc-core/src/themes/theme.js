@@ -53,6 +53,31 @@ const getTheme = (options, preferences) => {
               },
             },
           },
+          SCWidget: {
+            variants: [
+              {
+                props: {elevation: 0},
+                style: {
+                  border: 0,
+                  boxShadow: 'none',
+                },
+              },
+              {
+                props: {variant: 'outlined'},
+                style: {
+                  border: '1px solid rgba(0, 0, 0, 0.12)',
+                  boxShadow: 'none',
+                },
+              },
+            ],
+            styleOverrides: {
+              root: {
+                border: '0 none',
+                borderRadius: '15px',
+                boxShadow: '0px 5px 20px rgba(0, 0, 0, 0.1)',
+              }
+            },
+          },
           MuiDivider: {
             styleOverrides: {
               root: {

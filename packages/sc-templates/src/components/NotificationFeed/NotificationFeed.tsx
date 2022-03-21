@@ -65,14 +65,14 @@ const WIDGETS: SCFeedWidgetType[] = [
   {
     type: 'widget',
     component: BroadcastMessages,
-    componentProps: {MessageProps: {variant: 'outlined'}},
+    componentProps: {},
     column: 'left',
     position: 0
   },
   {
     type: 'widget',
     component: FeedUpdates,
-    componentProps: {variant: 'outlined', subscriptionChannel: SCNotificationTopicType.INTERACTION},
+    componentProps: {subscriptionChannel: SCNotificationTopicType.INTERACTION},
     column: 'left',
     position: 1,
     publishEvents: true
@@ -80,28 +80,28 @@ const WIDGETS: SCFeedWidgetType[] = [
   {
     type: 'widget',
     component: Platform,
-    componentProps: {variant: 'outlined'},
+    componentProps: {},
     column: 'right',
     position: 0
   },
   {
     type: 'widget',
     component: LoyaltyProgram,
-    componentProps: {variant: 'outlined'},
+    componentProps: {},
     column: 'right',
     position: 1
   },
   {
     type: 'widget',
     component: CategoriesSuggestion,
-    componentProps: {variant: 'outlined'},
+    componentProps: {},
     column: 'right',
     position: 2
   },
   {
     type: 'widget',
     component: PeopleSuggestion,
-    componentProps: {variant: 'outlined'},
+    componentProps: {},
     column: 'right',
     position: 3
   }
@@ -109,7 +109,7 @@ const WIDGETS: SCFeedWidgetType[] = [
 
 export default function NotificationFeed(props: NotificationFeedProps): JSX.Element {
   // PROPS
-  const {id = 'notification_feed', className, widgets = WIDGETS, NotificationProps = {variant: 'outlined'}, FeedSidebarProps = null} = props;
+  const {id = 'notification_feed', className, widgets = WIDGETS, NotificationProps = {}, FeedSidebarProps = null} = props;
 
   //CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);

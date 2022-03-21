@@ -106,14 +106,14 @@ const WIDGETS = [
   {
     type: 'widget',
     component: CategoriesFollowed,
-    componentProps: {variant: 'outlined'},
+    componentProps: {},
     column: 'right',
     position: 0
   },
   {
     type: 'widget',
     component: UsersFollowed,
-    componentProps: {variant: 'outlined'},
+    componentProps: {},
     column: 'right',
     position: 1
   }
@@ -123,28 +123,28 @@ const MY_PROFILE_WIDGETS = [
   {
     type: 'widget',
     component: InlineComposer,
-    componentProps: {variant: 'outlined'},
+    componentProps: {},
     column: 'left',
     position: 0
   },
   {
     type: 'widget',
     component: CategoriesFollowed,
-    componentProps: {variant: 'outlined'},
+    componentProps: {},
     column: 'right',
     position: 0
   },
   {
     type: 'widget',
     component: UsersFollowed,
-    componentProps: {variant: 'outlined'},
+    componentProps: {},
     column: 'right',
     position: 1
   },
   {
     type: 'widget',
     component: UserFollowers,
-    componentProps: {variant: 'outlined'},
+    componentProps: {},
     column: 'right',
     position: 2
   }

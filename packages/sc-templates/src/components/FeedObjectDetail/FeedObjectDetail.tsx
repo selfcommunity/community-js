@@ -68,7 +68,7 @@ const PREFERENCES = [SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED, SCPreferences
 
 export default function FeedObjectDetail(props: FeedObjectDetailProps): JSX.Element {
   // PROPS
-  const {id = 'feed_object_page', className, feedObjectId, feedObject, feedObjectType, FeedObjectProps = {variant: 'outlined'}} = props;
+  const {id = 'feed_object_page', className, feedObjectId, feedObject, feedObjectType, FeedObjectProps = {}} = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();

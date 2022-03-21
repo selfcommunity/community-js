@@ -63,35 +63,35 @@ const WIDGETS: SCFeedWidgetType[] = [
   {
     type: 'widget',
     component: InlineComposer,
-    componentProps: {variant: 'outlined'},
+    componentProps: {},
     column: 'left',
     position: 0
   },
   {
     type: 'widget',
     component: Platform,
-    componentProps: {variant: 'outlined'},
+    componentProps: {},
     column: 'right',
     position: 0
   },
   {
     type: 'widget',
     component: LoyaltyProgram,
-    componentProps: {variant: 'outlined'},
+    componentProps: {},
     column: 'right',
     position: 1
   },
   {
     type: 'widget',
     component: CategoriesSuggestion,
-    componentProps: {variant: 'outlined'},
+    componentProps: {},
     column: 'right',
     position: 2
   },
   {
     type: 'widget',
     component: PeopleSuggestion,
-    componentProps: {variant: 'outlined'},
+    componentProps: {},
     column: 'right',
     position: 3
   }
@@ -99,7 +99,7 @@ const WIDGETS: SCFeedWidgetType[] = [
 
 export default function MainFeed(props: MainFeedProps): JSX.Element {
   // PROPS
-  const {id = 'main_feed', className, widgets = WIDGETS, FeedObjectProps = {variant: 'outlined'}, FeedSidebarProps = null} = props;
+  const {id = 'main_feed', className, widgets = WIDGETS, FeedObjectProps = {}, FeedSidebarProps = null} = props;
 
   //CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);

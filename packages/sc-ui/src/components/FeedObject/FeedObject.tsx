@@ -614,6 +614,8 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
               additionalHeaderComments={comments}
               hideAdvertising={true}
               CommentObjectProps={{variant: 'outlined'}}
+              CommentObjectSkeletonProps={{variant: 'outlined'}}
+              ReplyCommentObjectProps={{variant: 'outlined'}}
             />
           </LazyLoad>
         )}

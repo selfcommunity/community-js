@@ -23,7 +23,7 @@ const Root = styled(Widget)(({theme}) => ({
 
 export default function TrendingPeopleSkeleton(props: WidgetProps): JSX.Element {
   return (
-    <Root variant={'outlined'} className={classes.root} {...props}>
+    <Root className={classes.root} {...props}>
       <CardContent>
         <List className={classes.list}>
           {[...Array(4)].map((person, index) => (
