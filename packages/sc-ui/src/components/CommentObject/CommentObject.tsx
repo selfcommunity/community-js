@@ -95,6 +95,7 @@ const Root = styled(Box, {
   },
   [`& .${classes.author}`]: {
     textDecoration: 'none',
+    color: theme.palette.text.primary,
     '& span': {
       fontWeight: '600'
     }
@@ -706,7 +707,7 @@ export default function CommentObject(props: CommentObjectProps): JSX.Element {
                   <Widget classes={{root: classes.content}} {...rest}>
                     <CardContent classes={{root: classNames({[classes.deleted]: obj && obj.deleted})}}>
                       <Link className={classes.author} to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, comment.author)}>
-                        <Typography component="span" sx={{display: 'inline'}} gutterBottom color="inherit">
+                        <Typography component="span" gutterBottom color="inherit">
                           {comment.author.username}
                         </Typography>
                       </Link>
