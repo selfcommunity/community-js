@@ -1,6 +1,6 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Button, List, Typography} from '@mui/material';
+import { Button, CardContent, List, Typography } from '@mui/material';
 import {Endpoints, http, Logger} from '@selfcommunity/core';
 import Skeleton from './Skeleton';
 import {AxiosResponse} from 'axios';
@@ -113,7 +113,7 @@ export default function CategoriesPopular(props: CategoriesListProps): JSX.Eleme
       {loading ? (
         <Skeleton elevation={0} />
       ) : (
-        <>
+        <CardContent>
           <Typography className={classes.title} variant="body1">
             <FormattedMessage id="ui.categoriesPopular.title" defaultMessage="ui.categoriesPopular.title" />
           </Typography>
@@ -167,7 +167,7 @@ export default function CategoriesPopular(props: CategoriesListProps): JSX.Eleme
               )}
             </BaseDialog>
           )}
-        </>
+        </CardContent>
       )}
     </React.Fragment>
   );

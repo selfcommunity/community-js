@@ -76,21 +76,21 @@ const WIDGETS: SCFeedWidgetType[] = [
   {
     type: 'widget',
     component: CategoriesFollowed,
-    componentProps: {variant: 'outlined'},
+    componentProps: {},
     column: 'right',
     position: 0
   },
   {
     type: 'widget',
     component: UsersFollowed,
-    componentProps: {variant: 'outlined'},
+    componentProps: {},
     column: 'right',
     position: 1
   },
   {
     type: 'widget',
     component: UserFollowers,
-    componentProps: {variant: 'outlined'},
+    componentProps: {},
     column: 'right',
     position: 2
   }
@@ -98,7 +98,7 @@ const WIDGETS: SCFeedWidgetType[] = [
 
 export default function UserFeed(props: UserFeedProps): JSX.Element {
   // PROPS
-  const {id = 'user_feed', className, userId, user, widgets = WIDGETS, FeedObjectProps = {variant: 'outlined'}, FeedSidebarProps = null} = props;
+  const {id = 'user_feed', className, userId, user, widgets = WIDGETS, FeedObjectProps = {}, FeedSidebarProps = null} = props;
 
   // Hooks
   const {scUser} = useSCFetchUser({id: userId, user});
