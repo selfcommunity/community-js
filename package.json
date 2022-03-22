@@ -70,6 +70,7 @@
     "emotion-theming": "^11.0.0",
     "notistack": "^2.0.3",
     "pubsub-js": "^1.9.4",
+    "react-custom-scrollbars": "^4.2.1",
     "react-infinite-scroll-component": "^6.1.0",
     "react-lazyload": "^3.2.0",
     "react-singleton-hook": "^3.2.3",
