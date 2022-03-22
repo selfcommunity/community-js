@@ -10,7 +10,7 @@ import {AxiosResponse} from 'axios';
 import {DatePicker, LocalizationProvider} from '@mui/lab';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import UsernameTextField from '../../../shared/UsernameTextField';
-import useDeepCompareEffect, {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
+import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
 
 const messages = defineMessages({
   username: {
