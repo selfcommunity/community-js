@@ -178,7 +178,7 @@ export default function MessageEditor(props: MessageEditorProps): JSX.Element {
                 {uploading ? (
                   <CircularProgress size={15} />
                 ) : (
-                  <IconButton disabled={isSending} onClick={handleMessageSend}>
+                  <IconButton disabled={!messageFile} onClick={handleMessageSend}>
                     <Icon>send</Icon>
                   </IconButton>
                 )}
