@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import {SCContextType, SCNotificationTopicType, SCUserContextType} from '../types';
+import {SCContextType, SCNotificationTopicType, SCNotificationTypologyType, SCUserContextType} from '../types';
 import {useSCContext} from '../components/provider/SCContextProvider';
 import {useSCUser} from '../components/provider/SCUserProvider';
 import {WSClientType} from '../utils/websocket';
@@ -65,9 +65,25 @@ export default function useSCWebSocket() {
     // receive a message though the websocket from the server
     let _data = JSON.parse(data);
     if (_data && _data.type && SCNotificationTopics.includes(_data.type)) {
-      if (_data.type === SCNotificationTopicType.INTERACTION && SCNotificationMapping[_data.data.activity_type]) {
+      if (_data.type === SCNotificationTopicType.INTERACTION) {
+        /**
+         * With topic interaction there are two types of notifications group:
+         *  - notification_banner
+         *  - comment, nested_comment, follow, etc..
+         */
+        if (_data.data.activity_type === SCNotificationTypologyType.NOTIFICATION_BANNER) {
+          /**
+           * Notification of type 'notification_banner'
+           * It is a special case of notifications with topic 'interaction'
+           */
+          PubSub.publish(`${_data.type}.${SCNotificationTypologyType.NOTIFICATION_BANNER}`, _data);
+        } else if (SCNotificationMapping[_data.data.activity_type]) {
+          /**
+           * Notification of type 'comment', 'nested_comment', etc...
+           */
+          PubSub.publish(`${_data.type}.${SCNotificationMapping[_data.data.activity_type]}`, _data);
+        }
         setNotificationCounters(_data.data);
-        PubSub.publish(`${_data.type}.${SCNotificationMapping[_data.data.activity_type]}`, _data);
       } else {
         PubSub.publish(`${_data.type}`, _data);
       }
