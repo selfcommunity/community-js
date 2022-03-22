@@ -470,7 +470,7 @@ const Endpoints: {[key: string]: EndpointType} = {
     method: 'POST',
   },
   PrivateMessageChunkUploadDone: {
-    url: urlReplacer('/api/v2/pm/upload/?done/'),
+    url: urlReplacer('/api/v2/pm/upload/?done'),
     method: 'POST',
   },
   DeleteASingleMessage: {

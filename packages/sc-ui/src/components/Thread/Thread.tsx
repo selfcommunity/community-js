@@ -168,6 +168,7 @@ export default function Thread(props: ThreadProps): JSX.Element {
   const [openDeleteMessageDialog, setOpenDeleteMessageDialog] = useState<boolean>(false);
   const [deletingMsg, setDeletingMsg] = useState(null);
   const [message, setMessage] = useState<string>('');
+  const [messageFile, setMessageFile] = useState(null);
   const [sending, setSending] = useState<boolean>(false);
   const [followers, setFollowers] = useState<any[]>([]);
   const [recipients, setRecipients] = useState([]);
@@ -195,6 +196,10 @@ export default function Thread(props: ThreadProps): JSX.Element {
 
   const handleMessage = (m) => {
     setMessage(m);
+  };
+
+  const handleMessageFile = (f) => {
+    setMessageFile(f);
   };
 
   const handleMouseEnter = (index) => {
@@ -262,7 +267,8 @@ export default function Thread(props: ThreadProps): JSX.Element {
           method: Endpoints.SendMessage.method,
           data: {
             recipients: openNewMessage ? ids : [receiverId],
-            message: message
+            message: message,
+            file_uuid: messageFile ?? null
           }
         })
         .then((res) => {
@@ -363,7 +369,7 @@ export default function Thread(props: ThreadProps): JSX.Element {
             ))}
           </div>
         ))}
-        <MessageEditor send={() => sendMessage()} isSending={sending} getMessage={handleMessage} />
+        <MessageEditor send={() => sendMessage()} isSending={sending} getMessage={handleMessage} getMessageFile={handleMessageFile} />
       </Box>
     );
   }
@@ -407,7 +413,7 @@ export default function Thread(props: ThreadProps): JSX.Element {
             </Box>
             <Box className={classes.newMessageEmptyBox} />
             <Box className={classes.newMessageEditor}>
-              <MessageEditor send={() => sendMessage()} isSending={sending} getMessage={handleMessage} />
+              <MessageEditor send={() => sendMessage()} isSending={sending} getMessage={handleMessage} getMessageFile={handleMessageFile} />
             </Box>
           </Box>
         ) : (

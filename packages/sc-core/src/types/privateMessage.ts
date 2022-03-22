@@ -70,3 +70,56 @@ export enum SCPrivateMessageStatusType {
   HIDDEN = 'hidden',
   NEW = 'new',
 }
+
+export interface SCPrivateMessageFileType {
+  /**
+   * The file id
+   */
+  uuid?: string;
+
+  /**
+   * File name
+   */
+  filename?: string;
+
+  /**
+   * File size
+   */
+  filesize?: number;
+
+  /**
+   * The type of the file
+   */
+  mimetype?: string;
+
+  /**
+   * The duration (in seconds) of the file
+   */
+  duration?: number;
+
+  /**
+   * File Url
+   */
+  url?: string;
+  /**
+   * File thumbnail
+   */
+  thumbnail?: string;
+  /**
+   * File Url(response)
+   */
+  file_url?: string;
+  /**
+   * The file id(response)
+   */
+  file_uuid?: string;
+}
+
+/**
+ * Private Message status:
+ * created, deleted or hidden message
+ */
+export enum SCMessageFileType {
+  PDF = 'application/pdf',
+  IMAGE = 'image/*',
+}
