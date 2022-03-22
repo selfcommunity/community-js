@@ -22,6 +22,7 @@ import classNames from 'classnames';
 import Skeleton from './Skeleton';
 import {NotificationObjectTemplateType} from '../../types';
 import ScrollContainer from '../../shared/ScrollContainer';
+import {FormattedMessage} from 'react-intl';
 import {
   Endpoints,
   http,
@@ -34,7 +35,6 @@ import {
   SCUserContextType,
   useSCUser
 } from '@selfcommunity/core';
-import {FormattedMessage} from 'react-intl';
 
 const PREFIX = 'SCSnippetNotifications';
 
@@ -100,6 +100,14 @@ export interface SnippetNotificationsProps extends CardProps {
   key: number;
 
   /**
+   * Props to spread to ScrollContainer component
+   * This lib use 'react-custom-scrollbars' component to perform scrollbars
+   * For more info: https://github.com/malte-wessel/react-custom-scrollbars/blob/master/docs/API.md
+   * @default {}
+   */
+  ScrollContainerProps?: Record<string, any>;
+
+  /**
    * Any other properties
    */
   [p: string]: any;
@@ -134,7 +142,7 @@ export interface SnippetNotificationsProps extends CardProps {
  */
 export default function SnippetNotifications(props: SnippetNotificationsProps): JSX.Element {
   // PROPS
-  const {id = `snippetNotifications`, className, showMax = 20, handleCustomNotification, ...rest} = props;
+  const {id = `snippetNotifications`, className, showMax = 20, handleCustomNotification, ScrollContainerProps = {}, ...rest} = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
@@ -298,7 +306,7 @@ export default function SnippetNotifications(props: SnippetNotificationsProps): 
                   defaultMessage="ui.snippetNotifications.noNotifications"></FormattedMessage>
               </Box>
             ) : (
-              <ScrollContainer>
+              <ScrollContainer {...ScrollContainerProps}>
                 <MenuList className={classes.notificationsList}>
                   {notifications.slice(0, showMax).map((notificationObject: SCNotificationAggregatedType, i) => (
                     <Box key={i}>

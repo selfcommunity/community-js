@@ -76,6 +76,7 @@
     "prop-types-extra": "^1.1.1",
     "pubsub-js": "^1.9.4",
     "react-infinite-scroll-component": "^6.1.0",
+    "react-custom-scrollbars": "^4.2.1",
     "react-lazyload": "^3.2.0",
     "react-player": "^2.9.0",
     "react-sortablejs": "^6.0.0",
