@@ -40,6 +40,7 @@ const PREFIX = 'SCUsersFollowed';
 const classes = {
   root: `${PREFIX}-root`,
   title: `${PREFIX}-title`,
+  followersItem: `${PREFIX}-followers-item`,
   noResults: `${PREFIX}-noResults`
 };
 
@@ -49,7 +50,10 @@ const Root = styled(Widget, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   maxWidth: 700,
-  marginBottom: theme.spacing(2)
+  marginBottom: theme.spacing(2),
+  [`& .${classes.followersItem}`]: {
+    marginBottom: theme.spacing()
+  }
 }));
 
 export interface UserFollowersProps {
@@ -177,7 +181,7 @@ export default function UserFollowers(props: UserFollowersProps): JSX.Element {
               <List>
                 {followers.slice(0, visibleUsers).map((user: SCUserType, index) => (
                   <div key={index}>
-                    <User elevation={0} user={user} key={user.id} {...UserProps} />
+                    <User elevation={0} user={user} className={classes.followersItem} key={user.id} {...UserProps} />
                   </div>
                 ))}
               </List>
@@ -209,7 +213,7 @@ export default function UserFollowers(props: UserFollowersProps): JSX.Element {
                       }>
                       <List>
                         {followers.map((f, index) => (
-                          <User elevation={0} user={f} key={f.id} sx={{m: 0}} {...UserProps} />
+                          <User elevation={0} user={f} key={f.id} className={classes.followersItem} {...UserProps} />
                         ))}
                       </List>
                     </InfiniteScroll>

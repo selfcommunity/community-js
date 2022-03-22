@@ -48,6 +48,7 @@ const classes = {
   paginationLink: `${PREFIX}-pagination-link`,
   paginationFooter: `${PREFIX}-pagination-footer`,
   commentsCounter: `${PREFIX}-comments-counter`,
+  noComments: `${PREFIX}-no-comments`,
   commentNotFound: `${PREFIX}-comment-not-found`,
   noOtherComments: `${PREFIX}-no-other-comment`
 };
@@ -83,6 +84,9 @@ const Root = styled(Box, {
   },
   [`& .${classes.commentsCounter}`]: {
     paddingRight: theme.spacing()
+  },
+  [`& .${classes.noComments}`]: {
+    paddingBottom: 200
   },
   [`& .${classes.commentNotFound}`]: {
     padding: theme.spacing(1),
@@ -138,7 +142,7 @@ export interface CommentsObjectProps {
 
   /**
    * Props to spread to single comment object
-   * @default {variant: 'outlined'}
+   * @default {}
    */
   CommentObjectProps?: CommentObjectProps;
 
@@ -150,7 +154,7 @@ export interface CommentsObjectProps {
 
   /**
    * Props to spread to single reply comment object
-   * @default {variant: 'outlined'}
+   * @default {}
    */
   ReplyCommentObjectProps?: ReplyCommentObjectProps;
 
@@ -459,7 +463,7 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
     if (obj) {
       const _next = next
         ? next
-        : `${Endpoints.Comments.url()}?${feedObjectType}=${obj.id}&limit=${commentsPageCount}&ordering=${commentsOrderBy}&offset=${
+        : `${Endpoints.Comments.url()}?${obj.type}=${obj.id}&limit=${commentsPageCount}&ordering=${commentsOrderBy}&offset=${
             page > 0 ? (page - 1) * commentsPageCount : 0
           }`;
       setIsLoading(true);
@@ -878,9 +882,9 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
         {renderNoComments ? (
           renderNoComments()
         ) : (
-          <>
+          <Box className={classes.noComments}>
             <FormattedMessage id={'ui.commentsObject.noComments'} defaultMessage={'ui.commentsObject.noComments'} />
-          </>
+          </Box>
         )}
       </>
     );

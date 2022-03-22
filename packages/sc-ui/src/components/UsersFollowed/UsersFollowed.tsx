@@ -40,6 +40,7 @@ const PREFIX = 'SCUsersFollowed';
 const classes = {
   root: `${PREFIX}-root`,
   title: `${PREFIX}-title`,
+  followedItem: `${PREFIX}-followed-item`,
   noResults: `${PREFIX}-noResults`
 };
 
@@ -49,7 +50,10 @@ const Root = styled(Widget, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   maxWidth: 700,
-  marginBottom: theme.spacing(2)
+  marginBottom: theme.spacing(2),
+  [`& .${classes.followedItem}`]: {
+    marginBottom: theme.spacing()
+  }
 }));
 
 export interface UsersFollowedProps {
@@ -153,7 +157,7 @@ export default function UsersFollowed(props: UsersFollowedProps): JSX.Element {
           setFollowed([...followed, ...data.results]);
           setHasMore(data.count > visibleUsers);
           setNext(data['next']);
-          // setLoading(false);
+          setLoading(false);
           setTotal(data.count);
         })
         .catch((error) => {
@@ -200,7 +204,14 @@ export default function UsersFollowed(props: UsersFollowedProps): JSX.Element {
               <List>
                 {followed.slice(0, visibleUsers).map((user: SCUserType, index) => (
                   <div key={index}>
-                    <User elevation={0} user={user} key={user.id} followConnectUserButtonProps={{onFollow: handleOnFollowUser}} {...UserProps} />
+                    <User
+                      elevation={0}
+                      user={user}
+                      key={user.id}
+                      followConnectUserButtonProps={{onFollow: handleOnFollowUser}}
+                      className={classes.followedItem}
+                      {...UserProps}
+                    />
                   </div>
                 ))}
               </List>
@@ -232,7 +243,7 @@ export default function UsersFollowed(props: UsersFollowedProps): JSX.Element {
                       }>
                       <List>
                         {followed.map((f, index) => (
-                          <User elevation={0} user={f} key={f.id} sx={{m: 0}} {...UserProps} />
+                          <User elevation={0} user={f} key={f.id} {...UserProps} className={classes.followedItem} />
                         ))}
                       </List>
                     </InfiniteScroll>

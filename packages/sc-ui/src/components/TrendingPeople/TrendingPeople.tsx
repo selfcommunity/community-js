@@ -18,6 +18,7 @@ const PREFIX = 'SCTrendingPeople';
 const classes = {
   root: `${PREFIX}-root`,
   title: `${PREFIX}-title`,
+  trendingUserItem: `${PREFIX}-trending-user-item`,
   noResults: `${PREFIX}-noResults`
 };
 
@@ -27,7 +28,10 @@ const Root = styled(Widget, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   maxWidth: 700,
-  marginBottom: theme.spacing(2)
+  marginBottom: theme.spacing(2),
+  [`& .${classes.trendingUserItem}`]: {
+    marginBottom: theme.spacing()
+  }
 }));
 
 export interface TrendingPeopleProps {
@@ -154,7 +158,7 @@ export default function TrendingPeople(props: TrendingPeopleProps): JSX.Element 
             <React.Fragment>
               <List>
                 {people.slice(0, visiblePeople).map((user, index) => (
-                  <User elevation={0} user={user} id={user.id} key={index} {...UserProps} />
+                  <User elevation={0} user={user} id={user.id} key={index} className={classes.trendingUserItem} {...UserProps} />
                 ))}
               </List>
             </React.Fragment>
@@ -187,7 +191,7 @@ export default function TrendingPeople(props: TrendingPeopleProps): JSX.Element 
                   }>
                   <List>
                     {people.map((p, index) => (
-                      <User elevation={0} user={p} key={p.id} sx={{m: 0}} {...UserProps} />
+                      <User elevation={0} user={p} key={p.id} className={classes.trendingUserItem} {...UserProps} />
                     ))}
                   </List>
                 </InfiniteScroll>

@@ -1,7 +1,7 @@
 import React from 'react';
 import {ComponentMeta, ComponentStory} from '@storybook/react';
 import FeedObjectDetailTemplate from './index';
-import { SCFeedObjectTypologyType } from '@selfcommunity/core';
+import {SCFeedObjectTypologyType} from '@selfcommunity/core';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -12,13 +12,13 @@ export default {
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const Template: ComponentStory<typeof FeedObjectDetailTemplate> = (args) => (
   <div style={{maxWidth: '1200px', width: '100%', height: '500px'}}>
-    <FeedObjectDetailTemplate {...args} />
+    <FeedObjectDetailTemplate {...args} CommentsObjectProps={{ReplyCommentObjectProps: {variant: 'elevation'}}} />
   </div>
 );
 
 export const Main = Template.bind({});
 
 Main.args = {
-  feedObjectId: 7629,
-  feedObjectType: SCFeedObjectTypologyType.DISCUSSION
+  feedObjectId: 344,
+  feedObjectType: SCFeedObjectTypologyType.POST
 };

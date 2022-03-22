@@ -1,4 +1,4 @@
-import {useEffect, useMemo, useState} from 'react';
+import {useEffect, useMemo, useRef, useState} from 'react';
 import {AxiosResponse} from 'axios';
 import {SCOPE_SC_CORE} from '../constants/Errors';
 import http from '../utils/http';
@@ -17,6 +17,7 @@ import {SCCustomAdvPosition, SCCustomAdvType} from '../types';
 export default function useSCFetchCustomAdv({position = null, categoriesId = null}: {position?: SCCustomAdvPosition; categoriesId?: Array<number>}) {
   const [scCustomAdv, setSCCustomAdv] = useState<SCCustomAdvType | null>(null);
   const [error, setError] = useState<string>(null);
+  const mounted = useRef(false);
 
   /**
    * Memoized fetchCustomAdv
@@ -43,15 +44,29 @@ export default function useSCFetchCustomAdv({position = null, categoriesId = nul
   );
 
   /**
+   * Track mount/unmount
+   */
+  useEffect(() => {
+    mounted.current = true;
+    return () => {
+      mounted.current = false;
+    };
+  }, []);
+
+  /**
    * If id attempt to get the category by id
    */
   useEffect(() => {
     fetchCustomAdv()
       .then((objects: SCCustomAdvType[]) => {
-        setSCCustomAdv(objects[Math.floor(Math.random() * objects.length)]);
+        if (mounted.current) {
+          setSCCustomAdv(objects[Math.floor(Math.random() * objects.length)]);
+        }
       })
       .catch((err) => {
-        setError(`Custom ADV with position ${position} not found`);
+        if (mounted.current) {
+          setError(`Custom ADV with position ${position} not found`);
+        }
         Logger.error(SCOPE_SC_CORE, `Custom ADV with position ${position} not found`);
         Logger.error(SCOPE_SC_CORE, err.message);
       });
