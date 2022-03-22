@@ -7,7 +7,7 @@ import {
   FeedObject,
   FeedObjectProps,
   FeedObjectSkeleton,
-  FeedObjectTemplateType,
+  SCFeedObjectTemplateType,
   FeedRef,
   FeedSidebarProps,
   InlineComposer,
@@ -160,7 +160,7 @@ export default function UserFeed(props: UserFeedProps): JSX.Element {
       ItemProps={FeedObjectProps}
       ItemSkeleton={FeedObjectSkeleton}
       ItemSkeletonProps={{
-        template: FeedObjectTemplateType.PREVIEW
+        template: SCFeedObjectTemplateType.PREVIEW
       }}
       FeedSidebarProps={FeedSidebarProps}
     />

@@ -5,9 +5,9 @@ import {
   FeedObject,
   FeedObjectProps,
   RelatedDiscussion,
-  FeedObjectTemplateType,
+  SCFeedObjectTemplateType,
   CommentsObject,
-  CommentsOrderBy,
+  SCCommentsOrderBy,
   CustomAdv,
   CommentsObjectProps
 } from '@selfcommunity/ui';
@@ -128,9 +128,9 @@ export default function FeedObjectDetail(props: FeedObjectDetailProps): JSX.Elem
     <Root id={id} className={className}>
       <Grid container spacing={2}>
         <Grid item xs={12} md={7}>
-          <FeedObject {...FeedObjectProps} feedObject={obj} template={FeedObjectTemplateType.DETAIL} />
+          <FeedObject {...FeedObjectProps} feedObject={obj} template={SCFeedObjectTemplateType.DETAIL} />
           {renderAdvertising()}
-          <CommentsObject showTitle feedObject={obj} commentsOrderBy={CommentsOrderBy.ADDED_AT_ASC} fixedPrimaryReply {...CommentsObjectProps} />
+          <CommentsObject showTitle feedObject={obj} commentsOrderBy={SCCommentsOrderBy.ADDED_AT_ASC} fixedPrimaryReply {...CommentsObjectProps} />
         </Grid>
         <Grid item xs={12} md={5}>
           <Hidden smDown>
