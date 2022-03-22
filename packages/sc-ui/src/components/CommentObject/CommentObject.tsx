@@ -11,7 +11,7 @@ import {SCOPE_SC_UI} from '../../constants/Errors';
 import CommentObjectSkeleton from './Skeleton';
 import {LoadingButton} from '@mui/lab';
 import Icon from '@mui/material/Icon';
-import {CommentsOrderBy} from '../../types/comments';
+import {SCCommentsOrderBy} from '../../types/comments';
 import ReplyCommentObject from './ReplyComment';
 import ContributionActionsMenu from '../../shared/ContributionActionsMenu';
 import DateTimeAgo from '../../shared/DateTimeAgo';
@@ -189,9 +189,9 @@ export interface CommentObjectProps {
 
   /**
    * comments orderBy
-   * @default CommentsOrderBy.ADDED_AT_DESC
+   * @default SCCommentsOrderBy.ADDED_AT_DESC
    */
-  commentsOrderBy?: CommentsOrderBy;
+  commentsOrderBy?: SCCommentsOrderBy;
 
   /**
    * comment to reply
@@ -281,7 +281,7 @@ export default function CommentObject(props: CommentObjectProps): JSX.Element {
     feedObject,
     feedObjectType = SCFeedObjectTypologyType.POST,
     commentsPageCount = 5,
-    commentsOrderBy = CommentsOrderBy.ADDED_AT_DESC,
+    commentsOrderBy = SCCommentsOrderBy.ADDED_AT_DESC,
     commentReply,
     onOpenReply,
     onVote,

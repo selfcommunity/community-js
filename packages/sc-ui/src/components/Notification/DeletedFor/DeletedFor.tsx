@@ -9,7 +9,7 @@ import DateTimeAgo from '../../../shared/DateTimeAgo';
 import NewChip from '../../../shared/NewChip/NewChip';
 import {Link, SCRoutingContextType, useSCRouting, StringUtils, SCNotificationDeletedForType, SCRoutes} from '@selfcommunity/core';
 import classNames from 'classnames';
-import {NotificationObjectTemplateType} from '../../../types';
+import {SCNotificationObjectTemplateType} from '../../../types';
 
 const messages = defineMessages({
   deletedForAdvertising: {
@@ -114,7 +114,7 @@ export interface NotificationDeletedForProps {
    * Notification Object template type
    * @default 'detail'
    */
-  template?: NotificationObjectTemplateType;
+  template?: SCNotificationObjectTemplateType;
 
   /**
    * Any other properties
@@ -132,7 +132,7 @@ export default function DeletedForNotification(props: NotificationDeletedForProp
   const {
     notificationObject = null,
     id = `n_${props.notificationObject['feed_serialization_id']}`,
-    template = NotificationObjectTemplateType.DETAIL,
+    template = SCNotificationObjectTemplateType.DETAIL,
     className,
     ...rest
   } = props;
@@ -142,8 +142,8 @@ export default function DeletedForNotification(props: NotificationDeletedForProp
 
   // CONST
   const contributionType = getContributeType(notificationObject);
-  const isSnippetTemplate = template === NotificationObjectTemplateType.SNIPPET;
-  const isToastTemplate = template === NotificationObjectTemplateType.TOAST;
+  const isSnippetTemplate = template === SCNotificationObjectTemplateType.SNIPPET;
+  const isToastTemplate = template === SCNotificationObjectTemplateType.TOAST;
 
   //INTL
   const intl = useIntl();
@@ -186,7 +186,7 @@ export default function DeletedForNotification(props: NotificationDeletedForProp
                 </Link>
               ) : (
                 <>
-                  {template === NotificationObjectTemplateType.DETAIL && notificationObject.is_new && <NewChip />}
+                  {template === SCNotificationObjectTemplateType.DETAIL && notificationObject.is_new && <NewChip />}
                   <Typography component="span" color="inherit" className={classes.flagText}>
                     {intl.formatMessage(messages[StringUtils.camelCase(notificationObject.type)], {b: (...chunks) => <strong>{chunks}</strong>})}
                   </Typography>
@@ -196,7 +196,7 @@ export default function DeletedForNotification(props: NotificationDeletedForProp
           }
           secondary={
             <>
-              {template === NotificationObjectTemplateType.DETAIL && <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />}
+              {template === SCNotificationObjectTemplateType.DETAIL && <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />}
             </>
           }
         />
@@ -215,7 +215,7 @@ export default function DeletedForNotification(props: NotificationDeletedForProp
           </Link>
         </Box>
       )}
-      {template === NotificationObjectTemplateType.TOAST && (
+      {template === SCNotificationObjectTemplateType.TOAST && (
         <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2} className={classes.toastInfo}>
           <DateTimeAgo date={notificationObject.active_at} />
           <Typography color="primary">

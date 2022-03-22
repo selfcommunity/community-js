@@ -9,7 +9,7 @@ import {getContributeType, getContributionSnippet, getRouteData} from '../../../
 import DateTimeAgo from '../../../shared/DateTimeAgo';
 import NewChip from '../../../shared/NewChip/NewChip';
 import classNames from 'classnames';
-import {NotificationObjectTemplateType} from '../../../types';
+import {SCNotificationObjectTemplateType} from '../../../types';
 
 const messages = defineMessages({
   kindlyNoticeFlag: {
@@ -94,7 +94,7 @@ export interface NotificationKindlyNoticeFlagProps {
    * Notification Object template type
    * @default 'detail'
    */
-  template?: NotificationObjectTemplateType;
+  template?: SCNotificationObjectTemplateType;
 
   /**
    * Any other properties
@@ -113,7 +113,7 @@ export default function KindlyNoticeFlagNotification(props: NotificationKindlyNo
     notificationObject,
     id = `n_${props.notificationObject['sid']}`,
     className,
-    template = NotificationObjectTemplateType.DETAIL,
+    template = SCNotificationObjectTemplateType.DETAIL,
     ...rest
   } = props;
 
@@ -121,7 +121,7 @@ export default function KindlyNoticeFlagNotification(props: NotificationKindlyNo
   const scRoutingContext: SCRoutingContextType = useSCRouting();
 
   // CONST
-  const isSnippetTemplate = template === NotificationObjectTemplateType.SNIPPET;
+  const isSnippetTemplate = template === SCNotificationObjectTemplateType.SNIPPET;
   const contributionType = getContributeType(notificationObject);
 
   //INTL

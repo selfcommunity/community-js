@@ -3,7 +3,7 @@ import {ComponentStory, ComponentMeta} from '@storybook/react';
 
 import FeedObject from './index';
 import {SCFeedObjectTypologyType} from '@selfcommunity/core';
-import {FeedObjectTemplateType} from '../../types/feedObject';
+import {SCFeedObjectTemplateType} from '../../types/feedObject';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -21,10 +21,10 @@ export default {
       description: 'Object type. Used only with args id.'
     },
     template: {
-      options: [FeedObjectTemplateType.SNIPPET, FeedObjectTemplateType.PREVIEW, FeedObjectTemplateType.DETAIL, FeedObjectTemplateType.SHARE],
+      options: [SCFeedObjectTemplateType.SNIPPET, SCFeedObjectTemplateType.PREVIEW, SCFeedObjectTemplateType.DETAIL, SCFeedObjectTemplateType.SHARE],
       control: {type: 'select'},
       description: 'Object template. Used only with args id.',
-      table: {defaultValue: {summary: FeedObjectTemplateType.SNIPPET}}
+      table: {defaultValue: {summary: SCFeedObjectTemplateType.SNIPPET}}
     },
     elevation: {
       control: {type: 'number'},
@@ -41,7 +41,7 @@ export default {
   args: {
     feedObjectId: 356,
     feedObjectType: SCFeedObjectTypologyType.POST,
-    template: FeedObjectTemplateType.PREVIEW,
+    template: SCFeedObjectTemplateType.PREVIEW,
     elevation: 0,
     variant: 'outlined',
     hideShareAction: false

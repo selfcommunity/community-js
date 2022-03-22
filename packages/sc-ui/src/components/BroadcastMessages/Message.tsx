@@ -20,7 +20,7 @@ import {FormattedMessage} from 'react-intl';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import MarkRead from '../../shared/MarkRead';
 import Widget from '../Widget';
-import {BroadcastMessageTemplateType} from '../../types';
+import {SCBroadcastMessageTemplateType} from '../../types';
 import classNames from 'classnames';
 import {red} from '@mui/material/colors';
 import {
@@ -114,7 +114,7 @@ export interface MessageProps extends CardProps {
    * Template type
    * @default 'preview'
    */
-  template?: BroadcastMessageTemplateType;
+  template?: SCBroadcastMessageTemplateType;
 
   /**
    * Any other properties
@@ -132,7 +132,7 @@ export default function Message(props: MessageProps): JSX.Element {
     message,
     onClose = null,
     onRead = null,
-    template = BroadcastMessageTemplateType.DETAIL,
+    template = SCBroadcastMessageTemplateType.DETAIL,
     ...rest
   } = props;
 
@@ -203,7 +203,7 @@ export default function Message(props: MessageProps): JSX.Element {
   // Banner
   const {banner} = message;
 
-  if (template === BroadcastMessageTemplateType.DETAIL || BroadcastMessageTemplateType.TOAST) {
+  if (template === SCBroadcastMessageTemplateType.DETAIL || SCBroadcastMessageTemplateType.TOAST) {
     return (
       <Fade in={open} unmountOnExit>
         <Root id={id} className={className} {...rest}>
@@ -230,7 +230,7 @@ export default function Message(props: MessageProps): JSX.Element {
     );
   }
 
-  // BroadcastMessageTemplateType.SNIPPET
+  // SCBroadcastMessageTemplateType.SNIPPET
   return (
     <Root id={id} className={className} {...rest}>
       <ListItem

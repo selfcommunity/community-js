@@ -3,7 +3,7 @@ import {ComponentMeta, ComponentStory} from '@storybook/react';
 import Feed from './index';
 import {Endpoints, SCNotificationTopicType} from '@selfcommunity/core';
 import FeedObject, {FeedObjectSkeleton} from '../FeedObject';
-import {FeedObjectTemplateType} from '../../types/feedObject';
+import {SCFeedObjectTemplateType} from '../../types/feedObject';
 import SCNotification, {NotificationSkeleton} from '../Notification';
 import FeedUpdates from '../FeedUpdates';
 
@@ -34,7 +34,7 @@ Main.args = {
   itemIdGenerator: (item) => item[item.type].id,
   ItemSkeleton: FeedObjectSkeleton,
   ItemSkeletonProps: {
-    template: FeedObjectTemplateType.PREVIEW
+    template: SCFeedObjectTemplateType.PREVIEW
   }
 };
 
@@ -52,7 +52,7 @@ Explore.args = {
   itemIdGenerator: (item) => item[item.type].id,
   ItemSkeleton: FeedObjectSkeleton,
   ItemSkeletonProps: {
-    template: FeedObjectTemplateType.PREVIEW
+    template: SCFeedObjectTemplateType.PREVIEW
   }
 };
 

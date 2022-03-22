@@ -8,7 +8,7 @@ import {defineMessages, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
 import NewChip from '../../../shared/NewChip/NewChip';
 import classNames from 'classnames';
-import {NotificationObjectTemplateType} from '../../../types';
+import {SCNotificationObjectTemplateType} from '../../../types';
 
 const messages = defineMessages({
   accountBlocked: {
@@ -96,7 +96,7 @@ export interface NotificationBlockedProps {
    * Notification Object template type
    * @default 'detail'
    */
-  template?: NotificationObjectTemplateType;
+  template?: SCNotificationObjectTemplateType;
 
   /**
    * Any other properties
@@ -113,7 +113,7 @@ export default function UserBlockedNotification(props: NotificationBlockedProps)
   const {
     notificationObject = null,
     id = `n_${props.notificationObject['sid']}`,
-    template = NotificationObjectTemplateType.DETAIL,
+    template = SCNotificationObjectTemplateType.DETAIL,
     className,
     ...rest
   } = props;
@@ -122,8 +122,8 @@ export default function UserBlockedNotification(props: NotificationBlockedProps)
   const intl = useIntl();
 
   // CONST
-  const isSnippetTemplate = template === NotificationObjectTemplateType.SNIPPET;
-  const isToastTemplate = template === NotificationObjectTemplateType.TOAST;
+  const isSnippetTemplate = template === SCNotificationObjectTemplateType.SNIPPET;
+  const isToastTemplate = template === SCNotificationObjectTemplateType.TOAST;
 
   /**
    * Renders root object
@@ -155,7 +155,7 @@ export default function UserBlockedNotification(props: NotificationBlockedProps)
           disableTypography={true}
           primary={
             <>
-              {template === NotificationObjectTemplateType.DETAIL && notificationObject.is_new && <NewChip />}
+              {template === SCNotificationObjectTemplateType.DETAIL && notificationObject.is_new && <NewChip />}
               <Typography component="div" color="inherit" className={classes.blockedText}>
                 {notificationObject.type === SCNotificationTypologyType.BLOCKED_USER
                   ? intl.formatMessage(messages.accountBlocked, {b: (...chunks) => <strong>{chunks}</strong>})
@@ -165,12 +165,12 @@ export default function UserBlockedNotification(props: NotificationBlockedProps)
           }
           secondary={
             <>
-              {template === NotificationObjectTemplateType.DETAIL && <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />}
+              {template === SCNotificationObjectTemplateType.DETAIL && <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />}
             </>
           }
         />
       </ListItem>
-      {template === NotificationObjectTemplateType.TOAST && (
+      {template === SCNotificationObjectTemplateType.TOAST && (
         <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2} className={classes.toastInfo}>
           <DateTimeAgo date={notificationObject.active_at} />
         </Stack>

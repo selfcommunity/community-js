@@ -20,7 +20,7 @@ import {Box, CardProps, MenuItem, MenuList} from '@mui/material';
 import IncubatorApprovedNotification from '../Notification/IncubatorApproved';
 import classNames from 'classnames';
 import Skeleton from './Skeleton';
-import {NotificationObjectTemplateType} from '../../types';
+import {SCNotificationObjectTemplateType} from '../../types';
 import ScrollContainer from '../../shared/ScrollContainer';
 import {FormattedMessage} from 'react-intl';
 import {
@@ -257,15 +257,15 @@ export default function SnippetNotifications(props: SnippetNotificationsProps): 
     const type = n.type ? n.type : n.activity_type ? n.activity_type : null;
     let content;
     if (type === SCNotificationTypologyType.COMMENT || type === SCNotificationTypologyType.NESTED_COMMENT) {
-      content = <CommentNotification notificationObject={n} key={i} index={i} template={NotificationObjectTemplateType.SNIPPET} />;
+      content = <CommentNotification notificationObject={n} key={i} index={i} template={SCNotificationObjectTemplateType.SNIPPET} />;
     } else if (type === SCNotificationTypologyType.FOLLOW) {
-      content = <ContributionFollowNotification notificationObject={n} key={i} template={NotificationObjectTemplateType.SNIPPET} />;
+      content = <ContributionFollowNotification notificationObject={n} key={i} template={SCNotificationObjectTemplateType.SNIPPET} />;
     } else if (type === SCNotificationTypologyType.USER_FOLLOW) {
-      content = <UserFollowNotification notificationObject={n} key={i} template={NotificationObjectTemplateType.SNIPPET} />;
+      content = <UserFollowNotification notificationObject={n} key={i} template={SCNotificationObjectTemplateType.SNIPPET} />;
     } else if (type === SCNotificationTypologyType.CONNECTION_REQUEST || type === SCNotificationTypologyType.CONNECTION_ACCEPT) {
-      content = <UserConnectionNotification notificationObject={n} key={i} template={NotificationObjectTemplateType.SNIPPET} />;
+      content = <UserConnectionNotification notificationObject={n} key={i} template={SCNotificationObjectTemplateType.SNIPPET} />;
     } else if (type === SCNotificationTypologyType.VOTE_UP) {
-      content = <VoteUpNotification notificationObject={n} key={i} template={NotificationObjectTemplateType.SNIPPET} />;
+      content = <VoteUpNotification notificationObject={n} key={i} template={SCNotificationObjectTemplateType.SNIPPET} />;
     } else if (
       type === SCNotificationTypologyType.KINDLY_NOTICE_ADVERTISING ||
       type === SCNotificationTypologyType.KINDLY_NOTICE_AGGRESSIVE ||
@@ -273,9 +273,9 @@ export default function SnippetNotifications(props: SnippetNotificationsProps): 
       type === SCNotificationTypologyType.KINDLY_NOTICE_VULGAR ||
       type === SCNotificationTypologyType.KINDLY_NOTICE_OFFTOPIC
     ) {
-      content = <KindlyNoticeForNotification notificationObject={n} key={i} template={NotificationObjectTemplateType.SNIPPET} />;
+      content = <KindlyNoticeForNotification notificationObject={n} key={i} template={SCNotificationObjectTemplateType.SNIPPET} />;
     } else if (type === SCNotificationTypologyType.KINDLY_NOTICE_FLAG) {
-      content = <KindlyNoticeFlagNotification notificationObject={n} key={i} template={NotificationObjectTemplateType.SNIPPET} />;
+      content = <KindlyNoticeFlagNotification notificationObject={n} key={i} template={SCNotificationObjectTemplateType.SNIPPET} />;
     } else if (
       type === SCNotificationTypologyType.DELETED_FOR_ADVERTISING ||
       type === SCNotificationTypologyType.DELETED_FOR_AGGRESSIVE ||
@@ -283,9 +283,9 @@ export default function SnippetNotifications(props: SnippetNotificationsProps): 
       type === SCNotificationTypologyType.DELETED_FOR_VULGAR ||
       type === SCNotificationTypologyType.DELETED_FOR_OFFTOPIC
     ) {
-      content = <DeletedForNotification notificationObject={n} key={i} template={NotificationObjectTemplateType.SNIPPET} />;
+      content = <DeletedForNotification notificationObject={n} key={i} template={SCNotificationObjectTemplateType.SNIPPET} />;
     } else if (type === SCNotificationTypologyType.UNDELETED_FOR) {
-      content = <UndeletedForNotification notificationObject={n} key={i} template={NotificationObjectTemplateType.SNIPPET} />;
+      content = <UndeletedForNotification notificationObject={n} key={i} template={SCNotificationObjectTemplateType.SNIPPET} />;
     } else if (
       type === SCNotificationTypologyType.COLLAPSED_FOR_ADVERTISING ||
       type === SCNotificationTypologyType.COLLAPSED_FOR_AGGRESSIVE ||
@@ -293,15 +293,15 @@ export default function SnippetNotifications(props: SnippetNotificationsProps): 
       type === SCNotificationTypologyType.COLLAPSED_FOR_VULGAR ||
       type === SCNotificationTypologyType.COLLAPSED_FOR_OFFTOPIC
     ) {
-      content = <CollapsedForNotification notificationObject={n} key={i} template={NotificationObjectTemplateType.SNIPPET} />;
+      content = <CollapsedForNotification notificationObject={n} key={i} template={SCNotificationObjectTemplateType.SNIPPET} />;
     } else if (type === SCNotificationTypologyType.PRIVATE_MESSAGE) {
-      content = <PrivateMessageNotification notificationObject={n} key={i} template={NotificationObjectTemplateType.SNIPPET} />;
+      content = <PrivateMessageNotification notificationObject={n} key={i} template={SCNotificationObjectTemplateType.SNIPPET} />;
     } else if (type === SCNotificationTypologyType.BLOCKED_USER || type === SCNotificationTypologyType.UNBLOCKED_USER) {
-      content = <UserBlockedNotification notificationObject={n} key={i} template={NotificationObjectTemplateType.SNIPPET} />;
+      content = <UserBlockedNotification notificationObject={n} key={i} template={SCNotificationObjectTemplateType.SNIPPET} />;
     } else if (type === SCNotificationTypologyType.MENTION) {
-      content = <MentionNotification notificationObject={n} key={i} template={NotificationObjectTemplateType.SNIPPET} />;
+      content = <MentionNotification notificationObject={n} key={i} template={SCNotificationObjectTemplateType.SNIPPET} />;
     } else if (type === SCNotificationTypologyType.INCUBATOR_APPROVED) {
-      content = <IncubatorApprovedNotification notificationObject={n} key={i} template={NotificationObjectTemplateType.SNIPPET} />;
+      content = <IncubatorApprovedNotification notificationObject={n} key={i} template={SCNotificationObjectTemplateType.SNIPPET} />;
     } else if (type === SCNotificationTypologyType.NOTIFICATION_BANNER) {
       /** Notification of type: 'notification_banner' */
       // TODO: When api is fixed, use BroadcastMessage -> Message as the component to render this content

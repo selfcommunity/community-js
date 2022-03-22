@@ -5,7 +5,7 @@ import Vote, {VoteProps} from './Vote';
 import Comment, {CommentProps} from './Comment';
 import Share, {ShareProps} from './Share';
 import {SCFeedObjectType, SCFeedObjectTypologyType, useSCFetchFeedObject} from '@selfcommunity/core';
-import {FeedObjectTemplateType} from '../../../types/feedObject';
+import {SCFeedObjectTemplateType} from '../../../types/feedObject';
 import classNames from 'classnames';
 
 const PREFIX = 'SCFeedObjectActions';
@@ -53,7 +53,7 @@ export interface ActionsProps {
    * Feed Object template type
    * @default 'preview'
    */
-  feedObjectTemplate?: FeedObjectTemplateType;
+  feedObjectTemplate?: SCFeedObjectTemplateType;
 
   /**
    * Hides vote action
@@ -105,7 +105,7 @@ export default function Actions(props: ActionsProps): JSX.Element {
     feedObjectId,
     feedObject,
     feedObjectType = SCFeedObjectTypologyType.POST,
-    feedObjectTemplate = FeedObjectTemplateType.PREVIEW,
+    feedObjectTemplate = SCFeedObjectTemplateType.PREVIEW,
     hideVoteAction = false,
     hideShareAction = false,
     hideCommentAction = false,

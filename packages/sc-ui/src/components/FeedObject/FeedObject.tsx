@@ -50,8 +50,8 @@ import {
 import Composer from '../Composer';
 import CommentsObject from '../CommentsObject';
 import ActivitiesMenu from './ActivitiesMenu';
-import {CommentsOrderBy} from '../../types/comments';
-import {FeedObjectActivitiesType, FeedObjectTemplateType} from '../../types/feedObject';
+import {SCCommentsOrderBy} from '../../types/comments';
+import {SCFeedObjectActivitiesType, SCFeedObjectTemplateType} from '../../types/feedObject';
 import RelevantActivities from './RelevantActivities';
 import ReplyCommentObject from '../CommentObject/ReplyComment';
 import {SCOPE_SC_UI} from '../../constants/Errors';
@@ -243,7 +243,7 @@ export interface FeedObjectProps extends CardProps {
    * Feed Object template type
    * @default 'preview'
    */
-  template?: FeedObjectTemplateType;
+  template?: SCFeedObjectTemplateType;
 
   /**
    * Hide follow action object
@@ -355,7 +355,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
     feedObjectType = SCFeedObjectTypologyType.POST,
     feedObjectActivities = null,
     markRead = false,
-    template = FeedObjectTemplateType.PREVIEW,
+    template = SCFeedObjectTemplateType.PREVIEW,
     hideFollowAction = false,
     hideParticipantsPreview = false,
     FollowButtonProps = {},
@@ -411,9 +411,9 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
    */
   function getInitialSelectedActivitiesType() {
     if (feedObjectActivities && feedObjectActivities.length > 0) {
-      return FeedObjectActivitiesType.RELEVANCE_ACTIVITIES;
+      return SCFeedObjectActivitiesType.RELEVANCE_ACTIVITIES;
     }
-    return FeedObjectActivitiesType.RECENT_COMMENTS;
+    return SCFeedObjectActivitiesType.RECENT_COMMENTS;
   }
 
   /**
@@ -542,10 +542,10 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
       setIsReplying(true);
       performReply(comment)
         .then((data: SCCommentType) => {
-          if (selectedActivities !== FeedObjectActivitiesType.RECENT_COMMENTS || obj.comment_count === 0) {
+          if (selectedActivities !== SCFeedObjectActivitiesType.RECENT_COMMENTS || obj.comment_count === 0) {
             setObj(Object.assign({}, obj, {comment_count: obj.comment_count + 1}));
             setComments([]);
-            setSelectedActivities(FeedObjectActivitiesType.RECENT_COMMENTS);
+            setSelectedActivities(SCFeedObjectActivitiesType.RECENT_COMMENTS);
           } else {
             setComments([...[data], ...comments]);
           }
@@ -576,7 +576,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
             onChange={handleSelectActivitiesType}
           />
         )}
-        {selectedActivities === FeedObjectActivitiesType.RELEVANCE_ACTIVITIES ? renderRelevantActivities() : renderComments()}
+        {selectedActivities === SCFeedObjectActivitiesType.RELEVANCE_ACTIVITIES ? renderRelevantActivities() : renderComments()}
       </>
     );
   }
@@ -593,11 +593,11 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
    */
   function renderComments() {
     const _commentsOrderBy =
-      selectedActivities === FeedObjectActivitiesType.CONNECTIONS_COMMENTS
-        ? CommentsOrderBy.CONNECTION_DESC
-        : selectedActivities === FeedObjectActivitiesType.FIRST_COMMENTS
-        ? CommentsOrderBy.ADDED_AT_ASC
-        : CommentsOrderBy.ADDED_AT_DESC;
+      selectedActivities === SCFeedObjectActivitiesType.CONNECTIONS_COMMENTS
+        ? SCCommentsOrderBy.CONNECTION_DESC
+        : selectedActivities === SCFeedObjectActivitiesType.FIRST_COMMENTS
+        ? SCCommentsOrderBy.ADDED_AT_ASC
+        : SCCommentsOrderBy.ADDED_AT_DESC;
     return (
       <>
         {(obj.comment_count > 0 || comments.length > 0) && (
@@ -640,7 +640,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
    * SNIPPET, PREVIEW, DETAIL
    */
   let objElement;
-  if (template === FeedObjectTemplateType.PREVIEW || template === FeedObjectTemplateType.DETAIL) {
+  if (template === SCFeedObjectTemplateType.PREVIEW || template === SCFeedObjectTemplateType.DETAIL) {
     objElement = (
       <React.Fragment>
         {obj ? (
@@ -693,7 +693,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
               <Box className={classes.titleSection}>
                 {'title' in obj && (
                   <>
-                    {template === FeedObjectTemplateType.DETAIL ? (
+                    {template === SCFeedObjectTemplateType.DETAIL ? (
                       <Typography variant="body1" gutterBottom className={classes.title}>
                         {obj.title}
                       </Typography>
@@ -708,7 +708,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
                 )}
               </Box>
               <Box className={classes.textSection}>
-                {template === FeedObjectTemplateType.DETAIL ? (
+                {template === SCFeedObjectTemplateType.DETAIL ? (
                   <Typography
                     component="div"
                     gutterBottom
@@ -744,12 +744,12 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
               <Actions
                 feedObject={obj}
                 feedObjectType={feedObjectType}
-                hideCommentAction={template === FeedObjectTemplateType.DETAIL}
+                hideCommentAction={template === SCFeedObjectTemplateType.DETAIL}
                 handleExpandActivities={handleExpandActivities}
                 {...ActionsProps}
               />
             </CardActions>
-            {template === FeedObjectTemplateType.PREVIEW && (
+            {template === SCFeedObjectTemplateType.PREVIEW && (
               <Collapse in={expandedActivities} timeout="auto" unmountOnExit classes={{root: classes.activities}}>
                 <CardContent className={classes.activitiesContent} sx={{paddingTop: 0}}>
                   {renderActivities()}
@@ -773,7 +773,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
         )}
       </React.Fragment>
     );
-  } else if (template === FeedObjectTemplateType.SHARE) {
+  } else if (template === SCFeedObjectTemplateType.SHARE) {
     objElement = (
       <React.Fragment>
         {obj ? (

@@ -1,7 +1,7 @@
 /**
  * BroadcastMessage template type
  */
-export enum BroadcastMessageTemplateType {
+export enum SCBroadcastMessageTemplateType {
   SNIPPET = 'snippet',
   DETAIL = 'detail',
   TOAST = 'toast'

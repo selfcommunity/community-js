@@ -1,7 +1,7 @@
 /**
  * Notification template type
  */
-export enum NotificationObjectTemplateType {
+export enum SCNotificationObjectTemplateType {
   SNIPPET = 'snippet',
   DETAIL = 'detail',
   TOAST = 'toast'

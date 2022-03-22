@@ -1,7 +1,7 @@
 /**
  * FeedObject template type
  */
-export enum FeedObjectTemplateType {
+export enum SCFeedObjectTemplateType {
   SNIPPET = 'snippet',
   PREVIEW = 'preview',
   DETAIL = 'detail',
@@ -11,7 +11,7 @@ export enum FeedObjectTemplateType {
 /**
  * FeedObject activities type
  */
-export enum FeedObjectActivitiesType {
+export enum SCFeedObjectActivitiesType {
   RELEVANCE_ACTIVITIES = 'relevant_activities',
   RECENT_COMMENTS = 'recent_comments',
   FIRST_COMMENTS = 'first_comments',

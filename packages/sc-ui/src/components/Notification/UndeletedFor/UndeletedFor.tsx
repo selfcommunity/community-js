@@ -9,7 +9,7 @@ import {getContributeType, getContributionSnippet, getRouteData} from '../../../
 import DateTimeAgo from '../../../shared/DateTimeAgo';
 import NewChip from '../../../shared/NewChip/NewChip';
 import classNames from 'classnames';
-import {NotificationObjectTemplateType} from '../../../types';
+import {SCNotificationObjectTemplateType} from '../../../types';
 
 const PREFIX = 'SCUndeletedForNotification';
 
@@ -91,7 +91,7 @@ export interface NotificationUndeletedProps {
    * Notification Object template type
    * @default 'detail'
    */
-  template?: NotificationObjectTemplateType;
+  template?: SCNotificationObjectTemplateType;
 
   /**
    * Any other properties
@@ -110,7 +110,7 @@ export default function UndeletedForNotification(props: NotificationUndeletedPro
     notificationObject,
     id = `n_${props.notificationObject['sid']}`,
     className,
-    template = NotificationObjectTemplateType.DETAIL,
+    template = SCNotificationObjectTemplateType.DETAIL,
     ...rest
   } = props;
 
@@ -118,8 +118,8 @@ export default function UndeletedForNotification(props: NotificationUndeletedPro
   const scRoutingContext: SCRoutingContextType = useSCRouting();
 
   // CONST
-  const isSnippetTemplate = template === NotificationObjectTemplateType.SNIPPET;
-  const isToastTemplate = template === NotificationObjectTemplateType.TOAST;
+  const isSnippetTemplate = template === SCNotificationObjectTemplateType.SNIPPET;
+  const isToastTemplate = template === SCNotificationObjectTemplateType.TOAST;
   const contributionType = getContributeType(notificationObject);
 
   /**
@@ -160,7 +160,7 @@ export default function UndeletedForNotification(props: NotificationUndeletedPro
                 </Link>
               ) : (
                 <>
-                  {template === NotificationObjectTemplateType.DETAIL && notificationObject.is_new && <NewChip />}
+                  {template === SCNotificationObjectTemplateType.DETAIL && notificationObject.is_new && <NewChip />}
                   <Typography component="span" color="inherit" className={classes.undeletedText}>
                     <FormattedMessage
                       id="ui.notification.undeletedFor.restoredContent"
@@ -173,7 +173,7 @@ export default function UndeletedForNotification(props: NotificationUndeletedPro
           }
           secondary={
             <>
-              {template === NotificationObjectTemplateType.DETAIL && <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />}
+              {template === SCNotificationObjectTemplateType.DETAIL && <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />}
             </>
           }
         />
@@ -192,7 +192,7 @@ export default function UndeletedForNotification(props: NotificationUndeletedPro
           </Link>
         </Box>
       )}
-      {template === NotificationObjectTemplateType.TOAST && (
+      {template === SCNotificationObjectTemplateType.TOAST && (
         <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2} className={classes.toastInfo}>
           <DateTimeAgo date={notificationObject.active_at} />
           <Typography color="primary">

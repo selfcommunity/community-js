@@ -5,7 +5,7 @@ import {SCNotificationTopicType, SCNotification, SCNotificationTypologyType, use
 import PubSub from 'pubsub-js';
 import {useSnackbar} from 'notistack';
 import CustomSnackMessage from '../../shared/CustomSnackMessage';
-import {NotificationObjectTemplateType} from '../../types';
+import {SCNotificationObjectTemplateType} from '../../types';
 import CommentNotification from '../Notification/Comment';
 import ContributionFollowNotification from '../Notification/ContributionFollow';
 import UserFollowNotification from '../Notification/UserFollow';
@@ -103,23 +103,23 @@ export default function UserToastNotifications(props: ToastNotificationsProps): 
       /** Notification of types: comment, nested_comment, etc... */
       type = SCNotification.SCNotificationMapping[n.activity_type];
       if (type === SCNotificationTypologyType.COMMENT || type === SCNotificationTypologyType.NESTED_COMMENT) {
-        content = <CommentNotification notificationObject={n.notification_obj} template={NotificationObjectTemplateType.TOAST} />;
+        content = <CommentNotification notificationObject={n.notification_obj} template={SCNotificationObjectTemplateType.TOAST} />;
       } else if (type === SCNotificationTypologyType.FOLLOW) {
-        content = <ContributionFollowNotification notificationObject={n.notification_obj} template={NotificationObjectTemplateType.TOAST} />;
+        content = <ContributionFollowNotification notificationObject={n.notification_obj} template={SCNotificationObjectTemplateType.TOAST} />;
       } else if (type === SCNotificationTypologyType.USER_FOLLOW) {
-        content = <UserFollowNotification notificationObject={n.notification_obj} template={NotificationObjectTemplateType.TOAST} />;
+        content = <UserFollowNotification notificationObject={n.notification_obj} template={SCNotificationObjectTemplateType.TOAST} />;
       } else if (type === SCNotificationTypologyType.CONNECTION_REQUEST || type === SCNotificationTypologyType.CONNECTION_ACCEPT) {
-        content = <UserConnectionNotification notificationObject={n.notification_obj} template={NotificationObjectTemplateType.TOAST} />;
+        content = <UserConnectionNotification notificationObject={n.notification_obj} template={SCNotificationObjectTemplateType.TOAST} />;
       } else if (type === SCNotificationTypologyType.VOTE_UP) {
-        content = <VoteUpNotification notificationObject={n.notification_obj} template={NotificationObjectTemplateType.TOAST} />;
+        content = <VoteUpNotification notificationObject={n.notification_obj} template={SCNotificationObjectTemplateType.TOAST} />;
       } else if (type === SCNotificationTypologyType.PRIVATE_MESSAGE) {
-        content = <PrivateMessageNotification notificationObject={n.notification_obj} template={NotificationObjectTemplateType.TOAST} />;
+        content = <PrivateMessageNotification notificationObject={n.notification_obj} template={SCNotificationObjectTemplateType.TOAST} />;
       } else if (n.type === SCNotificationTypologyType.BLOCKED_USER || n.type === SCNotificationTypologyType.UNBLOCKED_USER) {
-        return <UserBlockedNotification notificationObject={n.notification_obj} template={NotificationObjectTemplateType.TOAST} />;
+        return <UserBlockedNotification notificationObject={n.notification_obj} template={SCNotificationObjectTemplateType.TOAST} />;
       } else if (type === SCNotificationTypologyType.MENTION) {
-        content = <MentionNotification notificationObject={n.notification_obj} template={NotificationObjectTemplateType.TOAST} />;
+        content = <MentionNotification notificationObject={n.notification_obj} template={SCNotificationObjectTemplateType.TOAST} />;
       } else if (type === SCNotificationTypologyType.INCUBATOR_APPROVED) {
-        content = <IncubatorApprovedNotification notificationObject={n.notification_obj} template={NotificationObjectTemplateType.TOAST} />;
+        content = <IncubatorApprovedNotification notificationObject={n.notification_obj} template={SCNotificationObjectTemplateType.TOAST} />;
       }
     }
     if (n.activity_type && n.activity_type === SCNotificationTypologyType.NOTIFICATION_BANNER) {

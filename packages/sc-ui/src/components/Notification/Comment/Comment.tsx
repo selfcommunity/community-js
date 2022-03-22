@@ -11,7 +11,7 @@ import DateTimeAgo from '../../../shared/DateTimeAgo';
 import NewChip from '../../../shared/NewChip/NewChip';
 import {getContributionSnippet, getRouteData} from '../../../utils/contribute';
 import classNames from 'classnames';
-import {NotificationObjectTemplateType} from '../../../types';
+import {SCNotificationObjectTemplateType} from '../../../types';
 
 const messages = defineMessages({
   comment: {
@@ -106,7 +106,7 @@ export interface CommentNotificationProps {
    * Notification Object template type
    * @default 'detail'
    */
-  template?: NotificationObjectTemplateType;
+  template?: SCNotificationObjectTemplateType;
 
   /**
    * Index
@@ -145,7 +145,7 @@ export default function CommentNotification(props: CommentNotificationProps): JS
     onVote,
     loadingVote,
     id = `n_${props.notificationObject['sid']}`,
-    template = NotificationObjectTemplateType.DETAIL,
+    template = SCNotificationObjectTemplateType.DETAIL,
     className,
     ...rest
   } = props;
@@ -154,8 +154,8 @@ export default function CommentNotification(props: CommentNotificationProps): JS
   const scRoutingContext: SCRoutingContextType = useSCRouting();
 
   // CONST
-  const isSnippetTemplate = template === NotificationObjectTemplateType.SNIPPET;
-  const isToastTemplate = template === NotificationObjectTemplateType.TOAST;
+  const isSnippetTemplate = template === SCNotificationObjectTemplateType.SNIPPET;
+  const isToastTemplate = template === SCNotificationObjectTemplateType.TOAST;
 
   //INTL
   const intl = useIntl();
@@ -188,7 +188,7 @@ export default function CommentNotification(props: CommentNotificationProps): JS
           disableTypography={true}
           primary={
             <>
-              {template === NotificationObjectTemplateType.DETAIL && notificationObject.is_new && <NewChip />}
+              {template === SCNotificationObjectTemplateType.DETAIL && notificationObject.is_new && <NewChip />}
               <Typography component="span" className={classes.commentText} color="inherit">
                 <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.comment.author)} className={classes.username}>
                   {notificationObject.comment.author.username}
@@ -210,7 +210,7 @@ export default function CommentNotification(props: CommentNotificationProps): JS
                   {getContributionSnippet(notificationObject.comment)}
                 </Typography>
               </Link>
-              {template === NotificationObjectTemplateType.DETAIL && (
+              {template === SCNotificationObjectTemplateType.DETAIL && (
                 <Stack direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
                   <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
                   <Bullet className={classes.bullet} />
@@ -244,7 +244,7 @@ export default function CommentNotification(props: CommentNotificationProps): JS
           }
         />
       </ListItem>
-      {template === NotificationObjectTemplateType.TOAST && (
+      {template === SCNotificationObjectTemplateType.TOAST && (
         <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
           <DateTimeAgo date={notificationObject.active_at} />
           <Typography color="primary">

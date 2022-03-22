@@ -54,13 +54,13 @@ import AccountSignUp, {AccountSignUpProps} from './components/AccountSignUp';
 import AccountRecover, {AccountRecoverProps} from './components/AccountRecover';
 import {
   SCFeedWidgetType,
-  FeedObjectTemplateType,
-  CommentsOrderBy,
-  FeedObjectActivitiesType,
+  SCFeedObjectTemplateType,
+  SCCommentsOrderBy,
+  SCFeedObjectActivitiesType,
   SCMediaObjectType,
   SCMediaChunkType,
-  NotificationObjectTemplateType,
-  BroadcastMessageTemplateType
+  SCNotificationObjectTemplateType,
+  SCBroadcastMessageTemplateType
 } from './types';
 import {SCCategoryType} from '@selfcommunity/core';
 import Widget from './components/Widget';
@@ -197,11 +197,11 @@ export {
   SnippetNotificationsSkeleton,
   Widget,
   SCFeedWidgetType,
-  FeedObjectTemplateType,
-  CommentsOrderBy,
-  FeedObjectActivitiesType,
+  SCFeedObjectTemplateType,
+  SCCommentsOrderBy,
+  SCFeedObjectActivitiesType,
   SCMediaObjectType,
   SCMediaChunkType,
-  NotificationObjectTemplateType,
-  BroadcastMessageTemplateType
+  SCNotificationObjectTemplateType,
+  SCBroadcastMessageTemplateType
 };
