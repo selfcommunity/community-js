@@ -104,7 +104,7 @@ export interface CommentNotificationProps {
 
   /**
    * Notification Object template type
-   * @default 'preview'
+   * @default 'detail'
    */
   template?: NotificationObjectTemplateType;
 

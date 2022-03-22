@@ -41,7 +41,7 @@ export interface ToastNotificationsProps extends BoxProps {
   /**
    * Handle notification
    */
-  handleNotification?: (type, data, content) => void;
+  handleNotification?: (type, data, content) => JSX.Element;
 
   /**
    * Disable Toast Notification
@@ -100,6 +100,7 @@ export default function UserToastNotifications(props: ToastNotificationsProps): 
     let content;
     let type;
     if (n.notification_obj) {
+      /** Notification of types: comment, nested_comment, etc... */
       type = SCNotification.SCNotificationMapping[n.activity_type];
       if (type === SCNotificationTypologyType.COMMENT || type === SCNotificationTypologyType.NESTED_COMMENT) {
         content = <CommentNotification notificationObject={n.notification_obj} template={NotificationObjectTemplateType.TOAST} />;
@@ -121,7 +122,13 @@ export default function UserToastNotifications(props: ToastNotificationsProps): 
         content = <IncubatorApprovedNotification notificationObject={n.notification_obj} template={NotificationObjectTemplateType.TOAST} />;
       }
     }
+    if (n.activity_type && n.activity_type === SCNotificationTypologyType.NOTIFICATION_BANNER) {
+      /** Notification of type: 'notification_banner' */
+      // TODO: When api is fixed, use BroadcastMessage -> Message as the component to render this content
+      content = <div style={{maxWidth: 300}} dangerouslySetInnerHTML={{__html: n.message}} />;
+    }
     if (handleNotification && type) {
+      /** Override content */
       content = handleNotification(type, n, content);
     }
     return content;
@@ -136,11 +143,12 @@ export default function UserToastNotifications(props: ToastNotificationsProps): 
     if (
       data &&
       data.type === SCNotificationTopicType.INTERACTION &&
-      SCNotification.SCNotificationMapping[data.data.activity_type] &&
+      (data.data.activity_type === SCNotificationTypologyType.NOTIFICATION_BANNER || SCNotification.SCNotificationMapping[data.data.activity_type]) &&
       !SCNotification.SCSilentToastNotifications.includes(data.data.activity_type) &&
       !disableToastNotification &&
       !scContext.settings.notifications.webSocket.disableToastMessage
     ) {
+      const messageKey = data.data.feed_serialization_id ? data.data.feed_serialization_id : data.data.id;
       enqueueSnackbar(
         null,
         Object.assign(
@@ -148,7 +156,7 @@ export default function UserToastNotifications(props: ToastNotificationsProps): 
           {
             content: (
               <CustomSnackMessage
-                id={data.data.feed_serialization_id}
+                id={messageKey}
                 message={
                   <div className={classes.toastMessage}>
                     <div className={classes.toastContent}>{getContent(data.data)}</div>
@@ -157,7 +165,7 @@ export default function UserToastNotifications(props: ToastNotificationsProps): 
               />
             ),
             preventDuplicate: true,
-            key: data.data.feed_serialization_id,
+            key: messageKey,
             variant: 'default',
             persist: true,
             anchorOrigin: {horizontal: 'left', vertical: 'bottom'},

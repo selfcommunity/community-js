@@ -52,7 +52,16 @@ import Notification, {NotificationProps, NotificationSkeleton} from './component
 import AccountSignIn, {AccountSignInProps} from './components/AccountSignIn';
 import AccountSignUp, {AccountSignUpProps} from './components/AccountSignUp';
 import AccountRecover, {AccountRecoverProps} from './components/AccountRecover';
-import {SCFeedWidgetType, FeedObjectTemplateType, CommentsOrderBy, FeedObjectActivitiesType, SCMediaObjectType, SCMediaChunkType} from './types';
+import {
+  SCFeedWidgetType,
+  FeedObjectTemplateType,
+  CommentsOrderBy,
+  FeedObjectActivitiesType,
+  SCMediaObjectType,
+  SCMediaChunkType,
+  NotificationObjectTemplateType,
+  BroadcastMessageTemplateType
+} from './types';
 import {SCCategoryType} from '@selfcommunity/core';
 import Widget from './components/Widget';
 
@@ -186,11 +195,13 @@ export {
   SnippetNotifications,
   SnippetNotificationsProps,
   SnippetNotificationsSkeleton,
+  Widget,
   SCFeedWidgetType,
   FeedObjectTemplateType,
   CommentsOrderBy,
   FeedObjectActivitiesType,
   SCMediaObjectType,
   SCMediaChunkType,
-  Widget
+  NotificationObjectTemplateType,
+  BroadcastMessageTemplateType
 };

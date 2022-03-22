@@ -112,7 +112,7 @@ export interface NotificationKindlyNoticeForProps {
 
   /**
    * Notification Object template type
-   * @default 'preview'
+   * @default 'detail'
    */
   template?: NotificationObjectTemplateType;
 

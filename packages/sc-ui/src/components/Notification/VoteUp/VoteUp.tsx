@@ -91,7 +91,7 @@ export interface NotificationVoteUpProps {
 
   /**
    * Notification Object template type
-   * @default 'preview'
+   * @default 'detail'
    */
   template?: NotificationObjectTemplateType;
 

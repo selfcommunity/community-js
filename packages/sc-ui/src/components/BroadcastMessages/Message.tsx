@@ -1,11 +1,28 @@
 import React, {useContext, useMemo, useState} from 'react';
+import {
+  Avatar,
+  CardContent,
+  CardHeader,
+  CardMedia,
+  CardProps,
+  Chip,
+  CircularProgress,
+  Fade,
+  IconButton,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+  Typography
+} from '@mui/material';
 import {styled} from '@mui/material/styles';
-import {Avatar, Box, CardContent, CardHeader, CardMedia, CardProps, Chip, CircularProgress, Fade, IconButton, Typography} from '@mui/material';
 import Icon from '@mui/material/Icon';
 import {FormattedMessage} from 'react-intl';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import MarkRead from '../../shared/MarkRead';
 import Widget from '../Widget';
+import {BroadcastMessageTemplateType} from '../../types';
+import classNames from 'classnames';
+import {red} from '@mui/material/colors';
 import {
   Endpoints,
   http,
@@ -15,7 +32,10 @@ import {
   SCBroadcastMessageType,
   SCPreferences,
   SCPreferencesContext,
-  SCPreferencesContextType
+  SCPreferencesContextType,
+  SCRoutes,
+  SCRoutingContextType,
+  useSCRouting
 } from '@selfcommunity/core';
 
 const PREFIX = 'SCBroadcastMessage';
@@ -24,7 +44,11 @@ const classes = {
   header: `${PREFIX}-header`,
   title: `${PREFIX}-title`,
   media: `${PREFIX}-media`,
-  content: `${PREFIX}-content`
+  content: `${PREFIX}-content`,
+  listItemSnippet: `${PREFIX}-list-item-snippet`,
+  listItemSnippetNew: `${PREFIX}-list-item-snippet-new`,
+  messageIconWrap: `${PREFIX}-flag-icon-wrap`,
+  messageIconSnippet: `${PREFIX}-flag-icon-snippet`
 };
 
 const Root = styled(Widget, {
@@ -36,6 +60,23 @@ const Root = styled(Widget, {
   marginBottom: theme.spacing(2),
   [`& .${classes.header} .MuiAvatar-img`]: {
     objectFit: 'fill'
+  },
+  [`& .${classes.listItemSnippet}`]: {
+    padding: '0px 5px',
+    alignItems: 'center'
+  },
+  [`& .${classes.listItemSnippetNew}`]: {
+    borderLeft: '2px solid red'
+  },
+  [`& .${classes.messageIconWrap}`]: {
+    minWidth: 'auto',
+    paddingRight: 10
+  },
+  [`& .${classes.messageIconSnippet}`]: {
+    backgroundColor: red[500],
+    color: '#FFF',
+    width: 30,
+    height: 30
   }
 }));
 
@@ -70,6 +111,12 @@ export interface MessageProps extends CardProps {
   onRead?: (message: SCBroadcastMessageType) => void;
 
   /**
+   * Template type
+   * @default 'preview'
+   */
+  template?: BroadcastMessageTemplateType;
+
+  /**
    * Any other properties
    */
   [p: string]: any;
@@ -79,14 +126,25 @@ const PREFERENCES = [SCPreferences.LOGO_NAVBAR_LOGO, SCPreferences.TEXT_APPLICAT
 
 export default function Message(props: MessageProps): JSX.Element {
   // PROPS
-  const {id = `message_${props.message.id}`, className, message, onClose = null, onRead = null, ...rest} = props;
+  const {
+    id = `message_${props.message.id}`,
+    className,
+    message,
+    onClose = null,
+    onRead = null,
+    template = BroadcastMessageTemplateType.DETAIL,
+    ...rest
+  } = props;
 
   // STATE
   const [open, setOpen] = useState<boolean>(message.disposed_at === null);
   const [closing, setClosing] = useState<boolean>(false);
 
-  // Context
+  // CONTEXT
   const scPrefernces: SCPreferencesContextType = useContext(SCPreferencesContext);
+
+  // ROUTING
+  const scRoutingContext: SCRoutingContextType = useSCRouting();
 
   // Compute preferences
   const preferences = useMemo(() => {
@@ -145,28 +203,58 @@ export default function Message(props: MessageProps): JSX.Element {
   // Banner
   const {banner} = message;
 
+  if (template === BroadcastMessageTemplateType.DETAIL || BroadcastMessageTemplateType.TOAST) {
+    return (
+      <Fade in={open} unmountOnExit>
+        <Root id={id} className={className} {...rest}>
+          {message.viewed_at === null && <MarkRead endpoint={Endpoints.BroadcastMessagesMarkRead} data={{banner_ids: [message.id]}} />}
+          <CardHeader
+            className={classes.header}
+            avatar={<Avatar alt={preferences[SCPreferences.TEXT_APPLICATION_NAME]} src={preferences[SCPreferences.LOGO_NAVBAR_LOGO]} />}
+            action={
+              <IconButton aria-label="close" onClick={handleClose} disabled={closing}>
+                {closing ? <CircularProgress size={20} /> : <Icon>close</Icon>}
+              </IconButton>
+            }
+            title={
+              <Chip
+                color="secondary"
+                size="small"
+                label={<FormattedMessage id="ui.broadcastMessages.message.chip" defaultMessage="ui.broadcastMessages.message.chip" />}
+              />
+            }
+          />
+          {renderContent(banner)}
+        </Root>
+      </Fade>
+    );
+  }
+
+  // BroadcastMessageTemplateType.SNIPPET
   return (
-    <Fade in={open} unmountOnExit>
-      <Root id={id} className={className} {...rest}>
-        {message.viewed_at === null && <MarkRead endpoint={Endpoints.BroadcastMessagesMarkRead} data={{banner_ids: [message.id]}} />}
-        <CardHeader
-          className={classes.header}
-          avatar={<Avatar alt={preferences[SCPreferences.TEXT_APPLICATION_NAME]} src={preferences[SCPreferences.LOGO_NAVBAR_LOGO]} />}
-          action={
-            <IconButton aria-label="close" onClick={handleClose} disabled={closing}>
-              {closing ? <CircularProgress size={20} /> : <Icon>close</Icon>}
-            </IconButton>
-          }
-          title={
-            <Chip
-              color="secondary"
-              size="small"
-              label={<FormattedMessage id="ui.broadcastMessages.message.chip" defaultMessage="ui.broadcastMessages.message.chip" />}
-            />
+    <Root id={id} className={className} {...rest}>
+      <ListItem
+        alignItems={'center'}
+        component={'div'}
+        classes={{
+          root: classNames(classes.listItemSnippet, classes.listItemSnippetNew)
+        }}>
+        <ListItemAvatar classes={{root: classes.messageIconWrap}}>
+          <Avatar variant="circular" classes={{root: classes.messageIconSnippet}}>
+            <Icon>info</Icon>
+          </Avatar>
+        </ListItemAvatar>
+        <ListItemText
+          disableTypography={true}
+          primary={
+            <Link to={scRoutingContext.url(SCRoutes.USER_NOTIFICATIONS_ROUTE_NAME, {})}>
+              <Typography component="span" color="inherit">
+                {banner.title}
+              </Typography>
+            </Link>
           }
         />
-        {renderContent(banner)}
-      </Root>
-    </Fade>
+      </ListItem>
+    </Root>
   );
 }

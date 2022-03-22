@@ -3,6 +3,7 @@ import {SCMediaObjectType, SCMediaChunkType} from './media';
 import {CommentsOrderBy} from './comments';
 import {FeedObjectActivitiesType, FeedObjectTemplateType} from './feedObject';
 import {NotificationObjectTemplateType} from './notification';
+import {BroadcastMessageTemplateType} from './broadcastMessage';
 
 export {
   SCFeedWidgetType,
@@ -11,5 +12,6 @@ export {
   CommentsOrderBy,
   FeedObjectActivitiesType,
   FeedObjectTemplateType,
-  NotificationObjectTemplateType
+  NotificationObjectTemplateType,
+  BroadcastMessageTemplateType
 };
