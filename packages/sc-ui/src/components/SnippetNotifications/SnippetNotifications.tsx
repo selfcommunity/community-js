@@ -220,17 +220,18 @@ export default function SnippetNotifications(props: SnippetNotificationsProps): 
    * @param data
    */
   const notificationSubscriber = (msg, data) => {
+    /**
+     * Ignore notifications of type: notification_banner
+     * (data.data.activity_type === SCNotificationTypologyType.NOTIFICATION_BANNER)
+     */
     if (
       data &&
       data.type === SCNotificationTopicType.INTERACTION &&
-      (SCNotification.SCNotificationMapping[data.data.activity_type] || data.data.activity_type === SCNotificationTypologyType.NOTIFICATION_BANNER) &&
+      SCNotification.SCNotificationMapping[data.data.activity_type] &&
       !SCNotification.SCSilentSnippetNotifications.includes(data.data.activity_type)
     ) {
       if (data.data.notification_obj) {
         setNotifications([...[{is_new: true, sid: '', aggregated: [data.data.notification_obj]}], ...notifications]);
-      } else if (data.data.activity_type === SCNotificationTypologyType.NOTIFICATION_BANNER) {
-        // TODO: When api is fixed, use BroadcastMessage -> Message as the component to render this content
-        // setNotifications([...[{is_new: true, sid: '', aggregated: [data.data]}], ...notifications]);
       }
     }
   };
@@ -254,7 +255,7 @@ export default function SnippetNotifications(props: SnippetNotificationsProps): 
    * @param i
    */
   function renderAggregatedItem(n, i) {
-    const type = n.type ? n.type : n.activity_type ? n.activity_type : null;
+    const type = n.type;
     let content;
     if (type === SCNotificationTypologyType.COMMENT || type === SCNotificationTypologyType.NESTED_COMMENT) {
       content = <CommentNotification notificationObject={n} key={i} index={i} template={SCNotificationObjectTemplateType.SNIPPET} />;
@@ -302,10 +303,6 @@ export default function SnippetNotifications(props: SnippetNotificationsProps): 
       content = <MentionNotification notificationObject={n} key={i} template={SCNotificationObjectTemplateType.SNIPPET} />;
     } else if (type === SCNotificationTypologyType.INCUBATOR_APPROVED) {
       content = <IncubatorApprovedNotification notificationObject={n} key={i} template={SCNotificationObjectTemplateType.SNIPPET} />;
-    } else if (type === SCNotificationTypologyType.NOTIFICATION_BANNER) {
-      /** Notification of type: 'notification_banner' */
-      // TODO: When api is fixed, use BroadcastMessage -> Message as the component to render this content
-      content = <div>Notification banner (id={n.id})</div>;
     } else if (type === SCNotificationTypologyType.CUSTOM_NOTIFICATION && handleCustomNotification) {
       content = handleCustomNotification(n);
     }

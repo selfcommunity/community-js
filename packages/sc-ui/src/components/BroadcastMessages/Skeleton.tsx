@@ -1,6 +1,7 @@
 import React from 'react';
 import {Box, Card, CardContent, CardHeader, Skeleton} from '@mui/material';
 import {styled} from '@mui/material/styles';
+import Widget from '../Widget';
 
 const MESSAGE_PREFIX = 'SCBroadcastMessageSkeleton';
 
@@ -12,7 +13,7 @@ const messageClasses = {
   content: `${MESSAGE_PREFIX}-content`
 };
 
-const MessageRoot = styled(Card, {
+const MessageRoot = styled(Widget, {
   name: MESSAGE_PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root

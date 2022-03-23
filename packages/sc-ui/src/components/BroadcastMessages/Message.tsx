@@ -61,6 +61,9 @@ const Root = styled(Widget, {
   [`& .${classes.header} .MuiAvatar-img`]: {
     objectFit: 'fill'
   },
+  [`& .${classes.title}`]: {
+    padding: '4px 16px'
+  },
   [`& .${classes.listItemSnippet}`]: {
     padding: '0px 5px',
     alignItems: 'center'
@@ -166,44 +169,44 @@ export default function Message(props: MessageProps): JSX.Element {
       })
       .then(() => {
         setOpen(false);
+        setClosing(false);
         onClose && onClose(message);
       })
       .catch((error) => {
         Logger.error(SCOPE_SC_UI, error);
-      })
-      .then(() => setClosing(false));
+      });
   };
 
   // RENDER
   const renderContent = (banner) => {
-    switch (banner.type_banner) {
-      case SCBroadcastMessageBannerType.NOTIFICATION:
-        return (
-          <>
-            <CardContent className={classes.title}>
-              <Typography variant="h6">{banner.title}</Typography>
-            </CardContent>
-            {banner.image && <CardMedia className={classes.media} component="img" image={banner.image} alt={banner.title} />}
-            <CardContent className={classes.content}>
-              <Typography variant="body2" color="text.secondary">
-                {banner.body_text}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                <Link to={banner.link} target={banner.open_in_new_tab ? '_blank' : '_self'}>
-                  {banner.link_text}
-                </Link>
-              </Typography>
-            </CardContent>
-          </>
-        );
-      default:
-        return null;
-    }
+    return (
+      <>
+        <CardContent className={classes.title}>
+          <Typography variant="h6">{banner.title}</Typography>
+        </CardContent>
+        {banner.image && <CardMedia className={classes.media} component="img" image={banner.image} alt={banner.title} />}
+        <CardContent className={classes.content}>
+          <Typography variant="body2" color="text.secondary">
+            {banner.body_text}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            <Link to={banner.link} target={banner.open_in_new_tab ? '_blank' : '_self'}>
+              {banner.link_text}
+            </Link>
+          </Typography>
+        </CardContent>
+      </>
+    );
   };
+
   // Banner
   const {banner} = message;
 
   if (template === SCBroadcastMessageTemplateType.DETAIL || SCBroadcastMessageTemplateType.TOAST) {
+    /**
+     * With a fade in transition show the Card (Widget)
+     * Include also MarkRead component to
+     */
     return (
       <Fade in={open} unmountOnExit>
         <Root id={id} className={className} {...rest}>
