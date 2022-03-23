@@ -2,7 +2,7 @@ import React from 'react';
 import {styled} from '@mui/material/styles';
 import {Avatar, Box, ListItem, ListItemAvatar, ListItemText, Stack, Typography} from '@mui/material';
 import Icon from '@mui/material/Icon';
-import {red} from '@mui/material/colors';
+import {grey, red} from '@mui/material/colors';
 import {Link, SCNotificationDeletedForType, SCRoutingContextType, useSCRouting, StringUtils, SCRoutes} from '@selfcommunity/core';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {getContributeType, getContributionSnippet, getRouteData} from '../../../utils/contribute';
@@ -58,10 +58,11 @@ const Root = styled(Box, {
 })(({theme}) => ({
   [`& .${classes.listItemSnippet}`]: {
     padding: '0px 5px',
-    alignItems: 'center'
+    alignItems: 'center',
+    borderLeft: `2px solid ${grey[300]}`
   },
   [`& .${classes.listItemSnippetNew}`]: {
-    borderLeft: '2px solid red'
+    borderLeft: `2px solid ${red[500]}`
   },
   [`& .${classes.flagIconWrap}`]: {
     minWidth: 'auto',
@@ -196,7 +197,9 @@ export default function CollapsedForNotification(props: NotificationCollapsedFor
           }
           secondary={
             <>
-              {template === SCNotificationObjectTemplateType.DETAIL && <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />}
+              {template === SCNotificationObjectTemplateType.DETAIL && (
+                <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
+              )}
             </>
           }
         />

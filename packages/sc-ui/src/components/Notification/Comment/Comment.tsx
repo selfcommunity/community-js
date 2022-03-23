@@ -6,7 +6,7 @@ import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import Bullet from '../../../shared/Bullet';
 import {LoadingButton} from '@mui/lab';
 import Icon from '@mui/material/Icon';
-import {red} from '@mui/material/colors';
+import { grey, red } from '@mui/material/colors';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
 import NewChip from '../../../shared/NewChip/NewChip';
 import {getContributionSnippet, getRouteData} from '../../../utils/contribute';
@@ -49,10 +49,11 @@ const Root = styled(Box, {
 })(({theme}) => ({
   [`& .${classes.listItemSnippet}`]: {
     padding: '0px 5px',
-    alignItems: 'center'
+    alignItems: 'center',
+    borderLeft: `2px solid ${grey[300]}`
   },
   [`& .${classes.listItemSnippetNew}`]: {
-    borderLeft: '2px solid red'
+    borderLeft: `2px solid ${red[500]}`
   },
   [`& .${classes.avatarWrap}`]: {
     minWidth: 'auto',

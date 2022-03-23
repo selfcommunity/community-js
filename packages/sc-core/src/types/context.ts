@@ -486,5 +486,10 @@ export interface SCAlertMessagesContextType {
   /**
    * Options
    */
-  [p: string]: any;
+  options: Record<string, any>;
+
+  /**
+   * Set options
+   */
+  setOptions: (options) => void;
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import {styled} from '@mui/material/styles';
 import {Avatar, Box, ListItem, ListItemAvatar, ListItemText, Stack, Typography} from '@mui/material';
 import Icon from '@mui/material/Icon';
-import {red} from '@mui/material/colors';
+import { grey, red } from '@mui/material/colors';
 import {Link, SCNotificationUnDeletedForType, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
 import {FormattedMessage} from 'react-intl';
 import {getContributeType, getContributionSnippet, getRouteData} from '../../../utils/contribute';
@@ -35,10 +35,11 @@ const Root = styled(Box, {
 })(({theme}) => ({
   [`& .${classes.listItemSnippet}`]: {
     padding: '0px 5px',
-    alignItems: 'center'
+    alignItems: 'center',
+    borderLeft: `2px solid ${grey[300]}`
   },
   [`& .${classes.listItemSnippetNew}`]: {
-    borderLeft: '2px solid red'
+    borderLeft: `2px solid ${red[500]}`
   },
   [`& .${classes.undeletedIconWrap}`]: {
     minWidth: 'auto',

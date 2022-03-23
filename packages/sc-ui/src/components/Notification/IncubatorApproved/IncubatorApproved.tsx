@@ -40,10 +40,11 @@ const Root = styled(Box, {
 })(({theme}) => ({
   [`& .${classes.listItemSnippet}`]: {
     padding: '0px 5px',
-    alignItems: 'center'
+    alignItems: 'center',
+    borderLeft: `2px solid ${grey[300]}`
   },
   [`& .${classes.listItemSnippetNew}`]: {
-    borderLeft: '2px solid red'
+    borderLeft: `2px solid ${red[500]}`
   },
   [`& .${classes.categoryIconWrap}`]: {
     minWidth: 'auto',
@@ -171,7 +172,9 @@ export default function IncubatorApprovedNotification(props: NotificationIncubat
           }
           secondary={
             <>
-              {template === SCNotificationObjectTemplateType.DETAIL && <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />}
+              {template === SCNotificationObjectTemplateType.DETAIL && (
+                <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
+              )}
             </>
           }
         />

@@ -30,10 +30,10 @@ export const SCAlertMessagesContext = createContext<SCAlertMessagesContextType>(
  * ```
  */
 export default function SCAlertMessagesProvider({children = null}: {children: React.ReactNode}): JSX.Element {
-  const [options, setOptions] = useState({maxSnack: 3});
+  const [options, setOptions] = useState<Record<string, any>>({maxSnack: 3, autoHideDuration: null});
 
   return (
-    <SCAlertMessagesContext.Provider value={{options}}>
+    <SCAlertMessagesContext.Provider value={{options, setOptions}}>
       <SnackbarProvider {...options}>{children}</SnackbarProvider>
     </SCAlertMessagesContext.Provider>
   );
