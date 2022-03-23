@@ -59,4 +59,7 @@ export interface SCMessageChunkType {
   completed: number;
   error: string;
   uuid: string;
+  thumbnail: string;
+  //duration: number;
+  //filesize: number;
 }

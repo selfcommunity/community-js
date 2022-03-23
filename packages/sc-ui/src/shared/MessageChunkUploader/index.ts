@@ -29,7 +29,7 @@ export interface MessageChunkUploaderProps {
    * Handles on progress
    * @default null
    */
-  onProgress: () => void;
+  onProgress: (chunks: any) => void;
   /**
    * Handles on error
    * @default null
@@ -58,9 +58,9 @@ export default (props: MessageChunkUploaderProps): JSX.Element => {
   const intl = useIntl();
 
   // component update
-  // useEffect(() => {
-  //   onProgress && onProgress(chunks);
-  // }, [chunks]);
+  useEffect(() => {
+    onProgress && onProgress(chunks);
+  }, [chunks]);
 
   // LISTENERS
   useItemStartListener((item) => {
@@ -73,7 +73,7 @@ export default (props: MessageChunkUploaderProps): JSX.Element => {
       // @ts-ignore
       reader.readAsDataURL(item.file);
     }
-    chunkStateRef.current.setChunk({id: item.id, [`file_uuid`]: null, completed: 0, name: item.file.name, [`qqtotalparts`]: null});
+    chunkStateRef.current.setChunk({id: item.id, [`file_uuid`]: null, completed: 0, filename: item.file.name, [`qqtotalparts`]: null});
   });
 
   useItemProgressListener((item) => {
@@ -89,7 +89,7 @@ export default (props: MessageChunkUploaderProps): JSX.Element => {
     } else {
       const formData = new FormData();
       formData.append('qquuid', chunkStateRef.current.chunks[item.id].file_uuid);
-      formData.append('qqfilename', chunkStateRef.current.chunks[item.id].name);
+      formData.append('qqfilename', chunkStateRef.current.chunks[item.id].filename);
       formData.append('qqtotalparts', chunkStateRef.current.chunks[item.id].qqtotalparts);
       http
         .request({

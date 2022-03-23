@@ -1,23 +1,17 @@
 import React, {forwardRef, useContext, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Box, IconButton, InputAdornment, Popover, Stack, TextField, CardHeader, CardContent, Button, CircularProgress} from '@mui/material';
+import {Box, IconButton, InputAdornment, Popover, Stack, TextField} from '@mui/material';
 import Icon from '@mui/material/Icon';
 import Picker from 'emoji-picker-react';
 import classNames from 'classnames';
-import Widget from '../Widget';
-import ChunkedUploady from '@rpldy/chunked-uploady';
-import {Endpoints, SCContext, SCContextType, SCMediaType, SCPrivateMessageFileType} from '@selfcommunity/core';
-import MessageChunkUploader from '../../shared/MessageChunkUploader';
-import {asUploadButton} from '@rpldy/upload-button';
-import {ButtonProps} from '@mui/material/Button/Button';
-import {SCMessageChunkType} from '../../types/media';
+import {SCContext, SCContextType} from '@selfcommunity/core';
+import MessageMediaUploader from './MessageMediaUploader/index';
 
 const PREFIX = 'SCMessageEditor';
 
 const classes = {
   root: `${PREFIX}-root`,
-  messageInput: `${PREFIX}-message-input`,
-  mediaUploadSection: `${PREFIX}-media-upload-section`
+  messageInput: `${PREFIX}-message-input`
 };
 
 const Root = styled(Box, {
@@ -29,19 +23,8 @@ const Root = styled(Box, {
   display: 'inline-block',
   [`& .${classes.messageInput}`]: {
     width: '100%'
-  },
-  [`& .${classes.mediaUploadSection}`]: {
-    backgroundColor: theme.palette.grey['A200']
   }
 }));
-
-const UploadButton = asUploadButton(
-  forwardRef((props: ButtonProps, ref: any) => (
-    <Button {...props} aria-label="upload" ref={ref} variant="outlined" color="inherit">
-      <Icon>upload_file</Icon>
-    </Button>
-  ))
-);
 
 export interface MessageEditorProps {
   /**
@@ -110,9 +93,6 @@ export default function MessageEditor(props: MessageEditorProps): JSX.Element {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const [openMediaSection, setOpenMediaSection] = useState(false);
-  const [uploading, setUploading] = useState<boolean>(false);
-  const [errors, setErrors] = useState({});
-  //console.log(messageFile);
 
   // CONTEXT
   const scContext: SCContextType = useContext(SCContext);
@@ -120,34 +100,22 @@ export default function MessageEditor(props: MessageEditorProps): JSX.Element {
   // REF
   const ref = useRef(null);
 
-  // Chunk Upload handlers
-
-  const handleSuccess = (media: SCPrivateMessageFileType) => {
-    setUploading(false);
-    setMessageFile(media.file_uuid);
-    getMessageFile(media.file_uuid);
-    console.log(media);
-  };
-
-  const handleProgress = () => {
-    setUploading(true);
-  };
-
-  const handleError = (chunk: SCMessageChunkType, error: string) => {
-    setErrors({...errors, [chunk.id]: {...chunk, error}});
-  };
-
   // HANDLERS
 
-  // const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-  //   setAnchorEl(event.currentTarget);
-  // };
-  // const handleClose = () => {
-  //   setAnchorEl(null);
-  // };
+  const handleMediaSectionClose = () => {
+    setOpenMediaSection(false);
+    setShow(false);
+  };
+
+  const handleMessageFile = (f) => {
+    setMessageFile(f);
+    getMessageFile(f);
+  };
+
   const handleMessageSend = () => {
     send();
     setMessage('');
+    setOpenMediaSection(false);
     setShow(false);
   };
   const handleMessageInput = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -171,31 +139,19 @@ export default function MessageEditor(props: MessageEditorProps): JSX.Element {
     return (
       <Root {...rest} className={classNames(classes.root, className)}>
         {openMediaSection ? (
-          <Widget className={classes.mediaUploadSection}>
-            <CardHeader action={<Icon onClick={() => setOpenMediaSection(false)}>close</Icon>} />
-            <CardContent sx={{display: 'flex', justifyContent: 'center'}}>
-              <>
-                {uploading ? (
-                  <CircularProgress size={15} />
-                ) : (
-                  <IconButton disabled={!messageFile} onClick={handleMessageSend}>
-                    <Icon>send</Icon>
-                  </IconButton>
-                )}
-                <ChunkedUploady
-                  destination={{
-                    url: `${scContext.settings.portal}${Endpoints.PrivateMessageUploadMediaInChunks.url()}`,
-                    headers: {Authorization: `Bearer ${scContext.settings.session.authToken.accessToken}`},
-                    method: Endpoints.PrivateMessageUploadMediaInChunks.method
-                  }}
-                  chunkSize={2142880}
-                  chunked>
-                  <MessageChunkUploader onSuccess={handleSuccess} onProgress={handleProgress} onError={handleError} />
-                  <UploadButton inputFieldName="qqfile" />
-                </ChunkedUploady>
-              </>
-            </CardContent>
-          </Widget>
+          <>
+            <MessageMediaUploader
+              open={openMediaSection}
+              onClose={handleMediaSectionClose}
+              forwardMessageFile={handleMessageFile}
+              onFileUploaded={() => setShow(true)}
+            />
+            {show && (
+              <IconButton disabled={!messageFile} onClick={handleMessageSend}>
+                <Icon>send</Icon>
+              </IconButton>
+            )}
+          </>
         ) : (
           <>
             <TextField

@@ -49,7 +49,7 @@ export interface SCPrivateMessageType {
   /**
    * file
    */
-  file?: any;
+  file?: SCPrivateMessageFileType;
   /**
    * Headline
    */
@@ -90,7 +90,7 @@ export interface SCPrivateMessageFileType {
   /**
    * The type of the file
    */
-  mimetype?: string;
+  mimetype?: SCMessageFileType;
 
   /**
    * The duration (in seconds) of the file
@@ -120,6 +120,7 @@ export interface SCPrivateMessageFileType {
  * created, deleted or hidden message
  */
 export enum SCMessageFileType {
-  PDF = 'application/pdf',
-  IMAGE = 'image/*',
+  DOCUMENT = 'application/',
+  IMAGE = 'image/',
+  VIDEO = 'video/',
 }

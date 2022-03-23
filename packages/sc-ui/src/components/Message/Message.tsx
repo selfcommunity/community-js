@@ -1,13 +1,14 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
 import {Avatar, ListItem, ListItemAvatar, ListItemText, CardProps, Typography, Box, IconButton} from '@mui/material';
 import MessageSkeleton from './Skeleton';
 import {useIntl} from 'react-intl';
-import {SCPrivateMessageType} from '@selfcommunity/core';
+import {SCPrivateMessageType, SCMessageFileType} from '@selfcommunity/core';
 import Icon from '@mui/material/Icon';
 import classNames from 'classnames';
 import Widget from '../Widget';
+import AutoPlayer from '../../shared/AutoPlayer';
 
 const PREFIX = 'SCMessage';
 
@@ -168,6 +169,46 @@ export default function Message(props: MessageProps): JSX.Element {
     return <MessageSkeleton elevation={0} />;
   }
 
+  // RENDERING
+
+  const renderMessageFile = (m) => {
+    if (!m) {
+      return null;
+    }
+    let section = null;
+    if (m.file) {
+      let type = m.file.mimetype;
+      let src = message.file.url;
+      switch (true) {
+        case type.startsWith(SCMessageFileType.IMAGE):
+          section = (
+            <Box className={classes.img}>
+              <img style={{height: '100%', width: '100%'}} src={src} loading="lazy" alt={'img'} />
+            </Box>
+          );
+          break;
+        case type.startsWith(SCMessageFileType.VIDEO):
+          section = (
+            <Box>
+              <AutoPlayer url={src} width={'100%'} enableautoplay="true" />
+            </Box>
+          );
+          break;
+        case type.startsWith(SCMessageFileType.DOCUMENT):
+          section = (
+            <Box>
+              <iframe src={`https://docs.google.com/gview?url=${src}&embedded=true`} title="file" width="100%" height="200" />
+            </Box>
+          );
+          break;
+        default:
+          section = <Icon>hide_image</Icon>;
+          break;
+      }
+    }
+    return <React.Fragment>{section}</React.Fragment>;
+  };
+
   /**
    * Renders snippet or thread type message object
    */
@@ -212,13 +253,7 @@ export default function Message(props: MessageProps): JSX.Element {
           <ListItemText
             primary={
               <Box className={classes.messageBox}>
-                {hasFile ? (
-                  <Box className={classes.img}>
-                    <img style={{height: '100%', width: '100%'}} src={message.file.url} loading="lazy" alt={'img'} />
-                  </Box>
-                ) : (
-                  <Typography component="span">{message.message}</Typography>
-                )}
+                {hasFile ? renderMessageFile(message) : <Typography component="span">{message.message}</Typography>}
               </Box>
             }
             secondary={
