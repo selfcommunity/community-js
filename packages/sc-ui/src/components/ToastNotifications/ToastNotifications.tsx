@@ -148,6 +148,11 @@ export default function UserToastNotifications(props: ToastNotificationsProps): 
       !disableToastNotification &&
       !scContext.settings.notifications.webSocket.disableToastMessage
     ) {
+      /**
+       * !IMPORTANT
+       * - messageKey for the notification_banner is 'id', for others type 'feed_serialization_id'
+       * - the enqueue message is persistent (it remains on the screen while the others replace each other) if type notification_banner
+       */
       const messageKey = data.data.feed_serialization_id ? data.data.feed_serialization_id : data.data.id;
       enqueueSnackbar(
         null,
@@ -167,7 +172,7 @@ export default function UserToastNotifications(props: ToastNotificationsProps): 
             preventDuplicate: true,
             key: messageKey,
             variant: 'default',
-            persist: true,
+            persist: data.data.activity_type === SCNotificationTypologyType.NOTIFICATION_BANNER ? true : false,
             anchorOrigin: {horizontal: 'left', vertical: 'bottom'},
             action: null
           },

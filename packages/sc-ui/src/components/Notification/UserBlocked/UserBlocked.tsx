@@ -42,11 +42,12 @@ const Root = styled(Box, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   [`& .${classes.listItemSnippet}`]: {
+    padding: '0px 5px',
     alignItems: 'center',
-    padding: '0px 5px'
+    borderLeft: `2px solid ${grey[300]}`
   },
   [`& .${classes.listItemSnippetNew}`]: {
-    borderLeft: '2px solid red'
+    borderLeft: `2px solid ${red[500]}`
   },
   [`& .${classes.blockedIconWrap}`]: {
     minWidth: 'auto',
