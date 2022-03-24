@@ -5,7 +5,7 @@ import {
   FeedObject,
   FeedObjectProps,
   FeedObjectSkeleton,
-  FeedObjectTemplateType,
+  SCFeedObjectTemplateType,
   FeedRef,
   FeedSidebarProps,
   InlineComposer,
@@ -175,7 +175,7 @@ export default function CategoryFeed(props: CategoryFeedProps): JSX.Element {
       ItemProps={FeedObjectProps}
       ItemSkeleton={FeedObjectSkeleton}
       ItemSkeletonProps={{
-        template: FeedObjectTemplateType.PREVIEW
+        template: SCFeedObjectTemplateType.PREVIEW
       }}
       FeedSidebarProps={FeedSidebarProps}
       CustomAdvProps={{position: SCCustomAdvPosition.POSITION_FEED, categoriesId: [scCategory.id]}}

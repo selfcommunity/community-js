@@ -3,9 +3,10 @@ import {ComponentMeta, ComponentStory} from '@storybook/react';
 import Feed from './index';
 import {Endpoints, SCNotificationTopicType} from '@selfcommunity/core';
 import FeedObject, {FeedObjectSkeleton} from '../FeedObject';
-import {FeedObjectTemplateType} from '../../types/feedObject';
+import {SCFeedObjectTemplateType} from '../../types/feedObject';
 import SCNotification, {NotificationSkeleton} from '../Notification';
 import FeedUpdates from '../FeedUpdates';
+import BroadcastMessages from '../BroadcastMessages';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -34,7 +35,7 @@ Main.args = {
   itemIdGenerator: (item) => item[item.type].id,
   ItemSkeleton: FeedObjectSkeleton,
   ItemSkeletonProps: {
-    template: FeedObjectTemplateType.PREVIEW
+    template: SCFeedObjectTemplateType.PREVIEW
   }
 };
 
@@ -52,7 +53,7 @@ Explore.args = {
   itemIdGenerator: (item) => item[item.type].id,
   ItemSkeleton: FeedObjectSkeleton,
   ItemSkeletonProps: {
-    template: FeedObjectTemplateType.PREVIEW
+    template: SCFeedObjectTemplateType.PREVIEW
   }
 };
 
@@ -68,6 +69,12 @@ Notification.args = {
       componentProps: {variant: 'outlined', subscriptionChannel: SCNotificationTopicType.INTERACTION, publicationChannel: 'notifications_feed'},
       column: 'left',
       position: 0
+    },
+    {
+      type: 'widget',
+      component: BroadcastMessages,
+      column: 'left',
+      position: 1
     }
   ],
   ItemComponent: SCNotification,

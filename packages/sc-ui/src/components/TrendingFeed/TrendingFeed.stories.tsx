@@ -1,7 +1,7 @@
 import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
 import TrendingFeed from './index';
-import {FeedObjectTemplateType} from '../../types/feedObject';
+import {SCFeedObjectTemplateType} from '../../types/feedObject';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -24,7 +24,7 @@ export default {
     categoryId: 1,
     elevation: 1,
     variant: 'elevation',
-    template: FeedObjectTemplateType.SNIPPET
+    template: SCFeedObjectTemplateType.SNIPPET
   }
 } as ComponentMeta<typeof TrendingFeed>;
 

@@ -10,6 +10,7 @@ import {AxiosResponse} from 'axios';
 import {DatePicker, LocalizationProvider} from '@mui/lab';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import UsernameTextField from '../../../shared/UsernameTextField';
+import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
 
 const messages = defineMessages({
   username: {
@@ -123,7 +124,7 @@ export default function PublicInfo(props: PublicInfoProps): JSX.Element {
   const intl = useIntl();
 
   // EFFECTS
-  useEffect(() => {
+  useDeepCompareEffectNoCheck(() => {
     setUser(scUserContext.user);
   }, [scUserContext.user]);
 
@@ -253,7 +254,8 @@ export default function PublicInfo(props: PublicInfoProps): JSX.Element {
     );
   };
 
-  if (fields.length === 0) {
+  console.log(user);
+  if (fields.length === 0 || !user) {
     return null;
   }
 

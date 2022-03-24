@@ -44,6 +44,7 @@ export enum SCNotificationTypologyType {
   UNBLOCKED_USER = 'unblocked_user',
   INCUBATOR_APPROVED = 'incubator_approved',
   CUSTOM_NOTIFICATION = 'custom_notification',
+  NOTIFICATION_BANNER = 'notification_banner',
 }
 
 /**

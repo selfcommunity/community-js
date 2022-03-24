@@ -7,7 +7,7 @@ import DateTimeAgo from '../../../shared/DateTimeAgo';
 import NewChip from '../../../shared/NewChip/NewChip';
 import classNames from 'classnames';
 import {grey, red} from '@mui/material/colors';
-import {NotificationObjectTemplateType} from '../../../types';
+import {SCNotificationObjectTemplateType} from '../../../types';
 import {getRouteData} from '../../../utils/contribute';
 
 const messages = defineMessages({
@@ -40,10 +40,11 @@ const Root = styled(Box, {
 })(({theme}) => ({
   [`& .${classes.listItemSnippet}`]: {
     padding: '0px 5px',
-    alignItems: 'center'
+    alignItems: 'center',
+    borderLeft: `2px solid ${grey[300]}`
   },
   [`& .${classes.listItemSnippetNew}`]: {
-    borderLeft: '2px solid red'
+    borderLeft: `2px solid ${red[500]}`
   },
   [`& .${classes.categoryIconWrap}`]: {
     minWidth: 'auto',
@@ -91,9 +92,9 @@ export interface NotificationIncubatorApprovedProps {
 
   /**
    * Notification Object template type
-   * @default 'preview'
+   * @default 'detail'
    */
-  template?: NotificationObjectTemplateType;
+  template?: SCNotificationObjectTemplateType;
 
   /**
    * Any other properties
@@ -106,7 +107,7 @@ export default function IncubatorApprovedNotification(props: NotificationIncubat
   const {
     notificationObject = null,
     id = `n_${props.notificationObject['feed_serialization_id']}`,
-    template = NotificationObjectTemplateType.DETAIL,
+    template = SCNotificationObjectTemplateType.DETAIL,
     className,
     ...rest
   } = props;
@@ -115,8 +116,8 @@ export default function IncubatorApprovedNotification(props: NotificationIncubat
   const scRoutingContext: SCRoutingContextType = useSCRouting();
 
   // CONST
-  const isSnippetTemplate = template === NotificationObjectTemplateType.SNIPPET;
-  const isToastTemplate = template === NotificationObjectTemplateType.TOAST;
+  const isSnippetTemplate = template === SCNotificationObjectTemplateType.SNIPPET;
+  const isToastTemplate = template === SCNotificationObjectTemplateType.TOAST;
 
   //INTL
   const intl = useIntl();
@@ -158,7 +159,7 @@ export default function IncubatorApprovedNotification(props: NotificationIncubat
                 </Link>
               ) : (
                 <>
-                  {template === NotificationObjectTemplateType.DETAIL && notificationObject.is_new && <NewChip />}
+                  {template === SCNotificationObjectTemplateType.DETAIL && notificationObject.is_new && <NewChip />}
                   <Typography component="span" className={classes.categoryApprovedText} color="inherit">
                     {intl.formatMessage(messages.incubatorApproved, {
                       name: notificationObject.incubator.name,
@@ -171,7 +172,9 @@ export default function IncubatorApprovedNotification(props: NotificationIncubat
           }
           secondary={
             <>
-              {template === NotificationObjectTemplateType.DETAIL && <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />}
+              {template === SCNotificationObjectTemplateType.DETAIL && (
+                <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
+              )}
             </>
           }
         />
@@ -188,7 +191,7 @@ export default function IncubatorApprovedNotification(props: NotificationIncubat
           </Link>
         </Box>
       )}
-      {template === NotificationObjectTemplateType.TOAST && (
+      {template === SCNotificationObjectTemplateType.TOAST && (
         <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2} className={classes.toastInfo}>
           <DateTimeAgo date={notificationObject.active_at} />
           <Typography color="primary">

@@ -3,7 +3,7 @@ import {ComponentMeta, ComponentStory} from '@storybook/react';
 
 import CommentsObject from './index';
 import {SCFeedObjectTypologyType} from '@selfcommunity/core';
-import {CommentsOrderBy} from '../../types/comments';
+import {SCCommentsOrderBy} from '../../types/comments';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -36,7 +36,7 @@ export default {
     feedObjectId: 50, // 1064,
     feedObjectType: SCFeedObjectTypologyType.DISCUSSION,
     infiniteScrolling: true,
-    commentsOrderBy: CommentsOrderBy.ADDED_AT_ASC,
+    commentsOrderBy: SCCommentsOrderBy.ADDED_AT_ASC,
     fixedPrimaryReply: true,
     commentsPageCount: 5
   }

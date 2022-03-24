@@ -1,8 +1,8 @@
 import React, {ChangeEvent, useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Box, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Stack, Typography} from '@mui/material';
-import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {Endpoints, http, SCUserContextType, SCUserFields, SCUserType, SCUserSettingsType, useSCUser} from '@selfcommunity/core';
+import {Box, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Typography} from '@mui/material';
+import {FormattedMessage} from 'react-intl';
+import {Endpoints, http, SCUserContextType, SCUserSettingsType, useSCUser} from '@selfcommunity/core';
 import {DEFAULT_FIELDS} from '../../../constants/UserProfile';
 import classNames from 'classnames';
 import {AxiosResponse} from 'axios';
@@ -61,17 +61,19 @@ export default function Settings(props: SettingsProps): JSX.Element {
 
   // EFFECTS
   useEffect(() => {
-    http
-      .request({
-        url: Endpoints.UserSettings.url({id: scUserContext.user.id}),
-        method: Endpoints.UserSettings.method
-      })
-      .then((res: AxiosResponse<SCUserSettingsType>) => {
-        setSetting(res.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    if (scUserContext.user) {
+      http
+        .request({
+          url: Endpoints.UserSettings.url({id: scUserContext.user.id}),
+          method: Endpoints.UserSettings.method
+        })
+        .then((res: AxiosResponse<SCUserSettingsType>) => {
+          setSetting(res.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   }, [scUserContext.user]);
 
   // HANDLERS
@@ -94,6 +96,10 @@ export default function Settings(props: SettingsProps): JSX.Element {
         console.log(error);
       });
   };
+
+  if (!scUserContext.user) {
+    return null;
+  }
 
   if (settings === null) {
     return <SettingsSkeleton />;

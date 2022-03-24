@@ -8,7 +8,7 @@ import ReplyCommentObject, {ReplyCommentObjectProps} from '../CommentObject/Repl
 import Typography from '@mui/material/Typography';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import {Box, Button, CardProps, Stack} from '@mui/material';
-import {CommentsOrderBy} from '../../types/comments';
+import {SCCommentsOrderBy} from '../../types/comments';
 import classNames from 'classnames';
 import CustomAdv from '../CustomAdv';
 import {useSnackbar} from 'notistack';
@@ -186,9 +186,9 @@ export interface CommentsObjectProps {
 
   /**
    * comments orderBy
-   * @default CommentsOrderBy.ADDED_AT_DESC
+   * @default SCCommentsOrderBy.ADDED_AT_DESC
    */
-  commentsOrderBy?: CommentsOrderBy;
+  commentsOrderBy?: SCCommentsOrderBy;
 
   /**
    * show title (number of comments)
@@ -288,7 +288,7 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
     renderNoComments,
     page = 1,
     commentsPageCount = 5,
-    commentsOrderBy = CommentsOrderBy.ADDED_AT_DESC,
+    commentsOrderBy = SCCommentsOrderBy.ADDED_AT_DESC,
     showTitle = false,
     infiniteScrolling = true,
     ReplyCommentObjectProps = {},
@@ -331,7 +331,7 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
 
   // CONST
   const wrapperStyles = {
-    ...(fixedPrimaryReply ? (commentsOrderBy === CommentsOrderBy.ADDED_AT_DESC ? {paddingTop: 100} : {paddingBottom: 100}) : {})
+    ...(fixedPrimaryReply ? (commentsOrderBy === SCCommentsOrderBy.ADDED_AT_DESC ? {paddingTop: 100} : {paddingBottom: 100}) : {})
   };
 
   /**
@@ -602,10 +602,10 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
     setIsReplying(true);
     performReply(content)
       .then((c: SCCommentType) => {
-        if (infiniteScrollingEnabled && (commentsOrderBy === CommentsOrderBy.ADDED_AT_ASC || previous || comment)) {
+        if (infiniteScrollingEnabled && (commentsOrderBy === SCCommentsOrderBy.ADDED_AT_ASC || previous || comment)) {
           setInfiniteScrollingEnabled(false);
         }
-        setNewComments(commentsOrderBy === CommentsOrderBy.ADDED_AT_DESC ? [...[c], ...newComments] : [...newComments, ...[c]]);
+        setNewComments(commentsOrderBy === SCCommentsOrderBy.ADDED_AT_DESC ? [...[c], ...newComments] : [...newComments, ...[c]]);
         setIsReplying(false);
         setTimeout(() => {
           const element = document.getElementById(`${c.id}`);
@@ -624,7 +624,7 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
    * Render header primary reply
    */
   function renderHeadPrimaryReply() {
-    if (scUserContext.user && !hidePrimaryReply && commentsOrderBy === CommentsOrderBy.ADDED_AT_DESC) {
+    if (scUserContext.user && !hidePrimaryReply && commentsOrderBy === SCCommentsOrderBy.ADDED_AT_DESC) {
       return (
         <Box
           className={classNames({[classes.fixedPrimaryReply]: fixedPrimaryReply, [classes.fixedTopPrimaryReply]: fixedPrimaryReply})}
@@ -640,7 +640,7 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
    * Render footer primary reply
    */
   function renderFooterPrimaryReply() {
-    if (scUserContext.user && !hidePrimaryReply && commentsOrderBy === CommentsOrderBy.ADDED_AT_ASC) {
+    if (scUserContext.user && !hidePrimaryReply && commentsOrderBy === SCCommentsOrderBy.ADDED_AT_ASC) {
       return (
         <Box
           className={classNames({[classes.fixedPrimaryReply]: fixedPrimaryReply, [classes.fixedBottomPrimaryReply]: fixedPrimaryReply})}
@@ -740,7 +740,7 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
         loader={<CommentObjectSkeleton {...CommentObjectSkeletonProps} />}
         style={wrapperStyles}
         endMessage={
-          !errorCommentObj && commentsOrderBy === CommentsOrderBy.ADDED_AT_DESC ? (
+          !errorCommentObj && commentsOrderBy === SCCommentsOrderBy.ADDED_AT_DESC ? (
             <Typography variant="body2" align="center" className={classes.noOtherComments}>
               <FormattedMessage id="ui.commentsObject.noOtherComments" defaultMessage="ui.commentsObject.noOtherComments" />
             </Typography>
@@ -840,7 +840,7 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
     return (
       <Box style={wrapperStyles}>
         {isLoading && commentObj && comments.length === 0 && <CommentObjectSkeleton {...CommentObjectSkeletonProps} />}
-        {renderNewComments(CommentsOrderBy.ADDED_AT_DESC)}
+        {renderNewComments(SCCommentsOrderBy.ADDED_AT_DESC)}
         {renderLoadPreviousComments()}
         {renderCommentNotFound()}
         {[...additionalHeaderComments, ...comments].map((comment: SCCommentType, index) => {
@@ -853,7 +853,7 @@ export default function CommentsObject(props: CommentsObjectProps): JSX.Element 
         })}
         {renderLoadMorePaginationFooter()}
         {isLoading && (!commentObj || (commentObj && comments.length > 0)) && <CommentObjectSkeleton {...CommentObjectSkeletonProps} />}
-        {renderNewComments(CommentsOrderBy.ADDED_AT_ASC)}
+        {renderNewComments(SCCommentsOrderBy.ADDED_AT_ASC)}
         {renderSingleComment(comment)}
         {renderCrawlableNextLink()}
       </Box>

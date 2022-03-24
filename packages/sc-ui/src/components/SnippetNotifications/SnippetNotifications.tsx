@@ -20,7 +20,7 @@ import {Box, CardProps, MenuItem, MenuList} from '@mui/material';
 import IncubatorApprovedNotification from '../Notification/IncubatorApproved';
 import classNames from 'classnames';
 import Skeleton from './Skeleton';
-import {NotificationObjectTemplateType} from '../../types';
+import {SCNotificationObjectTemplateType} from '../../types';
 import ScrollContainer from '../../shared/ScrollContainer';
 import {FormattedMessage} from 'react-intl';
 import {
@@ -89,6 +89,12 @@ export interface SnippetNotificationsProps extends CardProps {
   handleCustomNotification?: (data) => JSX.Element;
 
   /**
+   * Handle single notification
+   * Override content
+   */
+  handleNotification?: (type, data, content) => JSX.Element;
+
+  /**
    * The max n of results shown
    * @default 20
    */
@@ -142,7 +148,15 @@ export interface SnippetNotificationsProps extends CardProps {
  */
 export default function SnippetNotifications(props: SnippetNotificationsProps): JSX.Element {
   // PROPS
-  const {id = `snippetNotifications`, className, showMax = 20, handleCustomNotification, ScrollContainerProps = {}, ...rest} = props;
+  const {
+    id = `snippetNotifications`,
+    className,
+    showMax = 20,
+    handleCustomNotification,
+    handleNotification,
+    ScrollContainerProps = {},
+    ...rest
+  } = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
@@ -206,6 +220,10 @@ export default function SnippetNotifications(props: SnippetNotificationsProps): 
    * @param data
    */
   const notificationSubscriber = (msg, data) => {
+    /**
+     * Ignore notifications of type: notification_banner
+     * (data.data.activity_type === SCNotificationTypologyType.NOTIFICATION_BANNER)
+     */
     if (
       data &&
       data.type === SCNotificationTopicType.INTERACTION &&
@@ -237,56 +255,62 @@ export default function SnippetNotifications(props: SnippetNotificationsProps): 
    * @param i
    */
   function renderAggregatedItem(n, i) {
-    if (n.type === SCNotificationTypologyType.COMMENT || n.type === SCNotificationTypologyType.NESTED_COMMENT) {
-      return <CommentNotification notificationObject={n} key={i} index={i} template={NotificationObjectTemplateType.SNIPPET} />;
-    } else if (n.type === SCNotificationTypologyType.FOLLOW) {
-      return <ContributionFollowNotification notificationObject={n} key={i} template={NotificationObjectTemplateType.SNIPPET} />;
-    } else if (n.type === SCNotificationTypologyType.USER_FOLLOW) {
-      return <UserFollowNotification notificationObject={n} key={i} template={NotificationObjectTemplateType.SNIPPET} />;
-    } else if (n.type === SCNotificationTypologyType.CONNECTION_REQUEST || n.type === SCNotificationTypologyType.CONNECTION_ACCEPT) {
-      return <UserConnectionNotification notificationObject={n} key={i} template={NotificationObjectTemplateType.SNIPPET} />;
-    } else if (n.type === SCNotificationTypologyType.VOTE_UP) {
-      return <VoteUpNotification notificationObject={n} key={i} template={NotificationObjectTemplateType.SNIPPET} />;
+    const type = n.type;
+    let content;
+    if (type === SCNotificationTypologyType.COMMENT || type === SCNotificationTypologyType.NESTED_COMMENT) {
+      content = <CommentNotification notificationObject={n} key={i} index={i} template={SCNotificationObjectTemplateType.SNIPPET} />;
+    } else if (type === SCNotificationTypologyType.FOLLOW) {
+      content = <ContributionFollowNotification notificationObject={n} key={i} template={SCNotificationObjectTemplateType.SNIPPET} />;
+    } else if (type === SCNotificationTypologyType.USER_FOLLOW) {
+      content = <UserFollowNotification notificationObject={n} key={i} template={SCNotificationObjectTemplateType.SNIPPET} />;
+    } else if (type === SCNotificationTypologyType.CONNECTION_REQUEST || type === SCNotificationTypologyType.CONNECTION_ACCEPT) {
+      content = <UserConnectionNotification notificationObject={n} key={i} template={SCNotificationObjectTemplateType.SNIPPET} />;
+    } else if (type === SCNotificationTypologyType.VOTE_UP) {
+      content = <VoteUpNotification notificationObject={n} key={i} template={SCNotificationObjectTemplateType.SNIPPET} />;
     } else if (
-      n.type === SCNotificationTypologyType.KINDLY_NOTICE_ADVERTISING ||
-      n.type === SCNotificationTypologyType.KINDLY_NOTICE_AGGRESSIVE ||
-      n.type === SCNotificationTypologyType.KINDLY_NOTICE_POOR ||
-      n.type === SCNotificationTypologyType.KINDLY_NOTICE_VULGAR ||
-      n.type === SCNotificationTypologyType.KINDLY_NOTICE_OFFTOPIC
+      type === SCNotificationTypologyType.KINDLY_NOTICE_ADVERTISING ||
+      type === SCNotificationTypologyType.KINDLY_NOTICE_AGGRESSIVE ||
+      type === SCNotificationTypologyType.KINDLY_NOTICE_POOR ||
+      type === SCNotificationTypologyType.KINDLY_NOTICE_VULGAR ||
+      type === SCNotificationTypologyType.KINDLY_NOTICE_OFFTOPIC
     ) {
-      return <KindlyNoticeForNotification notificationObject={n} key={i} template={NotificationObjectTemplateType.SNIPPET} />;
-    } else if (n.type === SCNotificationTypologyType.KINDLY_NOTICE_FLAG) {
-      return <KindlyNoticeFlagNotification notificationObject={n} key={i} template={NotificationObjectTemplateType.SNIPPET} />;
+      content = <KindlyNoticeForNotification notificationObject={n} key={i} template={SCNotificationObjectTemplateType.SNIPPET} />;
+    } else if (type === SCNotificationTypologyType.KINDLY_NOTICE_FLAG) {
+      content = <KindlyNoticeFlagNotification notificationObject={n} key={i} template={SCNotificationObjectTemplateType.SNIPPET} />;
     } else if (
-      n.type === SCNotificationTypologyType.DELETED_FOR_ADVERTISING ||
-      n.type === SCNotificationTypologyType.DELETED_FOR_AGGRESSIVE ||
-      n.type === SCNotificationTypologyType.DELETED_FOR_POOR ||
-      n.type === SCNotificationTypologyType.DELETED_FOR_VULGAR ||
-      n.type === SCNotificationTypologyType.DELETED_FOR_OFFTOPIC
+      type === SCNotificationTypologyType.DELETED_FOR_ADVERTISING ||
+      type === SCNotificationTypologyType.DELETED_FOR_AGGRESSIVE ||
+      type === SCNotificationTypologyType.DELETED_FOR_POOR ||
+      type === SCNotificationTypologyType.DELETED_FOR_VULGAR ||
+      type === SCNotificationTypologyType.DELETED_FOR_OFFTOPIC
     ) {
-      return <DeletedForNotification notificationObject={n} key={i} template={NotificationObjectTemplateType.SNIPPET} />;
-    } else if (n.type === SCNotificationTypologyType.UNDELETED_FOR) {
-      return <UndeletedForNotification notificationObject={n} key={i} template={NotificationObjectTemplateType.SNIPPET} />;
+      content = <DeletedForNotification notificationObject={n} key={i} template={SCNotificationObjectTemplateType.SNIPPET} />;
+    } else if (type === SCNotificationTypologyType.UNDELETED_FOR) {
+      content = <UndeletedForNotification notificationObject={n} key={i} template={SCNotificationObjectTemplateType.SNIPPET} />;
     } else if (
-      n.type === SCNotificationTypologyType.COLLAPSED_FOR_ADVERTISING ||
-      n.type === SCNotificationTypologyType.COLLAPSED_FOR_AGGRESSIVE ||
-      n.type === SCNotificationTypologyType.COLLAPSED_FOR_POOR ||
-      n.type === SCNotificationTypologyType.COLLAPSED_FOR_VULGAR ||
-      n.type === SCNotificationTypologyType.COLLAPSED_FOR_OFFTOPIC
+      type === SCNotificationTypologyType.COLLAPSED_FOR_ADVERTISING ||
+      type === SCNotificationTypologyType.COLLAPSED_FOR_AGGRESSIVE ||
+      type === SCNotificationTypologyType.COLLAPSED_FOR_POOR ||
+      type === SCNotificationTypologyType.COLLAPSED_FOR_VULGAR ||
+      type === SCNotificationTypologyType.COLLAPSED_FOR_OFFTOPIC
     ) {
-      return <CollapsedForNotification notificationObject={n} key={i} template={NotificationObjectTemplateType.SNIPPET} />;
-    } else if (n.type === SCNotificationTypologyType.PRIVATE_MESSAGE) {
-      return <PrivateMessageNotification notificationObject={n} key={i} template={NotificationObjectTemplateType.SNIPPET} />;
-    } else if (n.type === SCNotificationTypologyType.BLOCKED_USER || n.type === SCNotificationTypologyType.UNBLOCKED_USER) {
-      return <UserBlockedNotification notificationObject={n} key={i} template={NotificationObjectTemplateType.SNIPPET} />;
-    } else if (n.type === SCNotificationTypologyType.MENTION) {
-      return <MentionNotification notificationObject={n} key={i} template={NotificationObjectTemplateType.SNIPPET} />;
-    } else if (n.type === SCNotificationTypologyType.INCUBATOR_APPROVED) {
-      return <IncubatorApprovedNotification notificationObject={n} key={i} template={NotificationObjectTemplateType.SNIPPET} />;
-    } else if (n.type === SCNotificationTypologyType.CUSTOM_NOTIFICATION) {
-      handleCustomNotification && handleCustomNotification(n);
+      content = <CollapsedForNotification notificationObject={n} key={i} template={SCNotificationObjectTemplateType.SNIPPET} />;
+    } else if (type === SCNotificationTypologyType.PRIVATE_MESSAGE) {
+      content = <PrivateMessageNotification notificationObject={n} key={i} template={SCNotificationObjectTemplateType.SNIPPET} />;
+    } else if (type === SCNotificationTypologyType.BLOCKED_USER || type === SCNotificationTypologyType.UNBLOCKED_USER) {
+      content = <UserBlockedNotification notificationObject={n} key={i} template={SCNotificationObjectTemplateType.SNIPPET} />;
+    } else if (type === SCNotificationTypologyType.MENTION) {
+      content = <MentionNotification notificationObject={n} key={i} template={SCNotificationObjectTemplateType.SNIPPET} />;
+    } else if (type === SCNotificationTypologyType.INCUBATOR_APPROVED) {
+      content = <IncubatorApprovedNotification notificationObject={n} key={i} template={SCNotificationObjectTemplateType.SNIPPET} />;
+    } else if (type === SCNotificationTypologyType.CUSTOM_NOTIFICATION && handleCustomNotification) {
+      content = handleCustomNotification(n);
     }
-    return null;
+    if (type && handleNotification) {
+      /** Override content */
+      content = handleNotification(type, n, content);
+    }
+    return content;
   }
 
   /**

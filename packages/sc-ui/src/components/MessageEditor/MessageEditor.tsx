@@ -1,9 +1,11 @@
-import React, {useRef, useState} from 'react';
+import React, {forwardRef, useContext, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Box, IconButton, InputAdornment, Popover, Stack, TextField} from '@mui/material';
 import Icon from '@mui/material/Icon';
 import Picker from 'emoji-picker-react';
 import classNames from 'classnames';
+import {SCContext, SCContextType} from '@selfcommunity/core';
+import MessageMediaUploader from './MessageMediaUploader/index';
 
 const PREFIX = 'SCMessageEditor';
 
@@ -48,6 +50,11 @@ export interface MessageEditorProps {
    * @param message
    */
   getMessage?: (message) => void;
+  /**
+   * Callback to pass message file item
+   * @param file
+   */
+  getMessageFile?: (file) => void;
 }
 
 /**
@@ -76,20 +83,39 @@ export interface MessageEditorProps {
  */
 export default function MessageEditor(props: MessageEditorProps): JSX.Element {
   // PROPS
-  const {autoHide = null, className = null, send = null, isSending = null, getMessage = null, ...rest} = props;
+  const {autoHide = null, className = null, send = null, isSending = null, getMessage = null, getMessageFile = null, ...rest} = props;
 
   // STATE
   const [message, setMessage] = useState<string>('');
+  const [messageFile, setMessageFile] = useState(null);
   const [show, setShow] = useState(false);
   const [emojiAnchorEl, setEmojiAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const [openMediaSection, setOpenMediaSection] = useState(false);
+
+  // CONTEXT
+  const scContext: SCContextType = useContext(SCContext);
 
   // REF
   const ref = useRef(null);
 
   // HANDLERS
+
+  const handleMediaSectionClose = () => {
+    setOpenMediaSection(false);
+    setShow(false);
+  };
+
+  const handleMessageFile = (f) => {
+    setMessageFile(f);
+    getMessageFile(f);
+  };
+
   const handleMessageSend = () => {
     send();
     setMessage('');
+    setOpenMediaSection(false);
     setShow(false);
   };
   const handleMessageInput = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -112,48 +138,73 @@ export default function MessageEditor(props: MessageEditorProps): JSX.Element {
   if (!autoHide) {
     return (
       <Root {...rest} className={classNames(classes.root, className)}>
-        <TextField
-          size="small"
-          ref={ref}
-          className={classes.messageInput}
-          multiline
-          placeholder="Aa"
-          value={message}
-          onChange={handleMessageInput}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <Stack>
-                  <div>
-                    <IconButton size="small" onClick={handleToggleEmoji}>
-                      <Icon>sentiment_satisfied_alt</Icon>
-                    </IconButton>
-                    <Popover
-                      open={Boolean(emojiAnchorEl)}
-                      anchorEl={emojiAnchorEl}
-                      onClose={handleToggleEmoji}
-                      anchorOrigin={{
-                        vertical: 'top',
-                        horizontal: 'right'
-                      }}
-                      transformOrigin={{
-                        vertical: 'bottom',
-                        horizontal: 'left'
-                      }}
-                      sx={(theme) => {
-                        return {zIndex: theme.zIndex.tooltip};
-                      }}>
-                      <Picker onEmojiClick={handleEmojiClick} />
-                    </Popover>
-                  </div>
-                </Stack>
-                <IconButton disabled={isSending} onClick={handleMessageSend}>
-                  {show && <Icon>send</Icon>}
-                </IconButton>
-              </InputAdornment>
-            )
-          }}
-        />
+        {openMediaSection ? (
+          <>
+            <MessageMediaUploader
+              open={openMediaSection}
+              onClose={handleMediaSectionClose}
+              forwardMessageFile={handleMessageFile}
+              onFileUploaded={() => setShow(true)}
+            />
+            {show && (
+              <IconButton disabled={!messageFile} onClick={handleMessageSend}>
+                <Icon>send</Icon>
+              </IconButton>
+            )}
+          </>
+        ) : (
+          <>
+            <TextField
+              size="small"
+              ref={ref}
+              className={classes.messageInput}
+              multiline
+              placeholder="Aa"
+              value={message}
+              onChange={handleMessageInput}
+              InputProps={{
+                endAdornment: (
+                  <>
+                    <InputAdornment position="end">
+                      <IconButton onClick={() => setOpenMediaSection(true)}>
+                        <Icon>attach_file</Icon>
+                      </IconButton>
+                    </InputAdornment>
+                    <InputAdornment position="end">
+                      <Stack>
+                        <div>
+                          <IconButton size="small" onClick={handleToggleEmoji}>
+                            <Icon>sentiment_satisfied_alt</Icon>
+                          </IconButton>
+                          <Popover
+                            open={Boolean(emojiAnchorEl)}
+                            anchorEl={emojiAnchorEl}
+                            onClose={handleToggleEmoji}
+                            anchorOrigin={{
+                              vertical: 'top',
+                              horizontal: 'right'
+                            }}
+                            transformOrigin={{
+                              vertical: 'bottom',
+                              horizontal: 'left'
+                            }}
+                            sx={(theme) => {
+                              return {zIndex: theme.zIndex.tooltip};
+                            }}>
+                            <Picker onEmojiClick={handleEmojiClick} />
+                          </Popover>
+                        </div>
+                      </Stack>
+                      <IconButton disabled={isSending} onClick={handleMessageSend}>
+                        {show && <Icon>send</Icon>}
+                      </IconButton>
+                    </InputAdornment>
+                  </>
+                )
+              }}
+            />
+          </>
+        )}
       </Root>
     );
   }

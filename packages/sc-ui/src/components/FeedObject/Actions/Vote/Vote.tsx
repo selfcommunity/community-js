@@ -374,7 +374,7 @@ export default function Vote(props: VoteProps): JSX.Element {
                 <>
                   {!inlineAction && (
                     <>
-                      {obj.voted ? (
+                      {scUserContext.user && obj.voted ? (
                         <Icon fontSize="small" color="primary">
                           thumb_up
                         </Icon>
@@ -385,7 +385,7 @@ export default function Vote(props: VoteProps): JSX.Element {
                   )}
                 </>
               }>
-              {obj.voted ? (
+              {scUserContext.user && obj.voted ? (
                 <React.Fragment>
                   {obj.vote_count === 1
                     ? intl.formatMessage(messages.votedByOnlyMe)
@@ -443,7 +443,7 @@ export default function Vote(props: VoteProps): JSX.Element {
         {withAction && (
           <React.Fragment>
             {!inlineAction && withAudience && <Divider className={classes.divider} />}
-            <Tooltip title={voting ? '' : obj.voted ? intl.formatMessage(messages.voteDown) : intl.formatMessage(messages.voteUp)}>
+            <Tooltip title={voting ? '' : obj.voted && scUserContext.user ? intl.formatMessage(messages.voteDown) : intl.formatMessage(messages.voteUp)}>
               <span>
                 <LoadingButton
                   loading={voting}
@@ -451,7 +451,7 @@ export default function Vote(props: VoteProps): JSX.Element {
                   onClick={vote}
                   color="inherit"
                   classes={{root: classNames(classes.actionButton, {[classes.inlineActionButton]: inlineAction})}}>
-                  {obj.voted ? (
+                  {scUserContext.user && obj.voted ? (
                     <Icon fontSize={'large'} color="primary">
                       thumb_up
                     </Icon>

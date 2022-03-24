@@ -85,6 +85,10 @@ export default function CategoriesFollowed(props: CategoriesListProps): JSX.Elem
   const [openCategoriesFollowedDialog, setOpenCategoriesFollowedDialog] = useState<boolean>(false);
   const [next, setNext] = useState<string>(`${Endpoints.FollowedCategories.url({id: userId ?? scUserContext.user['id']})}?limit=10`);
 
+  // CONST
+  const authUserId = scUserContext.user ? scUserContext.user.id : null;
+
+
   /**
    * Handles list change on category follow
    */
@@ -138,7 +142,7 @@ export default function CategoriesFollowed(props: CategoriesListProps): JSX.Elem
    */
   useEffect(() => {
     fetchCategoriesFollowed();
-  }, []);
+  }, [authUserId]);
 
   /**
    * Renders the list of categories followed

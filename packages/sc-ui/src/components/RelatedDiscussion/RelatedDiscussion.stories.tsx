@@ -2,7 +2,7 @@ import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
 import RelatedDiscussion from './index';
 import {SCFeedObjectTypologyType} from '@selfcommunity/core';
-import {FeedObjectTemplateType} from '../../types/feedObject';
+import {SCFeedObjectTemplateType} from '../../types/feedObject';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -29,7 +29,7 @@ export default {
   args: {
     feedObjectId: 23,
     feedObjectType: SCFeedObjectTypologyType.DISCUSSION,
-    template: FeedObjectTemplateType.SNIPPET,
+    template: SCFeedObjectTemplateType.SNIPPET,
     elevation: 1,
     variant: 'elevation'
   }

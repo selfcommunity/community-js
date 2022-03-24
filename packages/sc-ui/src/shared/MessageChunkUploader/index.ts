@@ -6,16 +6,15 @@ import {
   useItemFinishListener,
   useRequestPreSend
 } from '@rpldy/chunked-uploady';
-import {Endpoints, formatHttpError, http, SCContextType, SCMediaType, useSCContext} from '@selfcommunity/core';
+import {Endpoints, formatHttpError, http, SCContextType, SCPrivateMessageFileType, useSCContext} from '@selfcommunity/core';
 import {useItemProgressListener, useItemStartListener} from '@rpldy/uploady';
 import {AxiosResponse} from 'axios';
-import {md5} from '../../utils/hash';
 import React, {useEffect, useState} from 'react';
-import {SCMediaChunkType} from '../../types/media';
+import {SCMessageChunkType} from '../../types/media';
 import {useIntl} from 'react-intl';
 import messages from '../../messages/common';
 
-export interface MediaChunkUploaderProps {
+export interface MessageChunkUploaderProps {
   /**
    * Chunk type
    * @default null
@@ -25,7 +24,7 @@ export interface MediaChunkUploaderProps {
    * Handles on success
    * @default null
    */
-  onSuccess: (media: SCMediaType) => void;
+  onSuccess: (media: SCPrivateMessageFileType) => void;
   /**
    * Handles on progress
    * @default null
@@ -35,15 +34,15 @@ export interface MediaChunkUploaderProps {
    * Handles on error
    * @default null
    */
-  onError: (chunk: SCMediaChunkType, error: string) => void;
+  onError: (chunk: SCMessageChunkType, error: string) => void;
 }
-export default (props: MediaChunkUploaderProps): JSX.Element => {
+export default (props: MessageChunkUploaderProps): JSX.Element => {
   // PROPS
   const {type = null, onSuccess = null, onProgress = null, onError = null} = props;
 
   // STATE
   const [chunks, setChunks] = useState({});
-  const setChunk: Function = (chunk: SCMediaChunkType) => {
+  const setChunk: Function = (chunk: SCMessageChunkType) => {
     setChunks({...chunks, [chunk.id]: {...chunks[chunk.id], ...chunk}});
   };
 
@@ -68,13 +67,13 @@ export default (props: MediaChunkUploaderProps): JSX.Element => {
     if (item.file.type.startsWith('image/')) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        chunkStateRef.current.setChunk({id: item.id, image: e.target.result});
+        chunkStateRef.current.setChunk({id: item.id, qqfile: e.target.result});
       };
       // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
       // @ts-ignore
       reader.readAsDataURL(item.file);
     }
-    chunkStateRef.current.setChunk({id: item.id, [`upload_id`]: null, completed: 0, name: item.file.name});
+    chunkStateRef.current.setChunk({id: item.id, [`file_uuid`]: null, completed: 0, filename: item.file.name, [`qqtotalparts`]: null});
   });
 
   useItemProgressListener((item) => {
@@ -82,15 +81,20 @@ export default (props: MediaChunkUploaderProps): JSX.Element => {
   });
 
   useItemFinishListener((item) => {
-    md5(item.file, 2142880, (hash) => {
+    if (item.file.type.startsWith('image/') && item.file.size < 10485760) {
+      const _chunks = {...chunkStateRef.current.chunks};
+      delete _chunks[item.id];
+      chunkStateRef.current.setChunks(_chunks);
+      onSuccess(item.uploadResponse.results[0].data);
+    } else {
       const formData = new FormData();
-      formData.append('upload_id', chunkStateRef.current.chunks[item.id].upload_id);
-      formData.append('type', chunkStateRef.current.chunks[item.id].type);
-      formData.append('md5', hash);
+      formData.append('qquuid', chunkStateRef.current.chunks[item.id].file_uuid);
+      formData.append('qqfilename', chunkStateRef.current.chunks[item.id].filename);
+      formData.append('qqtotalparts', chunkStateRef.current.chunks[item.id].qqtotalparts);
       http
         .request({
-          url: Endpoints.ComposerChunkUploadMediaComplete.url(),
-          method: Endpoints.ComposerChunkUploadMediaComplete.method,
+          url: Endpoints.PrivateMessageChunkUploadDone.url(),
+          method: Endpoints.PrivateMessageChunkUploadDone.method,
           data: formData,
           headers: {'Content-Type': 'multipart/form-data'}
         })
@@ -107,7 +111,7 @@ export default (props: MediaChunkUploaderProps): JSX.Element => {
           delete _chunks[item.id];
           chunkStateRef.current.setChunks(_chunks);
         });
-    });
+    }
   });
 
   useItemErrorListener((item) => {
@@ -118,16 +122,32 @@ export default (props: MediaChunkUploaderProps): JSX.Element => {
   });
 
   useChunkStartListener((data): StartEventResponse => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
+    chunkStateRef.current.setChunk({id: data.item.id, [`qqpartindex`]: data.chunk.index});
+    chunkStateRef.current.setChunk({id: data.item.id, [`qqtotalparts`]: data.totalCount});
     const res: StartEventResponse = {
-      url: `${scContext.settings.portal}${Endpoints.ComposerChunkUploadMedia.url()}`,
+      url: `${scContext.settings.portal}${Endpoints.PrivateMessageUploadMediaInChunks.url()}`,
       sendOptions: {
-        paramName: 'image',
+        paramName: 'qqfile',
         headers: {Authorization: `Bearer ${scContext.settings.session.authToken.accessToken}`},
-        method: Endpoints.ComposerChunkUploadMedia.method
+        method: Endpoints.PrivateMessageUploadMediaInChunks.method
       }
     };
-    if (chunkStateRef.current.chunks[data.item.id].upload_id) {
-      res.sendOptions.params = {[`upload_id`]: chunkStateRef.current.chunks[data.item.id].upload_id};
+    if (data.totalCount > 1) {
+      res.sendOptions.params = {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore
+        qqpartindex: data.chunkIndex,
+        qqtotalparts: data.totalCount
+      };
+    }
+    if (chunkStateRef.current.chunks[data.item.id].file_uuid && data.totalCount > 1) {
+      res.sendOptions.params = {
+        [`qquuid`]: chunkStateRef.current.chunks[data.item.id].file_uuid,
+        [`qqtotalparts`]: chunkStateRef.current.chunks[data.item.id].qqtotalparts,
+        [`qqpartindex`]: chunkStateRef.current.chunks[data.item.id].qqpartindex
+      };
     } else {
       chunkStateRef.current.setChunk({id: data.item.id, type: type || data.sendOptions.paramName});
     }
@@ -135,7 +155,7 @@ export default (props: MediaChunkUploaderProps): JSX.Element => {
   });
 
   useChunkFinishListener((data) => {
-    chunkStateRef.current.setChunk({id: data.item.id, [`upload_id`]: data.uploadData.response.data.upload_id});
+    chunkStateRef.current.setChunk({id: data.item.id, [`file_uuid`]: data.uploadData.response.data.file_uuid});
   });
 
   useRequestPreSend(({items, options}) => {

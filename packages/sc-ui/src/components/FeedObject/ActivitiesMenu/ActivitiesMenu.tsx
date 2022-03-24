@@ -5,7 +5,7 @@ import Tooltip from '@mui/material/Tooltip';
 import {Button, ListItem, ListItemText} from '@mui/material';
 import Icon from '@mui/material/Icon';
 import {styled} from '@mui/material/styles';
-import {FeedObjectActivitiesType} from '../../../types/feedObject';
+import {SCFeedObjectActivitiesType} from '../../../types/feedObject';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {SCPreferences, SCPreferencesContext, SCPreferencesContextType, SCUserContextType, StringUtils, useSCUser} from '@selfcommunity/core';
 import {useContext} from 'react';
@@ -125,7 +125,7 @@ export default function ActivitiesMenu(props: ActivitiesMenuProps) {
         <Tooltip
           title={<FormattedMessage id="ui.feedObject.activitiesMenu.tooltipTitle" defaultMessage="ui.feedObject.activitiesMenu.tooltipTitle" />}>
           <Button variant="text" size="small" onClick={handleClick} endIcon={<Icon>expand_more</Icon>} color="inherit">
-            {selectedActivities === FeedObjectActivitiesType.CONNECTIONS_COMMENTS && followEnabled
+            {selectedActivities === SCFeedObjectActivitiesType.CONNECTIONS_COMMENTS && followEnabled
               ? intl.formatMessage(messages.followedComments)
               : intl.formatMessage(messages[`${StringUtils.camelCase(selectedActivities)}`])}
           </Button>
@@ -160,9 +160,9 @@ export default function ActivitiesMenu(props: ActivitiesMenuProps) {
         anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}>
         {!hideRelevantActivitiesItem && (
           <ListItem
-            selected={selectedActivities === FeedObjectActivitiesType.RELEVANCE_ACTIVITIES}
+            selected={selectedActivities === SCFeedObjectActivitiesType.RELEVANCE_ACTIVITIES}
             button
-            onClick={handleChangeActivitiesType(FeedObjectActivitiesType.RELEVANCE_ACTIVITIES)}>
+            onClick={handleChangeActivitiesType(SCFeedObjectActivitiesType.RELEVANCE_ACTIVITIES)}>
             <ListItemText
               primary={<b>{intl.formatMessage(messages.relevantActivities)}</b>}
               secondary={
@@ -175,9 +175,9 @@ export default function ActivitiesMenu(props: ActivitiesMenuProps) {
           </ListItem>
         )}
         <ListItem
-          selected={selectedActivities === FeedObjectActivitiesType.RECENT_COMMENTS}
+          selected={selectedActivities === SCFeedObjectActivitiesType.RECENT_COMMENTS}
           button
-          onClick={handleChangeActivitiesType(FeedObjectActivitiesType.RECENT_COMMENTS)}>
+          onClick={handleChangeActivitiesType(SCFeedObjectActivitiesType.RECENT_COMMENTS)}>
           <ListItemText
             primary={<b>{intl.formatMessage(messages.recentComments)}</b>}
             secondary={
@@ -189,9 +189,9 @@ export default function ActivitiesMenu(props: ActivitiesMenuProps) {
           />
         </ListItem>
         <ListItem
-          selected={selectedActivities === FeedObjectActivitiesType.FIRST_COMMENTS}
+          selected={selectedActivities === SCFeedObjectActivitiesType.FIRST_COMMENTS}
           button
-          onClick={handleChangeActivitiesType(FeedObjectActivitiesType.FIRST_COMMENTS)}>
+          onClick={handleChangeActivitiesType(SCFeedObjectActivitiesType.FIRST_COMMENTS)}>
           <ListItemText
             primary={<b>{intl.formatMessage(messages.firstComments)}</b>}
             secondary={
@@ -204,9 +204,9 @@ export default function ActivitiesMenu(props: ActivitiesMenuProps) {
         </ListItem>
         {scUserContext.user && (
           <ListItem
-            selected={selectedActivities === FeedObjectActivitiesType.CONNECTIONS_COMMENTS}
+            selected={selectedActivities === SCFeedObjectActivitiesType.CONNECTIONS_COMMENTS}
             button
-            onClick={handleChangeActivitiesType(FeedObjectActivitiesType.CONNECTIONS_COMMENTS)}>
+            onClick={handleChangeActivitiesType(SCFeedObjectActivitiesType.CONNECTIONS_COMMENTS)}>
             <ListItemText
               primary={<b>{followEnabled ? intl.formatMessage(messages.followedComments) : intl.formatMessage(messages.connectionsComments)}</b>}
               secondary={

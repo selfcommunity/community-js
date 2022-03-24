@@ -6,8 +6,8 @@ import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
 import NewChip from '../../../shared/NewChip/NewChip';
 import classNames from 'classnames';
-import {red} from '@mui/material/colors';
-import {NotificationObjectTemplateType} from '../../../types';
+import {grey, red} from '@mui/material/colors';
+import {SCNotificationObjectTemplateType} from '../../../types';
 import {getContributeType, getRouteData} from '../../../utils/contribute';
 
 const messages = defineMessages({
@@ -40,10 +40,11 @@ const Root = styled(Box, {
 })(({theme}) => ({
   [`& .${classes.listItemSnippet}`]: {
     padding: '0px 5px',
-    alignItems: 'center'
+    alignItems: 'center',
+    borderLeft: `2px solid ${grey[300]}`
   },
   [`& .${classes.listItemSnippetNew}`]: {
-    borderLeft: '2px solid red'
+    borderLeft: `2px solid ${red[500]}`
   },
   [`& .${classes.avatarWrap}`]: {
     minWidth: 'auto',
@@ -94,9 +95,9 @@ export interface ContributionFollowProps {
 
   /**
    * Notification Object template type
-   * @default 'preview'
+   * @default 'detail'
    */
-  template?: NotificationObjectTemplateType;
+  template?: SCNotificationObjectTemplateType;
 
   /**
    * Any other properties
@@ -115,7 +116,7 @@ export default function ContributionFollowNotification(props: ContributionFollow
     notificationObject,
     id = `n_${props.notificationObject['sid']}`,
     className,
-    template = NotificationObjectTemplateType.DETAIL,
+    template = SCNotificationObjectTemplateType.DETAIL,
     ...rest
   } = props;
 
@@ -123,8 +124,8 @@ export default function ContributionFollowNotification(props: ContributionFollow
   const scRoutingContext: SCRoutingContextType = useSCRouting();
 
   // CONST
-  const isSnippetTemplate = template === NotificationObjectTemplateType.SNIPPET;
-  const isToastTemplate = template === NotificationObjectTemplateType.TOAST;
+  const isSnippetTemplate = template === SCNotificationObjectTemplateType.SNIPPET;
+  const isToastTemplate = template === SCNotificationObjectTemplateType.TOAST;
   const contributionType = getContributeType(notificationObject);
 
   // INTL
@@ -158,7 +159,7 @@ export default function ContributionFollowNotification(props: ContributionFollow
           disableTypography={true}
           primary={
             <>
-              {template === NotificationObjectTemplateType.DETAIL && notificationObject.is_new && <NewChip />}
+              {template === SCNotificationObjectTemplateType.DETAIL && notificationObject.is_new && <NewChip />}
               <Typography component="div" className={classes.followText} color="inherit">
                 <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.user)} className={classes.username}>
                   {notificationObject.user.username}
@@ -172,12 +173,14 @@ export default function ContributionFollowNotification(props: ContributionFollow
           }
           secondary={
             <>
-              {template === NotificationObjectTemplateType.DETAIL && <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />}
+              {template === SCNotificationObjectTemplateType.DETAIL && (
+                <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
+              )}
             </>
           }
         />
       </ListItem>
-      {template === NotificationObjectTemplateType.TOAST && (
+      {template === SCNotificationObjectTemplateType.TOAST && (
         <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2} className={classes.toastInfo}>
           <DateTimeAgo date={notificationObject.active_at} />
           <Typography color="primary">

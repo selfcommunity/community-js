@@ -5,7 +5,7 @@ import {SCNotificationTopicType, SCNotification, SCNotificationTypologyType, use
 import PubSub from 'pubsub-js';
 import {useSnackbar} from 'notistack';
 import CustomSnackMessage from '../../shared/CustomSnackMessage';
-import {NotificationObjectTemplateType} from '../../types';
+import {SCNotificationObjectTemplateType} from '../../types';
 import CommentNotification from '../Notification/Comment';
 import ContributionFollowNotification from '../Notification/ContributionFollow';
 import UserFollowNotification from '../Notification/UserFollow';
@@ -41,7 +41,7 @@ export interface ToastNotificationsProps extends BoxProps {
   /**
    * Handle notification
    */
-  handleNotification?: (type, data, content) => void;
+  handleNotification?: (type, data, content) => JSX.Element;
 
   /**
    * Disable Toast Notification
@@ -100,28 +100,35 @@ export default function UserToastNotifications(props: ToastNotificationsProps): 
     let content;
     let type;
     if (n.notification_obj) {
+      /** Notification of types: comment, nested_comment, etc... */
       type = SCNotification.SCNotificationMapping[n.activity_type];
       if (type === SCNotificationTypologyType.COMMENT || type === SCNotificationTypologyType.NESTED_COMMENT) {
-        content = <CommentNotification notificationObject={n.notification_obj} template={NotificationObjectTemplateType.TOAST} />;
+        content = <CommentNotification notificationObject={n.notification_obj} template={SCNotificationObjectTemplateType.TOAST} />;
       } else if (type === SCNotificationTypologyType.FOLLOW) {
-        content = <ContributionFollowNotification notificationObject={n.notification_obj} template={NotificationObjectTemplateType.TOAST} />;
+        content = <ContributionFollowNotification notificationObject={n.notification_obj} template={SCNotificationObjectTemplateType.TOAST} />;
       } else if (type === SCNotificationTypologyType.USER_FOLLOW) {
-        content = <UserFollowNotification notificationObject={n.notification_obj} template={NotificationObjectTemplateType.TOAST} />;
+        content = <UserFollowNotification notificationObject={n.notification_obj} template={SCNotificationObjectTemplateType.TOAST} />;
       } else if (type === SCNotificationTypologyType.CONNECTION_REQUEST || type === SCNotificationTypologyType.CONNECTION_ACCEPT) {
-        content = <UserConnectionNotification notificationObject={n.notification_obj} template={NotificationObjectTemplateType.TOAST} />;
+        content = <UserConnectionNotification notificationObject={n.notification_obj} template={SCNotificationObjectTemplateType.TOAST} />;
       } else if (type === SCNotificationTypologyType.VOTE_UP) {
-        content = <VoteUpNotification notificationObject={n.notification_obj} template={NotificationObjectTemplateType.TOAST} />;
+        content = <VoteUpNotification notificationObject={n.notification_obj} template={SCNotificationObjectTemplateType.TOAST} />;
       } else if (type === SCNotificationTypologyType.PRIVATE_MESSAGE) {
-        content = <PrivateMessageNotification notificationObject={n.notification_obj} template={NotificationObjectTemplateType.TOAST} />;
+        content = <PrivateMessageNotification notificationObject={n.notification_obj} template={SCNotificationObjectTemplateType.TOAST} />;
       } else if (n.type === SCNotificationTypologyType.BLOCKED_USER || n.type === SCNotificationTypologyType.UNBLOCKED_USER) {
-        return <UserBlockedNotification notificationObject={n.notification_obj} template={NotificationObjectTemplateType.TOAST} />;
+        return <UserBlockedNotification notificationObject={n.notification_obj} template={SCNotificationObjectTemplateType.TOAST} />;
       } else if (type === SCNotificationTypologyType.MENTION) {
-        content = <MentionNotification notificationObject={n.notification_obj} template={NotificationObjectTemplateType.TOAST} />;
+        content = <MentionNotification notificationObject={n.notification_obj} template={SCNotificationObjectTemplateType.TOAST} />;
       } else if (type === SCNotificationTypologyType.INCUBATOR_APPROVED) {
-        content = <IncubatorApprovedNotification notificationObject={n.notification_obj} template={NotificationObjectTemplateType.TOAST} />;
+        content = <IncubatorApprovedNotification notificationObject={n.notification_obj} template={SCNotificationObjectTemplateType.TOAST} />;
       }
     }
+    if (n.activity_type && n.activity_type === SCNotificationTypologyType.NOTIFICATION_BANNER) {
+      /** Notification of type: 'notification_banner' */
+      // TODO: When api is fixed, use BroadcastMessage -> Message as the component to render this content
+      content = <div style={{maxWidth: 300}} dangerouslySetInnerHTML={{__html: n.message}} />;
+    }
     if (handleNotification && type) {
+      /** Override content */
       content = handleNotification(type, n, content);
     }
     return content;
@@ -136,11 +143,17 @@ export default function UserToastNotifications(props: ToastNotificationsProps): 
     if (
       data &&
       data.type === SCNotificationTopicType.INTERACTION &&
-      SCNotification.SCNotificationMapping[data.data.activity_type] &&
+      (data.data.activity_type === SCNotificationTypologyType.NOTIFICATION_BANNER || SCNotification.SCNotificationMapping[data.data.activity_type]) &&
       !SCNotification.SCSilentToastNotifications.includes(data.data.activity_type) &&
       !disableToastNotification &&
       !scContext.settings.notifications.webSocket.disableToastMessage
     ) {
+      /**
+       * !IMPORTANT
+       * - messageKey for the notification_banner is 'id', for others type 'feed_serialization_id'
+       * - the enqueue message is persistent (it remains on the screen while the others replace each other) if type notification_banner
+       */
+      const messageKey = data.data.feed_serialization_id ? data.data.feed_serialization_id : data.data.id;
       enqueueSnackbar(
         null,
         Object.assign(
@@ -148,7 +161,7 @@ export default function UserToastNotifications(props: ToastNotificationsProps): 
           {
             content: (
               <CustomSnackMessage
-                id={data.data.feed_serialization_id}
+                id={messageKey}
                 message={
                   <div className={classes.toastMessage}>
                     <div className={classes.toastContent}>{getContent(data.data)}</div>
@@ -157,9 +170,9 @@ export default function UserToastNotifications(props: ToastNotificationsProps): 
               />
             ),
             preventDuplicate: true,
-            key: data.data.feed_serialization_id,
+            key: messageKey,
             variant: 'default',
-            persist: true,
+            persist: data.data.activity_type === SCNotificationTypologyType.NOTIFICATION_BANNER ? true : false,
             anchorOrigin: {horizontal: 'left', vertical: 'bottom'},
             action: null
           },

@@ -21,7 +21,7 @@ import {AxiosResponse} from 'axios';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import FeedObject, {FeedObjectProps} from '../FeedObject';
 import {FormattedMessage} from 'react-intl';
-import {FeedObjectTemplateType} from '../../types/feedObject';
+import {SCFeedObjectTemplateType} from '../../types/feedObject';
 import CustomAdv from '../CustomAdv';
 import classNames from 'classnames';
 import BaseDialog from '../../shared/BaseDialog';
@@ -65,7 +65,7 @@ export interface RelatedDiscussionProps {
    * Feed Object template type
    * @default 'snippet'
    */
-  template?: FeedObjectTemplateType;
+  template?: SCFeedObjectTemplateType;
   /**
    * Props to spread to single feed object
    * @default empty object
@@ -121,7 +121,7 @@ export default function RelatedDiscussion(props: RelatedDiscussionProps): JSX.El
   const scUserContext: SCUserContextType = useSCUser();
 
   // PROPS
-  const {feedObjectId, feedObjectType, template = FeedObjectTemplateType.SNIPPET, FeedObjectProps = {}, className, autoHide = true, ...rest} = props;
+  const {feedObjectId, feedObjectType, template = SCFeedObjectTemplateType.SNIPPET, FeedObjectProps = {}, className, autoHide = true, ...rest} = props;
 
   // STATE
   const {obj, setObj} = useSCFetchFeedObject({id: feedObjectId, feedObject: null, feedObjectType});

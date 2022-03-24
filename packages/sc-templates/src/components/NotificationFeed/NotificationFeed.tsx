@@ -4,7 +4,7 @@ import {
   BroadcastMessages,
   CategoriesSuggestion,
   Feed,
-  FeedObjectTemplateType,
+  SCFeedObjectTemplateType,
   FeedSidebarProps,
   FeedUpdates,
   LoyaltyProgram,
@@ -132,7 +132,7 @@ export default function NotificationFeed(props: NotificationFeedProps): JSX.Elem
       ItemProps={NotificationProps}
       ItemSkeleton={NotificationSkeleton}
       ItemSkeletonProps={{
-        template: FeedObjectTemplateType.PREVIEW
+        template: SCFeedObjectTemplateType.PREVIEW
       }}
       FeedSidebarProps={FeedSidebarProps}
     />

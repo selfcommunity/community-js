@@ -47,3 +47,19 @@ export interface SCMediaChunkType {
   error: string;
   upload_id: string;
 }
+
+/**
+ * Interface MediaChunkType
+ */
+export interface SCMessageChunkType {
+  id: number;
+  filename: string;
+  mimetype: string;
+  url: string;
+  completed: number;
+  error: string;
+  uuid: string;
+  thumbnail: string;
+  //duration: number;
+  //filesize: number;
+}

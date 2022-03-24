@@ -4,7 +4,7 @@ import {Box, Button, Divider, Tooltip, Typography} from '@mui/material';
 import Icon from '@mui/material/Icon';
 import {SCFeedObjectType, SCFeedObjectTypologyType, SCRoutingContextType, useSCFetchFeedObject, useSCRouting, Link} from '@selfcommunity/core';
 import {styled} from '@mui/material/styles';
-import {FeedObjectTemplateType} from '../../../../types/feedObject';
+import {SCFeedObjectTemplateType} from '../../../../types/feedObject';
 import {getContributionRouteName, getRouteData} from '../../../../utils/contribute';
 import classNames from 'classnames';
 import Skeleton from '@mui/material/Skeleton';
@@ -89,7 +89,7 @@ export interface CommentProps {
    * Feed Object template type
    * @default 'preview'
    */
-  feedObjectTemplate?: FeedObjectTemplateType;
+  feedObjectTemplate?: SCFeedObjectTemplateType;
 
   /**
    * Show audience
@@ -135,7 +135,7 @@ export default function Comment(props: CommentProps): JSX.Element {
     feedObjectId,
     feedObject,
     feedObjectType = SCFeedObjectTypologyType.POST,
-    feedObjectTemplate = FeedObjectTemplateType,
+    feedObjectTemplate = SCFeedObjectTemplateType,
     withAction = true,
     withAudience = true,
     inlineAction = true,
@@ -175,7 +175,7 @@ export default function Comment(props: CommentProps): JSX.Element {
               </Button>
             ) : (
               <>
-                {feedObjectTemplate === FeedObjectTemplateType.DETAIL ? (
+                {feedObjectTemplate === SCFeedObjectTemplateType.DETAIL ? (
                   <Typography variant={'body2'}>{`${intl.formatMessage(messages.comments, {total: obj.comment_count})}`}</Typography>
                 ) : (
                   <Button

@@ -1,15 +1,17 @@
 import {SCFeedWidgetType} from './feed';
 import {SCMediaObjectType, SCMediaChunkType} from './media';
-import {CommentsOrderBy} from './comments';
-import {FeedObjectActivitiesType, FeedObjectTemplateType} from './feedObject';
-import {NotificationObjectTemplateType} from './notification';
+import {SCCommentsOrderBy} from './comments';
+import {SCFeedObjectActivitiesType, SCFeedObjectTemplateType} from './feedObject';
+import {SCNotificationObjectTemplateType} from './notification';
+import {SCBroadcastMessageTemplateType} from './broadcastMessage';
 
 export {
   SCFeedWidgetType,
   SCMediaObjectType,
   SCMediaChunkType,
-  CommentsOrderBy,
-  FeedObjectActivitiesType,
-  FeedObjectTemplateType,
-  NotificationObjectTemplateType
+  SCCommentsOrderBy,
+  SCFeedObjectActivitiesType,
+  SCFeedObjectTemplateType,
+  SCNotificationObjectTemplateType,
+  SCBroadcastMessageTemplateType
 };

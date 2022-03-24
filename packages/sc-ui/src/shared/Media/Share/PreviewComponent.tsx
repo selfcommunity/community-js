@@ -4,7 +4,7 @@ import LazyLoad from 'react-lazyload';
 import CentralProgress from '../../CentralProgress';
 import Box from '@mui/material/Box';
 import FeedObject from '../../../components/FeedObject';
-import {FeedObjectTemplateType} from '../../../types/feedObject';
+import {SCFeedObjectTemplateType} from '../../../types/feedObject';
 
 const PREFIX = 'SCPreviewMediaShare';
 
@@ -35,7 +35,7 @@ export default ({medias = [], adornment = null}: {medias: any[]; GridImageProps?
                   feedObjectId={media.embed.metadata.id}
                   feedObjectType={media.embed.metadata.type}
                   variant={'outlined'}
-                  template={FeedObjectTemplateType.SHARE}
+                  template={SCFeedObjectTemplateType.SHARE}
                 />
               </Box>
             ))}

@@ -15,7 +15,7 @@ import {
 } from '@selfcommunity/core';
 import classNames from 'classnames';
 import {grey, red} from '@mui/material/colors';
-import {NotificationObjectTemplateType} from '../../../types';
+import {SCNotificationObjectTemplateType} from '../../../types';
 
 const messages = defineMessages({
   requestConnection: {
@@ -50,10 +50,11 @@ const Root = styled(Box, {
 })(({theme}) => ({
   [`& .${classes.listItemSnippet}`]: {
     padding: '0px 5px',
-    alignItems: 'center'
+    alignItems: 'center',
+    borderLeft: `2px solid ${grey[300]}`
   },
   [`& .${classes.listItemSnippetNew}`]: {
-    borderLeft: '2px solid red'
+    borderLeft: `2px solid ${red[500]}`
   },
   [`& .${classes.avatarWrap}`]: {
     minWidth: 'auto',
@@ -97,9 +98,9 @@ export interface NotificationConnectionProps {
 
   /**
    * Notification Object template type
-   * @default 'preview'
+   * @default 'detail'
    */
-  template?: NotificationObjectTemplateType;
+  template?: SCNotificationObjectTemplateType;
 
   /**
    * Any other properties
@@ -118,7 +119,7 @@ export default function UserConnectionNotification(props: NotificationConnection
     notificationObject = null,
     id = `n_${props.notificationObject['sid']}`,
     className,
-    template = NotificationObjectTemplateType.DETAIL,
+    template = SCNotificationObjectTemplateType.DETAIL,
     ...rest
   } = props;
 
@@ -129,8 +130,8 @@ export default function UserConnectionNotification(props: NotificationConnection
   const intl = useIntl();
 
   // CONST
-  const isSnippetTemplate = template === NotificationObjectTemplateType.SNIPPET;
-  const isToastTemplate = template === NotificationObjectTemplateType.TOAST;
+  const isSnippetTemplate = template === SCNotificationObjectTemplateType.SNIPPET;
+  const isToastTemplate = template === SCNotificationObjectTemplateType.TOAST;
   const userConnection =
     notificationObject.type === SCNotificationTypologyType.CONNECTION_REQUEST ? notificationObject.request_user : notificationObject.accept_user;
 
@@ -162,7 +163,7 @@ export default function UserConnectionNotification(props: NotificationConnection
           disableTypography={true}
           primary={
             <>
-              {template === NotificationObjectTemplateType.DETAIL && notificationObject.is_new && <NewChip />}
+              {template === SCNotificationObjectTemplateType.DETAIL && notificationObject.is_new && <NewChip />}
               <Typography component="div" className={classes.connectionText} color="inherit">
                 <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, userConnection)} className={classes.username}>
                   {userConnection.username}
@@ -175,12 +176,12 @@ export default function UserConnectionNotification(props: NotificationConnection
           }
           secondary={
             <>
-              {template === NotificationObjectTemplateType.DETAIL && <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />}
+              {template === SCNotificationObjectTemplateType.DETAIL && <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />}
             </>
           }
         />
       </ListItem>
-      {template === NotificationObjectTemplateType.TOAST && (
+      {template === SCNotificationObjectTemplateType.TOAST && (
         <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2} className={classes.toastInfo}>
           <DateTimeAgo date={notificationObject.active_at} />
           <Typography color="primary">

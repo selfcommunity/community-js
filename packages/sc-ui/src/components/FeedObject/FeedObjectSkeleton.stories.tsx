@@ -1,7 +1,7 @@
 import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
 import FeedObjectSkeleton from './Skeleton';
-import {FeedObjectTemplateType} from '../../types/feedObject';
+import {SCFeedObjectTemplateType} from '../../types/feedObject';
 
 export default {
   title: 'Design System/SC UI/Skeleton/FeedObject',
@@ -19,10 +19,10 @@ export default {
       table: {defaultValue: {summary: 1}}
     },
     template: {
-      options: [FeedObjectTemplateType.SNIPPET, FeedObjectTemplateType.PREVIEW, FeedObjectTemplateType.DETAIL],
+      options: [SCFeedObjectTemplateType.SNIPPET, SCFeedObjectTemplateType.PREVIEW, SCFeedObjectTemplateType.DETAIL],
       control: {type: 'select'},
       description: 'Object template. Used only with args id.',
-      table: {defaultValue: {summary: FeedObjectTemplateType.SNIPPET}}
+      table: {defaultValue: {summary: SCFeedObjectTemplateType.SNIPPET}}
     },
     className: {
       table: {
@@ -38,7 +38,7 @@ export default {
   args: {
     elevation: 1,
     variant: 'elevation',
-    template: FeedObjectTemplateType.DETAIL
+    template: SCFeedObjectTemplateType.DETAIL
   }
 } as ComponentMeta<typeof FeedObjectSkeleton>;
 

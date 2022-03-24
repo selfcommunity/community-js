@@ -217,6 +217,9 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (props: FeedProps, re
   const scPreferences: SCPreferencesContextType = useSCPreferences();
   const scUserContext: SCUserContextType = useContext(SCUserContext);
 
+  // CONST
+  const authUserId = scUserContext.user ? scUserContext.user.id : null;
+
   // REFS
   const refreshSubscription = useRef(null);
 
@@ -282,12 +285,12 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (props: FeedProps, re
         const data = res.data;
         setFeedData([...feedData, ...data.results]);
         setNext(data.next);
+        setLoading(false);
         onFetchData && onFetchData(res.data);
       })
       .catch((error) => {
         Logger.error(SCOPE_SC_UI, error);
-      })
-      .then(() => setLoading(false));
+      });
   };
 
   const refresh = () => {
@@ -305,7 +308,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (props: FeedProps, re
   // EFFECTS
   useEffect(() => {
     fetch();
-  }, []);
+  }, [authUserId]);
 
   useEffect(() => {
     refreshSubscription.current = PubSub.subscribe(id, subscriber);

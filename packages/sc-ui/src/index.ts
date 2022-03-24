@@ -52,9 +52,20 @@ import Notification, {NotificationProps, NotificationSkeleton} from './component
 import AccountSignIn, {AccountSignInProps} from './components/AccountSignIn';
 import AccountSignUp, {AccountSignUpProps} from './components/AccountSignUp';
 import AccountRecover, {AccountRecoverProps} from './components/AccountRecover';
-import {SCFeedWidgetType, FeedObjectTemplateType, CommentsOrderBy, FeedObjectActivitiesType, SCMediaObjectType, SCMediaChunkType} from './types';
+import {
+  SCFeedWidgetType,
+  SCFeedObjectTemplateType,
+  SCCommentsOrderBy,
+  SCFeedObjectActivitiesType,
+  SCMediaObjectType,
+  SCMediaChunkType,
+  SCNotificationObjectTemplateType,
+  SCBroadcastMessageTemplateType
+} from './types';
 import {SCCategoryType} from '@selfcommunity/core';
 import Widget from './components/Widget';
+import MediaChunkUploader, {MediaChunkUploaderProps} from './shared/MediaChunkUploader';
+import {Document, Image, Link, Share, EditMediaProps} from './shared/Media';
 
 /**
  * List all exports
@@ -186,11 +197,21 @@ export {
   SnippetNotifications,
   SnippetNotificationsProps,
   SnippetNotificationsSkeleton,
+  Widget,
   SCFeedWidgetType,
-  FeedObjectTemplateType,
-  CommentsOrderBy,
-  FeedObjectActivitiesType,
+  SCFeedObjectTemplateType,
+  SCCommentsOrderBy,
+  SCFeedObjectActivitiesType,
   SCMediaObjectType,
   SCMediaChunkType,
-  Widget
+  SCNotificationObjectTemplateType,
+  SCBroadcastMessageTemplateType,
+  /* SC UI SHARED */
+  MediaChunkUploader,
+  MediaChunkUploaderProps,
+  Document,
+  Image,
+  Link,
+  Share,
+  EditMediaProps
 };

@@ -2,7 +2,7 @@ import React from 'react';
 import Widget from '../Widget';
 import {styled} from '@mui/material/styles';
 import Skeleton from '@mui/material/Skeleton';
-import {FeedObjectTemplateType} from '../../types/feedObject';
+import {SCFeedObjectTemplateType} from '../../types/feedObject';
 import {Box, CardContent, CardHeader, CardProps} from '@mui/material';
 
 const PREFIX = 'SCFeedObjectSkeleton';
@@ -28,7 +28,7 @@ export interface FeedObjectSkeletonProps extends CardProps {
    * Feed Object template type
    * @default 'preview'
    */
-  template?: FeedObjectTemplateType;
+  template?: SCFeedObjectTemplateType;
 
   /**
    * Other props
@@ -36,11 +36,11 @@ export interface FeedObjectSkeletonProps extends CardProps {
   [p: string]: any;
 }
 
-export default function FeedObjectSkeleton(props: {template?: FeedObjectTemplateType; [p: string]: any}): JSX.Element {
+export default function FeedObjectSkeleton(props: {template?: SCFeedObjectTemplateType; [p: string]: any}): JSX.Element {
   const {template, ...rest} = props;
-  const _template = template || FeedObjectTemplateType.SNIPPET;
+  const _template = template || SCFeedObjectTemplateType.SNIPPET;
   let obj;
-  if (_template === FeedObjectTemplateType.PREVIEW || _template === FeedObjectTemplateType.DETAIL) {
+  if (_template === SCFeedObjectTemplateType.PREVIEW || _template === SCFeedObjectTemplateType.DETAIL) {
     obj = (
       <React.Fragment>
         <CardHeader

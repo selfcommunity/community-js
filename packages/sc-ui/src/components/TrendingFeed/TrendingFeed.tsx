@@ -8,7 +8,7 @@ import {AxiosResponse} from 'axios';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import FeedObject from '../FeedObject';
 import {FormattedMessage} from 'react-intl';
-import {FeedObjectTemplateType} from '../../types/feedObject';
+import {SCFeedObjectTemplateType} from '../../types/feedObject';
 import classNames from 'classnames';
 import BaseDialog from '../../shared/BaseDialog';
 import CentralProgress from '../../shared/CentralProgress';
@@ -46,7 +46,7 @@ export interface TrendingFeedProps {
    * Feed Object template type
    * @default 'preview'
    */
-  template?: FeedObjectTemplateType;
+  template?: SCFeedObjectTemplateType;
   /**
    * Hides this component
    * @default false
