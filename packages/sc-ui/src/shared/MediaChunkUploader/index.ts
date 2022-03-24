@@ -10,7 +10,7 @@ import {Endpoints, formatHttpError, http, SCContextType, SCMediaType, useSCConte
 import {useItemProgressListener, useItemStartListener} from '@rpldy/uploady';
 import {AxiosResponse} from 'axios';
 import {md5} from '../../utils/hash';
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {SCMediaChunkType} from '../../types/media';
 import {useIntl} from 'react-intl';
 import messages from '../../messages/common';
@@ -41,6 +41,9 @@ export default (props: MediaChunkUploaderProps): JSX.Element => {
   // PROPS
   const {type = null, onSuccess = null, onProgress = null, onError = null} = props;
 
+  // REFS
+  const firstRender = useRef<boolean>(true);
+
   // STATE
   const [chunks, setChunks] = useState({});
   const setChunk: Function = (chunk: SCMediaChunkType) => {
@@ -60,6 +63,10 @@ export default (props: MediaChunkUploaderProps): JSX.Element => {
 
   // component update
   useEffect(() => {
+    if (firstRender.current) {
+      firstRender.current = false;
+      return;
+    }
     onProgress && onProgress(chunks);
   }, [chunks]);
 

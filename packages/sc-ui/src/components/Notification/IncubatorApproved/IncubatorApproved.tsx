@@ -117,7 +117,6 @@ export default function IncubatorApprovedNotification(props: NotificationIncubat
 
   // CONST
   const isSnippetTemplate = template === SCNotificationObjectTemplateType.SNIPPET;
-  const isToastTemplate = template === SCNotificationObjectTemplateType.TOAST;
 
   //INTL
   const intl = useIntl();
@@ -132,7 +131,7 @@ export default function IncubatorApprovedNotification(props: NotificationIncubat
         component={'div'}
         classes={{
           root: classNames({
-            [classes.listItemSnippet]: isToastTemplate || isSnippetTemplate,
+            [classes.listItemSnippet]: isSnippetTemplate,
             [classes.listItemSnippetNew]: isSnippetTemplate && notificationObject.is_new
           })
         }}>

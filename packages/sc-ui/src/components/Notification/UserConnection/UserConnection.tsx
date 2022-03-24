@@ -131,7 +131,6 @@ export default function UserConnectionNotification(props: NotificationConnection
 
   // CONST
   const isSnippetTemplate = template === SCNotificationObjectTemplateType.SNIPPET;
-  const isToastTemplate = template === SCNotificationObjectTemplateType.TOAST;
   const userConnection =
     notificationObject.type === SCNotificationTypologyType.CONNECTION_REQUEST ? notificationObject.request_user : notificationObject.accept_user;
 
@@ -145,7 +144,7 @@ export default function UserConnectionNotification(props: NotificationConnection
         component={'div'}
         classes={{
           root: classNames({
-            [classes.listItemSnippet]: isToastTemplate || isSnippetTemplate,
+            [classes.listItemSnippet]: isSnippetTemplate,
             [classes.listItemSnippetNew]: isSnippetTemplate && notificationObject.is_new
           })
         }}>

@@ -121,7 +121,6 @@ export default function MentionNotification(props: MentionNotificationProps): JS
 
   // CONST
   const isSnippetTemplate = template === SCNotificationObjectTemplateType.SNIPPET;
-  const isToastTemplate = template === SCNotificationObjectTemplateType.TOAST;
   const objectType = getContributeType(notificationObject);
   const contribution = getContribute(notificationObject);
 
@@ -138,7 +137,7 @@ export default function MentionNotification(props: MentionNotificationProps): JS
         component={'div'}
         classes={{
           root: classNames({
-            [classes.listItemSnippet]: isToastTemplate || isSnippetTemplate,
+            [classes.listItemSnippet]: isSnippetTemplate,
             [classes.listItemSnippetNew]: isSnippetTemplate && notificationObject.is_new
           })
         }}>

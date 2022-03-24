@@ -125,7 +125,6 @@ export default function ContributionFollowNotification(props: ContributionFollow
 
   // CONST
   const isSnippetTemplate = template === SCNotificationObjectTemplateType.SNIPPET;
-  const isToastTemplate = template === SCNotificationObjectTemplateType.TOAST;
   const contributionType = getContributeType(notificationObject);
 
   // INTL
@@ -141,7 +140,7 @@ export default function ContributionFollowNotification(props: ContributionFollow
         component={'div'}
         classes={{
           root: classNames({
-            [classes.listItemSnippet]: isToastTemplate || isSnippetTemplate,
+            [classes.listItemSnippet]: isSnippetTemplate,
             [classes.listItemSnippetNew]: isSnippetTemplate && notificationObject.is_new
           })
         }}>

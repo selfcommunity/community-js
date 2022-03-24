@@ -1,13 +1,23 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Box, Button, CardContent} from '@mui/material';
-import {Endpoints, http, Logger, SCBroadcastMessageType, SCUserContextType, useSCUser} from '@selfcommunity/core';
+import {
+  Endpoints,
+  http,
+  Logger,
+  SCBroadcastMessageType,
+  SCNotificationTopicType,
+  SCNotificationTypologyType,
+  SCUserContextType,
+  useSCUser
+} from '@selfcommunity/core';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import Message, {MessageProps} from './Message';
 import classNames from 'classnames';
 import {FormattedMessage} from 'react-intl';
 import {MessageSkeleton} from './Skeleton';
 import Widget from '../Widget';
+import PubSub from 'pubsub-js';
 
 const PREFIX = 'SCBroadcastMessages';
 
@@ -53,6 +63,13 @@ export interface BroadcastMessagesProps {
   MessageProps?: MessageProps;
 
   /**
+   * Subscription channel for updates notification
+   * When receive this event the component reacts updating data
+   * @default `interaction.notification_banner`
+   */
+  subscriptionChannel?: string;
+
+  /**
    * Any other properties
    */
   [p: string]: any;
@@ -80,7 +97,13 @@ export interface BroadcastMessagesProps {
  */
 export default function BroadcastMessages(props: BroadcastMessagesProps): JSX.Element {
   // PROPS
-  const {id = 'broadcast_messages', className = null, MessageProps = {}, ...rest} = props;
+  const {
+    id = 'broadcast_messages',
+    className = null,
+    MessageProps = {},
+    subscriptionChannel = `${SCNotificationTopicType.INTERACTION}.${SCNotificationTypologyType.NOTIFICATION_BANNER}`,
+    ...rest
+  } = props;
 
   // STATE
   const [loading, setLoading] = useState<boolean>(null);
@@ -95,6 +118,9 @@ export default function BroadcastMessages(props: BroadcastMessagesProps): JSX.El
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
   const unViewedMessages = messages.filter((m) => !m.viewed_at);
   const viewedMessageCounter = messages.length - unViewedMessages.length;
+
+  // REFS
+  const refreshSubscription = useRef(null);
 
   const handleDisposeMessage = (message) => {
     setMessages(messages.filter((m) => m.id != message.id));
@@ -143,12 +169,38 @@ export default function BroadcastMessages(props: BroadcastMessagesProps): JSX.El
     }
   };
 
-  // On mount, fetch first page of notifications
+  /**
+   * On mount, fetch first page of notifications
+   */
   useEffect(() => {
     if (authUserId !== null) {
       fetchMessages();
     }
   }, [authUserId]);
+
+  /**
+   * Notification subscriber
+   */
+  const subscriber = (msg, data) => {
+    performFetchMessages(next)
+      .then((res) => {
+        setMessages(res.data);
+        setNext(res.next);
+      })
+      .catch((error) => {
+        Logger.error(SCOPE_SC_UI, error);
+      });
+  };
+
+  /**
+   * When a ws notification arrives, update data
+   */
+  useEffect(() => {
+    refreshSubscription.current = PubSub.subscribe(subscriptionChannel, subscriber);
+    return () => {
+      PubSub.unsubscribe(refreshSubscription.current);
+    };
+  }, []);
 
   return (
     <Root id={id} className={classNames(classes.root, className)} {...rest}>

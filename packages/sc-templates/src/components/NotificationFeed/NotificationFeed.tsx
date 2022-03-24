@@ -63,18 +63,18 @@ export interface NotificationFeedProps {
 const WIDGETS: SCFeedWidgetType[] = [
   {
     type: 'widget',
-    component: BroadcastMessages,
-    componentProps: {},
+    component: FeedUpdates,
+    componentProps: {subscriptionChannel: SCNotificationTopicType.INTERACTION, publicationChannel: 'notifications_feed'},
     column: 'left',
-    position: 0
+    position: 0,
+    publishEvents: true
   },
   {
     type: 'widget',
-    component: FeedUpdates,
-    componentProps: {subscriptionChannel: SCNotificationTopicType.INTERACTION},
+    component: BroadcastMessages,
+    componentProps: {subscriptionChannel: 'notification_feed'},
     column: 'left',
-    position: 1,
-    publishEvents: true
+    position: 1
   },
   {
     type: 'widget',

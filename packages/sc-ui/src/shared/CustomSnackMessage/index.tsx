@@ -18,13 +18,17 @@ const Root = styled(SnackbarContent, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
+  border: '0 none',
+  borderRadius: '15px',
+  boxShadow: '0px 5px 20px rgba(0, 0, 0, 0.1)',
   [theme.breakpoints.up('sm')]: {
     minWidth: '344px !important'
   },
   [`& .${classes.card}`]: {
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#fff',
     width: '100%',
-    padding: '16px'
+    padding: theme.spacing(),
+    borderRadius: 30
   },
   [`& .${classes.closeAction}`]: {
     position: 'absolute',
@@ -55,7 +59,7 @@ const CustomSnackMessage = forwardRef<HTMLDivElement, {id: string | number; mess
 
   return (
     <Root ref={ref} className={classes.root} key={props.id}>
-      <Card className={classes.card} elevation={1}>
+      <Card className={classes.card} elevation={0}>
         <IconButton className={classes.closeAction} onClick={handleDismiss}>
           <Icon>close</Icon>
         </IconButton>

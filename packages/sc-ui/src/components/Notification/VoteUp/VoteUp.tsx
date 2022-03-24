@@ -6,7 +6,7 @@ import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
 import NewChip from '../../../shared/NewChip/NewChip';
 import {getContribute, getContributeType, getContributionSnippet, getRouteData, getContributionRouteName} from '../../../utils/contribute';
-import { grey, red } from '@mui/material/colors';
+import {grey, red} from '@mui/material/colors';
 import classNames from 'classnames';
 import {SCNotificationObjectTemplateType} from '../../../types/notification';
 
@@ -125,7 +125,6 @@ export default function VoteUpNotification(props: NotificationVoteUpProps): JSX.
 
   // CONST
   const isSnippetTemplate = template === SCNotificationObjectTemplateType.SNIPPET;
-  const isToastTemplate = template === SCNotificationObjectTemplateType.TOAST;
   const contribution = getContribute(notificationObject);
   const contributionType = getContributeType(notificationObject);
 
@@ -142,7 +141,7 @@ export default function VoteUpNotification(props: NotificationVoteUpProps): JSX.
         component={'div'}
         classes={{
           root: classNames({
-            [classes.listItemSnippet]: isToastTemplate || isSnippetTemplate,
+            [classes.listItemSnippet]: isSnippetTemplate,
             [classes.listItemSnippetNew]: isSnippetTemplate && notificationObject.is_new
           })
         }}>
@@ -183,7 +182,9 @@ export default function VoteUpNotification(props: NotificationVoteUpProps): JSX.
                   {getContributionSnippet(notificationObject[contributionType])}
                 </Typography>
               </Link>
-              {template === SCNotificationObjectTemplateType.DETAIL && <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />}
+              {template === SCNotificationObjectTemplateType.DETAIL && (
+                <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
+              )}
             </Box>
           }
         />
