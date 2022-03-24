@@ -215,9 +215,11 @@ export default function Message(props: MessageProps): JSX.Element {
             className={classes.header}
             avatar={<Avatar alt={preferences[SCPreferences.TEXT_APPLICATION_NAME]} src={preferences[SCPreferences.LOGO_NAVBAR_LOGO]} />}
             action={
-              <IconButton aria-label="close" onClick={handleClose} disabled={closing}>
-                {closing ? <CircularProgress size={20} /> : <Icon>close</Icon>}
-              </IconButton>
+              template === SCBroadcastMessageTemplateType.DETAIL && (
+                <IconButton aria-label="close" onClick={handleClose} disabled={closing}>
+                  {closing ? <CircularProgress size={20} /> : <Icon>close</Icon>}
+                </IconButton>
+              )
             }
             title={
               <Chip

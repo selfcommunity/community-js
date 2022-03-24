@@ -73,6 +73,7 @@ Notification.args = {
     {
       type: 'widget',
       component: BroadcastMessages,
+      componentProps: {variant: 'outlined', subscriptionChannel: `notifications_feed`},
       column: 'left',
       position: 1
     }

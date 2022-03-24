@@ -1,11 +1,17 @@
-import React, {useEffect, useRef} from 'react';
-import {styled} from '@mui/material/styles';
-import {Box, BoxProps} from '@mui/material';
-import {SCNotificationTopicType, SCNotification, SCNotificationTypologyType, useSCContext, SCContextType, Logger} from '@selfcommunity/core';
+import React, { useEffect, useRef } from 'react';
+import { styled } from '@mui/material/styles';
+import { Box, BoxProps } from '@mui/material';
+import {
+  SCContextType,
+  SCNotification,
+  SCNotificationTopicType,
+  SCNotificationTypologyType,
+  useSCContext,
+} from '@selfcommunity/core';
 import PubSub from 'pubsub-js';
-import {useSnackbar} from 'notistack';
+import { useSnackbar } from 'notistack';
 import CustomSnackMessage from '../../shared/CustomSnackMessage';
-import {SCNotificationObjectTemplateType} from '../../types';
+import { SCBroadcastMessageTemplateType, SCNotificationObjectTemplateType } from '../../types';
 import CommentNotification from '../Notification/Comment';
 import ContributionFollowNotification from '../Notification/ContributionFollow';
 import UserFollowNotification from '../Notification/UserFollow';
@@ -15,6 +21,7 @@ import PrivateMessageNotification from '../Notification/PrivateMessage';
 import MentionNotification from '../Notification/Mention';
 import IncubatorApprovedNotification from '../Notification/IncubatorApproved';
 import UserBlockedNotification from '../Notification/UserBlocked';
+import Message from '../BroadcastMessages/Message';
 
 const PREFIX = 'SCToastNotifications';
 
@@ -125,7 +132,7 @@ export default function UserToastNotifications(props: ToastNotificationsProps): 
     if (n.activity_type && n.activity_type === SCNotificationTypologyType.NOTIFICATION_BANNER) {
       /** Notification of type: 'notification_banner' */
       // TODO: When api is fixed, use BroadcastMessage -> Message as the component to render this content
-      content = <div style={{maxWidth: 300}} dangerouslySetInnerHTML={{__html: n.message}} />;
+      content = <Message key={n.notification_obj.id} message={n.notification_obj} elevation={0} template={SCBroadcastMessageTemplateType.TOAST} />;
     }
     if (handleNotification && type) {
       /** Override content */

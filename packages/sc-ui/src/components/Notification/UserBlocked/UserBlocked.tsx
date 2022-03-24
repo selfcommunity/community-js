@@ -124,7 +124,6 @@ export default function UserBlockedNotification(props: NotificationBlockedProps)
 
   // CONST
   const isSnippetTemplate = template === SCNotificationObjectTemplateType.SNIPPET;
-  const isToastTemplate = template === SCNotificationObjectTemplateType.TOAST;
 
   /**
    * Renders root object
@@ -136,7 +135,7 @@ export default function UserBlockedNotification(props: NotificationBlockedProps)
         component={'div'}
         classes={{
           root: classNames({
-            [classes.listItemSnippet]: isToastTemplate || isSnippetTemplate,
+            [classes.listItemSnippet]: isSnippetTemplate,
             [classes.listItemSnippetNew]: isSnippetTemplate && notificationObject.is_new
           })
         }}>
