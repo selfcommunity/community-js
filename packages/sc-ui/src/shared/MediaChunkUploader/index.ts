@@ -15,7 +15,7 @@ import {SCMediaChunkType} from '../../types/media';
 import {useIntl} from 'react-intl';
 import messages from '../../messages/common';
 
-export interface ChunkUploaderProps {
+export interface MediaChunkUploaderProps {
   /**
    * Chunk type
    * @default null
@@ -37,7 +37,7 @@ export interface ChunkUploaderProps {
    */
   onError: (chunk: SCMediaChunkType, error: string) => void;
 }
-export default (props: ChunkUploaderProps): JSX.Element => {
+export default (props: MediaChunkUploaderProps): JSX.Element => {
   // PROPS
   const {type = null, onSuccess = null, onProgress = null, onError = null} = props;
 

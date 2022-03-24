@@ -64,6 +64,8 @@ import {
 } from './types';
 import {SCCategoryType} from '@selfcommunity/core';
 import Widget from './components/Widget';
+import MediaChunkUploader, {MediaChunkUploaderProps} from './shared/MediaChunkUploader';
+import {Document, Image, Link, Share, EditMediaProps} from './shared/Media';
 
 /**
  * List all exports
@@ -203,5 +205,13 @@ export {
   SCMediaObjectType,
   SCMediaChunkType,
   SCNotificationObjectTemplateType,
-  SCBroadcastMessageTemplateType
+  SCBroadcastMessageTemplateType,
+  /* SC UI SHARED */
+  MediaChunkUploader,
+  MediaChunkUploaderProps,
+  Document,
+  Image,
+  Link,
+  Share,
+  EditMediaProps
 };
