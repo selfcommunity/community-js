@@ -1,6 +1,6 @@
 {
   "name": "@selfcommunity/i18n",
-  "version": "0.1.0-alpha.43",
+  "version": "0.1.0-alpha.44",
   "license": "MIT",
   "private": false,
   "main": "./lib/cjs/index.js",
