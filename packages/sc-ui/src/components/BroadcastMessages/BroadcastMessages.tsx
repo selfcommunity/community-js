@@ -25,7 +25,8 @@ const Root = styled(Box, {
   [`& .${classes.boxLoadMore}`]: {
     '& > div': {
       paddingBottom: theme.spacing(2)
-    }
+    },
+    marginBottom: theme.spacing(2)
   },
   [`& .${classes.buttonLoadMore}`]: {
     textTransform: 'capitalize'
