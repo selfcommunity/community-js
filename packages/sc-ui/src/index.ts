@@ -11,6 +11,7 @@ import ChangeCover, {ChangeCoverProps} from './components/ChangeCover';
 import ChangePicture, {ChangePictureProps} from './components/ChangePicture';
 import FriendshipUserButton, {FriendshipButtonProps} from './components/FriendshipUserButton';
 import Composer, {ComposerProps, ComposerSkeleton} from './components/Composer';
+import {COMPOSER_TYPE_DISCUSSION, COMPOSER_TYPE_POST} from './constants/Composer';
 import Editor, {EditorProps, EditorSkeleton} from './components/Editor';
 import User, {UserProps, UserSkeleton} from './components/User';
 import Feed, {FeedRef, FeedProps, FeedSidebarProps, FeedSkeleton} from './components/Feed';
@@ -99,13 +100,15 @@ export {
   ChangePictureProps,
   ChangeCoverProps,
   Composer,
-  FriendshipUserButton,
-  FriendshipButtonProps,
+  COMPOSER_TYPE_DISCUSSION,
+  COMPOSER_TYPE_POST,
   ComposerProps,
   ComposerSkeleton,
   Editor,
   EditorProps,
   EditorSkeleton,
+  FriendshipUserButton,
+  FriendshipButtonProps,
   Feed,
   FeedRef,
   FeedProps,
