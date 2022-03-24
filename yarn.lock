@@ -2911,107 +2911,106 @@
   resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.11.4.tgz#d8c7b8db9226d2d7664553a0741ad7d0397ee503"
   integrity sha512-q/ytXxO5NKvyT37pmisQAItCFqA7FD/vNb8dgaJy3/630Fsc+Mz9/9f2SziBoIZ30TJooXyTwZmhi1zjXmObYg==
 
-"@rpldy/chunked-sender@^0.14.1", "@rpldy/chunked-sender@^0.14.2":
-  version "0.14.2"
-  resolved "https://registry.yarnpkg.com/@rpldy/chunked-sender/-/chunked-sender-0.14.2.tgz#393c515d0e446e10d0c75789411478ee5c794d85"
-  integrity sha512-wa2ZndP/yrtRlu3Pd6EMBiRTg9SkY3XMjj9gstuucpyYOsz5Zh8cTQUESLyl5LgnngZ3RVmu3eWStXSj095PoA==
+"@rpldy/chunked-sender@^0.18.0":
+  version "0.18.0"
+  resolved "https://registry.yarnpkg.com/@rpldy/chunked-sender/-/chunked-sender-0.18.0.tgz#588d348d3bba731db1f60d0ae6317f42f68aa59e"
+  integrity sha512-5jBJb4Lqc2iLb9Tfqi+ZdzqCI8uiAIaiqcJZ3S90JSk72vqkBCHPc8epWiHnts+ur5l9VqHXYe6N/0aN1tLALA==
   dependencies:
-    "@rpldy/sender" "^0.14.2"
-    "@rpldy/shared" "^0.14.2"
-    "@rpldy/simple-state" "^0.14.2"
+    "@rpldy/sender" "^0.18.0"
+    "@rpldy/shared" "^0.18.0"
+    "@rpldy/simple-state" "^0.18.0"
 
-"@rpldy/chunked-uploady@^0.14.1":
-  version "0.14.2"
-  resolved "https://registry.yarnpkg.com/@rpldy/chunked-uploady/-/chunked-uploady-0.14.2.tgz#27c012d1a98a6a092049fda6eb5a62b501d5e190"
-  integrity sha512-j6Ojig/PsWYqcxptzPyqHJCE29vO9IKQXcX1t6NqVt49Mk/x9XG5jzN1/Lgj4GJ0Ai0BBWK+jO637oh3bHfFKA==
+"@rpldy/chunked-uploady@^0.18.0":
+  version "0.18.0"
+  resolved "https://registry.yarnpkg.com/@rpldy/chunked-uploady/-/chunked-uploady-0.18.0.tgz#559a05936976b7629503cb3b2a817ce58446fc53"
+  integrity sha512-wEbKUFuDFOUww1iD1KsTkNB+TKSFP0bBWriPUQk+RsHIIsw2hUu+zwNM3fthbcOamB+g4BGqekmM8rHYjpSD9Q==
   dependencies:
-    "@rpldy/chunked-sender" "^0.14.2"
-    "@rpldy/sender" "^0.14.2"
-    "@rpldy/shared" "^0.14.2"
-    "@rpldy/shared-ui" "^0.14.2"
-    "@rpldy/uploader" "^0.14.2"
-    "@rpldy/uploady" "^0.14.2"
+    "@rpldy/chunked-sender" "^0.18.0"
+    "@rpldy/sender" "^0.18.0"
+    "@rpldy/shared" "^0.18.0"
+    "@rpldy/shared-ui" "^0.18.0"
+    "@rpldy/uploader" "^0.18.0"
+    "@rpldy/uploady" "^0.18.0"
 
-"@rpldy/life-events@^0.14.2":
-  version "0.14.2"
-  resolved "https://registry.yarnpkg.com/@rpldy/life-events/-/life-events-0.14.2.tgz#3bb8e1c37a4ab695e2ba7ec2b96f686e40e68624"
-  integrity sha512-fSG1dYVLvOJsXSr8HvWnQ3O+q/yd5oeklZOsUat3pxgky+4tt3qvaRfPz2Ouk2BhgKD43JUE88QNrVIy4j4ZzQ==
+"@rpldy/life-events@^0.18.0":
+  version "0.18.0"
+  resolved "https://registry.yarnpkg.com/@rpldy/life-events/-/life-events-0.18.0.tgz#c02fcca4946c605a6fbedfab3515f3003e296267"
+  integrity sha512-xeflgiLwV2ZqUySrV+rtDPm5fIDbDYZTVByji7+VUV3EP0KprNWTcsjJ1ce6Z7sway5G4i8QHoC+/At9C7GJsA==
   dependencies:
-    "@rpldy/shared" "^0.14.2"
-    is-promise "^4.0.0"
+    "@rpldy/shared" "^0.18.0"
 
-"@rpldy/sender@^0.14.2":
-  version "0.14.2"
-  resolved "https://registry.yarnpkg.com/@rpldy/sender/-/sender-0.14.2.tgz#1fd00bf8301d564948c7ceab21e3b2788518d4c3"
-  integrity sha512-eDO7jTWKw131JauZIffupxXxvVRxs+S5T3+W7AL3hQXGZie3DFbybJwtVP3oTq+kqrIUTFEStm4XfYQ8ocdwlg==
+"@rpldy/sender@^0.18.0":
+  version "0.18.0"
+  resolved "https://registry.yarnpkg.com/@rpldy/sender/-/sender-0.18.0.tgz#5225a290689d1f78918236443653ebcc57790370"
+  integrity sha512-vGYCQNk51BXUqiVokbWKM7iicOiq5YJ3++ooDzLxemD1I96bLPHTjNYAU+rYCPNk0gVRZnR1jfS0F1+hl9KGeA==
   dependencies:
-    "@rpldy/shared" "^0.14.2"
+    "@rpldy/shared" "^0.18.0"
 
-"@rpldy/shared-ui@^0.14.2":
-  version "0.14.2"
-  resolved "https://registry.yarnpkg.com/@rpldy/shared-ui/-/shared-ui-0.14.2.tgz#4396616bbed485fa6ca80bd4a6a8717dff8ed001"
-  integrity sha512-j00drBQ08WTk4yLXRKmD6ett19Pp9aG3sz3HTlFVS8/4IcjTT6wdSgYVtwgfyWN4L+5uZPoIiKZvwAM7+I084w==
+"@rpldy/shared-ui@^0.18.0":
+  version "0.18.0"
+  resolved "https://registry.yarnpkg.com/@rpldy/shared-ui/-/shared-ui-0.18.0.tgz#ab9db49faccc13be0d2e644eef91b0efe3c65874"
+  integrity sha512-m7zgSj7cH3jZYF027E2HZ6pjE5IJ08oFZCUrLE0lQ3v2pSu4oP1CH2PB5rFt91cfHjiD57rVcd8YerSFSblRDA==
   dependencies:
-    "@rpldy/shared" "^0.14.2"
-    "@rpldy/uploader" "^0.14.2"
+    "@rpldy/shared" "^0.18.0"
+    "@rpldy/uploader" "^0.18.0"
 
-"@rpldy/shared@^0.14.2":
-  version "0.14.2"
-  resolved "https://registry.yarnpkg.com/@rpldy/shared/-/shared-0.14.2.tgz#d1aebf92b4608041417f6885e3dbe8fe3905700a"
-  integrity sha512-8NQuSq1xkpj863dmKJ/8Z9PS6kPMWJVvzPosSbK1FWd6bBql0RKTcTmUJV05AgUNwevgj3ADgDHShJongFLO/A==
+"@rpldy/shared@^0.18.0":
+  version "0.18.0"
+  resolved "https://registry.yarnpkg.com/@rpldy/shared/-/shared-0.18.0.tgz#9b4f0dafbe5fa31edb4ae75fe2b9a7e629104d47"
+  integrity sha512-C2Udp6XT7qKF9RZ1vtt37goKaFbnO0gDXVPsWmoUeXceXLEu/dLM3JfL4YZpm7MSGUwYG6DSmKsHzmSFTEDNRw==
   dependencies:
     invariant "^2.2.4"
     just-throttle "^1.1.0"
 
-"@rpldy/simple-state@^0.14.2":
-  version "0.14.2"
-  resolved "https://registry.yarnpkg.com/@rpldy/simple-state/-/simple-state-0.14.2.tgz#dbf0a6e412663d8b96f509d5d444edbf40a80bb4"
-  integrity sha512-8kC//E3SS53D2OnjjPhLluP39EVU2fousxSibZfvTzK5xDpFa3tiZ/3K0acfqbVpFWxqzbaOf/9mbmsOUODHBg==
+"@rpldy/simple-state@^0.18.0":
+  version "0.18.0"
+  resolved "https://registry.yarnpkg.com/@rpldy/simple-state/-/simple-state-0.18.0.tgz#6eb1379c99367b0d04d18d8e338f974cd71da3e3"
+  integrity sha512-hP9as5pJkKg4StpIIf4Bd1dzs07oCLK4R+yfd2t8KQiCrbpwFeGbYJf7tMacPWVtxqaqd3tTJWwm612NjQ7w8A==
   dependencies:
-    "@rpldy/shared" "^0.14.2"
+    "@rpldy/shared" "^0.18.0"
 
-"@rpldy/upload-button@^0.14.1":
-  version "0.14.2"
-  resolved "https://registry.yarnpkg.com/@rpldy/upload-button/-/upload-button-0.14.2.tgz#c3a51208f2a56a39290bb5f12b82a5f720456aca"
-  integrity sha512-wlFxmyCKw7Ytcu6MIfuV1JiB4WhdukiCSB4tLRH0+hkBmnBO8E5Gj9EUy2Psfb5Hp3Rr9HVjDjPK/8ojjwQD0w==
+"@rpldy/upload-button@^0.18.0":
+  version "0.18.0"
+  resolved "https://registry.yarnpkg.com/@rpldy/upload-button/-/upload-button-0.18.0.tgz#e88258ff5021d56ba0251cd44c95871f12672d92"
+  integrity sha512-R8dL8h3iy8+UMi/CZbCEuZ/IxSk+ToXILsWWO2xTf66P8hWWX65WVMLCPe/A9NbWV52Hsk0SdaWSm8IJUUUTEg==
   dependencies:
-    "@rpldy/shared-ui" "^0.14.2"
+    "@rpldy/shared-ui" "^0.18.0"
 
-"@rpldy/upload-drop-zone@^0.14.1":
-  version "0.14.2"
-  resolved "https://registry.yarnpkg.com/@rpldy/upload-drop-zone/-/upload-drop-zone-0.14.2.tgz#f5fa5a58e9de924f0c4c29f877f42843b7d28615"
-  integrity sha512-cNT1VQ12irCy9UnSObJLrb7YFdIPDLO3T2ZKX25CacIqaN0o7PoQHcYK1hmvSp1B1Hhk/xkuXEWevLvG3G0DbQ==
+"@rpldy/upload-drop-zone@^0.18.0":
+  version "0.18.0"
+  resolved "https://registry.yarnpkg.com/@rpldy/upload-drop-zone/-/upload-drop-zone-0.18.0.tgz#82fe5ee1ad56674d9b65ca07d4587a6fecf81eb9"
+  integrity sha512-uooeIyItTwUnuYS4tlK5YIX4dvmkb999CkSmFQ0jKoZJLdukkfM62ZhWJxgzGmBr8BbpkOmm/nMHxJNPf76VpA==
   dependencies:
-    "@rpldy/shared-ui" "^0.14.2"
+    "@rpldy/shared-ui" "^0.18.0"
     html-dir-content "^0.3.2"
 
-"@rpldy/upload-preview@^0.14.1":
-  version "0.14.2"
-  resolved "https://registry.yarnpkg.com/@rpldy/upload-preview/-/upload-preview-0.14.2.tgz#2042106572a978f46378f68339dfa2df64b3f925"
-  integrity sha512-m5NsPE+jKt9u6lleXLhnlc5i13ZqA3EkKBcXyBL6vW6b5b3yQxdYSQP+l2ryu1/UJMlg3gerxlme8GVp2f+hhw==
+"@rpldy/upload-preview@^0.18.0":
+  version "0.18.0"
+  resolved "https://registry.yarnpkg.com/@rpldy/upload-preview/-/upload-preview-0.18.0.tgz#3c9bcc41d40eeb2b0418717cb28c1b0112fb189d"
+  integrity sha512-tVDa9sH8zOWJf0E/fwYdABHx6EI2G/0qewIGeXjUjyZy5bS0qD1BXvLrxIa+Co6PQ2gHROcbL69pChTmkOuOvg==
   dependencies:
-    "@rpldy/shared" "^0.14.2"
-    "@rpldy/shared-ui" "^0.14.2"
+    "@rpldy/shared" "^0.18.0"
+    "@rpldy/shared-ui" "^0.18.0"
 
-"@rpldy/uploader@^0.14.2":
-  version "0.14.2"
-  resolved "https://registry.yarnpkg.com/@rpldy/uploader/-/uploader-0.14.2.tgz#356fab33af0c14fdd418f128bb5c3b0ea86e4250"
-  integrity sha512-xLo1F07+WTSqYDTlcBzkTCU2eWQsWHN6D882Iv2uT8nQJQPcqVH8/ghU17fmyyy2CguJiFWWISITfjl5tvvKSw==
+"@rpldy/uploader@^0.18.0":
+  version "0.18.0"
+  resolved "https://registry.yarnpkg.com/@rpldy/uploader/-/uploader-0.18.0.tgz#9759002492f7c3795c84ba8b059164c0bc603e4d"
+  integrity sha512-GcA7xwk9+clyxqsRu00VQ8rZ+sF35uhmeJK/gXodMQhgU5HoO0+RcKPMhoLSrR1uIr+09xE3l66K53y1qWGsIQ==
   dependencies:
-    "@rpldy/life-events" "^0.14.2"
-    "@rpldy/sender" "^0.14.2"
-    "@rpldy/shared" "^0.14.2"
-    "@rpldy/simple-state" "^0.14.2"
+    "@rpldy/life-events" "^0.18.0"
+    "@rpldy/sender" "^0.18.0"
+    "@rpldy/shared" "^0.18.0"
+    "@rpldy/simple-state" "^0.18.0"
 
-"@rpldy/uploady@^0.14.1", "@rpldy/uploady@^0.14.2":
-  version "0.14.2"
-  resolved "https://registry.yarnpkg.com/@rpldy/uploady/-/uploady-0.14.2.tgz#c867a59dc1635e5286f9329905ae52f48bc5f2b7"
-  integrity sha512-8V1K3Zo1OlQ6y29zFthNwEtvGI6qAAcZ+KxhAODxnzgC5d3XPkJnVX1f373RJScIPnqogthZPsCiXOwAzKZ57A==
+"@rpldy/uploady@^0.18.0":
+  version "0.18.0"
+  resolved "https://registry.yarnpkg.com/@rpldy/uploady/-/uploady-0.18.0.tgz#36013b59a38e63dd3d5a00c37dda844d7137892c"
+  integrity sha512-aJ97WMc+XWF2lnNTUd+jhs4BovJdb/mRrYk1wzMQ/OuKC+u55tsNJFBzVsgBpNoND1QDbE4nMprOoLreEbmhMA==
   dependencies:
-    "@rpldy/life-events" "^0.14.2"
-    "@rpldy/shared" "^0.14.2"
-    "@rpldy/shared-ui" "^0.14.2"
-    "@rpldy/uploader" "^0.14.2"
+    "@rpldy/life-events" "^0.18.0"
+    "@rpldy/shared" "^0.18.0"
+    "@rpldy/shared-ui" "^0.18.0"
+    "@rpldy/uploader" "^0.18.0"
 
 "@sinonjs/commons@^1.6.0", "@sinonjs/commons@^1.7.0", "@sinonjs/commons@^1.8.1":
   version "1.8.3"
@@ -10139,11 +10138,6 @@ is-potential-custom-element-name@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/is-potential-custom-element-name/-/is-potential-custom-element-name-1.0.1.tgz#171ed6f19e3ac554394edf78caa05784a45bebb5"
   integrity sha512-bCYeRA2rVibKZd+s2625gGnGF/t7DSqDs4dP7CrLA1m7jKWz6pps0LpYLJN8Q64HtmPKJ1hrN3nzPNKFEKOUiQ==
-
-is-promise@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/is-promise/-/is-promise-4.0.0.tgz#42ff9f84206c1991d26debf520dd5c01042dd2f3"
-  integrity sha512-hvpoI6korhJMnej285dSg6nu1+e6uxs7zG3BYAm5byqDsgJNWwxzM6z6iZiAgQR4TJ30JmBTOwqZUw3WlyH3AQ==
 
 is-regex@^1.0.5, is-regex@^1.1.0, is-regex@^1.1.2, is-regex@^1.1.4:
   version "1.1.4"
