@@ -20,7 +20,8 @@ const PREFIX = 'SCTrendingFeed';
 const classes = {
   root: `${PREFIX}-root`,
   title: `${PREFIX}-title`,
-  noResults: `${PREFIX}-noResults`
+  noResults: `${PREFIX}-noResults`,
+  trendingItem: `${PREFIX}-trending-item`
 };
 
 const Root = styled(Widget, {
@@ -29,7 +30,10 @@ const Root = styled(Widget, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   maxWidth: 700,
-  marginBottom: theme.spacing(2)
+  marginBottom: theme.spacing(2),
+  [`& .${classes.trendingItem}`]: {
+    marginBottom: 0
+  }
 }));
 export interface TrendingFeedProps {
   /**
@@ -151,7 +155,7 @@ export default function TrendingFeed(props: TrendingFeedProps): JSX.Element {
               <List>
                 {posts.slice(0, visible).map((obj: SCFeedObjectType, index) => (
                   <div key={index}>
-                    <FeedObject elevation={0} feedObject={obj[obj.type]} key={obj.id} template={template} />
+                    <FeedObject elevation={0} feedObject={obj[obj.type]} key={obj.id} template={template} className={classes.trendingItem} />
                   </div>
                 ))}
               </List>
@@ -186,7 +190,7 @@ export default function TrendingFeed(props: TrendingFeedProps): JSX.Element {
                   <List>
                     {posts.map((obj: SCFeedObjectType, index) => (
                       <div key={index}>
-                        <FeedObject elevation={0} feedObject={obj[obj.type]} key={obj.id} template={template} />
+                        <FeedObject elevation={0} feedObject={obj[obj.type]} key={obj.id} template={template} className={classes.trendingItem} />
                       </div>
                     ))}
                   </List>
