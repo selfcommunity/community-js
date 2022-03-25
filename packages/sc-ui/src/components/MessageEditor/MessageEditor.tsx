@@ -1,17 +1,19 @@
 import React, {forwardRef, useContext, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Box, IconButton, InputAdornment, Popover, Stack, TextField} from '@mui/material';
+import {Box, Button, IconButton, InputAdornment, Popover, Stack, TextField} from '@mui/material';
 import Icon from '@mui/material/Icon';
 import Picker from 'emoji-picker-react';
 import classNames from 'classnames';
 import {SCContext, SCContextType} from '@selfcommunity/core';
 import MessageMediaUploader from './MessageMediaUploader/index';
+import {FormattedMessage} from 'react-intl';
 
 const PREFIX = 'SCMessageEditor';
 
 const classes = {
   root: `${PREFIX}-root`,
-  messageInput: `${PREFIX}-message-input`
+  messageInput: `${PREFIX}-message-input`,
+  sendMediaSection: `${PREFIX}-send-media-section`
 };
 
 const Root = styled(Box, {
@@ -23,6 +25,11 @@ const Root = styled(Box, {
   display: 'inline-block',
   [`& .${classes.messageInput}`]: {
     width: '100%'
+  },
+  [`& .${classes.sendMediaSection}`]: {
+    backgroundColor: theme.palette.grey['A200'],
+    display: 'flex',
+    justifyContent: 'center'
   }
 }));
 
@@ -140,17 +147,20 @@ export default function MessageEditor(props: MessageEditorProps): JSX.Element {
       <Root {...rest} className={classNames(classes.root, className)}>
         {openMediaSection ? (
           <>
+            <Box className={classes.sendMediaSection}>
+              {show && (
+                <Button disabled={!messageFile} onClick={handleMessageSend} variant="outlined">
+                  <FormattedMessage id="ui.messageEditor.button.send" defaultMessage="ui.messageEditor.button.send" />
+                </Button>
+              )}
+            </Box>
             <MessageMediaUploader
               open={openMediaSection}
               onClose={handleMediaSectionClose}
               forwardMessageFile={handleMessageFile}
               onFileUploaded={() => setShow(true)}
+              onFileCleared={() => setShow(false)}
             />
-            {show && (
-              <IconButton disabled={!messageFile} onClick={handleMessageSend}>
-                <Icon>send</Icon>
-              </IconButton>
-            )}
           </>
         ) : (
           <>

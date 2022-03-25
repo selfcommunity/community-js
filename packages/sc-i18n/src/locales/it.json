@@ -363,6 +363,8 @@
 
   "ui.snippetNotifications.noNotifications": "Al momento, non hai nessuna notifica da vedere",
 
+  "ui.messageEditor.button.send" : "invia",
+
   "ui.Message.dialog.msg": "Sei sicuro di voler eliminare il messaggio selezionato?",
   "ui.Message.dialog.confirm": "Sì",
   "ui.NewMessage.new" : "Nuovo Messaggio",

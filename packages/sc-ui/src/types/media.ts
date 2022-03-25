@@ -53,13 +53,11 @@ export interface SCMediaChunkType {
  */
 export interface SCMessageChunkType {
   id: number;
+  file_uuid: string;
   filename: string;
-  mimetype: string;
   url: string;
   completed: number;
   error: string;
-  uuid: string;
+  type: string;
   thumbnail: string;
-  //duration: number;
-  //filesize: number;
 }

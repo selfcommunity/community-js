@@ -9,7 +9,7 @@ import {
 import {Endpoints, formatHttpError, http, SCContextType, SCPrivateMessageFileType, useSCContext} from '@selfcommunity/core';
 import {useItemProgressListener, useItemStartListener} from '@rpldy/uploady';
 import {AxiosResponse} from 'axios';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {SCMessageChunkType} from '../../types/media';
 import {useIntl} from 'react-intl';
 import messages from '../../messages/common';
@@ -20,6 +20,11 @@ export interface MessageChunkUploaderProps {
    * @default null
    */
   type?: string | null;
+  /**
+   * Handles on progress
+   * @default null
+   */
+  onStart: (type: any) => void;
   /**
    * Handles on success
    * @default null
@@ -34,11 +39,14 @@ export interface MessageChunkUploaderProps {
    * Handles on error
    * @default null
    */
-  onError: (chunk: SCMessageChunkType, error: string) => void;
+  onError?: (chunk: SCMessageChunkType, error: string) => void;
 }
 export default (props: MessageChunkUploaderProps): JSX.Element => {
   // PROPS
-  const {type = null, onSuccess = null, onProgress = null, onError = null} = props;
+  const {type = null, onSuccess = null, onProgress = null, onError = null, onStart = null} = props;
+
+  // REFS
+  const firstRender = useRef<boolean>(true);
 
   // STATE
   const [chunks, setChunks] = useState({});
@@ -59,15 +67,20 @@ export default (props: MessageChunkUploaderProps): JSX.Element => {
 
   // component update
   useEffect(() => {
+    if (firstRender.current) {
+      firstRender.current = false;
+      return;
+    }
     onProgress && onProgress(chunks);
   }, [chunks]);
 
   // LISTENERS
   useItemStartListener((item) => {
+    onStart(item.file.type);
     if (item.file.type.startsWith('image/')) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        chunkStateRef.current.setChunk({id: item.id, qqfile: e.target.result});
+        chunkStateRef.current.setChunk({id: item.id, url: e.target.result});
       };
       // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
       // @ts-ignore
@@ -81,7 +94,7 @@ export default (props: MessageChunkUploaderProps): JSX.Element => {
   });
 
   useItemFinishListener((item) => {
-    if (item.file.type.startsWith('image/') && item.file.size < 10485760) {
+    if (item.file.type.startsWith('document/') && item.file.size < 10485760) {
       const _chunks = {...chunkStateRef.current.chunks};
       delete _chunks[item.id];
       chunkStateRef.current.setChunks(_chunks);

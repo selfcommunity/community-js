@@ -9,6 +9,7 @@ import Icon from '@mui/material/Icon';
 import classNames from 'classnames';
 import Widget from '../Widget';
 import AutoPlayer from '../../shared/AutoPlayer';
+import LazyLoad from 'react-lazyload';
 
 const PREFIX = 'SCMessage';
 
@@ -107,6 +108,10 @@ export interface MessageProps extends Pick<CardProps, Exclude<keyof CardProps, '
    * @default null
    */
   loggedUser?: number;
+  /**
+   * Action triggered on delete icon click
+   * @default null
+   */
   onDeleteIconClick?: () => void;
 }
 
@@ -190,14 +195,14 @@ export default function Message(props: MessageProps): JSX.Element {
         case type.startsWith(SCMessageFileType.VIDEO):
           section = (
             <Box>
-              <AutoPlayer url={src} width={'100%'} enableautoplay="true" />
+              <AutoPlayer url={src} width={'100%'} />
             </Box>
           );
           break;
         case type.startsWith(SCMessageFileType.DOCUMENT):
           section = (
             <Box>
-              <iframe src={`https://docs.google.com/gview?url=${src}&embedded=true`} title="file" width="100%" height="200" />
+              <iframe src={`https://docs.google.com/gview?url=${src}&embedded=true`} title="file" width="100%" height="200" loading="eager" />
             </Box>
           );
           break;
@@ -242,30 +247,32 @@ export default function Message(props: MessageProps): JSX.Element {
           </ListItem>
         </React.Fragment>
       ) : (
-        <ListItem onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} button={true}>
-          {!snippetType && isHovering && loggedUser === message.sender_id && message.status !== 'hidden' && (
-            <>
-              <IconButton sx={{marginBottom: '25px'}} onClick={onDeleteIconClick}>
-                <Icon fontSize="small">delete</Icon>
-              </IconButton>
-            </>
-          )}
-          <ListItemText
-            primary={
-              <Box className={classes.messageBox}>
-                {hasFile ? renderMessageFile(message) : <Typography component="span">{message.message}</Typography>}
-              </Box>
-            }
-            secondary={
-              <Box component="span" className={classes.messageTime}>
-                <Typography component="span">{`${intl.formatDate(message.created_at, {
-                  hour: 'numeric',
-                  minute: 'numeric'
-                })}`}</Typography>
-              </Box>
-            }
-          />
-        </ListItem>
+        <LazyLoad once>
+          <ListItem onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} button={true}>
+            {!snippetType && isHovering && loggedUser === message.sender_id && message.status !== 'hidden' && (
+              <>
+                <IconButton sx={{marginBottom: '25px'}} onClick={onDeleteIconClick}>
+                  <Icon fontSize="small">delete</Icon>
+                </IconButton>
+              </>
+            )}
+            <ListItemText
+              primary={
+                <Box className={classes.messageBox}>
+                  {hasFile ? renderMessageFile(message) : <Typography component="span" dangerouslySetInnerHTML={{__html: message.message}} />}
+                </Box>
+              }
+              secondary={
+                <Box component="span" className={classes.messageTime}>
+                  <Typography component="span">{`${intl.formatDate(message.created_at, {
+                    hour: 'numeric',
+                    minute: 'numeric'
+                  })}`}</Typography>
+                </Box>
+              }
+            />
+          </ListItem>
+        </LazyLoad>
       )}
     </React.Fragment>
   );
