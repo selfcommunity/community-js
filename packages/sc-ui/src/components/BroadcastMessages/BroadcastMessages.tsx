@@ -106,8 +106,9 @@ export default function BroadcastMessages(props: BroadcastMessagesProps): JSX.El
   } = props;
 
   // STATE
+  const broadcastMessagesRefreshUrl = `${Endpoints.BroadcastMessagesList.url()}?limit=3`;
   const [loading, setLoading] = useState<boolean>(null);
-  const [next, setNext] = useState<string>(`${Endpoints.BroadcastMessagesList.url()}?limit=3`);
+  const [next, setNext] = useState<string>(broadcastMessagesRefreshUrl);
   const [messages, setMessages] = useState<SCBroadcastMessageType[]>([]);
   const [viewAll, setViewAll] = useState<boolean>(false);
 
@@ -124,6 +125,9 @@ export default function BroadcastMessages(props: BroadcastMessagesProps): JSX.El
 
   const handleDisposeMessage = (message) => {
     setMessages(messages.filter((m) => m.id != message.id));
+    if (messages.length <= 1) {
+      fetchMessages(true);
+    }
   };
 
   /**
@@ -145,11 +149,11 @@ export default function BroadcastMessages(props: BroadcastMessagesProps): JSX.El
   /**
    * Fetch broadcast messages
    */
-  const fetchMessages = () => {
+  const fetchMessages = (refresh = false) => {
     setLoading(true);
-    performFetchMessages(next)
+    performFetchMessages(refresh ? broadcastMessagesRefreshUrl : next)
       .then((res) => {
-        setMessages([...messages, ...res.data]);
+        setMessages(refresh ? res.data : [...messages, ...res.data]);
         setNext(res.next);
         setLoading(false);
       })
@@ -182,14 +186,7 @@ export default function BroadcastMessages(props: BroadcastMessagesProps): JSX.El
    * Notification subscriber
    */
   const subscriber = (msg, data) => {
-    performFetchMessages(next)
-      .then((res) => {
-        setMessages(res.data);
-        setNext(res.next);
-      })
-      .catch((error) => {
-        Logger.error(SCOPE_SC_UI, error);
-      });
+    fetchMessages(true);
   };
 
   /**

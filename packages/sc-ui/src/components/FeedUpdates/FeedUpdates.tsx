@@ -1,9 +1,10 @@
 import React, {ReactNode, useEffect, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Button, Card, CardContent} from '@mui/material';
+import {Button, CardContent} from '@mui/material';
 import PubSub from 'pubsub-js';
 import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
+import Widget from '../Widget';
 
 const PREFIX = 'SCFeedUpdates';
 
@@ -12,12 +13,15 @@ const classes = {
   image: `${PREFIX}-image`
 };
 
-const Root = styled(Card, {
+const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  marginBottom: theme.spacing(2)
+  marginBottom: theme.spacing(2),
+  '& div:last-child': {
+    paddingBottom: theme.spacing(2)
+  }
 }));
 
 export interface FeedUpdatesProps {
