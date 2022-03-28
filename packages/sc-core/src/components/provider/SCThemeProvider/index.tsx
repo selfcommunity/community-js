@@ -8,13 +8,22 @@ import {SCPreferencesContextType} from '../../../types/context';
 import {useSCPreferences} from '../SCPreferencesProvider';
 
 /**
- * Create Global Context
- * Consuming this context in one of the following ways:
- *  1. <SCThemeContext.Consumer>
- *       {(theme,) => (...)}
- *     </SCThemeContext.Consumer>
- *  2. const scThemeContext: SCThemeContextType = useContext(SCThemeContext);
- *  3. const scThemeContext: SCThemeContextType = useSCTheme();
+ * Creates Global Context
+ *
+ :::tipContext can be consumed in one of the following ways:
+
+ ```jsx
+ 1. <SCThemeContext.Consumer>{(theme,) => (...)}</SCThemeContext.Consumer>
+ ```
+ ```jsx
+ 2. const scThemeContext: SCThemeContextType = useContext(SCThemeContext);
+ ```
+ ```jsx
+ 3. const scThemeContext: SCThemeContextType = useSCTheme();
+ ````
+
+ :::
+
  */
 export const SCThemeContext = createContext<SCThemeContextType>({} as SCThemeContextType);
 

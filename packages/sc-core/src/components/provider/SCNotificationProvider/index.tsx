@@ -9,13 +9,20 @@ import {WS_FACILITY_NOTIFY, WS_PROTOCOL_PREFIX, WS_HEARTBEAT_MESSAGE} from '../.
 import {SCNotificationMapping, SCNotificationTopics} from '../../../constants/Notification';
 
 /**
- * Create Global Context
- * Consuming this context in one of the following ways:
- *  1. <SCNotificationContext.Consumer>
- *       {(wsInstance, subscribe,) => (...)}
- *     </SCNotificationContext.Consumer>
- *  2. const scNotificationContext: SCNotificationContextType = useContext(SCNotificationContext);
- *  3. const scNotificationContext: SCNotificationContextType = useSCNotification();
+ * Creates Global Context
+ *
+ :::tipContext can be consumed in one of the following ways:
+
+ ```jsx
+ 1. <SCNotificationContext.Consumer>{(wsInstance, subscribe,) => (...)}</SCNotificationContext.Consumer>
+ ```
+ ```jsx
+ 2. const scNotificationContext: SCNotificationContextType = useContext(SCNotificationContext);
+ ```
+ ```jsx
+ 3. const scNotificationContext: SCNotificationContextType = useSCNotification();
+ ````
+ :::
  */
 export const SCNotificationContext = createContext<SCNotificationContextType>({} as SCNotificationContextType);
 

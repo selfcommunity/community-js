@@ -20,13 +20,22 @@ import {
 } from '../../../constants/Routes';
 
 /**
- * Create Global Context
- * Consuming this context in one of the following ways:
- *  1. <SCRoutingContext.Consumer>
- *       {(routerLink, routes, url) => (...)}
- *     </SCRoutingContext.Consumer>
- *  2. const scRoutingContext: SCRoutingContextType = useContext(SCRoutingContext);
- *  3. const scRoutingContext: SCRoutingContextType = useSCRouting();
+ * Creates Global Context
+ *
+ :::tipContext can be consumed in one of the following ways:
+
+
+ ```jsx
+ 1. <SCRoutingContext.Consumer>{(routerLink, routes, url) => (...)}</SCRoutingContext.Consumer>
+ ```
+ ```jsx
+ 2. const scRoutingContext: SCRoutingContextType = useContext(SCRoutingContext);
+ ```
+ ```jsx
+ 3. const scRoutingContext: SCRoutingContextType = useSCRouting();
+ ````
+
+ :::
  */
 export const SCRoutingContext = createContext<SCRoutingContextType>({} as SCRoutingContextType);
 

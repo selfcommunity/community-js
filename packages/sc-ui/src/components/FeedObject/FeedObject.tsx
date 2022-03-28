@@ -171,7 +171,7 @@ const Root = styled(Card, {
 export interface FeedObjectProps extends CardProps {
   /**
    * Id of the feedObject
-   * @default 'feed_object_<feedObjectType>_<feedObjectId | feedObject.id>'
+   * @default `feed_object_<feedObjectType>_<feedObjectId | feedObject.id>`
    */
   id?: string;
 

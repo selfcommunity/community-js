@@ -4,13 +4,19 @@ import {validateOptions, validOptions} from '../../../utils/validator';
 import {SCContextProviderType, SCContextType, SCSettingsType} from '../../../types';
 
 /**
- * Create Global Context
- * Consuming this context in one of the following ways:
- *  1. <SCContext.Consumer>
- *       {settings => (...)}
- *     </SCContext.Consumer>
- *  2. const scContext: SCContextType = useContext(SCContext);
- *  3. const scContext: SCContextType = useSCContext();
+ * Creates Global Context
+ *
+ :::tipContext can be consumed in one of the following ways:
+ ```jsx
+ 1. <SCContext.Consumer>{settings => (...)}</SCContext.Consumer>
+ ```
+ ```jsx
+ 2. const scContext: SCContextType = useContext(SCContext);
+ ```
+ ```jsx
+ 3. const scContext: SCContextType = useSCContext();
+ ````
+ :::
  */
 export const SCContext = createContext<SCContextType>({} as SCContextType);
 

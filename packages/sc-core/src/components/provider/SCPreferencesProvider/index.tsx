@@ -6,13 +6,21 @@ import {Logger} from '../../../utils/logger';
 import {SCOPE_SC_CORE} from '../../../constants/Errors';
 
 /**
- * Create Preferences/Features Context
- * Consuming this context in one of the following ways:
- *  1. <SCPreferencesContext.Consumer>
- *       {(preferences) => (...)}
- *     </SCPreferencesContext.Consumer>
- *  2. const scPreferences: SCPreferencesType = usePreferencesContext(SCPreferencesContext);
- *  3. const scPreferences: SCPreferencesType = useSCPreferences();
+ * Creates Preferences/Features Context
+ *
+ :::tipContext can be consumed in one of the following ways:
+
+
+ ```jsx
+ 1. <SCPreferencesContext.Consumer>{(preferences) => (...)}</SCPreferencesContext.Consumer>
+ ```
+ ```jsx
+ 2. const scPreferences: SCPreferencesType = usePreferencesContext(SCPreferencesContext);
+ ```
+ ```jsx
+ 3. const scPreferences: SCPreferencesType = useSCPreferences();
+ ````
+ :::
  */
 export const SCPreferencesContext = createContext<SCPreferencesContextType>({} as SCPreferencesContextType);
 

@@ -89,7 +89,7 @@ const Root = styled(Card, {
 export interface NotificationProps extends CardProps {
   /**
    * Id of the UserNotification
-   * @default 'notification_<notificationObject.sid>'
+   * @default `notification_<notificationObject.sid>`
    */
   id?: string;
 
