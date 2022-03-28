@@ -1,6 +1,6 @@
 import {asUploadButton} from '@rpldy/upload-button';
 import React, {forwardRef, useCallback, useContext, useRef, useState} from 'react';
-import {Box, CardContent, CardHeader, CircularProgress, IconButton, ImageListItem, ImageListItemBar, Typography} from '@mui/material';
+import {Alert, AlertTitle, Box, CardContent, CardHeader, CircularProgress, Fade, IconButton, Typography} from '@mui/material';
 import {ButtonProps} from '@mui/material/Button/Button';
 import Icon from '@mui/material/Icon';
 import ChunkedUploady from '@rpldy/chunked-uploady';
@@ -118,6 +118,7 @@ export default function MessageMediaUploader(props: MessageMediaUploaderProps): 
   const [previews, setPreviews] = useState([]);
   const [loaded, setLoaded] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const [errors, setErrors] = useState({});
 
   // CONTEXT
   const scContext: SCContextType = useContext(SCContext);
@@ -161,6 +162,20 @@ export default function MessageMediaUploader(props: MessageMediaUploaderProps): 
     setFileType(type);
   };
 
+  const handleError = (chunk: SCMessageChunkType, error: string) => {
+    setErrors({...errors, [chunk.id]: {...chunk, error}});
+    onClear();
+  };
+
+  const handleRemoveErrors = (id: string) => {
+    return () => {
+      delete errors[id];
+      setErrors({...errors});
+      setFile(null);
+      setLoading(false);
+    };
+  };
+
   /**
    * Renders root object
    */
@@ -169,6 +184,16 @@ export default function MessageMediaUploader(props: MessageMediaUploaderProps): 
       <Widget className={classes.mediaUploadSection}>
         <CardHeader action={<Icon onClick={onClose}>close</Icon>} />
         <CardContent>
+          <Box>
+            {Object.keys(errors).map((id: string) => (
+              <Fade in key={id}>
+                <Alert severity="error" onClose={handleRemoveErrors(id)}>
+                  <AlertTitle>{errors[id].name}</AlertTitle>
+                  {errors[id].error}
+                </Alert>
+              </Fade>
+            ))}
+          </Box>
           <ChunkedUploady
             destination={{
               url: `${scContext.settings.portal}${Endpoints.PrivateMessageUploadMediaInChunks.url()}`,
@@ -177,7 +202,7 @@ export default function MessageMediaUploader(props: MessageMediaUploaderProps): 
             }}
             chunkSize={2142880}
             chunked>
-            <MessageChunkUploader onStart={handleStart} onSuccess={handleSuccess} onProgress={handleProgress} />
+            <MessageChunkUploader onStart={handleStart} onSuccess={handleSuccess} onProgress={handleProgress} onError={handleError} />
             <Box display="grid">
               <Box gridColumn="span 12" className={classes.progress}>
                 {Object.values(uploading).map((chunk: SCMessageChunkType, index) => (

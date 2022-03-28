@@ -7,6 +7,7 @@
   "ui.common.error.username": "Invalid username",
   "ui.common.error.action": "An error has occurred. Try later!",
   "ui.common.userBlocked": "We're sorry, you can't report a post because your account is blocked",
+  "ui.common.error.messageError": "Message could not be sent!",
   "ui.common.discussionWithoutText": "View discussion",
   "ui.common.postWithoutText": "View post",
   "ui.common.statusWithoutText": "View status",

@@ -94,7 +94,7 @@ export default (props: MessageChunkUploaderProps): JSX.Element => {
   });
 
   useItemFinishListener((item) => {
-    if (item.file.type.startsWith('document/') && item.file.size < 10485760) {
+    if (item.file.size < 10485760) {
       const _chunks = {...chunkStateRef.current.chunks};
       delete _chunks[item.id];
       chunkStateRef.current.setChunks(_chunks);

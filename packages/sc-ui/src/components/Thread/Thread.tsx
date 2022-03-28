@@ -159,6 +159,11 @@ export interface ThreadProps {
  |sender|.SCThread-sender|Styles applied to the sender element.|
  |receiver|.SCThread-receiver|Styles applied to the receiver element.|
  |center|.SCThread-center|Styles applied to the center section.|
+ |threadBox|.SCThread-threadBox|Styles applied to the thread box element.|
+ |emptyBox|.SCThread-emptyBox|Styles applied to the empty box element.|
+ |newMessageBox|.SCThread-newMessageBox|Styles applied to the new message box element.|
+ |newMessageEditor|.SCThread-newMessageEditor|Styles applied to the new message editor.|
+ |newMessageEmptyBox|.SCThread-newMessageEmptyBox|Styles applied to the new message empty box element.|
 
  * @param props
  */
@@ -168,7 +173,7 @@ export default function Thread(props: ThreadProps): JSX.Element {
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
-  const {enqueueSnackbar} = useSnackbar();
+  const {enqueueSnackbar, closeSnackbar} = useSnackbar();
 
   // STATE
   const [loading, setLoading] = useState<boolean>(true);
@@ -265,6 +270,12 @@ export default function Thread(props: ThreadProps): JSX.Element {
       })
       .catch((error) => {
         console.log(error);
+        let _snackBar = enqueueSnackbar(<FormattedMessage id="ui.common.error" defaultMessage="ui.common.error" />, {
+          variant: 'error',
+          onClick: () => {
+            closeSnackbar(_snackBar);
+          }
+        });
       });
   }
 
@@ -286,11 +297,19 @@ export default function Thread(props: ThreadProps): JSX.Element {
         })
         .then((res) => {
           setMessages((prev) => [...prev, res.data]);
-          onNewMessageSent(res.data);
           setSending(false);
+          if (openNewMessage) {
+            onNewMessageSent(res.data);
+          }
         })
         .catch((error) => {
           console.log(error);
+          let _snackBar = enqueueSnackbar(<FormattedMessage id="ui.common.error.messageError" defaultMessage="ui.common.error.messageError" />, {
+            variant: 'error',
+            onClick: () => {
+              closeSnackbar(_snackBar);
+            }
+          });
         });
     }
   }

@@ -1,10 +1,10 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
-import {Avatar, ListItem, ListItemAvatar, ListItemText, CardProps, Typography, Box, IconButton} from '@mui/material';
+import {Avatar, ListItem, ListItemAvatar, ListItemText, CardProps, Typography, Box, IconButton, Button} from '@mui/material';
 import MessageSkeleton from './Skeleton';
 import {useIntl} from 'react-intl';
-import {SCPrivateMessageType, SCMessageFileType} from '@selfcommunity/core';
+import {SCPrivateMessageType, SCMessageFileType, SCUserContextType, SCUserContext} from '@selfcommunity/core';
 import Icon from '@mui/material/Icon';
 import classNames from 'classnames';
 import Widget from '../Widget';
@@ -21,7 +21,9 @@ const classes = {
   messageTime: `${PREFIX}-messageTime`,
   unread: `${PREFIX}-unread`,
   hide: `${PREFIX}-hide`,
-  img: `${PREFIX}-img`
+  img: `${PREFIX}-img`,
+  downloadButton: `${PREFIX}-downloadButton`,
+  documentFile: `${PREFIX}-documentFile`
 };
 
 const Root = styled(Widget, {
@@ -54,6 +56,15 @@ const Root = styled(Widget, {
   [`& .${classes.img}`]: {
     width: 250,
     height: 200
+  },
+  [`& .${classes.downloadButton}`]: {
+    backgroundColor: theme.palette.common.white,
+    marginBottom: '5px'
+  },
+  [`& .${classes.documentFile}`]: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 }));
 
@@ -135,7 +146,6 @@ export interface MessageProps extends Pick<CardProps, Exclude<keyof CardProps, '
  |Rule Name|Global class|Description|
  |---|---|---|
  |root|.SCMessage-root|Styles applied to the root element.|
- |card|.SCMessage-card|Styles applied to the card element.|
  |selected|.SCMessage-selected|Styles applied to the selected element.|
  |info|.SCMessage-info|Styles applied to the info section.|
  |messageBox|.SCMessage-messageBox|Styles applied to the message box element.|
@@ -143,6 +153,8 @@ export interface MessageProps extends Pick<CardProps, Exclude<keyof CardProps, '
  |unread|.SCMessage-unread|Styles applied to the unread element.|
  |hide|.SCMessage-hide|Styles applied to the hidden element.|
  |img|.SCMessage-img|Styles applied to the img element.|
+ |downloadButton|.SCMessage-downloadButton|Styles applied to the download button element.|
+ |documentFile|.SCMessage-documentFile|Styles applied to the message file element.|
 
 
  * @param props
@@ -170,8 +182,15 @@ export default function Message(props: MessageProps): JSX.Element {
   // STATE
   const hasFile = message ? message.file : null;
 
+  // CONTEXT
+  const scUserContext: SCUserContextType = useContext(SCUserContext);
+
   if (!message) {
     return <MessageSkeleton elevation={0} />;
+  }
+
+  function bytesToSize(bytes) {
+    return (bytes / (1024 * 1024)).toFixed(1) + 'MB';
   }
 
   // RENDERING
@@ -183,6 +202,7 @@ export default function Message(props: MessageProps): JSX.Element {
     let section = null;
     if (m.file) {
       let type = m.file.mimetype;
+      let isPdf = type === 'application/pdf';
       let src = message.file.url;
       switch (true) {
         case type.startsWith(SCMessageFileType.IMAGE):
@@ -201,9 +221,21 @@ export default function Message(props: MessageProps): JSX.Element {
           break;
         case type.startsWith(SCMessageFileType.DOCUMENT):
           section = (
-            <Box>
-              <iframe src={`https://docs.google.com/gview?url=${src}&embedded=true`} title="file" width="100%" height="200" loading="eager" />
-            </Box>
+            <>
+              {isPdf ? (
+                <iframe src={`https://docs.google.com/gview?url=${src}&embedded=true`} title="file" width="100%" height="200" loading="eager" />
+              ) : (
+                <>
+                  <Box className={classes.documentFile}>
+                    <IconButton className={classes.downloadButton} onClick={() => window.open(src, '_blank')}>
+                      <Icon>download</Icon>
+                    </IconButton>
+                    <Typography sx={{marginLeft: '5px'}}>{m.file.filename}</Typography>
+                  </Box>
+                  <Typography component={'span'}>{bytesToSize(m.file.filesize)}</Typography>
+                </>
+              )}
+            </>
           );
           break;
         default:
@@ -223,12 +255,20 @@ export default function Message(props: MessageProps): JSX.Element {
         <React.Fragment>
           <ListItem>
             <ListItemAvatar>
-              <Avatar alt={message.receiver.username} src={message.receiver.avatar} />
+              {scUserContext['user'] && scUserContext['user'].username === message.receiver.username ? (
+                <Avatar alt={message.sender.username} src={message.sender.avatar} />
+              ) : (
+                <Avatar alt={message.receiver.username} src={message.receiver.avatar} />
+              )}
             </ListItemAvatar>
             <ListItemText
               primary={
                 <Box className={classes.info}>
-                  <Typography component="span">{message.receiver.username}</Typography>
+                  {scUserContext['user'] && scUserContext['user'].username === message.receiver.username ? (
+                    <Typography component="span">{message.sender.username}</Typography>
+                  ) : (
+                    <Typography component="span">{message.receiver.username}</Typography>
+                  )}
                   <Typography component="span">{`${intl.formatDate(message.last_message_at, {
                     weekday: 'long',
                     day: 'numeric'

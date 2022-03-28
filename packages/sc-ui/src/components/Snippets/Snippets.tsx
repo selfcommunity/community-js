@@ -53,6 +53,10 @@ export interface SnippetsProps {
    * @param msg
    */
   onSnippetClick?: (msg) => void;
+  /**
+   * Clicked thread id
+   * @default null
+   */
   threadId?: number;
 }
 /**
