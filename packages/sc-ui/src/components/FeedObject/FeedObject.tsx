@@ -724,7 +724,7 @@ export default function FeedObject(props: FeedObjectProps): JSX.Element {
                 )}
               </Box>
               <Box className={classes.mediasSection}>
-                <MediasPreview medias={obj.medias} {...PollObjectProps} />
+                <MediasPreview medias={obj.medias} {...MediasPreviewProps} />
               </Box>
               <Box className={classes.pollsSection}>
                 {obj['poll'] && <PollObject feedObject={obj} pollObject={obj['poll']} onChange={handleChangePoll} {...PollObjectProps} />}
