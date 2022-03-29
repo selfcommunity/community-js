@@ -3,7 +3,6 @@ import {styled} from '@mui/material/styles';
 import {Box, Paper, Typography} from '@mui/material';
 import ChangeCover, {ChangeCoverProps} from '../ChangeCover';
 import ChangePicture, {ChangePictureProps} from '../ChangePicture';
-import {useIntl} from 'react-intl';
 import {
   SCPreferences,
   SCPreferencesContextType,
@@ -151,11 +150,8 @@ export default function UserProfileHeader(inProps: UserProfileHeaderProps): JSX.
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
 
-  // STATE
+  // HOOKS
   const {scUser, setSCUser} = useSCFetchUser({id: userId, user});
-
-  // INTL
-  const intl = useIntl();
 
   /**
    * Handles Change Avatar

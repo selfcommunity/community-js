@@ -185,7 +185,7 @@ export default function ChangeCover(inProps: ChangeCoverProps): JSX.Element {
             <CircularProgress size={15} />
           </MenuItem>
         ) : (
-          <>
+          <Box>
             <input type="file" onChange={() => handleUpload(event)} ref={fileInput} hidden />
             <MenuItem disabled={loading} onClick={() => fileInput.current.click()} className={classes.addMenuItem}>
               <ListItemIcon>
@@ -201,7 +201,7 @@ export default function ChangeCover(inProps: ChangeCoverProps): JSX.Element {
                 <FormattedMessage id="ui.changeCover.button.delete" defaultMessage="ui.changeCover.button.delete" />
               </MenuItem>
             )}
-          </>
+          </Box>
         )}
       </Menu>
       <IconButton className={classes.helpPopover} color="primary" aria-label="upload picture" component="span" onClick={handleClickHelpButton}>
