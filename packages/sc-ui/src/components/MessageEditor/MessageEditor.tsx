@@ -7,6 +7,7 @@ import classNames from 'classnames';
 import {SCContext, SCContextType} from '@selfcommunity/core';
 import MessageMediaUploader from './MessageMediaUploader/index';
 import {FormattedMessage} from 'react-intl';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const PREFIX = 'SCMessageEditor';
 
@@ -85,11 +86,16 @@ export interface MessageEditorProps {
  |---|---|---|
  |root|.SCMessageEditor-root|Styles applied to the root element.|
  |messageInput|.SCMessageEditor-card|Styles applied to the message input element.|
+ |sendMediaSection|.SCMessageEditor-send-media-section|Styles applied to the send media section.|
 
- * @param props
+ * @param inProps
  */
-export default function MessageEditor(props: MessageEditorProps): JSX.Element {
+export default function MessageEditor(inProps: MessageEditorProps): JSX.Element {
   // PROPS
+  const props: MessageEditorProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   const {autoHide = null, className = null, send = null, isSending = null, getMessage = null, getMessageFile = null, ...rest} = props;
 
   // STATE

@@ -16,6 +16,7 @@ import {
   SCFeedWidgetType
 } from '@selfcommunity/ui';
 import {Endpoints} from '@selfcommunity/core';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const PREFIX = 'SCExploreFeedTemplate';
 
@@ -98,8 +99,12 @@ const WIDGETS: SCFeedWidgetType[] = [
   }
 ];
 
-export default function ExploreFeed(props: ExploreFeedProps): JSX.Element {
+export default function ExploreFeed(inProps: ExploreFeedProps): JSX.Element {
   // PROPS
+  const props: ExploreFeedProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   const {id = 'explore_feed', className, widgets = WIDGETS, FeedObjectProps = {}, FeedSidebarProps = null} = props;
 
   // STATE

@@ -8,6 +8,7 @@ import {AxiosResponse} from 'axios';
 import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
 import Widget from '../Widget';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const PREFIX = 'SCCategoriesSuggestion';
 
@@ -73,13 +74,18 @@ export interface CategoriesListProps {
  |noResults|.SCCategoriesSuggestion-noResults|Styles applied to noResults section.|
 
 
- * @param props
+ * @param inProps
  */
-export default function CategoriesSuggestion(props: CategoriesListProps): JSX.Element {
+export default function CategoriesSuggestion(inProps: CategoriesListProps): JSX.Element {
   // CONST
   const limit = 3;
 
   // PROPS
+  const props: CategoriesListProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
+
   const {autoHide, className, CategoryProps = {}, ...rest} = props;
 
   // STATE

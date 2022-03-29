@@ -8,6 +8,7 @@ import {SCUserContext, SCUserContextType, useSCFetchCommentObject} from '@selfco
 import Editor, {TRichTextEditorRef} from '../../Editor';
 import classNames from 'classnames';
 import {LoadingButton} from '@mui/lab';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const messages = defineMessages({
   reply: {
@@ -123,8 +124,12 @@ export interface ReplyCommentObjectProps {
   [p: string]: any;
 }
 
-export default function ReplyCommentObject(props: ReplyCommentObjectProps): JSX.Element {
+export default function ReplyCommentObject(inProps: ReplyCommentObjectProps): JSX.Element {
   // PROPS
+  const props: ReplyCommentObjectProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   const {
     className,
     commentObjectId,
@@ -144,7 +149,7 @@ export default function ReplyCommentObject(props: ReplyCommentObjectProps): JSX.
   const scUserContext: SCUserContextType = useContext(SCUserContext);
   const intl = useIntl();
 
-  // RETRIVE OBJECTS
+  // RETRIEVE OBJECTS
   const {obj} = useSCFetchCommentObject({id: commentObjectId, commentObject});
   const [html, setHtml] = useState(text);
 

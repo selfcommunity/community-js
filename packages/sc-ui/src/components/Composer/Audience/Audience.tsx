@@ -15,6 +15,7 @@ import {SCTagType} from '@selfcommunity/core/src/types';
 import {Endpoints, http} from '@selfcommunity/core';
 import {AxiosResponse} from 'axios';
 import TagChip from '../../../shared/TagChip';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const PREFIX = 'SCComposerAudience';
 
@@ -66,25 +67,47 @@ export interface AudienceProps extends StandardProps<React.HTMLAttributes<HTMLDi
    * @default 'auto'
    */
   defaultValue?: SCTagType[];
+  /**
+   * The maximum number of tags that will be visible when not focused.
+   * @default 0
+   */
   limitCountTags?: number;
+  /**
+   * If checkbox is selected
+   * @default false
+   */
   checkboxSelect?: boolean;
+  /**
+   * The props applied to text field
+   * @default {variant: 'outlined, label: audience_tags_label}
+   */
   TextFieldProps?: TextFieldProps;
+  /**
+   * Callback for change event on poll object
+   * @param value
+   * @default empty object
+   */
   onChange?: (value: any) => void;
 }
 
-export default function ({
-  defaultValue = [],
-  limitCountTags = 0,
-  checkboxSelect = false,
-  disabled = false,
-  TextFieldProps = {
-    variant: 'outlined',
-    label: <FormattedMessage id="ui.composer.audience.tags.label" defaultMessage="ui.composer.audience.tags.label" />
-  },
-  ...props
-}: AudienceProps): JSX.Element {
+export default function (inProps: AudienceProps): JSX.Element {
   // Props
-  const {onChange, ...rest} = props;
+  const props: AudienceProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
+  const {
+    onChange,
+    defaultValue = [],
+    limitCountTags = 0,
+    checkboxSelect = false,
+    disabled = false,
+    TextFieldProps = {
+      variant: 'outlined',
+      label: <FormattedMessage id="ui.composer.audience.tags.label" defaultMessage="ui.composer.audience.tags.label" />
+    },
+    ...rest
+  } = props;
 
   // State
   const [isLoading, setIsLoading] = useState(false);

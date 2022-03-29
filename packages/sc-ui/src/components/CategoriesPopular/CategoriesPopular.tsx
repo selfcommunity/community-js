@@ -1,6 +1,6 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import { Button, CardContent, List, Typography } from '@mui/material';
+import {Button, CardContent, List, Typography} from '@mui/material';
 import {Endpoints, http, Logger} from '@selfcommunity/core';
 import Skeleton from './Skeleton';
 import {AxiosResponse} from 'axios';
@@ -14,6 +14,7 @@ import BaseDialog from '../../shared/BaseDialog';
 import CentralProgress from '../../shared/CentralProgress';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Widget from '../Widget';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const PREFIX = 'SCCategoriesPopular';
 
@@ -51,13 +52,18 @@ const Root = styled(Widget, {
  |title|.SCCategoriesPopular-title|Styles applied to the title element.|
  |noResults|.SCCategoriesPopular-noResults|Styles applied to noResults section.|
 
- * @param props
+ * @param inProps
  */
-export default function CategoriesPopular(props: CategoriesListProps): JSX.Element {
+export default function CategoriesPopular(inProps: CategoriesListProps): JSX.Element {
   // CONST
   const limit = 3;
 
   // PROPS
+  const props: CategoriesListProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
+
   const {autoHide = true, className, CategoryProps = {}, ...rest} = props;
 
   // STATE
@@ -125,9 +131,7 @@ export default function CategoriesPopular(props: CategoriesListProps): JSX.Eleme
             <React.Fragment>
               <List>
                 {categories.slice(0, visibleCategories).map((category: SCCategoryType, index) => (
-                  <div key={index}>
-                    <Category elevation={0} category={category} key={category.id} {...CategoryProps} />
-                  </div>
+                  <Category elevation={0} category={category} key={category.id} {...CategoryProps} />
                 ))}
               </List>
               {hasMore && (

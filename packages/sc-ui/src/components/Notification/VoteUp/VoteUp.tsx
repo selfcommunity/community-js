@@ -9,6 +9,7 @@ import {getContribute, getContributeType, getContributionSnippet, getRouteData, 
 import {grey, red} from '@mui/material/colors';
 import classNames from 'classnames';
 import {SCNotificationObjectTemplateType} from '../../../types/notification';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const messages = defineMessages({
   appreciated: {
@@ -104,11 +105,15 @@ export interface NotificationVoteUpProps {
 
 /**
  * This component render the content of the notification of type vote up
- * @param props
+ * @param inProps
  * @constructor
  */
-export default function VoteUpNotification(props: NotificationVoteUpProps): JSX.Element {
+export default function VoteUpNotification(inProps: NotificationVoteUpProps): JSX.Element {
   // PROPS
+  const props: NotificationVoteUpProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   const {
     notificationObject,
     id = `n_${props.notificationObject['sid']}`,

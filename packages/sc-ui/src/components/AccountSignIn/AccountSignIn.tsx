@@ -8,6 +8,7 @@ import {LoadingButton} from '@mui/lab';
 import PasswordTextField from '../../shared/PasswordTextField';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {AxiosResponse} from 'axios';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const PREFIX = 'SCAccountSignIn';
 
@@ -91,9 +92,13 @@ export interface AccountSignInProps {
  |password|.SCAccountSignIn-password|Styles applied to the password TextField.|
 
  *
- * @param props
+ * @param inProps
  */
-export default function AccountSignIn(props: AccountSignInProps): JSX.Element {
+export default function AccountSignIn(inProps: AccountSignInProps): JSX.Element {
+  const props: AccountSignInProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   // PROPS
   const {
     className,

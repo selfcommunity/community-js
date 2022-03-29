@@ -1,12 +1,11 @@
 import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
-
-import UserProfileHeader from './index';
+import UserProfileInfo from './index';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC UI/UserProfileHeader ',
-  component: UserProfileHeader,
+  title: 'Design System/SC UI/UserProfileInfo ',
+  component: UserProfileInfo,
   argTypes: {
     userId: {
       control: {type: 'number'},
@@ -15,15 +14,15 @@ export default {
     }
   },
   args: {
-    userId: 796
+    userId: 1
   }
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
-} as ComponentMeta<typeof UserProfileHeader>;
+} as ComponentMeta<typeof UserProfileInfo>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof UserProfileHeader> = (args) => (
+const Template: ComponentStory<typeof UserProfileInfo> = (args) => (
   <div style={{width: '100%'}}>
-    <UserProfileHeader {...args} />
+    <UserProfileInfo {...args} />
   </div>
 );
 

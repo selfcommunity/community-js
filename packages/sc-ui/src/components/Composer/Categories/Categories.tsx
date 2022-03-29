@@ -13,6 +13,7 @@ import {AutocompleteClasses} from '@mui/material/Autocomplete/autocompleteClasse
 import {OverridableStringUnion} from '@mui/types';
 import {AutocompletePropsSizeOverrides} from '@mui/material/Autocomplete/Autocomplete';
 import {SCCategoryType} from '@selfcommunity/core/src/types';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const PREFIX = 'SCComposerCategories';
 
@@ -64,22 +65,46 @@ export interface CategoriesProps extends StandardProps<React.HTMLAttributes<HTML
    * @default 'auto'
    */
   defaultValue?: SCCategoryType[];
+  /**
+   * The maximum number of categories that will be visible when not focused.
+   * @default 0
+   */
   limitCountCategories?: number;
+  /**
+   * If checkbox is selected
+   * @default false
+   */
   checkboxSelect?: boolean;
+  /**
+   * The props applied to text field
+   * @default {variant: 'outlined, label: categories_label}
+   */
   TextFieldProps?: TextFieldProps;
+  /**
+   * Callback for change event on poll object
+   * @param value
+   */
   onChange?: (value: any) => void;
 }
 
-export default function ({
-  defaultValue = [],
-  limitCountCategories = 0,
-  checkboxSelect = false,
-  disabled = false,
-  TextFieldProps = {variant: 'outlined', label: <FormattedMessage id="ui.composer.categories.label" defaultMessage="ui.composer.categories.label" />},
-  ...props
-}: CategoriesProps): JSX.Element {
+export default function (inProps: CategoriesProps): JSX.Element {
+  const props: CategoriesProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   // Props
-  const {onChange, ...rest} = props;
+  const {
+    onChange,
+    defaultValue = [],
+    limitCountCategories = 0,
+    checkboxSelect = false,
+    disabled = false,
+    TextFieldProps = {
+      variant: 'outlined',
+      label: <FormattedMessage id="ui.composer.categories.label" defaultMessage="ui.composer.categories.label" />
+    },
+    ...rest
+  } = props;
 
   // State
   const [open, setOpen] = useState(false);

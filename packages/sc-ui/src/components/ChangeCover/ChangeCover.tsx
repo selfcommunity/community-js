@@ -8,6 +8,7 @@ import {FormattedMessage} from 'react-intl';
 import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
 import classNames from 'classnames';
 import CircularProgress from '@mui/material/CircularProgress';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const PREFIX = 'SCChangeCoverButton';
 
@@ -70,10 +71,14 @@ export interface ChangeCoverProps {
  |addMenuItem|.SCChangeCoverButton-add-menuItem|Styles applied to the add menu element.|
  |delMenuItem|.SCChangeCoverButton-del-menuItem|Styles applied to the del menu element.|
 
- * @param props
+ * @param inProps
  */
-export default function ChangeCover(props: ChangeCoverProps): JSX.Element {
+export default function ChangeCover(inProps: ChangeCoverProps): JSX.Element {
   //PROPS
+  const props: ChangeCoverProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   const {onChange, autoHide, className, ...rest} = props;
 
   //CONTEXT
@@ -180,7 +185,7 @@ export default function ChangeCover(props: ChangeCoverProps): JSX.Element {
             <CircularProgress size={15} />
           </MenuItem>
         ) : (
-          <>
+          <Box>
             <input type="file" onChange={() => handleUpload(event)} ref={fileInput} hidden />
             <MenuItem disabled={loading} onClick={() => fileInput.current.click()} className={classes.addMenuItem}>
               <ListItemIcon>
@@ -196,7 +201,7 @@ export default function ChangeCover(props: ChangeCoverProps): JSX.Element {
                 <FormattedMessage id="ui.changeCover.button.delete" defaultMessage="ui.changeCover.button.delete" />
               </MenuItem>
             )}
-          </>
+          </Box>
         )}
       </Menu>
       <IconButton className={classes.helpPopover} color="primary" aria-label="upload picture" component="span" onClick={handleClickHelpButton}>

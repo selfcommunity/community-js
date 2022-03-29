@@ -5,6 +5,7 @@ import {Link, SCFeedUnitActivityType, SCNotificationUserFollowType, SCRoutes, SC
 import {defineMessages, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../../shared/DateTimeAgo';
 import classNames from 'classnames';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const messages = defineMessages({
   followUser: {
@@ -41,8 +42,12 @@ export interface ActionsRelevantActivityProps {
    */
   [p: string]: any;
 }
-export default function FollowRelevantActivity(props: ActionsRelevantActivityProps): JSX.Element {
+export default function FollowRelevantActivity(inProps: ActionsRelevantActivityProps): JSX.Element {
   // PROPS
+  const props: ActionsRelevantActivityProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   const {className = null, activityObject = null, ...rest} = props;
 
   // CONTEXT

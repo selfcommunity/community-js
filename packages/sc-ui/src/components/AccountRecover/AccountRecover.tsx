@@ -6,6 +6,7 @@ import classNames from 'classnames';
 import {FormattedMessage} from 'react-intl';
 import {LoadingButton} from '@mui/lab';
 import EmailTextField from '../../shared/EmailTextField';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const PREFIX = 'SCAccountRecover';
 
@@ -80,9 +81,13 @@ export interface AccountRecoverProps {
  |email|.SCAccountRecover-email|Styles applied to the email TextField.|
 
  *
- * @param props
+ * @param inProps
  */
-export default function AccountRecover(props: AccountRecoverProps): JSX.Element {
+export default function AccountRecover(inProps: AccountRecoverProps): JSX.Element {
+  const props: AccountRecoverProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   // PROPS
   const {className, onSuccess = null, TextFieldProps = {variant: 'outlined', fullWidth: true}, ButtonProps = {variant: 'contained'}, ...rest} = props;
 

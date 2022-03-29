@@ -1,17 +1,11 @@
-import React, { useEffect, useRef } from 'react';
-import { styled } from '@mui/material/styles';
-import { Box, BoxProps } from '@mui/material';
-import {
-  SCContextType,
-  SCNotification,
-  SCNotificationTopicType,
-  SCNotificationTypologyType,
-  useSCContext,
-} from '@selfcommunity/core';
+import React, {useEffect, useRef} from 'react';
+import {styled} from '@mui/material/styles';
+import {Box, BoxProps} from '@mui/material';
+import {SCContextType, SCNotification, SCNotificationTopicType, SCNotificationTypologyType, useSCContext} from '@selfcommunity/core';
 import PubSub from 'pubsub-js';
-import { useSnackbar } from 'notistack';
+import {useSnackbar} from 'notistack';
 import CustomSnackMessage from '../../shared/CustomSnackMessage';
-import { SCBroadcastMessageTemplateType, SCNotificationObjectTemplateType } from '../../types';
+import {SCBroadcastMessageTemplateType, SCNotificationObjectTemplateType} from '../../types';
 import CommentNotification from '../Notification/Comment';
 import ContributionFollowNotification from '../Notification/ContributionFollow';
 import UserFollowNotification from '../Notification/UserFollow';
@@ -22,6 +16,7 @@ import MentionNotification from '../Notification/Mention';
 import IncubatorApprovedNotification from '../Notification/IncubatorApproved';
 import UserBlockedNotification from '../Notification/UserBlocked';
 import Message from '../BroadcastMessages/Message';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const PREFIX = 'SCToastNotifications';
 
@@ -84,10 +79,15 @@ export interface ToastNotificationsProps extends BoxProps {
  |toastContent|.SCUserToastNotifications-toast-content|Styles applied to the toast content element.|
  |toastActions|.SCUserToastNotifications-toast-actions|Styles applied to the toast actions section.|
 
- * @param props
+ * @param inProps
  */
-export default function UserToastNotifications(props: ToastNotificationsProps): JSX.Element {
+export default function UserToastNotifications(inProps: ToastNotificationsProps): JSX.Element {
   // PROPS
+  const props: ToastNotificationsProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
+
   const {ToastMessageProps = {}, handleNotification, disableToastNotification = false} = props;
 
   // CONTEXT

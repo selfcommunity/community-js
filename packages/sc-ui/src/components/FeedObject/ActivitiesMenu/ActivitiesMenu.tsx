@@ -10,6 +10,7 @@ import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {SCPreferences, SCPreferencesContext, SCPreferencesContextType, SCUserContextType, StringUtils, useSCUser} from '@selfcommunity/core';
 import {useContext} from 'react';
 import classNames from 'classnames';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const messages = defineMessages({
   relevantActivities: {
@@ -85,8 +86,12 @@ export interface ActivitiesMenuProps {
    */
   [p: string]: any;
 }
-export default function ActivitiesMenu(props: ActivitiesMenuProps) {
+export default function ActivitiesMenu(inProps: ActivitiesMenuProps) {
   // PROPS
+  const props: ActivitiesMenuProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   const {className = null, selectedActivities = null, hideRelevantActivitiesItem = false, onChange = null, ...rest} = props;
 
   // CONTEXT

@@ -11,6 +11,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import User from '../../User';
 import {AxiosResponse} from 'axios';
 import classNames from 'classnames';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const PREFIX = 'SCContributorsFeedObject';
 
@@ -70,8 +71,13 @@ export interface ContributorsFeedObjectProps {
   [p: string]: any;
 }
 
-export default function ContributorsFeedObject(props: ContributorsFeedObjectProps): JSX.Element {
+export default function ContributorsFeedObject(inProps: ContributorsFeedObjectProps): JSX.Element {
   // PROPS
+  const props: ContributorsFeedObjectProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
+
   const {className = null, feedObjectId = null, feedObject = null, feedObjectType = null, ...rest} = props;
 
   // STATE

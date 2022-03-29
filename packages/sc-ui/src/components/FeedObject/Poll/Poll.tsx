@@ -10,6 +10,7 @@ import Icon from '@mui/material/Icon';
 import {SCOPE_SC_UI} from '../../../constants/Errors';
 import {AxiosResponse} from 'axios';
 import classNames from 'classnames';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const messages = defineMessages({
   showPoll: {
@@ -133,8 +134,12 @@ export interface PollObjectProps {
   [p: string]: any;
 }
 
-export default function PollObject(props: PollObjectProps): JSX.Element {
+export default function PollObject(inProps: PollObjectProps): JSX.Element {
   //  PROPS
+  const props: PollObjectProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   const {className, feedObject, pollObject, disabled, onChange, ...rest} = props;
 
   // INTL

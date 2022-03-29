@@ -39,6 +39,7 @@ import {
   SCRoutingContextType,
   useSCRouting
 } from '@selfcommunity/core';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const messages = defineMessages({
   receivePrivateMessage: {
@@ -164,10 +165,15 @@ export interface NotificationProps extends CardProps {
  |stopNotificationButton|.SCUserNotification-stop-notification-button|Styles applied to the stop notification button.|
  |showOtherAggregated|.SCUserNotification-show-other-aggregated|Styles applied to the show other aggregated element.|
 
- * @param props
+ * @param inProps
  */
-export default function UserNotification(props: NotificationProps): JSX.Element {
+export default function UserNotification(inProps: NotificationProps): JSX.Element {
   // PROPS
+  const props: NotificationProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
+
   const {
     id = `notification_${props.notificationObject.sid}`,
     className,

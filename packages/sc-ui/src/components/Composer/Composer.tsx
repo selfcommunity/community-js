@@ -71,7 +71,6 @@ import {OverrideProps} from '@mui/material/OverridableComponent';
 import {ComposerSkeleton} from './index';
 import {useSnackbar} from 'notistack';
 import useThemeProps from '@mui/material/styles/useThemeProps';
-import { InlineComposerProps } from '@selfcommunity/ui';
 
 const DialogTransition = forwardRef(function Transition(
   props: TransitionProps & {
@@ -376,7 +375,7 @@ const reducer = (state, action) => {
  |badgeError|.SCComposer-badgeError|Styles applied to the badge error element.|
 
 
- * @param props
+ * @param inProps
  */
 export default function Composer(inProps: ComposerProps): JSX.Element {
   // PROPS

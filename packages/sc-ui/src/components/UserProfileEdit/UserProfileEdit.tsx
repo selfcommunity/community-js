@@ -9,6 +9,7 @@ import Notification from './Section/Settings';
 import classNames from 'classnames';
 import {DistributiveOmit} from '@mui/types';
 import {OverrideProps} from '@mui/material/OverridableComponent';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const messages = defineMessages({
   realName: {
@@ -118,10 +119,14 @@ export interface UserProfileEditProps {
  |root|.SCUserProfileEdit-root|Styles applied to the root element.|
  |field|.SCUserProfileEdit-field|Styles applied to the field element.|
 
- * @param props
+ * @param inProps
  */
-export default function UserProfileEdit(props: UserProfileEditProps): JSX.Element {
+export default function UserProfileEdit(inProps: UserProfileEditProps): JSX.Element {
   // PROPS
+  const props: UserProfileEditProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   const {id = null, className = null, fields = [...DEFAULT_FIELDS], AccordionProps = {}, ...rest} = props;
 
   // RENDER

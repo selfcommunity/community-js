@@ -3,6 +3,7 @@ import {styled} from '@mui/material/styles';
 import {Box} from '@mui/material';
 import {SCCustomAdvPosition, useSCFetchCustomAdv} from '@selfcommunity/core';
 import classNames from 'classnames';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const PREFIX = 'SCCustomAdv';
 
@@ -62,10 +63,15 @@ export interface CustomAdvProps {
  |root|.SCCustomAdv-root|Styles applied to the root element.|
  |image|.SCCustomAdv-image|Styles applied to the image element.|
 
- * @param props
+ * @param inProps
  */
-export default function CustomAdv(props: CustomAdvProps): JSX.Element {
+export default function CustomAdv(inProps: CustomAdvProps): JSX.Element {
   // PROPS
+  const props: CustomAdvProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
+
   const {id = 'custom_adv', className = null, position, categoriesId = null} = props;
 
   // retrieve adv

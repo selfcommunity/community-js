@@ -24,6 +24,7 @@ import {
   useSCUser
 } from '@selfcommunity/core';
 import FeedObjectDetailSkeleton from './Skeleton';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const PREFIX = 'SCFeedObjectDetailTemplate';
 
@@ -81,8 +82,12 @@ export interface FeedObjectDetailProps {
 
 const PREFERENCES = [SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED, SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED];
 
-export default function FeedObjectDetail(props: FeedObjectDetailProps): JSX.Element {
+export default function FeedObjectDetail(inProps: FeedObjectDetailProps): JSX.Element {
   // PROPS
+  const props: FeedObjectDetailProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   const {id = 'feed_object_page', className, feedObjectId, feedObject, feedObjectType, FeedObjectProps = {}, CommentsObjectProps = {}} = props;
 
   // CONTEXT

@@ -7,6 +7,7 @@ import Icon from '@mui/material/Icon';
 import LinearProgress, {LinearProgressProps} from '@mui/material/LinearProgress';
 import {LoadingButton} from '@mui/lab';
 import classNames from 'classnames';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const PREFIX = 'SCChoices';
 
@@ -105,8 +106,12 @@ export interface ChoiceProps {
    */
   [p: string]: any;
 }
-export default function Choice(props: ChoiceProps): JSX.Element {
+export default function Choice(inProps: ChoiceProps): JSX.Element {
   //PROPS
+  const props: ChoiceProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   const {className = null, choiceObj = null, feedObject = null, vote = null, votes = null, isVoting = null, votable = null, ...rest} = props;
   const disabled = !feedObject;
   // CONTEXT

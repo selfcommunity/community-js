@@ -8,10 +8,10 @@ import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import CentralProgress from '../../shared/CentralProgress';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import User from '../User';
-import Icon from '@mui/material/Icon';
 import {Endpoints, http, SCCategoryType, SCUserContext, SCUserContextType, SCUserType, useSCFetchCategory} from '@selfcommunity/core';
 import AvatarGroupSkeleton from '../Skeleton/AvatarGroupSkeleton';
 import classNames from 'classnames';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const messages = defineMessages({
   followedBy: {
@@ -127,11 +127,22 @@ export interface CategoryHeaderProps {
  |Rule Name|Global class|Description|
  |---|---|---|
  |root|.SCCategoryHeader-root|Styles applied to the root element.|
+ |cover|.SCCategoryHeader-cover|Styles applied to the cover element.|
+ |name|.SCCategoryHeader-name|Styles applied to the name element.|
+ |slogan|.SCCategoryHeader-slogan|Styles applied to the slogan element.|
+ |info|.SCCategoryHeader-info|Styles applied to the info element.|
+ |followedByCounter|.SCCategoryHeader-followed-by-counter|Styles applied to the followers counter element.|
+ |followedByAvatars|.SCCategoryHeader-followed-by-avatars|Styles applied to the followers avatars element.|
+ |divider|.SCCategoryHeader-divider|Styles applied to the divider element.|
 
- * @param props
+ * @param inProps
  */
-export default function CategoryHeader(props: CategoryHeaderProps): JSX.Element {
+export default function CategoryHeader(inProps: CategoryHeaderProps): JSX.Element {
   // PROPS
+  const props: CategoryHeaderProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   const {className, categoryId, category, FollowCategoryButtonProps = {}, FollowedByDialogProps = {}, ...rest} = props;
 
   // CONTEXT

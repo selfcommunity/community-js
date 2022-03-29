@@ -4,6 +4,7 @@ import {SCCommentType, useSCFetchCommentObject} from '@selfcommunity/core';
 import {styled} from '@mui/material/styles';
 import Icon from '@mui/material/Icon';
 import CommentObjectVotesDialog from './VotesDialog';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const PREFIX = 'SCCommentObjectVotes';
 
@@ -51,11 +52,16 @@ export interface VotesProps {
   [p: string]: any;
 }
 
-export default function Votes(props: VotesProps): JSX.Element {
+export default function Votes(inProps: VotesProps): JSX.Element {
   // PROPS
+  const props: VotesProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
+
   const {commentObjectId, commentObject, ...rest} = props;
 
-  // RETRIVE OBJECTS
+  // RETRIEVE OBJECTS
   const {obj, setObj} = useSCFetchCommentObject({id: commentObjectId, commentObject});
 
   // STATE

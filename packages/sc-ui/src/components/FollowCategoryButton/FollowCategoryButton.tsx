@@ -14,6 +14,7 @@ import {SCOPE_SC_UI} from '../../constants/Errors';
 import {LoadingButton} from '@mui/lab';
 import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const PREFIX = 'SCFollowCategoryButton';
 
@@ -78,10 +79,15 @@ export interface FollowCategoryButtonProps {
  |---|---|---|
  |root|.SCFollowCategoryButton-root|Styles applied to the root element.|
 
- * @param props
+ * @param inProps
  */
-export default function FollowCategoryButton(props: FollowCategoryButtonProps): JSX.Element {
+export default function FollowCategoryButton(inProps: FollowCategoryButtonProps): JSX.Element {
   // PROPS
+  const props: FollowCategoryButtonProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
+
   const {className, categoryId, category, onFollow, ...rest} = props;
 
   const {scCategory, setSCCategory} = useSCFetchCategory({id: categoryId, category});

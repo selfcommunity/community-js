@@ -11,6 +11,7 @@ import {SCRoutingContextType, useSCRouting, Link, SCRoutes} from '@selfcommunity
 import LoyaltyProgramDetail from './LoyaltyProgramDetail';
 import classNames from 'classnames';
 import Widget from '../Widget';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const messages = defineMessages({
   points: {
@@ -101,15 +102,20 @@ export interface LoyaltyProgramProps {
  |Rule Name|Global class|Description|
  |---|---|---|
  |root|.SCLoyaltyProgram-root|Styles applied to the root element.|
+ |title.SCLoyaltyProgram-title|Styles applied to the title element.|
  |cardHeader|.SCLoyaltyProgram-card-header|Styles applied to the card header element.|
  |pointsIcon|.SCLoyaltyProgram-pointsIcon|Styles applied to the points icon element.|
  |actions|.SCLoyaltyProgram-actions|Styles applied to the actions section.|
  |points|.SCLoyaltyProgram-points|Styles applied to the points section.|
  |pointsBox|.SCLoyaltyProgram-points-box|Styles applied to the points box element.|
  *
- * @param props
+ * @param inProps
  */
-export default function LoyaltyProgram(props: LoyaltyProgramProps): JSX.Element {
+export default function LoyaltyProgram(inProps: LoyaltyProgramProps): JSX.Element {
+  const props: LoyaltyProgramProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   // PROPS
   const {autoHide, className, cardType} = props;
 

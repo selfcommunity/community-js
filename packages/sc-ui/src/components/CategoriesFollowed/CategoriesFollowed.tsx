@@ -15,6 +15,7 @@ import BaseDialog from '../../shared/BaseDialog';
 import CentralProgress from '../../shared/CentralProgress';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Widget from '../Widget';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const messages = defineMessages({
   title: {
@@ -61,9 +62,9 @@ const Root = styled(Widget, {
  |title|.SCCategoryFollowed-title|Styles applied to the title element.|
  |noResults|.SCCategoryFollowed-noResults|Styles applied to noResults section.|
 
- * @param props
+ * @param inProps
  */
-export default function CategoriesFollowed(props: CategoriesListProps): JSX.Element {
+export default function CategoriesFollowed(inProps: CategoriesListProps): JSX.Element {
   // CONST
   const limit = 3;
 
@@ -74,6 +75,10 @@ export default function CategoriesFollowed(props: CategoriesListProps): JSX.Elem
   const scUserContext: SCUserContextType = useContext(SCUserContext);
 
   // PROPS
+  const props: CategoriesListProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   const {userId, autoHide, className, CategoryProps = {}} = props;
 
   // STATE
@@ -87,7 +92,6 @@ export default function CategoriesFollowed(props: CategoriesListProps): JSX.Elem
 
   // CONST
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
-
 
   /**
    * Handles list change on category follow

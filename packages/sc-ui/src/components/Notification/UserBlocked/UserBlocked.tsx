@@ -9,6 +9,7 @@ import DateTimeAgo from '../../../shared/DateTimeAgo';
 import NewChip from '../../../shared/NewChip/NewChip';
 import classNames from 'classnames';
 import {SCNotificationObjectTemplateType} from '../../../types';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const messages = defineMessages({
   accountBlocked: {
@@ -106,11 +107,15 @@ export interface NotificationBlockedProps {
 }
 /**
  * This component render the content of the notification of type user blocked
- * @param props
+ * @param inProps
  * @constructor
  */
-export default function UserBlockedNotification(props: NotificationBlockedProps): JSX.Element {
+export default function UserBlockedNotification(inProps: NotificationBlockedProps): JSX.Element {
   // PROPS
+  const props: NotificationBlockedProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   const {
     notificationObject = null,
     id = `n_${props.notificationObject['sid']}`,
@@ -165,7 +170,9 @@ export default function UserBlockedNotification(props: NotificationBlockedProps)
           }
           secondary={
             <>
-              {template === SCNotificationObjectTemplateType.DETAIL && <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />}
+              {template === SCNotificationObjectTemplateType.DETAIL && (
+                <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
+              )}
             </>
           }
         />

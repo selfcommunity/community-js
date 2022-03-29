@@ -12,6 +12,7 @@ import {AutocompletePropsSizeOverrides} from '@mui/material/Autocomplete/Autocom
 import {AxiosResponse} from 'axios';
 import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const PREFIX = 'SCComposerLocation';
 
@@ -44,7 +45,7 @@ export interface LocationProps extends StandardProps<React.HTMLAttributes<HTMLDi
    */
   limitTags?: number;
   /**
-   * If `true`, the autocomplede will be disabled.
+   * If `true`, the autocomplete will be disabled.
    * @default false
    */
   disabled?: boolean;
@@ -53,18 +54,32 @@ export interface LocationProps extends StandardProps<React.HTMLAttributes<HTMLDi
    * @default 'auto'
    */
   defaultValue?: SCLocalityType;
+  /**
+   * The props applied to the text field.
+   * @default {variant: 'outlined, label: location_label}
+   */
   TextFieldProps?: TextFieldProps;
+  /**
+   * Callback for change event on poll object
+   * @param value
+   * @default null
+   */
   onChange?: (value: any) => void;
 }
 
-export default function ({
-  defaultValue = null,
-  disabled = false,
-  TextFieldProps = {variant: 'outlined', label: <FormattedMessage id="ui.composer.location.label" defaultMessage="ui.composer.locations.label" />},
-  ...props
-}: LocationProps): JSX.Element {
+export default function Location(inProps: LocationProps): JSX.Element {
   // Props
-  const {onChange, ...rest} = props;
+  const props: LocationProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
+  const {
+    defaultValue = null,
+    disabled = false,
+    onChange,
+    TextFieldProps = {variant: 'outlined', label: <FormattedMessage id="ui.composer.location.label" defaultMessage="ui.composer.locations.label" />},
+    ...rest
+  } = props;
 
   // State
   const [isLoading, setIsLoading] = useState(false);

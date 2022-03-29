@@ -29,6 +29,7 @@ import {
   useSCPreferences,
   useSCUser
 } from '@selfcommunity/core';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const messages = defineMessages({
   noOtherComment: {
@@ -270,10 +271,20 @@ const PREFERENCES = [SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED, SCPreferences
  |fixedBottomPrimaryReply|.SCCommentsObject-fixed-bottom-primary-reply|Styles applied to the comment bottom primary reply element.|
  |commentNotFound|.SCCommentsObject-comment-not-found|Styles applied to the label 'Comment not found'.|
  |noOtherComments|.SCCommentsObject-no-other-comments|Styles applied to the label 'No other comments'.|
+ |loadMoreCommentsButton|.SCCommentsObject-load-more-comments-button|Styles applied to the load more button.|
+ |paginationLink|.SCCommentsObject-pagination-link|Styles applied to the pagination link.|
+ |paginationFooter|.SCCommentsObject-pagination-footer|Styles applied to the pagination footer.|
+ |commentsCounter|.SCCommentsObject-comments-counter|Styles applied to the comments counter element.|
+ |noComments|.SCCommentsObject-no-comments|Styles applied to the 'no comments' section.|
 
- * @param props
+
+ * @param inProps
  */
-export default function CommentsObject(props: CommentsObjectProps): JSX.Element {
+export default function CommentsObject(inProps: CommentsObjectProps): JSX.Element {
+  const props: CommentsObjectProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   // PROPS
   const {
     id = `comments_object_${props.feedObjectType}_${props.feedObjectId ? props.feedObjectId : props.feedObject ? props.feedObject.id : ''}`,

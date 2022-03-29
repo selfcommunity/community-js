@@ -10,6 +10,7 @@ import BaseDialog from '../../../../shared/BaseDialog';
 import CentralProgress from '../../../../shared/CentralProgress';
 import User from '../../../User';
 import {styled} from '@mui/material/styles';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const PREFIX = 'SCCommentObjectVotesDialog';
 
@@ -48,11 +49,16 @@ export interface CommentObjectVotesDialogProps {
   onClose?: () => any;
 }
 
-export default function CommentObjectVotesDialog(props: CommentObjectVotesDialogProps): JSX.Element {
+export default function CommentObjectVotesDialog(inProps: CommentObjectVotesDialogProps): JSX.Element {
   // PROPS
+  const props: CommentObjectVotesDialogProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
+
   const {commentObjectId, commentObject, open = false, onClose} = props;
 
-  // RETRIVE OBJECTS
+  // RETRIEVE OBJECTS
   const {obj, setObj} = useSCFetchCommentObject({id: commentObjectId, commentObject});
 
   // STATE

@@ -15,6 +15,7 @@ import {
   SCFeedWidgetType
 } from '@selfcommunity/ui';
 import {Endpoints, SCUserContext, SCUserContextType} from '@selfcommunity/core';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const PREFIX = 'SCMainFeedTemplate';
 
@@ -97,8 +98,12 @@ const WIDGETS: SCFeedWidgetType[] = [
   }
 ];
 
-export default function MainFeed(props: MainFeedProps): JSX.Element {
+export default function MainFeed(inProps: MainFeedProps): JSX.Element {
   // PROPS
+  const props: MainFeedProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   const {id = 'main_feed', className, widgets = WIDGETS, FeedObjectProps = {}, FeedSidebarProps = null} = props;
 
   //CONTEXT

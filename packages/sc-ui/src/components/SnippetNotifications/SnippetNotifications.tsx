@@ -35,6 +35,7 @@ import {
   SCUserContextType,
   useSCUser
 } from '@selfcommunity/core';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const PREFIX = 'SCSnippetNotifications';
 
@@ -144,10 +145,15 @@ export interface SnippetNotificationsProps extends CardProps {
  |notificationsList|.SCSnippetNotification-notifications-list|Styles applied to the list of notifications.|
  |notificationItem|.SCSnippetNotification-notification-item|Styles applied to the single notification.|
 
- * @param props
+ * @param inProps
  */
-export default function SnippetNotifications(props: SnippetNotificationsProps): JSX.Element {
+export default function SnippetNotifications(inProps: SnippetNotificationsProps): JSX.Element {
   // PROPS
+  const props: SnippetNotificationsProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
+
   const {
     id = `snippetNotifications`,
     className,

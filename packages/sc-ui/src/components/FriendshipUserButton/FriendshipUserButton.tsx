@@ -4,6 +4,7 @@ import {Button} from '@mui/material';
 import {Endpoints, http, SCContextType, SCUserContext, SCUserContextType, SCUserType, useSCContext, useSCFetchUser} from '@selfcommunity/core';
 import {AxiosResponse} from 'axios';
 import classNames from 'classnames';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const PREFIX = 'SCFriendshipUserButton';
 
@@ -78,10 +79,14 @@ export interface FriendshipButtonProps {
  |---|---|---|
  |root|.SCFriendshipUserButton-root|Styles applied to the root element.|
 
- * @param props
+ * @param inProps
  */
-export default function FriendshipUserButton(props: FriendshipButtonProps): JSX.Element {
+export default function FriendshipUserButton(inProps: FriendshipButtonProps): JSX.Element {
   // PROPS
+  const props: FriendshipButtonProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   const {className, userId, user, connected, ...rest} = props;
 
   // STATE

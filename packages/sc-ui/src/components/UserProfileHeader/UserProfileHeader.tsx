@@ -3,7 +3,6 @@ import {styled} from '@mui/material/styles';
 import {Box, Paper, Typography} from '@mui/material';
 import ChangeCover, {ChangeCoverProps} from '../ChangeCover';
 import ChangePicture, {ChangePictureProps} from '../ChangePicture';
-import {useIntl} from 'react-intl';
 import {
   SCPreferences,
   SCPreferencesContextType,
@@ -15,6 +14,7 @@ import {
 } from '@selfcommunity/core';
 import UserProfileHeaderSkeleton from './Skeleton';
 import classNames from 'classnames';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const PREFIX = 'SCUserProfileHeader';
 
@@ -134,10 +134,14 @@ export interface UserProfileHeaderProps {
  |changePicture|.SCUserProfileHeader-change-picture|Styles applied to changePicture element.|
  |changeCover|.SCUserProfileHeader-change-cover`|Styles applied to changeCover element.|
 
- * @param props
+ * @param inProps
  */
-export default function UserProfileHeader(props: UserProfileHeaderProps): JSX.Element {
+export default function UserProfileHeader(inProps: UserProfileHeaderProps): JSX.Element {
   // PROPS
+  const props: UserProfileHeaderProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   const {id = null, className = null, userId = null, user = null, ChangePictureProps = {}, ChangeCoverProps = {}, ...rest} = props;
 
   // PREFERENCES
@@ -146,11 +150,8 @@ export default function UserProfileHeader(props: UserProfileHeaderProps): JSX.El
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
 
-  // STATE
+  // HOOKS
   const {scUser, setSCUser} = useSCFetchUser({id: userId, user});
-
-  // INTL
-  const intl = useIntl();
 
   /**
    * Handles Change Avatar

@@ -1,13 +1,14 @@
 import React, {ChangeEvent, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Link, SCRoutes, SCRoutingContextType, SCUserContextType, SCUserType, useSCRouting, useSCUser} from '@selfcommunity/core';
-import {ButtonProps, TextFieldProps, Typography} from '@mui/material';
+import {SCRoutingContextType, SCUserContextType, SCUserType, useSCRouting, useSCUser} from '@selfcommunity/core';
+import {ButtonProps, TextFieldProps} from '@mui/material';
 import classNames from 'classnames';
-import {FormattedMessage, useIntl} from 'react-intl';
+import {FormattedMessage} from 'react-intl';
 import {LoadingButton} from '@mui/lab';
 import PasswordTextField from '../../shared/PasswordTextField';
 import EmailTextField from '../../shared/EmailTextField';
 import UsernameTextField from '../../shared/UsernameTextField';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const PREFIX = 'SCAccountSignUp';
 
@@ -86,9 +87,14 @@ export interface AccountSignUpProps {
  |password|.SCAccountSignUp-password|Styles applied to the password TextField.|
 
  *
- * @param props
+ * @param inProps
  */
-export default function AccountSignUp(props: AccountSignUpProps): JSX.Element {
+export default function AccountSignUp(inProps: AccountSignUpProps): JSX.Element {
+  const props: AccountSignUpProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
+
   // PROPS
   const {className, onSuccess = null, TextFieldProps = {variant: 'outlined', fullWidth: true}, ButtonProps = {variant: 'contained'}, ...rest} = props;
 

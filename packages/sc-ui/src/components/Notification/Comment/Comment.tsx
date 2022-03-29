@@ -6,12 +6,13 @@ import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import Bullet from '../../../shared/Bullet';
 import {LoadingButton} from '@mui/lab';
 import Icon from '@mui/material/Icon';
-import { grey, red } from '@mui/material/colors';
+import {grey, red} from '@mui/material/colors';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
 import NewChip from '../../../shared/NewChip/NewChip';
 import {getContributionSnippet, getRouteData} from '../../../utils/contribute';
 import classNames from 'classnames';
 import {SCNotificationObjectTemplateType} from '../../../types';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const messages = defineMessages({
   comment: {
@@ -135,11 +136,15 @@ export interface CommentNotificationProps {
 
 /**
  * This component render the content of the notification of type comment/nested comment
- * @param props
+ * @param inProps
  * @constructor
  */
-export default function CommentNotification(props: CommentNotificationProps): JSX.Element {
+export default function CommentNotification(inProps: CommentNotificationProps): JSX.Element {
   // PROPS
+  const props: CommentNotificationProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   const {
     notificationObject,
     index,

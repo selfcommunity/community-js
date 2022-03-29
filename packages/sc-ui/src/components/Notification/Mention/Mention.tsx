@@ -3,12 +3,13 @@ import {styled} from '@mui/material/styles';
 import {Avatar, Box, ListItem, ListItemAvatar, ListItemText, Stack, Typography} from '@mui/material';
 import {Link, SCNotificationMentionType, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import { getRouteData, getContributeType, getContributionSnippet, getContribute } from '../../../utils/contribute';
+import {getRouteData, getContributeType, getContributionSnippet, getContribute} from '../../../utils/contribute';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
 import NewChip from '../../../shared/NewChip/NewChip';
 import classNames from 'classnames';
-import { grey, red } from '@mui/material/colors';
+import {grey, red} from '@mui/material/colors';
 import {SCNotificationObjectTemplateType} from '../../../types';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const messages = defineMessages({
   quotedYouOn: {
@@ -103,11 +104,15 @@ export interface MentionNotificationProps {
 
 /**
  * This component render the content of the notification of type mention
- * @param props
+ * @param inProps
  * @constructor
  */
-export default function MentionNotification(props: MentionNotificationProps): JSX.Element {
+export default function MentionNotification(inProps: MentionNotificationProps): JSX.Element {
   // PROPS
+  const props: MentionNotificationProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   const {
     notificationObject,
     id = `n_${props.notificationObject['sid']}`,
@@ -173,7 +178,9 @@ export default function MentionNotification(props: MentionNotificationProps): JS
                   {getContributionSnippet(notificationObject[objectType])}
                 </Typography>
               </Link>
-              {template === SCNotificationObjectTemplateType.DETAIL && <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />}
+              {template === SCNotificationObjectTemplateType.DETAIL && (
+                <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
+              )}
             </div>
           }
         />

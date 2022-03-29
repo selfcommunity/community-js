@@ -16,6 +16,7 @@ import {
 import classNames from 'classnames';
 import {grey, red} from '@mui/material/colors';
 import {SCNotificationObjectTemplateType} from '../../../types';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const messages = defineMessages({
   requestConnection: {
@@ -110,11 +111,15 @@ export interface NotificationConnectionProps {
 
 /**
  * This component render the content of the notification of connection accept/request
- * @param props
+ * @param inProps
  * @constructor
  */
-export default function UserConnectionNotification(props: NotificationConnectionProps): JSX.Element {
+export default function UserConnectionNotification(inProps: NotificationConnectionProps): JSX.Element {
   // PROPS
+  const props: NotificationConnectionProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   const {
     notificationObject = null,
     id = `n_${props.notificationObject['sid']}`,
@@ -175,7 +180,9 @@ export default function UserConnectionNotification(props: NotificationConnection
           }
           secondary={
             <>
-              {template === SCNotificationObjectTemplateType.DETAIL && <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />}
+              {template === SCNotificationObjectTemplateType.DETAIL && (
+                <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
+              )}
             </>
           }
         />

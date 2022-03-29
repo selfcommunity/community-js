@@ -6,8 +6,9 @@ import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
 import NewChip from '../../../shared/NewChip/NewChip';
 import classNames from 'classnames';
-import { grey, red } from '@mui/material/colors';
+import {grey, red} from '@mui/material/colors';
 import {SCNotificationObjectTemplateType} from '../../../types';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const messages = defineMessages({
   followUser: {
@@ -98,11 +99,15 @@ export interface NotificationFollowProps {
 
 /**
  * This component render the content of the notification of type user follow
- * @param props
+ * @param inProps
  * @constructor
  */
-export default function UserFollowNotification(props: NotificationFollowProps): JSX.Element {
+export default function UserFollowNotification(inProps: NotificationFollowProps): JSX.Element {
   // PROPS
+  const props: NotificationFollowProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   const {
     notificationObject,
     id = `n_${props.notificationObject['sid']}`,
@@ -160,7 +165,9 @@ export default function UserFollowNotification(props: NotificationFollowProps): 
           }
           secondary={
             <>
-              {template === SCNotificationObjectTemplateType.DETAIL && <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />}
+              {template === SCNotificationObjectTemplateType.DETAIL && (
+                <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
+              )}
             </>
           }
         />

@@ -8,6 +8,7 @@ import classNames from 'classnames';
 import {AxiosResponse} from 'axios';
 import SettingsSkeleton from './SettingsSkeleton';
 import {useSnackbar} from 'notistack';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const PREFIX = 'SCUserProfileEditSectionSettings';
 
@@ -46,8 +47,12 @@ export interface SettingsProps {
   [p: string]: any;
 }
 
-export default function Settings(props: SettingsProps): JSX.Element {
+export default function Settings(inProps: SettingsProps): JSX.Element {
   // PROPS
+  const props: SettingsProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   const {id = null, className = null, fields = [...DEFAULT_FIELDS], ...rest} = props;
 
   // CONTEXT

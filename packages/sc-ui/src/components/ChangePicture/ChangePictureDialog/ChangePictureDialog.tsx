@@ -12,6 +12,7 @@ import BaseDialog from '../../../shared/BaseDialog';
 import ConfirmDialog from '../../../shared/ConfirmDialog/ConfirmDialog';
 import classNames from 'classnames';
 import CircularProgress from '@mui/material/CircularProgress';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const PREFIX = 'SCChangePictureDialog';
 
@@ -62,8 +63,12 @@ export interface CPDialogProps {
   [p: string]: any;
 }
 
-export default function ChangePictureDialog(props: CPDialogProps): JSX.Element {
+export default function ChangePictureDialog(inProps: CPDialogProps): JSX.Element {
   //PROPS
+  const props: CPDialogProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   const {open, onChange, onClose, className, ...rest} = props;
   //CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);

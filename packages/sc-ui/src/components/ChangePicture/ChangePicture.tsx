@@ -6,6 +6,7 @@ import {FormattedMessage} from 'react-intl';
 import Icon from '@mui/material/Icon';
 import {SCUserContext, SCUserContextType} from '@selfcommunity/core';
 import classNames from 'classnames';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const PREFIX = 'SCChangePictureButton';
 
@@ -65,10 +66,14 @@ export interface ChangePictureProps {
  |---|---|---|
  |root|.SCChangePictureButton-root|Styles applied to the root element.|
 
- * @param props
+ * @param inProps
  */
-export default function ChangePicture(props: ChangePictureProps): JSX.Element {
+export default function ChangePicture(inProps: ChangePictureProps): JSX.Element {
   //PROPS
+  const props: ChangePictureProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   const {iconButton, onChange, autoHide, className, ...rest} = props;
 
   //STATE

@@ -9,6 +9,7 @@ import Chip from '@mui/material/Chip';
 import Icon from '@mui/material/Icon';
 import {SCOPE_SC_UI} from '../../../constants/Errors';
 import classNames from 'classnames';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const messages = defineMessages({
   points: {
@@ -109,8 +110,12 @@ export interface LoyaltyProgramDetailProps {
    */
   requestable?: boolean;
 }
-export default function LoyaltyProgramDetail(props: LoyaltyProgramDetailProps): JSX.Element {
+export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps): JSX.Element {
   // PROPS
+  const props: LoyaltyProgramDetailProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   const {className, autoHide, points, cardType, requestable, ...rest} = props;
 
   // STATE
