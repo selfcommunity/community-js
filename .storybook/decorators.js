@@ -4,7 +4,7 @@ import { getJWTSession, getOAuthSession, refreshToken } from './sessionHelpers';
 import { Box, Button } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
 import { ThemeProvider as EmotionThemeProvider } from 'emotion-theming';
-
+import {Image, Link} from '../packages/sc-ui/src';
 /**
  * Fix Storybook v6.3.10 with mui v5
  * Wrap stories with EmotionThemeProvider, to fix problem of storybook 6.4.19 with mui_v5
@@ -97,6 +97,11 @@ const withProvider = (Story, context) => {
             baseClassName: 'material-icons-outlined',
           },
         },
+        SCInlineComposer: {
+          defaultProps: {
+            mediaObjectTypes: [Image, Link]
+          }
+        }
       },
     },
     handleAnonymousAction: () => {

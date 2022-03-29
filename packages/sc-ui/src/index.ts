@@ -67,6 +67,7 @@ import {SCCategoryType} from '@selfcommunity/core';
 import Widget from './components/Widget';
 import MediaChunkUploader, {MediaChunkUploaderProps} from './shared/MediaChunkUploader';
 import {Document, Image, Link, Share, EditMediaProps} from './shared/Media';
+import {MEDIA_TYPE_EMBED} from './constants/Media';
 
 /**
  * List all exports
@@ -216,5 +217,6 @@ export {
   Image,
   Link,
   Share,
-  EditMediaProps
+  EditMediaProps,
+  MEDIA_TYPE_EMBED
 };

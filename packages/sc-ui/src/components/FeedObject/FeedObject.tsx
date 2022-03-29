@@ -63,6 +63,8 @@ import {getContributionHtml, getContributionRouteName, getRouteData} from '../..
 import {useSnackbar} from 'notistack';
 import Follow, {FollowProps} from './Actions/Follow';
 import Widget from '../Widget';
+import useThemeProps from '@mui/material/styles/useThemeProps';
+import {InlineComposerProps} from '@selfcommunity/ui';
 
 const messages = defineMessages({
   comment: {
@@ -345,8 +347,13 @@ export interface FeedObjectProps extends CardProps {
 
  * @param props
  */
-export default function FeedObject(props: FeedObjectProps): JSX.Element {
+export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
   // PROPS
+  const props: FeedObjectProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
+
   const {
     id = `feed_object_${props.feedObjectId ? props.feedObjectId : props.feedObject ? props.feedObject.id : ''}`,
     className = null,
