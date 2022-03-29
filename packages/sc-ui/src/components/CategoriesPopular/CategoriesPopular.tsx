@@ -131,9 +131,7 @@ export default function CategoriesPopular(inProps: CategoriesListProps): JSX.Ele
             <React.Fragment>
               <List>
                 {categories.slice(0, visibleCategories).map((category: SCCategoryType, index) => (
-                  <div key={index}>
-                    <Category elevation={0} category={category} key={category.id} {...CategoryProps} />
-                  </div>
+                  <Category elevation={0} category={category} key={category.id} {...CategoryProps} />
                 ))}
               </List>
               {hasMore && (

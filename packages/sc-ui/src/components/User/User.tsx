@@ -31,13 +31,7 @@ const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  maxWidth: 700,
-  marginBottom: theme.spacing(2),
-  '& .MuiList-root': {
-    padding: 0
-  }
-}));
+})(({theme}) => ({}));
 
 export interface UserProps extends Pick<CardProps, Exclude<keyof CardProps, 'id'>> {
   /**

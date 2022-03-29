@@ -31,9 +31,7 @@ const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  maxWidth: 700
-}));
+})(({theme}) => ({}));
 
 export interface CategoryProps {
   /**
