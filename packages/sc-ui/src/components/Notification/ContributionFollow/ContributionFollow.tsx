@@ -9,6 +9,7 @@ import classNames from 'classnames';
 import {grey, red} from '@mui/material/colors';
 import {SCNotificationObjectTemplateType} from '../../../types';
 import {getContributeType, getRouteData} from '../../../utils/contribute';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const messages = defineMessages({
   contributionFollow: {
@@ -107,11 +108,15 @@ export interface ContributionFollowProps {
 
 /**
  * This component render the content of the notification of type follow (contribution)
- * @param props
+ * @param inProps
  * @constructor
  */
-export default function ContributionFollowNotification(props: ContributionFollowProps): JSX.Element {
+export default function ContributionFollowNotification(inProps: ContributionFollowProps): JSX.Element {
   // PROPS
+  const props: ContributionFollowProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   const {
     notificationObject,
     id = `n_${props.notificationObject['sid']}`,

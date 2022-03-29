@@ -6,6 +6,7 @@ import {SCUserFields, SCUserType, StringUtils, useSCFetchUser} from '@selfcommun
 import {DEFAULT_FIELDS} from '../../constants/UserProfile';
 import UserProfileInfoSkeleton from './Skeleton';
 import classNames from 'classnames';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const messages = defineMessages({
   realName: {
@@ -106,10 +107,14 @@ export interface UserProfileInfoProps {
  |root|.SCUserProfileInfo-root|Styles applied to the root element.|
  |field|.SCUserProfileInfo-field|Styles applied to the field element.|
 
- * @param props
+ * @param inProps
  */
-export default function UserProfileInfo(props: UserProfileInfoProps): JSX.Element {
+export default function UserProfileInfo(inProps: UserProfileInfoProps): JSX.Element {
   // PROPS
+  const props: UserProfileInfoProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   const {className = null, userId = null, user = null, fields = [...DEFAULT_FIELDS], ...rest} = props;
 
   // STATE

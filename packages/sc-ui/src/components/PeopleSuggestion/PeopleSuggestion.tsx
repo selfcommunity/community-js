@@ -17,6 +17,7 @@ import User, {UserProps} from '../User';
 import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
 import Widget from '../Widget';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const PREFIX = 'SCPeopleSuggestion';
 
@@ -82,14 +83,21 @@ export interface PeopleSuggestionProps {
  |Rule Name|Global class|Description|
  |---|---|---|
  |root|.SCPeopleSuggestion-root|Styles applied to the root element.|
+ |title|.SCPeopleSuggestion-title|Styles applied to the title element.|
+ |suggestedUserItem|.SCPeopleSuggestion-suggested-user-item|Styles applied to the suggested user element.|
+ |noResults|.SCPeopleSuggestion-noResults|Styles applied to the no results section.|
 
- * @param props
+ * @param inProps
  */
-export default function PeopleSuggestion(props: PeopleSuggestionProps): JSX.Element {
+export default function PeopleSuggestion(inProps: PeopleSuggestionProps): JSX.Element {
   // CONST
   const limit = 3;
 
   // PROPS
+  const props: PeopleSuggestionProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   const {autoHide, className, UserProps = {}, ...rest} = props;
 
   // STATE

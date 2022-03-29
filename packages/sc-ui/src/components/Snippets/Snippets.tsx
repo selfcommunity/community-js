@@ -9,6 +9,7 @@ import {FormattedMessage} from 'react-intl';
 import SnippetsSkeleton from './Skeleton';
 import Message from '../Message';
 import classNames from 'classnames';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const PREFIX = 'SCSnippets';
 
@@ -81,10 +82,15 @@ export interface SnippetsProps {
  |root|.SCSnippets-root|Styles applied to the root element.|
  |selected|.SCSnippets-selected|Styles applied to the selected element.|
 
- * @param props
+ * @param inProps
  */
-export default function Snippets(props: SnippetsProps): JSX.Element {
+export default function Snippets(inProps: SnippetsProps): JSX.Element {
   // PROPS
+  const props: SnippetsProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
+
   const {autoHide = false, className = null, onSnippetClick, threadId, ...rest} = props;
 
   // STATE

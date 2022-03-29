@@ -8,6 +8,7 @@ import {SCFeedObjectTemplateType} from '../../../../types/feedObject';
 import {getContributionRouteName, getRouteData} from '../../../../utils/contribute';
 import classNames from 'classnames';
 import Skeleton from '@mui/material/Skeleton';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const messages = defineMessages({
   comments: {
@@ -128,7 +129,11 @@ export interface CommentProps {
   [p: string]: any;
 }
 
-export default function Comment(props: CommentProps): JSX.Element {
+export default function Comment(inProps: CommentProps): JSX.Element {
+  const props: CommentProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   // PROPS
   const {
     className,

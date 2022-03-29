@@ -37,6 +37,7 @@ import {
 } from '@selfcommunity/core';
 import classNames from 'classnames';
 import PubSub from 'pubsub-js';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const PREFIX = 'SCFeed';
 
@@ -186,10 +187,14 @@ const PREFERENCES = [SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED, SCPreferences
  |end|.SCFeed-end|Styles applied to the end element.|
  |refresh|.SCFeed-refresh|Styles applied to the refresh section.|
  *
- * @param props
+ * @param inProps
  */
-const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (props: FeedProps, ref): JSX.Element => {
+const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, ref): JSX.Element => {
   // PROPS
+  const props: FeedProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   const {
     id = 'feed',
     className,

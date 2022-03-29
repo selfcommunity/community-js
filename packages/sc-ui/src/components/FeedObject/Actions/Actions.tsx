@@ -7,6 +7,7 @@ import Share, {ShareProps} from './Share';
 import {SCFeedObjectType, SCFeedObjectTypologyType, useSCFetchFeedObject} from '@selfcommunity/core';
 import {SCFeedObjectTemplateType} from '../../../types/feedObject';
 import classNames from 'classnames';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const PREFIX = 'SCFeedObjectActions';
 
@@ -98,8 +99,12 @@ export interface ActionsProps {
   ShareActionProps?: ShareProps;
 }
 
-export default function Actions(props: ActionsProps): JSX.Element {
+export default function Actions(inProps: ActionsProps): JSX.Element {
   // PROPS
+  const props: ActionsProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   const {
     className,
     feedObjectId,

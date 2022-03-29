@@ -10,6 +10,7 @@ import {grey} from '@mui/material/colors';
 import DateTimeAgo from '../../../../shared/DateTimeAgo';
 import classNames from 'classnames';
 import {getRouteData} from '../../../../utils/contribute';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const messages = defineMessages({
   comment: {
@@ -70,8 +71,13 @@ export interface CommentRelevantActivityProps {
    */
   [p: string]: any;
 }
-export default function CommentRelevantActivity(props: CommentRelevantActivityProps): JSX.Element {
+export default function CommentRelevantActivity(inProps: CommentRelevantActivityProps): JSX.Element {
   // PROPS
+  const props: CommentRelevantActivityProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
+
   const {className = null, activityObject = null, index = null, onVote = null, loadingVote = null, ...rest} = props;
 
   // CONTEXT

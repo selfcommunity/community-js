@@ -14,6 +14,7 @@ import BaseDialog from '../../shared/BaseDialog';
 import CentralProgress from '../../shared/CentralProgress';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Skeleton from './Skeleton';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const PREFIX = 'SCTrendingFeed';
 
@@ -83,14 +84,20 @@ export interface TrendingFeedProps {
  |root|.SCTrendingFeed-root|Styles applied to the root element.|
  |title|.SCTrendingFeed-title|Styles applied to the title element.|
  |noResults|.SCTrendingFeed-noResults|Styles applied to noResults section.|
+ |trendingItem|.SCTrendingFeed-trending-item|Styles applied to the trending feed item element.|
 
- * @param props
+ * @param inProps
  */
-export default function TrendingFeed(props: TrendingFeedProps): JSX.Element {
+export default function TrendingFeed(inProps: TrendingFeedProps): JSX.Element {
   //CONST
   const limit = 4;
 
   // PROPS
+  const props: TrendingFeedProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
+
   const {className = null, categoryId = null, template = null, autoHide = null, ...rest} = props;
 
   // STATE

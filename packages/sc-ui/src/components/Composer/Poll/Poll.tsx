@@ -13,6 +13,7 @@ import enLocale from 'date-fns/locale/en-US';
 import {SCFeedWidgetType} from '../../../types/feed';
 import {SCPollChoiceType, SCPollType} from '@selfcommunity/core';
 import classNames from 'classnames';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const localeMap = {
   en: enLocale,
@@ -98,13 +99,18 @@ export interface PollProps {
 
   /**
    * Callback for change event on poll object
+   * @param value
    * @default empty object
    */
   onChange: (value: SCPollType) => void;
 }
 
-export default (props: PollProps): JSX.Element => {
+export default (inProps: PollProps): JSX.Element => {
   // PROPS
+  const props: PollProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   const {id = 'poll', className = null, value = {...DEFAULT_POLL}, error = {}, onChange} = props;
   const {titleError = null} = {...error};
 

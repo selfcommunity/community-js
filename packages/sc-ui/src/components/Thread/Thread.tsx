@@ -22,6 +22,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import classNames from 'classnames';
 import {useSnackbar} from 'notistack';
 import PubSub from 'pubsub-js';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const PREFIX = 'SCThread';
 
@@ -165,10 +166,14 @@ export interface ThreadProps {
  |newMessageEditor|.SCThread-newMessageEditor|Styles applied to the new message editor.|
  |newMessageEmptyBox|.SCThread-newMessageEmptyBox|Styles applied to the new message empty box element.|
 
- * @param props
+ * @param inProps
  */
-export default function Thread(props: ThreadProps): JSX.Element {
+export default function Thread(inProps: ThreadProps): JSX.Element {
   // PROPS
+  const props: ThreadProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   const {id, receiverId, autoHide, className, openNewMessage, onNewMessageSent, ...rest} = props;
 
   // CONTEXT

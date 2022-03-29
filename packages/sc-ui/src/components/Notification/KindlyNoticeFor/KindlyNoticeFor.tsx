@@ -2,7 +2,7 @@ import React from 'react';
 import {styled} from '@mui/material/styles';
 import {Avatar, Box, ListItem, ListItemAvatar, ListItemText, Stack, Typography} from '@mui/material';
 import Icon from '@mui/material/Icon';
-import { grey, red } from '@mui/material/colors';
+import {grey, red} from '@mui/material/colors';
 import {Link, SCNotificationDeletedForType, SCRoutingContextType, useSCRouting, StringUtils, SCRoutes} from '@selfcommunity/core';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {getContributeType, getContributionSnippet, getRouteData} from '../../../utils/contribute';
@@ -10,6 +10,7 @@ import DateTimeAgo from '../../../shared/DateTimeAgo';
 import NewChip from '../../../shared/NewChip/NewChip';
 import classNames from 'classnames';
 import {SCNotificationObjectTemplateType} from '../../../types';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const messages = defineMessages({
   kindlyNoticeAdvertising: {
@@ -125,11 +126,15 @@ export interface NotificationKindlyNoticeForProps {
 
 /**
  * This component render the content of the notification of type kindly notice for
- * @param props
+ * @param inProps
  * @constructor
  */
-export default function KindlyNoticeForNotification(props: NotificationKindlyNoticeForProps): JSX.Element {
+export default function KindlyNoticeForNotification(inProps: NotificationKindlyNoticeForProps): JSX.Element {
   // PROPS
+  const props: NotificationKindlyNoticeForProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   const {
     notificationObject,
     id = `n_${props.notificationObject['sid']}`,
@@ -197,7 +202,9 @@ export default function KindlyNoticeForNotification(props: NotificationKindlyNot
           }
           secondary={
             <>
-              {template === SCNotificationObjectTemplateType.DETAIL && <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />}
+              {template === SCNotificationObjectTemplateType.DETAIL && (
+                <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
+              )}
             </>
           }
         />

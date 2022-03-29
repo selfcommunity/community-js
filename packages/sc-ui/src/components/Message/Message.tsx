@@ -10,6 +10,7 @@ import classNames from 'classnames';
 import Widget from '../Widget';
 import AutoPlayer from '../../shared/AutoPlayer';
 import LazyLoad from 'react-lazyload';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const PREFIX = 'SCMessage';
 
@@ -157,10 +158,14 @@ export interface MessageProps extends Pick<CardProps, Exclude<keyof CardProps, '
  |documentFile|.SCMessage-documentFile|Styles applied to the message file element.|
 
 
- * @param props
+ * @param inProps
  */
-export default function Message(props: MessageProps): JSX.Element {
+export default function Message(inProps: MessageProps): JSX.Element {
   // PROPS
+  const props: MessageProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   const {
     id = null,
     autoHide = false,

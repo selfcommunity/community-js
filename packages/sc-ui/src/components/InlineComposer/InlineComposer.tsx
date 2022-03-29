@@ -122,7 +122,7 @@ const INITIAL_STATE = {
  |avatar|.SCInlineComposer-avatar|Styles applied to the avatar element.|
 
 
- * @param props
+ * @param inProps
  */
 export default function InlineComposer(inProps: InlineComposerProps): JSX.Element {
   // PROPS

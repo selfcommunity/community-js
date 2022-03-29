@@ -28,6 +28,7 @@ import {
   useSCFetchFeedObject,
   useSCUser
 } from '@selfcommunity/core';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const messages = defineMessages({
   shares: {
@@ -138,8 +139,13 @@ export interface ShareProps {
   [p: string]: any;
 }
 
-export default function Share(props: ShareProps): JSX.Element {
+export default function Share(inProps: ShareProps): JSX.Element {
   // PROPS
+  const props: ShareProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
+
   const {
     className = null,
     feedObjectId = null,

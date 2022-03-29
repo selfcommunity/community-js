@@ -9,6 +9,7 @@ import {SCCategoryType} from '@selfcommunity/core';
 import {defineMessages, useIntl} from 'react-intl';
 import classNames from 'classnames';
 import Widget from '../Widget';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const messages = defineMessages({
   categoryFollowers: {
@@ -90,10 +91,15 @@ export interface CategoryProps {
  |title|.SCCategory-title|Styles applied to the title element.|
  |actions|.SCCategory-actions|Styles applied to action section.|
 
- * @param props
+ * @param inProps
  */
-export default function Category(props: CategoryProps): JSX.Element {
+export default function Category(inProps: CategoryProps): JSX.Element {
   // PROPS
+  const props: CategoryProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
+
   const {id = null, category = null, className = null, autoHide = false, followCategoryButtonProps = {}, showFollowers = true, ...rest} = props;
 
   // CONTEXT

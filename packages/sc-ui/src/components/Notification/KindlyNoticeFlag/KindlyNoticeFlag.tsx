@@ -2,7 +2,7 @@ import React from 'react';
 import {styled} from '@mui/material/styles';
 import {Avatar, Box, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
 import Icon from '@mui/material/Icon';
-import { grey, red } from '@mui/material/colors';
+import {grey, red} from '@mui/material/colors';
 import {Link, SCNotificationDeletedForType, SCRoutingContextType, useSCRouting, StringUtils, SCRoutes} from '@selfcommunity/core';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {getContributeType, getContributionSnippet, getRouteData} from '../../../utils/contribute';
@@ -10,6 +10,7 @@ import DateTimeAgo from '../../../shared/DateTimeAgo';
 import NewChip from '../../../shared/NewChip/NewChip';
 import classNames from 'classnames';
 import {SCNotificationObjectTemplateType} from '../../../types';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const messages = defineMessages({
   kindlyNoticeFlag: {
@@ -105,11 +106,15 @@ export interface NotificationKindlyNoticeFlagProps {
 
 /**
  * This component render the content of the notification of type kindly notice flag
- * @param props
+ * @param inProps
  * @constructor
  */
-export default function KindlyNoticeFlagNotification(props: NotificationKindlyNoticeFlagProps): JSX.Element {
+export default function KindlyNoticeFlagNotification(inProps: NotificationKindlyNoticeFlagProps): JSX.Element {
   // PROPS
+  const props: NotificationKindlyNoticeFlagProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   const {
     notificationObject,
     id = `n_${props.notificationObject['sid']}`,

@@ -23,6 +23,7 @@ import {SCOPE_SC_UI} from '../../constants/Errors';
 import BaseDialog from '../../shared/BaseDialog';
 import CentralProgress from '../../shared/CentralProgress';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const messages = defineMessages({
   title: {
@@ -100,10 +101,11 @@ export interface UserFollowersProps {
  |root|.SCUserFollowers-root|Styles applied to the root element.|
  |title|.SCUserFollowers-title|Styles applied to the title element.|
  |noResults|.SCUserFollowers-noResults|Styles applied to noResults section.|
+ |followersItem|.SCUserFollowers-followers-item|Styles applied to follower item element.|
 
- * @param props
+ * @param inProps
  */
-export default function UserFollowers(props: UserFollowersProps): JSX.Element {
+export default function UserFollowers(inProps: UserFollowersProps): JSX.Element {
   // CONST
   const limit = 3;
 
@@ -118,6 +120,10 @@ export default function UserFollowers(props: UserFollowersProps): JSX.Element {
     scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY].value;
 
   // PROPS
+  const props: UserFollowersProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   const {userId, autoHide, className, UserProps = {}} = props;
 
   // STATE

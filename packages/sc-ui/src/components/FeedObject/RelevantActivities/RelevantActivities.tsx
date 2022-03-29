@@ -12,6 +12,7 @@ import FollowRelevantActivity from './FollowActivity';
 import PollVoteRelevantActivity from './PollVoteActivity';
 import {grey} from '@mui/material/colors';
 import classNames from 'classnames';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const PREFIX = 'SCFeedRelevantActivities';
 
@@ -54,8 +55,12 @@ export interface RelevantActivitiesProps {
    */
   [p: string]: any;
 }
-export default function RelevantActivities(props: RelevantActivitiesProps): JSX.Element {
+export default function RelevantActivities(inProps: RelevantActivitiesProps): JSX.Element {
   //PROPS
+  const props: RelevantActivitiesProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   const {className = null, activities = [], showMaxRelevantActivities = 5, ...rest} = props;
 
   // STATE

@@ -21,6 +21,7 @@ import {
   useSCFetchFeedObject,
   useSCUser
 } from '@selfcommunity/core';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const PREFIX = 'SCFollowObject';
 
@@ -91,8 +92,12 @@ export interface FollowProps {
   [p: string]: any;
 }
 
-export default function Follow(props: FollowProps): JSX.Element {
+export default function Follow(inProps: FollowProps): JSX.Element {
   // PROPS
+  const props: FollowProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   const {
     className = null,
     feedObjectId = null,

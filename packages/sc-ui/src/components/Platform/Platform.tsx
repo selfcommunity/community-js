@@ -7,6 +7,7 @@ import {AxiosResponse} from 'axios';
 import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
 import Widget from '../Widget';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const PREFIX = 'SCPlatform';
 
@@ -62,11 +63,17 @@ export interface PlatformProps {
  |Rule Name|Global class|Description|
  |---|---|---|
  |root|.SCPlatform-root|Styles applied to the root element.|
+ |title|.SCPlatform-title|Styles applied to the title element.|
+
  *
- * @param props
+ * @param inProps
  */
-export default function Platform(props: PlatformProps): JSX.Element {
+export default function Platform(inProps: PlatformProps): JSX.Element {
   // PROPS
+  const props: PlatformProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   const {autoHide, className, ...rest} = props;
 
   // CONTEXT

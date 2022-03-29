@@ -18,6 +18,7 @@ import {FormattedMessage} from 'react-intl';
 import {MessageSkeleton} from './Skeleton';
 import Widget from '../Widget';
 import PubSub from 'pubsub-js';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const PREFIX = 'SCBroadcastMessages';
 
@@ -93,10 +94,15 @@ export interface BroadcastMessagesProps {
  |boxLoadMore|.SCBroadcastMessages-box-load-more|Styles applied to load more box.|
  |buttonLoadMore|.SCBroadcastMessages-button-load-more|Styles applied to load more button.|
 
- * @param props
+ * @param inProps
  */
-export default function BroadcastMessages(props: BroadcastMessagesProps): JSX.Element {
+export default function BroadcastMessages(inProps: BroadcastMessagesProps): JSX.Element {
   // PROPS
+  const props: BroadcastMessagesProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
+
   const {
     id = 'broadcast_messages',
     className = null,

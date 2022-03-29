@@ -6,6 +6,7 @@ import {defineMessages, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../../shared/DateTimeAgo';
 import {ActionsRelevantActivityProps} from '../FollowActivity';
 import classNames from 'classnames';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const messages = defineMessages({
   appreciated: {
@@ -26,8 +27,13 @@ const Root = styled(Box, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({}));
 
-export default function VoteUpRelevantActivity(props: ActionsRelevantActivityProps): JSX.Element {
+export default function VoteUpRelevantActivity(inProps: ActionsRelevantActivityProps): JSX.Element {
   // PROPS
+  const props: ActionsRelevantActivityProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
+
   const {className = null, activityObject = null, ...rest} = props;
 
   // CONTEXT

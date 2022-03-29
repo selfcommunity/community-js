@@ -8,7 +8,7 @@ import NewChip from '../../../shared/NewChip/NewChip';
 import classNames from 'classnames';
 import {grey, red} from '@mui/material/colors';
 import {SCNotificationObjectTemplateType} from '../../../types';
-import {getRouteData} from '../../../utils/contribute';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const messages = defineMessages({
   incubatorApproved: {
@@ -102,8 +102,12 @@ export interface NotificationIncubatorApprovedProps {
   [p: string]: any;
 }
 
-export default function IncubatorApprovedNotification(props: NotificationIncubatorApprovedProps): JSX.Element {
+export default function IncubatorApprovedNotification(inProps: NotificationIncubatorApprovedProps): JSX.Element {
   // PROPS
+  const props: NotificationIncubatorApprovedProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   const {
     notificationObject = null,
     id = `n_${props.notificationObject['feed_serialization_id']}`,

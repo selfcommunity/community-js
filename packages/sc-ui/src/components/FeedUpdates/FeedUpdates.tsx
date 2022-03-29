@@ -5,6 +5,7 @@ import PubSub from 'pubsub-js';
 import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
 import Widget from '../Widget';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const PREFIX = 'SCFeedUpdates';
 
@@ -88,10 +89,15 @@ export interface FeedUpdatesProps {
  |root|.SCFeedUpdates-root|Styles applied to the root element.|
  |image|.SCFeedUpdates-image|Styles applied to the image element.|
  *
- * @param props
+ * @param inProps
  */
-export default function FeedUpdates(props: FeedUpdatesProps): JSX.Element {
+export default function FeedUpdates(inProps: FeedUpdatesProps): JSX.Element {
   // PROPS
+  const props: FeedUpdatesProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
+
   const {
     id = 'feed_updates',
     className = null,

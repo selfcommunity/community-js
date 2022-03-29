@@ -15,6 +15,7 @@ import Icon from '@mui/material/Icon';
 import Picker from 'emoji-picker-react';
 import {random} from '../../utils/string';
 import classNames from 'classnames';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const PREFIX = 'SCEditor';
 
@@ -162,12 +163,16 @@ export interface EditorProps {
  |drop|.SCEditor-drop|Styles applied to the drop element.|
  |actions|.SCEditor-actions|Styles applied to the actions section.|
 
- * @param props
+ * @param inProps
  */
-export default function Editor(props: EditorProps): JSX.Element {
+export default function Editor(inProps: EditorProps): JSX.Element {
   const editorId = useMemo(() => `editor${random()}`, []);
 
   // PROPS
+  const props: EditorProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   const {id = 'editor', className = null, defaultValue = '', readOnly = false, onChange = null, onRef = null} = props;
 
   // Refs

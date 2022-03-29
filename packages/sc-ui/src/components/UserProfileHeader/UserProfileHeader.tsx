@@ -15,6 +15,7 @@ import {
 } from '@selfcommunity/core';
 import UserProfileHeaderSkeleton from './Skeleton';
 import classNames from 'classnames';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const PREFIX = 'SCUserProfileHeader';
 
@@ -134,10 +135,14 @@ export interface UserProfileHeaderProps {
  |changePicture|.SCUserProfileHeader-change-picture|Styles applied to changePicture element.|
  |changeCover|.SCUserProfileHeader-change-cover`|Styles applied to changeCover element.|
 
- * @param props
+ * @param inProps
  */
-export default function UserProfileHeader(props: UserProfileHeaderProps): JSX.Element {
+export default function UserProfileHeader(inProps: UserProfileHeaderProps): JSX.Element {
   // PROPS
+  const props: UserProfileHeaderProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   const {id = null, className = null, userId = null, user = null, ChangePictureProps = {}, ChangeCoverProps = {}, ...rest} = props;
 
   // PREFERENCES

@@ -28,6 +28,7 @@ import BaseDialog from '../../shared/BaseDialog';
 import CentralProgress from '../../shared/CentralProgress';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Widget from '../Widget';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const PREFIX = 'SCTrendingPost';
 
@@ -109,10 +110,12 @@ const PREFERENCES = [SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED, SCPreferences
  |root|.SCRelatedDiscussion-root|Styles applied to the root element.|
  |title|.SCRelatedDiscussion-title|Styles applied to the title element.|
  |noResults|.SCRelatedDiscussion-noResults|Styles applied to noResults section.|
+ |relatedItem|.SCRelatedDiscussion-related-item|Styles applied to the related item element.|
+
  *
- * @param props
+ * @param inProps
  */
-export default function RelatedDiscussion(props: RelatedDiscussionProps): JSX.Element {
+export default function RelatedDiscussion(inProps: RelatedDiscussionProps): JSX.Element {
   // CONST
   const limit = 4;
 
@@ -121,7 +124,19 @@ export default function RelatedDiscussion(props: RelatedDiscussionProps): JSX.El
   const scUserContext: SCUserContextType = useSCUser();
 
   // PROPS
-  const {feedObjectId, feedObjectType, template = SCFeedObjectTemplateType.SNIPPET, FeedObjectProps = {}, className, autoHide = true, ...rest} = props;
+  const props: RelatedDiscussionProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
+  const {
+    feedObjectId,
+    feedObjectType,
+    template = SCFeedObjectTemplateType.SNIPPET,
+    FeedObjectProps = {},
+    className,
+    autoHide = true,
+    ...rest
+  } = props;
 
   // STATE
   const {obj, setObj} = useSCFetchFeedObject({id: feedObjectId, feedObject: null, feedObjectType});

@@ -16,6 +16,7 @@ import {
   useSCContext,
   useSCFetchUser
 } from '@selfcommunity/core';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const PREFIX = 'SCFollowUserButton';
 
@@ -80,10 +81,14 @@ export interface FollowUserButtonProps {
  |---|---|---|
  |root|.SCFollowUserButton-root|Styles applied to the root element.|
 
- * @param props
+ * @param inProps
  */
-export default function FollowUserButton(props: FollowUserButtonProps): JSX.Element {
+export default function FollowUserButton(inProps: FollowUserButtonProps): JSX.Element {
   // PROPS
+  const props: FollowUserButtonProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   const {className, userId, user, onFollow, ...rest} = props;
 
   // CONTEXT

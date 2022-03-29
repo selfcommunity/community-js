@@ -36,6 +36,7 @@ import {
   UserUtils,
   SCRoutes
 } from '@selfcommunity/core';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const messages = defineMessages({
   reply: {
@@ -260,6 +261,7 @@ export interface CommentObjectProps {
  |avatar|.SCCommentObject-avatar|Styles applied to the avatar element.|
  |author|.SCCommentObject-author|Styles applied to the author section.|
  |content|.SCCommentObject-content|Styles applied to content section.|
+ |contentWrap|.SCCommentObject-content-wrap|Styles applied to content container element.|
  |textContent|.SCCommentObject-text-content|Styles applied to text content section.|
  |commentChild|.SCCommentObject-comment-child|Styles applied to the comment child element.|
  |btnVotes|.SCCommentObject-btn-votes|Styles applied to the vote button element.|
@@ -268,11 +270,16 @@ export interface CommentObjectProps {
  |commentActionsMenu|.SCCommentObject-comment-actions-menu|Styles applied to comment action menu element.|
  |deleted|.SCCommentObject-deleted|Styles applied to tdeleted element.|
  |activityAt|.SCCommentObject-activity-at|Styles applied to activity at section.|
+ |reply|.SCCommentObject-reply|Styles applied to the reply element.|
 
- * @param props
+ * @param inProps
  */
-export default function CommentObject(props: CommentObjectProps): JSX.Element {
+export default function CommentObject(inProps: CommentObjectProps): JSX.Element {
   // PROPS
+  const props: CommentObjectProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   const {
     className,
     commentObjectId,

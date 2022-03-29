@@ -9,6 +9,7 @@ import DateTimeAgo from '../../../shared/DateTimeAgo';
 import NewChip from '../../../shared/NewChip/NewChip';
 import classNames from 'classnames';
 import {SCNotificationObjectTemplateType} from '../../../types';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const messages = defineMessages({
   receivePrivateMessage: {
@@ -122,11 +123,15 @@ export interface NotificationPrivateMessageProps {
 
 /**
  * This component render the content of the notification of type private message
- * @param props
+ * @param inProps
  * @constructor
  */
-export default function PrivateMessageNotification(props: NotificationPrivateMessageProps): JSX.Element {
+export default function PrivateMessageNotification(inProps: NotificationPrivateMessageProps): JSX.Element {
   // PROPS
+  const props: NotificationPrivateMessageProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   const {
     notificationObject,
     id = `n_${props.notificationObject['sid']}`,

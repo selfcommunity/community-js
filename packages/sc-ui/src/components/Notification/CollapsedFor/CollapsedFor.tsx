@@ -10,6 +10,7 @@ import DateTimeAgo from '../../../shared/DateTimeAgo';
 import NewChip from '../../../shared/NewChip/NewChip';
 import classNames from 'classnames';
 import {SCNotificationObjectTemplateType} from '../../../types';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const messages = defineMessages({
   collapsedForAdvertising: {
@@ -125,11 +126,15 @@ export interface NotificationCollapsedForProps {
 
 /**
  * This component render the content of the notification of type collapsed for
- * @param props
+ * @param inProps
  * @constructor
  */
-export default function CollapsedForNotification(props: NotificationCollapsedForProps): JSX.Element {
+export default function CollapsedForNotification(inProps: NotificationCollapsedForProps): JSX.Element {
   // PROPS
+  const props: NotificationCollapsedForProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   const {
     notificationObject,
     id = `n_${props.notificationObject['sid']}`,

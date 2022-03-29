@@ -4,6 +4,7 @@ import {SCPreferences, SCPreferencesContext, SCPreferencesContextType, SCUserTyp
 import {Box} from '@mui/material';
 import FollowUserButton, {FollowUserButtonProps} from '../FollowUserButton';
 import FriendshipUserButton, {FriendshipButtonProps} from '../FriendshipUserButton';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const PREFIX = 'SCConnectionUserButton';
 
@@ -51,10 +52,14 @@ export interface ConnectionUserButtonProps {
  |---|---|---|
  |root|.SCConnectionUserButton-root|Styles applied to the root element.|
 
- * @param props
+ * @param inProps
  */
-export default function ConnectionUserButton(props: ConnectionUserButtonProps): JSX.Element {
+export default function ConnectionUserButton(inProps: ConnectionUserButtonProps): JSX.Element {
   // PROPS
+  const props: ConnectionUserButtonProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   const {user = null, followConnectUserButtonProps = {}, ...rest} = props;
 
   // CONTEXT

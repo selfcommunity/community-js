@@ -345,7 +345,7 @@ export interface FeedObjectProps extends CardProps {
  |activityAt|.SCFeedObject-activity-at|Styles applied to the activity at section.|
  |deleted|.SCFeedObject-deleted|Styles applied to the feed obj when is deleted (visible only for admin and moderator).|
 
- * @param props
+ * @param inProps
  */
 export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
   // PROPS

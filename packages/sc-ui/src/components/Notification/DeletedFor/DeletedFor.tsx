@@ -10,6 +10,7 @@ import NewChip from '../../../shared/NewChip/NewChip';
 import {Link, SCRoutingContextType, useSCRouting, StringUtils, SCNotificationDeletedForType, SCRoutes} from '@selfcommunity/core';
 import classNames from 'classnames';
 import {SCNotificationObjectTemplateType} from '../../../types';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const messages = defineMessages({
   deletedForAdvertising: {
@@ -125,11 +126,15 @@ export interface NotificationDeletedForProps {
 
 /**
  * This component render the content of the notification of type deleted for
- * @param props
+ * @param inProps
  * @constructor
  */
-export default function DeletedForNotification(props: NotificationDeletedForProps): JSX.Element {
+export default function DeletedForNotification(inProps: NotificationDeletedForProps): JSX.Element {
   // PROPS
+  const props: NotificationDeletedForProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   const {
     notificationObject = null,
     id = `n_${props.notificationObject['feed_serialization_id']}`,

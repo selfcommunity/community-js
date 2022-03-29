@@ -12,6 +12,7 @@ import BaseDialog from '../../shared/BaseDialog';
 import CentralProgress from '../../shared/CentralProgress';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Skeleton from './Skeleton';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const PREFIX = 'SCTrendingPeople';
 
@@ -86,14 +87,19 @@ export interface TrendingPeopleProps {
  |root|.SCTrendingPeople-root|Styles applied to the root element.|
  |title|.SCTrendingPeople-title|Styles applied to the title element.|
  |noResults|.SCTrendingPeople-noResults|Styles applied to noResults section.|
+ |trendingUserItem|.SCTrendingPeople-trending-user-items|Styles applied to the trending user item element.|
 
- * @param props
+ * @param inProps
  */
-export default function TrendingPeople(props: TrendingPeopleProps): JSX.Element {
+export default function TrendingPeople(inProps: TrendingPeopleProps): JSX.Element {
   // CONST
   const limit = 3;
 
   // PROPS
+  const props: TrendingPeopleProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   const {categoryId, autoHide, className, UserProps = {}, ...rest} = props;
 
   // STATE

@@ -10,6 +10,7 @@ import classNames from 'classnames';
 import {FriendshipButtonProps} from '../FriendshipUserButton/FriendshipUserButton';
 import ConnectionUserButton from '../ConnectionUserButton';
 import Widget from '../Widget';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const messages = defineMessages({
   userFollowers: {
@@ -102,10 +103,14 @@ export interface UserProps extends Pick<CardProps, Exclude<keyof CardProps, 'id'
  |avatar|.SCUser-avatar|Styles applied to the avatar element.|
  |actions|.SCUser-actions|Styles applied to actions section.|
 
- * @param props
+ * @param inProps
  */
-export default function User(props: UserProps): JSX.Element {
+export default function User(inProps: UserProps): JSX.Element {
   // PROPS
+  const props: UserProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   const {
     id = null,
     user = null,

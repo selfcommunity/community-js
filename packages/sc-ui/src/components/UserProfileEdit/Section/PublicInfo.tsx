@@ -11,6 +11,7 @@ import {DatePicker, LocalizationProvider} from '@mui/lab';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import UsernameTextField from '../../../shared/UsernameTextField';
 import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const messages = defineMessages({
   username: {
@@ -108,8 +109,12 @@ export interface PublicInfoProps {
 
 const GENDERS = ['Male', 'Female', 'Unspecified'];
 
-export default function PublicInfo(props: PublicInfoProps): JSX.Element {
+export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
   // PROPS
+  const props: PublicInfoProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   const {id = null, className = null, fields = [...DEFAULT_FIELDS], ...rest} = props;
 
   // CONTEXT

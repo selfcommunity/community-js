@@ -1,7 +1,7 @@
 import React, {useEffect, useMemo, useReducer} from 'react';
 import BaseDialog from '../../../../shared/BaseDialog';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {Box, Button, Divider, IconButton, List, Tooltip} from '@mui/material';
+import {Box, Button, Divider, List, Tooltip} from '@mui/material';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Icon from '@mui/material/Icon';
 import Skeleton from '@mui/material/Skeleton';
@@ -27,6 +27,7 @@ import {
   useSCFetchFeedObject,
   useSCUser
 } from '@selfcommunity/core';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 /**
  * We have complex state logic that involves multiple sub-values,
@@ -220,7 +221,12 @@ export interface VoteProps {
   [p: string]: any;
 }
 
-export default function Vote(props: VoteProps): JSX.Element {
+export default function Vote(inProps: VoteProps): JSX.Element {
+  const props: VoteProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
+
   // PROPS
   const {
     className = null,
@@ -443,7 +449,8 @@ export default function Vote(props: VoteProps): JSX.Element {
         {withAction && (
           <React.Fragment>
             {!inlineAction && withAudience && <Divider className={classes.divider} />}
-            <Tooltip title={voting ? '' : obj.voted && scUserContext.user ? intl.formatMessage(messages.voteDown) : intl.formatMessage(messages.voteUp)}>
+            <Tooltip
+              title={voting ? '' : obj.voted && scUserContext.user ? intl.formatMessage(messages.voteDown) : intl.formatMessage(messages.voteUp)}>
               <span>
                 <LoadingButton
                   loading={voting}

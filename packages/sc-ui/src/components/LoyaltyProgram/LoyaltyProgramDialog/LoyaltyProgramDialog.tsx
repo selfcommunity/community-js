@@ -4,6 +4,7 @@ import {FormattedMessage} from 'react-intl';
 import BaseDialog from '../../../shared/BaseDialog';
 import LoyaltyProgramDetail from '../LoyaltyProgramDetail';
 import classNames from 'classnames';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const PREFIX = 'SCLoyaltyProgramDialog';
 
@@ -46,8 +47,12 @@ export interface LoyaltyProgramDialogProps {
   points?: number;
 }
 
-export default function LoyaltyProgramDialog(props: LoyaltyProgramDialogProps): JSX.Element {
+export default function LoyaltyProgramDialog(inProps: LoyaltyProgramDialogProps): JSX.Element {
   // PROPS
+  const props: LoyaltyProgramDialogProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   const {className, open, onClose, points, ...rest} = props;
   return (
     <Root
