@@ -25,6 +25,7 @@ export const COLORS_COLORPRIMARY = 'colors.colorprimary';
 export const COLORS_COLORSECONDARY = 'colors.colorsecondary';
 export const COLORS_NAVBARBACK = 'colors.navbarback';
 export const COLORS_SUBMENUBACK = 'colors.submenuback';
+export const COLORS_COLORFONT = 'colors.font_color';
 
 /**
  * COVERS
@@ -175,6 +176,12 @@ export const DATA_TYPES = {
   [TEXT_APPLICATION_COPYRIGHT]: stringType,
   [LOGO_NAVBAR_LOGO]: stringType,
   [LOGO_NAVBAR_LOGO_MOBILE]: stringType,
+  [COLORS_COLORBACK]: stringType,
+  [COLORS_COLORPRIMARY]: stringType,
+  [COLORS_COLORSECONDARY]: stringType,
+  [COLORS_NAVBARBACK]: stringType,
+  [COLORS_SUBMENUBACK]: stringType,
+  [COLORS_COLORFONT]: stringType,
   [COVERS_COVER_1_HP_M1920]: stringType,
   [COVERS_COVER_2_HP_M1920]: stringType,
   [COVERS_COVER_3_HP_M1920]: stringType,

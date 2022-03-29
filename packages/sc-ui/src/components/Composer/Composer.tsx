@@ -70,6 +70,8 @@ import {DistributiveOmit} from '@mui/types';
 import {OverrideProps} from '@mui/material/OverridableComponent';
 import {ComposerSkeleton} from './index';
 import {useSnackbar} from 'notistack';
+import useThemeProps from '@mui/material/styles/useThemeProps';
+import { InlineComposerProps } from '@selfcommunity/ui';
 
 const DialogTransition = forwardRef(function Transition(
   props: TransitionProps & {
@@ -376,8 +378,12 @@ const reducer = (state, action) => {
 
  * @param props
  */
-export default function Composer(props: ComposerProps): JSX.Element {
+export default function Composer(inProps: ComposerProps): JSX.Element {
   // PROPS
+  const props: ComposerProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   const {
     feedObjectId = null,
     feedObjectType = null,

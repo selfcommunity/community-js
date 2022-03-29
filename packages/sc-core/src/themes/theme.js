@@ -1,7 +1,7 @@
 import {createTheme} from '@mui/material/styles';
 import {mergeDeep} from '../utils/object';
 import validateColor from 'validate-color';
-import {COLORS_COLORBACK, COLORS_COLORPRIMARY, COLORS_COLORSECONDARY, FONT_FAMILY} from '../constants/Preferences';
+import {COLORS_COLORBACK, COLORS_COLORPRIMARY, COLORS_COLORSECONDARY, COLORS_COLORFONT, FONT_FAMILY} from '../constants/Preferences';
 import {isString} from '../utils/string';
 
 /**
@@ -30,7 +30,7 @@ const getTheme = (options, preferences) => {
     ? {
         palette: {
           ...(isValidPreference(preferences, COLORS_COLORBACK, validateColor) && {background: {default: preferences[COLORS_COLORBACK].value}}),
-          ...{text: {primary: '#777'}}, // TODO: add dynamic preferences
+          ...(isValidPreference(preferences, COLORS_COLORFONT, validateColor) && {text: {primary: preferences[COLORS_COLORFONT].value}}),
           ...(isValidPreference(preferences, COLORS_COLORPRIMARY, validateColor) && {primary: {main: preferences[COLORS_COLORPRIMARY].value}}),
           ...(isValidPreference(preferences, COLORS_COLORSECONDARY, validateColor) && {
             secondary: {main: preferences[COLORS_COLORSECONDARY].value},

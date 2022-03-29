@@ -1,7 +1,16 @@
-import React, {useContext, useEffect, useMemo, useState} from 'react';
+import React, {useContext, useEffect, useMemo, useState, useRef} from 'react';
 import {styled} from '@mui/material/styles';
 import Widget from '../Widget';
-import {Endpoints, http, SCPrivateMessageType, SCUserContext, SCUserContextType, UserUtils} from '@selfcommunity/core';
+import {
+  Endpoints,
+  http,
+  SCNotificationTopicType,
+  SCNotificationTypologyType,
+  SCPrivateMessageType,
+  SCUserContext,
+  SCUserContextType,
+  UserUtils
+} from '@selfcommunity/core';
 import {AxiosResponse} from 'axios';
 import Message from '../Message';
 import _ from 'lodash';
@@ -12,6 +21,7 @@ import MessageEditor from '../MessageEditor';
 import Autocomplete from '@mui/material/Autocomplete';
 import classNames from 'classnames';
 import {useSnackbar} from 'notistack';
+import PubSub from 'pubsub-js';
 
 const PREFIX = 'SCThread';
 
@@ -149,6 +159,11 @@ export interface ThreadProps {
  |sender|.SCThread-sender|Styles applied to the sender element.|
  |receiver|.SCThread-receiver|Styles applied to the receiver element.|
  |center|.SCThread-center|Styles applied to the center section.|
+ |threadBox|.SCThread-threadBox|Styles applied to the thread box element.|
+ |emptyBox|.SCThread-emptyBox|Styles applied to the empty box element.|
+ |newMessageBox|.SCThread-newMessageBox|Styles applied to the new message box element.|
+ |newMessageEditor|.SCThread-newMessageEditor|Styles applied to the new message editor.|
+ |newMessageEmptyBox|.SCThread-newMessageEmptyBox|Styles applied to the new message empty box element.|
 
  * @param props
  */
@@ -158,7 +173,7 @@ export default function Thread(props: ThreadProps): JSX.Element {
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
-  const {enqueueSnackbar} = useSnackbar();
+  const {enqueueSnackbar, closeSnackbar} = useSnackbar();
 
   // STATE
   const [loading, setLoading] = useState<boolean>(true);
@@ -172,6 +187,9 @@ export default function Thread(props: ThreadProps): JSX.Element {
   const [sending, setSending] = useState<boolean>(false);
   const [followers, setFollowers] = useState<any[]>([]);
   const [recipients, setRecipients] = useState([]);
+
+  // REFS
+  const refreshSubscription = useRef(null);
 
   // INTL
   const intl = useIntl();
@@ -252,6 +270,12 @@ export default function Thread(props: ThreadProps): JSX.Element {
       })
       .catch((error) => {
         console.log(error);
+        let _snackBar = enqueueSnackbar(<FormattedMessage id="ui.common.error" defaultMessage="ui.common.error" />, {
+          variant: 'error',
+          onClick: () => {
+            closeSnackbar(_snackBar);
+          }
+        });
       });
   }
 
@@ -273,11 +297,19 @@ export default function Thread(props: ThreadProps): JSX.Element {
         })
         .then((res) => {
           setMessages((prev) => [...prev, res.data]);
-          onNewMessageSent(res.data);
           setSending(false);
+          if (openNewMessage) {
+            onNewMessageSent(res.data);
+          }
         })
         .catch((error) => {
           console.log(error);
+          let _snackBar = enqueueSnackbar(<FormattedMessage id="ui.common.error.messageError" defaultMessage="ui.common.error.messageError" />, {
+            variant: 'error',
+            onClick: () => {
+              closeSnackbar(_snackBar);
+            }
+          });
         });
     }
   }
@@ -332,6 +364,27 @@ export default function Thread(props: ThreadProps): JSX.Element {
     }
     fetchThread();
   }, [id, openNewMessage]);
+
+  /**
+   * When a ws notification arrives, update data
+   */
+  useEffect(() => {
+    refreshSubscription.current = PubSub.subscribe(
+      `${SCNotificationTopicType.INTERACTION}.${SCNotificationTypologyType.PRIVATE_MESSAGE}`,
+      subscriber
+    );
+    return () => {
+      PubSub.unsubscribe(refreshSubscription.current);
+    };
+  }, []);
+
+  /**
+   * Notification subscriber
+   */
+  const subscriber = (msg, data) => {
+    console.log(data);
+    //setMessages([...messages, data.private_message]);
+  };
 
   /**
    * Renders thread component

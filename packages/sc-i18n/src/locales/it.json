@@ -7,6 +7,7 @@
   "ui.common.error.username": "Il campo username può essere composto da caratteri alfanumerici _ e -",
   "ui.common.error.action": "Si è verificato un'errore. Riprova più tardi!",
   "ui.common.userBlocked": "Siamo spiacenti, non puoi segnalare un intervento perché il tuo account è bloccato",
+  "ui.common.error.messageError": "Non è stato possibile inviare il messaggio!",
   "ui.common.discussionWithoutText": "Vedi la discussione",
   "ui.common.postWithoutText": "Vedi il post",
   "ui.common.statusWithoutText": "Vedi lo status",
@@ -362,6 +363,8 @@
   "ui.userToastNotifications.userBlocked.accountReactivated": "Il tuo accont è stato <b>sbloccato</b>",
 
   "ui.snippetNotifications.noNotifications": "Al momento, non hai nessuna notifica da vedere",
+
+  "ui.messageEditor.button.send" : "invia",
 
   "ui.Message.dialog.msg": "Sei sicuro di voler eliminare il messaggio selezionato?",
   "ui.Message.dialog.confirm": "Sì",

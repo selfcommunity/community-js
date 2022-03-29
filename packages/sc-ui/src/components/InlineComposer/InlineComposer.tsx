@@ -24,6 +24,7 @@ import {DistributiveOmit} from '@mui/types';
 import {OverrideProps} from '@mui/material/OverridableComponent';
 import {useSnackbar} from 'notistack';
 import Widget from '../Widget';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const PREFIX = 'SCInlineComposer';
 
@@ -123,8 +124,12 @@ const INITIAL_STATE = {
 
  * @param props
  */
-export default function InlineComposer(props: InlineComposerProps): JSX.Element {
+export default function InlineComposer(inProps: InlineComposerProps): JSX.Element {
   // PROPS
+  const props: InlineComposerProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   const {mediaObjectTypes = [Image, Document, Link], defaultValue, onSuccess = null, ...rest} = props;
 
   // Context
