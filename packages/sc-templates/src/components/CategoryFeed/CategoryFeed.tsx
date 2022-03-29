@@ -13,18 +13,9 @@ import {
   TrendingFeed,
   TrendingPeople
 } from '@selfcommunity/ui';
-import {
-  Endpoints,
-  SCCategoryType,
-  SCCustomAdvPosition,
-  SCFeedDiscussionType,
-  SCFeedObjectTypologyType,
-  SCFeedPostType,
-  SCFeedStatusType,
-  SCFeedUnitActivityType,
-  useSCFetchCategory
-} from '@selfcommunity/core';
+import {Endpoints, SCCategoryType, SCCustomAdvPosition, useSCFetchCategory} from '@selfcommunity/core';
 import {CategoryFeedSkeleton} from './index';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const PREFIX = 'SCCategoryFeedTemplate';
 
@@ -105,8 +96,12 @@ const WIDGETS: SCFeedWidgetType[] = [
   }
 ];
 
-export default function CategoryFeed(props: CategoryFeedProps): JSX.Element {
+export default function CategoryFeed(inProps: CategoryFeedProps): JSX.Element {
   // PROPS
+  const props: CategoryFeedProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   const {id = 'category_feed', className, category, categoryId, widgets = WIDGETS, FeedObjectProps = {}, FeedSidebarProps = null} = props;
 
   // REF

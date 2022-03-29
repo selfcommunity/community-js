@@ -7,6 +7,7 @@ import {FormattedMessage} from 'react-intl';
 import Icon from '@mui/material/Icon';
 import {SCUserContext, SCUserContextType} from '@selfcommunity/core';
 import classNames from 'classnames';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const PREFIX = 'SCPrivateMessages';
 
@@ -93,10 +94,14 @@ export interface PrivateMessagesProps {
  |selected|.SCPrivateMessages-selected|Styles applied to the selected element.|
 
 
- * @param props
+ * @param inProps
  */
-export default function PrivateMessages(props: PrivateMessagesProps): JSX.Element {
+export default function PrivateMessages(inProps: PrivateMessagesProps): JSX.Element {
   //PROPS
+  const props: PrivateMessagesProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   const {autoHide = false, className = null, ...rest} = props;
 
   // STATE

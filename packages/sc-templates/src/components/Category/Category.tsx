@@ -5,6 +5,7 @@ import {FeedObjectProps, FeedSidebarProps, CategoryHeader, SCFeedWidgetType} fro
 import CategoryFeed from '../CategoryFeed';
 import {SCCategoryType, useSCFetchCategory} from '@selfcommunity/core';
 import CategorySkeleton from './Skeleton';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const PREFIX = 'SCCategoryTemplate';
 
@@ -60,8 +61,12 @@ export interface CategoryProps {
   FeedSidebarProps?: FeedSidebarProps;
 }
 
-export default function Category(props: CategoryProps): JSX.Element {
+export default function Category(inProps: CategoryProps): JSX.Element {
   // PROPS
+  const props: CategoryProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   const {id = 'category', className, category, categoryId, widgets, FeedObjectProps, FeedSidebarProps} = props;
 
   // Hooks

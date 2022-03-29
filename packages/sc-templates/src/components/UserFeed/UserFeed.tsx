@@ -16,6 +16,7 @@ import {
   UsersFollowed
 } from '@selfcommunity/ui';
 import {UserFeedSkeleton} from './index';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const PREFIX = 'SCUserFeedTemplate';
 
@@ -96,8 +97,12 @@ const WIDGETS: SCFeedWidgetType[] = [
   }
 ];
 
-export default function UserFeed(props: UserFeedProps): JSX.Element {
+export default function UserFeed(inProps: UserFeedProps): JSX.Element {
   // PROPS
+  const props: UserFeedProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   const {id = 'user_feed', className, userId, user, widgets = WIDGETS, FeedObjectProps = {}, FeedSidebarProps = null} = props;
 
   // Hooks

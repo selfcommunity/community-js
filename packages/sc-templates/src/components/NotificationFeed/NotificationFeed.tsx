@@ -16,6 +16,7 @@ import {
   SCFeedWidgetType
 } from '@selfcommunity/ui';
 import {Endpoints, SCNotificationTopicType, SCUserContext, SCUserContextType} from '@selfcommunity/core';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const PREFIX = 'SCNotificationFeedTemplate';
 
@@ -106,8 +107,12 @@ const WIDGETS: SCFeedWidgetType[] = [
   }
 ];
 
-export default function NotificationFeed(props: NotificationFeedProps): JSX.Element {
+export default function NotificationFeed(inProps: NotificationFeedProps): JSX.Element {
   // PROPS
+  const props: NotificationFeedProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   const {id = 'notification_feed', className, widgets = WIDGETS, NotificationProps = {}, FeedSidebarProps = null} = props;
 
   //CONTEXT

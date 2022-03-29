@@ -20,6 +20,7 @@ import {SCContextType, SCUserContext, SCUserContextType, SCUserType, useSCContex
 import UserProfileSkeleton from './Skeleton';
 import classNames from 'classnames';
 import {FormattedMessage} from 'react-intl';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const PREFIX = 'SCUserProfileTemplate';
 
@@ -150,8 +151,12 @@ const MY_PROFILE_WIDGETS = [
   }
 ];
 
-export default function UserProfile(props: UserProfileProps): JSX.Element {
+export default function UserProfile(inProps: UserProfileProps): JSX.Element {
   // PROPS
+  const props: UserProfileProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   const {
     id = 'user_profile',
     className,
