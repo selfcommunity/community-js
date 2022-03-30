@@ -29,7 +29,8 @@ const classes = {
   pointsIcon: `${PREFIX}-pointsIcon`,
   actions: `${PREFIX}-actions`,
   points: `${PREFIX}-points`,
-  pointsBox: `${PREFIX}-points-box`
+  pointsBox: `${PREFIX}-points-box`,
+  discoverMore: `${PREFIX}-discover-more`
 };
 
 const Root = styled(Widget, {
@@ -108,6 +109,7 @@ export interface LoyaltyProgramProps {
  |actions|.SCLoyaltyProgram-actions|Styles applied to the actions section.|
  |points|.SCLoyaltyProgram-points|Styles applied to the points section.|
  |pointsBox|.SCLoyaltyProgram-points-box|Styles applied to the points box element.|
+ |discoverMore|.SCLoyaltyProgram-discover-more|Styles applied to discover more button element.|
  *
  * @param inProps
  */
@@ -195,11 +197,16 @@ export default function LoyaltyProgram(inProps: LoyaltyProgramProps): JSX.Elemen
           </Typography>
         </Box>
         {cardType ? (
-          <Button variant="outlined" size="small" component={Link} to={scRoutingContext.url(SCRoutes.LOYALTY_ROUTE_NAME, {LoyaltyProgramDetail})}>
+          <Button
+            variant="outlined"
+            size="small"
+            className={classes.discoverMore}
+            component={Link}
+            to={scRoutingContext.url(SCRoutes.LOYALTY_ROUTE_NAME, {LoyaltyProgramDetail})}>
             <FormattedMessage id="ui.loyaltyProgram.discover" defaultMessage="ui.loyaltyProgram.discover" />
           </Button>
         ) : (
-          <Button variant="outlined" size="small" onClick={() => setOpenLoyaltyProgramDialog(true)}>
+          <Button variant="outlined" size="small" className={classes.discoverMore} onClick={() => setOpenLoyaltyProgramDialog(true)}>
             <FormattedMessage id="ui.loyaltyProgram.discover" defaultMessage="ui.loyaltyProgram.discover" />
           </Button>
         )}

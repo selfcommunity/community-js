@@ -42,7 +42,8 @@ const classes = {
   root: `${PREFIX}-root`,
   title: `${PREFIX}-title`,
   followedItem: `${PREFIX}-followed-item`,
-  noResults: `${PREFIX}-noResults`
+  noResults: `${PREFIX}-no-results`,
+  showMore: `${PREFIX}-show-more`
 };
 
 const Root = styled(Widget, {
@@ -100,8 +101,10 @@ export interface UsersFollowedProps {
  |---|---|---|
  |root|.SCUsersFollowed-root|Styles applied to the root element.|
  |title|.SCUsersFollowed-title|Styles applied to the title element.|
- |noResults|.SCUsersFollowed-noResults|Styles applied to noResults section.|
+ |noResults|.SCUsersFollowed-no-results|Styles applied to no results section.|
  |followedItem|.SCUsersFollowed-followed-item|Styles applied to the followed item element.|
+ |showMore|.SCUsersFollowed-show-more|Styles applied to show more button element.|
+
  * @param inProps
  */
 export default function UsersFollowed(inProps: UsersFollowedProps): JSX.Element {
@@ -221,7 +224,7 @@ export default function UsersFollowed(inProps: UsersFollowedProps): JSX.Element 
                 ))}
               </List>
               {hasMore && (
-                <Button size="small" onClick={() => setOpenUsersFollowedDialog(true)}>
+                <Button size="small" className={classes.showMore} onClick={() => setOpenUsersFollowedDialog(true)}>
                   <FormattedMessage id="ui.usersFollowed.button.showAll" defaultMessage="ui.usersFollowed.button.showAll" />
                 </Button>
               )}

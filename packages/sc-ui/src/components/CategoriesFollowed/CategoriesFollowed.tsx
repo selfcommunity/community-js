@@ -33,7 +33,8 @@ const PREFIX = 'SCCategoriesFollowed';
 const classes = {
   root: `${PREFIX}-root`,
   title: `${PREFIX}-title`,
-  noResults: `${PREFIX}-noResults`
+  noResults: `${PREFIX}-no-results`,
+  showMore: `${PREFIX}-show-more`
 };
 
 const Root = styled(Widget, {
@@ -60,7 +61,8 @@ const Root = styled(Widget, {
  |---|---|---|
  |root|.SCCategoryFollowed-root|Styles applied to the root element.|
  |title|.SCCategoryFollowed-title|Styles applied to the title element.|
- |noResults|.SCCategoryFollowed-noResults|Styles applied to noResults section.|
+ |noResults|.SCCategoryFollowed-no-results|Styles applied to no results section.|
+ |showMore|.SCCategoryFollowed-show-more|Styles applied to show more button element.|
 
  * @param inProps
  */
@@ -178,7 +180,7 @@ export default function CategoriesFollowed(inProps: CategoriesListProps): JSX.El
                 ))}
               </List>
               {hasMore && (
-                <Button size="small" onClick={() => setOpenCategoriesFollowedDialog(true)}>
+                <Button size="small" className={classes.showMore} onClick={() => setOpenCategoriesFollowedDialog(true)}>
                   <FormattedMessage id="ui.categoriesFollowed.button.showAll" defaultMessage="ui.categoriesFollowed.button.showAll" />
                 </Button>
               )}
