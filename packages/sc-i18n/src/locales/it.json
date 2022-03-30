@@ -31,6 +31,13 @@
   "ui.peopleSuggestion.subtitle.noResults": "Nessun risultato",
   "ui.peopleSuggestion.button.showMore": "Vedi di più",
 
+  "ui.pollSuggestion.title": "Sondaggi che ti potrebbero interessare",
+  "ui.pollSuggestion.subtitle.noResults": "Nessun risultato",
+  "ui.pollSuggestion.button.showMore": "Vedi di più",
+  "ui.pollSuggestion.noMoreResults": "Nient'altro da mostrare",
+
+  "ui.pollSuggestion.pollSnippet.button.seeItem": "Vedi",
+
   "ui.trendingPeople.title": "Gli utenti più apprezzati",
   "ui.trendingPeople.noResults": "Nessun risultato",
   "ui.trendingPeople.button.showAll": "Vedi di più",

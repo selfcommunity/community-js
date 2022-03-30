@@ -28,11 +28,11 @@ const PREFIX = 'SCThread';
 
 const classes = {
   root: `${PREFIX}-root`,
-  threadBox: `${PREFIX}-threadBox`,
-  emptyBox: `${PREFIX}-emptyBox`,
-  newMessageBox: `${PREFIX}-newMessageBox`,
-  newMessageEditor: `${PREFIX}-newMessageEditor`,
-  newMessageEmptyBox: `${PREFIX}-newMessageEmptyBox`,
+  threadBox: `${PREFIX}-thread-box`,
+  emptyBox: `${PREFIX}-empty-box`,
+  newMessageBox: `${PREFIX}-new-message-box`,
+  newMessageEditor: `${PREFIX}-new-message-editor`,
+  newMessageEmptyBox: `${PREFIX}-new-message-empty-box`,
   sender: `${PREFIX}-sender`,
   receiver: `${PREFIX}-receiver`,
   center: `${PREFIX}-center`
@@ -156,15 +156,15 @@ export interface ThreadProps {
  |Rule Name|Global class|Description|
  |---|---|---|
  |root|.SCThread-root|Styles applied to the root element.|
- |emptyBox|.SCThread-emptyBox|Styles applied to the empty box element.|
+ |emptyBox|.SCThread-empty-box|Styles applied to the empty box element.|
  |sender|.SCThread-sender|Styles applied to the sender element.|
  |receiver|.SCThread-receiver|Styles applied to the receiver element.|
  |center|.SCThread-center|Styles applied to the center section.|
- |threadBox|.SCThread-threadBox|Styles applied to the thread box element.|
- |emptyBox|.SCThread-emptyBox|Styles applied to the empty box element.|
- |newMessageBox|.SCThread-newMessageBox|Styles applied to the new message box element.|
- |newMessageEditor|.SCThread-newMessageEditor|Styles applied to the new message editor.|
- |newMessageEmptyBox|.SCThread-newMessageEmptyBox|Styles applied to the new message empty box element.|
+ |threadBox|.SCThread-thread-box|Styles applied to the thread box element.|
+ |emptyBox|.SCThread-empty-box|Styles applied to the empty box element.|
+ |newMessageBox|.SCThread-new-message-box|Styles applied to the new message box element.|
+ |newMessageEditor|.SCThread-new-message-editor|Styles applied to the new message editor.|
+ |newMessageEmptyBox|.SCThread-new-message-empty-box|Styles applied to the new message empty box element.|
 
  * @param inProps
  */

@@ -29,6 +29,13 @@
   "ui.peopleSuggestion.subtitle.noResults": "Nothing to show",
   "ui.peopleSuggestion.button.showMore": "Show More",
 
+  "ui.pollSuggestion.title": "Suggested polls",
+  "ui.pollSuggestion.subtitle.noResults": "Nothing to show",
+  "ui.pollSuggestion.button.showMore": "Show More",
+  "ui.pollSuggestion.noMoreResults": "No more results",
+
+  "ui.pollSuggestion.pollSnippet.button.seeItem": "See",
+
   "ui.trendingPeople.title": "Trending People",
   "ui.trendingPeople.noResults": "Nothing to show",
   "ui.trendingPeople.button.showAll": "Show All",

@@ -317,6 +317,10 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/user/me/platform_url'),
     method: 'GET',
   },
+  PollSuggestion: {
+    url: urlReplacer('/api/v2/suggestion/poll/'),
+    method: 'GET',
+  },
   /**
    * Follow
    */
