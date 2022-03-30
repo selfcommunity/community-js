@@ -21,7 +21,7 @@ const PREFIX = 'SCTrendingFeed';
 const classes = {
   root: `${PREFIX}-root`,
   title: `${PREFIX}-title`,
-  noResults: `${PREFIX}-noResults`,
+  noResults: `${PREFIX}-no-results`,
   trendingItem: `${PREFIX}-trending-item`,
   showMore: `${PREFIX}-show-more`
 };
@@ -84,7 +84,7 @@ export interface TrendingFeedProps {
  |---|---|---|
  |root|.SCTrendingFeed-root|Styles applied to the root element.|
  |title|.SCTrendingFeed-title|Styles applied to the title element.|
- |noResults|.SCTrendingFeed-noResults|Styles applied to noResults section.|
+ |noResults|.SCTrendingFeed-no-results|Styles applied to no results section.|
  |trendingItem|.SCTrendingFeed-trending-item|Styles applied to the trending feed item element.|
  |showMore|.SCTrendingFeed-show-more|Styles applied to show more button element.|
 

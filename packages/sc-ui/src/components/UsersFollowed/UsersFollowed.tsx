@@ -42,7 +42,7 @@ const classes = {
   root: `${PREFIX}-root`,
   title: `${PREFIX}-title`,
   followedItem: `${PREFIX}-followed-item`,
-  noResults: `${PREFIX}-noResults`,
+  noResults: `${PREFIX}-no-results`,
   showMore: `${PREFIX}-show-more`
 };
 
@@ -101,7 +101,7 @@ export interface UsersFollowedProps {
  |---|---|---|
  |root|.SCUsersFollowed-root|Styles applied to the root element.|
  |title|.SCUsersFollowed-title|Styles applied to the title element.|
- |noResults|.SCUsersFollowed-noResults|Styles applied to noResults section.|
+ |noResults|.SCUsersFollowed-no-results|Styles applied to no results section.|
  |followedItem|.SCUsersFollowed-followed-item|Styles applied to the followed item element.|
  |showMore|.SCUsersFollowed-show-more|Styles applied to show more button element.|
 

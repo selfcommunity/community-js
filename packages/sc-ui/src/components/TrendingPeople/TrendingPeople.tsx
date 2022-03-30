@@ -20,7 +20,7 @@ const classes = {
   root: `${PREFIX}-root`,
   title: `${PREFIX}-title`,
   trendingUserItem: `${PREFIX}-trending-user-item`,
-  noResults: `${PREFIX}-noResults`,
+  noResults: `${PREFIX}-no-results`,
   showMore: `${PREFIX}-show-more`
 };
 
@@ -87,7 +87,7 @@ export interface TrendingPeopleProps {
  |---|---|---|
  |root|.SCTrendingPeople-root|Styles applied to the root element.|
  |title|.SCTrendingPeople-title|Styles applied to the title element.|
- |noResults|.SCTrendingPeople-noResults|Styles applied to noResults section.|
+ |noResults|.SCTrendingPeople-no-results|Styles applied to no results section.|
  |trendingUserItem|.SCTrendingPeople-trending-user-items|Styles applied to the trending user item element.|
  |showMore|.SCTrendingPeople-show-more|Styles applied to show more button element.|
 

@@ -15,7 +15,7 @@ const PREFIX = 'SCCategoriesSuggestion';
 const classes = {
   root: `${PREFIX}-root`,
   title: `${PREFIX}-title`,
-  noResults: `${PREFIX}-noResults`,
+  noResults: `${PREFIX}-no-results`,
   showMore: `${PREFIX}-show-more`
 };
 
@@ -72,7 +72,7 @@ export interface CategoriesListProps {
  |---|---|---|
  |root|.SCCategoriesSuggestion-root|Styles applied to the root element.|
  |title|.SCCategoriesSuggestion-title|Styles applied to the title element.|
- |noResults|.SCCategoriesSuggestion-noResults|Styles applied to noResults section.|
+ |noResults|.SCCategoriesSuggestion-no-results|Styles applied to no results section.|
  |showMore|.SCCategoriesSuggestion-show-more|Styles applied to show more button element.|
 
 

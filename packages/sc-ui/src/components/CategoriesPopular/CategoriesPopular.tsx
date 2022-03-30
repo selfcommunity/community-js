@@ -21,7 +21,7 @@ const PREFIX = 'SCCategoriesPopular';
 const classes = {
   root: `${PREFIX}-root`,
   title: `${PREFIX}-title`,
-  noResults: `${PREFIX}-noResults`,
+  noResults: `${PREFIX}-no-results`,
   showMore: `${PREFIX}-show-more`
 };
 
@@ -51,7 +51,7 @@ const Root = styled(Widget, {
  |---|---|---|
  |root|.SCCategoriesPopular-root|Styles applied to the root element.|
  |title|.SCCategoriesPopular-title|Styles applied to the title element.|
- |noResults|.SCCategoriesPopular-noResults|Styles applied to noResults section.|
+ |noResults|.SCCategoriesPopular-no-results|Styles applied to no results section.|
  |showMore|.SCCategoriesPopular-show-more|Styles applied to show more button element.|
 
  * @param inProps

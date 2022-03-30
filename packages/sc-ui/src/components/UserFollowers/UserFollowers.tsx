@@ -42,7 +42,7 @@ const classes = {
   root: `${PREFIX}-root`,
   title: `${PREFIX}-title`,
   followersItem: `${PREFIX}-followers-item`,
-  noResults: `${PREFIX}-noResults`,
+  noResults: `${PREFIX}-no-results`,
   showMore: `${PREFIX}-show-more`
 };
 
@@ -101,7 +101,7 @@ export interface UserFollowersProps {
  |---|---|---|
  |root|.SCUserFollowers-root|Styles applied to the root element.|
  |title|.SCUserFollowers-title|Styles applied to the title element.|
- |noResults|.SCUserFollowers-noResults|Styles applied to noResults section.|
+ |noResults|.SCUserFollowers-no-results|Styles applied to no results section.|
  |followersItem|.SCUserFollowers-followers-item|Styles applied to follower item element.|
  |showMore|.SCUserFollowers-show-more|Styles applied to show more button element.|
 

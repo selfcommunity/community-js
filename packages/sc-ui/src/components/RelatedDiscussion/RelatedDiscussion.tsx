@@ -35,7 +35,7 @@ const PREFIX = 'SCTrendingPost';
 const classes = {
   root: `${PREFIX}-root`,
   title: `${PREFIX}-title`,
-  noResults: `${PREFIX}-noResults`,
+  noResults: `${PREFIX}-no-results`,
   relatedItem: `${PREFIX}-related-item`,
   showMore: `${PREFIX}-show-more`
 };
@@ -110,7 +110,7 @@ const PREFERENCES = [SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED, SCPreferences
  |---|---|---|
  |root|.SCRelatedDiscussion-root|Styles applied to the root element.|
  |title|.SCRelatedDiscussion-title|Styles applied to the title element.|
- |noResults|.SCRelatedDiscussion-noResults|Styles applied to noResults section.|
+ |no-results|.SCRelatedDiscussion-no-results|Styles applied to no results section.|
  |relatedItem|.SCRelatedDiscussion-related-item|Styles applied to the related item element.|
  |showMore|.SCRelatedDiscussion-show-more|Styles applied to show more button element.|
 

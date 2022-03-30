@@ -25,7 +25,7 @@ const classes = {
   root: `${PREFIX}-root`,
   title: `${PREFIX}-title`,
   suggestedUserItem: `${PREFIX}-suggested-user-item`,
-  noResults: `${PREFIX}-noResults`,
+  noResults: `${PREFIX}-no-results`,
   showMore: `${PREFIX}-show-more`
 };
 
@@ -86,7 +86,7 @@ export interface PeopleSuggestionProps {
  |root|.SCPeopleSuggestion-root|Styles applied to the root element.|
  |title|.SCPeopleSuggestion-title|Styles applied to the title element.|
  |suggestedUserItem|.SCPeopleSuggestion-suggested-user-item|Styles applied to the suggested user element.|
- |noResults|.SCPeopleSuggestion-noResults|Styles applied to the no results section.|
+ |noResults|.SCPeopleSuggestion-no-results|Styles applied to the no results section.|
  |showMore|.SCPeopleSuggestion-show-more|Styles applied to show more button element.|
 
  * @param inProps
