@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Divider, Typography, List} from '@mui/material';
 import Widget from '../Widget';
-import {Endpoints, http} from '@selfcommunity/core';
+import {Endpoints, http, SCNotificationTopicType, SCNotificationTypologyType} from '@selfcommunity/core';
 import {AxiosResponse} from 'axios';
 import {SCPrivateMessageType} from '@selfcommunity/core/src/types';
 import {FormattedMessage} from 'react-intl';
@@ -10,6 +10,7 @@ import SnippetsSkeleton from './Skeleton';
 import Message from '../Message';
 import classNames from 'classnames';
 import useThemeProps from '@mui/material/styles/useThemeProps';
+import PubSub from 'pubsub-js';
 
 const PREFIX = 'SCSnippets';
 
@@ -99,6 +100,9 @@ export default function Snippets(inProps: SnippetsProps): JSX.Element {
   const [total, setTotal] = useState<number>(0);
   const [unseen, setUnseen] = useState<boolean>(null);
 
+  // REFS
+  const refreshSubscription = useRef(null);
+
   /**
    * Fetches Snippets
    */
@@ -125,6 +129,27 @@ export default function Snippets(inProps: SnippetsProps): JSX.Element {
   useEffect(() => {
     fetchSnippets();
   }, []);
+
+  /**
+   * When a ws notification arrives, update data
+   */
+  useEffect(() => {
+    refreshSubscription.current = PubSub.subscribe(
+      `${SCNotificationTopicType.INTERACTION}.${SCNotificationTypologyType.PRIVATE_MESSAGE}`,
+      subscriber
+    );
+    return () => {
+      PubSub.unsubscribe(refreshSubscription.current);
+    };
+  }, []);
+
+  /**
+   * Notification subscriber
+   */
+  const subscriber = (msg, data) => {
+    console.log(data.data);
+    //setSnippets((prev) => [...prev, data.data.notification_obj.snippet]);
+  };
 
   /**
    * Handles thread opening

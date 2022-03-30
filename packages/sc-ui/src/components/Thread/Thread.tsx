@@ -79,17 +79,17 @@ const Root = styled(Widget, {
   [`& .${classes.sender}`]: {
     display: 'flex',
     justifyContent: 'flex-end',
-    '& .SCMessage-messageBox': {
+    '& .SCMessage-message-box': {
       backgroundColor: theme.palette.grey[400]
     }
   },
   [`& .${classes.receiver}`]: {
     display: 'flex',
     justifyContent: 'flex-start',
-    '& .SCMessage-messageBox': {
+    '& .SCMessage-message-box': {
       backgroundColor: theme.palette.grey['A200']
     },
-    '& .SCMessage-messageTime': {
+    '& .SCMessage-message-time': {
       display: 'flex',
       justifyContent: 'flex-start'
     }
@@ -387,8 +387,7 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
    * Notification subscriber
    */
   const subscriber = (msg, data) => {
-    console.log(data);
-    //setMessages([...messages, data.private_message]);
+    setMessages((prev) => [...prev, data.data.notification_obj.message]);
   };
 
   /**

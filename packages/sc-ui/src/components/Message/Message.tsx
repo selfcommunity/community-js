@@ -47,10 +47,6 @@ const Root = styled(Widget, {
     display: 'flex',
     justifyContent: 'flex-end'
   },
-  [`& .${classes.unread}`]: {
-    width: '0.8rem',
-    fill: 'blue'
-  },
   [`& .${classes.hide}`]: {
     display: 'none'
   },
