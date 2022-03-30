@@ -15,7 +15,8 @@ const PREFIX = 'SCCategoriesSuggestion';
 const classes = {
   root: `${PREFIX}-root`,
   title: `${PREFIX}-title`,
-  noResults: `${PREFIX}-noResults`
+  noResults: `${PREFIX}-noResults`,
+  showMore: `${PREFIX}-show-more`
 };
 
 const Root = styled(Widget, {
@@ -72,6 +73,7 @@ export interface CategoriesListProps {
  |root|.SCCategoriesSuggestion-root|Styles applied to the root element.|
  |title|.SCCategoriesSuggestion-title|Styles applied to the title element.|
  |noResults|.SCCategoriesSuggestion-noResults|Styles applied to noResults section.|
+ |showMore|.SCCategoriesSuggestion-show-more|Styles applied to show more button element.|
 
 
  * @param inProps
@@ -184,7 +186,7 @@ export default function CategoriesSuggestion(inProps: CategoriesListProps): JSX.
                 ))}
               </List>
               {hasMore && (
-                <Button size="small" onClick={() => loadCategories(2)}>
+                <Button size="small" className={classes.showMore} onClick={() => loadCategories(2)}>
                   <FormattedMessage id="ui.categoriesSuggestion.button.showMore" defaultMessage="ui.categoriesSuggestion.button.showMore" />
                 </Button>
               )}

@@ -21,7 +21,8 @@ const PREFIX = 'SCCategoriesPopular';
 const classes = {
   root: `${PREFIX}-root`,
   title: `${PREFIX}-title`,
-  noResults: `${PREFIX}-noResults`
+  noResults: `${PREFIX}-noResults`,
+  showMore: `${PREFIX}-show-more`
 };
 
 const Root = styled(Widget, {
@@ -51,6 +52,7 @@ const Root = styled(Widget, {
  |root|.SCCategoriesPopular-root|Styles applied to the root element.|
  |title|.SCCategoriesPopular-title|Styles applied to the title element.|
  |noResults|.SCCategoriesPopular-noResults|Styles applied to noResults section.|
+ |showMore|.SCCategoriesPopular-show-more|Styles applied to show more button element.|
 
  * @param inProps
  */
@@ -135,7 +137,7 @@ export default function CategoriesPopular(inProps: CategoriesListProps): JSX.Ele
                 ))}
               </List>
               {hasMore && (
-                <Button size="small" onClick={() => setOpenPopularCategoriesDialog(true)}>
+                <Button size="small" className={classes.showMore} onClick={() => setOpenPopularCategoriesDialog(true)}>
                   <FormattedMessage id="ui.categoriesPopular.button.showAll" defaultMessage="ui.categoriesPopular.button.showAll" />
                 </Button>
               )}

@@ -25,7 +25,8 @@ const classes = {
   root: `${PREFIX}-root`,
   title: `${PREFIX}-title`,
   suggestedUserItem: `${PREFIX}-suggested-user-item`,
-  noResults: `${PREFIX}-noResults`
+  noResults: `${PREFIX}-noResults`,
+  showMore: `${PREFIX}-show-more`
 };
 
 const Root = styled(Widget, {
@@ -86,6 +87,7 @@ export interface PeopleSuggestionProps {
  |title|.SCPeopleSuggestion-title|Styles applied to the title element.|
  |suggestedUserItem|.SCPeopleSuggestion-suggested-user-item|Styles applied to the suggested user element.|
  |noResults|.SCPeopleSuggestion-noResults|Styles applied to the no results section.|
+ |showMore|.SCPeopleSuggestion-show-more|Styles applied to show more button element.|
 
  * @param inProps
  */
@@ -213,7 +215,7 @@ export default function PeopleSuggestion(inProps: PeopleSuggestionProps): JSX.El
                 ))}
               </List>
               {hasMore && (
-                <Button color="secondary" size="small" onClick={() => loadPeople(limit)}>
+                <Button className={classes.showMore} color="secondary" size="small" onClick={() => loadPeople(limit)}>
                   <FormattedMessage id="ui.peopleSuggestion.button.showMore" defaultMessage="ui.peopleSuggestion.button.showMore" />
                 </Button>
               )}

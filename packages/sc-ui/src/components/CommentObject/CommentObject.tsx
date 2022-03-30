@@ -71,7 +71,8 @@ const classes = {
   commentActionsMenu: `${PREFIX}-comment-actions-menu`,
   deleted: `${PREFIX}-deleted`,
   activityAt: `${PREFIX}-activity-at`,
-  reply: `${PREFIX}-reply`
+  reply: `${PREFIX}-reply`,
+  commentSubSection: `${PREFIX}-comment-sub-section`
 };
 
 const Root = styled(Box, {
@@ -142,6 +143,10 @@ const Root = styled(Box, {
     textDecoration: 'underline',
     textDecorationStyle: 'dotted',
     color: theme.palette.text.primary
+  },
+  [`& .${classes.commentSubSection}`]: {
+    display: 'flex',
+    justifyContent: 'flex-start'
   }
 }));
 
@@ -271,6 +276,7 @@ export interface CommentObjectProps {
  |deleted|.SCCommentObject-deleted|Styles applied to tdeleted element.|
  |activityAt|.SCCommentObject-activity-at|Styles applied to activity at section.|
  |reply|.SCCommentObject-reply|Styles applied to the reply element.|
+ |commentSubSection|.SCCommentObject-comment-sub-section|Styles applied to the comment subsection|
 
  * @param inProps
  */
@@ -736,7 +742,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
                       </Box>
                     )}
                   </Widget>
-                  <Box component="span" sx={{display: 'flex', justifyContent: 'flex-start', p: '2px'}}>
+                  <Box component="span" className={classes.commentSubSection}>
                     <Grid component="span" item={true} sm="auto" container direction="row" alignItems="center">
                       {renderTimeAgo(comment)}
                       <Bullet sx={{paddingLeft: '10px', paddingTop: '1px'}} />

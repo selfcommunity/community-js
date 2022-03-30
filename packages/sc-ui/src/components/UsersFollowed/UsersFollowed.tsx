@@ -42,7 +42,8 @@ const classes = {
   root: `${PREFIX}-root`,
   title: `${PREFIX}-title`,
   followedItem: `${PREFIX}-followed-item`,
-  noResults: `${PREFIX}-noResults`
+  noResults: `${PREFIX}-noResults`,
+  showMore: `${PREFIX}-show-more`
 };
 
 const Root = styled(Widget, {
@@ -102,6 +103,8 @@ export interface UsersFollowedProps {
  |title|.SCUsersFollowed-title|Styles applied to the title element.|
  |noResults|.SCUsersFollowed-noResults|Styles applied to noResults section.|
  |followedItem|.SCUsersFollowed-followed-item|Styles applied to the followed item element.|
+ |showMore|.SCUsersFollowed-show-more|Styles applied to show more button element.|
+
  * @param inProps
  */
 export default function UsersFollowed(inProps: UsersFollowedProps): JSX.Element {
@@ -221,7 +224,7 @@ export default function UsersFollowed(inProps: UsersFollowedProps): JSX.Element 
                 ))}
               </List>
               {hasMore && (
-                <Button size="small" onClick={() => setOpenUsersFollowedDialog(true)}>
+                <Button size="small" className={classes.showMore} onClick={() => setOpenUsersFollowedDialog(true)}>
                   <FormattedMessage id="ui.usersFollowed.button.showAll" defaultMessage="ui.usersFollowed.button.showAll" />
                 </Button>
               )}

@@ -42,7 +42,8 @@ const classes = {
   root: `${PREFIX}-root`,
   title: `${PREFIX}-title`,
   followersItem: `${PREFIX}-followers-item`,
-  noResults: `${PREFIX}-noResults`
+  noResults: `${PREFIX}-noResults`,
+  showMore: `${PREFIX}-show-more`
 };
 
 const Root = styled(Widget, {
@@ -102,6 +103,7 @@ export interface UserFollowersProps {
  |title|.SCUserFollowers-title|Styles applied to the title element.|
  |noResults|.SCUserFollowers-noResults|Styles applied to noResults section.|
  |followersItem|.SCUserFollowers-followers-item|Styles applied to follower item element.|
+ |showMore|.SCUserFollowers-show-more|Styles applied to show more button element.|
 
  * @param inProps
  */
@@ -192,7 +194,7 @@ export default function UserFollowers(inProps: UserFollowersProps): JSX.Element 
                 ))}
               </List>
               {hasMore && (
-                <Button size="small" onClick={() => setOpenUserFollowersDialog(true)}>
+                <Button size="small" className={classes.showMore} onClick={() => setOpenUserFollowersDialog(true)}>
                   <FormattedMessage id="ui.userFollowers.button.showAll" defaultMessage="ui.userFollowers.button.showAll" />
                 </Button>
               )}

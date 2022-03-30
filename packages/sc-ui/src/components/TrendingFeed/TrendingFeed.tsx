@@ -22,7 +22,8 @@ const classes = {
   root: `${PREFIX}-root`,
   title: `${PREFIX}-title`,
   noResults: `${PREFIX}-noResults`,
-  trendingItem: `${PREFIX}-trending-item`
+  trendingItem: `${PREFIX}-trending-item`,
+  showMore: `${PREFIX}-show-more`
 };
 
 const Root = styled(Widget, {
@@ -85,6 +86,7 @@ export interface TrendingFeedProps {
  |title|.SCTrendingFeed-title|Styles applied to the title element.|
  |noResults|.SCTrendingFeed-noResults|Styles applied to noResults section.|
  |trendingItem|.SCTrendingFeed-trending-item|Styles applied to the trending feed item element.|
+ |showMore|.SCTrendingFeed-show-more|Styles applied to show more button element.|
 
  * @param inProps
  */
@@ -167,7 +169,7 @@ export default function TrendingFeed(inProps: TrendingFeedProps): JSX.Element {
                 ))}
               </List>
               {hasMore && (
-                <Button size="small" onClick={() => setOpenTrendingPostDialog(true)}>
+                <Button size="small" className={classes.showMore} onClick={() => setOpenTrendingPostDialog(true)}>
                   <FormattedMessage id="ui.trendingFeed.button.showMore" defaultMessage="ui.trendingFeed.button.showMore" />
                 </Button>
               )}

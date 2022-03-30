@@ -20,7 +20,8 @@ const classes = {
   root: `${PREFIX}-root`,
   title: `${PREFIX}-title`,
   trendingUserItem: `${PREFIX}-trending-user-item`,
-  noResults: `${PREFIX}-noResults`
+  noResults: `${PREFIX}-noResults`,
+  showMore: `${PREFIX}-show-more`
 };
 
 const Root = styled(Widget, {
@@ -88,6 +89,7 @@ export interface TrendingPeopleProps {
  |title|.SCTrendingPeople-title|Styles applied to the title element.|
  |noResults|.SCTrendingPeople-noResults|Styles applied to noResults section.|
  |trendingUserItem|.SCTrendingPeople-trending-user-items|Styles applied to the trending user item element.|
+ |showMore|.SCTrendingPeople-show-more|Styles applied to show more button element.|
 
  * @param inProps
  */
@@ -170,7 +172,7 @@ export default function TrendingPeople(inProps: TrendingPeopleProps): JSX.Elemen
             </React.Fragment>
           )}
           {hasMore && (
-            <Button size="small" onClick={() => setOpenTrendingPeopleDialog(true)}>
+            <Button size="small" className={classes.showMore} onClick={() => setOpenTrendingPeopleDialog(true)}>
               <FormattedMessage id="ui.trendingPeople.button.showAll" defaultMessage="ui.trendingPeople.button.showAll" />
             </Button>
           )}
