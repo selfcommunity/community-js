@@ -23,12 +23,7 @@ const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  [`& .${classes.action}`]: {
-    display: 'flex',
-    justifyContent: 'flex-end'
-  }
-}));
+})(({theme}) => ({}));
 
 export interface PollSnippetProps {
   /**
