@@ -141,17 +141,19 @@ export default function Snippets(inProps: SnippetsProps): JSX.Element {
     return () => {
       PubSub.unsubscribe(refreshSubscription.current);
     };
-  }, []);
+  }, [snippets]);
 
   /**
    * Notification subscriber
    */
   const subscriber = (msg, data) => {
     const res = data.data;
-    const index = snippets.findIndex((s) => s.id === res.thread_id);
-    const t = [...snippets];
-    t[index] = res.notification_obj.snippet;
-    setSnippets(t);
+    const newSnippets = [...snippets];
+    const index = newSnippets.findIndex((s) => s.id === res.thread_id);
+    if (index !== -1) {
+      newSnippets[index].headline = res.notification_obj.snippet.headline;
+      setSnippets(newSnippets);
+    }
   };
 
   /**

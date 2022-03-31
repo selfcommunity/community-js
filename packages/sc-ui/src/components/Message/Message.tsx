@@ -278,7 +278,7 @@ export default function Message(inProps: MessageProps): JSX.Element {
               }
               secondary={
                 <Box component="span" className={classes.info}>
-                  <Typography component="span"> {message.headline}</Typography>
+                  <Typography component="span" dangerouslySetInnerHTML={{__html: message.headline}} />
                   <Icon fontSize="small" className={unseen ? classes.unread : classes.hide}>
                     fiber_manual_record
                   </Icon>

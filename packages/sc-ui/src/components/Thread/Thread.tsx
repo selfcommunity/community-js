@@ -381,13 +381,18 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
     return () => {
       PubSub.unsubscribe(refreshSubscription.current);
     };
-  }, []);
+  }, [messages]);
 
   /**
    * Notification subscriber
    */
   const subscriber = (msg, data) => {
-    setMessages((prev) => [...prev, data.data.notification_obj.message]);
+    const res = data.data;
+    const newMessages = [...messages];
+    const index = newMessages.findIndex((m) => m.sender_id === res.notification_obj.message.sender_id);
+    if (index !== -1) {
+      setMessages((prev) => [...prev, res.notification_obj.message]);
+    }
   };
 
   /**
