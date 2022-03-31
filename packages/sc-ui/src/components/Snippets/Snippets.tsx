@@ -147,8 +147,11 @@ export default function Snippets(inProps: SnippetsProps): JSX.Element {
    * Notification subscriber
    */
   const subscriber = (msg, data) => {
-    console.log(data.data);
-    //setSnippets((prev) => [...prev, data.data.notification_obj.snippet]);
+    const res = data.data;
+    const index = snippets.findIndex((s) => s.id === res.thread_id);
+    const t = [...snippets];
+    t[index] = res.notification_obj.snippet;
+    setSnippets(t);
   };
 
   /**
