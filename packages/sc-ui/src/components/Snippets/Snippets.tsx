@@ -108,7 +108,6 @@ export default function Snippets(inProps: SnippetsProps): JSX.Element {
   const [snippets, setSnippets] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [total, setTotal] = useState<number>(0);
-  const [unseen, setUnseen] = useState<boolean>(null);
 
   // REFS
   const refreshSubscription = useRef(null);
@@ -134,15 +133,31 @@ export default function Snippets(inProps: SnippetsProps): JSX.Element {
   }
 
   /**
-   * Updates snippet headline
+   * Updates snippet headline and status
    * @param id
    * @param headline
+   * @param status
    */
-  function updateSnippets(id, headline) {
+  function updateSnippets(id, headline, status) {
     const newSnippets = [...snippets];
     const index = newSnippets.findIndex((s) => s.id === id);
     if (index !== -1) {
       newSnippets[index].headline = headline;
+      newSnippets[index].thread_status = status;
+      setSnippets(newSnippets);
+    }
+  }
+
+  /**
+   * Updates snippet status
+   * @param id
+   * @param status
+   */
+  function updateStatus(id, status) {
+    const newSnippets = [...snippets];
+    const index = newSnippets.findIndex((s) => s.id === id);
+    if (index !== -1) {
+      newSnippets[index].thread_status = status;
       setSnippets(newSnippets);
     }
   }
@@ -172,7 +187,7 @@ export default function Snippets(inProps: SnippetsProps): JSX.Element {
    */
   useEffect(() => {
     if (threadId) {
-      updateSnippets(threadId, getSnippetHeadline);
+      updateSnippets(threadId, getSnippetHeadline, null);
     }
   }, [getSnippetHeadline]);
 
@@ -181,7 +196,7 @@ export default function Snippets(inProps: SnippetsProps): JSX.Element {
    */
   const subscriber = (msg, data) => {
     const res = data.data;
-    updateSnippets(res.thread_id, res.notification_obj.snippet.headline);
+    updateSnippets(res.thread_id, res.notification_obj.snippet.headline, res.notification_obj.snippet.thread_status);
   };
 
   /**
@@ -189,7 +204,7 @@ export default function Snippets(inProps: SnippetsProps): JSX.Element {
    */
   function handleOpenThread(msg) {
     onSnippetClick(msg);
-    setUnseen(false);
+    updateStatus(msg.id, null);
   }
 
   /**
@@ -214,7 +229,6 @@ export default function Snippets(inProps: SnippetsProps): JSX.Element {
                     message={message}
                     key={message.id}
                     onClick={() => handleOpenThread(message)}
-                    unseen={unseen === null ? message.thread_status === 'new' : unseen}
                     className={message.id === threadId ? classes.selected : ''}
                   />
                   {index < total - 1 ? <Divider /> : null}

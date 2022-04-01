@@ -47,9 +47,6 @@ const Root = styled(Widget, {
     display: 'flex',
     justifyContent: 'flex-end'
   },
-  [`& .${classes.hide}`]: {
-    display: 'none'
-  },
   [`& .${classes.img}`]: {
     width: 250,
     height: 200
@@ -91,11 +88,6 @@ export interface MessageProps extends Pick<CardProps, Exclude<keyof CardProps, '
    * @default true
    */
   snippetType?: boolean;
-  /**
-   * The message status. If true, shows a dot next to message headline.
-   * @default null
-   */
-  unseen?: boolean;
   /**
    * Callback fired on mouse hover
    * @default null
@@ -148,7 +140,6 @@ export interface MessageProps extends Pick<CardProps, Exclude<keyof CardProps, '
  |messageBox|.SCMessage-message-box|Styles applied to the message box element.|
  |messageTime|.SCMessage-message-time|Styles applied to the message time element.|
  |unread|.SCMessage-unread|Styles applied to the unread element.|
- |hide|.SCMessage-hide|Styles applied to the hidden element.|
  |img|.SCMessage-img|Styles applied to the img element.|
  |downloadButton|.SCMessage-download-button|Styles applied to the download button element.|
  |documentFile|.SCMessage-document-file|Styles applied to the message file element.|
@@ -168,7 +159,6 @@ export default function Message(inProps: MessageProps): JSX.Element {
     message = null,
     className = null,
     snippetType = true,
-    unseen = null,
     onMouseEnter = null,
     onMouseLeave = null,
     isHovering = null,
@@ -182,6 +172,7 @@ export default function Message(inProps: MessageProps): JSX.Element {
 
   // STATE
   const hasFile = message ? message.file : null;
+  const isNew = message ? message.thread_status === 'new' : null;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
@@ -279,9 +270,11 @@ export default function Message(inProps: MessageProps): JSX.Element {
               secondary={
                 <Box component="span" className={classes.info}>
                   <Typography component="span" dangerouslySetInnerHTML={{__html: message.headline}} />
-                  <Icon fontSize="small" className={unseen ? classes.unread : classes.hide}>
-                    fiber_manual_record
-                  </Icon>
+                  {isNew && (
+                    <Icon fontSize="small" className={classes.unread}>
+                      fiber_manual_record
+                    </Icon>
+                  )}
                 </Box>
               }
             />
