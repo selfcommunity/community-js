@@ -14,7 +14,7 @@ import {
 import {AxiosResponse} from 'axios';
 import Message from '../Message';
 import _ from 'lodash';
-import {FormattedMessage, useIntl} from 'react-intl';
+import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {Box, Grid, ListSubheader, TextField, Typography} from '@mui/material';
 import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
 import MessageEditor from '../MessageEditor';
@@ -23,6 +23,14 @@ import classNames from 'classnames';
 import {useSnackbar} from 'notistack';
 import PubSub from 'pubsub-js';
 import useThemeProps from '@mui/material/styles/useThemeProps';
+import Icon from '@mui/material/Icon';
+
+const smessages = defineMessages({
+  placeholder: {
+    id: 'ui.NewMessage.autocomplete.placeholder',
+    defaultMessage: 'ui.NewMessage.autocomplete.placeholder'
+  }
+});
 
 const PREFIX = 'SCThread';
 
@@ -33,9 +41,11 @@ const classes = {
   newMessageBox: `${PREFIX}-new-message-box`,
   newMessageEditor: `${PREFIX}-new-message-editor`,
   newMessageEmptyBox: `${PREFIX}-new-message-empty-box`,
+  newMessageHeader: `${PREFIX}-new-message-header`,
   sender: `${PREFIX}-sender`,
   receiver: `${PREFIX}-receiver`,
-  center: `${PREFIX}-center`
+  center: `${PREFIX}-center`,
+  autocomplete: `${PREFIX}-autocomplete`
 };
 
 const Root = styled(Widget, {
@@ -97,6 +107,13 @@ const Root = styled(Widget, {
   [`& .${classes.center}`]: {
     display: 'flex',
     justifyContent: 'center'
+  },
+  [`& .${classes.newMessageHeader}`]: {
+    marginLeft: theme.spacing(1),
+    marginTop: theme.spacing(1)
+  },
+  [`& .${classes.autocomplete}`]: {
+    marginRight: theme.spacing(1)
   }
 }));
 
@@ -165,6 +182,8 @@ export interface ThreadProps {
  |newMessageBox|.SCThread-new-message-box|Styles applied to the new message box element.|
  |newMessageEditor|.SCThread-new-message-editor|Styles applied to the new message editor.|
  |newMessageEmptyBox|.SCThread-new-message-empty-box|Styles applied to the new message empty box element.|
+ |newMessageHeader|.SCThread-new-message-header|Styles applied to the new message header section.|
+ |autocomplete|.SCThread-autocomplete|Styles applied to new message user insertion autocomplete.|
 
  * @param inProps
  */
@@ -446,14 +465,18 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
         {openNewMessage ? (
           <Box className={classes.newMessageBox}>
             <Box sx={{flexGrow: 0, flexShrink: 1, flexBasis: 'auto'}}>
-              <Grid container spacing={2}>
-                <Grid item xs={4}>
-                  <b>
+              <Grid container className={classes.newMessageHeader}>
+                <Grid item xs={4} sx={{display: 'flex', alignItems: 'center'}}>
+                  <Icon sx={{marginRight: '8px'}} fontSize="small">
+                    person
+                  </Icon>
+                  <Typography sx={{fontWeight: 'bold'}}>
                     <FormattedMessage defaultMessage="ui.NewMessage.to" id="ui.NewMessage.to" />
-                  </b>
+                  </Typography>
                 </Grid>
                 <Grid item xs={8}>
                   <Autocomplete
+                    className={classes.autocomplete}
                     multiple
                     freeSolo
                     options={followers}
@@ -461,6 +484,7 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
                     renderInput={(params) => (
                       <TextField
                         {...params}
+                        placeholder={`${intl.formatMessage(smessages.placeholder)}`}
                         variant="standard"
                         InputProps={{
                           ...params.InputProps,

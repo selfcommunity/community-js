@@ -376,6 +376,7 @@
   "ui.Message.dialog.msg": "Sei sicuro di voler eliminare il messaggio selezionato?",
   "ui.Message.dialog.confirm": "Sì",
   "ui.NewMessage.new" : "Nuovo Messaggio",
+  "ui.NewMessage.autocomplete.placeholder" : "nome utente...",
   "ui.NewMessage.to" : "A:",
   "ui.Thread.emptyBox.message" : "Seleziona o componi un messaggio",
 

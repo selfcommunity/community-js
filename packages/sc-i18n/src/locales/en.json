@@ -377,6 +377,7 @@
   "ui.Message.dialog.confirm": "Yes",
   "ui.NewMessage.new" : "New Message",
   "ui.NewMessage.to" : "To:",
+  "ui.NewMessage.autocomplete.placeholder" : "type username...",
   "ui.Thread.emptyBox.message" : "Select or compose a message",
 
   "ui.accountSignin.username.label": "Username",

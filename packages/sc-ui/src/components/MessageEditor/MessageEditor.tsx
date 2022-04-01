@@ -25,7 +25,10 @@ const Root = styled(Box, {
   width: '100%',
   display: 'inline-block',
   [`& .${classes.messageInput}`]: {
-    width: '100%'
+    width: '100%',
+    '& .MuiOutlinedInput-root': {
+      borderRadius: '20px'
+    }
   },
   [`& .${classes.sendMediaSection}`]: {
     backgroundColor: theme.palette.grey['A200'],
