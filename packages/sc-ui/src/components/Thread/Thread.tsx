@@ -152,6 +152,17 @@ export interface ThreadProps {
    * @default null
    */
   onNewMessageSent?: (dispatch: any) => void;
+  /**
+   * Callback fired when a  message is sent
+   * @param data
+   * @default null
+   */
+  onMessageSent?: (data) => void;
+  /**
+   * Callback fired only when a new message is sent to update snippets component
+   * @default null
+   */
+  shouldUpdate?: (dispatch: any) => void;
 }
 /**
  *
@@ -193,7 +204,7 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {id, receiverId, autoHide, className, openNewMessage, onNewMessageSent, ...rest} = props;
+  const {id, receiverId, autoHide, className, openNewMessage, onNewMessageSent, onMessageSent, shouldUpdate, ...rest} = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
@@ -322,8 +333,11 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
         .then((res) => {
           setMessages((prev) => [...prev, res.data]);
           setSending(false);
+          onMessageSent(res.data);
+          shouldUpdate(false);
           if (openNewMessage) {
             onNewMessageSent(res.data);
+            shouldUpdate(true);
           }
         })
         .catch((error) => {

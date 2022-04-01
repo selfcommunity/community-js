@@ -60,6 +60,16 @@ export interface SnippetsProps {
    * @default null
    */
   threadId?: number;
+  /**
+   * Callback to get new snippet headline on message sent
+   * @param headline
+   */
+  getSnippetHeadline?: (headline) => void;
+  /**
+   * If component needs to reload
+   * @default false
+   */
+  shouldUpdate?: boolean;
 }
 /**
  *
@@ -92,7 +102,7 @@ export default function Snippets(inProps: SnippetsProps): JSX.Element {
     name: PREFIX
   });
 
-  const {autoHide = false, className = null, onSnippetClick, threadId, ...rest} = props;
+  const {autoHide = false, className = null, onSnippetClick, threadId, getSnippetHeadline, shouldUpdate, ...rest} = props;
 
   // STATE
   const [snippets, setSnippets] = useState<any[]>([]);
@@ -124,14 +134,28 @@ export default function Snippets(inProps: SnippetsProps): JSX.Element {
   }
 
   /**
+   * Updates snippet headline
+   * @param id
+   * @param headline
+   */
+  function updateSnippets(id, headline) {
+    const newSnippets = [...snippets];
+    const index = newSnippets.findIndex((s) => s.id === id);
+    if (index !== -1) {
+      newSnippets[index].headline = headline;
+      setSnippets(newSnippets);
+    }
+  }
+
+  /**
    * On mount, fetches snippets
    */
   useEffect(() => {
     fetchSnippets();
-  }, []);
+  }, [shouldUpdate]);
 
   /**
-   * When a ws notification arrives, update data
+   * When a ws notification arrives, updates data
    */
   useEffect(() => {
     refreshSubscription.current = PubSub.subscribe(
@@ -144,16 +168,20 @@ export default function Snippets(inProps: SnippetsProps): JSX.Element {
   }, [snippets]);
 
   /**
+   * When the logged in user sends a message, snippet headline is updated
+   */
+  useEffect(() => {
+    if (threadId) {
+      updateSnippets(threadId, getSnippetHeadline);
+    }
+  }, [getSnippetHeadline]);
+
+  /**
    * Notification subscriber
    */
   const subscriber = (msg, data) => {
     const res = data.data;
-    const newSnippets = [...snippets];
-    const index = newSnippets.findIndex((s) => s.id === res.thread_id);
-    if (index !== -1) {
-      newSnippets[index].headline = res.notification_obj.snippet.headline;
-      setSnippets(newSnippets);
-    }
+    updateSnippets(res.thread_id, res.notification_obj.snippet.headline);
   };
 
   /**

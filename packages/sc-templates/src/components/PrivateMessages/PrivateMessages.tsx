@@ -106,7 +106,9 @@ export default function PrivateMessages(inProps: PrivateMessagesProps): JSX.Elem
 
   // STATE
   const [obj, setObj] = useState(null);
+  const [data, setData] = useState(null);
   const [openNewMessage, setOpenNewMessage] = useState<boolean>(false);
+  const [shouldUpdate, setShouldUpdate] = useState<boolean>(false);
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
@@ -122,6 +124,10 @@ export default function PrivateMessages(inProps: PrivateMessagesProps): JSX.Elem
     setObj(null);
   };
 
+  const handleSnippetsUpdate = (data) => {
+    setData(data.message);
+  };
+
   /**
    * Renders the component (if not hidden by autoHide prop)
    */
@@ -133,7 +139,7 @@ export default function PrivateMessages(inProps: PrivateMessagesProps): JSX.Elem
             <Icon>add_circle_outline</Icon>
             <FormattedMessage id="ui.NewMessage.new" defaultMessage="ui.NewMessage.new" />
           </Button>
-          <Snippets onSnippetClick={handleThreadOpening} threadId={obj ? obj.id : null} />
+          <Snippets onSnippetClick={handleThreadOpening} threadId={obj ? obj.id : null} getSnippetHeadline={data} shouldUpdate={shouldUpdate} />
         </Box>
         <Box className={classes.threadBox}>
           <Thread
@@ -141,6 +147,8 @@ export default function PrivateMessages(inProps: PrivateMessagesProps): JSX.Elem
             receiverId={obj && !openNewMessage ? obj.receiver.id : null}
             openNewMessage={openNewMessage}
             onNewMessageSent={openNewMessage ? setObj : null}
+            onMessageSent={handleSnippetsUpdate}
+            shouldUpdate={setShouldUpdate}
           />
         </Box>
       </Root>
