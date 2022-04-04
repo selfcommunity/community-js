@@ -1,7 +1,7 @@
 import React, {useEffect, useMemo, useReducer} from 'react';
 import BaseDialog from '../../../../shared/BaseDialog';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {Box, Button, Divider, List, Tooltip} from '@mui/material';
+import {Box, Button, Divider, List, ListItem, Tooltip} from '@mui/material';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Icon from '@mui/material/Icon';
 import Skeleton from '@mui/material/Skeleton';
@@ -424,7 +424,9 @@ export default function Vote(inProps: VoteProps): JSX.Element {
                     }>
                     <List>
                       {votes.map((vote, index) => (
-                        <User elevation={0} user={vote.user} key={index} sx={{m: 0}} />
+                        <ListItem key={index}>
+                          <User elevation={0} user={vote.user} key={index} sx={{m: 0}} />
+                        </ListItem>
                       ))}
                     </List>
                   </InfiniteScroll>

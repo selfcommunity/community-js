@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
-import {Button, CardContent, Typography} from '@mui/material';
+import {Button, CardContent, ListItem, Typography} from '@mui/material';
 import Widget from '../Widget';
 import {Endpoints, http, Logger, SCFeedObjectType} from '@selfcommunity/core';
 import {AxiosResponse} from 'axios';
@@ -198,9 +198,9 @@ export default function TrendingFeed(inProps: TrendingFeedProps): JSX.Element {
                   }>
                   <List>
                     {posts.map((obj: SCFeedObjectType, index) => (
-                      <div key={index}>
+                      <ListItem key={index}>
                         <FeedObject elevation={0} feedObject={obj[obj.type]} key={obj.id} template={template} className={classes.trendingItem} />
-                      </div>
+                      </ListItem>
                     ))}
                   </List>
                 </InfiniteScroll>

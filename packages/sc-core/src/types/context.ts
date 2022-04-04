@@ -377,12 +377,12 @@ export interface SCRoutingType {
   /**
    * Handle override routes path
    * @param name
-   * @param templateUrl
-   * @param data
    * @param defaultUrl
+   * @param data
+   * @param templateUrl
    * @return string
    */
-  handleRoute?: (name, templateUrl, data, defaultUrl) => string;
+  handleRoute?: (name, defaultUrl, data, templateUrl) => string;
 }
 
 /**

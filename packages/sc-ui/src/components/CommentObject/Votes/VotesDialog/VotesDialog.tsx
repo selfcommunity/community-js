@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
-import {Box, List} from '@mui/material';
+import {Box, List, ListItem} from '@mui/material';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Typography from '@mui/material/Typography';
 import {Endpoints, http, Logger, SCCommentType, useSCFetchCommentObject, SCCommentTypologyType} from '@selfcommunity/core';
@@ -113,7 +113,9 @@ export default function CommentObjectVotesDialog(inProps: CommentObjectVotesDial
           }>
           <List>
             {votes.slice(0, 4).map((like, index) => (
-              <User elevation={0} user={like.user} key={index} />
+              <ListItem key={index}>
+                <User elevation={0} user={like.user} key={index} />
+              </ListItem>
             ))}
           </List>
         </InfiniteScroll>
