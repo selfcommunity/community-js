@@ -1,7 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import List from '@mui/material/List';
-import {Button, CardContent, Typography} from '@mui/material';
+import {Button, CardContent, List, ListItem, Typography} from '@mui/material';
 import {
   Endpoints,
   http,
@@ -200,18 +199,17 @@ export default function PeopleSuggestion(inProps: PeopleSuggestionProps): JSX.El
             <React.Fragment>
               <List>
                 {users.slice(0, visiblePeople).map((user: SCUserType, index) => (
-                  <div key={index}>
+                  <ListItem key={user.id}>
                     <User
                       elevation={0}
                       user={user}
-                      key={user.id}
                       {...(followEnabled
                         ? {followConnectUserButtonProps: {onFollow: handleOnFollowUser}}
                         : {followConnectUserButtonProps: {onChangeConnectionStatus: handleOnConnectUser}})}
                       className={classes.suggestedUserItem}
                       {...UserProps}
                     />
-                  </div>
+                  </ListItem>
                 ))}
               </List>
               {hasMore && (

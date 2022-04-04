@@ -1,6 +1,6 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Button, CardContent, List, Typography} from '@mui/material';
+import {Button, CardContent, List, ListItem, Typography} from '@mui/material';
 import {Endpoints, http, Logger} from '@selfcommunity/core';
 import Skeleton from './Skeleton';
 import {AxiosResponse} from 'axios';
@@ -166,7 +166,9 @@ export default function CategoriesPopular(inProps: CategoriesListProps): JSX.Ele
                   }>
                   <List>
                     {categories.map((c, index) => (
-                      <Category elevation={0} category={c} key={c.id} sx={{m: 0}} {...CategoryProps} />
+                      <ListItem key={c.id}>
+                        <Category elevation={0} category={c} {...CategoryProps} />
+                      </ListItem>
                     ))}
                   </List>
                 </InfiniteScroll>

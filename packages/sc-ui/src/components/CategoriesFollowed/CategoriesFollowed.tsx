@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
-import {Button, CardContent, Typography} from '@mui/material';
+import {Button, CardContent, ListItem, Typography} from '@mui/material';
 import {Endpoints, http, Logger, SCUserContext, SCUserContextType} from '@selfcommunity/core';
 import Category from '../Category';
 import {AxiosResponse} from 'axios';
@@ -209,14 +209,16 @@ export default function CategoriesFollowed(inProps: CategoriesListProps): JSX.El
                   }>
                   <List>
                     {categories.map((c, index) => (
-                      <Category
-                        elevation={0}
-                        category={c}
-                        key={c.id}
-                        sx={{m: 0}}
-                        followCategoryButtonProps={{onFollow: handleOnFollowCategory}}
-                        {...CategoryProps}
-                      />
+                      <ListItem key={index}>
+                        <Category
+                          elevation={0}
+                          category={c}
+                          key={c.id}
+                          sx={{m: 0}}
+                          followCategoryButtonProps={{onFollow: handleOnFollowCategory}}
+                          {...CategoryProps}
+                        />
+                      </ListItem>
                     ))}
                   </List>
                 </InfiniteScroll>

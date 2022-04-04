@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
-import {Button, CardContent, Typography} from '@mui/material';
+import {Button, CardContent, ListItem, Typography} from '@mui/material';
 import Widget from '../Widget';
 import {Endpoints, http} from '@selfcommunity/core';
 import {AxiosResponse} from 'axios';
@@ -199,7 +199,9 @@ export default function TrendingPeople(inProps: TrendingPeopleProps): JSX.Elemen
                   }>
                   <List>
                     {people.map((p, index) => (
-                      <User elevation={0} user={p} key={p.id} className={classes.trendingUserItem} {...UserProps} />
+                      <ListItem>
+                        <User elevation={0} user={p} key={p.id} className={classes.trendingUserItem} {...UserProps} />
+                      </ListItem>
                     ))}
                   </List>
                 </InfiniteScroll>

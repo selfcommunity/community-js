@@ -73,7 +73,7 @@ const getTheme = (options, preferences) => {
             styleOverrides: {
               root: {
                 border: '0 none',
-                borderRadius: '15px',
+                borderRadius: '10px',
                 boxShadow: '0px 5px 20px rgba(0, 0, 0, 0.1)',
               },
             },

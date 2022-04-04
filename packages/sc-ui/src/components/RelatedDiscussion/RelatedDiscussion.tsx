@@ -1,7 +1,7 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
-import {Button, CardContent, Typography} from '@mui/material';
+import {Button, CardContent, ListItem, Typography} from '@mui/material';
 import {
   Endpoints,
   http,
@@ -276,7 +276,7 @@ export default function RelatedDiscussion(inProps: RelatedDiscussionProps): JSX.
                   }>
                   <List>
                     {objs.map((obj: SCFeedDiscussionType, index) => (
-                      <div key={index}>
+                      <ListItem key={index}>
                         <FeedObject
                           elevation={0}
                           feedObject={obj}
@@ -285,7 +285,7 @@ export default function RelatedDiscussion(inProps: RelatedDiscussionProps): JSX.
                           className={classes.relatedItem}
                           {...FeedObjectProps}
                         />
-                      </div>
+                      </ListItem>
                     ))}
                   </List>
                 </InfiniteScroll>

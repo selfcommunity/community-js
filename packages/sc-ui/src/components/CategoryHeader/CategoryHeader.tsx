@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Avatar, AvatarGroup, Box, Button, Chip, Divider, Grid, List, Paper, Typography} from '@mui/material';
+import {Avatar, AvatarGroup, Box, Button, Chip, Divider, Grid, List, ListItem, Paper, Typography} from '@mui/material';
 import FollowCategoryButton, {FollowCategoryButtonProps} from '../FollowCategoryButton';
 import {AxiosResponse} from 'axios';
 import BaseDialog, {BaseDialogProps} from '../../shared/BaseDialog';
@@ -313,7 +313,9 @@ export default function CategoryHeader(inProps: CategoryHeaderProps): JSX.Elemen
               }>
               <List>
                 {followers.map((follower, index) => (
-                  <User elevation={0} user={follower} key={index} />
+                  <ListItem key={follower.id}>
+                    <User elevation={0} user={follower} key={index} />
+                  </ListItem>
                 ))}
               </List>
             </InfiniteScroll>
