@@ -69,6 +69,8 @@ import MediaChunkUploader, {MediaChunkUploaderProps} from './shared/MediaChunkUp
 import {Document, Image, Link, Share, EditMediaProps} from './shared/Media';
 import {MEDIA_TYPE_EMBED} from './constants/Media';
 import PollSuggestion, {PollSuggestionProps} from './components/PollSuggestion';
+import Incubator, {IncubatorProps} from './components/Incubator';
+import IncubatorsList, {IncubatorsListProps} from './components/IncubatorsList';
 
 /**
  * List all exports
@@ -221,5 +223,9 @@ export {
   EditMediaProps,
   MEDIA_TYPE_EMBED,
   PollSuggestion,
-  PollSuggestionProps
+  PollSuggestionProps,
+  Incubator,
+  IncubatorProps,
+  IncubatorsList,
+  IncubatorsListProps
 };

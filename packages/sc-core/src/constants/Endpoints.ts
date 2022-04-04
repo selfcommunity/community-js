@@ -536,6 +536,30 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/insight/user/counters/?user_id=$(id)'),
     method: 'GET',
   },
+
+  /**
+   * Incubators
+   */
+  GetAllIncubators: {
+    url: urlReplacer('/api/v2/incubator/'),
+    method: 'GET',
+  },
+  GetASpecificIncubator: {
+    url: urlReplacer('/api/v2/incubator/$(id)/'),
+    method: 'GET',
+  },
+  CheckIncubatorSubscription: {
+    url: urlReplacer('/api/v2/incubator/$(id)/subscribed/'),
+    method: 'GET',
+  },
+  SubscribeToIncubator: {
+    url: urlReplacer('/api/v2/incubator/$(id)/subscribe/'),
+    method: 'POST',
+  },
+  CreateAnIncubator: {
+    url: urlReplacer('/api/v2/incubator/'),
+    method: 'POST',
+  },
 };
 
 export default Endpoints;

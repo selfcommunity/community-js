@@ -422,6 +422,21 @@
   "ui.lightbox.zoomOutLabel": "Zoom out",
   "ui.lightbox.imageLoadErrorMessage": "This image failed to load",
 
+
+  "ui.incubator.subscribeButton.button.subscribe": "Subscribe",
+  "ui.incubator.subscribeButton.button.subscribed": "Subscribed",
+  "ui.incubator.proposedBy": "Proposed by",
+  "ui.incubator.progressBar.proposal": "Proposal",
+  "ui.incubator.progressBar.collectingSubscribers": "Collecting subscribers",
+  "ui.incubator.progressBar.approved": "Approved",
+
+  "ui.incubatorsList.title": "Interests Incubator",
+  "ui.incubatorsList.popover": "Interest incubator is a proposal zone\n where users come together to generate\n new interests. New interests are\n approved depending on subscribers\n number and growth rate.",
+  "ui.incubatorsList.noResults": "Nothing to show",
+  "ui.incubatorsList.ShowAll": "View all",
+  "ui.incubatorsList.SuggestNewTopic": "Suggest a new topic",
+  "ui.incubatorsList.noMoreIncubators": "No more results",
+
   "templates.userProfile.edit": "Edit",
   "templates.privateMessages.button.new" : "New Message"
 }

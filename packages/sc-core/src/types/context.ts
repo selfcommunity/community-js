@@ -1,6 +1,7 @@
 import {SCUserType} from './user';
 import React, {ReactNode} from 'react';
 import {SCCategoryType} from './category';
+import {SCIncubatorType} from '@selfcommunity/core';
 
 /**
  * Interface SCSettingsType
@@ -123,9 +124,14 @@ export interface SCUserContextType {
   refreshNotificationCounters: () => Promise<any>;
 
   /**
-   * Managers: followed, connections, categories, etc...
+   * Managers: followed, connections, categories, incubators, etc...
    */
-  managers: {followed?: SCFollowedManagerType; connections?: SCConnectionsManagerType; categories: SCFollowedCategoriesManagerType};
+  managers: {
+    followed?: SCFollowedManagerType;
+    connections?: SCConnectionsManagerType;
+    categories: SCFollowedCategoriesManagerType;
+    incubators?: SCSubscribedIncubatorsManagerType;
+  };
 }
 
 export interface SCFollowedManagerType {
@@ -240,6 +246,43 @@ export interface SCConnectionsManagerType {
 
   /**
    * Empty cache to revalidate all categories
+   */
+  emptyCache?: () => void;
+}
+
+export interface SCSubscribedIncubatorsManagerType {
+  /**
+   * List of all incubators ids subscribed by the authenticated user
+   */
+  incubators: number[];
+
+  /**
+   * List of all incubators in loading state
+   */
+  loading: number[];
+
+  /**
+   * List of current incubators in loading state
+   */
+  isLoading: (incubator: SCIncubatorType) => boolean;
+
+  /**
+   * Handle incubator subscribe/unsubscribe
+   */
+  subscribe?: (incubator: SCIncubatorType) => Promise<any>;
+
+  /**
+   * Handle check if a user has subscribed to an incubator, caching data
+   */
+  isSubscribed?: (incubator: SCIncubatorType) => boolean;
+
+  /**
+   * Refresh subscribed
+   */
+  refresh?: () => void;
+
+  /**
+   * Empty cache to revalidate all subscribed
    */
   emptyCache?: () => void;
 }

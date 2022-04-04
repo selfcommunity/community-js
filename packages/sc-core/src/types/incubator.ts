@@ -55,4 +55,8 @@ export interface SCIncubatorType {
    * Added at
    */
   added_at: Date;
+  /**
+   * If the logged user has subscribed to the incubator
+   */
+  subscribed?: boolean;
 }
