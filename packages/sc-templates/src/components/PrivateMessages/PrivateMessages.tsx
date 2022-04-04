@@ -137,7 +137,7 @@ export default function PrivateMessages(inProps: PrivateMessagesProps): JSX.Elem
         <Box className={classes.snippetsBox}>
           <Button className={openNewMessage ? classes.selected : classes.newMessage} onClick={handleOpenNewMessage}>
             <Icon>add_circle_outline</Icon>
-            <FormattedMessage id="ui.NewMessage.new" defaultMessage="ui.NewMessage.new" />
+            <FormattedMessage id="templates.privateMessages.button.new" defaultMessage="templates.privateMessages.button.new" />
           </Button>
           <Snippets onSnippetClick={handleThreadOpening} threadId={obj ? obj.id : null} getSnippetHeadline={data} shouldUpdate={shouldUpdate} />
         </Box>

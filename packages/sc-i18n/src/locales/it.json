@@ -102,16 +102,16 @@
   "ui.loyaltyProgram.description": "Converti la tua partecipazione in punti preziosi. Il programma fedeltà è semplice e ricco di vantaggi",
   "ui.loyaltyProgram.points": "I tuoi punti: {total}",
   "ui.loyaltyProgram.discover": "Scopri di più",
-  "ui.LoyaltyProgramDetail.community": "Partecipare alla Community ti Premia!",
-  "ui.LoyaltyProgramDetail.description": "La tua partecipazione ha valore. Ogni tuo contributo dà valore alla discussione e fa crescere il tuo punteggio.",
-  "ui.LoyaltyProgramDetail.listTitle": "Come guadagnare punti:",
-  "ui.LoyaltyProgramDetail.list": "<li><b>Pubblichi un Post:</b> +2 punti</li><li><b>Pubblichi una Discussione:</b> +2 punti</li><li><b>Pubblichi un Commento:</b> +1 punto</li><li><b>Ricevi un Apprezzamento:</b> +1 punto</li><li><b>Ottieni un Follower:</b> +1 punto</li><li><b>Condividi sui tuoi account social:</b> +1 punto</li><li><b>Utilizzi l'app per la prima volta:</b> +10 points</li><li><b>Visita la Community quotidianamente:</b> +1 punto</li>",
-  "ui.LoyaltyProgramDetail.ypoints": "Hai {total, plural, =0 {# punti} one {# punto} other {# punti}}",
-  "ui.LoyaltyProgramDetail.points": "{total, plural, =0 {# punti} one {# punto} other {# punti}}",
-  "ui.LoyaltyProgramDetail.prizes": "I premi per te.",
-  "ui.LoyaltyProgramDetail.prizesIntro": "Guadagna punti e convertili in premi.",
-  "ui.LoyaltyProgramDetail.prizesContent": "La richiesta del premio prevede la sottrazione dei punti corrispondenti al premio selezionato.",
-  "ui.LoyaltyProgramDetail.button.request": "Richiedi Ora",
+  "ui.loyaltyProgramDetail.community": "Partecipare alla Community ti Premia!",
+  "ui.loyaltyProgramDetail.description": "La tua partecipazione ha valore. Ogni tuo contributo dà valore alla discussione e fa crescere il tuo punteggio.",
+  "ui.loyaltyProgramDetail.listTitle": "Come guadagnare punti:",
+  "ui.loyaltyProgramDetail.list": "<li><b>Pubblichi un Post:</b> +2 punti</li><li><b>Pubblichi una Discussione:</b> +2 punti</li><li><b>Pubblichi un Commento:</b> +1 punto</li><li><b>Ricevi un Apprezzamento:</b> +1 punto</li><li><b>Ottieni un Follower:</b> +1 punto</li><li><b>Condividi sui tuoi account social:</b> +1 punto</li><li><b>Utilizzi l'app per la prima volta:</b> +10 points</li><li><b>Visita la Community quotidianamente:</b> +1 punto</li>",
+  "ui.loyaltyProgramDetail.ypoints": "Hai {total, plural, =0 {# punti} one {# punto} other {# punti}}",
+  "ui.loyaltyProgramDetail.points": "{total, plural, =0 {# punti} one {# punto} other {# punti}}",
+  "ui.loyaltyProgramDetail.prizes": "I premi per te.",
+  "ui.loyaltyProgramDetail.prizesIntro": "Guadagna punti e convertili in premi.",
+  "ui.loyaltyProgramDetail.prizesContent": "La richiesta del premio prevede la sottrazione dei punti corrispondenti al premio selezionato.",
+  "ui.loyaltyProgramDetail.button.request": "Richiedi Ora",
 
   "ui.composer.type.post": "Create Post",
   "ui.composer.type.discussion": "Create Discussion",
@@ -373,12 +373,11 @@
 
   "ui.messageEditor.button.send" : "invia",
 
-  "ui.Message.dialog.msg": "Sei sicuro di voler eliminare il messaggio selezionato?",
-  "ui.Message.dialog.confirm": "Sì",
-  "ui.NewMessage.new" : "Nuovo Messaggio",
-  "ui.NewMessage.autocomplete.placeholder" : "nome utente...",
-  "ui.NewMessage.to" : "A:",
-  "ui.Thread.emptyBox.message" : "Seleziona o componi un messaggio",
+  "ui.thread.message.dialog.msg": "Sei sicuro di voler eliminare il messaggio selezionato?",
+  "ui.thread.message.dialog.confirm": "Sì",
+  "ui.thread.newMessage.to" : "A:",
+  "ui.thread.newMessage.autocomplete.placeholder" : "nome utente...",
+  "ui.thread.emptyBox.message" : "Seleziona o componi un messaggio",
 
   "ui.accountSignin.username.label": "Username",
   "ui.accountSignin.password.label": "Password",
@@ -423,5 +422,6 @@
   "ui.lightbox.zoomOutLabel": "Rimpicciolisci",
   "ui.lightbox.imageLoadErrorMessage": "Non è stato possibile caricare l'immagine",
 
-  "templates.userProfile.edit": "Modifica"
+  "templates.userProfile.edit": "Modifica",
+  "templates.privateMessages.button.new" : "Nuovo Messaggio"
 }

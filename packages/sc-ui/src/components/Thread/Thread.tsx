@@ -27,8 +27,8 @@ import Icon from '@mui/material/Icon';
 
 const smessages = defineMessages({
   placeholder: {
-    id: 'ui.NewMessage.autocomplete.placeholder',
-    defaultMessage: 'ui.NewMessage.autocomplete.placeholder'
+    id: 'ui.thread.newMessage.autocomplete.placeholder',
+    defaultMessage: 'ui.thread.newMessage.autocomplete.placeholder'
   }
 });
 
@@ -438,8 +438,8 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
         {openDeleteMessageDialog && (
           <ConfirmDialog
             open={openDeleteMessageDialog}
-            title={<FormattedMessage id="ui.Message.dialog.msg" defaultMessage="ui.Message.dialog.msg" />}
-            btnConfirm={<FormattedMessage id="ui.Message.dialog.confirm" defaultMessage="ui.Message.dialog.confirm" />}
+            title={<FormattedMessage id="ui.thread.message.dialog.msg" defaultMessage="ui.thread.message.dialog.msg" />}
+            btnConfirm={<FormattedMessage id="ui.thread.message.dialog.confirm" defaultMessage="ui.thread.message.dialog.confirm" />}
             onConfirm={() => handleDelete()}
             onClose={handleClose}
           />
@@ -485,7 +485,7 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
                     person
                   </Icon>
                   <Typography sx={{fontWeight: 'bold'}}>
-                    <FormattedMessage defaultMessage="ui.NewMessage.to" id="ui.NewMessage.to" />
+                    <FormattedMessage defaultMessage="ui.thread.newMessage.to" id="ui.thread.newMessage.to" />
                   </Typography>
                 </Grid>
                 <Grid item xs={8}>
@@ -519,7 +519,7 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
         ) : (
           <Box className={classes.emptyBox}>
             <Typography component="h3">
-              <FormattedMessage id="ui.Thread.emptyBox.message" defaultMessage="ui.Thread.emptyBox.message" />
+              <FormattedMessage id="ui.thread.emptyBox.message" defaultMessage="ui.thread.emptyBox.message" />
             </Typography>
           </Box>
         )}
