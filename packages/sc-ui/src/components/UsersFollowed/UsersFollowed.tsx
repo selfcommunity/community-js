@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
-import {Button, CardContent, Typography} from '@mui/material';
+import {Button, CardContent, ListItem, Typography} from '@mui/material';
 import Widget from '../Widget';
 import {
   Endpoints,
@@ -251,7 +251,9 @@ export default function UsersFollowed(inProps: UsersFollowedProps): JSX.Element 
                       }>
                       <List>
                         {followed.map((f, index) => (
-                          <User elevation={0} user={f} key={f.id} {...UserProps} className={classes.followedItem} />
+                          <ListItem>
+                            <User elevation={0} user={f} key={f.id} {...UserProps} className={classes.followedItem} />
+                          </ListItem>
                         ))}
                       </List>
                     </InfiniteScroll>

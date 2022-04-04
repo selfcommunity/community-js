@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
-import {Button, CardContent, Typography, Box} from '@mui/material';
+import {Button, CardContent, Typography, Box, ListItem} from '@mui/material';
 import {Endpoints, http, Logger, SCFeedDiscussionType, SCUserContextType, useSCUser} from '@selfcommunity/core';
 import TrendingFeedSkeleton from '../TrendingFeed/Skeleton';
 import {AxiosResponse} from 'axios';
@@ -196,9 +196,9 @@ export default function PollSuggestion(inProps: PollSuggestionProps): JSX.Elemen
                   }>
                   <List>
                     {objs.map((obj: SCFeedDiscussionType, index) => (
-                      <Box key={index}>
+                      <ListItem key={index}>
                         <PollSnippet elevation={0} feedObj={obj} key={obj.id} className={classes.pollSnippetItem} />
-                      </Box>
+                      </ListItem>
                     ))}
                   </List>
                 </InfiniteScroll>

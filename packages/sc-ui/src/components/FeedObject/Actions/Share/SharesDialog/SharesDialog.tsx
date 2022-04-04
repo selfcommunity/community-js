@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
-import {List} from '@mui/material';
+import {List, ListItem} from '@mui/material';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Typography from '@mui/material/Typography';
 import {Endpoints, http, Logger, SCFeedObjectType, SCFeedObjectTypologyType, useSCFetchFeedObject} from '@selfcommunity/core';
@@ -113,7 +113,9 @@ export default function SharesDialog(props: ShareDialogProps): JSX.Element {
           }>
           <List>
             {shares.slice(0, 4).map((user, index) => (
-              <User elevation={0} user={user} key={index} />
+              <ListItem key={user.id}>
+                <User elevation={0} user={user} key={index} />
+              </ListItem>
             ))}
           </List>
         </InfiniteScroll>

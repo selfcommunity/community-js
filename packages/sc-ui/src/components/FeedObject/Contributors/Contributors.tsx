@@ -1,7 +1,7 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Endpoints, http, Logger, SCFeedObjectType, SCFeedObjectTypologyType, SCUserType, useSCFetchFeedObject} from '@selfcommunity/core';
-import {Avatar, AvatarGroup, Box, Button, List, Skeleton} from '@mui/material';
+import {Avatar, AvatarGroup, Box, Button, List, ListItem, Skeleton} from '@mui/material';
 import {FormattedMessage, useIntl} from 'react-intl';
 import AvatarGroupSkeleton from '../../Skeleton/AvatarGroupSkeleton';
 import {SCOPE_SC_UI} from '../../../constants/Errors';
@@ -183,7 +183,9 @@ export default function ContributorsFeedObject(inProps: ContributorsFeedObjectPr
                       }>
                       <List>
                         {contributors.map((c, index) => (
-                          <User elevation={0} user={c} key={c.id} sx={{m: 0}} />
+                          <ListItem key={c.id}>
+                            <User elevation={0} user={c} key={c.id} sx={{m: 0}} />
+                          </ListItem>
                         ))}
                       </List>
                     </InfiniteScroll>

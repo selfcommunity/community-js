@@ -1,15 +1,13 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import List from '@mui/material/List';
-import {Avatar, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText} from '@mui/material';
-import {Link, SCRoutes, SCRoutingContextType, useSCFetchCategory, useSCRouting} from '@selfcommunity/core';
+import {Avatar} from '@mui/material';
+import {Link, SCCategoryType, SCRoutes, SCRoutingContextType, useSCFetchCategory, useSCRouting} from '@selfcommunity/core';
 import CategorySkeleton from './Skeleton';
 import FollowButton, {FollowCategoryButtonProps} from '../FollowCategoryButton';
-import {SCCategoryType} from '@selfcommunity/core';
 import {defineMessages, useIntl} from 'react-intl';
 import classNames from 'classnames';
-import Widget from '../Widget';
 import useThemeProps from '@mui/material/styles/useThemeProps';
+import BaseItem from '../../shared/BaseItem';
 
 const messages = defineMessages({
   categoryFollowers: {
@@ -27,7 +25,7 @@ const classes = {
   actions: `${PREFIX}-actions`
 };
 
-const Root = styled(Widget, {
+const Root = styled(BaseItem, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
@@ -98,7 +96,16 @@ export default function Category(inProps: CategoryProps): JSX.Element {
     name: PREFIX
   });
 
-  const {id = null, category = null, className = null, autoHide = false, followCategoryButtonProps = {}, showFollowers = true, ...rest} = props;
+  const {
+    id = null,
+    category = null,
+    className = null,
+    elevation,
+    autoHide = false,
+    followCategoryButtonProps = {},
+    showFollowers = true,
+    ...rest
+  } = props;
 
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
@@ -109,40 +116,23 @@ export default function Category(inProps: CategoryProps): JSX.Element {
   // INTL
   const intl = useIntl();
 
-  /**
-   * Renders category object
-   */
-  const c = (
-    <React.Fragment>
-      {scCategory ? (
-        <ListItem button={true} component={Link} to={scRoutingContext.url(SCRoutes.CATEGORY_ROUTE_NAME, scCategory)}>
-          <ListItemAvatar>
-            <Avatar alt={scCategory.name} src={scCategory.image_medium} variant="square" className={classes.categoryImage} />
-          </ListItemAvatar>
-          <ListItemText
-            secondaryTypographyProps={{style: {whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'}}}
-            primary={scCategory.name}
-            secondary={showFollowers ? `${intl.formatMessage(messages.categoryFollowers, {total: scCategory.followers_counter})}` : scCategory.slogan}
-            className={classes.title}
-          />
-          <ListItemSecondaryAction className={classes.actions}>
-            <FollowButton category={scCategory} {...followCategoryButtonProps} />
-          </ListItemSecondaryAction>
-        </ListItem>
-      ) : (
-        <CategorySkeleton elevation={0} />
-      )}
-    </React.Fragment>
-  );
+  if (!scCategory) {
+    return <CategorySkeleton elevation={elevation} />;
+  }
 
-  /**
-   * Renders root object (if not hidden by autoHide prop)
-   */
+  // RENDER
   if (!autoHide) {
     return (
-      <Root className={classNames(classes.root, className)} {...rest}>
-        <List>{c}</List>
-      </Root>
+      <Root
+        elevation={elevation}
+        {...rest}
+        className={classNames(classes.root, className)}
+        ButtonBaseProps={{component: Link, to: scRoutingContext.url(SCRoutes.CATEGORY_ROUTE_NAME, scCategory)}}
+        image={<Avatar alt={scCategory.name} src={scCategory.image_medium} variant="square" className={classes.categoryImage} />}
+        primary={scCategory.name}
+        secondary={showFollowers ? `${intl.formatMessage(messages.categoryFollowers, {total: scCategory.followers_counter})}` : scCategory.slogan}
+        actions={<FollowButton category={scCategory} {...followCategoryButtonProps} />}
+      />
     );
   }
   return null;
