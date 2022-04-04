@@ -14,7 +14,7 @@ import {
 import {AxiosResponse} from 'axios';
 import Message from '../Message';
 import _ from 'lodash';
-import {FormattedMessage, useIntl} from 'react-intl';
+import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {Box, Grid, ListSubheader, TextField, Typography} from '@mui/material';
 import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
 import MessageEditor from '../MessageEditor';
@@ -23,19 +23,29 @@ import classNames from 'classnames';
 import {useSnackbar} from 'notistack';
 import PubSub from 'pubsub-js';
 import useThemeProps from '@mui/material/styles/useThemeProps';
+import Icon from '@mui/material/Icon';
+
+const smessages = defineMessages({
+  placeholder: {
+    id: 'ui.NewMessage.autocomplete.placeholder',
+    defaultMessage: 'ui.NewMessage.autocomplete.placeholder'
+  }
+});
 
 const PREFIX = 'SCThread';
 
 const classes = {
   root: `${PREFIX}-root`,
-  threadBox: `${PREFIX}-threadBox`,
-  emptyBox: `${PREFIX}-emptyBox`,
-  newMessageBox: `${PREFIX}-newMessageBox`,
-  newMessageEditor: `${PREFIX}-newMessageEditor`,
-  newMessageEmptyBox: `${PREFIX}-newMessageEmptyBox`,
+  threadBox: `${PREFIX}-thread-box`,
+  emptyBox: `${PREFIX}-empty-box`,
+  newMessageBox: `${PREFIX}-new-message-box`,
+  newMessageEditor: `${PREFIX}-new-message-editor`,
+  newMessageEmptyBox: `${PREFIX}-new-message-empty-box`,
+  newMessageHeader: `${PREFIX}-new-message-header`,
   sender: `${PREFIX}-sender`,
   receiver: `${PREFIX}-receiver`,
-  center: `${PREFIX}-center`
+  center: `${PREFIX}-center`,
+  autocomplete: `${PREFIX}-autocomplete`
 };
 
 const Root = styled(Widget, {
@@ -79,17 +89,17 @@ const Root = styled(Widget, {
   [`& .${classes.sender}`]: {
     display: 'flex',
     justifyContent: 'flex-end',
-    '& .SCMessage-messageBox': {
+    '& .SCMessage-message-box': {
       backgroundColor: theme.palette.grey[400]
     }
   },
   [`& .${classes.receiver}`]: {
     display: 'flex',
     justifyContent: 'flex-start',
-    '& .SCMessage-messageBox': {
+    '& .SCMessage-message-box': {
       backgroundColor: theme.palette.grey['A200']
     },
-    '& .SCMessage-messageTime': {
+    '& .SCMessage-message-time': {
       display: 'flex',
       justifyContent: 'flex-start'
     }
@@ -97,6 +107,13 @@ const Root = styled(Widget, {
   [`& .${classes.center}`]: {
     display: 'flex',
     justifyContent: 'center'
+  },
+  [`& .${classes.newMessageHeader}`]: {
+    marginLeft: theme.spacing(1),
+    marginTop: theme.spacing(1)
+  },
+  [`& .${classes.autocomplete}`]: {
+    marginRight: theme.spacing(1)
   }
 }));
 
@@ -135,6 +152,17 @@ export interface ThreadProps {
    * @default null
    */
   onNewMessageSent?: (dispatch: any) => void;
+  /**
+   * Callback fired when a  message is sent
+   * @param data
+   * @default null
+   */
+  onMessageSent?: (data) => void;
+  /**
+   * Callback fired only when a new message is sent to update snippets component
+   * @default null
+   */
+  shouldUpdate?: (dispatch: any) => void;
 }
 /**
  *
@@ -156,15 +184,17 @@ export interface ThreadProps {
  |Rule Name|Global class|Description|
  |---|---|---|
  |root|.SCThread-root|Styles applied to the root element.|
- |emptyBox|.SCThread-emptyBox|Styles applied to the empty box element.|
+ |emptyBox|.SCThread-empty-box|Styles applied to the empty box element.|
  |sender|.SCThread-sender|Styles applied to the sender element.|
  |receiver|.SCThread-receiver|Styles applied to the receiver element.|
  |center|.SCThread-center|Styles applied to the center section.|
- |threadBox|.SCThread-threadBox|Styles applied to the thread box element.|
- |emptyBox|.SCThread-emptyBox|Styles applied to the empty box element.|
- |newMessageBox|.SCThread-newMessageBox|Styles applied to the new message box element.|
- |newMessageEditor|.SCThread-newMessageEditor|Styles applied to the new message editor.|
- |newMessageEmptyBox|.SCThread-newMessageEmptyBox|Styles applied to the new message empty box element.|
+ |threadBox|.SCThread-thread-box|Styles applied to the thread box element.|
+ |emptyBox|.SCThread-empty-box|Styles applied to the empty box element.|
+ |newMessageBox|.SCThread-new-message-box|Styles applied to the new message box element.|
+ |newMessageEditor|.SCThread-new-message-editor|Styles applied to the new message editor.|
+ |newMessageEmptyBox|.SCThread-new-message-empty-box|Styles applied to the new message empty box element.|
+ |newMessageHeader|.SCThread-new-message-header|Styles applied to the new message header section.|
+ |autocomplete|.SCThread-autocomplete|Styles applied to new message user insertion autocomplete.|
 
  * @param inProps
  */
@@ -174,7 +204,7 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {id, receiverId, autoHide, className, openNewMessage, onNewMessageSent, ...rest} = props;
+  const {id, receiverId, autoHide, className, openNewMessage, onNewMessageSent, onMessageSent, shouldUpdate, ...rest} = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
@@ -303,8 +333,11 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
         .then((res) => {
           setMessages((prev) => [...prev, res.data]);
           setSending(false);
+          onMessageSent(res.data);
+          shouldUpdate(false);
           if (openNewMessage) {
             onNewMessageSent(res.data);
+            shouldUpdate(true);
           }
         })
         .catch((error) => {
@@ -381,14 +414,18 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
     return () => {
       PubSub.unsubscribe(refreshSubscription.current);
     };
-  }, []);
+  }, [messages]);
 
   /**
    * Notification subscriber
    */
   const subscriber = (msg, data) => {
-    console.log(data);
-    //setMessages([...messages, data.private_message]);
+    const res = data.data;
+    const newMessages = [...messages];
+    const index = newMessages.findIndex((m) => m.sender_id === res.notification_obj.message.sender_id);
+    if (index !== -1) {
+      setMessages((prev) => [...prev, res.notification_obj.message]);
+    }
   };
 
   /**
@@ -442,14 +479,18 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
         {openNewMessage ? (
           <Box className={classes.newMessageBox}>
             <Box sx={{flexGrow: 0, flexShrink: 1, flexBasis: 'auto'}}>
-              <Grid container spacing={2}>
-                <Grid item xs={4}>
-                  <b>
+              <Grid container className={classes.newMessageHeader}>
+                <Grid item xs={4} sx={{display: 'flex', alignItems: 'center'}}>
+                  <Icon sx={{marginRight: '8px'}} fontSize="small">
+                    person
+                  </Icon>
+                  <Typography sx={{fontWeight: 'bold'}}>
                     <FormattedMessage defaultMessage="ui.NewMessage.to" id="ui.NewMessage.to" />
-                  </b>
+                  </Typography>
                 </Grid>
                 <Grid item xs={8}>
                   <Autocomplete
+                    className={classes.autocomplete}
                     multiple
                     freeSolo
                     options={followers}
@@ -457,6 +498,7 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
                     renderInput={(params) => (
                       <TextField
                         {...params}
+                        placeholder={`${intl.formatMessage(smessages.placeholder)}`}
                         variant="standard"
                         InputProps={{
                           ...params.InputProps,

@@ -18,13 +18,13 @@ const classes = {
   root: `${PREFIX}-root`,
   selected: `${PREFIX}-selected`,
   info: `${PREFIX}-info`,
-  messageBox: `${PREFIX}-messageBox`,
-  messageTime: `${PREFIX}-messageTime`,
+  messageBox: `${PREFIX}-message-box`,
+  messageTime: `${PREFIX}-message-time`,
   unread: `${PREFIX}-unread`,
   hide: `${PREFIX}-hide`,
   img: `${PREFIX}-img`,
-  downloadButton: `${PREFIX}-downloadButton`,
-  documentFile: `${PREFIX}-documentFile`
+  downloadButton: `${PREFIX}-download-button`,
+  documentFile: `${PREFIX}-document-file`
 };
 
 const Root = styled(Widget, {
@@ -46,13 +46,6 @@ const Root = styled(Widget, {
     marginTop: '5px',
     display: 'flex',
     justifyContent: 'flex-end'
-  },
-  [`& .${classes.unread}`]: {
-    width: '0.8rem',
-    fill: 'blue'
-  },
-  [`& .${classes.hide}`]: {
-    display: 'none'
   },
   [`& .${classes.img}`]: {
     width: 250,
@@ -95,11 +88,6 @@ export interface MessageProps extends Pick<CardProps, Exclude<keyof CardProps, '
    * @default true
    */
   snippetType?: boolean;
-  /**
-   * The message status. If true, shows a dot next to message headline.
-   * @default null
-   */
-  unseen?: boolean;
   /**
    * Callback fired on mouse hover
    * @default null
@@ -149,13 +137,12 @@ export interface MessageProps extends Pick<CardProps, Exclude<keyof CardProps, '
  |root|.SCMessage-root|Styles applied to the root element.|
  |selected|.SCMessage-selected|Styles applied to the selected element.|
  |info|.SCMessage-info|Styles applied to the info section.|
- |messageBox|.SCMessage-messageBox|Styles applied to the message box element.|
- |messageTime|.SCMessage-messageTime|Styles applied to the message time element.|
+ |messageBox|.SCMessage-message-box|Styles applied to the message box element.|
+ |messageTime|.SCMessage-message-time|Styles applied to the message time element.|
  |unread|.SCMessage-unread|Styles applied to the unread element.|
- |hide|.SCMessage-hide|Styles applied to the hidden element.|
  |img|.SCMessage-img|Styles applied to the img element.|
- |downloadButton|.SCMessage-downloadButton|Styles applied to the download button element.|
- |documentFile|.SCMessage-documentFile|Styles applied to the message file element.|
+ |downloadButton|.SCMessage-download-button|Styles applied to the download button element.|
+ |documentFile|.SCMessage-document-file|Styles applied to the message file element.|
 
 
  * @param inProps
@@ -172,7 +159,6 @@ export default function Message(inProps: MessageProps): JSX.Element {
     message = null,
     className = null,
     snippetType = true,
-    unseen = null,
     onMouseEnter = null,
     onMouseLeave = null,
     isHovering = null,
@@ -186,6 +172,7 @@ export default function Message(inProps: MessageProps): JSX.Element {
 
   // STATE
   const hasFile = message ? message.file : null;
+  const isNew = message ? message.thread_status === 'new' : null;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
@@ -282,10 +269,12 @@ export default function Message(inProps: MessageProps): JSX.Element {
               }
               secondary={
                 <Box component="span" className={classes.info}>
-                  <Typography component="span"> {message.headline}</Typography>
-                  <Icon fontSize="small" className={unseen ? classes.unread : classes.hide}>
-                    fiber_manual_record
-                  </Icon>
+                  <Typography component="span" dangerouslySetInnerHTML={{__html: message.headline}} />
+                  {isNew && (
+                    <Icon fontSize="small" className={classes.unread}>
+                      fiber_manual_record
+                    </Icon>
+                  )}
                 </Box>
               }
             />

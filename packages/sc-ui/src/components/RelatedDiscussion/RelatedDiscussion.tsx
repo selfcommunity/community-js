@@ -16,7 +16,7 @@ import {
   useSCPreferences,
   useSCUser
 } from '@selfcommunity/core';
-import TrendingPostSkeleton from '../TrendingFeed/Skeleton';
+import TrendingFeedSkeleton from '../TrendingFeed/Skeleton';
 import {AxiosResponse} from 'axios';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import FeedObject, {FeedObjectProps} from '../FeedObject';
@@ -215,7 +215,7 @@ export default function RelatedDiscussion(inProps: RelatedDiscussionProps): JSX.
   const d = (
     <React.Fragment>
       {loading ? (
-        <TrendingPostSkeleton elevation={0} />
+        <TrendingFeedSkeleton elevation={0} />
       ) : (
         <CardContent>
           <Typography className={classes.title} variant="body1">

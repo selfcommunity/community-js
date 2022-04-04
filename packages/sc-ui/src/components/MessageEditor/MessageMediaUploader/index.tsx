@@ -26,9 +26,9 @@ const classes = {
   mediaUploadSection: `${PREFIX}-media-upload-section`,
   uploadButton: `${PREFIX}-upload-button`,
   docPreview: `${PREFIX}-doc-preview`,
-  docLoadingPreview: `${PREFIX}-doc-loadingPreview`,
+  docLoadingPreview: `${PREFIX}-doc-loading-preview`,
   progress: `${PREFIX}-progress`,
-  clearMedia: `${PREFIX}-clearMedia`
+  clearMedia: `${PREFIX}-clear-media`
 };
 
 const Root = styled(Box, {

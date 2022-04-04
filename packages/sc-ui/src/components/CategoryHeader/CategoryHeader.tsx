@@ -230,7 +230,7 @@ export default function CategoryHeader(inProps: CategoryHeaderProps): JSX.Elemen
   }
 
   const _backgroundCover = {
-    ...(scCategory ? {background: `url('${scCategory.image_bigger}') center / cover`} : {})
+    ...(scCategory ? {background: `url('${scCategory.emotional_image_original}') center / cover`} : {})
   };
 
   /**

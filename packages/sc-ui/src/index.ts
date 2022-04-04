@@ -68,6 +68,7 @@ import Widget from './components/Widget';
 import MediaChunkUploader, {MediaChunkUploaderProps} from './shared/MediaChunkUploader';
 import {Document, Image, Link, Share, EditMediaProps} from './shared/Media';
 import {MEDIA_TYPE_EMBED} from './constants/Media';
+import PollSuggestion, {PollSuggestionProps} from './components/PollSuggestion';
 
 /**
  * List all exports
@@ -218,5 +219,7 @@ export {
   Link,
   Share,
   EditMediaProps,
-  MEDIA_TYPE_EMBED
+  MEDIA_TYPE_EMBED,
+  PollSuggestion,
+  PollSuggestionProps
 };

@@ -29,6 +29,13 @@
   "ui.peopleSuggestion.subtitle.noResults": "Nothing to show",
   "ui.peopleSuggestion.button.showMore": "Show More",
 
+  "ui.pollSuggestion.title": "Suggested polls",
+  "ui.pollSuggestion.subtitle.noResults": "Nothing to show",
+  "ui.pollSuggestion.button.showMore": "Show More",
+  "ui.pollSuggestion.noMoreResults": "No more results",
+
+  "ui.pollSuggestion.pollSnippet.button.seeItem": "See",
+
   "ui.trendingPeople.title": "Trending People",
   "ui.trendingPeople.noResults": "Nothing to show",
   "ui.trendingPeople.button.showAll": "Show All",
@@ -370,6 +377,7 @@
   "ui.Message.dialog.confirm": "Yes",
   "ui.NewMessage.new" : "New Message",
   "ui.NewMessage.to" : "To:",
+  "ui.NewMessage.autocomplete.placeholder" : "type username...",
   "ui.Thread.emptyBox.message" : "Select or compose a message",
 
   "ui.accountSignin.username.label": "Username",
