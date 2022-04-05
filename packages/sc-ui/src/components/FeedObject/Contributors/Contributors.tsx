@@ -1,8 +1,8 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Endpoints, http, Logger, SCFeedObjectType, SCFeedObjectTypologyType, SCUserType, useSCFetchFeedObject} from '@selfcommunity/core';
-import {Avatar, AvatarGroup, Box, Button, List, ListItem, Skeleton} from '@mui/material';
-import {FormattedMessage, useIntl} from 'react-intl';
+import {Avatar, AvatarGroup, Box, Button, List, ListItem} from '@mui/material';
+import {FormattedMessage} from 'react-intl';
 import AvatarGroupSkeleton from '../../Skeleton/AvatarGroupSkeleton';
 import {SCOPE_SC_UI} from '../../../constants/Errors';
 import BaseDialog from '../../../shared/BaseDialog';
@@ -136,7 +136,7 @@ export default function ContributorsFeedObject(inProps: ContributorsFeedObjectPr
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
       {loading && !openContributorsDialog ? (
-        <Button variant={'text'} disabled classes={{root: classes.btnParticipants}}>
+        <Button variant="text" disabled classes={{root: classes.btnParticipants}}>
           <FormattedMessage id={'ui.feedObject.contributors.participants'} defaultMessage={'ui.feedObject.contributors.participants'} />:
           <AvatarGroupSkeleton {...rest} />
         </Button>
@@ -144,7 +144,7 @@ export default function ContributorsFeedObject(inProps: ContributorsFeedObjectPr
         <>
           {contributors.length > 0 ? (
             <>
-              <Button variant={'text'} onClick={() => setOpenContributorsDialog(true)} classes={{root: classes.btnParticipants}} color="inherit">
+              <Button variant="text" onClick={() => setOpenContributorsDialog(true)} classes={{root: classes.btnParticipants}} color="inherit">
                 <FormattedMessage id={'ui.feedObject.contributors.participants'} defaultMessage={'ui.feedObject.contributors.participants'} />:
                 <AvatarGroup {...rest}>
                   {contributors.map((c: SCUserType) => (
