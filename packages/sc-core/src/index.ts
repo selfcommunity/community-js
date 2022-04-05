@@ -11,6 +11,7 @@ import {
   SCFollowedManagerType,
   SCConnectionsManagerType,
   SCFollowedCategoriesManagerType,
+  SCSubscribedIncubatorsManagerType,
   SCContextProviderType,
   SCCustomAdvPosition,
   SCCustomAdvType,
@@ -128,6 +129,7 @@ import useSCFetchCustomAdv from './hooks/useSCFetchCustomAdv';
 import useSCFetchTag from './hooks/useSCFetchTag';
 import useSCFetchCategory from './hooks/useSCFetchCategory';
 import useSCFetchCategories from './hooks/useSCFetchCategories';
+import useSCFetchIncubator from './hooks/useSCFetchIncubator';
 
 /**
  * Routing component
@@ -180,6 +182,7 @@ export {
   SCFollowedManagerType,
   SCConnectionsManagerType,
   SCFollowedCategoriesManagerType,
+  SCSubscribedIncubatorsManagerType,
   SCThemeContextType,
   SCRoutingContextType,
   SCLocaleContextType,
@@ -288,4 +291,5 @@ export {
   useSCFetchTag,
   useSCFetchCategory,
   useSCFetchCategories,
+  useSCFetchIncubator,
 };

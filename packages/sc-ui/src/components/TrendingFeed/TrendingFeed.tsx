@@ -152,7 +152,7 @@ export default function TrendingFeed(inProps: TrendingFeedProps): JSX.Element {
         <Skeleton elevation={0} />
       ) : (
         <CardContent>
-          <Typography className={classes.title} variant="body1">
+          <Typography className={classes.title} variant="h5">
             <FormattedMessage id="ui.trendingFeed.title" defaultMessage="ui.trendingFeed.title" />
           </Typography>
           {!total ? (
@@ -162,10 +162,10 @@ export default function TrendingFeed(inProps: TrendingFeedProps): JSX.Element {
           ) : (
             <React.Fragment>
               <List>
-                {posts.slice(0, visible).map((obj: SCFeedObjectType, index) => (
-                  <div key={index}>
-                    <FeedObject elevation={0} feedObject={obj[obj.type]} key={obj.id} template={template} className={classes.trendingItem} />
-                  </div>
+                {posts.slice(0, visible).map((obj: SCFeedObjectType) => (
+                  <ListItem key={obj.id}>
+                    <FeedObject elevation={0} feedObject={obj[obj.type]} template={template} className={classes.trendingItem} />
+                  </ListItem>
                 ))}
               </List>
               {hasMore && (
@@ -197,9 +197,9 @@ export default function TrendingFeed(inProps: TrendingFeedProps): JSX.Element {
                     </p>
                   }>
                   <List>
-                    {posts.map((obj: SCFeedObjectType, index) => (
-                      <ListItem key={index}>
-                        <FeedObject elevation={0} feedObject={obj[obj.type]} key={obj.id} template={template} className={classes.trendingItem} />
+                    {posts.map((obj: SCFeedObjectType) => (
+                      <ListItem key={obj.id}>
+                        <FeedObject elevation={0} feedObject={obj[obj.type]} template={template} className={classes.trendingItem} />
                       </ListItem>
                     ))}
                   </List>

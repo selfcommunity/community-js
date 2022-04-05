@@ -1,18 +1,12 @@
 import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
-
-import User from './index';
+import IncubatorsListSkeleton from './index';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC UI/User',
-  component: User,
+  title: 'Design System/SC UI/IncubatorsList',
+  component: IncubatorsListSkeleton,
   argTypes: {
-    userId: {
-      control: {type: 'number'},
-      description: 'User Id',
-      table: {defaultValue: {summary: 1}}
-    },
     elevation: {
       control: {type: 'number'},
       description: 'Used only if variant="elevation". Shadow depth, corresponds to dp in the spec. It accepts values between 0 and 24 inclusive.',
@@ -26,17 +20,15 @@ export default {
     }
   },
   args: {
-    userId: 1,
     elevation: 1,
     variant: 'elevation'
   }
-  // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
-} as ComponentMeta<typeof User>;
+} as ComponentMeta<typeof IncubatorsListSkeleton>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof User> = (args) => (
-  <div style={{width: 400}}>
-    <User {...args} />
+const Template: ComponentStory<typeof IncubatorsListSkeleton> = (args) => (
+  <div style={{width: 500}}>
+    <IncubatorsListSkeleton {...args} />
   </div>
 );
 

@@ -42,7 +42,8 @@ const Root = styled(Widget, {
   [`& .${classes.cardHeader}`]: {
     display: 'flex',
     alignItems: 'start',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
+    marginTop: theme.spacing(2)
   },
   [`& .${classes.pointsIcon}`]: {
     backgroundColor: theme.palette.grey['A200'],
@@ -170,10 +171,10 @@ export default function LoyaltyProgram(inProps: LoyaltyProgramProps): JSX.Elemen
    */
   const l = (
     <React.Fragment>
-      <Typography className={classes.title} component="h3" align="left">
-        <FormattedMessage id="ui.loyaltyProgram.title" defaultMessage="ui.loyaltyProgram.title" />
-      </Typography>
       <CardContent>
+        <Typography className={classes.title} variant="h5">
+          <FormattedMessage id="ui.loyaltyProgram.title" defaultMessage="ui.loyaltyProgram.title" />
+        </Typography>
         <Grid container spacing={2} className={classes.cardHeader}>
           <Grid item>
             <Box className={classes.pointsIcon}>
@@ -181,7 +182,7 @@ export default function LoyaltyProgram(inProps: LoyaltyProgramProps): JSX.Elemen
             </Box>
           </Grid>
           <Grid item xs={12} sm container>
-            <Typography gutterBottom variant="h5" component="div">
+            <Typography gutterBottom variant="h6">
               <FormattedMessage id="ui.loyaltyProgram.lp" defaultMessage="ui.loyaltyProgram.lp" />
             </Typography>
             <Typography variant="body2" color="text.secondary">
@@ -221,7 +222,7 @@ export default function LoyaltyProgram(inProps: LoyaltyProgramProps): JSX.Elemen
   if (!autoHide && scUserContext.user) {
     return (
       <Root {...props} className={classNames(classes.root, className)}>
-        <CardContent>{l}</CardContent>
+        {l}
       </Root>
     );
   }

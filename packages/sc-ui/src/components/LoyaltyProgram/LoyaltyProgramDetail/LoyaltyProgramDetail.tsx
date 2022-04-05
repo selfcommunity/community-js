@@ -13,12 +13,12 @@ import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const messages = defineMessages({
   points: {
-    id: 'ui.LoyaltyProgramDetail.points',
-    defaultMessage: 'ui.LoyaltyProgramDetail.points'
+    id: 'ui.loyaltyProgramDetail.points',
+    defaultMessage: 'ui.loyaltyProgramDetail.points'
   },
   yourPoints: {
-    id: 'ui.LoyaltyProgramDetail.ypoints',
-    defaultMessage: 'ui.LoyaltyProgramDetail.ypoints'
+    id: 'ui.loyaltyProgramDetail.ypoints',
+    defaultMessage: 'ui.loyaltyProgramDetail.ypoints'
   }
 });
 
@@ -176,20 +176,20 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <Typography variant="h6">
-            <FormattedMessage id="ui.LoyaltyProgramDetail.community" defaultMessage="ui.LoyaltyProgramDetail.community" />
+            <FormattedMessage id="ui.loyaltyProgramDetail.community" defaultMessage="ui.loyaltyProgramDetail.community" />
           </Typography>
           <Typography component="div">
-            <FormattedMessage id="ui.LoyaltyProgramDetail.description" defaultMessage="ui.LoyaltyProgramDetail.description" />
+            <FormattedMessage id="ui.loyaltyProgramDetail.description" defaultMessage="ui.loyaltyProgramDetail.description" />
           </Typography>
         </Grid>
         <Grid item xs={12}>
           <Typography>
-            <FormattedMessage id="ui.LoyaltyProgramDetail.listTitle" defaultMessage="ui.LoyaltyProgramDetail.listTitle" />
+            <FormattedMessage id="ui.loyaltyProgramDetail.listTitle" defaultMessage="ui.loyaltyProgramDetail.listTitle" />
           </Typography>
           <ul style={{columnCount: 2}}>
             <FormattedMessage
-              id="ui.LoyaltyProgramDetail.list"
-              defaultMessage="ui.LoyaltyProgramDetail.list"
+              id="ui.loyaltyProgramDetail.list"
+              defaultMessage="ui.loyaltyProgramDetail.list"
               values={{
                 b: (chunks) => <strong>{chunks}</strong>,
                 li: (chunks) => <li>{chunks}</li>
@@ -199,13 +199,13 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
         </Grid>
         <Grid item xs={12} sx={{mb: 2}}>
           <Typography variant="h6">
-            <FormattedMessage id="ui.LoyaltyProgramDetail.prizes" defaultMessage="ui.LoyaltyProgramDetail.prizes" />
+            <FormattedMessage id="ui.loyaltyProgramDetail.prizes" defaultMessage="ui.loyaltyProgramDetail.prizes" />
           </Typography>
           <Typography component="div">
-            <FormattedMessage id="ui.LoyaltyProgramDetail.prizesIntro" defaultMessage="ui.LoyaltyProgramDetail.prizesIntro" />
+            <FormattedMessage id="ui.loyaltyProgramDetail.prizesIntro" defaultMessage="ui.loyaltyProgramDetail.prizesIntro" />
           </Typography>
           <Typography component="div">
-            <FormattedMessage id="ui.LoyaltyProgramDetail.prizesContent" defaultMessage="ui.LoyaltyProgramDetail.prizesContent" />
+            <FormattedMessage id="ui.loyaltyProgramDetail.prizesContent" defaultMessage="ui.loyaltyProgramDetail.prizesContent" />
           </Typography>
         </Grid>
       </Grid>
@@ -228,7 +228,7 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
               <CardActions sx={{justifyContent: 'center'}}>
                 <Button size="small" variant="outlined" disabled={requestable} className={classes.action}>
                   {points >= prize.points ? (
-                    <FormattedMessage id="ui.LoyaltyProgramDetail.button.request" defaultMessage="ui.LoyaltyProgramDetail.button.request" />
+                    <FormattedMessage id="ui.loyaltyProgramDetail.button.request" defaultMessage="ui.loyaltyProgramDetail.button.request" />
                   ) : (
                     <FormattedMessage id="ui.loyaltyProgram.discover" defaultMessage="ui.loyaltyProgram.discover" />
                   )}

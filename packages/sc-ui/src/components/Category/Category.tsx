@@ -8,6 +8,7 @@ import {defineMessages, useIntl} from 'react-intl';
 import classNames from 'classnames';
 import useThemeProps from '@mui/material/styles/useThemeProps';
 import BaseItem from '../../shared/BaseItem';
+import {WidgetProps} from '../Widget';
 
 const messages = defineMessages({
   categoryFollowers: {
@@ -31,17 +32,12 @@ const Root = styled(BaseItem, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({}));
 
-export interface CategoryProps {
+export interface CategoryProps extends WidgetProps {
   /**
-   * Id of category object
+   * Category Id
    * @default null
    */
-  id?: number;
-  /**
-   * Overrides or extends the styles applied to the component.
-   * @default null
-   */
-  className?: string;
+  categoryId?: number;
   /**
    * Category Object
    * @default null
@@ -97,7 +93,7 @@ export default function Category(inProps: CategoryProps): JSX.Element {
   });
 
   const {
-    id = null,
+    categoryId = null,
     category = null,
     className = null,
     elevation,
@@ -111,7 +107,7 @@ export default function Category(inProps: CategoryProps): JSX.Element {
   const scRoutingContext: SCRoutingContextType = useSCRouting();
 
   // STATE
-  const {scCategory, setSCCategory} = useSCFetchCategory({id, category});
+  const {scCategory, setSCCategory} = useSCFetchCategory({id: categoryId, category});
 
   // INTL
   const intl = useIntl();

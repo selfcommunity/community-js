@@ -1,10 +1,11 @@
 import React from 'react';
+import CardContent from '@mui/material/CardContent';
+import List from '@mui/material/List';
 import {styled} from '@mui/material/styles';
-import UserSkeleton from '../User/Skeleton';
+import {IncubatorSkeleton} from '../Incubator';
 import Widget from '../Widget';
-import {List, CardContent, ListItem} from '@mui/material';
 
-const PREFIX = 'SCPeopleSuggestionSkeleton';
+const PREFIX = 'SCIncubatorsListSkeleton';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -19,20 +20,16 @@ const Root = styled(Widget)(({theme}) => ({
   }
 }));
 
-function PeopleSuggestionSkeleton(props): JSX.Element {
+export default function IncubatorsListSkeleton(props): JSX.Element {
   return (
     <Root className={classes.root} {...props}>
       <CardContent>
         <List className={classes.list}>
-          {[...Array(4)].map((user, index) => (
-            <ListItem key={index}>
-              <UserSkeleton elevation={0} />
-            </ListItem>
+          {[...Array(4)].map((category, index) => (
+            <IncubatorSkeleton key={index} elevation={0} />
           ))}
         </List>
       </CardContent>
     </Root>
   );
 }
-
-export default PeopleSuggestionSkeleton;

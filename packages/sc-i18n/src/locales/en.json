@@ -100,16 +100,16 @@
   "ui.loyaltyProgram.description":"Convert your partecipation into precious points. The loyalty program is simple and full of advantages.",
   "ui.loyaltyProgram.points": "Your points: {total}",
   "ui.loyaltyProgram.discover": "Discover more",
-  "ui.LoyaltyProgramDetail.community": "Joining the Community Rewards you!",
-  "ui.LoyaltyProgramDetail.description": "Your participation has a value. Every contribution gives value to the discussion and increases your score.",
-  "ui.LoyaltyProgramDetail.listTitle": "How to earn points:",
-  "ui.LoyaltyProgramDetail.list": "<li><b>Post published:</b> +2 points</li><li><b>Discussion published:</b> +2 points</li><li><b>Comment published:</b> +1 point</li><li><b>Like received:</b> +1 point</li><li><b>Follower:</b> +1 point</li><li><b>Share content on your social accounts:</b> +1 point</li><li><b>First App use:</b> +10 points</li><li><b>Daily Community visit:</b> +1 point</li>",
-  "ui.LoyaltyProgramDetail.ypoints": "You Got {total, plural, =0 {# points} one {# point} other {# points}}",
-  "ui.LoyaltyProgramDetail.points": "{total, plural, =0 {# points} one {# point} other {# points}}",
-  "ui.LoyaltyProgramDetail.prizes": "Prizes for you.",
-  "ui.LoyaltyProgramDetail.prizesIntro": "Earn points and redeem them for rewards.",
-  "ui.LoyaltyProgramDetail.prizesContent": "Prize request involves the subtraction of the points corresponding to the selected prize.",
-  "ui.LoyaltyProgramDetail.button.request": "Request Now",
+  "ui.loyaltyProgramDetail.community": "Joining the Community Rewards you!",
+  "ui.loyaltyProgramDetail.description": "Your participation has a value. Every contribution gives value to the discussion and increases your score.",
+  "ui.loyaltyProgramDetail.listTitle": "How to earn points:",
+  "ui.loyaltyProgramDetail.list": "<li><b>Post published:</b> +2 points</li><li><b>Discussion published:</b> +2 points</li><li><b>Comment published:</b> +1 point</li><li><b>Like received:</b> +1 point</li><li><b>Follower:</b> +1 point</li><li><b>Share content on your social accounts:</b> +1 point</li><li><b>First App use:</b> +10 points</li><li><b>Daily Community visit:</b> +1 point</li>",
+  "ui.loyaltyProgramDetail.ypoints": "You Got {total, plural, =0 {# points} one {# point} other {# points}}",
+  "ui.loyaltyProgramDetail.points": "{total, plural, =0 {# points} one {# point} other {# points}}",
+  "ui.loyaltyProgramDetail.prizes": "Prizes for you.",
+  "ui.loyaltyProgramDetail.prizesIntro": "Earn points and redeem them for rewards.",
+  "ui.loyaltyProgramDetail.prizesContent": "Prize request involves the subtraction of the points corresponding to the selected prize.",
+  "ui.loyaltyProgramDetail.button.request": "Request Now",
 
   "ui.composer.type.post": "Create Post",
   "ui.composer.type.discussion": "Create Discussion",
@@ -373,12 +373,11 @@
 
   "ui.messageEditor.button.send" : "send",
 
-  "ui.Message.dialog.msg": "Are you sure you want to delete this message?",
-  "ui.Message.dialog.confirm": "Yes",
-  "ui.NewMessage.new" : "New Message",
-  "ui.NewMessage.to" : "To:",
-  "ui.NewMessage.autocomplete.placeholder" : "type username...",
-  "ui.Thread.emptyBox.message" : "Select or compose a message",
+  "ui.thread.message.dialog.msg": "Are you sure you want to delete this message?",
+  "ui.thread.message.dialog.confirm": "Yes",
+  "ui.thread.newMessage.to" : "To:",
+  "ui.thread.newMessage.autocomplete.placeholder" : "type username...",
+  "ui.thread.emptyBox.message" : "Select or compose a message",
 
   "ui.accountSignin.username.label": "Username",
   "ui.accountSignin.password.label": "Password",
@@ -423,5 +422,21 @@
   "ui.lightbox.zoomOutLabel": "Zoom out",
   "ui.lightbox.imageLoadErrorMessage": "This image failed to load",
 
-  "templates.userProfile.edit": "Edit"
+
+  "ui.incubator.subscribeButton.button.subscribe": "Subscribe",
+  "ui.incubator.subscribeButton.button.subscribed": "Subscribed",
+  "ui.incubator.proposedBy": "Proposed by",
+  "ui.incubator.progressBar.proposal": "Proposal",
+  "ui.incubator.progressBar.collectingSubscribers": "Collecting subscribers",
+  "ui.incubator.progressBar.approved": "Approved",
+
+  "ui.incubatorsList.title": "Interests Incubator",
+  "ui.incubatorsList.popover": "Interest incubator is a proposal zone\n where users come together to generate\n new interests. New interests are\n approved depending on subscribers\n number and growth rate.",
+  "ui.incubatorsList.noResults": "Nothing to show",
+  "ui.incubatorsList.ShowAll": "View all",
+  "ui.incubatorsList.SuggestNewTopic": "Suggest a new topic",
+  "ui.incubatorsList.noMoreIncubators": "No more results",
+
+  "templates.userProfile.edit": "Edit",
+  "templates.privateMessages.button.new" : "New Message"
 }

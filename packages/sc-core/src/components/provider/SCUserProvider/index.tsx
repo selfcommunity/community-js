@@ -20,7 +20,9 @@ import {
   SCNotificationTopicType,
   SCNotificationTypologyType,
   SCUserStatus,
+  SCSubscribedIncubatorsManagerType,
 } from '../../../types';
+import useSCSubscribedIncubatorsManager from '../../../hooks/useSCSubscribedIncubatorsManager';
 
 /**
  * SCUserContext (Authentication Context)
@@ -64,6 +66,7 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
    * Managers followed, categories
    */
   const followedManager: SCFollowedManagerType = useSCFollowedManager(state.user);
+  const subscribedIncubatorsManager: SCSubscribedIncubatorsManagerType = useSCSubscribedIncubatorsManager(state.user);
   const connectionsManager: SCConnectionsManagerType = useSCConnectionsManager(state.user);
   const categoriesManager: SCFollowedCategoriesManagerType = useSCFollowedCategoriesManager(state.user);
 
@@ -114,6 +117,7 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
       categoriesManager.refresh && categoriesManager.refresh();
       followedManager.refresh && followedManager.refresh();
       connectionsManager.refresh && connectionsManager.refresh();
+      subscribedIncubatorsManager.refresh && subscribedIncubatorsManager.refresh();
     }
   }
 
@@ -232,6 +236,7 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
         categories: categoriesManager,
         followed: followedManager,
         connections: connectionsManager,
+        incubators: subscribedIncubatorsManager,
       },
     }),
     [
@@ -242,6 +247,8 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
       followedManager.followed,
       connectionsManager.loading,
       connectionsManager.connections,
+      subscribedIncubatorsManager.loading,
+      subscribedIncubatorsManager.incubators,
     ]
   );
 

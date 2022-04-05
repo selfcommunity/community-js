@@ -8,7 +8,7 @@ export default {
   title: 'Design System/SC UI/Category',
   component: Category,
   argTypes: {
-    id: {
+    categoryId: {
       control: {type: 'number'},
       description: 'Category Id',
       table: {defaultValue: {summary: 1}}
@@ -26,7 +26,7 @@ export default {
     }
   },
   args: {
-    id: 1,
+    categoryId: 1,
     elevation: 1,
     variant: 'elevation'
   }

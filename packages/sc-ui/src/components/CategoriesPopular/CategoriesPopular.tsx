@@ -122,7 +122,7 @@ export default function CategoriesPopular(inProps: CategoriesListProps): JSX.Ele
         <Skeleton elevation={0} />
       ) : (
         <CardContent>
-          <Typography className={classes.title} variant="body1">
+          <Typography className={classes.title} variant="h5">
             <FormattedMessage id="ui.categoriesPopular.title" defaultMessage="ui.categoriesPopular.title" />
           </Typography>
           {!total ? (
@@ -132,8 +132,10 @@ export default function CategoriesPopular(inProps: CategoriesListProps): JSX.Ele
           ) : (
             <React.Fragment>
               <List>
-                {categories.slice(0, visibleCategories).map((category: SCCategoryType, index) => (
-                  <Category elevation={0} category={category} key={category.id} {...CategoryProps} />
+                {categories.slice(0, visibleCategories).map((category: SCCategoryType) => (
+                  <ListItem key={category.id}>
+                    <Category elevation={0} category={category} {...CategoryProps} />
+                  </ListItem>
                 ))}
               </List>
               {hasMore && (
@@ -165,7 +167,7 @@ export default function CategoriesPopular(inProps: CategoriesListProps): JSX.Ele
                     </p>
                   }>
                   <List>
-                    {categories.map((c, index) => (
+                    {categories.map((c) => (
                       <ListItem key={c.id}>
                         <Category elevation={0} category={c} {...CategoryProps} />
                       </ListItem>

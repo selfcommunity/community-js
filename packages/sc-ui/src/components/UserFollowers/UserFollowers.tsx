@@ -181,16 +181,16 @@ export default function UserFollowers(inProps: UserFollowersProps): JSX.Element 
         <Skeleton elevation={0} />
       ) : (
         <CardContent>
+          <Typography className={classes.title} variant="h5">{`${intl.formatMessage(messages.title, {total: total})}`}</Typography>
           {!total ? (
             <Typography className={classes.noResults} variant="body2">{`${intl.formatMessage(messages.noFollowers)}`}</Typography>
           ) : (
             <React.Fragment>
-              <Typography className={classes.title} variant="body1">{`${intl.formatMessage(messages.title, {total: total})}`}</Typography>
               <List>
-                {followers.slice(0, visibleUsers).map((user: SCUserType, index) => (
-                  <div key={index}>
-                    <User elevation={0} user={user} className={classes.followersItem} key={user.id} {...UserProps} />
-                  </div>
+                {followers.slice(0, visibleUsers).map((user: SCUserType) => (
+                  <ListItem key={user.id}>
+                    <User elevation={0} user={user} className={classes.followersItem} {...UserProps} />
+                  </ListItem>
                 ))}
               </List>
               {hasMore && (
@@ -220,9 +220,9 @@ export default function UserFollowers(inProps: UserFollowersProps): JSX.Element 
                         </p>
                       }>
                       <List>
-                        {followers.map((f, index) => (
-                          <ListItem>
-                            <User elevation={0} user={f} key={f.id} className={classes.followersItem} {...UserProps} />
+                        {followers.map((f) => (
+                          <ListItem key={f.id}>
+                            <User elevation={0} user={f} className={classes.followersItem} {...UserProps} />
                           </ListItem>
                         ))}
                       </List>

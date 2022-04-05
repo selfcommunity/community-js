@@ -148,7 +148,7 @@ export default function PollSuggestion(inProps: PollSuggestionProps): JSX.Elemen
         <TrendingFeedSkeleton elevation={0} />
       ) : (
         <CardContent>
-          <Typography className={classes.title} variant="body1">
+          <Typography className={classes.title} variant="h5">
             <FormattedMessage id="ui.pollSuggestion.title" defaultMessage="ui.pollSuggestion.title" />
           </Typography>
           {!total ? (
@@ -158,11 +158,11 @@ export default function PollSuggestion(inProps: PollSuggestionProps): JSX.Elemen
           ) : (
             <React.Fragment>
               <List>
-                {objs.slice(0, visibleObjs).map((obj: SCFeedDiscussionType, index) => {
+                {objs.slice(0, visibleObjs).map((obj: SCFeedDiscussionType) => {
                   return (
-                    <Box key={index}>
-                      <PollSnippet elevation={0} feedObj={obj} key={obj.id} className={classes.pollSnippetItem} />
-                    </Box>
+                    <ListItem key={obj.id}>
+                      <PollSnippet elevation={0} feedObj={obj} className={classes.pollSnippetItem} />
+                    </ListItem>
                   );
                 })}
               </List>
@@ -195,9 +195,9 @@ export default function PollSuggestion(inProps: PollSuggestionProps): JSX.Elemen
                     </p>
                   }>
                   <List>
-                    {objs.map((obj: SCFeedDiscussionType, index) => (
-                      <ListItem key={index}>
-                        <PollSnippet elevation={0} feedObj={obj} key={obj.id} className={classes.pollSnippetItem} />
+                    {objs.map((obj: SCFeedDiscussionType) => (
+                      <ListItem key={obj.id}>
+                        <PollSnippet elevation={0} feedObj={obj} className={classes.pollSnippetItem} />
                       </ListItem>
                     ))}
                   </List>

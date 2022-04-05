@@ -1,16 +1,16 @@
 import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
 
-import User from './index';
+import Incubator from './index';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC UI/User',
-  component: User,
+  title: 'Design System/SC UI/Incubator',
+  component: Incubator,
   argTypes: {
-    userId: {
+    id: {
       control: {type: 'number'},
-      description: 'User Id',
+      description: 'Incubator Id',
       table: {defaultValue: {summary: 1}}
     },
     elevation: {
@@ -26,17 +26,14 @@ export default {
     }
   },
   args: {
-    userId: 1,
     elevation: 1,
     variant: 'elevation'
   }
-  // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
-} as ComponentMeta<typeof User>;
+} as ComponentMeta<typeof Incubator>;
 
-// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof User> = (args) => (
+const Template: ComponentStory<typeof Incubator> = (args) => (
   <div style={{width: 400}}>
-    <User {...args} />
+    <Incubator {...args} />
   </div>
 );
 

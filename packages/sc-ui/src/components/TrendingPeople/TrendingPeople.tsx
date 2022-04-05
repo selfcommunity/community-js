@@ -155,7 +155,7 @@ export default function TrendingPeople(inProps: TrendingPeopleProps): JSX.Elemen
         <Skeleton elevation={0} />
       ) : (
         <CardContent>
-          <Typography className={classes.title} variant="body1">
+          <Typography className={classes.title} variant="h5">
             <FormattedMessage id="ui.trendingPeople.title" defaultMessage="ui.trendingPeople.title" />
           </Typography>
           {!total ? (
@@ -165,8 +165,10 @@ export default function TrendingPeople(inProps: TrendingPeopleProps): JSX.Elemen
           ) : (
             <React.Fragment>
               <List>
-                {people.slice(0, visiblePeople).map((user, index) => (
-                  <User elevation={0} user={user} id={user.id} key={index} className={classes.trendingUserItem} {...UserProps} />
+                {people.slice(0, visiblePeople).map((user) => (
+                  <ListItem key={user.id}>
+                    <User elevation={0} user={user} className={classes.trendingUserItem} {...UserProps} />
+                  </ListItem>
                 ))}
               </List>
             </React.Fragment>
@@ -199,8 +201,8 @@ export default function TrendingPeople(inProps: TrendingPeopleProps): JSX.Elemen
                   }>
                   <List>
                     {people.map((p, index) => (
-                      <ListItem>
-                        <User elevation={0} user={p} key={p.id} className={classes.trendingUserItem} {...UserProps} />
+                      <ListItem key={p.id} >
+                        <User elevation={0} user={p} className={classes.trendingUserItem} {...UserProps} />
                       </ListItem>
                     ))}
                   </List>

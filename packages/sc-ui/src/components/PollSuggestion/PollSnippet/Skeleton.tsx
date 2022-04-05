@@ -1,10 +1,11 @@
 import React from 'react';
+import {Button} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import Skeleton from '@mui/material/Skeleton';
-import {Button} from '@mui/material';
-import BaseItem from '../../shared/BaseItem';
+import BaseItem from '../../../shared/BaseItem';
+import {WidgetProps} from '../../Widget';
 
-const PREFIX = 'SCCategorySkeleton';
+const PREFIX = 'SCUserSkeleton';
 
 const classes = {
   root: `${PREFIX}-root`
@@ -12,12 +13,11 @@ const classes = {
 
 const Root = styled(BaseItem)(({theme}) => ({}));
 
-export default function CategorySkeleton(props): JSX.Element {
+export default function PollSnippetSkeleton(props: WidgetProps): JSX.Element {
   return (
     <Root
       className={classes.root}
       {...props}
-      image={<Skeleton animation="wave" variant="rectangular" width={40} height={40} />}
       primary={<Skeleton animation="wave" height={10} width={120} style={{marginBottom: 10}} />}
       secondary={<Skeleton animation="wave" height={10} width={70} style={{marginBottom: 10}} />}
       actions={
