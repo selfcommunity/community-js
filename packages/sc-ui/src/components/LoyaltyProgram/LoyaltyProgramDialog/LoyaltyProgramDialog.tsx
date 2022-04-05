@@ -2,7 +2,7 @@ import React from 'react';
 import {styled} from '@mui/material/styles';
 import {FormattedMessage} from 'react-intl';
 import BaseDialog from '../../../shared/BaseDialog';
-import LoyaltyProgramDetail from '../LoyaltyProgramDetail';
+import {LoyaltyProgramDetail} from '@selfcommunity/templates';
 import classNames from 'classnames';
 import useThemeProps from '@mui/material/styles/useThemeProps';
 

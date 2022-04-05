@@ -1,24 +1,23 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
-import Widget from '../../Widget';
-import {Endpoints, http, SCUserContext, SCUserContextType, SCPrizeType, Logger} from '@selfcommunity/core';
+import {Endpoints, http, SCUserContext, SCUserContextType, SCPrizeType} from '@selfcommunity/core';
 import {Box, Button, CardActions, CardContent, CardMedia, Grid, Typography} from '@mui/material';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import Chip from '@mui/material/Chip';
 import Icon from '@mui/material/Icon';
-import {SCOPE_SC_UI} from '../../../constants/Errors';
 import classNames from 'classnames';
 import useThemeProps from '@mui/material/styles/useThemeProps';
+import LoyaltyProgramDetailSkeleton from './Skeleton';
 
 const messages = defineMessages({
   points: {
-    id: 'ui.loyaltyProgramDetail.points',
-    defaultMessage: 'ui.loyaltyProgramDetail.points'
+    id: 'templates.loyaltyProgramDetail.points',
+    defaultMessage: 'templates.loyaltyProgramDetail.points'
   },
-  yourPoints: {
-    id: 'ui.loyaltyProgramDetail.ypoints',
-    defaultMessage: 'ui.loyaltyProgramDetail.ypoints'
+  userPoints: {
+    id: 'templates.loyaltyProgramDetail.userPoints',
+    defaultMessage: 'templates.loyaltyProgramDetail.userPoints'
   }
 });
 
@@ -37,7 +36,7 @@ const classes = {
   chip: `${PREFIX}-chip`
 };
 
-const Root = styled(Widget, {
+const Root = styled(Card, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
@@ -110,6 +109,12 @@ export interface LoyaltyProgramDetailProps {
    */
   requestable?: boolean;
 }
+
+/**
+ *
+ * @param inProps
+ * @constructor
+ */
 export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps): JSX.Element {
   // PROPS
   const props: LoyaltyProgramDetailProps = useThemeProps({
@@ -140,7 +145,7 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
         setPrizes(res.data.results);
       })
       .catch((error) => {
-        Logger.error(SCOPE_SC_UI, error);
+        console.log(error);
       });
   }
 
@@ -151,7 +156,7 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
     if (scUserContext.user) {
       fetchPrizes();
     }
-  }, []);
+  }, [scUserContext.user]);
 
   /**
    * Renders loyalty program detail
@@ -169,27 +174,27 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
         </Box>
         {points && (
           <Box className={classes.points}>
-            <Chip label={`${intl.formatMessage(messages.yourPoints, {total: points})}`} />
+            <Chip label={`${intl.formatMessage(messages.userPoints, {total: points})}`} />
           </Box>
         )}
       </Box>
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <Typography variant="h6">
-            <FormattedMessage id="ui.loyaltyProgramDetail.community" defaultMessage="ui.loyaltyProgramDetail.community" />
+            <FormattedMessage id="templates.loyaltyProgramDetail.community" defaultMessage="templates.loyaltyProgramDetail.community" />
           </Typography>
           <Typography component="div">
-            <FormattedMessage id="ui.loyaltyProgramDetail.description" defaultMessage="ui.loyaltyProgramDetail.description" />
+            <FormattedMessage id="templates.loyaltyProgramDetail.description" defaultMessage="templates.loyaltyProgramDetail.description" />
           </Typography>
         </Grid>
         <Grid item xs={12}>
           <Typography>
-            <FormattedMessage id="ui.loyaltyProgramDetail.listTitle" defaultMessage="ui.loyaltyProgramDetail.listTitle" />
+            <FormattedMessage id="templates.loyaltyProgramDetail.listTitle" defaultMessage="templates.loyaltyProgramDetail.listTitle" />
           </Typography>
           <ul style={{columnCount: 2}}>
             <FormattedMessage
-              id="ui.loyaltyProgramDetail.list"
-              defaultMessage="ui.loyaltyProgramDetail.list"
+              id="templates.loyaltyProgramDetail.list"
+              defaultMessage="templates.loyaltyProgramDetail.list"
               values={{
                 b: (chunks) => <strong>{chunks}</strong>,
                 li: (chunks) => <li>{chunks}</li>
@@ -199,13 +204,13 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
         </Grid>
         <Grid item xs={12} sx={{mb: 2}}>
           <Typography variant="h6">
-            <FormattedMessage id="ui.loyaltyProgramDetail.prizes" defaultMessage="ui.loyaltyProgramDetail.prizes" />
+            <FormattedMessage id="templates.loyaltyProgramDetail.prizes" defaultMessage="templates.loyaltyProgramDetail.prizes" />
           </Typography>
           <Typography component="div">
-            <FormattedMessage id="ui.loyaltyProgramDetail.prizesIntro" defaultMessage="ui.loyaltyProgramDetail.prizesIntro" />
+            <FormattedMessage id="templates.loyaltyProgramDetail.prizesIntro" defaultMessage="templates.loyaltyProgramDetail.prizesIntro" />
           </Typography>
           <Typography component="div">
-            <FormattedMessage id="ui.loyaltyProgramDetail.prizesContent" defaultMessage="ui.loyaltyProgramDetail.prizesContent" />
+            <FormattedMessage id="templates.loyaltyProgramDetail.prizesContent" defaultMessage="templates.loyaltyProgramDetail.prizesContent" />
           </Typography>
         </Grid>
       </Grid>
@@ -228,7 +233,10 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
               <CardActions sx={{justifyContent: 'center'}}>
                 <Button size="small" variant="outlined" disabled={requestable} className={classes.action}>
                   {points >= prize.points ? (
-                    <FormattedMessage id="ui.loyaltyProgramDetail.button.request" defaultMessage="ui.loyaltyProgramDetail.button.request" />
+                    <FormattedMessage
+                      id="templates.loyaltyProgramDetail.button.request"
+                      defaultMessage="templates.loyaltyProgramDetail.button.request"
+                    />
                   ) : (
                     <FormattedMessage id="ui.loyaltyProgram.discover" defaultMessage="ui.loyaltyProgram.discover" />
                   )}
@@ -240,6 +248,10 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
       </Grid>
     </React.Fragment>
   );
+
+  if (!prizes) {
+    return <LoyaltyProgramDetailSkeleton />;
+  }
 
   /**
    * Renders the component (if not hidden by autoHide prop)
