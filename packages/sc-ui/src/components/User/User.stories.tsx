@@ -8,7 +8,7 @@ export default {
   title: 'Design System/SC UI/User',
   component: User,
   argTypes: {
-    id: {
+    userId: {
       control: {type: 'number'},
       description: 'User Id',
       table: {defaultValue: {summary: 1}}
@@ -26,7 +26,7 @@ export default {
     }
   },
   args: {
-    id: 1,
+    userId: 1,
     elevation: 1,
     variant: 'elevation'
   }

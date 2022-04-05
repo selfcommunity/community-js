@@ -204,23 +204,22 @@ export default function UsersFollowed(inProps: UsersFollowedProps): JSX.Element 
         <Skeleton elevation={0} />
       ) : (
         <CardContent>
+          <Typography className={classes.title} variant="h5">{`${intl.formatMessage(messages.title, {total: total})}`}</Typography>
           {!total ? (
             <Typography className={classes.noResults} variant="body2">{`${intl.formatMessage(messages.noUsers)}`}</Typography>
           ) : (
             <React.Fragment>
-              <Typography className={classes.title} variant="body1">{`${intl.formatMessage(messages.title, {total: total})}`}</Typography>
               <List>
-                {followed.slice(0, visibleUsers).map((user: SCUserType, index) => (
-                  <div key={index}>
+                {followed.slice(0, visibleUsers).map((user: SCUserType) => (
+                  <ListItem key={user.id}>
                     <User
                       elevation={0}
                       user={user}
-                      key={user.id}
                       followConnectUserButtonProps={{onFollow: handleOnFollowUser}}
                       className={classes.followedItem}
                       {...UserProps}
                     />
-                  </div>
+                  </ListItem>
                 ))}
               </List>
               {hasMore && (
@@ -250,9 +249,9 @@ export default function UsersFollowed(inProps: UsersFollowedProps): JSX.Element 
                         </p>
                       }>
                       <List>
-                        {followed.map((f, index) => (
-                          <ListItem>
-                            <User elevation={0} user={f} key={f.id} {...UserProps} className={classes.followedItem} />
+                        {followed.map((f) => (
+                          <ListItem key={f.id}>
+                            <User elevation={0} user={f} {...UserProps} className={classes.followedItem} />
                           </ListItem>
                         ))}
                       </List>

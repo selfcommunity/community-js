@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Button, Typography, List, CardContent} from '@mui/material';
+import { Button, Typography, List, CardContent, ListItem } from '@mui/material';
 import {Endpoints, http, SCUserContext, SCUserContextType, SCCategoryType} from '@selfcommunity/core';
 import Skeleton from './Skeleton';
 import Category, {CategoryProps} from '../Category';
@@ -163,7 +163,7 @@ export default function CategoriesSuggestion(inProps: CategoriesListProps): JSX.
         <Skeleton elevation={0} />
       ) : (
         <CardContent>
-          <Typography className={classes.title} variant="body1">
+          <Typography className={classes.title} variant="h5">
             <FormattedMessage id="ui.categoriesSuggestion.title" defaultMessage="ui.categoriesSuggestion.title" />
           </Typography>
           {!total ? (
@@ -173,16 +173,10 @@ export default function CategoriesSuggestion(inProps: CategoriesListProps): JSX.
           ) : (
             <React.Fragment>
               <List>
-                {categories.slice(0, visibleCategories).map((category: SCCategoryType, index) => (
-                  <div key={index}>
-                    <Category
-                      elevation={0}
-                      category={category}
-                      key={category.id}
-                      followCategoryButtonProps={{onFollow: handleOnFollowCategory}}
-                      {...CategoryProps}
-                    />
-                  </div>
+                {categories.slice(0, visibleCategories).map((category: SCCategoryType) => (
+                  <ListItem key={category.id}>
+                    <Category elevation={0} category={category} followCategoryButtonProps={{onFollow: handleOnFollowCategory}} {...CategoryProps} />
+                  </ListItem>
                 ))}
               </List>
               {hasMore && (

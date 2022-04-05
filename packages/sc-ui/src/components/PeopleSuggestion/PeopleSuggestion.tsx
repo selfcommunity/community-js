@@ -188,7 +188,7 @@ export default function PeopleSuggestion(inProps: PeopleSuggestionProps): JSX.El
         <PeopleSuggestionSkeleton elevation={0} />
       ) : (
         <CardContent>
-          <Typography className={classes.title} variant="body1">
+          <Typography className={classes.title} variant="h5">
             <FormattedMessage id="ui.peopleSuggestion.title" defaultMessage="ui.peopleSuggestion.title" />
           </Typography>
           {!total ? (

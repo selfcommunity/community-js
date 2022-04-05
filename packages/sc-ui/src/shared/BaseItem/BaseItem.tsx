@@ -34,7 +34,10 @@ const Root = styled(Widget, {
         paddingTop: 0,
         paddingBottom: 0,
         paddingLeft: 0,
-        paddingRight: 0
+        paddingRight: 0,
+        [`& .${classes.actions}`]: {
+          right: 0
+        }
       }
     }
   },
@@ -49,6 +52,7 @@ const Root = styled(Widget, {
     marginRight: theme.spacing(2)
   },
   [`& .${classes.text}`]: {
+    textAlign: 'left',
     flex: '1 1 auto',
     minWidth: 0,
     marginTop: theme.spacing(),
@@ -63,7 +67,7 @@ const Root = styled(Widget, {
   },
   [`& .${classes.actions}`]: {
     position: 'absolute',
-    right: 0,
+    right: theme.spacing(),
     top: '50%',
     transform: 'translateY(-50%)'
   }
@@ -146,7 +150,7 @@ export interface BaseItemProps extends Pick<WidgetProps, Exclude<keyof WidgetPro
 
  * @param inProps
  */
-export default function User(inProps: BaseItemProps): JSX.Element {
+export default function BaseItem(inProps: BaseItemProps): JSX.Element {
   // PROPS
   const props: BaseItemProps = useThemeProps({
     props: inProps,

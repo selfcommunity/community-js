@@ -3,7 +3,7 @@ import Widget, {WidgetProps} from '../Widget';
 import List from '@mui/material/List';
 import {styled} from '@mui/material/styles';
 import UserSkeleton from '../User/Skeleton';
-import {CardContent} from '@mui/material';
+import {CardContent, ListItem} from '@mui/material';
 
 const PREFIX = 'SCTrendingPeopleSkeleton';
 
@@ -27,7 +27,9 @@ export default function TrendingPeopleSkeleton(props: WidgetProps): JSX.Element 
       <CardContent>
         <List className={classes.list}>
           {[...Array(4)].map((person, index) => (
-            <UserSkeleton key={index} elevation={0} />
+            <ListItem key={index}>
+              <UserSkeleton elevation={0} />
+            </ListItem>
           ))}
         </List>
       </CardContent>

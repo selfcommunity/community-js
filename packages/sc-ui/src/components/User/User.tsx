@@ -1,7 +1,7 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
 import UserSkeleton from './Skeleton';
-import {Avatar, Button, CardProps} from '@mui/material';
+import {Avatar, Button} from '@mui/material';
 import {Link, SCRoutes, SCRoutingContextType, SCUserType, useSCFetchUser, useSCRouting} from '@selfcommunity/core';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {FollowUserButtonProps} from '../FollowUserButton/FollowUserButton';
@@ -10,6 +10,7 @@ import {FriendshipButtonProps} from '../FriendshipUserButton/FriendshipUserButto
 import ConnectionUserButton from '../ConnectionUserButton';
 import useThemeProps from '@mui/material/styles/useThemeProps';
 import BaseItem from '../../shared/BaseItem';
+import {WidgetProps} from '../Widget';
 
 const messages = defineMessages({
   userFollowers: {
@@ -30,17 +31,12 @@ const Root = styled(BaseItem, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({}));
 
-export interface UserProps extends Pick<CardProps, Exclude<keyof CardProps, 'id'>> {
+export interface UserProps extends WidgetProps {
   /**
-   * Id of user object
+   * User Id
    * @default null
    */
-  id?: number;
-  /**
-   * Overrides or extends the styles applied to the component.
-   * @default null
-   */
-  className?: string;
+  userId?: number;
   /**
    * User Object
    * @default null
@@ -96,7 +92,7 @@ export default function User(inProps: UserProps): JSX.Element {
     name: PREFIX
   });
   const {
-    id = null,
+    userId = null,
     user = null,
     handleIgnoreAction,
     className = null,
@@ -107,7 +103,7 @@ export default function User(inProps: UserProps): JSX.Element {
   } = props;
 
   // STATE
-  const {scUser, setSCUser} = useSCFetchUser({id, user});
+  const {scUser, setSCUser} = useSCFetchUser({id: userId, user});
 
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();

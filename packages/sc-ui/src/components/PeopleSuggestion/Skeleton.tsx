@@ -1,9 +1,8 @@
 import React from 'react';
-import List from '@mui/material/List';
 import {styled} from '@mui/material/styles';
 import UserSkeleton from '../User/Skeleton';
 import Widget from '../Widget';
-import {CardContent} from '@mui/material';
+import {List, CardContent, ListItem} from '@mui/material';
 
 const PREFIX = 'SCPeopleSuggestionSkeleton';
 
@@ -26,7 +25,9 @@ function PeopleSuggestionSkeleton(props): JSX.Element {
       <CardContent>
         <List className={classes.list}>
           {[...Array(4)].map((user, index) => (
-            <UserSkeleton key={index} elevation={0} />
+            <ListItem key={index}>
+              <UserSkeleton elevation={0} />
+            </ListItem>
           ))}
         </List>
       </CardContent>

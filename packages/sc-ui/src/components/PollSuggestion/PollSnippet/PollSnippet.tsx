@@ -1,14 +1,12 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import List from '@mui/material/List';
-import {Avatar, Button, ListItem, ListItemSecondaryAction, ListItemText, Typography} from '@mui/material';
+import {Button, Typography} from '@mui/material';
 import {Link, SCFeedDiscussionType, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
 import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
-import Widget from '../../Widget';
 import useThemeProps from '@mui/material/styles/useThemeProps';
-import {GenericSkeleton} from '@selfcommunity/ui';
 import {getContributionRouteName, getRouteData} from '../../../utils/contribute';
+import BaseItem from '../../../shared/BaseItem';
 
 const PREFIX = 'SCPollSnippet';
 
@@ -19,7 +17,7 @@ const classes = {
   seeItem: `${PREFIX}-see-item`
 };
 
-const Root = styled(Widget, {
+const Root = styled(BaseItem, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
@@ -80,55 +78,38 @@ export default function PollSnippet(inProps: PollSnippetProps): JSX.Element {
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
 
-  /**
-   * Renders PollSnippet obj
-   */
-  const p = (
-    <React.Fragment>
-      {feedObj ? (
-        <ListItem>
-          <ListItemText
-            primary={
-              <>
-                <Typography>{feedObj.author.username}</Typography>
-                <Typography variant="body1" className={classes.title}>
-                  {feedObj.poll.title}
-                </Typography>
-              </>
-            }
-            secondary={
-              <Typography
-                variant="body2"
-                sx={{whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'}}
-                dangerouslySetInnerHTML={{__html: feedObj.summary ?? null}}
-              />
-            }
-          />
-          <ListItemSecondaryAction className={classes.action}>
-            <Button
-              size="small"
-              variant="outlined"
-              className={classes.seeItem}
-              component={Link}
-              to={scRoutingContext.url(getContributionRouteName(feedObj), getRouteData(feedObj))}>
-              <FormattedMessage id="ui.pollSuggestion.pollSnippet.button.seeItem" defaultMessage="ui.pollSuggestion.pollSnippet.button.seeItem" />
-            </Button>
-          </ListItemSecondaryAction>
-        </ListItem>
-      ) : (
-        <GenericSkeleton elevation={0} />
-      )}
-    </React.Fragment>
-  );
-
-  /**
-   * Renders root object (if not hidden by autoHide prop)
-   */
+  // RENDER
   if (!autoHide) {
     return (
-      <Root className={classNames(classes.root, className)} {...rest}>
-        {p}
-      </Root>
+      <Root
+        {...rest}
+        className={classNames(classes.root, className)}
+        primary={
+          <>
+            <Typography>{feedObj.author.username}</Typography>
+            <Typography variant="body1" className={classes.title}>
+              {feedObj.poll.title}
+            </Typography>
+          </>
+        }
+        secondary={
+          <Typography
+            variant="body2"
+            sx={{whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'}}
+            dangerouslySetInnerHTML={{__html: feedObj.summary ?? null}}
+          />
+        }
+        actions={
+          <Button
+            size="small"
+            variant="outlined"
+            className={classes.seeItem}
+            component={Link}
+            to={scRoutingContext.url(getContributionRouteName(feedObj), getRouteData(feedObj))}>
+            <FormattedMessage id="ui.pollSuggestion.pollSnippet.button.seeItem" defaultMessage="ui.pollSuggestion.pollSnippet.button.seeItem" />
+          </Button>
+        }
+      />
     );
   }
   return null;

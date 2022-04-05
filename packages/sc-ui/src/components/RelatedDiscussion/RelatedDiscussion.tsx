@@ -218,7 +218,7 @@ export default function RelatedDiscussion(inProps: RelatedDiscussionProps): JSX.
         <TrendingFeedSkeleton elevation={0} />
       ) : (
         <CardContent>
-          <Typography className={classes.title} variant="body1">
+          <Typography className={classes.title} variant="h5">
             <FormattedMessage id="ui.relatedDiscussion.title" defaultMessage="ui.relatedDiscussion.title" />
           </Typography>
           {!total ? (
@@ -230,18 +230,11 @@ export default function RelatedDiscussion(inProps: RelatedDiscussionProps): JSX.
               <List>
                 {objs.slice(0, visibleDiscussions).map((obj: SCFeedDiscussionType, index) => {
                   return (
-                    <React.Fragment key={index}>
-                      <div>
-                        <FeedObject
-                          elevation={0}
-                          feedObject={obj}
-                          key={obj.id}
-                          template={template}
-                          className={classes.relatedItem}
-                          {...FeedObjectProps}
-                        />
-                      </div>
-                      {advPosition === index && renderAdvertising()}
+                    <React.Fragment>
+                      <ListItem key={obj.id}>
+                        <FeedObject elevation={0} feedObject={obj} template={template} className={classes.relatedItem} {...FeedObjectProps} />
+                      </ListItem>
+                      {advPosition === index && <ListItem key={`ads_${index}`}>{renderAdvertising()}</ListItem>}
                     </React.Fragment>
                   );
                 })}
@@ -275,16 +268,9 @@ export default function RelatedDiscussion(inProps: RelatedDiscussionProps): JSX.
                     </p>
                   }>
                   <List>
-                    {objs.map((obj: SCFeedDiscussionType, index) => (
-                      <ListItem key={index}>
-                        <FeedObject
-                          elevation={0}
-                          feedObject={obj}
-                          key={obj.id}
-                          template={template}
-                          className={classes.relatedItem}
-                          {...FeedObjectProps}
-                        />
+                    {objs.map((obj: SCFeedDiscussionType) => (
+                      <ListItem key={obj.id}>
+                        <FeedObject elevation={0} feedObject={obj} template={template} className={classes.relatedItem} {...FeedObjectProps} />
                       </ListItem>
                     ))}
                   </List>
