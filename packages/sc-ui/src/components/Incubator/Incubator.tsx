@@ -1,7 +1,5 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {styled} from '@mui/material/styles';
-import List from '@mui/material/List';
-import Card from '@mui/material/Card';
 import {CardProps, Typography, Grid, Box} from '@mui/material';
 import {Link, SCContextType, SCIncubatorType, SCRoutes, SCRoutingContextType, useSCContext, useSCRouting} from '@selfcommunity/core';
 import {FormattedMessage} from 'react-intl';
@@ -85,7 +83,7 @@ export interface IncubatorProps extends Pick<CardProps, Exclude<keyof CardProps,
    */
   autoHide?: boolean;
   /**
-   * Props to spread to subscribe/unsubscribe button
+   * Props to spread to subscribe button
    * @default {}
    */
   subscribeButtonProps?: SubscribeButtonProps;
@@ -110,8 +108,12 @@ export interface IncubatorProps extends Pick<CardProps, Exclude<keyof CardProps,
  |Rule Name|Global class|Description|
  |---|---|---|
  |root|.SCIncubator-root|Styles applied to the root element.|
- |title|.SCIncubator-title|Styles applied to the title element.|
- |actions|.SCIncubator-actions|Styles applied to action section.|
+ |name|.SCIncubator-name|Styles applied to the name section.|
+ |info|.SCIncubator-info|Styles applied to the info section.|
+ |slogan|.SCIncubator-slogan|Styles applied to the slogan section.|
+ |author|.SCIncubator-author|Styles applied to the author element.|
+ |progressBox|.SCIncubator-progress-box|Styles applied to the progress box element.|
+ |progressBar|.SCIncubator-progress-bar|Styles applied to the progress bar element.|
 
  * @param inProps
  */
@@ -123,15 +125,12 @@ export default function Incubator(inProps: IncubatorProps): JSX.Element {
   });
   const {id = null, incubator = null, className = null, autoHide = false, subscribeButtonProps = {}, ...rest} = props;
 
-  // STATE
-  const [count, setCount] = useState<number>(incubator ? incubator.subscribers_count : null);
-
   // CONTEXT
   const scContext: SCContextType = useSCContext();
   const scRoutingContext: SCRoutingContextType = useSCRouting();
 
   /**
-   * Renders total votes in percentage
+   * Renders total votes
    */
   function renderVotes(voteCount, totalVotes) {
     if (totalVotes === 0) {
@@ -170,7 +169,7 @@ export default function Incubator(inProps: IncubatorProps): JSX.Element {
               <LinearProgressWithLabel
                 className={classes.progressBar}
                 value={renderVotes(incubator.subscribers_count, incubator.subscribers_threshold)}
-                subscribed={count}
+                subscribed={incubator.subscribers_count}
               />
               <Grid container spacing={3}>
                 <Grid item xs>

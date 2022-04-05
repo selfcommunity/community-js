@@ -33,13 +33,12 @@ export default function useSCSubscribedIncubatorsManager(user?: SCUserType) {
   const refresh = useMemo(
     () => (): void => {
       emptyCache();
-      if (user && cache.length > 0) {
+      if (user) {
         // Only if user is authenticated
         http
           .request({
             url: Endpoints.GetAllIncubators.url({}),
             method: Endpoints.GetAllIncubators.method,
-            data: {incubators: cache},
           })
           .then((res: AxiosResponse<any>) => {
             if (res.status >= 300) {
@@ -113,18 +112,18 @@ export default function useSCSubscribedIncubatorsManager(user?: SCUserType) {
       });
   };
 
-  /**
-   * Bypass remote check if the incubator is subscribed
-   */
-  const getSubscriptionStatus = useMemo(
-    () => (incubator: SCIncubatorType) => {
-      const isSubscribed = incubator.subscribed === true;
-      updateCache([incubator.id]);
-      setData((prev) => (isSubscribed ? [...prev, ...[incubator.id]] : prev));
-      return isSubscribed;
-    },
-    [data, cache]
-  );
+  // /**
+  //  * Bypass remote check if the incubator is subscribed
+  //  */
+  // const getSubscriptionStatus = useMemo(
+  //   () => (incubator: SCIncubatorType) => {
+  //     const isSubscribed = incubator.subscribed === true;
+  //     updateCache([incubator.id]);
+  //     setData((prev) => (isSubscribed ? [...prev, ...[incubator.id]] : prev));
+  //     return isSubscribed;
+  //   },
+  //   [data, cache]
+  // );
 
   /**
    * Memoized isSubscribed
@@ -137,9 +136,9 @@ export default function useSCSubscribedIncubatorsManager(user?: SCUserType) {
         if (cache.includes(incubator.id)) {
           return Boolean(data.includes(incubator.id));
         }
-        if ('subscribed' in incubator) {
-          return getSubscriptionStatus(incubator);
-        }
+        // if ('subscribed' in incubator) {
+        //   return getSubscriptionStatus(incubator);
+        // }
         if (!loading.includes(incubator.id)) {
           checkIsIncubatorFollowed(incubator);
         }

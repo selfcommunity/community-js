@@ -49,7 +49,7 @@ export interface SubscribeButtonProps {
    * Incubator
    * @default null
    */
-  incubator: SCIncubatorType;
+  incubator?: SCIncubatorType;
 
   /**
    * onSubscribe callback

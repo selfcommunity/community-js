@@ -3,26 +3,26 @@ import {SCCategoryType} from './category';
 
 /**
  * Interface SCIncubatorType.
- * Category Schema.
+ * Incubator Schema.
  */
 export interface SCIncubatorType {
   /**
-   * The ID of the category.
+   * The ID of the incubator.
    */
   id: number;
 
   /**
-   * The name of the category.
+   * The name of the incubator.
    */
   name: string;
 
   /**
-   * The slug of the category.
+   * The slug of the incubator.
    */
   slug?: string;
 
   /**
-   * The slogan of the category.
+   * The slogan of the incubator.
    */
   slogan?: string;
 
@@ -47,7 +47,7 @@ export interface SCIncubatorType {
   user: SCUserType;
 
   /**
-   * Approved category
+   * Approved incubator
    */
   approved_category?: SCCategoryType;
 
@@ -58,5 +58,5 @@ export interface SCIncubatorType {
   /**
    * If the logged user has subscribed to the incubator
    */
-  subscribed?: boolean;
+  subscribed: boolean;
 }

@@ -27,11 +27,11 @@ export function MessageSkeleton(props): JSX.Element {
       <CardHeader
         className={messageClasses.header}
         avatar={<Skeleton animation="wave" variant="circular" width={40} height={40} />}
-        title={<Skeleton animation="wave" height={10} width="80%" style={{marginBottom: 6}} />}
+        title={<Skeleton animation="wave" variant="circular" width={60} height={20} style={{marginBottom: 6}} />}
       />
       <CardContent className={messageClasses.title}>
         <React.Fragment>
-          <Skeleton animation="wave" height={10} style={{marginBottom: 6}} />
+          <Skeleton animation="wave" height={10} width="80%" style={{marginBottom: 6}} />
         </React.Fragment>
       </CardContent>
       <Box className={messageClasses.media}>
@@ -39,8 +39,8 @@ export function MessageSkeleton(props): JSX.Element {
       </Box>
       <CardContent className={messageClasses.content}>
         <React.Fragment>
-          <Skeleton animation="wave" height={10} style={{marginBottom: 6}} />
-          <Skeleton animation="wave" height={10} width="80%" />
+          <Skeleton animation="wave" height={10} width="80%" style={{marginBottom: 6}} />
+          <Skeleton animation="wave" height={10} width={60} />
         </React.Fragment>
       </CardContent>
     </MessageRoot>
