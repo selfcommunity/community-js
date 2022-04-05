@@ -1,22 +1,7 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import CardContent from '@mui/material/CardContent';
-import {
-  Avatar,
-  Box,
-  Button,
-  CardActions,
-  CardHeader,
-  CardProps,
-  Collapse,
-  Grid,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
-  Stack,
-  Tooltip,
-  Typography
-} from '@mui/material';
+import {Avatar, Box, Button, CardActions, CardHeader, CardProps, Collapse, Grid, Stack, Tooltip, Typography} from '@mui/material';
 import FeedObjectSkeleton, {FeedObjectSkeletonProps} from './Skeleton';
 import DateTimeAgo from '../../shared/DateTimeAgo';
 import Bullet from '../../shared/Bullet';
@@ -64,13 +49,9 @@ import {useSnackbar} from 'notistack';
 import Follow, {FollowProps} from './Actions/Follow';
 import Widget from '../Widget';
 import useThemeProps from '@mui/material/styles/useThemeProps';
-import {InlineComposerProps} from '@selfcommunity/ui';
+import BaseItem from '../../shared/BaseItem';
 
 const messages = defineMessages({
-  comment: {
-    id: 'ui.feedObject.comment',
-    defaultMessage: 'ui.feedObject.comment'
-  },
   visibleToAll: {
     id: 'ui.feedObject.visibleToAll',
     defaultMessage: 'ui.feedObject.visibleToAll'
@@ -848,42 +829,36 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
     objElement = (
       <React.Fragment>
         {obj ? (
-          <ListItem alignItems="flex-start">
-            <ListItemAvatar>
+          <BaseItem
+            elevation={0}
+            image={
               <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, obj.author)}>
                 <Avatar alt={obj.author.username} variant="circular" src={obj.author.avatar} />
               </Link>
-            </ListItemAvatar>
-            <ListItemText
-              primary={
-                <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, obj.author)} className={classes.username}>
-                  {obj.author.username}
+            }
+            primary={
+              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, obj.author)} className={classes.username}>
+                {obj.author.username}
+              </Link>
+            }
+            secondary={
+              <Box>
+                <Link to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))} className={classes.snippetContent}>
+                  {obj.summary}
                 </Link>
-              }
-              secondary={
-                <React.Fragment>
-                  <Link to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))} className={classes.snippetContent}>
-                    {obj.summary}
+                <Box>
+                  <Link to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))} className={classes.activityAt}>
+                    <DateTimeAgo component="span" date={obj.added_at} />
                   </Link>
-                  <Box component="span" sx={{display: 'flex', justifyContent: 'flex-start', p: '2px'}}>
-                    <Grid component="span" item={true} sm="auto" container direction="row" alignItems="center">
-                      <Link to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))} className={classes.activityAt}>
-                        <DateTimeAgo component="span" date={obj.added_at} />
-                      </Link>
-                      <Bullet sx={{paddingLeft: '4px', paddingTop: '1px'}} />
-                      <Button
-                        component={Link}
-                        to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))}
-                        variant={'text'}
-                        sx={{marginTop: '-1px'}}>
-                        {intl.formatMessage(messages.comment)}
-                      </Button>
-                    </Grid>
-                  </Box>
-                </React.Fragment>
-              }
-            />
-          </ListItem>
+                </Box>
+              </Box>
+            }
+            actions={
+              <Button component={Link} to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))} variant="outlined">
+                <FormattedMessage id="ui.feedObject.comment" defaultMessage="ui.feedObject.comment" />
+              </Button>
+            }
+          />
         ) : (
           <FeedObjectSkeleton {...FeedObjectSkeletonProps} />
         )}

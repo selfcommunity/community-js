@@ -43,8 +43,7 @@ export default {
     feedObjectType: SCFeedObjectTypologyType.POST,
     template: SCFeedObjectTemplateType.PREVIEW,
     elevation: 0,
-    variant: 'outlined',
-    hideShareAction: false
+    variant: 'outlined'
   }
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
 } as ComponentMeta<typeof FeedObject>;

@@ -45,20 +45,22 @@ const Root = styled(Widget, {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    alignItems: 'center'
+    alignItems: 'center',
+    width: '100%'
   },
   [`& .${classes.image}`]: {
     flexShrink: 0,
     marginRight: theme.spacing(2)
   },
   [`& .${classes.text}`]: {
-    textAlign: 'left',
     flex: '1 1 auto',
-    minWidth: 0,
     marginTop: theme.spacing(),
-    marginBottom: theme.spacing()
+    marginBottom: theme.spacing(),
+    textAlign: 'left'
   },
-  [`& .${classes.primary}`]: {},
+  [`& .${classes.primary}`]: {
+    color: theme.palette.text.primary
+  },
   [`& .${classes.secondary}`]: {
     whiteSpace: 'nowrap',
     overflow: 'hidden',
