@@ -114,6 +114,12 @@ const Root = styled(Widget, {
     fontSize: '15px',
     textDecoration: 'none'
   },
+  [`& .${classes.header}`]: {
+    '& .MuiCardHeader-subheader': {
+      display: 'flex',
+      alignItems: 'center'
+    }
+  },
   [`& .${classes.category}`]: {
     textAlign: 'center',
     color: '#939598',
@@ -657,12 +663,12 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                 </Link>
               }
               subheader={
-                <Grid component="span" item={true} sm="auto" container direction="row" alignItems="center">
+                <>
                   <Link to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))} className={classes.activityAt}>
-                    <DateTimeAgo date={obj.added_at} />
+                    <DateTimeAgo component={'span'} date={obj.added_at} />
                   </Link>
                   <Bullet />
-                  <div className={classes.tag}>
+                  <Box className={classes.tag}>
                     {obj.addressing.length > 0 ? (
                       <Tags tags={obj.addressing} />
                     ) : (
@@ -672,8 +678,8 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                         </Icon>
                       </Tooltip>
                     )}
-                  </div>
-                </Grid>
+                  </Box>
+                </>
               }
               action={renderHeaderAction()}
             />

@@ -15,7 +15,7 @@ const Root = styled(Box, {
   overridesResolver: (props, styles) => [styles.root]
 })(() => ({
   width: 'auto',
-  display: 'flex',
+  display: 'inline-flex',
   marginTop: 3,
   '& .MuiIcon-root': {
     fontSize: '18px'

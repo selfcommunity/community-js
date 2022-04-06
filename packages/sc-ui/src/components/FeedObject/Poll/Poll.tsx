@@ -59,7 +59,6 @@ const Root = styled(Card, {
   boxShadow: 'none',
   '& .MuiCardHeader-root': {
     textAlign: 'center',
-    marginLeft: '-11px',
     width: '100%',
     maxHeight: '10px'
   },

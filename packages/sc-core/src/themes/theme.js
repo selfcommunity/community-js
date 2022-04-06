@@ -47,36 +47,36 @@ const getTheme = (options, preferences) => {
         },
         components: {
           MuiPaper: {
-            styleOverrides: {
-              rounded: {
-                borderRadius: 3,
-              },
-            },
+            // styleOverrides: {
+            //   rounded: {
+            //     borderRadius: 3,
+            //   },
+            // },
           },
           SCWidget: {
-            variants: [
-              {
-                props: {elevation: 0},
-                style: {
-                  border: 0,
-                  boxShadow: 'none',
-                },
-              },
-              {
-                props: {variant: 'outlined'},
-                style: {
-                  border: '1px solid rgba(0, 0, 0, 0.12)',
-                  boxShadow: 'none',
-                },
-              },
-            ],
-            styleOverrides: {
-              root: {
-                border: '0 none',
-                borderRadius: '10px',
-                boxShadow: '0px 5px 20px rgba(0, 0, 0, 0.1)',
-              },
-            },
+            // variants: [
+            //   {
+            //     props: {elevation: 0},
+            //     style: {
+            //       border: 0,
+            //       boxShadow: 'none',
+            //     },
+            //   },
+            //   {
+            //     props: {variant: 'outlined'},
+            //     style: {
+            //       border: '1px solid rgba(0, 0, 0, 0.12)',
+            //       boxShadow: 'none',
+            //     },
+            //   },
+            // ],
+            // styleOverrides: {
+            //   root: {
+            //     border: '0 none',
+            //     borderRadius: '10px',
+            //     boxShadow: '0px 5px 20px rgba(0, 0, 0, 0.1)',
+            //   },
+            // },
           },
           MuiDivider: {
             styleOverrides: {
