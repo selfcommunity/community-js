@@ -438,7 +438,7 @@
   "ui.incubatorsList.noMoreIncubators": "Nient'altro da mostrare",
 
   "ui.incubatorsList.createIncubatorDialog.title": "Proponi un nuovo interesse",
-  "ui.incubatorsList.createIncubatorDialog.intro": "L'incubatore interessi è un'area dove gli utenti collaborano per far nascere nuovi interessi.\n I nuovi interessi saranno resi operativi in base al numero di adesioni e alla rapidità con cui vengono raccolte",
+  "ui.incubatorsList.createIncubatorDialog.intro": "L'incubatore interessi è un'area dove gli utenti collaborano per far nascere nuovi interessi.\n I nuovi interessi saranno resi operativi in base al numero di adesioni e alla rapidità con cui vengono raccolte.",
   "ui.incubatorsList.createIncubatorDialog.formPlaceholder.name": "Nome dell'interesse",
   "ui.incubatorsList.createIncubatorDialog.formPlaceholder.slogan": "Descrizione",
   "ui.incubatorsList.createIncubatorDialog.button": "Proponi",
