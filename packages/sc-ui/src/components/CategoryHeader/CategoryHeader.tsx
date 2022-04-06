@@ -28,9 +28,9 @@ const classes = {
   name: `${PREFIX}-name`,
   slogan: `${PREFIX}-slogan`,
   info: `${PREFIX}-info`,
-  followedByCounter: `${PREFIX}-followed-by-counter`,
-  followedByAvatars: `${PREFIX}-followed-by-avatars`,
-  divider: `${PREFIX}-divider`
+  followedCounter: `${PREFIX}-followed-counter`,
+  followed: `${PREFIX}-followed`,
+  action: `${PREFIX}-action`
 };
 
 const Root = styled(Box, {
@@ -47,32 +47,30 @@ const Root = styled(Box, {
     color: '#FFF',
     background: 'linear-gradient(180deg, rgba(177,177,177,1) 0%, rgba(255,255,255,1) 90%)'
   },
-  [`& .${classes.name}`]: {
+  [`& .${classes.info}`]: {
+    marginTop: theme.spacing(2),
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2)
+  },
+  [`& .${classes.name}, & .${classes.slogan}`]: {
     display: 'block',
     whiteSpace: 'nowrap',
     overflow: 'hidden',
-    textOverflow: 'ellipsis'
+    textOverflow: 'ellipsis',
+    textAlign: 'center',
+    marginBottom: theme.spacing(2)
   },
-  [`& .${classes.slogan}`]: {
-    display: 'block',
-    whiteSpace: 'nowrap',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis'
+  [`& .${classes.followed}, & .${classes.action}`]: {
+    textAlign: 'center',
+    marginBottom: theme.spacing(2)
   },
-  ['& .MuiAvatar-root']: {
+  [`& .${classes.followed} .MuiAvatar-root`]: {
     color: '#FFF',
     border: '2px solid #FFF',
     fontSize: 11
   },
-  [`& .${classes.info}`]: {
-    marginTop: 0.5,
-    padding: 3,
-    flexDirection: 'column',
-    alignItems: 'center'
-  },
-  [`& .${classes.followedByCounter}`]: {
-    display: 'inline',
-    marginLeft: 10
+  [`& .${classes.followedCounter}`]: {
+    display: 'inline'
   }
 }));
 
@@ -131,9 +129,9 @@ export interface CategoryHeaderProps {
  |name|.SCCategoryHeader-name|Styles applied to the name element.|
  |slogan|.SCCategoryHeader-slogan|Styles applied to the slogan element.|
  |info|.SCCategoryHeader-info|Styles applied to the info element.|
- |followedByCounter|.SCCategoryHeader-followed-by-counter|Styles applied to the followers counter element.|
- |followedByAvatars|.SCCategoryHeader-followed-by-avatars|Styles applied to the followers avatars element.|
- |divider|.SCCategoryHeader-divider|Styles applied to the divider element.|
+ |followedCounter|.SCCategoryHeader-followed-by-counter|Styles applied to the followers counter element.|
+ |followed|.SCCategoryHeader-followed|Styles applied to the followers avatars section.|
+ |action|.SCCategoryHeader-action|Styles applied to the action section.|
 
  * @param inProps
  */
@@ -239,19 +237,17 @@ export default function CategoryHeader(inProps: CategoryHeaderProps): JSX.Elemen
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
       <Paper style={_backgroundCover} classes={{root: classes.cover}} />
-      <Grid container spacing={2} className={classes.info}>
-        <Grid item xs={6}>
-          <Typography variant={'h3'} align={'center'} className={classes.name} gutterBottom>
-            {scCategory.name}
+      <Box className={classes.info}>
+        <Typography variant="h3" className={classes.name} gutterBottom>
+          {scCategory.name}
+        </Typography>
+        {scCategory.slogan && (
+          <Typography variant="h5" className={classes.slogan}>
+            {scCategory.slogan}
           </Typography>
-          {scCategory.slogan && (
-            <Typography variant={'h5'} align={'center'} className={classes.slogan}>
-              {scCategory.slogan}
-            </Typography>
-          )}
-        </Grid>
-        <Grid item xs={12} className={classes.followedByAvatars}>
-          <Typography className={classes.followedByCounter} component="div">
+        )}
+        <Box className={classes.followed}>
+          <Typography className={classes.followedCounter} component="div">
             {intl.formatMessage(messages.followedBy, {total: total})}
           </Typography>
           {loading && !scCategory ? (
@@ -279,12 +275,11 @@ export default function CategoryHeader(inProps: CategoryHeaderProps): JSX.Elemen
               )}
             </>
           )}
-        </Grid>
-        <Grid item xs={6}>
+        </Box>
+        <Box className={classes.action}>
           <FollowCategoryButton category={scCategory} onFollow={handleFollowCategory} {...FollowCategoryButtonProps} />
-        </Grid>
-      </Grid>
-      <Divider className={classes.divider} />
+        </Box>
+      </Box>
       {openFollowersDialog && (
         <BaseDialog
           title={
