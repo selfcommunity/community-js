@@ -1,14 +1,14 @@
 import React, {RefObject, useContext, useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import Widget from '../../Widget';
+import Widget, {WidgetProps} from '../../Widget';
 import {defineMessages, useIntl} from 'react-intl';
-import {Avatar, Box, CardProps, Grid, ListItem, ListItemAvatar, ListItemText, Stack} from '@mui/material';
-import {SCCommentType} from '@selfcommunity/core/src/types/comment';
-import {SCUserContext, SCUserContextType, useSCFetchCommentObject} from '@selfcommunity/core';
+import {Avatar, CardProps, Stack} from '@mui/material';
+import {SCUserContext, SCUserContextType} from '@selfcommunity/core';
 import Editor, {TRichTextEditorRef} from '../../Editor';
 import classNames from 'classnames';
 import {LoadingButton} from '@mui/lab';
 import useThemeProps from '@mui/material/styles/useThemeProps';
+import BaseItem from '../../../shared/BaseItem';
 
 const messages = defineMessages({
   reply: {
@@ -30,12 +30,10 @@ const PREFIX = 'SCReplyCommentObject';
 const classes = {
   root: `${PREFIX}-root`,
   comment: `${PREFIX}-comment`,
-  commentChild: `${PREFIX}-commentChild`,
-  avatarWrap: `${PREFIX}-avatar-wrap`,
   avatar: `${PREFIX}-avatar`
 };
 
-const Root = styled(Box, {
+const Root = styled(BaseItem, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
@@ -45,37 +43,13 @@ const Root = styled(Box, {
   [`& .${classes.comment}`]: {
     overflow: 'visible'
   },
-  [`& .${classes.commentChild}`]: {
-    paddingLeft: '70px'
-  },
-  [`& .${classes.avatarWrap}`]: {
-    minWidth: 46
-  },
   [`& .${classes.avatar}`]: {
     width: 35,
     height: 35
   }
 }));
 
-export interface ReplyCommentObjectProps {
-  /**
-   * Overrides or extends the styles applied to the component.
-   * @default null
-   */
-  className?: string;
-
-  /**
-   * Id of the comment object
-   * @default null
-   */
-  commentObjectId?: number;
-
-  /**
-   * Comment object
-   * @default null
-   */
-  commentObject?: SCCommentType;
-
+export interface ReplyCommentObjectProps extends WidgetProps {
   /**
    * Bind focus on mount
    * @default false
@@ -132,8 +106,7 @@ export default function ReplyCommentObject(inProps: ReplyCommentObjectProps): JS
   });
   const {
     className,
-    commentObjectId,
-    commentObject,
+    elevation = 0,
     autoFocus = false,
     inline = false,
     onReply,
@@ -150,7 +123,6 @@ export default function ReplyCommentObject(inProps: ReplyCommentObjectProps): JS
   const intl = useIntl();
 
   // RETRIEVE OBJECTS
-  const {obj} = useSCFetchCommentObject({id: commentObjectId, commentObject});
   const [html, setHtml] = useState(text);
 
   // REFS
@@ -212,68 +184,56 @@ export default function ReplyCommentObject(inProps: ReplyCommentObjectProps): JS
     [html]
   );
 
-  /**
-   * Render reply
-   * @param obj
-   */
-  function renderReply(obj) {
-    return (
-      <ListItem alignItems="flex-start" classes={{root: classNames({[classes.commentChild]: !inline})}}>
-        <ListItemAvatar classes={{root: classes.avatarWrap}}>
-          {!scUserContext.user ? (
-            <Avatar variant="circular" classes={{root: classes.avatar}} />
-          ) : (
-            <Avatar alt={scUserContext.user.username} variant="circular" src={scUserContext.user.avatar} classes={{root: classes.avatar}} />
-          )}
-        </ListItemAvatar>
-        <ListItemText
-          disableTypography
-          secondary={
-            <>
-              <Widget classes={{root: classes.comment}} {...ReplyBoxProps}>
-                <Editor
-                  onRef={(e) => {
-                    editor = e;
-                  }}
-                  onChange={handleChangeText}
-                  defaultValue={html}
-                  readOnly={readOnly}
-                />
-                {!isEditorEmpty() && (
-                  <Stack direction="row" spacing={2} sx={{mb: 1, ml: 1}}>
-                    {onReply && (
-                      <LoadingButton variant="outlined" size="small" onClick={handleReply} loading={readOnly}>
-                        {intl.formatMessage(messages.reply)}
+  // RENDER
+  return (
+    <Root
+      {...rest}
+      elevation={elevation}
+      ButtonBaseProps={{disableTouchRipple: true, onClick: handleEditorFocus}}
+      className={classNames(classes.root, className)}
+      image={
+        !scUserContext.user ? (
+          <Avatar variant="circular" className={classes.avatar} />
+        ) : (
+          <Avatar alt={scUserContext.user.username} variant="circular" src={scUserContext.user.avatar} classes={{root: classes.avatar}} />
+        )
+      }
+      primary={null}
+      secondary={
+        <>
+          <Widget className={classes.comment} {...ReplyBoxProps}>
+            <Editor
+              onRef={(e) => {
+                editor = e;
+              }}
+              onChange={handleChangeText}
+              defaultValue={html}
+              readOnly={readOnly}
+            />
+            {!isEditorEmpty() && (
+              <Stack direction="row" spacing={2} sx={{mb: 1, ml: 1}}>
+                {onReply && (
+                  <LoadingButton variant="outlined" size="small" onClick={handleReply} loading={readOnly}>
+                    {intl.formatMessage(messages.reply)}
+                  </LoadingButton>
+                )}
+                {onSave && (
+                  <>
+                    {onCancel && (
+                      <LoadingButton variant={'text'} size="small" onClick={handleCancel} loading={readOnly} color="inherit">
+                        {intl.formatMessage(messages.cancel)}
                       </LoadingButton>
                     )}
-                    {onSave && (
-                      <>
-                        {onCancel && (
-                          <LoadingButton variant={'text'} size="small" onClick={handleCancel} loading={readOnly} color="inherit">
-                            {intl.formatMessage(messages.cancel)}
-                          </LoadingButton>
-                        )}
-                        <LoadingButton variant="outlined" size="small" onClick={handleSave} loading={readOnly}>
-                          {intl.formatMessage(messages.save)}
-                        </LoadingButton>
-                      </>
-                    )}
-                  </Stack>
+                    <LoadingButton variant="outlined" size="small" onClick={handleSave} loading={readOnly}>
+                      {intl.formatMessage(messages.save)}
+                    </LoadingButton>
+                  </>
                 )}
-              </Widget>
-            </>
-          }
-        />
-      </ListItem>
-    );
-  }
-
-  /**
-   * Renders root object
-   */
-  return (
-    <Root className={className} {...rest}>
-      {renderReply(obj)}
-    </Root>
+              </Stack>
+            )}
+          </Widget>
+        </>
+      }
+    />
   );
 }
