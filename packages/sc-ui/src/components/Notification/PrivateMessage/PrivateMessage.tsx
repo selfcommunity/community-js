@@ -76,7 +76,6 @@ const Root = styled(Box, {
     fontWeight: '600'
   },
   [`& .${classes.messageLabel}`]: {
-    display: 'inline',
     color: theme.palette.text.primary
   },
   [`& .${classes.messageWrap}`]: {

@@ -55,7 +55,6 @@ const Root = styled(Box, {
     height: 30
   },
   [`& .${classes.undeletedText}`]: {
-    display: 'inline',
     color: theme.palette.text.primary
   },
   [`& .${classes.contributionWrap}`]: {
@@ -156,7 +155,7 @@ export default function UndeletedForNotification(inProps: NotificationUndeletedP
                     SCRoutes[`${contributionType.toUpperCase()}_ROUTE_NAME`],
                     getRouteData(notificationObject[contributionType])
                   )}>
-                  <Typography component="span" color="inherit" className={classes.undeletedText}>
+                  <Typography component="div" color="inherit" className={classes.undeletedText}>
                     <FormattedMessage
                       id="ui.notification.undeletedFor.restoredContentSnippet"
                       defaultMessage="ui.notification.undeletedFor.restoredContentSnippet"
@@ -166,7 +165,7 @@ export default function UndeletedForNotification(inProps: NotificationUndeletedP
               ) : (
                 <>
                   {template === SCNotificationObjectTemplateType.DETAIL && notificationObject.is_new && <NewChip />}
-                  <Typography component="span" color="inherit" className={classes.undeletedText}>
+                  <Typography component="div" color="inherit" className={classes.undeletedText}>
                     <FormattedMessage
                       id="ui.notification.undeletedFor.restoredContent"
                       defaultMessage="ui.notification.undeletedFor.restoredContent"

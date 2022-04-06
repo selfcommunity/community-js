@@ -67,7 +67,6 @@ const Root = styled(Box, {
     height: 30
   },
   [`& .${classes.blockedText}`]: {
-    display: 'inline',
     color: theme.palette.text.primary
   },
   [`& .${classes.toastInfo}`]: {

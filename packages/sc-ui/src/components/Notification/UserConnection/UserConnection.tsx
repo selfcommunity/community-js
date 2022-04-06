@@ -70,7 +70,6 @@ const Root = styled(Box, {
     height: 30
   },
   [`& .${classes.connectionText}`]: {
-    display: 'inline',
     color: theme.palette.text.primary
   },
   [`& .${classes.toastInfo}`]: {

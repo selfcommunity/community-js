@@ -60,7 +60,6 @@ const Root = styled(Box, {
     height: 30
   },
   [`& .${classes.followText}`]: {
-    display: 'inline',
     color: theme.palette.text.primary
   },
   [`& .${classes.contributionText}`]: {
