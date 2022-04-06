@@ -25,6 +25,7 @@ import PeopleSuggestion, {PeopleSuggestionProps, PeopleSuggestionSkeleton} from 
 import Platform, {PlatformProps, PlatformSkeleton} from './components/Platform';
 import Snippets, {SnippetsProps, SnippetsSkeleton} from './components/Snippets';
 import LoyaltyProgram, {LoyaltyProgramProps, LoyaltyProgramSkeleton} from './components/LoyaltyProgram';
+import LoyaltyProgramDetail, {LoyaltyProgramDetailProps, LoyaltyProgramDetailSkeleton} from './components/LoyaltyProgramDetail';
 import TrendingFeed, {TrendingFeedProps, TrendingFeedSkeleton} from './components/TrendingFeed';
 import TrendingPeople, {TrendingPeopleProps, TrendingPeopleSkeleton} from './components/TrendingPeople';
 import UserProfileHeader, {UserProfileHeaderProps, UserProfileHeaderSkeleton} from './components/UserProfileHeader';
@@ -153,6 +154,9 @@ export {
   LoyaltyProgram,
   LoyaltyProgramProps,
   LoyaltyProgramSkeleton,
+  LoyaltyProgramDetail,
+  LoyaltyProgramDetailSkeleton,
+  LoyaltyProgramDetailProps,
   TrendingFeed,
   TrendingFeedProps,
   TrendingFeedSkeleton,

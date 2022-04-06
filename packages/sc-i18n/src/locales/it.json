@@ -102,6 +102,17 @@
   "ui.loyaltyProgram.description": "Converti la tua partecipazione in punti preziosi. Il programma fedeltà è semplice e ricco di vantaggi",
   "ui.loyaltyProgram.points": "I tuoi punti: {total}",
   "ui.loyaltyProgram.discover": "Scopri di più",
+
+  "ui.loyaltyProgramDetail.community": "Partecipare alla Community ti Premia!",
+  "ui.loyaltyProgramDetail.description": "La tua partecipazione ha valore. Ogni tuo contributo dà valore alla discussione e fa crescere il tuo punteggio.",
+  "ui.loyaltyProgramDetail.listTitle": "Come guadagnare punti:",
+  "ui.loyaltyProgramDetail.list": "<li><b>Pubblichi un Post:</b> +2 punti</li><li><b>Pubblichi una Discussione:</b> +2 punti</li><li><b>Pubblichi un Commento:</b> +1 punto</li><li><b>Ricevi un Apprezzamento:</b> +1 punto</li><li><b>Ottieni un Follower:</b> +1 punto</li><li><b>Condividi sui tuoi account social:</b> +1 punto</li><li><b>Utilizzi l'app per la prima volta:</b> +10 points</li><li><b>Visita la Community quotidianamente:</b> +1 punto</li>",
+  "ui.loyaltyProgramDetail.userPoints": "Hai {total, plural, =0 {# punti} one {# punto} other {# punti}}",
+  "ui.loyaltyProgramDetail.points": "{total, plural, =0 {# punti} one {# punto} other {# punti}}",
+  "ui.loyaltyProgramDetail.prizes": "I premi per te.",
+  "ui.loyaltyProgramDetail.prizesIntro": "Guadagna punti e convertili in premi.",
+  "ui.loyaltyProgramDetail.prizesContent": "La richiesta del premio prevede la sottrazione dei punti corrispondenti al premio selezionato.",
+  "ui.loyaltyProgramDetail.button.request": "Richiedi Ora",
   
   "ui.composer.type.post": "Create Post",
   "ui.composer.type.discussion": "Create Discussion",
@@ -426,19 +437,15 @@
   "ui.incubatorsList.SuggestNewTopic": "Suggerisci nuovo interesse",
   "ui.incubatorsList.noMoreIncubators": "Nient'altro da mostrare",
 
+  "ui.incubatorsList.createIncubatorDialog.title": "Proponi un nuovo interesse",
+  "ui.incubatorsList.createIncubatorDialog.intro": "L'incubatore interessi è un'area dove gli utenti collaborano per far nascere nuovi interessi.\n I nuovi interessi saranno resi operativi in base al numero di adesioni e alla rapidità con cui vengono raccolte",
+  "ui.incubatorsList.createIncubatorDialog.formPlaceholder.name": "Nome dell'interesse",
+  "ui.incubatorsList.createIncubatorDialog.formPlaceholder.slogan": "Descrizione",
+  "ui.incubatorsList.createIncubatorDialog.button": "Proponi",
+  "ui.incubatorsList.createIncubatorDialog.propose.success": "Grazie per il tuo contributo, lo valuteremo al più presto. La tua proposta potrà essere accettata, modificata o declinata. Tieni d'occhio l'incubatore interessi!",
+
 
   "templates.userProfile.edit": "Modifica",
-  "templates.privateMessages.button.new" : "Nuovo Messaggio",
+  "templates.privateMessages.button.new" : "Nuovo Messaggio"
 
-
-  "templates.loyaltyProgramDetail.community": "Partecipare alla Community ti Premia!",
-  "templates.loyaltyProgramDetail.description": "La tua partecipazione ha valore. Ogni tuo contributo dà valore alla discussione e fa crescere il tuo punteggio.",
-  "templates.loyaltyProgramDetail.listTitle": "Come guadagnare punti:",
-  "templates.loyaltyProgramDetail.list": "<li><b>Pubblichi un Post:</b> +2 punti</li><li><b>Pubblichi una Discussione:</b> +2 punti</li><li><b>Pubblichi un Commento:</b> +1 punto</li><li><b>Ricevi un Apprezzamento:</b> +1 punto</li><li><b>Ottieni un Follower:</b> +1 punto</li><li><b>Condividi sui tuoi account social:</b> +1 punto</li><li><b>Utilizzi l'app per la prima volta:</b> +10 points</li><li><b>Visita la Community quotidianamente:</b> +1 punto</li>",
-  "templates.loyaltyProgramDetail.userPoints": "Hai {total, plural, =0 {# punti} one {# punto} other {# punti}}",
-  "templates.loyaltyProgramDetail.points": "{total, plural, =0 {# punti} one {# punto} other {# punti}}",
-  "templates.loyaltyProgramDetail.prizes": "I premi per te.",
-  "templates.loyaltyProgramDetail.prizesIntro": "Guadagna punti e convertili in premi.",
-  "templates.loyaltyProgramDetail.prizesContent": "La richiesta del premio prevede la sottrazione dei punti corrispondenti al premio selezionato.",
-  "templates.loyaltyProgramDetail.button.request": "Richiedi Ora"
 }

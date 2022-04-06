@@ -12,12 +12,12 @@ import LoyaltyProgramDetailSkeleton from './Skeleton';
 
 const messages = defineMessages({
   points: {
-    id: 'templates.loyaltyProgramDetail.points',
-    defaultMessage: 'templates.loyaltyProgramDetail.points'
+    id: 'ui.loyaltyProgramDetail.points',
+    defaultMessage: 'ui.loyaltyProgramDetail.points'
   },
   userPoints: {
-    id: 'templates.loyaltyProgramDetail.userPoints',
-    defaultMessage: 'templates.loyaltyProgramDetail.userPoints'
+    id: 'ui.loyaltyProgramDetail.userPoints',
+    defaultMessage: 'ui.loyaltyProgramDetail.userPoints'
   }
 });
 
@@ -181,20 +181,20 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <Typography variant="h6">
-            <FormattedMessage id="templates.loyaltyProgramDetail.community" defaultMessage="templates.loyaltyProgramDetail.community" />
+            <FormattedMessage id="ui.loyaltyProgramDetail.community" defaultMessage="ui.loyaltyProgramDetail.community" />
           </Typography>
           <Typography component="div">
-            <FormattedMessage id="templates.loyaltyProgramDetail.description" defaultMessage="templates.loyaltyProgramDetail.description" />
+            <FormattedMessage id="ui.loyaltyProgramDetail.description" defaultMessage="ui.loyaltyProgramDetail.description" />
           </Typography>
         </Grid>
         <Grid item xs={12}>
           <Typography>
-            <FormattedMessage id="templates.loyaltyProgramDetail.listTitle" defaultMessage="templates.loyaltyProgramDetail.listTitle" />
+            <FormattedMessage id="ui.loyaltyProgramDetail.listTitle" defaultMessage="ui.loyaltyProgramDetail.listTitle" />
           </Typography>
           <ul style={{columnCount: 2}}>
             <FormattedMessage
-              id="templates.loyaltyProgramDetail.list"
-              defaultMessage="templates.loyaltyProgramDetail.list"
+              id="ui.loyaltyProgramDetail.list"
+              defaultMessage="ui.loyaltyProgramDetail.list"
               values={{
                 b: (chunks) => <strong>{chunks}</strong>,
                 li: (chunks) => <li>{chunks}</li>
@@ -204,13 +204,13 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
         </Grid>
         <Grid item xs={12} sx={{mb: 2}}>
           <Typography variant="h6">
-            <FormattedMessage id="templates.loyaltyProgramDetail.prizes" defaultMessage="templates.loyaltyProgramDetail.prizes" />
+            <FormattedMessage id="ui.loyaltyProgramDetail.prizes" defaultMessage="ui.loyaltyProgramDetail.prizes" />
           </Typography>
           <Typography component="div">
-            <FormattedMessage id="templates.loyaltyProgramDetail.prizesIntro" defaultMessage="templates.loyaltyProgramDetail.prizesIntro" />
+            <FormattedMessage id="ui.loyaltyProgramDetail.prizesIntro" defaultMessage="ui.loyaltyProgramDetail.prizesIntro" />
           </Typography>
           <Typography component="div">
-            <FormattedMessage id="templates.loyaltyProgramDetail.prizesContent" defaultMessage="templates.loyaltyProgramDetail.prizesContent" />
+            <FormattedMessage id="ui.loyaltyProgramDetail.prizesContent" defaultMessage="ui.loyaltyProgramDetail.prizesContent" />
           </Typography>
         </Grid>
       </Grid>
@@ -233,10 +233,7 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
               <CardActions sx={{justifyContent: 'center'}}>
                 <Button size="small" variant="outlined" disabled={requestable} className={classes.action}>
                   {points >= prize.points ? (
-                    <FormattedMessage
-                      id="templates.loyaltyProgramDetail.button.request"
-                      defaultMessage="templates.loyaltyProgramDetail.button.request"
-                    />
+                    <FormattedMessage id="ui.loyaltyProgramDetail.button.request" defaultMessage="ui.loyaltyProgramDetail.button.request" />
                   ) : (
                     <FormattedMessage id="ui.loyaltyProgram.discover" defaultMessage="ui.loyaltyProgram.discover" />
                   )}

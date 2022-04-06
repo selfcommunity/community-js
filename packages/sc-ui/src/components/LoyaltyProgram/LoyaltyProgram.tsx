@@ -8,7 +8,7 @@ import {AxiosResponse} from 'axios';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import LoyaltyProgramDialog from './LoyaltyProgramDialog';
 import {SCRoutingContextType, useSCRouting, Link, SCRoutes} from '@selfcommunity/core';
-import {LoyaltyProgramDetail} from '@selfcommunity/templates';
+import LoyaltyProgramDetail from '../LoyaltyProgramDetail';
 import classNames from 'classnames';
 import Widget from '../Widget';
 import useThemeProps from '@mui/material/styles/useThemeProps';
@@ -163,7 +163,7 @@ export default function LoyaltyProgram(inProps: LoyaltyProgramProps): JSX.Elemen
     if (scUserContext.user) {
       fetchLP();
     }
-  }, []);
+  }, [scUserContext.user]);
 
   /**
    * Renders loyalty card
