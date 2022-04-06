@@ -1,6 +1,6 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import {Box} from '@mui/material';
+import {List} from '@mui/material';
 import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Skeleton from '@mui/material/Skeleton';
@@ -12,7 +12,7 @@ const classes = {
   root: `${PREFIX}-root`
 };
 
-const Root = styled(Box)(({theme}) => ({
+const Root = styled(List)(({theme}) => ({
   marginBottom: theme.spacing(2)
 }));
 

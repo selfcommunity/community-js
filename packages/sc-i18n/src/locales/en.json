@@ -100,17 +100,7 @@
   "ui.loyaltyProgram.description":"Convert your partecipation into precious points. The loyalty program is simple and full of advantages.",
   "ui.loyaltyProgram.points": "Your points: {total}",
   "ui.loyaltyProgram.discover": "Discover more",
-  "ui.loyaltyProgramDetail.community": "Joining the Community Rewards you!",
-  "ui.loyaltyProgramDetail.description": "Your participation has a value. Every contribution gives value to the discussion and increases your score.",
-  "ui.loyaltyProgramDetail.listTitle": "How to earn points:",
-  "ui.loyaltyProgramDetail.list": "<li><b>Post published:</b> +2 points</li><li><b>Discussion published:</b> +2 points</li><li><b>Comment published:</b> +1 point</li><li><b>Like received:</b> +1 point</li><li><b>Follower:</b> +1 point</li><li><b>Share content on your social accounts:</b> +1 point</li><li><b>First App use:</b> +10 points</li><li><b>Daily Community visit:</b> +1 point</li>",
-  "ui.loyaltyProgramDetail.ypoints": "You Got {total, plural, =0 {# points} one {# point} other {# points}}",
-  "ui.loyaltyProgramDetail.points": "{total, plural, =0 {# points} one {# point} other {# points}}",
-  "ui.loyaltyProgramDetail.prizes": "Prizes for you.",
-  "ui.loyaltyProgramDetail.prizesIntro": "Earn points and redeem them for rewards.",
-  "ui.loyaltyProgramDetail.prizesContent": "Prize request involves the subtraction of the points corresponding to the selected prize.",
-  "ui.loyaltyProgramDetail.button.request": "Request Now",
-
+  
   "ui.composer.type.post": "Create Post",
   "ui.composer.type.discussion": "Create Discussion",
   "ui.composer.done": "done",
@@ -438,5 +428,16 @@
   "ui.incubatorsList.noMoreIncubators": "No more results",
 
   "templates.userProfile.edit": "Edit",
-  "templates.privateMessages.button.new" : "New Message"
+  "templates.privateMessages.button.new" : "New Message",
+
+  "templates.loyaltyProgramDetail.community": "Joining the Community Rewards you!",
+  "templates.loyaltyProgramDetail.description": "Your participation has a value. Every contribution gives value to the discussion and increases your score.",
+  "templates.loyaltyProgramDetail.listTitle": "How to earn points:",
+  "templates.loyaltyProgramDetail.list": "<li><b>Post published:</b> +2 points</li><li><b>Discussion published:</b> +2 points</li><li><b>Comment published:</b> +1 point</li><li><b>Like received:</b> +1 point</li><li><b>Follower:</b> +1 point</li><li><b>Share content on your social accounts:</b> +1 point</li><li><b>First App use:</b> +10 points</li><li><b>Daily Community visit:</b> +1 point</li>",
+  "templates.loyaltyProgramDetail.userPoints": "You Got {total, plural, =0 {# points} one {# point} other {# points}}",
+  "templates.loyaltyProgramDetail.points": "{total, plural, =0 {# points} one {# point} other {# points}}",
+  "templates.loyaltyProgramDetail.prizes": "Prizes for you.",
+  "templates.loyaltyProgramDetail.prizesIntro": "Earn points and redeem them for rewards.",
+  "templates.loyaltyProgramDetail.prizesContent": "Prize request involves the subtraction of the points corresponding to the selected prize.",
+  "templates.loyaltyProgramDetail.button.request": "Request Now"
 }

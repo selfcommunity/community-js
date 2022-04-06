@@ -8,7 +8,7 @@ import {AxiosResponse} from 'axios';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import LoyaltyProgramDialog from './LoyaltyProgramDialog';
 import {SCRoutingContextType, useSCRouting, Link, SCRoutes} from '@selfcommunity/core';
-import LoyaltyProgramDetail from './LoyaltyProgramDetail';
+import {LoyaltyProgramDetail} from '@selfcommunity/templates';
 import classNames from 'classnames';
 import Widget from '../Widget';
 import useThemeProps from '@mui/material/styles/useThemeProps';
@@ -59,8 +59,7 @@ const Root = styled(Widget, {
   },
   [`& .${classes.pointsBox}`]: {
     backgroundColor: theme.palette.primary.main,
-    padding: 10,
-    marginLeft: '-24px'
+    padding: 10
   },
   [`& .${classes.points}`]: {
     color: theme.palette.common.white,

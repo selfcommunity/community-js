@@ -24,7 +24,7 @@ const classes = {
   root: `${PREFIX}-root`,
   header: `${PREFIX}-header`,
   title: `${PREFIX}-title`,
-  noResults: `${PREFIX}-noResults`,
+  noResults: `${PREFIX}-no-results`,
   actions: `${PREFIX}-actions`,
   helpPopover: `${PREFIX}-help-popover`
 };
@@ -74,8 +74,9 @@ export interface IncubatorsListProps {
  |Rule Name|Global class|Description|
  |---|---|---|
  |root|.SCIncubatorsList-root|Styles applied to the root element.|
+ |header|.SCIncubatorsList-header|Styles applied to the header element.|
  |title|.SCIncubatorsList-title|Styles applied to the title element.|
- |noResults|.SCIncubatorsList-noResults|Styles applied to the noResults section.|
+ |noResults|.SCIncubatorsList-no-results|Styles applied to the no results section.|
  |actions|.SCIncubatorsList-actions|Styles applied to the actions section.|
  |helpPopover|.SCIncubatorsList-help-popover|Styles applied to the help popover element.|
 
@@ -94,7 +95,7 @@ export default function IncubatorsList(inProps: IncubatorsListProps): JSX.Elemen
 
   // STATE
   const [incubators, setIncubators] = useState<any[]>([]);
-  const [visibleIncubators, setVisibleCategories] = useState<number>(limit);
+  const [visibleIncubators, setVisibleIncubators] = useState<number>(limit);
   const [loading, setLoading] = useState<boolean>(true);
   const [hasMore, setHasMore] = useState<boolean>(false);
   const [total, setTotal] = useState<number>(0);
@@ -150,6 +151,21 @@ export default function IncubatorsList(inProps: IncubatorsListProps): JSX.Elemen
     fetchIncubators();
   }, []);
 
+  function handleSubscriptionsUpdate(incubator) {
+    const newIncubators = [...incubators];
+    const index = newIncubators.findIndex((i) => i.id === incubator.id);
+    if (index !== -1) {
+      if (incubator.subscribed) {
+        newIncubators[index].subscribers_count = incubator.subscribers_count - 1;
+        newIncubators[index].subscribed = !incubator.subscribed;
+      } else {
+        newIncubators[index].subscribers_count = incubator.subscribers_count + 1;
+        newIncubators[index].subscribed = !incubator.subscribed;
+      }
+      setIncubators(newIncubators);
+    }
+  }
+
   /**
    * Renders popular incubators list
    */
@@ -192,7 +208,12 @@ export default function IncubatorsList(inProps: IncubatorsListProps): JSX.Elemen
               <List>
                 {incubators.slice(0, visibleIncubators).map((incubator: SCIncubatorType, index) => (
                   <div key={index}>
-                    <Incubator elevation={0} incubator={incubator} key={incubator.id} />
+                    <Incubator
+                      elevation={0}
+                      incubator={incubator}
+                      key={incubator.id}
+                      subscribeButtonProps={{onSubscribe: handleSubscriptionsUpdate}}
+                    />
                   </div>
                 ))}
               </List>
@@ -231,8 +252,7 @@ export default function IncubatorsList(inProps: IncubatorsListProps): JSX.Elemen
                   }>
                   <List>
                     {incubators.map((i, index) => (
-                      <Incubator elevation={0} incubator={i} key={i.id} sx={{m: 0}} />
-                      // subscribeButtonProps={{onSubscribe:}}
+                      <Incubator elevation={0} incubator={i} key={i.id} sx={{m: 0}} subscribeButtonProps={{onSubscribe: handleSubscriptionsUpdate}} />
                     ))}
                   </List>
                 </InfiniteScroll>
