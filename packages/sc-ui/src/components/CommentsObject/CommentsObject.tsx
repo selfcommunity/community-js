@@ -363,7 +363,7 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
       if (showTitle) {
         return (
           <Typography variant="h6" gutterBottom color={'inherit'}>
-            <FormattedMessage id="ui.commentsObject.title" defaultMessage="ui.commentsObject.title" values={{total: total}} />
+            <FormattedMessage id="ui.commentsObject.title" defaultMessage="ui.commentsObject.title" values={{total: total + newComments.length}} />
           </Typography>
         );
       }
@@ -594,7 +594,7 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
         url: Endpoints.NewComment.url({}),
         method: Endpoints.NewComment.method,
         data: {
-          [`${feedObjectType}`]: feedObjectId,
+          [`${feedObjectType}`]: feedObject ? feedObject.id : feedObjectId,
           text: comment
         }
       })
@@ -626,7 +626,8 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
       .catch((error) => {
         Logger.error(SCOPE_SC_UI, error);
         enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
-          variant: 'error'
+          variant: 'error',
+          autoHideDuration: 5000
         });
       });
   }
