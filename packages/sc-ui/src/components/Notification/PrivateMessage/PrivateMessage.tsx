@@ -220,7 +220,7 @@ export default function PrivateMessageNotification(inProps: NotificationPrivateM
                 :
               </Typography>
             }
-            secondary={<Typography color="primary" gutterBottom dangerouslySetInnerHTML={{__html: notificationObject.message.html}} />}
+            secondary={<Typography color="primary" gutterBottom dangerouslySetInnerHTML={{__html: notificationObject.message.message}} />}
           />
         </ListItem>
         <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
@@ -261,7 +261,7 @@ export default function PrivateMessageNotification(inProps: NotificationPrivateM
                 {notificationObject.is_new && <NewChip />}
                 <Box className={classes.messageWrap}>
                   <Link to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, notificationObject.message)} className={classes.message}>
-                    <Typography variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: notificationObject.message.html}} />
+                    <Typography variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: notificationObject.message.message}} />
                   </Link>
                 </Box>
               </>
