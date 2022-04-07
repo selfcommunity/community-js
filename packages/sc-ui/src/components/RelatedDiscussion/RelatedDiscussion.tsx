@@ -230,11 +230,11 @@ export default function RelatedDiscussion(inProps: RelatedDiscussionProps): JSX.
               <List>
                 {objs.slice(0, visibleDiscussions).map((obj: SCFeedDiscussionType, index) => {
                   return (
-                    <React.Fragment>
-                      <ListItem key={obj.id}>
+                    <React.Fragment key={obj.id}>
+                      <ListItem>
                         <FeedObject elevation={0} feedObject={obj} template={template} className={classes.relatedItem} {...FeedObjectProps} />
                       </ListItem>
-                      {advPosition === index && <ListItem key={`ads_${index}`}>{renderAdvertising()}</ListItem>}
+                      {advPosition === index && <ListItem>{renderAdvertising()}</ListItem>}
                     </React.Fragment>
                   );
                 })}

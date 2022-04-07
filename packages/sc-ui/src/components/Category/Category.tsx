@@ -7,7 +7,7 @@ import FollowButton, {FollowCategoryButtonProps} from '../FollowCategoryButton';
 import {defineMessages, useIntl} from 'react-intl';
 import classNames from 'classnames';
 import useThemeProps from '@mui/material/styles/useThemeProps';
-import BaseItem from '../../shared/BaseItem';
+import BaseItemButton from '../../shared/BaseItemButton';
 import {WidgetProps} from '../Widget';
 
 const messages = defineMessages({
@@ -26,7 +26,7 @@ const classes = {
   actions: `${PREFIX}-actions`
 };
 
-const Root = styled(BaseItem, {
+const Root = styled(BaseItemButton, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root

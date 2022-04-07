@@ -2,47 +2,35 @@ import React from 'react';
 import Widget from '../Widget';
 import {styled} from '@mui/material/styles';
 import Skeleton from '@mui/material/Skeleton';
-import {Box, CardContent, ListItem, ListItemAvatar, ListItemText} from '@mui/material';
+import {CardContent} from '@mui/material';
+import BaseItem from '../../shared/BaseItem';
 
 const PREFIX = 'SCCommentObjectSkeleton';
 
 const classes = {
-  root: `${PREFIX}-root`,
-  avatarWrap: `${PREFIX}-avatar-wrap`
+  root: `${PREFIX}-root`
 };
 
-const Root = styled(Box, {
-  name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  marginBottom: theme.spacing(3),
-  [`& .${classes.avatarWrap}`]: {
-    minWidth: 46
-  }
-}));
+const Root = styled(BaseItem)(({theme}) => ({}));
 
 export default function CommentObjectSkeleton(props): JSX.Element {
+  const {WidgetProps, ...rest} = props;
   return (
-    <Root>
-      <ListItem button={false} alignItems="flex-start">
-        <ListItemAvatar classes={{root: classes.avatarWrap}}>
-          <Skeleton animation="wave" variant="circular" width={35} height={35} />
-        </ListItemAvatar>
-        <ListItemText
-          disableTypography
-          secondary={
-            <>
-              <Widget {...props}>
-                <CardContent>
-                  <Skeleton animation="wave" height={10} width="80%" style={{marginBottom: 6}} />
-                  <Skeleton animation="wave" height={10} width="40%" />
-                </CardContent>
-              </Widget>
-            </>
-          }
-        />
-      </ListItem>
-    </Root>
+    <Root
+      className={classes.root}
+      disableTypography
+      {...rest}
+      image={<Skeleton animation="wave" variant="circular" width={40} height={40} />}
+      secondary={
+        <>
+          <Widget {...WidgetProps}>
+            <CardContent>
+              <Skeleton animation="wave" height={10} width="80%" style={{marginBottom: 6}} />
+              <Skeleton animation="wave" height={10} width="40%" />
+            </CardContent>
+          </Widget>
+        </>
+      }
+    />
   );
 }

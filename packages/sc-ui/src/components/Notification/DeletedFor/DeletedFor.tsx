@@ -78,7 +78,6 @@ const Root = styled(Box, {
     height: 30
   },
   [`& .${classes.flagText}`]: {
-    display: 'inline',
     color: theme.palette.text.primary
   },
   [`& .${classes.contributionWrap}`]: {
@@ -182,7 +181,7 @@ export default function DeletedForNotification(inProps: NotificationDeletedForPr
                     SCRoutes[`${contributionType.toUpperCase()}_ROUTE_NAME`],
                     getRouteData(notificationObject[contributionType])
                   )}>
-                  <Typography component="span" color="inherit" className={classes.flagText}>
+                  <Typography component="div" color="inherit" className={classes.flagText}>
                     <FormattedMessage
                       id={`ui.notification.deletedFor.${StringUtils.camelCase(notificationObject.type)}Snippet`}
                       defaultMessage={`ui.notification.deletedFor.${StringUtils.camelCase(notificationObject.type)}Snippet`}
@@ -192,7 +191,7 @@ export default function DeletedForNotification(inProps: NotificationDeletedForPr
               ) : (
                 <>
                   {template === SCNotificationObjectTemplateType.DETAIL && notificationObject.is_new && <NewChip />}
-                  <Typography component="span" color="inherit" className={classes.flagText}>
+                  <Typography component="div" color="inherit" className={classes.flagText}>
                     {intl.formatMessage(messages[StringUtils.camelCase(notificationObject.type)], {b: (...chunks) => <strong>{chunks}</strong>})}
                   </Typography>
                 </>

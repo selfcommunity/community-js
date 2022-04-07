@@ -61,7 +61,6 @@ const Root = styled(Box, {
     height: 30
   },
   [`& .${classes.voteUpText}`]: {
-    display: 'inline',
     color: theme.palette.text.primary
   },
   [`& .${classes.contributionText}`]: {

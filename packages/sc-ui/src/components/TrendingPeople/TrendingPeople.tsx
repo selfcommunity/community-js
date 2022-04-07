@@ -88,7 +88,7 @@ export interface TrendingPeopleProps {
  |root|.SCTrendingPeople-root|Styles applied to the root element.|
  |title|.SCTrendingPeople-title|Styles applied to the title element.|
  |noResults|.SCTrendingPeople-no-results|Styles applied to no results section.|
- |trendingUserItem|.SCTrendingPeople-trending-user-items|Styles applied to the trending user item element.|
+ |trendingUserItem|.SCTrendingPeople-trending-user-item|Styles applied to the trending user item element.|
  |showMore|.SCTrendingPeople-show-more|Styles applied to show more button element.|
 
  * @param inProps
@@ -201,7 +201,7 @@ export default function TrendingPeople(inProps: TrendingPeopleProps): JSX.Elemen
                   }>
                   <List>
                     {people.map((p, index) => (
-                      <ListItem key={p.id} >
+                      <ListItem key={p.id}>
                         <User elevation={0} user={p} className={classes.trendingUserItem} {...UserProps} />
                       </ListItem>
                     ))}

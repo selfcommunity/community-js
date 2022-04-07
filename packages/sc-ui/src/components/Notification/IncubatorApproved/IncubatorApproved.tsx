@@ -59,7 +59,6 @@ const Root = styled(Box, {
     height: 30
   },
   [`& .${classes.categoryApprovedText}`]: {
-    display: 'inline',
     color: theme.palette.text.primary
   },
   [`& .${classes.viewIncubatorLink}`]: {
@@ -153,7 +152,7 @@ export default function IncubatorApprovedNotification(inProps: NotificationIncub
             <>
               {isSnippetTemplate ? (
                 <Link to={scRoutingContext.url(SCRoutes.CATEGORY_ROUTE_NAME, notificationObject.incubator.approved_category)}>
-                  <Typography component="span" className={classes.categoryApprovedText} color="inherit">
+                  <Typography component="div" className={classes.categoryApprovedText} color="inherit">
                     {intl.formatMessage(messages.incubatorApproved, {
                       name: notificationObject.incubator.name,
                       b: (...chunks) => <strong>{chunks}</strong>
@@ -163,7 +162,7 @@ export default function IncubatorApprovedNotification(inProps: NotificationIncub
               ) : (
                 <>
                   {template === SCNotificationObjectTemplateType.DETAIL && notificationObject.is_new && <NewChip />}
-                  <Typography component="span" className={classes.categoryApprovedText} color="inherit">
+                  <Typography component="div" className={classes.categoryApprovedText} color="inherit">
                     {intl.formatMessage(messages.incubatorApproved, {
                       name: notificationObject.incubator.name,
                       b: (...chunks) => <strong>{chunks}</strong>

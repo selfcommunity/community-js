@@ -1,8 +1,8 @@
 import React, {useContext, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import Widget from '../Widget';
+import Widget, {WidgetProps} from '../Widget';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {Avatar, Box, Button, CardContent, CardProps, Grid, ListItem, ListItemAvatar, ListItemText, Tooltip, Typography} from '@mui/material';
+import {Avatar, Box, Button, CardContent, CardProps, Grid, List, ListItem, ListItemAvatar, ListItemText, Tooltip, Typography} from '@mui/material';
 import Bullet from '../../shared/Bullet';
 import classNames from 'classnames';
 import Votes from './Votes';
@@ -24,17 +24,17 @@ import {
   Logger,
   SCCommentType,
   SCCommentTypologyType,
+  SCContextType,
   SCFeedObjectType,
   SCFeedObjectTypologyType,
+  SCRoutes,
   SCRoutingContextType,
   SCUserContext,
   SCUserContextType,
-  useSCFetchCommentObject,
-  useSCRouting,
-  useSCContext,
-  SCContextType,
   UserUtils,
-  SCRoutes
+  useSCContext,
+  useSCFetchCommentObject,
+  useSCRouting
 } from '@selfcommunity/core';
 import useThemeProps from '@mui/material/styles/useThemeProps';
 
@@ -58,13 +58,11 @@ const PREFIX = 'SCCommentObject';
 const classes = {
   root: `${PREFIX}-root`,
   comment: `${PREFIX}-comment`,
-  avatarWrap: `${PREFIX}-avatar-wrap`,
+  nestedComments: `${PREFIX}-nestedComments`,
   avatar: `${PREFIX}-avatar`,
-  author: `${PREFIX}-author`,
-  contentWrap: `${PREFIX}-content-wrap`,
   content: `${PREFIX}-content`,
+  author: `${PREFIX}-author`,
   textContent: `${PREFIX}-text-content`,
-  commentChild: `${PREFIX}-comment-child`,
   btnVotes: `${PREFIX}-btn-votes`,
   votes: `${PREFIX}-votes`,
   btnViewPreviousComments: `${PREFIX}-btn-view-previous-comments`,
@@ -86,28 +84,36 @@ const Root = styled(Box, {
     marginBottom: '0.5px'
   },
   [`& .${classes.comment}`]: {
-    paddingBottom: 0
+    paddingBottom: 0,
+    alignItems: 'flex-start',
+    '& > .MuiListItemText-root': {
+      marginTop: 0
+    }
   },
-  [`& .${classes.avatarWrap}`]: {
-    minWidth: 46
+  [`& .${classes.nestedComments}`]: {
+    paddingTop: 0,
+    paddingBottom: 0,
+    '& ul.MuiList-root': {
+      paddingTop: 0,
+      paddingBottom: 0,
+      width: '100%',
+      '& li.MuiListItem-root': {
+        paddingLeft: 40,
+        paddingTop: 0
+      }
+    }
   },
-  [`& .${classes.avatar}`]: {
-    width: 35,
-    height: 35
+  [`& .${classes.content}`]: {
+    position: 'relative',
+    '& .MuiCardContent-root': {
+      padding: '7px 13px 7px 13px'
+    }
   },
   [`& .${classes.author}`]: {
     textDecoration: 'none',
     color: theme.palette.text.primary,
     '& span': {
       fontWeight: '600'
-    }
-  },
-  [`& .${classes.contentWrap}`]: {
-    marginBottom: 0
-  },
-  [`& .${classes.content}`]: {
-    '& .MuiCardContent-root': {
-      padding: '7px 13px 7px 13px'
     }
   },
   [`& .${classes.textContent}`]: {
@@ -119,16 +125,13 @@ const Root = styled(Box, {
       marginBlockEnd: '0.3em'
     }
   },
-  [`& .${classes.commentChild}`]: {
-    paddingLeft: '70px'
-  },
   [`& .${classes.btnViewPreviousComments}`]: {
     textTransform: 'initial'
   },
   [`& .${classes.commentActionsMenu}`]: {
     position: 'absolute',
-    top: 10,
-    right: 11
+    top: 0,
+    right: 0
   },
   [`& .${classes.deleted}`]: {
     opacity: 0.3
@@ -146,7 +149,8 @@ const Root = styled(Box, {
   },
   [`& .${classes.commentSubSection}`]: {
     display: 'flex',
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
+    alignItems: 'center'
   }
 }));
 
@@ -262,13 +266,11 @@ export interface CommentObjectProps {
  |---|---|---|
  |root|.SCCommentObject-root|Styles applied to the root element.|
  |comment|.SCCommentObject-comment|Styles applied to comment element.|
- |avatarWrap|.SCCommentObject-avatar-wrap|Styles applied to avatar wrap.|
+ |nestedComments|.SCCommentObject-nestedComments|Styles applied to nested comments element wrapper.|
  |avatar|.SCCommentObject-avatar|Styles applied to the avatar element.|
  |author|.SCCommentObject-author|Styles applied to the author section.|
  |content|.SCCommentObject-content|Styles applied to content section.|
- |contentWrap|.SCCommentObject-content-wrap|Styles applied to content container element.|
  |textContent|.SCCommentObject-text-content|Styles applied to text content section.|
- |commentChild|.SCCommentObject-comment-child|Styles applied to the comment child element.|
  |btnVotes|.SCCommentObject-btn-votes|Styles applied to the vote button element.|
  |votes|.SCCommentObject-votes|Styles applied to the votes section.|
  |btnViewPreviousComments|.SCCommentObject-btn-view-previous-comments|Styles applied to previous comment button element|
@@ -299,8 +301,9 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
     onOpenReply,
     onVote,
     onFetchLatestComment,
-    CommentObjectSkeletonProps = {elevation: 0, variant: 'outlined'},
-    ReplyCommentObjectProps = {elevation: 0, variant: 'outlined'},
+    elevation = 0,
+    CommentObjectSkeletonProps = {elevation, WidgetProps: {variant: 'outlined'} as WidgetProps},
+    ReplyCommentObjectProps = {elevation, ReplyBoxProps: {variant: 'outlined'} as WidgetProps},
     ...rest
   } = props;
 
@@ -536,11 +539,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
       setIsReplying(true);
       performReply(comment)
         .then((data: SCCommentType) => {
-          setObj(
-            Object.assign({}, obj, {
-              latest_comments: [...obj.latest_comments, ...[data]]
-            })
-          );
+          setObj({...obj, ...{comment_count: obj.comment_count + 1, latest_comments: [...obj.latest_comments, data]}});
           setReplyComment(null);
           setIsReplying(false);
         })
@@ -691,38 +690,34 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
     return (
       <React.Fragment key={comment.id}>
         {editComment && editComment.id === comment.id ? (
-          <ReplyCommentObject
-            text={comment.html}
-            autoFocus
-            id={`reply-${comment.id}`}
-            commentObject={comment}
-            onSave={handleSave}
-            onCancel={handleCancel}
-            readOnly={isReplying}
-            inline={!comment.parent}
-            ReplyBoxProps={ReplyCommentObjectProps}
-          />
+          <ListItem className={classes.comment}>
+            <ReplyCommentObject
+              text={comment.html}
+              autoFocus
+              id={`edit-${comment.id}`}
+              commentObject={comment}
+              onSave={handleSave}
+              onCancel={handleCancel}
+              readOnly={isReplying}
+              inline={!comment.parent}
+              {...ReplyCommentObjectProps}
+            />
+          </ListItem>
         ) : (
-          <ListItem
-            button={false}
-            alignItems="flex-start"
-            classes={{root: classNames(classes.comment, {[classes.commentChild]: Boolean(comment.parent)})}}>
-            <ListItemAvatar classes={{root: classes.avatarWrap}}>
+          <ListItem className={classes.comment}>
+            <ListItemAvatar>
               <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, comment.author)}>
-                <Avatar alt={obj.author.username} variant="circular" src={comment.author.avatar} classes={{root: classes.avatar}} />
+                <Avatar alt={obj.author.username} variant="circular" src={comment.author.avatar} className={classes.avatar} />
               </Link>
             </ListItemAvatar>
             <ListItemText
-              classes={{root: classes.contentWrap}}
               disableTypography
               secondary={
                 <>
-                  <Widget classes={{root: classes.content}} {...rest}>
-                    <CardContent classes={{root: classNames({[classes.deleted]: obj && obj.deleted})}}>
+                  <Widget className={classes.content} elevation={elevation} {...rest}>
+                    <CardContent className={classNames({[classes.deleted]: obj && obj.deleted})}>
                       <Link className={classes.author} to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, comment.author)}>
-                        <Typography component="span" gutterBottom color="inherit">
-                          {comment.author.username}
-                        </Typography>
+                        <Typography component="span">{comment.author.username}</Typography>
                       </Link>
                       <Typography
                         className={classes.textContent}
@@ -743,31 +738,35 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
                     )}
                   </Widget>
                   <Box component="span" className={classes.commentSubSection}>
-                    <Grid component="span" item={true} sm="auto" container direction="row" alignItems="center">
-                      {renderTimeAgo(comment)}
-                      <Bullet sx={{paddingLeft: '10px', paddingTop: '1px'}} />
-                      {renderActionVote(comment)}
-                      <Bullet sx={{paddingTop: '1px'}} />
-                      {renderActionReply(comment)}
-                      {renderVotes(comment)}
-                    </Grid>
+                    {renderTimeAgo(comment)}
+                    <Bullet sx={{paddingLeft: '10px', paddingTop: '1px'}} />
+                    {renderActionVote(comment)}
+                    <Bullet sx={{paddingTop: '1px'}} />
+                    {renderActionReply(comment)}
+                    {renderVotes(comment)}
                   </Box>
                 </>
               }
             />
           </ListItem>
         )}
-        {renderLatestComment(comment)}
+        {comment.comment_count > 0 && <ListItem className={classes.nestedComments}>{renderLatestComment(comment)}</ListItem>}
         {scUserContext.user && replyComment && (replyComment.id === comment.id || replyComment.parent === comment.id) && !comment.parent && (
-          <ReplyCommentObject
-            text={replyComment.parent ? `@${replyComment.author.username}, ` : ''}
-            autoFocus
-            id={`reply-${replyComment.id}`}
-            commentObject={replyComment}
-            onReply={handleReply}
-            readOnly={isReplying}
-            {...rest}
-          />
+          <ListItem className={classes.nestedComments}>
+            <List>
+              <ListItem>
+                <ReplyCommentObject
+                  text={replyComment.parent ? `@${replyComment.author.username}, ` : ''}
+                  autoFocus
+                  id={`reply-${replyComment.id}`}
+                  commentObject={replyComment}
+                  onReply={handleReply}
+                  readOnly={isReplying}
+                  {...ReplyCommentObjectProps}
+                />
+              </ListItem>
+            </List>
+          </ListItem>
         )}
       </React.Fragment>
     );
@@ -779,15 +778,15 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
    */
   function renderLatestComment(comment) {
     return (
-      <>
+      <List>
         {comment.comment_count - comment.latest_comments?.length >= 1 && (
           <>
             {loadingLatestComments ? (
-              <Box sx={{paddingLeft: '55px', paddingRight: 0}}>
-                <CommentObjectSkeleton {...rest} />
-              </Box>
+              <ListItem>
+                <CommentObjectSkeleton elevation={elevation} {...CommentObjectSkeletonProps} />
+              </ListItem>
             ) : (
-              <Box className={classes.commentChild}>
+              <ListItem>
                 <Button
                   color="inherit"
                   variant="text"
@@ -800,14 +799,14 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
                     values={{total: comment.comment_count - comment.latest_comments?.length}}
                   />
                 </Button>
-              </Box>
+              </ListItem>
             )}
           </>
         )}
         {comment.latest_comments?.map((lc: SCCommentType) => (
           <React.Fragment key={lc.id}>{renderComment(lc)}</React.Fragment>
         ))}
-      </>
+      </List>
     );
   }
 
@@ -824,5 +823,5 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
   /**
    * Render object
    */
-  return <Root className={className}>{comment}</Root>;
+  return <Root className={classNames(classes.root, className)}>{comment}</Root>;
 }

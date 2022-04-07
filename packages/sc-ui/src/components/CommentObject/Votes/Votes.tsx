@@ -19,11 +19,6 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  [`& .${classes.votes}`]: {
-    backgroundColor: '#d5d5d5',
-    padding: '0 3px',
-    borderRadius: 20
-  },
   [`& .${classes.btnViewVotes}`]: {
     minWidth: 42,
     marginRight: theme.spacing(2),

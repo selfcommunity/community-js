@@ -60,7 +60,6 @@ const Root = styled(Box, {
     height: 30
   },
   [`& .${classes.mentionText}`]: {
-    display: 'inline',
     color: theme.palette.text.primary
   },
   [`& .${classes.contributionText}`]: {
@@ -161,7 +160,7 @@ export default function MentionNotification(inProps: MentionNotificationProps): 
           primary={
             <>
               {template === SCNotificationObjectTemplateType.DETAIL && notificationObject.is_new && <NewChip />}
-              <Typography component="span" className={classes.mentionText} color="inherit">
+              <Typography component="div" className={classes.mentionText} color="inherit">
                 <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject[objectType].author)} className={classes.username}>
                   {notificationObject[objectType].author.username}
                 </Link>{' '}

@@ -211,7 +211,7 @@ export default function BroadcastMessages(inProps: BroadcastMessagesProps): JSX.
         <Message key={message.id} message={message} {...MessageProps} onClose={handleDisposeMessage} />
       ))}
       {loading && <MessageSkeleton />}
-      {loading !== null && !loading && (next || (viewedMessageCounter >= 0 && !viewAll)) && (
+      {loading !== null && !loading && (next || (viewedMessageCounter > 0 && !viewAll)) && (
         <Widget className={classes.boxLoadMore}>
           <CardContent>
             <Button variant="text" onClick={fetchOtherMessages} disabled={loading} color="inherit" classes={{root: classes.buttonLoadMore}}>

@@ -74,7 +74,6 @@ const Root = styled(Box, {
     paddingTop: 3
   },
   [`& .${classes.commentText}`]: {
-    display: 'inline',
     color: theme.palette.text.primary
   },
   [`& .${classes.contributionText}`]: {
@@ -194,7 +193,7 @@ export default function CommentNotification(inProps: CommentNotificationProps): 
           primary={
             <>
               {template === SCNotificationObjectTemplateType.DETAIL && notificationObject.is_new && <NewChip />}
-              <Typography component="span" className={classes.commentText} color="inherit">
+              <Typography component="div" className={classes.commentText} color="inherit">
                 <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.comment.author)} className={classes.username}>
                   {notificationObject.comment.author.username}
                 </Link>{' '}

@@ -30,6 +30,7 @@ import {
   useSCUser
 } from '@selfcommunity/core';
 import useThemeProps from '@mui/material/styles/useThemeProps';
+import {WidgetProps} from '../Widget';
 
 const messages = defineMessages({
   noOtherComment: {
@@ -70,7 +71,8 @@ const Root = styled(Box, {
     transitionProperty: 'box-shadow',
     transitionDuration: '250ms',
     transitionTimingFunction: 'ease-out',
-    zIndex: 1
+    zIndex: 1,
+    padding: theme.spacing()
   },
   [`& .${classes.fixedTopPrimaryReply}`]: {
     top: 0,
@@ -142,29 +144,36 @@ export interface CommentsObjectProps {
   commentObject?: SCCommentType;
 
   /**
-   * Props to spread to single comment object
-   * @default {}
+   * CommentComponent component
+   * Usefull to override the single Comment render component
+   * @default CommentObject
    */
-  CommentObjectProps?: CommentObjectProps;
+  CommentComponent?: React.ElementType;
+
+  /**
+   * Props to spread to single comment object
+   * @default {variant: 'outlined'}
+   */
+  CommentComponentProps?: CommentObjectProps;
 
   /**
    * Props to spread to single comment object skeleton
-   * @default {variant: 'outlined'}
+   * @default CommentObjectSkeletonProps
    */
-  CommentObjectSkeletonProps?: CardProps;
+  CommentObjectSkeletonProps?: any;
+
+  /**
+   * ReplyCommentComponent component
+   * Usefull to override the single ReplyComment render component
+   * @default CommentObject
+   */
+  ReplyCommentComponent?: React.ElementType;
 
   /**
    * Props to spread to single reply comment object
-   * @default {}
+   * @default {variant: 'outlined'}
    */
-  ReplyCommentObjectProps?: ReplyCommentObjectProps;
-
-  /**
-   * renderComment function
-   * Usefull to override the single Comment
-   * @default null
-   */
-  renderComment?: (SCCommentType) => JSX.Element;
+  ReplyCommentComponentProps?: ReplyCommentObjectProps;
 
   /**
    * renderNoComment function
@@ -294,18 +303,19 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
     feedObjectType = SCFeedObjectTypologyType.POST,
     commentObjectId,
     commentObject,
-    CommentObjectProps = {},
-    renderComment,
+    CommentComponent = CommentObject,
+    CommentComponentProps = {variant: 'outlined'},
+    ReplyCommentComponent = ReplyCommentObject,
+    ReplyCommentComponentProps = {ReplyBoxProps: {variant: 'outlined'}},
     renderNoComments,
     page = 1,
     commentsPageCount = 5,
     commentsOrderBy = SCCommentsOrderBy.ADDED_AT_DESC,
     showTitle = false,
     infiniteScrolling = true,
-    ReplyCommentObjectProps = {},
     hidePrimaryReply = false,
     fixedPrimaryReply = false,
-    CommentObjectSkeletonProps = {},
+    CommentObjectSkeletonProps = {elevation: 0, WidgetProps: {variant: 'outlined'} as WidgetProps},
     commentsLoadingBoxCount = 3,
     additionalHeaderComments = [],
     onChangePage,
@@ -363,7 +373,7 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
       if (showTitle) {
         return (
           <Typography variant="h6" gutterBottom color={'inherit'}>
-            <FormattedMessage id="ui.commentsObject.title" defaultMessage="ui.commentsObject.title" values={{total: total}} />
+            <FormattedMessage id="ui.commentsObject.title" defaultMessage="ui.commentsObject.title" values={{total: total + newComments.length}} />
           </Typography>
         );
       }
@@ -594,7 +604,7 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
         url: Endpoints.NewComment.url({}),
         method: Endpoints.NewComment.method,
         data: {
-          [`${feedObjectType}`]: feedObjectId,
+          [`${feedObjectType}`]: feedObject ? feedObject.id : feedObjectId,
           text: comment
         }
       })
@@ -626,7 +636,8 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
       .catch((error) => {
         Logger.error(SCOPE_SC_UI, error);
         enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
-          variant: 'error'
+          variant: 'error',
+          autoHideDuration: 5000
         });
       });
   }
@@ -640,7 +651,13 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
         <Box
           className={classNames({[classes.fixedPrimaryReply]: fixedPrimaryReply, [classes.fixedTopPrimaryReply]: fixedPrimaryReply})}
           style={{width: `${rootWidth}px`}}>
-          <ReplyCommentObject readOnly={isReplying || isLoading} onReply={handleReply} key={Number(isReplying)} inline {...ReplyCommentObjectProps} />
+          <ReplyCommentComponent
+            readOnly={isReplying || isLoading}
+            onReply={handleReply}
+            key={Number(isReplying)}
+            inline
+            {...ReplyCommentComponentProps}
+          />
         </Box>
       );
     }
@@ -656,7 +673,13 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
         <Box
           className={classNames({[classes.fixedPrimaryReply]: fixedPrimaryReply, [classes.fixedBottomPrimaryReply]: fixedPrimaryReply})}
           style={{width: `${rootWidth}px`}}>
-          <ReplyCommentObject readOnly={isReplying || isLoading} onReply={handleReply} key={Number(isReplying)} inline {...ReplyCommentObjectProps} />
+          <ReplyCommentComponent
+            readOnly={isReplying || isLoading}
+            onReply={handleReply}
+            key={Number(isReplying)}
+            inline
+            {...ReplyCommentComponentProps}
+          />
         </Box>
       );
     }
@@ -673,19 +696,17 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
           {newComments.map((comment: SCCommentType) => {
             return (
               <React.Fragment key={comment.id}>
-                {renderComment ? (
-                  renderComment(comment)
-                ) : (
-                  <CommentObject
-                    id={comment.id}
-                    commentObject={comment}
-                    onOpenReply={openReplyBox}
-                    feedObject={obj}
-                    feedObjectType={feedObjectType}
-                    commentReply={commentObj}
-                    {...CommentObjectProps}
-                  />
-                )}
+                <CommentComponent
+                  id={comment.id}
+                  commentObject={comment}
+                  onOpenReply={openReplyBox}
+                  feedObject={obj}
+                  feedObjectType={feedObjectType}
+                  commentReply={commentObj}
+                  {...CommentComponentProps}
+                  ReplyCommentObjectProps={ReplyCommentComponentProps}
+                  CommentObjectSkeletonProps={CommentObjectSkeletonProps}
+                />
               </React.Fragment>
             );
           })}
@@ -779,19 +800,16 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
       <>
         {comment && (
           <React.Fragment key={comment.id}>
-            {renderComment ? (
-              renderComment(comment)
-            ) : (
-              <CommentObject
-                id={comment.id}
-                commentObject={comment}
-                onOpenReply={openReplyBox}
-                feedObject={obj}
-                feedObjectType={feedObjectType}
-                commentReply={commentObj}
-                {...CommentObjectProps}
-              />
-            )}
+            <CommentComponent
+              id={comment.id}
+              commentObject={comment}
+              onOpenReply={openReplyBox}
+              feedObject={obj}
+              feedObjectType={feedObjectType}
+              commentReply={commentObj}
+              {...CommentComponentProps}
+              ReplyCommentObjectProps={ReplyCommentComponentProps}
+            />
           </React.Fragment>
         )}
       </>
@@ -894,7 +912,7 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
           renderNoComments()
         ) : (
           <Box className={classes.noComments}>
-            <FormattedMessage id={'ui.commentsObject.noComments'} defaultMessage={'ui.commentsObject.noComments'} />
+            <FormattedMessage id="ui.commentsObject.noComments" defaultMessage="ui.commentsObject.noComments" />
           </Box>
         )}
       </>
@@ -940,7 +958,7 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
    * Renders root object
    */
   return (
-    <Root ref={rootContainer} id={id} className={className} {...rest}>
+    <Root ref={rootContainer} id={id} className={classNames(classes.root, className)} {...rest}>
       {renderTitle()}
       {renderHeadPrimaryReply()}
       {commentsRendered}

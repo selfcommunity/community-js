@@ -6,7 +6,7 @@ import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
 import useThemeProps from '@mui/material/styles/useThemeProps';
 import {getContributionRouteName, getRouteData} from '../../../utils/contribute';
-import BaseItem from '../../../shared/BaseItem';
+import BaseItemButton from '../../../shared/BaseItemButton';
 
 const PREFIX = 'SCPollSnippet';
 
@@ -17,7 +17,7 @@ const classes = {
   seeItem: `${PREFIX}-see-item`
 };
 
-const Root = styled(BaseItem, {
+const Root = styled(BaseItemButton, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root

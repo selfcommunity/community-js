@@ -1,6 +1,6 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import {CardProps, Typography, Grid, Box} from '@mui/material';
+import {Typography, Grid, Box} from '@mui/material';
 import {Link, SCContextType, SCIncubatorType, SCRoutes, SCRoutingContextType, useSCContext, useSCRouting} from '@selfcommunity/core';
 import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
@@ -16,7 +16,6 @@ const PREFIX = 'SCIncubator';
 const classes = {
   root: `${PREFIX}-root`,
   name: `${PREFIX}-name`,
-  info: `${PREFIX}-info`,
   slogan: `${PREFIX}-slogan`,
   author: `${PREFIX}-author`,
   progressBox: `${PREFIX}-progress-box`,
@@ -30,7 +29,8 @@ const Root = styled(Widget, {
 })(({theme}) => ({
   maxWidth: 700,
   [`& .${classes.name}`]: {
-    marginBottom: 8
+    color: theme.palette.common.black,
+    textDecoration: 'none'
   },
   [`& .${classes.progressBar}`]: {
     marginTop: 8,
@@ -42,7 +42,8 @@ const Root = styled(Widget, {
     textOverflow: 'ellipsis'
   },
   [`& .${classes.author}`]: {
-    display: 'flex'
+    marginLeft: 2,
+    marginRight: 2
   }
 }));
 
@@ -54,19 +55,19 @@ function LinearProgressWithLabel(props) {
       </Box>
       <Box sx={{position: 'absolute', top: '3px', left: props.value + 2 + '%', transform: 'translateX(-50%)'}}>
         <Typography variant="body2" color="text.secondary">
-          {props.subscribed}
+          {!props.subscribed ? null : props.subscribed}
         </Typography>
       </Box>
     </Box>
   );
 }
 
-export interface IncubatorProps extends Pick<CardProps, Exclude<keyof CardProps, 'id'>> {
+export interface IncubatorProps {
   /**
-   * Id of Incubator object
+   * Incubator object id
    * @default null
    */
-  id?: number;
+  incubatorId?: number;
   /**
    * Incubator object
    * @default null
@@ -109,7 +110,6 @@ export interface IncubatorProps extends Pick<CardProps, Exclude<keyof CardProps,
  |---|---|---|
  |root|.SCIncubator-root|Styles applied to the root element.|
  |name|.SCIncubator-name|Styles applied to the name section.|
- |info|.SCIncubator-info|Styles applied to the info section.|
  |slogan|.SCIncubator-slogan|Styles applied to the slogan section.|
  |author|.SCIncubator-author|Styles applied to the author element.|
  |progressBox|.SCIncubator-progress-box|Styles applied to the progress box element.|
@@ -123,7 +123,7 @@ export default function Incubator(inProps: IncubatorProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {id = null, incubator = null, className = null, autoHide = false, subscribeButtonProps = {}, ...rest} = props;
+  const {incubatorId = null, incubator = null, className = null, autoHide = false, subscribeButtonProps = {}, ...rest} = props;
 
   // CONTEXT
   const scContext: SCContextType = useSCContext();
@@ -147,24 +147,20 @@ export default function Incubator(inProps: IncubatorProps): JSX.Element {
       {incubator ? (
         <>
           <CardContent>
-            <Typography className={classes.name} variant={'h5'} align="left">
-              {incubator.name}
+            <Typography variant={'h6'} align="left">
+              <Link className={classes.name} to={scRoutingContext.url(SCRoutes.INCUBATOR_ROUTE_NAME, incubator)}>
+                {incubator.name}
+              </Link>
             </Typography>
-            <Grid container className={classes.info}>
-              <Grid item xs="auto" className={classes.author}>
-                <Typography sx={{mr: 1}}>
-                  <FormattedMessage defaultMessage="ui.incubator.proposedBy" id="ui.incubator.proposedBy" />
-                </Typography>
-                <Typography component={Link} to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, incubator.user)}>
-                  {incubator.user.username} -
-                </Typography>
-              </Grid>
-              <Grid item xs="auto">
-                <Typography className={classes.slogan} component={Link} to={scRoutingContext.url(SCRoutes.INCUBATOR_ROUTE_NAME, incubator)}>
-                  {incubator.slogan}
-                </Typography>
-              </Grid>
-            </Grid>
+            <Typography component={'span'}>
+              <FormattedMessage defaultMessage="ui.incubator.proposedBy" id="ui.incubator.proposedBy" />
+              <Link className={classes.author} to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, incubator.user)}>
+                {incubator.user.username}
+              </Link>
+            </Typography>
+            <Typography component={'p'} className={classes.slogan}>
+              {incubator.slogan}
+            </Typography>
             <Box className={classes.progressBox}>
               <LinearProgressWithLabel
                 className={classes.progressBar}
@@ -178,7 +174,7 @@ export default function Incubator(inProps: IncubatorProps): JSX.Element {
                   </Typography>
                 </Grid>
                 <Grid item xs={6}>
-                  <Typography>
+                  <Typography sx={{display: 'flex', justifyContent: 'center'}}>
                     <FormattedMessage
                       defaultMessage="ui.incubator.progressBar.collectingSubscribers"
                       id="ui.incubator.progressBar.collectingSubscribers"

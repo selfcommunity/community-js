@@ -61,7 +61,6 @@ const Root = styled(Box, {
     height: 30
   },
   [`& .${classes.flagText}`]: {
-    display: 'inline',
     color: theme.palette.text.primary
   },
   [`& .${classes.contributionWrap}`]: {
@@ -157,7 +156,7 @@ export default function KindlyNoticeFlagNotification(inProps: NotificationKindly
                     SCRoutes[`${contributionType.toUpperCase()}_ROUTE_NAME`],
                     getRouteData(notificationObject[contributionType])
                   )}>
-                  <Typography component="span" color="inherit" className={classes.flagText}>
+                  <Typography component="div" color="inherit" className={classes.flagText}>
                     <FormattedMessage
                       id={`ui.notification.kindlyNoticeFlag.kindlyNoticeFlagSnippet`}
                       defaultMessage={`ui.notification.kindlyNoticeFlag.kindlyNoticeFlagSnippet`}
@@ -167,7 +166,7 @@ export default function KindlyNoticeFlagNotification(inProps: NotificationKindly
               ) : (
                 <>
                   {!isSnippetTemplate && notificationObject.is_new && <NewChip />}
-                  <Typography component="span" color="inherit" className={classes.flagText}>
+                  <Typography component="div" color="inherit" className={classes.flagText}>
                     {intl.formatMessage(messages[StringUtils.camelCase(notificationObject.type)], {b: (...chunks) => <strong>{chunks}</strong>})}
                   </Typography>
                 </>

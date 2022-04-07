@@ -1,7 +1,6 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Button, List, Typography, Box, IconButton} from '@mui/material';
-import Card from '@mui/material/Card';
+import {Button, List, Typography, Box, IconButton, ListItem} from '@mui/material';
 import CardContent from '@mui/material/CardContent';
 import {Endpoints, http, Logger, SCIncubatorType} from '@selfcommunity/core';
 import Skeleton from './Skeleton';
@@ -12,11 +11,12 @@ import classNames from 'classnames';
 import BaseDialog from '../../shared/BaseDialog';
 import CentralProgress from '../../shared/CentralProgress';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import Incubator from '../Incubator';
+import Incubator, {IncubatorProps} from '../Incubator';
 import Popover from '@mui/material/Popover';
 import Icon from '@mui/material/Icon';
 import useThemeProps from '@mui/material/styles/useThemeProps';
 import Widget from '../Widget';
+import CreateIncubatorDialog from './CreateIncubatorDialog';
 
 const PREFIX = 'SCIncubatorsList';
 
@@ -24,6 +24,7 @@ const classes = {
   root: `${PREFIX}-root`,
   header: `${PREFIX}-header`,
   title: `${PREFIX}-title`,
+  incubatorItem: `${PREFIX}-incubator-item`,
   noResults: `${PREFIX}-no-results`,
   actions: `${PREFIX}-actions`,
   helpPopover: `${PREFIX}-help-popover`
@@ -43,6 +44,10 @@ const Root = styled(Widget, {
   [`& .${classes.actions}`]: {
     display: 'flex',
     justifyContent: 'space-between'
+  },
+  '& .MuiListItem-root': {
+    display: 'block',
+    padding: 0
   }
 }));
 
@@ -57,6 +62,16 @@ export interface IncubatorsListProps {
    * @default null
    */
   className?: string;
+  /**
+   * Props to spread to single user object
+   * @default {}
+   */
+  IncubatorProps?: IncubatorProps;
+
+  /**
+   * Other props
+   */
+  [p: string]: any;
 }
 /**
  > API documentation for the Community-UI Categories Popular component. Learn about the available props and the CSS API.
@@ -76,6 +91,7 @@ export interface IncubatorsListProps {
  |root|.SCIncubatorsList-root|Styles applied to the root element.|
  |header|.SCIncubatorsList-header|Styles applied to the header element.|
  |title|.SCIncubatorsList-title|Styles applied to the title element.|
+ |incubatorItem|.SCIncubatorsList-incubator-item|Styles applied to the incubator item element.|
  |noResults|.SCIncubatorsList-no-results|Styles applied to the no results section.|
  |actions|.SCIncubatorsList-actions|Styles applied to the actions section.|
  |helpPopover|.SCIncubatorsList-help-popover|Styles applied to the help popover element.|
@@ -91,7 +107,7 @@ export default function IncubatorsList(inProps: IncubatorsListProps): JSX.Elemen
     props: inProps,
     name: PREFIX
   });
-  const {autoHide = true, className, ...rest} = props;
+  const {autoHide = true, className, IncubatorProps = {}, ...rest} = props;
 
   // STATE
   const [incubators, setIncubators] = useState<any[]>([]);
@@ -114,35 +130,34 @@ export default function IncubatorsList(inProps: IncubatorsListProps): JSX.Elemen
     setAnchorEl(null);
   };
 
+  const handleCreateIncubatorDialogClose = () => {
+    setOpenCreateIncubatorDialog(false);
+  };
+
   /**
    * Fetches incubators list
    */
-  const fetchIncubators = useMemo(
-    () => () => {
-      if (next) {
-        http
-          .request({
-            url: next,
-            method: Endpoints.GetAllIncubators.method
-          })
-          .then((res: AxiosResponse<any>) => {
-            if (res.status < 300) {
-              const data = res.data;
-              setIncubators([...incubators, ...data['results']]);
-              setHasMore(data['count'] > visibleIncubators);
-              setNext(data['next']);
-              setLoading(false);
-              setTotal(data['count']);
-            }
-          })
-          .catch((error) => {
-            setLoading(false);
-            Logger.error(SCOPE_SC_UI, error);
-          });
-      }
-    },
-    [incubators, next, loading]
-  );
+  function fetchIncubators() {
+    if (next) {
+      http
+        .request({
+          url: next,
+          method: Endpoints.GetAllIncubators.method
+        })
+        .then((res: AxiosResponse<any>) => {
+          const data = res.data;
+          setIncubators([...incubators, ...data['results']]);
+          setHasMore(data['count'] > visibleIncubators);
+          setNext(data['next']);
+          setLoading(false);
+          setTotal(data['count']);
+        })
+        .catch((error) => {
+          setLoading(false);
+          Logger.error(SCOPE_SC_UI, error);
+        });
+    }
+  }
 
   /**
    * On mount, fetches popular incubators list
@@ -206,15 +221,16 @@ export default function IncubatorsList(inProps: IncubatorsListProps): JSX.Elemen
           ) : (
             <React.Fragment>
               <List>
-                {incubators.slice(0, visibleIncubators).map((incubator: SCIncubatorType, index) => (
-                  <div key={index}>
+                {incubators.slice(0, visibleIncubators).map((incubator: SCIncubatorType) => (
+                  <ListItem key={incubator.id}>
                     <Incubator
                       elevation={0}
                       incubator={incubator}
-                      key={incubator.id}
+                      className={classes.incubatorItem}
                       subscribeButtonProps={{onSubscribe: handleSubscriptionsUpdate}}
+                      {...IncubatorProps}
                     />
-                  </div>
+                  </ListItem>
                 ))}
               </List>
               <Box className={classes.actions}>
@@ -251,15 +267,23 @@ export default function IncubatorsList(inProps: IncubatorsListProps): JSX.Elemen
                     </p>
                   }>
                   <List>
-                    {incubators.map((i, index) => (
-                      <Incubator elevation={0} incubator={i} key={i.id} sx={{m: 0}} subscribeButtonProps={{onSubscribe: handleSubscriptionsUpdate}} />
+                    {incubators.map((i) => (
+                      <ListItem key={i.id} sx={{display: 'block', padding: 0}}>
+                        <Incubator
+                          elevation={0}
+                          incubator={i}
+                          className={classes.incubatorItem}
+                          subscribeButtonProps={{onSubscribe: handleSubscriptionsUpdate}}
+                          {...IncubatorProps}
+                        />
+                      </ListItem>
                     ))}
                   </List>
                 </InfiniteScroll>
               )}
             </BaseDialog>
           )}
-          {openCreateIncubatorDialog && <></>}
+          {openCreateIncubatorDialog && <CreateIncubatorDialog open={openCreateIncubatorDialog} onClose={handleCreateIncubatorDialogClose} />}
         </CardContent>
       )}
     </React.Fragment>

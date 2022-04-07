@@ -33,8 +33,8 @@ export default {
     }
   },
   args: {
-    feedObjectId: 50, // 1064,
-    feedObjectType: SCFeedObjectTypologyType.DISCUSSION,
+    feedObjectId: 344, // 1064,
+    feedObjectType: SCFeedObjectTypologyType.POST,
     infiniteScrolling: true,
     commentsOrderBy: SCCommentsOrderBy.ADDED_AT_ASC,
     fixedPrimaryReply: true,
