@@ -169,7 +169,7 @@ const Root = styled(Widget, {
   },
   [`& .${classes.activityAt}`]: {
     textDecoration: 'none',
-    color: '#939598'
+    color: 'inherit'
   },
   [`& .${classes.deleted}`]: {
     opacity: 0.3,
@@ -561,7 +561,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
     return (
       <>
         {scUserContext.user && <ReplyCommentObject inline onReply={handleReply} isLoading={isReplying} key={Number(isReplying)} />}
-        {(obj.comment_count || feedObjectActivities || comments.length > 0) && (
+        {(obj.comment_count || (feedObjectActivities && feedObjectActivities.length > 0) || comments.length > 0) && (
           <ActivitiesMenu
             selectedActivities={selectedActivities}
             hideRelevantActivitiesItem={!(feedObjectActivities && feedObjectActivities.length > 0)}
