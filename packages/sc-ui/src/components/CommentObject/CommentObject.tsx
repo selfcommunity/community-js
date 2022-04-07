@@ -138,7 +138,8 @@ const Root = styled(Box, {
   },
   [`& .${classes.activityAt}`]: {
     display: 'flex',
-    textDecoration: 'none'
+    textDecoration: 'none',
+    color: 'inherit'
   },
   [`& .${classes.reply}`]: {
     textTransform: 'capitalize',

@@ -169,7 +169,7 @@ const Root = styled(Widget, {
   },
   [`& .${classes.activityAt}`]: {
     textDecoration: 'none',
-    color: '#939598'
+    color: 'inherit'
   },
   [`& .${classes.deleted}`]: {
     opacity: 0.3,
