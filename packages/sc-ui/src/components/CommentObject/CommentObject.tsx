@@ -138,19 +138,18 @@ const Root = styled(Box, {
   },
   [`& .${classes.activityAt}`]: {
     display: 'flex',
-    textDecoration: 'none',
-    color: theme.palette.grey[700]
+    textDecoration: 'none'
   },
   [`& .${classes.reply}`]: {
     textTransform: 'capitalize',
     textDecoration: 'underline',
-    textDecorationStyle: 'dotted',
-    color: theme.palette.text.primary
+    textDecorationStyle: 'dotted'
   },
   [`& .${classes.commentSubSection}`]: {
     display: 'flex',
     justifyContent: 'flex-start',
-    alignItems: 'center'
+    alignItems: 'center',
+    color: theme.palette.text.secondary
   }
 }));
 

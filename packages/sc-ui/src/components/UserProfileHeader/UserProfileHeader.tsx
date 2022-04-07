@@ -48,7 +48,8 @@ const Root = styled(Box, {
     border: '#FFF solid 5px'
   },
   [`& .${classes.username}`]: {
-    marginTop: 50
+    marginTop: 50,
+    textAlign: 'center'
   },
   [`& .${classes.changePicture}`]: {
     position: 'relative',
@@ -198,7 +199,7 @@ export default function UserProfileHeader(inProps: UserProfileHeaderProps): JSX.
           </>
         )}
       </Paper>
-      <Typography variant="h5" align={'center'} className={classes.username}>
+      <Typography variant="h5" className={classes.username}>
         {scUser.username}
       </Typography>
     </Root>
