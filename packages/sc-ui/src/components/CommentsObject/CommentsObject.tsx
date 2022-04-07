@@ -695,19 +695,18 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
         <>
           {newComments.map((comment: SCCommentType) => {
             return (
-              <React.Fragment key={comment.id}>
-                <CommentComponent
-                  id={comment.id}
-                  commentObject={comment}
-                  onOpenReply={openReplyBox}
-                  feedObject={obj}
-                  feedObjectType={feedObjectType}
-                  commentReply={commentObj}
-                  {...CommentComponentProps}
-                  ReplyCommentObjectProps={ReplyCommentComponentProps}
-                  CommentObjectSkeletonProps={CommentObjectSkeletonProps}
-                />
-              </React.Fragment>
+              <CommentComponent
+                key={comment.id}
+                id={comment.id}
+                commentObject={comment}
+                onOpenReply={openReplyBox}
+                feedObject={obj}
+                feedObjectType={feedObjectType}
+                commentReply={commentObj}
+                {...CommentComponentProps}
+                ReplyCommentObjectProps={ReplyCommentComponentProps}
+                CommentObjectSkeletonProps={CommentObjectSkeletonProps}
+              />
             );
           })}
         </>
@@ -799,18 +798,17 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
     return (
       <>
         {comment && (
-          <React.Fragment key={comment.id}>
-            <CommentComponent
-              id={comment.id}
-              commentObject={comment}
-              onOpenReply={openReplyBox}
-              feedObject={obj}
-              feedObjectType={feedObjectType}
-              commentReply={commentObj}
-              {...CommentComponentProps}
-              ReplyCommentObjectProps={ReplyCommentComponentProps}
-            />
-          </React.Fragment>
+          <CommentComponent
+            id={comment.id}
+            key={comment.id}
+            commentObject={comment}
+            onOpenReply={openReplyBox}
+            feedObject={obj}
+            feedObjectType={feedObjectType}
+            commentReply={commentObj}
+            {...CommentComponentProps}
+            ReplyCommentObjectProps={ReplyCommentComponentProps}
+          />
         )}
       </>
     );
@@ -867,7 +865,7 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
    */
   function renderLoadMorePaginationContent() {
     return (
-      <Box style={wrapperStyles}>
+      <Box id="paginated" style={wrapperStyles}>
         {isLoading && commentObj && comments.length === 0 && <CommentObjectSkeleton {...CommentObjectSkeletonProps} />}
         {renderNewComments(SCCommentsOrderBy.ADDED_AT_DESC)}
         {renderLoadPreviousComments()}

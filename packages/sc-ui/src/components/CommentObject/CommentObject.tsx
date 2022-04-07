@@ -2,7 +2,7 @@ import React, {useContext, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Widget, {WidgetProps} from '../Widget';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {Avatar, Box, Button, CardContent, CardProps, Grid, List, ListItem, ListItemAvatar, ListItemText, Tooltip, Typography} from '@mui/material';
+import {Avatar, Box, Button, CardContent, CardProps, List, ListItem, ListItemAvatar, ListItemText, Tooltip, Typography} from '@mui/material';
 import Bullet from '../../shared/Bullet';
 import classNames from 'classnames';
 import Votes from './Votes';
@@ -73,7 +73,7 @@ const classes = {
   commentSubSection: `${PREFIX}-comment-sub-section`
 };
 
-const Root = styled(Box, {
+const Root = styled(List, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
