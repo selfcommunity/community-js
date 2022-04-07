@@ -30,7 +30,6 @@ const Root = styled(Widget, {
   maxWidth: 700,
   [`& .${classes.name}`]: {
     display: 'flex',
-    color: theme.palette.common.black,
     padding: 0
   },
   [`& .${classes.progressBar}`]: {
