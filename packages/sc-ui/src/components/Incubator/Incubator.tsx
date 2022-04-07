@@ -1,6 +1,6 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import {Typography, Grid, Box} from '@mui/material';
+import {Typography, Grid, Box, Button, ButtonProps} from '@mui/material';
 import {Link, SCContextType, SCIncubatorType, SCRoutes, SCRoutingContextType, useSCContext, useSCRouting} from '@selfcommunity/core';
 import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
@@ -29,8 +29,9 @@ const Root = styled(Widget, {
 })(({theme}) => ({
   maxWidth: 700,
   [`& .${classes.name}`]: {
+    display: 'flex',
     color: theme.palette.common.black,
-    textDecoration: 'none'
+    padding: 0
   },
   [`& .${classes.progressBar}`]: {
     marginTop: 8,
@@ -92,6 +93,11 @@ export interface IncubatorProps {
    * Any other properties
    */
   [p: string]: any;
+  /**
+   * Default props to submit button Input
+   * @default {}
+   */
+  ButtonProps?: ButtonProps;
 }
 
 /**
@@ -123,7 +129,7 @@ export default function Incubator(inProps: IncubatorProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {incubatorId = null, incubator = null, className = null, autoHide = false, subscribeButtonProps = {}, ...rest} = props;
+  const {incubatorId = null, incubator = null, className = null, autoHide = false, subscribeButtonProps = {}, ButtonProps = {}, ...rest} = props;
 
   // CONTEXT
   const scContext: SCContextType = useSCContext();
@@ -147,11 +153,12 @@ export default function Incubator(inProps: IncubatorProps): JSX.Element {
       {incubator ? (
         <>
           <CardContent>
-            <Typography variant={'h6'} align="left">
-              <Link className={classes.name} to={scRoutingContext.url(SCRoutes.INCUBATOR_ROUTE_NAME, incubator)}>
-                {incubator.name}
-              </Link>
-            </Typography>
+            <Button variant="text" className={classes.name} {...ButtonProps}>
+              {incubator.name}
+            </Button>
+            {/*<Link className={classes.name} to={scRoutingContext.url(SCRoutes.INCUBATOR_ROUTE_NAME, incubator)}>*/}
+            {/*  {incubator.name}*/}
+            {/*</Link>*/}
             <Typography component={'span'}>
               <FormattedMessage defaultMessage="ui.incubator.proposedBy" id="ui.incubator.proposedBy" />
               <Link className={classes.author} to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, incubator.user)}>

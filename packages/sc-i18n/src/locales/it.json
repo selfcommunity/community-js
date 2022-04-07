@@ -430,6 +430,8 @@
   "ui.incubator.progressBar.collectingSubscribers": "Raccolta adesioni",
   "ui.incubator.progressBar.approved": "Approvato",
 
+  "ui.incubatorDetail.intro": "Propongo la creazione dell'interesse \"{name}\".\n Aderisci anche tu per raggiungere la quota di approvazione.",
+
   "ui.incubatorsList.title": "Incubatore interessi",
   "ui.incubatorsList.popover": "L'incubatore interessi è un'area dove gli\n utenti collaborano per far nascere nuovi\n interessi. I nuovi interessi saranno resi\n operativi in base al numero di adesioni e\n alla rapidità con cui vengono raccolte.",
   "ui.incubatorsList.noResults": "Nessun risultato",
