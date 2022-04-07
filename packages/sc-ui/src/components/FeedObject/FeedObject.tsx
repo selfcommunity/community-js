@@ -89,8 +89,8 @@ const Root = styled(Widget, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   marginBottom: theme.spacing(2),
-  [`& .${PREFIX}-share`]: {
-    margin: '0px ${theme.spacing(2)}'
+  [`&.${classes.root}`]: {
+    width: '100%'
   },
   [`& .${classes.header}`]: {
     paddingBottom: 0
@@ -560,9 +560,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
   function renderActivities() {
     return (
       <>
-        {scUserContext.user && (
-          <ReplyCommentObject inline ReplyBoxProps={{variant: 'outlined'}} onReply={handleReply} isLoading={isReplying} key={Number(isReplying)} />
-        )}
+        {scUserContext.user && <ReplyCommentObject inline onReply={handleReply} isLoading={isReplying} key={Number(isReplying)} />}
         {(obj.comment_count || feedObjectActivities || comments.length > 0) && (
           <ActivitiesMenu
             selectedActivities={selectedActivities}
@@ -607,9 +605,6 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
               commentsOrderBy={_commentsOrderBy}
               additionalHeaderComments={comments}
               hideAdvertising={true}
-              CommentObjectProps={{variant: 'outlined'}}
-              CommentObjectSkeletonProps={{variant: 'outlined'}}
-              ReplyCommentObjectProps={{variant: 'outlined'}}
             />
           </LazyLoad>
         )}
@@ -796,11 +791,9 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                 </Link>
               }
               subheader={
-                <Grid component="span" item={true} sm="auto" container direction="row" alignItems="center">
-                  <Link to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))} className={classes.activityAt}>
-                    <DateTimeAgo date={obj.added_at} />
-                  </Link>
-                </Grid>
+                <Link to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))} className={classes.activityAt}>
+                  <DateTimeAgo date={obj.added_at} />
+                </Link>
               }
             />
             <CardContent classes={{root: classes.content}}>
@@ -847,16 +840,17 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                 {obj.author.username}
               </Link>
             }
+            disableTypography
             secondary={
               <Box>
-                <Link to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))} className={classes.snippetContent}>
-                  {obj.summary}
-                </Link>
-                <Box>
-                  <Link to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))} className={classes.activityAt}>
-                    <DateTimeAgo component="span" date={obj.added_at} />
+                <Typography variant="body2">
+                  <Link to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))} className={classes.snippetContent}>
+                    {obj.summary}
                   </Link>
-                </Box>
+                </Typography>
+                <Link to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))} className={classes.activityAt}>
+                  <DateTimeAgo component="span" date={obj.added_at} />
+                </Link>
               </Box>
             }
             actions={

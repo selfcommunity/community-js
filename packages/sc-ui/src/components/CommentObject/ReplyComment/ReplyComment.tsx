@@ -2,13 +2,13 @@ import React, {RefObject, useContext, useEffect, useMemo, useState} from 'react'
 import {styled} from '@mui/material/styles';
 import Widget, {WidgetProps} from '../../Widget';
 import {defineMessages, useIntl} from 'react-intl';
-import {Avatar, CardProps, Stack} from '@mui/material';
+import {Avatar, Stack} from '@mui/material';
 import {SCUserContext, SCUserContextType} from '@selfcommunity/core';
 import Editor, {TRichTextEditorRef} from '../../Editor';
 import classNames from 'classnames';
 import {LoadingButton} from '@mui/lab';
 import useThemeProps from '@mui/material/styles/useThemeProps';
-import BaseItem from '../../../shared/BaseItem';
+import BaseItemButton from '../../../shared/BaseItemButton';
 
 const messages = defineMessages({
   reply: {
@@ -33,19 +33,26 @@ const classes = {
   avatar: `${PREFIX}-avatar`
 };
 
-const Root = styled(BaseItem, {
+const Root = styled(BaseItemButton, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   padding: '1px',
   overflow: 'visible',
+  [`&.${classes.root}`]: {
+    '& .SCBaseItemButton-content': {
+      alignItems: 'flex-start',
+      '& .SCBaseItemButton-text': {
+        marginTop: 0,
+        '& .SCBaseItemButton-secondary': {
+          overflow: 'visible'
+        }
+      }
+    }
+  },
   [`& .${classes.comment}`]: {
     overflow: 'visible'
-  },
-  [`& .${classes.avatar}`]: {
-    width: 35,
-    height: 35
   }
 }));
 
@@ -90,7 +97,7 @@ export interface ReplyCommentObjectProps extends WidgetProps {
    * Initial content
    * @default {variant: 'outlined'}
    */
-  ReplyBoxProps?: CardProps;
+  ReplyBoxProps?: WidgetProps;
 
   /**
    * Other props
@@ -114,7 +121,7 @@ export default function ReplyCommentObject(inProps: ReplyCommentObjectProps): JS
     onCancel,
     readOnly = false,
     text = '',
-    ReplyBoxProps = {},
+    ReplyBoxProps = {variant: 'outlined'},
     ...rest
   } = props;
 
@@ -188,8 +195,9 @@ export default function ReplyCommentObject(inProps: ReplyCommentObjectProps): JS
   return (
     <Root
       {...rest}
+      disableTypography
       elevation={elevation}
-      ButtonBaseProps={{disableTouchRipple: true, onClick: handleEditorFocus}}
+      ButtonBaseProps={{disableTouchRipple: true, onClick: handleEditorFocus, component: 'div'}}
       className={classNames(classes.root, className)}
       image={
         !scUserContext.user ? (
@@ -198,10 +206,9 @@ export default function ReplyCommentObject(inProps: ReplyCommentObjectProps): JS
           <Avatar alt={scUserContext.user.username} variant="circular" src={scUserContext.user.avatar} classes={{root: classes.avatar}} />
         )
       }
-      primary={null}
       secondary={
         <>
-          <Widget className={classes.comment} {...ReplyBoxProps}>
+          <Widget className={classes.comment} elevation={elevation} {...ReplyBoxProps}>
             <Editor
               onRef={(e) => {
                 editor = e;

@@ -1,11 +1,11 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import {Box, Typography, TypographyProps} from '@mui/material';
+import {Box, ButtonBase, ButtonBaseProps, Typography, TypographyProps} from '@mui/material';
 import classNames from 'classnames';
 import Widget, {WidgetProps} from '../../components/Widget';
 import useThemeProps from '@mui/material/styles/useThemeProps';
 
-const PREFIX = 'SCBaseItem';
+const PREFIX = 'SCBaseItemButton';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -23,10 +23,8 @@ const Root = styled(Widget, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   [`&.${classes.root}`]: {
+    position: 'relative',
     width: '100%',
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
     '&.MuiPaper-elevation': {
       paddingTop: theme.spacing(),
       paddingBottom: theme.spacing(),
@@ -58,20 +56,26 @@ const Root = styled(Widget, {
     flex: '1 1 auto',
     marginTop: theme.spacing(),
     marginBottom: theme.spacing(),
-    textAlign: 'left',
-    width: '100%'
+    textAlign: 'left'
   },
   [`& .${classes.primary}`]: {
     color: theme.palette.text.primary
   },
   [`& .${classes.secondary}`]: {
+    whiteSpace: 'nowrap',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     color: theme.palette.text.secondary
+  },
+  [`& .${classes.actions}`]: {
+    position: 'absolute',
+    right: theme.spacing(),
+    top: '50%',
+    transform: 'translateY(-50%)'
   }
 }));
 
-export interface BaseItemProps extends Pick<WidgetProps, Exclude<keyof WidgetProps, 'id'>> {
+export interface BaseItemButtonProps extends Pick<WidgetProps, Exclude<keyof WidgetProps, 'id'>> {
   /**
    * Id of user object
    * @default null
@@ -82,6 +86,18 @@ export interface BaseItemProps extends Pick<WidgetProps, Exclude<keyof WidgetPro
    * @default null
    */
   className?: string;
+  /**
+   * If `true`, the base item is a button (using `ButtonBase`). Props intended
+   * for `ButtonBase` can then be applied to `ButtonBaseProps` prop.
+   * @default false
+   * @deprecated checkout [ListItemButton](/api/list-item-button/) instead
+   */
+  button?: boolean;
+  /**
+   * Props to spread to ButtonBase
+   * @default {}
+   */
+  ButtonBaseProps?: ButtonBaseProps;
   /**
    * Image to insert into the item
    * @default null
@@ -122,36 +138,36 @@ export interface BaseItemProps extends Pick<WidgetProps, Exclude<keyof WidgetPro
 }
 
 /**
- * > API documentation for the Community-UI BaseItem component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-UI BaseItemButton component. Learn about the available props and the CSS API.
 
  #### Import
 
  ```jsx
- import {BaseItem} from '@selfcommunity/ui';
+ import {BaseItemButton} from '@selfcommunity/ui';
  ```
 
  #### Component Name
 
- The name `BaseItem` can be used when providing style overrides in the theme.
+ The name `BaseItemButton` can be used when providing style overrides in the theme.
 
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCBaseItem-root|Styles applied to the root element.|
- |content|.SCBaseItem-content|Styles applied to the content element.|
- |image|.SCBaseItem-image|Styles applied to image section.|
- |text|.SCBaseItem-text|Styles applied to text section.|
- |primary|.SCBaseItem-primary|Styles applied to primary section.|
- |secondary|.SCBaseItem-secondary|Styles applied to secondary section.|
- |actions|.SCBaseItem-actions|Styles applied to actions section.|
+ |root|.SCBaseItemButton-root|Styles applied to the root element.|
+ |content|.SCBaseItemButton-content|Styles applied to the content element.|
+ |image|.SCBaseItemButton-image|Styles applied to image section.|
+ |text|.SCBaseItemButton-text|Styles applied to text section.|
+ |primary|.SCBaseItemButton-primary|Styles applied to primary section.|
+ |secondary|.SCBaseItemButton-secondary|Styles applied to secondary section.|
+ |actions|.SCBaseItemButton-actions|Styles applied to actions section.|
 
  * @param inProps
  */
-export default function BaseItem(inProps: BaseItemProps): JSX.Element {
+export default function BaseItemButton(inProps: BaseItemButtonProps): JSX.Element {
   // PROPS
-  const props: BaseItemProps = useThemeProps({
+  const props: BaseItemButtonProps = useThemeProps({
     props: inProps,
     name: PREFIX
   });
@@ -159,6 +175,7 @@ export default function BaseItem(inProps: BaseItemProps): JSX.Element {
   const {
     id = null,
     className = null,
+    ButtonBaseProps = {},
     image = null,
     disableTypography = false,
     primary = null,
@@ -172,7 +189,7 @@ export default function BaseItem(inProps: BaseItemProps): JSX.Element {
   // RENDER
   return (
     <Root id={id} {...rest} className={classNames(classes.root, className)}>
-      <Box className={classes.content}>
+      <ButtonBase className={classes.content} {...ButtonBaseProps}>
         {image && <Box className={classes.image}>{image}</Box>}
         <Box className={classes.text}>
           {primary &&
@@ -192,7 +209,7 @@ export default function BaseItem(inProps: BaseItemProps): JSX.Element {
               </Typography>
             ))}
         </Box>
-      </Box>
+      </ButtonBase>
       {actions && <Box className={classes.actions}>{actions}</Box>}
     </Root>
   );
