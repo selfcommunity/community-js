@@ -17,6 +17,7 @@ import Icon from '@mui/material/Icon';
 import useThemeProps from '@mui/material/styles/useThemeProps';
 import Widget from '../Widget';
 import CreateIncubatorDialog from './CreateIncubatorDialog';
+import IncubatorDetail from '../IncubatorDetail';
 
 const PREFIX = 'SCIncubatorsList';
 
@@ -63,7 +64,7 @@ export interface IncubatorsListProps {
    */
   className?: string;
   /**
-   * Props to spread to single user object
+   * Props to spread to single incubator object
    * @default {}
    */
   IncubatorProps?: IncubatorProps;
@@ -117,9 +118,11 @@ export default function IncubatorsList(inProps: IncubatorsListProps): JSX.Elemen
   const [total, setTotal] = useState<number>(0);
   const [openIncubatorsDialog, setOpenIncubatorsDialog] = useState<boolean>(false);
   const [openCreateIncubatorDialog, setOpenCreateIncubatorDialog] = useState<boolean>(false);
+  const [openIncubatorDetailDialog, setOpenIncubatorDetailDialog] = useState<boolean>(false);
   const [next, setNext] = useState<string>(`${Endpoints.GetAllIncubators.url()}?limit=10`);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const isOpen = Boolean(anchorEl);
+  const [detailObj, setDetailObj] = useState(null);
 
   // HANDLERS
 
@@ -132,6 +135,16 @@ export default function IncubatorsList(inProps: IncubatorsListProps): JSX.Elemen
 
   const handleCreateIncubatorDialogClose = () => {
     setOpenCreateIncubatorDialog(false);
+  };
+
+  function handleIncubatorDetailDialogOpening(incubator) {
+    setOpenIncubatorDetailDialog(true);
+    setOpenIncubatorsDialog(false);
+    setDetailObj(incubator);
+  }
+
+  const handleIncubatorDetailDialogClose = () => {
+    setOpenIncubatorDetailDialog(false);
   };
 
   /**
@@ -228,6 +241,7 @@ export default function IncubatorsList(inProps: IncubatorsListProps): JSX.Elemen
                       incubator={incubator}
                       className={classes.incubatorItem}
                       subscribeButtonProps={{onSubscribe: handleSubscriptionsUpdate}}
+                      ButtonProps={{onClick: () => handleIncubatorDetailDialogOpening(incubator)}}
                       {...IncubatorProps}
                     />
                   </ListItem>
@@ -274,6 +288,7 @@ export default function IncubatorsList(inProps: IncubatorsListProps): JSX.Elemen
                           incubator={i}
                           className={classes.incubatorItem}
                           subscribeButtonProps={{onSubscribe: handleSubscriptionsUpdate}}
+                          ButtonProps={{onClick: () => handleIncubatorDetailDialogOpening(i)}}
                           {...IncubatorProps}
                         />
                       </ListItem>
@@ -284,6 +299,14 @@ export default function IncubatorsList(inProps: IncubatorsListProps): JSX.Elemen
             </BaseDialog>
           )}
           {openCreateIncubatorDialog && <CreateIncubatorDialog open={openCreateIncubatorDialog} onClose={handleCreateIncubatorDialogClose} />}
+          {openIncubatorDetailDialog && (
+            <IncubatorDetail
+              open={openIncubatorDetailDialog}
+              onClose={handleIncubatorDetailDialogClose}
+              incubator={detailObj}
+              onSubscriptionsUpdate={handleSubscriptionsUpdate}
+            />
+          )}
         </CardContent>
       )}
     </React.Fragment>

@@ -97,7 +97,7 @@
 
   "ui.loyaltyProgram.title":"Collecting Points",
   "ui.loyaltyProgram.lp":"Loyalty Program",
-  "ui.loyaltyProgram.description":"Convert your partecipation into precious points. The loyalty program is simple and full of advantages.",
+  "ui.loyaltyProgram.description":"Convert your participation into precious points. The loyalty program is simple and full of advantages.",
   "ui.loyaltyProgram.points": "Your points: {total}",
   "ui.loyaltyProgram.discover": "Discover more",
 
@@ -430,6 +430,14 @@
   "ui.incubator.progressBar.proposal": "Proposal",
   "ui.incubator.progressBar.collectingSubscribers": "Collecting subscribers",
   "ui.incubator.progressBar.approved": "Approved",
+
+  "ui.incubatorDetail.intro": "I propose the creation of the interest \"{name}\".\n Support the initiative to meet the quota of approval.",
+  "ui.incubatorDetail.shareSection.title": "Support the cause",
+  "ui.incubatorDetail.shareSection.share": "Share this page",
+  "ui.incubatorDetail.shareSection.button.copy": "Copy",
+  "ui.incubatorDetail.shareSection.copied": "Copied!",
+  "ui.incubatorDetail.shareSection.invite": "Invite those you think might be interested",
+
 
   "ui.incubatorsList.title": "Interests Incubator",
   "ui.incubatorsList.popover": "Interest incubator is a proposal zone\n where users come together to generate\n new interests. New interests are\n approved depending on subscribers\n number and growth rate.",

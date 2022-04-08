@@ -2,7 +2,7 @@ import React, {useContext, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Widget, {WidgetProps} from '../Widget';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {Avatar, Box, Button, CardContent, CardProps, Grid, List, ListItem, ListItemAvatar, ListItemText, Tooltip, Typography} from '@mui/material';
+import {Avatar, Box, Button, CardContent, CardProps, List, ListItem, ListItemAvatar, ListItemText, Tooltip, Typography} from '@mui/material';
 import Bullet from '../../shared/Bullet';
 import classNames from 'classnames';
 import Votes from './Votes';
@@ -73,7 +73,7 @@ const classes = {
   commentSubSection: `${PREFIX}-comment-sub-section`
 };
 
-const Root = styled(Box, {
+const Root = styled(List, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
@@ -98,8 +98,8 @@ const Root = styled(Box, {
       paddingBottom: 0,
       width: '100%',
       '& li.MuiListItem-root': {
-        paddingLeft: 40,
-        paddingTop: 0
+        paddingLeft: 55,
+        paddingTop: 5
       }
     }
   },
@@ -139,18 +139,18 @@ const Root = styled(Box, {
   [`& .${classes.activityAt}`]: {
     display: 'flex',
     textDecoration: 'none',
-    color: theme.palette.grey[700]
+    color: 'inherit'
   },
   [`& .${classes.reply}`]: {
     textTransform: 'capitalize',
     textDecoration: 'underline',
-    textDecorationStyle: 'dotted',
-    color: theme.palette.text.primary
+    textDecorationStyle: 'dotted'
   },
   [`& .${classes.commentSubSection}`]: {
     display: 'flex',
     justifyContent: 'flex-start',
-    alignItems: 'center'
+    alignItems: 'center',
+    color: theme.palette.text.secondary
   }
 }));
 

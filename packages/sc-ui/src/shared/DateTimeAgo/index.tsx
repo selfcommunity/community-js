@@ -6,8 +6,13 @@ import {styled} from '@mui/material/styles';
 import {Box, Tooltip, Typography} from '@mui/material';
 import Icon from '@mui/material/Icon';
 import {useIntl} from 'react-intl';
+import classNames from 'classnames';
 
 const PREFIX = 'SCDateTimeAgo';
+
+const classes = {
+  root: `${PREFIX}-root`
+};
 
 const Root = styled(Box, {
   name: PREFIX,
@@ -16,6 +21,7 @@ const Root = styled(Box, {
 })(() => ({
   width: 'auto',
   display: 'inline-flex',
+  alignItems: 'center',
   marginTop: 3,
   '& .MuiIcon-root': {
     fontSize: '18px'
@@ -67,8 +73,8 @@ export default function DateTimeAgo(props: DateTimeAgoProps): JSX.Element {
 
   if (date) {
     return (
-      <Root className={className} {...rest}>
-        {showStartIcon && <Icon sx={{paddingRight: '2px'}}>access_time</Icon>}
+      <Root className={classNames(classes.root, className)} {...rest}>
+        {showStartIcon && <Icon>access_time</Icon>}
         <Tooltip title={`${intl.formatDate(date, {year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric'})}`}>
           <Typography variant={'body2'} component={'span'}>
             <TimeAgo date={date} live={live} formatter={formatter} />

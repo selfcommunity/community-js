@@ -72,6 +72,7 @@ import {MEDIA_TYPE_EMBED} from './constants/Media';
 import PollSuggestion, {PollSuggestionProps} from './components/PollSuggestion';
 import Incubator, {IncubatorProps} from './components/Incubator';
 import IncubatorsList, {IncubatorsListProps} from './components/IncubatorsList';
+import IncubatorDetail, {IncubatorDetailProps} from './components/IncubatorDetail';
 
 /**
  * List all exports
@@ -231,5 +232,7 @@ export {
   Incubator,
   IncubatorProps,
   IncubatorsList,
-  IncubatorsListProps
+  IncubatorsListProps,
+  IncubatorDetail,
+  IncubatorDetailProps
 };

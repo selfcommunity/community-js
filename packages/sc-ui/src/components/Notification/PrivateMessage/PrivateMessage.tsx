@@ -80,7 +80,13 @@ const Root = styled(Box, {
   },
   [`& .${classes.messageWrap}`]: {
     display: 'inline-block',
-    height: 20
+    '& p': {
+      margin: 0
+    }
+  },
+  [`& .${classes.message}`]: {
+    height: 20,
+    overflowY: 'hidden'
   },
   [`& .${classes.actions}`]: {
     color: grey[600],
@@ -207,9 +213,9 @@ export default function PrivateMessageNotification(inProps: NotificationPrivateM
             </Link>
           </ListItemAvatar>
           <ListItemText
-            disableTypography={true}
+            disableTypography
             primary={
-              <Typography>
+              <Box>
                 <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.message.sender)}>
                   {notificationObject.message.sender.username}
                 </Link>{' '}
@@ -218,9 +224,9 @@ export default function PrivateMessageNotification(inProps: NotificationPrivateM
                   defaultMessage={'ui.userToastNotifications.privateMessage.sentMessage'}
                 />
                 :
-              </Typography>
+              </Box>
             }
-            secondary={<Typography color="primary" gutterBottom dangerouslySetInnerHTML={{__html: notificationObject.message.html}} />}
+            secondary={<Typography color="primary" gutterBottom dangerouslySetInnerHTML={{__html: notificationObject.message.message}} />}
           />
         </ListItem>
         <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
@@ -261,7 +267,7 @@ export default function PrivateMessageNotification(inProps: NotificationPrivateM
                 {notificationObject.is_new && <NewChip />}
                 <Box className={classes.messageWrap}>
                   <Link to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, notificationObject.message)} className={classes.message}>
-                    <Typography variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: notificationObject.message.html}} />
+                    <Typography variant="body2" dangerouslySetInnerHTML={{__html: notificationObject.message.message}} />
                   </Link>
                 </Box>
               </>

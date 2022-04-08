@@ -1,7 +1,8 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import {Chip} from '@mui/material';
+import {Chip, ChipProps} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const PREFIX = 'SCNotificationNewChip';
 
@@ -16,19 +17,27 @@ const Root = styled(Chip, {
 })(() => ({
   marginRight: 3,
   fontSize: 11,
-  padding: '1px',
+  padding: 3,
   borderRadius: 3,
-  height: 20
+  height: 20,
+  display: 'inline',
+  float: 'left'
 }));
 
-export interface NotificationNewChipProps {
+export interface NotificationNewChipProps extends ChipProps {
   /**
    * Any other properties
    */
   [p: string]: any;
 }
 
-export default function NewChip(props: NotificationNewChipProps): JSX.Element {
+export default function NewChip(inProps: NotificationNewChipProps): JSX.Element {
+
+  const props: NotificationNewChipProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
+
   /**
    * Renders root object
    */
