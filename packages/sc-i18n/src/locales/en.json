@@ -456,6 +456,12 @@
   "ui.incubatorsList.createIncubatorDialog.button": "Propose",
   "ui.incubatorsList.createIncubatorDialog.propose.success": "Thanks for your contribution, we will evaluate it as soon as possible. Your proposal will be accepted, modified or declined. Check the interests incubator.",
 
+  "ui.IncubatorSuggestion.title": "Suggested incubators",
+  "ui.IncubatorSuggestion.noResults": "Nothing to show",
+  "ui.IncubatorSuggestion.ShowAll": "View all",
+  "ui.IncubatorSuggestion.noMoreIncubators": "No more results",
+
+
   "templates.userProfile.edit": "Edit",
   "templates.privateMessages.button.new" : "New Message"
 

@@ -544,6 +544,10 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/incubator/'),
     method: 'GET',
   },
+  GetIncubatorSuggestion: {
+    url: urlReplacer('/api/v2/suggestion/incubator/'),
+    method: 'GET',
+  },
   GetASpecificIncubator: {
     url: urlReplacer('/api/v2/incubator/$(id)/'),
     method: 'GET',
