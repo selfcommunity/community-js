@@ -40,7 +40,7 @@ const Root = styled(Box, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   [`& .${classes.listItemSnippet}`]: {
-    padding: '0px 5px',
+    padding: '10px 5px',
     alignItems: 'center',
     borderLeft: `2px solid ${grey[300]}`
   },
@@ -66,7 +66,8 @@ const Root = styled(Box, {
     textDecoration: 'underline'
   },
   [`& .${classes.toastInfo}`]: {
-    marginTop: 10
+    marginTop: 10,
+    padding: `0px ${theme.spacing()}`
   }
 }));
 
@@ -137,7 +138,6 @@ export default function MentionNotification(inProps: MentionNotificationProps): 
   return (
     <Root id={id} className={classNames(classes.root, className, `${PREFIX}-${template}`)} {...rest}>
       <ListItem
-        alignItems={isSnippetTemplate ? 'center' : 'flex-start'}
         component={'div'}
         classes={{
           root: classNames({

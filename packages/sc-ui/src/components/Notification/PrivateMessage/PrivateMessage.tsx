@@ -43,7 +43,7 @@ const Root = styled(Box, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   [`& .${classes.listItemSnippet}`]: {
-    padding: '0px 5px',
+    padding: '10px 5px',
     alignItems: 'center',
     borderLeft: `2px solid ${grey[300]}`
   },
