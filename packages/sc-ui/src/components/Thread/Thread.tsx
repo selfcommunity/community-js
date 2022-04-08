@@ -422,7 +422,7 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
   const subscriber = (msg, data) => {
     const res = data.data;
     const newMessages = [...messages];
-    const index = newMessages.findIndex((m) => m.sender_id === res.notification_obj.message.sender_id);
+    const index = newMessages.findIndex((m) => m.sender.id === res.notification_obj.message.sender.id);
     if (index !== -1) {
       setMessages((prev) => [...prev, res.notification_obj.message]);
     }
@@ -448,7 +448,7 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
           <div key={index}>
             <ListSubheader className={classes.center}>{key}</ListSubheader>
             {formattedMessages[key].map((msg: SCPrivateMessageType, index) => (
-              <div key={index} className={loggedUser === msg.sender_id ? classes.sender : classes.receiver}>
+              <div key={index} className={loggedUser === msg.sender.id ? classes.sender : classes.receiver}>
                 <Message
                   elevation={0}
                   message={msg}
