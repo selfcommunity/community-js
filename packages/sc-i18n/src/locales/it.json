@@ -425,10 +425,12 @@
 
   "ui.incubator.subscribeButton.button.subscribe": "Aderisco",
   "ui.incubator.subscribeButton.button.subscribed": "Hai aderito",
+
   "ui.incubator.proposedBy": "Proposto da",
   "ui.incubator.progressBar.proposal": "Proposta",
   "ui.incubator.progressBar.collectingSubscribers": "Raccolta adesioni",
   "ui.incubator.progressBar.approved": "Approvato",
+
 
   "ui.incubatorDetail.intro": "Propongo la creazione dell'interesse \"{name}\".\n Aderisci anche tu per raggiungere la quota di approvazione.",
   "ui.incubatorDetail.shareSection.title": "Sostieni la causa",
@@ -436,6 +438,8 @@
   "ui.incubatorDetail.shareSection.button.copy": "Copia",
   "ui.incubatorDetail.shareSection.copied": "Copiato!",
   "ui.incubatorDetail.shareSection.invite": "Invita chi pensi possa essere interessato",
+  "ui.incubatorDetail.subscribersSection.title": "Persone che hanno aderito",
+  "ui.incubatorDetail.subscribersSection.noMoreSubscribers": "Nient'altro da mostrare",
 
   "ui.incubatorsList.title": "Incubatore interessi",
   "ui.incubatorsList.popover": "L'incubatore interessi è un'area dove gli\n utenti collaborano per far nascere nuovi\n interessi. I nuovi interessi saranno resi\n operativi in base al numero di adesioni e\n alla rapidità con cui vengono raccolte.",

@@ -1,15 +1,20 @@
-import React, {useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {TextField, Typography, Box, Avatar, Button, Input, CardContent, Alert, FormGroup} from '@mui/material';
+import {TextField, Typography, Box, Avatar, Button, Input, CardContent, Alert, FormGroup, AvatarGroup, List, ListItem} from '@mui/material';
 import {
+  Endpoints,
+  http,
   Link,
+  Logger,
   SCContextType,
   SCIncubatorType,
   SCRoutes,
   SCRoutingContextType,
   SCUserContextType,
+  SCUserType,
   useSCContext,
+  useSCFetchIncubator,
   useSCRouting,
   useSCUser
 } from '@selfcommunity/core';
@@ -19,6 +24,12 @@ import useThemeProps from '@mui/material/styles/useThemeProps';
 import Incubator, {IncubatorProps} from '../Incubator';
 import Widget from '../Widget';
 import {TwitterShareButton, LinkedinShareButton, TwitterIcon, LinkedinIcon} from 'react-share';
+import {AxiosResponse} from 'axios';
+import AvatarGroupSkeleton from '../Skeleton/AvatarGroupSkeleton';
+import CentralProgress from '../../shared/CentralProgress';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import User from '../User';
+import {SCOPE_SC_UI} from '../../constants/Errors';
 
 const messages = defineMessages({
   intro: {
@@ -39,7 +50,8 @@ const classes = {
   copyButton: `${PREFIX}-copy-button`,
   copyText: `${PREFIX}-copy-text`,
   shareSection: `${PREFIX}-share-section`,
-  socialShareButton: `${PREFIX}-social-share-button`
+  socialShareButton: `${PREFIX}-social-share-button`,
+  subscribers: `${PREFIX}-subscribers`
 };
 
 const Root = styled(BaseDialog, {
@@ -47,7 +59,11 @@ const Root = styled(BaseDialog, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  margin: 2,
+  ' & .MuiCardContent-root': {
+    '&:last-child': {
+      paddingBottom: 0
+    }
+  },
   [theme.breakpoints.down(500)]: {
     minWidth: 300
   },
@@ -80,15 +96,27 @@ const Root = styled(BaseDialog, {
   },
   [`& .${classes.socialShareButton}`]: {
     marginRight: theme.spacing(1)
+  },
+  [`& .${classes.subscribers}`]: {
+    marginTop: theme.spacing(1),
+    '& .MuiAvatar-root': {
+      color: theme.palette.common.white,
+      border: '2px solid #FFF'
+    }
   }
 }));
 
 export interface IncubatorDetailProps {
   /**
-   * The incubator obj
+   * Incubator Object
    * @default null
    */
   incubator?: SCIncubatorType;
+  /**
+   * Id of scIncubator object
+   * @default null
+   */
+  incubatorId?: number;
   /**
    * Overrides or extends the styles applied to the component.
    * @default null
@@ -105,15 +133,15 @@ export interface IncubatorDetailProps {
    */
   onClose?: () => void;
   /**
-   * Props to spread to single incubator object
+   * Props to spread to single scIncubator object
    * @default {}
    */
   IncubatorProps?: IncubatorProps;
   /**
    * Callback fired on subscribe action to update count in main list
-   * @param incubator
+   * @param scIncubator
    */
-  onSubscriptionsUpdate?: (incubator) => any;
+  onSubscriptionsUpdate?: (scIncubator) => any;
 }
 /**
  * > API documentation for the Community-UI Incubator Detail component. Learn about the available props and the CSS API.
@@ -139,6 +167,7 @@ export interface IncubatorDetailProps {
  |copyText|.SCIncubatorDetail-copy-text|Styles applied to the text copy element.|
  |shareSection|.SCIncubatorDetail-share-section|Styles applied to the social share section.|
  |socialShareButton|.SCIncubatorDetail-social-share-button|Styles applied to the social share button.|
+ |subscribers|.SCIncubatorDetail-subscribers|Styles applied to the subscribers avatar section.|
 * @param inProps
 */
 export default function IncubatorDetail(inProps: IncubatorDetailProps): JSX.Element {
@@ -147,26 +176,115 @@ export default function IncubatorDetail(inProps: IncubatorDetailProps): JSX.Elem
     props: inProps,
     name: PREFIX
   });
-  const {incubator, className, open, onClose, IncubatorProps = {}, onSubscriptionsUpdate, ...rest} = props;
+  const {incubator, incubatorId, className, open, onClose, IncubatorProps = {}, onSubscriptionsUpdate, ...rest} = props;
+
+  // STATE
+  const [alert, setAlert] = useState<boolean>(false);
+  const {scIncubator, setSCIncubator} = useSCFetchIncubator({id: incubator.id, incubator});
+  const [loading, setLoading] = useState<boolean>(true);
+  const [next, setNext] = useState<string>(
+    incubator.id || scIncubator ? `${Endpoints.GetIncubatorSubscribers.url({id: incubator ? incubator.id : scIncubator.id})}?limit=10` : null
+  );
+  const [total, setTotal] = useState<number>(0);
+  const [subscribers, setSubscribers] = useState<SCUserType[]>([]);
+  const [openSubscribersDialog, setOpenSubscribersDialog] = useState<boolean>(false);
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
   const scContext: SCContextType = useSCContext();
   const scRoutingContext: SCRoutingContextType = useSCRouting();
-  const portal = scContext.settings.portal + scRoutingContext.url(SCRoutes.INCUBATOR_ROUTE_NAME, incubator);
-
-  // STATE
-  const [alert, setAlert] = useState<boolean>(false);
+  const portal = scContext.settings.portal + scRoutingContext.url(SCRoutes.INCUBATOR_ROUTE_NAME, scIncubator);
 
   // INTL
   const intl = useIntl();
 
   // HANDLERS
 
+  /**
+   * Copies incubator path on clipboard and notifies user
+   */
   const copy = async () => {
     await navigator.clipboard.writeText(portal);
     setAlert(true);
   };
+
+  /**
+   * Opens subscribers dialog
+   */
+  function handleToggleSubscribersDialog() {
+    setOpenSubscribersDialog((prev) => !prev);
+  }
+
+  /**
+   * Handles incubator subscribe/unsubscribe callback
+   */
+  function handleSubscribersUpdate(incubator, subscribed) {
+    let _subscribers = [];
+    if (subscribed) {
+      _subscribers = [...[scUserContext.user], ...subscribers];
+    } else {
+      if (total < 5) {
+        _subscribers = [...subscribers.filter((u) => u.id !== scUserContext.user.id)];
+      } else {
+        const _pSubscribers = subscribers.slice(0, 5).filter((u) => u.id !== scUserContext.user.id);
+        _subscribers = [..._pSubscribers, ...subscribers.slice(5)];
+      }
+    }
+    setTotal((prev) => prev + (subscribed ? 1 : -1));
+    setSubscribers(_subscribers);
+    setNext(null);
+  }
+
+  /**
+   * Handles subscription counter and subscribers update callbacks on subscribe/unsubscribe action
+   */
+  const handleUpdates = (incubator, subscribed) => {
+    onSubscriptionsUpdate(incubator);
+    handleSubscribersUpdate(incubator, subscribed);
+  };
+
+  /**
+   * If id attempts to get the incubator by id
+   */
+  useEffect(() => {
+    if (scIncubator) {
+      fetchSubscribers();
+    }
+  }, [scIncubator]);
+
+  /**
+   * Fetches incubator subscribers
+   */
+  const fetchSubscribers = useMemo(
+    () => () => {
+      if (next) {
+        http
+          .request({
+            url: next,
+            method: Endpoints.GetIncubatorSubscribers.method
+          })
+          .then((res: AxiosResponse<any>) => {
+            if (res.status < 300) {
+              setSubscribers([...subscribers, ...res.data.results]);
+              setTotal(res.data['count']);
+              setNext(res.data['next']);
+              setLoading(false);
+            }
+          })
+          .catch((error) => {
+            Logger.error(SCOPE_SC_UI, error);
+          });
+      }
+    },
+    [scIncubator, next, loading]
+  );
+
+  /**
+   * If not incubator object returns null
+   */
+  if (!scIncubator) {
+    return null;
+  }
 
   /**
    * Renders root element
@@ -175,11 +293,11 @@ export default function IncubatorDetail(inProps: IncubatorDetailProps): JSX.Elem
     <Root
       title={
         <>
-          <Avatar className={classes.avatar} alt={incubator.user.avatar} src={incubator.user.avatar} />
+          <Avatar className={classes.avatar} alt={scIncubator.user.avatar} src={scIncubator.user.avatar} />
           <Box>
-            <Typography className={classes.title}>{`${intl.formatMessage(messages.intro, {name: incubator.name})}`} </Typography>
+            <Typography className={classes.title}>{`${intl.formatMessage(messages.intro, {name: scIncubator.name})}`} </Typography>
             <Typography component={'span'}>
-              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, incubator.user)}>@{incubator.user.username}</Link>
+              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, scIncubator.user)}>@{scIncubator.user.username}</Link>
             </Typography>
           </Box>
         </>
@@ -189,7 +307,72 @@ export default function IncubatorDetail(inProps: IncubatorDetailProps): JSX.Elem
       className={classNames(classes.root, className)}
       {...rest}>
       <Box>
-        <Incubator elevation={0} incubator={incubator} subscribeButtonProps={{onSubscribe: onSubscriptionsUpdate}} {...IncubatorProps} />
+        <Incubator elevation={0} incubator={scIncubator} detailView={true} subscribeButtonProps={{onSubscribe: handleUpdates}} {...IncubatorProps} />
+        <Box className={classes.subscribers}>
+          {loading && !scIncubator ? (
+            <AvatarGroupSkeleton {...rest} />
+          ) : (
+            <>
+              {total > 0 ? (
+                <Button onClick={handleToggleSubscribersDialog} disabled={loading || !scIncubator}>
+                  <AvatarGroup {...rest}>
+                    {subscribers.map((u: SCUserType) => (
+                      <Avatar key={u.id} alt={u.username} src={u.avatar} />
+                    ))}
+                    {[...Array(Math.max(0, total - subscribers.length))].map(
+                      (
+                        x,
+                        i // Add max to 0 to prevent creation of array with negative index during state update
+                      ) => (
+                        <Avatar key={i} />
+                      )
+                    )}
+                  </AvatarGroup>
+                </Button>
+              ) : null}
+            </>
+          )}
+        </Box>
+        {openSubscribersDialog && (
+          <BaseDialog
+            title={
+              <>
+                <FormattedMessage defaultMessage="ui.incubatorDetail.subscribersSection.title" id="ui.incubatorDetail.subscribersSection.title" /> (
+                {total})
+              </>
+            }
+            onClose={handleToggleSubscribersDialog}
+            open={openSubscribersDialog}>
+            {loading ? (
+              <CentralProgress size={50} />
+            ) : (
+              <InfiniteScroll
+                dataLength={total}
+                next={fetchSubscribers}
+                hasMore={next !== null}
+                loader={<CentralProgress size={30} />}
+                height={400}
+                endMessage={
+                  <p style={{textAlign: 'center'}}>
+                    <b>
+                      <FormattedMessage
+                        id="ui.incubatorDetail.subscribersSection.noMoreSubscribers"
+                        defaultMessage="ui.incubatorDetail.subscribersSection.noMoreSubscribers"
+                      />
+                    </b>
+                  </p>
+                }>
+                <List>
+                  {subscribers.map((s, index) => (
+                    <ListItem key={(s.id, index)}>
+                      <User elevation={0} user={s} key={index} />
+                    </ListItem>
+                  ))}
+                </List>
+              </InfiniteScroll>
+            )}
+          </BaseDialog>
+        )}
         <Widget elevation={1} className={classes.shareCard}>
           <CardContent>
             <Typography variant={'h6'}>

@@ -426,10 +426,12 @@
 
   "ui.incubator.subscribeButton.button.subscribe": "Subscribe",
   "ui.incubator.subscribeButton.button.subscribed": "Subscribed",
+
   "ui.incubator.proposedBy": "Proposed by",
   "ui.incubator.progressBar.proposal": "Proposal",
   "ui.incubator.progressBar.collectingSubscribers": "Collecting subscribers",
   "ui.incubator.progressBar.approved": "Approved",
+
 
   "ui.incubatorDetail.intro": "I propose the creation of the interest \"{name}\".\n Support the initiative to meet the quota of approval.",
   "ui.incubatorDetail.shareSection.title": "Support the cause",
@@ -437,7 +439,8 @@
   "ui.incubatorDetail.shareSection.button.copy": "Copy",
   "ui.incubatorDetail.shareSection.copied": "Copied!",
   "ui.incubatorDetail.shareSection.invite": "Invite those you think might be interested",
-
+  "ui.incubatorDetail.subscribersSection.title": "Subscribers",
+  "ui.incubatorDetail.subscribersSection.noMoreSubscribers": "No more results",
 
   "ui.incubatorsList.title": "Interests Incubator",
   "ui.incubatorsList.popover": "Interest incubator is a proposal zone\n where users come together to generate\n new interests. New interests are\n approved depending on subscribers\n number and growth rate.",

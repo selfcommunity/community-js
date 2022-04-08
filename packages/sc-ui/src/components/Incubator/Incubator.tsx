@@ -1,7 +1,16 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
 import {Typography, Grid, Box, Button, ButtonProps} from '@mui/material';
-import {Link, SCContextType, SCIncubatorType, SCRoutes, SCRoutingContextType, useSCContext, useSCRouting} from '@selfcommunity/core';
+import {
+  Link,
+  SCContextType,
+  SCIncubatorType,
+  SCRoutes,
+  SCRoutingContextType,
+  useSCContext,
+  useSCFetchIncubator,
+  useSCRouting
+} from '@selfcommunity/core';
 import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
 import CardContent from '@mui/material/CardContent';
@@ -97,6 +106,11 @@ export interface IncubatorProps {
    * @default {}
    */
   ButtonProps?: ButtonProps;
+  /**
+   * If true shows extended incubator' slogan in detail view
+   * @default false
+   */
+  detailView?: boolean;
 }
 
 /**
@@ -128,7 +142,19 @@ export default function Incubator(inProps: IncubatorProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {incubatorId = null, incubator = null, className = null, autoHide = false, subscribeButtonProps = {}, ButtonProps = {}, ...rest} = props;
+  const {
+    incubatorId = null,
+    incubator = null,
+    className = null,
+    autoHide = false,
+    subscribeButtonProps = {},
+    ButtonProps = {},
+    detailView = false,
+    ...rest
+  } = props;
+
+  // STATE
+  const {scIncubator, setSCIncubator} = useSCFetchIncubator({id: incubatorId, incubator});
 
   // CONTEXT
   const scContext: SCContextType = useSCContext();
@@ -149,29 +175,29 @@ export default function Incubator(inProps: IncubatorProps): JSX.Element {
    */
   const i = (
     <React.Fragment>
-      {incubator ? (
+      {scIncubator ? (
         <>
           <CardContent>
             <Button variant="text" className={classes.name} {...ButtonProps}>
-              {incubator.name}
+              {scIncubator.name}
             </Button>
             {/*<Link className={classes.name} to={scRoutingContext.url(SCRoutes.INCUBATOR_ROUTE_NAME, incubator)}>*/}
             {/*  {incubator.name}*/}
             {/*</Link>*/}
             <Typography component={'span'}>
               <FormattedMessage defaultMessage="ui.incubator.proposedBy" id="ui.incubator.proposedBy" />
-              <Link className={classes.author} to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, incubator.user)}>
-                {incubator.user.username}
+              <Link className={classes.author} to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, scIncubator.user)}>
+                {scIncubator.user.username}
               </Link>
             </Typography>
-            <Typography component={'p'} className={classes.slogan}>
-              {incubator.slogan}
+            <Typography component={'p'} className={!detailView ? classes.slogan : null}>
+              {scIncubator.slogan}
             </Typography>
             <Box className={classes.progressBox}>
               <LinearProgressWithLabel
                 className={classes.progressBar}
-                value={renderVotes(incubator.subscribers_count, incubator.subscribers_threshold)}
-                subscribed={incubator.subscribers_count}
+                value={renderVotes(scIncubator.subscribers_count, scIncubator.subscribers_threshold)}
+                subscribed={scIncubator.subscribers_count}
               />
               <Grid container spacing={3}>
                 <Grid item xs>
@@ -194,7 +220,7 @@ export default function Incubator(inProps: IncubatorProps): JSX.Element {
                 </Grid>
               </Grid>
             </Box>
-            <SubscribeButton incubator={incubator} {...subscribeButtonProps} />
+            <SubscribeButton incubator={scIncubator} {...subscribeButtonProps} />
           </CardContent>
         </>
       ) : (

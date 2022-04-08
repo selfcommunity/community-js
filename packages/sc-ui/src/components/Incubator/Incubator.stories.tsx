@@ -8,6 +8,11 @@ export default {
   title: 'Design System/SC UI/Incubator',
   component: Incubator,
   argTypes: {
+    incubatorId: {
+      control: {type: 'number'},
+      description: 'Incubator Id',
+      table: {defaultValue: {summary: 1}}
+    },
     elevation: {
       control: {type: 'number'},
       description: 'Used only if variant="elevation". Shadow depth, corresponds to dp in the spec. It accepts values between 0 and 24 inclusive.',
@@ -22,7 +27,8 @@ export default {
   },
   args: {
     elevation: 1,
-    variant: 'elevation'
+    variant: 'elevation',
+    incubatorId: 1
   }
 } as ComponentMeta<typeof Incubator>;
 

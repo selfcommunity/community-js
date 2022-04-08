@@ -560,6 +560,10 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/incubator/'),
     method: 'POST',
   },
+  GetIncubatorSubscribers: {
+    url: urlReplacer('/api/v2/incubator/$(id)/subscribers/'),
+    method: 'GET',
+  },
 };
 
 export default Endpoints;
