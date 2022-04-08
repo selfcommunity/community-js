@@ -20,13 +20,6 @@ import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const PREFIX = 'SCToastNotifications';
 
-const classes = {
-  root: `${PREFIX}-root`,
-  toastMessage: `${PREFIX}-toast-message`,
-  toastContent: `${PREFIX}-toast-content`,
-  toastActions: `${PREFIX}-toast-actions`
-};
-
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
@@ -166,16 +159,7 @@ export default function UserToastNotifications(inProps: ToastNotificationsProps)
         Object.assign(
           {},
           {
-            content: (
-              <CustomSnackMessage
-                id={messageKey}
-                message={
-                  <div className={classes.toastMessage}>
-                    <div className={classes.toastContent}>{getContent(data.data)}</div>
-                  </div>
-                }
-              />
-            ),
+            content: <CustomSnackMessage id={messageKey} message={getContent(data.data)} />,
             preventDuplicate: true,
             key: messageKey,
             variant: 'default',
