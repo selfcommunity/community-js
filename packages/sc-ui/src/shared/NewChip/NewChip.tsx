@@ -17,9 +17,10 @@ const Root = styled(Chip, {
 })(() => ({
   marginRight: 3,
   fontSize: 11,
-  padding: '1px',
+  padding: 3,
   borderRadius: 3,
   height: 20,
+  display: 'inline',
   float: 'left'
 }));
 
