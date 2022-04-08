@@ -98,8 +98,8 @@ const Root = styled(List, {
       paddingBottom: 0,
       width: '100%',
       '& li.MuiListItem-root': {
-        paddingLeft: 40,
-        paddingTop: 0
+        paddingLeft: 55,
+        paddingTop: 5
       }
     }
   },
