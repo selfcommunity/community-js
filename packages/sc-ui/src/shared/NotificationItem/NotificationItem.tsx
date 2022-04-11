@@ -58,10 +58,33 @@ const Root = styled(Widget, {
     padding: `0px ${theme.spacing()} !important`
   },
   [`&.${classes.snippet}`]: {
-    borderLeft: `2px solid ${grey[200]}`
+    '&:before': {
+      borderRadius: '5px',
+      width: '4px',
+      left: 1,
+      height: '100%',
+      display: 'block',
+      zIndex: '20',
+      position: 'absolute',
+      content: '" "',
+      backgroundColor: `${grey[200]}`
+    },
+    '& .SCNotificationItem-content': {
+      padding: `5px ${theme.spacing()}`
+    }
   },
   [`&.${classes.newSnippet}`]: {
-    borderLeft: `2px solid ${red[500]}`
+    '&:before': {
+      borderRadius: '5px',
+      width: '4px',
+      left: 1,
+      height: '100%',
+      display: 'block',
+      zIndex: '20',
+      position: 'absolute',
+      content: '" "',
+      backgroundColor: `${red[200]}`
+    }
   },
   [`& .${classes.content}`]: {
     width: '100%',
@@ -83,6 +106,7 @@ const Root = styled(Widget, {
     marginRight: theme.spacing(1)
   },
   [`& .${classes.snippetImage}`]: {
+    paddingLeft: `${theme.spacing()}`,
     '& .MuiAvatar-root': {
       width: 25,
       height: 25

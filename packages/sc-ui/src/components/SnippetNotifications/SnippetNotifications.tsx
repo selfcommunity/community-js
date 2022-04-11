@@ -59,7 +59,8 @@ const Root = styled(Box, {
     overflowY: 'hidden'
   },
   [`& .${classes.notificationItem}`]: {
-    padding: 5,
+    padding: 0,
+    margin: `${theme.spacing()} 0px`,
     whiteSpace: 'normal',
     '&:hover': {
       backgroundColor: 'rgba(0, 0, 0, 0.05)'
@@ -338,7 +339,7 @@ export default function SnippetNotifications(inProps: SnippetNotificationsProps)
               </Box>
             ) : (
               <ScrollContainer {...ScrollContainerProps}>
-                <MenuList className={classes.notificationsList}>
+                <MenuList className={classes.notificationsList} component={'div'}>
                   {notifications.slice(0, showMax).map((notificationObject: SCNotificationAggregatedType, i) => (
                     <Box key={i}>
                       {notificationObject.aggregated.map((n: SCNotificationType, k) => (
