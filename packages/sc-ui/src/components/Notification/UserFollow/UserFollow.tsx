@@ -32,6 +32,12 @@ const Root = styled(Box, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   width: '100%',
+  [`& .${classes.username}`]: {
+    fontWeight: 700,
+    '&:hover': {
+      textDecoration: 'underline'
+    }
+  },
   [`& .${classes.followText}`]: {
     color: theme.palette.text.primary
   }
@@ -119,7 +125,9 @@ export default function UserFollowNotification(inProps: NotificationFollowProps)
             {intl.formatMessage(messages.followUser, {b: (...chunks) => <strong>{chunks}</strong>})}
           </>
         }
-        secondary={<DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />}
+        secondary={
+          template === SCNotificationObjectTemplateType.DETAIL && <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
+        }
         footer={
           <>
             {template === SCNotificationObjectTemplateType.TOAST && (

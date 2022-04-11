@@ -43,6 +43,12 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
+  [`& .${classes.username}`]: {
+    fontWeight: 700,
+    '&:hover': {
+      textDecoration: 'underline'
+    }
+  },
   [`& .${classes.connectionText}`]: {
     color: theme.palette.text.primary
   }
@@ -131,7 +137,9 @@ export default function UserConnectionNotification(inProps: NotificationConnecti
               : intl.formatMessage(messages.requestConnection, {b: (...chunks) => <strong>{chunks}</strong>})}
           </>
         }
-        secondary={<DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />}
+        secondary={
+          template === SCNotificationObjectTemplateType.DETAIL && <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
+        }
         footer={
           <>
             {template === SCNotificationObjectTemplateType.TOAST && (

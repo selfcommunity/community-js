@@ -33,11 +33,22 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
+  [`& .${classes.username}`]: {
+    fontWeight: 700,
+    '&:hover': {
+      textDecoration: 'underline'
+    }
+  },
   [`& .${classes.mentionText}`]: {
     color: theme.palette.text.primary
   },
   [`& .${classes.contributionText}`]: {
-    textDecoration: 'underline'
+    '&:hover': {
+      textDecoration: 'underline'
+    },
+    textOverflow: 'ellipsis',
+    display: 'inline',
+    overflow: 'hidden'
   }
 }));
 
@@ -95,7 +106,6 @@ export default function MentionNotification(inProps: MentionNotificationProps): 
   const scRoutingContext: SCRoutingContextType = useSCRouting();
 
   // CONST
-  const isSnippetTemplate = template === SCNotificationObjectTemplateType.SNIPPET;
   const objectType = getContributeType(notificationObject);
   const contribution = getContribute(notificationObject);
 
@@ -131,14 +141,18 @@ export default function MentionNotification(inProps: MentionNotificationProps): 
           </>
         }
         secondary={
-          <div>
+          <React.Fragment>
             <Link to={scRoutingContext.url(SCRoutes[`${objectType.toUpperCase()}_ROUTE_NAME`], getRouteData(notificationObject[objectType]))}>
               <Typography component={'span'} variant="body2" className={classes.contributionText} gutterBottom>
                 {getContributionSnippet(notificationObject[objectType])}
               </Typography>
             </Link>
-            {template === SCNotificationObjectTemplateType.DETAIL && <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />}
-          </div>
+            {template === SCNotificationObjectTemplateType.DETAIL && (
+              <Box>
+                <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
+              </Box>
+            )}
+          </React.Fragment>
         }
         footer={
           <>

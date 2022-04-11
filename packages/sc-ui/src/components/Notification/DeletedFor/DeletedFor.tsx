@@ -11,7 +11,7 @@ import classNames from 'classnames';
 import {SCNotificationObjectTemplateType} from '../../../types';
 import useThemeProps from '@mui/material/styles/useThemeProps';
 import NotificationItem from '../../../shared/NotificationItem';
-import { red } from '@mui/material/colors';
+import {red} from '@mui/material/colors';
 
 const messages = defineMessages({
   deletedForAdvertising: {
@@ -62,10 +62,15 @@ const Root = styled(Box, {
   },
   [`& .${classes.contributionWrap}`]: {
     marginBottom: theme.spacing(1),
-    padding: theme.spacing(2)
+    padding: theme.spacing(2),
+    textOverflow: 'ellipsis',
+    display: 'inline',
+    overflow: 'hidden'
   },
   [`& .${classes.contributionText}`]: {
-    textDecoration: 'underline'
+    '&:hover': {
+      textDecoration: 'underline'
+    }
   }
 }));
 
@@ -168,7 +173,9 @@ export default function DeletedForNotification(inProps: NotificationDeletedForPr
             )}
           </>
         }
-        secondary={<DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />}
+        secondary={
+          template === SCNotificationObjectTemplateType.DETAIL && <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
+        }
         footer={
           <>
             {!isSnippetTemplate && (

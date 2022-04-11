@@ -10,7 +10,7 @@ import classNames from 'classnames';
 import {SCNotificationObjectTemplateType} from '../../../types';
 import useThemeProps from '@mui/material/styles/useThemeProps';
 import NotificationItem from '../../../shared/NotificationItem';
-import { red } from '@mui/material/colors';
+import {red} from '@mui/material/colors';
 
 const messages = defineMessages({
   kindlyNoticeFlag: {
@@ -44,11 +44,15 @@ const Root = styled(Box, {
     color: theme.palette.text.primary
   },
   [`& .${classes.contributionWrap}`]: {
-    marginBottom: theme.spacing(1),
-    padding: theme.spacing(2)
+    padding: `${theme.spacing(2)} ${theme.spacing(2)}`,
+    textOverflow: 'ellipsis',
+    display: 'inline',
+    overflow: 'hidden'
   },
   [`& .${classes.contributionText}`]: {
-    textDecoration: 'underline'
+    '&:hover': {
+      textDecoration: 'underline'
+    }
   }
 }));
 
@@ -148,12 +152,14 @@ export default function KindlyNoticeFlagNotification(inProps: NotificationKindly
             )}
           </>
         }
-        secondary={<DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />}
+        secondary={
+          template === SCNotificationObjectTemplateType.DETAIL && <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
+        }
         footer={
           <>
             {!isSnippetTemplate && (
               <Box className={classes.contributionWrap}>
-                <Typography variant={'body2'} color={'inherit'} component={'span'} classes={{root: classes.contributionYouWroteLabel}}>
+                <Typography variant={'body2'} color={'inherit'} component={'div'} classes={{root: classes.contributionYouWroteLabel}}>
                   <FormattedMessage id="ui.notification.undeletedFor.youWrote" defaultMessage="ui.notification.undeletedFor.youWrote" />
                 </Typography>
                 <Link

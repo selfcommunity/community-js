@@ -10,9 +10,13 @@ import classNames from 'classnames';
 import {SCNotificationObjectTemplateType} from '../../../types';
 import useThemeProps from '@mui/material/styles/useThemeProps';
 import NotificationItem from '../../../shared/NotificationItem';
-import { red } from '@mui/material/colors';
+import {red} from '@mui/material/colors';
 
 const messages = defineMessages({
+  youWrote: {
+    id: 'ui.notification.kindlyNoticeFor.youWrote',
+    defaultMessage: 'ui.notification.kindlyNoticeFor.youWrote'
+  },
   kindlyNoticeAdvertising: {
     id: 'ui.notification.kindlyNoticeFor.kindlyNoticeAdvertising',
     defaultMessage: 'ui.notification.kindlyNoticeFor.kindlyNoticeAdvertising'
@@ -52,6 +56,7 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
+  width: '100%',
   [`& .${classes.flagIcon}`]: {
     backgroundColor: red[500],
     color: '#FFF'
@@ -60,11 +65,15 @@ const Root = styled(Box, {
     color: theme.palette.text.primary
   },
   [`& .${classes.contributionWrap}`]: {
-    marginBottom: theme.spacing(1),
-    padding: theme.spacing(2)
+    padding: `${theme.spacing(2)} ${theme.spacing(2)}`,
+    textOverflow: 'ellipsis',
+    display: 'inline',
+    overflow: 'hidden'
   },
   [`& .${classes.contributionText}`]: {
-    textDecoration: 'underline'
+    '&:hover': {
+      textDecoration: 'underline'
+    }
   }
 }));
 
@@ -133,6 +142,7 @@ export default function KindlyNoticeForNotification(inProps: NotificationKindlyN
    */
   return (
     <Root id={id} className={classNames(classes.root, className, `${PREFIX}-${template}`)} {...rest}>
+      Ciao
       <NotificationItem
         template={template}
         isNew={notificationObject.is_new}
@@ -164,13 +174,17 @@ export default function KindlyNoticeForNotification(inProps: NotificationKindlyN
             )}
           </>
         }
-        secondary={<DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />}
+        secondary={
+          template === SCNotificationObjectTemplateType.DETAIL && <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
+        }
         footer={
           <>
             {!isSnippetTemplate && (
               <Box className={classes.contributionWrap}>
-                <Typography variant={'body2'} color={'inherit'} component={'span'} classes={{root: classes.contributionYouWroteLabel}}>
-                  <FormattedMessage id="ui.notification.kindlyNoticeFor.youWrote" defaultMessage="ui.notification.kindlyNoticeFor.youWrote" />
+                <Typography variant={'body2'} color={'inherit'} component={'div'} classes={{root: classes.contributionYouWroteLabel}}>
+                  {intl.formatMessage(messages.youWrote, {
+                    b: (...chunks) => <strong>{chunks}</strong>
+                  })}
                 </Typography>
                 <Link
                   to={scRoutingContext.url(

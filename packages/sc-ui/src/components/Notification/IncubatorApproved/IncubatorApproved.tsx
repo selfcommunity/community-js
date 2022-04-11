@@ -37,7 +37,8 @@ const Root = styled(Box, {
   },
   [`& .${classes.viewIncubatorButton}`]: {
     padding: theme.spacing(),
-    textTransform: 'capitalize'
+    paddingBottom: 0,
+    textTransform: 'initial'
   }
 }));
 
@@ -111,7 +112,6 @@ export default function IncubatorApprovedNotification(inProps: NotificationIncub
             classes={{root: classes.categoryIcon}}
           />
         }
-        secondary={<DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />}
         primary={
           <>
             {isSnippetTemplate ? (
@@ -135,6 +135,9 @@ export default function IncubatorApprovedNotification(inProps: NotificationIncub
               </>
             )}
           </>
+        }
+        secondary={
+          template === SCNotificationObjectTemplateType.DETAIL && <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
         }
         footer={
           <>

@@ -46,7 +46,10 @@ const Root = styled(Box, {
     color: '#FFF'
   },
   [`& .${classes.blockedText}`]: {
-    color: theme.palette.text.primary
+    color: theme.palette.text.primary,
+    textOverflow: 'ellipsis',
+    display: 'inline',
+    overflow: 'hidden'
   }
 }));
 
@@ -128,7 +131,9 @@ export default function UserBlockedNotification(inProps: NotificationBlockedProp
               : intl.formatMessage(messages.accountReactivated, {b: (...chunks) => <strong>{chunks}</strong>})}
           </>
         }
-        secondary={<DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />}
+        secondary={
+          template === SCNotificationObjectTemplateType.DETAIL && <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
+        }
         footer={
           <>
             {template === SCNotificationObjectTemplateType.TOAST && (

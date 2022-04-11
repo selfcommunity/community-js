@@ -6,7 +6,7 @@ import Widget, {WidgetProps} from '../../components/Widget';
 import useThemeProps from '@mui/material/styles/useThemeProps';
 import {SCNotificationObjectTemplateType} from '@selfcommunity/ui';
 import NewChip from '../NewChip/NewChip';
-import {red} from '@mui/material/colors';
+import {grey, red} from '@mui/material/colors';
 
 const PREFIX = 'SCNotificationItem';
 
@@ -22,7 +22,9 @@ const classes = {
   secondary: `${PREFIX}-secondary`,
   actions: `${PREFIX}-actions`,
   footer: `${PREFIX}-footer`,
-  new: `${PREFIX}-new`
+  snippet: `${PREFIX}-snippet`,
+  newSnippet: `${PREFIX}-new-snippet`,
+  newChip: `${PREFIX}-new-chip`
 };
 
 const Root = styled(Widget, {
@@ -49,10 +51,16 @@ const Root = styled(Widget, {
     }
   },
   [`&.${classes.dense}`]: {
+    '& .SCNotificationItem-header': {
+      alignItems: 'center'
+    },
     marginTop: 0,
     padding: `0px ${theme.spacing()} !important`
   },
-  [`&.${classes.new}`]: {
+  [`&.${classes.snippet}`]: {
+    borderLeft: `2px solid ${grey[200]}`
+  },
+  [`&.${classes.newSnippet}`]: {
     borderLeft: `2px solid ${red[500]}`
   },
   [`& .${classes.content}`]: {
@@ -76,8 +84,8 @@ const Root = styled(Widget, {
   },
   [`& .${classes.snippetImage}`]: {
     '& .MuiAvatar-root': {
-      width: 30,
-      height: 30
+      width: 25,
+      height: 25
     }
   },
   [`& .${classes.title}`]: {
@@ -86,11 +94,15 @@ const Root = styled(Widget, {
     width: '100%'
   },
   [`& .${classes.primary}`]: {
-    color: theme.palette.text.primary
+    color: theme.palette.text.primary,
+    textOverflow: 'ellipsis',
+    display: 'inline',
+    overflow: 'hidden'
   },
   [`& .${classes.secondary}`]: {
-    overflow: 'hidden',
     textOverflow: 'ellipsis',
+    display: 'inline',
+    overflow: 'hidden',
     color: theme.palette.text.secondary
   },
   [`& .${classes.actions}`]: {
@@ -190,14 +202,17 @@ export interface NotificationItemProps extends Pick<WidgetProps, Exclude<keyof W
  |Rule Name|Global class|Description|
  |---|---|---|
  |root|.SCBaseItem-root|Styles applied to the root element.|
+ |newSnippet|.SCBaseItem-new-snippet|Styles applied to the root element when notification is marked as new.|
  |content|.SCBaseItem-content|Styles applied to the content element.|
  |header|.SCBaseItem-header|Styles applied to the header element.|
  |image|.SCBaseItem-image|Styles applied to image section.|
+ |snippetImage|.SCBaseItem-snippet-image|Styles applied to image section when a snippet notification is rendered.|
  |title|.SCBaseItem-text|Styles applied to title section.|
  |primary|.SCBaseItem-primary|Styles applied to primary section.|
  |secondary|.SCBaseItem-secondary|Styles applied to secondary section.|
  |actions|.SCBaseItem-actions|Styles applied to actions section.|
  |footer|.SCBaseItem-footer|Styles applied to footer section.|
+ |newChip|.SCBaseItem-new-chip|Styles applied to the new chip element when notification is marked as new.|
 
  * @param inProps
  */
@@ -236,7 +251,8 @@ export default function NotificationItem(inProps: NotificationItemProps): JSX.El
       {...rest}
       className={classNames(classes.root, className, {
         [classes.dense]: isSnippetTemplate || isToastTemplate,
-        [classes.new]: isSnippetTemplate && isNew
+        [classes.snippet]: isSnippetTemplate,
+        [classes.newSnippet]: isSnippetTemplate && isNew
       })}
       elevation={elevation}>
       <Box className={classes.content}>
@@ -245,11 +261,11 @@ export default function NotificationItem(inProps: NotificationItemProps): JSX.El
           <Box className={classes.title}>
             {primary && (
               <Box className={classes.primary}>
-                {isDetailTemplate && isNew && <NewChip />}
+                {isDetailTemplate && isNew && <NewChip className={classes.newChip} />}
                 {disableTypography ? primary : <Typography {...primaryTypographyProps}>{primary}</Typography>}
               </Box>
             )}
-            {!isSnippetTemplate && secondary && (
+            {secondary && (
               <Box className={classes.secondary}>
                 {disableTypography ? secondary : <Typography {...secondaryTypographyProps}>{secondary}</Typography>}
               </Box>

@@ -28,7 +28,7 @@ const classes = {
   replyButtonIcon: `${PREFIX}-reply-button-icon`,
   activeAt: `${PREFIX}-active-at`,
   messageLabel: `${PREFIX}-message-label`,
-  messageSender: `${PREFIX}-message-sender`,
+  username: `${PREFIX}-username`,
   messageWrap: `${PREFIX}-message-wrap`,
   message: `${PREFIX}-message`
 };
@@ -47,25 +47,46 @@ const Root = styled(Box, {
       display: 'none'
     }
   },
-  [`& .${classes.messageSender}`]: {
+  [`& .${classes.username}`]: {
     display: 'inline',
-    fontWeight: '600'
+    fontWeight: 700,
+    '&:hover': {
+      textDecoration: 'underline'
+    }
   },
   [`& .${classes.messageLabel}`]: {
     color: theme.palette.text.primary
   },
   [`& .${classes.messageWrap}`]: {
     display: 'inline-block',
+    textOverflow: 'ellipsis',
+    overflow: 'hidden',
+    '-webkit-line-clamp': '2',
+    lineClamp: 2,
+    '-webkit-box-orient': 'vertical',
     '& p': {
       margin: 0
     }
   },
   [`& .${classes.message}`]: {
     height: 20,
-    overflowY: 'hidden'
+    overflowY: 'hidden',
+    textOverflow: 'ellipsis',
+    display: 'inline',
+    overflow: 'hidden',
+    '&:hover': {
+      textDecoration: 'underline'
+    },
+    '& > p': {
+      overflowY: 'hidden',
+      textOverflow: 'ellipsis',
+      display: '-webkit-box',
+      '-webkit-line-clamp': '2',
+      lineClamp: 2,
+      '-webkit-box-orient': 'vertical',
+    }
   },
   [`& .${classes.actions}`]: {
-    color: grey[600],
     fontSize: '13px',
     maxWidth: '40%'
   }
@@ -135,7 +156,7 @@ export default function PrivateMessageNotification(inProps: NotificationPrivateM
    * Renders content
    */
   let content;
-  if (isSnippetTemplate) {
+  if (isSnippetTemplate || isToastTemplate) {
     content = (
       <NotificationItem
         template={template}
@@ -163,14 +184,17 @@ export default function PrivateMessageNotification(inProps: NotificationPrivateM
                   defaultMessage={'ui.userToastNotifications.privateMessage.sentMessage'}
                 />
                 :
+                <Box className={classes.messageWrap}>
+                  <Link to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, notificationObject.message)} className={classes.message}>
+                    <Typography variant="body2" dangerouslySetInnerHTML={{__html: notificationObject.message.message}} />
+                  </Link>
+                </Box>
               </Box>
             )}
             {isSnippetTemplate && (
               <Box>
                 <Typography component="div" color="inherit">
-                  <Link
-                    to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.message.sender)}
-                    className={classes.messageSender}>
+                  <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.message.sender)} className={classes.username}>
                     {notificationObject.message.sender.username}
                   </Link>{' '}
                   <Link

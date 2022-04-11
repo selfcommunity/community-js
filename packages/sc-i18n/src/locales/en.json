@@ -111,7 +111,7 @@
   "ui.loyaltyProgramDetail.prizesIntro": "Earn points and redeem them for rewards.",
   "ui.loyaltyProgramDetail.prizesContent": "Prize request involves the subtraction of the points corresponding to the selected prize.",
   "ui.loyaltyProgramDetail.button.request": "Request Now",
-  
+
   "ui.composer.type.post": "Create Post",
   "ui.composer.type.discussion": "Create Discussion",
   "ui.composer.done": "done",
@@ -349,7 +349,7 @@
   "ui.notification.kindlyNoticeFlag.kindlyNoticeFlag": "You have flagged a contribution which is not irregular. Please read website rules before further flagging.",
   "ui.notification.kindlyNoticeFlag.kindlyNoticeFlagSnippet": "You have flagged a contribution which is not irregular",
   "ui.notification.newNotificationsLabel": "There are new notifications for you ({count}). Do you want to see them?",
-  "ui.notification.incubatorApproved.approved": "Your incubator {name} has been approved.",
+  "ui.notification.incubatorApproved.approved": "Your incubator <b>\"{name}\"</b> has been approved.",
   "ui.notification.incubatorApproved.viewIncubator": "View category",
   "ui.notification.notificationNewChip.label": "New",
 

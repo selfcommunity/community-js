@@ -19,7 +19,7 @@ const Root = styled(SnackbarContent, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  maxWidth: 370,
+  width: 370,
   [theme.breakpoints.up('sm')]: {
     minWidth: '345px !important'
   },
@@ -27,7 +27,7 @@ const Root = styled(SnackbarContent, {
     backgroundColor: '#fff',
     width: '100%',
     padding: theme.spacing(),
-    borderRadius: 30
+    borderRadius: 10
   },
   [`& .${classes.cardContent}`]: {
     padding: `5px 5px`,

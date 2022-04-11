@@ -113,7 +113,7 @@
   "ui.loyaltyProgramDetail.prizesIntro": "Guadagna punti e convertili in premi.",
   "ui.loyaltyProgramDetail.prizesContent": "La richiesta del premio prevede la sottrazione dei punti corrispondenti al premio selezionato.",
   "ui.loyaltyProgramDetail.button.request": "Richiedi Ora",
-  
+
   "ui.composer.type.post": "Create Post",
   "ui.composer.type.discussion": "Create Discussion",
   "ui.composer.done": "done",
@@ -348,7 +348,7 @@
   "ui.notification.kindlyNoticeFlag.kindlyNoticeFlag": "Il contenuto da te segnalato non rientra nella casitica dei contenuti ritenuti irregolari. Ti preghiamo di leggere con attenzione il regolamento prima di effettuare ulteriori segnalazioni.",
   "ui.notification.kindlyNoticeFlag.kindlyNoticeFlagSnippet": "Hai segnalato un contenuto ritenuto regolare",
   "ui.notification.newNotificationsLabel": "Ci sono nuove notifiche per te ({count}). Vuoi vederle?",
-  "ui.notification.incubatorApproved.approved": "Il tuo incubatore {name} è stato approvato.",
+  "ui.notification.incubatorApproved.approved": "Il tuo incubatore <b>\"{name}\"</b> è stato approvato.",
   "ui.notification.incubatorApproved.viewIncubator": "Vedi categoria",
   "ui.notification.notificationNewChip.label": "New",
 

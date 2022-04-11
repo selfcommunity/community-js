@@ -31,7 +31,6 @@ const classes = {
   avatar: `${PREFIX}-avatar`,
   username: `${PREFIX}-username`,
   voteButton: `${PREFIX}-vote-button`,
-  commentText: `${PREFIX}-comment-text`,
   contributionText: `${PREFIX}-contribution-text`,
   activeAt: `${PREFIX}-active-at`,
   bullet: `${PREFIX}-bullet`
@@ -42,19 +41,28 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
+  [`& .${classes.username}`]: {
+    fontWeight: 700,
+    '&:hover': {
+      textDecoration: 'underline'
+    }
+  },
   [`& .${classes.voteButton}`]: {
     marginLeft: '-1px',
     minWidth: '30px',
     paddingTop: 3,
     '& > span': {
-      fontSize: '18px'
+      fontSize: '15px'
     }
   },
-  [`& .${classes.commentText}`]: {
-    color: theme.palette.text.primary
-  },
   [`& .${classes.contributionText}`]: {
-    textDecoration: 'underline'
+    color: theme.palette.text.primary,
+    textOverflow: 'ellipsis',
+    display: 'inline',
+    overflow: 'hidden',
+    '&:hover': {
+      textDecoration: 'underline'
+    }
   }
 }));
 
@@ -168,7 +176,7 @@ export default function CommentNotification(inProps: CommentNotificationProps): 
           </>
         }
         secondary={
-          <>
+          <React.Fragment>
             <Link to={scRoutingContext.url(SCRoutes.COMMENT_ROUTE_NAME, getRouteData(notificationObject.comment))}>
               <Typography variant="body2" gutterBottom className={classes.contributionText}>
                 {getContributionSnippet(notificationObject.comment)}
@@ -204,7 +212,7 @@ export default function CommentNotification(inProps: CommentNotificationProps): 
                 </LoadingButton>
               </Stack>
             )}
-          </>
+          </React.Fragment>
         }
         footer={
           <>

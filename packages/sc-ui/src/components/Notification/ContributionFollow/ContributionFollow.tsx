@@ -33,11 +33,22 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
+  [`& .${classes.username}`]: {
+    fontWeight: 700,
+    '&:hover': {
+      textDecoration: 'underline'
+    }
+  },
   [`& .${classes.followText}`]: {
     color: theme.palette.text.primary
   },
   [`& .${classes.contributionText}`]: {
-    textDecoration: 'underline'
+    '&:hover': {
+      textDecoration: 'underline'
+    },
+    textOverflow: 'ellipsis',
+    display: 'inline',
+    overflow: 'hidden'
   },
   '& .MuiIcon-root': {
     fontSize: '18px',
@@ -128,7 +139,9 @@ export default function ContributionFollowNotification(inProps: ContributionFoll
             })}
           </>
         }
-        secondary={<DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />}
+        secondary={
+          template === SCNotificationObjectTemplateType.DETAIL && <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
+        }
         footer={
           <>
             {template === SCNotificationObjectTemplateType.TOAST && (
