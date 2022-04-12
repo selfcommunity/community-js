@@ -159,7 +159,7 @@ export default function MentionNotification(inProps: MentionNotificationProps): 
             {template === SCNotificationObjectTemplateType.TOAST && (
               <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
                 <DateTimeAgo date={notificationObject.active_at} />
-                <Typography color="primary">
+                <Typography color="primary" component={'div'}>
                   <Link to={scRoutingContext.url(SCRoutes[`${contribution.type.toUpperCase()}_ROUTE_NAME`], getRouteData(contribution))}>
                     <FormattedMessage id="ui.userToastNotifications.viewContribution" defaultMessage={'ui.userToastNotifications.viewContribution'} />
                   </Link>

@@ -15,7 +15,10 @@ const classes = {
 const Root = styled(List)(({theme}) => ({
   marginBottom: theme.spacing(2),
   [`& .${classes.item}`]: {
-    marginBottom: theme.spacing()
+    marginBottom: theme.spacing(),
+    '&::before': {
+      height: '11% !important'
+    }
   }
 }));
 

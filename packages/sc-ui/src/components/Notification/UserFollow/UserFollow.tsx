@@ -133,7 +133,7 @@ export default function UserFollowNotification(inProps: NotificationFollowProps)
             {template === SCNotificationObjectTemplateType.TOAST && (
               <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
                 <DateTimeAgo date={notificationObject.active_at} />
-                <Typography color="primary">
+                <Typography color="primary" component={'div'}>
                   <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.follower)}>
                     <FormattedMessage id="ui.userToastNotifications.goToProfile" defaultMessage={'ui.userToastNotifications.goToProfile'} />
                   </Link>

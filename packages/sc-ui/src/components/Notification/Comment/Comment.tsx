@@ -144,6 +144,13 @@ export default function CommentNotification(inProps: CommentNotificationProps): 
   const intl = useIntl();
 
   /**
+   * Handle vote
+   */
+  function handleVote() {
+    return onVote && index !== undefined && onVote(index, notificationObject.comment);
+  }
+
+  /**
    * Renders root object
    */
   return (
@@ -191,9 +198,7 @@ export default function CommentNotification(inProps: CommentNotificationProps): 
                   size={'small'}
                   classes={{root: classes.voteButton}}
                   variant={'text'}
-                  onClick={() => {
-                    onVote && index && onVote(index, notificationObject.comment);
-                  }}
+                  onClick={handleVote}
                   disabled={loadingVote === index}
                   loading={loadingVote === index}>
                   {notificationObject.comment.voted ? (
@@ -219,10 +224,8 @@ export default function CommentNotification(inProps: CommentNotificationProps): 
             {template === SCNotificationObjectTemplateType.TOAST && (
               <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
                 <DateTimeAgo date={notificationObject.active_at} />
-                <Typography color="primary">
-                  <Link
-                    to={scRoutingContext.url(SCRoutes.COMMENT_ROUTE_NAME, getRouteData(notificationObject.comment))}
-                    sx={{textDecoration: 'underline'}}>
+                <Typography color="primary" component={'div'}>
+                  <Link to={scRoutingContext.url(SCRoutes.COMMENT_ROUTE_NAME, getRouteData(notificationObject.comment))}>
                     <FormattedMessage id="ui.userToastNotifications.viewContribution" defaultMessage={'ui.userToastNotifications.viewContribution'} />
                   </Link>
                 </Typography>

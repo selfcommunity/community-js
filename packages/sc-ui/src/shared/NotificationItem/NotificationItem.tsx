@@ -75,14 +75,6 @@ const Root = styled(Widget, {
   },
   [`&.${classes.newSnippet}`]: {
     '&:before': {
-      borderRadius: '5px',
-      width: '4px',
-      left: 1,
-      height: '100%',
-      display: 'block',
-      zIndex: '20',
-      position: 'absolute',
-      content: '" "',
       backgroundColor: `${red[200]}`
     }
   },

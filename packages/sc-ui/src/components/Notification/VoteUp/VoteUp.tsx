@@ -141,7 +141,7 @@ export default function VoteUpNotification(inProps: NotificationVoteUpProps): JS
           <>
             <Link
               to={scRoutingContext.url(SCRoutes[`${contributionType.toUpperCase()}_ROUTE_NAME`], getRouteData(notificationObject[contributionType]))}>
-              <Typography variant="body2" className={classes.contributionText} gutterBottom>
+              <Typography variant="body2" className={classes.contributionText} gutterBottom component={'div'}>
                 {getContributionSnippet(notificationObject[contributionType])}
               </Typography>
             </Link>
@@ -152,7 +152,7 @@ export default function VoteUpNotification(inProps: NotificationVoteUpProps): JS
           template === SCNotificationObjectTemplateType.TOAST && (
             <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
               <DateTimeAgo date={notificationObject.active_at} />
-              <Typography color="primary">
+              <Typography color="primary" component={'div'}>
                 <Link to={scRoutingContext.url(getContributionRouteName(contribution), getRouteData(contribution))}>
                   <FormattedMessage id="ui.userToastNotifications.viewContribution" defaultMessage={'ui.userToastNotifications.viewContribution'} />
                 </Link>

@@ -339,15 +339,15 @@ export default function SnippetNotifications(inProps: SnippetNotificationsProps)
               </Box>
             ) : (
               <ScrollContainer {...ScrollContainerProps}>
-                <MenuList className={classes.notificationsList} component={'div'}>
+                <MenuList className={classes.notificationsList}>
                   {notifications.slice(0, showMax).map((notificationObject: SCNotificationAggregatedType, i) => (
-                    <Box key={i}>
+                    <React.Fragment key={i}>
                       {notificationObject.aggregated.map((n: SCNotificationType, k) => (
                         <MenuItem className={classes.notificationItem} key={k}>
                           {renderAggregatedItem(n, i)}
                         </MenuItem>
                       ))}
-                    </Box>
+                    </React.Fragment>
                   ))}
                 </MenuList>
               </ScrollContainer>

@@ -155,7 +155,7 @@ export default function IncubatorApprovedNotification(inProps: NotificationIncub
             {template === SCNotificationObjectTemplateType.TOAST && (
               <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
                 <DateTimeAgo date={notificationObject.active_at} />
-                <Typography color="primary">
+                <Typography color="primary" component={'div'}>
                   <Link to={scRoutingContext.url(SCRoutes.CATEGORY_ROUTE_NAME, notificationObject.incubator)}>
                     <FormattedMessage
                       id="ui.userToastNotifications.incubatorApproved.viewIncubator"
