@@ -292,7 +292,7 @@
   "ui.notification.showOthers": "Show more",
   "ui.notification.notificationSuspended": "Suspended notifications. Click to reactivate.",
   "ui.notification.notificationSuspend": "Active notifications. Click to disable.",
-  "ui.notification.receivePrivateMessage": "sent you {total, plural, =0 {# messages} one {# message} other {# messages}}",
+  "ui.notification.receivePrivateMessage": "sent you {total, plural, =0 {# messages} one {a message} other {# messages}}",
   "ui.notification.userFollow.followUser": "started following you",
   "ui.notification.comment.comment": "commented on your content:< ",
   "ui.notification.comment.nestedComment": "replied to your comment: ",

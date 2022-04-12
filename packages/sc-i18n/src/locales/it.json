@@ -292,7 +292,7 @@
   "ui.notification.showOthers": "Vedi altro",
   "ui.notification.notificationSuspended": "Notifiche sospese. Clicca per riattivarle.",
   "ui.notification.notificationSuspend": "Notifiche attive. Clicca per disattivarle.",
-  "ui.notification.receivePrivateMessage": "ti ha inviato {total, plural, =0 {# messaggi} one {# messaggio} other {# messaggi}}",
+  "ui.notification.receivePrivateMessage": "ti ha inviato {total, plural, =0 {# messaggi} one {un messaggio} other {# messaggi}}",
   "ui.notification.userFollow.followUser": "ti sta seguendo",
   "ui.notification.comment.comment": "ha commentato il tuo contenuto: ",
   "ui.notification.comment.nestedComment": "ha replicato al tuo commento: ",
