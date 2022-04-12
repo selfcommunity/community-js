@@ -142,7 +142,6 @@ export default function KindlyNoticeForNotification(inProps: NotificationKindlyN
    */
   return (
     <Root id={id} className={classNames(classes.root, className, `${PREFIX}-${template}`)} {...rest}>
-      Ciao
       <NotificationItem
         template={template}
         isNew={notificationObject.is_new}
