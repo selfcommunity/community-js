@@ -520,12 +520,20 @@ const Endpoints: {[key: string]: EndpointType} = {
   /**
    * Insights
    **/
+  InsightBestContribution: {
+    url: urlReplacer('/api/v2/insight/contribution/'),
+    method: 'GET',
+  },
   InsightBestEmbed: {
     url: urlReplacer('/api/v2/insight/embed/'),
     method: 'GET',
   },
   InsightBestUser: {
     url: urlReplacer('/api/v2/insight/user/'),
+    method: 'GET',
+  },
+  InsightContributionCounter: {
+    url: urlReplacer('/api/v2/insight/contribution/counters/?contribution_id=$(id)'),
     method: 'GET',
   },
   InsightEmbedCounter: {
