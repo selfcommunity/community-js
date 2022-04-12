@@ -13,6 +13,7 @@ import UserConnectionNotification from '../Notification/UserConnection';
 import VoteUpNotification from '../Notification/VoteUp';
 import PrivateMessageNotification from '../Notification/PrivateMessage';
 import MentionNotification from '../Notification/Mention';
+import KindlyNoticeFlagNotification from '../Notification/KindlyNoticeFlag';
 import IncubatorApprovedNotification from '../Notification/IncubatorApproved';
 import UserBlockedNotification from '../Notification/UserBlocked';
 import Message from '../BroadcastMessages/Message';
@@ -114,10 +115,12 @@ export default function UserToastNotifications(inProps: ToastNotificationsProps)
         content = <VoteUpNotification notificationObject={n.notification_obj} template={SCNotificationObjectTemplateType.TOAST} />;
       } else if (type === SCNotificationTypologyType.PRIVATE_MESSAGE) {
         content = <PrivateMessageNotification notificationObject={n.notification_obj} template={SCNotificationObjectTemplateType.TOAST} />;
-      } else if (n.type === SCNotificationTypologyType.BLOCKED_USER || n.type === SCNotificationTypologyType.UNBLOCKED_USER) {
+      } else if (type === SCNotificationTypologyType.BLOCKED_USER || type === SCNotificationTypologyType.UNBLOCKED_USER) {
         return <UserBlockedNotification notificationObject={n.notification_obj} template={SCNotificationObjectTemplateType.TOAST} />;
       } else if (type === SCNotificationTypologyType.MENTION) {
         content = <MentionNotification notificationObject={n.notification_obj} template={SCNotificationObjectTemplateType.TOAST} />;
+      } else if (type === SCNotificationTypologyType.KINDLY_NOTICE_FLAG) {
+        content = <KindlyNoticeFlagNotification notificationObject={n.notification_obj} template={SCNotificationObjectTemplateType.TOAST} />;
       } else if (type === SCNotificationTypologyType.INCUBATOR_APPROVED) {
         content = <IncubatorApprovedNotification notificationObject={n.notification_obj} template={SCNotificationObjectTemplateType.TOAST} />;
       }

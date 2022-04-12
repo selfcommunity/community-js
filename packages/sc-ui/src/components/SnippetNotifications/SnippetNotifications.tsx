@@ -55,10 +55,12 @@ const Root = styled(Box, {
   width: '100%',
   [`& .${classes.notificationsWrap}`]: {
     height: 330,
+    maxWidth: 320,
     overflowY: 'hidden'
   },
   [`& .${classes.notificationItem}`]: {
-    padding: 5,
+    padding: 0,
+    margin: `${theme.spacing()} 0px`,
     whiteSpace: 'normal',
     '&:hover': {
       backgroundColor: 'rgba(0, 0, 0, 0.05)'
@@ -339,13 +341,13 @@ export default function SnippetNotifications(inProps: SnippetNotificationsProps)
               <ScrollContainer {...ScrollContainerProps}>
                 <MenuList className={classes.notificationsList}>
                   {notifications.slice(0, showMax).map((notificationObject: SCNotificationAggregatedType, i) => (
-                    <Box key={i}>
+                    <React.Fragment key={i}>
                       {notificationObject.aggregated.map((n: SCNotificationType, k) => (
                         <MenuItem className={classes.notificationItem} key={k}>
                           {renderAggregatedItem(n, i)}
                         </MenuItem>
                       ))}
-                    </Box>
+                    </React.Fragment>
                   ))}
                 </MenuList>
               </ScrollContainer>

@@ -1,15 +1,14 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import {Avatar, Box, ListItem, ListItemAvatar, ListItemText, Stack, Typography} from '@mui/material';
+import {Avatar, Box, Stack, Typography} from '@mui/material';
 import {Link, SCNotificationVoteUpType, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
-import NewChip from '../../../shared/NewChip/NewChip';
 import classNames from 'classnames';
-import {grey, red} from '@mui/material/colors';
 import {SCNotificationObjectTemplateType} from '../../../types';
 import {getContributeType, getRouteData} from '../../../utils/contribute';
 import useThemeProps from '@mui/material/styles/useThemeProps';
+import NotificationItem from '../../../shared/NotificationItem';
 
 const messages = defineMessages({
   contributionFollow: {
@@ -22,16 +21,11 @@ const PREFIX = 'SCContributionFollowNotification';
 
 const classes = {
   root: `${PREFIX}-root`,
-  listItemSnippet: `${PREFIX}-list-item-snippet`,
-  listItemSnippetNew: `${PREFIX}-list-item-snippet-new`,
-  avatarWrap: `${PREFIX}-avatar-wrap`,
   avatar: `${PREFIX}-avatar`,
-  avatarSnippet: `${PREFIX}-avatar-snippet`,
   username: `${PREFIX}-username`,
   followText: `${PREFIX}-mention-text`,
   activeAt: `${PREFIX}-active-at`,
-  contributionText: `${PREFIX}-contribution-text`,
-  toastInfo: `${PREFIX}-toast-info`
+  contributionText: `${PREFIX}-contribution-text`
 };
 
 const Root = styled(Box, {
@@ -39,39 +33,26 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  [`& .${classes.listItemSnippet}`]: {
-    padding: '10px 5px',
-    alignItems: 'center',
-    borderLeft: `2px solid ${grey[300]}`
-  },
-  [`& .${classes.listItemSnippetNew}`]: {
-    borderLeft: `2px solid ${red[500]}`
-  },
-  [`& .${classes.avatarWrap}`]: {
-    minWidth: 'auto',
-    paddingRight: 10
-  },
-  [`& .${classes.avatar}`]: {
-    backgroundColor: red[500],
-    color: '#FFF'
-  },
-  [`& .${classes.avatarSnippet}`]: {
-    width: 30,
-    height: 30
+  [`& .${classes.username}`]: {
+    fontWeight: 700,
+    '&:hover': {
+      textDecoration: 'underline'
+    }
   },
   [`& .${classes.followText}`]: {
     color: theme.palette.text.primary
   },
   [`& .${classes.contributionText}`]: {
-    textDecoration: 'underline'
+    '&:hover': {
+      textDecoration: 'underline'
+    },
+    textOverflow: 'ellipsis',
+    display: 'inline',
+    overflow: 'hidden'
   },
   '& .MuiIcon-root': {
     fontSize: '18px',
     marginBottom: '0.5px'
-  },
-  [`& .${classes.toastInfo}`]: {
-    marginTop: 10,
-    padding: `0px ${theme.spacing()}`
   }
 }));
 
@@ -129,7 +110,6 @@ export default function ContributionFollowNotification(inProps: ContributionFoll
   const scRoutingContext: SCRoutingContextType = useSCRouting();
 
   // CONST
-  const isSnippetTemplate = template === SCNotificationObjectTemplateType.SNIPPET;
   const contributionType = getContributeType(notificationObject);
 
   // INTL
@@ -140,63 +120,47 @@ export default function ContributionFollowNotification(inProps: ContributionFoll
    */
   return (
     <Root id={id} className={classNames(classes.root, className, `${PREFIX}-${template}`)} {...rest}>
-      <ListItem
-        component={'div'}
-        classes={{
-          root: classNames({
-            [classes.listItemSnippet]: isSnippetTemplate,
-            [classes.listItemSnippetNew]: isSnippetTemplate && notificationObject.is_new
-          })
-        }}>
-        <ListItemAvatar classes={{root: classes.avatarWrap}}>
+      <NotificationItem
+        template={template}
+        isNew={notificationObject.is_new}
+        image={
           <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.user)}>
-            <Avatar
-              alt={notificationObject.user.username}
-              variant="circular"
-              src={notificationObject.user.avatar}
-              classes={{root: classNames(classes.avatar, {[classes.avatarSnippet]: isSnippetTemplate})}}
-            />
+            <Avatar alt={notificationObject.user.username} variant="circular" src={notificationObject.user.avatar} classes={{root: classes.avatar}} />
           </Link>
-        </ListItemAvatar>
-        <ListItemText
-          disableTypography={true}
-          primary={
-            <>
-              {template === SCNotificationObjectTemplateType.DETAIL && notificationObject.is_new && <NewChip />}
-              <Typography component="div" className={classes.followText} color="inherit">
-                <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.user)} className={classes.username}>
-                  {notificationObject.user.username}
-                </Link>{' '}
-                {intl.formatMessage(messages.contributionFollow, {
-                  username: notificationObject.user.username,
-                  b: (...chunks) => <strong>{chunks}</strong>
-                })}
-              </Typography>
-            </>
-          }
-          secondary={
-            <>
-              {template === SCNotificationObjectTemplateType.DETAIL && (
-                <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
-              )}
-            </>
-          }
-        />
-      </ListItem>
-      {template === SCNotificationObjectTemplateType.TOAST && (
-        <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2} className={classes.toastInfo}>
-          <DateTimeAgo date={notificationObject.active_at} />
-          <Typography color="primary">
-            <Link
-              to={scRoutingContext.url(
-                SCRoutes[`${notificationObject[contributionType]['type'].toUpperCase()}_ROUTE_NAME`],
-                getRouteData(notificationObject[contributionType])
-              )}>
-              <FormattedMessage id="ui.userToastNotifications.viewContribution" defaultMessage={'ui.userToastNotifications.viewContribution'} />
-            </Link>
-          </Typography>
-        </Stack>
-      )}
+        }
+        primary={
+          <>
+            <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.user)} className={classes.username}>
+              {notificationObject.user.username}
+            </Link>{' '}
+            {intl.formatMessage(messages.contributionFollow, {
+              username: notificationObject.user.username,
+              b: (...chunks) => <strong>{chunks}</strong>
+            })}
+          </>
+        }
+        secondary={
+          template === SCNotificationObjectTemplateType.DETAIL && <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
+        }
+        footer={
+          <>
+            {template === SCNotificationObjectTemplateType.TOAST && (
+              <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
+                <DateTimeAgo date={notificationObject.active_at} />
+                <Typography color="primary" component={'div'}>
+                  <Link
+                    to={scRoutingContext.url(
+                      SCRoutes[`${notificationObject[contributionType]['type'].toUpperCase()}_ROUTE_NAME`],
+                      getRouteData(notificationObject[contributionType])
+                    )}>
+                    <FormattedMessage id="ui.userToastNotifications.viewContribution" defaultMessage={'ui.userToastNotifications.viewContribution'} />
+                  </Link>
+                </Typography>
+              </Stack>
+            )}
+          </>
+        }
+      />
     </Root>
   );
 }

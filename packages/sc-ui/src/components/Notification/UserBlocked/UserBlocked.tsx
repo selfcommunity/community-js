@@ -1,15 +1,15 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import {Avatar, Box, ListItem, ListItemAvatar, ListItemText, Stack, Typography} from '@mui/material';
+import {Avatar, Box, Stack} from '@mui/material';
 import {green, grey, red} from '@mui/material/colors';
 import Icon from '@mui/material/Icon';
 import {SCNotificationBlockedUserType, SCNotificationTypologyType} from '@selfcommunity/core';
 import {defineMessages, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
-import NewChip from '../../../shared/NewChip/NewChip';
 import classNames from 'classnames';
 import {SCNotificationObjectTemplateType} from '../../../types';
 import useThemeProps from '@mui/material/styles/useThemeProps';
+import NotificationItem from '../../../shared/NotificationItem';
 
 const messages = defineMessages({
   accountBlocked: {
@@ -26,15 +26,10 @@ const PREFIX = 'SCUserBlockedNotification';
 
 const classes = {
   root: `${PREFIX}-root`,
-  listItemSnippet: `${PREFIX}-list-item-snippet`,
-  listItemSnippetNew: `${PREFIX}-list-item-snippet-new`,
-  blockedIconWrap: `${PREFIX}-flag-icon-wrap`,
   unBlockedIcon: `${PREFIX}-unblocked-icon`,
   blockedIcon: `${PREFIX}-blocked-icon`,
-  blockedIconSnippet: `${PREFIX}-blocked-icon-snippet`,
   blockedText: `${PREFIX}-blocked-text`,
-  activeAt: `${PREFIX}-active-at`,
-  toastInfo: `${PREFIX}-toast-info`
+  activeAt: `${PREFIX}-active-at`
 };
 
 const Root = styled(Box, {
@@ -42,18 +37,6 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  [`& .${classes.listItemSnippet}`]: {
-    padding: '10px 5px',
-    alignItems: 'center',
-    borderLeft: `2px solid ${grey[300]}`
-  },
-  [`& .${classes.listItemSnippetNew}`]: {
-    borderLeft: `2px solid ${red[500]}`
-  },
-  [`& .${classes.blockedIconWrap}`]: {
-    minWidth: 'auto',
-    paddingRight: 10
-  },
   [`& .${classes.unBlockedIcon}`]: {
     backgroundColor: green[500],
     color: '#FFF'
@@ -62,16 +45,11 @@ const Root = styled(Box, {
     backgroundColor: red[500],
     color: '#FFF'
   },
-  [`& .${classes.blockedIconSnippet}`]: {
-    width: 30,
-    height: 30
-  },
   [`& .${classes.blockedText}`]: {
-    color: theme.palette.text.primary
-  },
-  [`& .${classes.toastInfo}`]: {
-    marginTop: 10,
-    padding: `0px ${theme.spacing()}`
+    color: theme.palette.text.primary,
+    textOverflow: 'ellipsis',
+    display: 'inline',
+    overflow: 'hidden'
   }
 }));
 
@@ -127,60 +105,45 @@ export default function UserBlockedNotification(inProps: NotificationBlockedProp
   // INTL
   const intl = useIntl();
 
-  // CONST
-  const isSnippetTemplate = template === SCNotificationObjectTemplateType.SNIPPET;
-
   /**
    * Renders root object
    */
   return (
     <Root id={id} className={classNames(classes.root, className, `${PREFIX}-${template}`)} {...rest}>
-      <ListItem
-        component={'div'}
-        classes={{
-          root: classNames({
-            [classes.listItemSnippet]: isSnippetTemplate,
-            [classes.listItemSnippetNew]: isSnippetTemplate && notificationObject.is_new
-          })
-        }}>
-        <ListItemAvatar classes={{root: classes.blockedIconWrap}}>
+      <NotificationItem
+        template={template}
+        isNew={notificationObject.is_new}
+        image={
           <Avatar
             variant="circular"
             classes={{
               root: classNames(classes.unBlockedIcon, {
-                [classes.blockedIcon]: notificationObject.type === SCNotificationTypologyType.BLOCKED_USER,
-                [classes.blockedIconSnippet]: isSnippetTemplate
+                [classes.blockedIcon]: notificationObject.type === SCNotificationTypologyType.BLOCKED_USER
               })
             }}>
             <Icon>outlined_flag</Icon>
           </Avatar>
-        </ListItemAvatar>
-        <ListItemText
-          disableTypography={true}
-          primary={
-            <>
-              {template === SCNotificationObjectTemplateType.DETAIL && notificationObject.is_new && <NewChip />}
-              <Typography component="div" color="inherit" className={classes.blockedText}>
-                {notificationObject.type === SCNotificationTypologyType.BLOCKED_USER
-                  ? intl.formatMessage(messages.accountBlocked, {b: (...chunks) => <strong>{chunks}</strong>})
-                  : intl.formatMessage(messages.accountReactivated, {b: (...chunks) => <strong>{chunks}</strong>})}
-              </Typography>
-            </>
-          }
-          secondary={
-            <>
-              {template === SCNotificationObjectTemplateType.DETAIL && (
-                <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
-              )}
-            </>
-          }
-        />
-      </ListItem>
-      {template === SCNotificationObjectTemplateType.TOAST && (
-        <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2} className={classes.toastInfo}>
-          <DateTimeAgo date={notificationObject.active_at} />
-        </Stack>
-      )}
+        }
+        primary={
+          <>
+            {notificationObject.type === SCNotificationTypologyType.BLOCKED_USER
+              ? intl.formatMessage(messages.accountBlocked, {b: (...chunks) => <strong>{chunks}</strong>})
+              : intl.formatMessage(messages.accountReactivated, {b: (...chunks) => <strong>{chunks}</strong>})}
+          </>
+        }
+        secondary={
+          template === SCNotificationObjectTemplateType.DETAIL && <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
+        }
+        footer={
+          <>
+            {template === SCNotificationObjectTemplateType.TOAST && (
+              <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
+                <DateTimeAgo date={notificationObject.active_at} />
+              </Stack>
+            )}
+          </>
+        }
+      />
     </Root>
   );
 }
