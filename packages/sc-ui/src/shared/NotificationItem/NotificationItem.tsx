@@ -69,6 +69,9 @@ const Root = styled(Widget, {
       content: '" "',
       backgroundColor: `${grey[200]}`
     },
+    '& .SCNotificationItem-header': {
+      alignItems: 'flex-start'
+    },
     '& .SCNotificationItem-content': {
       padding: `5px ${theme.spacing()}`
     }
