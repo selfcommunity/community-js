@@ -91,7 +91,7 @@ const Root = styled(Widget, {
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     width: '100%',
-    flex: 2
+    flex: 1
   },
   [`& .${classes.image}`]: {
     flexShrink: 0,
