@@ -283,7 +283,7 @@ export default function Message(inProps: MessageProps): JSX.Element {
       ) : (
         <LazyLoad once>
           <ListItem onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} button={true}>
-            {!snippetType && isHovering && loggedUser === message.sender_id && message.status !== 'hidden' && (
+            {!snippetType && isHovering && loggedUser === message.sender.id && message.status !== 'hidden' && (
               <>
                 <IconButton sx={{marginBottom: '25px'}} onClick={onDeleteIconClick}>
                   <Icon fontSize="small">delete</Icon>

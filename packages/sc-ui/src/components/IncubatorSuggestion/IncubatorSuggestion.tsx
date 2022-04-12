@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Button, List, Typography, Box, IconButton, ListItem} from '@mui/material';
+import {Button, List, Typography, ListItem} from '@mui/material';
 import CardContent from '@mui/material/CardContent';
-import {Endpoints, http, Logger, SCIncubatorType} from '@selfcommunity/core';
+import {Endpoints, http, Logger, SCIncubatorType, SCUserContextType, useSCUser} from '@selfcommunity/core';
 import Skeleton from './Skeleton';
 import {AxiosResponse} from 'axios';
 import {SCOPE_SC_UI} from '../../constants/Errors';
@@ -12,23 +12,18 @@ import BaseDialog from '../../shared/BaseDialog';
 import CentralProgress from '../../shared/CentralProgress';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Incubator, {IncubatorProps} from '../Incubator';
-import Popover from '@mui/material/Popover';
-import Icon from '@mui/material/Icon';
 import useThemeProps from '@mui/material/styles/useThemeProps';
 import Widget from '../Widget';
-import CreateIncubatorDialog from './CreateIncubatorDialog';
 import IncubatorDetail from '../IncubatorDetail';
 
-const PREFIX = 'SCIncubatorsList';
+const PREFIX = 'SCIncubatorSuggestion';
 
 const classes = {
   root: `${PREFIX}-root`,
-  header: `${PREFIX}-header`,
   title: `${PREFIX}-title`,
   incubatorItem: `${PREFIX}-incubator-item`,
   noResults: `${PREFIX}-no-results`,
-  actions: `${PREFIX}-actions`,
-  helpPopover: `${PREFIX}-help-popover`
+  showMore: `${PREFIX}-show-more`
 };
 
 const Root = styled(Widget, {
@@ -38,14 +33,6 @@ const Root = styled(Widget, {
 })(({theme}) => ({
   maxWidth: 700,
   marginBottom: theme.spacing(2),
-  [`& .${classes.header}`]: {
-    display: 'flex',
-    alignItems: 'center'
-  },
-  [`& .${classes.actions}`]: {
-    display: 'flex',
-    justifyContent: 'space-between'
-  },
   '& .MuiListItem-root': {
     display: 'block',
     padding: 0
@@ -58,7 +45,7 @@ const Root = styled(Widget, {
   }
 }));
 
-export interface IncubatorsListProps {
+export interface IncubatorSuggestionProps {
   /**
    * Hides this component
    * @default false
@@ -81,40 +68,43 @@ export interface IncubatorsListProps {
   [p: string]: any;
 }
 /**
- > API documentation for the Community-UI Incubators List component. Learn about the available props and the CSS API.
+ > API documentation for the Community-UI Incubator Suggestion component. Learn about the available props and the CSS API.
  *
  #### Import
  ```jsx
- import {IncubatorsList} from '@selfcommunity/ui';
+ import {IncubatorSuggestion} from '@selfcommunity/ui';
  ```
 
  #### Component Name
- The name `SCIncubatorsList` can be used when providing style overrides in the theme.
+ The name `SCIncubatorSuggestion` can be used when providing style overrides in the theme.
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCIncubatorsList-root|Styles applied to the root element.|
- |header|.SCIncubatorsList-header|Styles applied to the header element.|
- |title|.SCIncubatorsList-title|Styles applied to the title element.|
- |incubatorItem|.SCIncubatorsList-incubator-item|Styles applied to the incubator item element.|
- |noResults|.SCIncubatorsList-no-results|Styles applied to the no results section.|
- |actions|.SCIncubatorsList-actions|Styles applied to the actions section.|
- |helpPopover|.SCIncubatorsList-help-popover|Styles applied to the help popover element.|
+ |root|.SCIncubatorSuggestion-root|Styles applied to the root element.|
+ |title|.SCIncubatorSuggestion-title|Styles applied to the title element.|
+ |incubatorItem|.SCIncubatorSuggestion-incubator-item|Styles applied to the incubator item element.|
+ |noResults|.SCIncubatorSuggestion-no-results|Styles applied to the no results section.|
+ |showMore|.SCIncubatorSuggestion-show-more|Styles applied to the show more button element.|
+
 
  * @param inProps
  */
-export default function IncubatorsList(inProps: IncubatorsListProps): JSX.Element {
+export default function IncubatorSuggestion(inProps: IncubatorSuggestionProps): JSX.Element {
   // CONST
   const limit = 2;
 
   // PROPS
-  const props: IncubatorsListProps = useThemeProps({
+  const props: IncubatorSuggestionProps = useThemeProps({
     props: inProps,
     name: PREFIX
   });
   const {autoHide = true, className, IncubatorProps = {}, ...rest} = props;
+
+  // CONTEXT
+  const scUserContext: SCUserContextType = useSCUser();
+  const authUserId = scUserContext.user ? scUserContext.user.id : null;
 
   // STATE
   const [incubators, setIncubators] = useState<any[]>([]);
@@ -123,25 +113,11 @@ export default function IncubatorsList(inProps: IncubatorsListProps): JSX.Elemen
   const [hasMore, setHasMore] = useState<boolean>(false);
   const [total, setTotal] = useState<number>(0);
   const [openIncubatorsDialog, setOpenIncubatorsDialog] = useState<boolean>(false);
-  const [openCreateIncubatorDialog, setOpenCreateIncubatorDialog] = useState<boolean>(false);
   const [openIncubatorDetailDialog, setOpenIncubatorDetailDialog] = useState<boolean>(false);
-  const [next, setNext] = useState<string>(`${Endpoints.GetAllIncubators.url()}?limit=10`);
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const isOpen = Boolean(anchorEl);
+  const [next, setNext] = useState<string>(`${Endpoints.GetIncubatorSuggestion.url()}?limit=10`);
   const [detailObj, setDetailObj] = useState(null);
 
   // HANDLERS
-
-  const handleClickHelpButton = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handlePopoverClose = () => {
-    setAnchorEl(null);
-  };
-
-  const handleCreateIncubatorDialogClose = () => {
-    setOpenCreateIncubatorDialog(false);
-  };
 
   function handleIncubatorDetailDialogOpening(incubator) {
     setOpenIncubatorDetailDialog(true);
@@ -154,22 +130,22 @@ export default function IncubatorsList(inProps: IncubatorsListProps): JSX.Elemen
   };
 
   /**
-   * Fetches incubators list
+   * Fetches incubator suggestion list
    */
-  function fetchIncubators() {
+  function fetchIncubatorSuggestion() {
     if (next) {
       http
         .request({
           url: next,
-          method: Endpoints.GetAllIncubators.method
+          method: Endpoints.GetIncubatorSuggestion.method
         })
         .then((res: AxiosResponse<any>) => {
           const data = res.data;
-          setIncubators([...incubators, ...data['results']]);
-          setHasMore(data['count'] > visibleIncubators);
+          setIncubators([...incubators, ...data]);
+          setHasMore(data.length > visibleIncubators);
           setNext(data['next']);
           setLoading(false);
-          setTotal(data['count']);
+          setTotal(data.length);
         })
         .catch((error) => {
           setLoading(false);
@@ -179,11 +155,13 @@ export default function IncubatorsList(inProps: IncubatorsListProps): JSX.Elemen
   }
 
   /**
-   * On mount, fetches  incubators list
+   * On mount, if user is authenticated, fetches suggested incubators list
    */
   useEffect(() => {
-    fetchIncubators();
-  }, []);
+    if (scUserContext.user) {
+      fetchIncubatorSuggestion();
+    }
+  }, [authUserId]);
 
   /**
    * Handles subscriptions counter update on subscribe/unsubscribe action.
@@ -205,7 +183,7 @@ export default function IncubatorsList(inProps: IncubatorsListProps): JSX.Elemen
   }
 
   /**
-   * Renders incubators list
+   * Renders suggested incubators list
    */
   const c = (
     <React.Fragment>
@@ -213,33 +191,12 @@ export default function IncubatorsList(inProps: IncubatorsListProps): JSX.Elemen
         <Skeleton elevation={0} />
       ) : (
         <CardContent>
-          <Box className={classes.header}>
-            <Typography className={classes.title} variant={'h5'}>
-              <FormattedMessage id="ui.incubatorsList.title" defaultMessage="ui.incubatorsList.title" />
-            </Typography>
-            <IconButton className={classes.helpPopover} color="primary" aria-label="info" component="span" onClick={handleClickHelpButton}>
-              <Icon fontSize="small">help_outline</Icon>
-            </IconButton>
-            {isOpen && (
-              <Popover
-                open={isOpen}
-                anchorEl={anchorEl}
-                onClose={handlePopoverClose}
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'right'
-                }}>
-                <Box sx={{p: '10px'}}>
-                  <Typography component={'span'} sx={{whiteSpace: 'pre-line'}}>
-                    <FormattedMessage id="ui.incubatorsList.popover" defaultMessage="ui.incubatorsList.popover" />
-                  </Typography>
-                </Box>
-              </Popover>
-            )}
-          </Box>
+          <Typography className={classes.title} variant={'h5'}>
+            <FormattedMessage id="ui.IncubatorSuggestion.title" defaultMessage="ui.IncubatorSuggestion.title" />
+          </Typography>
           {!total ? (
             <Typography className={classes.noResults} variant="body2">
-              <FormattedMessage id="ui.incubatorsList.noResults" defaultMessage="ui.incubatorsList.noResults" />
+              <FormattedMessage id="ui.IncubatorSuggestion.noResults" defaultMessage="ui.IncubatorSuggestion.noResults" />
             </Typography>
           ) : (
             <React.Fragment>
@@ -257,21 +214,16 @@ export default function IncubatorsList(inProps: IncubatorsListProps): JSX.Elemen
                   </ListItem>
                 ))}
               </List>
-              <Box className={classes.actions}>
-                {hasMore && (
-                  <Button size="small" onClick={() => setOpenIncubatorsDialog(true)}>
-                    <FormattedMessage id="ui.incubatorsList.ShowAll" defaultMessage="ui.incubatorsList.ShowAll" />
-                  </Button>
-                )}
-                <Button size="small" onClick={() => setOpenCreateIncubatorDialog(true)}>
-                  <FormattedMessage id="ui.incubatorsList.SuggestNewTopic" defaultMessage="ui.incubatorsList.SuggestNewTopic" />
+              {hasMore && (
+                <Button className={classes.showMore} size="small" onClick={() => setOpenIncubatorsDialog(true)}>
+                  <FormattedMessage id="ui.IncubatorSuggestion.ShowAll" defaultMessage="ui.IncubatorSuggestion.ShowAll" />
                 </Button>
-              </Box>
+              )}
             </React.Fragment>
           )}
           {openIncubatorsDialog && (
             <BaseDialog
-              title={<FormattedMessage id="ui.incubatorsList.title" defaultMessage="ui.incubatorsList.title" />}
+              title={<FormattedMessage id="ui.IncubatorSuggestion.title" defaultMessage="ui.IncubatorSuggestion.title" />}
               onClose={() => setOpenIncubatorsDialog(false)}
               open={openIncubatorsDialog}>
               {loading ? (
@@ -279,14 +231,14 @@ export default function IncubatorsList(inProps: IncubatorsListProps): JSX.Elemen
               ) : (
                 <InfiniteScroll
                   dataLength={incubators.length}
-                  next={fetchIncubators}
+                  next={fetchIncubatorSuggestion}
                   hasMore={Boolean(next)}
                   loader={<CentralProgress size={30} />}
                   height={400}
                   endMessage={
                     <p style={{textAlign: 'center'}}>
                       <b>
-                        <FormattedMessage id="ui.incubatorsList.noMoreIncubators" defaultMessage="ui.incubatorsList.noMoreIncubators" />
+                        <FormattedMessage id="ui.IncubatorSuggestion.noMoreIncubators" defaultMessage="ui.IncubatorSuggestion.noMoreIncubators" />
                       </b>
                     </p>
                   }>
@@ -308,7 +260,6 @@ export default function IncubatorsList(inProps: IncubatorsListProps): JSX.Elemen
               )}
             </BaseDialog>
           )}
-          {openCreateIncubatorDialog && <CreateIncubatorDialog open={openCreateIncubatorDialog} onClose={handleCreateIncubatorDialogClose} />}
           {openIncubatorDetailDialog && (
             <IncubatorDetail
               open={openIncubatorDetailDialog}
@@ -328,9 +279,12 @@ export default function IncubatorsList(inProps: IncubatorsListProps): JSX.Elemen
   if (autoHide && !total) {
     return null;
   }
-  return (
-    <Root className={classNames(classes.root, className)} {...rest}>
-      {c}
-    </Root>
-  );
+  if (scUserContext.user) {
+    return (
+      <Root className={classNames(classes.root, className)} {...rest}>
+        {c}
+      </Root>
+    );
+  }
+  return null;
 }

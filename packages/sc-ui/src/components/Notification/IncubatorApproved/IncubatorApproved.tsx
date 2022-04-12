@@ -1,14 +1,14 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import {Avatar, Box, ListItem, ListItemAvatar, ListItemText, Stack, Typography} from '@mui/material';
+import {Avatar, Box, Button, Stack, Typography} from '@mui/material';
 import {Link, SCRoutingContextType, useSCRouting, SCNotificationIncubatorType, SCRoutes} from '@selfcommunity/core';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
 import NewChip from '../../../shared/NewChip/NewChip';
 import classNames from 'classnames';
-import {grey, red} from '@mui/material/colors';
 import {SCNotificationObjectTemplateType} from '../../../types';
 import useThemeProps from '@mui/material/styles/useThemeProps';
+import NotificationItem from '../../../shared/NotificationItem';
 
 const messages = defineMessages({
   incubatorApproved: {
@@ -21,16 +21,10 @@ const PREFIX = 'SCIncubatorApprovedNotification';
 
 const classes = {
   root: `${PREFIX}-root`,
-  listItemSnippet: `${PREFIX}-list-item-snippet`,
-  listItemSnippetNew: `${PREFIX}-list-item-snippet-new`,
-  categoryIconWrap: `${PREFIX}-category-icon-wrap`,
   categoryIcon: `${PREFIX}-category-icon`,
-  categoryIconSnippet: `${PREFIX}-category-icon-snippet`,
   categoryApprovedText: `${PREFIX}-category-approved-text`,
   activeAt: `${PREFIX}-active-at`,
-  viewIncubatorWrap: `${PREFIX}-view-incubator-wrap`,
-  viewIncubatorLink: `${PREFIX}-view-incubator-link`,
-  toastInfo: `${PREFIX}-toast-info`
+  viewIncubatorButton: `${PREFIX}-view-incubator-button`
 };
 
 const Root = styled(Box, {
@@ -38,35 +32,13 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  [`& .${classes.listItemSnippet}`]: {
-    padding: '0px 5px',
-    alignItems: 'center',
-    borderLeft: `2px solid ${grey[300]}`
-  },
-  [`& .${classes.listItemSnippetNew}`]: {
-    borderLeft: `2px solid ${red[500]}`
-  },
-  [`& .${classes.categoryIconWrap}`]: {
-    minWidth: 'auto',
-    paddingRight: 10
-  },
   [`& .${classes.categoryIcon}`]: {
-    backgroundColor: red[500],
-    color: '#FFF'
+    borderRadius: 3
   },
-  [`& .${classes.categoryIconSnippet}`]: {
-    width: 30,
-    height: 30
-  },
-  [`& .${classes.categoryApprovedText}`]: {
-    color: theme.palette.text.primary
-  },
-  [`& .${classes.viewIncubatorLink}`]: {
-    paddingLeft: theme.spacing(2),
-    paddingBottom: theme.spacing()
-  },
-  [`& .${classes.toastInfo}`]: {
-    marginTop: 10
+  [`& .${classes.viewIncubatorButton}`]: {
+    padding: theme.spacing(),
+    paddingBottom: 0,
+    textTransform: 'initial'
   }
 }));
 
@@ -129,83 +101,73 @@ export default function IncubatorApprovedNotification(inProps: NotificationIncub
    */
   return (
     <Root id={id} className={classNames(classes.root, className, `${PREFIX}-${template}`)} {...rest}>
-      <ListItem
-        alignItems={isSnippetTemplate ? 'center' : 'flex-start'}
-        component={'div'}
-        classes={{
-          root: classNames({
-            [classes.listItemSnippet]: isSnippetTemplate,
-            [classes.listItemSnippetNew]: isSnippetTemplate && notificationObject.is_new
-          })
-        }}>
-        <ListItemAvatar classes={{root: classes.categoryIconWrap}}>
+      <NotificationItem
+        template={template}
+        isNew={notificationObject.is_new}
+        image={
           <Avatar
             alt={notificationObject.incubator.approved_category.name}
             src={notificationObject.incubator.approved_category.image_medium}
             variant="square"
-            classes={{root: classNames(classes.categoryIcon, {[classes.categoryIconSnippet]: isSnippetTemplate})}}
+            classes={{root: classes.categoryIcon}}
           />
-        </ListItemAvatar>
-        <ListItemText
-          disableTypography={true}
-          primary={
-            <>
-              {isSnippetTemplate ? (
-                <Link to={scRoutingContext.url(SCRoutes.CATEGORY_ROUTE_NAME, notificationObject.incubator.approved_category)}>
-                  <Typography component="div" className={classes.categoryApprovedText} color="inherit">
-                    {intl.formatMessage(messages.incubatorApproved, {
-                      name: notificationObject.incubator.name,
-                      b: (...chunks) => <strong>{chunks}</strong>
-                    })}
-                  </Typography>
-                </Link>
-              ) : (
-                <>
-                  {template === SCNotificationObjectTemplateType.DETAIL && notificationObject.is_new && <NewChip />}
-                  <Typography component="div" className={classes.categoryApprovedText} color="inherit">
-                    {intl.formatMessage(messages.incubatorApproved, {
-                      name: notificationObject.incubator.name,
-                      b: (...chunks) => <strong>{chunks}</strong>
-                    })}
-                  </Typography>
-                </>
-              )}
-            </>
-          }
-          secondary={
-            <>
-              {template === SCNotificationObjectTemplateType.DETAIL && (
-                <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
-              )}
-            </>
-          }
-        />
-      </ListItem>
-      {!isSnippetTemplate && (
-        <Box className={classes.viewIncubatorWrap}>
-          <Link to={scRoutingContext.url(SCRoutes.CATEGORY_ROUTE_NAME, notificationObject.incubator.approved_category)}>
-            <Typography component="div" className={classes.viewIncubatorLink}>
-              <FormattedMessage
-                id={'ui.notification.incubatorApproved.viewIncubator'}
-                defaultMessage={'ui.notification.incubatorApproved.viewIncubator'}
-              />
-            </Typography>
-          </Link>
-        </Box>
-      )}
-      {template === SCNotificationObjectTemplateType.TOAST && (
-        <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2} className={classes.toastInfo}>
-          <DateTimeAgo date={notificationObject.active_at} />
-          <Typography color="primary">
-            <Link to={scRoutingContext.url(SCRoutes.CATEGORY_ROUTE_NAME, notificationObject.incubator)}>
-              <FormattedMessage
-                id="ui.userToastNotifications.incubatorApproved.viewIncubator"
-                defaultMessage={'ui.userToastNotifications.incubatorApproved.viewIncubator'}
-              />
-            </Link>
-          </Typography>
-        </Stack>
-      )}
+        }
+        primary={
+          <>
+            {isSnippetTemplate ? (
+              <Link to={scRoutingContext.url(SCRoutes.CATEGORY_ROUTE_NAME, notificationObject.incubator.approved_category)}>
+                <Typography component="div" className={classes.categoryApprovedText} color="inherit">
+                  {intl.formatMessage(messages.incubatorApproved, {
+                    name: notificationObject.incubator.name,
+                    b: (...chunks) => <strong>{chunks}</strong>
+                  })}
+                </Typography>
+              </Link>
+            ) : (
+              <>
+                {template === SCNotificationObjectTemplateType.DETAIL && notificationObject.is_new && <NewChip />}
+                <Typography component="div" className={classes.categoryApprovedText} color="inherit">
+                  {intl.formatMessage(messages.incubatorApproved, {
+                    name: notificationObject.incubator.name,
+                    b: (...chunks) => <strong>{chunks}</strong>
+                  })}
+                </Typography>
+              </>
+            )}
+          </>
+        }
+        secondary={
+          template === SCNotificationObjectTemplateType.DETAIL && <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
+        }
+        footer={
+          <>
+            {template === SCNotificationObjectTemplateType.DETAIL && (
+              <Button
+                component={Link}
+                to={scRoutingContext.url(SCRoutes.CATEGORY_ROUTE_NAME, notificationObject.incubator.approved_category)}
+                className={classes.viewIncubatorButton}>
+                <FormattedMessage
+                  id={'ui.notification.incubatorApproved.viewIncubator'}
+                  defaultMessage={'ui.notification.incubatorApproved.viewIncubator'}
+                />
+              </Button>
+            )}
+            {template === SCNotificationObjectTemplateType.TOAST && (
+              <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
+                <DateTimeAgo date={notificationObject.active_at} />
+                <Typography color="primary" component={'div'}>
+                  <Link to={scRoutingContext.url(SCRoutes.CATEGORY_ROUTE_NAME, notificationObject.incubator)}>
+                    <FormattedMessage
+                      id="ui.userToastNotifications.incubatorApproved.viewIncubator"
+                      defaultMessage={'ui.userToastNotifications.incubatorApproved.viewIncubator'}
+                    />
+                  </Link>
+                </Typography>
+              </Stack>
+            )}
+          </>
+        }
+      />
     </Root>
   );
 }

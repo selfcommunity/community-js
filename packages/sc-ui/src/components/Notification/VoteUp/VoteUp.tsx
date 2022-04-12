@@ -1,15 +1,14 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import {Avatar, Box, ListItem, ListItemAvatar, ListItemText, Stack, Typography} from '@mui/material';
+import {Avatar, Box, Stack, Typography} from '@mui/material';
 import {Link, SCNotificationVoteUpType, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
-import NewChip from '../../../shared/NewChip/NewChip';
 import {getContribute, getContributeType, getContributionSnippet, getRouteData, getContributionRouteName} from '../../../utils/contribute';
-import {grey, red} from '@mui/material/colors';
 import classNames from 'classnames';
 import {SCNotificationObjectTemplateType} from '../../../types/notification';
 import useThemeProps from '@mui/material/styles/useThemeProps';
+import NotificationItem from '../../../shared/NotificationItem';
 
 const messages = defineMessages({
   appreciated: {
@@ -22,17 +21,11 @@ const PREFIX = 'SCVoteUpNotification';
 
 const classes = {
   root: `${PREFIX}-root`,
-  listItemSnippet: `${PREFIX}-list-item-snippet`,
-  listItemSnippetNew: `${PREFIX}-list-item-snippet-new`,
-  avatarWrap: `${PREFIX}-avatar-wrap`,
   avatar: `${PREFIX}-avatar`,
-  avatarSnippet: `${PREFIX}-avatar-snippet`,
   username: `${PREFIX}-username`,
   voteUpText: `${PREFIX}-vote-up-text`,
   activeAt: `${PREFIX}-active-at`,
-  contributionWrap: `${PREFIX}-contribution-wrap`,
-  contributionText: `${PREFIX}-contribution-text`,
-  toastInfo: `${PREFIX}-toast-info`
+  contributionText: `${PREFIX}-contribution-text`
 };
 
 const Root = styled(Box, {
@@ -40,34 +33,20 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  [`& .${classes.listItemSnippet}`]: {
-    padding: '0px 5px',
-    alignItems: 'center',
-    borderLeft: `2px solid ${grey[300]}`
-  },
-  [`& .${classes.listItemSnippetNew}`]: {
-    borderLeft: `2px solid ${red[500]}`
-  },
-  [`& .${classes.avatarWrap}`]: {
-    minWidth: 'auto',
-    paddingRight: 10
-  },
-  [`& .${classes.avatar}`]: {
-    backgroundColor: red[500],
-    color: '#FFF'
-  },
-  [`& .${classes.avatarSnippet}`]: {
-    width: 30,
-    height: 30
+  width: '100%',
+  [`& .${classes.username}`]: {
+    fontWeight: 700,
+    '&:hover': {
+      textDecoration: 'underline'
+    }
   },
   [`& .${classes.voteUpText}`]: {
     color: theme.palette.text.primary
   },
   [`& .${classes.contributionText}`]: {
-    textDecoration: 'underline'
-  },
-  [`& .${classes.toastInfo}`]: {
-    marginTop: 10
+    '&:hover': {
+      textDecoration: 'underline'
+    }
   }
 }));
 
@@ -128,7 +107,6 @@ export default function VoteUpNotification(inProps: NotificationVoteUpProps): JS
   const scRoutingContext: SCRoutingContextType = useSCRouting();
 
   // CONST
-  const isSnippetTemplate = template === SCNotificationObjectTemplateType.SNIPPET;
   const contribution = getContribute(notificationObject);
   const contributionType = getContributeType(notificationObject);
 
@@ -140,69 +118,49 @@ export default function VoteUpNotification(inProps: NotificationVoteUpProps): JS
    */
   return (
     <Root id={id} className={classNames(classes.root, className, `${PREFIX}-${template}`)} {...rest}>
-      <ListItem
-        alignItems={isSnippetTemplate ? 'center' : 'flex-start'}
-        component={'div'}
-        classes={{
-          root: classNames({
-            [classes.listItemSnippet]: isSnippetTemplate,
-            [classes.listItemSnippetNew]: isSnippetTemplate && notificationObject.is_new
-          })
-        }}>
-        <ListItemAvatar classes={{root: classes.avatarWrap}}>
+      <NotificationItem
+        template={template}
+        isNew={notificationObject.is_new}
+        image={
           <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.user)}>
-            <Avatar
-              alt={notificationObject.user.username}
-              variant="circular"
-              src={notificationObject.user.avatar}
-              classes={{root: classNames(classes.avatar, {[classes.avatarSnippet]: isSnippetTemplate})}}
-            />
+            <Avatar alt={notificationObject.user.username} variant="circular" src={notificationObject.user.avatar} classes={{root: classes.avatar}} />
           </Link>
-        </ListItemAvatar>
-        <ListItemText
-          disableTypography={true}
-          primary={
-            <>
-              {template === SCNotificationObjectTemplateType.DETAIL && notificationObject.is_new && <NewChip />}
-              <Typography component="div" className={classes.voteUpText} color="inherit">
-                <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.user)} className={classes.username}>
-                  {notificationObject.user.username}
-                </Link>{' '}
-                {intl.formatMessage(messages.appreciated, {
-                  username: notificationObject.user.username,
-                  b: (...chunks) => <strong>{chunks}</strong>
-                })}
+        }
+        primary={
+          <>
+            <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.user)} className={classes.username}>
+              {notificationObject.user.username}
+            </Link>{' '}
+            {intl.formatMessage(messages.appreciated, {
+              username: notificationObject.user.username,
+              b: (...chunks) => <strong>{chunks}</strong>
+            })}
+          </>
+        }
+        secondary={
+          <>
+            <Link
+              to={scRoutingContext.url(SCRoutes[`${contributionType.toUpperCase()}_ROUTE_NAME`], getRouteData(notificationObject[contributionType]))}>
+              <Typography variant="body2" className={classes.contributionText} gutterBottom component={'div'}>
+                {getContributionSnippet(notificationObject[contributionType])}
               </Typography>
-            </>
-          }
-          secondary={
-            <Box className={classes.contributionWrap}>
-              <Link
-                to={scRoutingContext.url(
-                  SCRoutes[`${contributionType.toUpperCase()}_ROUTE_NAME`],
-                  getRouteData(notificationObject[contributionType])
-                )}>
-                <Typography variant="body2" className={classes.contributionText} gutterBottom>
-                  {getContributionSnippet(notificationObject[contributionType])}
-                </Typography>
-              </Link>
-              {template === SCNotificationObjectTemplateType.DETAIL && (
-                <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
-              )}
-            </Box>
-          }
-        />
-      </ListItem>
-      {template === SCNotificationObjectTemplateType.TOAST && (
-        <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
-          <DateTimeAgo date={notificationObject.active_at} />
-          <Typography color="primary">
-            <Link to={scRoutingContext.url(getContributionRouteName(contribution), getRouteData(contribution))}>
-              <FormattedMessage id="ui.userToastNotifications.viewContribution" defaultMessage={'ui.userToastNotifications.viewContribution'} />
             </Link>
-          </Typography>
-        </Stack>
-      )}
+            {template === SCNotificationObjectTemplateType.DETAIL && <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />}
+          </>
+        }
+        footer={
+          template === SCNotificationObjectTemplateType.TOAST && (
+            <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
+              <DateTimeAgo date={notificationObject.active_at} />
+              <Typography color="primary" component={'div'}>
+                <Link to={scRoutingContext.url(getContributionRouteName(contribution), getRouteData(contribution))}>
+                  <FormattedMessage id="ui.userToastNotifications.viewContribution" defaultMessage={'ui.userToastNotifications.viewContribution'} />
+                </Link>
+              </Typography>
+            </Stack>
+          )
+        }
+      />
     </Root>
   );
 }

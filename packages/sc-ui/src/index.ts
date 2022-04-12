@@ -73,6 +73,7 @@ import PollSuggestion, {PollSuggestionProps} from './components/PollSuggestion';
 import Incubator, {IncubatorProps} from './components/Incubator';
 import IncubatorsList, {IncubatorsListProps} from './components/IncubatorsList';
 import IncubatorDetail, {IncubatorDetailProps} from './components/IncubatorDetail';
+import IncubatorSuggestion, {IncubatorSuggestionProps} from './components/IncubatorSuggestion';
 
 /**
  * List all exports
@@ -234,5 +235,7 @@ export {
   IncubatorsList,
   IncubatorsListProps,
   IncubatorDetail,
-  IncubatorDetailProps
+  IncubatorDetailProps,
+  IncubatorSuggestion,
+  IncubatorSuggestionProps
 };

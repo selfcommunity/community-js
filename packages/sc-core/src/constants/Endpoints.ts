@@ -520,12 +520,20 @@ const Endpoints: {[key: string]: EndpointType} = {
   /**
    * Insights
    **/
+  InsightBestContribution: {
+    url: urlReplacer('/api/v2/insight/contribution/'),
+    method: 'GET',
+  },
   InsightBestEmbed: {
     url: urlReplacer('/api/v2/insight/embed/'),
     method: 'GET',
   },
   InsightBestUser: {
     url: urlReplacer('/api/v2/insight/user/'),
+    method: 'GET',
+  },
+  InsightContributionCounter: {
+    url: urlReplacer('/api/v2/insight/contribution/counters/?contribution_id=$(id)'),
     method: 'GET',
   },
   InsightEmbedCounter: {
@@ -544,6 +552,10 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/incubator/'),
     method: 'GET',
   },
+  GetIncubatorSuggestion: {
+    url: urlReplacer('/api/v2/suggestion/incubator/'),
+    method: 'GET',
+  },
   GetASpecificIncubator: {
     url: urlReplacer('/api/v2/incubator/$(id)/'),
     method: 'GET',
@@ -559,6 +571,10 @@ const Endpoints: {[key: string]: EndpointType} = {
   CreateAnIncubator: {
     url: urlReplacer('/api/v2/incubator/'),
     method: 'POST',
+  },
+  GetIncubatorSubscribers: {
+    url: urlReplacer('/api/v2/incubator/$(id)/subscribers/'),
+    method: 'GET',
   },
 };
 

@@ -111,7 +111,7 @@
   "ui.loyaltyProgramDetail.prizesIntro": "Earn points and redeem them for rewards.",
   "ui.loyaltyProgramDetail.prizesContent": "Prize request involves the subtraction of the points corresponding to the selected prize.",
   "ui.loyaltyProgramDetail.button.request": "Request Now",
-  
+
   "ui.composer.type.post": "Create Post",
   "ui.composer.type.discussion": "Create Discussion",
   "ui.composer.done": "done",
@@ -292,7 +292,7 @@
   "ui.notification.showOthers": "Show more",
   "ui.notification.notificationSuspended": "Suspended notifications. Click to reactivate.",
   "ui.notification.notificationSuspend": "Active notifications. Click to disable.",
-  "ui.notification.receivePrivateMessage": "sent you {total, plural, =0 {# messages} one {# message} other {# messages}}",
+  "ui.notification.receivePrivateMessage": "sent you {total, plural, =0 {# messages} one {a message} other {# messages}}",
   "ui.notification.userFollow.followUser": "started following you",
   "ui.notification.comment.comment": "commented on your content:< ",
   "ui.notification.comment.nestedComment": "replied to your comment: ",
@@ -349,7 +349,7 @@
   "ui.notification.kindlyNoticeFlag.kindlyNoticeFlag": "You have flagged a contribution which is not irregular. Please read website rules before further flagging.",
   "ui.notification.kindlyNoticeFlag.kindlyNoticeFlagSnippet": "You have flagged a contribution which is not irregular",
   "ui.notification.newNotificationsLabel": "There are new notifications for you ({count}). Do you want to see them?",
-  "ui.notification.incubatorApproved.approved": "Your incubator {name} has been approved.",
+  "ui.notification.incubatorApproved.approved": "Your incubator <b>\"{name}\"</b> has been approved.",
   "ui.notification.incubatorApproved.viewIncubator": "View category",
   "ui.notification.notificationNewChip.label": "New",
 
@@ -426,10 +426,12 @@
 
   "ui.incubator.subscribeButton.button.subscribe": "Subscribe",
   "ui.incubator.subscribeButton.button.subscribed": "Subscribed",
+
   "ui.incubator.proposedBy": "Proposed by",
   "ui.incubator.progressBar.proposal": "Proposal",
   "ui.incubator.progressBar.collectingSubscribers": "Collecting subscribers",
   "ui.incubator.progressBar.approved": "Approved",
+
 
   "ui.incubatorDetail.intro": "I propose the creation of the interest \"{name}\".\n Support the initiative to meet the quota of approval.",
   "ui.incubatorDetail.shareSection.title": "Support the cause",
@@ -437,7 +439,8 @@
   "ui.incubatorDetail.shareSection.button.copy": "Copy",
   "ui.incubatorDetail.shareSection.copied": "Copied!",
   "ui.incubatorDetail.shareSection.invite": "Invite those you think might be interested",
-
+  "ui.incubatorDetail.subscribersSection.title": "Subscribers",
+  "ui.incubatorDetail.subscribersSection.noMoreSubscribers": "No more results",
 
   "ui.incubatorsList.title": "Interests Incubator",
   "ui.incubatorsList.popover": "Interest incubator is a proposal zone\n where users come together to generate\n new interests. New interests are\n approved depending on subscribers\n number and growth rate.",
@@ -452,6 +455,12 @@
   "ui.incubatorsList.createIncubatorDialog.formPlaceholder.slogan": "Description",
   "ui.incubatorsList.createIncubatorDialog.button": "Propose",
   "ui.incubatorsList.createIncubatorDialog.propose.success": "Thanks for your contribution, we will evaluate it as soon as possible. Your proposal will be accepted, modified or declined. Check the interests incubator.",
+
+  "ui.IncubatorSuggestion.title": "Suggested incubators",
+  "ui.IncubatorSuggestion.noResults": "Nothing to show",
+  "ui.IncubatorSuggestion.ShowAll": "View all",
+  "ui.IncubatorSuggestion.noMoreIncubators": "No more results",
+
 
   "templates.userProfile.edit": "Edit",
   "templates.privateMessages.button.new" : "New Message"

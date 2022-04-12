@@ -1,15 +1,16 @@
 import React, {forwardRef, useCallback} from 'react';
 import {useSnackbar, SnackbarContent} from 'notistack';
-import Card from '@mui/material/Card';
 import {styled} from '@mui/material/styles';
-import {IconButton} from '@mui/material';
+import {CardContent, IconButton} from '@mui/material';
 import Icon from '@mui/material/Icon';
+import Widget from '../../components/Widget';
 
 const PREFIX = 'SCCustomSnackMessage';
 
 const classes = {
   root: `${PREFIX}-root`,
   card: `${PREFIX}-card`,
+  cardContent: `${PREFIX}-card-content`,
   closeAction: `${PREFIX}-close-action`
 };
 
@@ -18,17 +19,19 @@ const Root = styled(SnackbarContent, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  border: '0 none',
-  borderRadius: '15px',
-  boxShadow: '0px 5px 20px rgba(0, 0, 0, 0.1)',
+  width: 370,
   [theme.breakpoints.up('sm')]: {
-    minWidth: '344px !important'
+    minWidth: '345px !important'
   },
   [`& .${classes.card}`]: {
     backgroundColor: '#fff',
     width: '100%',
     padding: theme.spacing(),
-    borderRadius: 30
+    borderRadius: 10
+  },
+  [`& .${classes.cardContent}`]: {
+    padding: `5px 5px`,
+    paddingBottom: `5px !important`
   },
   [`& .${classes.closeAction}`]: {
     position: 'absolute',
@@ -59,12 +62,14 @@ const CustomSnackMessage = forwardRef<HTMLDivElement, {id: string | number; mess
 
   return (
     <Root ref={ref} className={classes.root} key={props.id}>
-      <Card className={classes.card} elevation={0}>
-        <IconButton className={classes.closeAction} onClick={handleDismiss}>
-          <Icon>close</Icon>
-        </IconButton>
-        {props.message}
-      </Card>
+      <Widget className={classes.card}>
+        <CardContent className={classes.cardContent}>
+          <IconButton className={classes.closeAction} onClick={handleDismiss}>
+            <Icon>close</Icon>
+          </IconButton>
+          {props.message}
+        </CardContent>
+      </Widget>
     </Root>
   );
 });
