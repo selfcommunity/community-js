@@ -24,7 +24,7 @@ jobs:
     - run: git config --global user.name "fedetorre"
     - run: yarn build
     - run: yarn prerelease
-    - name: pull-request
+    - name: Open pull-request
       uses: repo-sync/pull-request@v2
       with:
         entrypoint: './.github/pull-request/entrypoint.sh'

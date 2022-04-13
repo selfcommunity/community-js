@@ -5,7 +5,7 @@ import {defineMessages, FormattedMessage} from 'react-intl';
 import {SCUserFields} from '@selfcommunity/core';
 import {DEFAULT_FIELDS} from '../../constants/UserProfile';
 import PublicInfo from './Section/PublicInfo';
-import Notification from './Section/Settings';
+import Settings from './Section/Settings';
 import classNames from 'classnames';
 import {DistributiveOmit} from '@mui/types';
 import {OverrideProps} from '@mui/material/OverridableComponent';
@@ -149,7 +149,7 @@ export default function UserProfileEdit(inProps: UserProfileEditProps): JSX.Elem
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Notification fields={fields} />
+          <Settings fields={fields} />
         </AccordionDetails>
       </Accordion>
     </Root>
