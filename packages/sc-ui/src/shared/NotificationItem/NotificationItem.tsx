@@ -4,9 +4,9 @@ import {Box, Typography, TypographyProps} from '@mui/material';
 import classNames from 'classnames';
 import Widget, {WidgetProps} from '../../components/Widget';
 import useThemeProps from '@mui/material/styles/useThemeProps';
-import {SCNotificationObjectTemplateType} from '@selfcommunity/ui';
 import NewChip from '../NewChip/NewChip';
 import {grey, red} from '@mui/material/colors';
+import {SCNotificationObjectTemplateType} from '../../types/notification';
 
 const PREFIX = 'SCNotificationItem';
 

@@ -3,7 +3,7 @@ import {styled} from '@mui/material/styles';
 import {List} from '@mui/material';
 import Skeleton from '@mui/material/Skeleton';
 import NotificationItem from '../../shared/NotificationItem';
-import {SCNotificationObjectTemplateType} from '@selfcommunity/ui';
+import {SCNotificationObjectTemplateType} from '../../types/notification';
 
 const PREFIX = 'SCNotificationSkeleton';
 
