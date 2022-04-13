@@ -9,7 +9,7 @@ import Icon from '@mui/material/Icon';
 import {grey} from '@mui/material/colors';
 import DateTimeAgo from '../../../../shared/DateTimeAgo';
 import classNames from 'classnames';
-import {getRouteData} from '../../../../utils/contribute';
+import {getRouteData} from '../../../../utils/contribution';
 import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const messages = defineMessages({

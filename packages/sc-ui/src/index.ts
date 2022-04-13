@@ -76,6 +76,12 @@ import IncubatorDetail, {IncubatorDetailProps} from './components/IncubatorDetai
 import IncubatorSuggestion, {IncubatorSuggestionProps} from './components/IncubatorSuggestion';
 
 /**
+ * Utilities:
+ * contribute
+ */
+import * as ContributionUtils from './utils/contribution';
+
+/**
  * List all exports
  */
 export {
@@ -237,5 +243,6 @@ export {
   IncubatorDetail,
   IncubatorDetailProps,
   IncubatorSuggestion,
-  IncubatorSuggestionProps
+  IncubatorSuggestionProps,
+  ContributionUtils
 };

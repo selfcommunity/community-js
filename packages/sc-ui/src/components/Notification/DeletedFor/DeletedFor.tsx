@@ -3,7 +3,7 @@ import {styled} from '@mui/material/styles';
 import {Avatar, Box, Stack, Typography} from '@mui/material';
 import Icon from '@mui/material/Icon';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {getContributeType, getContributionSnippet, getRouteData} from '../../../utils/contribute';
+import {getContributionType, getContributionSnippet, getRouteData} from '../../../utils/contribution';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
 import NewChip from '../../../shared/NewChip/NewChip';
 import {Link, SCRoutingContextType, useSCRouting, StringUtils, SCNotificationDeletedForType, SCRoutes} from '@selfcommunity/core';
@@ -128,7 +128,7 @@ export default function DeletedForNotification(inProps: NotificationDeletedForPr
   const scRoutingContext: SCRoutingContextType = useSCRouting();
 
   // CONST
-  const contributionType = getContributeType(notificationObject);
+  const contributionType = getContributionType(notificationObject);
   const isSnippetTemplate = template === SCNotificationObjectTemplateType.SNIPPET;
 
   //INTL

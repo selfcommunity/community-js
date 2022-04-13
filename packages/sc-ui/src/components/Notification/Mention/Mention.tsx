@@ -3,7 +3,7 @@ import {styled} from '@mui/material/styles';
 import {Avatar, Box, Stack, Typography} from '@mui/material';
 import {Link, SCNotificationMentionType, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {getRouteData, getContributeType, getContributionSnippet, getContribute} from '../../../utils/contribute';
+import {getRouteData, getContributionType, getContributionSnippet, getContribution} from '../../../utils/contribution';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
 import classNames from 'classnames';
 import {SCNotificationObjectTemplateType} from '../../../types';
@@ -106,8 +106,8 @@ export default function MentionNotification(inProps: MentionNotificationProps): 
   const scRoutingContext: SCRoutingContextType = useSCRouting();
 
   // CONST
-  const objectType = getContributeType(notificationObject);
-  const contribution = getContribute(notificationObject);
+  const objectType = getContributionType(notificationObject);
+  const contribution = getContribution(notificationObject);
 
   // INTL
   const intl = useIntl();

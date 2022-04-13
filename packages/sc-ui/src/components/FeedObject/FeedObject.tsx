@@ -44,7 +44,7 @@ import {AxiosResponse} from 'axios';
 import MarkRead from '../../shared/MarkRead';
 import classNames from 'classnames';
 import ContributionActionsMenu, {ContributionActionsMenuProps} from '../../shared/ContributionActionsMenu';
-import {getContributionHtml, getContributionRouteName, getRouteData} from '../../utils/contribute';
+import {getContributionHtml, getContributionRouteName, getRouteData} from '../../utils/contribution';
 import {useSnackbar} from 'notistack';
 import Follow, {FollowProps} from './Actions/Follow';
 import Widget from '../Widget';

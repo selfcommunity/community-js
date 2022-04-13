@@ -6,7 +6,7 @@ import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
 import classNames from 'classnames';
 import {SCNotificationObjectTemplateType} from '../../../types';
-import {getContributeType, getRouteData} from '../../../utils/contribute';
+import {getContributionType, getRouteData} from '../../../utils/contribution';
 import useThemeProps from '@mui/material/styles/useThemeProps';
 import NotificationItem from '../../../shared/NotificationItem';
 
@@ -110,7 +110,7 @@ export default function ContributionFollowNotification(inProps: ContributionFoll
   const scRoutingContext: SCRoutingContextType = useSCRouting();
 
   // CONST
-  const contributionType = getContributeType(notificationObject);
+  const contributionType = getContributionType(notificationObject);
 
   // INTL
   const intl = useIntl();

@@ -5,7 +5,7 @@ import Icon from '@mui/material/Icon';
 import {SCFeedObjectType, SCFeedObjectTypologyType, SCRoutingContextType, useSCFetchFeedObject, useSCRouting, Link} from '@selfcommunity/core';
 import {styled} from '@mui/material/styles';
 import {SCFeedObjectTemplateType} from '../../../../types/feedObject';
-import {getContributionRouteName, getRouteData} from '../../../../utils/contribute';
+import {getContributionRouteName, getRouteData} from '../../../../utils/contribution';
 import classNames from 'classnames';
 import Skeleton from '@mui/material/Skeleton';
 import useThemeProps from '@mui/material/styles/useThemeProps';

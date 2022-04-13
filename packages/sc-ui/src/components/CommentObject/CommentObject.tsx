@@ -15,7 +15,7 @@ import {SCCommentsOrderBy} from '../../types/comments';
 import ReplyCommentObject from './ReplyComment';
 import ContributionActionsMenu from '../../shared/ContributionActionsMenu';
 import DateTimeAgo from '../../shared/DateTimeAgo';
-import {getContributionHtml, getRouteData} from '../../utils/contribute';
+import {getContributionHtml, getRouteData} from '../../utils/contribution';
 import {useSnackbar} from 'notistack';
 import {
   Endpoints,

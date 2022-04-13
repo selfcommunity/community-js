@@ -18,7 +18,7 @@ import VoteUpNotification from './VoteUp';
 import Icon from '@mui/material/Icon';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {AxiosResponse} from 'axios';
-import {getContribute, getContributionRouteName, getContributionSnippet} from '../../utils/contribute';
+import {getContribution, getContributionRouteName, getContributionSnippet} from '../../utils/contribution';
 import ContributionFollowNotification from './ContributionFollow';
 import {Avatar, CardProps, Collapse, ListItem, ListItemAvatar, ListItemButton, ListItemText, Stack, Tooltip, Typography} from '@mui/material';
 import IncubatorApprovedNotification from './IncubatorApproved';
@@ -334,7 +334,7 @@ export default function UserNotification(inProps: NotificationProps): JSX.Elemen
         notificationObject.aggregated[0].type === SCNotificationTypologyType.MENTION ||
         notificationObject.aggregated[0].type === SCNotificationTypologyType.VOTE_UP)
     ) {
-      const contribution = getContribute(notificationObject);
+      const contribution = getContribution(notificationObject);
       return (
         <div className={classes.notificationHeader}>
           {contribution && contribution.type !== SCCommentTypologyType && (

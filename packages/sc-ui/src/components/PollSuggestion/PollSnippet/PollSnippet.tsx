@@ -5,7 +5,7 @@ import {Link, SCFeedDiscussionType, SCRoutingContextType, useSCRouting} from '@s
 import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
 import useThemeProps from '@mui/material/styles/useThemeProps';
-import {getContributionRouteName, getRouteData} from '../../../utils/contribute';
+import {getContributionRouteName, getRouteData} from '../../../utils/contribution';
 import BaseItemButton from '../../../shared/BaseItemButton';
 
 const PREFIX = 'SCPollSnippet';

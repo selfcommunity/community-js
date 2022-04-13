@@ -6,7 +6,7 @@ import {FormattedMessage} from 'react-intl';
  * From obj extract type of the contribution
  * @param obj
  */
-export function getContributeType(obj) {
+export function getContributionType(obj) {
   return SCFeedObjectTypologyType.DISCUSSION in obj
     ? SCFeedObjectTypologyType.DISCUSSION
     : SCFeedObjectTypologyType.POST in obj
@@ -22,7 +22,7 @@ export function getContributeType(obj) {
  * From obj extract the contribution
  * @param obj
  */
-export function getContribute(obj) {
+export function getContribution(obj) {
   return SCFeedObjectTypologyType.DISCUSSION in obj
     ? obj[SCFeedObjectTypologyType.DISCUSSION]
     : SCFeedObjectTypologyType.POST in obj
@@ -86,7 +86,7 @@ export function getRouteData(obj) {
   ) {
     data = obj;
   } else if (obj.type === SCCommentTypologyType) {
-    const contribution_type = getContributeType(obj);
+    const contribution_type = getContributionType(obj);
     const isContributionTypeObj = obj[contribution_type] && typeof obj[contribution_type] === 'object';
     data = {
       ...obj,
