@@ -22,13 +22,11 @@ jobs:
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
     - run: git config --global user.email "fede.torre@gmail.com"
     - run: git config --global user.name "fedetorre"
-    - run: git config --global --add safe.directory /github/workspace
     - run: yarn build
     - run: yarn prerelease
-    - name: pull-request
-      uses: repo-sync/pull-request@v2
+    - uses: repo-sync/pull-request@v2
+      name: pull-request
       with:
-        entrypoint: './.github/pull-request/entrypoint.sh'
         destination_branch: "main"
         pr_title: "Pulling ${{ github.ref }} from prerelease into main"
         pr_body: "👑 *An automated PR*"
