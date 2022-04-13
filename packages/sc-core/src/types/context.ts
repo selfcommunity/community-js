@@ -1,7 +1,7 @@
 import {SCUserType} from './user';
 import React, {ReactNode} from 'react';
 import {SCCategoryType} from './category';
-import {SCIncubatorType} from '@selfcommunity/core';
+import {SCIncubatorType} from '../types/incubator';
 
 /**
  * Interface SCSettingsType
