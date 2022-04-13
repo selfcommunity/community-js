@@ -4,7 +4,7 @@ import {Avatar, Box, Stack, Typography} from '@mui/material';
 import {Link, SCNotificationVoteUpType, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
-import {getContribute, getContributeType, getContributionSnippet, getRouteData, getContributionRouteName} from '../../../utils/contribute';
+import {getContribution, getContributionType, getContributionSnippet, getRouteData, getContributionRouteName} from '../../../utils/contribution';
 import classNames from 'classnames';
 import {SCNotificationObjectTemplateType} from '../../../types/notification';
 import useThemeProps from '@mui/material/styles/useThemeProps';
@@ -107,8 +107,8 @@ export default function VoteUpNotification(inProps: NotificationVoteUpProps): JS
   const scRoutingContext: SCRoutingContextType = useSCRouting();
 
   // CONST
-  const contribution = getContribute(notificationObject);
-  const contributionType = getContributeType(notificationObject);
+  const contribution = getContribution(notificationObject);
+  const contributionType = getContributionType(notificationObject);
 
   // INTL
   const intl = useIntl();

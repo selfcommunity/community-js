@@ -5,7 +5,7 @@ import Icon from '@mui/material/Icon';
 import {red} from '@mui/material/colors';
 import {Link, SCNotificationUnDeletedForType, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
 import {FormattedMessage} from 'react-intl';
-import {getContributeType, getContributionSnippet, getRouteData} from '../../../utils/contribute';
+import {getContributionType, getContributionSnippet, getRouteData} from '../../../utils/contribution';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
 import classNames from 'classnames';
 import {SCNotificationObjectTemplateType} from '../../../types';
@@ -105,7 +105,7 @@ export default function UndeletedForNotification(inProps: NotificationUndeletedP
 
   // CONST
   const isSnippetTemplate = template === SCNotificationObjectTemplateType.SNIPPET;
-  const contributionType = getContributeType(notificationObject);
+  const contributionType = getContributionType(notificationObject);
 
   /**
    * Renders root object

@@ -7,7 +7,7 @@ import Bullet from '../../../shared/Bullet';
 import {LoadingButton} from '@mui/lab';
 import Icon from '@mui/material/Icon';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
-import {getContributionSnippet, getRouteData} from '../../../utils/contribute';
+import {getContributionSnippet, getRouteData} from '../../../utils/contribution';
 import classNames from 'classnames';
 import {SCNotificationObjectTemplateType} from '../../../types';
 import useThemeProps from '@mui/material/styles/useThemeProps';

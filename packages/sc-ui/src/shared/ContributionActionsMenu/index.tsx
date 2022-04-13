@@ -8,7 +8,7 @@ import {SCOPE_SC_UI} from '../../constants/Errors';
 import {AxiosResponse} from 'axios';
 import {copyTextToClipboard} from '../../utils/string';
 import {useSnackbar} from 'notistack';
-import {getRouteData, getContributionRouteName} from '../../utils/contribute';
+import {getRouteData, getContributionRouteName} from '../../utils/contribution';
 import classNames from 'classnames';
 import ConfirmDialog from '../ConfirmDialog/ConfirmDialog';
 import {camelCase} from 'lodash';

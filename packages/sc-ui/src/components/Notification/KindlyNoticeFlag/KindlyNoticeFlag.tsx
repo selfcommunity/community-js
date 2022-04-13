@@ -4,7 +4,7 @@ import {Avatar, Box, Typography} from '@mui/material';
 import Icon from '@mui/material/Icon';
 import {Link, SCNotificationDeletedForType, SCRoutingContextType, useSCRouting, StringUtils, SCRoutes} from '@selfcommunity/core';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {getContributeType, getContributionSnippet, getRouteData} from '../../../utils/contribute';
+import {getContributionType, getContributionSnippet, getRouteData} from '../../../utils/contribution';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
 import classNames from 'classnames';
 import {SCNotificationObjectTemplateType} from '../../../types';
@@ -111,7 +111,7 @@ export default function KindlyNoticeFlagNotification(inProps: NotificationKindly
 
   // CONST
   const isSnippetTemplate = template === SCNotificationObjectTemplateType.SNIPPET;
-  const contributionType = getContributeType(notificationObject);
+  const contributionType = getContributionType(notificationObject);
 
   //INTL
   const intl = useIntl();
