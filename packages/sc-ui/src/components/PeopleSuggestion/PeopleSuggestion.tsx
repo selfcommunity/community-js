@@ -213,7 +213,7 @@ export default function PeopleSuggestion(inProps: PeopleSuggestionProps): JSX.El
                 ))}
               </List>
               {hasMore && (
-                <Button className={classes.showMore} color="secondary" size="small" onClick={() => loadPeople(limit)}>
+                <Button className={classes.showMore} size="small" onClick={() => loadPeople(limit)}>
                   <FormattedMessage id="ui.peopleSuggestion.button.showMore" defaultMessage="ui.peopleSuggestion.button.showMore" />
                 </Button>
               )}
