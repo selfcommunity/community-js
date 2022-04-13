@@ -24,9 +24,10 @@ jobs:
     - run: git config --global user.name "fedetorre"
     - run: yarn build
     - run: yarn prerelease
-    - uses: repo-sync/pull-request@v2
-      name: pull-request
+    - name: pull-request
+      uses: repo-sync/pull-request@v2
       with:
+        entrypoint: './.github/pull-request/entrypoint.sh'
         destination_branch: "main"
         pr_title: "Pulling ${{ github.ref }} from prerelease into main"
         pr_body: "👑 *An automated PR*"
