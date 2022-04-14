@@ -1,31 +1,38 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import {Avatar, Box, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
+import {Avatar} from '@mui/material';
 import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
 import {defineMessages, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../../shared/DateTimeAgo';
-import {ActionsRelevantActivityProps} from '../FollowActivity';
+import {ActionsRelevantActivityProps} from '../ActionsRelevantActivity';
 import classNames from 'classnames';
 import useThemeProps from '@mui/material/styles/useThemeProps';
+import BaseItem from '../../../../shared/BaseItem';
 
 const messages = defineMessages({
-  appreciated: {
-    id: 'ui.notification.voteUp.appreciated',
-    defaultMessage: 'ui.notification.voteUp.appreciated'
+  vote: {
+    id: 'ui.feedObject.relevantActivities.vote',
+    defaultMessage: 'ui.feedObject.relevantActivities.vote'
   }
 });
 
 const PREFIX = 'SCVoteUpRelevantActivity';
 
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-root`,
+  avatar: `${PREFIX}-avatar`,
+  username: `${PREFIX}-username`
 };
 
-const Root = styled(Box, {
+const Root = styled(BaseItem, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+})(({theme}) => ({
+  [`& .${classes.username}`]: {
+    color: 'inherit'
+  }
+}));
 
 export default function VoteUpRelevantActivity(inProps: ActionsRelevantActivityProps): JSX.Element {
   // PROPS
@@ -42,30 +49,28 @@ export default function VoteUpRelevantActivity(inProps: ActionsRelevantActivityP
   // INTL
   const intl = useIntl();
 
-  /**
-   * Renders root object
-   */
+  // RENDER
   return (
-    <Root className={classNames(classes.root, className)} {...props}>
-      <ListItem alignItems="flex-start">
-        <ListItemAvatar>
-          <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, activityObject.author)}>
-            <Avatar alt={activityObject.author.username} variant="circular" src={activityObject.author.avatar} />
-          </Link>
-        </ListItemAvatar>
-        <ListItemText
-          primary={
-            <Typography component="span" sx={{display: 'inline'}} color="primary">
-              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, activityObject.author)}>{activityObject.author.username}</Link>{' '}
-              {intl.formatMessage(messages.appreciated, {
-                username: activityObject.author.username,
-                b: (...chunks) => <strong>{chunks}</strong>
-              })}
-            </Typography>
-          }
-          secondary={<DateTimeAgo date={activityObject.active_at} />}
-        />
-      </ListItem>
-    </Root>
+    <Root
+      {...rest}
+      className={classNames(classes.root, className)}
+      image={
+        <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, activityObject.author)}>
+          <Avatar alt={activityObject.author.username} variant="circular" src={activityObject.author.avatar} className={classes.avatar} />
+        </Link>
+      }
+      primary={
+        <>
+          {intl.formatMessage(messages.vote, {
+            username: (
+              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, activityObject.author)} className={classes.username}>
+                {activityObject.author.username}
+              </Link>
+            )
+          })}
+        </>
+      }
+      secondary={<DateTimeAgo date={activityObject.active_at} />}
+    />
   );
 }

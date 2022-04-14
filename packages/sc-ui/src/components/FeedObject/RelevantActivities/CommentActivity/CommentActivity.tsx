@@ -1,84 +1,51 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import {Avatar, Box, Grid, ListItem, ListItemAvatar, ListItemText, Tooltip, Typography} from '@mui/material';
-import {Link, SCFeedUnitActivityType, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
-import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import Bullet from '../../../../shared/Bullet';
-import {LoadingButton} from '@mui/lab';
-import Icon from '@mui/material/Icon';
-import {grey} from '@mui/material/colors';
+import {Avatar} from '@mui/material';
+import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
+import {defineMessages, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../../shared/DateTimeAgo';
 import classNames from 'classnames';
-import {getRouteData} from '../../../../utils/contribution';
 import useThemeProps from '@mui/material/styles/useThemeProps';
+import {ActionsRelevantActivityProps} from '../ActionsRelevantActivity';
+import BaseItem from '../../../../shared/BaseItem';
 
 const messages = defineMessages({
   comment: {
-    id: 'ui.notification.comment.comment',
-    defaultMessage: 'ui.notification.comment.comment'
+    id: 'ui.feedObject.relevantActivities.comment',
+    defaultMessage: 'ui.feedObject.relevantActivities.comment'
   }
 });
 
 const PREFIX = 'SCCommentRelevantActivity';
 
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-root`,
+  avatar: `${PREFIX}-avatar`,
+  username: `${PREFIX}-username`
 };
 
-const Root = styled(Box, {
+const Root = styled(BaseItem, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  '& .MuiIcon-root': {
-    fontSize: '18px',
-    marginBottom: '0.5px'
+  [`& .${classes.username}`]: {
+    color: 'inherit'
   },
-  '& a': {
-    textDecoration: 'none',
-    color: grey[900]
+  '& .SCBaseItem-secondary': {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center'
   }
 }));
 
-export interface CommentRelevantActivityProps {
-  /**
-   * Overrides or extends the styles applied to the component.
-   * @default null
-   */
-  className?: string;
-  /**
-   * Activity object
-   * @default null
-   */
-  activityObject: SCFeedUnitActivityType;
-  /**
-   * Index
-   * @default null
-   */
-  index: number;
-  /**
-   * On vote function
-   * @default null
-   */
-  onVote: (i, v) => void;
-  /**
-   * The id of the loading vote
-   * @default null
-   */
-  loadingVote: number;
-  /**
-   * Any other properties
-   */
-  [p: string]: any;
-}
-export default function CommentRelevantActivity(inProps: CommentRelevantActivityProps): JSX.Element {
+export default function CommentRelevantActivity(inProps: ActionsRelevantActivityProps): JSX.Element {
   // PROPS
-  const props: CommentRelevantActivityProps = useThemeProps({
+  const props: ActionsRelevantActivityProps = useThemeProps({
     props: inProps,
     name: PREFIX
   });
-
-  const {className = null, activityObject = null, index = null, onVote = null, loadingVote = null, ...rest} = props;
+  const {className = null, activityObject = null, ...rest} = props;
 
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
@@ -86,63 +53,29 @@ export default function CommentRelevantActivity(inProps: CommentRelevantActivity
   // INTL
   const intl = useIntl();
 
-  /**
-   * Renders root object (if obj)
-   */
-  if (!activityObject) {
-    return null;
-  }
+  // RENDER
   return (
-    <Root className={classNames(classes.root, className)} {...rest}>
-      <ListItem alignItems="flex-start">
-        <ListItemAvatar>
-          <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, activityObject.author)}>
-            <Avatar alt={activityObject.author.username} variant="circular" src={activityObject.author.avatar} />
-          </Link>
-        </ListItemAvatar>
-        <ListItemText
-          primary={
-            <Typography component="span" sx={{display: 'inline'}} color="primary">
-              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, activityObject.author)}>{activityObject.author.username}</Link>{' '}
-              {intl.formatMessage(messages.comment, {
-                b: (...chunks) => <strong>{chunks}</strong>
-              })}
-            </Typography>
-          }
-          secondary={
-            <React.Fragment>
-              <Link to={scRoutingContext.url(SCRoutes.COMMENT_ROUTE_NAME, getRouteData(activityObject.comment))} sx={{textDecoration: 'underline'}}>
-                <Typography variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: activityObject.comment.summary}} />
+    <Root
+      {...rest}
+      className={classNames(classes.root, className)}
+      image={
+        <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, activityObject.author)}>
+          <Avatar alt={activityObject.author.username} variant="circular" src={activityObject.author.avatar} className={classes.avatar} />
+        </Link>
+      }
+      primary={
+        <>
+          {intl.formatMessage(messages.comment, {
+            username: (
+              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, activityObject.author)} className={classes.username}>
+                {activityObject.author.username}
               </Link>
-              <Box component="span" sx={{display: 'flex', justifyContent: 'flex-start', p: '2px'}}>
-                <Grid component="span" item={true} sm="auto" container direction="row" alignItems="center">
-                  <DateTimeAgo date={activityObject.active_at} />
-                  <Bullet sx={{paddingLeft: '10px', paddingTop: '1px'}} />
-                  <LoadingButton
-                    variant={'text'}
-                    sx={{marginTop: '-1px', minWidth: '30px'}}
-                    onClick={() => onVote(index, activityObject.comment)}
-                    disabled={loadingVote !== null}
-                    loading={loadingVote === index}>
-                    {activityObject.comment.voted ? (
-                      <Tooltip
-                        title={<FormattedMessage id={'ui.notification.comment.voteDown'} defaultMessage={'ui.notification.comment.voteDown'} />}>
-                        <Icon fontSize={'small'} color="primary">
-                          thumb_up_alt
-                        </Icon>
-                      </Tooltip>
-                    ) : (
-                      <Tooltip title={<FormattedMessage id={'ui.notification.comment.voteUp'} defaultMessage={'ui.notification.comment.voteUp'} />}>
-                        <Icon fontSize={'small'}>thumb_up_off_alt</Icon>
-                      </Tooltip>
-                    )}
-                  </LoadingButton>
-                </Grid>
-              </Box>
-            </React.Fragment>
-          }
-        />
-      </ListItem>
-    </Root>
+            ),
+            comment: activityObject.comment.summary
+          })}
+        </>
+      }
+      secondary={<DateTimeAgo date={activityObject.active_at} />}
+    />
   );
 }
