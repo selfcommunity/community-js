@@ -48,10 +48,10 @@
   "ui.trendingFeed.button.showMore": "Vedi di più",
   "ui.trendingFeed.noMoreResults": "Nient'altro da mostrare",
 
-  "ui.relatedDiscussion.title": "Post correlati",
-  "ui.relatedDiscussion.noResults": "Nessun risultato",
-  "ui.relatedDiscussion.button.showMore": "Vedi di più",
-  "ui.relatedDiscussion.noMoreResults": "Nient'altro da mostrare",
+  "ui.relatedFeedObjects.title": "Post correlati",
+  "ui.relatedFeedObjects.noResults": "Nessun risultato",
+  "ui.relatedFeedObjects.button.showMore": "Vedi di più",
+  "ui.relatedFeedObjects.noMoreResults": "Nient'altro da mostrare",
 
   "ui.category.categoryFollowers": "{total, plural, =0 {Seguito da # persone} one {Seguito da # persona} other {Seguito da # persone}}",
 

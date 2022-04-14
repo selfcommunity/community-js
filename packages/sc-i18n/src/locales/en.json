@@ -46,10 +46,10 @@
   "ui.trendingFeed.button.showMore": "Show More",
   "ui.trendingFeed.noMoreResults": "No more results",
 
-  "ui.relatedDiscussion.title": "Related Discussions",
-  "ui.relatedDiscussion.noResults": "Nothing to show",
-  "ui.relatedDiscussion.button.showMore": "Show More",
-  "ui.relatedDiscussion.noMoreResults": "No more results",
+  "ui.relatedFeedObjects.title": "Related Posts",
+  "ui.relatedFeedObjects.noResults": "Nothing to show",
+  "ui.relatedFeedObjects.button.showMore": "Show More",
+  "ui.relatedFeedObjects.noMoreResults": "No more results",
 
 
   "ui.category.categoryFollowers": "{total, plural, =0 {Followed by # people} one {Followed by # person} other {Followed by # people}}",
