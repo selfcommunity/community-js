@@ -18,7 +18,27 @@ const Root = styled(Widget)(({theme}) => ({
     marginRight: -16
   }
 }));
+/**
+ * > API documentation for the Community-UI Categories Suggestion Skeleton component. Learn about the available props and the CSS API.
 
+ #### Import
+
+ ```jsx
+ import {CategoriesSuggestionSkeleton} from '@selfcommunity/ui';
+ ```
+
+ #### Component Name
+
+ The name `SCCategoriesSuggestionSkeleton` can be used when providing style overrides in the theme.
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCCategoriesSuggestionSkeleton-root|Styles applied to the root element.|
+ |list|.SCCategoriesSuggestionSkeleton-list|Styles applied to the list element.|
+ *
+ */
 export default function CategoriesSuggestionSkeleton(props): JSX.Element {
   return (
     <Root className={classes.root} {...props}>

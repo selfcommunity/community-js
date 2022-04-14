@@ -1,12 +1,10 @@
 import React from 'react';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemText from '@mui/material/ListItemText';
 import {styled} from '@mui/material/styles';
 import Skeleton from '@mui/material/Skeleton';
 import Widget from '../Widget';
-import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
 import {Button} from '@mui/material';
 
 const PREFIX = 'SCIncubatorSkeleton';
@@ -23,6 +21,27 @@ const Root = styled(Widget)(({theme}) => ({
   }
 }));
 
+/**
+ * > API documentation for the Community-UI Incubator Skeleton component. Learn about the available props and the CSS API.
+
+ #### Import
+
+ ```jsx
+ import {IncubatorSkeleton} from '@selfcommunity/ui';
+ ```
+
+ #### Component Name
+
+ The name `SCIncubatorSkeleton` can be used when providing style overrides in the theme.
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCIncubatorSkeleton-root|Styles applied to the root element.|
+ |list|.SCIncubatorSkeleton-list|Styles applied to the list element.|
+ *
+ */
 export default function IncubatorSkeleton(props): JSX.Element {
   const incubator = (
     <>

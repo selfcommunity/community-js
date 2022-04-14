@@ -12,6 +12,26 @@ const classes = {
 
 const Root = styled(BaseItem)(({theme}) => ({}));
 
+/**
+ * > API documentation for the Community-UI Category Skeleton component. Learn about the available props and the CSS API.
+
+ #### Import
+
+ ```jsx
+ import {CategorySkeleton} from '@selfcommunity/ui';
+ ```
+
+ #### Component Name
+
+ The name `SCCategorySkeleton` can be used when providing style overrides in the theme.
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCCategorySkeleton-root|Styles applied to the root element.|
+ *
+ */
 export default function CategorySkeleton(props): JSX.Element {
   return (
     <Root

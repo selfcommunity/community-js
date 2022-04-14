@@ -64,6 +64,30 @@ const Root = styled(Box, {
   }
 }));
 
+/**
+ * > API documentation for the Community-UI Composer Skeleton component. Learn about the available props and the CSS API.
+
+ #### Import
+
+ ```jsx
+ import {ComposerSkeleton} from '@selfcommunity/ui';
+ ```
+
+ #### Component Name
+
+ The name `SCComposerSkeleton` can be used when providing style overrides in the theme.
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCComposerSkeleton-root|Styles applied to the root element.|
+ |title|.SCComposerSkeleton-title|Styles applied to the title element.|
+ |avatar|.SCComposerSkeleton-avatar|Styles applied to the avatar element.|
+ |content|.SCComposerSkeleton-content|Styles applied to the content element.|
+ |actions|.SCComposerSkeleton-actions|Styles applied to the actions section.|
+ *
+ */
 export default function ComposerSkeleton(): JSX.Element {
   return (
     <Root className={classes.root}>

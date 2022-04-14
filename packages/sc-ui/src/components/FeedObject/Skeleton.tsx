@@ -35,7 +35,27 @@ export interface FeedObjectSkeletonProps extends CardProps {
    */
   [p: string]: any;
 }
+/**
+ * > API documentation for the Community-UI Feed Object Skeleton component. Learn about the available props and the CSS API.
 
+ #### Import
+
+ ```jsx
+ import {FeedObjectSkeleton} from '@selfcommunity/ui';
+ ```
+
+ #### Component Name
+
+ The name `SCFeedObjectSkeleton` can be used when providing style overrides in the theme.
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCFeedObjectSkeleton-root|Styles applied to the root element.|
+ |media|.SCFeedObjectSkeleton-media|Styles applied to the media element.|
+ *
+ */
 export default function FeedObjectSkeleton(props: {template?: SCFeedObjectTemplateType; [p: string]: any}): JSX.Element {
   const {template, ...rest} = props;
   const _template = template || SCFeedObjectTemplateType.SNIPPET;

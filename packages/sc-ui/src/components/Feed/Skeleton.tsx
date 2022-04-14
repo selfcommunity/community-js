@@ -38,6 +38,28 @@ interface FeedSkeletonMap {
 
 export type FeedSkeletonProps = React.PropsWithChildren<FeedSkeletonMap>;
 
+/**
+ * > API documentation for the Community-UI Feed Skeleton component. Learn about the available props and the CSS API.
+
+ #### Import
+
+ ```jsx
+ import {FeedSkeleton} from '@selfcommunity/ui';
+ ```
+
+ #### Component Name
+
+ The name `SCFeedSkeleton` can be used when providing style overrides in the theme.
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCFeedSkeleton-root|Styles applied to the root element.|
+ |left|.SCFeedSkeleton-left|Styles applied to the left section.|
+ |right|.SCFeedSkeleton-right|Styles applied to the right section.|
+ *
+ */
 export default function FeedSkeleton(props: FeedSkeletonProps): JSX.Element {
   // PROPS
   const {

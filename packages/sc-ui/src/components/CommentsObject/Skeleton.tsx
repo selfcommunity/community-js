@@ -19,6 +19,27 @@ const Root = styled(Widget)(({theme}) => ({
   }
 }));
 
+/**
+ * > API documentation for the Community-UI Comments Object Skeleton component. Learn about the available props and the CSS API.
+
+ #### Import
+
+ ```jsx
+ import {CommentsObjectSkeleton} from '@selfcommunity/ui';
+ ```
+
+ #### Component Name
+
+ The name `SCCommentsObjectSkeleton` can be used when providing style overrides in the theme.
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCCommentsObjectSkeleton-root|Styles applied to the root element.|
+ |list|.SCCommentsObjectSkeleton-root|Styles applied to the list element.|
+ *
+ */
 export default function CommentsObjectSkeleton(props): JSX.Element {
   return (
     <Root className={classes.root} {...props}>

@@ -6,9 +6,9 @@ import Skeleton from '@mui/material/Skeleton';
 const PREFIX = 'SCUserProfileHeaderSkeleton';
 
 const classes = {
+  root: `${PREFIX}-root`,
   avatar: `${PREFIX}-avatar`,
-  username: `${PREFIX}-username`,
-  root: `${PREFIX}-root`
+  username: `${PREFIX}-username`
 };
 
 const Root = styled(Box, {
@@ -32,6 +32,28 @@ const Root = styled(Box, {
   }
 }));
 
+/**
+ * > API documentation for the Community-UI User Profile Header Skeleton component. Learn about the available props and the CSS API.
+
+ #### Import
+
+ ```jsx
+ import {UserProfileHeaderSkeleton} from '@selfcommunity/ui';
+ ```
+
+ #### Component Name
+
+ The name `SCUserProfileHeaderSkeleton` can be used when providing style overrides in the theme.
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCUserProfileHeaderSkeleton-root|Styles applied to the root element.|
+ |avatar|.SCUserProfileHeaderSkeleton-avatar|Styles applied to the avatar element.|
+ |username|.SCUserProfileHeaderSkeleton-username|Styles applied to the username element.|
+ *
+ */
 function UserProfileHeaderSkeleton(): JSX.Element {
   return (
     <Root className={classes.root}>

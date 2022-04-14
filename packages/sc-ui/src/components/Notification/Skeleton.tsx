@@ -15,6 +15,26 @@ const Root = styled(Widget)(({theme}) => ({
   marginBottom: theme.spacing(2)
 }));
 
+/**
+ * > API documentation for the Community-UI Notification Skeleton component. Learn about the available props and the CSS API.
+
+ #### Import
+
+ ```jsx
+ import {NotificationSkeleton} from '@selfcommunity/ui';
+ ```
+
+ #### Component Name
+
+ The name `SCNotificationSkeleton` can be used when providing style overrides in the theme.
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCNotificationSkeleton-root|Styles applied to the root element.|
+ *
+ */
 export default function NotificationSkeleton(props): JSX.Element {
   const notification = (
     <>

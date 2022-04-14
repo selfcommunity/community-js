@@ -19,7 +19,27 @@ const Root = styled(Widget)(({theme}) => ({
     marginRight: -16
   }
 }));
+/**
+ * > API documentation for the Community-UI Trending People Skeleton component. Learn about the available props and the CSS API.
 
+ #### Import
+
+ ```jsx
+ import {TrendingPeopleSkeleton} from '@selfcommunity/ui';
+ ```
+
+ #### Component Name
+
+ The name `SCTrendingPeopleSkeleton` can be used when providing style overrides in the theme.
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCTrendingPeopleSkeleton-root|Styles applied to the root element.|
+ |list|.SCTrendingPeopleSkeleton-list|Styles applied to the list element.|
+ *
+ */
 export default function TrendingPeopleSkeleton(props: WidgetProps): JSX.Element {
   return (
     <Root className={classes.root} {...props}>
