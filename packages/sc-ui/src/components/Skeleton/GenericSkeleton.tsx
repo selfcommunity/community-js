@@ -12,7 +12,6 @@ const classes = {
 };
 
 const Root = styled(Widget)(({theme}) => ({
-  maxWidth: 700,
   [`& .${classes.list}`]: {
     marginLeft: -16,
     marginRight: -16

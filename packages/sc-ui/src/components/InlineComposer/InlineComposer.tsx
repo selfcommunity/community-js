@@ -13,7 +13,7 @@ import {
   SCUserContextType,
   UserUtils
 } from '@selfcommunity/core';
-import {Avatar, Box, Button, IconButton, CardProps} from '@mui/material';
+import { Avatar, Box, Button, IconButton, CardProps, CardContent } from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {SCMediaObjectType} from '../../types/media';
 import {Document, Image, Link} from '../../shared/Media';
@@ -30,6 +30,7 @@ const PREFIX = 'SCInlineComposer';
 
 const classes = {
   root: `${PREFIX}-root`,
+  content: `${PREFIX}-content`,
   input: `${PREFIX}-input`,
   actions: `${PREFIX}-actions`,
   avatar: `${PREFIX}-avatar`
@@ -40,17 +41,19 @@ const Root = styled(Widget, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  padding: theme.spacing(),
-  display: 'flex',
-  flexDirection: 'row',
-  justifyContent: 'space-between',
   marginBottom: theme.spacing(2),
-  [`& .${classes.input}`]: {
-    flexGrow: 2
-  },
-  [`& .${classes.input} .MuiButton-text`]: {
-    justifyContent: 'flex-start',
-    textTransform: 'none'
+  [`& .${classes.content}`]: {
+    padding: theme.spacing(),
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    [`& .${classes.input}`]: {
+      flexGrow: 2
+    },
+    [`& .${classes.input} .MuiButton-text`]: {
+      justifyContent: 'flex-start',
+      textTransform: 'none'
+    }
   }
 }));
 
@@ -117,6 +120,7 @@ const INITIAL_STATE = {
  |Rule Name|Global class|Description|
  |---|---|---|
  |root|.SCInlineComposer-root|Styles applied to the root element.|
+ |content|.SCInlineComposer-content|Styles applied to the content element.|
  |input|.SCInlineComposer-input|Styles applied to the input element.|
  |actions|.SCInlineComposer-actions|Styles applied to the actions section.|
  |avatar|.SCInlineComposer-avatar|Styles applied to the avatar element.|
@@ -185,30 +189,32 @@ export default function InlineComposer(inProps: InlineComposerProps): JSX.Elemen
   return (
     <React.Fragment>
       <Root className={classes.root} {...rest}>
-        <Box className={classes.input}>
-          <Button variant="text" disableFocusRipple disableRipple disableElevation onClick={handleOpen(MAIN_VIEW)} fullWidth color="inherit">
-            <FormattedMessage id="ui.inlineComposer.label" defaultMessage="ui.inlineComposer.label" />
-          </Button>
-        </Box>
-        <Box className={classes.actions}>
-          {mediaObjectTypes
-            .filter((mediaObjectType: SCMediaObjectType) => mediaObjectType.editButton !== null)
-            .map((mediaObjectType: SCMediaObjectType) => (
-              <mediaObjectType.editButton key={mediaObjectType.name} onClick={handleOpen(mediaObjectType.name)} />
-            ))}
-          {preferences[SCPreferences.ADDONS_POLLS_ENABLED] && (
-            <IconButton onClick={handleOpen(POLL_VIEW)}>
-              <Icon>bar_chart</Icon>
-            </IconButton>
-          )}
-        </Box>
-        <Box className={classes.avatar}>
-          {!scUserContext.user ? (
-            <Avatar variant="circular" />
-          ) : (
-            <Avatar alt={scUserContext.user.username} variant="circular" src={scUserContext.user.avatar} />
-          )}
-        </Box>
+        <CardContent className={classes.content}>
+          <Box className={classes.input}>
+            <Button variant="text" disableFocusRipple disableRipple disableElevation onClick={handleOpen(MAIN_VIEW)} fullWidth color="inherit">
+              <FormattedMessage id="ui.inlineComposer.label" defaultMessage="ui.inlineComposer.label" />
+            </Button>
+          </Box>
+          <Box className={classes.actions}>
+            {mediaObjectTypes
+              .filter((mediaObjectType: SCMediaObjectType) => mediaObjectType.editButton !== null)
+              .map((mediaObjectType: SCMediaObjectType) => (
+                <mediaObjectType.editButton key={mediaObjectType.name} onClick={handleOpen(mediaObjectType.name)} />
+              ))}
+            {preferences[SCPreferences.ADDONS_POLLS_ENABLED] && (
+              <IconButton onClick={handleOpen(POLL_VIEW)}>
+                <Icon>bar_chart</Icon>
+              </IconButton>
+            )}
+          </Box>
+          <Box className={classes.avatar}>
+            {!scUserContext.user ? (
+              <Avatar variant="circular" />
+            ) : (
+              <Avatar alt={scUserContext.user.username} variant="circular" src={scUserContext.user.avatar} />
+            )}
+          </Box>
+        </CardContent>
       </Root>
       <Composer
         open={open}

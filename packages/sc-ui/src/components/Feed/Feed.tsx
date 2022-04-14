@@ -56,7 +56,14 @@ const Root = styled(Grid, {
 })(({theme}) => ({
   marginTop: theme.spacing(-2),
   [`& .${classes.left}`]: {
-    padding: '0 2px 0 2px'
+    padding: '0 2px 0 2px',
+    [theme.breakpoints.down('md')]: {
+      '& > .SCWidget-root, & > .SCCustomAdv-root': {
+        maxWidth: 700,
+        marginLeft: 'auto',
+        marginRight: 'auto'
+      }
+    }
   },
   [`& .${classes.end}, & .${classes.refresh}`]: {
     textAlign: 'center'

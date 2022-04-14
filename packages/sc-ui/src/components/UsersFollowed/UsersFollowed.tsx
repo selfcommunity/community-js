@@ -51,7 +51,6 @@ const Root = styled(Widget, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  maxWidth: 700,
   marginBottom: theme.spacing(2),
   [`& .${classes.followedItem}`]: {
     marginBottom: theme.spacing()
