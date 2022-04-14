@@ -331,7 +331,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
 
   // RENDER
   const theme: Theme = useTheme();
-  const oneColLayout = useMediaQuery(theme.breakpoints.down('sm'));
+  const oneColLayout = useMediaQuery(theme.breakpoints.down('md'));
 
   const getData = useCallback((): FeedData => {
     const widgetSort = (w1, w2) => (w1.position > w2.position ? 1 : -1);
@@ -383,7 +383,8 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
               <Widget variant="outlined" className={classes.refresh}>
                 <CardContent>{refreshMessage}</CardContent>
               </Widget>
-            }>
+            }
+            style={{overflow: 'visible'}}>
             {data.left.map((d, i) =>
               d.type === 'widget' ? (
                 <d.component key={`widget_left_${i}`} {...d.componentProps} {...(d.publishEvents && {publicationChannel: id})}></d.component>
