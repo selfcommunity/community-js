@@ -20,11 +20,13 @@ import {SCOPE_SC_UI} from '../../constants/Errors';
 import {AxiosResponse} from 'axios';
 import {getContribution, getContributionRouteName, getContributionSnippet} from '../../utils/contribution';
 import ContributionFollowNotification from './ContributionFollow';
-import {Avatar, CardProps, Collapse, ListItem, ListItemAvatar, ListItemButton, ListItemText, Stack, Tooltip, Typography} from '@mui/material';
+import {Avatar, CardProps, Collapse, ListItemButton, ListItemText, Stack, Tooltip, Typography} from '@mui/material';
 import IncubatorApprovedNotification from './IncubatorApproved';
 import classNames from 'classnames';
 import LoadingButton from '@mui/lab/LoadingButton';
 import Widget from '../Widget';
+import useThemeProps from '@mui/material/styles/useThemeProps';
+import BaseItem from '../../shared/BaseItem';
 import {
   Endpoints,
   http,
@@ -39,7 +41,7 @@ import {
   SCRoutingContextType,
   useSCRouting
 } from '@selfcommunity/core';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+
 
 const messages = defineMessages({
   receivePrivateMessage: {
@@ -89,6 +91,10 @@ const Root = styled(Widget, {
   },
   [`& .${classes.notificationContent}`]: {
     position: 'relative'
+  },
+  [`& .${classes.notificationHeader}`]: {
+    boxSizing: 'border-box',
+    boxShadow: 'none'
   },
   [`& .${classes.stopNotificationButton}`]: {
     margin: '5px 10px',
@@ -308,27 +314,25 @@ export default function UserNotification(inProps: NotificationProps): JSX.Elemen
     if (notificationObject.aggregated && notificationObject.aggregated[0].type === SCNotificationTypologyType.PRIVATE_MESSAGE) {
       let messageNotification: SCNotificationPrivateMessageType = notificationObject.aggregated[0] as SCNotificationPrivateMessageType;
       return (
-        <ListItem component={'div'} classes={{root: classes.notificationHeader}}>
-          <ListItemAvatar className={classes.image}>
+        <BaseItem
+          className={classes.notificationHeader}
+          image={
             <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, messageNotification.message.sender)}>
               <Avatar alt={messageNotification.message.sender.username} variant="circular" src={messageNotification.message.sender.avatar} />
             </Link>
-          </ListItemAvatar>
-          <ListItemText
-            disableTypography={true}
-            primary={
-              <Typography component="span" color="inherit">
-                <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, messageNotification.message.sender)} className={classes.username}>
-                  {messageNotification.message.sender.username}
-                </Link>{' '}
-                {intl.formatMessage(messages.receivePrivateMessage, {
-                  total: notificationObject.aggregated.length,
-                  b: (...chunks) => <strong>{chunks}</strong>
-                })}
-              </Typography>
-            }
-          />
-        </ListItem>
+          }
+          primary={
+            <Typography component="span" color="inherit">
+              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, messageNotification.message.sender)} className={classes.username}>
+                {messageNotification.message.sender.username}
+              </Link>{' '}
+              {intl.formatMessage(messages.receivePrivateMessage, {
+                total: notificationObject.aggregated.length,
+                b: (...chunks) => <strong>{chunks}</strong>
+              })}
+            </Typography>
+          }
+          disableTypography />
       );
     }
     /**
