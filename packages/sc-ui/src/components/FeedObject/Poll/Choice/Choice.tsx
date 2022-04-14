@@ -13,10 +13,8 @@ const PREFIX = 'SCChoices';
 
 const classes = {
   root: `${PREFIX}-root`,
-  vote: `${PREFIX}-vote`,
-  voted: `${PREFIX}-voted`,
+  voteButton: `${PREFIX}-vote-button`,
   choice: `${PREFIX}-choice`,
-  result: `${PREFIX}-result`,
   progress: `${PREFIX}-progress`
 };
 
@@ -28,29 +26,12 @@ const Root = styled(Card, {
   background: theme.palette.grey['A200'],
   marginBottom: theme.spacing(2),
   padding: theme.spacing(1),
-  [`& .${classes.vote}`]: {
-    backgroundColor: theme.palette.common.white,
-    marginRight: theme.spacing(1)
-  },
-  [`& .${classes.voted}`]: {
-    backgroundColor: theme.palette.common.black,
-    '&:hover': {
-      backgroundColor: theme.palette.common.black
-    },
+  [`& .${classes.voteButton}`]: {
     marginRight: theme.spacing(1)
   },
   [`& .${classes.choice}`]: {
     display: 'inline-flex',
     margin: theme.spacing(1)
-  },
-  [`& .${classes.result}`]: {
-    marginLeft: theme.spacing(2)
-  },
-  '& .MuiIcon-root': {
-    color: theme.palette.common.white
-  },
-  '& .MuiLinearProgress-bar': {
-    backgroundColor: theme.palette.common.black
   },
   [`& .${classes.progress}`]: {
     marginLeft: theme.spacing(1),
@@ -144,10 +125,10 @@ export default function Choice(inProps: ChoiceProps): JSX.Element {
       <Box className={classes.choice}>
         <LoadingButton
           loading={isVoting === choiceObj.id}
-          variant="outlined"
+          variant={choiceObj.voted ? 'contained' : 'outlined'}
           size="small"
           disabled={disabled || isVoting !== null || votable}
-          className={choiceObj.voted ? classes.voted : classes.vote}
+          className={classes.voteButton}
           onClick={handleVoteAction}>
           {choiceObj.voted ? (
             <Icon>check</Icon>
