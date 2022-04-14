@@ -103,6 +103,27 @@ const WIDGETS: SCFeedWidgetType[] = [
   }
 ];
 
+/**
+ * > API documentation for the Community-UI Main Feed Template. Learn about the available props and the CSS API.
+
+ #### Import
+
+ ```jsx
+ import {MainFeed} from '@selfcommunity/templates';
+ ```
+
+ #### Component Name
+
+ The name `SCMainFeedTemplate` can be used when providing style overrides in the theme.
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCMainFeedTemplate-root|Styles applied to the root element.|
+ *
+ * @param inProps
+ */
 export default function MainFeed(inProps: MainFeedProps): JSX.Element {
   // PROPS
   const props: MainFeedProps = useThemeProps({

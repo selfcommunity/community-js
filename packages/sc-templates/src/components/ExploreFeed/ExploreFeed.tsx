@@ -104,6 +104,27 @@ const WIDGETS: SCFeedWidgetType[] = [
   }
 ];
 
+/**
+ * > API documentation for the Community-UI Explore Feed Template. Learn about the available props and the CSS API.
+
+ #### Import
+
+ ```jsx
+ import {ExploreFeed} from '@selfcommunity/templates';
+ ```
+
+ #### Component Name
+
+ The name `SCExploreFeedTemplate` can be used when providing style overrides in the theme.
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCExploreFeedTemplate-root|Styles applied to the root element.|
+ *
+ * @param inProps
+ */
 export default function ExploreFeed(inProps: ExploreFeedProps): JSX.Element {
   // PROPS
   const props: ExploreFeedProps = useThemeProps({

@@ -102,6 +102,27 @@ const WIDGETS: SCFeedWidgetType[] = [
   }
 ];
 
+/**
+ * > API documentation for the Community-UI User Feed Template. Learn about the available props and the CSS API.
+
+ #### Import
+
+ ```jsx
+ import {UserFeed} from '@selfcommunity/templates';
+ ```
+
+ #### Component Name
+
+ The name `SCUserFeedTemplate` can be used when providing style overrides in the theme.
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCUserFeedTemplate-root|Styles applied to the root element.|
+ *
+ * @param inProps
+ */
 export default function UserFeed(inProps: UserFeedProps): JSX.Element {
   // PROPS
   const props: UserFeedProps = useThemeProps({

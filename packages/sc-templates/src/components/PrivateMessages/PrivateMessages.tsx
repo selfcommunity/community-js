@@ -9,13 +9,13 @@ import {SCUserContext, SCUserContextType} from '@selfcommunity/core';
 import classNames from 'classnames';
 import useThemeProps from '@mui/material/styles/useThemeProps';
 
-const PREFIX = 'SCPrivateMessages';
+const PREFIX = 'SCPrivateMessagesTemplate';
 
 const classes = {
   root: `${PREFIX}-root`,
-  snippetsBox: `${PREFIX}-snippetsBox`,
-  threadBox: `${PREFIX}-threadBox`,
-  newMessage: `${PREFIX}-newMessage`,
+  snippetsBox: `${PREFIX}-snippets-box`,
+  threadBox: `${PREFIX}-thread-box`,
+  newMessage: `${PREFIX}-new-message`,
   selected: `${PREFIX}-selected`
 };
 
@@ -72,26 +72,28 @@ export interface PrivateMessagesProps {
 }
 /**
  *
- > API documentation for the Community-UI Private Messages component. Learn about the available props and the CSS API.
+ > API documentation for the Community-UI Private Messages template. Learn about the available props and the CSS API.
 
  #### Import
 
  ```jsx
- import {PrivateMessages} from '@selfcommunity/ui';
+ import {PrivateMessages} from '@selfcommunity/templates';
  ```
 
  #### Component Name
 
- The name `SCPrivateMessages` can be used when providing style overrides in the theme.
+ The name `SCPrivateMessagesTemplate` can be used when providing style overrides in the theme.
 
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCPrivateMessages-root|Styles applied to the root element.|
- |newMessage|.SCPrivateMessages-newMessage|Styles applied to the new message element.|
- |selected|.SCPrivateMessages-selected|Styles applied to the selected element.|
+ |root|.SCPrivateMessagesTemplate-root|Styles applied to the root element.|
+ |newMessage|.SCPrivateMessagesTemplate-new-message|Styles applied to the new message element.|
+ |selected|.SCPrivateMessagesTemplate-selected|Styles applied to the selected element.|
+ |snippetsBox|.SCPrivateMessagesTemplate-snippets-box|Styles applied to the snippets box element.|
+ |threadBox|.SCPrivateMessagesTemplate-thread-box|Styles applied to the thread box element.|
 
 
  * @param inProps
