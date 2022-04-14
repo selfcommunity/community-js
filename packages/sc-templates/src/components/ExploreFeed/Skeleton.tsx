@@ -2,7 +2,11 @@ import React from 'react';
 import {styled} from '@mui/material/styles';
 import {FeedObjectSkeleton, SCFeedObjectTemplateType, FeedSkeleton, GenericSkeleton, InlineComposerSkeleton} from '@selfcommunity/ui';
 
-const PREFIX = 'SCNotificationFeedSkeleton';
+const PREFIX = 'SCExploreFeedTemplateSkeleton';
+
+const classes = {
+  root: `${PREFIX}-root`
+};
 
 const Root = styled(FeedSkeleton, {
   name: PREFIX,
@@ -10,9 +14,30 @@ const Root = styled(FeedSkeleton, {
   overridesResolver: (props, styles) => styles.root
 })(() => ({}));
 
-export default function NotificationFeedSkeleton(): JSX.Element {
+/**
+ * > API documentation for the Community-UI Explore Feed Skeleton Template. Learn about the available props and the CSS API.
+
+ #### Import
+
+ ```jsx
+ import {ExploreFeedSkeleton} from '@selfcommunity/templates';
+ ```
+
+ #### Component Name
+
+ The name `SCExploreFeedTemplateSkeleton` can be used when providing style overrides in the theme.
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCExploreFeedTemplateSkeleton-root|Styles applied to the root element.|
+ *
+ */
+export default function ExploreFeedSkeleton(): JSX.Element {
   return (
     <Root
+      className={classes.root}
       sidebar={
         <React.Fragment>
           <GenericSkeleton sx={{mb: 2}} />

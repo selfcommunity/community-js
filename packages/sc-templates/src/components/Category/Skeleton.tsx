@@ -6,6 +6,10 @@ import {CategoryHeaderSkeleton} from '@selfcommunity/ui';
 
 const PREFIX = 'SCCategoryTemplateSkeleton';
 
+const classes = {
+  root: `${PREFIX}-root`
+};
+
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
@@ -14,9 +18,29 @@ const Root = styled(Box, {
   marginTop: theme.spacing(2)
 }));
 
+/**
+ * > API documentation for the Community-UI Category Skeleton Template. Learn about the available props and the CSS API.
+
+ #### Import
+
+ ```jsx
+ import {CategorySkeleton} from '@selfcommunity/templates';
+ ```
+
+ #### Component Name
+
+ The name `SCCategoryTemplateSkeleton` can be used when providing style overrides in the theme.
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCCategoryTemplateSkeleton-root|Styles applied to the root element.|
+ *
+ */
 export default function CategorySkeleton(): JSX.Element {
   return (
-    <Root>
+    <Root className={classes.root}>
       <CategoryHeaderSkeleton />
       <CategoryFeedSkeleton />
     </Root>

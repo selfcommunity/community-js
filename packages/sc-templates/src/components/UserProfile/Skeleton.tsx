@@ -4,7 +4,11 @@ import {styled} from '@mui/material/styles';
 import {UserProfileHeaderSkeleton} from '@selfcommunity/ui';
 import UserFeedSkeleton from '../UserFeed/Skeleton';
 
-const PREFIX = 'SCUserProfileSkeleton';
+const PREFIX = 'SCUserProfileTemplateSkeleton';
+
+const classes = {
+  root: `${PREFIX}-root`
+};
 
 const Root = styled(Box, {
   name: PREFIX,
@@ -14,9 +18,29 @@ const Root = styled(Box, {
   marginTop: theme.spacing(2)
 }));
 
+/**
+ * > API documentation for the Community-UI User Profile Skeleton Template. Learn about the available props and the CSS API.
+
+ #### Import
+
+ ```jsx
+ import {UserProfileSkeleton} from '@selfcommunity/templates';
+ ```
+
+ #### Component Name
+
+ The name `SCUserProfileTemplateSkeleton` can be used when providing style overrides in the theme.
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCUserProfileTemplateSkeleton-root|Styles applied to the root element.|
+ *
+ */
 export default function UserProfileSkeleton(): JSX.Element {
   return (
-    <Root>
+    <Root className={classes.root}>
       <UserProfileHeaderSkeleton />
       <UserFeedSkeleton />
     </Root>
