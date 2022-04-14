@@ -1,3 +1,2 @@
-import CommentRelevantActivity, {CommentRelevantActivityProps} from './CommentActivity';
+import CommentRelevantActivity from './CommentActivity';
 export default CommentRelevantActivity;
-export {CommentRelevantActivityProps};
