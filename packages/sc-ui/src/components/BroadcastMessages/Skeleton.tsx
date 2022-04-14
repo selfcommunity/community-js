@@ -20,7 +20,30 @@ const MessageRoot = styled(Widget, {
 })(({theme}) => ({
   marginBottom: theme.spacing(2)
 }));
+/**
+ * > API documentation for the Community-UI Broadcast Message Skeleton component. Learn about the available props and the CSS API.
 
+ #### Import
+
+ ```jsx
+ import {MessageSkeleton} from '@selfcommunity/ui';
+ ```
+
+ #### Component Name
+
+ The name `SCBroadcastMessageSkeleton` can be used when providing style overrides in the theme.
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCBroadcastMessageSkeleton-root|Styles applied to the root element.|
+ |header|.SCBroadcastMessageSkeleton-header|Styles applied to the header element.|
+ |title|.SCBroadcastMessageSkeleton-title|Styles applied to the title element.|
+ |media|.SCBroadcastMessageSkeleton-media|Styles applied to the media element.|
+ |content|.SCBroadcastMessageSkeleton-content|Styles applied to the content section.|
+ *
+ */
 export function MessageSkeleton(props): JSX.Element {
   return (
     <MessageRoot className={classes.root}>
@@ -59,6 +82,26 @@ const Root = styled(Box, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({}));
 
+/**
+ * > API documentation for the Community-UI Broadcast Messages Skeleton component. Learn about the available props and the CSS API.
+
+ #### Import
+
+ ```jsx
+ import {BroadcastMessagesSkeleton} from '@selfcommunity/ui';
+ ```
+
+ #### Component Name
+
+ The name `SCBroadcastMessagesSkeleton` can be used when providing style overrides in the theme.
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCBroadcastMessagesSkeleton-root|Styles applied to the root element.|
+ *
+ */
 export default function BroadcastMessagesSkeleton(props): JSX.Element {
   return (
     <Root className={classes.root} {...props}>

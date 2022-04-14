@@ -18,6 +18,27 @@ const Root = styled(Widget)(({theme}) => ({
   }
 }));
 
+/**
+ * > API documentation for the Community-UI People Suggestion Skeleton component. Learn about the available props and the CSS API.
+
+ #### Import
+
+ ```jsx
+ import {PeopleSuggestionSkeleton} from '@selfcommunity/ui';
+ ```
+
+ #### Component Name
+
+ The name `SCPeopleSuggestionSkeleton` can be used when providing style overrides in the theme.
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCPeopleSuggestionSkeleton-root|Styles applied to the root element.|
+ |list|.SCPeopleSuggestionSkeleton-list|Styles applied to the list element.|
+ *
+ */
 function PeopleSuggestionSkeleton(props): JSX.Element {
   return (
     <Root className={classes.root} {...props}>

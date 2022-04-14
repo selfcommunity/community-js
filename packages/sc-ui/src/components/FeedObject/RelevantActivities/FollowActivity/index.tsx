@@ -1,3 +1,2 @@
-import FollowRelevantActivity, {ActionsRelevantActivityProps} from './FollowActivity';
+import FollowRelevantActivity from './FollowActivity';
 export default FollowRelevantActivity;
-export {ActionsRelevantActivityProps};

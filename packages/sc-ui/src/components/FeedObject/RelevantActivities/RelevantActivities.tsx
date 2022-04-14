@@ -18,7 +18,7 @@ const PREFIX = 'SCFeedRelevantActivities';
 
 const classes = {
   root: `${PREFIX}-root`,
-  activityItem: `${PREFIX}-activity`
+  activity: `${PREFIX}-activity`
 };
 
 const Root = styled(Box, {
@@ -26,12 +26,8 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  [`& .${classes.activityItem}`]: {
+  [`& .MuiList-root, & .${classes.activity}`]: {
     padding: 0
-  },
-  '& a': {
-    textDecoration: 'none',
-    color: grey[900]
   }
 }));
 export interface RelevantActivitiesProps {
@@ -68,51 +64,19 @@ export default function RelevantActivities(inProps: RelevantActivitiesProps): JS
   const [loadingVote, setLoadingVote] = useState<number>(null);
 
   /**
-   * Performs vote comment
-   */
-  const performVoteComment = (comment) => {
-    return http
-      .request({
-        url: Endpoints.Vote.url({type: SCCommentTypologyType, id: comment.id}),
-        method: Endpoints.Vote.method
-      })
-      .then((res: AxiosResponse<any>) => {
-        if (res.status >= 300) {
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res.data);
-      });
-  };
-
-  /**
-   * Handles vote comment
-   * @param comment
-   */
-  function handleVote(index, comment) {
-    setLoadingVote(index);
-    performVoteComment(comment)
-      .then((data) => {
-        setLoadingVote(null);
-      })
-      .catch((error) => {
-        Logger.error(SCOPE_SC_UI, error);
-      });
-  }
-
-  /**
    * Renders single relevant activity
    * @param a
    * @param i
    */
   function renderActivity(a, i) {
     if (a.type === SCFeedUnitActivityTypologyType.COMMENT) {
-      return <CommentRelevantActivity activityObject={a} key={i} index={i} onVote={handleVote} loadingVote={loadingVote} />;
+      return <CommentRelevantActivity activityObject={a} key={i} elevation={0} />;
     } else if (a.type === SCFeedUnitActivityTypologyType.FOLLOW) {
-      return <FollowRelevantActivity activityObject={a} key={i} />;
+      return <FollowRelevantActivity activityObject={a} key={i} elevation={0} />;
     } else if (a.type === SCFeedUnitActivityTypologyType.VOTE) {
-      return <VoteUpRelevantActivity activityObject={a} key={i} />;
+      return <VoteUpRelevantActivity activityObject={a} key={i} elevation={0} />;
     } else if (a.type === SCFeedUnitActivityTypologyType.POLLVOTE) {
-      return <PollVoteRelevantActivity activityObject={a} key={i} />;
+      return <PollVoteRelevantActivity activityObject={a} key={i} elevation={0} />;
     }
     return null;
   }
@@ -129,7 +93,7 @@ export default function RelevantActivities(inProps: RelevantActivitiesProps): JS
       ) : (
         <List>
           {activities.slice(0, showMaxRelevantActivities).map((a: SCFeedUnitActivityType, i) => (
-            <ListItem classes={{root: classes.activityItem}}>{renderActivity(a, i)}</ListItem>
+            <ListItem className={classes.activity}>{renderActivity(a, i)}</ListItem>
           ))}
           {!openOtherActivities && activities.length > showMaxRelevantActivities && (
             <ListItemButton onClick={() => setOpenOtherActivities((prev) => !prev)}>
@@ -146,7 +110,7 @@ export default function RelevantActivities(inProps: RelevantActivitiesProps): JS
           )}
           <Collapse in={openOtherActivities} timeout="auto" unmountOnExit>
             {activities.slice(showMaxRelevantActivities).map((a: SCFeedUnitActivityType, i) => (
-              <ListItem classes={{root: classes.activityItem}}>{renderActivity(a, i)}</ListItem>
+              <ListItem className={classes.activity}>{renderActivity(a, i)}</ListItem>
             ))}
           </Collapse>
         </List>

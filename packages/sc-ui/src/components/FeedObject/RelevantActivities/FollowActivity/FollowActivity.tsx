@@ -1,47 +1,39 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import {Avatar, Box, ListItem, ListItemAvatar, ListItemText, Typography} from '@mui/material';
-import {Link, SCFeedUnitActivityType, SCNotificationUserFollowType, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
+import {Avatar} from '@mui/material';
+import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
 import {defineMessages, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../../shared/DateTimeAgo';
 import classNames from 'classnames';
 import useThemeProps from '@mui/material/styles/useThemeProps';
+import {ActionsRelevantActivityProps} from '../ActionsRelevantActivity';
+import BaseItem from '../../../../shared/BaseItem';
 
 const messages = defineMessages({
-  followUser: {
-    id: 'ui.notification.userFollow.followUser',
-    defaultMessage: 'ui.notification.userFollow.followUser'
+  follow: {
+    id: 'ui.feedObject.relevantActivities.follow',
+    defaultMessage: 'ui.feedObject.relevantActivities.follow'
   }
 });
 
 const PREFIX = 'SCFollowRelevantActivity';
 
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-root`,
+  avatar: `${PREFIX}-avatar`,
+  username: `${PREFIX}-username`
 };
 
-const Root = styled(Box, {
+const Root = styled(BaseItem, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+})(({theme}) => ({
+  [`& .${classes.username}`]: {
+    color: 'inherit'
+  }
+}));
 
-export interface ActionsRelevantActivityProps {
-  /**
-   * Overrides or extends the styles applied to the component.
-   * @default null
-   */
-  className?: string;
-  /**
-   * Activity obj
-   * @default null
-   */
-  activityObject: SCFeedUnitActivityType;
-  /**
-   * Any other properties
-   */
-  [p: string]: any;
-}
 export default function FollowRelevantActivity(inProps: ActionsRelevantActivityProps): JSX.Element {
   // PROPS
   const props: ActionsRelevantActivityProps = useThemeProps({
@@ -56,27 +48,28 @@ export default function FollowRelevantActivity(inProps: ActionsRelevantActivityP
   // INTL
   const intl = useIntl();
 
-  /**
-   * Renders root object
-   */
+  // RENDER
   return (
-    <Root className={classNames(classes.root, className)} {...rest}>
-      <ListItem alignItems="flex-start">
-        <ListItemAvatar>
-          <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, activityObject.author)}>
-            <Avatar alt={activityObject.author.username} variant="circular" src={activityObject.author.avatar} />
-          </Link>
-        </ListItemAvatar>
-        <ListItemText
-          primary={
-            <Typography component="span" sx={{display: 'inline'}} color="primary">
-              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, activityObject.author)}>{activityObject.author.username}</Link>{' '}
-              {intl.formatMessage(messages.followUser, {b: (...chunks) => <strong>{chunks}</strong>})}
-            </Typography>
-          }
-          secondary={<DateTimeAgo date={activityObject.active_at} />}
-        />
-      </ListItem>
-    </Root>
+    <Root
+      {...rest}
+      className={classNames(classes.root, className)}
+      image={
+        <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, activityObject.author)}>
+          <Avatar alt={activityObject.author.username} variant="circular" src={activityObject.author.avatar} className={classes.avatar} />
+        </Link>
+      }
+      primary={
+        <>
+          {intl.formatMessage(messages.follow, {
+            username: (
+              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, activityObject.author)} className={classes.username}>
+                {activityObject.author.username}
+              </Link>
+            )
+          })}
+        </>
+      }
+      secondary={<DateTimeAgo date={activityObject.active_at} />}
+    />
   );
 }

@@ -4,7 +4,7 @@ import Widget from '../Widget';
 import {CardContent, List, ListItem} from '@mui/material';
 import {PollSnippetSkeleton} from './PollSnippet';
 
-const PREFIX = 'SCPeopleSuggestionSkeleton';
+const PREFIX = 'SCPollSuggestionSkeleton';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -18,7 +18,28 @@ const Root = styled(Widget)(({theme}) => ({
   }
 }));
 
-function PollSuggestionSkeleton(props): JSX.Element {
+/**
+ * > API documentation for the Community-UI Poll Suggestion Skeleton component. Learn about the available props and the CSS API.
+
+ #### Import
+
+ ```jsx
+ import {PollSuggestionSkeleton} from '@selfcommunity/ui';
+ ```
+
+ #### Component Name
+
+ The name `SCPollSuggestionSkeleton` can be used when providing style overrides in the theme.
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCPollSuggestionSkeleton-root|Styles applied to the root element.|
+ |list|.SCPollSuggestionSkeleton-list|Styles applied to the list element.|
+ *
+ */
+export default function PollSuggestionSkeleton(props): JSX.Element {
   return (
     <Root className={classes.root} {...props}>
       <CardContent>
@@ -33,5 +54,3 @@ function PollSuggestionSkeleton(props): JSX.Element {
     </Root>
   );
 }
-
-export default PollSuggestionSkeleton;

@@ -46,10 +46,10 @@
   "ui.trendingFeed.button.showMore": "Show More",
   "ui.trendingFeed.noMoreResults": "No more results",
 
-  "ui.relatedDiscussion.title": "Related Discussions",
-  "ui.relatedDiscussion.noResults": "Nothing to show",
-  "ui.relatedDiscussion.button.showMore": "Show More",
-  "ui.relatedDiscussion.noMoreResults": "No more results",
+  "ui.relatedFeedObjects.title": "Related Posts",
+  "ui.relatedFeedObjects.noResults": "Nothing to show",
+  "ui.relatedFeedObjects.button.showMore": "Show More",
+  "ui.relatedFeedObjects.noMoreResults": "No more results",
 
 
   "ui.category.categoryFollowers": "{total, plural, =0 {Followed by # people} one {Followed by # person} other {Followed by # people}}",
@@ -163,7 +163,7 @@
   "ui.feedObject.vote.voteDown": "Unlike this contribute",
   "ui.feedObject.vote.votes": "{total, plural, =0 {# Likes} one {# Like} other {# Likes}}",
   "ui.feedObject.vote.votedByOnlyMe": "Only you",
-  "ui.feedObject.vote.votedByMe": "You",
+  "ui.feedObject.vote.votedByMe": "You + {total}",
   "ui.feedObject.share.share": "Share this contribute",
   "ui.feedObject.share.shareNow": "Share now",
   "ui.feedObject.share.shareInCategories": "Share in {categories}",
@@ -187,6 +187,10 @@
 
   "ui.feedObject.relevantActivities.noResults": "There aren't relevant activities to show at the moment.",
   "ui.feedObject.relevantActivities.showOthers": "Show more",
+  "ui.feedObject.relevantActivities.vote": "{username} appreciated you",
+  "ui.feedObject.relevantActivities.pollVote": "{username} voted the poll",
+  "ui.feedObject.relevantActivities.follow": "{username} follows the contribution",
+  "ui.feedObject.relevantActivities.comment": "{username} comment your contribution \"{comment}\"",
 
   "ui.feedObject.activitiesMenu.tooltipTitle": "Select the type of activity",
   "ui.feedObject.activitiesMenu.relevantActivities": "Relevant activities",

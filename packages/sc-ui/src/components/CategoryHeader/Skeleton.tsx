@@ -31,7 +31,28 @@ const Root = styled(Box, {
     textAlign: 'center'
   }
 }));
+/**
+ * > API documentation for the Community-UI Category Header Skeleton component. Learn about the available props and the CSS API.
 
+ #### Import
+
+ ```jsx
+ import {CategoryHeaderSkeleton} from '@selfcommunity/ui';
+ ```
+
+ #### Component Name
+
+ The name `SCCategoryHeaderSkeleton` can be used when providing style overrides in the theme.
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCCategoryHeaderSkeleton-root|Styles applied to the root element.|
+ |avatar|.SCCategoryHeaderSkeleton-avatar|Styles applied to the avatar element.|
+ |username|.SCCategoryHeaderSkeleton-username|Styles applied to the username element.|
+ *
+ */
 export default function CategoryHeaderSkeleton(): JSX.Element {
   return (
     <Root className={classes.root}>

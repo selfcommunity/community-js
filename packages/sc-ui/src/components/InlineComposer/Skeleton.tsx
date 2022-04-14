@@ -33,6 +33,30 @@ const Root = styled(Widget, {
   }
 }));
 
+/**
+ * > API documentation for the Community-UI Inline Composer Skeleton component. Learn about the available props and the CSS API.
+
+ #### Import
+
+ ```jsx
+ import {InlineComposerSkeleton} from '@selfcommunity/ui';
+ ```
+
+ #### Component Name
+
+ The name `SCInlineComposerSkeleton` can be used when providing style overrides in the theme.
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCInlineComposerSkeleton-root|Styles applied to the root element.|
+ |input|.SCInlineComposerSkeleton-input|Styles applied to the input element.|
+ |actions|.SCInlineComposerSkeleton-actions|Styles applied to the actions section.|
+ |action|.SCInlineComposerSkeleton-action|Styles applied to the action section.|
+ |avatar|.SCInlineComposerSkeleton-avatar|Styles applied to the avatar element.|
+ *
+ */
 export default function InlineComposerSkeleton(): JSX.Element {
   return (
     <Root className={classes.root}>

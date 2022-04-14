@@ -13,6 +13,26 @@ const classes = {
 
 const Root = styled(BaseItem)(({theme}) => ({}));
 
+/**
+ * > API documentation for the Community-UI User Skeleton component. Learn about the available props and the CSS API.
+
+ #### Import
+
+ ```jsx
+ import {UserSkeleton} from '@selfcommunity/ui';
+ ```
+
+ #### Component Name
+
+ The name `SCUserSkeleton` can be used when providing style overrides in the theme.
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCUserSkeleton-root|Styles applied to the root element.|
+ *
+ */
 export default function UserSkeleton(props: WidgetProps): JSX.Element {
   return (
     <Root

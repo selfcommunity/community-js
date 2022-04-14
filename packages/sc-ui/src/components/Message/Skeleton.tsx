@@ -21,7 +21,27 @@ const Root = styled(Widget)(({theme}) => ({
     marginRight: -16
   }
 }));
+/**
+ * > API documentation for the Community-UI Message Skeleton component. Learn about the available props and the CSS API.
 
+ #### Import
+
+ ```jsx
+ import {MessageSkeleton} from '@selfcommunity/ui';
+ ```
+
+ #### Component Name
+
+ The name `SCMessageSkeleton` can be used when providing style overrides in the theme.
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCMessageSkeleton-root|Styles applied to the root element.|
+ |list|.SCMessageSkeleton-list|Styles applied to the list element.|
+ *
+ */
 export default function MessageSkeleton(props): JSX.Element {
   const m = (
     <ListItem>

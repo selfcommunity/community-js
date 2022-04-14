@@ -19,6 +19,27 @@ const Root = styled(Widget)(({theme}) => ({
   }
 }));
 
+/**
+ * > API documentation for the Community-UI Incubators List Skeleton component. Learn about the available props and the CSS API.
+
+ #### Import
+
+ ```jsx
+ import {IncubatorsListSkeleton} from '@selfcommunity/ui';
+ ```
+
+ #### Component Name
+
+ The name `SCIncubatorsListSkeleton` can be used when providing style overrides in the theme.
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCIncubatorsListSkeleton-root|Styles applied to the root element.|
+ |list|.SCIncubatorsListSkeleton-list|Styles applied to the list element.|
+ *
+ */
 export default function IncubatorsListSkeleton(props): JSX.Element {
   return (
     <Root className={classes.root} {...props}>

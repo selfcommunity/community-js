@@ -15,7 +15,27 @@ const Root = styled(Box, {
   overridesResolver: (props, styles) => styles.root
 })(() => ({}));
 
-function UserProfileEditSkeleton(): JSX.Element {
+/**
+ * > API documentation for the Community-UI User Profile Edit Skeleton component. Learn about the available props and the CSS API.
+
+ #### Import
+
+ ```jsx
+ import {UserProfileEditSkeleton} from '@selfcommunity/ui';
+ ```
+
+ #### Component Name
+
+ The name `SCUserProfileEditSkeleton` can be used when providing style overrides in the theme.
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCUserProfileEditSkeleton-root|Styles applied to the root element.|
+ *
+ */
+export default function UserProfileEditSkeleton(): JSX.Element {
   return (
     <Root className={classes.root}>
       <Grid container>
@@ -27,5 +47,3 @@ function UserProfileEditSkeleton(): JSX.Element {
     </Root>
   );
 }
-
-export default UserProfileEditSkeleton;

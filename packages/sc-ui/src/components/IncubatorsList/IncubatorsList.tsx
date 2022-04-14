@@ -49,7 +49,7 @@ const Root = styled(Widget, {
     display: 'block',
     padding: 0
   },
-  ' & .MuiCardContent-root': {
+  '& .MuiCardContent-root': {
     padding: theme.spacing(1),
     '&:last-child': {
       paddingBottom: theme.spacing(1)

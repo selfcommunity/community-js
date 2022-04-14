@@ -30,7 +30,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import Widget from '../Widget';
 import useThemeProps from '@mui/material/styles/useThemeProps';
 
-const PREFIX = 'SCTrendingPost';
+const PREFIX = 'SCRelatedFeedObjects';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -219,11 +219,11 @@ export default function RelatedFeedObjects(inProps: RelatedFeedObjectsProps): JS
       ) : (
         <CardContent>
           <Typography className={classes.title} variant="h5">
-            <FormattedMessage id="ui.relatedDiscussion.title" defaultMessage="ui.relatedDiscussion.title" />
+            <FormattedMessage id="ui.relatedFeedObjects.title" defaultMessage="ui.relatedFeedObjects.title" />
           </Typography>
           {!total ? (
             <Typography className={classes.noResults} variant="body2">
-              <FormattedMessage id="ui.relatedDiscussion.noResults" defaultMessage="ui.relatedDiscussion.noResults" />
+              <FormattedMessage id="ui.relatedFeedObjects.noResults" defaultMessage="ui.relatedFeedObjects.noResults" />
             </Typography>
           ) : (
             <React.Fragment>
@@ -241,14 +241,14 @@ export default function RelatedFeedObjects(inProps: RelatedFeedObjectsProps): JS
               </List>
               {hasMore && (
                 <Button size="small" className={classes.showMore} onClick={() => setOpenRelatedFeedObjectsDialog(true)}>
-                  <FormattedMessage id="ui.relatedDiscussion.button.showMore" defaultMessage="ui.relatedDiscussion.button.showMore" />
+                  <FormattedMessage id="ui.relatedFeedObjects.button.showMore" defaultMessage="ui.relatedFeedObjects.button.showMore" />
                 </Button>
               )}
             </React.Fragment>
           )}
           {openRelatedFeedObjectsDialog && (
             <BaseDialog
-              title={<FormattedMessage id="ui.relatedDiscussion.title" defaultMessage="ui.relatedDiscussion.title" />}
+              title={<FormattedMessage id="ui.relatedFeedObjects.title" defaultMessage="ui.relatedFeedObjects.title" />}
               onClose={() => setOpenRelatedFeedObjectsDialog(false)}
               open={openRelatedFeedObjectsDialog}>
               {loading ? (
@@ -263,7 +263,7 @@ export default function RelatedFeedObjects(inProps: RelatedFeedObjectsProps): JS
                   endMessage={
                     <p style={{textAlign: 'center'}}>
                       <b>
-                        <FormattedMessage id="ui.relatedDiscussion.noMoreResults" defaultMessage="ui.relatedDiscussion.noMoreResults" />
+                        <FormattedMessage id="ui.relatedFeedObjects.noMoreResults" defaultMessage="ui.relatedFeedObjects.noMoreResults" />
                       </b>
                     </p>
                   }>

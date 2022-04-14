@@ -15,6 +15,27 @@ const Root = styled(Box, {
   overridesResolver: (props, styles) => styles.root
 })(() => ({}));
 
+/**
+ * > API documentation for the Community-UI User Profile Info Skeleton component. Learn about the available props and the CSS API.
+
+ #### Import
+
+ ```jsx
+ import {UserProfileInfoSkeleton} from '@selfcommunity/ui';
+ ```
+
+ #### Component Name
+
+ The name `SCUserProfileInfoSkeleton` can be used when providing style overrides in the theme.
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCUserProfileInfoSkeleton-root|Styles applied to the root element.|
+ *
+ */
+
 function UserProfileInfoSkeleton(): JSX.Element {
   return (
     <Root className={classes.root}>

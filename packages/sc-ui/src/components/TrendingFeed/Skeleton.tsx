@@ -20,7 +20,26 @@ const Root = styled(Widget)(({theme}) => ({
     marginRight: -16
   }
 }));
+/**
+ * > API documentation for the Community-UI Trending Feed Skeleton component. Learn about the available props and the CSS API.
 
+ #### Import
+
+ ```jsx
+ import {TrendingFeedSkeleton} from '@selfcommunity/ui';
+ ```
+
+ #### Component Name
+
+ The name `SCTrendingFeedSkeleton` can be used when providing style overrides in the theme.
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCTrendingFeedSkeleton-root|Styles applied to the root element.|
+ *
+ */
 export default function TrendingFeedSkeleton(props): JSX.Element {
   return (
     <Root className={classes.root} {...props}>

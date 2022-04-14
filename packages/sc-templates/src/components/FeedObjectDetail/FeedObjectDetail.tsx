@@ -1,15 +1,15 @@
 import React, {useMemo} from 'react';
 import {styled} from '@mui/material/styles';
-import {Box, Grid, Hidden, Typography} from '@mui/material';
+import {Box, Grid, Hidden} from '@mui/material';
 import {
+  CommentsObject,
+  CommentsObjectProps,
+  CustomAdv,
   FeedObject,
   FeedObjectProps,
   RelatedFeedObjects,
-  SCFeedObjectTemplateType,
-  CommentsObject,
   SCCommentsOrderBy,
-  CustomAdv,
-  CommentsObjectProps
+  SCFeedObjectTemplateType
 } from '@selfcommunity/ui';
 import Sticky from 'react-stickynode';
 import {
