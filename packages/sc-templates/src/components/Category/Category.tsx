@@ -6,8 +6,13 @@ import CategoryFeed from '../CategoryFeed';
 import {SCCategoryType, useSCFetchCategory} from '@selfcommunity/core';
 import CategorySkeleton from './Skeleton';
 import useThemeProps from '@mui/material/styles/useThemeProps';
+import classNames from 'classnames';
 
 const PREFIX = 'SCCategoryTemplate';
+
+const classes = {
+  root: `${PREFIX}-root`
+};
 
 const Root = styled(Box, {
   name: PREFIX,
@@ -60,7 +65,27 @@ export interface CategoryProps {
    */
   FeedSidebarProps?: FeedSidebarProps;
 }
+/**
+ * > API documentation for the Community-UI Category Page Template. Learn about the available props and the CSS API.
 
+ #### Import
+
+ ```jsx
+ import {Category} from '@selfcommunity/templates';
+ ```
+
+ #### Component Name
+
+ The name `SCCategoryTemplate` can be used when providing style overrides in the theme.
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCCategoryTemplate-root|Styles applied to the root element.|
+ *
+ * @param inProps
+ */
 export default function Category(inProps: CategoryProps): JSX.Element {
   // PROPS
   const props: CategoryProps = useThemeProps({
@@ -77,7 +102,7 @@ export default function Category(inProps: CategoryProps): JSX.Element {
   }
 
   return (
-    <Root id={id} className={className}>
+    <Root id={id} className={classNames(classes.root, className)}>
       <CategoryHeader category={scCategory} />
       <CategoryFeed category={scCategory} widgets={widgets} FeedObjectProps={FeedObjectProps} FeedSidebarProps={FeedSidebarProps} />
     </Root>
