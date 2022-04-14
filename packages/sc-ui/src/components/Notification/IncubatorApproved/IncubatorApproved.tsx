@@ -38,7 +38,8 @@ const Root = styled(Box, {
   [`& .${classes.viewIncubatorButton}`]: {
     padding: theme.spacing(),
     paddingBottom: 0,
-    textTransform: 'initial'
+    textTransform: 'initial',
+    marginLeft: -8
   }
 }));
 
