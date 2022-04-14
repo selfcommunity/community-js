@@ -739,9 +739,9 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
                   </Widget>
                   <Box component="span" className={classes.commentSubSection}>
                     {renderTimeAgo(comment)}
-                    <Bullet sx={{paddingLeft: '10px', paddingTop: '1px'}} />
+                    <Bullet />
                     {renderActionVote(comment)}
-                    <Bullet sx={{paddingTop: '1px'}} />
+                    <Bullet />
                     {renderActionReply(comment)}
                     {renderVotes(comment)}
                   </Box>

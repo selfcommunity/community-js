@@ -9,7 +9,7 @@ const Root = styled('span', {
   overridesResolver: (props, styles) => [styles.root]
 })(() => ({
   display: 'inline-block',
-  margin: '0 4px',
+  margin: '0px 4px',
   transform: 'scale(1.2)'
 }));
 

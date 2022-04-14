@@ -22,9 +22,10 @@ const Root = styled(Box, {
   width: 'auto',
   display: 'inline-flex',
   alignItems: 'center',
-  marginTop: 3,
+  marginRight: 3,
   '& .MuiIcon-root': {
-    fontSize: '18px'
+    fontSize: '18px',
+    marginRight: 2
   }
 }));
 

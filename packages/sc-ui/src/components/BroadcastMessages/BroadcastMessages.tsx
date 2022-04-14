@@ -40,7 +40,8 @@ const Root = styled(Box, {
     marginBottom: theme.spacing(2)
   },
   [`& .${classes.buttonLoadMore}`]: {
-    textTransform: 'capitalize'
+    textTransform: 'capitalize',
+    marginLeft: -10
   }
 }));
 

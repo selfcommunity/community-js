@@ -134,6 +134,9 @@ const Root = styled(Widget, {
     },
     '& a:last-child::after': {
       display: 'none'
+    },
+    '& span': {
+      textTransform: 'initial'
     }
   },
   [`& .${classes.content}`]: {
@@ -169,7 +172,8 @@ const Root = styled(Widget, {
   },
   [`& .${classes.activityAt}`]: {
     textDecoration: 'none',
-    color: 'inherit'
+    color: 'inherit',
+    marginTop: 3
   },
   [`& .${classes.deleted}`]: {
     opacity: 0.3,
@@ -178,7 +182,7 @@ const Root = styled(Widget, {
     }
   },
   [`& .${classes.actions}`]: {
-    padding: '1px 0px'
+    paddingBottom: 10
   },
   '& .MuiIcon-root': {
     fontSize: '18px',
