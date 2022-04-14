@@ -36,7 +36,6 @@ const Root = styled(Widget, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  maxWidth: 700,
   [`& .${classes.name}`]: {
     display: 'flex',
     padding: 0

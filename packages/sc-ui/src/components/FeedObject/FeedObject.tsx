@@ -44,7 +44,7 @@ import {AxiosResponse} from 'axios';
 import MarkRead from '../../shared/MarkRead';
 import classNames from 'classnames';
 import ContributionActionsMenu, {ContributionActionsMenuProps} from '../../shared/ContributionActionsMenu';
-import {getContributionHtml, getContributionRouteName, getRouteData} from '../../utils/contribution';
+import {getContributionHtml, getContributionRouteName, getContributionSnippet, getRouteData} from '../../utils/contribution';
 import {useSnackbar} from 'notistack';
 import Follow, {FollowProps} from './Actions/Follow';
 import Widget from '../Widget';
@@ -845,7 +845,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
               <Box>
                 <Typography variant="body2">
                   <Link to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))} className={classes.snippetContent}>
-                    {obj.summary}
+                    {getContributionSnippet(obj)}
                   </Link>
                 </Typography>
                 <Link to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))} className={classes.activityAt}>

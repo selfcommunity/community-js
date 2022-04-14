@@ -24,7 +24,7 @@ jobs:
     - run: git config --global user.name "fedetorre"
     - run: yarn build
     - run: yarn prerelease
-    - name: Open pull-request
+    - name: Open pull-request (prerelease -> main)
       uses: mirk8xr/pull-request@v2.6.2
       with:
         destination_branch: "main"

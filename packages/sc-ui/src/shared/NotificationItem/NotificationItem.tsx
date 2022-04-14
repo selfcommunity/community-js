@@ -78,7 +78,7 @@ const Root = styled(Widget, {
   },
   [`&.${classes.newSnippet}`]: {
     '&:before': {
-      backgroundColor: `${red[200]}`
+      backgroundColor: theme.palette.primary.main
     }
   },
   [`& .${classes.content}`]: {

@@ -13,7 +13,6 @@ const classes = {
 };
 
 const Root = styled(Widget)(({theme}) => ({
-  maxWidth: 700,
   marginBottom: theme.spacing(2),
 
   [`& .${classes.list}`]: {
