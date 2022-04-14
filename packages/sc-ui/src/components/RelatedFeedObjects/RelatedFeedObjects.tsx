@@ -30,7 +30,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import Widget from '../Widget';
 import useThemeProps from '@mui/material/styles/useThemeProps';
 
-const PREFIX = 'SCTrendingPost';
+const PREFIX = 'SCRelatedFeedObjects';
 
 const classes = {
   root: `${PREFIX}-root`,
