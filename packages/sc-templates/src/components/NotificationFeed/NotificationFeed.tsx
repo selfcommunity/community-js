@@ -17,8 +17,13 @@ import {
 } from '@selfcommunity/ui';
 import {Endpoints, SCNotificationTopicType, SCUserContext, SCUserContextType} from '@selfcommunity/core';
 import useThemeProps from '@mui/material/styles/useThemeProps';
+import classNames from 'classnames';
 
 const PREFIX = 'SCNotificationFeedTemplate';
+
+const classes = {
+  root: `${PREFIX}-root`
+};
 
 const Root = styled(Feed, {
   name: PREFIX,
@@ -107,6 +112,27 @@ const WIDGETS: SCFeedWidgetType[] = [
   }
 ];
 
+/**
+ * > API documentation for the Community-UI Notification Feed Template. Learn about the available props and the CSS API.
+
+ #### Import
+
+ ```jsx
+ import {NotificationFeed} from '@selfcommunity/templates';
+ ```
+
+ #### Component Name
+
+ The name `SCNotificationFeedTemplate` can be used when providing style overrides in the theme.
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCNotificationFeedTemplate-root|Styles applied to the root element.|
+ *
+ * @param inProps
+ */
 export default function NotificationFeed(inProps: NotificationFeedProps): JSX.Element {
   // PROPS
   const props: NotificationFeedProps = useThemeProps({
@@ -126,7 +152,7 @@ export default function NotificationFeed(inProps: NotificationFeedProps): JSX.El
   return (
     <Root
       id={id}
-      className={className}
+      className={classNames(classes.root, className)}
       endpoint={Endpoints.UserNotificationList}
       widgets={widgets}
       ItemComponent={Notification}

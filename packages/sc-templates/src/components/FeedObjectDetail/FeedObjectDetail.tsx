@@ -25,8 +25,13 @@ import {
 } from '@selfcommunity/core';
 import FeedObjectDetailSkeleton from './Skeleton';
 import useThemeProps from '@mui/material/styles/useThemeProps';
+import classNames from 'classnames';
 
 const PREFIX = 'SCFeedObjectDetailTemplate';
+
+const classes = {
+  root: `${PREFIX}-root`
+};
 
 const Root = styled(Box, {
   name: PREFIX,
@@ -82,6 +87,28 @@ export interface FeedObjectDetailProps {
 
 const PREFERENCES = [SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED, SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED];
 
+/**
+ * > API documentation for the Community-UI Feed Object Detail Template. Learn about the available props and the CSS API.
+
+ #### Import
+
+ ```jsx
+ import {FeedObjectDetail} from '@selfcommunity/templates';
+ ```
+
+ #### Component Name
+
+ The name `SCFeedObjectDetailTemplate` can be used when providing style overrides in the theme.
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCFeedObjectDetailTemplate-root|Styles applied to the root element.|
+ *
+ * @param inProps
+ */
+
 export default function FeedObjectDetail(inProps: FeedObjectDetailProps): JSX.Element {
   // PROPS
   const props: FeedObjectDetailProps = useThemeProps({
@@ -130,7 +157,7 @@ export default function FeedObjectDetail(inProps: FeedObjectDetailProps): JSX.El
   }
 
   return (
-    <Root id={id} className={className}>
+    <Root id={id} className={classNames(classes.root, className)}>
       <Grid container spacing={2}>
         <Grid item xs={12} md={7}>
           <FeedObject {...FeedObjectProps} feedObject={obj} template={SCFeedObjectTemplateType.DETAIL} />

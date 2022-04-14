@@ -16,8 +16,13 @@ import {
 import {Endpoints, SCCategoryType, SCCustomAdvPosition, useSCFetchCategory} from '@selfcommunity/core';
 import {CategoryFeedSkeleton} from './index';
 import useThemeProps from '@mui/material/styles/useThemeProps';
+import classNames from 'classnames';
 
 const PREFIX = 'SCCategoryFeedTemplate';
+
+const classes = {
+  root: `${PREFIX}-root`
+};
 
 const Root = styled(Feed, {
   name: PREFIX,
@@ -96,6 +101,27 @@ const WIDGETS: SCFeedWidgetType[] = [
   }
 ];
 
+/**
+ * > API documentation for the Community-UI Category Feed Template. Learn about the available props and the CSS API.
+
+ #### Import
+
+ ```jsx
+ import {CategoryFeed} from '@selfcommunity/templates';
+ ```
+
+ #### Component Name
+
+ The name `SCCategoryFeedTemplate` can be used when providing style overrides in the theme.
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCCategoryFeedTemplate-root|Styles applied to the root element.|
+ *
+ * @param inProps
+ */
 export default function CategoryFeed(inProps: CategoryFeedProps): JSX.Element {
   // PROPS
   const props: CategoryFeedProps = useThemeProps({
@@ -152,7 +178,7 @@ export default function CategoryFeed(inProps: CategoryFeedProps): JSX.Element {
   return (
     <Root
       id={id}
-      className={className}
+      className={classNames(classes.root, className)}
       ref={feedRef}
       endpoint={{
         ...Endpoints.CategoryFeed,

@@ -66,7 +66,7 @@ export interface CategoryProps {
   FeedSidebarProps?: FeedSidebarProps;
 }
 /**
- * > API documentation for the Community-UI Category Page Template. Learn about the available props and the CSS API.
+ * > API documentation for the Community-UI Category Template. Learn about the available props and the CSS API.
 
  #### Import
 

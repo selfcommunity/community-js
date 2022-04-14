@@ -151,6 +151,28 @@ const MY_PROFILE_WIDGETS = [
   }
 ];
 
+/**
+ * > API documentation for the Community-UI User Profile Template. Learn about the available props and the CSS API.
+
+ #### Import
+
+ ```jsx
+ import {UserProfile} from '@selfcommunity/templates';
+ ```
+
+ #### Component Name
+
+ The name `SCUserProfileTemplate` can be used when providing style overrides in the theme.
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCUserProfileTemplate-root|Styles applied to the root element.|
+ |actions|.SCUserProfileTemplate-actions|Styles applied to the actions section.|
+ *
+ * @param inProps
+ */
 export default function UserProfile(inProps: UserProfileProps): JSX.Element {
   // PROPS
   const props: UserProfileProps = useThemeProps({

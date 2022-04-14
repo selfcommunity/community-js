@@ -16,8 +16,13 @@ import {
 } from '@selfcommunity/ui';
 import {Endpoints, SCUserContext, SCUserContextType} from '@selfcommunity/core';
 import useThemeProps from '@mui/material/styles/useThemeProps';
+import classNames from 'classnames';
 
 const PREFIX = 'SCMainFeedTemplate';
+
+const classes = {
+  root: `${PREFIX}-root`
+};
 
 const Root = styled(Feed, {
   name: PREFIX,
@@ -98,6 +103,27 @@ const WIDGETS: SCFeedWidgetType[] = [
   }
 ];
 
+/**
+ * > API documentation for the Community-UI Main Feed Template. Learn about the available props and the CSS API.
+
+ #### Import
+
+ ```jsx
+ import {MainFeed} from '@selfcommunity/templates';
+ ```
+
+ #### Component Name
+
+ The name `SCMainFeedTemplate` can be used when providing style overrides in the theme.
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCMainFeedTemplate-root|Styles applied to the root element.|
+ *
+ * @param inProps
+ */
 export default function MainFeed(inProps: MainFeedProps): JSX.Element {
   // PROPS
   const props: MainFeedProps = useThemeProps({
@@ -117,7 +143,7 @@ export default function MainFeed(inProps: MainFeedProps): JSX.Element {
   return (
     <Root
       id={id}
-      className={className}
+      className={classNames(classes.root, className)}
       endpoint={Endpoints.MainFeed}
       widgets={widgets}
       ItemComponent={FeedObject}
