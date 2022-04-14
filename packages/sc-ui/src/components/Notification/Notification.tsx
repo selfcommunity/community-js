@@ -84,11 +84,11 @@ const Root = styled(Widget, {
       textDecoration: 'underline'
     }
   },
-  ['& .MuiCardContent-root']: {
-    padding: 0,
-    [`&.${classes.notificationWrap}`]: {
-      paddingBottom: 0
-    }
+  [`& .${classes.notificationWrap}`]: {
+    padding: `${theme.spacing()} 0px`
+  },
+  [`& .${classes.notificationContent}`]: {
+    position: 'relative'
   },
   [`& .${classes.stopNotificationButton}`]: {
     margin: '5px 10px',
@@ -99,7 +99,12 @@ const Root = styled(Widget, {
     }
   },
   [`& .${classes.showOtherAggregated}`]: {
+    position: 'relative',
+    top: theme.spacing(),
     backgroundColor: grey[100]
+  },
+  [`& .${classes.notificationCollapsed}`]: {
+    paddingTop: theme.spacing()
   },
   '& a': {
     textDecoration: 'none',
@@ -176,7 +181,7 @@ export interface NotificationProps extends CardProps {
  |username|.SCUserNotification-username|Styles applied to the user element in the notification header.|
  |notificationContent|.SCUserNotification-notification-content|Styles applied to the notification content.|
  |notificationUnCollapsed|.SCUserNotification-notification-wrap|Styles applied to the uncollapsed elements.|
- |notificationUnCollapsed|.SCUserNotification-notification-wrap|Styles applied to the collapsed elements.|
+ |notificationCollapsed|.SCUserNotification-notification-wrap|Styles applied to the collapsed elements.|
  |stopNotificationButton|.SCUserNotification-stop-notification-button|Styles applied to the stop notification button.|
  |showOtherAggregated|.SCUserNotification-show-other-aggregated|Styles applied to the show other aggregated element.|
 

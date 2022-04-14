@@ -131,11 +131,8 @@ const Root = styled(Widget, {
     flex: 1
   },
   [`& .${classes.footer}`]: {
-    width: '100%',
-    '> div': {
-      paddingTop: 8
-    },
-    paddingRight: 8
+    padding: `0px ${theme.spacing()}`,
+    width: '100%'
   }
 }));
 

@@ -26,6 +26,9 @@ const Root = styled(Box, {
   '& .MuiIcon-root': {
     fontSize: '18px',
     marginRight: 2
+  },
+  '& .MuiTypography-root': {
+    lineHeight: 1.8
   }
 }));
 
