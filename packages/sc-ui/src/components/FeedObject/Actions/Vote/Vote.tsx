@@ -395,7 +395,7 @@ export default function Vote(inProps: VoteProps): JSX.Element {
                 <React.Fragment>
                   {obj.vote_count === 1
                     ? intl.formatMessage(messages.votedByOnlyMe)
-                    : `${intl.formatMessage(messages.votedByMe)} + ${obj.vote_count - 1}`}
+                    : intl.formatMessage(messages.votedByMe, {total: obj.vote_count - 1})}
                 </React.Fragment>
               ) : (
                 <React.Fragment>{`${intl.formatMessage(messages.votes, {total: obj.vote_count})}`}</React.Fragment>

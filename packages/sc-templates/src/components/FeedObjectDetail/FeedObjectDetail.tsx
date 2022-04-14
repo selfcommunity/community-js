@@ -1,15 +1,15 @@
 import React, {useMemo} from 'react';
 import {styled} from '@mui/material/styles';
-import {Box, Grid, Hidden, Typography} from '@mui/material';
+import {Box, Grid, Hidden} from '@mui/material';
 import {
+  CommentsObject,
+  CommentsObjectProps,
+  CustomAdv,
   FeedObject,
   FeedObjectProps,
-  RelatedDiscussion,
-  SCFeedObjectTemplateType,
-  CommentsObject,
+  RelatedFeedObjects,
   SCCommentsOrderBy,
-  CustomAdv,
-  CommentsObjectProps
+  SCFeedObjectTemplateType
 } from '@selfcommunity/ui';
 import Sticky from 'react-stickynode';
 import {
@@ -167,7 +167,7 @@ export default function FeedObjectDetail(inProps: FeedObjectDetailProps): JSX.El
         <Grid item xs={12} md={5}>
           <Hidden smDown>
             <Sticky enabled top={15}>
-              <RelatedDiscussion feedObjectId={feedObjectId} feedObjectType={feedObjectType} />
+              <RelatedFeedObjects feedObjectId={feedObjectId} feedObjectType={feedObjectType} />
             </Sticky>
           </Hidden>
         </Grid>

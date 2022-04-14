@@ -30,7 +30,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import Widget from '../Widget';
 import useThemeProps from '@mui/material/styles/useThemeProps';
 
-const PREFIX = 'SCTrendingPost';
+const PREFIX = 'SCRelatedFeedObjects';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -52,7 +52,7 @@ const Root = styled(Widget, {
   }
 }));
 
-export interface RelatedDiscussionProps {
+export interface RelatedFeedObjectsProps {
   /**
    * Id of the feed object
    * @default null
@@ -97,27 +97,27 @@ const PREFERENCES = [SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED, SCPreferences
  #### Import
 
  ```jsx
- import {RelatedDiscussion} from '@selfcommunity/ui';
+ import {RelatedFeedObjects} from '@selfcommunity/ui';
  ```
 
  #### Component Name
 
- The name `SCRelatedDiscussion` can be used when providing style overrides in the theme.
+ The name `SCRelatedFeedObjects` can be used when providing style overrides in the theme.
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCRelatedDiscussion-root|Styles applied to the root element.|
- |title|.SCRelatedDiscussion-title|Styles applied to the title element.|
- |no-results|.SCRelatedDiscussion-no-results|Styles applied to no results section.|
- |relatedItem|.SCRelatedDiscussion-related-item|Styles applied to the related item element.|
- |showMore|.SCRelatedDiscussion-show-more|Styles applied to show more button element.|
+ |root|.SCRelatedFeedObjects-root|Styles applied to the root element.|
+ |title|.SCRelatedFeedObjects-title|Styles applied to the title element.|
+ |no-results|.SCRelatedFeedObjects-no-results|Styles applied to no results section.|
+ |relatedItem|.SCRelatedFeedObjects-related-item|Styles applied to the related item element.|
+ |showMore|.SCRelatedFeedObjects-show-more|Styles applied to show more button element.|
 
  *
  * @param inProps
  */
-export default function RelatedDiscussion(inProps: RelatedDiscussionProps): JSX.Element {
+export default function RelatedFeedObjects(inProps: RelatedFeedObjectsProps): JSX.Element {
   // CONST
   const limit = 4;
 
@@ -126,7 +126,7 @@ export default function RelatedDiscussion(inProps: RelatedDiscussionProps): JSX.
   const scUserContext: SCUserContextType = useSCUser();
 
   // PROPS
-  const props: RelatedDiscussionProps = useThemeProps({
+  const props: RelatedFeedObjectsProps = useThemeProps({
     props: inProps,
     name: PREFIX
   });
@@ -147,8 +147,8 @@ export default function RelatedDiscussion(inProps: RelatedDiscussionProps): JSX.
   const [hasMore, setHasMore] = useState<boolean>(false);
   const [total, setTotal] = useState<number>(0);
   const [visibleDiscussions, setVisibleDiscussions] = useState<number>(limit);
-  const [openRelatedDiscussionDialog, setOpenRelatedDiscussionDialog] = useState<boolean>(false);
-  const [next, setNext] = useState<string>(`${Endpoints.RelatedDiscussion.url({type: feedObjectType, id: feedObjectId})}?limit=10`);
+  const [openRelatedFeedObjectsDialog, setOpenRelatedFeedObjectsDialog] = useState<boolean>(false);
+  const [next, setNext] = useState<string>(`${Endpoints.RelatedFeedObjects.url({type: feedObjectType, id: feedObjectId})}?limit=10`);
   /**
    * Compute preferences
    */
@@ -185,7 +185,7 @@ export default function RelatedDiscussion(inProps: RelatedDiscussionProps): JSX.
       http
         .request({
           url: next,
-          method: Endpoints.RelatedDiscussion.method
+          method: Endpoints.RelatedFeedObjects.method
         })
         .then((res: AxiosResponse<any>) => {
           const data = res.data;
@@ -240,17 +240,17 @@ export default function RelatedDiscussion(inProps: RelatedDiscussionProps): JSX.
                 })}
               </List>
               {hasMore && (
-                <Button size="small" className={classes.showMore} onClick={() => setOpenRelatedDiscussionDialog(true)}>
+                <Button size="small" className={classes.showMore} onClick={() => setOpenRelatedFeedObjectsDialog(true)}>
                   <FormattedMessage id="ui.relatedDiscussion.button.showMore" defaultMessage="ui.relatedDiscussion.button.showMore" />
                 </Button>
               )}
             </React.Fragment>
           )}
-          {openRelatedDiscussionDialog && (
+          {openRelatedFeedObjectsDialog && (
             <BaseDialog
               title={<FormattedMessage id="ui.relatedDiscussion.title" defaultMessage="ui.relatedDiscussion.title" />}
-              onClose={() => setOpenRelatedDiscussionDialog(false)}
-              open={openRelatedDiscussionDialog}>
+              onClose={() => setOpenRelatedFeedObjectsDialog(false)}
+              open={openRelatedFeedObjectsDialog}>
               {loading ? (
                 <CentralProgress size={50} />
               ) : (

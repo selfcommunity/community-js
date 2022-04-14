@@ -165,7 +165,7 @@
   "ui.feedObject.vote.voteDown": "Rimuovi il tuo like",
   "ui.feedObject.vote.votes": "{total, plural, =0 {# Voti} one {# Voto} other {# Voti}}",
   "ui.feedObject.vote.votedByOnlyMe": "Solo tu",
-  "ui.feedObject.vote.votedByMe": "Tu",
+  "ui.feedObject.vote.votedByMe": "Tu + {total}",
   "ui.feedObject.share.share": "Condividi il contributo",
   "ui.feedObject.share.shareNow": "Condividi ora",
   "ui.feedObject.share.shareInCategories": "Condividi in {categories}",
