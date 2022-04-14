@@ -17,8 +17,13 @@ import {
 } from '@selfcommunity/ui';
 import {UserFeedSkeleton} from './index';
 import useThemeProps from '@mui/material/styles/useThemeProps';
+import classNames from 'classnames';
 
 const PREFIX = 'SCUserFeedTemplate';
+
+const classes = {
+  root: `${PREFIX}-root`
+};
 
 const Root = styled(Feed, {
   name: PREFIX,
@@ -148,7 +153,7 @@ export default function UserFeed(inProps: UserFeedProps): JSX.Element {
   return (
     <Root
       id={id}
-      className={className}
+      className={classNames(classes.root, className)}
       ref={feedRef}
       endpoint={{
         ...Endpoints.UserFeed,

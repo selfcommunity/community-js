@@ -17,8 +17,13 @@ import {
 } from '@selfcommunity/ui';
 import {Endpoints, SCNotificationTopicType, SCUserContext, SCUserContextType} from '@selfcommunity/core';
 import useThemeProps from '@mui/material/styles/useThemeProps';
+import classNames from 'classnames';
 
 const PREFIX = 'SCNotificationFeedTemplate';
+
+const classes = {
+  root: `${PREFIX}-root`
+};
 
 const Root = styled(Feed, {
   name: PREFIX,
@@ -126,7 +131,7 @@ export default function NotificationFeed(inProps: NotificationFeedProps): JSX.El
   return (
     <Root
       id={id}
-      className={className}
+      className={classNames(classes.root, className)}
       endpoint={Endpoints.UserNotificationList}
       widgets={widgets}
       ItemComponent={Notification}

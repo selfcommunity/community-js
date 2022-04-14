@@ -16,8 +16,13 @@ import {
 } from '@selfcommunity/ui';
 import {Endpoints, SCUserContext, SCUserContextType} from '@selfcommunity/core';
 import useThemeProps from '@mui/material/styles/useThemeProps';
+import classNames from 'classnames';
 
 const PREFIX = 'SCMainFeedTemplate';
+
+const classes = {
+  root: `${PREFIX}-root`
+};
 
 const Root = styled(Feed, {
   name: PREFIX,
@@ -117,7 +122,7 @@ export default function MainFeed(inProps: MainFeedProps): JSX.Element {
   return (
     <Root
       id={id}
-      className={className}
+      className={classNames(classes.root, className)}
       endpoint={Endpoints.MainFeed}
       widgets={widgets}
       ItemComponent={FeedObject}

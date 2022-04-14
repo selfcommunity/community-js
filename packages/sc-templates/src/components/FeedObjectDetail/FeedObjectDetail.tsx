@@ -25,8 +25,13 @@ import {
 } from '@selfcommunity/core';
 import FeedObjectDetailSkeleton from './Skeleton';
 import useThemeProps from '@mui/material/styles/useThemeProps';
+import classNames from 'classnames';
 
 const PREFIX = 'SCFeedObjectDetailTemplate';
+
+const classes = {
+  root: `${PREFIX}-root`
+};
 
 const Root = styled(Box, {
   name: PREFIX,
@@ -130,7 +135,7 @@ export default function FeedObjectDetail(inProps: FeedObjectDetailProps): JSX.El
   }
 
   return (
-    <Root id={id} className={className}>
+    <Root id={id} className={classNames(classes.root, className)}>
       <Grid container spacing={2}>
         <Grid item xs={12} md={7}>
           <FeedObject {...FeedObjectProps} feedObject={obj} template={SCFeedObjectTemplateType.DETAIL} />
