@@ -93,7 +93,10 @@ const Root = styled(Widget, {
   [`& .${classes.stopNotificationButton}`]: {
     margin: '5px 10px',
     padding: '2px 2px 2px 2px',
-    minWidth: 'auto'
+    minWidth: 'auto',
+    '& span': {
+      fontSize: 20
+    }
   },
   [`& .${classes.showOtherAggregated}`]: {
     backgroundColor: grey[100]
@@ -354,7 +357,7 @@ export default function UserNotification(inProps: NotificationProps): JSX.Elemen
                     )
                   }>
                   <LoadingButton
-                    variant="outlined"
+                    variant="text"
                     size="small"
                     loading={loadingSuspendNotification}
                     color={'inherit'}
