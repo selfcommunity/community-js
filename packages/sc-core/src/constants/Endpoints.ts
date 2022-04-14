@@ -43,7 +43,7 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/$(type)/$(id)/restore/'),
     method: 'POST',
   },
-  RelatedDiscussion: {
+  RelatedFeedObjects: {
     url: urlReplacer('/api/v2/$(type)/$(id)/related/'),
     method: 'GET',
   },

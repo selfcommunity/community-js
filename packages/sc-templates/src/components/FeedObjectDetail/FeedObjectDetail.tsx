@@ -4,7 +4,7 @@ import {Box, Grid, Hidden, Typography} from '@mui/material';
 import {
   FeedObject,
   FeedObjectProps,
-  RelatedDiscussion,
+  RelatedFeedObjects,
   SCFeedObjectTemplateType,
   CommentsObject,
   SCCommentsOrderBy,
@@ -167,7 +167,7 @@ export default function FeedObjectDetail(inProps: FeedObjectDetailProps): JSX.El
         <Grid item xs={12} md={5}>
           <Hidden smDown>
             <Sticky enabled top={15}>
-              <RelatedDiscussion feedObjectId={feedObjectId} feedObjectType={feedObjectType} />
+              <RelatedFeedObjects feedObjectId={feedObjectId} feedObjectType={feedObjectType} />
             </Sticky>
           </Hidden>
         </Grid>

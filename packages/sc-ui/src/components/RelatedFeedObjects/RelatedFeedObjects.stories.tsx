@@ -1,13 +1,13 @@
 import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
-import RelatedDiscussion from './index';
+import RelatedFeedObjects from './index';
 import {SCFeedObjectTypologyType} from '@selfcommunity/core';
 import {SCFeedObjectTemplateType} from '../../types/feedObject';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC UI/Related Discussion',
-  component: RelatedDiscussion,
+  title: 'Design System/SC UI/Related Feed Objects',
+  component: RelatedFeedObjects,
   argTypes: {
     feedObjectId: {
       control: {type: 'number'},
@@ -33,12 +33,12 @@ export default {
     elevation: 1,
     variant: 'elevation'
   }
-} as ComponentMeta<typeof RelatedDiscussion>;
+} as ComponentMeta<typeof RelatedFeedObjects>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof RelatedDiscussion> = (args) => (
+const Template: ComponentStory<typeof RelatedFeedObjects> = (args) => (
   <div style={{maxWidth: 500}}>
-    <RelatedDiscussion {...args} />
+    <RelatedFeedObjects {...args} />
   </div>
 );
 

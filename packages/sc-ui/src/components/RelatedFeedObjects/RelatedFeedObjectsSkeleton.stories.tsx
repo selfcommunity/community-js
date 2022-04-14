@@ -1,18 +1,18 @@
 import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
-import RelatedDiscussionSkeleton from './Skeleton';
+import RelatedFeedObjectsSkeleton from './Skeleton';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC UI/Skeleton/RelatedDiscussion',
-  component: RelatedDiscussionSkeleton
+  title: 'Design System/SC UI/Skeleton/RelatedFeedObjects',
+  component: RelatedFeedObjectsSkeleton
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
-} as ComponentMeta<typeof RelatedDiscussionSkeleton>;
+} as ComponentMeta<typeof RelatedFeedObjectsSkeleton>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof RelatedDiscussionSkeleton> = (args) => (
+const Template: ComponentStory<typeof RelatedFeedObjectsSkeleton> = (args) => (
   <div style={{width: 400}}>
-    <RelatedDiscussionSkeleton {...args} />
+    <RelatedFeedObjectsSkeleton {...args} />
   </div>
 );
 

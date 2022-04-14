@@ -63,7 +63,7 @@ const Root = styled(Box, {
   boxShadow: 'none',
   position: 'relative',
   [`& .${classes.fixedPrimaryReply}`]: {
-    height: 100,
+    height: 'auto',
     width: '100%',
     position: 'fixed',
     background: '#FFF',
