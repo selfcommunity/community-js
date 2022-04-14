@@ -379,7 +379,7 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
       }
       return null;
     },
-    [total]
+    [total, newComments.length]
   );
 
   /**
@@ -604,7 +604,7 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
         url: Endpoints.NewComment.url({}),
         method: Endpoints.NewComment.method,
         data: {
-          [`${feedObjectType}`]: feedObject ? feedObject.id : feedObjectId,
+          [`${obj.type}`]: obj.id,
           text: comment
         }
       })
@@ -701,7 +701,7 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
                 commentObject={comment}
                 onOpenReply={openReplyBox}
                 feedObject={obj}
-                feedObjectType={feedObjectType}
+                feedObjectType={obj.type}
                 commentReply={commentObj}
                 {...CommentComponentProps}
                 ReplyCommentObjectProps={ReplyCommentComponentProps}
@@ -804,7 +804,7 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
             commentObject={comment}
             onOpenReply={openReplyBox}
             feedObject={obj}
-            feedObjectType={feedObjectType}
+            feedObjectType={obj.type}
             commentReply={commentObj}
             {...CommentComponentProps}
             ReplyCommentObjectProps={ReplyCommentComponentProps}
@@ -929,7 +929,7 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
      * no comments during loading render the skeletons
      */
     commentsRendered = renderLoadingSkeletons();
-  } else if (comments.length === 0 && !isLoading && !comment && !errorCommentObj) {
+  } else if (!comments.length && !newComments.length && !isLoading && !comment && !errorCommentObj) {
     /**
      * If comments were not found and loading is finished
      * and the componet and the component was not looking
