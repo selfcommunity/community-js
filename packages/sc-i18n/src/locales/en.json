@@ -163,7 +163,7 @@
   "ui.feedObject.vote.voteDown": "Unlike this contribute",
   "ui.feedObject.vote.votes": "{total, plural, =0 {# Likes} one {# Like} other {# Likes}}",
   "ui.feedObject.vote.votedByOnlyMe": "Only you",
-  "ui.feedObject.vote.votedByMe": "You",
+  "ui.feedObject.vote.votedByMe": "You + {total}",
   "ui.feedObject.share.share": "Share this contribute",
   "ui.feedObject.share.shareNow": "Share now",
   "ui.feedObject.share.shareInCategories": "Share in {categories}",
