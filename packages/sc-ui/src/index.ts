@@ -39,7 +39,7 @@ import UserProfileEdit, {
 } from './components/UserProfileEdit';
 import UsersFollowed, {UsersFollowedProps, UsersFollowedSkeleton} from './components/UsersFollowed';
 import UserFollowers, {UserFollowersProps, UserFollowersSkeleton} from './components/UserFollowers';
-import RelatedDiscussion, {RelatedDiscussionProps, RelatedDiscussionSkeleton} from './components/RelatedDiscussion';
+import RelatedFeedObjects, {RelatedFeedObjectsProps, RelatedFeedObjectsSkeleton} from './components/RelatedFeedObjects';
 import CommentObject, {CommentObjectProps, CommentObjectSkeleton} from './components/CommentObject';
 import CommentsObject, {CommentsObjectProps, CommentsObjectSkeleton} from './components/CommentsObject';
 import ReplyComment from './components/CommentObject/ReplyComment';
@@ -171,9 +171,9 @@ export {
   TrendingPeople,
   TrendingPeopleProps,
   TrendingPeopleSkeleton,
-  RelatedDiscussion,
-  RelatedDiscussionProps,
-  RelatedDiscussionSkeleton,
+  RelatedFeedObjects,
+  RelatedFeedObjectsProps,
+  RelatedFeedObjectsSkeleton,
   UserProfileHeader,
   UserProfileHeaderProps,
   UserProfileHeaderSkeleton,

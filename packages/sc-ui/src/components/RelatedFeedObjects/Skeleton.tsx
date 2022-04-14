@@ -1,6 +1,6 @@
 import React from 'react';
 import {TrendingFeedSkeleton} from '../TrendingFeed';
 
-export default function RelatedDiscussionSkeleton(): JSX.Element {
+export default function RelatedFeedObjectsSkeleton(): JSX.Element {
   return <TrendingFeedSkeleton />;
 }
