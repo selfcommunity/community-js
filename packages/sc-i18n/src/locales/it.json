@@ -189,6 +189,10 @@
 
   "ui.feedObject.relevantActivities.noResults": "Non ci sono rilevanti attività da vedere al momento.",
   "ui.feedObject.relevantActivities.showOthers": "Vedi altre",
+  "ui.feedObject.relevantActivities.vote": "{username} appreciated you",
+  "ui.feedObject.relevantActivities.pollVote": "{username} voted the poll",
+  "ui.feedObject.relevantActivities.follow": "{username} follows the contribution",
+  "ui.feedObject.relevantActivities.comment": "{username} comment your contribution \"{comment}\"",
 
   "ui.feedObject.activitiesMenu.tooltipTitle": "Seleziona il tipo di attività",
   "ui.feedObject.activitiesMenu.relevantActivities": "Attività rilevanti",

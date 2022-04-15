@@ -187,6 +187,10 @@
 
   "ui.feedObject.relevantActivities.noResults": "There aren't relevant activities to show at the moment.",
   "ui.feedObject.relevantActivities.showOthers": "Show more",
+  "ui.feedObject.relevantActivities.vote": "{username} appreciated you",
+  "ui.feedObject.relevantActivities.pollVote": "{username} voted the poll",
+  "ui.feedObject.relevantActivities.follow": "{username} follows the contribution",
+  "ui.feedObject.relevantActivities.comment": "{username} comment your contribution \"{comment}\"",
 
   "ui.feedObject.activitiesMenu.tooltipTitle": "Select the type of activity",
   "ui.feedObject.activitiesMenu.relevantActivities": "Relevant activities",
