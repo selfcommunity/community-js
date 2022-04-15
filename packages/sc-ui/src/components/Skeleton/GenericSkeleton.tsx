@@ -17,7 +17,27 @@ const Root = styled(Widget)(({theme}) => ({
     marginRight: -16
   }
 }));
+/**
+ * > API documentation for the Community-UI Generic Skeleton component. Learn about the available props and the CSS API.
 
+ #### Import
+
+ ```jsx
+ import {GenericSkeleton} from '@selfcommunity/ui';
+ ```
+
+ #### Component Name
+
+ The name `SCGenericSkeleton` can be used when providing style overrides in the theme.
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCGenericSkeleton-root|Styles applied to the root element.|
+ |list|.SCGenericSkeleton-list|Styles applied to the list element.|
+ *
+ */
 function GenericSkeleton(props): JSX.Element {
   return (
     <Root className={classes.root} {...props}>
