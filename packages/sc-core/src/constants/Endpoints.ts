@@ -576,6 +576,24 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/incubator/$(id)/subscribers/'),
     method: 'GET',
   },
+  /**
+   * Footer
+   */
+  GetCustomPages: {
+    url: urlReplacer('/api/v2/custom_page/'),
+    method: 'GET',
+  },
+  GetLegalPages: {
+    url: urlReplacer('/api/v2/legal_page/'),
+    method: 'GET',
+  },
+  /**
+   * Media
+   */
+  MediaClickTracker: {
+    url: urlReplacer('/api/v2/media/$(id)/click/'),
+    method: 'POST',
+  },
 };
 
 export default Endpoints;
