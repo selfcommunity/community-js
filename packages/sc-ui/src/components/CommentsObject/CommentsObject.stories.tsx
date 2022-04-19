@@ -33,12 +33,12 @@ export default {
     }
   },
   args: {
-    feedObjectId: 344, // 1064,
+    feedObjectId: 392, // 358, // 344,
     feedObjectType: SCFeedObjectTypologyType.POST,
     infiniteScrolling: true,
     commentsOrderBy: SCCommentsOrderBy.ADDED_AT_ASC,
     fixedPrimaryReply: true,
-    commentsPageCount: 5
+    commentsPageCount: 3
   }
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
 } as ComponentMeta<typeof CommentsObject>;

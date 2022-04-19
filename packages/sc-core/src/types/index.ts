@@ -26,7 +26,7 @@ import {SCEmbedType} from './embed';
 import {SCMediaType} from './media';
 import {SCContributionLocation, SCLocalityType} from './location';
 import {SCPollChoiceType, SCPollType} from './poll';
-import {SCCommentType, SCCommentTypologyType} from './comment';
+import {SCCommentType, SCCommentTypologyType, SCCommentsOrderBy} from './comment';
 import {SCPrivateMessageType, SCPrivateMessageStatusType, SCPrivateMessageFileType, SCMessageFileType} from './privateMessage';
 import {SCIncubatorType} from './incubator';
 import {SCCustomNotificationType} from './customNotification';
@@ -114,6 +114,7 @@ export {
   SCFeedUnitActivityTypologyType,
   SCFeedTypologyType,
   SCCommentTypologyType,
+  SCCommentsOrderBy,
   SCCommentType,
   SCPrivateMessageType,
   SCPrivateMessageStatusType,

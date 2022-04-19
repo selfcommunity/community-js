@@ -37,6 +37,7 @@ import {
   useSCRouting
 } from '@selfcommunity/core';
 import useThemeProps from '@mui/material/styles/useThemeProps';
+import CommentsObject from '../CommentsObject';
 
 const messages = defineMessages({
   reply: {
@@ -70,7 +71,8 @@ const classes = {
   deleted: `${PREFIX}-deleted`,
   activityAt: `${PREFIX}-activity-at`,
   reply: `${PREFIX}-reply`,
-  commentSubSection: `${PREFIX}-comment-sub-section`
+  commentSubSection: `${PREFIX}-comment-sub-section`,
+  commentsObject: `${PREFIX}-comments-object`
 };
 
 const Root = styled(List, {
@@ -79,6 +81,7 @@ const Root = styled(List, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   overflow: 'auto',
+  width: '100%',
   '& .MuiIcon-root': {
     fontSize: '18px',
     marginBottom: '0.5px'
@@ -93,12 +96,12 @@ const Root = styled(List, {
   [`& .${classes.nestedComments}`]: {
     paddingTop: 0,
     paddingBottom: 0,
+    paddingLeft: 55,
     '& ul.MuiList-root': {
       paddingTop: 0,
       paddingBottom: 0,
       width: '100%',
       '& li.MuiListItem-root': {
-        paddingLeft: 55,
         paddingTop: 5
       }
     }
@@ -151,6 +154,9 @@ const Root = styled(List, {
     justifyContent: 'flex-start',
     alignItems: 'center',
     color: theme.palette.text.secondary
+  },
+  [`& .${classes.commentsObject}`]: {
+    flexDirection: 'column-reverse'
   }
 }));
 
@@ -403,7 +409,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
    */
   function loadLatestComment() {
     setLoadingLatestComments(true);
-    fetchLatestComment()
+    /* fetchLatestComment()
       .then((data) => {
         const newObj = obj;
         obj.latest_comments = obj.latest_comments.length <= 1 ? [...data.results.reverse()] : [...data.results.reverse(), ...obj.latest_comments];
@@ -414,7 +420,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
       })
       .catch((error) => {
         Logger.error(SCOPE_SC_UI, error);
-      });
+      }); */
   }
 
   /**
@@ -539,6 +545,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
       setIsReplying(true);
       performReply(comment)
         .then((data: SCCommentType) => {
+          console.log(obj);
           setObj({...obj, ...{comment_count: obj.comment_count + 1, latest_comments: [...obj.latest_comments, data]}});
           setReplyComment(null);
           setIsReplying(false);
@@ -778,13 +785,35 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
    */
   function renderLatestComment(comment) {
     return (
-      <List>
+      <>
+        {comment.comment_count >= 1 && (
+          <CommentsObject
+            additionalHeaderComments={comment.latest_comments}
+            feedObject={feedObject}
+            feedObjectType={feedObjectType}
+            commentObjectId={obj.id}
+            variant={'outlined'}
+            commentsPageCount={2}
+            commentsOrderBy={SCCommentsOrderBy.ADDED_AT_DESC}
+            hideAdvertising={true}
+            className={classes.commentsObject}
+          />
+        )}
+        {/*<List>
         {comment.comment_count - comment.latest_comments?.length >= 1 && (
           <>
             {loadingLatestComments ? (
-              <ListItem>
-                <CommentObjectSkeleton elevation={elevation} {...CommentObjectSkeletonProps} />
-              </ListItem>
+              <CommentsObject
+                feedObject={feedObject}
+                feedObjectType={feedObjectType}
+                commentObjectId={obj.id}
+                variant={'outlined'}
+                commentsPageCount={2}
+                commentsOrderBy={SCCommentsOrderBy.ADDED_AT_DESC}
+                hideAdvertising={true}
+                className={classes.commentsObject}
+                additionalHeaderComments={comment.latest_comments}
+              />
             ) : (
               <ListItem>
                 <Button
@@ -803,10 +832,10 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
             )}
           </>
         )}
-        {comment.latest_comments?.map((lc: SCCommentType) => (
-          <React.Fragment key={lc.id}>{renderComment(lc)}</React.Fragment>
-        ))}
-      </List>
+        {!loadingLatestComments &&
+          comment.latest_comments?.map((lc: SCCommentType) => <React.Fragment key={lc.id}>{renderComment(lc)}</React.Fragment>)}
+      </List> */}
+      </>
     );
   }
 

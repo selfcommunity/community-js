@@ -44,6 +44,7 @@ import {
   SCFeedUnitActivityTypologyType,
   SCFeedTypologyType,
   SCCommentTypologyType,
+  SCCommentsOrderBy,
   SCCommentType,
   SCPrivateMessageType,
   SCPrivateMessageStatusType,
@@ -125,6 +126,7 @@ import * as SCNotification from './constants/Notification';
 import useSCFetchUser from './hooks/useSCFetchUser';
 import useSCFetchFeedObject from './hooks/useSCFetchFeedObject';
 import useSCFetchCommentObject from './hooks/useSCFetchCommentObject';
+import useSCFetchCommentObjects from './hooks/useSCFetchCommentObjects';
 import useSCFetchCustomAdv from './hooks/useSCFetchCustomAdv';
 import useSCFetchTag from './hooks/useSCFetchTag';
 import useSCFetchCategory from './hooks/useSCFetchCategory';
@@ -212,6 +214,7 @@ export {
   SCFeedUnitActivityTypologyType,
   SCFeedTypologyType,
   SCCommentTypologyType,
+  SCCommentsOrderBy,
   SCCommentType,
   SCPrivateMessageType,
   SCPrivateMessageStatusType,
@@ -287,6 +290,7 @@ export {
   useSCFetchUser,
   useSCFetchFeedObject,
   useSCFetchCommentObject,
+  useSCFetchCommentObjects,
   useSCFetchCustomAdv,
   useSCFetchTag,
   useSCFetchCategory,

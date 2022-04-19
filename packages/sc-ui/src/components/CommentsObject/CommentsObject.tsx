@@ -1,22 +1,17 @@
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {defineMessages, FormattedMessage} from 'react-intl';
-import {SCOPE_SC_UI} from '../../constants/Errors';
-import {AxiosResponse} from 'axios';
 import CommentObject, {CommentObjectProps, CommentObjectSkeleton} from '../CommentObject';
 import ReplyCommentObject, {ReplyCommentObjectProps} from '../CommentObject/ReplyComment';
 import Typography from '@mui/material/Typography';
-import InfiniteScroll from 'react-infinite-scroll-component';
 import {Box, Button, CardProps, Stack} from '@mui/material';
 import {SCCommentsOrderBy} from '../../types/comments';
 import classNames from 'classnames';
 import CustomAdv from '../CustomAdv';
-import {useSnackbar} from 'notistack';
+import useThemeProps from '@mui/material/styles/useThemeProps';
+import {WidgetProps} from '../Widget';
+import CommentsObjectSkeleton from './Skeleton';
 import {
-  Endpoints,
-  http,
-  Link,
-  Logger,
   SCCommentType,
   SCCustomAdvPosition,
   SCFeedObjectType,
@@ -24,28 +19,15 @@ import {
   SCPreferences,
   SCPreferencesContextType,
   SCUserContextType,
-  useSCFetchCommentObject,
-  useSCFetchFeedObject,
+  useSCFetchCommentObjects,
   useSCPreferences,
   useSCUser
 } from '@selfcommunity/core';
-import useThemeProps from '@mui/material/styles/useThemeProps';
-import {WidgetProps} from '../Widget';
-
-const messages = defineMessages({
-  noOtherComment: {
-    id: 'ui.commentsObject.noOtherComment',
-    defaultMessage: 'ui.commentsObject.noOtherComment'
-  }
-});
 
 const PREFIX = 'SCCommentsObject';
 
 const classes = {
   root: `${PREFIX}-root`,
-  fixedPrimaryReply: `${PREFIX}-fixed-primary-reply`,
-  fixedTopPrimaryReply: `${PREFIX}-fixed-top-primary-reply`,
-  fixedBottomPrimaryReply: `${PREFIX}-fixed-bottom-primary-reply`,
   loadMoreCommentsButton: `${PREFIX}-load-more-comments-button`,
   paginationLink: `${PREFIX}-pagination-link`,
   paginationFooter: `${PREFIX}-pagination-footer`,
@@ -62,26 +44,9 @@ const Root = styled(Box, {
 })(({theme}) => ({
   boxShadow: 'none',
   position: 'relative',
-  [`& .${classes.fixedPrimaryReply}`]: {
-    height: 'auto',
-    width: '100%',
-    position: 'fixed',
-    background: '#FFF',
-    boxSizing: 'border-box',
-    transitionProperty: 'box-shadow',
-    transitionDuration: '250ms',
-    transitionTimingFunction: 'ease-out',
-    zIndex: 1,
-    padding: theme.spacing()
-  },
-  [`& .${classes.fixedTopPrimaryReply}`]: {
-    top: 0,
-    boxShadow: 'rgb(0 0 0 / 5%) 0px 1px 0px 0px, rgb(0 0 0 / 4%) 0px 2px 1px'
-  },
-  [`& .${classes.fixedBottomPrimaryReply}`]: {
-    bottom: 0,
-    boxShadow: 'rgb(0 0 0 / 5%) 0px -1px 0px 0px, rgb(0 0 0 / 4%) 0px -1px 1px'
-  },
+  display: 'flex',
+  flexWrap: 'wrap',
+  width: '100%',
   [`& .${classes.loadMoreCommentsButton}`]: {
     textTransform: 'initial'
   },
@@ -97,6 +62,9 @@ const Root = styled(Box, {
   },
   [`& .${classes.paginationLink}`]: {
     display: 'none'
+  },
+  [`& .${classes.paginationFooter}`]: {
+    width: '100%'
   }
 }));
 
@@ -275,9 +243,6 @@ const PREFERENCES = [SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED, SCPreferences
  |Rule Name|Global class|Description|
  |---|---|---|
  |root|.SCCommentsObject-root|Styles applied to the root element.|
- |fixedPrimaryReply|.SCCommentsObject-fixed-primary-reply|Styles applied to the comment primary reply element.|
- |fixedTopPrimaryReply|.SCCommentsObject-fixed-top-primary-reply|Styles applied to the comment top primary reply element.|
- |fixedBottomPrimaryReply|.SCCommentsObject-fixed-bottom-primary-reply|Styles applied to the comment bottom primary reply element.|
  |commentNotFound|.SCCommentsObject-comment-not-found|Styles applied to the label 'Comment not found'.|
  |noOtherComments|.SCCommentsObject-no-other-comments|Styles applied to the label 'No other comments'.|
  |loadMoreCommentsButton|.SCCommentsObject-load-more-comments-button|Styles applied to the load more button.|
@@ -316,7 +281,6 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
     hidePrimaryReply = false,
     fixedPrimaryReply = false,
     CommentObjectSkeletonProps = {elevation: 0, WidgetProps: {variant: 'outlined'} as WidgetProps},
-    commentsLoadingBoxCount = 3,
     additionalHeaderComments = [],
     onChangePage,
     hideAdvertising = false,
@@ -326,61 +290,34 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
   const scPreferences: SCPreferencesContextType = useSCPreferences();
-  const {enqueueSnackbar} = useSnackbar();
 
   // STATE
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [comment, setComment] = useState<SCCommentType>(null);
-  const [comments, setComments] = useState<SCCommentType[]>([]);
+  const {
+    feedObject: obj,
+    comments,
+    getNextPage,
+    getPreviousPage,
+    isLoadingNext,
+    isLoadingPrevious,
+    total: commentsTotal,
+    next,
+    previous
+  } = useSCFetchCommentObjects({
+    id: feedObjectId,
+    feedObject,
+    feedObjectType,
+    page,
+    pageSize: commentsPageCount,
+    orderBy: commentsOrderBy,
+    parent: commentObjectId
+  });
+  const commentIds = comments.map((e) => e.id);
   const [newComments, setNewComments] = useState<SCCommentType[]>([]);
-  const [next, setNext] = useState<string>(null);
-  const [previous, setPrevious] = useState<string>(null);
-  const [total, setTotal] = useState<number>(null);
-  const [isReplying, setIsReplying] = useState<boolean>(false);
-  const [infiniteScrollingEnabled, setInfiniteScrollingEnabled] = useState<boolean>(
-    infiniteScrolling && !(commentObject || Boolean(commentObjectId))
-  );
-  const [rootRef, setRootRef] = useState(null);
-  const [rootWidth, setRootWidth] = useState(null);
-
-  // REFS
-  const isComponentMounted = useRef(false);
-
-  // RETRIVE OBJECTS
-  const {obj, setObj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
-  const {obj: commentObj, setObj: setCommentObj, error: errorCommentObj} = useSCFetchCommentObject({id: commentObjectId, commentObject});
-
-  // CONST
-  const wrapperStyles = {
-    ...(fixedPrimaryReply ? (commentsOrderBy === SCCommentsOrderBy.ADDED_AT_DESC ? {paddingTop: 100} : {paddingBottom: 100}) : {})
-  };
 
   /**
-   * Define root width to set primary reply width
+   * Total number of comments
    */
-  const rootContainer = useCallback((node) => {
-    if (node !== null) {
-      setRootRef(node);
-      setRootWidth(node.getBoundingClientRect().width);
-    }
-  }, []);
-
-  /**
-   * Render title
-   */
-  const renderTitle = useMemo(
-    () => () => {
-      if (showTitle) {
-        return (
-          <Typography variant="h6" gutterBottom color={'inherit'}>
-            <FormattedMessage id="ui.commentsObject.title" defaultMessage="ui.commentsObject.title" values={{total: total + newComments.length}} />
-          </Typography>
-        );
-      }
-      return null;
-    },
-    [total, newComments.length]
-  );
+  const total = additionalHeaderComments.length + commentsTotal + newComments.length;
 
   /**
    * Compute preferences
@@ -398,7 +335,6 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
     () => () => {
       if (
         obj &&
-        isComponentMounted.current &&
         !hideAdvertising &&
         preferences[SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED] &&
         ((preferences[SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED] && scUserContext.user === null) ||
@@ -417,173 +353,6 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
   );
 
   /**
-   * Remove commentObj or comments from newComments
-   * if commentsObj.id or ids of newComments are included in commentsSet
-   * @param commentsSet
-   */
-  const filterExtraComments = (commentsSet) => {
-    // Filter comment
-    if (comment) {
-      const _isCommentDataIncluded = commentsSet.filter((c) => c.id === comment.id).length > 0;
-      _isCommentDataIncluded && setComment(null);
-    }
-    // Filter newComments
-    if (newComments.length) {
-      const commentIds: number[] = commentsSet.map((c) => c.id);
-      let newCommentsToRemove = [];
-      newComments.map((nC: SCCommentType) => {
-        if (commentIds.includes(nC.id)) {
-          newCommentsToRemove.push(nC.id);
-        }
-      });
-      setNewComments(newComments.filter((c) => !newCommentsToRemove.includes(c.id)));
-    }
-  };
-
-  /**
-   * Get Comments
-   */
-  const performFetchComments = (url) => {
-    return http
-      .request({
-        url,
-        method: Endpoints.Comments.method
-      })
-      .then((res: AxiosResponse<any>) => {
-        if (res.status >= 300) {
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res.data);
-      });
-  };
-
-  /**
-   * Fetch prevoius comments
-   */
-  function fetchPreviousComments() {
-    if (obj && previous) {
-      setIsLoading(true);
-      performFetchComments(previous)
-        .then((res) => {
-          setComments([...res.results, ...comments]);
-          setPrevious(res.previous);
-          filterExtraComments(res.results);
-          setIsLoading(false);
-          onChangePage && onChangePage(comments.length / commentsPageCount + 1);
-        })
-        .catch((error) => {
-          Logger.error(SCOPE_SC_UI, error);
-        });
-    }
-  }
-
-  /**
-   * Fetch next comments
-   */
-  function fetchNextComments() {
-    if (obj) {
-      const _next = next
-        ? next
-        : `${Endpoints.Comments.url()}?${obj.type}=${obj.id}&limit=${commentsPageCount}&ordering=${commentsOrderBy}&offset=${
-            page > 0 ? (page - 1) * commentsPageCount : 0
-          }`;
-      setIsLoading(true);
-      performFetchComments(_next)
-        .then((res) => {
-          setComments(next ? [...comments, ...res.results] : res.results);
-          setTotal(res.count);
-          setNext(res.next);
-          if (page > 1 && comments.length === 0) {
-            // Save initial previous if start from a page > 1
-            setPrevious(res.previous);
-          }
-          filterExtraComments(res.results);
-          setIsLoading(false);
-          onChangePage && onChangePage(comments.length / commentsPageCount + 1);
-        })
-        .catch((error) => {
-          Logger.error(SCOPE_SC_UI, error);
-        });
-    }
-  }
-
-  /**
-   * Get a single comment
-   */
-  const performFetchComment = useMemo(
-    () => (commentId) => {
-      return http
-        .request({
-          url: Endpoints.Comment.url({id: commentId}),
-          method: Endpoints.Comment.method
-        })
-        .then((res: AxiosResponse<any>) => {
-          if (res.status >= 300) {
-            return Promise.reject(res);
-          }
-          return Promise.resolve(res.data);
-        });
-    },
-    [obj, commentObjectId, commentObj]
-  );
-
-  /**
-   * Fetch a single comment
-   * and comment parent (if need it)
-   */
-  function fetchComment() {
-    if (commentObj) {
-      if (commentObj.parent) {
-        setIsLoading(true);
-        performFetchComment(commentObj.parent)
-          .then((parent) => {
-            const _parent = Object.assign({}, parent);
-            _parent.latest_comments = [commentObj];
-            setComment(_parent);
-            setIsLoading(false);
-          })
-          .catch((error) => {
-            // Comment not found
-            setIsLoading(false);
-            Logger.error(SCOPE_SC_UI, error);
-          });
-      } else {
-        setComment(commentObj);
-        setIsLoading(false);
-      }
-    } else if (errorCommentObj) {
-      setIsLoading(false);
-    }
-  }
-
-  /**
-   * Reload comments
-   */
-  useEffect(() => {
-    if (obj && obj.id && isComponentMounted.current) {
-      setNext(null);
-      setComments([]);
-      setNewComments([]);
-      fetchNextComments();
-    }
-  }, [commentsPageCount, commentsOrderBy]);
-
-  /**
-   * Fetch comments only if obj change
-   */
-  useEffect(() => {
-    if (commentObjectId || commentObj) {
-      fetchComment();
-    } else if (obj && obj.id) {
-      fetchNextComments();
-    }
-    isComponentMounted.current = true;
-    return () => {
-      isComponentMounted.current = false;
-    };
-  }, [obj, commentObj, errorCommentObj]);
-
-  /**
    * Handle open reply box
    * @param comment
    */
@@ -595,257 +364,36 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
   }
 
   /**
-   * Perform reply
-   * Comment of first level
-   */
-  const performReply = (comment) => {
-    return http
-      .request({
-        url: Endpoints.NewComment.url({}),
-        method: Endpoints.NewComment.method,
-        data: {
-          [`${obj.type}`]: obj.id,
-          text: comment
-        }
-      })
-      .then((res: AxiosResponse<SCCommentType>) => {
-        if (res.status >= 300) {
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res.data);
-      });
-  };
-
-  /**
-   * Handle comment of 1° level
-   */
-  function handleReply(content) {
-    setIsReplying(true);
-    performReply(content)
-      .then((c: SCCommentType) => {
-        if (infiniteScrollingEnabled && (commentsOrderBy === SCCommentsOrderBy.ADDED_AT_ASC || previous || comment)) {
-          setInfiniteScrollingEnabled(false);
-        }
-        setNewComments(commentsOrderBy === SCCommentsOrderBy.ADDED_AT_DESC ? [...[c], ...newComments] : [...newComments, ...[c]]);
-        setIsReplying(false);
-        setTimeout(() => {
-          const element = document.getElementById(`${c.id}`);
-          element && element.scrollIntoView({behavior: 'smooth', block: 'center'});
-        }, 100);
-      })
-      .catch((error) => {
-        Logger.error(SCOPE_SC_UI, error);
-        enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
-          variant: 'error',
-          autoHideDuration: 5000
-        });
-      });
-  }
-
-  /**
-   * Render header primary reply
-   */
-  function renderHeadPrimaryReply() {
-    if (scUserContext.user && !hidePrimaryReply && commentsOrderBy === SCCommentsOrderBy.ADDED_AT_DESC) {
-      return (
-        <Box
-          className={classNames({[classes.fixedPrimaryReply]: fixedPrimaryReply, [classes.fixedTopPrimaryReply]: fixedPrimaryReply})}
-          style={{width: `${rootWidth}px`}}>
-          <ReplyCommentComponent
-            readOnly={isReplying || isLoading}
-            onReply={handleReply}
-            key={Number(isReplying)}
-            inline
-            {...ReplyCommentComponentProps}
-          />
-        </Box>
-      );
-    }
-    return null;
-  }
-
-  /**
-   * Render footer primary reply
-   */
-  function renderFooterPrimaryReply() {
-    if (scUserContext.user && !hidePrimaryReply && commentsOrderBy === SCCommentsOrderBy.ADDED_AT_ASC) {
-      return (
-        <Box
-          className={classNames({[classes.fixedPrimaryReply]: fixedPrimaryReply, [classes.fixedBottomPrimaryReply]: fixedPrimaryReply})}
-          style={{width: `${rootWidth}px`}}>
-          <ReplyCommentComponent
-            readOnly={isReplying || isLoading}
-            onReply={handleReply}
-            key={Number(isReplying)}
-            inline
-            {...ReplyCommentComponentProps}
-          />
-        </Box>
-      );
-    }
-    return null;
-  }
-
-  /**
-   * Render new comments
-   */
-  function renderNewComments(order) {
-    if (order === commentsOrderBy) {
-      return (
-        <>
-          {newComments.map((comment: SCCommentType) => {
-            return (
-              <CommentComponent
-                key={comment.id}
-                id={comment.id}
-                commentObject={comment}
-                onOpenReply={openReplyBox}
-                feedObject={obj}
-                feedObjectType={obj.type}
-                commentReply={commentObj}
-                {...CommentComponentProps}
-                ReplyCommentObjectProps={ReplyCommentComponentProps}
-                CommentObjectSkeletonProps={CommentObjectSkeletonProps}
-              />
-            );
-          })}
-        </>
-      );
-    }
-    return null;
-  }
-
-  /**
    * Render button load previous comments
    */
   function renderLoadPreviousComments() {
     return (
-      <>
-        {((previous && !isLoading) || (comment && comments.length === 0 && obj && obj.comment_count > 0 && !isLoading)) && (
+      <Box>
+        {isLoadingPrevious && <CommentObjectSkeleton {...CommentObjectSkeletonProps} count={1} />}
+        {previous && !isLoadingPrevious && (
           <>
-            {renderCrawlablePreviousLink()}
-            <Button variant="text" onClick={fetchPreviousComments} disabled={isLoading} color="inherit">
+            <Button variant="text" onClick={getPreviousPage} disabled={isLoadingNext} color="inherit">
               <FormattedMessage id="ui.commentsObject.loadPreviousComments" defaultMessage="ui.commentsObject.loadPreviousComments" />
             </Button>
           </>
         )}
-      </>
-    );
-  }
-
-  /**
-   * Helpers to render SEO crawlable links when paginate results
-   */
-  function renderCrawlableNextLink() {
-    return (
-      <>
-        {next && (
-          <Link to={next} className={classes.paginationLink}>
-            Next page
-          </Link>
-        )}
-      </>
-    );
-  }
-  function renderCrawlablePreviousLink() {
-    return (
-      <>
-        {previous && (
-          <Link to={previous} className={classes.paginationLink}>
-            Previous page
-          </Link>
-        )}
-      </>
-    );
-  }
-
-  /**
-   * Render comments and load others in infinite scrolling mode
-   */
-  function renderInfiniteScrollContent() {
-    return (
-      <InfiniteScroll
-        dataLength={comments.length}
-        next={fetchNextComments}
-        hasMore={next !== null}
-        loader={<CommentObjectSkeleton {...CommentObjectSkeletonProps} />}
-        style={wrapperStyles}
-        endMessage={
-          !errorCommentObj && commentsOrderBy === SCCommentsOrderBy.ADDED_AT_DESC ? (
-            <Typography variant="body2" align="center" className={classes.noOtherComments}>
-              <FormattedMessage id="ui.commentsObject.noOtherComments" defaultMessage="ui.commentsObject.noOtherComments" />
-            </Typography>
-          ) : null
-        }>
-        {renderLoadPreviousComments()}
-        {[...additionalHeaderComments, ...newComments, ...comments, ...(comment ? [comment] : [])].map((c: SCCommentType, index) => {
-          return (
-            <React.Fragment key={c.id}>
-              {renderSingleComment(c)}
-              {advPosition === index && renderAdvertising()}
-            </React.Fragment>
-          );
-        })}
-        {renderCrawlableNextLink()}
-      </InfiniteScroll>
-    );
-  }
-
-  /**
-   * Render a single comment if found
-   */
-  function renderSingleComment(comment) {
-    return (
-      <>
-        {comment && (
-          <CommentComponent
-            id={comment.id}
-            key={comment.id}
-            commentObject={comment}
-            onOpenReply={openReplyBox}
-            feedObject={obj}
-            feedObjectType={obj.type}
-            commentReply={commentObj}
-            {...CommentComponentProps}
-            ReplyCommentObjectProps={ReplyCommentComponentProps}
-          />
-        )}
-      </>
-    );
-  }
-
-  /**
-   * Render not found comment box
-   */
-  function renderCommentNotFound() {
-    return (
-      <>
-        {(errorCommentObj || (commentObjectId && !comment && !isLoading)) && comments.length === 0 && (
-          <>
-            <Typography className={classes.commentNotFound}>
-              <FormattedMessage id="ui.commentsObject.commentNotFound" defaultMessage="ui.commentsObject.commentNotFound" />
-            </Typography>
-            <Button variant="text" onClick={fetchNextComments} disabled={isLoading} color="inherit">
-              <FormattedMessage id="ui.commentsObject.loadMoreComments" defaultMessage="ui.commentsObject.loadMoreComments" />
-            </Button>
-          </>
-        )}
-      </>
+      </Box>
     );
   }
 
   /**
    * Footer with n comments of, only for load more pagination mode
    */
-  function renderLoadMorePaginationFooter() {
+  function renderLoadNextComments() {
+    console.log(obj.comment_count, additionalHeaderComments);
     return (
       <Box className={classes.paginationFooter}>
-        {Boolean(next) && !isLoading && (
+        {Boolean(next) && !isLoadingNext && (
           <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
-            <Button variant="text" onClick={fetchNextComments} disabled={isLoading} color="inherit" classes={{root: classes.loadMoreCommentsButton}}>
+            <Button variant="text" onClick={getNextPage} disabled={isLoadingNext} color="inherit" classes={{root: classes.loadMoreCommentsButton}}>
               <FormattedMessage id="ui.commentsObject.loadMoreComments" defaultMessage="ui.commentsObject.loadMoreComments" />
             </Button>
-            {total && !commentObj && (
+            {comments.length && (
               <Typography variant="body1" classes={{root: classes.commentsCounter}}>
                 <FormattedMessage
                   id="ui.commentsObject.numberOfComments"
@@ -856,45 +404,38 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
             )}
           </Stack>
         )}
+        {isLoadingNext && <CommentObjectSkeleton {...CommentObjectSkeletonProps} count={1} />}
       </Box>
     );
+  }
+
+  /**
+   * Filter additional comments to remove duplicate
+   */
+  function getAdditionalHeaderComments() {
+    return additionalHeaderComments.filter((e) => !commentIds.includes(e.id));
   }
 
   /**
    * Render comments and load others with load more button
    */
-  function renderLoadMorePaginationContent() {
-    return (
-      <Box id="paginated" style={wrapperStyles}>
-        {isLoading && commentObj && comments.length === 0 && <CommentObjectSkeleton {...CommentObjectSkeletonProps} />}
-        {renderNewComments(SCCommentsOrderBy.ADDED_AT_DESC)}
-        {renderLoadPreviousComments()}
-        {renderCommentNotFound()}
-        {[...additionalHeaderComments, ...comments].map((comment: SCCommentType, index) => {
-          return (
-            <React.Fragment key={comment.id}>
-              {renderSingleComment(comment)}
-              {advPosition === index && renderAdvertising()}
-            </React.Fragment>
-          );
-        })}
-        {renderLoadMorePaginationFooter()}
-        {isLoading && (!commentObj || (commentObj && comments.length > 0)) && <CommentObjectSkeleton {...CommentObjectSkeletonProps} />}
-        {renderNewComments(SCCommentsOrderBy.ADDED_AT_ASC)}
-        {renderSingleComment(comment)}
-        {renderCrawlableNextLink()}
-      </Box>
-    );
-  }
-
-  /**
-   * Render loading skeletons
-   */
-  function renderLoadingSkeletons() {
+  function renderComments(comments) {
     return (
       <>
-        {[...Array(commentsLoadingBoxCount)].map((x, i) => (
-          <CommentObjectSkeleton key={i} {...CommentObjectSkeletonProps} />
+        {comments.map((comment: SCCommentType, index) => (
+          <React.Fragment key={index}>
+            <CommentComponent
+              id={comment.id}
+              key={comment.id}
+              commentObject={comment}
+              onOpenReply={openReplyBox}
+              feedObject={obj}
+              feedObjectType={obj.type}
+              {...CommentComponentProps}
+              ReplyCommentObjectProps={ReplyCommentComponentProps}
+            />
+            {advPosition === index && renderAdvertising()}
+          </React.Fragment>
         ))}
       </>
     );
@@ -918,18 +459,27 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
   }
 
   /**
+   * Prefetch comments only if obj exists and additionalHeaderComments is empty
+   */
+  useEffect(() => {
+    if (obj && additionalHeaderComments.length === 0) {
+      getNextPage();
+    }
+  }, [obj]);
+
+  /**
    * Render comments
    */
   const advPosition = Math.floor(Math.random() * (Math.min(total, 5) - 1 + 1) + 1);
   let commentsRendered = <></>;
 
-  if (!obj || (comments.length === 0 && isLoading)) {
+  if (!obj) {
     /**
      * Until the contribution has not been founded and there are
      * no comments during loading render the skeletons
      */
-    commentsRendered = renderLoadingSkeletons();
-  } else if (!comments.length && !newComments.length && !isLoading && !comment && !errorCommentObj) {
+    commentsRendered = <CommentsObjectSkeleton CommentObjectSkeletonProps={CommentObjectSkeletonProps} elevation={0} />;
+  } else if (!total && !isLoadingNext) {
     /**
      * If comments were not found and loading is finished
      * and the componet and the component was not looking
@@ -945,22 +495,22 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
      *  the component will switch to 'load more pagination' mode automatically
      *  in case it needs to display a single comment
      */
-    if (infiniteScrollingEnabled) {
-      commentsRendered = renderInfiniteScrollContent();
-    } else {
-      commentsRendered = renderLoadMorePaginationContent();
-    }
+    commentsRendered = (
+      <>
+        {renderComments(getAdditionalHeaderComments())}
+        {renderLoadPreviousComments()}
+        {renderComments(comments)}
+        {renderLoadNextComments()}
+      </>
+    );
   }
 
   /**
    * Renders root object
    */
   return (
-    <Root ref={rootContainer} id={id} className={classNames(classes.root, className)} {...rest}>
-      {renderTitle()}
-      {renderHeadPrimaryReply()}
+    <Root id={id} className={classNames(classes.root, className)} {...rest}>
       {commentsRendered}
-      {renderFooterPrimaryReply()}
     </Root>
   );
 }

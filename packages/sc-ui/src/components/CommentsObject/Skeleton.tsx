@@ -13,6 +13,7 @@ const classes = {
 };
 
 const Root = styled(Widget)(({theme}) => ({
+  width: '100%',
   [`& .${classes.list}`]: {
     marginLeft: -16,
     marginRight: -16
@@ -40,13 +41,14 @@ const Root = styled(Widget)(({theme}) => ({
  |list|.SCCommentsObjectSkeleton-root|Styles applied to the list element.|
  *
  */
-export default function CommentsObjectSkeleton(props): JSX.Element {
+export default function CommentsObjectSkeleton(props: {count?: number; CommentObjectSkeletonProps?: any, [p: string]: any}): JSX.Element {
+  const {count = 3, CommentObjectSkeletonProps = {}, ...rest} = props;
   return (
-    <Root className={classes.root} {...props}>
+    <Root className={classes.root} {...rest}>
       <CardContent>
         <List className={classes.list}>
-          {[...Array(4)].map((comment, index) => (
-            <CommentObjectSkeleton key={index} elevation={0} />
+          {[...Array(count)].map((comment, index) => (
+            <CommentObjectSkeleton key={index} {...CommentObjectSkeletonProps} />
           ))}
         </List>
       </CardContent>
