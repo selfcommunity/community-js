@@ -33,8 +33,8 @@ import {
   SCUserContextType,
   UserUtils,
   useSCContext,
-  useSCFetchCommentObject,
-  useSCRouting
+  useSCFetchCommentObject, useSCFetchCommentObjects,
+  useSCRouting,
 } from '@selfcommunity/core';
 import useThemeProps from '@mui/material/styles/useThemeProps';
 import CommentsObject from '../CommentsObject';
@@ -329,6 +329,14 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
   const [isReplying, setIsReplying] = useState<boolean>(false);
   const [editComment, setEditComment] = useState<SCCommentType>(null);
   const [isSavingComment, setIsSavingComment] = useState<boolean>(false);
+  const commentsObject = useSCFetchCommentObjects({
+    id: feedObjectId,
+    feedObject,
+    feedObjectType,
+    orderBy: SCCommentsOrderBy.ADDED_AT_DESC,
+    parent: obj.id,
+    offset: 1
+  });
 
   /**
    * Render added_at of the comment
@@ -788,15 +796,15 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
       <>
         {comment.comment_count >= 1 && (
           <CommentsObject
-            additionalHeaderComments={comment.latest_comments}
             feedObject={feedObject}
             feedObjectType={feedObjectType}
-            commentObjectId={obj.id}
-            variant={'outlined'}
-            commentsPageCount={2}
-            commentsOrderBy={SCCommentsOrderBy.ADDED_AT_DESC}
             hideAdvertising={true}
+            comments={[...commentsObject.comments, ...comment.latest_comments]}
+            previous={commentsObject.next}
+            isLoadingPrevious={commentsObject.isLoadingNext}
+            onPrevious={commentsObject.getNextPage}
             className={classes.commentsObject}
+            variant={'outlined'}
           />
         )}
         {/*<List>

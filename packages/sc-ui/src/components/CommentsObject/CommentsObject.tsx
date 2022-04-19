@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {defineMessages, FormattedMessage} from 'react-intl';
@@ -19,9 +20,9 @@ import {
   SCPreferences,
   SCPreferencesContextType,
   SCUserContextType,
-  useSCFetchCommentObjects,
+  useSCFetchCommentObjects, useSCFetchFeedObject,
   useSCPreferences,
-  useSCUser
+  useSCUser,
 } from '@selfcommunity/core';
 
 const PREFIX = 'SCCommentsObject';
@@ -100,18 +101,6 @@ export interface CommentsObjectProps {
   feedObjectType?: SCFeedObjectTypologyType;
 
   /**
-   * Id of the comment object
-   * @default null
-   */
-  commentObjectId?: number;
-
-  /**
-   * Comment object
-   * @default null
-   */
-  commentObject?: SCCommentType;
-
-  /**
    * CommentComponent component
    * Usefull to override the single Comment render component
    * @default CommentObject
@@ -130,48 +119,13 @@ export interface CommentsObjectProps {
    */
   CommentObjectSkeletonProps?: any;
 
-  /**
-   * ReplyCommentComponent component
-   * Usefull to override the single ReplyComment render component
-   * @default CommentObject
-   */
-  ReplyCommentComponent?: React.ElementType;
-
-  /**
-   * Props to spread to single reply comment object
-   * @default {variant: 'outlined'}
-   */
-  ReplyCommentComponentProps?: ReplyCommentObjectProps;
-
-  /**
-   * renderNoComment function
-   * invoked when no comments founds
-   * @default null
-   */
-  renderNoComments?: () => JSX.Element;
-
-  /**
-   * page
-   * @default 1
-   */
-  page?: number;
-
-  /**
-   * comments per page
-   * @default null
-   */
-  commentsPageCount?: number;
-
-  /**
-   * comments orderBy
-   * @default SCCommentsOrderBy.ADDED_AT_DESC
-   */
-  commentsOrderBy?: SCCommentsOrderBy;
-
-  /**
-   * show title (number of comments)
-   */
-  showTitle?: boolean;
+  comments: SCCommentType[];
+  next?: string;
+  isLoadingNext?: boolean;
+  handleNext?: () => void;
+  previous?: string;
+  isLoadingPrevious?: boolean;
+  handlePrevious?: () => void;
 
   /**
    * enable/disable infinite scrolling
@@ -180,43 +134,10 @@ export interface CommentsObjectProps {
   infiniteScrolling?: boolean;
 
   /**
-   * show/hide primary content reply box
-   * @default false
-   */
-  hidePrimaryReply?: boolean;
-
-  /**
-   * position the primary reply in the bottom of the component
-   * @default false
-   */
-  fixedPrimaryReply?: boolean;
-
-  /**
    * number of box of skeleton loading to show during loading phase
    * @default 3
    */
   commentsLoadingBoxCount?: number;
-
-  /**
-   * additional comments to show in the header
-   * usefull when from a feedObject publish a comment
-   * and this component show recent comments
-   * @default []
-   */
-  additionalHeaderComments?: SCCommentType[];
-
-  /**
-   * Callback invoked when load comments page
-   * Usefull to sync location path for SEO optimization
-   * @param page
-   */
-  onChangePage?: (page) => any;
-
-  /**
-   * show/hide box advertising
-   * @default false
-   */
-  hideAdvertising?: boolean;
 
   /**
    * Other props
@@ -266,58 +187,27 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
     feedObjectId,
     feedObject,
     feedObjectType = SCFeedObjectTypologyType.POST,
-    commentObjectId,
-    commentObject,
     CommentComponent = CommentObject,
     CommentComponentProps = {variant: 'outlined'},
-    ReplyCommentComponent = ReplyCommentObject,
-    ReplyCommentComponentProps = {ReplyBoxProps: {variant: 'outlined'}},
-    renderNoComments,
-    page = 1,
-    commentsPageCount = 5,
-    commentsOrderBy = SCCommentsOrderBy.ADDED_AT_DESC,
-    showTitle = false,
-    infiniteScrolling = true,
-    hidePrimaryReply = false,
-    fixedPrimaryReply = false,
     CommentObjectSkeletonProps = {elevation: 0, WidgetProps: {variant: 'outlined'} as WidgetProps},
-    additionalHeaderComments = [],
-    onChangePage,
+    next,
+    isLoadingNext,
+    handleNext,
+    previous,
+    isLoadingPrevious,
+    handlePrevious,
+    totalComments,
+    comments = [],
+    infiniteScrolling = true,
     hideAdvertising = false,
+    commentsLoadingBoxCount = 3,
     ...rest
   } = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
   const scPreferences: SCPreferencesContextType = useSCPreferences();
-
-  // STATE
-  const {
-    feedObject: obj,
-    comments,
-    getNextPage,
-    getPreviousPage,
-    isLoadingNext,
-    isLoadingPrevious,
-    total: commentsTotal,
-    next,
-    previous
-  } = useSCFetchCommentObjects({
-    id: feedObjectId,
-    feedObject,
-    feedObjectType,
-    page,
-    pageSize: commentsPageCount,
-    orderBy: commentsOrderBy,
-    parent: commentObjectId
-  });
-  const commentIds = comments.map((e) => e.id);
-  const [newComments, setNewComments] = useState<SCCommentType[]>([]);
-
-  /**
-   * Total number of comments
-   */
-  const total = additionalHeaderComments.length + commentsTotal + newComments.length;
+  const {obj, setObj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
 
   /**
    * Compute preferences
@@ -370,9 +260,9 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
     return (
       <Box>
         {isLoadingPrevious && <CommentObjectSkeleton {...CommentObjectSkeletonProps} count={1} />}
-        {previous && !isLoadingPrevious && (
+        {Boolean(previous) && !isLoadingPrevious && (
           <>
-            <Button variant="text" onClick={getPreviousPage} disabled={isLoadingNext} color="inherit">
+            <Button variant="text" onClick={handlePrevious} disabled={isLoadingPrevious} color="inherit">
               <FormattedMessage id="ui.commentsObject.loadPreviousComments" defaultMessage="ui.commentsObject.loadPreviousComments" />
             </Button>
           </>
@@ -385,20 +275,19 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
    * Footer with n comments of, only for load more pagination mode
    */
   function renderLoadNextComments() {
-    console.log(obj.comment_count, additionalHeaderComments);
     return (
       <Box className={classes.paginationFooter}>
         {Boolean(next) && !isLoadingNext && (
           <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
-            <Button variant="text" onClick={getNextPage} disabled={isLoadingNext} color="inherit" classes={{root: classes.loadMoreCommentsButton}}>
+            <Button variant="text" onClick={handleNext} disabled={isLoadingNext} color="inherit" classes={{root: classes.loadMoreCommentsButton}}>
               <FormattedMessage id="ui.commentsObject.loadMoreComments" defaultMessage="ui.commentsObject.loadMoreComments" />
             </Button>
-            {comments.length && (
+            {Boolean(totalComments) && (
               <Typography variant="body1" classes={{root: classes.commentsCounter}}>
                 <FormattedMessage
                   id="ui.commentsObject.numberOfComments"
                   defaultMessage="ui.commentsObject.numberOfComments"
-                  values={{loaded: comments.length, total: total}}
+                  values={{loaded: comments.length, total: totalComments}}
                 />
               </Typography>
             )}
@@ -407,13 +296,6 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
         {isLoadingNext && <CommentObjectSkeleton {...CommentObjectSkeletonProps} count={1} />}
       </Box>
     );
-  }
-
-  /**
-   * Filter additional comments to remove duplicate
-   */
-  function getAdditionalHeaderComments() {
-    return additionalHeaderComments.filter((e) => !commentIds.includes(e.id));
   }
 
   /**
@@ -432,7 +314,6 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
               feedObject={obj}
               feedObjectType={obj.type}
               {...CommentComponentProps}
-              ReplyCommentObjectProps={ReplyCommentComponentProps}
             />
             {advPosition === index && renderAdvertising()}
           </React.Fragment>
@@ -442,35 +323,9 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
   }
 
   /**
-   * Render no comments
-   */
-  function renderNoCommentsFound() {
-    return (
-      <>
-        {renderNoComments ? (
-          renderNoComments()
-        ) : (
-          <Box className={classes.noComments}>
-            <FormattedMessage id="ui.commentsObject.noComments" defaultMessage="ui.commentsObject.noComments" />
-          </Box>
-        )}
-      </>
-    );
-  }
-
-  /**
-   * Prefetch comments only if obj exists and additionalHeaderComments is empty
-   */
-  useEffect(() => {
-    if (obj && additionalHeaderComments.length === 0) {
-      getNextPage();
-    }
-  }, [obj]);
-
-  /**
    * Render comments
    */
-  const advPosition = Math.floor(Math.random() * (Math.min(total, 5) - 1 + 1) + 1);
+  const advPosition = Math.floor(Math.random() * (Math.min(totalComments, 5) - 1 + 1) + 1);
   let commentsRendered = <></>;
 
   if (!obj) {
@@ -479,13 +334,6 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
      * no comments during loading render the skeletons
      */
     commentsRendered = <CommentsObjectSkeleton CommentObjectSkeletonProps={CommentObjectSkeletonProps} elevation={0} />;
-  } else if (!total && !isLoadingNext) {
-    /**
-     * If comments were not found and loading is finished
-     * and the componet and the component was not looking
-     * for a particular comment render no comments message
-     */
-    commentsRendered = renderNoCommentsFound();
   } else {
     /**
      * Two modes available:
@@ -497,7 +345,6 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
      */
     commentsRendered = (
       <>
-        {renderComments(getAdditionalHeaderComments())}
         {renderLoadPreviousComments()}
         {renderComments(comments)}
         {renderLoadNextComments()}
