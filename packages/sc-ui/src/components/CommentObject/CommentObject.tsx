@@ -33,8 +33,9 @@ import {
   SCUserContextType,
   UserUtils,
   useSCContext,
-  useSCFetchCommentObject, useSCFetchCommentObjects,
-  useSCRouting,
+  useSCFetchCommentObject,
+  useSCFetchCommentObjects,
+  useSCRouting
 } from '@selfcommunity/core';
 import useThemeProps from '@mui/material/styles/useThemeProps';
 import CommentsObject from '../CommentsObject';
@@ -71,8 +72,7 @@ const classes = {
   deleted: `${PREFIX}-deleted`,
   activityAt: `${PREFIX}-activity-at`,
   reply: `${PREFIX}-reply`,
-  commentSubSection: `${PREFIX}-comment-sub-section`,
-  commentsObject: `${PREFIX}-comments-object`
+  commentSubSection: `${PREFIX}-comment-sub-section`
 };
 
 const Root = styled(List, {
@@ -154,9 +154,6 @@ const Root = styled(List, {
     justifyContent: 'flex-start',
     alignItems: 'center',
     color: theme.palette.text.secondary
-  },
-  [`& .${classes.commentsObject}`]: {
-    flexDirection: 'column-reverse'
   }
 }));
 
@@ -334,7 +331,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
     feedObject,
     feedObjectType,
     orderBy: SCCommentsOrderBy.ADDED_AT_DESC,
-    parent: obj.id,
+    parent: commentObject ? commentObject.id : commentObjectId,
     offset: 1
   });
 
@@ -356,12 +353,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
    */
   function renderActionVote(comment) {
     return (
-      <LoadingButton
-        variant={'text'}
-        sx={{minWidth: 30}}
-        onClick={() => (!scUserContext.user ? scContext.settings.handleAnonymousAction() : vote(comment))}
-        disabled={loadingVote}
-        color="inherit">
+      <LoadingButton variant={'text'} sx={{minWidth: 30}} onClick={() => vote(comment)} disabled={loadingVote} color="inherit">
         {comment.voted ? (
           <Tooltip title={<FormattedMessage id={'ui.commentObject.voteDown'} defaultMessage={'ui.commentObject.voteDown'} />}>
             <Icon fontSize={'small'} color="primary">
@@ -385,11 +377,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
    */
   function renderActionReply(comment) {
     return (
-      <Button
-        className={classes.reply}
-        variant="text"
-        onClick={() => (!scUserContext.user ? scContext.settings.handleAnonymousAction() : reply(comment))}
-        color="inherit">
+      <Button className={classes.reply} variant="text" onClick={() => reply(comment)} color="inherit">
         {intl.formatMessage(messages.reply)}
       </Button>
     );
@@ -407,8 +395,12 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
    * @param comment
    */
   function reply(comment) {
-    setReplyComment(comment);
-    onOpenReply && onOpenReply(comment);
+    if (!scUserContext.user) {
+      scContext.settings.handleAnonymousAction();
+    } else {
+      setReplyComment(comment);
+      onOpenReply && onOpenReply(comment);
+    }
   }
 
   /**
@@ -480,40 +472,44 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
    * @param comment
    */
   function vote(comment) {
-    if (UserUtils.isBlocked(scUserContext.user)) {
-      enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
-        variant: 'warning'
-      });
+    if (!scUserContext.user) {
+      scContext.settings.handleAnonymousAction();
     } else {
-      setLoadingVote(true);
-      performVoteComment(comment)
-        .then((data) => {
-          const newObj = obj;
-          if (comment.parent) {
-            // 2° comment level
-            const newLatestComments: SCCommentType[] = obj.latest_comments.map((lc) => {
-              if (lc.id === comment.id) {
-                lc.voted = !lc.voted;
-                lc.vote_count = lc.vote_count - (lc.voted ? -1 : 1);
-              }
-              return lc;
-            });
-            obj.latest_comments = newLatestComments;
-          } else {
+      if (UserUtils.isBlocked(scUserContext.user)) {
+        enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
+          variant: 'warning'
+        });
+      } else {
+        setLoadingVote(true);
+        performVoteComment(comment)
+          .then((data) => {
+            const newObj = obj;
+            /* if (comment.parent) {
+              // 2° comment level
+              const newLatestComments: SCCommentType[] = obj.latest_comments.map((lc) => {
+                if (lc.id === comment.id) {
+                  lc.voted = !lc.voted;
+                  lc.vote_count = lc.vote_count - (lc.voted ? -1 : 1);
+                }
+                return lc;
+              });
+              obj.latest_comments = newLatestComments;
+            } else { */
             // 1° comment level
             obj.voted = !obj.voted;
             obj.vote_count = obj.vote_count - (obj.voted ? -1 : 1);
-          }
-          setObj(newObj);
-          setLoadingVote(false);
-          onVote && onVote(comment);
-        })
-        .catch((error) => {
-          Logger.error(SCOPE_SC_UI, error);
-          enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
-            variant: 'error'
+            // }
+            setObj(newObj);
+            setLoadingVote(false);
+            onVote && onVote(comment);
+          })
+          .catch((error) => {
+            Logger.error(SCOPE_SC_UI, error);
+            enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
+              variant: 'error'
+            });
           });
-        });
+      }
     }
   }
 
@@ -553,7 +549,6 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
       setIsReplying(true);
       performReply(comment)
         .then((data: SCCommentType) => {
-          console.log(obj);
           setObj({...obj, ...{comment_count: obj.comment_count + 1, latest_comments: [...obj.latest_comments, data]}});
           setReplyComment(null);
           setIsReplying(false);
@@ -794,17 +789,17 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
   function renderLatestComment(comment) {
     return (
       <>
-        {comment.comment_count >= 1 && (
+        {Boolean(comment.comment_count) && (
           <CommentsObject
-            feedObject={feedObject}
-            feedObjectType={feedObjectType}
+            feedObject={commentsObject.feedObject}
+            feedObjectType={commentsObject.feedObject ? commentsObject.feedObject.type : feedObjectType}
             hideAdvertising={true}
-            comments={[...commentsObject.comments, ...comment.latest_comments]}
-            previous={commentsObject.next}
+            comments={[...commentsObject.comments.reverse(), ...comment.latest_comments]}
+            previous={comment.comment_count > 1 ? commentsObject.next : null}
             isLoadingPrevious={commentsObject.isLoadingNext}
-            onPrevious={commentsObject.getNextPage}
-            className={classes.commentsObject}
+            handlePrevious={commentsObject.getNextPage}
             variant={'outlined'}
+            CommentComponentProps={{onOpenReply: reply, variant: 'outlined'}}
           />
         )}
         {/*<List>

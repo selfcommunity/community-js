@@ -1,14 +1,14 @@
 import React from 'react';
 import {ComponentMeta, ComponentStory} from '@storybook/react';
 
-import CommentsObject from './index';
+import CommentsFeedObjectDetail from './index';
 import {SCFeedObjectTypologyType} from '@selfcommunity/core';
 import {SCCommentsOrderBy} from '../../types/comments';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC UI/CommentsObject',
-  component: CommentsObject,
+  title: 'Design System/SC UI/CommentsFeedObjectDetail',
+  component: CommentsFeedObjectDetail,
   argTypes: {
     feedObjectId: {
       control: {type: 'number'},
@@ -37,16 +37,15 @@ export default {
     feedObjectType: SCFeedObjectTypologyType.POST,
     infiniteScrolling: true,
     commentsOrderBy: SCCommentsOrderBy.ADDED_AT_ASC,
-    fixedPrimaryReply: true,
     commentsPageCount: 3
   }
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
-} as ComponentMeta<typeof CommentsObject>;
+} as ComponentMeta<typeof CommentsFeedObjectDetail>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof CommentsObject> = (args) => (
+const Template: ComponentStory<typeof CommentsFeedObjectDetail> = (args) => (
   <div style={{width: '100%', maxWidth: 800}}>
-    <CommentsObject {...args} />
+    <CommentsFeedObjectDetail {...args} />
   </div>
 );
 

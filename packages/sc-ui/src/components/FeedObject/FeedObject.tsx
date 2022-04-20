@@ -1,7 +1,8 @@
-import React, {useEffect, useMemo, useState} from 'react';
+/* eslint-disable */
+import React, { useEffect, useState } from 'react';
 import {styled} from '@mui/material/styles';
 import CardContent from '@mui/material/CardContent';
-import {Avatar, Box, Button, CardActions, CardHeader, CardProps, Collapse, Grid, Stack, Tooltip, Typography} from '@mui/material';
+import {Avatar, Box, Button, CardActions, CardHeader, CardProps, Collapse, Stack, Tooltip, Typography} from '@mui/material';
 import FeedObjectSkeleton, {FeedObjectSkeletonProps} from './Skeleton';
 import DateTimeAgo from '../../shared/DateTimeAgo';
 import Bullet from '../../shared/Bullet';
@@ -50,6 +51,7 @@ import Follow, {FollowProps} from './Actions/Follow';
 import Widget from '../Widget';
 import useThemeProps from '@mui/material/styles/useThemeProps';
 import BaseItem from '../../shared/BaseItem';
+import FeedObjectActivities from './FeedObjectActivities';
 
 const messages = defineMessages({
   visibleToAll: {
@@ -370,32 +372,17 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
   const scContext: SCContextType = useSCContext();
   const scRoutingContext: SCRoutingContextType = useSCRouting();
   const scUserContext: SCUserContextType = useSCUser();
-  const {enqueueSnackbar} = useSnackbar();
 
   // RETRIVE OBJECTS
   const {obj, setObj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
+  const objId = obj ? obj.id : null;
 
   // STATE
   const [composerOpen, setComposerOpen] = useState<boolean>(false);
-  const [comments, setComments] = useState<SCCommentType[]>([]);
   const [expandedActivities, setExpandedActivities] = useState<boolean>(getInitialExpandedActivities());
-  const [selectedActivities, setSelectedActivities] = useState<string>(getInitialSelectedActivitiesType());
-  const [isReplying, setIsReplying] = useState<boolean>(false);
 
   // INTL
   const intl = useIntl();
-
-  /**
-   * Set:
-   * - expandedActivities
-   * - selectedActivities
-   * when update the current obj
-   */
-  useEffect(() => {
-    if (obj) {
-      setExpandedActivities(getInitialExpandedActivities());
-    }
-  }, [obj]);
 
   /**
    * Get initial expanded activities
@@ -405,14 +392,11 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
   }
 
   /**
-   * Get initial selected activities section
+   * Open expanded activities
    */
-  function getInitialSelectedActivitiesType() {
-    if (feedObjectActivities && feedObjectActivities.length > 0) {
-      return SCFeedObjectActivitiesType.RELEVANCE_ACTIVITIES;
-    }
-    return SCFeedObjectActivitiesType.RECENT_COMMENTS;
-  }
+  useEffect(() => {
+    setExpandedActivities(getInitialExpandedActivities);
+  }, [objId]);
 
   /**
    * Handle change/update poll: votes
@@ -488,135 +472,6 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
   }
 
   /**
-   * Handle follow obj
-   */
-  function handleFollow(isFollow) {
-    setObj((prev) => ({...prev, ...{followed: isFollow}}));
-  }
-
-  /**
-   * Handle change activities type
-   * @param type
-   */
-  function handleSelectActivitiesType(type) {
-    setComments([]);
-    setSelectedActivities(type);
-  }
-
-  /**
-   * Perform reply
-   * Comment of first level
-   */
-  const performReply = useMemo(
-    () => (comment) => {
-      return http
-        .request({
-          url: Endpoints.NewComment.url({}),
-          method: Endpoints.NewComment.method,
-          data: {
-            [`${feedObjectType}`]: obj.id,
-            text: comment
-          }
-        })
-        .then((res: AxiosResponse<SCCommentType>) => {
-          if (res.status >= 300) {
-            return Promise.reject(res);
-          }
-          return Promise.resolve(res.data);
-        });
-    },
-    [obj]
-  );
-
-  /**
-   * Handle comment
-   */
-  function handleReply(comment) {
-    if (UserUtils.isBlocked(scUserContext.user)) {
-      enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
-        variant: 'warning'
-      });
-    } else {
-      setIsReplying(true);
-      performReply(comment)
-        .then((data: SCCommentType) => {
-          if (selectedActivities !== SCFeedObjectActivitiesType.RECENT_COMMENTS || obj.comment_count === 0) {
-            setObj(Object.assign({}, obj, {comment_count: obj.comment_count + 1}));
-            setComments([]);
-            setSelectedActivities(SCFeedObjectActivitiesType.RECENT_COMMENTS);
-          } else {
-            setComments([...[data], ...comments]);
-          }
-          setIsReplying(false);
-        })
-        .catch((error) => {
-          Logger.error(SCOPE_SC_UI, error);
-          enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
-            variant: 'error'
-          });
-        });
-    }
-  }
-
-  /**
-   * Render collapsed activities of the single feedObject
-   */
-  function renderActivities() {
-    return (
-      <>
-        {scUserContext.user && <ReplyCommentObject inline onReply={handleReply} isLoading={isReplying} key={Number(isReplying)} />}
-        {(obj.comment_count || (feedObjectActivities && feedObjectActivities.length > 0) || comments.length > 0) && (
-          <ActivitiesMenu
-            selectedActivities={selectedActivities}
-            hideRelevantActivitiesItem={!(feedObjectActivities && feedObjectActivities.length > 0)}
-            onChange={handleSelectActivitiesType}
-          />
-        )}
-        {selectedActivities === SCFeedObjectActivitiesType.RELEVANCE_ACTIVITIES ? renderRelevantActivities() : renderComments()}
-      </>
-    );
-  }
-
-  /**
-   * Render latest activities of feedObject
-   */
-  function renderRelevantActivities() {
-    return <RelevantActivities activities={feedObjectActivities} />;
-  }
-
-  /**
-   * Render comments of feedObject
-   */
-  function renderComments() {
-    const _commentsOrderBy =
-      selectedActivities === SCFeedObjectActivitiesType.CONNECTIONS_COMMENTS
-        ? SCCommentsOrderBy.CONNECTION_DESC
-        : selectedActivities === SCFeedObjectActivitiesType.FIRST_COMMENTS
-        ? SCCommentsOrderBy.ADDED_AT_ASC
-        : SCCommentsOrderBy.ADDED_AT_DESC;
-    return (
-      <>
-        {(obj.comment_count > 0 || comments.length > 0) && (
-          <LazyLoad once>
-            <CommentsObject
-              key={_commentsOrderBy}
-              feedObject={obj}
-              feedObjectType={feedObjectType}
-              variant={'outlined'}
-              infiniteScrolling={false}
-              commentsPageCount={3}
-              hidePrimaryReply={true}
-              commentsOrderBy={_commentsOrderBy}
-              additionalHeaderComments={comments}
-              hideAdvertising={true}
-            />
-          </LazyLoad>
-        )}
-      </>
-    );
-  }
-
-  /**
    * Expand activities if the user is logged
    */
   function handleExpandActivities() {
@@ -625,6 +480,13 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
     } else {
       scContext.settings.handleAnonymousAction();
     }
+  }
+
+  /**
+   * Handle follow obj
+   */
+  function handleFollow(isFollow) {
+    setObj((prev) => ({...prev, ...{followed: isFollow}}));
   }
 
   /**
@@ -745,7 +607,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
             {template === SCFeedObjectTemplateType.PREVIEW && (
               <Collapse in={expandedActivities} timeout="auto" unmountOnExit classes={{root: classes.activities}}>
                 <CardContent className={classes.activitiesContent} sx={{paddingTop: 0}}>
-                  {renderActivities()}
+                  <FeedObjectActivities feedObject={obj} feedObjectType={feedObjectType} />
                 </CardContent>
               </Collapse>
             )}

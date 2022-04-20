@@ -41,7 +41,7 @@ const Root = styled(Widget)(({theme}) => ({
  |list|.SCCommentsObjectSkeleton-root|Styles applied to the list element.|
  *
  */
-export default function CommentsObjectSkeleton(props: {count?: number; CommentObjectSkeletonProps?: any, [p: string]: any}): JSX.Element {
+export default function CommentsFeedObjectSkeleton(props: {count?: number; CommentObjectSkeletonProps?: any, [p: string]: any}): JSX.Element {
   const {count = 3, CommentObjectSkeletonProps = {}, ...rest} = props;
   return (
     <Root className={classes.root} {...rest}>

@@ -1,4 +1,4 @@
-import {useEffect, useMemo, useState} from 'react';
+import {useEffect, useMemo, useRef, useState} from 'react';
 import {AxiosResponse} from 'axios';
 import {SCOPE_SC_CORE} from '../constants/Errors';
 import {SCCommentsOrderBy, SCCommentType} from '../types/comment';
@@ -19,6 +19,7 @@ import useSCFetchFeedObject from './useSCFetchFeedObject';
  * @param page
  * @param pageSize
  * @param orderBy
+ * @param parent
  */
 export default function useSCFetchCommentObjects({
   id = null,
@@ -42,12 +43,17 @@ export default function useSCFetchCommentObjects({
   // STATE
   const {obj, setObj} = useSCFetchFeedObject({id, feedObject, feedObjectType});
   const [comments, setComments] = useState<SCCommentType[]>([]);
+  const mounted = useRef(false);
+
+  const log = () => {
+    console.log(obj.id, offset, page, pageSize, orderBy, parent, mounted.current, next);
+  };
 
   /**
    * Get next url
    */
   const getNextUrl = () => {
-    const _offset = `&offset=${offset + page > 0 ? (page - 1) * pageSize : 0}`;
+    const _offset = `&offset=${offset ? offset : (page - 1) * pageSize}`;
     const _parent = parent ? `&parent=${parent}` : '';
     const _objectId = obj ? obj.id : id;
     const _typeObject = obj ? obj.type : feedObjectType;
@@ -123,15 +129,39 @@ export default function useSCFetchCommentObjects({
    * Change orderBy, page, pageSize, offset
    * Reset comments sets
    */
-  /* useEffect(() => {
-    setComments([]);
-    setTotal(0);
-    setNext(getNextUrl());
-    getNextPage();
-  }, [pageSize]); */
+  useEffect(() => {
+    if (mounted.current && obj) {
+      setNext(getNextUrl());
+      setComments([]);
+      setTotal(0);
+      setPrevious(null);
+      // getNextPage();
+    }
+  }, [orderBy, pageSize, page, offset]);
+
+  /**
+   * When comments.length === 0 and the component is mounted
+   * Auto fetch comments
+   */
+  useEffect(() => {
+    if (mounted.current && comments.length === 0 && obj) {
+      getNextPage();
+    }
+  }, [comments]);
+
+  /**
+   * Track component mount/unmount
+   */
+  useEffect(() => {
+    mounted.current = true;
+    return () => {
+      mounted.current = false;
+    };
+  }, []);
 
   return {
     feedObject: obj,
+    setFeedObject: setObj,
     comments,
     setComments,
     isLoadingNext,
@@ -144,5 +174,6 @@ export default function useSCFetchCommentObjects({
     getNextPage,
     getPreviousPage,
     orderBy,
+    log,
   };
 }

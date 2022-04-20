@@ -20,7 +20,7 @@ import {
   SCPreferences,
   SCPreferencesContextType,
   SCUserContextType,
-  useSCFetchCommentObjects, useSCFetchFeedObject,
+  useSCFetchFeedObject,
   useSCPreferences,
   useSCUser,
 } from '@selfcommunity/core';
@@ -30,8 +30,9 @@ const PREFIX = 'SCCommentsObject';
 const classes = {
   root: `${PREFIX}-root`,
   loadMoreCommentsButton: `${PREFIX}-load-more-comments-button`,
+  loadPreviousCommentsButton: `${PREFIX}-load-previous-comments-button`,
   paginationLink: `${PREFIX}-pagination-link`,
-  paginationFooter: `${PREFIX}-pagination-footer`,
+  pagination: `${PREFIX}-pagination`,
   commentsCounter: `${PREFIX}-comments-counter`,
   noComments: `${PREFIX}-no-comments`,
   commentNotFound: `${PREFIX}-comment-not-found`,
@@ -51,6 +52,9 @@ const Root = styled(Box, {
   [`& .${classes.loadMoreCommentsButton}`]: {
     textTransform: 'initial'
   },
+  [`& .${classes.loadPreviousCommentsButton}`]: {
+    textTransform: 'initial'
+  },
   [`& .${classes.commentsCounter}`]: {
     paddingRight: theme.spacing()
   },
@@ -64,7 +68,7 @@ const Root = styled(Box, {
   [`& .${classes.paginationLink}`]: {
     display: 'none'
   },
-  [`& .${classes.paginationFooter}`]: {
+  [`& .${classes.pagination}`]: {
     width: '100%'
   }
 }));
@@ -119,13 +123,16 @@ export interface CommentsObjectProps {
    */
   CommentObjectSkeletonProps?: any;
 
-  comments: SCCommentType[];
+  comments?: SCCommentType[];
   next?: string;
   isLoadingNext?: boolean;
   handleNext?: () => void;
   previous?: string;
   isLoadingPrevious?: boolean;
   handlePrevious?: () => void;
+
+  startComments?: SCCommentType[];
+  endComments?: SCCommentType[];
 
   /**
    * enable/disable infinite scrolling
@@ -168,7 +175,7 @@ const PREFERENCES = [SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED, SCPreferences
  |noOtherComments|.SCCommentsObject-no-other-comments|Styles applied to the label 'No other comments'.|
  |loadMoreCommentsButton|.SCCommentsObject-load-more-comments-button|Styles applied to the load more button.|
  |paginationLink|.SCCommentsObject-pagination-link|Styles applied to the pagination link.|
- |paginationFooter|.SCCommentsObject-pagination-footer|Styles applied to the pagination footer.|
+ |pagination|.SCCommentsObject-pagination|Styles applied to the pagination controls.|
  |commentsCounter|.SCCommentsObject-comments-counter|Styles applied to the comments counter element.|
  |noComments|.SCCommentsObject-no-comments|Styles applied to the 'no comments' section.|
 
@@ -198,6 +205,8 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
     handlePrevious,
     totalComments,
     comments = [],
+    startComments = [],
+    endComments = [],
     infiniteScrolling = true,
     hideAdvertising = false,
     commentsLoadingBoxCount = 3,
@@ -258,11 +267,11 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
    */
   function renderLoadPreviousComments() {
     return (
-      <Box>
+      <Box className={classes.pagination}>
         {isLoadingPrevious && <CommentObjectSkeleton {...CommentObjectSkeletonProps} count={1} />}
         {Boolean(previous) && !isLoadingPrevious && (
           <>
-            <Button variant="text" onClick={handlePrevious} disabled={isLoadingPrevious} color="inherit">
+            <Button variant="text" onClick={handlePrevious} disabled={isLoadingPrevious} color="inherit" classes={{root: classes.loadPreviousCommentsButton}}>
               <FormattedMessage id="ui.commentsObject.loadPreviousComments" defaultMessage="ui.commentsObject.loadPreviousComments" />
             </Button>
           </>
@@ -276,7 +285,7 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
    */
   function renderLoadNextComments() {
     return (
-      <Box className={classes.paginationFooter}>
+      <Box className={classes.pagination}>
         {Boolean(next) && !isLoadingNext && (
           <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
             <Button variant="text" onClick={handleNext} disabled={isLoadingNext} color="inherit" classes={{root: classes.loadMoreCommentsButton}}>
@@ -293,7 +302,7 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
             )}
           </Stack>
         )}
-        {isLoadingNext && <CommentObjectSkeleton {...CommentObjectSkeletonProps} count={1} />}
+        {isLoadingNext && <CommentObjectSkeleton {...CommentObjectSkeletonProps} count={comments.length ? 1 : 3} />}
       </Box>
     );
   }
@@ -327,8 +336,7 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
    */
   const advPosition = Math.floor(Math.random() * (Math.min(totalComments, 5) - 1 + 1) + 1);
   let commentsRendered = <></>;
-
-  if (!obj) {
+  if (!obj || ((isLoadingPrevious || isLoadingNext) && !comments.length)) {
     /**
      * Until the contribution has not been founded and there are
      * no comments during loading render the skeletons
@@ -345,9 +353,11 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
      */
     commentsRendered = (
       <>
+        {renderComments(startComments)}
         {renderLoadPreviousComments()}
         {renderComments(comments)}
         {renderLoadNextComments()}
+        {renderComments(endComments)}
       </>
     );
   }

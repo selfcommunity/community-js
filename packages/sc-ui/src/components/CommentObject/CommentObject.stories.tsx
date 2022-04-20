@@ -27,9 +27,10 @@ export default {
     }
   },
   args: {
-    commentObjectId: 79,
-    feedObjectType: SCFeedObjectTypologyType.DISCUSSION,
-    feedObjectId: 17
+    commentObjectId: 995,
+    feedObjectType: SCFeedObjectTypologyType.POST,
+    feedObjectId: 392,
+    variant: 'outlined'
   }
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
 } as ComponentMeta<typeof CommentObject>;
