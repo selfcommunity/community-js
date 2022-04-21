@@ -379,7 +379,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
 
   // STATE
   const [composerOpen, setComposerOpen] = useState<boolean>(false);
-  const [expandedActivities, setExpandedActivities] = useState<boolean>(getInitialExpandedActivities());
+  const [expandedActivities, setExpandedActivities] = useState<boolean>(false);
 
   // INTL
   const intl = useIntl();
@@ -387,7 +387,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
   /**
    * Get initial expanded activities
    */
-  function getInitialExpandedActivities() {
+  function geExpandedActivities() {
     return obj && ((feedObjectActivities && feedObjectActivities.length > 0) || obj.comment_count > 0);
   }
 
@@ -395,7 +395,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
    * Open expanded activities
    */
   useEffect(() => {
-    setExpandedActivities(getInitialExpandedActivities);
+    setExpandedActivities(geExpandedActivities);
   }, [objId]);
 
   /**

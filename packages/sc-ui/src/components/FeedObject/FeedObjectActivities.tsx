@@ -279,13 +279,13 @@ export default function FeedObjectActivities(inProps: FeedObjectActivitiesProps)
       setIsReplying(true);
       performReply(comment)
         .then((data: SCCommentType) => {
-          if (selectedActivities !== SCFeedObjectActivitiesType.RECENT_COMMENTS || commentsObject.feedObject.comment_count === 0) {
-            // commentsObject.setFeedObject(Object.assign({}, commentsObject.feedObject, {comment_count: commentsObject.feedObject.comment_count + 1}));
+          if (selectedActivities !== SCFeedObjectActivitiesType.RECENT_COMMENTS) {
             setComments([]);
             setSelectedActivities(SCFeedObjectActivitiesType.RECENT_COMMENTS);
           } else {
             setComments([...[data], ...comments]);
           }
+          commentsObject.setFeedObject(Object.assign(commentsObject.feedObject, {comment_count: commentsObject.feedObject.comment_count + 1}));
           setIsReplying(false);
         })
         .catch((error) => {
@@ -346,6 +346,7 @@ export default function FeedObjectActivities(inProps: FeedObjectActivitiesProps)
   /**
    * Render comments
    */
+  console.log(commentsObject.feedObject);
   let activitiesRender = <></>;
   if (!commentsObject.feedObject) {
     /**
