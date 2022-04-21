@@ -118,6 +118,13 @@ export interface CommentsObjectProps {
   CommentComponentProps?: CommentObjectProps;
 
   /**
+   * Props to spread to CommentsObjectSkeleton
+   * @default {}
+   */
+
+  CommentsObjectSkeletonProps?: any;
+
+  /**
    * Props to spread to single comment object skeleton
    * @default CommentObjectSkeletonProps
    */
@@ -197,6 +204,7 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
     CommentComponent = CommentObject,
     CommentComponentProps = {variant: 'outlined'},
     CommentObjectSkeletonProps = {elevation: 0, WidgetProps: {variant: 'outlined'} as WidgetProps},
+    CommentsObjectSkeletonProps = {},
     next,
     isLoadingNext,
     handleNext,
@@ -217,6 +225,7 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
   const scUserContext: SCUserContextType = useSCUser();
   const scPreferences: SCPreferencesContextType = useSCPreferences();
   const {obj, setObj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
+  const commentsIds = comments.map(c => c.id);
 
   /**
    * Compute preferences
@@ -302,9 +311,17 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
             )}
           </Stack>
         )}
-        {isLoadingNext && <CommentObjectSkeleton {...CommentObjectSkeletonProps} count={comments.length ? 1 : 3} />}
+        {isLoadingNext && <CommentObjectSkeleton {...CommentObjectSkeletonProps} count={1} />}
       </Box>
     );
+  }
+
+  /**
+   * Remove duplicate comments (from header or footer)
+   * @param comments
+   */
+  function getFilteredComments(comments) {
+    return comments.filter(c => !commentsIds.includes(c.id));
   }
 
   /**
@@ -341,7 +358,7 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
      * Until the contribution has not been founded and there are
      * no comments during loading render the skeletons
      */
-    commentsRendered = <CommentsObjectSkeleton CommentObjectSkeletonProps={CommentObjectSkeletonProps} elevation={0} />;
+    commentsRendered = <CommentsObjectSkeleton {...CommentsObjectSkeletonProps} CommentObjectSkeletonProps={CommentObjectSkeletonProps} elevation={0} />;
   } else {
     /**
      * Two modes available:
@@ -353,11 +370,10 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
      */
     commentsRendered = (
       <>
-        {renderComments(startComments)}
+
         {renderLoadPreviousComments()}
         {renderComments(comments)}
         {renderLoadNextComments()}
-        {renderComments(endComments)}
       </>
     );
   }
@@ -367,7 +383,9 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
    */
   return (
     <Root id={id} className={classNames(classes.root, className)} {...rest}>
+      {renderComments(getFilteredComments(startComments))}
       {commentsRendered}
+      {renderComments(getFilteredComments(endComments))}
     </Root>
   );
 }

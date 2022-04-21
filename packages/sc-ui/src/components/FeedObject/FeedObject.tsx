@@ -34,7 +34,6 @@ import {
   useSCUser
 } from '@selfcommunity/core';
 import Composer from '../Composer';
-import CommentsObject from '../CommentsObject';
 import ActivitiesMenu from './ActivitiesMenu';
 import {SCCommentsOrderBy} from '../../types/comments';
 import {SCFeedObjectActivitiesType, SCFeedObjectTemplateType} from '../../types/feedObject';
@@ -490,6 +489,14 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
   }
 
   /**
+   * onReply callback
+   * @param fields
+   */
+  function handleChangeObject(fields) {
+    setObj(Object.assign({}, obj, fields));
+  }
+
+  /**
    * Render the obj object
    * Manage variants:
    * SNIPPET, PREVIEW, DETAIL
@@ -598,7 +605,6 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
             <CardActions className={classes.actions}>
               <Actions
                 feedObject={obj}
-                feedObjectType={feedObjectType}
                 hideCommentAction={template === SCFeedObjectTemplateType.DETAIL}
                 handleExpandActivities={handleExpandActivities}
                 {...ActionsProps}
@@ -607,7 +613,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
             {template === SCFeedObjectTemplateType.PREVIEW && (
               <Collapse in={expandedActivities} timeout="auto" unmountOnExit classes={{root: classes.activities}}>
                 <CardContent className={classes.activitiesContent} sx={{paddingTop: 0}}>
-                  <FeedObjectActivities feedObject={obj} feedObjectType={feedObjectType} />
+                  <FeedObjectActivities feedObject={obj} feedObjectType={feedObjectType} onChangeObject={handleChangeObject}/>
                 </CardContent>
               </Collapse>
             )}

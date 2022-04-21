@@ -13,12 +13,13 @@ export default {
     feedObjectId: {
       control: {type: 'number'},
       description: 'FeedObject Id',
-      table: {defaultValue: {summary: 17}}
+      table: {defaultValue: {summary: 392}}
     },
     feedObjectType: {
       options: [SCFeedObjectTypologyType.POST, SCFeedObjectTypologyType.DISCUSSION, SCFeedObjectTypologyType.STATUS],
       control: {type: 'select'},
-      description: 'Object type. Used only with args id.'
+      description: 'Object type. Used only with args id.',
+      table: {defaultValue: {summary: SCFeedObjectTypologyType.POST}}
     },
     elevation: {
       control: {type: 'number'},
@@ -33,11 +34,10 @@ export default {
     }
   },
   args: {
-    feedObjectId: 392, // 358, // 344,
+    feedObjectId: 392,
     feedObjectType: SCFeedObjectTypologyType.POST,
     infiniteScrolling: true,
-    commentsOrderBy: SCCommentsOrderBy.ADDED_AT_ASC,
-    commentsPageCount: 3
+    commentsOrderBy: SCCommentsOrderBy.ADDED_AT_ASC
   }
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
 } as ComponentMeta<typeof CommentsFeedObject>;
@@ -56,11 +56,11 @@ Base.args = {};
 export const CommentFirstLevel = Template.bind({});
 
 CommentFirstLevel.args = {
-  commentObjectId: 132 // 81
+  commentObjectId: 995
 };
 
 export const CommentSecondLevel = Template.bind({});
 
 CommentSecondLevel.args = {
-  commentObjectId: 4522 // 31909
+  commentObjectId: 1058
 };

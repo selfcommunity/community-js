@@ -226,6 +226,12 @@ export interface CommentObjectProps {
   onVote?: (comment: SCCommentType) => void;
 
   /**
+   * Callback on delete the comment
+   * @default null
+   */
+  onDelete?: (comment: SCCommentType) => void;
+
+  /**
    * Callback on fecth latest comments
    * @default null
    */
@@ -302,6 +308,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
     commentsOrderBy = SCCommentsOrderBy.ADDED_AT_DESC,
     commentReply,
     onOpenReply,
+    onDelete,
     onVote,
     onFetchLatestComment,
     elevation = 0,
@@ -331,8 +338,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
     feedObject,
     feedObjectType,
     orderBy: SCCommentsOrderBy.ADDED_AT_DESC,
-    parent: commentObject ? commentObject.id : commentObjectId,
-    offset: 1
+    parent: commentObject ? commentObject.id : commentObjectId
   });
 
   /**
@@ -556,8 +562,10 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
         .catch((error) => {
           Logger.error(SCOPE_SC_UI, error);
           enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
-            variant: 'error'
+            variant: 'error',
+            autoHideDuration: 3000
           });
+          setIsReplying(false);
         });
     }
   }
@@ -575,7 +583,9 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
       });
       setObj(Object.assign({}, obj, {latest_comments: _latestComment}));
     } else {
+      const _comment = Object.assign({}, obj, {deleted: !obj.deleted});
       setObj(Object.assign({}, obj, {deleted: !obj.deleted}));
+      onDelete && onDelete(_comment);
     }
   }
 
@@ -794,12 +804,14 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
             feedObject={commentsObject.feedObject}
             feedObjectType={commentsObject.feedObject ? commentsObject.feedObject.type : feedObjectType}
             hideAdvertising={true}
-            comments={[...commentsObject.comments.reverse(), ...comment.latest_comments]}
+            comments={[].concat(commentsObject.comments).reverse()}
+            endComments={comment.latest_comments}
             previous={comment.comment_count > 1 ? commentsObject.next : null}
             isLoadingPrevious={commentsObject.isLoadingNext}
             handlePrevious={commentsObject.getNextPage}
             variant={'outlined'}
             CommentComponentProps={{onOpenReply: reply, variant: 'outlined'}}
+            CommentsObjectSkeletonProps={{count: 1}}
           />
         )}
         {/*<List>

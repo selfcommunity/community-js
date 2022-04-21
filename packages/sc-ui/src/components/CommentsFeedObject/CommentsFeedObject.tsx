@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {FormattedMessage} from 'react-intl';
 import CommentObject, {CommentObjectProps} from '../CommentObject';
@@ -9,8 +9,20 @@ import classNames from 'classnames';
 import useThemeProps from '@mui/material/styles/useThemeProps';
 import {WidgetProps} from '../Widget';
 import CommentsObjectSkeleton from './Skeleton';
-import {SCCommentType, SCFeedObjectType, SCFeedObjectTypologyType, SCPreferences, useSCFetchCommentObjects} from '@selfcommunity/core';
-import CommentsObject from '../CommentsObject/CommentsObject';
+import {
+  Endpoints,
+  http,
+  Logger,
+  SCCommentType,
+  SCFeedObjectType,
+  SCFeedObjectTypologyType,
+  SCPreferences,
+  useSCFetchCommentObject,
+  useSCFetchCommentObjects
+} from '@selfcommunity/core';
+import CommentsObject from '../CommentsObject';
+import {SCOPE_SC_UI} from '../../constants/Errors';
+import {AxiosResponse} from 'axios';
 
 const PREFIX = 'SCCommentsFeedObject';
 
@@ -276,6 +288,9 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
   } = props;
 
   // STATE
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [comment, setComment] = useState<SCCommentType>(null);
+  const {obj: commentObj, setObj: setCommentObj, error: errorCommentObj} = useSCFetchCommentObject({id: commentObjectId, commentObject});
   const commentsObject = useSCFetchCommentObjects({
     id: feedObjectId,
     feedObject,
@@ -284,6 +299,8 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
     pageSize: commentsPageCount,
     orderBy: commentsOrderBy
   });
+  // REFS
+  const isComponentMounted = useRef(false);
 
   /**
    * Total number of comments
@@ -319,25 +336,80 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
   }
 
   /**
+   * Get a single comment
+   */
+  const performFetchComment = useMemo(
+    () => (commentId) => {
+      return http
+        .request({
+          url: Endpoints.Comment.url({id: commentId}),
+          method: Endpoints.Comment.method
+        })
+        .then((res: AxiosResponse<any>) => {
+          if (res.status >= 300) {
+            return Promise.reject(res);
+          }
+          return Promise.resolve(res.data);
+        });
+    },
+    [commentsObject.feedObject, commentObjectId, commentObj]
+  );
+
+  /**
+   * Fetch a single comment
+   * and comment parent (if need it)
+   */
+  function fetchComment() {
+    if (commentObj) {
+      if (commentObj.parent) {
+        setIsLoading(true);
+        performFetchComment(commentObj.parent)
+          .then((parent) => {
+            const _parent = Object.assign({}, parent);
+            _parent.latest_comments = [commentObj];
+            setComment(_parent);
+            setIsLoading(false);
+          })
+          .catch((error) => {
+            // Comment not found
+            setIsLoading(false);
+            Logger.error(SCOPE_SC_UI, error);
+          });
+      } else {
+        setComment(commentObj);
+        setIsLoading(false);
+      }
+    } else if (errorCommentObj) {
+      setIsLoading(false);
+    }
+  }
+
+  /**
    * Prefetch comments only if obj exists and additionalHeaderComments is empty
    */
   useEffect(() => {
-    if (commentsObject.feedObject) {
+    if (commentObjectId || commentObj) {
+      fetchComment();
+    } else if (commentsObject.feedObject) {
       commentsObject.getNextPage();
     }
-  }, [commentsObject.feedObject]);
+    isComponentMounted.current = true;
+    return () => {
+      isComponentMounted.current = false;
+    };
+  }, [commentsObject.feedObject, commentObj, errorCommentObj]);
 
   /**
    * Render comments
    */
   let commentsRendered = <></>;
-  if (!commentsObject.feedObject) {
+  if (!commentsObject.feedObject || isLoading) {
     /**
      * Until the contribution has not been founded and there are
      * no comments during loading render the skeletons
      */
     commentsRendered = <CommentsObjectSkeleton CommentObjectSkeletonProps={CommentObjectSkeletonProps} elevation={0} />;
-  } else if (!total && !commentsObject.isLoadingNext) {
+  } else if (!total && !commentsObject.isLoadingNext && !isLoading && !comment) {
     /**
      * If comments were not found and loading is finished
      * and the componet and the component was not looking
@@ -356,8 +428,8 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
     commentsRendered = (
       <CommentsObject
         feedObject={commentsObject.feedObject}
-        feedObjectType={commentsObject.feedObject && commentsObject.feedObject.type}
         comments={commentsObject.comments}
+        endComments={comment ? [comment] : []}
         next={commentsObject.next}
         isLoadingNext={commentsObject.isLoadingNext}
         handleNext={commentsObject.getNextPage}

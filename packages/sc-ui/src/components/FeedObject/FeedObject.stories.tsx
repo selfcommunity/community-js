@@ -39,7 +39,7 @@ export default {
     }
   },
   args: {
-    feedObjectId: 401,
+    feedObjectId: 395,
     feedObjectType: SCFeedObjectTypologyType.POST,
     template: SCFeedObjectTemplateType.PREVIEW,
     elevation: 0,

@@ -26,7 +26,7 @@ import {
   useSCRouting,
   useSCUser
 } from '@selfcommunity/core';
-import CommentsObject from '../CommentsObject/CommentsObject';
+import CommentsObject from '../CommentsObject';
 import ActivitiesMenu from './ActivitiesMenu';
 import LazyLoad from 'react-lazyload';
 import {SCFeedObjectActivitiesType} from '@selfcommunity/ui';
@@ -145,6 +145,8 @@ export interface FeedObjectActivitiesProps {
    */
   feedObjectActivities?: any[];
 
+  onChangeObject?: (obj) => void;
+
   /**
    * Other props
    */
@@ -198,6 +200,7 @@ export default function FeedObjectActivities(inProps: FeedObjectActivitiesProps)
     ReplyCommentComponentProps = {ReplyBoxProps: {variant: 'outlined'}},
     CommentObjectSkeletonProps = {elevation: 0, WidgetProps: {variant: 'outlined'} as WidgetProps},
     feedObjectActivities = [],
+    onChangeObject,
     ...rest
   } = props;
 
@@ -213,6 +216,7 @@ export default function FeedObjectActivities(inProps: FeedObjectActivitiesProps)
     id: feedObjectId,
     feedObject,
     feedObjectType,
+    pageSize: 3,
     orderBy:
       selectedActivities === SCFeedObjectActivitiesType.CONNECTIONS_COMMENTS
         ? SCCommentsOrderBy.CONNECTION_DESC
@@ -285,7 +289,11 @@ export default function FeedObjectActivities(inProps: FeedObjectActivitiesProps)
           } else {
             setComments([...[data], ...comments]);
           }
-          commentsObject.setFeedObject(Object.assign(commentsObject.feedObject, {comment_count: commentsObject.feedObject.comment_count + 1}));
+          if (onChangeObject) {
+            onChangeObject({comment_count: commentsObject.feedObject.comment_count + 1});
+          } else {
+            commentsObject.setFeedObject(Object.assign(commentsObject.feedObject, {comment_count: commentsObject.feedObject.comment_count + 1}));
+          }
           setIsReplying(false);
         })
         .catch((error) => {
@@ -336,6 +344,10 @@ export default function FeedObjectActivities(inProps: FeedObjectActivitiesProps)
               next={commentsObject.next}
               isLoadingNext={commentsObject.isLoadingNext}
               handleNext={commentsObject.getNextPage}
+              CommentComponentProps={{
+                ...{onDelete: () => onChangeObject({comment_count: commentsObject.feedObject.comment_count - 1})},
+                ...CommentComponentProps
+              }}
             />
           </LazyLoad>
         )}
@@ -346,7 +358,6 @@ export default function FeedObjectActivities(inProps: FeedObjectActivitiesProps)
   /**
    * Render comments
    */
-  console.log(commentsObject.feedObject);
   let activitiesRender = <></>;
   if (!commentsObject.feedObject) {
     /**
@@ -357,7 +368,7 @@ export default function FeedObjectActivities(inProps: FeedObjectActivitiesProps)
   } else {
     activitiesRender = (
       <>
-        {scUserContext.user && <ReplyCommentObject inline onReply={handleReply} isLoading={isReplying} key={Number(isReplying)} />}
+        {scUserContext.user && <ReplyCommentObject inline onReply={handleReply} readOnly={isReplying} key={Number(isReplying)} />}
         {(commentsObject.feedObject.comment_count || (feedObjectActivities && feedObjectActivities.length > 0) || comments.length > 0) && (
           <ActivitiesMenu
             selectedActivities={selectedActivities}
