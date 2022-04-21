@@ -42,6 +42,7 @@ export default function useSCFetchCommentObjects({
 }) {
   // STATE
   const {obj, setObj} = useSCFetchFeedObject({id, feedObject, feedObjectType});
+  const objId = obj ? obj.id : null;
   const [comments, setComments] = useState<SCCommentType[]>([]);
   const mounted = useRef(false);
 
@@ -66,6 +67,7 @@ export default function useSCFetchCommentObjects({
   const [total, setTotal] = useState<number>(0);
   const [next, setNext] = useState<string>(getNextUrl());
   const [previous, setPrevious] = useState<string>(null);
+  const [reload, setReload] = useState<boolean>(false);
 
   /**
    * Get Comments
@@ -130,24 +132,24 @@ export default function useSCFetchCommentObjects({
    * Reset comments sets
    */
   useEffect(() => {
-    if (mounted.current && obj) {
+    if (mounted.current && obj && !reload) {
       setNext(getNextUrl());
       setComments([]);
       setTotal(0);
       setPrevious(null);
-      // getNextPage();
+      setReload(true);
     }
-  }, [orderBy, pageSize, page, offset]);
+  }, [id, feedObject, feedObjectType, orderBy, pageSize, page, offset]);
 
   /**
-   * When comments.length === 0 and the component is mounted
-   * Auto fetch comments
+   * Reload fetch comments
    */
   useEffect(() => {
-    if (mounted.current && comments.length === 0 && obj) {
+    if (mounted.current && reload && !isLoadingNext && !isLoadingPrevious) {
       getNextPage();
+      setReload(false);
     }
-  }, [comments]);
+  }, [reload]);
 
   /**
    * Track component mount/unmount
