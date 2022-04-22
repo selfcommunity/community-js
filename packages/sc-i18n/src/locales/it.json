@@ -218,6 +218,8 @@
   "ui.commentsObject.loadPreviousComments": "Vedi commenti precedenti",
   "ui.commentsObject.numberOfComments": "{loaded} di {total}",
   "ui.commentsObject.commentNotFound": "Il commento non è stato trovato!",
+  "ui.commentsObject.nextComments": "Commenti successivi",
+  "ui.commentsObject.previousComments": "Commenti precedenti",
 
   "ui.commentObject.reply": "Replica",
   "ui.commentObject.voteUp": "Apprezza",
