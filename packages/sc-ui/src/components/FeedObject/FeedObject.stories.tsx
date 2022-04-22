@@ -42,7 +42,7 @@ export default {
     feedObjectId: 395,
     feedObjectType: SCFeedObjectTypologyType.POST,
     template: SCFeedObjectTemplateType.PREVIEW,
-    elevation: 1,
+    elevation: 0,
     variant: 'outlined'
   }
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes

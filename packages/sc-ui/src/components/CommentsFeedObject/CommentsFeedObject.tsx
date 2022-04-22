@@ -334,10 +334,8 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
     if (commentObjectId || commentObj) {
       fetchComment();
     } else if (commentsObject && commentsObject.feedObject && !isLoading) {
-      commentsObject.getNextPage().then(() => {
-        isComponentInitialized.current = true;
-      });
-
+      commentsObject.getNextPage();
+      isComponentInitialized.current = true;
     }
   }, [objId, commentObjId, errorCommentObj]);
 
