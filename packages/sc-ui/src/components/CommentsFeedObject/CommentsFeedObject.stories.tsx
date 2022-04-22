@@ -34,10 +34,12 @@ export default {
     }
   },
   args: {
-    feedObjectId: 360,
+    feedObjectId: 344, // 360,
     feedObjectType: SCFeedObjectTypologyType.POST,
     infiniteScrolling: true,
-    commentsOrderBy: SCCommentsOrderBy.ADDED_AT_ASC
+    commentsOrderBy: SCCommentsOrderBy.ADDED_AT_ASC,
+    // onChangePage: (p) => console.log(p),
+    page: 2
   }
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
 } as ComponentMeta<typeof CommentsFeedObject>;

@@ -11,6 +11,7 @@ import {WidgetProps} from '../Widget';
 import CommentsObjectSkeleton from './Skeleton';
 import {InView} from 'react-intersection-observer';
 import {
+  Link,
   SCCommentType,
   SCCustomAdvPosition,
   SCFeedObjectType,
@@ -170,6 +171,11 @@ export interface CommentsObjectProps {
   totalComments?: number;
 
   /**
+   * Current page
+   */
+  page?: number;
+
+  /**
    * Add/show other comments at the head of the component
    * Useful when there is a new comment (reply feed object)
    */
@@ -245,6 +251,7 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
     handlePrevious,
     totalLoadedComments,
     totalComments,
+    page,
     comments = [],
     startComments = [],
     endComments = [],
@@ -338,6 +345,11 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
               classes={{root: classes.loadPreviousCommentsButton}}>
               <FormattedMessage id="ui.commentsObject.loadPreviousComments" defaultMessage="ui.commentsObject.loadPreviousComments" />
             </Button>
+            {page && (
+              <Link to={`?page=${page - 1}`} className={classes.paginationLink}>
+                <FormattedMessage id="ui.commentsObject.previousComments" defaultMessage="ui.commentsObject.previousComments" />
+              </Link>
+            )}
           </>
         )}
       </Box>
@@ -356,6 +368,11 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
               <Button variant="text" onClick={handleNext} disabled={isLoadingNext} color="inherit" classes={{root: classes.loadNextCommentsButton}}>
                 <FormattedMessage id="ui.commentsObject.loadMoreComments" defaultMessage="ui.commentsObject.loadMoreComments" />
               </Button>
+              {page && (
+                <Link to={`?page=${page + 1}`} className={classes.paginationLink}>
+                  <FormattedMessage id="ui.commentsObject.nextComments" defaultMessage="ui.commentsObject.nextComments" />
+                </Link>
+              )}
               {showCommentsCounter() && (
                 <Typography variant="body1" classes={{root: classes.commentsCounter}}>
                   <FormattedMessage
@@ -389,14 +406,7 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
       <>
         {comments.map((comment: SCCommentType, index) => (
           <React.Fragment key={index}>
-            <CommentComponent
-              key={comment.id}
-              commentObject={comment}
-              onOpenReply={openReplyBox}
-              feedObject={obj}
-              feedObjectType={obj.type}
-              {...CommentComponentProps}
-            />
+            <CommentComponent key={comment.id} commentObject={comment} onOpenReply={openReplyBox} feedObject={obj} {...CommentComponentProps} />
             {advPosition === index && renderAdvertising()}
           </React.Fragment>
         ))}

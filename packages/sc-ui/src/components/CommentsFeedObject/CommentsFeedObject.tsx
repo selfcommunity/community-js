@@ -8,7 +8,6 @@ import {SCCommentsOrderBy} from '../../types/comments';
 import classNames from 'classnames';
 import useThemeProps from '@mui/material/styles/useThemeProps';
 import {WidgetProps} from '../Widget';
-import CommentsObjectSkeleton from './Skeleton';
 import CommentsObject from '../CommentsObject';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import Typography from '@mui/material/Typography';
@@ -90,14 +89,21 @@ export interface CommentsFeedObjectProps {
   commentObject?: SCCommentType;
 
   /**
-   * Props to spread to single comment object
-   * @default {variant: 'outlined'}
+   * CommentComponent component
+   * Useful to override the single Comment render component
+   * @default CommentObject
    */
-  CommentsObjectProps?: CommentObjectProps;
+  CommentComponent?: (inProps: CommentObjectProps) => JSX.Element;
 
   /**
-   * Props to spread to single comment object skeleton
-   * @default CommentObjectSkeletonProps
+   * Props to spread to CommentObject component
+   * @default {variant: 'outlined}
+   */
+  CommentComponentProps?: CommentObjectProps;
+
+  /**
+   * Props to spread to CommentObject component
+   * @default {elevation: 0, variant: 'outlined'}
    */
   CommentObjectSkeletonProps?: any;
 
@@ -188,7 +194,7 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
   });
   // PROPS
   const {
-    id = `comments_object_${props.feedObjectType ? props.feedObjectType : props.feedObject.type}_${
+    id = `comments_object_${props.feedObjectType ? props.feedObjectType : props.feedObject ? props.feedObject.type : ''}_${
       props.feedObjectId ? props.feedObjectId : props.feedObject ? props.feedObject.id : ''
     }`,
     className,
@@ -199,13 +205,13 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
     commentObject,
     CommentComponent = CommentObject,
     CommentComponentProps = {variant: 'outlined'},
+    CommentObjectSkeletonProps = {elevation: 0, WidgetProps: {variant: 'outlined'} as WidgetProps},
     renderNoComments,
     page = 1,
     commentsPageCount = 5,
     commentsOrderBy = SCCommentsOrderBy.ADDED_AT_ASC,
     showTitle = false,
     infiniteScrolling = true,
-    CommentObjectSkeletonProps = {elevation: 0, WidgetProps: {variant: 'outlined'} as WidgetProps},
     onChangePage,
     comments = [],
     ...rest
@@ -219,9 +225,10 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
     id: feedObjectId,
     feedObject,
     feedObjectType,
-    page,
+    offset: (page - 1) * commentsPageCount,
     pageSize: commentsPageCount,
-    orderBy: commentsOrderBy
+    orderBy: commentsOrderBy,
+    onChangePage: onChangePage
   });
 
   // CONST
@@ -229,12 +236,12 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
   const commentObjId = commentObj ? commentObj.id : null;
 
   // REFS
-  const isComponentMounted = useRef(false);
+  const isComponentInitialized = useRef(false);
 
   /**
    * Total number of comments
    */
-  const total = commentsObject.comments.length;
+  const total = commentsObject.comments.length + comments.length;
 
   /**
    * Render title
@@ -244,13 +251,13 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
       if (showTitle) {
         return (
           <Typography variant="h6" gutterBottom color={'inherit'}>
-            <FormattedMessage id="ui.commentsObject.title" defaultMessage="ui.commentsObject.title" values={{total: total + comments.length}} />
+            <FormattedMessage id="ui.commentsObject.title" defaultMessage="ui.commentsObject.title" values={{total}} />
           </Typography>
         );
       }
       return null;
     },
-    [total, comments.length]
+    [total]
   );
 
   /**
@@ -303,6 +310,7 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
             const _parent = Object.assign({}, parent);
             _parent.latest_comments = [commentObj];
             setComment(_parent);
+            isComponentInitialized.current = true;
             setIsLoading(false);
           })
           .catch((error) => {
@@ -325,29 +333,22 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
   useEffect(() => {
     if (commentObjectId || commentObj) {
       fetchComment();
-    } else if (commentsObject.feedObject && !isLoading) {
-      commentsObject.getNextPage();
+    } else if (commentsObject && commentsObject.feedObject && !isLoading) {
+      commentsObject.getNextPage().then(() => {
+        isComponentInitialized.current = true;
+      });
+
     }
-    isComponentMounted.current = true;
-    return () => {
-      isComponentMounted.current = false;
-    };
   }, [objId, commentObjId, errorCommentObj]);
 
   /**
    * Render comments
    */
   let commentsRendered = <></>;
-  if (!commentsObject.feedObject || isLoading) {
-    /**
-     * Until the contribution has not been founded and there are
-     * no comments during loading render the skeletons
-     */
-    commentsRendered = <CommentsObjectSkeleton CommentObjectSkeletonProps={CommentObjectSkeletonProps} elevation={0} />;
-  } else if (!total && !commentsObject.isLoadingNext && !isLoading && !comment) {
+  if (isComponentInitialized.current && !total && !commentsObject.isLoadingNext && !isLoading && !comment) {
     /**
      * If comments were not found and loading is finished
-     * and the componet and the component was not looking
+     * and the component and the component was not looking
      * for a particular comment render no comments message
      */
     commentsRendered = renderNoCommentsFound();
@@ -366,10 +367,17 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
         comments={commentsObject.comments}
         endComments={[...(comment ? [comment] : []), ...(commentsOrderBy === SCCommentsOrderBy.ADDED_AT_ASC ? comments: [])]}
         startComments={[...(commentsOrderBy === SCCommentsOrderBy.ADDED_AT_ASC ? [] : comments)]}
+        previous={commentsObject.previous}
+        handlePrevious={commentsObject.getPreviousPage}
+        isLoadingPrevious={commentsObject.isLoadingPrevious}
         next={commentsObject.next}
         isLoadingNext={commentsObject.isLoadingNext}
         handleNext={commentsObject.getNextPage}
+        page={commentsObject.page}
         infiniteScrolling={infiniteScrolling && commentsObject.total > 0 && !comment && !comments.length}
+        CommentComponentProps={CommentComponentProps}
+        CommentComponent={CommentComponent}
+        CommentObjectSkeletonProps={CommentObjectSkeletonProps}
       />
     );
   }

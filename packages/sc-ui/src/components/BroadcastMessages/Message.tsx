@@ -179,7 +179,6 @@ export default function Message(props: MessageProps): JSX.Element {
 
   // RENDER
   const renderContent = (banner) => {
-    console.log(banner);
     return (
       <>
         <CardContent className={classes.title}>

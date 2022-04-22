@@ -206,11 +206,7 @@ export default function BroadcastMessages(inProps: BroadcastMessagesProps): JSX.
     };
   }, []);
 
-  console.log('---------');
-  console.log(messages);
   const messagesToShow = [...unViewedMessages, ...messages.slice(unViewedMessages.length, viewAll ? viewedMessageCounter : 1)];
-  console.log(messagesToShow);
-  console.log('---------');
   return (
     <Root id={id} className={classNames(classes.root, className)} {...rest}>
       {messagesToShow.map((message, index) => (
