@@ -2,7 +2,7 @@ import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {FormattedMessage} from 'react-intl';
 import CommentObject, {CommentObjectProps} from '../CommentObject';
-import ReplyCommentObject, {ReplyCommentObjectProps} from '../CommentObject/ReplyComment';
+import {AxiosResponse} from 'axios';
 import {Box} from '@mui/material';
 import {SCCommentsOrderBy} from '../../types/comments';
 import classNames from 'classnames';
@@ -11,7 +11,7 @@ import {WidgetProps} from '../Widget';
 import CommentsObjectSkeleton from './Skeleton';
 import CommentsObject from '../CommentsObject';
 import {SCOPE_SC_UI} from '../../constants/Errors';
-import {AxiosResponse} from 'axios';
+import Typography from '@mui/material/Typography';
 import {
   Endpoints,
   http,
@@ -237,6 +237,23 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
   const total = commentsObject.comments.length;
 
   /**
+   * Render title
+   */
+  const renderTitle = useMemo(
+    () => () => {
+      if (showTitle) {
+        return (
+          <Typography variant="h6" gutterBottom color={'inherit'}>
+            <FormattedMessage id="ui.commentsObject.title" defaultMessage="ui.commentsObject.title" values={{total: total + comments.length}} />
+          </Typography>
+        );
+      }
+      return null;
+    },
+    [total, comments.length]
+  );
+
+  /**
    * Render no comments
    */
   function renderNoCommentsFound() {
@@ -362,6 +379,7 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
    */
   return (
     <Root id={id} className={classNames(classes.root, className)} {...rest}>
+      {renderTitle()}
       {commentsRendered}
     </Root>
   );
