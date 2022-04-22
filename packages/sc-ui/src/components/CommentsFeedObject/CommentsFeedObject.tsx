@@ -241,7 +241,7 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
   /**
    * Total number of comments
    */
-  const total = commentsObject.comments.length + comments.length;
+  const total = commentsObject.total + comments.length;
 
   /**
    * Render title

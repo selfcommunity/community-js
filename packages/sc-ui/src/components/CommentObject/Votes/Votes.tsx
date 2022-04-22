@@ -21,7 +21,6 @@ const Root = styled(Box, {
 })(({theme}) => ({
   [`& .${classes.btnViewVotes}`]: {
     minWidth: 42,
-    marginRight: theme.spacing(2),
     marginTop: -14,
     right: 0,
     position: 'absolute'
