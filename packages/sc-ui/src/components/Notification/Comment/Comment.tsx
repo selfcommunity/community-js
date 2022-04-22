@@ -158,6 +158,7 @@ export default function CommentNotification(inProps: CommentNotificationProps): 
       <NotificationItem
         template={template}
         isNew={notificationObject.is_new}
+        disableTypography
         image={
           <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject['follower'])}>
             <Avatar

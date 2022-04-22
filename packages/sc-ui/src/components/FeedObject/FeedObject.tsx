@@ -24,6 +24,11 @@ import Widget, {WidgetProps} from '../Widget';
 import useThemeProps from '@mui/material/styles/useThemeProps';
 import BaseItem from '../../shared/BaseItem';
 import Activities, {ActivitiesProps} from './Activities';
+import ReplyCommentObject, {ReplyCommentObjectProps} from '../CommentObject/ReplyComment';
+import {SCOPE_SC_UI} from '../../constants/Errors';
+import {useSnackbar} from 'notistack';
+import {AxiosResponse} from 'axios';
+import {CommentObjectProps} from '../CommentObject';
 import {
   Endpoints,
   http,
@@ -43,11 +48,6 @@ import {
   useSCRouting,
   useSCUser
 } from '@selfcommunity/core';
-import ReplyCommentObject, {ReplyCommentObjectProps} from '../CommentObject/ReplyComment';
-import {SCOPE_SC_UI} from '../../constants/Errors';
-import {useSnackbar} from 'notistack';
-import {AxiosResponse} from 'axios';
-import {CommentObjectProps} from '@selfcommunity/ui';
 
 const messages = defineMessages({
   visibleToAll: {

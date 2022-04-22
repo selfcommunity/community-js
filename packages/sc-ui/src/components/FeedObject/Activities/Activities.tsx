@@ -7,15 +7,11 @@ import useThemeProps from '@mui/material/styles/useThemeProps';
 import CommentsObject from '../../CommentsObject';
 import ActivitiesMenu from './ActivitiesMenu';
 import LazyLoad from 'react-lazyload';
-import {CommentObjectProps, SCFeedObjectActivitiesType} from '@selfcommunity/ui';
+import {CommentObjectProps} from '../../CommentObject';
 import RelevantActivities from './RelevantActivities';
 import {CommentsObjectProps} from '../../CommentsObject';
-import {
-  SCCommentType,
-  SCFeedObjectType,
-  SCFeedObjectTypologyType,
-  useSCFetchCommentObjects
-} from '@selfcommunity/core';
+import {SCFeedObjectActivitiesType} from '../../../types/feedObject';
+import {SCCommentType, SCFeedObjectType, SCFeedObjectTypologyType, useSCFetchCommentObjects} from '@selfcommunity/core';
 
 const PREFIX = 'SCFeedObjectActivities';
 
