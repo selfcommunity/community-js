@@ -412,7 +412,7 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
   if (!obj || ((isLoadingPrevious || isLoadingNext) && !comments.length)) {
     /**
      * Until the contribution has not been founded and there are
-     * no comments during loading render the skeletons
+     * no comments during loading render skeletons
      */
     commentsRendered = (
       <CommentsObjectSkeleton {...CommentsObjectSkeletonProps} CommentObjectSkeletonProps={CommentObjectSkeletonProps} elevation={0} />
@@ -421,10 +421,10 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
     /**
      * Two modes available:
      *  - infinite scroll
-     *  - load pagination with load more button
+     *  - load pagination with load next comment button
      *  !IMPORTANT:
      *  the component will switch to 'load more pagination' mode automatically
-     *  in case it needs to display a single comment
+     *  in case it needs to display a single comment or newComments
      */
     commentsRendered = (
       <>

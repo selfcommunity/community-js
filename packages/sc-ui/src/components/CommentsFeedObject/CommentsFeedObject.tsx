@@ -102,19 +102,6 @@ export interface CommentsFeedObjectProps {
   CommentObjectSkeletonProps?: any;
 
   /**
-   * ReplyCommentComponent component
-   * Usefull to override the single ReplyComment render component
-   * @default CommentObject
-   */
-  ReplyCommentComponent?: React.ElementType;
-
-  /**
-   * Props to spread to single reply comment object
-   * @default {variant: 'outlined'}
-   */
-  ReplyCommentComponentProps?: ReplyCommentObjectProps;
-
-  /**
    * renderNoComment function
    * invoked when no comments founds
    * @default null
@@ -212,8 +199,6 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
     commentObject,
     CommentComponent = CommentObject,
     CommentComponentProps = {variant: 'outlined'},
-    ReplyCommentComponent = ReplyCommentObject,
-    ReplyCommentComponentProps = {ReplyBoxProps: {variant: 'outlined'}},
     renderNoComments,
     page = 1,
     commentsPageCount = 5,
@@ -250,17 +235,6 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
    * Total number of comments
    */
   const total = commentsObject.comments.length;
-
-  /**
-   * Handle open reply box
-   * @param comment
-   */
-  function openReplyBox(comment) {
-    setTimeout(() => {
-      const element = document.getElementById(`reply-${comment.id}`);
-      element && element.scrollIntoView({behavior: 'smooth', block: 'center'});
-    }, 200);
-  }
 
   /**
    * Render no comments
@@ -373,7 +347,8 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
       <CommentsObject
         feedObject={commentsObject.feedObject}
         comments={commentsObject.comments}
-        endComments={[...(comment ? [comment] : []), ...comments]}
+        endComments={[...(comment ? [comment] : []), ...(commentsOrderBy === SCCommentsOrderBy.ADDED_AT_ASC ? comments: [])]}
+        startComments={[...(commentsOrderBy === SCCommentsOrderBy.ADDED_AT_ASC ? [] : comments)]}
         next={commentsObject.next}
         isLoadingNext={commentsObject.isLoadingNext}
         handleNext={commentsObject.getNextPage}
