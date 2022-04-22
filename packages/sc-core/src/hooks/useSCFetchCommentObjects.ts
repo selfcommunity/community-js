@@ -21,16 +21,7 @@ import useSCFetchFeedObject from './useSCFetchFeedObject';
  * @param orderBy
  * @param parent
  */
-export default function useSCFetchCommentObjects({
-  id = null,
-  feedObject = null,
-  feedObjectType = null,
-  offset = 0,
-  page = 1,
-  pageSize = 5,
-  orderBy = SCCommentsOrderBy.ADDED_AT_DESC,
-  parent = null,
-}: {
+export default function useSCFetchCommentObjects(props: {
   id?: number;
   feedObject?: SCFeedObjectType;
   feedObjectType: SCFeedObjectTypologyType;
@@ -40,15 +31,14 @@ export default function useSCFetchCommentObjects({
   orderBy?: SCCommentsOrderBy;
   parent?: number;
 }) {
+  // PROPS
+  const {id, feedObject, feedObjectType, offset = 0, page = 1, pageSize = 5, orderBy = SCCommentsOrderBy.ADDED_AT_DESC, parent = null} = props;
+
   // STATE
   const {obj, setObj} = useSCFetchFeedObject({id, feedObject, feedObjectType});
   const objId = obj ? obj.id : null;
   const [comments, setComments] = useState<SCCommentType[]>([]);
-  const mounted = useRef(false);
-
-  const log = () => {
-    console.log(obj.id, offset, page, pageSize, orderBy, parent, mounted.current, next);
-  };
+  const initialDataLoaded = useRef(false);
 
   /**
    * Get next url
@@ -90,7 +80,7 @@ export default function useSCFetchCommentObjects({
    * Fetch previous comments
    */
   function getPreviousPage() {
-    if (obj && previous) {
+    if (obj && previous && !isLoadingPrevious) {
       setIsLoadingPrevious(true);
       performFetchComments(previous)
         .then((res) => {
@@ -108,7 +98,7 @@ export default function useSCFetchCommentObjects({
    * Fetch next comments
    */
   function getNextPage() {
-    if (obj && next) {
+    if (obj && next && !isLoadingNext) {
       setIsLoadingNext(true);
       performFetchComments(next)
         .then((res) => {
@@ -120,6 +110,7 @@ export default function useSCFetchCommentObjects({
             setPrevious(res.previous);
           }
           setIsLoadingNext(false);
+          initialDataLoaded.current = true;
         })
         .catch((error) => {
           Logger.error(SCOPE_SC_CORE, error);
@@ -132,34 +123,24 @@ export default function useSCFetchCommentObjects({
    * Reset comments sets
    */
   useEffect(() => {
-    if (mounted.current && obj && !reload) {
+    if (initialDataLoaded.current && Boolean(obj) && !reload) {
       setNext(getNextUrl());
       setComments([]);
       setTotal(0);
       setPrevious(null);
       setReload(true);
     }
-  }, [id, feedObject, feedObjectType, orderBy, pageSize, page, offset]);
+  }, [objId, orderBy, pageSize, page, offset]);
 
   /**
    * Reload fetch comments
    */
   useEffect(() => {
-    if (mounted.current && reload && !isLoadingNext && !isLoadingPrevious) {
-      getNextPage();
+    if (initialDataLoaded.current && reload && !isLoadingNext && !isLoadingPrevious) {
       setReload(false);
+      getNextPage();
     }
   }, [reload]);
-
-  /**
-   * Track component mount/unmount
-   */
-  useEffect(() => {
-    mounted.current = true;
-    return () => {
-      mounted.current = false;
-    };
-  }, []);
 
   return {
     feedObject: obj,
@@ -175,7 +156,6 @@ export default function useSCFetchCommentObjects({
     pageSize,
     getNextPage,
     getPreviousPage,
-    orderBy,
-    log,
+    orderBy
   };
 }
