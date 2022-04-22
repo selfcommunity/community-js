@@ -16,7 +16,6 @@ import useSCFetchFeedObject from './useSCFetchFeedObject';
  * @param feedObject
  * @param feedObjectType
  * @param offset
- * @param page
  * @param pageSize
  * @param orderBy
  * @param parent
@@ -26,25 +25,32 @@ export default function useSCFetchCommentObjects(props: {
   feedObject?: SCFeedObjectType;
   feedObjectType: SCFeedObjectTypologyType;
   offset?: number;
-  page?: number;
   pageSize?: number;
   orderBy?: SCCommentsOrderBy;
   parent?: number;
+  onChangePage?: (page) => any;
 }) {
   // PROPS
-  const {id, feedObject, feedObjectType, offset = 0, page = 1, pageSize = 5, orderBy = SCCommentsOrderBy.ADDED_AT_DESC, parent = null} = props;
+  const {id, feedObject, feedObjectType, offset = 0, pageSize = 5, orderBy = SCCommentsOrderBy.ADDED_AT_DESC, parent, onChangePage} = props;
 
-  // STATE
+  // FeedObject
   const {obj, setObj} = useSCFetchFeedObject({id, feedObject, feedObjectType});
   const objId = obj ? obj.id : null;
+
+  // Comments
   const [comments, setComments] = useState<SCCommentType[]>([]);
+
+  // Current page
+  const [page, setPage] = useState<number>(offset / pageSize + 1);
+
+  // Component status
   const initialDataLoaded = useRef(false);
 
   /**
    * Get next url
    */
   const getNextUrl = () => {
-    const _offset = `&offset=${offset ? offset : (page - 1) * pageSize}`;
+    const _offset = offset ? `&offset=${offset}` : '';
     const _parent = parent ? `&parent=${parent}` : '';
     const _objectId = obj ? obj.id : id;
     const _typeObject = obj ? obj.type : feedObjectType;
@@ -58,6 +64,16 @@ export default function useSCFetchCommentObjects(props: {
   const [next, setNext] = useState<string>(getNextUrl());
   const [previous, setPrevious] = useState<string>(null);
   const [reload, setReload] = useState<boolean>(false);
+
+  /**
+   * Calculate current page
+   */
+  const getCurrentPage = (url) => {
+    const urlSearchParams = new URLSearchParams(url);
+    const params = Object.fromEntries(urlSearchParams.entries());
+    const currentOffset: number = params.offset ? parseInt(params.offset) : 0;
+    return currentOffset / pageSize + 1;
+  };
 
   /**
    * Get Comments
@@ -82,11 +98,14 @@ export default function useSCFetchCommentObjects(props: {
   function getPreviousPage() {
     if (obj && previous && !isLoadingPrevious) {
       setIsLoadingPrevious(true);
-      performFetchComments(previous)
+      return performFetchComments(previous)
         .then((res) => {
+          let currentPage = getCurrentPage(previous);
+          setPage(currentPage);
           setComments([...res.results, ...comments]);
           setPrevious(res.previous);
           setIsLoadingPrevious(false);
+          onChangePage && onChangePage(currentPage);
         })
         .catch((error) => {
           Logger.error(SCOPE_SC_CORE, error);
@@ -100,17 +119,20 @@ export default function useSCFetchCommentObjects(props: {
   function getNextPage() {
     if (obj && next && !isLoadingNext) {
       setIsLoadingNext(true);
-      performFetchComments(next)
+      return performFetchComments(next)
         .then((res) => {
+          let currentPage = getCurrentPage(next);
           setComments([...comments, ...res.results]);
+          setPage(currentPage);
           setNext(res.next);
           setTotal(res.count);
-          if (page > 1 && comments.length === 0) {
-            // Save initial previous if start from a page > 1
+          if (offset && comments.length === 0) {
+            // Set initial previous if start from a offset > 0
             setPrevious(res.previous);
           }
           setIsLoadingNext(false);
           initialDataLoaded.current = true;
+          onChangePage && onChangePage(currentPage);
         })
         .catch((error) => {
           Logger.error(SCOPE_SC_CORE, error);
@@ -119,8 +141,7 @@ export default function useSCFetchCommentObjects(props: {
   }
 
   /**
-   * Change orderBy, page, pageSize, offset
-   * Reset comments sets
+   * Reset component status on change orderBy, pageSize, offset
    */
   useEffect(() => {
     if (initialDataLoaded.current && Boolean(obj) && !reload) {
@@ -130,7 +151,7 @@ export default function useSCFetchCommentObjects(props: {
       setPrevious(null);
       setReload(true);
     }
-  }, [objId, orderBy, pageSize, page, offset]);
+  }, [objId, orderBy, pageSize, offset]);
 
   /**
    * Reload fetch comments
@@ -156,6 +177,6 @@ export default function useSCFetchCommentObjects(props: {
     pageSize,
     getNextPage,
     getPreviousPage,
-    orderBy
+    orderBy,
   };
 }
