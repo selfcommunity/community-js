@@ -228,7 +228,7 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
   });
   // PROPS
   const {
-    id = `comments_object_${props.feedObjectType}_${props.feedObjectId ? props.feedObjectId : props.feedObject ? props.feedObject.id : ''}`,
+    id = `comments_object_${props.feedObjectId ? props.feedObjectId : props.feedObject ? props.feedObject.id : ''}`,
     className,
     feedObjectId,
     feedObject,
@@ -390,7 +390,6 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
         {comments.map((comment: SCCommentType, index) => (
           <React.Fragment key={index}>
             <CommentComponent
-              id={comment.id}
               key={comment.id}
               commentObject={comment}
               onOpenReply={openReplyBox}

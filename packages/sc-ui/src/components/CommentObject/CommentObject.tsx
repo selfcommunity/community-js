@@ -290,6 +290,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
     name: PREFIX
   });
   const {
+    id = `comment_object_${props.commentObjectId ? props.commentObjectId : props.commentObject ? props.commentObject.id : ''}`,
     className,
     commentObjectId,
     commentObject,
@@ -757,5 +758,9 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
   /**
    * Render object
    */
-  return <Root className={classNames(classes.root, className)}>{comment}</Root>;
+  return (
+    <Root id={id} className={classNames(classes.root, className)}>
+      {comment}
+    </Root>
+  );
 }

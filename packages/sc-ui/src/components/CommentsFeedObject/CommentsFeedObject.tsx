@@ -201,7 +201,9 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
   });
   // PROPS
   const {
-    id = `comments_object_${props.feedObjectType}_${props.feedObjectId ? props.feedObjectId : props.feedObject ? props.feedObject.id : ''}`,
+    id = `comments_object_${props.feedObjectType ? props.feedObjectType : props.feedObject.type}_${
+      props.feedObjectId ? props.feedObjectId : props.feedObject ? props.feedObject.id : ''
+    }`,
     className,
     feedObjectId,
     feedObject,
@@ -375,7 +377,7 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
         next={commentsObject.next}
         isLoadingNext={commentsObject.isLoadingNext}
         handleNext={commentsObject.getNextPage}
-        infiniteScrolling={infiniteScrolling && commentsObject.total > 0 && !comment}
+        infiniteScrolling={infiniteScrolling && commentsObject.total > 0 && !comment && !comments.length}
       />
     );
   }
