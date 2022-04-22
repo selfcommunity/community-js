@@ -732,7 +732,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
             hideAdvertising={true}
             comments={[].concat(commentsObject.comments).reverse()}
             endComments={comment.latest_comments}
-            previous={comment.comment_count > 1 ? commentsObject.next : null}
+            previous={comment.comment_count > comment.latest_comments.length ? commentsObject.next : null}
             isLoadingPrevious={commentsObject.isLoadingNext}
             handlePrevious={commentsObject.getNextPage}
             variant={'outlined'}

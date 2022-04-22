@@ -9,6 +9,9 @@ import classNames from 'classnames';
 import useThemeProps from '@mui/material/styles/useThemeProps';
 import {WidgetProps} from '../Widget';
 import CommentsObjectSkeleton from './Skeleton';
+import CommentsObject from '../CommentsObject';
+import {SCOPE_SC_UI} from '../../constants/Errors';
+import {AxiosResponse} from 'axios';
 import {
   Endpoints,
   http,
@@ -19,21 +22,13 @@ import {
   useSCFetchCommentObject,
   useSCFetchCommentObjects
 } from '@selfcommunity/core';
-import CommentsObject from '../CommentsObject';
-import {SCOPE_SC_UI} from '../../constants/Errors';
-import {AxiosResponse} from 'axios';
 
 const PREFIX = 'SCCommentsFeedObject';
 
 const classes = {
   root: `${PREFIX}-root`,
-  loadMoreCommentsButton: `${PREFIX}-load-more-comments-button`,
-  paginationLink: `${PREFIX}-pagination-link`,
-  paginationFooter: `${PREFIX}-pagination-footer`,
-  commentsCounter: `${PREFIX}-comments-counter`,
   noComments: `${PREFIX}-no-comments`,
-  commentNotFound: `${PREFIX}-comment-not-found`,
-  noOtherComments: `${PREFIX}-no-other-comment`
+  commentNotFound: `${PREFIX}-comment-not-found`
 };
 
 const Root = styled(Box, {
@@ -41,29 +36,13 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  boxShadow: 'none',
-  position: 'relative',
-  display: 'flex',
-  flexWrap: 'wrap',
   width: '100%',
-  [`& .${classes.loadMoreCommentsButton}`]: {
-    textTransform: 'initial'
-  },
-  [`& .${classes.commentsCounter}`]: {
-    paddingRight: theme.spacing()
-  },
   [`& .${classes.noComments}`]: {
     paddingBottom: 200
   },
   [`& .${classes.commentNotFound}`]: {
     padding: theme.spacing(1),
     fontWeight: '500'
-  },
-  [`& .${classes.paginationLink}`]: {
-    display: 'none'
-  },
-  [`& .${classes.paginationFooter}`]: {
-    width: '100%'
   }
 }));
 
@@ -111,17 +90,10 @@ export interface CommentsFeedObjectProps {
   commentObject?: SCCommentType;
 
   /**
-   * CommentComponent component
-   * Usefull to override the single Comment render component
-   * @default CommentObject
-   */
-  CommentComponent?: React.ElementType;
-
-  /**
    * Props to spread to single comment object
    * @default {variant: 'outlined'}
    */
-  CommentComponentProps?: CommentObjectProps;
+  CommentsObjectProps?: CommentObjectProps;
 
   /**
    * Props to spread to single comment object skeleton
@@ -179,24 +151,6 @@ export interface CommentsFeedObjectProps {
   infiniteScrolling?: boolean;
 
   /**
-   * show/hide primary content reply box
-   * @default false
-   */
-  hidePrimaryReply?: boolean;
-
-  /**
-   * position the primary reply in the bottom of the component
-   * @default false
-   */
-  fixedPrimaryReply?: boolean;
-
-  /**
-   * number of box of skeleton loading to show during loading phase
-   * @default 3
-   */
-  commentsLoadingBoxCount?: number;
-
-  /**
    * additional comments to show in the header
    * usefull when from a feedObject publish a comment
    * and this component show recent comments
@@ -242,11 +196,6 @@ export interface CommentsFeedObjectProps {
  |---|---|---|
  |root|.SCCommentsObject-root|Styles applied to the root element.|
  |commentNotFound|.SCCommentsObject-comment-not-found|Styles applied to the label 'Comment not found'.|
- |noOtherComments|.SCCommentsObject-no-other-comments|Styles applied to the label 'No other comments'.|
- |loadMoreCommentsButton|.SCCommentsObject-load-more-comments-button|Styles applied to the load more button.|
- |paginationLink|.SCCommentsObject-pagination-link|Styles applied to the pagination link.|
- |paginationFooter|.SCCommentsObject-pagination-footer|Styles applied to the pagination footer.|
- |commentsCounter|.SCCommentsObject-comments-counter|Styles applied to the comments counter element.|
  |noComments|.SCCommentsObject-no-comments|Styles applied to the 'no comments' section.|
 
 
@@ -279,7 +228,6 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
     hidePrimaryReply = false,
     fixedPrimaryReply = false,
     CommentObjectSkeletonProps = {elevation: 0, WidgetProps: {variant: 'outlined'} as WidgetProps},
-    additionalHeaderComments = [],
     onChangePage,
     hideAdvertising = false,
     ...rest
@@ -388,13 +336,12 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
   }
 
   /**
-   * Prefetch comments only if obj exists and additionalHeaderComments is empty
+   * Prefetch comments only if obj exists
    */
   useEffect(() => {
     if (commentObjectId || commentObj) {
       fetchComment();
     } else if (commentsObject.feedObject && !isLoading) {
-      console.log('Load page');
       commentsObject.getNextPage();
     }
     isComponentMounted.current = true;
@@ -437,7 +384,7 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
         next={commentsObject.next}
         isLoadingNext={commentsObject.isLoadingNext}
         handleNext={commentsObject.getNextPage}
-        // infiniteScrolling={infiniteScrolling && commentsObject.total > 0 && !comment}
+        infiniteScrolling={infiniteScrolling && commentsObject.total > 0 && !comment}
       />
     );
   }
