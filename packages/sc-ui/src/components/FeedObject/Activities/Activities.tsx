@@ -1,7 +1,5 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {FormattedMessage} from 'react-intl';
-import ReplyCommentObject, {ReplyCommentObjectProps} from '../../CommentObject/ReplyComment';
 import {Box} from '@mui/material';
 import {SCCommentsOrderBy} from '../../../types/comments';
 import classNames from 'classnames';
@@ -10,22 +8,13 @@ import CommentsObject from '../../CommentsObject';
 import ActivitiesMenu from './ActivitiesMenu';
 import LazyLoad from 'react-lazyload';
 import {CommentObjectProps, SCFeedObjectActivitiesType} from '@selfcommunity/ui';
-import {SCOPE_SC_UI} from '../../../constants/Errors';
-import {useSnackbar} from 'notistack';
-import {AxiosResponse} from 'axios';
 import RelevantActivities from './RelevantActivities';
 import {CommentsObjectProps} from '../../CommentsObject';
 import {
-  Endpoints,
-  http,
-  Logger,
   SCCommentType,
   SCFeedObjectType,
   SCFeedObjectTypologyType,
-  SCUserContextType,
-  UserUtils,
-  useSCFetchCommentObjects,
-  useSCUser
+  useSCFetchCommentObjects
 } from '@selfcommunity/core';
 
 const PREFIX = 'SCFeedObjectActivities';
@@ -78,29 +67,27 @@ export interface ActivitiesProps {
   feedObjectActivities?: any[];
 
   /**
-   * ReplyCommentComponent component
-   * Usefull to override the single ReplyComment render component
-   * @default CommentObject
+   * Comments (if new)
+   * @default []
    */
-  ReplyCommentComponent?: (inProps: ReplyCommentObjectProps) => JSX.Element;
+  comments?: SCCommentType[];
 
   /**
-   * Props to spread to single reply comment object
-   * @default {variant: 'outlined'}
+   * Activities type
+   * @default SCFeedObjectActivitiesType.RECENT_COMMENTS
    */
-  ReplyCommentComponentProps?: ReplyCommentObjectProps;
+  activitiesType?: SCFeedObjectActivitiesType;
+
+  /**
+   * Callback change activities type
+   */
+  onSetSelectedActivities?: (type: SCFeedObjectActivitiesType) => void;
 
   /**
    * Props to spread to comments object skeleton
    * @default {elevation: 0, WidgetProps: {variant: 'outlined'} as WidgetProps}
    */
   CommentsObjectProps?: CommentsObjectProps;
-
-  /**
-   * Callback on add a comment
-   * @default null
-   */
-  onAddComment?: (obj) => void;
 
   /**
    * Other props
@@ -122,20 +109,15 @@ export default function Activities(inProps: ActivitiesProps): JSX.Element {
     feedObject,
     feedObjectType = SCFeedObjectTypologyType.POST,
     CommentsObjectProps = {CommentComponentProps: {variant: 'outlined'} as CommentObjectProps},
-    ReplyCommentComponent = ReplyCommentObject,
-    ReplyCommentComponentProps = {ReplyBoxProps: {variant: 'outlined'}},
     feedObjectActivities = [],
-    onAddComment,
+    comments = [],
+    onSetSelectedActivities,
+    activitiesType = SCFeedObjectActivitiesType.RECENT_COMMENTS,
     ...rest
   } = props;
 
-  const scUserContext: SCUserContextType = useSCUser();
-  const {enqueueSnackbar} = useSnackbar();
-
   // STATE
-  const [comments, setComments] = useState<SCCommentType[]>([]);
-  const [isReplying, setIsReplying] = useState<boolean>(false);
-  const [selectedActivities, setSelectedActivities] = useState<string>(getInitialSelectedActivitiesType());
+  const [selectedActivities, setSelectedActivities] = useState<SCFeedObjectActivitiesType>(activitiesType);
 
   const commentsObject = useSCFetchCommentObjects({
     id: feedObjectId,
@@ -153,76 +135,14 @@ export default function Activities(inProps: ActivitiesProps): JSX.Element {
   const objId = commentsObject.feedObject ? commentsObject.feedObject.id : null;
 
   /**
-   * Get initial selected activities section
+   * Sync activities type if prop change
    */
-  function getInitialSelectedActivitiesType() {
-    if (feedObjectActivities && feedObjectActivities.length > 0) {
-      return SCFeedObjectActivitiesType.RELEVANCE_ACTIVITIES;
-    }
-    return SCFeedObjectActivitiesType.RECENT_COMMENTS;
-  }
+  useEffect(() => {
+    setSelectedActivities(activitiesType);
+  }, [activitiesType]);
 
   /**
-   * Perform reply
-   * Comment of first level
-   */
-  const performReply = useMemo(
-    () => (comment: SCCommentType) => {
-      return http
-        .request({
-          url: Endpoints.NewComment.url({}),
-          method: Endpoints.NewComment.method,
-          data: {
-            [`${feedObjectType}`]: commentsObject.feedObject.id,
-            text: comment
-          }
-        })
-        .then((res: AxiosResponse<SCCommentType>) => {
-          if (res.status >= 300) {
-            return Promise.reject(res);
-          }
-          return Promise.resolve(res.data);
-        });
-    },
-    [commentsObject.feedObject]
-  );
-
-  /**
-   * Handle comment
-   */
-  function handleReply(comment: SCCommentType) {
-    if (UserUtils.isBlocked(scUserContext.user)) {
-      enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
-        variant: 'warning'
-      });
-    } else {
-      setIsReplying(true);
-      performReply(comment)
-        .then((data: SCCommentType) => {
-          if (selectedActivities !== SCFeedObjectActivitiesType.RECENT_COMMENTS) {
-            setComments([]);
-            setSelectedActivities(SCFeedObjectActivitiesType.RECENT_COMMENTS);
-          } else {
-            setComments([...[data], ...comments]);
-          }
-          if (onAddComment) {
-            onAddComment(data);
-          } else {
-            commentsObject.setFeedObject(Object.assign(commentsObject.feedObject, {comment_count: commentsObject.feedObject.comment_count + 1}));
-          }
-          setIsReplying(false);
-        })
-        .catch((error) => {
-          Logger.error(SCOPE_SC_UI, error);
-          enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
-            variant: 'error'
-          });
-        });
-    }
-  }
-
-  /**
-   * Prefetch comments only if obj exists and additionalHeaderComments is empty
+   * Prefetch comments only if obj
    */
   useEffect(() => {
     commentsObject.getNextPage();
@@ -233,7 +153,7 @@ export default function Activities(inProps: ActivitiesProps): JSX.Element {
    * @param type
    */
   function handleSelectActivitiesType(type: SCFeedObjectActivitiesType) {
-    setComments([]);
+    onSetSelectedActivities(type);
     setSelectedActivities(type);
   }
 
@@ -274,15 +194,6 @@ export default function Activities(inProps: ActivitiesProps): JSX.Element {
    */
   return (
     <Root id={id} className={classNames(classes.root, className)} {...rest}>
-      {scUserContext.user && (
-        <ReplyCommentComponent
-          inline
-          onReply={handleReply}
-          readOnly={isReplying || !commentsObject.feedObject}
-          key={Number(isReplying)}
-          {...ReplyCommentComponentProps}
-        />
-      )}
       {(commentsObject.feedObject.comment_count || (feedObjectActivities && feedObjectActivities.length > 0) || comments.length > 0) && (
         <ActivitiesMenu
           selectedActivities={selectedActivities}

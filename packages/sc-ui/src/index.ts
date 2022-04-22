@@ -42,6 +42,7 @@ import UserFollowers, {UserFollowersProps, UserFollowersSkeleton} from './compon
 import RelatedFeedObjects, {RelatedFeedObjectsProps, RelatedFeedObjectsSkeleton} from './components/RelatedFeedObjects';
 import CommentObject, {CommentObjectProps, CommentObjectSkeleton} from './components/CommentObject';
 import CommentsObject, {CommentsObjectProps, CommentsObjectSkeleton} from './components/CommentsObject';
+import CommentsFeedObject, {CommentsFeedObjectProps, CommentsFeedObjectSkeleton} from './components/CommentsFeedObject';
 import ReplyComment from './components/CommentObject/ReplyComment';
 import CustomAdv, {CustomAdvProps, CustomAdvSkeleton} from './components/CustomAdv';
 import {GenericSkeleton, AvatarGroupSkeleton} from './components/Skeleton';
@@ -144,8 +145,11 @@ export {
   CommentsObject,
   CommentsObjectProps,
   CommentObjectProps,
-  CommentObjectSkeleton,
   CommentsObjectSkeleton,
+  CommentObjectSkeleton,
+  CommentsFeedObject,
+  CommentsFeedObjectProps,
+  CommentsFeedObjectSkeleton,
   ReplyComment,
   InlineComposer,
   InlineComposerProps,

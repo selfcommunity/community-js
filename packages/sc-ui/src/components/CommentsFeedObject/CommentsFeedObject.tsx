@@ -151,12 +151,11 @@ export interface CommentsFeedObjectProps {
   infiniteScrolling?: boolean;
 
   /**
-   * additional comments to show in the header
-   * usefull when from a feedObject publish a comment
-   * and this component show recent comments
+   * additional comments to show in the header/footer
+   * useful when from a feedObject publish a comment
    * @default []
    */
-  additionalHeaderComments?: SCCommentType[];
+  comments?: SCCommentType[];
 
   /**
    * Callback invoked when load comments page
@@ -164,12 +163,6 @@ export interface CommentsFeedObjectProps {
    * @param page
    */
   onChangePage?: (page) => any;
-
-  /**
-   * show/hide box advertising
-   * @default false
-   */
-  hideAdvertising?: boolean;
 
   /**
    * Other props
@@ -225,18 +218,16 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
     commentsOrderBy = SCCommentsOrderBy.ADDED_AT_ASC,
     showTitle = false,
     infiniteScrolling = true,
-    hidePrimaryReply = false,
-    fixedPrimaryReply = false,
     CommentObjectSkeletonProps = {elevation: 0, WidgetProps: {variant: 'outlined'} as WidgetProps},
     onChangePage,
-    hideAdvertising = false,
+    comments = [],
     ...rest
   } = props;
 
   // STATE
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [comment, setComment] = useState<SCCommentType>(null);
-  const {obj: commentObj, setObj: setCommentObj, error: errorCommentObj} = useSCFetchCommentObject({id: commentObjectId, commentObject});
+  const {obj: commentObj, error: errorCommentObj} = useSCFetchCommentObject({id: commentObjectId, commentObject});
   const commentsObject = useSCFetchCommentObjects({
     id: feedObjectId,
     feedObject,
@@ -380,7 +371,7 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
       <CommentsObject
         feedObject={commentsObject.feedObject}
         comments={commentsObject.comments}
-        endComments={comment ? [comment] : []}
+        endComments={[...(comment ? [comment] : []), ...comments]}
         next={commentsObject.next}
         isLoadingNext={commentsObject.isLoadingNext}
         handleNext={commentsObject.getNextPage}
