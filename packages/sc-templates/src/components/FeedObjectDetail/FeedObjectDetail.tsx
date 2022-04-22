@@ -160,6 +160,10 @@ export default function FeedObjectDetail(inProps: FeedObjectDetailProps): JSX.El
    */
   function handleReply(comment: SCCommentType) {
     setComments([...comments, ...[comment]]);
+    setTimeout(() => {
+      const element = document.getElementById(`comment_object_${comment.id}`);
+      element && element.scrollIntoView({behavior: 'smooth', block: 'center'});
+    }, 300);
   }
 
   if (obj === null) {
