@@ -2,7 +2,7 @@ import React, {useContext, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Widget, {WidgetProps} from '../Widget';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {Avatar, Box, Button, CardContent, CardProps, List, ListItem, ListItemAvatar, ListItemText, Tooltip, Typography} from '@mui/material';
+import {Avatar, Box, Button, CardContent, CardProps, Tooltip, Typography} from '@mui/material';
 import Bullet from '../../shared/Bullet';
 import classNames from 'classnames';
 import Votes from './Votes';
@@ -17,6 +17,9 @@ import ContributionActionsMenu from '../../shared/ContributionActionsMenu';
 import DateTimeAgo from '../../shared/DateTimeAgo';
 import {getContributionHtml, getRouteData} from '../../utils/contribution';
 import {useSnackbar} from 'notistack';
+import useThemeProps from '@mui/material/styles/useThemeProps';
+import CommentsObject from '../CommentsObject';
+import BaseItem from '../../shared/BaseItem';
 import {
   Endpoints,
   http,
@@ -37,8 +40,6 @@ import {
   useSCFetchCommentObjects,
   useSCRouting
 } from '@selfcommunity/core';
-import useThemeProps from '@mui/material/styles/useThemeProps';
-import CommentsObject from '../CommentsObject';
 
 const messages = defineMessages({
   reply: {
@@ -67,7 +68,6 @@ const classes = {
   textContent: `${PREFIX}-text-content`,
   btnVotes: `${PREFIX}-btn-votes`,
   votes: `${PREFIX}-votes`,
-  btnViewPreviousComments: `${PREFIX}-btn-view-previous-comments`,
   commentActionsMenu: `${PREFIX}-comment-actions-menu`,
   deleted: `${PREFIX}-deleted`,
   activityAt: `${PREFIX}-activity-at`,
@@ -75,7 +75,7 @@ const classes = {
   commentSubSection: `${PREFIX}-comment-sub-section`
 };
 
-const Root = styled(List, {
+const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
@@ -88,9 +88,8 @@ const Root = styled(List, {
   },
   [`& .${classes.comment}`]: {
     paddingBottom: 0,
-    alignItems: 'flex-start',
-    '& > .MuiListItemText-root': {
-      marginTop: 0
+    '& > div': {
+      alignItems: 'flex-start'
     }
   },
   [`& .${classes.nestedComments}`]: {
@@ -108,9 +107,14 @@ const Root = styled(List, {
   },
   [`& .${classes.content}`]: {
     position: 'relative',
+    display: 'flex',
     '& .MuiCardContent-root': {
-      padding: '7px 13px 7px 13px'
+      padding: '7px 13px 7px 13px',
+      flexGrow: 1
     }
+  },
+  [`& .${classes.avatar}`]: {
+    top: theme.spacing()
   },
   [`& .${classes.author}`]: {
     textDecoration: 'none',
@@ -128,13 +132,8 @@ const Root = styled(List, {
       marginBlockEnd: '0.3em'
     }
   },
-  [`& .${classes.btnViewPreviousComments}`]: {
-    textTransform: 'initial'
-  },
   [`& .${classes.commentActionsMenu}`]: {
-    position: 'absolute',
-    top: 0,
-    right: 0
+    alignItems: 'flexStart'
   },
   [`& .${classes.deleted}`]: {
     opacity: 0.3
@@ -232,12 +231,6 @@ export interface CommentObjectProps {
   onDelete?: (comment: SCCommentType) => void;
 
   /**
-   * Callback on fecth latest comments
-   * @default null
-   */
-  onFetchLatestComment?: () => void;
-
-  /**
    * Props to spread to single comment object skeleton
    * @default {elevation: 0}
    */
@@ -282,7 +275,6 @@ export interface CommentObjectProps {
  |textContent|.SCCommentObject-text-content|Styles applied to text content section.|
  |btnVotes|.SCCommentObject-btn-votes|Styles applied to the vote button element.|
  |votes|.SCCommentObject-votes|Styles applied to the votes section.|
- |btnViewPreviousComments|.SCCommentObject-btn-view-previous-comments|Styles applied to previous comment button element|
  |commentActionsMenu|.SCCommentObject-comment-actions-menu|Styles applied to comment action menu element.|
  |deleted|.SCCommentObject-deleted|Styles applied to tdeleted element.|
  |activityAt|.SCCommentObject-activity-at|Styles applied to activity at section.|
@@ -304,13 +296,10 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
     feedObjectId,
     feedObject,
     feedObjectType = SCFeedObjectTypologyType.POST,
-    commentsPageCount = 5,
-    commentsOrderBy = SCCommentsOrderBy.ADDED_AT_DESC,
     commentReply,
     onOpenReply,
     onDelete,
     onVote,
-    onFetchLatestComment,
     elevation = 0,
     CommentObjectSkeletonProps = {elevation, WidgetProps: {variant: 'outlined'} as WidgetProps},
     ReplyCommentObjectProps = {elevation, ReplyBoxProps: {variant: 'outlined'} as WidgetProps},
@@ -327,12 +316,10 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
   // STATE
   const {obj, setObj} = useSCFetchCommentObject({id: commentObjectId, commentObject});
   const [loadingVote, setLoadingVote] = useState(false);
-  const [loadingLatestComments, setLoadingLatestComments] = useState(false);
-  const [next, setNext] = useState<string>(null);
   const [replyComment, setReplyComment] = useState<SCCommentType>(commentReply);
   const [isReplying, setIsReplying] = useState<boolean>(false);
-  const [editComment, setEditComment] = useState<SCCommentType>(null);
   const [isSavingComment, setIsSavingComment] = useState<boolean>(false);
+  const [editComment, setEditComment] = useState<SCCommentType>(null);
   const commentsObject = useSCFetchCommentObjects({
     id: feedObjectId,
     feedObject,
@@ -410,50 +397,6 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
   }
 
   /**
-   * Handle fetch latest comments
-   * @param comment
-   */
-  function loadLatestComment() {
-    setLoadingLatestComments(true);
-    /* fetchLatestComment()
-      .then((data) => {
-        const newObj = obj;
-        obj.latest_comments = obj.latest_comments.length <= 1 ? [...data.results.reverse()] : [...data.results.reverse(), ...obj.latest_comments];
-        setObj(newObj);
-        setNext(data.next);
-        setLoadingLatestComments(false);
-        onFetchLatestComment && onFetchLatestComment();
-      })
-      .catch((error) => {
-        Logger.error(SCOPE_SC_UI, error);
-      }); */
-  }
-
-  /**
-   * fetchVotes
-   */
-  const fetchLatestComment = useMemo(
-    () => () => {
-      return http
-        .request({
-          url: next
-            ? next
-            : `${Endpoints.Comments.url()}?${feedObjectType}=${feedObjectId ? feedObjectId : feedObject.id}&parent=${
-                obj.id
-              }&limit=${commentsPageCount}&ordering=${commentsOrderBy}`,
-          method: Endpoints.Comments.method
-        })
-        .then((res: AxiosResponse<any>) => {
-          if (res.status >= 300) {
-            return Promise.reject(res);
-          }
-          return Promise.resolve(res.data);
-        });
-    },
-    [obj, next, commentsOrderBy, commentsPageCount]
-  );
-
-  /**
    * Perform vote comment
    */
   const performVoteComment = useMemo(
@@ -490,21 +433,8 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
         performVoteComment(comment)
           .then((data) => {
             const newObj = obj;
-            /* if (comment.parent) {
-              // 2° comment level
-              const newLatestComments: SCCommentType[] = obj.latest_comments.map((lc) => {
-                if (lc.id === comment.id) {
-                  lc.voted = !lc.voted;
-                  lc.vote_count = lc.vote_count - (lc.voted ? -1 : 1);
-                }
-                return lc;
-              });
-              obj.latest_comments = newLatestComments;
-            } else { */
-            // 1° comment level
             obj.voted = !obj.voted;
             obj.vote_count = obj.vote_count - (obj.voted ? -1 : 1);
-            // }
             setObj(newObj);
             setLoadingVote(false);
             onVote && onVote(comment);
@@ -698,7 +628,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
    * Render comment & latest activities
    * @param comment
    */
-  function renderComment(comment) {
+  function renderComment(comment: SCCommentType) {
     if (
       comment.deleted &&
       (!scUserContext.user || (scUserContext.user && (!UserUtils.isStaff(scUserContext.user) || scUserContext.user.id !== comment.author.id)))
@@ -710,7 +640,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
     return (
       <React.Fragment key={comment.id}>
         {editComment && editComment.id === comment.id ? (
-          <ListItem className={classes.comment}>
+          <Box className={classes.comment}>
             <ReplyCommentObject
               text={comment.html}
               autoFocus
@@ -722,71 +652,67 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
               inline={!comment.parent}
               {...ReplyCommentObjectProps}
             />
-          </ListItem>
+          </Box>
         ) : (
-          <ListItem className={classes.comment}>
-            <ListItemAvatar>
+          <BaseItem
+            elevation={0}
+            className={classes.comment}
+            image={
               <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, comment.author)}>
                 <Avatar alt={obj.author.username} variant="circular" src={comment.author.avatar} className={classes.avatar} />
               </Link>
-            </ListItemAvatar>
-            <ListItemText
-              disableTypography
-              secondary={
-                <>
-                  <Widget className={classes.content} elevation={elevation} {...rest}>
-                    <CardContent className={classNames({[classes.deleted]: obj && obj.deleted})}>
-                      <Link className={classes.author} to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, comment.author)}>
-                        <Typography component="span">{comment.author.username}</Typography>
-                      </Link>
-                      <Typography
-                        className={classes.textContent}
-                        variant="body2"
-                        gutterBottom
-                        dangerouslySetInnerHTML={{__html: getContributionHtml(comment, scRoutingContext.url)}}></Typography>
-                    </CardContent>
-                    {scUserContext.user && (
-                      <Box className={classes.commentActionsMenu}>
-                        <ContributionActionsMenu
-                          commentObject={comment}
-                          onRestoreContribution={handleRestore}
-                          onHideContribution={handleHide}
-                          onDeleteContribution={handleDelete}
-                          onEditContribution={handleEdit}
-                        />
-                      </Box>
-                    )}
-                  </Widget>
-                  <Box component="span" className={classes.commentSubSection}>
-                    {renderTimeAgo(comment)}
-                    <Bullet />
-                    {renderActionVote(comment)}
-                    <Bullet />
-                    {renderActionReply(comment)}
-                    {renderVotes(comment)}
-                  </Box>
-                </>
-              }
-            />
-          </ListItem>
+            }
+            disableTypography
+            primary={
+              <>
+                <Widget className={classes.content} elevation={elevation} {...rest}>
+                  <CardContent className={classNames({[classes.deleted]: obj && obj.deleted})}>
+                    <Link className={classes.author} to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, comment.author)}>
+                      <Typography component="span">{comment.author.username}</Typography>
+                    </Link>
+                    <Typography
+                      className={classes.textContent}
+                      variant="body2"
+                      gutterBottom
+                      dangerouslySetInnerHTML={{__html: getContributionHtml(comment, scRoutingContext.url)}}></Typography>
+                  </CardContent>
+                  {scUserContext.user && (
+                    <Box className={classes.commentActionsMenu}>
+                      <ContributionActionsMenu
+                        commentObject={comment}
+                        onRestoreContribution={handleRestore}
+                        onHideContribution={handleHide}
+                        onDeleteContribution={handleDelete}
+                        onEditContribution={handleEdit}
+                      />
+                    </Box>
+                  )}
+                </Widget>
+                <Box component="span" className={classes.commentSubSection}>
+                  {renderTimeAgo(comment)}
+                  <Bullet />
+                  {renderActionVote(comment)}
+                  <Bullet />
+                  {renderActionReply(comment)}
+                  {renderVotes(comment)}
+                </Box>
+              </>
+            }
+          />
         )}
-        {comment.comment_count > 0 && <ListItem className={classes.nestedComments}>{renderLatestComment(comment)}</ListItem>}
+        {comment.comment_count > 0 && <Box className={classes.nestedComments}>{renderLatestComment(comment)}</Box>}
         {scUserContext.user && replyComment && (replyComment.id === comment.id || replyComment.parent === comment.id) && !comment.parent && (
-          <ListItem className={classes.nestedComments}>
-            <List>
-              <ListItem>
-                <ReplyCommentObject
-                  text={replyComment.parent ? `@${replyComment.author.username}, ` : ''}
-                  autoFocus
-                  id={`reply-${replyComment.id}`}
-                  commentObject={replyComment}
-                  onReply={handleReply}
-                  readOnly={isReplying}
-                  {...ReplyCommentObjectProps}
-                />
-              </ListItem>
-            </List>
-          </ListItem>
+          <Box className={classes.nestedComments}>
+            <ReplyCommentObject
+              text={replyComment.parent ? `@${replyComment.author.username}, ` : ''}
+              autoFocus
+              id={`reply-${replyComment.id}`}
+              commentObject={replyComment}
+              onReply={handleReply}
+              readOnly={isReplying}
+              {...ReplyCommentObjectProps}
+            />
+          </Box>
         )}
       </React.Fragment>
     );
@@ -814,42 +740,6 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
             CommentsObjectSkeletonProps={{count: 1}}
           />
         )}
-        {/*<List>
-        {comment.comment_count - comment.latest_comments?.length >= 1 && (
-          <>
-            {loadingLatestComments ? (
-              <CommentsObject
-                feedObject={feedObject}
-                feedObjectType={feedObjectType}
-                commentObjectId={obj.id}
-                variant={'outlined'}
-                commentsPageCount={2}
-                commentsOrderBy={SCCommentsOrderBy.ADDED_AT_DESC}
-                hideAdvertising={true}
-                className={classes.commentsObject}
-                additionalHeaderComments={comment.latest_comments}
-              />
-            ) : (
-              <ListItem>
-                <Button
-                  color="inherit"
-                  variant="text"
-                  onClick={loadLatestComment}
-                  disabled={loadingLatestComments || (!feedObjectId && !feedObject)}
-                  classes={{text: classNames(classes.btnViewPreviousComments)}}>
-                  <FormattedMessage
-                    id={'ui.commentObject.viewLatestComment'}
-                    defaultMessage={'ui.commentObject.viewLatestComment'}
-                    values={{total: comment.comment_count - comment.latest_comments?.length}}
-                  />
-                </Button>
-              </ListItem>
-            )}
-          </>
-        )}
-        {!loadingLatestComments &&
-          comment.latest_comments?.map((lc: SCCommentType) => <React.Fragment key={lc.id}>{renderComment(lc)}</React.Fragment>)}
-      </List> */}
       </>
     );
   }

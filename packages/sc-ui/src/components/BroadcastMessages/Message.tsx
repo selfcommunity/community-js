@@ -1,6 +1,6 @@
 import React, {useContext, useMemo, useState} from 'react';
 import {
-  Avatar,
+  Avatar, Box,
   CardContent,
   CardHeader,
   CardMedia,
@@ -12,7 +12,7 @@ import {
   ListItem,
   ListItemAvatar,
   ListItemText,
-  Typography
+  Typography,
 } from '@mui/material';
 import {styled} from '@mui/material/styles';
 import Icon from '@mui/material/Icon';
@@ -179,6 +179,7 @@ export default function Message(props: MessageProps): JSX.Element {
 
   // RENDER
   const renderContent = (banner) => {
+    console.log(banner);
     return (
       <>
         <CardContent className={classes.title}>
@@ -208,30 +209,32 @@ export default function Message(props: MessageProps): JSX.Element {
      * Include also MarkRead component to
      */
     return (
-      <Fade in={open} unmountOnExit>
-        <Root id={id} className={className} {...rest}>
-          {message.viewed_at === null && <MarkRead endpoint={Endpoints.BroadcastMessagesMarkRead} data={{banner_ids: [message.id]}} />}
-          <CardHeader
-            className={classes.header}
-            avatar={<Avatar alt={preferences[SCPreferences.TEXT_APPLICATION_NAME]} src={preferences[SCPreferences.LOGO_NAVBAR_LOGO]} />}
-            action={
-              template === SCBroadcastMessageTemplateType.DETAIL && (
-                <IconButton aria-label="close" onClick={handleClose} disabled={closing}>
-                  {closing ? <CircularProgress size={20} /> : <Icon>close</Icon>}
-                </IconButton>
-              )
-            }
-            title={
-              <Chip
-                color="secondary"
-                size="small"
-                label={<FormattedMessage id="ui.broadcastMessages.message.chip" defaultMessage="ui.broadcastMessages.message.chip" />}
-              />
-            }
-          />
-          {renderContent(banner)}
-        </Root>
-      </Fade>
+      <Root id={id} className={className} {...rest}>
+        <Fade in={open} unmountOnExit>
+          <Box>
+            {message.viewed_at === null && <MarkRead endpoint={Endpoints.BroadcastMessagesMarkRead} data={{banner_ids: [message.id]}} />}
+            <CardHeader
+              className={classes.header}
+              avatar={<Avatar alt={preferences[SCPreferences.TEXT_APPLICATION_NAME]} src={preferences[SCPreferences.LOGO_NAVBAR_LOGO]} />}
+              action={
+                template === SCBroadcastMessageTemplateType.DETAIL && (
+                  <IconButton aria-label="close" onClick={handleClose} disabled={closing}>
+                    {closing ? <CircularProgress size={20} /> : <Icon>close</Icon>}
+                  </IconButton>
+                )
+              }
+              title={
+                <Chip
+                  color="secondary"
+                  size="small"
+                  label={<FormattedMessage id="ui.broadcastMessages.message.chip" defaultMessage="ui.broadcastMessages.message.chip" />}
+                />
+              }
+            />
+            {renderContent(banner)}
+          </Box>
+        </Fade>
+      </Root>
     );
   }
 

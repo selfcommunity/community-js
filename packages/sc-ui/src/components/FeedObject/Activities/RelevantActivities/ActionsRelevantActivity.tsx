@@ -1,4 +1,4 @@
-import {BaseItemProps} from '../../../shared/BaseItem';
+import {BaseItemProps} from '../../../../shared/BaseItem';
 import {SCFeedUnitActivityType} from '@selfcommunity/core';
 
 export interface ActionsRelevantActivityProps extends BaseItemProps {

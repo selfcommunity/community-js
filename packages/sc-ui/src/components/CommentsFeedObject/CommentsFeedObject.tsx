@@ -16,7 +16,6 @@ import {
   SCCommentType,
   SCFeedObjectType,
   SCFeedObjectTypologyType,
-  SCPreferences,
   useSCFetchCommentObject,
   useSCFetchCommentObjects
 } from '@selfcommunity/core';
@@ -224,7 +223,6 @@ export interface CommentsFeedObjectProps {
   [p: string]: any;
 }
 
-const PREFERENCES = [SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED, SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED];
 /**
  *> API documentation for the Community-UI Comments Object component. Learn about the available props and the CSS API.
 
@@ -299,6 +297,11 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
     pageSize: commentsPageCount,
     orderBy: commentsOrderBy
   });
+
+  // CONST
+  const objId = commentsObject.feedObject ? commentsObject.feedObject.id : null;
+  const commentObjId = commentObj ? commentObj.id : null;
+
   // REFS
   const isComponentMounted = useRef(false);
 
@@ -390,14 +393,15 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
   useEffect(() => {
     if (commentObjectId || commentObj) {
       fetchComment();
-    } else if (commentsObject.feedObject) {
+    } else if (commentsObject.feedObject && !isLoading) {
+      console.log('Load page');
       commentsObject.getNextPage();
     }
     isComponentMounted.current = true;
     return () => {
       isComponentMounted.current = false;
     };
-  }, [commentsObject.feedObject, commentObj, errorCommentObj]);
+  }, [objId, commentObjId, errorCommentObj]);
 
   /**
    * Render comments
@@ -433,6 +437,7 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
         next={commentsObject.next}
         isLoadingNext={commentsObject.isLoadingNext}
         handleNext={commentsObject.getNextPage}
+        // infiniteScrolling={infiniteScrolling && commentsObject.total > 0 && !comment}
       />
     );
   }

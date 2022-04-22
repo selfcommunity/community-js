@@ -5,7 +5,7 @@ import Tooltip from '@mui/material/Tooltip';
 import {Button, ListItem, ListItemText} from '@mui/material';
 import Icon from '@mui/material/Icon';
 import {styled} from '@mui/material/styles';
-import {SCFeedObjectActivitiesType} from '../../../types/feedObject';
+import {SCFeedObjectActivitiesType} from '../../../../types/feedObject';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {SCPreferences, SCPreferencesContext, SCPreferencesContextType, SCUserContextType, StringUtils, useSCUser} from '@selfcommunity/core';
 import {useContext} from 'react';

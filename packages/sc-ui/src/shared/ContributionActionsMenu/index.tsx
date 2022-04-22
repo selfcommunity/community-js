@@ -139,13 +139,10 @@ const Root = styled(Box, {
   overridesResolver: (props, styles) => styles.root
 })(() => ({
   [`& .${classes.visibilityBadge}`]: {
-    padding: '0px',
-    marginLeft: 2,
-    '&.MuiListItemIcon-root': {
-      width: '9px'
-    },
-    '& svg': {
-      fontSize: '1.1rem'
+    color: 'red',
+    '& > span': {
+      padding: 12,
+      fontSize: 15
     }
   }
 }));
@@ -1116,8 +1113,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
         {contributionObj.collapsed || contributionObj.deleted ? (
           <Badge
             badgeContent={contributionObj.collapsed ? <Icon>visibility_off</Icon> : <Icon>delete</Icon>}
-            classes={{badge: classes.visibilityBadge}}
-            color="error">
+            classes={{badge: classes.visibilityBadge}}>
             <Icon>more_vert</Icon>
           </Badge>
         ) : (

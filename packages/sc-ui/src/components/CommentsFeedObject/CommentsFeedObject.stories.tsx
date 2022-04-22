@@ -13,7 +13,7 @@ export default {
     feedObjectId: {
       control: {type: 'number'},
       description: 'FeedObject Id',
-      table: {defaultValue: {summary: 392}}
+      table: {defaultValue: {summary: 360}}
     },
     feedObjectType: {
       options: [SCFeedObjectTypologyType.POST, SCFeedObjectTypologyType.DISCUSSION, SCFeedObjectTypologyType.STATUS],
@@ -34,7 +34,7 @@ export default {
     }
   },
   args: {
-    feedObjectId: 392,
+    feedObjectId: 360,
     feedObjectType: SCFeedObjectTypologyType.POST,
     infiniteScrolling: true,
     commentsOrderBy: SCCommentsOrderBy.ADDED_AT_ASC
@@ -56,11 +56,11 @@ Base.args = {};
 export const CommentFirstLevel = Template.bind({});
 
 CommentFirstLevel.args = {
-  commentObjectId: 995
+  commentObjectId: 871
 };
 
 export const CommentSecondLevel = Template.bind({});
 
 CommentSecondLevel.args = {
-  commentObjectId: 1058
+  commentObjectId: 1119
 };

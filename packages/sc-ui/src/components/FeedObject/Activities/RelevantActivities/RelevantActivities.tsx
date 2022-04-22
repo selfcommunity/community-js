@@ -2,15 +2,12 @@ import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Box, Collapse, List, ListItem, ListItemButton, ListItemText, Typography} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
-import {Endpoints, http, SCCommentTypologyType, Logger, SCFeedUnitActivityType, SCFeedUnitActivityTypologyType} from '@selfcommunity/core';
+import {SCFeedUnitActivityType, SCFeedUnitActivityTypologyType} from '@selfcommunity/core';
 import Icon from '@mui/material/Icon';
-import {SCOPE_SC_UI} from '../../../constants/Errors';
-import {AxiosResponse} from 'axios';
 import CommentRelevantActivity from './CommentActivity';
 import VoteUpRelevantActivity from './VoteUpActivity';
 import FollowRelevantActivity from './FollowActivity';
 import PollVoteRelevantActivity from './PollVoteActivity';
-import {grey} from '@mui/material/colors';
 import classNames from 'classnames';
 import useThemeProps from '@mui/material/styles/useThemeProps';
 

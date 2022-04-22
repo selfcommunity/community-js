@@ -1,5 +1,4 @@
-/* eslint-disable */
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import CardContent from '@mui/material/CardContent';
 import {Avatar, Box, Button, CardActions, CardHeader, CardProps, Collapse, Stack, Tooltip, Typography} from '@mui/material';
@@ -14,12 +13,20 @@ import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import PollObject, {PollObjectProps} from './Poll';
 import ContributorsFeedObject, {ContributorsFeedObjectProps} from './Contributors';
 import LazyLoad from 'react-lazyload';
+import Composer from '../Composer';
+import {SCFeedObjectTemplateType} from '../../types/feedObject';
+import MarkRead from '../../shared/MarkRead';
+import classNames from 'classnames';
+import ContributionActionsMenu, {ContributionActionsMenuProps} from '../../shared/ContributionActionsMenu';
+import {getContributionHtml, getContributionRouteName, getContributionSnippet, getRouteData} from '../../utils/contribution';
+import Follow, {FollowProps} from './Actions/Follow';
+import Widget, {WidgetProps} from '../Widget';
+import useThemeProps from '@mui/material/styles/useThemeProps';
+import BaseItem from '../../shared/BaseItem';
+import Activities, {ActivitiesProps} from './Activities';
 import {
   Endpoints,
-  http,
   Link,
-  Logger,
-  SCCommentType,
   SCContextType,
   SCFeedObjectType,
   SCFeedObjectTypologyType,
@@ -27,30 +34,11 @@ import {
   SCRoutes,
   SCRoutingContextType,
   SCUserContextType,
-  UserUtils,
   useSCContext,
   useSCFetchFeedObject,
   useSCRouting,
   useSCUser
 } from '@selfcommunity/core';
-import Composer from '../Composer';
-import ActivitiesMenu from './ActivitiesMenu';
-import {SCCommentsOrderBy} from '../../types/comments';
-import {SCFeedObjectActivitiesType, SCFeedObjectTemplateType} from '../../types/feedObject';
-import RelevantActivities from './RelevantActivities';
-import ReplyCommentObject from '../CommentObject/ReplyComment';
-import {SCOPE_SC_UI} from '../../constants/Errors';
-import {AxiosResponse} from 'axios';
-import MarkRead from '../../shared/MarkRead';
-import classNames from 'classnames';
-import ContributionActionsMenu, {ContributionActionsMenuProps} from '../../shared/ContributionActionsMenu';
-import {getContributionHtml, getContributionRouteName, getContributionSnippet, getRouteData} from '../../utils/contribution';
-import {useSnackbar} from 'notistack';
-import Follow, {FollowProps} from './Actions/Follow';
-import Widget from '../Widget';
-import useThemeProps from '@mui/material/styles/useThemeProps';
-import BaseItem from '../../shared/BaseItem';
-import FeedObjectActivities from './FeedObjectActivities';
 
 const messages = defineMessages({
   visibleToAll: {
@@ -166,7 +154,8 @@ const Root = styled(Widget, {
     top: 3
   },
   [`& .${classes.activitiesContent}`]: {
-    paddingBottom: '3px'
+    paddingTop: 3,
+    paddingBottom: 3
   },
   [`& .${classes.infoSection}`]: {
     padding: `0px ${theme.spacing(2)}`
@@ -276,6 +265,12 @@ export interface FeedObjectProps extends CardProps {
   ContributionActionsMenuProps?: ContributionActionsMenuProps;
 
   /**
+   * Props to spread to Activities component
+   * @default {}
+   */
+  ActivitiesProps?: ActivitiesProps;
+
+  /**
    * Props to spread to MediasPreview component
    * @default {}
    */
@@ -360,6 +355,15 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
     FollowButtonProps = {},
     FeedObjectSkeletonProps = {elevation: 0},
     ActionsProps = {},
+    ActivitiesProps = {
+      CommentsObjectProps: {
+        CommentComponentProps: {
+          onDelete: handleDeleteComment,
+          variant: 'outlined'
+        }
+      },
+      CommentObjectSkeletonProps: {elevation: 0, WidgetProps: {variant: 'outlined'} as WidgetProps}
+    },
     ContributionActionsMenuProps = {},
     MediasPreviewProps = {},
     PollObjectProps = {elevation: 0},
@@ -489,11 +493,17 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
   }
 
   /**
-   * onReply callback
-   * @param fields
+   * Handle add comment callback
    */
-  function handleChangeObject(fields) {
-    setObj(Object.assign({}, obj, fields));
+  function handleAddComment() {
+    setObj((prev) => ({...prev, ...{comment_count: prev.comment_count + 1}}));
+  }
+
+  /**
+   * Handle delete comment callback
+   */
+  function handleDeleteComment() {
+    setObj((prev) => ({...prev, ...{comment_count: Math.max(prev.comment_count - 1, 0)}}));
   }
 
   /**
@@ -612,8 +622,13 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
             </CardActions>
             {template === SCFeedObjectTemplateType.PREVIEW && (
               <Collapse in={expandedActivities} timeout="auto" unmountOnExit classes={{root: classes.activities}}>
-                <CardContent className={classes.activitiesContent} sx={{paddingTop: 0}}>
-                  <FeedObjectActivities feedObject={obj} feedObjectType={feedObjectType} onChangeObject={handleChangeObject}/>
+                <CardContent className={classes.activitiesContent}>
+                  <Activities
+                    feedObject={obj}
+                    feedObjectActivities={feedObjectActivities}
+                    onAddComment={handleAddComment}
+                    {...ActivitiesProps}
+                  />
                 </CardContent>
               </Collapse>
             )}

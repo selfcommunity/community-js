@@ -3,20 +3,20 @@ import {styled} from '@mui/material/styles';
 import {Avatar} from '@mui/material';
 import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
 import {defineMessages, useIntl} from 'react-intl';
-import DateTimeAgo from '../../../../shared/DateTimeAgo';
-import {ActionsRelevantActivityProps} from '../ActionsRelevantActivity';
+import DateTimeAgo from '../../../../../shared/DateTimeAgo';
 import classNames from 'classnames';
 import useThemeProps from '@mui/material/styles/useThemeProps';
-import BaseItem from '../../../../shared/BaseItem';
+import {ActionsRelevantActivityProps} from '../ActionsRelevantActivity';
+import BaseItem from '../../../../../shared/BaseItem';
 
 const messages = defineMessages({
-  vote: {
-    id: 'ui.feedObject.relevantActivities.vote',
-    defaultMessage: 'ui.feedObject.relevantActivities.vote'
+  comment: {
+    id: 'ui.feedObject.relevantActivities.comment',
+    defaultMessage: 'ui.feedObject.relevantActivities.comment'
   }
 });
 
-const PREFIX = 'SCVoteUpRelevantActivity';
+const PREFIX = 'SCCommentRelevantActivity';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -31,16 +31,20 @@ const Root = styled(BaseItem, {
 })(({theme}) => ({
   [`& .${classes.username}`]: {
     color: 'inherit'
+  },
+  '& .SCBaseItem-secondary': {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center'
   }
 }));
 
-export default function VoteUpRelevantActivity(inProps: ActionsRelevantActivityProps): JSX.Element {
+export default function CommentRelevantActivity(inProps: ActionsRelevantActivityProps): JSX.Element {
   // PROPS
   const props: ActionsRelevantActivityProps = useThemeProps({
     props: inProps,
     name: PREFIX
   });
-
   const {className = null, activityObject = null, ...rest} = props;
 
   // CONTEXT
@@ -61,12 +65,13 @@ export default function VoteUpRelevantActivity(inProps: ActionsRelevantActivityP
       }
       primary={
         <>
-          {intl.formatMessage(messages.vote, {
+          {intl.formatMessage(messages.comment, {
             username: (
               <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, activityObject.author)} className={classes.username}>
                 {activityObject.author.username}
               </Link>
-            )
+            ),
+            comment: activityObject.comment.summary
           })}
         </>
       }
