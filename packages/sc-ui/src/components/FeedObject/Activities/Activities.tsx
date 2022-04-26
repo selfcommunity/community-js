@@ -175,6 +175,7 @@ export default function Activities(inProps: ActivitiesProps): JSX.Element {
             handleNext={commentsObject.getNextPage}
             totalLoadedComments={commentsObject.comments.length + comments.length}
             totalComments={commentsObject.feedObject.comment_count}
+            hideAdvertising
             {...CommentsObjectProps}
           />
         )}
