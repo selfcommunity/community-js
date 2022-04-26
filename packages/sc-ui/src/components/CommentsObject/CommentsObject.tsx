@@ -10,6 +10,7 @@ import useThemeProps from '@mui/material/styles/useThemeProps';
 import {WidgetProps} from '../Widget';
 import CommentsObjectSkeleton from './Skeleton';
 import {InView} from 'react-intersection-observer';
+import {getContributionRouteName, getRouteData} from '../../utils/contribution';
 import {
   Link,
   SCCommentType,
@@ -18,11 +19,14 @@ import {
   SCFeedObjectTypologyType,
   SCPreferences,
   SCPreferencesContextType,
+  SCRoutingContextType,
   SCUserContextType,
   useSCFetchFeedObject,
   useSCPreferences,
+  useSCRouting,
   useSCUser
 } from '@selfcommunity/core';
+import {appendURLSearchParams} from '../../utils/url';
 
 const PREFIX = 'SCCommentsObject';
 
@@ -263,6 +267,7 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
   const scPreferences: SCPreferencesContextType = useSCPreferences();
+  const scRoutingContext: SCRoutingContextType = useSCRouting();
   const {obj, setObj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
   const commentsIds = comments.map((c) => c.id);
 
@@ -346,7 +351,11 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
               <FormattedMessage id="ui.commentsObject.loadPreviousComments" defaultMessage="ui.commentsObject.loadPreviousComments" />
             </Button>
             {page && (
-              <Link to={`?page=${page - 1}`} className={classes.paginationLink}>
+              <Link
+                to={`${appendURLSearchParams(scRoutingContext.url(getContributionRouteName(feedObject), getRouteData(feedObject)), [
+                  {page: page - 1}
+                ])}`}
+                className={classes.paginationLink}>
                 <FormattedMessage id="ui.commentsObject.previousComments" defaultMessage="ui.commentsObject.previousComments" />
               </Link>
             )}
@@ -369,7 +378,11 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
                 <FormattedMessage id="ui.commentsObject.loadMoreComments" defaultMessage="ui.commentsObject.loadMoreComments" />
               </Button>
               {page && (
-                <Link to={`?page=${page + 1}`} className={classes.paginationLink}>
+                <Link
+                  to={`${appendURLSearchParams(scRoutingContext.url(getContributionRouteName(feedObject), getRouteData(feedObject)), [
+                    {page: page + 1}
+                  ])}`}
+                  className={classes.paginationLink}>
                   <FormattedMessage id="ui.commentsObject.nextComments" defaultMessage="ui.commentsObject.nextComments" />
                 </Link>
               )}
