@@ -249,7 +249,8 @@ export default function Share(inProps: ShareProps): JSX.Element {
     } else {
       if (UserUtils.isBlocked(scUserContext.user)) {
         enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
-          variant: 'warning'
+          variant: 'warning',
+          autoHideDuration: 3000
         });
       } else {
         setIsSharing(true);

@@ -94,7 +94,8 @@ export default function Settings(inProps: SettingsProps): JSX.Element {
       .then((res: AxiosResponse<SCUserSettingsType>) => {
         setSetting(res.data);
         enqueueSnackbar(<FormattedMessage id="ui.userProfileEditSettings.saved" defaultMessage="ui.userProfileEditSettings.saved" />, {
-          variant: 'success'
+          variant: 'success',
+          autoHideDuration: 3000
         });
       })
       .catch((error) => {

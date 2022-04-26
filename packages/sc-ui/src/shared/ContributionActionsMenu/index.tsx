@@ -404,7 +404,8 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
         setCurrentAction(null);
         setCurrentActionLoading(null);
         enqueueSnackbar(<FormattedMessage id="ui.contributionActionMenu.actionError" defaultMessage="ui.contributionActionMenu.actionError" />, {
-          variant: 'error'
+          variant: 'error',
+          autoHideDuration: 3000
         });
       });
   }
@@ -569,7 +570,8 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
   function handleFlagContribution(type) {
     if (UserUtils.isBlocked(scUserContext.user)) {
       enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
-        variant: 'warning'
+        variant: 'warning',
+        autoHideDuration: 3000
       });
     } else if (contributionObj && !isLoading && !isFlagging && type !== 'undefined') {
       setIsFlagging(true);
@@ -633,7 +635,8 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
     ) {
       // if user is blocked, deny edit and moderate
       enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
-        variant: 'warning'
+        variant: 'warning',
+        autoHideDuration: 3000
       });
       return;
     }
@@ -643,7 +646,8 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
       ).then(() => {
         setOpen(false);
         enqueueSnackbar(<FormattedMessage id="ui.common.permanentLinkCopied" defaultMessage="ui.common.permanentLinkCopied" />, {
-          variant: 'success'
+          variant: 'success',
+          autoHideDuration: 3000
         });
       });
       handleClose();
@@ -692,12 +696,14 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
       setCurrentAction(null);
       setOpenConfirmDialog(false);
       enqueueSnackbar(<FormattedMessage id="ui.contributionActionMenu.actionSuccess" defaultMessage="ui.contributionActionMenu.actionSuccess" />, {
-        variant: 'success'
+        variant: 'success',
+        autoHideDuration: 3000
       });
     } else {
       setCurrentActionLoading(null);
       enqueueSnackbar(<FormattedMessage id="ui.contributionActionMenu.actionError" defaultMessage="ui.contributionActionMenu.actionError" />, {
-        variant: 'error'
+        variant: 'error',
+        autoHideDuration: 3000
       });
     }
   }

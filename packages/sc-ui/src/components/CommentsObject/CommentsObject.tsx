@@ -7,7 +7,7 @@ import CommentObject, {CommentObjectProps, CommentObjectSkeleton} from '../Comme
 import ReplyCommentObject, {ReplyCommentObjectProps} from '../CommentObject/ReplyComment';
 import Typography from '@mui/material/Typography';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import {Box, Button, CardProps, Stack} from '@mui/material';
+import {Box, Button, Stack} from '@mui/material';
 import {SCCommentsOrderBy} from '../../types/comments';
 import classNames from 'classnames';
 import CustomAdv from '../CustomAdv';
