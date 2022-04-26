@@ -1,10 +1,10 @@
 import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
-import CommentsObjectSkeleton from './Skeleton';
+import CommentsFeedObjectSkeleton from './Skeleton';
 
 export default {
-  title: 'Design System/SC UI/Skeleton/CommentsObject',
-  component: CommentsObjectSkeleton,
+  title: 'Design System/SC UI/Skeleton/CommentsFeedObjectSkeleton',
+  component: CommentsFeedObjectSkeleton,
   argTypes: {
     variant: {
       options: ['elevation', 'outlined'],
@@ -22,11 +22,11 @@ export default {
     elevation: 1,
     variant: 'elevation'
   }
-} as ComponentMeta<typeof CommentsObjectSkeleton>;
+} as ComponentMeta<typeof CommentsFeedObjectSkeleton>;
 
-const Template: ComponentStory<typeof CommentsObjectSkeleton> = (args) => (
+const Template: ComponentStory<typeof CommentsFeedObjectSkeleton> = (args) => (
   <div style={{width: 400}}>
-    <CommentsObjectSkeleton {...args} />
+    <CommentsFeedObjectSkeleton {...args} />
   </div>
 );
 

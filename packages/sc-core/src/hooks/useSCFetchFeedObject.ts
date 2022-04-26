@@ -5,6 +5,7 @@ import Endpoints from '../constants/Endpoints';
 import {AxiosResponse} from 'axios';
 import {SCOPE_SC_CORE} from '../constants/Errors';
 import {SCFeedDiscussionType, SCFeedObjectType, SCFeedObjectTypologyType, SCFeedPostType, SCFeedStatusType} from '../types';
+import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
 
 /**
  :::info
@@ -63,6 +64,10 @@ export default function useSCFetchFeedObject({
         });
     }
   }, [id]);
+
+  useDeepCompareEffectNoCheck(() => {
+    setObj(feedObject);
+  }, [feedObject]);
 
   return {obj, setObj, error};
 }

@@ -113,7 +113,6 @@ export default function CreateIncubatorDialog(inProps: CreateIncubatorDialogProp
         }
       })
       .then((res: AxiosResponse<any>) => {
-        console.log(res.data);
         setIsSubmitting(false);
         setSubmitted(true);
       })

@@ -3,11 +3,11 @@ import {styled} from '@mui/material/styles';
 import {Avatar} from '@mui/material';
 import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
 import {defineMessages, useIntl} from 'react-intl';
-import DateTimeAgo from '../../../../shared/DateTimeAgo';
+import DateTimeAgo from '../../../../../shared/DateTimeAgo';
 import classNames from 'classnames';
 import useThemeProps from '@mui/material/styles/useThemeProps';
 import {ActionsRelevantActivityProps} from '../ActionsRelevantActivity';
-import BaseItem from '../../../../shared/BaseItem';
+import BaseItem from '../../../../../shared/BaseItem';
 
 const messages = defineMessages({
   follow: {

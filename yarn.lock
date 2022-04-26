@@ -3164,7 +3164,7 @@
     ts-dedent "^2.0.0"
     util-deprecate "^1.0.2"
 
-"@storybook/addon-essentials@^6.4.21":
+"@storybook/addon-essentials@^6.4.22":
   version "6.4.22"
   resolved "https://registry.yarnpkg.com/@storybook/addon-essentials/-/addon-essentials-6.4.22.tgz#6981c89e8b315cda7ce93b9bf74e98ca80aec00a"
   integrity sha512-GTv291fqvWq2wzm7MruBvCGuWaCUiuf7Ca3kzbQ/WqWtve7Y/1PDsqRNQLGZrQxkXU0clXCqY1XtkTrtA3WGFQ==
@@ -3184,7 +3184,7 @@
     regenerator-runtime "^0.13.7"
     ts-dedent "^2.0.0"
 
-"@storybook/addon-links@^6.4.21":
+"@storybook/addon-links@^6.4.22":
   version "6.4.22"
   resolved "https://registry.yarnpkg.com/@storybook/addon-links/-/addon-links-6.4.22.tgz#c0ed9e9ef6505cf1562e1476bbc5064c82dadbe2"
   integrity sha512-OSOyDnTXnmcplJHlXTYUTMkrfpLqxtHp2R69IXfAyI1e8WNDb79mXflrEXDA/RSNEliLkqYwCyYby7gDMGds5Q==
@@ -3232,7 +3232,7 @@
     regenerator-runtime "^0.13.7"
     ts-dedent "^2.0.0"
 
-"@storybook/addon-toolbars@6.4.22", "@storybook/addon-toolbars@^6.4.21":
+"@storybook/addon-toolbars@6.4.22", "@storybook/addon-toolbars@^6.4.22":
   version "6.4.22"
   resolved "https://registry.yarnpkg.com/@storybook/addon-toolbars/-/addon-toolbars-6.4.22.tgz#858a4e5939987c188c96ed374ebeea88bdd9e8de"
   integrity sha512-FFyj6XDYpBBjcUu6Eyng7R805LUbVclEfydZjNiByAoDVyCde9Hb4sngFxn/T4fKAfBz/32HKVXd5iq4AHYtLg==
@@ -3742,7 +3742,7 @@
     react-docgen-typescript "^2.0.0"
     tslib "^2.0.0"
 
-"@storybook/react@^6.4.21":
+"@storybook/react@^6.4.22":
   version "6.4.22"
   resolved "https://registry.yarnpkg.com/@storybook/react/-/react-6.4.22.tgz#5940e5492bc87268555b47f12aff4be4b67eae54"
   integrity sha512-5BFxtiguOcePS5Ty/UoH7C6odmvBYIZutfiy4R3Ua6FYmtxac5vP9r5KjCz1IzZKT8mCf4X+PuK1YvDrPPROgQ==
@@ -13918,6 +13918,11 @@ react-inspector@^5.1.0:
     "@babel/runtime" "^7.0.0"
     is-dom "^1.0.0"
     prop-types "^15.0.0"
+
+react-intersection-observer@^9.0.0:
+  version "9.1.0"
+  resolved "https://registry.yarnpkg.com/react-intersection-observer/-/react-intersection-observer-9.1.0.tgz#27e66be9113fdf6fc6d745e849e1ad6ef20f97f1"
+  integrity sha512-XSDWQGzgJ4/B4eW39+qa3S+uc4Gb+m6lxXR54m/uD5lqeL5sLrgYdntbjl4BlTYAblgUhz+JB5obINhZaD+c0Q==
 
 react-is@17.0.2, react-is@^17.0.1, react-is@^17.0.2:
   version "17.0.2"

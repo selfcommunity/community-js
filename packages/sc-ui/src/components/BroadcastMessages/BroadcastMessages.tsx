@@ -148,7 +148,7 @@ export default function BroadcastMessages(inProps: BroadcastMessagesProps): JSX.
     });
     const data: any = response.data;
     if (data.next && !data.results[data.results.length - 1]['viewed_at']) {
-      return {data: data.results.concat(await performFetchMessages(data.next)), next: data.next};
+      return {data: data.results.concat((await performFetchMessages(data.next)).data), next: data.next};
     }
     return {data: data.results, next: data.next};
   };
@@ -206,10 +206,13 @@ export default function BroadcastMessages(inProps: BroadcastMessagesProps): JSX.
     };
   }, []);
 
+  const messagesToShow = [...unViewedMessages, ...messages.slice(unViewedMessages.length, viewAll ? viewedMessageCounter : 1)];
   return (
     <Root id={id} className={classNames(classes.root, className)} {...rest}>
-      {[...unViewedMessages, ...messages.slice(unViewedMessages.length, viewAll ? viewedMessageCounter : 1)].map((message) => (
-        <Message key={message.id} message={message} {...MessageProps} onClose={handleDisposeMessage} />
+      {messagesToShow.map((message, index) => (
+        <Box key={index}>
+          <Message message={message} {...MessageProps} onClose={handleDisposeMessage} />
+        </Box>
       ))}
       {loading && <MessageSkeleton />}
       {loading !== null && !loading && (next || (viewedMessageCounter > 0 && !viewAll)) && (

@@ -121,6 +121,7 @@ export default function VoteUpNotification(inProps: NotificationVoteUpProps): JS
       <NotificationItem
         template={template}
         isNew={notificationObject.is_new}
+        disableTypography
         image={
           <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.user)}>
             <Avatar alt={notificationObject.user.username} variant="circular" src={notificationObject.user.avatar} classes={{root: classes.avatar}} />

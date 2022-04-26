@@ -122,6 +122,7 @@ export default function UserConnectionNotification(inProps: NotificationConnecti
       <NotificationItem
         template={template}
         isNew={notificationObject.is_new}
+        disableTypography
         image={
           <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, userConnection)}>
             <Avatar alt={userConnection.username} variant="circular" src={userConnection.avatar} classes={{root: classes.avatar}} />

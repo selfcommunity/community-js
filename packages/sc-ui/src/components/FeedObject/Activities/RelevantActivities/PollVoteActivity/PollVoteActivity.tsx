@@ -3,20 +3,20 @@ import {styled} from '@mui/material/styles';
 import {Avatar} from '@mui/material';
 import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
 import {defineMessages, useIntl} from 'react-intl';
-import DateTimeAgo from '../../../../shared/DateTimeAgo';
+import DateTimeAgo from '../../../../../shared/DateTimeAgo';
+import {ActionsRelevantActivityProps} from '../ActionsRelevantActivity';
 import classNames from 'classnames';
 import useThemeProps from '@mui/material/styles/useThemeProps';
-import {ActionsRelevantActivityProps} from '../ActionsRelevantActivity';
-import BaseItem from '../../../../shared/BaseItem';
+import BaseItem from '../../../../../shared/BaseItem';
 
 const messages = defineMessages({
-  comment: {
-    id: 'ui.feedObject.relevantActivities.comment',
-    defaultMessage: 'ui.feedObject.relevantActivities.comment'
+  pollVote: {
+    id: 'ui.feedObject.relevantActivities.pollVote',
+    defaultMessage: 'ui.feedObject.relevantActivities.pollVote'
   }
 });
 
-const PREFIX = 'SCCommentRelevantActivity';
+const PREFIX = 'SCPollVoteRelevantActivity';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -31,15 +31,10 @@ const Root = styled(BaseItem, {
 })(({theme}) => ({
   [`& .${classes.username}`]: {
     color: 'inherit'
-  },
-  '& .SCBaseItem-secondary': {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center'
   }
 }));
 
-export default function CommentRelevantActivity(inProps: ActionsRelevantActivityProps): JSX.Element {
+export default function PollVoteRelevantActivity(inProps: ActionsRelevantActivityProps): JSX.Element {
   // PROPS
   const props: ActionsRelevantActivityProps = useThemeProps({
     props: inProps,
@@ -65,13 +60,12 @@ export default function CommentRelevantActivity(inProps: ActionsRelevantActivity
       }
       primary={
         <>
-          {intl.formatMessage(messages.comment, {
+          {intl.formatMessage(messages.pollVote, {
             username: (
               <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, activityObject.author)} className={classes.username}>
                 {activityObject.author.username}
               </Link>
-            ),
-            comment: activityObject.comment.summary
+            )
           })}
         </>
       }
