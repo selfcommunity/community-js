@@ -43,12 +43,14 @@ import {
   Select,
   SelectChangeEvent,
   Stack,
-  TextField, Theme,
+  TextField,
+  Theme,
   ToggleButton,
   ToggleButtonGroup,
-  Typography, useMediaQuery,
+  Typography,
+  useMediaQuery
 } from '@mui/material';
-import { styled, useTheme } from '@mui/material/styles';
+import {styled, useTheme} from '@mui/material/styles';
 import {COMPOSER_POLL_MIN_CHOICES, COMPOSER_TITLE_MAX_LENGTH, COMPOSER_TYPE_DISCUSSION, COMPOSER_TYPE_POST} from '../../constants/Composer';
 import {MEDIA_TYPE_SHARE} from '../../constants/Media';
 import LoadingButton from '@mui/lab/LoadingButton';
