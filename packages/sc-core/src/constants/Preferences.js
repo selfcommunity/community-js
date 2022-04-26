@@ -116,6 +116,7 @@ export const CONFIGURATIONS_URL_TEMPLATE_USER_PROFILE_SETTINGS = 'configurations
 export const CONFIGURATIONS_URL_TEMPLATE_USER_NOTIFICATIONS = 'configurations.url_template_notifications';
 export const CONFIGURATIONS_URL_TEMPLATE_USER_PRIVATE_MESSAGES = 'configurations.url_template_private_message';
 export const CONFIGURATIONS_URL_TEMPLATE_INCUBATOR = 'configurations.url_template_incubator';
+export const CONFIGURATIONS_USER_METADATA_DEFINITIONS = 'configurations.user_metadata_definition';
 
 /**
  * PROVIDERS

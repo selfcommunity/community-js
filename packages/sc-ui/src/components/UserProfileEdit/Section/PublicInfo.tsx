@@ -1,9 +1,21 @@
-import React, {ChangeEvent, useEffect, useState} from 'react';
+import React, {ChangeEvent, useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Box, CircularProgress, IconButton, InputAdornment, MenuItem, TextField} from '@mui/material';
 import Icon from '@mui/material/Icon';
 import {defineMessages, useIntl} from 'react-intl';
-import {Endpoints, http, SCUserContextType, SCUserFields, SCUserType, StringUtils, useSCUser} from '@selfcommunity/core';
+import {
+  Endpoints,
+  formatHttpError,
+  http,
+  SCPreferences,
+  SCPreferencesContextType,
+  SCUserContextType,
+  SCUserFields,
+  SCUserType,
+  StringUtils,
+  useSCPreferences,
+  useSCUser
+} from '@selfcommunity/core';
 import {DEFAULT_FIELDS} from '../../../constants/UserProfile';
 import classNames from 'classnames';
 import {AxiosResponse} from 'axios';
@@ -14,38 +26,6 @@ import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
 import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const messages = defineMessages({
-  username: {
-    id: 'ui.userProfileInfo.username',
-    defaultMessage: 'ui.userProfileInfo.username'
-  },
-  realName: {
-    id: 'ui.userProfileInfo.realName',
-    defaultMessage: 'ui.userProfileInfo.realName'
-  },
-  dateJoined: {
-    id: 'ui.userProfileInfo.dateJoined',
-    defaultMessage: 'ui.userProfileInfo.dateJoined'
-  },
-  bio: {
-    id: 'ui.userProfileInfo.bio',
-    defaultMessage: 'ui.userProfileInfo.bio'
-  },
-  location: {
-    id: 'ui.userProfileInfo.location',
-    defaultMessage: 'ui.userProfileInfo.location'
-  },
-  dateOfBirth: {
-    id: 'ui.userProfileInfo.dateOfBirth',
-    defaultMessage: 'ui.userProfileInfo.dateOfBirth'
-  },
-  description: {
-    id: 'ui.userProfileInfo.description',
-    defaultMessage: 'ui.userProfileInfo.description'
-  },
-  gender: {
-    id: 'ui.userProfileInfo.gender',
-    defaultMessage: 'ui.userProfileInfo.gender'
-  },
   genderMale: {
     id: 'ui.userProfileEditPublicInfo.genderMale',
     defaultMessage: 'ui.userProfileEditPublicInfo.genderMale'
@@ -57,10 +37,6 @@ const messages = defineMessages({
   genderUnspecified: {
     id: 'ui.userProfileEditPublicInfo.genderUnspecified',
     defaultMessage: 'ui.userProfileEditPublicInfo.genderUnspecified'
-  },
-  website: {
-    id: 'ui.userProfileInfo.website',
-    defaultMessage: 'ui.userProfileInfo.website'
   }
 });
 
@@ -120,8 +96,15 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
 
+  // PREFERENCES
+  const scPreferences: SCPreferencesContextType = useSCPreferences();
+  const metadataDefinitions = useMemo(() => {
+    return JSON.parse(scPreferences.preferences[SCPreferences.CONFIGURATIONS_USER_METADATA_DEFINITIONS].value);
+  }, [scPreferences.preferences]);
+
   // STATE
   const [user, setUser] = useState<SCUserType>(scUserContext.user);
+  const [error, setError] = useState<any>({});
   const [editing, setEditing] = useState<SCUserFields[]>([]);
   const [saving, setSaving] = useState<SCUserFields[]>([]);
 
@@ -137,6 +120,10 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
   const handleEdit = (field: SCUserFields) => {
     return (event: React.MouseEvent<HTMLButtonElement>) => {
       setEditing([...editing, field]);
+      if (error[`${StringUtils.camelCase(field)}Error`]) {
+        delete error[`${StringUtils.camelCase(field)}Error`];
+        setError(error);
+      }
     };
   };
 
@@ -155,11 +142,13 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
         })
         .then((res: AxiosResponse<SCUserType>) => {
           scUserContext.updateUser(res.data);
-          setEditing(editing.filter((f) => f !== field));
-          setSaving(saving.filter((f) => f !== field));
         })
         .catch((error) => {
-          console.log(error);
+          setError({...error, ...formatHttpError(error)});
+        })
+        .then(() => {
+          setEditing(editing.filter((f) => f !== field));
+          setSaving(saving.filter((f) => f !== field));
         });
     };
   };
@@ -169,11 +158,34 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
   };
 
   // RENDER
+  const getMetadataProps = (field) => {
+    if (!metadataDefinitions[field]) {
+      return {};
+    }
+    const props: any = {};
+    switch (metadataDefinitions[field].type) {
+      case 'url':
+        props.type = 'url';
+        props.pattern = 'https://.*';
+        props.size = '30';
+        break;
+      case 'email':
+        props.type = 'email';
+        break;
+      case 'phone_number':
+        props.type = 'tel';
+        break;
+    }
+    return props;
+  };
+
   const renderField = (field) => {
     const isEditing = editing.includes(field);
     const isSaving = saving.includes(field);
+    const camelField = StringUtils.camelCase(field);
+    const _error = error !== null && error[`${camelField}Error`] && error[`${camelField}Error`].error;
     const component = {element: TextField};
-    const props: any = {
+    let props: any = {
       InputProps: {
         endAdornment: (
           <InputAdornment position="end">
@@ -204,7 +216,10 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
         return (
           <LocalizationProvider dateAdapter={AdapterDateFns} key={field}>
             <DatePicker
-              label={intl.formatMessage(messages[StringUtils.camelCase(field)])}
+              label={intl.formatMessage({
+                id: `ui.userProfileInfo.${StringUtils.camelCase(field)}`,
+                defaultMessage: `ui.userProfileInfo.${field}`
+              })}
               value={user[field]}
               onChange={(newValue) => {
                 setUser({...user, [field]: newValue.toJSON().split('T')[0]}); // FIX for ensuring API format
@@ -241,6 +256,7 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
         ));
         break;
       default:
+        props = {...props, ...getMetadataProps(field)};
         break;
     }
     return (
@@ -250,16 +266,20 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
         className={classes.field}
         name={field}
         fullWidth
-        label={intl.formatMessage(messages[StringUtils.camelCase(field)])}
-        value={user[field]}
+        label={intl.formatMessage({
+          id: `ui.userProfileInfo.${camelField}`,
+          defaultMessage: `ui.userProfileInfo.${field}`
+        })}
+        value={user[field] || ''}
         onChange={handleChange}
-        disabled={!isEditing || isSaving}>
+        disabled={!isEditing || isSaving}
+        error={_error}
+        helperText={_error}>
         {content}
       </component.element>
     );
   };
 
-  console.log(user);
   if (fields.length === 0 || !user) {
     return null;
   }
