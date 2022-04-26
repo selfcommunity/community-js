@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useRef, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {FormattedMessage} from 'react-intl';
 import CommentObject, {CommentObjectProps} from '../CommentObject';
@@ -11,6 +11,7 @@ import {WidgetProps} from '../Widget';
 import CommentsObject from '../CommentsObject';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import Typography from '@mui/material/Typography';
+import {getContribution} from '../../utils/contribution';
 import {
   Endpoints,
   http,
@@ -37,7 +38,7 @@ const Root = styled(Box, {
 })(({theme}) => ({
   width: '100%',
   [`& .${classes.noComments}`]: {
-    paddingBottom: 200
+    paddingBottom: 20
   },
   [`& .${classes.commentNotFound}`]: {
     padding: theme.spacing(1),
@@ -113,6 +114,13 @@ export interface CommentsFeedObjectProps {
    * @default null
    */
   renderNoComments?: () => JSX.Element;
+
+  /**
+   * renderCommentNotFound function
+   * invoked when comment not found
+   * @default null
+   */
+  renderCommentNotFound?: () => JSX.Element;
 
   /**
    * page
@@ -207,6 +215,7 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
     CommentComponentProps = {variant: 'outlined'},
     CommentObjectSkeletonProps = {elevation: 0, WidgetProps: {variant: 'outlined'} as WidgetProps},
     renderNoComments,
+    renderCommentNotFound,
     page = 1,
     commentsPageCount = 5,
     commentsOrderBy = SCCommentsOrderBy.ADDED_AT_ASC,
@@ -221,6 +230,7 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [comment, setComment] = useState<SCCommentType>(null);
   const {obj: commentObj, error: errorCommentObj} = useSCFetchCommentObject({id: commentObjectId, commentObject});
+  const [commentError, setCommentError] = useState<boolean>(null);
   const commentsObject = useSCFetchCommentObjects({
     id: feedObjectId,
     feedObject,
@@ -234,9 +244,6 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
   // CONST
   const objId = commentsObject.feedObject ? commentsObject.feedObject.id : null;
   const commentObjId = commentObj ? commentObj.id : null;
-
-  // REFS
-  const isComponentInitialized = useRef(false);
 
   /**
    * Total number of comments
@@ -263,7 +270,7 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
   /**
    * Render no comments
    */
-  function renderNoCommentsFound() {
+  function renderNoCommentsFoundError() {
     return (
       <>
         {renderNoComments ? (
@@ -271,6 +278,23 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
         ) : (
           <Box className={classes.noComments}>
             <FormattedMessage id="ui.commentsObject.noComments" defaultMessage="ui.commentsObject.noComments" />
+          </Box>
+        )}
+      </>
+    );
+  }
+
+  /**
+   * Render comment not found
+   */
+  function renderCommentNotFoundError() {
+    return (
+      <>
+        {renderCommentNotFound ? (
+          renderCommentNotFound()
+        ) : (
+          <Box className={classes.noComments}>
+            <FormattedMessage id="ui.commentsObject.commentNotFound" defaultMessage="ui.commentsObject.commentNotFound" />
           </Box>
         )}
       </>
@@ -309,8 +333,11 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
           .then((parent) => {
             const _parent = Object.assign({}, parent);
             _parent.latest_comments = [commentObj];
-            setComment(_parent);
-            isComponentInitialized.current = true;
+            if (getContribution(parent).id === commentsObject.feedObject.id) {
+              setComment(_parent);
+            } else {
+              setCommentError(true);
+            }
             setIsLoading(false);
           })
           .catch((error) => {
@@ -319,7 +346,11 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
             Logger.error(SCOPE_SC_UI, error);
           });
       } else {
-        setComment(commentObj);
+        if (getContribution(commentObj).id === commentsObject.feedObject.id) {
+          setComment(commentObj);
+        } else {
+          setCommentError(true);
+        }
         setIsLoading(false);
       }
     } else if (errorCommentObj) {
@@ -331,11 +362,12 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
    * Prefetch comments only if obj exists
    */
   useEffect(() => {
-    if (commentObjectId || commentObj) {
-      fetchComment();
-    } else if (commentsObject && commentsObject.feedObject && !isLoading) {
-      commentsObject.getNextPage();
-      isComponentInitialized.current = true;
+    if (objId !== null && !isLoading) {
+      if (commentObjectId || commentObj) {
+        fetchComment();
+      } else if (!isLoading) {
+        commentsObject.getNextPage();
+      }
     }
   }, [objId, commentObjId, errorCommentObj]);
 
@@ -343,13 +375,13 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
    * Render comments
    */
   let commentsRendered = <></>;
-  if (isComponentInitialized.current && !total && !commentsObject.isLoadingNext && !isLoading && !comment) {
+  if (commentsObject.componentLoaded && !total && !commentsObject.isLoadingNext && !isLoading) {
     /**
      * If comments were not found and loading is finished
-     * and the component and the component was not looking
-     * for a particular comment render no comments message
+     * and the component was not looking for a particular
+     * comment render no comments message
      */
-    commentsRendered = renderNoCommentsFound();
+    commentsRendered = renderNoCommentsFoundError();
   } else {
     /**
      * Two modes available:
@@ -360,23 +392,26 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
      *  in case it needs to display a single comment
      */
     commentsRendered = (
-      <CommentsObject
-        feedObject={commentsObject.feedObject}
-        comments={commentsObject.comments}
-        endComments={[...(comment ? [comment] : []), ...(commentsOrderBy === SCCommentsOrderBy.ADDED_AT_ASC ? comments : [])]}
-        startComments={[...(commentsOrderBy === SCCommentsOrderBy.ADDED_AT_ASC ? [] : comments)]}
-        previous={commentsObject.previous}
-        handlePrevious={commentsObject.getPreviousPage}
-        isLoadingPrevious={commentsObject.isLoadingPrevious}
-        next={commentsObject.next}
-        isLoadingNext={commentsObject.isLoadingNext}
-        handleNext={commentsObject.getNextPage}
-        page={commentsObject.page}
-        infiniteScrolling={infiniteScrolling && commentsObject.total > 0 && !comment && !comments.length}
-        CommentComponentProps={CommentComponentProps}
-        CommentComponent={CommentComponent}
-        CommentObjectSkeletonProps={CommentObjectSkeletonProps}
-      />
+      <>
+        {(commentError || errorCommentObj) && !isLoading && !total && renderCommentNotFoundError()}
+        <CommentsObject
+          feedObject={commentsObject.feedObject}
+          comments={commentsObject.comments}
+          endComments={[...(comment ? [comment] : []), ...(commentsOrderBy === SCCommentsOrderBy.ADDED_AT_ASC ? comments : [])]}
+          startComments={[...(commentsOrderBy === SCCommentsOrderBy.ADDED_AT_ASC ? [] : comments)]}
+          previous={commentsObject.previous}
+          handlePrevious={commentsObject.getPreviousPage}
+          isLoadingPrevious={commentsObject.isLoadingPrevious}
+          next={commentsObject.next}
+          isLoadingNext={commentsObject.isLoadingNext}
+          handleNext={commentsObject.getNextPage}
+          page={commentsObject.page}
+          infiniteScrolling={infiniteScrolling && commentsObject.total > 0 && !comment && !comments.length}
+          CommentComponentProps={CommentComponentProps}
+          CommentComponent={CommentComponent}
+          CommentObjectSkeletonProps={CommentObjectSkeletonProps}
+        />
+      </>
     );
   }
 

@@ -43,8 +43,8 @@ export default function useSCFetchCommentObjects(props: {
   // Current page
   const [page, setPage] = useState<number>(offset / pageSize + 1);
 
-  // Component status
-  const initialDataLoaded = useRef(false);
+  // Component status - if load initial data
+  const componentLoaded = useRef(false);
 
   /**
    * Get next url
@@ -131,7 +131,7 @@ export default function useSCFetchCommentObjects(props: {
             setPrevious(res.previous);
           }
           setIsLoadingNext(false);
-          initialDataLoaded.current = true;
+          componentLoaded.current = true;
           onChangePage && onChangePage(currentPage);
         })
         .catch((error) => {
@@ -144,7 +144,7 @@ export default function useSCFetchCommentObjects(props: {
    * Reset component status on change orderBy, pageSize, offset
    */
   useEffect(() => {
-    if (initialDataLoaded.current && Boolean(obj) && !reload) {
+    if (componentLoaded.current && Boolean(obj) && !reload) {
       setNext(getNextUrl());
       setComments([]);
       setTotal(0);
@@ -157,7 +157,7 @@ export default function useSCFetchCommentObjects(props: {
    * Reload fetch comments
    */
   useEffect(() => {
-    if (initialDataLoaded.current && reload && !isLoadingNext && !isLoadingPrevious) {
+    if (componentLoaded.current && reload && !isLoadingNext && !isLoadingPrevious) {
       setReload(false);
       getNextPage();
     }
@@ -178,5 +178,6 @@ export default function useSCFetchCommentObjects(props: {
     getNextPage,
     getPreviousPage,
     orderBy,
+    componentLoaded: componentLoaded.current,
   };
 }
