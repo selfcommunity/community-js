@@ -351,7 +351,10 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
         left: _widgets
           .map((w) => Object.assign({}, w, {position: w.position * (w.column === 'right' ? 5 : 1)}))
           .sort(widgetSort)
-          .reduce(widgetReducer, [...feedData]),
+          .reduce(widgetReducer, [
+            ...feedData,
+            ...(loading ? Array.from({length: 5}).map(() => ({type: 'widget', component: ItemSkeleton, componentProps: ItemSkeletonProps})) : [])
+          ]),
         right: []
       };
     } else {
@@ -359,11 +362,14 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
         left: _widgets
           .filter((w) => w.column === 'left')
           .sort(widgetSort)
-          .reduce(widgetReducer, [...feedData]),
+          .reduce(widgetReducer, [
+            ...feedData,
+            ...(loading ? Array.from({length: 5}).map(() => ({type: 'widget', component: ItemSkeleton, componentProps: ItemSkeletonProps})) : [])
+          ]),
         right: _widgets.filter((w) => w.column === 'right').sort(widgetSort)
       };
     }
-  }, [oneColLayout, feedData, _widgets]);
+  }, [loading, oneColLayout, feedData, _widgets]);
 
   const data = getData();
 
@@ -405,13 +411,6 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
               )
             )}
           </InfiniteScroll>
-          {loading && (
-            <Box className={classes.left}>
-              {Array.from({length: 5}).map((e, i) => (
-                <ItemSkeleton key={i} {...ItemSkeletonProps} />
-              ))}
-            </Box>
-          )}
         </React.Suspense>
       </Grid>
       {data.right.length > 0 && (
