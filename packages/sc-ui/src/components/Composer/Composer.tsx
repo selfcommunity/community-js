@@ -653,7 +653,8 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
     if (UserUtils.isBlocked(scAuthContext.user)) {
       // deny submit action if authenticated user is blocked
       enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
-        variant: 'warning'
+        variant: 'warning',
+        autoHideDuration: 3000
       });
       return;
     }

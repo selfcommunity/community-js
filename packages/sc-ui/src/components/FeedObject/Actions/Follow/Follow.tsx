@@ -157,7 +157,8 @@ export default function Follow(inProps: FollowProps): JSX.Element {
         .catch((error) => {
           Logger.error(SCOPE_SC_UI, error);
           enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
-            variant: 'error'
+            variant: 'error',
+            autoHideDuration: 3000
           });
         });
     }

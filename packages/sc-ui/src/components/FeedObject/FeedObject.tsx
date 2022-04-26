@@ -534,7 +534,8 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
   function handleReply(comment) {
     if (UserUtils.isBlocked(scUserContext.user)) {
       enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
-        variant: 'warning'
+        variant: 'warning',
+        autoHideDuration: 3000
       });
     } else {
       setIsReplying(true);
@@ -552,7 +553,8 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
         .catch((error) => {
           Logger.error(SCOPE_SC_UI, error);
           enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
-            variant: 'error'
+            variant: 'error',
+            autoHideDuration: 3000
           });
         });
     }

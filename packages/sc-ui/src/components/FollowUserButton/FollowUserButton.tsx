@@ -114,7 +114,8 @@ export default function FollowUserButton(inProps: FollowUserButtonProps): JSX.El
   const followUser = () => {
     if (!followed && UserUtils.isBlocked(scUserContext.user)) {
       enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
-        variant: 'warning'
+        variant: 'warning',
+        autoHideDuration: 3000
       });
     } else {
       scFollowedManager

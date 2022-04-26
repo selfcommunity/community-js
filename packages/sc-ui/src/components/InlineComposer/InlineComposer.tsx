@@ -13,7 +13,7 @@ import {
   SCUserContextType,
   UserUtils
 } from '@selfcommunity/core';
-import { Avatar, Box, Button, IconButton, CardProps, CardContent } from '@mui/material';
+import {Avatar, Box, Button, IconButton, CardProps, CardContent} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {SCMediaObjectType} from '../../types/media';
 import {Document, Image, Link} from '../../shared/Media';
@@ -161,7 +161,8 @@ export default function InlineComposer(inProps: InlineComposerProps): JSX.Elemen
       if (scUserContext.user) {
         if (UserUtils.isBlocked(scUserContext.user)) {
           enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
-            variant: 'warning'
+            variant: 'warning',
+            autoHideDuration: 3000
           });
         } else {
           setState({view, open: true});
@@ -181,7 +182,8 @@ export default function InlineComposer(inProps: InlineComposerProps): JSX.Elemen
       onSuccess(feedObject);
     }
     enqueueSnackbar(<FormattedMessage id="ui.inlineComposer.success" defaultMessage="ui.inlineComposer.success" />, {
-      variant: 'success'
+      variant: 'success',
+      autoHideDuration: 3000
     });
     setState({...INITIAL_STATE});
   };
