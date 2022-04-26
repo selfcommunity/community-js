@@ -12,7 +12,7 @@ export default {
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const Template: ComponentStory<typeof FeedObjectDetailTemplate> = (args) => (
   <div style={{maxWidth: '1200px', width: '100%', height: '500px'}}>
-    <FeedObjectDetailTemplate {...args} CommentsObjectProps={{ReplyCommentObjectProps: {variant: 'elevation'}}} />
+    <FeedObjectDetailTemplate {...args} />
   </div>
 );
 
