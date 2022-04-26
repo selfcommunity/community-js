@@ -24,7 +24,26 @@ const Root = styled(AvatarGroup, {
     height: 24
   }
 }));
+/**
+ * > API documentation for the Community-UI Avatar Group Skeleton component. Learn about the available props and the CSS API.
 
+ #### Import
+
+ ```jsx
+ import {AvatarGroupSkeleton} from '@selfcommunity/ui';
+ ```
+
+ #### Component Name
+
+ The name `SCAvatarGroupSkeleton` can be used when providing style overrides in the theme.
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCAvatarGroupSkeleton-root|Styles applied to the root element.|
+ *
+ */
 export default function AvatarGroupSkeleton(props): JSX.Element {
   return (
     <Root className={classes.root} {...props}>

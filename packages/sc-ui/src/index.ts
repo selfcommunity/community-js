@@ -74,6 +74,7 @@ import Incubator, {IncubatorProps} from './components/Incubator';
 import IncubatorsList, {IncubatorsListProps} from './components/IncubatorsList';
 import IncubatorDetail, {IncubatorDetailProps} from './components/IncubatorDetail';
 import IncubatorSuggestion, {IncubatorSuggestionProps} from './components/IncubatorSuggestion';
+import Footer, {FooterProps} from './components/Footer';
 
 /**
  * Utilities:
@@ -244,5 +245,7 @@ export {
   IncubatorDetailProps,
   IncubatorSuggestion,
   IncubatorSuggestionProps,
-  ContributionUtils
+  ContributionUtils,
+  Footer,
+  FooterProps
 };

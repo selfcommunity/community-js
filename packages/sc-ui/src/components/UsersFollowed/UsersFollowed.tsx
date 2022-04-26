@@ -250,7 +250,13 @@ export default function UsersFollowed(inProps: UsersFollowedProps): JSX.Element 
                       <List>
                         {followed.map((f) => (
                           <ListItem key={f.id}>
-                            <User elevation={0} user={f} {...UserProps} className={classes.followedItem} />
+                            <User
+                              elevation={0}
+                              user={f}
+                              {...UserProps}
+                              className={classes.followedItem}
+                              followConnectUserButtonProps={{onFollow: handleOnFollowUser}}
+                            />
                           </ListItem>
                         ))}
                       </List>

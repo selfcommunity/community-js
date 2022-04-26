@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import { Button, Typography, List, CardContent, ListItem } from '@mui/material';
+import {Button, Typography, List, CardContent, ListItem} from '@mui/material';
 import {Endpoints, http, SCUserContext, SCUserContextType, SCCategoryType} from '@selfcommunity/core';
 import Skeleton from './Skeleton';
 import Category, {CategoryProps} from '../Category';
@@ -108,6 +108,7 @@ export default function CategoriesSuggestion(inProps: CategoriesListProps): JSX.
    */
   function handleOnFollowCategory(category, follow) {
     setCategories(categories.filter((c) => c.id !== category.id));
+    setTotal((prev) => prev - 1);
     if (visibleCategories < limit && total > 1) {
       loadCategories(1);
     }

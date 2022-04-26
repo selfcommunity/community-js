@@ -44,11 +44,13 @@ import {
   SelectChangeEvent,
   Stack,
   TextField,
+  Theme,
   ToggleButton,
   ToggleButtonGroup,
-  Typography
+  Typography,
+  useMediaQuery
 } from '@mui/material';
-import {styled} from '@mui/material/styles';
+import {styled, useTheme} from '@mui/material/styles';
 import {COMPOSER_POLL_MIN_CHOICES, COMPOSER_TITLE_MAX_LENGTH, COMPOSER_TYPE_DISCUSSION, COMPOSER_TYPE_POST} from '../../constants/Composer';
 import {MEDIA_TYPE_SHARE} from '../../constants/Media';
 import LoadingButton from '@mui/lab/LoadingButton';
@@ -1044,12 +1046,15 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
     );
   }
 
+  const theme: Theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+
   if (!scAuthContext.user) {
     return null;
   }
 
   return (
-    <Root TransitionComponent={DialogTransition} keepMounted onClose={handleClose} {...rest} className={classes.root}>
+    <Root TransitionComponent={DialogTransition} keepMounted onClose={handleClose} {...rest} className={classes.root} fullScreen={fullScreen}>
       {child()}
     </Root>
   );

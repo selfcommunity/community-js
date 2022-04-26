@@ -19,6 +19,7 @@ export const INCUBATOR_ROUTE_NAME = 'incubator';
 export const SIGNIN_ROUTE_NAME = 'signin';
 export const SIGNUP_ROUTE_NAME = 'signup';
 export const RECOVER_ROUTE_NAME = 'recover';
+export const CUSTOM_PAGES_ROUTE_NAME = 'custom_pages';
 
 /**
  * Default Routes
@@ -40,4 +41,5 @@ export const defaultRoutes: {[k: string]: string} = {
   [SIGNIN_ROUTE_NAME]: '/signin/',
   [SIGNUP_ROUTE_NAME]: '/signup/',
   [RECOVER_ROUTE_NAME]: '/recover/',
+  [CUSTOM_PAGES_ROUTE_NAME]: '/:id/:slug/',
 };

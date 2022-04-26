@@ -30,6 +30,7 @@ const Root = styled(Box, {
     padding: 0
   }
 }));
+
 export interface RelevantActivitiesProps {
   /**
    * Overrides or extends the styles applied to the component.
@@ -51,6 +52,7 @@ export interface RelevantActivitiesProps {
    */
   [p: string]: any;
 }
+
 export default function RelevantActivities(inProps: RelevantActivitiesProps): JSX.Element {
   //PROPS
   const props: RelevantActivitiesProps = useThemeProps({
@@ -61,7 +63,6 @@ export default function RelevantActivities(inProps: RelevantActivitiesProps): JS
 
   // STATE
   const [openOtherActivities, setOpenOtherActivities] = useState<boolean>(false);
-  const [loadingVote, setLoadingVote] = useState<number>(null);
 
   /**
    * Renders single relevant activity

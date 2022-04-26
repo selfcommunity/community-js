@@ -1,5 +1,5 @@
 import React from 'react';
-import {CommentObjectSkeleton, FeedObjectSkeleton, SCFeedObjectTemplateType, GenericSkeleton} from '@selfcommunity/ui';
+import {CommentObjectSkeleton, FeedObjectSkeleton, RelatedFeedObjectsSkeleton, SCFeedObjectTemplateType} from '@selfcommunity/ui';
 import {Box, Grid, Hidden} from '@mui/material';
 import {styled} from '@mui/material/styles';
 
@@ -47,7 +47,7 @@ export default function FeedObjectDetailSkeleton(): JSX.Element {
         </Grid>
         <Grid item xs={12} md={5}>
           <Hidden smDown>
-            <GenericSkeleton />
+            <RelatedFeedObjectsSkeleton />
           </Hidden>
         </Grid>
       </Grid>
