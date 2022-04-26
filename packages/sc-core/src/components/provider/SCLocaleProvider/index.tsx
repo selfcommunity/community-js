@@ -1,7 +1,6 @@
-import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
-import {SCContextType} from '../../../types';
+import React, {createContext, useContext, useMemo, useState} from 'react';
+import {SCContextType, SCLocaleContextType} from '../../../types';
 import {useSCContext} from '../SCContextProvider';
-import {SCLocaleContextType} from '../../../types';
 import {loadLocaleData} from '../../../utils/locale';
 import {DEFAULT_LANGUAGE_UI} from '../../../constants/Locale';
 import {IntlProvider} from 'react-intl';
