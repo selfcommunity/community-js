@@ -38,11 +38,10 @@ const Root = styled(Box, {
 })(({theme}) => ({
   width: '100%',
   [`& .${classes.noComments}`]: {
-    paddingBottom: 20
+    padding: theme.spacing()
   },
   [`& .${classes.commentNotFound}`]: {
-    padding: theme.spacing(1),
-    fontWeight: '500'
+    padding: theme.spacing()
   }
 }));
 
@@ -192,7 +191,6 @@ export interface CommentsFeedObjectProps {
  |commentNotFound|.SCCommentsObject-comment-not-found|Styles applied to the label 'Comment not found'.|
  |noComments|.SCCommentsObject-no-comments|Styles applied to the 'no comments' section.|
 
-
  * @param inProps
  */
 export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JSX.Element {
@@ -293,7 +291,7 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
         {renderCommentNotFound ? (
           renderCommentNotFound()
         ) : (
-          <Box className={classes.noComments}>
+          <Box className={classes.commentNotFound}>
             <FormattedMessage id="ui.commentsObject.commentNotFound" defaultMessage="ui.commentsObject.commentNotFound" />
           </Box>
         )}
