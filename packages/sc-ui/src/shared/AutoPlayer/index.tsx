@@ -1,3 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+// @ts-nocheck
+
 import React, {useState} from 'react';
 import {Waypoint} from 'react-waypoint';
 import ReactPlayer from 'react-player';
