@@ -6,7 +6,6 @@ import classNames from 'classnames';
 import useThemeProps from '@mui/material/styles/useThemeProps';
 import CommentsObject from '../../CommentsObject';
 import ActivitiesMenu from './ActivitiesMenu';
-import LazyLoad from 'react-lazyload';
 import {CommentObjectProps} from '../../CommentObject';
 import RelevantActivities from './RelevantActivities';
 import {CommentsObjectProps} from '../../CommentsObject';
@@ -167,19 +166,17 @@ export default function Activities(inProps: ActivitiesProps): JSX.Element {
     return (
       <>
         {(commentsObject.feedObject.comment_count > 0 || comments.length > 0) && (
-          <LazyLoad once>
-            <CommentsObject
-              feedObject={commentsObject.feedObject}
-              comments={commentsObject.comments}
-              startComments={comments}
-              next={commentsObject.next}
-              isLoadingNext={commentsObject.isLoadingNext}
-              handleNext={commentsObject.getNextPage}
-              totalLoadedComments={commentsObject.comments.length + comments.length}
-              totalComments={commentsObject.feedObject.comment_count}
-              {...CommentsObjectProps}
-            />
-          </LazyLoad>
+          <CommentsObject
+            feedObject={commentsObject.feedObject}
+            comments={commentsObject.comments}
+            startComments={comments}
+            next={commentsObject.next}
+            isLoadingNext={commentsObject.isLoadingNext}
+            handleNext={commentsObject.getNextPage}
+            totalLoadedComments={commentsObject.comments.length + comments.length}
+            totalComments={commentsObject.feedObject.comment_count}
+            {...CommentsObjectProps}
+          />
         )}
       </>
     );

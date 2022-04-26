@@ -707,6 +707,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
             <ReplyCommentObject
               text={replyComment.parent ? `@${replyComment.author.username}, ` : ''}
               autoFocus
+              key={`reply-${replyComment.id}`}
               id={`reply-${replyComment.id}`}
               commentObject={replyComment}
               onReply={handleReply}

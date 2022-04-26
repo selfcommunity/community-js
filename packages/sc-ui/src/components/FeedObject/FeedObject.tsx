@@ -752,17 +752,19 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
             {template === SCFeedObjectTemplateType.PREVIEW && (
               <Collapse in={expandedActivities} timeout="auto" unmountOnExit classes={{root: classes.activitiesSection}}>
                 <CardContent className={classes.activitiesContent}>
-                  <Activities
-                    feedObject={obj}
-                    feedObjectActivities={feedObjectActivities}
-                    activitiesType={selectedActivities}
-                    onSetSelectedActivities={handleSelectedActivities}
-                    comments={comments}
-                    CommentsObjectProps={{
-                      CommentComponentProps: {...{onDelete: handleDeleteComment}, ...CommentComponentProps},
-                      CommentObjectSkeletonProps: CommentObjectSkeletonProps
-                    }}
-                  />
+                  <LazyLoad once>
+                    <Activities
+                      feedObject={obj}
+                      feedObjectActivities={feedObjectActivities}
+                      activitiesType={selectedActivities}
+                      onSetSelectedActivities={handleSelectedActivities}
+                      comments={comments}
+                      CommentsObjectProps={{
+                        CommentComponentProps: {...{onDelete: handleDeleteComment}, ...CommentComponentProps},
+                        CommentObjectSkeletonProps: CommentObjectSkeletonProps
+                      }}
+                    />
+                  </LazyLoad>
                 </CardContent>
               </Collapse>
             )}

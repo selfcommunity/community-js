@@ -98,7 +98,7 @@ export default function useSCFetchCommentObjects(props: {
   function getPreviousPage() {
     if (obj && previous && !isLoadingPrevious) {
       setIsLoadingPrevious(true);
-      return performFetchComments(previous)
+      performFetchComments(previous)
         .then((res) => {
           let currentPage = getCurrentPage(previous);
           setPage(currentPage);
@@ -119,7 +119,7 @@ export default function useSCFetchCommentObjects(props: {
   function getNextPage() {
     if (obj && next && !isLoadingNext) {
       setIsLoadingNext(true);
-      return performFetchComments(next)
+      performFetchComments(next)
         .then((res) => {
           let currentPage = getCurrentPage(next);
           setComments([...comments, ...res.results]);
