@@ -1,22 +1,16 @@
 import React from 'react';
-import List from '@mui/material/List';
 import {styled} from '@mui/material/styles';
 import CommentObjectSkeleton from '../CommentObject';
-import Widget from '../Widget';
-import {CardContent} from '@mui/material';
+import {Box} from '@mui/material';
 
 const PREFIX = 'SCCommentsObjectSkeleton';
 
 const classes = {
-  root: `${PREFIX}-root`,
-  list: `${PREFIX}-list`
+  root: `${PREFIX}-root`
 };
 
-const Root = styled(Widget)(({theme}) => ({
-  [`& .${classes.list}`]: {
-    marginLeft: -16,
-    marginRight: -16
-  }
+const Root = styled(Box)(({theme}) => ({
+  width: '100%'
 }));
 
 /**
@@ -37,19 +31,15 @@ const Root = styled(Widget)(({theme}) => ({
  |Rule Name|Global class|Description|
  |---|---|---|
  |root|.SCCommentsObjectSkeleton-root|Styles applied to the root element.|
- |list|.SCCommentsObjectSkeleton-root|Styles applied to the list element.|
  *
  */
-export default function CommentsObjectSkeleton(props): JSX.Element {
+export default function CommentsObjectSkeleton(props: {count?: number; CommentObjectSkeletonProps?: any; [p: string]: any}): JSX.Element {
+  const {count = 3, CommentObjectSkeletonProps = {}, ...rest} = props;
   return (
-    <Root className={classes.root} {...props}>
-      <CardContent>
-        <List className={classes.list}>
-          {[...Array(4)].map((comment, index) => (
-            <CommentObjectSkeleton key={index} elevation={0} />
-          ))}
-        </List>
-      </CardContent>
+    <Root className={classes.root} {...rest}>
+      {[...Array(count)].map((comment, index) => (
+        <CommentObjectSkeleton key={index} {...CommentObjectSkeletonProps} />
+      ))}
     </Root>
   );
 }

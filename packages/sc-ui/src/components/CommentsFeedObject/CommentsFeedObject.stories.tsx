@@ -1,24 +1,25 @@
 import React from 'react';
 import {ComponentMeta, ComponentStory} from '@storybook/react';
 
-import CommentsObject from './index';
+import CommentsFeedObject from './index';
 import {SCFeedObjectTypologyType} from '@selfcommunity/core';
 import {SCCommentsOrderBy} from '../../types/comments';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC UI/CommentsObject',
-  component: CommentsObject,
+  title: 'Design System/SC UI/CommentsFeedObject',
+  component: CommentsFeedObject,
   argTypes: {
     feedObjectId: {
       control: {type: 'number'},
       description: 'FeedObject Id',
-      table: {defaultValue: {summary: 17}}
+      table: {defaultValue: {summary: 360}}
     },
     feedObjectType: {
       options: [SCFeedObjectTypologyType.POST, SCFeedObjectTypologyType.DISCUSSION, SCFeedObjectTypologyType.STATUS],
       control: {type: 'select'},
-      description: 'Object type. Used only with args id.'
+      description: 'Object type. Used only with args id.',
+      table: {defaultValue: {summary: SCFeedObjectTypologyType.POST}}
     },
     elevation: {
       control: {type: 'number'},
@@ -33,20 +34,20 @@ export default {
     }
   },
   args: {
-    feedObjectId: 344, // 1064,
+    feedObjectId: 360,
     feedObjectType: SCFeedObjectTypologyType.POST,
     infiniteScrolling: true,
     commentsOrderBy: SCCommentsOrderBy.ADDED_AT_ASC,
-    fixedPrimaryReply: true,
-    commentsPageCount: 5
+    // onChangePage: (p) => console.log(p),
+    // page: 2
   }
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
-} as ComponentMeta<typeof CommentsObject>;
+} as ComponentMeta<typeof CommentsFeedObject>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof CommentsObject> = (args) => (
+const Template: ComponentStory<typeof CommentsFeedObject> = (args) => (
   <div style={{width: '100%', maxWidth: 800}}>
-    <CommentsObject {...args} />
+    <CommentsFeedObject {...args} />
   </div>
 );
 
@@ -57,11 +58,11 @@ Base.args = {};
 export const CommentFirstLevel = Template.bind({});
 
 CommentFirstLevel.args = {
-  commentObjectId: 132 // 81
+  commentObjectId: 1146
 };
 
 export const CommentSecondLevel = Template.bind({});
 
 CommentSecondLevel.args = {
-  commentObjectId: 4522 // 31909
+  commentObjectId: 1119
 };

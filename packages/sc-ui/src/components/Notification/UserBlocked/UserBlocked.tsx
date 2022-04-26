@@ -1,7 +1,7 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import {Avatar, Box, Stack} from '@mui/material';
-import {green, grey, red} from '@mui/material/colors';
+import { Avatar, Box, Stack, Typography } from '@mui/material';
+import {green, red} from '@mui/material/colors';
 import Icon from '@mui/material/Icon';
 import {SCNotificationBlockedUserType, SCNotificationTypologyType} from '@selfcommunity/core';
 import {defineMessages, useIntl} from 'react-intl';
@@ -113,6 +113,7 @@ export default function UserBlockedNotification(inProps: NotificationBlockedProp
       <NotificationItem
         template={template}
         isNew={notificationObject.is_new}
+        disableTypography
         image={
           <Avatar
             variant="circular"
@@ -125,11 +126,11 @@ export default function UserBlockedNotification(inProps: NotificationBlockedProp
           </Avatar>
         }
         primary={
-          <>
+          <Typography component="div" color="inherit" className={classes.blockedText}>
             {notificationObject.type === SCNotificationTypologyType.BLOCKED_USER
               ? intl.formatMessage(messages.accountBlocked, {b: (...chunks) => <strong>{chunks}</strong>})
               : intl.formatMessage(messages.accountReactivated, {b: (...chunks) => <strong>{chunks}</strong>})}
-          </>
+          </Typography>
         }
         secondary={
           template === SCNotificationObjectTemplateType.DETAIL && <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />

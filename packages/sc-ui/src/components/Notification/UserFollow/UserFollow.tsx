@@ -107,6 +107,7 @@ export default function UserFollowNotification(inProps: NotificationFollowProps)
       <NotificationItem
         template={template}
         isNew={notificationObject.is_new}
+        disableTypography
         image={
           <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.follower)}>
             <Avatar
@@ -118,12 +119,12 @@ export default function UserFollowNotification(inProps: NotificationFollowProps)
           </Link>
         }
         primary={
-          <>
+          <Typography component="div" color="inherit" className={classes.followText}>
             <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.follower)} className={classes.username}>
               {notificationObject.follower.username}
             </Link>{' '}
             {intl.formatMessage(messages.followUser, {b: (...chunks) => <strong>{chunks}</strong>})}
-          </>
+          </Typography>
         }
         secondary={
           template === SCNotificationObjectTemplateType.DETAIL && <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />

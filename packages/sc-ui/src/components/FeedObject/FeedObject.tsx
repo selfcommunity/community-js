@@ -1,7 +1,7 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import CardContent from '@mui/material/CardContent';
-import {Avatar, Box, Button, CardActions, CardHeader, CardProps, Collapse, Grid, Stack, Tooltip, Typography} from '@mui/material';
+import {Avatar, Box, Button, CardActions, CardHeader, CardProps, Collapse, Stack, Tooltip, Typography} from '@mui/material';
 import FeedObjectSkeleton, {FeedObjectSkeletonProps} from './Skeleton';
 import DateTimeAgo from '../../shared/DateTimeAgo';
 import Bullet from '../../shared/Bullet';
@@ -13,6 +13,22 @@ import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import PollObject, {PollObjectProps} from './Poll';
 import ContributorsFeedObject, {ContributorsFeedObjectProps} from './Contributors';
 import LazyLoad from 'react-lazyload';
+import Composer from '../Composer';
+import {SCFeedObjectActivitiesType, SCFeedObjectTemplateType} from '../../types/feedObject';
+import MarkRead from '../../shared/MarkRead';
+import classNames from 'classnames';
+import ContributionActionsMenu, {ContributionActionsMenuProps} from '../../shared/ContributionActionsMenu';
+import {getContributionHtml, getContributionRouteName, getContributionSnippet, getRouteData} from '../../utils/contribution';
+import Follow, {FollowProps} from './Actions/Follow';
+import Widget, {WidgetProps} from '../Widget';
+import useThemeProps from '@mui/material/styles/useThemeProps';
+import BaseItem from '../../shared/BaseItem';
+import Activities, {ActivitiesProps} from './Activities';
+import ReplyCommentObject, {ReplyCommentObjectProps} from '../CommentObject/ReplyComment';
+import {SCOPE_SC_UI} from '../../constants/Errors';
+import {useSnackbar} from 'notistack';
+import {AxiosResponse} from 'axios';
+import {CommentObjectProps} from '../CommentObject';
 import {
   Endpoints,
   http,
@@ -32,24 +48,6 @@ import {
   useSCRouting,
   useSCUser
 } from '@selfcommunity/core';
-import Composer from '../Composer';
-import CommentsObject from '../CommentsObject';
-import ActivitiesMenu from './ActivitiesMenu';
-import {SCCommentsOrderBy} from '../../types/comments';
-import {SCFeedObjectActivitiesType, SCFeedObjectTemplateType} from '../../types/feedObject';
-import RelevantActivities from './RelevantActivities';
-import ReplyCommentObject from '../CommentObject/ReplyComment';
-import {SCOPE_SC_UI} from '../../constants/Errors';
-import {AxiosResponse} from 'axios';
-import MarkRead from '../../shared/MarkRead';
-import classNames from 'classnames';
-import ContributionActionsMenu, {ContributionActionsMenuProps} from '../../shared/ContributionActionsMenu';
-import {getContributionHtml, getContributionRouteName, getContributionSnippet, getRouteData} from '../../utils/contribution';
-import {useSnackbar} from 'notistack';
-import Follow, {FollowProps} from './Actions/Follow';
-import Widget from '../Widget';
-import useThemeProps from '@mui/material/styles/useThemeProps';
-import BaseItem from '../../shared/BaseItem';
 
 const messages = defineMessages({
   visibleToAll: {
@@ -77,8 +75,9 @@ const classes = {
   mediasSection: `${PREFIX}-medias-section`,
   pollsSection: `${PREFIX}-polls-section`,
   infoSection: `${PREFIX}-info-section`,
-  actions: `${PREFIX}-actions`,
-  activities: `${PREFIX}-activities`,
+  actionsSection: `${PREFIX}-actions-section`,
+  replyContent: `${PREFIX}-reply-content`,
+  activitiesSection: `${PREFIX}-activities-section`,
   activitiesContent: `${PREFIX}-activities-content`,
   followButton: `${PREFIX}-follow-button`
 };
@@ -164,8 +163,20 @@ const Root = styled(Widget, {
     position: 'relative',
     top: 3
   },
+  [`& .${classes.actionsSection}`]: {
+    padding: 0,
+    display: 'flex',
+    flexDirection: 'column'
+  },
+  [`& .${classes.replyContent}`]: {
+    width: '100%',
+    boxSizing: 'border-box',
+    margin: 0,
+    padding: theme.spacing(2)
+  },
   [`& .${classes.activitiesContent}`]: {
-    paddingBottom: '3px'
+    paddingTop: 3,
+    paddingBottom: 3
   },
   [`& .${classes.infoSection}`]: {
     padding: `0px ${theme.spacing(2)}`
@@ -180,9 +191,6 @@ const Root = styled(Widget, {
     '&:hover': {
       opacity: 1
     }
-  },
-  [`& .${classes.actions}`]: {
-    paddingBottom: 10
   },
   '& .MuiIcon-root': {
     fontSize: '18px',
@@ -275,6 +283,12 @@ export interface FeedObjectProps extends CardProps {
   ContributionActionsMenuProps?: ContributionActionsMenuProps;
 
   /**
+   * Props to spread to Activities component
+   * @default {}
+   */
+  ActivitiesProps?: ActivitiesProps;
+
+  /**
    * Props to spread to MediasPreview component
    * @default {}
    */
@@ -287,10 +301,41 @@ export interface FeedObjectProps extends CardProps {
   PollObjectProps?: PollObjectProps;
 
   /**
+   * ReplyCommentComponent component
+   * Usefull to override the single ReplyComment render component
+   * @default CommentObject
+   */
+  ReplyCommentComponent?: (inProps: ReplyCommentObjectProps) => JSX.Element;
+
+  /**
+   * Props to spread to single reply comment object
+   * @default {variant: 'outlined'}
+   */
+  ReplyCommentComponentProps?: ReplyCommentObjectProps;
+
+  /**
    * Props to spread to ContributorsFeedObject component
    * @default {elevation: 0}
    */
   ContributorsFeedObjectProps?: ContributorsFeedObjectProps;
+
+  /**
+   * Props to spread to CommentObject component
+   * @default {variant: 'outlined}
+   */
+  CommentComponentProps?: CommentObjectProps;
+
+  /**
+   * Props to spread to CommentObject component
+   * @default {elevation: 0, variant: 'outlined'}
+   */
+  CommentObjectSkeletonProps?: any;
+
+  /**
+   * Callback on reply
+   * @param SCCommentType
+   */
+  onReply?: (SCCommentType) => void;
 
   /**
    * Other props
@@ -326,12 +371,14 @@ export interface FeedObjectProps extends CardProps {
  |content|.SCFeedObject-content|Styles applied to the content section. Content section include: title-section, text-section, snippetContent, subContent, medias-section, polls-section, info-section.|
  |text-section|.SCFeedObject-text-section|Styles applied to the text section.|
  |text|.SCFeedObject-text|Styles applied to the text element.|
- |snippetContent|.SCFeedObject-snippet-content|Styles applied to snippet content element.|
+ |snippet-content|.SCFeedObject-snippet-content|Styles applied to snippet content element.|
  |medias-section|.SCFeedObject-medias-section|Styles applied to the medias section.|
  |polls-section|.SCFeedObject-polls-section|Styles applied to the polls section.|
  |info-section|.SCFeedObject-info-section|Styles applied to the info section.|
  |subContent|.SCFeedObject-sub-content|Styles applied to the sub content (container placed immediately after the content, similar to a footer). Wrap the contributors and the follow button.|
- |actions|.SCFeedObject-actions|Styles applied to the actions container.|
+ |actions-section|.SCFeedObject-actions-section|Styles applied to the actions container.|
+ |reply-content|.SCFeedObject-reply-content|Styles applied to the reply box.|
+ |activitiesSection|.SCFeedObject-activities-section|Styles applied to the activities section element.|
  |activitiesContent|.SCFeedObject-activities-content|Styles applied to the activities content element.|
  |activityAt|.SCFeedObject-activity-at|Styles applied to the activity at section.|
  |deleted|.SCFeedObject-deleted|Styles applied to the feed obj when is deleted (visible only for admin and moderator).|
@@ -359,10 +406,15 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
     FollowButtonProps = {},
     FeedObjectSkeletonProps = {elevation: 0},
     ActionsProps = {},
+    ReplyCommentComponent = ReplyCommentObject,
+    ReplyCommentComponentProps = {ReplyBoxProps: {variant: 'outlined'}},
+    CommentComponentProps = {variant: 'outlined'},
+    CommentObjectSkeletonProps = {elevation: 0, WidgetProps: {variant: 'outlined'} as WidgetProps},
     ContributionActionsMenuProps = {},
     MediasPreviewProps = {},
     PollObjectProps = {elevation: 0},
     ContributorsFeedObjectProps = {},
+    onReply,
     ...rest
   } = props;
 
@@ -374,33 +426,22 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
 
   // RETRIVE OBJECTS
   const {obj, setObj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
+  const objId = obj ? obj.id : null;
 
   // STATE
   const [composerOpen, setComposerOpen] = useState<boolean>(false);
+  const [expandedActivities, setExpandedActivities] = useState<boolean>(false);
   const [comments, setComments] = useState<SCCommentType[]>([]);
-  const [expandedActivities, setExpandedActivities] = useState<boolean>(getInitialExpandedActivities());
-  const [selectedActivities, setSelectedActivities] = useState<string>(getInitialSelectedActivitiesType());
   const [isReplying, setIsReplying] = useState<boolean>(false);
+  const [selectedActivities, setSelectedActivities] = useState<SCFeedObjectActivitiesType>(getInitialSelectedActivitiesType());
 
   // INTL
   const intl = useIntl();
 
   /**
-   * Set:
-   * - expandedActivities
-   * - selectedActivities
-   * when update the current obj
-   */
-  useEffect(() => {
-    if (obj) {
-      setExpandedActivities(getInitialExpandedActivities());
-    }
-  }, [obj]);
-
-  /**
    * Get initial expanded activities
    */
-  function getInitialExpandedActivities() {
+  function geExpandedActivities() {
     return obj && ((feedObjectActivities && feedObjectActivities.length > 0) || obj.comment_count > 0);
   }
 
@@ -413,6 +454,13 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
     }
     return SCFeedObjectActivitiesType.RECENT_COMMENTS;
   }
+
+  /**
+   * Open expanded activities
+   */
+  useEffect(() => {
+    setExpandedActivities(geExpandedActivities);
+  }, [objId]);
 
   /**
    * Handle change/update poll: votes
@@ -488,6 +536,17 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
   }
 
   /**
+   * Expand activities if the user is logged
+   */
+  function handleExpandActivities() {
+    if (scUserContext.user) {
+      setExpandedActivities((prev) => !prev);
+    } else {
+      scContext.settings.handleAnonymousAction();
+    }
+  }
+
+  /**
    * Handle follow obj
    */
   function handleFollow(isFollow) {
@@ -495,12 +554,18 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
   }
 
   /**
-   * Handle change activities type
-   * @param type
+   * Handle delete comment callback
    */
-  function handleSelectActivitiesType(type) {
-    setComments([]);
+  function handleDeleteComment() {
+    setObj((prev) => ({...prev, ...{comment_count: Math.max(prev.comment_count - 1, 0)}}));
+  }
+
+  /**
+   * Handle select activities
+   */
+  function handleSelectedActivities(type) {
     setSelectedActivities(type);
+    setComments([]);
   }
 
   /**
@@ -508,7 +573,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
    * Comment of first level
    */
   const performReply = useMemo(
-    () => (comment) => {
+    () => (comment: SCCommentType) => {
       return http
         .request({
           url: Endpoints.NewComment.url({}),
@@ -525,13 +590,13 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
           return Promise.resolve(res.data);
         });
     },
-    [obj]
+    [objId]
   );
 
   /**
    * Handle comment
    */
-  function handleReply(comment) {
+  function handleReply(comment: SCCommentType) {
     if (UserUtils.isBlocked(scUserContext.user)) {
       enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
         variant: 'warning',
@@ -541,14 +606,15 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
       setIsReplying(true);
       performReply(comment)
         .then((data: SCCommentType) => {
-          if (selectedActivities !== SCFeedObjectActivitiesType.RECENT_COMMENTS || obj.comment_count === 0) {
-            setObj(Object.assign({}, obj, {comment_count: obj.comment_count + 1}));
+          if (selectedActivities !== SCFeedObjectActivitiesType.RECENT_COMMENTS) {
             setComments([]);
             setSelectedActivities(SCFeedObjectActivitiesType.RECENT_COMMENTS);
           } else {
             setComments([...[data], ...comments]);
           }
           setIsReplying(false);
+          setObj((prev) => ({...prev, ...{comment_count: prev.comment_count + 1}}));
+          onReply && onReply(data);
         })
         .catch((error) => {
           Logger.error(SCOPE_SC_UI, error);
@@ -557,75 +623,6 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
             autoHideDuration: 3000
           });
         });
-    }
-  }
-
-  /**
-   * Render collapsed activities of the single feedObject
-   */
-  function renderActivities() {
-    return (
-      <>
-        {scUserContext.user && <ReplyCommentObject inline onReply={handleReply} isLoading={isReplying} key={Number(isReplying)} />}
-        {(obj.comment_count || (feedObjectActivities && feedObjectActivities.length > 0) || comments.length > 0) && (
-          <ActivitiesMenu
-            selectedActivities={selectedActivities}
-            hideRelevantActivitiesItem={!(feedObjectActivities && feedObjectActivities.length > 0)}
-            onChange={handleSelectActivitiesType}
-          />
-        )}
-        {selectedActivities === SCFeedObjectActivitiesType.RELEVANCE_ACTIVITIES ? renderRelevantActivities() : renderComments()}
-      </>
-    );
-  }
-
-  /**
-   * Render latest activities of feedObject
-   */
-  function renderRelevantActivities() {
-    return <RelevantActivities activities={feedObjectActivities} />;
-  }
-
-  /**
-   * Render comments of feedObject
-   */
-  function renderComments() {
-    const _commentsOrderBy =
-      selectedActivities === SCFeedObjectActivitiesType.CONNECTIONS_COMMENTS
-        ? SCCommentsOrderBy.CONNECTION_DESC
-        : selectedActivities === SCFeedObjectActivitiesType.FIRST_COMMENTS
-        ? SCCommentsOrderBy.ADDED_AT_ASC
-        : SCCommentsOrderBy.ADDED_AT_DESC;
-    return (
-      <>
-        {(obj.comment_count > 0 || comments.length > 0) && (
-          <LazyLoad once>
-            <CommentsObject
-              key={_commentsOrderBy}
-              feedObject={obj}
-              feedObjectType={feedObjectType}
-              variant={'outlined'}
-              infiniteScrolling={false}
-              commentsPageCount={3}
-              hidePrimaryReply={true}
-              commentsOrderBy={_commentsOrderBy}
-              additionalHeaderComments={comments}
-              hideAdvertising={true}
-            />
-          </LazyLoad>
-        )}
-      </>
-    );
-  }
-
-  /**
-   * Expand activities if the user is logged
-   */
-  function handleExpandActivities() {
-    if (scUserContext.user) {
-      setExpandedActivities((prev) => !prev);
-    } else {
-      scContext.settings.handleAnonymousAction();
     }
   }
 
@@ -735,19 +732,41 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                 </Stack>
               </Box>
             </CardContent>
-            <CardActions className={classes.actions}>
+            <CardActions className={classes.actionsSection}>
               <Actions
                 feedObject={obj}
-                feedObjectType={feedObjectType}
                 hideCommentAction={template === SCFeedObjectTemplateType.DETAIL}
                 handleExpandActivities={handleExpandActivities}
                 {...ActionsProps}
               />
+              {scUserContext.user && (expandedActivities || template === SCFeedObjectTemplateType.DETAIL) && (
+                <Box className={classes.replyContent}>
+                  <ReplyCommentComponent
+                    inline
+                    onReply={handleReply}
+                    readOnly={isReplying || !obj}
+                    key={Number(isReplying)}
+                    {...ReplyCommentComponentProps}
+                  />
+                </Box>
+              )}
             </CardActions>
             {template === SCFeedObjectTemplateType.PREVIEW && (
-              <Collapse in={expandedActivities} timeout="auto" unmountOnExit classes={{root: classes.activities}}>
-                <CardContent className={classes.activitiesContent} sx={{paddingTop: 0}}>
-                  {renderActivities()}
+              <Collapse in={expandedActivities} timeout="auto" unmountOnExit classes={{root: classes.activitiesSection}}>
+                <CardContent className={classes.activitiesContent}>
+                  <LazyLoad once>
+                    <Activities
+                      feedObject={obj}
+                      feedObjectActivities={feedObjectActivities}
+                      activitiesType={selectedActivities}
+                      onSetSelectedActivities={handleSelectedActivities}
+                      comments={comments}
+                      CommentsObjectProps={{
+                        CommentComponentProps: {...{onDelete: handleDeleteComment}, ...CommentComponentProps},
+                        CommentObjectSkeletonProps: CommentObjectSkeletonProps
+                      }}
+                    />
+                  </LazyLoad>
                 </CardContent>
               </Collapse>
             )}

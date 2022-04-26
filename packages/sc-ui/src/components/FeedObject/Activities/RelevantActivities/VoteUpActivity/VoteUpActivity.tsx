@@ -3,20 +3,20 @@ import {styled} from '@mui/material/styles';
 import {Avatar} from '@mui/material';
 import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/core';
 import {defineMessages, useIntl} from 'react-intl';
-import DateTimeAgo from '../../../../shared/DateTimeAgo';
+import DateTimeAgo from '../../../../../shared/DateTimeAgo';
 import {ActionsRelevantActivityProps} from '../ActionsRelevantActivity';
 import classNames from 'classnames';
 import useThemeProps from '@mui/material/styles/useThemeProps';
-import BaseItem from '../../../../shared/BaseItem';
+import BaseItem from '../../../../../shared/BaseItem';
 
 const messages = defineMessages({
-  pollVote: {
-    id: 'ui.feedObject.relevantActivities.pollVote',
-    defaultMessage: 'ui.feedObject.relevantActivities.pollVote'
+  vote: {
+    id: 'ui.feedObject.relevantActivities.vote',
+    defaultMessage: 'ui.feedObject.relevantActivities.vote'
   }
 });
 
-const PREFIX = 'SCPollVoteRelevantActivity';
+const PREFIX = 'SCVoteUpRelevantActivity';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -34,12 +34,13 @@ const Root = styled(BaseItem, {
   }
 }));
 
-export default function PollVoteRelevantActivity(inProps: ActionsRelevantActivityProps): JSX.Element {
+export default function VoteUpRelevantActivity(inProps: ActionsRelevantActivityProps): JSX.Element {
   // PROPS
   const props: ActionsRelevantActivityProps = useThemeProps({
     props: inProps,
     name: PREFIX
   });
+
   const {className = null, activityObject = null, ...rest} = props;
 
   // CONTEXT
@@ -60,7 +61,7 @@ export default function PollVoteRelevantActivity(inProps: ActionsRelevantActivit
       }
       primary={
         <>
-          {intl.formatMessage(messages.pollVote, {
+          {intl.formatMessage(messages.vote, {
             username: (
               <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, activityObject.author)} className={classes.username}>
                 {activityObject.author.username}
