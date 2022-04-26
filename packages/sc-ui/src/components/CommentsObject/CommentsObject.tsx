@@ -224,9 +224,9 @@ const PREFERENCES = [SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED, SCPreferences
  |---|---|---|
  |root|.SCCommentsObject-root|Styles applied to the root element.|
  |pagination|.SCCommentsObject-pagination|Styles applied to the pagination controls.|
+ |paginationLink|.SCCommentsObject-pagination-link|Styles applied to the pagination link.|
  |loadNextCommentsButton|.SCCommentsObject-load-next-comments-button|Styles applied to the load next comments button.|
  |loadPreviousCommentsButton|.SCCommentsObject-load-previous-comments-button|Styles applied to the load previous comments button.|
- |paginationLink|.SCCommentsObject-pagination-link|Styles applied to the pagination link.|
  |commentsCounter|.SCCommentsObject-comments-counter|Styles applied to the comments counter element.|
 
  * @param inProps
@@ -268,7 +268,7 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
   const scUserContext: SCUserContextType = useSCUser();
   const scPreferences: SCPreferencesContextType = useSCPreferences();
   const scRoutingContext: SCRoutingContextType = useSCRouting();
-  const {obj, setObj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
+  const {obj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
   const commentsIds = comments.map((c) => c.id);
 
   /**

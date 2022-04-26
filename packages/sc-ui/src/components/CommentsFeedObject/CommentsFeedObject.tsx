@@ -363,7 +363,7 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
       <CommentsObject
         feedObject={commentsObject.feedObject}
         comments={commentsObject.comments}
-        endComments={[...(comment ? [comment] : []), ...(commentsOrderBy === SCCommentsOrderBy.ADDED_AT_ASC ? comments: [])]}
+        endComments={[...(comment ? [comment] : []), ...(commentsOrderBy === SCCommentsOrderBy.ADDED_AT_ASC ? comments : [])]}
         startComments={[...(commentsOrderBy === SCCommentsOrderBy.ADDED_AT_ASC ? [] : comments)]}
         previous={commentsObject.previous}
         handlePrevious={commentsObject.getPreviousPage}

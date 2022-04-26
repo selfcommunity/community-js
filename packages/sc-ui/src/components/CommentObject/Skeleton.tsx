@@ -8,10 +8,25 @@ import BaseItem from '../../shared/BaseItem';
 const PREFIX = 'SCCommentObjectSkeleton';
 
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-root`,
+  avatar: `${PREFIX}-avatar`,
+  primaryContent: `${PREFIX}-primary-content`,
 };
 
-const Root = styled(BaseItem)(({theme}) => ({}));
+const Root = styled(BaseItem)(({theme}) => ({
+  [`&.${classes.root}`]: {
+    paddingBottom: theme.spacing(),
+    '& > div': {
+      alignItems: 'flex-start'
+    }
+  },
+  [`& .${classes.avatar}`]: {
+    top: theme.spacing()
+  },
+  [`& .${classes.primaryContent}`]: {
+    marginBottom: theme.spacing()
+  }
+}));
 
 /**
  * > API documentation for the Community-UI Comment Object Skeleton component. Learn about the available props and the CSS API.
@@ -40,12 +55,12 @@ export default function CommentObjectSkeleton(props): JSX.Element {
       className={classes.root}
       disableTypography
       {...rest}
-      image={<Skeleton animation="wave" variant="circular" width={40} height={40} />}
+      image={<Skeleton animation="wave" variant="circular" width={40} height={40} className={classes.avatar} />}
       secondary={
         <>
           <Widget {...WidgetProps}>
             <CardContent>
-              <Skeleton animation="wave" height={10} width="80%" style={{marginBottom: 6}} />
+              <Skeleton animation="wave" height={10} width="80%" className={classes.primaryContent} />
               <Skeleton animation="wave" height={10} width="40%" />
             </CardContent>
           </Widget>

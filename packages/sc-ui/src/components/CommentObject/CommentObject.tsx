@@ -72,7 +72,7 @@ const classes = {
   deleted: `${PREFIX}-deleted`,
   activityAt: `${PREFIX}-activity-at`,
   reply: `${PREFIX}-reply`,
-  commentSubSection: `${PREFIX}-comment-sub-section`
+  contentSubSection: `${PREFIX}-comment-sub-section`
 };
 
 const Root = styled(Box, {
@@ -138,6 +138,12 @@ const Root = styled(Box, {
   [`& .${classes.deleted}`]: {
     opacity: 0.3
   },
+  [`& .${classes.contentSubSection}`]: {
+    display: 'flex',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    color: theme.palette.text.secondary
+  },
   [`& .${classes.activityAt}`]: {
     display: 'flex',
     textDecoration: 'none',
@@ -147,12 +153,6 @@ const Root = styled(Box, {
     textTransform: 'capitalize',
     textDecoration: 'underline',
     textDecorationStyle: 'dotted'
-  },
-  [`& .${classes.commentSubSection}`]: {
-    display: 'flex',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    color: theme.palette.text.secondary
   }
 }));
 
@@ -279,7 +279,7 @@ export interface CommentObjectProps {
  |deleted|.SCCommentObject-deleted|Styles applied to tdeleted element.|
  |activityAt|.SCCommentObject-activity-at|Styles applied to activity at section.|
  |reply|.SCCommentObject-reply|Styles applied to the reply element.|
- |commentSubSection|.SCCommentObject-comment-sub-section|Styles applied to the comment subsection|
+ |contentSubSection|.SCCommentObject-content-sub-section|Styles applied to the comment subsection|
 
  * @param inProps
  */
@@ -649,7 +649,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
               commentObject={comment}
               onSave={handleSave}
               onCancel={handleCancel}
-              readOnly={isReplying}
+              readOnly={isReplying || isSavingComment}
               inline={!comment.parent}
               {...ReplyCommentObjectProps}
             />
@@ -689,7 +689,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
                     </Box>
                   )}
                 </Widget>
-                <Box component="span" className={classes.commentSubSection}>
+                <Box component="span" className={classes.contentSubSection}>
                   {renderTimeAgo(comment)}
                   <Bullet />
                   {renderActionVote(comment)}

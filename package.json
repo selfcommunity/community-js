@@ -39,10 +39,10 @@
     "@babel/preset-typescript": "^7.7.4",
     "@storybook/addon-backgrounds": "^6.4.19",
     "@storybook/addon-docs": "^6.4.21",
-    "@storybook/addon-essentials": "^6.4.21",
-    "@storybook/addon-links": "^6.4.21",
-    "@storybook/addon-toolbars": "^6.4.21",
-    "@storybook/react": "^6.4.21",
+    "@storybook/addon-essentials": "^6.4.22",
+    "@storybook/addon-links": "^6.4.22",
+    "@storybook/addon-toolbars": "^6.4.22",
+    "@storybook/react": "^6.4.22",
     "@typescript-eslint/eslint-plugin": "^2.6.0",
     "@typescript-eslint/parser": "^2.6.0",
     "babel-eslint": "10.1.0",
@@ -83,9 +83,15 @@
     "@emotion/styled": "^11.6.0",
     "@mui/icons-material": "^5.4.1",
     "@mui/material": "^5.4.1",
+    "@types/react": ">=17.0.2",
+    "@types/react-dom": ">=17.0.2",
     "react": ">=17.0.2",
     "react-dom": ">=17.0.2",
     "react-intl": "^5.21.0"
+  },
+  "resolutions": {
+    "@types/react": ">=17.0.2",
+    "@types/react-dom": ">=17.0.2"
   },
   "prettier": {
     "trailingComma": "all",
