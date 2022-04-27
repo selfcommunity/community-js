@@ -27,7 +27,6 @@ import {
   useSCUser
 } from '@selfcommunity/core';
 
-
 const PREFIX = 'SCFeedObjectDetailTemplate';
 
 const classes = {

@@ -738,8 +738,8 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
             isLoadingPrevious={commentsObject.isLoadingNext}
             handlePrevious={commentsObject.getNextPage}
             variant={'outlined'}
-            CommentComponentProps={{onOpenReply: reply, variant: 'outlined'}}
-            CommentsObjectSkeletonProps={{count: 1}}
+            CommentComponentProps={{onOpenReply: reply, elevation: elevation, ...rest}}
+            CommentsObjectSkeletonProps={{count: 1, ...CommentObjectSkeletonProps}}
           />
         )}
       </>

@@ -17,7 +17,16 @@ const Template: ComponentStory<typeof SnippetNotifications> = (args) => (
 
 export const Base = Template.bind({});
 
-Base.args = {};
+Base.args = {
+  onNotificationClick: (e, n) => {
+    /**
+     * Example of onNotificationClick callback
+     * e.preventDefault();
+     * e.stopPropagation();
+     * console.log(n);
+     */
+  }
+};
 
 export const FewNotifications = Template.bind({});
 

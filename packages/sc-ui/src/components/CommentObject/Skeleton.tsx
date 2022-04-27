@@ -10,7 +10,7 @@ const PREFIX = 'SCCommentObjectSkeleton';
 const classes = {
   root: `${PREFIX}-root`,
   avatar: `${PREFIX}-avatar`,
-  primaryContent: `${PREFIX}-primary-content`,
+  primaryContent: `${PREFIX}-primary-content`
 };
 
 const Root = styled(BaseItem)(({theme}) => ({
