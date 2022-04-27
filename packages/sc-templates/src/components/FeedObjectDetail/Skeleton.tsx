@@ -1,6 +1,6 @@
 import React from 'react';
-import {CommentObjectSkeleton, FeedObjectSkeleton, RelatedFeedObjectsSkeleton, SCFeedObjectTemplateType} from '@selfcommunity/ui';
-import {Box, Grid, Hidden} from '@mui/material';
+import {CommentsFeedObjectSkeleton, FeedObjectSkeleton, SCFeedObjectTemplateType} from '@selfcommunity/ui';
+import {Box, Grid} from '@mui/material';
 import {styled} from '@mui/material/styles';
 
 const PREFIX = 'SCFeedObjectDetailTemplateSkeleton';
@@ -41,14 +41,11 @@ export default function FeedObjectDetailSkeleton(): JSX.Element {
   return (
     <Root className={classes.root}>
       <Grid container spacing={2}>
-        <Grid item xs={12} md={7}>
+        <Grid item xs={12}>
           <FeedObjectSkeleton template={SCFeedObjectTemplateType.DETAIL} />
-          <CommentObjectSkeleton />
         </Grid>
-        <Grid item xs={12} md={5}>
-          <Hidden smDown>
-            <RelatedFeedObjectsSkeleton />
-          </Hidden>
+        <Grid item xs={12}>
+          <CommentsFeedObjectSkeleton />
         </Grid>
       </Grid>
     </Root>
