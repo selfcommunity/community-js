@@ -63,7 +63,8 @@ const Root = styled(Box, {
     margin: `${theme.spacing()} 0px`,
     whiteSpace: 'normal',
     '&:hover': {
-      backgroundColor: 'rgba(0, 0, 0, 0.05)'
+      backgroundColor: 'rgba(0, 0, 0, 0.05)',
+      cursor: 'default'
     }
   },
   '& a': {
@@ -117,6 +118,12 @@ export interface SnippetNotificationsProps extends CardProps {
   ScrollContainerProps?: Record<string, any>;
 
   /**
+   * Callback when click on single notification
+   * @param notification
+   */
+  onNotificationClick?: (event, notification) => void;
+
+  /**
    * Any other properties
    */
   [p: string]: any;
@@ -163,6 +170,7 @@ export default function SnippetNotifications(inProps: SnippetNotificationsProps)
     handleCustomNotification,
     handleNotification,
     ScrollContainerProps = {},
+    onNotificationClick,
     ...rest
   } = props;
 
@@ -241,6 +249,12 @@ export default function SnippetNotifications(inProps: SnippetNotificationsProps)
       if (data.data.notification_obj) {
         setNotifications([...[{is_new: true, sid: '', aggregated: [data.data.notification_obj]}], ...notifications]);
       }
+    }
+  };
+
+  const handleSingleNotificationClick = (e, n) => {
+    if (onNotificationClick) {
+      onNotificationClick(e, n);
     }
   };
 
@@ -342,7 +356,7 @@ export default function SnippetNotifications(inProps: SnippetNotificationsProps)
                 <MenuList className={classes.notificationsList}>
                   {notifications.slice(0, showMax).map((notificationObject: SCNotificationAggregatedType, i) =>
                     notificationObject.aggregated.map((n: SCNotificationType, k) => (
-                      <MenuItem className={classes.notificationItem} key={k}>
+                      <MenuItem className={classes.notificationItem} key={k} onClick={(e) => handleSingleNotificationClick(e, n)}>
                         {renderAggregatedItem(n, i)}
                       </MenuItem>
                     ))
