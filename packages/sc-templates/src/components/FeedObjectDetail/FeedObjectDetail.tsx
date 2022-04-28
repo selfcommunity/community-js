@@ -130,7 +130,7 @@ export default function FeedObjectDetail(inProps: FeedObjectDetailProps): JSX.El
     feedObjectType,
     FeedObjectProps = {},
     CommentsFeedObjectProps = {},
-    RelatedFeedObjectProps = {}
+    RelatedFeedObjectProps = {autoHide: false}
   } = props;
 
   // CONTEXT

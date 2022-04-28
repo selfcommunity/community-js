@@ -579,7 +579,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
           url: Endpoints.NewComment.url({}),
           method: Endpoints.NewComment.method,
           data: {
-            [`${feedObjectType}`]: obj.id,
+            [`${obj.type}`]: obj.id,
             text: comment
           }
         })
