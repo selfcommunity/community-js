@@ -18,7 +18,7 @@ export default {
     feedObjectType: {
       options: [SCFeedObjectTypologyType.POST, SCFeedObjectTypologyType.DISCUSSION, SCFeedObjectTypologyType.STATUS],
       control: {type: 'select'},
-      description: 'Object type. Used only with args id.'
+      description: 'Object type. Used only with args id.',
     },
     template: {
       options: [SCFeedObjectTemplateType.SNIPPET, SCFeedObjectTemplateType.PREVIEW, SCFeedObjectTemplateType.DETAIL, SCFeedObjectTemplateType.SHARE],
@@ -39,7 +39,7 @@ export default {
     }
   },
   args: {
-    feedObjectId: 395,
+    feedObjectId: 412,
     feedObjectType: SCFeedObjectTypologyType.POST,
     template: SCFeedObjectTemplateType.PREVIEW,
     elevation: 0,
