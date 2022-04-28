@@ -116,12 +116,11 @@ export interface CommentsObjectProps {
    * Props to spread to CommentsObjectSkeleton
    * @default {}
    */
-
   CommentsObjectSkeletonProps?: any;
 
   /**
    * Props to spread to single comment object skeleton
-   * @default CommentObjectSkeletonProps
+   * @default {elevation: 0, WidgetProps: {variant: 'outlined'}},
    */
   CommentObjectSkeletonProps?: any;
 
@@ -419,7 +418,14 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
       <>
         {comments.map((comment: SCCommentType, index) => (
           <React.Fragment key={index}>
-            <CommentComponent key={comment.id} commentObject={comment} onOpenReply={openReplyBox} feedObject={obj} {...CommentComponentProps} />
+            <CommentComponent
+              key={comment.id}
+              commentObject={comment}
+              onOpenReply={openReplyBox}
+              feedObject={obj}
+              {...CommentComponentProps}
+              CommentObjectSkeletonProps={CommentObjectSkeletonProps}
+            />
             {advPosition === index && renderAdvertising()}
           </React.Fragment>
         ))}
@@ -437,9 +443,7 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
      * Until the contribution has not been founded and there are
      * no comments during loading render skeletons
      */
-    commentsRendered = (
-      <CommentsObjectSkeleton {...CommentsObjectSkeletonProps} CommentObjectSkeletonProps={CommentObjectSkeletonProps} elevation={0} />
-    );
+    commentsRendered = <CommentsObjectSkeleton CommentObjectSkeletonProps={CommentObjectSkeletonProps} {...CommentsObjectSkeletonProps} />;
   } else {
     /**
      * Two modes available:
