@@ -37,16 +37,17 @@ const Root = styled(Box, {
  |root|.SCFeedObjectDetailTemplateSkeleton-root|Styles applied to the root element.|
  *
  */
-export default function FeedObjectDetailSkeleton(): JSX.Element {
+export default function FeedObjectDetailSkeleton(props): JSX.Element {
+  const {FeedObjectSkeletonProps = {}, CommentsFeedObjectSkeletonProps = {}, RelatedFeedObjectsSkeletonProps = {}} = props;
   return (
     <Root className={classes.root}>
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
-          <FeedObjectSkeleton template={SCFeedObjectTemplateType.DETAIL} />
-          <CommentsFeedObjectSkeleton count={4} />
+          <FeedObjectSkeleton template={SCFeedObjectTemplateType.DETAIL} {...FeedObjectSkeletonProps} />
+          <CommentsFeedObjectSkeleton count={4} {...CommentsFeedObjectSkeletonProps} />
         </Grid>
         <Grid item xs={12} md={6}>
-          <RelatedFeedObjectsSkeleton />
+          <RelatedFeedObjectsSkeleton {...RelatedFeedObjectsSkeletonProps} />
         </Grid>
       </Grid>
     </Root>
