@@ -2,20 +2,6 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
 import {Button, CardContent, ListItem, Typography} from '@mui/material';
-import {
-  Endpoints,
-  http,
-  Logger,
-  SCCustomAdvPosition,
-  SCFeedDiscussionType,
-  SCFeedObjectTypologyType,
-  SCPreferences,
-  SCPreferencesContextType,
-  SCUserContextType,
-  useSCFetchFeedObject,
-  useSCPreferences,
-  useSCUser
-} from '@selfcommunity/core';
 import TrendingFeedSkeleton from '../TrendingFeed/Skeleton';
 import {AxiosResponse} from 'axios';
 import {SCOPE_SC_UI} from '../../constants/Errors';
@@ -29,6 +15,21 @@ import CentralProgress from '../../shared/CentralProgress';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Widget from '../Widget';
 import useThemeProps from '@mui/material/styles/useThemeProps';
+import {
+  Endpoints,
+  http,
+  Logger,
+  SCCustomAdvPosition,
+  SCFeedDiscussionType,
+  SCFeedObjectType,
+  SCFeedObjectTypologyType,
+  SCPreferences,
+  SCPreferencesContextType,
+  SCUserContextType,
+  useSCFetchFeedObject,
+  useSCPreferences,
+  useSCUser
+} from '@selfcommunity/core';
 
 const PREFIX = 'SCRelatedFeedObjects';
 
@@ -63,6 +64,11 @@ export interface RelatedFeedObjectsProps {
    * @default 'discussion'
    */
   feedObjectType?: SCFeedObjectTypologyType;
+  /**
+   * Feed Object
+   * @default null
+   */
+  feedObject?: SCFeedObjectType;
   /**
    * Feed Object template type
    * @default 'snippet'
@@ -131,6 +137,7 @@ export default function RelatedFeedObjects(inProps: RelatedFeedObjectsProps): JS
     name: PREFIX
   });
   const {
+    feedObject,
     feedObjectId,
     feedObjectType,
     template = SCFeedObjectTemplateType.SNIPPET,
@@ -141,14 +148,21 @@ export default function RelatedFeedObjects(inProps: RelatedFeedObjectsProps): JS
   } = props;
 
   // STATE
-  const {obj, setObj} = useSCFetchFeedObject({id: feedObjectId, feedObject: null, feedObjectType});
+  const {obj, setObj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
   const [objs, setObjs] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [hasMore, setHasMore] = useState<boolean>(false);
   const [total, setTotal] = useState<number>(0);
   const [visibleDiscussions, setVisibleDiscussions] = useState<number>(limit);
   const [openRelatedFeedObjectsDialog, setOpenRelatedFeedObjectsDialog] = useState<boolean>(false);
-  const [next, setNext] = useState<string>(`${Endpoints.RelatedFeedObjects.url({type: feedObjectType, id: feedObjectId})}?limit=10`);
+  const [next, setNext] = useState<string>(
+    `${Endpoints.RelatedFeedObjects.url({
+      type: feedObject ? feedObject.type : feedObjectType,
+      id: feedObject ? feedObject.id : feedObjectId
+    })}?limit=10`
+  );
+  const objId = obj ? obj.id : null;
+
   /**
    * Compute preferences
    */
@@ -205,8 +219,10 @@ export default function RelatedFeedObjects(inProps: RelatedFeedObjectsProps): JS
    * On mount, fetches related discussions list
    */
   useEffect(() => {
-    fetchRelated();
-  }, []);
+    if (objId !== null) {
+      fetchRelated();
+    }
+  }, [objId]);
 
   /**
    * Renders related discussions list
@@ -230,7 +246,7 @@ export default function RelatedFeedObjects(inProps: RelatedFeedObjectsProps): JS
               <List>
                 {objs.slice(0, visibleDiscussions).map((obj: SCFeedDiscussionType, index) => {
                   return (
-                    <React.Fragment key={obj.id}>
+                    <React.Fragment key={index}>
                       <ListItem>
                         <FeedObject elevation={0} feedObject={obj} template={template} className={classes.relatedItem} {...FeedObjectProps} />
                       </ListItem>
@@ -268,8 +284,8 @@ export default function RelatedFeedObjects(inProps: RelatedFeedObjectsProps): JS
                     </p>
                   }>
                   <List>
-                    {objs.map((obj: SCFeedDiscussionType) => (
-                      <ListItem key={obj.id}>
+                    {objs.map((obj: SCFeedDiscussionType, index) => (
+                      <ListItem key={index}>
                         <FeedObject elevation={0} feedObject={obj} template={template} className={classes.relatedItem} {...FeedObjectProps} />
                       </ListItem>
                     ))}
