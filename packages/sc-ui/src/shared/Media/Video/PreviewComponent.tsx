@@ -24,10 +24,18 @@ export interface PreviewVideoProps {
    * @default null
    */
   adornment?: React.ReactNode;
+  /**
+   * Handles on media click
+   */
+  onMediaClick?: (any) => void;
 }
 export default (props: PreviewVideoProps): JSX.Element => {
   // PROPS
-  const {medias = [], adornment = null} = props;
+  const {medias = [], adornment = null, onMediaClick} = props;
+
+  const handleVideoClick = (link) => {
+    onMediaClick(link);
+  };
 
   /**
    * Renders Video preview
@@ -40,7 +48,7 @@ export default (props: PreviewVideoProps): JSX.Element => {
             {adornment}
             {medias.map((v, i) => (
               <LazyLoad height={360} placeholder={<CentralProgress size={20} />} key={i} once>
-                <AutoPlayer url={v.url} width={'100%'} />
+                <AutoPlayer url={v.url} width={'100%'} onVideoWatch={() => handleVideoClick(v)} />
               </LazyLoad>
             ))}
           </Root>

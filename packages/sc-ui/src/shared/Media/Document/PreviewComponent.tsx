@@ -13,7 +13,7 @@ const Root = styled(ImagePreview, {
 
 export default (props: ImagePreviewComponentProps): JSX.Element => {
   // PROPS
-  const {medias = [], ...rest} = props;
+  const {medias = [], onMediaClick, ...rest} = props;
 
   /**
    * Handles click on pdf
@@ -28,6 +28,7 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
       let win = window.open(doc.src.url, '_blank');
       win.focus();
     }
+    onMediaClick(doc.src);
   };
 
   /**
