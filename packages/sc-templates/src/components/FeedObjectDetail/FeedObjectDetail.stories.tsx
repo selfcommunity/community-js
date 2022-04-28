@@ -19,6 +19,6 @@ const Template: ComponentStory<typeof FeedObjectDetailTemplate> = (args) => (
 export const Main = Template.bind({});
 
 Main.args = {
-  feedObjectId: 344,
+  feedObjectId: 412,
   feedObjectType: SCFeedObjectTypologyType.POST
 };

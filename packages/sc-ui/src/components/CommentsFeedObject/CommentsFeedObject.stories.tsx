@@ -37,7 +37,8 @@ export default {
     feedObjectId: 360,
     feedObjectType: SCFeedObjectTypologyType.POST,
     infiniteScrolling: true,
-    commentsOrderBy: SCCommentsOrderBy.ADDED_AT_ASC
+    commentsOrderBy: SCCommentsOrderBy.ADDED_AT_ASC,
+    showTitle: true,
     // onChangePage: (p) => console.log(p),
     // page: 2
   }

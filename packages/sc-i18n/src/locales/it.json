@@ -211,7 +211,7 @@
   "ui.feedUpdates.message": "C'è un aggiornamento per te!",
   "ui.feedUpdates.reload": "Aggiorna",
 
-  "ui.commentsObject.title": "{total, plural, =0 {# Commenti} one {# Commento} other {# Commenti}}",
+  "ui.commentsObject.title": "{total, plural, =0 {Commenti} one {# Commento} other {# Commenti}}",
   "ui.commentsObject.noComments": "Non ci sono ancora commenti al momento.",
   "ui.commentsObject.noOtherComments": "Non ci sono altri commenti.",
   "ui.commentsObject.loadMoreComments": "Vedi altri commenti",
