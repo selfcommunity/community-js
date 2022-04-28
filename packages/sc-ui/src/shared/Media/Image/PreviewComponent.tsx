@@ -253,7 +253,7 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
           item
           xs={6}
           classes={{root: classNames(classes.border, classes.heightTwo, classes.background, {[classes.gallery]: gallery})}}
-          onClick={() => openPreviewImage(conditionalRender ? 1 : 0)}
+          onClick={() => openPreviewImage(conditionalRender ? 2 : 1)}
           style={{background: `url(${getImageUrl(conditionalRender ? medias[2] : medias[1])})`}}>
           {overlay}
           {renderTitle(medias[1])}
