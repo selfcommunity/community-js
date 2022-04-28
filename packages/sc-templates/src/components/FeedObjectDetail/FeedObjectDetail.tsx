@@ -12,7 +12,8 @@ import {
   FeedObjectProps,
   RelatedFeedObjects,
   SCFeedObjectTemplateType,
-  CommentsFeedObject
+  CommentsFeedObject,
+  RelatedFeedObjectsProps
 } from '@selfcommunity/ui';
 import {
   SCCommentType,
@@ -83,6 +84,12 @@ export interface FeedObjectDetailProps {
    * @default empty object
    */
   CommentsFeedObjectProps?: CommentsFeedObjectProps;
+
+  /**
+   * Props to spread to RelatedFeedObject
+   * @default empty object
+   */
+  RelatedFeedObjectProps?: RelatedFeedObjectsProps;
 }
 
 const PREFERENCES = [SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED, SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED];
@@ -115,7 +122,16 @@ export default function FeedObjectDetail(inProps: FeedObjectDetailProps): JSX.El
     props: inProps,
     name: PREFIX
   });
-  const {id = 'feed_object_page', className, feedObjectId, feedObject, feedObjectType, FeedObjectProps = {}, CommentsFeedObjectProps = {}} = props;
+  const {
+    id = 'feed_object_page',
+    className,
+    feedObjectId,
+    feedObject,
+    feedObjectType,
+    FeedObjectProps = {},
+    CommentsFeedObjectProps = {},
+    RelatedFeedObjectProps = {}
+  } = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
@@ -180,7 +196,7 @@ export default function FeedObjectDetail(inProps: FeedObjectDetailProps): JSX.El
         <Grid item xs={12} md={5}>
           <Hidden smDown>
             <Sticky enabled top={15}>
-              <RelatedFeedObjects feedObjectId={feedObjectId} feedObjectType={feedObjectType} />
+              <RelatedFeedObjects feedObject={obj} {...RelatedFeedObjectProps} />
             </Sticky>
           </Hidden>
         </Grid>

@@ -6,6 +6,7 @@ import Document from '../Media/Document';
 import Image from '../Media/Image';
 import Link from '../Media/Link';
 import Share from '../Media/Share';
+import {useSCMediaClick} from '@selfcommunity/core';
 
 const PREFIX = 'SCMedias';
 
@@ -38,6 +39,7 @@ export interface MediaPreviewProps {
 export default (props: MediaPreviewProps): JSX.Element => {
   //PROPS
   const {medias, mediaObjectTypes = [Image, Document, Link, Share], ...rest} = props;
+  const {handleMediaClick} = useSCMediaClick();
 
   if (!medias.length) {
     /**
@@ -58,7 +60,7 @@ export default (props: MediaPreviewProps): JSX.Element => {
         const {previewProps = {}} = mediaObject;
         return (
           <div key={mediaObject.name}>
-            <mediaObject.previewComponent medias={medias.filter(mediaObject.filter)} {...previewProps} />
+            <mediaObject.previewComponent medias={medias.filter(mediaObject.filter)} {...previewProps} onMediaClick={handleMediaClick} />
           </div>
         );
       })}

@@ -68,10 +68,18 @@ export interface LinkPreviewProps {
    * @default null
    */
   adornment?: React.ReactNode;
+  /**
+   * Handles on media click
+   */
+  onMediaClick?: (any) => void;
 }
 export default (props: LinkPreviewProps): JSX.Element => {
   // PROPS
-  const {medias, fullWidth = false, adornment = null} = props;
+  const {medias, fullWidth = false, adornment = null, onMediaClick = null} = props;
+
+  const handleLinkClick = (link) => {
+    onMediaClick(link);
+  };
 
   /**
    * Renders link preview
@@ -96,7 +104,7 @@ export default (props: LinkPreviewProps): JSX.Element => {
           <b className={classes.snippetTitle}>{link.embed.metadata.title}</b>
           <br />
           <p className={classes.snippetDescription}>{link.embed.metadata.description}</p>
-          <a href={link.embed.metadata.url} target={'_blank'}>
+          <a href={link.embed.metadata.url} target={'_blank'} onClick={() => handleLinkClick(link)}>
             {link.embed.metadata.url}
           </a>
         </Box>
@@ -116,7 +124,7 @@ export default (props: LinkPreviewProps): JSX.Element => {
             {adornment}
             {medias.map((l, i) => {
               if (l.embed.metadata && l.embed.metadata.type === MEDIA_TYPE_VIDEO) {
-                return <AutoPlayer url={l.url} width={'100%'} key={i} />;
+                return <AutoPlayer url={l.url} width={'100%'} key={i} onVideoWatch={() => handleLinkClick(l)} />;
               }
               return renderPreview(l, i);
             })}

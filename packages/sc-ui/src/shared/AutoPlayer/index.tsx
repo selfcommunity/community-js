@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-nocheck
 
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Waypoint} from 'react-waypoint';
 import ReactPlayer from 'react-player';
 import {styled} from '@mui/material/styles';
@@ -46,6 +46,10 @@ export interface AutoPlayerProps {
    */
   pip?: boolean;
   /**
+   * Callback fired when video is played for more than 10 secs
+   */
+  onVideoWatch?: () => void;
+  /**
    * Any other properties
    */
   [p: string]: any;
@@ -53,10 +57,17 @@ export interface AutoPlayerProps {
 
 export default function AutoPlayer(props: AutoPlayerProps) {
   // PROPS
-  const {enableAutoplay = true, loop = false, muted = true, controls = true, stopOnUnmount = true, pip = true, ...rest} = props;
+  const {enableAutoplay = true, loop = false, muted = true, controls = true, stopOnUnmount = true, pip = true, onVideoWatch, ...rest} = props;
 
   // STATE
   const [shouldPlay, setShouldPlay] = useState<boolean>(false);
+  const [played, setPlayed] = useState(0);
+
+  useEffect(() => {
+    if (played >= 10 && played <= 11) {
+      onVideoWatch();
+    }
+  }, [played]);
 
   /**
    * Handle viewport enter
@@ -93,6 +104,9 @@ export default function AutoPlayer(props: AutoPlayerProps) {
           pip={pip}
           playing={shouldPlay}
           muted={muted}
+          onProgress={(progress) => {
+            setPlayed(progress.playedSeconds);
+          }}
           {...rest}
         />
       </div>

@@ -147,10 +147,14 @@ export interface ImagePreviewComponentProps {
    * Handles on click
    */
   onClick?: (any) => void;
+  /**
+   * Handles on media click
+   */
+  onMediaClick?: (any) => void;
 }
 export default (props: ImagePreviewComponentProps): JSX.Element => {
   // PROPS
-  const {medias = [], gallery = true, adornment = null, onClick = null} = props;
+  const {medias = [], gallery = true, adornment = null, onClick = null, onMediaClick = null} = props;
 
   // STATE
   const [preview, setPreview] = useState(-1);
@@ -180,6 +184,7 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
     }
 
     setPreview(index);
+    onMediaClick(medias[index]);
   };
 
   // RENDERING

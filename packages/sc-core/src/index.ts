@@ -132,6 +132,7 @@ import useSCFetchTag from './hooks/useSCFetchTag';
 import useSCFetchCategory from './hooks/useSCFetchCategory';
 import useSCFetchCategories from './hooks/useSCFetchCategories';
 import useSCFetchIncubator from './hooks/useSCFetchIncubator';
+import useSCMediaClick from './hooks/useSCMediaClick';
 
 /**
  * Routing component
@@ -296,4 +297,5 @@ export {
   useSCFetchCategory,
   useSCFetchCategories,
   useSCFetchIncubator,
+  useSCMediaClick,
 };
