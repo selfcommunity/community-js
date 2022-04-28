@@ -397,7 +397,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
     className = null,
     feedObjectId = null,
     feedObject = null,
-    feedObjectType = SCFeedObjectTypologyType.POST,
+    feedObjectType = SCFeedObjectTypologyType.DISCUSSION,
     feedObjectActivities = null,
     markRead = false,
     template = SCFeedObjectTemplateType.PREVIEW,
