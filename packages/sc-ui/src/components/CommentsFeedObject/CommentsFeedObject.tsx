@@ -405,8 +405,8 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
           handleNext={commentsObject.getNextPage}
           page={commentsObject.page}
           infiniteScrolling={infiniteScrolling && commentsObject.total > 0 && !comment && !comments.length}
-          CommentComponentProps={CommentComponentProps}
           CommentComponent={CommentComponent}
+          CommentComponentProps={CommentComponentProps}
           CommentObjectSkeletonProps={CommentObjectSkeletonProps}
         />
       </>

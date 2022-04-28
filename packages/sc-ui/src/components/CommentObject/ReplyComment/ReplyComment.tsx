@@ -207,39 +207,37 @@ export default function ReplyCommentObject(inProps: ReplyCommentObjectProps): JS
         )
       }
       secondary={
-        <>
-          <Widget className={classes.comment} elevation={elevation} {...ReplyBoxProps}>
-            <Editor
-              onRef={(e) => {
-                editor = e;
-              }}
-              onChange={handleChangeText}
-              defaultValue={html}
-              readOnly={readOnly}
-            />
-            {!isEditorEmpty() && (
-              <Stack direction="row" spacing={2} sx={{mb: 1, ml: 1}}>
-                {onReply && (
-                  <LoadingButton variant="outlined" size="small" onClick={handleReply} loading={readOnly}>
-                    {intl.formatMessage(messages.reply)}
-                  </LoadingButton>
-                )}
-                {onSave && (
-                  <>
-                    {onCancel && (
-                      <LoadingButton variant={'text'} size="small" onClick={handleCancel} loading={readOnly} color="inherit">
-                        {intl.formatMessage(messages.cancel)}
-                      </LoadingButton>
-                    )}
-                    <LoadingButton variant="outlined" size="small" onClick={handleSave} loading={readOnly}>
-                      {intl.formatMessage(messages.save)}
+        <Widget className={classes.comment} elevation={elevation} {...ReplyBoxProps}>
+          <Editor
+            onRef={(e) => {
+              editor = e;
+            }}
+            onChange={handleChangeText}
+            defaultValue={html}
+            readOnly={readOnly}
+          />
+          {!isEditorEmpty() && (
+            <Stack direction="row" spacing={2} sx={{mb: 1, ml: 1}}>
+              {onReply && (
+                <LoadingButton variant="outlined" size="small" onClick={handleReply} loading={readOnly}>
+                  {intl.formatMessage(messages.reply)}
+                </LoadingButton>
+              )}
+              {onSave && (
+                <>
+                  {onCancel && (
+                    <LoadingButton variant={'text'} size="small" onClick={handleCancel} loading={readOnly} color="inherit">
+                      {intl.formatMessage(messages.cancel)}
                     </LoadingButton>
-                  </>
-                )}
-              </Stack>
-            )}
-          </Widget>
-        </>
+                  )}
+                  <LoadingButton variant="outlined" size="small" onClick={handleSave} loading={readOnly}>
+                    {intl.formatMessage(messages.save)}
+                  </LoadingButton>
+                </>
+              )}
+            </Stack>
+          )}
+        </Widget>
       }
     />
   );

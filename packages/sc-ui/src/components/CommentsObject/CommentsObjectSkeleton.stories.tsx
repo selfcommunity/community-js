@@ -1,17 +1,11 @@
 import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
-import CommentsFeedObjectSkeleton from './Skeleton';
+import CommentsObjectSkeleton from './Skeleton';
 
 export default {
-  title: 'Design System/SC UI/Skeleton/CommentsFeedObjectSkeleton',
-  component: CommentsFeedObjectSkeleton,
+  title: 'Design System/SC UI/Skeleton/CommentsObjectSkeleton',
+  component: CommentsObjectSkeleton,
   argTypes: {
-    variant: {
-      options: ['elevation', 'outlined'],
-      control: {type: 'select'},
-      description: 'The variant to use. Types: "elevation", "outlined", etc.',
-      table: {defaultValue: {summary: 'elevation'}}
-    },
     elevation: {
       control: {type: 'number'},
       description: 'Used only if variant="elevation". Shadow depth, corresponds to dp in the spec. It accepts values between 0 and 24 inclusive.',
@@ -27,11 +21,11 @@ export default {
       }
     }
   }
-} as ComponentMeta<typeof CommentsFeedObjectSkeleton>;
+} as ComponentMeta<typeof CommentsObjectSkeleton>;
 
-const Template: ComponentStory<typeof CommentsFeedObjectSkeleton> = (args) => (
+const Template: ComponentStory<typeof CommentsObjectSkeleton> = (args) => (
   <div style={{width: 400}}>
-    <CommentsFeedObjectSkeleton {...args} />
+    <CommentsObjectSkeleton {...args} />
   </div>
 );
 

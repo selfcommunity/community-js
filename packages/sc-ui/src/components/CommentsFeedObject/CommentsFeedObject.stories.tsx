@@ -37,7 +37,7 @@ export default {
     feedObjectId: 360,
     feedObjectType: SCFeedObjectTypologyType.POST,
     infiniteScrolling: true,
-    commentsOrderBy: SCCommentsOrderBy.ADDED_AT_ASC,
+    commentsOrderBy: SCCommentsOrderBy.ADDED_AT_ASC
     // onChangePage: (p) => console.log(p),
     // page: 2
   }
@@ -53,7 +53,13 @@ const Template: ComponentStory<typeof CommentsFeedObject> = (args) => (
 
 export const Base = Template.bind({});
 
-Base.args = {};
+Base.args = {
+  CommentObjectSkeletonProps: {elevation: 0, WidgetProps: {variant: 'outlined'}},
+  CommentComponentProps: {
+    ReplyCommentObjectProps: {elevation: 0, ReplyBoxProps: {variant: 'outlined'}},
+    variant: 'outlined'
+  }
+};
 
 export const CommentFirstLevel = Template.bind({});
 

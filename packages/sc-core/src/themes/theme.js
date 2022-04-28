@@ -60,6 +60,7 @@ const getTheme = (options, preferences) => {
             //     style: {
             //       border: 0,
             //       boxShadow: 'none',
+            //       marginBottom: '0 !important',
             //     },
             //   },
             //   {
@@ -73,8 +74,8 @@ const getTheme = (options, preferences) => {
             // styleOverrides: {
             //   root: {
             //     border: '0 none',
-            //     borderRadius: '10px',
             //     boxShadow: '0px 5px 20px rgba(0, 0, 0, 0.1)',
+            //     borderRadius: '15px',
             //   },
             // },
           },
