@@ -209,7 +209,7 @@
   "ui.feedUpdates.message": "There is an update for you!",
   "ui.feedUpdates.reload": "Reload",
 
-  "ui.commentsObject.title": "{total, plural, =0 {# Comments} one {# Comment} other {# Comments}}",
+  "ui.commentsObject.title": "{total, plural, =0 {Comments} one {# Comment} other {# Comments}}",
   "ui.commentsObject.noComments": "No comments at the moment.",
   "ui.commentsObject.noOtherComments": "No other comments.",
   "ui.commentsObject.loadMoreComments": "See more comments",
