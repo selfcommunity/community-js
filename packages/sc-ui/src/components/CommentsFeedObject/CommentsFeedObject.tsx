@@ -38,7 +38,8 @@ const Root = styled(Box, {
 })(({theme}) => ({
   width: '100%',
   [`& .${classes.noComments}`]: {
-    padding: theme.spacing()
+    padding: theme.spacing(),
+    paddingLeft: 0
   },
   [`& .${classes.commentNotFound}`]: {
     padding: theme.spacing()
@@ -256,19 +257,19 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
       if (showTitle) {
         return (
           <Typography variant="h6" gutterBottom color={'inherit'}>
-            <FormattedMessage id="ui.commentsObject.title" defaultMessage="ui.commentsObject.title" values={{total}} />
+            <FormattedMessage id="ui.commentsObject.title" defaultMessage="ui.commentsObject.title" values={{total: total}} />
           </Typography>
         );
       }
       return null;
     },
-    [total]
+    [total, isLoading]
   );
 
   /**
    * Render no comments
    */
-  function renderNoCommentsFoundError() {
+  function renderNoCommentsFound() {
     return (
       <>
         {renderNoComments ? (
@@ -379,7 +380,7 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
      * and the component was not looking for a particular
      * comment render no comments message
      */
-    commentsRendered = renderNoCommentsFoundError();
+    commentsRendered = renderNoCommentsFound();
   } else {
     /**
      * Two modes available:
