@@ -151,7 +151,7 @@ export default function useSCFetchCommentObjects(props: {
       setPrevious(null);
       setReload(true);
     }
-  }, [objId, orderBy, pageSize, offset]);
+  }, [objId, parent, orderBy, pageSize, offset]);
 
   /**
    * Reload fetch comments
