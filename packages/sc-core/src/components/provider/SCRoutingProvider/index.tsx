@@ -101,7 +101,7 @@ export default function SCRoutingProvider({children = null}: {children: React.Re
    */
   function url(name = '', params = {}) {
     const replacer = (tpl: string, data: Record<string, any>) => {
-      const re = /:([^/]+)?/g;
+      const re = /:([^/|^?|^#]+)?/g;
       let _tpl = tpl;
       let match = re.exec(tpl);
       while (match) {
