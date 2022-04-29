@@ -325,9 +325,11 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
    * @param comment
    */
   function scrollToComment(comment) {
+    // Add (window.innerHeight / 2) to scroll
+    // (usually >= (topBar + offset) and in center of the screen)
     setTimeout(() => {
       const el = document.querySelector(`#comment_object_${comment.id}`);
-      const y = el.getBoundingClientRect().top + window.pageYOffset + 15;
+      const y = el.getBoundingClientRect().top + window.pageYOffset - window.innerHeight / 2;
       window.scrollTo({top: y, behavior: 'smooth'});
     }, 300);
   }
