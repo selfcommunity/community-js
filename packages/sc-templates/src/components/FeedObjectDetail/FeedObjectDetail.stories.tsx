@@ -16,9 +16,25 @@ const Template: ComponentStory<typeof FeedObjectDetailTemplate> = (args) => (
   </div>
 );
 
-export const Main = Template.bind({});
+export const Base = Template.bind({});
 
-Main.args = {
+Base.args = {
   feedObjectId: 412,
   feedObjectType: SCFeedObjectTypologyType.POST
+};
+
+export const CommentFirstLevel = Template.bind({});
+
+CommentFirstLevel.args = {
+  feedObjectId: 412,
+  feedObjectType: SCFeedObjectTypologyType.POST,
+  CommentsFeedObjectProps: {commentObjectId: 1199}
+};
+
+export const CommentSecondLevel = Template.bind({});
+
+CommentSecondLevel.args = {
+  feedObjectId: 412,
+  feedObjectType: SCFeedObjectTypologyType.POST,
+  CommentsFeedObjectProps: {commentObjectId: 1205}
 };
