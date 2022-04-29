@@ -195,7 +195,7 @@ export default function FeedObjectDetail(inProps: FeedObjectDetailProps): JSX.El
         </Grid>
         <Grid item xs={12} md={5}>
           <Hidden smDown>
-            <Sticky enabled top={15}>
+            <Sticky enabled top={15} bottomBoundary={`#${id}`}>
               <RelatedFeedObjects feedObject={obj} {...RelatedFeedObjectProps} />
             </Sticky>
           </Hidden>
