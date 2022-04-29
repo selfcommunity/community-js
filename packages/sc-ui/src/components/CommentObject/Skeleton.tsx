@@ -16,6 +16,7 @@ const classes = {
 const Root = styled(BaseItem)(({theme}) => ({
   [`&.${classes.root}`]: {
     paddingBottom: theme.spacing(),
+    overflow: 'visible',
     '& > div': {
       alignItems: 'flex-start'
     }
