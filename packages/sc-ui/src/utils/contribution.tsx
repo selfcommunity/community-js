@@ -85,7 +85,12 @@ export function getRouteData(obj) {
     obj.type === SCFeedObjectTypologyType.POST ||
     obj.type === SCFeedObjectTypologyType.STATUS
   ) {
-    data = obj;
+    data = {
+      ...obj,
+      contribution_type: obj.type,
+      contribution_id: obj.id,
+      contribution_slug: obj.slug
+    };
   } else if (obj.type === SCCommentTypologyType) {
     const contribution_type = getContributionType(obj);
     const isContributionTypeObj = obj[contribution_type] && typeof obj[contribution_type] === 'object';

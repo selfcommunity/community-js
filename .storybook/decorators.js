@@ -107,13 +107,21 @@ const withProvider = (Story, context) => {
     handleAnonymousAction: () => {
       alert('Anonymous action');
     },
-    /* contextProviders: [
-        SCPreferencesProvider,
-        SCRoutingProvider,
-        SCUserProvider,
-        SCLocaleProvider,
-        SCAlertMessagesProvider
-      ] */
+    // router: {
+    //   routes: {
+    //     'comment': '/community/:contribution_type/:contribution_id/:contribution_slug?comment=:id#comment_object_:id',
+    //     'post': '/community/:contribution_type/:contribution_id/:contribution_slug',
+    //     'discussion': '/community/:contribution_type/:contribution_id/:contribution_slug',
+    //     'status': '/community/:contribution_type/:contribution_id/:contribution_slug'
+    //   },
+    // },
+    // contextProviders: [
+    //   SCPreferencesProvider,
+    //   SCRoutingProvider,
+    //   SCUserProvider,
+    //   SCLocaleProvider,
+    //   SCAlertMessagesProvider
+    // ]
   };
 
   // Handle to test
