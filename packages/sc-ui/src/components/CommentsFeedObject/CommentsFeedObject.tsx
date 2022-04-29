@@ -326,9 +326,10 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
    */
   function scrollToComment(comment) {
     setTimeout(() => {
-      const element = document.getElementById(`comment_object_${comment.id}`);
-      element && element.scrollIntoView({behavior: 'smooth', block: 'center'});
-    }, 200);
+      const el = document.querySelector(`#comment_object_${comment.id}`);
+      const y = el.getBoundingClientRect().top + window.pageYOffset + 100;
+      window.scrollTo({top: y, behavior: 'smooth'});
+    }, 300);
   }
 
   /**
