@@ -80,7 +80,7 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  overflow: 'auto',
+  overflow: 'visible',
   width: '100%',
   '& .MuiIcon-root': {
     fontSize: '18px',
@@ -88,6 +88,7 @@ const Root = styled(Box, {
   },
   [`& .${classes.comment}`]: {
     paddingBottom: 0,
+    overflow: 'visible',
     '& > div': {
       alignItems: 'flex-start'
     }
