@@ -321,6 +321,17 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
   );
 
   /**
+   * Focus on comment
+   * @param comment
+   */
+  function scrollToComment(comment) {
+    setTimeout(() => {
+      const element = document.getElementById(`comment_object_${comment.id}`);
+      element && element.scrollIntoView({behavior: 'smooth', block: 'center'});
+    }, 200);
+  }
+
+  /**
    * Fetch a single comment
    * and comment parent (if need it)
    */
@@ -334,6 +345,7 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
             _parent.latest_comments = [commentObj];
             if (getContribution(parent).id === commentsObject.feedObject.id) {
               setComment(_parent);
+              scrollToComment(_parent);
             } else {
               setCommentError(true);
             }
@@ -347,6 +359,7 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
       } else {
         if (getContribution(commentObj).id === commentsObject.feedObject.id) {
           setComment(commentObj);
+          scrollToComment(commentObj);
         } else {
           setCommentError(true);
         }
