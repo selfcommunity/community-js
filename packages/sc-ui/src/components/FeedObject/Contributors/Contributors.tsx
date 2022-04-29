@@ -150,7 +150,7 @@ export default function ContributorsFeedObject(inProps: ContributorsFeedObjectPr
                   {contributors.map((c: SCUserType) => (
                     <Avatar alt={c.username} src={c.avatar} key={c.id} />
                   ))}
-                  {[...Array(total - contributors.length)].map((x, i) => (
+                  {[...Array(Math.max(total - contributors.length, 0))].map((x, i) => (
                     <Avatar key={i}></Avatar>
                   ))}
                 </AvatarGroup>
