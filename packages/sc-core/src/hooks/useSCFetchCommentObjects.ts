@@ -1,4 +1,4 @@
-import {useEffect, useMemo, useRef, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import {AxiosResponse} from 'axios';
 import {SCOPE_SC_CORE} from '../constants/Errors';
 import {SCCommentsOrderBy, SCCommentType} from '../types/comment';
@@ -158,6 +158,7 @@ export default function useSCFetchCommentObjects(props: {
    */
   useEffect(() => {
     if (componentLoaded.current && reload && !isLoadingNext && !isLoadingPrevious) {
+      componentLoaded.current = false;
       setReload(false);
       getNextPage();
     }
