@@ -410,7 +410,7 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
      */
     commentsRendered = (
       <>
-        {(commentError || errorCommentObj) && !isLoading && !total && renderCommentNotFoundError()}
+        {Boolean((commentError || errorCommentObj) && !isLoading && !total) && renderCommentNotFoundError()}
         <CommentsObject
           feedObject={commentsObject.feedObject}
           comments={commentsObject.comments}
