@@ -226,10 +226,6 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
   } = props;
 
   // STATE
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [comment, setComment] = useState<SCCommentType>(null);
-  const {obj: commentObj, error: errorCommentObj} = useSCFetchCommentObject({id: commentObjectId, commentObject});
-  const [commentError, setCommentError] = useState<boolean>(null);
   const commentsObject = useSCFetchCommentObjects({
     id: feedObjectId,
     feedObject,
@@ -239,6 +235,10 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
     orderBy: commentsOrderBy,
     onChangePage: onChangePage
   });
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [comment, setComment] = useState<SCCommentType>(null);
+  const {obj: commentObj, error: errorCommentObj} = useSCFetchCommentObject({id: commentObjectId, commentObject});
+  const [commentError, setCommentError] = useState<boolean>(null);
 
   // CONST
   const objId = commentsObject.feedObject ? commentsObject.feedObject.id : null;
