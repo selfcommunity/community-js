@@ -97,7 +97,7 @@ export interface ReplyCommentObjectProps extends WidgetProps {
    * Initial content
    * @default {variant: 'outlined'}
    */
-  ReplyBoxProps?: WidgetProps;
+  WidgetProps?: WidgetProps;
 
   /**
    * Other props
@@ -121,7 +121,7 @@ export default function ReplyCommentObject(inProps: ReplyCommentObjectProps): JS
     onCancel,
     readOnly = false,
     text = '',
-    ReplyBoxProps = {variant: 'outlined'},
+    WidgetProps = {variant: 'outlined'},
     ...rest
   } = props;
 
@@ -207,7 +207,7 @@ export default function ReplyCommentObject(inProps: ReplyCommentObjectProps): JS
         )
       }
       secondary={
-        <Widget className={classes.comment} elevation={elevation} {...ReplyBoxProps}>
+        <Widget className={classes.comment} {...WidgetProps}>
           <Editor
             onRef={(e) => {
               editor = e;

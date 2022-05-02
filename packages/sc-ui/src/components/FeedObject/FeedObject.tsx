@@ -407,7 +407,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
     FeedObjectSkeletonProps = {elevation: 0},
     ActionsProps = {},
     ReplyCommentComponent = ReplyCommentObject,
-    ReplyCommentComponentProps = {ReplyBoxProps: {variant: 'outlined'}},
+    ReplyCommentComponentProps = {WidgetProps: {variant: 'outlined'}},
     CommentComponentProps = {variant: 'outlined'},
     CommentObjectSkeletonProps = {elevation: 0, WidgetProps: {variant: 'outlined'} as WidgetProps},
     ContributionActionsMenuProps = {},

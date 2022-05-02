@@ -57,7 +57,7 @@ export const Base = Template.bind({});
 Base.args = {
   CommentObjectSkeletonProps: {elevation: 0, WidgetProps: {variant: 'outlined'}},
   CommentComponentProps: {
-    ReplyCommentObjectProps: {elevation: 0, ReplyBoxProps: {variant: 'outlined'}},
+    ReplyCommentObjectProps: {elevation: 0, WidgetProps: {elevation: 1, variant: 'elevation'}},
     variant: 'outlined'
   }
 };
