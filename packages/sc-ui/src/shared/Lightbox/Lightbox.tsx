@@ -647,7 +647,10 @@ class ReactImageLightbox extends React.Component<ReactImageLightboxProps, ReactI
   }
 
   static isTargetMatchImage(target) {
-    return target && target.className && target.className.includes('ril-image-current');
+    if (target && target.className && Array.isArray(target.className)) {
+      return target.className.includes('ril-image-current');
+    }
+    return false;
   }
 
   static parseMouseEvent(mouseEvent) {
