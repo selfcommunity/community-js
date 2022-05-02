@@ -30,7 +30,11 @@ const PREFIX = 'SCReplyCommentObject';
 const classes = {
   root: `${PREFIX}-root`,
   comment: `${PREFIX}-comment`,
-  avatar: `${PREFIX}-avatar`
+  avatar: `${PREFIX}-avatar`,
+  actions: `${PREFIX}-actions`,
+  buttonReply: `${PREFIX}-button-reply`,
+  buttonSave: `${PREFIX}-button-save`,
+  buttonCancel: `${PREFIX}-button-cancel`
 };
 
 const Root = styled(BaseItemButton, {
@@ -53,6 +57,10 @@ const Root = styled(BaseItemButton, {
   },
   [`& .${classes.comment}`]: {
     overflow: 'visible'
+  },
+  [`& .${classes.actions}`]: {
+    marginLeft: theme.spacing(),
+    paddingBottom: theme.spacing()
   }
 }));
 
@@ -97,7 +105,7 @@ export interface ReplyCommentObjectProps extends WidgetProps {
    * Initial content
    * @default {variant: 'outlined'}
    */
-  ReplyBoxProps?: WidgetProps;
+  WidgetProps?: WidgetProps;
 
   /**
    * Other props
@@ -121,7 +129,7 @@ export default function ReplyCommentObject(inProps: ReplyCommentObjectProps): JS
     onCancel,
     readOnly = false,
     text = '',
-    ReplyBoxProps = {variant: 'outlined'},
+    WidgetProps = {variant: 'outlined'},
     ...rest
   } = props;
 
@@ -207,7 +215,7 @@ export default function ReplyCommentObject(inProps: ReplyCommentObjectProps): JS
         )
       }
       secondary={
-        <Widget className={classes.comment} elevation={elevation} {...ReplyBoxProps}>
+        <Widget className={classes.comment} {...WidgetProps}>
           <Editor
             onRef={(e) => {
               editor = e;
@@ -217,20 +225,20 @@ export default function ReplyCommentObject(inProps: ReplyCommentObjectProps): JS
             readOnly={readOnly}
           />
           {!isEditorEmpty() && (
-            <Stack direction="row" spacing={2} sx={{mb: 1, ml: 1}}>
+            <Stack direction="row" spacing={2} className={classes.actions}>
               {onReply && (
-                <LoadingButton variant="outlined" size="small" onClick={handleReply} loading={readOnly}>
+                <LoadingButton variant="outlined" size="small" onClick={handleReply} loading={readOnly} className={classes.buttonReply}>
                   {intl.formatMessage(messages.reply)}
                 </LoadingButton>
               )}
               {onSave && (
                 <>
                   {onCancel && (
-                    <LoadingButton variant={'text'} size="small" onClick={handleCancel} loading={readOnly} color="inherit">
+                    <LoadingButton variant={'text'} size="small" onClick={handleCancel} loading={readOnly} color="inherit" className={classes.buttonCancel}>
                       {intl.formatMessage(messages.cancel)}
                     </LoadingButton>
                   )}
-                  <LoadingButton variant="outlined" size="small" onClick={handleSave} loading={readOnly}>
+                  <LoadingButton variant="outlined" size="small" onClick={handleSave} loading={readOnly} className={classes.buttonSave}>
                     {intl.formatMessage(messages.save)}
                   </LoadingButton>
                 </>

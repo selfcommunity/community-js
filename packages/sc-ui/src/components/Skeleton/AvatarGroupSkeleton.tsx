@@ -45,9 +45,10 @@ const Root = styled(AvatarGroup, {
  *
  */
 export default function AvatarGroupSkeleton(props): JSX.Element {
+  const {count = 2, ...rest} = props;
   return (
-    <Root className={classes.root} {...props}>
-      {[...Array(props.max ? props.max + 1 : 5)].map((x, i) => (
+    <Root className={classes.root} {...rest}>
+      {[...Array(count + 1)].map((x, i) => (
         <Avatar key={i}>
           <Skeleton variant="circular" width={24} height={24} />
         </Avatar>

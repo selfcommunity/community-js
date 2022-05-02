@@ -1,7 +1,7 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Endpoints, http, Logger, SCFeedObjectType, SCFeedObjectTypologyType, SCUserType, useSCFetchFeedObject} from '@selfcommunity/core';
-import {Avatar, AvatarGroup, Box, Button, List, ListItem} from '@mui/material';
+import {Avatar, AvatarGroup, Box, Button, Fade, List, ListItem} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import AvatarGroupSkeleton from '../../Skeleton/AvatarGroupSkeleton';
 import {SCOPE_SC_UI} from '../../../constants/Errors';
@@ -66,6 +66,11 @@ export interface ContributorsFeedObjectProps {
    */
   feedObjectType: SCFeedObjectTypologyType;
   /**
+   * AvatarGroupSkeleton props
+   * @default {count: 3}
+   */
+  AvatarGroupSkeletonProps?: any;
+  /**
    * Any other properties
    */
   [p: string]: any;
@@ -78,7 +83,7 @@ export default function ContributorsFeedObject(inProps: ContributorsFeedObjectPr
     name: PREFIX
   });
 
-  const {className = null, feedObjectId = null, feedObject = null, feedObjectType = null, ...rest} = props;
+  const {className = null, feedObjectId = null, feedObject = null, feedObjectType = null, AvatarGroupSkeletonProps = {}, ...rest} = props;
 
   // STATE
   const {obj, setObj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
@@ -135,67 +140,71 @@ export default function ContributorsFeedObject(inProps: ContributorsFeedObjectPr
   }
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
-      {loading && !openContributorsDialog ? (
-        <Button variant="text" disabled classes={{root: classes.btnParticipants}}>
-          <FormattedMessage id={'ui.feedObject.contributors.participants'} defaultMessage={'ui.feedObject.contributors.participants'} />:
-          <AvatarGroupSkeleton {...rest} />
-        </Button>
-      ) : (
-        <>
-          {contributors.length > 0 ? (
+      <Fade in>
+        <Box>
+          {loading && !openContributorsDialog ? (
+            <Button variant="text" disabled classes={{root: classes.btnParticipants}}>
+              <FormattedMessage id={'ui.feedObject.contributors.participants'} defaultMessage={'ui.feedObject.contributors.participants'} />:
+              <AvatarGroupSkeleton {...AvatarGroupSkeletonProps} />
+            </Button>
+          ) : (
             <>
-              <Button variant="text" onClick={() => setOpenContributorsDialog(true)} classes={{root: classes.btnParticipants}} color="inherit">
-                <FormattedMessage id={'ui.feedObject.contributors.participants'} defaultMessage={'ui.feedObject.contributors.participants'} />:
-                <AvatarGroup {...rest}>
-                  {contributors.map((c: SCUserType) => (
-                    <Avatar alt={c.username} src={c.avatar} key={c.id} />
-                  ))}
-                  {[...Array(Math.max(total - contributors.length, 0))].map((x, i) => (
-                    <Avatar key={i}></Avatar>
-                  ))}
-                </AvatarGroup>
-              </Button>
-              {openContributorsDialog && (
-                <BaseDialog
-                  title={
-                    <FormattedMessage defaultMessage="ui.feedObject.contributors.title" id="ui.feedObject.contributors.title" values={{total}} />
-                  }
-                  onClose={() => setOpenContributorsDialog(false)}
-                  open={openContributorsDialog}>
-                  {loading ? (
-                    <CentralProgress size={50} />
-                  ) : (
-                    <InfiniteScroll
-                      dataLength={contributors.length}
-                      next={fetchContributors}
-                      hasMore={Boolean(next)}
-                      loader={<CentralProgress size={30} />}
-                      height={400}
-                      endMessage={
-                        <p style={{textAlign: 'center'}}>
-                          <b>
-                            <FormattedMessage
-                              id="ui.feedObject.contributors.noOtherContributors"
-                              defaultMessage="ui.feedObject.contributors.noOtherContributors"
-                            />
-                          </b>
-                        </p>
-                      }>
-                      <List>
-                        {contributors.map((c, index) => (
-                          <ListItem key={c.id}>
-                            <User elevation={0} user={c} key={c.id} sx={{m: 0}} />
-                          </ListItem>
-                        ))}
-                      </List>
-                    </InfiniteScroll>
+              {contributors.length > 0 ? (
+                <>
+                  <Button variant="text" onClick={() => setOpenContributorsDialog(true)} classes={{root: classes.btnParticipants}} color="inherit">
+                    <FormattedMessage id={'ui.feedObject.contributors.participants'} defaultMessage={'ui.feedObject.contributors.participants'} />:
+                    <AvatarGroup {...rest}>
+                      {contributors.map((c: SCUserType) => (
+                        <Avatar alt={c.username} src={c.avatar} key={c.id} />
+                      ))}
+                      {[...Array(Math.max(total - contributors.length, 0))].map((x, i) => (
+                        <Avatar key={i}></Avatar>
+                      ))}
+                    </AvatarGroup>
+                  </Button>
+                  {openContributorsDialog && (
+                    <BaseDialog
+                      title={
+                        <FormattedMessage defaultMessage="ui.feedObject.contributors.title" id="ui.feedObject.contributors.title" values={{total}} />
+                      }
+                      onClose={() => setOpenContributorsDialog(false)}
+                      open={openContributorsDialog}>
+                      {loading ? (
+                        <CentralProgress size={50} />
+                      ) : (
+                        <InfiniteScroll
+                          dataLength={contributors.length}
+                          next={fetchContributors}
+                          hasMore={Boolean(next)}
+                          loader={<CentralProgress size={30} />}
+                          height={400}
+                          endMessage={
+                            <p style={{textAlign: 'center'}}>
+                              <b>
+                                <FormattedMessage
+                                  id="ui.feedObject.contributors.noOtherContributors"
+                                  defaultMessage="ui.feedObject.contributors.noOtherContributors"
+                                />
+                              </b>
+                            </p>
+                          }>
+                          <List>
+                            {contributors.map((c, index) => (
+                              <ListItem key={c.id}>
+                                <User elevation={0} user={c} key={c.id} sx={{m: 0}} />
+                              </ListItem>
+                            ))}
+                          </List>
+                        </InfiniteScroll>
+                      )}
+                    </BaseDialog>
                   )}
-                </BaseDialog>
-              )}
+                </>
+              ) : null}
             </>
-          ) : null}
-        </>
-      )}
+          )}
+        </Box>
+      </Fade>
     </Root>
   );
 }

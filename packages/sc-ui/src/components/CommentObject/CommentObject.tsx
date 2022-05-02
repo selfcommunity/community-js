@@ -304,7 +304,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
     onVote,
     elevation = 0,
     CommentObjectSkeletonProps = {elevation, WidgetProps: {variant: 'outlined'} as WidgetProps},
-    ReplyCommentObjectProps = {elevation, ReplyBoxProps: {variant: 'outlined'} as WidgetProps},
+    ReplyCommentObjectProps = {elevation, WidgetProps: {variant: 'outlined'} as WidgetProps},
     ...rest
   } = props;
 
