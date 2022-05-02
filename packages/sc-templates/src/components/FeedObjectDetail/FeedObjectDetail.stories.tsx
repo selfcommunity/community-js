@@ -19,16 +19,16 @@ const Template: ComponentStory<typeof FeedObjectDetailTemplate> = (args) => (
 export const Base = Template.bind({});
 
 Base.args = {
-  feedObjectId: 412,
+  feedObjectId: 360,
   feedObjectType: SCFeedObjectTypologyType.POST
 };
 
 export const CommentFirstLevel = Template.bind({});
 
 CommentFirstLevel.args = {
-  feedObjectId: 412,
+  feedObjectId: 360,
   feedObjectType: SCFeedObjectTypologyType.POST,
-  CommentsFeedObjectProps: {commentObjectId: 1199}
+  CommentsFeedObjectProps: {commentObjectId: 1145}
 };
 
 export const CommentSecondLevel = Template.bind({});
