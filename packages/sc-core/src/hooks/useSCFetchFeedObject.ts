@@ -1,4 +1,4 @@
-import {useEffect, useMemo, useState} from 'react';
+import {useEffect, useState} from 'react';
 import http from '../utils/http';
 import {Logger} from '../utils/logger';
 import Endpoints from '../constants/Endpoints';
@@ -31,22 +31,19 @@ export default function useSCFetchFeedObject({
   /**
    * Memoized fetchFeedObject
    */
-  const fetchFeedObject = useMemo(
-    () => () => {
-      return http
-        .request({
-          url: Endpoints.FeedObject.url({type: feedObjectType, id: id}),
-          method: Endpoints.FeedObject.method,
-        })
-        .then((res: AxiosResponse<any>) => {
-          if (res.status >= 300) {
-            return Promise.reject(res);
-          }
-          return Promise.resolve(res.data);
-        });
-    },
-    [id, feedObjectType]
-  );
+  const fetchFeedObject = () => {
+    return http
+      .request({
+        url: Endpoints.FeedObject.url({type: feedObjectType, id: id}),
+        method: Endpoints.FeedObject.method,
+      })
+      .then((res: AxiosResponse<any>) => {
+        if (res.status >= 300) {
+          return Promise.reject(res);
+        }
+        return Promise.resolve(res.data);
+      });
+  };
 
   /**
    * If id and feedObjectType resolve feddObject
@@ -63,7 +60,7 @@ export default function useSCFetchFeedObject({
           Logger.error(SCOPE_SC_CORE, err.message);
         });
     }
-  }, [id]);
+  }, [id, feedObjectType]);
 
   useDeepCompareEffectNoCheck(() => {
     setObj(feedObject);
