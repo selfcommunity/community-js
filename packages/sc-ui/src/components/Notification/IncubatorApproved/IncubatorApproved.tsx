@@ -105,6 +105,7 @@ export default function IncubatorApprovedNotification(inProps: NotificationIncub
       <NotificationItem
         template={template}
         isNew={notificationObject.is_new}
+        disableTypography
         image={
           <Avatar
             alt={notificationObject.incubator.approved_category.name}

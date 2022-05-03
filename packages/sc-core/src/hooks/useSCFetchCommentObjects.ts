@@ -1,4 +1,4 @@
-import {useEffect, useRef, useState} from 'react';
+import {useEffect, useReducer} from 'react';
 import {AxiosResponse} from 'axios';
 import {SCOPE_SC_CORE} from '../constants/Errors';
 import {SCCommentsOrderBy, SCCommentType} from '../types/comment';
@@ -7,6 +7,107 @@ import {Logger} from '../utils/logger';
 import Endpoints from '../constants/Endpoints';
 import {SCFeedObjectType, SCFeedObjectTypologyType} from '../types';
 import useSCFetchFeedObject from './useSCFetchFeedObject';
+
+/**
+ * Interface SCCommentsObjectType
+ */
+export interface SCCommentsObjectType {
+  componentLoaded: boolean;
+  comments: SCCommentType[];
+  total: number;
+  next: string;
+  previous: string;
+  isLoadingNext: boolean;
+  isLoadingPrevious: boolean;
+  page: number;
+  reload: boolean;
+}
+
+/**
+ * @hidden
+ * We have complex state logic that involves multiple sub-values,
+ * so useReducer is preferable to useState.
+ * Define all possible auth action types label
+ * Use this to export actions and dispatch an action
+ */
+export const commentsObjectActionTypes = {
+  LOADING_NEXT: '_loading_next',
+  LOADING_PREVIOUS: '_loading_previous',
+  DATA_NEXT_LOADED: '_data_next_loaded',
+  DATA_PREVIOUS_LOADED: '_data_previous_loaded',
+  DATA_RELOAD: '_data_reload',
+  DATA_RELOADED: '_data_reloaded',
+};
+
+/**
+ * commentsReducer:
+ *  - manage the state of comments object
+ *  - update the state base on action type
+ * @param state
+ * @param action
+ */
+function commentsReducer(state, action) {
+  switch (action.type) {
+    case commentsObjectActionTypes.LOADING_NEXT:
+      return {...state, isLoadingNext: true, isLoadingPrevious: false};
+    case commentsObjectActionTypes.LOADING_PREVIOUS:
+      return {...state, isLoadingNext: false, isLoadingPrevious: true};
+    case commentsObjectActionTypes.DATA_NEXT_LOADED:
+      return {
+        ...state,
+        page: action.payload.currentPage,
+        comments: action.payload.comments,
+        isLoadingNext: false,
+        componentLoaded: true,
+        next: action.payload.next,
+        ...(action.payload.previous ? {previous: action.payload.previous} : {}),
+        ...(action.payload.total ? {total: action.payload.total} : {}),
+      };
+    case commentsObjectActionTypes.DATA_PREVIOUS_LOADED:
+      return {
+        ...state,
+        page: action.payload.currentPage,
+        comments: action.payload.comments,
+        isLoadingPrevious: false,
+        previous: action.payload.previous
+      };
+    case commentsObjectActionTypes.DATA_RELOAD:
+      return {
+        ...state,
+        next: action.payload.next,
+        comments: [],
+        total: 0,
+        previous: null,
+        reload: true,
+      };
+    case commentsObjectActionTypes.DATA_RELOADED:
+      return {
+        ...state,
+        componentLoaded: false,
+        reload: false,
+      };
+    default:
+      throw new Error(`Unhandled type: ${action.type}`);
+  }
+}
+
+/**
+ * Define initial state
+ * @param data
+ */
+function stateInitializer(data): SCCommentsObjectType {
+  return {
+    componentLoaded: false,
+    comments: [],
+    total: 0,
+    next: data.next,
+    previous: null,
+    isLoadingNext: false,
+    isLoadingPrevious: false,
+    page: data.offset / data.pageSize + 1,
+    reload: false,
+  };
+}
 
 /**
  :::info
@@ -37,15 +138,6 @@ export default function useSCFetchCommentObjects(props: {
   const {obj, setObj} = useSCFetchFeedObject({id, feedObject, feedObjectType});
   const objId = obj ? obj.id : null;
 
-  // Comments
-  const [comments, setComments] = useState<SCCommentType[]>([]);
-
-  // Current page
-  const [page, setPage] = useState<number>(offset / pageSize + 1);
-
-  // Component status - if loaded initial data
-  const [componentLoaded, setComponentLoaded] = useState<boolean>(false);
-
   /**
    * Get next url
    */
@@ -58,12 +150,7 @@ export default function useSCFetchCommentObjects(props: {
   };
 
   // STATE
-  const [isLoadingNext, setIsLoadingNext] = useState<boolean>(false);
-  const [isLoadingPrevious, setIsLoadingPrevious] = useState<boolean>(false);
-  const [total, setTotal] = useState<number>(0);
-  const [next, setNext] = useState<string>(getNextUrl());
-  const [previous, setPrevious] = useState<string>(null);
-  const [reload, setReload] = useState<boolean>(false);
+  const [state, dispatch] = useReducer(commentsReducer, {}, () => stateInitializer({offset, pageSize, next: getNextUrl()}));
 
   /**
    * Calculate current page
@@ -96,15 +183,19 @@ export default function useSCFetchCommentObjects(props: {
    * Fetch previous comments
    */
   function getPreviousPage() {
-    if (obj && previous && !isLoadingPrevious) {
-      setIsLoadingPrevious(true);
-      performFetchComments(previous)
+    if (obj && state.previous && !state.isLoadingPrevious) {
+      dispatch({type: commentsObjectActionTypes.LOADING_PREVIOUS});
+      performFetchComments(state.previous)
         .then((res) => {
-          let currentPage = getCurrentPage(previous);
-          setPage(currentPage);
-          setComments([...res.results, ...comments]);
-          setPrevious(res.previous);
-          setIsLoadingPrevious(false);
+          let currentPage = getCurrentPage(state.previous);
+          dispatch({
+            type: commentsObjectActionTypes.DATA_PREVIOUS_LOADED,
+            payload: {
+              page: currentPage,
+              comments: [...res.results, ...state.comments],
+              previous: res.previous,
+            },
+          });
           onChangePage && onChangePage(currentPage);
         })
         .catch((error) => {
@@ -117,21 +208,22 @@ export default function useSCFetchCommentObjects(props: {
    * Fetch next comments
    */
   function getNextPage() {
-    if (obj && next && !isLoadingNext) {
-      setIsLoadingNext(true);
-      performFetchComments(next)
+    if (obj && state.next && !state.isLoadingNext) {
+      dispatch({type: commentsObjectActionTypes.LOADING_NEXT});
+      performFetchComments(state.next)
         .then((res) => {
-          let currentPage = getCurrentPage(next);
-          setComments([...comments, ...res.results]);
-          setPage(currentPage);
-          setNext(res.next);
-          setTotal(res.count);
-          if (offset && comments.length === 0) {
-            // Set initial previous if start from a offset > 0
-            setPrevious(res.previous);
-          }
-          setIsLoadingNext(false);
-          setComponentLoaded(true);
+          let currentPage = getCurrentPage(state.next);
+          dispatch({
+            type: commentsObjectActionTypes.DATA_NEXT_LOADED,
+            payload: {
+              page: currentPage,
+              comments: [...state.comments, ...res.results],
+              next: res.next,
+              total: res.count,
+              componentLoaded: true,
+              ...(offset && state.comments.length === 0 ? {previous: res.previous} : {}),
+            },
+          });
           onChangePage && onChangePage(currentPage);
         })
         .catch((error) => {
@@ -144,12 +236,13 @@ export default function useSCFetchCommentObjects(props: {
    * Reset component status on change orderBy, pageSize, offset
    */
   useEffect(() => {
-    if (componentLoaded && Boolean(obj) && !reload) {
-      setNext(getNextUrl());
-      setComments([]);
-      setTotal(0);
-      setPrevious(null);
-      setReload(true);
+    if (state.componentLoaded && Boolean(obj) && !state.reload) {
+      dispatch({
+        type: commentsObjectActionTypes.DATA_RELOAD,
+        payload: {
+          next: getNextUrl(),
+        },
+      });
     }
   }, [objId, parent, orderBy, pageSize, offset]);
 
@@ -157,28 +250,21 @@ export default function useSCFetchCommentObjects(props: {
    * Reload fetch comments
    */
   useEffect(() => {
-    if (componentLoaded && reload && !isLoadingNext && !isLoadingPrevious) {
-      setComponentLoaded(false);
-      setReload(false);
+    if (state.componentLoaded && state.reload && !state.isLoadingNext && !state.isLoadingPrevious) {
+      dispatch({
+        type: commentsObjectActionTypes.DATA_RELOADED,
+      });
       getNextPage();
     }
-  }, [reload]);
+  }, [state.reload]);
 
   return {
     feedObject: obj,
     setFeedObject: setObj,
-    comments,
-    setComments,
-    isLoadingNext,
-    isLoadingPrevious,
-    next,
-    previous,
-    total,
-    page,
+    ...state,
     pageSize,
     getNextPage,
     getPreviousPage,
     orderBy,
-    componentLoaded,
   };
 }

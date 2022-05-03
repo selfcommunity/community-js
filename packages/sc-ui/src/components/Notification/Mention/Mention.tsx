@@ -120,6 +120,7 @@ export default function MentionNotification(inProps: MentionNotificationProps): 
       <NotificationItem
         template={template}
         isNew={notificationObject.is_new}
+        disableTypography
         image={
           <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject[objectType].author)}>
             <Avatar
@@ -131,14 +132,14 @@ export default function MentionNotification(inProps: MentionNotificationProps): 
           </Link>
         }
         primary={
-          <>
+          <Typography component="div" color="inherit" className={classes.mentionText}>
             <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject[objectType].author)} className={classes.username}>
               {notificationObject[objectType].author.username}
             </Link>{' '}
             {intl.formatMessage(messages.quotedYouOn, {
               b: (...chunks) => <strong>{chunks}</strong>
             })}{' '}
-          </>
+          </Typography>
         }
         secondary={
           <React.Fragment>

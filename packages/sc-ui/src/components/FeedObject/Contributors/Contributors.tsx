@@ -154,8 +154,8 @@ export default function ContributorsFeedObject(inProps: ContributorsFeedObjectPr
                   <Button variant="text" onClick={() => setOpenContributorsDialog(true)} classes={{root: classes.btnParticipants}} color="inherit">
                     <FormattedMessage id={'ui.feedObject.contributors.participants'} defaultMessage={'ui.feedObject.contributors.participants'} />:
                     <AvatarGroup {...rest}>
-                      {contributors.map((c: SCUserType) => (
-                        <Avatar alt={c.username} src={c.avatar} key={c.id} />
+                      {contributors.map((c: SCUserType, i) => (
+                        <Avatar alt={c.username} src={c.avatar} key={i} />
                       ))}
                       {[...Array(Math.max(total - contributors.length, 0))].map((x, i) => (
                         <Avatar key={i}></Avatar>
@@ -189,8 +189,8 @@ export default function ContributorsFeedObject(inProps: ContributorsFeedObjectPr
                             </p>
                           }>
                           <List>
-                            {contributors.map((c, index) => (
-                              <ListItem key={c.id}>
+                            {contributors.map((c, i) => (
+                              <ListItem key={i}>
                                 <User elevation={0} user={c} key={c.id} sx={{m: 0}} />
                               </ListItem>
                             ))}

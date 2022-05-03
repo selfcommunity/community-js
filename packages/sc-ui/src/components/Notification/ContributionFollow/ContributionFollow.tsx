@@ -23,7 +23,7 @@ const classes = {
   root: `${PREFIX}-root`,
   avatar: `${PREFIX}-avatar`,
   username: `${PREFIX}-username`,
-  followText: `${PREFIX}-mention-text`,
+  followText: `${PREFIX}-follow-text`,
   activeAt: `${PREFIX}-active-at`,
   contributionText: `${PREFIX}-contribution-text`
 };
@@ -123,13 +123,14 @@ export default function ContributionFollowNotification(inProps: ContributionFoll
       <NotificationItem
         template={template}
         isNew={notificationObject.is_new}
+        disableTypography
         image={
           <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.user)}>
             <Avatar alt={notificationObject.user.username} variant="circular" src={notificationObject.user.avatar} classes={{root: classes.avatar}} />
           </Link>
         }
         primary={
-          <>
+          <Typography component="div" color="inherit" className={classes.followText}>
             <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.user)} className={classes.username}>
               {notificationObject.user.username}
             </Link>{' '}
@@ -137,7 +138,7 @@ export default function ContributionFollowNotification(inProps: ContributionFoll
               username: notificationObject.user.username,
               b: (...chunks) => <strong>{chunks}</strong>
             })}
-          </>
+          </Typography>
         }
         secondary={
           template === SCNotificationObjectTemplateType.DETAIL && <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />

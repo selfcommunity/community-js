@@ -91,7 +91,7 @@ export default function RelevantActivities(inProps: RelevantActivitiesProps): JS
       ) : (
         <List>
           {activities.slice(0, showMaxRelevantActivities).map((a: SCFeedUnitActivityType, i) => (
-            <ListItem className={classes.activity}>{renderActivity(a, i)}</ListItem>
+            <ListItem className={classes.activity} key={i}>{renderActivity(a, i)}</ListItem>
           ))}
           {!openOtherActivities && activities.length > showMaxRelevantActivities && (
             <ListItemButton onClick={() => setOpenOtherActivities((prev) => !prev)}>
@@ -108,7 +108,7 @@ export default function RelevantActivities(inProps: RelevantActivitiesProps): JS
           )}
           <Collapse in={openOtherActivities} timeout="auto" unmountOnExit>
             {activities.slice(showMaxRelevantActivities).map((a: SCFeedUnitActivityType, i) => (
-              <ListItem className={classes.activity}>{renderActivity(a, i)}</ListItem>
+              <ListItem className={classes.activity} key={i}>{renderActivity(a, i)}</ListItem>
             ))}
           </Collapse>
         </List>
