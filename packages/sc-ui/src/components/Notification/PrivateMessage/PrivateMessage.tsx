@@ -61,9 +61,9 @@ const Root = styled(Box, {
     display: 'inline-block',
     textOverflow: 'ellipsis',
     overflow: 'hidden',
-    '-webkit-line-clamp': '2',
+    WebkitLineClamp: '2',
     lineClamp: 2,
-    '-webkit-box-orient': 'vertical',
+    WebkitBoxOrient: 'vertical',
     '& p': {
       margin: 0
     }
@@ -81,9 +81,9 @@ const Root = styled(Box, {
       overflowY: 'hidden',
       textOverflow: 'ellipsis',
       display: '-webkit-box',
-      '-webkit-line-clamp': '2',
+      WebkitLineClamp: '2',
       lineClamp: 2,
-      '-webkit-box-orient': 'vertical',
+      WebkitBoxOrient: 'vertical',
     }
   },
   [`& .${classes.actions}`]: {

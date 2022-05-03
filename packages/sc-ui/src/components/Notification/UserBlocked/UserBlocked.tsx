@@ -46,10 +46,7 @@ const Root = styled(Box, {
     color: '#FFF'
   },
   [`& .${classes.blockedText}`]: {
-    color: theme.palette.text.primary,
-    textOverflow: 'ellipsis',
-    display: 'inline',
-    overflow: 'hidden'
+    color: theme.palette.text.primary
   }
 }));
 
