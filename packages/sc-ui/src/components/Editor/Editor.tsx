@@ -1,28 +1,27 @@
-import React, {FunctionComponent, RefObject, SyntheticEvent, useContext, useEffect, useMemo, useRef, useState} from 'react';
+import React, {useMemo} from 'react';
 import {styled} from '@mui/material/styles';
-import {ContentState, convertFromHTML, convertToRaw, EditorState} from 'draft-js';
-import draftToHtml from 'draftjs-to-html';
-import {defineMessages, useIntl} from 'react-intl';
-import RichTextEditor, {TAutocompleteItem, TRichTextEditorProps, TRichTextEditorRef} from './RichTextEditor';
-import {Alert, AlertTitle, Avatar, Box, Fade, IconButton, LinearProgress, ListItemAvatar, ListItemText, Popover, Stack} from '@mui/material';
-import {Endpoints, http, SCContextType, SCMediaType, SCUserContext, SCUserContextType, SCUserType, useSCContext} from '@selfcommunity/core';
-import {AxiosResponse} from 'axios';
-import MediaChunkUploader from '../../shared/MediaChunkUploader';
-import ChunkedUploady from '@rpldy/chunked-uploady';
-import {SCMediaChunkType} from '../../types/media';
-import UploadDropZone from '@rpldy/upload-drop-zone';
-import Icon from '@mui/material/Icon';
-import Picker from 'emoji-picker-react';
-import {random} from '../../utils/string';
+import {defineMessages, FormattedMessage} from 'react-intl';
+import {Box} from '@mui/material';
 import classNames from 'classnames';
 import useThemeProps from '@mui/material/styles/useThemeProps';
+
+import LexicalComposer from '@lexical/react/LexicalComposer';
+import LexicalContentEditable from '@lexical/react/LexicalContentEditable';
+import LexicalRichTextPlugin from '@lexical/react/LexicalRichTextPlugin';
+import {AutoLinkPlugin, DefaultHtmlValuePlugin} from './plugins';
+import LexicalLinkPlugin from '@lexical/react/LexicalLinkPlugin';
+import {EditorThemeClasses, LexicalEditor} from 'lexical';
+import nodes from './nodes';
+import LexicalAutoFocusPlugin from '@lexical/react/LexicalAutoFocusPlugin';
+import OnChangePlugin from './plugins/OnChangePlugin';
+import MentionsPlugin from './plugins/MentionsPlugin';
 
 const PREFIX = 'SCEditor';
 
 const classes = {
   root: `${PREFIX}-root`,
-  drop: `${PREFIX}-drop`,
-  actions: `${PREFIX}-actions`
+  content: `${PREFIX}-content`,
+  placeholder: `${PREFIX}-placeholder`
 };
 
 const Root = styled(Box, {
@@ -33,76 +32,27 @@ const Root = styled(Box, {
   boxSizing: 'border-box',
   cursor: 'text',
   padding: theme.spacing(1),
-  minHeight: 59,
   position: 'relative',
-  [`& .${classes.drop}`]: {
-    position: 'relative',
-    '&::before': {
-      content: 'attr(data-content)',
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      backgroundColor: theme.palette.primary.main,
-      color: theme.palette.primary.contrastText,
-      zIndex: 2,
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center'
+  [`& .${classes.content}`]: {
+    outline: 'none',
+    minHeight: 60,
+    '& > p': {
+      margin: theme.spacing(1, 0, 1, 0),
+      '&:first-child': {
+        marginTop: 0
+      }
     }
   },
-  [`& .${classes.actions}`]: {
+  [`& .${classes.placeholder}`]: {
     position: 'absolute',
-    bottom: 0,
-    right: theme.spacing()
+    top: theme.spacing(1),
+    left: theme.spacing(1),
+    color: theme.palette.text.disabled
+  },
+  ['& mention']: {
+    backgroundColor: theme.palette.primary.light
   }
 }));
-
-const messages = defineMessages({
-  placeholder: {
-    id: 'ui.editor.placeholder',
-    defaultMessage: 'ui.editor.placeholder'
-  },
-  drop: {
-    id: 'ui.editor.drop',
-    defaultMessage: 'ui.editor.drop'
-  }
-});
-
-type TUser = {
-  avatar: string;
-  username: string;
-  realName?: string;
-};
-
-const User: FunctionComponent<TUser> = (props) => {
-  return (
-    <>
-      <ListItemAvatar>
-        <Avatar alt={props.username} src={props.avatar}>
-          {props.username.substr(0, 1)}
-        </Avatar>
-      </ListItemAvatar>
-      <ListItemText primary={props.username} secondary={props.realName} />
-    </>
-  );
-};
-
-const EditorImage: FunctionComponent<any> = (props) => {
-  // Props
-  const {blockProps} = props;
-  const {src, width, height, rest} = blockProps;
-
-  // Utils
-  const calculateAspectRatioFit = (srcWidth, srcHeight, maxWidth, maxHeight) => {
-    const ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
-    return {width: srcWidth * ratio, height: srcHeight * ratio};
-  };
-
-  return <img src={src} {...calculateAspectRatioFit(width, height, 300, 300)} {...rest} />;
-};
 
 export interface EditorProps {
   /**
@@ -134,12 +84,6 @@ export interface EditorProps {
    * @default null
    * */
   onChange?: (value: string) => void;
-
-  /**
-   * Handler for ref forwarding of the MUIRichTextEditor
-   * @default null
-   */
-  onRef?: (editor: RefObject<TRichTextEditorRef>) => void;
 }
 
 /**
@@ -160,202 +104,55 @@ export interface EditorProps {
  |Rule Name|Global class|Description|
  |---|---|---|
  |root|.SCEditor-root|Styles applied to the root element.|
- |drop|.SCEditor-drop|Styles applied to the drop element.|
- |actions|.SCEditor-actions|Styles applied to the actions section.|
+ |content|.SCEditor-content|Styles applied to the content element.|
 
  * @param inProps
  */
 export default function Editor(inProps: EditorProps): JSX.Element {
-  const editorId = useMemo(() => `editor${random()}`, []);
-
   // PROPS
   const props: EditorProps = useThemeProps({
     props: inProps,
     name: PREFIX
   });
-  const {id = 'editor', className = null, defaultValue = '', readOnly = false, onChange = null, onRef = null} = props;
-
-  // Refs
-  const editor = useRef<TRichTextEditorRef>(null);
-
-  // INTL
-  const intl = useIntl();
-
-  // Context
-  const scContext: SCContextType = useSCContext();
-  const scUserContext: SCUserContextType = useContext(SCUserContext);
-
-  // State
-  const [uploading, setUploading] = useState({});
-  const [errors, setErrors] = useState({});
-  const [emojiAnchorEl, setEmojiAnchorEl] = React.useState<null | HTMLElement>(null);
-
-  /**
-   * On mount if onRef in props
-   * forward editor ref
-   */
-  useEffect(() => {
-    onRef && onRef(editor);
-  });
-
-  // Default editor content
-  const content: string = useMemo(() => {
-    const contentHTML = convertFromHTML(defaultValue);
-    const state = ContentState.createFromBlockArray(contentHTML.contentBlocks, contentHTML.entityMap);
-    return JSON.stringify(convertToRaw(state));
-  }, []);
-
-  // UTILITY
-  const searchMentions = async (query: string): Promise<TAutocompleteItem[]> => {
-    const response: AxiosResponse<any> = await http.request({
-      url: Endpoints.UserSearch.url(),
-      method: Endpoints.UserSearch.method,
-      params: {user: query, limit: 7}
-    });
-    return response.data.results.map((user: SCUserType) => {
-      return {
-        keys: [user.email, user.username, user.real_name],
-        value: `@${user.username}`,
-        content: <User username={user.username} realName={user.real_name} avatar={user.avatar} />
-      };
-    });
-  };
+  const {id = 'editor', className = null, defaultValue = '', readOnly = false, onChange = null} = props;
 
   // HANDLERS
-
-  const handleUploadSuccess = (media: SCMediaType) => {
-    const data = {
-      src: media.image,
-      width: media.image_width,
-      height: media.image_height
-    };
-    editor.current?.insertAtomicBlockSync('sc-image', data);
+  const handleChange = (value) => {
+    console.log(value);
+    onChange && onChange(value);
   };
 
-  const handleUploadProgress = (chunks: any) => {
-    setUploading({...chunks});
+  const handleError = (error: Error, editor: LexicalEditor) => {
+    console.log(error);
   };
 
-  const handleUploadError = (chunk: SCMediaChunkType, error: string) => {
-    setErrors({...errors, [chunk.id]: {...chunk, error}});
-  };
-
-  const handleRemoveUploadErrors = (id: string) => {
-    return () => {
-      delete errors[id];
-      setErrors({...errors});
-    };
-  };
-
-  const handleChange = (editor: EditorState) => {
-    onChange && onChange(draftToHtml(convertToRaw(editor.getCurrentContent())));
-  };
-
-  const handleFileUploadFilter = (file: File, index: number, a: File[] | string[]): boolean => {
-    return file.type.startsWith('image/');
-  };
-
-  const handleToggleEmoji = (event: React.MouseEvent<HTMLElement>) => {
-    setEmojiAnchorEl(emojiAnchorEl ? null : event.currentTarget);
-  };
-
-  const handleEmojiClick = (event: SyntheticEvent, emoji) => {
-    editor.current?.insertText(emoji.emoji);
-  };
+  const initialConfig = useMemo(
+    () => ({
+      readOnly: readOnly,
+      onError: handleError,
+      nodes: [...nodes]
+    }),
+    [readOnly]
+  );
 
   return (
     <Root id={id} className={classNames(classes.root, className)}>
-      {scUserContext.user && (
-        <ChunkedUploady
-          destination={{
-            url: `${scContext.settings.portal}${Endpoints.ComposerChunkUploadMedia.url()}`,
-            headers: {
-              ...(scContext.settings.session &&
-                scContext.settings.session.authToken && {
-                  Authorization: `Bearer ${scContext.settings.session.authToken.accessToken}`
-                })
-            },
-            method: Endpoints.ComposerChunkUploadMedia.method
-          }}
-          chunkSize={2142880}
-          multiple
-          accept="image/*"
-          fileFilter={handleFileUploadFilter}>
-          <MediaChunkUploader type="eimage" onSuccess={handleUploadSuccess} onProgress={handleUploadProgress} onError={handleUploadError} />
-          <UploadDropZone onDragOverClassName={classes.drop} inputFieldName="image" extraProps={{'data-content': intl.formatMessage(messages.drop)}}>
-            <RichTextEditor
-              id={editorId}
-              readOnly={readOnly}
-              label={intl.formatMessage(messages.placeholder)}
-              onChange={handleChange}
-              ref={editor}
-              defaultValue={content}
-              inlineToolbarControls={['bold', 'italic', 'underline', 'strikethrough', 'highlight', 'link', 'clear']}
-              customControls={[
-                {
-                  name: 'sc-image',
-                  type: 'atomic',
-                  atomicComponent: EditorImage
-                }
-              ]}
-              toolbar={false}
-              inlineToolbar={true}
-              autocomplete={{
-                strategies: [
-                  {
-                    asyncItems: searchMentions,
-                    triggerChar: '@'
-                  }
-                ]
-              }}
-            />
-            {(uploading || errors) && (
-              <Stack>
-                {Object.values(uploading).map((chunk: SCMediaChunkType) => (
-                  <Fade in key={chunk.id}>
-                    <Box>
-                      {chunk.name}
-                      <LinearProgress variant="determinate" value={chunk.completed} />
-                    </Box>
-                  </Fade>
-                ))}
-                {Object.keys(errors).map((id: string) => (
-                  <Fade in key={id}>
-                    <Alert severity="error" onClose={handleRemoveUploadErrors(id)}>
-                      <AlertTitle>{errors[id].name}</AlertTitle>
-                      {errors[id].error}
-                    </Alert>
-                  </Fade>
-                ))}
-              </Stack>
-            )}
-          </UploadDropZone>
-        </ChunkedUploady>
-      )}
-      <Stack className={classes.actions}>
-        <div>
-          <IconButton size="small" onClick={handleToggleEmoji}>
-            <Icon>sentiment_satisfied_alt</Icon>
-          </IconButton>
-          <Popover
-            open={Boolean(emojiAnchorEl)}
-            anchorEl={emojiAnchorEl}
-            onClose={handleToggleEmoji}
-            anchorOrigin={{
-              vertical: 'top',
-              horizontal: 'right'
-            }}
-            transformOrigin={{
-              vertical: 'bottom',
-              horizontal: 'left'
-            }}
-            sx={(theme) => {
-              return {zIndex: theme.zIndex.tooltip};
-            }}>
-            <Picker onEmojiClick={handleEmojiClick} />
-          </Popover>
-        </div>
-      </Stack>
+      <LexicalComposer initialConfig={initialConfig}>
+        <LexicalRichTextPlugin
+          contentEditable={<LexicalContentEditable className={classes.content} />}
+          placeholder={
+            <Box className={classes.placeholder}>
+              <FormattedMessage id="ui.editor.placeholder" defaultMessage="ui.editor.placeholder" />
+            </Box>
+          }
+        />
+        <DefaultHtmlValuePlugin defaultValue={defaultValue} />
+        <LexicalAutoFocusPlugin />
+        <OnChangePlugin onChange={handleChange} />
+        <LexicalLinkPlugin />
+        <AutoLinkPlugin />
+        <MentionsPlugin />
+      </LexicalComposer>
     </Root>
   );
 }
