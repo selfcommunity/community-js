@@ -1,16 +1,3 @@
-/**
- * Copyright (c) Meta Platforms, Inc. and affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- * @flow strict
- */
-
-import {LexicalEditor, RangeSelection} from 'lexical';
-
-import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
-import {mergeRegister} from '@lexical/utils';
 import {
   $getSelection,
   $isRangeSelection,
@@ -20,8 +7,13 @@ import {
   KEY_ARROW_UP_COMMAND,
   KEY_ENTER_COMMAND,
   KEY_ESCAPE_COMMAND,
-  KEY_TAB_COMMAND
+  KEY_TAB_COMMAND,
+  LexicalEditor,
+  RangeSelection
 } from 'lexical';
+
+import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
+import {mergeRegister} from '@lexical/utils';
 import React, {startTransition, useCallback, useEffect, useLayoutEffect, useRef, useState} from 'react';
 import {createPortal} from 'react-dom';
 
@@ -29,7 +21,7 @@ import {createMentionNode, MentionNode} from '../nodes/MentionNode';
 import {Endpoints, http, SCUserType} from '@selfcommunity/core';
 import {AxiosResponse} from 'axios';
 import classNames from 'classnames';
-import {Avatar, Box} from '@mui/material';
+import {Avatar} from '@mui/material';
 import {styled} from '@mui/material/styles';
 
 type MentionMatch = {

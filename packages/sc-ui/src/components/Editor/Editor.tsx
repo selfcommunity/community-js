@@ -1,20 +1,19 @@
 import React, {useMemo} from 'react';
 import {styled} from '@mui/material/styles';
-import {defineMessages, FormattedMessage} from 'react-intl';
+import {FormattedMessage} from 'react-intl';
 import {Box} from '@mui/material';
 import classNames from 'classnames';
 import useThemeProps from '@mui/material/styles/useThemeProps';
-
 import LexicalComposer from '@lexical/react/LexicalComposer';
 import LexicalContentEditable from '@lexical/react/LexicalContentEditable';
 import LexicalRichTextPlugin from '@lexical/react/LexicalRichTextPlugin';
+import {HistoryPlugin} from '@lexical/react/LexicalHistoryPlugin';
 import {AutoLinkPlugin, DefaultHtmlValuePlugin} from './plugins';
-import LexicalLinkPlugin from '@lexical/react/LexicalLinkPlugin';
-import {EditorThemeClasses, LexicalEditor} from 'lexical';
+import {LexicalEditor} from 'lexical';
 import nodes from './nodes';
+import LexicalLinkPlugin from '@lexical/react/LexicalLinkPlugin';
 import LexicalAutoFocusPlugin from '@lexical/react/LexicalAutoFocusPlugin';
-import OnChangePlugin from './plugins/OnChangePlugin';
-import MentionsPlugin from './plugins/MentionsPlugin';
+import {MentionsPlugin, EmojiPlugin, OnChangePlugin} from './plugins';
 
 const PREFIX = 'SCEditor';
 
@@ -148,9 +147,11 @@ export default function Editor(inProps: EditorProps): JSX.Element {
         />
         <DefaultHtmlValuePlugin defaultValue={defaultValue} />
         <LexicalAutoFocusPlugin />
+        <HistoryPlugin />
         <OnChangePlugin onChange={handleChange} />
         <LexicalLinkPlugin />
         <AutoLinkPlugin />
+        <EmojiPlugin />
         <MentionsPlugin />
       </LexicalComposer>
     </Root>
