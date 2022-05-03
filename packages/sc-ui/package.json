@@ -1,6 +1,6 @@
 {
   "name": "@selfcommunity/ui",
-  "version": "0.1.0-alpha.96",
+  "version": "0.1.0-alpha.97",
   "description": "React UI Components to integrate a Community created with SelfCommunity.",
   "author": "mirk8xr <mirk8xr@gmail.com>",
   "homepage": "https://www.selfcommunity.com",
@@ -63,8 +63,8 @@
     "@rpldy/upload-drop-zone": "^0.18.0",
     "@rpldy/upload-preview": "^0.18.0",
     "@rpldy/uploady": "^0.18.0",
-    "@selfcommunity/core": "^0.1.0-alpha.96",
-    "@selfcommunity/i18n": "^0.1.0-alpha.96",
+    "@selfcommunity/core": "^0.1.0-alpha.97",
+    "@selfcommunity/i18n": "^0.1.0-alpha.97",
     "@types/classnames": "^2.2.11",
     "autosuggest-highlight": "^3.1.1",
     "classnames": "^2.2.6",
