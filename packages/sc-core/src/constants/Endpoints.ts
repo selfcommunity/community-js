@@ -258,6 +258,10 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/user/avatar/'),
     method: 'DELETE',
   },
+  CheckEmailToken: {
+    url: urlReplacer('/api/v2/user/check_email_token/'),
+    method: 'GET',
+  },
 
   /**
    * Broadcast Messages
