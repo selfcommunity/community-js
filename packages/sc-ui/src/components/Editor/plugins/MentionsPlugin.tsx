@@ -556,7 +556,6 @@ const Root = styled(MentionsTypeahead, {
 
 function useMentions(editor: LexicalEditor): JSX.Element {
   const [resolution, setResolution] = useState<Resolution | null>(null);
-  const [, startTransition] = useTransition();
 
   useEffect(() => {
     if (!editor.hasNodes([MentionNode])) {
@@ -587,16 +586,14 @@ function useMentions(editor: LexicalEditor): JSX.Element {
       if (match !== null && !isSelectionOnEntityBoundary(editor, match.leadOffset)) {
         const isRangePositioned = tryToPositionRange(match, range);
         if (isRangePositioned !== null) {
-          startTransition(() =>
-            setResolution({
-              match,
-              range
-            })
-          );
+          setResolution({
+            match,
+            range
+          });
           return;
         }
       }
-      startTransition(() => setResolution(null));
+      setResolution(null);
     };
 
     const removeUpdateListener = editor.registerUpdateListener(updateListener);
