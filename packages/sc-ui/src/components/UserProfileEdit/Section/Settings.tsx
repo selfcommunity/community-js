@@ -138,6 +138,7 @@ export default function Settings(inProps: SettingsProps): JSX.Element {
             />
           </RadioGroup>
         </FormControl>
+        {/*
         <FormControl>
           <FormLabel>
             <FormattedMessage
@@ -162,6 +163,7 @@ export default function Settings(inProps: SettingsProps): JSX.Element {
             />
           </RadioGroup>
         </FormControl>
+        */}
       </Box>
       <Typography gutterBottom variant="body1">
         <FormattedMessage id="ui.userProfileEditSettings.interaction.title" defaultMessage="ui.userProfileEditSettings.interaction.title" />
