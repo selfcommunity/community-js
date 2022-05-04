@@ -181,7 +181,11 @@ const Root = styled(Dialog, {
       padding: theme.spacing(2)
     },
     [`& .${classes.editor}`]: {
-      minHeight: 200
+      minHeight: 200,
+      '& .SCEditor-placeholder': {
+        top: theme.spacing(2),
+        left: theme.spacing(2)
+      }
     },
     [`& .${classes.divider}`]: {
       borderTop: '1px solid #D1D1D1'
