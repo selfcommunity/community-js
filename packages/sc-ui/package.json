@@ -75,7 +75,7 @@
     "@lexical/link": "^0.2.4",
     "draft-js": "^0.11.7",
     "draftjs-to-html": "^0.9.1",
-    "emoji-picker-react": "^3.4.8",
+    "emoji-picker-react": "^3.5.1",
     "prop-types": "^15.7.2",
     "prop-types-extra": "^1.1.1",
     "pubsub-js": "^1.9.4",

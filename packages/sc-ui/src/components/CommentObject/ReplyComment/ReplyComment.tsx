@@ -1,10 +1,10 @@
-import React, {RefObject, useContext, useEffect, useMemo, useState} from 'react';
+import React, {RefObject, useContext, useEffect, useMemo, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Widget, {WidgetProps} from '../../Widget';
 import {defineMessages, useIntl} from 'react-intl';
 import {Avatar, Stack} from '@mui/material';
 import {SCUserContext, SCUserContextType} from '@selfcommunity/core';
-import Editor, {TRichTextEditorRef} from '../../Editor';
+import Editor, {EditorRef} from '../../Editor';
 import classNames from 'classnames';
 import {LoadingButton} from '@mui/lab';
 import useThemeProps from '@mui/material/styles/useThemeProps';
@@ -141,7 +141,7 @@ export default function ReplyCommentObject(inProps: ReplyCommentObjectProps): JS
   const [html, setHtml] = useState(text);
 
   // REFS
-  let editor: RefObject<TRichTextEditorRef> = React.createRef();
+  let editor: RefObject<EditorRef> = useRef<EditorRef>();
 
   /**
    * When ReplyCommentObject is mount
@@ -216,14 +216,7 @@ export default function ReplyCommentObject(inProps: ReplyCommentObjectProps): JS
       }
       secondary={
         <Widget className={classes.comment} {...WidgetProps}>
-          <Editor
-            onRef={(e) => {
-              editor = e;
-            }}
-            onChange={handleChangeText}
-            defaultValue={html}
-            readOnly={readOnly}
-          />
+          <Editor ref={editor} onChange={handleChangeText} defaultValue={html} readOnly={readOnly} />
           {!isEditorEmpty() && (
             <Stack direction="row" spacing={2} className={classes.actions}>
               {onReply && (
@@ -234,7 +227,13 @@ export default function ReplyCommentObject(inProps: ReplyCommentObjectProps): JS
               {onSave && (
                 <>
                   {onCancel && (
-                    <LoadingButton variant={'text'} size="small" onClick={handleCancel} loading={readOnly} color="inherit" className={classes.buttonCancel}>
+                    <LoadingButton
+                      variant={'text'}
+                      size="small"
+                      onClick={handleCancel}
+                      disabled={readOnly}
+                      color="inherit"
+                      className={classes.buttonCancel}>
                       {intl.formatMessage(messages.cancel)}
                     </LoadingButton>
                   )}

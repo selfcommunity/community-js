@@ -1,4 +1,4 @@
-import React, {ChangeEvent, LegacyRef, Suspense, SyntheticEvent, useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import React, {ChangeEvent, LegacyRef, Suspense, useCallback, useEffect, useRef, useState} from 'react';
 import {
   $getNodeByKey,
   $getSelection,
@@ -9,9 +9,9 @@ import {
   EditorConfig,
   KEY_BACKSPACE_COMMAND,
   KEY_DELETE_COMMAND,
-  LexicalEditor,
   LexicalNode,
-  NodeKey, TextNode,
+  NodeKey,
+  TextNode
 } from 'lexical';
 import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
 import useLexicalNodeSelection from '@lexical/react/useLexicalNodeSelection';
@@ -21,7 +21,6 @@ import {createPortal} from 'react-dom';
 import {styled} from '@mui/material/styles';
 import {FormattedMessage} from 'react-intl';
 import {Icon, IconButton, InputAdornment, Stack, TextField} from '@mui/material';
-import { createMentionNode } from './MentionNode';
 
 const PREFIX = 'SCEditorImagePluginResizer';
 
@@ -86,7 +85,7 @@ const ImageEdit = ({
 
   // RENDER
   return (
-    <Root direction="row" sx={{top: positioning.top, left: positioning.left, width: positioning.width}} spacing={1}>
+    <Root className={classes.root} direction="row" sx={{top: positioning.top, left: positioning.left, width: positioning.width}} spacing={1}>
       <TextField
         value={width}
         size="small"
@@ -118,7 +117,7 @@ const imageCache = new Set();
 
 function useSuspenseImage(src: string) {
   if (!imageCache.has(src)) {
-    throw new Promise((resolve) => {
+    throw new Promise<void>((resolve) => {
       const img = new Image();
       img.src = src;
       img.onload = () => {

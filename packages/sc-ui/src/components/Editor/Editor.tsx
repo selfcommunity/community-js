@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React, {ForwardedRef, forwardRef, ForwardRefRenderFunction, useImperativeHandle, useMemo, useRef} from 'react';
 import {styled} from '@mui/material/styles';
 import {FormattedMessage} from 'react-intl';
 import {Box, Stack} from '@mui/material';
@@ -8,12 +8,12 @@ import LexicalComposer from '@lexical/react/LexicalComposer';
 import LexicalContentEditable from '@lexical/react/LexicalContentEditable';
 import LexicalRichTextPlugin from '@lexical/react/LexicalRichTextPlugin';
 import {HistoryPlugin} from '@lexical/react/LexicalHistoryPlugin';
-import { AutoLinkPlugin, DefaultHtmlValuePlugin, ImagePlugin } from './plugins';
+import {AutoLinkPlugin, DefaultHtmlValuePlugin, EmojiPlugin, ImagePlugin, MentionsPlugin, OnChangePlugin} from './plugins';
 import {LexicalEditor} from 'lexical';
 import nodes from './nodes';
 import LexicalLinkPlugin from '@lexical/react/LexicalLinkPlugin';
 import LexicalAutoFocusPlugin from '@lexical/react/LexicalAutoFocusPlugin';
-import {MentionsPlugin, EmojiPlugin, OnChangePlugin} from './plugins';
+import ApiPlugin, {ApiRef} from './plugins/ApiPlugin';
 
 const PREFIX = 'SCEditor';
 
@@ -115,6 +115,10 @@ const Root = styled(Box, {
   }
 }));
 
+export type EditorRef = {
+  focus: () => void;
+};
+
 export interface EditorProps {
   /**
    * Id of the feed object
@@ -169,23 +173,32 @@ export interface EditorProps {
 
  * @param inProps
  */
-export default function Editor(inProps: EditorProps): JSX.Element {
+const Editor: ForwardRefRenderFunction<EditorRef, EditorProps> = (inProps: EditorProps, ref: ForwardedRef<EditorRef>): JSX.Element => {
   // PROPS
   const props: EditorProps = useThemeProps({
     props: inProps,
     name: PREFIX
   });
   const {id = 'editor', className = null, defaultValue = '', readOnly = false, onChange = null} = props;
+  const apiRef = useRef<ApiRef>();
 
   // HANDLERS
   const handleChange = (value) => {
-    console.log(value);
     onChange && onChange(value);
   };
 
   const handleError = (error: Error, editor: LexicalEditor) => {
     console.log(error);
   };
+
+  // EXPOSED METHODS
+  useImperativeHandle(ref, () => ({
+    focus: () => {
+      apiRef.current.focus();
+    }
+  }));
+
+  // RENDER
 
   const initialConfig = useMemo(
     () => ({
@@ -218,7 +231,10 @@ export default function Editor(inProps: EditorProps): JSX.Element {
           <ImagePlugin />
           <EmojiPlugin />
         </Stack>
+        <ApiPlugin ref={apiRef} />
       </LexicalComposer>
     </Root>
   );
-}
+};
+
+export default forwardRef(Editor);
