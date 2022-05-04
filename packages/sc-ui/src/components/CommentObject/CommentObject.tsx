@@ -706,7 +706,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
         {scUserContext.user && replyComment && (replyComment.id === comment.id || replyComment.parent === comment.id) && !comment.parent && (
           <Box className={classes.nestedComments}>
             <ReplyCommentObject
-              text={replyComment.parent ? `@${replyComment.author.username}, ` : ''}
+              text={`@${replyComment.author.username}, `}
               autoFocus
               key={`reply-${replyComment.id}`}
               id={`reply-${replyComment.id}`}
