@@ -1,3 +1,4 @@
+import React, {useCallback, useEffect, useLayoutEffect, useRef, useState, useTransition} from 'react';
 import {
   $getSelection,
   $isRangeSelection,
@@ -11,10 +12,8 @@ import {
   LexicalEditor,
   RangeSelection
 } from 'lexical';
-
 import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
 import {mergeRegister} from '@lexical/utils';
-import React, {startTransition, useCallback, useEffect, useLayoutEffect, useRef, useState} from 'react';
 import {createPortal} from 'react-dom';
 
 import {createMentionNode, MentionNode} from '../nodes/MentionNode';
@@ -557,6 +556,7 @@ const Root = styled(MentionsTypeahead, {
 
 function useMentions(editor: LexicalEditor): JSX.Element {
   const [resolution, setResolution] = useState<Resolution | null>(null);
+  const [, startTransition] = useTransition();
 
   useEffect(() => {
     if (!editor.hasNodes([MentionNode])) {
