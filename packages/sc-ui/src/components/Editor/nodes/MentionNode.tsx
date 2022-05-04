@@ -2,17 +2,8 @@ import {EditorConfig, LexicalNode, NodeKey, TextNode} from 'lexical';
 import {SCUserType} from '@selfcommunity/core';
 
 function convertMentionElement(domNode) {
-  const mention = domNode; // Google Docs uses span tags + font-weight for bold text
-
-  const hasBoldFontWeight = mention.style.fontWeight === '700';
+  const mention = domNode;
   return {
-    forChild: (lexicalNode) => {
-      if (isMentionNode(lexicalNode) && hasBoldFontWeight) {
-        lexicalNode.toggleFormat('bold');
-      }
-
-      return lexicalNode;
-    },
     node: createMentionNode({
       avatar: '',
       bio: '',

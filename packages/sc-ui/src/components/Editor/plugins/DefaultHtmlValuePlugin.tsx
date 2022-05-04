@@ -1,7 +1,7 @@
 import {useEffect} from 'react';
 import {$insertDataTransferForRichText} from '@lexical/clipboard';
 import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
-import { $createParagraphNode, $createRangeSelection, $getRoot, ParagraphNode } from 'lexical';
+import {$createParagraphNode, $createRangeSelection, $getRoot, ParagraphNode} from 'lexical';
 
 function DefaultHtmlValuePlugin({defaultValue}) {
   const [editor] = useLexicalComposerContext();
@@ -13,6 +13,7 @@ function DefaultHtmlValuePlugin({defaultValue}) {
       const fakeDataTransfer = new DataTransfer();
       fakeDataTransfer.getData = (format) => {
         if (format === 'text/html') {
+          console.log(defaultValue);
           return defaultValue;
         }
         return '';

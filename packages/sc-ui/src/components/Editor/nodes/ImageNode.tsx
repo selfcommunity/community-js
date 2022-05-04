@@ -11,7 +11,7 @@ import {
   KEY_DELETE_COMMAND,
   LexicalEditor,
   LexicalNode,
-  NodeKey
+  NodeKey, TextNode,
 } from 'lexical';
 import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
 import useLexicalNodeSelection from '@lexical/react/useLexicalNodeSelection';
@@ -21,6 +21,7 @@ import {createPortal} from 'react-dom';
 import {styled} from '@mui/material/styles';
 import {FormattedMessage} from 'react-intl';
 import {Icon, IconButton, InputAdornment, Stack, TextField} from '@mui/material';
+import { createMentionNode } from './MentionNode';
 
 const PREFIX = 'SCEditorImagePluginResizer';
 
@@ -255,6 +256,13 @@ function ImageComponent({
   );
 }
 
+function convertImageElement(domNode) {
+  const image = domNode;
+  return {
+    node: $createImageNode(image.getAttribute('src'), image.getAttribute('alt'), '100%')
+  };
+}
+
 export class ImageNode extends DecoratorNode<JSX.Element> {
   __src: string;
   __altText: string;
@@ -310,6 +318,19 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
 
   updateDOM(): false {
     return false;
+  }
+
+  static importDOM() {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
+    const dom = TextNode.importDOM();
+    return {
+      img: (node) => ({
+        conversion: convertImageElement,
+        priority: 0
+      }),
+      ...dom
+    };
   }
 
   decorate(): JSX.Element {
