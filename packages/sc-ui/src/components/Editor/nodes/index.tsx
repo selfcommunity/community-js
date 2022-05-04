@@ -4,6 +4,7 @@ import {AutoLinkNode, LinkNode} from '@lexical/link';
 import {ListItemNode, ListNode} from '@lexical/list';
 import {HeadingNode, QuoteNode} from '@lexical/rich-text';
 import {TableCellNode, TableNode, TableRowNode} from '@lexical/table';
+import {ImageNode} from './ImageNode';
 import {MentionNode} from './MentionNode';
 
 const nodes = [
@@ -19,6 +20,7 @@ const nodes = [
   CodeHighlightNode,
   AutoLinkNode,
   LinkNode,
+  ImageNode,
   MentionNode
 ];
 

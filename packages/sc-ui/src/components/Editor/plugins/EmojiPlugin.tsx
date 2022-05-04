@@ -20,7 +20,7 @@ function Emoji({editor, className = ''}: {editor: LexicalEditor; className?: str
 
   return (
     <>
-      <IconButton className={className} onClick={handleClick}>
+      <IconButton className={className} onClick={handleClick} color="inherit">
         <Icon>sentiment_satisfied_alt</Icon>
       </IconButton>
       <Popover
@@ -55,11 +55,7 @@ const Root = styled(Emoji, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  position: 'absolute',
-  bottom: 0,
-  right: 0
-}));
+})(({theme}) => ({}));
 
 export default function EmojiPlugin(): JSX.Element {
   const [editor] = useLexicalComposerContext();

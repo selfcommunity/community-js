@@ -1,14 +1,14 @@
 import React, {useMemo} from 'react';
 import {styled} from '@mui/material/styles';
 import {FormattedMessage} from 'react-intl';
-import {Box} from '@mui/material';
+import {Box, Stack} from '@mui/material';
 import classNames from 'classnames';
 import useThemeProps from '@mui/material/styles/useThemeProps';
 import LexicalComposer from '@lexical/react/LexicalComposer';
 import LexicalContentEditable from '@lexical/react/LexicalContentEditable';
 import LexicalRichTextPlugin from '@lexical/react/LexicalRichTextPlugin';
 import {HistoryPlugin} from '@lexical/react/LexicalHistoryPlugin';
-import {AutoLinkPlugin, DefaultHtmlValuePlugin} from './plugins';
+import { AutoLinkPlugin, DefaultHtmlValuePlugin, ImagePlugin } from './plugins';
 import {LexicalEditor} from 'lexical';
 import nodes from './nodes';
 import LexicalLinkPlugin from '@lexical/react/LexicalLinkPlugin';
@@ -20,7 +20,8 @@ const PREFIX = 'SCEditor';
 const classes = {
   root: `${PREFIX}-root`,
   content: `${PREFIX}-content`,
-  placeholder: `${PREFIX}-placeholder`
+  placeholder: `${PREFIX}-placeholder`,
+  actions: `${PREFIX}-actions`
 };
 
 const Root = styled(Box, {
@@ -40,6 +41,16 @@ const Root = styled(Box, {
       '&:first-child': {
         marginTop: 0
       }
+    },
+    '& img': {
+      margin: theme.spacing(1, 0, 1, 0),
+      '&.focused': {
+        outline: '2px solid rgb(60, 132, 244)',
+        userSelect: 'none'
+      }
+    },
+    ['& mention']: {
+      backgroundColor: theme.palette.primary.light
     }
   },
   [`& .${classes.placeholder}`]: {
@@ -48,8 +59,59 @@ const Root = styled(Box, {
     left: theme.spacing(1),
     color: theme.palette.text.disabled
   },
-  ['& mention']: {
-    backgroundColor: theme.palette.primary.light
+  [`& .${classes.actions}`]: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    color: theme.palette.text.primary
+  },
+  '& .image-resizer': {
+    display: 'block',
+    width: 7,
+    height: 7,
+    position: 'absolute',
+    backgroundColor: 'rgb(60, 132, 244)',
+    border: '1px solid #fff',
+    '&.image-resizer-n': {
+      top: -6,
+      left: '48%',
+      cursor: 'n-resize'
+    },
+    '&.image-resizer-ne': {
+      top: -6,
+      right: -6,
+      cursor: 'ne-resize'
+    },
+    '&.image-resizer-e': {
+      top: '48%',
+      right: -6,
+      cursor: 'e-resize'
+    },
+    '&.image-resizer-se': {
+      bottom: -2,
+      right: -6,
+      cursor: 'se-resize'
+    },
+    '&.image-resizer-s': {
+      bottom: -2,
+      left: '48%',
+      cursor: 's-resize'
+    },
+    '&.image-resizer-sw': {
+      bottom: -2,
+      left: -6,
+      cursor: 'sw-resize'
+    },
+    '&.image-resizer-w': {
+      bottom: '48%',
+      left: -6,
+      cursor: 'w-resize'
+    },
+    '&.image-resizer-nw': {
+      top: -6,
+      left: -6,
+      cursor: 'nw-resize'
+    }
   }
 }));
 
@@ -151,8 +213,11 @@ export default function Editor(inProps: EditorProps): JSX.Element {
         <OnChangePlugin onChange={handleChange} />
         <LexicalLinkPlugin />
         <AutoLinkPlugin />
-        <EmojiPlugin />
         <MentionsPlugin />
+        <Stack className={classes.actions} direction="row">
+          <ImagePlugin />
+          <EmojiPlugin />
+        </Stack>
       </LexicalComposer>
     </Root>
   );

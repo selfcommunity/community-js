@@ -95,5 +95,5 @@ export function createMentionNode(user: SCUserType): MentionNode {
 }
 
 export function isMentionNode(node?: LexicalNode): boolean {
-  return node instanceof MentionNode;
+  return node.getType() === 'mention';
 }

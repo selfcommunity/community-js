@@ -155,7 +155,8 @@
   "ui.inlineComposer.success": "Creation succeed!",
 
   "ui.editor.placeholder": "Write your text...",
-  "ui.editor.drop": "Rilascia qui",
+  "ui.editor.imagePluginResizer.width": "Larghezza",
+  "ui.editor.imagePluginResizer.height": "Altezza",
 
   "ui.feedObject.comment": "Commenta",
   "ui.feedObject.visibleToAll": "Visibile a tutti",
