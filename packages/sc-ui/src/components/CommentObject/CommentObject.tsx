@@ -131,6 +131,9 @@ const Root = styled(Box, {
     '& p': {
       marginBlockStart: '0.3em',
       marginBlockEnd: '0.3em'
+    },
+    '& img': {
+      maxWidth: '100%'
     }
   },
   [`& .${classes.commentActionsMenu}`]: {

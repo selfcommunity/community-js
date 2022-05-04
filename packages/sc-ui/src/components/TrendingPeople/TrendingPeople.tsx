@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
 import {Button, CardContent, ListItem, Typography} from '@mui/material';
 import Widget from '../Widget';
-import {Endpoints, http} from '@selfcommunity/core';
+import {Endpoints, http, SCPreferences, SCPreferencesContext, SCPreferencesContextType, SCUserContext, SCUserContextType} from '@selfcommunity/core';
 import {AxiosResponse} from 'axios';
 import {FormattedMessage} from 'react-intl';
 import User, {UserProps} from '../User';
@@ -112,6 +112,13 @@ export default function TrendingPeople(inProps: TrendingPeopleProps): JSX.Elemen
   const [total, setTotal] = useState<number>(0);
   const [next, setNext] = useState<string>(`${Endpoints.CategoryTrendingPeople.url({id: categoryId})}?limit=10`);
 
+  // CONTEXT
+  const scUserContext: SCUserContextType = useContext(SCUserContext);
+  const scPreferencesContext: SCPreferencesContextType = useContext(SCPreferencesContext);
+  const followEnabled =
+    SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED in scPreferencesContext.preferences &&
+    scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED].value;
+
   /**
    * Fetches trending people list
    */
@@ -146,6 +153,25 @@ export default function TrendingPeople(inProps: TrendingPeopleProps): JSX.Elemen
   }, []);
 
   /**
+   * Handles followers counter update on follow/unfollow action.
+   * @param user
+   */
+  function handleFollowersUpdate(user) {
+    const newUsers = [...people];
+    const index = newUsers.findIndex((u) => u.id === user.id);
+    if (index !== -1) {
+      if (user.connection_status === 'followed') {
+        newUsers[index].followers_counter = user.followers_counter - 1;
+        newUsers[index].connection_status = null;
+      } else {
+        newUsers[index].followers_counter = user.followers_counter + 1;
+        newUsers[index].connection_status = 'followed';
+      }
+      setPeople(newUsers);
+    }
+  }
+
+  /**
    * Renders trending people list
    */
   const p = (
@@ -166,7 +192,15 @@ export default function TrendingPeople(inProps: TrendingPeopleProps): JSX.Elemen
               <List>
                 {people.slice(0, visiblePeople).map((user) => (
                   <ListItem key={user.id}>
-                    <User elevation={0} user={user} className={classes.trendingUserItem} {...UserProps} />
+                    <User
+                      elevation={0}
+                      user={user}
+                      className={classes.trendingUserItem}
+                      {...(followEnabled
+                        ? {followConnectUserButtonProps: {onFollow: handleFollowersUpdate}}
+                        : {followConnectUserButtonProps: {onChangeConnectionStatus: handleFollowersUpdate}})}
+                      {...UserProps}
+                    />
                   </ListItem>
                 ))}
               </List>
@@ -201,7 +235,15 @@ export default function TrendingPeople(inProps: TrendingPeopleProps): JSX.Elemen
                   <List>
                     {people.map((p, index) => (
                       <ListItem key={p.id}>
-                        <User elevation={0} user={p} className={classes.trendingUserItem} {...UserProps} />
+                        <User
+                          elevation={0}
+                          user={p}
+                          className={classes.trendingUserItem}
+                          {...(followEnabled
+                            ? {followConnectUserButtonProps: {onFollow: handleFollowersUpdate}}
+                            : {followConnectUserButtonProps: {onChangeConnectionStatus: handleFollowersUpdate}})}
+                          {...UserProps}
+                        />
                       </ListItem>
                     ))}
                   </List>
