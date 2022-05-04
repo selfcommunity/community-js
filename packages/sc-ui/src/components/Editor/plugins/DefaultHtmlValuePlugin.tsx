@@ -1,7 +1,7 @@
-import {useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {$insertDataTransferForRichText} from '@lexical/clipboard';
 import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
-import {$createParagraphNode, $createRangeSelection, $getRoot, ParagraphNode} from 'lexical';
+import {$createParagraphNode, $createRangeSelection, $getRoot} from 'lexical';
 
 function DefaultHtmlValuePlugin({defaultValue}) {
   const [editor] = useLexicalComposerContext();
