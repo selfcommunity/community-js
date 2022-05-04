@@ -195,7 +195,7 @@ export default function Follow(inProps: FollowProps): JSX.Element {
                   )}
                 </>
               ) : (
-                <>{iconizedButton ? <Icon fontSize="large">bookmark_outline</Icon> : btnLabel}</>
+                <>{iconizedButton ? <Icon fontSize="large">bookmark_border</Icon> : btnLabel}</>
               )}
             </LoadingButton>
           </Tooltip>

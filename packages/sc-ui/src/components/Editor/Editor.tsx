@@ -191,6 +191,10 @@ const Editor: ForwardRefRenderFunction<EditorRef, EditorProps> = (inProps: Edito
     console.log(error);
   };
 
+  const handleFocus = () => {
+    apiRef.current.focus();
+  };
+
   // EXPOSED METHODS
   useImperativeHandle(ref, () => ({
     focus: () => {
@@ -215,7 +219,7 @@ const Editor: ForwardRefRenderFunction<EditorRef, EditorProps> = (inProps: Edito
         <LexicalRichTextPlugin
           contentEditable={<LexicalContentEditable className={classes.content} />}
           placeholder={
-            <Box className={classes.placeholder}>
+            <Box className={classes.placeholder} onClick={handleFocus}>
               <FormattedMessage id="ui.editor.placeholder" defaultMessage="ui.editor.placeholder" />
             </Box>
           }
