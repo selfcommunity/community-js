@@ -522,7 +522,7 @@ const Root = styled(MentionsTypeahead, {
   background: '#fff',
   boxShadow: '0px 5px 10px rgba(0, 0, 0, 0.3)',
   borderEadius: 8,
-  zIndex: 3,
+  zIndex: 3000,
   '& ul': {
     padding: 0,
     listStyle: 'none',
