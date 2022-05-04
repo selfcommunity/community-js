@@ -119,6 +119,9 @@ export default function UserFollowers(inProps: UserFollowersProps): JSX.Element 
   const contentAvailability =
     SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY in scPreferencesContext.preferences &&
     scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY].value;
+  const followEnabled =
+    SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED in scPreferencesContext.preferences &&
+    scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED].value;
 
   // PROPS
   const props: UserFollowersProps = useThemeProps({
@@ -172,6 +175,25 @@ export default function UserFollowers(inProps: UserFollowersProps): JSX.Element 
   }, [scUserContext.user]);
 
   /**
+   * Handles followers counter update on follow/unfollow action.
+   * @param user
+   */
+  function handleFollowersUpdate(user) {
+    const newUsers = [...followers];
+    const index = newUsers.findIndex((u) => u.id === user.id);
+    if (index !== -1) {
+      if (user.connection_status === 'followed') {
+        newUsers[index].followers_counter = user.followers_counter - 1;
+        newUsers[index].connection_status = null;
+      } else {
+        newUsers[index].followers_counter = user.followers_counter + 1;
+        newUsers[index].connection_status = 'followed';
+      }
+      setFollowers(newUsers);
+    }
+  }
+
+  /**
    * Renders the list of users followers
    */
   const u = (
@@ -188,7 +210,15 @@ export default function UserFollowers(inProps: UserFollowersProps): JSX.Element 
               <List>
                 {followers.slice(0, visibleUsers).map((user: SCUserType) => (
                   <ListItem key={user.id}>
-                    <User elevation={0} user={user} className={classes.followersItem} {...UserProps} />
+                    <User
+                      elevation={0}
+                      user={user}
+                      className={classes.followersItem}
+                      {...(followEnabled
+                        ? {followConnectUserButtonProps: {onFollow: handleFollowersUpdate}}
+                        : {followConnectUserButtonProps: {onChangeConnectionStatus: handleFollowersUpdate}})}
+                      {...UserProps}
+                    />
                   </ListItem>
                 ))}
               </List>
@@ -221,7 +251,15 @@ export default function UserFollowers(inProps: UserFollowersProps): JSX.Element 
                       <List>
                         {followers.map((f) => (
                           <ListItem key={f.id}>
-                            <User elevation={0} user={f} className={classes.followersItem} {...UserProps} />
+                            <User
+                              elevation={0}
+                              user={f}
+                              className={classes.followersItem}
+                              {...(followEnabled
+                                ? {followConnectUserButtonProps: {onFollow: handleFollowersUpdate}}
+                                : {followConnectUserButtonProps: {onChangeConnectionStatus: handleFollowersUpdate}})}
+                              {...UserProps}
+                            />
                           </ListItem>
                         ))}
                       </List>

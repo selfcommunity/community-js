@@ -119,6 +119,9 @@ export default function UsersFollowed(inProps: UsersFollowedProps): JSX.Element 
   const contentAvailability =
     SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY in scPreferencesContext.preferences &&
     scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY].value;
+  const followEnabled =
+    SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED in scPreferencesContext.preferences &&
+    scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED].value;
 
   // PROPS
   const props: UsersFollowedProps = useThemeProps({
@@ -145,6 +148,19 @@ export default function UsersFollowed(inProps: UsersFollowedProps): JSX.Element 
       setTotal((prev) => prev - 1);
       if (visibleUsers < limit && total > 1) {
         loadUsers(1);
+      }
+    } else {
+      const newUsers = [...followed];
+      const index = newUsers.findIndex((u) => u.id === user.id);
+      if (index !== -1) {
+        if (user.connection_status === 'followed') {
+          newUsers[index].followers_counter = user.followers_counter - 1;
+          newUsers[index].connection_status = null;
+        } else {
+          newUsers[index].followers_counter = user.followers_counter + 1;
+          newUsers[index].connection_status = 'followed';
+        }
+        setFollowed(newUsers);
       }
     }
   }
@@ -214,7 +230,9 @@ export default function UsersFollowed(inProps: UsersFollowedProps): JSX.Element 
                     <User
                       elevation={0}
                       user={user}
-                      followConnectUserButtonProps={{onFollow: handleOnFollowUser}}
+                      {...(followEnabled
+                        ? {followConnectUserButtonProps: {onFollow: handleOnFollowUser}}
+                        : {followConnectUserButtonProps: {onChangeConnectionStatus: handleOnFollowUser}})}
                       className={classes.followedItem}
                       {...UserProps}
                     />
@@ -255,7 +273,9 @@ export default function UsersFollowed(inProps: UsersFollowedProps): JSX.Element 
                               user={f}
                               {...UserProps}
                               className={classes.followedItem}
-                              followConnectUserButtonProps={{onFollow: handleOnFollowUser}}
+                              {...(followEnabled
+                                ? {followConnectUserButtonProps: {onFollow: handleOnFollowUser}}
+                                : {followConnectUserButtonProps: {onChangeConnectionStatus: handleOnFollowUser}})}
                             />
                           </ListItem>
                         ))}
