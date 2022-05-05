@@ -11,7 +11,6 @@ import {useSnackbar} from 'notistack';
 import {getRouteData, getContributionRouteName} from '../../utils/contribution';
 import classNames from 'classnames';
 import ConfirmDialog from '../ConfirmDialog/ConfirmDialog';
-import {camelCase} from 'lodash';
 import {
   Badge,
   Box,
@@ -334,6 +333,15 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
    * Extra sections to render in the popup
    */
   const extraSections = getExtraSections();
+
+  /**
+   * Define renders for extra section
+   */
+  const extraSectionsRenders = {
+    [FLAG_CONTRIBUTION_SECTION]: renderFlagContributionSection,
+    [HIDE_CONTRIBUTION_SECTION]: renderHideContributionSection,
+    [DELETE_CONTRIBUTION_SECTION]: renderDeleteContributionSection
+  };
 
   /**
    * Handles open popup
@@ -818,14 +826,15 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
         : section === HIDE_CONTRIBUTION_SECTION
         ? handleHideContribution
         : handleDeleteContribution;
-    return REPORTS.map((report, index) => (
-      <MenuItem key={`${section}_${index}`} className={classes.subItem} disabled={isFlagging}>
-        <ListItemIcon classes={{root: classes.selectedIcon}}>
-          {eval(`${section.split('_')[1]}Type`) === report && <Icon color="secondary">check</Icon>}
-        </ListItemIcon>
-        <ListItemText primary={getReportName(report)} onClick={() => handlerFunc(report)} classes={{root: classes.subItemText}} />
-      </MenuItem>
-    ));
+    let value = FLAG_CONTRIBUTION_SECTION ? flagType : section === HIDE_CONTRIBUTION_SECTION ? hideType : deleteType;
+    return REPORTS.map((report, index) => {
+      return (
+        <MenuItem key={`${section}_${index}`} className={classes.subItem} disabled={isFlagging}>
+          <ListItemIcon classes={{root: classes.selectedIcon}}>{value === report && <Icon color="secondary">check</Icon>}</ListItemIcon>
+          <ListItemText primary={getReportName(report)} onClick={() => handlerFunc(report)} classes={{root: classes.subItemText}} />
+        </MenuItem>
+      );
+    });
   }
 
   /**
@@ -1146,7 +1155,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
                       {renderGeneralSection()}
                       {Boolean(extraSections.length) && <Divider />}
                       {extraSections.map((s, i) => (
-                        <Box key={`es_${i}`}>{eval(`render${capitalize(camelCase(s))}`)()}</Box>
+                        <Box key={`es_${i}`}>{extraSectionsRenders[s]()}</Box>
                       ))}
                     </MenuList>
                   )}
