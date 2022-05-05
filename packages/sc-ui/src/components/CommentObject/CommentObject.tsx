@@ -431,7 +431,8 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
     } else {
       if (UserUtils.isBlocked(scUserContext.user)) {
         enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
-          variant: 'warning'
+          variant: 'warning',
+          autoHideDuration: 3000
         });
       } else {
         setLoadingVote(true);
@@ -447,7 +448,8 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
           .catch((error) => {
             Logger.error(SCOPE_SC_UI, error);
             enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
-              variant: 'error'
+              variant: 'error',
+              autoHideDuration: 3000
             });
           });
       }
@@ -484,7 +486,8 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
   function handleReply(comment) {
     if (UserUtils.isBlocked(scUserContext.user)) {
       enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
-        variant: 'warning'
+        variant: 'warning',
+        autoHideDuration: 3000
       });
     } else {
       setIsReplying(true);
@@ -593,37 +596,29 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
   function handleSave(comment) {
     if (UserUtils.isBlocked(scUserContext.user)) {
       enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
-        variant: 'warning'
+        variant: 'warning',
+        autoHideDuration: 3000
       });
     } else {
       setIsSavingComment(true);
       performSave(comment)
         .then((data: SCCommentType) => {
-          if (data.parent) {
-            const _latestComment = obj.latest_comments.map((c) => {
-              if (c.id === data.id) {
-                return data;
-              }
-              return c;
-            });
-            setObj(Object.assign({}, obj, {latest_comments: _latestComment}));
-          } else {
-            setObj(
-              Object.assign({}, obj, {
-                text: data.text,
-                html: data.html,
-                summary: data.summary,
-                added_at: data.added_at
-              })
-            );
-          }
+          setObj(
+            Object.assign({}, obj, {
+              text: data.text,
+              html: data.html,
+              summary: data.summary,
+              added_at: data.added_at
+            })
+          );
           setEditComment(null);
           setIsSavingComment(false);
         })
         .catch((error) => {
           Logger.error(SCOPE_SC_UI, error);
           enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
-            variant: 'error'
+            variant: 'error',
+            autoHideDuration: 3000
           });
         });
     }
