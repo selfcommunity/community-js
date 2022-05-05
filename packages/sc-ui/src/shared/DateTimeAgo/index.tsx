@@ -77,7 +77,7 @@ export default function DateTimeAgo(props: DateTimeAgoProps): JSX.Element {
 
   if (date) {
     return (
-      <Root className={classNames(classes.root, className)} {...rest}>
+      <Root component="span" className={classNames(classes.root, className)} {...rest}>
         {showStartIcon && <Icon>access_time</Icon>}
         <Tooltip title={`${intl.formatDate(date, {year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric'})}`}>
           <Typography variant={'body2'} component={'span'}>
