@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import {Endpoints, http, Logger, SCFeedObjectType, SCFeedObjectTypologyType, SCPollChoiceType, SCPollType} from '@selfcommunity/core';
@@ -275,12 +275,13 @@ export default function PollObject(inProps: PollObjectProps): JSX.Element {
             <Typography variant="body1" gutterBottom align={'center'}>
               {obj.title}
             </Typography>
-            {obj.expiration_at && Date.parse(obj.expiration_at as string) >= new Date().getTime() ? (
+            {obj.expiration_at && Date.parse(obj.expiration_at as string) >= new Date().getTime() && (
               <Typography variant="body2" gutterBottom align={'center'}>
                 {`${intl.formatMessage(messages.expDate)}`}
                 {`${intl.formatDate(Date.parse(obj.expiration_at as string), {year: 'numeric', month: 'numeric', day: 'numeric'})}`}
               </Typography>
-            ) : (
+            )}
+            {obj.closed && (
               <Typography variant="body2" gutterBottom align={'center'}>
                 <FormattedMessage id="ui.feedObject.poll.closed" defaultMessage="ui.feedObject.poll.closed" />
               </Typography>
@@ -315,6 +316,10 @@ export default function PollObject(inProps: PollObjectProps): JSX.Element {
       </>
     );
   }
+
+  useEffect(() => {
+    setChoices(pollObject.choices);
+  }, [pollObject.choices]);
 
   /**
    * Renders root element
