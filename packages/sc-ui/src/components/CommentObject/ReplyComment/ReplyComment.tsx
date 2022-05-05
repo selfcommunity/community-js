@@ -49,6 +49,7 @@ const Root = styled(BaseItemButton, {
       alignItems: 'flex-start',
       '& .SCBaseItemButton-text': {
         marginTop: 0,
+        marginBottom: 0,
         '& .SCBaseItemButton-secondary': {
           overflow: 'visible'
         }
