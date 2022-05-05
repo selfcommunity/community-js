@@ -40,6 +40,9 @@ const Root = styled(Box, {
       margin: theme.spacing(1, 0, 1, 0),
       '&:first-child': {
         marginTop: 0
+      },
+      '&:last-child': {
+        marginBottom: 0
       }
     },
     '& img': {
