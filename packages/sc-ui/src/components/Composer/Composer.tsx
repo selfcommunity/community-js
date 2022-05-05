@@ -906,7 +906,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
           </Box>
           <Box>
             <IconButton onClick={handleClose}>
-              <Icon>highlight_off</Icon>
+              <Icon>close</Icon>
             </IconButton>
           </Box>
         </DialogTitle>
