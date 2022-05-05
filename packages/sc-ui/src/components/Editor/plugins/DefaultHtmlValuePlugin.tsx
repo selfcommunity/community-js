@@ -13,7 +13,6 @@ function DefaultHtmlValuePlugin({defaultValue}) {
       const fakeDataTransfer = new DataTransfer();
       fakeDataTransfer.getData = (format) => {
         if (format === 'text/html') {
-          console.log(defaultValue);
           return defaultValue;
         }
         return '';
