@@ -1,7 +1,8 @@
 import React, {useContext} from 'react';
 import {styled} from '@mui/material/styles';
 import {Button, Grid, Typography} from '@mui/material';
-import {Endpoints, http, SCLocaleContextType, SCUserContext, SCUserContextType, useSCLocale} from '@selfcommunity/react-core';
+import {http, Endpoints} from '@selfcommunity/api-services';
+import {SCLocaleContextType, SCUserContext, SCUserContextType, useSCLocale} from '@selfcommunity/react-core';
 import Icon from '@mui/material/Icon';
 import {AxiosResponse} from 'axios';
 import {FormattedMessage} from 'react-intl';

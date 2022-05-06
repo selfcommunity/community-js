@@ -4,7 +4,8 @@ import List from '@mui/material/List';
 import {Button, CardContent, ListItem, Typography} from '@mui/material';
 import Widget from '../Widget';
 import {SCFeedObjectType} from '@selfcommunity/types';
-import {Endpoints, http, Logger} from '@selfcommunity/react-core';
+import {http, Endpoints} from '@selfcommunity/api-services';
+import {Logger} from '@selfcommunity/react-core';
 import {AxiosResponse} from 'axios';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import FeedObject from '../FeedObject';
@@ -162,8 +163,8 @@ export default function TrendingFeed(inProps: TrendingFeedProps): JSX.Element {
           ) : (
             <React.Fragment>
               <List>
-                {posts.slice(0, visible).map((obj: SCFeedObjectType) => (
-                  <ListItem key={obj.id}>
+                {posts.slice(0, visible).map((obj: SCFeedObjectType, index) => (
+                  <ListItem key={index}>
                     <FeedObject elevation={0} feedObject={obj[obj.type]} template={template} className={classes.trendingItem} />
                   </ListItem>
                 ))}
@@ -197,8 +198,8 @@ export default function TrendingFeed(inProps: TrendingFeedProps): JSX.Element {
                     </p>
                   }>
                   <List>
-                    {posts.map((obj: SCFeedObjectType) => (
-                      <ListItem key={obj.id}>
+                    {posts.map((obj: SCFeedObjectType, index) => (
+                      <ListItem key={index}>
                         <FeedObject elevation={0} feedObject={obj[obj.type]} template={template} className={classes.trendingItem} />
                       </ListItem>
                     ))}

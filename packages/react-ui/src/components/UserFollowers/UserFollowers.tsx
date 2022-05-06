@@ -4,9 +4,8 @@ import List from '@mui/material/List';
 import {Button, CardContent, ListItem, Typography} from '@mui/material';
 import Widget from '../Widget';
 import {SCUserType} from '@selfcommunity/types';
+import {http, Endpoints} from '@selfcommunity/api-services';
 import {
-  Endpoints,
-  http,
   Logger,
   SCPreferences,
   SCPreferencesContext,

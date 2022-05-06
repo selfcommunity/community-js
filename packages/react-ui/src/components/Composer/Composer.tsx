@@ -7,11 +7,10 @@ import {
   SCMediaType,
   SCPollType,
   SCCategoryType,
-  SCTagType} from '@selfcommunity/types';
+  SCTagType
+} from '@selfcommunity/types';
+import {http, Endpoints, formatHttpError} from '@selfcommunity/api-services';
 import {
-  Endpoints,
-  formatHttpError,
-  http,
   SCFeatures,
   SCPreferences,
   SCPreferencesContext,

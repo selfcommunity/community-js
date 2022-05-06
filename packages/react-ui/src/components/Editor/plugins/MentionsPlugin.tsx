@@ -17,7 +17,8 @@ import {mergeRegister} from '@lexical/utils';
 import {createPortal} from 'react-dom';
 
 import {createMentionNode, MentionNode} from '../nodes/MentionNode';
-import {Endpoints, http, SCUserType} from '@selfcommunity/react-core';
+import {http, Endpoints} from '@selfcommunity/api-services';
+import {SCUserType} from '@selfcommunity/types';
 import {AxiosResponse} from 'axios';
 import classNames from 'classnames';
 import {Avatar} from '@mui/material';

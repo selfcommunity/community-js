@@ -9,7 +9,8 @@ import classNames from 'classnames';
 import {useSnackbar} from 'notistack';
 import Icon from '@mui/material/Icon';
 import {SCFeedObjectType, SCFeedObjectTypologyType, SCTagType} from '@selfcommunity/types';
-import {Endpoints, http, Logger, SCContextType, SCUserContextType, useSCContext, useSCFetchFeedObject, useSCUser} from '@selfcommunity/react-core';
+import {http, Endpoints} from '@selfcommunity/api-services';
+import {Logger, SCContextType, SCUserContextType, useSCContext, useSCFetchFeedObject, useSCUser} from '@selfcommunity/react-core';
 import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const PREFIX = 'SCFollowObject';

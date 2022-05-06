@@ -15,7 +15,8 @@ import {
   Platform,
   SCFeedWidgetType
 } from '@selfcommunity/react-ui';
-import {Endpoints, SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
+import {Endpoints} from '@selfcommunity/api-services';
+import {SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
 import {SCNotificationTopicType} from '@selfcommunity/types';
 import useThemeProps from '@mui/material/styles/useThemeProps';
 import classNames from 'classnames';

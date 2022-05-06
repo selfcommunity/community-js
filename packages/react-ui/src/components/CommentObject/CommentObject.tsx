@@ -21,9 +21,8 @@ import useThemeProps from '@mui/material/styles/useThemeProps';
 import CommentsObject from '../CommentsObject';
 import BaseItem from '../../shared/BaseItem';
 import {SCCommentType, SCCommentTypologyType, SCFeedObjectType, SCFeedObjectTypologyType} from '@selfcommunity/types';
+import {http, Endpoints} from '@selfcommunity/api-services';
 import {
-  Endpoints,
-  http,
   Link,
   Logger,
   SCContextType,

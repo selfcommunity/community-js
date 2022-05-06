@@ -1,7 +1,8 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Button, CardContent, List, ListItem, Typography} from '@mui/material';
-import {Endpoints, http, Logger} from '@selfcommunity/react-core';
+import {http, Endpoints} from '@selfcommunity/api-services';
+import {Logger} from '@selfcommunity/react-core';
 import Skeleton from './Skeleton';
 import {AxiosResponse} from 'axios';
 import {SCCategoryType} from '@selfcommunity/types';

@@ -3,9 +3,8 @@ import useThemeProps from '@mui/material/styles/useThemeProps';
 import {styled} from '@mui/material/styles';
 import {Box, Grid, Typography} from '@mui/material';
 import classNames from 'classnames';
+import {http, Endpoints} from '@selfcommunity/api-services';
 import {
-  Endpoints,
-  http,
   Logger,
   SCRoutes,
   SCRoutingContextType,

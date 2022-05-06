@@ -15,17 +15,8 @@ import classNames from 'classnames';
 import {useSnackbar} from 'notistack';
 import Skeleton from '@mui/material/Skeleton';
 import {SCFeedObjectType, SCFeedObjectTypologyType, SCMediaType} from '@selfcommunity/types';
-import {
-  Endpoints,
-  http,
-  Logger,
-  SCContextType,
-  SCUserContextType,
-  UserUtils,
-  useSCContext,
-  useSCFetchFeedObject,
-  useSCUser
-} from '@selfcommunity/react-core';
+import {http, Endpoints} from '@selfcommunity/api-services';
+import {Logger, SCContextType, SCUserContextType, UserUtils, useSCContext, useSCFetchFeedObject, useSCUser} from '@selfcommunity/react-core';
 import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const messages = defineMessages({

@@ -1,7 +1,7 @@
 import React from 'react';
 import {ComponentMeta, ComponentStory} from '@storybook/react';
 import Feed from './index';
-import {Endpoints} from '@selfcommunity/react-core';
+import {Endpoints} from '@selfcommunity/api-services';
 import {SCNotificationTopicType} from '@selfcommunity/types';
 import FeedObject, {FeedObjectSkeleton} from '../FeedObject';
 import {SCFeedObjectTemplateType} from '../../types/feedObject';

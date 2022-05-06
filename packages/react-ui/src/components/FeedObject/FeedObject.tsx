@@ -30,9 +30,8 @@ import {useSnackbar} from 'notistack';
 import {AxiosResponse} from 'axios';
 import {CommentObjectProps} from '../CommentObject';
 import {SCCommentType, SCFeedObjectType, SCFeedObjectTypologyType, SCPollType} from '@selfcommunity/types';
+import {http, Endpoints} from '@selfcommunity/api-services';
 import {
-  Endpoints,
-  http,
   Link,
   Logger,
   SCContextType,

@@ -1,6 +1,7 @@
 import React, {useContext, useMemo, useState} from 'react';
 import {
-  Avatar, Box,
+  Avatar,
+  Box,
   CardContent,
   CardHeader,
   CardMedia,
@@ -12,7 +13,7 @@ import {
   ListItem,
   ListItemAvatar,
   ListItemText,
-  Typography,
+  Typography
 } from '@mui/material';
 import {styled} from '@mui/material/styles';
 import Icon from '@mui/material/Icon';
@@ -23,12 +24,11 @@ import Widget from '../Widget';
 import {SCBroadcastMessageTemplateType} from '../../types';
 import classNames from 'classnames';
 import {red} from '@mui/material/colors';
+import {SCBroadcastMessageType} from '@selfcommunity/types';
+import {http, Endpoints} from '@selfcommunity/api-services';
 import {
-  Endpoints,
-  http,
   Link,
   Logger,
-  SCBroadcastMessageType,
   SCPreferences,
   SCPreferencesContext,
   SCPreferencesContextType,

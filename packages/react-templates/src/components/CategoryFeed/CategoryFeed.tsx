@@ -13,7 +13,8 @@ import {
   TrendingFeed,
   TrendingPeople
 } from '@selfcommunity/react-ui';
-import {Endpoints, useSCFetchCategory} from '@selfcommunity/react-core';
+import {Endpoints} from '@selfcommunity/api-services';
+import {useSCFetchCategory} from '@selfcommunity/react-core';
 import {SCCategoryType, SCCustomAdvPosition} from '@selfcommunity/types';
 import {CategoryFeedSkeleton} from './index';
 import useThemeProps from '@mui/material/styles/useThemeProps';

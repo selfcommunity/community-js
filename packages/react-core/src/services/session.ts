@@ -1,5 +1,4 @@
-import http from '../utils/http';
-import endpoints from '../constants/Endpoints';
+import {http, Endpoints} from '@selfcommunity/api-services';
 import {Logger} from '../utils/logger';
 import {SCOPE_SC_CORE} from '../constants/Errors';
 
@@ -9,8 +8,8 @@ import {SCOPE_SC_CORE} from '../constants/Errors';
 function getCurrentUser() {
   return http
     .request({
-      url: endpoints.Me.url(),
-      method: endpoints.Me.method,
+      url: Endpoints.Me.url(),
+      method: Endpoints.Me.method,
     })
     .then((res) => {
       if (res.status >= 300) {
@@ -32,8 +31,8 @@ function getCurrentUser() {
 function getUser(id) {
   return http
     .request({
-      url: endpoints.User.url({id: id}),
-      method: endpoints.User.method,
+      url: Endpoints.User.url({id: id}),
+      method: Endpoints.User.method,
     })
     .then((res) => {
       if (res.status >= 300) {
@@ -54,8 +53,8 @@ function getUser(id) {
 function getUnseenNotificationsCounter() {
   return http
     .request({
-      url: endpoints.UserUnseenNotificationCount.url(),
-      method: endpoints.UserUnseenNotificationCount.method,
+      url: Endpoints.UserUnseenNotificationCount.url(),
+      method: Endpoints.UserUnseenNotificationCount.method,
     })
     .then((res) => {
       if (res.status >= 300) {
@@ -76,8 +75,8 @@ function getUnseenNotificationsCounter() {
 function getUnseenBroadcastMessagesCounter() {
   return http
     .request({
-      url: endpoints.BroadcastMessagesUnseenCount.url(),
-      method: endpoints.BroadcastMessagesUnseenCount.method,
+      url: Endpoints.BroadcastMessagesUnseenCount.url(),
+      method: Endpoints.BroadcastMessagesUnseenCount.method,
     })
     .then((res) => {
       if (res.status >= 300) {

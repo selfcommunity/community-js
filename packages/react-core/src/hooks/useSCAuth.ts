@@ -1,4 +1,4 @@
-import http, {setAuthorizeToken, setSupportWithCredentials} from '../utils/http';
+import {http, setAuthorizeToken, setSupportWithCredentials} from '@selfcommunity/api-services';
 import {useEffect, useMemo, useReducer, useRef} from 'react';
 import {SCSessionType} from '../types';
 import {SCAuthTokenType} from '@selfcommunity/types';

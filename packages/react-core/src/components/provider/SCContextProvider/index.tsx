@@ -1,5 +1,5 @@
 import React, {createContext, useContext, useState} from 'react';
-import {setBasePortal} from '../../../utils/http';
+import {setBasePortal} from '@selfcommunity/api-services';
 import useDeepCompareEffect from 'use-deep-compare-effect';
 import {validateOptions, validOptions} from '../../../utils/validator';
 import {SCContextProviderType, SCContextType, SCSettingsType} from '../../../types';

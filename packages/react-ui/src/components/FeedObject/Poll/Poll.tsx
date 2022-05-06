@@ -1,7 +1,8 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
-import {Endpoints, http, Logger} from '@selfcommunity/react-core';
+import {http, Endpoints} from '@selfcommunity/api-services';
+import {Logger} from '@selfcommunity/react-core';
 import {SCFeedObjectType, SCFeedObjectTypologyType, SCPollChoiceType, SCPollType} from '@selfcommunity/types';
 import {Button, CardContent, CardHeader, Collapse, Typography} from '@mui/material';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';

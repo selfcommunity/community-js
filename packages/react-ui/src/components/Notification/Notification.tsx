@@ -34,7 +34,8 @@ import {
   SCNotificationType,
   SCNotificationTypologyType
 } from '@selfcommunity/types';
-import {Endpoints, http, Link, Logger, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
+import {http, Endpoints} from '@selfcommunity/api-services';
+import {Link, Logger, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
 
 const messages = defineMessages({
   receivePrivateMessage: {

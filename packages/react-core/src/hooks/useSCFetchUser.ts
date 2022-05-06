@@ -2,9 +2,8 @@ import {useEffect, useMemo, useState} from 'react';
 import {AxiosResponse} from 'axios';
 import {SCOPE_SC_CORE} from '../constants/Errors';
 import {SCUserType} from '@selfcommunity/types';
-import http from '../utils/http';
+import {http, Endpoints} from '@selfcommunity/api-services';
 import {Logger} from '../utils/logger';
-import Endpoints from '../constants/Endpoints';
 
 /**
  :::info

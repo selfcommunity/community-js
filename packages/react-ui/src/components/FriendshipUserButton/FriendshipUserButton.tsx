@@ -1,7 +1,8 @@
 import React, {useContext, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Button} from '@mui/material';
-import {Endpoints, http, SCContextType, SCUserContext, SCUserContextType, useSCContext, useSCFetchUser} from '@selfcommunity/react-core';
+import {http, Endpoints} from '@selfcommunity/api-services';
+import {SCContextType, SCUserContext, SCUserContextType, useSCContext, useSCFetchUser} from '@selfcommunity/react-core';
 import {SCUserType} from '@selfcommunity/types';
 import {AxiosResponse} from 'axios';
 import classNames from 'classnames';

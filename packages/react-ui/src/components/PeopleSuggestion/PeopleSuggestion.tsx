@@ -2,9 +2,8 @@ import React, {useContext, useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Button, CardContent, List, ListItem, Typography} from '@mui/material';
 import {SCUserType} from '@selfcommunity/types';
+import {http, Endpoints} from '@selfcommunity/api-services';
 import {
-  Endpoints,
-  http,
   SCPreferences,
   SCPreferencesContext,
   SCPreferencesContextType,

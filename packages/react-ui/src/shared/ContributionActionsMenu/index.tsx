@@ -39,9 +39,8 @@ import {
   MODERATION_CONTRIBUTION_STATE_HIDDEN,
   MODERATION_CONTRIBUTION_STATE_DELETED
 } from '../../constants/Flagging';
+import {http, Endpoints} from '@selfcommunity/api-services';
 import {
-  Endpoints,
-  http,
   Logger,
   SCContext,
   SCContextType,

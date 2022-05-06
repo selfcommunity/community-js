@@ -22,16 +22,8 @@ import {SCFeedWidgetType} from '../../types/feed';
 import Sticky from 'react-stickynode';
 import CustomAdv, {CustomAdvProps} from '../CustomAdv';
 import {SCUserType, SCCustomAdvPosition, SCFeedUnitType, SCNotificationAggregatedType} from '@selfcommunity/types';
-import {
-  EndpointType,
-  http,
-  Logger,
-  SCPreferences,
-  SCPreferencesContextType,
-  SCUserContext,
-  SCUserContextType,
-  useSCPreferences
-} from '@selfcommunity/react-core';
+import {http, EndpointType} from '@selfcommunity/api-services';
+import {Logger, SCPreferences, SCPreferencesContextType, SCUserContext, SCUserContextType, useSCPreferences} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import PubSub from 'pubsub-js';
 import useThemeProps from '@mui/material/styles/useThemeProps';

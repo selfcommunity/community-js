@@ -1,10 +1,11 @@
 import React, {forwardRef, useEffect, useState} from 'react';
 import {$getSelection, $isRangeSelection, $isRootNode, COMMAND_PRIORITY_EDITOR, createCommand, LexicalCommand, LexicalEditor} from 'lexical';
 import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
-import {CircularProgress, Icon, IconButton, IconButtonProps} from '@mui/material';
+import {Icon, IconButton, IconButtonProps} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import ChunkedUploady from '@rpldy/chunked-uploady';
-import {Endpoints, SCContextType, SCMediaType, SCUserContextType, useSCContext, useSCUser} from '@selfcommunity/react-core';
+import {Endpoints} from '@selfcommunity/api-services';
+import {SCContextType, SCMediaType, SCUserContextType, useSCContext, useSCUser} from '@selfcommunity/react-core';
 import MediaChunkUploader from '../../../shared/MediaChunkUploader';
 import {SCMediaChunkType} from '@selfcommunity/react-ui';
 import {asUploadButton} from '@rpldy/upload-button';

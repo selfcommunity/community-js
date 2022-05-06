@@ -1,4 +1,5 @@
-import {Endpoints, http, Logger} from '@selfcommunity/react-core';
+import {Endpoints, http} from '@selfcommunity/api-services';
+import {Logger} from '@selfcommunity/react-core';
 import {SCOPE_SC_CORE} from '../constants/Errors';
 
 export default function useSCMediaClick() {

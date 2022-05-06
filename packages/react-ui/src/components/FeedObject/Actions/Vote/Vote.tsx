@@ -14,17 +14,8 @@ import {styled} from '@mui/material/styles';
 import classNames from 'classnames';
 import {useSnackbar} from 'notistack';
 import {SCFeedObjectType, SCFeedObjectTypologyType, SCTagType} from '@selfcommunity/types';
-import {
-  Endpoints,
-  http,
-  Logger,
-  SCContextType,
-  SCUserContextType,
-  UserUtils,
-  useSCContext,
-  useSCFetchFeedObject,
-  useSCUser
-} from '@selfcommunity/react-core';
+import {http, Endpoints} from '@selfcommunity/api-services';
+import {Logger, SCContextType, SCUserContextType, UserUtils, useSCContext, useSCFetchFeedObject, useSCUser} from '@selfcommunity/react-core';
 import useThemeProps from '@mui/material/styles/useThemeProps';
 
 /**

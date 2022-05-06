@@ -15,7 +15,7 @@ import {
   Platform,
   SCFeedWidgetType
 } from '@selfcommunity/react-ui';
-import {Endpoints} from '@selfcommunity/react-core';
+import {Endpoints} from '@selfcommunity/api-services';
 import useThemeProps from '@mui/material/styles/useThemeProps';
 import classNames from 'classnames';
 

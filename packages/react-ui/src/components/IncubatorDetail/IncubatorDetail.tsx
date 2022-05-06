@@ -3,9 +3,8 @@ import {styled} from '@mui/material/styles';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {TextField, Typography, Box, Avatar, Button, Input, CardContent, Alert, FormGroup, AvatarGroup, List, ListItem} from '@mui/material';
 import {SCIncubatorType, SCUserType} from '@selfcommunity/types';
+import {http, Endpoints} from '@selfcommunity/api-services';
 import {
-  Endpoints,
-  http,
   Link,
   Logger,
   SCContextType,

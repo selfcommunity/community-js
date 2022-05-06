@@ -1,7 +1,6 @@
 import {useMemo} from 'react';
 import {AxiosResponse} from 'axios';
-import http from '../utils/http';
-import Endpoints from '../constants/Endpoints';
+import {http, Endpoints} from '@selfcommunity/api-services';
 import {SCCategoryType, SCUserType} from '@selfcommunity/types';
 import useSCCachingManager from './useSCCachingManager';
 import {SCOPE_SC_CORE} from '../constants/Errors';

@@ -1,7 +1,7 @@
 import React from 'react';
 import {ComponentMeta, ComponentStory} from '@storybook/react';
 import ContributionActionsMenu from './index';
-import {SCFeedObjectTypologyType} from '@selfcommunity/react-core';
+import {SCFeedObjectTypologyType} from '@selfcommunity/types';
 
 export default {
   title: 'Design System/SHARED COMPONENT/ContributionActionsMenu',

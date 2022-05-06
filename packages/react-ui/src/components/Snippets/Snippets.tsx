@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Divider, Typography, List} from '@mui/material';
 import Widget from '../Widget';
-import {Endpoints, http} from '@selfcommunity/react-core';
+import {http, Endpoints} from '@selfcommunity/api-services';
 import {AxiosResponse} from 'axios';
 import {SCPrivateMessageType, SCNotificationTopicType, SCNotificationTypologyType} from '@selfcommunity/types';
 import {FormattedMessage} from 'react-intl';

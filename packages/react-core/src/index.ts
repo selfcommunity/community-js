@@ -84,16 +84,6 @@ import Link from './components/router';
 import * as SCRoutes from './constants/Routes';
 
 /**
- * Http component
- */
-import http, {formatHttpError} from './utils/http';
-
-/**
- * Endpoint component
- */
-import Endpoints, {EndpointType} from './constants/Endpoints';
-
-/**
  * Utilities:
  * logger, string, url, object
  */
@@ -159,12 +149,8 @@ export {
   SCAlertMessagesProvider,
   SCAlertMessagesContext,
   useSCAlertMessages,
-  http,
-  formatHttpError,
   Link,
   SCRoutes,
-  Endpoints,
-  EndpointType,
   Logger,
   StringUtils,
   ObjectUtils,

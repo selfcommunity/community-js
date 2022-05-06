@@ -24,7 +24,8 @@ import {SCNotificationObjectTemplateType} from '../../types';
 import ScrollContainer from '../../shared/ScrollContainer';
 import {FormattedMessage} from 'react-intl';
 import {SCNotificationAggregatedType, SCNotificationTopicType, SCNotificationType, SCNotificationTypologyType} from '@selfcommunity/types';
-import {Endpoints, http, Logger, SCNotification, SCUserContextType, useSCUser} from '@selfcommunity/react-core';
+import {http, Endpoints} from '@selfcommunity/api-services';
+import {Logger, SCNotification, SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const PREFIX = 'SCSnippetNotifications';

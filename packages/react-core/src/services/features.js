@@ -1,5 +1,4 @@
-import http from '../utils/http';
-import endpoints from '../constants/Endpoints';
+import {http, Endpoints} from '@selfcommunity/api-services';
 import {Logger} from '../utils/logger';
 import {SCOPE_SC_CORE} from '../constants/Errors';
 
@@ -10,8 +9,8 @@ import {SCOPE_SC_CORE} from '../constants/Errors';
 function loadFeatures() {
   return http
     .request({
-      url: endpoints.Feature.url(),
-      method: endpoints.Feature.method,
+      url: Endpoints.Feature.url(),
+      method: Endpoints.Feature.method,
     })
     .then((res) => {
       if (res.status >= 300) {

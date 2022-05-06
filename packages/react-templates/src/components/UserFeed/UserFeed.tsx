@@ -1,6 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Endpoints, useSCFetchUser} from '@selfcommunity/react-core';
+import {Endpoints} from '@selfcommunity/api-services';
+import {useSCFetchUser} from '@selfcommunity/react-core';
 import {SCUserType} from '@selfcommunity/types';
 import {
   CategoriesFollowed,

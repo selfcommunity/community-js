@@ -1,7 +1,8 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Button, Typography, List, CardContent, ListItem} from '@mui/material';
-import {Endpoints, http, SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
+import {http, Endpoints} from '@selfcommunity/api-services';
+import {SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
 import {SCCategoryType} from '@selfcommunity/types';
 import Skeleton from './Skeleton';
 import Category, {CategoryProps} from '../Category';

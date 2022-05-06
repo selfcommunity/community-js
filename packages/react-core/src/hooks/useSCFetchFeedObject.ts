@@ -1,7 +1,6 @@
 import {useEffect, useState} from 'react';
-import http from '../utils/http';
+import {http, Endpoints} from '@selfcommunity/api-services';
 import {Logger} from '../utils/logger';
-import Endpoints from '../constants/Endpoints';
 import {AxiosResponse} from 'axios';
 import {SCOPE_SC_CORE} from '../constants/Errors';
 import {SCFeedDiscussionType, SCFeedObjectType, SCFeedObjectTypologyType, SCFeedPostType, SCFeedStatusType} from '@selfcommunity/types';

@@ -6,7 +6,8 @@ import {
   useItemFinishListener,
   useRequestPreSend
 } from '@rpldy/chunked-uploady';
-import {Endpoints, formatHttpError, http, SCContextType, SCMediaType, useSCContext} from '@selfcommunity/react-core';
+import {http, Endpoints, formatHttpError} from '@selfcommunity/api-services';
+import {SCContextType, SCMediaType, useSCContext} from '@selfcommunity/react-core';
 import {useItemProgressListener, useItemStartListener} from '@rpldy/uploady';
 import {AxiosResponse} from 'axios';
 import {md5} from '../../utils/hash';

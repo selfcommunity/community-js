@@ -2,13 +2,8 @@ import React, {useEffect, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Box, Button, CardContent} from '@mui/material';
 import {SCBroadcastMessageType, SCNotificationTopicType, SCNotificationTypologyType} from '@selfcommunity/types';
-import {
-  Endpoints,
-  http,
-  Logger,
-  SCUserContextType,
-  useSCUser
-} from '@selfcommunity/react-core';
+import {http, Endpoints} from '@selfcommunity/api-services';
+import {Logger, SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import Message, {MessageProps} from './Message';
 import classNames from 'classnames';

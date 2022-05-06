@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {EndpointType, http} from '@selfcommunity/react-core';
+import {http, EndpointType} from '@selfcommunity/api-services';
 import LazyLoad from 'react-lazyload';
 
 export interface MarkReadProps {

@@ -4,10 +4,8 @@ import {Box, CircularProgress, IconButton, InputAdornment, MenuItem, TextField} 
 import Icon from '@mui/material/Icon';
 import {defineMessages, useIntl} from 'react-intl';
 import {SCUserFields, SCUserType} from '@selfcommunity/types';
+import {http, Endpoints, formatHttpError} from '@selfcommunity/api-services';
 import {
-  Endpoints,
-  formatHttpError,
-  http,
   SCPreferences,
   SCPreferencesContextType,
   SCUserContextType,

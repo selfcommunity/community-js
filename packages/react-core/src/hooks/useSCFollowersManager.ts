@@ -1,7 +1,6 @@
-import {useEffect, useMemo, useRef, useState} from 'react';
+import {useEffect, useMemo, useRef} from 'react';
 import {AxiosResponse} from 'axios';
-import http from '../utils/http';
-import Endpoints from '../constants/Endpoints';
+import {http, Endpoints} from '@selfcommunity/api-services';
 import {SCPreferencesContextType} from '../types';
 import {SCNotificationTopicType, SCNotificationTypologyType, SCUserType} from '@selfcommunity/types';
 import {Logger} from '../utils/logger';

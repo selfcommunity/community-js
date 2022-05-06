@@ -1,7 +1,8 @@
 import React, {useContext, useEffect, useMemo, useState, useRef} from 'react';
 import {styled} from '@mui/material/styles';
 import Widget from '../Widget';
-import {Endpoints, http, SCUserContext, SCUserContextType, UserUtils} from '@selfcommunity/react-core';
+import {http, Endpoints} from '@selfcommunity/api-services';
+import {SCUserContext, SCUserContextType, UserUtils} from '@selfcommunity/react-core';
 import {SCNotificationTopicType, SCNotificationTypologyType, SCPrivateMessageType} from '@selfcommunity/types';
 import {AxiosResponse} from 'axios';
 import Message from '../Message';

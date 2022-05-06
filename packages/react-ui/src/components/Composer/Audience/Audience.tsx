@@ -12,7 +12,7 @@ import {AutocompleteClasses} from '@mui/material/Autocomplete/autocompleteClasse
 import {OverridableStringUnion} from '@mui/types';
 import {AutocompletePropsSizeOverrides} from '@mui/material/Autocomplete/Autocomplete';
 import {SCTagType} from '@selfcommunity/types';
-import {Endpoints, http} from '@selfcommunity/react-core';
+import {http, Endpoints} from '@selfcommunity/api-services';
 import {AxiosResponse} from 'axios';
 import TagChip from '../../../shared/TagChip';
 import useThemeProps from '@mui/material/styles/useThemeProps';

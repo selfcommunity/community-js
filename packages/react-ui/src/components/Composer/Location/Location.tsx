@@ -4,7 +4,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import TextField, {TextFieldProps} from '@mui/material/TextField';
 import CircularProgress from '@mui/material/CircularProgress';
 import {InternalStandardProps as StandardProps} from '@mui/material';
-import {Endpoints, http} from '@selfcommunity/react-core';
+import {http, Endpoints} from '@selfcommunity/api-services';
 import {SCLocalityType} from '@selfcommunity/types';
 import {styled} from '@mui/material/styles';
 import {AutocompleteClasses} from '@mui/material/Autocomplete/autocompleteClasses';

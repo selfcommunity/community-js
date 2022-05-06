@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Endpoints, http, Logger, SCUserContextType, useSCUser} from '@selfcommunity/react-core';
+import {http, Endpoints} from '@selfcommunity/api-services';
+import {Logger, SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import {SCAuthTokenType} from '@selfcommunity/types';
 import {ButtonProps, TextField, TextFieldProps} from '@mui/material';
 import classNames from 'classnames';

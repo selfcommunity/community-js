@@ -1,7 +1,8 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
-import {Endpoints, http, SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
+import {http, Endpoints} from '@selfcommunity/api-services';
+import {SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
 import {SCPrizeType} from '@selfcommunity/types';
 import {Box, Button, CardActions, CardContent, CardMedia, Grid, Typography} from '@mui/material';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
