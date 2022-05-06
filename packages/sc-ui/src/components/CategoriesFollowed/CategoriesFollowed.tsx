@@ -111,7 +111,7 @@ export default function CategoriesFollowed(inProps: CategoriesListProps): JSX.El
         console.log(category.followed);
         if (category.followed) {
           newCategories[index].followers_counter = category.followers_counter - 1;
-          //newCategories[index].followed = !category.followed;
+          newCategories[index].followed = !category.followed;
         } else {
           newCategories[index].followers_counter = category.followers_counter + 1;
           newCategories[index].followed = !category.followed;
