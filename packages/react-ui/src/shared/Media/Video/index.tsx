@@ -4,7 +4,7 @@ import PreviewComponent from './PreviewComponent';
 import EditButton from './EditButton';
 import EditComponent from './EditComponent';
 import {MEDIA_TYPE_URL, MEDIA_EMBED_SC_VIMEO_TYPE} from '../../../constants/Media';
-import {SCMediaType} from '@selfcommunity/react-core';
+import {SCMediaType} from '@selfcommunity/types';
 
 const Video: SCMediaObjectType = {
   name: 'video',

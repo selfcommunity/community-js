@@ -3,7 +3,7 @@ import PreviewComponent from './PreviewComponent';
 import EditButton from './EditButton';
 import EditComponent from './EditComponent';
 import {MEDIA_TYPE_IMAGE} from '../../../constants/Media';
-import {SCMediaType} from '@selfcommunity/react-core';
+import {SCMediaType} from '@selfcommunity/types';
 import {SCMediaObjectType} from '../../../types/media';
 
 const Image: SCMediaObjectType = {

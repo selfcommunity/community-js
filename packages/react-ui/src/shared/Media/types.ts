@@ -1,4 +1,4 @@
-import {SCMediaType} from '@selfcommunity/react-core';
+import {SCMediaType} from '@selfcommunity/types';
 import {SCMediaChunkType} from '../../types';
 import {SyntheticEvent} from 'react';
 

@@ -7,11 +7,12 @@ import {
   useRequestPreSend
 } from '@rpldy/chunked-uploady';
 import {http, Endpoints, formatHttpError} from '@selfcommunity/api-services';
-import {SCContextType, SCMediaType, useSCContext} from '@selfcommunity/react-core';
+import {SCMediaType} from '@selfcommunity/types';
+import {SCContextType, useSCContext} from '@selfcommunity/react-core';
 import {useItemProgressListener, useItemStartListener} from '@rpldy/uploady';
 import {AxiosResponse} from 'axios';
 import {md5} from '../../utils/hash';
-import React, { useEffect, useRef, useState } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {SCMediaChunkType} from '../../types/media';
 import {useIntl} from 'react-intl';
 import messages from '../../messages/common';

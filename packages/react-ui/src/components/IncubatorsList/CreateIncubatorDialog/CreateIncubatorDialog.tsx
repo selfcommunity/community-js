@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {TextField, Typography, FormGroup, Box} from '@mui/material';
-import {Endpoints, formatHttpError, http, Logger, SCUserContextType, useSCUser} from '@selfcommunity/react-core';
+import {TextField, Typography, FormGroup} from '@mui/material';
+import {http, Endpoints, formatHttpError} from '@selfcommunity/api-services';
+import {Logger, SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import BaseDialog from '../../../shared/BaseDialog';
 import classNames from 'classnames';
 import useThemeProps from '@mui/material/styles/useThemeProps';

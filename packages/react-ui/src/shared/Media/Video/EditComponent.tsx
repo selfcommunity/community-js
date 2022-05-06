@@ -1,5 +1,5 @@
 import {asUploadButton} from '@rpldy/upload-button';
-import React, {forwardRef, SyntheticEvent, useContext, useState} from 'react';
+import React, {forwardRef, useContext, useState} from 'react';
 import {
   Alert,
   AlertTitle,
@@ -17,7 +17,9 @@ import {FormattedMessage} from 'react-intl';
 import {ReactSortable} from 'react-sortablejs';
 import Icon from '@mui/material/Icon';
 import ChunkedUploady from '@rpldy/chunked-uploady';
-import {Endpoints, SCContext, SCContextType, SCMediaType} from '@selfcommunity/react-core';
+import {Endpoints} from '@selfcommunity/api-services';
+import {SCMediaType} from '@selfcommunity/types';
+import {SCContext, SCContextType} from '@selfcommunity/react-core';
 import {styled} from '@mui/material/styles';
 import MediaChunkUploader from '../../MediaChunkUploader';
 import {SCMediaChunkType} from '../../../types/media';

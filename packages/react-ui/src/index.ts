@@ -65,7 +65,6 @@ import {
   SCNotificationObjectTemplateType,
   SCBroadcastMessageTemplateType
 } from './types';
-import {SCCategoryType} from '@selfcommunity/react-core';
 import Widget from './components/Widget';
 import MediaChunkUploader, {MediaChunkUploaderProps} from './shared/MediaChunkUploader';
 import {Document, Image, Link, Share, EditMediaProps} from './shared/Media';
@@ -98,7 +97,6 @@ export {
   BroadcastMessagesSkeleton,
   Category,
   CategoryProps,
-  SCCategoryType,
   CategorySkeleton,
   CategoryHeader,
   CategoryHeaderProps,

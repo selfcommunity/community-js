@@ -1,7 +1,7 @@
 import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
 import TagChip from './index';
-import {SCTagType} from '@selfcommunity/react-core';
+import {SCTagType} from '@selfcommunity/types';
 
 export default {
   title: 'Design System/SHARED COMPONENT/TagChip',

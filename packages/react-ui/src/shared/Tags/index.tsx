@@ -6,7 +6,7 @@ import Paper from '@mui/material/Paper';
 import Popper from '@mui/material/Popper';
 import Icon from '@mui/material/Icon';
 import TagChip from '../TagChip';
-import {SCTagType} from '@selfcommunity/react-core';
+import {SCTagType} from '@selfcommunity/types';
 import {Box, Divider, Stack, Typography} from '@mui/material';
 
 const PREFIX = 'SCTags';
