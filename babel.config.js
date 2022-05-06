@@ -11,7 +11,7 @@ module.exports = (api) => ({
       },
     ],
     '@babel/preset-react',
-    '@babel/preset-typescript'
+    '@babel/preset-typescript',
   ],
   plugins: ['macros'],
-})
+});
