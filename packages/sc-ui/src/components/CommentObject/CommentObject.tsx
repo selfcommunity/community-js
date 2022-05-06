@@ -466,7 +466,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
         url: Endpoints.NewComment.url({}),
         method: Endpoints.NewComment.method,
         data: {
-          [`${feedObjectType}`]: feedObjectId ? feedObjectId : feedObject.id,
+          [`${feedObject ? feedObject.type : feedObjectType}`]: feedObject ? feedObject.id : feedObjectId,
           parent: replyComment.parent ? replyComment.parent : replyComment.id,
           ...(replyComment.parent ? {in_reply_to: replyComment.id} : {}),
           text: comment

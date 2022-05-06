@@ -113,6 +113,25 @@ export default function CategoriesPopular(inProps: CategoriesListProps): JSX.Ele
   }, []);
 
   /**
+   * Handles followers counter update on follow/unfollow action.
+   * @param category
+   */
+  function handleFollowersUpdate(category) {
+    const newCategories = [...categories];
+    const index = newCategories.findIndex((u) => u.id === category.id);
+    if (index !== -1) {
+      if (category.followed) {
+        newCategories[index].followers_counter = category.followers_counter - 1;
+        newCategories[index].followed = !category.followed;
+      } else {
+        newCategories[index].followers_counter = category.followers_counter + 1;
+        newCategories[index].followed = !category.followed;
+      }
+      setCategories(newCategories);
+    }
+  }
+
+  /**
    * Renders popular categories list
    */
   const c = (
@@ -133,7 +152,7 @@ export default function CategoriesPopular(inProps: CategoriesListProps): JSX.Ele
               <List>
                 {categories.slice(0, visibleCategories).map((category: SCCategoryType) => (
                   <ListItem key={category.id}>
-                    <Category elevation={0} category={category} {...CategoryProps} />
+                    <Category elevation={0} category={category} followCategoryButtonProps={{onFollow: handleFollowersUpdate}} {...CategoryProps} />
                   </ListItem>
                 ))}
               </List>
@@ -168,7 +187,7 @@ export default function CategoriesPopular(inProps: CategoriesListProps): JSX.Ele
                   <List>
                     {categories.map((c) => (
                       <ListItem key={c.id}>
-                        <Category elevation={0} category={c} {...CategoryProps} />
+                        <Category elevation={0} category={c} {...CategoryProps} followCategoryButtonProps={{onFollow: handleFollowersUpdate}} />
                       </ListItem>
                     ))}
                   </List>

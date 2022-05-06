@@ -181,7 +181,7 @@ export default function FeedObjectDetail(inProps: FeedObjectDetailProps): JSX.El
     }, 300);
   }
 
-  if (obj === null) {
+  if (!obj) {
     return <FeedObjectDetailSkeleton />;
   }
 

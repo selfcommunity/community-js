@@ -97,12 +97,26 @@ export default function CategoriesFollowed(inProps: CategoriesListProps): JSX.El
   /**
    * Handles list change on category follow
    */
-  function handleOnFollowCategory(category, follow) {
+  function handleOnFollowCategory(category) {
     if (scUserContext.user['id'] === userId) {
       setCategories(categories.filter((c) => c.id !== category.id));
       setTotal((prev) => prev - 1);
       if (visibleCategories < limit && total > 1) {
         loadCategories(1);
+      }
+    } else {
+      const newCategories = [...categories];
+      const index = newCategories.findIndex((u) => u.id === category.id);
+      if (index !== -1) {
+        console.log(category.followed);
+        if (category.followed) {
+          newCategories[index].followers_counter = category.followers_counter - 1;
+          newCategories[index].followed = !category.followed;
+        } else {
+          newCategories[index].followers_counter = category.followers_counter + 1;
+          newCategories[index].followed = !category.followed;
+        }
+        setCategories(newCategories);
       }
     }
   }
