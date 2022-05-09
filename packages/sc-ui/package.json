@@ -56,9 +56,9 @@
     "react-intl": "^5.25.0"
   },
   "dependencies": {
-    "@lexical/link": "^0.2.4",
-    "@lexical/react": "^0.2.4",
-    "@lexical/rich-text": "^0.2.4",
+    "@lexical/link": "^0.2.5",
+    "@lexical/react": "^0.2.5",
+    "@lexical/rich-text": "^0.2.5",
     "@mui/lab": "~5.0.0-alpha.68",
     "@rpldy/chunked-sender": "^0.18.0",
     "@rpldy/chunked-uploady": "^0.18.0",
@@ -75,7 +75,7 @@
     "draft-js": "^0.11.7",
     "draftjs-to-html": "^0.9.1",
     "emoji-picker-react": "^3.5.1",
-    "lexical": "^0.2.4",
+    "lexical": "^0.2.5",
     "prop-types": "^15.7.2",
     "prop-types-extra": "^1.1.1",
     "pubsub-js": "^1.9.4",
