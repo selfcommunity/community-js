@@ -187,6 +187,7 @@ const Editor: ForwardRefRenderFunction<EditorRef, EditorProps> = (inProps: Edito
 
   // HANDLERS
   const handleChange = (value) => {
+    console.log(value);
     onChange && onChange(value);
   };
 
