@@ -51,9 +51,6 @@ export default function SharesDialog(props: ShareDialogProps): JSX.Element {
     ...rest
   } = props;
 
-  console.log(feedObject);
-  console.log(feedObjectType);
-
   // STATE
   const {obj, setObj} = useSCFetchFeedObject({id, feedObject, feedObjectType});
   const [isLoading, setIsLoading] = useState<boolean>(Boolean((id && feedObjectType) || feedObject));
