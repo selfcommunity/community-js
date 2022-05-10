@@ -1,6 +1,6 @@
 {
   "name": "@selfcommunity/core",
-  "version": "0.1.0-alpha.105",
+  "version": "0.1.0-alpha.106",
   "description": "React Core Components useful for integrating UI Community components (sc-ui).",
   "author": "mirk8xr <mirk8xr@gmail.com>",
   "homepage": "https://www.selfcommunity.com",
@@ -53,7 +53,7 @@
     "react-intl": "^5.25.0"
   },
   "dependencies": {
-    "@selfcommunity/i18n": "^0.1.0-alpha.105",
+    "@selfcommunity/i18n": "^0.1.0-alpha.106",
     "axios": "^0.23.0",
     "pubsub-js": "^1.9.4",
     "react-singleton-hook": "^3.2.3",
