@@ -42,7 +42,17 @@ export interface ShareDialogProps {
 }
 export default function SharesDialog(props: ShareDialogProps): JSX.Element {
   // PROPS
-  const {id = null, feedObject = null, feedObjectType = SCFeedObjectTypologyType.POST, open = false, onClose = null, ...rest} = props;
+  const {
+    id = null,
+    feedObject = null,
+    feedObjectType = feedObject ? feedObject.type : SCFeedObjectTypologyType.POST,
+    open = false,
+    onClose = null,
+    ...rest
+  } = props;
+
+  console.log(feedObject);
+  console.log(feedObjectType);
 
   // STATE
   const {obj, setObj} = useSCFetchFeedObject({id, feedObject, feedObjectType});

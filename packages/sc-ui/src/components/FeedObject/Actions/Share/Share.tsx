@@ -293,7 +293,9 @@ export default function Share(inProps: ShareProps): JSX.Element {
               classes={{root: classes.viewAudienceButton}}>
               {`${intl.formatMessage(messages.shares, {total: sharesCount})}`}
             </Button>
-            {openSharesDialog && sharesCount > 0 && <SharesDialog feedObject={obj} open={openSharesDialog} onClose={handleToggleSharesDialog} />}
+            {openSharesDialog && sharesCount > 0 && (
+              <SharesDialog feedObject={obj} feedObjectType={obj.type} open={openSharesDialog} onClose={handleToggleSharesDialog} />
+            )}
           </>
         );
       }
