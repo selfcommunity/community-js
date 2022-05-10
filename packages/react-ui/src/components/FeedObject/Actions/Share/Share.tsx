@@ -29,8 +29,8 @@ import {
   useSCFetchFeedObject,
   useSCRouting,
   useSCUser
-} from '@selfcommunity/core';i
-mport useThemeProps from '@mui/material/styles/useThemeProps';
+} from '@selfcommunity/react-core';
+import useThemeProps from '@mui/material/styles/useThemeProps';
 import {getContributionRouteName, getRouteData} from '../../../../utils/contribution';
 
 const FACEBOOK_SHARE = 'https://www.facebook.com/sharer.php?u=';

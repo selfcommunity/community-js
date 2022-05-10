@@ -23,7 +23,6 @@ export class ApiClient implements ApiClientInterface {
       ...(config && config.baseURL && {baseURL: config.baseURL}),
       responseType: 'json' as const,
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
         ...(config && config.accessToken && {Authorization: `Token ${config.accessToken}`})
       },
       timeout: ApiClient.DEFAULT_TIMEOUT
@@ -32,6 +31,7 @@ export class ApiClient implements ApiClientInterface {
 
   constructor(config?: any) {
     this.client = this.createClient(config);
+    this.setDefaultHeader({name: 'Content-Type', value: 'application/x-www-form-urlencoded', methods: ['post']});
   }
 
   /**
