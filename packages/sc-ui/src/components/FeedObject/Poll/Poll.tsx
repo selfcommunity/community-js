@@ -74,7 +74,6 @@ const Root = styled(Card, {
     alignItems: 'center',
     justifyContent: 'center',
     '& .MuiIcon-root': {
-      width: '0.7em',
       marginRight: '5px'
     }
   },
