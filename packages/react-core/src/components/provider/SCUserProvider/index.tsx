@@ -1,5 +1,5 @@
 import React, {createContext, useContext, useEffect, useMemo, useRef} from 'react';
-import sessionServices from '../../../services/session';
+import {UserService} from '@selfcommunity/api-services';
 import {SCContext} from '../SCContextProvider';
 import useSCAuth, {userActionTypes} from '../../../hooks/useSCAuth';
 import {Logger} from '../../../utils/logger';
@@ -81,7 +81,7 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
   useDeepCompareEffect(() => {
     if (state.session.authToken && state.session.authToken.accessToken) {
       dispatch({type: userActionTypes.LOGIN_LOADING});
-      sessionServices
+      UserService
         .getCurrentUser()
         .then((user: SCUserType) => {
           dispatch({type: userActionTypes.LOGIN_SUCCESS, payload: {user}});
@@ -177,8 +177,7 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
   const refreshNotificationCounters = useMemo(
     () => () => {
       if (state.user) {
-        // use thie services
-        return sessionServices
+        return UserService
           .getCurrentUser()
           .then((user: SCUserType) => {
             dispatch({

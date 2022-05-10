@@ -1,6 +1,6 @@
 {
   "name": "@selfcommunity/api-services",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "license": "MIT",
   "private": false,
   "main": "./lib/cjs/index.js",
@@ -48,7 +48,8 @@
   },
   "dependencies": {
     "@selfcommunity/types": "^0.1.0",
-    "axios": "^0.23.0"
+    "axios": "^0.23.0",
+    "jsonwebtoken": "^8.5.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.13",

@@ -1,7 +1,7 @@
 /**
  * Axios client wrapper
  */
-import http, {formatHttpError, setSupportWithCredentials, setBasePortal, setAuthorizeToken} from './utils/http';
+import http from './apiClient';
 
 /**
  * Endpoint component
@@ -9,6 +9,38 @@ import http, {formatHttpError, setSupportWithCredentials, setBasePortal, setAuth
 import Endpoints, {EndpointType} from './constants/Endpoints';
 
 /**
+ * Utils
+ */
+import {formatHttpError} from './utils/http';
+import {generateJWTToken} from './utils/token';
+
+/**
+ * Services
+ */
+import PreferenceService, {PreferenceApiClient, PreferenceApiClientInterface} from './services/preference';
+import UserService, {UserApiClient, UserApiClientInterface} from './services/user';
+import FeatureService, {FeatureApiClient, FeatureApiClientInterface} from './services/feature';
+import CategoryService, {CategoryApiClient, CategoryApiClientInterface} from './services/category';
+
+/**
  * Export all
  */
-export {http, formatHttpError, setSupportWithCredentials, setBasePortal, setAuthorizeToken, Endpoints, EndpointType};
+export {
+  http,
+  formatHttpError,
+  generateJWTToken,
+  Endpoints,
+  EndpointType,
+  PreferenceService,
+  PreferenceApiClient,
+  PreferenceApiClientInterface,
+  UserService,
+  UserApiClient,
+  UserApiClientInterface,
+  FeatureService,
+  FeatureApiClient,
+  FeatureApiClientInterface,
+  CategoryService,
+  CategoryApiClient,
+  CategoryApiClientInterface
+};

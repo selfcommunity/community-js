@@ -1,6 +1,5 @@
 import React, {createContext, ReactNode, useContext, useEffect, useState} from 'react';
-import preferencesServices from '../../../services/preferences';
-import featuresServices from '../../../services/features';
+import {FeatureService, PreferenceService} from '@selfcommunity/api-services';
 import {SCPreferencesContextType} from '../../../types/context';
 import {Logger} from '../../../utils/logger';
 import {SCOPE_SC_CORE} from '../../../constants/Errors';
@@ -44,7 +43,7 @@ export default function SCPreferencesProvider({children = null}: {children: Reac
    * to manages configurations of the project
    */
   useEffect(() => {
-    Promise.all([preferencesServices.loadPreferences(), featuresServices.loadFeatures()])
+    Promise.all([PreferenceService.getAllPreferences(), FeatureService.getAllFeatures()])
       .then(function (results) {
         setPreferences(results[0]);
         setFeatures(results[1]);

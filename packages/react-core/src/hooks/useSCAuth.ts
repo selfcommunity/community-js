@@ -1,4 +1,4 @@
-import {http, setAuthorizeToken, setSupportWithCredentials} from '@selfcommunity/api-services';
+import {http} from '@selfcommunity/api-services';
 import {useEffect, useMemo, useReducer, useRef} from 'react';
 import {SCSessionType} from '../types';
 import {SCAuthTokenType} from '@selfcommunity/types';
@@ -44,17 +44,18 @@ function userReducer(state, action) {
       return {user: null, session: Object.assign({}, state.session), error: action.payload.error, loading: false};
 
     case userActionTypes.REFRESH_TOKEN_SUCCESS:
+      const newAuthToken = Object.assign({}, state.session.authToken, {
+        ...state.session.authToken,
+        accessToken: action.payload.token.accessToken,
+        ...(action.payload.token.refreshToken ? {refreshToken: action.payload.token.refreshToken} : {}),
+        ...(action.payload.token.expiresIn ? {expiresIn: action.payload.token.expiresIn} : {}),
+      });
       const newSession: SCSessionType = Object.assign({}, state.session, {
-        authToken: {
-          ...state.session.authToken,
-          accessToken: action.payload.token.accessToken,
-          ...(action.payload.token.refreshToken ? {refreshToken: action.payload.token.refreshToken} : {}),
-          ...(action.payload.token.expiresIn ? {expiresIn: action.payload.token.expiresIn} : {}),
-        },
+        authToken: newAuthToken,
       });
       // Update current config axios object
-      setAuthorizeToken(newSession.authToken.accessToken);
-      return {user: state.user, session: newSession, error: null, loading: false};
+      http.setAuthorizeToken(newAuthToken.accessToken);
+      return {...state, session: newSession, error: null, loading: false};
 
     case userActionTypes.REFRESH_TOKEN_FAILURE:
       return {user: null, session: Object.assign({}, state.session), loading: null, error: action.payload.error};
@@ -85,10 +86,10 @@ function stateInitializer(session: SCSessionType): any {
    * Configure http object (Authorization, etc...)
    */
   if ([Session.OAUTH_SESSION, Session.JWT_SESSION].includes(_session.type) && _session.authToken && _session.authToken.accessToken) {
-    setAuthorizeToken(_session.authToken.accessToken);
+    http.setAuthorizeToken(_session.authToken.accessToken);
     _isLoading = true;
   }
-  setSupportWithCredentials(_session.type === Session.COOKIE_SESSION);
+  http.setSupportWithCredentials(_session.type === Session.COOKIE_SESSION);
   return {user: null, session: _session, error: null, loading: _isLoading, isSessionRefreshing: false, refreshSession: false};
 }
 
@@ -126,12 +127,9 @@ export default function useAuth(initialSession: SCSessionType) {
   let isSessionRefreshing = useRef(false);
   let failedQueue = useRef([]);
 
-  /**
-   * Reset session if initial conf changed
-   */
-  useDeepCompareEffect(() => {
-    dispatch({type: userActionTypes.REFRESH_SESSION, payload: {conf: stateInitializer(initialSession)}});
-  }, [initialSession]);
+  // CONST
+  const userId = state.user ? state.user.id : null;
+  const accessToken = state.session.authToken && state.session.authToken.accessToken ? state.session.authToken.accessToken : null;
 
   /**
    * Refresh session
@@ -158,7 +156,7 @@ export default function useAuth(initialSession: SCSessionType) {
       }
       return Promise.reject(new Error('Unable to refresh session. Unauthenticated user.'));
     },
-    [state.session]
+    [accessToken]
   );
 
   /**
@@ -187,8 +185,8 @@ export default function useAuth(initialSession: SCSessionType) {
    * The interceptor check if the token is expiring
    */
   useEffect(() => {
-    if (state.user) {
-      authInterceptor.current = http.interceptors.response.use(
+    if (userId !== null) {
+      authInterceptor.current = http.getInstance().interceptors.response.use(
         (response) => {
           return response;
         },
@@ -206,7 +204,7 @@ export default function useAuth(initialSession: SCSessionType) {
                 })
                   .then((token) => {
                     originalConfig.headers['Authorization'] = 'Bearer ' + token;
-                    return http(originalConfig);
+                    return http.request(originalConfig);
                   })
                   .catch((err) => {
                     Logger.error(SCOPE_SC_CORE, 'Unable to resolve promises in failedQueue.');
@@ -236,7 +234,7 @@ export default function useAuth(initialSession: SCSessionType) {
                   const res = await refreshSession();
                   originalConfig.headers.Authorization = `Bearer ${res['accessToken']}`;
                   processQueue(null, res['accessToken']);
-                  return Promise.resolve(http(originalConfig));
+                  return Promise.resolve(http.request(originalConfig));
                 } catch (_error) {
                   if (_error.response && _error.response.data) {
                     processQueue(_error, null);
@@ -252,10 +250,17 @@ export default function useAuth(initialSession: SCSessionType) {
     }
     return (): void => {
       if (authInterceptor.current !== null) {
-        http.interceptors.response.eject(authInterceptor.current);
+        http.getInstance().interceptors.response.eject(authInterceptor.current);
       }
     };
-  }, [state.user, state.session]);
+  }, [userId, accessToken]);
+
+  /**
+   * Reset session if initial conf changed
+   */
+  useDeepCompareEffect(() => {
+    dispatch({type: userActionTypes.REFRESH_SESSION, payload: {conf: stateInitializer(initialSession)}});
+  }, [initialSession]);
 
   return {state, dispatch, helpers: {refreshSession}};
 }

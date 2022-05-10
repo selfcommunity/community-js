@@ -1,5 +1,5 @@
 import React, {createContext, useContext, useState} from 'react';
-import {setBasePortal} from '@selfcommunity/api-services';
+import {http} from '@selfcommunity/api-services';
 import useDeepCompareEffect from 'use-deep-compare-effect';
 import {validateOptions, validOptions} from '../../../utils/validator';
 import {SCContextProviderType, SCContextType, SCSettingsType} from '../../../types';
@@ -61,7 +61,7 @@ export default function SCContextProvider({conf, children}: SCContextProviderTyp
       /**
        * Set the base path on the http objects
        */
-      setBasePortal(settings.portal);
+      http.setBasePortal(settings.portal);
 
       /**
        * Render all Providers
