@@ -2,7 +2,7 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import {Endpoints, http, Logger, SCFeedObjectType, SCFeedObjectTypologyType, SCPollChoiceType, SCPollType} from '@selfcommunity/core';
-import {Button, CardContent, CardHeader, Collapse, Typography} from '@mui/material';
+import { Button, CardContent, CardHeader, Collapse, ListItem, Typography } from '@mui/material';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import List from '@mui/material/List';
 import Choice from './Choice';
@@ -107,7 +107,7 @@ const Root = styled(Card, {
   [`& .${classes.title}, & .${classes.expiration}, & .${classes.closed}`]: {
     marginBottom: theme.spacing(),
     textAlign: 'center'
-  },
+  }
 }));
 
 export interface PollObjectProps {
@@ -289,22 +289,23 @@ export default function PollObject(inProps: PollObjectProps): JSX.Element {
               </Typography>
             )}
             {obj.closed && (
-              <Typography variant="body2"  className={classes.closed}>
+              <Typography variant="body2" className={classes.closed}>
                 <FormattedMessage id="ui.feedObject.poll.closed" defaultMessage="ui.feedObject.poll.closed" />
               </Typography>
             )}
             <List>
               {choices.map((choice: SCPollChoiceType, index) => (
-                <Choice
-                  elevation={0}
-                  choiceObj={choice}
-                  key={index}
-                  feedObject={disabled ? null : feedObject}
-                  votes={votes}
-                  vote={vote}
-                  isVoting={isVoting}
-                  votable={votable}
-                />
+                <ListItem key={index}>
+                  <Choice
+                    elevation={0}
+                    choiceObj={choice}
+                    feedObject={disabled ? null : feedObject}
+                    votes={votes}
+                    vote={vote}
+                    isVoting={isVoting}
+                    votable={votable}
+                  />
+                </ListItem>
               ))}
             </List>
             {multipleChoices ? (
