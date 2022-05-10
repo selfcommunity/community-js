@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import React, {useContext, useMemo, useState} from 'react';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import Icon from '@mui/material/Icon';
 import LoadingButton from '@mui/lab/LoadingButton';
@@ -16,8 +16,26 @@ import {useSnackbar} from 'notistack';
 import Skeleton from '@mui/material/Skeleton';
 import {SCFeedObjectType, SCFeedObjectTypologyType, SCMediaType} from '@selfcommunity/types';
 import {http, Endpoints} from '@selfcommunity/api-services';
-import {Logger, SCContextType, SCUserContextType, UserUtils, useSCContext, useSCFetchFeedObject, useSCUser} from '@selfcommunity/react-core';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {
+  Logger,
+  SCContextType,
+  SCPreferences,
+  SCPreferencesContext,
+  SCPreferencesContextType,
+  SCRoutingContextType,
+  SCUserContextType,
+  UserUtils,
+  useSCContext,
+  useSCFetchFeedObject,
+  useSCRouting,
+  useSCUser
+} from '@selfcommunity/core';i
+mport useThemeProps from '@mui/material/styles/useThemeProps';
+import {getContributionRouteName, getRouteData} from '../../../../utils/contribution';
+
+const FACEBOOK_SHARE = 'https://www.facebook.com/sharer.php?u=';
+const TWITTER_SHARE = 'https://twitter.com/intent/tweet?url=';
+const LINKEDIN_SHARE = 'https://www.linkedin.com/sharing/share-offsite/?url=';
 
 const messages = defineMessages({
   shares: {
@@ -156,19 +174,27 @@ export default function Share(inProps: ShareProps): JSX.Element {
 
   // CONTEXT
   const scContext: SCContextType = useSCContext();
+  const scRoutingContext: SCRoutingContextType = useSCRouting();
+  const scPreferencesContext: SCPreferencesContextType = useContext(SCPreferencesContext);
+  const facebookShareEnabled =
+    SCPreferences.ADDONS_SHARE_POST_ON_FACEBOOK_ENABLED in scPreferencesContext.preferences &&
+    scPreferencesContext.preferences[SCPreferences.ADDONS_SHARE_POST_ON_FACEBOOK_ENABLED].value;
+  const twitterShareEnabled =
+    SCPreferences.ADDONS_SHARE_POST_ON_TWITTER_ENABLED in scPreferencesContext.preferences &&
+    scPreferencesContext.preferences[SCPreferences.ADDONS_SHARE_POST_ON_TWITTER_ENABLED].value;
+  const linkedinShareEnabled =
+    SCPreferences.ADDONS_SHARE_POST_ON_LINKEDIN_ENABLED in scPreferencesContext.preferences &&
+    scPreferencesContext.preferences[SCPreferences.ADDONS_SHARE_POST_ON_LINKEDIN_ENABLED].value;
   const scUserContext: SCUserContextType = useSCUser();
   const {enqueueSnackbar} = useSnackbar();
+  const url = scContext.settings.portal + scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj));
 
   // INTL
   const intl = useIntl();
 
   // HANDLERS
   const handleOpenShareMenu = (event) => {
-    if (!scUserContext.user) {
-      scContext.settings.handleAnonymousAction();
-    } else {
-      setAnchorEl(event.currentTarget);
-    }
+    setAnchorEl(event.currentTarget);
   };
 
   const handleClose = () => {
@@ -282,7 +308,9 @@ export default function Share(inProps: ShareProps): JSX.Element {
               classes={{root: classes.viewAudienceButton}}>
               {`${intl.formatMessage(messages.shares, {total: sharesCount})}`}
             </Button>
-            {openSharesDialog && sharesCount > 0 && <SharesDialog feedObject={obj} open={openSharesDialog} onClose={handleToggleSharesDialog} />}
+            {openSharesDialog && sharesCount > 0 && (
+              <SharesDialog feedObject={obj} feedObjectType={obj.type} open={openSharesDialog} onClose={handleToggleSharesDialog} />
+            )}
           </>
         );
       }
@@ -350,6 +378,24 @@ export default function Share(inProps: ShareProps): JSX.Element {
                   <ListItemText
                     primary={intl.formatMessage(messages.shareInCategories, {categories: obj.categories.map((c) => c.name).join(', ')})}
                   />
+                </MenuItem>
+              )}
+              {facebookShareEnabled && (
+                <MenuItem onClick={() => window.open(FACEBOOK_SHARE + url, 'facebook-share-dialog', 'width=626,height=436')}>
+                  <ListItemIcon classes={{root: classes.shareMenuIcon}}>
+                    <Icon fontSize="small">facebook</Icon>
+                  </ListItemIcon>
+                  <ListItemText primary={<FormattedMessage id="ui.feedObject.share.facebook" defaultMessage="ui.feedObject.share.facebook" />} />
+                </MenuItem>
+              )}
+              {twitterShareEnabled && (
+                <MenuItem onClick={() => window.open(TWITTER_SHARE + url, 'twitter-share-dialog', 'width=626,height=436')}>
+                  <ListItemText primary={<FormattedMessage id="ui.feedObject.share.twitter" defaultMessage="ui.feedObject.share.twitter" />} />
+                </MenuItem>
+              )}
+              {linkedinShareEnabled && (
+                <MenuItem onClick={() => window.open(LINKEDIN_SHARE + url, 'linkedin-share-dialog', 'width=626,height=436')}>
+                  <ListItemText primary={<FormattedMessage id="ui.feedObject.share.linkedin" defaultMessage="ui.feedObject.share.linkedin" />} />
                 </MenuItem>
               )}
             </Menu>
