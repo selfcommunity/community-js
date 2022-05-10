@@ -26,6 +26,7 @@ const Root = styled(Card, {
   background: theme.palette.grey['A200'],
   marginBottom: theme.spacing(2),
   padding: theme.spacing(1),
+  width: '100%',
   [`& .${classes.voteButton}`]: {
     marginRight: theme.spacing(1)
   },
