@@ -305,7 +305,7 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
 
   // View
 
-  createDOM(config: EditorConfig<any>): HTMLElement {
+  createDOM(config: EditorConfig): HTMLElement {
     const span = document.createElement('span');
     const theme = config.theme;
     const className = theme.image;

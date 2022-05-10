@@ -16,6 +16,8 @@ import {$createImageNode, ImageNode} from '../nodes/ImageNode';
 export interface InsertImagePayload {
   altText: string;
   src: string;
+  width: number;
+  height: number;
 }
 
 export const INSERT_IMAGE_COMMAND: LexicalCommand<InsertImagePayload> = createCommand();
@@ -121,6 +123,7 @@ export default function ImagePlugin(): JSX.Element {
           }
           const imageNode = $createImageNode(payload.src, payload.altText, '100%');
           selection.insertNodes([imageNode]);
+          console.log('image');
         }
         return true;
       },

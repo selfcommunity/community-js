@@ -50,7 +50,7 @@ export class MentionNode extends TextNode {
     return dom;
   }
 
-  updateDOM(prevNode: TextNode, dom: HTMLElement, config: EditorConfig<any>): boolean {
+  updateDOM(prevNode: TextNode, dom: HTMLElement, config: EditorConfig): boolean {
     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore
     const inner: null | HTMLElement = dom.firstChild;
