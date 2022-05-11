@@ -5,7 +5,7 @@ import InlineComposer from './index';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC UI/Inline Composer',
+  title: 'Design System/React UI/Inline Composer',
   component: InlineComposer
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
 } as ComponentMeta<typeof InlineComposer>;

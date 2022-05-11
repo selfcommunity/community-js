@@ -4,7 +4,7 @@ import BroadcastMessagesSkeleton from './Skeleton';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC UI/Skeleton/Broadcast Messages',
+  title: 'Design System/React UI/Skeleton/Broadcast Messages',
   component: BroadcastMessagesSkeleton,
   argTypes: {},
   args: {}

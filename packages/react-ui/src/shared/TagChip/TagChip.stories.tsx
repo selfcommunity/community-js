@@ -4,7 +4,7 @@ import TagChip from './index';
 import {SCTagType} from '@selfcommunity/types';
 
 export default {
-  title: 'Design System/SHARED COMPONENT/TagChip',
+  title: 'Design System/React UI Shared/TagChip',
   component: TagChip,
   argTypes: {
     name: {

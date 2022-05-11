@@ -3,7 +3,7 @@ import {ComponentStory, ComponentMeta} from '@storybook/react';
 import UserProfileInfoSkeleton from './Skeleton';
 
 export default {
-  title: 'Design System/SC UI/Skeleton/User Profile Info',
+  title: 'Design System/React UI/Skeleton/User Profile Info',
   component: UserProfileInfoSkeleton,
   argTypes: {},
   args: {}

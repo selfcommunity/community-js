@@ -11,7 +11,7 @@ import BroadcastMessages from '../BroadcastMessages';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC UI/Feed',
+  title: 'Design System/React UI/Feed',
   component: Feed
 } as ComponentMeta<typeof Feed>;
 

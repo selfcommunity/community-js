@@ -3,7 +3,7 @@ import {ComponentStory, ComponentMeta} from '@storybook/react';
 import InlineComposerSkeleton from './Skeleton';
 
 export default {
-  title: 'Design System/SC UI/Skeleton/Inline Composer',
+  title: 'Design System/React UI/Skeleton/Inline Composer',
   component: InlineComposerSkeleton,
   argTypes: {},
   args: {}

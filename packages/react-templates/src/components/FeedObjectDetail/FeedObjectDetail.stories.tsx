@@ -5,7 +5,7 @@ import {SCFeedObjectTypologyType} from '@selfcommunity/types';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC TEMPLATES/Feed Object Detail',
+  title: 'Design System/React TEMPLATES/Feed Object Detail',
   component: FeedObjectDetailTemplate
 } as ComponentMeta<typeof FeedObjectDetailTemplate>;
 

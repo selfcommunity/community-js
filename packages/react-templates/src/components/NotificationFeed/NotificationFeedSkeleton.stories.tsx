@@ -4,7 +4,7 @@ import NotificationFeedSkeletonTemplate from './Skeleton';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC TEMPLATES/Skeleton/Notification Feed',
+  title: 'Design System/React TEMPLATES/Skeleton/Notification Feed',
   component: NotificationFeedSkeletonTemplate
 } as ComponentMeta<typeof NotificationFeedSkeletonTemplate>;
 

@@ -5,7 +5,7 @@ import Composer from './index';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC UI/Composer',
+  title: 'Design System/React UI/Composer',
   component: Composer
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
 } as ComponentMeta<typeof Composer>;

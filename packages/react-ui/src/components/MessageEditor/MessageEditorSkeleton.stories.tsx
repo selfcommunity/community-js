@@ -4,7 +4,7 @@ import MessageEditorSkeleton from './Skeleton';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC UI/Skeleton/MessageEditor',
+  title: 'Design System/React UI/Skeleton/MessageEditor',
   component: MessageEditorSkeleton
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
 } as ComponentMeta<typeof MessageEditorSkeleton>;

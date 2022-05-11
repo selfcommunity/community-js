@@ -4,7 +4,7 @@ import Bullet from './index';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SHARED COMPONENT/Bullet',
+  title: 'Design System/React UI Shared/Bullet',
   component: Bullet
 } as ComponentMeta<typeof Bullet>;
 

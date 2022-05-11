@@ -3,7 +3,7 @@ import {ComponentStory, ComponentMeta} from '@storybook/react';
 import DateTimeAgo from './index';
 
 export default {
-  title: 'Design System/SHARED COMPONENT/DateTimeAgo',
+  title: 'Design System/React UI Shared/DateTimeAgo',
   component: DateTimeAgo,
   argTypes: {
     date: {

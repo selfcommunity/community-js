@@ -4,7 +4,7 @@ import FooterSkeleton from './Skeleton';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC UI/Skeleton/Footer',
+  title: 'Design System/React UI/Skeleton/Footer',
   component: FooterSkeleton
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
 } as ComponentMeta<typeof FooterSkeleton>;

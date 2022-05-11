@@ -5,7 +5,7 @@ import Notification from './index';
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 /*
 export default {
-  title: 'Design System/SC UI/Notification',
+  title: 'Design System/React UI/Notification',
   component: Notification,
   argTypes: {
     elevation: {

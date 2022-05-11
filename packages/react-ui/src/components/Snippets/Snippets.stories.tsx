@@ -5,7 +5,7 @@ import Snippets from './index';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC UI/Snippets',
+  title: 'Design System/React UI/Snippets',
   component: Snippets
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
 } as ComponentMeta<typeof Snippets>;

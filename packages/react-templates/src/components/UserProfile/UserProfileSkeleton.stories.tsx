@@ -4,7 +4,7 @@ import UserProfileSkeletonTemplate from './Skeleton';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC TEMPLATES/Skeleton/User Profile',
+  title: 'Design System/React TEMPLATES/Skeleton/User Profile',
   component: UserProfileSkeletonTemplate
 } as ComponentMeta<typeof UserProfileSkeletonTemplate>;
 

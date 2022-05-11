@@ -4,7 +4,7 @@ import {ComponentStory, ComponentMeta} from '@storybook/react';
 import UsersFollowed from './index';
 
 export default {
-  title: 'Design System/SC UI/UsersFollowed',
+  title: 'Design System/React UI/UsersFollowed',
   component: UsersFollowed,
   argTypes: {
     userId: {

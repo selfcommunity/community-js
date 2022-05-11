@@ -4,7 +4,7 @@ import TrendingPeopleSkeleton from './Skeleton';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC UI/Skeleton/TrendingPeople',
+  title: 'Design System/React UI/Skeleton/TrendingPeople',
   component: TrendingPeopleSkeleton
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
 } as ComponentMeta<typeof TrendingPeopleSkeleton>;

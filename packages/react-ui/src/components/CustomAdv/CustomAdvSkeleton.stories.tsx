@@ -4,7 +4,7 @@ import CustomAdvSkeleton from './Skeleton';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC UI/Skeleton/CustomAdv',
+  title: 'Design System/React UI/Skeleton/CustomAdv',
   component: CustomAdvSkeleton
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
 } as ComponentMeta<typeof CustomAdvSkeleton>;

@@ -7,7 +7,7 @@ import {SCCommentsOrderBy} from '../../types/comments';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC UI/CommentsFeedObject',
+  title: 'Design System/React UI/CommentsFeedObject',
   component: CommentsFeedObject,
   argTypes: {
     feedObjectId: {

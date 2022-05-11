@@ -4,7 +4,7 @@ import NotificationFeedTemplate from './index';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC TEMPLATES/Notification Feed',
+  title: 'Design System/React TEMPLATES/Notification Feed',
   component: NotificationFeedTemplate
 } as ComponentMeta<typeof NotificationFeedTemplate>;
 

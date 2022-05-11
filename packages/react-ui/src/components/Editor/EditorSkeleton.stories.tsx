@@ -4,7 +4,7 @@ import EditorSkeleton from './Skeleton';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC UI/Skeleton/Editor',
+  title: 'Design System/React UI/Skeleton/Editor',
   component: EditorSkeleton
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
 } as ComponentMeta<typeof EditorSkeleton>;

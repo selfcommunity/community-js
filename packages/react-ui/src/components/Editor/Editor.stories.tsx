@@ -5,7 +5,7 @@ import Editor from './index';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC UI/Editor',
+  title: 'Design System/React UI/Editor',
   component: Editor
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
 } as ComponentMeta<typeof Editor>;
