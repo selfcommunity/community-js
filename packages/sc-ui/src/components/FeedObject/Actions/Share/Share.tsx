@@ -35,10 +35,7 @@ import {
 } from '@selfcommunity/core';
 import useThemeProps from '@mui/material/styles/useThemeProps';
 import {getContributionRouteName, getRouteData} from '../../../../utils/contribution';
-
-const FACEBOOK_SHARE = 'https://www.facebook.com/sharer.php?u=';
-const TWITTER_SHARE = 'https://twitter.com/intent/tweet?url=';
-const LINKEDIN_SHARE = 'https://www.linkedin.com/sharing/share-offsite/?url=';
+import {FACEBOOK_SHARE, TWITTER_SHARE, LINKEDIN_SHARE} from '../../../../constants/SocialShare';
 
 const messages = defineMessages({
   shares: {
@@ -393,11 +390,17 @@ export default function Share(inProps: ShareProps): JSX.Element {
               )}
               {twitterShareEnabled && (
                 <MenuItem onClick={() => window.open(TWITTER_SHARE + url, 'twitter-share-dialog', 'width=626,height=436')}>
+                  <ListItemIcon classes={{root: classes.shareMenuIcon}}>
+                    <Icon fontSize="small">twitter</Icon>
+                  </ListItemIcon>
                   <ListItemText primary={<FormattedMessage id="ui.feedObject.share.twitter" defaultMessage="ui.feedObject.share.twitter" />} />
                 </MenuItem>
               )}
               {linkedinShareEnabled && (
                 <MenuItem onClick={() => window.open(LINKEDIN_SHARE + url, 'linkedin-share-dialog', 'width=626,height=436')}>
+                  <ListItemIcon classes={{root: classes.shareMenuIcon}}>
+                    <Icon fontSize="small">linkedin</Icon>
+                  </ListItemIcon>
                   <ListItemText primary={<FormattedMessage id="ui.feedObject.share.linkedin" defaultMessage="ui.feedObject.share.linkedin" />} />
                 </MenuItem>
               )}
