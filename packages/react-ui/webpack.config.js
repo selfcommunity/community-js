@@ -7,7 +7,7 @@ module.exports = (env, argv) => {
     mode,
     devtool: 'source-map',
     entry: {
-      ui: './src/index.ts'
+      'react-ui': './src/index.ts'
     },
     output: {
       path: path.join(__dirname, './lib/umd'),

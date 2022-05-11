@@ -7,7 +7,7 @@ module.exports = (env, argv) => {
     mode,
     devtool: 'source-map',
     entry: {
-      i18n: './src/index.ts'
+      utils: './src/index.ts'
     },
     output: {
       path: path.join(__dirname, './lib/umd'),
