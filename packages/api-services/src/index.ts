@@ -12,6 +12,7 @@ import Endpoints, {EndpointType} from './constants/Endpoints';
  * Utils
  */
 import {formatHttpError} from './utils/http';
+import {generateJWTToken} from './utils/token';
 
 /**
  * Services

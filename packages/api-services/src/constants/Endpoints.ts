@@ -1,9 +1,9 @@
 import {urlReplacer} from '@selfcommunity/utils';
-import {Method} from 'axios';
+import {HttpMethod} from '../client';
 
 export interface EndpointType {
   url: (params?: object) => string;
-  method: Method;
+  method: HttpMethod;
 }
 
 const Endpoints: {[key: string]: EndpointType} = {
