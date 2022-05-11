@@ -8,7 +8,7 @@ import {Endpoints} from '@selfcommunity/api-services';
 import {SCMediaType} from '@selfcommunity/types';
 import {SCContextType, SCUserContextType, useSCContext, useSCUser} from '@selfcommunity/react-core';
 import MediaChunkUploader from '../../../shared/MediaChunkUploader';
-import {SCMediaChunkType} from '@selfcommunity/react-ui';
+import {SCMediaChunkType} from '../../../types/media';
 import {asUploadButton} from '@rpldy/upload-button';
 import {useSnackbar} from 'notistack';
 import {$createImageNode, ImageNode} from '../nodes/ImageNode';

@@ -5,7 +5,7 @@
   "private": false,
   "main": "./lib/cjs/index.js",
   "module": "./lib/esm/index.js",
-  "description": "Types to integrate a Community created with SelfCommunity.",
+  "description": "Types to integrate a community created with SelfCommunity.",
   "author": "SelfCommunity <https://www.selfcommunity.com>",
   "keywords": [
     "react",

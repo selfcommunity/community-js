@@ -5,7 +5,7 @@
   "private": false,
   "main": "./lib/cjs/index.js",
   "module": "./lib/esm/index.js",
-  "description": "Utils to integrate a Community.",
+  "description": "Utilities to integrate a Community.",
   "author": "SelfCommunity <https://www.selfcommunity.com>",
   "keywords": [
     "react",
