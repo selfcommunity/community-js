@@ -11,16 +11,16 @@
 Quickly build beautiful community with SelfCommunity.
 A set of React components UI to use to integrate a community.
 
-[![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/selfcommunity/community-ui/blob/master/LICENSE)
-[![npm latest package](https://img.shields.io/npm/v/@selfcommunity/ui/latest.svg)](https://www.npmjs.com/package/@selfcommunity/ui)
-[![npm downloads](https://img.shields.io/npm/dm/@selfcommunity/ui.svg)](https://www.npmjs.com/package/@selfcommunity/ui)
+[![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/selfcommunity/community-js/blob/master/LICENSE)
+[![npm latest package](https://img.shields.io/npm/v/@selfcommunity/react-ui/latest.svg)](https://www.npmjs.com/package/@selfcommunity/react-ui)
+[![npm downloads](https://img.shields.io/npm/dm/@selfcommunity/react-ui.svg)](https://www.npmjs.com/package/@selfcommunity/react-ui)
 [![Follow on Twitter URL](https://img.shields.io/twitter/url/https/twitter.com/community_self.svg?style=social&label=Follow%20%40SelfCommunity)](https://twitter.com/community_self)
 
 </div>
 
 ## Installation
 
-CommunityUI is available as an [npm package](https://www.npmjs.com/package/@selfcommunity/ui).
+Community-JS is available as an [npm package](https://www.npmjs.com/package/@selfcommunity/react-ui).
 
 First install peer dependencies needed to make the library work:
 
@@ -38,40 +38,40 @@ Install sc-core:
 
 ```sh
 // with npm
-`npm install @selfcommunity/i18n @selfcommunity/core`
+`npm install @selfcommunity/react-i18n @selfcommunity/react-core`
 
 // with yarn
-`yarn add @selfcommunity/i18n @selfcommunity/core`
+`yarn add @selfcommunity/react-i18n @selfcommunity/react-core`
 ```
 
 Install sc-ui package:
 
 ```sh
 // with npm
-`npm install @selfcommunity/i18n @selfcommunity/core @selfcommunity/ui`
+`npm install @selfcommunity/react-i18n @selfcommunity/react-core @selfcommunity/react-ui`
 
 // with yarn
-`yarn add @selfcommunity/i18n @selfcommunity/core @selfcommunity/ui`
+`yarn add @selfcommunity/react-i18n @selfcommunity/react-core @selfcommunity/react-ui`
 ```
 
 Install sc-templates package:
 
 ```sh
 // with npm
-`npm install @selfcommunity/i18n @selfcommunity/core @selfcommunity/templates`
+`npm install @selfcommunity/react-i18n @selfcommunity/react-core @selfcommunity/react-templates`
 
 // with yarn
-`yarn add @selfcommunity/i18n @selfcommunity/core @selfcommunity/templates`
+`yarn add @selfcommunity/react-i18n @selfcommunity/react-core @selfcommunity/react-templates`
 ```
 
 Install sc-i18n:
 
 ```sh
 // with npm
-`npm install @selfcommunity/i18n`
+`npm install @selfcommunity/react-i18n`
 
 // with yarn
-`yarn add @selfcommunity/i18n`
+`yarn add @selfcommunity/react-i18n`
 ```
 
 ## Usage
@@ -81,8 +81,8 @@ Here is a quick example to get you started, **it's all you need**:
 ```jsx
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {SCContextProvider} from '@selfcommunity/core';
-import {PeopleSuggestion} from '@selfcommunity/ui';
+import {SCContextProvider} from '@selfcommunity/react-core';
+import {PeopleSuggestion} from '@selfcommunity/react-ui';
 
 function App() {
   const conf = {
@@ -114,24 +114,32 @@ the project.
 This projects use also lerna, a tool that use yarn workspaces to manage multi packages operation.
 
 This repo contains this workspaces:
-- sc-core
-- sc-ui
-- sc-templates
-- sc-i18n
+- types
+- utils
+- react-core
+- react-ui
+- react-templates
+- react-i18n
 
-### sc-core
+### types
+Contains SelfCommunity types.
+
+### utils
+Contains function utilities.
+
+### react-core
 Groups core components.
 
-### sc-ui
+### react-ui
 Contains all atomic components usefull to integrate a community in a frontend service context.
 Some components use sc-core components, so sc-core is list between dependencies.
 Requiring an sc-core component from this package, use the exact code currently located inside the project rather than
 what is published on npm.
 
-### sc-templates
+### react-templates
 Contains full community pages components usefull to integrate a community in a frontend service context.
 
-### sc-ui
+### react-ui
 Contains i18n.
 
 
@@ -151,8 +159,8 @@ To get everything setup and dependencies installed:
 - Follow the steps above
 - `yarn storybook` to start storybook
 
-[npm-image]: https://img.shields.io/npm/v/communityui.svg?style=flat-square
-[npm-url]: https://npmjs.org/package/communityui
-[downloads-image]: https://img.shields.io/npm/dm/communityui.svg?style=flat-square
-[downloads-url]: https://npmjs.org/package/communityui
+[npm-image]: https://img.shields.io/npm/v/Community-JS.svg?style=flat-square
+[npm-url]: https://npmjs.org/package/Community-JS
+[downloads-image]: https://img.shields.io/npm/dm/Community-JS.svg?style=flat-square
+[downloads-url]: https://npmjs.org/package/Community-JS
 

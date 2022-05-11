@@ -1,5 +1,5 @@
 {
-  "name": "@selfcommunity/community-ui",
+  "name": "@selfcommunity/community-js",
   "private": true,
   "workspaces": {
     "packages": [
@@ -94,6 +94,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/selfcommunity/community-ui"
+    "url": "https://github.com/selfcommunity/community-js"
   }
 }
