@@ -1,7 +1,7 @@
 /**
  * Axios client wrapper
  */
-import http, {HttpResponse, HttpMethod} from './apiClient';
+import http, {HttpResponse, HttpMethod} from './client';
 
 /**
  * Endpoint component

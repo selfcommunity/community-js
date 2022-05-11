@@ -20,6 +20,10 @@ module.exports = (env, argv) => {
     },
     resolve: {
       extensions: ['.js', '.ts', '.tsx', '.json'],
+      fallback: {
+        crypto: require.resolve('crypto-browserify'),
+        stream: require.resolve('stream-browserify')
+      }
     },
     externals: {
       react: {

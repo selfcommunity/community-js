@@ -1,5 +1,8 @@
 import axios, {AxiosInstance, AxiosRequestConfig} from 'axios';
 
+/**
+ * List of all Http methods
+ */
 export type HttpMethod =
   | 'get'
   | 'GET'
@@ -22,10 +25,16 @@ export type HttpMethod =
   | 'unlink'
   | 'UNLINK';
 
+/**
+ * AxiosResponseHeaders interface
+ */
 export type AxiosResponseHeaders = Record<string, string> & {
   'set-cookie'?: string[];
 };
 
+/**
+ * General HttpResponse
+ */
 export interface HttpResponse<T = unknown, D = any> {
   data: T;
   status: number;
@@ -35,6 +44,9 @@ export interface HttpResponse<T = unknown, D = any> {
   request?: any;
 }
 
+/**
+ * Interface for the ApiClient
+ */
 export interface ApiClientInterface {
   request<TRequest, TResponse>(config?: any): Promise<HttpResponse<TResponse>>;
   post<TRequest, TResponse>(path: string, object: TRequest, config?: any): Promise<HttpResponse<TResponse>>;
