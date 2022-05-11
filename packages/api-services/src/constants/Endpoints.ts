@@ -1,4 +1,4 @@
-import {urlReplacer} from '../utils/url';
+import {urlReplacer} from '@selfcommunity/utils';
 import {Method} from 'axios';
 
 export interface EndpointType {

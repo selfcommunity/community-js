@@ -1,7 +1,7 @@
 /**
  * Axios client wrapper
  */
-import http from './apiClient';
+import http, {HttpResponse, HttpMethod} from './apiClient';
 
 /**
  * Endpoint component
@@ -27,6 +27,8 @@ import CategoryService, {CategoryApiClient, CategoryApiClientInterface} from './
  */
 export {
   http,
+  HttpResponse,
+  HttpMethod,
   formatHttpError,
   generateJWTToken,
   Endpoints,

@@ -1,4 +1,4 @@
-import {camelCase} from './string';
+import {camelCase} from '@selfcommunity/utils';
 
 export function defaultError(error: {request?: any; message?: any}): void {
   if (error.request) {
@@ -38,4 +38,3 @@ export function formatHttpError(error) {
   }
   return errors;
 }
-

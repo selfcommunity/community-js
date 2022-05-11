@@ -1,11 +1,46 @@
-import axios, {AxiosInstance, AxiosResponse} from 'axios';
+import axios, {AxiosInstance, AxiosRequestConfig} from 'axios';
+
+export type HttpMethod =
+  | 'get'
+  | 'GET'
+  | 'delete'
+  | 'DELETE'
+  | 'head'
+  | 'HEAD'
+  | 'options'
+  | 'OPTIONS'
+  | 'post'
+  | 'POST'
+  | 'put'
+  | 'PUT'
+  | 'patch'
+  | 'PATCH'
+  | 'purge'
+  | 'PURGE'
+  | 'link'
+  | 'LINK'
+  | 'unlink'
+  | 'UNLINK';
+
+export type AxiosResponseHeaders = Record<string, string> & {
+  'set-cookie'?: string[];
+};
+
+export interface HttpResponse<T = unknown, D = any> {
+  data: T;
+  status: number;
+  statusText: string;
+  headers: AxiosResponseHeaders;
+  config: AxiosRequestConfig<D>;
+  request?: any;
+}
 
 export interface ApiClientInterface {
-  request<TRequest, TResponse>(config?: any): Promise<AxiosResponse<TResponse>>;
-  post<TRequest, TResponse>(path: string, object: TRequest, config?: any): Promise<AxiosResponse<TResponse>>;
-  patch<TRequest, TResponse>(path: string, object: TRequest): Promise<AxiosResponse<TResponse>>;
-  put<TRequest, TResponse>(path: string, object: TRequest): Promise<AxiosResponse<TResponse>>;
-  get<TResponse>(path: string): Promise<AxiosResponse<TResponse>>;
+  request<TRequest, TResponse>(config?: any): Promise<HttpResponse<TResponse>>;
+  post<TRequest, TResponse>(path: string, object: TRequest, config?: any): Promise<HttpResponse<TResponse>>;
+  patch<TRequest, TResponse>(path: string, object: TRequest): Promise<HttpResponse<TResponse>>;
+  put<TRequest, TResponse>(path: string, object: TRequest): Promise<HttpResponse<TResponse>>;
+  get<TResponse>(path: string): Promise<HttpResponse<TResponse>>;
 }
 
 /**
@@ -37,7 +72,7 @@ export class ApiClient implements ApiClientInterface {
   /**
    * Get client instance
    */
-  public getInstance() {
+  public getClientInstance() {
     return this.client;
   }
 
@@ -102,7 +137,7 @@ export class ApiClient implements ApiClientInterface {
    * request wrapper
    * @param config
    */
-  request<TRequest, TResponse>(config: any): Promise<AxiosResponse<TResponse>> {
+  request<TRequest, TResponse>(config: any): Promise<HttpResponse<TResponse>> {
     return this.client.request<TResponse>(config);
   }
 
@@ -110,7 +145,7 @@ export class ApiClient implements ApiClientInterface {
    * get wrapper
    * @param path
    */
-  get<TResponse>(path: string): Promise<AxiosResponse<TResponse>> {
+  get<TResponse>(path: string): Promise<HttpResponse<TResponse>> {
     return this.client.get<TResponse>(path);
   }
 
@@ -120,7 +155,7 @@ export class ApiClient implements ApiClientInterface {
    * @param payload
    * @param config
    */
-  post<TRequest, TResponse>(path: string, payload: TRequest, config?: any): Promise<AxiosResponse<TResponse>> {
+  post<TRequest, TResponse>(path: string, payload: TRequest, config?: any): Promise<HttpResponse<TResponse>> {
     return config ? this.client.post<TResponse>(path, payload, config) : this.client.post<TResponse>(path, payload);
   }
 
@@ -129,7 +164,7 @@ export class ApiClient implements ApiClientInterface {
    * @param path
    * @param object
    */
-  patch<TRequest, TResponse>(path: string, payload: TRequest): Promise<AxiosResponse<TResponse>> {
+  patch<TRequest, TResponse>(path: string, payload: TRequest): Promise<HttpResponse<TResponse>> {
     return this.client.patch<TResponse>(path, payload);
   }
 
@@ -138,7 +173,7 @@ export class ApiClient implements ApiClientInterface {
    * @param path
    * @param payload
    */
-  put<TRequest, TResponse>(path: string, payload: TRequest): Promise<AxiosResponse<TResponse>> {
+  put<TRequest, TResponse>(path: string, payload: TRequest): Promise<HttpResponse<TResponse>> {
     return this.client.put<TResponse>(path, payload);
   }
 }
