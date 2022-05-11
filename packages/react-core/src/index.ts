@@ -72,6 +72,7 @@ import useSCFetchCommentObject from './hooks/useSCFetchCommentObject';
 import useSCFetchCommentObjects from './hooks/useSCFetchCommentObjects';
 import useSCFetchCustomAdv from './hooks/useSCFetchCustomAdv';
 import useSCFetchTag from './hooks/useSCFetchTag';
+import useSCFetchAddressingTagList from './hooks/useSCFetchAddressingTagList';
 import useSCFetchCategory from './hooks/useSCFetchCategory';
 import useSCFetchCategories from './hooks/useSCFetchCategories';
 import useSCFetchIncubator from './hooks/useSCFetchIncubator';
@@ -166,6 +167,7 @@ export {
   useSCFetchCommentObjects,
   useSCFetchCustomAdv,
   useSCFetchTag,
+  useSCFetchAddressingTagList,
   useSCFetchCategory,
   useSCFetchCategories,
   useSCFetchIncubator,

@@ -17,7 +17,8 @@ import {
   SCPreferencesContextType,
   SCUserContext,
   SCUserContextType,
-  UserUtils
+  UserUtils,
+  useSCFetchAddressingTagList
 } from '@selfcommunity/react-core';
 import {FormattedMessage} from 'react-intl';
 import Icon from '@mui/material/Icon';
@@ -405,6 +406,9 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
   const scAuthContext: SCUserContextType = useContext(SCUserContext);
   const {enqueueSnackbar} = useSnackbar();
 
+  // HOOKS
+  const {scAddressingTags} = useSCFetchAddressingTagList({fetch: rest.open});
+
   // State variables
   const [fades, setFades] = useState({});
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
@@ -777,7 +781,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
           {audience === AUDIENCE_TAG && (
             <Box className={classes.divider}>
               <Box className={classes.block} sx={{textAlign: 'center'}}>
-                <Audience onChange={handleChange('addressing')} defaultValue={addressing} />
+                <Audience onChange={handleChange('addressing')} defaultValue={addressing} tags={scAddressingTags} />
               </Box>
             </Box>
           )}
@@ -1002,7 +1006,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
                 <Icon>add_location_alt</Icon>
               </IconButton>
             )}
-            {scPrefernces.features.includes(SCFeatures.USER_TAGGING) && (
+            {scPrefernces.features.includes(SCFeatures.USER_TAGGING) && scAddressingTags.length > 0 && (
               <IconButton disabled={isSubmitting} onClick={handleChangeView(AUDIENCE_VIEW)}>
                 {audience === AUDIENCE_TAG ? <Icon>label</Icon> : <Icon>public</Icon>}
               </IconButton>
