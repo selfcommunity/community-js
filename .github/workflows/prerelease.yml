@@ -51,27 +51,27 @@ jobs:
         path: packages/react-i18n
     - run: echo "@selfcommunity/react-i18n - ${{ steps.react-i18n.outputs.current-version }}"
     - name: Get @selfcommunity/react-core version
-      id: core
+      id: react-core
       uses: martinbeentjes/npm-get-version-action@master
       with:
         path: packages/react-core
     - run: echo "@selfcommunity/react-core - ${{ steps.react-core.outputs.current-version }}"
     - name: Get @selfcommunity/react-ui version
-      id: ui
+      id: react-ui
       uses: martinbeentjes/npm-get-version-action@master
       with:
         path: packages/react-ui
     - run: echo "@selfcommunity/react-ui - ${{ steps.react-ui.outputs.current-version }}"
     - name: Get @selfcommunity/react-templates version
-      id: templates
+      id: react-templates
       uses: martinbeentjes/npm-get-version-action@master
       with:
         path: packages/react-templates
     - run: echo "@selfcommunity/react-templates - ${{ steps.react-templates.outputs.current-version }}"
-    - uses: peter-evans/repository-dispatch@v1
-      name: Repository Dispatch
-      with:
-        token: ${{ secrets.DOCS_ACCESS_TOKEN }}
-        repository: selfcommunity/developers-doc
-        event-type: community-js-prerelease
-        client-payload: '{"types": "${{ steps.types.outputs.current-version }}", "utils": "${{ steps.utils.outputs.current-version }}", "react-i18n": "${{ steps.react-i18n.outputs.current-version }}", "react-core": "${{ steps.react-core.outputs.current-version }}", "react-ui": "${{ steps.react-ui.outputs.current-version }}", "react-templates": "${{ steps.react-templates.outputs.current-version }}"}'
+#    - uses: peter-evans/repository-dispatch@v1
+#      name: Repository Dispatch
+#      with:
+#        token: ${{ secrets.DOCS_ACCESS_TOKEN }}
+#        repository: selfcommunity/developers-doc
+#        event-type: community-js-prerelease
+#        client-payload: '{"types": "${{ steps.types.outputs.current-version }}", "utils": "${{ steps.utils.outputs.current-version }}", "react-i18n": "${{ steps.react-i18n.outputs.current-version }}", "react-core": "${{ steps.react-core.outputs.current-version }}", "react-ui": "${{ steps.react-ui.outputs.current-version }}", "react-templates": "${{ steps.react-templates.outputs.current-version }}"}'
