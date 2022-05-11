@@ -4,7 +4,7 @@ import Card from '@mui/material/Card';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/react-core';
 import {SCFeedObjectType, SCFeedObjectTypologyType, SCPollChoiceType, SCPollType} from '@selfcommunity/types';
-import {Button, CardContent, CardHeader, Collapse, Typography} from '@mui/material';
+import { Button, CardContent, CardHeader, Collapse, ListItem, Typography } from '@mui/material';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import List from '@mui/material/List';
 import Choice from './Choice';

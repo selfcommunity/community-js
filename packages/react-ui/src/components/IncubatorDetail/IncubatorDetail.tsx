@@ -1,8 +1,8 @@
 import React, {useContext, useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {TextField, Typography, Box, Avatar, Button, Input, CardContent, Alert, FormGroup, AvatarGroup, List, ListItem} from '@mui/material';
-import {SCIncubatorType, SCUserType, SCIncubatorType} from '@selfcommunity/types';
+import {TextField, Typography, Box, Avatar, Button, CardContent, Alert, FormGroup, AvatarGroup, List, ListItem} from '@mui/material';
+import {SCIncubatorType, SCUserType} from '@selfcommunity/types';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {
   Link,
@@ -24,7 +24,6 @@ import classNames from 'classnames';
 import useThemeProps from '@mui/material/styles/useThemeProps';
 import Incubator, {IncubatorProps} from '../Incubator';
 import Widget from '../Widget';
-import {TwitterShareButton, LinkedinShareButton, TwitterIcon, LinkedinIcon} from 'react-share';
 import AvatarGroupSkeleton from '../Skeleton/AvatarGroupSkeleton';
 import CentralProgress from '../../shared/CentralProgress';
 import InfiniteScroll from 'react-infinite-scroll-component';
