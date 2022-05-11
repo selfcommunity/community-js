@@ -38,6 +38,12 @@ jobs:
       with:
         path: packages/types
     - run: echo "@selfcommunity/types - ${{ steps.types.outputs.current-version }}"
+    - name: Get @selfcommunity/utils version
+      id: utils
+      uses: martinbeentjes/npm-get-version-action@master
+      with:
+        path: packages/utils
+    - run: echo "@selfcommunity/utils - ${{ steps.utils.outputs.current-version }}"
     - name: Get @selfcommunity/react-i18n version
       id: react-i18n
       uses: martinbeentjes/npm-get-version-action@master
@@ -68,4 +74,4 @@ jobs:
         token: ${{ secrets.DOCS_ACCESS_TOKEN }}
         repository: selfcommunity/developers-doc
         event-type: community-js-prerelease
-        client-payload: '{"react-i18n": "${{ steps.react-i18n.outputs.current-version }}", "react-core": "${{ steps.react-core.outputs.current-version }}", "react-ui": "${{ steps.react-ui.outputs.current-version }}", "react-templates": "${{ steps.react-templates.outputs.current-version }}"}'
+        client-payload: '{"types": "${{ steps.types.outputs.current-version }}", "utils": "${{ steps.utils.outputs.current-version }}", "react-i18n": "${{ steps.react-i18n.outputs.current-version }}", "react-core": "${{ steps.react-core.outputs.current-version }}", "react-ui": "${{ steps.react-ui.outputs.current-version }}", "react-templates": "${{ steps.react-templates.outputs.current-version }}"}'

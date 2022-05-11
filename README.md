@@ -114,24 +114,32 @@ the project.
 This projects use also lerna, a tool that use yarn workspaces to manage multi packages operation.
 
 This repo contains this workspaces:
-- sc-core
-- sc-ui
-- sc-templates
-- sc-i18n
+- types
+- utils
+- react-core
+- react-ui
+- react-templates
+- react-i18n
 
-### sc-core
+### types
+Contains SelfCommunity types.
+
+### utils
+Contains function utilities.
+
+### react-core
 Groups core components.
 
-### sc-ui
+### react-ui
 Contains all atomic components usefull to integrate a community in a frontend service context.
 Some components use sc-core components, so sc-core is list between dependencies.
 Requiring an sc-core component from this package, use the exact code currently located inside the project rather than
 what is published on npm.
 
-### sc-templates
+### react-templates
 Contains full community pages components usefull to integrate a community in a frontend service context.
 
-### sc-ui
+### react-ui
 Contains i18n.
 
 

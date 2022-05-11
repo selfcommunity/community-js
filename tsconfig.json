@@ -5,6 +5,7 @@
     "baseUrl": ".",
     "paths": {
       "@selfcommunity/types": ["packages/types/src"],
+      "@selfcommunity/utils": ["packages/utils/src"],
       "@selfcommunity/api-services": ["packages/api-services/src"],
       "@selfcommunity/react-i18n": ["packages/react-i18n/src"],
       "@selfcommunity/react-core": ["packages/react-core/src"],
