@@ -1,14 +1,13 @@
 import React, {useContext, useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Avatar, AvatarGroup, Box, Button, Chip, Divider, Grid, List, ListItem, Paper, Typography} from '@mui/material';
+import {Avatar, AvatarGroup, Box, Button, List, ListItem, Paper, Typography} from '@mui/material';
 import FollowCategoryButton, {FollowCategoryButtonProps} from '../FollowCategoryButton';
-import {AxiosResponse} from 'axios';
 import BaseDialog, {BaseDialogProps} from '../../shared/BaseDialog';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import CentralProgress from '../../shared/CentralProgress';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import User from '../User';
-import {http, Endpoints} from '@selfcommunity/api-services';
+import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {SCUserContext, SCUserContextType, useSCFetchCategory} from '@selfcommunity/react-core';
 import {SCCategoryType, SCUserType} from '@selfcommunity/types';
 import AvatarGroupSkeleton from '../Skeleton/AvatarGroupSkeleton';
@@ -178,7 +177,7 @@ export default function CategoryHeader(inProps: CategoryHeaderProps): JSX.Elemen
           url: next ? next : Endpoints.CategoryFollowers.url({id: scCategory.id}),
           method: Endpoints.CategoryFollowers.method
         })
-        .then((res: AxiosResponse<any>) => {
+        .then((res: HttpResponse<any>) => {
           if (res.status >= 300) {
             return Promise.reject(res);
           }

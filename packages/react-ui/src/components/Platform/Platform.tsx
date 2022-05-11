@@ -1,10 +1,9 @@
 import React, {useContext} from 'react';
 import {styled} from '@mui/material/styles';
 import {Button, Grid, Typography} from '@mui/material';
-import {http, Endpoints} from '@selfcommunity/api-services';
+import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {SCLocaleContextType, SCUserContext, SCUserContextType, useSCLocale} from '@selfcommunity/react-core';
 import Icon from '@mui/material/Icon';
-import {AxiosResponse} from 'axios';
 import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
 import Widget from '../Widget';
@@ -98,7 +97,7 @@ export default function Platform(inProps: PlatformProps): JSX.Element {
           next: query
         }
       })
-      .then((res: AxiosResponse<any>) => {
+      .then((res: HttpResponse<any>) => {
         const platformUrl = res.data.platform_url;
         window.open(platformUrl, '_blank').focus();
       })

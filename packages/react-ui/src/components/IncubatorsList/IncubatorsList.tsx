@@ -2,11 +2,10 @@ import React, {useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Button, List, Typography, Box, IconButton, ListItem} from '@mui/material';
 import CardContent from '@mui/material/CardContent';
-import {http, Endpoints} from '@selfcommunity/api-services';
+import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/react-core';
 import {SCIncubatorType} from '@selfcommunity/types';
 import Skeleton from './Skeleton';
-import {AxiosResponse} from 'axios';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
@@ -164,7 +163,7 @@ export default function IncubatorsList(inProps: IncubatorsListProps): JSX.Elemen
           url: next,
           method: Endpoints.GetAllIncubators.method
         })
-        .then((res: AxiosResponse<any>) => {
+        .then((res: HttpResponse<any>) => {
           const data = res.data;
           setIncubators([...incubators, ...data['results']]);
           setHasMore(data['count'] > visibleIncubators);

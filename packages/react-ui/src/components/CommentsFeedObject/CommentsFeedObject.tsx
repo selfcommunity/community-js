@@ -2,7 +2,6 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {FormattedMessage} from 'react-intl';
 import CommentObject, {CommentObjectProps} from '../CommentObject';
-import {AxiosResponse} from 'axios';
 import {Box} from '@mui/material';
 import {SCCommentsOrderBy} from '../../types/comments';
 import classNames from 'classnames';
@@ -12,7 +11,7 @@ import CommentsObject from '../CommentsObject';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import Typography from '@mui/material/Typography';
 import {getContribution} from '../../utils/contribution';
-import {http, Endpoints} from '@selfcommunity/api-services';
+import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {Logger, useSCFetchCommentObject, useSCFetchCommentObjects} from '@selfcommunity/react-core';
 import {SCCommentType, SCFeedObjectType, SCFeedObjectTypologyType} from '@selfcommunity/types';
 
@@ -303,7 +302,7 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
           url: Endpoints.Comment.url({id: commentId}),
           method: Endpoints.Comment.method
         })
-        .then((res: AxiosResponse<any>) => {
+        .then((res: HttpResponse<any>) => {
           if (res.status >= 300) {
             return Promise.reject(res);
           }

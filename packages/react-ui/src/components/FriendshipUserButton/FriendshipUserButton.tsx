@@ -1,10 +1,9 @@
 import React, {useContext, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Button} from '@mui/material';
-import {http, Endpoints} from '@selfcommunity/api-services';
+import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {SCContextType, SCUserContext, SCUserContextType, useSCContext, useSCFetchUser} from '@selfcommunity/react-core';
 import {SCUserType} from '@selfcommunity/types';
-import {AxiosResponse} from 'axios';
 import classNames from 'classnames';
 import useThemeProps from '@mui/material/styles/useThemeProps';
 
@@ -114,7 +113,7 @@ export default function FriendshipUserButton(inProps: FriendshipButtonProps): JS
         url: Endpoints.RequestConnection.url({id: user.id}),
         method: Endpoints.RequestConnection.method
       })
-      .then((res: AxiosResponse<any>) => {
+      .then((res: HttpResponse<any>) => {
         console.log(res);
       })
       .catch((error) => {
@@ -129,7 +128,7 @@ export default function FriendshipUserButton(inProps: FriendshipButtonProps): JS
         url: Endpoints.CancelConnectionRequest.url({id: user.id}),
         method: Endpoints.CancelConnectionRequest.method
       })
-      .then((res: AxiosResponse<any>) => {
+      .then((res: HttpResponse<any>) => {
         console.log(res);
       })
       .catch((error) => {
@@ -143,7 +142,7 @@ export default function FriendshipUserButton(inProps: FriendshipButtonProps): JS
         url: Endpoints.RemoveConnection.url({id: user.id}),
         method: Endpoints.RemoveConnection.method
       })
-      .then((res: AxiosResponse<any>) => {
+      .then((res: HttpResponse<any>) => {
         console.log(res);
       })
       .catch((error) => {

@@ -2,13 +2,12 @@ import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {TextField, Typography, FormGroup} from '@mui/material';
-import {http, Endpoints, formatHttpError} from '@selfcommunity/api-services';
+import {http, Endpoints, formatHttpError, HttpResponse} from '@selfcommunity/api-services';
 import {Logger, SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import BaseDialog from '../../../shared/BaseDialog';
 import classNames from 'classnames';
 import useThemeProps from '@mui/material/styles/useThemeProps';
 import {SCOPE_SC_UI} from '../../../constants/Errors';
-import {AxiosResponse} from 'axios';
 import {LoadingButton} from '@mui/lab';
 
 const messages = defineMessages({
@@ -113,7 +112,7 @@ export default function CreateIncubatorDialog(inProps: CreateIncubatorDialogProp
           slogan: slogan
         }
       })
-      .then((res: AxiosResponse<any>) => {
+      .then((res: HttpResponse<any>) => {
         setIsSubmitting(false);
         setSubmitted(true);
       })

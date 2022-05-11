@@ -3,13 +3,12 @@ import {FormattedMessage, useIntl} from 'react-intl';
 import LoadingButton from '@mui/lab/LoadingButton';
 import {styled} from '@mui/material/styles';
 import {Box, Tooltip} from '@mui/material';
-import {AxiosResponse} from 'axios';
 import {SCOPE_SC_UI} from '../../../../constants/Errors';
 import classNames from 'classnames';
 import {useSnackbar} from 'notistack';
 import Icon from '@mui/material/Icon';
 import {SCFeedObjectType, SCFeedObjectTypologyType, SCTagType} from '@selfcommunity/types';
-import {http, Endpoints} from '@selfcommunity/api-services';
+import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {Logger, SCContextType, SCUserContextType, useSCContext, useSCFetchFeedObject, useSCUser} from '@selfcommunity/react-core';
 import useThemeProps from '@mui/material/styles/useThemeProps';
 
@@ -118,7 +117,7 @@ export default function Follow(inProps: FollowProps): JSX.Element {
           url: Endpoints.FollowContribution.url({type: obj.type, id: obj.id}),
           method: Endpoints.FollowContribution.method
         })
-        .then((res: AxiosResponse<SCTagType>) => {
+        .then((res: HttpResponse<SCTagType>) => {
           if (res.status >= 300) {
             return Promise.reject(res);
           }

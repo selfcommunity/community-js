@@ -12,8 +12,7 @@ import {AutocompleteClasses} from '@mui/material/Autocomplete/autocompleteClasse
 import {OverridableStringUnion} from '@mui/types';
 import {AutocompletePropsSizeOverrides} from '@mui/material/Autocomplete/Autocomplete';
 import {SCTagType} from '@selfcommunity/types';
-import {http, Endpoints} from '@selfcommunity/api-services';
-import {AxiosResponse} from 'axios';
+import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import TagChip from '../../../shared/TagChip';
 import useThemeProps from '@mui/material/styles/useThemeProps';
 
@@ -121,7 +120,7 @@ export default function (inProps: AudienceProps): JSX.Element {
         url: Endpoints.ComposerAddressingTagList.url(),
         method: Endpoints.ComposerAddressingTagList.method
       })
-      .then((res: AxiosResponse<any>) => {
+      .then((res: HttpResponse<any>) => {
         setTags(res.data);
       })
       .then(() => setIsLoading(false));

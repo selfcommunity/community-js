@@ -3,7 +3,6 @@ import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
 import {Button, CardContent, ListItem, Typography} from '@mui/material';
 import TrendingFeedSkeleton from '../TrendingFeed/Skeleton';
-import {AxiosResponse} from 'axios';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import FeedObject, {FeedObjectProps} from '../FeedObject';
 import {FormattedMessage} from 'react-intl';
@@ -15,7 +14,7 @@ import CentralProgress from '../../shared/CentralProgress';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Widget from '../Widget';
 import useThemeProps from '@mui/material/styles/useThemeProps';
-import {http, Endpoints} from '@selfcommunity/api-services';
+import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {
   Logger,
   SCPreferences,
@@ -197,7 +196,7 @@ export default function RelatedFeedObjects(inProps: RelatedFeedObjectsProps): JS
           url: next,
           method: Endpoints.RelatedFeedObjects.method
         })
-        .then((res: AxiosResponse<any>) => {
+        .then((res: HttpResponse<any>) => {
           const data = res.data;
           setObjs([...objs, ...data.results]);
           setHasMore(data.count > visibleDiscussions);

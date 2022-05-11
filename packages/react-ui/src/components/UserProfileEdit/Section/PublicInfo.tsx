@@ -4,7 +4,7 @@ import {Box, CircularProgress, IconButton, InputAdornment, MenuItem, TextField} 
 import Icon from '@mui/material/Icon';
 import {defineMessages, useIntl} from 'react-intl';
 import {SCUserFields, SCUserType} from '@selfcommunity/types';
-import {http, Endpoints, formatHttpError} from '@selfcommunity/api-services';
+import {http, Endpoints, formatHttpError, HttpResponse} from '@selfcommunity/api-services';
 import {
   SCPreferences,
   SCPreferencesContextType,
@@ -15,7 +15,6 @@ import {
 } from '@selfcommunity/react-core';
 import {DEFAULT_FIELDS} from '../../../constants/UserProfile';
 import classNames from 'classnames';
-import {AxiosResponse} from 'axios';
 import {DatePicker, LocalizationProvider} from '@mui/lab';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import UsernameTextField from '../../../shared/UsernameTextField';
@@ -137,7 +136,7 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
           method: Endpoints.UserPatch.method,
           data: {[field]: user[field]}
         })
-        .then((res: AxiosResponse<SCUserType>) => {
+        .then((res: HttpResponse<SCUserType>) => {
           scUserContext.updateUser(res.data);
         })
         .catch((error) => {

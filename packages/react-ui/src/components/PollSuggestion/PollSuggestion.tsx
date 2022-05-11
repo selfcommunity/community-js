@@ -3,10 +3,9 @@ import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
 import {Button, CardContent, Typography, ListItem} from '@mui/material';
 import {SCFeedDiscussionType} from '@selfcommunity/types';
-import {http, Endpoints} from '@selfcommunity/api-services';
+import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {Logger, SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import TrendingFeedSkeleton from '../TrendingFeed/Skeleton';
-import {AxiosResponse} from 'axios';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
@@ -117,7 +116,7 @@ export default function PollSuggestion(inProps: PollSuggestionProps): JSX.Elemen
           url: next,
           method: Endpoints.PollSuggestion.method
         })
-        .then((res: AxiosResponse<any>) => {
+        .then((res: HttpResponse<any>) => {
           const data = res.data;
           setObjs([...objs, ...data]);
           setTotal(data.length);

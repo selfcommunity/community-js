@@ -5,7 +5,6 @@ import Popper from '@mui/material/Popper';
 import Icon from '@mui/material/Icon';
 import CentralProgress from '../CentralProgress';
 import {SCOPE_SC_UI} from '../../constants/Errors';
-import {AxiosResponse} from 'axios';
 import {copyTextToClipboard} from '../../utils/string';
 import {useSnackbar} from 'notistack';
 import {getRouteData, getContributionRouteName} from '../../utils/contribution';
@@ -39,7 +38,7 @@ import {
   MODERATION_CONTRIBUTION_STATE_HIDDEN,
   MODERATION_CONTRIBUTION_STATE_DELETED
 } from '../../constants/Flagging';
-import {http, Endpoints} from '@selfcommunity/api-services';
+import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {
   Logger,
   SCContext,
@@ -376,7 +375,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
           url: Endpoints.UserSuspendContributionNotification.url({type: contributionObj.type, id: contributionObj.id}),
           method: Endpoints.UserSuspendContributionNotification.method
         })
-        .then((res: AxiosResponse<any>) => {
+        .then((res: HttpResponse<any>) => {
           if (res.status >= 300) {
             return Promise.reject(res);
           }
@@ -420,7 +419,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
           url: Endpoints.FlagStatus.url({type: contributionObj.type, id: contributionObj.id}),
           method: Endpoints.FlagStatus.method
         })
-        .then((res: AxiosResponse<any>) => {
+        .then((res: HttpResponse<any>) => {
           if (res.status >= 300) {
             return Promise.reject(res);
           }
@@ -441,7 +440,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
           method: Endpoints.Flag.method,
           data: {flag_type: type}
         })
-        .then((res: AxiosResponse<any>) => {
+        .then((res: HttpResponse<any>) => {
           if (res.status >= 300) {
             return Promise.reject(res);
           }
@@ -461,7 +460,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
           url: Endpoints.ModerateContributionStatus.url({contribution_type: contributionObj.type, id: contributionObj.id}),
           method: Endpoints.ModerateContributionStatus.method
         })
-        .then((res: AxiosResponse<any>) => {
+        .then((res: HttpResponse<any>) => {
           if (res.status >= 300) {
             return Promise.reject(res);
           }
@@ -485,7 +484,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
               : Endpoints.DeleteFeedObject.url({type: contributionType, id: contributionObj.id}),
           method: contributionType === SCCommentTypologyType ? Endpoints.DeleteComment.method : Endpoints.DeleteFeedObject.method
         })
-        .then((res: AxiosResponse<any>) => {
+        .then((res: HttpResponse<any>) => {
           if (res.status >= 300) {
             return Promise.reject(res);
           }
@@ -509,7 +508,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
               : Endpoints.RestoreFeedObject.url({type: contributionType, id: contributionObj.id}),
           method: contributionType === SCCommentTypologyType ? Endpoints.RestoreComment.method : Endpoints.RestoreFeedObject.method
         })
-        .then((res: AxiosResponse<any>) => {
+        .then((res: HttpResponse<any>) => {
           if (res.status >= 300) {
             return Promise.reject(res);
           }
@@ -597,7 +596,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
           method: Endpoints.ModerateContribution.method,
           data: {contribution_type: contributionObj.type, ...(type ? {moderation_type: type} : {}), action: action}
         })
-        .then((res: AxiosResponse<any>) => {
+        .then((res: HttpResponse<any>) => {
           if (res.status >= 300) {
             return Promise.reject(res);
           }

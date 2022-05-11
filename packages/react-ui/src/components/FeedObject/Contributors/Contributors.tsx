@@ -1,6 +1,6 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {http, Endpoints} from '@selfcommunity/api-services';
+import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {Logger, useSCFetchFeedObject} from '@selfcommunity/react-core';
 import {SCFeedObjectType, SCFeedObjectTypologyType, SCUserType} from '@selfcommunity/types';
 import {Avatar, AvatarGroup, Box, Button, Fade, List, ListItem} from '@mui/material';
@@ -11,7 +11,6 @@ import BaseDialog from '../../../shared/BaseDialog';
 import CentralProgress from '../../../shared/CentralProgress';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import User from '../../User';
-import {AxiosResponse} from 'axios';
 import classNames from 'classnames';
 import useThemeProps from '@mui/material/styles/useThemeProps';
 
@@ -108,7 +107,7 @@ export default function ContributorsFeedObject(inProps: ContributorsFeedObjectPr
             url: next,
             method: Endpoints.Contributors.method
           })
-          .then((res: AxiosResponse<any>) => {
+          .then((res: HttpResponse<any>) => {
             if (res.status < 300) {
               const data = res.data;
               setContributors([...contributors, ...data['results']]);

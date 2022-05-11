@@ -1,10 +1,9 @@
 import React, {useContext, useEffect, useMemo, useState, useRef} from 'react';
 import {styled} from '@mui/material/styles';
 import Widget from '../Widget';
-import {http, Endpoints} from '@selfcommunity/api-services';
+import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {SCUserContext, SCUserContextType, UserUtils} from '@selfcommunity/react-core';
 import {SCNotificationTopicType, SCNotificationTypologyType, SCPrivateMessageType} from '@selfcommunity/types';
-import {AxiosResponse} from 'axios';
 import Message from '../Message';
 import _ from 'lodash';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
@@ -355,7 +354,7 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
         url: Endpoints.UserFollowers.url({id: scUserContext['user'].id}),
         method: Endpoints.UserFollowers.method
       })
-      .then((res: AxiosResponse<any>) => {
+      .then((res: HttpResponse<any>) => {
         const data = res.data;
         setFollowers(data.results);
       })
@@ -376,7 +375,7 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
           thread: id
         }
       })
-      .then((res: AxiosResponse<any>) => {
+      .then((res: HttpResponse<any>) => {
         const data = res.data;
         setMessages(data.results);
         setLoading(false);

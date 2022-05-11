@@ -1,7 +1,7 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
-import {http, Endpoints} from '@selfcommunity/api-services';
+import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/react-core';
 import {SCFeedObjectType, SCFeedObjectTypologyType, SCPollChoiceType, SCPollType} from '@selfcommunity/types';
 import {Button, CardContent, CardHeader, Collapse, Typography} from '@mui/material';
@@ -10,7 +10,6 @@ import List from '@mui/material/List';
 import Choice from './Choice';
 import Icon from '@mui/material/Icon';
 import {SCOPE_SC_UI} from '../../../constants/Errors';
-import {AxiosResponse} from 'axios';
 import classNames from 'classnames';
 import useThemeProps from '@mui/material/styles/useThemeProps';
 
@@ -229,7 +228,7 @@ export default function PollObject(inProps: PollObjectProps): JSX.Element {
           choice: choiceObj.id
         }
       })
-      .then((res: AxiosResponse<any>) => {
+      .then((res: HttpResponse<any>) => {
         if (choiceObj.voted) {
           handleUnVote(choiceObj.id);
         } else {

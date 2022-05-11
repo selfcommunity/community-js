@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {http, Endpoints} from '@selfcommunity/api-services';
+import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {Logger, SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import {SCAuthTokenType} from '@selfcommunity/types';
 import {ButtonProps, TextField, TextFieldProps} from '@mui/material';
@@ -9,7 +9,6 @@ import {FormattedMessage} from 'react-intl';
 import {LoadingButton} from '@mui/lab';
 import PasswordTextField from '../../shared/PasswordTextField';
 import {SCOPE_SC_UI} from '../../constants/Errors';
-import {AxiosResponse} from 'axios';
 import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const PREFIX = 'SCAccountSignIn';
@@ -141,7 +140,7 @@ export default function AccountSignIn(inProps: AccountSignInProps): JSX.Element 
           },
           data: formData
         })
-        .then((res: AxiosResponse<SCAuthTokenType>) => {
+        .then((res: HttpResponse<SCAuthTokenType>) => {
           onSuccess && onSuccess(res.data);
           setIsSubmitting(false);
         })

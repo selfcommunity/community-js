@@ -2,8 +2,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Divider, Typography, List} from '@mui/material';
 import Widget from '../Widget';
-import {http, Endpoints} from '@selfcommunity/api-services';
-import {AxiosResponse} from 'axios';
+import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {SCPrivateMessageType, SCNotificationTopicType, SCNotificationTypologyType} from '@selfcommunity/types';
 import {FormattedMessage} from 'react-intl';
 import SnippetsSkeleton from './Skeleton';
@@ -121,7 +120,7 @@ export default function Snippets(inProps: SnippetsProps): JSX.Element {
         url: Endpoints.GetSnippets.url(),
         method: Endpoints.GetSnippets.method
       })
-      .then((res: AxiosResponse<any>) => {
+      .then((res: HttpResponse<any>) => {
         const data = res.data;
         setSnippets(data.results);
         setLoading(false);

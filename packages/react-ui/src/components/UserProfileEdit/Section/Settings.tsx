@@ -3,11 +3,10 @@ import {styled} from '@mui/material/styles';
 import {Box, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Typography} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import {SCUserSettingsType} from '@selfcommunity/types';
-import {http, Endpoints} from '@selfcommunity/api-services';
+import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import {DEFAULT_FIELDS} from '../../../constants/UserProfile';
 import classNames from 'classnames';
-import {AxiosResponse} from 'axios';
 import SettingsSkeleton from './SettingsSkeleton';
 import {useSnackbar} from 'notistack';
 import useThemeProps from '@mui/material/styles/useThemeProps';
@@ -74,7 +73,7 @@ export default function Settings(inProps: SettingsProps): JSX.Element {
           url: Endpoints.UserSettings.url({id: scUserContext.user.id}),
           method: Endpoints.UserSettings.method
         })
-        .then((res: AxiosResponse<SCUserSettingsType>) => {
+        .then((res: HttpResponse<SCUserSettingsType>) => {
           setSetting(res.data);
         })
         .catch((error) => {
@@ -93,7 +92,7 @@ export default function Settings(inProps: SettingsProps): JSX.Element {
         method: Endpoints.UserSettingsPatch.method,
         data: {[event.target.name]: parseInt(event.target.value, 10)}
       })
-      .then((res: AxiosResponse<SCUserSettingsType>) => {
+      .then((res: HttpResponse<SCUserSettingsType>) => {
         setSetting(res.data);
         enqueueSnackbar(<FormattedMessage id="ui.userProfileEditSettings.saved" defaultMessage="ui.userProfileEditSettings.saved" />, {
           variant: 'success',

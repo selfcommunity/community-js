@@ -6,7 +6,6 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import Icon from '@mui/material/Icon';
 import Skeleton from '@mui/material/Skeleton';
 import LoadingButton from '@mui/lab/LoadingButton';
-import {AxiosResponse} from 'axios';
 import CentralProgress from '../../../../shared/CentralProgress';
 import User from '../../../User';
 import {SCOPE_SC_UI} from '../../../../constants/Errors';
@@ -14,7 +13,7 @@ import {styled} from '@mui/material/styles';
 import classNames from 'classnames';
 import {useSnackbar} from 'notistack';
 import {SCFeedObjectType, SCFeedObjectTypologyType, SCTagType} from '@selfcommunity/types';
-import {http, Endpoints} from '@selfcommunity/api-services';
+import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {Logger, SCContextType, SCUserContextType, UserUtils, useSCContext, useSCFetchFeedObject, useSCUser} from '@selfcommunity/react-core';
 import useThemeProps from '@mui/material/styles/useThemeProps';
 
@@ -279,7 +278,7 @@ export default function Vote(inProps: VoteProps): JSX.Element {
           url: state.next,
           method: Endpoints.VotesList.method
         })
-        .then((res: AxiosResponse<SCTagType>) => {
+        .then((res: HttpResponse<SCTagType>) => {
           if (res.status >= 300) {
             return Promise.reject(res);
           }
@@ -299,7 +298,7 @@ export default function Vote(inProps: VoteProps): JSX.Element {
           url: Endpoints.Vote.url({type: obj.type, id: obj.id}),
           method: Endpoints.Vote.method
         })
-        .then((res: AxiosResponse<SCTagType>) => {
+        .then((res: HttpResponse<SCTagType>) => {
           if (res.status >= 300) {
             return Promise.reject(res);
           }

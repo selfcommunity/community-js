@@ -4,7 +4,7 @@ import List from '@mui/material/List';
 import {Button, CardContent, ListItem, Typography} from '@mui/material';
 import Widget from '../Widget';
 import {SCUserType} from '@selfcommunity/types';
-import {http, Endpoints} from '@selfcommunity/api-services';
+import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {
   Logger,
   SCPreferences,
@@ -15,7 +15,6 @@ import {
 } from '@selfcommunity/react-core';
 import Skeleton from './Skeleton';
 import User, {UserProps} from '../User';
-import {AxiosResponse} from 'axios';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import classNames from 'classnames';
 import {SCOPE_SC_UI} from '../../constants/Errors';
@@ -148,7 +147,7 @@ export default function UserFollowers(inProps: UserFollowersProps): JSX.Element 
           url: next,
           method: Endpoints.UserFollowers.method
         })
-        .then((res: AxiosResponse<any>) => {
+        .then((res: HttpResponse<any>) => {
           const data = res.data;
           setFollowers([...followers, ...data.results]);
           setHasMore(data.count > visibleUsers);

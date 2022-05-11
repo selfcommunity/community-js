@@ -3,7 +3,7 @@ import {styled} from '@mui/material/styles';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {TextField, Typography, Box, Avatar, Button, Input, CardContent, Alert, FormGroup, AvatarGroup, List, ListItem} from '@mui/material';
 import {SCIncubatorType, SCUserType} from '@selfcommunity/types';
-import {http, Endpoints} from '@selfcommunity/api-services';
+import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {
   Link,
   Logger,
@@ -22,7 +22,6 @@ import useThemeProps from '@mui/material/styles/useThemeProps';
 import Incubator, {IncubatorProps} from '../Incubator';
 import Widget from '../Widget';
 import {TwitterShareButton, LinkedinShareButton, TwitterIcon, LinkedinIcon} from 'react-share';
-import {AxiosResponse} from 'axios';
 import AvatarGroupSkeleton from '../Skeleton/AvatarGroupSkeleton';
 import CentralProgress from '../../shared/CentralProgress';
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -261,7 +260,7 @@ export default function IncubatorDetail(inProps: IncubatorDetailProps): JSX.Elem
             url: next,
             method: Endpoints.GetIncubatorSubscribers.method
           })
-          .then((res: AxiosResponse<any>) => {
+          .then((res: HttpResponse<any>) => {
             if (res.status < 300) {
               setSubscribers([...subscribers, ...res.data.results]);
               setTotal(res.data['count']);

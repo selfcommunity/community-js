@@ -8,14 +8,13 @@ import {Box, Button, Divider, ListItemText, Menu, Tooltip} from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Composer from '../../../Composer';
-import {AxiosResponse} from 'axios';
 import {MEDIA_TYPE_SHARE} from '../../../../constants/Media';
 import {SCOPE_SC_UI} from '../../../../constants/Errors';
 import classNames from 'classnames';
 import {useSnackbar} from 'notistack';
 import Skeleton from '@mui/material/Skeleton';
 import {SCFeedObjectType, SCFeedObjectTypologyType, SCMediaType} from '@selfcommunity/types';
-import {http, Endpoints} from '@selfcommunity/api-services';
+import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {
   Logger,
   SCContextType,
@@ -245,7 +244,7 @@ export default function Share(inProps: ShareProps): JSX.Element {
             shared_object: sharedObjectId
           }
         })
-        .then((res: AxiosResponse<SCMediaType>) => {
+        .then((res: HttpResponse<SCMediaType>) => {
           if (res.status >= 300) {
             return Promise.reject(res);
           }

@@ -4,9 +4,8 @@ import List from '@mui/material/List';
 import {Button, CardContent, ListItem, Typography} from '@mui/material';
 import Widget from '../Widget';
 import {SCFeedObjectType} from '@selfcommunity/types';
-import {http, Endpoints} from '@selfcommunity/api-services';
+import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/react-core';
-import {AxiosResponse} from 'axios';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import FeedObject from '../FeedObject';
 import {FormattedMessage} from 'react-intl';
@@ -122,7 +121,7 @@ export default function TrendingFeed(inProps: TrendingFeedProps): JSX.Element {
           url: next,
           method: Endpoints.CategoryTrendingFeed.method
         })
-        .then((res: AxiosResponse<any>) => {
+        .then((res: HttpResponse<any>) => {
           const data = res.data;
           setPosts([...posts, ...data.results]);
           setHasMore(data.count > visible);

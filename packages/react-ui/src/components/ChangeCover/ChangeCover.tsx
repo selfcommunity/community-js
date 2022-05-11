@@ -1,10 +1,9 @@
 import React, {useContext, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Menu, MenuItem, ListItemIcon, Typography, Button, Popover, Divider, IconButton, Box} from '@mui/material';
-import {http, Endpoints} from '@selfcommunity/api-services';
+import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
 import {SCUserType} from '@selfcommunity/types';
-import {AxiosResponse} from 'axios';
 import Icon from '@mui/material/Icon';
 import {FormattedMessage} from 'react-intl';
 import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
@@ -157,7 +156,7 @@ export default function ChangeCover(inProps: ChangeCoverProps): JSX.Element {
         },
         data: formData
       })
-      .then((res: AxiosResponse<SCUserType>) => {
+      .then((res: HttpResponse<SCUserType>) => {
         scUserContext.updateUser({cover: res.data.cover});
         onChange && onChange(res.data.cover);
         setAnchorEl(null);

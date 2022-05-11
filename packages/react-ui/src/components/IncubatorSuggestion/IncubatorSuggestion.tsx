@@ -2,11 +2,10 @@ import React, {useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Button, List, Typography, ListItem} from '@mui/material';
 import CardContent from '@mui/material/CardContent';
-import {http, Endpoints} from '@selfcommunity/api-services';
+import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {Logger, SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import {SCIncubatorType} from '@selfcommunity/types';
 import Skeleton from './Skeleton';
-import {AxiosResponse} from 'axios';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
@@ -140,7 +139,7 @@ export default function IncubatorSuggestion(inProps: IncubatorSuggestionProps): 
           url: next,
           method: Endpoints.GetIncubatorSuggestion.method
         })
-        .then((res: AxiosResponse<any>) => {
+        .then((res: HttpResponse<any>) => {
           const data = res.data;
           setIncubators([...incubators, ...data]);
           setHasMore(data.length > visibleIncubators);

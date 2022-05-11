@@ -3,11 +3,10 @@ import {FormattedMessage} from 'react-intl';
 import {List, ListItem} from '@mui/material';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Typography from '@mui/material/Typography';
-import {http, Endpoints} from '@selfcommunity/api-services';
+import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {Logger, useSCFetchFeedObject} from '@selfcommunity/react-core';
 import {SCFeedObjectType, SCFeedObjectTypologyType} from '@selfcommunity/types';
 import {SCOPE_SC_UI} from '../../../../../constants/Errors';
-import {AxiosResponse} from 'axios';
 import BaseDialog from '../../../../../shared/BaseDialog';
 import CentralProgress from '../../../../../shared/CentralProgress';
 import User from '../../../../User';
@@ -84,7 +83,7 @@ export default function SharesDialog(props: ShareDialogProps): JSX.Element {
         url: next,
         method: Endpoints.ShareUsersList.method
       })
-      .then((res: AxiosResponse<any>) => {
+      .then((res: HttpResponse<any>) => {
         const data: {results: Record<string, any>[]; next?: string} = res.data;
         setShares([...shares, ...data.results]);
         setIsLoading(false);

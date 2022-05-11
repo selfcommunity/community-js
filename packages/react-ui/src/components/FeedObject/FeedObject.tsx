@@ -27,10 +27,9 @@ import Activities, {ActivitiesProps} from './Activities';
 import ReplyCommentObject, {ReplyCommentObjectProps} from '../CommentObject/ReplyComment';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {useSnackbar} from 'notistack';
-import {AxiosResponse} from 'axios';
 import {CommentObjectProps} from '../CommentObject';
 import {SCCommentType, SCFeedObjectType, SCFeedObjectTypologyType, SCPollType} from '@selfcommunity/types';
-import {http, Endpoints} from '@selfcommunity/api-services';
+import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {
   Link,
   Logger,
@@ -579,7 +578,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
             text: comment
           }
         })
-        .then((res: AxiosResponse<SCCommentType>) => {
+        .then((res: HttpResponse<SCCommentType>) => {
           if (res.status >= 300) {
             return Promise.reject(res);
           }

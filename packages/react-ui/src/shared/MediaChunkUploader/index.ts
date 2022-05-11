@@ -6,11 +6,10 @@ import {
   useItemFinishListener,
   useRequestPreSend
 } from '@rpldy/chunked-uploady';
-import {http, Endpoints, formatHttpError} from '@selfcommunity/api-services';
+import {http, Endpoints, formatHttpError, HttpResponse} from '@selfcommunity/api-services';
 import {SCMediaType} from '@selfcommunity/types';
 import {SCContextType, useSCContext} from '@selfcommunity/react-core';
 import {useItemProgressListener, useItemStartListener} from '@rpldy/uploady';
-import {AxiosResponse} from 'axios';
 import {md5} from '../../utils/hash';
 import React, {useEffect, useRef, useState} from 'react';
 import {SCMediaChunkType} from '../../types/media';
@@ -103,7 +102,7 @@ export default (props: MediaChunkUploaderProps): JSX.Element => {
           data: formData,
           headers: {'Content-Type': 'multipart/form-data'}
         })
-        .then((res: AxiosResponse<any>) => {
+        .then((res: HttpResponse<any>) => {
           const _chunks = {...chunkStateRef.current.chunks};
           delete _chunks[item.id];
           chunkStateRef.current.setChunks(_chunks);

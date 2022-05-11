@@ -3,7 +3,7 @@ import useThemeProps from '@mui/material/styles/useThemeProps';
 import {styled} from '@mui/material/styles';
 import {Box, Grid, Typography} from '@mui/material';
 import classNames from 'classnames';
-import {http, Endpoints} from '@selfcommunity/api-services';
+import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {
   Logger,
   SCRoutes,
@@ -15,7 +15,6 @@ import {
   useSCPreferences
 } from '@selfcommunity/react-core';
 import {SCOPE_SC_UI} from '../../constants/Errors';
-import {AxiosResponse} from 'axios';
 import FooterSkeleton from './Skeleton';
 import DetailDialog from './DetailDialog';
 
@@ -115,7 +114,7 @@ export default function Footer(inProps: FooterProps): JSX.Element {
           visible_in_menu: true
         }
       })
-      .then((res: AxiosResponse<any>) => {
+      .then((res: HttpResponse<any>) => {
         setPages(res.data.results);
         //console.log(res.data.results, 'custom');
         setLoading(false);
@@ -136,7 +135,7 @@ export default function Footer(inProps: FooterProps): JSX.Element {
           valid_to: activePages
         }
       })
-      .then((res: AxiosResponse<any>) => {
+      .then((res: HttpResponse<any>) => {
         setLegalPages(res.data.results);
         //console.log(res.data.results, 'legal');
         setLoading(false);

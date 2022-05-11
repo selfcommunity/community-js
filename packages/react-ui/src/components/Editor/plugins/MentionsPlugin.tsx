@@ -17,9 +17,8 @@ import {mergeRegister} from '@lexical/utils';
 import {createPortal} from 'react-dom';
 
 import {createMentionNode, MentionNode} from '../nodes/MentionNode';
-import {http, Endpoints} from '@selfcommunity/api-services';
+import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {SCUserType} from '@selfcommunity/types';
-import {AxiosResponse} from 'axios';
 import classNames from 'classnames';
 import {Avatar} from '@mui/material';
 import {styled} from '@mui/material/styles';
@@ -102,7 +101,7 @@ function useMentionLookupService(mentionString) {
         method: Endpoints.UserSearch.method,
         params: {user: mentionString, limit: 7}
       })
-      .then((res: AxiosResponse<any>) => {
+      .then((res: HttpResponse<any>) => {
         mentionsCache.set(mentionString, res.data.results);
         setResults(res.data.results);
       });

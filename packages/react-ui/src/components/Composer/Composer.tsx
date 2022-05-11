@@ -9,7 +9,7 @@ import {
   SCCategoryType,
   SCTagType
 } from '@selfcommunity/types';
-import {http, Endpoints, formatHttpError} from '@selfcommunity/api-services';
+import {http, Endpoints, formatHttpError, HttpResponse} from '@selfcommunity/api-services';
 import {
   SCFeatures,
   SCPreferences,
@@ -67,7 +67,6 @@ import MediasPreview from '../../shared/MediasPreview';
 import Poll from './Poll';
 import Location from './Location';
 import TagChip from '../../shared/TagChip';
-import {AxiosResponse} from 'axios';
 import {DistributiveOmit} from '@mui/types';
 import {OverrideProps} from '@mui/material/OverridableComponent';
 import {ComposerSkeleton} from './index';
@@ -504,7 +503,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
         url: Endpoints.FeedObject.url({type: feedObjectType, id: feedObjectId}),
         method: Endpoints.FeedObject.method
       })
-      .then((res: AxiosResponse<any>) => {
+      .then((res: HttpResponse<any>) => {
         destructureFeedObject(res.data);
       })
       .catch(() => {
@@ -698,7 +697,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
         method,
         data
       })
-      .then((res: AxiosResponse<any>) => {
+      .then((res: HttpResponse<any>) => {
         onSuccess(res.data);
         if (unloadRef.current) {
           window.onbeforeunload = null;

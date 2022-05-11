@@ -14,7 +14,6 @@ import KindlyNoticeFlagNotification from '../Notification/KindlyNoticeFlag';
 import VoteUpNotification from '../Notification/VoteUp';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import PubSub from 'pubsub-js';
-import {AxiosResponse} from 'axios';
 import ContributionFollowNotification from '../Notification/ContributionFollow';
 import {Box, CardProps, MenuItem, MenuList} from '@mui/material';
 import IncubatorApprovedNotification from '../Notification/IncubatorApproved';
@@ -24,7 +23,7 @@ import {SCNotificationObjectTemplateType} from '../../types';
 import ScrollContainer from '../../shared/ScrollContainer';
 import {FormattedMessage} from 'react-intl';
 import {SCNotificationAggregatedType, SCNotificationTopicType, SCNotificationType, SCNotificationTypologyType} from '@selfcommunity/types';
-import {http, Endpoints} from '@selfcommunity/api-services';
+import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {Logger, SCNotification, SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import useThemeProps from '@mui/material/styles/useThemeProps';
 
@@ -185,7 +184,7 @@ export default function SnippetNotifications(inProps: SnippetNotificationsProps)
           url: Endpoints.UserNotificationList.url(),
           method: Endpoints.UserNotificationList.method
         })
-        .then((res: AxiosResponse<any>) => {
+        .then((res: HttpResponse<any>) => {
           if (res.status >= 300) {
             return Promise.reject(res);
           }

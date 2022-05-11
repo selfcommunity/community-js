@@ -13,7 +13,6 @@ import React, {
 import {styled, useTheme} from '@mui/material/styles';
 import Widget from '../Widget';
 import {CardContent, Grid, Hidden, Theme, useMediaQuery} from '@mui/material';
-import {AxiosResponse} from 'axios';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {FormattedMessage} from 'react-intl';
 import {GenericSkeleton} from '../Skeleton';
@@ -22,7 +21,7 @@ import {SCFeedWidgetType} from '../../types/feed';
 import Sticky from 'react-stickynode';
 import CustomAdv, {CustomAdvProps} from '../CustomAdv';
 import {SCUserType, SCCustomAdvPosition, SCFeedUnitType, SCNotificationAggregatedType} from '@selfcommunity/types';
-import {http, EndpointType} from '@selfcommunity/api-services';
+import {http, EndpointType, HttpResponse} from '@selfcommunity/api-services';
 import {Logger, SCPreferences, SCPreferencesContextType, SCUserContext, SCUserContextType, useSCPreferences} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import PubSub from 'pubsub-js';
@@ -282,7 +281,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
         url: next,
         method: endpoint.method
       })
-      .then((res: AxiosResponse<{next?: string; previous?: string; results: SCNotificationAggregatedType[]}>) => {
+      .then((res: HttpResponse<{next?: string; previous?: string; results: SCNotificationAggregatedType[]}>) => {
         const data = res.data;
         setFeedData([...feedData, ...data.results]);
         setNext(data.next);

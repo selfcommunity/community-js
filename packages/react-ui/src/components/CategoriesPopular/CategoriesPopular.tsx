@@ -1,10 +1,9 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Button, CardContent, List, ListItem, Typography} from '@mui/material';
-import {http, Endpoints} from '@selfcommunity/api-services';
+import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/react-core';
 import Skeleton from './Skeleton';
-import {AxiosResponse} from 'axios';
 import {SCCategoryType} from '@selfcommunity/types';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {FormattedMessage} from 'react-intl';
@@ -87,7 +86,7 @@ export default function CategoriesPopular(inProps: CategoriesListProps): JSX.Ele
             url: next,
             method: Endpoints.PopularCategories.method
           })
-          .then((res: AxiosResponse<any>) => {
+          .then((res: HttpResponse<any>) => {
             if (res.status < 300) {
               const data = res.data;
               setCategories([...categories, ...data['results']]);

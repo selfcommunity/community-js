@@ -2,10 +2,9 @@ import React, {useContext, useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import CardContent from '@mui/material/CardContent';
 import {Button, CardActions, Box, Typography, Grid} from '@mui/material';
-import {http, Endpoints} from '@selfcommunity/api-services';
+import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
 import Icon from '@mui/material/Icon';
-import {AxiosResponse} from 'axios';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import LoyaltyProgramDialog from './LoyaltyProgramDialog';
 import {SCRoutingContextType, useSCRouting, Link, SCRoutes} from '@selfcommunity/react-core';
@@ -149,7 +148,7 @@ export default function LoyaltyProgram(inProps: LoyaltyProgramProps): JSX.Elemen
         url: Endpoints.GetUserLoyaltyPoints.url({id: scUserContext.user['id']}),
         method: Endpoints.GetUserLoyaltyPoints.method
       })
-      .then((res: AxiosResponse<any>) => {
+      .then((res: HttpResponse<any>) => {
         setPoints(res.data.points);
       })
       .catch((error) => {

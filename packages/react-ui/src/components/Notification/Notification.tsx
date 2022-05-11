@@ -17,7 +17,6 @@ import KindlyNoticeFlagNotification from './KindlyNoticeFlag';
 import VoteUpNotification from './VoteUp';
 import Icon from '@mui/material/Icon';
 import {SCOPE_SC_UI} from '../../constants/Errors';
-import {AxiosResponse} from 'axios';
 import {getContribution, getContributionRouteName, getContributionSnippet} from '../../utils/contribution';
 import ContributionFollowNotification from './ContributionFollow';
 import {Avatar, CardProps, Collapse, ListItemButton, ListItemText, Stack, Tooltip, Typography} from '@mui/material';
@@ -34,7 +33,7 @@ import {
   SCNotificationType,
   SCNotificationTypologyType
 } from '@selfcommunity/types';
-import {http, Endpoints} from '@selfcommunity/api-services';
+import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {Link, Logger, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
 
 const messages = defineMessages({
@@ -225,7 +224,7 @@ export default function UserNotification(inProps: NotificationProps): JSX.Elemen
           url: Endpoints.UserSuspendContributionNotification.url({type: obj.type, id: obj.id}),
           method: Endpoints.UserSuspendContributionNotification.method
         })
-        .then((res: AxiosResponse<any>) => {
+        .then((res: HttpResponse<any>) => {
           if (res.status >= 300) {
             return Promise.reject(res);
           }
@@ -263,7 +262,7 @@ export default function UserNotification(inProps: NotificationProps): JSX.Elemen
           url: Endpoints.Vote.url({type: contribution.type, id: contribution.id}),
           method: Endpoints.Vote.method
         })
-        .then((res: AxiosResponse<any>) => {
+        .then((res: HttpResponse<any>) => {
           if (res.status >= 300) {
             return Promise.reject(res);
           }

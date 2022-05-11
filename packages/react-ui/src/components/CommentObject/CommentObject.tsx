@@ -6,7 +6,6 @@ import {Avatar, Box, Button, CardContent, CardProps, Tooltip, Typography} from '
 import Bullet from '../../shared/Bullet';
 import classNames from 'classnames';
 import Votes from './Votes';
-import {AxiosResponse} from 'axios';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import CommentObjectSkeleton from './Skeleton';
 import {LoadingButton} from '@mui/lab';
@@ -21,7 +20,7 @@ import useThemeProps from '@mui/material/styles/useThemeProps';
 import CommentsObject from '../CommentsObject';
 import BaseItem from '../../shared/BaseItem';
 import {SCCommentType, SCCommentTypologyType, SCFeedObjectType, SCFeedObjectTypologyType} from '@selfcommunity/types';
-import {http, Endpoints} from '@selfcommunity/api-services';
+import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {
   Link,
   Logger,
@@ -407,7 +406,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
           url: Endpoints.Vote.url({type: SCCommentTypologyType, id: comment.id}),
           method: Endpoints.Vote.method
         })
-        .then((res: AxiosResponse<any>) => {
+        .then((res: HttpResponse<any>) => {
           if (res.status >= 300) {
             return Promise.reject(res);
           }
@@ -468,7 +467,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
           text: comment
         }
       })
-      .then((res: AxiosResponse<SCCommentType>) => {
+      .then((res: HttpResponse<SCCommentType>) => {
         if (res.status >= 300) {
           return Promise.reject(res);
         }
@@ -578,7 +577,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
         method: Endpoints.UpdateComment.method,
         data: {text: comment}
       })
-      .then((res: AxiosResponse<SCCommentType>) => {
+      .then((res: HttpResponse<SCCommentType>) => {
         if (res.status >= 300) {
           return Promise.reject(res);
         }

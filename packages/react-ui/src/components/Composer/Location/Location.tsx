@@ -4,13 +4,12 @@ import Autocomplete from '@mui/material/Autocomplete';
 import TextField, {TextFieldProps} from '@mui/material/TextField';
 import CircularProgress from '@mui/material/CircularProgress';
 import {InternalStandardProps as StandardProps} from '@mui/material';
-import {http, Endpoints} from '@selfcommunity/api-services';
+import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {SCLocalityType} from '@selfcommunity/types';
 import {styled} from '@mui/material/styles';
 import {AutocompleteClasses} from '@mui/material/Autocomplete/autocompleteClasses';
 import {OverridableStringUnion} from '@mui/types';
 import {AutocompletePropsSizeOverrides} from '@mui/material/Autocomplete/Autocomplete';
-import {AxiosResponse} from 'axios';
 import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
 import useThemeProps from '@mui/material/styles/useThemeProps';
@@ -99,7 +98,7 @@ export default function Location(inProps: LocationProps): JSX.Element {
           search: search.trim()
         }
       })
-      .then((res: AxiosResponse<any>) => {
+      .then((res: HttpResponse<any>) => {
         setLocations(res.data.results);
       })
       .then(() => setIsLoading(false));

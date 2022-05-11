@@ -3,10 +3,9 @@ import {FormattedMessage} from 'react-intl';
 import {Box, List, ListItem} from '@mui/material';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Typography from '@mui/material/Typography';
-import {http, Endpoints} from '@selfcommunity/api-services';
+import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {Logger, useSCFetchCommentObject} from '@selfcommunity/react-core';
 import {SCCommentType, SCCommentTypologyType} from '@selfcommunity/types';
-import {AxiosResponse} from 'axios';
 import {SCOPE_SC_UI} from '../../../../constants/Errors';
 import BaseDialog from '../../../../shared/BaseDialog';
 import CentralProgress from '../../../../shared/CentralProgress';
@@ -81,7 +80,7 @@ export default function CommentObjectVotesDialog(inProps: CommentObjectVotesDial
         url: next ? next : `${Endpoints.VotesList.url({type: SCCommentTypologyType, id: obj.id})}`,
         method: Endpoints.VotesList.method
       })
-      .then((res: AxiosResponse<any>) => {
+      .then((res: HttpResponse<any>) => {
         const data: {results: Record<string, any>[]; next?: string} = res.data;
         setVotes([...data.results, ...votes]);
         setIsLoading(false);

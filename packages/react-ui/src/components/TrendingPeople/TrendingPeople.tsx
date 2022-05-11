@@ -3,9 +3,8 @@ import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
 import {Button, CardContent, ListItem, Typography} from '@mui/material';
 import Widget from '../Widget';
-import {http, Endpoints} from '@selfcommunity/api-services';
+import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {SCPreferences, SCPreferencesContext, SCPreferencesContextType, SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
-import {AxiosResponse} from 'axios';
 import {FormattedMessage} from 'react-intl';
 import User, {UserProps} from '../User';
 import classNames from 'classnames';
@@ -131,7 +130,7 @@ export default function TrendingPeople(inProps: TrendingPeopleProps): JSX.Elemen
           url: next,
           method: Endpoints.CategoryTrendingPeople.method
         })
-        .then((res: AxiosResponse<any>) => {
+        .then((res: HttpResponse<any>) => {
           const data = res.data;
           setPeople([...people, ...data.results]);
           setHasMore(data.count > visiblePeople);

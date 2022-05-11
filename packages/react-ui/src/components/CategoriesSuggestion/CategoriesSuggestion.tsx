@@ -1,12 +1,11 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Button, Typography, List, CardContent, ListItem} from '@mui/material';
-import {http, Endpoints} from '@selfcommunity/api-services';
+import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
 import {SCCategoryType} from '@selfcommunity/types';
 import Skeleton from './Skeleton';
 import Category, {CategoryProps} from '../Category';
-import {AxiosResponse} from 'axios';
 import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
 import Widget from '../Widget';
@@ -125,7 +124,7 @@ export default function CategoriesSuggestion(inProps: CategoriesListProps): JSX.
         url: Endpoints.CategoriesSuggestion.url(),
         method: Endpoints.CategoriesSuggestion.method
       })
-      .then((res: AxiosResponse<any>) => {
+      .then((res: HttpResponse<any>) => {
         const data = res.data;
         setCategories(data.results);
         setHasMore(data.count > visibleCategories);
