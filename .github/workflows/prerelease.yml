@@ -44,6 +44,12 @@ jobs:
       with:
         path: packages/utils
     - run: echo "@selfcommunity/utils - ${{ steps.utils.outputs.current-version }}"
+    - name: Get @selfcommunity/api-services version
+      id: api-services
+      uses: martinbeentjes/npm-get-version-action@master
+      with:
+        path: packages/api-services
+    - run: echo "@selfcommunity/api-services - ${{ steps.api-services.outputs.current-version }}"
     - name: Get @selfcommunity/react-i18n version
       id: react-i18n
       uses: martinbeentjes/npm-get-version-action@master
