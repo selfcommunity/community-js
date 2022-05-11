@@ -1,7 +1,7 @@
 # This workflow will run tests using node and then publish a package to GitHub Packages when a release is created
 # For more information see: https://help.github.com/actions/language-and-framework-guides/publishing-nodejs-packages
 
-name: Node.js Package
+name: Prerelease
 
 on:
   push:
@@ -32,34 +32,46 @@ jobs:
         pr_body: "👑 *An automated PR*"
         pr_draft: true
         github_token: ${{ secrets.GITHUB_TOKEN }}
-    - name: Get @selfcommunity/i18n version
-      id: i18n
+    - name: Get @selfcommunity/types version
+      id: types
       uses: martinbeentjes/npm-get-version-action@master
       with:
-        path: packages/sc-i18n
-    - run: echo "@selfcommunity/i18n - ${{ steps.i18n.outputs.current-version }}"
-    - name: Get @selfcommunity/core version
-      id: core
+        path: packages/types
+    - run: echo "@selfcommunity/types - ${{ steps.types.outputs.current-version }}"
+    - name: Get @selfcommunity/utils version
+      id: utils
       uses: martinbeentjes/npm-get-version-action@master
       with:
-        path: packages/sc-core
-    - run: echo "@selfcommunity/core - ${{ steps.core.outputs.current-version }}"
-    - name: Get @selfcommunity/ui version
-      id: ui
+        path: packages/utils
+    - run: echo "@selfcommunity/utils - ${{ steps.utils.outputs.current-version }}"
+    - name: Get @selfcommunity/react-i18n version
+      id: react-i18n
       uses: martinbeentjes/npm-get-version-action@master
       with:
-        path: packages/sc-ui
-    - run: echo "@selfcommunity/ui - ${{ steps.ui.outputs.current-version }}"
-    - name: Get @selfcommunity/templates version
-      id: templates
+        path: packages/react-i18n
+    - run: echo "@selfcommunity/react-i18n - ${{ steps.react-i18n.outputs.current-version }}"
+    - name: Get @selfcommunity/react-core version
+      id: react-core
       uses: martinbeentjes/npm-get-version-action@master
       with:
-        path: packages/sc-templates
-    - run: echo "@selfcommunity/templates - ${{ steps.templates.outputs.current-version }}"
-    - uses: peter-evans/repository-dispatch@v1
-      name: Repository Dispatch
+        path: packages/react-core
+    - run: echo "@selfcommunity/react-core - ${{ steps.react-core.outputs.current-version }}"
+    - name: Get @selfcommunity/react-ui version
+      id: react-ui
+      uses: martinbeentjes/npm-get-version-action@master
       with:
-        token: ${{ secrets.DOCS_ACCESS_TOKEN }}
-        repository: selfcommunity/developers-doc
-        event-type: community-ui-prerelease
-        client-payload: '{"i18n": "${{ steps.i18n.outputs.current-version }}", "core": "${{ steps.core.outputs.current-version }}", "ui": "${{ steps.ui.outputs.current-version }}", "templates": "${{ steps.templates.outputs.current-version }}"}'
+        path: packages/react-ui
+    - run: echo "@selfcommunity/react-ui - ${{ steps.react-ui.outputs.current-version }}"
+    - name: Get @selfcommunity/react-templates version
+      id: react-templates
+      uses: martinbeentjes/npm-get-version-action@master
+      with:
+        path: packages/react-templates
+    - run: echo "@selfcommunity/react-templates - ${{ steps.react-templates.outputs.current-version }}"
+#    - uses: peter-evans/repository-dispatch@v1
+#      name: Repository Dispatch
+#      with:
+#        token: ${{ secrets.DOCS_ACCESS_TOKEN }}
+#        repository: selfcommunity/developers-doc
+#        event-type: community-js-prerelease
+#        client-payload: '{"types": "${{ steps.types.outputs.current-version }}", "utils": "${{ steps.utils.outputs.current-version }}", "react-i18n": "${{ steps.react-i18n.outputs.current-version }}", "react-core": "${{ steps.react-core.outputs.current-version }}", "react-ui": "${{ steps.react-ui.outputs.current-version }}", "react-templates": "${{ steps.react-templates.outputs.current-version }}"}'
