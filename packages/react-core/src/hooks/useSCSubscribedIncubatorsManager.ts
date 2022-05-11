@@ -1,6 +1,5 @@
 import {useMemo} from 'react';
-import {AxiosResponse} from 'axios';
-import {http, Endpoints} from '@selfcommunity/api-services';
+import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {SCIncubatorType, SCUserType} from '@selfcommunity/types';
 import {Logger} from '../utils/logger';
 import {SCOPE_SC_CORE} from '../constants/Errors';
@@ -39,7 +38,7 @@ export default function useSCSubscribedIncubatorsManager(user?: SCUserType) {
             url: Endpoints.GetAllIncubators.url({}),
             method: Endpoints.GetAllIncubators.method,
           })
-          .then((res: AxiosResponse<any>) => {
+          .then((res: HttpResponse<any>) => {
             if (res.status >= 300) {
               return Promise.reject(res);
             }
@@ -73,7 +72,7 @@ export default function useSCSubscribedIncubatorsManager(user?: SCUserType) {
             url: Endpoints.SubscribeToIncubator.url({id: incubator.id}),
             method: Endpoints.SubscribeToIncubator.method,
           })
-          .then((res: AxiosResponse<any>) => {
+          .then((res: HttpResponse<any>) => {
             if (res.status >= 300) {
               return Promise.reject(res);
             }
@@ -100,7 +99,7 @@ export default function useSCSubscribedIncubatorsManager(user?: SCUserType) {
         url: Endpoints.CheckIncubatorSubscription.url({id: incubator.id}),
         method: Endpoints.CheckIncubatorSubscription.method,
       })
-      .then((res: AxiosResponse<any>) => {
+      .then((res: HttpResponse<any>) => {
         if (res.status >= 300) {
           return Promise.reject(res);
         }

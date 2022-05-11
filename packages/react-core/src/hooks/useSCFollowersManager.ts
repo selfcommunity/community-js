@@ -1,6 +1,5 @@
 import {useEffect, useMemo, useRef} from 'react';
-import {AxiosResponse} from 'axios';
-import {http, Endpoints} from '@selfcommunity/api-services';
+import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {SCPreferencesContextType} from '../types';
 import {SCNotificationTopicType, SCNotificationTypologyType, SCUserType} from '@selfcommunity/types';
 import {Logger} from '../utils/logger';
@@ -95,7 +94,7 @@ export default function useSCFollowedManager(user?: SCUserType) {
             method: Endpoints.UserConnectionStatuses.method,
             data: {users: cache},
           })
-          .then((res: AxiosResponse<any>) => {
+          .then((res: HttpResponse<any>) => {
             if (res.status >= 300) {
               return Promise.reject(res);
             }
@@ -129,7 +128,7 @@ export default function useSCFollowedManager(user?: SCUserType) {
             url: Endpoints.FollowUser.url({id: user.id}),
             method: Endpoints.FollowUser.method,
           })
-          .then((res: AxiosResponse<any>) => {
+          .then((res: HttpResponse<any>) => {
             if (res.status >= 300) {
               return Promise.reject(res);
             }
@@ -156,7 +155,7 @@ export default function useSCFollowedManager(user?: SCUserType) {
         url: Endpoints.CheckUserFollowed.url({id: user.id}),
         method: Endpoints.CheckUserFollowed.method,
       })
-      .then((res: AxiosResponse<any>) => {
+      .then((res: HttpResponse<any>) => {
         if (res.status >= 300) {
           return Promise.reject(res);
         }

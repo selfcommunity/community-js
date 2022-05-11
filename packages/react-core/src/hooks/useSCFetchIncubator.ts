@@ -1,8 +1,7 @@
 import {useEffect, useMemo, useState} from 'react';
-import {AxiosResponse} from 'axios';
 import {SCOPE_SC_CORE} from '../constants/Errors';
 import {SCIncubatorType} from '@selfcommunity/types';
-import {http, Endpoints} from '@selfcommunity/api-services';
+import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {Logger} from '../utils/logger';
 
 /**
@@ -27,7 +26,7 @@ export default function useSCFetchIncubator({id = null, incubator = null}: {id?:
           url: Endpoints.GetASpecificIncubator.url({id: id}),
           method: Endpoints.GetASpecificIncubator.method,
         })
-        .then((res: AxiosResponse<SCIncubatorType>) => {
+        .then((res: HttpResponse<SCIncubatorType>) => {
           if (res.status >= 300) {
             return Promise.reject(res);
           }

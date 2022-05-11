@@ -6,8 +6,7 @@ import {useSCUser} from '../components/provider/SCUserProvider';
 import {Logger} from '../utils/logger';
 import {loadVersionBrowser, urlB64ToUint8Array} from '../utils/webPushMessaging';
 import {SCOPE_SC_CORE} from '../constants/Errors';
-import {http, Endpoints} from '@selfcommunity/api-services';
-import {AxiosResponse} from 'axios';
+import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {WEB_PUSH_NOTIFICATION_DEVICE_TYPE} from '../constants/Device';
 import {SCPreferencesContext} from '../components/provider/SCPreferencesProvider';
 import * as SCPreferences from '../constants/Preferences';
@@ -58,7 +57,7 @@ export default function useSCWebPushMessaging() {
         method,
         ...(remove ? {} : {data: data}),
       })
-      .then((res: AxiosResponse<SCTagType>) => {
+      .then((res: HttpResponse<SCTagType>) => {
         if (res.status >= 300) {
           return Promise.reject(res);
         }
@@ -112,7 +111,7 @@ export default function useSCWebPushMessaging() {
             return;
           }
 
-          // We have a subcription, so call unsubscribe on it
+          // We have a subscription, so call unsubscribe on it
           pushSubscription
             .unsubscribe()
             .then(() => {

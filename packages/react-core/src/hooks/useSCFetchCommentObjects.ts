@@ -1,8 +1,7 @@
 import {useEffect, useReducer} from 'react';
-import {AxiosResponse} from 'axios';
 import {SCOPE_SC_CORE} from '../constants/Errors';
 import {SCCommentsOrderBy, SCCommentType} from '@selfcommunity/types';
-import {http, Endpoints} from '@selfcommunity/api-services';
+import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {Logger} from '../utils/logger';
 import {SCFeedObjectType, SCFeedObjectTypologyType} from '@selfcommunity/types';
 import useSCFetchFeedObject from './useSCFetchFeedObject';
@@ -170,7 +169,7 @@ export default function useSCFetchCommentObjects(props: {
         url,
         method: Endpoints.Comments.method,
       })
-      .then((res: AxiosResponse<any>) => {
+      .then((res: HttpResponse<any>) => {
         if (res.status >= 300) {
           return Promise.reject(res);
         }

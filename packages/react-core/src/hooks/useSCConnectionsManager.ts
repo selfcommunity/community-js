@@ -1,6 +1,5 @@
 import {useEffect, useMemo, useRef} from 'react';
-import {AxiosResponse} from 'axios';
-import {http, Endpoints} from '@selfcommunity/api-services';
+import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {SCPreferencesContextType} from '../types';
 import {SCNotificationTopicType, SCNotificationTypologyType, SCUserType} from '@selfcommunity/types';
 import {Logger} from '../utils/logger';
@@ -111,7 +110,7 @@ export default function useSCConnectionsManager(user?: SCUserType) {
             method: Endpoints.UserConnectionStatuses.method,
             data: {users: cache},
           })
-          .then((res: AxiosResponse<any>) => {
+          .then((res: HttpResponse<any>) => {
             if (res.status >= 300) {
               return Promise.reject(res);
             }
@@ -147,7 +146,7 @@ export default function useSCConnectionsManager(user?: SCUserType) {
             url: Endpoints.UserRequestConnection.url({id: user.id}),
             method: Endpoints.UserRequestConnection.method,
           })
-          .then((res: AxiosResponse<any>) => {
+          .then((res: HttpResponse<any>) => {
             if (res.status >= 300) {
               return Promise.reject(res);
             }
@@ -176,7 +175,7 @@ export default function useSCConnectionsManager(user?: SCUserType) {
               url: Endpoints.UserAcceptRequestConnection.url({id: user.id}),
               method: Endpoints.UserAcceptRequestConnection.method,
             })
-            .then((res: AxiosResponse<any>) => {
+            .then((res: HttpResponse<any>) => {
               if (res.status >= 300) {
                 return Promise.reject(res);
               }
@@ -219,7 +218,7 @@ export default function useSCConnectionsManager(user?: SCUserType) {
         url: Endpoints.UserCheckConnection.url({id: user.id}),
         method: Endpoints.UserCheckConnection.method,
       })
-      .then((res: AxiosResponse<any>) => {
+      .then((res: HttpResponse<any>) => {
         if (res.status >= 300) {
           return Promise.reject(res);
         }

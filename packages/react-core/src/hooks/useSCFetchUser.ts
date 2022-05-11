@@ -1,8 +1,7 @@
 import {useEffect, useMemo, useState} from 'react';
-import {AxiosResponse} from 'axios';
 import {SCOPE_SC_CORE} from '../constants/Errors';
 import {SCUserType} from '@selfcommunity/types';
-import {http, Endpoints} from '@selfcommunity/api-services';
+import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {Logger} from '../utils/logger';
 
 /**
@@ -27,7 +26,7 @@ export default function useSCFetchUser({id = null, user = null}: {id?: number; u
           url: Endpoints.User.url({id: id}),
           method: Endpoints.User.method,
         })
-        .then((res: AxiosResponse<SCUserType>) => {
+        .then((res: HttpResponse<SCUserType>) => {
           if (res.status >= 300) {
             return Promise.reject(res);
           }

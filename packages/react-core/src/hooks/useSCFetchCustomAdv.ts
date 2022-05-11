@@ -1,7 +1,6 @@
 import {useEffect, useMemo, useRef, useState} from 'react';
-import {AxiosResponse} from 'axios';
 import {SCOPE_SC_CORE} from '../constants/Errors';
-import {http, Endpoints} from '@selfcommunity/api-services';
+import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {Logger} from '../utils/logger';
 import {SCCustomAdvPosition, SCCustomAdvType} from '@selfcommunity/types';
 
@@ -32,7 +31,7 @@ export default function useSCFetchCustomAdv({position = null, categoriesId = nul
             ...(categoriesId && {categories: `[${categoriesId.toString()}]`}),
           },
         })
-        .then((res: AxiosResponse<any>) => {
+        .then((res: HttpResponse<any>) => {
           if (res.status >= 300) {
             return Promise.reject(res);
           }

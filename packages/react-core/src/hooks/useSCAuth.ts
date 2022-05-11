@@ -53,7 +53,7 @@ function userReducer(state, action) {
       const newSession: SCSessionType = Object.assign({}, state.session, {
         authToken: newAuthToken,
       });
-      // Update current config axios object
+      // Update current client config
       http.setAuthorizeToken(newAuthToken.accessToken);
       return {...state, session: newSession, error: null, loading: false};
 
@@ -186,7 +186,7 @@ export default function useAuth(initialSession: SCSessionType) {
    */
   useEffect(() => {
     if (userId !== null) {
-      authInterceptor.current = http.getInstance().interceptors.response.use(
+      authInterceptor.current = http.getClientInstance().interceptors.response.use(
         (response) => {
           return response;
         },
@@ -250,7 +250,7 @@ export default function useAuth(initialSession: SCSessionType) {
     }
     return (): void => {
       if (authInterceptor.current !== null) {
-        http.getInstance().interceptors.response.eject(authInterceptor.current);
+        http.getClientInstance().interceptors.response.eject(authInterceptor.current);
       }
     };
   }, [userId, accessToken]);

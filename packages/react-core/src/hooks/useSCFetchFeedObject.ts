@@ -1,7 +1,6 @@
 import {useEffect, useState} from 'react';
-import {http, Endpoints} from '@selfcommunity/api-services';
+import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {Logger} from '../utils/logger';
-import {AxiosResponse} from 'axios';
 import {SCOPE_SC_CORE} from '../constants/Errors';
 import {SCFeedDiscussionType, SCFeedObjectType, SCFeedObjectTypologyType, SCFeedPostType, SCFeedStatusType} from '@selfcommunity/types';
 import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
@@ -36,7 +35,7 @@ export default function useSCFetchFeedObject({
         url: Endpoints.FeedObject.url({type: feedObjectType, id: id}),
         method: Endpoints.FeedObject.method,
       })
-      .then((res: AxiosResponse<any>) => {
+      .then((res: HttpResponse<any>) => {
         if (res.status >= 300) {
           return Promise.reject(res);
         }

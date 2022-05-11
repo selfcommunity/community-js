@@ -1,6 +1,5 @@
 import {useMemo} from 'react';
-import {AxiosResponse} from 'axios';
-import {http, Endpoints} from '@selfcommunity/api-services';
+import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {SCCategoryType, SCUserType} from '@selfcommunity/types';
 import useSCCachingManager from './useSCCachingManager';
 import {SCOPE_SC_CORE} from '../constants/Errors';
@@ -39,7 +38,7 @@ export default function useSCFollowedCategoriesManager(user?: SCUserType) {
             url: Endpoints.FollowedCategories.url({id: user.id}),
             method: Endpoints.FollowedCategories.method,
           })
-          .then((res: AxiosResponse<any>) => {
+          .then((res: HttpResponse<any>) => {
             if (res.status >= 300) {
               return Promise.reject(res);
             }
@@ -70,7 +69,7 @@ export default function useSCFollowedCategoriesManager(user?: SCUserType) {
             url: Endpoints.FollowCategory.url({id: category.id}),
             method: Endpoints.FollowCategory.method,
           })
-          .then((res: AxiosResponse<any>) => {
+          .then((res: HttpResponse<any>) => {
             if (res.status >= 300) {
               return Promise.reject(res);
             }
@@ -97,7 +96,7 @@ export default function useSCFollowedCategoriesManager(user?: SCUserType) {
         url: Endpoints.CheckCategoryIsFollowed.url({id: category.id}),
         method: Endpoints.CheckCategoryIsFollowed.method,
       })
-      .then((res: AxiosResponse<any>) => {
+      .then((res: HttpResponse<any>) => {
         if (res.status >= 300) {
           return Promise.reject(res);
         }
