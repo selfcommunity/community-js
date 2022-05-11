@@ -1,4 +1,4 @@
-import client from '../../apiClient';
+import client from '../../client';
 import Endpoints from '../../constants/Endpoints';
 
 export interface FeatureApiClientInterface {
