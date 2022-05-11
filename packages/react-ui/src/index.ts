@@ -75,6 +75,7 @@ import IncubatorsList, {IncubatorsListProps} from './components/IncubatorsList';
 import IncubatorDetail, {IncubatorDetailProps} from './components/IncubatorDetail';
 import IncubatorSuggestion, {IncubatorSuggestionProps} from './components/IncubatorSuggestion';
 import Footer, {FooterProps} from './components/Footer';
+import {FACEBOOK_SHARE, TWITTER_SHARE, LINKEDIN_SHARE} from './constants/SocialShare';
 
 /**
  * Utilities:
@@ -237,6 +238,9 @@ export {
   Share,
   EditMediaProps,
   MEDIA_TYPE_EMBED,
+  FACEBOOK_SHARE,
+  TWITTER_SHARE,
+  LINKEDIN_SHARE,
   PollSuggestion,
   PollSuggestionProps,
   Incubator,

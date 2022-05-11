@@ -43,7 +43,10 @@ const classes = {
   poll: `${PREFIX}-poll`,
   voters: `${PREFIX}-voters`,
   votes: `${PREFIX}-votes`,
+  toggleButton: `${PREFIX}-toggleButton`,
   title: `${PREFIX}-title`,
+  expiration: `${PREFIX}-expiration`,
+  closed: `${PREFIX}-closed`,
   expandIcon: `${PREFIX}-expand-icon`,
   collapsedIcon: `${PREFIX}-collapsed-icon`
 };
@@ -72,7 +75,6 @@ const Root = styled(Card, {
     alignItems: 'center',
     justifyContent: 'center',
     '& .MuiIcon-root': {
-      width: '0.7em',
       marginRight: '5px'
     }
   },
@@ -86,7 +88,7 @@ const Root = styled(Card, {
       marginRight: '5px'
     }
   },
-  [`& .${classes.title}`]: {
+  [`& .${classes.toggleButton}`]: {
     textTransform: 'uppercase'
   },
   [`& .${classes.expandIcon}`]: {
@@ -101,6 +103,10 @@ const Root = styled(Card, {
   },
   '& .MuiTypography-root': {
     fontSize: '1rem'
+  },
+  [`& .${classes.title}, & .${classes.expiration}, & .${classes.closed}`]: {
+    marginBottom: theme.spacing(),
+    textAlign: 'center'
   }
 }));
 
@@ -262,6 +268,7 @@ export default function PollObject(inProps: PollObjectProps): JSX.Element {
           title={
             <>
               <Button
+                className={classes.toggleButton}
                 onClick={handleToggleCollapsedClick}
                 aria-expanded={collapsed}
                 endIcon={<Icon className={classNames(classes.expandIcon, {[classes.collapsedIcon]: collapsed})}>arrow_upward</Icon>}>
@@ -269,36 +276,36 @@ export default function PollObject(inProps: PollObjectProps): JSX.Element {
               </Button>
             </>
           }
-          className={classes.title}
         />
         <Collapse in={!collapsed} timeout="auto" unmountOnExit>
           <CardContent>
-            <Typography variant="body1" gutterBottom align={'center'}>
+            <Typography variant="body1" className={classes.title}>
               {obj.title}
             </Typography>
             {obj.expiration_at && Date.parse(obj.expiration_at as string) >= new Date().getTime() && (
-              <Typography variant="body2" gutterBottom align={'center'}>
+              <Typography variant="body2" className={classes.expiration}>
                 {`${intl.formatMessage(messages.expDate)}`}
                 {`${intl.formatDate(Date.parse(obj.expiration_at as string), {year: 'numeric', month: 'numeric', day: 'numeric'})}`}
               </Typography>
             )}
             {obj.closed && (
-              <Typography variant="body2" gutterBottom align={'center'}>
+              <Typography variant="body2" className={classes.closed}>
                 <FormattedMessage id="ui.feedObject.poll.closed" defaultMessage="ui.feedObject.poll.closed" />
               </Typography>
             )}
             <List>
               {choices.map((choice: SCPollChoiceType, index) => (
-                <Choice
-                  elevation={0}
-                  choiceObj={choice}
-                  key={index}
-                  feedObject={disabled ? null : feedObject}
-                  votes={votes}
-                  vote={vote}
-                  isVoting={isVoting}
-                  votable={votable}
-                />
+                <ListItem key={index}>
+                  <Choice
+                    elevation={0}
+                    choiceObj={choice}
+                    feedObject={disabled ? null : feedObject}
+                    votes={votes}
+                    vote={vote}
+                    isVoting={isVoting}
+                    votable={votable}
+                  />
+                </ListItem>
               ))}
             </List>
             {multipleChoices ? (

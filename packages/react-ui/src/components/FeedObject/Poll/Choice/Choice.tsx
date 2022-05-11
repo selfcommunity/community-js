@@ -14,8 +14,8 @@ const PREFIX = 'SCChoices';
 
 const classes = {
   root: `${PREFIX}-root`,
-  voteButton: `${PREFIX}-vote-button`,
-  choice: `${PREFIX}-choice`,
+  label: `${PREFIX}-label`,
+  vote: `${PREFIX}-vote`,
   progress: `${PREFIX}-progress`
 };
 
@@ -26,18 +26,21 @@ const Root = styled(Card, {
 })(({theme}) => ({
   background: theme.palette.grey['A200'],
   marginBottom: theme.spacing(2),
-  padding: theme.spacing(1),
-  [`& .${classes.voteButton}`]: {
-    marginRight: theme.spacing(1)
-  },
-  [`& .${classes.choice}`]: {
-    display: 'inline-flex',
-    margin: theme.spacing(1)
+  padding: theme.spacing(2),
+  width: '100%',
+  [`& .${classes.label}, & .${classes.vote}`]: {
+    marginBottom: theme.spacing()
   },
   [`& .${classes.progress}`]: {
-    marginLeft: theme.spacing(1),
-    height: '25px',
-    backgroundColor: theme.palette.grey['A200']
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: theme.spacing(),
+    '& .MuiLinearProgress-root': {
+      flexGrow: 2,
+      marginRight: theme.spacing(2),
+      backgroundColor: theme.palette.common.white
+    }
   }
 }));
 
@@ -48,15 +51,11 @@ export interface ChoiceObjectProps {
   choiceObj: SCPollChoiceType;
 }
 
-function LinearProgressWithLabel(props: LinearProgressProps & {value: number}) {
+function LinearProgressWithLabel({className, ...props}: LinearProgressProps & {value: number}) {
   return (
-    <Box sx={{display: 'flex', alignItems: 'center'}}>
-      <Box sx={{width: '100%', mr: 1}}>
-        <LinearProgress variant="determinate" {...props} />
-      </Box>
-      <Box sx={{minWidth: 35}}>
-        <Typography variant="body2" color="text.secondary">{`${Math.round(props.value)}%`}</Typography>
-      </Box>
+    <Box className={className}>
+      <LinearProgress variant="determinate" {...props} />
+      <Typography variant="body2" color="text.secondary">{`${Math.round(props.value)}%`}</Typography>
     </Box>
   );
 }
@@ -119,36 +118,25 @@ export default function Choice(inProps: ChoiceProps): JSX.Element {
   }
 
   /**
-   * Renders choice obj
-   */
-  const c = (
-    <React.Fragment>
-      <Box className={classes.choice}>
-        <LoadingButton
-          loading={isVoting === choiceObj.id}
-          variant={choiceObj.voted ? 'contained' : 'outlined'}
-          size="small"
-          disabled={disabled || isVoting !== null || votable}
-          className={classes.voteButton}
-          onClick={handleVoteAction}>
-          {choiceObj.voted ? (
-            <Icon>check</Icon>
-          ) : (
-            <FormattedMessage id="ui.feedObject.poll.choice.vote" defaultMessage="ui.feedObject.poll.choice.vote" />
-          )}
-        </LoadingButton>
-        <Typography>{choiceObj.choice}</Typography>
-      </Box>
-      <LinearProgressWithLabel className={classes.progress} value={renderVotes(choiceObj.vote_count, votes)} />
-    </React.Fragment>
-  );
-
-  /**
    * Renders root element
    */
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
-      {c}
+      <Typography className={classes.label}>{choiceObj.choice}</Typography>
+      <LinearProgressWithLabel className={classes.progress} value={renderVotes(choiceObj.vote_count, votes)} />
+      <LoadingButton
+        loading={isVoting === choiceObj.id}
+        variant={choiceObj.voted ? 'contained' : 'outlined'}
+        size="small"
+        disabled={disabled || isVoting !== null || votable}
+        className={classes.vote}
+        onClick={handleVoteAction}>
+        {choiceObj.voted ? (
+          <Icon>check</Icon>
+        ) : (
+          <FormattedMessage id="ui.feedObject.poll.choice.vote" defaultMessage="ui.feedObject.poll.choice.vote" />
+        )}
+      </LoadingButton>
     </Root>
   );
 }

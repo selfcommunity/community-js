@@ -1,13 +1,16 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useContext, useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {TextField, Typography, Box, Avatar, Button, Input, CardContent, Alert, FormGroup, AvatarGroup, List, ListItem} from '@mui/material';
-import {SCIncubatorType, SCUserType} from '@selfcommunity/types';
+import {SCIncubatorType, SCUserType, SCIncubatorType} from '@selfcommunity/types';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {
   Link,
   Logger,
   SCContextType,
+  SCPreferences,
+  SCPreferencesContext,
+  SCPreferencesContextType,
   SCRoutes,
   SCRoutingContextType,
   SCUserContextType,
@@ -27,6 +30,8 @@ import CentralProgress from '../../shared/CentralProgress';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import User from '../User';
 import {SCOPE_SC_UI} from '../../constants/Errors';
+import Icon from '@mui/material/Icon';
+import {FACEBOOK_SHARE, TWITTER_SHARE, LINKEDIN_SHARE} from '../../constants/SocialShare';
 
 const messages = defineMessages({
   intro: {
@@ -48,7 +53,8 @@ const classes = {
   copyText: `${PREFIX}-copy-text`,
   shareSection: `${PREFIX}-share-section`,
   socialShareButton: `${PREFIX}-social-share-button`,
-  subscribers: `${PREFIX}-subscribers`
+  subscribers: `${PREFIX}-subscribers`,
+  shareMenuIcon: `${PREFIX}-share-Menu-icon`
 };
 
 const Root = styled(BaseDialog, {
@@ -89,7 +95,10 @@ const Root = styled(BaseDialog, {
     }
   },
   [`& .${classes.shareSection}`]: {
-    marginTop: theme.spacing(1)
+    display: 'flex',
+    gap: theme.spacing(1),
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1)
   },
   [`& .${classes.socialShareButton}`]: {
     marginRight: theme.spacing(1)
@@ -189,8 +198,19 @@ export default function IncubatorDetail(inProps: IncubatorDetailProps): JSX.Elem
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
   const scContext: SCContextType = useSCContext();
+  const scPreferencesContext: SCPreferencesContextType = useContext(SCPreferencesContext);
+  const facebookShareEnabled =
+    SCPreferences.ADDONS_SHARE_POST_ON_FACEBOOK_ENABLED in scPreferencesContext.preferences &&
+    scPreferencesContext.preferences[SCPreferences.ADDONS_SHARE_POST_ON_FACEBOOK_ENABLED].value;
+  const twitterShareEnabled =
+    SCPreferences.ADDONS_SHARE_POST_ON_TWITTER_ENABLED in scPreferencesContext.preferences &&
+    scPreferencesContext.preferences[SCPreferences.ADDONS_SHARE_POST_ON_TWITTER_ENABLED].value;
+  const linkedinShareEnabled =
+    SCPreferences.ADDONS_SHARE_POST_ON_LINKEDIN_ENABLED in scPreferencesContext.preferences &&
+    scPreferencesContext.preferences[SCPreferences.ADDONS_SHARE_POST_ON_LINKEDIN_ENABLED].value;
   const scRoutingContext: SCRoutingContextType = useSCRouting();
   const portal = scContext.settings.portal + scRoutingContext.url(SCRoutes.INCUBATOR_ROUTE_NAME, scIncubator);
+  const isSocialShareEnabled = facebookShareEnabled || twitterShareEnabled || linkedinShareEnabled;
 
   // INTL
   const intl = useIntl();
@@ -389,16 +409,36 @@ export default function IncubatorDetail(inProps: IncubatorDetailProps): JSX.Elem
                 <FormattedMessage id="ui.incubatorDetail.shareSection.copied" defaultMessage="ui.incubatorDetail.shareSection.copied" />
               </Alert>
             )}
-            <Typography variant={'subtitle2'}>
-              <FormattedMessage id="ui.incubatorDetail.shareSection.invite" defaultMessage="ui.incubatorDetail.shareSection.invite" />
-            </Typography>
+            {isSocialShareEnabled && (
+              <Typography variant={'subtitle2'}>
+                <FormattedMessage id="ui.incubatorDetail.shareSection.invite" defaultMessage="ui.incubatorDetail.shareSection.invite" />
+              </Typography>
+            )}
             <Box className={classes.shareSection}>
-              <LinkedinShareButton url={portal} className={classes.socialShareButton}>
-                <LinkedinIcon size={32} round />
-              </LinkedinShareButton>
-              <TwitterShareButton url={portal}>
-                <TwitterIcon size={32} round />
-              </TwitterShareButton>
+              {facebookShareEnabled && (
+                <Icon
+                  classes={{root: classes.shareMenuIcon}}
+                  fontSize="small"
+                  onClick={() => window.open(FACEBOOK_SHARE + portal, 'facebook-share-dialog', 'width=626,height=436')}>
+                  facebook
+                </Icon>
+              )}
+              {twitterShareEnabled && (
+                <Icon
+                  classes={{root: classes.shareMenuIcon}}
+                  fontSize="small"
+                  onClick={() => window.open(TWITTER_SHARE + portal, 'twitter-share-dialog', 'width=626,height=436')}>
+                  twitter
+                </Icon>
+              )}
+              {linkedinShareEnabled && (
+                <Icon
+                  classes={{root: classes.shareMenuIcon}}
+                  fontSize="small"
+                  onClick={() => window.open(LINKEDIN_SHARE + portal, 'linkedin-share-dialog', 'width=626,height=436')}>
+                  linkedin
+                </Icon>
+              )}
             </Box>
           </CardContent>
         </Widget>
