@@ -19,7 +19,7 @@ import {Logger} from '../utils/logger';
  ```
  :::
  */
-export default function useSCFollowedCategoriesManager(user?: SCUserType) {
+export default function useSCFollowedCategoriesManager(user?: SCUserType, updateUser?: (info) => void) {
   const {cache, updateCache, emptyCache, data, setData, loading, setLoading, isLoading} = useSCCachingManager();
 
   /**
@@ -77,6 +77,7 @@ export default function useSCFollowedCategoriesManager(user?: SCUserType) {
             const isFollowed = data.includes(category.id);
             setData((prev) => (isFollowed ? prev.filter((id) => id !== category.id) : [...[category.id], ...prev]));
             setLoading((prev) => prev.filter((c) => c !== category.id));
+            updateUser({categories_counter: isFollowed ? data.length - 1 : data.length + 1});
             return Promise.resolve(res.data);
           });
       },

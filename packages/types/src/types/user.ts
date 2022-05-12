@@ -200,6 +200,11 @@ export interface SCUserType {
   polls_counter?: number;
 
   /**
+   * Number of categories followed by the user.
+   */
+  categories_counter?: number;
+
+  /**
    *  User role
    */
   role: string;
