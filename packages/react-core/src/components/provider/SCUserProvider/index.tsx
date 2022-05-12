@@ -60,12 +60,19 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
   const {state, dispatch, helpers} = useSCAuth(initialSession);
 
   /**
+   * Handle change user
+   */
+  function updateUser(info): void {
+    dispatch({type: userActionTypes.UPDATE_USER, payload: info});
+  }
+
+  /**
    * Managers followed, categories
    */
   const followedManager: SCFollowedManagerType = useSCFollowedManager(state.user);
   const subscribedIncubatorsManager: SCSubscribedIncubatorsManagerType = useSCSubscribedIncubatorsManager(state.user);
   const connectionsManager: SCConnectionsManagerType = useSCConnectionsManager(state.user);
-  const categoriesManager: SCFollowedCategoriesManagerType = useSCFollowedCategoriesManager(state.user);
+  const categoriesManager: SCFollowedCategoriesManagerType = useSCFollowedCategoriesManager(state.user, updateUser);
 
   /**
    * Ref notifications subscribers: BLOCKED_USER, UNBLOCKED_USER
@@ -81,8 +88,7 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
   useDeepCompareEffect(() => {
     if (state.session.authToken && state.session.authToken.accessToken) {
       dispatch({type: userActionTypes.LOGIN_LOADING});
-      UserService
-        .getCurrentUser()
+      UserService.getCurrentUser()
         .then((user: SCUserType) => {
           dispatch({type: userActionTypes.LOGIN_SUCCESS, payload: {user}});
         })
@@ -142,13 +148,6 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
   }, []);
 
   /**
-   * Handle change user
-   */
-  function updateUser(info): void {
-    dispatch({type: userActionTypes.UPDATE_USER, payload: info});
-  }
-
-  /**
    * Handle change unseen interactions counter
    */
   function setUnseenInteractionsCounter(counter): void {
@@ -177,8 +176,7 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
   const refreshNotificationCounters = useMemo(
     () => () => {
       if (state.user) {
-        return UserService
-          .getCurrentUser()
+        return UserService.getCurrentUser()
           .then((user: SCUserType) => {
             dispatch({
               type: userActionTypes.UPDATE_USER,
