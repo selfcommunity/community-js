@@ -106,6 +106,12 @@ export default function AutoPlayer(props: AutoPlayerProps) {
           onProgress={(progress) => {
             setPlayed(progress.playedSeconds);
           }}
+          config={{
+            vimeo: {
+              playerOptions: { autopause: true },
+              preload: true,
+            },
+          }}
           {...rest}
         />
       </div>

@@ -702,7 +702,6 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
               autoFocus
               key={`reply-${replyComment.id}`}
               id={`reply-${replyComment.id}`}
-              commentObject={replyComment}
               onReply={handleReply}
               readOnly={isReplying}
               {...ReplyCommentObjectProps}
