@@ -7,7 +7,7 @@ import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
 import classNames from 'classnames';
 import {SCNotificationObjectTemplateType} from '../../../types';
-import {getContributionType, getRouteData} from '../../../utils/contribution';
+import {getContributionSnippet, getContributionType, getRouteData} from '../../../utils/contribution';
 import useThemeProps from '@mui/material/styles/useThemeProps';
 import NotificationItem from '../../../shared/NotificationItem';
 
@@ -131,21 +131,40 @@ export default function ContributionFollowNotification(inProps: ContributionFoll
           </Link>
         }
         primary={
-          <Typography component="div" color="inherit" className={classes.followText}>
+          <Typography component="span" color="inherit" className={classes.followText}>
             <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.user)} className={classes.username}>
               {notificationObject.user.username}
             </Link>{' '}
             {intl.formatMessage(messages.contributionFollow, {
-              username: notificationObject.user.username,
               b: (...chunks) => <strong>{chunks}</strong>
             })}
           </Typography>
         }
         secondary={
-          template === SCNotificationObjectTemplateType.DETAIL && <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
+          <React.Fragment>
+            {template === SCNotificationObjectTemplateType.SNIPPET && (
+              <>
+                :{' '}
+                <Link
+                  to={scRoutingContext.url(
+                    SCRoutes[`${notificationObject[contributionType]['type'].toUpperCase()}_ROUTE_NAME`],
+                    getRouteData(notificationObject[contributionType])
+                  )}>
+                  <Typography variant="body2" gutterBottom className={classes.contributionText}>
+                    {getContributionSnippet(notificationObject[contributionType])}
+                  </Typography>
+                </Link>
+              </>
+            )}
+            {template === SCNotificationObjectTemplateType.DETAIL && (
+              <div>
+                <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
+              </div>
+            )}
+          </React.Fragment>
         }
         footer={
-          <>
+          <React.Fragment>
             {template === SCNotificationObjectTemplateType.TOAST && (
               <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
                 <DateTimeAgo date={notificationObject.active_at} />
@@ -160,7 +179,7 @@ export default function ContributionFollowNotification(inProps: ContributionFoll
                 </Typography>
               </Stack>
             )}
-          </>
+          </React.Fragment>
         }
       />
     </Root>
