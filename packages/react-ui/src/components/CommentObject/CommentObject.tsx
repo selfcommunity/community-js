@@ -248,7 +248,7 @@ export interface CommentObjectProps {
 }
 
 /**
- *> API documentation for the Community-UI Comment Object component. Learn about the available props and the CSS API.
+ *> API documentation for the Community-JS Comment Object component. Learn about the available props and the CSS API.
 
  #### Import
 

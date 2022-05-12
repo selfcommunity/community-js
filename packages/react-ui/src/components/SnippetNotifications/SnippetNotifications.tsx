@@ -121,7 +121,7 @@ export interface SnippetNotificationsProps extends CardProps {
 
 /**
  *
- > API documentation for the Community-UI SnippetNotifications component. Learn about the available props and the CSS API.
+ > API documentation for the Community-JS SnippetNotifications component. Learn about the available props and the CSS API.
 
  #### Import
 

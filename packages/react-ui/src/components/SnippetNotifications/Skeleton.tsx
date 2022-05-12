@@ -23,7 +23,7 @@ const Root = styled(List)(({theme}) => ({
 }));
 
 /**
- * > API documentation for the Community-UI Snippet Notification Skeleton component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS Snippet Notification Skeleton component. Learn about the available props and the CSS API.
 
  #### Import
 

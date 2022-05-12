@@ -68,7 +68,7 @@ export interface FeedUpdatesProps {
 }
 
 /**
- * > API documentation for the Community-UI FeedUpdates component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS FeedUpdates component. Learn about the available props and the CSS API.
  * This Component subscribe to updates from PubSub channel (eg. websocket) and tell the feed to updates if necessary.
 
  #### Import

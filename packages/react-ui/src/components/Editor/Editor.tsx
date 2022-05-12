@@ -149,7 +149,7 @@ export interface EditorProps {
 }
 
 /**
- * > API documentation for the Community-UI Editor component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS Editor component. Learn about the available props and the CSS API.
 
  #### Import
 

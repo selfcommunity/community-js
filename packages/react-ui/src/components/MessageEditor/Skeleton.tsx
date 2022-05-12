@@ -14,7 +14,7 @@ const Root = styled(GenericSkeleton, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({}));
 /**
- * > API documentation for the Community-UI Message Editor Skeleton component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS Message Editor Skeleton component. Learn about the available props and the CSS API.
 
  #### Import
 

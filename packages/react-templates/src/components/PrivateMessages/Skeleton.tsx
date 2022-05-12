@@ -14,7 +14,7 @@ const Root = styled(GenericSkeleton, {
 })(() => ({}));
 
 /**
- * > API documentation for the Community-UI Private Messages Skeleton Template. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS Private Messages Skeleton Template. Learn about the available props and the CSS API.
 
  #### Import
 

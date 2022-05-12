@@ -16,7 +16,7 @@ const Root = styled(Widget)(({theme}) => ({
 }));
 
 /**
- * > API documentation for the Community-UI Notification Skeleton component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS Notification Skeleton component. Learn about the available props and the CSS API.
 
  #### Import
 

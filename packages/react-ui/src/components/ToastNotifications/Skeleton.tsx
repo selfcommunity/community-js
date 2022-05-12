@@ -14,7 +14,7 @@ const Root = styled(NotificationSkeleton, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({}));
 /**
- * > API documentation for the Community-UI Toast Notifications Skeleton component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS Toast Notifications Skeleton component. Learn about the available props and the CSS API.
 
  #### Import
 

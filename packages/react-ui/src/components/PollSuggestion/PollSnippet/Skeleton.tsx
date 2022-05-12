@@ -14,7 +14,7 @@ const classes = {
 const Root = styled(BaseItem)(({theme}) => ({}));
 
 /**
- * > API documentation for the Community-UI Poll Snippet Skeleton component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS Poll Snippet Skeleton component. Learn about the available props and the CSS API.
 
  #### Import
 

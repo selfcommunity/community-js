@@ -103,7 +103,7 @@ const INITIAL_STATE = {
   view: null
 };
 /**
- > API documentation for the Community-UI Inline Composer component. Learn about the available props and the CSS API.
+ > API documentation for the Community-JS Inline Composer component. Learn about the available props and the CSS API.
  *
  #### Import
  ```jsx

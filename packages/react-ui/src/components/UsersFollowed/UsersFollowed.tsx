@@ -5,14 +5,7 @@ import {Button, CardContent, ListItem, Typography} from '@mui/material';
 import Widget from '../Widget';
 import {SCUserType} from '@selfcommunity/types';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
-import {
-  Logger,
-  SCPreferences,
-  SCPreferencesContext,
-  SCPreferencesContextType,
-  SCUserContext,
-  SCUserContextType
-} from '@selfcommunity/react-core';
+import {Logger, SCPreferences, SCPreferencesContext, SCPreferencesContextType, SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
 import Skeleton from './Skeleton';
 import User, {UserProps} from '../User';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
@@ -79,7 +72,7 @@ export interface UsersFollowedProps {
 }
 
 /**
- * > API documentation for the Community-UI Users Followed component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS Users Followed component. Learn about the available props and the CSS API.
 
  #### Import
 

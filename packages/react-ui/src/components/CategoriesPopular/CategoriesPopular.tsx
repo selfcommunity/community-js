@@ -34,7 +34,7 @@ const Root = styled(Widget, {
 }));
 
 /**
- > API documentation for the Community-UI Categories Popular component. Learn about the available props and the CSS API.
+ > API documentation for the Community-JS Categories Popular component. Learn about the available props and the CSS API.
  *
  #### Import
  ```jsx

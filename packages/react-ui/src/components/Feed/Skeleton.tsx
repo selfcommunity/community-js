@@ -39,7 +39,7 @@ interface FeedSkeletonMap {
 export type FeedSkeletonProps = React.PropsWithChildren<FeedSkeletonMap>;
 
 /**
- * > API documentation for the Community-UI Feed Skeleton component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS Feed Skeleton component. Learn about the available props and the CSS API.
 
  #### Import
 

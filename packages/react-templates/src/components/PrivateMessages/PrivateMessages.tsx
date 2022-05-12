@@ -72,7 +72,7 @@ export interface PrivateMessagesProps {
 }
 /**
  *
- > API documentation for the Community-UI Private Messages template. Learn about the available props and the CSS API.
+ > API documentation for the Community-JS Private Messages template. Learn about the available props and the CSS API.
 
  #### Import
 

@@ -111,7 +111,7 @@ export interface CategoryHeaderProps {
 }
 
 /**
- *> API documentation for the Community-UI Category Header component. Learn about the available props and the CSS API.
+ *> API documentation for the Community-JS Category Header component. Learn about the available props and the CSS API.
  *
  #### Import
  ```jsx

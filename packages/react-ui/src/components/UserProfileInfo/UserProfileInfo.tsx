@@ -88,7 +88,7 @@ export interface UserProfileInfoProps {
 }
 /**
  *
- > API documentation for the Community-UI User Profile Info component. Learn about the available props and the CSS API.
+ > API documentation for the Community-JS User Profile Info component. Learn about the available props and the CSS API.
 
  #### Import
 

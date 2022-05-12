@@ -200,7 +200,7 @@ export interface NotificationItemProps extends Pick<WidgetProps, Exclude<keyof W
 }
 
 /**
- * > API documentation for the Community-UI BaseItem component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS BaseItem component. Learn about the available props and the CSS API.
 
  #### Import
 

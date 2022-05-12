@@ -70,7 +70,7 @@ export interface BroadcastMessagesProps {
   [p: string]: any;
 }
 /**
- > API documentation for the Community-UI Broadcast Messages component. Learn about the available props and the CSS API.
+ > API documentation for the Community-JS Broadcast Messages component. Learn about the available props and the CSS API.
  > This component handles message broadcasts. It initially displays unseen messages. If all messages have been viewed it will show at most one message.
  *
  #### Import

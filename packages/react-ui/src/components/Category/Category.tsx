@@ -66,7 +66,7 @@ export interface CategoryProps extends WidgetProps {
 }
 
 /**
- * > API documentation for the Community-UI Category component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS Category component. Learn about the available props and the CSS API.
  *
  * #### Import
  ```jsx

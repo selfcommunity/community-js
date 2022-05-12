@@ -16,7 +16,7 @@ const Root = styled(TrendingPeopleSkeleton, {
 })(({theme}) => ({}));
 
 /**
- * > API documentation for the Community-UI User Followers Skeleton component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS User Followers Skeleton component. Learn about the available props and the CSS API.
 
  #### Import
 

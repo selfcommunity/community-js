@@ -15,7 +15,7 @@ const Root = styled(FeedSkeleton, {
 })(() => ({}));
 
 /**
- * > API documentation for the Community-UI Explore Feed Skeleton Template. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS Explore Feed Skeleton Template. Learn about the available props and the CSS API.
 
  #### Import
 

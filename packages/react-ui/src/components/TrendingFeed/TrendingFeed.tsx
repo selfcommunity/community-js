@@ -65,7 +65,7 @@ export interface TrendingFeedProps {
 }
 
 /**
- * > API documentation for the Community-UI Trending Feed component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS Trending Feed component. Learn about the available props and the CSS API.
 
  #### Import
 

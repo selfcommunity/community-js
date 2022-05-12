@@ -92,7 +92,7 @@ export interface FeedObjectDetailProps {
 const PREFERENCES = [SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED, SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED];
 
 /**
- * > API documentation for the Community-UI Feed Object Detail Template. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS Feed Object Detail Template. Learn about the available props and the CSS API.
 
  #### Import
 

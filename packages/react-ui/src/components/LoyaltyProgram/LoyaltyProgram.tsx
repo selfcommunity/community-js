@@ -85,7 +85,7 @@ export interface LoyaltyProgramProps {
   cardType?: boolean;
 }
 /**
- * > API documentation for the Community-UI Loyalty Program component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS Loyalty Program component. Learn about the available props and the CSS API.
 
  #### Import
 

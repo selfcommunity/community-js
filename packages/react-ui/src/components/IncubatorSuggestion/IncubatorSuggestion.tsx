@@ -68,7 +68,7 @@ export interface IncubatorSuggestionProps {
   [p: string]: any;
 }
 /**
- > API documentation for the Community-UI Incubator Suggestion component. Learn about the available props and the CSS API.
+ > API documentation for the Community-JS Incubator Suggestion component. Learn about the available props and the CSS API.
  *
  #### Import
  ```jsx

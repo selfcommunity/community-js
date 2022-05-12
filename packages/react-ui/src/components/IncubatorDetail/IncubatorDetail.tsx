@@ -149,7 +149,7 @@ export interface IncubatorDetailProps {
   onSubscriptionsUpdate?: (scIncubator) => any;
 }
 /**
- * > API documentation for the Community-UI Incubator Detail component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS Incubator Detail component. Learn about the available props and the CSS API.
  *
  * #### Import
  ```jsx

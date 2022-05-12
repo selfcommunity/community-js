@@ -81,7 +81,7 @@ export interface IncubatorsListProps {
   [p: string]: any;
 }
 /**
- > API documentation for the Community-UI Incubators List component. Learn about the available props and the CSS API.
+ > API documentation for the Community-JS Incubators List component. Learn about the available props and the CSS API.
  *
  #### Import
  ```jsx
