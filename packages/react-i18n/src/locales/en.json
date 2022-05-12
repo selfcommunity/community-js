@@ -261,7 +261,7 @@
   "ui.userProfileEditPublicInfo.genderUnspecified": "Unspecified",
 
   "ui.userProfileEditSettings.notification.title": "When receive a notification",
-  "ui.userProfileEditSettings.notification.label": "show a toast message in the bottom right corner:",
+  "ui.userProfileEditSettings.notification.label": "show a toast message in the bottom left corner:",
   "ui.userProfileEditSettings.notificationSound.label": "emit a sound:",
 
   "ui.userProfileEditSettings.interaction.title": "When someone interact with me",
