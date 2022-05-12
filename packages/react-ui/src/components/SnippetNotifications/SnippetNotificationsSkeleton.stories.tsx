@@ -3,7 +3,7 @@ import {ComponentStory, ComponentMeta} from '@storybook/react';
 import NotificationPopupSkeleton from './Skeleton';
 
 export default {
-  title: 'Design System/SC UI/Skeleton/NotificationPopup',
+  title: 'Design System/React UI/Skeleton/NotificationPopup',
   component: NotificationPopupSkeleton,
 } as ComponentMeta<typeof NotificationPopupSkeleton>;
 

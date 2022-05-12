@@ -4,7 +4,7 @@ import PrivateMessagesSkeleton from './Skeleton';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC TEMPLATES/Skeleton/PrivateMessages',
+  title: 'Design System/React TEMPLATES/Skeleton/PrivateMessages',
   component: PrivateMessagesSkeleton
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
 } as ComponentMeta<typeof PrivateMessagesSkeleton>;

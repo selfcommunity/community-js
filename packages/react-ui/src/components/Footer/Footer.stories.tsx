@@ -4,7 +4,7 @@ import Footer from './index';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC UI/Footer',
+  title: 'Design System/React UI/Footer',
   component: Footer,
   argTypes: {
     elevation: {

@@ -4,7 +4,7 @@ import ScrollContainer from './index';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SHARED COMPONENT/ScrollContainer',
+  title: 'Design System/React UI Shared/ScrollContainer',
   component: ScrollContainer
 } as ComponentMeta<typeof ScrollContainer>;
 

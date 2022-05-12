@@ -3,7 +3,7 @@ import {ComponentStory, ComponentMeta} from '@storybook/react';
 import CommentsFeedObjectSkeleton from './Skeleton';
 
 export default {
-  title: 'Design System/SC UI/Skeleton/CommentsFeedObjectSkeleton',
+  title: 'Design System/React UI/Skeleton/CommentsFeedObjectSkeleton',
   component: CommentsFeedObjectSkeleton,
   argTypes: {
     variant: {

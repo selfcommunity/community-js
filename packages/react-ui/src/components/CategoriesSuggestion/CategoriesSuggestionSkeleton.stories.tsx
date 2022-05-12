@@ -4,7 +4,7 @@ import CategoriesSuggestionSkeleton from './Skeleton';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC UI/Skeleton/CategoriesSuggestion',
+  title: 'Design System/React UI/Skeleton/CategoriesSuggestion',
   component: CategoriesSuggestionSkeleton,
   argTypes: {
     variant: {

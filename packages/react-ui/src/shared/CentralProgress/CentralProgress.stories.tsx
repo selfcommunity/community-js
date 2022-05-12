@@ -4,7 +4,7 @@ import CentralProgress from './index';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SHARED COMPONENT/CentralProgress',
+  title: 'Design System/React UI Shared/CentralProgress',
   component: CentralProgress,
   argTypes: {
     size: {

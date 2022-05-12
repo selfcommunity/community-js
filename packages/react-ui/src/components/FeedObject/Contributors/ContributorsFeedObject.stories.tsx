@@ -6,7 +6,7 @@ import {SCFeedObjectTypologyType} from '@selfcommunity/types';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC UI/ContributorsFeedObject',
+  title: 'Design System/React UI/ContributorsFeedObject',
   component: ContributorsFeedObject,
   argTypes: {
     feedObjectId: {

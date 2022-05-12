@@ -5,7 +5,7 @@ import CategoriesPopular from './index';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC UI/Categories Popular',
+  title: 'Design System/React UI/Categories Popular',
   component: CategoriesPopular,
   argTypes: {
     elevation: {

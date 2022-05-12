@@ -4,7 +4,7 @@ import UserProfileInfo from './index';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC UI/UserProfileInfo ',
+  title: 'Design System/React UI/UserProfileInfo ',
   component: UserProfileInfo,
   argTypes: {
     userId: {

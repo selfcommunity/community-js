@@ -4,7 +4,7 @@ import CategoryFeedSkeletonTemplate from './Skeleton';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC TEMPLATES/Skeleton/Category Feed',
+  title: 'Design System/React TEMPLATES/Skeleton/Category Feed',
   component: CategoryFeedSkeletonTemplate
 } as ComponentMeta<typeof CategoryFeedSkeletonTemplate>;
 

@@ -41,6 +41,11 @@ export interface AudienceProps extends StandardProps<React.HTMLAttributes<HTMLDi
    */
   size?: OverridableStringUnion<'small' | 'medium', AutocompletePropsSizeOverrides>;
   /**
+   * The addressing tags to use to address the content
+   * @default []
+   */
+  tags: SCTagType[];
+  /**
    * The maximum number of tags that will be visible when not focused.
    * Set `-1` to disable the limit.
    * @default -1
@@ -105,33 +110,13 @@ export default function (inProps: AudienceProps): JSX.Element {
       variant: 'outlined',
       label: <FormattedMessage id="ui.composer.audience.tags.label" defaultMessage="ui.composer.audience.tags.label" />
     },
+    tags = [],
     ...rest
   } = props;
 
   // State
-  const [isLoading, setIsLoading] = useState(false);
   const [open, setOpen] = useState(false);
-  const [tags, setTags] = useState([]);
   const [value, setValue] = useState(defaultValue);
-
-  const load = () => {
-    http
-      .request({
-        url: Endpoints.ComposerAddressingTagList.url(),
-        method: Endpoints.ComposerAddressingTagList.method
-      })
-      .then((res: HttpResponse<any>) => {
-        setTags(res.data);
-      })
-      .then(() => setIsLoading(false));
-  };
-
-  // Component update
-  useEffect(() => {
-    if (!isLoading && open && tags.length === 0) {
-      load();
-    }
-  }, [open]);
 
   // Handlers
 
@@ -208,12 +193,7 @@ export default function (inProps: AudienceProps): JSX.Element {
             InputProps={{
               ...params.InputProps,
               autoComplete: 'addressing', // disable autocomplete and autofill
-              endAdornment: (
-                <React.Fragment>
-                  {isLoading ? <CircularProgress color="inherit" size={20} /> : null}
-                  {params.InputProps.endAdornment}
-                </React.Fragment>
-              )
+              endAdornment: <React.Fragment>{params.InputProps.endAdornment}</React.Fragment>
             }}
           />
         );

@@ -5,7 +5,7 @@ import {SCFeedObjectTemplateType} from '../../types/feedObject';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC UI/Trending Feed',
+  title: 'Design System/React UI/Trending Feed',
   component: TrendingFeed,
   argTypes: {
     elevation: {

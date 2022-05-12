@@ -4,7 +4,7 @@ import IncubatorsListSkeleton from './Skeleton';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC UI/Skeleton/IncubatorsList',
+  title: 'Design System/React UI/Skeleton/IncubatorsList',
   component: IncubatorsListSkeleton,
   argTypes: {
     variant: {

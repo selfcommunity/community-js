@@ -4,7 +4,7 @@ import ToastNotificationsSkeleton from './Skeleton';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC UI/Skeleton/ToastNotifications',
+  title: 'Design System/React UI/Skeleton/ToastNotifications',
   component: ToastNotificationsSkeleton
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
 } as ComponentMeta<typeof ToastNotificationsSkeleton>;

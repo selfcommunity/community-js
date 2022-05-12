@@ -4,7 +4,7 @@ import NotificationItem from './index';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SHARED COMPONENT/NotificationItem',
+  title: 'Design System/React UI Shared/NotificationItem',
   component: NotificationItem
 } as ComponentMeta<typeof NotificationItem>;
 

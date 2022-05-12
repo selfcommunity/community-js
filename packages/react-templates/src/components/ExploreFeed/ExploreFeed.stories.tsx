@@ -4,7 +4,7 @@ import ExploreFeedTemplate from './index';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC TEMPLATES/Explore Feed',
+  title: 'Design System/React TEMPLATES/Explore Feed',
   component: ExploreFeedTemplate
 } as ComponentMeta<typeof ExploreFeedTemplate>;
 

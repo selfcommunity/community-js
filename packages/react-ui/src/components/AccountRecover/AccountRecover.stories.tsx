@@ -5,7 +5,7 @@ import AccountRecover from './index';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC UI/Account Recover',
+  title: 'Design System/React UI/Account Recover',
   component: AccountRecover
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
 } as ComponentMeta<typeof AccountRecover>;

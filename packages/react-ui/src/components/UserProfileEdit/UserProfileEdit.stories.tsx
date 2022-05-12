@@ -6,7 +6,7 @@ import {SCUserFields} from '@selfcommunity/types';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC UI/User Profile Edit',
+  title: 'Design System/React UI/User Profile Edit',
   component: UserProfileEdit,
   argTypes: {
     userId: {

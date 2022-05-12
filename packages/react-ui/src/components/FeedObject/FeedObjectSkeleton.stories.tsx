@@ -4,7 +4,7 @@ import FeedObjectSkeleton from './Skeleton';
 import {SCFeedObjectTemplateType} from '../../types/feedObject';
 
 export default {
-  title: 'Design System/SC UI/Skeleton/FeedObject',
+  title: 'Design System/React UI/Skeleton/FeedObject',
   component: FeedObjectSkeleton,
   argTypes: {
     variant: {

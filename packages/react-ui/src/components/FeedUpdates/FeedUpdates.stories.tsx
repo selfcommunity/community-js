@@ -6,7 +6,7 @@ import {SCNotificationTopicType} from '@selfcommunity/types';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC UI/Feed Updates',
+  title: 'Design System/React UI/Feed Updates',
   component: FeedUpdates
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
 } as ComponentMeta<typeof FeedUpdates>;

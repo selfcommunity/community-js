@@ -5,7 +5,7 @@ import PrivateMessages from './index';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC TEMPLATES/PrivateMessages',
+  title: 'Design System/React TEMPLATES/PrivateMessages',
   component: PrivateMessages
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
 } as ComponentMeta<typeof PrivateMessages>;

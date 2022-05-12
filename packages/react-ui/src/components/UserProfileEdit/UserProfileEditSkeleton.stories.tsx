@@ -3,7 +3,7 @@ import {ComponentStory, ComponentMeta} from '@storybook/react';
 import UserProfileEditSkeleton from './Skeleton';
 
 export default {
-  title: 'Design System/SC UI/Skeleton/User Profile Edit',
+  title: 'Design System/React UI/Skeleton/User Profile Edit',
   component: UserProfileEditSkeleton,
   argTypes: {},
   args: {}

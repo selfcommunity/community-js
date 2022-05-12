@@ -3,7 +3,7 @@ import {ComponentStory, ComponentMeta} from '@storybook/react';
 import CommentsObjectSkeleton from './Skeleton';
 
 export default {
-  title: 'Design System/SC UI/Skeleton/CommentsObjectSkeleton',
+  title: 'Design System/React UI/Skeleton/CommentsObjectSkeleton',
   component: CommentsObjectSkeleton,
   argTypes: {
     elevation: {

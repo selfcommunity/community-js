@@ -5,7 +5,7 @@ import CategoriesFollowed from './index';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC UI/Categories Followed',
+  title: 'Design System/React UI/Categories Followed',
   component: CategoriesFollowed,
   argTypes: {
     userId: {

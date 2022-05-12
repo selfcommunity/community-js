@@ -5,7 +5,7 @@ import BroadcastMessages from './index';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC UI/Broadcast Messages',
+  title: 'Design System/React UI/Broadcast Messages',
   component: BroadcastMessages,
   argTypes: {
     elevation: {

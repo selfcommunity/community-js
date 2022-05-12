@@ -3,7 +3,7 @@ import {ComponentStory, ComponentMeta} from '@storybook/react';
 import NotificationSkeleton from './Skeleton';
 
 export default {
-  title: 'Design System/SC UI/Skeleton/Notification',
+  title: 'Design System/React UI/Skeleton/Notification',
   component: NotificationSkeleton,
   argTypes: {
     variant: {

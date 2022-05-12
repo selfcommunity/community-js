@@ -5,7 +5,7 @@ import Category from './index';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC UI/Category',
+  title: 'Design System/React UI/Category',
   component: Category,
   argTypes: {
     categoryId: {

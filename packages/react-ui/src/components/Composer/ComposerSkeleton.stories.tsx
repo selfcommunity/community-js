@@ -3,7 +3,7 @@ import {ComponentStory, ComponentMeta} from '@storybook/react';
 import ComposerSkeleton from './Skeleton';
 
 export default {
-  title: 'Design System/SC UI/Skeleton/Composer',
+  title: 'Design System/React UI/Skeleton/Composer',
   component: ComposerSkeleton,
   argTypes: {},
   args: {}

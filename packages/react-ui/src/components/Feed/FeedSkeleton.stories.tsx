@@ -3,7 +3,7 @@ import {ComponentStory, ComponentMeta} from '@storybook/react';
 import FeedSkeleton from './Skeleton';
 
 export default {
-  title: 'Design System/SC UI/Skeleton/Feed',
+  title: 'Design System/React UI/Skeleton/Feed',
   component: FeedSkeleton,
   argTypes: {},
   args: {}

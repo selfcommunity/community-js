@@ -4,7 +4,7 @@ import IncubatorsListSkeleton from './index';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC UI/IncubatorsList',
+  title: 'Design System/React UI/IncubatorsList',
   component: IncubatorsListSkeleton,
   argTypes: {
     elevation: {

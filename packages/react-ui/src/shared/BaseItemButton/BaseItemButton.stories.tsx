@@ -4,7 +4,7 @@ import BaseItemButton from './index';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SHARED COMPONENT/BaseItemButton',
+  title: 'Design System/React UI Shared/BaseItemButton',
   component: BaseItemButton
 } as ComponentMeta<typeof BaseItemButton>;
 

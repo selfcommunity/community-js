@@ -6,7 +6,7 @@ import {SCFeedObjectTemplateType} from '../../types/feedObject';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC UI/Related Feed Objects',
+  title: 'Design System/React UI/Related Feed Objects',
   component: RelatedFeedObjects,
   argTypes: {
     feedObjectId: {

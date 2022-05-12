@@ -6,7 +6,7 @@ import {createTheme, ThemeProvider} from '@mui/material';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC UI/People Suggestion',
+  title: 'Design System/React UI/People Suggestion',
   component: PeopleSuggestion,
   argTypes: {
     elevation: {

@@ -4,7 +4,7 @@ import Tags, {TagsComponentType} from './index';
 import {SCTagType} from '@selfcommunity/types';
 
 export default {
-  title: 'Design System/SHARED COMPONENT/Tags',
+  title: 'Design System/React UI Shared/Tags',
   component: Tags,
   argTypes: {
     type: {

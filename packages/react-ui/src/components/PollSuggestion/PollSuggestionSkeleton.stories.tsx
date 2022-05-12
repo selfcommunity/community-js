@@ -4,7 +4,7 @@ import PollSuggestionSkeleton from './Skeleton';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC UI/Skeleton/PollSuggestion',
+  title: 'Design System/React UI/Skeleton/PollSuggestion',
   component: PollSuggestionSkeleton
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
 } as ComponentMeta<typeof PollSuggestionSkeleton>;

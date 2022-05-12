@@ -8,7 +8,7 @@ import {Dialog, DialogTitle} from '@mui/material';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC TEMPLATES/User Profile',
+  title: 'Design System/React TEMPLATES/User Profile',
   component: UserProfileTemplate
 } as ComponentMeta<typeof UserProfileTemplate>;
 

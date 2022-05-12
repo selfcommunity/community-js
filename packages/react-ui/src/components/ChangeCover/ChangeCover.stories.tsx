@@ -5,7 +5,7 @@ import ChangeCover from './index';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC UI/ChangeCover',
+  title: 'Design System/React UI/ChangeCover',
   component: ChangeCover
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
 } as ComponentMeta<typeof ChangeCover>;

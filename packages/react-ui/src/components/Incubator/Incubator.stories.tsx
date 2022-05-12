@@ -5,7 +5,7 @@ import Incubator from './index';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC UI/Incubator',
+  title: 'Design System/React UI/Incubator',
   component: Incubator,
   argTypes: {
     incubatorId: {

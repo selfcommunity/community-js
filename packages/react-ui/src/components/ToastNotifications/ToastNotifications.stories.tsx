@@ -4,7 +4,7 @@ import ToastNotifications from './index';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC UI/ToastNotifications',
+  title: 'Design System/React UI/ToastNotifications',
   component: ToastNotifications,
   argTypes: {},
   args: {}

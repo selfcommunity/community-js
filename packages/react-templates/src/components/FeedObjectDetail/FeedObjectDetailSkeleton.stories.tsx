@@ -4,7 +4,7 @@ import FeedObjectDetailSkeletonTemplate from './Skeleton';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC TEMPLATES/Skeleton/Feed Object Detail',
+  title: 'Design System/React TEMPLATES/Skeleton/Feed Object Detail',
   component: FeedObjectDetailSkeletonTemplate
 } as ComponentMeta<typeof FeedObjectDetailSkeletonTemplate>;
 

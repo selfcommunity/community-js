@@ -4,7 +4,7 @@ import ContributionActionsMenu from './index';
 import {SCFeedObjectTypologyType} from '@selfcommunity/types';
 
 export default {
-  title: 'Design System/SHARED COMPONENT/ContributionActionsMenu',
+  title: 'Design System/React UI Shared/ContributionActionsMenu',
   component: ContributionActionsMenu,
   argTypes: {
     feedObjectId: {

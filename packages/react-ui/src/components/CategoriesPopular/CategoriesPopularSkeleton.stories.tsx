@@ -4,7 +4,7 @@ import CategoriesPopularSkeleton from './Skeleton';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC UI/Skeleton/CategoriesPopular',
+  title: 'Design System/React UI/Skeleton/CategoriesPopular',
   component: CategoriesPopularSkeleton,
   argTypes: {
     variant: {

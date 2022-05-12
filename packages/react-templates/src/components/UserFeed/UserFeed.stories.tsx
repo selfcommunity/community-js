@@ -4,7 +4,7 @@ import UserFeedTemplate from './index';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/SC TEMPLATES/User Feed',
+  title: 'Design System/React TEMPLATES/User Feed',
   component: UserFeedTemplate
 } as ComponentMeta<typeof UserFeedTemplate>;
 

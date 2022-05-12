@@ -74,10 +74,10 @@ jobs:
       with:
         path: packages/react-templates
     - run: echo "@selfcommunity/react-templates - ${{ steps.react-templates.outputs.current-version }}"
-#    - uses: peter-evans/repository-dispatch@v1
-#      name: Repository Dispatch
-#      with:
-#        token: ${{ secrets.DOCS_ACCESS_TOKEN }}
-#        repository: selfcommunity/developers-doc
-#        event-type: community-js-prerelease
-#        client-payload: '{"types": "${{ steps.types.outputs.current-version }}", "utils": "${{ steps.utils.outputs.current-version }}", "react-i18n": "${{ steps.react-i18n.outputs.current-version }}", "react-core": "${{ steps.react-core.outputs.current-version }}", "react-ui": "${{ steps.react-ui.outputs.current-version }}", "react-templates": "${{ steps.react-templates.outputs.current-version }}"}'
+    - uses: peter-evans/repository-dispatch@v1
+      name: Repository Dispatch
+      with:
+        token: ${{ secrets.DOCS_ACCESS_TOKEN }}
+        repository: selfcommunity/developers-doc
+        event-type: community-js-prerelease
+        client-payload: '{"types": "${{ steps.types.outputs.current-version }}", "utils": "${{ steps.utils.outputs.current-version }}", "react-i18n": "${{ steps.react-i18n.outputs.current-version }}", "react-core": "${{ steps.react-core.outputs.current-version }}", "react-ui": "${{ steps.react-ui.outputs.current-version }}", "react-templates": "${{ steps.react-templates.outputs.current-version }}"}'
