@@ -97,7 +97,6 @@ export default function AutoPlayer(props: AutoPlayerProps) {
               playerVars: {rel: 0}
             }
           }}
-          enableAutoplay={enableAutoplay}
           loop={loop}
           controls={controls}
           stopOnUnmount={stopOnUnmount}

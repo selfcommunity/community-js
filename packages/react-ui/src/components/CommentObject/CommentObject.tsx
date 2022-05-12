@@ -640,7 +640,6 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
               text={comment.html}
               autoFocus
               id={`edit-${comment.id}`}
-              commentObject={comment}
               onSave={handleSave}
               onCancel={handleCancel}
               readOnly={isReplying || isSavingComment}

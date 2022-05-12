@@ -9,7 +9,7 @@ export const md5 = (file, chunkSize, callback) => {
     fileReader = new FileReader();
 
   fileReader.onload = function (e) {
-    console.log('read chunk nr', currentChunk + 1, 'of', chunks);
+    // console.log('read chunk nr', currentChunk + 1, 'of', chunks);
     spark.append(e.target.result); // Append array buffer
     currentChunk++;
 
