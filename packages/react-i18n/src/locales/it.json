@@ -311,7 +311,7 @@
   "ui.notification.userConnection.requestConnection": "ti ha inviato una richiesta di connessione",
   "ui.notification.userConnection.acceptConnection": "ha accettato la tua richiesta di connessione",
   "ui.notification.voteUp.appreciated": "ti ha apprezzato su:",
-  "ui.notification.contributionFollow.follow": "sta seguendo il tuo post",
+  "ui.notification.contributionFollow.follow": "sta seguendo il tuo contributo",
   "ui.notification.userBlocked.accountBlocked": "Il tuo account è stato bloccato",
   "ui.notification.userBlocked.accountReactivated": "Il tuo accont è stato sbloccato",
   "ui.notification.undeletedFor.restoredContent": "Un tuo contenuto, precedentemente rimosso, è stato ripristinato",

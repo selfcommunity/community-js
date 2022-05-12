@@ -1,7 +1,6 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
 import {Avatar, Box, Button, Stack, Typography} from '@mui/material';
-import Icon from '@mui/material/Icon';
 import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
 import {SCNotificationPrivateMessageType} from '@selfcommunity/types';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
@@ -25,7 +24,6 @@ const classes = {
   avatar: `${PREFIX}-avatar`,
   actions: `${PREFIX}-actions`,
   replyButton: `${PREFIX}-reply-button`,
-  replyButtonIcon: `${PREFIX}-reply-button-icon`,
   activeAt: `${PREFIX}-active-at`,
   messageLabel: `${PREFIX}-message-label`,
   username: `${PREFIX}-username`,
@@ -83,7 +81,7 @@ const Root = styled(Box, {
       display: '-webkit-box',
       WebkitLineClamp: '2',
       lineClamp: 2,
-      WebkitBoxOrient: 'vertical',
+      WebkitBoxOrient: 'vertical'
     }
   },
   [`& .${classes.actions}`]: {
@@ -241,8 +239,7 @@ export default function PrivateMessageNotification(inProps: NotificationPrivateM
               size="small"
               classes={{root: classes.replyButton}}
               component={Link}
-              to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, notificationObject.message)}
-              endIcon={<Icon className={classes.replyButtonIcon}>reply</Icon>}>
+              to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, notificationObject.message)}>
               <FormattedMessage id="ui.notification.privateMessage.btnReplyLabel" defaultMessage="ui.notification.privateMessage.btnReplyLabel" />
             </Button>
           </Stack>
