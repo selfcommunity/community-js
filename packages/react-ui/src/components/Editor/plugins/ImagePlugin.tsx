@@ -123,7 +123,6 @@ export default function ImagePlugin(): JSX.Element {
           }
           const imageNode = $createImageNode(payload.src, payload.altText, '100%');
           selection.insertNodes([imageNode]);
-          console.log('image');
         }
         return true;
       },

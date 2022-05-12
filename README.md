@@ -4,7 +4,7 @@
   </a>
 </p>
 
-<h1 align="center">Community UI</h1>
+<h1 align="center">Community JS</h1>
 
 <div align="center">
 
@@ -34,7 +34,7 @@ First install peer dependencies needed to make the library work:
 
 Based on which package you want to install proceed as follows:
 
-Install sc-core:
+Install react-core:
 
 ```sh
 // with npm
@@ -44,7 +44,7 @@ Install sc-core:
 `yarn add @selfcommunity/react-i18n @selfcommunity/react-core`
 ```
 
-Install sc-ui package:
+Install react-ui package:
 
 ```sh
 // with npm
@@ -54,7 +54,7 @@ Install sc-ui package:
 `yarn add @selfcommunity/react-i18n @selfcommunity/react-core @selfcommunity/react-ui`
 ```
 
-Install sc-templates package:
+Install react-templates package:
 
 ```sh
 // with npm
@@ -64,7 +64,7 @@ Install sc-templates package:
 `yarn add @selfcommunity/react-i18n @selfcommunity/react-core @selfcommunity/react-templates`
 ```
 
-Install sc-i18n:
+Install react-i18n:
 
 ```sh
 // with npm
@@ -104,7 +104,7 @@ ReactDOM.render(<App />, document.querySelector('#app'));
 
 ## Local development
 
-Community UI library uses a "monorepo" organization style for managing multiple npm packages in a single git repo.
+Community JS library uses a "monorepo" organization style for managing multiple npm packages in a single git repo.
 This is done through a [Yarn](https://yarnpkg.com/en/) feature called workspaces.
 It allows you to setup multiple packages in such a way that you only need to run yarn install once to install all of
 them in a single pass. Some workspaces depends on other workspace and in this way ensure all using the most up-to-date
@@ -122,10 +122,10 @@ This repo contains this workspaces:
 - react-i18n
 
 ### types
-Contains SelfCommunity types.
+Contains Community types.
 
 ### utils
-Contains function utilities.
+Contains utilities.
 
 ### react-core
 Groups core components.
@@ -137,7 +137,7 @@ Requiring an sc-core component from this package, use the exact code currently l
 what is published on npm.
 
 ### react-templates
-Contains full community pages components usefull to integrate a community in a frontend service context.
+Contains full community pages components useful to integrate a community in a frontend service context.
 
 ### react-ui
 Contains i18n.

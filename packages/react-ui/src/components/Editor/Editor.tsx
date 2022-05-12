@@ -37,13 +37,7 @@ const Root = styled(Box, {
     outline: 'none',
     minHeight: 60,
     '& > p': {
-      margin: theme.spacing(1, 0, 1, 0),
-      '&:first-child': {
-        marginTop: 0
-      },
-      '&:last-child': {
-        marginBottom: 0
-      }
+      margin: theme.spacing(1, 0, 1, 0)
     },
     '& img': {
       margin: theme.spacing(1, 0, 1, 0),

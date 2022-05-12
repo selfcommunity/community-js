@@ -97,7 +97,6 @@ export default function AutoPlayer(props: AutoPlayerProps) {
               playerVars: {rel: 0}
             }
           }}
-          enableAutoplay={enableAutoplay}
           loop={loop}
           controls={controls}
           stopOnUnmount={stopOnUnmount}
@@ -106,6 +105,12 @@ export default function AutoPlayer(props: AutoPlayerProps) {
           muted={muted}
           onProgress={(progress) => {
             setPlayed(progress.playedSeconds);
+          }}
+          config={{
+            vimeo: {
+              playerOptions: { autopause: true },
+              preload: true,
+            },
           }}
           {...rest}
         />
