@@ -205,7 +205,7 @@ export default function CommentNotification(inProps: CommentNotificationProps): 
                   loading={loadingVote === index}>
                   {notificationObject.comment.voted ? (
                     <Tooltip title={<FormattedMessage id={'ui.notification.comment.voteDown'} defaultMessage={'ui.notification.comment.voteDown'} />}>
-                      <Icon fontSize={'small'} color={'secondary'}>
+                      <Icon fontSize={'small'} color={'primary'}>
                         thumb_up_alt
                       </Icon>
                     </Tooltip>
