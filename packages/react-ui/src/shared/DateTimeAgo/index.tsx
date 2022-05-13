@@ -79,7 +79,9 @@ export default function DateTimeAgo(props: DateTimeAgoProps): JSX.Element {
     return (
       <Root component="span" className={classNames(classes.root, className)} {...rest}>
         {showStartIcon && <Icon>access_time</Icon>}
-        <Tooltip title={`${intl.formatDate(date, {year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric'})}`}>
+        <Tooltip
+          title={`${intl.formatDate(date, {year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric'})}`}
+          enterTouchDelay={0}>
           <Typography variant={'body2'} component={'span'}>
             <TimeAgo date={date} live={live} formatter={formatter} />
           </Typography>

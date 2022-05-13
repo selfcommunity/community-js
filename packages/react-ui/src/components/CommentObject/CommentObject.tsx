@@ -104,6 +104,7 @@ const Root = styled(Box, {
   [`& .${classes.content}`]: {
     position: 'relative',
     display: 'flex',
+    wordBreak: 'break-all',
     '& .MuiCardContent-root': {
       padding: '7px 13px 7px 13px',
       flexGrow: 1
@@ -242,13 +243,19 @@ export interface CommentObjectProps {
   ReplyCommentObjectProps?: CardProps;
 
   /**
+   * If datetime is linkable or not
+   * @default true
+   */
+  linkableCommentDateTime?: boolean;
+
+  /**
    * Other props
    */
   [p: string]: any;
 }
 
 /**
- *> API documentation for the Community-UI Comment Object component. Learn about the available props and the CSS API.
+ *> API documentation for the Community-JS Comment Object component. Learn about the available props and the CSS API.
 
  #### Import
 
@@ -303,6 +310,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
     elevation = 0,
     CommentObjectSkeletonProps = {elevation, WidgetProps: {variant: 'outlined'} as WidgetProps},
     ReplyCommentObjectProps = {elevation, WidgetProps: {variant: 'outlined'} as WidgetProps},
+    linkableCommentDateTime = true,
     ...rest
   } = props;
 
@@ -334,9 +342,15 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
    */
   function renderTimeAgo(comment) {
     return (
-      <Link to={scRoutingContext.url(SCRoutes.COMMENT_ROUTE_NAME, getRouteData(comment))} className={classes.activityAt}>
-        <DateTimeAgo date={comment.added_at} />
-      </Link>
+      <>
+        {linkableCommentDateTime ? (
+          <Link to={scRoutingContext.url(SCRoutes.COMMENT_ROUTE_NAME, getRouteData(comment))} className={classes.activityAt}>
+            <DateTimeAgo date={comment.added_at} />
+          </Link>
+        ) : (
+          <DateTimeAgo date={comment.added_at} />
+        )}
+      </>
     );
   }
 
@@ -729,7 +743,13 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
             previous={comment.comment_count > comment.latest_comments.length ? commentsObject.next : null}
             isLoadingPrevious={commentsObject.isLoadingNext}
             handlePrevious={commentsObject.getNextPage}
-            CommentComponentProps={{onOpenReply: reply, CommentObjectSkeletonProps, elevation: elevation, ...rest}}
+            CommentComponentProps={{
+              onOpenReply: reply,
+              CommentObjectSkeletonProps,
+              elevation: elevation,
+              linkableCommentDateTime: linkableCommentDateTime,
+              ...rest
+            }}
             CommentsObjectSkeletonProps={{count: 1, CommentObjectSkeletonProps: CommentObjectSkeletonProps}}
           />
         )}

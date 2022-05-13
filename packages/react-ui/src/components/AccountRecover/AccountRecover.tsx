@@ -61,7 +61,7 @@ export interface AccountRecoverProps {
 }
 
 /**
- * > API documentation for the Community-UI AccountRecover component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS AccountRecover component. Learn about the available props and the CSS API.
 
  #### Import
 

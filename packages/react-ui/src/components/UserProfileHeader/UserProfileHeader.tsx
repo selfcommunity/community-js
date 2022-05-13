@@ -4,14 +4,7 @@ import {Box, Paper, Typography} from '@mui/material';
 import ChangeCover, {ChangeCoverProps} from '../ChangeCover';
 import ChangePicture, {ChangePictureProps} from '../ChangePicture';
 import {SCUserType} from '@selfcommunity/types';
-import {
-  SCPreferences,
-  SCPreferencesContextType,
-  SCUserContextType,
-  useSCFetchUser,
-  useSCPreferences,
-  useSCUser
-} from '@selfcommunity/react-core';
+import {SCPreferences, SCPreferencesContextType, SCUserContextType, useSCFetchUser, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
 import UserProfileHeaderSkeleton from './Skeleton';
 import classNames from 'classnames';
 import useThemeProps from '@mui/material/styles/useThemeProps';
@@ -110,7 +103,7 @@ export interface UserProfileHeaderProps {
 }
 
 /**
- * > API documentation for the Community-UI User Profile Header component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS User Profile Header component. Learn about the available props and the CSS API.
 
  #### Import
 

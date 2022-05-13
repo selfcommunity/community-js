@@ -19,7 +19,7 @@ const Root = styled(Box, {
 }));
 
 /**
- * > API documentation for the Community-UI Category Skeleton Template. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS Category Skeleton Template. Learn about the available props and the CSS API.
 
  #### Import
 

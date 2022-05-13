@@ -105,7 +105,7 @@ const WIDGETS: SCFeedWidgetType[] = [
 ];
 
 /**
- * > API documentation for the Community-UI Explore Feed Template. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS Explore Feed Template. Learn about the available props and the CSS API.
 
  #### Import
 

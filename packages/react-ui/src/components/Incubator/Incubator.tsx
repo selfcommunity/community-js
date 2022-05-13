@@ -2,15 +2,7 @@ import React from 'react';
 import {styled} from '@mui/material/styles';
 import {Typography, Grid, Box, Button, ButtonProps} from '@mui/material';
 import {SCIncubatorType} from '@selfcommunity/types';
-import {
-  Link,
-  SCContextType,
-  SCRoutes,
-  SCRoutingContextType,
-  useSCContext,
-  useSCFetchIncubator,
-  useSCRouting
-} from '@selfcommunity/react-core';
+import {Link, SCContextType, SCRoutes, SCRoutingContextType, useSCContext, useSCFetchIncubator, useSCRouting} from '@selfcommunity/react-core';
 import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
 import CardContent from '@mui/material/CardContent';
@@ -113,7 +105,7 @@ export interface IncubatorProps {
 }
 
 /**
- * > API documentation for the Community-UI Incubator component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS Incubator component. Learn about the available props and the CSS API.
  *
  * #### Import
  ```jsx

@@ -155,7 +155,7 @@ export interface NotificationProps extends CardProps {
 
 /**
  *
- > API documentation for the Community-UI UserNotification component. Learn about the available props and the CSS API.
+ > API documentation for the Community-JS UserNotification component. Learn about the available props and the CSS API.
 
  #### Import
 

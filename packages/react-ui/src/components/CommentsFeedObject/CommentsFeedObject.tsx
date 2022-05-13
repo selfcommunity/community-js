@@ -164,7 +164,7 @@ export interface CommentsFeedObjectProps {
 }
 
 /**
- *> API documentation for the Community-UI Comments Object component. Learn about the available props and the CSS API.
+ *> API documentation for the Community-JS Comments Object component. Learn about the available props and the CSS API.
 
  #### Import
 
@@ -203,7 +203,7 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
     commentObjectId,
     commentObject,
     CommentComponent = CommentObject,
-    CommentComponentProps = {variant: 'outlined'},
+    CommentComponentProps = {variant: 'outlined', linkableCommentDateTime: false},
     CommentObjectSkeletonProps = {elevation: 0, WidgetProps: {variant: 'outlined'} as WidgetProps},
     renderNoComments,
     renderCommentNotFound,

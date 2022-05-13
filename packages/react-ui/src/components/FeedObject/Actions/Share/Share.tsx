@@ -216,6 +216,7 @@ export default function Share(inProps: ShareProps): JSX.Element {
    * Handles Composer onSuccess
    */
   function handleComposerOnSuccess() {
+    setObj(Object.assign({}, obj, {share_count: obj.share_count + 1}));
     handleComposerOnClose();
   }
 

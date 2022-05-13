@@ -48,7 +48,7 @@ export interface CustomAdvProps {
   categoriesId?: Array<number> | null;
 }
 /**
- > API documentation for the Community-UI CustomAdv component. Learn about the available props and the CSS API.
+ > API documentation for the Community-JS CustomAdv component. Learn about the available props and the CSS API.
  *
  #### Import
  ```jsx

@@ -45,7 +45,7 @@ const Root = styled(Widget, {
   marginBottom: theme.spacing(2)
 }));
 /**
- > API documentation for the Community-UI Categories Followed component. Learn about the available props and the CSS API.
+ > API documentation for the Community-JS Categories Followed component. Learn about the available props and the CSS API.
  *
  #### Import
  ```jsx

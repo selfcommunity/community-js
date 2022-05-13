@@ -60,7 +60,7 @@ export interface FollowCategoryButtonProps {
 }
 
 /**
- * > API documentation for the Community-UI Follow Category Button component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS Follow Category Button component. Learn about the available props and the CSS API.
 
  #### Import
 

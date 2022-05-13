@@ -65,7 +65,7 @@ export interface SubscribeButtonProps {
 }
 
 /**
- * > API documentation for the Community-UI Subscribe Button component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS Subscribe Button component. Learn about the available props and the CSS API.
 
  #### Import
 

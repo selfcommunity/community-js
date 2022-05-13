@@ -3,13 +3,7 @@ import {styled} from '@mui/material/styles';
 import {Button, CardContent, List, ListItem, Typography} from '@mui/material';
 import {SCUserType} from '@selfcommunity/types';
 import {http, Endpoints} from '@selfcommunity/api-services';
-import {
-  SCPreferences,
-  SCPreferencesContext,
-  SCPreferencesContextType,
-  SCUserContext,
-  SCUserContextType
-} from '@selfcommunity/react-core';
+import {SCPreferences, SCPreferencesContext, SCPreferencesContextType, SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
 import PeopleSuggestionSkeleton from './Skeleton';
 import User, {UserProps} from '../User';
 import {FormattedMessage} from 'react-intl';
@@ -63,7 +57,7 @@ export interface PeopleSuggestionProps {
 
 /**
  *
- > API documentation for the Community-UI People Suggestion component. Learn about the available props and the CSS API.
+ > API documentation for the Community-JS People Suggestion component. Learn about the available props and the CSS API.
 
  #### Import
 

@@ -13,7 +13,7 @@ const classes = {
 const Root = styled(BaseItem)(({theme}) => ({}));
 
 /**
- * > API documentation for the Community-UI Category Skeleton component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS Category Skeleton component. Learn about the available props and the CSS API.
 
  #### Import
 

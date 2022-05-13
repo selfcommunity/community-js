@@ -65,7 +65,7 @@ export interface AccountSignUpProps {
 }
 
 /**
- * > API documentation for the Community-UI AccountSignUp component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS AccountSignUp component. Learn about the available props and the CSS API.
 
  #### Import
 

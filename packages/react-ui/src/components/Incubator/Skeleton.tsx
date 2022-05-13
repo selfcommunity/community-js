@@ -22,7 +22,7 @@ const Root = styled(Widget)(({theme}) => ({
 }));
 
 /**
- * > API documentation for the Community-UI Incubator Skeleton component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS Incubator Skeleton component. Learn about the available props and the CSS API.
 
  #### Import
 

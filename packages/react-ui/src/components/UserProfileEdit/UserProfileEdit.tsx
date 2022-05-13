@@ -1,21 +1,14 @@
 import React from 'react';
-import { styled } from '@mui/material/styles';
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionProps as MUIAccordionProps,
-  AccordionSummary,
-  Box,
-  Typography,
-} from '@mui/material';
-import { defineMessages, FormattedMessage } from 'react-intl';
-import { SCUserFields } from '@selfcommunity/types';
-import { DEFAULT_FIELDS } from '../../constants/UserProfile';
+import {styled} from '@mui/material/styles';
+import {Accordion, AccordionDetails, AccordionProps as MUIAccordionProps, AccordionSummary, Box, Typography} from '@mui/material';
+import {defineMessages, FormattedMessage} from 'react-intl';
+import {SCUserFields} from '@selfcommunity/types';
+import {DEFAULT_FIELDS} from '../../constants/UserProfile';
 import PublicInfo from './Section/PublicInfo';
 import Settings from './Section/Settings';
 import classNames from 'classnames';
-import { DistributiveOmit } from '@mui/types';
-import { OverrideProps } from '@mui/material/OverridableComponent';
+import {DistributiveOmit} from '@mui/types';
+import {OverrideProps} from '@mui/material/OverridableComponent';
 import useThemeProps from '@mui/material/styles/useThemeProps';
 
 const messages = defineMessages({
@@ -107,7 +100,7 @@ export interface UserProfileEditProps {
 
 /**
  *
- > API documentation for the Community-UI User Profile Edit component. Learn about the available props and the CSS API.
+ > API documentation for the Community-JS User Profile Edit component. Learn about the available props and the CSS API.
 
  #### Import
 

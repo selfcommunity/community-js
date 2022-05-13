@@ -70,7 +70,7 @@ export interface AccountSignInProps {
 }
 
 /**
- * > API documentation for the Community-UI AccountSignIn component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS AccountSignIn component. Learn about the available props and the CSS API.
  * > This component support [OAuth2 authentication](https://developers.selfcommunity.com/docs/api/authentication/oauth#password) protocol with grant_type password
 
  #### Import

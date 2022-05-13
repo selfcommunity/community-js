@@ -47,7 +47,7 @@ export interface PollSnippetProps {
 }
 
 /**
- * > API documentation for the Community-UI PollSnippet component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS PollSnippet component. Learn about the available props and the CSS API.
  *
  * #### Import
  ```jsx

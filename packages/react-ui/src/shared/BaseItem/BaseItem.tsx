@@ -122,7 +122,7 @@ export interface BaseItemProps extends Pick<WidgetProps, Exclude<keyof WidgetPro
 }
 
 /**
- * > API documentation for the Community-UI BaseItem component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS BaseItem component. Learn about the available props and the CSS API.
 
  #### Import
 

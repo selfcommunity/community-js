@@ -72,7 +72,7 @@ export interface SnippetsProps {
 }
 /**
  *
- > API documentation for the Community-UI Snippets component. Learn about the available props and the CSS API.
+ > API documentation for the Community-JS Snippets component. Learn about the available props and the CSS API.
 
  #### Import
 

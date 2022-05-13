@@ -30,7 +30,7 @@ const Root = styled(BaseItem)(({theme}) => ({
 }));
 
 /**
- * > API documentation for the Community-UI Comment Object Skeleton component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS Comment Object Skeleton component. Learn about the available props and the CSS API.
 
  #### Import
 

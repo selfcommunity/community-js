@@ -138,7 +138,7 @@ export interface BaseItemButtonProps extends Pick<WidgetProps, Exclude<keyof Wid
 }
 
 /**
- * > API documentation for the Community-UI BaseItemButton component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS BaseItemButton component. Learn about the available props and the CSS API.
 
  #### Import
 

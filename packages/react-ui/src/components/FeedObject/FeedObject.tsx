@@ -339,7 +339,7 @@ export interface FeedObjectProps extends CardProps {
 }
 
 /**
- * > API documentation for the Community-UI Feed Object component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS Feed Object component. Learn about the available props and the CSS API.
 
  #### Import
 

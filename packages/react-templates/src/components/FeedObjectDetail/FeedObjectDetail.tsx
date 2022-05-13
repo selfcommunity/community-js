@@ -24,6 +24,7 @@ import {
   useSCPreferences,
   useSCUser
 } from '@selfcommunity/react-core';
+import {FormattedMessage} from 'react-intl';
 
 const PREFIX = 'SCFeedObjectDetailTemplate';
 
@@ -92,7 +93,7 @@ export interface FeedObjectDetailProps {
 const PREFERENCES = [SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED, SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED];
 
 /**
- * > API documentation for the Community-UI Feed Object Detail Template. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS Feed Object Detail Template. Learn about the available props and the CSS API.
 
  #### Import
 
@@ -135,7 +136,7 @@ export default function FeedObjectDetail(inProps: FeedObjectDetailProps): JSX.El
   const scPreferences: SCPreferencesContextType = useSCPreferences();
 
   // RETRIVE OBJECTS
-  const {obj, setObj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
+  const {obj, setObj, error} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
   const [comments, setComments] = useState<SCCommentType[]>([]);
 
   /**
@@ -178,6 +179,13 @@ export default function FeedObjectDetail(inProps: FeedObjectDetailProps): JSX.El
     }, 300);
   }
 
+  if (error) {
+    return (
+      <Box>
+        <FormattedMessage id="templates.feedObjectDetail.contributionNotFound" defaultMessage="utemplates.feedObjectDetail.contributionNotFound" />
+      </Box>
+    );
+  }
   if (!obj) {
     return <FeedObjectDetailSkeleton />;
   }

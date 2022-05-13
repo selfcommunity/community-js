@@ -70,7 +70,7 @@ export interface MessageEditorProps {
 
 /**
  *
- > API documentation for the Community-UI Message Editor component. Learn about the available props and the CSS API.
+ > API documentation for the Community-JS Message Editor component. Learn about the available props and the CSS API.
 
  #### Import
 

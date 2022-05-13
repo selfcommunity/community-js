@@ -25,7 +25,7 @@ const Root = styled(AvatarGroup, {
   }
 }));
 /**
- * > API documentation for the Community-UI Avatar Group Skeleton component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS Avatar Group Skeleton component. Learn about the available props and the CSS API.
 
  #### Import
 

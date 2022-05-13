@@ -21,7 +21,7 @@ const MessageRoot = styled(Widget, {
   marginBottom: theme.spacing(2)
 }));
 /**
- * > API documentation for the Community-UI Broadcast Message Skeleton component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS Broadcast Message Skeleton component. Learn about the available props and the CSS API.
 
  #### Import
 
@@ -83,7 +83,7 @@ const Root = styled(Box, {
 })(({theme}) => ({}));
 
 /**
- * > API documentation for the Community-UI Broadcast Messages Skeleton component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS Broadcast Messages Skeleton component. Learn about the available props and the CSS API.
 
  #### Import
 

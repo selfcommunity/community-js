@@ -261,7 +261,7 @@
   "ui.userProfileEditPublicInfo.genderUnspecified": "Non specificato",
 
   "ui.userProfileEditSettings.notification.title": "Quando ricevi una notifica",
-  "ui.userProfileEditSettings.notification.label": "mostra un messaggio in basso a destra:",
+  "ui.userProfileEditSettings.notification.label": "mostra un messaggio in basso a sinistra:",
   "ui.userProfileEditSettings.notificationSound.label": "emetti un suono:",
 
   "ui.userProfileEditSettings.interaction.title": "Quando qualcuno interagisce con me",
@@ -471,6 +471,6 @@
   "ui.IncubatorSuggestion.noMoreIncubators": "Nient'altro da mostrare",
 
   "templates.userProfile.edit": "Modifica",
-  "templates.privateMessages.button.new" : "Nuovo Messaggio"
-
+  "templates.privateMessages.button.new" : "Nuovo Messaggio",
+  "templates.feedObjectDetail.contributionNotFound": "Il contributo non è stato trovato oppure non hai i permessi per vederlo."
 }

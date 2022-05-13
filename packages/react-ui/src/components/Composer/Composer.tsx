@@ -344,7 +344,7 @@ const reducer = (state, action) => {
   }
 };
 /**
- > API documentation for the Community-UI Composer component. Learn about the available props and the CSS API.
+ > API documentation for the Community-JS Composer component. Learn about the available props and the CSS API.
  > The Composer component contains the logic around the creation of [Post](https://developers.selfcommunity.com/docs/apireference/v2/post/create_a_post) and [Discussion](https://developers.selfcommunity.com/docs/apireference/v2/discussion/create_a_discussion) objects.
  *
  #### Import
