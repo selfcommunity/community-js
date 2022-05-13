@@ -714,7 +714,11 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
       .then(() => setIsSubmitting(false));
   };
 
-  /* Renderers */
+  // RENDER
+  const theme: Theme = useTheme();
+  const smDown = useMediaQuery(theme.breakpoints.down('sm'));
+  const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+
   const hasMediaShare = useMemo(() => medias.findIndex((m) => m.type === MEDIA_TYPE_SHARE) !== -1, [medias]);
 
   const renderMediaAdornment = (mediaObjectType: SCMediaObjectType): JSX.Element => {
@@ -753,9 +757,15 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
             <Avatar className={classes.avatar} src={scAuthContext.user.avatar}></Avatar>
           </Box>
           <Box>
-            <Button onClick={handleChangeView(MAIN_VIEW)} variant="text" color="inherit">
-              <FormattedMessage id="ui.composer.done" defaultMessage="ui.composer.done" />
-            </Button>
+            {smDown ? (
+              <IconButton onClick={handleChangeView(MAIN_VIEW)} color="inherit">
+                <Icon>check</Icon>
+              </IconButton>
+            ) : (
+              <Button onClick={handleChangeView(MAIN_VIEW)} variant="text" color="inherit">
+                <FormattedMessage id="ui.composer.done" defaultMessage="ui.composer.done" />
+              </Button>
+            )}
           </Box>
         </DialogTitle>
         <DialogContent className={classes.audienceContent}>
@@ -808,9 +818,15 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
               <Avatar className={classes.avatar} src={scAuthContext.user.avatar}></Avatar>
             </Box>
             <Box>
-              <Button onClick={handleChangeView(MAIN_VIEW)} variant="text" color="inherit" disabled={mediasRef.current.mediaChunks.length > 0}>
-                <FormattedMessage id="ui.composer.done" defaultMessage="ui.composer.done" />
-              </Button>
+              {smDown ? (
+                <IconButton onClick={handleChangeView(MAIN_VIEW)} color="inherit" disabled={mediasRef.current.mediaChunks.length > 0}>
+                  <Icon>check</Icon>
+                </IconButton>
+              ) : (
+                <Button onClick={handleChangeView(MAIN_VIEW)} variant="text" color="inherit" disabled={mediasRef.current.mediaChunks.length > 0}>
+                  <FormattedMessage id="ui.composer.done" defaultMessage="ui.composer.done" />
+                </Button>
+              )}
             </Box>
           </DialogTitle>
           <DialogContent className={classNames(classes.content, classes.mediaContent)}>
@@ -843,12 +859,25 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
             <Avatar className={classes.avatar} src={scAuthContext.user.avatar}></Avatar>
           </Box>
           <Stack spacing={2} direction="row">
-            <Button onClick={handleDeletePoll} variant="text" color="inherit">
-              <FormattedMessage id="ui.composer.delete" defaultMessage="ui.composer.delete" />
-            </Button>
-            <Button onClick={handleChangeView(MAIN_VIEW)} variant="text" color="inherit" disabled={!hasPoll()}>
-              <FormattedMessage id="ui.composer.done" defaultMessage="ui.composer.done" />
-            </Button>
+            {smDown ? (
+              <>
+                <IconButton onClick={handleChangeView(MAIN_VIEW)} color="inherit" disabled={!hasPoll()}>
+                  <Icon>check</Icon>
+                </IconButton>
+                <IconButton onClick={handleChangeView(MAIN_VIEW)} color="inherit" disabled={!hasPoll()}>
+                  <Icon>delete</Icon>
+                </IconButton>
+              </>
+            ) : (
+              <>
+                <Button onClick={handleDeletePoll} variant="text" color="inherit">
+                  <FormattedMessage id="ui.composer.delete" defaultMessage="ui.composer.delete" />
+                </Button>
+                <Button onClick={handleChangeView(MAIN_VIEW)} variant="text" color="inherit" disabled={!hasPoll()}>
+                  <FormattedMessage id="ui.composer.done" defaultMessage="ui.composer.done" />
+                </Button>
+              </>
+            )}
           </Stack>
         </DialogTitle>
         <DialogContent className={classes.content}>
@@ -872,9 +901,15 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
             <Avatar className={classes.avatar} src={scAuthContext.user.avatar}></Avatar>
           </Box>
           <Box>
-            <Button onClick={handleChangeView(MAIN_VIEW)} variant="text" color="inherit">
-              <FormattedMessage id="ui.composer.done" defaultMessage="ui.composer.done" />
-            </Button>
+            {smDown ? (
+              <IconButton onClick={handleChangeView(MAIN_VIEW)} color="inherit">
+                <Icon>check</Icon>
+              </IconButton>
+            ) : (
+              <Button onClick={handleChangeView(MAIN_VIEW)} variant="text" color="inherit">
+                <FormattedMessage id="ui.composer.done" defaultMessage="ui.composer.done" />
+              </Button>
+            )}
           </Box>
         </DialogTitle>
         <DialogContent className={classes.locationContent}>
@@ -994,7 +1029,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
             {/*)}*/}
             {preferences[SCPreferences.ADDONS_POLLS_ENABLED] && (
               <IconButton aria-label="add poll" color={poll ? 'primary' : 'default'} disabled={isSubmitting} onClick={handleChangeView(POLL_VIEW)}>
-                <Badge className={classes.badgeError} badgeContent={pollError ? <Icon fontSize="small">error_outline</Icon> : null} color="error">
+                <Badge className={classes.badgeError} badgeContent={pollError ? ' ' : null} color="error">
                   <Icon>bar_chart</Icon>
                 </Badge>
               </IconButton>
@@ -1053,9 +1088,6 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
       </Alert>
     );
   }
-
-  const theme: Theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
   if (!scAuthContext.user) {
     return null;
