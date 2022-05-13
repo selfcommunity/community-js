@@ -853,7 +853,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
             <IconButton onClick={handleChangeView(MAIN_VIEW)} size="small" disabled={!hasPoll()}>
               <Icon>arrow_back</Icon>
             </IconButton>
-            <FormattedMessage id="ui.composer.poll.title" defaultMessage="ui.composer.poll.title" />
+            <FormattedMessage id="ui.composer.poll" defaultMessage="ui.composer.poll" />
           </Typography>
           <Box>
             <Avatar className={classes.avatar} src={scAuthContext.user.avatar}></Avatar>
