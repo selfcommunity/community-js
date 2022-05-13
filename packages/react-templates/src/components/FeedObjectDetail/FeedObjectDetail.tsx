@@ -24,6 +24,7 @@ import {
   useSCPreferences,
   useSCUser
 } from '@selfcommunity/react-core';
+import {FormattedMessage} from 'react-intl';
 
 const PREFIX = 'SCFeedObjectDetailTemplate';
 
@@ -135,7 +136,7 @@ export default function FeedObjectDetail(inProps: FeedObjectDetailProps): JSX.El
   const scPreferences: SCPreferencesContextType = useSCPreferences();
 
   // RETRIVE OBJECTS
-  const {obj, setObj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
+  const {obj, setObj, error} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
   const [comments, setComments] = useState<SCCommentType[]>([]);
 
   /**
@@ -178,6 +179,13 @@ export default function FeedObjectDetail(inProps: FeedObjectDetailProps): JSX.El
     }, 300);
   }
 
+  if (error) {
+    return (
+      <Box>
+        <FormattedMessage id="templates.feedObjectDetail.contributionNotFound" defaultMessage="utemplates.feedObjectDetail.contributionNotFound" />
+      </Box>
+    );
+  }
   if (!obj) {
     return <FeedObjectDetailSkeleton />;
   }
