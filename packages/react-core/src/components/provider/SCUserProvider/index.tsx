@@ -60,7 +60,7 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
   const {state, dispatch, helpers} = useSCAuth(initialSession);
 
   /**
-   * Handle change user
+   * Helper handle change user
    */
   function updateUser(info): void {
     dispatch({type: userActionTypes.UPDATE_USER, payload: info});
