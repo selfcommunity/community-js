@@ -24,6 +24,7 @@ const PREFIX = 'SCComposerPoll';
 
 const classes = {
   root: `${PREFIX}-root`,
+  generalError: `${PREFIX}-generalError`,
   title: `${PREFIX}-title`,
   choices: `${PREFIX}-choices`,
   choiceNew: `${PREFIX}-choice-new`,
@@ -36,6 +37,10 @@ const Root = styled(Box, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   padding: theme.spacing(2),
+  [`& .${classes.generalError}`]: {
+    marginBottom: theme.spacing(2),
+    color: theme.palette.error.main
+  },
   [`& .${classes.title}, & .${classes.choices}, & .${classes.choiceNew}, & .${classes.metadata}`]: {
     marginBottom: theme.spacing(3)
   },
@@ -112,7 +117,7 @@ export default (inProps: PollProps): JSX.Element => {
     name: PREFIX
   });
   const {id = 'poll', className = null, value = {...DEFAULT_POLL}, error = {}, onChange} = props;
-  const {titleError = null} = {...error};
+  const {titleError = null, error: generalError = null} = {...error};
 
   // STATE
   const [title, setTitle] = useState<string>(value !== null ? value.title : DEFAULT_POLL.title);
@@ -173,6 +178,7 @@ export default (inProps: PollProps): JSX.Element => {
 
   return (
     <Root id={id} className={classNames(classes.root, className)}>
+      {generalError && <Typography className={classes.generalError}>{generalError}</Typography>}
       <Box className={classes.title}>
         <TextField
           label={<FormattedMessage id="ui.composer.poll.title" defaultMessage="ui.composer.poll.title" />}

@@ -182,7 +182,7 @@ export default function FeedObjectDetail(inProps: FeedObjectDetailProps): JSX.El
   if (error) {
     return (
       <Box>
-        <FormattedMessage id="templates.feedObjectDetail.contributionNotFound" defaultMessage="utemplates.feedObjectDetail.contributionNotFound" />
+        <FormattedMessage id="templates.feedObjectDetail.contributionNotFound" defaultMessage="templates.feedObjectDetail.contributionNotFound" />
       </Box>
     );
   }

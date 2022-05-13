@@ -210,7 +210,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
 
   // STATE
   const [feedData, setFeedData] = useState([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
   const [next, setNext] = useState<string>(endpoint.url({}));
 
   // CONTEXT
@@ -275,22 +275,24 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
    * Manage pagination, infinite scrolling
    */
   const fetch = () => {
-    setLoading(true);
-    http
-      .request({
-        url: next,
-        method: endpoint.method
-      })
-      .then((res: HttpResponse<{next?: string; previous?: string; results: SCNotificationAggregatedType[]}>) => {
-        const data = res.data;
-        setFeedData([...feedData, ...data.results]);
-        setNext(data.next);
-        setLoading(false);
-        onFetchData && onFetchData(res.data);
-      })
-      .catch((error) => {
-        Logger.error(SCOPE_SC_UI, error);
-      });
+    if (!loading) {
+      setLoading(true);
+      http
+        .request({
+          url: next,
+          method: endpoint.method
+        })
+        .then((res: HttpResponse<{next?: string; previous?: string; results: SCNotificationAggregatedType[]}>) => {
+          const data = res.data;
+          setFeedData([...feedData, ...data.results]);
+          setNext(data.next);
+          setLoading(false);
+          onFetchData && onFetchData(res.data);
+        })
+        .catch((error) => {
+          Logger.error(SCOPE_SC_UI, error);
+        });
+    }
   };
 
   const refresh = () => {

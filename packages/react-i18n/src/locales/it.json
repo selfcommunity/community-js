@@ -140,6 +140,7 @@
   "ui.composer.location.label": "Insert a city",
   "ui.composer.categories.label": "Category",
   "ui.composer.categories.empty": "No category to assign",
+  "ui.composer.poll": "Sondaggio",
   "ui.composer.poll.title": "Poll's title",
   "ui.composer.poll.choice.placeholder": "Add a choice",
   "ui.composer.poll.choice.delete": "Delete the choice",
