@@ -471,8 +471,7 @@
   "ui.IncubatorSuggestion.ShowAll": "View all",
   "ui.IncubatorSuggestion.noMoreIncubators": "No more results",
 
-
   "templates.userProfile.edit": "Edit",
-  "templates.privateMessages.button.new" : "New Message"
-
+  "templates.privateMessages.button.new" : "New Message",
+  "templates.feedObjectDetail.contributionNotFound": "Contribution not found or you do not have permission to view it."
 }
