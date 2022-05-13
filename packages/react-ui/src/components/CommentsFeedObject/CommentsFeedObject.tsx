@@ -203,7 +203,7 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
     commentObjectId,
     commentObject,
     CommentComponent = CommentObject,
-    CommentComponentProps = {variant: 'outlined'},
+    CommentComponentProps = {variant: 'outlined', linkableCommentDateTime: false},
     CommentObjectSkeletonProps = {elevation: 0, WidgetProps: {variant: 'outlined'} as WidgetProps},
     renderNoComments,
     renderCommentNotFound,
