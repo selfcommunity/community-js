@@ -20,6 +20,10 @@ const messages = defineMessages({
   userPoints: {
     id: 'ui.loyaltyProgramDetail.userPoints',
     defaultMessage: 'ui.loyaltyProgramDetail.userPoints'
+  },
+  list: {
+    id: 'ui.loyaltyProgramDetail.list',
+    defaultMessage: 'ui.loyaltyProgramDetail.list'
   }
 });
 
@@ -194,7 +198,10 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
             <FormattedMessage id="ui.loyaltyProgramDetail.listTitle" defaultMessage="ui.loyaltyProgramDetail.listTitle" />
           </Typography>
           <ul style={{columnCount: 2}}>
-            <FormattedMessage id="ui.loyaltyProgramDetail.list" defaultMessage="ui.loyaltyProgramDetail.list" />
+            {intl.formatMessage(messages.list, {
+              b: (chunks) => <strong>{chunks}</strong>,
+              li: (chunks) => <li>{chunks}</li>
+            })}
           </ul>
         </Grid>
         <Grid item xs={12} sx={{mb: 2}}>
