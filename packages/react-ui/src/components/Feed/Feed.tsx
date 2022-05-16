@@ -339,7 +339,10 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
           left: _widgets
             .map((w) => Object.assign({}, w, {position: w.position * (w.column === 'right' ? 5 : 1)}))
             .sort(widgetSort)
-            .reduce(widgetReducer, [...feedData, ...(loading ? [{type: 'widget', component: ItemSkeleton, componentProps: ItemSkeletonProps}] : [])]),
+            .reduce(widgetReducer, [
+              ...feedData,
+              ...(loading ? Array.from({length: 3}).map(() => ({type: 'widget', component: ItemSkeleton, componentProps: ItemSkeletonProps})) : [])
+            ]),
           right: []
         };
       } else {
@@ -347,7 +350,10 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
           left: _widgets
             .filter((w) => w.column === 'left')
             .sort(widgetSort)
-            .reduce(widgetReducer, [...feedData, ...(loading ? [{type: 'widget', component: ItemSkeleton, componentProps: ItemSkeletonProps}] : [])]),
+            .reduce(widgetReducer, [
+              ...feedData,
+              ...(loading ? Array.from({length: 3}).map(() => ({type: 'widget', component: ItemSkeleton, componentProps: ItemSkeletonProps})) : [])
+            ]),
           right: _widgets.filter((w) => w.column === 'right').sort(widgetSort)
         };
       }
@@ -362,10 +368,10 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
       <Grid item xs={12} md={7}>
         <InfiniteScroll
           className={classes.left}
-          dataLength={feedData.length}
+          dataLength={data.left.length}
           next={fetch}
           hasMore={Boolean(next)}
-          loader={<ItemSkeleton {...ItemSkeletonProps} />}
+          loader={<></>}
           endMessage={
             <Widget className={classes.end}>
               <CardContent>{endMessage}</CardContent>
@@ -381,7 +387,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
             </Widget>
           }
           style={{overflow: 'visible'}}>
-          {feedData.map((d, i) =>
+          {data.left.map((d, i) =>
             d.type === 'widget' ? (
               <d.component key={`widget_left_${i}`} {...d.componentProps} {...(d.publishEvents && {publicationChannel: id})}></d.component>
             ) : (
