@@ -84,7 +84,6 @@ export default function CategoriesFollowed(inProps: CategoriesListProps): JSX.El
 
   // STATE
   const [categories, setCategories] = useState<any[]>([]);
-  const [visibleCategories, setVisibleCategories] = useState<number>(limit);
   const [loading, setLoading] = useState<boolean>(true);
   const [hasMore, setHasMore] = useState<boolean>(false);
   const [total, setTotal] = useState<number>(0);
@@ -101,14 +100,11 @@ export default function CategoriesFollowed(inProps: CategoriesListProps): JSX.El
     if (scUserContext.user['id'] === userId) {
       setCategories(categories.filter((c) => c.id !== category.id));
       setTotal((prev) => prev - 1);
-      if (visibleCategories < limit && total > 1) {
-        loadCategories(1);
-      }
+      setHasMore(total - 1 > limit);
     } else {
       const newCategories = [...categories];
       const index = newCategories.findIndex((u) => u.id === category.id);
       if (index !== -1) {
-        console.log(category.followed);
         if (category.followed) {
           newCategories[index].followers_counter = category.followers_counter - 1;
           newCategories[index].followed = !category.followed;
@@ -136,7 +132,7 @@ export default function CategoriesFollowed(inProps: CategoriesListProps): JSX.El
           setCategories([...categories, ...data]);
           setTotal(data.length);
           setNext(data['next']);
-          setHasMore(data.length > visibleCategories);
+          setHasMore(data.length > limit);
           setLoading(false);
         })
         .catch((error) => {
@@ -144,16 +140,6 @@ export default function CategoriesFollowed(inProps: CategoriesListProps): JSX.El
           Logger.error(SCOPE_SC_UI, error);
         });
     }
-  }
-
-  /**
-   * Loads more categories when followed list changes
-   */
-  function loadCategories(n) {
-    const newIndex = visibleCategories + n;
-    const newHasMore = newIndex < categories.length - 1;
-    setVisibleCategories(newIndex);
-    setHasMore(newHasMore);
   }
 
   /**
@@ -180,7 +166,7 @@ export default function CategoriesFollowed(inProps: CategoriesListProps): JSX.El
           ) : (
             <React.Fragment>
               <List>
-                {categories.slice(0, visibleCategories).map((category: SCCategoryType) => (
+                {categories.slice(0, limit).map((category: SCCategoryType) => (
                   <ListItem key={category.id}>
                     <Category elevation={0} category={category} followCategoryButtonProps={{onFollow: handleOnFollowCategory}} {...CategoryProps} />
                   </ListItem>
