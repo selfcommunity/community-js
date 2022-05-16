@@ -124,7 +124,7 @@ export interface MessageProps extends CardProps {
   [p: string]: any;
 }
 
-const PREFERENCES = [SCPreferences.LOGO_NAVBAR_LOGO, SCPreferences.TEXT_APPLICATION_NAME];
+const PREFERENCES = [SCPreferences.LOGO_NAVBAR_LOGO_MOBILE, SCPreferences.TEXT_APPLICATION_NAME];
 
 export default function Message(props: MessageProps): JSX.Element {
   // PROPS
@@ -213,7 +213,9 @@ export default function Message(props: MessageProps): JSX.Element {
             {message.viewed_at === null && <MarkRead endpoint={Endpoints.BroadcastMessagesMarkRead} data={{banner_ids: [message.id]}} />}
             <CardHeader
               className={classes.header}
-              avatar={<Avatar alt={preferences[SCPreferences.TEXT_APPLICATION_NAME]} src={preferences[SCPreferences.LOGO_NAVBAR_LOGO]} />}
+              avatar={
+                <Avatar alt={preferences[SCPreferences.TEXT_APPLICATION_NAME]} src={preferences[SCPreferences.LOGO_NAVBAR_LOGO_MOBILE_MOBILE]} />
+              }
               action={
                 template === SCBroadcastMessageTemplateType.DETAIL && (
                   <IconButton aria-label="close" onClick={handleClose} disabled={closing}>
