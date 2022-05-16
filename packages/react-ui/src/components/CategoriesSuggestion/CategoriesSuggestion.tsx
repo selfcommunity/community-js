@@ -110,9 +110,7 @@ export default function CategoriesSuggestion(inProps: CategoriesListProps): JSX.
   function handleOnFollowCategory(category, follow) {
     setCategories(categories.filter((c) => c.id !== category.id));
     setTotal((prev) => prev - 1);
-    if (visibleCategories < limit && total > 1) {
-      loadCategories(1);
-    }
+    setHasMore(total - 1 > limit);
   }
 
   /**

@@ -91,7 +91,7 @@ const Root = styled(Box, {
   [`& .${classes.nestedComments}`]: {
     paddingTop: 0,
     paddingBottom: 0,
-    paddingLeft: 55,
+    paddingLeft: 25,
     '& ul.MuiList-root': {
       paddingTop: 0,
       paddingBottom: 0,
@@ -99,6 +99,9 @@ const Root = styled(Box, {
       '& li.MuiListItem-root': {
         paddingTop: 5
       }
+    },
+    [theme.breakpoints.up('sm')]: {
+      paddingLeft: 55
     }
   },
   [`& .${classes.content}`]: {

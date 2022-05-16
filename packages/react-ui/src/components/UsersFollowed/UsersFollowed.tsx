@@ -123,7 +123,6 @@ export default function UsersFollowed(inProps: UsersFollowedProps): JSX.Element 
 
   // STATE
   const [followed, setFollowed] = useState<any[]>([]);
-  const [visibleUsers, setVisibleUsers] = useState<number>(limit);
   const [loading, setLoading] = useState<boolean>(true);
   const [hasMore, setHasMore] = useState<boolean>(false);
   const [total, setTotal] = useState<number>(0);
@@ -137,9 +136,7 @@ export default function UsersFollowed(inProps: UsersFollowedProps): JSX.Element 
     if (scUserContext.user['id'] === userId) {
       setFollowed(followed.filter((u) => u.id !== user.id));
       setTotal((prev) => prev - 1);
-      if (visibleUsers < limit && total > 1) {
-        loadUsers(1);
-      }
+      setHasMore(total - 1 > limit);
     } else {
       const newUsers = [...followed];
       const index = newUsers.findIndex((u) => u.id === user.id);
@@ -169,7 +166,7 @@ export default function UsersFollowed(inProps: UsersFollowedProps): JSX.Element 
         .then((res: HttpResponse<any>) => {
           const data = res.data;
           setFollowed([...followed, ...data.results]);
-          setHasMore(data.count > visibleUsers);
+          setHasMore(data.count > limit);
           setNext(data['next']);
           setLoading(false);
           setTotal(data.count);
@@ -179,16 +176,6 @@ export default function UsersFollowed(inProps: UsersFollowedProps): JSX.Element 
           Logger.error(SCOPE_SC_UI, error);
         });
     }
-  }
-
-  /**
-   * Loads more users when followed list changes
-   */
-  function loadUsers(n) {
-    const newIndex = visibleUsers + n;
-    const newHasMore = newIndex < followed.length - 1;
-    setVisibleUsers(newIndex);
-    setHasMore(newHasMore);
   }
 
   /**
@@ -216,7 +203,7 @@ export default function UsersFollowed(inProps: UsersFollowedProps): JSX.Element 
           ) : (
             <React.Fragment>
               <List>
-                {followed.slice(0, visibleUsers).map((user: SCUserType) => (
+                {followed.slice(0, limit).map((user: SCUserType) => (
                   <ListItem key={user.id}>
                     <User
                       elevation={0}

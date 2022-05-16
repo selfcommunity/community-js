@@ -117,9 +117,7 @@ export default function PeopleSuggestion(inProps: PeopleSuggestionProps): JSX.El
   function handleOnFollowUser(user, follow) {
     setUsers(users.filter((u) => u.id !== user.id));
     setTotal((prev) => prev - 1);
-    if (visiblePeople < limit && total > 1) {
-      loadPeople(1);
-    }
+    setHasMore(total - 1 > limit);
   }
 
   /**
@@ -128,9 +126,7 @@ export default function PeopleSuggestion(inProps: PeopleSuggestionProps): JSX.El
   function handleOnConnectUser(user, status) {
     setUsers(users.filter((u) => u.id !== user.id));
     setTotal((prev) => prev - 1);
-    if (visiblePeople < limit && total > 1) {
-      loadPeople(1);
-    }
+    setHasMore(total - 1 > limit);
   }
 
   /**
