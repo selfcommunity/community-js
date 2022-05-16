@@ -1,15 +1,4 @@
-import React, {
-  forwardRef,
-  ForwardRefRenderFunction,
-  ReactNode,
-  useCallback,
-  useContext,
-  useEffect,
-  useImperativeHandle,
-  useMemo,
-  useRef,
-  useState
-} from 'react';
+import React, {forwardRef, ForwardRefRenderFunction, ReactNode, useContext, useEffect, useImperativeHandle, useMemo, useRef, useState} from 'react';
 import {styled, useTheme} from '@mui/material/styles';
 import Widget from '../Widget';
 import {CardContent, Grid, Hidden, Theme, useMediaQuery} from '@mui/material';
@@ -26,6 +15,7 @@ import {Logger, SCPreferences, SCPreferencesContextType, SCUserContext, SCUserCo
 import classNames from 'classnames';
 import PubSub from 'pubsub-js';
 import useThemeProps from '@mui/material/styles/useThemeProps';
+import {appendURLSearchParams} from '../../utils/url';
 
 const PREFIX = 'SCFeed';
 
@@ -84,6 +74,12 @@ export interface FeedProps {
    * Feed API Endpoint
    */
   endpoint: EndpointType;
+
+  /**
+   * Feed API Query Params
+   * @default [{'limit': 5}]
+   */
+  endpointQueryParams?: Record<string, string | number>[];
 
   /**
    * End message, rendered when no more feed item can be displayed
@@ -194,6 +190,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     id = 'feed',
     className,
     endpoint,
+    endpointQueryParams = [{limit: 5}],
     endMessage = <FormattedMessage id="ui.feed.noOtherFeedObject" defaultMessage="ui.feed.noOtherFeedObject" />,
     refreshMessage = <FormattedMessage id="ui.feed.refreshRelease" defaultMessage="ui.feed.refreshRelease" />,
     widgets = [],
@@ -211,7 +208,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
   // STATE
   const [feedData, setFeedData] = useState([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [next, setNext] = useState<string>(endpoint.url({}));
+  const [next, setNext] = useState<string>(appendURLSearchParams(endpoint.url({}), endpointQueryParams));
 
   // CONTEXT
   const scPreferences: SCPreferencesContextType = useSCPreferences();
@@ -330,78 +327,68 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
   const theme: Theme = useTheme();
   const oneColLayout = useMediaQuery(theme.breakpoints.down('md'));
 
-  const getData = useCallback((): FeedData => {
-    const widgetSort = (w1, w2) => (w1.position > w2.position ? 1 : -1);
-    const widgetReducer = (value, w) => {
-      value.splice(w.position, 0, w);
-      return value;
-    };
-    if (oneColLayout) {
-      return {
-        left: _widgets
-          .map((w) => Object.assign({}, w, {position: w.position * (w.column === 'right' ? 5 : 1)}))
-          .sort(widgetSort)
-          .reduce(widgetReducer, [
-            ...feedData,
-            ...(loading ? Array.from({length: 5}).map(() => ({type: 'widget', component: ItemSkeleton, componentProps: ItemSkeletonProps})) : [])
-          ]),
-        right: []
+  const getData = useMemo(
+    () => (): FeedData => {
+      const widgetSort = (w1, w2) => (w1.position > w2.position ? 1 : -1);
+      const widgetReducer = (value, w) => {
+        value.splice(w.position, 0, w);
+        return value;
       };
-    } else {
-      return {
-        left: _widgets
-          .filter((w) => w.column === 'left')
-          .sort(widgetSort)
-          .reduce(widgetReducer, [
-            ...feedData,
-            ...(loading ? Array.from({length: 5}).map(() => ({type: 'widget', component: ItemSkeleton, componentProps: ItemSkeletonProps})) : [])
-          ]),
-        right: _widgets.filter((w) => w.column === 'right').sort(widgetSort)
-      };
-    }
-  }, [loading, oneColLayout, feedData, _widgets]);
+      if (oneColLayout) {
+        return {
+          left: _widgets
+            .map((w) => Object.assign({}, w, {position: w.position * (w.column === 'right' ? 5 : 1)}))
+            .sort(widgetSort)
+            .reduce(widgetReducer, [...feedData, ...(loading ? [{type: 'widget', component: ItemSkeleton, componentProps: ItemSkeletonProps}] : [])]),
+          right: []
+        };
+      } else {
+        return {
+          left: _widgets
+            .filter((w) => w.column === 'left')
+            .sort(widgetSort)
+            .reduce(widgetReducer, [...feedData, ...(loading ? [{type: 'widget', component: ItemSkeleton, componentProps: ItemSkeletonProps}] : [])]),
+          right: _widgets.filter((w) => w.column === 'right').sort(widgetSort)
+        };
+      }
+    },
+    [loading, oneColLayout, feedData, _widgets]
+  );
 
   const data = getData();
 
   return (
     <Root container spacing={2} id={id} className={classNames(classes.root, className)}>
       <Grid item xs={12} md={7}>
-        <React.Suspense fallback={<ItemSkeleton {...ItemSkeletonProps} />}>
-          <InfiniteScroll
-            className={classes.left}
-            dataLength={data.left.length}
-            next={fetch}
-            hasMore={Boolean(next)}
-            loader={false}
-            endMessage={
-              <Widget className={classes.end}>
-                <CardContent>{endMessage}</CardContent>
-              </Widget>
-            }
-            refreshFunction={refresh}
-            pullDownToRefresh
-            pullDownToRefreshThreshold={1000}
-            pullDownToRefreshContent={null}
-            releaseToRefreshContent={
-              <Widget variant="outlined" className={classes.refresh}>
-                <CardContent>{refreshMessage}</CardContent>
-              </Widget>
-            }
-            style={{overflow: 'visible'}}>
-            {data.left.map((d, i) =>
-              d.type === 'widget' ? (
-                <d.component key={`widget_left_${i}`} {...d.componentProps} {...(d.publishEvents && {publicationChannel: id})}></d.component>
-              ) : (
-                <ItemComponent
-                  key={`item_${itemIdGenerator(d)}`}
-                  {...itemPropsGenerator(scUserContext.user, d)}
-                  {...ItemProps}
-                  sx={{width: '100%'}}
-                />
-              )
-            )}
-          </InfiniteScroll>
-        </React.Suspense>
+        <InfiniteScroll
+          className={classes.left}
+          dataLength={feedData.length}
+          next={fetch}
+          hasMore={Boolean(next)}
+          loader={<ItemSkeleton {...ItemSkeletonProps} />}
+          endMessage={
+            <Widget className={classes.end}>
+              <CardContent>{endMessage}</CardContent>
+            </Widget>
+          }
+          refreshFunction={refresh}
+          pullDownToRefresh
+          pullDownToRefreshThreshold={1000}
+          pullDownToRefreshContent={null}
+          releaseToRefreshContent={
+            <Widget variant="outlined" className={classes.refresh}>
+              <CardContent>{refreshMessage}</CardContent>
+            </Widget>
+          }
+          style={{overflow: 'visible'}}>
+          {feedData.map((d, i) =>
+            d.type === 'widget' ? (
+              <d.component key={`widget_left_${i}`} {...d.componentProps} {...(d.publishEvents && {publicationChannel: id})}></d.component>
+            ) : (
+              <ItemComponent key={`item_${itemIdGenerator(d)}`} {...itemPropsGenerator(scUserContext.user, d)} {...ItemProps} sx={{width: '100%'}} />
+            )
+          )}
+        </InfiniteScroll>
       </Grid>
       {data.right.length > 0 && (
         <Hidden smDown>

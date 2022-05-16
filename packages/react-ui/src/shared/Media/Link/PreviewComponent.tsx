@@ -119,7 +119,7 @@ export default (props: LinkPreviewProps): JSX.Element => {
   return (
     <>
       {medias.length > 0 && (
-        <LazyLoad height={360} placeholder={<CentralProgress size={20} />}>
+        <LazyLoad height={360} placeholder={<CentralProgress size={20} />} once>
           <Root>
             {adornment}
             {medias.map((l, i) => {

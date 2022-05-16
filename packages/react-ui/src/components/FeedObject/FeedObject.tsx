@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import CardContent from '@mui/material/CardContent';
 import {Avatar, Box, Button, CardActions, CardHeader, CardProps, Collapse, Stack, Tooltip, Typography} from '@mui/material';
@@ -489,79 +489,85 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
   /**
    * Handle restore obj
    */
-  function handleRestore() {
+  const handleRestore = useCallback(() => {
     setObj((prev) => ({...prev, ...{deleted: false}}));
-  }
+  }, [obj]);
 
   /**
    * Handle restore obj
    */
-  function handleHide() {
+  const handleHide = useCallback(() => {
     setObj((prev) => ({...prev, ...{collapsed: !prev.collapsed}}));
-  }
+  }, [obj]);
 
   /**
    * Handle delete obj
    */
-  function handleDelete() {
+  const handleDelete = useCallback(() => {
     setObj((prev) => ({...prev, ...{deleted: !prev.deleted}}));
-  }
+  }, [obj]);
 
   /**
    * Handle suspend notification obj
    */
-  function handleSuspendNotification() {
+  const handleSuspendNotification = useCallback(() => {
     setObj((prev) => ({...prev, ...{suspended: !prev.suspended}}));
-  }
+  }, [obj]);
 
   /**
    * Handle initial edit
    * Open composer
    */
-  function handleToggleEdit() {
+  const handleToggleEdit = useCallback(() => {
     setComposerOpen((prev) => !prev);
-  }
+  }, [composerOpen]);
 
   /**
    * handle edit success
    */
-  function handleEditSuccess(data) {
-    setObj(data);
-    setComposerOpen(false);
-  }
+  const handleEditSuccess = useCallback(
+    (data) => {
+      setObj(data);
+      setComposerOpen(false);
+    },
+    [obj, composerOpen]
+  );
 
   /**
    * Expand activities if the user is logged
    */
-  function handleExpandActivities() {
+  const handleExpandActivities = useCallback(() => {
     if (scUserContext.user) {
       setExpandedActivities((prev) => !prev);
     } else {
       scContext.settings.handleAnonymousAction();
     }
-  }
+  }, [scUserContext.user]);
 
   /**
    * Handle follow obj
    */
-  function handleFollow(isFollow) {
-    setObj((prev) => ({...prev, ...{followed: isFollow}}));
-  }
+  const handleFollow = useCallback(
+    (isFollow) => {
+      setObj((prev) => ({...prev, ...{followed: isFollow}}));
+    },
+    [obj]
+  );
 
   /**
    * Handle delete comment callback
    */
-  function handleDeleteComment() {
+  const handleDeleteComment = useCallback(() => {
     setObj((prev) => ({...prev, ...{comment_count: Math.max(prev.comment_count - 1, 0)}}));
-  }
+  }, [obj]);
 
   /**
    * Handle select activities
    */
-  function handleSelectedActivities(type) {
+  const handleSelectedActivities = useCallback((type) => {
     setSelectedActivities(type);
     setComments([]);
-  }
+  }, [obj]);
 
   /**
    * Perform reply
