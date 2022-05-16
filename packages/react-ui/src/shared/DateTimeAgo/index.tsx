@@ -1,5 +1,5 @@
-import React from 'react';
-import TimeAgo from 'react-timeago';
+import React, {useEffect} from 'react';
+import {SCContextType, useSCContext} from '@selfcommunity/react-core';
 import itStrings from 'react-timeago/lib/language-strings/it';
 import buildFormatter from 'react-timeago/lib/formatters/buildFormatter';
 import {styled} from '@mui/material/styles';
@@ -7,6 +7,7 @@ import {Box, Tooltip, Typography} from '@mui/material';
 import Icon from '@mui/material/Icon';
 import {useIntl} from 'react-intl';
 import classNames from 'classnames';
+import moment from 'moment';
 
 const PREFIX = 'SCDateTimeAgo';
 
@@ -66,7 +67,16 @@ export interface DateTimeAgoProps {
 }
 export default function DateTimeAgo(props: DateTimeAgoProps): JSX.Element {
   // PROPS
-  const {className, live = true, date = null, showStartIcon = true, ...rest} = props;
+  const {className, date = null, showStartIcon = true, ...rest} = props;
+
+  // CONTEXT
+  const scContext: SCContextType = useSCContext();
+
+  useEffect(() => {
+    if (moment.locale() !== scContext.settings.locale.default) {
+      moment.locale(scContext.settings.locale.default);
+    }
+  }, [scContext.settings.locale.default]);
 
   // INTL
   const intl = useIntl();
@@ -83,7 +93,7 @@ export default function DateTimeAgo(props: DateTimeAgoProps): JSX.Element {
           title={`${intl.formatDate(date, {year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric'})}`}
           enterTouchDelay={0}>
           <Typography variant={'body2'} component={'span'}>
-            <TimeAgo date={date} live={live} formatter={formatter} />
+            {moment(date).fromNow()}
           </Typography>
         </Tooltip>
       </Root>

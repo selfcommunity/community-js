@@ -50,7 +50,7 @@
     "babel-plugin-macros": "^3.1.0",
     "babel-preset-env-modules": "^1.0.0",
     "cross-env": "^5.0.5",
-    "devcert": "^1.2.0",
+    "devcert": "1.2.0",
     "eslint": "^7.0.0",
     "eslint-config-prettier": "^6.5.0",
     "eslint-import-resolver-typescript": "^2.5.0",

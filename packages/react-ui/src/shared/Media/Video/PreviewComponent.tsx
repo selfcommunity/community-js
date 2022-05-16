@@ -43,16 +43,14 @@ export default (props: PreviewVideoProps): JSX.Element => {
   return (
     <>
       {medias.length > 0 && (
-        <LazyLoad height={360} placeholder={<CentralProgress size={20} />} once>
-          <Root>
-            {adornment}
-            {medias.map((v, i) => (
-              <LazyLoad height={360} placeholder={<CentralProgress size={20} />} key={i} once>
-                <AutoPlayer url={v.url} width={'100%'} onVideoWatch={() => handleVideoClick(v)} />
-              </LazyLoad>
-            ))}
-          </Root>
-        </LazyLoad>
+        <Root>
+          {adornment}
+          {medias.map((v, i) => (
+            <LazyLoad height={360} placeholder={<CentralProgress size={20} />} key={i} once>
+              <AutoPlayer url={v.url} width={'100%'} onVideoWatch={() => handleVideoClick(v)} />
+            </LazyLoad>
+          ))}
+        </Root>
       )}
     </>
   );
