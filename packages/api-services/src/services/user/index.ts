@@ -50,7 +50,7 @@ export class UserApiClient {
     return client
       .request({
         url: Endpoints.Me.url(),
-        method: Endpoints.Me.method,
+        method: Endpoints.Me.method
       })
       .then((res) => {
         if (res.status >= 300) {
