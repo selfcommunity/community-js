@@ -1,6 +1,10 @@
-import {addDecorator} from '@storybook/react'
-import decorators from './decorators';
-addDecorator(decorators.withProvider);
+import defaultDecorators from './decorators';
+/**
+ * Add decorators:
+ * 1. wrap the story with SCContextProvider
+ * 2. register a service worker
+ */
+export const decorators = [defaultDecorators.withProvider, defaultDecorators.withServiceWorker];
 
 /**
  * Parameters
@@ -17,6 +21,19 @@ export const parameters = {
     storySort: {
       order: ['General', 'Design System'],
     },
+  },
+  backgrounds: {
+    default: 'light_grey',
+    values: [
+      {
+        name: 'light_grey',
+        value: '#F7F7F7',
+      },
+      {
+        name: 'dark_grey',
+        value: '#565656',
+      },
+    ],
   }
 }
 

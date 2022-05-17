@@ -1,29 +1,24 @@
 const path = require("path");
 const toPath = (filePath) => path.join(process.cwd(), filePath);
 
-/*
-Fix Storybook v6.3.10 with mui v5
-Check this issue to resolve mui problems in DOCs tab of storybook
-https://github.com/mui-org/material-ui/issues/28716
-After Storybook fix the problem remove "webpackFinal" in the following export
- */
-
 module.exports = {
+  staticDirs: ['../public'],
   "reactOptions": {
     "fastRefresh": true
   },
   "stories": [
-    "../packages/sc-core/src/**/*.stories.@(js|jsx|ts|tsx)",
-    "../packages/sc-ui/src/components/**/*.stories.@(js|jsx|ts|tsx)",
-    "../packages/sc-ui/src/shared/**/*.stories.@(js|jsx|ts|tsx)",
-    "../packages/sc-templates/src/components/**/*.stories.@(js|jsx|ts|tsx)",
+    "../packages/react-core/src/**/*.stories.@(js|jsx|ts|tsx)",
+    "../packages/react-ui/src/components/**/*.stories.@(js|jsx|ts|tsx)",
+    "../packages/react-ui/src/shared/**/*.stories.@(js|jsx|ts|tsx)",
+    "../packages/react-templates/src/components/**/*.stories.@(js|jsx|ts|tsx)",
     "../stories/**/*.stories.mdx",
     "../stories/**/*.stories.@(js|jsx|ts|tsx)"
   ],
   "addons": [
     "@storybook/addon-docs",
+    "@storybook/addon-essentials",
     "@storybook/addon-links",
-    "@storybook/addon-toolbars"
+    "@storybook/addon-toolbars",
   ],
   "features": {
     "postcss": false
@@ -38,10 +33,13 @@ module.exports = {
           "@emotion/core": toPath("node_modules/@emotion/react"),
           "@emotion/styled": require.resolve('@emotion/styled'),
           "emotion-theming": toPath("node_modules/@emotion/react"),
-          "@selfcommunity/i18n": toPath("packages/sc-i18n/src"), // development
-          "@selfcommunity/core": toPath("packages/sc-core/src"), // development
-          "@selfcommunity/ui": toPath("packages/sc-ui/src"), // development
-          "@selfcommunity/templates": toPath("packages/sc-templates/src") // development
+          "@selfcommunity/types": toPath("packages/types/src"), // development
+          "@selfcommunity/utils": toPath("packages/utils/src"), // development
+          "@selfcommunity/api-services": toPath("packages/api-services/src"), // development
+          "@selfcommunity/react-i18n": toPath("packages/react-i18n/src"), // development
+          "@selfcommunity/react-core": toPath("packages/react-core/src"), // development
+          "@selfcommunity/react-ui": toPath("packages/react-ui/src"), // development
+          "@selfcommunity/react-templates": toPath("packages/react-templates/src") // development
         },
       },
     };
