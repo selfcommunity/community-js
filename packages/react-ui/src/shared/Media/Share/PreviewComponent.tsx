@@ -26,21 +26,21 @@ export default ({medias = [], adornment = null}: {medias: any[]; GridImageProps?
   return (
     <>
       {medias.length > 0 && (
-        <LazyLoad height={360} placeholder={<CentralProgress size={20} />} once>
-          <Root>
-            {adornment}
-            {medias.map((media) => (
-              <Box key={media.id} className={classes.sharePreview}>
+        <Root>
+          {adornment}
+          {medias.map((media) => (
+            <Box key={media.id} className={classes.sharePreview}>
+              <LazyLoad height={360} placeholder={<CentralProgress size={20} />} once>
                 <FeedObject
                   feedObjectId={media.embed.metadata.id}
                   feedObjectType={media.embed.metadata.type}
                   variant={'outlined'}
                   template={SCFeedObjectTemplateType.SHARE}
                 />
-              </Box>
-            ))}
-          </Root>
-        </LazyLoad>
+              </LazyLoad>
+            </Box>
+          ))}
+        </Root>
       )}
     </>
   );

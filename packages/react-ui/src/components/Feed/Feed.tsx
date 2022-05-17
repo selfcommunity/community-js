@@ -16,6 +16,7 @@ import classNames from 'classnames';
 import PubSub from 'pubsub-js';
 import useThemeProps from '@mui/material/styles/useThemeProps';
 import {appendURLSearchParams} from '../../utils/url';
+import {AutoSizer, CellMeasurer, CellMeasurerCache, InfiniteLoader, List, WindowScroller} from 'react-virtualized';
 
 const PREFIX = 'SCFeed';
 
@@ -180,6 +181,9 @@ const PREFERENCES = [SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED, SCPreferences
  *
  * @param inProps
  */
+const LOADING = 1;
+const LOADED = 2;
+
 const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, ref): JSX.Element => {
   // PROPS
   const props: FeedProps = useThemeProps({
@@ -219,6 +223,14 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
 
   // REFS
   const refreshSubscription = useRef(null);
+  const itemStatusMap = useRef({});
+
+  // Caching
+  const cache = React.useRef(
+    new CellMeasurerCache({
+      fixedWidth: true
+    })
+  );
 
   /**
    * Compute preferences
@@ -272,24 +284,24 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
    * Manage pagination, infinite scrolling
    */
   const fetch = () => {
-    if (!loading) {
-      setLoading(true);
-      http
-        .request({
-          url: next,
-          method: endpoint.method
-        })
-        .then((res: HttpResponse<{next?: string; previous?: string; results: SCNotificationAggregatedType[]}>) => {
-          const data = res.data;
-          setFeedData([...feedData, ...data.results]);
-          setNext(data.next);
-          setLoading(false);
-          onFetchData && onFetchData(res.data);
-        })
-        .catch((error) => {
-          Logger.error(SCOPE_SC_UI, error);
-        });
-    }
+    // if (!loading) {
+    //   setLoading(true);
+    return http
+      .request({
+        url: next,
+        method: endpoint.method
+      })
+      .then((res: HttpResponse<{next?: string; previous?: string; results: SCNotificationAggregatedType[]}>) => {
+        const data = res.data;
+        setFeedData([...feedData, ...data.results]);
+        setNext(data.next);
+        setLoading(false);
+        onFetchData && onFetchData(res.data);
+      })
+      .catch((error) => {
+        Logger.error(SCOPE_SC_UI, error);
+      });
+    //}
   };
 
   const refresh = () => {
@@ -363,38 +375,106 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
 
   const data = getData();
 
+  /* const elements = data.left.map((d, i) => (
+    <>
+      {d.type === 'widget' ? (
+        <d.component key={`widget_left_${i}`} {...d.componentProps} {...(d.publishEvents && {publicationChannel: id})}></d.component>
+      ) : (
+        <ItemComponent key={`item_${itemIdGenerator(d)}`} {...itemPropsGenerator(scUserContext.user, d)} {...ItemProps} sx={{width: '100%'}} />
+      )}
+    </>
+  ));
+
+  const VirtualScrollChildren = useMemo(
+    () => () => {
+      return data.left.map((d, i) => (
+        <VirtualScrollChild
+          children={
+            <>
+              {d.type === 'widget' ? (
+                <d.component key={`widget_left_${i}`} {...d.componentProps} {...(d.publishEvents && {publicationChannel: id})}></d.component>
+              ) : (
+                <ItemComponent
+                  key={`item_${itemIdGenerator(d)}`}
+                  {...itemPropsGenerator(scUserContext.user, d)}
+                  {...ItemProps}
+                  sx={{width: '100%'}}
+                />
+              )}
+            </>
+          }
+        />
+      ));
+    },
+    [data.left]
+  ); */
+
+  const isRowLoaded = ({index}) => !!itemStatusMap.current[index];
+
+  const loadMoreRows = async ({startIndex, stopIndex}) => {
+    for (let index = startIndex; index <= stopIndex; index++) {
+      itemStatusMap.current[index] = LOADING;
+    }
+
+    await fetch();
+
+    for (let index = startIndex; index <= stopIndex; index++) {
+      itemStatusMap.current[index] = LOADED;
+    }
+  };
+
+  const rowRenderer = ({key, index, style}) => {
+    let label;
+    if (itemStatusMap.current[index] === LOADED) {
+      const f = data.left[index];
+      const d = f[f.type];
+      if (d.type === 'widget') {
+        label = <d.component key={index} {...d.componentProps} {...(d.publishEvents && {publicationChannel: id})}></d.component>;
+      } else {
+        label = (
+          <ItemComponent key={index} feedObject={d} sx={{width: '100%'}} />
+        );
+      }
+    } else {
+      label = <ItemSkeleton {...ItemSkeletonProps} />;
+    }
+    return (
+      <CellMeasurer key={key} cache={cache.current} columnCount={1} columnIndex={0} parent={parent} rowIndex={index}>
+        {({registerChild}) => (
+          <div key={key} ref={registerChild} style={style}>
+            {label}
+          </div>
+        )}
+      </CellMeasurer>
+    );
+  };
+
   return (
     <Root container spacing={2} id={id} className={classNames(classes.root, className)}>
       <Grid item xs={12} md={7}>
-        <InfiniteScroll
-          className={classes.left}
-          dataLength={data.left.length}
-          next={fetch}
-          hasMore={Boolean(next)}
-          loader={<></>}
-          endMessage={
-            <Widget className={classes.end}>
-              <CardContent>{endMessage}</CardContent>
-            </Widget>
-          }
-          refreshFunction={refresh}
-          pullDownToRefresh
-          pullDownToRefreshThreshold={1000}
-          pullDownToRefreshContent={null}
-          releaseToRefreshContent={
-            <Widget variant="outlined" className={classes.refresh}>
-              <CardContent>{refreshMessage}</CardContent>
-            </Widget>
-          }
-          style={{overflow: 'visible'}}>
-          {data.left.map((d, i) =>
-            d.type === 'widget' ? (
-              <d.component key={`widget_left_${i}`} {...d.componentProps} {...(d.publishEvents && {publicationChannel: id})}></d.component>
-            ) : (
-              <ItemComponent key={`item_${itemIdGenerator(d)}`} {...itemPropsGenerator(scUserContext.user, d)} {...ItemProps} sx={{width: '100%'}} />
-            )
+        <InfiniteLoader isRowLoaded={isRowLoaded} loadMoreRows={loadMoreRows} rowCount={data.left.length} threshold={10}>
+          {({onRowsRendered, registerChild}) => (
+            <WindowScroller>
+              {({height, scrollTop}) => (
+                <AutoSizer>
+                  {({width}) => (
+                    <List
+                      autoHeight
+                      ref={registerChild}
+                      height={height}
+                      width={width}
+                      onRowsRendered={onRowsRendered}
+                      rowCount={data.left.length}
+                      rowHeight={500}
+                      rowRenderer={rowRenderer}
+                      scrollTop={scrollTop}
+                    />
+                  )}
+                </AutoSizer>
+              )}
+            </WindowScroller>
           )}
-        </InfiniteScroll>
+        </InfiniteLoader>
       </Grid>
       {data.right.length > 0 && (
         <Hidden smDown>
