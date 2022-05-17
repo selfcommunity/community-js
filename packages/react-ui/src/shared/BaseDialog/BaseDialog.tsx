@@ -23,6 +23,11 @@ const Root = styled(Dialog, {
   [theme.breakpoints.down(500)]: {
     minWidth: 300
   },
+  [theme.breakpoints.only('xs')]: {
+    '& .MuiDialogContent-root': {
+      padding: 0
+    }
+  },
   minWidth: 500
 }));
 
