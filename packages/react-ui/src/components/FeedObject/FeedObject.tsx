@@ -564,10 +564,13 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
   /**
    * Handle select activities
    */
-  const handleSelectedActivities = useCallback((type) => {
-    setSelectedActivities(type);
-    setComments([]);
-  }, [obj]);
+  const handleSelectedActivities = useCallback(
+    (type) => {
+      setSelectedActivities(type);
+      setComments([]);
+    },
+    [obj]
+  );
 
   /**
    * Perform reply

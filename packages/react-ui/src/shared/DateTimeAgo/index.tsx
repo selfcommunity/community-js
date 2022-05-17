@@ -1,7 +1,5 @@
 import React, {useEffect} from 'react';
 import {SCContextType, useSCContext} from '@selfcommunity/react-core';
-import itStrings from 'react-timeago/lib/language-strings/it';
-import buildFormatter from 'react-timeago/lib/formatters/buildFormatter';
 import {styled} from '@mui/material/styles';
 import {Box, Tooltip, Typography} from '@mui/material';
 import Icon from '@mui/material/Icon';
@@ -32,8 +30,6 @@ const Root = styled(Box, {
     lineHeight: 1.8
   }
 }));
-
-const formatter = buildFormatter(itStrings);
 
 export interface DateTimeAgoProps {
   /**
