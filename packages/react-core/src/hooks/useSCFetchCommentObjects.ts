@@ -67,7 +67,7 @@ function commentsReducer(state, action) {
         page: action.payload.currentPage,
         comments: action.payload.comments,
         isLoadingPrevious: false,
-        previous: action.payload.previous
+        previous: action.payload.previous,
       };
     case commentsObjectActionTypes.DATA_RELOAD:
       return {
