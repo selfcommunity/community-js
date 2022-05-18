@@ -103,10 +103,16 @@ export default function AutoPlayer(props: AutoPlayerProps) {
           }}
           config={{
             youtube: {
+              embedOptions: {
+                host: 'https://www.youtube-nocookie.com'
+              },
               playerVars: {rel: 0}
             },
             vimeo: {
-              playerOptions: {autopause: true},
+              playerOptions: {
+                autopause: true,
+                dnt: true
+              },
               preload: true
             }
           }}
