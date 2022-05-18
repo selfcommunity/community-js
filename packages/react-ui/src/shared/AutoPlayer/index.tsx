@@ -92,11 +92,6 @@ export default function AutoPlayer(props: AutoPlayerProps) {
     <Root scrollableAncestor={window} onEnter={handleEnterViewport} onLeave={handleExitViewport}>
       <div>
         <ReactPlayer
-          config={{
-            youtube: {
-              playerVars: {rel: 0}
-            }
-          }}
           loop={loop}
           controls={controls}
           stopOnUnmount={stopOnUnmount}
@@ -107,10 +102,20 @@ export default function AutoPlayer(props: AutoPlayerProps) {
             setPlayed(progress.playedSeconds);
           }}
           config={{
-            vimeo: {
-              playerOptions: { autopause: true },
-              preload: true,
+            youtube: {
+              embedOptions: {
+                host: 'https://www.youtube-nocookie.com'
+              },
+              playerVars: {rel: 0}
             },
+            vimeo: {
+              playerOptions: {
+                autopause: true,
+                dnt: true,
+                transparent: false
+              },
+              preload: true
+            }
           }}
           {...rest}
         />
