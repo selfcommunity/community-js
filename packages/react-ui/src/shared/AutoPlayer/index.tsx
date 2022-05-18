@@ -111,7 +111,8 @@ export default function AutoPlayer(props: AutoPlayerProps) {
             vimeo: {
               playerOptions: {
                 autopause: true,
-                dnt: true
+                dnt: true,
+                transparent: false
               },
               preload: true
             }

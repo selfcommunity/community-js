@@ -8209,7 +8209,7 @@ eslint-visitor-keys@^2.0.0:
   resolved "https://registry.yarnpkg.com/eslint-visitor-keys/-/eslint-visitor-keys-2.1.0.tgz#f65328259305927392c938ed44eb0a5c9b2bd303"
   integrity sha512-0rSmRBzXgDzIsD6mGdJgevzgezI534Cer5L/vyMX0kHzT/jiB43jRhd9YUlMGYLQy2zprNmoT8qasCGtY+QaKw==
 
-eslint@^7.0.0, eslint@^7.19.0, eslint@^7.26.0:
+eslint@^7.0.0, eslint@^7.19.0:
   version "7.32.0"
   resolved "https://registry.yarnpkg.com/eslint/-/eslint-7.32.0.tgz#c6d328a14be3fb08c8d1d21e12c02fdb7a2a812d"
   integrity sha512-VHZ8gX+EDfz+97jGcgyGCyRia/dPOd6Xh9yPv8Bl1+SoaIwD+a/vlrOmGRUyOYu7MwUhc7CxqeaDZU13S4+EpA==
@@ -14217,13 +14217,6 @@ react-textarea-autosize@^8.3.0:
     use-composed-ref "^1.0.0"
     use-latest "^1.0.0"
 
-react-timeago@^5.2.0:
-  version "5.3.0"
-  resolved "https://registry.yarnpkg.com/react-timeago/-/react-timeago-5.3.0.tgz#00f6776bfe48b922beec570a36449a3f5c253c73"
-  integrity sha512-+SUGRu+elNozCMpp9mNPUqarS0AK+sjzicVK0tjUifxMcb3+6lU5vxM9rOh+/uBcOhnTyNYe9JLvbU/NVySFOQ==
-  dependencies:
-    eslint "^7.26.0"
-
 react-transition-group@^4.4.2:
   version "4.4.2"
   resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-4.4.2.tgz#8b59a56f09ced7b55cbd53c36768b922890d5470"
@@ -15992,18 +15985,6 @@ through@2, "through@>=2.2.7 <3", through@^2.3.4, through@^2.3.6:
   version "2.3.8"
   resolved "https://registry.yarnpkg.com/through/-/through-2.3.8.tgz#0dd4c9ffaabc357960b1b724115d7e0e86a2e1f5"
   integrity sha1-DdTJ/6q8NXlgsbckEV1+Doai4fU=
-
-timeago-react@^3.0.4:
-  version "3.0.4"
-  resolved "https://registry.yarnpkg.com/timeago-react/-/timeago-react-3.0.4.tgz#291bc1a0bac4db922b7852e6f858da24dc41fd3a"
-  integrity sha512-cv6Bnm01VKyHoQCBKzk24+L9ycj3jLq3uEFpYILKGJT7UUXWEzC0TBCxforsvL4NSjcwqqHNKdEeqEFMNNoN2A==
-  dependencies:
-    timeago.js "^4.0.0"
-
-timeago.js@^4.0.0:
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/timeago.js/-/timeago.js-4.0.2.tgz#724e8c8833e3490676c7bb0a75f5daf20e558028"
-  integrity sha512-a7wPxPdVlQL7lqvitHGGRsofhdwtkoSXPGATFuSOA2i1ZNQEPLrGnj68vOp2sOJTCFAQVXPeNMX/GctBaO9L2w==
 
 timers-browserify@^2.0.4:
   version "2.0.12"
