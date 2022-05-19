@@ -1,21 +1,4 @@
 /**
- * Take the application server's public key, which is Base64 URL-safe encoded,
- * and convert it to a UInt8Array, because this is the expected input of the subscribe()
- */
-export const urlB64ToUint8Array = (base64String) => {
-  const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
-  const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
-
-  const rawData = window.atob(base64);
-  const outputArray = new Uint8Array(rawData.length);
-
-  for (let i = 0; i < rawData.length; ++i) {
-    outputArray[i] = rawData.charCodeAt(i);
-  }
-  return outputArray;
-};
-
-/**
  * Get browser version to track on backend
  * @return {{name: string, version: null}|{name: string, version: string}|{name: *, version: *}|{name: string, version}}
  */
