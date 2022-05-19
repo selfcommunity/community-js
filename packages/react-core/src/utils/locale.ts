@@ -1,7 +1,7 @@
 import {DEFAULT_LANGUAGE_UI, LOCALE_EN} from '../constants/Locale';
 import localeData from '@selfcommunity/react-i18n';
 import {createIntl} from 'react-intl';
-import {Logger} from './logger';
+import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_CORE} from '../constants/Errors';
 
 /**
