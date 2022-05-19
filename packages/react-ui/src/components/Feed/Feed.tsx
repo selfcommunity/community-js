@@ -194,7 +194,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     id = 'feed',
     className,
     endpoint,
-    endpointQueryParams = [{limit: 5}],
+    endpointQueryParams = [{limit: 10}],
     endMessage = <FormattedMessage id="ui.feed.noOtherFeedObject" defaultMessage="ui.feed.noOtherFeedObject" />,
     refreshMessage = <FormattedMessage id="ui.feed.refreshRelease" defaultMessage="ui.feed.refreshRelease" />,
     widgets = [],
@@ -468,6 +468,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
                       rowHeight={500}
                       rowRenderer={rowRenderer}
                       scrollTop={scrollTop}
+                      overscanCount={20}
                     />
                   )}
                 </AutoSizer>
