@@ -21,9 +21,9 @@ import CommentsObject from '../CommentsObject';
 import BaseItem from '../../shared/BaseItem';
 import {SCCommentType, SCCommentTypologyType, SCFeedObjectType, SCFeedObjectTypologyType} from '@selfcommunity/types';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
+import {Logger} from '@selfcommunity/utils';
 import {
   Link,
-  Logger,
   SCContextType,
   SCRoutes,
   SCRoutingContextType,

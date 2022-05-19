@@ -23,7 +23,7 @@ import {
   useSCUser
 } from '@selfcommunity/react-core';
 import {SCCommentType, SCCustomAdvPosition, SCFeedObjectType, SCFeedObjectTypologyType} from '@selfcommunity/types';
-import {appendURLSearchParams} from '../../utils/url';
+import {appendURLSearchParams} from '@selfcommunity/utils';
 
 const PREFIX = 'SCCommentsObject';
 

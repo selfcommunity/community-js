@@ -6,8 +6,8 @@ import {FormattedMessage} from 'react-intl';
 import Icon from '@mui/material/Icon';
 import classNames from 'classnames';
 import {SCIncubatorType} from '@selfcommunity/types';
+import {Logger} from '@selfcommunity/utils';
 import {
-  Logger,
   SCContextType,
   SCSubscribedIncubatorsManagerType,
   SCUserContext,

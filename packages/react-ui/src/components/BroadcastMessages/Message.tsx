@@ -26,9 +26,9 @@ import classNames from 'classnames';
 import {red} from '@mui/material/colors';
 import {SCBroadcastMessageType} from '@selfcommunity/types';
 import {http, Endpoints} from '@selfcommunity/api-services';
+import {Logger} from '@selfcommunity/utils';
 import {
   Link,
-  Logger,
   SCPreferences,
   SCPreferencesContext,
   SCPreferencesContextType,

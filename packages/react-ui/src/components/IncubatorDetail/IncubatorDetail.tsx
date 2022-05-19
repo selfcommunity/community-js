@@ -4,9 +4,9 @@ import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {TextField, Typography, Box, Avatar, Button, CardContent, Alert, FormGroup, AvatarGroup, List, ListItem} from '@mui/material';
 import {SCIncubatorType, SCUserType} from '@selfcommunity/types';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
+import {Logger} from '@selfcommunity/utils';
 import {
   Link,
-  Logger,
   SCContextType,
   SCPreferences,
   SCPreferencesContext,

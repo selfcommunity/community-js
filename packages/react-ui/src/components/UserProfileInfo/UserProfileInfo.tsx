@@ -2,8 +2,9 @@ import React from 'react';
 import {styled} from '@mui/material/styles';
 import {Box, Grid, Typography} from '@mui/material';
 import {defineMessages, useIntl} from 'react-intl';
+import {camelCase} from '@selfcommunity/utils';
 import {SCUserFields, SCUserType} from '@selfcommunity/types';
-import {StringUtils, useSCFetchUser} from '@selfcommunity/react-core';
+import {useSCFetchUser} from '@selfcommunity/react-core';
 import {DEFAULT_FIELDS} from '../../constants/UserProfile';
 import UserProfileInfoSkeleton from './Skeleton';
 import classNames from 'classnames';
@@ -151,7 +152,7 @@ export default function UserProfileInfo(inProps: UserProfileInfoProps): JSX.Elem
             return (
               <Grid item xs={6} key={field}>
                 <Typography variant="body2">
-                  <span className={classes.field}>{intl.formatMessage(messages[StringUtils.camelCase(field)])}:</span> {renderField(scUser, field)}
+                  <span className={classes.field}>{intl.formatMessage(messages[camelCase(field)])}:</span> {renderField(scUser, field)}
                 </Typography>
               </Grid>
             );
