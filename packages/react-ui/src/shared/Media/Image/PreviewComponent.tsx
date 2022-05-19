@@ -6,6 +6,7 @@ import classNames from 'classnames';
 import Icon from '@mui/material/Icon';
 import CentralProgress from '../../CentralProgress';
 import LazyLoad from 'react-lazyload';
+import Skeleton from '@mui/material/Skeleton';
 
 const PREFIX = 'SCPreviewMediaImage';
 
@@ -340,7 +341,7 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
   return (
     <>
       {medias.length > 0 && (
-        <LazyLoad height={360} placeholder={<CentralProgress size={20} />} once>
+        <LazyLoad height={360} placeholder={<Skeleton animation="wave" variant="rectangular" width={'100%'} height={800} />} once>
           <Root>
             {adornment}
             {[1, 3, 4].includes(imagesToShow.length) && renderOne()}

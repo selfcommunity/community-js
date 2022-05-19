@@ -1,11 +1,9 @@
 import React, {forwardRef, ForwardRefRenderFunction, ReactNode, useContext, useEffect, useImperativeHandle, useMemo, useRef, useState} from 'react';
 import {styled, useTheme} from '@mui/material/styles';
-import Widget from '../Widget';
 import {CardContent, Grid, Hidden, Theme, useMediaQuery} from '@mui/material';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {FormattedMessage} from 'react-intl';
 import {GenericSkeleton} from '../Skeleton';
-import InfiniteScroll from 'react-infinite-scroll-component';
 import {SCFeedWidgetType} from '../../types/feed';
 import Sticky from 'react-stickynode';
 import CustomAdv, {CustomAdvProps} from '../CustomAdv';
@@ -16,7 +14,8 @@ import classNames from 'classnames';
 import PubSub from 'pubsub-js';
 import useThemeProps from '@mui/material/styles/useThemeProps';
 import {appendURLSearchParams} from '../../utils/url';
-import {AutoSizer, CellMeasurer, CellMeasurerCache, InfiniteLoader, List, WindowScroller} from 'react-virtualized';
+import {Virtuoso} from 'react-virtuoso';
+import Widget from '../Widget';
 
 const PREFIX = 'SCFeed';
 
@@ -223,14 +222,6 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
 
   // REFS
   const refreshSubscription = useRef(null);
-  const itemStatusMap = useRef({});
-
-  // Caching
-  const cache = React.useRef(
-    new CellMeasurerCache({
-      fixedWidth: true
-    })
-  );
 
   /**
    * Compute preferences
@@ -284,24 +275,24 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
    * Manage pagination, infinite scrolling
    */
   const fetch = () => {
-    // if (!loading) {
-    //   setLoading(true);
-    return http
-      .request({
-        url: next,
-        method: endpoint.method
-      })
-      .then((res: HttpResponse<{next?: string; previous?: string; results: SCNotificationAggregatedType[]}>) => {
-        const data = res.data;
-        setFeedData([...feedData, ...data.results]);
-        setNext(data.next);
-        setLoading(false);
-        onFetchData && onFetchData(res.data);
-      })
-      .catch((error) => {
-        Logger.error(SCOPE_SC_UI, error);
-      });
-    //}
+    if (!loading) {
+      setLoading(true);
+      return http
+        .request({
+          url: next,
+          method: endpoint.method
+        })
+        .then((res: HttpResponse<{next?: string; previous?: string; results: SCNotificationAggregatedType[]}>) => {
+          const data = res.data;
+          setFeedData([...feedData, ...data.results]);
+          setNext(data.next);
+          setLoading(false);
+          onFetchData && onFetchData(res.data);
+        })
+        .catch((error) => {
+          Logger.error(SCOPE_SC_UI, error);
+        });
+    }
   };
 
   const refresh = () => {
@@ -351,10 +342,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
           left: _widgets
             .map((w) => Object.assign({}, w, {position: w.position * (w.column === 'right' ? 5 : 1)}))
             .sort(widgetSort)
-            .reduce(widgetReducer, [
-              ...feedData,
-              ...(loading ? Array.from({length: 3}).map(() => ({type: 'widget', component: ItemSkeleton, componentProps: ItemSkeletonProps})) : [])
-            ]),
+            .reduce(widgetReducer, feedData),
           right: []
         };
       } else {
@@ -362,10 +350,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
           left: _widgets
             .filter((w) => w.column === 'left')
             .sort(widgetSort)
-            .reduce(widgetReducer, [
-              ...feedData,
-              ...(loading ? Array.from({length: 3}).map(() => ({type: 'widget', component: ItemSkeleton, componentProps: ItemSkeletonProps})) : [])
-            ]),
+            .reduce(widgetReducer, feedData),
           right: _widgets.filter((w) => w.column === 'right').sort(widgetSort)
         };
       }
@@ -375,107 +360,46 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
 
   const data = getData();
 
-  /* const elements = data.left.map((d, i) => (
-    <>
-      {d.type === 'widget' ? (
-        <d.component key={`widget_left_${i}`} {...d.componentProps} {...(d.publishEvents && {publicationChannel: id})}></d.component>
-      ) : (
-        <ItemComponent key={`item_${itemIdGenerator(d)}`} {...itemPropsGenerator(scUserContext.user, d)} {...ItemProps} sx={{width: '100%'}} />
-      )}
-    </>
-  ));
-
-  const VirtualScrollChildren = useMemo(
-    () => () => {
-      return data.left.map((d, i) => (
-        <VirtualScrollChild
-          children={
-            <>
-              {d.type === 'widget' ? (
-                <d.component key={`widget_left_${i}`} {...d.componentProps} {...(d.publishEvents && {publicationChannel: id})}></d.component>
-              ) : (
-                <ItemComponent
-                  key={`item_${itemIdGenerator(d)}`}
-                  {...itemPropsGenerator(scUserContext.user, d)}
-                  {...ItemProps}
-                  sx={{width: '100%'}}
-                />
-              )}
-            </>
-          }
-        />
-      ));
-    },
-    [data.left]
-  ); */
-
-  const isRowLoaded = ({index}) => !!itemStatusMap.current[index];
-
-  const loadMoreRows = async ({startIndex, stopIndex}) => {
-    for (let index = startIndex; index <= stopIndex; index++) {
-      itemStatusMap.current[index] = LOADING;
-    }
-
-    await fetch();
-
-    for (let index = startIndex; index <= stopIndex; index++) {
-      itemStatusMap.current[index] = LOADED;
-    }
-  };
-
-  const rowRenderer = ({key, index, style}) => {
-    let label;
-    if (itemStatusMap.current[index] === LOADED) {
-      const f = data.left[index];
-      const d = f[f.type];
-      if (d.type === 'widget') {
-        label = <d.component key={index} {...d.componentProps} {...(d.publishEvents && {publicationChannel: id})}></d.component>;
-      } else {
-        label = (
-          <ItemComponent key={index} feedObject={d} sx={{width: '100%'}} />
-        );
-      }
-    } else {
-      label = <ItemSkeleton {...ItemSkeletonProps} />;
-    }
+  const InnerItem = React.memo(({index, d}) => {
     return (
-      <CellMeasurer key={key} cache={cache.current} columnCount={1} columnIndex={0} parent={parent} rowIndex={index}>
-        {({registerChild}) => (
-          <div key={key} ref={registerChild} style={style}>
-            {label}
-          </div>
+      <>
+        {d.type === 'widget' ? (
+          <d.component key={`widget_left_${index}`} {...d.componentProps} {...(d.publishEvents && {publicationChannel: id})}></d.component>
+        ) : (
+          <ItemComponent key={`item_${itemIdGenerator(d)}`} {...itemPropsGenerator(scUserContext.user, d)} {...ItemProps} sx={{width: '100%'}} />
         )}
-      </CellMeasurer>
+      </>
     );
+  });
+
+  const itemContent = (i, d) => {
+    return <InnerItem index={i} d={d} />;
   };
 
   return (
     <Root container spacing={2} id={id} className={classNames(classes.root, className)}>
       <Grid item xs={12} md={7}>
-        <InfiniteLoader isRowLoaded={isRowLoaded} loadMoreRows={loadMoreRows} rowCount={data.left.length} threshold={10}>
-          {({onRowsRendered, registerChild}) => (
-            <WindowScroller>
-              {({height, scrollTop}) => (
-                <AutoSizer>
-                  {({width}) => (
-                    <List
-                      autoHeight
-                      ref={registerChild}
-                      height={height}
-                      width={width}
-                      onRowsRendered={onRowsRendered}
-                      rowCount={data.left.length}
-                      rowHeight={500}
-                      rowRenderer={rowRenderer}
-                      scrollTop={scrollTop}
-                      overscanCount={20}
-                    />
-                  )}
-                </AutoSizer>
-              )}
-            </WindowScroller>
-          )}
-        </InfiniteLoader>
+        <div className={classes.left} style={{overflow: 'visible'}}>
+          <Virtuoso
+            useWindowScroll
+            totalCount={data.left.length}
+            data={data.left}
+            endReached={fetch}
+            overscan={{main: 3000, reverse: 2000}}
+            // atBottomThreshold={600}
+            itemContent={itemContent}
+            components={{
+              Footer: () =>
+                next ? (
+                  <ItemSkeleton {...ItemSkeletonProps} />
+                ) : (
+                  <Widget className={classes.end}>
+                    <CardContent>{endMessage}</CardContent>
+                  </Widget>
+                )
+            }}
+          />
+        </div>
       </Grid>
       {data.right.length > 0 && (
         <Hidden smDown>

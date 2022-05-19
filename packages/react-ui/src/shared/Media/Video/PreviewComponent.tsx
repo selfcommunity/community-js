@@ -4,6 +4,7 @@ import LazyLoad from 'react-lazyload';
 import CentralProgress from '../../CentralProgress';
 import Box from '@mui/material/Box';
 import AutoPlayer from '../../AutoPlayer';
+import Skeleton from '@mui/material/Skeleton';
 
 const PREFIX = 'SCPreviewMediaVideo';
 
@@ -46,7 +47,7 @@ export default (props: PreviewVideoProps): JSX.Element => {
         <Root>
           {adornment}
           {medias.map((v, i) => (
-            <LazyLoad height={360} placeholder={<CentralProgress size={20} />} key={i} once>
+            <LazyLoad height={360} placeholder={<Skeleton animation="wave" variant="rectangular" width={'100%'} height={450} />} key={i} once>
               <AutoPlayer url={v.url} width={'100%'} onVideoWatch={() => handleVideoClick(v)} />
             </LazyLoad>
           ))}

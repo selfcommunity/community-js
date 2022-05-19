@@ -5,6 +5,7 @@ import {MEDIA_TYPE_VIDEO} from '../../../constants/Media';
 import AutoPlayer from '../../AutoPlayer';
 import CentralProgress from '../../CentralProgress';
 import Box from '@mui/material/Box';
+import Skeleton from '@mui/material/Skeleton';
 
 const PREFIX = 'SCPreviewMediaLink';
 
@@ -119,7 +120,7 @@ export default (props: LinkPreviewProps): JSX.Element => {
   return (
     <>
       {medias.length > 0 && (
-        <LazyLoad height={360} placeholder={<CentralProgress size={20} />} once>
+        <LazyLoad height={450} placeholder={<Skeleton animation="wave" variant="rectangular" width={'100%'} height={450} />} once>
           <Root>
             {adornment}
             {medias.map((l, i) => {

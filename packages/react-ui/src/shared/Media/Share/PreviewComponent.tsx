@@ -30,7 +30,7 @@ export default ({medias = [], adornment = null}: {medias: any[]; GridImageProps?
           {adornment}
           {medias.map((media) => (
             <Box key={media.id} className={classes.sharePreview}>
-              <LazyLoad height={360} placeholder={<CentralProgress size={20} />} once>
+              <LazyLoad height={300} placeholder={<CentralProgress size={20} />} once>
                 <FeedObject
                   feedObjectId={media.embed.metadata.id}
                   feedObjectType={media.embed.metadata.type}

@@ -43,6 +43,7 @@ import {
   useSCRouting,
   useSCUser
 } from '@selfcommunity/react-core';
+import CommentsObjectSkeleton from '../CommentsObject/Skeleton';
 
 const messages = defineMessages({
   visibleToAll: {
@@ -758,7 +759,10 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
             {template === SCFeedObjectTemplateType.PREVIEW && (
               <Collapse in={expandedActivities} timeout="auto" unmountOnExit classes={{root: classes.activitiesSection}}>
                 <CardContent className={classes.activitiesContent}>
-                  <LazyLoad once height={350}>
+                  <LazyLoad
+                    once
+                    height={550}
+                    placeholder={obj.comment_count > 1 ? <CommentsObjectSkeleton CommentObjectSkeletonProps={CommentObjectSkeletonProps} /> : null}>
                     <Activities
                       feedObject={obj}
                       feedObjectActivities={feedObjectActivities}
