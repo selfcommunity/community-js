@@ -199,7 +199,7 @@ export default function FeedObjectDetail(inProps: FeedObjectDetailProps): JSX.El
           <CommentsFeedObject showTitle feedObject={obj} comments={comments} {...CommentsFeedObjectProps} />
         </Grid>
         <Grid item xs={12} md={5}>
-          <Hidden smDown>
+          <Hidden mdDown>
             <Sticky enabled top={15} bottomBoundary={`#${id}`}>
               <RelatedFeedObjects feedObject={obj} {...RelatedFeedObjectProps} />
             </Sticky>

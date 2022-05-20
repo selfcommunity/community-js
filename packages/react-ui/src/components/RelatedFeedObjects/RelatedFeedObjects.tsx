@@ -15,8 +15,9 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import Widget from '../Widget';
 import useThemeProps from '@mui/material/styles/useThemeProps';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
+import {Logger} from '@selfcommunity/utils';
+import {SCCustomAdvPosition, SCFeedDiscussionType, SCFeedObjectType, SCFeedObjectTypologyType} from '@selfcommunity/types';
 import {
-  Logger,
   SCPreferences,
   SCPreferencesContextType,
   SCUserContextType,
@@ -24,7 +25,6 @@ import {
   useSCPreferences,
   useSCUser
 } from '@selfcommunity/react-core';
-import {SCCustomAdvPosition, SCFeedDiscussionType, SCFeedObjectType, SCFeedObjectTypologyType} from '@selfcommunity/types';
 
 const PREFIX = 'SCRelatedFeedObjects';
 

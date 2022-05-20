@@ -30,9 +30,9 @@ import {useSnackbar} from 'notistack';
 import {CommentObjectProps} from '../CommentObject';
 import {SCCommentType, SCFeedObjectType, SCFeedObjectTypologyType, SCPollType} from '@selfcommunity/types';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
+import {Logger} from '@selfcommunity/utils';
 import {
   Link,
-  Logger,
   SCContextType,
   SCRoutes,
   SCRoutingContextType,

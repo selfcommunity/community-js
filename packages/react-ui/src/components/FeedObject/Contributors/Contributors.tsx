@@ -1,7 +1,8 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
-import {Logger, useSCFetchFeedObject} from '@selfcommunity/react-core';
+import {Logger} from '@selfcommunity/utils';
+import {useSCFetchFeedObject} from '@selfcommunity/react-core';
 import {SCFeedObjectType, SCFeedObjectTypologyType, SCUserType} from '@selfcommunity/types';
 import {Avatar, AvatarGroup, Box, Button, Fade, List, ListItem} from '@mui/material';
 import {FormattedMessage} from 'react-intl';

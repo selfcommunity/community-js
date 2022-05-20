@@ -1,7 +1,7 @@
 import React, {createContext, ReactNode, useContext, useEffect, useState} from 'react';
 import {FeatureService, PreferenceService} from '@selfcommunity/api-services';
 import {SCPreferencesContextType} from '../../../types/context';
-import {Logger} from '../../../utils/logger';
+import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_CORE} from '../../../constants/Errors';
 
 /**

@@ -26,6 +26,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import Widget from '../Widget';
 import useThemeProps from '@mui/material/styles/useThemeProps';
 import BaseItem from '../../shared/BaseItem';
+import {Logger} from '@selfcommunity/utils';
 import {
   SCCommentTypologyType,
   SCNotificationAggregatedType,
@@ -34,7 +35,7 @@ import {
   SCNotificationTypologyType
 } from '@selfcommunity/types';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
-import {Link, Logger, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
+import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
 
 const messages = defineMessages({
   receivePrivateMessage: {

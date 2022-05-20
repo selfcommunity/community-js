@@ -2,7 +2,7 @@ import {useEffect, useMemo, useState} from 'react';
 import {SCOPE_SC_CORE} from '../constants/Errors';
 import {SCCategoryType} from '@selfcommunity/types';
 import {http, Endpoints} from '@selfcommunity/api-services';
-import {Logger} from '../utils/logger';
+import {Logger} from '@selfcommunity/utils';
 import {singletonHook} from 'react-singleton-hook';
 
 const init = {categories: [], isLoading: true};

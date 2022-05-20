@@ -6,7 +6,7 @@ import {IconButton, Modal} from '@mui/material';
 import {defineMessages, injectIntl, WrappedComponentProps} from 'react-intl';
 import classNames from 'classnames';
 import {keyframes} from '@emotion/react';
-import {getWindowWidth, getWindowHeight, getHighestSafeWindowContext} from '../../utils/window.js';
+import {getWindowWidth, getWindowHeight, getHighestSafeWindowContext} from '@selfcommunity/utils';
 import {
   KEYS,
   MIN_ZOOM_LEVEL,

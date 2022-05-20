@@ -3,7 +3,7 @@ import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {SCCategoryType, SCUserType} from '@selfcommunity/types';
 import useSCCachingManager from './useSCCachingManager';
 import {SCOPE_SC_CORE} from '../constants/Errors';
-import {Logger} from '../utils/logger';
+import {Logger} from '@selfcommunity/utils';
 
 /**
  :::info

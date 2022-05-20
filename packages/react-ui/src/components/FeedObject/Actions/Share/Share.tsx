@@ -15,8 +15,8 @@ import {useSnackbar} from 'notistack';
 import Skeleton from '@mui/material/Skeleton';
 import {SCFeedObjectType, SCFeedObjectTypologyType, SCMediaType} from '@selfcommunity/types';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
+import {Logger} from '@selfcommunity/utils';
 import {
-  Logger,
   SCContextType,
   SCPreferences,
   SCPreferencesContext,

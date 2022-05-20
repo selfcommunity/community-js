@@ -9,11 +9,12 @@ import Sticky from 'react-stickynode';
 import CustomAdv, {CustomAdvProps} from '../CustomAdv';
 import {SCUserType, SCCustomAdvPosition, SCFeedUnitType, SCNotificationAggregatedType} from '@selfcommunity/types';
 import {http, EndpointType, HttpResponse} from '@selfcommunity/api-services';
-import {Logger, SCPreferences, SCPreferencesContextType, SCUserContext, SCUserContextType, useSCPreferences} from '@selfcommunity/react-core';
+import {Logger} from '@selfcommunity/utils';
+import {SCPreferences, SCPreferencesContextType, SCUserContext, SCUserContextType, useSCPreferences} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import PubSub from 'pubsub-js';
 import useThemeProps from '@mui/material/styles/useThemeProps';
-import {appendURLSearchParams} from '../../utils/url';
+import {appendURLSearchParams} from '@selfcommunity/utils';
 import {Virtuoso} from 'react-virtuoso';
 import Widget from '../Widget';
 

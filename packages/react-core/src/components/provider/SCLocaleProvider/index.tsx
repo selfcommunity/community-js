@@ -4,7 +4,7 @@ import {useSCContext} from '../SCContextProvider';
 import {loadLocaleData} from '../../../utils/locale';
 import {DEFAULT_LANGUAGE_UI} from '../../../constants/Locale';
 import {IntlProvider} from 'react-intl';
-import {Logger} from '../../../utils/logger';
+import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_CORE} from '../../../constants/Errors';
 import useDeepCompareEffect from 'use-deep-compare-effect';
 

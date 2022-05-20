@@ -12,7 +12,8 @@ import {SCOPE_SC_UI} from '../../constants/Errors';
 import Typography from '@mui/material/Typography';
 import {getContribution} from '../../utils/contribution';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
-import {Logger, useSCFetchCommentObject, useSCFetchCommentObjects} from '@selfcommunity/react-core';
+import {Logger} from '@selfcommunity/utils';
+import {useSCFetchCommentObject, useSCFetchCommentObjects} from '@selfcommunity/react-core';
 import {SCCommentType, SCFeedObjectType, SCFeedObjectTypologyType} from '@selfcommunity/types';
 
 const PREFIX = 'SCCommentsFeedObject';

@@ -2,7 +2,8 @@ import React from 'react';
 import {styled} from '@mui/material/styles';
 import {Avatar, Box, Stack, Typography} from '@mui/material';
 import Icon from '@mui/material/Icon';
-import {Link, SCRoutingContextType, useSCRouting, StringUtils, SCRoutes} from '@selfcommunity/react-core';
+import {camelCase} from '@selfcommunity/utils';
+import {Link, SCRoutingContextType, useSCRouting, SCRoutes} from '@selfcommunity/react-core';
 import {SCNotificationDeletedForType} from '@selfcommunity/types';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {getContributionType, getContributionSnippet, getRouteData} from '../../../utils/contribution';
@@ -162,14 +163,14 @@ export default function KindlyNoticeForNotification(inProps: NotificationKindlyN
                 )}>
                 <Typography component="div" color="inherit" className={classes.flagText}>
                   <FormattedMessage
-                    id={`ui.notification.kindlyNoticeFor.${StringUtils.camelCase(notificationObject.type)}Snippet`}
-                    defaultMessage={`ui.notification.kindlyNoticeFor.${StringUtils.camelCase(notificationObject.type)}Snippet`}
+                    id={`ui.notification.kindlyNoticeFor.${camelCase(notificationObject.type)}Snippet`}
+                    defaultMessage={`ui.notification.kindlyNoticeFor.${camelCase(notificationObject.type)}Snippet`}
                   />
                 </Typography>
               </Link>
             ) : (
               <Typography component="div" color="inherit" className={classes.flagText}>
-                {intl.formatMessage(messages[StringUtils.camelCase(notificationObject.type)], {b: (...chunks) => <strong>{chunks}</strong>})}
+                {intl.formatMessage(messages[camelCase(notificationObject.type)], {b: (...chunks) => <strong>{chunks}</strong>})}
               </Typography>
             )}
           </>
