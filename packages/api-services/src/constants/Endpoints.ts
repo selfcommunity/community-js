@@ -15,10 +15,18 @@ const Endpoints: {[key: string]: EndpointType} = {
     method: 'POST'
   },
   /**
-   * Preferences Endpoints
+   * Dynamic Preference Endpoints
    */
   Preferences: {
     url: urlReplacer('/api/v2/dynamic_preference/'),
+    method: 'GET'
+  },
+  PreferencesSearch: {
+    url: urlReplacer('/api/v2/dynamic_preference/search/'),
+    method: 'GET'
+  },
+  SpecificPreference: {
+    url: urlReplacer('/api/v2/dynamic_preference/$(id)/'),
     method: 'GET'
   },
   /**
@@ -78,9 +86,25 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/comment/$(id)/vote/'),
     method: 'POST'
   },
+  CommentVotesList: {
+    url: urlReplacer('/api/v2/comment/$(id)/vote/'),
+    method: 'GET'
+  },
   CommentRestore: {
     url: urlReplacer('/api/v2/comment/$(id)/restore'),
     method: 'POST'
+  },
+  CommentFlagList: {
+    url: urlReplacer('/api/v2/comment/$(id)/flag/'),
+    method: 'GET'
+  },
+  FlagComment: {
+    url: urlReplacer('/api/v2/comment/$(id)/flag/'),
+    method: 'POST'
+  },
+  CommentFlagStatus: {
+    url: urlReplacer('/api/v2/comment/$(id)/flag/status/'),
+    method: 'GET'
   },
   /**
    * Reporting Flag Endpoints
@@ -468,6 +492,38 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/loyalty/prize/'),
     method: 'GET'
   },
+  CreatePrize: {
+    url: urlReplacer('/api/v2/loyalty/prize/'),
+    method: 'GET'
+  },
+  GetSpecificPrize: {
+    url: urlReplacer('/api/v2/loyalty/prize/$(id)/'),
+    method: 'GET'
+  },
+  UpdatePrize: {
+    url: urlReplacer('/api/v2/loyalty/prize/$(id)/'),
+    method: 'PUT'
+  },
+  PatchPrize: {
+    url: urlReplacer('/api/v2/loyalty/prize/$(id)/'),
+    method: 'PATCH'
+  },
+  GetPrizeRequests: {
+    url: urlReplacer('/api/v2/loyalty/request/'),
+    method: 'GET'
+  },
+  CreatePrizeRequest: {
+    url: urlReplacer('/api/v2/loyalty/request/'),
+    method: 'POST'
+  },
+  GetSpecificPrizeRequest: {
+    url: urlReplacer('/api/v2/loyalty/request/$(id)/'),
+    method: 'GET'
+  },
+  PatchPrizeRequest: {
+    url: urlReplacer('/api/v2/loyalty/request/$(id)/'),
+    method: 'PATCH'
+  },
   /**
    * Composer Endpoints
    */
@@ -504,8 +560,23 @@ const Endpoints: {[key: string]: EndpointType} = {
     method: 'GET'
   },
   /**
+   * Locality
+   */
+  GetLocalities: {
+    url: urlReplacer('/api/v2/locality/'),
+    method: 'GET'
+  },
+  /**
    * Custom ADV
    */
+  CustomAdvList: {
+    url: urlReplacer('/api/v2/custom_adv/'),
+    method: 'GET'
+  },
+  CustomAdv: {
+    url: urlReplacer('/api/v2/custom_adv/$(id)/'),
+    method: 'GET'
+  },
   CustomAdvSearch: {
     url: urlReplacer('/api/v2/custom_adv/search/'),
     method: 'GET'
@@ -544,6 +615,37 @@ const Endpoints: {[key: string]: EndpointType} = {
   },
   EmbedFeed: {
     url: urlReplacer('/api/v2/embed/feed/'),
+    method: 'GET'
+  },
+  /**
+   * Embed
+   */
+  EmbedList: {
+    url: urlReplacer('/api/v2/embed/'),
+    method: 'GET'
+  },
+  EmbedCreate: {
+    url: urlReplacer('/api/v2/embed/'),
+    method: 'POST'
+  },
+  EmbedSearch: {
+    url: urlReplacer('/api/v2/embed/search/'),
+    method: 'GET'
+  },
+  Embed: {
+    url: urlReplacer('/api/v2/embed/$(id)/'),
+    method: 'GET'
+  },
+  UpdateEmbed: {
+    url: urlReplacer('/api/v2/embed/$(id)/'),
+    method: 'PUT'
+  },
+  PatchEmbed: {
+    url: urlReplacer('/api/v2/embed/$(id)/'),
+    method: 'PATCH'
+  },
+  SpecificEmbedFeed: {
+    url: urlReplacer('/api/v2/embed/$(id)/feed/'),
     method: 'GET'
   },
   /**
@@ -648,6 +750,10 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/incubator/'),
     method: 'GET'
   },
+  SearchIncubators: {
+    url: urlReplacer('/api/v2/incubator/search/'),
+    method: 'GET'
+  },
   GetASpecificIncubator: {
     url: urlReplacer('/api/v2/incubator/$(id)/'),
     method: 'GET'
@@ -669,14 +775,45 @@ const Endpoints: {[key: string]: EndpointType} = {
     method: 'GET'
   },
   /**
-   * Footer
+   * Custom Page
    */
   GetCustomPages: {
     url: urlReplacer('/api/v2/custom_page/'),
     method: 'GET'
   },
+  CustomPage: {
+    url: urlReplacer('/api/v2/custom_page/$(id)/'),
+    method: 'GET'
+  },
+  CustomPageSearch: {
+    url: urlReplacer('/api/v2/custom_page/search/'),
+    method: 'GET'
+  },
+  /**
+   * Legal Page
+   */
+  LegalPage: {
+    url: urlReplacer('/api/v2/legal_page/$(id)/'),
+    method: 'GET'
+  },
   GetLegalPages: {
     url: urlReplacer('/api/v2/legal_page/'),
+    method: 'GET'
+  },
+  SearchLegalPages: {
+    url: urlReplacer('/api/v2/legal_page/search/'),
+    method: 'GET'
+  },
+  AckLegalPage: {
+    url: urlReplacer('/api/v2/legal_page/$(id)/ack/'),
+    method: 'POST'
+  },
+  SpecificUserAck: {
+    url: urlReplacer('/api/v2/legal_page/$(id)/user_ack/'),
+    method: 'GET'
+  },
+  UserAckList: {
+    url: urlReplacer('/api/v2/legal_page/user_acks/'),
     method: 'GET'
   },
   /**
@@ -737,6 +874,21 @@ const Endpoints: {[key: string]: EndpointType} = {
   WebhookResendMultipleEndpointEvent: {
     url: urlReplacer('/api/v2/webhook/endpoint/$(id)/event/resend/bulk/'),
     method: 'POST'
+  },
+  /**
+   * Data Portability
+   */
+  GenerateDataPortability: {
+    url: urlReplacer('/api/v2/udp/'),
+    method: 'POST'
+  },
+  DataPortabilityStatus: {
+    url: urlReplacer('/api/v2/udp/'),
+    method: 'GET'
+  },
+  DataPortabilityDownload: {
+    url: urlReplacer('/api/v2/udp/'),
+    method: 'GET'
   }
 };
 
