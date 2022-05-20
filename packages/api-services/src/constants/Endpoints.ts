@@ -100,6 +100,30 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/category/'),
     method: 'GET'
   },
+  SearchCategory: {
+    url: urlReplacer('/api/v2/category/search/'),
+    method: 'GET'
+  },
+  CreateCategory: {
+    url: urlReplacer('/api/v2/category/'),
+    method: 'POST'
+  },
+  UpdateCategory: {
+    url: urlReplacer('/api/v2/category/$(id)/'),
+    method: 'PUT'
+  },
+  PatchCategory: {
+    url: urlReplacer('/api/v2/category/$(id)/'),
+    method: 'PATCH'
+  },
+  DeleteCategory: {
+    url: urlReplacer('/api/v2/category/$(id)/'),
+    method: 'DELETE'
+  },
+  CategoryAudience: {
+    url: urlReplacer('/api/v2/category/$(id)/audience/'),
+    method: 'GET'
+  },
   Category: {
     url: urlReplacer('/api/v2/category/$(id)/'),
     method: 'GET'
@@ -110,10 +134,6 @@ const Endpoints: {[key: string]: EndpointType} = {
   },
   CategoryFollowers: {
     url: urlReplacer('/api/v2/category/$(id)/followers/'),
-    method: 'GET'
-  },
-  CategoriesSuggestion: {
-    url: urlReplacer('/api/v2/suggestion/category/'),
     method: 'GET'
   },
   CategoryTrendingFeed: {
@@ -146,6 +166,18 @@ const Endpoints: {[key: string]: EndpointType} = {
   /**
    * User Endpoints
    */
+  UserList: {
+    url: urlReplacer('/api/v2/user/'),
+    method: 'GET'
+  },
+  ListHiddenUsers: {
+    url: urlReplacer('/api/v2/user/hidden_users/'),
+    method: 'GET'
+  },
+  UserAutocomplete: {
+    url: urlReplacer('/api/v2/user/autocomplete/'),
+    method: 'GET'
+  },
   UserSearch: {
     url: urlReplacer('/api/v2/user/search/'),
     method: 'GET'
@@ -154,8 +186,32 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/user/$(id)/'),
     method: 'GET'
   },
+  UserCounters: {
+    url: urlReplacer('/api/v2/user/$(id)/counters/'),
+    method: 'GET'
+  },
+  UserUpdate: {
+    url: urlReplacer('/api/v2/user/$(id)/'),
+    method: 'PUT'
+  },
   UserPatch: {
     url: urlReplacer('/api/v2/user/$(id)/'),
+    method: 'PATCH'
+  },
+  UserDelete: {
+    url: urlReplacer('/api/v2/user/$(id)/'),
+    method: 'DELETE'
+  },
+  ChangeUserMail: {
+    url: urlReplacer('/api/v2/user/$(id)/change_email/'),
+    method: 'PATCH'
+  },
+  ConfirmUserChangeMail: {
+    url: urlReplacer('/api/v2/user/$(id)/change_email/'),
+    method: 'POST'
+  },
+  ChangeUserPassword: {
+    url: urlReplacer('/api/v2/user/$(id)/change_password/'),
     method: 'PATCH'
   },
   UserSettings: {
@@ -166,8 +222,24 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/user/$(id)/settings/'),
     method: 'PATCH'
   },
-  GetUserLoyaltyPoints: {
-    url: urlReplacer('/api/v2/user/$(id)/loyalty/points/'),
+  Me: {
+    url: urlReplacer('/api/v2/user/me/'),
+    method: 'GET'
+  },
+  MyAvatar: {
+    url: urlReplacer('/api/v2/user/me/avatar/'),
+    method: 'GET'
+  },
+  Permission: {
+    url: urlReplacer('/api/v2/user/me/permission'),
+    method: 'GET'
+  },
+  Platform: {
+    url: urlReplacer('/api/v2/user/me/platform_url'),
+    method: 'GET'
+  },
+  FollowedCategories: {
+    url: urlReplacer('/api/v2/user/$(id)/categories'),
     method: 'GET'
   },
   UserFollowers: {
@@ -186,6 +258,10 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/user/$(id)/is_followed/'),
     method: 'GET'
   },
+  CheckUserFollower: {
+    url: urlReplacer('/api/v2/user/$(id)/is_follower/'),
+    method: 'GET'
+  },
   UserConnections: {
     url: urlReplacer('/api/v2/user/$(id)/connections/'),
     method: 'GET'
@@ -194,75 +270,86 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/user/$(id)/is_connection/'),
     method: 'GET'
   },
-  UserConnectionStatuses: {
-    url: urlReplacer('/api/v2/user/connection/statuses/'),
-    method: 'POST'
-  },
   UserConnectionRequests: {
     url: urlReplacer('/api/v2/user/$(id)/connection/requests/'),
-    method: 'POST'
+    method: 'GET'
   },
-  UserRequestConnections: {
+  UserRequestConnectionsSent: {
     url: urlReplacer('/api/v2/user/$(id)/connection/requests_sent/'),
+    method: 'GET'
+  },
+  UserAcceptRequestConnection: {
+    url: urlReplacer('/api/v2/user/$(id)/connection/accept/'),
     method: 'POST'
   },
   UserRequestConnection: {
     url: urlReplacer('/api/v2/user/$(id)/connection/request'),
     method: 'POST'
   },
-  UserCancelRequestConnection: {
-    url: urlReplacer('/api/v2/user/$(id)/connection/cancel_request'),
-    method: 'POST'
-  },
-  UserAcceptRequestConnection: {
-    url: urlReplacer('/api/v2/user/$(id)/connection/accept/'),
-    method: 'POST'
-  },
-  UserRejectConnectionRequest: {
-    url: urlReplacer('/api/v2/user/$(id)/connection/reject'),
+  UserRemoveConnection: {
+    url: urlReplacer('/api/v2/user/$(id)/connection/remove'),
     method: 'POST'
   },
   UserCancelRejectConnectionRequest: {
     url: urlReplacer('/api/v2/user/$(id)/connection/cancel_reject'),
     method: 'POST'
   },
-  UserRemoveConnection: {
-    url: urlReplacer('/api/v2/user/$(id)/connection/remove'),
+  UserCancelRequestConnection: {
+    url: urlReplacer('/api/v2/user/$(id)/connection/cancel_request'),
     method: 'POST'
   },
-  Me: {
-    url: urlReplacer('/api/v2/user/me/'),
-    method: 'GET'
-  },
-  UpdateUser: {
-    url: urlReplacer('/api/v2/user/$(id)/'),
-    method: 'PATCH'
-  },
-  FollowedCategories: {
-    url: urlReplacer('/api/v2/user/$(id)/categories'),
-    method: 'GET'
-  },
-  GetAvatars: {
-    url: urlReplacer('/api/v2/user/avatar/'),
-    method: 'GET'
-  },
-  SetPrimaryAvatar: {
-    url: urlReplacer('/api/v2/user/avatar/'),
-    method: 'PATCH'
-  },
-  AddAvatar: {
-    url: urlReplacer('/api/v2/user/avatar/'),
+  UserRejectConnectionRequest: {
+    url: urlReplacer('/api/v2/user/$(id)/connection/reject'),
     method: 'POST'
   },
-  RemoveAvatar: {
-    url: urlReplacer('/api/v2/user/avatar/'),
-    method: 'DELETE'
+  UserMarkSeenConnectionRequest: {
+    url: urlReplacer('/api/v2/user/$(id)/connection_requests/mark_seen/'),
+    method: 'POST'
+  },
+  UserShowHide: {
+    url: urlReplacer('/api/v2/user/$(id)/hide/'),
+    method: 'POST'
+  },
+  CheckUserHidden: {
+    url: urlReplacer('/api/v2/user/$(id)/is_hidden/'),
+    method: 'GET'
+  },
+  CheckUserHiddenBy: {
+    url: urlReplacer('/api/v2/user/$(id)/is_hidden_by/'),
+    method: 'GET'
+  },
+  GetUserLoyaltyPoints: {
+    url: urlReplacer('/api/v2/user/$(id)/loyalty/points/'),
+    method: 'GET'
+  },
+  UserConnectionStatuses: {
+    url: urlReplacer('/api/v2/user/connection/statuses/'),
+    method: 'POST'
+  },
+  UserTagToAddressContribution: {
+    url: urlReplacer('/api/v2/user/tag/tags_to_address_a_contribution/'),
+    method: 'GET'
   },
   CheckEmailToken: {
     url: urlReplacer('/api/v2/user/check_email_token/'),
     method: 'GET'
   },
-
+  AddAvatar: {
+    url: urlReplacer('/api/v2/user/avatar/'),
+    method: 'POST'
+  },
+  GetAvatars: {
+    url: urlReplacer('/api/v2/user/avatar/'),
+    method: 'GET'
+  },
+  RemoveAvatar: {
+    url: urlReplacer('/api/v2/user/avatar/'),
+    method: 'DELETE'
+  },
+  SetPrimaryAvatar: {
+    url: urlReplacer('/api/v2/user/avatar/'),
+    method: 'PATCH'
+  },
   /**
    * Broadcast Messages
    */
@@ -313,18 +400,23 @@ const Endpoints: {[key: string]: EndpointType} = {
   /**
    * Suggestion Endpoints
    */
-  UserSuggestion: {
-    url: urlReplacer('/api/v2/suggestion/user/'),
+  CategoriesSuggestion: {
+    url: urlReplacer('/api/v2/suggestion/category/'),
     method: 'GET'
   },
-  Platform: {
-    url: urlReplacer('/api/v2/user/me/platform_url'),
+  GetIncubatorSuggestion: {
+    url: urlReplacer('/api/v2/suggestion/incubator/'),
     method: 'GET'
   },
   PollSuggestion: {
     url: urlReplacer('/api/v2/suggestion/poll/'),
     method: 'GET'
   },
+  UserSuggestion: {
+    url: urlReplacer('/api/v2/suggestion/user/'),
+    method: 'GET'
+  },
+
   /**
    * Follow
    */
@@ -554,10 +646,6 @@ const Endpoints: {[key: string]: EndpointType} = {
    */
   GetAllIncubators: {
     url: urlReplacer('/api/v2/incubator/'),
-    method: 'GET'
-  },
-  GetIncubatorSuggestion: {
-    url: urlReplacer('/api/v2/suggestion/incubator/'),
     method: 'GET'
   },
   GetASpecificIncubator: {
