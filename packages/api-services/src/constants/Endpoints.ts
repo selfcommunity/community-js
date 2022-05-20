@@ -685,6 +685,58 @@ const Endpoints: {[key: string]: EndpointType} = {
   MediaClickTracker: {
     url: urlReplacer('/api/v2/media/$(id)/click/'),
     method: 'POST'
+  },
+
+  /**
+   * Webhook
+   */
+  WebhookEndpointsList: {
+    url: urlReplacer('/api/v2/webhook/endpoint/'),
+    method: 'GET'
+  },
+  WebhookEventsList: {
+    url: urlReplacer('/api/v2/webhook/endpoint/event/'),
+    method: 'GET'
+  },
+  WebhookCreate: {
+    url: urlReplacer('/api/v2/webhook/endpoint/'),
+    method: 'POST'
+  },
+  GetSpecificWebhook: {
+    url: urlReplacer('/api/v2/webhook/endpoint/$(id)/'),
+    method: 'GET'
+  },
+  WebhookUpdate: {
+    url: urlReplacer('/api/v2/webhook/endpoint/$(id)/'),
+    method: 'PUT'
+  },
+  WebhookPatch: {
+    url: urlReplacer('/api/v2/webhook/endpoint/$(id)/'),
+    method: 'PATCH'
+  },
+  WebhookDelete: {
+    url: urlReplacer('/api/v2/webhook/endpoint/$(id)/'),
+    method: 'DELETE'
+  },
+  WebhookEndpointAttempts: {
+    url: urlReplacer('/api/v2/webhook/endpoint/$(id)/attempt/'),
+    method: 'GET'
+  },
+  WebhookExpireSigningSecret: {
+    url: urlReplacer('/api/v2/webhook/endpoint/$(id)/secret/expire/'),
+    method: 'POST'
+  },
+  WebhookRevealSigningSecret: {
+    url: urlReplacer('/api/v2/webhook/endpoint/$(id)/secret/reveal/'),
+    method: 'POST'
+  },
+  WebhookResendEndpointEvent: {
+    url: urlReplacer('/api/v2/webhook/endpoint/$(id)/event/resend/'),
+    method: 'POST'
+  },
+  WebhookResendMultipleEndpointEvent: {
+    url: urlReplacer('/api/v2/webhook/endpoint/$(id)/event/resend/bulk/'),
+    method: 'POST'
   }
 };
 
