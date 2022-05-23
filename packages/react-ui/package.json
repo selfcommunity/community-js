@@ -69,6 +69,7 @@
     "@rpldy/upload-preview": "^0.18.0",
     "@rpldy/uploady": "^0.18.0",
     "@selfcommunity/api-services": "^0.1.5",
+    "@selfcommunity/utils": "^0.1.5",
     "@selfcommunity/react-core": "^0.1.5",
     "@selfcommunity/react-i18n": "^0.1.5",
     "@selfcommunity/types": "^0.1.5",
