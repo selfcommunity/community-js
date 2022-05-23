@@ -3,9 +3,6 @@ const toPath = (filePath) => path.join(process.cwd(), filePath);
 
 module.exports = {
   staticDirs: ['../public'],
-  "reactOptions": {
-    "fastRefresh": true
-  },
   "stories": [
     "../packages/react-core/src/**/*.stories.@(js|jsx|ts|tsx)",
     "../packages/react-ui/src/components/**/*.stories.@(js|jsx|ts|tsx)",

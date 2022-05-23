@@ -1,4 +1,4 @@
-{
+const config = {
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
@@ -46,4 +46,6 @@
     "@typescript-eslint",
     "import"
   ]
-}
+};
+
+module.exports = config;
