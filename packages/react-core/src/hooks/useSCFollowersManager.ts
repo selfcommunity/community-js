@@ -2,7 +2,7 @@ import {useEffect, useMemo, useRef} from 'react';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {SCPreferencesContextType} from '../types';
 import {SCNotificationTopicType, SCNotificationTypologyType, SCUserType} from '@selfcommunity/types';
-import {Logger} from '../utils/logger';
+import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_CORE} from '../constants/Errors';
 import {useSCPreferences} from '../components/provider/SCPreferencesProvider';
 import {CONFIGURATIONS_FOLLOW_ENABLED} from '../constants/Preferences';

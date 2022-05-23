@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
+import {Logger} from '@selfcommunity/utils';
 import {
-  Logger,
   SCContextType,
   SCUserContext,
   SCUserContextType,

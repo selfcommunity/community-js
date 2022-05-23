@@ -1,8 +1,8 @@
 import {createTheme} from '@mui/material/styles';
-import {mergeDeep} from '../utils/object';
+import {mergeDeep} from '@selfcommunity/utils';
 import validateColor from 'validate-color';
 import {COLORS_COLORBACK, COLORS_COLORPRIMARY, COLORS_COLORSECONDARY, COLORS_COLORFONT, FONT_FAMILY} from '../constants/Preferences';
-import {isString} from '../utils/string';
+import {isString} from '@selfcommunity/utils';
 
 /**
  * check if colorProp is a valid color

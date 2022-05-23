@@ -1,6 +1,6 @@
 import {DEFAULT_LANGUAGE_UI, LOCALES} from '../constants/Locale';
 import * as Session from '../constants/Session';
-import {Logger} from './logger';
+import {Logger} from '@selfcommunity/utils';
 
 /**
  * Manage Validation Error

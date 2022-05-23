@@ -6,8 +6,8 @@ import {FormattedMessage} from 'react-intl';
 import {useSnackbar} from 'notistack';
 import classNames from 'classnames';
 import {SCUserType} from '@selfcommunity/types';
+import {Logger} from '@selfcommunity/utils';
 import {
-  Logger,
   SCContextType,
   SCFollowedManagerType,
   SCUserContext,

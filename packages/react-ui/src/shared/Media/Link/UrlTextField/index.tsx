@@ -5,7 +5,7 @@ import IconButton from '@mui/material/IconButton';
 import TextField from '@mui/material/TextField';
 import {http, Endpoints, formatHttpError, HttpResponse} from '@selfcommunity/api-services';
 import {SCMediaType} from '@selfcommunity/types';
-import {UrlUtils} from '@selfcommunity/react-core';
+import {isValidUrl} from '@selfcommunity/utils';
 import {MEDIA_TYPE_URL} from '../../../../constants/Media';
 import {FormattedMessage, useIntl} from 'react-intl';
 import commonMessages from '../../../../messages/common';
@@ -124,7 +124,7 @@ export default (props: UrlTextFieldProps): JSX.Element => {
   // HANDLERS
   const handleChange = (event: SyntheticEvent) => {
     const target = event.target as HTMLInputElement;
-    setState({url: target.value, urlError: UrlUtils.isValidUrl(target.value) ? null : intl.formatMessage(commonMessages.urlError)});
+    setState({url: target.value, urlError: isValidUrl(target.value) ? null : intl.formatMessage(commonMessages.urlError)});
   };
 
   const handleSubmit = (event: SyntheticEvent) => {
@@ -156,7 +156,7 @@ export default (props: UrlTextFieldProps): JSX.Element => {
   const handlePaste = (event: SyntheticEvent) => {
     timerRef.current && clearTimeout(timerRef.current);
     timerRef.current = setTimeout(() => {
-      if (UrlUtils.isValidUrl(urlRef.current)) {
+      if (isValidUrl(urlRef.current)) {
         handleSubmit(event);
       }
     }, 500);

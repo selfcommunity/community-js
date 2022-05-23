@@ -4,7 +4,7 @@ import {SCSessionType} from '../types';
 import {SCAuthTokenType} from '@selfcommunity/types';
 import * as Session from '../constants/Session';
 import useDeepCompareEffect from 'use-deep-compare-effect';
-import {Logger} from '../utils/logger';
+import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_CORE} from '../constants/Errors';
 
 /**

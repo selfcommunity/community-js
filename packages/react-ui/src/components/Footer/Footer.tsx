@@ -4,8 +4,8 @@ import {styled} from '@mui/material/styles';
 import {Box, Grid, Typography} from '@mui/material';
 import classNames from 'classnames';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
+import {Logger} from '@selfcommunity/utils';
 import {
-  Logger,
   SCRoutes,
   SCRoutingContextType,
   Link,

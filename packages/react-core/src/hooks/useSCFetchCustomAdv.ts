@@ -1,7 +1,7 @@
 import {useEffect, useMemo, useRef, useState} from 'react';
 import {SCOPE_SC_CORE} from '../constants/Errors';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
-import {Logger} from '../utils/logger';
+import {Logger} from '@selfcommunity/utils';
 import {SCCustomAdvPosition, SCCustomAdvType} from '@selfcommunity/types';
 
 /**

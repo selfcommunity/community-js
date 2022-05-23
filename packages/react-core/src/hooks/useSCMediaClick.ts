@@ -1,5 +1,5 @@
 import {Endpoints, http} from '@selfcommunity/api-services';
-import {Logger} from '../utils/logger';
+import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_CORE} from '../constants/Errors';
 
 export default function useSCMediaClick() {

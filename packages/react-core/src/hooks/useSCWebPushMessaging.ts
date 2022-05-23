@@ -1,10 +1,10 @@
-import {useContext, useEffect, useMemo, useRef, useState} from 'react';
+import {useContext, useEffect, useRef, useState} from 'react';
 import {SCContextType, SCPreferencesContextType, SCUserContextType} from '../types';
 import {SCTagType} from '@selfcommunity/types';
 import {useSCContext} from '../components/provider/SCContextProvider';
 import {useSCUser} from '../components/provider/SCUserProvider';
-import {Logger} from '../utils/logger';
-import {loadVersionBrowser, urlB64ToUint8Array} from '../utils/webPushMessaging';
+import {Logger} from '@selfcommunity/utils';
+import {loadVersionBrowser, urlB64ToUint8Array} from '@selfcommunity/utils';
 import {SCOPE_SC_CORE} from '../constants/Errors';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {WEB_PUSH_NOTIFICATION_DEVICE_TYPE} from '../constants/Device';

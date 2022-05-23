@@ -7,7 +7,8 @@ import Icon from '@mui/material/Icon';
 import {styled} from '@mui/material/styles';
 import {SCFeedObjectActivitiesType} from '../../../../types/feedObject';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {SCPreferences, SCPreferencesContext, SCPreferencesContextType, SCUserContextType, StringUtils, useSCUser} from '@selfcommunity/react-core';
+import {camelCase} from '@selfcommunity/utils';
+import {SCPreferences, SCPreferencesContext, SCPreferencesContextType, SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import {useContext} from 'react';
 import classNames from 'classnames';
 import useThemeProps from '@mui/material/styles/useThemeProps';
@@ -131,7 +132,7 @@ export default function ActivitiesMenu(inProps: ActivitiesMenuProps) {
           <Button variant="text" size="small" onClick={handleClick} endIcon={<Icon>expand_more</Icon>} color="inherit">
             {selectedActivities === SCFeedObjectActivitiesType.CONNECTIONS_COMMENTS && followEnabled
               ? intl.formatMessage(messages.followedComments)
-              : intl.formatMessage(messages[`${StringUtils.camelCase(selectedActivities)}`])}
+              : intl.formatMessage(messages[`${camelCase(selectedActivities)}`])}
           </Button>
         </Tooltip>
       </Box>
