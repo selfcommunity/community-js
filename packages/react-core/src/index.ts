@@ -86,14 +86,9 @@ import * as SCRoutes from './constants/Routes';
 
 /**
  * Utilities:
- * logger, string, url, object
+ * User
  */
-import {Logger} from './utils/logger';
-import * as StringUtils from './utils/string';
-import * as ObjectUtils from './utils/object';
-import * as UrlUtils from './utils/url';
 import * as UserUtils from './utils/user';
-import WSClient, {WSClientType, WSClientPropTypes} from './utils/websocket';
 
 /**
  * Constants:
@@ -152,13 +147,6 @@ export {
   useSCAlertMessages,
   Link,
   SCRoutes,
-  Logger,
-  StringUtils,
-  ObjectUtils,
-  WSClient,
-  WSClientType,
-  WSClientPropTypes,
-  UrlUtils,
   UserUtils,
   Locale,
   useSCFetchUser,

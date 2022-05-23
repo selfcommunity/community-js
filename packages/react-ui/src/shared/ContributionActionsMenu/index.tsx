@@ -5,7 +5,7 @@ import Popper from '@mui/material/Popper';
 import Icon from '@mui/material/Icon';
 import CentralProgress from '../CentralProgress';
 import {SCOPE_SC_UI} from '../../constants/Errors';
-import {copyTextToClipboard} from '../../utils/string';
+import {copyTextToClipboard} from '@selfcommunity/utils';
 import {useSnackbar} from 'notistack';
 import {getRouteData, getContributionRouteName} from '../../utils/contribution';
 import classNames from 'classnames';
@@ -39,8 +39,8 @@ import {
   MODERATION_CONTRIBUTION_STATE_DELETED
 } from '../../constants/Flagging';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
+import {Logger} from '@selfcommunity/utils';
 import {
-  Logger,
   SCContext,
   SCContextType,
   SCRoutingContextType,
@@ -51,7 +51,7 @@ import {
   useSCFetchFeedObject,
   useSCRouting
 } from '@selfcommunity/react-core';
-import {SCCommentType, SCCommentTypologyType, SCFeedObjectType, SCFeedObjectTypologyType } from '@selfcommunity/types';
+import {SCCommentType, SCCommentTypologyType, SCFeedObjectType, SCFeedObjectTypologyType} from '@selfcommunity/types';
 import {
   GENERAL_SECTION,
   DELETE_CONTRIBUTION,

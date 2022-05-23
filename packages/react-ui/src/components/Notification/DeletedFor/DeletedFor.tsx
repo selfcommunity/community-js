@@ -6,7 +6,8 @@ import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {getContributionType, getContributionSnippet, getRouteData} from '../../../utils/contribution';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
 import NewChip from '../../../shared/NewChip/NewChip';
-import {Link, SCRoutingContextType, useSCRouting, StringUtils, SCRoutes} from '@selfcommunity/react-core';
+import {camelCase} from '@selfcommunity/utils';
+import {Link, SCRoutingContextType, useSCRouting, SCRoutes} from '@selfcommunity/react-core';
 import {SCNotificationDeletedForType} from '@selfcommunity/types';
 import classNames from 'classnames';
 import {SCNotificationObjectTemplateType} from '../../../types';
@@ -159,8 +160,8 @@ export default function DeletedForNotification(inProps: NotificationDeletedForPr
                 )}>
                 <Typography component="div" color="inherit" className={classes.flagText}>
                   <FormattedMessage
-                    id={`ui.notification.deletedFor.${StringUtils.camelCase(notificationObject.type)}Snippet`}
-                    defaultMessage={`ui.notification.deletedFor.${StringUtils.camelCase(notificationObject.type)}Snippet`}
+                    id={`ui.notification.deletedFor.${camelCase(notificationObject.type)}Snippet`}
+                    defaultMessage={`ui.notification.deletedFor.${camelCase(notificationObject.type)}Snippet`}
                   />
                 </Typography>
               </Link>
@@ -168,7 +169,7 @@ export default function DeletedForNotification(inProps: NotificationDeletedForPr
               <>
                 {template === SCNotificationObjectTemplateType.DETAIL && notificationObject.is_new && <NewChip />}
                 <Typography component="div" color="inherit" className={classes.flagText}>
-                  {intl.formatMessage(messages[StringUtils.camelCase(notificationObject.type)], {b: (...chunks) => <strong>{chunks}</strong>})}
+                  {intl.formatMessage(messages[camelCase(notificationObject.type)], {b: (...chunks) => <strong>{chunks}</strong>})}
                 </Typography>
               </>
             )}

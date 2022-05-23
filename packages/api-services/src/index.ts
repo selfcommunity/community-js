@@ -12,16 +12,37 @@ import Endpoints, {EndpointType} from './constants/Endpoints';
  * Utils
  */
 import {formatHttpError} from './utils/http';
-import {generateJWTToken} from './utils/token';
+import {generateJWTToken, parseJwt} from './utils/token';
 
 /**
  * Services
  */
-import PreferenceService, {PreferenceApiClient, PreferenceApiClientInterface} from './services/preference';
-import UserService, {UserApiClient, UserApiClientInterface} from './services/user';
-import FeatureService, {FeatureApiClient, FeatureApiClientInterface} from './services/feature';
 import CategoryService, {CategoryApiClient, CategoryApiClientInterface} from './services/category';
-
+import CommentService, {CommentApiClient, CommentApiClientInterface} from './services/comment';
+import CustomAdvService, {CustomAdvApiClient, CustomAdvApiClientInterface} from './services/custom_adv';
+import CustomPageService, {CustomPageApiClient, CustomPageApiClientInterface} from './services/custom_page';
+import DataPortabilityService, {DataPortabilityApiClient, DataPortabilityApiClientInterface} from './services/data_portability';
+import DynamicPreferenceService, {DynamicPreferenceApiClient, DynamicPreferenceApiClientInterface} from './services/dynamic_preference';
+import EmbedService, {EmbedApiClient, EmbedApiClientInterface} from './services/embed';
+import FeatureService, {FeatureApiClient, FeatureApiClientInterface} from './services/feature';
+import FeedService, {FeedApiClient, FeedApiClientInterface} from './services/feed';
+import FeedObjectService, {FeedObjectApiClient, FeedObjectApiClientInterface} from './services/feed_object';
+import IncubatorService, {IncubatorApiClient, IncubatorApiClientInterface} from './services/incubator';
+import InsightService, {InsightApiClient, InsightApiClientInterface} from './services/insight';
+import LegalPageService, {LegalPageApiClient, LegalPageApiClientInterface} from './services/legal_page';
+import LocalityService, {LocalityApiClient, LocalityApiClientInterface} from './services/locality';
+import LoyaltyService, {LoyaltyApiClient, LoyaltyApiClientInterface} from './services/loyalty';
+import MediaService, {MediaApiClient, MediaApiClientInterface} from './services/media';
+import ModerationService, {ModerationApiClient, ModerationApiClientInterface} from './services/moderation';
+import NotificationService, {NotificationApiClient, NotificationApiClientInterface} from './services/notification';
+import PreferenceService, {PreferenceApiClient, PreferenceApiClientInterface} from './services/preference';
+import PrivateMessageService, {PrivateMessageApiClient, PrivateMessageApiClientInterface} from './services/private_message';
+import ScoreService, {ScoreApiClient, ScoreApiClientInterface} from './services/score';
+import SSOService, {SSOApiClient, SSOApiClientInterface} from './services/sso';
+import SuggestionService, {SuggestionApiClient, SuggestionApiClientInterface} from './services/suggestion';
+import TagService, {TagApiClient, TagApiClientInterface} from './services/tag';
+import UserService, {UserApiClient, UserApiClientInterface} from './services/user';
+import WebhookService, {WebhookApiClient, WebhookApiClientInterface} from './services/webhook';
 /**
  * Export all
  */
@@ -30,6 +51,8 @@ export {
   HttpResponse,
   HttpMethod,
   formatHttpError,
+  generateJWTToken,
+  parseJwt,
   Endpoints,
   EndpointType,
   PreferenceService,
@@ -43,5 +66,71 @@ export {
   FeatureApiClientInterface,
   CategoryService,
   CategoryApiClient,
-  CategoryApiClientInterface
+  CategoryApiClientInterface,
+  CommentService,
+  CommentApiClient,
+  CommentApiClientInterface,
+  CustomAdvService,
+  CustomAdvApiClient,
+  CustomAdvApiClientInterface,
+  CustomPageService,
+  CustomPageApiClient,
+  CustomPageApiClientInterface,
+  DataPortabilityService,
+  DataPortabilityApiClient,
+  DataPortabilityApiClientInterface,
+  DynamicPreferenceService,
+  DynamicPreferenceApiClient,
+  DynamicPreferenceApiClientInterface,
+  EmbedService,
+  EmbedApiClient,
+  EmbedApiClientInterface,
+  FeedService,
+  FeedApiClient,
+  FeedApiClientInterface,
+  FeedObjectService,
+  FeedObjectApiClient,
+  FeedObjectApiClientInterface,
+  IncubatorService,
+  IncubatorApiClient,
+  IncubatorApiClientInterface,
+  InsightService,
+  InsightApiClient,
+  InsightApiClientInterface,
+  LegalPageService,
+  LegalPageApiClient,
+  LegalPageApiClientInterface,
+  LocalityService,
+  LocalityApiClient,
+  LocalityApiClientInterface,
+  LoyaltyService,
+  LoyaltyApiClient,
+  LoyaltyApiClientInterface,
+  MediaService,
+  MediaApiClient,
+  MediaApiClientInterface,
+  ModerationService,
+  ModerationApiClient,
+  ModerationApiClientInterface,
+  NotificationService,
+  NotificationApiClient,
+  NotificationApiClientInterface,
+  PrivateMessageService,
+  PrivateMessageApiClient,
+  PrivateMessageApiClientInterface,
+  ScoreService,
+  ScoreApiClient,
+  ScoreApiClientInterface,
+  SSOService,
+  SSOApiClient,
+  SSOApiClientInterface,
+  SuggestionService,
+  SuggestionApiClient,
+  SuggestionApiClientInterface,
+  TagService,
+  TagApiClient,
+  TagApiClientInterface,
+  WebhookService,
+  WebhookApiClient,
+  WebhookApiClientInterface
 };

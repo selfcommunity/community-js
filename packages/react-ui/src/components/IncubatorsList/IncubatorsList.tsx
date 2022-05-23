@@ -3,7 +3,7 @@ import {styled} from '@mui/material/styles';
 import {Button, List, Typography, Box, IconButton, ListItem} from '@mui/material';
 import CardContent from '@mui/material/CardContent';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
-import {Logger} from '@selfcommunity/react-core';
+import {Logger} from '@selfcommunity/utils';
 import {SCIncubatorType} from '@selfcommunity/types';
 import Skeleton from './Skeleton';
 import {SCOPE_SC_UI} from '../../constants/Errors';

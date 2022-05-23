@@ -1,9 +1,8 @@
 import {useEffect, useReducer} from 'react';
 import {SCOPE_SC_CORE} from '../constants/Errors';
-import {SCCommentsOrderBy, SCCommentType} from '@selfcommunity/types';
+import {SCCommentsOrderBy, SCCommentType, SCFeedObjectType, SCFeedObjectTypologyType} from '@selfcommunity/types';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
-import {Logger} from '../utils/logger';
-import {SCFeedObjectType, SCFeedObjectTypologyType} from '@selfcommunity/types';
+import {Logger} from '@selfcommunity/utils';
 import useSCFetchFeedObject from './useSCFetchFeedObject';
 
 /**

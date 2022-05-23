@@ -5,14 +5,8 @@ import Icon from '@mui/material/Icon';
 import {defineMessages, useIntl} from 'react-intl';
 import {SCUserFields, SCUserType} from '@selfcommunity/types';
 import {http, Endpoints, formatHttpError, HttpResponse} from '@selfcommunity/api-services';
-import {
-  SCPreferences,
-  SCPreferencesContextType,
-  SCUserContextType,
-  StringUtils,
-  useSCPreferences,
-  useSCUser
-} from '@selfcommunity/react-core';
+import {camelCase} from '@selfcommunity/utils';
+import {SCPreferences, SCPreferencesContextType, SCUserContextType, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
 import {DEFAULT_FIELDS} from '../../../constants/UserProfile';
 import classNames from 'classnames';
 import {DatePicker, LocalizationProvider} from '@mui/lab';
@@ -116,8 +110,8 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
   const handleEdit = (field: SCUserFields) => {
     return (event: React.MouseEvent<HTMLButtonElement>) => {
       setEditing([...editing, field]);
-      if (error[`${StringUtils.camelCase(field)}Error`]) {
-        delete error[`${StringUtils.camelCase(field)}Error`];
+      if (error[`${camelCase(field)}Error`]) {
+        delete error[`${camelCase(field)}Error`];
         setError(error);
       }
     };
@@ -178,7 +172,7 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
   const renderField = (field) => {
     const isEditing = editing.includes(field);
     const isSaving = saving.includes(field);
-    const camelField = StringUtils.camelCase(field);
+    const camelField = camelCase(field);
     const _error = error !== null && error[`${camelField}Error`] && error[`${camelField}Error`].error;
     const component = {element: TextField};
     let props: any = {
@@ -213,7 +207,7 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
           <LocalizationProvider dateAdapter={AdapterDateFns} key={field}>
             <DatePicker
               label={intl.formatMessage({
-                id: `ui.userProfileInfo.${StringUtils.camelCase(field)}`,
+                id: `ui.userProfileInfo.${camelCase(field)}`,
                 defaultMessage: `ui.userProfileInfo.${field}`
               })}
               value={user[field]}
