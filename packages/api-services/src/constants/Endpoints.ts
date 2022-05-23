@@ -39,13 +39,45 @@ const Endpoints: {[key: string]: EndpointType} = {
   /**
    * FeedObject Endpoints
    */
+  FeedObjectList: {
+    url: urlReplacer('/api/v2/$(type)/'),
+    method: 'GET'
+  },
+  FeedObjectsUncommented: {
+    url: urlReplacer('/api/v2/$(type)/uncommented/'),
+    method: 'GET'
+  },
+  SearchFeedObject: {
+    url: urlReplacer('/api/v2/$(type)/search/'),
+    method: 'GET'
+  },
+  CreateFeedObject: {
+    url: urlReplacer('/api/v2/$(type)/'),
+    method: 'POST'
+  },
   FeedObject: {
     url: urlReplacer('/api/v2/$(type)/$(id)/'),
     method: 'GET'
   },
+  UpdateFeedObject: {
+    url: urlReplacer('/api/v2/$(type)/$(id)/'),
+    method: 'PUT'
+  },
   DeleteFeedObject: {
     url: urlReplacer('/api/v2/$(type)/$(id)/'),
     method: 'DELETE'
+  },
+  FeedObjectContributorsList: {
+    url: urlReplacer('/api/v2/$(type)/$(id)/contributors/'),
+    method: 'GET'
+  },
+  FeedObjectSharesList: {
+    url: urlReplacer('/api/v2/$(type)/$(id)/shares/'),
+    method: 'GET'
+  },
+  FeedObjectUserSharesList: {
+    url: urlReplacer('/api/v2/$(type)/$(id)/shares_users/'),
+    method: 'GET'
   },
   RestoreFeedObject: {
     url: urlReplacer('/api/v2/$(type)/$(id)/restore/'),
@@ -54,6 +86,26 @@ const Endpoints: {[key: string]: EndpointType} = {
   RelatedFeedObjects: {
     url: urlReplacer('/api/v2/$(type)/$(id)/related/'),
     method: 'GET'
+  },
+  HideFeedObject: {
+    url: urlReplacer('/api/v2/$(type)/$(id)/hide/'),
+    method: 'POST'
+  },
+  FeedObjectHideStatus: {
+    url: urlReplacer('/api/v2/$(type)/$(id)/hide/status/'),
+    method: 'GET'
+  },
+  CheckIfFollowingFeedObject: {
+    url: urlReplacer('/api/v2/$(type)/$(id)/following/'),
+    method: 'GET'
+  },
+  FeedObjectFollowingList: {
+    url: urlReplacer('/api/v2/$(type)/following/'),
+    method: 'GET'
+  },
+  FeedObjectFlagList: {
+    url: urlReplacer('/api/v2/$(type)/$(id)/flag/'),
+    method: 'POST'
   },
   /**
    * Comments
@@ -255,15 +307,15 @@ const Endpoints: {[key: string]: EndpointType} = {
     method: 'GET'
   },
   Permission: {
-    url: urlReplacer('/api/v2/user/me/permission'),
+    url: urlReplacer('/api/v2/user/me/permission/'),
     method: 'GET'
   },
   Platform: {
-    url: urlReplacer('/api/v2/user/me/platform_url'),
+    url: urlReplacer('/api/v2/user/me/platform_url/'),
     method: 'GET'
   },
   FollowedCategories: {
-    url: urlReplacer('/api/v2/user/$(id)/categories'),
+    url: urlReplacer('/api/v2/user/$(id)/categories/'),
     method: 'GET'
   },
   UserFollowers: {
@@ -307,23 +359,23 @@ const Endpoints: {[key: string]: EndpointType} = {
     method: 'POST'
   },
   UserRequestConnection: {
-    url: urlReplacer('/api/v2/user/$(id)/connection/request'),
+    url: urlReplacer('/api/v2/user/$(id)/connection/request/'),
     method: 'POST'
   },
   UserRemoveConnection: {
-    url: urlReplacer('/api/v2/user/$(id)/connection/remove'),
+    url: urlReplacer('/api/v2/user/$(id)/connection/remove/'),
     method: 'POST'
   },
   UserCancelRejectConnectionRequest: {
-    url: urlReplacer('/api/v2/user/$(id)/connection/cancel_reject'),
+    url: urlReplacer('/api/v2/user/$(id)/connection/cancel_reject/'),
     method: 'POST'
   },
   UserCancelRequestConnection: {
-    url: urlReplacer('/api/v2/user/$(id)/connection/cancel_request'),
+    url: urlReplacer('/api/v2/user/$(id)/connection/cancel_request/'),
     method: 'POST'
   },
   UserRejectConnectionRequest: {
-    url: urlReplacer('/api/v2/user/$(id)/connection/reject'),
+    url: urlReplacer('/api/v2/user/$(id)/connection/reject/'),
     method: 'POST'
   },
   UserMarkSeenConnectionRequest: {
@@ -559,6 +611,27 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/locality/search/'),
     method: 'GET'
   },
+
+  /**
+   * Media
+   */
+  GetMedia: {
+    url: urlReplacer('/api/v2/media/$(id)/'),
+    method: 'GET'
+  },
+  UpdateMedia: {
+    url: urlReplacer('/api/v2/media/$(id)/'),
+    method: 'PUT'
+  },
+  DeleteMedia: {
+    url: urlReplacer('/api/v2/media/$(id)/'),
+    method: 'DELETE'
+  },
+  MediaClickTracker: {
+    url: urlReplacer('/api/v2/media/$(id)/click/'),
+    method: 'POST'
+  },
+
   /**
    * Locality
    */
@@ -680,7 +753,7 @@ const Endpoints: {[key: string]: EndpointType} = {
     method: 'DELETE'
   },
   DeleteAThread: {
-    url: urlReplacer('/api/v2/pm/$(id)/?hide=1'),
+    url: urlReplacer('/api/v2/pm/$(id)/?hide=1/'),
     method: 'DELETE'
   },
 
@@ -703,15 +776,29 @@ const Endpoints: {[key: string]: EndpointType} = {
   /**
    * Moderation
    */
+  UsersForModeration: {
+    url: urlReplacer('/api/v2/moderation/user/'),
+    method: 'GET'
+  },
+  ModerateUser: {
+    url: urlReplacer('/api/v2/moderation/user/$(id)/'),
+    method: 'PATCH'
+  },
+  FlaggedContributions: {
+    url: urlReplacer('/api/v2/moderation/contribution/'),
+    method: 'GET'
+  },
+  FlagsForSpecificContribution: {
+    url: urlReplacer('/api/v2/moderation/contribution/$(id)/flag/?contribution_type=$(contribution_type)/'),
+    method: 'GET'
+  },
   ModerateContribution: {
     url: urlReplacer('/api/v2/moderation/contribution/$(id)/'),
     method: 'PATCH'
   },
-  /**
-   * Moderation
-   */
+
   ModerateContributionStatus: {
-    url: urlReplacer('/api/v2/moderation/contribution/$(id)/status/?contribution_type=$(contribution_type)'),
+    url: urlReplacer('/api/v2/moderation/contribution/$(id)/status/?contribution_type=$(contribution_type)/'),
     method: 'GET'
   },
 
@@ -731,15 +818,15 @@ const Endpoints: {[key: string]: EndpointType} = {
     method: 'GET'
   },
   InsightContributionCounter: {
-    url: urlReplacer('/api/v2/insight/contribution/counters/?contribution_id=$(id)'),
+    url: urlReplacer('/api/v2/insight/contribution/counters/?contribution_id=$(id)/'),
     method: 'GET'
   },
   InsightEmbedCounter: {
-    url: urlReplacer('/api/v2/insight/embed/counters/?embed_type=$(type)&embed_id=$(id)'),
+    url: urlReplacer('/api/v2/insight/embed/counters/?embed_type=$(type)&embed_id=$(id)/'),
     method: 'GET'
   },
   InsightUserCounter: {
-    url: urlReplacer('/api/v2/insight/user/counters/?user_id=$(id)'),
+    url: urlReplacer('/api/v2/insight/user/counters/?user_id=$(id)/'),
     method: 'GET'
   },
 
@@ -815,13 +902,6 @@ const Endpoints: {[key: string]: EndpointType} = {
   UserAckList: {
     url: urlReplacer('/api/v2/legal_page/user_acks/'),
     method: 'GET'
-  },
-  /**
-   * Media
-   */
-  MediaClickTracker: {
-    url: urlReplacer('/api/v2/media/$(id)/click/'),
-    method: 'POST'
   },
 
   /**
