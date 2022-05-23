@@ -15,6 +15,17 @@ const Endpoints: {[key: string]: EndpointType} = {
     method: 'POST'
   },
   /**
+   * SSO Endpoints
+   */
+  SignIn: {
+    url: urlReplacer('/api/v2/sso/signin/'),
+    method: 'POST'
+  },
+  SignUp: {
+    url: urlReplacer('/api/v2/sso/signup/'),
+    method: 'POST'
+  },
+  /**
    * Dynamic Preference Endpoints
    */
   Preferences: {
@@ -235,9 +246,33 @@ const Endpoints: {[key: string]: EndpointType} = {
   /**
    * Tag Endpoints
    */
+  TagsList: {
+    url: urlReplacer('/api/v2/tag/'),
+    method: 'GET'
+  },
+  CreateTag: {
+    url: urlReplacer('/api/v2/tag/'),
+    method: 'POST'
+  },
+  SearchTag: {
+    url: urlReplacer('/api/v2/tag/'),
+    method: 'GET'
+  },
   Tag: {
     url: urlReplacer('/api/v2/tag/$(id)/'),
     method: 'GET'
+  },
+  UpdateTag: {
+    url: urlReplacer('/api/v2/tag/$(id)/'),
+    method: 'PUT'
+  },
+  PatchTag: {
+    url: urlReplacer('/api/v2/tag/$(id)/'),
+    method: 'PATCH'
+  },
+  AssignTag: {
+    url: urlReplacer('/api/v2/tag/assign/'),
+    method: 'POST'
   },
   /**
    * User Endpoints
@@ -445,6 +480,10 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/notification/banner/unseen/count/'),
     method: 'GET'
   },
+  BroadcastMessagesUndisposedCount: {
+    url: urlReplacer('/api/v2/notification/banner/undisposed/count/'),
+    method: 'GET'
+  },
   /**
    * Notifications
    */
@@ -459,6 +498,10 @@ const Endpoints: {[key: string]: EndpointType} = {
   UserUnseenNotificationCount: {
     url: urlReplacer('/api/v2/notification/unseen/'),
     method: 'GET'
+  },
+  CreateCustomNotification: {
+    url: urlReplacer('/api/v2/notification/notify/'),
+    method: 'POST'
   },
   UserSuspendContributionNotification: {
     url: urlReplacer('/api/v2/$(type)/$(id)/suspend/'),
@@ -740,6 +783,14 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/pm/'),
     method: 'GET'
   },
+  PrivateMessageUploadMedia: {
+    url: urlReplacer('/api/v2/pm/upload/'),
+    method: 'POST'
+  },
+  PrivateMessageUploadThumbnail: {
+    url: urlReplacer('/api/v2/pm/upload/'),
+    method: 'POST'
+  },
   PrivateMessageUploadMediaInChunks: {
     url: urlReplacer('/api/v2/pm/upload/'),
     method: 'POST'
@@ -969,6 +1020,21 @@ const Endpoints: {[key: string]: EndpointType} = {
   DataPortabilityDownload: {
     url: urlReplacer('/api/v2/udp/'),
     method: 'GET'
+  },
+  /**
+   * Score
+   */
+  ScoresList: {
+    url: urlReplacer('/api/v2/score/'),
+    method: 'GET'
+  },
+  SearchScore: {
+    url: urlReplacer('/api/v2/score/search/'),
+    method: 'GET'
+  },
+  AddScore: {
+    url: urlReplacer('/api/v2/score/'),
+    method: 'POST'
   }
 };
 

@@ -14,7 +14,6 @@ export interface FeedObjectApiClientInterface {
   feedObjectUserSharesList(type: string, id: number): Promise<any>;
   restoreFeedObject(type: string, id: number): Promise<any>;
   relatedFeedObjects(type: string, id: number): Promise<any>;
-
   voteFeedObject(type: string, id: number): Promise<any>;
   feedObjectVotes(type: string, id: number): Promise<any>;
   feedObjectPollVote(type: string, id: number): Promise<any>;
