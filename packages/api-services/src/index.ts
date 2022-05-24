@@ -22,7 +22,6 @@ import CommentService, {CommentApiClient, CommentApiClientInterface} from './ser
 import CustomAdvService, {CustomAdvApiClient, CustomAdvApiClientInterface} from './services/custom_adv';
 import CustomPageService, {CustomPageApiClient, CustomPageApiClientInterface} from './services/custom_page';
 import DataPortabilityService, {DataPortabilityApiClient, DataPortabilityApiClientInterface} from './services/data_portability';
-import DynamicPreferenceService, {DynamicPreferenceApiClient, DynamicPreferenceApiClientInterface} from './services/dynamic_preference';
 import EmbedService, {EmbedApiClient, EmbedApiClientInterface} from './services/embed';
 import FeatureService, {FeatureApiClient, FeatureApiClientInterface} from './services/feature';
 import FeedService, {FeedApiClient, FeedApiClientInterface} from './services/feed';
@@ -79,9 +78,6 @@ export {
   DataPortabilityService,
   DataPortabilityApiClient,
   DataPortabilityApiClientInterface,
-  DynamicPreferenceService,
-  DynamicPreferenceApiClient,
-  DynamicPreferenceApiClientInterface,
   EmbedService,
   EmbedApiClient,
   EmbedApiClientInterface,
