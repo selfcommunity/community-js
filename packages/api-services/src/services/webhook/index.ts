@@ -1,17 +1,18 @@
-import client, {HttpResponse} from '../../client';
 import Endpoints from '../../constants/Endpoints';
 import {SCWebhookEndpointType, SCWebhookEndpointAttemptType, SCWebhookEndpointSecretType} from '@selfcommunity/types';
-import {WebhookParamType} from './types';
+import {WebhookParamType} from '../../types';
+import {SCPaginatedResponse} from '../../types';
+import {apiRequest} from '../../utils/apiRequest';
 
 export interface WebhookApiClientInterface {
-  getAllWebhookEndpoints(): Promise<SCWebhookEndpointType>;
-  getAllWebhookEvents(): Promise<any>;
+  getAllWebhookEndpoints(): Promise<SCPaginatedResponse<SCWebhookEndpointType>>;
+  getAllWebhookEvents(): Promise<string[]>;
   createWebhookEndpoint(params: WebhookParamType): Promise<SCWebhookEndpointType>;
   getASpecificWebhookEndpoint(id: number): Promise<SCWebhookEndpointType>;
   updateASpecificWebhookEndpoint(id: number, params: WebhookParamType): Promise<SCWebhookEndpointType>;
   updateASingleWebhookEndpointField(id: number, params: WebhookParamType): Promise<SCWebhookEndpointType>;
   deleteWebhookEndpoint(id: number): Promise<any>;
-  getAllWebhookEndpointAttempts(id: number): Promise<SCWebhookEndpointAttemptType>;
+  getAllWebhookEndpointAttempts(id: number): Promise<SCPaginatedResponse<SCWebhookEndpointAttemptType>>;
   expireWebhookSigningSecret(id: number): Promise<SCWebhookEndpointType>;
   revealWebhookSigningSecret(id: number, password?: string): Promise<SCWebhookEndpointSecretType>;
   resendWebhookEndpointEvent(id: number, event: number): Promise<any>;
@@ -25,71 +26,23 @@ export class WebhookApiClient {
   /**
    * This endpoint retrieves all webhook endpoints
    */
-  static getAllWebhookEndpoints(): Promise<HttpResponse<SCWebhookEndpointType>> {
-    return client
-      .request({
-        url: Endpoints.WebhookEndpointsList.url({}),
-        method: Endpoints.WebhookEndpointsList.method
-      })
-      .then((res: HttpResponse<SCWebhookEndpointType>) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve webhook endpoints (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve endpoints.');
-        return Promise.reject(error);
-      });
+  static getAllWebhookEndpoints(): Promise<SCPaginatedResponse<SCWebhookEndpointType>> {
+    return apiRequest(Endpoints.WebhookEndpointsList.url({}), Endpoints.WebhookEndpointsList.method);
   }
 
   /**
    * This endpoint retrieves webhook events that can be enabled in the endpoint.
    */
-  static getAllWebhookEvents(): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.WebhookEventsList.url({}),
-        method: Endpoints.WebhookEventsList.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve webhook endpoints events (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve endpoints events.');
-        return Promise.reject(error);
-      });
+  static getAllWebhookEvents(): Promise<string[]> {
+    return apiRequest(Endpoints.WebhookEventsList.url({}), Endpoints.WebhookEventsList.method);
   }
 
   /**
    * This endpoint creates a webhook endpoint and connects it to the given webhook events.
-   * @param params
+   * @param data
    */
-  static createWebhookEndpoint(params: WebhookParamType): Promise<HttpResponse<SCWebhookEndpointType>> {
-    return client
-      .request({
-        url: Endpoints.WebhookCreate.url({}),
-        method: Endpoints.WebhookCreate.method,
-        data: {
-          params
-        }
-      })
-      .then((res: HttpResponse<any>) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res.data);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
+  static createWebhookEndpoint(data: WebhookParamType): Promise<SCWebhookEndpointType> {
+    return apiRequest(Endpoints.WebhookCreate.url({}), Endpoints.WebhookCreate.method, data);
   }
 
   /**
@@ -97,22 +50,7 @@ export class WebhookApiClient {
    * @param id
    */
   static getASpecificWebhookEndpoint(id: number): Promise<SCWebhookEndpointType> {
-    return client
-      .request({
-        url: Endpoints.GetSpecificWebhook.url({id}),
-        method: Endpoints.GetSpecificWebhook.method
-      })
-      .then((res: HttpResponse<SCWebhookEndpointType>) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve webhook (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res.data);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve webhook.');
-        return Promise.reject(error);
-      });
+    return apiRequest(Endpoints.GetSpecificWebhook.url({id}), Endpoints.GetSpecificWebhook.method);
   }
 
   /**
@@ -121,25 +59,7 @@ export class WebhookApiClient {
    * @param params
    */
   static updateASpecificWebhookEndpoint(id: number, params: WebhookParamType): Promise<SCWebhookEndpointType> {
-    return client
-      .request({
-        url: Endpoints.WebhookUpdate.url({id}),
-        method: Endpoints.WebhookUpdate.method,
-        data: {
-          params
-        }
-      })
-      .then((res: HttpResponse<SCWebhookEndpointType>) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res.data);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
+    return apiRequest(Endpoints.WebhookUpdate.url({id}), Endpoints.WebhookUpdate.method, params);
   }
 
   /**
@@ -148,25 +68,7 @@ export class WebhookApiClient {
    * @param params
    */
   static updateASingleWebhookEndpointField(id: number, params: WebhookParamType): Promise<SCWebhookEndpointType> {
-    return client
-      .request({
-        url: Endpoints.WebhookPatch.url({id}),
-        method: Endpoints.WebhookPatch.method,
-        data: {
-          params
-        }
-      })
-      .then((res: HttpResponse<SCWebhookEndpointType>) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res.data);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
+    return apiRequest(Endpoints.WebhookPatch.url({id}), Endpoints.WebhookPatch.method, params);
   }
 
   /**
@@ -174,45 +76,15 @@ export class WebhookApiClient {
    * @param id
    */
   static deleteWebhookEndpoint(id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.WebhookDelete.url({id}),
-        method: Endpoints.WebhookDelete.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
+    return apiRequest(Endpoints.WebhookDelete.url({id}), Endpoints.WebhookDelete.method);
   }
 
   /**
    * This endpoint retrieves the attempts related to this endpoint.
    * @param id
    */
-  static getAllWebhookEndpointAttempts(id: number): Promise<SCWebhookEndpointAttemptType> {
-    return client
-      .request({
-        url: Endpoints.WebhookEndpointAttempts.url({id}),
-        method: Endpoints.WebhookEndpointAttempts.method
-      })
-      .then((res: HttpResponse<SCWebhookEndpointAttemptType>) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve webhook endpoint attempts (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res.data);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve webhook endpoint attempts.');
-        return Promise.reject(error);
-      });
+  static getAllWebhookEndpointAttempts(id: number): Promise<SCPaginatedResponse<SCWebhookEndpointAttemptType>> {
+    return apiRequest(Endpoints.WebhookEndpointAttempts.url({id}), Endpoints.WebhookEndpointAttempts.method);
   }
 
   /**
@@ -220,22 +92,7 @@ export class WebhookApiClient {
    * @param id
    */
   static expireWebhookSigningSecret(id: number): Promise<SCWebhookEndpointType> {
-    return client
-      .request({
-        url: Endpoints.WebhookExpireSigningSecret.url({id}),
-        method: Endpoints.WebhookExpireSigningSecret.method
-      })
-      .then((res: HttpResponse<SCWebhookEndpointType>) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res.data);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
+    return apiRequest(Endpoints.WebhookExpireSigningSecret.url({id}), Endpoints.WebhookExpireSigningSecret.method);
   }
 
   /**
@@ -244,25 +101,11 @@ export class WebhookApiClient {
    * @param password
    */
   static revealWebhookSigningSecret(id: number, password?: string): Promise<SCWebhookEndpointSecretType> {
-    return client
-      .request({
-        url: Endpoints.WebhookRevealSigningSecret.url({id}),
-        method: Endpoints.WebhookRevealSigningSecret.method,
-        data: {
-          password: password ?? null
-        }
-      })
-      .then((res: HttpResponse<SCWebhookEndpointSecretType>) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action(Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res.data);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
+    return apiRequest(
+      Endpoints.WebhookRevealSigningSecret.url({id}),
+      Endpoints.WebhookRevealSigningSecret.method,
+      password ? {password: password} : null
+    );
   }
 
   /**
@@ -271,25 +114,7 @@ export class WebhookApiClient {
    * @param event
    */
   static resendWebhookEndpointEvent(id: number, event: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.WebhookResendEndpointEvent.url({id}),
-        method: Endpoints.WebhookResendEndpointEvent.method,
-        data: {
-          event: event
-        }
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
+    return apiRequest(Endpoints.WebhookResendEndpointEvent.url({id}), Endpoints.WebhookResendEndpointEvent.method, {event: event});
   }
 
   /**
@@ -298,36 +123,18 @@ export class WebhookApiClient {
    * @param event
    */
   static resendMultipleWebhookEndpointEvent(id: number, event: number[]): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.WebhookResendMultipleEndpointEvent.url({id}),
-        method: Endpoints.WebhookResendMultipleEndpointEvent.method,
-        data: {
-          event: event
-        }
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
+    return apiRequest(Endpoints.WebhookResendMultipleEndpointEvent.url({id}), Endpoints.WebhookResendMultipleEndpointEvent.method, {event: event});
   }
 }
 
 export default class WebhookService {
-  static async getAllWebhookEndpoints(): Promise<HttpResponse<SCWebhookEndpointType>> {
+  static async getAllWebhookEndpoints(): Promise<SCPaginatedResponse<SCWebhookEndpointType>> {
     return WebhookApiClient.getAllWebhookEndpoints();
   }
   static async getAllWebhookEvents(): Promise<any> {
     return WebhookApiClient.getAllWebhookEvents();
   }
-  static async createWebhookEndpoint(params: WebhookParamType): Promise<HttpResponse<SCWebhookEndpointType>> {
+  static async createWebhookEndpoint(params: WebhookParamType): Promise<SCWebhookEndpointType> {
     return WebhookApiClient.createWebhookEndpoint(params);
   }
   static async getASpecificWebhookEndpoint(id: number): Promise<SCWebhookEndpointType> {
@@ -342,7 +149,7 @@ export default class WebhookService {
   static async deleteWebhookEndpoint(id: number): Promise<any> {
     return WebhookApiClient.deleteWebhookEndpoint(id);
   }
-  static async getAllWebhookEndpointAttempts(id: number): Promise<SCWebhookEndpointAttemptType> {
+  static async getAllWebhookEndpointAttempts(id: number): Promise<SCPaginatedResponse<SCWebhookEndpointAttemptType>> {
     return WebhookApiClient.getAllWebhookEndpointAttempts(id);
   }
   static async expireWebhookSigningSecret(id: number): Promise<SCWebhookEndpointType> {
