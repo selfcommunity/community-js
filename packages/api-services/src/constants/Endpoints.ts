@@ -15,6 +15,13 @@ const Endpoints: {[key: string]: EndpointType} = {
     method: 'POST'
   },
   /**
+   * Dynamic Preference Endpoints
+   */
+  Preferences: {
+    url: urlReplacer('/api/v2/dynamic_preference/'),
+    method: 'GET'
+  },
+  /**
    * SSO Endpoints
    */
   SignIn: {
@@ -24,21 +31,6 @@ const Endpoints: {[key: string]: EndpointType} = {
   SignUp: {
     url: urlReplacer('/api/v2/sso/signup/'),
     method: 'POST'
-  },
-  /**
-   * Dynamic Preference Endpoints
-   */
-  Preferences: {
-    url: urlReplacer('/api/v2/dynamic_preference/'),
-    method: 'GET'
-  },
-  PreferencesSearch: {
-    url: urlReplacer('/api/v2/dynamic_preference/search/'),
-    method: 'GET'
-  },
-  SpecificPreference: {
-    url: urlReplacer('/api/v2/dynamic_preference/$(id)/'),
-    method: 'GET'
   },
   /**
    * Features Endpoints
