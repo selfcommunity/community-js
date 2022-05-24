@@ -184,7 +184,7 @@ export class WebhookApiClient {
           console.log(`Unable to perform action (Response code: ${res.status}).`);
           return Promise.reject(res);
         }
-        return Promise.resolve(res.data);
+        return Promise.resolve(res);
       })
       .catch((error) => {
         console.log('Unable to perform action.');
@@ -284,7 +284,7 @@ export class WebhookApiClient {
           console.log(`Unable to perform action (Response code: ${res.status}).`);
           return Promise.reject(res);
         }
-        return Promise.resolve(res.data);
+        return Promise.resolve(res);
       })
       .catch((error) => {
         console.log('Unable to perform action.');
@@ -311,7 +311,7 @@ export class WebhookApiClient {
           console.log(`Unable to perform action (Response code: ${res.status}).`);
           return Promise.reject(res);
         }
-        return Promise.resolve(res.data);
+        return Promise.resolve(res);
       })
       .catch((error) => {
         console.log('Unable to perform action.');
