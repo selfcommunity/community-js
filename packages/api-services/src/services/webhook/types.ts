@@ -1,7 +1,6 @@
 /**
- * Interface WebhookCreateType
+ * Interface WebhookParamType
  */
-
 export interface WebhookParamType {
   /**
    * Active status
@@ -25,6 +24,9 @@ export interface WebhookParamType {
   ssl_cert_verification?: boolean;
 }
 
+/**
+ * Interface WebhookEventsType
+ */
 export interface WebhookEventsType {
   type: string;
 }
