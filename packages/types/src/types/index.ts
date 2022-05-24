@@ -46,7 +46,7 @@ import {
   SCNotificationIncubatorType,
   SCNotificationTopicType
 } from './notification';
-
+import {SCWebhookEndpointType, SCWebhookEndpointAttemptType, SCWebhookEndpointSecretType, SCWebhookEventsType} from './webhook';
 /**
  * Exports all types
  */
@@ -108,5 +108,9 @@ export {
   SCNotificationTopicType,
   SCIncubatorType,
   SCNotificationIncubatorType,
-  SCPrizeType
+  SCPrizeType,
+  SCWebhookEndpointType,
+  SCWebhookEndpointAttemptType,
+  SCWebhookEndpointSecretType,
+  SCWebhookEventsType
 };

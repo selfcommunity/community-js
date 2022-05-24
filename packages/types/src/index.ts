@@ -59,7 +59,11 @@ import {
   SCIncubatorType,
   SCNotificationIncubatorType,
   SCNotificationTopicType,
-  SCPrizeType
+  SCPrizeType,
+  SCWebhookEndpointType,
+  SCWebhookEndpointAttemptType,
+  SCWebhookEndpointSecretType,
+  SCWebhookEventsType
 } from './types';
 
 /**
@@ -123,5 +127,9 @@ export {
   SCNotificationTopicType,
   SCIncubatorType,
   SCNotificationIncubatorType,
-  SCPrizeType
+  SCPrizeType,
+  SCWebhookEndpointType,
+  SCWebhookEndpointAttemptType,
+  SCWebhookEndpointSecretType,
+  SCWebhookEventsType
 };
