@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.1.6-alpha.1 (2022-05-24)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
 ## 0.1.6-alpha.0 (2022-05-23)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
