@@ -4,19 +4,25 @@ import Endpoints from '../../constants/Endpoints';
 export interface WebhookApiClientInterface {
   getAllWebhookEndpoints(): Promise<any>;
   getAllWebhookEvents(): Promise<any>;
-  createWebhookEndpoint(): Promise<any>;
+  createWebhookEndpoint(target: string, events: any[]): Promise<any>;
   getASpecificWebhookEndpoint(id: number): Promise<any>;
-  updateASpecificWebhookEndpoint(id: number): Promise<any>;
-  updateASingleWebhookEndpointField(id: number): Promise<any>;
+  updateASpecificWebhookEndpoint(id: number, target: string, events: any[]): Promise<any>;
+  updateASingleWebhookEndpointField(id: number, target: string, events: any[]): Promise<any>;
   deleteWebhookEndpoint(id: number): Promise<any>;
   getAllWebhookEndpointAttempts(): Promise<any>;
   expireWebhookSigningSecret(id: number): Promise<any>;
   revealWebhookSigningSecret(id: number): Promise<any>;
-  resendWebhookEndpointEvent(id: number): Promise<any>;
-  resendMultipleWebhookEndpointEvent(id: number): Promise<any>;
+  resendWebhookEndpointEvent(id: number, event: number): Promise<any>;
+  resendMultipleWebhookEndpointEvent(id: number, event: number[]): Promise<any>;
 }
 
+/**
+ * Contains all the endpoints needed to manage webhooks.
+ */
 export class WebhookApiClient {
+  /**
+   * This endpoint retrieves all webhook endpoints
+   */
   static getAllWebhookEndpoints(): Promise<any> {
     return client
       .request({
@@ -36,6 +42,9 @@ export class WebhookApiClient {
       });
   }
 
+  /**
+   * This endpoint retrieves webhook events that can be enabled in the endpoint.
+   */
   static getAllWebhookEvents(): Promise<any> {
     return client
       .request({
@@ -55,11 +64,20 @@ export class WebhookApiClient {
       });
   }
 
-  static createWebhookEndpoint(): Promise<any> {
+  /**
+   * This endpoint creates a webhook endpoint and connects it to the given webhook events.
+   * @param target
+   * @param events
+   */
+  static createWebhookEndpoint(target: string, events: any[]): Promise<any> {
     return client
       .request({
         url: Endpoints.WebhookCreate.url({}),
-        method: Endpoints.WebhookCreate.method
+        method: Endpoints.WebhookCreate.method,
+        data: {
+          target: target,
+          events: events
+        }
       })
       .then((res) => {
         if (res.status >= 300) {
@@ -74,6 +92,10 @@ export class WebhookApiClient {
       });
   }
 
+  /**
+   * This endpoint retrieves a specific webhook endpoint using ID.
+   * @param id
+   */
   static getASpecificWebhookEndpoint(id: number): Promise<any> {
     return client
       .request({
@@ -93,11 +115,21 @@ export class WebhookApiClient {
       });
   }
 
-  static updateASpecificWebhookEndpoint(id: number): Promise<any> {
+  /**
+   * This endpoint updates a specific webhook endpoint.
+   * @param id
+   * @param target
+   * @param events
+   */
+  static updateASpecificWebhookEndpoint(id: number, target: string, events: any[]): Promise<any> {
     return client
       .request({
         url: Endpoints.WebhookUpdate.url({id}),
-        method: Endpoints.WebhookUpdate.method
+        method: Endpoints.WebhookUpdate.method,
+        data: {
+          target: target,
+          events: events
+        }
       })
       .then((res) => {
         if (res.status >= 300) {
@@ -112,11 +144,21 @@ export class WebhookApiClient {
       });
   }
 
-  static updateASingleWebhookEndpointField(id: number): Promise<any> {
+  /**
+   * This endpoint updates a specific field for a specific webhook endpoint.
+   * @param id
+   * @param target
+   * @param events
+   */
+  static updateASingleWebhookEndpointField(id: number, target: string, events: any[]): Promise<any> {
     return client
       .request({
         url: Endpoints.WebhookPatch.url({id}),
-        method: Endpoints.WebhookPatch.method
+        method: Endpoints.WebhookPatch.method,
+        data: {
+          target: target,
+          events: events
+        }
       })
       .then((res) => {
         if (res.status >= 300) {
@@ -131,6 +173,10 @@ export class WebhookApiClient {
       });
   }
 
+  /**
+   * This endpoint deletes a Webhook Endpoint.
+   * @param id
+   */
   static deleteWebhookEndpoint(id: number): Promise<any> {
     return client
       .request({
@@ -150,6 +196,10 @@ export class WebhookApiClient {
       });
   }
 
+  /**
+   * This endpoint retrieves the attempts related to this endpoint.
+   * @param id
+   */
   static getAllWebhookEndpointAttempts(id: number): Promise<any> {
     return client
       .request({
@@ -169,6 +219,10 @@ export class WebhookApiClient {
       });
   }
 
+  /**
+   * This endpoint expires the secret associated with this endpoint.
+   * @param id
+   */
   static expireWebhookSigningSecret(id: number): Promise<any> {
     return client
       .request({
@@ -188,6 +242,10 @@ export class WebhookApiClient {
       });
   }
 
+  /**
+   * This endpoint reveals the secret associated with this endpoint.
+   * @param id
+   */
   static revealWebhookSigningSecret(id: number): Promise<any> {
     return client
       .request({
@@ -206,11 +264,20 @@ export class WebhookApiClient {
         return Promise.reject(error);
       });
   }
-  static resendWebhookEndpointEvent(id: number): Promise<any> {
+
+  /**
+   * This endpoint resends the event specified as parameter to the endpoint specified by the id parameter.
+   * @param id
+   * @param event
+   */
+  static resendWebhookEndpointEvent(id: number, event: number): Promise<any> {
     return client
       .request({
         url: Endpoints.WebhookResendEndpointEvent.url({id}),
-        method: Endpoints.WebhookResendEndpointEvent.method
+        method: Endpoints.WebhookResendEndpointEvent.method,
+        data: {
+          event: event
+        }
       })
       .then((res) => {
         if (res.status >= 300) {
@@ -224,11 +291,20 @@ export class WebhookApiClient {
         return Promise.reject(error);
       });
   }
-  static resendMultipleWebhookEndpointEvent(id: number): Promise<any> {
+
+  /**
+   * This endpoint resends the events specified as parameters to the endpoint specified by the id parameter.
+   * @param id
+   * @param event
+   */
+  static resendMultipleWebhookEndpointEvent(id: number, event: number[]): Promise<any> {
     return client
       .request({
         url: Endpoints.WebhookResendMultipleEndpointEvent.url({id}),
-        method: Endpoints.WebhookResendMultipleEndpointEvent.method
+        method: Endpoints.WebhookResendMultipleEndpointEvent.method,
+        data: {
+          event: event
+        }
       })
       .then((res) => {
         if (res.status >= 300) {
@@ -251,17 +327,17 @@ export default class WebhookService {
   static async getAllWebhookEvents(): Promise<any> {
     return WebhookApiClient.getAllWebhookEvents();
   }
-  static async createWebhookEndpoint(): Promise<any> {
-    return WebhookApiClient.createWebhookEndpoint();
+  static async createWebhookEndpoint(target: string, events: any[]): Promise<any> {
+    return WebhookApiClient.createWebhookEndpoint(target, events);
   }
   static async getASpecificWebhookEndpoint(id: number): Promise<any> {
     return WebhookApiClient.getASpecificWebhookEndpoint(id);
   }
-  static async updateASpecificWebhookEndpoint(id: number): Promise<any> {
-    return WebhookApiClient.updateASpecificWebhookEndpoint(id);
+  static async updateASpecificWebhookEndpoint(id: number, target: string, events: any[]): Promise<any> {
+    return WebhookApiClient.updateASpecificWebhookEndpoint(id, target, events);
   }
-  static async updateASingleWebhookEndpointField(id: number): Promise<any> {
-    return WebhookApiClient.updateASingleWebhookEndpointField(id);
+  static async updateASingleWebhookEndpointField(id: number, target: string, events: any[]): Promise<any> {
+    return WebhookApiClient.updateASingleWebhookEndpointField(id, target, events);
   }
   static async deleteWebhookEndpoint(id: number): Promise<any> {
     return WebhookApiClient.deleteWebhookEndpoint(id);
@@ -275,10 +351,10 @@ export default class WebhookService {
   static async revealWebhookSigningSecret(id: number): Promise<any> {
     return WebhookApiClient.revealWebhookSigningSecret(id);
   }
-  static async resendWebhookEndpointEvent(id: number): Promise<any> {
-    return WebhookApiClient.resendWebhookEndpointEvent(id);
+  static async resendWebhookEndpointEvent(id: number, event: number): Promise<any> {
+    return WebhookApiClient.resendWebhookEndpointEvent(id, event);
   }
-  static async resendMultipleWebhookEndpointEvent(id: number): Promise<any> {
-    return WebhookApiClient.resendMultipleWebhookEndpointEvent(id);
+  static async resendMultipleWebhookEndpointEvent(id: number, event: number[]): Promise<any> {
+    return WebhookApiClient.resendMultipleWebhookEndpointEvent(id, event);
   }
 }
