@@ -13,6 +13,7 @@ import Endpoints, {EndpointType} from './constants/Endpoints';
  */
 import {formatHttpError} from './utils/http';
 import {generateJWTToken, parseJwt} from './utils/token';
+import {apiRequest} from './utils/apiRequest';
 
 /**
  * Services
@@ -42,6 +43,12 @@ import SuggestionService, {SuggestionApiClient, SuggestionApiClientInterface} fr
 import TagService, {TagApiClient, TagApiClientInterface} from './services/tag';
 import UserService, {UserApiClient, UserApiClientInterface} from './services/user';
 import WebhookService, {WebhookApiClient, WebhookApiClientInterface} from './services/webhook';
+
+/**
+ * Types
+ */
+import {SCPaginatedResponse, WebhookParamType, WebhookEventsType} from './types';
+
 /**
  * Export all
  */
@@ -49,6 +56,7 @@ export {
   http,
   HttpResponse,
   HttpMethod,
+  apiRequest,
   formatHttpError,
   generateJWTToken,
   parseJwt,
@@ -128,5 +136,8 @@ export {
   TagApiClientInterface,
   WebhookService,
   WebhookApiClient,
-  WebhookApiClientInterface
+  WebhookApiClientInterface,
+  SCPaginatedResponse,
+  WebhookParamType,
+  WebhookEventsType
 };
