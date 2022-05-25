@@ -14,10 +14,11 @@ import * as jose from 'jose';
  * @param secretKey
  * @param expirationTime
  */
-export async function generateJWTToken(userId, secretKey, expirationTime) {
+export async function generateJWTToken(userId, secretKey, expirationTime = '2h') {
   let data = {
     token_type: 'access',
-    user_id: userId
+    user_id: userId,
+    jti: new Date().getTime().toString()
   };
   const privateKey = new TextEncoder().encode(secretKey);
   return await new jose.SignJWT(data)
