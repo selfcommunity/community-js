@@ -13,6 +13,7 @@ import Endpoints, {EndpointType} from './constants/Endpoints';
  */
 import {formatHttpError} from './utils/http';
 import {generateJWTToken, parseJwt} from './utils/token';
+import {apiRequest} from './utils/apiRequest';
 
 /**
  * Services
@@ -22,7 +23,6 @@ import CommentService, {CommentApiClient, CommentApiClientInterface} from './ser
 import CustomAdvService, {CustomAdvApiClient, CustomAdvApiClientInterface} from './services/custom_adv';
 import CustomPageService, {CustomPageApiClient, CustomPageApiClientInterface} from './services/custom_page';
 import DataPortabilityService, {DataPortabilityApiClient, DataPortabilityApiClientInterface} from './services/data_portability';
-import DynamicPreferenceService, {DynamicPreferenceApiClient, DynamicPreferenceApiClientInterface} from './services/dynamic_preference';
 import EmbedService, {EmbedApiClient, EmbedApiClientInterface} from './services/embed';
 import FeatureService, {FeatureApiClient, FeatureApiClientInterface} from './services/feature';
 import FeedService, {FeedApiClient, FeedApiClientInterface} from './services/feed';
@@ -43,6 +43,12 @@ import SuggestionService, {SuggestionApiClient, SuggestionApiClientInterface} fr
 import TagService, {TagApiClient, TagApiClientInterface} from './services/tag';
 import UserService, {UserApiClient, UserApiClientInterface} from './services/user';
 import WebhookService, {WebhookApiClient, WebhookApiClientInterface} from './services/webhook';
+
+/**
+ * Types
+ */
+import {SCPaginatedResponse, WebhookParamType, WebhookEventsType} from './types';
+
 /**
  * Export all
  */
@@ -50,6 +56,7 @@ export {
   http,
   HttpResponse,
   HttpMethod,
+  apiRequest,
   formatHttpError,
   generateJWTToken,
   parseJwt,
@@ -79,9 +86,6 @@ export {
   DataPortabilityService,
   DataPortabilityApiClient,
   DataPortabilityApiClientInterface,
-  DynamicPreferenceService,
-  DynamicPreferenceApiClient,
-  DynamicPreferenceApiClientInterface,
   EmbedService,
   EmbedApiClient,
   EmbedApiClientInterface,
@@ -132,5 +136,8 @@ export {
   TagApiClientInterface,
   WebhookService,
   WebhookApiClient,
-  WebhookApiClientInterface
+  WebhookApiClientInterface,
+  SCPaginatedResponse,
+  WebhookParamType,
+  WebhookEventsType
 };
