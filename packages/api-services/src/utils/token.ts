@@ -17,7 +17,7 @@ import * as jose from 'jose';
 export async function generateJWTToken(userId, secretKey, expirationTime) {
   let data = {
     token_type: 'access',
-    userId: userId
+    user_id: userId
   };
   const privateKey = new TextEncoder().encode(secretKey);
   return await new jose.SignJWT(data)
