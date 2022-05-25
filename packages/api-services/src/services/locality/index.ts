@@ -1,56 +1,34 @@
-import client from '../../client';
 import Endpoints from '../../constants/Endpoints';
+import {SCPaginatedResponse} from '../../types';
+import {apiRequest} from '../../utils/apiRequest';
+import {SCLocalityType} from '@selfcommunity/types';
 
 export interface LocalityApiClientInterface {
-  getLocalities(): Promise<any>;
-  searchLocalities(): Promise<any>;
+  getLocalities(): Promise<SCPaginatedResponse<SCLocalityType>>;
+  searchLocalities(): Promise<SCPaginatedResponse<SCLocalityType>>;
 }
 
 export class LocalityApiClient {
-  static getLocalities(): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.GetLocalities.url({}),
-        method: Endpoints.GetLocalities.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve localities (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve localities.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint retrieves the list of available localities.
+   */
+  static getLocalities(): Promise<SCPaginatedResponse<SCLocalityType>> {
+    return apiRequest(Endpoints.GetLocalities.url({}), Endpoints.GetLocalities.method);
   }
 
-  static searchLocalities(): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.ComposerLocalitySearch.url({}),
-        method: Endpoints.ComposerLocalitySearch.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve localities (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve localities.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint searches localities
+   */
+  static searchLocalities(): Promise<SCPaginatedResponse<SCLocalityType>> {
+    return apiRequest(Endpoints.ComposerLocalitySearch.url({}), Endpoints.ComposerLocalitySearch.method);
   }
 }
 
 export default class LocalityService {
-  static async getLocalities(): Promise<any> {
+  static async getLocalities(): Promise<SCPaginatedResponse<SCLocalityType>> {
     return LocalityApiClient.getLocalities();
   }
-  static async searchLocalities(): Promise<any> {
+  static async searchLocalities(): Promise<SCPaginatedResponse<SCLocalityType>> {
     return LocalityApiClient.searchLocalities();
   }
 }

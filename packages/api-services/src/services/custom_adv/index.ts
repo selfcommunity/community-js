@@ -1,77 +1,46 @@
-import client from '../../client';
+import {apiRequest} from '../../utils/apiRequest';
 import Endpoints from '../../constants/Endpoints';
+import {SCCustomAdvType} from '@selfcommunity/types';
+import {SCPaginatedResponse} from '../../types';
 
 export interface CustomAdvApiClientInterface {
-  getASpecificCustomAdv(id: number): Promise<any>;
-  getAllCustomAdv(): Promise<any>;
-  searchCustomAdv(): Promise<any>;
+  getASpecificCustomAdv(id: number): Promise<SCPaginatedResponse<SCCustomAdvType>>;
+  getAllCustomAdv(): Promise<SCPaginatedResponse<SCCustomAdvType>>;
+  searchCustomAdv(): Promise<SCPaginatedResponse<SCCustomAdvType>>;
 }
 
 export class CustomAdvApiClient {
-  static getASpecificCustomAdv(id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.CustomAdv.url({id}),
-        method: Endpoints.CustomAdv.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve custom adv (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve custom adv.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint retrieves a specific custom adv.
+   * @param id
+   */
+  static getASpecificCustomAdv(id: number): Promise<SCPaginatedResponse<SCCustomAdvType>> {
+    return apiRequest(Endpoints.CustomAdv.url({id}), Endpoints.CustomAdv.method);
   }
-  static getAllCustomAdv(): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.CustomAdvList.url({}),
-        method: Endpoints.CustomAdvList.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve custom advs (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve custom advs.');
-        return Promise.reject(error);
-      });
+
+  /**
+   * This endpoint retrieves all custom advs.
+   */
+  static getAllCustomAdv(): Promise<SCPaginatedResponse<SCCustomAdvType>> {
+    return apiRequest(Endpoints.CustomAdvList.url({}), Endpoints.CustomAdvList.method);
   }
-  static searchCustomAdv(): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.CustomAdvSearch.url({}),
-        method: Endpoints.CustomAdvSearch.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve custom advs (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve custom advs.');
-        return Promise.reject(error);
-      });
+
+  /**
+   * This endpoint performs search of a Custom Adv
+   */
+  static searchCustomAdv(): Promise<SCPaginatedResponse<SCCustomAdvType>> {
+    return apiRequest(Endpoints.CustomAdvSearch.url({}), Endpoints.CustomAdvSearch.method);
   }
 }
 
 export default class CustomAdvService {
-  static async getASpecificCustomAdv(id: number): Promise<any> {
+  static async getASpecificCustomAdv(id: number): Promise<SCPaginatedResponse<SCCustomAdvType>> {
     return CustomAdvApiClient.getASpecificCustomAdv(id);
   }
-  static async getAllCustomAdv(): Promise<any> {
+  static async getAllCustomAdv(): Promise<SCPaginatedResponse<SCCustomAdvType>> {
     return CustomAdvApiClient.getAllCustomAdv();
   }
-  static async searchCustomAdv(): Promise<any> {
+  static async searchCustomAdv(): Promise<SCPaginatedResponse<SCCustomAdvType>> {
     return CustomAdvApiClient.searchCustomAdv();
   }
 }

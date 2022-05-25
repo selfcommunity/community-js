@@ -1,168 +1,91 @@
-import client from '../../client';
+import {IncubatorCreateParams, SCPaginatedResponse} from '../../types';
+import {apiRequest} from '../../utils/apiRequest';
 import Endpoints from '../../constants/Endpoints';
+import {SCIncubatorSubscriptionType, SCIncubatorType, SCUserType} from '@selfcommunity/types';
 
 export interface IncubatorApiClientInterface {
-  getAllIncubators(): Promise<any>;
-  searchIncubators(): Promise<any>;
-  getSpecificIncubator(id: number): Promise<any>;
-  createIncubator(): Promise<any>;
-  getIncubatorSubscribers(id: number): Promise<any>;
+  getAllIncubators(): Promise<SCPaginatedResponse<SCIncubatorType>>;
+  searchIncubators(): Promise<SCPaginatedResponse<SCIncubatorType>>;
+  getSpecificIncubator(id: number): Promise<SCIncubatorType>;
+  createIncubator(data: IncubatorCreateParams): Promise<SCIncubatorType>;
+  getIncubatorSubscribers(id: number): Promise<SCPaginatedResponse<SCUserType>>;
   subscribeToIncubator(id: number): Promise<any>;
-  checkIncubatorSubscription(id: number): Promise<any>;
+  checkIncubatorSubscription(id: number): Promise<SCIncubatorSubscriptionType>;
 }
 
 export class IncubatorApiClient {
-  static getAllIncubators(): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.GetAllIncubators.url({}),
-        method: Endpoints.GetAllIncubators.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve incubators (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve incubators.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint retrieves all incubators.
+   */
+  static getAllIncubators(): Promise<SCPaginatedResponse<SCIncubatorType>> {
+    return apiRequest(Endpoints.GetAllIncubators.url({}), Endpoints.GetAllIncubators.method);
   }
 
-  static searchIncubators(): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.SearchIncubators.url({}),
-        method: Endpoints.SearchIncubators.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve incubators (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve incubators.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint performs search od Incubators
+   */
+  static searchIncubators(): Promise<SCPaginatedResponse<SCIncubatorType>> {
+    return apiRequest(Endpoints.SearchIncubators.url({}), Endpoints.SearchIncubators.method);
   }
 
-  static getSpecificIncubator(id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.GetASpecificIncubator.url({id}),
-        method: Endpoints.GetASpecificIncubator.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve incubator (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve incubator.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint retrieves a specific incubator.
+   * @param id
+   */
+  static getSpecificIncubator(id: number): Promise<SCIncubatorType> {
+    return apiRequest(Endpoints.GetASpecificIncubator.url({id}), Endpoints.GetASpecificIncubator.method);
   }
 
-  static createIncubator(): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.CreateAnIncubator.url({}),
-        method: Endpoints.CreateAnIncubator.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint creates an incubator.
+   * @param data
+   */
+  static createIncubator(data: IncubatorCreateParams): Promise<SCIncubatorType> {
+    return apiRequest(Endpoints.CreateAnIncubator.url({}), Endpoints.CreateAnIncubator.method, data);
   }
 
-  static getIncubatorSubscribers(id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.GetIncubatorSubscribers.url({id}),
-        method: Endpoints.GetIncubatorSubscribers.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve incubator subscribers (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve incubator subscribers.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint returns all subscribers of a specific incubator.
+   * @param id
+   */
+  static getIncubatorSubscribers(id: number): Promise<SCPaginatedResponse<SCUserType>> {
+    return apiRequest(Endpoints.GetIncubatorSubscribers.url({id}), Endpoints.GetIncubatorSubscribers.method);
   }
 
+  /**
+   * This endpoint subscribes to an incubator.
+   * @param id
+   */
   static subscribeToIncubator(id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.SubscribeToIncubator.url({id}),
-        method: Endpoints.SubscribeToIncubator.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
+    return apiRequest(Endpoints.SubscribeToIncubator.url({id}), Endpoints.SubscribeToIncubator.method);
   }
 
-  static checkIncubatorSubscription(id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.CheckIncubatorSubscription.url({id}),
-        method: Endpoints.CheckIncubatorSubscription.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve result (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve result.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint returns subscribed = true if the incubator (identified in path) is subscribed by the authenticated user.
+   * @param id
+   */
+  static checkIncubatorSubscription(id: number): Promise<SCIncubatorSubscriptionType> {
+    return apiRequest(Endpoints.CheckIncubatorSubscription.url({id}), Endpoints.CheckIncubatorSubscription.method);
   }
 }
 
 export default class IncubatorService {
-  static async getAllIncubators(): Promise<any> {
+  static async getAllIncubators(): Promise<SCPaginatedResponse<SCIncubatorType>> {
     return IncubatorApiClient.getAllIncubators();
   }
 
-  static async searchIncubators(): Promise<any> {
+  static async searchIncubators(): Promise<SCPaginatedResponse<SCIncubatorType>> {
     return IncubatorApiClient.searchIncubators();
   }
 
-  static async getSpecificIncubator(id: number): Promise<any> {
+  static async getSpecificIncubator(id: number): Promise<SCIncubatorType> {
     return IncubatorApiClient.getSpecificIncubator(id);
   }
-  static async createIncubator(): Promise<any> {
-    return IncubatorApiClient.createIncubator();
+  static async createIncubator(data: IncubatorCreateParams): Promise<SCIncubatorType> {
+    return IncubatorApiClient.createIncubator(data);
   }
 
-  static async getIncubatorSubscribers(id: number): Promise<any> {
+  static async getIncubatorSubscribers(id: number): Promise<SCPaginatedResponse<SCUserType>> {
     return IncubatorApiClient.getIncubatorSubscribers(id);
   }
 
@@ -170,7 +93,7 @@ export default class IncubatorService {
     return IncubatorApiClient.subscribeToIncubator(id);
   }
 
-  static async checkIncubatorSubscription(id: number): Promise<any> {
+  static async checkIncubatorSubscription(id: number): Promise<SCIncubatorSubscriptionType> {
     return IncubatorApiClient.checkIncubatorSubscription(id);
   }
 }

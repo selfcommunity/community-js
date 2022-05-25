@@ -47,7 +47,16 @@ import WebhookService, {WebhookApiClient, WebhookApiClientInterface} from './ser
 /**
  * Types
  */
-import {SCPaginatedResponse, WebhookParamType, WebhookEventsType} from './types';
+import {
+  SCPaginatedResponse,
+  WebhookParamType,
+  WebhookEventsType,
+  SSOSignUpParams,
+  CommentListParams,
+  CommentCreateParams,
+  IncubatorCreateParams,
+  LoyaltyPrizeParams
+} from './types';
 
 /**
  * Export all
@@ -139,5 +148,10 @@ export {
   WebhookApiClientInterface,
   SCPaginatedResponse,
   WebhookParamType,
-  WebhookEventsType
+  WebhookEventsType,
+  CommentCreateParams,
+  IncubatorCreateParams,
+  SSOSignUpParams,
+  CommentListParams,
+  LoyaltyPrizeParams
 };

@@ -1,151 +1,93 @@
-import client from '../../client';
+import {SCPaginatedResponse} from '../../types';
+import {apiRequest} from '../../utils/apiRequest';
 import Endpoints from '../../constants/Endpoints';
+import {
+  SCContributionInsightCountersType,
+  SCContributionInsightType,
+  SCEmbedInsightCountersType,
+  SCEmbedInsightType,
+  SCUsersInsightCountersType,
+  SCUsersInsightType
+} from '@selfcommunity/types';
 
 export interface InsightApiClientInterface {
-  getBestContributionInsight(): Promise<any>;
-  getBestEmbedInsight(): Promise<any>;
-  getBestUsersInsight(): Promise<any>;
-  getContributionsInsightCounters(): Promise<any>;
-  getEmbedsInsightCounters(id: number): Promise<any>;
-  getUsersInsightCounters(id: number): Promise<any>;
+  getBestContributionInsight(): Promise<SCPaginatedResponse<SCContributionInsightType>>;
+  getBestEmbedInsight(): Promise<SCPaginatedResponse<SCEmbedInsightType>>;
+  getBestUsersInsight(): Promise<SCPaginatedResponse<SCUsersInsightType>>;
+  getContributionsInsightCounters(id: number): Promise<SCContributionInsightCountersType>;
+  getEmbedsInsightCounters(id: number): Promise<SCEmbedInsightCountersType>;
+  getUsersInsightCounters(id: number): Promise<SCUsersInsightCountersType>;
 }
 
 export class InsightApiClient {
-  static getBestContributionInsight(): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.InsightBestContribution.url({}),
-        method: Endpoints.InsightBestContribution.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve contribution insights (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve contribution insights.');
-        return Promise.reject(error);
-      });
-  }
-  static getBestEmbedInsight(): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.InsightBestEmbed.url({}),
-        method: Endpoints.InsightBestEmbed.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve embed insights. (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve embed insights.');
-        return Promise.reject(error);
-      });
-  }
-  static getBestUsersInsight(): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.InsightBestUser.url({}),
-        method: Endpoints.InsightBestUser.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve user insight (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve user insight.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint retrieves the best contribution insights list.
+   */
+  static getBestContributionInsight(): Promise<SCPaginatedResponse<SCContributionInsightType>> {
+    return apiRequest(Endpoints.InsightBestContribution.url({}), Endpoints.InsightBestContribution.method);
   }
 
-  static getContributionsInsightCounters(): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.InsightContributionCounter.url({}),
-        method: Endpoints.InsightContributionCounter.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve contribution counters (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve contributions counters.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint retrieves the best embed insights list. The operations of this endpoint is quite complex and returns different result structures based on the parameters passed. For example, pagination (and therefore the use of the offset parameter) is guaranteed only if the metadata and group_by parameter are not passed. If you are passing metadata you MUST pass also group_by. If you pass group_by the result will be not paginated and will contain only user defined custom embeds (not among these: 'sc_vimeo', 'sc_link', 'sc_shared_object').
+   */
+  static getBestEmbedInsight(): Promise<SCPaginatedResponse<SCEmbedInsightType>> {
+    return apiRequest(Endpoints.InsightBestEmbed.url({}), Endpoints.InsightBestEmbed.method);
   }
 
-  static getEmbedsInsightCounters(): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.InsightEmbedCounter.url({}),
-        method: Endpoints.InsightEmbedCounter.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve embeds counters (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve embeds counters.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint retrieves the best users insights list.
+   */
+  static getBestUsersInsight(): Promise<SCPaginatedResponse<SCUsersInsightType>> {
+    return apiRequest(Endpoints.InsightBestUser.url({}), Endpoints.InsightBestUser.method);
   }
 
-  static getUsersInsightCounters(): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.InsightUserCounter.url({}),
-        method: Endpoints.InsightUserCounter.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve users counters (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve users counters.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint retrieves a specific contribution's insight counters.
+   * @param id
+   */
+  static getContributionsInsightCounters(id: number): Promise<SCContributionInsightCountersType> {
+    return apiRequest(Endpoints.InsightContributionCounter.url({id}), Endpoints.InsightContributionCounter.method);
+  }
+
+  /**
+   * This endpoint retrieves a specific embed's insight counters.
+   * @param id
+   */
+  static getEmbedsInsightCounters(id: number): Promise<SCEmbedInsightCountersType> {
+    return apiRequest(Endpoints.InsightEmbedCounter.url({id}), Endpoints.InsightEmbedCounter.method);
+  }
+
+  /**
+   * This endpoint retrieves a specific user's insight counters.
+   * @param id
+   */
+  static getUsersInsightCounters(id: number): Promise<SCUsersInsightCountersType> {
+    return apiRequest(Endpoints.InsightUserCounter.url({id}), Endpoints.InsightUserCounter.method);
   }
 }
 
 export default class InsightService {
-  static async getBestContributionInsight(): Promise<any> {
+  static async getBestContributionInsight(): Promise<SCPaginatedResponse<SCContributionInsightType>> {
     return InsightApiClient.getBestContributionInsight();
   }
 
-  static async getBestEmbedInsight(): Promise<any> {
+  static async getBestEmbedInsight(): Promise<SCPaginatedResponse<SCEmbedInsightType>> {
     return InsightApiClient.getBestEmbedInsight();
   }
 
-  static async getBestUsersInsight(): Promise<any> {
+  static async getBestUsersInsight(): Promise<SCPaginatedResponse<SCUsersInsightType>> {
     return InsightApiClient.getBestUsersInsight();
   }
 
-  static async getContributionsInsightCounters(): Promise<any> {
-    return InsightApiClient.getContributionsInsightCounters();
+  static async getContributionsInsightCounters(id: number): Promise<SCContributionInsightCountersType> {
+    return InsightApiClient.getContributionsInsightCounters(id);
   }
 
-  static async getEmbedsInsightCounters(): Promise<any> {
-    return InsightApiClient.getEmbedsInsightCounters();
+  static async getEmbedsInsightCounters(id: number): Promise<SCEmbedInsightCountersType> {
+    return InsightApiClient.getEmbedsInsightCounters(id);
   }
 
-  static async getUsersInsightCounters(): Promise<any> {
-    return InsightApiClient.getUsersInsightCounters();
+  static async getUsersInsightCounters(id: number): Promise<SCUsersInsightCountersType> {
+    return InsightApiClient.getUsersInsightCounters(id);
   }
 }

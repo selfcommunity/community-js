@@ -1,79 +1,44 @@
-import client from '../../client';
+import {apiRequest} from '../../utils/apiRequest';
 import Endpoints from '../../constants/Endpoints';
+import {SCDataPortabilityType} from '@selfcommunity/types';
 
 export interface DataPortabilityApiClientInterface {
-  generateDataPortability(): Promise<any>;
+  generateDataPortability(): Promise<SCDataPortabilityType>;
   downloadDataPortability(): Promise<any>;
-  dataPortabilityStatus(): Promise<any>;
+  dataPortabilityStatus(): Promise<SCDataPortabilityType>;
 }
 
 export class DataPortabilityApiClient {
-  static generateDataPortability(): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.GenerateDataPortability.url({}),
-        method: Endpoints.GenerateDataPortability.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to generate data (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to generate data.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint generates data portability.
+   */
+  static generateDataPortability(): Promise<SCDataPortabilityType> {
+    return apiRequest(Endpoints.GenerateDataPortability.url({}), Endpoints.GenerateDataPortability.method);
   }
 
+  /**
+   * This endpoint downloads data portability.
+   */
   static downloadDataPortability(): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.DataPortabilityDownload.url({}),
-        method: Endpoints.DataPortabilityDownload.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to download data (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to download data.');
-        return Promise.reject(error);
-      });
+    return apiRequest(Endpoints.DataPortabilityDownload.url({}), Endpoints.DataPortabilityDownload.method);
   }
 
-  static dataPortabilityStatus(): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.DataPortabilityStatus.url({}),
-        method: Endpoints.DataPortabilityStatus.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve data status (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve data status.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint retrieves data portability status.
+   */
+  static dataPortabilityStatus(): Promise<SCDataPortabilityType> {
+    return apiRequest(Endpoints.DataPortabilityStatus.url({}), Endpoints.DataPortabilityStatus.method);
   }
 }
 
 export default class DataPortabilityService {
-  static async generateDataPortability(): Promise<any> {
+  static async generateDataPortability(): Promise<SCDataPortabilityType> {
     return DataPortabilityApiClient.generateDataPortability();
   }
   static async downloadDataPortability(): Promise<any> {
     return DataPortabilityApiClient.downloadDataPortability();
   }
-  static async dataPortabilityStatus(): Promise<any> {
+  static async dataPortabilityStatus(): Promise<SCDataPortabilityType> {
     return DataPortabilityApiClient.dataPortabilityStatus();
   }
 }

@@ -1,77 +1,46 @@
-import client from '../../client';
 import Endpoints from '../../constants/Endpoints';
+import {SCPaginatedResponse} from '../../types';
+import {SCCustomPageType} from '@selfcommunity/types/src/types';
+import {apiRequest} from '../../utils/apiRequest';
 
 export interface CustomPageApiClientInterface {
-  getASpecificCustomPage(id: number): Promise<any>;
-  getAllCustomPages(): Promise<any>;
-  searchCustomPages(): Promise<any>;
+  getASpecificCustomPage(id: number): Promise<SCCustomPageType>;
+  getAllCustomPages(): Promise<SCPaginatedResponse<SCCustomPageType>>;
+  searchCustomPages(): Promise<SCPaginatedResponse<SCCustomPageType>>;
 }
 
 export class CustomPageApiClient {
-  static getASpecificCustomPage(id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.CustomPage.url({id}),
-        method: Endpoints.CustomPage.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve custom page (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve custom page.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint retrieves a specific custom page.
+   * @param id
+   */
+  static getASpecificCustomPage(id: number): Promise<SCCustomPageType> {
+    return apiRequest(Endpoints.CustomPage.url({id}), Endpoints.CustomPage.method);
   }
-  static getAllCustomPages(): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.GetCustomPages.url({}),
-        method: Endpoints.GetCustomPages.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve custom pages (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve custom pages.');
-        return Promise.reject(error);
-      });
+
+  /**
+   * This endpoint retrieves all custom pages.
+   */
+  static getAllCustomPages(): Promise<SCPaginatedResponse<SCCustomPageType>> {
+    return apiRequest(Endpoints.GetCustomPages.url({}), Endpoints.GetCustomPages.method);
   }
-  static searchCustomPages(): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.CustomPageSearch.url({}),
-        method: Endpoints.CustomPageSearch.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve custom pages (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve custom pages.');
-        return Promise.reject(error);
-      });
+
+  /**
+   * This endpoint performs search of a Custom Page
+   */
+  static searchCustomPages(): Promise<SCPaginatedResponse<SCCustomPageType>> {
+    return apiRequest(Endpoints.CustomPageSearch.url({}), Endpoints.CustomPageSearch.method);
   }
 }
 
 export default class CustomPageService {
-  static async getASpecificCustomPage(id: number): Promise<any> {
+  static async getASpecificCustomPage(id: number): Promise<SCCustomPageType> {
     return CustomPageApiClient.getASpecificCustomPage(id);
   }
-  static async getAllCustomPages(): Promise<any> {
+  static async getAllCustomPages(): Promise<SCPaginatedResponse<SCCustomPageType>> {
     return CustomPageApiClient.getAllCustomPages();
   }
-  static async searchCustomPages(): Promise<any> {
+  static async searchCustomPages(): Promise<SCPaginatedResponse<SCCustomPageType>> {
     return CustomPageApiClient.searchCustomPages();
   }
 }

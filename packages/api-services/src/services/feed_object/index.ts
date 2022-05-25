@@ -1,651 +1,262 @@
-import client from '../../client';
+import {apiRequest} from '../../utils/apiRequest';
+import {SCPaginatedResponse} from '../../types';
 import Endpoints from '../../constants/Endpoints';
+import {
+  SCFeedObjectFollowingStatusType,
+  SCFeedObjectHideStatusType,
+  SCFeedObjectSuspendedStatusType,
+  SCFeedObjectType,
+  SCFeedObjectTypologyType,
+  SCFlagType,
+  SCFlagTypeEnum,
+  SCPollVoteType,
+  SCUserType,
+  SCVoteType
+} from '@selfcommunity/types';
 
 export interface FeedObjectApiClientInterface {
-  getAllFeedObjects(type: string): Promise<any>;
-  getUncommentedFeedObjects(type: string): Promise<any>;
-  searchFeedObject(type: string): Promise<any>;
-  createFeedObject(type: string): Promise<any>;
-  getSpecificFeedObject(type: string, id: number): Promise<any>;
-  updateFeedObject(type: string, id: number): Promise<any>;
-  deleteFeedObject(type: string, id: number): Promise<any>;
-  feedObjectContributorsList(id: number, type: string): Promise<any>;
-  feedObjectSharesList(type: string, id: number): Promise<any>;
-  feedObjectUserSharesList(type: string, id: number): Promise<any>;
-  restoreFeedObject(type: string, id: number): Promise<any>;
-  relatedFeedObjects(type: string, id: number): Promise<any>;
-  voteFeedObject(type: string, id: number): Promise<any>;
-  feedObjectVotes(type: string, id: number): Promise<any>;
-  feedObjectPollVote(type: string, id: number): Promise<any>;
-  feedObjectPollVotesList(type: string, id: number): Promise<any>;
-  followFeedObject(type: string, id: number): Promise<any>;
-  feedObjectFollowingList(type: string): Promise<any>;
-  checkIfFollowingFeedObject(type: string, id: number): Promise<any>;
-  suspendFeedObject(type: string, id: number): Promise<any>;
-  checkIfSuspendedFeedObject(type: string, id: number): Promise<any>;
-  feedObjectSuspendedList(type: string): Promise<any>;
-  flagFeedObject(type: string, id: number): Promise<any>;
-  feedObjectFlagList(type: string, id: number): Promise<any>;
-  feedObjectFlagStatus(type: string, id: number): Promise<any>;
-  hideFeedObject(type: string, id: number): Promise<any>;
-  feedObjectHideStatus(type: string, id: number): Promise<any>;
+  getAllFeedObjects(type: SCFeedObjectTypologyType): Promise<SCPaginatedResponse<SCFeedObjectType>>;
+  getUncommentedFeedObjects(type: SCFeedObjectTypologyType): Promise<SCPaginatedResponse<SCFeedObjectType>>;
+  searchFeedObject(type: SCFeedObjectTypologyType): Promise<SCPaginatedResponse<SCFeedObjectType>>;
+  createFeedObject(type: SCFeedObjectTypologyType): Promise<any>;
+  getSpecificFeedObject(type: SCFeedObjectTypologyType, id: number): Promise<any>;
+  updateFeedObject(type: SCFeedObjectTypologyType, id: number): Promise<any>;
+  deleteFeedObject(type: SCFeedObjectTypologyType, id: number): Promise<any>;
+  feedObjectContributorsList(type: SCFeedObjectTypologyType, id: number): Promise<SCPaginatedResponse<SCUserType>>;
+  feedObjectSharesList(type: SCFeedObjectTypologyType, id: number): Promise<SCPaginatedResponse<SCFeedObjectType>>;
+  feedObjectUserSharesList(type: SCFeedObjectTypologyType, id: number): Promise<SCPaginatedResponse<SCUserType>>;
+  restoreFeedObject(type: SCFeedObjectTypologyType, id: number): Promise<any>;
+  relatedFeedObjects(type: SCFeedObjectTypologyType, id: number): Promise<SCPaginatedResponse<SCFeedObjectType>>;
+  voteFeedObject(type: SCFeedObjectTypologyType, id: number): Promise<any>;
+  feedObjectVotes(type: SCFeedObjectTypologyType, id: number): Promise<SCPaginatedResponse<SCVoteType>>;
+  feedObjectPollVote(type: SCFeedObjectTypologyType, id: number, choice: number): Promise<any>;
+  feedObjectPollVotesList(type: SCFeedObjectTypologyType, id: number): Promise<SCPaginatedResponse<SCPollVoteType>>;
+  followFeedObject(type: SCFeedObjectTypologyType, id: number): Promise<any>;
+  feedObjectFollowingList(type: SCFeedObjectTypologyType): Promise<SCPaginatedResponse<SCFeedObjectType>>;
+  checkIfFollowingFeedObject(type: SCFeedObjectTypologyType, id: number): Promise<SCPaginatedResponse<SCFeedObjectFollowingStatusType>>;
+  suspendFeedObject(type: SCFeedObjectTypologyType, id: number): Promise<any>;
+  checkIfSuspendedFeedObject(type: SCFeedObjectTypologyType, id: number): Promise<SCPaginatedResponse<SCFeedObjectSuspendedStatusType>>;
+  feedObjectSuspendedList(type: SCFeedObjectTypologyType): Promise<SCPaginatedResponse<SCFeedObjectType>>;
+  flagFeedObject(type: SCFeedObjectTypologyType, id: number, flag_type: SCFlagTypeEnum): Promise<any>;
+  feedObjectFlagList(type: SCFeedObjectTypologyType, id: number): Promise<SCPaginatedResponse<SCFlagType>>;
+  feedObjectFlagStatus(type: SCFeedObjectTypologyType, id: number): Promise<SCPaginatedResponse<SCFlagType>>;
+  hideFeedObject(type: SCFeedObjectTypologyType, id: number): Promise<any>;
+  feedObjectHideStatus(type: SCFeedObjectTypologyType, id: number): Promise<SCPaginatedResponse<SCFeedObjectHideStatusType>>;
 }
 
 export class FeedObjectApiClient {
-  static getAllFeedObjects(type: string): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.FeedObjectList.url({type}),
-        method: Endpoints.FeedObjectList.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve feed objects (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve feed objects.');
-        return Promise.reject(error);
-      });
+  static getAllFeedObjects(type: SCFeedObjectTypologyType): Promise<SCPaginatedResponse<SCFeedObjectType>> {
+    return apiRequest(Endpoints.FeedObjectList.url({type}), Endpoints.FeedObjectList.method);
   }
 
-  static getUncommentedFeedObjects(type: string): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.FeedObjectsUncommented.url({type}),
-        method: Endpoints.FeedObjectsUncommented.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve uncommented feed object (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve uncommented feed object.');
-        return Promise.reject(error);
-      });
+  static getUncommentedFeedObjects(type: SCFeedObjectTypologyType): Promise<SCPaginatedResponse<SCFeedObjectType>> {
+    return apiRequest(Endpoints.FeedObjectsUncommented.url({type}), Endpoints.FeedObjectsUncommented.method);
   }
 
-  static searchFeedObject(type: string): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.SearchFeedObject.url({type}),
-        method: Endpoints.SearchFeedObject.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve feed object (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve feed object.');
-        return Promise.reject(error);
-      });
+  static searchFeedObject(type: SCFeedObjectTypologyType): Promise<SCPaginatedResponse<SCFeedObjectType>> {
+    return apiRequest(Endpoints.SearchFeedObject.url({type}), Endpoints.SearchFeedObject.method);
   }
 
-  static createFeedObject(type: string): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.CreateFeedObject.url({type}),
-        method: Endpoints.CreateFeedObject.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
+  static createFeedObject(type: SCFeedObjectTypologyType): Promise<any> {
+    return apiRequest(Endpoints.CreateFeedObject.url({type}), Endpoints.CreateFeedObject.method);
   }
 
-  static getSpecificFeedObject(type: string, id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.FeedObject.url({type, id}),
-        method: Endpoints.FeedObject.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve feed object (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve feed object.');
-        return Promise.reject(error);
-      });
+  static getSpecificFeedObject(type: SCFeedObjectTypologyType, id: number): Promise<any> {
+    return apiRequest(Endpoints.FeedObject.url({type, id}), Endpoints.FeedObject.method);
   }
 
-  static updateFeedObject(type: string, id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.UpdateFeedObject.url({id, type}),
-        method: Endpoints.UpdateFeedObject.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
+  static updateFeedObject(type: SCFeedObjectTypologyType, id: number): Promise<any> {
+    return apiRequest(Endpoints.UpdateFeedObject.url({id, type}), Endpoints.UpdateFeedObject.method);
   }
 
-  static deleteFeedObject(type: string, id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.DeleteFeedObject.url({type, id}),
-        method: Endpoints.DeleteFeedObject.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
+  static deleteFeedObject(type: SCFeedObjectTypologyType, id: number): Promise<any> {
+    return apiRequest(Endpoints.DeleteFeedObject.url({type, id}), Endpoints.DeleteFeedObject.method);
   }
 
-  static feedObjectContributorsList(type: string, id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.FeedObjectContributorsList.url({type, id}),
-        method: Endpoints.FeedObjectContributorsList.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve feed object contributors (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve feed object contributors.');
-        return Promise.reject(error);
-      });
+  static feedObjectContributorsList(type: SCFeedObjectTypologyType, id: number): Promise<SCPaginatedResponse<SCUserType>> {
+    return apiRequest(Endpoints.FeedObjectContributorsList.url({type, id}), Endpoints.FeedObjectContributorsList.method);
   }
 
-  static feedObjectSharesList(type: string, id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.FeedObjectSharesList.url({type, id}),
-        method: Endpoints.FeedObjectSharesList.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve feed object shares (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve feed object shares.');
-        return Promise.reject(error);
-      });
+  static feedObjectSharesList(type: SCFeedObjectTypologyType, id: number): Promise<SCPaginatedResponse<SCFeedObjectType>> {
+    return apiRequest(Endpoints.FeedObjectSharesList.url({type, id}), Endpoints.FeedObjectSharesList.method);
   }
 
-  static feedObjectUserSharesList(type: string, id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.FeedObjectUserSharesList.url({type, id}),
-        method: Endpoints.FeedObjectUserSharesList.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve feed object users shares (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve feed object users shares.');
-        return Promise.reject(error);
-      });
+  static feedObjectUserSharesList(type: SCFeedObjectTypologyType, id: number): Promise<SCPaginatedResponse<SCUserType>> {
+    return apiRequest(Endpoints.FeedObjectUserSharesList.url({type, id}), Endpoints.FeedObjectUserSharesList.method);
   }
 
-  static restoreFeedObject(type: string, id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.RestoreFeedObject.url({type, id}),
-        method: Endpoints.RestoreFeedObject.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
+  static restoreFeedObject(type: SCFeedObjectTypologyType, id: number): Promise<any> {
+    return apiRequest(Endpoints.RestoreFeedObject.url({type, id}), Endpoints.RestoreFeedObject.method);
   }
 
-  static relatedFeedObjects(type: string, id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.RelatedFeedObjects.url({type, id}),
-        method: Endpoints.RelatedFeedObjects.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve related feed objects (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve related feed objects.');
-        return Promise.reject(error);
-      });
+  static relatedFeedObjects(type: SCFeedObjectTypologyType, id: number): Promise<SCPaginatedResponse<SCFeedObjectType>> {
+    return apiRequest(Endpoints.RelatedFeedObjects.url({type, id}), Endpoints.RelatedFeedObjects.method);
   }
 
-  static voteFeedObject(type: string, id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.Vote.url({type, id}),
-        method: Endpoints.Vote.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
+  static voteFeedObject(type: SCFeedObjectTypologyType, id: number): Promise<any> {
+    return apiRequest(Endpoints.Vote.url({type, id}), Endpoints.Vote.method);
   }
 
-  static feedObjectVotes(type: string, id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.VotesList.url({type, id}),
-        method: Endpoints.VotesList.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve feed object votes (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve feed object votes.');
-        return Promise.reject(error);
-      });
+  static feedObjectVotes(type: SCFeedObjectTypologyType, id: number): Promise<SCPaginatedResponse<SCVoteType>> {
+    return apiRequest(Endpoints.VotesList.url({type, id}), Endpoints.VotesList.method);
   }
 
-  static feedObjectPollVote(type: string, id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.PollVote.url({type, id}),
-        method: Endpoints.PollVote.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
+  static feedObjectPollVote(type: SCFeedObjectTypologyType, id: number, choice: number): Promise<any> {
+    return apiRequest(Endpoints.PollVote.url({type, id}), Endpoints.PollVote.method, {choice: choice});
   }
 
-  static feedObjectPollVotesList(type: string, id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.PollVotesList.url({type, id}),
-        method: Endpoints.PollVotesList.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve poll votes (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve poll votes.');
-        return Promise.reject(error);
-      });
+  static feedObjectPollVotesList(type: SCFeedObjectTypologyType, id: number): Promise<SCPaginatedResponse<SCPollVoteType>> {
+    return apiRequest(Endpoints.PollVotesList.url({type, id}), Endpoints.PollVotesList.method);
   }
 
-  static followFeedObject(type: string, id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.FollowContribution.url({id}),
-        method: Endpoints.FollowContribution.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform follow action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to perform follow action.');
-        return Promise.reject(error);
-      });
+  static followFeedObject(type: SCFeedObjectTypologyType, id: number): Promise<any> {
+    return apiRequest(Endpoints.FollowContribution.url({id}), Endpoints.FollowContribution.method);
   }
 
-  static feedObjectFollowingList(type: string): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.FeedObjectFollowingList.url({type}),
-        method: Endpoints.FeedObjectFollowingList.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve feed object followings (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve feed object followings.');
-        return Promise.reject(error);
-      });
+  static feedObjectFollowingList(type: SCFeedObjectTypologyType): Promise<SCPaginatedResponse<SCFeedObjectType>> {
+    return apiRequest(Endpoints.FeedObjectFollowingList.url({type}), Endpoints.FeedObjectFollowingList.method);
   }
 
-  static checkIfFollowingFeedObject(type: string, id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.CheckIfFollowingFeedObject.url({type, id}),
-        method: Endpoints.CheckIfFollowingFeedObject.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
+  static checkIfFollowingFeedObject(type: SCFeedObjectTypologyType, id: number): Promise<SCPaginatedResponse<SCFeedObjectFollowingStatusType>> {
+    return apiRequest(Endpoints.CheckIfFollowingFeedObject.url({type, id}), Endpoints.CheckIfFollowingFeedObject.method);
   }
-  static suspendFeedObject(type: string, id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.UserSuspendContributionNotification.url({type, id}),
-        method: Endpoints.UserSuspendContributionNotification.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
+  static suspendFeedObject(type: SCFeedObjectTypologyType, id: number): Promise<any> {
+    return apiRequest(Endpoints.UserSuspendContributionNotification.url({type, id}), Endpoints.UserSuspendContributionNotification.method);
   }
 
-  static checkIfSuspendedFeedObject(type: string, id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.UserCheckContributionNotificationSuspended.url({type, id}),
-        method: Endpoints.UserCheckContributionNotificationSuspended.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
+  static checkIfSuspendedFeedObject(type: SCFeedObjectTypologyType, id: number): Promise<SCPaginatedResponse<SCFeedObjectSuspendedStatusType>> {
+    return apiRequest(
+      Endpoints.UserCheckContributionNotificationSuspended.url({type, id}),
+      Endpoints.UserCheckContributionNotificationSuspended.method
+    );
   }
 
-  static feedObjectSuspendedList(type: string): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.UserListContributionNotificationSuspended.url({type}),
-        method: Endpoints.UserListContributionNotificationSuspended.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve suspended feed objects (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve suspended feed objects.');
-        return Promise.reject(error);
-      });
+  static feedObjectSuspendedList(type: SCFeedObjectTypologyType): Promise<SCPaginatedResponse<SCFeedObjectType>> {
+    return apiRequest(Endpoints.UserListContributionNotificationSuspended.url({type}), Endpoints.UserListContributionNotificationSuspended.method);
   }
-  static flagFeedObject(type: string, id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.Flag.url({type, id}),
-        method: Endpoints.Flag.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
+  static flagFeedObject(type: SCFeedObjectTypologyType, id: number, flag_type: SCFlagTypeEnum): Promise<any> {
+    return apiRequest(Endpoints.Flag.url({type, id}), Endpoints.Flag.method, flag_type);
   }
 
-  static feedObjectFlagStatus(type: string, id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.FlagStatus.url({type, id}),
-        method: Endpoints.FlagStatus.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve status (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve status.');
-        return Promise.reject(error);
-      });
+  static feedObjectFlagStatus(type: SCFeedObjectTypologyType, id: number): Promise<SCPaginatedResponse<SCFlagType>> {
+    return apiRequest(Endpoints.FlagStatus.url({type, id}), Endpoints.FlagStatus.method);
   }
 
-  static feedObjectFlagList(type: string): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.FeedObjectFlagList.url({type}),
-        method: Endpoints.FeedObjectFlagList.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve flagged feed objects (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve flagged feed objects.');
-        return Promise.reject(error);
-      });
+  static feedObjectFlagList(type: SCFeedObjectTypologyType, id: number): Promise<SCPaginatedResponse<SCFlagType>> {
+    return apiRequest(Endpoints.FeedObjectFlagList.url({type, id}), Endpoints.FeedObjectFlagList.method);
   }
 
-  static hideFeedObject(type: string, id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.HideFeedObject.url({type, id}),
-        method: Endpoints.HideFeedObject.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
+  static hideFeedObject(type: SCFeedObjectTypologyType, id: number): Promise<any> {
+    return apiRequest(Endpoints.HideFeedObject.url({type, id}), Endpoints.HideFeedObject.method);
   }
 
-  static feedObjectHideStatus(type: string, id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.FeedObjectHideStatus.url({type, id}),
-        method: Endpoints.FeedObjectHideStatus.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve status (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve status.');
-        return Promise.reject(error);
-      });
+  static feedObjectHideStatus(type: SCFeedObjectTypologyType, id: number): Promise<SCPaginatedResponse<SCFeedObjectHideStatusType>> {
+    return apiRequest(Endpoints.FeedObjectHideStatus.url({type, id}), Endpoints.FeedObjectHideStatus.method);
   }
 }
 
 export default class FeedObjectService {
-  static async getAllFeedObjects(type: string): Promise<any> {
+  static async getAllFeedObjects(type: SCFeedObjectTypologyType): Promise<SCPaginatedResponse<SCFeedObjectType>> {
     return FeedObjectApiClient.getAllFeedObjects(type);
   }
 
-  static async getUncommentedFeedObjects(type: string): Promise<any> {
+  static async getUncommentedFeedObjects(type: SCFeedObjectTypologyType): Promise<SCPaginatedResponse<SCFeedObjectType>> {
     return FeedObjectApiClient.getUncommentedFeedObjects(type);
   }
 
-  static async searchFeedObject(type: string): Promise<any> {
+  static async searchFeedObject(type: SCFeedObjectTypologyType): Promise<SCPaginatedResponse<SCFeedObjectType>> {
     return FeedObjectApiClient.searchFeedObject(type);
   }
 
-  static async createFeedObject(type: string): Promise<any> {
+  static async createFeedObject(type: SCFeedObjectTypologyType): Promise<any> {
     return FeedObjectApiClient.createFeedObject(type);
   }
 
-  static async getSpecificFeedObject(type: string, id: number): Promise<any> {
+  static async getSpecificFeedObject(type: SCFeedObjectTypologyType, id: number): Promise<any> {
     return FeedObjectApiClient.getSpecificFeedObject(type, id);
   }
 
-  static async updateFeedObject(type: string, id: number): Promise<any> {
+  static async updateFeedObject(type: SCFeedObjectTypologyType, id: number): Promise<any> {
     return FeedObjectApiClient.updateFeedObject(type, id);
   }
 
-  static async deleteFeedObject(type: string, id: number): Promise<any> {
+  static async deleteFeedObject(type: SCFeedObjectTypologyType, id: number): Promise<any> {
     return FeedObjectApiClient.deleteFeedObject(type, id);
   }
 
-  static async feedObjectContributorsList(type: string, id: number): Promise<any> {
+  static async feedObjectContributorsList(type: SCFeedObjectTypologyType, id: number): Promise<SCPaginatedResponse<SCUserType>> {
     return FeedObjectApiClient.feedObjectContributorsList(type, id);
   }
 
-  static async feedObjectSharesList(type: string, id: number): Promise<any> {
+  static async feedObjectSharesList(type: SCFeedObjectTypologyType, id: number): Promise<SCPaginatedResponse<SCFeedObjectType>> {
     return FeedObjectApiClient.feedObjectSharesList(type, id);
   }
 
-  static async feedObjectUserSharesList(type: string, id: number): Promise<any> {
+  static async feedObjectUserSharesList(type: SCFeedObjectTypologyType, id: number): Promise<SCPaginatedResponse<SCUserType>> {
     return FeedObjectApiClient.feedObjectUserSharesList(type, id);
   }
 
-  static async restoreFeedObject(type: string, id: number): Promise<any> {
+  static async restoreFeedObject(type: SCFeedObjectTypologyType, id: number): Promise<any> {
     return FeedObjectApiClient.restoreFeedObject(type, id);
   }
 
-  static async relatedFeedObjects(type: string, id: number): Promise<any> {
+  static async relatedFeedObjects(type: SCFeedObjectTypologyType, id: number): Promise<SCPaginatedResponse<SCFeedObjectType>> {
     return FeedObjectApiClient.relatedFeedObjects(type, id);
   }
 
-  static async voteFeedObject(type: string, id: number): Promise<any> {
+  static async voteFeedObject(type: SCFeedObjectTypologyType, id: number): Promise<any> {
     return FeedObjectApiClient.voteFeedObject(type, id);
   }
-  static async feedObjectVotes(type: string, id: number): Promise<any> {
+  static async feedObjectVotes(type: SCFeedObjectTypologyType, id: number): Promise<SCPaginatedResponse<SCVoteType>> {
     return FeedObjectApiClient.feedObjectVotes(type, id);
   }
-  static async feedObjectPollVote(type: string, id: number): Promise<any> {
-    return FeedObjectApiClient.feedObjectPollVote(type, id);
+  static async feedObjectPollVote(type: SCFeedObjectTypologyType, id: number, choice: number): Promise<any> {
+    return FeedObjectApiClient.feedObjectPollVote(type, id, choice);
   }
 
-  static async feedObjectPollVotesList(type: string, id: number): Promise<any> {
+  static async feedObjectPollVotesList(type: SCFeedObjectTypologyType, id: number): Promise<SCPaginatedResponse<SCPollVoteType>> {
     return FeedObjectApiClient.feedObjectPollVotesList(type, id);
   }
 
-  static async followFeedObject(type: string, id: number): Promise<any> {
+  static async followFeedObject(type: SCFeedObjectTypologyType, id: number): Promise<any> {
     return FeedObjectApiClient.followFeedObject(type, id);
   }
 
-  static async feedObjectFollowingList(type: string): Promise<any> {
+  static async feedObjectFollowingList(type: SCFeedObjectTypologyType): Promise<SCPaginatedResponse<SCFeedObjectType>> {
     return FeedObjectApiClient.feedObjectFollowingList(type);
   }
 
-  static async checkIfFollowingFeedObject(type: string, id: number): Promise<any> {
+  static async checkIfFollowingFeedObject(type: SCFeedObjectTypologyType, id: number): Promise<SCPaginatedResponse<SCFeedObjectFollowingStatusType>> {
     return FeedObjectApiClient.checkIfFollowingFeedObject(type, id);
   }
 
-  static async suspendFeedObject(type: string, id: number): Promise<any> {
+  static async suspendFeedObject(type: SCFeedObjectTypologyType, id: number): Promise<any> {
     return FeedObjectApiClient.suspendFeedObject(type, id);
   }
 
-  static async checkIfSuspendedFeedObject(type: string, id: number): Promise<any> {
+  static async checkIfSuspendedFeedObject(type: SCFeedObjectTypologyType, id: number): Promise<SCPaginatedResponse<SCFeedObjectSuspendedStatusType>> {
     return FeedObjectApiClient.checkIfSuspendedFeedObject(type, id);
   }
-  static async feedObjectSuspendedList(type: string): Promise<any> {
+  static async feedObjectSuspendedList(type: SCFeedObjectTypologyType): Promise<SCPaginatedResponse<SCFeedObjectType>> {
     return FeedObjectApiClient.feedObjectSuspendedList(type);
   }
 
-  static async flagFeedObject(type: string, id: number): Promise<any> {
-    return FeedObjectApiClient.flagFeedObject(type, id);
+  static async flagFeedObject(type: SCFeedObjectTypologyType, id: number, flag_type: SCFlagTypeEnum): Promise<any> {
+    return FeedObjectApiClient.flagFeedObject(type, id, flag_type);
   }
 
-  static async feedObjectFlagList(type: string): Promise<any> {
-    return FeedObjectApiClient.feedObjectFlagList(type);
+  static async feedObjectFlagList(type: SCFeedObjectTypologyType, id: number): Promise<SCPaginatedResponse<SCFlagType>> {
+    return FeedObjectApiClient.feedObjectFlagList(type, id);
   }
 
-  static async feedObjectFlagStatus(type: string, id: number): Promise<any> {
+  static async feedObjectFlagStatus(type: SCFeedObjectTypologyType, id: number): Promise<SCPaginatedResponse<SCFlagType>> {
     return FeedObjectApiClient.feedObjectFlagStatus(type, id);
   }
-  static async hideFeedObject(type: string, id: number): Promise<any> {
+  static async hideFeedObject(type: SCFeedObjectTypologyType, id: number): Promise<any> {
     return FeedObjectApiClient.hideFeedObject(type, id);
   }
 
-  static async feedObjectHideStatus(type: string, id: number): Promise<any> {
+  static async feedObjectHideStatus(type: SCFeedObjectTypologyType, id: number): Promise<SCPaginatedResponse<SCFeedObjectHideStatusType>> {
     return FeedObjectApiClient.feedObjectHideStatus(type, id);
   }
 }

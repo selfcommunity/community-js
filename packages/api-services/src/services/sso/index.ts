@@ -1,55 +1,35 @@
-import client from '../../client';
+import {apiRequest} from '../../utils/apiRequest';
 import Endpoints from '../../constants/Endpoints';
+import {SSOSignInType, SSOSignUpType} from '@selfcommunity/types/src/types/sso';
+import {SSOSignUpParams} from '../../types';
 
 export interface SSOApiClientInterface {
-  SignIn(): Promise<any>;
-  SignUp(): Promise<any>;
+  SignIn(): Promise<SSOSignInType>;
+  SignUp(data: SSOSignUpParams): Promise<SSOSignUpType>;
 }
 
 export class SSOApiClient {
-  static SignIn(): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.SignIn.url({}),
-        method: Endpoints.SignIn.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint signs in the user authenticated with the access token.
+   */
+  static SignIn(): Promise<SSOSignInType> {
+    return apiRequest(Endpoints.SignIn.url({}), Endpoints.SignIn.method);
   }
-  static SignUp(): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.SignUp.url({}),
-        method: Endpoints.SignUp.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
+
+  /**
+   * This endpoint creates a new account.
+   * @constructor
+   */
+  static SignUp(data: SSOSignUpParams): Promise<SSOSignUpType> {
+    return apiRequest(Endpoints.SignUp.url({}), Endpoints.SignUp.method, data);
   }
 }
 
 export default class SSOService {
-  static async SignIn(): Promise<any> {
+  static async SignIn(): Promise<SSOSignInType> {
     return SSOApiClient.SignIn();
   }
-  static async SignUp(): Promise<any> {
-    return SSOApiClient.SignUp();
+  static async SignUp(data: SSOSignUpParams): Promise<SSOSignUpType> {
+    return SSOApiClient.SignUp(data);
   }
 }
