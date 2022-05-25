@@ -3,16 +3,16 @@ import {SCBannerType, SCBroadcastMessageBannerType, SCBroadcastMessageType} from
 import {SCCustomAdvPosition, SCCustomAdvType} from './customAdv';
 import {SCUserType, SCUserBlockedSettingsType, SCUserFields, SCUserSettingsType, SCUserStatus} from './user';
 import {SCTagType} from './tag';
-import {SCCategoryType} from './category';
+import {SCCategoryType, SCCategoryAudienceType, SCCategoryFollowedStatusType} from './category';
 import {SCEmbedType} from './embed';
 import {SCMediaType} from './media';
 import {SCContributionLocation, SCLocalityType} from './location';
-import {SCPollChoiceType, SCPollType} from './poll';
+import {SCPollChoiceType, SCPollType, SCPollVoteType} from './poll';
 import {SCCommentType, SCCommentTypologyType, SCCommentsOrderBy} from './comment';
 import {SCPrivateMessageType, SCPrivateMessageStatusType, SCPrivateMessageFileType, SCMessageFileType} from './privateMessage';
-import {SCIncubatorType} from './incubator';
+import {SCIncubatorType, SCIncubatorSubscriptionType} from './incubator';
 import {SCCustomNotificationType} from './customNotification';
-import {SCPrizeType} from './prize';
+import {SCPrizeType, SCPrizeUserType, SCPrizeUserStatusType} from './prize';
 import {
   SCFeedUnitType,
   SCFeedUnitActivityType,
@@ -22,7 +22,12 @@ import {
   SCFeedStatusType,
   SCFeedObjectTypologyType,
   SCFeedUnitActivityTypologyType,
-  SCFeedTypologyType
+  SCFeedTypologyType,
+  SCFeedUnseenCountType,
+  SCCountByCategoryType,
+  SCFeedObjectSuspendedStatusType,
+  SCFeedObjectHideStatusType,
+  SCFeedObjectFollowingStatusType
 } from './feed';
 import {
   SCNotificationTypologyType,
@@ -47,6 +52,23 @@ import {
   SCNotificationTopicType
 } from './notification';
 import {SCWebhookEndpointType, SCWebhookEndpointAttemptType, SCWebhookEndpointSecretType, SCWebhookEventsType} from './webhook';
+import {SCVoteType} from './vote';
+import {SCFlagType, SCFlagTypeEnum} from './flag';
+import {SCCustomPageType} from './customPage';
+import {SCDataPortabilityType} from './dataPortability';
+import {SCPreferenceType} from './preference';
+import {SCFeatureType} from './feature';
+import {SSOSignInType, SSOSignUpType} from './sso';
+import {SCLegalPageType, SCLegalPageAckType} from './legalPage';
+import {
+  SCContributionInsightType,
+  SCContributionInsightCountersType,
+  SCEmbedInsightType,
+  SCEmbedInsightCountersType,
+  SCUsersInsightType,
+  SCUsersInsightCountersType
+} from './insight';
+
 /**
  * Exports all types
  */
@@ -62,6 +84,8 @@ export {
   SCUserBlockedSettingsType,
   SCTagType,
   SCCategoryType,
+  SCCategoryAudienceType,
+  SCCategoryFollowedStatusType,
   SCCustomAdvPosition,
   SCCustomAdvType,
   SCEmbedType,
@@ -70,6 +94,7 @@ export {
   SCLocalityType,
   SCPollChoiceType,
   SCPollType,
+  SCPollVoteType,
   SCFeedUnitType,
   SCFeedUnitActivityType,
   SCFeedObjectType,
@@ -79,6 +104,11 @@ export {
   SCFeedObjectTypologyType,
   SCFeedUnitActivityTypologyType,
   SCFeedTypologyType,
+  SCFeedUnseenCountType,
+  SCFeedObjectSuspendedStatusType,
+  SCFeedObjectHideStatusType,
+  SCFeedObjectFollowingStatusType,
+  SCCountByCategoryType,
   SCCommentTypologyType,
   SCCommentsOrderBy,
   SCCommentType,
@@ -107,10 +137,30 @@ export {
   SCCustomNotificationType,
   SCNotificationTopicType,
   SCIncubatorType,
+  SCIncubatorSubscriptionType,
   SCNotificationIncubatorType,
   SCPrizeType,
+  SCPrizeUserType,
+  SCPrizeUserStatusType,
   SCWebhookEndpointType,
   SCWebhookEndpointAttemptType,
   SCWebhookEndpointSecretType,
-  SCWebhookEventsType
+  SCWebhookEventsType,
+  SCVoteType,
+  SCFlagType,
+  SCFlagTypeEnum,
+  SCCustomPageType,
+  SCDataPortabilityType,
+  SCPreferenceType,
+  SCFeatureType,
+  SSOSignInType,
+  SSOSignUpType,
+  SCLegalPageType,
+  SCLegalPageAckType,
+  SCContributionInsightCountersType,
+  SCContributionInsightType,
+  SCEmbedInsightType,
+  SCEmbedInsightCountersType,
+  SCUsersInsightType,
+  SCUsersInsightCountersType
 };

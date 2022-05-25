@@ -60,3 +60,7 @@ export interface SCIncubatorType {
    */
   subscribed: boolean;
 }
+
+export interface SCIncubatorSubscriptionType {
+  subscribed: boolean;
+}

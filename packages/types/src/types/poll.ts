@@ -2,6 +2,8 @@
  * Interface SCPoll.
  * Poll Schema.
  */
+import {SCUserType} from './user';
+
 export interface SCPollType {
   /**
    * Id of the poll
@@ -88,4 +90,15 @@ export interface SCPollChoiceType {
    * True if the logged user has already voted the choice
    */
   voted?: boolean;
+}
+
+/**
+ * SCPollVoteType interface
+ * Poll Vote Schema
+ */
+
+export interface SCPollVoteType {
+  id?: number;
+  choice?: number;
+  user?: SCUserType;
 }

@@ -51,3 +51,45 @@ export interface SCPrizeType {
    */
   link?: string;
 }
+
+/**
+ * SCPrizeUserType interface
+ * Loyalty Prize User Schema
+ */
+
+export interface SCPrizeUserType {
+  /**
+   * Unique integer value
+   */
+  id: number;
+  /**
+   * User obj
+   */
+  user: SCUserType;
+  /**
+   * Prize obj.
+   */
+  prize: SCPrizeType;
+  /**
+   * Prize points when the request was created
+   */
+  prize_points: number;
+  /**
+   * Date since it was in pending status.
+   */
+  pending_at: Date | string;
+  /**
+   * Integer value representing the status.
+   */
+  status: SCPrizeUserStatusType;
+  /**
+   * The string representation of the status.
+   */
+  status_description: string;
+}
+
+export enum SCPrizeUserStatusType {
+  PENDING = 0,
+  REFUSED = 1,
+  SENT = 2
+}
