@@ -15,7 +15,7 @@ export function apiRequest(url: string, method: string, data?: any) {
       return Promise.resolve(res.data);
     })
     .catch((error) => {
-      console.log(`Unable to ${method} ${url}`);
+      console.log(`Unable to ${method} ${url} ${error}`);
       return Promise.reject(error);
     });
 }
