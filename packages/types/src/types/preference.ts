@@ -5,7 +5,7 @@ export interface SCPreferenceType {
   /**
    * Unique integer value identifying this dynamic preference
    */
-  id?: 0;
+  id?: number;
   /**
    * Grouping name
    */
