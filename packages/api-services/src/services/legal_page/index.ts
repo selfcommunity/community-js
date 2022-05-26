@@ -11,6 +11,9 @@ export interface LegalPageApiClientInterface {
   getSpecificUserAck(id: number): Promise<SCLegalPageAckType>;
   userAckList(): Promise<SCLegalPageAckType[]>;
 }
+/**
+ * Contains all the endpoints needed to manage legal pages.
+ */
 
 export class LegalPageApiClient {
   /**

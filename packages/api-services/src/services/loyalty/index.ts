@@ -14,6 +14,9 @@ export interface LoyaltyApiClientInterface {
   getSpecificPrizeRequest(id: number): Promise<SCPrizeUserType>;
   patchPrizeRequest(id: number, status?: SCPrizeUserStatusType): Promise<SCPrizeUserType>;
 }
+/**
+ * Contains all the endpoints needed to manage loyalty program.
+ */
 
 export class LoyaltyApiClient {
   /**

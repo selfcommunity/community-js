@@ -43,6 +43,9 @@ export interface FeedObjectApiClientInterface {
   hideFeedObject(type: SCFeedObjectTypologyType, id: number): Promise<any>;
   feedObjectHideStatus(type: SCFeedObjectTypologyType, id: number): Promise<SCPaginatedResponse<SCFeedObjectHideStatusType>>;
 }
+/**
+ * Contains all the endpoints needed to manage feed objs (discussions-posts-statuses).
+ */
 
 export class FeedObjectApiClient {
   /**

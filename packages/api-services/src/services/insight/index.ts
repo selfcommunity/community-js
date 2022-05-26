@@ -18,6 +18,9 @@ export interface InsightApiClientInterface {
   getEmbedsInsightCounters(id: number): Promise<SCEmbedInsightCountersType>;
   getUsersInsightCounters(id: number): Promise<SCUsersInsightCountersType>;
 }
+/**
+ * Contains all the endpoints needed to manage insights.
+ */
 
 export class InsightApiClient {
   /**

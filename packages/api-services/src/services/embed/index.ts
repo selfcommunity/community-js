@@ -13,6 +13,9 @@ export interface EmbedApiClientInterface {
   getEmbedFeed(): Promise<SCPaginatedResponse<SCFeedUnitType>>;
   getSpecificEmbedFeed(id: number): Promise<SCPaginatedResponse<SCFeedUnitType>>;
 }
+/**
+ * Contains all the endpoints needed to manage embeds.
+ */
 
 export class EmbedApiClient {
   /**

@@ -6,6 +6,9 @@ import {SCFeatureType} from '@selfcommunity/types';
 export interface FeatureApiClientInterface {
   getAllFeatures(): Promise<SCPaginatedResponse<SCFeatureType>>;
 }
+/**
+ * Contains all the endpoints needed to manage features.
+ */
 
 export class FeatureApiClient {
   /**

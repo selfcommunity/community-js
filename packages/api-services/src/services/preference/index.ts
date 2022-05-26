@@ -8,6 +8,9 @@ export interface PreferenceApiClientInterface {
   searchPreferences(search?: string, section?: string, keys?: string, ordering?: string): Promise<SCPaginatedResponse<SCPreferenceType>>;
   getSpecificPreference(id: number): Promise<SCPreferenceType>;
 }
+/**
+ * Contains all the endpoints needed to manage dynamic preferences.
+ */
 
 export class PreferenceApiClient {
   /**

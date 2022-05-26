@@ -8,6 +8,15 @@ import {ModerateContributionParams} from './moderation';
 import {CustomNotificationParams} from './notification';
 import {UserAutocompleteParams, UserScoreParams, UserSearchParams} from './user';
 import {TagParams} from './tag';
+import {MediaCreateParams, MediaTypes, ChunkUploadParams, ChunkUploadCompleteParams, ChunkType} from './media';
+import {
+  ThreadParams,
+  MessageCreateParams,
+  MessageMediaUploadParams,
+  MessageThumbnailUploadParams,
+  MessageChunkUploadDoneParams,
+  MessageMediaChunksParams
+} from './privateMessage';
 
 export {
   SCPaginatedResponse,
@@ -23,5 +32,16 @@ export {
   UserAutocompleteParams,
   UserScoreParams,
   UserSearchParams,
-  TagParams
+  TagParams,
+  MediaCreateParams,
+  MediaTypes,
+  ChunkUploadCompleteParams,
+  ChunkType,
+  ChunkUploadParams,
+  ThreadParams,
+  MessageCreateParams,
+  MessageMediaUploadParams,
+  MessageThumbnailUploadParams,
+  MessageChunkUploadDoneParams,
+  MessageMediaChunksParams
 };

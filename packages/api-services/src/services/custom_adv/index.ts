@@ -8,6 +8,9 @@ export interface CustomAdvApiClientInterface {
   getAllCustomAdv(): Promise<SCPaginatedResponse<SCCustomAdvType>>;
   searchCustomAdv(): Promise<SCPaginatedResponse<SCCustomAdvType>>;
 }
+/**
+ * Contains all the endpoints needed to manage custom advs.
+ */
 
 export class CustomAdvApiClient {
   /**

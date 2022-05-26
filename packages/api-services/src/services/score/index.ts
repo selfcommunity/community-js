@@ -8,6 +8,9 @@ export interface ScoreApiClientInterface {
   searchScore(): Promise<SCPaginatedResponse<SCUserScoreType>>;
   addScore(data: UserScoreParams): Promise<SCUserScoreType>;
 }
+/**
+ * Contains all the endpoints needed to manage user scores.
+ */
 
 export class ScoreApiClient {
   /**

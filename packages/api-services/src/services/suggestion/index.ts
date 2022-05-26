@@ -9,6 +9,9 @@ export interface SuggestionApiClientInterface {
   getPollSuggestion(): Promise<SCFeedObjectType[]>;
   getUserSuggestion(): Promise<SCPaginatedResponse<SCUserType>>;
 }
+/**
+ * Contains all the endpoints needed to manage suggestions.
+ */
 
 export class SuggestionApiClient {
   /**

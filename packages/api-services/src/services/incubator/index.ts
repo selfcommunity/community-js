@@ -12,6 +12,9 @@ export interface IncubatorApiClientInterface {
   subscribeToIncubator(id: number): Promise<any>;
   checkIncubatorSubscription(id: number): Promise<SCIncubatorSubscriptionType>;
 }
+/**
+ * Contains all the endpoints needed to manage incubators.
+ */
 
 export class IncubatorApiClient {
   /**

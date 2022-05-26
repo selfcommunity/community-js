@@ -438,7 +438,7 @@ export class UserApiClient {
    * @param avatar
    */
   static addUserAvatar(avatar: SCMediaType): Promise<SCAvatarType> {
-    return apiRequest(Endpoints.AddAvatar.url({}), Endpoints.AddAvatar.method, {avatar: avatar});
+    return apiRequest(Endpoints.AddAvatar.url({}), Endpoints.AddAvatar.method, {'Content-Type': 'multipart/form-data'}, {avatar: avatar});
   }
 
   /**

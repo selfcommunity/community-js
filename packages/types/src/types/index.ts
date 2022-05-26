@@ -27,11 +27,19 @@ import {
 import {SCTagType} from './tag';
 import {SCCategoryType, SCCategoryAudienceType, SCCategoryFollowedStatusType} from './category';
 import {SCEmbedType} from './embed';
-import {SCMediaType} from './media';
+import {SCMediaType, SCChunkMediaType} from './media';
 import {SCContributionLocation, SCLocalityType} from './location';
 import {SCPollChoiceType, SCPollType, SCPollVoteType} from './poll';
 import {SCCommentType, SCCommentTypologyType, SCCommentsOrderBy} from './comment';
-import {SCPrivateMessageType, SCPrivateMessageStatusType, SCPrivateMessageFileType, SCMessageFileType} from './privateMessage';
+import {
+  SCPrivateMessageType,
+  SCPrivateMessageStatusType,
+  SCPrivateMessageFileType,
+  SCMessageFileType,
+  SCPrivateMessageUploadMediaType,
+  SCPrivateMessageUploadThumbnailType,
+  SCPrivateMessageUploadMediaChunkType
+} from './privateMessage';
 import {SCIncubatorType, SCIncubatorSubscriptionType} from './incubator';
 import {SCCustomNotificationType} from './customNotification';
 import {SCPrizeType, SCPrizeUserType, SCPrizeUserStatusType, SCUserLoyaltyPointsType} from './prize';
@@ -131,6 +139,7 @@ export {
   SCCustomAdvType,
   SCEmbedType,
   SCMediaType,
+  SCChunkMediaType,
   SCContributionLocation,
   SCLocalityType,
   SCPollChoiceType,
@@ -157,6 +166,9 @@ export {
   SCPrivateMessageStatusType,
   SCPrivateMessageFileType,
   SCMessageFileType,
+  SCPrivateMessageUploadMediaType,
+  SCPrivateMessageUploadThumbnailType,
+  SCPrivateMessageUploadMediaChunkType,
   SCNotificationTypologyType,
   SCNotificationAggregatedType,
   SCNotificationCommentType,

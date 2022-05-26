@@ -8,6 +8,9 @@ export interface CustomPageApiClientInterface {
   getAllCustomPages(): Promise<SCPaginatedResponse<SCCustomPageType>>;
   searchCustomPages(): Promise<SCPaginatedResponse<SCCustomPageType>>;
 }
+/**
+ * Contains all the endpoints needed to manage custom pages.
+ */
 
 export class CustomPageApiClient {
   /**

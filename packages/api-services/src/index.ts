@@ -61,7 +61,18 @@ import {
   UserAutocompleteParams,
   UserScoreParams,
   UserSearchParams,
-  TagParams
+  TagParams,
+  MediaCreateParams,
+  MediaTypes,
+  ChunkType,
+  ChunkUploadParams,
+  ChunkUploadCompleteParams,
+  ThreadParams,
+  MessageCreateParams,
+  MessageMediaUploadParams,
+  MessageThumbnailUploadParams,
+  MessageChunkUploadDoneParams,
+  MessageMediaChunksParams
 } from './types';
 
 /**
@@ -165,5 +176,16 @@ export {
   UserAutocompleteParams,
   UserScoreParams,
   UserSearchParams,
-  TagParams
+  TagParams,
+  MediaCreateParams,
+  MediaTypes,
+  ChunkUploadParams,
+  ChunkUploadCompleteParams,
+  ChunkType,
+  ThreadParams,
+  MessageCreateParams,
+  MessageMediaUploadParams,
+  MessageThumbnailUploadParams,
+  MessageChunkUploadDoneParams,
+  MessageMediaChunksParams
 };

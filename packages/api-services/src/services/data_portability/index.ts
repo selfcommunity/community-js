@@ -7,6 +7,9 @@ export interface DataPortabilityApiClientInterface {
   downloadDataPortability(): Promise<any>;
   dataPortabilityStatus(): Promise<SCDataPortabilityType>;
 }
+/**
+ * Contains all the endpoints needed to manage data portability.
+ */
 
 export class DataPortabilityApiClient {
   /**

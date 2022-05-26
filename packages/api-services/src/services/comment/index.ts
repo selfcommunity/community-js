@@ -17,6 +17,10 @@ export interface CommentApiClientInterface {
   getSpecificCommentFlagStatus(id: number): Promise<SCFlagType>;
 }
 
+/**
+ * Contains all the endpoints needed to manage comments.
+ */
+
 export class CommentApiClient {
   /**
    * This endpoint retrieves all comments.

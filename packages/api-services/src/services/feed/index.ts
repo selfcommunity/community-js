@@ -10,6 +10,9 @@ export interface FeedApiClientInterface {
   markReadASpecificFeedObj(object: number[]): Promise<any>;
   likeFeedObjs(object: number[]): Promise<SCPaginatedResponse<SCFeedUnitType>>;
 }
+/**
+ * Contains all the endpoints needed to manage feed.
+ */
 
 export class FeedApiClient {
   /**

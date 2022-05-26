@@ -16,6 +16,9 @@ export interface ModerationApiClientInterface {
   moderateAContribution(id: number, data: ModerateContributionParams): Promise<any>;
   getContributionModerationStatus(id: number, contribution_type: SCContributionType): Promise<SCContributionStatus>;
 }
+/**
+ * Contains all the endpoints needed to manage moderation.
+ */
 
 export class ModerationApiClient {
   /**

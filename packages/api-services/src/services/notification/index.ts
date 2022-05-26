@@ -14,6 +14,9 @@ export interface NotificationApiClientInterface {
   markReadBroadcastMessages(banner_ids: number[]): Promise<any>;
   disposeBroadcastMessages(banner_ids: number[]): Promise<any>;
 }
+/**
+ * Contains all the endpoints needed to manage notifications.
+ */
 
 export class NotificationApiClient {
   /**

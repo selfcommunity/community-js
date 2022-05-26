@@ -7,6 +7,9 @@ export interface LocalityApiClientInterface {
   getLocalities(): Promise<SCPaginatedResponse<SCLocalityType>>;
   searchLocalities(): Promise<SCPaginatedResponse<SCLocalityType>>;
 }
+/**
+ * Contains all the endpoints needed to manage localities.
+ */
 
 export class LocalityApiClient {
   /**

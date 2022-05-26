@@ -7,6 +7,9 @@ export interface SSOApiClientInterface {
   SignIn(): Promise<SSOSignInType>;
   SignUp(data: SSOSignUpParams): Promise<SSOSignUpType>;
 }
+/**
+ * Contains all the endpoints needed to manage sso.
+ */
 
 export class SSOApiClient {
   /**
