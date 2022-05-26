@@ -159,5 +159,5 @@ export {
   useSCFetchCategory,
   useSCFetchCategories,
   useSCFetchIncubator,
-  useSCMediaClick,
+  useSCMediaClick
 };

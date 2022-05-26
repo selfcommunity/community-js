@@ -1,10 +1,11 @@
 {
   "name": "@selfcommunity/react-templates",
-  "version": "0.1.6-alpha.0",
+  "version": "0.1.6-alpha.4",
   "license": "MIT",
   "private": false,
   "main": "./lib/cjs/index.js",
   "module": "./lib/esm/index.js",
+  "types": "./lib/types/index.d.ts",
   "description": "React Templates Components to integrate a Community created with SelfCommunity.",
   "author": "SelfCommunity <https://www.selfcommunity.com>",
   "keywords": [
@@ -32,7 +33,7 @@
     "build:commonjs": "cross-env BABEL_ENV=commonjs babel --root-mode upward --extensions .js,.jsx,.ts,.tsx  ./src --out-dir lib/cjs --ignore **/*.stories.js,**/*.spec.js --copy-files",
     "build:es": "cross-env BABEL_ENV=es babel --root-mode upward --extensions .js,.jsx,.ts,.tsx ./src --out-dir lib/esm --ignore **/*.stories.js,**/*.spec.js --copy-files",
     "build:umd": "webpack --mode production",
-    "build:types": "tsc -d --declarationDir lib/esm --declarationMap --resolveJsonModule --emitDeclarationOnly",
+    "build:types": "tsc -b tsconfig.build.json",
     "build": "yarn clean:lib && yarn build:commonjs && yarn build:es && yarn build:umd && yarn build:types",
     "prerelease": "yarn run clean:lib && yarn run build"
   },
@@ -57,10 +58,10 @@
     "react-stickynode": "^4.0.0"
   },
   "dependencies": {
-    "@selfcommunity/react-core": "^0.1.6-alpha.0",
-    "@selfcommunity/react-i18n": "^0.1.6-alpha.0",
-    "@selfcommunity/react-ui": "^0.1.6-alpha.0",
-    "@selfcommunity/types": "^0.1.6-alpha.0",
+    "@selfcommunity/react-core": "^0.1.6-alpha.4",
+    "@selfcommunity/react-i18n": "^0.1.6-alpha.4",
+    "@selfcommunity/react-ui": "^0.1.6-alpha.4",
+    "@selfcommunity/types": "^0.1.6-alpha.4",
     "@types/classnames": "^2.2.11",
     "classnames": "^2.2.6"
   },

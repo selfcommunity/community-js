@@ -1,7 +1,9 @@
 import {useEffect, useMemo, useState} from 'react';
 import {SCTagType} from '@selfcommunity/types';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
-import {SCFeatures, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
+import {useSCPreferences} from '../components/provider/SCPreferencesProvider';
+import {useSCUser} from '../components/provider/SCUserProvider';
+import * as SCFeatures from '../constants/Features';
 
 /**
  :::info
