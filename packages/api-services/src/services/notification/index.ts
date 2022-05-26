@@ -1,213 +1,115 @@
-import client from '../../client';
+import {apiRequest} from '../../utils/apiRequest';
 import Endpoints from '../../constants/Endpoints';
+import {SCBroadcastMessageType, SCNotificationAggregatedType, SCNotificationUnseenCountType} from '@selfcommunity/types';
+import {CustomNotificationParams, SCPaginatedResponse} from '../../types';
 
 export interface NotificationApiClientInterface {
-  listUserNotification(): Promise<any>;
-  markReadNotification(): Promise<any>;
-  getUnseenNotification(): Promise<any>;
-  createCustomNotification(): Promise<any>;
-  listBroadcastMessages(): Promise<any>;
-  listBroadcastMessagesUnseenCount(): Promise<any>;
-  listBroadcastMessagesUndisposedCount(): Promise<any>;
-  markReadBroadcastMessages(): Promise<any>;
-  disposeBroadcastMessages(): Promise<any>;
+  listUserNotification(): Promise<SCNotificationAggregatedType>;
+  markReadNotification(sids: string[]): Promise<any>;
+  getUnseenNotification(): Promise<SCNotificationUnseenCountType>;
+  createCustomNotification(data: CustomNotificationParams): Promise<any>;
+  listBroadcastMessages(): Promise<SCPaginatedResponse<SCBroadcastMessageType>>;
+  listBroadcastMessagesUnseenCount(): Promise<SCNotificationUnseenCountType>;
+  listBroadcastMessagesUndisposedCount(): Promise<SCNotificationUnseenCountType>;
+  markReadBroadcastMessages(banner_ids: number[]): Promise<any>;
+  disposeBroadcastMessages(banner_ids: number[]): Promise<any>;
 }
 
 export class NotificationApiClient {
-  static listUserNotification(): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.UserNotificationList.url({}),
-        method: Endpoints.UserNotificationList.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve results (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve results.');
-        return Promise.reject(error);
-      });
-  }
-  static markReadNotification(): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.UserMarkReadNotification.url({}),
-        method: Endpoints.UserMarkReadNotification.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
+  /**
+   * List all user notifications (in aggregate form) related to the community.
+   */
+  static listUserNotification(): Promise<SCNotificationAggregatedType> {
+    return apiRequest(Endpoints.UserNotificationList.url({}), Endpoints.UserNotificationList.method);
   }
 
-  static getUnseenNotification(): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.UserUnseenNotificationCount.url({}),
-        method: Endpoints.UserUnseenNotificationCount.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve results (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve results.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint marks as read a list of notifications identified by serialization_ids (sids).
+   * @param sids
+   */
+  static markReadNotification(sids: string[]): Promise<any> {
+    return apiRequest(Endpoints.UserMarkReadNotification.url({}), Endpoints.UserMarkReadNotification.method, {sids: sids});
   }
 
-  static createCustomNotification(): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.CreateCustomNotification.url({}),
-        method: Endpoints.CreateCustomNotification.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint retrieves the number of unseen/unread notifications.
+   */
+  static getUnseenNotification(): Promise<SCNotificationUnseenCountType> {
+    return apiRequest(Endpoints.UserUnseenNotificationCount.url({}), Endpoints.UserUnseenNotificationCount.method);
   }
 
-  static listBroadcastMessages(): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.BroadcastMessagesList.url({}),
-        method: Endpoints.BroadcastMessagesList.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve results (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve results.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint generates a custom notification starting from the user. The recipients of the notification can be the user's friends/followers or the user himself (based on recipients_type value). Es. connections -> "user" added an item to the wishlist.
+   * @param data
+   */
+  static createCustomNotification(data: CustomNotificationParams): Promise<any> {
+    return apiRequest(Endpoints.CreateCustomNotification.url({}), Endpoints.CreateCustomNotification.method, data);
   }
 
-  static listBroadcastMessagesUnseenCount(): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.BroadcastMessagesUnseenCount.url({}),
-        method: Endpoints.BroadcastMessagesUnseenCount.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve results  (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve results.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint lists all broadcast messages. Broadcast Message is a feature which allows a specific user to send messages and announcements to a larger group of users at once.
+   */
+  static listBroadcastMessages(): Promise<SCPaginatedResponse<SCBroadcastMessageType>> {
+    return apiRequest(Endpoints.BroadcastMessagesList.url({}), Endpoints.BroadcastMessagesList.method);
   }
-  static listBroadcastMessagesUndisposedCount(): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.BroadcastMessagesUndisposedCount.url({}),
-        method: Endpoints.BroadcastMessagesUndisposedCount.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve results (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve results.');
-        return Promise.reject(error);
-      });
+
+  /**
+   * This endpoint retrieves the total number of broadcast messages not yet seen by the user.
+   */
+  static listBroadcastMessagesUnseenCount(): Promise<SCNotificationUnseenCountType> {
+    return apiRequest(Endpoints.BroadcastMessagesUnseenCount.url({}), Endpoints.BroadcastMessagesUnseenCount.method);
   }
-  static markReadBroadcastMessages(): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.BroadcastMessagesMarkRead.url({}),
-        method: Endpoints.BroadcastMessagesMarkRead.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
+
+  /**
+   * This endpoint retrieves the total number of broadcast messages not yet disposed by the user.
+   */
+  static listBroadcastMessagesUndisposedCount(): Promise<SCNotificationUnseenCountType> {
+    return apiRequest(Endpoints.BroadcastMessagesUndisposedCount.url({}), Endpoints.BroadcastMessagesUndisposedCount.method);
   }
-  static disposeBroadcastMessages(): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.BroadcastMessagesDispose.url({}),
-        method: Endpoints.BroadcastMessagesDispose.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve results  (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve results.');
-        return Promise.reject(error);
-      });
+
+  /**
+   * This endpoint marks as viewed/read a broadcast message for a user.
+   * @param banner_ids
+   */
+  static markReadBroadcastMessages(banner_ids: number[]): Promise<any> {
+    return apiRequest(Endpoints.BroadcastMessagesMarkRead.url({}), Endpoints.BroadcastMessagesMarkRead.method, {banner_ids: banner_ids});
+  }
+
+  /**
+   * This endpoint disposes a broadcast message for a user.
+   * @param banner_ids
+   */
+  static disposeBroadcastMessages(banner_ids: number[]): Promise<any> {
+    return apiRequest(Endpoints.BroadcastMessagesDispose.url({}), Endpoints.BroadcastMessagesDispose.method, {banner_ids: banner_ids});
   }
 }
 
 export default class NotificationService {
-  static async listUserNotification(): Promise<any> {
+  static async listUserNotification(): Promise<SCNotificationAggregatedType> {
     return NotificationApiClient.listUserNotification();
   }
-  static async markReadNotification(): Promise<any> {
-    return NotificationApiClient.markReadNotification();
+  static async markReadNotification(sids: string[]): Promise<any> {
+    return NotificationApiClient.markReadNotification(sids);
   }
-  static async getUnseenNotification(): Promise<any> {
+  static async getUnseenNotification(): Promise<SCNotificationUnseenCountType> {
     return NotificationApiClient.getUnseenNotification();
   }
-  static async createCustomNotification(): Promise<any> {
-    return NotificationApiClient.createCustomNotification();
+  static async createCustomNotification(data: CustomNotificationParams): Promise<any> {
+    return NotificationApiClient.createCustomNotification(data);
   }
-  static async listBroadcastMessages(): Promise<any> {
+  static async listBroadcastMessages(): Promise<SCPaginatedResponse<SCBroadcastMessageType>> {
     return NotificationApiClient.listBroadcastMessages();
   }
-  static async listBroadcastMessagesUnseenCount(): Promise<any> {
+  static async listBroadcastMessagesUnseenCount(): Promise<SCNotificationUnseenCountType> {
     return NotificationApiClient.listBroadcastMessagesUnseenCount();
   }
-  static async listBroadcastMessagesUndisposedCount(): Promise<any> {
+  static async listBroadcastMessagesUndisposedCount(): Promise<SCNotificationUnseenCountType> {
     return NotificationApiClient.listBroadcastMessagesUndisposedCount();
   }
-  static async disposeBroadcastMessages(): Promise<any> {
-    return NotificationApiClient.disposeBroadcastMessages();
+  static async disposeBroadcastMessages(banner_ids: number[]): Promise<any> {
+    return NotificationApiClient.disposeBroadcastMessages(banner_ids);
   }
-  static async markReadBroadcastMessages(): Promise<any> {
-    return NotificationApiClient.markReadBroadcastMessages();
+  static async markReadBroadcastMessages(banner_ids: number[]): Promise<any> {
+    return NotificationApiClient.markReadBroadcastMessages(banner_ids);
   }
 }

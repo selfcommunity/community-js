@@ -55,7 +55,13 @@ import {
   CommentListParams,
   CommentCreateParams,
   IncubatorCreateParams,
-  LoyaltyPrizeParams
+  LoyaltyPrizeParams,
+  ModerateContributionParams,
+  CustomNotificationParams,
+  UserAutocompleteParams,
+  UserScoreParams,
+  UserSearchParams,
+  TagParams
 } from './types';
 
 /**
@@ -153,5 +159,11 @@ export {
   IncubatorCreateParams,
   SSOSignUpParams,
   CommentListParams,
-  LoyaltyPrizeParams
+  LoyaltyPrizeParams,
+  ModerateContributionParams,
+  CustomNotificationParams,
+  UserAutocompleteParams,
+  UserScoreParams,
+  UserSearchParams,
+  TagParams
 };

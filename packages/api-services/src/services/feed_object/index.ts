@@ -45,85 +45,187 @@ export interface FeedObjectApiClientInterface {
 }
 
 export class FeedObjectApiClient {
+  /**
+   * This endpoint retrieves all feed objs
+   * @param type
+   */
   static getAllFeedObjects(type: SCFeedObjectTypologyType): Promise<SCPaginatedResponse<SCFeedObjectType>> {
     return apiRequest(Endpoints.FeedObjectList.url({type}), Endpoints.FeedObjectList.method);
   }
 
+  /**
+   * This endpoint retrieves all uncommented feed objs
+   * @param type
+   */
   static getUncommentedFeedObjects(type: SCFeedObjectTypologyType): Promise<SCPaginatedResponse<SCFeedObjectType>> {
     return apiRequest(Endpoints.FeedObjectsUncommented.url({type}), Endpoints.FeedObjectsUncommented.method);
   }
 
+  /**
+   * This endpoint performs search operation to feed objs
+   * @param type
+   */
   static searchFeedObject(type: SCFeedObjectTypologyType): Promise<SCPaginatedResponse<SCFeedObjectType>> {
     return apiRequest(Endpoints.SearchFeedObject.url({type}), Endpoints.SearchFeedObject.method);
   }
 
+  /**
+   * This endpoint creates a feed obj
+   * @param type
+   */
   static createFeedObject(type: SCFeedObjectTypologyType): Promise<any> {
     return apiRequest(Endpoints.CreateFeedObject.url({type}), Endpoints.CreateFeedObject.method);
   }
 
+  /**
+   * This endpoint retrieves a specific feed obj using ID
+   * @param type
+   * @param id
+   */
   static getSpecificFeedObject(type: SCFeedObjectTypologyType, id: number): Promise<any> {
     return apiRequest(Endpoints.FeedObject.url({type, id}), Endpoints.FeedObject.method);
   }
 
+  /**
+   * This endpoint updates a specific feed obj
+   * @param type
+   * @param id
+   */
   static updateFeedObject(type: SCFeedObjectTypologyType, id: number): Promise<any> {
     return apiRequest(Endpoints.UpdateFeedObject.url({id, type}), Endpoints.UpdateFeedObject.method);
   }
 
+  /**
+   * This endpoint deletes a specific feed obj
+   * @param type
+   * @param id
+   */
   static deleteFeedObject(type: SCFeedObjectTypologyType, id: number): Promise<any> {
     return apiRequest(Endpoints.DeleteFeedObject.url({type, id}), Endpoints.DeleteFeedObject.method);
   }
 
+  /**
+   * This endpoint retrieves all contributors for a specific feed obj
+   * @param type
+   * @param id
+   */
   static feedObjectContributorsList(type: SCFeedObjectTypologyType, id: number): Promise<SCPaginatedResponse<SCUserType>> {
     return apiRequest(Endpoints.FeedObjectContributorsList.url({type, id}), Endpoints.FeedObjectContributorsList.method);
   }
 
+  /**
+   * This endpoint retrieves all shares for a specific feed obj
+   * @param type
+   * @param id
+   */
   static feedObjectSharesList(type: SCFeedObjectTypologyType, id: number): Promise<SCPaginatedResponse<SCFeedObjectType>> {
     return apiRequest(Endpoints.FeedObjectSharesList.url({type, id}), Endpoints.FeedObjectSharesList.method);
   }
 
+  /**
+   * This endpoint retrieves all shares users for a specific feed obj
+   * @param type
+   * @param id
+   */
   static feedObjectUserSharesList(type: SCFeedObjectTypologyType, id: number): Promise<SCPaginatedResponse<SCUserType>> {
     return apiRequest(Endpoints.FeedObjectUserSharesList.url({type, id}), Endpoints.FeedObjectUserSharesList.method);
   }
 
+  /**
+   *
+   * @param type
+   * @param id
+   */
   static restoreFeedObject(type: SCFeedObjectTypologyType, id: number): Promise<any> {
     return apiRequest(Endpoints.RestoreFeedObject.url({type, id}), Endpoints.RestoreFeedObject.method);
   }
 
+  /**
+   * This endpoint restores a feed obj
+   * @param type
+   * @param id
+   */
   static relatedFeedObjects(type: SCFeedObjectTypologyType, id: number): Promise<SCPaginatedResponse<SCFeedObjectType>> {
     return apiRequest(Endpoints.RelatedFeedObjects.url({type, id}), Endpoints.RelatedFeedObjects.method);
   }
 
+  /**
+   * This endpoint upvotes a specific feed obj
+   * @param type
+   * @param id
+   */
   static voteFeedObject(type: SCFeedObjectTypologyType, id: number): Promise<any> {
     return apiRequest(Endpoints.Vote.url({type, id}), Endpoints.Vote.method);
   }
 
+  /**
+   * This endpoint retrieves all votes for a specific feed obj
+   * @param type
+   * @param id
+   */
   static feedObjectVotes(type: SCFeedObjectTypologyType, id: number): Promise<SCPaginatedResponse<SCVoteType>> {
     return apiRequest(Endpoints.VotesList.url({type, id}), Endpoints.VotesList.method);
   }
 
+  /**
+   * This endpoint upvotes a specific poll choice in a feed obj
+   * @param type It can be only "discussion" or "post".
+   * @param id
+   * @param choice
+   */
   static feedObjectPollVote(type: SCFeedObjectTypologyType, id: number, choice: number): Promise<any> {
     return apiRequest(Endpoints.PollVote.url({type, id}), Endpoints.PollVote.method, {choice: choice});
   }
 
+  /**
+   * This endpoint retrieves all poll votes for a specific feed obj
+   * @param type It can be only "discussion" or "post".
+   * @param id
+   */
   static feedObjectPollVotesList(type: SCFeedObjectTypologyType, id: number): Promise<SCPaginatedResponse<SCPollVoteType>> {
     return apiRequest(Endpoints.PollVotesList.url({type, id}), Endpoints.PollVotesList.method);
   }
 
+  /**
+   * This endpoint follows a feed obj
+   * @param type
+   * @param id
+   */
   static followFeedObject(type: SCFeedObjectTypologyType, id: number): Promise<any> {
     return apiRequest(Endpoints.FollowContribution.url({id}), Endpoints.FollowContribution.method);
   }
 
+  /**
+   * This endpoint retrieves all feed objs followed by the authenticated user
+   * @param type
+   */
   static feedObjectFollowingList(type: SCFeedObjectTypologyType): Promise<SCPaginatedResponse<SCFeedObjectType>> {
     return apiRequest(Endpoints.FeedObjectFollowingList.url({type}), Endpoints.FeedObjectFollowingList.method);
   }
 
+  /**
+   * This endpoint returns following = true if the feed obj (identified in path) is followed by the authenticated user
+   * @param type
+   * @param id
+   */
   static checkIfFollowingFeedObject(type: SCFeedObjectTypologyType, id: number): Promise<SCPaginatedResponse<SCFeedObjectFollowingStatusType>> {
     return apiRequest(Endpoints.CheckIfFollowingFeedObject.url({type, id}), Endpoints.CheckIfFollowingFeedObject.method);
   }
+
+  /**
+   * This endpoint suspends the notifications for the selected feed obj
+   * @param type
+   * @param id
+   */
   static suspendFeedObject(type: SCFeedObjectTypologyType, id: number): Promise<any> {
     return apiRequest(Endpoints.UserSuspendContributionNotification.url({type, id}), Endpoints.UserSuspendContributionNotification.method);
   }
 
+  /**
+   * This endpoint returns suspended = true if the notifications for the feed obj (identified in path) is suspended by the authenticated user
+   * @param type
+   * @param id
+   */
   static checkIfSuspendedFeedObject(type: SCFeedObjectTypologyType, id: number): Promise<SCPaginatedResponse<SCFeedObjectSuspendedStatusType>> {
     return apiRequest(
       Endpoints.UserCheckContributionNotificationSuspended.url({type, id}),
@@ -131,25 +233,56 @@ export class FeedObjectApiClient {
     );
   }
 
+  /**
+   * This endpoint retrieves the list of feed obj which notifications are suspended by the authenticated user
+   * @param type
+   */
   static feedObjectSuspendedList(type: SCFeedObjectTypologyType): Promise<SCPaginatedResponse<SCFeedObjectType>> {
     return apiRequest(Endpoints.UserListContributionNotificationSuspended.url({type}), Endpoints.UserListContributionNotificationSuspended.method);
   }
+
+  /**
+   * This endpoint flags a specific feed obj
+   * @param type
+   * @param id
+   * @param flag_type
+   */
   static flagFeedObject(type: SCFeedObjectTypologyType, id: number, flag_type: SCFlagTypeEnum): Promise<any> {
     return apiRequest(Endpoints.Flag.url({type, id}), Endpoints.Flag.method, flag_type);
   }
 
+  /**
+   * Retrieves, if exists, a flag for this contribute created by the authenticated user
+   * @param type
+   * @param id
+   */
   static feedObjectFlagStatus(type: SCFeedObjectTypologyType, id: number): Promise<SCPaginatedResponse<SCFlagType>> {
     return apiRequest(Endpoints.FlagStatus.url({type, id}), Endpoints.FlagStatus.method);
   }
 
+  /**
+   * This endpoint retrieves a list of flags for a specific feed obj
+   * @param type
+   * @param id
+   */
   static feedObjectFlagList(type: SCFeedObjectTypologyType, id: number): Promise<SCPaginatedResponse<SCFlagType>> {
     return apiRequest(Endpoints.FeedObjectFlagList.url({type, id}), Endpoints.FeedObjectFlagList.method);
   }
 
+  /**
+   * This endpoint hides the feed obj for the logged user. The feed obj must be in show state
+   * @param type
+   * @param id
+   */
   static hideFeedObject(type: SCFeedObjectTypologyType, id: number): Promise<any> {
     return apiRequest(Endpoints.HideFeedObject.url({type, id}), Endpoints.HideFeedObject.method);
   }
 
+  /**
+   * This endpoint retrieves if the the feed obj has been hidden by the authenticated user (hidden = true)
+   * @param type
+   * @param id
+   */
   static feedObjectHideStatus(type: SCFeedObjectTypologyType, id: number): Promise<SCPaginatedResponse<SCFeedObjectHideStatusType>> {
     return apiRequest(Endpoints.FeedObjectHideStatus.url({type, id}), Endpoints.FeedObjectHideStatus.method);
   }

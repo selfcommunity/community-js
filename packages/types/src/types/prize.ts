@@ -93,3 +93,10 @@ export enum SCPrizeUserStatusType {
   REFUSED = 1,
   SENT = 2
 }
+
+/**
+ * Interface SCUserLoyaltyPointsType
+ */
+export interface SCUserLoyaltyPointsType {
+  points: number;
+}

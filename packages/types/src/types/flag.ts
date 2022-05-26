@@ -32,3 +32,9 @@ export enum SCFlagTypeEnum {
   POOR = 3,
   OFFTOPIC = 4
 }
+
+export enum SCFlagModerationStatusType {
+  IGNORED = 'ignored',
+  DELETED = 'deleted',
+  HIDDEN = 'hidden'
+}

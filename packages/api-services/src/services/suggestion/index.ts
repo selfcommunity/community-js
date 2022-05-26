@@ -1,105 +1,59 @@
-import client from '../../client';
+import {apiRequest} from '../../utils/apiRequest';
 import Endpoints from '../../constants/Endpoints';
+import {SCPaginatedResponse} from '../../types';
+import {SCCategoryType, SCFeedObjectType, SCIncubatorType, SCUserType} from '@selfcommunity/types';
 
 export interface SuggestionApiClientInterface {
-  getCategorySuggestion(): Promise<any>;
-  getIncubatorSuggestion(): Promise<any>;
-  getPollSuggestion(): Promise<any>;
-  getUserSuggestion(): Promise<any>;
+  getCategorySuggestion(): Promise<SCPaginatedResponse<SCCategoryType>>;
+  getIncubatorSuggestion(): Promise<SCIncubatorType[]>;
+  getPollSuggestion(): Promise<SCFeedObjectType[]>;
+  getUserSuggestion(): Promise<SCPaginatedResponse<SCUserType>>;
 }
 
 export class SuggestionApiClient {
-  static getCategorySuggestion(): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.CategoriesSuggestion.url({}),
-        method: Endpoints.CategoriesSuggestion.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve categories (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve categories.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint retrieves a list of categories suggested to the current user.
+   */
+  static getCategorySuggestion(): Promise<SCPaginatedResponse<SCCategoryType>> {
+    return apiRequest(Endpoints.CategoriesSuggestion.url({}), Endpoints.CategoriesSuggestion.method);
   }
 
-  static getIncubatorSuggestion(): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.GetIncubatorSuggestion.url({}),
-        method: Endpoints.GetIncubatorSuggestion.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve incubators (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve incubators.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint retrieves a list of suggested incubators.
+   */
+  static getIncubatorSuggestion(): Promise<SCIncubatorType[]> {
+    return apiRequest(Endpoints.GetIncubatorSuggestion.url({}), Endpoints.GetIncubatorSuggestion.method);
   }
 
-  static getPollSuggestion(): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.PollSuggestion.url({}),
-        method: Endpoints.PollSuggestion.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve polls (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve polls.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint retrieves a list of contributes(discussions, posts, statuses) with a related poll.
+   */
+  static getPollSuggestion(): Promise<SCFeedObjectType[]> {
+    return apiRequest(Endpoints.PollSuggestion.url({}), Endpoints.PollSuggestion.method);
   }
 
-  static getUserSuggestion(): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.UserSuggestion.url({}),
-        method: Endpoints.UserSuggestion.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve users (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve users.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint retrieves a list of users suggested to the current user.
+   */
+  static getUserSuggestion(): Promise<SCPaginatedResponse<SCUserType>> {
+    return apiRequest(Endpoints.UserSuggestion.url({}), Endpoints.UserSuggestion.method);
   }
 }
 
 export default class SuggestionService {
-  static async getCategorySuggestion(): Promise<any> {
+  static async getCategorySuggestion(): Promise<SCPaginatedResponse<SCCategoryType>> {
     return SuggestionApiClient.getCategorySuggestion();
   }
 
-  static async getIncubatorSuggestion(): Promise<any> {
+  static async getIncubatorSuggestion(): Promise<SCIncubatorType[]> {
     return SuggestionApiClient.getIncubatorSuggestion();
   }
 
-  static async getPollSuggestion(): Promise<any> {
+  static async getPollSuggestion(): Promise<SCFeedObjectType[]> {
     return SuggestionApiClient.getPollSuggestion();
   }
 
-  static async getUserSuggestion(): Promise<any> {
+  static async getUserSuggestion(): Promise<SCPaginatedResponse<SCUserType>> {
     return SuggestionApiClient.getUserSuggestion();
   }
 }

@@ -1,7 +1,29 @@
 import {SCAuthTokenType} from './auth';
 import {SCBannerType, SCBroadcastMessageBannerType, SCBroadcastMessageType} from './broadcastMessage';
 import {SCCustomAdvPosition, SCCustomAdvType} from './customAdv';
-import {SCUserType, SCUserBlockedSettingsType, SCUserFields, SCUserSettingsType, SCUserStatus} from './user';
+import {
+  SCUserType,
+  SCUserBlockedSettingsType,
+  SCUserFields,
+  SCUserSettingsType,
+  SCUserStatus,
+  SCUserModerationType,
+  SCUserScoreVariation,
+  SCUserScoreType,
+  SCUserReputationType,
+  SCUserAutocompleteType,
+  SCUserCounterType,
+  SCUserChangeEmailType,
+  SCUserAvatarType,
+  SCUserPermissionType,
+  SCUserFollowedStatusType,
+  SCUserFollowerStatusType,
+  SCUserConnectionStatusType,
+  SCUserHiddenStatusType,
+  SCUserHiddenByStatusType,
+  SCUserConnectionRequestType,
+  SCUserEmailTokenType
+} from './user';
 import {SCTagType} from './tag';
 import {SCCategoryType, SCCategoryAudienceType, SCCategoryFollowedStatusType} from './category';
 import {SCEmbedType} from './embed';
@@ -12,7 +34,7 @@ import {SCCommentType, SCCommentTypologyType, SCCommentsOrderBy} from './comment
 import {SCPrivateMessageType, SCPrivateMessageStatusType, SCPrivateMessageFileType, SCMessageFileType} from './privateMessage';
 import {SCIncubatorType, SCIncubatorSubscriptionType} from './incubator';
 import {SCCustomNotificationType} from './customNotification';
-import {SCPrizeType, SCPrizeUserType, SCPrizeUserStatusType} from './prize';
+import {SCPrizeType, SCPrizeUserType, SCPrizeUserStatusType, SCUserLoyaltyPointsType} from './prize';
 import {
   SCFeedUnitType,
   SCFeedUnitActivityType,
@@ -49,11 +71,12 @@ import {
   SCNotificationUserFollowType,
   SCNotificationVoteUpType,
   SCNotificationIncubatorType,
-  SCNotificationTopicType
+  SCNotificationTopicType,
+  SCNotificationUnseenCountType
 } from './notification';
 import {SCWebhookEndpointType, SCWebhookEndpointAttemptType, SCWebhookEndpointSecretType, SCWebhookEventsType} from './webhook';
 import {SCVoteType} from './vote';
-import {SCFlagType, SCFlagTypeEnum} from './flag';
+import {SCFlagType, SCFlagTypeEnum, SCFlagModerationStatusType} from './flag';
 import {SCCustomPageType} from './customPage';
 import {SCDataPortabilityType} from './dataPortability';
 import {SCPreferenceType} from './preference';
@@ -68,7 +91,9 @@ import {
   SCUsersInsightType,
   SCUsersInsightCountersType
 } from './insight';
-
+import {SCFlaggedContributionType, SCContributionType, SCContributionStatus, SCContributeStatusType} from './contribution';
+import {SCPlatformType} from './platform';
+import {SCAvatarType} from './avatar';
 /**
  * Exports all types
  */
@@ -82,6 +107,22 @@ export {
   SCUserSettingsType,
   SCUserStatus,
   SCUserBlockedSettingsType,
+  SCUserModerationType,
+  SCUserScoreVariation,
+  SCUserScoreType,
+  SCUserReputationType,
+  SCUserAutocompleteType,
+  SCUserCounterType,
+  SCUserChangeEmailType,
+  SCUserAvatarType,
+  SCUserPermissionType,
+  SCUserFollowedStatusType,
+  SCUserFollowerStatusType,
+  SCUserConnectionStatusType,
+  SCUserHiddenStatusType,
+  SCUserHiddenByStatusType,
+  SCUserConnectionRequestType,
+  SCUserEmailTokenType,
   SCTagType,
   SCCategoryType,
   SCCategoryAudienceType,
@@ -136,12 +177,14 @@ export {
   SCNotificationVoteUpType,
   SCCustomNotificationType,
   SCNotificationTopicType,
+  SCNotificationUnseenCountType,
   SCIncubatorType,
   SCIncubatorSubscriptionType,
   SCNotificationIncubatorType,
   SCPrizeType,
   SCPrizeUserType,
   SCPrizeUserStatusType,
+  SCUserLoyaltyPointsType,
   SCWebhookEndpointType,
   SCWebhookEndpointAttemptType,
   SCWebhookEndpointSecretType,
@@ -149,6 +192,7 @@ export {
   SCVoteType,
   SCFlagType,
   SCFlagTypeEnum,
+  SCFlagModerationStatusType,
   SCCustomPageType,
   SCDataPortabilityType,
   SCPreferenceType,
@@ -162,5 +206,11 @@ export {
   SCEmbedInsightType,
   SCEmbedInsightCountersType,
   SCUsersInsightType,
-  SCUsersInsightCountersType
+  SCUsersInsightCountersType,
+  SCFlaggedContributionType,
+  SCContributionType,
+  SCContributionStatus,
+  SCContributeStatusType,
+  SCPlatformType,
+  SCAvatarType
 };
