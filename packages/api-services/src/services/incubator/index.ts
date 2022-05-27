@@ -1,11 +1,11 @@
-import {IncubatorCreateParams, SCPaginatedResponse} from '../../types';
+import {IncubatorCreateParams, IncubatorSearchParams, SCPaginatedResponse} from '../../types';
 import {apiRequest} from '../../utils/apiRequest';
 import Endpoints from '../../constants/Endpoints';
 import {SCIncubatorSubscriptionType, SCIncubatorType, SCUserType} from '@selfcommunity/types';
 
 export interface IncubatorApiClientInterface {
-  getAllIncubators(): Promise<SCPaginatedResponse<SCIncubatorType>>;
-  searchIncubators(): Promise<SCPaginatedResponse<SCIncubatorType>>;
+  getAllIncubators(params?: IncubatorSearchParams): Promise<SCPaginatedResponse<SCIncubatorType>>;
+  searchIncubators(params?: IncubatorSearchParams): Promise<SCPaginatedResponse<SCIncubatorType>>;
   getSpecificIncubator(id: number): Promise<SCIncubatorType>;
   createIncubator(data: IncubatorCreateParams): Promise<SCIncubatorType>;
   getIncubatorSubscribers(id: number): Promise<SCPaginatedResponse<SCUserType>>;
@@ -19,16 +19,18 @@ export interface IncubatorApiClientInterface {
 export class IncubatorApiClient {
   /**
    * This endpoint retrieves all incubators.
+   * @param params
    */
-  static getAllIncubators(): Promise<SCPaginatedResponse<SCIncubatorType>> {
-    return apiRequest(Endpoints.GetAllIncubators.url({}), Endpoints.GetAllIncubators.method);
+  static getAllIncubators(params?: IncubatorSearchParams): Promise<SCPaginatedResponse<SCIncubatorType>> {
+    return apiRequest(`${Endpoints.GetAllIncubators.url({})}?${params.toString()}`, Endpoints.GetAllIncubators.method);
   }
 
   /**
    * This endpoint performs search od Incubators
+   * @param params
    */
-  static searchIncubators(): Promise<SCPaginatedResponse<SCIncubatorType>> {
-    return apiRequest(Endpoints.SearchIncubators.url({}), Endpoints.SearchIncubators.method);
+  static searchIncubators(params?: IncubatorSearchParams): Promise<SCPaginatedResponse<SCIncubatorType>> {
+    return apiRequest(`${Endpoints.SearchIncubators.url({})}?${params.toString()}`, Endpoints.SearchIncubators.method);
   }
 
   /**
@@ -73,12 +75,12 @@ export class IncubatorApiClient {
 }
 
 export default class IncubatorService {
-  static async getAllIncubators(): Promise<SCPaginatedResponse<SCIncubatorType>> {
-    return IncubatorApiClient.getAllIncubators();
+  static async getAllIncubators(params?: IncubatorSearchParams): Promise<SCPaginatedResponse<SCIncubatorType>> {
+    return IncubatorApiClient.getAllIncubators(params);
   }
 
-  static async searchIncubators(): Promise<SCPaginatedResponse<SCIncubatorType>> {
-    return IncubatorApiClient.searchIncubators();
+  static async searchIncubators(params?: IncubatorSearchParams): Promise<SCPaginatedResponse<SCIncubatorType>> {
+    return IncubatorApiClient.searchIncubators(params);
   }
 
   static async getSpecificIncubator(id: number): Promise<SCIncubatorType> {

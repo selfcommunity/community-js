@@ -40,7 +40,7 @@ import {
   SCPrivateMessageUploadThumbnailType,
   SCPrivateMessageUploadMediaChunkType
 } from './privateMessage';
-import {SCIncubatorType, SCIncubatorSubscriptionType} from './incubator';
+import {SCIncubatorType, SCIncubatorSubscriptionType, SCIncubatorStatusType} from './incubator';
 import {SCCustomNotificationType} from './customNotification';
 import {SCPrizeType, SCPrizeUserType, SCPrizeUserStatusType, SCUserLoyaltyPointsType} from './prize';
 import {
@@ -192,6 +192,7 @@ export {
   SCNotificationUnseenCountType,
   SCIncubatorType,
   SCIncubatorSubscriptionType,
+  SCIncubatorStatusType,
   SCNotificationIncubatorType,
   SCPrizeType,
   SCPrizeUserType,

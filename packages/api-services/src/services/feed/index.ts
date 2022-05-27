@@ -1,11 +1,11 @@
 import {apiRequest} from '../../utils/apiRequest';
 import Endpoints from '../../constants/Endpoints';
 import {SCFeedUnitType, SCFeedUnseenCountType} from '@selfcommunity/types';
-import {SCPaginatedResponse} from '../../types';
+import {FeedParams, SCPaginatedResponse} from '../../types';
 
 export interface FeedApiClientInterface {
-  getMainFeed(): Promise<SCPaginatedResponse<SCFeedUnitType>>;
-  getExploreFeed(): Promise<SCPaginatedResponse<SCFeedUnitType>>;
+  getMainFeed(params?: FeedParams): Promise<SCPaginatedResponse<SCFeedUnitType>>;
+  getExploreFeed(params?: FeedParams): Promise<SCPaginatedResponse<SCFeedUnitType>>;
   getMainFeedUnseenCount(): Promise<SCFeedUnseenCountType>;
   markReadASpecificFeedObj(object: number[]): Promise<any>;
   likeFeedObjs(object: number[]): Promise<SCPaginatedResponse<SCFeedUnitType>>;
@@ -17,16 +17,18 @@ export interface FeedApiClientInterface {
 export class FeedApiClient {
   /**
    * This endpoint retrieves the main (home) feed.
+   * @param params
    */
-  static getMainFeed(): Promise<SCPaginatedResponse<SCFeedUnitType>> {
-    return apiRequest(Endpoints.MainFeed.url({}), Endpoints.MainFeed.method);
+  static getMainFeed(params?: FeedParams): Promise<SCPaginatedResponse<SCFeedUnitType>> {
+    return apiRequest(`${Endpoints.MainFeed.url({})}?${params.toString()}`, Endpoints.MainFeed.method);
   }
 
   /**
    * This endpoint retrieves the explore feed. This endpoint can be disabled by setting explore_stream_enabled community option to false.
+   * @param params
    */
-  static getExploreFeed(): Promise<SCPaginatedResponse<SCFeedUnitType>> {
-    return apiRequest(Endpoints.ExploreFeed.url({}), Endpoints.ExploreFeed.method);
+  static getExploreFeed(params?: FeedParams): Promise<SCPaginatedResponse<SCFeedUnitType>> {
+    return apiRequest(`${Endpoints.ExploreFeed.url({})}?${params.toString()}`, Endpoints.ExploreFeed.method);
   }
 
   /**
@@ -52,11 +54,11 @@ export class FeedApiClient {
 }
 
 export default class FeedService {
-  static async getMainFeed(): Promise<SCPaginatedResponse<SCFeedUnitType>> {
-    return FeedApiClient.getMainFeed();
+  static async getMainFeed(params?: FeedParams): Promise<SCPaginatedResponse<SCFeedUnitType>> {
+    return FeedApiClient.getMainFeed(params);
   }
-  static async getExploreFeed(): Promise<SCPaginatedResponse<SCFeedUnitType>> {
-    return FeedApiClient.getExploreFeed();
+  static async getExploreFeed(params?: FeedParams): Promise<SCPaginatedResponse<SCFeedUnitType>> {
+    return FeedApiClient.getExploreFeed(params);
   }
 
   static async getMainFeedUnseenCount(): Promise<SCFeedUnseenCountType> {

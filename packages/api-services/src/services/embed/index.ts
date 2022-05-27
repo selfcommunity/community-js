@@ -1,15 +1,15 @@
-import {SCPaginatedResponse} from '../../types';
+import {BaseGetParams, EmbedSearchParams, EmbedUpdateParams, SCPaginatedResponse} from '../../types';
 import {apiRequest} from '../../utils/apiRequest';
 import Endpoints from '../../constants/Endpoints';
 import {SCEmbedType, SCFeedUnitType} from '@selfcommunity/types';
 
 export interface EmbedApiClientInterface {
-  getAllEmbeds(): Promise<SCPaginatedResponse<SCEmbedType>>;
-  createEmbed(): Promise<SCEmbedType>;
-  searchEmbed(): Promise<SCPaginatedResponse<SCEmbedType>>;
+  getAllEmbeds(params?: BaseGetParams): Promise<SCPaginatedResponse<SCEmbedType>>;
+  createEmbed(data: SCEmbedType): Promise<SCEmbedType>;
+  searchEmbed(params?: EmbedSearchParams): Promise<SCPaginatedResponse<SCEmbedType>>;
   getSpecificEmbed(id: number): Promise<SCEmbedType>;
-  updateASpecificEmbed(id: number): Promise<SCEmbedType>;
-  patchASpecificEmbed(id: number): Promise<SCEmbedType>;
+  updateASpecificEmbed(id: number, data?: EmbedUpdateParams): Promise<SCEmbedType>;
+  patchASpecificEmbed(id: number, data?: EmbedUpdateParams): Promise<SCEmbedType>;
   getEmbedFeed(): Promise<SCPaginatedResponse<SCFeedUnitType>>;
   getSpecificEmbedFeed(id: number): Promise<SCPaginatedResponse<SCFeedUnitType>>;
 }
@@ -20,23 +20,26 @@ export interface EmbedApiClientInterface {
 export class EmbedApiClient {
   /**
    * This endpoint retrieves all embeds.
+   * @param params
    */
-  static getAllEmbeds(): Promise<SCPaginatedResponse<SCEmbedType>> {
-    return apiRequest(Endpoints.EmbedList.url({}), Endpoints.EmbedList.method);
+  static getAllEmbeds(params?: BaseGetParams): Promise<SCPaginatedResponse<SCEmbedType>> {
+    return apiRequest(`${Endpoints.EmbedList.url({})}?${params.toString()}`, Endpoints.EmbedList.method);
   }
 
   /**
    * This endpoint creates an embed.
+   * @param data
    */
-  static createEmbed(): Promise<SCEmbedType> {
-    return apiRequest(Endpoints.EmbedCreate.url({}), Endpoints.EmbedCreate.method);
+  static createEmbed(data: SCEmbedType): Promise<SCEmbedType> {
+    return apiRequest(Endpoints.EmbedCreate.url({}), Endpoints.EmbedCreate.method, data);
   }
 
   /**
    * This endpoint performs embed search.
+   * @param params
    */
-  static searchEmbed(): Promise<SCPaginatedResponse<SCEmbedType>> {
-    return apiRequest(Endpoints.EmbedSearch.url({}), Endpoints.EmbedSearch.method);
+  static searchEmbed(params?: EmbedSearchParams): Promise<SCPaginatedResponse<SCEmbedType>> {
+    return apiRequest(`${Endpoints.EmbedSearch.url({})}?${params.toString()}`, Endpoints.EmbedSearch.method);
   }
 
   /**
@@ -50,17 +53,19 @@ export class EmbedApiClient {
   /**
    * This endpoint updates a specific embed.
    * @param id
+   * @param data
    */
-  static updateASpecificEmbed(id: number): Promise<SCEmbedType> {
-    return apiRequest(Endpoints.UpdateEmbed.url({id}), Endpoints.UpdateEmbed.method);
+  static updateASpecificEmbed(id: number, data?: EmbedUpdateParams): Promise<SCEmbedType> {
+    return apiRequest(Endpoints.UpdateEmbed.url({id}), Endpoints.UpdateEmbed.method, data);
   }
 
   /**
    * This endpoint patches a specific embed.
    * @param id
+   * @param data
    */
-  static patchASpecificEmbed(id: number): Promise<SCEmbedType> {
-    return apiRequest(Endpoints.PatchEmbed.url({id}), Endpoints.PatchEmbed.method);
+  static patchASpecificEmbed(id: number, data?: EmbedUpdateParams): Promise<SCEmbedType> {
+    return apiRequest(Endpoints.PatchEmbed.url({id}), Endpoints.PatchEmbed.method, data);
   }
 
   /**
@@ -80,28 +85,28 @@ export class EmbedApiClient {
 }
 
 export default class EmbedService {
-  static async getAllEmbeds(): Promise<SCPaginatedResponse<SCEmbedType>> {
-    return EmbedApiClient.getAllEmbeds();
+  static async getAllEmbeds(params?: BaseGetParams): Promise<SCPaginatedResponse<SCEmbedType>> {
+    return EmbedApiClient.getAllEmbeds(params);
   }
 
-  static async searchEmbed(): Promise<SCPaginatedResponse<SCEmbedType>> {
-    return EmbedApiClient.searchEmbed();
+  static async searchEmbed(params?: EmbedSearchParams): Promise<SCPaginatedResponse<SCEmbedType>> {
+    return EmbedApiClient.searchEmbed(params);
   }
 
-  static async createEmbed(): Promise<SCEmbedType> {
-    return EmbedApiClient.createEmbed();
+  static async createEmbed(data: SCEmbedType): Promise<SCEmbedType> {
+    return EmbedApiClient.createEmbed(data);
   }
 
   static async getSpecificEmbed(id: number): Promise<SCEmbedType> {
     return EmbedApiClient.getSpecificEmbed(id);
   }
 
-  static async updateASpecificEmbed(id: number): Promise<SCEmbedType> {
-    return EmbedApiClient.updateASpecificEmbed(id);
+  static async updateASpecificEmbed(id: number, data?: EmbedUpdateParams): Promise<SCEmbedType> {
+    return EmbedApiClient.updateASpecificEmbed(id, data);
   }
 
-  static async patchASpecificEmbed(id: number): Promise<SCEmbedType> {
-    return EmbedApiClient.patchASpecificEmbed(id);
+  static async patchASpecificEmbed(id: number, data?: EmbedUpdateParams): Promise<SCEmbedType> {
+    return EmbedApiClient.patchASpecificEmbed(id, data);
   }
 
   static async getEmbedFeed(): Promise<SCPaginatedResponse<SCFeedUnitType>> {

@@ -1,19 +1,9 @@
 /**
  * UserAutocompleteParams interface.
  */
-export interface UserAutocompleteParams {
-  /**
-   * Number of results to return per page.
-   */
-  limit?: number;
-  /**
-   * The initial index from which to return the results.
-   */
-  offset?: number;
-  /**
-   * A search term. Search in fields?: username, real_name.
-   */
-  search?: string;
+import {BaseGetParams, BaseSearchParams} from './baseParams';
+
+export interface UserAutocompleteParams extends BaseSearchParams {
   /**
    *	Filter using field username.
    */
@@ -61,15 +51,7 @@ export interface UserScoreParams {
 /**
  * UserSearchParams interface.
  */
-export interface UserSearchParams {
-  /**
-   * Number of results to return per page.
-   */
-  limit?: number;
-  /**
-   * The initial index from which to return the results.
-   */
-  offset?: number;
+export interface UserSearchParams extends BaseGetParams {
   /**
    * A search term. Search in fields: username, real_name. If this parameter is used username & real_name will be ignored.
    */

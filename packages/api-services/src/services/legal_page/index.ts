@@ -1,12 +1,12 @@
 import Endpoints from '../../constants/Endpoints';
-import {SCPaginatedResponse} from '../../types';
+import {LegalPageFilterParams, SCPaginatedResponse} from '../../types';
 import {apiRequest} from '../../utils/apiRequest';
 import {SCLegalPageAckType, SCLegalPageType} from '@selfcommunity/types';
 
 export interface LegalPageApiClientInterface {
-  getLegalPages(): Promise<SCPaginatedResponse<SCLegalPageType>>;
+  getLegalPages(params?: LegalPageFilterParams): Promise<SCPaginatedResponse<SCLegalPageType>>;
   getSpecificLegalPage(id: number): Promise<SCLegalPageType>;
-  searchLegalPages(): Promise<SCPaginatedResponse<SCLegalPageType>>;
+  searchLegalPages(params?: LegalPageFilterParams): Promise<SCPaginatedResponse<SCLegalPageType>>;
   ackLegalPage(id: number, accept?: number): Promise<SCPaginatedResponse<SCLegalPageType>>;
   getSpecificUserAck(id: number): Promise<SCLegalPageAckType>;
   userAckList(): Promise<SCLegalPageAckType[]>;
@@ -18,9 +18,10 @@ export interface LegalPageApiClientInterface {
 export class LegalPageApiClient {
   /**
    * This endpoint retrieves all legal pages.
+   * @param params
    */
-  static getLegalPages(): Promise<SCPaginatedResponse<SCLegalPageType>> {
-    return apiRequest(Endpoints.GetLegalPages.url({}), Endpoints.GetLegalPages.method);
+  static getLegalPages(params?: LegalPageFilterParams): Promise<SCPaginatedResponse<SCLegalPageType>> {
+    return apiRequest(`${Endpoints.GetLegalPages.url({})}?${params.toString()}`, Endpoints.GetLegalPages.method);
   }
   /**
    * This endpoint retrieves a specific legal page.
@@ -31,9 +32,10 @@ export class LegalPageApiClient {
 
   /**
    * This endpoint performs search of a Legal Page.
+   * @param params
    */
-  static searchLegalPages(): Promise<SCPaginatedResponse<SCLegalPageType>> {
-    return apiRequest(Endpoints.SearchLegalPages.url({}), Endpoints.SearchLegalPages.method);
+  static searchLegalPages(params?: LegalPageFilterParams): Promise<SCPaginatedResponse<SCLegalPageType>> {
+    return apiRequest(`${Endpoints.SearchLegalPages.url({})}?${params.toString()}`, Endpoints.SearchLegalPages.method);
   }
 
   /**
@@ -62,16 +64,16 @@ export class LegalPageApiClient {
 }
 
 export default class LegalPageService {
-  static async getLegalPages(): Promise<SCPaginatedResponse<SCLegalPageType>> {
-    return LegalPageApiClient.getLegalPages();
+  static async getLegalPages(params?: LegalPageFilterParams): Promise<SCPaginatedResponse<SCLegalPageType>> {
+    return LegalPageApiClient.getLegalPages(params);
   }
 
   static async getSpecificLegalPage(id: number): Promise<SCLegalPageType> {
     return LegalPageApiClient.getSpecificLegalPage(id);
   }
 
-  static async searchLegalPages(): Promise<SCPaginatedResponse<SCLegalPageType>> {
-    return LegalPageApiClient.searchLegalPages();
+  static async searchLegalPages(params?: LegalPageFilterParams): Promise<SCPaginatedResponse<SCLegalPageType>> {
+    return LegalPageApiClient.searchLegalPages(params);
   }
 
   static async ackLegalPage(id: number, accept?: number): Promise<SCPaginatedResponse<SCLegalPageType>> {

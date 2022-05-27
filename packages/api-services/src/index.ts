@@ -55,6 +55,7 @@ import {
   CommentListParams,
   CommentCreateParams,
   IncubatorCreateParams,
+  IncubatorSearchParams,
   LoyaltyPrizeParams,
   ModerateContributionParams,
   CustomNotificationParams,
@@ -72,7 +73,20 @@ import {
   MessageMediaUploadParams,
   MessageThumbnailUploadParams,
   MessageChunkUploadDoneParams,
-  MessageMediaChunksParams
+  MessageMediaChunksParams,
+  CategoryParams,
+  CustomAdvParams,
+  CustomPageParams,
+  CustomPageSearchParams,
+  EmbedUpdateParams,
+  EmbedSearchParams,
+  BaseGetParams,
+  BaseSearchParams,
+  FeedObjGetParams,
+  FeedObjCreateParams,
+  FeedObjectPollVotesSearch,
+  FeedParams,
+  LegalPageFilterParams
 } from './types';
 
 /**
@@ -168,6 +182,7 @@ export {
   WebhookEventsType,
   CommentCreateParams,
   IncubatorCreateParams,
+  IncubatorSearchParams,
   SSOSignUpParams,
   CommentListParams,
   LoyaltyPrizeParams,
@@ -187,5 +202,18 @@ export {
   MessageMediaUploadParams,
   MessageThumbnailUploadParams,
   MessageChunkUploadDoneParams,
-  MessageMediaChunksParams
+  MessageMediaChunksParams,
+  CategoryParams,
+  CustomAdvParams,
+  CustomPageParams,
+  CustomPageSearchParams,
+  EmbedUpdateParams,
+  EmbedSearchParams,
+  BaseGetParams,
+  BaseSearchParams,
+  FeedObjGetParams,
+  FeedObjCreateParams,
+  FeedObjectPollVotesSearch,
+  FeedParams,
+  LegalPageFilterParams
 };

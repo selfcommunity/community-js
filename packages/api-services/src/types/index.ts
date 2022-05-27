@@ -2,7 +2,7 @@ import {SCPaginatedResponse} from './paginatedResponse';
 import {WebhookParamType, WebhookEventsType} from './webhook';
 import {SSOSignUpParams} from './sso';
 import {CommentListParams, CommentCreateParams} from './comment';
-import {IncubatorCreateParams} from './incubator';
+import {IncubatorCreateParams, IncubatorSearchParams} from './incubator';
 import {LoyaltyPrizeParams} from './prize';
 import {ModerateContributionParams} from './moderation';
 import {CustomNotificationParams} from './notification';
@@ -17,6 +17,14 @@ import {
   MessageChunkUploadDoneParams,
   MessageMediaChunksParams
 } from './privateMessage';
+import {CategoryParams} from './category';
+import {CustomAdvParams} from './customAdv';
+import {CustomPageParams, CustomPageSearchParams} from './customPage';
+import {EmbedUpdateParams, EmbedSearchParams} from './embed';
+import {BaseGetParams, BaseSearchParams} from './baseParams';
+import {FeedObjGetParams, FeedObjCreateParams, FeedObjectPollVotesSearch} from './feedObject';
+import {FeedParams} from './feed';
+import {LegalPageFilterParams} from './legalPage';
 
 export {
   SCPaginatedResponse,
@@ -26,6 +34,7 @@ export {
   CommentListParams,
   CommentCreateParams,
   IncubatorCreateParams,
+  IncubatorSearchParams,
   LoyaltyPrizeParams,
   ModerateContributionParams,
   CustomNotificationParams,
@@ -43,5 +52,18 @@ export {
   MessageMediaUploadParams,
   MessageThumbnailUploadParams,
   MessageChunkUploadDoneParams,
-  MessageMediaChunksParams
+  MessageMediaChunksParams,
+  CategoryParams,
+  CustomAdvParams,
+  CustomPageParams,
+  CustomPageSearchParams,
+  EmbedUpdateParams,
+  EmbedSearchParams,
+  BaseGetParams,
+  BaseSearchParams,
+  FeedObjGetParams,
+  FeedObjCreateParams,
+  FeedObjectPollVotesSearch,
+  FeedParams,
+  LegalPageFilterParams
 };

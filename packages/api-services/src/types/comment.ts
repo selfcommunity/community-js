@@ -1,16 +1,9 @@
 import {SCUserType} from '@selfcommunity/types/';
+import {BaseGetParams} from './baseParams';
 /**
  * Interface Comment
  */
-export interface CommentListParams {
-  /**
-   * Number of results to return per page.
-   */
-  limit?: number;
-  /**
-   * The initial index from which to return the results.
-   */
-  offset?: number;
+export interface CommentListParams extends BaseGetParams {
   /**
    * Id of the Discussion, required if both post, status and user parameters are not set
    */

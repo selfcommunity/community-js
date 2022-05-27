@@ -1,25 +1,25 @@
 import Endpoints from '../../constants/Endpoints';
 import {SCCategoryType, SCCategoryAudienceType, SCUserType, SCFeedUnitType, SCCategoryFollowedStatusType} from '@selfcommunity/types';
-import {SCPaginatedResponse} from '../../types';
+import {BaseGetParams, CategoryParams, SCPaginatedResponse} from '../../types';
 import {apiRequest} from '../../utils/apiRequest';
 
 export interface CategoryApiClientInterface {
-  getAllCategories(): Promise<SCPaginatedResponse<SCCategoryType>>;
-  searchCategory(): Promise<SCPaginatedResponse<SCCategoryType>>;
-  createCategory(): Promise<SCCategoryType>;
+  getAllCategories(params?: CategoryParams): Promise<SCPaginatedResponse<SCCategoryType>>;
+  searchCategory(params?: CategoryParams): Promise<SCPaginatedResponse<SCCategoryType>>;
+  createCategory(data: SCCategoryType): Promise<SCCategoryType>;
   getSpecificCategory(id: number): Promise<SCCategoryType>;
-  updateASpecificCategory(id: number): Promise<SCCategoryType>;
-  patchASpecificCategory(id: number): Promise<SCCategoryType>;
+  updateASpecificCategory(id: number, data: SCCategoryType): Promise<SCCategoryType>;
+  patchASpecificCategory(id: number, data: SCCategoryType): Promise<SCCategoryType>;
   deleteASpecificCategory(id: number): Promise<any>;
   getCategoryAudience(id: number): Promise<SCCategoryAudienceType>;
   getCategoryFollowers(id: number): Promise<SCPaginatedResponse<SCUserType>>;
   getCategoryFeed(id: number): Promise<SCPaginatedResponse<SCFeedUnitType>>;
-  getCategoryTrendingFeed(id: number): Promise<SCPaginatedResponse<SCFeedUnitType>>;
+  getCategoryTrendingFeed(id: number, params?: BaseGetParams): Promise<SCPaginatedResponse<SCFeedUnitType>>;
   getCategoryTrendingFollowers(id: number): Promise<SCPaginatedResponse<SCUserType>>;
   followCategory(id: number): Promise<any>;
   checkCategoryIsFollowed(id: number): Promise<SCCategoryFollowedStatusType>;
-  getFollowedCategories(): Promise<SCPaginatedResponse<SCCategoryType>>;
-  getPopularCategories(): Promise<SCPaginatedResponse<SCCategoryType>>;
+  getFollowedCategories(params?: CategoryParams): Promise<SCPaginatedResponse<SCCategoryType>>;
+  getPopularCategories(params?: BaseGetParams): Promise<SCPaginatedResponse<SCCategoryType>>;
 }
 
 /**
@@ -28,23 +28,26 @@ export interface CategoryApiClientInterface {
 export class CategoryApiClient {
   /**
    * This endpoint retrieves all categories.
+   * @param params
    */
-  static getAllCategories(): Promise<SCPaginatedResponse<SCCategoryType>> {
-    return apiRequest(Endpoints.CategoryList.url({}), Endpoints.CategoryList.method);
+  static getAllCategories(params?: CategoryParams): Promise<SCPaginatedResponse<SCCategoryType>> {
+    return apiRequest(`${Endpoints.CategoryList.url({})}?${params.toString()}`, Endpoints.CategoryList.method);
   }
 
   /**
    * This endpoint performs category search.
+   * @param params
    */
-  static searchCategory(): Promise<SCPaginatedResponse<SCCategoryType>> {
-    return apiRequest(Endpoints.SearchCategory.url({}), Endpoints.SearchCategory.method);
+  static searchCategory(params?: CategoryParams): Promise<SCPaginatedResponse<SCCategoryType>> {
+    return apiRequest(`${Endpoints.SearchCategory.url({})}?${params.toString()}`, Endpoints.SearchCategory.method);
   }
 
   /**
    * This endpoint creates a category.
+   * @param data
    */
-  static createCategory(): Promise<SCCategoryType> {
-    return apiRequest(Endpoints.CreateCategory.url({}), Endpoints.CreateCategory.method);
+  static createCategory(data: SCCategoryType): Promise<SCCategoryType> {
+    return apiRequest(Endpoints.CreateCategory.url({}), Endpoints.CreateCategory.method, data);
   }
 
   /**
@@ -58,17 +61,19 @@ export class CategoryApiClient {
   /**
    * This endpoint updates a specific category.
    * @param id
+   * @param data
    */
-  static updateASpecificCategory(id: number): Promise<SCCategoryType> {
-    return apiRequest(Endpoints.UpdateCategory.url({id}), Endpoints.UpdateCategory.method);
+  static updateASpecificCategory(id: number, data: SCCategoryType): Promise<SCCategoryType> {
+    return apiRequest(Endpoints.UpdateCategory.url({id}), Endpoints.UpdateCategory.method, data);
   }
 
   /**
    * This endpoint patches a specific category.
    * @param id
+   * @param data
    */
-  static patchASpecificCategory(id: number): Promise<SCCategoryType> {
-    return apiRequest(Endpoints.PatchCategory.url({id}), Endpoints.PatchCategory.method);
+  static patchASpecificCategory(id: number, data: SCCategoryType): Promise<SCCategoryType> {
+    return apiRequest(Endpoints.PatchCategory.url({id}), Endpoints.PatchCategory.method, data);
   }
 
   /**
@@ -106,9 +111,10 @@ export class CategoryApiClient {
   /**
    * This endpoint retrieves the category trending feed.
    * @param id
+   * @param params
    */
-  static getCategoryTrendingFeed(id: number): Promise<SCPaginatedResponse<SCFeedUnitType>> {
-    return apiRequest(Endpoints.CategoryTrendingFeed.url({id}), Endpoints.CategoryTrendingFeed.method);
+  static getCategoryTrendingFeed(id: number, params?: BaseGetParams): Promise<SCPaginatedResponse<SCFeedUnitType>> {
+    return apiRequest(`${Endpoints.CategoryTrendingFeed.url({id})}?${params.toString()}`, Endpoints.CategoryTrendingFeed.method);
   }
 
   /**
@@ -137,42 +143,44 @@ export class CategoryApiClient {
 
   /**
    * This endpoint retrieves all followed categories by the user.
+   * @param params
    */
-  static getFollowedCategories(): Promise<SCPaginatedResponse<SCCategoryType>> {
-    return apiRequest(Endpoints.CategoriesFollowed.url({}), Endpoints.CategoriesFollowed.method);
+  static getFollowedCategories(params?: CategoryParams): Promise<SCPaginatedResponse<SCCategoryType>> {
+    return apiRequest(`${Endpoints.CategoriesFollowed.url({})}?${params.toString()}`, Endpoints.CategoriesFollowed.method);
   }
 
   /**
    * This endpoint retrieves all categories ordered by the number of followers (in descending order).
+   * @param params
    */
-  static getPopularCategories(): Promise<SCPaginatedResponse<SCCategoryType>> {
-    return apiRequest(Endpoints.PopularCategories.url({}), Endpoints.PopularCategories.method);
+  static getPopularCategories(params?: BaseGetParams): Promise<SCPaginatedResponse<SCCategoryType>> {
+    return apiRequest(`${Endpoints.PopularCategories.url({})}?${params.toString()}`, Endpoints.PopularCategories.method);
   }
 }
 
 export default class CategoryService {
-  static async getAllCategories(): Promise<SCPaginatedResponse<SCCategoryType>> {
-    return CategoryApiClient.getAllCategories();
+  static async getAllCategories(params?: CategoryParams): Promise<SCPaginatedResponse<SCCategoryType>> {
+    return CategoryApiClient.getAllCategories(params);
   }
 
-  static async searchCategory(): Promise<SCPaginatedResponse<SCCategoryType>> {
-    return CategoryApiClient.searchCategory();
+  static async searchCategory(params?: CategoryParams): Promise<SCPaginatedResponse<SCCategoryType>> {
+    return CategoryApiClient.searchCategory(params);
   }
 
-  static async createCategory(): Promise<SCCategoryType> {
-    return CategoryApiClient.createCategory();
+  static async createCategory(data: SCCategoryType): Promise<SCCategoryType> {
+    return CategoryApiClient.createCategory(data);
   }
 
   static async getSpecificCategory(id: number): Promise<SCCategoryType> {
     return CategoryApiClient.getSpecificCategory(id);
   }
 
-  static async updateASpecificCategory(id: number): Promise<SCCategoryType> {
-    return CategoryApiClient.updateASpecificCategory(id);
+  static async updateASpecificCategory(id: number, data: SCCategoryType): Promise<SCCategoryType> {
+    return CategoryApiClient.updateASpecificCategory(id, data);
   }
 
-  static async patchASpecificCategory(id: number): Promise<SCCategoryType> {
-    return CategoryApiClient.patchASpecificCategory(id);
+  static async patchASpecificCategory(id: number, data: SCCategoryType): Promise<SCCategoryType> {
+    return CategoryApiClient.patchASpecificCategory(id, data);
   }
 
   static async deleteASpecificCategory(id: number): Promise<any> {
@@ -191,8 +199,8 @@ export default class CategoryService {
     return CategoryApiClient.getCategoryFeed(id);
   }
 
-  static async getCategoryTrendingFeed(id: number): Promise<SCPaginatedResponse<SCFeedUnitType>> {
-    return CategoryApiClient.getCategoryTrendingFeed(id);
+  static async getCategoryTrendingFeed(id: number, params?: BaseGetParams): Promise<SCPaginatedResponse<SCFeedUnitType>> {
+    return CategoryApiClient.getCategoryTrendingFeed(id, params);
   }
 
   static async getCategoryTrendingFollowers(id: number): Promise<SCPaginatedResponse<SCUserType>> {
@@ -207,11 +215,11 @@ export default class CategoryService {
     return CategoryApiClient.checkCategoryIsFollowed(id);
   }
 
-  static async getFollowedCategories(): Promise<SCPaginatedResponse<SCCategoryType>> {
-    return CategoryApiClient.getFollowedCategories();
+  static async getFollowedCategories(params?: CategoryParams): Promise<SCPaginatedResponse<SCCategoryType>> {
+    return CategoryApiClient.getFollowedCategories(params);
   }
 
-  static async getPopularCategories(): Promise<SCPaginatedResponse<SCCategoryType>> {
-    return CategoryApiClient.getPopularCategories();
+  static async getPopularCategories(params?: BaseGetParams): Promise<SCPaginatedResponse<SCCategoryType>> {
+    return CategoryApiClient.getPopularCategories(params);
   }
 }

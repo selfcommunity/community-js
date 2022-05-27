@@ -61,6 +61,20 @@ export interface SCIncubatorType {
   subscribed: boolean;
 }
 
+/**
+ * SCIncubatorSubscriptionType inerface
+ */
 export interface SCIncubatorSubscriptionType {
   subscribed: boolean;
+}
+
+/**
+ * SCIncubatorStatusType enum
+ */
+
+export enum SCIncubatorStatusType {
+  PENDING = 0,
+  PROPOSAL = 1,
+  APPROVED = 2,
+  IGNORED = 3
 }

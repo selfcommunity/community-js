@@ -1,12 +1,12 @@
 import Endpoints from '../../constants/Endpoints';
-import {SCPaginatedResponse} from '../../types';
-import {SCCustomPageType} from '@selfcommunity/types/src/types';
+import {CustomPageParams, CustomPageSearchParams, SCPaginatedResponse} from '../../types';
+import {SCCustomPageType} from '@selfcommunity/types';
 import {apiRequest} from '../../utils/apiRequest';
 
 export interface CustomPageApiClientInterface {
   getASpecificCustomPage(id: number): Promise<SCCustomPageType>;
-  getAllCustomPages(): Promise<SCPaginatedResponse<SCCustomPageType>>;
-  searchCustomPages(): Promise<SCPaginatedResponse<SCCustomPageType>>;
+  getAllCustomPages(params?: CustomPageParams): Promise<SCPaginatedResponse<SCCustomPageType>>;
+  searchCustomPages(params?: CustomPageSearchParams): Promise<SCPaginatedResponse<SCCustomPageType>>;
 }
 /**
  * Contains all the endpoints needed to manage custom pages.
@@ -23,16 +23,18 @@ export class CustomPageApiClient {
 
   /**
    * This endpoint retrieves all custom pages.
+   * @param params
    */
-  static getAllCustomPages(): Promise<SCPaginatedResponse<SCCustomPageType>> {
-    return apiRequest(Endpoints.GetCustomPages.url({}), Endpoints.GetCustomPages.method);
+  static getAllCustomPages(params?: CustomPageParams): Promise<SCPaginatedResponse<SCCustomPageType>> {
+    return apiRequest(`${Endpoints.GetCustomPages.url({})}?${params.toString()}`, Endpoints.GetCustomPages.method);
   }
 
   /**
    * This endpoint performs search of a Custom Page
+   * @param params
    */
-  static searchCustomPages(): Promise<SCPaginatedResponse<SCCustomPageType>> {
-    return apiRequest(Endpoints.CustomPageSearch.url({}), Endpoints.CustomPageSearch.method);
+  static searchCustomPages(params?: CustomPageSearchParams): Promise<SCPaginatedResponse<SCCustomPageType>> {
+    return apiRequest(`${Endpoints.CustomPageSearch.url({})}?${params.toString()}`, Endpoints.CustomPageSearch.method);
   }
 }
 
@@ -40,10 +42,10 @@ export default class CustomPageService {
   static async getASpecificCustomPage(id: number): Promise<SCCustomPageType> {
     return CustomPageApiClient.getASpecificCustomPage(id);
   }
-  static async getAllCustomPages(): Promise<SCPaginatedResponse<SCCustomPageType>> {
-    return CustomPageApiClient.getAllCustomPages();
+  static async getAllCustomPages(params?: CustomPageParams): Promise<SCPaginatedResponse<SCCustomPageType>> {
+    return CustomPageApiClient.getAllCustomPages(params);
   }
-  static async searchCustomPages(): Promise<SCPaginatedResponse<SCCustomPageType>> {
-    return CustomPageApiClient.searchCustomPages();
+  static async searchCustomPages(params?: CustomPageSearchParams): Promise<SCPaginatedResponse<SCCustomPageType>> {
+    return CustomPageApiClient.searchCustomPages(params);
   }
 }
