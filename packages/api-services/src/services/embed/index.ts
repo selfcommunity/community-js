@@ -23,7 +23,8 @@ export class EmbedApiClient {
    * @param params
    */
   static getAllEmbeds(params?: BaseGetParams): Promise<SCPaginatedResponse<SCEmbedType>> {
-    return apiRequest(`${Endpoints.EmbedList.url({})}?${params.toString()}`, Endpoints.EmbedList.method);
+    const p = new URLSearchParams(params);
+    return apiRequest(`${Endpoints.EmbedList.url({})}?${p.toString()}`, Endpoints.EmbedList.method);
   }
 
   /**
@@ -39,7 +40,8 @@ export class EmbedApiClient {
    * @param params
    */
   static searchEmbed(params?: EmbedSearchParams): Promise<SCPaginatedResponse<SCEmbedType>> {
-    return apiRequest(`${Endpoints.EmbedSearch.url({})}?${params.toString()}`, Endpoints.EmbedSearch.method);
+    const p = new URLSearchParams(params);
+    return apiRequest(`${Endpoints.EmbedSearch.url({})}?${p.toString()}`, Endpoints.EmbedSearch.method);
   }
 
   /**

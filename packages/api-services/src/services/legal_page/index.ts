@@ -21,7 +21,8 @@ export class LegalPageApiClient {
    * @param params
    */
   static getLegalPages(params?: LegalPageFilterParams): Promise<SCPaginatedResponse<SCLegalPageType>> {
-    return apiRequest(`${Endpoints.GetLegalPages.url({})}?${params.toString()}`, Endpoints.GetLegalPages.method);
+    const p = new URLSearchParams(params);
+    return apiRequest(`${Endpoints.GetLegalPages.url({})}?${p.toString()}`, Endpoints.GetLegalPages.method);
   }
   /**
    * This endpoint retrieves a specific legal page.
@@ -35,7 +36,8 @@ export class LegalPageApiClient {
    * @param params
    */
   static searchLegalPages(params?: LegalPageFilterParams): Promise<SCPaginatedResponse<SCLegalPageType>> {
-    return apiRequest(`${Endpoints.SearchLegalPages.url({})}?${params.toString()}`, Endpoints.SearchLegalPages.method);
+    const p = new URLSearchParams(params);
+    return apiRequest(`${Endpoints.SearchLegalPages.url({})}?${p.toString()}`, Endpoints.SearchLegalPages.method);
   }
 
   /**

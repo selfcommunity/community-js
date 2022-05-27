@@ -20,7 +20,8 @@ export class FeedApiClient {
    * @param params
    */
   static getMainFeed(params?: FeedParams): Promise<SCPaginatedResponse<SCFeedUnitType>> {
-    return apiRequest(`${Endpoints.MainFeed.url({})}?${params.toString()}`, Endpoints.MainFeed.method);
+    const p = new URLSearchParams(params);
+    return apiRequest(`${Endpoints.MainFeed.url({})}?${p.toString()}`, Endpoints.MainFeed.method);
   }
 
   /**
@@ -28,7 +29,8 @@ export class FeedApiClient {
    * @param params
    */
   static getExploreFeed(params?: FeedParams): Promise<SCPaginatedResponse<SCFeedUnitType>> {
-    return apiRequest(`${Endpoints.ExploreFeed.url({})}?${params.toString()}`, Endpoints.ExploreFeed.method);
+    const p = new URLSearchParams(params);
+    return apiRequest(`${Endpoints.ExploreFeed.url({})}?${p.toString()}`, Endpoints.ExploreFeed.method);
   }
 
   /**

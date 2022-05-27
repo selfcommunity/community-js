@@ -27,7 +27,8 @@ export class CommentApiClient {
    * @param params
    */
   static getAllComments(params: CommentListParams): Promise<SCPaginatedResponse<SCCommentType>> {
-    return apiRequest(`${Endpoints.Comments.url({})}?${params.toString()}`, Endpoints.Comments.method);
+    const p = new URLSearchParams(params);
+    return apiRequest(`${Endpoints.Comments.url({})}?${p.toString()}`, Endpoints.Comments.method);
   }
 
   /**

@@ -99,7 +99,8 @@ export class UserApiClient {
    * @param params
    */
   static userAutocomplete(params: UserAutocompleteParams): Promise<SCPaginatedResponse<SCUserAutocompleteType>> {
-    return apiRequest(`${Endpoints.UserAutocomplete.url()}?${params.toString()})}`, Endpoints.UserAutocomplete.method);
+    const p = new URLSearchParams(params);
+    return apiRequest(`${Endpoints.UserAutocomplete.url()}?${p.toString()})}`, Endpoints.UserAutocomplete.method);
   }
 
   /**
@@ -107,7 +108,8 @@ export class UserApiClient {
    * @param params
    */
   static userSearch(params: UserSearchParams): Promise<SCPaginatedResponse<SCUserType>> {
-    return apiRequest(`${Endpoints.UserSearch.url()}?${params.toString()})}`, Endpoints.UserSearch.method);
+    const p = new URLSearchParams(params);
+    return apiRequest(`${Endpoints.UserSearch.url()}?${p.toString()})}`, Endpoints.UserSearch.method);
   }
 
   /**

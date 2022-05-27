@@ -26,7 +26,8 @@ export class CustomPageApiClient {
    * @param params
    */
   static getAllCustomPages(params?: CustomPageParams): Promise<SCPaginatedResponse<SCCustomPageType>> {
-    return apiRequest(`${Endpoints.GetCustomPages.url({})}?${params.toString()}`, Endpoints.GetCustomPages.method);
+    const p = new URLSearchParams(params);
+    return apiRequest(`${Endpoints.GetCustomPages.url({})}?${p.toString()}`, Endpoints.GetCustomPages.method);
   }
 
   /**
@@ -34,7 +35,8 @@ export class CustomPageApiClient {
    * @param params
    */
   static searchCustomPages(params?: CustomPageSearchParams): Promise<SCPaginatedResponse<SCCustomPageType>> {
-    return apiRequest(`${Endpoints.CustomPageSearch.url({})}?${params.toString()}`, Endpoints.CustomPageSearch.method);
+    const p = new URLSearchParams(params);
+    return apiRequest(`${Endpoints.CustomPageSearch.url({})}?${p.toString()}`, Endpoints.CustomPageSearch.method);
   }
 }
 

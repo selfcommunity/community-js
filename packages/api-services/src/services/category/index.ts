@@ -31,7 +31,8 @@ export class CategoryApiClient {
    * @param params
    */
   static getAllCategories(params?: CategoryParams): Promise<SCPaginatedResponse<SCCategoryType>> {
-    return apiRequest(`${Endpoints.CategoryList.url({})}?${params.toString()}`, Endpoints.CategoryList.method);
+    const p = new URLSearchParams(params);
+    return apiRequest(`${Endpoints.CategoryList.url({})}?${p.toString()}`, Endpoints.CategoryList.method);
   }
 
   /**
@@ -39,7 +40,8 @@ export class CategoryApiClient {
    * @param params
    */
   static searchCategory(params?: CategoryParams): Promise<SCPaginatedResponse<SCCategoryType>> {
-    return apiRequest(`${Endpoints.SearchCategory.url({})}?${params.toString()}`, Endpoints.SearchCategory.method);
+    const p = new URLSearchParams(params);
+    return apiRequest(`${Endpoints.SearchCategory.url({})}?${p.toString()}`, Endpoints.SearchCategory.method);
   }
 
   /**
@@ -114,7 +116,8 @@ export class CategoryApiClient {
    * @param params
    */
   static getCategoryTrendingFeed(id: number, params?: BaseGetParams): Promise<SCPaginatedResponse<SCFeedUnitType>> {
-    return apiRequest(`${Endpoints.CategoryTrendingFeed.url({id})}?${params.toString()}`, Endpoints.CategoryTrendingFeed.method);
+    const p = new URLSearchParams(params);
+    return apiRequest(`${Endpoints.CategoryTrendingFeed.url({id})}?${p.toString()}`, Endpoints.CategoryTrendingFeed.method);
   }
 
   /**
@@ -146,7 +149,8 @@ export class CategoryApiClient {
    * @param params
    */
   static getFollowedCategories(params?: CategoryParams): Promise<SCPaginatedResponse<SCCategoryType>> {
-    return apiRequest(`${Endpoints.CategoriesFollowed.url({})}?${params.toString()}`, Endpoints.CategoriesFollowed.method);
+    const p = new URLSearchParams(params);
+    return apiRequest(`${Endpoints.CategoriesFollowed.url({})}?${p.toString()}`, Endpoints.CategoriesFollowed.method);
   }
 
   /**
@@ -154,7 +158,8 @@ export class CategoryApiClient {
    * @param params
    */
   static getPopularCategories(params?: BaseGetParams): Promise<SCPaginatedResponse<SCCategoryType>> {
-    return apiRequest(`${Endpoints.PopularCategories.url({})}?${params.toString()}`, Endpoints.PopularCategories.method);
+    const p = new URLSearchParams(params);
+    return apiRequest(`${Endpoints.PopularCategories.url({})}?${p.toString()}`, Endpoints.PopularCategories.method);
   }
 }
 

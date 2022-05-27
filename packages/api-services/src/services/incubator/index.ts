@@ -22,7 +22,8 @@ export class IncubatorApiClient {
    * @param params
    */
   static getAllIncubators(params?: IncubatorSearchParams): Promise<SCPaginatedResponse<SCIncubatorType>> {
-    return apiRequest(`${Endpoints.GetAllIncubators.url({})}?${params.toString()}`, Endpoints.GetAllIncubators.method);
+    const p = new URLSearchParams(params);
+    return apiRequest(`${Endpoints.GetAllIncubators.url({})}?${p.toString()}`, Endpoints.GetAllIncubators.method);
   }
 
   /**
@@ -30,7 +31,8 @@ export class IncubatorApiClient {
    * @param params
    */
   static searchIncubators(params?: IncubatorSearchParams): Promise<SCPaginatedResponse<SCIncubatorType>> {
-    return apiRequest(`${Endpoints.SearchIncubators.url({})}?${params.toString()}`, Endpoints.SearchIncubators.method);
+    const p = new URLSearchParams(params);
+    return apiRequest(`${Endpoints.SearchIncubators.url({})}?${p.toString()}`, Endpoints.SearchIncubators.method);
   }
 
   /**

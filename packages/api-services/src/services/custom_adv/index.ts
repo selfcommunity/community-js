@@ -26,7 +26,8 @@ export class CustomAdvApiClient {
    * @param params
    */
   static getAllCustomAdv(params?: CustomAdvParams): Promise<SCPaginatedResponse<SCCustomAdvType>> {
-    return apiRequest(`${Endpoints.CustomAdvList.url({})}?${params.toString()}`, Endpoints.CustomAdvList.method);
+    const p = new URLSearchParams(params);
+    return apiRequest(`${Endpoints.CustomAdvList.url({})}?${p.toString()}`, Endpoints.CustomAdvList.method);
   }
 
   /**
@@ -34,7 +35,8 @@ export class CustomAdvApiClient {
    * @param params
    */
   static searchCustomAdv(params?: CustomAdvParams): Promise<SCPaginatedResponse<SCCustomAdvType>> {
-    return apiRequest(`${Endpoints.CustomAdvSearch.url({})}?${params.toString()}`, Endpoints.CustomAdvSearch.method);
+    const p = new URLSearchParams(params);
+    return apiRequest(`${Endpoints.CustomAdvSearch.url({})}?${p.toString()}`, Endpoints.CustomAdvSearch.method);
   }
 }
 

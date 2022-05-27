@@ -58,7 +58,8 @@ export class FeedObjectApiClient {
    * @param params
    */
   static getAllFeedObjects(type: SCFeedObjectTypologyType, params?: FeedObjGetParams): Promise<SCPaginatedResponse<SCFeedObjectType>> {
-    return apiRequest(`${Endpoints.FeedObjectList.url({type})}?${params.toString()}`, Endpoints.FeedObjectList.method);
+    const p = new URLSearchParams(params);
+    return apiRequest(`${Endpoints.FeedObjectList.url({type})}?${p.toString()}`, Endpoints.FeedObjectList.method);
   }
 
   /**
@@ -67,7 +68,8 @@ export class FeedObjectApiClient {
    * @param params
    */
   static getUncommentedFeedObjects(type: SCFeedObjectTypologyType, params?: BaseGetParams): Promise<SCPaginatedResponse<SCFeedObjectType>> {
-    return apiRequest(`${Endpoints.FeedObjectsUncommented.url({type})}?${params.toString()}`, Endpoints.FeedObjectsUncommented.method);
+    const p = new URLSearchParams(params);
+    return apiRequest(`${Endpoints.FeedObjectsUncommented.url({type})}?${p.toString()}`, Endpoints.FeedObjectsUncommented.method);
   }
 
   /**
@@ -122,7 +124,8 @@ export class FeedObjectApiClient {
    * @param params
    */
   static feedObjectContributorsList(type: SCFeedObjectTypologyType, id: number, params?: BaseGetParams): Promise<SCPaginatedResponse<SCUserType>> {
-    return apiRequest(`${Endpoints.FeedObjectContributorsList.url({type, id})}?${params.toString()}`, Endpoints.FeedObjectContributorsList.method);
+    const p = new URLSearchParams(params);
+    return apiRequest(`${Endpoints.FeedObjectContributorsList.url({type, id})}?${p.toString()}`, Endpoints.FeedObjectContributorsList.method);
   }
 
   /**
@@ -132,7 +135,8 @@ export class FeedObjectApiClient {
    * @param params
    */
   static feedObjectSharesList(type: SCFeedObjectTypologyType, id: number, params?: BaseGetParams): Promise<SCPaginatedResponse<SCFeedObjectType>> {
-    return apiRequest(`${Endpoints.FeedObjectSharesList.url({type, id})}?${params.toString()}`, Endpoints.FeedObjectSharesList.method);
+    const p = new URLSearchParams(params);
+    return apiRequest(`${Endpoints.FeedObjectSharesList.url({type, id})}?${p.toString()}`, Endpoints.FeedObjectSharesList.method);
   }
 
   /**
@@ -142,7 +146,8 @@ export class FeedObjectApiClient {
    * @param params
    */
   static feedObjectUserSharesList(type: SCFeedObjectTypologyType, id: number, params?: BaseGetParams): Promise<SCPaginatedResponse<SCUserType>> {
-    return apiRequest(`${Endpoints.FeedObjectUserSharesList.url({type, id})}?${params.toString()}`, Endpoints.FeedObjectUserSharesList.method);
+    const p = new URLSearchParams(params);
+    return apiRequest(`${Endpoints.FeedObjectUserSharesList.url({type, id})}?${p.toString()}`, Endpoints.FeedObjectUserSharesList.method);
   }
 
   /**
@@ -161,7 +166,8 @@ export class FeedObjectApiClient {
    * @param params
    */
   static relatedFeedObjects(type: SCFeedObjectTypologyType, id: number, params?: BaseGetParams): Promise<SCPaginatedResponse<SCFeedObjectType>> {
-    return apiRequest(`${Endpoints.RelatedFeedObjects.url({type, id})}?${params.toString()}`, Endpoints.RelatedFeedObjects.method);
+    const p = new URLSearchParams(params);
+    return apiRequest(`${Endpoints.RelatedFeedObjects.url({type, id})}?${p.toString()}`, Endpoints.RelatedFeedObjects.method);
   }
 
   /**
@@ -180,7 +186,8 @@ export class FeedObjectApiClient {
    * @param params
    */
   static feedObjectVotes(type: SCFeedObjectTypologyType, id: number, params?: BaseGetParams): Promise<SCPaginatedResponse<SCVoteType>> {
-    return apiRequest(`${Endpoints.VotesList.url({type, id})}?${params.toString()}`, Endpoints.VotesList.method);
+    const p = new URLSearchParams(params);
+    return apiRequest(`${Endpoints.VotesList.url({type, id})}?${p.toString()}`, Endpoints.VotesList.method);
   }
 
   /**
@@ -204,7 +211,8 @@ export class FeedObjectApiClient {
     id: number,
     params?: FeedObjectPollVotesSearch
   ): Promise<SCPaginatedResponse<SCPollVoteType>> {
-    return apiRequest(`${Endpoints.PollVotesList.url({type, id})}?${params.toString()}`, Endpoints.PollVotesList.method);
+    const p = new URLSearchParams(params);
+    return apiRequest(`${Endpoints.PollVotesList.url({type, id})}?${p.toString()}`, Endpoints.PollVotesList.method);
   }
 
   /**
@@ -222,7 +230,8 @@ export class FeedObjectApiClient {
    * @param params
    */
   static feedObjectFollowingList(type: SCFeedObjectTypologyType, params?: BaseGetParams): Promise<SCPaginatedResponse<SCFeedObjectType>> {
-    return apiRequest(`${Endpoints.FeedObjectFollowingList.url({type})}?${params.toString()}`, Endpoints.FeedObjectFollowingList.method);
+    const p = new URLSearchParams(params);
+    return apiRequest(`${Endpoints.FeedObjectFollowingList.url({type})}?${p.toString()}`, Endpoints.FeedObjectFollowingList.method);
   }
 
   /**
@@ -261,8 +270,9 @@ export class FeedObjectApiClient {
    * @param params
    */
   static feedObjectSuspendedList(type: SCFeedObjectTypologyType, params?: BaseGetParams): Promise<SCPaginatedResponse<SCFeedObjectType>> {
+    const p = new URLSearchParams(params);
     return apiRequest(
-      `${Endpoints.UserListContributionNotificationSuspended.url({type})}?${params.toString()}`,
+      `${Endpoints.UserListContributionNotificationSuspended.url({type})}?${p.toString()}`,
       Endpoints.UserListContributionNotificationSuspended.method
     );
   }
