@@ -96,6 +96,11 @@ export default function useSCWebSocket() {
    * @param payload
    */
   const setNotificationCounters = (payload) => {
+    /**
+     * The counter count_interactions includes pure interactions and notification banners,
+     * so unseen_interactions_counter = payload.count_interactions - payload.count_notification_banners
+     * if payload.count_notification_banners exists (was added later in the payload of the message ws)
+     */
     let unseen_interactions_counter = 0;
     if (payload.count_interactions !== undefined) {
       unseen_interactions_counter = payload.count_interactions;
