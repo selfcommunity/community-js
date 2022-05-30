@@ -4,8 +4,8 @@ import {SCPreferenceType} from '@selfcommunity/types/src/types';
 import {SCPaginatedResponse} from '../../types';
 
 export interface PreferenceApiClientInterface {
-  getAllPreferences(): Promise<SCPaginatedResponse<SCPreferenceType>>;
-  searchPreferences(search?: string, section?: string, keys?: string, ordering?: string): Promise<SCPaginatedResponse<SCPreferenceType>>;
+  getAllPreferences(): Promise<SCPaginatedResponse<SCPreferenceType[]>>;
+  searchPreferences(search?: string, section?: string, keys?: string, ordering?: string): Promise<SCPaginatedResponse<SCPreferenceType[]>>;
   getSpecificPreference(id: number): Promise<SCPreferenceType>;
 }
 /**
@@ -16,7 +16,7 @@ export class PreferenceApiClient {
   /**
    * This endpoint retrieves all available dynamic preferences.
    */
-  static getAllPreferences(): Promise<SCPaginatedResponse<SCPreferenceType>> {
+  static getAllPreferences(): Promise<SCPaginatedResponse<SCPreferenceType[]>> {
     return apiRequest(Endpoints.Preferences.url({}), Endpoints.Preferences.method);
   }
 
@@ -27,7 +27,7 @@ export class PreferenceApiClient {
    * @param keys
    * @param ordering
    */
-  static searchPreferences(search?: string, section?: string, keys?: string, ordering?: string): Promise<SCPaginatedResponse<SCPreferenceType>> {
+  static searchPreferences(search?: string, section?: string, keys?: string, ordering?: string): Promise<SCPaginatedResponse<SCPreferenceType[]>> {
     const params = new URLSearchParams({
       ...(search && {search: search}),
       ...(section && {section: section}),
@@ -47,7 +47,7 @@ export class PreferenceApiClient {
 }
 
 export default class PreferenceService {
-  static async getAllPreferences(): Promise<SCPaginatedResponse<SCPreferenceType>> {
+  static async getAllPreferences(): Promise<SCPaginatedResponse<SCPreferenceType[]>> {
     return PreferenceApiClient.getAllPreferences();
   }
 
@@ -56,7 +56,7 @@ export default class PreferenceService {
     section?: string,
     keys?: string,
     ordering?: string
-  ): Promise<SCPaginatedResponse<SCPreferenceType>> {
+  ): Promise<SCPaginatedResponse<SCPreferenceType[]>> {
     return PreferenceApiClient.searchPreferences(search, section, keys, ordering);
   }
 

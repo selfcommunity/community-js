@@ -44,11 +44,9 @@ export default function SCPreferencesProvider({children = null}: {children: Reac
    */
   useEffect(() => {
     Promise.all([PreferenceService.getAllPreferences(), FeatureService.getAllFeatures()])
-      .then(function (results) {
-        const p = results[0];
-        const f = results[1];
-        setPreferences(p['results'].reduce((obj, p) => ({...obj, [`${p.section}.${p.name}`]: p}), {}));
-        setFeatures(f['results'].map((f) => f.name));
+      .then(function ([preferences, features]) {
+        setPreferences(preferences['results'].reduce((obj, p) => ({...obj, [`${p.section}.${p.name}`]: p}), {}));
+        setFeatures(features['results'].map((f) => f.name));
         setLoading(false);
       })
       .catch((_error) => {
