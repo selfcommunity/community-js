@@ -96,8 +96,20 @@ export default function useSCWebSocket() {
    * @param payload
    */
   const setNotificationCounters = (payload) => {
-    payload.count_interactions !== undefined && scUserContext.setUnseenInteractionsCounter(payload.count_interactions);
-    payload.count_notification_banners !== undefined && scUserContext.setUnseenInteractionsCounter(payload.count_notification_banners);
+    /**
+     * The counter count_interactions includes pure interactions and notification banners,
+     * so unseen_interactions_counter = payload.count_interactions - payload.count_notification_banners
+     * if payload.count_notification_banners exists (was added later in the payload of the message ws)
+     */
+    let unseen_interactions_counter = 0;
+    if (payload.count_interactions !== undefined) {
+      unseen_interactions_counter = payload.count_interactions;
+    }
+    if (payload.count_notification_banners !== undefined) {
+      unseen_interactions_counter = Math.max(unseen_interactions_counter - payload.count_notification_banners, 0);
+      scUserContext.setUnseenInteractionsCounter(payload.count_notification_banners);
+    }
+    payload.count_interactions !== undefined && scUserContext.setUnseenInteractionsCounter(unseen_interactions_counter);
   };
 
   return {wsInstance, setWsInstance};
