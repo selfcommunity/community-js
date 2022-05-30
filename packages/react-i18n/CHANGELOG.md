@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.1.7-alpha.1...@selfcommunity/react-i18n@0.1.7) (2022-05-30)
+
+**Note:** Version bump only for package @selfcommunity/react-i18n
+
+
+
+
+
 ## 0.1.7-alpha.1 (2022-05-30)
 
 **Note:** Version bump only for package @selfcommunity/react-i18n
