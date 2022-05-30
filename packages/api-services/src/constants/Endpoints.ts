@@ -861,15 +861,15 @@ const Endpoints: {[key: string]: EndpointType} = {
     method: 'GET'
   },
   InsightContributionCounter: {
-    url: urlReplacer('/api/v2/insight/contribution/counters/?contribution_id=$(id)/'),
+    url: urlReplacer('/api/v2/insight/contribution/counters/?contribution_id=$(id)'),
     method: 'GET'
   },
   InsightEmbedCounter: {
-    url: urlReplacer('/api/v2/insight/embed/counters/?embed_type=$(type)&embed_id=$(id)/'),
+    url: urlReplacer('/api/v2/insight/embed/counters/?embed_type=$(type)&embed_id=$(id)'),
     method: 'GET'
   },
   InsightUserCounter: {
-    url: urlReplacer('/api/v2/insight/user/counters/?user_id=$(id)/'),
+    url: urlReplacer('/api/v2/insight/user/counters/?user_id=$(id)'),
     method: 'GET'
   },
 
