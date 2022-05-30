@@ -4,5 +4,9 @@ module.exports = {
   setupFilesAfterEnv: [require.resolve('./test/index.js')],
   transform: {
     '^.+\\.(js|jsx|ts|tsx)$': ['babel-jest', {rootMode: 'upward'}]
+  },
+  testEnvironment: 'node',
+  moduleNameMapper: {
+    '@selfcommunity/utils': '<rootDir>/../utils/src/'
   }
 };

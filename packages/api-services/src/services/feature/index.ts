@@ -1,34 +1,26 @@
-import client from '../../client';
+import {SCPaginatedResponse} from '../../types';
+import {apiRequest} from '../../utils/apiRequest';
 import Endpoints from '../../constants/Endpoints';
+import {SCFeatureType} from '@selfcommunity/types';
 
 export interface FeatureApiClientInterface {
-  getAllFeatures(): Promise<any>;
+  getAllFeatures(): Promise<SCPaginatedResponse<SCFeatureType[]>>;
 }
+/**
+ * Contains all the endpoints needed to manage features.
+ */
 
 export class FeatureApiClient {
-  static getAllFeatures(): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.Feature.url({}),
-        method: Endpoints.Feature.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve community preferences (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        const data = res.data['results'].map((f) => f.name);
-        return Promise.resolve(data);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve features.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint retrieves all features.
+   */
+  static getAllFeatures(): Promise<SCPaginatedResponse<SCFeatureType[]>> {
+    return apiRequest(Endpoints.Feature.url({}), Endpoints.Feature.method);
   }
 }
 
 export default class FeatureService {
-  static async getAllFeatures(): Promise<any> {
+  static async getAllFeatures(): Promise<SCPaginatedResponse<SCFeatureType[]>> {
     return FeatureApiClient.getAllFeatures();
   }
 }

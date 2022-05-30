@@ -1,174 +1,110 @@
-import client from '../../client';
+import {apiRequest} from '../../utils/apiRequest';
 import Endpoints from '../../constants/Endpoints';
+import {SCChunkMediaType, SCMediaType} from '@selfcommunity/types';
+import {ChunkUploadCompleteParams, ChunkUploadParams, MediaCreateParams} from '../../types';
 
 export interface MediaApiClientInterface {
-  chunkUploadMedia(): Promise<any>;
-  chunkUploadMediaComplete(): Promise<any>;
-  createMedia(): Promise<any>;
-  clickMedia(id: number): Promise<any>;
-  getSpecificMedia(id: number): Promise<any>;
-  updateMedia(id: number): Promise<any>;
+  chunkUploadMedia(data: ChunkUploadParams): Promise<SCChunkMediaType>;
+  chunkUploadMediaComplete(data: ChunkUploadCompleteParams): Promise<SCMediaType>;
+  createMedia(data: MediaCreateParams): Promise<SCMediaType>;
+  clickMedia(id: number, ip?: string): Promise<any>;
+  getSpecificMedia(id: number): Promise<SCMediaType>;
+  updateMedia(id: number, image: string): Promise<SCMediaType>;
   deleteMedia(id: number): Promise<any>;
 }
-
+/**
+ * Contains all the endpoints needed to manage medias.
+ */
 export class MediaApiClient {
-  static chunkUploadMedia(): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.ComposerChunkUploadMedia.url({}),
-        method: Endpoints.ComposerChunkUploadMedia.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint performs the chunk upload of a media with type image or document.
+   * The client must split the file into chunks and send to the server in series. After all the chunks have been uploaded the client must call the Chunk Upload Complete endpoint with the given upload_id parameter to finalize the upload and retrieve the Media.
+   *  To perform chunk upload the request must contain Content-Range header with the information about the chunk.
+   * @param data
+   */
+  static chunkUploadMedia(data: ChunkUploadParams): Promise<SCChunkMediaType> {
+    return apiRequest(
+      Endpoints.ComposerChunkUploadMedia.url({}),
+      Endpoints.ComposerChunkUploadMedia.method,
+      {'Content-Range': 'bytes 1433600-1638399/2124437'},
+      data
+    );
   }
 
-  static chunkUploadMediaComplete(): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.ComposerChunkUploadMediaComplete.url({}),
-        method: Endpoints.ComposerChunkUploadMediaComplete.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint completes the chunk upload and create the media.
+   * @param data
+   */
+  static chunkUploadMediaComplete(data: ChunkUploadCompleteParams): Promise<SCMediaType> {
+    return apiRequest(Endpoints.ComposerChunkUploadMediaComplete.url({}), Endpoints.ComposerChunkUploadMediaComplete.method, data);
   }
 
-  static createMedia(): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.ComposerMediaCreate.url({}),
-        method: Endpoints.ComposerMediaCreate.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint creates a media.
+   * @param data
+   */
+  static createMedia(data: MediaCreateParams): Promise<SCMediaType> {
+    return apiRequest(Endpoints.ComposerMediaCreate.url({}), Endpoints.ComposerMediaCreate.method, data);
   }
 
-  static clickMedia(id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.MediaClickTracker.url({id}),
-        method: Endpoints.MediaClickTracker.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint saves a click on a specific media using ID.
+   * @param id
+   * @param ip
+   */
+  static clickMedia(id: number, ip?: string): Promise<any> {
+    return apiRequest(Endpoints.MediaClickTracker.url({id}), Endpoints.MediaClickTracker.method, {ip: ip} ?? null);
   }
 
-  static getSpecificMedia(id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.GetMedia.url({id}),
-        method: Endpoints.GetMedia.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve media (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve media.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint retrieves a specific media using ID.
+   * @param id
+   */
+  static getSpecificMedia(id: number): Promise<SCMediaType> {
+    return apiRequest(Endpoints.GetMedia.url({id}), Endpoints.GetMedia.method);
   }
 
-  static updateMedia(id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.UpdateMedia.url({id}),
-        method: Endpoints.UpdateMedia.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint updates a media.
+   * @param id
+   * @param image
+   */
+  static updateMedia(id: number, image: string): Promise<SCMediaType> {
+    return apiRequest(Endpoints.UpdateMedia.url({id}), Endpoints.UpdateMedia.method, {image: image});
   }
 
+  /**
+   * This endpoint deletes a media.
+   * @param id
+   */
   static deleteMedia(id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.DeleteMedia.url({id}),
-        method: Endpoints.DeleteMedia.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action(Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
+    return apiRequest(Endpoints.DeleteMedia.url({id}), Endpoints.DeleteMedia.method);
   }
 }
 
 export default class MediaService {
-  static async chunkUploadMedia(): Promise<any> {
-    return MediaApiClient.chunkUploadMedia();
+  static async chunkUploadMedia(data: ChunkUploadParams): Promise<SCChunkMediaType> {
+    return MediaApiClient.chunkUploadMedia(data);
   }
 
-  static async chunkUploadMediaComplete(): Promise<any> {
-    return MediaApiClient.chunkUploadMediaComplete();
+  static async chunkUploadMediaComplete(data: ChunkUploadCompleteParams): Promise<SCMediaType> {
+    return MediaApiClient.chunkUploadMediaComplete(data);
   }
 
-  static async createMedia(): Promise<any> {
-    return MediaApiClient.createMedia();
+  static async createMedia(data: MediaCreateParams): Promise<SCMediaType> {
+    return MediaApiClient.createMedia(data);
   }
 
-  static async clickMedia(id: number): Promise<any> {
-    return MediaApiClient.clickMedia(id);
+  static async clickMedia(id: number, ip?: string): Promise<any> {
+    return MediaApiClient.clickMedia(id, ip);
   }
 
-  static async getSpecificMedia(id: number): Promise<any> {
+  static async getSpecificMedia(id: number): Promise<SCMediaType> {
     return MediaApiClient.getSpecificMedia(id);
   }
 
-  static async updateMedia(id: number): Promise<any> {
-    return MediaApiClient.updateMedia(id);
+  static async updateMedia(id: number, image: string): Promise<SCMediaType> {
+    return MediaApiClient.updateMedia(id, image);
   }
 
   static async deleteMedia(id: number): Promise<any> {

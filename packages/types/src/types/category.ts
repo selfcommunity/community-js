@@ -119,3 +119,12 @@ export interface SCCategoryType {
    */
   followers_counter?: number;
 }
+
+export interface SCCategoryAudienceType {
+  category_audience: number;
+  connections_audience: number;
+}
+
+export interface SCCategoryFollowedStatusType {
+  is_followed: boolean;
+}
