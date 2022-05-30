@@ -64,7 +64,7 @@ export enum SCPrivateMessageStatusType {
   CREATED = 'created',
   DELETED = 'deleted',
   HIDDEN = 'hidden',
-  NEW = 'new',
+  NEW = 'new'
 }
 
 export interface SCPrivateMessageFileType {
@@ -118,5 +118,29 @@ export interface SCPrivateMessageFileType {
 export enum SCMessageFileType {
   DOCUMENT = 'application/',
   IMAGE = 'image/',
-  VIDEO = 'video/',
+  VIDEO = 'video/'
+}
+
+/**
+ * SCPrivateMessageUploadMediaType interface
+ */
+export interface SCPrivateMessageUploadMediaType {
+  file_url: string;
+  file_uuid: string;
+}
+
+/**
+ * SCPrivateMessageUploadThumbnailType interface
+ */
+export interface SCPrivateMessageUploadThumbnailType {
+  file_url: string;
+  file_uuid: string;
+  parent_file_uuid: string;
+}
+
+/**
+ * SCPrivateMessageUploadMediaChunkType interface
+ */
+export interface SCPrivateMessageUploadMediaChunkType {
+  file_uuid: string;
 }

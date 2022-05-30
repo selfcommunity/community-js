@@ -1,201 +1,121 @@
-import client from '../../client';
+import {BaseGetParams, EmbedSearchParams, EmbedUpdateParams, SCPaginatedResponse} from '../../types';
+import {apiRequest} from '../../utils/apiRequest';
 import Endpoints from '../../constants/Endpoints';
+import {SCEmbedType, SCFeedUnitType} from '@selfcommunity/types';
 
 export interface EmbedApiClientInterface {
-  getAllEmbeds(): Promise<any>;
-  createEmbed(): Promise<any>;
-  searchEmbed(): Promise<any>;
-  getSpecificEmbed(id: number): Promise<any>;
-  updateASpecificEmbed(id: number): Promise<any>;
-  patchASpecificEmbed(id: number): Promise<any>;
-  getEmbedFeed(id: number): Promise<any>;
-  getSpecificEmbedFeed(id: number): Promise<any>;
+  getAllEmbeds(params?: BaseGetParams): Promise<SCPaginatedResponse<SCEmbedType>>;
+  createEmbed(data: SCEmbedType): Promise<SCEmbedType>;
+  searchEmbed(params?: EmbedSearchParams): Promise<SCPaginatedResponse<SCEmbedType>>;
+  getSpecificEmbed(id: number): Promise<SCEmbedType>;
+  updateASpecificEmbed(id: number, data?: EmbedUpdateParams): Promise<SCEmbedType>;
+  patchASpecificEmbed(id: number, data?: EmbedUpdateParams): Promise<SCEmbedType>;
+  getEmbedFeed(): Promise<SCPaginatedResponse<SCFeedUnitType>>;
+  getSpecificEmbedFeed(id: number): Promise<SCPaginatedResponse<SCFeedUnitType>>;
 }
+/**
+ * Contains all the endpoints needed to manage embeds.
+ */
 
 export class EmbedApiClient {
-  static getAllEmbeds(): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.EmbedList.url({}),
-        method: Endpoints.EmbedList.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve embeds (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve embeds.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint retrieves all embeds.
+   * @param params
+   */
+  static getAllEmbeds(params?: BaseGetParams): Promise<SCPaginatedResponse<SCEmbedType>> {
+    const p = new URLSearchParams(params);
+    return apiRequest(`${Endpoints.EmbedList.url({})}?${p.toString()}`, Endpoints.EmbedList.method);
   }
 
-  static createEmbed(): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.EmbedCreate.url({}),
-        method: Endpoints.EmbedCreate.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint creates an embed.
+   * @param data
+   */
+  static createEmbed(data: SCEmbedType): Promise<SCEmbedType> {
+    return apiRequest(Endpoints.EmbedCreate.url({}), Endpoints.EmbedCreate.method, data);
   }
 
-  static searchEmbed(): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.EmbedSearch.url({}),
-        method: Endpoints.EmbedSearch.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve embed (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve embed.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint performs embed search.
+   * @param params
+   */
+  static searchEmbed(params?: EmbedSearchParams): Promise<SCPaginatedResponse<SCEmbedType>> {
+    const p = new URLSearchParams(params);
+    return apiRequest(`${Endpoints.EmbedSearch.url({})}?${p.toString()}`, Endpoints.EmbedSearch.method);
   }
 
-  static getSpecificEmbed(id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.Embed.url({id}),
-        method: Endpoints.Embed.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve embed (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve embed.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint retrieves a specific embed using ID.
+   * @param id
+   */
+  static getSpecificEmbed(id: number): Promise<SCEmbedType> {
+    return apiRequest(Endpoints.Embed.url({id}), Endpoints.Embed.method);
   }
 
-  static updateASpecificEmbed(id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.UpdateEmbed.url({id}),
-        method: Endpoints.UpdateEmbed.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint updates a specific embed.
+   * @param id
+   * @param data
+   */
+  static updateASpecificEmbed(id: number, data?: EmbedUpdateParams): Promise<SCEmbedType> {
+    return apiRequest(Endpoints.UpdateEmbed.url({id}), Endpoints.UpdateEmbed.method, data);
   }
 
-  static patchASpecificEmbed(id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.PatchEmbed.url({id}),
-        method: Endpoints.PatchEmbed.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint patches a specific embed.
+   * @param id
+   * @param data
+   */
+  static patchASpecificEmbed(id: number, data?: EmbedUpdateParams): Promise<SCEmbedType> {
+    return apiRequest(Endpoints.PatchEmbed.url({id}), Endpoints.PatchEmbed.method, data);
   }
 
-  static getEmbedFeed(id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.EmbedFeed.url({id}),
-        method: Endpoints.EmbedFeed.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve embeds feed (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve embeds feed.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint retrieves the embed's feed which contains Feed that has the Embed as associated media.
+   */
+  static getEmbedFeed(): Promise<SCPaginatedResponse<SCFeedUnitType>> {
+    return apiRequest(Endpoints.EmbedFeed.url({}), Endpoints.EmbedFeed.method);
   }
 
-  static getSpecificEmbedFeed(id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.SpecificEmbedFeed.url({id}),
-        method: Endpoints.SpecificEmbedFeed.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve embed feed (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve embed feed.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint retrieves the embed's feed which contains Feed that has an Embed as associated media.
+   * @param id
+   */
+  static getSpecificEmbedFeed(id: number): Promise<SCPaginatedResponse<SCFeedUnitType>> {
+    return apiRequest(Endpoints.SpecificEmbedFeed.url({id}), Endpoints.SpecificEmbedFeed.method);
   }
 }
 
 export default class EmbedService {
-  static async getAllEmbeds(): Promise<any> {
-    return EmbedApiClient.getAllEmbeds();
+  static async getAllEmbeds(params?: BaseGetParams): Promise<SCPaginatedResponse<SCEmbedType>> {
+    return EmbedApiClient.getAllEmbeds(params);
   }
 
-  static async searchEmbed(): Promise<any> {
-    return EmbedApiClient.searchEmbed();
+  static async searchEmbed(params?: EmbedSearchParams): Promise<SCPaginatedResponse<SCEmbedType>> {
+    return EmbedApiClient.searchEmbed(params);
   }
 
-  static async createEmbed(): Promise<any> {
-    return EmbedApiClient.createEmbed();
+  static async createEmbed(data: SCEmbedType): Promise<SCEmbedType> {
+    return EmbedApiClient.createEmbed(data);
   }
 
-  static async getSpecificEmbed(id: number): Promise<any> {
+  static async getSpecificEmbed(id: number): Promise<SCEmbedType> {
     return EmbedApiClient.getSpecificEmbed(id);
   }
 
-  static async updateASpecificEmbed(id: number): Promise<any> {
-    return EmbedApiClient.updateASpecificEmbed(id);
+  static async updateASpecificEmbed(id: number, data?: EmbedUpdateParams): Promise<SCEmbedType> {
+    return EmbedApiClient.updateASpecificEmbed(id, data);
   }
 
-  static async patchASpecificEmbed(id: number): Promise<any> {
-    return EmbedApiClient.patchASpecificEmbed(id);
+  static async patchASpecificEmbed(id: number, data?: EmbedUpdateParams): Promise<SCEmbedType> {
+    return EmbedApiClient.patchASpecificEmbed(id, data);
   }
 
-  static async getEmbedFeed(id: number): Promise<any> {
-    return EmbedApiClient.getEmbedFeed(id);
+  static async getEmbedFeed(): Promise<SCPaginatedResponse<SCFeedUnitType>> {
+    return EmbedApiClient.getEmbedFeed();
   }
 
-  static async getSpecificEmbedFeed(id: number): Promise<any> {
+  static async getSpecificEmbedFeed(id: number): Promise<SCPaginatedResponse<SCFeedUnitType>> {
     return EmbedApiClient.getSpecificEmbedFeed(id);
   }
 }

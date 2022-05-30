@@ -1,220 +1,130 @@
-import client from '../../client';
+import {apiRequest} from '../../utils/apiRequest';
 import Endpoints from '../../constants/Endpoints';
+import {
+  MessageChunkUploadDoneParams,
+  MessageCreateParams,
+  MessageMediaChunksParams,
+  MessageMediaUploadParams,
+  MessageThumbnailUploadParams,
+  SCPaginatedResponse,
+  ThreadParams
+} from '../../types';
+import {
+  SCPrivateMessageType,
+  SCPrivateMessageUploadMediaChunkType,
+  SCPrivateMessageUploadMediaType,
+  SCPrivateMessageUploadThumbnailType
+} from '@selfcommunity/types';
 
 export interface PrivateMessageApiClientInterface {
-  getAllSnippets(): Promise<any>;
-  getAThread(): Promise<any>;
-  getASingleMessage(id: number): Promise<any>;
-  sendAMessage(): Promise<any>;
+  getAllSnippets(): Promise<SCPaginatedResponse<SCPrivateMessageType>>;
+  getAThread(data: ThreadParams): Promise<SCPaginatedResponse<SCPrivateMessageType>>;
+  getASingleMessage(id: number): Promise<SCPrivateMessageType>;
+  sendAMessage(data: MessageCreateParams): Promise<SCPrivateMessageType>;
   deleteAMessage(id: number): Promise<any>;
   deleteAThread(id: number): Promise<any>;
-  uploadMedia(): Promise<any>;
-  uploadThumbnail(): Promise<any>;
-  uploadMediaInChunks(): Promise<any>;
-  chunkUploadDone(): Promise<any>;
+  uploadMedia(data: MessageMediaUploadParams): Promise<SCPrivateMessageUploadMediaType>;
+  uploadThumbnail(data: MessageThumbnailUploadParams): Promise<SCPrivateMessageUploadThumbnailType>;
+  uploadMediaInChunks(data: MessageMediaChunksParams): Promise<SCPrivateMessageUploadMediaChunkType>;
+  chunkUploadDone(data: MessageChunkUploadDoneParams): Promise<SCPrivateMessageUploadMediaType>;
 }
+/**
+ * Contains all the endpoints needed to manage private messages.
+ */
 
 export class PrivateMessageApiClient {
-  static getAllSnippets(): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.GetSnippets.url({}),
-        method: Endpoints.GetSnippets.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve results (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve results.');
-        return Promise.reject(error);
-      });
-  }
-  static getAThread(): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.GetAThread.url({}),
-        method: Endpoints.GetAThread.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve thread (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve thread.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint retrieves all snippets.
+   */
+  static getAllSnippets(): Promise<SCPaginatedResponse<SCPrivateMessageType>> {
+    return apiRequest(Endpoints.GetSnippets.url({}), Endpoints.GetSnippets.method);
   }
 
-  static getASingleMessage(id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.GetASingleMessage.url({id}),
-        method: Endpoints.GetASingleMessage.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve message (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve message.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint retrieves all messages in a thread.
+   * @param data
+   */
+  static getAThread(data: ThreadParams): Promise<SCPaginatedResponse<SCPrivateMessageType>> {
+    return apiRequest(Endpoints.GetAThread.url({}), Endpoints.GetAThread.method, data);
   }
 
-  static sendAMessage(): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.SendMessage.url({}),
-        method: Endpoints.SendMessage.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint retrieves a single message using ID.
+   * @param id
+   */
+  static getASingleMessage(id: number): Promise<SCPrivateMessageType> {
+    return apiRequest(Endpoints.GetASingleMessage.url({id}), Endpoints.GetASingleMessage.method);
   }
 
+  /**
+   * This endpoint sends a message.
+   * @param data
+   */
+  static sendAMessage(data: MessageCreateParams): Promise<SCPrivateMessageType> {
+    return apiRequest(Endpoints.SendMessage.url({}), Endpoints.SendMessage.method, data);
+  }
+
+  /**
+   * This endpoint deletes a single message.
+   * @param id
+   */
   static deleteAMessage(id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.DeleteASingleMessage.url({id}),
-        method: Endpoints.DeleteASingleMessage.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
+    return apiRequest(Endpoints.DeleteASingleMessage.url({id}), Endpoints.DeleteASingleMessage.method);
   }
 
+  /**
+   * This endpoint deletes a thread.
+   * @param id
+   */
   static deleteAThread(id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.DeleteAThread.url({id}),
-        method: Endpoints.DeleteAThread.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable perform action.');
-        return Promise.reject(error);
-      });
+    return apiRequest(Endpoints.DeleteAThread.url({id}), Endpoints.DeleteAThread.method);
   }
 
-  static uploadMedia(): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.PrivateMessageUploadMedia.url({}),
-        method: Endpoints.PrivateMessageUploadMedia.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
-  }
-  static uploadThumbnail(): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.PrivateMessageUploadThumbnail.url({}),
-        method: Endpoints.PrivateMessageUploadThumbnail.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
-  }
-  static uploadMediaInChunks(): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.PrivateMessageUploadMediaInChunks.url({}),
-        method: Endpoints.PrivateMessageUploadMediaInChunks.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint uploads a media.
+   * @param data
+   */
+  static uploadMedia(data: MessageMediaUploadParams): Promise<SCPrivateMessageUploadMediaType> {
+    return apiRequest(Endpoints.PrivateMessageUploadMedia.url({}), Endpoints.PrivateMessageUploadMedia.method, data);
   }
 
-  static chunkUploadDone(): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.PrivateMessageChunkUploadDone.url({}),
-        method: Endpoints.PrivateMessageChunkUploadDone.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint uploads a thumbnail.
+   * @param data
+   */
+  static uploadThumbnail(data: MessageThumbnailUploadParams): Promise<SCPrivateMessageUploadThumbnailType> {
+    return apiRequest(Endpoints.PrivateMessageUploadThumbnail.url({}), Endpoints.PrivateMessageUploadThumbnail.method, data);
+  }
+
+  /**
+   * This endpoint performs the chunk upload of a file.
+   * @param data
+   */
+  static uploadMediaInChunks(data: MessageMediaChunksParams): Promise<SCPrivateMessageUploadMediaChunkType> {
+    return apiRequest(Endpoints.PrivateMessageUploadMediaInChunks.url({}), Endpoints.PrivateMessageUploadMediaInChunks.method, data);
+  }
+
+  /**
+   * This endpoint finalizes the chunk upload and creates the file.
+   * @param data
+   */
+  static chunkUploadDone(data: MessageChunkUploadDoneParams): Promise<SCPrivateMessageUploadMediaType> {
+    return apiRequest(Endpoints.PrivateMessageChunkUploadDone.url({}), Endpoints.PrivateMessageChunkUploadDone.method, data);
   }
 }
 
 export default class PrivateMessageService {
-  static async getAllSnippets(): Promise<any> {
+  static async getAllSnippets(): Promise<SCPaginatedResponse<SCPrivateMessageType>> {
     return PrivateMessageApiClient.getAllSnippets();
   }
-  static async getAThread(): Promise<any> {
-    return PrivateMessageApiClient.getAThread();
+  static async getAThread(data: ThreadParams): Promise<SCPaginatedResponse<SCPrivateMessageType>> {
+    return PrivateMessageApiClient.getAThread(data);
   }
-  static async getASingleMessage(id: number): Promise<any> {
+  static async getASingleMessage(id: number): Promise<SCPrivateMessageType> {
     return PrivateMessageApiClient.getASingleMessage(id);
   }
-  static async sendAMessage(): Promise<any> {
-    return PrivateMessageApiClient.sendAMessage();
+  static async sendAMessage(data: MessageCreateParams): Promise<SCPrivateMessageType> {
+    return PrivateMessageApiClient.sendAMessage(data);
   }
   static async deleteAMessage(id: number): Promise<any> {
     return PrivateMessageApiClient.deleteAMessage(id);
@@ -222,16 +132,16 @@ export default class PrivateMessageService {
   static async deleteAThread(id: number): Promise<any> {
     return PrivateMessageApiClient.deleteAThread(id);
   }
-  static async uploadMedia(): Promise<any> {
-    return PrivateMessageApiClient.uploadMedia();
+  static async uploadMedia(data: MessageMediaUploadParams): Promise<SCPrivateMessageUploadMediaType> {
+    return PrivateMessageApiClient.uploadMedia(data);
   }
-  static async uploadThumbnail(): Promise<any> {
-    return PrivateMessageApiClient.uploadThumbnail();
+  static async uploadThumbnail(data: MessageThumbnailUploadParams): Promise<SCPrivateMessageUploadThumbnailType> {
+    return PrivateMessageApiClient.uploadThumbnail(data);
   }
-  static async uploadMediaInChunks(): Promise<any> {
-    return PrivateMessageApiClient.uploadMediaInChunks();
+  static async uploadMediaInChunks(data: MessageMediaChunksParams): Promise<SCPrivateMessageUploadMediaChunkType> {
+    return PrivateMessageApiClient.uploadMediaInChunks(data);
   }
-  static async chunkUploadDone(): Promise<any> {
-    return PrivateMessageApiClient.chunkUploadDone();
+  static async chunkUploadDone(data: MessageChunkUploadDoneParams): Promise<SCPrivateMessageUploadMediaType> {
+    return PrivateMessageApiClient.chunkUploadDone(data);
   }
 }

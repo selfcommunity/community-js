@@ -1,36 +1,60 @@
-import client from '../../client';
+import {apiRequest} from '../../utils/apiRequest';
 import Endpoints from '../../constants/Endpoints';
+import {
+  SCUserAutocompleteType,
+  SCUserType,
+  SCUserCounterType,
+  SCUserSettingsType,
+  SCUserChangeEmailType,
+  SCUserAvatarType,
+  SCUserPermissionType,
+  SCPlatformType,
+  SCCategoryType,
+  SCFeedUnitType,
+  SCUserFollowedStatusType,
+  SCUserFollowerStatusType,
+  SCUserConnectionStatusType,
+  SCUserHiddenStatusType,
+  SCUserConnectionRequestType,
+  SCTagType,
+  SCUserLoyaltyPointsType,
+  SCUserEmailTokenType,
+  SCUserHiddenByStatusType,
+  SCAvatarType,
+  SCMediaType
+} from '@selfcommunity/types';
+import {SCPaginatedResponse, UserAutocompleteParams, UserSearchParams} from '../../types';
 
 export interface UserApiClientInterface {
-  getAllUsers(): Promise<any>;
-  getHiddenUsers(): Promise<any>;
-  userAutocomplete(): Promise<any>;
-  userSearch(): Promise<any>;
-  getSpecificUser(id: number): Promise<any>;
-  getUserCounters(id: number): Promise<any>;
-  userUpdate(id: number): Promise<any>;
-  userPatch(id: number): Promise<any>;
-  userDelete(id: number): Promise<any>;
-  changeUserMail(id: number): Promise<any>;
-  confirmChangeUserMail(id: number): Promise<any>;
-  changeUserPassword(id: number): Promise<any>;
-  userSettings(id: number): Promise<any>;
-  userSettingsPatch(id: number): Promise<any>;
-  getCurrentUser(): Promise<any>;
-  getCurrentUserAvatar(): Promise<any>;
-  getCurrentUserPermission(): Promise<any>;
-  getCurrentUserPlatform(): Promise<any>;
-  getUserFollowedCategories(id: number): Promise<any>;
-  getUserFeed(id: number): Promise<any>;
-  getUserFollowers(id: number): Promise<any>;
-  getUserFollowed(id: number): Promise<any>;
+  getAllUsers(): Promise<SCPaginatedResponse<SCUserType>>;
+  getHiddenUsers(): Promise<SCPaginatedResponse<SCUserType>>;
+  userAutocomplete(params: UserAutocompleteParams): Promise<SCPaginatedResponse<SCUserAutocompleteType>>;
+  userSearch(params: UserSearchParams): Promise<SCPaginatedResponse<SCUserType>>;
+  getSpecificUser(id: number): Promise<SCUserType>;
+  getUserCounters(id: number): Promise<SCUserCounterType>;
+  userUpdate(id: number, data?: SCUserType): Promise<SCUserType>;
+  userPatch(id: number, data?: SCUserType): Promise<SCUserType>;
+  userDelete(id: number, hard?: number): Promise<any>;
+  changeUserMail(id: number, new_email: string, confirm?: boolean): Promise<any | SCUserChangeEmailType>;
+  confirmChangeUserMail(id: number, new_email: string, validation_code?: string): Promise<any>;
+  changeUserPassword(id: number, password: string, new_password: string): Promise<any>;
+  userSettings(id: number): Promise<SCUserSettingsType>;
+  userSettingsPatch(id: number, data?: SCUserSettingsType): Promise<SCUserSettingsType>;
+  getCurrentUser(): Promise<SCUserType>;
+  getCurrentUserAvatar(): Promise<SCUserAvatarType>;
+  getCurrentUserPermission(): Promise<SCUserPermissionType>;
+  getCurrentUserPlatform(): Promise<SCPlatformType>;
+  getUserFollowedCategories(id: number, mutual?: number): Promise<SCCategoryType[]>;
+  getUserFeed(id: number): Promise<SCPaginatedResponse<SCFeedUnitType>>;
+  getUserFollowers(id: number, mutual?: number): Promise<SCPaginatedResponse<SCUserType>>;
+  getUserFollowed(id: number, mutual?: number): Promise<SCPaginatedResponse<SCUserType>>;
   followUser(id: number): Promise<any>;
-  checkUserFollowed(id: number): Promise<any>;
-  checkUserFollower(id: number): Promise<any>;
-  getUserConnections(id: number): Promise<any>;
-  checkUserConnections(id: number): Promise<any>;
-  getUserConnectionRequests(id: number): Promise<any>;
-  getUserRequestConnectionsSent(id: number): Promise<any>;
+  checkUserFollowed(id: number): Promise<SCUserFollowedStatusType>;
+  checkUserFollower(id: number): Promise<SCUserFollowerStatusType>;
+  getUserConnections(id: number, mutual?: number): Promise<SCPaginatedResponse<SCUserType>>;
+  checkUserConnections(id: number): Promise<SCUserConnectionStatusType>;
+  getUserConnectionRequests(id: number): Promise<SCPaginatedResponse<SCUserConnectionRequestType>>;
+  getUserRequestConnectionsSent(id: number): Promise<SCPaginatedResponse<SCUserConnectionRequestType>>;
   userAcceptRequestConnection(id: number): Promise<any>;
   userRequestConnection(id: number): Promise<any>;
   userRemoveConnection(id: number): Promise<any>;
@@ -39,999 +63,496 @@ export interface UserApiClientInterface {
   userRejectConnectionRequest(id: number): Promise<any>;
   userMarkSeenConnectionRequest(id: number): Promise<any>;
   showHideUser(id: number): Promise<any>;
-  checkUserHidden(id: number): Promise<any>;
-  checkUserHiddenBy(id: number): Promise<any>;
-  getUserLoyaltyPoints(id: number): Promise<any>;
-  getUserConnectionStatuses(): Promise<any>;
-  userTagToAddressContribution(): Promise<any>;
-  checkUserEmailToken(): Promise<any>;
-  addUserAvatar(): Promise<any>;
-  getUserAvatars(): Promise<any>;
-  removeUserAvatar(): Promise<any>;
-  setUserPrimaryAvatar(): Promise<any>;
+  checkUserHidden(id: number): Promise<SCUserHiddenStatusType>;
+  checkUserHiddenBy(id: number): Promise<SCUserHiddenByStatusType>;
+  getUserLoyaltyPoints(id: number): Promise<SCUserLoyaltyPointsType>;
+  getUserConnectionStatuses(users: number[]): Promise<any>;
+  userTagToAddressContribution(): Promise<SCTagType>;
+  checkUserEmailToken(): Promise<SCUserEmailTokenType>;
+  addUserAvatar(avatar: SCMediaType): Promise<SCAvatarType>;
+  getUserAvatars(): Promise<SCAvatarType>;
+  removeUserAvatar(avatar_id: number): Promise<any>;
+  setUserPrimaryAvatar(avatar_id: number): Promise<any>;
 }
 
+/**
+ * Contains all the endpoints needed to manage users.
+ */
 export class UserApiClient {
-  static getAllUsers(): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.User.url({}),
-        method: Endpoints.User.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve users (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve users.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint retrieves the list of all users
+   */
+  static getAllUsers(): Promise<SCPaginatedResponse<SCUserType>> {
+    return apiRequest(Endpoints.User.url({}), Endpoints.User.method);
   }
 
-  static getHiddenUsers(): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.ListHiddenUsers.url(),
-        method: Endpoints.ListHiddenUsers.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve hidden users (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res.data);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve hidden users.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint retrieves the list of all users hidden by the authenticated user
+   */
+  static getHiddenUsers(): Promise<SCPaginatedResponse<SCUserType>> {
+    return apiRequest(Endpoints.ListHiddenUsers.url(), Endpoints.ListHiddenUsers.method);
   }
 
-  static userAutocomplete(): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.UserAutocomplete.url(),
-        method: Endpoints.UserAutocomplete.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve users (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res.data);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve users.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint retrieves the list of all users that meet the search criteria. The user object returned will contain only the following attributes: id, username, real_name, ext_id and avatar.
+   * This endpoint is recommended for implementing an autocomplete input field.
+   * @param params
+   */
+  static userAutocomplete(params: UserAutocompleteParams): Promise<SCPaginatedResponse<SCUserAutocompleteType>> {
+    const p = new URLSearchParams(params);
+    return apiRequest(`${Endpoints.UserAutocomplete.url()}?${p.toString()})}`, Endpoints.UserAutocomplete.method);
   }
 
-  static userSearch(): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.UserSearch.url(),
-        method: Endpoints.UserSearch.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve users (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res.data);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve users .');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint performs users search.
+   * @param params
+   */
+  static userSearch(params: UserSearchParams): Promise<SCPaginatedResponse<SCUserType>> {
+    const p = new URLSearchParams(params);
+    return apiRequest(`${Endpoints.UserSearch.url()}?${p.toString()})}`, Endpoints.UserSearch.method);
   }
 
-  static getSpecificUser(id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.User.url({id}),
-        method: Endpoints.User.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve user (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve user.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint retrieves a specific user's profile identified by ID.
+   * @param id
+   */
+  static getSpecificUser(id: number): Promise<SCUserType> {
+    return apiRequest(Endpoints.User.url({id}), Endpoints.User.method);
   }
 
-  static getUserCounters(id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.UserCounters.url({id}),
-        method: Endpoints.UserCounters.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve counters (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res.data);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve counters.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint retrieves the counters of a specific user identified by Id.
+   * @param id
+   */
+  static getUserCounters(id: number): Promise<SCUserCounterType> {
+    return apiRequest(Endpoints.UserCounters.url({id}), Endpoints.UserCounters.method);
   }
 
-  static userUpdate(id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.UserUpdate.url({id}),
-        method: Endpoints.UserUpdate.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res.data);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint updates the profile of a user identified by ID. A user can only update their personal data.
+   * @param id
+   * @param data
+   */
+  static userUpdate(id: number, data?: SCUserType): Promise<SCUserType> {
+    return apiRequest(Endpoints.UserUpdate.url({id}), Endpoints.UserUpdate.method, data ?? null);
   }
 
-  static userPatch(id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.UserPatch.url({id}),
-        method: Endpoints.UserPatch.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res.data);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint patches a specific user identified by {id}
+   * @param id
+   * @param data
+   */
+  static userPatch(id: number, data?: SCUserType): Promise<SCUserType> {
+    return apiRequest(Endpoints.UserPatch.url({id}), Endpoints.UserPatch.method, data ?? null);
   }
 
-  static userDelete(id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.UserDelete.url({id}),
-        method: Endpoints.UserDelete.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res.data);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint deletes a specific user identified by {id}
+   * @param id
+   * @param hard
+   */
+  static userDelete(id: number, hard?: number): Promise<any> {
+    return apiRequest(`${Endpoints.UserDelete.url({id})}?${hard.toString()})}`, Endpoints.UserDelete.method);
   }
 
-  static changeUserMail(id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.ChangeUserMail.url({id}),
-        method: Endpoints.ChangeUserMail.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res.data);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint changes the email of the authenticated user.
+   * @param id
+   * @param new_email
+   * @param confirm
+   */
+  static changeUserMail(id: number, new_email: string, confirm?: boolean): Promise<any | SCUserChangeEmailType> {
+    return apiRequest(Endpoints.ChangeUserMail.url({id}), Endpoints.ChangeUserMail.method, {new_email: new_email, confirm: confirm ?? null});
   }
 
-  static confirmChangeUserMail(id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.ConfirmUserChangeMail.url({id}),
-        method: Endpoints.ConfirmUserChangeMail.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res.data);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint confirms email change.
+   * @param id
+   * @param new_email
+   * @param validation_code
+   */
+  static confirmChangeUserMail(id: number, new_email: string, validation_code?: string): Promise<any> {
+    return apiRequest(Endpoints.ConfirmUserChangeMail.url({id}), Endpoints.ConfirmUserChangeMail.method, {
+      new_email: new_email,
+      validation_code: validation_code
+    });
   }
 
-  static changeUserPassword(id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.ChangeUserPassword.url({id}),
-        method: Endpoints.ChangeUserPassword.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res.data);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint changes the password of the authenticated user.
+   * @param id
+   * @param password
+   * @param new_password
+   */
+  static changeUserPassword(id: number, password: string, new_password: string): Promise<any> {
+    return apiRequest(Endpoints.ChangeUserPassword.url({id}), Endpoints.ChangeUserPassword.method, {password: password, new_password: new_password});
   }
 
-  static userSettings(id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.UserSettings.url({id}),
-        method: Endpoints.UserSettings.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res.data);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint retrieves all current user's settings for the authenticated user.
+   * @param id
+   */
+  static userSettings(id: number): Promise<SCUserSettingsType> {
+    return apiRequest(Endpoints.UserSettings.url({id}), Endpoints.UserSettings.method);
   }
 
-  static userSettingsPatch(id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.UserSettingsPatch.url({id}),
-        method: Endpoints.UserSettingsPatch.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res.data);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint changes the user settings for the authenticated user.
+   * @param id
+   * @param data
+   */
+  static userSettingsPatch(id: number, data?: SCUserSettingsType): Promise<SCUserSettingsType> {
+    return apiRequest(Endpoints.UserSettingsPatch.url({id}), Endpoints.UserSettingsPatch.method, data ?? null);
   }
 
-  static getCurrentUser(): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.Me.url(),
-        method: Endpoints.Me.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve user (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res.data);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve user profile.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint returns the user identified by the authentication token.
+   */
+  static getCurrentUser(): Promise<SCUserType> {
+    return apiRequest(Endpoints.Me.url(), Endpoints.Me.method);
   }
 
-  static getCurrentUserAvatar(): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.MyAvatar.url({}),
-        method: Endpoints.MyAvatar.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve user avatar (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res.data);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve user avatar.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint returns the url to the user's current avatar.
+   */
+  static getCurrentUserAvatar(): Promise<SCUserAvatarType> {
+    return apiRequest(Endpoints.MyAvatar.url({}), Endpoints.MyAvatar.method);
   }
 
-  static getCurrentUserPermission(): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.Permission.url({}),
-        method: Endpoints.Permission.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve user permissions (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res.data);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve user permissions.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint returns a list of permissions for the user identified by the authentication token. Some of the permissions in the list depend on global community settings.
+   */
+  static getCurrentUserPermission(): Promise<SCUserPermissionType> {
+    return apiRequest(Endpoints.Permission.url({}), Endpoints.Permission.method);
   }
 
-  static getCurrentUserPlatform(): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.Platform.url({}),
-        method: Endpoints.Platform.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve platform (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res.data);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve platform.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint retrieves the platform url starting from the Authorization user token. Using this url, the logged user (must be a staff member) can access the platform to manage the community.
+   */
+  static getCurrentUserPlatform(): Promise<SCPlatformType> {
+    return apiRequest(Endpoints.Platform.url({}), Endpoints.Platform.method);
   }
 
-  static getUserFollowedCategories(id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.FollowedCategories.url({id}),
-        method: Endpoints.FollowedCategories.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve categories followed (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res.data);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve categories followed.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint gets the list of categories followed by the user.
+   * @param id
+   * @param mutual
+   */
+  static getUserFollowedCategories(id: number, mutual?: number): Promise<SCCategoryType[]> {
+    return apiRequest(`${Endpoints.FollowedCategories.url({id})}?${mutual.toString()})}`, Endpoints.FollowedCategories.method);
   }
 
-  static getUserFeed(id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.UserFeed.url({id}),
-        method: Endpoints.UserFeed.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve user feed (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res.data);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve user feed.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint retrieves the list of posts of the user identified by {id}
+   * @param id
+   */
+  static getUserFeed(id: number): Promise<SCPaginatedResponse<SCFeedUnitType>> {
+    return apiRequest(Endpoints.UserFeed.url({id}), Endpoints.UserFeed.method);
   }
 
-  static getUserFollowers(id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.UserFollowers.url({id}),
-        method: Endpoints.UserFollowers.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve user followers (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res.data);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve user followers.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint retrieves the list of followers of a specific user identified by {id}
+   * @param id
+   * @param mutual
+   */
+  static getUserFollowers(id: number, mutual?: number): Promise<SCPaginatedResponse<SCUserType>> {
+    return apiRequest(`${Endpoints.UserFollowers.url({id})}?${mutual.toString()})}`, Endpoints.UserFollowers.method);
   }
 
-  static getUserFollowed(id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.UserFollowed.url({id}),
-        method: Endpoints.UserFollowed.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve user followings (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res.data);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve user followings.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint retrieves the list of following of a specific user identified by {id}.
+   * @param id
+   * @param mutual
+   */
+  static getUserFollowed(id: number, mutual?: number): Promise<SCPaginatedResponse<SCUserType>> {
+    return apiRequest(`${Endpoints.UserFollowed.url({id})}?${mutual.toString()})`, Endpoints.UserFollowed.method);
   }
 
+  /**
+   * This endpoint allows a user to follow another user identified by {id}
+   * @param id
+   */
   static followUser(id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.FollowUser.url({id}),
-        method: Endpoints.FollowUser.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res.data);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
+    return apiRequest(Endpoints.FollowUser.url({id}), Endpoints.FollowUser.method);
   }
 
-  static checkUserFollowed(id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.CheckUserFollowed.url({id}),
-        method: Endpoints.CheckUserFollowed.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve users (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res.data);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve users .');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint returns is_followed = true if the user (identified in path) is followed by me.
+   * @param id
+   */
+  static checkUserFollowed(id: number): Promise<SCUserFollowedStatusType> {
+    return apiRequest(Endpoints.CheckUserFollowed.url({id}), Endpoints.CheckUserFollowed.method);
   }
 
-  static checkUserFollower(id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.CheckUserFollower.url({id}),
-        method: Endpoints.CheckUserFollower.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve users (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res.data);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve users .');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint returns is_follower = true if the user (identified in path) follow me
+   * @param id
+   */
+  static checkUserFollower(id: number): Promise<SCUserFollowerStatusType> {
+    return apiRequest(Endpoints.CheckUserFollower.url({id}), Endpoints.CheckUserFollower.method);
   }
 
-  static getUserConnections(id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.UserConnections.url({id}),
-        method: Endpoints.UserConnections.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve user connections (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res.data);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve user connections.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint retrieves the list of connections of a specific user identified by ID.
+   * @param id
+   * @param mutual
+   */
+  static getUserConnections(id: number, mutual?: number): Promise<SCPaginatedResponse<SCUserType>> {
+    return apiRequest(`${Endpoints.UserConnections.url({id})}?${mutual.toString()})`, Endpoints.UserConnections.method);
   }
 
-  static checkUserConnections(id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.UserCheckConnection.url({id}),
-        method: Endpoints.UserCheckConnection.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res.data);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint returns is_connection = true if the user (identified in path) is connected with me.
+   * @param id
+   */
+  static checkUserConnections(id: number): Promise<SCUserConnectionStatusType> {
+    return apiRequest(Endpoints.UserCheckConnection.url({id}), Endpoints.UserCheckConnection.method);
   }
 
-  static getUserConnectionRequests(id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.UserConnectionRequests.url({id}),
-        method: Endpoints.UserConnectionRequests.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve user connection requests (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res.data);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve user connection requests.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint retrieves the list of connection requests received by a specific user identified by ID.
+   * @param id
+   */
+  static getUserConnectionRequests(id: number): Promise<SCPaginatedResponse<SCUserConnectionRequestType>> {
+    return apiRequest(Endpoints.UserConnectionRequests.url({id}), Endpoints.UserConnectionRequests.method);
   }
 
-  static getUserRequestConnectionsSent(id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.UserRequestConnectionsSent.url({id}),
-        method: Endpoints.UserRequestConnectionsSent.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve user connection requests sent (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res.data);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve user connection requests sent.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint retrieves a specific user's list of connection requests sent by user.
+   * @param id
+   */
+  static getUserRequestConnectionsSent(id: number): Promise<SCPaginatedResponse<SCUserConnectionRequestType>> {
+    return apiRequest(Endpoints.UserRequestConnectionsSent.url({id}), Endpoints.UserRequestConnectionsSent.method);
   }
 
+  /**
+   * This endpoint accepts a request connection of the user identified by {id}
+   * @param id
+   */
   static userAcceptRequestConnection(id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.UserAcceptRequestConnection.url({id}),
-        method: Endpoints.UserAcceptRequestConnection.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res.data);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
+    return apiRequest(Endpoints.UserAcceptRequestConnection.url({id}), Endpoints.UserAcceptRequestConnection.method);
   }
 
+  /**
+   * This endpoint requests a connection to the user identified by {id}
+   * @param id
+   */
   static userRequestConnection(id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.UserRequestConnection.url({id}),
-        method: Endpoints.UserRequestConnection.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res.data);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
+    return apiRequest(Endpoints.UserRequestConnection.url({id}), Endpoints.UserRequestConnection.method);
   }
 
+  /**
+   * This endpoint removes connection with the user identified by {id}
+   * @param id
+   */
   static userRemoveConnection(id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.UserRemoveConnection.url({id}),
-        method: Endpoints.UserRemoveConnection.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res.data);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
+    return apiRequest(Endpoints.UserRemoveConnection.url({id}), Endpoints.UserRemoveConnection.method);
   }
 
+  /**
+   * This endpoint cancels reject connection to a user identified by {id}
+   * @param id
+   */
   static userCancelRejectConnectionRequest(id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.UserCancelRejectConnectionRequest.url({id}),
-        method: Endpoints.UserCancelRejectConnectionRequest.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res.data);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
+    return apiRequest(Endpoints.UserCancelRejectConnectionRequest.url({id}), Endpoints.UserCancelRejectConnectionRequest.method);
   }
 
+  /**
+   * This endpoint cancels a request connection for a user.
+   * @param id
+   */
   static userCancelRequestConnection(id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.UserCancelRequestConnection.url({id}),
-        method: Endpoints.UserCancelRequestConnection.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res.data);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
+    return apiRequest(Endpoints.UserCancelRequestConnection.url({id}), Endpoints.UserCancelRequestConnection.method);
   }
 
+  /**
+   * This endpoint rejects a connection request sent from user identified by {id}
+   * @param id
+   */
   static userRejectConnectionRequest(id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.UserRejectConnectionRequest.url({id}),
-        method: Endpoints.UserRejectConnectionRequest.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res.data);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
+    return apiRequest(Endpoints.UserRejectConnectionRequest.url({id}), Endpoints.UserRejectConnectionRequest.method);
   }
 
+  /**
+   * This endpoint marks seen a connection request of user identified by {id} for the authenticated user.
+   * @param id
+   */
   static userMarkSeenConnectionRequest(id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.UserMarkSeenConnectionRequest.url({id}),
-        method: Endpoints.UserMarkSeenConnectionRequest.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res.data);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
+    return apiRequest(Endpoints.UserMarkSeenConnectionRequest.url({id}), Endpoints.UserMarkSeenConnectionRequest.method);
   }
 
+  /**
+   * This endpoint shows/hides a user (and its posts) identified by {id} for the authenticated user.
+   * @param id
+   */
   static showHideUser(id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.UserShowHide.url({id}),
-        method: Endpoints.UserShowHide.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res.data);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
+    return apiRequest(Endpoints.UserShowHide.url({id}), Endpoints.UserShowHide.method);
   }
 
-  static checkUserHidden(id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.CheckUserHidden.url({id}),
-        method: Endpoints.CheckUserHidden.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res.data);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint returns true if the user (identified in path) is hidden by the authenticated user.
+   * @param id
+   */
+  static checkUserHidden(id: number): Promise<SCUserHiddenStatusType> {
+    return apiRequest(Endpoints.CheckUserHidden.url({id}), Endpoints.CheckUserHidden.method);
   }
 
-  static checkUserHiddenBy(id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.CheckUserHiddenBy.url({id}),
-        method: Endpoints.CheckUserHiddenBy.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res.data);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint returns true if the user (identified in path) has hidden by the authenticated user.
+   * @param id
+   */
+  static checkUserHiddenBy(id: number): Promise<SCUserHiddenByStatusType> {
+    return apiRequest(Endpoints.CheckUserHiddenBy.url({id}), Endpoints.CheckUserHiddenBy.method);
   }
 
-  static getUserLoyaltyPoints(id: number): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.GetUserLoyaltyPoints.url({id}),
-        method: Endpoints.GetUserLoyaltyPoints.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve user loyalty points (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res.data);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve user loyalty points.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint returns user's loyalty points.
+   * @param id
+   */
+  static getUserLoyaltyPoints(id: number): Promise<SCUserLoyaltyPointsType> {
+    return apiRequest(Endpoints.GetUserLoyaltyPoints.url({id}), Endpoints.GetUserLoyaltyPoints.method);
   }
 
-  static getUserConnectionStatuses(): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.UserConnectionStatuses.url({}),
-        method: Endpoints.UserConnectionStatuses.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve user connection statuses (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res.data);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve user connection statuses.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint lists the connection/follow statuses of the logged user starting from a users array.
+   * @param users
+   */
+  static getUserConnectionStatuses(users: number[]): Promise<any> {
+    return apiRequest(Endpoints.UserConnectionStatuses.url({}), Endpoints.UserConnectionStatuses.method, {users: users});
   }
 
-  static userTagToAddressContribution(): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.UserTagToAddressContribution.url({}),
-        method: Endpoints.UserTagToAddressContribution.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res.data);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint returns user's tags to address a contribution.
+   */
+  static userTagToAddressContribution(): Promise<SCTagType> {
+    return apiRequest(Endpoints.UserTagToAddressContribution.url({}), Endpoints.UserTagToAddressContribution.method);
   }
 
-  static checkUserEmailToken(): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.CheckEmailToken.url({}),
-        method: Endpoints.CheckEmailToken.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res.data);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint checks an email token.
+   */
+  static checkUserEmailToken(): Promise<SCUserEmailTokenType> {
+    return apiRequest(Endpoints.CheckEmailToken.url({}), Endpoints.CheckEmailToken.method);
   }
 
-  static addUserAvatar(): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.AddAvatar.url({}),
-        method: Endpoints.AddAvatar.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res.data);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint adds an avatar to my avatars.
+   * @param avatar
+   */
+  static addUserAvatar(avatar: SCMediaType): Promise<SCAvatarType> {
+    return apiRequest(Endpoints.AddAvatar.url({}), Endpoints.AddAvatar.method, {'Content-Type': 'multipart/form-data'}, {avatar: avatar});
   }
 
-  static getUserAvatars(): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.GetAvatars.url({}),
-        method: Endpoints.GetAvatars.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to retrieve user avatars (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res.data);
-      })
-      .catch((error) => {
-        console.log('Unable to retrieve user avatars.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint retrieves all user avatars.
+   */
+  static getUserAvatars(): Promise<SCAvatarType> {
+    return apiRequest(Endpoints.GetAvatars.url({}), Endpoints.GetAvatars.method);
   }
 
-  static removeUserAvatar(): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.RemoveAvatar.url({}),
-        method: Endpoints.RemoveAvatar.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res.data);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint removes/deletes an avatar from the authenticated user avatars.
+   * @param avatar_id
+   */
+  static removeUserAvatar(avatar_id: number): Promise<any> {
+    return apiRequest(Endpoints.RemoveAvatar.url({}), Endpoints.RemoveAvatar.method, {avatar_id: avatar_id});
   }
 
-  static setUserPrimaryAvatar(): Promise<any> {
-    return client
-      .request({
-        url: Endpoints.SetPrimaryAvatar.url({}),
-        method: Endpoints.SetPrimaryAvatar.method
-      })
-      .then((res) => {
-        if (res.status >= 300) {
-          console.log(`Unable to perform action (Response code: ${res.status}).`);
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res.data);
-      })
-      .catch((error) => {
-        console.log('Unable to perform action.');
-        return Promise.reject(error);
-      });
+  /**
+   * This endpoint sets the primary avatar for the authenticated user.
+   * @param avatar_id
+   */
+  static setUserPrimaryAvatar(avatar_id: number): Promise<any> {
+    return apiRequest(Endpoints.SetPrimaryAvatar.url({}), Endpoints.SetPrimaryAvatar.method, {avatar_id: avatar_id});
   }
 }
 
 export default class UserService {
-  static async getAllUsers(): Promise<any> {
+  static async getAllUsers(): Promise<SCPaginatedResponse<SCUserType>> {
     return UserApiClient.getAllUsers();
   }
-  static async getHiddenUsers(): Promise<any> {
+  static async getHiddenUsers(): Promise<SCPaginatedResponse<SCUserType>> {
     return UserApiClient.getHiddenUsers();
   }
-  static async userAutocomplete(): Promise<any> {
-    return UserApiClient.userAutocomplete();
+  static async userAutocomplete(params: UserAutocompleteParams): Promise<SCPaginatedResponse<SCUserAutocompleteType>> {
+    return UserApiClient.userAutocomplete(params);
   }
-  static async userSearch(): Promise<any> {
-    return UserApiClient.userSearch();
+  static async userSearch(params: UserSearchParams): Promise<SCPaginatedResponse<SCUserType>> {
+    return UserApiClient.userSearch(params);
   }
-  static async getSpecificUser(id: number): Promise<any> {
+  static async getSpecificUser(id: number): Promise<SCUserType> {
     return UserApiClient.getSpecificUser(id);
   }
-  static async getUserCounters(id: number): Promise<any> {
+  static async getUserCounters(id: number): Promise<SCUserCounterType> {
     return UserApiClient.getUserCounters(id);
   }
-  static async userUpdate(id: number): Promise<any> {
-    return UserApiClient.userUpdate(id);
+  static async userUpdate(id: number, data?: SCUserType): Promise<SCUserType> {
+    return UserApiClient.userUpdate(id, data);
   }
-  static async userPatch(id: number): Promise<any> {
-    return UserApiClient.userPatch(id);
+  static async userPatch(id: number, data?: SCUserType): Promise<SCUserType> {
+    return UserApiClient.userPatch(id, data);
   }
-  static async userDelete(id: number): Promise<any> {
-    return UserApiClient.userDelete(id);
+  static async userDelete(id: number, hard?: number): Promise<any> {
+    return UserApiClient.userDelete(id, hard);
   }
-  static async changeUserMail(id: number): Promise<any> {
-    return UserApiClient.changeUserMail(id);
+  static async changeUserMail(id: number, new_email: string, confirm?: boolean): Promise<any | SCUserChangeEmailType> {
+    return UserApiClient.changeUserMail(id, new_email, confirm);
   }
-  static async confirmChangeUserMail(id: number): Promise<any> {
-    return UserApiClient.confirmChangeUserMail(id);
+  static async confirmChangeUserMail(id: number, new_email: string, validation_code?: string): Promise<any> {
+    return UserApiClient.confirmChangeUserMail(id, new_email, validation_code);
   }
-  static async changeUserPassword(id: number): Promise<any> {
-    return UserApiClient.changeUserPassword(id);
+  static async changeUserPassword(id: number, password: string, new_password: string): Promise<any> {
+    return UserApiClient.changeUserPassword(id, password, new_password);
   }
-  static async userSettings(id: number): Promise<any> {
+  static async userSettings(id: number): Promise<SCUserSettingsType> {
     return UserApiClient.userSettings(id);
   }
-  static async userSettingsPatch(id: number): Promise<any> {
-    return UserApiClient.userSettingsPatch(id);
+  static async userSettingsPatch(id: number, data?: SCUserSettingsType): Promise<SCUserSettingsType> {
+    return UserApiClient.userSettingsPatch(id, data);
   }
-  static async getCurrentUser(): Promise<any> {
+  static async getCurrentUser(): Promise<SCUserType> {
     return UserApiClient.getCurrentUser();
   }
-  static async getCurrentUserAvatar(): Promise<any> {
+  static async getCurrentUserAvatar(): Promise<SCUserAvatarType> {
     return UserApiClient.getCurrentUserAvatar();
   }
-  static async getCurrentUserPermission(): Promise<any> {
+  static async getCurrentUserPermission(): Promise<SCUserPermissionType> {
     return UserApiClient.getCurrentUserPermission();
   }
-  static async getCurrentUserPlatform(): Promise<any> {
+  static async getCurrentUserPlatform(): Promise<SCPlatformType> {
     return UserApiClient.getCurrentUserPlatform();
   }
-  static async getUserFollowedCategories(id: number): Promise<any> {
-    return UserApiClient.getUserFollowedCategories(id);
+  static async getUserFollowedCategories(id: number, mutual?: number): Promise<SCCategoryType[]> {
+    return UserApiClient.getUserFollowedCategories(id, mutual);
   }
-  static async getUserFeed(id: number): Promise<any> {
+  static async getUserFeed(id: number): Promise<SCPaginatedResponse<SCFeedUnitType>> {
     return UserApiClient.getUserFeed(id);
   }
-  static async getUserFollowers(id: number): Promise<any> {
-    return UserApiClient.getUserFollowers(id);
+  static async getUserFollowers(id: number, mutual?: number): Promise<SCPaginatedResponse<SCUserType>> {
+    return UserApiClient.getUserFollowers(id, mutual);
   }
-  static async getUserFollowed(id: number): Promise<any> {
-    return UserApiClient.getUserFollowed(id);
+  static async getUserFollowed(id: number, mutual?: number): Promise<SCPaginatedResponse<SCUserType>> {
+    return UserApiClient.getUserFollowed(id, mutual);
   }
   static async followUser(id: number): Promise<any> {
     return UserApiClient.followUser(id);
   }
-  static async checkUserFollowed(id: number): Promise<any> {
+  static async checkUserFollowed(id: number): Promise<SCUserFollowedStatusType> {
     return UserApiClient.checkUserFollowed(id);
   }
-  static async checkUserFollower(id: number): Promise<any> {
+  static async checkUserFollower(id: number): Promise<SCUserFollowerStatusType> {
     return UserApiClient.checkUserFollower(id);
   }
-  static async getUserConnections(id: number): Promise<any> {
-    return UserApiClient.getUserConnections(id);
+  static async getUserConnections(id: number, mutual?: number): Promise<SCPaginatedResponse<SCUserType>> {
+    return UserApiClient.getUserConnections(id, mutual);
   }
-  static async checkUserConnections(id: number): Promise<any> {
+  static async checkUserConnections(id: number): Promise<SCUserConnectionStatusType> {
     return UserApiClient.checkUserConnections(id);
   }
-  static async getUserConnectionRequests(id: number): Promise<any> {
+  static async getUserConnectionRequests(id: number): Promise<SCPaginatedResponse<SCUserConnectionRequestType>> {
     return UserApiClient.getUserConnectionRequests(id);
   }
-  static async getUserRequestConnectionsSent(id: number): Promise<any> {
+  static async getUserRequestConnectionsSent(id: number): Promise<SCPaginatedResponse<SCUserConnectionRequestType>> {
     return UserApiClient.getUserRequestConnectionsSent(id);
   }
   static async userAcceptRequestConnection(id: number): Promise<any> {
@@ -1058,34 +579,34 @@ export default class UserService {
   static async showHideUser(id: number): Promise<any> {
     return UserApiClient.showHideUser(id);
   }
-  static async checkUserHidden(id: number): Promise<any> {
+  static async checkUserHidden(id: number): Promise<SCUserHiddenStatusType> {
     return UserApiClient.checkUserHidden(id);
   }
-  static async checkUserHiddenBy(id: number): Promise<any> {
+  static async checkUserHiddenBy(id: number): Promise<SCUserHiddenByStatusType> {
     return UserApiClient.checkUserHiddenBy(id);
   }
-  static async getUserLoyaltyPoints(id: number): Promise<any> {
+  static async getUserLoyaltyPoints(id: number): Promise<SCUserLoyaltyPointsType> {
     return UserApiClient.getUserLoyaltyPoints(id);
   }
-  static async getUserConnectionStatuses(): Promise<any> {
-    return UserApiClient.getUserConnectionStatuses();
+  static async getUserConnectionStatuses(users: number[]): Promise<any> {
+    return UserApiClient.getUserConnectionStatuses(users);
   }
-  static async userTagToAddressContribution(): Promise<any> {
+  static async userTagToAddressContribution(): Promise<SCTagType> {
     return UserApiClient.userTagToAddressContribution();
   }
-  static async checkUserEmailToken(): Promise<any> {
+  static async checkUserEmailToken(): Promise<SCUserEmailTokenType> {
     return UserApiClient.checkUserEmailToken();
   }
-  static async addUserAvatar(): Promise<any> {
-    return UserApiClient.addUserAvatar();
+  static async addUserAvatar(avatar: SCMediaType): Promise<SCAvatarType> {
+    return UserApiClient.addUserAvatar(avatar);
   }
-  static async getUserAvatars(): Promise<any> {
+  static async getUserAvatars(): Promise<SCAvatarType> {
     return UserApiClient.getUserAvatars();
   }
-  static async removeUserAvatar(): Promise<any> {
-    return UserApiClient.removeUserAvatar();
+  static async removeUserAvatar(avatar_id: number): Promise<any> {
+    return UserApiClient.removeUserAvatar(avatar_id);
   }
-  static async setUserPrimaryAvatar(): Promise<any> {
-    return UserApiClient.setUserPrimaryAvatar();
+  static async setUserPrimaryAvatar(avatar_id: number): Promise<any> {
+    return UserApiClient.setUserPrimaryAvatar(avatar_id);
   }
 }

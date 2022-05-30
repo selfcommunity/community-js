@@ -14,7 +14,7 @@ export interface WebhookApiClientInterface {
   deleteWebhookEndpoint(id: number): Promise<any>;
   getAllWebhookEndpointAttempts(id: number): Promise<SCPaginatedResponse<SCWebhookEndpointAttemptType>>;
   expireWebhookSigningSecret(id: number): Promise<SCWebhookEndpointType>;
-  revealWebhookSigningSecret(id: number, password?: string): Promise<SCWebhookEndpointSecretType>;
+  revealWebhookSigningSecret(id: number): Promise<SCWebhookEndpointSecretType>;
   resendWebhookEndpointEvent(id: number, event: number): Promise<any>;
   resendMultipleWebhookEndpointEvent(id: number, event: number[]): Promise<any>;
 }
@@ -98,14 +98,9 @@ export class WebhookApiClient {
   /**
    * This endpoint reveals the secret associated with this endpoint.
    * @param id
-   * @param password
    */
-  static revealWebhookSigningSecret(id: number, password?: string): Promise<SCWebhookEndpointSecretType> {
-    return apiRequest(
-      Endpoints.WebhookRevealSigningSecret.url({id}),
-      Endpoints.WebhookRevealSigningSecret.method,
-      password ? {password: password} : null
-    );
+  static revealWebhookSigningSecret(id: number): Promise<SCWebhookEndpointSecretType> {
+    return apiRequest(Endpoints.WebhookRevealSigningSecret.url({id}), Endpoints.WebhookRevealSigningSecret.method);
   }
 
   /**
@@ -155,8 +150,8 @@ export default class WebhookService {
   static async expireWebhookSigningSecret(id: number): Promise<SCWebhookEndpointType> {
     return WebhookApiClient.expireWebhookSigningSecret(id);
   }
-  static async revealWebhookSigningSecret(id: number, password?: string): Promise<SCWebhookEndpointSecretType> {
-    return WebhookApiClient.revealWebhookSigningSecret(id, password);
+  static async revealWebhookSigningSecret(id: number): Promise<SCWebhookEndpointSecretType> {
+    return WebhookApiClient.revealWebhookSigningSecret(id);
   }
   static async resendWebhookEndpointEvent(id: number, event: number): Promise<any> {
     return WebhookApiClient.resendWebhookEndpointEvent(id, event);
