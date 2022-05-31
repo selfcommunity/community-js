@@ -9,7 +9,8 @@
   "scripts": {
     "bootstrap": "yarn && lerna bootstrap --use-workspaces && yarn install-peers",
     "install-peers": "install-peers -f",
-    "build": "lerna run build",
+    "build:essentials": "lerna run build --scope @selfcommunity/utils && lerna run build --scope @selfcommunity/types && lerna run build --scope @selfcommunity/api-services ",
+    "build": "yarn run build:essentials && lerna run build --ignore @selfcommunity/utils --ignore @selfcommunity/types --ignore @selfcommunity/api-services",
     "prerelease": "lerna publish --conventional-commits --conventional-prerelease --yes",
     "release": "lerna publish --conventional-commits --conventional-graduate --yes",
     "lint": "lerna run lint",

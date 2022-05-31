@@ -2,12 +2,12 @@ import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {SCRoutingContextType, SCUserContextType, useSCRouting, useSCUser} from '@selfcommunity/react-core';
 import {SCUserType} from '@selfcommunity/types';
-import {ButtonProps, TextFieldProps} from '@mui/material';
+import {TextFieldProps} from '@mui/material';
+import {LoadingButton, LoadingButtonProps} from '@mui/lab';
 import classNames from 'classnames';
 import {FormattedMessage} from 'react-intl';
-import {LoadingButton} from '@mui/lab';
 import EmailTextField from '../../shared/EmailTextField';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 
 const PREFIX = 'SCAccountRecover';
 
@@ -52,7 +52,7 @@ export interface AccountRecoverProps {
    * Default props to submit button Input
    * @default {variant: 'contained'}
    */
-  ButtonProps?: ButtonProps;
+  ButtonProps?: LoadingButtonProps;
 
   /**
    * Other props

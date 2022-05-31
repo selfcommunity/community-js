@@ -25,6 +25,8 @@ export function getHighestSafeWindowContext(self = global.window.self) {
   // If parent is the same origin, we can move up one context
   // Reference: https://stackoverflow.com/a/21965342/1601953
   if (!isCrossOriginFrame()) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
     return getHighestSafeWindowContext(self.parent);
   }
 

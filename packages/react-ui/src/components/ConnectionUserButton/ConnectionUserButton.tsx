@@ -5,7 +5,7 @@ import {SCUserType} from '@selfcommunity/types';
 import {Box} from '@mui/material';
 import FollowUserButton, {FollowUserButtonProps} from '../FollowUserButton';
 import FriendshipUserButton, {FriendshipButtonProps} from '../FriendshipUserButton';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 
 const PREFIX = 'SCConnectionUserButton';
 

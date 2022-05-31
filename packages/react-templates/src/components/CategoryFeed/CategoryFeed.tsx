@@ -17,7 +17,7 @@ import {Endpoints} from '@selfcommunity/api-services';
 import {useSCFetchCategory} from '@selfcommunity/react-core';
 import {SCCategoryType, SCCustomAdvPosition} from '@selfcommunity/types';
 import {CategoryFeedSkeleton} from './index';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 
 const PREFIX = 'SCCategoryFeedTemplate';

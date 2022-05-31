@@ -5,7 +5,7 @@ import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {SCContextType, SCUserContext, SCUserContextType, useSCContext, useSCFetchUser} from '@selfcommunity/react-core';
 import {SCUserType} from '@selfcommunity/types';
 import classNames from 'classnames';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 
 const PREFIX = 'SCFriendshipUserButton';
 

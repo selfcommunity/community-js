@@ -1,19 +1,22 @@
 {
   "extends": "../../tsconfig.base.json",
-
   "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
     "resolveJsonModule": true,
-    "emitDeclarationOnly": true,
-    "incremental": true,            /* Enable incremental compilation */
+    "moduleResolution": "node",
+    "esModuleInterop": true,        /* Enables intero between CommonJS and ES */
     "jsx": "react",
     "allowSyntheticDefaultImports": true,
     "declaration": true,            /* Concatenate & emit output to single file.*/
     "sourceMap": true,
     "declarationMap": true,
-    "outDir": "lib/types",                /* Redirect output to the directory. */
-    "esModuleInterop": true,        /* Enables intero between CommonJS and ES */
+    "outDir": "lib/cjs",                /* Redirect output to the directory. */
     "skipLibCheck": true,           /* Skip type checking of declaration files. */
+    "incremental": true,
     "forceConsistentCasingInFileNames": true /* Disallow inconsistently */
   },
-  "include": ["src/**/*"]
+  "include": [
+    "src/**/*"
+  ]
 }

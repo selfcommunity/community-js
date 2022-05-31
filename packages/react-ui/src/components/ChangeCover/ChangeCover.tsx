@@ -9,7 +9,7 @@ import {FormattedMessage} from 'react-intl';
 import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
 import classNames from 'classnames';
 import CircularProgress from '@mui/material/CircularProgress';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 
 const PREFIX = 'SCChangeCoverButton';
 

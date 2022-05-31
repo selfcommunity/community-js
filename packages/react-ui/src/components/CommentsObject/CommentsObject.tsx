@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import {Box, Button, Stack} from '@mui/material';
 import classNames from 'classnames';
 import CustomAdv from '../CustomAdv';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 import {WidgetProps} from '../Widget';
 import CommentsObjectSkeleton from './Skeleton';
 import {InView} from 'react-intersection-observer';

@@ -3,7 +3,7 @@ import {styled} from '@mui/material/styles';
 import {Box} from '@mui/material';
 import {SCCommentsOrderBy} from '../../../types/comments';
 import classNames from 'classnames';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 import CommentsObject from '../../CommentsObject';
 import ActivitiesMenu from './ActivitiesMenu';
 import {CommentObjectProps} from '../../CommentObject';

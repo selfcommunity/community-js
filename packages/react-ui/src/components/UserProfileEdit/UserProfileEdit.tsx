@@ -9,7 +9,7 @@ import Settings from './Section/Settings';
 import classNames from 'classnames';
 import {DistributiveOmit} from '@mui/types';
 import {OverrideProps} from '@mui/material/OverridableComponent';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 
 const messages = defineMessages({
   realName: {

@@ -6,7 +6,7 @@ import {defineMessages, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../../../shared/DateTimeAgo';
 import {ActionsRelevantActivityProps} from '../ActionsRelevantActivity';
 import classNames from 'classnames';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 import BaseItem from '../../../../../shared/BaseItem';
 
 const messages = defineMessages({

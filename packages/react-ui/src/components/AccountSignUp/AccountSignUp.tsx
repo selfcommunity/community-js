@@ -9,7 +9,7 @@ import {LoadingButton} from '@mui/lab';
 import PasswordTextField from '../../shared/PasswordTextField';
 import EmailTextField from '../../shared/EmailTextField';
 import UsernameTextField from '../../shared/UsernameTextField';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 
 const PREFIX = 'SCAccountSignUp';
 

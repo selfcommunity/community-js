@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import {SCContext, SCContextType} from '@selfcommunity/react-core';
 import MessageMediaUploader from './MessageMediaUploader/index';
 import {FormattedMessage} from 'react-intl';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 
 const PREFIX = 'SCMessageEditor';
 

@@ -7,7 +7,7 @@ import {Logger} from '@selfcommunity/utils';
 import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import BaseDialog from '../../../shared/BaseDialog';
 import classNames from 'classnames';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 import {SCOPE_SC_UI} from '../../../constants/Errors';
 import {LoadingButton} from '@mui/lab';
 

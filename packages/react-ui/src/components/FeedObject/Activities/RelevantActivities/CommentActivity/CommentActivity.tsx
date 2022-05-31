@@ -5,7 +5,7 @@ import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity
 import {defineMessages, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../../../shared/DateTimeAgo';
 import classNames from 'classnames';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 import {ActionsRelevantActivityProps} from '../ActionsRelevantActivity';
 import BaseItem from '../../../../../shared/BaseItem';
 

@@ -14,7 +14,7 @@ import {AutocompletePropsSizeOverrides} from '@mui/material/Autocomplete/Autocom
 import {SCTagType} from '@selfcommunity/types';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import TagChip from '../../../shared/TagChip';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 
 const PREFIX = 'SCComposerAudience';
 

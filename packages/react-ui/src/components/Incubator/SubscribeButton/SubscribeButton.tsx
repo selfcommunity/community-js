@@ -17,7 +17,7 @@ import {
   useSCFetchIncubator
 } from '@selfcommunity/react-core';
 import {useSnackbar} from 'notistack';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 
 const PREFIX = 'SCSubscribeButton';
 

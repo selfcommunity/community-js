@@ -10,7 +10,7 @@ import {FormattedMessage} from 'react-intl';
 import {LoadingButton} from '@mui/lab';
 import PasswordTextField from '../../shared/PasswordTextField';
 import {SCOPE_SC_UI} from '../../constants/Errors';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 
 const PREFIX = 'SCAccountSignIn';
 

@@ -21,7 +21,7 @@ import {DistributiveOmit} from '@mui/types';
 import {OverrideProps} from '@mui/material/OverridableComponent';
 import {useSnackbar} from 'notistack';
 import Widget from '../Widget';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 
 const PREFIX = 'SCInlineComposer';
 

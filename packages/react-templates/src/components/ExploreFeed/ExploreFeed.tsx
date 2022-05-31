@@ -16,7 +16,7 @@ import {
   SCFeedWidgetType
 } from '@selfcommunity/react-ui';
 import {Endpoints} from '@selfcommunity/api-services';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 
 const PREFIX = 'SCExploreFeedTemplate';

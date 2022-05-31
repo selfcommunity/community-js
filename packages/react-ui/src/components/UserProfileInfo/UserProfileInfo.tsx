@@ -8,7 +8,7 @@ import {useSCFetchUser} from '@selfcommunity/react-core';
 import {DEFAULT_FIELDS} from '../../constants/UserProfile';
 import UserProfileInfoSkeleton from './Skeleton';
 import classNames from 'classnames';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 
 const messages = defineMessages({
   realName: {
