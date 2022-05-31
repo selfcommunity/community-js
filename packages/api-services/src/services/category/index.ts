@@ -16,9 +16,9 @@ export interface CategoryApiClientInterface {
   getCategoryFeed(id: number): Promise<SCPaginatedResponse<SCFeedUnitType>>;
   getCategoryTrendingFeed(id: number, params?: BaseGetParams): Promise<SCPaginatedResponse<SCFeedUnitType>>;
   getCategoryTrendingFollowers(id: number): Promise<SCPaginatedResponse<SCUserType>>;
-  followCategory(id: number): Promise<any>;
-  checkCategoryIsFollowed(id: number): Promise<SCCategoryFollowedStatusType>;
-  getFollowedCategories(params?: CategoryParams): Promise<SCPaginatedResponse<SCCategoryType>>;
+  followCategory(id: number, token: string): Promise<any>;
+  checkCategoryIsFollowed(id: number, token: string): Promise<SCCategoryFollowedStatusType>;
+  getFollowedCategories(token: string, params?: CategoryParams): Promise<SCPaginatedResponse<SCCategoryType>>;
   getPopularCategories(params?: BaseGetParams): Promise<SCPaginatedResponse<SCCategoryType>>;
 }
 
@@ -49,7 +49,7 @@ export class CategoryApiClient {
    * @param data
    */
   static createCategory(data: SCCategoryType): Promise<SCCategoryType> {
-    return apiRequest(Endpoints.CreateCategory.url({}), Endpoints.CreateCategory.method, data);
+    return apiRequest(Endpoints.CreateCategory.url({}), Endpoints.CreateCategory.method, null, data);
   }
 
   /**
@@ -66,7 +66,7 @@ export class CategoryApiClient {
    * @param data
    */
   static updateASpecificCategory(id: number, data: SCCategoryType): Promise<SCCategoryType> {
-    return apiRequest(Endpoints.UpdateCategory.url({id}), Endpoints.UpdateCategory.method, data);
+    return apiRequest(Endpoints.UpdateCategory.url({id}), Endpoints.UpdateCategory.method, null, data);
   }
 
   /**
@@ -75,7 +75,7 @@ export class CategoryApiClient {
    * @param data
    */
   static patchASpecificCategory(id: number, data: SCCategoryType): Promise<SCCategoryType> {
-    return apiRequest(Endpoints.PatchCategory.url({id}), Endpoints.PatchCategory.method, data);
+    return apiRequest(Endpoints.PatchCategory.url({id}), Endpoints.PatchCategory.method, null, data);
   }
 
   /**
@@ -131,26 +131,29 @@ export class CategoryApiClient {
   /**
    * This endpoint follows a category.
    * @param id
+   * @param token
    */
-  static followCategory(id: number): Promise<any> {
-    return apiRequest(Endpoints.FollowCategory.url({id}), Endpoints.FollowCategory.method);
+  static followCategory(id: number, token: string): Promise<any> {
+    return apiRequest(Endpoints.FollowCategory.url({id}), Endpoints.FollowCategory.method, token);
   }
 
   /**
    * This endpoint returns is_followed = true if the category (identified in path) is followed by the authenticated user.
    * @param id
+   * @param token
    */
-  static checkCategoryIsFollowed(id: number): Promise<SCCategoryFollowedStatusType> {
-    return apiRequest(Endpoints.CheckCategoryIsFollowed.url({id}), Endpoints.CheckCategoryIsFollowed.method);
+  static checkCategoryIsFollowed(id: number, token: string): Promise<SCCategoryFollowedStatusType> {
+    return apiRequest(Endpoints.CheckCategoryIsFollowed.url({id}), Endpoints.CheckCategoryIsFollowed.method, token);
   }
 
   /**
    * This endpoint retrieves all followed categories by the user.
    * @param params
+   * @param token
    */
-  static getFollowedCategories(params?: CategoryParams): Promise<SCPaginatedResponse<SCCategoryType>> {
+  static getFollowedCategories(token: string, params?: CategoryParams): Promise<SCPaginatedResponse<SCCategoryType>> {
     const p = new URLSearchParams(params);
-    return apiRequest(`${Endpoints.CategoriesFollowed.url({})}?${p.toString()}`, Endpoints.CategoriesFollowed.method);
+    return apiRequest(`${Endpoints.CategoriesFollowed.url({})}?${p.toString()}`, Endpoints.CategoriesFollowed.method, token);
   }
 
   /**
@@ -212,16 +215,16 @@ export default class CategoryService {
     return CategoryApiClient.getCategoryTrendingFollowers(id);
   }
 
-  static async followCategory(id: number): Promise<any> {
-    return CategoryApiClient.followCategory(id);
+  static async followCategory(id: number, token: string): Promise<any> {
+    return CategoryApiClient.followCategory(id, token);
   }
 
-  static async checkCategoryIsFollowed(id: number): Promise<SCCategoryFollowedStatusType> {
-    return CategoryApiClient.checkCategoryIsFollowed(id);
+  static async checkCategoryIsFollowed(id: number, token: string): Promise<SCCategoryFollowedStatusType> {
+    return CategoryApiClient.checkCategoryIsFollowed(id, token);
   }
 
-  static async getFollowedCategories(params?: CategoryParams): Promise<SCPaginatedResponse<SCCategoryType>> {
-    return CategoryApiClient.getFollowedCategories(params);
+  static async getFollowedCategories(token: string, params?: CategoryParams): Promise<SCPaginatedResponse<SCCategoryType>> {
+    return CategoryApiClient.getFollowedCategories(token, params);
   }
 
   static async getPopularCategories(params?: BaseGetParams): Promise<SCPaginatedResponse<SCCategoryType>> {

@@ -1,6 +1,8 @@
 import client from '../client';
 
-export function apiRequest(url: string, method: string, headers?: any, data?: any) {
+export function apiRequest(url: string, method: string, token?: string, headers?: any, data?: any) {
+  client.setBasePortal(process.env.SERVICES_PLATFORM_URL);
+  client.setAuthorizeToken(token);
   return client
     .request({
       url,
