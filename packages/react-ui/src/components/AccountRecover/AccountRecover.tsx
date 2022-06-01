@@ -2,8 +2,7 @@ import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {SCRoutingContextType, SCUserContextType, useSCRouting, useSCUser} from '@selfcommunity/react-core';
 import {SCUserType} from '@selfcommunity/types';
-import {TextFieldProps} from '@mui/material';
-import {LoadingButton, LoadingButtonProps} from '@mui/lab';
+import {Button, ButtonProps, TextFieldProps} from '@mui/material';
 import classNames from 'classnames';
 import {FormattedMessage} from 'react-intl';
 import EmailTextField from '../../shared/EmailTextField';
@@ -52,7 +51,7 @@ export interface AccountRecoverProps {
    * Default props to submit button Input
    * @default {variant: 'contained'}
    */
-  ButtonProps?: LoadingButtonProps;
+  ButtonProps?: ButtonProps;
 
   /**
    * Other props
@@ -130,9 +129,9 @@ export default function AccountRecover(inProps: AccountRecoverProps): JSX.Elemen
         error={Boolean(emailError)}
         helperText={emailError}
       />
-      <LoadingButton type="submit" {...ButtonProps} loading={isSubmitting} disabled={!email}>
+      <Button type="submit" {...ButtonProps} disabled={!email || isSubmitting}>
         <FormattedMessage id="ui.accountRecover.submit" defaultMessage="ui.accountRecover.submit" />
-      </LoadingButton>
+      </Button>
     </Root>
   );
 }
