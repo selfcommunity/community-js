@@ -2,7 +2,7 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "target": "es6",
-    "module": "commonjs",
+    "module": "ES6",
     "resolveJsonModule": true,
     "moduleResolution": "node",
     "esModuleInterop": true,        /* Enables intero between CommonJS and ES */
@@ -11,9 +11,8 @@
     "declaration": true,            /* Concatenate & emit output to single file.*/
     "sourceMap": true,
     "declarationMap": true,
-    "outDir": "lib/cjs",                /* Redirect output to the directory. */
+    "outDir": "lib/esm",                /* Redirect output to the directory. */
     "skipLibCheck": true,           /* Skip type checking of declaration files. */
-    "incremental": true,
     "forceConsistentCasingInFileNames": true /* Disallow inconsistently */
   },
   "include": [
