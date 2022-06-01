@@ -282,7 +282,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   // MODERATION FLAGS STATE
-  const [flagType, setFlagType] = useState<string>(null);
+  const [flagType, setFlagType] = useState<number>(null);
   const [isFlagging, setIsFlagging] = useState<boolean>(false);
 
   // MODERATION HIDE STATE

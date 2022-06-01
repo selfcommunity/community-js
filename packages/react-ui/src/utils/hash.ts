@@ -2,7 +2,8 @@ import SparkMD5 from 'spark-md5';
 
 export const md5 = (file, chunkSize, callback) => {
   chunkSize = chunkSize || 2097152; // Read in chunks of 2MB
-  var blobSlice = File.prototype.slice || File.prototype.mozSlice || File.prototype.webkitSlice,
+  // eslint-disable-next-line @typescript-eslint/unbound-method
+  let blobSlice = File.prototype.slice || File.prototype['mozSlice'] || File.prototype['webkitSlice'],
     chunks = Math.ceil(file.size / chunkSize),
     currentChunk = 0,
     spark = new SparkMD5.ArrayBuffer(),
@@ -25,7 +26,7 @@ export const md5 = (file, chunkSize, callback) => {
   };
 
   function loadNext() {
-    var start = currentChunk * chunkSize,
+    let start = currentChunk * chunkSize,
       end = start + chunkSize >= file.size ? file.size : start + chunkSize;
 
     fileReader.readAsArrayBuffer(blobSlice.call(file, start, end));
