@@ -1,7 +1,7 @@
 import client from '../client';
 
 export function apiRequest(url: string, method: string, token?: string, headers?: any, data?: any) {
-  client.setBasePortal(process.env.SERVICES_PLATFORM_URL);
+  client.setBasePortal(process.env.STORYBOOK_PLATFORM_URL);
   client.setAuthorizeToken(token);
   return client
     .request({
