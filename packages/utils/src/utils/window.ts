@@ -34,3 +34,7 @@ export function getHighestSafeWindowContext(self = global.window.self) {
   // as the top reachable one
   return self;
 }
+
+export function isClientSideRendering() {
+  return typeof window !== 'undefined';
+}
