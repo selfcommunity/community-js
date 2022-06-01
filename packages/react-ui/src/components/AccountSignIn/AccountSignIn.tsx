@@ -4,10 +4,10 @@ import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
 import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import {SCAuthTokenType} from '@selfcommunity/types';
-import {ButtonProps, TextField, TextFieldProps} from '@mui/material';
+import {TextField, TextFieldProps} from '@mui/material';
 import classNames from 'classnames';
 import {FormattedMessage} from 'react-intl';
-import {LoadingButton} from '@mui/lab';
+import LoadingButton, {LoadingButtonProps} from '@mui/lab/LoadingButton';
 import PasswordTextField from '../../shared/PasswordTextField';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {useThemeProps} from '@mui/system';
@@ -62,7 +62,7 @@ export interface AccountSignInProps {
    * Default props to submit button Input
    * @default {variant: 'contained'}
    */
-  ButtonProps?: ButtonProps;
+  ButtonProps?: LoadingButtonProps;
 
   /**
    * Other props
