@@ -2,7 +2,7 @@ import React, {createContext, useContext, useEffect, useMemo, useRef} from 'reac
 import {UserService} from '@selfcommunity/api-services';
 import {SCContext} from '../SCContextProvider';
 import useSCAuth, {userActionTypes} from '../../../hooks/useSCAuth';
-import {Logger} from '@selfcommunity/utils';
+import {isClientSideRendering, Logger} from '@selfcommunity/utils';
 import PubSub from 'pubsub-js';
 import {SCOPE_SC_CORE} from '../../../constants/Errors';
 import useDeepCompareEffect from 'use-deep-compare-effect';
@@ -116,7 +116,7 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
    * Refresh followed categories, users, etc..
    */
   function handleVisibilityChange() {
-    if (typeof window !== 'undefined' && !window.document.hidden && state.user) {
+    if (isClientSideRendering() && !window.document.hidden && state.user) {
       categoriesManager.refresh && categoriesManager.refresh();
       followedManager.refresh && followedManager.refresh();
       connectionsManager.refresh && connectionsManager.refresh();

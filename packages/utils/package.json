@@ -25,8 +25,8 @@
     "prettier-list-different": "prettier './**/*.js' './**/*.css' './**/*.md' --list-different",
     "clean:lib": "rimraf lib",
     "clean:node_modules": "rimraf node_modules",
-    "build:commonjs": "tsc -b tsconfig.build.cjs.json",
-    "build:esm": "tsc -b tsconfig.build.esm.json",
+    "build:commonjs": "tsc -b tsconfig-cjs.build.json",
+    "build:esm": "tsc -b tsconfig-esm.build.json",
     "build:umd": "webpack --mode production",
     "build": "yarn clean:lib && yarn build:commonjs && yarn build:esm && yarn build:umd",
     "prerelease": "yarn run clean:lib && yarn run build"
