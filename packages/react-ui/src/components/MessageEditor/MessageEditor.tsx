@@ -2,12 +2,17 @@ import React, {useContext, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Box, Button, IconButton, InputAdornment, Popover, Stack, TextField} from '@mui/material';
 import Icon from '@mui/material/Icon';
-import Picker from 'emoji-picker-react';
 import classNames from 'classnames';
 import {SCContext, SCContextType} from '@selfcommunity/react-core';
 import MessageMediaUploader from './MessageMediaUploader/index';
 import {FormattedMessage} from 'react-intl';
 import {useThemeProps} from '@mui/system';
+// import deps only if csr
+let Picker;
+typeof window !== 'undefined' &&
+  import('emoji-picker-react').then((_module) => {
+    Picker = _module.default;
+  });
 
 const PREFIX = 'SCMessageEditor';
 
@@ -210,7 +215,7 @@ export default function MessageEditor(inProps: MessageEditorProps): JSX.Element 
                             sx={(theme) => {
                               return {zIndex: theme.zIndex.tooltip};
                             }}>
-                            <Picker onEmojiClick={handleEmojiClick} />
+                            {Picker && <Picker onEmojiClick={handleEmojiClick} />}
                           </Popover>
                         </div>
                       </Stack>
