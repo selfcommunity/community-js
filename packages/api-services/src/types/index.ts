@@ -25,6 +25,7 @@ import {BaseGetParams, BaseSearchParams} from './baseParams';
 import {FeedObjGetParams, FeedObjCreateParams, FeedObjectPollVotesSearch} from './feedObject';
 import {FeedParams} from './feed';
 import {LegalPageFilterParams} from './legalPage';
+import {FeatureParams} from './feature';
 
 export {
   SCPaginatedResponse,
@@ -65,5 +66,6 @@ export {
   FeedObjCreateParams,
   FeedObjectPollVotesSearch,
   FeedParams,
-  LegalPageFilterParams
+  LegalPageFilterParams,
+  FeatureParams
 };
