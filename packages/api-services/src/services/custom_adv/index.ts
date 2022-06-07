@@ -4,7 +4,7 @@ import {SCCustomAdvType} from '@selfcommunity/types';
 import {CustomAdvParams, SCPaginatedResponse} from '../../types';
 
 export interface CustomAdvApiClientInterface {
-  getASpecificCustomAdv(id: number): Promise<SCPaginatedResponse<SCCustomAdvType>>;
+  getASpecificCustomAdv(id: number): Promise<SCCustomAdvType>;
   getAllCustomAdv(params?: CustomAdvParams): Promise<SCPaginatedResponse<SCCustomAdvType>>;
   searchCustomAdv(params?: CustomAdvParams): Promise<SCPaginatedResponse<SCCustomAdvType>>;
 }
@@ -17,7 +17,7 @@ export class CustomAdvApiClient {
    * This endpoint retrieves a specific custom adv.
    * @param id
    */
-  static getASpecificCustomAdv(id: number): Promise<SCPaginatedResponse<SCCustomAdvType>> {
+  static getASpecificCustomAdv(id: number): Promise<SCCustomAdvType> {
     return apiRequest(Endpoints.CustomAdv.url({id}), Endpoints.CustomAdv.method);
   }
 
@@ -41,7 +41,7 @@ export class CustomAdvApiClient {
 }
 
 export default class CustomAdvService {
-  static async getASpecificCustomAdv(id: number): Promise<SCPaginatedResponse<SCCustomAdvType>> {
+  static async getASpecificCustomAdv(id: number): Promise<SCCustomAdvType> {
     return CustomAdvApiClient.getASpecificCustomAdv(id);
   }
   static async getAllCustomAdv(params?: CustomAdvParams): Promise<SCPaginatedResponse<SCCustomAdvType>> {

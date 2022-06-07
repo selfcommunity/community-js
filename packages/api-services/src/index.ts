@@ -86,7 +86,8 @@ import {
   FeedObjCreateParams,
   FeedObjectPollVotesSearch,
   FeedParams,
-  LegalPageFilterParams
+  LegalPageFilterParams,
+  FeatureParams
 } from './types';
 
 /**
@@ -215,5 +216,6 @@ export {
   FeedObjCreateParams,
   FeedObjectPollVotesSearch,
   FeedParams,
-  LegalPageFilterParams
+  LegalPageFilterParams,
+  FeatureParams
 };

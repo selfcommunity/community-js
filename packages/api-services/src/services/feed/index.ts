@@ -42,6 +42,7 @@ export class FeedApiClient {
 
   /**
    * This endpoint marks as read a list of objects in the feed. Usually it is called when a Feed object enter the viewport of the user.
+   * @param object
    */
   static markReadASpecificFeedObj(object: number[]): Promise<any> {
     return apiRequest(Endpoints.FeedObjectMarkRead.url({}), Endpoints.FeedObjectMarkRead.method, {object: object});
@@ -49,6 +50,7 @@ export class FeedApiClient {
 
   /**
    * This endpoint retrieves a list of Feed objects similar to the id of passed objects
+   * @param object
    */
   static likeFeedObjs(object: number[]): Promise<SCPaginatedResponse<SCFeedUnitType>> {
     return apiRequest(Endpoints.FeedLikeThese.url({}), Endpoints.FeedLikeThese.method, {object: object});

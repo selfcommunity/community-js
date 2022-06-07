@@ -10,7 +10,7 @@ export interface EmbedApiClientInterface {
   getSpecificEmbed(id: number): Promise<SCEmbedType>;
   updateASpecificEmbed(id: number, data?: EmbedUpdateParams): Promise<SCEmbedType>;
   patchASpecificEmbed(id: number, data?: EmbedUpdateParams): Promise<SCEmbedType>;
-  getEmbedFeed(): Promise<SCPaginatedResponse<SCFeedUnitType>>;
+  getEmbedFeed(embed_type?: string, embed_id?: string): Promise<SCPaginatedResponse<SCFeedUnitType>>;
   getSpecificEmbedFeed(id: number): Promise<SCPaginatedResponse<SCFeedUnitType>>;
 }
 /**
@@ -28,7 +28,7 @@ export class EmbedApiClient {
   }
 
   /**
-   * This endpoint creates an embed.
+   * This endpoint creates an embed. This operation requires admin role.
    * @param data
    */
   static createEmbed(data: SCEmbedType): Promise<SCEmbedType> {
@@ -53,7 +53,7 @@ export class EmbedApiClient {
   }
 
   /**
-   * This endpoint updates a specific embed.
+   * This endpoint updates a specific embed. This operation requires admin role.
    * @param id
    * @param data
    */
@@ -62,7 +62,7 @@ export class EmbedApiClient {
   }
 
   /**
-   * This endpoint patches a specific embed.
+   * This endpoint patches a specific embed. This operation requires admin role.
    * @param id
    * @param data
    */
@@ -72,9 +72,12 @@ export class EmbedApiClient {
 
   /**
    * This endpoint retrieves the embed's feed which contains Feed that has the Embed as associated media.
+   * @param embed_type
+   * @param embed_id
    */
-  static getEmbedFeed(): Promise<SCPaginatedResponse<SCFeedUnitType>> {
-    return apiRequest(Endpoints.EmbedFeed.url({}), Endpoints.EmbedFeed.method);
+  static getEmbedFeed(embed_type?: string, embed_id?: string): Promise<SCPaginatedResponse<SCFeedUnitType>> {
+    const p = new URLSearchParams({embed_type: embed_type, embed_id: embed_id});
+    return apiRequest(`${Endpoints.EmbedFeed.url({})}?${p.toString()}`, Endpoints.EmbedFeed.method);
   }
 
   /**
@@ -111,8 +114,8 @@ export default class EmbedService {
     return EmbedApiClient.patchASpecificEmbed(id, data);
   }
 
-  static async getEmbedFeed(): Promise<SCPaginatedResponse<SCFeedUnitType>> {
-    return EmbedApiClient.getEmbedFeed();
+  static async getEmbedFeed(embed_type?: string, embed_id?: string): Promise<SCPaginatedResponse<SCFeedUnitType>> {
+    return EmbedApiClient.getEmbedFeed(embed_type, embed_id);
   }
 
   static async getSpecificEmbedFeed(id: number): Promise<SCPaginatedResponse<SCFeedUnitType>> {
