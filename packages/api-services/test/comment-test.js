@@ -8,6 +8,7 @@ describe('Comment Service Test', () => {
   let token;
   let feedObjId;
   let comment;
+  const loggedUser = 7;
   beforeAll(async () => {
     token = await generateJWTToken(process.env.SERVICES_USER_ID, process.env.SERVICES_SECRET_KEY);
   });
@@ -60,16 +61,14 @@ describe('Comment Service Test', () => {
       expect(data).toBe('');
     });
   });
-  describe('Flag a comment', () => {
-    test('Flag a comment', () => {
-      if (comment.author.id !== 7) {
-        return CommentService.flagComment(token, comment.id, SCFlagTypeEnum.SPAM).then((data) => {
-          expect(data).toBe('');
-        });
-      } else {
-        test.skip;
-      }
-    });
+  test('Flag a comment', () => {
+    if (comment.author.id !== loggedUser) {
+      return CommentService.flagComment(token, comment.id, SCFlagTypeEnum.SPAM).then((data) => {
+        expect(data).toBe('');
+      });
+    } else {
+      test.skip;
+    }
   });
   test('Get a specific comment flag list', () => {
     return CommentService.getSpecificCommentFlags(token, comment.id).then((data) => {
