@@ -1,11 +1,12 @@
 import client from '../client';
 
-export function apiRequest(url: string, method: string, headers?: any, data?: any) {
+export function apiRequest(url: string, method: string, token?: string, data?: any) {
+  client.setBasePortal(process.env.STORYBOOK_PLATFORM_URL);
+  client.setAuthorizeToken(token);
   return client
     .request({
       url,
       method,
-      headers,
       data: data ?? null
     })
     .then((res: any) => {
