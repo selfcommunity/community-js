@@ -1,12 +1,7 @@
-import {CategoryService, generateJWTToken} from '../src/index';
-import {SCFeedObjectTypologyType} from '@selfcommunity/types/src/types';
+import {CategoryService} from '../src/index';
 
 describe('Category Service Test', () => {
   let category;
-  let token;
-  beforeAll(async () => {
-    token = await generateJWTToken(process.env.SERVICES_USER_ID, process.env.SERVICES_SECRET_KEY);
-  });
   test('Get all categories', () => {
     return CategoryService.getAllCategories().then((data) => {
       category = data.results[0];
@@ -57,31 +52,35 @@ describe('Category Service Test', () => {
   });
   test('Get category followers', () => {
     return CategoryService.getCategoryFollowers(category.id).then((data) => {
-      expect(data.results[0]).toHaveProperty('username');
+      if (data.count !== 0) {
+        expect(data.results[0]).toHaveProperty('username');
+      } else {
+        expect(data.results).toBeInstanceOf(Array);
+      }
     });
   });
   test('Get category feed', () => {
     return CategoryService.getCategoryFeed(category.id).then((data) => {
-      expect(data.results[0].type).toMatch(SCFeedObjectTypologyType.POST || SCFeedObjectTypologyType.DISCUSSION || SCFeedObjectTypologyType.STATUS);
+      expect(data.results).toBeInstanceOf(Array);
     });
   });
   test('Get category trending feed', () => {
     return CategoryService.getCategoryTrendingFeed(category.id).then((data) => {
-      expect(data.results[0].type).toMatch(SCFeedObjectTypologyType.POST || SCFeedObjectTypologyType.DISCUSSION || SCFeedObjectTypologyType.STATUS);
+      expect(data.results).toBeInstanceOf(Array);
     });
   });
   test('Follow category', () => {
-    return CategoryService.followCategory(category.id, token).then((data) => {
+    return CategoryService.followCategory(category.id).then((data) => {
       expect(data).toBe('');
     });
   });
   test('Check if category is followed', () => {
-    return CategoryService.checkCategoryIsFollowed(category.id, token).then((data) => {
+    return CategoryService.checkCategoryIsFollowed(category.id).then((data) => {
       expect(data).toHaveProperty('is_followed');
     });
   });
   test('Get followed categories', () => {
-    return CategoryService.getFollowedCategories(token, null).then((data) => {
+    return CategoryService.getFollowedCategories().then((data) => {
       expect(data.results).toBeInstanceOf(Array);
     });
   });

@@ -1,13 +1,8 @@
-import {generateJWTToken} from '../src/utils/token';
 import {EmbedService} from '../src/index';
 import {getRandomInt} from './utils/random';
 
 describe('Embed Service Test', () => {
-  let token;
   let embed;
-  beforeAll(async () => {
-    token = await generateJWTToken(process.env.SERVICES_USER_ID, process.env.SERVICES_SECRET_KEY);
-  });
   test('Get all Embeds', () => {
     return EmbedService.getAllEmbeds().then((data) => {
       expect(data.results).toBeInstanceOf(Array);
@@ -15,7 +10,7 @@ describe('Embed Service Test', () => {
   });
   test('Create an embed', () => {
     const body = {embed_type: 'image', embed_id: getRandomInt()};
-    return EmbedService.createEmbed(token, body).then((data) => {
+    return EmbedService.createEmbed(body).then((data) => {
       expect(data).toBeInstanceOf(Object);
       embed = data;
     });
@@ -31,12 +26,12 @@ describe('Embed Service Test', () => {
     });
   });
   test('Update a specific embed', () => {
-    return EmbedService.updateASpecificEmbed(token, embed.id).then((data) => {
+    return EmbedService.updateASpecificEmbed(embed.id).then((data) => {
       expect(data).toBeInstanceOf(Object);
     });
   });
   test('Patch a specific embed', () => {
-    return EmbedService.patchASpecificEmbed(token, embed.id).then((data) => {
+    return EmbedService.patchASpecificEmbed(embed.id).then((data) => {
       expect(data).toBeInstanceOf(Object);
     });
   });

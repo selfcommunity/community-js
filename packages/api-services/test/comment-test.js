@@ -1,17 +1,12 @@
-import {generateJWTToken} from '../src/utils/token';
 import {CommentService, FeedObjectService} from '../src/index';
 import {SCFeedObjectTypologyType} from '@selfcommunity/types/src/types';
 import {generateString} from './utils/random';
-import {SCFlagTypeEnum} from '../lib/types/src';
+import {SCFlagTypeEnum} from '@selfcommunity/types';
 
 describe('Comment Service Test', () => {
-  let token;
   let feedObjId;
   let comment;
   const loggedUser = 7;
-  beforeAll(async () => {
-    token = await generateJWTToken(process.env.SERVICES_USER_ID, process.env.SERVICES_SECRET_KEY);
-  });
   test('Get all discussions', () => {
     return FeedObjectService.getAllFeedObjects(SCFeedObjectTypologyType.DISCUSSION).then((data) => {
       feedObjId = data.results[0].id;
@@ -25,7 +20,7 @@ describe('Comment Service Test', () => {
   });
   test('Create a comment', () => {
     const body = {discussion: feedObjId, text: generateString()};
-    return CommentService.createComment(token, body).then((data) => {
+    return CommentService.createComment(body).then((data) => {
       expect(data.summary).toBe(body.text);
       comment = data;
     });
@@ -37,17 +32,17 @@ describe('Comment Service Test', () => {
   });
   test('Update a comment', () => {
     const text = generateString();
-    return CommentService.updateComment(token, comment.id, text).then((data) => {
+    return CommentService.updateComment(comment.id, text).then((data) => {
       expect(data.summary).toBe(text);
     });
   });
   test('Delete a comment', () => {
-    return CommentService.deleteComment(token, comment.id).then((data) => {
+    return CommentService.deleteComment(comment.id).then((data) => {
       expect(data).toBe('');
     });
   });
   test('Restore a comment', () => {
-    return CommentService.restoreComment(token, comment.id).then((data) => {
+    return CommentService.restoreComment(comment.id).then((data) => {
       expect(data).toBe('');
     });
   });
@@ -57,13 +52,13 @@ describe('Comment Service Test', () => {
     });
   });
   test('Upvote a comment', () => {
-    return CommentService.upvoteComment(token, comment.id).then((data) => {
+    return CommentService.upvoteComment(comment.id).then((data) => {
       expect(data).toBe('');
     });
   });
   test('Flag a comment', () => {
     if (comment.author.id !== loggedUser) {
-      return CommentService.flagComment(token, comment.id, SCFlagTypeEnum.SPAM).then((data) => {
+      return CommentService.flagComment(comment.id, SCFlagTypeEnum.SPAM).then((data) => {
         expect(data).toBe('');
       });
     } else {
@@ -71,12 +66,12 @@ describe('Comment Service Test', () => {
     }
   });
   test('Get a specific comment flag list', () => {
-    return CommentService.getSpecificCommentFlags(token, comment.id).then((data) => {
+    return CommentService.getSpecificCommentFlags(comment.id).then((data) => {
       expect(data).toHaveProperty('count');
     });
   });
   test('Get a specific comment flag status', () => {
-    return CommentService.getSpecificCommentFlagStatus(token, comment.id).then((data) => {
+    return CommentService.getSpecificCommentFlagStatus(comment.id).then((data) => {
       expect(data).toBeInstanceOf(Object);
     });
   });
