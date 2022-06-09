@@ -1,11 +1,11 @@
 import Endpoints from '../../constants/Endpoints';
-import {SCPaginatedResponse} from '../../types';
+import {BaseSearchParams, SCPaginatedResponse} from '../../types';
 import {apiRequest} from '../../utils/apiRequest';
 import {SCLocalityType} from '@selfcommunity/types';
 
 export interface LocalityApiClientInterface {
-  getLocalities(): Promise<SCPaginatedResponse<SCLocalityType>>;
-  searchLocalities(): Promise<SCPaginatedResponse<SCLocalityType>>;
+  getLocalities(params?: BaseSearchParams): Promise<SCPaginatedResponse<SCLocalityType>>;
+  searchLocalities(params?: BaseSearchParams): Promise<SCPaginatedResponse<SCLocalityType>>;
 }
 /**
  * Contains all the endpoints needed to manage localities.
@@ -14,24 +14,28 @@ export interface LocalityApiClientInterface {
 export class LocalityApiClient {
   /**
    * This endpoint retrieves the list of available localities.
+   * @param params
    */
-  static getLocalities(): Promise<SCPaginatedResponse<SCLocalityType>> {
-    return apiRequest(Endpoints.GetLocalities.url({}), Endpoints.GetLocalities.method);
+  static getLocalities(params?: BaseSearchParams): Promise<SCPaginatedResponse<SCLocalityType>> {
+    const p = new URLSearchParams(params);
+    return apiRequest(`${Endpoints.GetLocalities.url({})}?${p.toString()}`, Endpoints.GetLocalities.method);
   }
 
   /**
    * This endpoint searches localities
+   * @param params
    */
-  static searchLocalities(): Promise<SCPaginatedResponse<SCLocalityType>> {
-    return apiRequest(Endpoints.ComposerLocalitySearch.url({}), Endpoints.ComposerLocalitySearch.method);
+  static searchLocalities(params?: BaseSearchParams): Promise<SCPaginatedResponse<SCLocalityType>> {
+    const p = new URLSearchParams(params);
+    return apiRequest(`${Endpoints.ComposerLocalitySearch.url({})}?${p.toString()}`, Endpoints.ComposerLocalitySearch.method);
   }
 }
 
 export default class LocalityService {
-  static async getLocalities(): Promise<SCPaginatedResponse<SCLocalityType>> {
-    return LocalityApiClient.getLocalities();
+  static async getLocalities(params?: BaseSearchParams): Promise<SCPaginatedResponse<SCLocalityType>> {
+    return LocalityApiClient.getLocalities(params);
   }
-  static async searchLocalities(): Promise<SCPaginatedResponse<SCLocalityType>> {
-    return LocalityApiClient.searchLocalities();
+  static async searchLocalities(params?: BaseSearchParams): Promise<SCPaginatedResponse<SCLocalityType>> {
+    return LocalityApiClient.searchLocalities(params);
   }
 }

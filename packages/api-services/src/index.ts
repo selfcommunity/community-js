@@ -63,6 +63,7 @@ import {
   UserScoreParams,
   UserSearchParams,
   TagParams,
+  TagGetParams,
   MediaCreateParams,
   MediaTypes,
   ChunkType,
@@ -87,7 +88,12 @@ import {
   FeedObjectPollVotesSearch,
   FeedParams,
   LegalPageFilterParams,
-  FeatureParams
+  FeatureParams,
+  ScoreParams,
+  InsightContributionParams,
+  InsightUserParams,
+  InsightEmbedParams,
+  InsightCommonParams
 } from './types';
 
 /**
@@ -193,6 +199,7 @@ export {
   UserScoreParams,
   UserSearchParams,
   TagParams,
+  TagGetParams,
   MediaCreateParams,
   MediaTypes,
   ChunkUploadParams,
@@ -217,5 +224,10 @@ export {
   FeedObjectPollVotesSearch,
   FeedParams,
   LegalPageFilterParams,
-  FeatureParams
+  FeatureParams,
+  ScoreParams,
+  InsightContributionParams,
+  InsightUserParams,
+  InsightEmbedParams,
+  InsightCommonParams
 };

@@ -15,7 +15,7 @@ export interface ModerateContributionParams {
   /**
    * The user id of the contribution flagger to scold (use only with action=scold_flagger)
    */
-  user: number;
+  user?: number;
   /**
    * An integer value to describe the moderation activity if action is one between scold_author, hide or delete. This param is not needed if the contribute is already hidden or deleted (you are restoring).
    */
