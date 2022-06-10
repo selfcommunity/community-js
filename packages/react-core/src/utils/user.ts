@@ -6,6 +6,7 @@ import {SCUserStatus, SCUserType} from '@selfcommunity/types';
  */
 export const ADMIN_ROLE = 'admin';
 export const MODERATOR_ROLE = 'moderator';
+export const EDITOR_ROLE = 'editor';
 
 /**
  * Get user role from roles(set)
@@ -19,6 +20,8 @@ export function getUserRole(user: SCUserType): string | null {
       return ADMIN_ROLE;
     } else if (role === MODERATOR_ROLE) {
       return MODERATOR_ROLE;
+    } else if (role === EDITOR_ROLE) {
+      return EDITOR_ROLE;
     }
   }
   return null;
@@ -43,12 +46,21 @@ export function isModerator(user: SCUserType) {
 }
 
 /**
+ * Check if user is editor
+ * @param user
+ * @returns boolean
+ */
+export function isEditor(user: SCUserType) {
+  return getUserRole(user) === EDITOR_ROLE;
+}
+
+/**
  * Check if user is admin or moderator
  * @param user
  * @returns boolean
  */
 export function isStaff(user: SCUserType) {
-  return isAdmin(user) || isModerator(user);
+  return isAdmin(user) || isModerator(user) || isEditor(user);
 }
 
 /**
