@@ -22,6 +22,8 @@ describe('Feed Object Service Test', () => {
     });
   });
   test('Create a feedObj', () => {
+    const pollExp = new Date();
+    pollExp.setDate(pollExp.getDate() + 20);
     const body = {
       title: generateString(),
       addressing: [],
@@ -32,7 +34,7 @@ describe('Feed Object Service Test', () => {
       poll: {
         title: generateString(),
         multiple_choices: true,
-        expiration_at: '2099-01-01',
+        expiration_at: pollExp.toISOString().split('T')[0],
         choices: [{choice: generateString()}, {choice: generateString()}]
       }
     };
@@ -51,12 +53,27 @@ describe('Feed Object Service Test', () => {
       expect(data).toBeInstanceOf(Object);
     });
   });
-  // test('Update a feedObj', () => {
-  //   const title = {text: feedObj.title};
-  //   return FeedObjectService.updateFeedObject(discussion, feedObj.id, title).then((data) => {
-  //     expect(data[discussion].title).toBe(title.title);
-  //   });
-  // });
+  test('Update a feedObj', () => {
+    const newPollExp = new Date();
+    newPollExp.setDate(newPollExp.getDate() + 20);
+    const body = {
+      title: generateString(),
+      addressing: [],
+      text: generateString(),
+      medias: [],
+      categories: [1],
+      location: null,
+      poll: {
+        title: generateString(),
+        multiple_choices: true,
+        expiration_at: newPollExp.toISOString().split('T')[0],
+        choices: [{choice: generateString()}, {choice: generateString()}]
+      }
+    };
+    return FeedObjectService.updateFeedObject(discussion, feedObj.id, body).then((data) => {
+      expect(data).toBeInstanceOf(Object);
+    });
+  });
   test('Delete a feedObj', () => {
     return FeedObjectService.deleteFeedObject(discussion, feedObj.id).then((data) => {
       expect(data).toBe('');
@@ -98,8 +115,10 @@ describe('Feed Object Service Test', () => {
     });
   });
   test('Feed obj poll vote', () => {
-    if (feedObj.poll) {
+    console.log(feedObj.id);
+    if (feedObj.poll && !feedObj.poll.closed) {
       const choice = feedObj.poll.choices[0];
+      console.log(feedObj.poll);
       return FeedObjectService.feedObjectPollVote(discussion, feedObj.id, choice.id).then((data) => {
         expect(data).toBe('');
       });
@@ -189,6 +208,11 @@ describe('Feed Object Service Test', () => {
   test('Get a specific feedObj hide status', () => {
     return FeedObjectService.feedObjectHideStatus(discussion, feedObj.id).then((data) => {
       expect(data).toHaveProperty('hidden');
+    });
+  });
+  test('Delete a feedObj', () => {
+    return FeedObjectService.deleteFeedObject(discussion, feedObj.id).then((data) => {
+      expect(data).toBe('');
     });
   });
 });
