@@ -8,7 +8,7 @@ import {FormattedMessage} from 'react-intl';
 import SnippetsSkeleton from './Skeleton';
 import Message from '../Message';
 import classNames from 'classnames';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 import PubSub from 'pubsub-js';
 
 const PREFIX = 'SCSnippets';

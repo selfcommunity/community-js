@@ -12,7 +12,7 @@ import {OverridableStringUnion} from '@mui/types';
 import {AutocompletePropsSizeOverrides} from '@mui/material/Autocomplete/Autocomplete';
 import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 
 const PREFIX = 'SCComposerLocation';
 

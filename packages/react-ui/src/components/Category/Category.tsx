@@ -7,7 +7,7 @@ import CategorySkeleton from './Skeleton';
 import FollowButton, {FollowCategoryButtonProps} from '../FollowCategoryButton';
 import {defineMessages, useIntl} from 'react-intl';
 import classNames from 'classnames';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 import BaseItemButton from '../../shared/BaseItemButton';
 import {WidgetProps} from '../Widget';
 

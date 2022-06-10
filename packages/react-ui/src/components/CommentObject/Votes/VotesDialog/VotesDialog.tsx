@@ -12,7 +12,7 @@ import BaseDialog from '../../../../shared/BaseDialog';
 import CentralProgress from '../../../../shared/CentralProgress';
 import User from '../../../User';
 import {styled} from '@mui/material/styles';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 
 const PREFIX = 'SCCommentObjectVotesDialog';
 

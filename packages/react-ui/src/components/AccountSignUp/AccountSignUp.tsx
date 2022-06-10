@@ -1,15 +1,14 @@
 import React, {ChangeEvent, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {SCRoutingContextType, SCUserContextType, useSCRouting, useSCUser} from '@selfcommunity/react-core';
+import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import {SCUserType} from '@selfcommunity/types';
-import {ButtonProps, TextFieldProps} from '@mui/material';
+import {Button, ButtonProps, TextFieldProps} from '@mui/material';
 import classNames from 'classnames';
 import {FormattedMessage} from 'react-intl';
-import {LoadingButton} from '@mui/lab';
 import PasswordTextField from '../../shared/PasswordTextField';
 import EmailTextField from '../../shared/EmailTextField';
 import UsernameTextField from '../../shared/UsernameTextField';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 
 const PREFIX = 'SCAccountSignUp';
 
@@ -109,7 +108,6 @@ export default function AccountSignUp(inProps: AccountSignUpProps): JSX.Element 
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
-  const scRoutingContext: SCRoutingContextType = useSCRouting();
 
   // HANDLERS
   const handleSubmit = (event: React.SyntheticEvent<HTMLFormElement>) => {
@@ -156,9 +154,9 @@ export default function AccountSignUp(inProps: AccountSignUpProps): JSX.Element 
         value={password}
         onChange={(event: React.ChangeEvent<HTMLInputElement>) => setPassword(event.target.value)}
       />
-      <LoadingButton type="submit" {...ButtonProps} loading={isSubmitting} disabled={!email || !username || !password}>
+      <Button type="submit" {...ButtonProps} disabled={!email || !username || !password || isSubmitting}>
         <FormattedMessage id="ui.accountSignup.submit" defaultMessage="ui.accountSignup.submit" />
-      </LoadingButton>
+      </Button>
     </Root>
   );
 }

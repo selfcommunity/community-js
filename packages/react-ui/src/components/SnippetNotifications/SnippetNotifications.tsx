@@ -26,7 +26,7 @@ import {SCNotificationAggregatedType, SCNotificationTopicType, SCNotificationTyp
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
 import {SCNotification, SCUserContextType, useSCUser} from '@selfcommunity/react-core';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 
 const PREFIX = 'SCSnippetNotifications';
 

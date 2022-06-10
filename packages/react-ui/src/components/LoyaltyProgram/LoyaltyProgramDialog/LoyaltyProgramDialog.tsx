@@ -4,7 +4,7 @@ import {FormattedMessage} from 'react-intl';
 import BaseDialog from '../../../shared/BaseDialog';
 import LoyaltyProgramDetail from '../../LoyaltyProgramDetail';
 import classNames from 'classnames';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 
 const PREFIX = 'SCLoyaltyProgramDialog';
 

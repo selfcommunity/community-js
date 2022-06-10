@@ -6,7 +6,7 @@ import CategoryFeed from '../CategoryFeed';
 import {useSCFetchCategory} from '@selfcommunity/react-core';
 import {SCCategoryType} from '@selfcommunity/types';
 import CategorySkeleton from './Skeleton';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 
 const PREFIX = 'SCCategoryTemplate';

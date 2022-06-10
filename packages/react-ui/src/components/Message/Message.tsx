@@ -11,7 +11,7 @@ import classNames from 'classnames';
 import Widget from '../Widget';
 import AutoPlayer from '../../shared/AutoPlayer';
 import LazyLoad from 'react-lazyload';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 
 const PREFIX = 'SCMessage';
 

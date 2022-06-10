@@ -15,7 +15,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import Incubator, {IncubatorProps} from '../Incubator';
 import Popover from '@mui/material/Popover';
 import Icon from '@mui/material/Icon';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 import Widget from '../Widget';
 import CreateIncubatorDialog from './CreateIncubatorDialog';
 import IncubatorDetail from '../IncubatorDetail';

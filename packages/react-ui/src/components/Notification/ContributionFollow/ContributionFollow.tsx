@@ -8,7 +8,7 @@ import DateTimeAgo from '../../../shared/DateTimeAgo';
 import classNames from 'classnames';
 import {SCNotificationObjectTemplateType} from '../../../types';
 import {getContributionSnippet, getContributionType, getRouteData} from '../../../utils/contribution';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 import NotificationItem from '../../../shared/NotificationItem';
 
 const messages = defineMessages({

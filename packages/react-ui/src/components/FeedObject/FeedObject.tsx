@@ -21,7 +21,7 @@ import ContributionActionsMenu, {ContributionActionsMenuProps} from '../../share
 import {getContributionHtml, getContributionRouteName, getContributionSnippet, getRouteData} from '../../utils/contribution';
 import Follow, {FollowProps} from './Actions/Follow';
 import Widget, {WidgetProps} from '../Widget';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 import BaseItem from '../../shared/BaseItem';
 import Activities, {ActivitiesProps} from './Activities';
 import ReplyCommentObject, {ReplyCommentObjectProps} from '../CommentObject/ReplyComment';

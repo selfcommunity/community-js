@@ -6,7 +6,7 @@ import {DEFAULT_LANGUAGE_UI} from '../../../constants/Locale';
 import {IntlProvider} from 'react-intl';
 import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_CORE} from '../../../constants/Errors';
-import useDeepCompareEffect from 'use-deep-compare-effect';
+import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
 
 /**
  * Creates Global Context
@@ -65,7 +65,7 @@ export default function SCLocaleProvider({children = null}: {children: React.Rea
   /**
    * Update locale and messages if initial conf changes
    */
-  useDeepCompareEffect(() => {
+  useDeepCompareEffectNoCheck(() => {
     selectLocale(scContext.settings.locale?.default ? scContext.settings.locale.default : DEFAULT_LANGUAGE_UI);
   }, [scContext.settings.locale]);
 
