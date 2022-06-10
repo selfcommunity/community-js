@@ -1,83 +1,128 @@
 import {CategoryService} from '../src/index';
+import {generateString} from './utils/random';
 
 describe('Category Service Test', () => {
   let category;
+  test('Create a category', () => {
+    const body = {name: generateString(), slug: generateString()};
+    return CategoryService.createCategory(body).then((data) => {
+      category = data;
+      expect(body.name).toEqual(data.name);
+    });
+  });
+  test('Get Specific category', () => {
+    if (category) {
+      return CategoryService.getSpecificCategory(category.id).then((data) => {
+        expect(data.id).toEqual(category.id);
+      });
+    } else {
+      test.skip;
+    }
+  });
+  test('Update a  Specific category', () => {
+    if (category) {
+      const body = {name: category.name, slug: generateString()};
+      return CategoryService.updateASpecificCategory(category.id, body).then((data) => {
+        expect(body.name).toEqual(data.name);
+      });
+    } else {
+      test.skip;
+    }
+  });
+  test('Patch a  Specific category', () => {
+    if (category) {
+      const body = {slug: category.slug};
+      return CategoryService.patchASpecificCategory(category.id, body).then((data) => {
+        expect(body.slug).toEqual(data.slug);
+      });
+    } else {
+      test.skip;
+    }
+  });
+  test('Delete a  Specific category', () => {
+    if (category) {
+      return CategoryService.deleteASpecificCategory(category.id).then((data) => {
+        expect(data).toBe('');
+      });
+    } else {
+      test.skip;
+    }
+  });
   test('Get all categories', () => {
     return CategoryService.getAllCategories().then((data) => {
-      category = data.results[0];
-      expect(category).toHaveProperty('name');
+      if (data.count !== 0) {
+        category = data.results[0];
+        expect(category).toHaveProperty('name');
+      }
+      expect(data.results).toBeInstanceOf(Array);
     });
   });
   test('Search category', () => {
-    return CategoryService.searchCategory({search: category.name}).then((data) => {
-      expect(data.results[0].name).toBe(category.name);
-    });
+    if (category) {
+      return CategoryService.searchCategory({search: category.name}).then((data) => {
+        expect(data.results[0].name).toBe(category.name);
+      });
+    } else {
+      test.skip;
+    }
   });
-  // test('Create a category', () => {
-  //   const payload = {name: 'Jest', slug: 'categoria prova jest'};
-  //   return CategoryService.createCategory(payload).then((data) => {
-  //     category = data;
-  //     expect(payload.name).toEqual(data.name);
-  //   });
-  // });
-  test('Get Specific category', () => {
-    return CategoryService.getSpecificCategory(category.id).then((data) => {
-      expect(data.id).toEqual(category.id);
-    });
-  });
-  // test('Update a  Specific category', () => {
-  //   const id = category.id;
-  //   const payload = {name: 'Jest update'};
-  //   return CategoryService.updateASpecificCategory(id, payload).then((data) => {
-  //     expect(payload.name).toEqual(data.name);
-  //   });
-  // });
-  // test('Patch a  Specific category', () => {
-  //   const id = category.id;
-  //   const payload = {slug: 'Jest patch slug'};
-  //   return CategoryService.patchASpecificCategory(id, payload).then((data) => {
-  //     expect(payload.slug).toEqual(data.slug);
-  //   });
-  // });
-  // test('Delete a  Specific category', () => {
-  //   const id = category.id;
-  //   return CategoryService.deleteASpecificCategory(id).then((data) => {
-  //     expect(payload.slug).toEqual(data.slug);
-  //   });
-  // });
   test('Get category audience', () => {
-    return CategoryService.getCategoryAudience(category.id).then((data) => {
-      expect(data).toHaveProperty('category_audience');
-    });
+    if (category) {
+      return CategoryService.getCategoryAudience(category.id).then((data) => {
+        expect(data).toHaveProperty('category_audience');
+      });
+    } else {
+      test.skip;
+    }
   });
   test('Get category followers', () => {
-    return CategoryService.getCategoryFollowers(category.id).then((data) => {
-      if (data.count !== 0) {
-        expect(data.results[0]).toHaveProperty('username');
-      } else {
-        expect(data.results).toBeInstanceOf(Array);
-      }
-    });
+    if (category) {
+      return CategoryService.getCategoryFollowers(category.id).then((data) => {
+        if (data.count !== 0) {
+          expect(data.results[0]).toHaveProperty('username');
+        } else {
+          expect(data.results).toBeInstanceOf(Array);
+        }
+      });
+    } else {
+      test.skip;
+    }
   });
   test('Get category feed', () => {
-    return CategoryService.getCategoryFeed(category.id).then((data) => {
-      expect(data.results).toBeInstanceOf(Array);
-    });
+    if (category) {
+      return CategoryService.getCategoryFeed(category.id).then((data) => {
+        expect(data.results).toBeInstanceOf(Array);
+      });
+    } else {
+      test.skip;
+    }
   });
   test('Get category trending feed', () => {
-    return CategoryService.getCategoryTrendingFeed(category.id).then((data) => {
-      expect(data.results).toBeInstanceOf(Array);
-    });
+    if (category) {
+      return CategoryService.getCategoryTrendingFeed(category.id).then((data) => {
+        expect(data.results).toBeInstanceOf(Array);
+      });
+    } else {
+      test.skip;
+    }
   });
   test('Follow category', () => {
-    return CategoryService.followCategory(category.id).then((data) => {
-      expect(data).toBe('');
-    });
+    if (category) {
+      return CategoryService.followCategory(category.id).then((data) => {
+        expect(data).toBe('');
+      });
+    } else {
+      test.skip;
+    }
   });
   test('Check if category is followed', () => {
-    return CategoryService.checkCategoryIsFollowed(category.id).then((data) => {
-      expect(data).toHaveProperty('is_followed');
-    });
+    if (category) {
+      return CategoryService.checkCategoryIsFollowed(category.id).then((data) => {
+        expect(data).toHaveProperty('is_followed');
+      });
+    } else {
+      test.skip;
+    }
   });
   test('Get followed categories', () => {
     return CategoryService.getFollowedCategories().then((data) => {
