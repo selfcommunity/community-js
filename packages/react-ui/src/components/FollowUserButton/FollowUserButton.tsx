@@ -16,7 +16,7 @@ import {
   useSCContext,
   useSCFetchUser
 } from '@selfcommunity/react-core';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 
 const PREFIX = 'SCFollowUserButton';
 

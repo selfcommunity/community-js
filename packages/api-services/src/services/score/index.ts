@@ -1,11 +1,11 @@
 import {apiRequest} from '../../utils/apiRequest';
 import Endpoints from '../../constants/Endpoints';
 import {SCUserScoreType} from '@selfcommunity/types/src/types';
-import {SCPaginatedResponse, UserScoreParams} from '../../types';
+import {ScoreParams, SCPaginatedResponse, UserScoreParams} from '../../types';
 
 export interface ScoreApiClientInterface {
-  getAllScores(): Promise<SCPaginatedResponse<SCUserScoreType>>;
-  searchScore(): Promise<SCPaginatedResponse<SCUserScoreType>>;
+  getAllScores(params?: ScoreParams): Promise<SCPaginatedResponse<SCUserScoreType>>;
+  searchScore(params?: ScoreParams): Promise<SCPaginatedResponse<SCUserScoreType>>;
   addScore(data: UserScoreParams): Promise<SCUserScoreType>;
 }
 /**
@@ -15,16 +15,20 @@ export interface ScoreApiClientInterface {
 export class ScoreApiClient {
   /**
    * This endpoint retrieves all users scores.
+   * @param params
    */
-  static getAllScores(): Promise<SCPaginatedResponse<SCUserScoreType>> {
-    return apiRequest(Endpoints.ScoresList.url({}), Endpoints.ScoresList.method);
+  static getAllScores(params?: ScoreParams): Promise<SCPaginatedResponse<SCUserScoreType>> {
+    const p = new URLSearchParams(params);
+    return apiRequest(`${Endpoints.ScoresList.url({})}?${p.toString()}`, Endpoints.ScoresList.method);
   }
 
   /**
    * This endpoint performs search to user scores.
+   * @param params
    */
-  static searchScore(): Promise<SCPaginatedResponse<SCUserScoreType>> {
-    return apiRequest(Endpoints.SearchScore.url({}), Endpoints.SearchScore.method);
+  static searchScore(params?: ScoreParams): Promise<SCPaginatedResponse<SCUserScoreType>> {
+    const p = new URLSearchParams(params);
+    return apiRequest(`${Endpoints.SearchScore.url({})}?${p.toString()}`, Endpoints.SearchScore.method);
   }
 
   /**
@@ -37,11 +41,11 @@ export class ScoreApiClient {
 }
 
 export default class ScoreService {
-  static async getAllScores(): Promise<SCPaginatedResponse<SCUserScoreType>> {
-    return ScoreApiClient.getAllScores();
+  static async getAllScores(params?: ScoreParams): Promise<SCPaginatedResponse<SCUserScoreType>> {
+    return ScoreApiClient.getAllScores(params);
   }
-  static async searchScore(): Promise<SCPaginatedResponse<SCUserScoreType>> {
-    return ScoreApiClient.searchScore();
+  static async searchScore(params?: ScoreParams): Promise<SCPaginatedResponse<SCUserScoreType>> {
+    return ScoreApiClient.searchScore(params);
   }
   static async addScore(data: UserScoreParams): Promise<SCUserScoreType> {
     return ScoreApiClient.addScore(data);

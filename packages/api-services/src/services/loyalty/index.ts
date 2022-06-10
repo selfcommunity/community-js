@@ -7,7 +7,7 @@ export interface LoyaltyApiClientInterface {
   getPrizes(): Promise<SCPaginatedResponse<SCPrizeType>>;
   createPrize(data: LoyaltyPrizeParams): Promise<SCPrizeType>;
   getSpecificPrize(id: number): Promise<SCPrizeType>;
-  updatePrize(id: number, data?: LoyaltyPrizeParams): Promise<SCPrizeType>;
+  updatePrize(id: number, data: LoyaltyPrizeParams): Promise<SCPrizeType>;
   patchPrize(id: number, data?: LoyaltyPrizeParams): Promise<SCPrizeType>;
   getAllPrizeRequests(): Promise<SCPaginatedResponse<SCPrizeUserType>>;
   createPrizeRequest(prize: number): Promise<SCPrizeUserType>;
@@ -47,8 +47,8 @@ export class LoyaltyApiClient {
    * @param id
    * @param data
    */
-  static updatePrize(id: number, data?: LoyaltyPrizeParams): Promise<SCPrizeType> {
-    return apiRequest(Endpoints.UpdatePrize.url({id}), Endpoints.UpdatePrize.method, data ?? null);
+  static updatePrize(id: number, data: LoyaltyPrizeParams): Promise<SCPrizeType> {
+    return apiRequest(Endpoints.UpdatePrize.url({id}), Endpoints.UpdatePrize.method, data);
   }
 
   /**
@@ -57,7 +57,7 @@ export class LoyaltyApiClient {
    * @param data
    */
   static patchPrize(id: number, data?: LoyaltyPrizeParams): Promise<SCPrizeType> {
-    return apiRequest(Endpoints.PatchPrize.url({id}), Endpoints.PatchPrize.method, data ?? null);
+    return apiRequest(Endpoints.PatchPrize.url({id}), Endpoints.PatchPrize.method, data);
   }
 
   /**
@@ -90,7 +90,7 @@ export class LoyaltyApiClient {
    * @param status
    */
   static patchPrizeRequest(id: number, status?: SCPrizeUserStatusType): Promise<SCPrizeUserType> {
-    return apiRequest(Endpoints.PatchPrizeRequest.url({id}), Endpoints.PatchPrizeRequest.method, {status: status} ?? null);
+    return apiRequest(Endpoints.PatchPrizeRequest.url({id}), Endpoints.PatchPrizeRequest.method, {status: status});
   }
 }
 
@@ -107,7 +107,7 @@ export default class LoyaltyService {
     return LoyaltyApiClient.getSpecificPrize(id);
   }
 
-  static async updatePrize(id: number, data?: LoyaltyPrizeParams): Promise<SCPrizeType> {
+  static async updatePrize(id: number, data: LoyaltyPrizeParams): Promise<SCPrizeType> {
     return LoyaltyApiClient.updatePrize(id, data);
   }
 

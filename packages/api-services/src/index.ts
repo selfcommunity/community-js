@@ -63,9 +63,9 @@ import {
   UserScoreParams,
   UserSearchParams,
   TagParams,
+  TagGetParams,
   MediaCreateParams,
   MediaTypes,
-  ChunkType,
   ChunkUploadParams,
   ChunkUploadCompleteParams,
   ThreadParams,
@@ -86,7 +86,13 @@ import {
   FeedObjCreateParams,
   FeedObjectPollVotesSearch,
   FeedParams,
-  LegalPageFilterParams
+  LegalPageFilterParams,
+  FeatureParams,
+  ScoreParams,
+  InsightContributionParams,
+  InsightUserParams,
+  InsightEmbedParams,
+  InsightCommonParams
 } from './types';
 
 /**
@@ -192,11 +198,11 @@ export {
   UserScoreParams,
   UserSearchParams,
   TagParams,
+  TagGetParams,
   MediaCreateParams,
   MediaTypes,
   ChunkUploadParams,
   ChunkUploadCompleteParams,
-  ChunkType,
   ThreadParams,
   MessageCreateParams,
   MessageMediaUploadParams,
@@ -215,5 +221,11 @@ export {
   FeedObjCreateParams,
   FeedObjectPollVotesSearch,
   FeedParams,
-  LegalPageFilterParams
+  LegalPageFilterParams,
+  FeatureParams,
+  ScoreParams,
+  InsightContributionParams,
+  InsightUserParams,
+  InsightEmbedParams,
+  InsightCommonParams
 };

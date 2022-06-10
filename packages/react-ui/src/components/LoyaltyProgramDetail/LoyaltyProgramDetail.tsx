@@ -9,7 +9,7 @@ import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import Chip from '@mui/material/Chip';
 import Icon from '@mui/material/Icon';
 import classNames from 'classnames';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 import LoyaltyProgramDetailSkeleton from './Skeleton';
 
 const messages = defineMessages({

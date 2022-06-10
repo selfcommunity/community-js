@@ -1,11 +1,10 @@
 {
   "name": "@selfcommunity/react-templates",
-  "version": "0.1.7",
+  "version": "0.1.8-alpha.1",
   "license": "MIT",
   "private": false,
   "main": "./lib/cjs/index.js",
   "module": "./lib/esm/index.js",
-  "types": "./lib/types/index.d.ts",
   "description": "React Templates Components to integrate a Community created with SelfCommunity.",
   "author": "SelfCommunity <https://www.selfcommunity.com>",
   "keywords": [
@@ -30,11 +29,10 @@
     "prettier-list-different": "prettier './**/*.js' './**/*.css' './**/*.md' --list-different",
     "clean:lib": "rimraf lib",
     "clean:node_modules": "rimraf node_modules",
-    "build:commonjs": "cross-env BABEL_ENV=commonjs babel --root-mode upward --extensions .js,.jsx,.ts,.tsx  ./src --out-dir lib/cjs --ignore **/*.stories.js,**/*.spec.js --copy-files",
-    "build:es": "cross-env BABEL_ENV=es babel --root-mode upward --extensions .js,.jsx,.ts,.tsx ./src --out-dir lib/esm --ignore **/*.stories.js,**/*.spec.js --copy-files",
+    "build:commonjs": "tsc -b tsconfig-cjs.build.json",
+    "build:esm": "tsc -b tsconfig-esm.build.json",
     "build:umd": "webpack --mode production",
-    "build:types": "tsc -b tsconfig.build.json",
-    "build": "yarn clean:lib && yarn build:commonjs && yarn build:es && yarn build:umd && yarn build:types",
+    "build": "yarn clean:lib && yarn build:commonjs && yarn build:esm && yarn build:umd",
     "prerelease": "yarn run clean:lib && yarn run build"
   },
   "homepage": "https://www.selfcommunity.com",
@@ -58,10 +56,10 @@
     "react-stickynode": "^4.0.0"
   },
   "dependencies": {
-    "@selfcommunity/react-core": "^0.1.7",
-    "@selfcommunity/react-i18n": "^0.1.7",
-    "@selfcommunity/react-ui": "^0.1.7",
-    "@selfcommunity/types": "^0.1.7",
+    "@selfcommunity/react-core": "^0.1.8-alpha.1",
+    "@selfcommunity/react-i18n": "^0.1.8-alpha.0",
+    "@selfcommunity/react-ui": "^0.1.8-alpha.1",
+    "@selfcommunity/types": "^0.1.8-alpha.0",
     "@types/classnames": "^2.2.11",
     "classnames": "^2.2.6"
   },

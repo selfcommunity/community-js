@@ -3,7 +3,7 @@ import {styled} from '@mui/material/styles';
 import {Box, Grid, Hidden} from '@mui/material';
 import Sticky from 'react-stickynode';
 import FeedObjectDetailSkeleton from './Skeleton';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {
   CommentsFeedObjectProps,

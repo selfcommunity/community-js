@@ -21,7 +21,8 @@ export class SSOApiClient {
 
   /**
    * This endpoint creates a new account.
-   * @constructor
+   * Only users with the admin role can register new users.
+   * @param data
    */
   static SignUp(data: SSOSignUpParams): Promise<SSOSignUpType> {
     return apiRequest(Endpoints.SignUp.url({}), Endpoints.SignUp.method, data);

@@ -4,7 +4,7 @@ import {Box} from '@mui/material';
 import {useSCFetchCustomAdv} from '@selfcommunity/react-core';
 import {SCCustomAdvPosition} from '@selfcommunity/types';
 import classNames from 'classnames';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 
 const PREFIX = 'SCCustomAdv';
 

@@ -9,7 +9,7 @@ import CardContent from '@mui/material/CardContent';
 import IncubatorSkeleton from './Skeleton';
 import LinearProgress from '@mui/material/LinearProgress';
 import SubscribeButton, {SubscribeButtonProps} from './SubscribeButton';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 import Widget from '../Widget';
 
 const PREFIX = 'SCIncubator';

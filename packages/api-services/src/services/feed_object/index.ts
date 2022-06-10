@@ -37,15 +37,15 @@ export interface FeedObjectApiClientInterface {
   ): Promise<SCPaginatedResponse<SCPollVoteType>>;
   followFeedObject(type: SCFeedObjectTypologyType, id: number): Promise<any>;
   feedObjectFollowingList(type: SCFeedObjectTypologyType, params?: BaseGetParams): Promise<SCPaginatedResponse<SCFeedObjectType>>;
-  checkIfFollowingFeedObject(type: SCFeedObjectTypologyType, id: number): Promise<SCPaginatedResponse<SCFeedObjectFollowingStatusType>>;
+  checkIfFollowingFeedObject(type: SCFeedObjectTypologyType, id: number): Promise<SCFeedObjectFollowingStatusType>;
   suspendFeedObject(type: SCFeedObjectTypologyType, id: number): Promise<any>;
-  checkIfSuspendedFeedObject(type: SCFeedObjectTypologyType, id: number): Promise<SCPaginatedResponse<SCFeedObjectSuspendedStatusType>>;
+  checkIfSuspendedFeedObject(type: SCFeedObjectTypologyType, id: number): Promise<SCFeedObjectSuspendedStatusType>;
   feedObjectSuspendedList(type: SCFeedObjectTypologyType, params?: BaseGetParams): Promise<SCPaginatedResponse<SCFeedObjectType>>;
   flagFeedObject(type: SCFeedObjectTypologyType, id: number, flag_type: SCFlagTypeEnum): Promise<any>;
   feedObjectFlagList(type: SCFeedObjectTypologyType, id: number): Promise<SCPaginatedResponse<SCFlagType>>;
   feedObjectFlagStatus(type: SCFeedObjectTypologyType, id: number): Promise<SCPaginatedResponse<SCFlagType>>;
   hideFeedObject(type: SCFeedObjectTypologyType, id: number): Promise<any>;
-  feedObjectHideStatus(type: SCFeedObjectTypologyType, id: number): Promise<SCPaginatedResponse<SCFeedObjectHideStatusType>>;
+  feedObjectHideStatus(type: SCFeedObjectTypologyType, id: number): Promise<SCFeedObjectHideStatusType>;
 }
 /**
  * Contains all the endpoints needed to manage feed objs (discussions-posts-statuses).
@@ -239,7 +239,7 @@ export class FeedObjectApiClient {
    * @param type
    * @param id
    */
-  static checkIfFollowingFeedObject(type: SCFeedObjectTypologyType, id: number): Promise<SCPaginatedResponse<SCFeedObjectFollowingStatusType>> {
+  static checkIfFollowingFeedObject(type: SCFeedObjectTypologyType, id: number): Promise<SCFeedObjectFollowingStatusType> {
     return apiRequest(Endpoints.CheckIfFollowingFeedObject.url({type, id}), Endpoints.CheckIfFollowingFeedObject.method);
   }
 
@@ -257,7 +257,7 @@ export class FeedObjectApiClient {
    * @param type
    * @param id
    */
-  static checkIfSuspendedFeedObject(type: SCFeedObjectTypologyType, id: number): Promise<SCPaginatedResponse<SCFeedObjectSuspendedStatusType>> {
+  static checkIfSuspendedFeedObject(type: SCFeedObjectTypologyType, id: number): Promise<SCFeedObjectSuspendedStatusType> {
     return apiRequest(
       Endpoints.UserCheckContributionNotificationSuspended.url({type, id}),
       Endpoints.UserCheckContributionNotificationSuspended.method
@@ -319,7 +319,7 @@ export class FeedObjectApiClient {
    * @param type
    * @param id
    */
-  static feedObjectHideStatus(type: SCFeedObjectTypologyType, id: number): Promise<SCPaginatedResponse<SCFeedObjectHideStatusType>> {
+  static feedObjectHideStatus(type: SCFeedObjectTypologyType, id: number): Promise<SCFeedObjectHideStatusType> {
     return apiRequest(Endpoints.FeedObjectHideStatus.url({type, id}), Endpoints.FeedObjectHideStatus.method);
   }
 }
@@ -415,7 +415,7 @@ export default class FeedObjectService {
     return FeedObjectApiClient.feedObjectFollowingList(type, params);
   }
 
-  static async checkIfFollowingFeedObject(type: SCFeedObjectTypologyType, id: number): Promise<SCPaginatedResponse<SCFeedObjectFollowingStatusType>> {
+  static async checkIfFollowingFeedObject(type: SCFeedObjectTypologyType, id: number): Promise<SCFeedObjectFollowingStatusType> {
     return FeedObjectApiClient.checkIfFollowingFeedObject(type, id);
   }
 
@@ -423,7 +423,7 @@ export default class FeedObjectService {
     return FeedObjectApiClient.suspendFeedObject(type, id);
   }
 
-  static async checkIfSuspendedFeedObject(type: SCFeedObjectTypologyType, id: number): Promise<SCPaginatedResponse<SCFeedObjectSuspendedStatusType>> {
+  static async checkIfSuspendedFeedObject(type: SCFeedObjectTypologyType, id: number): Promise<SCFeedObjectSuspendedStatusType> {
     return FeedObjectApiClient.checkIfSuspendedFeedObject(type, id);
   }
   static async feedObjectSuspendedList(type: SCFeedObjectTypologyType, params?: BaseGetParams): Promise<SCPaginatedResponse<SCFeedObjectType>> {
@@ -445,7 +445,7 @@ export default class FeedObjectService {
     return FeedObjectApiClient.hideFeedObject(type, id);
   }
 
-  static async feedObjectHideStatus(type: SCFeedObjectTypologyType, id: number): Promise<SCPaginatedResponse<SCFeedObjectHideStatusType>> {
+  static async feedObjectHideStatus(type: SCFeedObjectTypologyType, id: number): Promise<SCFeedObjectHideStatusType> {
     return FeedObjectApiClient.feedObjectHideStatus(type, id);
   }
 }

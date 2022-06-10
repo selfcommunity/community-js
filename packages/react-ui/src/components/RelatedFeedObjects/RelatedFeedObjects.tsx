@@ -13,7 +13,7 @@ import BaseDialog from '../../shared/BaseDialog';
 import CentralProgress from '../../shared/CentralProgress';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Widget from '../Widget';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
 import {SCCustomAdvPosition, SCFeedDiscussionType, SCFeedObjectType, SCFeedObjectTypologyType} from '@selfcommunity/types';

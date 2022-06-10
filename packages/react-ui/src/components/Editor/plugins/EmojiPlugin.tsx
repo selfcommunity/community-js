@@ -3,7 +3,12 @@ import {INSERT_TEXT_COMMAND, LexicalEditor} from 'lexical';
 import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
 import {Fade, Icon, IconButton, Popover} from '@mui/material';
 import {styled} from '@mui/material/styles';
-import Picker from 'emoji-picker-react';
+// import deps only if csr
+let Picker;
+typeof window !== 'undefined' &&
+import('emoji-picker-react').then((_module) => {
+  Picker = _module.default;
+});
 
 function Emoji({editor, className = ''}: {editor: LexicalEditor; className?: string}): JSX.Element {
   // STATE
@@ -39,7 +44,7 @@ function Emoji({editor, className = ''}: {editor: LexicalEditor; className?: str
         sx={(theme) => {
           return {zIndex: theme.zIndex.tooltip};
         }}>
-        <Picker onEmojiClick={handleEmojiClick} />
+        {Picker && <Picker onEmojiClick={handleEmojiClick} />}
       </Popover>
     </>
   );

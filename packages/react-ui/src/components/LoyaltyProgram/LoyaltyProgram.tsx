@@ -11,7 +11,7 @@ import {SCRoutingContextType, useSCRouting, Link, SCRoutes} from '@selfcommunity
 import LoyaltyProgramDetail from '../LoyaltyProgramDetail';
 import classNames from 'classnames';
 import Widget from '../Widget';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 
 const messages = defineMessages({
   points: {

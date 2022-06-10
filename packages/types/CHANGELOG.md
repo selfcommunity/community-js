@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.8-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.1.7...@selfcommunity/types@0.1.8-alpha.0) (2022-06-10)
+
+
+### Bug Fixes
+
+* build & useThemeProps ([6894cca](https://github.com/selfcommunity/community-js/commit/6894cca5f7b6d1ff9d64adafb79534f5b05a470e))
+* fixed test setup, added categoryservice test ([49e8424](https://github.com/selfcommunity/community-js/commit/49e8424f172e4307d70805ab7d0e22f4752575db))
+* SCCategoryType id param ([bb1128e](https://github.com/selfcommunity/community-js/commit/bb1128ee8d38246eb442c5a2f6d63148e35af954))
+* ssr ([3aad131](https://github.com/selfcommunity/community-js/commit/3aad131a42ffd59dea3a032574c8448613435c9d))
+
+
+
+
+
 ## [0.1.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.1.7-alpha.1...@selfcommunity/types@0.1.7) (2022-05-30)
 
 **Note:** Version bump only for package @selfcommunity/types

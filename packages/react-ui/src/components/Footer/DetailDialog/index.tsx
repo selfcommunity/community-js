@@ -3,7 +3,7 @@ import {styled} from '@mui/material/styles';
 import {TextField, Box} from '@mui/material';
 import BaseDialog from '../../../shared/BaseDialog';
 import classNames from 'classnames';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 
 const PREFIX = 'SCDetailDialog';
 

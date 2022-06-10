@@ -26,8 +26,8 @@ import {
 import {SCPaginatedResponse, UserAutocompleteParams, UserSearchParams} from '../../types';
 
 export interface UserApiClientInterface {
-  getAllUsers(): Promise<SCPaginatedResponse<SCUserType>>;
-  getHiddenUsers(): Promise<SCPaginatedResponse<SCUserType>>;
+  getAllUsers(params?: any): Promise<SCPaginatedResponse<SCUserType>>;
+  getHiddenUsers(params?: any): Promise<SCPaginatedResponse<SCUserType>>;
   userAutocomplete(params: UserAutocompleteParams): Promise<SCPaginatedResponse<SCUserAutocompleteType>>;
   userSearch(params: UserSearchParams): Promise<SCPaginatedResponse<SCUserType>>;
   getSpecificUser(id: number): Promise<SCUserType>;
@@ -68,9 +68,9 @@ export interface UserApiClientInterface {
   getUserLoyaltyPoints(id: number): Promise<SCUserLoyaltyPointsType>;
   getUserConnectionStatuses(users: number[]): Promise<any>;
   userTagToAddressContribution(): Promise<SCTagType>;
-  checkUserEmailToken(): Promise<SCUserEmailTokenType>;
+  checkUserEmailToken(email_token: string): Promise<SCUserEmailTokenType>;
   addUserAvatar(avatar: SCMediaType): Promise<SCAvatarType>;
-  getUserAvatars(): Promise<SCAvatarType>;
+  getUserAvatars(): Promise<SCPaginatedResponse<SCAvatarType>>;
   removeUserAvatar(avatar_id: number): Promise<any>;
   setUserPrimaryAvatar(avatar_id: number): Promise<any>;
 }
@@ -81,16 +81,20 @@ export interface UserApiClientInterface {
 export class UserApiClient {
   /**
    * This endpoint retrieves the list of all users
+   * @param params
    */
-  static getAllUsers(): Promise<SCPaginatedResponse<SCUserType>> {
-    return apiRequest(Endpoints.User.url({}), Endpoints.User.method);
+  static getAllUsers(params?: any): Promise<SCPaginatedResponse<SCUserType>> {
+    const p = new URLSearchParams(params);
+    return apiRequest(`${Endpoints.UserList.url({})}?${p.toString()}`, Endpoints.UserList.method);
   }
 
   /**
    * This endpoint retrieves the list of all users hidden by the authenticated user
+   * @param params
    */
-  static getHiddenUsers(): Promise<SCPaginatedResponse<SCUserType>> {
-    return apiRequest(Endpoints.ListHiddenUsers.url(), Endpoints.ListHiddenUsers.method);
+  static getHiddenUsers(params?: any): Promise<SCPaginatedResponse<SCUserType>> {
+    const p = new URLSearchParams(params);
+    return apiRequest(`${Endpoints.ListHiddenUsers.url({})}?${p.toString()}`, Endpoints.ListHiddenUsers.method);
   }
 
   /**
@@ -100,7 +104,7 @@ export class UserApiClient {
    */
   static userAutocomplete(params: UserAutocompleteParams): Promise<SCPaginatedResponse<SCUserAutocompleteType>> {
     const p = new URLSearchParams(params);
-    return apiRequest(`${Endpoints.UserAutocomplete.url()}?${p.toString()})}`, Endpoints.UserAutocomplete.method);
+    return apiRequest(`${Endpoints.UserAutocomplete.url({})}?${p.toString()}`, Endpoints.UserAutocomplete.method);
   }
 
   /**
@@ -109,7 +113,7 @@ export class UserApiClient {
    */
   static userSearch(params: UserSearchParams): Promise<SCPaginatedResponse<SCUserType>> {
     const p = new URLSearchParams(params);
-    return apiRequest(`${Endpoints.UserSearch.url()}?${p.toString()})}`, Endpoints.UserSearch.method);
+    return apiRequest(`${Endpoints.UserSearch.url({})}?${p.toString()}`, Endpoints.UserSearch.method);
   }
 
   /**
@@ -130,11 +134,12 @@ export class UserApiClient {
 
   /**
    * This endpoint updates the profile of a user identified by ID. A user can only update their personal data.
+   * If the request will update the avatar or the cover the 'Content-Type' request header must be set as 'multipart/form-data', otherwise it can be 'application/x-www-form-urlencoded'.
    * @param id
    * @param data
    */
   static userUpdate(id: number, data?: SCUserType): Promise<SCUserType> {
-    return apiRequest(Endpoints.UserUpdate.url({id}), Endpoints.UserUpdate.method, data ?? null);
+    return apiRequest(Endpoints.UserUpdate.url({id}), Endpoints.UserUpdate.method, data);
   }
 
   /**
@@ -143,7 +148,7 @@ export class UserApiClient {
    * @param data
    */
   static userPatch(id: number, data?: SCUserType): Promise<SCUserType> {
-    return apiRequest(Endpoints.UserPatch.url({id}), Endpoints.UserPatch.method, data ?? null);
+    return apiRequest(Endpoints.UserPatch.url({id}), Endpoints.UserPatch.method, data);
   }
 
   /**
@@ -152,7 +157,7 @@ export class UserApiClient {
    * @param hard
    */
   static userDelete(id: number, hard?: number): Promise<any> {
-    return apiRequest(`${Endpoints.UserDelete.url({id})}?${hard.toString()})}`, Endpoints.UserDelete.method);
+    return apiRequest(`${Endpoints.UserDelete.url({id})}?${hard.toString()}`, Endpoints.UserDelete.method);
   }
 
   /**
@@ -162,7 +167,10 @@ export class UserApiClient {
    * @param confirm
    */
   static changeUserMail(id: number, new_email: string, confirm?: boolean): Promise<any | SCUserChangeEmailType> {
-    return apiRequest(Endpoints.ChangeUserMail.url({id}), Endpoints.ChangeUserMail.method, {new_email: new_email, confirm: confirm ?? null});
+    return apiRequest(Endpoints.ChangeUserMail.url({id}), Endpoints.ChangeUserMail.method, {
+      new_email: new_email,
+      confirm: confirm
+    });
   }
 
   /**
@@ -185,7 +193,10 @@ export class UserApiClient {
    * @param new_password
    */
   static changeUserPassword(id: number, password: string, new_password: string): Promise<any> {
-    return apiRequest(Endpoints.ChangeUserPassword.url({id}), Endpoints.ChangeUserPassword.method, {password: password, new_password: new_password});
+    return apiRequest(Endpoints.ChangeUserPassword.url({id}), Endpoints.ChangeUserPassword.method, {
+      password: password,
+      new_password: new_password
+    });
   }
 
   /**
@@ -239,7 +250,7 @@ export class UserApiClient {
    * @param mutual
    */
   static getUserFollowedCategories(id: number, mutual?: number): Promise<SCCategoryType[]> {
-    return apiRequest(`${Endpoints.FollowedCategories.url({id})}?${mutual.toString()})}`, Endpoints.FollowedCategories.method);
+    return apiRequest(Endpoints.FollowedCategories.url({id, mutual}), Endpoints.FollowedCategories.method);
   }
 
   /**
@@ -256,7 +267,7 @@ export class UserApiClient {
    * @param mutual
    */
   static getUserFollowers(id: number, mutual?: number): Promise<SCPaginatedResponse<SCUserType>> {
-    return apiRequest(`${Endpoints.UserFollowers.url({id})}?${mutual.toString()})}`, Endpoints.UserFollowers.method);
+    return apiRequest(Endpoints.UserFollowers.url({id, mutual}), Endpoints.UserFollowers.method);
   }
 
   /**
@@ -265,7 +276,7 @@ export class UserApiClient {
    * @param mutual
    */
   static getUserFollowed(id: number, mutual?: number): Promise<SCPaginatedResponse<SCUserType>> {
-    return apiRequest(`${Endpoints.UserFollowed.url({id})}?${mutual.toString()})`, Endpoints.UserFollowed.method);
+    return apiRequest(Endpoints.UsersFollowed.url({id, mutual}), Endpoints.UsersFollowed.method);
   }
 
   /**
@@ -298,7 +309,7 @@ export class UserApiClient {
    * @param mutual
    */
   static getUserConnections(id: number, mutual?: number): Promise<SCPaginatedResponse<SCUserType>> {
-    return apiRequest(`${Endpoints.UserConnections.url({id})}?${mutual.toString()})`, Endpoints.UserConnections.method);
+    return apiRequest(`${Endpoints.UserConnections.url({id})}?${mutual.toString()}`, Endpoints.UserConnections.method);
   }
 
   /**
@@ -430,9 +441,11 @@ export class UserApiClient {
 
   /**
    * This endpoint checks an email token.
+   * @param email_token
    */
-  static checkUserEmailToken(): Promise<SCUserEmailTokenType> {
-    return apiRequest(Endpoints.CheckEmailToken.url({}), Endpoints.CheckEmailToken.method);
+  static checkUserEmailToken(email_token): Promise<SCUserEmailTokenType> {
+    const p = new URLSearchParams({email_token: email_token});
+    return apiRequest(`${Endpoints.CheckEmailToken.url({})}?${p.toString()}`, Endpoints.CheckEmailToken.method);
   }
 
   /**
@@ -440,13 +453,13 @@ export class UserApiClient {
    * @param avatar
    */
   static addUserAvatar(avatar: SCMediaType): Promise<SCAvatarType> {
-    return apiRequest(Endpoints.AddAvatar.url({}), Endpoints.AddAvatar.method, {'Content-Type': 'multipart/form-data'}, {avatar: avatar});
+    return apiRequest(Endpoints.AddAvatar.url({}), Endpoints.AddAvatar.method, {avatar: avatar});
   }
 
   /**
    * This endpoint retrieves all user avatars.
    */
-  static getUserAvatars(): Promise<SCAvatarType> {
+  static getUserAvatars(): Promise<SCPaginatedResponse<SCAvatarType>> {
     return apiRequest(Endpoints.GetAvatars.url({}), Endpoints.GetAvatars.method);
   }
 
@@ -468,11 +481,11 @@ export class UserApiClient {
 }
 
 export default class UserService {
-  static async getAllUsers(): Promise<SCPaginatedResponse<SCUserType>> {
-    return UserApiClient.getAllUsers();
+  static async getAllUsers(params?: any): Promise<SCPaginatedResponse<SCUserType>> {
+    return UserApiClient.getAllUsers(params);
   }
-  static async getHiddenUsers(): Promise<SCPaginatedResponse<SCUserType>> {
-    return UserApiClient.getHiddenUsers();
+  static async getHiddenUsers(params?: any): Promise<SCPaginatedResponse<SCUserType>> {
+    return UserApiClient.getHiddenUsers(params);
   }
   static async userAutocomplete(params: UserAutocompleteParams): Promise<SCPaginatedResponse<SCUserAutocompleteType>> {
     return UserApiClient.userAutocomplete(params);
@@ -594,13 +607,13 @@ export default class UserService {
   static async userTagToAddressContribution(): Promise<SCTagType> {
     return UserApiClient.userTagToAddressContribution();
   }
-  static async checkUserEmailToken(): Promise<SCUserEmailTokenType> {
-    return UserApiClient.checkUserEmailToken();
+  static async checkUserEmailToken(email_token): Promise<SCUserEmailTokenType> {
+    return UserApiClient.checkUserEmailToken(email_token);
   }
   static async addUserAvatar(avatar: SCMediaType): Promise<SCAvatarType> {
     return UserApiClient.addUserAvatar(avatar);
   }
-  static async getUserAvatars(): Promise<SCAvatarType> {
+  static async getUserAvatars(): Promise<SCPaginatedResponse<SCAvatarType>> {
     return UserApiClient.getUserAvatars();
   }
   static async removeUserAvatar(avatar_id: number): Promise<any> {

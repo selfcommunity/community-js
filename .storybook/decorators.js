@@ -134,7 +134,6 @@ const withProvider = (Story, context) => {
   };
 
   return (
-    <React.StrictMode>
       <EmotionThemeProvider theme={defaultTheme}>
         <Box style={{ textAlign: 'right' }}>
           {!authToken && (
@@ -158,7 +157,6 @@ const withProvider = (Story, context) => {
           <Story {...context} />
         </SCContextProvider>
       </EmotionThemeProvider>
-    </React.StrictMode>
   );
 };
 

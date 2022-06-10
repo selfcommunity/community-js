@@ -13,7 +13,7 @@ import {AutocompleteClasses} from '@mui/material/Autocomplete/autocompleteClasse
 import {OverridableStringUnion} from '@mui/types';
 import {AutocompletePropsSizeOverrides} from '@mui/material/Autocomplete/Autocomplete';
 import {SCCategoryType} from '@selfcommunity/types';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 
 const PREFIX = 'SCComposerCategories';
 

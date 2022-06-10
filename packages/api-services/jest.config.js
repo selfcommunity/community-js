@@ -10,3 +10,9 @@ module.exports = {
     '@selfcommunity/utils': '<rootDir>/../utils/src/'
   }
 };
+process.env = Object.assign(process.env, {
+  SERVICES_PLATFORM_URL: 'https://italiano.quentrix.com',
+  SERVICES_SECRET_KEY: '2|~./YJ8r}4?&3V_xr=?r5gwGQaN2-z<@q=W)b}mQ&lc<G1fWFZ',
+  SERVICES_ADMIN_USER_ID: 1,
+  SERVICES_USER_ID: 7
+});

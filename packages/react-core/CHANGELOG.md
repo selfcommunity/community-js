@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.8-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.1.8-alpha.0...@selfcommunity/react-core@0.1.8-alpha.1) (2022-06-10)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.1.8-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.1.7...@selfcommunity/react-core@0.1.8-alpha.0) (2022-06-10)
+
+
+### Bug Fixes
+
+* build & useThemeProps ([6894cca](https://github.com/selfcommunity/community-js/commit/6894cca5f7b6d1ff9d64adafb79534f5b05a470e))
+* ssr ([67de4e5](https://github.com/selfcommunity/community-js/commit/67de4e5ebb2be7a8b268293f43e194632b12a695))
+* ssr ([3aad131](https://github.com/selfcommunity/community-js/commit/3aad131a42ffd59dea3a032574c8448613435c9d))
+* ssr ([592b9bc](https://github.com/selfcommunity/community-js/commit/592b9bcb313b98cd15f5cd6506b8870ef7adb4e2))
+* ssr ([c434ff6](https://github.com/selfcommunity/community-js/commit/c434ff632e917f2279463a08e54d1deb04f5fc1d))
+
+
+
+
+
 ## [0.1.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.1.7-alpha.1...@selfcommunity/react-core@0.1.7) (2022-05-30)
 
 **Note:** Version bump only for package @selfcommunity/react-core
