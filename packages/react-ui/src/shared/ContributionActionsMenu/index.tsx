@@ -594,7 +594,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
         .request({
           url: Endpoints.ModerateContribution.url({id: contributionObj.id}),
           method: Endpoints.ModerateContribution.method,
-          data: {contribution_type: contributionObj.type, ...(type ? {moderation_type: type} : {}), action: action}
+          data: {contribution_type: contributionObj.type, ...(type !== null ? {moderation_type: type} : {}), action: action}
         })
         .then((res: HttpResponse<any>) => {
           if (res.status >= 300) {
