@@ -1,5 +1,5 @@
 import {ModerationService} from '../src/index';
-import {SCUserStatus} from '@selfcommunity/types';
+import {SCFlagTypeEnum, SCUserStatus} from '@selfcommunity/types';
 
 describe('Moderation Service Test', () => {
   let user;
@@ -41,16 +41,16 @@ describe('Moderation Service Test', () => {
       test.skip;
     }
   });
-  // test('Moderate a specific contribution', () => {
-  //   if (contribution && user) {
-  //     const body = {contribution_type: contribution.contribution_type, action: 'ignore', moderation_type: SCFlagTypeEnum.POOR};
-  //     return ModerationService.moderateAContribution(contribution.contribution.id, body).then((data) => {
-  //       expect(data).toBe('');
-  //     });
-  //   } else {
-  //     test.skip;
-  //   }
-  // });
+  test('Moderate a specific contribution', () => {
+    if (contribution && user) {
+      const body = {contribution_type: contribution.contribution_type, action: 'ignore', moderation_type: SCFlagTypeEnum.POOR};
+      return ModerationService.moderateAContribution(contribution.contribution.id, body).then((data) => {
+        expect(data).toBe('');
+      });
+    } else {
+      test.skip;
+    }
+  });
   test('Get moderation status for a specific contribution', () => {
     if (contribution) {
       return ModerationService.getContributionModerationStatus(contribution.contribution.id, contribution.contribution_type).then((data) => {
