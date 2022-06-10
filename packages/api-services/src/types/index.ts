@@ -7,7 +7,7 @@ import {LoyaltyPrizeParams} from './prize';
 import {ModerateContributionParams} from './moderation';
 import {CustomNotificationParams} from './notification';
 import {UserAutocompleteParams, UserScoreParams, UserSearchParams} from './user';
-import {TagParams} from './tag';
+import {TagParams, TagGetParams} from './tag';
 import {MediaCreateParams, MediaTypes, ChunkUploadParams, ChunkUploadCompleteParams, ChunkType} from './media';
 import {
   ThreadParams,
@@ -25,6 +25,9 @@ import {BaseGetParams, BaseSearchParams} from './baseParams';
 import {FeedObjGetParams, FeedObjCreateParams, FeedObjectPollVotesSearch} from './feedObject';
 import {FeedParams} from './feed';
 import {LegalPageFilterParams} from './legalPage';
+import {FeatureParams} from './feature';
+import {ScoreParams} from './score';
+import {InsightCommonParams, InsightEmbedParams, InsightUserParams, InsightContributionParams} from './insight';
 
 export {
   SCPaginatedResponse,
@@ -42,6 +45,7 @@ export {
   UserScoreParams,
   UserSearchParams,
   TagParams,
+  TagGetParams,
   MediaCreateParams,
   MediaTypes,
   ChunkUploadCompleteParams,
@@ -65,5 +69,11 @@ export {
   FeedObjCreateParams,
   FeedObjectPollVotesSearch,
   FeedParams,
-  LegalPageFilterParams
+  LegalPageFilterParams,
+  FeatureParams,
+  ScoreParams,
+  InsightContributionParams,
+  InsightUserParams,
+  InsightEmbedParams,
+  InsightCommonParams
 };

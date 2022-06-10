@@ -72,7 +72,7 @@ import {DistributiveOmit} from '@mui/types';
 import {OverrideProps} from '@mui/material/OverridableComponent';
 import {ComposerSkeleton} from './index';
 import {useSnackbar} from 'notistack';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 
 const DialogTransition = forwardRef(function Transition(
   props: TransitionProps & {

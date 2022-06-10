@@ -23,12 +23,7 @@ export class MediaApiClient {
    * @param data
    */
   static chunkUploadMedia(data: ChunkUploadParams): Promise<SCChunkMediaType> {
-    return apiRequest(
-      Endpoints.ComposerChunkUploadMedia.url({}),
-      Endpoints.ComposerChunkUploadMedia.method,
-      {'Content-Range': 'bytes 1433600-1638399/2124437'},
-      data
-    );
+    return apiRequest(Endpoints.ComposerChunkUploadMedia.url({}), Endpoints.ComposerChunkUploadMedia.method, data);
   }
 
   /**

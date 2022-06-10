@@ -1,11 +1,10 @@
 import client from '../client';
 
-export function apiRequest(url: string, method: string, headers?: any, data?: any) {
+export function apiRequest(url: string, method: string, data?: any) {
   return client
     .request({
       url,
       method,
-      headers,
       data: data ?? null
     })
     .then((res: any) => {

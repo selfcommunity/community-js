@@ -21,7 +21,7 @@ import {SCUserType} from '@selfcommunity/types';
 import UserProfileSkeleton from './Skeleton';
 import classNames from 'classnames';
 import {FormattedMessage} from 'react-intl';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 
 const PREFIX = 'SCUserProfileTemplate';
 

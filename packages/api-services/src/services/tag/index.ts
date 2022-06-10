@@ -1,12 +1,12 @@
 import {apiRequest} from '../../utils/apiRequest';
-import {TagParams, SCPaginatedResponse} from '../../types';
+import {TagParams, SCPaginatedResponse, TagGetParams} from '../../types';
 import Endpoints from '../../constants/Endpoints';
 import {SCTagType} from '@selfcommunity/types/src/types';
 
 export interface TagApiClientInterface {
-  getAllTags(): Promise<SCPaginatedResponse<SCTagType>>;
+  getAllTags(params?: TagGetParams): Promise<SCPaginatedResponse<SCTagType>>;
   createTag(data: TagParams): Promise<SCTagType>;
-  searchTag(): Promise<SCPaginatedResponse<SCTagType>>;
+  searchTag(params?: TagGetParams): Promise<SCPaginatedResponse<SCTagType>>;
   getSpecificTag(id: number): Promise<SCTagType>;
   updateTag(id: number, data?: TagParams): Promise<SCTagType>;
   patchTag(id: number, data?: TagParams): Promise<SCTagType>;
@@ -14,13 +14,16 @@ export interface TagApiClientInterface {
 }
 /**
  * Contains all the endpoints needed to manage tags.
+ * All endpoints require admin role.
  */
 export class TagApiClient {
   /**
    * This endpoint retrieves all tags.
+   * @param params
    */
-  static getAllTags(): Promise<SCPaginatedResponse<SCTagType>> {
-    return apiRequest(Endpoints.TagsList.url({}), Endpoints.TagsList.method);
+  static getAllTags(params?: TagGetParams): Promise<SCPaginatedResponse<SCTagType>> {
+    const p = new URLSearchParams(params);
+    return apiRequest(`${Endpoints.TagsList.url({})}?${p.toString()}`, Endpoints.TagsList.method);
   }
 
   /**
@@ -33,9 +36,11 @@ export class TagApiClient {
 
   /**
    * This endpoint performs tag search.
+   * @param params
    */
-  static searchTag(): Promise<SCPaginatedResponse<SCTagType>> {
-    return apiRequest(Endpoints.SearchTag.url({}), Endpoints.SearchTag.method);
+  static searchTag(params?: TagGetParams): Promise<SCPaginatedResponse<SCTagType>> {
+    const p = new URLSearchParams(params);
+    return apiRequest(`${Endpoints.SearchTag.url({})}?${p.toString()}`, Endpoints.SearchTag.method);
   }
 
   /**
@@ -77,14 +82,14 @@ export class TagApiClient {
 }
 
 export default class TagService {
-  static async getAllTags(): Promise<SCPaginatedResponse<SCTagType>> {
-    return TagApiClient.getAllTags();
+  static async getAllTags(params?: TagGetParams): Promise<SCPaginatedResponse<SCTagType>> {
+    return TagApiClient.getAllTags(params);
   }
   static async createTag(data: TagParams): Promise<SCTagType> {
     return TagApiClient.createTag(data);
   }
-  static async searchTag(): Promise<SCPaginatedResponse<SCTagType>> {
-    return TagApiClient.searchTag();
+  static async searchTag(params?: TagGetParams): Promise<SCPaginatedResponse<SCTagType>> {
+    return TagApiClient.searchTag(params);
   }
   static async getSpecificTag(id: number): Promise<SCTagType> {
     return TagApiClient.getSpecificTag(id);

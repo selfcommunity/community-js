@@ -16,7 +16,7 @@ import ContributionActionsMenu from '../../shared/ContributionActionsMenu';
 import DateTimeAgo from '../../shared/DateTimeAgo';
 import {getContributionHtml, getRouteData} from '../../utils/contribution';
 import {useSnackbar} from 'notistack';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 import CommentsObject from '../CommentsObject';
 import BaseItem from '../../shared/BaseItem';
 import {SCCommentType, SCCommentTypologyType, SCFeedObjectType, SCFeedObjectTypologyType} from '@selfcommunity/types';

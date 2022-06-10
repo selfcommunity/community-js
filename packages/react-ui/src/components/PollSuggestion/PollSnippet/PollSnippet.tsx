@@ -5,7 +5,7 @@ import {SCFeedDiscussionType} from '@selfcommunity/types';
 import {Link, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
 import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 import {getContributionRouteName, getRouteData} from '../../../utils/contribution';
 import BaseItemButton from '../../../shared/BaseItemButton';
 

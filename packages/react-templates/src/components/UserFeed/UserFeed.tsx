@@ -18,7 +18,7 @@ import {
   UsersFollowed
 } from '@selfcommunity/react-ui';
 import {UserFeedSkeleton} from './index';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 
 const PREFIX = 'SCUserFeedTemplate';

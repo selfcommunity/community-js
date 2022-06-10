@@ -13,7 +13,7 @@ export interface CommentApiClientInterface {
   getSpecificCommentVotesList(id: number): Promise<SCPaginatedResponse<SCVoteType>>;
   upvoteComment(id: number): Promise<any>;
   getSpecificCommentFlags(id: number): Promise<SCPaginatedResponse<SCFlagType>>;
-  flagComment(id: number): Promise<any>;
+  flagComment(id: number, flagType: SCFlagTypeEnum): Promise<any>;
   getSpecificCommentFlagStatus(id: number): Promise<SCFlagType>;
 }
 
@@ -48,7 +48,7 @@ export class CommentApiClient {
   }
 
   /**
-   * This endpoint updates a specific comment.
+   * This endpoint updates a specific comment. The logged user must be the comment creator.
    * @param id
    * @param text
    */
@@ -57,7 +57,7 @@ export class CommentApiClient {
   }
 
   /**
-   * This endpoint deletes a specific comment using ID.
+   * This endpoint deletes a specific comment using ID. The logged user must be the comment creator.
    * @param id
    */
   static deleteComment(id: number): Promise<any> {
@@ -65,7 +65,7 @@ export class CommentApiClient {
   }
 
   /**
-   * This endpoint restores a specific comment using ID.
+   * This endpoint restores a specific comment using ID. The logged user must be the comment creator.
    * @param id
    */
   static restoreComment(id: number): Promise<any> {
@@ -90,6 +90,7 @@ export class CommentApiClient {
 
   /**
    * This endpoint retrieves a List of Flags for a Specific Comment.
+   * This operation requires moderation role.
    * @param id
    */
   static getSpecificCommentFlags(id: number): Promise<SCPaginatedResponse<SCFlagType>> {

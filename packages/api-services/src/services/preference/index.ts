@@ -42,7 +42,7 @@ export class PreferenceApiClient {
    * @param id
    */
   static getSpecificPreference(id: number): Promise<SCPreferenceType> {
-    return apiRequest(Endpoints.Preferences.url({id}), Endpoints.Preferences.method);
+    return apiRequest(Endpoints.GetPreference.url({id}), Endpoints.Preferences.method);
   }
 }
 

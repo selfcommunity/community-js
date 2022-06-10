@@ -1,6 +1,8 @@
 /**
  * TagParams interface
  */
+import {BaseSearchParams} from './baseParams';
+
 export interface TagParams {
   /**
    * Is this tag active?
@@ -35,4 +37,26 @@ export interface TagParams {
    * Is this tag deleted?
    */
   deleted?: boolean;
+}
+
+/**
+ * Interface TagGetParams
+ */
+export interface TagGetParams extends BaseSearchParams {
+  /**
+   * Is this tag active?
+   */
+  active?: boolean;
+  /**
+   * Is this tag deleted?
+   */
+  deleted?: boolean;
+  /**
+   * 	Is this tag publicly visible?
+   */
+  visible?: boolean;
+  /**
+   * 	The tag add a visibility boost.
+   */
+  visibility_boost?: boolean;
 }

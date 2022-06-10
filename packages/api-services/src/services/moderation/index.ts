@@ -55,8 +55,7 @@ export class ModerationApiClient {
     contribution_type: SCContributionType,
     flag_type?: SCFlagTypeEnum
   ): Promise<SCPaginatedResponse<SCFlagType>> {
-    return apiRequest(Endpoints.FlagsForSpecificContribution.url({id}), Endpoints.FlagsForSpecificContribution.method, {
-      contribution_type: contribution_type,
+    return apiRequest(Endpoints.FlagsForSpecificContribution.url({id, contribution_type}), Endpoints.FlagsForSpecificContribution.method, {
       flag_type: flag_type ?? null
     });
   }
@@ -76,9 +75,7 @@ export class ModerationApiClient {
    * @param contribution_type
    */
   static getContributionModerationStatus(id: number, contribution_type: SCContributionType): Promise<SCContributionStatus> {
-    return apiRequest(Endpoints.ModerateContributionStatus.url({id}), Endpoints.ModerateContributionStatus.method, {
-      contribution_type: contribution_type
-    });
+    return apiRequest(Endpoints.ModerateContributionStatus.url({id, contribution_type}), Endpoints.ModerateContributionStatus.method);
   }
 }
 

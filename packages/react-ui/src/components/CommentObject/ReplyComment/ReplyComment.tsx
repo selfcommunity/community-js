@@ -7,7 +7,7 @@ import {SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
 import Editor, {EditorRef} from '../../Editor';
 import classNames from 'classnames';
 import {LoadingButton} from '@mui/lab';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 import BaseItemButton from '../../../shared/BaseItemButton';
 
 const messages = defineMessages({

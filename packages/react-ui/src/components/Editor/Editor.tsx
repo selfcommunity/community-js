@@ -3,7 +3,7 @@ import {styled} from '@mui/material/styles';
 import {FormattedMessage} from 'react-intl';
 import {Box, Stack} from '@mui/material';
 import classNames from 'classnames';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 import LexicalComposer from '@lexical/react/LexicalComposer';
 import LexicalContentEditable from '@lexical/react/LexicalContentEditable';
 import LexicalRichTextPlugin from '@lexical/react/LexicalRichTextPlugin';

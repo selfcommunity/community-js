@@ -4,7 +4,7 @@ import {SCBroadcastMessageType, SCNotificationAggregatedType, SCNotificationUnse
 import {CustomNotificationParams, SCPaginatedResponse} from '../../types';
 
 export interface NotificationApiClientInterface {
-  listUserNotification(): Promise<SCNotificationAggregatedType>;
+  listUserNotification(): Promise<SCPaginatedResponse<SCNotificationAggregatedType>>;
   markReadNotification(sids: string[]): Promise<any>;
   getUnseenNotification(): Promise<SCNotificationUnseenCountType>;
   createCustomNotification(data: CustomNotificationParams): Promise<any>;
@@ -22,7 +22,7 @@ export class NotificationApiClient {
   /**
    * List all user notifications (in aggregate form) related to the community.
    */
-  static listUserNotification(): Promise<SCNotificationAggregatedType> {
+  static listUserNotification(): Promise<SCPaginatedResponse<SCNotificationAggregatedType>> {
     return apiRequest(Endpoints.UserNotificationList.url({}), Endpoints.UserNotificationList.method);
   }
 
@@ -88,7 +88,7 @@ export class NotificationApiClient {
 }
 
 export default class NotificationService {
-  static async listUserNotification(): Promise<SCNotificationAggregatedType> {
+  static async listUserNotification(): Promise<SCPaginatedResponse<SCNotificationAggregatedType>> {
     return NotificationApiClient.listUserNotification();
   }
   static async markReadNotification(sids: string[]): Promise<any> {

@@ -13,7 +13,7 @@ import enLocale from 'date-fns/locale/en-US';
 import {SCFeedWidgetType} from '../../../types/feed';
 import {SCPollChoiceType, SCPollType} from '@selfcommunity/types';
 import classNames from 'classnames';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 
 const localeMap = {
   en: enLocale,

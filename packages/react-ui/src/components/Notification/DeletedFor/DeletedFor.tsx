@@ -11,7 +11,7 @@ import {Link, SCRoutingContextType, useSCRouting, SCRoutes} from '@selfcommunity
 import {SCNotificationDeletedForType} from '@selfcommunity/types';
 import classNames from 'classnames';
 import {SCNotificationObjectTemplateType} from '../../../types';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 import NotificationItem from '../../../shared/NotificationItem';
 import {red} from '@mui/material/colors';
 

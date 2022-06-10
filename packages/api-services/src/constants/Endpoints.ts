@@ -21,6 +21,10 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/dynamic_preference/'),
     method: 'GET'
   },
+  GetPreference: {
+    url: urlReplacer('/api/v2/dynamic_preference/$(id)/'),
+    method: 'GET'
+  },
   /**
    * SSO Endpoints
    */
@@ -263,7 +267,7 @@ const Endpoints: {[key: string]: EndpointType} = {
     method: 'PATCH'
   },
   AssignTag: {
-    url: urlReplacer('/api/v2/tag/assign/'),
+    url: urlReplacer('/api/v2/tag/$(id)/assign/'),
     method: 'POST'
   },
   /**
@@ -488,7 +492,7 @@ const Endpoints: {[key: string]: EndpointType} = {
     method: 'POST'
   },
   UserUnseenNotificationCount: {
-    url: urlReplacer('/api/v2/notification/unseen/'),
+    url: urlReplacer('/api/v2/notification/unseen/count/'),
     method: 'GET'
   },
   CreateCustomNotification: {
@@ -581,7 +585,7 @@ const Endpoints: {[key: string]: EndpointType} = {
   },
   CreatePrize: {
     url: urlReplacer('/api/v2/loyalty/prize/'),
-    method: 'GET'
+    method: 'POST'
   },
   GetSpecificPrize: {
     url: urlReplacer('/api/v2/loyalty/prize/$(id)/'),
@@ -832,7 +836,7 @@ const Endpoints: {[key: string]: EndpointType} = {
     method: 'GET'
   },
   FlagsForSpecificContribution: {
-    url: urlReplacer('/api/v2/moderation/contribution/$(id)/flag/?contribution_type=$(contribution_type)/'),
+    url: urlReplacer('/api/v2/moderation/contribution/$(id)/flag/?contribution_type=$(contribution_type)'),
     method: 'GET'
   },
   ModerateContribution: {
@@ -841,7 +845,7 @@ const Endpoints: {[key: string]: EndpointType} = {
   },
 
   ModerateContributionStatus: {
-    url: urlReplacer('/api/v2/moderation/contribution/$(id)/status/?contribution_type=$(contribution_type)/'),
+    url: urlReplacer('/api/v2/moderation/contribution/$(id)/status/?contribution_type=$(contribution_type)'),
     method: 'GET'
   },
 
@@ -861,15 +865,15 @@ const Endpoints: {[key: string]: EndpointType} = {
     method: 'GET'
   },
   InsightContributionCounter: {
-    url: urlReplacer('/api/v2/insight/contribution/counters/?contribution_id=$(id)/'),
+    url: urlReplacer('/api/v2/insight/contribution/counters/?contribution_id=$(id)'),
     method: 'GET'
   },
   InsightEmbedCounter: {
-    url: urlReplacer('/api/v2/insight/embed/counters/?embed_type=$(type)&embed_id=$(id)/'),
+    url: urlReplacer('/api/v2/insight/embed/counters/?embed_type=$(type)&embed_id=$(id)'),
     method: 'GET'
   },
   InsightUserCounter: {
-    url: urlReplacer('/api/v2/insight/user/counters/?user_id=$(id)/'),
+    url: urlReplacer('/api/v2/insight/user/counters/?user_id=$(id)'),
     method: 'GET'
   },
 

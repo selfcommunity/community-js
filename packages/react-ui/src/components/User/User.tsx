@@ -9,7 +9,7 @@ import {FollowUserButtonProps} from '../FollowUserButton/FollowUserButton';
 import classNames from 'classnames';
 import {FriendshipButtonProps} from '../FriendshipUserButton/FriendshipUserButton';
 import ConnectionUserButton from '../ConnectionUserButton';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 import BaseItemButton from '../../shared/BaseItemButton';
 import {WidgetProps} from '../Widget';
 

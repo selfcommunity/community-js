@@ -5,7 +5,7 @@ import {SCCommentType} from '@selfcommunity/types';
 import {styled} from '@mui/material/styles';
 import Icon from '@mui/material/Icon';
 import CommentObjectVotesDialog from './VotesDialog';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 
 const PREFIX = 'SCCommentObjectVotes';
 

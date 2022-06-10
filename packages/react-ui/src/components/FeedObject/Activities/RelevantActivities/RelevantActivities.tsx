@@ -9,7 +9,7 @@ import VoteUpRelevantActivity from './VoteUpActivity';
 import FollowRelevantActivity from './FollowActivity';
 import PollVoteRelevantActivity from './PollVoteActivity';
 import classNames from 'classnames';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 
 const PREFIX = 'SCFeedRelevantActivities';
 

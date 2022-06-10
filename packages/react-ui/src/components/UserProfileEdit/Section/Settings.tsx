@@ -9,7 +9,7 @@ import {DEFAULT_FIELDS} from '../../../constants/UserProfile';
 import classNames from 'classnames';
 import SettingsSkeleton from './SettingsSkeleton';
 import {useSnackbar} from 'notistack';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 
 const PREFIX = 'SCUserProfileEditSectionSettings';
 
