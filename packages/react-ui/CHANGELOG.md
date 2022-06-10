@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.8-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.1.7...@selfcommunity/react-ui@0.1.8-alpha.0) (2022-06-10)
+
+
+### Bug Fixes
+
+* build & useThemeProps ([6894cca](https://github.com/selfcommunity/community-js/commit/6894cca5f7b6d1ff9d64adafb79534f5b05a470e))
+* ContributionsActionMenu ([a792cc3](https://github.com/selfcommunity/community-js/commit/a792cc3ec34f95b2b2485193e333b0e2b20a4e5f))
+* ssr ([f93667f](https://github.com/selfcommunity/community-js/commit/f93667fee2354853322bb087e30e588af927e3e8))
+* ssr ([3aad131](https://github.com/selfcommunity/community-js/commit/3aad131a42ffd59dea3a032574c8448613435c9d))
+* ssr ([bb5ea9c](https://github.com/selfcommunity/community-js/commit/bb5ea9ccc63eea11c43837e01aaba07902e85fd4))
+* ssr ([b865ce1](https://github.com/selfcommunity/community-js/commit/b865ce1a1bd53a5f36a6961da49fa683c9cb277d))
+* ssr ([6d6cca7](https://github.com/selfcommunity/community-js/commit/6d6cca7f999047aba81e31ec51e173d17827b70d))
+* ssr ([222c906](https://github.com/selfcommunity/community-js/commit/222c906fac5c73720ffedfa2971ae0b1cd020b77))
+* ssr ([f490e26](https://github.com/selfcommunity/community-js/commit/f490e26080e1d329977846c67354fe3b24cee8d2))
+* ssr ([188264c](https://github.com/selfcommunity/community-js/commit/188264cc29d8df9f894f8cdf2a6f230a001f9fe1))
+* ssr ([5284e15](https://github.com/selfcommunity/community-js/commit/5284e159d4d2f3b6cad272649b07218e56f9fc6f))
+* ssr ([c434ff6](https://github.com/selfcommunity/community-js/commit/c434ff632e917f2279463a08e54d1deb04f5fc1d))
+
+
+
+
+
 ## [0.1.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.1.7-alpha.1...@selfcommunity/react-ui@0.1.7) (2022-05-30)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
