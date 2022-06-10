@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.8-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.1.7...@selfcommunity/react-templates@0.1.8-alpha.0) (2022-06-10)
+
+
+### Bug Fixes
+
+* build & useThemeProps ([6894cca](https://github.com/selfcommunity/community-js/commit/6894cca5f7b6d1ff9d64adafb79534f5b05a470e))
+* ssr ([3aad131](https://github.com/selfcommunity/community-js/commit/3aad131a42ffd59dea3a032574c8448613435c9d))
+
+
+
+
+
 ## [0.1.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.1.7-alpha.1...@selfcommunity/react-templates@0.1.7) (2022-05-30)
 
 **Note:** Version bump only for package @selfcommunity/react-templates

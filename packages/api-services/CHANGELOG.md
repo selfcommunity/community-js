@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.8-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.1.7...@selfcommunity/api-services@0.1.8-alpha.0) (2022-06-10)
+
+
+### Bug Fixes
+
+* assign a tag endpoint/test ([fb8851c](https://github.com/selfcommunity/community-js/commit/fb8851c8400215af176cf907e26a2df84842f5e2))
+* build & useThemeProps ([6894cca](https://github.com/selfcommunity/community-js/commit/6894cca5f7b6d1ff9d64adafb79534f5b05a470e))
+* category test ([ed8050e](https://github.com/selfcommunity/community-js/commit/ed8050e9619c05e782568f81c094403554e53bd2))
+* feedObj test ([df3c2ee](https://github.com/selfcommunity/community-js/commit/df3c2eec251e117c2ef87b0b544a3a6d20bafd9b))
+* Fix Endpoints.ts of insights ([2d47e6e](https://github.com/selfcommunity/community-js/commit/2d47e6ee178f9185cd22d27244c7da12e25977aa))
+* fixed apiRequest, user-test and user serviece. Add test utils functions to generate random variables. ([eb6a417](https://github.com/selfcommunity/community-js/commit/eb6a417a93ab9538385125b56b59f9a7d7b62070))
+* fixed env variable for jest test ([87a1422](https://github.com/selfcommunity/community-js/commit/87a1422c874532c7546af08be42ef005d02773e2))
+* fixed services, removed token. ([b3bebd7](https://github.com/selfcommunity/community-js/commit/b3bebd7eba29216e7f7c2a2d512a1daa63e37f53))
+* fixed test setup, added categoryservice test ([49e8424](https://github.com/selfcommunity/community-js/commit/49e8424f172e4307d70805ab7d0e22f4752575db))
+* fixed tests. Put token generation logic inside test index. ([268b357](https://github.com/selfcommunity/community-js/commit/268b35757205ea3745475a56f6f7bc12aeb132a5))
+* moderation test ([9cf6797](https://github.com/selfcommunity/community-js/commit/9cf67978f8053039dec8b8285dff10ff204dc783))
+* ssr ([3aad131](https://github.com/selfcommunity/community-js/commit/3aad131a42ffd59dea3a032574c8448613435c9d))
+
+
+
+
+
 ## [0.1.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.1.7-alpha.1...@selfcommunity/api-services@0.1.7) (2022-05-30)
 
 **Note:** Version bump only for package @selfcommunity/api-services
