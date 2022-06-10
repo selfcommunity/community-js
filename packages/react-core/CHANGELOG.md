@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.9-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.1.8...@selfcommunity/react-core@0.1.9-alpha.0) (2022-06-10)
+
+
+### Bug Fixes
+
+* polls composer ([ab85ad7](https://github.com/selfcommunity/community-js/commit/ab85ad7f3af321aeefebd9787bf1c85b4b89f32d))
+
+
+
+
+
 ## [0.1.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.1.8-alpha.2...@selfcommunity/react-core@0.1.8) (2022-06-10)
 
 **Note:** Version bump only for package @selfcommunity/react-core
