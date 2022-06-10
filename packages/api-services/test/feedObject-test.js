@@ -115,10 +115,8 @@ describe('Feed Object Service Test', () => {
     });
   });
   test('Feed obj poll vote', () => {
-    console.log(feedObj.id);
     if (feedObj.poll && !feedObj.poll.closed) {
       const choice = feedObj.poll.choices[0];
-      console.log(feedObj.poll);
       return FeedObjectService.feedObjectPollVote(discussion, feedObj.id, choice.id).then((data) => {
         expect(data).toBe('');
       });
