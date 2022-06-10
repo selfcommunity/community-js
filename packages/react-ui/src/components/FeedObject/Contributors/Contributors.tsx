@@ -13,7 +13,7 @@ import CentralProgress from '../../../shared/CentralProgress';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import User from '../../User';
 import classNames from 'classnames';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 
 const PREFIX = 'SCContributorsFeedObject';
 

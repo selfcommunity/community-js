@@ -50,8 +50,10 @@ export default function useSCFetchUser({id = null, user = null}: {id?: number; u
           Logger.error(SCOPE_SC_CORE, `User with id ${id} not found`);
           Logger.error(SCOPE_SC_CORE, err.message);
         });
+    } else {
+      setSCUser(user);
     }
-  }, [id]);
+  }, [id, user]);
 
   return {scUser, setSCUser, error};
 }

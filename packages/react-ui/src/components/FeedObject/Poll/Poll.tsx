@@ -11,7 +11,7 @@ import Choice from './Choice';
 import Icon from '@mui/material/Icon';
 import {SCOPE_SC_UI} from '../../../constants/Errors';
 import classNames from 'classnames';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 
 const messages = defineMessages({
   showPoll: {

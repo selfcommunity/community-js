@@ -14,7 +14,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import classNames from 'classnames';
 import {useSnackbar} from 'notistack';
 import PubSub from 'pubsub-js';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 import Icon from '@mui/material/Icon';
 
 const smessages = defineMessages({

@@ -24,7 +24,7 @@ import IncubatorApprovedNotification from './IncubatorApproved';
 import classNames from 'classnames';
 import LoadingButton from '@mui/lab/LoadingButton';
 import Widget from '../Widget';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 import BaseItem from '../../shared/BaseItem';
 import {Logger} from '@selfcommunity/utils';
 import {

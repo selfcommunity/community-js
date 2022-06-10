@@ -214,7 +214,7 @@ export default function Message(props: MessageProps): JSX.Element {
             <CardHeader
               className={classes.header}
               avatar={
-                <Avatar alt={preferences[SCPreferences.TEXT_APPLICATION_NAME]} src={preferences[SCPreferences.LOGO_NAVBAR_LOGO_MOBILE_MOBILE]} />
+                <Avatar alt={preferences[SCPreferences.TEXT_APPLICATION_NAME]} src={preferences[SCPreferences.LOGO_NAVBAR_LOGO_MOBILE]} />
               }
               action={
                 template === SCBroadcastMessageTemplateType.DETAIL && (

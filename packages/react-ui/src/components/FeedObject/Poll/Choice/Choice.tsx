@@ -8,7 +8,7 @@ import Icon from '@mui/material/Icon';
 import LinearProgress, {LinearProgressProps} from '@mui/material/LinearProgress';
 import {LoadingButton} from '@mui/lab';
 import classNames from 'classnames';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 
 const PREFIX = 'SCChoices';
 

@@ -9,7 +9,7 @@ import {SCFeedObjectTemplateType} from '../../../../types/feedObject';
 import {getContributionRouteName, getRouteData} from '../../../../utils/contribution';
 import classNames from 'classnames';
 import Skeleton from '@mui/material/Skeleton';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 
 const messages = defineMessages({
   comments: {

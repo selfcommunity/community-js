@@ -12,7 +12,7 @@ import {SCUserContext, SCUserContextType, useSCFetchCategory} from '@selfcommuni
 import {SCCategoryType, SCUserType} from '@selfcommunity/types';
 import AvatarGroupSkeleton from '../Skeleton/AvatarGroupSkeleton';
 import classNames from 'classnames';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 
 const messages = defineMessages({
   followedBy: {

@@ -7,7 +7,7 @@ import {SCUserType} from '@selfcommunity/types';
 import {SCPreferences, SCPreferencesContextType, SCUserContextType, useSCFetchUser, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
 import UserProfileHeaderSkeleton from './Skeleton';
 import classNames from 'classnames';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 
 const PREFIX = 'SCUserProfileHeader';
 

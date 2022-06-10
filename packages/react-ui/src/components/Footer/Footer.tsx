@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 import {styled} from '@mui/material/styles';
 import {Box, Grid, Typography} from '@mui/material';
 import classNames from 'classnames';

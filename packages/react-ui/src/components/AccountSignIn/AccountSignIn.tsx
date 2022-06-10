@@ -4,13 +4,12 @@ import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
 import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import {SCAuthTokenType} from '@selfcommunity/types';
-import {ButtonProps, TextField, TextFieldProps} from '@mui/material';
+import {Button, ButtonProps, TextField, TextFieldProps} from '@mui/material';
 import classNames from 'classnames';
 import {FormattedMessage} from 'react-intl';
-import {LoadingButton} from '@mui/lab';
 import PasswordTextField from '../../shared/PasswordTextField';
 import {SCOPE_SC_UI} from '../../constants/Errors';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 
 const PREFIX = 'SCAccountSignIn';
 
@@ -175,9 +174,9 @@ export default function AccountSignIn(inProps: AccountSignInProps): JSX.Element 
         value={password}
         onChange={(event: React.ChangeEvent<HTMLInputElement>) => setPassword(event.target.value)}
       />
-      <LoadingButton type="submit" {...ButtonProps} loading={isSubmitting} disabled={!username || !password}>
+      <Button type="submit" {...ButtonProps} disabled={!username || !password || isSubmitting}>
         <FormattedMessage id="ui.accountSignin.submit" defaultMessage="ui.accountSignin.submit" />
-      </LoadingButton>
+      </Button>
     </Root>
   );
 }
