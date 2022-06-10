@@ -267,7 +267,7 @@ const Endpoints: {[key: string]: EndpointType} = {
     method: 'PATCH'
   },
   AssignTag: {
-    url: urlReplacer('/api/v2/tag/assign/'),
+    url: urlReplacer('/api/v2/tag/$(id)/assign/'),
     method: 'POST'
   },
   /**

@@ -3,7 +3,7 @@ import {generateString} from './utils/random';
 
 describe('Tag Service Test', () => {
   let tag;
-  //const loggedUser = 7;
+  const loggedUser = 7;
   test('Get all tags', () => {
     return TagService.getAllTags().then((data) => {
       expect(data.results).toBeInstanceOf(Array);
@@ -38,9 +38,9 @@ describe('Tag Service Test', () => {
     });
   });
 
-  // test('Assign a tag', () => {
-  //   return TagService.assignATag(tag.id, loggedUser).then((data) => {
-  //     expect(data).toBe('');
-  //   });
-  // });
+  test('Assign a tag', () => {
+    return TagService.assignATag(tag.id, loggedUser).then((data) => {
+      expect(data).toBe('');
+    });
+  });
 });
