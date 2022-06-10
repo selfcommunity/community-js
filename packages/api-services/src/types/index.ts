@@ -8,7 +8,7 @@ import {ModerateContributionParams} from './moderation';
 import {CustomNotificationParams} from './notification';
 import {UserAutocompleteParams, UserScoreParams, UserSearchParams} from './user';
 import {TagParams, TagGetParams} from './tag';
-import {MediaCreateParams, MediaTypes, ChunkUploadParams, ChunkUploadCompleteParams, ChunkType} from './media';
+import {MediaCreateParams, MediaTypes, ChunkUploadParams, ChunkUploadCompleteParams} from './media';
 import {
   ThreadParams,
   MessageCreateParams,
@@ -49,7 +49,6 @@ export {
   MediaCreateParams,
   MediaTypes,
   ChunkUploadCompleteParams,
-  ChunkType,
   ChunkUploadParams,
   ThreadParams,
   MessageCreateParams,

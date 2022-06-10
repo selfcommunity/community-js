@@ -57,8 +57,9 @@ export interface ChunkUploadParams {
 export interface ChunkUploadCompleteParams {
   /**
    * Default to image or document based on file extension
+   * It can be: image, doc, eimage.
    */
-  type?: ChunkType;
+  type?: string;
   /**
    * Id of the chunk uploaded file.
    */
@@ -67,19 +68,4 @@ export interface ChunkUploadCompleteParams {
    * MD5 hash of the original file for checksum proposal
    */
   md5: string;
-}
-
-export enum ChunkType {
-  /**
-   * Image media type
-   */
-  IMAGE = 'image',
-  /**
-   * 	Document media type (only pdf documents are supported)
-   */
-  DOC = 'doc',
-  /**
-   * Other images related to contributes. eg. Images uploaded and inserted as <img> into the contribute text
-   */
-  EIMAGE = 'eimage'
 }
