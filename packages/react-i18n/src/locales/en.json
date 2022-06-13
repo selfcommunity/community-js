@@ -381,7 +381,7 @@
   "ui.userToastNotifications.userBlocked.accountBlocked": "Your account has been <b>blocked</b>",
   "ui.userToastNotifications.userBlocked.accountReactivated": "Your account has been <b>reactivated</b>",
 
-  "ui.snippetNotifications.noNotifications": "At the moment, you don't have any notifications to see",
+  "ui.snippetNotifications.noNotifications": "At the moment, there aren't notifications",
 
   "ui.messageEditor.button.send" : "send",
 

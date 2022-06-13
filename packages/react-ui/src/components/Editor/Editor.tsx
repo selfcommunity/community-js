@@ -4,15 +4,14 @@ import {FormattedMessage} from 'react-intl';
 import {Box, Stack} from '@mui/material';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
-import LexicalComposer from '@lexical/react/LexicalComposer';
-import LexicalContentEditable from '@lexical/react/LexicalContentEditable';
-import LexicalRichTextPlugin from '@lexical/react/LexicalRichTextPlugin';
-import {HistoryPlugin} from '@lexical/react/LexicalHistoryPlugin';
-import {AutoLinkPlugin, DefaultHtmlValuePlugin, EmojiPlugin, ImagePlugin, MentionsPlugin, OnChangePlugin} from './plugins';
-import {LexicalEditor} from 'lexical';
 import nodes from './nodes';
-import LexicalLinkPlugin from '@lexical/react/LexicalLinkPlugin';
-import LexicalAutoFocusPlugin from '@lexical/react/LexicalAutoFocusPlugin';
+import {LexicalComposer} from '@lexical/react/LexicalComposer';
+import {ContentEditable} from '@lexical/react/LexicalContentEditable';
+import {HistoryPlugin} from '@lexical/react/LexicalHistoryPlugin';
+import {RichTextPlugin} from '@lexical/react/LexicalRichTextPlugin';
+import {AutoFocusPlugin} from '@lexical/react/LexicalAutoFocusPlugin';
+import {OnChangePlugin, AutoLinkPlugin, MentionsPlugin, ImagePlugin, EmojiPlugin, DefaultHtmlValuePlugin} from './plugins';
+import {LinkPlugin} from '@lexical/react/LexicalLinkPlugin';
 import ApiPlugin, {ApiRef} from './plugins/ApiPlugin';
 
 const PREFIX = 'SCEditor';
@@ -30,17 +29,18 @@ const Root = styled(Box, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   boxSizing: 'border-box',
-  cursor: 'text',
   padding: theme.spacing(1),
   position: 'relative',
+  cursor: 'text',
   [`& .${classes.content}`]: {
     outline: 'none',
-    minHeight: 60,
+    minHeight: 40,
+    paddingBottom: 20,
     '& > p': {
-      margin: theme.spacing(1, 0, 1, 0)
+      margin: 0
     },
     '& img': {
-      margin: theme.spacing(1, 0, 1, 0),
+      margin: 0,
       '&.focused': {
         outline: '2px solid rgb(60, 132, 244)',
         userSelect: 'none'
@@ -213,8 +213,8 @@ const Editor: ForwardRefRenderFunction<EditorRef, EditorProps> = (inProps: Edito
   return (
     <Root id={id} className={classNames(classes.root, className)}>
       <LexicalComposer initialConfig={initialConfig}>
-        <LexicalRichTextPlugin
-          contentEditable={<LexicalContentEditable className={classes.content} />}
+        <RichTextPlugin
+          contentEditable={<ContentEditable className={classes.content} />}
           placeholder={
             <Box className={classes.placeholder} onClick={handleFocus}>
               <FormattedMessage id="ui.editor.placeholder" defaultMessage="ui.editor.placeholder" />
@@ -222,12 +222,12 @@ const Editor: ForwardRefRenderFunction<EditorRef, EditorProps> = (inProps: Edito
           }
         />
         <DefaultHtmlValuePlugin defaultValue={defaultValue} />
-        <LexicalAutoFocusPlugin />
+        <AutoFocusPlugin />
         <HistoryPlugin />
         <OnChangePlugin onChange={handleChange} />
-        <LexicalLinkPlugin />
         <AutoLinkPlugin />
         <MentionsPlugin />
+        <LinkPlugin />
         <Stack className={classes.actions} direction="row">
           <ImagePlugin />
           <EmojiPlugin />

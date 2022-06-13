@@ -1,5 +1,5 @@
 import React from 'react';
-import LexicalOnChangePlugin from '@lexical/react/LexicalOnChangePlugin';
+import {OnChangePlugin as LexicalOnChangePlugin} from '@lexical/react/LexicalOnChangePlugin';
 import {$getRoot, EditorState, LexicalEditor} from 'lexical';
 import {ImageNode} from '../nodes/ImageNode';
 import {MentionNode} from '../nodes/MentionNode';
