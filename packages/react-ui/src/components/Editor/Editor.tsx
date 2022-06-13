@@ -13,6 +13,7 @@ import {AutoFocusPlugin} from '@lexical/react/LexicalAutoFocusPlugin';
 import {OnChangePlugin, AutoLinkPlugin, MentionsPlugin, ImagePlugin, EmojiPlugin, DefaultHtmlValuePlugin} from './plugins';
 import {LinkPlugin} from '@lexical/react/LexicalLinkPlugin';
 import ApiPlugin, {ApiRef} from './plugins/ApiPlugin';
+import {LexicalEditor} from 'lexical';
 
 const PREFIX = 'SCEditor';
 
@@ -203,6 +204,7 @@ const Editor: ForwardRefRenderFunction<EditorRef, EditorProps> = (inProps: Edito
 
   const initialConfig = useMemo(
     () => ({
+      namespace: 'LexicalEditor',
       readOnly: readOnly,
       onError: handleError,
       nodes: [...nodes]
