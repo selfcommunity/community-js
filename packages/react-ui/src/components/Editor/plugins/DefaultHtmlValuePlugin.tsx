@@ -24,6 +24,8 @@ function DefaultHtmlValuePlugin({defaultValue}) {
 
       // Insert them at a selection.
       const selection = $getSelection();
+      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // @ts-ignore
       selection.insertNodes(nodes);
     });
   }, []);
