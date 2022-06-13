@@ -1,39 +1,32 @@
 import React, {useEffect} from 'react';
-import {$insertDataTransferForRichText} from '@lexical/clipboard';
 import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
-import {$createParagraphNode, $createRangeSelection, $getRoot} from 'lexical';
+import {$getRoot, $getSelection} from 'lexical';
+import {$generateNodesFromDOM} from '@lexical/html';
 
 function DefaultHtmlValuePlugin({defaultValue}) {
   const [editor] = useLexicalComposerContext();
 
   useEffect(() => {
     editor.update(() => {
-      // Fake DataTransfer object which $insertDataTransferForRichText expects from clipboard
-      // https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer
-      const fakeDataTransfer = new DataTransfer();
-      fakeDataTransfer.getData = (format) => {
-        if (format === 'text/html') {
-          return defaultValue;
-        }
-        return '';
-      };
+      // See:
+      // https://github.com/facebook/lexical/issues/1834
+      // https://github.com/facebook/lexical/issues/2328
 
-      const root = $getRoot();
-      const rootChildren = root.getChildren();
-      let paragraphNode = null;
-      if (rootChildren.length === 1) {
-        paragraphNode = rootChildren[0];
-      } else {
-        paragraphNode = $createParagraphNode();
-        root.append(paragraphNode);
-      }
+      // In the browser you can use the native DOMParser API to parse the HTML string.
+      const parser = new DOMParser();
+      const dom = parser.parseFromString(defaultValue, 'text/html');
 
-      // we need selection to point out where to insert our html;
-      const selection = $createRangeSelection();
-      selection.anchor.set(paragraphNode.getKey(), 0, 'element');
-      selection.focus.set(paragraphNode.getKey(), 0, 'element');
+      // Once you have the DOM instance it's easy to generate LexicalNodes.
+      const nodes = $generateNodesFromDOM(editor, dom);
 
-      $insertDataTransferForRichText(fakeDataTransfer, selection, editor);
+      // Select the root
+      $getRoot().select();
+
+      // Insert them at a selection.
+      const selection = $getSelection();
+      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // @ts-ignore
+      selection.insertNodes(nodes);
     });
   }, []);
 

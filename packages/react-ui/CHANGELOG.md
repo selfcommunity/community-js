@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.10-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.1.9...@selfcommunity/react-ui@0.1.10-alpha.0) (2022-06-13)
+
+
+### Bug Fixes
+
+* editor focus, initialValue, iOS bugfixes ([df01bc9](https://github.com/selfcommunity/community-js/commit/df01bc9c8ca4488fb191bbd6576aa9d114d2b874))
+* editor selection ([e9f0f3a](https://github.com/selfcommunity/community-js/commit/e9f0f3a829992035c7e0f872f04490dc99ad781e))
+
+
+
+
+
 ## [0.1.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.1.9-alpha.1...@selfcommunity/react-ui@0.1.9) (2022-06-10)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
