@@ -99,7 +99,7 @@ function useMentionLookupService(mentionString) {
       .request({
         url: Endpoints.UserSearch.url(),
         method: Endpoints.UserSearch.method,
-        params: {user: mentionString, limit: 7}
+        params: {user: mentionString, limit: 3}
       })
       .then((res: HttpResponse<any>) => {
         mentionsCache.set(mentionString, res.data.results);
@@ -167,9 +167,15 @@ function MentionsTypeahead({
     const rootElement = editor.getRootElement();
     if (results !== null && div !== null && rootElement !== null) {
       const range = resolution.range;
-      const {left, top, height} = range.getBoundingClientRect();
-      div.style.top = `${top + height + 2}px`;
-      div.style.left = `${left - 14}px`;
+
+      // Re-calc, relative to the parent container, prevent scroll problems
+      const parentRootPos = rootElement.getBoundingClientRect();
+      const {left, right, top, height} = range.getBoundingClientRect();
+      let relativePosTop = top - parentRootPos.top;
+      let relativePosLeft = right - parentRootPos.left;
+      div.style.position = 'absolute';
+      div.style.top = `${relativePosTop + height + 7}px`;
+      div.style.left = `${relativePosLeft - 14}px`;
       div.style.display = 'block';
       rootElement.setAttribute('aria-controls', 'mentions-typeahead');
 
@@ -518,7 +524,7 @@ const Root = styled(MentionsTypeahead, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  position: 'fixed',
+  position: 'absolute',
   background: '#fff',
   boxShadow: '0px 5px 10px rgba(0, 0, 0, 0.3)',
   borderEadius: 8,
@@ -610,7 +616,10 @@ function useMentions(editor: LexicalEditor): JSX.Element {
 
   return resolution === null || editor === null
     ? null
-    : createPortal(<Root close={closeTypeahead} resolution={resolution} editor={editor} className={classes.root} />, document.body);
+    : createPortal(
+        <Root close={closeTypeahead} resolution={resolution} editor={editor} className={classes.root} />,
+        editor.getRootElement().parentElement
+      );
 }
 
 export default function MentionsPlugin(): JSX.Element {
