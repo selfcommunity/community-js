@@ -33,6 +33,7 @@ const Root = styled(Box, {
   position: 'relative',
   cursor: 'text',
   [`& .${classes.content}`]: {
+    position: 'relative',
     outline: 'none',
     minHeight: 40,
     paddingBottom: 20,
