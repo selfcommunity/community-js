@@ -9,7 +9,6 @@ import {LexicalComposer} from '@lexical/react/LexicalComposer';
 import {ContentEditable} from '@lexical/react/LexicalContentEditable';
 import {HistoryPlugin} from '@lexical/react/LexicalHistoryPlugin';
 import {RichTextPlugin} from '@lexical/react/LexicalRichTextPlugin';
-import {AutoFocusPlugin} from '@lexical/react/LexicalAutoFocusPlugin';
 import {OnChangePlugin, AutoLinkPlugin, MentionsPlugin, ImagePlugin, EmojiPlugin, DefaultHtmlValuePlugin} from './plugins';
 import {LinkPlugin} from '@lexical/react/LexicalLinkPlugin';
 import ApiPlugin, {ApiRef} from './plugins/ApiPlugin';
@@ -224,7 +223,6 @@ const Editor: ForwardRefRenderFunction<EditorRef, EditorProps> = (inProps: Edito
           }
         />
         <DefaultHtmlValuePlugin defaultValue={defaultValue} />
-        <AutoFocusPlugin />
         <HistoryPlugin />
         <OnChangePlugin onChange={handleChange} />
         <AutoLinkPlugin />
