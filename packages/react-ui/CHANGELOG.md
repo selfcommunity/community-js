@@ -3,6 +3,35 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.1.13-alpha.1...@selfcommunity/react-ui@0.1.13) (2022-06-15)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.1.13-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.1.13-alpha.0...@selfcommunity/react-ui@0.1.13-alpha.1) (2022-06-15)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.1.13-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.1.12...@selfcommunity/react-ui@0.1.13-alpha.0) (2022-06-15)
+
+
+### Bug Fixes
+
+* composer styles ([1a51a0e](https://github.com/selfcommunity/community-js/commit/1a51a0ee91cfa8e5902070b0913dfbc93bab7e13))
+* FeedObject styles ([6ba3ba0](https://github.com/selfcommunity/community-js/commit/6ba3ba04cfd23e250197ef004e97e1655aa0f8f0))
+* mentions popup position ([7417f0d](https://github.com/selfcommunity/community-js/commit/7417f0db6d9c8c76eb760a4b8495a2b2427e4bea))
+
+
+
+
+
 ## [0.1.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.1.12-alpha.1...@selfcommunity/react-ui@0.1.12) (2022-06-14)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
