@@ -84,7 +84,8 @@ const Root = styled(Widget, {
 })(({theme}) => ({
   marginBottom: theme.spacing(2),
   [`&.${classes.root}`]: {
-    width: '100%'
+    width: '100%',
+    paddingBottom: 5
   },
   [`& .${classes.header}`]: {
     paddingBottom: 0
