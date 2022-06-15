@@ -172,7 +172,9 @@ const Root = styled(Widget, {
   },
   [`& .${classes.activitiesContent}`]: {
     paddingTop: 3,
-    paddingBottom: 3
+    '&:last-child': {
+      paddingBottom: 5
+    }
   },
   [`& .${classes.infoSection}`]: {
     padding: `0px ${theme.spacing(2)}`
