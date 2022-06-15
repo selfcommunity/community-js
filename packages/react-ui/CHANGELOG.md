@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.1.12-alpha.1...@selfcommunity/react-ui@0.1.12) (2022-06-14)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.1.12-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.1.12-alpha.0...@selfcommunity/react-ui@0.1.12-alpha.1) (2022-06-14)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.1.12-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.1.11...@selfcommunity/react-ui@0.1.12-alpha.0) (2022-06-14)
+
+
+### Bug Fixes
+
+* mentions popup position ([ab37153](https://github.com/selfcommunity/community-js/commit/ab37153d6115d0ff436516cb4cb4ec869a4ee7b8))
+
+
+
+
+
 ## [0.1.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.1.11-alpha.1...@selfcommunity/react-ui@0.1.11) (2022-06-14)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
