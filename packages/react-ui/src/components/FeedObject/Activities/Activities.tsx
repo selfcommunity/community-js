@@ -22,8 +22,7 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  width: '100%',
-  paddingBottom: 30
+  width: '100%'
 }));
 
 export interface ActivitiesProps {

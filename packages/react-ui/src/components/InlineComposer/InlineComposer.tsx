@@ -44,6 +44,9 @@ const Root = styled(Widget, {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
+    '&:last-child': {
+      paddingBottom: 5
+    },
     [`& .${classes.input}`]: {
       flexGrow: 2
     },

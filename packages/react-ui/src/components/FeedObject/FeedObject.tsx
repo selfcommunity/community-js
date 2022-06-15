@@ -84,7 +84,8 @@ const Root = styled(Widget, {
 })(({theme}) => ({
   marginBottom: theme.spacing(2),
   [`&.${classes.root}`]: {
-    width: '100%'
+    width: '100%',
+    paddingBottom: 5
   },
   [`& .${classes.header}`]: {
     paddingBottom: 0
@@ -171,7 +172,9 @@ const Root = styled(Widget, {
   },
   [`& .${classes.activitiesContent}`]: {
     paddingTop: 3,
-    paddingBottom: 3
+    '&:last-child': {
+      paddingBottom: 5
+    }
   },
   [`& .${classes.infoSection}`]: {
     padding: `0px ${theme.spacing(2)}`
