@@ -343,7 +343,7 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
             _parent.latest_comments = [commentObj];
             if (getContribution(parent).id === commentsObject.feedObject.id) {
               setComment(_parent);
-              scrollToComment(_parent);
+              scrollToComment(commentObj);
             } else {
               setCommentError(true);
             }
