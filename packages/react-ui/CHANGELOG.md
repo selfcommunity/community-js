@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.14](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.1.14-alpha.1...@selfcommunity/react-ui@0.1.14) (2022-06-16)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.1.14-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.1.14-alpha.0...@selfcommunity/react-ui@0.1.14-alpha.1) (2022-06-16)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.1.14-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.1.13...@selfcommunity/react-ui@0.1.14-alpha.0) (2022-06-16)
+
+
+### Bug Fixes
+
+* commentObj scrollTo ([0b2f57f](https://github.com/selfcommunity/community-js/commit/0b2f57f94f57723d014860813a4e5a6cd69ac254))
+* inlineComposer User linked ([e2399c2](https://github.com/selfcommunity/community-js/commit/e2399c2f2637c0d01f7100f848607d629bf2fbec))
+
+
+
+
+
 ## [0.1.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.1.13-alpha.1...@selfcommunity/react-ui@0.1.13) (2022-06-15)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
