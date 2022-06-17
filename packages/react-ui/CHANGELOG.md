@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.15-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.1.14...@selfcommunity/react-ui@0.1.15-alpha.0) (2022-06-17)
+
+
+### Bug Fixes
+
+* UserProfileEdit add callback on success edit data ([ec9515e](https://github.com/selfcommunity/community-js/commit/ec9515e8f68756b895c6ce9be17f11b3099829b1))
+
+
+
+
+
 ## [0.1.14](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.1.14-alpha.1...@selfcommunity/react-ui@0.1.14) (2022-06-16)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
