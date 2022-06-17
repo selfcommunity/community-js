@@ -4,8 +4,8 @@ import {Accordion, AccordionDetails, AccordionProps as MUIAccordionProps, Accord
 import {defineMessages, FormattedMessage} from 'react-intl';
 import {SCUserFields} from '@selfcommunity/types';
 import {DEFAULT_FIELDS} from '../../constants/UserProfile';
-import PublicInfo from './Section/PublicInfo';
-import Settings from './Section/Settings';
+import PublicInfo, {PublicInfoProps} from './Section/PublicInfo';
+import Settings, {SettingsProps} from './Section/Settings';
 import classNames from 'classnames';
 import {DistributiveOmit} from '@mui/types';
 import {OverrideProps} from '@mui/material/OverridableComponent';
@@ -93,6 +93,18 @@ export interface UserProfileEditProps {
   AccordionProps?: AccordionProps;
 
   /**
+   * Props to apply to PublicInfo section
+   * @default {}
+   */
+  UserProfileEditSectionPublicInfoProps?: PublicInfoProps;
+
+  /**
+   * Props to apply to Settings section
+   * @default {}
+   */
+  UserProfileEditSectionSettingsProps?: SettingsProps;
+
+  /**
    * Any other properties
    */
   [p: string]: any;
@@ -128,7 +140,15 @@ export default function UserProfileEdit(inProps: UserProfileEditProps): JSX.Elem
     props: inProps,
     name: PREFIX
   });
-  const {id = null, className = null, fields = [...DEFAULT_FIELDS], AccordionProps = {}, ...rest} = props;
+  const {
+    id = null,
+    className = null,
+    fields = [...DEFAULT_FIELDS],
+    AccordionProps = {},
+    UserProfileEditSectionPublicInfoProps = {},
+    UserProfileEditSectionSettingsProps = {},
+    ...rest
+  } = props;
 
   // RENDER
   return (
@@ -140,7 +160,7 @@ export default function UserProfileEdit(inProps: UserProfileEditProps): JSX.Elem
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <PublicInfo fields={fields} />
+          <PublicInfo fields={fields} {...UserProfileEditSectionPublicInfoProps}/>
         </AccordionDetails>
       </Accordion>
       <Accordion {...AccordionProps}>
@@ -150,7 +170,7 @@ export default function UserProfileEdit(inProps: UserProfileEditProps): JSX.Elem
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Settings fields={fields} />
+          <Settings {...UserProfileEditSectionSettingsProps} />
         </AccordionDetails>
       </Accordion>
     </Root>
