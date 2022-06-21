@@ -33,7 +33,7 @@ describe('User Service Test', () => {
   });
   test('Get user counters', () => {
     return UserService.getUserCounters(user.id).then((data) => {
-      expect(data).toHaveProperty('polls');
+      expect(data).toHaveProperty('posts');
     });
   });
   test('Get Current User Avatar', () => {
