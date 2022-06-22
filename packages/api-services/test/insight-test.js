@@ -2,7 +2,7 @@ import {InsightService} from '../src/index';
 
 describe('Insight Service Test', () => {
   let contributionId;
-  let embedId;
+  let embed;
   let userId;
   test('Get best contribution insight', () => {
     return InsightService.getBestContributionInsight().then((data) => {
@@ -20,7 +20,7 @@ describe('Insight Service Test', () => {
     return InsightService.getBestEmbedInsight().then((data) => {
       if (data.count !== 0) {
         expect(data.results[0]).toHaveProperty('embed');
-        embedId = data.results[0].embed.id;
+        embed = data.results[0].embed;
       } else {
         expect(data.results).toBeInstanceOf(Array);
       }
@@ -46,8 +46,8 @@ describe('Insight Service Test', () => {
     }
   });
   test('Get best embed insight counters', () => {
-    if (embedId) {
-      return InsightService.getEmbedsInsightCounters(embedId).then((data) => {
+    if (embed.id) {
+      return InsightService.getEmbedsInsightCounters(embed.embed_type, embed.embed_id).then((data) => {
         expect(data).toHaveProperty('num_clicks');
       });
     } else {
