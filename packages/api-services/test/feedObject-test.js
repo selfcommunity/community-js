@@ -1,19 +1,28 @@
-import {FeedObjectService} from '../src/index';
+import {FeedObjectService, PreferenceService} from '../src/index';
 import {SCFeedObjectTypologyType} from '@selfcommunity/types/src/types';
 import {generateString} from './utils/random';
 import {SCFlagTypeEnum} from '@selfcommunity/types';
 
 describe('Feed Object Service Test', () => {
-  let feedObj;
-  const discussion = SCFeedObjectTypologyType.DISCUSSION;
   const loggedUser = 7;
+  let feedObj;
+  let type;
+  test('Get dynamic preferences', () => {
+    return PreferenceService.searchPreferences('discussion_type_enabled').then((data) => {
+      if (data.results[0].value) {
+        type = SCFeedObjectTypologyType.DISCUSSION;
+      } else {
+        type = SCFeedObjectTypologyType.POST;
+      }
+    });
+  });
   test('Get all feedObjs', () => {
-    return FeedObjectService.getAllFeedObjects(discussion).then((data) => {
+    return FeedObjectService.getAllFeedObjects(type).then((data) => {
       expect(data.results).toBeInstanceOf(Array);
     });
   });
   test('Get all uncommented feedObjs', () => {
-    return FeedObjectService.getUncommentedFeedObjects(discussion).then((data) => {
+    return FeedObjectService.getUncommentedFeedObjects(type).then((data) => {
       if (data.count !== 0) {
         expect(data.results[0].comment_count).toEqual(0);
       } else {
@@ -38,18 +47,18 @@ describe('Feed Object Service Test', () => {
         choices: [{choice: generateString()}, {choice: generateString()}]
       }
     };
-    return FeedObjectService.createFeedObject(discussion, body).then((data) => {
+    return FeedObjectService.createFeedObject(type, body).then((data) => {
       expect(data.summary).toBe(body.text);
       feedObj = data;
     });
   });
   test('Search feedObj', () => {
-    return FeedObjectService.searchFeedObject(discussion).then((data) => {
+    return FeedObjectService.searchFeedObject(type).then((data) => {
       expect(data.results).toBeInstanceOf(Array);
     });
   });
   test('Get a specific feedObj', () => {
-    return FeedObjectService.getSpecificFeedObject(discussion, feedObj.id).then((data) => {
+    return FeedObjectService.getSpecificFeedObject(type, feedObj.id).then((data) => {
       expect(data).toBeInstanceOf(Object);
     });
   });
@@ -70,54 +79,54 @@ describe('Feed Object Service Test', () => {
         choices: [{choice: generateString()}, {choice: generateString()}]
       }
     };
-    return FeedObjectService.updateFeedObject(discussion, feedObj.id, body).then((data) => {
+    return FeedObjectService.updateFeedObject(type, feedObj.id, body).then((data) => {
       expect(data).toBeInstanceOf(Object);
     });
   });
   test('Delete a feedObj', () => {
-    return FeedObjectService.deleteFeedObject(discussion, feedObj.id).then((data) => {
+    return FeedObjectService.deleteFeedObject(type, feedObj.id).then((data) => {
       expect(data).toBe('');
     });
   });
   test('Restore a feedObj', () => {
-    return FeedObjectService.restoreFeedObject(discussion, feedObj.id).then((data) => {
+    return FeedObjectService.restoreFeedObject(type, feedObj.id).then((data) => {
       expect(data).toBe('');
     });
   });
   test('Get feed obj contributors list', () => {
-    return FeedObjectService.feedObjectContributorsList(discussion, feedObj.id).then((data) => {
+    return FeedObjectService.feedObjectContributorsList(type, feedObj.id).then((data) => {
       expect(data.results).toBeInstanceOf(Array);
     });
   });
   test('Get feed obj shares list', () => {
-    return FeedObjectService.feedObjectSharesList(discussion, feedObj.id).then((data) => {
+    return FeedObjectService.feedObjectSharesList(type, feedObj.id).then((data) => {
       expect(data.results).toBeInstanceOf(Array);
     });
   });
   test('Get feed obj user shares list', () => {
-    return FeedObjectService.feedObjectSharesList(discussion, feedObj.id).then((data) => {
+    return FeedObjectService.feedObjectSharesList(type, feedObj.id).then((data) => {
       expect(data.results).toBeInstanceOf(Array);
     });
   });
   test('Get related feedObjs', () => {
-    return FeedObjectService.relatedFeedObjects(discussion, feedObj.id).then((data) => {
+    return FeedObjectService.relatedFeedObjects(type, feedObj.id).then((data) => {
       expect(data.results).toBeInstanceOf(Array);
     });
   });
   test('Vote a feedObj', () => {
-    return FeedObjectService.voteFeedObject(discussion, feedObj.id).then((data) => {
+    return FeedObjectService.voteFeedObject(type, feedObj.id).then((data) => {
       expect(data).toBe('');
     });
   });
   test('Get  feedObj votes list', () => {
-    return FeedObjectService.feedObjectVotes(discussion, feedObj.id).then((data) => {
+    return FeedObjectService.feedObjectVotes(type, feedObj.id).then((data) => {
       expect(data.results).toBeInstanceOf(Array);
     });
   });
   test('Feed obj poll vote', () => {
     if (feedObj.poll && !feedObj.poll.closed) {
       const choice = feedObj.poll.choices[0];
-      return FeedObjectService.feedObjectPollVote(discussion, feedObj.id, choice.id).then((data) => {
+      return FeedObjectService.feedObjectPollVote(type, feedObj.id, choice.id).then((data) => {
         expect(data).toBe('');
       });
     } else {
@@ -125,13 +134,13 @@ describe('Feed Object Service Test', () => {
     }
   });
   test('Get  feedObj poll votes list', () => {
-    return FeedObjectService.feedObjectPollVotesList(discussion, feedObj.id).then((data) => {
+    return FeedObjectService.feedObjectPollVotesList(type, feedObj.id).then((data) => {
       expect(data.results).toBeInstanceOf(Array);
     });
   });
   test('Follow a feedObj', () => {
     if (feedObj.author.id !== loggedUser) {
-      return FeedObjectService.followFeedObject(discussion, feedObj.id).then((data) => {
+      return FeedObjectService.followFeedObject(type, feedObj.id).then((data) => {
         expect(data).toBe('');
       });
     } else {
@@ -139,18 +148,18 @@ describe('Feed Object Service Test', () => {
     }
   });
   test('Check if following feed obj', () => {
-    return FeedObjectService.checkIfFollowingFeedObject(discussion, feedObj.id).then((data) => {
+    return FeedObjectService.checkIfFollowingFeedObject(type, feedObj.id).then((data) => {
       expect(data).toHaveProperty('following');
     });
   });
   test('FeedObj following list', () => {
-    return FeedObjectService.feedObjectFollowingList(discussion, feedObj.id).then((data) => {
+    return FeedObjectService.feedObjectFollowingList(type, feedObj.id).then((data) => {
       expect(data.results).toBeInstanceOf(Array);
     });
   });
   test('Suspend a feedObj', () => {
     if (feedObj.author.id !== loggedUser) {
-      return FeedObjectService.suspendFeedObject(discussion, feedObj.id).then((data) => {
+      return FeedObjectService.suspendFeedObject(type, feedObj.id).then((data) => {
         expect(data).toBe('');
       });
     } else {
@@ -158,18 +167,18 @@ describe('Feed Object Service Test', () => {
     }
   });
   test('Check if suspended feed obj', () => {
-    return FeedObjectService.checkIfSuspendedFeedObject(discussion, feedObj.id).then((data) => {
+    return FeedObjectService.checkIfSuspendedFeedObject(type, feedObj.id).then((data) => {
       expect(data).toHaveProperty('suspended');
     });
   });
   test('FeedObj suspended list', () => {
-    return FeedObjectService.feedObjectSuspendedList(discussion, feedObj.id).then((data) => {
+    return FeedObjectService.feedObjectSuspendedList(type, feedObj.id).then((data) => {
       expect(data.results).toBeInstanceOf(Array);
     });
   });
   test('Flag a feedObj', () => {
     if (feedObj.author.id !== loggedUser) {
-      return FeedObjectService.flagFeedObject(discussion, feedObj.id, SCFlagTypeEnum.SPAM).then((data) => {
+      return FeedObjectService.flagFeedObject(type, feedObj.id, SCFlagTypeEnum.SPAM).then((data) => {
         expect(data).toBe('');
       });
     } else {
@@ -178,7 +187,7 @@ describe('Feed Object Service Test', () => {
   });
   test('Get a specific feedObj flag list', () => {
     if (loggedUser !== feedObj.author.id) {
-      return FeedObjectService.feedObjectFlagList(discussion, feedObj.id).then((data) => {
+      return FeedObjectService.feedObjectFlagList(type, feedObj.id).then((data) => {
         if (data.count !== 0) {
           expect(data.results[0]).toHaveProperty('added_at');
         } else {
@@ -190,13 +199,13 @@ describe('Feed Object Service Test', () => {
     }
   });
   test('Get a specific feedObj flag status', () => {
-    return FeedObjectService.feedObjectFlagStatus(discussion, feedObj.id).then((data) => {
+    return FeedObjectService.feedObjectFlagStatus(type, feedObj.id).then((data) => {
       expect(data).toBeInstanceOf(Object);
     });
   });
   test('Hide a feedObj', () => {
     if (feedObj.author.id !== loggedUser) {
-      return FeedObjectService.hideFeedObject(discussion, feedObj.id).then((data) => {
+      return FeedObjectService.hideFeedObject(type, feedObj.id).then((data) => {
         expect(data).toBe('');
       });
     } else {
@@ -204,12 +213,12 @@ describe('Feed Object Service Test', () => {
     }
   });
   test('Get a specific feedObj hide status', () => {
-    return FeedObjectService.feedObjectHideStatus(discussion, feedObj.id).then((data) => {
+    return FeedObjectService.feedObjectHideStatus(type, feedObj.id).then((data) => {
       expect(data).toHaveProperty('hidden');
     });
   });
   test('Delete a feedObj', () => {
-    return FeedObjectService.deleteFeedObject(discussion, feedObj.id).then((data) => {
+    return FeedObjectService.deleteFeedObject(type, feedObj.id).then((data) => {
       expect(data).toBe('');
     });
   });
