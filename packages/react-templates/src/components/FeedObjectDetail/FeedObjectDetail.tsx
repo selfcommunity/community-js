@@ -5,6 +5,9 @@ import Sticky from 'react-stickynode';
 import FeedObjectDetailSkeleton from './Skeleton';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
+import {scrollIntoView} from 'seamless-scroll-polyfill';
+import {FormattedMessage} from 'react-intl';
+import {SCCommentType, SCCustomAdvPosition, SCFeedObjectType, SCFeedObjectTypologyType} from '@selfcommunity/types';
 import {
   CommentsFeedObjectProps,
   CustomAdv,
@@ -15,7 +18,6 @@ import {
   CommentsFeedObject,
   RelatedFeedObjectsProps
 } from '@selfcommunity/react-ui';
-import {SCCommentType, SCCustomAdvPosition, SCFeedObjectType, SCFeedObjectTypologyType} from '@selfcommunity/types';
 import {
   SCPreferences,
   SCPreferencesContextType,
@@ -24,7 +26,6 @@ import {
   useSCPreferences,
   useSCUser
 } from '@selfcommunity/react-core';
-import {FormattedMessage} from 'react-intl';
 
 const PREFIX = 'SCFeedObjectDetailTemplate';
 
@@ -175,7 +176,9 @@ export default function FeedObjectDetail(inProps: FeedObjectDetailProps): JSX.El
     setComments([...comments, ...[comment]]);
     setTimeout(() => {
       const element = document.getElementById(`comment_object_${comment.id}`);
-      element && element.scrollIntoView({behavior: 'smooth', block: 'center'});
+      if (element) {
+        scrollIntoView(element, {behavior: 'smooth', block: 'center', inline: 'center'});
+      }
     }, 300);
   }
 

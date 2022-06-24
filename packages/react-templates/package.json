@@ -61,7 +61,8 @@
     "@selfcommunity/react-ui": "^0.1.15",
     "@selfcommunity/types": "^0.1.15",
     "@types/classnames": "^2.2.11",
-    "classnames": "^2.2.6"
+    "classnames": "^2.2.6",
+    "seamless-scroll-polyfill": "^2.1.8"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.13",
