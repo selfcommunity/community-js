@@ -12351,6 +12351,14 @@ notistack@^2.0.3:
     clsx "^1.1.0"
     hoist-non-react-statics "^3.3.0"
 
+notistack@^2.0.4:
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/notistack/-/notistack-2.0.5.tgz#8eb53720453f6e02182cd0e6784ced630a7bb7e6"
+  integrity sha512-Ig2T1Muqkc1PaSQcEDrK7diKv6cBxw02Iq6uv074ySfgq524TV5lK41diAb6OSsaiWfp3aRt+T3+0MF8m2EcJQ==
+  dependencies:
+    clsx "^1.1.0"
+    hoist-non-react-statics "^3.3.0"
+
 npm-bundled@^1.1.1:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/npm-bundled/-/npm-bundled-1.1.2.tgz#944c78789bd739035b70baa2ca5cc32b8d860bc1"
@@ -14880,6 +14888,11 @@ schema-utils@^4.0.0:
     ajv "^8.8.0"
     ajv-formats "^2.1.1"
     ajv-keywords "^5.0.0"
+
+seamless-scroll-polyfill@^2.1.8:
+  version "2.1.8"
+  resolved "https://registry.yarnpkg.com/seamless-scroll-polyfill/-/seamless-scroll-polyfill-2.1.8.tgz#357b478b54a093e03581dcc9c0a86eae4b00eee2"
+  integrity sha512-cF92Op90//vEpHphRx25rttJGXIgxcTB1WR5y0ODQhN7O4d0lSEOp5+l3sQDx0aAZ2MfXCqFEb/rG/3ghvVDIQ==
 
 "semver@2 || 3 || 4 || 5", semver@^5.4.1, semver@^5.5.0, semver@^5.6.0, semver@^5.7.0, semver@^5.7.1:
   version "5.7.1"
