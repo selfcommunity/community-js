@@ -1,14 +1,24 @@
-import {CommentService, FeedObjectService} from '../src/index';
+import {CommentService, FeedObjectService, PreferenceService} from '../src/index';
 import {SCFeedObjectTypologyType} from '@selfcommunity/types/src/types';
 import {generateString} from './utils/random';
 import {SCFlagTypeEnum} from '@selfcommunity/types';
 
 describe('Comment Service Test', () => {
+  const loggedUser = 7;
   let feedObjId;
   let comment;
-  const loggedUser = 7;
-  test('Get all discussions', () => {
-    return FeedObjectService.getAllFeedObjects(SCFeedObjectTypologyType.DISCUSSION).then((data) => {
+  let type;
+  test('Get dynamic preferences', () => {
+    return PreferenceService.searchPreferences('discussion_type_enabled').then((data) => {
+      if (data.results[0].value) {
+        type = SCFeedObjectTypologyType.DISCUSSION;
+      } else {
+        type = SCFeedObjectTypologyType.POST;
+      }
+    });
+  });
+  test('Get all feed objs', () => {
+    return FeedObjectService.getAllFeedObjects(type).then((data) => {
       feedObjId = data.results[0].id;
       expect(data).toBeInstanceOf(Object);
     });

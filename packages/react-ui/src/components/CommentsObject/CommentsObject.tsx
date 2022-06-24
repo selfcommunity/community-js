@@ -11,6 +11,9 @@ import {WidgetProps} from '../Widget';
 import CommentsObjectSkeleton from './Skeleton';
 import {InView} from 'react-intersection-observer';
 import {getContributionRouteName, getRouteData} from '../../utils/contribution';
+import {SCCommentType, SCCustomAdvPosition, SCFeedObjectType, SCFeedObjectTypologyType} from '@selfcommunity/types';
+import {appendURLSearchParams} from '@selfcommunity/utils';
+import {scrollIntoView} from 'seamless-scroll-polyfill';
 import {
   Link,
   SCPreferences,
@@ -22,8 +25,6 @@ import {
   useSCRouting,
   useSCUser
 } from '@selfcommunity/react-core';
-import {SCCommentType, SCCustomAdvPosition, SCFeedObjectType, SCFeedObjectTypologyType} from '@selfcommunity/types';
-import {appendURLSearchParams} from '@selfcommunity/utils';
 
 const PREFIX = 'SCCommentsObject';
 
@@ -307,7 +308,9 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
   function openReplyBox(comment) {
     setTimeout(() => {
       const element = document.getElementById(`reply-${comment.id}`);
-      element && element.scrollIntoView({behavior: 'smooth', block: 'center'});
+      if (element) {
+        scrollIntoView(element, {behavior: 'smooth', block: 'center', inline: 'center'});
+      }
     }, 200);
   }
 

@@ -15,7 +15,7 @@ export interface InsightApiClientInterface {
   getBestEmbedInsight(params?: InsightEmbedParams): Promise<SCPaginatedResponse<SCEmbedInsightType>>;
   getBestUsersInsight(params?: InsightUserParams): Promise<SCPaginatedResponse<SCUsersInsightType>>;
   getContributionsInsightCounters(id: number): Promise<SCContributionInsightCountersType>;
-  getEmbedsInsightCounters(id: number): Promise<SCEmbedInsightCountersType>;
+  getEmbedsInsightCounters(type: string, id: number): Promise<SCEmbedInsightCountersType>;
   getUsersInsightCounters(id: number): Promise<SCUsersInsightCountersType>;
 }
 /**
@@ -60,10 +60,11 @@ export class InsightApiClient {
 
   /**
    * This endpoint retrieves a specific embed's insight counters.
+   * @param type
    * @param id
    */
-  static getEmbedsInsightCounters(id: number): Promise<SCEmbedInsightCountersType> {
-    return apiRequest(Endpoints.InsightEmbedCounter.url({id}), Endpoints.InsightEmbedCounter.method);
+  static getEmbedsInsightCounters(type: string, id: number): Promise<SCEmbedInsightCountersType> {
+    return apiRequest(Endpoints.InsightEmbedCounter.url({type, id}), Endpoints.InsightEmbedCounter.method);
   }
 
   /**
@@ -92,8 +93,8 @@ export default class InsightService {
     return InsightApiClient.getContributionsInsightCounters(id);
   }
 
-  static async getEmbedsInsightCounters(id: number): Promise<SCEmbedInsightCountersType> {
-    return InsightApiClient.getEmbedsInsightCounters(id);
+  static async getEmbedsInsightCounters(type: string, id: number): Promise<SCEmbedInsightCountersType> {
+    return InsightApiClient.getEmbedsInsightCounters(type, id);
   }
 
   static async getUsersInsightCounters(id: number): Promise<SCUsersInsightCountersType> {

@@ -58,7 +58,7 @@ describe('Webhook Service Test', () => {
       expect(data).toBe('');
     });
   });
-  test('Resend a specific webhook endpoint event', () => {
+  test('Resend a specific webhook endpoint event in bulk', () => {
     const events = [getRandomInt(), getRandomInt()];
     return WebhookService.resendMultipleWebhookEndpointEvent(webhookEndpoint.id, events).then((data) => {
       expect(data).toBe('');
