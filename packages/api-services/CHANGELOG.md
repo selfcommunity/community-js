@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.16](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.1.16-alpha.1...@selfcommunity/api-services@0.1.16) (2022-06-24)
+
+**Note:** Version bump only for package @selfcommunity/api-services
+
+
+
+
+
+## [0.1.16-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.1.16-alpha.0...@selfcommunity/api-services@0.1.16-alpha.1) (2022-06-24)
+
+**Note:** Version bump only for package @selfcommunity/api-services
+
+
+
+
+
+## [0.1.16-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.1.15...@selfcommunity/api-services@0.1.16-alpha.0) (2022-06-24)
+
+
+### Bug Fixes
+
+* fixed data portability test ([643ff78](https://github.com/selfcommunity/community-js/commit/643ff780293c480ca2721f282f9e00fccb870086))
+* fixed insight test ([69b51de](https://github.com/selfcommunity/community-js/commit/69b51de8b2e84d6a097236168dff9469579ea1ae))
+* fixed tests, added connections requests in user test. ([c567bb1](https://github.com/selfcommunity/community-js/commit/c567bb1e32909c3af8af201bca683b2cf967a4e1))
+* fixed user test(api-services). ([d8fe11c](https://github.com/selfcommunity/community-js/commit/d8fe11caf64e62bceac8fc99b229d8578e04e983))
+
+
+
+
+
 ## [0.1.15](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.1.15-alpha.1...@selfcommunity/api-services@0.1.15) (2022-06-17)
 
 **Note:** Version bump only for package @selfcommunity/api-services

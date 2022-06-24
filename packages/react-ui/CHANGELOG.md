@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.16](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.1.16-alpha.1...@selfcommunity/react-ui@0.1.16) (2022-06-24)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.1.16-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.1.16-alpha.0...@selfcommunity/react-ui@0.1.16-alpha.1) (2022-06-24)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.1.16-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.1.15...@selfcommunity/react-ui@0.1.16-alpha.0) (2022-06-24)
+
+
+### Bug Fixes
+
+* polyfill scrollIntoView ([a77bbe7](https://github.com/selfcommunity/community-js/commit/a77bbe79b29802eef4a7d5af22f474ff9c36739e))
+
+
+
+
+
 ## [0.1.15](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.1.15-alpha.1...@selfcommunity/react-ui@0.1.15) (2022-06-17)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
