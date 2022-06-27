@@ -11,6 +11,7 @@ import classNames from 'classnames';
 import Widget from '../Widget';
 import AutoPlayer from '../../shared/AutoPlayer';
 import LazyLoad from 'react-lazyload';
+import {PRELOAD_OFFSET_VIEWPORT} from '../../constants/LazyLoad';
 import {useThemeProps} from '@mui/system';
 
 const PREFIX = 'SCMessage';
@@ -281,7 +282,7 @@ export default function Message(inProps: MessageProps): JSX.Element {
           </ListItem>
         </React.Fragment>
       ) : (
-        <LazyLoad once>
+        <LazyLoad once offset={PRELOAD_OFFSET_VIEWPORT}>
           <ListItem onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} button={true}>
             {!snippetType && isHovering && loggedUser === message.sender.id && message.status !== 'hidden' && (
               <>

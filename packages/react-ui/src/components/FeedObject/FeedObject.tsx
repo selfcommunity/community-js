@@ -31,6 +31,7 @@ import {CommentObjectProps} from '../CommentObject';
 import {SCCommentType, SCFeedObjectType, SCFeedObjectTypologyType, SCPollType} from '@selfcommunity/types';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
+import {PRELOAD_OFFSET_VIEWPORT} from '../../constants/LazyLoad';
 import {
   Link,
   SCContextType,
@@ -740,7 +741,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
               <Box className={classes.infoSection}>
                 <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
                   {!hideParticipantsPreview && (
-                    <LazyLoad once>
+                    <LazyLoad once offset={PRELOAD_OFFSET_VIEWPORT}>
                       <ContributorsFeedObject feedObject={obj} feedObjectType={obj.type} {...ContributorsFeedObjectProps} />
                     </LazyLoad>
                   )}
@@ -769,7 +770,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
             {template === SCFeedObjectTemplateType.PREVIEW && (
               <Collapse in={expandedActivities} timeout="auto" unmountOnExit classes={{root: classes.activitiesSection}}>
                 <CardContent className={classes.activitiesContent}>
-                  <LazyLoad once>
+                  <LazyLoad once offset={PRELOAD_OFFSET_VIEWPORT}>
                     <Activities
                       feedObject={obj}
                       feedObjectActivities={feedObjectActivities}
