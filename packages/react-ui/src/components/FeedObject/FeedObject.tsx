@@ -749,7 +749,6 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
               {scUserContext.user && (expandedActivities || template === SCFeedObjectTemplateType.DETAIL) && (
                 <Box className={classes.replyContent}>
                   <ReplyCommentComponent
-                    inline
                     onReply={handleReply}
                     readOnly={isReplying || !obj}
                     key={Number(isReplying)}

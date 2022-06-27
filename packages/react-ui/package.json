@@ -81,7 +81,6 @@
     "emoji-picker-react": "^3.5.1",
     "lexical": "^0.3.3",
     "moment": "^2.29.3",
-    "notistack": "^2.0.4",
     "prop-types": "^15.7.2",
     "prop-types-extra": "^1.1.1",
     "pubsub-js": "^1.9.4",

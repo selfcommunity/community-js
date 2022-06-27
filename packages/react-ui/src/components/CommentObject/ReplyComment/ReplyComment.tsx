@@ -124,7 +124,6 @@ export default function ReplyCommentObject(inProps: ReplyCommentObjectProps): JS
     className,
     elevation = 0,
     autoFocus = false,
-    inline = false,
     onReply,
     onSave,
     onCancel,
