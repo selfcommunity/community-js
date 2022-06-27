@@ -660,7 +660,6 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
               onSave={handleSave}
               onCancel={handleCancel}
               readOnly={isReplying || isSavingComment}
-              inline={!comment.parent}
               {...ReplyCommentObjectProps}
             />
           </Box>
