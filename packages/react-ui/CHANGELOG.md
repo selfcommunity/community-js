@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.17-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.1.16...@selfcommunity/react-ui@0.1.17-alpha.0) (2022-06-27)
+
+
+### Bug Fixes
+
+* bugfixes ([324dccf](https://github.com/selfcommunity/community-js/commit/324dccfbaaffc3237bf85b9f8677ed11bc728521))
+* editor focus on open, offset lazyload ([7ad6862](https://github.com/selfcommunity/community-js/commit/7ad6862ebe6ae2f23211255159ae1da499dd5f79))
+* related post avatar align ([7d46f97](https://github.com/selfcommunity/community-js/commit/7d46f97f9b78d63e981e3ef588392c9279e67968))
+
+
+
+
+
 ## [0.1.16](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.1.16-alpha.1...@selfcommunity/react-ui@0.1.16) (2022-06-24)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
