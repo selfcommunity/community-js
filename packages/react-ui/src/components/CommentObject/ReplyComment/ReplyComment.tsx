@@ -45,12 +45,12 @@ const Root = styled(BaseItem, {
   padding: '1px',
   overflow: 'visible',
   [`&.${classes.root}`]: {
-    '& .SCBaseItemButton-content': {
+    '& .SCBaseItem-content': {
       alignItems: 'flex-start',
-      '& .SCBaseItemButton-text': {
+      '& .SCBaseItem-text': {
         marginTop: 0,
         marginBottom: 0,
-        '& .SCBaseItemButton-secondary': {
+        '& .SCBaseItem-secondary': {
           overflow: 'visible'
         }
       }
@@ -124,7 +124,6 @@ export default function ReplyCommentObject(inProps: ReplyCommentObjectProps): JS
     className,
     elevation = 0,
     autoFocus = false,
-    inline = false,
     onReply,
     onSave,
     onCancel,

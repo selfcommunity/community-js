@@ -76,6 +76,7 @@ import IncubatorDetail, {IncubatorDetailProps} from './components/IncubatorDetai
 import IncubatorSuggestion, {IncubatorSuggestionProps} from './components/IncubatorSuggestion';
 import Footer, {FooterProps} from './components/Footer';
 import {FACEBOOK_SHARE, TWITTER_SHARE, LINKEDIN_SHARE} from './constants/SocialShare';
+import {PRELOAD_OFFSET_VIEWPORT} from './constants/LazyLoad';
 
 /**
  * Utilities:
@@ -241,6 +242,7 @@ export {
   FACEBOOK_SHARE,
   TWITTER_SHARE,
   LINKEDIN_SHARE,
+  PRELOAD_OFFSET_VIEWPORT,
   PollSuggestion,
   PollSuggestionProps,
   Incubator,

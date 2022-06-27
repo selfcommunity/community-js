@@ -31,6 +31,7 @@ import {CommentObjectProps} from '../CommentObject';
 import {SCCommentType, SCFeedObjectType, SCFeedObjectTypologyType, SCPollType} from '@selfcommunity/types';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
+import {PRELOAD_OFFSET_VIEWPORT} from '../../constants/LazyLoad';
 import {
   Link,
   SCContextType,
@@ -66,6 +67,7 @@ const classes = {
   title: `${PREFIX}-title`,
   textSection: `${PREFIX}-text-section`,
   text: `${PREFIX}-text`,
+  snippet: `${PREFIX}-snippet`,
   snippetContent: `${PREFIX}-snippet-content`,
   mediasSection: `${PREFIX}-medias-section`,
   pollsSection: `${PREFIX}-polls-section`,
@@ -148,6 +150,14 @@ const Root = styled(Widget, {
     marginBottom: 0,
     '& a': {
       color: theme.palette.text.primary
+    }
+  },
+  [`& .${classes.snippet}`]: {
+    '& > div': {
+      alignItems: 'flex-start'
+    },
+    '& .SCBaseItem-text': {
+      marginTop: 0
     }
   },
   [`& .${classes.snippetContent}`]: {
@@ -731,7 +741,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
               <Box className={classes.infoSection}>
                 <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
                   {!hideParticipantsPreview && (
-                    <LazyLoad once>
+                    <LazyLoad once offset={PRELOAD_OFFSET_VIEWPORT}>
                       <ContributorsFeedObject feedObject={obj} feedObjectType={obj.type} {...ContributorsFeedObjectProps} />
                     </LazyLoad>
                   )}
@@ -749,7 +759,6 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
               {scUserContext.user && (expandedActivities || template === SCFeedObjectTemplateType.DETAIL) && (
                 <Box className={classes.replyContent}>
                   <ReplyCommentComponent
-                    inline
                     onReply={handleReply}
                     readOnly={isReplying || !obj}
                     key={Number(isReplying)}
@@ -761,7 +770,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
             {template === SCFeedObjectTemplateType.PREVIEW && (
               <Collapse in={expandedActivities} timeout="auto" unmountOnExit classes={{root: classes.activitiesSection}}>
                 <CardContent className={classes.activitiesContent}>
-                  <LazyLoad once>
+                  <LazyLoad once offset={PRELOAD_OFFSET_VIEWPORT}>
                     <Activities
                       feedObject={obj}
                       feedObjectActivities={feedObjectActivities}
@@ -862,6 +871,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
         {obj ? (
           <BaseItem
             elevation={0}
+            className={classes.snippet}
             image={
               <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, obj.author)}>
                 <Avatar alt={obj.author.username} variant="circular" src={obj.author.avatar} />
