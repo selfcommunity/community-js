@@ -6,6 +6,7 @@ import AutoPlayer from '../../AutoPlayer';
 import CentralProgress from '../../CentralProgress';
 import Box from '@mui/material/Box';
 import {PRELOAD_OFFSET_VIEWPORT} from '../../../constants/LazyLoad';
+import Skeleton from '@mui/material/Skeleton';
 
 const PREFIX = 'SCPreviewMediaLink';
 
@@ -120,17 +121,26 @@ export default (props: LinkPreviewProps): JSX.Element => {
   return (
     <>
       {medias.length > 0 && (
-        <LazyLoad height={360} placeholder={<CentralProgress size={20} />} once offset={PRELOAD_OFFSET_VIEWPORT}>
-          <Root>
-            {adornment}
-            {medias.map((l, i) => {
-              if (l.embed.metadata && l.embed.metadata.type === MEDIA_TYPE_VIDEO) {
-                return <AutoPlayer url={l.url} width={'100%'} key={i} onVideoWatch={() => handleLinkClick(l)} />;
-              }
-              return renderPreview(l, i);
-            })}
-          </Root>
-        </LazyLoad>
+        <Root>
+          {adornment}
+          {medias.map((l, i) => {
+            if (l.embed.metadata && l.embed.metadata.type === MEDIA_TYPE_VIDEO) {
+              return;
+              <LazyLoad
+                height={360}
+                placeholder={<Skeleton variant="rectangular" height={360} width={'100%'} />}
+                once
+                offset={PRELOAD_OFFSET_VIEWPORT}>
+                <AutoPlayer url={l.url} width={'100%'} key={i} onVideoWatch={() => handleLinkClick(l)} />;
+              </LazyLoad>;
+            }
+            return (
+              <LazyLoad height={370} placeholder={<CentralProgress size={20} />} once offset={PRELOAD_OFFSET_VIEWPORT}>
+                {renderPreview(l, i)}
+              </LazyLoad>
+            );
+          })}
+        </Root>
       )}
     </>
   );

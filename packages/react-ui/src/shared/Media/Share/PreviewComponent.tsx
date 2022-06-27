@@ -27,7 +27,7 @@ export default ({medias = [], adornment = null}: {medias: any[]; GridImageProps?
   return (
     <>
       {medias.length > 0 && (
-        <LazyLoad height={360} placeholder={<CentralProgress size={20} />} once offset={PRELOAD_OFFSET_VIEWPORT}>
+        <LazyLoad height={400} placeholder={<CentralProgress size={20} />} once offset={PRELOAD_OFFSET_VIEWPORT}>
           <Root>
             {adornment}
             {medias.map((media) => (
