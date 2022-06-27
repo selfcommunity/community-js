@@ -66,6 +66,7 @@ const classes = {
   title: `${PREFIX}-title`,
   textSection: `${PREFIX}-text-section`,
   text: `${PREFIX}-text`,
+  snippet: `${PREFIX}-snippet`,
   snippetContent: `${PREFIX}-snippet-content`,
   mediasSection: `${PREFIX}-medias-section`,
   pollsSection: `${PREFIX}-polls-section`,
@@ -148,6 +149,14 @@ const Root = styled(Widget, {
     marginBottom: 0,
     '& a': {
       color: theme.palette.text.primary
+    }
+  },
+  [`& .${classes.snippet}`]: {
+    '& > div': {
+      alignItems: 'flex-start'
+    },
+    '& .SCBaseItem-text': {
+      marginTop: 0
     }
   },
   [`& .${classes.snippetContent}`]: {
@@ -861,6 +870,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
         {obj ? (
           <BaseItem
             elevation={0}
+            className={classes.snippet}
             image={
               <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, obj.author)}>
                 <Avatar alt={obj.author.username} variant="circular" src={obj.author.avatar} />
