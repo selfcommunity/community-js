@@ -5,7 +5,7 @@ import CentralProgress from '../../CentralProgress';
 import Box from '@mui/material/Box';
 import FeedObject from '../../../components/FeedObject';
 import {SCFeedObjectTemplateType} from '../../../types/feedObject';
-import {PRELOAD_OFFSET_VIEWPORT} from '../../../constants/LazyLoad';
+import {MAX_PRELOAD_OFFSET_VIEWPORT} from '../../../constants/LazyLoad';
 
 const PREFIX = 'SCPreviewMediaShare';
 
@@ -27,10 +27,10 @@ export default ({medias = [], adornment = null}: {medias: any[]; GridImageProps?
   return (
     <>
       {medias.length > 0 && (
-        <LazyLoad height={400} placeholder={<CentralProgress size={20} />} once offset={PRELOAD_OFFSET_VIEWPORT}>
-          <Root>
-            {adornment}
-            {medias.map((media) => (
+        <Root>
+          {adornment}
+          {medias.map((media) => (
+            <LazyLoad height={400} placeholder={<CentralProgress size={20} />} once offset={MAX_PRELOAD_OFFSET_VIEWPORT}>
               <Box key={media.id} className={classes.sharePreview}>
                 <FeedObject
                   feedObjectId={media.embed.metadata.id}
@@ -39,9 +39,9 @@ export default ({medias = [], adornment = null}: {medias: any[]; GridImageProps?
                   template={SCFeedObjectTemplateType.SHARE}
                 />
               </Box>
-            ))}
-          </Root>
-        </LazyLoad>
+            </LazyLoad>
+          ))}
+        </Root>
       )}
     </>
   );

@@ -3,7 +3,7 @@ import {styled} from '@mui/material/styles';
 import LazyLoad from 'react-lazyload';
 import Box from '@mui/material/Box';
 import AutoPlayer from '../../AutoPlayer';
-import {PRELOAD_OFFSET_VIEWPORT} from '../../../constants/LazyLoad';
+import {DEFAULT_PRELOAD_OFFSET_VIEWPORT} from '../../../constants/LazyLoad';
 import Skeleton from '@mui/material/Skeleton';
 
 const PREFIX = 'SCPreviewMediaVideo';
@@ -52,7 +52,7 @@ export default (props: PreviewVideoProps): JSX.Element => {
               placeholder={<Skeleton variant="rectangular" height={360} width={'100%'} />}
               key={i}
               once
-              offset={PRELOAD_OFFSET_VIEWPORT}>
+              offset={DEFAULT_PRELOAD_OFFSET_VIEWPORT}>
               <AutoPlayer url={v.url} width={'100%'} onVideoWatch={() => handleVideoClick(v)} />
             </LazyLoad>
           ))}
