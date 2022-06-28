@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.18](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.1.18-alpha.1...@selfcommunity/react-ui@0.1.18) (2022-06-28)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.1.18-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.1.18-alpha.0...@selfcommunity/react-ui@0.1.18-alpha.1) (2022-06-28)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.1.18-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.1.17...@selfcommunity/react-ui@0.1.18-alpha.0) (2022-06-28)
+
+
+### Bug Fixes
+
+* lazyLoad bugfixes ([4ac57b8](https://github.com/selfcommunity/community-js/commit/4ac57b8454f72753eb767abe462f3979156d24de))
+* media object bugfixes ([9206d6d](https://github.com/selfcommunity/community-js/commit/9206d6df77bc92a7b5c448b198c32d309f81283e))
+* media object bugfixes ([20bbfe9](https://github.com/selfcommunity/community-js/commit/20bbfe9d2435b5fe333453a092e4f5112ceca5d9))
+* media objects placeholders ([2026b17](https://github.com/selfcommunity/community-js/commit/2026b17ee3fb68eda0fb57683108dd965e35b466))
+
+
+
+
+
 ## [0.1.17](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.1.17-alpha.1...@selfcommunity/react-ui@0.1.17) (2022-06-27)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
