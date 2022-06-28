@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {http, EndpointType} from '@selfcommunity/api-services';
 import LazyLoad from 'react-lazyload';
-import {PRELOAD_OFFSET_VIEWPORT} from '../../constants/LazyLoad';
+import {MIN_PRELOAD_OFFSET_VIEWPORT} from '../../constants/LazyLoad';
 
 export interface MarkReadProps {
   /**
@@ -37,7 +37,7 @@ const MarkRead = (props: MarkReadProps): JSX.Element => {
 
 export default (props: MarkReadProps): JSX.Element => {
   return (
-    <LazyLoad once offset={PRELOAD_OFFSET_VIEWPORT}>
+    <LazyLoad once offset={MIN_PRELOAD_OFFSET_VIEWPORT}>
       <MarkRead {...props} />
     </LazyLoad>
   );
