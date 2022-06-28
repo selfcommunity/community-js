@@ -1,5 +1,5 @@
 import React, {createContext, useContext, useMemo} from 'react';
-import {SCContextType, SCPreferencesContextType, SCRoutingContextType, SCUserContextType} from '../../../types';
+import {SCContextType, SCPreferencesContextType, SCRoutingContextType} from '../../../types';
 import {useSCContext} from '../SCContextProvider';
 import {SCPreferencesContext} from '../SCPreferencesProvider';
 import * as SCPreferences from '../../../constants/Preferences';
