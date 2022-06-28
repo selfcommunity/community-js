@@ -129,6 +129,7 @@ export default (props: LinkPreviewProps): JSX.Element => {
                 <LazyLoad
                   height={360}
                   placeholder={<Skeleton variant="rectangular" height={360} width={'100%'} />}
+                  key={i}
                   once
                   offset={DEFAULT_PRELOAD_OFFSET_VIEWPORT}>
                   <AutoPlayer url={l.url} width={'100%'} key={i} onVideoWatch={() => handleLinkClick(l)} />;
@@ -136,7 +137,7 @@ export default (props: LinkPreviewProps): JSX.Element => {
               );
             }
             return (
-              <LazyLoad height={370} placeholder={<CentralProgress size={20} />} once offset={DEFAULT_PRELOAD_OFFSET_VIEWPORT}>
+              <LazyLoad key={i} height={370} placeholder={<CentralProgress size={20} />} once offset={DEFAULT_PRELOAD_OFFSET_VIEWPORT}>
                 {renderPreview(l, i)}
               </LazyLoad>
             );

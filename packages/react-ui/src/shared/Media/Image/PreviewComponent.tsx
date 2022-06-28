@@ -5,7 +5,7 @@ import {Grid, Typography, Box} from '@mui/material';
 import classNames from 'classnames';
 import Icon from '@mui/material/Icon';
 import LazyLoad from 'react-lazyload';
-import {DEFAULT_PRELOAD_OFFSET_VIEWPORT} from '../../../constants/LazyLoad';
+import {MAX_PRELOAD_OFFSET_VIEWPORT} from '../../../constants/LazyLoad';
 import Skeleton from '@mui/material/Skeleton';
 
 const PREFIX = 'SCPreviewMediaImage';
@@ -343,7 +343,11 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
     <>
       {medias.length > 0 && (
         <Root>
-          <LazyLoad height={650} placeholder={<Skeleton variant="rectangular" height={650} width={'100%'} />} once offset={DEFAULT_PRELOAD_OFFSET_VIEWPORT}>
+          <LazyLoad
+            height={650}
+            placeholder={<Skeleton variant="rectangular" height={650} width={'100%'} />}
+            once
+            offset={MAX_PRELOAD_OFFSET_VIEWPORT}>
             <>
               {adornment}
               {[1, 3, 4].includes(imagesToShow.length) && renderOne()}

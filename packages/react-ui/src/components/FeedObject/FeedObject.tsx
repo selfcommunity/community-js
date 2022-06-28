@@ -31,7 +31,7 @@ import {CommentObjectProps} from '../CommentObject';
 import {SCCommentType, SCFeedObjectType, SCFeedObjectTypologyType, SCPollType} from '@selfcommunity/types';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
-import {PRELOAD_OFFSET_VIEWPORT} from '../../constants/LazyLoad';
+import {MAX_PRELOAD_OFFSET_VIEWPORT} from '../../constants/LazyLoad';
 import {
   Link,
   SCContextType,
@@ -379,6 +379,7 @@ export interface FeedObjectProps extends CardProps {
  |content|.SCFeedObject-content|Styles applied to the content section. Content section include: title-section, text-section, snippetContent, subContent, medias-section, polls-section, info-section.|
  |text-section|.SCFeedObject-text-section|Styles applied to the text section.|
  |text|.SCFeedObject-text|Styles applied to the text element.|
+ |snippet|.SCFeedObject-snippet|Styles applied to snippet element.|
  |snippet-content|.SCFeedObject-snippet-content|Styles applied to snippet content element.|
  |medias-section|.SCFeedObject-medias-section|Styles applied to the medias section.|
  |polls-section|.SCFeedObject-polls-section|Styles applied to the polls section.|
@@ -741,7 +742,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
               <Box className={classes.infoSection}>
                 <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
                   {!hideParticipantsPreview && (
-                    <LazyLoad once offset={PRELOAD_OFFSET_VIEWPORT}>
+                    <LazyLoad once offset={MAX_PRELOAD_OFFSET_VIEWPORT}>
                       <ContributorsFeedObject feedObject={obj} feedObjectType={obj.type} {...ContributorsFeedObjectProps} />
                     </LazyLoad>
                   )}
@@ -770,7 +771,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
             {template === SCFeedObjectTemplateType.PREVIEW && (
               <Collapse in={expandedActivities} timeout="auto" unmountOnExit classes={{root: classes.activitiesSection}}>
                 <CardContent className={classes.activitiesContent}>
-                  <LazyLoad once offset={PRELOAD_OFFSET_VIEWPORT}>
+                  <LazyLoad once offset={MAX_PRELOAD_OFFSET_VIEWPORT}>
                     <Activities
                       feedObject={obj}
                       feedObjectActivities={feedObjectActivities}

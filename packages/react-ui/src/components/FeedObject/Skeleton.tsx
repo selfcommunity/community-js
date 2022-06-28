@@ -90,7 +90,8 @@ export default function FeedObjectSkeleton(props: {template?: SCFeedObjectTempla
         <CardContent>
           <React.Fragment>
             <Skeleton animation="wave" height={10} style={{marginBottom: 6}} />
-            <Skeleton animation="wave" height={10} width="80%" />
+            <Skeleton animation="wave" height={10} width="80%" style={{marginBottom: 6}} />
+            <Skeleton animation="wave" height={10} width="60%" style={{marginBottom: 6}} />
           </React.Fragment>
         </CardContent>
       </React.Fragment>

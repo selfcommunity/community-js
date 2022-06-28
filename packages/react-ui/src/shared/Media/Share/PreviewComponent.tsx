@@ -1,16 +1,17 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
 import LazyLoad from 'react-lazyload';
-import CentralProgress from '../../CentralProgress';
 import Box from '@mui/material/Box';
 import FeedObject from '../../../components/FeedObject';
 import {SCFeedObjectTemplateType} from '../../../types/feedObject';
 import {MAX_PRELOAD_OFFSET_VIEWPORT} from '../../../constants/LazyLoad';
+import FeedObjectSkeleton from '../../../components/FeedObject/Skeleton';
 
 const PREFIX = 'SCPreviewMediaShare';
 
 const classes = {
-  sharePreview: `${PREFIX}-share-preview`
+  sharePreview: `${PREFIX}-share-preview`,
+  sharePlaceholder: `${PREFIX}-share-placeholder`
 };
 
 const Root = styled(Box, {
@@ -20,6 +21,9 @@ const Root = styled(Box, {
 })(({theme}) => ({
   [`& .${classes.sharePreview}`]: {
     padding: 16
+  },
+  [`& .${classes.sharePlaceholder}`]: {
+    margin: 16
   }
 }));
 
@@ -30,8 +34,13 @@ export default ({medias = [], adornment = null}: {medias: any[]; GridImageProps?
         <Root>
           {adornment}
           {medias.map((media) => (
-            <LazyLoad height={400} placeholder={<CentralProgress size={20} />} once offset={MAX_PRELOAD_OFFSET_VIEWPORT}>
-              <Box key={media.id} className={classes.sharePreview}>
+            <LazyLoad
+              height={400}
+              key={media.id}
+              placeholder={<FeedObjectSkeleton template={SCFeedObjectTemplateType.SNIPPET} elevation={0} className={classes.sharePlaceholder} />}
+              once
+              offset={MAX_PRELOAD_OFFSET_VIEWPORT}>
+              <Box className={classes.sharePreview}>
                 <FeedObject
                   feedObjectId={media.embed.metadata.id}
                   feedObjectType={media.embed.metadata.type}
