@@ -4,7 +4,7 @@ import {Box} from '@mui/material';
 import {SCCommentsOrderBy} from '../../../types/comments';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
-import CommentsObject from '../../CommentsObject';
+import CommentsObject, {CommentsObjectSkeleton} from '../../CommentsObject';
 import ActivitiesMenu from './ActivitiesMenu';
 import {CommentObjectProps} from '../../CommentObject';
 import RelevantActivities from './RelevantActivities';
@@ -15,14 +15,20 @@ import {SCCommentType, SCFeedObjectType, SCFeedObjectTypologyType} from '@selfco
 
 const PREFIX = 'SCFeedObjectActivities';
 
-const classes = {root: `${PREFIX}-root`};
+const classes = {
+  root: `${PREFIX}-root`,
+  activities: `${PREFIX}-activities`
+};
 
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  width: '100%'
+  width: '100%',
+  [`& .${classes.activities}`]: {
+    minHeight: 100
+  }
 }));
 
 export interface ActivitiesProps {
@@ -129,6 +135,7 @@ export default function Activities(inProps: ActivitiesProps): JSX.Element {
   });
 
   const objId = commentsObject.feedObject ? commentsObject.feedObject.id : null;
+  const skeletonsCount =  commentsObject.feedObject.comment_count > 3 ? 5 : commentsObject.feedObject.comment_count;
 
   /**
    * Sync activities type if prop change
@@ -177,6 +184,7 @@ export default function Activities(inProps: ActivitiesProps): JSX.Element {
             totalLoadedComments={commentsObject.comments.length + comments.length}
             totalComments={commentsObject.feedObject.comment_count}
             hideAdvertising
+            CommentsObjectSkeletonProps={{count: skeletonsCount}}
             {...CommentsObjectProps}
           />
         )}
@@ -189,14 +197,19 @@ export default function Activities(inProps: ActivitiesProps): JSX.Element {
    */
   return (
     <Root id={id} className={classNames(classes.root, className)} {...rest}>
-      {(commentsObject.feedObject.comment_count || (feedObjectActivities && feedObjectActivities.length > 0) || comments.length > 0) && (
-        <ActivitiesMenu
-          selectedActivities={selectedActivities}
-          hideRelevantActivitiesItem={!(feedObjectActivities && feedObjectActivities.length > 0)}
-          onChange={handleSelectActivitiesType}
-        />
-      )}
-      {selectedActivities === SCFeedObjectActivitiesType.RELEVANCE_ACTIVITIES ? renderRelevantActivities() : renderComments()}
+      {Boolean(commentsObject.feedObject.comment_count) ||
+      (feedObjectActivities && feedObjectActivities.length > 0) ||
+      comments.length > 0 ||
+      (feedObject && feedObject.comment_count > 0) ? (
+        <Box className={classes.activities} style={{minHeight: `${skeletonsCount * 80}px`}}>
+          <ActivitiesMenu
+            selectedActivities={selectedActivities}
+            hideRelevantActivitiesItem={!(feedObjectActivities && feedObjectActivities.length > 0)}
+            onChange={handleSelectActivitiesType}
+          />
+          {selectedActivities === SCFeedObjectActivitiesType.RELEVANCE_ACTIVITIES ? renderRelevantActivities() : renderComments()}
+        </Box>
+      ) : null}
     </Root>
   );
 }
