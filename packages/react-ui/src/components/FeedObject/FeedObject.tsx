@@ -346,6 +346,13 @@ export interface FeedObjectProps extends CardProps {
   onReply?: (SCCommentType) => void;
 
   /**
+   * Callback when select item. Control the event.
+   * @param event
+   * @param id
+   */
+  onSelectItem?: (event, id) => any;
+
+  /**
    * Other props
    */
   [p: string]: any;
@@ -423,6 +430,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
     MediasPreviewProps = {},
     PollObjectProps = {elevation: 0},
     ContributorsFeedObjectProps = {},
+    onSelectItem = () => null,
     onReply,
     ...rest
   } = props;
@@ -658,7 +666,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
             {obj.categories.length > 0 && (
               <div className={classes.category}>
                 {obj.categories.map((c) => (
-                  <Link to={scRoutingContext.url(SCRoutes.CATEGORY_ROUTE_NAME, c)} key={c.id}>
+                  <Link to={scRoutingContext.url(SCRoutes.CATEGORY_ROUTE_NAME, c)} key={c.id} onClick={(event) => onSelectItem(event, id)}>
                     <Typography variant="overline">{c.name}</Typography>
                   </Link>
                 ))}
@@ -667,20 +675,26 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
             <CardHeader
               classes={{root: classes.header}}
               avatar={
-                <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, obj.author)}>
+                <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, obj.author)} onClick={(event) => onSelectItem(event, id)}>
                   <Avatar aria-label="recipe" src={obj.author.avatar}>
                     {obj.author.username}
                   </Avatar>
                 </Link>
               }
               title={
-                <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, obj.author)} className={classes.username}>
+                <Link
+                  to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, obj.author)}
+                  className={classes.username}
+                  onClick={(event) => onSelectItem(event, id)}>
                   {obj.author.username}
                 </Link>
               }
               subheader={
                 <>
-                  <Link to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))} className={classes.activityAt}>
+                  <Link
+                    to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))}
+                    className={classes.activityAt}
+                    onClick={(event) => onSelectItem(event, id)}>
                     <DateTimeAgo component={'span'} date={obj.added_at} />
                   </Link>
                   <Bullet />
@@ -708,7 +722,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                         {obj.title}
                       </Typography>
                     ) : (
-                      <Link to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))}>
+                      <Link to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))} onClick={(event) => onSelectItem(event, id)}>
                         <Typography variant="body1" gutterBottom className={classes.title}>
                           {obj.title}
                         </Typography>
@@ -728,7 +742,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                     }}
                   />
                 ) : (
-                  <Link to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))}>
+                  <Link to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))} onClick={(event) => onSelectItem(event, id)}>
                     <Typography component="div" gutterBottom className={classes.text} dangerouslySetInnerHTML={{__html: obj.summary}} />
                   </Link>
                 )}
@@ -812,7 +826,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
             {obj.categories.length > 0 && (
               <div className={classes.category}>
                 {obj.categories.map((c) => (
-                  <Link to={scRoutingContext.url(SCRoutes.CATEGORY_ROUTE_NAME, c)} key={c.id}>
+                  <Link to={scRoutingContext.url(SCRoutes.CATEGORY_ROUTE_NAME, c)} key={c.id} onClick={(event) => onSelectItem(event, id)}>
                     <Typography variant="overline">{c.name}</Typography>
                   </Link>
                 ))}
@@ -821,19 +835,28 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
             <CardHeader
               classes={{root: classes.header}}
               avatar={
-                <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, obj.author)} className={classes.username}>
+                <Link
+                  to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, obj.author)}
+                  className={classes.username}
+                  onClick={(event) => onSelectItem(event, id)}>
                   <Avatar aria-label="recipe" src={obj.author.avatar}>
                     {obj.author.username}
                   </Avatar>
                 </Link>
               }
               title={
-                <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, obj.author)} className={classes.username}>
+                <Link
+                  to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, obj.author)}
+                  className={classes.username}
+                  onClick={(event) => onSelectItem(event, id)}>
                   {obj.author.username}
                 </Link>
               }
               subheader={
-                <Link to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))} className={classes.activityAt}>
+                <Link
+                  to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))}
+                  className={classes.activityAt}
+                  onClick={(event) => onSelectItem(event, id)}>
                   <DateTimeAgo date={obj.added_at} />
                 </Link>
               }
@@ -841,7 +864,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
             <CardContent classes={{root: classes.content}}>
               <Box className={classes.titleSection}>
                 {'title' in obj && (
-                  <Link to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))}>
+                  <Link to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))} onClick={(event) => onSelectItem(event, id)}>
                     <Typography variant="body1" gutterBottom className={classes.title}>
                       {obj.title}
                     </Typography>
@@ -849,7 +872,10 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                 )}
               </Box>
               <Box className={classes.textSection}>
-                <Link to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))} className={classes.text}>
+                <Link
+                  to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))}
+                  className={classes.text}
+                  onClick={(event) => onSelectItem(event, id)}>
                   <Typography component="div" className={classes.text} variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: obj.html}} />
                 </Link>
               </Box>
@@ -874,12 +900,15 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
             elevation={0}
             className={classes.snippet}
             image={
-              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, obj.author)}>
+              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, obj.author)} onClick={(event) => onSelectItem(event, id)}>
                 <Avatar alt={obj.author.username} variant="circular" src={obj.author.avatar} />
               </Link>
             }
             primary={
-              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, obj.author)} className={classes.username}>
+              <Link
+                to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, obj.author)}
+                className={classes.username}
+                onClick={(event) => onSelectItem(event, id)}>
                 {obj.author.username}
               </Link>
             }
@@ -887,17 +916,27 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
             secondary={
               <Box>
                 <Typography variant="body2">
-                  <Link to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))} className={classes.snippetContent}>
+                  <Link
+                    to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))}
+                    className={classes.snippetContent}
+                    onClick={(event) => onSelectItem(event, id)}>
                     {getContributionSnippet(obj)}
                   </Link>
                 </Typography>
-                <Link to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))} className={classes.activityAt}>
+                <Link
+                  to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))}
+                  className={classes.activityAt}
+                  onClick={(event) => onSelectItem(event, id)}>
                   <DateTimeAgo component="span" date={obj.added_at} />
                 </Link>
               </Box>
             }
             actions={
-              <Button component={Link} to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))} variant="outlined">
+              <Button
+                component={Link}
+                to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))}
+                variant="outlined"
+                onClick={(event) => onSelectItem(event, id)}>
                 <FormattedMessage id="ui.feedObject.comment" defaultMessage="ui.feedObject.comment" />
               </Button>
             }

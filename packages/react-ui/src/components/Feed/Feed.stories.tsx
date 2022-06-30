@@ -58,6 +58,25 @@ Explore.args = {
   }
 };
 
+export const Explore_cache = Template.bind({});
+
+Explore_cache.args = {
+  endpoint: Endpoints.ExploreFeed,
+  ItemComponent: FeedObject,
+  itemPropsGenerator: (scUser, item) => ({
+    feedObject: item[item.type],
+    feedObjectType: item.type,
+    feedObjectActivities: item.activities ? item.activities : null,
+    markRead: scUser ? !item.seen_by_id.includes(scUser.id) : false
+  }),
+  itemIdGenerator: (item) => item[item.type].id,
+  ItemSkeleton: FeedObjectSkeleton,
+  ItemSkeletonProps: {
+    template: SCFeedObjectTemplateType.PREVIEW
+  },
+  fromCache: true
+};
+
 export const Notification = Template.bind({});
 
 Notification.args = {

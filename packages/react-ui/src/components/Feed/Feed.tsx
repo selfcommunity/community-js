@@ -17,6 +17,7 @@ import classNames from 'classnames';
 import PubSub from 'pubsub-js';
 import {useThemeProps} from '@mui/system';
 import {appendURLSearchParams} from '@selfcommunity/utils';
+import {scrollIntoView, scrollTo} from 'seamless-scroll-polyfill';
 
 const PREFIX = 'SCFeed';
 
@@ -148,6 +149,11 @@ export interface FeedProps {
    * @default {}
    */
   CustomAdvProps?: CustomAdvProps;
+
+  /**
+   * From cache
+   */
+  restoreFromCache?: boolean;
 }
 
 interface FeedData {
@@ -203,13 +209,20 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     ItemSkeletonProps = {},
     onFetchData,
     FeedSidebarProps = {top: 0, bottomBoundary: `#${id}`},
-    CustomAdvProps = {}
+    CustomAdvProps = {},
+    restoreFromCache = false
   } = props;
 
   // STATE
-  const [feedData, setFeedData] = useState([]);
+  const [feedData, setFeedData] = useState<SCNotificationAggregatedType[]>(
+    restoreFromCache ? JSON.parse(sessionStorage.getItem(`sc-sr-${id}-data`) || '[]') : []
+  );
+  const [next, setNext] = useState<string>(
+    restoreFromCache
+      ? sessionStorage.getItem(`sc-sr-${id}-next`) || appendURLSearchParams(endpoint.url({}), endpointQueryParams)
+      : appendURLSearchParams(endpoint.url({}), endpointQueryParams)
+  );
   const [loading, setLoading] = useState<boolean>(false);
-  const [next, setNext] = useState<string>(appendURLSearchParams(endpoint.url({}), endpointQueryParams));
 
   // CONTEXT
   const scPreferences: SCPreferencesContextType = useSCPreferences();
@@ -220,6 +233,8 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
 
   // REFS
   const refreshSubscription = useRef(null);
+  const connectScrollTarget = useRef(null);
+  const mounted = useRef(false);
 
   /**
    * Compute preferences
@@ -273,7 +288,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
    * Manage pagination, infinite scrolling
    */
   const fetch = () => {
-    if (!loading) {
+    if (!loading && mounted.current) {
       setLoading(true);
       http
         .request({
@@ -305,10 +320,47 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     }
   };
 
+  const getScrollPosition = (target) => {
+    if (target instanceof window.Window) {
+      return {x: target.scrollX, y: target.scrollY};
+    }
+    console.log(target);
+    return {x: target.scrollLeft, y: target.scrollTop};
+  };
+
   // EFFECTS
   useEffect(() => {
-    fetch();
+    mounted.current = true;
+    if (!restoreFromCache || !feedData.length) {
+      fetch();
+    } else {
+      scrollTo(window, {top: 0});
+      window.requestAnimationFrame(() => {
+        const marker = sessionStorage.getItem(`sc-sr-${id}-marker`);
+        if (marker) {
+          const element = document.getElementById(marker);
+          if (element) {
+            scrollIntoView(element, {block: 'start'});
+          }
+          sessionStorage.removeItem(`sc-sr-${id}-marker`);
+        }
+      });
+    }
+    return () => {
+      mounted.current = false;
+    };
   }, [authUserId]);
+
+  /**
+   * Persist scroll position saving marker
+   * @param id
+   */
+  const persistScrollPosition = (event, itemId) => {
+    // Use sessionStorage in place of global state management
+    sessionStorage.setItem(`sc-sr-${id}-marker`, itemId);
+    sessionStorage.setItem(`sc-sr-${id}-data`, JSON.stringify(feedData));
+    sessionStorage.setItem(`sc-sr-${id}-next`, next);
+  };
 
   useEffect(() => {
     refreshSubscription.current = PubSub.subscribe(id, subscriber);
@@ -368,6 +420,9 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     <Root container spacing={2} id={id} className={classNames(classes.root, className)}>
       <Grid item xs={12} md={7}>
         <InfiniteScroll
+          ref={(node) => {
+            connectScrollTarget.current = node;
+          }}
           className={classes.left}
           dataLength={data.left.length}
           next={fetch}
@@ -392,7 +447,13 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
             d.type === 'widget' ? (
               <d.component key={`widget_left_${i}`} {...d.componentProps} {...(d.publishEvents && {publicationChannel: id})}></d.component>
             ) : (
-              <ItemComponent key={`item_${itemIdGenerator(d)}`} {...itemPropsGenerator(scUserContext.user, d)} {...ItemProps} sx={{width: '100%'}} />
+              <ItemComponent
+                key={`item_${itemIdGenerator(d)}`}
+                {...itemPropsGenerator(scUserContext.user, d)}
+                {...ItemProps}
+                sx={{width: '100%'}}
+                onSelectItem={persistScrollPosition}
+              />
             )
           )}
         </InfiniteScroll>
