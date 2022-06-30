@@ -2,7 +2,7 @@ import React from 'react';
 import {styled} from '@mui/material/styles';
 import {Box} from '@mui/material';
 import {FeedObjectProps, FeedSidebarProps, CategoryHeader, SCFeedWidgetType} from '@selfcommunity/react-ui';
-import CategoryFeed from '../CategoryFeed';
+import CategoryFeed, {CategoryFeedProps} from '../CategoryFeed';
 import {useSCFetchCategory} from '@selfcommunity/react-core';
 import {SCCategoryType} from '@selfcommunity/types';
 import CategorySkeleton from './Skeleton';
@@ -65,6 +65,12 @@ export interface CategoryProps {
    * @default {top: 0, bottomBoundary: `#${id}`}
    */
   FeedSidebarProps?: FeedSidebarProps;
+
+  /**
+   * Props to spread to Categoryfeed component
+   * @default {}
+   */
+  CategoryFeedProps?: CategoryFeedProps;
 }
 /**
  * > API documentation for the Community-JS Category Template. Learn about the available props and the CSS API.
@@ -93,7 +99,7 @@ export default function Category(inProps: CategoryProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {id = 'category', className, category, categoryId, widgets, FeedObjectProps, FeedSidebarProps} = props;
+  const {id = 'category', className, category, categoryId, widgets, FeedObjectProps, FeedSidebarProps, CategoryFeedProps = {}} = props;
 
   // Hooks
   const {scCategory, setSCCategory} = useSCFetchCategory({id: categoryId, category});
@@ -105,7 +111,13 @@ export default function Category(inProps: CategoryProps): JSX.Element {
   return (
     <Root id={id} className={classNames(classes.root, className)}>
       <CategoryHeader category={scCategory} />
-      <CategoryFeed category={scCategory} widgets={widgets} FeedObjectProps={FeedObjectProps} FeedSidebarProps={FeedSidebarProps} />
+      <CategoryFeed
+        category={scCategory}
+        widgets={widgets}
+        FeedObjectProps={FeedObjectProps}
+        FeedSidebarProps={FeedSidebarProps}
+        {...CategoryFeedProps}
+      />
     </Root>
   );
 }

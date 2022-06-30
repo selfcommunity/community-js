@@ -8,6 +8,7 @@ import {
   FeedObjectSkeleton,
   SCFeedObjectTemplateType,
   FeedSidebarProps,
+  FeedProps,
   InlineComposer,
   LoyaltyProgram,
   PeopleSuggestion,
@@ -63,6 +64,12 @@ export interface MainFeedProps {
    * @default {top: 0, bottomBoundary: `#${id}`}
    */
   FeedSidebarProps?: FeedSidebarProps;
+
+  /**
+   * Props to spread to feed component
+   * @default {}
+   */
+  FeedProps?: FeedProps;
 }
 
 // Widgets for feed
@@ -131,7 +138,7 @@ export default function MainFeed(inProps: MainFeedProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {id = 'main_feed', className, widgets = WIDGETS, FeedObjectProps = {}, FeedSidebarProps = null} = props;
+  const {id = 'main_feed', className, widgets = WIDGETS, FeedObjectProps = {}, FeedSidebarProps = null, FeedProps = {}} = props;
 
   //CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
@@ -161,6 +168,7 @@ export default function MainFeed(inProps: MainFeedProps): JSX.Element {
         template: SCFeedObjectTemplateType.PREVIEW
       }}
       FeedSidebarProps={FeedSidebarProps}
+      {...FeedProps}
     />
   );
 }
