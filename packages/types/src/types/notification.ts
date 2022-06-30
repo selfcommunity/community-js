@@ -1,4 +1,4 @@
-import {SCCategoryType, SCCommentType, SCFeedDiscussionType, SCFeedPostType, SCFeedStatusType, SCUserType} from '../index';
+import {SCCommentType, SCFeedDiscussionType, SCFeedPostType, SCFeedStatusType, SCUserType} from '../index';
 import {SCPrivateMessageType} from './privateMessage';
 import {SCUserBlockedSettingsType} from './user';
 import {SCCustomNotificationType} from './customNotification';
@@ -44,7 +44,7 @@ export enum SCNotificationTypologyType {
   UNBLOCKED_USER = 'unblocked_user',
   INCUBATOR_APPROVED = 'incubator_approved',
   CUSTOM_NOTIFICATION = 'custom_notification',
-  NOTIFICATION_BANNER = 'notification_banner',
+  NOTIFICATION_BANNER = 'notification_banner'
 }
 
 /**
@@ -53,7 +53,7 @@ export enum SCNotificationTypologyType {
  */
 export enum SCNotificationTopicType {
   INTERACTION = 'interaction',
-  NEWS = 'news',
+  NEWS = 'news'
 }
 
 /**
@@ -490,4 +490,11 @@ export interface SCNotificationCustomNotificationType extends SCNotificationType
    * Custom notification data
    */
   custom_notification: SCCustomNotificationType;
+}
+
+/**
+ * Interface SCNotificationUnseenCountType
+ */
+export interface SCNotificationUnseenCountType {
+  count: number;
 }

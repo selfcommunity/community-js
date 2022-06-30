@@ -60,3 +60,21 @@ export interface SCMediaType {
    */
   embed?: SCEmbedType;
 }
+
+/**
+ * SCChunkMediaType interface
+ */
+export interface SCChunkMediaType {
+  /**
+   * Media upload id
+   */
+  upload_id: string;
+  /**
+   * The offset
+   */
+  offset: string;
+  /**
+   * Expiration time
+   */
+  expires: string;
+}

@@ -5,11 +5,10 @@ import {FormattedMessage} from 'react-intl';
 import {SCUserSettingsType} from '@selfcommunity/types';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
-import {DEFAULT_FIELDS} from '../../../constants/UserProfile';
 import classNames from 'classnames';
 import SettingsSkeleton from './SettingsSkeleton';
 import {useSnackbar} from 'notistack';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 
 const PREFIX = 'SCUserProfileEditSectionSettings';
 
@@ -37,11 +36,18 @@ export interface SettingsProps {
    * @default null
    */
   id?: string;
+
   /**
    * Overrides or extends the styles applied to the component.
    * @default null
    */
   className?: string;
+
+  /**
+   * Callback on edit data with success
+   */
+  onEditSuccess?: () => void;
+
   /**
    * Any other properties
    */
@@ -54,7 +60,7 @@ export default function Settings(inProps: SettingsProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {id = null, className = null, fields = [...DEFAULT_FIELDS], ...rest} = props;
+  const {id = null, className = null, onEditSuccess = null, ...rest} = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
@@ -94,10 +100,14 @@ export default function Settings(inProps: SettingsProps): JSX.Element {
       })
       .then((res: HttpResponse<SCUserSettingsType>) => {
         setSetting(res.data);
-        enqueueSnackbar(<FormattedMessage id="ui.userProfileEditSettings.saved" defaultMessage="ui.userProfileEditSettings.saved" />, {
-          variant: 'success',
-          autoHideDuration: 3000
-        });
+        if (onEditSuccess) {
+          onEditSuccess();
+        } else {
+          enqueueSnackbar(<FormattedMessage id="ui.userProfileEditSettings.saved" defaultMessage="ui.userProfileEditSettings.saved" />, {
+            variant: 'success',
+            autoHideDuration: 3000
+          });
+        }
       })
       .catch((error) => {
         console.log(error);

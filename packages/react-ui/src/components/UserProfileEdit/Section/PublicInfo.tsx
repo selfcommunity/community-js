@@ -13,7 +13,7 @@ import {DatePicker, LocalizationProvider} from '@mui/lab';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import UsernameTextField from '../../../shared/UsernameTextField';
 import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 
 const messages = defineMessages({
   genderMale: {
@@ -68,6 +68,11 @@ export interface PublicInfoProps {
   fields?: SCUserFields[];
 
   /**
+   * Callback on edit data with success
+   */
+  onEditSuccess?: () => void;
+
+  /**
    * Any other properties
    */
   [p: string]: any;
@@ -81,7 +86,7 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {id = null, className = null, fields = [...DEFAULT_FIELDS], ...rest} = props;
+  const {id = null, className = null, fields = [...DEFAULT_FIELDS], onEditSuccess = null, ...rest} = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
@@ -139,6 +144,9 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
         .then(() => {
           setEditing(editing.filter((f) => f !== field));
           setSaving(saving.filter((f) => f !== field));
+          if (onEditSuccess) {
+            onEditSuccess();
+          }
         });
     };
   };

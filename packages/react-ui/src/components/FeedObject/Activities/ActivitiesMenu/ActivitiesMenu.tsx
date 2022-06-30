@@ -11,7 +11,7 @@ import {camelCase} from '@selfcommunity/utils';
 import {SCPreferences, SCPreferencesContext, SCPreferencesContextType, SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import {useContext} from 'react';
 import classNames from 'classnames';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 
 const messages = defineMessages({
   relevantActivities: {

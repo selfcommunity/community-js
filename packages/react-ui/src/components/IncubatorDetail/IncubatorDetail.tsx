@@ -21,7 +21,7 @@ import {
 } from '@selfcommunity/react-core';
 import BaseDialog from '../../shared/BaseDialog';
 import classNames from 'classnames';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 import Incubator, {IncubatorProps} from '../Incubator';
 import Widget from '../Widget';
 import AvatarGroupSkeleton from '../Skeleton/AvatarGroupSkeleton';

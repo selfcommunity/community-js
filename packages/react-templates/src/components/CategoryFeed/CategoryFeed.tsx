@@ -8,6 +8,7 @@ import {
   SCFeedObjectTemplateType,
   FeedRef,
   FeedSidebarProps,
+  FeedProps,
   InlineComposer,
   SCFeedWidgetType,
   TrendingFeed,
@@ -17,7 +18,7 @@ import {Endpoints} from '@selfcommunity/api-services';
 import {useSCFetchCategory} from '@selfcommunity/react-core';
 import {SCCategoryType, SCCustomAdvPosition} from '@selfcommunity/types';
 import {CategoryFeedSkeleton} from './index';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 
 const PREFIX = 'SCCategoryFeedTemplate';
@@ -76,6 +77,12 @@ export interface CategoryFeedProps {
    * @default {top: 0, bottomBoundary: `#${id}`}
    */
   FeedSidebarProps?: FeedSidebarProps;
+
+  /**
+   * Props to spread to feed component
+   * @default {}
+   */
+  FeedProps?: FeedProps;
 }
 
 // Widgets for feed
@@ -130,7 +137,16 @@ export default function CategoryFeed(inProps: CategoryFeedProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {id = 'category_feed', className, category, categoryId, widgets = WIDGETS, FeedObjectProps = {}, FeedSidebarProps = null} = props;
+  const {
+    id = 'category_feed',
+    className,
+    category,
+    categoryId,
+    widgets = WIDGETS,
+    FeedObjectProps = {},
+    FeedSidebarProps = null,
+    FeedProps = {}
+  } = props;
 
   // REF
   const feedRef = useRef<FeedRef>();
@@ -202,6 +218,7 @@ export default function CategoryFeed(inProps: CategoryFeedProps): JSX.Element {
       }}
       FeedSidebarProps={FeedSidebarProps}
       CustomAdvProps={{position: SCCustomAdvPosition.POSITION_FEED, categoriesId: [scCategory.id]}}
+      {...FeedProps}
     />
   );
 }

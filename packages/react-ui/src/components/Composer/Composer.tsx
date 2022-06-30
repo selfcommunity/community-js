@@ -72,7 +72,7 @@ import {DistributiveOmit} from '@mui/types';
 import {OverrideProps} from '@mui/material/OverridableComponent';
 import {ComposerSkeleton} from './index';
 import {useSnackbar} from 'notistack';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 
 const DialogTransition = forwardRef(function Transition(
   props: TransitionProps & {
@@ -1027,7 +1027,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
             {/*    <Icon>play_circle_outline</Icon>*/}
             {/*  </IconButton>*/}
             {/*)}*/}
-            {preferences[SCPreferences.ADDONS_POLLS_ENABLED] && (
+            {(preferences[SCPreferences.ADDONS_POLLS_ENABLED] || UserUtils.isStaff(scAuthContext.user)) && (
               <IconButton aria-label="add poll" color={poll ? 'primary' : 'default'} disabled={isSubmitting} onClick={handleChangeView(POLL_VIEW)}>
                 <Badge className={classes.badgeError} badgeContent={pollError ? ' ' : null} color="error">
                   <Icon>bar_chart</Icon>

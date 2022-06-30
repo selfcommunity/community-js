@@ -9,6 +9,7 @@ import {
   SCFeedObjectTemplateType,
   FeedRef,
   FeedSidebarProps,
+  FeedProps,
   InlineComposer,
   LoyaltyProgram,
   PeopleSuggestion,
@@ -16,7 +17,7 @@ import {
   SCFeedWidgetType
 } from '@selfcommunity/react-ui';
 import {Endpoints} from '@selfcommunity/api-services';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 
 const PREFIX = 'SCExploreFeedTemplate';
@@ -63,6 +64,12 @@ export interface ExploreFeedProps {
    * @default {top: 0, bottomBoundary: `#${id}`}
    */
   FeedSidebarProps?: FeedSidebarProps;
+
+  /**
+   * Props to spread to feed component
+   * @default {}
+   */
+  FeedProps?: FeedProps;
 }
 
 // Widgets for feed
@@ -131,7 +138,7 @@ export default function ExploreFeed(inProps: ExploreFeedProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {id = 'explore_feed', className, widgets = WIDGETS, FeedObjectProps = {}, FeedSidebarProps = null} = props;
+  const {id = 'explore_feed', className, widgets = WIDGETS, FeedObjectProps = {}, FeedSidebarProps = null, FeedProps = {}} = props;
 
   // STATE
   const [_widgets, setWidgets] = useState<SCFeedWidgetType[]>([]);
@@ -184,6 +191,7 @@ export default function ExploreFeed(inProps: ExploreFeedProps): JSX.Element {
         template: SCFeedObjectTemplateType.PREVIEW
       }}
       FeedSidebarProps={FeedSidebarProps}
+      {...FeedProps}
     />
   );
 }

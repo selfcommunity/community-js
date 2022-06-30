@@ -18,7 +18,7 @@ import KindlyNoticeFlagNotification from '../Notification/KindlyNoticeFlag';
 import IncubatorApprovedNotification from '../Notification/IncubatorApproved';
 import UserBlockedNotification from '../Notification/UserBlocked';
 import Message from '../BroadcastMessages/Message';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 
 const PREFIX = 'SCToastNotifications';
 

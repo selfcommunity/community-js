@@ -6,6 +6,7 @@ import {
   Feed,
   SCFeedObjectTemplateType,
   FeedSidebarProps,
+  FeedProps,
   FeedUpdates,
   LoyaltyProgram,
   Notification,
@@ -18,7 +19,7 @@ import {
 import {Endpoints} from '@selfcommunity/api-services';
 import {SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
 import {SCNotificationTopicType} from '@selfcommunity/types';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 
 const PREFIX = 'SCNotificationFeedTemplate';
@@ -65,6 +66,12 @@ export interface NotificationFeedProps {
    * @default {top: 0, bottomBoundary: `#${id}`}
    */
   FeedSidebarProps?: FeedSidebarProps;
+
+  /**
+   * Props to spread to feed component
+   * @default {}
+   */
+  FeedProps?: FeedProps;
 }
 
 // Widgets for feed
@@ -141,7 +148,7 @@ export default function NotificationFeed(inProps: NotificationFeedProps): JSX.El
     props: inProps,
     name: PREFIX
   });
-  const {id = 'notification_feed', className, widgets = WIDGETS, NotificationProps = {}, FeedSidebarProps = null} = props;
+  const {id = 'notification_feed', className, widgets = WIDGETS, NotificationProps = {}, FeedSidebarProps = null, FeedProps = {}} = props;
 
   //CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
@@ -168,6 +175,7 @@ export default function NotificationFeed(inProps: NotificationFeedProps): JSX.El
         template: SCFeedObjectTemplateType.PREVIEW
       }}
       FeedSidebarProps={FeedSidebarProps}
+      {...FeedProps}
     />
   );
 }

@@ -1,5 +1,5 @@
 import React, {createContext, useContext, useMemo} from 'react';
-import {SCContextType, SCPreferencesContextType, SCRoutingContextType, SCUserContextType} from '../../../types';
+import {SCContextType, SCPreferencesContextType, SCRoutingContextType} from '../../../types';
 import {useSCContext} from '../SCContextProvider';
 import {SCPreferencesContext} from '../SCPreferencesProvider';
 import * as SCPreferences from '../../../constants/Preferences';
@@ -75,25 +75,28 @@ export default function SCRoutingProvider({children = null}: {children: React.Re
    * Get override routes from community preferences
    */
   function getPreferencesRoutes() {
-    return {
-      [POST_ROUTE_NAME]: normalizeUrl(scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_POST].value),
-      [DISCUSSION_ROUTE_NAME]: normalizeUrl(scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_DISCUSSION].value),
-      [STATUS_ROUTE_NAME]: normalizeUrl(scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_STATUS].value),
-      [COMMENT_ROUTE_NAME]: normalizeUrl(scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_COMMENT].value),
-      [CATEGORY_ROUTE_NAME]: normalizeUrl(scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_CATEGORY].value),
-      [CATEGORIES_LIST_ROUTE_NAME]: normalizeUrl(scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_CATEGORIES_LIST].value),
-      [USER_PROFILE_ROUTE_NAME]: normalizeUrl(scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_USER_PROFILE].value),
-      [USER_PROFILE_SETTINGS_ROUTE_NAME]: normalizeUrl(
-        scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_USER_PROFILE_SETTINGS].value
-      ),
-      [USER_NOTIFICATIONS_ROUTE_NAME]: normalizeUrl(
-        scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_USER_NOTIFICATIONS].value
-      ),
-      [USER_PRIVATE_MESSAGES_ROUTE_NAME]: normalizeUrl(
-        scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_USER_PRIVATE_MESSAGES].value
-      ),
-      [INCUBATOR_ROUTE_NAME]: normalizeUrl(scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_INCUBATOR].value),
-    };
+    if (Object.keys(scPreferencesContext.preferences).length) {
+      return {
+        [POST_ROUTE_NAME]: normalizeUrl(scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_POST].value),
+        [DISCUSSION_ROUTE_NAME]: normalizeUrl(scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_DISCUSSION].value),
+        [STATUS_ROUTE_NAME]: normalizeUrl(scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_STATUS].value),
+        [COMMENT_ROUTE_NAME]: normalizeUrl(scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_COMMENT].value),
+        [CATEGORY_ROUTE_NAME]: normalizeUrl(scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_CATEGORY].value),
+        [CATEGORIES_LIST_ROUTE_NAME]: normalizeUrl(scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_CATEGORIES_LIST].value),
+        [USER_PROFILE_ROUTE_NAME]: normalizeUrl(scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_USER_PROFILE].value),
+        [USER_PROFILE_SETTINGS_ROUTE_NAME]: normalizeUrl(
+          scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_USER_PROFILE_SETTINGS].value
+        ),
+        [USER_NOTIFICATIONS_ROUTE_NAME]: normalizeUrl(
+          scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_USER_NOTIFICATIONS].value
+        ),
+        [USER_PRIVATE_MESSAGES_ROUTE_NAME]: normalizeUrl(
+          scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_USER_PRIVATE_MESSAGES].value
+        ),
+        [INCUBATOR_ROUTE_NAME]: normalizeUrl(scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_INCUBATOR].value),
+      };
+    }
+    return {};
   }
 
   /**

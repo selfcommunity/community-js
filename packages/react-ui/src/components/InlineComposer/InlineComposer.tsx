@@ -6,14 +6,18 @@ import {
   SCPreferences,
   SCPreferencesContext,
   SCPreferencesContextType,
+  SCRoutes,
+  SCRoutingContextType,
   SCUserContext,
   SCUserContextType,
-  UserUtils
+  UserUtils,
+  useSCRouting,
+  Link
 } from '@selfcommunity/react-core';
 import {Avatar, Box, Button, IconButton, CardProps, CardContent} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {SCMediaObjectType} from '../../types/media';
-import {Document, Image, Link} from '../../shared/Media';
+import {Document, Image, Link as MediaLink} from '../../shared/Media';
 import Composer, {MAIN_VIEW, POLL_VIEW} from '../Composer';
 import Icon from '@mui/material/Icon';
 import {FormattedMessage} from 'react-intl';
@@ -21,7 +25,7 @@ import {DistributiveOmit} from '@mui/types';
 import {OverrideProps} from '@mui/material/OverridableComponent';
 import {useSnackbar} from 'notistack';
 import Widget from '../Widget';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 
 const PREFIX = 'SCInlineComposer';
 
@@ -44,6 +48,9 @@ const Root = styled(Widget, {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
+    '&:last-child': {
+      paddingBottom: 5
+    },
     [`& .${classes.input}`]: {
       flexGrow: 2
     },
@@ -131,12 +138,13 @@ export default function InlineComposer(inProps: InlineComposerProps): JSX.Elemen
     props: inProps,
     name: PREFIX
   });
-  const {mediaObjectTypes = [Image, Document, Link], defaultValue, onSuccess = null, ...rest} = props;
+  const {mediaObjectTypes = [Image, Document, MediaLink], defaultValue, onSuccess = null, ...rest} = props;
 
   // Context
   const scContext: SCContextType = useContext(SCContext);
   const scPreferencesContext: SCPreferencesContextType = useContext(SCPreferencesContext);
   const scUserContext: SCUserContextType = useContext(SCUserContext);
+  const scRoutingContext: SCRoutingContextType = useSCRouting();
   const {enqueueSnackbar} = useSnackbar();
 
   // State variables
@@ -210,7 +218,9 @@ export default function InlineComposer(inProps: InlineComposerProps): JSX.Elemen
             {!scUserContext.user ? (
               <Avatar variant="circular" />
             ) : (
-              <Avatar alt={scUserContext.user.username} variant="circular" src={scUserContext.user.avatar} />
+              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, scUserContext.user)}>
+                <Avatar alt={scUserContext.user.username} variant="circular" src={scUserContext.user.avatar} />
+              </Link>
             )}
           </Box>
         </CardContent>

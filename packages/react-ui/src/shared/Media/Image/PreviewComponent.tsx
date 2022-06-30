@@ -4,8 +4,8 @@ import PreviewImage from './PreviewImage';
 import {Grid, Typography, Box} from '@mui/material';
 import classNames from 'classnames';
 import Icon from '@mui/material/Icon';
-import CentralProgress from '../../CentralProgress';
 import LazyLoad from 'react-lazyload';
+import {MAX_PRELOAD_OFFSET_VIEWPORT} from '../../../constants/LazyLoad';
 import Skeleton from '@mui/material/Skeleton';
 
 const PREFIX = 'SCPreviewMediaImage';
@@ -34,6 +34,7 @@ const Root = styled(Box, {
   margin: 'auto',
   width: '100%',
   position: 'relative',
+  minHeight: 500,
 
   [`& .${classes.background}`]: {
     backgroundSize: 'cover !important',
@@ -341,17 +342,23 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
   return (
     <>
       {medias.length > 0 && (
-        <LazyLoad height={360} placeholder={<Skeleton animation="wave" variant="rectangular" width={'100%'} height={800} />} once>
-          <Root>
-            {adornment}
-            {[1, 3, 4].includes(imagesToShow.length) && renderOne()}
-            {imagesToShow.length >= 2 && imagesToShow.length != 4 && renderTwo()}
-            {imagesToShow.length >= 4 && renderThree()}
+        <Root>
+          <LazyLoad
+            height={650}
+            placeholder={<Skeleton variant="rectangular" height={650} width={'100%'} />}
+            once
+            offset={MAX_PRELOAD_OFFSET_VIEWPORT}>
+            <>
+              {adornment}
+              {[1, 3, 4].includes(imagesToShow.length) && renderOne()}
+              {imagesToShow.length >= 2 && imagesToShow.length != 4 && renderTwo()}
+              {imagesToShow.length >= 4 && renderThree()}
 
-            {/* eslint-disable-next-line @typescript-eslint/unbound-method */}
-            {preview !== -1 && <PreviewImage onClose={handleClose} index={preview} images={medias} />}
-          </Root>
-        </LazyLoad>
+              {/* eslint-disable-next-line @typescript-eslint/unbound-method */}
+              {preview !== -1 && <PreviewImage onClose={handleClose} index={preview} images={medias} />}
+            </>
+          </LazyLoad>
+        </Root>
       )}
     </>
   );

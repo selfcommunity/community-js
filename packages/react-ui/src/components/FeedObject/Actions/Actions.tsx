@@ -8,7 +8,7 @@ import {SCFeedObjectType, SCFeedObjectTypologyType} from '@selfcommunity/types';
 import {useSCFetchFeedObject} from '@selfcommunity/react-core';
 import {SCFeedObjectTemplateType} from '../../../types/feedObject';
 import classNames from 'classnames';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 
 const PREFIX = 'SCFeedObjectActions';
 

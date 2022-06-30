@@ -1,39 +1,29 @@
 import React, {useEffect} from 'react';
-import {$insertDataTransferForRichText} from '@lexical/clipboard';
 import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
-import {$createParagraphNode, $createRangeSelection, $getRoot} from 'lexical';
+import {$createParagraphNode, $getRoot} from 'lexical';
+import {$generateNodesFromDOM} from '@lexical/html';
 
 function DefaultHtmlValuePlugin({defaultValue}) {
   const [editor] = useLexicalComposerContext();
 
   useEffect(() => {
     editor.update(() => {
-      // Fake DataTransfer object which $insertDataTransferForRichText expects from clipboard
-      // https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer
-      const fakeDataTransfer = new DataTransfer();
-      fakeDataTransfer.getData = (format) => {
-        if (format === 'text/html') {
-          return defaultValue;
-        }
-        return '';
-      };
+      // See:
+      // https://github.com/facebook/lexical/issues/1834
+      // https://github.com/facebook/lexical/issues/2328
 
+      // In the browser you can use the native DOMParser API to parse the HTML string.
+      const parser = new DOMParser();
+      const dom = parser.parseFromString(defaultValue, 'text/html');
+
+      // Once you have the DOM instance it's easy to generate LexicalNodes.
+      const nodes = $generateNodesFromDOM(editor, dom);
+
+      // Select the root
       const root = $getRoot();
-      const rootChildren = root.getChildren();
-      let paragraphNode = null;
-      if (rootChildren.length === 1) {
-        paragraphNode = rootChildren[0];
-      } else {
-        paragraphNode = $createParagraphNode();
-        root.append(paragraphNode);
-      }
-
-      // we need selection to point out where to insert our html;
-      const selection = $createRangeSelection();
-      selection.anchor.set(paragraphNode.getKey(), 0, 'element');
-      selection.focus.set(paragraphNode.getKey(), 0, 'element');
-
-      $insertDataTransferForRichText(fakeDataTransfer, selection, editor);
+      const paragraphNode = $createParagraphNode();
+      nodes.forEach((node) => paragraphNode.append(node));
+      root.getFirstChild().replace(paragraphNode);
     });
   }, []);
 

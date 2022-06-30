@@ -1,4 +1,4 @@
-import React, {createContext, ReactNode, useContext, useEffect, useState} from 'react';
+import React, {createContext, useContext, useEffect, useState} from 'react';
 import {FeatureService, PreferenceService} from '@selfcommunity/api-services';
 import {SCPreferencesContextType} from '../../../types/context';
 import {Logger} from '@selfcommunity/utils';
@@ -44,9 +44,9 @@ export default function SCPreferencesProvider({children = null}: {children: Reac
    */
   useEffect(() => {
     Promise.all([PreferenceService.getAllPreferences(), FeatureService.getAllFeatures()])
-      .then(function (results) {
-        setPreferences(results[0]);
-        setFeatures(results[1]);
+      .then(function ([preferences, features]) {
+        setPreferences(preferences['results'].reduce((obj, p) => ({...obj, [`${p.section}.${p.name}`]: p}), {}));
+        setFeatures(features['results'].map((f) => f.name));
         setLoading(false);
       })
       .catch((_error) => {

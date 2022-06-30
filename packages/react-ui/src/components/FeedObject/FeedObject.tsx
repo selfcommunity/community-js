@@ -21,7 +21,7 @@ import ContributionActionsMenu, {ContributionActionsMenuProps} from '../../share
 import {getContributionHtml, getContributionRouteName, getContributionSnippet, getRouteData} from '../../utils/contribution';
 import Follow, {FollowProps} from './Actions/Follow';
 import Widget, {WidgetProps} from '../Widget';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 import BaseItem from '../../shared/BaseItem';
 import Activities, {ActivitiesProps} from './Activities';
 import ReplyCommentObject, {ReplyCommentObjectProps} from '../CommentObject/ReplyComment';
@@ -31,6 +31,7 @@ import {CommentObjectProps} from '../CommentObject';
 import {SCCommentType, SCFeedObjectType, SCFeedObjectTypologyType, SCPollType} from '@selfcommunity/types';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
+import {MAX_PRELOAD_OFFSET_VIEWPORT} from '../../constants/LazyLoad';
 import {
   Link,
   SCContextType,
@@ -43,7 +44,6 @@ import {
   useSCRouting,
   useSCUser
 } from '@selfcommunity/react-core';
-import CommentsObjectSkeleton from '../CommentsObject/Skeleton';
 
 const messages = defineMessages({
   visibleToAll: {
@@ -67,6 +67,7 @@ const classes = {
   title: `${PREFIX}-title`,
   textSection: `${PREFIX}-text-section`,
   text: `${PREFIX}-text`,
+  snippet: `${PREFIX}-snippet`,
   snippetContent: `${PREFIX}-snippet-content`,
   mediasSection: `${PREFIX}-medias-section`,
   pollsSection: `${PREFIX}-polls-section`,
@@ -85,7 +86,8 @@ const Root = styled(Widget, {
 })(({theme}) => ({
   marginBottom: theme.spacing(2),
   [`&.${classes.root}`]: {
-    width: '100%'
+    width: '100%',
+    paddingBottom: 5
   },
   [`& .${classes.header}`]: {
     paddingBottom: 0
@@ -150,6 +152,14 @@ const Root = styled(Widget, {
       color: theme.palette.text.primary
     }
   },
+  [`& .${classes.snippet}`]: {
+    '& > div': {
+      alignItems: 'flex-start'
+    },
+    '& .SCBaseItem-text': {
+      marginTop: 0
+    }
+  },
   [`& .${classes.snippetContent}`]: {
     textDecoration: 'none',
     color: '#3e3e3e'
@@ -172,7 +182,9 @@ const Root = styled(Widget, {
   },
   [`& .${classes.activitiesContent}`]: {
     paddingTop: 3,
-    paddingBottom: 3
+    '&:last-child': {
+      paddingBottom: 5
+    }
   },
   [`& .${classes.infoSection}`]: {
     padding: `0px ${theme.spacing(2)}`
@@ -367,6 +379,7 @@ export interface FeedObjectProps extends CardProps {
  |content|.SCFeedObject-content|Styles applied to the content section. Content section include: title-section, text-section, snippetContent, subContent, medias-section, polls-section, info-section.|
  |text-section|.SCFeedObject-text-section|Styles applied to the text section.|
  |text|.SCFeedObject-text|Styles applied to the text element.|
+ |snippet|.SCFeedObject-snippet|Styles applied to snippet element.|
  |snippet-content|.SCFeedObject-snippet-content|Styles applied to snippet content element.|
  |medias-section|.SCFeedObject-medias-section|Styles applied to the medias section.|
  |polls-section|.SCFeedObject-polls-section|Styles applied to the polls section.|
@@ -729,7 +742,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
               <Box className={classes.infoSection}>
                 <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
                   {!hideParticipantsPreview && (
-                    <LazyLoad once height={30}>
+                    <LazyLoad once offset={MAX_PRELOAD_OFFSET_VIEWPORT}>
                       <ContributorsFeedObject feedObject={obj} feedObjectType={obj.type} {...ContributorsFeedObjectProps} />
                     </LazyLoad>
                   )}
@@ -747,7 +760,6 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
               {scUserContext.user && (expandedActivities || template === SCFeedObjectTemplateType.DETAIL) && (
                 <Box className={classes.replyContent}>
                   <ReplyCommentComponent
-                    inline
                     onReply={handleReply}
                     readOnly={isReplying || !obj}
                     key={Number(isReplying)}
@@ -759,10 +771,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
             {template === SCFeedObjectTemplateType.PREVIEW && (
               <Collapse in={expandedActivities} timeout="auto" unmountOnExit classes={{root: classes.activitiesSection}}>
                 <CardContent className={classes.activitiesContent}>
-                  <LazyLoad
-                    once
-                    height={550}
-                    placeholder={obj.comment_count > 1 ? <CommentsObjectSkeleton CommentObjectSkeletonProps={CommentObjectSkeletonProps} /> : null}>
+                  <LazyLoad once offset={MAX_PRELOAD_OFFSET_VIEWPORT}>
                     <Activities
                       feedObject={obj}
                       feedObjectActivities={feedObjectActivities}
@@ -863,6 +872,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
         {obj ? (
           <BaseItem
             elevation={0}
+            className={classes.snippet}
             image={
               <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, obj.author)}>
                 <Avatar alt={obj.author.username} variant="circular" src={obj.author.avatar} />

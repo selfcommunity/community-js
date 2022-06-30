@@ -7,8 +7,8 @@ import {SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
 import Editor, {EditorRef} from '../../Editor';
 import classNames from 'classnames';
 import {LoadingButton} from '@mui/lab';
-import useThemeProps from '@mui/material/styles/useThemeProps';
-import BaseItemButton from '../../../shared/BaseItemButton';
+import {useThemeProps} from '@mui/system';
+import BaseItem from '../../../shared/BaseItem';
 
 const messages = defineMessages({
   reply: {
@@ -37,7 +37,7 @@ const classes = {
   buttonCancel: `${PREFIX}-button-cancel`
 };
 
-const Root = styled(BaseItemButton, {
+const Root = styled(BaseItem, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
@@ -45,12 +45,12 @@ const Root = styled(BaseItemButton, {
   padding: '1px',
   overflow: 'visible',
   [`&.${classes.root}`]: {
-    '& .SCBaseItemButton-content': {
+    '& .SCBaseItem-content': {
       alignItems: 'flex-start',
-      '& .SCBaseItemButton-text': {
+      '& .SCBaseItem-text': {
         marginTop: 0,
         marginBottom: 0,
-        '& .SCBaseItemButton-secondary': {
+        '& .SCBaseItem-secondary': {
           overflow: 'visible'
         }
       }
@@ -124,7 +124,6 @@ export default function ReplyCommentObject(inProps: ReplyCommentObjectProps): JS
     className,
     elevation = 0,
     autoFocus = false,
-    inline = false,
     onReply,
     onSave,
     onCancel,
@@ -195,7 +194,7 @@ export default function ReplyCommentObject(inProps: ReplyCommentObjectProps): JS
   const isEditorEmpty = useMemo(
     () => (): boolean => {
       const _html = html.trim();
-      return _html === '' || _html === '<p></p>';
+      return _html === '' || _html === '<p></p>' || _html === '<p><br/></p>';
     },
     [html]
   );
@@ -205,8 +204,8 @@ export default function ReplyCommentObject(inProps: ReplyCommentObjectProps): JS
     <Root
       {...rest}
       disableTypography
+      onClick={handleEditorFocus}
       elevation={elevation}
-      ButtonBaseProps={{disableTouchRipple: true, onClick: handleEditorFocus, component: 'div'}}
       className={classNames(classes.root, className)}
       image={
         !scUserContext.user ? (

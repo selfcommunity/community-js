@@ -13,7 +13,7 @@ import {Logger} from '@selfcommunity/utils';
 import {SCPreferences, SCPreferencesContextType, SCUserContext, SCUserContextType, useSCPreferences} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import PubSub from 'pubsub-js';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 import {appendURLSearchParams} from '@selfcommunity/utils';
 import {Virtuoso} from 'react-virtuoso';
 import Widget from '../Widget';

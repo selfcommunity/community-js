@@ -29,7 +29,7 @@ import {
   useSCRouting,
   useSCUser
 } from '@selfcommunity/react-core';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 import {getContributionRouteName, getRouteData} from '../../../../utils/contribution';
 import {FACEBOOK_SHARE, TWITTER_SHARE, LINKEDIN_SHARE} from '../../../../constants/SocialShare';
 

@@ -1,6 +1,6 @@
 {
   "name": "@selfcommunity/react-core",
-  "version": "0.1.4",
+  "version": "0.1.18",
   "description": "React Core Components useful for integrating UI Community components (react-ui).",
   "author": "SelfCommunity <https://www.selfcommunity.com>",
   "homepage": "https://www.selfcommunity.com",
@@ -29,11 +29,10 @@
     "prettier-list-different": "prettier './**/*.js' './**/*.css' './**/*.md' --list-different",
     "clean:lib": "rimraf lib",
     "clean:node_modules": "rimraf node_modules",
-    "build:commonjs": "cross-env BABEL_ENV=commonjs babel --root-mode upward --extensions .js,.jsx,.ts,.tsx ./src --out-dir lib/cjs --ignore **/*.stories.js,**/*.spec.js --copy-files",
-    "build:es": "cross-env BABEL_ENV=es babel --root-mode upward --extensions .js,.jsx,.ts,.tsx ./src --out-dir lib/esm --ignore **/*.stories.js,**/*.spec.js --copy-files",
+    "build:commonjs": "tsc -b tsconfig-cjs.build.json",
+    "build:esm": "tsc -b tsconfig-esm.build.json",
     "build:umd": "webpack --mode production",
-    "build:types": "tsc -d --declarationDir lib/esm --declarationMap --resolveJsonModule --emitDeclarationOnly",
-    "build": "yarn clean:lib && yarn build:commonjs && yarn build:es && yarn build:umd && yarn build:types",
+    "build": "yarn clean:lib && yarn build:commonjs && yarn build:esm && yarn build:umd",
     "prerelease": "yarn run clean:lib && yarn run build"
   },
   "directories": {
@@ -57,10 +56,10 @@
     "react-intl": "^5.25.0"
   },
   "dependencies": {
-    "@selfcommunity/types": "^0.1.4",
-    "@selfcommunity/utils": "^0.1.4",
-    "@selfcommunity/api-services": "^0.1.4",
-    "@selfcommunity/react-i18n": "^0.1.4",
+    "@selfcommunity/api-services": "^0.1.18",
+    "@selfcommunity/react-i18n": "^0.1.18",
+    "@selfcommunity/types": "^0.1.18",
+    "@selfcommunity/utils": "^0.1.18",
     "pubsub-js": "^1.9.4",
     "react-singleton-hook": "^3.2.3",
     "use-deep-compare-effect": "^1.8.1",

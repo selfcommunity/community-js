@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useLayoutEffect, useRef, useState, useTransition} from 'react';
+import React, {useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, useTransition} from 'react';
 import {
   $getSelection,
   $isRangeSelection,
@@ -99,7 +99,7 @@ function useMentionLookupService(mentionString) {
       .request({
         url: Endpoints.UserSearch.url(),
         method: Endpoints.UserSearch.method,
-        params: {user: mentionString, limit: 7}
+        params: {user: mentionString, limit: 5}
       })
       .then((res: HttpResponse<any>) => {
         mentionsCache.set(mentionString, res.data.results);
@@ -149,12 +149,14 @@ function MentionsTypeahead({
   close,
   editor,
   resolution,
-  className = ''
+  className = '',
+  containerEl = null
 }: {
   close: () => void;
   editor: LexicalEditor;
   resolution: Resolution;
   className?: string;
+  containerEl?: any;
 }): JSX.Element {
   const divRef = useRef(null);
   const match = resolution.match;
@@ -165,11 +167,18 @@ function MentionsTypeahead({
   useEffect(() => {
     const div = divRef.current;
     const rootElement = editor.getRootElement();
+    const parentContainerElement = containerEl ? containerEl : rootElement.parentElement;
     if (results !== null && div !== null && rootElement !== null) {
       const range = resolution.range;
-      const {left, top, height} = range.getBoundingClientRect();
-      div.style.top = `${top + height + 2}px`;
-      div.style.left = `${left - 14}px`;
+
+      // Re-calc, relative to the parent container, prevent scroll problems
+      const parentRootPos = parentContainerElement.getBoundingClientRect();
+      const {left, right, top, height} = range.getBoundingClientRect();
+      let relativePosTop = top - parentRootPos.top;
+      let relativePosLeft = right - parentRootPos.left;
+      div.style.position = 'absolute';
+      div.style.top = `${relativePosTop + height + 7}px`;
+      div.style.left = `${relativePosLeft - 14}px`;
       div.style.display = 'block';
       rootElement.setAttribute('aria-controls', 'mentions-typeahead');
 
@@ -518,7 +527,7 @@ const Root = styled(MentionsTypeahead, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  position: 'fixed',
+  position: 'absolute',
   background: '#fff',
   boxShadow: '0px 5px 10px rgba(0, 0, 0, 0.3)',
   borderEadius: 8,
@@ -554,7 +563,7 @@ const Root = styled(MentionsTypeahead, {
   }
 }));
 
-function useMentions(editor: LexicalEditor): JSX.Element {
+function useMentions(editor: LexicalEditor, containerSelector = null): JSX.Element {
   const [resolution, setResolution] = useState<Resolution | null>(null);
 
   useEffect(() => {
@@ -608,12 +617,22 @@ function useMentions(editor: LexicalEditor): JSX.Element {
     setResolution(null);
   }, []);
 
-  return resolution === null || editor === null
-    ? null
-    : createPortal(<Root close={closeTypeahead} resolution={resolution} editor={editor} className={classes.root} />, document.body);
+  if (resolution === null || editor === null) {
+    return null;
+  }
+
+  // Set portal container
+  const portalContainer = containerSelector
+    ? editor.getRootElement().parentElement.closest(containerSelector)
+    : editor.getRootElement().parentElement;
+
+  return createPortal(
+    <Root close={closeTypeahead} resolution={resolution} editor={editor} className={classes.root} containerEl={portalContainer} />,
+    portalContainer
+  );
 }
 
-export default function MentionsPlugin(): JSX.Element {
+export default function MentionsPlugin({containerSelector = 'body'}): JSX.Element {
   const [editor] = useLexicalComposerContext();
-  return useMentions(editor);
+  return useMentions(editor, containerSelector);
 }

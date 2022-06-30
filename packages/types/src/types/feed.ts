@@ -10,7 +10,7 @@ import {SCTagType} from './tag';
  */
 export enum SCFeedTypologyType {
   HOME = 'home',
-  EXPLORE = 'explore',
+  EXPLORE = 'explore'
 }
 
 /**
@@ -19,7 +19,7 @@ export enum SCFeedTypologyType {
 export enum SCFeedObjectTypologyType {
   DISCUSSION = 'discussion',
   POST = 'post',
-  STATUS = 'status',
+  STATUS = 'status'
 }
 
 /**
@@ -67,7 +67,7 @@ export enum SCFeedUnitActivityTypologyType {
   COMMENT = 'comment',
   VOTE = 'vote',
   POLLVOTE = 'pollvote',
-  FOLLOW = 'follow',
+  FOLLOW = 'follow'
 }
 
 /**
@@ -245,3 +245,37 @@ export interface SCFeedPostType extends SCFeedObjectType {
  * Status Schema.
  */
 export type SCFeedStatusType = SCFeedObjectType;
+
+/**
+ * SCFeedUnseenCountType interface
+ */
+
+export interface SCFeedUnseenCountType {
+  count_by_category?: SCCountByCategoryType[];
+  total: number;
+}
+
+export interface SCCountByCategoryType {
+  id: number;
+  count: number;
+}
+
+/**
+ * Feed Object suspended status
+ */
+export interface SCFeedObjectSuspendedStatusType {
+  suspended: boolean;
+}
+
+/**
+ * Feed Object following status
+ */
+export interface SCFeedObjectFollowingStatusType {
+  following: boolean;
+}
+/**
+ * Feed Object hide status
+ */
+export interface SCFeedObjectHideStatusType {
+  hidden: boolean;
+}

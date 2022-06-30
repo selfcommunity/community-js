@@ -1,6 +1,6 @@
 import React, {createContext, useContext, useState} from 'react';
 import {http} from '@selfcommunity/api-services';
-import useDeepCompareEffect from 'use-deep-compare-effect';
+import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
 import {validateOptions, validOptions} from '../../../utils/validator';
 import {SCContextProviderType, SCContextType, SCSettingsType} from '../../../types';
 
@@ -38,7 +38,7 @@ export default function SCContextProvider({conf, children}: SCContextProviderTyp
    * Export the provider as we need to wrap the entire app with it
    * This provider keeps current user logged and session
    */
-  useDeepCompareEffect(() => {
+  useDeepCompareEffectNoCheck(() => {
     /**
      * Validate initial settings
      */

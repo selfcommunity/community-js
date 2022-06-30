@@ -5,7 +5,7 @@ import CommentObject, {CommentObjectProps} from '../CommentObject';
 import {Box} from '@mui/material';
 import {SCCommentsOrderBy} from '../../types/comments';
 import classNames from 'classnames';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 import {WidgetProps} from '../Widget';
 import CommentsObject from '../CommentsObject';
 import {SCOPE_SC_UI} from '../../constants/Errors';
@@ -343,7 +343,7 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
             _parent.latest_comments = [commentObj];
             if (getContribution(parent).id === commentsObject.feedObject.id) {
               setComment(_parent);
-              scrollToComment(_parent);
+              scrollToComment(commentObj);
             } else {
               setCommentError(true);
             }

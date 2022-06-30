@@ -16,7 +16,7 @@ import ContributionActionsMenu from '../../shared/ContributionActionsMenu';
 import DateTimeAgo from '../../shared/DateTimeAgo';
 import {getContributionHtml, getRouteData} from '../../utils/contribution';
 import {useSnackbar} from 'notistack';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 import CommentsObject from '../CommentsObject';
 import BaseItem from '../../shared/BaseItem';
 import {SCCommentType, SCCommentTypologyType, SCFeedObjectType, SCFeedObjectTypologyType} from '@selfcommunity/types';
@@ -660,7 +660,6 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
               onSave={handleSave}
               onCancel={handleCancel}
               readOnly={isReplying || isSavingComment}
-              inline={!comment.parent}
               {...ReplyCommentObjectProps}
             />
           </Box>

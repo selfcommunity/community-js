@@ -15,13 +15,13 @@ import {
   UsersFollowed,
   ConnectionUserButton
 } from '@selfcommunity/react-ui';
-import UserFeed from '../UserFeed';
+import UserFeed, {UserFeedProps} from '../UserFeed';
 import {SCContextType, SCUserContextType, useSCContext, useSCFetchUser, useSCUser} from '@selfcommunity/react-core';
 import {SCUserType} from '@selfcommunity/types';
 import UserProfileSkeleton from './Skeleton';
 import classNames from 'classnames';
 import {FormattedMessage} from 'react-intl';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 
 const PREFIX = 'SCUserProfileTemplate';
 
@@ -102,6 +102,12 @@ export interface UserProfileProps {
    * @default null
    */
   onEditClick?: (user: SCUserType) => void;
+
+  /**
+   * Props to spread to feed component
+   * @default {}
+   */
+  UserFeedProps?: UserFeedProps;
 }
 
 const WIDGETS = [
@@ -190,7 +196,8 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
     FeedSidebarProps,
     UserProfileHeaderProps = {},
     UserProfileInfoProps = {},
-    onEditClick = null
+    onEditClick = null,
+    UserFeedProps = {}
   } = props;
 
   // CONTEXT
@@ -255,7 +262,7 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
           </Button>
         )}
       </Stack>
-      <UserFeed user={scUser} widgets={_widgets} FeedObjectProps={FeedObjectProps} FeedSidebarProps={FeedSidebarProps} />
+      <UserFeed user={scUser} widgets={_widgets} FeedObjectProps={FeedObjectProps} FeedSidebarProps={FeedSidebarProps} {...UserFeedProps} />
     </Root>
   );
 }

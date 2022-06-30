@@ -3,7 +3,7 @@ import {styled} from '@mui/material/styles';
 import {Box, Typography, TypographyProps} from '@mui/material';
 import classNames from 'classnames';
 import Widget, {WidgetProps} from '../../components/Widget';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 
 const PREFIX = 'SCBaseItem';
 

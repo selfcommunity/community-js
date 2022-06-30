@@ -9,7 +9,7 @@ import {FormattedMessage} from 'react-intl';
 import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
 import classNames from 'classnames';
 import CircularProgress from '@mui/material/CircularProgress';
-import useThemeProps from '@mui/material/styles/useThemeProps';
+import {useThemeProps} from '@mui/system';
 
 const PREFIX = 'SCChangeCoverButton';
 
@@ -149,8 +149,8 @@ export default function ChangeCover(inProps: ChangeCoverProps): JSX.Element {
     }
     http
       .request({
-        url: Endpoints.UpdateUser.url({id: scUserContext.user['id']}),
-        method: Endpoints.UpdateUser.method,
+        url: Endpoints.UserPatch.url({id: scUserContext.user['id']}),
+        method: Endpoints.UserPatch.method,
         headers: {
           'Content-Type': 'multipart/form-data'
         },
