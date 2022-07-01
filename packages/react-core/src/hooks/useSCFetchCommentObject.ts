@@ -2,7 +2,9 @@ import {useEffect, useMemo, useState} from 'react';
 import {SCOPE_SC_CORE} from '../constants/Errors';
 import {SCCommentType} from '@selfcommunity/types';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
-import {Logger} from '@selfcommunity/utils';
+import {CacheStrategies, Logger, LRUCache} from '@selfcommunity/utils';
+import {getCommentObjectCacheKey} from '../constants/Cache';
+import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
 
 /**
  :::info
@@ -11,9 +13,24 @@ import {Logger} from '@selfcommunity/utils';
  * @param object
  * @param object.id
  * @param object.commentObject
+ * @param cacheStrategy
  */
-export default function useSCFetchCommentObject({id = null, commentObject = null}: {id?: number; commentObject?: SCCommentType}) {
-  const [obj, setObj] = useState<SCCommentType>(commentObject);
+export default function useSCFetchCommentObject({
+  id = null,
+  commentObject = null,
+  cacheStrategy = CacheStrategies.CACHE_FIRST
+}: {
+  id?: number;
+  commentObject?: SCCommentType,
+  cacheStrategy?: CacheStrategies
+}) {
+  const __commentObjectId = commentObject ? commentObject.id : id;
+
+  // CACHE
+  const __commentObjectCacheKey = getCommentObjectCacheKey(__commentObjectId);
+
+  const [obj, setObj] = useState<SCCommentType>(
+    cacheStrategy !== CacheStrategies.NETWORK_ONLY ? LRUCache.get(__commentObjectCacheKey, commentObject) : null);
   const [error, setError] = useState<string>(null);
 
   /**
@@ -23,7 +40,7 @@ export default function useSCFetchCommentObject({id = null, commentObject = null
     () => () => {
       return http
         .request({
-          url: Endpoints.Comment.url({id: id}),
+          url: Endpoints.Comment.url({id: __commentObjectId}),
           method: Endpoints.Comment.method,
         })
         .then((res: HttpResponse<any>) => {
@@ -33,25 +50,34 @@ export default function useSCFetchCommentObject({id = null, commentObject = null
           return Promise.resolve(res.data);
         });
     },
-    [id]
+    [__commentObjectId]
   );
 
   /**
    * If id and feedObjectType resolve feddObject
    */
   useEffect(() => {
-    if (id) {
+    if (__commentObjectId && (!obj || cacheStrategy === CacheStrategies.STALE_WHILE_REVALIDATE)) {
       fetchCommentObject()
         .then((obj) => {
           setObj(obj);
+          LRUCache.set(__commentObjectCacheKey, obj);
         })
         .catch((err) => {
+          LRUCache.delete(__commentObjectCacheKey);
           setError(`CommentObject with id ${id} not found`);
           Logger.error(SCOPE_SC_CORE, `CommentObject with id ${id} not found`);
           Logger.error(SCOPE_SC_CORE, err.message);
         });
     }
-  }, [id]);
+  }, [__commentObjectId]);
+
+  useDeepCompareEffectNoCheck(() => {
+    if (commentObject) {
+      setObj(commentObject);
+      LRUCache.set(__commentObjectCacheKey, obj);
+    }
+  }, [commentObject]);
 
   return {obj, setObj, error};
 }

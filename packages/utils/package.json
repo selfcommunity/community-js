@@ -100,5 +100,6 @@
   "bugs": {
     "url": "https://github.com/selfcommunity/community-js/issues"
   },
-  "gitHead": "1848949f11caa7c2306f0380ff036395e2e26f9b"
+  "gitHead": "1848949f11caa7c2306f0380ff036395e2e26f9b",
+  "dependencies": {}
 }

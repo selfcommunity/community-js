@@ -1,9 +1,10 @@
 import {useEffect, useReducer} from 'react';
 import {SCOPE_SC_CORE} from '../constants/Errors';
 import {SCCommentsOrderBy, SCCommentType, SCFeedObjectType, SCFeedObjectTypologyType} from '@selfcommunity/types';
-import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
-import {Logger} from '@selfcommunity/utils';
+import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
+import {CacheStrategies, Logger, LRUCache} from '@selfcommunity/utils';
 import useSCFetchFeedObject from './useSCFetchFeedObject';
+import {getCommentObjectsCacheKey} from '../constants/Cache';
 
 /**
  * Interface SCCommentsObjectType
@@ -93,7 +94,8 @@ function commentsReducer(state, action) {
  * @param data
  */
 function stateInitializer(data): SCCommentsObjectType {
-  return {
+  const __commentsObjectCacheKey = getCommentObjectsCacheKey(data.next);
+  let _initState = {
     componentLoaded: false,
     comments: [],
     total: 0,
@@ -104,6 +106,11 @@ function stateInitializer(data): SCCommentsObjectType {
     page: data.offset / data.pageSize + 1,
     reload: false,
   };
+  if (LRUCache.hasKey(__commentsObjectCacheKey) && data.cacheStrategy !== CacheStrategies.NETWORK_ONLY) {
+    const _cachedData = LRUCache.get(__commentsObjectCacheKey);
+    return {..._initState, ...{count: _cachedData.count, next: _cachedData.next, previous: _cachedData.previous, comments: _cachedData.results}};
+  }
+  return _initState;
 }
 
 /**
@@ -127,9 +134,11 @@ export default function useSCFetchCommentObjects(props: {
   orderBy?: SCCommentsOrderBy;
   parent?: number;
   onChangePage?: (page) => any;
+  cacheStrategy?: CacheStrategies
 }) {
   // PROPS
-  const {id, feedObject, feedObjectType, offset = 0, pageSize = 5, orderBy = SCCommentsOrderBy.ADDED_AT_DESC, parent, onChangePage} = props;
+  const {id, feedObject, feedObjectType, offset = 0, pageSize = 5, orderBy = SCCommentsOrderBy.ADDED_AT_DESC,
+    parent, onChangePage, cacheStrategy = CacheStrategies.CACHE_FIRST} = props;
 
   // FeedObject
   const {obj, setObj} = useSCFetchFeedObject({id, feedObject, feedObjectType});
@@ -147,7 +156,7 @@ export default function useSCFetchCommentObjects(props: {
   };
 
   // STATE
-  const [state, dispatch] = useReducer(commentsReducer, {}, () => stateInitializer({offset, pageSize, next: getNextUrl()}));
+  const [state, dispatch] = useReducer(commentsReducer, {}, () => stateInitializer({offset, pageSize, next: getNextUrl(), cacheStrategy}));
 
   /**
    * Calculate current page
@@ -159,10 +168,26 @@ export default function useSCFetchCommentObjects(props: {
     return currentOffset / pageSize + 1;
   };
 
+
+  /**
+   * Get Comments (with cache)
+   */
+  const revalidate = (url, forward) => {
+    return performFetchComments(url)
+      .then((res) => {
+          console.log('Revalidate');
+          console.log(res);
+        });
+  }
+
   /**
    * Get Comments
    */
-  const performFetchComments = (url) => {
+  const performFetchComments = (url, seekCache = true) => {
+    const __commentObjectsCacheKey = getCommentObjectsCacheKey(url);
+    if (LRUCache.hasKey(__commentObjectsCacheKey) && cacheStrategy !== CacheStrategies.NETWORK_ONLY && seekCache) {
+      return Promise.resolve(LRUCache.get(__commentObjectsCacheKey));
+    }
     return http
       .request({
         url,
@@ -172,6 +197,7 @@ export default function useSCFetchCommentObjects(props: {
         if (res.status >= 300) {
           return Promise.reject(res);
         }
+        LRUCache.set(__commentObjectsCacheKey, res.data);
         return Promise.resolve(res.data);
       });
   };
@@ -197,6 +223,10 @@ export default function useSCFetchCommentObjects(props: {
         })
         .catch((error) => {
           Logger.error(SCOPE_SC_CORE, error);
+        }).then(() => {
+          if (cacheStrategy === CacheStrategies.STALE_WHILE_REVALIDATE) {
+            revalidate(state.next, false);
+          }
         });
     }
   }
@@ -225,6 +255,10 @@ export default function useSCFetchCommentObjects(props: {
         })
         .catch((error) => {
           Logger.error(SCOPE_SC_CORE, error);
+        }).then(() => {
+          if (cacheStrategy === CacheStrategies.STALE_WHILE_REVALIDATE) {
+            revalidate(state.next, true);
+          }
         });
     }
   }

@@ -39,8 +39,6 @@ export default {
     }
   },
   args: {
-    feedObjectId: 64,
-    feedObjectType: SCFeedObjectTypologyType.DISCUSSION,
     template: SCFeedObjectTemplateType.PREVIEW,
     elevation: 0,
     variant: 'outlined'
@@ -57,4 +55,15 @@ const Template: ComponentStory<typeof FeedObject> = (args) => (
 
 export const Base = Template.bind({});
 
-Base.args = {};
+Base.args = {
+  feedObjectId: 327,
+  feedObjectType: SCFeedObjectTypologyType.POST
+};
+
+
+export const BaseCached = Template.bind({});
+
+BaseCached.args = {
+  feedObjectId: 327,
+  feedObjectType: SCFeedObjectTypologyType.POST
+};
