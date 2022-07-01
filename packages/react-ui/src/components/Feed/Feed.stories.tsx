@@ -40,6 +40,24 @@ Main.args = {
   }
 };
 
+export const MainCached = Template.bind({});
+
+MainCached.args = {
+  endpoint: Endpoints.MainFeed,
+  ItemComponent: FeedObject,
+  itemPropsGenerator: (scUser, item) => ({
+    feedObject: item[item.type],
+    feedObjectType: item.type,
+    feedObjectActivities: item.activities ? item.activities : null,
+    markRead: scUser ? !item.seen_by_id.includes(scUser.id) : false
+  }),
+  itemIdGenerator: (item) => item[item.type].id,
+  ItemSkeleton: FeedObjectSkeleton,
+  ItemSkeletonProps: {
+    template: SCFeedObjectTemplateType.PREVIEW
+  }
+};
+
 export const Explore = Template.bind({});
 
 Explore.args = {

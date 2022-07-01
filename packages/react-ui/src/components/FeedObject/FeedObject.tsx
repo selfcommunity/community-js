@@ -771,7 +771,6 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
             {template === SCFeedObjectTemplateType.PREVIEW && (
               <Collapse in={expandedActivities} timeout="auto" unmountOnExit classes={{root: classes.activitiesSection}}>
                 <CardContent className={classes.activitiesContent}>
-                  <LazyLoad once offset={MAX_PRELOAD_OFFSET_VIEWPORT}>
                     <Activities
                       feedObject={obj}
                       feedObjectActivities={feedObjectActivities}
@@ -783,7 +782,6 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                         CommentObjectSkeletonProps: CommentObjectSkeletonProps
                       }}
                     />
-                  </LazyLoad>
                 </CardContent>
               </Collapse>
             )}
