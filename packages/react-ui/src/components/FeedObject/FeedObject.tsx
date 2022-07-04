@@ -570,6 +570,16 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
   );
 
   /**
+   * handle vote
+   */
+  const handleVoteSuccess = useCallback(
+    (data) => {
+      updateObject(Object.assign(obj, {voted: data.voted, vote_count: data.vote_count}));
+    },
+    [obj]
+  );
+
+  /**
    * Expand activities if the user is logged
    */
   const handleExpandActivities = useCallback(() => {
@@ -780,6 +790,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                 feedObject={obj}
                 hideCommentAction={template === SCFeedObjectTemplateType.DETAIL}
                 handleExpandActivities={handleExpandActivities}
+                VoteActionProps={{onVoteAction: handleVoteSuccess}}
                 {...ActionsProps}
               />
               {scUserContext.user && (expandedActivities || template === SCFeedObjectTemplateType.DETAIL) && (
@@ -798,6 +809,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                 <CardContent className={classes.activitiesContent}>
                   <Activities
                     feedObject={obj}
+                    key={selectedActivities}
                     feedObjectActivities={feedObjectActivities}
                     activitiesType={selectedActivities}
                     onSetSelectedActivities={handleSelectedActivities}

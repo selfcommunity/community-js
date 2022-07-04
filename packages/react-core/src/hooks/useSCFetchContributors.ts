@@ -108,7 +108,7 @@ function stateInitializer(data): SCPaginatedContributorsType {
   };
   if (__contributorsObjectCacheKey && LRUCache.hasKey(__contributorsObjectCacheKey) && data.cacheStrategy !== CacheStrategies.NETWORK_ONLY) {
     const _cachedData = LRUCache.get(__contributorsObjectCacheKey);
-    return {..._initState, ...{count: _cachedData.count, next: _cachedData.next, previous: _cachedData.previous, contributors: _cachedData.results}};
+    return {..._initState, ...{total: _cachedData.count, next: _cachedData.next, previous: _cachedData.previous, contributors: _cachedData.results}};
   }
   return _initState;
 }

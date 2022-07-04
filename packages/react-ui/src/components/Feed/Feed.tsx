@@ -373,7 +373,6 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
             overscan={{main: 3000, reverse: 2000}}
             itemContent={itemContent}
             components={{
-              Item: () => <ItemSkeleton {...ItemSkeletonProps} />,
               Footer: () =>
                 feedDataObject.next ? (
                   <ItemSkeleton {...ItemSkeletonProps} />

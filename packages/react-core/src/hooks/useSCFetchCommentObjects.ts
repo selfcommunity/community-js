@@ -108,7 +108,7 @@ function stateInitializer(data): SCCommentsObjectType {
   };
   if (__commentsObjectCacheKey && LRUCache.hasKey(__commentsObjectCacheKey) && data.cacheStrategy !== CacheStrategies.NETWORK_ONLY) {
     const _cachedData = LRUCache.get(__commentsObjectCacheKey);
-    return {..._initState, ...{count: _cachedData.count, next: _cachedData.next, previous: _cachedData.previous, comments: _cachedData.results}};
+    return {..._initState, ...{total: _cachedData.count, next: _cachedData.next, previous: _cachedData.previous, comments: _cachedData.results}};
   }
   return _initState;
 }

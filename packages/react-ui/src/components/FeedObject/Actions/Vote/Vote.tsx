@@ -205,6 +205,12 @@ export interface VoteProps {
   inlineAction?: boolean;
 
   /**
+   * Handles action vote click
+   * @default null
+   */
+  onVoteAction?: () => any;
+
+  /**
    * Any other properties
    */
   [p: string]: any;
@@ -224,7 +230,8 @@ export default function Vote(inProps: VoteProps): JSX.Element {
     feedObjectType = SCFeedObjectTypologyType.POST,
     withAudience = true,
     withAction = true,
-    inlineAction = true,
+    inlineAction = false,
+    onVoteAction = () => null,
     ...rest
   } = props;
 
@@ -325,12 +332,12 @@ export default function Vote(inProps: VoteProps): JSX.Element {
           performVote()
             .then((data) => {
               dispatch({type: voteActionTypes.REQUEST_VOTING_SUCCESS});
-              setObj(
-                Object.assign({}, obj, {
-                  voted: !obj.voted,
-                  vote_count: obj.voted ? obj.vote_count - 1 : obj.vote_count + 1
-                })
-              );
+              const newObj = Object.assign({}, obj, {
+                voted: !obj.voted,
+                vote_count: obj.voted ? obj.vote_count - 1 : obj.vote_count + 1
+              });
+              setObj(newObj);
+              onVoteAction && onVoteAction(newObj);
             })
             .catch((error) => {
               Logger.error(SCOPE_SC_UI, error);
