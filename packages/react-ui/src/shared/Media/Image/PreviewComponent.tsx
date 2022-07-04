@@ -35,7 +35,9 @@ const Root = styled(Box, {
   width: '100%',
   position: 'relative',
   minHeight: 500,
-
+  [theme.breakpoints.down('md')]: {
+    minHeight: 400
+  },
   [`& .${classes.background}`]: {
     backgroundSize: 'cover !important',
     backgroundPosition: 'center !important',
@@ -277,7 +279,7 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
       <Grid container>
         <Grid
           item
-          xs={6}
+          xs={4}
           md={4}
           classes={{root: classNames(classes.border, classes.heightThree, classes.background, {[classes.gallery]: gallery})}}
           onClick={() => openPreviewImage(conditionalRender ? 1 : 2)}
@@ -287,7 +289,7 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
         </Grid>
         <Grid
           item
-          xs={6}
+          xs={4}
           md={4}
           classes={{root: classNames(classes.border, classes.heightThree, classes.background, {[classes.gallery]: gallery})}}
           onClick={() => openPreviewImage(conditionalRender ? 2 : 3)}
@@ -297,7 +299,7 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
         </Grid>
         <Grid
           item
-          xs={6}
+          xs={4}
           md={4}
           classes={{root: classNames(classes.border, classes.heightThree, classes.background, {[classes.gallery]: gallery})}}
           onClick={() => openPreviewImage(conditionalRender ? 3 : 4)}
