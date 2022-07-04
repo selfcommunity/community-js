@@ -3,7 +3,7 @@ import {isValidUrl, isValidUrls, urlReplacer, getDomain, appendURLSearchParams, 
 import {getHighestSafeWindowContext, getWindowWidth, getWindowHeight, isClientSideRendering} from './utils/window';
 import {mergeDeep, isObject} from './utils/object';
 import {loadVersionBrowser} from './utils/browser';
-import LRUCache, {CacheStrategies} from './utils/cache';
+import LRUCache, {LruCache, LruCacheType, CacheStrategies} from './utils/cache';
 import {Logger} from './utils/logger';
 import WSClient, {WSClientType, WSClientPropTypes} from './utils/websocket';
 
@@ -36,5 +36,7 @@ export {
   WSClientPropTypes,
   loadVersionBrowser,
   LRUCache,
+  LruCache,
+  LruCacheType,
   CacheStrategies
 };

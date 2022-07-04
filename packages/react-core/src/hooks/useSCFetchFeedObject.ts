@@ -21,12 +21,12 @@ export default function useSCFetchFeedObject({
   id = null,
   feedObject = null,
   feedObjectType = SCFeedObjectTypologyType.POST || SCFeedObjectTypologyType.DISCUSSION || SCFeedObjectTypologyType.STATUS,
-  cacheStrategy = CacheStrategies.CACHE_FIRST
+  cacheStrategy = CacheStrategies.CACHE_FIRST,
 }: {
   id?: number;
   feedObject?: SCFeedObjectType;
   feedObjectType?: SCFeedObjectTypologyType;
-  cacheStrategy?: CacheStrategies
+  cacheStrategy?: CacheStrategies;
 }) {
   const __feedObjectId = feedObject ? feedObject.id : id;
   const __feedObjectType = feedObject ? feedObject.type : feedObjectType;
@@ -35,7 +35,8 @@ export default function useSCFetchFeedObject({
   const __feedObjectCacheKey = getFeedObjectCacheKey(__feedObjectId, __feedObjectType);
 
   const [obj, setObj] = useState<SCFeedDiscussionType | SCFeedPostType | SCFeedStatusType>(
-    cacheStrategy !== CacheStrategies.NETWORK_ONLY ? LRUCache.get(__feedObjectCacheKey, feedObject) : null);
+    cacheStrategy !== CacheStrategies.NETWORK_ONLY ? LRUCache.get(__feedObjectCacheKey, feedObject) : null
+  );
   const [error, setError] = useState<string>(null);
 
   /**
@@ -43,26 +44,26 @@ export default function useSCFetchFeedObject({
    */
   const fetchFeedObject = useMemo(
     () => () => {
-    return http
-      .request({
-        url: Endpoints.FeedObject.url({type: __feedObjectType, id: __feedObjectId}),
-        method: Endpoints.FeedObject.method,
-      })
-      .then((res: HttpResponse<any>) => {
-        if (res.status >= 300) {
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res.data);
-      });
+      return http
+        .request({
+          url: Endpoints.FeedObject.url({type: __feedObjectType, id: __feedObjectId}),
+          method: Endpoints.FeedObject.method,
+        })
+        .then((res: HttpResponse<any>) => {
+          if (res.status >= 300) {
+            return Promise.reject(res);
+          }
+          return Promise.resolve(res.data);
+        });
     },
-      [__feedObjectId, __feedObjectType]
-    );
+    [__feedObjectId, __feedObjectType]
+  );
 
   /**
    * If id and feedObjectType resolve feedObject
    */
   useEffect(() => {
-    if ((__feedObjectId && __feedObjectType) && (!obj || cacheStrategy === CacheStrategies.STALE_WHILE_REVALIDATE)) {
+    if (__feedObjectId && __feedObjectType && (!obj || cacheStrategy === CacheStrategies.STALE_WHILE_REVALIDATE)) {
       fetchFeedObject()
         .then((obj) => {
           setObj(obj);

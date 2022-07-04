@@ -4,8 +4,10 @@
 export interface LruCacheType<T> {
   get: (key: string, value?: T) => T;
   set: (key: string, value: T) => void;
-  hasKey: (key: string) => Boolean;
+  hasKey: (key: string) => boolean;
   delete: (key: string) => void;
+  deleteKeys: (keys: string[]) => void;
+  deleteKeysWithPrefix: (prefix: string) => void;
   clean: () => void;
   evaluate: () => void;
 }
@@ -13,24 +15,35 @@ export interface LruCacheType<T> {
 /**
  * LruCache
  */
-class LruCache<T> {
-
+export class LruCache<T> {
   private values: Map<string, T> = new Map<string, T>();
-  private maxEntries: number = 500000;
+  private maxEntries;
+
+  /**
+   * Initialize Cache
+   * @param maxEntries
+   */
+  constructor(maxEntries = 10000) {
+    this.maxEntries = maxEntries;
+    if (typeof window !== 'undefined') {
+      window['__viewSCCache'] = this.values;
+    }
+  }
 
   /**
    * Get a key from the map store
    * @param key
+   * @param value
    */
   public get(key: string, value?: T): T {
     const hasKey = this.values.has(key);
     let entry: T;
     if (hasKey) {
       // peek the entry, re-insert(updated if value) for LRU strategy
-      entry = value || this.values.get(key);
+      entry = this.values.get(key);
       this.values.delete(key);
       this.values.set(key, entry);
-    }else if (value) {
+    } else if (value) {
       // insert value if passed
       entry = value;
       this.values.set(key, entry);
@@ -56,7 +69,7 @@ class LruCache<T> {
    * Check if key is in cache
    * @param key
    */
-  public hasKey(key: string): Boolean {
+  public hasKey(key: string): boolean {
     return this.values.has(key);
   }
 
@@ -72,6 +85,31 @@ class LruCache<T> {
   }
 
   /**
+   * Delete all entry with prefix keys
+   * @param keys
+   */
+  public deleteKeys(keys: string[]): void {
+    keys.forEach((k) => {
+      const hasKey = this.values.has(k);
+      if (hasKey) {
+        this.values.delete(k);
+      }
+    });
+  }
+
+  /**
+   * Delete all entry with prefix keys
+   * @param prefix
+   */
+  public deleteKeysWithPrefix(prefix: string): void {
+    this.values.forEach((v, k) => {
+      if (k.startsWith(prefix)) {
+        this.values.delete(k);
+      }
+    });
+  }
+
+  /**
    * Clean the store
    */
   public clean(): void {
@@ -82,8 +120,7 @@ class LruCache<T> {
    * Print the store in the console
    * Only for debug
    */
-  public evaluate() {
-    console.log('CURRENT Cache:');
+  public evaluate(): void {
     console.log(this.values);
   }
 }

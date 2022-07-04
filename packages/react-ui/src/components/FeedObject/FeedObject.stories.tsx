@@ -47,11 +47,11 @@ export default {
 } as ComponentMeta<typeof FeedObject>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof FeedObject> = (args) => (
-  <div style={{width: '100%', maxWidth: 800}}>
+const Template: ComponentStory<typeof FeedObject> = (args) => {
+  return (<div style={{width: '100%', maxWidth: 800}}>
     <FeedObject {...args} />
-  </div>
-);
+  </div>);
+};
 
 export const Base = Template.bind({});
 

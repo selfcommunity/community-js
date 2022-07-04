@@ -14,18 +14,19 @@ import {SCCommentsOrderBy} from '../../types/comments';
 import ReplyCommentObject from './ReplyComment';
 import ContributionActionsMenu from '../../shared/ContributionActionsMenu';
 import DateTimeAgo from '../../shared/DateTimeAgo';
-import {getContributionHtml, getRouteData} from '../../utils/contribution';
+import {getContribution, getContributionHtml, getContributionType, getRouteData} from '../../utils/contribution';
 import {useSnackbar} from 'notistack';
 import {useThemeProps} from '@mui/system';
 import CommentsObject from '../CommentsObject';
 import BaseItem from '../../shared/BaseItem';
 import {SCCommentType, SCCommentTypologyType, SCFeedObjectType, SCFeedObjectTypologyType} from '@selfcommunity/types';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
-import {Logger} from '@selfcommunity/utils';
+import {Logger, LRUCache} from '@selfcommunity/utils';
 import {
   Link,
   SCContextType,
   SCRoutes,
+  SCCache,
   SCRoutingContextType,
   SCUserContext,
   SCUserContextType,
@@ -340,6 +341,17 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
   });
 
   /**
+   * Update state object
+   * @param obj
+   */
+  function updateObject(newObj) {
+    LRUCache.set(SCCache.getCommentObjectCacheKey(obj.id), newObj);
+    setObj(newObj);
+    const contributionType = getContributionType(obj);
+    LRUCache.deleteKeysWithPrefix(SCCache.getCommentObjectsCachePrefixKeys(newObj[contributionType].id, contributionType));
+  }
+
+  /**
    * Render added_at of the comment
    * @param comment
    */
@@ -453,7 +465,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
             const newObj = obj;
             obj.voted = !obj.voted;
             obj.vote_count = obj.vote_count - (obj.voted ? -1 : 1);
-            setObj(newObj);
+            updateObject(obj);
             setLoadingVote(false);
             onVote && onVote(comment);
           })
@@ -505,7 +517,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
       setIsReplying(true);
       performReply(comment)
         .then((data: SCCommentType) => {
-          setObj({...obj, ...{comment_count: obj.comment_count + 1, latest_comments: [...obj.latest_comments, data]}});
+          updateObject({...obj, ...{comment_count: obj.comment_count + 1, latest_comments: [...obj.latest_comments, data]}});
           setReplyComment(null);
           setIsReplying(false);
         })
@@ -531,10 +543,10 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
         }
         return c;
       });
-      setObj(Object.assign({}, obj, {latest_comments: _latestComment}));
+      updateObject(Object.assign({}, obj, {latest_comments: _latestComment}));
     } else {
       const _comment = Object.assign({}, obj, {deleted: !obj.deleted});
-      setObj(Object.assign({}, obj, {deleted: !obj.deleted}));
+      updateObject(Object.assign({}, obj, {deleted: !obj.deleted}));
       onDelete && onDelete(_comment);
     }
   }
@@ -550,9 +562,9 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
         }
         return c;
       });
-      setObj(Object.assign({}, obj, {latest_comments: _latestComment}));
+      updateObject(Object.assign({}, obj, {latest_comments: _latestComment}));
     } else {
-      setObj(Object.assign({}, obj, {collapsed: !obj.collapsed}));
+      updateObject(Object.assign({}, obj, {collapsed: !obj.collapsed}));
     }
   }
 
@@ -567,9 +579,9 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
         }
         return c;
       });
-      setObj(Object.assign({}, obj, {latest_comments: _latestComment}));
+      updateObject(Object.assign({}, obj, {latest_comments: _latestComment}));
     } else {
-      setObj(Object.assign({}, obj, {deleted: false}));
+      updateObject(Object.assign({}, obj, {deleted: false}));
     }
   }
 
@@ -615,14 +627,13 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
       setIsSavingComment(true);
       performSave(comment)
         .then((data: SCCommentType) => {
-          setObj(
-            Object.assign({}, obj, {
-              text: data.text,
-              html: data.html,
-              summary: data.summary,
-              added_at: data.added_at
-            })
-          );
+          const newObj = Object.assign({}, obj, {
+            text: data.text,
+            html: data.html,
+            summary: data.summary,
+            added_at: data.added_at
+          });
+          updateObject(newObj);
           setEditComment(null);
           setIsSavingComment(false);
         })

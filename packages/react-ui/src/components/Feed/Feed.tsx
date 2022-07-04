@@ -1,20 +1,18 @@
 import React, {forwardRef, ForwardRefRenderFunction, ReactNode, useContext, useEffect, useImperativeHandle, useMemo, useRef, useState} from 'react';
 import {styled, useTheme} from '@mui/material/styles';
 import {CardContent, Grid, Hidden, Theme, useMediaQuery} from '@mui/material';
-import {SCOPE_SC_UI} from '../../constants/Errors';
 import {FormattedMessage} from 'react-intl';
 import {GenericSkeleton} from '../Skeleton';
 import {SCFeedWidgetType} from '../../types/feed';
 import Sticky from 'react-stickynode';
 import CustomAdv, {CustomAdvProps} from '../CustomAdv';
-import {SCUserType, SCCustomAdvPosition, SCFeedUnitType, SCNotificationAggregatedType} from '@selfcommunity/types';
-import {http, EndpointType, HttpResponse} from '@selfcommunity/api-services';
-import {Logger} from '@selfcommunity/utils';
-import {SCPreferences, SCPreferencesContextType, SCUserContext, SCUserContextType, useSCPreferences} from '@selfcommunity/react-core';
+import {SCUserType, SCCustomAdvPosition, SCFeedUnitType} from '@selfcommunity/types';
+import {EndpointType} from '@selfcommunity/api-services';
+import {CacheStrategies} from '@selfcommunity/utils';
+import {SCPreferences, SCPreferencesContextType, SCUserContext, SCUserContextType, useSCFetchFeed, useSCPreferences} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import PubSub from 'pubsub-js';
 import {useThemeProps} from '@mui/system';
-import {appendURLSearchParams} from '@selfcommunity/utils';
 import {Virtuoso} from 'react-virtuoso';
 import Widget from '../Widget';
 
@@ -80,7 +78,7 @@ export interface FeedProps {
    * Feed API Query Params
    * @default [{'limit': 5}]
    */
-  endpointQueryParams?: Record<string, string | number>[];
+  endpointQueryParams?: Record<string, string | number>;
 
   /**
    * End message, rendered when no more feed item can be displayed
@@ -138,6 +136,12 @@ export interface FeedProps {
   onFetchData?: (data) => any;
 
   /**
+   * Caching strategies
+   * @default CacheStrategies.CACHE_FIRST
+   */
+  cacheStrategy?: CacheStrategies;
+
+  /**
    * Props to spread to single feed object
    * @default {top: 0, bottomBoundary: `#${id}`}
    */
@@ -181,9 +185,6 @@ const PREFERENCES = [SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED, SCPreferences
  *
  * @param inProps
  */
-const LOADING = 1;
-const LOADED = 2;
-
 const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, ref): JSX.Element => {
   // PROPS
   const props: FeedProps = useThemeProps({
@@ -194,7 +195,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     id = 'feed',
     className,
     endpoint,
-    endpointQueryParams = [{limit: 10}],
+    endpointQueryParams = {limit: 10, offset: 0},
     endMessage = <FormattedMessage id="ui.feed.noOtherFeedObject" defaultMessage="ui.feed.noOtherFeedObject" />,
     refreshMessage = <FormattedMessage id="ui.feed.refreshRelease" defaultMessage="ui.feed.refreshRelease" />,
     widgets = [],
@@ -206,13 +207,19 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     ItemSkeletonProps = {},
     onFetchData,
     FeedSidebarProps = {top: 0, bottomBoundary: `#${id}`},
-    CustomAdvProps = {}
+    CustomAdvProps = {},
+    cacheStrategy = CacheStrategies.NETWORK_ONLY
   } = props;
 
   // STATE
-  const [feedData, setFeedData] = useState([]);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [next, setNext] = useState<string>(appendURLSearchParams(endpoint.url({}), endpointQueryParams));
+  const feedDataObject = useSCFetchFeed({
+    id,
+    endpoint,
+    endpointQueryParams,
+    onChangePage: onFetchData,
+    cacheStrategy
+  });
+  const [headData, setHeadData] = useState([]);
 
   // CONTEXT
   const scPreferences: SCPreferencesContextType = useSCPreferences();
@@ -254,7 +261,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
           column: 'right',
           position: 0
         },
-        ...Array.from({length: feedData.length / 10}, (_, i) => i * 10).map((position): SCFeedWidgetType => {
+        ...Array.from({length: feedDataObject.feedData.length / 10}, (_, i) => i * 10).map((position): SCFeedWidgetType => {
           return {
             type: 'widget',
             component: CustomAdv,
@@ -269,37 +276,10 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
       ];
     }
     return [...widgets];
-  }, [widgets, feedData, preferences]);
-
-  /**
-   * Fetch main feed
-   * Manage pagination, infinite scrolling
-   */
-  const fetch = () => {
-    if (!loading) {
-      setLoading(true);
-      return http
-        .request({
-          url: next,
-          method: endpoint.method
-        })
-        .then((res: HttpResponse<{next?: string; previous?: string; results: SCNotificationAggregatedType[]}>) => {
-          const data = res.data;
-          setFeedData([...feedData, ...data.results]);
-          setNext(data.next);
-          setLoading(false);
-          onFetchData && onFetchData(res.data);
-        })
-        .catch((error) => {
-          Logger.error(SCOPE_SC_UI, error);
-        });
-    }
-  };
+  }, [widgets, feedDataObject.feedData, preferences]);
 
   const refresh = () => {
-    setNext(endpoint.url({}));
-    setFeedData([]);
-    fetch();
+    feedDataObject.reload();
   };
 
   const subscriber = (msg, data) => {
@@ -310,7 +290,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
 
   // EFFECTS
   useEffect(() => {
-    fetch();
+    feedDataObject.getNextPage();
   }, [authUserId]);
 
   useEffect(() => {
@@ -323,7 +303,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
   // EXPOSED METHODS
   useImperativeHandle(ref, () => ({
     addFeedData: (data: any) => {
-      setFeedData([data, ...feedData]);
+      setHeadData(data);
     }
   }));
 
@@ -343,7 +323,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
           left: _widgets
             .map((w) => Object.assign({}, w, {position: w.position * (w.column === 'right' ? 5 : 1)}))
             .sort(widgetSort)
-            .reduce(widgetReducer, feedData),
+            .reduce(widgetReducer, [...headData, ...feedDataObject.feedData]),
           right: []
         };
       } else {
@@ -351,27 +331,31 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
           left: _widgets
             .filter((w) => w.column === 'left')
             .sort(widgetSort)
-            .reduce(widgetReducer, feedData),
+            .reduce(widgetReducer, [...headData, ...feedDataObject.feedData]),
           right: _widgets.filter((w) => w.column === 'right').sort(widgetSort)
         };
       }
     },
-    [loading, oneColLayout, feedData, _widgets]
+    [feedDataObject.isLoadingNext, oneColLayout, feedDataObject.feedData, _widgets, headData]
   );
 
   const data = getData();
 
-  const InnerItem = React.memo(({index, d}) => {
-    return (
-      <>
-        {d.type === 'widget' ? (
-          <d.component key={`widget_left_${index}`} {...d.componentProps} {...(d.publishEvents && {publicationChannel: id})}></d.component>
-        ) : (
-          <ItemComponent key={`item_${itemIdGenerator(d)}`} {...itemPropsGenerator(scUserContext.user, d)} {...ItemProps} sx={{width: '100%'}} />
-        )}
-      </>
-    );
-  });
+  const InnerItem = useMemo(
+    () =>
+      ({index, d}) => {
+        return (
+          <>
+            {d.type === 'widget' ? (
+              <d.component key={`widget_left_${index}`} {...d.componentProps} {...(d.publishEvents && {publicationChannel: id})}></d.component>
+            ) : (
+              <ItemComponent key={`item_${itemIdGenerator(d)}`} {...itemPropsGenerator(scUserContext.user, d)} {...ItemProps} sx={{width: '100%'}} />
+            )}
+          </>
+        );
+      },
+    []
+  );
 
   const itemContent = (i, d) => {
     return <InnerItem index={i} d={d} />;
@@ -385,13 +369,13 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
             useWindowScroll
             totalCount={data.left.length}
             data={data.left}
-            endReached={fetch}
+            endReached={feedDataObject.feedData.length > 0 ? feedDataObject.getNextPage : () => null}
             overscan={{main: 3000, reverse: 2000}}
-            // atBottomThreshold={600}
             itemContent={itemContent}
             components={{
+              Item: () => <ItemSkeleton {...ItemSkeletonProps} />,
               Footer: () =>
-                next ? (
+                feedDataObject.next ? (
                   <ItemSkeleton {...ItemSkeletonProps} />
                 ) : (
                   <Widget className={classes.end}>

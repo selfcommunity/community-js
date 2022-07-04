@@ -18,11 +18,11 @@ import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
 export default function useSCFetchCommentObject({
   id = null,
   commentObject = null,
-  cacheStrategy = CacheStrategies.CACHE_FIRST
+  cacheStrategy = CacheStrategies.CACHE_FIRST,
 }: {
   id?: number;
-  commentObject?: SCCommentType,
-  cacheStrategy?: CacheStrategies
+  commentObject?: SCCommentType;
+  cacheStrategy?: CacheStrategies;
 }) {
   const __commentObjectId = commentObject ? commentObject.id : id;
 
@@ -30,7 +30,8 @@ export default function useSCFetchCommentObject({
   const __commentObjectCacheKey = getCommentObjectCacheKey(__commentObjectId);
 
   const [obj, setObj] = useState<SCCommentType>(
-    cacheStrategy !== CacheStrategies.NETWORK_ONLY ? LRUCache.get(__commentObjectCacheKey, commentObject) : null);
+    cacheStrategy !== CacheStrategies.NETWORK_ONLY ? LRUCache.get(__commentObjectCacheKey, commentObject) : null
+  );
   const [error, setError] = useState<string>(null);
 
   /**
