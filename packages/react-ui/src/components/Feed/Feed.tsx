@@ -303,13 +303,6 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     feedDataObject.getNextPage();
   }, [authUserId]);
 
-  // EFFECTS
-  useEffect(() => {
-    /* if (cacheStrategy === CacheStrategies.CACHE_FIRST && LRUCache.hasKey(SCCache.getFeedSPCacheKey(id))) {
-      virtuosoRef.current.scrollToIndex({index: LRUCache.get(SCCache.getFeedSPCacheKey(id)), align: 'start'});
-    } */
-  }, []);
-
   useEffect(() => {
     refreshSubscription.current = PubSub.subscribe(id, subscriber);
     return () => {
@@ -388,20 +381,22 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
             totalCount={data.left.length}
             data={data.left}
             endReached={feedDataObject.feedData.length > 0 ? feedDataObject.getNextPage : () => null}
-            overscan={{main: 3000, reverse: 2000}}
             itemContent={itemContent}
             {...(cacheStrategy === CacheStrategies.CACHE_FIRST && LRUCache.get(SCCache.getFeedSPCacheKey(id))
               ? {initialTopMostItemIndex: {align: 'start', index: LRUCache.get(SCCache.getFeedSPCacheKey(id)), behavior: 'auto'}}
               : {})}
             components={{
-              Footer: () =>
-                feedDataObject.next ? (
-                  <ItemSkeleton {...ItemSkeletonProps} />
-                ) : (
-                  <Widget className={classes.end}>
-                    <CardContent>{endMessage}</CardContent>
-                  </Widget>
-                )
+              Footer: () => (
+                <>
+                  {feedDataObject.next ? (
+                    <ItemSkeleton {...ItemSkeletonProps} />
+                  ) : (
+                    <Widget className={classes.end}>
+                      <CardContent>{endMessage}</CardContent>
+                    </Widget>
+                  )}
+                </>
+              )
             }}
           />
         </div>
