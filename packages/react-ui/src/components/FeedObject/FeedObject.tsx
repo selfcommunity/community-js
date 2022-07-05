@@ -12,7 +12,6 @@ import Icon from '@mui/material/Icon';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import PollObject, {PollObjectProps} from './Poll';
 import ContributorsFeedObject, {ContributorsFeedObjectProps} from './Contributors';
-import LazyLoad from 'react-lazyload';
 import Composer from '../Composer';
 import {SCFeedObjectActivitiesType, SCFeedObjectTemplateType} from '../../types/feedObject';
 import MarkRead from '../../shared/MarkRead';
@@ -771,14 +770,12 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
               <Box className={classes.infoSection}>
                 <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
                   {!hideParticipantsPreview && (
-                    <LazyLoad once offset={MAX_PRELOAD_OFFSET_VIEWPORT}>
-                      <ContributorsFeedObject
-                        feedObject={obj}
-                        feedObjectType={obj.type}
-                        {...ContributorsFeedObjectProps}
-                        cacheStrategy={cacheStrategy}
-                      />
-                    </LazyLoad>
+                    <ContributorsFeedObject
+                      feedObject={obj}
+                      feedObjectType={obj.type}
+                      {...ContributorsFeedObjectProps}
+                      cacheStrategy={cacheStrategy}
+                    />
                   )}
                   {!hideFollowAction && <Follow feedObject={obj} feedObjectType={obj.type} handleFollow={handleFollow} {...FollowButtonProps} />}
                 </Stack>

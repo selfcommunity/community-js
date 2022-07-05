@@ -9,7 +9,7 @@ import {SCCache} from '@selfcommunity/react-core';
  * handles whether to display props.children.
  */
 function VirtualScrollChild({cacheKey, index, children}) {
-  const [ref, inView] = useInView({threshold: 0.3});
+  const [ref, inView] = useInView({threshold: 0.5});
 
   useEffect(() => {
     if (inView) {

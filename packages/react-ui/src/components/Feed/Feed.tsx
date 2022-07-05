@@ -21,7 +21,7 @@ import {
 import classNames from 'classnames';
 import PubSub from 'pubsub-js';
 import {useThemeProps} from '@mui/system';
-import {Virtuoso} from 'react-virtuoso';
+import {Virtuoso, VirtuosoHandle} from 'react-virtuoso';
 import VirtualScrollChild from './VirtualScrollChild';
 import Widget from '../Widget';
 
@@ -238,7 +238,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
 
   // REFS
-  const virtuosoRef = useRef(null);
+  const virtuosoRef = useRef<VirtuosoHandle>(null);
   const refreshSubscription = useRef(null);
 
   /**
@@ -383,13 +383,19 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
             endReached={feedDataObject.feedData.length > 0 ? feedDataObject.getNextPage : () => null}
             itemContent={itemContent}
             {...(cacheStrategy === CacheStrategies.CACHE_FIRST && LRUCache.get(SCCache.getFeedSPCacheKey(id))
-              ? {initialTopMostItemIndex: {align: 'start', index: LRUCache.get(SCCache.getFeedSPCacheKey(id)), behavior: 'auto'}}
+              ? {
+                  initialTopMostItemIndex: {align: 'start', index: LRUCache.get(SCCache.getFeedSPCacheKey(id)), behavior: 'auto'}
+                }
               : {})}
             components={{
               Footer: () => (
                 <>
-                  {feedDataObject.next ? (
-                    <ItemSkeleton {...ItemSkeletonProps} />
+                  {feedDataObject.isLoadingNext ? (
+                    data.left.length > 0 ? (
+                      <ItemSkeleton {...ItemSkeletonProps} />
+                    ) : (
+                      [...Array(3)].map((v, i) => <ItemSkeleton key={i} {...ItemSkeletonProps} />)
+                    )
                   ) : (
                     <Widget className={classes.end}>
                       <CardContent>{endMessage}</CardContent>
