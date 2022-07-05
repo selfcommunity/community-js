@@ -17,6 +17,7 @@ import CentralProgress from '../../shared/CentralProgress';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Widget from '../Widget';
 import {useThemeProps} from '@mui/system';
+import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 
 const messages = defineMessages({
   title: {
@@ -227,7 +228,7 @@ export default function CategoriesFollowed(inProps: CategoriesListProps): JSX.El
    * Renders root object (if results and if user is logged, otherwise component is hidden)
    */
   if (autoHide && !total) {
-    return null;
+    return <HiddenPlaceholder />;
   }
   return <Root className={classNames(classes.root, className)}>{c}</Root>;
 }

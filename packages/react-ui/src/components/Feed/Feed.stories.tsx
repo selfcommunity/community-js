@@ -9,6 +9,7 @@ import SCNotification, {NotificationSkeleton} from '../Notification';
 import FeedUpdates from '../FeedUpdates';
 import BroadcastMessages from '../BroadcastMessages';
 import {CacheStrategies} from '@selfcommunity/utils';
+import PeopleSuggestion from '../PeopleSuggestion';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -39,7 +40,8 @@ Main.args = {
   ItemSkeleton: FeedObjectSkeleton,
   ItemSkeletonProps: {
     template: SCFeedObjectTemplateType.PREVIEW
-  }
+  },
+  requireAuthentication: true
 };
 
 export const Explore = Template.bind({});
@@ -108,5 +110,6 @@ Notification.args = {
     notificationObject: item
   }),
   itemIdGenerator: (item) => item.sid,
-  ItemSkeleton: NotificationSkeleton
+  ItemSkeleton: NotificationSkeleton,
+  requireAuthentication: true
 };

@@ -145,6 +145,11 @@ export interface FeedProps {
   onFetchData?: (data) => any;
 
   /**
+   * Authenticated or not
+   */
+  requireAuthentication?: boolean;
+
+  /**
    * Caching strategies
    * @default CacheStrategies.CACHE_FIRST
    */
@@ -217,6 +222,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     onFetchData,
     FeedSidebarProps = {top: 0, bottomBoundary: `#${id}`},
     CustomAdvProps = {},
+    requireAuthentication = false,
     cacheStrategy = CacheStrategies.NETWORK_ONLY
   } = props;
 
@@ -300,7 +306,9 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
 
   // EFFECTS
   useEffect(() => {
-    feedDataObject.getNextPage();
+    if ((requireAuthentication && authUserId !== null) || !requireAuthentication) {
+      feedDataObject.getNextPage();
+    }
   }, [authUserId]);
 
   useEffect(() => {

@@ -6,13 +6,13 @@ import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
 import Widget from '../Widget';
 import {useThemeProps} from '@mui/system';
+import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 
 const PREFIX = 'SCFeedUpdates';
 
 const classes = {
   root: `${PREFIX}-root`,
-  image: `${PREFIX}-image`,
-  noUpdates: `${PREFIX}-no-updates`
+  image: `${PREFIX}-image`
 };
 
 const Root = styled(Widget, {
@@ -20,11 +20,8 @@ const Root = styled(Widget, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
+  height: 20,
   marginBottom: theme.spacing(2),
-  [`&.${classes.noUpdates}`]: {
-    border: 0,
-    height: 1
-  },
   '& div:last-child': {
     paddingBottom: theme.spacing(2)
   }
@@ -137,6 +134,10 @@ export default function FeedUpdates(inProps: FeedUpdatesProps): JSX.Element {
     };
   }, []);
 
+  if (!updates) {
+    return <HiddenPlaceholder />;
+  }
+
   // HANDLERS
   const handleClick = () => {
     PubSub.publishSync(publicationChannel, {refresh: true});
@@ -144,17 +145,15 @@ export default function FeedUpdates(inProps: FeedUpdatesProps): JSX.Element {
   };
 
   return (
-    <Root id={id} className={classNames(classes.root, className, {[classes.noUpdates]: !updates})} {...rest}>
-      {updates ? (
-        <CardContent>
-          {message}
-          {publicationChannel && (
-            <Button onClick={handleClick}>
-              <FormattedMessage id="ui.feedUpdates.reload" defaultMessage="ui.feedUpdates.reload" />
-            </Button>
-          )}
-        </CardContent>
-      ) : null}
+    <Root id={id} className={classNames(classes.root, className)} {...rest}>
+      <CardContent>
+        {message}
+        {publicationChannel && (
+          <Button onClick={handleClick}>
+            <FormattedMessage id="ui.feedUpdates.reload" defaultMessage="ui.feedUpdates.reload" />
+          </Button>
+        )}
+      </CardContent>
     </Root>
   );
 }

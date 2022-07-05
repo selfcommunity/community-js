@@ -25,6 +25,7 @@ import {
   useSCPreferences,
   useSCUser
 } from '@selfcommunity/react-core';
+import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 
 const PREFIX = 'SCRelatedFeedObjects';
 
@@ -298,7 +299,7 @@ export default function RelatedFeedObjects(inProps: RelatedFeedObjectsProps): JS
    * Renders root object (if results and autoHide prop is set to false, otherwise component is hidden)
    */
   if (autoHide && !total) {
-    return null;
+    return <HiddenPlaceholder />;
   }
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
