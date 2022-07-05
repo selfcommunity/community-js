@@ -208,7 +208,7 @@ export interface VoteProps {
    * Handles action vote click
    * @default null
    */
-  onVoteAction?: () => any;
+  onVoteAction?: (data) => any;
 
   /**
    * Any other properties

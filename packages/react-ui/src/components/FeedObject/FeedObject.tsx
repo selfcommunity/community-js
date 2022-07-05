@@ -18,13 +18,7 @@ import {SCFeedObjectActivitiesType, SCFeedObjectTemplateType} from '../../types/
 import MarkRead from '../../shared/MarkRead';
 import classNames from 'classnames';
 import ContributionActionsMenu, {ContributionActionsMenuProps} from '../../shared/ContributionActionsMenu';
-import {
-  getContributionHtml,
-  getContributionRouteName,
-  getContributionSnippet,
-  getContributionType,
-  getRouteData
-} from '../../utils/contribution';
+import {getContributionHtml, getContributionRouteName, getContributionSnippet, getContributionType, getRouteData} from '../../utils/contribution';
 import Follow, {FollowProps} from './Actions/Follow';
 import Widget, {WidgetProps} from '../Widget';
 import {useThemeProps} from '@mui/system';
@@ -39,7 +33,8 @@ import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {CacheStrategies, Logger, LRUCache} from '@selfcommunity/utils';
 import {MAX_PRELOAD_OFFSET_VIEWPORT} from '../../constants/LazyLoad';
 import {
-  Link, SCCache,
+  Link,
+  SCCache,
   SCContextType,
   SCRoutes,
   SCRoutingContextType,
@@ -604,7 +599,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
    * Handle delete comment callback
    */
   const handleDeleteComment = useCallback(() => {
-    updateObject({...obj, ...{comment_count: Math.max(prev.comment_count - 1, 0)}});
+    updateObject({...obj, ...{comment_count: Math.max(obj.comment_count - 1, 0)}});
   }, [obj]);
 
   /**
@@ -664,8 +659,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
           }
           setIsReplying(false);
           const newObj = Object.assign(obj, {comment_count: obj.comment_count + 1});
-          LRUCache.set(SCCache.getFeedObjectCacheKey(obj.id, obj.type), newObj);
-          setObj(newObj);
+          updateObject(newObj);
           LRUCache.deleteKeysWithPrefix(SCCache.getCommentObjectsCachePrefixKeys(obj.id, obj.type));
           onReply && onReply(data);
         })
@@ -778,7 +772,12 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                 <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
                   {!hideParticipantsPreview && (
                     <LazyLoad once offset={MAX_PRELOAD_OFFSET_VIEWPORT}>
-                      <ContributorsFeedObject feedObject={obj} feedObjectType={obj.type} {...ContributorsFeedObjectProps} />
+                      <ContributorsFeedObject
+                        feedObject={obj}
+                        feedObjectType={obj.type}
+                        {...ContributorsFeedObjectProps}
+                        cacheStrategy={cacheStrategy}
+                      />
                     </LazyLoad>
                   )}
                   {!hideFollowAction && <Follow feedObject={obj} feedObjectType={obj.type} handleFollow={handleFollow} {...FollowButtonProps} />}
@@ -818,6 +817,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                       CommentComponentProps: {...{onDelete: handleDeleteComment}, ...CommentComponentProps},
                       CommentObjectSkeletonProps: CommentObjectSkeletonProps
                     }}
+                    cacheStrategy={cacheStrategy}
                   />
                 </CardContent>
               </Collapse>

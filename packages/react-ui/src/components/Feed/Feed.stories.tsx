@@ -41,10 +41,31 @@ Main.args = {
   }
 };
 
-export const MainCached = Template.bind({});
+export const Explore = Template.bind({});
 
-MainCached.args = {
-  endpoint: Endpoints.MainFeed,
+Explore.args = {
+  id: 'explore',
+  endpoint: Endpoints.ExploreFeed,
+  ItemComponent: FeedObject,
+  itemPropsGenerator: (scUser, item) => ({
+    feedObject: item[item.type],
+    feedObjectType: item.type,
+    feedObjectActivities: item.activities ? item.activities : null,
+    markRead: scUser ? !item.seen_by_id.includes(scUser.id) : false
+  }),
+  itemIdGenerator: (item) => item[item.type].id,
+  ItemSkeleton: FeedObjectSkeleton,
+  ItemSkeletonProps: {
+    template: SCFeedObjectTemplateType.PREVIEW
+  },
+  cacheStrategy: CacheStrategies.NETWORK_ONLY
+};
+
+export const ExploreCache = Template.bind({});
+
+ExploreCache.args = {
+  id: 'explore',
+  endpoint: Endpoints.ExploreFeed,
   ItemComponent: FeedObject,
   itemPropsGenerator: (scUser, item) => ({
     feedObject: item[item.type],
@@ -58,24 +79,6 @@ MainCached.args = {
     template: SCFeedObjectTemplateType.PREVIEW
   },
   cacheStrategy: CacheStrategies.CACHE_FIRST
-};
-
-export const Explore = Template.bind({});
-
-Explore.args = {
-  endpoint: Endpoints.ExploreFeed,
-  ItemComponent: FeedObject,
-  itemPropsGenerator: (scUser, item) => ({
-    feedObject: item[item.type],
-    feedObjectType: item.type,
-    feedObjectActivities: item.activities ? item.activities : null,
-    markRead: scUser ? !item.seen_by_id.includes(scUser.id) : false
-  }),
-  itemIdGenerator: (item) => item[item.type].id,
-  ItemSkeleton: FeedObjectSkeleton,
-  ItemSkeletonProps: {
-    template: SCFeedObjectTemplateType.PREVIEW
-  }
 };
 
 export const Notification = Template.bind({});

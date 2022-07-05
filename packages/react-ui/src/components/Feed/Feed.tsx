@@ -6,14 +6,23 @@ import {GenericSkeleton} from '../Skeleton';
 import {SCFeedWidgetType} from '../../types/feed';
 import Sticky from 'react-stickynode';
 import CustomAdv, {CustomAdvProps} from '../CustomAdv';
-import {SCUserType, SCCustomAdvPosition, SCFeedUnitType} from '@selfcommunity/types';
+import {SCCustomAdvPosition, SCFeedUnitType, SCUserType} from '@selfcommunity/types';
 import {EndpointType} from '@selfcommunity/api-services';
-import {CacheStrategies} from '@selfcommunity/utils';
-import {SCPreferences, SCPreferencesContextType, SCUserContext, SCUserContextType, useSCFetchFeed, useSCPreferences} from '@selfcommunity/react-core';
+import {CacheStrategies, LRUCache} from '@selfcommunity/utils';
+import {
+  SCCache,
+  SCPreferences,
+  SCPreferencesContextType,
+  SCUserContext,
+  SCUserContextType,
+  useSCFetchFeed,
+  useSCPreferences
+} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import PubSub from 'pubsub-js';
 import {useThemeProps} from '@mui/system';
 import {Virtuoso} from 'react-virtuoso';
+import VirtualScrollChild from './VirtualScrollChild';
 import Widget from '../Widget';
 
 const PREFIX = 'SCFeed';
@@ -229,6 +238,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
 
   // REFS
+  const virtuosoRef = useRef(null);
   const refreshSubscription = useRef(null);
 
   /**
@@ -293,6 +303,13 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     feedDataObject.getNextPage();
   }, [authUserId]);
 
+  // EFFECTS
+  useEffect(() => {
+    /* if (cacheStrategy === CacheStrategies.CACHE_FIRST && LRUCache.hasKey(SCCache.getFeedSPCacheKey(id))) {
+      virtuosoRef.current.scrollToIndex({index: LRUCache.get(SCCache.getFeedSPCacheKey(id)), align: 'start'});
+    } */
+  }, []);
+
   useEffect(() => {
     refreshSubscription.current = PubSub.subscribe(id, subscriber);
     return () => {
@@ -345,13 +362,13 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     () =>
       ({index, d}) => {
         return (
-          <>
+          <VirtualScrollChild index={index} cacheKey={id}>
             {d.type === 'widget' ? (
               <d.component key={`widget_left_${index}`} {...d.componentProps} {...(d.publishEvents && {publicationChannel: id})}></d.component>
             ) : (
               <ItemComponent key={`item_${itemIdGenerator(d)}`} {...itemPropsGenerator(scUserContext.user, d)} {...ItemProps} sx={{width: '100%'}} />
             )}
-          </>
+          </VirtualScrollChild>
         );
       },
     []
@@ -366,12 +383,16 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
       <Grid item xs={12} md={7}>
         <div className={classes.left} style={{overflow: 'visible'}}>
           <Virtuoso
+            ref={virtuosoRef}
             useWindowScroll
             totalCount={data.left.length}
             data={data.left}
             endReached={feedDataObject.feedData.length > 0 ? feedDataObject.getNextPage : () => null}
             overscan={{main: 3000, reverse: 2000}}
             itemContent={itemContent}
+            {...(cacheStrategy === CacheStrategies.CACHE_FIRST && LRUCache.get(SCCache.getFeedSPCacheKey(id))
+              ? {initialTopMostItemIndex: {align: 'start', index: LRUCache.get(SCCache.getFeedSPCacheKey(id)), behavior: 'auto'}}
+              : {})}
             components={{
               Footer: () =>
                 feedDataObject.next ? (

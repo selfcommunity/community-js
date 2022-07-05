@@ -27,3 +27,5 @@ export const getContributorsCachePrefixKeys = (id, type) => `${CONTRIBUTORS_CACH
 /** FEED **/
 export const FEED_CACHE_PREFIX_KEY = '_feed_';
 export const getFeedCacheKey = (id, next) => `${FEED_CACHE_PREFIX_KEY}${id}_${next}`;
+export const FEED_CACHE_SP_KEY = '_feed_sp_';
+export const getFeedSPCacheKey = (id) => `${FEED_CACHE_SP_KEY}${id}`;
