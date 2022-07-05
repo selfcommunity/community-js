@@ -68,3 +68,11 @@ BaseCache.args = {
   feedObjectType: SCFeedObjectTypologyType.POST
 };
 
+export const BaseWithMedia = Template.bind({});
+
+BaseWithMedia.args = {
+  feedObjectId: 368,
+  feedObjectType: SCFeedObjectTypologyType.POST
+};
+
+

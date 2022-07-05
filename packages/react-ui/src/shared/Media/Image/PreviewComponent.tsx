@@ -36,7 +36,7 @@ const Root = styled(Box, {
   position: 'relative',
   minHeight: 500,
   [theme.breakpoints.down('md')]: {
-    minHeight: 400
+    minHeight: 370
   },
   [`& .${classes.background}`]: {
     backgroundSize: 'cover !important',
