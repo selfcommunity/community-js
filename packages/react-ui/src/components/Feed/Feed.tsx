@@ -22,8 +22,8 @@ import classNames from 'classnames';
 import PubSub from 'pubsub-js';
 import {useThemeProps} from '@mui/system';
 import {Virtuoso, VirtuosoHandle} from 'react-virtuoso';
-import VirtualScrollChild from './VirtualScrollChild';
 import Widget from '../Widget';
+import {useInView} from 'react-intersection-observer';
 
 const PREFIX = 'SCFeed';
 
@@ -174,6 +174,24 @@ interface FeedData {
 }
 
 const PREFERENCES = [SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED, SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED];
+
+/**
+ * A wrapper component for children of
+ * VirtualScroll. Computes inline style and
+ * handles whether to display props.children.
+ */
+const VirtualScrollChild = ({cacheKey, index, children}) => {
+  const [ref, inView] = useInView({threshold: 0.5});
+
+  useEffect(() => {
+    if (inView) {
+      LRUCache.set(SCCache.getFeedSPCacheKey(cacheKey), index);
+    }
+  }, [inView]);
+
+  return <div ref={ref}>{children}</div>;
+}
+
 /**
  * > API documentation for the Community-JS Feed component. Learn about the available props and the CSS API.
 
