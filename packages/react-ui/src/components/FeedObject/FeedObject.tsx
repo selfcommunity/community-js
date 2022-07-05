@@ -30,7 +30,6 @@ import {CommentObjectProps} from '../CommentObject';
 import {SCCommentType, SCFeedObjectType, SCFeedObjectTypologyType, SCPollType} from '@selfcommunity/types';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {CacheStrategies, Logger, LRUCache} from '@selfcommunity/utils';
-import {MAX_PRELOAD_OFFSET_VIEWPORT} from '../../constants/LazyLoad';
 import {
   Link,
   SCCache,
