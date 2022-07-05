@@ -17,7 +17,7 @@ import {SCFeedObjectActivitiesType, SCFeedObjectTemplateType} from '../../types/
 import MarkRead from '../../shared/MarkRead';
 import classNames from 'classnames';
 import ContributionActionsMenu, {ContributionActionsMenuProps} from '../../shared/ContributionActionsMenu';
-import {getContributionHtml, getContributionRouteName, getContributionSnippet, getContributionType, getRouteData} from '../../utils/contribution';
+import {getContributionHtml, getContributionRouteName, getContributionSnippet, getRouteData} from '../../utils/contribution';
 import Follow, {FollowProps} from './Actions/Follow';
 import Widget, {WidgetProps} from '../Widget';
 import {useThemeProps} from '@mui/system';
