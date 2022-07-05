@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.19-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.1.18...@selfcommunity/react-templates@0.1.19-alpha.0) (2022-07-05)
+
+
+### Bug Fixes
+
+* caching ([87f972d](https://github.com/selfcommunity/community-js/commit/87f972dc9e37febea70648dc26ef675d41cbc126))
+* feeds props ([4d96952](https://github.com/selfcommunity/community-js/commit/4d96952c5ea8f255b55ff0a0500fbe607c2c5ddf))
+
+
+
+
+
 ## [0.1.18](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.1.18-alpha.1...@selfcommunity/react-templates@0.1.18) (2022-06-28)
 
 **Note:** Version bump only for package @selfcommunity/react-templates
