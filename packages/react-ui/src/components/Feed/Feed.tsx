@@ -375,36 +375,38 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     <Root container spacing={2} id={id} className={classNames(classes.root, className)}>
       <Grid item xs={12} md={7}>
         <div className={classes.left} style={{overflow: 'visible'}}>
-          <Virtuoso
-            ref={virtuosoRef}
-            useWindowScroll
-            totalCount={data.left.length}
-            data={data.left}
-            endReached={feedDataObject.feedData.length > 0 ? feedDataObject.getNextPage : () => null}
-            itemContent={itemContent}
-            {...(cacheStrategy === CacheStrategies.CACHE_FIRST && LRUCache.get(SCCache.getFeedSPCacheKey(id))
-              ? {
-                  initialTopMostItemIndex: {align: 'start', index: LRUCache.get(SCCache.getFeedSPCacheKey(id)), behavior: 'auto'}
-                }
-              : {})}
-            components={{
-              Footer: () => (
-                <>
-                  {feedDataObject.next ? (
-                    data.left.length > 0 ? (
-                      <ItemSkeleton {...ItemSkeletonProps} />
-                    ) : (
-                      [...Array(3)].map((v, i) => <ItemSkeleton key={i} {...ItemSkeletonProps} />)
-                    )
+          {feedDataObject.isLoadingNext && !data.left.length ? (
+            <>
+              {[...Array(3)].map((v, i) => (
+                <ItemSkeleton key={i} {...ItemSkeletonProps} />
+              ))}
+            </>
+          ) : (
+            <Virtuoso
+              ref={virtuosoRef}
+              useWindowScroll
+              overscan={{main: 5, reverse: 5}}
+              totalCount={data.left.length}
+              data={data.left}
+              endReached={feedDataObject.feedData.length > 0 ? feedDataObject.getNextPage : () => null}
+              itemContent={itemContent}
+              {...(cacheStrategy === CacheStrategies.CACHE_FIRST && LRUCache.get(SCCache.getFeedSPCacheKey(id))
+                ? {
+                    initialTopMostItemIndex: {align: 'start', index: LRUCache.get(SCCache.getFeedSPCacheKey(id)), behavior: 'auto'}
+                  }
+                : {})}
+              components={{
+                Footer: () =>
+                  feedDataObject.next ? (
+                    <ItemSkeleton {...ItemSkeletonProps} />
                   ) : (
                     <Widget className={classes.end}>
                       <CardContent>{endMessage}</CardContent>
                     </Widget>
-                  )}
-                </>
-              )
-            }}
-          />
+                  )
+              }}
+            />
+          )}
         </div>
       </Grid>
       {data.right.length > 0 && (

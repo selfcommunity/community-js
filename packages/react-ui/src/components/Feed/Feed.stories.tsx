@@ -100,7 +100,7 @@ Notification.args = {
       component: BroadcastMessages,
       componentProps: {variant: 'outlined', subscriptionChannel: `notifications_feed`},
       column: 'left',
-      position: 1
+      position: 0
     }
   ],
   ItemComponent: SCNotification,
