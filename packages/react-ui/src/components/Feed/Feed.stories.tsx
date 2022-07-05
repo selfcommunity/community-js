@@ -26,6 +26,7 @@ const Template: ComponentStory<typeof Feed> = (args) => {
 export const Main = Template.bind({});
 
 Main.args = {
+  id: 'main',
   endpoint: Endpoints.MainFeed,
   ItemComponent: FeedObject,
   itemPropsGenerator: (scUser, item) => ({

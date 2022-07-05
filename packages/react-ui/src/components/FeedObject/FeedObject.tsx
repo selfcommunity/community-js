@@ -447,7 +447,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
    * Get initial expanded activities
    */
   function geExpandedActivities() {
-    return obj && ((feedObjectActivities && feedObjectActivities.length > 0) || obj.comment_count > 0);
+    return obj && (obj.comment_count > 0 || (feedObjectActivities && feedObjectActivities.length > 0));
   }
 
   // STATE
@@ -483,7 +483,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
    * Open expanded activities
    */
   useEffect(() => {
-    setExpandedActivities(geExpandedActivities);
+    setExpandedActivities(geExpandedActivities());
   }, [objId]);
 
   /**
@@ -640,7 +640,9 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
    * Handle comment
    */
   function handleReply(comment: SCCommentType) {
-    if (UserUtils.isBlocked(scUserContext.user)) {
+    if (!scUserContext.user) {
+      scContext.settings.handleAnonymousAction();
+    } else if (UserUtils.isBlocked(scUserContext.user)) {
       enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
         variant: 'warning',
         autoHideDuration: 3000
@@ -788,7 +790,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                 VoteActionProps={{onVoteAction: handleVoteSuccess}}
                 {...ActionsProps}
               />
-              {scUserContext.user && (expandedActivities || template === SCFeedObjectTemplateType.DETAIL) && (
+              {(template === SCFeedObjectTemplateType.DETAIL || expandedActivities) && (
                 <Box className={classes.replyContent}>
                   <ReplyCommentComponent
                     onReply={handleReply}

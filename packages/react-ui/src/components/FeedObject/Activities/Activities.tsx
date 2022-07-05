@@ -147,7 +147,7 @@ export default function Activities(inProps: ActivitiesProps): JSX.Element {
   });
 
   const objId = commentsObject.feedObject ? commentsObject.feedObject.id : null;
-  const skeletonsCount = commentsObject.feedObject.comment_count > 3 ? 5 : commentsObject.feedObject.comment_count;
+  const skeletonsCount = Math.min(5, commentsObject.feedObject ? commentsObject.feedObject.comment_count : 3);
 
   /**
    * Sync activities type if prop change
@@ -211,10 +211,11 @@ export default function Activities(inProps: ActivitiesProps): JSX.Element {
    */
   return (
     <Root id={id} className={classNames(classes.root, className)} {...rest} ref={ref}>
-      {Boolean(commentsObject.feedObject.comment_count) ||
-      (feedObjectActivities && feedObjectActivities.length > 0) ||
-      comments.length > 0 ||
-      (feedObject && feedObject.comment_count > 0) ? (
+      {commentsObject.feedObject &&
+      (Boolean(commentsObject.feedObject.comment_count) ||
+        (feedObjectActivities && feedObjectActivities.length > 0) ||
+        comments.length > 0 ||
+        (feedObject && feedObject.comment_count > 0)) ? (
         <Box className={classes.activities} style={{minHeight: `${skeletonsCount * 80}px`}}>
           <ActivitiesMenu
             selectedActivities={selectedActivities}
