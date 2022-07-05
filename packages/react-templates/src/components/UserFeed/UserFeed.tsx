@@ -12,6 +12,7 @@ import {
   SCFeedObjectTemplateType,
   FeedRef,
   FeedSidebarProps,
+  FeedProps,
   InlineComposer,
   SCFeedWidgetType,
   UserFollowers,
@@ -77,6 +78,12 @@ export interface UserFeedProps {
    * @default {top: 0, bottomBoundary: `#${id}`}
    */
   FeedSidebarProps?: FeedSidebarProps;
+
+  /**
+   * Props to spread to feed component
+   * @default {}
+   */
+  FeedProps?: FeedProps;
 }
 
 // Widgets for feed
@@ -131,7 +138,7 @@ export default function UserFeed(inProps: UserFeedProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {id = 'user_feed', className, userId, user, widgets = WIDGETS, FeedObjectProps = {}, FeedSidebarProps = null} = props;
+  const {id = 'user_feed', className, userId, user, widgets = WIDGETS, FeedObjectProps = {}, FeedSidebarProps = null, FeedProps = {}} = props;
 
   // Hooks
   const {scUser} = useSCFetchUser({id: userId, user});
@@ -196,6 +203,7 @@ export default function UserFeed(inProps: UserFeedProps): JSX.Element {
         template: SCFeedObjectTemplateType.PREVIEW
       }}
       FeedSidebarProps={FeedSidebarProps}
+      {...FeedProps}
     />
   );
 }

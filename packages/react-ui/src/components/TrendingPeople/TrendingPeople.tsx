@@ -13,6 +13,7 @@ import CentralProgress from '../../shared/CentralProgress';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Skeleton from './Skeleton';
 import {useThemeProps} from '@mui/system';
+import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 
 const PREFIX = 'SCTrendingPeople';
 
@@ -260,7 +261,7 @@ export default function TrendingPeople(inProps: TrendingPeopleProps): JSX.Elemen
    * Renders root object (if results and autoHide prop is set to false, otherwise component is hidden)
    */
   if (autoHide && !total) {
-    return null;
+    return <HiddenPlaceholder />;
   }
   return (
     <Root className={classNames(classes.root, className)} {...rest}>

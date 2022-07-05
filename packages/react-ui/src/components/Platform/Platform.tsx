@@ -8,6 +8,7 @@ import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
 import Widget from '../Widget';
 import {useThemeProps} from '@mui/system';
+import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 
 const PREFIX = 'SCPlatform';
 
@@ -153,5 +154,5 @@ export default function Platform(inProps: PlatformProps): JSX.Element {
       </Root>
     );
   }
-  return null;
+  return <HiddenPlaceholder />;
 }

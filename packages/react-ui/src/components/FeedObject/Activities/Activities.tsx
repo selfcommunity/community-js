@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Box} from '@mui/material';
 import {SCCommentsOrderBy} from '../../../types/comments';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
-import CommentsObject, {CommentsObjectSkeleton} from '../../CommentsObject';
+import CommentsObject from '../../CommentsObject';
 import ActivitiesMenu from './ActivitiesMenu';
 import {CommentObjectProps} from '../../CommentObject';
 import RelevantActivities from './RelevantActivities';
@@ -12,6 +12,8 @@ import {CommentsObjectProps} from '../../CommentsObject';
 import {SCFeedObjectActivitiesType} from '../../../types/feedObject';
 import {useSCFetchCommentObjects} from '@selfcommunity/react-core';
 import {SCCommentType, SCFeedObjectType, SCFeedObjectTypologyType} from '@selfcommunity/types';
+import {CacheStrategies} from '@selfcommunity/utils';
+import {useInView} from 'react-intersection-observer';
 
 const PREFIX = 'SCFeedObjectActivities';
 
@@ -92,6 +94,12 @@ export interface ActivitiesProps {
   CommentsObjectProps?: CommentsObjectProps;
 
   /**
+   * Caching strategies
+   * @default CacheStrategies.CACHE_FIRST
+   */
+  cacheStrategy?: CacheStrategies;
+
+  /**
    * Other props
    */
   [p: string]: any;
@@ -115,8 +123,11 @@ export default function Activities(inProps: ActivitiesProps): JSX.Element {
     comments = [],
     onSetSelectedActivities,
     activitiesType = SCFeedObjectActivitiesType.RECENT_COMMENTS,
+    cacheStrategy = CacheStrategies.CACHE_FIRST,
     ...rest
   } = props;
+
+  const {ref, inView} = useInView({triggerOnce: true});
 
   // STATE
   const [selectedActivities, setSelectedActivities] = useState<SCFeedObjectActivitiesType>(activitiesType);
@@ -131,11 +142,12 @@ export default function Activities(inProps: ActivitiesProps): JSX.Element {
         ? SCCommentsOrderBy.CONNECTION_DESC
         : selectedActivities === SCFeedObjectActivitiesType.FIRST_COMMENTS
         ? SCCommentsOrderBy.ADDED_AT_ASC
-        : SCCommentsOrderBy.ADDED_AT_DESC
+        : SCCommentsOrderBy.ADDED_AT_DESC,
+    cacheStrategy
   });
 
   const objId = commentsObject.feedObject ? commentsObject.feedObject.id : null;
-  const skeletonsCount =  commentsObject.feedObject.comment_count > 3 ? 5 : commentsObject.feedObject.comment_count;
+  const skeletonsCount = Math.min(5, commentsObject.feedObject ? commentsObject.feedObject.comment_count : 3);
 
   /**
    * Sync activities type if prop change
@@ -148,8 +160,10 @@ export default function Activities(inProps: ActivitiesProps): JSX.Element {
    * Prefetch comments only if obj
    */
   useEffect(() => {
-    commentsObject.getNextPage();
-  }, [objId]);
+    if (objId && !commentsObject.comments.length && inView) {
+      commentsObject.getNextPage();
+    }
+  }, [objId, inView]);
 
   /**
    * Handle change activities type
@@ -196,11 +210,12 @@ export default function Activities(inProps: ActivitiesProps): JSX.Element {
    * Renders root object
    */
   return (
-    <Root id={id} className={classNames(classes.root, className)} {...rest}>
-      {Boolean(commentsObject.feedObject.comment_count) ||
-      (feedObjectActivities && feedObjectActivities.length > 0) ||
-      comments.length > 0 ||
-      (feedObject && feedObject.comment_count > 0) ? (
+    <Root id={id} className={classNames(classes.root, className)} {...rest} ref={ref}>
+      {commentsObject.feedObject &&
+      (Boolean(commentsObject.feedObject.comment_count) ||
+        (feedObjectActivities && feedObjectActivities.length > 0) ||
+        comments.length > 0 ||
+        (feedObject && feedObject.comment_count > 0)) ? (
         <Box className={classes.activities} style={{minHeight: `${skeletonsCount * 80}px`}}>
           <ActivitiesMenu
             selectedActivities={selectedActivities}

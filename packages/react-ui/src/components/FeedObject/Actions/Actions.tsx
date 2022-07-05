@@ -116,9 +116,9 @@ export default function Actions(inProps: ActionsProps): JSX.Element {
     hideShareAction = false,
     hideCommentAction = false,
     handleExpandActivities,
-    VoteActionProps = {inlineAction: false},
-    CommentActionProps = {inlineAction: false},
-    ShareActionProps = {inlineAction: false}
+    VoteActionProps = {},
+    CommentActionProps = {},
+    ShareActionProps = {}
   } = props;
 
   // STATE

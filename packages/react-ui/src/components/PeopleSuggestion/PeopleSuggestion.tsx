@@ -10,6 +10,7 @@ import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
 import Widget from '../Widget';
 import {useThemeProps} from '@mui/system';
+import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 
 const PREFIX = 'SCPeopleSuggestion';
 
@@ -219,7 +220,7 @@ export default function PeopleSuggestion(inProps: PeopleSuggestionProps): JSX.El
    * Renders root object (if results and if user is logged, otherwise component is hidden)
    */
   if (autoHide && !total) {
-    return null;
+    return <HiddenPlaceholder />;
   }
   if (scUserContext.user) {
     return (
@@ -228,5 +229,5 @@ export default function PeopleSuggestion(inProps: PeopleSuggestionProps): JSX.El
       </Root>
     );
   }
-  return null;
+  return <HiddenPlaceholder />;
 }

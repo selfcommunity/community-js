@@ -17,6 +17,7 @@ import Incubator, {IncubatorProps} from '../Incubator';
 import {useThemeProps} from '@mui/system';
 import Widget from '../Widget';
 import IncubatorDetail from '../IncubatorDetail';
+import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 
 const PREFIX = 'SCIncubatorSuggestion';
 
@@ -278,7 +279,7 @@ export default function IncubatorSuggestion(inProps: IncubatorSuggestionProps): 
    * Renders root object (if results and autoHide prop is set to false, otherwise component is hidden)
    */
   if (autoHide && !total) {
-    return null;
+    return <HiddenPlaceholder />;
   }
   if (scUserContext.user) {
     return (
@@ -287,5 +288,5 @@ export default function IncubatorSuggestion(inProps: IncubatorSuggestionProps): 
       </Root>
     );
   }
-  return null;
+  return <HiddenPlaceholder />;
 }
