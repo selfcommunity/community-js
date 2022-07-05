@@ -13,7 +13,6 @@ function VirtualScrollChild({cacheKey, index, children}) {
 
   useEffect(() => {
     if (inView) {
-      console.log(`${SCCache.getFeedSPCacheKey(cacheKey)}: ${index}`);
       LRUCache.set(SCCache.getFeedSPCacheKey(cacheKey), index);
     }
   }, [inView]);

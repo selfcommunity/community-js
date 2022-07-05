@@ -390,7 +390,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
             components={{
               Footer: () => (
                 <>
-                  {feedDataObject.isLoadingNext ? (
+                  {feedDataObject.next ? (
                     data.left.length > 0 ? (
                       <ItemSkeleton {...ItemSkeletonProps} />
                     ) : (
