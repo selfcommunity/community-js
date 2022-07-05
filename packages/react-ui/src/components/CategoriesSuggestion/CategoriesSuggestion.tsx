@@ -10,6 +10,7 @@ import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
 import Widget from '../Widget';
 import {useThemeProps} from '@mui/system';
+import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 
 const PREFIX = 'SCCategoriesSuggestion';
 
@@ -195,7 +196,7 @@ export default function CategoriesSuggestion(inProps: CategoriesListProps): JSX.
    * Renders root object (if results and if user is logged, otherwise component is hidden)
    */
   if (autoHide && !total) {
-    return null;
+    return <HiddenPlaceholder />;
   }
   if (scUserContext.user) {
     return (
@@ -204,5 +205,5 @@ export default function CategoriesSuggestion(inProps: CategoriesListProps): JSX.
       </Root>
     );
   }
-  return null;
+  return <HiddenPlaceholder />;
 }

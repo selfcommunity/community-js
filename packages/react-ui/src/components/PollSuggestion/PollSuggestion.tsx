@@ -16,6 +16,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import Widget from '../Widget';
 import {useThemeProps} from '@mui/system';
 import PollSnippet from './PollSnippet';
+import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 
 const PREFIX = 'SCPollSuggestion';
 
@@ -216,7 +217,7 @@ export default function PollSuggestion(inProps: PollSuggestionProps): JSX.Elemen
    * Renders root object (if results and autoHide prop is set to false, otherwise component is hidden)
    */
   if (autoHide && !total) {
-    return null;
+    return <HiddenPlaceholder />;
   }
   if (scUserContext.user) {
     return (
@@ -225,5 +226,5 @@ export default function PollSuggestion(inProps: PollSuggestionProps): JSX.Elemen
       </Root>
     );
   }
-  return null;
+  return <HiddenPlaceholder />;
 }

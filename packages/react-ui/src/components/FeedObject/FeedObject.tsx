@@ -12,7 +12,6 @@ import Icon from '@mui/material/Icon';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import PollObject, {PollObjectProps} from './Poll';
 import ContributorsFeedObject, {ContributorsFeedObjectProps} from './Contributors';
-import LazyLoad from 'react-lazyload';
 import Composer from '../Composer';
 import {SCFeedObjectActivitiesType, SCFeedObjectTemplateType} from '../../types/feedObject';
 import MarkRead from '../../shared/MarkRead';
@@ -30,10 +29,10 @@ import {useSnackbar} from 'notistack';
 import {CommentObjectProps} from '../CommentObject';
 import {SCCommentType, SCFeedObjectType, SCFeedObjectTypologyType, SCPollType} from '@selfcommunity/types';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
-import {Logger} from '@selfcommunity/utils';
-import {MAX_PRELOAD_OFFSET_VIEWPORT} from '../../constants/LazyLoad';
+import {CacheStrategies, Logger, LRUCache} from '@selfcommunity/utils';
 import {
   Link,
+  SCCache,
   SCContextType,
   SCRoutes,
   SCRoutingContextType,
@@ -346,6 +345,12 @@ export interface FeedObjectProps extends CardProps {
   onReply?: (SCCommentType) => void;
 
   /**
+   * Caching strategies
+   * @default CacheStrategies.CACHE_FIRST
+   */
+  cacheStrategy?: CacheStrategies;
+
+  /**
    * Other props
    */
   [p: string]: any;
@@ -424,6 +429,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
     PollObjectProps = {elevation: 0},
     ContributorsFeedObjectProps = {},
     onReply,
+    cacheStrategy = CacheStrategies.CACHE_FIRST,
     ...rest
   } = props;
 
@@ -434,12 +440,19 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
   const {enqueueSnackbar} = useSnackbar();
 
   // RETRIVE OBJECTS
-  const {obj, setObj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
+  const {obj, setObj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType, cacheStrategy});
   const objId = obj ? obj.id : null;
+
+  /**
+   * Get initial expanded activities
+   */
+  function geExpandedActivities() {
+    return obj && (obj.comment_count > 0 || (feedObjectActivities && feedObjectActivities.length > 0));
+  }
 
   // STATE
   const [composerOpen, setComposerOpen] = useState<boolean>(false);
-  const [expandedActivities, setExpandedActivities] = useState<boolean>(false);
+  const [expandedActivities, setExpandedActivities] = useState<boolean>(geExpandedActivities());
   const [comments, setComments] = useState<SCCommentType[]>([]);
   const [isReplying, setIsReplying] = useState<boolean>(false);
   const [selectedActivities, setSelectedActivities] = useState<SCFeedObjectActivitiesType>(getInitialSelectedActivitiesType());
@@ -448,10 +461,12 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
   const intl = useIntl();
 
   /**
-   * Get initial expanded activities
+   * Update state object
+   * @param obj
    */
-  function geExpandedActivities() {
-    return obj && ((feedObjectActivities && feedObjectActivities.length > 0) || obj.comment_count > 0);
+  function updateObject(newObj) {
+    LRUCache.set(SCCache.getFeedObjectCacheKey(obj.id, obj.type), newObj);
+    setObj(newObj);
   }
 
   /**
@@ -468,7 +483,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
    * Open expanded activities
    */
   useEffect(() => {
-    setExpandedActivities(geExpandedActivities);
+    setExpandedActivities(geExpandedActivities());
   }, [objId]);
 
   /**
@@ -504,28 +519,28 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
    * Handle restore obj
    */
   const handleRestore = useCallback(() => {
-    setObj((prev) => ({...prev, ...{deleted: false}}));
+    updateObject(Object.assign(obj, {deleted: false}));
   }, [obj]);
 
   /**
    * Handle restore obj
    */
   const handleHide = useCallback(() => {
-    setObj((prev) => ({...prev, ...{collapsed: !prev.collapsed}}));
+    updateObject(Object.assign(obj, {collapsed: !obj.collapsed}));
   }, [obj]);
 
   /**
    * Handle delete obj
    */
   const handleDelete = useCallback(() => {
-    setObj((prev) => ({...prev, ...{deleted: !prev.deleted}}));
+    updateObject(Object.assign(obj, {deleted: !obj.deleted}));
   }, [obj]);
 
   /**
    * Handle suspend notification obj
    */
   const handleSuspendNotification = useCallback(() => {
-    setObj((prev) => ({...prev, ...{suspended: !prev.suspended}}));
+    updateObject(Object.assign(obj, {suspended: !obj.suspended}));
   }, [obj]);
 
   /**
@@ -541,10 +556,20 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
    */
   const handleEditSuccess = useCallback(
     (data) => {
-      setObj(data);
+      updateObject(data);
       setComposerOpen(false);
     },
     [obj, composerOpen]
+  );
+
+  /**
+   * handle vote
+   */
+  const handleVoteSuccess = useCallback(
+    (data) => {
+      updateObject(Object.assign(obj, {voted: data.voted, vote_count: data.vote_count}));
+    },
+    [obj]
   );
 
   /**
@@ -563,7 +588,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
    */
   const handleFollow = useCallback(
     (isFollow) => {
-      setObj((prev) => ({...prev, ...{followed: isFollow}}));
+      updateObject({...obj, ...{followed: isFollow}});
     },
     [obj]
   );
@@ -572,7 +597,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
    * Handle delete comment callback
    */
   const handleDeleteComment = useCallback(() => {
-    setObj((prev) => ({...prev, ...{comment_count: Math.max(prev.comment_count - 1, 0)}}));
+    updateObject({...obj, ...{comment_count: Math.max(obj.comment_count - 1, 0)}});
   }, [obj]);
 
   /**
@@ -615,7 +640,9 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
    * Handle comment
    */
   function handleReply(comment: SCCommentType) {
-    if (UserUtils.isBlocked(scUserContext.user)) {
+    if (!scUserContext.user) {
+      scContext.settings.handleAnonymousAction();
+    } else if (UserUtils.isBlocked(scUserContext.user)) {
       enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
         variant: 'warning',
         autoHideDuration: 3000
@@ -631,7 +658,9 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
             setComments([...[data], ...comments]);
           }
           setIsReplying(false);
-          setObj((prev) => ({...prev, ...{comment_count: prev.comment_count + 1}}));
+          const newObj = Object.assign(obj, {comment_count: obj.comment_count + 1});
+          updateObject(newObj);
+          LRUCache.deleteKeysWithPrefix(SCCache.getCommentObjectsCachePrefixKeys(obj.id, obj.type));
           onReply && onReply(data);
         })
         .catch((error) => {
@@ -742,9 +771,12 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
               <Box className={classes.infoSection}>
                 <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
                   {!hideParticipantsPreview && (
-                    <LazyLoad once offset={MAX_PRELOAD_OFFSET_VIEWPORT}>
-                      <ContributorsFeedObject feedObject={obj} feedObjectType={obj.type} {...ContributorsFeedObjectProps} />
-                    </LazyLoad>
+                    <ContributorsFeedObject
+                      feedObject={obj}
+                      feedObjectType={obj.type}
+                      {...ContributorsFeedObjectProps}
+                      cacheStrategy={cacheStrategy}
+                    />
                   )}
                   {!hideFollowAction && <Follow feedObject={obj} feedObjectType={obj.type} handleFollow={handleFollow} {...FollowButtonProps} />}
                 </Stack>
@@ -755,9 +787,10 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                 feedObject={obj}
                 hideCommentAction={template === SCFeedObjectTemplateType.DETAIL}
                 handleExpandActivities={handleExpandActivities}
+                VoteActionProps={{onVoteAction: handleVoteSuccess}}
                 {...ActionsProps}
               />
-              {scUserContext.user && (expandedActivities || template === SCFeedObjectTemplateType.DETAIL) && (
+              {(template === SCFeedObjectTemplateType.DETAIL || expandedActivities) && (
                 <Box className={classes.replyContent}>
                   <ReplyCommentComponent
                     onReply={handleReply}
@@ -769,21 +802,21 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
               )}
             </CardActions>
             {template === SCFeedObjectTemplateType.PREVIEW && (
-              <Collapse in={expandedActivities} timeout="auto" unmountOnExit classes={{root: classes.activitiesSection}}>
+              <Collapse in={expandedActivities} timeout="auto" classes={{root: classes.activitiesSection}}>
                 <CardContent className={classes.activitiesContent}>
-                  <LazyLoad once offset={MAX_PRELOAD_OFFSET_VIEWPORT}>
-                    <Activities
-                      feedObject={obj}
-                      feedObjectActivities={feedObjectActivities}
-                      activitiesType={selectedActivities}
-                      onSetSelectedActivities={handleSelectedActivities}
-                      comments={comments}
-                      CommentsObjectProps={{
-                        CommentComponentProps: {...{onDelete: handleDeleteComment}, ...CommentComponentProps},
-                        CommentObjectSkeletonProps: CommentObjectSkeletonProps
-                      }}
-                    />
-                  </LazyLoad>
+                  <Activities
+                    feedObject={obj}
+                    key={selectedActivities}
+                    feedObjectActivities={feedObjectActivities}
+                    activitiesType={selectedActivities}
+                    onSetSelectedActivities={handleSelectedActivities}
+                    comments={comments}
+                    CommentsObjectProps={{
+                      CommentComponentProps: {...{onDelete: handleDeleteComment}, ...CommentComponentProps},
+                      CommentObjectSkeletonProps: CommentObjectSkeletonProps
+                    }}
+                    cacheStrategy={cacheStrategy}
+                  />
                 </CardContent>
               </Collapse>
             )}

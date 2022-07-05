@@ -5,6 +5,7 @@ import {useSCFetchCustomAdv} from '@selfcommunity/react-core';
 import {SCCustomAdvPosition} from '@selfcommunity/types';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
+import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 
 const PREFIX = 'SCCustomAdv';
 
@@ -79,7 +80,7 @@ export default function CustomAdv(inProps: CustomAdvProps): JSX.Element {
   const {scCustomAdv} = useSCFetchCustomAdv({position, categoriesId});
 
   if (!scCustomAdv) {
-    return null;
+    return <HiddenPlaceholder />;
   }
 
   const adv = (

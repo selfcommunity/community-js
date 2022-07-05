@@ -39,8 +39,6 @@ export default {
     }
   },
   args: {
-    feedObjectId: 64,
-    feedObjectType: SCFeedObjectTypologyType.DISCUSSION,
     template: SCFeedObjectTemplateType.PREVIEW,
     elevation: 0,
     variant: 'outlined'
@@ -49,12 +47,32 @@ export default {
 } as ComponentMeta<typeof FeedObject>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof FeedObject> = (args) => (
-  <div style={{width: '100%', maxWidth: 800}}>
+const Template: ComponentStory<typeof FeedObject> = (args) => {
+  return (<div style={{width: '100%', maxWidth: 800}}>
     <FeedObject {...args} />
-  </div>
-);
+  </div>);
+};
 
 export const Base = Template.bind({});
 
-Base.args = {};
+Base.args = {
+  feedObjectId: 327,
+  feedObjectType: SCFeedObjectTypologyType.POST
+};
+
+
+export const BaseCache = Template.bind({});
+
+BaseCache.args = {
+  feedObjectId: 327,
+  feedObjectType: SCFeedObjectTypologyType.POST
+};
+
+export const BaseWithMedia = Template.bind({});
+
+BaseWithMedia.args = {
+  feedObjectId: 368,
+  feedObjectType: SCFeedObjectTypologyType.POST
+};
+
+

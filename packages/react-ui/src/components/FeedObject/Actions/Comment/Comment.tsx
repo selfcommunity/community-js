@@ -144,7 +144,7 @@ export default function Comment(inProps: CommentProps): JSX.Element {
     feedObjectTemplate = SCFeedObjectTemplateType,
     withAction = true,
     withAudience = true,
-    inlineAction = true,
+    inlineAction = false,
     onViewCommentsAction,
     onCommentAction,
     ...rest

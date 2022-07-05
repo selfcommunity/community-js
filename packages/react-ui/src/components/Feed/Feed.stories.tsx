@@ -8,6 +8,8 @@ import {SCFeedObjectTemplateType} from '../../types/feedObject';
 import SCNotification, {NotificationSkeleton} from '../Notification';
 import FeedUpdates from '../FeedUpdates';
 import BroadcastMessages from '../BroadcastMessages';
+import {CacheStrategies} from '@selfcommunity/utils';
+import PeopleSuggestion from '../PeopleSuggestion';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -16,15 +18,16 @@ export default {
 } as ComponentMeta<typeof Feed>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof Feed> = (args) => (
-  <div style={{width: '100%', height: '500px', marginTop: 30}}>
+const Template: ComponentStory<typeof Feed> = (args) => {
+  return (<div style={{width: '100%', height: '500px', marginTop: 30}}>
     <Feed {...args} />
-  </div>
-);
+  </div>);
+};
 
 export const Main = Template.bind({});
 
 Main.args = {
+  id: 'main',
   endpoint: Endpoints.MainFeed,
   ItemComponent: FeedObject,
   itemPropsGenerator: (scUser, item) => ({
@@ -37,12 +40,14 @@ Main.args = {
   ItemSkeleton: FeedObjectSkeleton,
   ItemSkeletonProps: {
     template: SCFeedObjectTemplateType.PREVIEW
-  }
+  },
+  requireAuthentication: true
 };
 
 export const Explore = Template.bind({});
 
 Explore.args = {
+  id: 'explore',
   endpoint: Endpoints.ExploreFeed,
   ItemComponent: FeedObject,
   itemPropsGenerator: (scUser, item) => ({
@@ -55,7 +60,28 @@ Explore.args = {
   ItemSkeleton: FeedObjectSkeleton,
   ItemSkeletonProps: {
     template: SCFeedObjectTemplateType.PREVIEW
-  }
+  },
+  cacheStrategy: CacheStrategies.NETWORK_ONLY
+};
+
+export const ExploreCache = Template.bind({});
+
+ExploreCache.args = {
+  id: 'explore',
+  endpoint: Endpoints.ExploreFeed,
+  ItemComponent: FeedObject,
+  itemPropsGenerator: (scUser, item) => ({
+    feedObject: item[item.type],
+    feedObjectType: item.type,
+    feedObjectActivities: item.activities ? item.activities : null,
+    markRead: scUser ? !item.seen_by_id.includes(scUser.id) : false
+  }),
+  itemIdGenerator: (item) => item[item.type].id,
+  ItemSkeleton: FeedObjectSkeleton,
+  ItemSkeletonProps: {
+    template: SCFeedObjectTemplateType.PREVIEW
+  },
+  cacheStrategy: CacheStrategies.CACHE_FIRST
 };
 
 export const Notification = Template.bind({});
@@ -76,7 +102,7 @@ Notification.args = {
       component: BroadcastMessages,
       componentProps: {variant: 'outlined', subscriptionChannel: `notifications_feed`},
       column: 'left',
-      position: 1
+      position: 0
     }
   ],
   ItemComponent: SCNotification,
@@ -84,5 +110,6 @@ Notification.args = {
     notificationObject: item
   }),
   itemIdGenerator: (item) => item.sid,
-  ItemSkeleton: NotificationSkeleton
+  ItemSkeleton: NotificationSkeleton,
+  requireAuthentication: true
 };

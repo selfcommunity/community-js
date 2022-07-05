@@ -175,6 +175,7 @@ export default function NotificationFeed(inProps: NotificationFeedProps): JSX.El
         template: SCFeedObjectTemplateType.PREVIEW
       }}
       FeedSidebarProps={FeedSidebarProps}
+      requireAuthentication={true}
       {...FeedProps}
     />
   );

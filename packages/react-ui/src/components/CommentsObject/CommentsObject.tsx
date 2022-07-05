@@ -370,7 +370,9 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
   function renderLoadNextComments() {
     return (
       <Box className={classes.pagination}>
-        {!isLoadingNext && (
+        {isLoadingNext ? (
+          <CommentObjectSkeleton {...CommentObjectSkeletonProps} count={1} />
+        ) : (
           <InView as="div" onChange={handleScrollEnd} threshold={0.5}>
             <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
               <Button variant="text" onClick={handleNext} disabled={isLoadingNext} color="inherit" classes={{root: classes.loadNextCommentsButton}}>
@@ -397,7 +399,6 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
             </Stack>
           </InView>
         )}
-        {isLoadingNext && <CommentObjectSkeleton {...CommentObjectSkeletonProps} count={1} />}
       </Box>
     );
   }

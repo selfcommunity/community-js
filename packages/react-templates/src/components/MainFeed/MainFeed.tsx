@@ -168,6 +168,7 @@ export default function MainFeed(inProps: MainFeedProps): JSX.Element {
         template: SCFeedObjectTemplateType.PREVIEW
       }}
       FeedSidebarProps={FeedSidebarProps}
+      requireAuthentication={true}
       {...FeedProps}
     />
   );

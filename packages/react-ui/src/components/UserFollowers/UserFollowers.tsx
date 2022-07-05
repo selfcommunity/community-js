@@ -16,6 +16,7 @@ import BaseDialog from '../../shared/BaseDialog';
 import CentralProgress from '../../shared/CentralProgress';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import {useThemeProps} from '@mui/system';
+import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 
 const messages = defineMessages({
   title: {
@@ -270,13 +271,13 @@ export default function UserFollowers(inProps: UserFollowersProps): JSX.Element 
    * if there are no results and autoHide prop is set to true ,component is hidden
    */
   if (autoHide && !total) {
-    return null;
+    return <HiddenPlaceholder />;
   }
   /**
    * If content availability community option is false and user is anonymous , component is hidden.
    */
   if (!contentAvailability && !scUserContext.user) {
-    return null;
+    return <HiddenPlaceholder />;
   }
   /**
    * Renders root object
