@@ -1,7 +1,6 @@
 import React from 'react';
 import {ComponentMeta, ComponentStory} from '@storybook/react';
 import Feed from './index';
-import FeedVirtuoso from './FeedVirtuoso';
 import {Endpoints} from '@selfcommunity/api-services';
 import {SCNotificationTopicType} from '@selfcommunity/types';
 import FeedObject, {FeedObjectSkeleton} from '../FeedObject';
@@ -25,15 +24,6 @@ const Template: ComponentStory<typeof Feed> = (args) => {
 };
 
 export const Main = Template.bind({});
-
-// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const TemplateVirtuoso: ComponentStory<typeof Feed> = (args) => {
-  return (<div style={{width: '100%', height: '500px', marginTop: 30}}>
-    <FeedVirtuoso {...args} />
-  </div>);
-};
-
-export const MainVirtuoso = TemplateVirtuoso.bind({});
 
 Main.args = {
   id: 'main',
@@ -77,45 +67,6 @@ export const ExploreCache = Template.bind({});
 
 ExploreCache.args = {
   id: 'explore',
-  endpoint: Endpoints.ExploreFeed,
-  ItemComponent: FeedObject,
-  itemPropsGenerator: (scUser, item) => ({
-    feedObject: item[item.type],
-    feedObjectType: item.type,
-    feedObjectActivities: item.activities ? item.activities : null,
-    markRead: scUser ? !item.seen_by_id.includes(scUser.id) : false
-  }),
-  itemIdGenerator: (item) => item[item.type].id,
-  ItemSkeleton: FeedObjectSkeleton,
-  ItemSkeletonProps: {
-    template: SCFeedObjectTemplateType.PREVIEW
-  },
-  cacheStrategy: CacheStrategies.CACHE_FIRST
-};
-
-export const ExploreVirtuoso = MainVirtuoso.bind({});
-
-ExploreVirtuoso.args = {
-  id: 'explore_virtuoso',
-  endpoint: Endpoints.ExploreFeed,
-  ItemComponent: FeedObject,
-  itemPropsGenerator: (scUser, item) => ({
-    feedObject: item[item.type],
-    feedObjectType: item.type,
-    feedObjectActivities: item.activities ? item.activities : null,
-    markRead: scUser ? !item.seen_by_id.includes(scUser.id) : false
-  }),
-  itemIdGenerator: (item) => item[item.type].id,
-  ItemSkeleton: FeedObjectSkeleton,
-  ItemSkeletonProps: {
-    template: SCFeedObjectTemplateType.PREVIEW
-  }
-};
-
-export const ExploreCacheVirtuoso = MainVirtuoso.bind({});
-
-ExploreCacheVirtuoso.args = {
-  id: 'explore_virtuoso',
   endpoint: Endpoints.ExploreFeed,
   ItemComponent: FeedObject,
   itemPropsGenerator: (scUser, item) => ({

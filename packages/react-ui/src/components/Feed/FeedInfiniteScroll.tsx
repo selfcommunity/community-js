@@ -1,4 +1,14 @@
-import React, {forwardRef, ForwardRefRenderFunction, ReactNode, useContext, useEffect, useImperativeHandle, useMemo, useRef, useState} from 'react';
+import React, {
+  forwardRef,
+  ForwardRefRenderFunction,
+  ReactNode,
+  useContext,
+  useEffect,
+  useImperativeHandle,
+  useMemo,
+  useRef,
+  useState
+} from 'react';
 import {styled, useTheme} from '@mui/material/styles';
 import {CardContent, Grid, Hidden, Theme, useMediaQuery} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
@@ -21,9 +31,10 @@ import {
 import classNames from 'classnames';
 import PubSub from 'pubsub-js';
 import {useThemeProps} from '@mui/system';
-import {Virtuoso, VirtuosoHandle} from 'react-virtuoso';
 import Widget from '../Widget';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import {useInView} from 'react-intersection-observer';
+import {scrollIntoView, scrollTo} from 'seamless-scroll-polyfill';
 
 const PREFIX = 'SCFeed';
 
@@ -63,6 +74,7 @@ export interface FeedSidebarProps {
 
 export type FeedRef = {
   addFeedData: (obj: any) => void;
+  refresh: () => void;
 };
 
 export interface FeedProps {
@@ -185,11 +197,16 @@ const VirtualScrollChild = ({cacheKey, index, children}) => {
 
   useEffect(() => {
     if (inView) {
+      console.log(SCCache.getFeedSPCacheKey(cacheKey), index);
       LRUCache.set(SCCache.getFeedSPCacheKey(cacheKey), index);
     }
   }, [inView]);
 
-  return <div ref={ref}>{children}</div>;
+  return (
+    <div ref={ref} id={index} key={index}>
+      {children}
+    </div>
+  );
 };
 
 /**
@@ -262,7 +279,6 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
 
   // REFS
-  const virtuosoRef = useRef<VirtuosoHandle>(null);
   const refreshSubscription = useRef(null);
 
   /**
@@ -330,6 +346,24 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
   }, [authUserId]);
 
   useEffect(() => {
+    const _restoreItemKey = SCCache.getFeedSPCacheKey(id);
+    if (cacheStrategy === CacheStrategies.CACHE_FIRST && LRUCache.hasKey(_restoreItemKey)) {
+      window.requestAnimationFrame(() => {
+        const marker = LRUCache.get(_restoreItemKey);
+        if (marker) {
+          const element = document.getElementById(marker);
+          if (element) {
+            scrollIntoView(element, {block: 'start'});
+          }
+          LRUCache.delete(SCCache.getFeedSPCacheKey(id));
+        }
+      });
+    } else {
+      scrollTo(window, {top: 0});
+    }
+  }, []);
+
+  useEffect(() => {
     refreshSubscription.current = PubSub.subscribe(id, subscriber);
     return () => {
       PubSub.unsubscribe(refreshSubscription.current);
@@ -340,6 +374,9 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
   useImperativeHandle(ref, () => ({
     addFeedData: (data: any) => {
       setHeadData(data);
+    },
+    refresh: () => {
+      refresh();
     }
   }));
 
@@ -359,7 +396,11 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
           left: _widgets
             .map((w) => Object.assign({}, w, {position: w.position * (w.column === 'right' ? 5 : 1)}))
             .sort(widgetSort)
-            .reduce(widgetReducer, [...headData, ...feedDataObject.feedData]),
+            .reduce(widgetReducer, [
+              ...headData,
+              ...feedDataObject.feedData,
+              ...(feedDataObject.isLoadingNext ? [{type: 'widget', component: ItemSkeleton, componentProps: ItemSkeletonProps}] : [])
+            ]),
           right: []
         };
       } else {
@@ -367,7 +408,11 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
           left: _widgets
             .filter((w) => w.column === 'left')
             .sort(widgetSort)
-            .reduce(widgetReducer, [...headData, ...feedDataObject.feedData]),
+            .reduce(widgetReducer, [
+              ...headData,
+              ...feedDataObject.feedData,
+              ...(feedDataObject.isLoadingNext ? [{type: 'widget', component: ItemSkeleton, componentProps: ItemSkeletonProps}] : [])
+            ]),
           right: _widgets.filter((w) => w.column === 'right').sort(widgetSort)
         };
       }
@@ -393,10 +438,6 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     []
   );
 
-  const itemContent = (i, d) => {
-    return <InnerItem index={i} d={d} />;
-  };
-
   return (
     <Root container spacing={2} id={id} className={classNames(classes.root, className)}>
       <Grid item xs={12} md={7}>
@@ -408,31 +449,31 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
               ))}
             </>
           ) : (
-            <Virtuoso
-              ref={virtuosoRef}
-              useWindowScroll
-              overscan={{main: 5, reverse: 5}}
-              totalCount={data.left.length}
-              data={data.left}
-              endReached={feedDataObject.feedData.length > 0 ? feedDataObject.getNextPage : () => null}
-              itemContent={itemContent}
-              {...(cacheStrategy === CacheStrategies.CACHE_FIRST && LRUCache.get(SCCache.getFeedSPCacheKey(id))
-                ? {
-                    initialItemCount: data.left.length,
-                    initialTopMostItemIndex: {align: 'start', index: LRUCache.get(SCCache.getFeedSPCacheKey(id)), behavior: 'auto'}
-                  }
-                : {})}
-              components={{
-                Footer: () =>
-                  feedDataObject.next ? (
-                    <ItemSkeleton {...ItemSkeletonProps} />
-                  ) : (
-                    <Widget className={classes.end}>
-                      <CardContent>{endMessage}</CardContent>
-                    </Widget>
-                  )
-              }}
-            />
+            <InfiniteScroll
+              className={classes.left}
+              dataLength={data.left.length}
+              next={feedDataObject.feedData.length > 0 ? feedDataObject.getNextPage : () => null}
+              hasMore={Boolean(feedDataObject.next)}
+              loader={<></>}
+              endMessage={
+                <Widget className={classes.end}>
+                  <CardContent>{endMessage}</CardContent>
+                </Widget>
+              }
+              refreshFunction={refresh}
+              pullDownToRefresh
+              pullDownToRefreshThreshold={1000}
+              pullDownToRefreshContent={null}
+              releaseToRefreshContent={
+                <Widget variant="outlined" className={classes.refresh}>
+                  <CardContent>{refreshMessage}</CardContent>
+                </Widget>
+              }
+              style={{overflow: 'visible'}}>
+              {data.left.map((d, i) => (
+                <InnerItem index={i} d={d} />
+              ))}
+            </InfiniteScroll>
           )}
         </div>
       </Grid>
