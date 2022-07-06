@@ -74,6 +74,7 @@ export interface FeedSidebarProps {
 
 export type FeedRef = {
   addFeedData: (obj: any) => void;
+  refresh: () => void;
 };
 
 export interface FeedProps {
@@ -260,8 +261,6 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     cacheStrategy = CacheStrategies.NETWORK_ONLY
   } = props;
 
-  console.log('Feed');
-
   // STATE
   const feedDataObject = useSCFetchFeed({
     id,
@@ -375,6 +374,9 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
   useImperativeHandle(ref, () => ({
     addFeedData: (data: any) => {
       setHeadData(data);
+    },
+    refresh: () => {
+      refresh();
     }
   }));
 

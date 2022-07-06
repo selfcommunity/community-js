@@ -244,8 +244,6 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     cacheStrategy = CacheStrategies.NETWORK_ONLY
   } = props;
 
-  console.log('FeedVirtuoso');
-
   // STATE
   const feedDataObject = useSCFetchFeed({
     id,

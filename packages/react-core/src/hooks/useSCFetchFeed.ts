@@ -279,6 +279,9 @@ export default function useSCFetchFeed(props: {
     }
   }
 
+  /**
+   * Reload
+   */
   function reload() {
     dispatch({
       type: feedDataActionTypes.DATA_RELOAD,

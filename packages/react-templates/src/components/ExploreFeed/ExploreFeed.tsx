@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {forwardRef, ForwardRefRenderFunction, useEffect, useImperativeHandle, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {
   CategoriesPopular,
@@ -111,6 +111,10 @@ const WIDGETS: SCFeedWidgetType[] = [
   }
 ];
 
+export type ExploreFeedRef = {
+  refresh: () => void;
+};
+
 /**
  * > API documentation for the Community-JS Explore Feed Template. Learn about the available props and the CSS API.
 
@@ -132,7 +136,7 @@ const WIDGETS: SCFeedWidgetType[] = [
  *
  * @param inProps
  */
-export default function ExploreFeed(inProps: ExploreFeedProps): JSX.Element {
+const ExploreFeed: ForwardRefRenderFunction<ExploreFeedRef, FeedProps> = (inProps: ExploreFeedProps, ref): JSX.Element => {
   // PROPS
   const props: ExploreFeedProps = useThemeProps({
     props: inProps,
@@ -170,6 +174,13 @@ export default function ExploreFeed(inProps: ExploreFeedProps): JSX.Element {
     feedRef && feedRef.current && feedRef.current.addFeedData(feedUnit);
   };
 
+  // EXPOSED METHODS
+  useImperativeHandle(ref, () => ({
+    refresh: () => {
+      feedRef && feedRef.current && feedRef.current.refresh();
+    }
+  }));
+
   return (
     <Root
       id={id}
@@ -194,4 +205,6 @@ export default function ExploreFeed(inProps: ExploreFeedProps): JSX.Element {
       {...FeedProps}
     />
   );
-}
+};
+
+export default forwardRef(ExploreFeed);
