@@ -3,6 +3,37 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.19-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.1.18...@selfcommunity/react-ui@0.1.19-alpha.0) (2022-07-05)
+
+
+### Bug Fixes
+
+* caching ([7e7d951](https://github.com/selfcommunity/community-js/commit/7e7d9514b48d4ba9bb5e15a1b9ee39d25a595ce7))
+* caching ([dd97ab9](https://github.com/selfcommunity/community-js/commit/dd97ab9939356164468567073e8ed1687dba0f54))
+* caching ([87f972d](https://github.com/selfcommunity/community-js/commit/87f972dc9e37febea70648dc26ef675d41cbc126))
+* caching ([9311efe](https://github.com/selfcommunity/community-js/commit/9311efe823a833ba872bcc134b09a3b7f6aabead))
+* caching ([723113c](https://github.com/selfcommunity/community-js/commit/723113c29e40f8a1a142165a23e2252bc0aa5298))
+* caching ([433bbc1](https://github.com/selfcommunity/community-js/commit/433bbc1f8a36d1955fd72ce50a4465f17d6ff4b0))
+* caching ([508ddfb](https://github.com/selfcommunity/community-js/commit/508ddfb80602bf93e8f06ad1c04e0bdf6e8536dc))
+* caching ([c3c40b1](https://github.com/selfcommunity/community-js/commit/c3c40b1a7c1740497131111d9fbba1d3c9ce8c60))
+* caching ([a0c7b5e](https://github.com/selfcommunity/community-js/commit/a0c7b5e23d5818653bbc53169b4cf287d9516982))
+* caching ([4dab745](https://github.com/selfcommunity/community-js/commit/4dab74560155e12c88cec5a762f6e625423c49d0))
+* caching ([b416d06](https://github.com/selfcommunity/community-js/commit/b416d068f501cbd06435026c19e20bd2bc6c3fbb))
+* caching ([922dbd5](https://github.com/selfcommunity/community-js/commit/922dbd502ee1e548af2203285775f03650f10b58))
+* caching ([e500df0](https://github.com/selfcommunity/community-js/commit/e500df0345a9f27d6c14cab508d2fe89ebccc6ca))
+* caching ([9840153](https://github.com/selfcommunity/community-js/commit/98401531b2328d2eb7f087e108d2c9b84d48d7b8))
+* caching ([8cec1f3](https://github.com/selfcommunity/community-js/commit/8cec1f38a0cee8031922d11a7ccf59f6c3b25270))
+* editor MentionNode ([52b867d](https://github.com/selfcommunity/community-js/commit/52b867de0af1d06e487e1bccdacfc057b8deae75))
+* feed ([e1b4ce3](https://github.com/selfcommunity/community-js/commit/e1b4ce35418b6bc979111061a74d4da5a6081194))
+* feed ([bb9b7fb](https://github.com/selfcommunity/community-js/commit/bb9b7fbc6bf2088b11727b57837328d6f99c792b))
+* feed performace ([7c68d37](https://github.com/selfcommunity/community-js/commit/7c68d37f1c49eac35ea8d6771fa4d6ce356f50ca))
+* feed virtual scroll ([0628145](https://github.com/selfcommunity/community-js/commit/06281456d544c79c441b6c043c3a82e81c0f1c7e))
+* feeds props ([4d96952](https://github.com/selfcommunity/community-js/commit/4d96952c5ea8f255b55ff0a0500fbe607c2c5ddf))
+
+
+
+
+
 ## [0.1.18](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.1.18-alpha.1...@selfcommunity/react-ui@0.1.18) (2022-06-28)
 
 **Note:** Version bump only for package @selfcommunity/react-ui

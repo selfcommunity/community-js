@@ -1,6 +1,6 @@
 {
   "name": "@selfcommunity/utils",
-  "version": "0.1.18",
+  "version": "0.1.19-alpha.0",
   "license": "MIT",
   "private": false,
   "main": "./lib/cjs/index.js",
@@ -100,6 +100,5 @@
   "bugs": {
     "url": "https://github.com/selfcommunity/community-js/issues"
   },
-  "gitHead": "1848949f11caa7c2306f0380ff036395e2e26f9b",
-  "dependencies": {}
+  "gitHead": "1848949f11caa7c2306f0380ff036395e2e26f9b"
 }
