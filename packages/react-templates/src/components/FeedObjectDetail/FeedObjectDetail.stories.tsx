@@ -2,6 +2,7 @@ import React from 'react';
 import {ComponentMeta, ComponentStory} from '@storybook/react';
 import FeedObjectDetailTemplate from './index';
 import {SCFeedObjectTypologyType} from '@selfcommunity/types';
+import {CacheStrategies} from '@selfcommunity/utils';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -21,6 +22,15 @@ export const Base = Template.bind({});
 Base.args = {
   feedObjectId: 360,
   feedObjectType: SCFeedObjectTypologyType.POST
+};
+
+export const BaseCacheSWR = Template.bind({});
+
+BaseCacheSWR.args = {
+  feedObjectId: 360,
+  feedObjectType: SCFeedObjectTypologyType.POST,
+  FeedObjectProps: {cacheStrategy: CacheStrategies.STALE_WHILE_REVALIDATE},
+  CommentsFeedObjectProps: {cacheStrategy: CacheStrategies.STALE_WHILE_REVALIDATE}
 };
 
 export const CommentFirstLevel = Template.bind({});

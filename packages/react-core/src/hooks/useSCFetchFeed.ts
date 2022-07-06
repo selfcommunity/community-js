@@ -3,7 +3,7 @@ import {SCOPE_SC_CORE} from '../constants/Errors';
 import {SCFeedUnitType} from '@selfcommunity/types';
 import {Endpoints, EndpointType, http, HttpResponse} from '@selfcommunity/api-services';
 import {CacheStrategies, Logger, LRUCache} from '@selfcommunity/utils';
-import {getFeedCacheKey} from '../constants/Cache';
+import {getFeedCacheKey, getStateFeedCacheKey} from '../constants/Cache';
 import {appendURLSearchParams} from '@selfcommunity/utils';
 
 /**
@@ -45,13 +45,16 @@ export const feedDataActionTypes = {
  * @param action
  */
 function feedDataReducer(state, action) {
+  let _state;
   switch (action.type) {
     case feedDataActionTypes.LOADING_NEXT:
-      return {...state, isLoadingNext: true, isLoadingPrevious: false};
+      _state = {...state, isLoadingNext: true, isLoadingPrevious: false};
+      break;
     case feedDataActionTypes.LOADING_PREVIOUS:
-      return {...state, isLoadingNext: false, isLoadingPrevious: true};
+      _state = {...state, isLoadingNext: false, isLoadingPrevious: true};
+      break;
     case feedDataActionTypes.DATA_NEXT_LOADED:
-      return {
+      _state = {
         ...state,
         page: action.payload.currentPage,
         feedData: action.payload.feedData,
@@ -61,16 +64,18 @@ function feedDataReducer(state, action) {
         ...(action.payload.previous ? {previous: action.payload.previous} : {}),
         ...(action.payload.total ? {total: action.payload.total} : {}),
       };
+      break;
     case feedDataActionTypes.DATA_PREVIOUS_LOADED:
-      return {
+      _state = {
         ...state,
         page: action.payload.currentPage,
         feedData: action.payload.feedData,
         isLoadingPrevious: false,
         previous: action.payload.previous,
       };
+      break;
     case feedDataActionTypes.DATA_RELOAD:
-      return {
+      _state = {
         ...state,
         next: action.payload.next,
         feedData: [],
@@ -78,15 +83,17 @@ function feedDataReducer(state, action) {
         previous: null,
         reload: true,
       };
+      break;
     case feedDataActionTypes.DATA_RELOADED:
-      return {
+      _state = {
         ...state,
         componentLoaded: false,
         reload: false,
       };
-    default:
-      throw new Error(`Unhandled type: ${action.type}`);
+      break;
   }
+  LRUCache.set(getStateFeedCacheKey(state.id), _state);
+  return _state;
 }
 
 /**
@@ -94,8 +101,9 @@ function feedDataReducer(state, action) {
  * @param data
  */
 function stateInitializer(data): SCPaginatedFeedType {
-  const __feedDataCacheKey = getFeedCacheKey(data.id, data.next);
+  const __feedStateCacheKey = getStateFeedCacheKey(data.id);
   let _initState = {
+    id: data.id,
     componentLoaded: false,
     feedData: [],
     total: 0,
@@ -106,12 +114,9 @@ function stateInitializer(data): SCPaginatedFeedType {
     page: data.queryParams.offset / data.queryParams.limit + 1,
     reload: false,
   };
-  if (__feedDataCacheKey && LRUCache.hasKey(__feedDataCacheKey) && data.cacheStrategy !== CacheStrategies.NETWORK_ONLY) {
-    const _cachedData = LRUCache.get(__feedDataCacheKey);
-    return {
-      ..._initState,
-      ...{componentLoaded: true, total: _cachedData.count, next: _cachedData.next, previous: _cachedData.previous, feedData: _cachedData.results},
-    };
+  if (__feedStateCacheKey && LRUCache.hasKey(__feedStateCacheKey) && data.cacheStrategy !== CacheStrategies.NETWORK_ONLY) {
+    const _cachedStateData = LRUCache.get(__feedStateCacheKey);
+    return {..._initState, ..._cachedStateData};
   }
   return _initState;
 }
@@ -274,6 +279,9 @@ export default function useSCFetchFeed(props: {
     }
   }
 
+  /**
+   * Reload
+   */
   function reload() {
     dispatch({
       type: feedDataActionTypes.DATA_RELOAD,

@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {forwardRef, ForwardRefRenderFunction, useContext, useImperativeHandle, useRef} from 'react';
 import {styled} from '@mui/material/styles';
 import {
   CategoriesSuggestion,
@@ -13,7 +13,7 @@ import {
   LoyaltyProgram,
   PeopleSuggestion,
   Platform,
-  SCFeedWidgetType
+  SCFeedWidgetType, FeedRef
 } from '@selfcommunity/react-ui';
 import {Endpoints} from '@selfcommunity/api-services';
 import {SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
@@ -111,6 +111,10 @@ const WIDGETS: SCFeedWidgetType[] = [
   }
 ];
 
+export type MainFeedRef = {
+  refresh: () => void;
+};
+
 /**
  * > API documentation for the Community-JS Main Feed Template. Learn about the available props and the CSS API.
 
@@ -132,7 +136,7 @@ const WIDGETS: SCFeedWidgetType[] = [
  *
  * @param inProps
  */
-export default function MainFeed(inProps: MainFeedProps): JSX.Element {
+const MainFeed: ForwardRefRenderFunction<MainFeedRef, MainFeedProps> = (inProps: MainFeedProps, ref): JSX.Element => {
   // PROPS
   const props: MainFeedProps = useThemeProps({
     props: inProps,
@@ -140,8 +144,18 @@ export default function MainFeed(inProps: MainFeedProps): JSX.Element {
   });
   const {id = 'main_feed', className, widgets = WIDGETS, FeedObjectProps = {}, FeedSidebarProps = null, FeedProps = {}} = props;
 
-  //CONTEXT
+  // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
+
+  // REF
+  const feedRef = useRef<FeedRef>();
+
+  // EXPOSED METHODS
+  useImperativeHandle(ref, () => ({
+    refresh: () => {
+      feedRef && feedRef.current && feedRef.current.refresh();
+    }
+  }));
 
   // Ckeck user is authenticated
   if (!scUserContext.user) {
@@ -154,6 +168,7 @@ export default function MainFeed(inProps: MainFeedProps): JSX.Element {
       className={classNames(classes.root, className)}
       endpoint={Endpoints.MainFeed}
       widgets={widgets}
+      ref={feedRef}
       ItemComponent={FeedObject}
       itemPropsGenerator={(scUser, item) => ({
         feedObject: item[item.type],
@@ -172,4 +187,6 @@ export default function MainFeed(inProps: MainFeedProps): JSX.Element {
       {...FeedProps}
     />
   );
-}
+};
+
+export default forwardRef(MainFeed);

@@ -220,7 +220,7 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
     infiniteScrolling = true,
     onChangePage,
     comments = [],
-    cacheStrategy = CacheStrategies.CACHE_FIRST,
+    cacheStrategy = CacheStrategies.NETWORK_ONLY,
     ...rest
   } = props;
 
@@ -237,7 +237,7 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
   });
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [comment, setComment] = useState<SCCommentType>(null);
-  const {obj: commentObj, error: errorCommentObj} = useSCFetchCommentObject({id: commentObjectId, commentObject});
+  const {obj: commentObj, error: errorCommentObj} = useSCFetchCommentObject({id: commentObjectId, commentObject, cacheStrategy});
   const [commentError, setCommentError] = useState<boolean>(null);
 
   // CONST
