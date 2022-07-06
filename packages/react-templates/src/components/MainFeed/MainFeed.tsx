@@ -1,4 +1,4 @@
-import React, {forwardRef, ForwardRefRenderFunction, useContext, useImperativeHandle, useRef} from 'react';
+import React, {useContext} from 'react';
 import {styled} from '@mui/material/styles';
 import {
   CategoriesSuggestion,
@@ -13,7 +13,7 @@ import {
   LoyaltyProgram,
   PeopleSuggestion,
   Platform,
-  SCFeedWidgetType, FeedRef
+  SCFeedWidgetType
 } from '@selfcommunity/react-ui';
 import {Endpoints} from '@selfcommunity/api-services';
 import {SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
@@ -111,10 +111,6 @@ const WIDGETS: SCFeedWidgetType[] = [
   }
 ];
 
-export type MainFeedRef = {
-  refresh: () => void;
-};
-
 /**
  * > API documentation for the Community-JS Main Feed Template. Learn about the available props and the CSS API.
 
@@ -136,7 +132,7 @@ export type MainFeedRef = {
  *
  * @param inProps
  */
-const MainFeed: ForwardRefRenderFunction<MainFeedRef, MainFeedProps> = (inProps: MainFeedProps, ref): JSX.Element => {
+export default function MainFeed(inProps: MainFeedProps): JSX.Element {
   // PROPS
   const props: MainFeedProps = useThemeProps({
     props: inProps,
@@ -144,18 +140,8 @@ const MainFeed: ForwardRefRenderFunction<MainFeedRef, MainFeedProps> = (inProps:
   });
   const {id = 'main_feed', className, widgets = WIDGETS, FeedObjectProps = {}, FeedSidebarProps = null, FeedProps = {}} = props;
 
-  // CONTEXT
+  //CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
-
-  // REF
-  const feedRef = useRef<FeedRef>();
-
-  // EXPOSED METHODS
-  useImperativeHandle(ref, () => ({
-    refresh: () => {
-      feedRef && feedRef.current && feedRef.current.refresh();
-    }
-  }));
 
   // Ckeck user is authenticated
   if (!scUserContext.user) {
@@ -168,7 +154,6 @@ const MainFeed: ForwardRefRenderFunction<MainFeedRef, MainFeedProps> = (inProps:
       className={classNames(classes.root, className)}
       endpoint={Endpoints.MainFeed}
       widgets={widgets}
-      ref={feedRef}
       ItemComponent={FeedObject}
       itemPropsGenerator={(scUser, item) => ({
         feedObject: item[item.type],
@@ -187,6 +172,4 @@ const MainFeed: ForwardRefRenderFunction<MainFeedRef, MainFeedProps> = (inProps:
       {...FeedProps}
     />
   );
-};
-
-export default forwardRef(MainFeed);
+}
