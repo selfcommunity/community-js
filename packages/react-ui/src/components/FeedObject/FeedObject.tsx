@@ -30,6 +30,8 @@ import {CommentObjectProps} from '../CommentObject';
 import {SCCommentType, SCFeedObjectType, SCFeedObjectTypologyType, SCPollType} from '@selfcommunity/types';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {CacheStrategies, Logger, LRUCache} from '@selfcommunity/utils';
+import LazyLoad from 'react-lazyload';
+import {MAX_PRELOAD_OFFSET_VIEWPORT} from '../../constants/LazyLoad';
 import {
   Link,
   SCCache,
@@ -771,12 +773,14 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
               <Box className={classes.infoSection}>
                 <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
                   {!hideParticipantsPreview && (
-                    <ContributorsFeedObject
-                      feedObject={obj}
-                      feedObjectType={obj.type}
-                      {...ContributorsFeedObjectProps}
-                      cacheStrategy={cacheStrategy}
-                    />
+                    <LazyLoad once offset={MAX_PRELOAD_OFFSET_VIEWPORT}>
+                      <ContributorsFeedObject
+                        feedObject={obj}
+                        feedObjectType={obj.type}
+                        {...ContributorsFeedObjectProps}
+                        cacheStrategy={cacheStrategy}
+                      />
+                    </LazyLoad>
                   )}
                   {!hideFollowAction && <Follow feedObject={obj} feedObjectType={obj.type} handleFollow={handleFollow} {...FollowButtonProps} />}
                 </Stack>
@@ -804,19 +808,21 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
             {template === SCFeedObjectTemplateType.PREVIEW && (
               <Collapse in={expandedActivities} timeout="auto" classes={{root: classes.activitiesSection}}>
                 <CardContent className={classes.activitiesContent}>
-                  <Activities
-                    feedObject={obj}
-                    key={selectedActivities}
-                    feedObjectActivities={feedObjectActivities}
-                    activitiesType={selectedActivities}
-                    onSetSelectedActivities={handleSelectedActivities}
-                    comments={comments}
-                    CommentsObjectProps={{
-                      CommentComponentProps: {...{onDelete: handleDeleteComment}, ...CommentComponentProps},
-                      CommentObjectSkeletonProps: CommentObjectSkeletonProps
-                    }}
-                    cacheStrategy={cacheStrategy}
-                  />
+                  <LazyLoad once offset={MAX_PRELOAD_OFFSET_VIEWPORT}>
+                    <Activities
+                      feedObject={obj}
+                      key={selectedActivities}
+                      feedObjectActivities={feedObjectActivities}
+                      activitiesType={selectedActivities}
+                      onSetSelectedActivities={handleSelectedActivities}
+                      comments={comments}
+                      CommentsObjectProps={{
+                        CommentComponentProps: {...{onDelete: handleDeleteComment}, ...CommentComponentProps},
+                        CommentObjectSkeletonProps: CommentObjectSkeletonProps
+                      }}
+                      cacheStrategy={cacheStrategy}
+                    />
+                  </LazyLoad>
                 </CardContent>
               </Collapse>
             )}
