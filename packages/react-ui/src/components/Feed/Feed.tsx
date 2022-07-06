@@ -43,6 +43,7 @@ const Root = styled(Grid, {
   marginTop: theme.spacing(-2),
   [`& .${classes.left}`]: {
     padding: '0 2px 0 2px',
+    minHeight: 800,
     [theme.breakpoints.down('md')]: {
       '& > .SCWidget-root, & > .SCCustomAdv-root': {
         maxWidth: 700,
@@ -413,6 +414,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
             </>
           ) : (
             <Virtuoso
+              defaultItemHeight={400}
               useWindowScroll
               ref={virtuosoRef}
               overscan={{main: 5, reverse: 5}}
