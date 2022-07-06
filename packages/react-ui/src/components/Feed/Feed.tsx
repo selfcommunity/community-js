@@ -381,17 +381,21 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
 
   const data = getData();
 
-  const InnerItem = React.memo(({index, d}) => {
-    return (
-      <VirtualScrollChild index={index} cacheKey={id}>
-        {d.type === 'widget' ? (
-          <d.component key={`widget_left_${index}`} {...d.componentProps} {...(d.publishEvents && {publicationChannel: id})}></d.component>
-        ) : (
-          <ItemComponent key={`item_${itemIdGenerator(d)}`} {...itemPropsGenerator(scUserContext.user, d)} {...ItemProps} sx={{width: '100%'}} />
-        )}
-      </VirtualScrollChild>
-    );
-  });
+  const InnerItem = useMemo(
+    () =>
+      ({index, d}) => {
+        return (
+          <VirtualScrollChild index={index} cacheKey={id}>
+            {d.type === 'widget' ? (
+              <d.component key={`widget_left_${index}`} {...d.componentProps} {...(d.publishEvents && {publicationChannel: id})}></d.component>
+            ) : (
+              <ItemComponent key={`item_${itemIdGenerator(d)}`} {...itemPropsGenerator(scUserContext.user, d)} {...ItemProps} sx={{width: '100%'}} />
+            )}
+          </VirtualScrollChild>
+        );
+      },
+    []
+  );
 
   const itemContent = (i, d) => {
     return <InnerItem index={i} d={d} />;
