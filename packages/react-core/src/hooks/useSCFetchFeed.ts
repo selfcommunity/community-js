@@ -57,7 +57,8 @@ function feedDataReducer(state, action) {
       _state = {
         ...state,
         page: action.payload.currentPage,
-        feedData: action.payload.feedData,
+        feedData: [...state.feedData, ...action.payload.feedData],
+        // feedDataSlice: action.payload.feedData,
         isLoadingNext: false,
         componentLoaded: true,
         next: action.payload.next,
@@ -69,8 +70,10 @@ function feedDataReducer(state, action) {
       _state = {
         ...state,
         page: action.payload.currentPage,
-        feedData: action.payload.feedData,
+        feedData: [...action.payload.feedData, ...state.feedData],
+        // feedDataSlice: action.payload.feedData,
         isLoadingPrevious: false,
+        componentLoaded: true,
         previous: action.payload.previous,
       };
       break;
@@ -106,6 +109,7 @@ function stateInitializer(data): SCPaginatedFeedType {
     id: data.id,
     componentLoaded: false,
     feedData: [],
+    // feedDataSlice: [],
     total: 0,
     next: data.next,
     previous: null,
@@ -229,8 +233,8 @@ export default function useSCFetchFeed(props: {
             type: feedDataActionTypes.DATA_PREVIOUS_LOADED,
             payload: {
               page: currentPage,
-              feedData: [...res.results, ...state.feedData],
-              previous: res.previous,
+              feedData: res.results,
+              previous: res.previous
             },
           });
           onChangePage && onChangePage(currentPage);
@@ -259,11 +263,11 @@ export default function useSCFetchFeed(props: {
             type: feedDataActionTypes.DATA_NEXT_LOADED,
             payload: {
               page: currentPage,
-              feedData: [...state.feedData, ...res.results],
+              feedData: res.results,
               next: res.next,
               total: res.count,
               componentLoaded: true,
-              ...(queryParams.offset && state.feedData.length === 0 ? {previous: res.previous} : {}),
+              ...(queryParams.offset && state.feedData.length === 0 ? {previous: res.previous} : {})
             },
           });
           onChangePage && onChangePage(currentPage);
@@ -291,26 +295,26 @@ export default function useSCFetchFeed(props: {
     });
   }
 
-  /**
-   * Reset feedData status on change pageSize, offset
-   */
-  useEffect(() => {
-    if (state.componentLoaded && Boolean(endpoint) && !state.reload) {
-      reload();
-    }
-  }, [endpoint, queryParams.offset, queryParams.limit]);
-
-  /**
-   * Reload fetch feedData
-   */
-  useEffect(() => {
-    if (state.componentLoaded && state.reload && !state.isLoadingNext && !state.isLoadingPrevious) {
-      dispatch({
-        type: feedDataActionTypes.DATA_RELOADED,
-      });
-      getNextPage();
-    }
-  }, [state.reload]);
+  // /**
+  //  * Reset feedData status on change pageSize, offset
+  //  */
+  // useEffect(() => {
+  //   if (state.componentLoaded && Boolean(endpoint) && !state.reload) {
+  //     reload();
+  //   }
+  // }, [endpoint, queryParams.offset, queryParams.limit]);
+  //
+  // /**
+  //  * Reload fetch feedData
+  //  */
+  // useEffect(() => {
+  //   if (state.componentLoaded && state.reload && !state.isLoadingNext && !state.isLoadingPrevious) {
+  //     dispatch({
+  //       type: feedDataActionTypes.DATA_RELOADED,
+  //     });
+  //     getNextPage();
+  //   }
+  // }, [state.reload]);
 
   return {
     ...state,
