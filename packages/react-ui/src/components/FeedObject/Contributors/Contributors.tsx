@@ -1,6 +1,6 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {CacheStrategies, Logger} from '@selfcommunity/utils';
+import {CacheStrategies} from '@selfcommunity/utils';
 import {useSCFetchContributors} from '@selfcommunity/react-core';
 import {SCFeedObjectType, SCFeedObjectTypologyType, SCUserType} from '@selfcommunity/types';
 import {Avatar, AvatarGroup, Box, Button, List, ListItem} from '@mui/material';
@@ -11,8 +11,8 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import User from '../../User';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
-import {MAX_PRELOAD_OFFSET_VIEWPORT} from '@selfcommunity/react-ui';
 import LazyLoad from 'react-lazyload';
+import {MAX_PRELOAD_OFFSET_VIEWPORT} from '../../../constants/LazyLoad';
 import ContributorsSkeleton from './Skeleton';
 
 const PREFIX = 'SCContributorsFeedObject';
