@@ -3,15 +3,17 @@ import {styled} from '@mui/material/styles';
 import {CacheStrategies, Logger} from '@selfcommunity/utils';
 import {useSCFetchContributors} from '@selfcommunity/react-core';
 import {SCFeedObjectType, SCFeedObjectTypologyType, SCUserType} from '@selfcommunity/types';
-import {Avatar, AvatarGroup, Box, Button, Fade, List, ListItem} from '@mui/material';
+import {Avatar, AvatarGroup, Box, Button, List, ListItem} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
-import AvatarGroupSkeleton from '../../Skeleton/AvatarGroupSkeleton';
 import BaseDialog from '../../../shared/BaseDialog';
 import CentralProgress from '../../../shared/CentralProgress';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import User from '../../User';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
+import {MAX_PRELOAD_OFFSET_VIEWPORT} from '@selfcommunity/react-ui';
+import LazyLoad from 'react-lazyload';
+import ContributorsSkeleton from './Skeleton';
 
 const PREFIX = 'SCContributorsFeedObject';
 
@@ -27,6 +29,7 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
+  minHeight: 40,
   marginTop: 0,
   marginBottom: 0,
   [`& .${classes.btnParticipants}`]: {
@@ -73,7 +76,7 @@ export interface ContributorsFeedObjectProps {
    * AvatarGroupSkeleton props
    * @default {count: 3}
    */
-  AvatarGroupSkeletonProps?: any;
+  ContributorsSkeletonProps?: any;
 
   /**
    * Caching strategies
@@ -99,7 +102,7 @@ export default function ContributorsFeedObject(inProps: ContributorsFeedObjectPr
     feedObjectId = null,
     feedObject = null,
     feedObjectType = null,
-    AvatarGroupSkeletonProps = {},
+    ContributorsSkeletonProps = {},
     cacheStrategy = CacheStrategies.CACHE_FIRST,
     ...rest
   } = props;
@@ -132,13 +135,10 @@ export default function ContributorsFeedObject(inProps: ContributorsFeedObjectPr
   }
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
-      <Fade in>
+      <LazyLoad once offset={MAX_PRELOAD_OFFSET_VIEWPORT} height={40} placeholder={<ContributorsSkeleton {...ContributorsSkeletonProps} />}>
         <Box>
           {contributorsObject.isLoadingNext && !openContributorsDialog ? (
-            <Button variant="text" disabled classes={{root: classes.btnParticipants}}>
-              <FormattedMessage id={'ui.feedObject.contributors.participants'} defaultMessage={'ui.feedObject.contributors.participants'} />:
-              <AvatarGroupSkeleton {...AvatarGroupSkeletonProps} />
-            </Button>
+            <ContributorsSkeleton {...ContributorsSkeletonProps} />
           ) : (
             <>
               {contributorsObject.contributors.length > 0 ? (
@@ -200,7 +200,7 @@ export default function ContributorsFeedObject(inProps: ContributorsFeedObjectPr
             </>
           )}
         </Box>
-      </Fade>
+      </LazyLoad>
     </Root>
   );
 }
