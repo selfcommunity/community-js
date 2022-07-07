@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.19-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.1.19-alpha.1...@selfcommunity/react-ui@0.1.19-alpha.2) (2022-07-06)
+
+
+### Bug Fixes
+
+* caching ([b54b995](https://github.com/selfcommunity/community-js/commit/b54b9952b255249a39a14b028af14cccd5fe2a3a))
+* caching ([a4ddb50](https://github.com/selfcommunity/community-js/commit/a4ddb50c4b2b8f3dd7a28ce4bae2789f69d49e8a))
+* caching ([38a14db](https://github.com/selfcommunity/community-js/commit/38a14db320878db7796f809bc3d55c1e322b0064))
+
+
+
+
+
 ## [0.1.19-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.1.19-alpha.0...@selfcommunity/react-ui@0.1.19-alpha.1) (2022-07-06)
 
 
