@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.19-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.1.19-alpha.1...@selfcommunity/react-core@0.1.19-alpha.2) (2022-07-07)
+
+
+### Bug Fixes
+
+* test scroll restoration ([6d0940b](https://github.com/selfcommunity/community-js/commit/6d0940b09c8588b93917ee6fbd24c43c546d696a))
+
+
+
+
+
 ## [0.1.19-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.1.19-alpha.0...@selfcommunity/react-core@0.1.19-alpha.1) (2022-07-06)
 
 

@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.19-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.1.19-alpha.2...@selfcommunity/react-ui@0.1.19-alpha.3) (2022-07-07)
+
+
+### Bug Fixes
+
+* contributors ([97a16b4](https://github.com/selfcommunity/community-js/commit/97a16b466496ca045a47314d085f61d683d1a6a5))
+* test scroll restoration ([6d0940b](https://github.com/selfcommunity/community-js/commit/6d0940b09c8588b93917ee6fbd24c43c546d696a))
+
+
+
+
+
 ## [0.1.19-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.1.19-alpha.1...@selfcommunity/react-ui@0.1.19-alpha.2) (2022-07-06)
 
 
