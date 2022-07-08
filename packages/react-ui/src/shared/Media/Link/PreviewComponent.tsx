@@ -132,7 +132,7 @@ export default (props: LinkPreviewProps): JSX.Element => {
                   key={i}
                   once
                   offset={DEFAULT_PRELOAD_OFFSET_VIEWPORT}>
-                  <AutoPlayer url={l.url} width={'100%'} key={i} onVideoWatch={() => handleLinkClick(l)} />;
+                  <AutoPlayer url={l.url} width={'100%'} key={i} onVideoWatch={() => handleLinkClick(l)} />
                 </LazyLoad>
               );
             }
