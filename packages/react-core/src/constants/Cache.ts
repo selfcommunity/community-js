@@ -31,5 +31,8 @@ export const getFeedCacheKey = (id, next) => `${FEED_CACHE_PREFIX_KEY}${id}_${ne
 export const FEED_STATE_CACHE_PREFIX_KEY = '_feed_st_';
 export const getStateFeedCacheKey = (id) => `${FEED_STATE_CACHE_PREFIX_KEY}${id}`;
 
+export const FEED_VIRTUAL_SCROLL_STATE_CACHE_PREFIX_KEY = '_feed_vs_st_';
+export const getFeedVirtualScrollStateFeedCacheKey = (id) => `${FEED_VIRTUAL_SCROLL_STATE_CACHE_PREFIX_KEY}${id}`;
+
 export const FEED_CACHE_SP_KEY = '_feed_sp_';
 export const getFeedSPCacheKey = (id) => `${FEED_CACHE_SP_KEY}${id}`;

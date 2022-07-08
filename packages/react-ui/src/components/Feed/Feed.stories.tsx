@@ -1,6 +1,6 @@
 import React from 'react';
 import {ComponentMeta, ComponentStory} from '@storybook/react';
-import Feed from './index';
+import Feed from './Feed';
 import {Endpoints} from '@selfcommunity/api-services';
 import {SCNotificationTopicType} from '@selfcommunity/types';
 import FeedObject, {FeedObjectSkeleton} from '../FeedObject';
@@ -9,6 +9,7 @@ import SCNotification, {NotificationSkeleton} from '../Notification';
 import FeedUpdates from '../FeedUpdates';
 import BroadcastMessages from '../BroadcastMessages';
 import {CacheStrategies} from '@selfcommunity/utils';
+import {InlineComposer, TrendingFeed, TrendingPeople} from '../../index';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -48,6 +49,29 @@ export const Explore = Template.bind({});
 Explore.args = {
   id: 'explore',
   endpoint: Endpoints.ExploreFeed,
+  widgets: [
+    {
+      type: 'widget',
+      component: InlineComposer,
+      componentProps: {},
+      column: 'left',
+      position: 0
+    },
+    {
+      type: 'widget',
+      component: TrendingPeople,
+      componentProps: {},
+      column: 'right',
+      position: 1
+    },
+    {
+      type: 'widget',
+      component: TrendingFeed,
+      componentProps: {},
+      column: 'right',
+      position: 2
+    }
+  ],
   ItemComponent: FeedObject,
   itemPropsGenerator: (scUser, item) => ({
     feedObject: item[item.type],
@@ -68,6 +92,29 @@ export const ExploreCache = Template.bind({});
 ExploreCache.args = {
   id: 'explore',
   endpoint: Endpoints.ExploreFeed,
+  widgets: [
+    {
+      type: 'widget',
+      component: InlineComposer,
+      componentProps: {},
+      column: 'left',
+      position: 0
+    },
+    {
+      type: 'widget',
+      component: TrendingPeople,
+      componentProps: {},
+      column: 'right',
+      position: 1
+    },
+    {
+      type: 'widget',
+      component: TrendingFeed,
+      componentProps: {},
+      column: 'right',
+      position: 2
+    }
+  ],
   ItemComponent: FeedObject,
   itemPropsGenerator: (scUser, item) => ({
     feedObject: item[item.type],

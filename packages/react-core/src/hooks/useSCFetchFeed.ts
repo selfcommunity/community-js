@@ -35,6 +35,7 @@ export const feedDataActionTypes = {
   DATA_PREVIOUS_LOADED: '_data_previous_loaded',
   DATA_RELOAD: '_data_reload',
   DATA_RELOADED: '_data_reloaded',
+  UPDATE_DATA: '_data_update',
 };
 
 /**
@@ -92,6 +93,11 @@ function feedDataReducer(state, action) {
         ...state,
         componentLoaded: false,
         reload: false,
+      };
+      break;
+    case feedDataActionTypes.UPDATE_DATA:
+      _state = {
+        feedData: action.payload.data,
       };
       break;
   }
@@ -234,7 +240,7 @@ export default function useSCFetchFeed(props: {
             payload: {
               page: currentPage,
               feedData: res.results,
-              previous: res.previous
+              previous: res.previous,
             },
           });
           onChangePage && onChangePage(currentPage);
@@ -267,7 +273,7 @@ export default function useSCFetchFeed(props: {
               next: res.next,
               total: res.count,
               componentLoaded: true,
-              ...(queryParams.offset && state.feedData.length === 0 ? {previous: res.previous} : {})
+              ...(queryParams.offset && state.feedData.length === 0 ? {previous: res.previous} : {}),
             },
           });
           onChangePage && onChangePage(currentPage);
@@ -316,8 +322,13 @@ export default function useSCFetchFeed(props: {
   //   }
   // }, [state.reload]);
 
+  function updateData(data) {
+    dispatch({type: feedDataActionTypes.UPDATE_DATA, payload: {data}});
+  }
+
   return {
     ...state,
+    updateData,
     queryParams,
     getNextPage,
     getPreviousPage,
