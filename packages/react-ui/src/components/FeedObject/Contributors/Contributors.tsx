@@ -11,8 +11,6 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import User from '../../User';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
-import LazyLoad from 'react-lazyload';
-import {MAX_PRELOAD_OFFSET_VIEWPORT} from '../../../constants/LazyLoad';
 import ContributorsSkeleton from './Skeleton';
 
 const PREFIX = 'SCContributorsFeedObject';
@@ -135,72 +133,70 @@ export default function ContributorsFeedObject(inProps: ContributorsFeedObjectPr
   }
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
-      <LazyLoad once offset={MAX_PRELOAD_OFFSET_VIEWPORT} height={40} placeholder={<ContributorsSkeleton {...ContributorsSkeletonProps} />}>
-        <Box>
-          {contributorsObject.isLoadingNext && !openContributorsDialog ? (
-            <ContributorsSkeleton {...ContributorsSkeletonProps} />
-          ) : (
-            <>
-              {contributorsObject.contributors.length > 0 ? (
-                <>
-                  <Button variant="text" onClick={() => setOpenContributorsDialog(true)} classes={{root: classes.btnParticipants}} color="inherit">
-                    <FormattedMessage id={'ui.feedObject.contributors.participants'} defaultMessage={'ui.feedObject.contributors.participants'} />:
-                    <AvatarGroup {...rest}>
-                      {contributorsObject.contributors.map((c: SCUserType, i) => (
-                        <Avatar alt={c.username} src={c.avatar} key={i} />
-                      ))}
-                      {[...Array(Math.max(contributorsObject.total - contributorsObject.contributors.length, 0))].map((x, i) => (
-                        <Avatar key={i}></Avatar>
-                      ))}
-                    </AvatarGroup>
-                  </Button>
-                  {openContributorsDialog && (
-                    <BaseDialog
-                      title={
-                        <FormattedMessage
-                          defaultMessage="ui.feedObject.contributors.title"
-                          id="ui.feedObject.contributors.title"
-                          values={{total: contributorsObject.total}}
-                        />
-                      }
-                      onClose={() => setOpenContributorsDialog(false)}
-                      open={openContributorsDialog}>
-                      {contributorsObject.isLoadingNext ? (
-                        <CentralProgress size={50} />
-                      ) : (
-                        <InfiniteScroll
-                          dataLength={contributorsObject.contributors.length}
-                          next={contributorsObject.getNextPage()}
-                          hasMore={Boolean(contributorsObject.next)}
-                          loader={<CentralProgress size={30} />}
-                          height={400}
-                          endMessage={
-                            <p style={{textAlign: 'center'}}>
-                              <b>
-                                <FormattedMessage
-                                  id="ui.feedObject.contributors.noOtherContributors"
-                                  defaultMessage="ui.feedObject.contributors.noOtherContributors"
-                                />
-                              </b>
-                            </p>
-                          }>
-                          <List>
-                            {contributorsObject.contributors.map((c, i) => (
-                              <ListItem key={i}>
-                                <User elevation={0} user={c} key={c.id} sx={{m: 0}} />
-                              </ListItem>
-                            ))}
-                          </List>
-                        </InfiniteScroll>
-                      )}
-                    </BaseDialog>
-                  )}
-                </>
-              ) : null}
-            </>
-          )}
-        </Box>
-      </LazyLoad>
+      <Box>
+        {contributorsObject.isLoadingNext && !openContributorsDialog ? (
+          <ContributorsSkeleton {...ContributorsSkeletonProps} />
+        ) : (
+          <>
+            {contributorsObject.contributors.length > 0 ? (
+              <>
+                <Button variant="text" onClick={() => setOpenContributorsDialog(true)} classes={{root: classes.btnParticipants}} color="inherit">
+                  <FormattedMessage id={'ui.feedObject.contributors.participants'} defaultMessage={'ui.feedObject.contributors.participants'} />:
+                  <AvatarGroup {...rest}>
+                    {contributorsObject.contributors.map((c: SCUserType, i) => (
+                      <Avatar alt={c.username} src={c.avatar} key={i} />
+                    ))}
+                    {[...Array(Math.max(contributorsObject.total - contributorsObject.contributors.length, 0))].map((x, i) => (
+                      <Avatar key={i}></Avatar>
+                    ))}
+                  </AvatarGroup>
+                </Button>
+                {openContributorsDialog && (
+                  <BaseDialog
+                    title={
+                      <FormattedMessage
+                        defaultMessage="ui.feedObject.contributors.title"
+                        id="ui.feedObject.contributors.title"
+                        values={{total: contributorsObject.total}}
+                      />
+                    }
+                    onClose={() => setOpenContributorsDialog(false)}
+                    open={openContributorsDialog}>
+                    {contributorsObject.isLoadingNext ? (
+                      <CentralProgress size={50} />
+                    ) : (
+                      <InfiniteScroll
+                        dataLength={contributorsObject.contributors.length}
+                        next={contributorsObject.getNextPage()}
+                        hasMore={Boolean(contributorsObject.next)}
+                        loader={<CentralProgress size={30} />}
+                        height={400}
+                        endMessage={
+                          <p style={{textAlign: 'center'}}>
+                            <b>
+                              <FormattedMessage
+                                id="ui.feedObject.contributors.noOtherContributors"
+                                defaultMessage="ui.feedObject.contributors.noOtherContributors"
+                              />
+                            </b>
+                          </p>
+                        }>
+                        <List>
+                          {contributorsObject.contributors.map((c, i) => (
+                            <ListItem key={i}>
+                              <User elevation={0} user={c} key={c.id} sx={{m: 0}} />
+                            </ListItem>
+                          ))}
+                        </List>
+                      </InfiniteScroll>
+                    )}
+                  </BaseDialog>
+                )}
+              </>
+            ) : null}
+          </>
+        )}
+      </Box>
     </Root>
   );
 }

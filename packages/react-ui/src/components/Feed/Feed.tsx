@@ -330,12 +330,13 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     if (feedDataObject.componentLoaded) {
       if (oneColLayout) {
         return _widgets
-          .map((w) => Object.assign({}, w, {position: w.position * (w.column === 'right' ? 5 : 1)}))
+          .map((w, i) => Object.assign({}, w, {position: w.position * (w.column === 'right' ? 5 : 1), id: `widget_${i}`}))
           .sort(widgetSort)
           .reduce(widgetReducer, [...headData, ...feedDataObject.feedData]);
       }
       return _widgets
         .filter((w) => w.column === 'left')
+        .map((w, i) => Object.assign({}, w, {id: `widget_${i}`}))
         .sort(widgetSort)
         .reduce(widgetReducer, [...headData, ...feedDataObject.feedData]);
     }
@@ -357,29 +358,29 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
   const virtualScrollerMountState = useRef(false);
 
   // VIRTUAL SCROLL HELPERS
-  const _getScrollItemId = useMemo(
+  const getScrollItemId = useMemo(
     () =>
       (item: any): string =>
-        item.type === 'widget' ? `${item.type}_${item.position}` : `${item.type}_${itemIdGenerator(item)}`,
+        item.type === 'widget' ? item.id : `${item.type}_${itemIdGenerator(item)}`,
     []
   );
-  const _getInitialScrollPosition = useMemo(
+  const getInitialScrollPosition = useMemo(
     () => () => cacheStrategy === CacheStrategies.CACHE_FIRST ? LRUCache.get(SCCache.getFeedSPCacheKey(id)) : 0,
     [id, cacheStrategy]
   );
-  const _onStateScrollChange = useMemo(
+  const onStateScrollChange = useMemo(
     () => (state) => {
       virtualScrollerState.current = state;
     },
     []
   );
-  const _onScrollPositionChange = useMemo(
+  const onScrollPositionChange = useMemo(
     () => (y) => {
       LRUCache.set(SCCache.getFeedSPCacheKey(id), y);
     },
     [id]
   );
-  const _onScrollerMount = useMemo(
+  const onScrollerMount = useMemo(
     () => () => {
       virtualScrollerMountState.current = true;
     },
@@ -512,14 +513,14 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
               <VirtualScroller
                 items={feedDataLeft}
                 itemComponent={InnerItem}
-                getItemId={_getScrollItemId}
+                getItemId={getScrollItemId}
                 initialState={readVirtualScrollerState()}
-                onMount={_onScrollerMount}
+                onMount={onScrollerMount}
                 preserveScrollPosition
                 preserveScrollPositionOnPrependItems
-                onStateChange={_onStateScrollChange}
-                initialScrollPosition={_getInitialScrollPosition()}
-                onScrollPositionChange={_onScrollPositionChange}
+                onStateChange={onStateScrollChange}
+                initialScrollPosition={getInitialScrollPosition()}
+                onScrollPositionChange={onScrollPositionChange}
               />
             </InfiniteScroll>
           )}
