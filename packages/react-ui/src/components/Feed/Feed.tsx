@@ -182,11 +182,7 @@ export interface FeedProps {
   CustomAdvProps?: CustomAdvProps;
 }
 
-interface FeedData {
-  left: Array<SCFeedWidgetType | SCFeedUnitType>;
-  right: Array<SCFeedWidgetType>;
-}
-
+const DEFAULT_PAGINATION_ITEMS_NUMBER = 5;
 const PREFERENCES = [SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED, SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED];
 
 /**
@@ -239,7 +235,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     id = 'feed',
     className,
     endpoint,
-    endpointQueryParams = {limit: 5, offset: 0},
+    endpointQueryParams = {limit: DEFAULT_PAGINATION_ITEMS_NUMBER, offset: 0},
     endMessage = <FormattedMessage id="ui.feed.noOtherFeedObject" defaultMessage="ui.feed.noOtherFeedObject" />,
     refreshMessage = <FormattedMessage id="ui.feed.refreshRelease" defaultMessage="ui.feed.refreshRelease" />,
     widgets = [],
@@ -262,6 +258,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
 
   // CONST
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
+  const limit = useMemo(() => (endpointQueryParams.limit || DEFAULT_PAGINATION_ITEMS_NUMBER), [endpointQueryParams]);
 
   // RENDER
   const theme: Theme = useTheme();
@@ -332,13 +329,13 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
         return _widgets
           .map((w, i) => Object.assign({}, w, {position: w.position * (w.column === 'right' ? 5 : 1), id: `widget_${i}`}))
           .sort(widgetSort)
-          .reduce(widgetReducer, [...headData, ...feedDataObject.feedData]);
+          .reduce(widgetReducer(feedDataObject.total, limit), [...headData, ...feedDataObject.feedData]);
       }
       return _widgets
         .filter((w) => w.column === 'left')
         .map((w, i) => Object.assign({}, w, {id: `widget_${i}`}))
         .sort(widgetSort)
-        .reduce(widgetReducer, [...headData, ...feedDataObject.feedData]);
+        .reduce(widgetReducer(feedDataObject.total, limit), [...headData, ...feedDataObject.feedData]);
     }
     return [];
   };
@@ -418,11 +415,16 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
   // EFFECTS
   useEffect(() => {
     if ((requireAuthentication && authUserId !== null) || !requireAuthentication) {
-      if (cacheStrategy !== CacheStrategies.CACHE_FIRST) {
+      if (cacheStrategy === CacheStrategies.CACHE_FIRST && feedDataObject.componentLoaded) {
+        // Set current cached feed
+        setFeedDataLeft(_getFeedDataLeft());
+        setFeedDataRight(_getFeedDataRight());
+      } else {
+        // Load next page
         feedDataObject.getNextPage();
       }
     }
-  }, [authUserId]);
+  }, [authUserId, feedDataObject.componentLoaded]);
 
   useEffect(() => {
     refreshSubscription.current = PubSub.subscribe(id, subscriber);
@@ -456,12 +458,12 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
 
   const InnerItem = useMemo(
     () =>
-      ({state: savedState, onStateChange, onHeightChange, children: item}) => {
+      ({onHeightChange, children: item}) => {
         return (
           <VirtualScrollChild virtualScrollerMountState onHeightChange={onHeightChange}>
             {item.type === 'widget' ? (
               <item.component
-                id={`widget_left_${item.position}`}
+                id={`widget_${item.position}`}
                 {...item.componentProps}
                 {...(item.publishEvents && {publicationChannel: id})}></item.component>
             ) : (

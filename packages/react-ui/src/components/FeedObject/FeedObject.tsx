@@ -260,6 +260,12 @@ export interface FeedObjectProps extends CardProps {
   hideFollowAction?: boolean;
 
   /**
+   * Show activities as default
+   * @default false
+   */
+  activitiesExpanded?: boolean;
+
+  /**
    * Hide Participants preview
    * @default false
    */
@@ -416,6 +422,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
     markRead = false,
     template = SCFeedObjectTemplateType.PREVIEW,
     hideFollowAction = false,
+    activitiesExpanded = false,
     hideParticipantsPreview = false,
     FollowButtonProps = {},
     FeedObjectSkeletonProps = {elevation: 0},
@@ -447,7 +454,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
    * Get initial expanded activities
    */
   function geExpandedActivities() {
-    return obj && (obj.comment_count > 0 || (feedObjectActivities && feedObjectActivities.length > 0));
+    return obj && ((obj.comment_count > 0 || (feedObjectActivities && feedObjectActivities.length > 0)) || activitiesExpanded);
   }
 
   // STATE
