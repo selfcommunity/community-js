@@ -306,7 +306,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
           column: 'right',
           position: 0
         },
-        ...Array.from({length: feedDataObject.feedData.length / 10}, (_, i) => i * 10).map((position): SCFeedWidgetType => {
+        ...Array.from({length: feedDataObject.total / 10}, (_, i) => i * 10).map((position): SCFeedWidgetType => {
           return {
             type: 'widget',
             component: CustomAdv,
@@ -321,7 +321,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
       ];
     }
     return [...widgets];
-  }, [widgets, feedDataObject.feedData, preferences]);
+  }, [widgets, feedDataObject.total, preferences]);
 
   const _getFeedDataLeft = () => {
     if (feedDataObject.componentLoaded) {
