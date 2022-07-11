@@ -11,16 +11,6 @@ import React, {
   useRef,
   useState
 } from 'react';
-import {styled, useTheme} from '@mui/material/styles';
-import {CardContent, Grid, Hidden, Theme, useMediaQuery} from '@mui/material';
-import {FormattedMessage} from 'react-intl';
-import {GenericSkeleton} from '../Skeleton';
-import {SCFeedWidgetType} from '../../types/feed';
-import Sticky from 'react-stickynode';
-import CustomAdv, {CustomAdvProps} from '../CustomAdv';
-import {SCCustomAdvPosition, SCUserType} from '@selfcommunity/types';
-import {EndpointType} from '@selfcommunity/api-services';
-import {CacheStrategies, LRUCache} from '@selfcommunity/utils';
 import {
   SCCache,
   SCPreferences,
@@ -30,12 +20,22 @@ import {
   useSCFetchFeed,
   useSCPreferences
 } from '@selfcommunity/react-core';
+import {styled, useTheme} from '@mui/material/styles';
+import {CardContent, Grid, Hidden, Theme, useMediaQuery} from '@mui/material';
+import {FormattedMessage} from 'react-intl';
+import {GenericSkeleton} from '../Skeleton';
+import {SCFeedWidgetType} from '../../types/feed';
+import Sticky from 'react-stickynode';
+import CustomAdv, {CustomAdvProps} from '../CustomAdv';
+import {SCCustomAdvPosition, SCUserType} from '@selfcommunity/types';
+import {EndpointType} from '@selfcommunity/api-services';
+import {CacheStrategies} from '@selfcommunity/utils';
 import classNames from 'classnames';
 import PubSub from 'pubsub-js';
 import {useThemeProps} from '@mui/system';
 import Widget from '../Widget';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import VirtualScroller from 'virtual-scroller/react';
+import FeedVirtualizedScroller from '../../shared/VirtualizedScroller';
 import {widgetReducer, widgetSort} from '../../utils/feed';
 
 const PREFIX = 'SCFeed';
@@ -258,7 +258,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
 
   // CONST
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
-  const limit = useMemo(() => (endpointQueryParams.limit || DEFAULT_PAGINATION_ITEMS_NUMBER), [endpointQueryParams]);
+  const limit = useMemo(() => endpointQueryParams.limit || DEFAULT_PAGINATION_ITEMS_NUMBER, [endpointQueryParams]);
 
   // RENDER
   const theme: Theme = useTheme();
@@ -361,46 +361,13 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
         item.type === 'widget' ? item.id : `${item.type}_${itemIdGenerator(item)}`,
     []
   );
-  const getInitialScrollPosition = useMemo(
-    () => () => cacheStrategy === CacheStrategies.CACHE_FIRST ? LRUCache.get(SCCache.getFeedSPCacheKey(id)) : 0,
-    [id, cacheStrategy]
-  );
-  const onStateScrollChange = useMemo(
-    () => (state) => {
-      virtualScrollerState.current = state;
-    },
-    []
-  );
-  const onScrollPositionChange = useMemo(
-    () => (y) => {
-      LRUCache.set(SCCache.getFeedSPCacheKey(id), y);
-    },
-    [id]
-  );
+
   const onScrollerMount = useMemo(
     () => () => {
       virtualScrollerMountState.current = true;
     },
     []
   );
-  const saveVirtualScrollerState = useMemo(
-    () =>
-      (state): void => {
-        LRUCache.set(SCCache.getFeedVirtualScrollStateFeedCacheKey(id), state);
-      },
-    [id]
-  );
-  const readVirtualScrollerState = useMemo(
-    () => (): number => {
-      if (cacheStrategy === CacheStrategies.CACHE_FIRST) {
-        return LRUCache.get(SCCache.getFeedVirtualScrollStateFeedCacheKey(id));
-      }
-      return null;
-    },
-    [id, cacheStrategy]
-  );
-
-  const virtualScrollerState = useRef(readVirtualScrollerState());
 
   const refresh = () => {
     feedDataObject.reload();
@@ -438,13 +405,6 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     setFeedDataLeft(_getFeedDataLeft());
     setFeedDataRight(_getFeedDataRight());
   }, [feedDataObject.feedData.length]);
-
-  useEffect(() => {
-    return () => {
-      // Save `VirtualScroller` state before the page unmounts.
-      saveVirtualScrollerState(virtualScrollerState.current);
-    };
-  });
 
   // EXPOSED METHODS
   useImperativeHandle(ref, () => ({
@@ -512,17 +472,16 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
                 </Widget>
               }
               style={{overflow: 'visible'}}>
-              <VirtualScroller
+              <FeedVirtualizedScroller
                 items={feedDataLeft}
                 itemComponent={InnerItem}
-                getItemId={getScrollItemId}
-                initialState={readVirtualScrollerState()}
                 onMount={onScrollerMount}
+                getItemId={getScrollItemId}
                 preserveScrollPosition
                 preserveScrollPositionOnPrependItems
-                onStateChange={onStateScrollChange}
-                initialScrollPosition={getInitialScrollPosition()}
-                onScrollPositionChange={onScrollPositionChange}
+                cacheScrollStateKey={SCCache.getVirtualizedScrollStateCacheKey(id)}
+                cacheScrollerPositionKey={SCCache.getFeedSPCacheKey(id)}
+                cacheStrategy={cacheStrategy}
               />
             </InfiniteScroll>
           )}
