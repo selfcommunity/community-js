@@ -5,7 +5,7 @@ import VirtualScroller from 'virtual-scroller/react';
 
 const PREFIX = 'SCVirtualizedScroller';
 
-const Root = styled('div', {
+const Root = styled(VirtualScroller, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => [styles.root]
@@ -95,18 +95,16 @@ export default function VirtualizedScroller(props): JSX.Element {
   });
 
   return (
-    <Root {...props}>
-      <VirtualScroller
-        items={items}
-        itemComponent={ItemComponent}
-        onMount={onVirtualScrollerMount}
-        {...(getItemId && {getItemId})}
-        initialState={initialScrollerState ? initialScrollerState : readVirtualScrollerState()}
-        onStateChange={onStateScrollChange}
-        initialScrollPosition={getInitialScrollPosition()}
-        onScrollPositionChange={onScrollPositionChange}
-        {...rest}
-      />
-    </Root>
+    <VirtualScroller
+      items={items}
+      itemComponent={ItemComponent}
+      onMount={onVirtualScrollerMount}
+      {...(getItemId && {getItemId})}
+      initialState={initialScrollerState ? initialScrollerState : readVirtualScrollerState()}
+      onStateChange={onStateScrollChange}
+      initialScrollPosition={getInitialScrollPosition()}
+      onScrollPositionChange={onScrollPositionChange}
+      {...rest}
+    />
   );
 }
