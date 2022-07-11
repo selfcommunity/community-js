@@ -18,7 +18,7 @@ import {GenericSkeleton} from '../Skeleton';
 import {SCFeedWidgetType} from '../../types/feed';
 import Sticky from 'react-stickynode';
 import CustomAdv, {CustomAdvProps} from '../CustomAdv';
-import {SCCustomAdvPosition, SCFeedUnitType, SCUserType} from '@selfcommunity/types';
+import {SCCustomAdvPosition, SCUserType} from '@selfcommunity/types';
 import {EndpointType} from '@selfcommunity/api-services';
 import {CacheStrategies, LRUCache} from '@selfcommunity/utils';
 import {
