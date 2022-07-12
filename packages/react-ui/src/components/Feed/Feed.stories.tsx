@@ -60,16 +60,9 @@ Explore.args = {
     {
       type: 'widget',
       component: TrendingPeople,
-      componentProps: {},
+      componentProps: {categoryId: 1},
       column: 'right',
       position: 1
-    },
-    {
-      type: 'widget',
-      component: TrendingFeed,
-      componentProps: {},
-      column: 'right',
-      position: 2
     }
   ],
   ItemComponent: FeedObject,
@@ -103,16 +96,9 @@ ExploreCache.args = {
     {
       type: 'widget',
       component: TrendingPeople,
-      componentProps: {},
+      componentProps: {categoryId: 1},
       column: 'right',
       position: 1
-    },
-    {
-      type: 'widget',
-      component: TrendingFeed,
-      componentProps: {},
-      column: 'right',
-      position: 2
     }
   ],
   ItemComponent: FeedObject,
@@ -129,6 +115,80 @@ ExploreCache.args = {
   },
   cacheStrategy: CacheStrategies.CACHE_FIRST
 };
+
+export const ExploreOffset2 = Template.bind({});
+
+ExploreOffset2.args = {
+  id: 'explore',
+  endpoint: Endpoints.ExploreFeed,
+  widgets: [
+    {
+      type: 'widget',
+      component: InlineComposer,
+      componentProps: {},
+      column: 'left',
+      position: 0
+    },
+    {
+      type: 'widget',
+      component: TrendingPeople,
+      componentProps: {categoryId: 1},
+      column: 'right',
+      position: 1
+    }
+  ],
+  ItemComponent: FeedObject,
+  itemPropsGenerator: (scUser, item) => ({
+    feedObject: item[item.type],
+    feedObjectType: item.type,
+    feedObjectActivities: item.activities ? item.activities : null,
+    markRead: scUser ? !item.seen_by_id.includes(scUser.id) : false
+  }),
+  itemIdGenerator: (item) => item[item.type].id,
+  ItemSkeleton: FeedObjectSkeleton,
+  ItemSkeletonProps: {
+    template: SCFeedObjectTemplateType.PREVIEW
+  },
+  endpointQueryParams: {limit: 5, offset: 2}
+};
+
+export const ExploreOffset2Cached = Template.bind({});
+
+ExploreOffset2Cached.args = {
+  id: 'explore',
+  endpoint: Endpoints.ExploreFeed,
+  widgets: [
+    {
+      type: 'widget',
+      component: InlineComposer,
+      componentProps: {},
+      column: 'left',
+      position: 0
+    },
+    {
+      type: 'widget',
+      component: TrendingPeople,
+      componentProps: {categoryId: 1},
+      column: 'right',
+      position: 1
+    }
+  ],
+  ItemComponent: FeedObject,
+  itemPropsGenerator: (scUser, item) => ({
+    feedObject: item[item.type],
+    feedObjectType: item.type,
+    feedObjectActivities: item.activities ? item.activities : null,
+    markRead: scUser ? !item.seen_by_id.includes(scUser.id) : false
+  }),
+  itemIdGenerator: (item) => item[item.type].id,
+  ItemSkeleton: FeedObjectSkeleton,
+  ItemSkeletonProps: {
+    template: SCFeedObjectTemplateType.PREVIEW
+  },
+  endpointQueryParams: {limit: 5, offset: 2},
+  cacheStrategy: CacheStrategies.CACHE_FIRST
+};
+
 
 export const Notification = Template.bind({});
 
