@@ -1,15 +1,5 @@
 // @ts-nocheck
-import React, {
-  forwardRef,
-  ForwardRefRenderFunction,
-  ReactNode,
-  useContext,
-  useEffect,
-  useImperativeHandle,
-  useMemo,
-  useRef,
-  useState
-} from 'react';
+import React, {forwardRef, ForwardRefRenderFunction, ReactNode, useContext, useEffect, useImperativeHandle, useMemo, useRef, useState} from 'react';
 import {
   SCCache,
   SCPreferences,
@@ -474,7 +464,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
 
   const InnerItem = useMemo(
     () =>
-      ({onHeightChange, children: item}) => {
+      ({state: savedState, onHeightChange, onStateChange, children: item}) => {
         return (
           <VirtualScrollChild virtualScrollerMountState onHeightChange={onHeightChange}>
             {item.type === 'widget' ? (
@@ -488,6 +478,8 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
                 {...itemPropsGenerator(scUserContext.user, item)}
                 {...ItemProps}
                 sx={{width: '100%'}}
+                onChangeLayout={onStateChange}
+                {...savedState}
               />
             )}
           </VirtualScrollChild>

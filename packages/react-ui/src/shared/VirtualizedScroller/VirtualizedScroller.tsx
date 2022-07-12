@@ -1,15 +1,6 @@
 import React, {useEffect, useMemo, useRef} from 'react';
-import {styled} from '@mui/material/styles';
 import {CacheStrategies, LRUCache} from '@selfcommunity/utils';
 import VirtualScroller from 'virtual-scroller/react';
-
-const PREFIX = 'SCVirtualizedScroller';
-
-const Root = styled(VirtualScroller, {
-  name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => [styles.root]
-})(() => ({}));
 
 export default function VirtualizedScroller(props): JSX.Element {
   const {
@@ -32,6 +23,9 @@ export default function VirtualizedScroller(props): JSX.Element {
 
   // HELPERS
 
+  /**
+   * Callback on mount the virtual scroller
+   */
   const onVirtualScrollerMount = useMemo(
     () => () => {
       virtualScrollerMountState.current = true;
@@ -40,20 +34,18 @@ export default function VirtualizedScroller(props): JSX.Element {
     []
   );
 
+  /**
+   * Get initial scroll position by cacheScrollerPositionKey
+   * Recovered only if cacheStrategy = CACHE_FIRST
+   */
   const getInitialScrollPosition = useMemo(
     () => () => cacheStrategy === CacheStrategies.CACHE_FIRST && cacheScrollerPositionKey ? LRUCache.get(cacheScrollerPositionKey) : 0,
     [cacheStrategy, cacheScrollerPositionKey]
   );
 
-  const onStateScrollChange = useMemo(
-    () => (state) => {
-      virtualScrollerState.current = state;
-      console.log(state);
-      onScrollerStateChange && onScrollerStateChange(state);
-    },
-    []
-  );
-
+  /**
+   * Callback on virtual scroller position change
+   */
   const onScrollPositionChange = useMemo(
     () => (y) => {
       if (cacheScrollerPositionKey) {
@@ -64,6 +56,20 @@ export default function VirtualizedScroller(props): JSX.Element {
     [cacheScrollerPositionKey]
   );
 
+  /**
+   * Callback on virtual scroller state change
+   */
+  const onStateScrollChange = useMemo(
+    () => (state) => {
+      virtualScrollerState.current = state;
+      onScrollerStateChange && onScrollerStateChange(state);
+    },
+    []
+  );
+
+  /**
+   * Save virtual scroller state
+   */
   const saveVirtualScrollerState = useMemo(
     () =>
       (state): void => {
@@ -90,7 +96,7 @@ export default function VirtualizedScroller(props): JSX.Element {
   // EFFECTS
   useEffect(() => {
     return () => {
-      // Save `VirtualScroller` state before the page unmounts.
+      // Save state before the component unmounts.
       saveVirtualScrollerState(virtualScrollerState.current);
     };
   });

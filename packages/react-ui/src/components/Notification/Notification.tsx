@@ -138,10 +138,22 @@ export interface NotificationProps extends CardProps {
   handleCustomNotification?: (data) => JSX.Element;
 
   /**
+   * Collapse or not other aggregated
+   * @default true
+   */
+  collapsedOtherAggregated?: boolean;
+
+  /**
    * The max n of results uncollapsed shown
    * @default 2
    */
   showMaxAggregated?: number;
+
+  /**
+   * When an action of feedObject change the layout of the element
+   * @param s
+   */
+  onChangeLayout?: (s) => void;
 
   /**
    * The obj key
@@ -200,6 +212,8 @@ export default function UserNotification(inProps: NotificationProps): JSX.Elemen
     notificationObject,
     handleCustomNotification,
     showMaxAggregated = 2,
+    collapsedOtherAggregated = true,
+    onChangeLayout,
     ...rest
   } = props;
 
@@ -210,7 +224,7 @@ export default function UserNotification(inProps: NotificationProps): JSX.Elemen
   const [obj, setObj] = useState<SCNotificationAggregatedType>(notificationObject);
   const [loadingVote, setLoadingVote] = useState<number>(null);
   const [loadingSuspendNotification, setLoadingSuspendNotification] = useState<boolean>(false);
-  const [openOtherAggregated, setOpenOtherAggregated] = useState<boolean>(false);
+  const [openOtherAggregated, setOpenOtherAggregated] = useState<boolean>(!collapsedOtherAggregated);
 
   //INTL
   const intl = useIntl();
@@ -294,6 +308,15 @@ export default function UserNotification(inProps: NotificationProps): JSX.Elemen
       .catch((error) => {
         Logger.error(SCOPE_SC_UI, error);
       });
+  }
+
+  /**
+   * Open/close other aggregated activities
+   * The layout change -> call onChangeLayout
+   */
+  function setStateAggregated() {
+    onChangeLayout({collapsedOtherAggregated: !openOtherAggregated});
+    setOpenOtherAggregated((prev) => !prev);
   }
 
   /**
@@ -458,7 +481,7 @@ export default function UserNotification(inProps: NotificationProps): JSX.Elemen
           </div>
           {notificationObject.aggregated.length > showMaxAggregated && (
             <>
-              <ListItemButton onClick={() => setOpenOtherAggregated((prev) => !prev)} classes={{root: classes.showOtherAggregated}}>
+              <ListItemButton onClick={setStateAggregated} classes={{root: classes.showOtherAggregated}}>
                 <ListItemText primary={<FormattedMessage id={'ui.notification.showOthers'} defaultMessage={'ui.notification.showOthers'} />} />
                 {openOtherAggregated ? <Icon>expand_less</Icon> : <Icon>expand_more</Icon>}
               </ListItemButton>
