@@ -26,6 +26,7 @@ import Widget from '../Widget';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import VirtualizedScroller, {VirtualScrollChild} from '../../shared/VirtualizedScroller';
 import {widgetReducer, widgetSort} from '../../utils/feed';
+import Footer from '../Footer';
 
 const PREFIX = 'SCFeed';
 
@@ -103,6 +104,18 @@ export interface FeedProps {
    * @default <FormattedMessage id="ui.feed.refreshRelease" defaultMessage="ui.feed.refreshRelease" />
    */
   refreshMessage?: ReactNode;
+
+  /**
+   * Component used as footer. It will be displayed after the end messages
+   @default <Footer>
+   */
+  FooterComponent?: React.ElementType;
+
+  /**
+   * Props to spread to FooterComponent
+   * @default empty object
+   */
+  FooterComponentProps?: any;
 
   /**
    * Widgets to insert into the feed
@@ -218,6 +231,8 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     endpointQueryParams = {limit: DEFAULT_PAGINATION_ITEMS_NUMBER, offset: 0},
     endMessage = <FormattedMessage id="ui.feed.noOtherFeedObject" defaultMessage="ui.feed.noOtherFeedObject" />,
     refreshMessage = <FormattedMessage id="ui.feed.refreshRelease" defaultMessage="ui.feed.refreshRelease" />,
+    FooterComponent = Footer,
+    FooterComponentProps = {},
     widgets = [],
     ItemComponent,
     itemPropsGenerator,
@@ -506,9 +521,12 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
               hasMore={Boolean(feedDataObject.next)}
               loader={<ItemSkeleton {...ItemSkeletonProps} />}
               endMessage={
-                <Widget className={classes.end}>
-                  <CardContent>{endMessage}</CardContent>
-                </Widget>
+                <>
+                  <Widget className={classes.end}>
+                    <CardContent>{endMessage}</CardContent>
+                  </Widget>
+                  {FooterComponent ? <FooterComponent {...FooterComponentProps} /> : null}
+                </>
               }
               refreshFunction={refresh}
               pullDownToRefresh
