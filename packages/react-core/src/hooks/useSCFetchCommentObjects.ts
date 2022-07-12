@@ -146,11 +146,11 @@ export default function useSCFetchCommentObjects(props: {
     orderBy = SCCommentsOrderBy.ADDED_AT_DESC,
     parent,
     onChangePage,
-    cacheStrategy = CacheStrategies.CACHE_FIRST,
+    cacheStrategy = CacheStrategies.NETWORK_ONLY,
   } = props;
 
   // FeedObject
-  const {obj, setObj} = useSCFetchFeedObject({id, feedObject, feedObjectType});
+  const {obj, setObj} = useSCFetchFeedObject({id, feedObject, feedObjectType, cacheStrategy});
   const objId = obj ? obj.id : null;
 
   /**

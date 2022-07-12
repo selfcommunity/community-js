@@ -63,7 +63,7 @@ export default function useSCFetchFeedObject({
    * If id and feedObjectType resolve feedObject
    */
   useEffect(() => {
-    if (__feedObjectId && __feedObjectType && (!obj || cacheStrategy === CacheStrategies.STALE_WHILE_REVALIDATE)) {
+    if (__feedObjectId && __feedObjectType && !feedObject) {
       fetchFeedObject()
         .then((obj) => {
           setObj(obj);

@@ -161,7 +161,14 @@ export default function useSCFetchFeed(props: {
   cacheStrategy?: CacheStrategies;
 }) {
   // PROPS
-  const {id, endpoint, endpointQueryParams = {limit: 10, offset: 0}, onNextPage, onPreviousPage, cacheStrategy = CacheStrategies.CACHE_FIRST} = props;
+  const {
+    id,
+    endpoint,
+    endpointQueryParams = {limit: 10, offset: 0},
+    onNextPage,
+    onPreviousPage,
+    cacheStrategy = CacheStrategies.NETWORK_ONLY,
+  } = props;
   const queryParams = useMemo(() => Object.assign({limit: 10, offset: 0}, endpointQueryParams), [endpointQueryParams]);
 
   /**

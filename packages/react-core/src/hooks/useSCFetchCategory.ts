@@ -17,11 +17,11 @@ import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
 export default function useSCFetchCategory({
   id = null,
   category = null,
-  cacheStrategy = CacheStrategies.CACHE_FIRST
+  cacheStrategy = CacheStrategies.CACHE_FIRST,
 }: {
   id?: number;
-  category?: SCCategoryType,
-  cacheStrategy?: CacheStrategies
+  category?: SCCategoryType;
+  cacheStrategy?: CacheStrategies;
 }) {
   const __categoryId = category ? category.id : id;
 
@@ -29,7 +29,8 @@ export default function useSCFetchCategory({
   const __categoryCacheKey = getCategoryObjectCacheKey(__categoryId);
 
   const [scCategory, setSCCategory] = useState<SCCategoryType>(
-    cacheStrategy !== CacheStrategies.NETWORK_ONLY ? LRUCache.get(__categoryCacheKey, category) : null);
+    cacheStrategy !== CacheStrategies.NETWORK_ONLY ? LRUCache.get(__categoryCacheKey, category) : null
+  );
   const [error, setError] = useState<string>(null);
 
   /**
