@@ -6,7 +6,6 @@ import React, {
   useContext,
   useEffect,
   useImperativeHandle,
-  useLayoutEffect,
   useMemo,
   useRef,
   useState
@@ -35,7 +34,7 @@ import PubSub from 'pubsub-js';
 import {useThemeProps} from '@mui/system';
 import Widget from '../Widget';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import FeedVirtualizedScroller from '../../shared/VirtualizedScroller';
+import VirtualizedScroller, {VirtualScrollChild} from '../../shared/VirtualizedScroller';
 import {widgetReducer, widgetSort} from '../../utils/feed';
 
 const PREFIX = 'SCFeed';
@@ -190,21 +189,6 @@ export interface FeedProps {
 const WIDGET_PREFIX_KEY = 'widget_';
 const DEFAULT_PAGINATION_ITEMS_NUMBER = 5;
 const PREFERENCES = [SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED, SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED];
-
-/**
- * A wrapper component for children of
- * VirtualScroll. Computes current height and
- * update virtual scroll
- */
-const VirtualScrollChild = ({virtualScrollerMountState, children, onHeightChange}) => {
-  useLayoutEffect(() => {
-    if (virtualScrollerMountState.current) {
-      onHeightChange();
-    }
-  }, []);
-
-  return <div>{children}</div>;
-};
 
 /**
  * > API documentation for the Community-JS Feed component. Learn about the available props and the CSS API.
@@ -544,7 +528,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
                 </Widget>
               }
               style={{overflow: 'visible'}}>
-              <FeedVirtualizedScroller
+              <VirtualizedScroller
                 items={feedDataLeft}
                 itemComponent={InnerItem}
                 onMount={onScrollerMount}
