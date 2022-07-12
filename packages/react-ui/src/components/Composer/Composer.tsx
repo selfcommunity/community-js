@@ -447,15 +447,16 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
           location: _feedObject.location
         }
       });
+      setIsLoading(false);
     } else {
       setLoadError(true);
     }
   };
 
   // Edit state variables
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [loadError, setLoadError] = useState<boolean>(false);
   const editMode = Boolean((feedObjectId && feedObjectType) || feedObject);
+  const [isLoading, setIsLoading] = useState<boolean>(editMode);
+  const [loadError, setLoadError] = useState<boolean>(false);
 
   // REFS
   const unloadRef = React.useRef<boolean>(false);

@@ -80,8 +80,12 @@ export default function useSCFetchFeedObject({
 
   useDeepCompareEffectNoCheck(() => {
     if (feedObject) {
-      setObj(feedObject);
-      LRUCache.set(__feedObjectCacheKey, obj);
+      if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
+        setObj(feedObject);
+        LRUCache.set(__feedObjectCacheKey, feedObject);
+      } else {
+        setObj(LRUCache.get(__feedObjectCacheKey, feedObject));
+      }
     }
   }, [feedObject]);
 

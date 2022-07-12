@@ -307,26 +307,17 @@ export default function useSCFetchFeed(props: {
     });
   }
 
-  // /**
-  //  * Reset feedData status on change pageSize, offset
-  //  */
-  // useEffect(() => {
-  //   if (state.componentLoaded && Boolean(endpoint) && !state.reload) {
-  //     reload();
-  //   }
-  // }, [endpoint, queryParams.offset, queryParams.limit]);
-  //
-  // /**
-  //  * Reload fetch feedData
-  //  */
-  // useEffect(() => {
-  //   if (state.componentLoaded && state.reload && !state.isLoadingNext && !state.isLoadingPrevious) {
-  //     dispatch({
-  //       type: feedDataActionTypes.DATA_RELOADED,
-  //     });
-  //     getNextPage();
-  //   }
-  // }, [state.reload]);
+  /**
+   * Reload fetch feedData
+   */
+  useEffect(() => {
+    if (state.componentLoaded && state.reload && !state.isLoadingNext && !state.isLoadingPrevious) {
+      dispatch({
+        type: feedDataActionTypes.DATA_RELOADED,
+      });
+      getNextPage();
+    }
+  }, [state.reload]);
 
   function updateData(data) {
     dispatch({type: feedDataActionTypes.UPDATE_DATA, payload: {data}});

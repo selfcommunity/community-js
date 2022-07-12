@@ -73,8 +73,12 @@ export default function useSCFetchCategory({
 
   useDeepCompareEffectNoCheck(() => {
     if (category) {
-      setSCCategory(category);
-      LRUCache.set(__categoryCacheKey, category);
+      if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
+        setSCCategory(category);
+        LRUCache.set(__categoryCacheKey, category);
+      } else {
+        setSCCategory(LRUCache.get(__categoryCacheKey, category));
+      }
     }
   }, [category]);
 
