@@ -141,7 +141,7 @@ export default function ExploreFeed(inProps: ExploreFeedProps): JSX.Element {
   const {id = 'explore_feed', className, widgets = WIDGETS, FeedObjectProps = {}, FeedSidebarProps = null, FeedProps = {}} = props;
 
   // STATE
-  const [_widgets, setWidgets] = useState<SCFeedWidgetType[]>([]);
+  const [_widgets, setWidgets] = useState<SCFeedWidgetType[]>(widgets);
 
   // REF
   const feedRef = useRef<FeedRef>();

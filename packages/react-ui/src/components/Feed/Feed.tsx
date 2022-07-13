@@ -331,7 +331,6 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
    */
   const onNextPage = (page, offset, total, data) => {
     setFeedDataLeft((prev) => prev.concat(_getFeedDataLeft(data)));
-    setFeedDataRight(_getFeedDataRight());
     onNextData && onNextData(page, offset, total, data);
   };
 
@@ -344,7 +343,6 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
    */
   const onPreviousPage = (page, offset, total, data) => {
     setFeedDataLeft((prev) => _getFeedDataLeft(data).concat(prev));
-    setFeedDataRight(_getFeedDataRight());
     onPreviousData && onPreviousData(page, offset, total, data);
   };
 
@@ -352,7 +350,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
   const feedDataObject = useSCFetchFeed({
     id,
     endpoint,
-    endpointQueryParams: {endpointQueryParams, ...{offset}},
+    endpointQueryParams: {...endpointQueryParams, ...{offset}},
     onNextPage: onNextPage,
     onPreviousPage: onPreviousPage,
     cacheStrategy
@@ -439,11 +437,11 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
       if (cacheStrategy === CacheStrategies.CACHE_FIRST && feedDataObject.componentLoaded) {
         // Set current cached feed
         setFeedDataLeft(_getFeedDataLeft(feedDataObject.feedData));
-        setFeedDataRight(_getFeedDataRight(feedDataObject.feedData));
       } else {
         // Load next page
         feedDataObject.getNextPage();
       }
+      setFeedDataRight(_getFeedDataRight());
     },
     [cacheStrategy, feedDataObject, endpointQueryParams]
   );
