@@ -102,9 +102,9 @@ export default function Category(inProps: CategoryProps): JSX.Element {
   const {id = 'category', className, category, categoryId, widgets, FeedObjectProps, FeedSidebarProps, CategoryFeedProps = {}} = props;
 
   // Hooks
-  const {scCategory, setSCCategory} = useSCFetchCategory({id: categoryId, category});
+  const {scCategory} = useSCFetchCategory({id: categoryId, category});
 
-  if (scCategory === null) {
+  if (!scCategory) {
     return <CategorySkeleton />;
   }
 

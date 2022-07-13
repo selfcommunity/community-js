@@ -1,6 +1,6 @@
 import React from 'react';
 import {ComponentMeta, ComponentStory} from '@storybook/react';
-import Feed from './index';
+import Feed from './Feed';
 import {Endpoints} from '@selfcommunity/api-services';
 import {SCNotificationTopicType} from '@selfcommunity/types';
 import FeedObject, {FeedObjectSkeleton} from '../FeedObject';
@@ -9,6 +9,7 @@ import SCNotification, {NotificationSkeleton} from '../Notification';
 import FeedUpdates from '../FeedUpdates';
 import BroadcastMessages from '../BroadcastMessages';
 import {CacheStrategies} from '@selfcommunity/utils';
+import {InlineComposer, TrendingFeed, TrendingPeople} from '../../index';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -48,6 +49,22 @@ export const Explore = Template.bind({});
 Explore.args = {
   id: 'explore',
   endpoint: Endpoints.ExploreFeed,
+  widgets: [
+    {
+      type: 'widget',
+      component: InlineComposer,
+      componentProps: {},
+      column: 'left',
+      position: 0
+    },
+    {
+      type: 'widget',
+      component: TrendingPeople,
+      componentProps: {categoryId: 1},
+      column: 'right',
+      position: 1
+    }
+  ],
   ItemComponent: FeedObject,
   itemPropsGenerator: (scUser, item) => ({
     feedObject: item[item.type],
@@ -68,6 +85,22 @@ export const ExploreCache = Template.bind({});
 ExploreCache.args = {
   id: 'explore',
   endpoint: Endpoints.ExploreFeed,
+  widgets: [
+    {
+      type: 'widget',
+      component: InlineComposer,
+      componentProps: {},
+      column: 'left',
+      position: 0
+    },
+    {
+      type: 'widget',
+      component: TrendingPeople,
+      componentProps: {categoryId: 1},
+      column: 'right',
+      position: 1
+    }
+  ],
   ItemComponent: FeedObject,
   itemPropsGenerator: (scUser, item) => ({
     feedObject: item[item.type],
@@ -83,11 +116,27 @@ ExploreCache.args = {
   cacheStrategy: CacheStrategies.CACHE_FIRST
 };
 
-export const ExploreCache2 = Template.bind({});
+export const ExploreOffset2 = Template.bind({});
 
-ExploreCache2.args = {
+ExploreOffset2.args = {
   id: 'explore',
   endpoint: Endpoints.ExploreFeed,
+  widgets: [
+    {
+      type: 'widget',
+      component: InlineComposer,
+      componentProps: {},
+      column: 'left',
+      position: 0
+    },
+    {
+      type: 'widget',
+      component: TrendingPeople,
+      componentProps: {categoryId: 1},
+      column: 'right',
+      position: 1
+    }
+  ],
   ItemComponent: FeedObject,
   itemPropsGenerator: (scUser, item) => ({
     feedObject: item[item.type],
@@ -100,8 +149,46 @@ ExploreCache2.args = {
   ItemSkeletonProps: {
     template: SCFeedObjectTemplateType.PREVIEW
   },
+  endpointQueryParams: {limit: 5, offset: 2}
+};
+
+export const ExploreOffset2Cached = Template.bind({});
+
+ExploreOffset2Cached.args = {
+  id: 'explore',
+  endpoint: Endpoints.ExploreFeed,
+  widgets: [
+    {
+      type: 'widget',
+      component: InlineComposer,
+      componentProps: {},
+      column: 'left',
+      position: 0
+    },
+    {
+      type: 'widget',
+      component: TrendingPeople,
+      componentProps: {categoryId: 1},
+      column: 'right',
+      position: 1
+    }
+  ],
+  ItemComponent: FeedObject,
+  itemPropsGenerator: (scUser, item) => ({
+    feedObject: item[item.type],
+    feedObjectType: item.type,
+    feedObjectActivities: item.activities ? item.activities : null,
+    markRead: scUser ? !item.seen_by_id.includes(scUser.id) : false
+  }),
+  itemIdGenerator: (item) => item[item.type].id,
+  ItemSkeleton: FeedObjectSkeleton,
+  ItemSkeletonProps: {
+    template: SCFeedObjectTemplateType.PREVIEW
+  },
+  endpointQueryParams: {limit: 5, offset: 2},
   cacheStrategy: CacheStrategies.CACHE_FIRST
 };
+
 
 export const Notification = Template.bind({});
 

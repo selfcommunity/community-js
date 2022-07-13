@@ -17,7 +17,8 @@ export interface SCPaginatedFeedType {
   previous: string;
   isLoadingNext: boolean;
   isLoadingPrevious: boolean;
-  page: number;
+  currentPage: number;
+  currentOffset: number;
   reload: boolean;
 }
 
@@ -33,8 +34,10 @@ export const feedDataActionTypes = {
   LOADING_PREVIOUS: '_loading_previous',
   DATA_NEXT_LOADED: '_data_next_loaded',
   DATA_PREVIOUS_LOADED: '_data_previous_loaded',
+  DATA_REVALIDATE: '_data_revalidate',
   DATA_RELOAD: '_data_reload',
   DATA_RELOADED: '_data_reloaded',
+  UPDATE_DATA: '_data_update',
 };
 
 /**
@@ -56,9 +59,9 @@ function feedDataReducer(state, action) {
     case feedDataActionTypes.DATA_NEXT_LOADED:
       _state = {
         ...state,
-        page: action.payload.currentPage,
+        currentPage: action.payload.currentPage,
+        currentOffset: action.payload.currentOffset,
         feedData: [...state.feedData, ...action.payload.feedData],
-        // feedDataSlice: action.payload.feedData,
         isLoadingNext: false,
         componentLoaded: true,
         next: action.payload.next,
@@ -69,18 +72,26 @@ function feedDataReducer(state, action) {
     case feedDataActionTypes.DATA_PREVIOUS_LOADED:
       _state = {
         ...state,
-        page: action.payload.currentPage,
+        currentPage: action.payload.currentPage,
+        currentOffset: action.payload.currentOffset,
         feedData: [...action.payload.feedData, ...state.feedData],
-        // feedDataSlice: action.payload.feedData,
         isLoadingPrevious: false,
         componentLoaded: true,
         previous: action.payload.previous,
+      };
+      break;
+    case feedDataActionTypes.DATA_REVALIDATE:
+      _state = {
+        ...state,
+        feedData: action.payload.feedData,
       };
       break;
     case feedDataActionTypes.DATA_RELOAD:
       _state = {
         ...state,
         next: action.payload.next,
+        currentPage: 1,
+        currentOffset: 0,
         feedData: [],
         total: 0,
         previous: null,
@@ -92,6 +103,11 @@ function feedDataReducer(state, action) {
         ...state,
         componentLoaded: false,
         reload: false,
+      };
+      break;
+    case feedDataActionTypes.UPDATE_DATA:
+      _state = {
+        feedData: action.payload.data,
       };
       break;
   }
@@ -109,13 +125,14 @@ function stateInitializer(data): SCPaginatedFeedType {
     id: data.id,
     componentLoaded: false,
     feedData: [],
-    // feedDataSlice: [],
     total: 0,
     next: data.next,
     previous: null,
     isLoadingNext: false,
     isLoadingPrevious: false,
-    page: data.queryParams.offset / data.queryParams.limit + 1,
+    limit: data.queryParams.limit,
+    currentPage: Math.ceil(data.queryParams.offset / data.queryParams.limit + 1),
+    currentOffset: data.queryParams.offset,
     reload: false,
   };
   if (__feedStateCacheKey && LRUCache.hasKey(__feedStateCacheKey) && data.cacheStrategy !== CacheStrategies.NETWORK_ONLY) {
@@ -139,11 +156,19 @@ export default function useSCFetchFeed(props: {
   id: string;
   endpoint: EndpointType;
   endpointQueryParams?: Record<string, string | number>;
-  onChangePage?: (page) => any;
+  onNextPage?: (page, offset, total, data) => any;
+  onPreviousPage?: (page, offset, total, data) => any;
   cacheStrategy?: CacheStrategies;
 }) {
   // PROPS
-  const {id, endpoint, endpointQueryParams = {limit: 10, offset: 0}, onChangePage, cacheStrategy = CacheStrategies.CACHE_FIRST} = props;
+  const {
+    id,
+    endpoint,
+    endpointQueryParams = {limit: 10, offset: 0},
+    onNextPage,
+    onPreviousPage,
+    cacheStrategy = CacheStrategies.NETWORK_ONLY,
+  } = props;
   const queryParams = useMemo(() => Object.assign({limit: 10, offset: 0}, endpointQueryParams), [endpointQueryParams]);
 
   /**
@@ -165,11 +190,10 @@ export default function useSCFetchFeed(props: {
   /**
    * Calculate current page
    */
-  const getCurrentPage = (url) => {
+  const getCurrentOffset = (url) => {
     const urlSearchParams = new URLSearchParams(url);
     const params = Object.fromEntries(urlSearchParams.entries());
-    const currentOffset: number = params.offset ? parseInt(params.offset) : 0;
-    return currentOffset / queryParams.limit + 1;
+    return params.offset ? parseInt(params.offset) : 0;
   };
 
   /**
@@ -177,23 +201,17 @@ export default function useSCFetchFeed(props: {
    */
   const revalidate = (url, forward) => {
     return performFetchComments(url, false).then((res) => {
-      let _feedData;
-      let currentPage = getCurrentPage(state.next);
+      let feedData;
       if (forward) {
         let start = state.feedData.slice(0, state.feedData.length - res.results.length);
-        _feedData = start.concat(res.results);
+        feedData = start.concat(res.results);
       } else {
         let start = state.feedData.slice(res.results.length, state.feedData.length);
-        _feedData = res.results.concat(start);
+        feedData = res.results.concat(start);
       }
       dispatch({
-        type: forward ? feedDataActionTypes.DATA_NEXT_LOADED : feedDataActionTypes.DATA_PREVIOUS_LOADED,
-        payload: {
-          page: currentPage,
-          feedData: _feedData,
-          ...(forward ? {next: res.next} : {previous: res.previous}),
-          total: res.count,
-        },
+        type: feedDataActionTypes.DATA_REVALIDATE,
+        payload: {feedData},
       });
     });
   };
@@ -228,24 +246,25 @@ export default function useSCFetchFeed(props: {
       dispatch({type: feedDataActionTypes.LOADING_PREVIOUS});
       performFetchComments(state.previous)
         .then((res) => {
-          let currentPage = getCurrentPage(state.previous);
+          let currentOffset = Math.max(getCurrentOffset(res.previous), 0);
+          let currentPage = Math.ceil(currentOffset / queryParams.limit + 1);
           dispatch({
             type: feedDataActionTypes.DATA_PREVIOUS_LOADED,
             payload: {
-              page: currentPage,
+              currentPage,
+              currentOffset,
+              total: res.count,
               feedData: res.results,
-              previous: res.previous
+              previous: res.previous,
             },
           });
-          onChangePage && onChangePage(currentPage);
-        })
-        .catch((error) => {
-          Logger.error(SCOPE_SC_CORE, error);
-        })
-        .then(() => {
+          onPreviousPage && onPreviousPage(currentPage, currentOffset, res.count, res.results);
           if (cacheStrategy === CacheStrategies.STALE_WHILE_REVALIDATE) {
             revalidate(state.next, false);
           }
+        })
+        .catch((error) => {
+          Logger.error(SCOPE_SC_CORE, error);
         });
     }
   }
@@ -258,27 +277,27 @@ export default function useSCFetchFeed(props: {
       dispatch({type: feedDataActionTypes.LOADING_NEXT});
       performFetchComments(state.next)
         .then((res) => {
-          let currentPage = getCurrentPage(state.next);
+          let currentOffset = Math.max(getCurrentOffset(res.next) - queryParams.limit, 0);
+          let currentPage = Math.ceil(currentOffset / queryParams.limit + 1);
           dispatch({
             type: feedDataActionTypes.DATA_NEXT_LOADED,
             payload: {
-              page: currentPage,
+              currentPage,
+              currentOffset,
               feedData: res.results,
               next: res.next,
               total: res.count,
               componentLoaded: true,
-              ...(queryParams.offset && state.feedData.length === 0 ? {previous: res.previous} : {})
+              ...(queryParams.offset && state.feedData.length === 0 ? {previous: res.previous} : {}),
             },
           });
-          onChangePage && onChangePage(currentPage);
-        })
-        .catch((error) => {
-          Logger.error(SCOPE_SC_CORE, error);
-        })
-        .then(() => {
+          onNextPage && onNextPage(currentPage, currentOffset, res.count, res.results);
           if (cacheStrategy === CacheStrategies.STALE_WHILE_REVALIDATE) {
             revalidate(state.next, true);
           }
+        })
+        .catch((error) => {
+          Logger.error(SCOPE_SC_CORE, error);
         });
     }
   }
@@ -295,29 +314,25 @@ export default function useSCFetchFeed(props: {
     });
   }
 
-  // /**
-  //  * Reset feedData status on change pageSize, offset
-  //  */
-  // useEffect(() => {
-  //   if (state.componentLoaded && Boolean(endpoint) && !state.reload) {
-  //     reload();
-  //   }
-  // }, [endpoint, queryParams.offset, queryParams.limit]);
-  //
-  // /**
-  //  * Reload fetch feedData
-  //  */
-  // useEffect(() => {
-  //   if (state.componentLoaded && state.reload && !state.isLoadingNext && !state.isLoadingPrevious) {
-  //     dispatch({
-  //       type: feedDataActionTypes.DATA_RELOADED,
-  //     });
-  //     getNextPage();
-  //   }
-  // }, [state.reload]);
+  /**
+   * Reload fetch feedData
+   */
+  useEffect(() => {
+    if (state.componentLoaded && state.reload && !state.isLoadingNext && !state.isLoadingPrevious) {
+      dispatch({
+        type: feedDataActionTypes.DATA_RELOADED,
+      });
+      getNextPage();
+    }
+  }, [state.reload]);
+
+  function updateData(data) {
+    dispatch({type: feedDataActionTypes.UPDATE_DATA, payload: {data}});
+  }
 
   return {
     ...state,
+    updateData,
     queryParams,
     getNextPage,
     getPreviousPage,

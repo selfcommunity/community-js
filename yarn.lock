@@ -14753,6 +14753,13 @@ replace-ext@^1.0.0:
   resolved "https://registry.yarnpkg.com/replace-ext/-/replace-ext-1.0.1.tgz#2d6d996d04a15855d967443631dd5f77825b016a"
   integrity sha512-yD5BHCe7quCgBph4rMQ+0KkIRKwWCrHDOX1p1Gp6HwjPM5kVoCdKGNhN7ydqqsX6lJEnQDKZ/tFMiEdQ1dvPEw==
 
+request-animation-frame-timeout@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/request-animation-frame-timeout/-/request-animation-frame-timeout-1.0.0.tgz#0622c11901abd0e5b0ce346c5aaafc1ef28a3a3d"
+  integrity sha512-jN+M/AWPCwtWIijtnhLvzolo9JASyK719b+m4+5IrSy5GJ4tApkQr8LxOUu12cidA1HOaDjbCKNOFhFY9eF1Gg==
+  dependencies:
+    raf "^3.4.1"
+
 request@^2.65.0, request@^2.88.0, request@^2.88.2:
   version "2.88.2"
   resolved "https://registry.yarnpkg.com/request/-/request-2.88.2.tgz#d73c918731cb5a87da047e207234146f664d12b3"
@@ -16872,6 +16879,13 @@ vinyl@^2.2.1:
     cloneable-readable "^1.0.0"
     remove-trailing-separator "^1.0.1"
     replace-ext "^1.0.0"
+
+virtual-scroller@^1.9.1:
+  version "1.9.1"
+  resolved "https://registry.yarnpkg.com/virtual-scroller/-/virtual-scroller-1.9.1.tgz#2b7b8e239574bc5e86545e8090f11542032d595f"
+  integrity sha512-AXAgvS0K3lmB4NOik2PgWha0hVAILbTVeLLCIa90+TmumM4DI5F8snChinqD6IbQ/2FOOQ+YZoRavQ1HBI5H9g==
+  dependencies:
+    request-animation-frame-timeout "^1.0.0"
 
 vm-browserify@^1.0.1:
   version "1.1.2"

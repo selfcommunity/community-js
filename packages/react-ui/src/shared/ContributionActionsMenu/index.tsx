@@ -269,6 +269,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
   // CONTEXT
   const scContext: SCContextType = useContext(SCContext);
   const scUserContext: SCUserContextType = useContext(SCUserContext);
+  const scUserId = scUserContext.user ? scUserContext.user.id : null;
   const scRoutingContext: SCRoutingContextType = useSCRouting();
   const {enqueueSnackbar} = useSnackbar();
 
@@ -309,7 +310,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
   const getExtraSections = useMemo(
     () => () => {
       let _extra = [];
-      if (scUserContext.user && Boolean(contributionObj) && scUserContext.user.id !== contributionObj.author.id) {
+      if (scUserContext.user && Boolean(contributionObj) && scUserId !== contributionObj.author.id) {
         _extra.push(FLAG_CONTRIBUTION_SECTION);
       }
       // Enable when backend is ready
@@ -320,7 +321,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
       }
       return _extra;
     },
-    [contributionObj]
+    [contributionObj, scUserId]
   );
 
   /**
@@ -716,6 +717,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
         setCurrentActionLoading(RESTORE_CONTRIBUTION);
         performDeleteContribution()
           .then((data) => {
+            setFeedObj(Object.assign(feedObj, {deleted: true}));
             onDeleteContribution && onDeleteContribution(contributionObj);
             performPostConfirmAction(true);
           })
@@ -727,6 +729,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
         setCurrentActionLoading(RESTORE_CONTRIBUTION);
         performRestoreContribution()
           .then((data) => {
+            setFeedObj(Object.assign(feedObj, {deleted: false}));
             onRestoreContribution && onRestoreContribution(contributionObj);
             performPostConfirmAction(true);
           })
@@ -740,6 +743,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
           .then((data) => {
             setHideType(hideType === hideFlagType ? null : hideFlagType);
             setHideFlagType(null);
+            setFeedObj(Object.assign(feedObj, {collapsed: !feedObj.collapsed}));
             onHideContribution && onHideContribution(contributionObj);
             performPostConfirmAction(true);
           })
@@ -753,6 +757,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
           .then((data) => {
             setDeleteType(deleteType === deleteFlagType ? null : deleteFlagType);
             setDeleteFlagType(null);
+            setFeedObj(Object.assign(feedObj, {deleted: !feedObj.deleted}));
             onDeleteContribution && onDeleteContribution(contributionObj);
             performPostConfirmAction(true);
           })

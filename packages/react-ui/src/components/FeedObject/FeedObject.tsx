@@ -260,6 +260,12 @@ export interface FeedObjectProps extends CardProps {
   hideFollowAction?: boolean;
 
   /**
+   * Show activities as default
+   * @default false
+   */
+  activitiesExpanded?: boolean;
+
+  /**
    * Hide Participants preview
    * @default false
    */
@@ -351,6 +357,12 @@ export interface FeedObjectProps extends CardProps {
   cacheStrategy?: CacheStrategies;
 
   /**
+   * When an action of feedObject change the layout of the element
+   * @param s
+   */
+  onChangeLayout?: (s) => void;
+
+  /**
    * Other props
    */
   [p: string]: any;
@@ -416,6 +428,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
     markRead = false,
     template = SCFeedObjectTemplateType.PREVIEW,
     hideFollowAction = false,
+    activitiesExpanded = true,
     hideParticipantsPreview = false,
     FollowButtonProps = {},
     FeedObjectSkeletonProps = {elevation: 0},
@@ -430,6 +443,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
     ContributorsFeedObjectProps = {},
     onReply,
     cacheStrategy = CacheStrategies.CACHE_FIRST,
+    onChangeLayout,
     ...rest
   } = props;
 
@@ -447,7 +461,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
    * Get initial expanded activities
    */
   function geExpandedActivities() {
-    return obj && (obj.comment_count > 0 || (feedObjectActivities && feedObjectActivities.length > 0));
+    return obj && activitiesExpanded && (obj.comment_count > 0 || (feedObjectActivities && feedObjectActivities.length > 0));
   }
 
   // STATE
@@ -558,6 +572,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
     (data) => {
       updateObject(data);
       setComposerOpen(false);
+      onChangeLayout && onChangeLayout({activitiesExpanded: expandedActivities});
     },
     [obj, composerOpen]
   );
@@ -577,6 +592,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
    */
   const handleExpandActivities = useCallback(() => {
     if (scUserContext.user) {
+      onChangeLayout && onChangeLayout({activitiesExpanded: !expandedActivities});
       setExpandedActivities((prev) => !prev);
     } else {
       scContext.settings.handleAnonymousAction();
@@ -607,6 +623,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
     (type) => {
       setSelectedActivities(type);
       setComments([]);
+      onChangeLayout && onChangeLayout({activitiesExpanded: expandedActivities});
     },
     [obj]
   );
@@ -661,6 +678,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
           const newObj = Object.assign(obj, {comment_count: obj.comment_count + 1});
           updateObject(newObj);
           LRUCache.deleteKeysWithPrefix(SCCache.getCommentObjectsCachePrefixKeys(obj.id, obj.type));
+          onChangeLayout && onChangeLayout({activitiesExpanded: expandedActivities});
           onReply && onReply(data);
         })
         .catch((error) => {

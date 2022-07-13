@@ -146,7 +146,7 @@ export default function useSCFetchCommentObjects(props: {
     orderBy = SCCommentsOrderBy.ADDED_AT_DESC,
     parent,
     onChangePage,
-    cacheStrategy = CacheStrategies.CACHE_FIRST,
+    cacheStrategy = CacheStrategies.NETWORK_ONLY,
   } = props;
 
   // FeedObject

@@ -63,7 +63,7 @@ export default function useSCFetchFeedObject({
    * If id and feedObjectType resolve feedObject
    */
   useEffect(() => {
-    if (__feedObjectId && __feedObjectType && (!obj || cacheStrategy === CacheStrategies.STALE_WHILE_REVALIDATE)) {
+    if (__feedObjectId && __feedObjectType && !feedObject) {
       fetchFeedObject()
         .then((obj) => {
           setObj(obj);
@@ -80,8 +80,12 @@ export default function useSCFetchFeedObject({
 
   useDeepCompareEffectNoCheck(() => {
     if (feedObject) {
-      setObj(feedObject);
-      LRUCache.set(__feedObjectCacheKey, obj);
+      if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
+        setObj(feedObject);
+        LRUCache.set(__feedObjectCacheKey, feedObject);
+      } else {
+        setObj(LRUCache.get(__feedObjectCacheKey, feedObject));
+      }
     }
   }, [feedObject]);
 
