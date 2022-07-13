@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useMemo, useRef} from 'react';
 import {styled} from '@mui/material/styles';
 import {
   CategoriesPopular,
@@ -140,23 +140,8 @@ export default function ExploreFeed(inProps: ExploreFeedProps): JSX.Element {
   });
   const {id = 'explore_feed', className, widgets = WIDGETS, FeedObjectProps = {}, FeedSidebarProps = null, FeedProps = {}} = props;
 
-  // STATE
-  const [_widgets, setWidgets] = useState<SCFeedWidgetType[]>(widgets);
-
   // REF
   const feedRef = useRef<FeedRef>();
-
-  // EFFECTS
-  useEffect(() => {
-    setWidgets(
-      widgets.map((w) => {
-        if (w.component === InlineComposer) {
-          return {...w, componentProps: {...w.componentProps, onSuccess: handleComposerSuccess}};
-        }
-        return {...w, componentProps: {...w.componentProps}};
-      })
-    );
-  }, [widgets]);
 
   // HANDLERS
   const handleComposerSuccess = (feedObject) => {
@@ -169,6 +154,18 @@ export default function ExploreFeed(inProps: ExploreFeedProps): JSX.Element {
     };
     feedRef && feedRef.current && feedRef.current.addFeedData(feedUnit);
   };
+
+  // WIDGETS
+  const _widgets = useMemo(
+    () =>
+      widgets.map((w) => {
+        if (w.component === InlineComposer) {
+          return {...w, componentProps: {...w.componentProps, onSuccess: handleComposerSuccess}};
+        }
+        return {...w, componentProps: {...w.componentProps}};
+      }),
+    [widgets]
+  );
 
   return (
     <Root

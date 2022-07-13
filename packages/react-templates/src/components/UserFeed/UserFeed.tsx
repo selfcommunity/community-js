@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useMemo, useRef} from 'react';
 import {styled} from '@mui/material/styles';
 import {Endpoints} from '@selfcommunity/api-services';
 import {useSCFetchUser} from '@selfcommunity/react-core';
@@ -143,26 +143,8 @@ export default function UserFeed(inProps: UserFeedProps): JSX.Element {
   // Hooks
   const {scUser} = useSCFetchUser({id: userId, user});
 
-  // STATE
-  const [_widgets, setWidgets] = useState<SCFeedWidgetType[]>([]);
-
   // REF
   const feedRef = useRef<FeedRef>();
-
-  // Component props update
-  useEffect(() => {
-    if (scUser === null) {
-      return;
-    }
-    setWidgets(
-      widgets.map((w) => {
-        if (w.component === InlineComposer) {
-          return {...w, componentProps: {...w.componentProps, onSuccess: handleComposerSuccess}};
-        }
-        return {...w, componentProps: {...w.componentProps, userId: scUser.id}};
-      })
-    );
-  }, [scUser, widgets]);
 
   // HANDLERS
   const handleComposerSuccess = (feedObject) => {
@@ -175,6 +157,18 @@ export default function UserFeed(inProps: UserFeedProps): JSX.Element {
     };
     feedRef && feedRef.current && feedRef.current.addFeedData(feedUnit);
   };
+
+  // WIDGETS
+  const _widgets = useMemo(
+    () =>
+      widgets.map((w) => {
+        if (w.component === InlineComposer && scUser) {
+          return {...w, componentProps: {...w.componentProps, onSuccess: handleComposerSuccess}};
+        }
+        return {...w, componentProps: {...w.componentProps}};
+      }),
+    [scUser, widgets]
+  );
 
   if (scUser === null) {
     return <UserFeedSkeleton />;
