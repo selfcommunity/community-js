@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.1.19-alpha.3...@selfcommunity/react-ui@0.2.0-alpha.0) (2022-07-13)
+
+
+### Bug Fixes
+
+* caching ([3a8c0c2](https://github.com/selfcommunity/community-js/commit/3a8c0c2915928f7514cc57184aca9b50ab247809))
+* caching ([6b4d01b](https://github.com/selfcommunity/community-js/commit/6b4d01b9f9d6e6af43e5ea793129fe0a3fa84a86))
+* caching ([d4a9b68](https://github.com/selfcommunity/community-js/commit/d4a9b68dfad2f0c3d6b0fcae1dce6595bcbf96a4))
+* caching ([0d342cb](https://github.com/selfcommunity/community-js/commit/0d342cb08209811197d39c00ccd913f4d7b410f6))
+* caching ([3569f27](https://github.com/selfcommunity/community-js/commit/3569f27f6ba669c1266db211068162ddf525872c))
+* caching ([27bad80](https://github.com/selfcommunity/community-js/commit/27bad8092cce7a0c22d55bdc103aea33086ee3fb))
+* caching ([d06a4bb](https://github.com/selfcommunity/community-js/commit/d06a4bbd210b093ad8fa463268a37295a224b9e1))
+* caching ([fd46eea](https://github.com/selfcommunity/community-js/commit/fd46eea0e4ae83b93bb45fc23a293169b44fcc70))
+* caching ([ab81721](https://github.com/selfcommunity/community-js/commit/ab817213d03ca0bd83fd66192726e632988ba8fe))
+* caching ([f8bc8e0](https://github.com/selfcommunity/community-js/commit/f8bc8e0e436420688a16346f8b81746d0d4cf8fa))
+* ContribuctionActionsMenu ([6cde382](https://github.com/selfcommunity/community-js/commit/6cde3825b794720e9c13add05cd79a82d237de19))
+* editor ([304b28e](https://github.com/selfcommunity/community-js/commit/304b28eacca1fd717ff8bedc085f97ca88ef60ad))
+* Feed ([26ba408](https://github.com/selfcommunity/community-js/commit/26ba408e460e3a91d8197c7cadfd1841e8e85dbd))
+* FeedObject ([a2af77d](https://github.com/selfcommunity/community-js/commit/a2af77d498806ef7e2481fb9b8438ee979b47206))
+* media links ([7684768](https://github.com/selfcommunity/community-js/commit/76847681177e496b9932b55901ac50d4fae8386f))
+
+
+### Features
+
+* Added footer component at the end of the feed ([d57406d](https://github.com/selfcommunity/community-js/commit/d57406d3e88fea9d71ac3d079b5eaad91bebd0e2))
+
+
+
+
+
 ## [0.1.19-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.1.19-alpha.2...@selfcommunity/react-ui@0.1.19-alpha.3) (2022-07-07)
 
 
