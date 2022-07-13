@@ -1,6 +1,6 @@
 {
   "name": "@selfcommunity/react-templates",
-  "version": "0.1.20",
+  "version": "0.1.21-alpha.0",
   "license": "MIT",
   "private": false,
   "main": "./lib/cjs/index.js",
@@ -56,10 +56,10 @@
     "react-stickynode": "^4.0.0"
   },
   "dependencies": {
-    "@selfcommunity/react-core": "^0.1.20",
-    "@selfcommunity/react-i18n": "^0.1.20",
-    "@selfcommunity/react-ui": "^0.2.1",
-    "@selfcommunity/types": "^0.1.20",
+    "@selfcommunity/react-core": "^0.1.21-alpha.0",
+    "@selfcommunity/react-i18n": "^0.1.21-alpha.0",
+    "@selfcommunity/react-ui": "^0.2.2-alpha.0",
+    "@selfcommunity/types": "^0.1.21-alpha.0",
     "@types/classnames": "^2.2.11",
     "classnames": "^2.2.6",
     "seamless-scroll-polyfill": "^2.1.8"
