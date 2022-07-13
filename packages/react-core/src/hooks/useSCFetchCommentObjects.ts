@@ -150,7 +150,7 @@ export default function useSCFetchCommentObjects(props: {
   } = props;
 
   // FeedObject
-  const {obj, setObj} = useSCFetchFeedObject({id, feedObject, feedObjectType, cacheStrategy});
+  const {obj, setObj} = useSCFetchFeedObject({id, feedObject, feedObjectType});
   const objId = obj ? obj.id : null;
 
   /**
