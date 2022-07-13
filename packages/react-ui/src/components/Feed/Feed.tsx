@@ -28,6 +28,7 @@ import VirtualizedScroller, {VirtualScrollChild} from '../../shared/VirtualizedS
 import {widgetReducer, widgetSort} from '../../utils/feed';
 import Footer from '../Footer';
 import FeedSkeleton from './Skeleton';
+import {scrollIntoView} from 'seamless-scroll-polyfill';
 
 const PREFIX = 'SCFeed';
 
@@ -331,7 +332,6 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
    */
   const onNextPage = (page, offset, total, data) => {
     setFeedDataLeft((prev) => prev.concat(_getFeedDataLeft(data)));
-    setFeedDataRight(_getFeedDataRight());
     onNextData && onNextData(page, offset, total, data);
   };
 
@@ -344,7 +344,6 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
    */
   const onPreviousPage = (page, offset, total, data) => {
     setFeedDataLeft((prev) => _getFeedDataLeft(data).concat(prev));
-    setFeedDataRight(_getFeedDataRight());
     onPreviousData && onPreviousData(page, offset, total, data);
   };
 
@@ -352,7 +351,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
   const feedDataObject = useSCFetchFeed({
     id,
     endpoint,
-    endpointQueryParams: {endpointQueryParams, ...{offset}},
+    endpointQueryParams: {...endpointQueryParams, ...{offset}},
     onNextPage: onNextPage,
     onPreviousPage: onPreviousPage,
     cacheStrategy
@@ -439,11 +438,11 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
       if (cacheStrategy === CacheStrategies.CACHE_FIRST && feedDataObject.componentLoaded) {
         // Set current cached feed
         setFeedDataLeft(_getFeedDataLeft(feedDataObject.feedData));
-        setFeedDataRight(_getFeedDataRight(feedDataObject.feedData));
       } else {
         // Load next page
         feedDataObject.getNextPage();
       }
+      setFeedDataRight(_getFeedDataRight());
     },
     [cacheStrategy, feedDataObject, endpointQueryParams]
   );
@@ -470,8 +469,16 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
 
   // EXPOSED METHODS
   useImperativeHandle(ref, () => ({
-    addFeedData: (data: any) => {
-      setFeedDataLeft([...data], feedDataLeft.length);
+    addFeedData: (feedUnit: any) => {
+      setFeedDataLeft([...[feedUnit], ...feedDataLeft]);
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          const element = document.getElementById(`item_${itemIdGenerator(feedUnit)}`);
+          if (element) {
+            scrollIntoView(element, {behavior: 'smooth', block: 'start', inline: 'center'});
+          }
+        }, 100);
+      });
     },
     refresh: () => {
       refresh();
