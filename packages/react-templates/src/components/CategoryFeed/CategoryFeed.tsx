@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {
   Feed,
@@ -154,24 +154,6 @@ export default function CategoryFeed(inProps: CategoryFeedProps): JSX.Element {
   // Hooks
   const {scCategory} = useSCFetchCategory({id: categoryId, category});
 
-  // STATE
-  const [_widgets, setWidgets] = useState<SCFeedWidgetType[]>([]);
-
-  // EFFECTS
-  useEffect(() => {
-    if (scCategory === null) {
-      return;
-    }
-    setWidgets(
-      widgets.map((w) => {
-        if (w.component === InlineComposer) {
-          return {...w, componentProps: {...w.componentProps, defaultValue: {categories: [scCategory]}, onSuccess: handleComposerSuccess}};
-        }
-        return {...w, componentProps: {...w.componentProps, categoryId: scCategory.id}};
-      })
-    );
-  }, [scCategory, widgets]);
-
   // HANDLERS
   const handleComposerSuccess = (feedObject) => {
     // Not insert if the category does not match
@@ -188,6 +170,21 @@ export default function CategoryFeed(inProps: CategoryFeedProps): JSX.Element {
     };
     feedRef && feedRef.current && feedRef.current.addFeedData(feedUnit);
   };
+
+  // WIDGETS
+  const _widgets = useMemo(
+    () =>
+      widgets.map((w) => {
+        if (scCategory) {
+          if (w.component === InlineComposer) {
+            return {...w, componentProps: {...w.componentProps, defaultValue: {categories: [scCategory]}, onSuccess: handleComposerSuccess}};
+          }
+          return {...w, componentProps: {...w.componentProps, categoryId: scCategory.id}};
+        }
+        return w;
+      }),
+    [widgets, scCategory]
+  );
 
   if (!scCategory) {
     return <CategoryFeedSkeleton />;
