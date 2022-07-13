@@ -21,9 +21,16 @@ function DefaultHtmlValuePlugin({defaultValue}) {
 
       // Select the root
       const root = $getRoot();
-      const paragraphNode = $createParagraphNode();
-      nodes.forEach((node) => paragraphNode.append(node));
-      root.getFirstChild().replace(paragraphNode);
+
+      // Add nodes
+      if (nodes.length <= 1) {
+        const paragraphNode = $createParagraphNode();
+        nodes.forEach((node) => paragraphNode.append(node));
+        root.getFirstChild().replace(paragraphNode);
+      } else {
+        root.getFirstChild().remove();
+        nodes.forEach((node) => root.append(node));
+      }
     });
   }, []);
 
