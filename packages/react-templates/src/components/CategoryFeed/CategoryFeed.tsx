@@ -189,7 +189,7 @@ export default function CategoryFeed(inProps: CategoryFeedProps): JSX.Element {
     feedRef && feedRef.current && feedRef.current.addFeedData(feedUnit);
   };
 
-  if (scCategory === null) {
+  if (!scCategory) {
     return <CategoryFeedSkeleton />;
   }
 
