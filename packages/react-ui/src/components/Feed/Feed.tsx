@@ -27,6 +27,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import VirtualizedScroller, {VirtualScrollChild} from '../../shared/VirtualizedScroller';
 import {widgetReducer, widgetSort} from '../../utils/feed';
 import Footer from '../Footer';
+import FeedSkeleton from './Skeleton';
 
 const PREFIX = 'SCFeed';
 
@@ -503,54 +504,56 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     []
   );
 
+  if (feedDataObject.isLoadingNext && !feedDataLeft.length) {
+    return (
+      <FeedSkeleton>
+        {[...Array(3)].map((v, i) => (
+          <ItemSkeleton key={i} {...ItemSkeletonProps} />
+        ))}
+      </FeedSkeleton>
+    );
+  }
+
   return (
     <Root container spacing={2} id={id} className={classNames(classes.root, className)}>
       <Grid item xs={12} md={7}>
         <div className={classes.left} style={{overflow: 'visible'}}>
-          {(feedDataObject.isLoadingNext && !feedDataLeft.length) || !feedDataLeft.length ? (
-            <>
-              {[...Array(3)].map((v, i) => (
-                <ItemSkeleton key={i} {...ItemSkeletonProps} />
-              ))}
-            </>
-          ) : (
-            <InfiniteScroll
-              className={classes.left}
-              dataLength={feedDataLeft.length}
-              next={feedDataObject.getNextPage}
-              hasMore={Boolean(feedDataObject.next)}
-              loader={<ItemSkeleton {...ItemSkeletonProps} />}
-              endMessage={
-                <>
-                  <Widget className={classes.end}>
-                    <CardContent>{endMessage}</CardContent>
-                  </Widget>
-                  {FooterComponent ? <FooterComponent {...FooterComponentProps} /> : null}
-                </>
-              }
-              refreshFunction={refresh}
-              pullDownToRefresh
-              pullDownToRefreshThreshold={1000}
-              pullDownToRefreshContent={null}
-              releaseToRefreshContent={
-                <Widget variant="outlined" className={classes.refresh}>
-                  <CardContent>{refreshMessage}</CardContent>
+          <InfiniteScroll
+            className={classes.left}
+            dataLength={feedDataLeft.length}
+            next={feedDataObject.getNextPage}
+            hasMore={Boolean(feedDataObject.next)}
+            loader={<ItemSkeleton {...ItemSkeletonProps} />}
+            endMessage={
+              <>
+                <Widget className={classes.end}>
+                  <CardContent>{endMessage}</CardContent>
                 </Widget>
-              }
-              style={{overflow: 'visible'}}>
-              <VirtualizedScroller
-                items={feedDataLeft}
-                itemComponent={InnerItem}
-                onMount={onScrollerMount}
-                getItemId={getScrollItemId}
-                preserveScrollPosition
-                preserveScrollPositionOnPrependItems
-                cacheScrollStateKey={SCCache.getVirtualizedScrollStateCacheKey(id)}
-                cacheScrollerPositionKey={SCCache.getFeedSPCacheKey(id)}
-                cacheStrategy={cacheStrategy}
-              />
-            </InfiniteScroll>
-          )}
+                {FooterComponent ? <FooterComponent {...FooterComponentProps} /> : null}
+              </>
+            }
+            refreshFunction={refresh}
+            pullDownToRefresh
+            pullDownToRefreshThreshold={1000}
+            pullDownToRefreshContent={null}
+            releaseToRefreshContent={
+              <Widget variant="outlined" className={classes.refresh}>
+                <CardContent>{refreshMessage}</CardContent>
+              </Widget>
+            }
+            style={{overflow: 'visible'}}>
+            <VirtualizedScroller
+              items={feedDataLeft}
+              itemComponent={InnerItem}
+              onMount={onScrollerMount}
+              getItemId={getScrollItemId}
+              preserveScrollPosition
+              preserveScrollPositionOnPrependItems
+              cacheScrollStateKey={SCCache.getVirtualizedScrollStateCacheKey(id)}
+              cacheScrollerPositionKey={SCCache.getFeedSPCacheKey(id)}
+              cacheStrategy={cacheStrategy}
+            />
+          </InfiniteScroll>
         </div>
       </Grid>
       {feedDataRight.length > 0 && (
