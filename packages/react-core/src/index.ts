@@ -62,6 +62,7 @@ import SCPreferencesProvider, {SCPreferencesContext, useSCPreferences} from './c
 import * as SCPreferences from './constants/Preferences';
 import * as SCFeatures from './constants/Features';
 import * as SCNotification from './constants/Notification';
+import * as SCCache from './constants/Cache';
 
 /**
  * Custom Hooks
@@ -77,6 +78,8 @@ import useSCFetchCategory from './hooks/useSCFetchCategory';
 import useSCFetchCategories from './hooks/useSCFetchCategories';
 import useSCFetchIncubator from './hooks/useSCFetchIncubator';
 import useSCMediaClick from './hooks/useSCMediaClick';
+import useSCFetchContributors from './hooks/useSCFetchContributors';
+import useSCFetchFeed from './hooks/useSCFetchFeed';
 
 /**
  * Routing component
@@ -147,6 +150,7 @@ export {
   useSCAlertMessages,
   Link,
   SCRoutes,
+  SCCache,
   UserUtils,
   Locale,
   useSCFetchUser,
@@ -159,5 +163,7 @@ export {
   useSCFetchCategory,
   useSCFetchCategories,
   useSCFetchIncubator,
-  useSCMediaClick
+  useSCMediaClick,
+  useSCFetchContributors,
+  useSCFetchFeed,
 };

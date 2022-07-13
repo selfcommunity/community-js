@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.19-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.1.18...@selfcommunity/utils@0.1.19-alpha.0) (2022-07-05)
+
+
+### Bug Fixes
+
+* caching ([9840153](https://github.com/selfcommunity/community-js/commit/98401531b2328d2eb7f087e108d2c9b84d48d7b8))
+* caching ([8cec1f3](https://github.com/selfcommunity/community-js/commit/8cec1f38a0cee8031922d11a7ccf59f6c3b25270))
+* caching ([c2cf53f](https://github.com/selfcommunity/community-js/commit/c2cf53f8ac7d300459098cc157260e39087dc6aa))
+
+
+
+
+
 ## [0.1.18](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.1.18-alpha.1...@selfcommunity/utils@0.1.18) (2022-06-28)
 
 **Note:** Version bump only for package @selfcommunity/utils

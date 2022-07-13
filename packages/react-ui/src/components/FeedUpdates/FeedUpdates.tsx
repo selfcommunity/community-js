@@ -6,6 +6,7 @@ import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
 import Widget from '../Widget';
 import {useThemeProps} from '@mui/system';
+import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 
 const PREFIX = 'SCFeedUpdates';
 
@@ -19,6 +20,7 @@ const Root = styled(Widget, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
+  height: 20,
   marginBottom: theme.spacing(2),
   '& div:last-child': {
     paddingBottom: theme.spacing(2)
@@ -133,7 +135,7 @@ export default function FeedUpdates(inProps: FeedUpdatesProps): JSX.Element {
   }, []);
 
   if (!updates) {
-    return null;
+    return <HiddenPlaceholder />;
   }
 
   // HANDLERS

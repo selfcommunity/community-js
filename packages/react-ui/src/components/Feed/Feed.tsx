@@ -1,22 +1,33 @@
+// @ts-nocheck
 import React, {forwardRef, ForwardRefRenderFunction, ReactNode, useContext, useEffect, useImperativeHandle, useMemo, useRef, useState} from 'react';
+import {
+  SCCache,
+  SCPreferences,
+  SCPreferencesContextType,
+  SCUserContext,
+  SCUserContextType,
+  useSCFetchFeed,
+  useSCPreferences
+} from '@selfcommunity/react-core';
 import {styled, useTheme} from '@mui/material/styles';
-import Widget from '../Widget';
 import {CardContent, Grid, Hidden, Theme, useMediaQuery} from '@mui/material';
-import {SCOPE_SC_UI} from '../../constants/Errors';
 import {FormattedMessage} from 'react-intl';
 import {GenericSkeleton} from '../Skeleton';
-import InfiniteScroll from 'react-infinite-scroll-component';
 import {SCFeedWidgetType} from '../../types/feed';
 import Sticky from 'react-stickynode';
 import CustomAdv, {CustomAdvProps} from '../CustomAdv';
-import {SCUserType, SCCustomAdvPosition, SCFeedUnitType, SCNotificationAggregatedType} from '@selfcommunity/types';
-import {http, EndpointType, HttpResponse} from '@selfcommunity/api-services';
-import {Logger} from '@selfcommunity/utils';
-import {SCPreferences, SCPreferencesContextType, SCUserContext, SCUserContextType, useSCPreferences} from '@selfcommunity/react-core';
+import {SCCustomAdvPosition, SCUserType} from '@selfcommunity/types';
+import {EndpointType} from '@selfcommunity/api-services';
+import {CacheStrategies} from '@selfcommunity/utils';
 import classNames from 'classnames';
 import PubSub from 'pubsub-js';
 import {useThemeProps} from '@mui/system';
-import {appendURLSearchParams} from '@selfcommunity/utils';
+import Widget from '../Widget';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import VirtualizedScroller, {VirtualScrollChild} from '../../shared/VirtualizedScroller';
+import {widgetReducer, widgetSort} from '../../utils/feed';
+import Footer from '../Footer';
+import FeedSkeleton from './Skeleton';
 
 const PREFIX = 'SCFeed';
 
@@ -56,6 +67,7 @@ export interface FeedSidebarProps {
 
 export type FeedRef = {
   addFeedData: (obj: any) => void;
+  refresh: () => void;
 };
 
 export interface FeedProps {
@@ -80,7 +92,7 @@ export interface FeedProps {
    * Feed API Query Params
    * @default [{'limit': 5}]
    */
-  endpointQueryParams?: Record<string, string | number>[];
+  endpointQueryParams?: Record<string, string | number>;
 
   /**
    * End message, rendered when no more feed item can be displayed
@@ -93,6 +105,18 @@ export interface FeedProps {
    * @default <FormattedMessage id="ui.feed.refreshRelease" defaultMessage="ui.feed.refreshRelease" />
    */
   refreshMessage?: ReactNode;
+
+  /**
+   * Component used as footer. It will be displayed after the end messages
+   @default <Footer>
+   */
+  FooterComponent?: React.ElementType;
+
+  /**
+   * Props to spread to FooterComponent
+   * @default empty object
+   */
+  FooterComponentProps?: any;
 
   /**
    * Widgets to insert into the feed
@@ -133,9 +157,25 @@ export interface FeedProps {
   ItemSkeletonProps?: any;
 
   /**
-   * Callback invoked whenever data is loaded during paging
+   * Callback invoked whenever data is loaded during paging next
    */
-  onFetchData?: (data) => any;
+  onNextData?: (data) => any;
+
+  /**
+   * Callback invoked whenever data is loaded during paging previous
+   */
+  onPreviousData?: (data) => any;
+
+  /**
+   * Authenticated or not
+   */
+  requireAuthentication?: boolean;
+
+  /**
+   * Caching strategies
+   * @default CacheStrategies.CACHE_FIRST
+   */
+  cacheStrategy?: CacheStrategies;
 
   /**
    * Props to spread to single feed object
@@ -150,12 +190,10 @@ export interface FeedProps {
   CustomAdvProps?: CustomAdvProps;
 }
 
-interface FeedData {
-  left: Array<SCFeedWidgetType | SCFeedUnitType>;
-  right: Array<SCFeedWidgetType>;
-}
-
+const WIDGET_PREFIX_KEY = 'widget_';
+const DEFAULT_PAGINATION_ITEMS_NUMBER = 5;
 const PREFERENCES = [SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED, SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED];
+
 /**
  * > API documentation for the Community-JS Feed component. Learn about the available props and the CSS API.
 
@@ -191,9 +229,11 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     id = 'feed',
     className,
     endpoint,
-    endpointQueryParams = [{limit: 5}],
+    endpointQueryParams = {limit: DEFAULT_PAGINATION_ITEMS_NUMBER, offset: 0},
     endMessage = <FormattedMessage id="ui.feed.noOtherFeedObject" defaultMessage="ui.feed.noOtherFeedObject" />,
     refreshMessage = <FormattedMessage id="ui.feed.refreshRelease" defaultMessage="ui.feed.refreshRelease" />,
+    FooterComponent = Footer,
+    FooterComponentProps = {},
     widgets = [],
     ItemComponent,
     itemPropsGenerator,
@@ -201,25 +241,17 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     ItemProps = {},
     ItemSkeleton,
     ItemSkeletonProps = {},
-    onFetchData,
+    onNextData,
+    onPreviousData,
     FeedSidebarProps = {top: 0, bottomBoundary: `#${id}`},
-    CustomAdvProps = {}
+    CustomAdvProps = {},
+    requireAuthentication = false,
+    cacheStrategy = CacheStrategies.NETWORK_ONLY
   } = props;
-
-  // STATE
-  const [feedData, setFeedData] = useState([]);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [next, setNext] = useState<string>(appendURLSearchParams(endpoint.url({}), endpointQueryParams));
 
   // CONTEXT
   const scPreferences: SCPreferencesContextType = useSCPreferences();
   const scUserContext: SCUserContextType = useContext(SCUserContext);
-
-  // CONST
-  const authUserId = scUserContext.user ? scUserContext.user.id : null;
-
-  // REFS
-  const refreshSubscription = useRef(null);
 
   /**
    * Compute preferences
@@ -233,82 +265,201 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
   /**
    * Compute Widgets
    */
-  const _widgets: SCFeedWidgetType[] = useMemo(() => {
-    if (
-      preferences[SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED] &&
-      ((preferences[SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED] && scUserContext.user === null) ||
-        !preferences[SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED])
-    ) {
-      return [
-        ...widgets,
-        {
-          type: 'widget',
-          component: CustomAdv,
-          componentProps: {
-            position: SCCustomAdvPosition.POSITION_FEED_SIDEBAR,
-            ...CustomAdvProps
-          },
-          column: 'right',
-          position: 0
-        },
-        ...Array.from({length: feedData.length / 10}, (_, i) => i * 10).map((position): SCFeedWidgetType => {
-          return {
-            type: 'widget',
-            component: CustomAdv,
-            componentProps: {
-              position: SCCustomAdvPosition.POSITION_FEED,
-              ...CustomAdvProps
+  const _widgets: SCFeedWidgetType[] = useMemo(
+    () =>
+      (offset = 0) => {
+        if (
+          preferences[SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED] &&
+          ((preferences[SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED] && scUserContext.user === null) ||
+            !preferences[SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED])
+        ) {
+          return [
+            ...widgets,
+            {
+              type: 'widget',
+              component: CustomAdv,
+              componentProps: {
+                position: SCCustomAdvPosition.POSITION_FEED_SIDEBAR,
+                ...CustomAdvProps
+              },
+              column: 'right',
+              position: 0
             },
-            column: 'left',
-            position
-          };
-        })
-      ];
-    }
-    return [...widgets];
-  }, [widgets, feedData, preferences]);
+            ...Array.from({length: offset / 10 + 1}, (_, i) => i * 10).map((position): SCFeedWidgetType => {
+              return {
+                type: 'widget',
+                component: CustomAdv,
+                componentProps: {
+                  position: SCCustomAdvPosition.POSITION_FEED,
+                  ...CustomAdvProps
+                },
+                column: 'left',
+                position
+              };
+            })
+          ];
+        }
+        return [...widgets];
+      },
+    [widgets, preferences]
+  );
+
+  // CONST
+  const authUserId = scUserContext.user ? scUserContext.user.id : null;
+  const limit = useMemo(() => endpointQueryParams.limit || DEFAULT_PAGINATION_ITEMS_NUMBER, [endpointQueryParams]);
+
+  // Define offset based on initial offset
+  const offset = useMemo(
+    () => (endpointQueryParams.offset > 0 ? Math.max(endpointQueryParams.offset - _widgets(endpointQueryParams.offset).length, 0) : 0),
+    [endpointQueryParams]
+  );
+
+  // RENDER
+  const theme: Theme = useTheme();
+  const oneColLayout = useMediaQuery(theme.breakpoints.down('md'));
+
+  // STATE
+  const [feedDataLeft, setFeedDataLeft] = useState([]);
+  const [feedDataRight, setFeedDataRight] = useState([]);
 
   /**
-   * Fetch main feed
-   * Manage pagination, infinite scrolling
+   * Callback onNextPage
+   * @param page
+   * @param offset
+   * @param total
+   * @param data
    */
-  const fetch = () => {
-    if (!loading) {
-      setLoading(true);
-      http
-        .request({
-          url: next,
-          method: endpoint.method
-        })
-        .then((res: HttpResponse<{next?: string; previous?: string; results: SCNotificationAggregatedType[]}>) => {
-          const data = res.data;
-          setFeedData([...feedData, ...data.results]);
-          setNext(data.next);
-          setLoading(false);
-          onFetchData && onFetchData(res.data);
-        })
-        .catch((error) => {
-          Logger.error(SCOPE_SC_UI, error);
-        });
+  const onNextPage = (page, offset, total, data) => {
+    setFeedDataLeft((prev) => prev.concat(_getFeedDataLeft(data)));
+    setFeedDataRight(_getFeedDataRight());
+    onNextData && onNextData(page, offset, total, data);
+  };
+
+  /**
+   * Callback onPreviousPage
+   * @param page
+   * @param offset
+   * @param total
+   * @param data
+   */
+  const onPreviousPage = (page, offset, total, data) => {
+    setFeedDataLeft((prev) => _getFeedDataLeft(data).concat(prev));
+    setFeedDataRight(_getFeedDataRight());
+    onPreviousData && onPreviousData(page, offset, total, data);
+  };
+
+  // PAGINATION FEED
+  const feedDataObject = useSCFetchFeed({
+    id,
+    endpoint,
+    endpointQueryParams: {endpointQueryParams, ...{offset}},
+    onNextPage: onNextPage,
+    onPreviousPage: onPreviousPage,
+    cacheStrategy
+  });
+
+  /**
+   * Get left column data
+   * @param data
+   */
+  const _getFeedDataLeft = (data) => {
+    if (oneColLayout) {
+      return _widgets(feedDataLeft.length + data.length)
+        .map((w, i) =>
+          Object.assign({}, w, {position: w.position * (w.column === 'right' ? 5 : 1) - feedDataLeft.length - endpointQueryParams.offset, id: i})
+        )
+        .filter((w) => w.position > -1)
+        .sort(widgetSort)
+        .reduce(widgetReducer(feedDataLeft.total, limit), [...data]);
     }
+    return _widgets(feedDataLeft.length + data.length)
+      .map((w, i) => Object.assign({}, w, {position: w.position - feedDataLeft.length - endpointQueryParams.offset, id: i}))
+      .filter((w) => w.column === 'left' && w.position > -1)
+      .sort(widgetSort)
+      .reduce(widgetReducer(feedDataLeft.total, limit), [...data]);
   };
 
+  /**
+   * Get right column data
+   */
+  const _getFeedDataRight = () => {
+    if (oneColLayout) {
+      return [];
+    }
+    return _widgets()
+      .filter((w) => w.column === 'right')
+      .sort(widgetSort);
+  };
+
+  // REFS
+  const refreshSubscription = useRef(null);
+  const virtualScrollerMountState = useRef(false);
+
+  // VIRTUAL SCROLL HELPERS
+  const getScrollItemId = useMemo(
+    () =>
+      (item: any): string =>
+        item.type === 'widget' ? `${WIDGET_PREFIX_KEY}${item.id}` : `${item.type}_${itemIdGenerator(item)}`,
+    []
+  );
+
+  /**
+   * Callback on scroll mount
+   */
+  const onScrollerMount = useMemo(
+    () => () => {
+      virtualScrollerMountState.current = true;
+    },
+    []
+  );
+
+  /**
+   * Callback on refresh
+   */
   const refresh = () => {
-    setNext(endpoint.url({}));
-    setFeedData([]);
-    fetch();
+    feedDataObject.reload();
   };
 
+  /**
+   * Callback subscribe events
+   * @param msg
+   * @param data
+   */
   const subscriber = (msg, data) => {
     if (data.refresh) {
       refresh();
     }
   };
 
+  /**
+   * Bootstrap initial data
+   */
+  const _initFeedData = useMemo(
+    () => () => {
+      if (cacheStrategy === CacheStrategies.CACHE_FIRST && feedDataObject.componentLoaded) {
+        // Set current cached feed
+        setFeedDataLeft(_getFeedDataLeft(feedDataObject.feedData));
+        setFeedDataRight(_getFeedDataRight(feedDataObject.feedData));
+      } else {
+        // Load next page
+        feedDataObject.getNextPage();
+      }
+    },
+    [cacheStrategy, feedDataObject, endpointQueryParams]
+  );
+
   // EFFECTS
   useEffect(() => {
-    fetch();
+    if (requireAuthentication && authUserId !== null) {
+      _initFeedData();
+    }
   }, [authUserId]);
+
+  useEffect(() => {
+    if (!requireAuthentication) {
+      _initFeedData();
+    }
+  }, []);
 
   useEffect(() => {
     refreshSubscription.current = PubSub.subscribe(id, subscriber);
@@ -320,89 +471,97 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
   // EXPOSED METHODS
   useImperativeHandle(ref, () => ({
     addFeedData: (data: any) => {
-      setFeedData([data, ...feedData]);
+      setFeedDataLeft([...data], feedDataLeft.length);
+    },
+    refresh: () => {
+      refresh();
     }
   }));
 
-  // RENDER
-  const theme: Theme = useTheme();
-  const oneColLayout = useMediaQuery(theme.breakpoints.down('md'));
-
-  const getData = useMemo(
-    () => (): FeedData => {
-      const widgetSort = (w1, w2) => (w1.position > w2.position ? 1 : -1);
-      const widgetReducer = (value, w) => {
-        value.splice(w.position, 0, w);
-        return value;
-      };
-      if (oneColLayout) {
-        return {
-          left: _widgets
-            .map((w) => Object.assign({}, w, {position: w.position * (w.column === 'right' ? 5 : 1)}))
-            .sort(widgetSort)
-            .reduce(widgetReducer, [
-              ...feedData,
-              ...(loading ? Array.from({length: 3}).map(() => ({type: 'widget', component: ItemSkeleton, componentProps: ItemSkeletonProps})) : [])
-            ]),
-          right: []
-        };
-      } else {
-        return {
-          left: _widgets
-            .filter((w) => w.column === 'left')
-            .sort(widgetSort)
-            .reduce(widgetReducer, [
-              ...feedData,
-              ...(loading ? Array.from({length: 3}).map(() => ({type: 'widget', component: ItemSkeleton, componentProps: ItemSkeletonProps})) : [])
-            ]),
-          right: _widgets.filter((w) => w.column === 'right').sort(widgetSort)
-        };
-      }
-    },
-    [loading, oneColLayout, feedData, _widgets]
+  const InnerItem = useMemo(
+    () =>
+      ({state: savedState, onHeightChange, onStateChange, children: item}) => {
+        return (
+          <VirtualScrollChild virtualScrollerMountState onHeightChange={onHeightChange}>
+            {item.type === 'widget' ? (
+              <item.component
+                id={`${WIDGET_PREFIX_KEY}${item.position}`}
+                {...item.componentProps}
+                {...(item.publishEvents && {publicationChannel: id})}></item.component>
+            ) : (
+              <ItemComponent
+                id={`item_${itemIdGenerator(item)}`}
+                {...itemPropsGenerator(scUserContext.user, item)}
+                {...ItemProps}
+                sx={{width: '100%'}}
+                onChangeLayout={onStateChange}
+                {...savedState}
+              />
+            )}
+          </VirtualScrollChild>
+        );
+      },
+    []
   );
 
-  const data = getData();
+  if (feedDataObject.isLoadingNext && !feedDataLeft.length) {
+    return (
+      <FeedSkeleton>
+        {[...Array(3)].map((v, i) => (
+          <ItemSkeleton key={i} {...ItemSkeletonProps} />
+        ))}
+      </FeedSkeleton>
+    );
+  }
 
   return (
     <Root container spacing={2} id={id} className={classNames(classes.root, className)}>
       <Grid item xs={12} md={7}>
-        <InfiniteScroll
-          className={classes.left}
-          dataLength={data.left.length}
-          next={fetch}
-          hasMore={Boolean(next)}
-          loader={<></>}
-          endMessage={
-            <Widget className={classes.end}>
-              <CardContent>{endMessage}</CardContent>
-            </Widget>
-          }
-          refreshFunction={refresh}
-          pullDownToRefresh
-          pullDownToRefreshThreshold={1000}
-          pullDownToRefreshContent={null}
-          releaseToRefreshContent={
-            <Widget variant="outlined" className={classes.refresh}>
-              <CardContent>{refreshMessage}</CardContent>
-            </Widget>
-          }
-          style={{overflow: 'visible'}}>
-          {data.left.map((d, i) =>
-            d.type === 'widget' ? (
-              <d.component key={`widget_left_${i}`} {...d.componentProps} {...(d.publishEvents && {publicationChannel: id})}></d.component>
-            ) : (
-              <ItemComponent key={`item_${itemIdGenerator(d)}`} {...itemPropsGenerator(scUserContext.user, d)} {...ItemProps} sx={{width: '100%'}} />
-            )
-          )}
-        </InfiniteScroll>
+        <div className={classes.left} style={{overflow: 'visible'}}>
+          <InfiniteScroll
+            className={classes.left}
+            dataLength={feedDataLeft.length}
+            next={feedDataObject.getNextPage}
+            hasMore={Boolean(feedDataObject.next)}
+            loader={<ItemSkeleton {...ItemSkeletonProps} />}
+            endMessage={
+              <>
+                <Widget className={classes.end}>
+                  <CardContent>{endMessage}</CardContent>
+                </Widget>
+                {FooterComponent ? <FooterComponent {...FooterComponentProps} /> : null}
+              </>
+            }
+            refreshFunction={refresh}
+            pullDownToRefresh
+            pullDownToRefreshThreshold={1000}
+            pullDownToRefreshContent={null}
+            releaseToRefreshContent={
+              <Widget variant="outlined" className={classes.refresh}>
+                <CardContent>{refreshMessage}</CardContent>
+              </Widget>
+            }
+            style={{overflow: 'visible'}}>
+            <VirtualizedScroller
+              items={feedDataLeft}
+              itemComponent={InnerItem}
+              onMount={onScrollerMount}
+              getItemId={getScrollItemId}
+              preserveScrollPosition
+              preserveScrollPositionOnPrependItems
+              cacheScrollStateKey={SCCache.getVirtualizedScrollStateCacheKey(id)}
+              cacheScrollerPositionKey={SCCache.getFeedSPCacheKey(id)}
+              cacheStrategy={cacheStrategy}
+            />
+          </InfiniteScroll>
+        </div>
       </Grid>
-      {data.right.length > 0 && (
+      {feedDataRight.length > 0 && (
         <Hidden smDown>
           <Grid item xs={12} md={5}>
             <Sticky enabled className={classes.right} {...FeedSidebarProps}>
               <React.Suspense fallback={<GenericSkeleton />}>
-                {data.right.map((d, i) => (
+                {feedDataRight.map((d, i) => (
                   <d.component key={i} {...d.componentProps}></d.component>
                 ))}
               </React.Suspense>

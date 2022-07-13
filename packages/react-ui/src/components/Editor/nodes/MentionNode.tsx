@@ -1,5 +1,6 @@
 import {EditorConfig, LexicalNode, NodeKey, TextNode} from 'lexical';
 import {SCUserType} from '@selfcommunity/types';
+import {DOMConversionMap} from 'lexical/LexicalNode';
 
 function convertMentionElement(domNode) {
   const mention = domNode;
@@ -61,7 +62,7 @@ export class MentionNode extends TextNode {
     return false;
   }
 
-  static importDOM() {
+  static importDOM(): DOMConversionMap | null {
     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore
     const dom = TextNode.importDOM();

@@ -156,7 +156,7 @@ export default function Share(inProps: ShareProps): JSX.Element {
     feedObjectType = SCFeedObjectTypologyType.POST,
     withAction = true,
     withAudience = true,
-    inlineAction = true,
+    inlineAction = false,
     ...rest
   } = props;
 

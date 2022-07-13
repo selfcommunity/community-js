@@ -70,7 +70,12 @@ export default function FeedSkeleton(props: FeedSkeletonProps): JSX.Element {
         <GenericSkeleton sx={{mb: 2}} />
       </React.Fragment>
     ),
-    sidebar = <GenericSkeleton />,
+    sidebar = (
+      <React.Fragment>
+        <GenericSkeleton sx={{mb: 2}} />
+        <GenericSkeleton sx={{mb: 2}} />
+      </React.Fragment>
+    ),
     className
   } = props;
   return (

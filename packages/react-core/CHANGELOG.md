@@ -3,6 +3,61 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.19-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.1.19-alpha.2...@selfcommunity/react-core@0.1.19-alpha.3) (2022-07-13)
+
+
+### Bug Fixes
+
+* caching ([d4a9b68](https://github.com/selfcommunity/community-js/commit/d4a9b68dfad2f0c3d6b0fcae1dce6595bcbf96a4))
+* caching ([3569f27](https://github.com/selfcommunity/community-js/commit/3569f27f6ba669c1266db211068162ddf525872c))
+* caching ([f8bc8e0](https://github.com/selfcommunity/community-js/commit/f8bc8e0e436420688a16346f8b81746d0d4cf8fa))
+* commentsObject ([23ab6b6](https://github.com/selfcommunity/community-js/commit/23ab6b6317cb8641653532ce8e25152e177b0f56))
+* FeedObject ([8a4685f](https://github.com/selfcommunity/community-js/commit/8a4685f9120e95180d5470a417fcee0ca401e09e))
+* FeedObject ([a2af77d](https://github.com/selfcommunity/community-js/commit/a2af77d498806ef7e2481fb9b8438ee979b47206))
+
+
+
+
+
+## [0.1.19-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.1.19-alpha.1...@selfcommunity/react-core@0.1.19-alpha.2) (2022-07-07)
+
+
+### Bug Fixes
+
+* test scroll restoration ([6d0940b](https://github.com/selfcommunity/community-js/commit/6d0940b09c8588b93917ee6fbd24c43c546d696a))
+
+
+
+
+
+## [0.1.19-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.1.19-alpha.0...@selfcommunity/react-core@0.1.19-alpha.1) (2022-07-06)
+
+
+### Bug Fixes
+
+* caching ([62e0512](https://github.com/selfcommunity/community-js/commit/62e051201e9dc900a38228a9db9dca95cc335ce1))
+* caching ([e327b11](https://github.com/selfcommunity/community-js/commit/e327b1145fc4a49d8ca3c6014cc2e1ccf31ee40f))
+
+
+
+
+
+## [0.1.19-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.1.18...@selfcommunity/react-core@0.1.19-alpha.0) (2022-07-05)
+
+
+### Bug Fixes
+
+* bugfixes ([b1624ad](https://github.com/selfcommunity/community-js/commit/b1624ad3b7b788088707908fa950fcb7ebef30fd))
+* caching ([b416d06](https://github.com/selfcommunity/community-js/commit/b416d068f501cbd06435026c19e20bd2bc6c3fbb))
+* caching ([e500df0](https://github.com/selfcommunity/community-js/commit/e500df0345a9f27d6c14cab508d2fe89ebccc6ca))
+* caching ([9840153](https://github.com/selfcommunity/community-js/commit/98401531b2328d2eb7f087e108d2c9b84d48d7b8))
+* caching ([8cec1f3](https://github.com/selfcommunity/community-js/commit/8cec1f38a0cee8031922d11a7ccf59f6c3b25270))
+* caching ([c2cf53f](https://github.com/selfcommunity/community-js/commit/c2cf53f8ac7d300459098cc157260e39087dc6aa))
+
+
+
+
+
 ## [0.1.18](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.1.18-alpha.1...@selfcommunity/react-core@0.1.18) (2022-06-28)
 
 **Note:** Version bump only for package @selfcommunity/react-core

@@ -1,17 +1,17 @@
 import {useEffect, useReducer} from 'react';
 import {SCOPE_SC_CORE} from '../constants/Errors';
-import {SCCommentsOrderBy, SCCommentType, SCFeedObjectType, SCFeedObjectTypologyType} from '@selfcommunity/types';
+import {SCUserType, SCFeedObjectType, SCFeedObjectTypologyType} from '@selfcommunity/types';
 import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
 import {CacheStrategies, Logger, LRUCache} from '@selfcommunity/utils';
 import useSCFetchFeedObject from './useSCFetchFeedObject';
-import {getCommentObjectCacheKey, getCommentObjectsCacheKey} from '../constants/Cache';
+import {getContributorsCacheKey} from '../constants/Cache';
 
 /**
  * Interface SCCommentsObjectType
  */
-export interface SCCommentsObjectType {
+export interface SCPaginatedContributorsType {
   componentLoaded: boolean;
-  comments: SCCommentType[];
+  contributors: SCUserType[];
   total: number;
   next: string;
   previous: string;
@@ -28,7 +28,7 @@ export interface SCCommentsObjectType {
  * Define all possible auth action types label
  * Use this to export actions and dispatch an action
  */
-export const commentsObjectActionTypes = {
+export const contributorsObjectActionTypes = {
   LOADING_NEXT: '_loading_next',
   LOADING_PREVIOUS: '_loading_previous',
   DATA_NEXT_LOADED: '_data_next_loaded',
@@ -38,47 +38,47 @@ export const commentsObjectActionTypes = {
 };
 
 /**
- * commentsReducer:
- *  - manage the state of comments object
+ * contributorsReducer:
+ *  - manage the state of contributors object
  *  - update the state base on action type
  * @param state
  * @param action
  */
-function commentsReducer(state, action) {
+function contributorsReducer(state, action) {
   switch (action.type) {
-    case commentsObjectActionTypes.LOADING_NEXT:
+    case contributorsObjectActionTypes.LOADING_NEXT:
       return {...state, isLoadingNext: true, isLoadingPrevious: false};
-    case commentsObjectActionTypes.LOADING_PREVIOUS:
+    case contributorsObjectActionTypes.LOADING_PREVIOUS:
       return {...state, isLoadingNext: false, isLoadingPrevious: true};
-    case commentsObjectActionTypes.DATA_NEXT_LOADED:
+    case contributorsObjectActionTypes.DATA_NEXT_LOADED:
       return {
         ...state,
         page: action.payload.currentPage,
-        comments: action.payload.comments,
+        contributors: action.payload.contributors,
         isLoadingNext: false,
         componentLoaded: true,
         next: action.payload.next,
         ...(action.payload.previous ? {previous: action.payload.previous} : {}),
         ...(action.payload.total ? {total: action.payload.total} : {}),
       };
-    case commentsObjectActionTypes.DATA_PREVIOUS_LOADED:
+    case contributorsObjectActionTypes.DATA_PREVIOUS_LOADED:
       return {
         ...state,
         page: action.payload.currentPage,
-        comments: action.payload.comments,
+        contributors: action.payload.contributors,
         isLoadingPrevious: false,
         previous: action.payload.previous,
       };
-    case commentsObjectActionTypes.DATA_RELOAD:
+    case contributorsObjectActionTypes.DATA_RELOAD:
       return {
         ...state,
         next: action.payload.next,
-        comments: [],
+        contributors: [],
         total: 0,
         previous: null,
         reload: true,
       };
-    case commentsObjectActionTypes.DATA_RELOADED:
+    case contributorsObjectActionTypes.DATA_RELOADED:
       return {
         ...state,
         componentLoaded: false,
@@ -93,11 +93,11 @@ function commentsReducer(state, action) {
  * Define initial state
  * @param data
  */
-function stateInitializer(data): SCCommentsObjectType {
-  const __commentsObjectCacheKey = data.obj ? getCommentObjectsCacheKey(data.obj.id, data.obj.type, data.next) : null;
+function stateInitializer(data): SCPaginatedContributorsType {
+  const __contributorsObjectCacheKey = data.obj ? getContributorsCacheKey(data.obj.id, data.obj.type, data.next) : null;
   let _initState = {
     componentLoaded: false,
-    comments: [],
+    contributors: [],
     total: 0,
     next: data.next,
     previous: null,
@@ -106,48 +106,34 @@ function stateInitializer(data): SCCommentsObjectType {
     page: data.offset / data.pageSize + 1,
     reload: false,
   };
-  if (__commentsObjectCacheKey && LRUCache.hasKey(__commentsObjectCacheKey) && data.cacheStrategy !== CacheStrategies.NETWORK_ONLY) {
-    const _cachedData = LRUCache.get(__commentsObjectCacheKey);
-    return {..._initState, ...{total: _cachedData.count, next: _cachedData.next, previous: _cachedData.previous, comments: _cachedData.results}};
+  if (__contributorsObjectCacheKey && LRUCache.hasKey(__contributorsObjectCacheKey) && data.cacheStrategy !== CacheStrategies.NETWORK_ONLY) {
+    const _cachedData = LRUCache.get(__contributorsObjectCacheKey);
+    return {..._initState, ...{total: _cachedData.count, next: _cachedData.next, previous: _cachedData.previous, contributors: _cachedData.results}};
   }
   return _initState;
 }
 
 /**
  :::info
- This custom hooks is used to fetch paginated comments.
+ This custom hooks is used to fetch paginated contributors.
  :::
  * @param id
  * @param feedObject
  * @param feedObjectType
  * @param offset
  * @param pageSize
- * @param orderBy
- * @param parent
  */
-export default function useSCFetchCommentObjects(props: {
+export default function useSCFetchContributors(props: {
   id?: number;
   feedObject?: SCFeedObjectType;
   feedObjectType: SCFeedObjectTypologyType;
   offset?: number;
   pageSize?: number;
-  orderBy?: SCCommentsOrderBy;
-  parent?: number;
   onChangePage?: (page) => any;
   cacheStrategy?: CacheStrategies;
 }) {
   // PROPS
-  const {
-    id,
-    feedObject,
-    feedObjectType,
-    offset = 0,
-    pageSize = 5,
-    orderBy = SCCommentsOrderBy.ADDED_AT_DESC,
-    parent,
-    onChangePage,
-    cacheStrategy = CacheStrategies.NETWORK_ONLY,
-  } = props;
+  const {id, feedObject, feedObjectType, offset = 0, pageSize = 5, onChangePage, cacheStrategy = CacheStrategies.CACHE_FIRST} = props;
 
   // FeedObject
   const {obj, setObj} = useSCFetchFeedObject({id, feedObject, feedObjectType});
@@ -158,14 +144,13 @@ export default function useSCFetchCommentObjects(props: {
    */
   const getNextUrl = () => {
     const _offset = offset ? `&offset=${offset}` : '';
-    const _parent = parent ? `&parent=${parent}` : '';
     const _objectId = obj ? obj.id : id;
     const _typeObject = obj ? obj.type : feedObjectType;
-    return `${Endpoints.Comments.url()}?${_typeObject}=${_objectId}&limit=${pageSize}&ordering=${orderBy}${_offset}${_parent}`;
+    return `${Endpoints.FeedObjectContributorsList.url({type: _typeObject, id: _objectId})}?limit=${pageSize}${_offset}`;
   };
 
   // STATE
-  const [state, dispatch] = useReducer(commentsReducer, {}, () => stateInitializer({obj, offset, pageSize, next: getNextUrl(), cacheStrategy}));
+  const [state, dispatch] = useReducer(contributorsReducer, {}, () => stateInitializer({obj, offset, pageSize, next: getNextUrl(), cacheStrategy}));
 
   /**
    * Calculate current page
@@ -182,20 +167,20 @@ export default function useSCFetchCommentObjects(props: {
    */
   const revalidate = (url, forward) => {
     return performFetchComments(url, false).then((res) => {
-      let _comments;
+      let _contributors;
       let currentPage = getCurrentPage(state.next);
       if (forward) {
-        let start = state.comments.slice(0, state.comments.length - res.results.length);
-        _comments = start.concat(res.results);
+        let start = state.contributors.slice(0, state.contributors.length - res.results.length);
+        _contributors = start.concat(res.results);
       } else {
-        let start = state.comments.slice(res.results.length, state.comments.length);
-        _comments = res.results.concat(start);
+        let start = state.contributors.slice(res.results.length, state.contributors.length);
+        _contributors = res.results.concat(start);
       }
       dispatch({
-        type: forward ? commentsObjectActionTypes.DATA_NEXT_LOADED : commentsObjectActionTypes.DATA_PREVIOUS_LOADED,
+        type: forward ? contributorsObjectActionTypes.DATA_NEXT_LOADED : contributorsObjectActionTypes.DATA_PREVIOUS_LOADED,
         payload: {
           page: currentPage,
-          comments: _comments,
+          contributors: _contributors,
           ...(forward ? {next: res.next} : {previous: res.previous}),
           total: res.count,
         },
@@ -207,9 +192,9 @@ export default function useSCFetchCommentObjects(props: {
    * Get Comments
    */
   const performFetchComments = (url, seekCache = true) => {
-    const __commentObjectsCacheKey = getCommentObjectsCacheKey(obj.id, obj.type, url);
-    if (seekCache && LRUCache.hasKey(__commentObjectsCacheKey) && cacheStrategy !== CacheStrategies.NETWORK_ONLY) {
-      return Promise.resolve(LRUCache.get(__commentObjectsCacheKey));
+    const _contributorsCacheKey = getContributorsCacheKey(obj.id, obj.type, url);
+    if (seekCache && LRUCache.hasKey(_contributorsCacheKey) && cacheStrategy !== CacheStrategies.NETWORK_ONLY) {
+      return Promise.resolve(LRUCache.get(_contributorsCacheKey));
     }
     return http
       .request({
@@ -220,26 +205,25 @@ export default function useSCFetchCommentObjects(props: {
         if (res.status >= 300) {
           return Promise.reject(res);
         }
-        LRUCache.set(__commentObjectsCacheKey, res.data);
-        res.data.results.forEach((e) => LRUCache.set(getCommentObjectCacheKey(e.id), e));
+        LRUCache.set(_contributorsCacheKey, res.data);
         return Promise.resolve(res.data);
       });
   };
 
   /**
-   * Fetch previous comments
+   * Fetch previous contributors
    */
   function getPreviousPage() {
     if (obj && state.previous && !state.isLoadingPrevious) {
-      dispatch({type: commentsObjectActionTypes.LOADING_PREVIOUS});
+      dispatch({type: contributorsObjectActionTypes.LOADING_PREVIOUS});
       performFetchComments(state.previous)
         .then((res) => {
           let currentPage = getCurrentPage(state.previous);
           dispatch({
-            type: commentsObjectActionTypes.DATA_PREVIOUS_LOADED,
+            type: contributorsObjectActionTypes.DATA_PREVIOUS_LOADED,
             payload: {
               page: currentPage,
-              comments: [...res.results, ...state.comments],
+              contributors: [...res.results, ...state.contributors],
               previous: res.previous,
             },
           });
@@ -257,23 +241,23 @@ export default function useSCFetchCommentObjects(props: {
   }
 
   /**
-   * Fetch next comments
+   * Fetch next contributors
    */
   function getNextPage() {
     if (obj && state.next && !state.isLoadingNext) {
-      dispatch({type: commentsObjectActionTypes.LOADING_NEXT});
+      dispatch({type: contributorsObjectActionTypes.LOADING_NEXT});
       performFetchComments(state.next)
         .then((res) => {
           let currentPage = getCurrentPage(state.next);
           dispatch({
-            type: commentsObjectActionTypes.DATA_NEXT_LOADED,
+            type: contributorsObjectActionTypes.DATA_NEXT_LOADED,
             payload: {
               page: currentPage,
-              comments: [...state.comments, ...res.results],
+              contributors: [...state.contributors, ...res.results],
               next: res.next,
               total: res.count,
               componentLoaded: true,
-              ...(offset && state.comments.length === 0 ? {previous: res.previous} : {}),
+              ...(offset && state.contributors.length === 0 ? {previous: res.previous} : {}),
             },
           });
           onChangePage && onChangePage(currentPage);
@@ -290,26 +274,26 @@ export default function useSCFetchCommentObjects(props: {
   }
 
   /**
-   * Reset component status on change orderBy, pageSize, offset
+   * Reset contributors status on change pageSize, offset
    */
   useEffect(() => {
     if (state.componentLoaded && Boolean(obj) && !state.reload) {
       dispatch({
-        type: commentsObjectActionTypes.DATA_RELOAD,
+        type: contributorsObjectActionTypes.DATA_RELOAD,
         payload: {
           next: getNextUrl(),
         },
       });
     }
-  }, [objId, parent, orderBy, pageSize, offset]);
+  }, [objId, pageSize, offset]);
 
   /**
-   * Reload fetch comments
+   * Reload fetch contributors
    */
   useEffect(() => {
     if (state.componentLoaded && state.reload && !state.isLoadingNext && !state.isLoadingPrevious) {
       dispatch({
-        type: commentsObjectActionTypes.DATA_RELOADED,
+        type: contributorsObjectActionTypes.DATA_RELOADED,
       });
       getNextPage();
     }
@@ -322,6 +306,5 @@ export default function useSCFetchCommentObjects(props: {
     pageSize,
     getNextPage,
     getPreviousPage,
-    orderBy,
   };
 }

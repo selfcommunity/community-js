@@ -6,6 +6,7 @@ import {
   Feed,
   SCFeedObjectTemplateType,
   FeedSidebarProps,
+  FeedProps,
   FeedUpdates,
   LoyaltyProgram,
   Notification,
@@ -65,6 +66,12 @@ export interface NotificationFeedProps {
    * @default {top: 0, bottomBoundary: `#${id}`}
    */
   FeedSidebarProps?: FeedSidebarProps;
+
+  /**
+   * Props to spread to feed component
+   * @default {}
+   */
+  FeedProps?: FeedProps;
 }
 
 // Widgets for feed
@@ -141,7 +148,7 @@ export default function NotificationFeed(inProps: NotificationFeedProps): JSX.El
     props: inProps,
     name: PREFIX
   });
-  const {id = 'notification_feed', className, widgets = WIDGETS, NotificationProps = {}, FeedSidebarProps = null} = props;
+  const {id = 'notification_feed', className, widgets = WIDGETS, NotificationProps = {}, FeedSidebarProps = null, FeedProps = {}} = props;
 
   //CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
@@ -168,6 +175,8 @@ export default function NotificationFeed(inProps: NotificationFeedProps): JSX.El
         template: SCFeedObjectTemplateType.PREVIEW
       }}
       FeedSidebarProps={FeedSidebarProps}
+      requireAuthentication={true}
+      {...FeedProps}
     />
   );
 }

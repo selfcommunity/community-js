@@ -8,6 +8,7 @@ import {
   SCFeedObjectTemplateType,
   FeedRef,
   FeedSidebarProps,
+  FeedProps,
   InlineComposer,
   SCFeedWidgetType,
   TrendingFeed,
@@ -76,6 +77,12 @@ export interface CategoryFeedProps {
    * @default {top: 0, bottomBoundary: `#${id}`}
    */
   FeedSidebarProps?: FeedSidebarProps;
+
+  /**
+   * Props to spread to feed component
+   * @default {}
+   */
+  FeedProps?: FeedProps;
 }
 
 // Widgets for feed
@@ -130,7 +137,16 @@ export default function CategoryFeed(inProps: CategoryFeedProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {id = 'category_feed', className, category, categoryId, widgets = WIDGETS, FeedObjectProps = {}, FeedSidebarProps = null} = props;
+  const {
+    id = 'category_feed',
+    className,
+    category,
+    categoryId,
+    widgets = WIDGETS,
+    FeedObjectProps = {},
+    FeedSidebarProps = null,
+    FeedProps = {}
+  } = props;
 
   // REF
   const feedRef = useRef<FeedRef>();
@@ -173,7 +189,7 @@ export default function CategoryFeed(inProps: CategoryFeedProps): JSX.Element {
     feedRef && feedRef.current && feedRef.current.addFeedData(feedUnit);
   };
 
-  if (scCategory === null) {
+  if (!scCategory) {
     return <CategoryFeedSkeleton />;
   }
 
@@ -202,6 +218,7 @@ export default function CategoryFeed(inProps: CategoryFeedProps): JSX.Element {
       }}
       FeedSidebarProps={FeedSidebarProps}
       CustomAdvProps={{position: SCCustomAdvPosition.POSITION_FEED, categoriesId: [scCategory.id]}}
+      {...FeedProps}
     />
   );
 }

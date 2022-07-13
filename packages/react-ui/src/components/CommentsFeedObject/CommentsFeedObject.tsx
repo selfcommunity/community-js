@@ -12,7 +12,7 @@ import {SCOPE_SC_UI} from '../../constants/Errors';
 import Typography from '@mui/material/Typography';
 import {getContribution} from '../../utils/contribution';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
-import {Logger} from '@selfcommunity/utils';
+import {CacheStrategies, Logger} from '@selfcommunity/utils';
 import {useSCFetchCommentObject, useSCFetchCommentObjects} from '@selfcommunity/react-core';
 import {SCCommentType, SCFeedObjectType, SCFeedObjectTypologyType} from '@selfcommunity/types';
 
@@ -159,6 +159,11 @@ export interface CommentsFeedObjectProps {
   onChangePage?: (page) => any;
 
   /**
+   * Caching strategies
+   */
+  cacheStrategy?: CacheStrategies;
+
+  /**
    * Other props
    */
   [p: string]: any;
@@ -215,6 +220,7 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
     infiniteScrolling = true,
     onChangePage,
     comments = [],
+    cacheStrategy = CacheStrategies.NETWORK_ONLY,
     ...rest
   } = props;
 
@@ -226,11 +232,12 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
     offset: (page - 1) * commentsPageCount,
     pageSize: commentsPageCount,
     orderBy: commentsOrderBy,
-    onChangePage: onChangePage
+    onChangePage: onChangePage,
+    cacheStrategy
   });
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [comment, setComment] = useState<SCCommentType>(null);
-  const {obj: commentObj, error: errorCommentObj} = useSCFetchCommentObject({id: commentObjectId, commentObject});
+  const {obj: commentObj, error: errorCommentObj} = useSCFetchCommentObject({id: commentObjectId, commentObject, cacheStrategy});
   const [commentError, setCommentError] = useState<boolean>(null);
 
   // CONST
