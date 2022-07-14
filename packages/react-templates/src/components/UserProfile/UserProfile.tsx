@@ -259,7 +259,7 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
         widgets={_widgets}
         FeedObjectProps={FeedObjectProps}
         FeedSidebarProps={FeedSidebarProps}
-        {...{...UserFeedProps, ...{(!scUser || scUserContext.user.id !== scUser.id) ? {HeaderComponent: null} : {}}}}
+        {...{...UserFeedProps, ...{...(!scUser || scUserContext.user.id !== scUser.id ? {HeaderComponent: null} : {})}}}
       />
     </Root>
   );
