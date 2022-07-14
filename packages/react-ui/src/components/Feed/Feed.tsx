@@ -23,6 +23,7 @@ import classNames from 'classnames';
 import PubSub from 'pubsub-js';
 import {useThemeProps} from '@mui/system';
 import Widget from '../Widget';
+import InlineComposer, {InlineComposerProps} from '../InlineComposer';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import VirtualizedScroller, {VirtualScrollChild} from '../../shared/VirtualizedScroller';
 import {widgetReducer, widgetSort} from '../../utils/feed';
@@ -173,6 +174,17 @@ export interface FeedProps {
   requireAuthentication?: boolean;
 
   /**
+   * Show InlineComposer
+   * @default false
+   */
+  showInlineComposer?: boolean;
+
+  /**
+   * Props to spread to InlineComposer component if exist
+   */
+  InlineComposerProps?: InlineComposerProps;
+
+  /**
    * Caching strategies
    * @default CacheStrategies.CACHE_FIRST
    */
@@ -246,6 +258,8 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     onPreviousData,
     FeedSidebarProps = {top: 0, bottomBoundary: `#${id}`},
     CustomAdvProps = {},
+    showInlineComposer = false,
+    InlineComposerProps = {},
     requireAuthentication = false,
     cacheStrategy = CacheStrategies.NETWORK_ONLY
   } = props;
@@ -430,6 +444,35 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     }
   };
 
+  const addDataToHead = (feedObject) => {
+    // Hydrate feedUnit
+    const feedUnit = {
+      type: feedObject.type,
+      [feedObject.type]: feedObject,
+      seen_by_id: [],
+      has_boost: false
+    };
+    setFeedDataLeft([...[feedUnit], ...feedDataLeft]);
+  };
+
+  /**
+   * Inline composer handler
+   * @param feedObject
+   */
+  const handleComposerSuccess = (feedObject) => {
+    // Hydrate feedUnit
+    addDataToHead(feedObject);
+  };
+
+  /**
+   * Render InlineComposer if need
+   */
+  const renderInlineComposer = () => {
+    return (
+      <>{virtualScrollerMountState.current && showInlineComposer && <InlineComposer onSuccess={handleComposerSuccess} {...InlineComposerProps} />}</>
+    );
+  };
+
   /**
    * Bootstrap initial data
    */
@@ -469,8 +512,8 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
 
   // EXPOSED METHODS
   useImperativeHandle(ref, () => ({
-    addFeedData: (feedUnit: any) => {
-      setFeedDataLeft([...[feedUnit], ...feedDataLeft]);
+    addFeedData: (data: any) => {
+      setFeedDataLeft([...[data], ...feedDataLeft]);
       requestAnimationFrame(() => {
         setTimeout(() => {
           const element = document.getElementById(`item_${itemIdGenerator(feedUnit)}`);
@@ -549,6 +592,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
               </Widget>
             }
             style={{overflow: 'visible'}}>
+            {renderInlineComposer()}
             <VirtualizedScroller
               items={feedDataLeft}
               itemComponent={InnerItem}

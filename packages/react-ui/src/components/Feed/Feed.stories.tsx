@@ -52,13 +52,6 @@ Explore.args = {
   widgets: [
     {
       type: 'widget',
-      component: InlineComposer,
-      componentProps: {},
-      column: 'left',
-      position: 0
-    },
-    {
-      type: 'widget',
       component: TrendingPeople,
       componentProps: {categoryId: 1},
       column: 'right',
@@ -77,6 +70,7 @@ Explore.args = {
   ItemSkeletonProps: {
     template: SCFeedObjectTemplateType.PREVIEW
   },
+  showInlineComposer: true,
   cacheStrategy: CacheStrategies.NETWORK_ONLY
 };
 
@@ -88,13 +82,6 @@ ExploreCache.args = {
   widgets: [
     {
       type: 'widget',
-      component: InlineComposer,
-      componentProps: {},
-      column: 'left',
-      position: 0
-    },
-    {
-      type: 'widget',
       component: TrendingPeople,
       componentProps: {categoryId: 1},
       column: 'right',
@@ -113,6 +100,7 @@ ExploreCache.args = {
   ItemSkeletonProps: {
     template: SCFeedObjectTemplateType.PREVIEW
   },
+  showInlineComposer: true,
   cacheStrategy: CacheStrategies.CACHE_FIRST
 };
 

@@ -119,7 +119,8 @@ const Root = styled(Box, {
 
   [`& .${classes.title} .MuiTypography-root`]: {
     color: '#FFF',
-    backgroundColor: theme.palette.getContrastText('#FFF')
+    backgroundColor: theme.palette.getContrastText('#FFF'),
+    opacity: 0.6
   },
 
   [`& .${classes.iconFile}`]: {
