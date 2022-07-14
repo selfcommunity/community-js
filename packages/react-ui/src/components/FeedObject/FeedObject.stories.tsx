@@ -68,10 +68,31 @@ BaseCache.args = {
   feedObjectType: SCFeedObjectTypologyType.POST
 };
 
-export const BaseWithMedia = Template.bind({});
+export const BaseWithMedia1 = Template.bind({});
 
-BaseWithMedia.args = {
-  feedObjectId: 368,
+BaseWithMedia1.args = {
+  feedObjectId: 404,
+  feedObjectType: SCFeedObjectTypologyType.DISCUSSION
+};
+
+export const BaseWithMedia2 = Template.bind({});
+
+BaseWithMedia2.args = {
+  feedObjectId: 328,
+  feedObjectType: SCFeedObjectTypologyType.POST
+};
+
+export const BaseWithMedia3 = Template.bind({});
+
+BaseWithMedia3.args = {
+  feedObjectId: 380,
+  feedObjectType: SCFeedObjectTypologyType.POST
+};
+
+export const BaseWithMedia3More = Template.bind({});
+
+BaseWithMedia3More.args = {
+  feedObjectId: 412,
   feedObjectType: SCFeedObjectTypologyType.POST
 };
 
