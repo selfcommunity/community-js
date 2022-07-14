@@ -76,13 +76,6 @@ export interface ExploreFeedProps {
 const WIDGETS: SCFeedWidgetType[] = [
   {
     type: 'widget',
-    component: InlineComposer,
-    componentProps: {},
-    column: 'left',
-    position: 0
-  },
-  {
-    type: 'widget',
     component: Platform,
     componentProps: {},
     column: 'right',
@@ -159,9 +152,6 @@ export default function ExploreFeed(inProps: ExploreFeedProps): JSX.Element {
   const _widgets = useMemo(
     () =>
       widgets.map((w) => {
-        if (w.component === InlineComposer) {
-          return {...w, componentProps: {...w.componentProps, onSuccess: handleComposerSuccess}};
-        }
         return {...w, componentProps: {...w.componentProps}};
       }),
     [widgets]
@@ -187,6 +177,7 @@ export default function ExploreFeed(inProps: ExploreFeedProps): JSX.Element {
       ItemSkeletonProps={{
         template: SCFeedObjectTemplateType.PREVIEW
       }}
+      HeaderComponent={<InlineComposer onSuccess={handleComposerSuccess} />}
       FeedSidebarProps={FeedSidebarProps}
       {...FeedProps}
     />

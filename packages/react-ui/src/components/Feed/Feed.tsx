@@ -109,6 +109,12 @@ export interface FeedProps {
   refreshMessage?: ReactNode;
 
   /**
+   * Component used as header. It will be displayed at the beginning of the feed
+   @default null
+   */
+  HeaderComponent?: JSX.Element;
+
+  /**
    * Component used as footer. It will be displayed after the end messages
    @default <Footer>
    */
@@ -174,17 +180,6 @@ export interface FeedProps {
   requireAuthentication?: boolean;
 
   /**
-   * Show InlineComposer
-   * @default false
-   */
-  showInlineComposer?: boolean;
-
-  /**
-   * Props to spread to InlineComposer component if exist
-   */
-  InlineComposerProps?: InlineComposerProps;
-
-  /**
    * Caching strategies
    * @default CacheStrategies.CACHE_FIRST
    */
@@ -245,6 +240,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     endpointQueryParams = {limit: DEFAULT_PAGINATION_ITEMS_NUMBER, offset: 0},
     endMessage = <FormattedMessage id="ui.feed.noOtherFeedObject" defaultMessage="ui.feed.noOtherFeedObject" />,
     refreshMessage = <FormattedMessage id="ui.feed.refreshRelease" defaultMessage="ui.feed.refreshRelease" />,
+    HeaderComponent,
     FooterComponent = Footer,
     FooterComponentProps = {},
     widgets = [],
@@ -258,8 +254,6 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     onPreviousData,
     FeedSidebarProps = {top: 0, bottomBoundary: `#${id}`},
     CustomAdvProps = {},
-    showInlineComposer = false,
-    InlineComposerProps = {},
     requireAuthentication = false,
     cacheStrategy = CacheStrategies.NETWORK_ONLY
   } = props;
@@ -444,33 +438,11 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     }
   };
 
-  const addDataToHead = (feedObject) => {
-    // Hydrate feedUnit
-    const feedUnit = {
-      type: feedObject.type,
-      [feedObject.type]: feedObject,
-      seen_by_id: [],
-      has_boost: false
-    };
-    setFeedDataLeft([...[feedUnit], ...feedDataLeft]);
-  };
-
-  /**
-   * Inline composer handler
-   * @param feedObject
-   */
-  const handleComposerSuccess = (feedObject) => {
-    // Hydrate feedUnit
-    addDataToHead(feedObject);
-  };
-
   /**
    * Render InlineComposer if need
    */
-  const renderInlineComposer = () => {
-    return (
-      <>{virtualScrollerMountState.current && showInlineComposer && <InlineComposer onSuccess={handleComposerSuccess} {...InlineComposerProps} />}</>
-    );
+  const renderHeaderComponent = () => {
+    return <>{virtualScrollerMountState.current && HeaderComponent}</>;
   };
 
   /**
@@ -514,14 +486,6 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
   useImperativeHandle(ref, () => ({
     addFeedData: (data: any) => {
       setFeedDataLeft([...[data], ...feedDataLeft]);
-      requestAnimationFrame(() => {
-        setTimeout(() => {
-          const element = document.getElementById(`item_${itemIdGenerator(feedUnit)}`);
-          if (element) {
-            scrollIntoView(element, {behavior: 'smooth', block: 'start', inline: 'center'});
-          }
-        }, 100);
-      });
     },
     refresh: () => {
       refresh();
@@ -592,7 +556,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
               </Widget>
             }
             style={{overflow: 'visible'}}>
-            {renderInlineComposer()}
+            {renderHeaderComponent()}
             <VirtualizedScroller
               items={feedDataLeft}
               itemComponent={InnerItem}

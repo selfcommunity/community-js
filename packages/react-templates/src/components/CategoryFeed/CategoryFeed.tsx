@@ -89,13 +89,6 @@ export interface CategoryFeedProps {
 const WIDGETS: SCFeedWidgetType[] = [
   {
     type: 'widget',
-    component: InlineComposer,
-    componentProps: {},
-    column: 'left',
-    position: 0
-  },
-  {
-    type: 'widget',
     component: TrendingPeople,
     componentProps: {},
     column: 'right',
@@ -176,9 +169,6 @@ export default function CategoryFeed(inProps: CategoryFeedProps): JSX.Element {
     () =>
       widgets.map((w) => {
         if (scCategory) {
-          if (w.component === InlineComposer) {
-            return {...w, componentProps: {...w.componentProps, defaultValue: {categories: [scCategory]}, onSuccess: handleComposerSuccess}};
-          }
           return {...w, componentProps: {...w.componentProps, categoryId: scCategory.id}};
         }
         return w;
@@ -214,6 +204,7 @@ export default function CategoryFeed(inProps: CategoryFeedProps): JSX.Element {
         template: SCFeedObjectTemplateType.PREVIEW
       }}
       FeedSidebarProps={FeedSidebarProps}
+      HeaderComponent={<InlineComposer onSuccess={handleComposerSuccess} />}
       CustomAdvProps={{position: SCCustomAdvPosition.POSITION_FEED, categoriesId: [scCategory.id]}}
       {...FeedProps}
     />

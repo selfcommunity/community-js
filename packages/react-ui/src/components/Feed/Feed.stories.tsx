@@ -9,7 +9,7 @@ import SCNotification, {NotificationSkeleton} from '../Notification';
 import FeedUpdates from '../FeedUpdates';
 import BroadcastMessages from '../BroadcastMessages';
 import {CacheStrategies} from '@selfcommunity/utils';
-import {TrendingPeople} from '../../index';
+import {InlineComposer, TrendingPeople} from '../../index';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -70,7 +70,6 @@ Explore.args = {
   ItemSkeletonProps: {
     template: SCFeedObjectTemplateType.PREVIEW
   },
-  showInlineComposer: true,
   cacheStrategy: CacheStrategies.NETWORK_ONLY
 };
 
@@ -100,7 +99,6 @@ ExploreCache.args = {
   ItemSkeletonProps: {
     template: SCFeedObjectTemplateType.PREVIEW
   },
-  showInlineComposer: true,
   cacheStrategy: CacheStrategies.CACHE_FIRST
 };
 

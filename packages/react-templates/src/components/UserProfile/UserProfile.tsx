@@ -5,7 +5,6 @@ import {
   CategoriesFollowed,
   FeedObjectProps,
   FeedSidebarProps,
-  InlineComposer,
   SCFeedWidgetType,
   UserFollowers,
   UserProfileHeaderProps,
@@ -128,13 +127,6 @@ const WIDGETS = [
 ];
 
 const MY_PROFILE_WIDGETS = [
-  {
-    type: 'widget',
-    component: InlineComposer,
-    componentProps: {},
-    column: 'left',
-    position: 0
-  },
   {
     type: 'widget',
     component: CategoriesFollowed,
@@ -262,7 +254,13 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
           </Button>
         )}
       </Stack>
-      <UserFeed user={scUser} widgets={_widgets} FeedObjectProps={FeedObjectProps} FeedSidebarProps={FeedSidebarProps} {...UserFeedProps} />
+      <UserFeed
+        user={scUser}
+        widgets={_widgets}
+        FeedObjectProps={FeedObjectProps}
+        FeedSidebarProps={FeedSidebarProps}
+        {...{...UserFeedProps, ...{(!scUser || scUserContext.user.id !== scUser.id) ? {HeaderComponent: null} : {}}}}
+      />
     </Root>
   );
 }
