@@ -23,13 +23,11 @@ import classNames from 'classnames';
 import PubSub from 'pubsub-js';
 import {useThemeProps} from '@mui/system';
 import Widget from '../Widget';
-import InlineComposer, {InlineComposerProps} from '../InlineComposer';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import VirtualizedScroller, {VirtualScrollChild} from '../../shared/VirtualizedScroller';
 import {widgetReducer, widgetSort} from '../../utils/feed';
 import Footer from '../Footer';
 import FeedSkeleton from './Skeleton';
-import {scrollIntoView} from 'seamless-scroll-polyfill';
 
 const PREFIX = 'SCFeed';
 
@@ -199,7 +197,8 @@ export interface FeedProps {
 }
 
 const WIDGET_PREFIX_KEY = 'widget_';
-const DEFAULT_PAGINATION_ITEMS_NUMBER = 5;
+const DEFAULT_PAGINATION_ITEMS_NUMBER = 5; // data pagination
+const DEFAULT_WIDGETS_NUMBER = 10; // every how many elements insert a widget
 const PREFERENCES = [SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED, SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED];
 
 /**
@@ -294,7 +293,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
               column: 'right',
               position: 0
             },
-            ...Array.from({length: offset / 10 + 1}, (_, i) => i * 10).map((position): SCFeedWidgetType => {
+            ...Array.from({length: offset / DEFAULT_WIDGETS_NUMBER + 1}, (_, i) => i * DEFAULT_WIDGETS_NUMBER).map((position): SCFeedWidgetType => {
               return {
                 type: 'widget',
                 component: CustomAdv,
@@ -370,8 +369,11 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
    * @param data
    */
   const _getFeedDataLeft = (data) => {
+    // if load initial data from cache take into account how much widgets should be included
+    const _currentFeedLength =
+      data.length + (data.length <= limit ? feedDataLeft.length : Math.ceil(data.length / DEFAULT_WIDGETS_NUMBER)) + endpointQueryParams.offset;
     if (oneColLayout) {
-      return _widgets(feedDataLeft.length + data.length)
+      return _widgets(_currentFeedLength)
         .map((w, i) =>
           Object.assign({}, w, {position: w.position * (w.column === 'right' ? 5 : 1) - feedDataLeft.length - endpointQueryParams.offset, id: i})
         )
@@ -379,7 +381,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
         .sort(widgetSort)
         .reduce(widgetReducer(feedDataLeft.total, limit), [...data]);
     }
-    return _widgets(feedDataLeft.length + data.length)
+    return _widgets(_currentFeedLength)
       .map((w, i) => Object.assign({}, w, {position: w.position - feedDataLeft.length - endpointQueryParams.offset, id: i}))
       .filter((w) => w.column === 'left' && w.position > -1)
       .sort(widgetSort)
