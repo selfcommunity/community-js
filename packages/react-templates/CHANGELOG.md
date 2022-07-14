@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.21](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.1.21-alpha.1...@selfcommunity/react-templates@0.1.21) (2022-07-14)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.1.21-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.1.21-alpha.0...@selfcommunity/react-templates@0.1.21-alpha.1) (2022-07-14)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.1.21-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.1.20...@selfcommunity/react-templates@0.1.21-alpha.0) (2022-07-13)
+
+
+### Bug Fixes
+
+* category template ([6edc171](https://github.com/selfcommunity/community-js/commit/6edc171ab381b2476f5a0259db18b417a3757dfd))
+
+
+
+
+
 ## [0.1.20](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.1.20-alpha.1...@selfcommunity/react-templates@0.1.20) (2022-07-13)
 
 **Note:** Version bump only for package @selfcommunity/react-templates
