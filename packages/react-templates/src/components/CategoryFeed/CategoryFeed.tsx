@@ -204,7 +204,7 @@ export default function CategoryFeed(inProps: CategoryFeedProps): JSX.Element {
         template: SCFeedObjectTemplateType.PREVIEW
       }}
       FeedSidebarProps={FeedSidebarProps}
-      HeaderComponent={<InlineComposer onSuccess={handleComposerSuccess} />}
+      HeaderComponent={<InlineComposer onSuccess={handleComposerSuccess} defaultValue={{categories: [scCategory]}} />}
       CustomAdvProps={{position: SCCustomAdvPosition.POSITION_FEED, categoriesId: [scCategory.id]}}
       {...FeedProps}
     />

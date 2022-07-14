@@ -1,7 +1,7 @@
 import React, {useMemo, useRef} from 'react';
 import {styled} from '@mui/material/styles';
 import {Endpoints} from '@selfcommunity/api-services';
-import {useSCFetchUser} from '@selfcommunity/react-core';
+import {SCUserContextType, useSCFetchUser, useSCUser} from '@selfcommunity/react-core';
 import {SCUserType} from '@selfcommunity/types';
 import {
   CategoriesFollowed,
@@ -140,6 +140,10 @@ export default function UserFeed(inProps: UserFeedProps): JSX.Element {
   });
   const {id = 'user_feed', className, userId, user, widgets = WIDGETS, FeedObjectProps = {}, FeedSidebarProps = null, UserFeedProps = {}} = props;
 
+
+  // Context
+  const scUserContext: SCUserContextType = useSCUser();
+
   // Hooks
   const {scUser} = useSCFetchUser({id: userId, user});
 
@@ -162,7 +166,7 @@ export default function UserFeed(inProps: UserFeedProps): JSX.Element {
   const _widgets = useMemo(
     () =>
       widgets.map((w) => {
-        return {...w, componentProps: {...w.componentProps}};
+        return {...w, componentProps: {...w.componentProps, userId: id}};
       }),
     [scUser, widgets]
   );
@@ -193,7 +197,7 @@ export default function UserFeed(inProps: UserFeedProps): JSX.Element {
       ItemSkeletonProps={{
         template: SCFeedObjectTemplateType.PREVIEW
       }}
-      HeaderComponent={<InlineComposer onSuccess={handleComposerSuccess} />}
+      {...(scUserContext.user ? {HeaderComponent: <InlineComposer onSuccess={handleComposerSuccess} />} : {})}
       FeedSidebarProps={FeedSidebarProps}
       {...UserFeedProps}
     />
