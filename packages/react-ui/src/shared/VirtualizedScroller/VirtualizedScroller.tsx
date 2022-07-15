@@ -11,7 +11,7 @@ import VirtualScroller from 'virtual-scroller/react';
  * at the bottom are compensated by setting padding-bottom on the list element.
  * The component listens to scroll / resize events and re-renders the currently visible items as the user
  * scrolls (or if the browser window is resized).
- * Set window.VirtualScrollerDebug to true to output debug messages to console.
+ * Set window.VirtualScrollerDebug=true; to output debug messages to console.
  */
 export default function VirtualizedScroller(props): JSX.Element {
   const {

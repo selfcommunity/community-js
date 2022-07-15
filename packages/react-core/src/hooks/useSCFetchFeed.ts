@@ -107,7 +107,8 @@ function feedDataReducer(state, action) {
       break;
     case feedDataActionTypes.UPDATE_DATA:
       _state = {
-        feedData: action.payload.data,
+        ...state,
+        ...action.payload,
       };
       break;
   }
@@ -234,9 +235,6 @@ export default function useSCFetchFeed(props: {
           return Promise.reject(res);
         }
         LRUCache.set(__feedDataCacheKey, res.data);
-        /* res.data.results.forEach((e) => {
-          LRUCache.set(getFeedObjectCacheKey(e.id, e.type), e[e.type]);
-        }); */
         return Promise.resolve(res.data);
       });
   };
@@ -329,13 +327,20 @@ export default function useSCFetchFeed(props: {
     }
   }, [state.reload]);
 
-  function updateData(data) {
-    dispatch({type: feedDataActionTypes.UPDATE_DATA, payload: {data}});
+  /**
+   * Update component state
+   * Re-sync next/previous url
+   * When an element is added in the head of a rendered list, fix the next/previous url
+   * to avoid importing posts already in the list
+   * @param payload
+   */
+  function updateState(payload) {
+    dispatch({type: feedDataActionTypes.UPDATE_DATA, payload: payload});
   }
 
   return {
     ...state,
-    updateData,
+    updateState,
     queryParams,
     getNextPage,
     getPreviousPage,

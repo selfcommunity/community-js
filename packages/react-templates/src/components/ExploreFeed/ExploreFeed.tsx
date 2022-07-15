@@ -145,7 +145,7 @@ export default function ExploreFeed(inProps: ExploreFeedProps): JSX.Element {
       seen_by_id: [],
       has_boost: false
     };
-    feedRef && feedRef.current && feedRef.current.addFeedData(feedUnit);
+    feedRef && feedRef.current && feedRef.current.addFeedData(feedUnit, true);
   };
 
   // WIDGETS

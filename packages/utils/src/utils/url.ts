@@ -82,3 +82,30 @@ export const urlB64ToUint8Array = (base64String) => {
   }
   return outputArray;
 };
+
+/**
+ * Get a query string parameter
+ */
+export const getQueryStringParameter = (uri, key) => {
+  if (uri && key) {
+    let params = new URL(uri).searchParams;
+    return params.get(key);
+  }
+  return null;
+};
+
+/**
+ * Add or update a query string parameter
+ */
+export const updateQueryStringParameter = (uri, key, value) => {
+  if (uri && key && value) {
+    let re = new RegExp('([?&])' + key + '=.*?(&|$)', 'i');
+    let separator = uri.indexOf('?') !== -1 ? '&' : '?';
+    if (uri.match(re)) {
+      return uri.replace(re, '$1' + key + '=' + value + '$2');
+    } else {
+      return uri + separator + key + '=' + value;
+    }
+  }
+  return uri;
+};

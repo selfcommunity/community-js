@@ -161,7 +161,7 @@ export default function CategoryFeed(inProps: CategoryFeedProps): JSX.Element {
       seen_by_id: [],
       has_boost: false
     };
-    feedRef && feedRef.current && feedRef.current.addFeedData(feedUnit);
+    feedRef && feedRef.current && feedRef.current.addFeedData(feedUnit, true);
   };
 
   // WIDGETS

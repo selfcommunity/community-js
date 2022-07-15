@@ -18,7 +18,7 @@ import Sticky from 'react-stickynode';
 import CustomAdv, {CustomAdvProps} from '../CustomAdv';
 import {SCCustomAdvPosition, SCUserType} from '@selfcommunity/types';
 import {EndpointType} from '@selfcommunity/api-services';
-import {CacheStrategies} from '@selfcommunity/utils';
+import {CacheStrategies, getQueryStringParameter, updateQueryStringParameter} from '@selfcommunity/utils';
 import classNames from 'classnames';
 import PubSub from 'pubsub-js';
 import {useThemeProps} from '@mui/system';
@@ -66,7 +66,7 @@ export interface FeedSidebarProps {
 }
 
 export type FeedRef = {
-  addFeedData: (obj: any) => void;
+  addFeedData: (obj: any, syncPagination?: boolean) => void;
   refresh: () => void;
 };
 
@@ -329,6 +329,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
   // STATE
   const [feedDataLeft, setFeedDataLeft] = useState([]);
   const [feedDataRight, setFeedDataRight] = useState([]);
+  const [headData, setHeadData] = useState([]);
 
   /**
    * Callback onNextPage
@@ -351,6 +352,8 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
    */
   const onPreviousPage = (page, offset, total, data) => {
     setFeedDataLeft((prev) => _getFeedDataLeft(data).concat(prev));
+    // Remove item duplicated from headData if the page data already contains
+    removeHeadDuplicatedData(data.map((item) => itemIdGenerator(item)));
     onPreviousData && onPreviousData(page, offset, total, data);
   };
 
@@ -444,7 +447,15 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
    * Render InlineComposer if need
    */
   const renderHeaderComponent = () => {
-    return <>{virtualScrollerMountState.current && HeaderComponent}</>;
+    return (
+      <>
+        {virtualScrollerMountState.current && HeaderComponent}
+        {headData.map((item) => {
+          const _itemId = `item_${itemIdGenerator(item)}`;
+          return <ItemComponent id={_itemId} key={_itemId} {...itemPropsGenerator(scUserContext.user, item)} {...ItemProps} sx={{width: '100%'}} />;
+        })}
+      </>
+    );
   };
 
   /**
@@ -484,10 +495,28 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     };
   }, []);
 
+  /**
+   *
+   */
+  const removeHeadDuplicatedData = (itemIds) => {
+    setHeadData(headData.filter((item) => !itemIds.includes(itemIdGenerator(item))));
+  };
+
   // EXPOSED METHODS
   useImperativeHandle(ref, () => ({
-    addFeedData: (data: any) => {
-      setFeedDataLeft([...[data], ...feedDataLeft]);
+    addFeedData: (data: any, syncPagination: boolean) => {
+      // Use headData to save new items in the head of the feed list
+      // In this way, the state of the feed (virtualScroller/cache) remains consistent
+      setHeadData([...[data], ...headData]);
+      if (syncPagination) {
+        // Adding an element, re-sync next and previous of feedDataObject
+        const nextOffset = parseInt(getQueryStringParameter(feedDataObject.next, 'offset') || feedDataObject.feedData.length - 1) + 1;
+        const previousOffset = parseInt(getQueryStringParameter(feedDataObject.previous, 'offset') || offset) + 1;
+        feedDataObject.updateState({
+          previous: updateQueryStringParameter(feedDataObject.previous, 'offset', previousOffset),
+          next: updateQueryStringParameter(feedDataObject.next, 'offset', nextOffset)
+        });
+      }
     },
     refresh: () => {
       refresh();
