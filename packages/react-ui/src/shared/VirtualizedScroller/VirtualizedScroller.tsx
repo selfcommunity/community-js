@@ -2,6 +2,17 @@ import React, {useEffect, useMemo, useRef} from 'react';
 import {CacheStrategies, LRUCache} from '@selfcommunity/utils';
 import VirtualScroller from 'virtual-scroller/react';
 
+/**
+ * VirtualizedScroller
+ * A component for efficiently rendering large lists of variable height items.
+ * VirtualScroller works by measuring each list item's height as it's being rendered, and then, as the user scrolls,
+ * it hides the items that are no longer visible, and shows the now-visible items as they're scrolled to.
+ * The hidden items at the top are compensated by setting padding-top on the list element, and the hidden items
+ * at the bottom are compensated by setting padding-bottom on the list element.
+ * The component listens to scroll / resize events and re-renders the currently visible items as the user
+ * scrolls (or if the browser window is resized).
+ * Set window.VirtualScrollerDebug to true to output debug messages to console.
+ */
 export default function VirtualizedScroller(props): JSX.Element {
   const {
     items = [],
@@ -80,10 +91,17 @@ export default function VirtualizedScroller(props): JSX.Element {
       },
     [cacheScrollStateKey]
   );
+
+  /**
+   * Read virtual scroller state
+   */
   const readVirtualScrollerState = useMemo(
     () => (): number => {
-      if (cacheStrategy === CacheStrategies.CACHE_FIRST && cacheScrollStateKey) {
-        return LRUCache.get(cacheScrollStateKey);
+      if (cacheStrategy === CacheStrategies.CACHE_FIRST && cacheScrollStateKey && LRUCache.hasKey(cacheScrollStateKey)) {
+        const _state = LRUCache.get(cacheScrollStateKey);
+        if (_state.items && _state.items.length) {
+          return _state;
+        }
       }
       return null;
     },
