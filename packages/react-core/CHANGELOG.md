@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.22-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.1.21...@selfcommunity/react-core@0.1.22-alpha.0) (2022-07-15)
+
+
+### Bug Fixes
+
+* add data to feed ([290e8f2](https://github.com/selfcommunity/community-js/commit/290e8f225a08c16d75ea5b6f71896f1eb1b284d0))
+* virtualize scroller ([c3c2fe1](https://github.com/selfcommunity/community-js/commit/c3c2fe1d442262acfd69cf8fd216cd1b76c6454e))
+
+
+
+
+
 ## [0.1.21](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.1.21-alpha.1...@selfcommunity/react-core@0.1.21) (2022-07-14)
 
 **Note:** Version bump only for package @selfcommunity/react-core
