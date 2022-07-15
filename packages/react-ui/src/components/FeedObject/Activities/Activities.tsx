@@ -29,7 +29,7 @@ const Root = styled(Box, {
 })(({theme}) => ({
   width: '100%',
   [`& .${classes.activities}`]: {
-    minHeight: 100
+    minHeight: 150
   }
 }));
 

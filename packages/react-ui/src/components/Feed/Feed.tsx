@@ -569,6 +569,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
             next={feedDataObject.getNextPage}
             hasMore={Boolean(feedDataObject.next)}
             loader={<ItemSkeleton {...ItemSkeletonProps} />}
+            scrollThreshold={1}
             endMessage={
               <>
                 <Widget className={classes.end}>
