@@ -3,7 +3,7 @@ import {SCOPE_SC_CORE} from '../constants/Errors';
 import {SCFeedUnitType} from '@selfcommunity/types';
 import {Endpoints, EndpointType, http, HttpResponse} from '@selfcommunity/api-services';
 import {CacheStrategies, Logger, LRUCache} from '@selfcommunity/utils';
-import {getFeedCacheKey, getStateFeedCacheKey} from '../constants/Cache';
+import {getFeedCacheKey, getFeedObjectCacheKey, getStateFeedCacheKey} from '../constants/Cache';
 import {appendURLSearchParams} from '@selfcommunity/utils';
 
 /**
@@ -107,7 +107,8 @@ function feedDataReducer(state, action) {
       break;
     case feedDataActionTypes.UPDATE_DATA:
       _state = {
-        feedData: action.payload.data,
+        ...state,
+        ...action.payload,
       };
       break;
   }
@@ -197,10 +198,10 @@ export default function useSCFetchFeed(props: {
   };
 
   /**
-   * Get Comments (with cache)
+   * Feed revalidation
    */
   const revalidate = (url, forward) => {
-    return performFetchComments(url, false).then((res) => {
+    return performFetchData(url, false).then((res) => {
       let feedData;
       if (forward) {
         let start = state.feedData.slice(0, state.feedData.length - res.results.length);
@@ -217,9 +218,9 @@ export default function useSCFetchFeed(props: {
   };
 
   /**
-   * Get Comments
+   * Get Feed data
    */
-  const performFetchComments = (url, seekCache = true) => {
+  const performFetchData = (url, seekCache = true) => {
     const __feedDataCacheKey = getFeedCacheKey(id, state.next);
     if (seekCache && LRUCache.hasKey(__feedDataCacheKey) && cacheStrategy !== CacheStrategies.NETWORK_ONLY) {
       return Promise.resolve(LRUCache.get(__feedDataCacheKey));
@@ -227,7 +228,7 @@ export default function useSCFetchFeed(props: {
     return http
       .request({
         url,
-        method: Endpoints.Comments.method,
+        method: endpoint.method,
       })
       .then((res: HttpResponse<any>) => {
         if (res.status >= 300) {
@@ -244,7 +245,7 @@ export default function useSCFetchFeed(props: {
   function getPreviousPage() {
     if (endpoint && state.previous && !state.isLoadingPrevious) {
       dispatch({type: feedDataActionTypes.LOADING_PREVIOUS});
-      performFetchComments(state.previous)
+      performFetchData(state.previous)
         .then((res) => {
           let currentOffset = Math.max(getCurrentOffset(res.previous), 0);
           let currentPage = Math.ceil(currentOffset / queryParams.limit + 1);
@@ -275,7 +276,7 @@ export default function useSCFetchFeed(props: {
   function getNextPage() {
     if (endpoint && state.next && !state.isLoadingNext) {
       dispatch({type: feedDataActionTypes.LOADING_NEXT});
-      performFetchComments(state.next)
+      performFetchData(state.next)
         .then((res) => {
           let currentOffset = Math.max(getCurrentOffset(res.next) - queryParams.limit, 0);
           let currentPage = Math.ceil(currentOffset / queryParams.limit + 1);
@@ -326,13 +327,20 @@ export default function useSCFetchFeed(props: {
     }
   }, [state.reload]);
 
-  function updateData(data) {
-    dispatch({type: feedDataActionTypes.UPDATE_DATA, payload: {data}});
+  /**
+   * Update component state
+   * Re-sync next/previous url
+   * When an element is added in the head of a rendered list, fix the next/previous url
+   * to avoid importing posts already in the list
+   * @param payload
+   */
+  function updateState(payload) {
+    dispatch({type: feedDataActionTypes.UPDATE_DATA, payload: payload});
   }
 
   return {
     ...state,
-    updateData,
+    updateState,
     queryParams,
     getNextPage,
     getPreviousPage,

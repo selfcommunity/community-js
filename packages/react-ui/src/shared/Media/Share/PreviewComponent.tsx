@@ -37,7 +37,14 @@ export default ({medias = [], adornment = null}: {medias: any[]; GridImageProps?
             <LazyLoad
               height={400}
               key={media.id}
-              placeholder={<FeedObjectSkeleton template={SCFeedObjectTemplateType.SNIPPET} elevation={0} variant={'outlined'} className={classes.sharePlaceholder} />}
+              placeholder={
+                <FeedObjectSkeleton
+                  template={SCFeedObjectTemplateType.SNIPPET}
+                  elevation={0}
+                  variant={'outlined'}
+                  className={classes.sharePlaceholder}
+                />
+              }
               once
               offset={MAX_PRELOAD_OFFSET_VIEWPORT}>
               <Box className={classes.sharePreview}>

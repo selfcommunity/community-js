@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.3-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.2.3-alpha.0...@selfcommunity/react-ui@0.2.3-alpha.1) (2022-07-15)
+
+
+### Bug Fixes
+
+* feed scroll ([c20bd99](https://github.com/selfcommunity/community-js/commit/c20bd9984102e63f5e61dcb7bda354cea3fa1f23))
+
+
+
+
+
+## [0.2.3-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.2.2...@selfcommunity/react-ui@0.2.3-alpha.0) (2022-07-15)
+
+
+### Bug Fixes
+
+* add data to feed ([290e8f2](https://github.com/selfcommunity/community-js/commit/290e8f225a08c16d75ea5b6f71896f1eb1b284d0))
+* feed customAdv widgets ([574f17f](https://github.com/selfcommunity/community-js/commit/574f17f15adfa8287d824457927f3088526b2183))
+* Feed HeaderComponent ([b35398d](https://github.com/selfcommunity/community-js/commit/b35398de075084cd696847269b7596d126bf5962))
+* Feed InlineComposer(optional) ([d3f2dfd](https://github.com/selfcommunity/community-js/commit/d3f2dfdbad1450f6260d40a9808bf329509f79ac))
+* FeedObject stories ([77a3d19](https://github.com/selfcommunity/community-js/commit/77a3d19c2f8b3a53ed1b443541cb2b57ad04ef54))
+* PreviuwImage ([fd41b7f](https://github.com/selfcommunity/community-js/commit/fd41b7fa9a85dc10c2e6f5e25dac57064a03251f))
+* virtualize scroller ([c3c2fe1](https://github.com/selfcommunity/community-js/commit/c3c2fe1d442262acfd69cf8fd216cd1b76c6454e))
+
+
+
+
+
 ## [0.2.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.2.2-alpha.1...@selfcommunity/react-ui@0.2.2) (2022-07-14)
 
 **Note:** Version bump only for package @selfcommunity/react-ui

@@ -1,5 +1,14 @@
 import {capitalize, isString, stripHtml, camelCase, copyTextToClipboard, fallbackCopyTextToClipboard, random} from './utils/string';
-import {isValidUrl, isValidUrls, urlReplacer, getDomain, appendURLSearchParams, urlB64ToUint8Array} from './utils/url';
+import {
+  isValidUrl,
+  isValidUrls,
+  urlReplacer,
+  getDomain,
+  appendURLSearchParams,
+  urlB64ToUint8Array,
+  getQueryStringParameter,
+  updateQueryStringParameter
+} from './utils/url';
 import {getHighestSafeWindowContext, getWindowWidth, getWindowHeight, isClientSideRendering} from './utils/window';
 import {mergeDeep, isObject} from './utils/object';
 import {loadVersionBrowser} from './utils/browser';
@@ -24,6 +33,8 @@ export {
   getDomain,
   appendURLSearchParams,
   urlB64ToUint8Array,
+  getQueryStringParameter,
+  updateQueryStringParameter,
   getHighestSafeWindowContext,
   getWindowWidth,
   getWindowHeight,

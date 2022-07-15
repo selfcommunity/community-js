@@ -76,13 +76,6 @@ export interface MainFeedProps {
 const WIDGETS: SCFeedWidgetType[] = [
   {
     type: 'widget',
-    component: InlineComposer,
-    componentProps: {},
-    column: 'left',
-    position: 0
-  },
-  {
-    type: 'widget',
     component: Platform,
     componentProps: {},
     column: 'right',
@@ -168,6 +161,7 @@ export default function MainFeed(inProps: MainFeedProps): JSX.Element {
         template: SCFeedObjectTemplateType.PREVIEW
       }}
       FeedSidebarProps={FeedSidebarProps}
+      HeaderComponent={<InlineComposer />}
       requireAuthentication={true}
       {...FeedProps}
     />

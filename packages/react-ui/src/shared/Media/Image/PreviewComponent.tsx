@@ -31,15 +31,15 @@ const Root = styled(Box, {
   margin: 'auto',
   width: '100%',
   position: 'relative',
-  minHeight: 500,
+  minHeight: 400,
   [theme.breakpoints.down('md')]: {
-    minHeight: 370
+    minHeight: 170
   },
+
   [`& .${classes.background}`]: {
     backgroundSize: 'cover !important',
     backgroundPosition: 'center !important',
-    backgroundRepeat: 'no-repeat !important',
-    backgroundImage: 'url(/static/frontend_v2/images/image.svg)'
+    backgroundRepeat: 'no-repeat !important'
   },
 
   [`& .${classes.heightOne}`]: {
@@ -48,12 +48,12 @@ const Root = styled(Box, {
   },
 
   [`& .${classes.heightHalfOne}`]: {
-    paddingTop: '50%'
+    paddingTop: '50%',
   },
 
   [`& .${classes.heightTwo}`]: {
     width: '50%',
-    paddingTop: '50%'
+    paddingTop: '50%',
   },
 
   [`& .${classes.heightThree}`]: {
@@ -119,7 +119,8 @@ const Root = styled(Box, {
 
   [`& .${classes.title} .MuiTypography-root`]: {
     color: '#FFF',
-    backgroundColor: theme.palette.getContrastText('#FFF')
+    backgroundColor: theme.palette.getContrastText('#FFF'),
+    opacity: 0.6
   },
 
   [`& .${classes.iconFile}`]: {

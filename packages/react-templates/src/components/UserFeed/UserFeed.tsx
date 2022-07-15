@@ -1,7 +1,7 @@
 import React, {useMemo, useRef} from 'react';
 import {styled} from '@mui/material/styles';
 import {Endpoints} from '@selfcommunity/api-services';
-import {useSCFetchUser} from '@selfcommunity/react-core';
+import {SCUserContextType, useSCFetchUser, useSCUser} from '@selfcommunity/react-core';
 import {SCUserType} from '@selfcommunity/types';
 import {
   CategoriesFollowed,
@@ -83,7 +83,7 @@ export interface UserFeedProps {
    * Props to spread to feed component
    * @default {}
    */
-  FeedProps?: FeedProps;
+  UserFeedProps?: FeedProps;
 }
 
 // Widgets for feed
@@ -138,7 +138,11 @@ export default function UserFeed(inProps: UserFeedProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {id = 'user_feed', className, userId, user, widgets = WIDGETS, FeedObjectProps = {}, FeedSidebarProps = null, FeedProps = {}} = props;
+  const {id = 'user_feed', className, userId, user, widgets = WIDGETS, FeedObjectProps = {}, FeedSidebarProps = null, UserFeedProps = {}} = props;
+
+
+  // Context
+  const scUserContext: SCUserContextType = useSCUser();
 
   // Hooks
   const {scUser} = useSCFetchUser({id: userId, user});
@@ -155,17 +159,14 @@ export default function UserFeed(inProps: UserFeedProps): JSX.Element {
       seen_by_id: [],
       has_boost: false
     };
-    feedRef && feedRef.current && feedRef.current.addFeedData(feedUnit);
+    feedRef && feedRef.current && feedRef.current.addFeedData(feedUnit, true);
   };
 
   // WIDGETS
   const _widgets = useMemo(
     () =>
       widgets.map((w) => {
-        if (w.component === InlineComposer && scUser) {
-          return {...w, componentProps: {...w.componentProps, onSuccess: handleComposerSuccess}};
-        }
-        return {...w, componentProps: {...w.componentProps}};
+        return {...w, componentProps: {...w.componentProps, userId: id}};
       }),
     [scUser, widgets]
   );
@@ -196,8 +197,9 @@ export default function UserFeed(inProps: UserFeedProps): JSX.Element {
       ItemSkeletonProps={{
         template: SCFeedObjectTemplateType.PREVIEW
       }}
+      {...(scUserContext.user ? {HeaderComponent: <InlineComposer onSuccess={handleComposerSuccess} />} : {})}
       FeedSidebarProps={FeedSidebarProps}
-      {...FeedProps}
+      {...UserFeedProps}
     />
   );
 }

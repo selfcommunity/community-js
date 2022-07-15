@@ -5,7 +5,6 @@ import {
   CategoriesFollowed,
   FeedObjectProps,
   FeedSidebarProps,
-  InlineComposer,
   SCFeedWidgetType,
   UserFollowers,
   UserProfileHeaderProps,
@@ -130,13 +129,6 @@ const WIDGETS = [
 const MY_PROFILE_WIDGETS = [
   {
     type: 'widget',
-    component: InlineComposer,
-    componentProps: {},
-    column: 'left',
-    position: 0
-  },
-  {
-    type: 'widget',
     component: CategoriesFollowed,
     componentProps: {},
     column: 'right',
@@ -221,7 +213,7 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
     } else {
       _widgets = [...WIDGETS];
     }
-    return _widgets;
+    return _widgets.map((w) => ({...w, componentProps: {...w.componentProps, userId}}));
   };
 
   // Choose widgets based on user session
@@ -262,7 +254,13 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
           </Button>
         )}
       </Stack>
-      <UserFeed user={scUser} widgets={_widgets} FeedObjectProps={FeedObjectProps} FeedSidebarProps={FeedSidebarProps} {...UserFeedProps} />
+      <UserFeed
+        user={scUser}
+        widgets={_widgets}
+        FeedObjectProps={FeedObjectProps}
+        FeedSidebarProps={FeedSidebarProps}
+        {...{...UserFeedProps, ...{...(!isMe ? {HeaderComponent: null} : {})}}}
+      />
     </Root>
   );
 }

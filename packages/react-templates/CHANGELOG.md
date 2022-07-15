@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.22-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.1.22-alpha.0...@selfcommunity/react-templates@0.1.22-alpha.1) (2022-07-15)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.1.22-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.1.21...@selfcommunity/react-templates@0.1.22-alpha.0) (2022-07-15)
+
+
+### Bug Fixes
+
+* add data to feed ([290e8f2](https://github.com/selfcommunity/community-js/commit/290e8f225a08c16d75ea5b6f71896f1eb1b284d0))
+* Feed HeaderComponent ([a6a7593](https://github.com/selfcommunity/community-js/commit/a6a75933f43e1ce117a7570c41b03dc96716dba0))
+* Feed HeaderComponent ([7c8fac3](https://github.com/selfcommunity/community-js/commit/7c8fac3448ab6961439ca7dad725ffbe94334529))
+* Feed HeaderComponent ([b35398d](https://github.com/selfcommunity/community-js/commit/b35398de075084cd696847269b7596d126bf5962))
+
+
+
+
+
 ## [0.1.21](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.1.21-alpha.1...@selfcommunity/react-templates@0.1.21) (2022-07-14)
 
 **Note:** Version bump only for package @selfcommunity/react-templates
