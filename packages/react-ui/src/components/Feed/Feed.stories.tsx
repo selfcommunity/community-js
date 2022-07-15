@@ -9,7 +9,7 @@ import SCNotification, {NotificationSkeleton} from '../Notification';
 import FeedUpdates from '../FeedUpdates';
 import BroadcastMessages from '../BroadcastMessages';
 import {CacheStrategies} from '@selfcommunity/utils';
-import {InlineComposer, TrendingFeed, TrendingPeople} from '../../index';
+import {InlineComposer, TrendingPeople} from '../../index';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -52,13 +52,6 @@ Explore.args = {
   widgets: [
     {
       type: 'widget',
-      component: InlineComposer,
-      componentProps: {},
-      column: 'left',
-      position: 0
-    },
-    {
-      type: 'widget',
       component: TrendingPeople,
       componentProps: {categoryId: 1},
       column: 'right',
@@ -86,13 +79,6 @@ ExploreCache.args = {
   id: 'explore',
   endpoint: Endpoints.ExploreFeed,
   widgets: [
-    {
-      type: 'widget',
-      component: InlineComposer,
-      componentProps: {},
-      column: 'left',
-      position: 0
-    },
     {
       type: 'widget',
       component: TrendingPeople,
@@ -124,13 +110,6 @@ ExploreOffset2.args = {
   widgets: [
     {
       type: 'widget',
-      component: InlineComposer,
-      componentProps: {},
-      column: 'left',
-      position: 0
-    },
-    {
-      type: 'widget',
       component: TrendingPeople,
       componentProps: {categoryId: 1},
       column: 'right',
@@ -158,13 +137,6 @@ ExploreOffset2Cached.args = {
   id: 'explore',
   endpoint: Endpoints.ExploreFeed,
   widgets: [
-    {
-      type: 'widget',
-      component: InlineComposer,
-      componentProps: {},
-      column: 'left',
-      position: 0
-    },
     {
       type: 'widget',
       component: TrendingPeople,

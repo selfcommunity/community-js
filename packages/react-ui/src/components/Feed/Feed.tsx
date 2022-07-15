@@ -18,7 +18,7 @@ import Sticky from 'react-stickynode';
 import CustomAdv, {CustomAdvProps} from '../CustomAdv';
 import {SCCustomAdvPosition, SCUserType} from '@selfcommunity/types';
 import {EndpointType} from '@selfcommunity/api-services';
-import {CacheStrategies} from '@selfcommunity/utils';
+import {CacheStrategies, getQueryStringParameter, updateQueryStringParameter} from '@selfcommunity/utils';
 import classNames from 'classnames';
 import PubSub from 'pubsub-js';
 import {useThemeProps} from '@mui/system';
@@ -28,7 +28,6 @@ import VirtualizedScroller, {VirtualScrollChild} from '../../shared/VirtualizedS
 import {widgetReducer, widgetSort} from '../../utils/feed';
 import Footer from '../Footer';
 import FeedSkeleton from './Skeleton';
-import {scrollIntoView} from 'seamless-scroll-polyfill';
 
 const PREFIX = 'SCFeed';
 
@@ -67,7 +66,7 @@ export interface FeedSidebarProps {
 }
 
 export type FeedRef = {
-  addFeedData: (obj: any) => void;
+  addFeedData: (obj: any, syncPagination?: boolean) => void;
   refresh: () => void;
 };
 
@@ -106,6 +105,12 @@ export interface FeedProps {
    * @default <FormattedMessage id="ui.feed.refreshRelease" defaultMessage="ui.feed.refreshRelease" />
    */
   refreshMessage?: ReactNode;
+
+  /**
+   * Component used as header. It will be displayed at the beginning of the feed
+   @default null
+   */
+  HeaderComponent?: JSX.Element;
 
   /**
    * Component used as footer. It will be displayed after the end messages
@@ -192,7 +197,8 @@ export interface FeedProps {
 }
 
 const WIDGET_PREFIX_KEY = 'widget_';
-const DEFAULT_PAGINATION_ITEMS_NUMBER = 5;
+const DEFAULT_PAGINATION_ITEMS_NUMBER = 5; // data pagination
+const DEFAULT_WIDGETS_NUMBER = 10; // every how many elements insert a widget
 const PREFERENCES = [SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED, SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED];
 
 /**
@@ -233,6 +239,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     endpointQueryParams = {limit: DEFAULT_PAGINATION_ITEMS_NUMBER, offset: 0},
     endMessage = <FormattedMessage id="ui.feed.noOtherFeedObject" defaultMessage="ui.feed.noOtherFeedObject" />,
     refreshMessage = <FormattedMessage id="ui.feed.refreshRelease" defaultMessage="ui.feed.refreshRelease" />,
+    HeaderComponent,
     FooterComponent = Footer,
     FooterComponentProps = {},
     widgets = [],
@@ -286,7 +293,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
               column: 'right',
               position: 0
             },
-            ...Array.from({length: offset / 10 + 1}, (_, i) => i * 10).map((position): SCFeedWidgetType => {
+            ...Array.from({length: offset / DEFAULT_WIDGETS_NUMBER + 1}, (_, i) => i * DEFAULT_WIDGETS_NUMBER).map((position): SCFeedWidgetType => {
               return {
                 type: 'widget',
                 component: CustomAdv,
@@ -322,6 +329,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
   // STATE
   const [feedDataLeft, setFeedDataLeft] = useState([]);
   const [feedDataRight, setFeedDataRight] = useState([]);
+  const [headData, setHeadData] = useState([]);
 
   /**
    * Callback onNextPage
@@ -344,6 +352,8 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
    */
   const onPreviousPage = (page, offset, total, data) => {
     setFeedDataLeft((prev) => _getFeedDataLeft(data).concat(prev));
+    // Remove item duplicated from headData if the page data already contains
+    removeHeadDuplicatedData(data.map((item) => itemIdGenerator(item)));
     onPreviousData && onPreviousData(page, offset, total, data);
   };
 
@@ -362,8 +372,11 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
    * @param data
    */
   const _getFeedDataLeft = (data) => {
+    // if load initial data from cache take into account how much widgets should be included
+    const _currentFeedLength =
+      data.length + (data.length <= limit ? feedDataLeft.length : Math.ceil(data.length / DEFAULT_WIDGETS_NUMBER)) + endpointQueryParams.offset;
     if (oneColLayout) {
-      return _widgets(feedDataLeft.length + data.length)
+      return _widgets(_currentFeedLength)
         .map((w, i) =>
           Object.assign({}, w, {position: w.position * (w.column === 'right' ? 5 : 1) - feedDataLeft.length - endpointQueryParams.offset, id: i})
         )
@@ -371,7 +384,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
         .sort(widgetSort)
         .reduce(widgetReducer(feedDataLeft.total, limit), [...data]);
     }
-    return _widgets(feedDataLeft.length + data.length)
+    return _widgets(_currentFeedLength)
       .map((w, i) => Object.assign({}, w, {position: w.position - feedDataLeft.length - endpointQueryParams.offset, id: i}))
       .filter((w) => w.column === 'left' && w.position > -1)
       .sort(widgetSort)
@@ -431,6 +444,21 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
   };
 
   /**
+   * Render InlineComposer if need
+   */
+  const renderHeaderComponent = () => {
+    return (
+      <>
+        {virtualScrollerMountState.current && HeaderComponent}
+        {headData.map((item) => {
+          const _itemId = `item_${itemIdGenerator(item)}`;
+          return <ItemComponent id={_itemId} key={_itemId} {...itemPropsGenerator(scUserContext.user, item)} {...ItemProps} sx={{width: '100%'}} />;
+        })}
+      </>
+    );
+  };
+
+  /**
    * Bootstrap initial data
    */
   const _initFeedData = useMemo(
@@ -467,18 +495,28 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     };
   }, []);
 
+  /**
+   *
+   */
+  const removeHeadDuplicatedData = (itemIds) => {
+    setHeadData(headData.filter((item) => !itemIds.includes(itemIdGenerator(item))));
+  };
+
   // EXPOSED METHODS
   useImperativeHandle(ref, () => ({
-    addFeedData: (feedUnit: any) => {
-      setFeedDataLeft([...[feedUnit], ...feedDataLeft]);
-      requestAnimationFrame(() => {
-        setTimeout(() => {
-          const element = document.getElementById(`item_${itemIdGenerator(feedUnit)}`);
-          if (element) {
-            scrollIntoView(element, {behavior: 'smooth', block: 'start', inline: 'center'});
-          }
-        }, 100);
-      });
+    addFeedData: (data: any, syncPagination: boolean) => {
+      // Use headData to save new items in the head of the feed list
+      // In this way, the state of the feed (virtualScroller/cache) remains consistent
+      setHeadData([...[data], ...headData]);
+      if (syncPagination) {
+        // Adding an element, re-sync next and previous of feedDataObject
+        const nextOffset = parseInt(getQueryStringParameter(feedDataObject.next, 'offset') || feedDataObject.feedData.length - 1) + 1;
+        const previousOffset = parseInt(getQueryStringParameter(feedDataObject.previous, 'offset') || offset) + 1;
+        feedDataObject.updateState({
+          previous: updateQueryStringParameter(feedDataObject.previous, 'offset', previousOffset),
+          next: updateQueryStringParameter(feedDataObject.next, 'offset', nextOffset)
+        });
+      }
     },
     refresh: () => {
       refresh();
@@ -549,6 +587,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
               </Widget>
             }
             style={{overflow: 'visible'}}>
+            {renderHeaderComponent()}
             <VirtualizedScroller
               items={feedDataLeft}
               itemComponent={InnerItem}
