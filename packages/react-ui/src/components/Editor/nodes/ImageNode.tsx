@@ -11,6 +11,8 @@ import {
   KEY_DELETE_COMMAND,
   LexicalNode,
   NodeKey,
+  SerializedLexicalNode,
+  Spread,
   TextNode
 } from 'lexical';
 import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
@@ -40,6 +42,16 @@ const Root = styled(Stack, {
   minWidth: 200,
   paddingBottom: theme.spacing()
 }));
+
+export interface ImagePayload {
+  altText: string;
+  className?: string;
+  height?: 'inherit' | number;
+  imageRef?: LegacyRef<HTMLImageElement>;
+  maxWidth: number | string;
+  src: string;
+  width?: 'inherit' | number;
+}
 
 const ImageEdit = ({
   onResize,
@@ -128,23 +140,7 @@ function useSuspenseImage(src: string) {
   }
 }
 
-function LazyImage({
-  altText,
-  className,
-  imageRef,
-  src,
-  width,
-  height,
-  maxWidth
-}: {
-  altText: string;
-  className?: string;
-  height: 'inherit' | number;
-  imageRef: LegacyRef<HTMLImageElement>;
-  maxWidth: number | string;
-  src: string;
-  width: 'inherit' | number;
-}): JSX.Element {
+function LazyImage({altText, className, imageRef, src, width, height, maxWidth}: ImagePayload): JSX.Element {
   useSuspenseImage(src);
   return (
     <img
@@ -258,9 +254,21 @@ function ImageComponent({
 function convertImageElement(domNode) {
   const image = domNode;
   return {
-    node: $createImageNode(image.getAttribute('src'), image.getAttribute('alt'), '100%')
+    node: $createImageNode({src: image.getAttribute('src') as string, altText: image.getAttribute('alt'), maxWidth: '100%'})
   };
 }
+export type SerializedImageNode = Spread<
+  {
+    altText: string;
+    height?: number;
+    maxWidth: number | string;
+    src: string;
+    width?: number;
+    type: 'image';
+    version: 1;
+  },
+  SerializedLexicalNode
+>;
 
 export class ImageNode extends DecoratorNode<JSX.Element> {
   __src: string;
@@ -295,14 +303,6 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
     // @ts-ignore
     writable.__height = height;
   }
-
-  setShowCaption(showCaption: boolean): void {
-    const writable = this.getWritable();
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore
-    writable.__showCaption = showCaption;
-  }
-
   // View
 
   createDOM(config: EditorConfig): HTMLElement {
@@ -345,10 +345,34 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
       />
     );
   }
+
+  static importJSON(serializedNode: SerializedImageNode): ImageNode {
+    const {altText, height, width, maxWidth, src} = serializedNode;
+    const node = $createImageNode({
+      altText,
+      height,
+      maxWidth,
+      src,
+      width
+    });
+    return node;
+  }
+
+  exportJSON(): SerializedImageNode {
+    return {
+      altText: this.getAltText(),
+      height: this.__height === 'inherit' ? 0 : this.__height,
+      maxWidth: this.__maxWidth,
+      src: this.getSrc(),
+      type: 'image',
+      version: 1,
+      width: this.__width === 'inherit' ? 0 : this.__width
+    };
+  }
 }
 
-export function $createImageNode(src: string, altText: string, maxWidth: number | string): ImageNode {
-  return new ImageNode(src, altText, maxWidth);
+export function $createImageNode({src, altText, maxWidth, width = null, height = null}: ImagePayload): ImageNode {
+  return new ImageNode(src, altText, maxWidth, width, height);
 }
 
 export function $isImageNode(node?: LexicalNode): boolean {

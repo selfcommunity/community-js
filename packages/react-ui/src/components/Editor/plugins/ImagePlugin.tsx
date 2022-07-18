@@ -121,7 +121,7 @@ export default function ImagePlugin(): JSX.Element {
           if ($isRootNode(selection.anchor.getNode())) {
             selection.insertParagraph();
           }
-          const imageNode = $createImageNode(payload.src, payload.altText, '100%');
+          const imageNode = $createImageNode({src: payload.src, altText: payload.altText, maxWidth: '100%'});
           selection.insertNodes([imageNode]);
         }
         return true;

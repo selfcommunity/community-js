@@ -270,46 +270,95 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     return _preferences;
   }, [scPreferences.preferences]);
 
+  // RENDER
+  const theme: Theme = useTheme();
+  const oneColLayout = useMediaQuery(theme.breakpoints.down('md'));
+  const advEnabled = useMemo(
+    () =>
+      preferences[SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED] &&
+      ((preferences[SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED] && scUserContext.user === null) ||
+        !preferences[SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED]),
+    [preferences]
+  );
+
   /**
-   * Compute Widgets
+   * Compute Widgets for the left column
    */
-  const _widgets: SCFeedWidgetType[] = useMemo(
+  const _getLeftColumnWidgets: SCFeedWidgetType[] = useMemo(
     () =>
       (offset = 0) => {
-        if (
-          preferences[SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED] &&
-          ((preferences[SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED] && scUserContext.user === null) ||
-            !preferences[SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED])
-        ) {
-          return [
-            ...widgets,
-            {
-              type: 'widget',
-              component: CustomAdv,
-              componentProps: {
-                position: SCCustomAdvPosition.POSITION_FEED_SIDEBAR,
-                ...CustomAdvProps
-              },
-              column: 'right',
-              position: 0
-            },
-            ...Array.from({length: offset / DEFAULT_WIDGETS_NUMBER + 1}, (_, i) => i * DEFAULT_WIDGETS_NUMBER).map((position): SCFeedWidgetType => {
-              return {
+        return [
+          ...widgets,
+          ...(advEnabled
+            ? [
+                {
+                  type: 'widget',
+                  component: CustomAdv,
+                  componentProps: {
+                    position: SCCustomAdvPosition.POSITION_FEED_SIDEBAR,
+                    ...CustomAdvProps
+                  },
+                  column: 'right',
+                  position: 0
+                },
+                ...Array.from({length: offset / DEFAULT_WIDGETS_NUMBER + 1}, (_, i) => i * DEFAULT_WIDGETS_NUMBER).map(
+                  (position): SCFeedWidgetType => {
+                    return {
+                      type: 'widget',
+                      component: CustomAdv,
+                      componentProps: {
+                        position: SCCustomAdvPosition.POSITION_FEED,
+                        ...CustomAdvProps
+                      },
+                      column: 'left',
+                      position
+                    };
+                  }
+                )
+              ]
+            : [])
+        ]
+          .map((w) =>
+            Object.assign({}, w, {
+              position:
+                w.position * (w.column === 'right' && oneColLayout ? 5 : 1) - (w.column === 'left' || oneColLayout ? endpointQueryParams.offset : 0)
+            })
+          )
+          .filter((w) => w.position > -1 && ((!oneColLayout && w.column === 'left') || oneColLayout))
+          .sort(widgetSort);
+      },
+    [widgets, advEnabled, endpointQueryParams, oneColLayout]
+  );
+
+  /**
+   * Compute Widgets for the right column
+   */
+  const _getRightColumnWidgets: SCFeedWidgetType[] = useMemo(
+    () => () => {
+      if (oneColLayout) {
+        return [];
+      }
+      return [
+        ...widgets,
+        ...(advEnabled
+          ? [
+              {
                 type: 'widget',
                 component: CustomAdv,
                 componentProps: {
-                  position: SCCustomAdvPosition.POSITION_FEED,
+                  position: SCCustomAdvPosition.POSITION_FEED_SIDEBAR,
                   ...CustomAdvProps
                 },
-                column: 'left',
-                position
-              };
-            })
-          ];
-        }
-        return [...widgets];
-      },
-    [widgets, preferences]
+                column: 'right',
+                position: 0
+              }
+            ]
+          : [])
+      ]
+        .filter((w) => w.column === 'right')
+        .sort(widgetSort);
+    },
+    [widgets, advEnabled, oneColLayout]
   );
 
   // CONST
@@ -318,13 +367,9 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
 
   // Define offset based on initial offset
   const offset = useMemo(
-    () => (endpointQueryParams.offset > 0 ? Math.max(endpointQueryParams.offset - _widgets(endpointQueryParams.offset).length, 0) : 0),
+    () => (endpointQueryParams.offset > 0 ? Math.max(endpointQueryParams.offset - _getLeftColumnWidgets(endpointQueryParams.offset).length, 0) : 0),
     [endpointQueryParams]
   );
-
-  // RENDER
-  const theme: Theme = useTheme();
-  const oneColLayout = useMediaQuery(theme.breakpoints.down('md'));
 
   // STATE
   const [feedDataLeft, setFeedDataLeft] = useState([]);
@@ -372,22 +417,15 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
    * @param data
    */
   const _getFeedDataLeft = (data) => {
-    // if load initial data from cache take into account how much widgets should be included
-    const _currentFeedLength =
-      data.length + (data.length <= limit ? feedDataLeft.length : Math.ceil(data.length / DEFAULT_WIDGETS_NUMBER)) + endpointQueryParams.offset;
-    if (oneColLayout) {
-      return _widgets(_currentFeedLength)
-        .map((w, i) =>
-          Object.assign({}, w, {position: w.position * (w.column === 'right' ? 5 : 1) - feedDataLeft.length - endpointQueryParams.offset, id: i})
-        )
-        .filter((w) => w.position > -1)
-        .sort(widgetSort)
-        .reduce(widgetReducer(feedDataLeft.total, limit), [...data]);
-    }
-    return _widgets(_currentFeedLength)
-      .map((w, i) => Object.assign({}, w, {position: w.position - feedDataLeft.length - endpointQueryParams.offset, id: i}))
-      .filter((w) => w.column === 'left' && w.position > -1)
-      .sort(widgetSort)
+    // if load initial data from cache take into account how many widgets should be included
+    // if data.length <= limit it means I'm paging (feedDataLeft.length + data.length)
+    // else I'm loading data in bulk from the cache (data.length + _getLeftColumnWidgets(data.length).length)
+    // ps. all positions must be calculated based on the starting offset
+    const totalFeedItems =
+      data.length + (data.length <= limit ? feedDataLeft.length : _getLeftColumnWidgets(data.length).length) + endpointQueryParams.offset;
+    return _getLeftColumnWidgets(totalFeedItems)
+      .map((w, i) => Object.assign({}, w, {position: w.position - feedDataLeft.length, id: i}))
+      .filter((w) => w.position > -1)
       .reduce(widgetReducer(feedDataLeft.total, limit), [...data]);
   };
 
@@ -398,9 +436,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     if (oneColLayout) {
       return [];
     }
-    return _widgets()
-      .filter((w) => w.column === 'right')
-      .sort(widgetSort);
+    return _getRightColumnWidgets();
   };
 
   // REFS

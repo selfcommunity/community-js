@@ -15,6 +15,10 @@ export const COMMENT_OBJECTS_CACHE_PREFIX_KEY = '_cos_';
 export const getCommentObjectsCacheKey = (id, type, next) => `${COMMENT_OBJECTS_CACHE_PREFIX_KEY}${type}_${id}_${next}`;
 export const getCommentObjectsCachePrefixKeys = (id, type) => `${COMMENT_OBJECTS_CACHE_PREFIX_KEY}${type}_${id}`;
 
+/** CATEGORIES OBJECT **/
+export const CATEGORIES_OBJECT_CACHE_PREFIX_KEY = '_cas_';
+export const getCategoriesObjectCacheKey = () => `${CATEGORIES_OBJECT_CACHE_PREFIX_KEY}`;
+
 /** CATEGORY OBJECT **/
 export const CATEGORY_OBJECT_CACHE_PREFIX_KEY = '_ca_';
 export const getCategoryObjectCacheKey = (id) => `${CATEGORY_OBJECT_CACHE_PREFIX_KEY}${id}`;
