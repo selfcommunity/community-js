@@ -29,6 +29,15 @@ export const Main = Template.bind({});
 Main.args = {
   id: 'main',
   endpoint: Endpoints.MainFeed,
+  widgets: [
+    {
+      type: 'widget',
+      component: TrendingPeople,
+      componentProps: {categoryId: 1},
+      column: 'right',
+      position: 0
+    }
+  ],
   ItemComponent: FeedObject,
   itemPropsGenerator: (scUser, item) => ({
     feedObject: item[item.type],

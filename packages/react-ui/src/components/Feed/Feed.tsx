@@ -423,7 +423,6 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     // ps. all positions must be calculated based on the starting offset
     const totalFeedItems =
       data.length + (data.length <= limit ? feedDataLeft.length : _getLeftColumnWidgets(data.length).length) + endpointQueryParams.offset;
-    //
     return _getLeftColumnWidgets(totalFeedItems)
       .map((w, i) => Object.assign({}, w, {position: w.position - feedDataLeft.length, id: i}))
       .filter((w) => w.position > -1)
