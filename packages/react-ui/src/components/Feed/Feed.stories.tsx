@@ -29,6 +29,15 @@ export const Main = Template.bind({});
 Main.args = {
   id: 'main',
   endpoint: Endpoints.MainFeed,
+  widgets: [
+    {
+      type: 'widget',
+      component: TrendingPeople,
+      componentProps: {categoryId: 1},
+      column: 'right',
+      position: 1
+    }
+  ],
   ItemComponent: FeedObject,
   itemPropsGenerator: (scUser, item) => ({
     feedObject: item[item.type],
@@ -43,6 +52,37 @@ Main.args = {
   },
   requireAuthentication: true
 };
+
+export const MainCache = Template.bind({});
+
+MainCache.args = {
+  id: 'main',
+  endpoint: Endpoints.MainFeed,
+  widgets: [
+    {
+      type: 'widget',
+      component: TrendingPeople,
+      componentProps: {categoryId: 1},
+      column: 'right',
+      position: 1
+    }
+  ],
+  ItemComponent: FeedObject,
+  itemPropsGenerator: (scUser, item) => ({
+    feedObject: item[item.type],
+    feedObjectType: item.type,
+    feedObjectActivities: item.activities ? item.activities : null,
+    markRead: scUser ? !item.seen_by_id.includes(scUser.id) : false
+  }),
+  itemIdGenerator: (item) => item[item.type].id,
+  ItemSkeleton: FeedObjectSkeleton,
+  ItemSkeletonProps: {
+    template: SCFeedObjectTemplateType.PREVIEW
+  },
+  requireAuthentication: true,
+  cacheStrategy: CacheStrategies.CACHE_FIRST
+};
+
 
 export const Explore = Template.bind({});
 
