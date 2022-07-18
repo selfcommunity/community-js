@@ -13,6 +13,7 @@ import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
  * @param object
  * @param object.id
  * @param object.category
+ * @param object.cacheStrategy
  */
 export default function useSCFetchCategory({
   id = null,

@@ -15,7 +15,7 @@ import {getFeedObjectCacheKey} from '../constants/Cache';
  * @param object.id
  * @param object.feedObject
  * @param object.feedObjectType
- * @param cacheStrategy
+ * @param object.cacheStrategy
  */
 export default function useSCFetchFeedObject({
   id = null,
