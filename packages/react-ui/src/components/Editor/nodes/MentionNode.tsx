@@ -1,4 +1,4 @@
-import {EditorConfig, LexicalNode, NodeKey, TextNode} from 'lexical';
+import {EditorConfig, LexicalNode, NodeKey, SerializedTextNode, Spread, TextNode} from 'lexical';
 import {SCUserType} from '@selfcommunity/types';
 import {DOMConversionMap} from 'lexical/LexicalNode';
 
@@ -24,6 +24,15 @@ function convertMentionElement(domNode) {
     })
   };
 }
+
+export type SerializedMentionNode = Spread<
+  {
+    user: SCUserType;
+    type: 'mention';
+    version: 1;
+  },
+  SerializedTextNode
+>;
 
 export class MentionNode extends TextNode {
   __user: SCUserType;
@@ -77,6 +86,21 @@ export class MentionNode extends TextNode {
 
   isTextEntity(): true {
     return true;
+  }
+
+  static importJSON(serializedNode: SerializedMentionNode): MentionNode {
+    const {user} = serializedNode;
+    const node = createMentionNode(user);
+    return node;
+  }
+
+  exportJSON(): SerializedMentionNode {
+    return {
+      ...super.exportJSON(),
+      user: this.__user,
+      type: 'mention',
+      version: 1
+    };
   }
 }
 
