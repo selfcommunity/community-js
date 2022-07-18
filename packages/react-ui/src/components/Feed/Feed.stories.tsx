@@ -35,7 +35,7 @@ Main.args = {
       component: TrendingPeople,
       componentProps: {categoryId: 1},
       column: 'right',
-      position: 0
+      position: 1
     }
   ],
   ItemComponent: FeedObject,
@@ -58,6 +58,15 @@ export const MainCache = Template.bind({});
 MainCache.args = {
   id: 'main',
   endpoint: Endpoints.MainFeed,
+  widgets: [
+    {
+      type: 'widget',
+      component: TrendingPeople,
+      componentProps: {categoryId: 1},
+      column: 'right',
+      position: 1
+    }
+  ],
   ItemComponent: FeedObject,
   itemPropsGenerator: (scUser, item) => ({
     feedObject: item[item.type],
