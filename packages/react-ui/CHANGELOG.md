@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.4-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.2.3...@selfcommunity/react-ui@0.2.4-alpha.0) (2022-07-18)
+
+
+### Bug Fixes
+
+* feed scroll for mobile ([060d9d4](https://github.com/selfcommunity/community-js/commit/060d9d4c2876427ef714efc417c3791f3ce351c2))
+* feed with zero items ([736cdef](https://github.com/selfcommunity/community-js/commit/736cdef90d90d8b540058f947faf5fc42597e9af))
+* feed with zero items ([bf86df9](https://github.com/selfcommunity/community-js/commit/bf86df9903456b057a0edd9053d37b599ebd2d5f))
+* Fix Editor warnings ([05b667b](https://github.com/selfcommunity/community-js/commit/05b667ba7a3a292073708700f9d3de179ffdf694))
+
+
+
+
+
 ## [0.2.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.2.3-alpha.2...@selfcommunity/react-ui@0.2.3) (2022-07-15)
 
 **Note:** Version bump only for package @selfcommunity/react-ui

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.23-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.1.22...@selfcommunity/react-core@0.1.23-alpha.0) (2022-07-18)
+
+
+### Performance Improvements
+
+* Remove dependency from singleton-hook and use framework cache instead ([99adbb1](https://github.com/selfcommunity/community-js/commit/99adbb116829eba35fbe8220c50494fd92ca9aab))
+
+
+
+
+
 ## [0.1.22](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.1.22-alpha.1...@selfcommunity/react-core@0.1.22) (2022-07-15)
 
 **Note:** Version bump only for package @selfcommunity/react-core
