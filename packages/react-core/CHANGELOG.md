@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.24-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.1.23...@selfcommunity/react-core@0.1.24-alpha.0) (2022-07-19)
+
+
+### Bug Fixes
+
+* warning mount/unmount component in virtual feed ([259275c](https://github.com/selfcommunity/community-js/commit/259275c034d108f027016dd41a48b0b48db3a7ad))
+* warning mount/unmount component in virtual feed ([abbc2dc](https://github.com/selfcommunity/community-js/commit/abbc2dc902e3ef9d315c4f4fd8cc79db00ad989f))
+
+
+
+
+
 ## [0.1.23](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.1.23-alpha.1...@selfcommunity/react-core@0.1.23) (2022-07-18)
 
 **Note:** Version bump only for package @selfcommunity/react-core
