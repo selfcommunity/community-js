@@ -4,7 +4,7 @@ import {Button, List, Typography, ListItem} from '@mui/material';
 import CardContent from '@mui/material/CardContent';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
-import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
+import {SCUserContextType, useIsComponentMountedRef, useSCUser} from '@selfcommunity/react-core';
 import {SCIncubatorType} from '@selfcommunity/types';
 import Skeleton from './Skeleton';
 import {SCOPE_SC_UI} from '../../constants/Errors';
@@ -104,6 +104,9 @@ export default function IncubatorSuggestion(inProps: IncubatorSuggestionProps): 
   });
   const {autoHide = true, className, IncubatorProps = {}, ...rest} = props;
 
+  // REFS
+  const isMountedRef = useIsComponentMountedRef();
+
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
@@ -142,12 +145,14 @@ export default function IncubatorSuggestion(inProps: IncubatorSuggestionProps): 
           method: Endpoints.GetIncubatorSuggestion.method
         })
         .then((res: HttpResponse<any>) => {
-          const data = res.data;
-          setIncubators([...incubators, ...data]);
-          setHasMore(data.length > visibleIncubators);
-          setNext(data['next']);
-          setLoading(false);
-          setTotal(data.length);
+          if (isMountedRef.current) {
+            const data = res.data;
+            setIncubators([...incubators, ...data]);
+            setHasMore(data.length > visibleIncubators);
+            setNext(data['next']);
+            setLoading(false);
+            setTotal(data.length);
+          }
         })
         .catch((error) => {
           setLoading(false);

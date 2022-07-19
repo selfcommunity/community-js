@@ -1,4 +1,5 @@
 import React, {useLayoutEffect} from 'react';
+import {useIsComponentMountedRef} from '@selfcommunity/react-core';
 
 /**
  * A wrapper component for children of
@@ -6,11 +7,14 @@ import React, {useLayoutEffect} from 'react';
  * update virtual scroll
  */
 const VirtualScrollChild = ({virtualScrollerMountState, children, onHeightChange}) => {
+  // REFS
+  const isMountedRef = useIsComponentMountedRef();
+
   useLayoutEffect(() => {
-    if (virtualScrollerMountState.current) {
+    if (virtualScrollerMountState.current && isMountedRef.current) {
       onHeightChange();
     }
-  }, []);
+  }, [isMountedRef]);
 
   return <div>{children}</div>;
 };

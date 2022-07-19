@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Button, Typography, List, CardContent, ListItem} from '@mui/material';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
-import {SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
+import {SCUserContext, SCUserContextType, useIsComponentMountedRef} from '@selfcommunity/react-core';
 import {SCCategoryType} from '@selfcommunity/types';
 import Skeleton from './Skeleton';
 import Category, {CategoryProps} from '../Category';
@@ -105,6 +105,9 @@ export default function CategoriesSuggestion(inProps: CategoriesListProps): JSX.
   // CONST
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
 
+  // REFS
+  const isMountedRef = useIsComponentMountedRef();
+
   /**
    * Handles list change on category follow
    */
@@ -124,11 +127,13 @@ export default function CategoriesSuggestion(inProps: CategoriesListProps): JSX.
         method: Endpoints.CategoriesSuggestion.method
       })
       .then((res: HttpResponse<any>) => {
-        const data = res.data;
-        setCategories(data.results);
-        setHasMore(data.count > visibleCategories);
-        setLoading(false);
-        setTotal(data.count);
+        if (isMountedRef.current) {
+          const data = res.data;
+          setCategories(data.results);
+          setHasMore(data.count > visibleCategories);
+          setLoading(false);
+          setTotal(data.count);
+        }
       })
       .catch((error) => {
         console.log(error);

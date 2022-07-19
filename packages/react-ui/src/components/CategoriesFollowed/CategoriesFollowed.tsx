@@ -4,7 +4,7 @@ import List from '@mui/material/List';
 import {Button, CardContent, ListItem, Typography} from '@mui/material';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
-import {SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
+import {SCUserContext, SCUserContextType, useIsComponentMountedRef} from '@selfcommunity/react-core';
 import Category from '../Category';
 import {SCCategoryType} from '@selfcommunity/types';
 import {SCOPE_SC_UI} from '../../constants/Errors';
@@ -84,6 +84,9 @@ export default function CategoriesFollowed(inProps: CategoriesListProps): JSX.El
   });
   const {userId, autoHide, className, CategoryProps = {}} = props;
 
+  // REFS
+  const isMountedRef = useIsComponentMountedRef();
+
   // STATE
   const [categories, setCategories] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -130,12 +133,14 @@ export default function CategoriesFollowed(inProps: CategoriesListProps): JSX.El
           method: Endpoints.FollowedCategories.method
         })
         .then((res: HttpResponse<any>) => {
-          const data = res.data;
-          setCategories([...categories, ...data]);
-          setTotal(data.length);
-          setNext(data['next']);
-          setHasMore(data.length > limit);
-          setLoading(false);
+          if (isMountedRef.current) {
+            const data = res.data;
+            setCategories([...categories, ...data]);
+            setTotal(data.length);
+            setNext(data['next']);
+            setHasMore(data.length > limit);
+            setLoading(false);
+          }
         })
         .catch((error) => {
           setLoading(false);
