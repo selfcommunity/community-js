@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {CacheStrategies} from '@selfcommunity/utils';
-import {useSCFetchContributors} from '@selfcommunity/react-core';
+import {useSCFetchContributors, useIsComponentMountedRef} from '@selfcommunity/react-core';
 import {SCFeedObjectType, SCFeedObjectTypologyType, SCUserType} from '@selfcommunity/types';
 import {Avatar, AvatarGroup, Box, Button, List, ListItem} from '@mui/material';
 import {FormattedMessage} from 'react-intl';

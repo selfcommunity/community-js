@@ -89,9 +89,10 @@ import * as SCRoutes from './constants/Routes';
 
 /**
  * Utilities:
- * User
+ * User, hooks (useIsComponentMountedRef)
  */
 import * as UserUtils from './utils/user';
+import {useIsComponentMountedRef} from './utils/hooks';
 
 /**
  * Constants:
@@ -166,4 +167,5 @@ export {
   useSCMediaClick,
   useSCFetchContributors,
   useSCFetchFeed,
+  useIsComponentMountedRef,
 };

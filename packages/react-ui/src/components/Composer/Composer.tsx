@@ -717,8 +717,8 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
 
   // RENDER
   const theme: Theme = useTheme();
-  const smDown = useMediaQuery(theme.breakpoints.down('sm'));
-  const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const smDown = useMediaQuery(theme.breakpoints.down('sm'), {noSsr: typeof window !== 'undefined'});
+  const fullScreen = useMediaQuery(theme.breakpoints.down('md'), {noSsr: typeof window !== 'undefined'});
 
   const hasMediaShare = useMemo(() => medias.findIndex((m) => m.type === MEDIA_TYPE_SHARE) !== -1, [medias]);
 

@@ -5,7 +5,7 @@ import {Button, CardContent, Typography, ListItem} from '@mui/material';
 import {SCFeedDiscussionType} from '@selfcommunity/types';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
-import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
+import {SCUserContextType, useIsComponentMountedRef, useSCUser} from '@selfcommunity/react-core';
 import TrendingFeedSkeleton from '../TrendingFeed/Skeleton';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {FormattedMessage} from 'react-intl';
@@ -99,6 +99,9 @@ export default function PollSuggestion(inProps: PollSuggestionProps): JSX.Elemen
   });
   const {className, autoHide = true, ...rest} = props;
 
+  // REFS
+  const isMountedRef = useIsComponentMountedRef();
+
   // STATE
   const [objs, setObjs] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -119,12 +122,14 @@ export default function PollSuggestion(inProps: PollSuggestionProps): JSX.Elemen
           method: Endpoints.PollSuggestion.method
         })
         .then((res: HttpResponse<any>) => {
-          const data = res.data;
-          setObjs([...objs, ...data]);
-          setTotal(data.length);
-          setHasMore(data.length > visibleObjs);
-          setLoading(false);
-          setNext(data['next']);
+          if (isMountedRef.current) {
+            const data = res.data;
+            setObjs([...objs, ...data]);
+            setTotal(data.length);
+            setHasMore(data.length > visibleObjs);
+            setLoading(false);
+            setNext(data['next']);
+          }
         })
         .catch((error) => {
           Logger.error(SCOPE_SC_UI, error);

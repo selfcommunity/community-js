@@ -4,7 +4,14 @@ import List from '@mui/material/List';
 import {Button, CardContent, ListItem, Typography} from '@mui/material';
 import Widget from '../Widget';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
-import {SCPreferences, SCPreferencesContext, SCPreferencesContextType, SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
+import {
+  SCPreferences,
+  SCPreferencesContext,
+  SCPreferencesContextType,
+  SCUserContext,
+  SCUserContextType,
+  useIsComponentMountedRef
+} from '@selfcommunity/react-core';
 import {FormattedMessage} from 'react-intl';
 import User, {UserProps} from '../User';
 import classNames from 'classnames';
@@ -104,6 +111,9 @@ export default function TrendingPeople(inProps: TrendingPeopleProps): JSX.Elemen
   });
   const {categoryId, autoHide, className, UserProps = {}, ...rest} = props;
 
+  // REFS
+  const isMountedRef = useIsComponentMountedRef();
+
   // STATE
   const [people, setPeople] = useState<any[]>([]);
   const [visiblePeople, setVisiblePeople] = useState<number>(limit);
@@ -132,12 +142,14 @@ export default function TrendingPeople(inProps: TrendingPeopleProps): JSX.Elemen
           method: Endpoints.CategoryTrendingPeople.method
         })
         .then((res: HttpResponse<any>) => {
-          const data = res.data;
-          setPeople([...people, ...data.results]);
-          setHasMore(data.count > visiblePeople);
-          setNext(data['next']);
-          setLoading(false);
-          setTotal(data.count);
+          if (isMountedRef.current) {
+            const data = res.data;
+            setPeople([...people, ...data.results]);
+            setHasMore(data.count > visiblePeople);
+            setNext(data['next']);
+            setLoading(false);
+            setTotal(data.count);
+          }
         })
         .catch((error) => {
           setLoading(false);

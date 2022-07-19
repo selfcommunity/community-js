@@ -17,6 +17,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import Skeleton from './Skeleton';
 import {useThemeProps} from '@mui/system';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
+import {useIsComponentMountedRef} from '@selfcommunity/react-core';
 
 const PREFIX = 'SCTrendingFeed';
 
@@ -103,6 +104,9 @@ export default function TrendingFeed(inProps: TrendingFeedProps): JSX.Element {
 
   const {className = null, categoryId = null, template = null, autoHide = null, ...rest} = props;
 
+  // REFS
+  const isMountedRef = useIsComponentMountedRef();
+
   // STATE
   const [posts, setPosts] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -123,12 +127,14 @@ export default function TrendingFeed(inProps: TrendingFeedProps): JSX.Element {
           method: Endpoints.CategoryTrendingFeed.method
         })
         .then((res: HttpResponse<any>) => {
-          const data = res.data;
-          setPosts([...posts, ...data.results]);
-          setHasMore(data.count > visible);
-          setLoading(false);
-          setTotal(data.count);
-          setNext(data['next']);
+          if (isMountedRef.current) {
+            const data = res.data;
+            setPosts([...posts, ...data.results]);
+            setHasMore(data.count > visible);
+            setLoading(false);
+            setTotal(data.count);
+            setNext(data['next']);
+          }
         })
         .catch((error) => {
           setLoading(false);
