@@ -92,7 +92,7 @@ import * as SCRoutes from './constants/Routes';
  * User, hooks (useIsComponentMountedRef)
  */
 import * as UserUtils from './utils/user';
-import useIsComponentMountedRef from './utils/hooks/useIsComponentMountedRef';
+import {useIsComponentMountedRef} from './utils/hooks';
 
 /**
  * Constants:

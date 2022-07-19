@@ -5,7 +5,7 @@ import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
 import {CacheStrategies, Logger, LRUCache} from '@selfcommunity/utils';
 import useSCFetchFeedObject from './useSCFetchFeedObject';
 import {getContributorsCacheKey} from '../constants/Cache';
-import {useIsComponentMountedRef} from '@selfcommunity/react-core';
+import {useIsComponentMountedRef} from '../utils/hooks';
 
 /**
  * Interface SCCommentsObjectType

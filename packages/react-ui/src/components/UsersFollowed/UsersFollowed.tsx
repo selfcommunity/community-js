@@ -6,7 +6,14 @@ import Widget from '../Widget';
 import {SCUserType} from '@selfcommunity/types';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
-import {SCPreferences, SCPreferencesContext, SCPreferencesContextType, SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
+import {
+  SCPreferences,
+  SCPreferencesContext,
+  SCPreferencesContextType,
+  SCUserContext,
+  SCUserContextType,
+  useIsComponentMountedRef
+} from '@selfcommunity/react-core';
 import Skeleton from './Skeleton';
 import User, {UserProps} from '../User';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
@@ -123,6 +130,9 @@ export default function UsersFollowed(inProps: UsersFollowedProps): JSX.Element 
   });
   const {userId, autoHide, className, UserProps = {}} = props;
 
+  // REFS
+  const isMountedRef = useIsComponentMountedRef();
+
   // STATE
   const [followed, setFollowed] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -166,12 +176,14 @@ export default function UsersFollowed(inProps: UsersFollowedProps): JSX.Element 
           method: Endpoints.UsersFollowed.method
         })
         .then((res: HttpResponse<any>) => {
-          const data = res.data;
-          setFollowed([...followed, ...data.results]);
-          setHasMore(data.count > limit);
-          setNext(data['next']);
-          setLoading(false);
-          setTotal(data.count);
+          if (isMountedRef.current) {
+            const data = res.data;
+            setFollowed([...followed, ...data.results]);
+            setHasMore(data.count > limit);
+            setNext(data['next']);
+            setLoading(false);
+            setTotal(data.count);
+          }
         })
         .catch((error) => {
           setLoading(false);

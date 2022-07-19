@@ -16,6 +16,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import Widget from '../Widget';
 import {useThemeProps} from '@mui/system';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
+import {useIsComponentMountedRef} from '@selfcommunity/react-core';
 
 const PREFIX = 'SCCategoriesPopular';
 
@@ -68,6 +69,9 @@ export default function CategoriesPopular(inProps: CategoriesListProps): JSX.Ele
 
   const {autoHide = true, className, CategoryProps = {}, ...rest} = props;
 
+  // REFS
+  const isMountedRef = useIsComponentMountedRef();
+
   // STATE
   const [categories, setCategories] = useState<any[]>([]);
   const [visibleCategories, setVisibleCategories] = useState<number>(limit);
@@ -88,7 +92,7 @@ export default function CategoriesPopular(inProps: CategoriesListProps): JSX.Ele
             method: Endpoints.PopularCategories.method
           })
           .then((res: HttpResponse<any>) => {
-            if (res.status < 300) {
+            if (res.status < 300 && isMountedRef.current) {
               const data = res.data;
               setCategories([...categories, ...data['results']]);
               setHasMore(data['count'] > visibleCategories);

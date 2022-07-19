@@ -3,7 +3,14 @@ import {styled} from '@mui/material/styles';
 import {Button, CardContent, List, ListItem, Typography} from '@mui/material';
 import {SCUserType} from '@selfcommunity/types';
 import {http, Endpoints} from '@selfcommunity/api-services';
-import {SCPreferences, SCPreferencesContext, SCPreferencesContextType, SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
+import {
+  SCPreferences,
+  SCPreferencesContext,
+  SCPreferencesContextType,
+  SCUserContext,
+  SCUserContextType,
+  useIsComponentMountedRef
+} from '@selfcommunity/react-core';
 import PeopleSuggestionSkeleton from './Skeleton';
 import User, {UserProps} from '../User';
 import {FormattedMessage} from 'react-intl';
@@ -94,6 +101,9 @@ export default function PeopleSuggestion(inProps: PeopleSuggestionProps): JSX.El
   });
   const {autoHide, className, UserProps = {}, ...rest} = props;
 
+  // REFS
+  const isMountedRef = useIsComponentMountedRef();
+
   // STATE
   const [users, setUsers] = useState<SCUserType[]>([]);
   const [visiblePeople, setVisiblePeople] = useState<number>(limit);
@@ -140,11 +150,13 @@ export default function PeopleSuggestion(inProps: PeopleSuggestionProps): JSX.El
         method: Endpoints.UserSuggestion.method
       })
       .then((res: any) => {
-        const data = res.data;
-        setUsers(data['results']);
-        setHasMore(data['count'] > visiblePeople);
-        setLoading(false);
-        setTotal(data.count);
+        if (isMountedRef.current) {
+          const data = res.data;
+          setUsers(data['results']);
+          setHasMore(data['count'] > visiblePeople);
+          setLoading(false);
+          setTotal(data.count);
+        }
       })
       .catch((error) => {
         console.log(error);
