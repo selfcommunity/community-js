@@ -148,6 +148,7 @@ export default function Activities(inProps: ActivitiesProps): JSX.Element {
 
   const objId = commentsObject.feedObject ? commentsObject.feedObject.id : null;
   const skeletonsCount = Math.min(5, commentsObject.feedObject ? commentsObject.feedObject.comment_count : 3);
+  const existFeedObjectActivities = feedObjectActivities && feedObjectActivities.length > 0;
 
   /**
    * Sync activities type if prop change
@@ -216,10 +217,10 @@ export default function Activities(inProps: ActivitiesProps): JSX.Element {
         (feedObjectActivities && feedObjectActivities.length > 0) ||
         comments.length > 0 ||
         (feedObject && feedObject.comment_count > 0)) ? (
-        <Box className={classes.activities} style={{minHeight: `${skeletonsCount * 80}px`}}>
+        <Box className={classes.activities} {...(existFeedObjectActivities ? {} : {style: {minHeight: `${skeletonsCount * 80}px`}})}>
           <ActivitiesMenu
             selectedActivities={selectedActivities}
-            hideRelevantActivitiesItem={!(feedObjectActivities && feedObjectActivities.length > 0)}
+            hideRelevantActivitiesItem={!existFeedObjectActivities}
             onChange={handleSelectActivitiesType}
           />
           {selectedActivities === SCFeedObjectActivitiesType.RELEVANCE_ACTIVITIES ? renderRelevantActivities() : renderComments()}

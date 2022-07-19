@@ -5,6 +5,7 @@ import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
 import {CacheStrategies, Logger, LRUCache} from '@selfcommunity/utils';
 import useSCFetchFeedObject from './useSCFetchFeedObject';
 import {getContributorsCacheKey} from '../constants/Cache';
+import {useIsComponentMountedRef} from '@selfcommunity/react-core';
 
 /**
  * Interface SCCommentsObjectType
@@ -135,6 +136,9 @@ export default function useSCFetchContributors(props: {
   // PROPS
   const {id, feedObject, feedObjectType, offset = 0, pageSize = 5, onChangePage, cacheStrategy = CacheStrategies.CACHE_FIRST} = props;
 
+  // REFS
+  const isMountedRef = useIsComponentMountedRef();
+
   // FeedObject
   const {obj, setObj} = useSCFetchFeedObject({id, feedObject, feedObjectType});
   const objId = obj ? obj.id : null;
@@ -176,15 +180,17 @@ export default function useSCFetchContributors(props: {
         let start = state.contributors.slice(res.results.length, state.contributors.length);
         _contributors = res.results.concat(start);
       }
-      dispatch({
-        type: forward ? contributorsObjectActionTypes.DATA_NEXT_LOADED : contributorsObjectActionTypes.DATA_PREVIOUS_LOADED,
-        payload: {
-          page: currentPage,
-          contributors: _contributors,
-          ...(forward ? {next: res.next} : {previous: res.previous}),
-          total: res.count,
-        },
-      });
+      if (isMountedRef.current) {
+        dispatch({
+          type: forward ? contributorsObjectActionTypes.DATA_NEXT_LOADED : contributorsObjectActionTypes.DATA_PREVIOUS_LOADED,
+          payload: {
+            page: currentPage,
+            contributors: _contributors,
+            ...(forward ? {next: res.next} : {previous: res.previous}),
+            total: res.count,
+          },
+        });
+      }
     });
   };
 
@@ -218,16 +224,18 @@ export default function useSCFetchContributors(props: {
       dispatch({type: contributorsObjectActionTypes.LOADING_PREVIOUS});
       performFetchComments(state.previous)
         .then((res) => {
-          let currentPage = getCurrentPage(state.previous);
-          dispatch({
-            type: contributorsObjectActionTypes.DATA_PREVIOUS_LOADED,
-            payload: {
-              page: currentPage,
-              contributors: [...res.results, ...state.contributors],
-              previous: res.previous,
-            },
-          });
-          onChangePage && onChangePage(currentPage);
+          if (isMountedRef.current) {
+            let currentPage = getCurrentPage(state.previous);
+            dispatch({
+              type: contributorsObjectActionTypes.DATA_PREVIOUS_LOADED,
+              payload: {
+                page: currentPage,
+                contributors: [...res.results, ...state.contributors],
+                previous: res.previous,
+              },
+            });
+            onChangePage && onChangePage(currentPage);
+          }
         })
         .catch((error) => {
           Logger.error(SCOPE_SC_CORE, error);
@@ -248,25 +256,27 @@ export default function useSCFetchContributors(props: {
       dispatch({type: contributorsObjectActionTypes.LOADING_NEXT});
       performFetchComments(state.next)
         .then((res) => {
-          let currentPage = getCurrentPage(state.next);
-          dispatch({
-            type: contributorsObjectActionTypes.DATA_NEXT_LOADED,
-            payload: {
-              page: currentPage,
-              contributors: [...state.contributors, ...res.results],
-              next: res.next,
-              total: res.count,
-              componentLoaded: true,
-              ...(offset && state.contributors.length === 0 ? {previous: res.previous} : {}),
-            },
-          });
-          onChangePage && onChangePage(currentPage);
+          if (isMountedRef.current) {
+            let currentPage = getCurrentPage(state.next);
+            dispatch({
+              type: contributorsObjectActionTypes.DATA_NEXT_LOADED,
+              payload: {
+                page: currentPage,
+                contributors: [...state.contributors, ...res.results],
+                next: res.next,
+                total: res.count,
+                componentLoaded: true,
+                ...(offset && state.contributors.length === 0 ? {previous: res.previous} : {}),
+              },
+            });
+            onChangePage && onChangePage(currentPage);
+          }
         })
         .catch((error) => {
           Logger.error(SCOPE_SC_CORE, error);
         })
         .then(() => {
-          if (cacheStrategy === CacheStrategies.STALE_WHILE_REVALIDATE) {
+          if (isMountedRef.current && cacheStrategy === CacheStrategies.STALE_WHILE_REVALIDATE) {
             revalidate(state.next, true);
           }
         });
@@ -277,7 +287,7 @@ export default function useSCFetchContributors(props: {
    * Reset contributors status on change pageSize, offset
    */
   useEffect(() => {
-    if (state.componentLoaded && Boolean(obj) && !state.reload) {
+    if (isMountedRef.current && state.componentLoaded && Boolean(obj) && !state.reload) {
       dispatch({
         type: contributorsObjectActionTypes.DATA_RELOAD,
         payload: {
@@ -285,19 +295,19 @@ export default function useSCFetchContributors(props: {
         },
       });
     }
-  }, [objId, pageSize, offset]);
+  }, [objId, pageSize, offset, isMountedRef]);
 
   /**
    * Reload fetch contributors
    */
   useEffect(() => {
-    if (state.componentLoaded && state.reload && !state.isLoadingNext && !state.isLoadingPrevious) {
+    if (isMountedRef.current && state.componentLoaded && state.reload && !state.isLoadingNext && !state.isLoadingPrevious) {
       dispatch({
         type: contributorsObjectActionTypes.DATA_RELOADED,
       });
       getNextPage();
     }
-  }, [state.reload]);
+  }, [state.reload, isMountedRef]);
 
   return {
     feedObject: obj,

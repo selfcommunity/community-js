@@ -116,7 +116,6 @@ export default function Footer(inProps: FooterProps): JSX.Element {
       })
       .then((res: HttpResponse<any>) => {
         setPages(res.data.results);
-        //console.log(res.data.results, 'custom');
         setLoading(false);
       })
       .catch((error) => {

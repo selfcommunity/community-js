@@ -5,6 +5,7 @@ import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
 import {CacheStrategies, Logger, LRUCache} from '@selfcommunity/utils';
 import useSCFetchFeedObject from './useSCFetchFeedObject';
 import {getCommentObjectCacheKey, getCommentObjectsCacheKey} from '../constants/Cache';
+import {useIsComponentMountedRef} from '@selfcommunity/react-core';
 
 /**
  * Interface SCCommentsObjectType
@@ -149,6 +150,9 @@ export default function useSCFetchCommentObjects(props: {
     cacheStrategy = CacheStrategies.NETWORK_ONLY,
   } = props;
 
+  // REFS
+  const isMountedRef = useIsComponentMountedRef();
+
   // FeedObject
   const {obj, setObj} = useSCFetchFeedObject({id, feedObject, feedObjectType});
   const objId = obj ? obj.id : null;
@@ -191,15 +195,17 @@ export default function useSCFetchCommentObjects(props: {
         let start = state.comments.slice(res.results.length, state.comments.length);
         _comments = res.results.concat(start);
       }
-      dispatch({
-        type: forward ? commentsObjectActionTypes.DATA_NEXT_LOADED : commentsObjectActionTypes.DATA_PREVIOUS_LOADED,
-        payload: {
-          page: currentPage,
-          comments: _comments,
-          ...(forward ? {next: res.next} : {previous: res.previous}),
-          total: res.count,
-        },
-      });
+      if (isMountedRef.current) {
+        dispatch({
+          type: forward ? commentsObjectActionTypes.DATA_NEXT_LOADED : commentsObjectActionTypes.DATA_PREVIOUS_LOADED,
+          payload: {
+            page: currentPage,
+            comments: _comments,
+            ...(forward ? {next: res.next} : {previous: res.previous}),
+            total: res.count,
+          },
+        });
+      }
     });
   };
 
@@ -234,22 +240,24 @@ export default function useSCFetchCommentObjects(props: {
       dispatch({type: commentsObjectActionTypes.LOADING_PREVIOUS});
       performFetchComments(state.previous)
         .then((res) => {
-          let currentPage = getCurrentPage(state.previous);
-          dispatch({
-            type: commentsObjectActionTypes.DATA_PREVIOUS_LOADED,
-            payload: {
-              page: currentPage,
-              comments: [...res.results, ...state.comments],
-              previous: res.previous,
-            },
-          });
-          onChangePage && onChangePage(currentPage);
+          if (isMountedRef.current) {
+            let currentPage = getCurrentPage(state.previous);
+            dispatch({
+              type: commentsObjectActionTypes.DATA_PREVIOUS_LOADED,
+              payload: {
+                page: currentPage,
+                comments: [...res.results, ...state.comments],
+                previous: res.previous,
+              },
+            });
+            onChangePage && onChangePage(currentPage);
+          }
         })
         .catch((error) => {
           Logger.error(SCOPE_SC_CORE, error);
         })
         .then(() => {
-          if (cacheStrategy === CacheStrategies.STALE_WHILE_REVALIDATE) {
+          if (isMountedRef.current && cacheStrategy === CacheStrategies.STALE_WHILE_REVALIDATE) {
             revalidate(state.next, false);
           }
         });
@@ -264,25 +272,27 @@ export default function useSCFetchCommentObjects(props: {
       dispatch({type: commentsObjectActionTypes.LOADING_NEXT});
       performFetchComments(state.next)
         .then((res) => {
-          let currentPage = getCurrentPage(state.next);
-          dispatch({
-            type: commentsObjectActionTypes.DATA_NEXT_LOADED,
-            payload: {
-              page: currentPage,
-              comments: [...state.comments, ...res.results],
-              next: res.next,
-              total: res.count,
-              componentLoaded: true,
-              ...(offset && state.comments.length === 0 ? {previous: res.previous} : {}),
-            },
-          });
-          onChangePage && onChangePage(currentPage);
+          if (isMountedRef.current) {
+            let currentPage = getCurrentPage(state.next);
+            dispatch({
+              type: commentsObjectActionTypes.DATA_NEXT_LOADED,
+              payload: {
+                page: currentPage,
+                comments: [...state.comments, ...res.results],
+                next: res.next,
+                total: res.count,
+                componentLoaded: true,
+                ...(offset && state.comments.length === 0 ? {previous: res.previous} : {}),
+              },
+            });
+            onChangePage && onChangePage(currentPage);
+          }
         })
         .catch((error) => {
           Logger.error(SCOPE_SC_CORE, error);
         })
         .then(() => {
-          if (cacheStrategy === CacheStrategies.STALE_WHILE_REVALIDATE) {
+          if (isMountedRef.current && cacheStrategy === CacheStrategies.STALE_WHILE_REVALIDATE) {
             revalidate(state.next, true);
           }
         });
@@ -293,7 +303,7 @@ export default function useSCFetchCommentObjects(props: {
    * Reset component status on change orderBy, pageSize, offset
    */
   useEffect(() => {
-    if (state.componentLoaded && Boolean(obj) && !state.reload) {
+    if (isMountedRef.current && state.componentLoaded && Boolean(obj) && !state.reload) {
       dispatch({
         type: commentsObjectActionTypes.DATA_RELOAD,
         payload: {
@@ -301,19 +311,19 @@ export default function useSCFetchCommentObjects(props: {
         },
       });
     }
-  }, [objId, parent, orderBy, pageSize, offset]);
+  }, [objId, parent, orderBy, pageSize, offset, isMountedRef]);
 
   /**
    * Reload fetch comments
    */
   useEffect(() => {
-    if (state.componentLoaded && state.reload && !state.isLoadingNext && !state.isLoadingPrevious) {
+    if (isMountedRef.current && state.componentLoaded && state.reload && !state.isLoadingNext && !state.isLoadingPrevious) {
       dispatch({
         type: commentsObjectActionTypes.DATA_RELOADED,
       });
       getNextPage();
     }
-  }, [state.reload]);
+  }, [state.reload, isMountedRef]);
 
   return {
     feedObject: obj,
