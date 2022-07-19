@@ -272,7 +272,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
 
   // RENDER
   const theme: Theme = useTheme();
-  const oneColLayout = useMediaQuery(theme.breakpoints.down('md'));
+  const oneColLayout = useMediaQuery(theme.breakpoints.down('md'), {noSsr: typeof window !== 'undefined'});
   const advEnabled = useMemo(
     () =>
       preferences[SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED] &&

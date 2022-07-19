@@ -64,7 +64,7 @@ export default function BaseDialog(props: BaseDialogProps) {
   const {children} = rest;
 
   // OPTIONS
-  const fullScreen = useMediaQuery((theme) => theme['breakpoints'].down('sm'));
+  const fullScreen = useMediaQuery((theme) => theme['breakpoints'].down('sm'), {noSsr: typeof window !== 'undefined'});
 
   /**
    * Renders root object
