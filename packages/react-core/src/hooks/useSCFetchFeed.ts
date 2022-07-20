@@ -1,9 +1,9 @@
 import {useEffect, useMemo, useReducer} from 'react';
 import {SCOPE_SC_CORE} from '../constants/Errors';
 import {SCFeedUnitType} from '@selfcommunity/types';
-import {Endpoints, EndpointType, http, HttpResponse} from '@selfcommunity/api-services';
+import {EndpointType, http, HttpResponse, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {CacheStrategies, Logger, LRUCache} from '@selfcommunity/utils';
-import {getFeedCacheKey, getFeedObjectCacheKey, getStateFeedCacheKey} from '../constants/Cache';
+import {getFeedCacheKey, getStateFeedCacheKey} from '../constants/Cache';
 import {appendURLSearchParams} from '@selfcommunity/utils';
 
 /**
@@ -11,8 +11,8 @@ import {appendURLSearchParams} from '@selfcommunity/utils';
  */
 export interface SCPaginatedFeedType {
   componentLoaded: boolean;
-  feedData: SCFeedUnitType[];
-  total: number;
+  results: SCFeedUnitType[];
+  count: number;
   next: string;
   previous: string;
   isLoadingNext: boolean;
@@ -42,7 +42,7 @@ export const feedDataActionTypes = {
 
 /**
  * feedDataReducer:
- *  - manage the state of feedData object
+ *  - manage the state of feed object
  *  - update the state base on action type
  * @param state
  * @param action
@@ -61,12 +61,12 @@ function feedDataReducer(state, action) {
         ...state,
         currentPage: action.payload.currentPage,
         currentOffset: action.payload.currentOffset,
-        feedData: [...state.feedData, ...action.payload.feedData],
+        results: [...state.results, ...action.payload.results],
         isLoadingNext: false,
         componentLoaded: true,
         next: action.payload.next,
         ...(action.payload.previous ? {previous: action.payload.previous} : {}),
-        ...(action.payload.total ? {total: action.payload.total} : {}),
+        ...(action.payload.count ? {count: action.payload.count} : {}),
       };
       break;
     case feedDataActionTypes.DATA_PREVIOUS_LOADED:
@@ -74,7 +74,7 @@ function feedDataReducer(state, action) {
         ...state,
         currentPage: action.payload.currentPage,
         currentOffset: action.payload.currentOffset,
-        feedData: [...action.payload.feedData, ...state.feedData],
+        results: [...action.payload.results, ...state.results],
         isLoadingPrevious: false,
         componentLoaded: true,
         previous: action.payload.previous,
@@ -83,7 +83,7 @@ function feedDataReducer(state, action) {
     case feedDataActionTypes.DATA_REVALIDATE:
       _state = {
         ...state,
-        feedData: action.payload.feedData,
+        results: action.payload.results,
       };
       break;
     case feedDataActionTypes.DATA_RELOAD:
@@ -92,8 +92,8 @@ function feedDataReducer(state, action) {
         next: action.payload.next,
         currentPage: 1,
         currentOffset: 0,
-        feedData: [],
-        total: 0,
+        results: [],
+        count: 0,
         previous: null,
         reload: true,
       };
@@ -121,12 +121,10 @@ function feedDataReducer(state, action) {
  * @param data
  */
 function stateInitializer(data): SCPaginatedFeedType {
-  const __feedStateCacheKey = getStateFeedCacheKey(data.id);
   let _initState = {
     id: data.id,
-    componentLoaded: false,
-    feedData: [],
-    total: 0,
+    results: [],
+    count: 0,
     next: data.next,
     previous: null,
     isLoadingNext: false,
@@ -134,8 +132,12 @@ function stateInitializer(data): SCPaginatedFeedType {
     limit: data.queryParams.limit,
     currentPage: Math.ceil(data.queryParams.offset / data.queryParams.limit + 1),
     currentOffset: data.queryParams.offset,
+    initialOffset: data.queryParams.offset,
     reload: false,
+    componentLoaded: Boolean(data.prefetchedData),
+    ...(data.prefetchedData && data.prefetchedData),
   };
+  const __feedStateCacheKey = getStateFeedCacheKey(data.id);
   if (__feedStateCacheKey && LRUCache.hasKey(__feedStateCacheKey) && data.cacheStrategy !== CacheStrategies.NETWORK_ONLY) {
     const _cachedStateData = LRUCache.get(__feedStateCacheKey);
     return {..._initState, ..._cachedStateData};
@@ -145,7 +147,7 @@ function stateInitializer(data): SCPaginatedFeedType {
 
 /**
  :::info
- This custom hooks is used to fetch paginated feedData.
+ This custom hooks is used to fetch paginated Data.
  :::
  * @param endpoint
  * @param offset
@@ -160,6 +162,7 @@ export default function useSCFetchFeed(props: {
   onNextPage?: (page, offset, total, data) => any;
   onPreviousPage?: (page, offset, total, data) => any;
   cacheStrategy?: CacheStrategies;
+  prefetchedData?: SCPaginatedResponse<SCFeedUnitType>;
 }) {
   // PROPS
   const {
@@ -169,6 +172,7 @@ export default function useSCFetchFeed(props: {
     onNextPage,
     onPreviousPage,
     cacheStrategy = CacheStrategies.NETWORK_ONLY,
+    prefetchedData,
   } = props;
   const queryParams = useMemo(() => Object.assign({limit: 10, offset: 0}, endpointQueryParams), [endpointQueryParams]);
 
@@ -185,7 +189,7 @@ export default function useSCFetchFeed(props: {
 
   // STATE
   const [state, dispatch] = useReducer(feedDataReducer, {}, () =>
-    stateInitializer({id, endpoint, queryParams, next: getInitialNextUrl(), cacheStrategy})
+    stateInitializer({id, endpoint, queryParams, next: getInitialNextUrl(), cacheStrategy, prefetchedData})
   );
 
   /**
@@ -202,17 +206,17 @@ export default function useSCFetchFeed(props: {
    */
   const revalidate = (url, forward) => {
     return performFetchData(url, false).then((res) => {
-      let feedData;
+      let _data;
       if (forward) {
-        let start = state.feedData.slice(0, state.feedData.length - res.results.length);
-        feedData = start.concat(res.results);
+        let start = state.results.slice(0, state.results.length - res.results.length);
+        _data = start.concat(res.results);
       } else {
-        let start = state.feedData.slice(res.results.length, state.feedData.length);
-        feedData = res.results.concat(start);
+        let start = state.results.slice(res.results.length, state.results.length);
+        _data = res.results.concat(start);
       }
       dispatch({
         type: feedDataActionTypes.DATA_REVALIDATE,
-        payload: {feedData},
+        payload: {results: _data},
       });
     });
   };
@@ -240,7 +244,7 @@ export default function useSCFetchFeed(props: {
   };
 
   /**
-   * Fetch previous feedData
+   * Fetch previous data
    */
   function getPreviousPage() {
     if (endpoint && state.previous && !state.isLoadingPrevious) {
@@ -254,8 +258,9 @@ export default function useSCFetchFeed(props: {
             payload: {
               currentPage,
               currentOffset,
-              total: res.count,
-              feedData: res.results,
+              initialOffset: currentOffset,
+              count: res.count,
+              results: res.results,
               previous: res.previous,
             },
           });
@@ -271,7 +276,7 @@ export default function useSCFetchFeed(props: {
   }
 
   /**
-   * Fetch next feedData
+   * Fetch next data
    */
   function getNextPage() {
     if (endpoint && state.next && !state.isLoadingNext) {
@@ -285,11 +290,11 @@ export default function useSCFetchFeed(props: {
             payload: {
               currentPage,
               currentOffset,
-              feedData: res.results,
+              results: res.results,
               next: res.next,
-              total: res.count,
+              count: res.count,
               componentLoaded: true,
-              ...(queryParams.offset && state.feedData.length === 0 ? {previous: res.previous} : {}),
+              ...(queryParams.offset && state.results.length === 0 ? {previous: res.previous} : {}),
             },
           });
           onNextPage && onNextPage(currentPage, currentOffset, res.count, res.results);
@@ -316,7 +321,7 @@ export default function useSCFetchFeed(props: {
   }
 
   /**
-   * Reload fetch feedData
+   * Reload fetch data
    */
   useEffect(() => {
     if (state.componentLoaded && state.reload && !state.isLoadingNext && !state.isLoadingPrevious) {
@@ -341,7 +346,6 @@ export default function useSCFetchFeed(props: {
   return {
     ...state,
     updateState,
-    queryParams,
     getNextPage,
     getPreviousPage,
     reload,
