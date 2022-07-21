@@ -364,7 +364,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
   );
 
   /**
-   * Compute Widgets for the left column
+   * Compute Widgets for the left column in a specific position
    */
   const _getLeftColumnWidgets: SCFeedWidgetType[] = (position = 1) => {
     const tw = {
@@ -379,19 +379,19 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
       id: `left_${position}`
     };
     if (oneColLayout) {
-      const remainsWidget = position === feedDataObject.count - 1 ? _widgets.filter((w) => w.position >= feedDataObject.count) : [];
+      const remainingWidgets = position === feedDataObject.count - 1 ? _widgets.filter((w) => w.position >= feedDataObject.count) : [];
       return [
         ..._widgets.filter((w) => w.position === position),
         ...(advEnabled && position > 0 && position % DEFAULT_WIDGETS_NUMBER === 0 ? [tw] : []),
-        ...remainsWidget
+        ...remainingWidgets
       ];
     }
-    const remainsWidget =
+    const remainingWidgets =
       position === feedDataObject.count - 1 ? _widgets.filter((w) => w.position >= feedDataObject.count && w.column === 'left') : [];
     return [
       ..._widgets.filter((w) => w.position === position && w.column === 'left'),
       ...(advEnabled && position > 0 && position % DEFAULT_WIDGETS_NUMBER === 0 ? [tw] : []),
-      ...remainsWidget
+      ...remainingWidgets
     ];
   };
 
