@@ -16,8 +16,8 @@ import {GenericSkeleton} from '../Skeleton';
 import {SCFeedWidgetType} from '../../types/feed';
 import Sticky from 'react-stickynode';
 import CustomAdv, {CustomAdvProps} from '../CustomAdv';
-import {SCCustomAdvPosition, SCUserType} from '@selfcommunity/types';
-import {EndpointType} from '@selfcommunity/api-services';
+import {SCCustomAdvPosition, SCFeedUnitType, SCUserType} from '@selfcommunity/types';
+import {EndpointType, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {CacheStrategies, getQueryStringParameter, updateQueryStringParameter} from '@selfcommunity/utils';
 import classNames from 'classnames';
 import PubSub from 'pubsub-js';
@@ -25,7 +25,7 @@ import {useThemeProps} from '@mui/system';
 import Widget from '../Widget';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import VirtualizedScroller, {VirtualScrollChild} from '../../shared/VirtualizedScroller';
-import {widgetReducer, widgetSort} from '../../utils/feed';
+import {widgetSort} from '../../utils/feed';
 import Footer from '../Footer';
 import FeedSkeleton from './Skeleton';
 
@@ -194,6 +194,12 @@ export interface FeedProps {
    * @default {}
    */
   CustomAdvProps?: CustomAdvProps;
+
+  /**
+   * Prefetch data. Useful for SSR.
+   * Use this to init the component (in particular useSCFetchFeed)
+   */
+  prefetchedData?: SCPaginatedResponse<SCFeedUnitType>;
 }
 
 const WIDGET_PREFIX_KEY = 'widget_';
@@ -254,12 +260,24 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     FeedSidebarProps = {top: 0, bottomBoundary: `#${id}`},
     CustomAdvProps = {},
     requireAuthentication = false,
-    cacheStrategy = CacheStrategies.NETWORK_ONLY
+    cacheStrategy = CacheStrategies.NETWORK_ONLY,
+    prefetchedData
   } = props;
 
   // CONTEXT
   const scPreferences: SCPreferencesContextType = useSCPreferences();
   const scUserContext: SCUserContextType = useContext(SCUserContext);
+
+  // CONST
+  const authUserId = scUserContext.user ? scUserContext.user.id : null;
+  const limit = useMemo(() => endpointQueryParams.limit || DEFAULT_PAGINATION_ITEMS_NUMBER, [endpointQueryParams]);
+  const offset = useMemo(() => {
+    if (prefetchedData) {
+      const currentOffset = getQueryStringParameter(prefetchedData.previous, 'offset') || 0;
+      return prefetchedData.previous ? currentOffset + limit : 0;
+    }
+    return endpointQueryParams.offset || 0;
+  }, [endpointQueryParams, prefetchedData]);
 
   /**
    * Compute preferences
@@ -282,63 +300,48 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
   );
 
   /**
-   * Compute Widgets for the left column
+   * Callback onNextPage
+   * @param page
+   * @param offset
+   * @param total
+   * @param data
    */
-  const _getLeftColumnWidgets: SCFeedWidgetType[] = useMemo(
-    () =>
-      (offset = 0) => {
-        return [
-          ...widgets,
-          ...(advEnabled
-            ? [
-                {
-                  type: 'widget',
-                  component: CustomAdv,
-                  componentProps: {
-                    position: SCCustomAdvPosition.POSITION_FEED_SIDEBAR,
-                    ...CustomAdvProps
-                  },
-                  column: 'right',
-                  position: 0
-                },
-                ...Array.from({length: offset / DEFAULT_WIDGETS_NUMBER + 1}, (_, i) => i * DEFAULT_WIDGETS_NUMBER).map(
-                  (position): SCFeedWidgetType => {
-                    return {
-                      type: 'widget',
-                      component: CustomAdv,
-                      componentProps: {
-                        position: SCCustomAdvPosition.POSITION_FEED,
-                        ...CustomAdvProps
-                      },
-                      column: 'left',
-                      position
-                    };
-                  }
-                )
-              ]
-            : [])
-        ]
-          .map((w) =>
-            Object.assign({}, w, {
-              position:
-                w.position * (w.column === 'right' && oneColLayout ? 5 : 1) - (w.column === 'left' || oneColLayout ? endpointQueryParams.offset : 0)
-            })
-          )
-          .filter((w) => w.position > -1 && ((!oneColLayout && w.column === 'left') || oneColLayout))
-          .sort(widgetSort);
-      },
-    [widgets, advEnabled, endpointQueryParams, oneColLayout]
-  );
+  const onNextPage = (page, offset, total, data) => {
+    setFeedDataLeft((prev) => prev.concat(_getFeedDataLeft(data, offset, total)));
+    onNextData && onNextData(page, offset, total, data);
+  };
 
   /**
-   * Compute Widgets for the right column
+   * Callback onPreviousPage
+   * @param page
+   * @param offset
+   * @param total
+   * @param data
    */
-  const _getRightColumnWidgets: SCFeedWidgetType[] = useMemo(
-    () => () => {
-      if (oneColLayout) {
-        return [];
-      }
-      return [
+  const onPreviousPage = (page, offset, total, data) => {
+    setFeedDataLeft((prev) => _getFeedDataLeft(data, offset, total).concat(prev));
+    // Remove item duplicated from headData if the page data already contains
+    removeHeadDuplicatedData(data.map((item) => itemIdGenerator(item)));
+    onPreviousData && onPreviousData(page, offset, total, data);
+  };
+
+  // PAGINATION FEED
+  const feedDataObject = useSCFetchFeed({
+    id,
+    endpoint,
+    endpointQueryParams: {...endpointQueryParams, ...{offset, limit}},
+    onNextPage: onNextPage,
+    onPreviousPage: onPreviousPage,
+    cacheStrategy,
+    prefetchedData
+  });
+
+  /**
+   * Compute Base Widgets
+   */
+  const _widgets: SCFeedWidgetType[] = useMemo(
+    () =>
+      [
         ...widgets,
         ...(advEnabled
           ? [
@@ -355,21 +358,52 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
             ]
           : [])
       ]
-        .filter((w) => w.column === 'right')
-        .sort(widgetSort);
-    },
-    [widgets, advEnabled, oneColLayout]
+        .map((w, i) => Object.assign({}, w, {position: w.position * (w.column === 'right' ? 5 : 1), id: `${w.column}_${i}`}))
+        .sort(widgetSort),
+    [widgets, advEnabled]
   );
 
-  // CONST
-  const authUserId = scUserContext.user ? scUserContext.user.id : null;
-  const limit = useMemo(() => endpointQueryParams.limit || DEFAULT_PAGINATION_ITEMS_NUMBER, [endpointQueryParams]);
+  /**
+   * Compute Widgets for the left column in a specific position
+   */
+  const _getLeftColumnWidgets: SCFeedWidgetType[] = (position = 1) => {
+    const tw = {
+      type: 'widget',
+      component: CustomAdv,
+      componentProps: {
+        position: SCCustomAdvPosition.POSITION_FEED,
+        ...CustomAdvProps
+      },
+      column: 'left',
+      position,
+      id: `left_${position}`
+    };
+    if (oneColLayout) {
+      const remainingWidgets = position === feedDataObject.count - 1 ? _widgets.filter((w) => w.position >= feedDataObject.count) : [];
+      return [
+        ..._widgets.filter((w) => w.position === position),
+        ...(advEnabled && position > 0 && position % DEFAULT_WIDGETS_NUMBER === 0 ? [tw] : []),
+        ...remainingWidgets
+      ];
+    }
+    const remainingWidgets =
+      position === feedDataObject.count - 1 ? _widgets.filter((w) => w.position >= feedDataObject.count && w.column === 'left') : [];
+    return [
+      ..._widgets.filter((w) => w.position === position && w.column === 'left'),
+      ...(advEnabled && position > 0 && position % DEFAULT_WIDGETS_NUMBER === 0 ? [tw] : []),
+      ...remainingWidgets
+    ];
+  };
 
-  // Define offset based on initial offset
-  const offset = useMemo(
-    () => (endpointQueryParams.offset > 0 ? Math.max(endpointQueryParams.offset - _getLeftColumnWidgets(endpointQueryParams.offset).length, 0) : 0),
-    [endpointQueryParams]
-  );
+  /**
+   * Compute Widgets for the right column
+   */
+  const _getRightColumnWidgets: SCFeedWidgetType[] = () => {
+    if (oneColLayout) {
+      return [];
+    }
+    return _widgets.filter((w) => w.column === 'right');
+  };
 
   // STATE
   const [feedDataLeft, setFeedDataLeft] = useState([]);
@@ -377,65 +411,25 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
   const [headData, setHeadData] = useState([]);
 
   /**
-   * Callback onNextPage
-   * @param page
-   * @param offset
-   * @param total
-   * @param data
-   */
-  const onNextPage = (page, offset, total, data) => {
-    setFeedDataLeft((prev) => prev.concat(_getFeedDataLeft(data)));
-    onNextData && onNextData(page, offset, total, data);
-  };
-
-  /**
-   * Callback onPreviousPage
-   * @param page
-   * @param offset
-   * @param total
-   * @param data
-   */
-  const onPreviousPage = (page, offset, total, data) => {
-    setFeedDataLeft((prev) => _getFeedDataLeft(data).concat(prev));
-    // Remove item duplicated from headData if the page data already contains
-    removeHeadDuplicatedData(data.map((item) => itemIdGenerator(item)));
-    onPreviousData && onPreviousData(page, offset, total, data);
-  };
-
-  // PAGINATION FEED
-  const feedDataObject = useSCFetchFeed({
-    id,
-    endpoint,
-    endpointQueryParams: {...endpointQueryParams, ...{offset}},
-    onNextPage: onNextPage,
-    onPreviousPage: onPreviousPage,
-    cacheStrategy
-  });
-
-  /**
    * Get left column data
    * @param data
    */
-  const _getFeedDataLeft = (data) => {
-    // if load initial data from cache take into account how many widgets should be included
-    // if data.length <= limit it means I'm paging (feedDataLeft.length + data.length)
-    // else I'm loading data in bulk from the cache (data.length + _getLeftColumnWidgets(data.length).length)
-    // ps. all positions must be calculated based on the starting offset
-    const totalFeedItems =
-      data.length + (data.length <= limit ? feedDataLeft.length : _getLeftColumnWidgets(data.length).length) + endpointQueryParams.offset;
-    return _getLeftColumnWidgets(totalFeedItems)
-      .map((w, i) => Object.assign({}, w, {position: w.position - feedDataLeft.length, id: i}))
-      .filter((w) => w.position > -1)
-      .reduce(widgetReducer(feedDataLeft.total, limit), [...data]);
+  const _getFeedDataLeft = (data, currentOffset, total) => {
+    let result = [];
+    if (total < limit) {
+      result = _getLeftColumnWidgets();
+    } else {
+      data.forEach((e, i) => {
+        result = result.concat([..._getLeftColumnWidgets(i + currentOffset), ...[e]]);
+      });
+    }
+    return result;
   };
 
   /**
    * Get right column data
    */
   const _getFeedDataRight = () => {
-    if (oneColLayout) {
-      return [];
-    }
     return _getRightColumnWidgets();
   };
 
@@ -480,16 +474,22 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
   };
 
   /**
-   * Render InlineComposer if need
+   * Render HeaderComponent
    */
   const renderHeaderComponent = () => {
     return (
       <>
-        {virtualScrollerMountState.current && HeaderComponent}
-        {headData.map((item) => {
-          const _itemId = `item_${itemIdGenerator(item)}`;
-          return <ItemComponent id={_itemId} key={_itemId} {...itemPropsGenerator(scUserContext.user, item)} {...ItemProps} sx={{width: '100%'}} />;
-        })}
+        {!feedDataObject.previous && (
+          <>
+            {virtualScrollerMountState.current && HeaderComponent}
+            {headData.map((item) => {
+              const _itemId = `item_${itemIdGenerator(item)}`;
+              return (
+                <ItemComponent id={_itemId} key={_itemId} {...itemPropsGenerator(scUserContext.user, item)} {...ItemProps} sx={{width: '100%'}} />
+              );
+            })}
+          </>
+        )}
       </>
     );
   };
@@ -499,9 +499,9 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
    */
   const _initFeedData = useMemo(
     () => () => {
-      if (cacheStrategy === CacheStrategies.CACHE_FIRST && feedDataObject.componentLoaded) {
-        // Set current cached feed
-        setFeedDataLeft(_getFeedDataLeft(feedDataObject.feedData));
+      if ((cacheStrategy === CacheStrategies.CACHE_FIRST || prefetchedData) && feedDataObject.componentLoaded) {
+        // Set current cached feed or prefetched data
+        setFeedDataLeft(_getFeedDataLeft(feedDataObject.results, feedDataObject.initialOffset, feedDataObject.count));
       } else {
         // Load next page
         feedDataObject.getNextPage();
@@ -546,7 +546,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
       setHeadData([...[data], ...headData]);
       if (syncPagination) {
         // Adding an element, re-sync next and previous of feedDataObject
-        const nextOffset = parseInt(getQueryStringParameter(feedDataObject.next, 'offset') || feedDataObject.feedData.length - 1) + 1;
+        const nextOffset = parseInt(getQueryStringParameter(feedDataObject.next, 'offset') || feedDataObject.results.length - 1) + 1;
         const previousOffset = parseInt(getQueryStringParameter(feedDataObject.previous, 'offset') || offset) + 1;
         feedDataObject.updateState({
           previous: updateQueryStringParameter(feedDataObject.previous, 'offset', previousOffset),
