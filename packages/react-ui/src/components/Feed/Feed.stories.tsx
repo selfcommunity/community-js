@@ -65,7 +65,8 @@ Main.args = {
   ItemSkeletonProps: {
     template: SCFeedObjectTemplateType.PREVIEW
   },
-  requireAuthentication: true
+  requireAuthentication: true,
+  HeaderComponent: <InlineComposer />
 };
 
 export const MainCache = Template.bind({});
@@ -87,7 +88,8 @@ MainCache.args = {
     template: SCFeedObjectTemplateType.PREVIEW
   },
   requireAuthentication: true,
-  cacheStrategy: CacheStrategies.CACHE_FIRST
+  cacheStrategy: CacheStrategies.CACHE_FIRST,
+  HeaderComponent: <InlineComposer />
 };
 
 

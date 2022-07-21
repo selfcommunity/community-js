@@ -417,7 +417,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
   const _getFeedDataLeft = (data, currentOffset, total) => {
     let result = [];
     if (total < limit) {
-      result = _getLeftColumnWidgets();
+      result = oneColLayout ? _widgets : _widgets.filter((w) => w.column === 'left');
     } else {
       data.forEach((e, i) => {
         result = result.concat([..._getLeftColumnWidgets(i + currentOffset), ...[e]]);
