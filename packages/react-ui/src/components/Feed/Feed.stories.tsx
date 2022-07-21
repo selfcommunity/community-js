@@ -9,7 +9,7 @@ import SCNotification, {NotificationSkeleton} from '../Notification';
 import FeedUpdates from '../FeedUpdates';
 import BroadcastMessages from '../BroadcastMessages';
 import {CacheStrategies} from '@selfcommunity/utils';
-import {CategoriesSuggestion, PeopleSuggestion, TrendingPeople} from '../../index';
+import {CategoriesSuggestion, InlineComposer, PeopleSuggestion, TrendingPeople} from '../../index';
 import {exampleExploreData} from './prefetchedData';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
@@ -109,7 +109,8 @@ Explore.args = {
   ItemSkeletonProps: {
     template: SCFeedObjectTemplateType.PREVIEW
   },
-  cacheStrategy: CacheStrategies.NETWORK_ONLY
+  cacheStrategy: CacheStrategies.NETWORK_ONLY,
+  HeaderComponent: <InlineComposer />
 };
 
 export const ExploreCache = Template.bind({});
@@ -130,7 +131,8 @@ ExploreCache.args = {
   ItemSkeletonProps: {
     template: SCFeedObjectTemplateType.PREVIEW
   },
-  cacheStrategy: CacheStrategies.CACHE_FIRST
+  cacheStrategy: CacheStrategies.CACHE_FIRST,
+  HeaderComponent: <InlineComposer />
 };
 
 export const ExploreOffset2 = Template.bind({});
@@ -151,7 +153,8 @@ ExploreOffset2.args = {
   ItemSkeletonProps: {
     template: SCFeedObjectTemplateType.PREVIEW
   },
-  endpointQueryParams: {limit: 5, offset: 2}
+  endpointQueryParams: {limit: 5, offset: 2},
+  HeaderComponent: <InlineComposer />
 };
 
 
@@ -174,7 +177,8 @@ ExploreOffset2Cached.args = {
     template: SCFeedObjectTemplateType.PREVIEW
   },
   endpointQueryParams: {limit: 5, offset: 2},
-  cacheStrategy: CacheStrategies.CACHE_FIRST
+  cacheStrategy: CacheStrategies.CACHE_FIRST,
+  HeaderComponent: <InlineComposer />
 };
 
 export const ExploreOffset5 = Template.bind({});
@@ -195,7 +199,8 @@ ExploreOffset5.args = {
   ItemSkeletonProps: {
     template: SCFeedObjectTemplateType.PREVIEW
   },
-  endpointQueryParams: {limit: 5, offset: 5}
+  endpointQueryParams: {limit: 5, offset: 5},
+  HeaderComponent: <InlineComposer />
 };
 
 export const ExploreOffset5Cached = Template.bind({});
@@ -217,7 +222,8 @@ ExploreOffset5Cached.args = {
     template: SCFeedObjectTemplateType.PREVIEW
   },
   endpointQueryParams: {limit: 5, offset: 5},
-  cacheStrategy: CacheStrategies.CACHE_FIRST
+  cacheStrategy: CacheStrategies.CACHE_FIRST,
+  HeaderComponent: <InlineComposer />
 };
 
 
@@ -239,7 +245,8 @@ ExploreOffset10.args = {
   ItemSkeletonProps: {
     template: SCFeedObjectTemplateType.PREVIEW
   },
-  endpointQueryParams: {limit: 5, offset: 10}
+  endpointQueryParams: {limit: 5, offset: 10},
+  HeaderComponent: <InlineComposer />
 };
 
 export const ExploreOffset10Cached = Template.bind({});
@@ -261,7 +268,8 @@ ExploreOffset10Cached.args = {
     template: SCFeedObjectTemplateType.PREVIEW
   },
   endpointQueryParams: {limit: 5, offset: 10},
-  cacheStrategy: CacheStrategies.CACHE_FIRST
+  cacheStrategy: CacheStrategies.CACHE_FIRST,
+  HeaderComponent: <InlineComposer />
 };
 
 export const ExplorePrefetchedData = Template.bind({});

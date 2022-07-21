@@ -474,16 +474,22 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
   };
 
   /**
-   * Render InlineComposer if need
+   * Render HeaderComponent
    */
   const renderHeaderComponent = () => {
     return (
       <>
-        {virtualScrollerMountState.current && HeaderComponent}
-        {headData.map((item) => {
-          const _itemId = `item_${itemIdGenerator(item)}`;
-          return <ItemComponent id={_itemId} key={_itemId} {...itemPropsGenerator(scUserContext.user, item)} {...ItemProps} sx={{width: '100%'}} />;
-        })}
+        {!feedDataObject.previous && (
+          <>
+            {virtualScrollerMountState.current && HeaderComponent}
+            {headData.map((item) => {
+              const _itemId = `item_${itemIdGenerator(item)}`;
+              return (
+                <ItemComponent id={_itemId} key={_itemId} {...itemPropsGenerator(scUserContext.user, item)} {...ItemProps} sx={{width: '100%'}} />
+              );
+            })}
+          </>
+        )}
       </>
     );
   };
