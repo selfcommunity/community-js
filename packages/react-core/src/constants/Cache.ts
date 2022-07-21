@@ -29,14 +29,19 @@ export const getContributorsCacheKey = (id, type, next) => `${CONTRIBUTORS_CACHE
 export const getContributorsCachePrefixKeys = (id, type) => `${CONTRIBUTORS_CACHE_PREFIX_KEY}${type}_${id}`;
 
 /** FEED **/
+
+// Cache single response body
 export const FEED_CACHE_PREFIX_KEY = '_feed_';
 export const getFeedCacheKey = (id, next) => `${FEED_CACHE_PREFIX_KEY}${id}_${next}`;
 
+// Cache state of the feed (ex. useSCFetchFeed)
 export const FEED_STATE_CACHE_PREFIX_KEY = '_feed_st_';
 export const getStateFeedCacheKey = (id) => `${FEED_STATE_CACHE_PREFIX_KEY}${id}`;
 
+// Cache the state of the virtualized feed
 export const VIRTUALIZED_SCROLL_STATE_CACHE_PREFIX_KEY = '_virtualized_scroll_st_';
 export const getVirtualizedScrollStateCacheKey = (id) => `${VIRTUALIZED_SCROLL_STATE_CACHE_PREFIX_KEY}${id}`;
 
+// Cache feed position
 export const FEED_CACHE_SP_KEY = '_feed_spos_';
 export const getFeedSPCacheKey = (id) => `${FEED_CACHE_SP_KEY}${id}`;
