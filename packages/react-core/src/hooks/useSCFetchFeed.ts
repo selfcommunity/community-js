@@ -168,13 +168,13 @@ export default function useSCFetchFeed(props: {
   const {
     id,
     endpoint,
-    endpointQueryParams = {limit: 10, offset: 0},
+    endpointQueryParams = {limit: 5, offset: 0},
     onNextPage,
     onPreviousPage,
     cacheStrategy = CacheStrategies.NETWORK_ONLY,
     prefetchedData,
   } = props;
-  const queryParams = useMemo(() => Object.assign({limit: 10, offset: 0}, endpointQueryParams), [endpointQueryParams]);
+  const queryParams = useMemo(() => Object.assign({limit: 5, offset: 0}, endpointQueryParams), [endpointQueryParams]);
 
   /**
    * Get next url

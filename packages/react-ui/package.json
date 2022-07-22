@@ -96,7 +96,8 @@
     "sortablejs": "^1.14.0",
     "spark-md5": "~3.0.2",
     "use-deep-compare-effect": "^1.8.1",
-    "virtual-scroller": "^1.9.1"
+    "virtual-scroller": "^1.9.1",
+    "throttle-debounce": "^2.1.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.13",
