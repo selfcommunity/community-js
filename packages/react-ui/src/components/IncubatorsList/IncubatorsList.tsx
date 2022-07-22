@@ -11,7 +11,7 @@ import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
 import BaseDialog from '../../shared/BaseDialog';
 import CentralProgress from '../../shared/CentralProgress';
-import InfiniteScroll from 'react-infinite-scroll-component';
+import InfiniteScroll from '../../shared/InfiniteScroll';
 import Incubator, {IncubatorProps} from '../Incubator';
 import Popover from '@mui/material/Popover';
 import Icon from '@mui/material/Icon';
@@ -280,8 +280,8 @@ export default function IncubatorsList(inProps: IncubatorsListProps): JSX.Elemen
                 <InfiniteScroll
                   dataLength={incubators.length}
                   next={fetchIncubators}
-                  hasMore={Boolean(next)}
-                  loader={<CentralProgress size={30} />}
+                  hasMoreNext={Boolean(next)}
+                  loaderNext={<CentralProgress size={30} />}
                   height={400}
                   endMessage={
                     <p style={{textAlign: 'center'}}>

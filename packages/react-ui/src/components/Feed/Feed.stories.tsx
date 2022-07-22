@@ -229,9 +229,9 @@ ExploreOffset5Cached.args = {
 };
 
 
-export const ExploreOffset10 = Template.bind({});
+export const ExploreOffset20 = Template.bind({});
 
-ExploreOffset10.args = {
+ExploreOffset20.args = {
   id: 'explore',
   endpoint: Endpoints.ExploreFeed,
   widgets: _WIDGETS,
@@ -247,13 +247,13 @@ ExploreOffset10.args = {
   ItemSkeletonProps: {
     template: SCFeedObjectTemplateType.PREVIEW
   },
-  endpointQueryParams: {limit: 5, offset: 10},
+  endpointQueryParams: {limit: 5, offset: 20},
   HeaderComponent: <InlineComposer />
 };
 
-export const ExploreOffset10Cached = Template.bind({});
+export const ExploreOffset20Cached = Template.bind({});
 
-ExploreOffset10Cached.args = {
+ExploreOffset20Cached.args = {
   id: 'explore',
   endpoint: Endpoints.ExploreFeed,
   widgets: _WIDGETS,
@@ -269,7 +269,7 @@ ExploreOffset10Cached.args = {
   ItemSkeletonProps: {
     template: SCFeedObjectTemplateType.PREVIEW
   },
-  endpointQueryParams: {limit: 5, offset: 10},
+  endpointQueryParams: {limit: 5, offset: 20},
   cacheStrategy: CacheStrategies.CACHE_FIRST,
   HeaderComponent: <InlineComposer />
 };
@@ -293,7 +293,8 @@ ExplorePrefetchedData.args = {
     template: SCFeedObjectTemplateType.PREVIEW
   },
   endpointQueryParams: {limit: 5},
-  prefetchedData: exampleExploreData
+  HeaderComponent: <InlineComposer />,
+  prefetchedData: exampleExploreData,
 };
 
 export const ExplorePrefetchedDataCached = Template.bind({});
@@ -315,6 +316,7 @@ ExplorePrefetchedDataCached.args = {
     template: SCFeedObjectTemplateType.PREVIEW
   },
   endpointQueryParams: {limit: 5},
+  HeaderComponent: <InlineComposer />,
   cacheStrategy: CacheStrategies.CACHE_FIRST
 };
 

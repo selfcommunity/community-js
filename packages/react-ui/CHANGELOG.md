@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.8-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.2.7...@selfcommunity/react-ui@0.2.8-alpha.0) (2022-07-22)
+
+
+### Bug Fixes
+
+* feed && first version of bidirectional inifiniteScroll ([686e422](https://github.com/selfcommunity/community-js/commit/686e42204717aa680a1a5ebbb528536ece8a996b))
+* infiniteScroll ([c9c8a2c](https://github.com/selfcommunity/community-js/commit/c9c8a2c890075343826e00d17aa538a817c3ff0b))
+* notification feed ([9d88fb5](https://github.com/selfcommunity/community-js/commit/9d88fb58345bf88a2fcbbfa0b1d08634fc84f9f4))
+* useFetchFeedObject ([a4deb35](https://github.com/selfcommunity/community-js/commit/a4deb357f30e70af46916593b51de72bada02151))
+
+
+
+
+
 ## [0.2.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.2.7-alpha.1...@selfcommunity/react-ui@0.2.7) (2022-07-21)
 
 **Note:** Version bump only for package @selfcommunity/react-ui

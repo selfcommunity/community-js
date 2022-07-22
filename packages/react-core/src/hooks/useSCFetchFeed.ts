@@ -74,6 +74,7 @@ function feedDataReducer(state, action) {
         ...state,
         currentPage: action.payload.currentPage,
         currentOffset: action.payload.currentOffset,
+        initialOffset: action.payload.initialOffset,
         results: [...action.payload.results, ...state.results],
         isLoadingPrevious: false,
         componentLoaded: true,
@@ -92,6 +93,7 @@ function feedDataReducer(state, action) {
         next: action.payload.next,
         currentPage: 1,
         currentOffset: 0,
+        initialOffset: 0,
         results: [],
         count: 0,
         previous: null,
@@ -168,7 +170,7 @@ export default function useSCFetchFeed(props: {
   const {
     id,
     endpoint,
-    endpointQueryParams = {limit: 10, offset: 0},
+    endpointQueryParams = {limit: 5, offset: 0},
     onNextPage,
     onPreviousPage,
     cacheStrategy = CacheStrategies.NETWORK_ONLY,
@@ -251,7 +253,7 @@ export default function useSCFetchFeed(props: {
       dispatch({type: feedDataActionTypes.LOADING_PREVIOUS});
       performFetchData(state.previous)
         .then((res) => {
-          let currentOffset = Math.max(getCurrentOffset(res.previous), 0);
+          let currentOffset = Math.max(getCurrentOffset(state.previous), 0);
           let currentPage = Math.ceil(currentOffset / queryParams.limit + 1);
           dispatch({
             type: feedDataActionTypes.DATA_PREVIOUS_LOADED,
