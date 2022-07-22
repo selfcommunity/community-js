@@ -2,7 +2,7 @@ import React, {useEffect, useMemo, useReducer} from 'react';
 import BaseDialog from '../../../../shared/BaseDialog';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {Box, Button, Divider, List, ListItem, Tooltip} from '@mui/material';
-import InfiniteScroll from 'react-infinite-scroll-component';
+import InfiniteScroll from '../../../../shared/InfiniteScroll';
 import Icon from '@mui/material/Icon';
 import Skeleton from '@mui/material/Skeleton';
 import LoadingButton from '@mui/lab/LoadingButton';
@@ -409,8 +409,8 @@ export default function Vote(inProps: VoteProps): JSX.Element {
                   <InfiniteScroll
                     dataLength={votes.length}
                     next={fetchVotes}
-                    hasMore={Boolean(state.next)}
-                    loader={<CentralProgress size={30} />}
+                    hasMoreNext={Boolean(state.next)}
+                    loaderNext={<CentralProgress size={30} />}
                     height={400}
                     endMessage={
                       <p style={{textAlign: 'center'}}>

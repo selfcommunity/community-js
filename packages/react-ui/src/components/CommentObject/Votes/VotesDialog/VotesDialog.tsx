@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {Box, List, ListItem} from '@mui/material';
-import InfiniteScroll from 'react-infinite-scroll-component';
+import InfiniteScroll from '../../../../shared/InfiniteScroll';
 import Typography from '@mui/material/Typography';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
@@ -103,8 +103,8 @@ export default function CommentObjectVotesDialog(inProps: CommentObjectVotesDial
         <InfiniteScroll
           dataLength={votes.length}
           next={fetchVotes}
-          hasMore={next !== null}
-          loader={<CentralProgress size={30} />}
+          hasMoreNext={next !== null}
+          loaderNext={<CentralProgress size={30} />}
           height={400}
           endMessage={
             <Typography variant="body2" align="center">

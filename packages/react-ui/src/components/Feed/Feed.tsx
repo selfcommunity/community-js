@@ -23,8 +23,9 @@ import classNames from 'classnames';
 import PubSub from 'pubsub-js';
 import {useThemeProps} from '@mui/system';
 import Widget from '../Widget';
-import InfiniteScroll from 'react-infinite-scroll-component';
+import InfiniteScroll from '../../shared/InfiniteScroll';
 import VirtualizedScroller, {VirtualScrollChild} from '../../shared/VirtualizedScroller';
+import {WIDGET_PREFIX_KEY, DEFAULT_WIDGETS_NUMBER, DEFAULT_PAGINATION_ITEMS_NUMBER} from '../../constants/Feed';
 import {widgetSort} from '../../utils/feed';
 import Footer from '../Footer';
 import FeedSkeleton from './Skeleton';
@@ -202,9 +203,6 @@ export interface FeedProps {
   prefetchedData?: SCPaginatedResponse<SCFeedUnitType>;
 }
 
-const WIDGET_PREFIX_KEY = 'widget_';
-const DEFAULT_PAGINATION_ITEMS_NUMBER = 5; // data pagination
-const DEFAULT_WIDGETS_NUMBER = 10; // every how many elements insert a widget
 const PREFERENCES = [SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED, SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED];
 
 /**
@@ -274,7 +272,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
   const offset = useMemo(() => {
     if (prefetchedData) {
       const currentOffset = getQueryStringParameter(prefetchedData.previous, 'offset') || 0;
-      return prefetchedData.previous ? currentOffset + limit : 0;
+      return prefetchedData.previous ? parseInt(currentOffset) + limit : 0;
     }
     return endpointQueryParams.offset || 0;
   }, [endpointQueryParams, prefetchedData]);
@@ -366,7 +364,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
   /**
    * Compute Widgets for the left column in a specific position
    */
-  const _getLeftColumnWidgets: SCFeedWidgetType[] = (position = 1) => {
+  const _getLeftColumnWidgets: SCFeedWidgetType[] = (position = 1, total) => {
     const tw = {
       type: 'widget',
       component: CustomAdv,
@@ -379,15 +377,14 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
       id: `left_${position}`
     };
     if (oneColLayout) {
-      const remainingWidgets = position === feedDataObject.count - 1 ? _widgets.filter((w) => w.position >= feedDataObject.count) : [];
+      const remainingWidgets = position === total - 1 ? _widgets.filter((w) => w.position >= total) : [];
       return [
         ..._widgets.filter((w) => w.position === position),
         ...(advEnabled && position > 0 && position % DEFAULT_WIDGETS_NUMBER === 0 ? [tw] : []),
         ...remainingWidgets
       ];
     }
-    const remainingWidgets =
-      position === feedDataObject.count - 1 ? _widgets.filter((w) => w.position >= feedDataObject.count && w.column === 'left') : [];
+    const remainingWidgets = position === total - 1 ? _widgets.filter((w) => w.position >= total && w.column === 'left') : [];
     return [
       ..._widgets.filter((w) => w.position === position && w.column === 'left'),
       ...(advEnabled && position > 0 && position % DEFAULT_WIDGETS_NUMBER === 0 ? [tw] : []),
@@ -416,11 +413,11 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
    */
   const _getFeedDataLeft = (data, currentOffset, total) => {
     let result = [];
-    if (total < limit) {
+    if (total === 0) {
       result = oneColLayout ? _widgets : _widgets.filter((w) => w.column === 'left');
     } else {
       data.forEach((e, i) => {
-        result = result.concat([..._getLeftColumnWidgets(i + currentOffset), ...[e]]);
+        result = result.concat([..._getLeftColumnWidgets(i + currentOffset, total), ...[e]]);
       });
     }
     return result;
@@ -603,8 +600,11 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
             className={classes.left}
             dataLength={feedDataLeft.length}
             next={feedDataObject.getNextPage}
-            hasMore={Boolean(feedDataObject.next)}
-            loader={<ItemSkeleton {...ItemSkeletonProps} />}
+            previous={feedDataObject.getPreviousPage}
+            hasMoreNext={Boolean(feedDataObject.next)}
+            hasMorePrevious={Boolean(feedDataObject.previous)}
+            loaderNext={<ItemSkeleton {...ItemSkeletonProps} />}
+            loaderPrevious={<ItemSkeleton {...ItemSkeletonProps} />}
             scrollThreshold={1}
             endMessage={
               <>

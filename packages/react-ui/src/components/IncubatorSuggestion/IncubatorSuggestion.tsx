@@ -12,7 +12,7 @@ import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
 import BaseDialog from '../../shared/BaseDialog';
 import CentralProgress from '../../shared/CentralProgress';
-import InfiniteScroll from 'react-infinite-scroll-component';
+import InfiniteScroll from '../../shared/InfiniteScroll';
 import Incubator, {IncubatorProps} from '../Incubator';
 import {useThemeProps} from '@mui/system';
 import Widget from '../Widget';
@@ -239,8 +239,8 @@ export default function IncubatorSuggestion(inProps: IncubatorSuggestionProps): 
                 <InfiniteScroll
                   dataLength={incubators.length}
                   next={fetchIncubatorSuggestion}
-                  hasMore={Boolean(next)}
-                  loader={<CentralProgress size={30} />}
+                  hasMoreNext={Boolean(next)}
+                  loaderNext={<CentralProgress size={30} />}
                   height={400}
                   endMessage={
                     <p style={{textAlign: 'center'}}>
