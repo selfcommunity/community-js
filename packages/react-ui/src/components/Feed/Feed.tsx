@@ -23,7 +23,7 @@ import classNames from 'classnames';
 import PubSub from 'pubsub-js';
 import {useThemeProps} from '@mui/system';
 import Widget from '../Widget';
-import InfiniteScroll from 'react-infinite-scroll-component';
+import InfiniteScroll from '../../shared/InfiniteScroll';
 import VirtualizedScroller, {VirtualScrollChild} from '../../shared/VirtualizedScroller';
 import {WIDGET_PREFIX_KEY, DEFAULT_WIDGETS_NUMBER, DEFAULT_PAGINATION_ITEMS_NUMBER} from '../../constants/Feed';
 import {widgetSort} from '../../utils/feed';
@@ -272,7 +272,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
   const offset = useMemo(() => {
     if (prefetchedData) {
       const currentOffset = getQueryStringParameter(prefetchedData.previous, 'offset') || 0;
-      return prefetchedData.previous ? currentOffset + limit : 0;
+      return prefetchedData.previous ? parseInt(currentOffset) + limit : 0;
     }
     return endpointQueryParams.offset || 0;
   }, [endpointQueryParams, prefetchedData]);
@@ -600,8 +600,11 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
             className={classes.left}
             dataLength={feedDataLeft.length}
             next={feedDataObject.getNextPage}
-            hasMore={Boolean(feedDataObject.next)}
-            loader={<ItemSkeleton {...ItemSkeletonProps} />}
+            previous={feedDataObject.getPreviousPage}
+            hasMoreNext={Boolean(feedDataObject.next)}
+            hasMorePrevious={Boolean(feedDataObject.previous)}
+            loaderNext={<ItemSkeleton {...ItemSkeletonProps} />}
+            loaderPrevious={<ItemSkeleton {...ItemSkeletonProps} />}
             scrollThreshold={1}
             endMessage={
               <>

@@ -12,7 +12,7 @@ import {CategoriesListProps} from '../CategoriesSuggestion';
 import classNames from 'classnames';
 import BaseDialog from '../../shared/BaseDialog';
 import CentralProgress from '../../shared/CentralProgress';
-import InfiniteScroll from 'react-infinite-scroll-component';
+import InfiniteScroll from '../../shared/InfiniteScroll';
 import Widget from '../Widget';
 import {useThemeProps} from '@mui/system';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
@@ -179,8 +179,8 @@ export default function CategoriesPopular(inProps: CategoriesListProps): JSX.Ele
                 <InfiniteScroll
                   dataLength={categories.length}
                   next={fetchPopularCategories}
-                  hasMore={Boolean(next)}
-                  loader={<CentralProgress size={30} />}
+                  hasMoreNext={Boolean(next)}
+                  loaderNext={<CentralProgress size={30} />}
                   height={400}
                   endMessage={
                     <p style={{textAlign: 'center'}}>

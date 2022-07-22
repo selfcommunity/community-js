@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {List, ListItem} from '@mui/material';
-import InfiniteScroll from 'react-infinite-scroll-component';
+import InfiniteScroll from '../../../../../shared/InfiniteScroll';
 import Typography from '@mui/material/Typography';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
@@ -110,8 +110,8 @@ export default function SharesDialog(props: ShareDialogProps): JSX.Element {
         <InfiniteScroll
           dataLength={shares.length}
           next={fetchShares}
-          hasMore={next !== null}
-          loader={<CentralProgress size={30} />}
+          hasMoreNext={next !== null}
+          loaderNext={<CentralProgress size={30} />}
           height={400}
           endMessage={
             <Typography variant="body2" align="center">

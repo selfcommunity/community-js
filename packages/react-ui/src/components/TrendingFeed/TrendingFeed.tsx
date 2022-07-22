@@ -13,7 +13,7 @@ import {SCFeedObjectTemplateType} from '../../types/feedObject';
 import classNames from 'classnames';
 import BaseDialog from '../../shared/BaseDialog';
 import CentralProgress from '../../shared/CentralProgress';
-import InfiniteScroll from 'react-infinite-scroll-component';
+import InfiniteScroll from '../../shared/InfiniteScroll';
 import Skeleton from './Skeleton';
 import {useThemeProps} from '@mui/system';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
@@ -193,8 +193,8 @@ export default function TrendingFeed(inProps: TrendingFeedProps): JSX.Element {
                 <InfiniteScroll
                   dataLength={posts.length}
                   next={fetchTrendingPost}
-                  hasMore={Boolean(next)}
-                  loader={<CentralProgress size={30} />}
+                  hasMoreNext={Boolean(next)}
+                  loaderNext={<CentralProgress size={30} />}
                   height={400}
                   endMessage={
                     <p style={{textAlign: 'center'}}>
