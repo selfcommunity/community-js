@@ -5,7 +5,7 @@ import FollowCategoryButton, {FollowCategoryButtonProps} from '../FollowCategory
 import BaseDialog, {BaseDialogProps} from '../../shared/BaseDialog';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import CentralProgress from '../../shared/CentralProgress';
-import InfiniteScroll from 'react-infinite-scroll-component';
+import InfiniteScroll from '../../shared/InfiniteScroll';
 import User from '../User';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {SCUserContext, SCUserContextType, useSCFetchCategory} from '@selfcommunity/react-core';
@@ -297,8 +297,8 @@ export default function CategoryHeader(inProps: CategoryHeaderProps): JSX.Elemen
             <InfiniteScroll
               dataLength={total}
               next={fetchFollowers}
-              hasMore={next !== null}
-              loader={<CentralProgress size={30} />}
+              hasMoreNext={next !== null}
+              loaderNext={<CentralProgress size={30} />}
               height={400}
               endMessage={
                 <p style={{textAlign: 'center'}}>

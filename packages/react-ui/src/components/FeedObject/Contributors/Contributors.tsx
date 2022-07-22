@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {CacheStrategies} from '@selfcommunity/utils';
-import {useSCFetchContributors, useIsComponentMountedRef} from '@selfcommunity/react-core';
+import {useSCFetchContributors} from '@selfcommunity/react-core';
 import {SCFeedObjectType, SCFeedObjectTypologyType, SCUserType} from '@selfcommunity/types';
 import {Avatar, AvatarGroup, Box, Button, List, ListItem} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import BaseDialog from '../../../shared/BaseDialog';
 import CentralProgress from '../../../shared/CentralProgress';
-import InfiniteScroll from 'react-infinite-scroll-component';
+import InfiniteScroll from '../../../shared/InfiniteScroll';
 import User from '../../User';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
@@ -168,8 +168,8 @@ export default function ContributorsFeedObject(inProps: ContributorsFeedObjectPr
                       <InfiniteScroll
                         dataLength={contributorsObject.contributors.length}
                         next={contributorsObject.getNextPage()}
-                        hasMore={Boolean(contributorsObject.next)}
-                        loader={<CentralProgress size={30} />}
+                        hasMoreNext={Boolean(contributorsObject.next)}
+                        loaderNext={<CentralProgress size={30} />}
                         height={400}
                         endMessage={
                           <p style={{textAlign: 'center'}}>

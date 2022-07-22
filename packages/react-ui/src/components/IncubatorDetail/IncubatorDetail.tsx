@@ -26,7 +26,7 @@ import Incubator, {IncubatorProps} from '../Incubator';
 import Widget from '../Widget';
 import AvatarGroupSkeleton from '../Skeleton/AvatarGroupSkeleton';
 import CentralProgress from '../../shared/CentralProgress';
-import InfiniteScroll from 'react-infinite-scroll-component';
+import InfiniteScroll from '../../shared/InfiniteScroll';
 import User from '../User';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import Icon from '@mui/material/Icon';
@@ -365,8 +365,8 @@ export default function IncubatorDetail(inProps: IncubatorDetailProps): JSX.Elem
               <InfiniteScroll
                 dataLength={total}
                 next={fetchSubscribers}
-                hasMore={next !== null}
-                loader={<CentralProgress size={30} />}
+                hasMoreNext={next !== null}
+                loaderNext={<CentralProgress size={30} />}
                 height={400}
                 endMessage={
                   <p style={{textAlign: 'center'}}>

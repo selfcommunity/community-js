@@ -11,12 +11,13 @@ import CustomAdv from '../CustomAdv';
 import classNames from 'classnames';
 import BaseDialog from '../../shared/BaseDialog';
 import CentralProgress from '../../shared/CentralProgress';
-import InfiniteScroll from 'react-infinite-scroll-component';
+import InfiniteScroll from '../../shared/InfiniteScroll';
 import Widget from '../Widget';
 import {useThemeProps} from '@mui/system';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
 import {SCCustomAdvPosition, SCFeedDiscussionType, SCFeedObjectType, SCFeedObjectTypologyType} from '@selfcommunity/types';
+import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import {
   SCPreferences,
   SCPreferencesContextType,
@@ -25,7 +26,6 @@ import {
   useSCPreferences,
   useSCUser
 } from '@selfcommunity/react-core';
-import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 
 const PREFIX = 'SCRelatedFeedObjects';
 
@@ -269,8 +269,8 @@ export default function RelatedFeedObjects(inProps: RelatedFeedObjectsProps): JS
                 <InfiniteScroll
                   dataLength={objs.length}
                   next={fetchRelated}
-                  hasMore={Boolean(next)}
-                  loader={<CentralProgress size={30} />}
+                  hasMoreNext={Boolean(next)}
+                  loaderNext={<CentralProgress size={30} />}
                   height={400}
                   endMessage={
                     <p style={{textAlign: 'center'}}>

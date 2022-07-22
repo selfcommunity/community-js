@@ -12,7 +12,7 @@ import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
 import BaseDialog from '../../shared/BaseDialog';
 import CentralProgress from '../../shared/CentralProgress';
-import InfiniteScroll from 'react-infinite-scroll-component';
+import InfiniteScroll from '../../shared/InfiniteScroll';
 import Widget from '../Widget';
 import {useThemeProps} from '@mui/system';
 import PollSnippet from './PollSnippet';
@@ -192,8 +192,8 @@ export default function PollSuggestion(inProps: PollSuggestionProps): JSX.Elemen
                 <InfiniteScroll
                   dataLength={objs.length}
                   next={fetchPollSuggestion}
-                  hasMore={Boolean(next)}
-                  loader={<CentralProgress size={30} />}
+                  hasMoreNext={Boolean(next)}
+                  loaderNext={<CentralProgress size={30} />}
                   height={400}
                   endMessage={
                     <p style={{textAlign: 'center'}}>
