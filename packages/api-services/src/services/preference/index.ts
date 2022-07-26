@@ -47,6 +47,31 @@ export class PreferenceApiClient {
 }
 
 export default class PreferenceService {
+  /**
+   *  :::tipPreference service can be used in the following ways:
+   *
+   *  ```jsx
+   *  1. Import the service from our library:
+   *
+   *  import {PreferenceService} from "@selfcommunity/api-services";
+   *  ```
+   *  ```jsx
+   *  2. Create a function and put the service inside it!
+   *  The async function `getAllPreferences` will return the paginated list of preferences.
+   *
+   *     async getAllPreferences() {
+   *       return await PreferenceService.getAllPreferences();
+   *     }
+   *  ```
+   *  ```jsx
+   *  - In case of required `params`, just add them inside the brackets.
+   *
+   *    async getSpecificPreference(preferenceId) {
+   *       return await PreferenceService.getSpecificPreference(preferenceId);
+   *     }
+   *  ```
+   *  :::
+   */
   static async getAllPreferences(): Promise<SCPaginatedResponse<SCPreferenceType[]>> {
     return PreferenceApiClient.getAllPreferences();
   }

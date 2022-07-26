@@ -164,6 +164,31 @@ export class CategoryApiClient {
 }
 
 export default class CategoryService {
+  /**
+   *  :::tipCategory service can be used in the following ways:
+   *
+   *  ```jsx
+   *  1. Import the service from our library:
+   *
+   *  import {CategoryService} from "@selfcommunity/api-services";
+   *  ```
+   *  ```jsx
+   *  2. Create a function and put the service inside it!
+   *  The async function `getAllCategories` will return the paginated list of categories.
+   *
+   *     async getAllCategories() {
+   *       return await CategoryService.getAllCategories();
+   *     }
+   *  ```
+   *  ```jsx
+   *  - In case of required `params`, just add them inside the brackets.
+   *
+   *    async getSpecificCategory(categoryId) {
+   *       return await CategoryService.getSpecificCategory(categoryId);
+   *     }
+   *  ```
+   *  :::
+   */
   static async getAllCategories(params?: CategoryParams): Promise<SCPaginatedResponse<SCCategoryType>> {
     return CategoryApiClient.getAllCategories(params);
   }

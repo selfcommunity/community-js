@@ -88,6 +88,31 @@ export class NotificationApiClient {
 }
 
 export default class NotificationService {
+  /**
+   *  :::tipEmbed service can be used in the following ways:
+   *
+   *  ```jsx
+   *  1. Import the service from our library:
+   *
+   *  import {NotificationService} from "@selfcommunity/api-services";
+   *  ```
+   *  ```jsx
+   *  2. Create a function and put the service inside it!
+   *  The async function `listUserNotification` will return the paginated list of notifications.
+   *
+   *     async listUserNotification() {
+   *       return await NotificationService.listUserNotification();
+   *     }
+   *  ```
+   *  ```jsx
+   *  - In case of required `params`, just add them inside the brackets.
+   *
+   *    async disposeBroadcastMessages(banner_ids) {
+   *       return await NotificationService.disposeBroadcastMessages(banner_ids);
+   *     }
+   *  ```
+   *  :::
+   */
   static async listUserNotification(): Promise<SCPaginatedResponse<SCNotificationAggregatedType>> {
     return NotificationApiClient.listUserNotification();
   }

@@ -30,6 +30,25 @@ export class SSOApiClient {
 }
 
 export default class SSOService {
+  /**
+   *  :::tipSSO service can be used in the following ways:
+   *
+   *  ```jsx
+   *  1. Import the service from our library:
+   *
+   *  import {SSOService} from "@selfcommunity/api-services";
+   *  ```
+   *  ```jsx
+   *  2. Create a function and put the service inside it!
+   *  The async function `SignUp` will return the user registration data. It takes the username and ext_id obj as body params.
+   *
+   *     async SignUp() {
+   *     const data = {username: 'string', ext_id: 'number'};
+   *       return await SSOService.SignUp(data);
+   *     }
+   *  ```
+   *  :::
+   */
   static async SignIn(): Promise<SSOSignInType> {
     return SSOApiClient.SignIn();
   }

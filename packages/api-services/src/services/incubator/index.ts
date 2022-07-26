@@ -77,6 +77,31 @@ export class IncubatorApiClient {
 }
 
 export default class IncubatorService {
+  /**
+   *  :::tipIncubator service can be used in the following ways:
+   *
+   *  ```jsx
+   *  1. Import the service from our library:
+   *
+   *  import {IncubatorService} from "@selfcommunity/api-services";
+   *  ```
+   *  ```jsx
+   *  2. Create a function and put the service inside it!
+   *  The async function `getAllIncubators` will return the paginated list of incubators.
+   *
+   *     async getAllIncubators() {
+   *       return await IncubatorService.getAllIncubators();
+   *     }
+   *  ```
+   *  ```jsx
+   *  - In case of required `params`, just add them inside the brackets.
+   *
+   *    async getSpecificIncubator(incubatorId) {
+   *       return await IncubatorService.getSpecificIncubator(incubatorId);
+   *     }
+   *  ```
+   *  :::
+   */
   static async getAllIncubators(params?: IncubatorSearchParams): Promise<SCPaginatedResponse<SCIncubatorType>> {
     return IncubatorApiClient.getAllIncubators(params);
   }

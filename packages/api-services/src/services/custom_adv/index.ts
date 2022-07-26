@@ -41,6 +41,31 @@ export class CustomAdvApiClient {
 }
 
 export default class CustomAdvService {
+  /**
+   *  :::tipCustomAdv service can be used in the following ways:
+   *
+   *  ```jsx
+   *  1. Import the service from our library:
+   *
+   *  import {CustomAdvService} from "@selfcommunity/api-services";
+   *  ```
+   *  ```jsx
+   *  2. Create a function and put the service inside it!
+   *  The async function `getAllCustomAdv` will return the paginated list of advs.
+   *
+   *     async getAllCustomAdv() {
+   *       return await CustomAdvService.getAllCustomAdv();
+   *     }
+   *  ```
+   *  ```jsx
+   *  - In case of required `params`, just add them inside the brackets.
+   *
+   *    async getASpecificCustomAdv(customAdvId) {
+   *       return await CustomAdvService.getASpecificCustomAdv(customAdvId);
+   *     }
+   *  ```
+   *  :::
+   */
   static async getASpecificCustomAdv(id: number): Promise<SCCustomAdvType> {
     return CustomAdvApiClient.getASpecificCustomAdv(id);
   }
