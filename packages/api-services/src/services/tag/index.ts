@@ -81,32 +81,33 @@ export class TagApiClient {
   }
 }
 
+/**
+ *
+ :::tipTag service can be used in the following ways:
+
+ ```jsx
+ 1. Import the service from our library:
+
+ import {TagService} from "@selfcommunity/api-services";
+ ```
+ ```jsx
+ 2. Create a function and put the service inside it!
+ The async function `getAllTags` will return the paginated list of tags.
+
+ async getAllTags() {
+        return await TagService.getAllTags();
+      }
+ ```
+ ```jsx
+ In case of required `params`, just add them inside the brackets.
+
+ async getSpecificTag(tagId) {
+       return await TagService.getSpecificTag(tagId);
+      }
+ ```
+ :::
+ */
 export default class TagService {
-  /**
-   *  :::tipTag service can be used in the following ways:
-   *
-   *  ```jsx
-   *  1. Import the service from our library:
-   *
-   *  import {TagService} from "@selfcommunity/api-services";
-   *  ```
-   *  ```jsx
-   *  2. Create a function and put the service inside it!
-   *  The async function `getAllTags` will return the paginated list of tags.
-   *
-   *     async getAllTags() {
-   *       return await TagService.getAllTags();
-   *     }
-   *  ```
-   *  ```jsx
-   *  - In case of required `params`, just add them inside the brackets.
-   *
-   *    async getSpecificTag(tagId) {
-   *       return await TagService.getSpecificTag(tagId);
-   *     }
-   *  ```
-   *  :::
-   */
   static async getAllTags(params?: TagGetParams): Promise<SCPaginatedResponse<SCTagType>> {
     return TagApiClient.getAllTags(params);
   }

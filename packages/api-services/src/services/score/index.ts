@@ -40,25 +40,26 @@ export class ScoreApiClient {
   }
 }
 
+/**
+ *
+ :::tipScore service can be used in the following ways:
+
+ ```jsx
+ 1. Import the service from our library:
+
+ import {ScoreService} from "@selfcommunity/api-services";
+ ```
+ ```jsx
+ 2. Create a function and put the service inside it!
+ The async function `getAllScores` will return the paginated list of user scores.
+
+ async getAllScores() {
+       return await ScoreService.getAllScores();
+     }
+ ```
+ :::
+ */
 export default class ScoreService {
-  /**
-   *  :::tipScore service can be used in the following ways:
-   *
-   *  ```jsx
-   *  1. Import the service from our library:
-   *
-   *  import {ScoreService} from "@selfcommunity/api-services";
-   *  ```
-   *  ```jsx
-   *  2. Create a function and put the service inside it!
-   *  The async function `getAllScores` will return the paginated list of user scores.
-   *
-   *     async getAllScores() {
-   *       return await ScoreService.getAllScores();
-   *     }
-   *  ```
-   *  :::
-   */
   static async getAllScores(params?: ScoreParams): Promise<SCPaginatedResponse<SCUserScoreType>> {
     return ScoreApiClient.getAllScores(params);
   }

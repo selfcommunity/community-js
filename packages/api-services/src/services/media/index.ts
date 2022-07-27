@@ -77,26 +77,27 @@ export class MediaApiClient {
   }
 }
 
+/**
+ *
+ :::tipMedia service can be used in the following ways:
+
+ ```jsx
+ 1. Import the service from our library:
+
+ import {MediaService} from "@selfcommunity/api-services";
+ ```
+ ```jsx
+ 2. Create a function and put the service inside it!
+ The async function `createMedia` will return the created media obj. It takes a media obj as body param.
+
+ async createMedia() {
+      const body = {url: 'string', type: 'url'};
+        return await MediaService.createMedia(body);
+     }
+ ```
+ :::
+ */
 export default class MediaService {
-  /**
-   *  :::tipMedia service can be used in the following ways:
-   *
-   *  ```jsx
-   *  1. Import the service from our library:
-   *
-   *  import {MediaService} from "@selfcommunity/api-services";
-   *  ```
-   *  ```jsx
-   *  2. Create a function and put the service inside it!
-   *  The async function `createMedia` will return the created media obj. It takes a media obj as body param.
-   *
-   *     async createMedia() {
-   *     const body = {url: 'string', type: 'url'};
-   *       return await MediaService.createMedia(body);
-   *     }
-   *  ```
-   *  :::
-   */
   static async chunkUploadMedia(data: ChunkUploadParams): Promise<SCChunkMediaType> {
     return MediaApiClient.chunkUploadMedia(data);
   }

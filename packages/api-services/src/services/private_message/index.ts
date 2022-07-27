@@ -113,32 +113,33 @@ export class PrivateMessageApiClient {
   }
 }
 
+/**
+ *
+ :::tipPrivateMessage service can be used in the following ways:
+
+ ```jsx
+ 1. Import the service from our library:
+
+ import {PrivateMessageService} from "@selfcommunity/api-services";
+ ```
+ ```jsx
+ 2. Create a function and put the service inside it!
+ The async function `getAllSnippets` will return the paginated list of snippets.
+
+ async getAllSnippets() {
+        return await PrivateMessageService.getAllSnippets();
+      }
+ ```
+ ```jsx
+ In case of required `params`, just add them inside the brackets.
+
+ async getASingleMessage(messageId) {
+        return await PrivateMessageService.getASingleMessage(messageId);
+     }
+ ```
+ :::
+ */
 export default class PrivateMessageService {
-  /**
-   *  :::tipPrivateMessage service can be used in the following ways:
-   *
-   *  ```jsx
-   *  1. Import the service from our library:
-   *
-   *  import {PrivateMessageService} from "@selfcommunity/api-services";
-   *  ```
-   *  ```jsx
-   *  2. Create a function and put the service inside it!
-   *  The async function `getAllSnippets` will return the paginated list of snippets.
-   *
-   *     async getAllSnippets() {
-   *       return await PrivateMessageService.getAllSnippets();
-   *     }
-   *  ```
-   *  ```jsx
-   *  - In case of required `params`, just add them inside the brackets.
-   *
-   *    async getASingleMessage(messageId) {
-   *       return await PrivateMessageService.getASingleMessage(messageId);
-   *     }
-   *  ```
-   *  :::
-   */
   static async getAllSnippets(): Promise<SCPaginatedResponse<SCPrivateMessageType>> {
     return PrivateMessageApiClient.getAllSnippets();
   }

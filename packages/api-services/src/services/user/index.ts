@@ -480,6 +480,32 @@ export class UserApiClient {
   }
 }
 
+/**
+ *
+ :::tipUser service can be used in the following ways:
+
+ ```jsx
+ 1. Import the service from our library:
+
+ import {UserService} from "@selfcommunity/api-services";
+ ```
+ ```jsx
+ 2. Create a function and put the service inside it!
+ The async function `getAllUsers` will return the paginated list of users.
+
+ async getAllTags() {
+        return await UserService.getAllUsers();
+      }
+ ```
+ ```jsx
+ In case of required `params`, just add them inside the brackets.
+
+ async getSpecificUser(userId) {
+       return await UserService.getSpecificUser(userId);
+      }
+ ```
+ :::
+ */
 export default class UserService {
   static async getAllUsers(params?: any): Promise<SCPaginatedResponse<SCUserType>> {
     return UserApiClient.getAllUsers(params);

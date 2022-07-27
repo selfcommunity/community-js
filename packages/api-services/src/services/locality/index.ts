@@ -31,25 +31,26 @@ export class LocalityApiClient {
   }
 }
 
+/**
+ *
+ :::tipLocality service can be used in the following way:
+
+ ```jsx
+ 1. Import the service from our library:
+
+ import {LocalityService} from "@selfcommunity/api-services";
+ ```
+ ```jsx
+ 2. Create a function and put the service inside it!
+ The async function `getLocalities` will return the paginated list of localities.
+
+ async getLocalities() {
+        return await LocalityService.getLocalities();
+      }
+ ```
+ :::
+ */
 export default class LocalityService {
-  /**
-   *  :::tipLocality service can be used in the following way:
-   *
-   *  ```jsx
-   *  1. Import the service from our library:
-   *
-   *  import {LocalityService} from "@selfcommunity/api-services";
-   *  ```
-   *  ```jsx
-   *  2. Create a function and put the service inside it!
-   *  The async function `getLocalities` will return the paginated list of localities.
-   *
-   *     async getLocalities() {
-   *       return await LocalityService.getLocalities();
-   *     }
-   *  ```
-   *  :::
-   */
   static async getLocalities(params?: BaseSearchParams): Promise<SCPaginatedResponse<SCLocalityType>> {
     return LocalityApiClient.getLocalities(params);
   }

@@ -94,32 +94,33 @@ export class LoyaltyApiClient {
   }
 }
 
+/**
+ *
+ :::tipLoyalty service can be used in the following ways:
+
+ ```jsx
+ 1. Import the service from our library:
+
+ import {LoyaltyService} from "@selfcommunity/api-services";
+ ```
+ ```jsx
+ 2. Create a function and put the service inside it!
+ The async function `getAllEmbeds` will return the paginated list of available prizes.
+
+ async getPrizes() {
+        return await LoyaltyService.getPrizes();
+      }
+ ```
+ ```jsx
+ In case of required `params`, just add them inside the brackets.
+
+ async getSpecificPrize(prizeId) {
+       return await LoyaltyService.getSpecificPrize(prizeId);
+     }
+ ```
+ :::
+ */
 export default class LoyaltyService {
-  /**
-   *  :::tipLoyalty service can be used in the following ways:
-   *
-   *  ```jsx
-   *  1. Import the service from our library:
-   *
-   *  import {LoyaltyService} from "@selfcommunity/api-services";
-   *  ```
-   *  ```jsx
-   *  2. Create a function and put the service inside it!
-   *  The async function `getAllEmbeds` will return the paginated list of available prizes.
-   *
-   *     async getPrizes() {
-   *       return await LoyaltyService.getPrizes();
-   *     }
-   *  ```
-   *  ```jsx
-   *  - In case of required `params`, just add them inside the brackets.
-   *
-   *    async getSpecificPrize(prizeId) {
-   *       return await LoyaltyService.getSpecificPrize(prizeId);
-   *     }
-   *  ```
-   *  :::
-   */
   static async getPrizes(): Promise<SCPaginatedResponse<SCPrizeType>> {
     return LoyaltyApiClient.getPrizes();
   }

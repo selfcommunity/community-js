@@ -324,25 +324,26 @@ export class FeedObjectApiClient {
   }
 }
 
+/**
+ *
+ :::tipFeedObject service can be used in the following ways:
+
+ ```jsx
+ 1. Import the service from our library:
+
+ import {FeedObjectService} from "@selfcommunity/api-services";
+ ```
+ ```jsx
+ 2. Create a function and put the service inside it!
+ The async function `getAllFeedObjects` will return the paginated list of feed objs.
+
+ async getAllFeedObjects(type) {
+        return await FeedObjectService.getAllFeedObjects(type);
+      }
+ ```
+ :::
+ */
 export default class FeedObjectService {
-  /**
-   *  :::tipFeedObject service can be used in the following ways:
-   *
-   *  ```jsx
-   *  1. Import the service from our library:
-   *
-   *  import {FeedObjectService} from "@selfcommunity/api-services";
-   *  ```
-   *  ```jsx
-   *  2. Create a function and put the service inside it!
-   *  The async function `getAllFeedObjects` will return the paginated list of feed objs.
-   *
-   *     async getAllFeedObjects(type) {
-   *       return await FeedObjectService.getAllFeedObjects(type);
-   *     }
-   *  ```
-   *  :::
-   */
   static async getAllFeedObjects(type: SCFeedObjectTypologyType, params?: FeedObjGetParams): Promise<SCPaginatedResponse<SCFeedObjectType>> {
     return FeedObjectApiClient.getAllFeedObjects(type, params);
   }

@@ -76,32 +76,33 @@ export class InsightApiClient {
   }
 }
 
+/**
+ *
+ :::tipInsight service can be used in the following ways:
+
+ ```jsx
+ 1. Import the service from our library:
+
+ import {InsightService} from "@selfcommunity/api-services";
+ ```
+ ```jsx
+ 2. Create a function and put the service inside it!
+ The async function `getBestContributionInsight` will return the paginated list of contribution insights.
+
+ async getBestContributionInsight() {
+        return await InsightService.getBestContributionInsight();
+     }
+ ```
+ ```jsx
+ In case of required `params`, just add them inside the brackets.
+
+ async getEmbedsInsightCounters(embedType, embedId) {
+        return await InsightService.getEmbedsInsightCounters(embedType, embedId);
+      }
+ ```
+ :::
+ */
 export default class InsightService {
-  /**
-   *  :::tipInsight service can be used in the following ways:
-   *
-   *  ```jsx
-   *  1. Import the service from our library:
-   *
-   *  import {InsightService} from "@selfcommunity/api-services";
-   *  ```
-   *  ```jsx
-   *  2. Create a function and put the service inside it!
-   *  The async function `getBestContributionInsight` will return the paginated list of contribution insights.
-   *
-   *     async getBestContributionInsight() {
-   *       return await InsightService.getBestContributionInsight();
-   *     }
-   *  ```
-   *  ```jsx
-   *  - In case of required `params`, just add them inside the brackets.
-   *
-   *    async getEmbedsInsightCounters(embedType, embedId) {
-   *       return await InsightService.getEmbedsInsightCounters(embedType, embedId);
-   *     }
-   *  ```
-   *  :::
-   */
   static async getBestContributionInsight(params?: InsightContributionParams): Promise<SCPaginatedResponse<SCContributionInsightType>> {
     return InsightApiClient.getBestContributionInsight(params);
   }
