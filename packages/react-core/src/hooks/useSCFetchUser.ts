@@ -12,7 +12,7 @@ import {Logger} from '@selfcommunity/utils';
  * @param object.id
  * @param object.user
  */
-export default function useSCFetchUser({id = null, user = null}: {id?: number; user?: SCUserType}) {
+export default function useSCFetchUser({id = null, user = null}: {id?: number | string; user?: SCUserType}) {
   const [scUser, setSCUser] = useState<SCUserType>(user);
   const [error, setError] = useState<string>(null);
 
