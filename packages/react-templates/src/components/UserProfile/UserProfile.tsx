@@ -64,7 +64,7 @@ export interface UserProfileProps {
    * Id of the user for filter the feed
    * @default null
    */
-  userId?: number;
+  userId?: number | string;
 
   /**
    * Widgets to be rendered into the feed
