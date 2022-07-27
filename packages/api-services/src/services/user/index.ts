@@ -493,7 +493,7 @@ export class UserApiClient {
  2. Create a function and put the service inside it!
  The async function `getAllUsers` will return the paginated list of users.
 
- async getAllTags() {
+ async getAllUsers() {
         return await UserService.getAllUsers();
       }
  ```

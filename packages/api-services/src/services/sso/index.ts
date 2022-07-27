@@ -31,7 +31,7 @@ export class SSOApiClient {
 
 /**
  *
- :::tipSSO service can be used in the following ways:
+ :::tipSSO service can be used in the following way:
 
  ```jsx
  1. Import the service from our library:

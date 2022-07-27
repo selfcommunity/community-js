@@ -89,7 +89,7 @@ export class NotificationApiClient {
 
 /**
  *
- :::tipEmbed service can be used in the following ways:
+ :::tipNotification service can be used in the following ways:
 
  ```jsx
  1. Import the service from our library:

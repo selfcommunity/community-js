@@ -105,7 +105,7 @@ export class LoyaltyApiClient {
  ```
  ```jsx
  2. Create a function and put the service inside it!
- The async function `getAllEmbeds` will return the paginated list of available prizes.
+ The async function `getPrizes` will return the paginated list of available prizes.
 
  async getPrizes() {
         return await LoyaltyService.getPrizes();

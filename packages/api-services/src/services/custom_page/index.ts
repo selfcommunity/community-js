@@ -42,7 +42,7 @@ export class CustomPageApiClient {
 
 /**
  *
- :::tipCustomPage service can be used in the following ways:
+ :::tipCustom Page service can be used in the following ways:
 
  ```jsx
  1. Import the service from our library:
