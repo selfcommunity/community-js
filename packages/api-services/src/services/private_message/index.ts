@@ -115,7 +115,7 @@ export class PrivateMessageApiClient {
 
 /**
  *
- :::tipPrivateMessage service can be used in the following ways:
+ :::tipPrivate Message service can be used in the following ways:
 
  ```jsx
  1. Import the service from our library:

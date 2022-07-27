@@ -42,7 +42,7 @@ export class CustomAdvApiClient {
 
 /**
  *
- :::tipCustomAdv service can be used in the following ways:
+ :::tipCustom Adv service can be used in the following ways:
 
  ```jsx
  1. Import the service from our library:
