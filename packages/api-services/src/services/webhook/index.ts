@@ -123,6 +123,31 @@ export class WebhookApiClient {
 }
 
 export default class WebhookService {
+  /**
+   *  :::tipWebhook service can be used in the following ways:
+   *
+   *  ```jsx
+   *  1. Import the service from our library:
+   *
+   *  import {WebhookService} from "@selfcommunity/api-services";
+   *  ```
+   *  ```jsx
+   *  2. Create a function and put the service inside it!
+   *  The async function `getAllWebhookEndpoints` will return the paginated list of webhook endpoints.
+   *
+   *     async getAllWebhookEndpoints() {
+   *       return await WebhookService.getAllWebhookEndpoints();
+   *     }
+   *  ```
+   *  ```jsx
+   *  - In case of required `params`, just add them inside the brackets.
+   *
+   *    async getASpecificWebhookEndpoint(webhookId) {
+   *       return await WebhookService.getASpecificWebhookEndpoint(webhookId);
+   *     }
+   *  ```
+   *  :::
+   */
   static async getAllWebhookEndpoints(): Promise<SCPaginatedResponse<SCWebhookEndpointType>> {
     return WebhookApiClient.getAllWebhookEndpoints();
   }

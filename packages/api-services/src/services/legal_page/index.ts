@@ -66,6 +66,31 @@ export class LegalPageApiClient {
 }
 
 export default class LegalPageService {
+  /**
+   *  :::tipLegalPage service can be used in the following ways:
+   *
+   *  ```jsx
+   *  1. Import the service from our library:
+   *
+   *  import {LegalPageService} from "@selfcommunity/api-services";
+   *  ```
+   *  ```jsx
+   *  2. Create a function and put the service inside it!
+   *  The async function `getLegalPages` will return the paginated list of legal pages.
+   *
+   *     async getLegalPages() {
+   *       return await LegalPageService.getLegalPages();
+   *     }
+   *  ```
+   *  ```jsx
+   *  - In case of required `params`, just add them inside the brackets.
+   *
+   *    async getSpecificLegalPage(legalPageId) {
+   *       return await LegalPageService.getSpecificLegalPage(legalPageId);
+   *     }
+   *  ```
+   *  :::
+   */
   static async getLegalPages(params?: LegalPageFilterParams): Promise<SCPaginatedResponse<SCLegalPageType>> {
     return LegalPageApiClient.getLegalPages(params);
   }

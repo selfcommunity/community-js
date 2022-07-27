@@ -41,6 +41,31 @@ export class CustomPageApiClient {
 }
 
 export default class CustomPageService {
+  /**
+   *  :::tipCustomPage service can be used in the following ways:
+   *
+   *  ```jsx
+   *  1. Import the service from our library:
+   *
+   *  import {CustomPageService} from "@selfcommunity/api-services";
+   *  ```
+   *  ```jsx
+   *  2. Create a function and put the service inside it!
+   *  The async function `getAllCustomPages` will return the paginated list of custom pages.
+   *
+   *     async getAllCustomPages() {
+   *       return await CustomPageService.getAllCustomPages();
+   *     }
+   *  ```
+   *  ```jsx
+   *  - In case of required `params`, just add them inside the brackets.
+   *
+   *    async getASpecificCustomPage(customPageId) {
+   *       return await CustomPageService.getASpecificCustomPage(customPageId);
+   *     }
+   *  ```
+   *  :::
+   */
   static async getASpecificCustomPage(id: number): Promise<SCCustomPageType> {
     return CustomPageApiClient.getASpecificCustomPage(id);
   }
