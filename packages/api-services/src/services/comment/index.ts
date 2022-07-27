@@ -115,32 +115,33 @@ export class CommentApiClient {
   }
 }
 
+/**
+ *
+ :::tipComment service can be used in the following ways:
+
+ ```jsx
+ 1. Import the service from our library:
+
+ import {CommentService} from "@selfcommunity/api-services";
+ ```
+ ```jsx
+ 2. Create a function and put the service inside it!
+ The async function `getAllComments` will return the paginated list of comments.
+
+ async getAllComments() {
+        return await CommentService.getAllComments();
+      }
+ ```
+ ```jsx
+ In case of required `params`, just add them inside the brackets.
+
+ async getASpecificComment(commentId) {
+        return await CommentService.getASpecificComment(commentId);
+      }
+ ```
+ :::
+ */
 export default class CommentService {
-  /**
-   *  :::tipComment service can be used in the following ways:
-   *
-   *  ```jsx
-   *  1. Import the service from our library:
-   *
-   *  import {CommentService} from "@selfcommunity/api-services";
-   *  ```
-   *  ```jsx
-   *  2. Create a function and put the service inside it!
-   *  The async function `getAllComments` will return the paginated list of comments.
-   *
-   *     async getAllComments() {
-   *       return await CommentService.getAllComments();
-   *     }
-   *  ```
-   *  ```jsx
-   *  - In case of required `params`, just add them inside the brackets.
-   *
-   *    async getASpecificComment(commentId) {
-   *       return await CommentService.getASpecificComment(commentId);
-   *     }
-   *  ```
-   *  :::
-   */
   static async getAllComments(params: CommentListParams): Promise<SCPaginatedResponse<SCCommentType>> {
     return CommentApiClient.getAllComments(params);
   }

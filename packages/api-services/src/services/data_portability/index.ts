@@ -34,25 +34,26 @@ export class DataPortabilityApiClient {
   }
 }
 
+/**
+ *
+ :::tipDataPortability service can be used in the following way:
+
+ ```jsx
+ 1. Import the service from our library:
+
+ import {DataPortabilityService} from "@selfcommunity/api-services";
+ ```
+ ```jsx
+ 2. Create a function and put the service inside it!
+ The async function `generateDataPortability` will return the generated data portability.
+
+ async generateDataPortability() {
+      return await DataPortabilityService.generateDataPortability();
+      }
+ ```
+ :::
+ */
 export default class DataPortabilityService {
-  /**
-   *  :::tipDataPortability service can be used in the following way:
-   *
-   *  ```jsx
-   *  1. Import the service from our library:
-   *
-   *  import {DataPortabilityService} from "@selfcommunity/api-services";
-   *  ```
-   *  ```jsx
-   *  2. Create a function and put the service inside it!
-   *  The async function `generateDataPortability` will return the generated data portability.
-   *
-   *     async generateDataPortability() {
-   *       return await DataPortabilityService.generateDataPortability();
-   *     }
-   *  ```
-   *  :::
-   */
   static async generateDataPortability(): Promise<SCDataPortabilityType> {
     return DataPortabilityApiClient.generateDataPortability();
   }

@@ -79,32 +79,33 @@ export class ModerationApiClient {
   }
 }
 
+/**
+ *
+ :::tipModeration service can be used in the following ways:
+
+ ```jsx
+ 1. Import the service from our library:
+
+ import {ModerationService} from "@selfcommunity/api-services";
+ ```
+ ```jsx
+ 2. Create a function and put the service inside it!
+ The async function `getUsersForModeration` will return the paginated list of users to moderate.
+
+ async getUsersForModeration() {
+        return await ModerationService.getUsersForModeration();
+     }
+ ```
+ ```jsx
+ In case of required `params`, just add them inside the brackets.
+
+ async moderateASpecificUser(userId, userStatus) {
+       return await ModerationService.moderateASpecificUser(userId, userStatus);
+     }
+ ```
+ :::
+ */
 export default class ModerationService {
-  /**
-   *  :::tipModeration service can be used in the following ways:
-   *
-   *  ```jsx
-   *  1. Import the service from our library:
-   *
-   *  import {ModerationService} from "@selfcommunity/api-services";
-   *  ```
-   *  ```jsx
-   *  2. Create a function and put the service inside it!
-   *  The async function `getUsersForModeration` will return the paginated list of users to moderate.
-   *
-   *     async getUsersForModeration() {
-   *       return await ModerationService.getUsersForModeration();
-   *     }
-   *  ```
-   *  ```jsx
-   *  - In case of required `params`, just add them inside the brackets.
-   *
-   *    async moderateASpecificUser(userId, userStatus) {
-   *       return await ModerationService.moderateASpecificUser(userId, userStatus);
-   *     }
-   *  ```
-   *  :::
-   */
   static async getUsersForModeration(): Promise<SCPaginatedResponse<SCUserModerationType>> {
     return ModerationApiClient.getUsersForModeration();
   }

@@ -21,25 +21,26 @@ export class FeatureApiClient {
   }
 }
 
+/**
+ *
+ :::tipFeature service can be used in the following way:
+
+ ```jsx
+ 1. Import the service from our library:
+
+ import {FeatureService} from "@selfcommunity/api-services";
+ ```
+ ```jsx
+ 2. Create a function and put the service inside it!
+ The async function `getAllFeatures` will return the paginated list of features.
+
+ async getAllFeatures() {
+        return await FeatureService.getAllFeatures();
+      }
+ ```
+ :::
+ */
 export default class FeatureService {
-  /**
-   *  :::tipFeature service can be used in the following way:
-   *
-   *  ```jsx
-   *  1. Import the service from our library:
-   *
-   *  import {FeatureService} from "@selfcommunity/api-services";
-   *  ```
-   *  ```jsx
-   *  2. Create a function and put the service inside it!
-   *  The async function `getAllFeatures` will return the paginated list of features.
-   *
-   *     async getAllFeatures() {
-   *       return await FeatureService.getAllFeatures();
-   *     }
-   *  ```
-   *  :::
-   */
   static async getAllFeatures(params?: FeatureParams): Promise<SCPaginatedResponse<SCFeatureType[]>> {
     return FeatureApiClient.getAllFeatures(params);
   }

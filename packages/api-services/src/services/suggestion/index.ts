@@ -43,25 +43,26 @@ export class SuggestionApiClient {
   }
 }
 
+/**
+ *
+ :::tipSuggestion service can be used in the following ways:
+
+ ```jsx
+ 1. Import the service from our library:
+
+ import {SuggestionService} from "@selfcommunity/api-services";
+ ```
+ ```jsx
+ 2. Create a function and put the service inside it!
+ The async function `getCategorySuggestion` will return the paginated list of categories.
+
+ async getCategorySuggestion() {
+          return await SuggestionService.getCategorySuggestion();
+       }
+ ```
+ :::
+ */
 export default class SuggestionService {
-  /**
-   *  :::tipSuggestion service can be used in the following ways:
-   *
-   *  ```jsx
-   *  1. Import the service from our library:
-   *
-   *  import {SuggestionService} from "@selfcommunity/api-services";
-   *  ```
-   *  ```jsx
-   *  2. Create a function and put the service inside it!
-   *  The async function `getCategorySuggestion` will return the paginated list of categories.
-   *
-   *     async getCategorySuggestion() {
-   *       return await SuggestionService.getCategorySuggestion();
-   *     }
-   *  ```
-   *  :::
-   */
   static async getCategorySuggestion(): Promise<SCPaginatedResponse<SCCategoryType>> {
     return SuggestionApiClient.getCategorySuggestion();
   }

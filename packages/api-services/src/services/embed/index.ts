@@ -89,32 +89,33 @@ export class EmbedApiClient {
   }
 }
 
+/**
+ *
+ :::tipEmbed service can be used in the following ways:
+
+ ```jsx
+ 1. Import the service from our library:
+
+ import {EmbedService} from "@selfcommunity/api-services";
+ ```
+ ```jsx
+ 2. Create a function and put the service inside it!
+ The async function `getAllEmbeds` will return the paginated list of embeds.
+
+ async getAllEmbeds() {
+        return await EmbedService.getAllEmbeds();
+      }
+ ```
+ ```jsx
+ In case of required `params`, just add them inside the brackets.
+
+ async getSpecificEmbed(embedId) {
+        return await EmbedService.getSpecificEmbed(embedId);
+     }
+ ```
+ :::
+ */
 export default class EmbedService {
-  /**
-   *  :::tipEmbed service can be used in the following ways:
-   *
-   *  ```jsx
-   *  1. Import the service from our library:
-   *
-   *  import {EmbedService} from "@selfcommunity/api-services";
-   *  ```
-   *  ```jsx
-   *  2. Create a function and put the service inside it!
-   *  The async function `getAllEmbeds` will return the paginated list of embeds.
-   *
-   *     async getAllEmbeds() {
-   *       return await EmbedService.getAllEmbeds();
-   *     }
-   *  ```
-   *  ```jsx
-   *  - In case of required `params`, just add them inside the brackets.
-   *
-   *    async getSpecificEmbed(embedId) {
-   *       return await EmbedService.getSpecificEmbed(embedId);
-   *     }
-   *  ```
-   *  :::
-   */
   static async getAllEmbeds(params?: BaseGetParams): Promise<SCPaginatedResponse<SCEmbedType>> {
     return EmbedApiClient.getAllEmbeds(params);
   }

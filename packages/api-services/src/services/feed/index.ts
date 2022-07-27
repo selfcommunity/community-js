@@ -57,32 +57,33 @@ export class FeedApiClient {
   }
 }
 
+/**
+ *
+ :::tipFeed service can be used in the following ways:
+
+ ```jsx
+ 1. Import the service from our library:
+
+ import {FeedService} from "@selfcommunity/api-services";
+ ```
+ ```jsx
+ 2. Create a function and put the service inside it!
+ The async function `getMainFeed` will return the paginated list of main feed posts.
+
+ async getMainFeed() {
+       return await FeedService.getMainFeed();
+     }
+ ```
+ ```jsx
+ In case of required `params`, just add them inside the brackets.
+
+ async likeFeedObjs(objIds) {
+       return await FeedService.likeFeedObjs(objIds);
+     }
+ ```
+ :::
+ */
 export default class FeedService {
-  /**
-   *  :::tipFeed service can be used in the following ways:
-   *
-   *  ```jsx
-   *  1. Import the service from our library:
-   *
-   *  import {FeedService} from "@selfcommunity/api-services";
-   *  ```
-   *  ```jsx
-   *  2. Create a function and put the service inside it!
-   *  The async function `getMainFeed` will return the paginated list of main feed posts.
-   *
-   *     async getMainFeed() {
-   *       return await FeedService.getMainFeed();
-   *     }
-   *  ```
-   *  ```jsx
-   *  - In case of required `params`, just add them inside the brackets.
-   *
-   *    async likeFeedObjs(objIds) {
-   *       return await FeedService.likeFeedObjs(objIds);
-   *     }
-   *  ```
-   *  :::
-   */
   static async getMainFeed(params?: FeedParams): Promise<SCPaginatedResponse<SCFeedUnitType>> {
     return FeedApiClient.getMainFeed(params);
   }
