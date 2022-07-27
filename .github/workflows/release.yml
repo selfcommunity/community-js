@@ -76,7 +76,7 @@ jobs:
       with:
         path: packages/react-templates
     - run: echo "@selfcommunity/react-templates - ${{ steps.react-templates.outputs.current-version }}"
-    - uses: peter-evans/repository-dispatch@v1
+    - uses: peter-evans/repository-dispatch@v2
       name: Repository Dispatch
       with:
         token: ${{ secrets.DOCS_ACCESS_TOKEN }}
