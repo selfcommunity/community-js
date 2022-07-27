@@ -97,13 +97,13 @@ export interface FeedProps {
 
   /**
    * End message, rendered when no more feed item can be displayed
-   * @default <FormattedMessage id="ui.feed.noOtherFeedObject" defaultMessage="ui.feed.noOtherFeedObject" />
+   * @default `<FormattedMessage id="ui.feed.noOtherFeedObject" defaultMessage="ui.feed.noOtherFeedObject" />`
    */
   endMessage?: ReactNode;
 
   /**
    * Refresh message, rendered when no more feed item can be displayed
-   * @default <FormattedMessage id="ui.feed.refreshRelease" defaultMessage="ui.feed.refreshRelease" />
+   * @default `<FormattedMessage id="ui.feed.refreshRelease" defaultMessage="ui.feed.refreshRelease" />`
    */
   refreshMessage?: ReactNode;
 
@@ -115,7 +115,7 @@ export interface FeedProps {
 
   /**
    * Component used as footer. It will be displayed after the end messages
-   @default <Footer>
+   @default `<Footer>`
    */
   FooterComponent?: React.ElementType;
 
