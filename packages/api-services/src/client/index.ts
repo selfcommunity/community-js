@@ -156,9 +156,10 @@ export class ApiClient implements ApiClientInterface {
   /**
    * get wrapper
    * @param path
+   * @param config
    */
-  get<TResponse>(path: string): Promise<HttpResponse<TResponse>> {
-    return this.client.get<TResponse>(path);
+  get<TResponse>(path: string, config?: any): Promise<HttpResponse<TResponse>> {
+    return this.client.get<TResponse>(path, config);
   }
 
   /**
