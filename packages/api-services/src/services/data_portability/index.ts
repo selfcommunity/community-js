@@ -1,11 +1,12 @@
 import {apiRequest} from '../../utils/apiRequest';
 import Endpoints from '../../constants/Endpoints';
 import {SCDataPortabilityType} from '@selfcommunity/types';
+import {AxiosRequestConfig} from 'axios';
 
 export interface DataPortabilityApiClientInterface {
-  generateDataPortability(): Promise<SCDataPortabilityType>;
-  downloadDataPortability(): Promise<any>;
-  dataPortabilityStatus(): Promise<SCDataPortabilityType>;
+  generateDataPortability(config?: AxiosRequestConfig): Promise<SCDataPortabilityType>;
+  downloadDataPortability(config?: AxiosRequestConfig): Promise<any>;
+  dataPortabilityStatus(config?: AxiosRequestConfig): Promise<SCDataPortabilityType>;
 }
 /**
  * Contains all the endpoints needed to manage data portability.
@@ -14,23 +15,26 @@ export interface DataPortabilityApiClientInterface {
 export class DataPortabilityApiClient {
   /**
    * This endpoint generates data portability.
+   * @param config
    */
-  static generateDataPortability(): Promise<SCDataPortabilityType> {
-    return apiRequest(Endpoints.GenerateDataPortability.url({}), Endpoints.GenerateDataPortability.method);
+  static generateDataPortability(config?: AxiosRequestConfig): Promise<SCDataPortabilityType> {
+    return apiRequest({...config, url: Endpoints.GenerateDataPortability.url({}), method: Endpoints.GenerateDataPortability.method});
   }
 
   /**
    * This endpoint downloads data portability.
+   * @param config
    */
-  static downloadDataPortability(): Promise<any> {
-    return apiRequest(Endpoints.DataPortabilityDownload.url({}), Endpoints.DataPortabilityDownload.method);
+  static downloadDataPortability(config?: AxiosRequestConfig): Promise<any> {
+    return apiRequest({...config, url: Endpoints.DataPortabilityDownload.url({}), method: Endpoints.DataPortabilityDownload.method});
   }
 
   /**
    * This endpoint retrieves data portability status.
+   * @param config
    */
-  static dataPortabilityStatus(): Promise<SCDataPortabilityType> {
-    return apiRequest(Endpoints.DataPortabilityStatus.url({}), Endpoints.DataPortabilityStatus.method);
+  static dataPortabilityStatus(config?: AxiosRequestConfig): Promise<SCDataPortabilityType> {
+    return apiRequest({...config, url: Endpoints.DataPortabilityStatus.url({}), method: Endpoints.DataPortabilityStatus.method});
   }
 }
 
@@ -51,16 +55,25 @@ export class DataPortabilityApiClient {
       return await DataPortabilityService.generateDataPortability();
       }
  ```
+ ```jsx
+ If you need to customize the request, you can add optional config params (`AxiosRequestConfig` type).
+
+ 1. Declare it(or declare them, it is possible to add multiple params)
+
+ const headers = headers: {Authorization: `Bearer ${yourToken}`}
+
+ 2. Add it inside the brackets and pass it to the function, as shown in the previous example!
+ ```
  :::
  */
 export default class DataPortabilityService {
-  static async generateDataPortability(): Promise<SCDataPortabilityType> {
-    return DataPortabilityApiClient.generateDataPortability();
+  static async generateDataPortability(config?: AxiosRequestConfig): Promise<SCDataPortabilityType> {
+    return DataPortabilityApiClient.generateDataPortability(config);
   }
-  static async downloadDataPortability(): Promise<any> {
-    return DataPortabilityApiClient.downloadDataPortability();
+  static async downloadDataPortability(config?: AxiosRequestConfig): Promise<any> {
+    return DataPortabilityApiClient.downloadDataPortability(config);
   }
-  static async dataPortabilityStatus(): Promise<SCDataPortabilityType> {
-    return DataPortabilityApiClient.dataPortabilityStatus();
+  static async dataPortabilityStatus(config?: AxiosRequestConfig): Promise<SCDataPortabilityType> {
+    return DataPortabilityApiClient.dataPortabilityStatus(config);
   }
 }
