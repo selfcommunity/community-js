@@ -5,7 +5,13 @@ import {ChunkUploadCompleteParams, ChunkUploadParams, MediaCreateParams} from '.
 import {AxiosRequestConfig} from 'axios';
 
 export interface MediaApiClientInterface {
-  chunkUploadMedia(data: ChunkUploadParams, config?: AxiosRequestConfig): Promise<SCChunkMediaType>;
+  chunkUploadMedia(
+    data: ChunkUploadParams,
+    bytesStart: number,
+    bytesEnd: number,
+    bytesTotal: number,
+    config?: AxiosRequestConfig
+  ): Promise<SCChunkMediaType>;
   chunkUploadMediaComplete(data: ChunkUploadCompleteParams, config?: AxiosRequestConfig): Promise<SCMediaType>;
   createMedia(data: MediaCreateParams, config?: AxiosRequestConfig): Promise<SCMediaType>;
   clickMedia(id: number, ip?: string, config?: AxiosRequestConfig): Promise<any>;
@@ -20,12 +26,27 @@ export class MediaApiClient {
   /**
    * This endpoint performs the chunk upload of a media with type image or document.
    * The client must split the file into chunks and send to the server in series. After all the chunks have been uploaded the client must call the Chunk Upload Complete endpoint with the given upload_id parameter to finalize the upload and retrieve the Media.
-   *  To perform chunk upload the request must contain Content-Range header with the information about the chunk.
+   *  To perform chunk upload the request must contain Content-Range header with the information about the chunk(range of the chunk upload in the format bytes start-end/total)
    * @param data
+   * @param bytesStart
+   * @param bytesEnd
+   * @param bytesTotal
    * @param config
    */
-  static chunkUploadMedia(data: ChunkUploadParams, config?: AxiosRequestConfig): Promise<SCChunkMediaType> {
-    return apiRequest({...config, url: Endpoints.ComposerChunkUploadMedia.url({}), method: Endpoints.ComposerChunkUploadMedia.method, data: data});
+  static chunkUploadMedia(
+    data: ChunkUploadParams,
+    bytesStart: number,
+    bytesEnd: number,
+    bytesTotal: number,
+    config?: AxiosRequestConfig
+  ): Promise<SCChunkMediaType> {
+    return apiRequest({
+      ...config,
+      url: Endpoints.ComposerChunkUploadMedia.url({}),
+      method: Endpoints.ComposerChunkUploadMedia.method,
+      data: data,
+      headers: {'Content-Range': `bytes ${bytesStart}-${bytesEnd}/${bytesTotal}`}
+    });
   }
 
   /**
@@ -108,11 +129,26 @@ export class MediaApiClient {
         return await MediaService.createMedia(body);
      }
  ```
+ ```jsx
+ If you need to customize the request, you can add optional config params (`AxiosRequestConfig` type).
+
+ 1. Declare it(or declare them, it is possible to add multiple params)
+
+ const headers = headers: {Authorization: `Bearer ${yourToken}`}
+
+ 2. Add it inside the brackets and pass it to the function, as shown in the previous example!
+ ```
  :::
  */
 export default class MediaService {
-  static async chunkUploadMedia(data: ChunkUploadParams, config?: AxiosRequestConfig): Promise<SCChunkMediaType> {
-    return MediaApiClient.chunkUploadMedia(data, config);
+  static async chunkUploadMedia(
+    data: ChunkUploadParams,
+    bytesStart: number,
+    bytesEnd: number,
+    bytesTotal: number,
+    config?: AxiosRequestConfig
+  ): Promise<SCChunkMediaType> {
+    return MediaApiClient.chunkUploadMedia(data, bytesStart, bytesEnd, bytesTotal, config);
   }
 
   static async chunkUploadMediaComplete(data: ChunkUploadCompleteParams, config?: AxiosRequestConfig): Promise<SCMediaType> {

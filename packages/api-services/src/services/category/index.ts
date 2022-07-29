@@ -182,7 +182,7 @@ export class CategoryApiClient {
 
 /**
  *
- :::tipCategory service can be used in the following ways:
+ :::tipCategory service can be used in the following way:
  ```jsx
  1. Import the service from our library:
 
@@ -198,9 +198,19 @@ export class CategoryApiClient {
  ```
  ```jsx
  In case of required `params`, just add them inside the brackets.
+
  async getSpecificCategory(categoryId) {
       return await CategoryService.getSpecificCategory(categoryId);
      }
+ ```
+ ```jsx
+ If you need to customize the request, you can add optional config params (`AxiosRequestConfig` type).
+
+ 1. Declare it(or declare them, it is possible to add multiple params)
+
+ const headers = headers: {Authorization: `Bearer ${yourToken}`}
+
+ 2. Add it inside the brackets and pass it to the function, as shown in the previous example!
  ```
  :::
  */

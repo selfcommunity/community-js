@@ -95,7 +95,7 @@ export class InsightApiClient {
 
 /**
  *
- :::tipInsight service can be used in the following ways:
+ :::tipInsight service can be used in the following way:
 
  ```jsx
  1. Import the service from our library:
@@ -116,6 +116,15 @@ export class InsightApiClient {
  async getEmbedsInsightCounters(embedType, embedId) {
         return await InsightService.getEmbedsInsightCounters(embedType, embedId);
       }
+ ```
+ ```jsx
+ If you need to customize the request, you can add optional config params (`AxiosRequestConfig` type).
+
+ 1. Declare it(or declare them, it is possible to add multiple params)
+
+ const headers = headers: {Authorization: `Bearer ${yourToken}`}
+
+ 2. Add it inside the brackets and pass it to the function, as shown in the previous example!
  ```
  :::
  */

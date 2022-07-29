@@ -554,7 +554,7 @@ export class UserApiClient {
 
 /**
  *
- :::tipUser service can be used in the following ways:
+ :::tipUser service can be used in the following way:
 
  ```jsx
  1. Import the service from our library:
@@ -574,6 +574,17 @@ export class UserApiClient {
 
  async getSpecificUser(userId) {
        return await UserService.getSpecificUser(userId);
+      }
+ ```
+
+ ```jsx
+ If you need to customize the request, you can add optional config params (`AxiosRequestConfig` type).
+
+ Ex: If the async function `userUpdate`  is willing to update the avatar or the cover the 'Content-Type' request header must be set as 'multipart/form-data'.
+
+ async getSpecificUser(userId, data, config) {
+ const headers = {headers: {'Content-Type': 'multipart/form-data'}}
+       return await UserService.getSpecificUser(userId, {avatar: avatar}, headers);
       }
  ```
  :::
