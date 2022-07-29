@@ -2,10 +2,11 @@ import Endpoints from '../../constants/Endpoints';
 import {BaseSearchParams, SCPaginatedResponse} from '../../types';
 import {apiRequest} from '../../utils/apiRequest';
 import {SCLocalityType} from '@selfcommunity/types';
+import {AxiosRequestConfig} from 'axios';
 
 export interface LocalityApiClientInterface {
-  getLocalities(params?: BaseSearchParams): Promise<SCPaginatedResponse<SCLocalityType>>;
-  searchLocalities(params?: BaseSearchParams): Promise<SCPaginatedResponse<SCLocalityType>>;
+  getLocalities(params?: BaseSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCLocalityType>>;
+  searchLocalities(params?: BaseSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCLocalityType>>;
 }
 /**
  * Contains all the endpoints needed to manage localities.
@@ -15,19 +16,25 @@ export class LocalityApiClient {
   /**
    * This endpoint retrieves the list of available localities.
    * @param params
+   * @param config
    */
-  static getLocalities(params?: BaseSearchParams): Promise<SCPaginatedResponse<SCLocalityType>> {
+  static getLocalities(params?: BaseSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCLocalityType>> {
     const p = new URLSearchParams(params);
-    return apiRequest(`${Endpoints.GetLocalities.url({})}?${p.toString()}`, Endpoints.GetLocalities.method);
+    return apiRequest({...config, url: `${Endpoints.GetLocalities.url({})}?${p.toString()}`, method: Endpoints.GetLocalities.method});
   }
 
   /**
    * This endpoint searches localities
    * @param params
+   * @param config
    */
-  static searchLocalities(params?: BaseSearchParams): Promise<SCPaginatedResponse<SCLocalityType>> {
+  static searchLocalities(params?: BaseSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCLocalityType>> {
     const p = new URLSearchParams(params);
-    return apiRequest(`${Endpoints.ComposerLocalitySearch.url({})}?${p.toString()}`, Endpoints.ComposerLocalitySearch.method);
+    return apiRequest({
+      ...config,
+      url: `${Endpoints.ComposerLocalitySearch.url({})}?${p.toString()}`,
+      method: Endpoints.ComposerLocalitySearch.method
+    });
   }
 }
 
@@ -51,10 +58,10 @@ export class LocalityApiClient {
  :::
  */
 export default class LocalityService {
-  static async getLocalities(params?: BaseSearchParams): Promise<SCPaginatedResponse<SCLocalityType>> {
-    return LocalityApiClient.getLocalities(params);
+  static async getLocalities(params?: BaseSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCLocalityType>> {
+    return LocalityApiClient.getLocalities(params, config);
   }
-  static async searchLocalities(params?: BaseSearchParams): Promise<SCPaginatedResponse<SCLocalityType>> {
-    return LocalityApiClient.searchLocalities(params);
+  static async searchLocalities(params?: BaseSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCLocalityType>> {
+    return LocalityApiClient.searchLocalities(params, config);
   }
 }

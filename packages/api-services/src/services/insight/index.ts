@@ -9,14 +9,18 @@ import {
   SCUsersInsightCountersType,
   SCUsersInsightType
 } from '@selfcommunity/types';
+import {AxiosRequestConfig} from 'axios';
 
 export interface InsightApiClientInterface {
-  getBestContributionInsight(params?: InsightContributionParams): Promise<SCPaginatedResponse<SCContributionInsightType>>;
-  getBestEmbedInsight(params?: InsightEmbedParams): Promise<SCPaginatedResponse<SCEmbedInsightType>>;
-  getBestUsersInsight(params?: InsightUserParams): Promise<SCPaginatedResponse<SCUsersInsightType>>;
-  getContributionsInsightCounters(id: number): Promise<SCContributionInsightCountersType>;
-  getEmbedsInsightCounters(type: string, id: number): Promise<SCEmbedInsightCountersType>;
-  getUsersInsightCounters(id: number): Promise<SCUsersInsightCountersType>;
+  getBestContributionInsight(
+    params?: InsightContributionParams,
+    config?: AxiosRequestConfig
+  ): Promise<SCPaginatedResponse<SCContributionInsightType>>;
+  getBestEmbedInsight(params?: InsightEmbedParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCEmbedInsightType>>;
+  getBestUsersInsight(params?: InsightUserParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUsersInsightType>>;
+  getContributionsInsightCounters(id: number, config?: AxiosRequestConfig): Promise<SCContributionInsightCountersType>;
+  getEmbedsInsightCounters(type: string, id: number, config?: AxiosRequestConfig): Promise<SCEmbedInsightCountersType>;
+  getUsersInsightCounters(id: number, config?: AxiosRequestConfig): Promise<SCUsersInsightCountersType>;
 }
 /**
  * Contains all the endpoints needed to manage insights.
@@ -26,53 +30,66 @@ export class InsightApiClient {
   /**
    * This endpoint retrieves the best contribution insights list.
    * @param params
+   * @param config
    */
-  static getBestContributionInsight(params?: InsightContributionParams): Promise<SCPaginatedResponse<SCContributionInsightType>> {
+  static getBestContributionInsight(
+    params?: InsightContributionParams,
+    config?: AxiosRequestConfig
+  ): Promise<SCPaginatedResponse<SCContributionInsightType>> {
     const p = new URLSearchParams(params);
-    return apiRequest(`${Endpoints.InsightBestContribution.url({})}?${p.toString()}`, Endpoints.InsightBestContribution.method);
+    return apiRequest({
+      ...config,
+      url: `${Endpoints.InsightBestContribution.url({})}?${p.toString()}`,
+      method: Endpoints.InsightBestContribution.method
+    });
   }
 
   /**
    * This endpoint retrieves the best embed insights list. The operations of this endpoint is quite complex and returns different result structures based on the parameters passed. For example, pagination (and therefore the use of the offset parameter) is guaranteed only if the metadata and group_by parameter are not passed. If you are passing metadata you MUST pass also group_by. If you pass group_by the result will be not paginated and will contain only user defined custom embeds (not among these: 'sc_vimeo', 'sc_link', 'sc_shared_object').
    * @param params
+   * @param config
    */
-  static getBestEmbedInsight(params?: InsightEmbedParams): Promise<SCPaginatedResponse<SCEmbedInsightType>> {
+  static getBestEmbedInsight(params?: InsightEmbedParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCEmbedInsightType>> {
     const p = new URLSearchParams(params);
-    return apiRequest(`${Endpoints.InsightBestEmbed.url({})}?${p.toString()}`, Endpoints.InsightBestEmbed.method);
+    return apiRequest({...config, url: `${Endpoints.InsightBestEmbed.url({})}?${p.toString()}`, method: Endpoints.InsightBestEmbed.method});
   }
 
   /**
    * This endpoint retrieves the best users insights list.
    * @param params
+   * @param config
    */
-  static getBestUsersInsight(params?: InsightUserParams): Promise<SCPaginatedResponse<SCUsersInsightType>> {
+  static getBestUsersInsight(params?: InsightUserParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUsersInsightType>> {
     const p = new URLSearchParams(params);
-    return apiRequest(`${Endpoints.InsightBestUser.url({})}?${p.toString()}`, Endpoints.InsightBestUser.method);
+    return apiRequest({...config, url: `${Endpoints.InsightBestUser.url({})}?${p.toString()}`, method: Endpoints.InsightBestUser.method});
   }
 
   /**
    * This endpoint retrieves a specific contribution's insight counters.
    * @param id
+   * @param config
    */
-  static getContributionsInsightCounters(id: number): Promise<SCContributionInsightCountersType> {
-    return apiRequest(Endpoints.InsightContributionCounter.url({id}), Endpoints.InsightContributionCounter.method);
+  static getContributionsInsightCounters(id: number, config?: AxiosRequestConfig): Promise<SCContributionInsightCountersType> {
+    return apiRequest({...config, url: Endpoints.InsightContributionCounter.url({id}), method: Endpoints.InsightContributionCounter.method});
   }
 
   /**
    * This endpoint retrieves a specific embed's insight counters.
    * @param type
    * @param id
+   * @param config
    */
-  static getEmbedsInsightCounters(type: string, id: number): Promise<SCEmbedInsightCountersType> {
-    return apiRequest(Endpoints.InsightEmbedCounter.url({type, id}), Endpoints.InsightEmbedCounter.method);
+  static getEmbedsInsightCounters(type: string, id: number, config?: AxiosRequestConfig): Promise<SCEmbedInsightCountersType> {
+    return apiRequest({...config, url: Endpoints.InsightEmbedCounter.url({type, id}), method: Endpoints.InsightEmbedCounter.method});
   }
 
   /**
    * This endpoint retrieves a specific user's insight counters.
    * @param id
+   * @param config
    */
-  static getUsersInsightCounters(id: number): Promise<SCUsersInsightCountersType> {
-    return apiRequest(Endpoints.InsightUserCounter.url({id}), Endpoints.InsightUserCounter.method);
+  static getUsersInsightCounters(id: number, config?: AxiosRequestConfig): Promise<SCUsersInsightCountersType> {
+    return apiRequest({...config, url: Endpoints.InsightUserCounter.url({id}), method: Endpoints.InsightUserCounter.method});
   }
 }
 
@@ -103,27 +120,30 @@ export class InsightApiClient {
  :::
  */
 export default class InsightService {
-  static async getBestContributionInsight(params?: InsightContributionParams): Promise<SCPaginatedResponse<SCContributionInsightType>> {
-    return InsightApiClient.getBestContributionInsight(params);
+  static async getBestContributionInsight(
+    params?: InsightContributionParams,
+    config?: AxiosRequestConfig
+  ): Promise<SCPaginatedResponse<SCContributionInsightType>> {
+    return InsightApiClient.getBestContributionInsight(params, config);
   }
 
-  static async getBestEmbedInsight(params?: InsightEmbedParams): Promise<SCPaginatedResponse<SCEmbedInsightType>> {
-    return InsightApiClient.getBestEmbedInsight(params);
+  static async getBestEmbedInsight(params?: InsightEmbedParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCEmbedInsightType>> {
+    return InsightApiClient.getBestEmbedInsight(params, config);
   }
 
-  static async getBestUsersInsight(params?: InsightUserParams): Promise<SCPaginatedResponse<SCUsersInsightType>> {
-    return InsightApiClient.getBestUsersInsight(params);
+  static async getBestUsersInsight(params?: InsightUserParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUsersInsightType>> {
+    return InsightApiClient.getBestUsersInsight(params, config);
   }
 
-  static async getContributionsInsightCounters(id: number): Promise<SCContributionInsightCountersType> {
-    return InsightApiClient.getContributionsInsightCounters(id);
+  static async getContributionsInsightCounters(id: number, config?: AxiosRequestConfig): Promise<SCContributionInsightCountersType> {
+    return InsightApiClient.getContributionsInsightCounters(id, config);
   }
 
-  static async getEmbedsInsightCounters(type: string, id: number): Promise<SCEmbedInsightCountersType> {
-    return InsightApiClient.getEmbedsInsightCounters(type, id);
+  static async getEmbedsInsightCounters(type: string, id: number, config?: AxiosRequestConfig): Promise<SCEmbedInsightCountersType> {
+    return InsightApiClient.getEmbedsInsightCounters(type, id, config);
   }
 
-  static async getUsersInsightCounters(id: number): Promise<SCUsersInsightCountersType> {
-    return InsightApiClient.getUsersInsightCounters(id);
+  static async getUsersInsightCounters(id: number, config?: AxiosRequestConfig): Promise<SCUsersInsightCountersType> {
+    return InsightApiClient.getUsersInsightCounters(id, config);
   }
 }

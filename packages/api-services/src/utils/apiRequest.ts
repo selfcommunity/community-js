@@ -1,21 +1,18 @@
 import client from '../client';
+import {AxiosRequestConfig} from 'axios';
 
-export function apiRequest(url: string, method: string, data?: any) {
+export function apiRequest(config: AxiosRequestConfig) {
   return client
-    .request({
-      url,
-      method,
-      data: data ?? null
-    })
+    .request(config)
     .then((res: any) => {
       if (res.status >= 300) {
-        console.log(`Unable to ${method} ${url} (Response code: ${res.status}).`);
+        console.log(`Unable to ${config.method} ${config.url} (Response code: ${res.status}).`);
         return Promise.reject(res);
       }
       return Promise.resolve(res.data);
     })
     .catch((error) => {
-      console.log(`Unable to ${method} ${url} ${error}`);
+      console.log(`Unable to ${config.method} ${config.url} ${error}`);
       return Promise.reject(error);
     });
 }

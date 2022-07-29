@@ -2,11 +2,18 @@ import {apiRequest} from '../../utils/apiRequest';
 import Endpoints from '../../constants/Endpoints';
 import {SCPreferenceType} from '@selfcommunity/types/src/types';
 import {SCPaginatedResponse} from '../../types';
+import {AxiosRequestConfig} from 'axios';
 
 export interface PreferenceApiClientInterface {
-  getAllPreferences(): Promise<SCPaginatedResponse<SCPreferenceType[]>>;
-  searchPreferences(search?: string, section?: string, keys?: string, ordering?: string): Promise<SCPaginatedResponse<SCPreferenceType[]>>;
-  getSpecificPreference(id: number): Promise<SCPreferenceType>;
+  getAllPreferences(config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPreferenceType[]>>;
+  searchPreferences(
+    search?: string,
+    section?: string,
+    keys?: string,
+    ordering?: string,
+    config?: AxiosRequestConfig
+  ): Promise<SCPaginatedResponse<SCPreferenceType[]>>;
+  getSpecificPreference(id: number, config?: AxiosRequestConfig): Promise<SCPreferenceType>;
 }
 /**
  * Contains all the endpoints needed to manage dynamic preferences.
@@ -15,9 +22,10 @@ export interface PreferenceApiClientInterface {
 export class PreferenceApiClient {
   /**
    * This endpoint retrieves all available dynamic preferences.
+   * @param config
    */
-  static getAllPreferences(): Promise<SCPaginatedResponse<SCPreferenceType[]>> {
-    return apiRequest(Endpoints.Preferences.url({}), Endpoints.Preferences.method);
+  static getAllPreferences(config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPreferenceType[]>> {
+    return apiRequest({...config, url: Endpoints.Preferences.url({}), method: Endpoints.Preferences.method});
   }
 
   /**
@@ -26,23 +34,31 @@ export class PreferenceApiClient {
    * @param section
    * @param keys
    * @param ordering
+   * @param config
    */
-  static searchPreferences(search?: string, section?: string, keys?: string, ordering?: string): Promise<SCPaginatedResponse<SCPreferenceType[]>> {
+  static searchPreferences(
+    search?: string,
+    section?: string,
+    keys?: string,
+    ordering?: string,
+    config?: AxiosRequestConfig
+  ): Promise<SCPaginatedResponse<SCPreferenceType[]>> {
     const params = new URLSearchParams({
       ...(search && {search: search}),
       ...(section && {section: section}),
       ...(keys && {keys: keys}),
       ...(ordering && {ordering: ordering})
     });
-    return apiRequest(`${Endpoints.Preferences.url({})}?${params.toString()}`, Endpoints.Preferences.method);
+    return apiRequest({...config, url: `${Endpoints.Preferences.url({})}?${params.toString()}`, method: Endpoints.Preferences.method});
   }
 
   /**
    * This endpoint retrieves a specific dynamic preference.
    * @param id
+   * @param config
    */
-  static getSpecificPreference(id: number): Promise<SCPreferenceType> {
-    return apiRequest(Endpoints.GetPreference.url({id}), Endpoints.Preferences.method);
+  static getSpecificPreference(id: number, config?: AxiosRequestConfig): Promise<SCPreferenceType> {
+    return apiRequest({...config, url: Endpoints.GetPreference.url({id}), method: Endpoints.Preferences.method});
   }
 }
 
@@ -73,20 +89,21 @@ export class PreferenceApiClient {
  :::
  */
 export default class PreferenceService {
-  static async getAllPreferences(): Promise<SCPaginatedResponse<SCPreferenceType[]>> {
-    return PreferenceApiClient.getAllPreferences();
+  static async getAllPreferences(config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPreferenceType[]>> {
+    return PreferenceApiClient.getAllPreferences(config);
   }
 
   static async searchPreferences(
     search?: string,
     section?: string,
     keys?: string,
-    ordering?: string
+    ordering?: string,
+    config?: AxiosRequestConfig
   ): Promise<SCPaginatedResponse<SCPreferenceType[]>> {
-    return PreferenceApiClient.searchPreferences(search, section, keys, ordering);
+    return PreferenceApiClient.searchPreferences(search, section, keys, ordering, config);
   }
 
-  static async getSpecificPreference(id: number): Promise<SCPreferenceType> {
-    return PreferenceApiClient.getSpecificPreference(id);
+  static async getSpecificPreference(id: number, config?: AxiosRequestConfig): Promise<SCPreferenceType> {
+    return PreferenceApiClient.getSpecificPreference(id, config);
   }
 }

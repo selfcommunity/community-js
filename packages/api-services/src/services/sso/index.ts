@@ -2,10 +2,11 @@ import {apiRequest} from '../../utils/apiRequest';
 import Endpoints from '../../constants/Endpoints';
 import {SSOSignInType, SSOSignUpType} from '@selfcommunity/types/src/types/sso';
 import {SSOSignUpParams} from '../../types';
+import {AxiosRequestConfig} from 'axios';
 
 export interface SSOApiClientInterface {
-  SignIn(): Promise<SSOSignInType>;
-  SignUp(data: SSOSignUpParams): Promise<SSOSignUpType>;
+  SignIn(config?: AxiosRequestConfig): Promise<SSOSignInType>;
+  SignUp(data: SSOSignUpParams, config?: AxiosRequestConfig): Promise<SSOSignUpType>;
 }
 /**
  * Contains all the endpoints needed to manage sso.
@@ -14,18 +15,20 @@ export interface SSOApiClientInterface {
 export class SSOApiClient {
   /**
    * This endpoint signs in the user authenticated with the access token.
+   * @param config
    */
-  static SignIn(): Promise<SSOSignInType> {
-    return apiRequest(Endpoints.SignIn.url({}), Endpoints.SignIn.method);
+  static SignIn(config?: AxiosRequestConfig): Promise<SSOSignInType> {
+    return apiRequest({...config, url: Endpoints.SignIn.url({}), method: Endpoints.SignIn.method});
   }
 
   /**
    * This endpoint creates a new account.
    * Only users with the admin role can register new users.
    * @param data
+   * @param config
    */
-  static SignUp(data: SSOSignUpParams): Promise<SSOSignUpType> {
-    return apiRequest(Endpoints.SignUp.url({}), Endpoints.SignUp.method, data);
+  static SignUp(data: SSOSignUpParams, config?: AxiosRequestConfig): Promise<SSOSignUpType> {
+    return apiRequest({...config, url: Endpoints.SignUp.url({}), method: Endpoints.SignUp.method, data: data});
   }
 }
 
@@ -50,10 +53,10 @@ export class SSOApiClient {
  :::
  */
 export default class SSOService {
-  static async SignIn(): Promise<SSOSignInType> {
-    return SSOApiClient.SignIn();
+  static async SignIn(config?: AxiosRequestConfig): Promise<SSOSignInType> {
+    return SSOApiClient.SignIn(config);
   }
-  static async SignUp(data: SSOSignUpParams): Promise<SSOSignUpType> {
-    return SSOApiClient.SignUp(data);
+  static async SignUp(data: SSOSignUpParams, config?: AxiosRequestConfig): Promise<SSOSignUpType> {
+    return SSOApiClient.SignUp(data, config);
   }
 }

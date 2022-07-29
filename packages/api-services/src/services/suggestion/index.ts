@@ -2,12 +2,13 @@ import {apiRequest} from '../../utils/apiRequest';
 import Endpoints from '../../constants/Endpoints';
 import {SCPaginatedResponse} from '../../types';
 import {SCCategoryType, SCFeedObjectType, SCIncubatorType, SCUserType} from '@selfcommunity/types';
+import {AxiosRequestConfig} from 'axios';
 
 export interface SuggestionApiClientInterface {
-  getCategorySuggestion(): Promise<SCPaginatedResponse<SCCategoryType>>;
-  getIncubatorSuggestion(): Promise<SCIncubatorType[]>;
-  getPollSuggestion(): Promise<SCFeedObjectType[]>;
-  getUserSuggestion(): Promise<SCPaginatedResponse<SCUserType>>;
+  getCategorySuggestion(config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCategoryType>>;
+  getIncubatorSuggestion(config?: AxiosRequestConfig): Promise<SCIncubatorType[]>;
+  getPollSuggestion(config?: AxiosRequestConfig): Promise<SCFeedObjectType[]>;
+  getUserSuggestion(config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>>;
 }
 /**
  * Contains all the endpoints needed to manage suggestions.
@@ -16,30 +17,34 @@ export interface SuggestionApiClientInterface {
 export class SuggestionApiClient {
   /**
    * This endpoint retrieves a list of categories suggested to the current user.
+   * @param config
    */
-  static getCategorySuggestion(): Promise<SCPaginatedResponse<SCCategoryType>> {
-    return apiRequest(Endpoints.CategoriesSuggestion.url({}), Endpoints.CategoriesSuggestion.method);
+  static getCategorySuggestion(config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCategoryType>> {
+    return apiRequest({...config, url: Endpoints.CategoriesSuggestion.url({}), method: Endpoints.CategoriesSuggestion.method});
   }
 
   /**
    * This endpoint retrieves a list of suggested incubators.
+   * @param config
    */
-  static getIncubatorSuggestion(): Promise<SCIncubatorType[]> {
-    return apiRequest(Endpoints.GetIncubatorSuggestion.url({}), Endpoints.GetIncubatorSuggestion.method);
+  static getIncubatorSuggestion(config?: AxiosRequestConfig): Promise<SCIncubatorType[]> {
+    return apiRequest({...config, url: Endpoints.GetIncubatorSuggestion.url({}), method: Endpoints.GetIncubatorSuggestion.method});
   }
 
   /**
    * This endpoint retrieves a list of contributes(discussions, posts, statuses) with a related poll.
+   * @param config
    */
-  static getPollSuggestion(): Promise<SCFeedObjectType[]> {
-    return apiRequest(Endpoints.PollSuggestion.url({}), Endpoints.PollSuggestion.method);
+  static getPollSuggestion(config?: AxiosRequestConfig): Promise<SCFeedObjectType[]> {
+    return apiRequest({...config, url: Endpoints.PollSuggestion.url({}), method: Endpoints.PollSuggestion.method});
   }
 
   /**
    * This endpoint retrieves a list of users suggested to the current user.
+   * @param config
    */
-  static getUserSuggestion(): Promise<SCPaginatedResponse<SCUserType>> {
-    return apiRequest(Endpoints.UserSuggestion.url({}), Endpoints.UserSuggestion.method);
+  static getUserSuggestion(config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
+    return apiRequest({...config, url: Endpoints.UserSuggestion.url({}), method: Endpoints.UserSuggestion.method});
   }
 }
 
@@ -63,19 +68,19 @@ export class SuggestionApiClient {
  :::
  */
 export default class SuggestionService {
-  static async getCategorySuggestion(): Promise<SCPaginatedResponse<SCCategoryType>> {
-    return SuggestionApiClient.getCategorySuggestion();
+  static async getCategorySuggestion(config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCategoryType>> {
+    return SuggestionApiClient.getCategorySuggestion(config);
   }
 
-  static async getIncubatorSuggestion(): Promise<SCIncubatorType[]> {
-    return SuggestionApiClient.getIncubatorSuggestion();
+  static async getIncubatorSuggestion(config?: AxiosRequestConfig): Promise<SCIncubatorType[]> {
+    return SuggestionApiClient.getIncubatorSuggestion(config);
   }
 
-  static async getPollSuggestion(): Promise<SCFeedObjectType[]> {
-    return SuggestionApiClient.getPollSuggestion();
+  static async getPollSuggestion(config?: AxiosRequestConfig): Promise<SCFeedObjectType[]> {
+    return SuggestionApiClient.getPollSuggestion(config);
   }
 
-  static async getUserSuggestion(): Promise<SCPaginatedResponse<SCUserType>> {
-    return SuggestionApiClient.getUserSuggestion();
+  static async getUserSuggestion(config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
+    return SuggestionApiClient.getUserSuggestion(config);
   }
 }

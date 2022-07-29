@@ -2,13 +2,14 @@ import {apiRequest} from '../../utils/apiRequest';
 import Endpoints from '../../constants/Endpoints';
 import {SCFeedUnitType, SCFeedUnseenCountType} from '@selfcommunity/types';
 import {FeedParams, SCPaginatedResponse} from '../../types';
+import {AxiosRequestConfig} from 'axios';
 
 export interface FeedApiClientInterface {
-  getMainFeed(params?: FeedParams): Promise<SCPaginatedResponse<SCFeedUnitType>>;
-  getExploreFeed(params?: FeedParams): Promise<SCPaginatedResponse<SCFeedUnitType>>;
-  getMainFeedUnseenCount(): Promise<SCFeedUnseenCountType>;
-  markReadASpecificFeedObj(object: number[]): Promise<any>;
-  likeFeedObjs(object: number[]): Promise<SCPaginatedResponse<SCFeedUnitType>>;
+  getMainFeed(params?: FeedParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeedUnitType>>;
+  getExploreFeed(params?: FeedParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeedUnitType>>;
+  getMainFeedUnseenCount(config?: AxiosRequestConfig): Promise<SCFeedUnseenCountType>;
+  markReadASpecificFeedObj(object: number[], config?: AxiosRequestConfig): Promise<any>;
+  likeFeedObjs(object: number[], config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeedUnitType>>;
 }
 /**
  * Contains all the endpoints needed to manage feed.
@@ -18,42 +19,47 @@ export class FeedApiClient {
   /**
    * This endpoint retrieves the main (home) feed.
    * @param params
+   * @param config
    */
-  static getMainFeed(params?: FeedParams): Promise<SCPaginatedResponse<SCFeedUnitType>> {
+  static getMainFeed(params?: FeedParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeedUnitType>> {
     const p = new URLSearchParams(params);
-    return apiRequest(`${Endpoints.MainFeed.url({})}?${p.toString()}`, Endpoints.MainFeed.method);
+    return apiRequest({...config, url: `${Endpoints.MainFeed.url({})}?${p.toString()}`, method: Endpoints.MainFeed.method});
   }
 
   /**
-   * This endpoint retrieves the explore feed. This endpoint can be disabled by setting explore_stream_enabled community option to false.
+   * This endpoint retrieves  explore feed. This endpoint can be disabled by setting explore_stream_enabled community option to false.
    * @param params
+   * @param config
    */
-  static getExploreFeed(params?: FeedParams): Promise<SCPaginatedResponse<SCFeedUnitType>> {
+  static getExploreFeed(params?: FeedParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeedUnitType>> {
     const p = new URLSearchParams(params);
-    return apiRequest(`${Endpoints.ExploreFeed.url({})}?${p.toString()}`, Endpoints.ExploreFeed.method);
+    return apiRequest({...config, url: `${Endpoints.ExploreFeed.url({})}?${p.toString()}`, method: Endpoints.ExploreFeed.method});
   }
 
   /**
    * This endpoint retrieves Main Feed unseen count.
+   * @param config
    */
-  static getMainFeedUnseenCount(): Promise<SCFeedUnseenCountType> {
-    return apiRequest(Endpoints.MainFeedUnseenCount.url({}), Endpoints.MainFeedUnseenCount.method);
+  static getMainFeedUnseenCount(config?: AxiosRequestConfig): Promise<SCFeedUnseenCountType> {
+    return apiRequest({...config, url: Endpoints.MainFeedUnseenCount.url({}), method: Endpoints.MainFeedUnseenCount.method});
   }
 
   /**
    * This endpoint marks as read a list of objects in the feed. Usually it is called when a Feed object enter the viewport of the user.
    * @param object
+   * @param config
    */
-  static markReadASpecificFeedObj(object: number[]): Promise<any> {
-    return apiRequest(Endpoints.FeedObjectMarkRead.url({}), Endpoints.FeedObjectMarkRead.method, {object: object});
+  static markReadASpecificFeedObj(object: number[], config?: AxiosRequestConfig): Promise<any> {
+    return apiRequest({...config, url: Endpoints.FeedObjectMarkRead.url({}), method: Endpoints.FeedObjectMarkRead.method, data: {object: object}});
   }
 
   /**
    * This endpoint retrieves a list of Feed objects similar to the id of passed objects
    * @param object
+   * @param config
    */
-  static likeFeedObjs(object: number[]): Promise<SCPaginatedResponse<SCFeedUnitType>> {
-    return apiRequest(Endpoints.FeedLikeThese.url({}), Endpoints.FeedLikeThese.method, {object: object});
+  static likeFeedObjs(object: number[], config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeedUnitType>> {
+    return apiRequest({...config, url: Endpoints.FeedLikeThese.url({}), method: Endpoints.FeedLikeThese.method, data: {object: object}});
   }
 }
 
@@ -84,20 +90,20 @@ export class FeedApiClient {
  :::
  */
 export default class FeedService {
-  static async getMainFeed(params?: FeedParams): Promise<SCPaginatedResponse<SCFeedUnitType>> {
-    return FeedApiClient.getMainFeed(params);
+  static async getMainFeed(params?: FeedParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeedUnitType>> {
+    return FeedApiClient.getMainFeed(params, config);
   }
-  static async getExploreFeed(params?: FeedParams): Promise<SCPaginatedResponse<SCFeedUnitType>> {
-    return FeedApiClient.getExploreFeed(params);
+  static async getExploreFeed(params?: FeedParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeedUnitType>> {
+    return FeedApiClient.getExploreFeed(params, config);
   }
 
-  static async getMainFeedUnseenCount(): Promise<SCFeedUnseenCountType> {
-    return FeedApiClient.getMainFeedUnseenCount();
+  static async getMainFeedUnseenCount(config?: AxiosRequestConfig): Promise<SCFeedUnseenCountType> {
+    return FeedApiClient.getMainFeedUnseenCount(config);
   }
-  static async markReadASpecificFeedObj(object: number[]): Promise<any> {
-    return FeedApiClient.markReadASpecificFeedObj(object);
+  static async markReadASpecificFeedObj(object: number[], config?: AxiosRequestConfig): Promise<any> {
+    return FeedApiClient.markReadASpecificFeedObj(object, config);
   }
-  static async likeFeedObjs(object: number[]): Promise<SCPaginatedResponse<SCFeedUnitType>> {
-    return FeedApiClient.likeFeedObjs(object);
+  static async likeFeedObjs(object: number[], config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeedUnitType>> {
+    return FeedApiClient.likeFeedObjs(object, config);
   }
 }
