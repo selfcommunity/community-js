@@ -213,7 +213,7 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
     } else {
       _widgets = [...WIDGETS];
     }
-    return _widgets.map((w) => ({...w, componentProps: {...w.componentProps, userId}}));
+    return _widgets.map((w) => ({...w, componentProps: {...w.componentProps, userId: scUser.id}}));
   };
 
   // Choose widgets based on user session
