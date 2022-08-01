@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.28-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.1.28-alpha.6...@selfcommunity/react-templates@0.1.28-alpha.7) (2022-08-01)
+
+
+### Bug Fixes
+
+* Fix userId in widgets props forwading ([21cac94](https://github.com/selfcommunity/community-js/commit/21cac94eda1ebbb724f83649d2c7fab9335c5e37))
+
+
+
+
+
 ## [0.1.28-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.1.28-alpha.5...@selfcommunity/react-templates@0.1.28-alpha.6) (2022-08-01)
 
 
