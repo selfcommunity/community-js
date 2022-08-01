@@ -83,7 +83,7 @@ export interface UserFeedProps {
    * Props to spread to feed component
    * @default {}
    */
-  UserFeedProps?: FeedProps;
+  FeedProps?: FeedProps;
 }
 
 // Widgets for feed
@@ -138,8 +138,7 @@ export default function UserFeed(inProps: UserFeedProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {id = 'user_feed', className, userId, user, widgets = WIDGETS, FeedObjectProps = {}, FeedSidebarProps = null, UserFeedProps = {}} = props;
-
+  const {id = 'user_feed', className, userId, user, widgets = WIDGETS, FeedObjectProps = {}, FeedSidebarProps = null, FeedProps = {}} = props;
 
   // Context
   const scUserContext: SCUserContextType = useSCUser();
@@ -166,7 +165,7 @@ export default function UserFeed(inProps: UserFeedProps): JSX.Element {
   const _widgets = useMemo(
     () =>
       widgets.map((w) => {
-        return {...w, componentProps: {...w.componentProps, userId: id}};
+        return {...w, componentProps: {...w.componentProps, userId: userId}};
       }),
     [scUser, widgets]
   );
@@ -199,7 +198,7 @@ export default function UserFeed(inProps: UserFeedProps): JSX.Element {
       }}
       {...(scUserContext.user ? {HeaderComponent: <InlineComposer onSuccess={handleComposerSuccess} />} : {})}
       FeedSidebarProps={FeedSidebarProps}
-      {...UserFeedProps}
+      {...FeedProps}
     />
   );
 }

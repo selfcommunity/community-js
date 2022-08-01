@@ -522,6 +522,10 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
   }, []);
 
   useEffect(() => {
+    _initFeedData();
+  }, [widgets]);
+
+  useEffect(() => {
     refreshSubscription.current = PubSub.subscribe(id, subscriber);
     return () => {
       PubSub.unsubscribe(refreshSubscription.current);
