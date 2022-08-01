@@ -165,7 +165,7 @@ export default function UserFeed(inProps: UserFeedProps): JSX.Element {
   const _widgets = useMemo(
     () =>
       widgets.map((w) => {
-        return {...w, componentProps: {...w.componentProps, userId: scUser.id}};
+        return {...w, componentProps: {...w.componentProps, userId: scUser ? scUser.id : userId}};
       }),
     [scUser, widgets]
   );
