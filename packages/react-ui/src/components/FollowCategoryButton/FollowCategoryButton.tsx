@@ -135,7 +135,7 @@ export default function FollowCategoryButton(inProps: FollowCategoryButtonProps)
       loading={scUserContext.user ? followed === null || scCategoriesManager.isLoading(scCategory) : null}
       className={classNames(classes.root, className)}
       {...rest}>
-      {followed ? (
+      {followed && scUserContext.user ? (
         <FormattedMessage defaultMessage="ui.followCategoryButton.unfollow" id="ui.followCategoryButton.unfollow" />
       ) : (
         <FormattedMessage defaultMessage="ui.followCategoryButton.follow" id="ui.followCategoryButton.follow" />

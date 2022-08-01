@@ -62,7 +62,7 @@ export interface UsersFollowedProps {
    * The user id
    * @default null
    */
-  userId?: number;
+  userId: number;
   /**
    * Hides this component
    * @default false
@@ -139,7 +139,7 @@ export default function UsersFollowed(inProps: UsersFollowedProps): JSX.Element 
   const [hasMore, setHasMore] = useState<boolean>(false);
   const [total, setTotal] = useState<number>(0);
   const [openUsersFollowedDialog, setOpenUsersFollowedDialog] = useState<boolean>(false);
-  const [next, setNext] = useState<string>(`${Endpoints.UsersFollowed.url({id: userId ?? scUserContext.user['id']})}?limit=10`);
+  const [next, setNext] = useState<string>(`${Endpoints.UsersFollowed.url({id: userId})}?limit=10`);
 
   /**
    * Handles list change on user follow
@@ -196,6 +196,9 @@ export default function UsersFollowed(inProps: UsersFollowedProps): JSX.Element 
    * On mount, fetches the list of users followed
    */
   useEffect(() => {
+    if (!userId) {
+      return;
+    }
     if (!contentAvailability && !scUserContext.user) {
       return;
     }
@@ -293,6 +296,12 @@ export default function UsersFollowed(inProps: UsersFollowedProps): JSX.Element 
    * If content availability community option is false and user is anonymous , component is hidden.
    */
   if (!contentAvailability && !scUserContext.user) {
+    return <HiddenPlaceholder />;
+  }
+  /**
+   * If there's no userId, component is hidden.
+   */
+  if (!userId) {
     return <HiddenPlaceholder />;
   }
   /**
