@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.29-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.1.28...@selfcommunity/react-core@0.1.29-alpha.0) (2022-08-02)
+
+
+### Bug Fixes
+
+* Added missing preferences name ([1321e90](https://github.com/selfcommunity/community-js/commit/1321e9018046b05506a1a9f15c403d1d31466691))
+
+
+
+
+
 ## [0.1.28](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.1.28-alpha.6...@selfcommunity/react-core@0.1.28) (2022-08-02)
 
 **Note:** Version bump only for package @selfcommunity/react-core
