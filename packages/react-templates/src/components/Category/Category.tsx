@@ -46,7 +46,7 @@ export interface CategoryProps {
    * Id of the category for filter the feed
    * @default null
    */
-  categoryId?: number;
+  categoryId?: number | string;
 
   /**
    * Widgets to be rendered into the feed

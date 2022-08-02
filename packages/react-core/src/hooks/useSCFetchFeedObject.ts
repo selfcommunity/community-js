@@ -23,7 +23,7 @@ export default function useSCFetchFeedObject({
   feedObjectType = SCFeedObjectTypologyType.POST || SCFeedObjectTypologyType.DISCUSSION || SCFeedObjectTypologyType.STATUS,
   cacheStrategy = CacheStrategies.CACHE_FIRST,
 }: {
-  id?: number;
+  id?: number | string;
   feedObject?: SCFeedObjectType;
   feedObjectType?: SCFeedObjectTypologyType;
   cacheStrategy?: CacheStrategies;

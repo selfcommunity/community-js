@@ -58,7 +58,7 @@ export interface FeedObjectDetailProps {
    * Id of feed object
    * @default null
    */
-  feedObjectId?: number;
+  feedObjectId?: number | string;
 
   /**
    * Feed object

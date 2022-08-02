@@ -34,7 +34,7 @@ export interface CategoriesListProps {
    * The user id
    * @default null
    */
-  userId?: number;
+  userId: number;
   /**
    * Hides this component
    * @default false

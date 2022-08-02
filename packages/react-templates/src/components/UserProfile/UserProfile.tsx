@@ -1,18 +1,18 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {styled} from '@mui/material/styles';
 import {Box, Button, Stack} from '@mui/material';
 import {
   CategoriesFollowed,
+  ConnectionUserButton,
   FeedObjectProps,
   FeedSidebarProps,
   SCFeedWidgetType,
   UserFollowers,
-  UserProfileHeaderProps,
   UserProfileHeader,
-  UserProfileInfoProps,
+  UserProfileHeaderProps,
   UserProfileInfo,
-  UsersFollowed,
-  ConnectionUserButton
+  UserProfileInfoProps,
+  UsersFollowed
 } from '@selfcommunity/react-ui';
 import UserFeed, {UserFeedProps} from '../UserFeed';
 import {SCContextType, SCUserContextType, useSCContext, useSCFetchUser, useSCUser} from '@selfcommunity/react-core';
@@ -64,7 +64,7 @@ export interface UserProfileProps {
    * Id of the user for filter the feed
    * @default null
    */
-  userId?: number;
+  userId?: number | string;
 
   /**
    * Widgets to be rendered into the feed
@@ -213,7 +213,7 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
     } else {
       _widgets = [...WIDGETS];
     }
-    return _widgets.map((w) => ({...w, componentProps: {...w.componentProps, userId}}));
+    return _widgets.map((w) => ({...w, componentProps: {...w.componentProps, userId: scUser.id}}));
   };
 
   // Choose widgets based on user session
@@ -231,6 +231,11 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
   const isMe = scUserContext.user && scUser.id === scUserContext.user.id;
   const roles = scUserContext.user && scUserContext.user.role;
   const canModerate = roles && (roles.includes('admin') || roles.includes('moderator'));
+
+  if (!isMe) {
+    UserFeedProps.FeedProps = {HeaderComponent: null, ...UserFeedProps.FeedProps};
+  }
+
   return (
     <Root id={id} className={classNames(classes.root, className)}>
       <UserProfileHeader user={scUser} {...UserProfileHeaderProps} />
@@ -254,13 +259,7 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
           </Button>
         )}
       </Stack>
-      <UserFeed
-        user={scUser}
-        widgets={_widgets}
-        FeedObjectProps={FeedObjectProps}
-        FeedSidebarProps={FeedSidebarProps}
-        {...{...UserFeedProps, ...{...(!isMe ? {HeaderComponent: null} : {})}}}
-      />
+      <UserFeed user={scUser} widgets={_widgets} FeedObjectProps={FeedObjectProps} FeedSidebarProps={FeedSidebarProps} {...UserFeedProps} />
     </Root>
   );
 }

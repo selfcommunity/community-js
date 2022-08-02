@@ -3,6 +3,61 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.28-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.1.28-alpha.4...@selfcommunity/react-core@0.1.28-alpha.5) (2022-07-29)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.1.28-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.1.28-alpha.3...@selfcommunity/react-core@0.1.28-alpha.4) (2022-07-28)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.1.28-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.1.28-alpha.2...@selfcommunity/react-core@0.1.28-alpha.3) (2022-07-27)
+
+
+### Performance Improvements
+
+* Params on user category page ([159b61d](https://github.com/selfcommunity/community-js/commit/159b61d67612e398a367f0c779dc59a1bc7ab789))
+* Params on user profile page ([62201a9](https://github.com/selfcommunity/community-js/commit/62201a917140d80808c8ae150d48e848c33ce183))
+
+
+
+
+
+## [0.1.28-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.1.28-alpha.1...@selfcommunity/react-core@0.1.28-alpha.2) (2022-07-27)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.1.28-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.1.28-alpha.0...@selfcommunity/react-core@0.1.28-alpha.1) (2022-07-27)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.1.28-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.1.27...@selfcommunity/react-core@0.1.28-alpha.0) (2022-07-27)
+
+
+### Performance Improvements
+
+* string as available type in feed object id ([f4a5ddf](https://github.com/selfcommunity/community-js/commit/f4a5ddf858eba8912a8d4935d0f91f210145bcc9))
+
+
+
+
+
 ## [0.1.27](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.1.27-alpha.1...@selfcommunity/react-core@0.1.27) (2022-07-22)
 
 **Note:** Version bump only for package @selfcommunity/react-core

@@ -20,7 +20,7 @@ export default function useSCFetchCategory({
   category = null,
   cacheStrategy = CacheStrategies.CACHE_FIRST,
 }: {
-  id?: number;
+  id?: number | string;
   category?: SCCategoryType;
   cacheStrategy?: CacheStrategies;
 }) {
