@@ -150,7 +150,7 @@ export default function FollowUserButton(inProps: FollowUserButtonProps): JSX.El
       loading={scUserContext.user ? followed === null || scFollowedManager.isLoading(scUser) : null}
       className={classNames(classes.root, className)}
       {...rest}>
-      {followed ? (
+      {followed && scUserContext.user ? (
         <FormattedMessage defaultMessage="ui.followUserButton.unfollow" id="ui.followUserButton.unfollow" />
       ) : (
         <FormattedMessage defaultMessage="ui.followUserButton.follow" id="ui.followUserButton.follow" />

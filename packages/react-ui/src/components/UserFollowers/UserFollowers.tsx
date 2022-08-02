@@ -62,7 +62,7 @@ export interface UserFollowersProps {
    * The user id
    * @default null
    */
-  userId?: number;
+  userId: number;
   /**
    * Hides this component
    * @default false
@@ -140,7 +140,7 @@ export default function UserFollowers(inProps: UserFollowersProps): JSX.Element 
   const [hasMore, setHasMore] = useState<boolean>(false);
   const [total, setTotal] = useState<number>(0);
   const [openUserFollowersDialog, setOpenUserFollowersDialog] = useState<boolean>(false);
-  const [next, setNext] = useState<string>(`${Endpoints.UserFollowers.url({id: userId ?? scUserContext.user['id']})}?limit=10`);
+  const [next, setNext] = useState<string>(`${Endpoints.UserFollowers.url({id: userId})}?limit=10`);
 
   /**
    * Fetches the list of users followers
@@ -174,6 +174,9 @@ export default function UserFollowers(inProps: UserFollowersProps): JSX.Element 
    */
   useEffect(() => {
     if (!contentAvailability && !scUserContext.user) {
+      return;
+    }
+    if (!userId) {
       return;
     }
     fetchFollowers();
@@ -289,6 +292,12 @@ export default function UserFollowers(inProps: UserFollowersProps): JSX.Element 
    * If content availability community option is false and user is anonymous , component is hidden.
    */
   if (!contentAvailability && !scUserContext.user) {
+    return <HiddenPlaceholder />;
+  }
+  /**
+   * If there's no userId, component is hidden.
+   */
+  if (!userId) {
     return <HiddenPlaceholder />;
   }
   /**

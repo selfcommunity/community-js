@@ -93,7 +93,7 @@ export default function CategoriesFollowed(inProps: CategoriesListProps): JSX.El
   const [hasMore, setHasMore] = useState<boolean>(false);
   const [total, setTotal] = useState<number>(0);
   const [openCategoriesFollowedDialog, setOpenCategoriesFollowedDialog] = useState<boolean>(false);
-  const [next, setNext] = useState<string>(`${Endpoints.FollowedCategories.url({id: userId ?? scUserContext.user['id']})}?limit=10`);
+  const [next, setNext] = useState<string>(`${Endpoints.FollowedCategories.url({id: userId})}?limit=10`);
 
   // CONST
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
@@ -153,6 +153,9 @@ export default function CategoriesFollowed(inProps: CategoriesListProps): JSX.El
    * On mount, fetches the list of categories followed
    */
   useEffect(() => {
+    if (!userId) {
+      return;
+    }
     fetchCategoriesFollowed();
   }, [authUserId]);
 
@@ -233,6 +236,12 @@ export default function CategoriesFollowed(inProps: CategoriesListProps): JSX.El
    * Renders root object (if results and if user is logged, otherwise component is hidden)
    */
   if (autoHide && !total) {
+    return <HiddenPlaceholder />;
+  }
+  /**
+   * If there's no userId, component is hidden.
+   */
+  if (!userId) {
     return <HiddenPlaceholder />;
   }
   return <Root className={classNames(classes.root, className)}>{c}</Root>;
