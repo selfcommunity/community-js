@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.28-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.1.28-alpha.8...@selfcommunity/react-templates@0.1.28-alpha.9) (2022-08-02)
+
+
+### Bug Fixes
+
+* Fix UserFeed parameters ([616d0c5](https://github.com/selfcommunity/community-js/commit/616d0c5adb56adb5691b3ce0b6d4d9405c2dbca7))
+
+
+
+
+
 ## [0.1.28-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.1.28-alpha.7...@selfcommunity/react-templates@0.1.28-alpha.8) (2022-08-01)
 
 
