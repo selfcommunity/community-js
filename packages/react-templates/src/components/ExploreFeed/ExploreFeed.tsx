@@ -69,7 +69,10 @@ export interface ExploreFeedProps {
    * Props to spread to feed component
    * @default {}
    */
-  FeedProps?: FeedProps;
+  FeedProps?: Omit<
+    FeedProps,
+    'endpoint' | 'widgets' | 'ItemComponent' | 'itemPropsGenerator' | 'itemIdGenerator' | 'ItemSkeleton' | 'ItemSkeletonProps' | 'FeedSidebarProps'
+  >;
 }
 
 // Widgets for feed
