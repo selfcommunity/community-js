@@ -38,6 +38,7 @@ export const COVERS_COVER_4_HP_M1920 = 'covers.cover_4_hp_m1920';
 /**
  * IMAGES
  */
+export const IMAGES_APP_ICON = 'images.app_icon';
 export const IMAGES_USER_DEFAULT_COVER = 'images.user_default_cover';
 export const IMAGES_ERROR_404 = 'images.error_404';
 export const IMAGES_ERROR_503 = 'images.error_503';
@@ -187,6 +188,7 @@ export const DATA_TYPES = {
   [COVERS_COVER_2_HP_M1920]: stringType,
   [COVERS_COVER_3_HP_M1920]: stringType,
   [COVERS_COVER_4_HP_M1920]: stringType,
+  [IMAGES_APP_ICON]: stringType,
   [IMAGES_USER_DEFAULT_COVER]: stringType,
   [IMAGES_ERROR_404]: stringType,
   [IMAGES_ERROR_503]: stringType,
