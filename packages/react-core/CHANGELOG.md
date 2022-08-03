@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.29-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.1.29-alpha.1...@selfcommunity/react-core@0.1.29-alpha.2) (2022-08-03)
+
+
+### Performance Improvements
+
+* Added preferences of app secrets ([3f5d585](https://github.com/selfcommunity/community-js/commit/3f5d585a45276e9c058ced88634ad482fc39ca49))
+
+
+
+
+
 ## [0.1.29-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.1.29-alpha.0...@selfcommunity/react-core@0.1.29-alpha.1) (2022-08-03)
 
 
