@@ -20,8 +20,8 @@ const messages = defineMessages({
     defaultMessage: 'ui.notification.contribution.newPostOrStatus'
   },
   discussion: {
-    id: 'ui.notification.contribution.newDiscussion',
-    defaultMessage: 'ui.notification.contribution.newDiscussion'
+    id: 'ui.notification.contribution.discussion',
+    defaultMessage: 'ui.notification.contribution.discussion'
   }
 });
 
@@ -163,38 +163,30 @@ export default function ContributionNotification(inProps: ContributionNotificati
         isNew={notificationObject.is_new}
         disableTypography
         image={
-          <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.user)}>
-            <Avatar alt={notificationObject.user.username} variant="circular" src={notificationObject.user.avatar} classes={{root: classes.avatar}} />
+          <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject[contributionType].author)}>
+            <Avatar
+              alt={notificationObject[contributionType].author.username}
+              variant="circular"
+              src={notificationObject[contributionType].author.avatar}
+              classes={{root: classes.avatar}}
+            />
           </Link>
         }
         primary={
           <>
-            <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.user)} className={classes.username}>
-              {notificationObject.user.username}
+            <Link
+              to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject[contributionType].author)}
+              className={classes.username}>
+              {notificationObject[contributionType].author.username}
             </Link>{' '}
-            {notificationObject[contributionType] === SCFeedObjectTypologyType.POST ||
-            notificationObject[contributionType] === SCFeedObjectTypologyType.STATUS
-              ? intl.formatMessage(messages.postOrStatus, {
-                  contribution: 'post',
-                  b: (...chunks) => <strong>{chunks}</strong>
-                })
-              : intl.formatMessage(messages.discussion, {
-                  contribution: 'discussion',
-                  b: (...chunks) => <strong>{chunks}</strong>
-                })}
+            {notificationObject[contributionType]['type'] === SCFeedObjectTypologyType.POST ||
+            notificationObject[contributionType]['type'] === SCFeedObjectTypologyType.STATUS
+              ? intl.formatMessage(messages.postOrStatus, {contribution: notificationObject[contributionType]['type']})
+              : intl.formatMessage(messages.discussion)}
           </>
         }
         secondary={
           <React.Fragment>
-            <Link
-              to={scRoutingContext.url(
-                SCRoutes[`${notificationObject[contributionType]['type'].toUpperCase()}_ROUTE_NAME`],
-                getRouteData(notificationObject[contributionType])
-              )}>
-              <Typography variant="body2" gutterBottom className={classes.contributionText}>
-                {getContributionSnippet(notificationObject[contributionType])}
-              </Typography>
-            </Link>
             {template === SCNotificationObjectTemplateType.DETAIL && (
               <Stack direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
                 <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />

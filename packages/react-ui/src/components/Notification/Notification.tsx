@@ -467,7 +467,7 @@ export default function UserNotification(inProps: NotificationProps): JSX.Elemen
     } else if (n.type === SCNotificationTypologyType.CUSTOM_NOTIFICATION) {
       handleCustomNotification && handleCustomNotification(n);
     } else if (n.type === SCNotificationTypologyType.CONTRIBUTION) {
-      return <ContributionNotification notificationObject={n} key={i} />;
+      return <ContributionNotification notificationObject={n} key={i} index={i} onVote={handleVote} loadingVote={loadingVote} />;
     }
     return null;
   }
