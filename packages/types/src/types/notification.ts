@@ -44,7 +44,8 @@ export enum SCNotificationTypologyType {
   UNBLOCKED_USER = 'unblocked_user',
   INCUBATOR_APPROVED = 'incubator_approved',
   CUSTOM_NOTIFICATION = 'custom_notification',
-  NOTIFICATION_BANNER = 'notification_banner'
+  NOTIFICATION_BANNER = 'notification_banner',
+  CONTRIBUTION = 'contribution'
 }
 
 /**
@@ -497,4 +498,30 @@ export interface SCNotificationCustomNotificationType extends SCNotificationType
  */
 export interface SCNotificationUnseenCountType {
   count: number;
+}
+
+/**
+ * Interface SCNotificationContributionType.
+ * Contribution Notification Schema.
+ */
+export interface SCNotificationContributionType extends SCNotificationType {
+  /**
+   * If the contribution type is discussion
+   */
+  discussion?: SCFeedDiscussionType;
+
+  /**
+   * If the contribution type is post
+   */
+  post?: SCFeedPostType;
+
+  /**
+   * If the contribution type is status
+   */
+  status?: SCFeedStatusType;
+
+  /**
+   * The user who created the contribution
+   */
+  user: SCUserType;
 }
