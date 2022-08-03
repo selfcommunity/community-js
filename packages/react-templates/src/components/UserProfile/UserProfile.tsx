@@ -240,7 +240,7 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
     <Root id={id} className={classNames(classes.root, className)}>
       <UserProfileHeader user={scUser} {...UserProfileHeaderProps} />
       <UserProfileInfo user={scUser} {...UserProfileInfoProps} />
-      <Stack direction="row" spacing={2} className={classes.actions}>
+      <Stack key={`actions_${scUser.id}`} direction="row" spacing={2} className={classes.actions}>
         {isMe ? (
           <Button variant="outlined" color="secondary" onClick={handleEdit}>
             <FormattedMessage defaultMessage="templates.userProfile.edit" id="templates.userProfile.edit" />
@@ -259,7 +259,14 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
           </Button>
         )}
       </Stack>
-      <UserFeed user={scUser} widgets={_widgets} FeedObjectProps={FeedObjectProps} FeedSidebarProps={FeedSidebarProps} {...UserFeedProps} />
+      <UserFeed
+        key={`feed_${scUser.id}`}
+        user={scUser}
+        widgets={_widgets}
+        FeedObjectProps={FeedObjectProps}
+        FeedSidebarProps={FeedSidebarProps}
+        {...UserFeedProps}
+      />
     </Root>
   );
 }
