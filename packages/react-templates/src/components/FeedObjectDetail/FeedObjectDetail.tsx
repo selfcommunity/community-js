@@ -199,12 +199,12 @@ export default function FeedObjectDetail(inProps: FeedObjectDetailProps): JSX.El
         <Grid item xs={12} md={7}>
           <FeedObject {...FeedObjectProps} feedObject={obj} template={SCFeedObjectTemplateType.DETAIL} onReply={handleReply} />
           {renderAdvertising()}
-          <CommentsFeedObject showTitle feedObject={obj} comments={comments} {...CommentsFeedObjectProps} />
+          <CommentsFeedObject key={`comments_${obj.id}`} showTitle feedObject={obj} comments={comments} {...CommentsFeedObjectProps} />
         </Grid>
         <Grid item xs={12} md={5}>
           <Hidden mdDown>
             <Sticky enabled top={15} bottomBoundary={`#${id}`}>
-              <RelatedFeedObjects feedObject={obj} {...RelatedFeedObjectProps} />
+              <RelatedFeedObjects key={`related_${obj.id}`} feedObject={obj} {...RelatedFeedObjectProps} />
             </Sticky>
           </Hidden>
         </Grid>
