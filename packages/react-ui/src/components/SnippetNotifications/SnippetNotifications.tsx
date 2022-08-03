@@ -27,6 +27,7 @@ import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
 import {SCNotification, SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import {useThemeProps} from '@mui/system';
+import ContributionNotification from '../Notification/Contribution';
 
 const PREFIX = 'SCSnippetNotifications';
 
@@ -318,6 +319,8 @@ export default function SnippetNotifications(inProps: SnippetNotificationsProps)
       content = <IncubatorApprovedNotification notificationObject={n} key={i} template={SCNotificationObjectTemplateType.SNIPPET} />;
     } else if (type === SCNotificationTypologyType.CUSTOM_NOTIFICATION && handleCustomNotification) {
       content = handleCustomNotification(n);
+    } else if (type === SCNotificationTypologyType.CONTRIBUTION) {
+      content = <ContributionNotification notificationObject={n} key={i} template={SCNotificationObjectTemplateType.SNIPPET} />;
     }
     if (type && handleNotification) {
       /** Override content */

@@ -313,7 +313,7 @@
   "ui.notification.userConnection.acceptConnection": "ha accettato la tua richiesta di connessione",
   "ui.notification.voteUp.appreciated": "ti ha apprezzato su:",
   "ui.notification.contributionFollow.follow": "sta seguendo il tuo contributo",
-  "ui.notification.contribution.newPostOrStatus":  "ha creato un nuovo {contribution}",
+  "ui.notification.contribution.newPostOrStatus":  "ha scritto un nuovo {contribution}",
   "ui.notification.contribution.discussion":  "ha scritto una nuova discussione",
   "ui.notification.contribution.voteUp": "Mi piace",
   "ui.notification.contribution.voteDown": "Rimuovi il tuo like",
