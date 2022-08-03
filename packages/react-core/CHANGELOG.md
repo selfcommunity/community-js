@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.29-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.1.29-alpha.0...@selfcommunity/react-core@0.1.29-alpha.1) (2022-08-03)
+
+
+### Performance Improvements
+
+* Added preferences ([ff52e06](https://github.com/selfcommunity/community-js/commit/ff52e06cda160f4146fa1ffec21374a59d223e2a))
+
+
+
+
+
 ## [0.1.29-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.1.28...@selfcommunity/react-core@0.1.29-alpha.0) (2022-08-02)
 
 
