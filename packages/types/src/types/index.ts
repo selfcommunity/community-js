@@ -80,7 +80,8 @@ import {
   SCNotificationVoteUpType,
   SCNotificationIncubatorType,
   SCNotificationTopicType,
-  SCNotificationUnseenCountType
+  SCNotificationUnseenCountType,
+  SCNotificationContributionType
 } from './notification';
 import {SCWebhookEndpointType, SCWebhookEndpointAttemptType, SCWebhookEndpointSecretType, SCWebhookEventsType} from './webhook';
 import {SCVoteType} from './vote';
@@ -194,6 +195,7 @@ export {
   SCIncubatorSubscriptionType,
   SCIncubatorStatusType,
   SCNotificationIncubatorType,
+  SCNotificationContributionType,
   SCPrizeType,
   SCPrizeUserType,
   SCPrizeUserStatusType,

@@ -19,6 +19,7 @@ import IncubatorApprovedNotification from '../Notification/IncubatorApproved';
 import UserBlockedNotification from '../Notification/UserBlocked';
 import Message from '../BroadcastMessages/Message';
 import {useThemeProps} from '@mui/system';
+import ContributionNotification from '../Notification/Contribution';
 
 const PREFIX = 'SCToastNotifications';
 
@@ -124,6 +125,8 @@ export default function UserToastNotifications(inProps: ToastNotificationsProps)
         content = <KindlyNoticeFlagNotification notificationObject={n.notification_obj} template={SCNotificationObjectTemplateType.TOAST} />;
       } else if (type === SCNotificationTypologyType.INCUBATOR_APPROVED) {
         content = <IncubatorApprovedNotification notificationObject={n.notification_obj} template={SCNotificationObjectTemplateType.TOAST} />;
+      } else if (type === SCNotificationTypologyType.CONTRIBUTION) {
+        content = <ContributionNotification notificationObject={n.notification_obj} template={SCNotificationObjectTemplateType.TOAST} />;
       }
     }
     if (n.activity_type && n.activity_type === SCNotificationTypologyType.NOTIFICATION_BANNER) {
