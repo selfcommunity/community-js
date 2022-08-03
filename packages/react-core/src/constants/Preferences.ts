@@ -122,7 +122,17 @@ export const CONFIGURATIONS_USER_METADATA_DEFINITIONS = 'configurations.user_met
 /**
  * PROVIDERS
  */
+export const PROVIDERS_APP_URL_ON_APP_STORE = 'providers.app_url_on_app_store';
+export const PROVIDERS_APP_URL_ON_GOOGLE_PLAY = 'providers.app_url_on_google_play';
+export const PROVIDERS_FACEBOOK_SIGNIN_ENABLED = 'providers.facebook_signin_enabled';
+export const PROVIDERS_FACEBOOK_APP_KEY = 'providers.facebook_app_key';
+export const PROVIDERS_LINKEDIN_SIGNIN_ENABLED = 'providers.linkedin_signin_enabled';
+export const PROVIDERS_LINKEDIN_APP_KEY = 'providers.linkedin_app_key';
+export const PROVIDERS_TWITTER_SIGNIN_ENABLED = 'providers.twitter_signin_enabled';
+export const PROVIDERS_TWITTER_APP_KEY = 'providers.twitter_app_key';
 export const PROVIDERS_GOOGLE_GEOCODING_API_KEY = 'providers.google_geocoding_api_key';
+export const PROVIDERS_GOOGLE_SIGNIN_ENABLED = 'providers.google_signin_enabled';
+export const PROVIDERS_GOOGLE_APP_KEY = 'providers.google_app_key';
 export const PROVIDERS_WEB_PUSH_PUBLIC_KEY = 'providers.web_push_public_key';
 export const PROVIDERS_WEB_PUSH_ENABLED = 'providers.web_push_enabled';
 
@@ -240,7 +250,17 @@ export const DATA_TYPES = {
   [CONFIGURATIONS_URL_TEMPLATE_USER_NOTIFICATIONS]: stringType,
   [CONFIGURATIONS_URL_TEMPLATE_USER_PRIVATE_MESSAGES]: stringType,
   [CONFIGURATIONS_URL_TEMPLATE_INCUBATOR]: stringType,
+  [PROVIDERS_APP_URL_ON_APP_STORE]: stringType,
+  [PROVIDERS_APP_URL_ON_GOOGLE_PLAY]: stringType,
+  [PROVIDERS_FACEBOOK_SIGNIN_ENABLED]: stringType,
+  [PROVIDERS_FACEBOOK_APP_KEY]: stringType,
+  [PROVIDERS_LINKEDIN_SIGNIN_ENABLED]: stringType,
+  [PROVIDERS_LINKEDIN_APP_KEY]: stringType,
+  [PROVIDERS_TWITTER_SIGNIN_ENABLED]: stringType,
+  [PROVIDERS_TWITTER_APP_KEY]: stringType,
   [PROVIDERS_GOOGLE_GEOCODING_API_KEY]: stringType,
+  [PROVIDERS_GOOGLE_SIGNIN_ENABLED]: stringType,
+  [PROVIDERS_GOOGLE_APP_KEY]: stringType,
   [PROVIDERS_WEB_PUSH_PUBLIC_KEY]: stringType,
   [PROVIDERS_WEB_PUSH_ENABLED]: booleanType,
   [WEBMASTER_META_ROBOTS]: stringType,
