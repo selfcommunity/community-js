@@ -315,6 +315,8 @@
   "ui.notification.contributionFollow.follow": "is following your contribution",
   "ui.notification.contribution.newPostOrStatus":  "created a new {contribution}",
   "ui.notification.contribution.discussion":  "created a new discussion",
+  "ui.notification.contribution.snippet.newPostOrStatus":  "created a new {contribution}:",
+  "ui.notification.contribution.snippet.discussion":  "created a new discussion:",
   "ui.notification.contribution.voteUp": "Like",
   "ui.notification.contribution.voteDown": "Dislike",
   "ui.notification.userBlocked.accountBlocked": "Your account has been blocked",
