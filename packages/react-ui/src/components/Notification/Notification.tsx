@@ -17,7 +17,7 @@ import KindlyNoticeFlagNotification from './KindlyNoticeFlag';
 import VoteUpNotification from './VoteUp';
 import Icon from '@mui/material/Icon';
 import {SCOPE_SC_UI} from '../../constants/Errors';
-import {getContribution, getContributionRouteName, getContributionSnippet} from '../../utils/contribution';
+import {getContribution, getContributionRouteName, getContributionSnippet, getRouteData} from '../../utils/contribution';
 import ContributionFollowNotification from './ContributionFollow';
 import {Avatar, CardProps, Collapse, ListItemButton, ListItemText, Stack, Tooltip, Typography} from '@mui/material';
 import IncubatorApprovedNotification from './IncubatorApproved';
@@ -367,11 +367,12 @@ export default function UserNotification(inProps: NotificationProps): JSX.Elemen
         notificationObject.aggregated[0].type === SCNotificationTypologyType.CONTRIBUTION)
     ) {
       const contribution = getContribution(notificationObject);
+      console.log(notificationObject[contribution.type]);
       return (
         <div className={classes.notificationHeader}>
           {contribution && contribution.type !== SCCommentTypologyType && (
             <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
-              <Link to={scRoutingContext.url(getContributionRouteName(contribution), notificationObject[contribution.type])}>
+              <Link to={scRoutingContext.url(getContributionRouteName(contribution), getRouteData(notificationObject[contribution.type]))}>
                 <Typography variant="body2" gutterBottom classes={{root: classes.title}}>
                   {getContributionSnippet(contribution)}
                 </Typography>
