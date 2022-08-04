@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.3.0-alpha.4...@selfcommunity/react-ui@0.3.0) (2022-08-04)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
 # [0.3.0-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.3.0-alpha.3...@selfcommunity/react-ui@0.3.0-alpha.4) (2022-08-04)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
