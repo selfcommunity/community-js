@@ -59,7 +59,6 @@ const Root = styled(Box, {
   [`& .${classes.contributionText}`]: {
     color: theme.palette.text.primary,
     textOverflow: 'ellipsis',
-    display: 'inline',
     overflow: 'hidden',
     '&:hover': {
       textDecoration: 'underline'
@@ -145,7 +144,6 @@ export default function ContributionNotification(inProps: ContributionNotificati
 
   // INTL
   const intl = useIntl();
-
   /**
    * Handle vote
    */
@@ -187,6 +185,17 @@ export default function ContributionNotification(inProps: ContributionNotificati
         }
         secondary={
           <React.Fragment>
+            {template === SCNotificationObjectTemplateType.SNIPPET && (
+              <Link
+                to={scRoutingContext.url(
+                  SCRoutes[`${contributionType.toUpperCase()}_ROUTE_NAME`],
+                  getRouteData(notificationObject[contributionType])
+                )}>
+                <Typography variant="body2" className={classes.contributionText} gutterBottom component={'div'}>
+                  {getContributionSnippet(notificationObject[contributionType])}
+                </Typography>
+              </Link>
+            )}
             {template === SCNotificationObjectTemplateType.DETAIL && (
               <Stack direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
                 <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
