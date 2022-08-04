@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.1-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.2.0...@selfcommunity/types@0.2.1-alpha.0) (2022-08-04)
+
+
+### Bug Fixes
+
+* fixed notification contribution type interface. ([c704f2a](https://github.com/selfcommunity/community-js/commit/c704f2aba824277a13d6361749bc216c7055b741))
+
+
+
+
+
 # [0.2.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.2.0-alpha.1...@selfcommunity/types@0.2.0) (2022-08-04)
 
 **Note:** Version bump only for package @selfcommunity/types
