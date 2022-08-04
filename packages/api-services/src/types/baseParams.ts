@@ -2,7 +2,7 @@
  * BaseGetParams interface
  */
 
-export interface BaseGetParams extends URLSearchParams {
+export interface BaseGetParams {
   /**
    *	Number of results to return per page.
    */

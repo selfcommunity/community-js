@@ -3,6 +3,7 @@ import {apiRequest} from '../../utils/apiRequest';
 import {SCCommentType, SCFlagType, SCFlagTypeEnum, SCVoteType} from '@selfcommunity/types';
 import {CommentCreateParams, CommentListParams, SCPaginatedResponse} from '../../types';
 import {AxiosRequestConfig} from 'axios';
+import {urlParams} from '../../utils/url';
 
 export interface CommentApiClientInterface {
   getAllComments(params: CommentListParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCommentType>>;
@@ -29,7 +30,7 @@ export class CommentApiClient {
    * @param config
    */
   static getAllComments(params: CommentListParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCommentType>> {
-    const p = new URLSearchParams(params);
+    const p = urlParams(params);
     return apiRequest({...config, url: `${Endpoints.Comments.url({})}?${p.toString()}`, method: Endpoints.Comments.method});
   }
 

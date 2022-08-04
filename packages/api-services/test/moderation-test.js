@@ -43,7 +43,7 @@ describe('Moderation Service Test', () => {
   });
   test('Moderate a specific contribution', () => {
     if (contribution && user) {
-      const body = {contribution_type: contribution.contribution_type, action: 'ignore', moderation_type: SCFlagTypeEnum.POOR};
+      const body = {contribution_type: contribution.contribution_type, action: 'ignore', user: user.id, moderation_type: SCFlagTypeEnum.POOR};
       return ModerationService.moderateAContribution(contribution.contribution.id, body).then((data) => {
         expect(data).toBe('');
       });

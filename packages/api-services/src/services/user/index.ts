@@ -25,6 +25,7 @@ import {
 } from '@selfcommunity/types';
 import {SCPaginatedResponse, UserAutocompleteParams, UserSearchParams} from '../../types';
 import {AxiosRequestConfig} from 'axios';
+import {urlParams} from '../../utils/url';
 
 export interface UserApiClientInterface {
   getAllUsers(params?: any, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>>;
@@ -86,7 +87,7 @@ export class UserApiClient {
    * @param config
    */
   static getAllUsers(params?: any, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
-    const p = new URLSearchParams(params);
+    const p = urlParams(params);
     return apiRequest({...config, url: `${Endpoints.UserList.url({})}?${p.toString()}`, method: Endpoints.UserList.method});
   }
 
@@ -96,7 +97,7 @@ export class UserApiClient {
    * @param config
    */
   static getHiddenUsers(params?: any, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
-    const p = new URLSearchParams(params);
+    const p = urlParams(params);
     return apiRequest({...config, url: `${Endpoints.ListHiddenUsers.url({})}?${p.toString()}`, method: Endpoints.ListHiddenUsers.method});
   }
 
@@ -107,7 +108,7 @@ export class UserApiClient {
    * @param config
    */
   static userAutocomplete(params: UserAutocompleteParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserAutocompleteType>> {
-    const p = new URLSearchParams(params);
+    const p = urlParams(params);
     return apiRequest({...config, url: `${Endpoints.UserAutocomplete.url({})}?${p.toString()}`, method: Endpoints.UserAutocomplete.method});
   }
 
@@ -117,7 +118,7 @@ export class UserApiClient {
    * @param config
    */
   static userSearch(params: UserSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
-    const p = new URLSearchParams(params);
+    const p = urlParams(params);
     return apiRequest({...config, url: `${Endpoints.UserSearch.url({})}?${p.toString()}`, method: Endpoints.UserSearch.method});
   }
 
@@ -512,7 +513,7 @@ export class UserApiClient {
    * @param config
    */
   static checkUserEmailToken(email_token, config?: AxiosRequestConfig): Promise<SCUserEmailTokenType> {
-    const p = new URLSearchParams({email_token: email_token});
+    const p = urlParams({email_token: email_token});
     return apiRequest({...config, url: `${Endpoints.CheckEmailToken.url({})}?${p.toString()}`, method: Endpoints.CheckEmailToken.method});
   }
 

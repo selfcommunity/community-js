@@ -3,6 +3,7 @@ import {apiRequest} from '../../utils/apiRequest';
 import Endpoints from '../../constants/Endpoints';
 import {SCFeatureType} from '@selfcommunity/types';
 import {AxiosRequestConfig} from 'axios';
+import {urlParams} from '../../utils/url';
 
 export interface FeatureApiClientInterface {
   getAllFeatures(params?: FeatureParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeatureType[]>>;
@@ -18,7 +19,7 @@ export class FeatureApiClient {
    * @param config
    */
   static getAllFeatures(params?: FeatureParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeatureType[]>> {
-    const p = new URLSearchParams(params);
+    const p = urlParams(params);
     return apiRequest({...config, url: `${Endpoints.Feature.url({})}?${p.toString()}`, method: Endpoints.Feature.method});
   }
 }

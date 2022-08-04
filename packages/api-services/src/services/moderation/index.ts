@@ -1,14 +1,18 @@
 import {apiRequest} from '../../utils/apiRequest';
 import Endpoints from '../../constants/Endpoints';
 import {SCUserModerationType, SCUserStatus, SCFlaggedContributionType, SCFlagType, SCFlagTypeEnum, SCContributionType} from '@selfcommunity/types';
-import {ModerateContributionParams, SCPaginatedResponse} from '../../types';
+import {FlaggedContributionParams, ModerateContributionParams, ModerationParams, SCPaginatedResponse} from '../../types';
 import {SCContributionStatus} from '@selfcommunity/types';
 import {AxiosRequestConfig} from 'axios';
+import {urlParams} from '../../utils/url';
 
 export interface ModerationApiClientInterface {
-  getUsersForModeration(config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserModerationType>>;
-  moderateASpecificUser(id: number, status: SCUserStatus, config?: AxiosRequestConfig): Promise<any>;
-  getAllFlaggedContributions(config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFlaggedContributionType>>;
+  getUsersForModeration(params?: ModerationParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserModerationType>>;
+  moderateASpecificUser(id: number, status: SCUserStatus, days_blocked?: string, hard?: number, config?: AxiosRequestConfig): Promise<any>;
+  getAllFlaggedContributions(
+    params?: FlaggedContributionParams,
+    config?: AxiosRequestConfig
+  ): Promise<SCPaginatedResponse<SCFlaggedContributionType>>;
   getAllFlagsForSpecificContribution(
     id: number,
     contribution_type: SCContributionType,
@@ -25,26 +29,43 @@ export interface ModerationApiClientInterface {
 export class ModerationApiClient {
   /**
    * This endpoint retrieves all users for moderation purpose.
+   * @param params
+   * @param config
    */
-  static getUsersForModeration(config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserModerationType>> {
-    return apiRequest({...config, url: Endpoints.UsersForModeration.url({}), method: Endpoints.UsersForModeration.method});
+  static getUsersForModeration(params?: ModerationParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserModerationType>> {
+    const p = urlParams(params);
+    return apiRequest({...config, url: `${Endpoints.UsersForModeration.url({})}?${p.toString()}`, method: Endpoints.UsersForModeration.method});
   }
 
   /**
    * This endpoint performs users moderation.
    * @param id
    * @param status
+   * @param days_blocked
+   * @param hard
    * @param config
    */
-  static moderateASpecificUser(id: number, status: SCUserStatus, config?: AxiosRequestConfig): Promise<any> {
-    return apiRequest({...config, url: Endpoints.ModerateUser.url({id}), method: Endpoints.ModerateUser.method, data: {status: status}});
+  static moderateASpecificUser(id: number, status: SCUserStatus, days_blocked?: string, hard?: number, config?: AxiosRequestConfig): Promise<any> {
+    const p = urlParams({...(days_blocked && {days_blocked: days_blocked}), ...(hard && {hard: hard})});
+    return apiRequest({
+      ...config,
+      url: `${Endpoints.ModerateUser.url({id})}?${p.toString()}`,
+      method: Endpoints.ModerateUser.method,
+      data: {status: status}
+    });
   }
 
   /**
    * This endpoint retrieves all flagged contributions.
+   * @param params
+   * @param config
    */
-  static getAllFlaggedContributions(config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFlaggedContributionType>> {
-    return apiRequest({...config, url: Endpoints.FlaggedContributions.url({}), method: Endpoints.FlaggedContributions.method});
+  static getAllFlaggedContributions(
+    params?: FlaggedContributionParams,
+    config?: AxiosRequestConfig
+  ): Promise<SCPaginatedResponse<SCFlaggedContributionType>> {
+    const p = urlParams(params);
+    return apiRequest({...config, url: `${Endpoints.FlaggedContributions.url({})}?${p.toString()}`, method: Endpoints.FlaggedContributions.method});
   }
 
   /**
@@ -135,14 +156,23 @@ export class ModerationApiClient {
  :::
  */
 export default class ModerationService {
-  static async getUsersForModeration(config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserModerationType>> {
-    return ModerationApiClient.getUsersForModeration(config);
+  static async getUsersForModeration(params?: ModerationParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserModerationType>> {
+    return ModerationApiClient.getUsersForModeration(params, config);
   }
-  static async moderateASpecificUser(id: number, status: SCUserStatus, config?: AxiosRequestConfig): Promise<any> {
-    return ModerationApiClient.moderateASpecificUser(id, status, config);
+  static async moderateASpecificUser(
+    id: number,
+    status: SCUserStatus,
+    days_blocked?: string,
+    hard?: number,
+    config?: AxiosRequestConfig
+  ): Promise<any> {
+    return ModerationApiClient.moderateASpecificUser(id, status, days_blocked, hard, config);
   }
-  static async getAllFlaggedContributions(config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFlaggedContributionType>> {
-    return ModerationApiClient.getAllFlaggedContributions(config);
+  static async getAllFlaggedContributions(
+    params?: FlaggedContributionParams,
+    config?: AxiosRequestConfig
+  ): Promise<SCPaginatedResponse<SCFlaggedContributionType>> {
+    return ModerationApiClient.getAllFlaggedContributions(params, config);
   }
   static async getAllFlagsForSpecificContribution(
     id: number,

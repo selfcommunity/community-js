@@ -3,6 +3,7 @@ import {CustomPageParams, CustomPageSearchParams, SCPaginatedResponse} from '../
 import {SCCustomPageType} from '@selfcommunity/types';
 import {apiRequest} from '../../utils/apiRequest';
 import {AxiosRequestConfig} from 'axios';
+import {urlParams} from '../../utils/url';
 
 export interface CustomPageApiClientInterface {
   getASpecificCustomPage(id: number, config?: AxiosRequestConfig): Promise<SCCustomPageType>;
@@ -29,7 +30,7 @@ export class CustomPageApiClient {
    * @param config
    */
   static getAllCustomPages(params?: CustomPageParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCustomPageType>> {
-    const p = new URLSearchParams(params);
+    const p = urlParams(params);
     return apiRequest({...config, url: `${Endpoints.GetCustomPages.url({})}?${p.toString()}`, method: Endpoints.GetCustomPages.method});
   }
 
@@ -39,7 +40,7 @@ export class CustomPageApiClient {
    * @param config
    */
   static searchCustomPages(params?: CustomPageSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCustomPageType>> {
-    const p = new URLSearchParams(params);
+    const p = urlParams(params);
     return apiRequest({...config, url: `${Endpoints.CustomPageSearch.url({})}?${p.toString()}`, method: Endpoints.CustomPageSearch.method});
   }
 }
