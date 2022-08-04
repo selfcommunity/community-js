@@ -239,7 +239,7 @@ export default function ContributionNotification(inProps: ContributionNotificati
                   <Link
                     to={scRoutingContext.url(
                       SCRoutes[`${notificationObject[contributionType]['type'].toUpperCase()}_ROUTE_NAME`],
-                      getRouteData(notificationObject)
+                      getRouteData(notificationObject[contributionType])
                     )}>
                     <FormattedMessage id="ui.userToastNotifications.viewContribution" defaultMessage={'ui.userToastNotifications.viewContribution'} />
                   </Link>
