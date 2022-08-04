@@ -519,9 +519,4 @@ export interface SCNotificationContributionType extends SCNotificationType {
    * If the contribution type is status
    */
   status?: SCFeedStatusType;
-
-  /**
-   * The user who created the contribution
-   */
-  user: SCUserType;
 }

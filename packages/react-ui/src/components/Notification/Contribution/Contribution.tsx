@@ -22,6 +22,14 @@ const messages = defineMessages({
   discussion: {
     id: 'ui.notification.contribution.discussion',
     defaultMessage: 'ui.notification.contribution.discussion'
+  },
+  postOrStatusSnippet: {
+    id: 'ui.notification.contribution.snippet.newPostOrStatus',
+    defaultMessage: 'ui.notification.contribution.snippet.newPostOrStatus'
+  },
+  discussionSnippet: {
+    id: 'ui.notification.contribution.snippet.discussion',
+    defaultMessage: 'ui.notification.contribution.snippet.discussion'
   }
 });
 
@@ -59,7 +67,6 @@ const Root = styled(Box, {
   [`& .${classes.contributionText}`]: {
     color: theme.palette.text.primary,
     textOverflow: 'ellipsis',
-    display: 'inline',
     overflow: 'hidden',
     '&:hover': {
       textDecoration: 'underline'
@@ -145,7 +152,6 @@ export default function ContributionNotification(inProps: ContributionNotificati
 
   // INTL
   const intl = useIntl();
-
   /**
    * Handle vote
    */
@@ -179,14 +185,36 @@ export default function ContributionNotification(inProps: ContributionNotificati
               className={classes.username}>
               {notificationObject[contributionType].author.username}
             </Link>{' '}
-            {notificationObject[contributionType]['type'] === SCFeedObjectTypologyType.POST ||
-            notificationObject[contributionType]['type'] === SCFeedObjectTypologyType.STATUS
-              ? intl.formatMessage(messages.postOrStatus, {contribution: notificationObject[contributionType]['type']})
-              : intl.formatMessage(messages.discussion)}
+            {template === SCNotificationObjectTemplateType.SNIPPET ? (
+              <>
+                {notificationObject[contributionType]['type'] === SCFeedObjectTypologyType.POST ||
+                notificationObject[contributionType]['type'] === SCFeedObjectTypologyType.STATUS
+                  ? intl.formatMessage(messages.postOrStatusSnippet, {contribution: notificationObject[contributionType]['type']})
+                  : intl.formatMessage(messages.discussionSnippet)}
+              </>
+            ) : (
+              <>
+                {notificationObject[contributionType]['type'] === SCFeedObjectTypologyType.POST ||
+                notificationObject[contributionType]['type'] === SCFeedObjectTypologyType.STATUS
+                  ? intl.formatMessage(messages.postOrStatus, {contribution: notificationObject[contributionType]['type']})
+                  : intl.formatMessage(messages.discussion)}
+              </>
+            )}
           </>
         }
         secondary={
           <React.Fragment>
+            {template === SCNotificationObjectTemplateType.SNIPPET && (
+              <Link
+                to={scRoutingContext.url(
+                  SCRoutes[`${contributionType.toUpperCase()}_ROUTE_NAME`],
+                  getRouteData(notificationObject[contributionType])
+                )}>
+                <Typography variant="body2" className={classes.contributionText} gutterBottom component={'div'}>
+                  {getContributionSnippet(notificationObject[contributionType])}
+                </Typography>
+              </Link>
+            )}
             {template === SCNotificationObjectTemplateType.DETAIL && (
               <Stack direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
                 <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
