@@ -3,6 +3,86 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.29-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.1.29-alpha.7...@selfcommunity/react-templates@0.1.29-alpha.8) (2022-08-04)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.1.29-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.1.29-alpha.6...@selfcommunity/react-templates@0.1.29-alpha.7) (2022-08-04)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.1.29-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.1.29-alpha.5...@selfcommunity/react-templates@0.1.29-alpha.6) (2022-08-03)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.1.29-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.1.29-alpha.4...@selfcommunity/react-templates@0.1.29-alpha.5) (2022-08-03)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.1.29-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.1.29-alpha.3...@selfcommunity/react-templates@0.1.29-alpha.4) (2022-08-03)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.1.29-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.1.29-alpha.2...@selfcommunity/react-templates@0.1.29-alpha.3) (2022-08-03)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.1.29-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.1.29-alpha.1...@selfcommunity/react-templates@0.1.29-alpha.2) (2022-08-03)
+
+
+### Bug Fixes
+
+* Fix component update on SSR ([3fa676d](https://github.com/selfcommunity/community-js/commit/3fa676daa4a1f8fc9f69da972a1dc1825352cb9b))
+
+
+
+
+
+## [0.1.29-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.1.29-alpha.0...@selfcommunity/react-templates@0.1.29-alpha.1) (2022-08-02)
+
+
+### Bug Fixes
+
+* Fix typescript props forwarding ([61dbbcf](https://github.com/selfcommunity/community-js/commit/61dbbcfa43f363132cd11bfa07afbb307d4c7ed4))
+* Fix typescript props forwarding ([e1ae905](https://github.com/selfcommunity/community-js/commit/e1ae9057f806847dce719a6073ade0f7524c211b))
+* Fix typescript props forwarding ([95cedaa](https://github.com/selfcommunity/community-js/commit/95cedaa5d9b3a45d211632c47ead99df02402e93))
+
+
+
+
+
+## [0.1.29-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.1.28...@selfcommunity/react-templates@0.1.29-alpha.0) (2022-08-02)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
 ## [0.1.28](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.1.28-alpha.10...@selfcommunity/react-templates@0.1.28) (2022-08-02)
 
 **Note:** Version bump only for package @selfcommunity/react-templates

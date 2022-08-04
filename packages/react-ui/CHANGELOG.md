@@ -3,6 +3,68 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.3.0-alpha.2...@selfcommunity/react-ui@0.3.0-alpha.3) (2022-08-04)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.3.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.3.0-alpha.1...@selfcommunity/react-ui@0.3.0-alpha.2) (2022-08-04)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.3.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.3.0-alpha.0...@selfcommunity/react-ui@0.3.0-alpha.1) (2022-08-03)
+
+
+### Bug Fixes
+
+* fixed contribution notification bugs ([a28f07f](https://github.com/selfcommunity/community-js/commit/a28f07ff8fec12c7503e64f0b338037e9fced1e1))
+
+
+
+
+
+# [0.3.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.2.10-alpha.2...@selfcommunity/react-ui@0.3.0-alpha.0) (2022-08-03)
+
+
+### Features
+
+* added ContributionNotification. Asana issue: https://app.asana.com/0/0/1202635970226074/f ([7656e3b](https://github.com/selfcommunity/community-js/commit/7656e3b94f7cca30b0912e811ff64cea2a4fade4))
+
+
+
+
+
+## [0.2.10-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.2.10-alpha.1...@selfcommunity/react-ui@0.2.10-alpha.2) (2022-08-03)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.2.10-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.2.10-alpha.0...@selfcommunity/react-ui@0.2.10-alpha.1) (2022-08-03)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.2.10-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.2.9...@selfcommunity/react-ui@0.2.10-alpha.0) (2022-08-02)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
 ## [0.2.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.2.9-alpha.8...@selfcommunity/react-ui@0.2.9) (2022-08-02)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
