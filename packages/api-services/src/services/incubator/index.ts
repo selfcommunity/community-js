@@ -3,6 +3,7 @@ import {apiRequest} from '../../utils/apiRequest';
 import Endpoints from '../../constants/Endpoints';
 import {SCIncubatorSubscriptionType, SCIncubatorType, SCUserType} from '@selfcommunity/types';
 import {AxiosRequestConfig} from 'axios';
+import {urlParams} from '../../utils/url';
 
 export interface IncubatorApiClientInterface {
   getAllIncubators(params?: IncubatorSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCIncubatorType>>;
@@ -24,7 +25,7 @@ export class IncubatorApiClient {
    * @param config
    */
   static getAllIncubators(params?: IncubatorSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCIncubatorType>> {
-    const p = new URLSearchParams(params);
+    const p = urlParams(params);
     return apiRequest({...config, url: `${Endpoints.GetAllIncubators.url({})}?${p.toString()}`, method: Endpoints.GetAllIncubators.method});
   }
 
@@ -34,7 +35,7 @@ export class IncubatorApiClient {
    * @param config
    */
   static searchIncubators(params?: IncubatorSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCIncubatorType>> {
-    const p = new URLSearchParams(params);
+    const p = urlParams(params);
     return apiRequest({...config, url: `${Endpoints.SearchIncubators.url({})}?${p.toString()}`, method: Endpoints.SearchIncubators.method});
   }
 

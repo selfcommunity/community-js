@@ -3,6 +3,7 @@ import Endpoints from '../../constants/Endpoints';
 import {SCUserScoreType} from '@selfcommunity/types/src/types';
 import {ScoreParams, SCPaginatedResponse, UserScoreParams} from '../../types';
 import {AxiosRequestConfig} from 'axios';
+import {urlParams} from '../../utils/url';
 
 export interface ScoreApiClientInterface {
   getAllScores(params?: ScoreParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserScoreType>>;
@@ -20,7 +21,7 @@ export class ScoreApiClient {
    * @param config
    */
   static getAllScores(params?: ScoreParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserScoreType>> {
-    const p = new URLSearchParams(params);
+    const p = urlParams(params);
     return apiRequest({...config, url: `${Endpoints.ScoresList.url({})}?${p.toString()}`, method: Endpoints.ScoresList.method});
   }
 
@@ -30,7 +31,7 @@ export class ScoreApiClient {
    * @param config
    */
   static searchScore(params?: ScoreParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserScoreType>> {
-    const p = new URLSearchParams(params);
+    const p = urlParams(params);
     return apiRequest({...config, url: `${Endpoints.SearchScore.url({})}?${p.toString()}`, method: Endpoints.SearchScore.method});
   }
 

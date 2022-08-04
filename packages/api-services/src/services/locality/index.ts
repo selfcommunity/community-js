@@ -3,6 +3,7 @@ import {BaseSearchParams, SCPaginatedResponse} from '../../types';
 import {apiRequest} from '../../utils/apiRequest';
 import {SCLocalityType} from '@selfcommunity/types';
 import {AxiosRequestConfig} from 'axios';
+import {urlParams} from '../../utils/url';
 
 export interface LocalityApiClientInterface {
   getLocalities(params?: BaseSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCLocalityType>>;
@@ -19,7 +20,7 @@ export class LocalityApiClient {
    * @param config
    */
   static getLocalities(params?: BaseSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCLocalityType>> {
-    const p = new URLSearchParams(params);
+    const p = urlParams(params);
     return apiRequest({...config, url: `${Endpoints.GetLocalities.url({})}?${p.toString()}`, method: Endpoints.GetLocalities.method});
   }
 
@@ -29,7 +30,7 @@ export class LocalityApiClient {
    * @param config
    */
   static searchLocalities(params?: BaseSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCLocalityType>> {
-    const p = new URLSearchParams(params);
+    const p = urlParams(params);
     return apiRequest({
       ...config,
       url: `${Endpoints.ComposerLocalitySearch.url({})}?${p.toString()}`,

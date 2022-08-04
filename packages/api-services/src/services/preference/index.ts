@@ -3,6 +3,7 @@ import Endpoints from '../../constants/Endpoints';
 import {SCPreferenceType} from '@selfcommunity/types/src/types';
 import {SCPaginatedResponse} from '../../types';
 import {AxiosRequestConfig} from 'axios';
+import {urlParams} from '../../utils/url';
 
 export interface PreferenceApiClientInterface {
   getAllPreferences(config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPreferenceType[]>>;
@@ -43,7 +44,7 @@ export class PreferenceApiClient {
     ordering?: string,
     config?: AxiosRequestConfig
   ): Promise<SCPaginatedResponse<SCPreferenceType[]>> {
-    const params = new URLSearchParams({
+    const params = urlParams({
       ...(search && {search: search}),
       ...(section && {section: section}),
       ...(keys && {keys: keys}),

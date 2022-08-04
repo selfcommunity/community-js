@@ -3,6 +3,7 @@ import {generateEmail, generateString} from './utils/random';
 
 describe('User Service Test', () => {
   const loggedUser = 7;
+  const admin = 1;
   const password = 'Password!';
   let user;
   let newEmail;
@@ -171,9 +172,13 @@ describe('User Service Test', () => {
     });
   }
   test('Show/Hide User', () => {
-    return UserService.showHideUser(user.id).then((data) => {
-      expect(data).toBe('');
-    });
+    if (user.id !== loggedUser && user.id !== admin) {
+      return UserService.showHideUser(user.id).then((data) => {
+        expect(data).toBe('');
+      });
+    } else {
+      test.skip;
+    }
   });
   test('Check user hidden', () => {
     return UserService.checkUserHidden(user.id).then((data) => {

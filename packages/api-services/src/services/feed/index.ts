@@ -3,6 +3,7 @@ import Endpoints from '../../constants/Endpoints';
 import {SCFeedUnitType, SCFeedUnseenCountType} from '@selfcommunity/types';
 import {FeedParams, SCPaginatedResponse} from '../../types';
 import {AxiosRequestConfig} from 'axios';
+import {urlParams} from '../../utils/url';
 
 export interface FeedApiClientInterface {
   getMainFeed(params?: FeedParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeedUnitType>>;
@@ -22,7 +23,7 @@ export class FeedApiClient {
    * @param config
    */
   static getMainFeed(params?: FeedParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeedUnitType>> {
-    const p = new URLSearchParams(params);
+    const p = urlParams(params);
     return apiRequest({...config, url: `${Endpoints.MainFeed.url({})}?${p.toString()}`, method: Endpoints.MainFeed.method});
   }
 
@@ -32,7 +33,7 @@ export class FeedApiClient {
    * @param config
    */
   static getExploreFeed(params?: FeedParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeedUnitType>> {
-    const p = new URLSearchParams(params);
+    const p = urlParams(params);
     return apiRequest({...config, url: `${Endpoints.ExploreFeed.url({})}?${p.toString()}`, method: Endpoints.ExploreFeed.method});
   }
 

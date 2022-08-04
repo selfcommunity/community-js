@@ -3,6 +3,7 @@ import {apiRequest} from '../../utils/apiRequest';
 import Endpoints from '../../constants/Endpoints';
 import {SCEmbedType, SCFeedUnitType} from '@selfcommunity/types';
 import {AxiosRequestConfig} from 'axios';
+import {urlParams} from '../../utils/url';
 
 export interface EmbedApiClientInterface {
   getAllEmbeds(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCEmbedType>>;
@@ -25,7 +26,7 @@ export class EmbedApiClient {
    * @param config
    */
   static getAllEmbeds(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCEmbedType>> {
-    const p = new URLSearchParams(params);
+    const p = urlParams(params);
     return apiRequest({...config, url: `${Endpoints.EmbedList.url({})}?${p.toString()}`, method: Endpoints.EmbedList.method});
   }
 
@@ -44,7 +45,7 @@ export class EmbedApiClient {
    * @param config
    */
   static searchEmbed(params?: EmbedSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCEmbedType>> {
-    const p = new URLSearchParams(params);
+    const p = urlParams(params);
     return apiRequest({...config, url: `${Endpoints.EmbedSearch.url({})}?${p.toString()}`, method: Endpoints.EmbedSearch.method});
   }
 
@@ -84,7 +85,7 @@ export class EmbedApiClient {
    * @param config
    */
   static getEmbedFeed(embed_type?: string, embed_id?: string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeedUnitType>> {
-    const p = new URLSearchParams({embed_type: embed_type, embed_id: embed_id});
+    const p = urlParams({...(embed_type && {embed_type: embed_type}), ...(embed_id && {embed_id: embed_id})});
     return apiRequest({...config, url: `${Endpoints.EmbedFeed.url({})}?${p.toString()}`, method: Endpoints.EmbedFeed.method});
   }
 

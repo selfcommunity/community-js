@@ -14,6 +14,7 @@ import Endpoints, {EndpointType} from './constants/Endpoints';
 import {formatHttpError} from './utils/http';
 import {generateJWTToken, parseJwt} from './utils/token';
 import {apiRequest} from './utils/apiRequest';
+import {urlParams} from './utils/url';
 
 /**
  * Services
@@ -57,7 +58,9 @@ import {
   IncubatorCreateParams,
   IncubatorSearchParams,
   LoyaltyPrizeParams,
+  ModerationParams,
   ModerateContributionParams,
+  FlaggedContributionParams,
   CustomNotificationParams,
   UserAutocompleteParams,
   UserScoreParams,
@@ -106,6 +109,7 @@ export {
   formatHttpError,
   generateJWTToken,
   parseJwt,
+  urlParams,
   Endpoints,
   EndpointType,
   PreferenceService,
@@ -192,6 +196,8 @@ export {
   SSOSignUpParams,
   CommentListParams,
   LoyaltyPrizeParams,
+  ModerationParams,
+  FlaggedContributionParams,
   ModerateContributionParams,
   CustomNotificationParams,
   UserAutocompleteParams,

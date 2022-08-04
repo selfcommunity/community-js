@@ -4,7 +4,7 @@ import {SSOSignUpParams} from './sso';
 import {CommentListParams, CommentCreateParams} from './comment';
 import {IncubatorCreateParams, IncubatorSearchParams} from './incubator';
 import {LoyaltyPrizeParams} from './prize';
-import {ModerateContributionParams} from './moderation';
+import {ModerationParams, ModerateContributionParams, FlaggedContributionParams} from './moderation';
 import {CustomNotificationParams} from './notification';
 import {UserAutocompleteParams, UserScoreParams, UserSearchParams} from './user';
 import {TagParams, TagGetParams} from './tag';
@@ -39,7 +39,9 @@ export {
   IncubatorCreateParams,
   IncubatorSearchParams,
   LoyaltyPrizeParams,
+  ModerationParams,
   ModerateContributionParams,
+  FlaggedContributionParams,
   CustomNotificationParams,
   UserAutocompleteParams,
   UserScoreParams,

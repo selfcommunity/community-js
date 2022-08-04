@@ -3,6 +3,7 @@ import {TagParams, SCPaginatedResponse, TagGetParams} from '../../types';
 import Endpoints from '../../constants/Endpoints';
 import {SCTagType} from '@selfcommunity/types/src/types';
 import {AxiosRequestConfig} from 'axios';
+import {urlParams} from '../../utils/url';
 
 export interface TagApiClientInterface {
   getAllTags(params?: TagGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCTagType>>;
@@ -24,7 +25,7 @@ export class TagApiClient {
    * @param config
    */
   static getAllTags(params?: TagGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCTagType>> {
-    const p = new URLSearchParams(params);
+    const p = urlParams(params);
     return apiRequest({...config, url: `${Endpoints.TagsList.url({})}?${p.toString()}`, method: Endpoints.TagsList.method});
   }
 
@@ -43,7 +44,7 @@ export class TagApiClient {
    * @param config
    */
   static searchTag(params?: TagGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCTagType>> {
-    const p = new URLSearchParams(params);
+    const p = urlParams(params);
     return apiRequest({...config, url: `${Endpoints.SearchTag.url({})}?${p.toString()}`, method: Endpoints.SearchTag.method});
   }
 

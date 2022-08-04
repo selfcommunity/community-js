@@ -3,6 +3,7 @@ import {LegalPageFilterParams, SCPaginatedResponse} from '../../types';
 import {apiRequest} from '../../utils/apiRequest';
 import {SCLegalPageAckType, SCLegalPageType} from '@selfcommunity/types';
 import {AxiosRequestConfig} from 'axios';
+import {urlParams} from '../../utils/url';
 
 export interface LegalPageApiClientInterface {
   getLegalPages(params?: LegalPageFilterParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCLegalPageType>>;
@@ -23,7 +24,7 @@ export class LegalPageApiClient {
    * @param config
    */
   static getLegalPages(params?: LegalPageFilterParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCLegalPageType>> {
-    const p = new URLSearchParams(params);
+    const p = urlParams(params);
     return apiRequest({...config, url: `${Endpoints.GetLegalPages.url({})}?${p.toString()}`, method: Endpoints.GetLegalPages.method});
   }
   /**
@@ -41,7 +42,7 @@ export class LegalPageApiClient {
    * @param config
    */
   static searchLegalPages(params?: LegalPageFilterParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCLegalPageType>> {
-    const p = new URLSearchParams(params);
+    const p = urlParams(params);
     return apiRequest({...config, url: `${Endpoints.SearchLegalPages.url({})}?${p.toString()}`, method: Endpoints.SearchLegalPages.method});
   }
 
