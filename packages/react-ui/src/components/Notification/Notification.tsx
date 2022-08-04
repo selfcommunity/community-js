@@ -36,6 +36,7 @@ import {
 } from '@selfcommunity/types';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
+import ContributionNotification from './Contribution';
 
 const messages = defineMessages({
   receivePrivateMessage: {
@@ -362,7 +363,8 @@ export default function UserNotification(inProps: NotificationProps): JSX.Elemen
         notificationObject.aggregated[0].type === SCNotificationTypologyType.NESTED_COMMENT ||
         notificationObject.aggregated[0].type === SCNotificationTypologyType.FOLLOW ||
         notificationObject.aggregated[0].type === SCNotificationTypologyType.MENTION ||
-        notificationObject.aggregated[0].type === SCNotificationTypologyType.VOTE_UP)
+        notificationObject.aggregated[0].type === SCNotificationTypologyType.VOTE_UP ||
+        notificationObject.aggregated[0].type === SCNotificationTypologyType.CONTRIBUTION)
     ) {
       const contribution = getContribution(notificationObject);
       return (
@@ -464,6 +466,8 @@ export default function UserNotification(inProps: NotificationProps): JSX.Elemen
       return <IncubatorApprovedNotification notificationObject={n} key={i} />;
     } else if (n.type === SCNotificationTypologyType.CUSTOM_NOTIFICATION) {
       handleCustomNotification && handleCustomNotification(n);
+    } else if (n.type === SCNotificationTypologyType.CONTRIBUTION) {
+      return <ContributionNotification notificationObject={n} key={i} index={i} onVote={handleVote} loadingVote={loadingVote} />;
     }
     return null;
   }

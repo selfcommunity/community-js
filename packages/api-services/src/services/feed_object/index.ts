@@ -14,6 +14,7 @@ import {
   SCVoteType
 } from '@selfcommunity/types';
 import {AxiosRequestConfig} from 'axios';
+import {urlParams} from '../../utils/url';
 
 export interface FeedObjectApiClientInterface {
   getAllFeedObjects(
@@ -26,7 +27,7 @@ export interface FeedObjectApiClientInterface {
     params?: BaseGetParams,
     config?: AxiosRequestConfig
   ): Promise<SCPaginatedResponse<SCFeedObjectType>>;
-  searchFeedObject(type: SCFeedObjectTypologyType, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeedObjectType>>;
+  searchFeedObject(type: SCFeedObjectTypologyType, search?: string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeedObjectType>>;
   createFeedObject(type: SCFeedObjectTypologyType, data: FeedObjCreateParams, config?: AxiosRequestConfig): Promise<SCFeedObjectType>;
   getSpecificFeedObject(type: SCFeedObjectTypologyType, id: number, config?: AxiosRequestConfig): Promise<SCFeedObjectType>;
   updateFeedObject(type: SCFeedObjectTypologyType, id: number, data: FeedObjCreateParams, config?: AxiosRequestConfig): Promise<SCFeedObjectType>;
@@ -106,7 +107,7 @@ export class FeedObjectApiClient {
     params?: FeedObjGetParams,
     config?: AxiosRequestConfig
   ): Promise<SCPaginatedResponse<SCFeedObjectType>> {
-    const p = new URLSearchParams(params);
+    const p = urlParams(params);
     return apiRequest({...config, url: `${Endpoints.FeedObjectList.url({type})}?${p.toString()}`, method: Endpoints.FeedObjectList.method});
   }
 
@@ -121,7 +122,7 @@ export class FeedObjectApiClient {
     params?: BaseGetParams,
     config?: AxiosRequestConfig
   ): Promise<SCPaginatedResponse<SCFeedObjectType>> {
-    const p = new URLSearchParams(params);
+    const p = urlParams(params);
     return apiRequest({
       ...config,
       url: `${Endpoints.FeedObjectsUncommented.url({type})}?${p.toString()}`,
@@ -132,10 +133,16 @@ export class FeedObjectApiClient {
   /**
    * This endpoint performs search operation to feed objs
    * @param type
+   * @param search
    * @param config
    */
-  static searchFeedObject(type: SCFeedObjectTypologyType, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeedObjectType>> {
-    return apiRequest({...config, url: Endpoints.SearchFeedObject.url({type}), method: Endpoints.SearchFeedObject.method});
+  static searchFeedObject(
+    type: SCFeedObjectTypologyType,
+    search?: string,
+    config?: AxiosRequestConfig
+  ): Promise<SCPaginatedResponse<SCFeedObjectType>> {
+    const p = urlParams({...(search && {search: search})});
+    return apiRequest({...config, url: `${Endpoints.SearchFeedObject.url({type})}?${p.toString()}`, method: Endpoints.SearchFeedObject.method});
   }
 
   /**
@@ -197,7 +204,7 @@ export class FeedObjectApiClient {
     params?: BaseGetParams,
     config?: AxiosRequestConfig
   ): Promise<SCPaginatedResponse<SCUserType>> {
-    const p = new URLSearchParams(params);
+    const p = urlParams(params);
     return apiRequest({
       ...config,
       url: `${Endpoints.FeedObjectContributorsList.url({type, id})}?${p.toString()}`,
@@ -218,7 +225,7 @@ export class FeedObjectApiClient {
     params?: BaseGetParams,
     config?: AxiosRequestConfig
   ): Promise<SCPaginatedResponse<SCFeedObjectType>> {
-    const p = new URLSearchParams(params);
+    const p = urlParams(params);
     return apiRequest({
       ...config,
       url: `${Endpoints.FeedObjectSharesList.url({type, id})}?${p.toString()}`,
@@ -239,7 +246,7 @@ export class FeedObjectApiClient {
     params?: BaseGetParams,
     config?: AxiosRequestConfig
   ): Promise<SCPaginatedResponse<SCUserType>> {
-    const p = new URLSearchParams(params);
+    const p = urlParams(params);
     return apiRequest({
       ...config,
       url: `${Endpoints.FeedObjectUserSharesList.url({type, id})}?${p.toString()}`,
@@ -270,7 +277,7 @@ export class FeedObjectApiClient {
     params?: BaseGetParams,
     config?: AxiosRequestConfig
   ): Promise<SCPaginatedResponse<SCFeedObjectType>> {
-    const p = new URLSearchParams(params);
+    const p = urlParams(params);
     return apiRequest({
       ...config,
       url: `${Endpoints.RelatedFeedObjects.url({type, id})}?${p.toString()}`,
@@ -301,7 +308,7 @@ export class FeedObjectApiClient {
     params?: BaseGetParams,
     config?: AxiosRequestConfig
   ): Promise<SCPaginatedResponse<SCVoteType>> {
-    const p = new URLSearchParams(params);
+    const p = urlParams(params);
     return apiRequest({...config, url: `${Endpoints.VotesList.url({type, id})}?${p.toString()}`, method: Endpoints.VotesList.method});
   }
 
@@ -329,7 +336,7 @@ export class FeedObjectApiClient {
     params?: FeedObjectPollVotesSearch,
     config?: AxiosRequestConfig
   ): Promise<SCPaginatedResponse<SCPollVoteType>> {
-    const p = new URLSearchParams(params);
+    const p = urlParams(params);
     return apiRequest({...config, url: `${Endpoints.PollVotesList.url({type, id})}?${p.toString()}`, method: Endpoints.PollVotesList.method});
   }
 
@@ -354,7 +361,7 @@ export class FeedObjectApiClient {
     params?: BaseGetParams,
     config?: AxiosRequestConfig
   ): Promise<SCPaginatedResponse<SCFeedObjectType>> {
-    const p = new URLSearchParams(params);
+    const p = urlParams(params);
     return apiRequest({
       ...config,
       url: `${Endpoints.FeedObjectFollowingList.url({type})}?${p.toString()}`,
@@ -419,7 +426,7 @@ export class FeedObjectApiClient {
     params?: BaseGetParams,
     config?: AxiosRequestConfig
   ): Promise<SCPaginatedResponse<SCFeedObjectType>> {
-    const p = new URLSearchParams(params);
+    const p = urlParams(params);
     return apiRequest({
       ...config,
       url: `${Endpoints.UserListContributionNotificationSuspended.url({type})}?${p.toString()}`,
@@ -524,8 +531,12 @@ export default class FeedObjectService {
     return FeedObjectApiClient.getUncommentedFeedObjects(type, params, config);
   }
 
-  static async searchFeedObject(type: SCFeedObjectTypologyType, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeedObjectType>> {
-    return FeedObjectApiClient.searchFeedObject(type, config);
+  static async searchFeedObject(
+    type: SCFeedObjectTypologyType,
+    search?: string,
+    config?: AxiosRequestConfig
+  ): Promise<SCPaginatedResponse<SCFeedObjectType>> {
+    return FeedObjectApiClient.searchFeedObject(type, search, config);
   }
 
   static async createFeedObject(type: SCFeedObjectTypologyType, data: FeedObjCreateParams, config?: AxiosRequestConfig): Promise<SCFeedObjectType> {

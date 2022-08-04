@@ -10,6 +10,7 @@ import {
   SCUsersInsightType
 } from '@selfcommunity/types';
 import {AxiosRequestConfig} from 'axios';
+import {urlParams} from '../../utils/url';
 
 export interface InsightApiClientInterface {
   getBestContributionInsight(
@@ -36,7 +37,7 @@ export class InsightApiClient {
     params?: InsightContributionParams,
     config?: AxiosRequestConfig
   ): Promise<SCPaginatedResponse<SCContributionInsightType>> {
-    const p = new URLSearchParams(params);
+    const p = urlParams(params);
     return apiRequest({
       ...config,
       url: `${Endpoints.InsightBestContribution.url({})}?${p.toString()}`,
@@ -50,7 +51,7 @@ export class InsightApiClient {
    * @param config
    */
   static getBestEmbedInsight(params?: InsightEmbedParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCEmbedInsightType>> {
-    const p = new URLSearchParams(params);
+    const p = urlParams(params);
     return apiRequest({...config, url: `${Endpoints.InsightBestEmbed.url({})}?${p.toString()}`, method: Endpoints.InsightBestEmbed.method});
   }
 
@@ -60,7 +61,7 @@ export class InsightApiClient {
    * @param config
    */
   static getBestUsersInsight(params?: InsightUserParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUsersInsightType>> {
-    const p = new URLSearchParams(params);
+    const p = urlParams(params);
     return apiRequest({...config, url: `${Endpoints.InsightBestUser.url({})}?${p.toString()}`, method: Endpoints.InsightBestUser.method});
   }
 

@@ -3,6 +3,7 @@ import Endpoints from '../../constants/Endpoints';
 import {SCCustomAdvType} from '@selfcommunity/types';
 import {CustomAdvParams, SCPaginatedResponse} from '../../types';
 import {AxiosRequestConfig} from 'axios';
+import {urlParams} from '../../utils/url';
 
 export interface CustomAdvApiClientInterface {
   getASpecificCustomAdv(id: number, config?: AxiosRequestConfig): Promise<SCCustomAdvType>;
@@ -29,7 +30,7 @@ export class CustomAdvApiClient {
    * @param config
    */
   static getAllCustomAdv(params?: CustomAdvParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCustomAdvType>> {
-    const p = new URLSearchParams(params);
+    const p = urlParams(params);
     return apiRequest({...config, url: `${Endpoints.CustomAdvList.url({})}?${p.toString()}`, method: Endpoints.CustomAdvList.method});
   }
 
@@ -39,7 +40,7 @@ export class CustomAdvApiClient {
    * @param config
    */
   static searchCustomAdv(params?: CustomAdvParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCustomAdvType>> {
-    const p = new URLSearchParams(params);
+    const p = urlParams(params);
     return apiRequest({...config, url: `${Endpoints.CustomAdvSearch.url({})}?${p.toString()}`, method: Endpoints.CustomAdvSearch.method});
   }
 }
