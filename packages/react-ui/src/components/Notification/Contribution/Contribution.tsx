@@ -22,6 +22,14 @@ const messages = defineMessages({
   discussion: {
     id: 'ui.notification.contribution.discussion',
     defaultMessage: 'ui.notification.contribution.discussion'
+  },
+  postOrStatusSnippet: {
+    id: 'ui.notification.contribution.snippet.newPostOrStatus',
+    defaultMessage: 'ui.notification.contribution.snippet.newPostOrStatus'
+  },
+  discussionSnippet: {
+    id: 'ui.notification.contribution.snippet.discussion',
+    defaultMessage: 'ui.notification.contribution.snippet.discussion'
   }
 });
 
@@ -177,10 +185,21 @@ export default function ContributionNotification(inProps: ContributionNotificati
               className={classes.username}>
               {notificationObject[contributionType].author.username}
             </Link>{' '}
-            {notificationObject[contributionType]['type'] === SCFeedObjectTypologyType.POST ||
-            notificationObject[contributionType]['type'] === SCFeedObjectTypologyType.STATUS
-              ? intl.formatMessage(messages.postOrStatus, {contribution: notificationObject[contributionType]['type']})
-              : intl.formatMessage(messages.discussion)}
+            {template === SCNotificationObjectTemplateType.SNIPPET ? (
+              <>
+                {notificationObject[contributionType]['type'] === SCFeedObjectTypologyType.POST ||
+                notificationObject[contributionType]['type'] === SCFeedObjectTypologyType.STATUS
+                  ? intl.formatMessage(messages.postOrStatusSnippet, {contribution: notificationObject[contributionType]['type']})
+                  : intl.formatMessage(messages.discussionSnippet)}
+              </>
+            ) : (
+              <>
+                {notificationObject[contributionType]['type'] === SCFeedObjectTypologyType.POST ||
+                notificationObject[contributionType]['type'] === SCFeedObjectTypologyType.STATUS
+                  ? intl.formatMessage(messages.postOrStatus, {contribution: notificationObject[contributionType]['type']})
+                  : intl.formatMessage(messages.discussion)}
+              </>
+            )}
           </>
         }
         secondary={
