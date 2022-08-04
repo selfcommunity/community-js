@@ -367,7 +367,6 @@ export default function UserNotification(inProps: NotificationProps): JSX.Elemen
         notificationObject.aggregated[0].type === SCNotificationTypologyType.CONTRIBUTION)
     ) {
       const contribution = getContribution(notificationObject);
-      console.log(notificationObject[contribution.type]);
       return (
         <div className={classes.notificationHeader}>
           {contribution && contribution.type !== SCCommentTypologyType && (
