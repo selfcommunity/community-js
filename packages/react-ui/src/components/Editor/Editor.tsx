@@ -29,7 +29,7 @@ const Root = styled(Box, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   boxSizing: 'border-box',
-  padding: theme.spacing(1),
+  padding: theme.spacing(1, 2),
   position: 'relative',
   cursor: 'text',
   [`& .${classes.content}`]: {
@@ -54,13 +54,13 @@ const Root = styled(Box, {
   [`& .${classes.placeholder}`]: {
     position: 'absolute',
     top: theme.spacing(1),
-    left: theme.spacing(1),
+    left: theme.spacing(2),
     color: theme.palette.text.disabled
   },
   [`& .${classes.actions}`]: {
     position: 'absolute',
     bottom: 0,
-    right: 0,
+    right: theme.spacing(),
     color: theme.palette.text.primary
   },
   '& .image-resizer': {
