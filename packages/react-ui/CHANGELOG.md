@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.2-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.3.1...@selfcommunity/react-ui@0.3.2-alpha.0) (2022-08-08)
+
+
+### Bug Fixes
+
+* Fix css position of avatar in RelevantActivities.tsx ([6f4f7ff](https://github.com/selfcommunity/community-js/commit/6f4f7ff59370c95cd71b5c5cc057502b34b9f54b))
+* Fix Editor.tsx theme positioning ([230c255](https://github.com/selfcommunity/community-js/commit/230c2557f6e262a1a35c432659cc5ce50f570a6a))
+* Fix InlineComposer.tsx syles ([567da4b](https://github.com/selfcommunity/community-js/commit/567da4b6cd28fe0e79cbbabc2a6ce615c3ed3bbd))
+* Fix style in Activities.tsx ([d28d737](https://github.com/selfcommunity/community-js/commit/d28d7373208c52f3fa9186a1aed0269d0b6b4e35))
+* Fix style in LoyaltyProgramDetail.tsx ([477b3af](https://github.com/selfcommunity/community-js/commit/477b3af7ab9e90f695a624b3ae452766ca1a4b59))
+
+
+
+
+
 ## [0.3.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.3.1-alpha.2...@selfcommunity/react-ui@0.3.1) (2022-08-04)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
