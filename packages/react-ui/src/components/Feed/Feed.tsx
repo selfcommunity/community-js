@@ -2,12 +2,13 @@
 import React, {forwardRef, ForwardRefRenderFunction, ReactNode, useContext, useEffect, useImperativeHandle, useMemo, useRef, useState} from 'react';
 import {
   SCCache,
-  SCPreferences,
+  SCPreferencesContext,
   SCPreferencesContextType,
   SCUserContext,
   SCUserContextType,
   useSCFetchFeed,
-  useSCPreferences
+  SCPreferences,
+  usePreviousValue
 } from '@selfcommunity/react-core';
 import {styled, useTheme} from '@mui/material/styles';
 import {CardContent, Grid, Hidden, Theme, useMediaQuery} from '@mui/material';
@@ -50,7 +51,7 @@ const Root = styled(Grid, {
     padding: '0 2px 0 2px',
     [theme.breakpoints.down('md')]: {
       '& > .SCWidget-root, & > .SCCustomAdv-root': {
-        maxWidth: 700,
+        maxWidth: 850,
         marginLeft: 'auto',
         marginRight: 'auto'
       }
@@ -263,7 +264,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
   } = props;
 
   // CONTEXT
-  const scPreferences: SCPreferencesContextType = useSCPreferences();
+  const scPreferences: SCPreferencesContextType = useContext(SCPreferencesContext);
   const scUserContext: SCUserContextType = useContext(SCUserContext);
 
   // CONST
@@ -282,7 +283,9 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
    */
   const preferences = useMemo(() => {
     const _preferences = {};
-    PREFERENCES.map((p) => (_preferences[p] = p in scPreferences.preferences ? scPreferences.preferences[p].value : null));
+    PREFERENCES.map(
+      (p) => (_preferences[p] = scPreferences.preferences && p in scPreferences.preferences ? scPreferences.preferences[p].value : null)
+    );
     return _preferences;
   }, [scPreferences.preferences]);
 
@@ -291,11 +294,13 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
   const oneColLayout = useMediaQuery(theme.breakpoints.down('md'), {noSsr: typeof window !== 'undefined'});
   const advEnabled = useMemo(
     () =>
+      preferences &&
       preferences[SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED] &&
       ((preferences[SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED] && scUserContext.user === null) ||
         !preferences[SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED]),
     [preferences]
   );
+  const prevWidgets = usePreviousValue(widgets);
 
   /**
    * Callback onNextPage
@@ -456,6 +461,9 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
    * Callback on refresh
    */
   const refresh = () => {
+    setHeadData([]);
+    setFeedDataLeft([]);
+    setFeedDataRight(_getFeedDataRight());
     feedDataObject.reload();
   };
 
@@ -513,16 +521,18 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     if (requireAuthentication && authUserId !== null) {
       _initFeedData();
     }
-  }, [authUserId]);
+  }, [authUserId, widgets]);
 
   useEffect(() => {
     if (!requireAuthentication) {
       _initFeedData();
     }
-  }, []);
+  }, [widgets]);
 
   useEffect(() => {
-    _initFeedData();
+    if (prevWidgets && prevWidgets !== widgets && feedDataObject.componentLoaded) {
+      refresh();
+    }
   }, [widgets]);
 
   useEffect(() => {
