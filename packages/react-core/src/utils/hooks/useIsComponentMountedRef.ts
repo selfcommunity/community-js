@@ -1,7 +1,6 @@
 import {useEffect, useRef} from 'react';
 
 /**
- * useIsComponentMountedRef
  * If for some reason you can't cleanup or clear the timeouts properly,
  * you can use the following hook to verify just before setting state
  * if the component is still mounted.

@@ -14,7 +14,7 @@ import {SCOPE_SC_CORE} from '../../../constants/Errors';
  1. <SCPreferencesContext.Consumer>{(preferences) => (...)}</SCPreferencesContext.Consumer>
  ```
  ```jsx
- 2. const scPreferences: SCPreferencesType = usePreferencesContext(SCPreferencesContext);
+ 2. const scPreferences: SCPreferencesType = useContext(SCPreferencesContext);
  ```
  ```jsx
  3. const scPreferences: SCPreferencesType = useSCPreferences();

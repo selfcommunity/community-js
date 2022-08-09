@@ -253,20 +253,21 @@ export default function useSCFetchFeed(props: {
       dispatch({type: feedDataActionTypes.LOADING_PREVIOUS});
       performFetchData(state.previous)
         .then((res) => {
-          let currentOffset = Math.max(getCurrentOffset(state.previous), 0);
+          let currentOffset = Math.min(getCurrentOffset(state.previous), 0);
           let currentPage = Math.ceil(currentOffset / queryParams.limit + 1);
+          let count = res.count || state.count + res.results.length;
           dispatch({
             type: feedDataActionTypes.DATA_PREVIOUS_LOADED,
             payload: {
               currentPage,
               currentOffset,
+              count,
               initialOffset: currentOffset,
-              count: res.count,
               results: res.results,
               previous: res.previous,
             },
           });
-          onPreviousPage && onPreviousPage(currentPage, currentOffset, res.count, res.results);
+          onPreviousPage && onPreviousPage(currentPage, currentOffset, count, res.results);
           if (cacheStrategy === CacheStrategies.STALE_WHILE_REVALIDATE) {
             revalidate(state.next, false);
           }
@@ -285,21 +286,22 @@ export default function useSCFetchFeed(props: {
       dispatch({type: feedDataActionTypes.LOADING_NEXT});
       performFetchData(state.next)
         .then((res) => {
-          let currentOffset = Math.max(getCurrentOffset(res.next) - queryParams.limit, 0);
+          let currentOffset = Math.max(getCurrentOffset(res.next) - queryParams.limit, state.results.length);
           let currentPage = Math.ceil(currentOffset / queryParams.limit + 1);
+          let count = res.count || state.count + res.results.length;
           dispatch({
             type: feedDataActionTypes.DATA_NEXT_LOADED,
             payload: {
               currentPage,
               currentOffset,
+              count,
               results: res.results,
               next: res.next,
-              count: res.count,
               componentLoaded: true,
               ...(queryParams.offset && state.results.length === 0 ? {previous: res.previous} : {}),
             },
           });
-          onNextPage && onNextPage(currentPage, currentOffset, res.count, res.results);
+          onNextPage && onNextPage(currentPage, currentOffset, count, res.results);
           if (cacheStrategy === CacheStrategies.STALE_WHILE_REVALIDATE) {
             revalidate(state.next, true);
           }

@@ -24,7 +24,10 @@ const Root = styled(Box, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   [`& .MuiList-root, & .${classes.activity}`]: {
-    padding: 0
+    padding: 0,
+    '& .SCBaseItem-content': {
+      alignItems: 'flex-start'
+    }
   }
 }));
 

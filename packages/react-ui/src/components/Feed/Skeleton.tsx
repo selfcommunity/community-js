@@ -16,12 +16,7 @@ const Root = styled(Grid, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  marginTop: theme.spacing(2),
-  [`& .${classes.left}`]: {
-    padding: '3px'
-  }
-}));
+})(({theme}) => ({}));
 
 interface FeedSkeletonMap {
   /**
@@ -80,11 +75,11 @@ export default function FeedSkeleton(props: FeedSkeletonProps): JSX.Element {
   } = props;
   return (
     <Root container spacing={2} className={classNames(classes.root, className)}>
-      <Grid item xs={12} md={7}>
+      <Grid item xs={12} md={7} className={classes.left}>
         {children}
       </Grid>
       <Hidden smDown>
-        <Grid item xs={12} md={5}>
+        <Grid item xs={12} md={5} className={classes.right}>
           {sidebar}
         </Grid>
       </Hidden>
