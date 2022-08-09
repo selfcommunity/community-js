@@ -3,6 +3,225 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.2-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.3.1...@selfcommunity/react-ui@0.3.2-alpha.0) (2022-08-08)
+
+
+### Bug Fixes
+
+* Fix css position of avatar in RelevantActivities.tsx ([6f4f7ff](https://github.com/selfcommunity/community-js/commit/6f4f7ff59370c95cd71b5c5cc057502b34b9f54b))
+* Fix Editor.tsx theme positioning ([230c255](https://github.com/selfcommunity/community-js/commit/230c2557f6e262a1a35c432659cc5ce50f570a6a))
+* Fix InlineComposer.tsx syles ([567da4b](https://github.com/selfcommunity/community-js/commit/567da4b6cd28fe0e79cbbabc2a6ce615c3ed3bbd))
+* Fix style in Activities.tsx ([d28d737](https://github.com/selfcommunity/community-js/commit/d28d7373208c52f3fa9186a1aed0269d0b6b4e35))
+* Fix style in LoyaltyProgramDetail.tsx ([477b3af](https://github.com/selfcommunity/community-js/commit/477b3af7ab9e90f695a624b3ae452766ca1a4b59))
+
+
+
+
+
+## [0.3.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.3.1-alpha.2...@selfcommunity/react-ui@0.3.1) (2022-08-04)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.3.1-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.3.1-alpha.1...@selfcommunity/react-ui@0.3.1-alpha.2) (2022-08-04)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.3.1-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.3.1-alpha.0...@selfcommunity/react-ui@0.3.1-alpha.1) (2022-08-04)
+
+
+### Bug Fixes
+
+* added semicolon for snippet notification (contribution type) ([4c1d736](https://github.com/selfcommunity/community-js/commit/4c1d736e2983c68855111dc78c06bba2a006b660))
+
+
+
+
+
+## [0.3.1-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.3.0...@selfcommunity/react-ui@0.3.1-alpha.0) (2022-08-04)
+
+
+### Bug Fixes
+
+* added link for snippet vie ([975870b](https://github.com/selfcommunity/community-js/commit/975870b575f57d4825098b0e36f7537147df34b8))
+* added link for snippet view ([d946334](https://github.com/selfcommunity/community-js/commit/d946334d0e0c3e644209aef872b965b23f575a3f))
+* Fix notification link ([812eb43](https://github.com/selfcommunity/community-js/commit/812eb4335bada9260f1c0e4dbe36e26fa827f48c))
+
+
+
+
+
+# [0.3.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.3.0-alpha.4...@selfcommunity/react-ui@0.3.0) (2022-08-04)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.3.0-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.3.0-alpha.3...@selfcommunity/react-ui@0.3.0-alpha.4) (2022-08-04)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.3.0-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.3.0-alpha.2...@selfcommunity/react-ui@0.3.0-alpha.3) (2022-08-04)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.3.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.3.0-alpha.1...@selfcommunity/react-ui@0.3.0-alpha.2) (2022-08-04)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.3.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.3.0-alpha.0...@selfcommunity/react-ui@0.3.0-alpha.1) (2022-08-03)
+
+
+### Bug Fixes
+
+* fixed contribution notification bugs ([a28f07f](https://github.com/selfcommunity/community-js/commit/a28f07ff8fec12c7503e64f0b338037e9fced1e1))
+
+
+
+
+
+# [0.3.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.2.10-alpha.2...@selfcommunity/react-ui@0.3.0-alpha.0) (2022-08-03)
+
+
+### Features
+
+* added ContributionNotification. Asana issue: https://app.asana.com/0/0/1202635970226074/f ([7656e3b](https://github.com/selfcommunity/community-js/commit/7656e3b94f7cca30b0912e811ff64cea2a4fade4))
+
+
+
+
+
+## [0.2.10-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.2.10-alpha.1...@selfcommunity/react-ui@0.2.10-alpha.2) (2022-08-03)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.2.10-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.2.10-alpha.0...@selfcommunity/react-ui@0.2.10-alpha.1) (2022-08-03)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.2.10-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.2.9...@selfcommunity/react-ui@0.2.10-alpha.0) (2022-08-02)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.2.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.2.9-alpha.8...@selfcommunity/react-ui@0.2.9) (2022-08-02)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.2.9-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.2.9-alpha.7...@selfcommunity/react-ui@0.2.9-alpha.8) (2022-08-02)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.2.9-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.2.9-alpha.6...@selfcommunity/react-ui@0.2.9-alpha.7) (2022-08-02)
+
+
+### Bug Fixes
+
+* fixed follow(category/user) button state when logging out, mandatory userId prop on profile components. ([baf8558](https://github.com/selfcommunity/community-js/commit/baf855863d57ca274e9c19802e7413becd44fe36))
+
+
+
+
+
+## [0.2.9-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.2.9-alpha.5...@selfcommunity/react-ui@0.2.9-alpha.6) (2022-08-01)
+
+
+### Bug Fixes
+
+* Fix feed widget forwarding ([b732e7f](https://github.com/selfcommunity/community-js/commit/b732e7f0f54d722b51a2a87f3b1ccc486b2c73a2))
+
+
+
+
+
+## [0.2.9-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.2.9-alpha.4...@selfcommunity/react-ui@0.2.9-alpha.5) (2022-07-29)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.2.9-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.2.9-alpha.3...@selfcommunity/react-ui@0.2.9-alpha.4) (2022-07-28)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.2.9-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.2.9-alpha.2...@selfcommunity/react-ui@0.2.9-alpha.3) (2022-07-27)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.2.9-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.2.9-alpha.1...@selfcommunity/react-ui@0.2.9-alpha.2) (2022-07-27)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.2.9-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.2.9-alpha.0...@selfcommunity/react-ui@0.2.9-alpha.1) (2022-07-27)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.2.9-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.2.8...@selfcommunity/react-ui@0.2.9-alpha.0) (2022-07-27)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
 ## [0.2.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.2.8-alpha.1...@selfcommunity/react-ui@0.2.8) (2022-07-22)
 
 **Note:** Version bump only for package @selfcommunity/react-ui

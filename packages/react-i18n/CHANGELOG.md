@@ -3,6 +3,119 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.2-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.2.1...@selfcommunity/react-i18n@0.2.2-alpha.0) (2022-08-08)
+
+**Note:** Version bump only for package @selfcommunity/react-i18n
+
+
+
+
+
+## [0.2.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.2.1-alpha.2...@selfcommunity/react-i18n@0.2.1) (2022-08-04)
+
+**Note:** Version bump only for package @selfcommunity/react-i18n
+
+
+
+
+
+## [0.2.1-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.2.1-alpha.1...@selfcommunity/react-i18n@0.2.1-alpha.2) (2022-08-04)
+
+**Note:** Version bump only for package @selfcommunity/react-i18n
+
+
+
+
+
+## [0.2.1-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.2.1-alpha.0...@selfcommunity/react-i18n@0.2.1-alpha.1) (2022-08-04)
+
+
+### Bug Fixes
+
+* added semicolon for snippet notification (contribution type) ([4c1d736](https://github.com/selfcommunity/community-js/commit/4c1d736e2983c68855111dc78c06bba2a006b660))
+
+
+
+
+
+## [0.2.1-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.2.0...@selfcommunity/react-i18n@0.2.1-alpha.0) (2022-08-04)
+
+**Note:** Version bump only for package @selfcommunity/react-i18n
+
+
+
+
+
+# [0.2.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.2.0-alpha.2...@selfcommunity/react-i18n@0.2.0) (2022-08-04)
+
+**Note:** Version bump only for package @selfcommunity/react-i18n
+
+
+
+
+
+# [0.2.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.2.0-alpha.1...@selfcommunity/react-i18n@0.2.0-alpha.2) (2022-08-04)
+
+**Note:** Version bump only for package @selfcommunity/react-i18n
+
+
+
+
+
+# [0.2.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.2.0-alpha.0...@selfcommunity/react-i18n@0.2.0-alpha.1) (2022-08-03)
+
+
+### Bug Fixes
+
+* fixed contribution notification bugs ([a28f07f](https://github.com/selfcommunity/community-js/commit/a28f07ff8fec12c7503e64f0b338037e9fced1e1))
+
+
+
+
+
+# [0.2.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.1.29-alpha.0...@selfcommunity/react-i18n@0.2.0-alpha.0) (2022-08-03)
+
+
+### Features
+
+* added ContributionNotification. Asana issue: https://app.asana.com/0/0/1202635970226074/f ([7656e3b](https://github.com/selfcommunity/community-js/commit/7656e3b94f7cca30b0912e811ff64cea2a4fade4))
+
+
+
+
+
+## [0.1.29-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.1.28...@selfcommunity/react-i18n@0.1.29-alpha.0) (2022-08-02)
+
+**Note:** Version bump only for package @selfcommunity/react-i18n
+
+
+
+
+
+## [0.1.28](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.1.28-alpha.1...@selfcommunity/react-i18n@0.1.28) (2022-08-02)
+
+**Note:** Version bump only for package @selfcommunity/react-i18n
+
+
+
+
+
+## [0.1.28-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.1.28-alpha.0...@selfcommunity/react-i18n@0.1.28-alpha.1) (2022-08-02)
+
+**Note:** Version bump only for package @selfcommunity/react-i18n
+
+
+
+
+
+## [0.1.28-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.1.27...@selfcommunity/react-i18n@0.1.28-alpha.0) (2022-07-27)
+
+**Note:** Version bump only for package @selfcommunity/react-i18n
+
+
+
+
+
 ## [0.1.27](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.1.27-alpha.1...@selfcommunity/react-i18n@0.1.27) (2022-07-22)
 
 **Note:** Version bump only for package @selfcommunity/react-i18n

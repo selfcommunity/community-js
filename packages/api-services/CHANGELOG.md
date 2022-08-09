@@ -3,6 +3,152 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.31-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.1.30...@selfcommunity/api-services@0.1.31-alpha.0) (2022-08-08)
+
+**Note:** Version bump only for package @selfcommunity/api-services
+
+
+
+
+
+## [0.1.30](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.1.30-alpha.1...@selfcommunity/api-services@0.1.30) (2022-08-04)
+
+**Note:** Version bump only for package @selfcommunity/api-services
+
+
+
+
+
+## [0.1.30-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.1.30-alpha.0...@selfcommunity/api-services@0.1.30-alpha.1) (2022-08-04)
+
+**Note:** Version bump only for package @selfcommunity/api-services
+
+
+
+
+
+## [0.1.30-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.1.29...@selfcommunity/api-services@0.1.30-alpha.0) (2022-08-04)
+
+**Note:** Version bump only for package @selfcommunity/api-services
+
+
+
+
+
+## [0.1.29](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.1.29-alpha.4...@selfcommunity/api-services@0.1.29) (2022-08-04)
+
+**Note:** Version bump only for package @selfcommunity/api-services
+
+
+
+
+
+## [0.1.29-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.1.29-alpha.3...@selfcommunity/api-services@0.1.29-alpha.4) (2022-08-04)
+
+**Note:** Version bump only for package @selfcommunity/api-services
+
+
+
+
+
+## [0.1.29-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.1.29-alpha.2...@selfcommunity/api-services@0.1.29-alpha.3) (2022-08-04)
+
+**Note:** Version bump only for package @selfcommunity/api-services
+
+
+
+
+
+## [0.1.29-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.1.29-alpha.1...@selfcommunity/api-services@0.1.29-alpha.2) (2022-08-04)
+
+
+### Bug Fixes
+
+* api services + test fixes ([5fcdb52](https://github.com/selfcommunity/community-js/commit/5fcdb5249c480e92b906ac0df3224081d5301256))
+
+
+
+
+
+## [0.1.29-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.1.29-alpha.0...@selfcommunity/api-services@0.1.29-alpha.1) (2022-08-03)
+
+**Note:** Version bump only for package @selfcommunity/api-services
+
+
+
+
+
+## [0.1.29-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.1.28...@selfcommunity/api-services@0.1.29-alpha.0) (2022-08-02)
+
+**Note:** Version bump only for package @selfcommunity/api-services
+
+
+
+
+
+## [0.1.28](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.1.28-alpha.5...@selfcommunity/api-services@0.1.28) (2022-08-02)
+
+**Note:** Version bump only for package @selfcommunity/api-services
+
+
+
+
+
+## [0.1.28-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.1.28-alpha.4...@selfcommunity/api-services@0.1.28-alpha.5) (2022-08-02)
+
+**Note:** Version bump only for package @selfcommunity/api-services
+
+
+
+
+
+## [0.1.28-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.1.28-alpha.3...@selfcommunity/api-services@0.1.28-alpha.4) (2022-07-29)
+
+
+### Bug Fixes
+
+* fixed api services comments ([79e6dd9](https://github.com/selfcommunity/community-js/commit/79e6dd9eb1975626dcf1eae3d8065b2b1399c177))
+* refactored api-services and api request ([4dc4767](https://github.com/selfcommunity/community-js/commit/4dc4767e2c3b0ac46f269b2085ab08c130d5c1ea))
+
+
+
+
+
+## [0.1.28-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.1.28-alpha.2...@selfcommunity/api-services@0.1.28-alpha.3) (2022-07-28)
+
+
+### Performance Improvements
+
+* Added config to get request ([a7ae31c](https://github.com/selfcommunity/community-js/commit/a7ae31c3454b590a5fff25577465484a1cc4b980))
+
+
+
+
+
+## [0.1.28-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.1.28-alpha.1...@selfcommunity/api-services@0.1.28-alpha.2) (2022-07-27)
+
+**Note:** Version bump only for package @selfcommunity/api-services
+
+
+
+
+
+## [0.1.28-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.1.28-alpha.0...@selfcommunity/api-services@0.1.28-alpha.1) (2022-07-27)
+
+**Note:** Version bump only for package @selfcommunity/api-services
+
+
+
+
+
+## [0.1.28-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.1.27...@selfcommunity/api-services@0.1.28-alpha.0) (2022-07-27)
+
+**Note:** Version bump only for package @selfcommunity/api-services
+
+
+
+
+
 ## [0.1.27](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.1.27-alpha.1...@selfcommunity/api-services@0.1.27) (2022-07-22)
 
 **Note:** Version bump only for package @selfcommunity/api-services

@@ -3,6 +3,100 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.2-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.2.1...@selfcommunity/types@0.2.2-alpha.0) (2022-08-08)
+
+**Note:** Version bump only for package @selfcommunity/types
+
+
+
+
+
+## [0.2.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.2.1-alpha.1...@selfcommunity/types@0.2.1) (2022-08-04)
+
+**Note:** Version bump only for package @selfcommunity/types
+
+
+
+
+
+## [0.2.1-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.2.1-alpha.0...@selfcommunity/types@0.2.1-alpha.1) (2022-08-04)
+
+**Note:** Version bump only for package @selfcommunity/types
+
+
+
+
+
+## [0.2.1-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.2.0...@selfcommunity/types@0.2.1-alpha.0) (2022-08-04)
+
+
+### Bug Fixes
+
+* fixed notification contribution type interface. ([c704f2a](https://github.com/selfcommunity/community-js/commit/c704f2aba824277a13d6361749bc216c7055b741))
+
+
+
+
+
+# [0.2.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.2.0-alpha.1...@selfcommunity/types@0.2.0) (2022-08-04)
+
+**Note:** Version bump only for package @selfcommunity/types
+
+
+
+
+
+# [0.2.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.2.0-alpha.0...@selfcommunity/types@0.2.0-alpha.1) (2022-08-04)
+
+**Note:** Version bump only for package @selfcommunity/types
+
+
+
+
+
+# [0.2.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.1.29-alpha.0...@selfcommunity/types@0.2.0-alpha.0) (2022-08-03)
+
+
+### Features
+
+* added ContributionNotification. Asana issue: https://app.asana.com/0/0/1202635970226074/f ([7656e3b](https://github.com/selfcommunity/community-js/commit/7656e3b94f7cca30b0912e811ff64cea2a4fade4))
+
+
+
+
+
+## [0.1.29-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.1.28...@selfcommunity/types@0.1.29-alpha.0) (2022-08-02)
+
+**Note:** Version bump only for package @selfcommunity/types
+
+
+
+
+
+## [0.1.28](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.1.28-alpha.1...@selfcommunity/types@0.1.28) (2022-08-02)
+
+**Note:** Version bump only for package @selfcommunity/types
+
+
+
+
+
+## [0.1.28-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.1.28-alpha.0...@selfcommunity/types@0.1.28-alpha.1) (2022-08-02)
+
+**Note:** Version bump only for package @selfcommunity/types
+
+
+
+
+
+## [0.1.28-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.1.27...@selfcommunity/types@0.1.28-alpha.0) (2022-07-27)
+
+**Note:** Version bump only for package @selfcommunity/types
+
+
+
+
+
 ## [0.1.27](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.1.27-alpha.1...@selfcommunity/types@0.1.27) (2022-07-22)
 
 **Note:** Version bump only for package @selfcommunity/types
