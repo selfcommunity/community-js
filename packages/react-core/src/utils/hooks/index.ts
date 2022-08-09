@@ -1,2 +1,3 @@
 import useIsComponentMountedRef from './useIsComponentMountedRef';
-export {useIsComponentMountedRef};
+import usePreviousValue from './usePreviousValue';
+export {useIsComponentMountedRef, usePreviousValue};

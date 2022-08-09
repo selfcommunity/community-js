@@ -1,6 +1,6 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import {ComponentMeta, ComponentStory} from '@storybook/react';
-import Feed from './Feed';
+import Feed, {FeedRef} from './Feed';
 import {Endpoints} from '@selfcommunity/api-services';
 import {SCNotificationTopicType} from '@selfcommunity/types';
 import FeedObject, {FeedObjectSkeleton} from '../FeedObject';
@@ -11,6 +11,8 @@ import BroadcastMessages from '../BroadcastMessages';
 import {CacheStrategies} from '@selfcommunity/utils';
 import {CategoriesSuggestion, InlineComposer, PeopleSuggestion, TrendingPeople} from '../../index';
 import {exampleExploreData} from './prefetchedData';
+import {Button} from '@mui/material';
+import Icon from '@mui/material/Icon';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -20,18 +22,28 @@ export default {
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const Template: ComponentStory<typeof Feed> = (args) => {
-  return (<div style={{width: '100%', height: '500px', marginTop: 30}}>
-    <Feed {...args} />
+  // REF
+  const feedRef = useRef<FeedRef>();
+
+  // HANDLERS
+  const handleRefresh = () => {
+    feedRef && feedRef.current && feedRef.current.refresh();
+  };
+
+  return (<div style={{width: '100%', marginTop: 30}}>
+    <Button variant={'outlined'} color="info" style={{position: 'absolute', top: 16}} endIcon={<Icon fontSize={'small'} color="primary">cached</Icon>} onClick={handleRefresh}>Refresh</Button>
+    <Feed {...args} ref={feedRef} />
   </div>);
 };
 
-const _WIDGETS = [{
-  type: 'widget',
-  component: TrendingPeople,
-  componentProps: {categoryId: 1},
-  column: 'right',
-  position: 1
-},
+const _WIDGETS = [
+  {
+    type: 'widget',
+    component: TrendingPeople,
+    componentProps: {categoryId: 1},
+    column: 'right',
+    position: 1
+  },
   {
     type: 'widget',
     component: CategoriesSuggestion,
@@ -348,4 +360,35 @@ Notification.args = {
   itemIdGenerator: (item) => item.sid,
   ItemSkeleton: NotificationSkeleton,
   requireAuthentication: true
+};
+
+export const NotificationCached = Template.bind({});
+
+NotificationCached.args = {
+  id: 'notifications_feed',
+  endpoint: Endpoints.UserNotificationList,
+  widgets: [
+    {
+      type: 'widget',
+      component: FeedUpdates,
+      componentProps: {variant: 'outlined', subscriptionChannel: SCNotificationTopicType.INTERACTION, publicationChannel: 'notifications_feed'},
+      column: 'left',
+      position: 0
+    },
+    {
+      type: 'widget',
+      component: BroadcastMessages,
+      componentProps: {variant: 'outlined', subscriptionChannel: `notifications_feed`},
+      column: 'left',
+      position: 0
+    }
+  ],
+  ItemComponent: SCNotification,
+  itemPropsGenerator: (scUser, item) => ({
+    notificationObject: item
+  }),
+  itemIdGenerator: (item) => item.sid,
+  ItemSkeleton: NotificationSkeleton,
+  requireAuthentication: true,
+  cacheStrategy: CacheStrategies.CACHE_FIRST
 };
