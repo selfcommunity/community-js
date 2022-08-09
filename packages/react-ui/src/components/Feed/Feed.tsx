@@ -30,6 +30,7 @@ import {WIDGET_PREFIX_KEY, DEFAULT_WIDGETS_NUMBER, DEFAULT_PAGINATION_ITEMS_NUMB
 import {widgetSort} from '../../utils/feed';
 import Footer from '../Footer';
 import FeedSkeleton from './Skeleton';
+import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
 
 const PREFIX = 'SCFeed';
 
@@ -521,16 +522,16 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     if (requireAuthentication && authUserId !== null) {
       _initFeedData();
     }
-  }, [authUserId, widgets]);
+  }, [authUserId]);
 
   useEffect(() => {
     if (!requireAuthentication) {
       _initFeedData();
     }
-  }, [widgets]);
+  }, []);
 
-  useEffect(() => {
-    if (prevWidgets && prevWidgets !== widgets && feedDataObject.componentLoaded) {
+  useDeepCompareEffectNoCheck(() => {
+    if (prevWidgets && widgets && prevWidgets !== widgets && feedDataObject.componentLoaded) {
       refresh();
     }
   }, [widgets]);

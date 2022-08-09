@@ -349,3 +349,34 @@ Notification.args = {
   ItemSkeleton: NotificationSkeleton,
   requireAuthentication: true
 };
+
+export const NotificationCached = Template.bind({});
+
+NotificationCached.args = {
+  id: 'notifications_feed',
+  endpoint: Endpoints.UserNotificationList,
+  widgets: [
+    {
+      type: 'widget',
+      component: FeedUpdates,
+      componentProps: {variant: 'outlined', subscriptionChannel: SCNotificationTopicType.INTERACTION, publicationChannel: 'notifications_feed'},
+      column: 'left',
+      position: 0
+    },
+    {
+      type: 'widget',
+      component: BroadcastMessages,
+      componentProps: {variant: 'outlined', subscriptionChannel: `notifications_feed`},
+      column: 'left',
+      position: 0
+    }
+  ],
+  ItemComponent: SCNotification,
+  itemPropsGenerator: (scUser, item) => ({
+    notificationObject: item
+  }),
+  itemIdGenerator: (item) => item.sid,
+  ItemSkeleton: NotificationSkeleton,
+  requireAuthentication: true,
+  cacheStrategy: CacheStrategies.CACHE_FIRST
+};
