@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.2-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.2.2-alpha.0...@selfcommunity/react-core@0.2.2-alpha.1) (2022-08-09)
+
+
+### Bug Fixes
+
+* context & hooks ([840c85d](https://github.com/selfcommunity/community-js/commit/840c85d82c92e6b02a8ad3d1cb738628773ab726))
+* feed ([55973a0](https://github.com/selfcommunity/community-js/commit/55973a0b872a41261a68dfc3b1a7d9afd9a3fd83))
+
+
+
+
+
 ## [0.2.2-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.2.1...@selfcommunity/react-core@0.2.2-alpha.0) (2022-08-08)
 
 **Note:** Version bump only for package @selfcommunity/react-core
