@@ -156,6 +156,7 @@ export default function Footer(inProps: FooterProps): JSX.Element {
   /**
    * Renders root object
    */
+  console.log(pages);
   return (
     <>
       {loading ? (
@@ -165,7 +166,9 @@ export default function Footer(inProps: FooterProps): JSX.Element {
           <Grid container spacing={1} justifyContent="center">
             {pages.map((page, index) => (
               <Grid item key={index}>
-                <Link className={classes.linkItem} to={scRoutingContext.url(SCRoutes.CUSTOM_PAGES_ROUTE_NAME, page)}>
+                <Link
+                  className={classes.linkItem}
+                  to={page.alternative_url ? page.alternative_url : scRoutingContext.url(SCRoutes.CUSTOM_PAGES_ROUTE_NAME, page)}>
                   {page.label}
                 </Link>
               </Grid>
