@@ -478,6 +478,27 @@
   "ui.IncubatorSuggestion.ShowAll": "View all",
   "ui.IncubatorSuggestion.noMoreIncubators": "No more results",
 
+  "ui.header.button.login": "Login",
+  "ui.header.button.register": "Register",
+  "ui.header.button.explore": "Explore",
+  "ui.header.menuItem.profile": "Profile",
+  "ui.header.menuItem.interests": "Interests",
+  "ui.header.menuItem.followings": "Followings",
+  "ui.header.menuItem.followers": "Followers",
+  "ui.header.menuItem.posts": "My posts",
+  "ui.header.menuItem.comments": "My comments",
+  "ui.header.menuItem.loyalty": "Loyalty program",
+  "ui.header.menuItem.postsFollowed": "Posts followed",
+  "ui.header.menuItem.interestingPeople": "People suggestion",
+  "ui.header.menuItem.privateMessages": "Private messages",
+  "ui.header.menuItem.settings": "Settings",
+  "ui.header.menuItem.moderation": "Moderation",
+  "ui.header.menuItem.platform": "Platform",
+  "ui.header.menuItem.communityTour": "Community tour",
+  "ui.header.menuItem.logout": "Logout",
+  "ui.header.searchBar.search": "Search",
+
+
   "templates.userProfile.edit": "Edit",
   "templates.privateMessages.button.new" : "New Message",
   "templates.feedObjectDetail.contributionNotFound": "Contribution not found or you do not have permission to view it."

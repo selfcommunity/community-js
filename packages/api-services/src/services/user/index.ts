@@ -45,7 +45,7 @@ export interface UserApiClientInterface {
   getCurrentUser(config?: AxiosRequestConfig): Promise<SCUserType>;
   getCurrentUserAvatar(config?: AxiosRequestConfig): Promise<SCUserAvatarType>;
   getCurrentUserPermission(config?: AxiosRequestConfig): Promise<SCUserPermissionType>;
-  getCurrentUserPlatform(config?: AxiosRequestConfig): Promise<SCPlatformType>;
+  getCurrentUserPlatform(next?: string, config?: AxiosRequestConfig): Promise<SCPlatformType>;
   getUserFollowedCategories(id: number, mutual?: number, config?: AxiosRequestConfig): Promise<SCCategoryType[]>;
   getUserFeed(id: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeedUnitType>>;
   getUserFollowers(id: number, mutual?: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>>;
@@ -168,7 +168,8 @@ export class UserApiClient {
    * @param config
    */
   static userDelete(id: number, hard?: number, config?: AxiosRequestConfig): Promise<any> {
-    return apiRequest({...config, url: `${Endpoints.UserDelete.url({id})}?${hard.toString()}`, method: Endpoints.UserDelete.method});
+    const p = urlParams({hard: hard});
+    return apiRequest({...config, url: `${Endpoints.UserDelete.url({id})}?${p.toString()}`, method: Endpoints.UserDelete.method});
   }
 
   /**
@@ -273,10 +274,12 @@ export class UserApiClient {
 
   /**
    * This endpoint retrieves the platform url starting from the Authorization user token. Using this url, the logged user (must be a staff member) can access the platform to manage the community.
+   * @param next
    * @param config
    */
-  static getCurrentUserPlatform(config?: AxiosRequestConfig): Promise<SCPlatformType> {
-    return apiRequest({...config, url: Endpoints.Platform.url({}), method: Endpoints.Platform.method});
+  static getCurrentUserPlatform(next?: string, config?: AxiosRequestConfig): Promise<SCPlatformType> {
+    const p = urlParams({next: next});
+    return apiRequest({...config, url: `${Endpoints.Platform.url({})}?${p.toString()}`, method: Endpoints.Platform.method});
   }
 
   /**
@@ -286,7 +289,8 @@ export class UserApiClient {
    * @param config
    */
   static getUserFollowedCategories(id: number, mutual?: number, config?: AxiosRequestConfig): Promise<SCCategoryType[]> {
-    return apiRequest({...config, url: Endpoints.FollowedCategories.url({id, mutual}), method: Endpoints.FollowedCategories.method});
+    const p = urlParams({mutual: mutual});
+    return apiRequest({...config, url: `${Endpoints.FollowedCategories.url({id})}?${p.toString()}`, method: Endpoints.FollowedCategories.method});
   }
 
   /**
@@ -305,7 +309,8 @@ export class UserApiClient {
    * @param config
    */
   static getUserFollowers(id: number, mutual?: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
-    return apiRequest({...config, url: Endpoints.UserFollowers.url({id, mutual}), method: Endpoints.UserFollowers.method});
+    const p = urlParams({mutual: mutual});
+    return apiRequest({...config, url: `${Endpoints.UserFollowers.url({id})}?${p.toString()}`, method: Endpoints.UserFollowers.method});
   }
 
   /**
@@ -315,7 +320,8 @@ export class UserApiClient {
    * @param config
    */
   static getUserFollowed(id: number, mutual?: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
-    return apiRequest({...config, url: Endpoints.UsersFollowed.url({id, mutual}), method: Endpoints.UsersFollowed.method});
+    const p = urlParams({mutual: mutual});
+    return apiRequest({...config, url: `${Endpoints.UsersFollowed.url({id})}?${p.toString()}`, method: Endpoints.UsersFollowed.method});
   }
 
   /**
@@ -352,7 +358,8 @@ export class UserApiClient {
    * @param config
    */
   static getUserConnections(id: number, mutual?: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
-    return apiRequest({...config, url: `${Endpoints.UserConnections.url({id})}?${mutual.toString()}`, method: Endpoints.UserConnections.method});
+    const p = urlParams({mutual: mutual});
+    return apiRequest({...config, url: `${Endpoints.UserConnections.url({id})}?${p.toString()}`, method: Endpoints.UserConnections.method});
   }
 
   /**
@@ -642,8 +649,8 @@ export default class UserService {
   static async getCurrentUserPermission(config?: AxiosRequestConfig): Promise<SCUserPermissionType> {
     return UserApiClient.getCurrentUserPermission(config);
   }
-  static async getCurrentUserPlatform(config?: AxiosRequestConfig): Promise<SCPlatformType> {
-    return UserApiClient.getCurrentUserPlatform(config);
+  static async getCurrentUserPlatform(next?: string, config?: AxiosRequestConfig): Promise<SCPlatformType> {
+    return UserApiClient.getCurrentUserPlatform(next, config);
   }
   static async getUserFollowedCategories(id: number, mutual?: number, config?: AxiosRequestConfig): Promise<SCCategoryType[]> {
     return UserApiClient.getUserFollowedCategories(id, mutual, config);

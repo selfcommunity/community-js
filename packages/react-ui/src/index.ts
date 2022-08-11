@@ -75,6 +75,7 @@ import IncubatorsList, {IncubatorsListProps} from './components/IncubatorsList';
 import IncubatorDetail, {IncubatorDetailProps} from './components/IncubatorDetail';
 import IncubatorSuggestion, {IncubatorSuggestionProps} from './components/IncubatorSuggestion';
 import Footer, {FooterProps} from './components/Footer';
+import Header, {HeaderProps} from './components/Header';
 import {FACEBOOK_SHARE, TWITTER_SHARE, LINKEDIN_SHARE} from './constants/SocialShare';
 import {DEFAULT_PRELOAD_OFFSET_VIEWPORT, MIN_PRELOAD_OFFSET_VIEWPORT, MAX_PRELOAD_OFFSET_VIEWPORT} from './constants/LazyLoad';
 
@@ -257,5 +258,7 @@ export {
   IncubatorSuggestionProps,
   ContributionUtils,
   Footer,
-  FooterProps
+  FooterProps,
+  Header,
+  HeaderProps
 };

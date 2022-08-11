@@ -4,6 +4,7 @@ import {SCCommentsOrderBy} from './comments';
 import {SCFeedObjectActivitiesType, SCFeedObjectTemplateType} from './feedObject';
 import {SCNotificationObjectTemplateType} from './notification';
 import {SCBroadcastMessageTemplateType} from './broadcastMessage';
+import {SCHeaderMenuUrlsType} from './headerMenuUrls';
 
 export {
   SCFeedWidgetType,
@@ -13,5 +14,6 @@ export {
   SCFeedObjectActivitiesType,
   SCFeedObjectTemplateType,
   SCNotificationObjectTemplateType,
-  SCBroadcastMessageTemplateType
+  SCBroadcastMessageTemplateType,
+  SCHeaderMenuUrlsType
 };
