@@ -76,7 +76,7 @@ const BottomBar = styled(AppBar)({
   position: 'fixed',
   top: 'auto',
   bottom: 0,
-  backgroundColor: 'inherit'
+  color: 'default'
 });
 
 export interface MobileHeaderProps {

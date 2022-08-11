@@ -71,6 +71,10 @@ export interface SCHeaderMenuUrlsType {
    */
   login?: string;
   /**
+   * Logout page url
+   */
+  logout?: string;
+  /**
    * Register page url
    */
   register?: string;

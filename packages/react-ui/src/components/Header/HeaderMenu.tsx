@@ -21,10 +21,6 @@ const Root = styled(Box, {
 
 export interface HeaderMenuProps {
   /**
-   * Logout function
-   */
-  logoutFunction?: () => void
-  /**
    * The single pages url
    */
   url?: SCHeaderMenuUrlsType;
@@ -46,7 +42,7 @@ export default function HeaderMenu (inProps: HeaderMenuProps) {
     props: inProps,
     name: PREFIX
   });
-  const {className, logoutFunction, url, ...rest} = props;
+  const {className, url, ...rest} = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
@@ -141,8 +137,8 @@ export default function HeaderMenu (inProps: HeaderMenuProps) {
         <Typography textAlign='center'><FormattedMessage id='ui.header.menuItem.settings'
                                                          defaultMessage='ui.header.menuItem.settings' /></Typography>
       </MenuItem>)}
-      {logoutFunction && (
-  <MenuItem className={classes.menuItem} key={'logout'} onClick={logoutFunction}>
+      {url && url.logout && (
+  <MenuItem className={classes.menuItem} key={'logout'}  component={Link} to={url.logout}>
     <Typography textAlign='center'><FormattedMessage id="ui.header.menuItem.logout" defaultMessage="ui.header.menuItem.logout" /></Typography>
   </MenuItem>
         )}
