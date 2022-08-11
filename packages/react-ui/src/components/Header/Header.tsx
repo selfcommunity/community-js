@@ -236,6 +236,7 @@ export default function Header(inProps: HeaderProps) {
                   keepMounted
                   open={Boolean(anchorEl)}
                   onClose={handleCloseSettingsMenu}
+                  onClick={handleCloseSettingsMenu}
                   anchorOrigin={{vertical: 'bottom', horizontal: 'center'}}
                   transformOrigin={{vertical: 'top', horizontal: 'center'}}
                 >
