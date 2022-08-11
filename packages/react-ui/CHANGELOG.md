@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.3.3-alpha.1...@selfcommunity/react-ui@0.4.0-alpha.0) (2022-08-11)
+
+
+### Features
+
+* added header component ([ed5ab73](https://github.com/selfcommunity/community-js/commit/ed5ab73bf55177ef6119ae03479a804c129cdf3e))
+
+
+
+
+
 ## [0.3.3-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.3.3-alpha.0...@selfcommunity/react-ui@0.3.3-alpha.1) (2022-08-11)
 
 
