@@ -156,7 +156,6 @@ export default function Footer(inProps: FooterProps): JSX.Element {
   /**
    * Renders root object
    */
-  console.log(pages);
   return (
     <>
       {loading ? (
