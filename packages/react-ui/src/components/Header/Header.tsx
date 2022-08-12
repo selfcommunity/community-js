@@ -21,7 +21,7 @@ import {SCUserContextType} from '@selfcommunity/react-core/lib/cjs/types/context
 import Icon from '@mui/material/Icon';
 import MobileHeader from './MobileHeader/MobileHeader';
 import {useThemeProps} from '@mui/system';
-import SearchBar from './SearchBar';
+import SearchBar, {HeaderSearchBarProps} from './SearchBar';
 import classNames from 'classnames';
 import {FormattedMessage} from 'react-intl';
 import HeaderMenu  from './HeaderMenu';
@@ -81,9 +81,9 @@ const Root = styled(Box, {
 
 export interface HeaderProps {
   /**
-   * OnSearchCallback
+   * Searchbar props
    */
-  onSearch?: () => void;
+  searchBarProps?: HeaderSearchBarProps;
   /**
    * The single pages url to pass to menu
    */
@@ -134,7 +134,7 @@ export default function Header(inProps: HeaderProps) {
     props: inProps,
     name: PREFIX
   });
-  const {url, className, onSearch, ...rest} = props;
+  const {url, className, searchBarProps, ...rest} = props;
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
 
@@ -158,7 +158,7 @@ export default function Header(inProps: HeaderProps) {
   return (
     <Root className={classNames(classes.root, className)}>
       {isMobile ?
-        <MobileHeader url={url} onSearch={onSearch}/> :
+        <MobileHeader url={url} {...searchBarProps}/> :
          <AppBar position="fixed" color={'default'}>
           <Toolbar>
             <Box className={classes.logoContainer}>
@@ -187,7 +187,7 @@ export default function Header(inProps: HeaderProps) {
                         component={Link}></Tab>)}
                 </Tabs>
                 </Box>
-                <Box className={classes.searchBarContainer}><SearchBar handleSearch={onSearch}/></Box>
+                <Box className={classes.searchBarContainer}><SearchBar {...searchBarProps}/></Box>
                 <Box className={classes.iconButtonsContainer}>
                   {url && url.profile &&(<IconButton
                     component={Link}
@@ -252,7 +252,7 @@ export default function Header(inProps: HeaderProps) {
                   justifyContent='flex-end'
                   alignItems='center'
                 >
-                  <SearchBar handleSearch={onSearch}/>
+                  <SearchBar {...searchBarProps}/>
                   {url && url.explore && (
                   <Button component={Link} to={url.explore} size='medium'
                           aria-label='Explore' color='inherit'><FormattedMessage id="ui.header.button.explore" defaultMessage="ui.header.button.explore" /></Button>
