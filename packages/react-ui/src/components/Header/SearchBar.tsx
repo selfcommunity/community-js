@@ -62,9 +62,9 @@ export interface HeaderSearchBarProps {
    */
   className?: string;
   /**
-   * handleSearch callback
+   * onSearch callback
    */
-  handleSearch: (url) => void;
+  onSearch?: (query) => void;
   /**
    * Other props
    */
@@ -77,7 +77,7 @@ export default function HeaderSearchBar(inProps: HeaderSearchBarProps){
     props: inProps,
     name: PREFIX
   });
-  const {className, handleSearch, ...rest} = props;
+  const {className, onSearch, ...rest} = props;
   const [query, setQuery] = useState('');
   const [clicked, setClicked]= useState(false);
   const theme = useTheme();
@@ -91,6 +91,9 @@ export default function HeaderSearchBar(inProps: HeaderSearchBarProps){
     setQuery(event.target.value);
   }
 
+  const handleSearch=()=> {
+    onSearch && onSearch(query);
+  }
 
   return (
     <Root className={classNames(classes.root, className)}>

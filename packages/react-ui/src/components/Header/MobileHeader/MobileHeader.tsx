@@ -21,7 +21,7 @@ import {
   useSCPreferences,
 } from '@selfcommunity/react-core';
 import { useThemeProps } from '@mui/system';
-import SearchBar from '../SearchBar';
+import SearchBar, {HeaderSearchBarProps} from '../SearchBar';
 import classNames from 'classnames';
 import {FormattedMessage} from 'react-intl';
 import HeaderMenu from '../HeaderMenu';
@@ -81,9 +81,9 @@ const BottomBar = styled(AppBar)({
 
 export interface MobileHeaderProps {
   /**
-   * OnSearchCallback
+   * Searchbar props
    */
-  onSearch?: () => void;
+  searchBarProps?: HeaderSearchBarProps;
   /**
    * The single pages url to pass to menu
    */
@@ -106,7 +106,7 @@ export default function MobileHeader (inProps: MobileHeaderProps) {
     props: inProps,
     name: PREFIX
   });
-  const {url, className, onSearch,...rest} = props;
+  const {url, className, searchBarProps,...rest} = props;
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
 
@@ -141,7 +141,7 @@ export default function MobileHeader (inProps: MobileHeaderProps) {
               <Link href={url.home}><img src={logo} alt={'logo'} style={{height: '30px'}}/></Link> :
               <Link href={'/'}><img src={logo} alt={'logo'} style={{height: '30px'}}/></Link>}
           </Grid>
-          <SearchBar handleSearch={onSearch}/>
+          <SearchBar {...searchBarProps}/>
           {scUserContext.user && url && url.create && (
             <IconButton
               component={Link}
@@ -162,7 +162,7 @@ export default function MobileHeader (inProps: MobileHeaderProps) {
               className={value === 4 ? classes.settingsTab : classes.tabs}
               onChange={(e, v) => setValue(v)}
               value={value}
-              textColor="inherit"
+              textColor="primary"
               indicatorColor="primary"
               aria-label="Navigation Tabs"
               variant="scrollable"
@@ -178,6 +178,7 @@ export default function MobileHeader (inProps: MobileHeaderProps) {
               <SwipeableDrawer
                 anchor={'right'}
                 open={openSettings}
+                onClick={() =>setOpenSettings(false)}
                 onClose={() =>setOpenSettings(false)}
                 onOpen={toggleDrawer('right', true)}
               >
