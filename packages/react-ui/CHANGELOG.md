@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.4.0-alpha.3...@selfcommunity/react-ui@0.4.0-alpha.4) (2022-08-12)
+
+
+### Bug Fixes
+
+* fixed mobile header link href->to ([a1532c8](https://github.com/selfcommunity/community-js/commit/a1532c822b4b027df0ebe241e48ca540cc7a5086))
+
+
+
+
+
 # [0.4.0-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.4.0-alpha.2...@selfcommunity/react-ui@0.4.0-alpha.3) (2022-08-12)
 
 
