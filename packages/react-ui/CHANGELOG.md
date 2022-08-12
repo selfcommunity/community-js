@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.4.0-alpha.1...@selfcommunity/react-ui@0.4.0-alpha.2) (2022-08-12)
+
+
+### Bug Fixes
+
+* header component props fixing ([2122ef4](https://github.com/selfcommunity/community-js/commit/2122ef44a397527e206378a650cd4915ea595b00))
+
+
+
+
+
 # [0.4.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.4.0-alpha.0...@selfcommunity/react-ui@0.4.0-alpha.1) (2022-08-11)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
