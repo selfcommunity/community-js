@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.4.0-alpha.2...@selfcommunity/react-ui@0.4.0-alpha.3) (2022-08-12)
+
+
+### Bug Fixes
+
+* fixed header searchbar props ([22b2ca0](https://github.com/selfcommunity/community-js/commit/22b2ca0b13610c5632b670c0bac8ad0c16e12870))
+
+
+
+
+
 # [0.4.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.4.0-alpha.1...@selfcommunity/react-ui@0.4.0-alpha.2) (2022-08-12)
 
 
