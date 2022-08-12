@@ -158,7 +158,7 @@ export default function Header(inProps: HeaderProps) {
   return (
     <Root className={classNames(classes.root, className)}>
       {isMobile ?
-        <MobileHeader /> :
+        <MobileHeader url={url} onSearch={onSearch}/> :
          <AppBar position="fixed" color={'default'}>
           <Toolbar>
             <Box className={classes.logoContainer}>
@@ -258,7 +258,7 @@ export default function Header(inProps: HeaderProps) {
                           aria-label='Explore' color='inherit'><FormattedMessage id="ui.header.button.explore" defaultMessage="ui.header.button.explore" /></Button>
                     )}
                   {url && url.login && (
-                  <Button color='inherit' component={Link} to={url.login}> <FormattedMessage id="ui.header.button.login" defaultMessage="ui.header.button.login" /></Button>
+                  <Button color='inherit' onClick={url.login}> <FormattedMessage id="ui.header.button.login" defaultMessage="ui.header.button.login" /></Button>
                     )}
                 </Grid>
               </>}

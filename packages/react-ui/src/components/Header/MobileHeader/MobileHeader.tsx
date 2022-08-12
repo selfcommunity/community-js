@@ -181,7 +181,7 @@ export default function MobileHeader (inProps: MobileHeaderProps) {
                 onClose={() =>setOpenSettings(false)}
                 onOpen={toggleDrawer('right', true)}
               >
-                <HeaderMenu/>
+                <HeaderMenu url={url}/>
               </SwipeableDrawer>
             </Tabs>
           </Toolbar>
@@ -191,7 +191,7 @@ export default function MobileHeader (inProps: MobileHeaderProps) {
             <Button component={Link} to={url.explore} size="medium" color="inherit"><FormattedMessage id="ui.header.button.explore" defaultMessage="ui.header.button.explore" /></Button>
               )}
             {url && url.login && (
-              <Button color="inherit" component={Link} to={url.login}><FormattedMessage id="ui.header.button.login" defaultMessage="ui.header.button.login" /></Button>
+              <Button color="inherit"  onClick={url.login}><FormattedMessage id="ui.header.button.login" defaultMessage="ui.header.button.login" /></Button>
               )}
             {url && url.register && (
               <Button color="inherit" component={Link} to={url.register}><FormattedMessage id="ui.header.button.register" defaultMessage="ui.header.button.register" /></Button>
