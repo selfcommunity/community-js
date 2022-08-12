@@ -67,13 +67,13 @@ export interface SCHeaderMenuUrlsType {
    */
   explore?: string;
   /**
-   * Login page url
+   * Login function
    */
-  login?: string;
+  login?: () => void;
   /**
-   * Logout page url
+   * Logout function
    */
-  logout?: string;
+  logout?: () => void;
   /**
    * Register page url
    */

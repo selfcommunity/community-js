@@ -138,7 +138,7 @@ export default function HeaderMenu (inProps: HeaderMenuProps) {
                                                          defaultMessage='ui.header.menuItem.settings' /></Typography>
       </MenuItem>)}
       {url && url.logout && (
-  <MenuItem className={classes.menuItem} key={'logout'}  component={Link} to={url.logout}>
+  <MenuItem className={classes.menuItem} key={'logout'}  onClick={url.logout}>
     <Typography textAlign='center'><FormattedMessage id="ui.header.menuItem.logout" defaultMessage="ui.header.menuItem.logout" /></Typography>
   </MenuItem>
         )}
