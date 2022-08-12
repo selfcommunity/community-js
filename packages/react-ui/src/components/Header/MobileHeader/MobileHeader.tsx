@@ -138,8 +138,8 @@ export default function MobileHeader (inProps: MobileHeaderProps) {
         <Toolbar className={classes.topToolbar}>
           <Grid container direction="row" justifyContent="flex-start">
             {scUserContext.user && url && url.home ?
-              <Link href={url.home}><img src={logo} alt={'logo'} style={{height: '30px'}}/></Link> :
-              <Link href={'/'}><img src={logo} alt={'logo'} style={{height: '30px'}}/></Link>}
+              <Link to={url.home}><img src={logo} alt={'logo'} style={{height: '30px'}}/></Link> :
+              <Link to={'/'}><img src={logo} alt={'logo'} style={{height: '30px'}}/></Link>}
           </Grid>
           <SearchBar {...searchBarProps}/>
           {scUserContext.user && url && url.create && (
@@ -167,12 +167,12 @@ export default function MobileHeader (inProps: MobileHeaderProps) {
               aria-label="Navigation Tabs"
               variant="scrollable"
             >
-              {url && url.home &&(<Tab icon={<Icon>home</Icon>} aria-label='HomePage' href={url.home} component={Link}></Tab>)}
-              {url && url.explore &&(<Tab icon={<Icon>explore</Icon>} aria-label='Explore' href={url.explore} component={Link}></Tab>)}
-              {url && url.followings &&<Tab icon={<Icon>person</Icon>} aria-label='Followings' href={url.followings} component={Link}></Tab>}
+              {url && url.home &&(<Tab icon={<Icon>home</Icon>} aria-label='HomePage' to={url.home} component={Link}></Tab>)}
+              {url && url.explore &&(<Tab icon={<Icon>explore</Icon>} aria-label='Explore' to={url.explore} component={Link}></Tab>)}
+              {url && url.followings &&<Tab icon={<Icon>person</Icon>} aria-label='Followings' to={url.followings} component={Link}></Tab>}
               {url && url.notifications &&(<Tab icon={<Badge badgeContent={scUserContext.user.unseen_interactions_counter}
                                  color='error'><Icon>notifications</Icon></Badge>} aria-label='Notifications'
-                    href={url.notifications}
+                    to={url.notifications}
                     component={Link}></Tab>)}
               <Tab className={classes.settingsTab} icon={<Icon>menu</Icon>} aria-label="HeaderMenu"  onClick={handleOpenSettingsMenu}></Tab>
               <SwipeableDrawer
