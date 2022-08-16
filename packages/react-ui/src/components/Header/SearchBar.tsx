@@ -1,5 +1,5 @@
 import {alpha, Box, IconButton, TextField, styled, useTheme, useMediaQuery} from '@mui/material';
-import Icon from "@mui/material/Icon";
+import Icon from '@mui/material/Icon';
 import React, {useState} from 'react';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
@@ -16,12 +16,12 @@ const PREFIX = 'SCHeaderSearchBar';
 
 const classes = {
   root: `${PREFIX}-root`,
-  searchInput:`${PREFIX}-search-input`
+  searchInput: `${PREFIX}-search-input`
 };
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
+  slot: 'Root'
 })(({theme}) => ({
   position: 'relative',
   display: 'flex',
@@ -29,14 +29,14 @@ const Root = styled(Box, {
   borderRadius: theme.shape.borderRadius,
   backgroundColor: alpha(theme.palette.common.white, 0.15),
   '&:hover': {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
+    backgroundColor: alpha(theme.palette.common.white, 0.25)
   },
   marginLeft: 0,
   width: '100%',
   maxWidth: '25ch',
   [theme.breakpoints.up('sm')]: {
     marginLeft: theme.spacing(1),
-    width: 'auto',
+    width: 'auto'
   },
   [`& .${classes.searchInput}`]: {
     color: 'inherit',
@@ -48,10 +48,10 @@ const Root = styled(Box, {
       [theme.breakpoints.up('sm')]: {
         width: '12ch',
         '&:focus': {
-          width: '25ch',
-        },
-      },
-    },
+          width: '25ch'
+        }
+      }
+    }
   }
 }));
 
@@ -71,7 +71,7 @@ export interface HeaderSearchBarProps {
   [p: string]: any;
 }
 
-export default function HeaderSearchBar(inProps: HeaderSearchBarProps){
+export default function HeaderSearchBar(inProps: HeaderSearchBarProps) {
   // PROPS
   const props: HeaderSearchBarProps = useThemeProps({
     props: inProps,
@@ -79,26 +79,25 @@ export default function HeaderSearchBar(inProps: HeaderSearchBarProps){
   });
   const {className, onSearch, ...rest} = props;
   const [query, setQuery] = useState('');
-  const [clicked, setClicked]= useState(false);
+  const [clicked, setClicked] = useState(false);
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up('sm'));
 
   // INTL
   const intl = useIntl();
 
-
-  const handleChange=(event) => {
+  const handleChange = (event) => {
     setQuery(event.target.value);
-  }
+  };
 
-  const handleSearch=()=> {
+  const handleSearch = () => {
     onSearch && onSearch(query);
-  }
+  };
 
   return (
     <Root className={classNames(classes.root, className)}>
-        {clicked || isDesktop ?
-          <form onSubmit={handleSearch}>
+      {clicked || isDesktop ? (
+        <form onSubmit={handleSearch}>
           <TextField
             placeholder={`${intl.formatMessage(messages.placeholder)}`}
             className={classes.searchInput}
@@ -106,14 +105,18 @@ export default function HeaderSearchBar(inProps: HeaderSearchBarProps){
             onChange={handleChange}
             InputProps={{
               endAdornment: (
-                <IconButton onClick={handleSearch}><Icon>search</Icon></IconButton>
+                <IconButton onClick={handleSearch}>
+                  <Icon>search</Icon>
+                </IconButton>
               )
             }}
           />
-          </form>
-          :
-          <IconButton onClick={() => setClicked(!clicked)}><Icon>search</Icon></IconButton>
-        }
+        </form>
+      ) : (
+        <IconButton onClick={() => setClicked(!clicked)}>
+          <Icon>search</Icon>
+        </IconButton>
+      )}
     </Root>
-  )
+  );
 }

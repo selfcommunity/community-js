@@ -24,7 +24,7 @@ import {useThemeProps} from '@mui/system';
 import SearchBar, {HeaderSearchBarProps} from './SearchBar';
 import classNames from 'classnames';
 import {FormattedMessage} from 'react-intl';
-import HeaderMenu  from './HeaderMenu';
+import HeaderMenu from './HeaderMenu';
 import {SCHeaderMenuUrlsType} from '../../types';
 
 const PREFIX = 'SCHeader';
@@ -58,8 +58,8 @@ const Root = styled(Box, {
   },
   [`& .${classes.logoContainer}`]: {
     display: 'flex',
-    justifyContent:'flex-start',
-    alignItems:'center',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
     marginRight: '24px',
     flexGrow: 2
   },
@@ -68,15 +68,15 @@ const Root = styled(Box, {
   },
   [`& .${classes.searchBarContainer}`]: {
     marginRight: '24px',
-    flexGrow:1,
+    flexGrow: 1,
     maxWidth: '25ch'
   },
   [`& .${classes.iconButtonsContainer}`]: {
     display: 'flex',
-    justifyContent:'flex-end',
-    alignItems:'center',
-    whiteSpace: 'nowrap',
-  },
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    whiteSpace: 'nowrap'
+  }
 }));
 
 export interface HeaderProps {
@@ -154,117 +154,114 @@ export default function Header(inProps: HeaderProps) {
     setAnchorEl(null);
   };
 
-
   return (
     <Root className={classNames(classes.root, className)}>
-      {isMobile ?
-        <MobileHeader url={url} {...searchBarProps}/> :
-         <AppBar position="fixed" color={'default'}>
+      {isMobile ? (
+        <MobileHeader url={url} {...searchBarProps} />
+      ) : (
+        <AppBar position="fixed" color={'default'}>
           <Toolbar>
             <Box className={classes.logoContainer}>
-            {scUserContext.user && url && url.home ?
-              <Link to={url.home}><img src={logo} alt={'logo'} style={{height: '30px'}} /></Link> :
-              <Link to={'/'}><img src={logo} alt={'logo'} style={{height: '30px'}} /></Link>}
-            {!scUserContext.user && url && url.register && (
-              <Button color='inherit' component={Link} to={url.register} className={classes.registerButton}>sign
-                up</Button>)}
+              {scUserContext.user && url && url.home ? (
+                <Link to={url.home}>
+                  <img src={logo} alt={'logo'} style={{height: '30px'}} />
+                </Link>
+              ) : (
+                <Link to={'/'}>
+                  <img src={logo} alt={'logo'} style={{height: '30px'}} />
+                </Link>
+              )}
+              {!scUserContext.user && url && url.register && (
+                <Button color="inherit" component={Link} to={url.register} className={classes.registerButton}>
+                  sign up
+                </Button>
+              )}
             </Box>
-            {scUserContext.user ?
+            {scUserContext.user ? (
               <>
                 <Box className={classes.tabsContainer}>
-                <Tabs
-                  onChange={(e, v) => setValue(v)}
-                  value={value}
-                  textColor='inherit'
-                  indicatorColor='primary'
-                  aria-label='Navigation Tabs'
-                >
-                  {url && url.home && (<Tab icon={<Icon>home</Icon>} aria-label='HomePage' to={url.home} component={Link}></Tab>)}
-                  {url && url.explore &&(<Tab icon={<Icon>explore</Icon>} aria-label='Explore' to={url.explore}
-                       component={Link}></Tab>)}
-                  {url && url.followings &&(<Tab icon={<Icon>person</Icon>} aria-label='Followings'
-                        to={url.followings}
-                        component={Link}></Tab>)}
-                </Tabs>
+                  <Tabs onChange={(e, v) => setValue(v)} value={value} textColor="inherit" indicatorColor="primary" aria-label="Navigation Tabs">
+                    {url && url.home && <Tab icon={<Icon>home</Icon>} aria-label="HomePage" to={url.home} component={Link}></Tab>}
+                    {url && url.explore && <Tab icon={<Icon>explore</Icon>} aria-label="Explore" to={url.explore} component={Link}></Tab>}
+                    {url && url.followings && <Tab icon={<Icon>person</Icon>} aria-label="Followings" to={url.followings} component={Link}></Tab>}
+                  </Tabs>
                 </Box>
-                <Box className={classes.searchBarContainer}><SearchBar {...searchBarProps}/></Box>
+                <Box className={classes.searchBarContainer}>
+                  <SearchBar {...searchBarProps} />
+                </Box>
                 <Box className={classes.iconButtonsContainer}>
-                  {url && url.profile &&(<IconButton
-                    component={Link}
-                    to={url.profile}
-                    size='large'
-                    aria-label='Profile'
-                    color='inherit'
-                    className={classes.iconButton}
-                  >
-                    <Badge color='error'>
-                      <Avatar alt='Remy Sharp' src={scUserContext.user.avatar} />
-                    </Badge>
-                  </IconButton>)}
-                  {url && url.create &&(<IconButton
-                    component={Link}
-                    to={url.create}
-                    size='large'
-                    aria-label='New Contribute'
-                    color='inherit'
-                    className={classes.iconButton}
-                  >
-                    <Badge color='error'>
-                      <Icon>add_circle_outline</Icon>
-                    </Badge>
-                  </IconButton>)}
-                  {url && url.notifications &&(<IconButton
-                    component={Link}
-                    to={url.notifications}
-                    size='large'
-                    aria-label='Notifications'
-                    color='inherit'
-                    className={classes.iconButton}
-                  >
-                    <Badge badgeContent={scUserContext.user.unseen_interactions_counter} color='error'>
-                      <Icon>notifications</Icon>
-                    </Badge>
-                  </IconButton>)}
-                <Tooltip title='HeaderMenu'>
-                  <IconButton onClick={handleOpenSettingsMenu} className={classes.iconButton}>
-                    <Icon>expand_more</Icon>
-                  </IconButton>
-                </Tooltip>
-                <Menu
-                  id='menu-appbar'
-                  anchorEl={anchorEl}
-                  keepMounted
-                  open={Boolean(anchorEl)}
-                  onClose={handleCloseSettingsMenu}
-                  onClick={handleCloseSettingsMenu}
-                  anchorOrigin={{vertical: 'bottom', horizontal: 'center'}}
-                  transformOrigin={{vertical: 'top', horizontal: 'center'}}
-                >
-                  <HeaderMenu url={url} />
-                </Menu>
+                  {url && url.profile && (
+                    <IconButton component={Link} to={url.profile} size="large" aria-label="Profile" color="inherit" className={classes.iconButton}>
+                      <Badge color="error">
+                        <Avatar alt="Remy Sharp" src={scUserContext.user.avatar} />
+                      </Badge>
+                    </IconButton>
+                  )}
+                  {url && url.create && (
+                    <IconButton
+                      component={Link}
+                      to={url.create}
+                      size="large"
+                      aria-label="New Contribute"
+                      color="inherit"
+                      className={classes.iconButton}>
+                      <Badge color="error">
+                        <Icon>add_circle_outline</Icon>
+                      </Badge>
+                    </IconButton>
+                  )}
+                  {url && url.notifications && (
+                    <IconButton
+                      component={Link}
+                      to={url.notifications}
+                      size="large"
+                      aria-label="Notifications"
+                      color="inherit"
+                      className={classes.iconButton}>
+                      <Badge badgeContent={scUserContext.user.unseen_interactions_counter} color="error">
+                        <Icon>notifications</Icon>
+                      </Badge>
+                    </IconButton>
+                  )}
+                  <Tooltip title="HeaderMenu">
+                    <IconButton onClick={handleOpenSettingsMenu} className={classes.iconButton}>
+                      <Icon>expand_more</Icon>
+                    </IconButton>
+                  </Tooltip>
+                  <Menu
+                    id="menu-appbar"
+                    anchorEl={anchorEl}
+                    keepMounted
+                    open={Boolean(anchorEl)}
+                    onClose={handleCloseSettingsMenu}
+                    onClick={handleCloseSettingsMenu}
+                    anchorOrigin={{vertical: 'bottom', horizontal: 'center'}}
+                    transformOrigin={{vertical: 'top', horizontal: 'center'}}>
+                    <HeaderMenu url={url} />
+                  </Menu>
                 </Box>
-              </> :
+              </>
+            ) : (
               <>
-
-                <Grid
-                  container
-                  direction='row'
-                  justifyContent='flex-end'
-                  alignItems='center'
-                >
-                  <SearchBar {...searchBarProps}/>
+                <Grid container direction="row" justifyContent="flex-end" alignItems="center">
+                  <SearchBar {...searchBarProps} />
                   {url && url.explore && (
-                  <Button component={Link} to={url.explore} size='medium'
-                          aria-label='Explore' color='inherit'><FormattedMessage id="ui.header.button.explore" defaultMessage="ui.header.button.explore" /></Button>
-                    )}
+                    <Button component={Link} to={url.explore} size="medium" aria-label="Explore" color="inherit">
+                      <FormattedMessage id="ui.header.button.explore" defaultMessage="ui.header.button.explore" />
+                    </Button>
+                  )}
                   {url && url.login && (
-                  <Button color='inherit' onClick={url.login}> <FormattedMessage id="ui.header.button.login" defaultMessage="ui.header.button.login" /></Button>
-                    )}
+                    <Button color="inherit" onClick={url.login}>
+                      {' '}
+                      <FormattedMessage id="ui.header.button.login" defaultMessage="ui.header.button.login" />
+                    </Button>
+                  )}
                 </Grid>
-              </>}
+              </>
+            )}
           </Toolbar>
         </AppBar>
-      }
+      )}
     </Root>
   );
 }
