@@ -192,92 +192,89 @@ export default function IncubatorSuggestion(inProps: IncubatorSuggestionProps): 
   /**
    * Renders suggested incubators list
    */
+  if (loading) {
+    return <Skeleton />;
+  }
   const c = (
-    <React.Fragment>
-      {loading ? (
-        <Skeleton elevation={0} />
+    <CardContent>
+      <Typography className={classes.title} variant={'h5'}>
+        <FormattedMessage id="ui.IncubatorSuggestion.title" defaultMessage="ui.IncubatorSuggestion.title" />
+      </Typography>
+      {!total ? (
+        <Typography className={classes.noResults} variant="body2">
+          <FormattedMessage id="ui.IncubatorSuggestion.noResults" defaultMessage="ui.IncubatorSuggestion.noResults" />
+        </Typography>
       ) : (
-        <CardContent>
-          <Typography className={classes.title} variant={'h5'}>
-            <FormattedMessage id="ui.IncubatorSuggestion.title" defaultMessage="ui.IncubatorSuggestion.title" />
-          </Typography>
-          {!total ? (
-            <Typography className={classes.noResults} variant="body2">
-              <FormattedMessage id="ui.IncubatorSuggestion.noResults" defaultMessage="ui.IncubatorSuggestion.noResults" />
-            </Typography>
+        <React.Fragment>
+          <List>
+            {incubators.slice(0, visibleIncubators).map((incubator: SCIncubatorType) => (
+              <ListItem key={incubator.id}>
+                <Incubator
+                  elevation={0}
+                  incubator={incubator}
+                  className={classes.incubatorItem}
+                  subscribeButtonProps={{onSubscribe: handleSubscriptionsUpdate}}
+                  ButtonProps={{onClick: () => handleIncubatorDetailDialogOpening(incubator)}}
+                  {...IncubatorProps}
+                />
+              </ListItem>
+            ))}
+          </List>
+          {hasMore && (
+            <Button className={classes.showMore} size="small" onClick={() => setOpenIncubatorsDialog(true)}>
+              <FormattedMessage id="ui.IncubatorSuggestion.ShowAll" defaultMessage="ui.IncubatorSuggestion.ShowAll" />
+            </Button>
+          )}
+        </React.Fragment>
+      )}
+      {openIncubatorsDialog && (
+        <BaseDialog
+          title={<FormattedMessage id="ui.IncubatorSuggestion.title" defaultMessage="ui.IncubatorSuggestion.title" />}
+          onClose={() => setOpenIncubatorsDialog(false)}
+          open={openIncubatorsDialog}>
+          {loading ? (
+            <CentralProgress size={50} />
           ) : (
-            <React.Fragment>
+            <InfiniteScroll
+              dataLength={incubators.length}
+              next={fetchIncubatorSuggestion}
+              hasMoreNext={Boolean(next)}
+              loaderNext={<CentralProgress size={30} />}
+              height={400}
+              endMessage={
+                <p style={{textAlign: 'center'}}>
+                  <b>
+                    <FormattedMessage id="ui.IncubatorSuggestion.noMoreIncubators" defaultMessage="ui.IncubatorSuggestion.noMoreIncubators" />
+                  </b>
+                </p>
+              }>
               <List>
-                {incubators.slice(0, visibleIncubators).map((incubator: SCIncubatorType) => (
-                  <ListItem key={incubator.id}>
+                {incubators.map((i) => (
+                  <ListItem key={i.id} sx={{display: 'block', padding: 0}}>
                     <Incubator
                       elevation={0}
-                      incubator={incubator}
+                      incubator={i}
                       className={classes.incubatorItem}
                       subscribeButtonProps={{onSubscribe: handleSubscriptionsUpdate}}
-                      ButtonProps={{onClick: () => handleIncubatorDetailDialogOpening(incubator)}}
+                      ButtonProps={{onClick: () => handleIncubatorDetailDialogOpening(i)}}
                       {...IncubatorProps}
                     />
                   </ListItem>
                 ))}
               </List>
-              {hasMore && (
-                <Button className={classes.showMore} size="small" onClick={() => setOpenIncubatorsDialog(true)}>
-                  <FormattedMessage id="ui.IncubatorSuggestion.ShowAll" defaultMessage="ui.IncubatorSuggestion.ShowAll" />
-                </Button>
-              )}
-            </React.Fragment>
+            </InfiniteScroll>
           )}
-          {openIncubatorsDialog && (
-            <BaseDialog
-              title={<FormattedMessage id="ui.IncubatorSuggestion.title" defaultMessage="ui.IncubatorSuggestion.title" />}
-              onClose={() => setOpenIncubatorsDialog(false)}
-              open={openIncubatorsDialog}>
-              {loading ? (
-                <CentralProgress size={50} />
-              ) : (
-                <InfiniteScroll
-                  dataLength={incubators.length}
-                  next={fetchIncubatorSuggestion}
-                  hasMoreNext={Boolean(next)}
-                  loaderNext={<CentralProgress size={30} />}
-                  height={400}
-                  endMessage={
-                    <p style={{textAlign: 'center'}}>
-                      <b>
-                        <FormattedMessage id="ui.IncubatorSuggestion.noMoreIncubators" defaultMessage="ui.IncubatorSuggestion.noMoreIncubators" />
-                      </b>
-                    </p>
-                  }>
-                  <List>
-                    {incubators.map((i) => (
-                      <ListItem key={i.id} sx={{display: 'block', padding: 0}}>
-                        <Incubator
-                          elevation={0}
-                          incubator={i}
-                          className={classes.incubatorItem}
-                          subscribeButtonProps={{onSubscribe: handleSubscriptionsUpdate}}
-                          ButtonProps={{onClick: () => handleIncubatorDetailDialogOpening(i)}}
-                          {...IncubatorProps}
-                        />
-                      </ListItem>
-                    ))}
-                  </List>
-                </InfiniteScroll>
-              )}
-            </BaseDialog>
-          )}
-          {openIncubatorDetailDialog && (
-            <IncubatorDetail
-              open={openIncubatorDetailDialog}
-              onClose={handleIncubatorDetailDialogClose}
-              incubator={detailObj}
-              onSubscriptionsUpdate={handleSubscriptionsUpdate}
-            />
-          )}
-        </CardContent>
+        </BaseDialog>
       )}
-    </React.Fragment>
+      {openIncubatorDetailDialog && (
+        <IncubatorDetail
+          open={openIncubatorDetailDialog}
+          onClose={handleIncubatorDetailDialogClose}
+          incubator={detailObj}
+          onSubscriptionsUpdate={handleSubscriptionsUpdate}
+        />
+      )}
+    </CardContent>
   );
 
   /**

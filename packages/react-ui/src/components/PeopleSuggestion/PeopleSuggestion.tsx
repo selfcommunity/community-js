@@ -185,47 +185,44 @@ export default function PeopleSuggestion(inProps: PeopleSuggestionProps): JSX.El
   /**
    * Renders people suggestion list
    */
+  if (loading) {
+    return <PeopleSuggestionSkeleton />;
+  }
   const p = (
-    <React.Fragment>
-      {loading ? (
-        <PeopleSuggestionSkeleton elevation={0} />
+    <CardContent>
+      <Typography className={classes.title} variant="h5">
+        <FormattedMessage id="ui.peopleSuggestion.title" defaultMessage="ui.peopleSuggestion.title" />
+      </Typography>
+      {!total ? (
+        <Typography className={classes.noResults} variant="body2">
+          <FormattedMessage id="ui.peopleSuggestion.subtitle.noResults" defaultMessage="ui.peopleSuggestion.subtitle.noResults" />
+        </Typography>
       ) : (
-        <CardContent>
-          <Typography className={classes.title} variant="h5">
-            <FormattedMessage id="ui.peopleSuggestion.title" defaultMessage="ui.peopleSuggestion.title" />
-          </Typography>
-          {!total ? (
-            <Typography className={classes.noResults} variant="body2">
-              <FormattedMessage id="ui.peopleSuggestion.subtitle.noResults" defaultMessage="ui.peopleSuggestion.subtitle.noResults" />
-            </Typography>
-          ) : (
-            <React.Fragment>
-              <List>
-                {users.slice(0, visiblePeople).map((user: SCUserType, index) => (
-                  <ListItem key={user.id}>
-                    <User
-                      elevation={0}
-                      user={user}
-                      {...(followEnabled
-                        ? {followConnectUserButtonProps: {onFollow: handleOnFollowUser}}
-                        : {followConnectUserButtonProps: {onChangeConnectionStatus: handleOnConnectUser}})}
-                      className={classes.suggestedUserItem}
-                      {...UserProps}
-                    />
-                  </ListItem>
-                ))}
-              </List>
-              {hasMore && (
-                <Button className={classes.showMore} size="small" onClick={() => loadPeople(limit)}>
-                  <FormattedMessage id="ui.peopleSuggestion.button.showMore" defaultMessage="ui.peopleSuggestion.button.showMore" />
-                </Button>
-              )}
-            </React.Fragment>
+        <React.Fragment>
+          <List>
+            {users.slice(0, visiblePeople).map((user: SCUserType, index) => (
+              <ListItem key={user.id}>
+                <User
+                  elevation={0}
+                  user={user}
+                  {...(followEnabled
+                    ? {followConnectUserButtonProps: {onFollow: handleOnFollowUser}}
+                    : {followConnectUserButtonProps: {onChangeConnectionStatus: handleOnConnectUser}})}
+                  className={classes.suggestedUserItem}
+                  {...UserProps}
+                />
+              </ListItem>
+            ))}
+          </List>
+          {hasMore && (
+            <Button className={classes.showMore} size="small" onClick={() => loadPeople(limit)}>
+              <FormattedMessage id="ui.peopleSuggestion.button.showMore" defaultMessage="ui.peopleSuggestion.button.showMore" />
+            </Button>
           )}
-          {openPeopleSuggestionDialog && <></>}
-        </CardContent>
+        </React.Fragment>
       )}
-    </React.Fragment>
+      {openPeopleSuggestionDialog && <></>}
+    </CardContent>
   );
 
   /**
