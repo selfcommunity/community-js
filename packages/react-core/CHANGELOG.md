@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.3-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.2.3-alpha.2...@selfcommunity/react-core@0.2.3-alpha.3) (2022-08-17)
+
+
+### Bug Fixes
+
+* import ([da5f124](https://github.com/selfcommunity/community-js/commit/da5f124b4a3ff64531903081f44bedec416046eb))
+* preferences context provider ssr ([514358f](https://github.com/selfcommunity/community-js/commit/514358f792a5c182e02cb8943d3b152837539928))
+
+
+
+
+
 ## [0.2.3-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.2.3-alpha.1...@selfcommunity/react-core@0.2.3-alpha.2) (2022-08-17)
 
 **Note:** Version bump only for package @selfcommunity/react-core
