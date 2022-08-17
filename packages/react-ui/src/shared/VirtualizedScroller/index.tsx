@@ -1,4 +1,4 @@
-import VirtualizedScroller from './VirtualizedScroller';
+import VirtualizedScroller, {VirtualizedScrollerProps, VirtualizedScrollerCommonProps} from './VirtualizedScroller';
 import VirtualScrollChild from './VirtualScrollerChild';
 export default VirtualizedScroller;
-export {VirtualScrollChild};
+export {VirtualScrollChild, VirtualizedScrollerProps, VirtualizedScrollerCommonProps};
