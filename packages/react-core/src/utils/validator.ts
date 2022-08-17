@@ -6,6 +6,7 @@ import {
   SCNotificationsType,
   SCNotificationsWebPushMessagingType,
   SCNotificationsWebSocketType,
+  SCPreferencesContextType,
   SCSessionType,
   SCSettingsType,
 } from '../types/context';
@@ -18,6 +19,9 @@ import * as Notifications from '../constants/Notifications';
 import * as Theme from '../constants/Theme';
 import {PORTAL_OPTION, ROUTER_OPTION} from '../constants/Routes';
 import * as Actions from '../constants/Actions';
+import * as Preferences from '../constants/Preferences';
+import * as Features from '../constants/Features';
+import {DEFAULT_FEATURES_OPTION} from '../constants/Features';
 
 /**
  * Validate session option
@@ -415,6 +419,75 @@ export const validateContextProviders = (value) => {
 };
 
 /**
+ * Validate global preferences
+ * @param value
+ * @param preferences
+ */
+export const validateGlobalPreferences = (value, preferences) => {
+  const errors = [];
+  const warnings = [];
+  if (preferences[Preferences.GLOBAL_PREFERENCES_OPTION]) {
+    if (!isObject(value)) {
+      errors.push(ValidationError.ERROR_INVALID_GLOBAL_PREFERENCES);
+    } else {
+      const isValidKeys = Object.keys(value).every((key) => /[a-zA-Z]+.[a-zA-Z]+/g.test(key));
+      if (!isValidKeys) {
+        errors.push(ValidationError.ERROR_INVALID_GLOBAL_PREFERENCES);
+      }
+    }
+  }
+  return {errors, warnings, value};
+};
+
+/**
+ * Validate features
+ * @param value
+ * @param preferences
+ */
+export const validateFeatures = (value, preferences) => {
+  const errors = [];
+  const warnings = [];
+  if (preferences[Features.FEATURES_OPTION]) {
+    if (!Array.isArray(value)) {
+      errors.push(ValidationError.ERROR_INVALID_PREFERENCES_FEATURES);
+    }
+  }
+  return {errors, warnings, value};
+};
+
+/**
+ * Validate preferences option
+ * @param v
+ */
+export function validatePreferences(v: Record<string, any>) {
+  const errors = [];
+  const warnings = [];
+  const defaultValue = {
+    [Preferences.GLOBAL_PREFERENCES_OPTION]: Preferences.DEFAULT_GLOBAL_PREFERENCES_OPTION,
+    [Features.FEATURES_OPTION]: Features.DEFAULT_FEATURES_OPTION,
+  };
+  if (v) {
+    if (!isObject(v)) {
+      errors.push(ValidationError.ERROR_INVALID_PREFERENCES);
+      return {errors, warnings, value: v};
+    } else {
+      const _options = Object.keys(preferencesOptions);
+      const value: SCPreferencesContextType = Object.keys(v)
+        .filter((key) => _options.includes(key))
+        .reduce((obj, key) => {
+          const res = preferencesOptions[key].validator(v[key], v);
+          res.errors.map((error) => errors.push(error));
+          res.warnings.map((warning) => warnings.push(warning));
+          obj[key] = res.value;
+          return obj;
+        }, {} as SCPreferencesContextType);
+      return {errors, warnings, value: {...defaultValue, ...value}};
+    }
+  }
+  return {errors, warnings, value: defaultValue};
+}
+
+/**
  * Components Widget
  */
 const PortalOption = {
@@ -449,6 +522,10 @@ const ContextProvidersOption = {
   name: CONTEXT_PROVIDERS_OPTION,
   validator: validateContextProviders,
 };
+const PreferencesOption = {
+  name: Preferences.PREFERENCES_OPTION,
+  validator: validatePreferences,
+};
 
 /**
  * Session options
@@ -476,6 +553,14 @@ const LocaleDefaultOption = {
 const LocaleMessagesOption = {
   name: Locale.LOCALE_MESSAGES_OPTION,
   validator: validateLocaleMessages,
+};
+const GlobalPreferencesOption = {
+  name: Preferences.GLOBAL_PREFERENCES_OPTION,
+  validator: validateGlobalPreferences,
+};
+const FeaturesOption = {
+  name: Features.FEATURES_OPTION,
+  validator: validateFeatures,
 };
 const NotificationsWebSocketOption = {
   name: Notifications.NOTIFICATIONS_WEB_SOCKET_OPTION,
@@ -511,6 +596,7 @@ export const settingsOptions: Record<string, any> = {
   [SessionOption.name]: SessionOption,
   [HandleAnonymousActionOption.name]: HandleAnonymousActionOption,
   [ContextProvidersOption.name]: ContextProvidersOption,
+  [PreferencesOption.name]: PreferencesOption,
 };
 export const sessionOptions: Record<string, any> = {
   [SessionTypeOption.name]: SessionTypeOption,
@@ -532,6 +618,10 @@ export const notificationsWebSocketOptions: Record<string, any> = {
 export const notificationsWebSPushMessagingOptions: Record<string, any> = {
   [NotificationsWebPushMessagingDisableToastMessageOption.name]: NotificationsWebPushMessagingDisableToastMessageOption,
   [NotificationsWebPushMessagingApplicationServerKeyOption.name]: NotificationsWebPushMessagingApplicationServerKeyOption,
+};
+export const preferencesOptions: Record<string, any> = {
+  [GlobalPreferencesOption.name]: GlobalPreferencesOption,
+  [FeaturesOption.name]: FeaturesOption,
 };
 
 export const validOptions = {
