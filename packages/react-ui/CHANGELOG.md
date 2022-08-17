@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.4.0-alpha.6...@selfcommunity/react-ui@0.4.0-alpha.7) (2022-08-17)
+
+
+### Bug Fixes
+
+* feed props ([2b6d07b](https://github.com/selfcommunity/community-js/commit/2b6d07b9975d78316d2c17ecba2411ac4487f25c))
+* feed ssr ([7561954](https://github.com/selfcommunity/community-js/commit/7561954e3ae6d2ddd5bc63369eb65bc76acd46d7))
+* Fix FeedSkeleton styles ([22d9d1a](https://github.com/selfcommunity/community-js/commit/22d9d1a3765aa68db21ef20bb11d08085a8ee36d))
+
+
+
+
+
 # [0.4.0-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.4.0-alpha.5...@selfcommunity/react-ui@0.4.0-alpha.6) (2022-08-17)
 
 

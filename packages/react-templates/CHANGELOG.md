@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.32-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.1.32-alpha.8...@selfcommunity/react-templates@0.1.32-alpha.9) (2022-08-17)
+
+
+### Bug Fixes
+
+* Fix Skeleton styles on templates ([dd86ef3](https://github.com/selfcommunity/community-js/commit/dd86ef37b2655478642261e058c52d5be66c32bc))
+
+
+
+
+
 ## [0.1.32-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.1.32-alpha.7...@selfcommunity/react-templates@0.1.32-alpha.8) (2022-08-17)
 
 **Note:** Version bump only for package @selfcommunity/react-templates
