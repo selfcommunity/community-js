@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.4.0-alpha.4...@selfcommunity/react-ui@0.4.0-alpha.5) (2022-08-17)
+
+
+### Bug Fixes
+
+* Fix CategoriesPopular.tsx loading ([599840d](https://github.com/selfcommunity/community-js/commit/599840da466ecdd6ac39d61b3c0918b464d14ad9))
+* Fix search bar page reload ([f90e94e](https://github.com/selfcommunity/community-js/commit/f90e94e870a99fd873e24fa85e21171162fa38a7))
+* Fix skeleton in widgets ([6c9dcb6](https://github.com/selfcommunity/community-js/commit/6c9dcb601330d21f35bfee44cd5948ed74ed046c))
+* formatting ([a612be8](https://github.com/selfcommunity/community-js/commit/a612be8cda8085b38a68ac6c34e37d72e18654df))
+
+
+### Performance Improvements
+
+* PeopleSuggestion.tsx render optimization ([43ab815](https://github.com/selfcommunity/community-js/commit/43ab81525851951a5f911ac929f78e374a8df72f))
+
+
+
+
+
 # [0.4.0-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.4.0-alpha.3...@selfcommunity/react-ui@0.4.0-alpha.4) (2022-08-12)
 
 
