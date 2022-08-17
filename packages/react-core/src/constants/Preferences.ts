@@ -1,4 +1,13 @@
 /**
+ * DEFAULT CONF VALIDATION OPTION
+ */
+export const PREFERENCES_OPTION = 'preferences';
+export const GLOBAL_PREFERENCES_OPTION = 'preferences';
+export const DEFAULT_GLOBAL_PREFERENCES_OPTION = {};
+
+/** PREFERENCES */
+
+/**
  * TEXT
  */
 export const TEXT_APPLICATION_NAME = 'text.application_name';

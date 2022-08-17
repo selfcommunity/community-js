@@ -332,6 +332,29 @@ ExplorePrefetchedDataCached.args = {
   cacheStrategy: CacheStrategies.CACHE_FIRST
 };
 
+export const ExploreWithoutVirtualization = Template.bind({});
+
+ExploreWithoutVirtualization.args = {
+  id: 'explore_no_virtualization',
+  endpoint: Endpoints.ExploreFeed,
+  widgets: _WIDGETS,
+  ItemComponent: FeedObject,
+  itemPropsGenerator: (scUser, item) => ({
+    feedObject: item[item.type],
+    feedObjectType: item.type,
+    feedObjectActivities: item.activities ? item.activities : null,
+    markRead: scUser ? !item.seen_by_id.includes(scUser.id) : false
+  }),
+  itemIdGenerator: (item) => item[item.type].id,
+  ItemSkeleton: FeedObjectSkeleton,
+  ItemSkeletonProps: {
+    template: SCFeedObjectTemplateType.PREVIEW
+  },
+  cacheStrategy: CacheStrategies.NETWORK_ONLY,
+  HeaderComponent: <InlineComposer />,
+  VirtualizedScrollerProps: {bypass: true}
+};
+
 export const Notification = Template.bind({});
 
 Notification.args = {

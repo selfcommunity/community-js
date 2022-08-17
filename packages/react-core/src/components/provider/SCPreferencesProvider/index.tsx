@@ -1,8 +1,9 @@
 import React, {createContext, useContext, useEffect, useState} from 'react';
 import {FeatureService, PreferenceService} from '@selfcommunity/api-services';
-import {SCPreferencesContextType} from '../../../types/context';
+import {SCContextType, SCPreferencesContextType} from '../../../types/context';
 import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_CORE} from '../../../constants/Errors';
+import {useSCContext} from '@selfcommunity/react-core';
 
 /**
  * Creates Preferences/Features Context
@@ -33,10 +34,13 @@ export const SCPreferencesContext = createContext<SCPreferencesContextType>({} a
  *  ```
  */
 export default function SCPreferencesProvider({children = null}: {children: React.ReactNode}): JSX.Element {
-  const [preferences, setPreferences] = useState<Record<string, any>>({});
-  const [features, setFeatures] = useState<string[]>([]);
+  const scContext: SCContextType = useSCContext();
+  const [preferences, setPreferences] = useState<Record<string, any>>(scContext.settings.preferences.preferences);
+  const [features, setFeatures] = useState<string[]>(scContext.settings.preferences.features);
   const [, setError] = useState<any>();
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(
+    !(Object.keys(scContext.settings.preferences.preferences).length && scContext.settings.preferences.features.length)
+  );
 
   /**
    * Load all dynamic preferences and features enabled

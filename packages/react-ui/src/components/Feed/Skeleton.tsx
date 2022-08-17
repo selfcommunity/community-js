@@ -75,12 +75,12 @@ export default function FeedSkeleton(props: FeedSkeletonProps): JSX.Element {
   } = props;
   return (
     <Root container spacing={2} className={classNames(classes.root, className)}>
-      <Grid item xs={12} md={7} className={classes.left}>
-        {children}
+      <Grid item xs={12} md={7}>
+        <div className={classes.left}>{children}</div>
       </Grid>
       <Hidden smDown>
-        <Grid item xs={12} md={5} className={classes.right}>
-          {sidebar}
+        <Grid item xs={12} md={5}>
+          <div className={classes.right}>{sidebar}</div>
         </Grid>
       </Hidden>
     </Root>

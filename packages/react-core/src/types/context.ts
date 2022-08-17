@@ -31,6 +31,11 @@ export interface SCSettingsType {
   router?: SCRoutingType;
 
   /**
+   * Object conf of preferences.
+   */
+  preferences?: SCPreferencesContextType;
+
+  /**
    * Object conf of notification.
    */
   notifications?: SCNotificationsType;

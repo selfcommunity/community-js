@@ -25,7 +25,7 @@ import PubSub from 'pubsub-js';
 import {useThemeProps} from '@mui/system';
 import Widget from '../Widget';
 import InfiniteScroll from '../../shared/InfiniteScroll';
-import VirtualizedScroller, {VirtualScrollChild} from '../../shared/VirtualizedScroller';
+import VirtualizedScroller, {VirtualizedScrollerCommonProps, VirtualScrollChild} from '../../shared/VirtualizedScroller';
 import {WIDGET_PREFIX_KEY, DEFAULT_WIDGETS_NUMBER, DEFAULT_PAGINATION_ITEMS_NUMBER} from '../../constants/Feed';
 import {widgetSort} from '../../utils/feed';
 import Footer from '../Footer';
@@ -203,6 +203,12 @@ export interface FeedProps {
    * Use this to init the component (in particular useSCFetchFeed)
    */
   prefetchedData?: SCPaginatedResponse<SCFeedUnitType>;
+
+  /**
+   * Props to spread to VirtualizedScroller object.
+   * @default {}
+   */
+  VirtualizedScrollerProps: VirtualizedScrollerCommonProps;
 }
 
 const PREFERENCES = [SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED, SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED];
@@ -261,7 +267,8 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     CustomAdvProps = {},
     requireAuthentication = false,
     cacheStrategy = CacheStrategies.NETWORK_ONLY,
-    prefetchedData
+    prefetchedData,
+    VirtualizedScrollerProps = {}
   } = props;
 
   // CONTEXT
@@ -650,6 +657,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
               cacheScrollStateKey={SCCache.getVirtualizedScrollStateCacheKey(id)}
               cacheScrollerPositionKey={SCCache.getFeedSPCacheKey(id)}
               cacheStrategy={cacheStrategy}
+              {...VirtualizedScrollerProps}
             />
           </InfiniteScroll>
         </div>
