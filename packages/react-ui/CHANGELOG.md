@@ -3,6 +3,107 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.4.0-alpha.5...@selfcommunity/react-ui@0.4.0-alpha.6) (2022-08-17)
+
+
+### Bug Fixes
+
+* Fix Skeleton.tsx styles ([9719c69](https://github.com/selfcommunity/community-js/commit/9719c6972a2c4de7b8ae538b05ce9473fd4ab1a4))
+
+
+
+
+
+# [0.4.0-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.4.0-alpha.4...@selfcommunity/react-ui@0.4.0-alpha.5) (2022-08-17)
+
+
+### Bug Fixes
+
+* Fix CategoriesPopular.tsx loading ([599840d](https://github.com/selfcommunity/community-js/commit/599840da466ecdd6ac39d61b3c0918b464d14ad9))
+* Fix search bar page reload ([f90e94e](https://github.com/selfcommunity/community-js/commit/f90e94e870a99fd873e24fa85e21171162fa38a7))
+* Fix skeleton in widgets ([6c9dcb6](https://github.com/selfcommunity/community-js/commit/6c9dcb601330d21f35bfee44cd5948ed74ed046c))
+* formatting ([a612be8](https://github.com/selfcommunity/community-js/commit/a612be8cda8085b38a68ac6c34e37d72e18654df))
+
+
+### Performance Improvements
+
+* PeopleSuggestion.tsx render optimization ([43ab815](https://github.com/selfcommunity/community-js/commit/43ab81525851951a5f911ac929f78e374a8df72f))
+
+
+
+
+
+# [0.4.0-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.4.0-alpha.3...@selfcommunity/react-ui@0.4.0-alpha.4) (2022-08-12)
+
+
+### Bug Fixes
+
+* fixed mobile header link href->to ([a1532c8](https://github.com/selfcommunity/community-js/commit/a1532c822b4b027df0ebe241e48ca540cc7a5086))
+
+
+
+
+
+# [0.4.0-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.4.0-alpha.2...@selfcommunity/react-ui@0.4.0-alpha.3) (2022-08-12)
+
+
+### Bug Fixes
+
+* fixed header searchbar props ([22b2ca0](https://github.com/selfcommunity/community-js/commit/22b2ca0b13610c5632b670c0bac8ad0c16e12870))
+
+
+
+
+
+# [0.4.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.4.0-alpha.1...@selfcommunity/react-ui@0.4.0-alpha.2) (2022-08-12)
+
+
+### Bug Fixes
+
+* header component props fixing ([2122ef4](https://github.com/selfcommunity/community-js/commit/2122ef44a397527e206378a650cd4915ea595b00))
+
+
+
+
+
+# [0.4.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.4.0-alpha.0...@selfcommunity/react-ui@0.4.0-alpha.1) (2022-08-11)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.4.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.3.3-alpha.1...@selfcommunity/react-ui@0.4.0-alpha.0) (2022-08-11)
+
+
+### Features
+
+* added header component ([ed5ab73](https://github.com/selfcommunity/community-js/commit/ed5ab73bf55177ef6119ae03479a804c129cdf3e))
+
+
+
+
+
+## [0.3.3-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.3.3-alpha.0...@selfcommunity/react-ui@0.3.3-alpha.1) (2022-08-11)
+
+
+### Bug Fixes
+
+* Fix footer link on alternative url pages ([e8d6ee6](https://github.com/selfcommunity/community-js/commit/e8d6ee69b404594f25d2768fb6574ea3ac79bbd1))
+
+
+
+
+
+## [0.3.3-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.3.2...@selfcommunity/react-ui@0.3.3-alpha.0) (2022-08-11)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
 ## [0.3.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.3.2-alpha.2...@selfcommunity/react-ui@0.3.2) (2022-08-09)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
