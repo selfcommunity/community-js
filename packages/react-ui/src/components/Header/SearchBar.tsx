@@ -1,6 +1,6 @@
 import {alpha, Box, IconButton, TextField, styled, useTheme, useMediaQuery} from '@mui/material';
 import Icon from '@mui/material/Icon';
-import React, {useState} from 'react';
+import React, { FormEvent, useState } from 'react';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import {defineMessages, useIntl} from 'react-intl';
@@ -90,8 +90,11 @@ export default function HeaderSearchBar(inProps: HeaderSearchBarProps) {
     setQuery(event.target.value);
   };
 
-  const handleSearch = () => {
+  const handleSearch = (event: FormEvent) => {
+    event.preventDefault();
+    event.stopPropagation();
     onSearch && onSearch(query);
+    return false;
   };
 
   return (

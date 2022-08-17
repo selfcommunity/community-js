@@ -17,7 +17,7 @@ import {
 } from '@mui/material';
 import React, {useContext} from 'react';
 import {SCPreferences, useSCPreferences, Link, SCUserContext} from '@selfcommunity/react-core';
-import {SCUserContextType} from '@selfcommunity/react-core/lib/cjs/types/context';
+import {SCUserContextType} from '@selfcommunity/react-core';
 import Icon from '@mui/material/Icon';
 import MobileHeader from './MobileHeader/MobileHeader';
 import {useThemeProps} from '@mui/system';
