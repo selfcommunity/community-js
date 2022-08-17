@@ -15,11 +15,7 @@ const classes = {
 };
 
 const Root = styled(Widget)(({theme}) => ({
-  maxWidth: 700,
-  [`& .${classes.list}`]: {
-    marginLeft: -16,
-    marginRight: -16
-  }
+  maxWidth: 700
 }));
 /**
  * > API documentation for the Community-JS Message Skeleton component. Learn about the available props and the CSS API.
