@@ -1,26 +1,8 @@
-import {
-  AppBar,
-  Badge,
-  Box,
-  Button,
-  Grid,
-  IconButton,
-  styled,
-  SwipeableDrawer,
-  Tab,
-  Tabs,
-  Toolbar
-} from '@mui/material';
+import {AppBar, Badge, Box, Button, Grid, IconButton, styled, SwipeableDrawer, Tab, Tabs, Toolbar} from '@mui/material';
 import Icon from '@mui/material/Icon';
 import React, {useContext, useState} from 'react';
-import {
-  Link,
-  SCPreferences, 
-  SCUserContext,
-  SCUserContextType,
-  useSCPreferences,
-} from '@selfcommunity/react-core';
-import { useThemeProps } from '@mui/system';
+import {Link, SCPreferences, SCUserContext, SCUserContextType, useSCPreferences} from '@selfcommunity/react-core';
+import {useThemeProps} from '@mui/system';
 import SearchBar, {HeaderSearchBarProps} from '../SearchBar';
 import classNames from 'classnames';
 import {FormattedMessage} from 'react-intl';
@@ -34,7 +16,7 @@ const classes = {
   tabs: `${PREFIX}-tabs`,
   settingsTab: `${PREFIX}-setting-tab`,
   topToolbar: `${PREFIX}-top-toolbar`,
-  bottomToolbar: `${PREFIX}-bottom-toolbar`,
+  bottomToolbar: `${PREFIX}-bottom-toolbar`
 };
 
 const Root = styled(Box, {
@@ -44,7 +26,7 @@ const Root = styled(Box, {
 })(({theme}) => ({
   [`& .${classes.tabs}`]: {
     '& .MuiTabs-indicator': {
-      top: '0px',
+      top: '0px'
     }
   },
   [`& .${classes.settingsTab}`]: {
@@ -60,15 +42,15 @@ const Root = styled(Box, {
   },
   [`& .${classes.bottomToolbar}`]: {
     display: 'flex',
-   justifyContent: 'space-between'
+    justifyContent: 'space-between'
   },
   ' & .MuiTab-root': {
     minWidth: '70px',
     maxWidth: '280px',
     [theme.breakpoints.up('sm')]: {
       minWidth: '150px',
-      maxWidth: '600px',
-    },
+      maxWidth: '600px'
+    }
   }
 }));
 
@@ -100,13 +82,13 @@ export interface MobileHeaderProps {
   [p: string]: any;
 }
 
-export default function MobileHeader (inProps: MobileHeaderProps) {
+export default function MobileHeader(inProps: MobileHeaderProps) {
   // PROPS
   const props: MobileHeaderProps = useThemeProps({
     props: inProps,
     name: PREFIX
   });
-  const {url, className, searchBarProps,...rest} = props;
+  const {url, className, searchBarProps, ...rest} = props;
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
 
@@ -119,44 +101,37 @@ export default function MobileHeader (inProps: MobileHeaderProps) {
   const handleOpenSettingsMenu = () => {
     setOpenSettings(true);
   };
-    const toggleDrawer =
-      (anchor: 'right', open: boolean) =>
-        (event: React.KeyboardEvent | React.MouseEvent) => {
-          if (
-            event &&
-            event.type === 'keydown' &&
-            ((event as React.KeyboardEvent).key === 'Tab' ||
-              (event as React.KeyboardEvent).key === 'Shift')
-          ) {
-            return;
-          }
-        }
+  const toggleDrawer = (anchor: 'right', open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
+    if (event && event.type === 'keydown' && ((event as React.KeyboardEvent).key === 'Tab' || (event as React.KeyboardEvent).key === 'Shift')) {
+      return;
+    }
+  };
 
   return (
-    <Root  className={classNames(classes.root, className)}>
-        <AppBar position="fixed" color={'default'}>
+    <Root className={classNames(classes.root, className)}>
+      <AppBar position="fixed" color={'default'}>
         <Toolbar className={classes.topToolbar}>
           <Grid container direction="row" justifyContent="flex-start">
-            {scUserContext.user && url && url.home ?
-              <Link to={url.home}><img src={logo} alt={'logo'} style={{height: '30px'}}/></Link> :
-              <Link to={'/'}><img src={logo} alt={'logo'} style={{height: '30px'}}/></Link>}
+            {scUserContext.user && url && url.home ? (
+              <Link to={url.home}>
+                <img src={logo} alt={'logo'} style={{height: '30px'}} />
+              </Link>
+            ) : (
+              <Link to={'/'}>
+                <img src={logo} alt={'logo'} style={{height: '30px'}} />
+              </Link>
+            )}
           </Grid>
-          <SearchBar {...searchBarProps}/>
+          <SearchBar {...searchBarProps} />
           {scUserContext.user && url && url.create && (
-            <IconButton
-              component={Link}
-              to={url.create}
-              size="large"
-              aria-label="New Contribute"
-              color="inherit"
-            >
+            <IconButton component={Link} to={url.create} size="large" aria-label="New Contribute" color="inherit">
               <Icon>create</Icon>
             </IconButton>
           )}
         </Toolbar>
       </AppBar>
       <BottomBar>
-        {scUserContext.user ?
+        {scUserContext.user ? (
           <Toolbar className={classes.bottomToolbar}>
             <Tabs
               className={value === 4 ? classes.settingsTab : classes.tabs}
@@ -165,40 +140,51 @@ export default function MobileHeader (inProps: MobileHeaderProps) {
               textColor="primary"
               indicatorColor="primary"
               aria-label="Navigation Tabs"
-              variant="scrollable"
-            >
-              {url && url.home &&(<Tab icon={<Icon>home</Icon>} aria-label='HomePage' to={url.home} component={Link}></Tab>)}
-              {url && url.explore &&(<Tab icon={<Icon>explore</Icon>} aria-label='Explore' to={url.explore} component={Link}></Tab>)}
-              {url && url.followings &&<Tab icon={<Icon>person</Icon>} aria-label='Followings' to={url.followings} component={Link}></Tab>}
-              {url && url.notifications &&(<Tab icon={<Badge badgeContent={scUserContext.user.unseen_interactions_counter}
-                                 color='error'><Icon>notifications</Icon></Badge>} aria-label='Notifications'
-                    to={url.notifications}
-                    component={Link}></Tab>)}
-              <Tab className={classes.settingsTab} icon={<Icon>menu</Icon>} aria-label="HeaderMenu"  onClick={handleOpenSettingsMenu}></Tab>
+              variant="scrollable">
+              {url && url.home && <Tab icon={<Icon>home</Icon>} aria-label="HomePage" to={url.home} component={Link}></Tab>}
+              {url && url.explore && <Tab icon={<Icon>explore</Icon>} aria-label="Explore" to={url.explore} component={Link}></Tab>}
+              {url && url.followings && <Tab icon={<Icon>person</Icon>} aria-label="Followings" to={url.followings} component={Link}></Tab>}
+              {url && url.notifications && (
+                <Tab
+                  icon={
+                    <Badge badgeContent={scUserContext.user.unseen_interactions_counter} color="error">
+                      <Icon>notifications</Icon>
+                    </Badge>
+                  }
+                  aria-label="Notifications"
+                  to={url.notifications}
+                  component={Link}></Tab>
+              )}
+              <Tab className={classes.settingsTab} icon={<Icon>menu</Icon>} aria-label="HeaderMenu" onClick={handleOpenSettingsMenu}></Tab>
               <SwipeableDrawer
                 anchor={'right'}
                 open={openSettings}
-                onClick={() =>setOpenSettings(false)}
-                onClose={() =>setOpenSettings(false)}
-                onOpen={toggleDrawer('right', true)}
-              >
-                <HeaderMenu url={url}/>
+                onClick={() => setOpenSettings(false)}
+                onClose={() => setOpenSettings(false)}
+                onOpen={toggleDrawer('right', true)}>
+                <HeaderMenu url={url} />
               </SwipeableDrawer>
             </Tabs>
           </Toolbar>
-          :
+        ) : (
           <Toolbar sx={{justifyContent: 'space-between'}}>
             {url && url.explore && (
-            <Button component={Link} to={url.explore} size="medium" color="inherit"><FormattedMessage id="ui.header.button.explore" defaultMessage="ui.header.button.explore" /></Button>
-              )}
+              <Button component={Link} to={url.explore} size="medium" color="inherit">
+                <FormattedMessage id="ui.header.button.explore" defaultMessage="ui.header.button.explore" />
+              </Button>
+            )}
             {url && url.login && (
-              <Button color="inherit"  onClick={url.login}><FormattedMessage id="ui.header.button.login" defaultMessage="ui.header.button.login" /></Button>
-              )}
+              <Button color="inherit" onClick={url.login}>
+                <FormattedMessage id="ui.header.button.login" defaultMessage="ui.header.button.login" />
+              </Button>
+            )}
             {url && url.register && (
-              <Button color="inherit" component={Link} to={url.register}><FormattedMessage id="ui.header.button.register" defaultMessage="ui.header.button.register" /></Button>
-              )}
+              <Button color="inherit" component={Link} to={url.register}>
+                <FormattedMessage id="ui.header.button.register" defaultMessage="ui.header.button.register" />
+              </Button>
+            )}
           </Toolbar>
-        }
+        )}
       </BottomBar>
     </Root>
   );

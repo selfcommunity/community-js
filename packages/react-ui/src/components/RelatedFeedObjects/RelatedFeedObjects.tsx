@@ -223,76 +223,73 @@ export default function RelatedFeedObjects(inProps: RelatedFeedObjectsProps): JS
   /**
    * Renders related discussions list
    */
+  if (loading) {
+    return <TrendingFeedSkeleton />;
+  }
   const advPosition = Math.floor(Math.random() * (Math.min(total, 5) - 1 + 1) + 1);
   const d = (
-    <React.Fragment>
-      {loading ? (
-        <TrendingFeedSkeleton elevation={0} />
+    <CardContent>
+      <Typography className={classes.title} variant="h5">
+        <FormattedMessage id="ui.relatedFeedObjects.title" defaultMessage="ui.relatedFeedObjects.title" />
+      </Typography>
+      {!total ? (
+        <Typography className={classes.noResults} variant="body2">
+          <FormattedMessage id="ui.relatedFeedObjects.noResults" defaultMessage="ui.relatedFeedObjects.noResults" />
+        </Typography>
       ) : (
-        <CardContent>
-          <Typography className={classes.title} variant="h5">
-            <FormattedMessage id="ui.relatedFeedObjects.title" defaultMessage="ui.relatedFeedObjects.title" />
-          </Typography>
-          {!total ? (
-            <Typography className={classes.noResults} variant="body2">
-              <FormattedMessage id="ui.relatedFeedObjects.noResults" defaultMessage="ui.relatedFeedObjects.noResults" />
-            </Typography>
-          ) : (
-            <React.Fragment>
-              <List>
-                {objs.slice(0, visibleDiscussions).map((obj: SCFeedDiscussionType, index) => {
-                  return (
-                    <React.Fragment key={index}>
-                      <ListItem>
-                        <FeedObject elevation={0} feedObject={obj} template={template} className={classes.relatedItem} {...FeedObjectProps} />
-                      </ListItem>
-                      {advPosition === index && <ListItem>{renderAdvertising()}</ListItem>}
-                    </React.Fragment>
-                  );
-                })}
-              </List>
-              {hasMore && (
-                <Button size="small" className={classes.showMore} onClick={() => setOpenRelatedFeedObjectsDialog(true)}>
-                  <FormattedMessage id="ui.relatedFeedObjects.button.showMore" defaultMessage="ui.relatedFeedObjects.button.showMore" />
-                </Button>
-              )}
-            </React.Fragment>
+        <React.Fragment>
+          <List>
+            {objs.slice(0, visibleDiscussions).map((obj: SCFeedDiscussionType, index) => {
+              return (
+                <React.Fragment key={index}>
+                  <ListItem>
+                    <FeedObject elevation={0} feedObject={obj} template={template} className={classes.relatedItem} {...FeedObjectProps} />
+                  </ListItem>
+                  {advPosition === index && <ListItem>{renderAdvertising()}</ListItem>}
+                </React.Fragment>
+              );
+            })}
+          </List>
+          {hasMore && (
+            <Button size="small" className={classes.showMore} onClick={() => setOpenRelatedFeedObjectsDialog(true)}>
+              <FormattedMessage id="ui.relatedFeedObjects.button.showMore" defaultMessage="ui.relatedFeedObjects.button.showMore" />
+            </Button>
           )}
-          {openRelatedFeedObjectsDialog && (
-            <BaseDialog
-              title={<FormattedMessage id="ui.relatedFeedObjects.title" defaultMessage="ui.relatedFeedObjects.title" />}
-              onClose={() => setOpenRelatedFeedObjectsDialog(false)}
-              open={openRelatedFeedObjectsDialog}>
-              {loading ? (
-                <CentralProgress size={50} />
-              ) : (
-                <InfiniteScroll
-                  dataLength={objs.length}
-                  next={fetchRelated}
-                  hasMoreNext={Boolean(next)}
-                  loaderNext={<CentralProgress size={30} />}
-                  height={400}
-                  endMessage={
-                    <p style={{textAlign: 'center'}}>
-                      <b>
-                        <FormattedMessage id="ui.relatedFeedObjects.noMoreResults" defaultMessage="ui.relatedFeedObjects.noMoreResults" />
-                      </b>
-                    </p>
-                  }>
-                  <List>
-                    {objs.map((obj: SCFeedDiscussionType, index) => (
-                      <ListItem key={index}>
-                        <FeedObject elevation={0} feedObject={obj} template={template} className={classes.relatedItem} {...FeedObjectProps} />
-                      </ListItem>
-                    ))}
-                  </List>
-                </InfiniteScroll>
-              )}
-            </BaseDialog>
-          )}
-        </CardContent>
+        </React.Fragment>
       )}
-    </React.Fragment>
+      {openRelatedFeedObjectsDialog && (
+        <BaseDialog
+          title={<FormattedMessage id="ui.relatedFeedObjects.title" defaultMessage="ui.relatedFeedObjects.title" />}
+          onClose={() => setOpenRelatedFeedObjectsDialog(false)}
+          open={openRelatedFeedObjectsDialog}>
+          {loading ? (
+            <CentralProgress size={50} />
+          ) : (
+            <InfiniteScroll
+              dataLength={objs.length}
+              next={fetchRelated}
+              hasMoreNext={Boolean(next)}
+              loaderNext={<CentralProgress size={30} />}
+              height={400}
+              endMessage={
+                <p style={{textAlign: 'center'}}>
+                  <b>
+                    <FormattedMessage id="ui.relatedFeedObjects.noMoreResults" defaultMessage="ui.relatedFeedObjects.noMoreResults" />
+                  </b>
+                </p>
+              }>
+              <List>
+                {objs.map((obj: SCFeedDiscussionType, index) => (
+                  <ListItem key={index}>
+                    <FeedObject elevation={0} feedObject={obj} template={template} className={classes.relatedItem} {...FeedObjectProps} />
+                  </ListItem>
+                ))}
+              </List>
+            </InfiniteScroll>
+          )}
+        </BaseDialog>
+      )}
+    </CardContent>
   );
 
   /**

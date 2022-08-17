@@ -153,70 +153,67 @@ export default function TrendingFeed(inProps: TrendingFeedProps): JSX.Element {
   /**
    * Renders the list
    */
+  if (loading) {
+    return <Skeleton />;
+  }
   const f = (
-    <React.Fragment>
-      {loading ? (
-        <Skeleton elevation={0} />
+    <CardContent>
+      <Typography className={classes.title} variant="h5">
+        <FormattedMessage id="ui.trendingFeed.title" defaultMessage="ui.trendingFeed.title" />
+      </Typography>
+      {!total ? (
+        <Typography className={classes.noResults} variant="body2">
+          <FormattedMessage id="ui.trendingFeed.noResults" defaultMessage="ui.trendingFeed.noResults" />
+        </Typography>
       ) : (
-        <CardContent>
-          <Typography className={classes.title} variant="h5">
-            <FormattedMessage id="ui.trendingFeed.title" defaultMessage="ui.trendingFeed.title" />
-          </Typography>
-          {!total ? (
-            <Typography className={classes.noResults} variant="body2">
-              <FormattedMessage id="ui.trendingFeed.noResults" defaultMessage="ui.trendingFeed.noResults" />
-            </Typography>
+        <React.Fragment>
+          <List>
+            {posts.slice(0, visible).map((obj: SCFeedObjectType, index) => (
+              <ListItem key={index}>
+                <FeedObject elevation={0} feedObject={obj[obj.type]} template={template} className={classes.trendingItem} />
+              </ListItem>
+            ))}
+          </List>
+          {hasMore && (
+            <Button size="small" className={classes.showMore} onClick={() => setOpenTrendingPostDialog(true)}>
+              <FormattedMessage id="ui.trendingFeed.button.showMore" defaultMessage="ui.trendingFeed.button.showMore" />
+            </Button>
+          )}
+        </React.Fragment>
+      )}
+      {openTrendingPostDialog && (
+        <BaseDialog
+          title={<FormattedMessage id="ui.trendingFeed.title" defaultMessage="ui.trendingFeed.title" />}
+          onClose={() => setOpenTrendingPostDialog(false)}
+          open={openTrendingPostDialog}>
+          {loading ? (
+            <CentralProgress size={50} />
           ) : (
-            <React.Fragment>
+            <InfiniteScroll
+              dataLength={posts.length}
+              next={fetchTrendingPost}
+              hasMoreNext={Boolean(next)}
+              loaderNext={<CentralProgress size={30} />}
+              height={400}
+              endMessage={
+                <p style={{textAlign: 'center'}}>
+                  <b>
+                    <FormattedMessage id="ui.trendingFeed.noMoreResults" defaultMessage="ui.trendingFeed.noMoreResults" />
+                  </b>
+                </p>
+              }>
               <List>
-                {posts.slice(0, visible).map((obj: SCFeedObjectType, index) => (
+                {posts.map((obj: SCFeedObjectType, index) => (
                   <ListItem key={index}>
                     <FeedObject elevation={0} feedObject={obj[obj.type]} template={template} className={classes.trendingItem} />
                   </ListItem>
                 ))}
               </List>
-              {hasMore && (
-                <Button size="small" className={classes.showMore} onClick={() => setOpenTrendingPostDialog(true)}>
-                  <FormattedMessage id="ui.trendingFeed.button.showMore" defaultMessage="ui.trendingFeed.button.showMore" />
-                </Button>
-              )}
-            </React.Fragment>
+            </InfiniteScroll>
           )}
-          {openTrendingPostDialog && (
-            <BaseDialog
-              title={<FormattedMessage id="ui.trendingFeed.title" defaultMessage="ui.trendingFeed.title" />}
-              onClose={() => setOpenTrendingPostDialog(false)}
-              open={openTrendingPostDialog}>
-              {loading ? (
-                <CentralProgress size={50} />
-              ) : (
-                <InfiniteScroll
-                  dataLength={posts.length}
-                  next={fetchTrendingPost}
-                  hasMoreNext={Boolean(next)}
-                  loaderNext={<CentralProgress size={30} />}
-                  height={400}
-                  endMessage={
-                    <p style={{textAlign: 'center'}}>
-                      <b>
-                        <FormattedMessage id="ui.trendingFeed.noMoreResults" defaultMessage="ui.trendingFeed.noMoreResults" />
-                      </b>
-                    </p>
-                  }>
-                  <List>
-                    {posts.map((obj: SCFeedObjectType, index) => (
-                      <ListItem key={index}>
-                        <FeedObject elevation={0} feedObject={obj[obj.type]} template={template} className={classes.trendingItem} />
-                      </ListItem>
-                    ))}
-                  </List>
-                </InfiniteScroll>
-              )}
-            </BaseDialog>
-          )}
-        </CardContent>
+        </BaseDialog>
       )}
-    </React.Fragment>
+    </CardContent>
   );
 
   /**
