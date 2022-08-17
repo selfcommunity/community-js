@@ -179,6 +179,8 @@ export default function PeopleSuggestion(inProps: PeopleSuggestionProps): JSX.El
   useEffect(() => {
     if (scUserContext.user) {
       fetchUserSuggestion();
+    } else {
+      setLoading(false);
     }
   }, [authUserId]);
 
@@ -188,55 +190,48 @@ export default function PeopleSuggestion(inProps: PeopleSuggestionProps): JSX.El
   if (loading) {
     return <PeopleSuggestionSkeleton />;
   }
-  const p = (
-    <CardContent>
-      <Typography className={classes.title} variant="h5">
-        <FormattedMessage id="ui.peopleSuggestion.title" defaultMessage="ui.peopleSuggestion.title" />
-      </Typography>
-      {!total ? (
-        <Typography className={classes.noResults} variant="body2">
-          <FormattedMessage id="ui.peopleSuggestion.subtitle.noResults" defaultMessage="ui.peopleSuggestion.subtitle.noResults" />
-        </Typography>
-      ) : (
-        <React.Fragment>
-          <List>
-            {users.slice(0, visiblePeople).map((user: SCUserType, index) => (
-              <ListItem key={user.id}>
-                <User
-                  elevation={0}
-                  user={user}
-                  {...(followEnabled
-                    ? {followConnectUserButtonProps: {onFollow: handleOnFollowUser}}
-                    : {followConnectUserButtonProps: {onChangeConnectionStatus: handleOnConnectUser}})}
-                  className={classes.suggestedUserItem}
-                  {...UserProps}
-                />
-              </ListItem>
-            ))}
-          </List>
-          {hasMore && (
-            <Button className={classes.showMore} size="small" onClick={() => loadPeople(limit)}>
-              <FormattedMessage id="ui.peopleSuggestion.button.showMore" defaultMessage="ui.peopleSuggestion.button.showMore" />
-            </Button>
-          )}
-        </React.Fragment>
-      )}
-      {openPeopleSuggestionDialog && <></>}
-    </CardContent>
-  );
-
   /**
    * Renders root object (if results and if user is logged, otherwise component is hidden)
    */
-  if (autoHide && !total) {
+  if ((autoHide && !total) || !scUserContext.user) {
     return <HiddenPlaceholder />;
   }
-  if (scUserContext.user) {
-    return (
-      <Root className={classNames(classes.root, className)} {...rest}>
-        {p}
-      </Root>
-    );
-  }
-  return <HiddenPlaceholder />;
+  return (
+    <Root className={classNames(classes.root, className)} {...rest}>
+      <CardContent>
+        <Typography className={classes.title} variant="h5">
+          <FormattedMessage id="ui.peopleSuggestion.title" defaultMessage="ui.peopleSuggestion.title" />
+        </Typography>
+        {!total ? (
+          <Typography className={classes.noResults} variant="body2">
+            <FormattedMessage id="ui.peopleSuggestion.subtitle.noResults" defaultMessage="ui.peopleSuggestion.subtitle.noResults" />
+          </Typography>
+        ) : (
+          <React.Fragment>
+            <List>
+              {users.slice(0, visiblePeople).map((user: SCUserType, index) => (
+                <ListItem key={user.id}>
+                  <User
+                    elevation={0}
+                    user={user}
+                    {...(followEnabled
+                      ? {followConnectUserButtonProps: {onFollow: handleOnFollowUser}}
+                      : {followConnectUserButtonProps: {onChangeConnectionStatus: handleOnConnectUser}})}
+                    className={classes.suggestedUserItem}
+                    {...UserProps}
+                  />
+                </ListItem>
+              ))}
+            </List>
+            {hasMore && (
+              <Button className={classes.showMore} size="small" onClick={() => loadPeople(limit)}>
+                <FormattedMessage id="ui.peopleSuggestion.button.showMore" defaultMessage="ui.peopleSuggestion.button.showMore" />
+              </Button>
+            )}
+          </React.Fragment>
+        )}
+        {openPeopleSuggestionDialog && <></>}
+      </CardContent>
+    </Root>
+  );
 }
