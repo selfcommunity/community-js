@@ -208,7 +208,7 @@ export interface FeedProps {
    * Props to spread to VirtualizedScroller object.
    * @default {}
    */
-  VirtualizedScrollerProps: VirtualizedScrollerCommonProps;
+  VirtualizedScrollerProps?: VirtualizedScrollerCommonProps;
 }
 
 const PREFERENCES = [SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED, SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED];
