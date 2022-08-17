@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.4.0-alpha.5...@selfcommunity/react-ui@0.4.0-alpha.6) (2022-08-17)
+
+
+### Bug Fixes
+
+* Fix Skeleton.tsx styles ([9719c69](https://github.com/selfcommunity/community-js/commit/9719c6972a2c4de7b8ae538b05ce9473fd4ab1a4))
+
+
+
+
+
 # [0.4.0-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.4.0-alpha.4...@selfcommunity/react-ui@0.4.0-alpha.5) (2022-08-17)
 
 
