@@ -12,12 +12,7 @@ const classes = {
   list: `${PREFIX}-list`
 };
 
-const Root = styled(Widget)(({theme}) => ({
-  [`& .${classes.list}`]: {
-    marginLeft: -16,
-    marginRight: -16
-  }
-}));
+const Root = styled(Widget)(({theme}) => ({}));
 /**
  * > API documentation for the Community-JS Categories Suggestion Skeleton component. Learn about the available props and the CSS API.
 
