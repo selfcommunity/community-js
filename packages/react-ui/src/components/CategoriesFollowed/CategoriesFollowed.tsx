@@ -162,74 +162,71 @@ export default function CategoriesFollowed(inProps: CategoriesListProps): JSX.El
   /**
    * Renders the list of categories followed
    */
+  if (loading) {
+    return <Skeleton />;
+  }
   const c = (
-    <React.Fragment>
-      {loading ? (
-        <Skeleton elevation={0} />
+    <CardContent>
+      <Typography className={classes.title} variant="h5">{`${intl.formatMessage(messages.title, {
+        total: total
+      })}`}</Typography>
+      {!total ? (
+        <Typography className={classes.noResults} variant="body2">{`${intl.formatMessage(messages.noCategories)}`}</Typography>
       ) : (
-        <CardContent>
-          <Typography className={classes.title} variant="h5">{`${intl.formatMessage(messages.title, {
-            total: total
-          })}`}</Typography>
-          {!total ? (
-            <Typography className={classes.noResults} variant="body2">{`${intl.formatMessage(messages.noCategories)}`}</Typography>
-          ) : (
-            <React.Fragment>
-              <List>
-                {categories.slice(0, limit).map((category: SCCategoryType) => (
-                  <ListItem key={category.id}>
-                    <Category elevation={0} category={category} followCategoryButtonProps={{onFollow: handleOnFollowCategory}} {...CategoryProps} />
-                  </ListItem>
-                ))}
-              </List>
-              {hasMore && (
-                <Button size="small" className={classes.showMore} onClick={() => setOpenCategoriesFollowedDialog(true)}>
-                  <FormattedMessage id="ui.categoriesFollowed.button.showAll" defaultMessage="ui.categoriesFollowed.button.showAll" />
-                </Button>
-              )}
-              {openCategoriesFollowedDialog && (
-                <BaseDialog
-                  title={`${intl.formatMessage(messages.title, {total: total})}`}
-                  onClose={() => setOpenCategoriesFollowedDialog(false)}
-                  open={openCategoriesFollowedDialog}>
-                  {loading ? (
-                    <CentralProgress size={50} />
-                  ) : (
-                    <InfiniteScroll
-                      dataLength={categories.length}
-                      next={fetchCategoriesFollowed}
-                      hasMoreNext={Boolean(next)}
-                      loaderNext={<CentralProgress size={30} />}
-                      height={400}
-                      endMessage={
-                        <p style={{textAlign: 'center'}}>
-                          <b>
-                            <FormattedMessage id="ui.categoriesFollowed.noMoreResults" defaultMessage="ui.categoriesFollowed.noMoreResults" />
-                          </b>
-                        </p>
-                      }>
-                      <List>
-                        {categories.map((c) => (
-                          <ListItem key={c.id}>
-                            <Category
-                              elevation={0}
-                              category={c}
-                              sx={{m: 0}}
-                              followCategoryButtonProps={{onFollow: handleOnFollowCategory}}
-                              {...CategoryProps}
-                            />
-                          </ListItem>
-                        ))}
-                      </List>
-                    </InfiniteScroll>
-                  )}
-                </BaseDialog>
-              )}
-            </React.Fragment>
+        <React.Fragment>
+          <List>
+            {categories.slice(0, limit).map((category: SCCategoryType) => (
+              <ListItem key={category.id}>
+                <Category elevation={0} category={category} followCategoryButtonProps={{onFollow: handleOnFollowCategory}} {...CategoryProps} />
+              </ListItem>
+            ))}
+          </List>
+          {hasMore && (
+            <Button size="small" className={classes.showMore} onClick={() => setOpenCategoriesFollowedDialog(true)}>
+              <FormattedMessage id="ui.categoriesFollowed.button.showAll" defaultMessage="ui.categoriesFollowed.button.showAll" />
+            </Button>
           )}
-        </CardContent>
+          {openCategoriesFollowedDialog && (
+            <BaseDialog
+              title={`${intl.formatMessage(messages.title, {total: total})}`}
+              onClose={() => setOpenCategoriesFollowedDialog(false)}
+              open={openCategoriesFollowedDialog}>
+              {loading ? (
+                <CentralProgress size={50} />
+              ) : (
+                <InfiniteScroll
+                  dataLength={categories.length}
+                  next={fetchCategoriesFollowed}
+                  hasMoreNext={Boolean(next)}
+                  loaderNext={<CentralProgress size={30} />}
+                  height={400}
+                  endMessage={
+                    <p style={{textAlign: 'center'}}>
+                      <b>
+                        <FormattedMessage id="ui.categoriesFollowed.noMoreResults" defaultMessage="ui.categoriesFollowed.noMoreResults" />
+                      </b>
+                    </p>
+                  }>
+                  <List>
+                    {categories.map((c) => (
+                      <ListItem key={c.id}>
+                        <Category
+                          elevation={0}
+                          category={c}
+                          sx={{m: 0}}
+                          followCategoryButtonProps={{onFollow: handleOnFollowCategory}}
+                          {...CategoryProps}
+                        />
+                      </ListItem>
+                    ))}
+                  </List>
+                </InfiniteScroll>
+              )}
+            </BaseDialog>
+          )}
+        </React.Fragment>
       )}
-    </React.Fragment>
+    </CardContent>
   );
 
   /**

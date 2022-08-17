@@ -1,3 +1,10 @@
+/**
+ * DEFAULT CONF VALIDATION OPTION
+ */
+export const FEATURES_OPTION = 'features';
+export const DEFAULT_FEATURES_OPTION = [];
+
+/** FEATURES */
 export const INTERESTS = 'interests';
 export const CUSTOMIZE = 'customize';
 export const ADDONS = 'addons';

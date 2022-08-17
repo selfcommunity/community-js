@@ -12,7 +12,9 @@ const Root = styled(FeedSkeleton, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(() => ({}));
+})(({theme}) => ({
+  marginTop: theme.spacing(2)
+}));
 
 /**
  * > API documentation for the Community-JS Explore Feed Skeleton Template. Learn about the available props and the CSS API.

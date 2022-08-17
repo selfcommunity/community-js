@@ -81,6 +81,16 @@ const withProvider = (Story, context) => {
         // applicationServerKey: 'BD9Ic3IqC5Uom1NiC46fjOFYCvQcDPA2emgmyBx25oTXySeA25C0cJsWfK1Dxr4zDYeQ-MUwV9vOqz8aIGMeLAI',
       },
     },
+    /* preferences: {
+      preferences: {
+        'addons.affinity_enabled': {
+          id: 81,
+          section: 'addons',
+          name: 'affinity_enabled',
+          value: true
+        }
+      }, features: ['addons', 'advertising']
+    }, */
     theme: {
       palette: {
         primary: {

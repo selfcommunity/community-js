@@ -208,82 +208,79 @@ export default function UsersFollowed(inProps: UsersFollowedProps): JSX.Element 
   /**
    * Renders the list of users followed
    */
+  if (loading) {
+    return <Skeleton />;
+  }
   const u = (
-    <React.Fragment>
-      {loading ? (
-        <Skeleton elevation={0} />
+    <CardContent>
+      <Typography className={classes.title} variant="h5">{`${intl.formatMessage(messages.title, {total: total})}`}</Typography>
+      {!total ? (
+        <Typography className={classes.noResults} variant="body2">{`${intl.formatMessage(messages.noUsers)}`}</Typography>
       ) : (
-        <CardContent>
-          <Typography className={classes.title} variant="h5">{`${intl.formatMessage(messages.title, {total: total})}`}</Typography>
-          {!total ? (
-            <Typography className={classes.noResults} variant="body2">{`${intl.formatMessage(messages.noUsers)}`}</Typography>
-          ) : (
-            <React.Fragment>
-              <List>
-                {followed.slice(0, limit).map((user: SCUserType) => (
-                  <ListItem key={user.id}>
-                    <User
-                      elevation={0}
-                      user={user}
-                      {...(followEnabled
-                        ? {followConnectUserButtonProps: {onFollow: handleOnFollowUser}}
-                        : {followConnectUserButtonProps: {onChangeConnectionStatus: handleOnFollowUser}})}
-                      className={classes.followedItem}
-                      {...UserProps}
-                    />
-                  </ListItem>
-                ))}
-              </List>
-              {hasMore && (
-                <Button size="small" className={classes.showMore} onClick={() => setOpenUsersFollowedDialog(true)}>
-                  <FormattedMessage id="ui.usersFollowed.button.showAll" defaultMessage="ui.usersFollowed.button.showAll" />
-                </Button>
-              )}
-              {openUsersFollowedDialog && (
-                <BaseDialog
-                  title={`${intl.formatMessage(messages.title, {total: total})}`}
-                  onClose={() => setOpenUsersFollowedDialog(false)}
-                  open={openUsersFollowedDialog}>
-                  {loading ? (
-                    <CentralProgress size={50} />
-                  ) : (
-                    <InfiniteScroll
-                      dataLength={followed.length}
-                      next={fetchFollowed}
-                      hasMoreNext={Boolean(next)}
-                      loaderNext={<CentralProgress size={30} />}
-                      height={400}
-                      endMessage={
-                        <p style={{textAlign: 'center'}}>
-                          <b>
-                            <FormattedMessage id="ui.usersFollowed.noMoreResults" defaultMessage="ui.usersFollowed.noMoreResults" />
-                          </b>
-                        </p>
-                      }>
-                      <List>
-                        {followed.map((f) => (
-                          <ListItem key={f.id}>
-                            <User
-                              elevation={0}
-                              user={f}
-                              {...UserProps}
-                              className={classes.followedItem}
-                              {...(followEnabled
-                                ? {followConnectUserButtonProps: {onFollow: handleOnFollowUser}}
-                                : {followConnectUserButtonProps: {onChangeConnectionStatus: handleOnFollowUser}})}
-                            />
-                          </ListItem>
-                        ))}
-                      </List>
-                    </InfiniteScroll>
-                  )}
-                </BaseDialog>
-              )}
-            </React.Fragment>
+        <React.Fragment>
+          <List>
+            {followed.slice(0, limit).map((user: SCUserType) => (
+              <ListItem key={user.id}>
+                <User
+                  elevation={0}
+                  user={user}
+                  {...(followEnabled
+                    ? {followConnectUserButtonProps: {onFollow: handleOnFollowUser}}
+                    : {followConnectUserButtonProps: {onChangeConnectionStatus: handleOnFollowUser}})}
+                  className={classes.followedItem}
+                  {...UserProps}
+                />
+              </ListItem>
+            ))}
+          </List>
+          {hasMore && (
+            <Button size="small" className={classes.showMore} onClick={() => setOpenUsersFollowedDialog(true)}>
+              <FormattedMessage id="ui.usersFollowed.button.showAll" defaultMessage="ui.usersFollowed.button.showAll" />
+            </Button>
           )}
-        </CardContent>
+          {openUsersFollowedDialog && (
+            <BaseDialog
+              title={`${intl.formatMessage(messages.title, {total: total})}`}
+              onClose={() => setOpenUsersFollowedDialog(false)}
+              open={openUsersFollowedDialog}>
+              {loading ? (
+                <CentralProgress size={50} />
+              ) : (
+                <InfiniteScroll
+                  dataLength={followed.length}
+                  next={fetchFollowed}
+                  hasMoreNext={Boolean(next)}
+                  loaderNext={<CentralProgress size={30} />}
+                  height={400}
+                  endMessage={
+                    <p style={{textAlign: 'center'}}>
+                      <b>
+                        <FormattedMessage id="ui.usersFollowed.noMoreResults" defaultMessage="ui.usersFollowed.noMoreResults" />
+                      </b>
+                    </p>
+                  }>
+                  <List>
+                    {followed.map((f) => (
+                      <ListItem key={f.id}>
+                        <User
+                          elevation={0}
+                          user={f}
+                          {...UserProps}
+                          className={classes.followedItem}
+                          {...(followEnabled
+                            ? {followConnectUserButtonProps: {onFollow: handleOnFollowUser}}
+                            : {followConnectUserButtonProps: {onChangeConnectionStatus: handleOnFollowUser}})}
+                        />
+                      </ListItem>
+                    ))}
+                  </List>
+                </InfiniteScroll>
+              )}
+            </BaseDialog>
+          )}
+        </React.Fragment>
       )}
-    </React.Fragment>
+    </CardContent>
   );
 
   /**

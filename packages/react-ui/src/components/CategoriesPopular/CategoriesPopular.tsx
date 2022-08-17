@@ -139,70 +139,67 @@ export default function CategoriesPopular(inProps: CategoriesListProps): JSX.Ele
   /**
    * Renders popular categories list
    */
+  if (loading) {
+    return <Skeleton />;
+  }
   const c = (
-    <React.Fragment>
-      {loading ? (
-        <Skeleton elevation={0} />
+    <CardContent>
+      <Typography className={classes.title} variant="h5">
+        <FormattedMessage id="ui.categoriesPopular.title" defaultMessage="ui.categoriesPopular.title" />
+      </Typography>
+      {!total ? (
+        <Typography className={classes.noResults} variant="body2">
+          <FormattedMessage id="ui.categoriesPopular.noResults" defaultMessage="ui.categoriesPopular.noResults" />
+        </Typography>
       ) : (
-        <CardContent>
-          <Typography className={classes.title} variant="h5">
-            <FormattedMessage id="ui.categoriesPopular.title" defaultMessage="ui.categoriesPopular.title" />
-          </Typography>
-          {!total ? (
-            <Typography className={classes.noResults} variant="body2">
-              <FormattedMessage id="ui.categoriesPopular.noResults" defaultMessage="ui.categoriesPopular.noResults" />
-            </Typography>
+        <React.Fragment>
+          <List>
+            {categories.slice(0, visibleCategories).map((category: SCCategoryType) => (
+              <ListItem key={category.id}>
+                <Category elevation={0} category={category} followCategoryButtonProps={{onFollow: handleFollowersUpdate}} {...CategoryProps} />
+              </ListItem>
+            ))}
+          </List>
+          {hasMore && (
+            <Button size="small" className={classes.showMore} onClick={() => setOpenPopularCategoriesDialog(true)}>
+              <FormattedMessage id="ui.categoriesPopular.button.showAll" defaultMessage="ui.categoriesPopular.button.showAll" />
+            </Button>
+          )}
+        </React.Fragment>
+      )}
+      {openPopularCategoriesDialog && (
+        <BaseDialog
+          title={<FormattedMessage defaultMessage="ui.categoriesPopular.title" id="ui.categoriesPopular.title" />}
+          onClose={() => setOpenPopularCategoriesDialog(false)}
+          open={openPopularCategoriesDialog}>
+          {loading ? (
+            <CentralProgress size={50} />
           ) : (
-            <React.Fragment>
+            <InfiniteScroll
+              dataLength={categories.length}
+              next={fetchPopularCategories}
+              hasMoreNext={Boolean(next)}
+              loaderNext={<CentralProgress size={30} />}
+              height={400}
+              endMessage={
+                <p style={{textAlign: 'center'}}>
+                  <b>
+                    <FormattedMessage id="ui.categoriesPopular.noMoreResults" defaultMessage="ui.categoriesPopular.noMoreResults" />
+                  </b>
+                </p>
+              }>
               <List>
-                {categories.slice(0, visibleCategories).map((category: SCCategoryType) => (
-                  <ListItem key={category.id}>
-                    <Category elevation={0} category={category} followCategoryButtonProps={{onFollow: handleFollowersUpdate}} {...CategoryProps} />
+                {categories.map((c) => (
+                  <ListItem key={c.id}>
+                    <Category elevation={0} category={c} {...CategoryProps} followCategoryButtonProps={{onFollow: handleFollowersUpdate}} />
                   </ListItem>
                 ))}
               </List>
-              {hasMore && (
-                <Button size="small" className={classes.showMore} onClick={() => setOpenPopularCategoriesDialog(true)}>
-                  <FormattedMessage id="ui.categoriesPopular.button.showAll" defaultMessage="ui.categoriesPopular.button.showAll" />
-                </Button>
-              )}
-            </React.Fragment>
+            </InfiniteScroll>
           )}
-          {openPopularCategoriesDialog && (
-            <BaseDialog
-              title={<FormattedMessage defaultMessage="ui.categoriesPopular.title" id="ui.categoriesPopular.title" />}
-              onClose={() => setOpenPopularCategoriesDialog(false)}
-              open={openPopularCategoriesDialog}>
-              {loading ? (
-                <CentralProgress size={50} />
-              ) : (
-                <InfiniteScroll
-                  dataLength={categories.length}
-                  next={fetchPopularCategories}
-                  hasMoreNext={Boolean(next)}
-                  loaderNext={<CentralProgress size={30} />}
-                  height={400}
-                  endMessage={
-                    <p style={{textAlign: 'center'}}>
-                      <b>
-                        <FormattedMessage id="ui.categoriesPopular.noMoreResults" defaultMessage="ui.categoriesPopular.noMoreResults" />
-                      </b>
-                    </p>
-                  }>
-                  <List>
-                    {categories.map((c) => (
-                      <ListItem key={c.id}>
-                        <Category elevation={0} category={c} {...CategoryProps} followCategoryButtonProps={{onFollow: handleFollowersUpdate}} />
-                      </ListItem>
-                    ))}
-                  </List>
-                </InfiniteScroll>
-              )}
-            </BaseDialog>
-          )}
-        </CardContent>
+        </BaseDialog>
       )}
-    </React.Fragment>
+    </CardContent>
   );
 
   /**

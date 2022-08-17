@@ -187,27 +187,69 @@ export default function TrendingPeople(inProps: TrendingPeopleProps): JSX.Elemen
   /**
    * Renders trending people list
    */
+  if (loading) {
+    return <Skeleton />;
+  }
   const p = (
-    <React.Fragment>
-      {loading ? (
-        <Skeleton elevation={0} />
+    <CardContent>
+      <Typography className={classes.title} variant="h5">
+        <FormattedMessage id="ui.trendingPeople.title" defaultMessage="ui.trendingPeople.title" />
+      </Typography>
+      {!total ? (
+        <Typography className={classes.noResults} variant="body2">
+          <FormattedMessage id="ui.trendingPeople.noResults" defaultMessage="ui.trendingPeople.noResults" />
+        </Typography>
       ) : (
-        <CardContent>
-          <Typography className={classes.title} variant="h5">
-            <FormattedMessage id="ui.trendingPeople.title" defaultMessage="ui.trendingPeople.title" />
-          </Typography>
-          {!total ? (
-            <Typography className={classes.noResults} variant="body2">
-              <FormattedMessage id="ui.trendingPeople.noResults" defaultMessage="ui.trendingPeople.noResults" />
-            </Typography>
+        <React.Fragment>
+          <List>
+            {people.slice(0, visiblePeople).map((user) => (
+              <ListItem key={user.id}>
+                <User
+                  elevation={0}
+                  user={user}
+                  className={classes.trendingUserItem}
+                  {...(followEnabled
+                    ? {followConnectUserButtonProps: {onFollow: handleFollowersUpdate}}
+                    : {followConnectUserButtonProps: {onChangeConnectionStatus: handleFollowersUpdate}})}
+                  {...UserProps}
+                />
+              </ListItem>
+            ))}
+          </List>
+        </React.Fragment>
+      )}
+      {hasMore && (
+        <Button size="small" className={classes.showMore} onClick={() => setOpenTrendingPeopleDialog(true)}>
+          <FormattedMessage id="ui.trendingPeople.button.showAll" defaultMessage="ui.trendingPeople.button.showAll" />
+        </Button>
+      )}
+      {openTrendingPeopleDialog && (
+        <BaseDialog
+          title={<FormattedMessage defaultMessage="ui.trendingPeople.title" id="ui.trendingPeople.title" />}
+          onClose={() => setOpenTrendingPeopleDialog(false)}
+          open={openTrendingPeopleDialog}>
+          {loading ? (
+            <CentralProgress size={50} />
           ) : (
-            <React.Fragment>
+            <InfiniteScroll
+              dataLength={people.length}
+              next={fetchTrendingPeople}
+              hasMoreNext={Boolean(next)}
+              loaderNext={<CentralProgress size={30} />}
+              height={400}
+              endMessage={
+                <p style={{textAlign: 'center'}}>
+                  <b>
+                    <FormattedMessage id="ui.trendingPeople.noMoreResults" defaultMessage="ui.trendingPeople.noMoreResults" />
+                  </b>
+                </p>
+              }>
               <List>
-                {people.slice(0, visiblePeople).map((user) => (
-                  <ListItem key={user.id}>
+                {people.map((p, index) => (
+                  <ListItem key={p.id}>
                     <User
                       elevation={0}
-                      user={user}
+                      user={p}
                       className={classes.trendingUserItem}
                       {...(followEnabled
                         ? {followConnectUserButtonProps: {onFollow: handleFollowersUpdate}}
@@ -217,56 +259,11 @@ export default function TrendingPeople(inProps: TrendingPeopleProps): JSX.Elemen
                   </ListItem>
                 ))}
               </List>
-            </React.Fragment>
+            </InfiniteScroll>
           )}
-          {hasMore && (
-            <Button size="small" className={classes.showMore} onClick={() => setOpenTrendingPeopleDialog(true)}>
-              <FormattedMessage id="ui.trendingPeople.button.showAll" defaultMessage="ui.trendingPeople.button.showAll" />
-            </Button>
-          )}
-          {openTrendingPeopleDialog && (
-            <BaseDialog
-              title={<FormattedMessage defaultMessage="ui.trendingPeople.title" id="ui.trendingPeople.title" />}
-              onClose={() => setOpenTrendingPeopleDialog(false)}
-              open={openTrendingPeopleDialog}>
-              {loading ? (
-                <CentralProgress size={50} />
-              ) : (
-                <InfiniteScroll
-                  dataLength={people.length}
-                  next={fetchTrendingPeople}
-                  hasMoreNext={Boolean(next)}
-                  loaderNext={<CentralProgress size={30} />}
-                  height={400}
-                  endMessage={
-                    <p style={{textAlign: 'center'}}>
-                      <b>
-                        <FormattedMessage id="ui.trendingPeople.noMoreResults" defaultMessage="ui.trendingPeople.noMoreResults" />
-                      </b>
-                    </p>
-                  }>
-                  <List>
-                    {people.map((p, index) => (
-                      <ListItem key={p.id}>
-                        <User
-                          elevation={0}
-                          user={p}
-                          className={classes.trendingUserItem}
-                          {...(followEnabled
-                            ? {followConnectUserButtonProps: {onFollow: handleFollowersUpdate}}
-                            : {followConnectUserButtonProps: {onChangeConnectionStatus: handleFollowersUpdate}})}
-                          {...UserProps}
-                        />
-                      </ListItem>
-                    ))}
-                  </List>
-                </InfiniteScroll>
-              )}
-            </BaseDialog>
-          )}
-        </CardContent>
+        </BaseDialog>
       )}
-    </React.Fragment>
+    </CardContent>
   );
 
   /**

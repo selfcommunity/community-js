@@ -25,7 +25,7 @@ import PubSub from 'pubsub-js';
 import {useThemeProps} from '@mui/system';
 import Widget from '../Widget';
 import InfiniteScroll from '../../shared/InfiniteScroll';
-import VirtualizedScroller, {VirtualScrollChild} from '../../shared/VirtualizedScroller';
+import VirtualizedScroller, {VirtualizedScrollerCommonProps, VirtualScrollChild} from '../../shared/VirtualizedScroller';
 import {WIDGET_PREFIX_KEY, DEFAULT_WIDGETS_NUMBER, DEFAULT_PAGINATION_ITEMS_NUMBER} from '../../constants/Feed';
 import {widgetSort} from '../../utils/feed';
 import Footer from '../Footer';
@@ -203,6 +203,12 @@ export interface FeedProps {
    * Use this to init the component (in particular useSCFetchFeed)
    */
   prefetchedData?: SCPaginatedResponse<SCFeedUnitType>;
+
+  /**
+   * Props to spread to VirtualizedScroller object.
+   * @default {}
+   */
+  VirtualizedScrollerProps?: VirtualizedScrollerCommonProps;
 }
 
 const PREFERENCES = [SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED, SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED];
@@ -261,7 +267,8 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     CustomAdvProps = {},
     requireAuthentication = false,
     cacheStrategy = CacheStrategies.NETWORK_ONLY,
-    prefetchedData
+    prefetchedData,
+    VirtualizedScrollerProps = {}
   } = props;
 
   // CONTEXT
@@ -408,11 +415,6 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     return _widgets.filter((w) => w.column === 'right');
   };
 
-  // STATE
-  const [feedDataLeft, setFeedDataLeft] = useState([]);
-  const [feedDataRight, setFeedDataRight] = useState([]);
-  const [headData, setHeadData] = useState([]);
-
   /**
    * Get left column data
    * @param data
@@ -435,6 +437,13 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
   const _getFeedDataRight = () => {
     return _getRightColumnWidgets();
   };
+
+  // STATE
+  const [feedDataLeft, setFeedDataLeft] = useState(
+    prefetchedData ? _getFeedDataLeft(feedDataObject.results, feedDataObject.initialOffset, feedDataObject.count) : []
+  );
+  const [feedDataRight, setFeedDataRight] = useState(prefetchedData ? _getFeedDataRight() : []);
+  const [headData, setHeadData] = useState([]);
 
   // REFS
   const refreshSubscription = useRef(null);
@@ -505,7 +514,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
    */
   const _initFeedData = useMemo(
     () => () => {
-      if ((cacheStrategy === CacheStrategies.CACHE_FIRST || prefetchedData) && feedDataObject.componentLoaded) {
+      if (cacheStrategy === CacheStrategies.CACHE_FIRST && feedDataObject.componentLoaded) {
         // Set current cached feed or prefetched data
         setFeedDataLeft(_getFeedDataLeft(feedDataObject.results, feedDataObject.initialOffset, feedDataObject.count));
       } else {
@@ -519,23 +528,37 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
 
   // EFFECTS
   useEffect(() => {
-    if (requireAuthentication && authUserId !== null) {
+    /**
+     * Initialize authenticated feed
+     * Init feed data when the user is authenticated and there is no data prefetched
+     */
+    if (requireAuthentication && authUserId !== null && !prefetchedData) {
       _initFeedData();
     }
   }, [authUserId]);
 
   useEffect(() => {
-    if (!requireAuthentication) {
+    /**
+     * Initialize un-authenticated feed
+     * Init feed if there is no data prefetched
+     */
+    if (!requireAuthentication && !prefetchedData) {
       _initFeedData();
     }
   }, []);
 
+  /**
+   * If widgets changed, refresh the feed (it must recalculate the correct positions of the objects)
+   */
   useDeepCompareEffectNoCheck(() => {
     if (prevWidgets && widgets && prevWidgets !== widgets && feedDataObject.componentLoaded) {
       refresh();
     }
   }, [widgets]);
 
+  /**
+   * Subscribe/Unsubscribe for external events
+   */
   useEffect(() => {
     refreshSubscription.current = PubSub.subscribe(id, subscriber);
     return () => {
@@ -544,7 +567,8 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
   }, []);
 
   /**
-   *
+   * Remove duplicated data when load previous page and
+   * previously some elements have been added in the head
    */
   const removeHeadDuplicatedData = (itemIds) => {
     setHeadData(headData.filter((item) => !itemIds.includes(itemIdGenerator(item))));
@@ -650,6 +674,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
               cacheScrollStateKey={SCCache.getVirtualizedScrollStateCacheKey(id)}
               cacheScrollerPositionKey={SCCache.getFeedSPCacheKey(id)}
               cacheStrategy={cacheStrategy}
+              {...VirtualizedScrollerProps}
             />
           </InfiniteScroll>
         </div>

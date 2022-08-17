@@ -1,4 +1,13 @@
 /**
+ * DEFAULT CONF VALIDATION OPTION
+ */
+export const PREFERENCES_OPTION = 'preferences';
+export const GLOBAL_PREFERENCES_OPTION = 'preferences';
+export const DEFAULT_GLOBAL_PREFERENCES_OPTION = {};
+
+/** PREFERENCES */
+
+/**
  * TEXT
  */
 export const TEXT_APPLICATION_NAME = 'text.application_name';
@@ -34,6 +43,7 @@ export const COVERS_COVER_1_HP_M1920 = 'covers.cover_1_hp_m1920';
 export const COVERS_COVER_2_HP_M1920 = 'covers.cover_2_hp_m1920';
 export const COVERS_COVER_3_HP_M1920 = 'covers.cover_3_hp_m1920';
 export const COVERS_COVER_4_HP_M1920 = 'covers.cover_4_hp_m1920';
+export const COVERS_VISIBILITY = 'covers.covers_visibility';
 
 /**
  * IMAGES
@@ -202,6 +212,7 @@ export const DATA_TYPES = {
   [COVERS_COVER_2_HP_M1920]: stringType,
   [COVERS_COVER_3_HP_M1920]: stringType,
   [COVERS_COVER_4_HP_M1920]: stringType,
+  [COVERS_VISIBILITY]: integerType,
   [IMAGES_APP_ICON]: stringType,
   [IMAGES_USER_DEFAULT_COVER]: stringType,
   [IMAGES_ERROR_404]: stringType,
