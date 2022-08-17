@@ -3,7 +3,7 @@ import {FeatureService, PreferenceService} from '@selfcommunity/api-services';
 import {SCContextType, SCPreferencesContextType} from '../../../types/context';
 import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_CORE} from '../../../constants/Errors';
-import {useSCContext} from '@selfcommunity/react-core';
+import {useSCContext} from '../SCContextProvider';
 
 /**
  * Creates Preferences/Features Context
