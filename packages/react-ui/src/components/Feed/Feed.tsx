@@ -415,11 +415,6 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     return _widgets.filter((w) => w.column === 'right');
   };
 
-  // STATE
-  const [feedDataLeft, setFeedDataLeft] = useState([]);
-  const [feedDataRight, setFeedDataRight] = useState([]);
-  const [headData, setHeadData] = useState([]);
-
   /**
    * Get left column data
    * @param data
@@ -442,6 +437,13 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
   const _getFeedDataRight = () => {
     return _getRightColumnWidgets();
   };
+
+  // STATE
+  const [feedDataLeft, setFeedDataLeft] = useState(
+    prefetchedData ? _getFeedDataLeft(feedDataObject.results, feedDataObject.initialOffset, feedDataObject.count) : []
+  );
+  const [feedDataRight, setFeedDataRight] = useState(prefetchedData ? _getFeedDataRight() : []);
+  const [headData, setHeadData] = useState([]);
 
   // REFS
   const refreshSubscription = useRef(null);
@@ -512,7 +514,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
    */
   const _initFeedData = useMemo(
     () => () => {
-      if ((cacheStrategy === CacheStrategies.CACHE_FIRST || prefetchedData) && feedDataObject.componentLoaded) {
+      if (cacheStrategy === CacheStrategies.CACHE_FIRST && feedDataObject.componentLoaded) {
         // Set current cached feed or prefetched data
         setFeedDataLeft(_getFeedDataLeft(feedDataObject.results, feedDataObject.initialOffset, feedDataObject.count));
       } else {
@@ -526,23 +528,37 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
 
   // EFFECTS
   useEffect(() => {
-    if (requireAuthentication && authUserId !== null) {
+    /**
+     * Initialize authenticated feed
+     * Init feed data when the user is authenticated and there is no data prefetched
+     */
+    if (requireAuthentication && authUserId !== null && !prefetchedData) {
       _initFeedData();
     }
   }, [authUserId]);
 
   useEffect(() => {
-    if (!requireAuthentication) {
+    /**
+     * Initialize un-authenticated feed
+     * Init feed if there is no data prefetched
+     */
+    if (!requireAuthentication && !prefetchedData) {
       _initFeedData();
     }
   }, []);
 
+  /**
+   * If widgets changed, refresh the feed (it must recalculate the correct positions of the objects)
+   */
   useDeepCompareEffectNoCheck(() => {
     if (prevWidgets && widgets && prevWidgets !== widgets && feedDataObject.componentLoaded) {
       refresh();
     }
   }, [widgets]);
 
+  /**
+   * Subscribe/Unsubscribe for external events
+   */
   useEffect(() => {
     refreshSubscription.current = PubSub.subscribe(id, subscriber);
     return () => {
@@ -551,7 +567,8 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
   }, []);
 
   /**
-   *
+   * Remove duplicated data when load previous page and
+   * previously some elements have been added in the head
    */
   const removeHeadDuplicatedData = (itemIds) => {
     setHeadData(headData.filter((item) => !itemIds.includes(itemIdGenerator(item))));
