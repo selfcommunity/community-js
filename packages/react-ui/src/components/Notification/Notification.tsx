@@ -89,7 +89,8 @@ const Root = styled(Widget, {
   },
   [`& .${classes.notificationHeader}`]: {
     boxSizing: 'border-box',
-    boxShadow: 'none'
+    boxShadow: 'none',
+    border: 'none'
   },
   [`& .${classes.stopNotificationButton}`]: {
     margin: '5px 10px',
