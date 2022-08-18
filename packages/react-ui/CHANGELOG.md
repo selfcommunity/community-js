@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.1-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.4.1-alpha.0...@selfcommunity/react-ui@0.4.1-alpha.1) (2022-08-18)
+
+
+### Bug Fixes
+
+* Fix footer Skeleton.tsx ([00f761c](https://github.com/selfcommunity/community-js/commit/00f761c264fcb491d3216f5f79d4a4c04cf00125))
+
+
+
+
+
 ## [0.4.1-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.4.0...@selfcommunity/react-ui@0.4.1-alpha.0) (2022-08-18)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
