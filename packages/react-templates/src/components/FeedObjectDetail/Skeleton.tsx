@@ -42,11 +42,11 @@ export default function FeedObjectDetailSkeleton(props): JSX.Element {
   return (
     <Root className={classes.root}>
       <Grid container spacing={2}>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={7}>
           <FeedObjectSkeleton template={SCFeedObjectTemplateType.DETAIL} {...FeedObjectSkeletonProps} />
           <CommentsFeedObjectSkeleton count={4} {...CommentsFeedObjectSkeletonProps} />
         </Grid>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={5}>
           <RelatedFeedObjectsSkeleton {...RelatedFeedObjectsSkeletonProps} />
         </Grid>
       </Grid>
