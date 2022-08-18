@@ -3,6 +3,41 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.5-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.2.4...@selfcommunity/react-core@0.2.5-alpha.0) (2022-08-18)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.2.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.2.4-alpha.1...@selfcommunity/react-core@0.2.4) (2022-08-18)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.2.4-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.2.4-alpha.0...@selfcommunity/react-core@0.2.4-alpha.1) (2022-08-18)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.2.4-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.2.3...@selfcommunity/react-core@0.2.4-alpha.0) (2022-08-18)
+
+
+### Bug Fixes
+
+* Fix SSR style rendering ([e42acb5](https://github.com/selfcommunity/community-js/commit/e42acb5756981ccf728c8899bfd74b5d8f619b13))
+
+
+
+
+
 ## [0.2.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.2.3-alpha.4...@selfcommunity/react-core@0.2.3) (2022-08-17)
 
 **Note:** Version bump only for package @selfcommunity/react-core
