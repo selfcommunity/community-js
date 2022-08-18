@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.33-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.1.33-alpha.1...@selfcommunity/react-templates@0.1.33-alpha.2) (2022-08-18)
+
+
+### Bug Fixes
+
+* Fix FeedObjectDetail Skeleton ([154b393](https://github.com/selfcommunity/community-js/commit/154b393b5d4aed6368bcbb7c1ecb65f1fc75b53c))
+
+
+
+
+
 ## [0.1.33-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.1.33-alpha.0...@selfcommunity/react-templates@0.1.33-alpha.1) (2022-08-18)
 
 **Note:** Version bump only for package @selfcommunity/react-templates
