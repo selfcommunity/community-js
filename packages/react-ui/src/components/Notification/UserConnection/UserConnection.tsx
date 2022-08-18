@@ -122,14 +122,14 @@ export default function UserConnectionNotification(inProps: NotificationConnecti
           </Link>
         }
         primary={
-          <>
+          <Typography component="div" color="inherit" className={classes.connectionText}>
             <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, userConnection)} className={classes.username}>
               {userConnection.username}
             </Link>{' '}
             {notificationObject.type === SCNotificationTypologyType.CONNECTION_REQUEST
               ? intl.formatMessage(messages.requestConnection, {b: (...chunks) => <strong>{chunks}</strong>})
               : intl.formatMessage(messages.requestConnection, {b: (...chunks) => <strong>{chunks}</strong>})}
-          </>
+          </Typography>
         }
         secondary={
           template === SCNotificationObjectTemplateType.DETAIL && <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
