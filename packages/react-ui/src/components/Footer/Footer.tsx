@@ -156,36 +156,33 @@ export default function Footer(inProps: FooterProps): JSX.Element {
   /**
    * Renders root object
    */
+  if (loading) {
+    return <FooterSkeleton />;
+  }
   return (
-    <>
-      {loading ? (
-        <FooterSkeleton />
-      ) : (
-        <Root {...rest} className={classNames(classes.root, className)}>
-          <Grid container spacing={1} justifyContent="center">
-            {pages.map((page, index) => (
-              <Grid item key={index}>
-                <Link
-                  className={classes.linkItem}
-                  to={page.alternative_url ? page.alternative_url : scRoutingContext.url(SCRoutes.CUSTOM_PAGES_ROUTE_NAME, page)}>
-                  {page.label}
-                </Link>
-              </Grid>
-            ))}
-            {filteredLegalPages.map((item, index) => (
-              <Grid item key={index}>
-                <Link className={classes.linkItem} onClick={() => handleOpenLegalPageDialog(item)}>
-                  {item.label}
-                </Link>
-              </Grid>
-            ))}
+    <Root {...rest} className={classNames(classes.root, className)}>
+      <Grid container spacing={1} justifyContent="center">
+        {pages.map((page, index) => (
+          <Grid item key={index}>
+            <Link
+              className={classes.linkItem}
+              to={page.alternative_url ? page.alternative_url : scRoutingContext.url(SCRoutes.CUSTOM_PAGES_ROUTE_NAME, page)}>
+              {page.label}
+            </Link>
           </Grid>
-          <Typography textAlign="center" className={classes.copyright} variant="subtitle2">
-            {copyRight}
-          </Typography>
-          {openLegalPageDialog && <DetailDialog pageObj={detailObj} open={openLegalPageDialog} onClose={() => setOpenLegalPageDialog(false)} />}
-        </Root>
-      )}
-    </>
+        ))}
+        {filteredLegalPages.map((item, index) => (
+          <Grid item key={index}>
+            <Link className={classes.linkItem} onClick={() => handleOpenLegalPageDialog(item)}>
+              {item.label}
+            </Link>
+          </Grid>
+        ))}
+      </Grid>
+      <Typography textAlign="center" className={classes.copyright} variant="subtitle2">
+        {copyRight}
+      </Typography>
+      {openLegalPageDialog && <DetailDialog pageObj={detailObj} open={openLegalPageDialog} onClose={() => setOpenLegalPageDialog(false)} />}
+    </Root>
   );
 }
