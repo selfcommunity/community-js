@@ -38,7 +38,8 @@ const Root = styled(Box, {
     color: 'inherit',
     cursor: 'pointer',
     '&:any-link': {
-      color: 'inherit'
+      color: 'inherit',
+      textDecoration: 'none'
     }
   }
 }));
