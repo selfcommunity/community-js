@@ -33,6 +33,13 @@ const Root = styled(Box, {
 })(({theme}) => ({
   [`& .${classes.copyright}`]: {
     marginTop: theme.spacing(2)
+  },
+  [`& .${classes.linkItem}`]: {
+    color: 'inherit',
+    cursor: 'pointer',
+    '&:any-link': {
+      color: 'inherit'
+    }
   }
 }));
 
