@@ -1,10 +1,9 @@
 import React, {createContext, useContext, useState} from 'react';
-import {StyledEngineProvider, ThemeProvider} from '@mui/material/styles';
+import {ThemeProvider} from '@mui/material/styles';
 import getTheme from '../../../themes/theme';
-import {SCContextType} from '../../../types/context';
+import {SCContextType, SCPreferencesContextType} from '../../../types/context';
 import {useSCContext} from '../SCContextProvider';
 import {SCThemeContextType} from '../../../types';
-import {SCPreferencesContextType} from '../../../types/context';
 import {useSCPreferences} from '../SCPreferencesProvider';
 import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
 
@@ -64,11 +63,9 @@ export default function SCThemeProvider({children = null}: {children: React.Reac
   }, [scContext.settings.theme]);
 
   return (
-    <StyledEngineProvider injectFirst>
-      <SCThemeContext.Provider value={{theme, setTheme: setCustomTheme}}>
-        <ThemeProvider theme={theme}>{children}</ThemeProvider>
-      </SCThemeContext.Provider>
-    </StyledEngineProvider>
+    <SCThemeContext.Provider value={{theme, setTheme: setCustomTheme}}>
+      <ThemeProvider theme={theme}>{children}</ThemeProvider>
+    </SCThemeContext.Provider>
   );
 }
 
