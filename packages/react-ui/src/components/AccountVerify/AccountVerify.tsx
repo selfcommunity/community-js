@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
-import {SCUserType} from '@selfcommunity/types';
 import {CircularProgress, Typography} from '@mui/material';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
@@ -11,7 +10,9 @@ import {FormattedMessage} from 'react-intl';
 const PREFIX = 'SCAccountVerify';
 
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-root`,
+  success: `${PREFIX}-success`,
+  error: `${PREFIX}-error`
 };
 
 const Root = styled(Typography, {
@@ -39,6 +40,12 @@ export interface AccountVerifyProps {
    * @default empty string
    */
   validationCode: string;
+
+  /**
+   * Callback triggered on success sign in
+   * @default null
+   */
+  onSuccess?: () => void;
 
   /**
    * Action component to display after success message
@@ -70,6 +77,8 @@ export interface AccountVerifyProps {
  |Rule Name|Global class|Description|
  |---|---|---|
  |root|.SCAccountVerify-root|Styles applied to the root element.|
+ |success|.SCAccountRecover-success|Styles applied to the success Typography.|
+ |error|.SCAccountRecover-error|Styles applied to the error Typography.|
 
  *
  * @param inProps
@@ -95,7 +104,8 @@ export default function AccountVerify(inProps: AccountVerifyProps): JSX.Element 
     setIsValidating(true);
     setError(false);
     AccountService.verify({validation_code: validationCode})
-      .catch((error) => setError(true))
+      .then(() => onSuccess && onSuccess())
+      .catch(() => setError(true))
       .then(() => setIsValidating(false));
   }, [validationCode]);
 
@@ -106,7 +116,7 @@ export default function AccountVerify(inProps: AccountVerifyProps): JSX.Element 
 
   // RENDER
   return (
-    <Root className={classNames(classes.root, className)} {...rest}>
+    <Root className={classNames(classes.root, className, {[classes.error]: error, [classes.success]: !isValidating && !error})} {...rest}>
       {isValidating ? (
         <>
           <CircularProgress />

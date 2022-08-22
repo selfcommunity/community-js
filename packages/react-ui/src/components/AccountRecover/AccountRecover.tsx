@@ -1,30 +1,31 @@
 import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
-import {SCUserType} from '@selfcommunity/types';
-import {Button, ButtonProps, TextFieldProps} from '@mui/material';
+import {Box, Button, ButtonProps, TextFieldProps, Typography} from '@mui/material';
 import classNames from 'classnames';
-import {FormattedMessage} from 'react-intl';
+import {FormattedMessage, useIntl} from 'react-intl';
 import EmailTextField from '../../shared/EmailTextField';
 import {useThemeProps} from '@mui/system';
-import { AccountService, formatHttpError } from '@selfcommunity/api-services';
+import {AccountService, formatHttpError} from '@selfcommunity/api-services';
 
 const PREFIX = 'SCAccountRecover';
 
 const classes = {
   root: `${PREFIX}-root`,
-  email: `${PREFIX}-email`
+  form: `${PREFIX}-form`,
+  email: `${PREFIX}-email`,
+  success: `${PREFIX}-success`
 };
 
-const Root = styled('form', {
+const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  [`&.${classes.root} .MuiTextField-root, &.${classes.root} .MuiButton-root`]: {
+  [`& .${classes.form} .MuiTextField-root, &.${classes.root} .MuiButton-root`]: {
     margin: theme.spacing(1, 0, 1, 0)
   },
-  [`&.${classes.root} .MuiTypography-root`]: {
+  [`& .${classes.form} .MuiTypography-root`]: {
     margin: theme.spacing(1, 0, 1, 0)
   }
 }));
@@ -37,12 +38,6 @@ export interface AccountRecoverProps {
   className?: string;
 
   /**
-   * Callback triggered on success sign in
-   * @default null
-   */
-  onSuccess?: () => void;
-
-  /**
    * Default props to TextField Input
    * @default {variant: 'outlined'}
    */
@@ -53,6 +48,17 @@ export interface AccountRecoverProps {
    * @default {variant: 'contained'}
    */
   ButtonProps?: ButtonProps;
+
+  /**
+   * Callback triggered on success sign in
+   * @default null
+   */
+  onSuccess?: () => void;
+
+  /**
+   * Action component to display after success message
+   * */
+  successAction?: React.ReactNode;
 
   /**
    * Other props
@@ -79,7 +85,9 @@ export interface AccountRecoverProps {
  |Rule Name|Global class|Description|
  |---|---|---|
  |root|.SCAccountRecover-root|Styles applied to the root element.|
+ |form|.SCAccountRecover-form|Styles applied to the form element.|
  |email|.SCAccountRecover-email|Styles applied to the email TextField.|
+ |success|.SCAccountRecover-success|Styles applied to the success Typography.|
 
  *
  * @param inProps
@@ -90,15 +98,17 @@ export default function AccountRecover(inProps: AccountRecoverProps): JSX.Elemen
     name: PREFIX
   });
   // PROPS
-  const {className, onSuccess = null, TextFieldProps = {variant: 'outlined', fullWidth: true}, ButtonProps = {variant: 'contained'}, ...rest} = props;
+  const {className, onSuccess = null, TextFieldProps = {variant: 'outlined', fullWidth: true}, ButtonProps = {variant: 'contained'}, successAction = null, ...rest} = props;
 
   // STATE
   const [email, setEmail] = useState<string>('');
   const [emailError, setEmailError] = useState<string>('');
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [isSucceed, setIsSucceed] = useState<boolean>(false);
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
+  const intl = useIntl();
 
   // HANDLERS
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -111,7 +121,10 @@ export default function AccountRecover(inProps: AccountRecoverProps): JSX.Elemen
     setIsSubmitting(true);
 
     AccountService.recover({email})
-      .then(() => onSuccess && onSuccess())
+      .then(() => {
+        setIsSucceed(true);
+        onSuccess && onSuccess();
+      })
       .catch((error) => {
         const _error = formatHttpError(error);
         if (_error.emailError) {
@@ -130,20 +143,34 @@ export default function AccountRecover(inProps: AccountRecoverProps): JSX.Elemen
 
   // RENDER
   return (
-    <Root className={classNames(classes.root, className)} {...rest} onSubmit={handleSubmit}>
-      <EmailTextField
-        className={classes.email}
-        disabled={isSubmitting}
-        label={<FormattedMessage id="ui.accountRecover.email.label" defaultMessage="ui.accountRecover.email.label" />}
-        {...TextFieldProps}
-        value={email}
-        onChange={handleChange}
-        error={Boolean(emailError)}
-        helperText={emailError}
-      />
-      <Button type="submit" {...ButtonProps} disabled={!email || isSubmitting}>
-        <FormattedMessage id="ui.accountRecover.submit" defaultMessage="ui.accountRecover.submit" />
-      </Button>
+    <Root className={classNames(classes.root, className)} {...rest}>
+      {isSucceed ? (
+        <>
+          <Typography className={classes.success}>
+            {intl.formatMessage(
+              {id: 'ui.accountRecover.success', defaultMessage: 'ui.accountRecover.success'},
+              {email, bold: (chunks) => <b>{chunks}</b>}
+            )}
+          </Typography>
+          {successAction}
+        </>
+      ) : (
+        <form className={classes.form} onSubmit={handleSubmit}>
+          <EmailTextField
+            className={classes.email}
+            disabled={isSubmitting}
+            label={<FormattedMessage id="ui.accountRecover.email.label" defaultMessage="ui.accountRecover.email.label" />}
+            {...TextFieldProps}
+            value={email}
+            onChange={handleChange}
+            error={Boolean(emailError)}
+            helperText={emailError}
+          />
+          <Button type="submit" {...ButtonProps} disabled={!email || isSubmitting}>
+            <FormattedMessage id="ui.accountRecover.submit" defaultMessage="ui.accountRecover.submit" />
+          </Button>
+        </form>
+      )}
     </Root>
   );
 }

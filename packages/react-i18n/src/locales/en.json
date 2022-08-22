@@ -399,10 +399,12 @@
 
   "ui.accountRecover.email.label": "Email",
   "ui.accountRecover.submit": "Recover Account",
+  "ui.accountRecover.success": "We sent an email to <b>{email}</b>, check your inbox",
 
   "ui.accountReset.password.label": "Password",
   "ui.accountReset.code.error": "Invalid token",
   "ui.accountReset.submit": "Reset Password",
+  "ui.accountReset.success": "Password updated",
 
   "ui.accountVerify.verifying": "Validating",
   "ui.accountVerify.error": "Invalid token",
