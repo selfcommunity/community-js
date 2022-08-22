@@ -65,8 +65,10 @@ function feedDataReducer(state, action) {
         isLoadingNext: false,
         componentLoaded: true,
         next: action.payload.next,
+        nextPage: action.payload.nextPage,
         ...(action.payload.previous ? {previous: action.payload.previous} : {}),
         ...(action.payload.count ? {count: action.payload.count} : {}),
+        ...(action.payload.previousPage ? {previousPage: action.payload.previousPage} : {}),
       };
       break;
     case feedDataActionTypes.DATA_PREVIOUS_LOADED:
@@ -79,6 +81,7 @@ function feedDataReducer(state, action) {
         isLoadingPrevious: false,
         componentLoaded: true,
         previous: action.payload.previous,
+        previousPage: action.payload.previousPage,
       };
       break;
     case feedDataActionTypes.DATA_REVALIDATE:
@@ -92,6 +95,8 @@ function feedDataReducer(state, action) {
         ...state,
         next: action.payload.next,
         currentPage: 1,
+        previousPage: null,
+        nextPage: null,
         currentOffset: 0,
         initialOffset: 0,
         results: [],
@@ -139,10 +144,14 @@ function stateInitializer(data): SCPaginatedFeedType {
     componentLoaded: Boolean(data.prefetchedData),
     ...(data.prefetchedData && data.prefetchedData),
   };
+  _initState['nextPage'] = _initState.next ? _initState.currentPage + 1 : null;
+  _initState['previousPage'] = _initState.previous ? _initState.currentPage - 1 : null;
   const __feedStateCacheKey = getStateFeedCacheKey(data.id);
   if (__feedStateCacheKey && LRUCache.hasKey(__feedStateCacheKey) && data.cacheStrategy !== CacheStrategies.NETWORK_ONLY) {
     const _cachedStateData = LRUCache.get(__feedStateCacheKey);
     return {..._initState, ..._cachedStateData};
+  } else if (data.prefetchedData) {
+    LRUCache.set(__feedStateCacheKey, _initState);
   }
   return _initState;
 }
@@ -227,7 +236,7 @@ export default function useSCFetchFeed(props: {
    * Get Feed data
    */
   const performFetchData = (url, seekCache = true) => {
-    const __feedDataCacheKey = getFeedCacheKey(id, state.next);
+    const __feedDataCacheKey = getFeedCacheKey(id, url);
     if (seekCache && LRUCache.hasKey(__feedDataCacheKey) && cacheStrategy !== CacheStrategies.NETWORK_ONLY) {
       return Promise.resolve(LRUCache.get(__feedDataCacheKey));
     }
@@ -253,13 +262,15 @@ export default function useSCFetchFeed(props: {
       dispatch({type: feedDataActionTypes.LOADING_PREVIOUS});
       performFetchData(state.previous)
         .then((res) => {
-          let currentOffset = Math.min(getCurrentOffset(state.previous), 0);
+          let currentOffset = Math.max(getCurrentOffset(state.previous), 0);
           let currentPage = Math.ceil(currentOffset / queryParams.limit + 1);
+          let previousPage = res.previous ? currentPage - 1 : null;
           let count = res.count || state.count + res.results.length;
           dispatch({
             type: feedDataActionTypes.DATA_PREVIOUS_LOADED,
             payload: {
               currentPage,
+              previousPage,
               currentOffset,
               count,
               initialOffset: currentOffset,
@@ -288,17 +299,21 @@ export default function useSCFetchFeed(props: {
         .then((res) => {
           let currentOffset = Math.max(getCurrentOffset(res.next) - queryParams.limit, state.results.length);
           let currentPage = Math.ceil(currentOffset / queryParams.limit + 1);
+          let nextPage = res.next ? currentPage + 1 : null;
           let count = res.count || state.count + res.results.length;
           dispatch({
             type: feedDataActionTypes.DATA_NEXT_LOADED,
             payload: {
               currentPage,
+              nextPage,
               currentOffset,
               count,
               results: res.results,
               next: res.next,
               componentLoaded: true,
-              ...(queryParams.offset && state.results.length === 0 ? {previous: res.previous} : {}),
+              ...(queryParams.offset && state.results.length === 0
+                ? {previous: res.previous, previousPage: res.previous ? currentPage - 1 : null}
+                : {}),
             },
           });
           onNextPage && onNextPage(currentPage, currentOffset, count, res.results);
