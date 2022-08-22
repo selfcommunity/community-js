@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.2.5...@selfcommunity/react-core@0.3.0-alpha.0) (2022-08-22)
+
+
+### Features
+
+* Added components for AccountRecover, AccountReset, AccountVerify and relative API Endpoints ([2f3e527](https://github.com/selfcommunity/community-js/commit/2f3e5278ec0971b760b7fa1d60057777959b9107))
+
+
+
+
+
 ## [0.2.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.2.5-alpha.1...@selfcommunity/react-core@0.2.5) (2022-08-22)
 
 **Note:** Version bump only for package @selfcommunity/react-core
