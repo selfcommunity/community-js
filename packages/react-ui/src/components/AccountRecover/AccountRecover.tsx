@@ -1,12 +1,13 @@
 import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {SCRoutingContextType, SCUserContextType, useSCRouting, useSCUser} from '@selfcommunity/react-core';
+import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import {SCUserType} from '@selfcommunity/types';
 import {Button, ButtonProps, TextFieldProps} from '@mui/material';
 import classNames from 'classnames';
 import {FormattedMessage} from 'react-intl';
 import EmailTextField from '../../shared/EmailTextField';
 import {useThemeProps} from '@mui/system';
+import { AccountService, formatHttpError } from '@selfcommunity/api-services';
 
 const PREFIX = 'SCAccountRecover';
 
@@ -39,7 +40,7 @@ export interface AccountRecoverProps {
    * Callback triggered on success sign in
    * @default null
    */
-  onSuccess?: (user: SCUserType) => void;
+  onSuccess?: () => void;
 
   /**
    * Default props to TextField Input
@@ -60,12 +61,12 @@ export interface AccountRecoverProps {
 }
 
 /**
- * > API documentation for the Community-JS AccountRecover component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS AccountVerify component. Learn about the available props and the CSS API.
 
  #### Import
 
  ```jsx
- import {AccountRecover} from '@selfcommunity/react-ui';
+ import {AccountVerify} from '@selfcommunity/react-ui';
  ```
 
  #### Component Name
@@ -98,16 +99,26 @@ export default function AccountRecover(inProps: AccountRecoverProps): JSX.Elemen
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
-  const scRoutingContext: SCRoutingContextType = useSCRouting();
 
   // HANDLERS
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(event.target.value);
+  };
+
   const handleSubmit = (event: React.SyntheticEvent<HTMLFormElement>) => {
     event.preventDefault();
     event.stopPropagation();
     setIsSubmitting(true);
 
-    // TODO: recover API call
-    onSuccess && onSuccess(null);
+    AccountService.recover({email})
+      .then(() => onSuccess && onSuccess())
+      .catch((error) => {
+        const _error = formatHttpError(error);
+        if (_error.emailError) {
+          setEmailError(_error.emailError.error);
+        }
+      })
+      .then(() => setIsSubmitting(false));
 
     return false;
   };
@@ -122,10 +133,11 @@ export default function AccountRecover(inProps: AccountRecoverProps): JSX.Elemen
     <Root className={classNames(classes.root, className)} {...rest} onSubmit={handleSubmit}>
       <EmailTextField
         className={classes.email}
+        disabled={isSubmitting}
         label={<FormattedMessage id="ui.accountRecover.email.label" defaultMessage="ui.accountRecover.email.label" />}
         {...TextFieldProps}
         value={email}
-        onChange={(event: React.ChangeEvent<HTMLInputElement>) => setEmail(event.target.value)}
+        onChange={handleChange}
         error={Boolean(emailError)}
         helperText={emailError}
       />

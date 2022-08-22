@@ -8,6 +8,29 @@ export interface EndpointType {
 
 const Endpoints: {[key: string]: EndpointType} = {
   /**
+   * Account Endpoints
+   */
+  AccountCreate: {
+    url: urlReplacer('/api/v2/account/create/'),
+    method: 'POST'
+  },
+  AccountVerify: {
+    url: urlReplacer('/api/v2/account/verify/'),
+    method: 'POST'
+  },
+  AccountRecover: {
+    url: urlReplacer('/api/v2/account/recover/'),
+    method: 'POST'
+  },
+  AccountReset: {
+    url: urlReplacer('/api/v2/account/reset/'),
+    method: 'POST'
+  },
+  AccountSearch: {
+    url: urlReplacer('/api/v2/account/search/'),
+    method: 'POST'
+  },
+  /**
    * OAuth2 Endpoints
    */
   OAuthToken: {
