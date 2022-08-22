@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.3.0-alpha.0...@selfcommunity/react-i18n@0.3.0-alpha.1) (2022-08-22)
+
+
+### Bug Fixes
+
+* Fix behaviour of account components ([5a1bbf9](https://github.com/selfcommunity/community-js/commit/5a1bbf9ce8ffe4cb0f977c7ee3f4515484198acb))
+
+
+
+
+
 # [0.3.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.2.5...@selfcommunity/react-i18n@0.3.0-alpha.0) (2022-08-22)
 
 
