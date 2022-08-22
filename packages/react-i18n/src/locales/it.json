@@ -399,10 +399,12 @@
 
   "ui.accountRecover.email.label": "Email",
   "ui.accountRecover.submit": "Recupera Account",
+  "ui.accountRecover.success": "Abbiamo inviato una mail di conferma a <bold>{email}</bold>, controlla la tua casella di posta",
 
   "ui.accountReset.password.label": "Password",
   "ui.accountReset.code.error": "Token non valido o scaduto",
   "ui.accountReset.submit": "Reset Password",
+  "ui.accountReset.success": "Password modificate",
 
   "ui.accountVerify.verifying": "Validazione in corso",
   "ui.accountVerify.error": "Token non valido o scaduto",

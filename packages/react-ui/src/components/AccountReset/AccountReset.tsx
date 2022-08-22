@@ -1,10 +1,9 @@
 import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
-import {SCUserType} from '@selfcommunity/types';
-import {Button, ButtonProps, TextFieldProps, Typography} from '@mui/material';
+import {Box, Button, ButtonProps, TextFieldProps, Typography} from '@mui/material';
 import classNames from 'classnames';
-import {FormattedMessage} from 'react-intl';
+import {FormattedMessage, useIntl} from 'react-intl';
 import {useThemeProps} from '@mui/system';
 import {AccountService, formatHttpError} from '@selfcommunity/api-services';
 import PasswordTextField from '../../shared/PasswordTextField';
@@ -13,18 +12,21 @@ const PREFIX = 'SCAccountReset';
 
 const classes = {
   root: `${PREFIX}-root`,
-  password: `${PREFIX}-password`
+  form: `${PREFIX}-form`,
+  password: `${PREFIX}-password`,
+  success: `${PREFIX}-success`,
+  error: `${PREFIX}-error`
 };
 
-const Root = styled('form', {
+const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  [`&.${classes.root} .MuiTextField-root, &.${classes.root} .MuiButton-root`]: {
+  [`& .${classes.form} .MuiTextField-root, &.${classes.root} .MuiButton-root`]: {
     margin: theme.spacing(1, 0, 1, 0)
   },
-  [`&.${classes.root} .MuiTypography-root`]: {
+  [`& .${classes.form} .MuiTypography-root`]: {
     margin: theme.spacing(1, 0, 1, 0)
   }
 }));
@@ -35,12 +37,6 @@ export interface AccountResetProps {
    * @default null
    */
   className?: string;
-
-  /**
-   * Callback triggered on success sign in
-   * @default null
-   */
-  onSuccess?: (user: SCUserType) => void;
 
   /**
    * Default props to TextField Input
@@ -59,6 +55,17 @@ export interface AccountResetProps {
    * @default empty string
    */
   validationCode: string;
+
+  /**
+   * Callback triggered on success sign in
+   * @default null
+   */
+  onSuccess?: () => void;
+
+  /**
+   * Action component to display after success message
+   * */
+  successAction?: React.ReactNode;
 
   /**
    * Other props
@@ -85,7 +92,10 @@ export interface AccountResetProps {
  |Rule Name|Global class|Description|
  |---|---|---|
  |root|.SCAccountReset-root|Styles applied to the root element.|
+ |form|.SCAccountReset-form|Styles applied to the form element.|
  |email|.SCAccountReset-password|Styles applied to the password TextField.|
+ |success|.SCAccountRecover-success|Styles applied to the success Typography.|
+ |error|.SCAccountRecover-error|Styles applied to the error Typography.|
 
  *
  * @param inProps
@@ -102,6 +112,7 @@ export default function AccountReset(inProps: AccountResetProps): JSX.Element {
     TextFieldProps = {variant: 'outlined', fullWidth: true},
     ButtonProps = {variant: 'contained'},
     validationCode,
+    successAction = null,
     ...rest
   } = props;
 
@@ -110,9 +121,11 @@ export default function AccountReset(inProps: AccountResetProps): JSX.Element {
   const [passwordError, setPasswordError] = useState<string>('');
   const [validationCodeError, setValidationCodeError] = useState<string>('');
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [isSucceed, setIsSucceed] = useState<boolean>(false);
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
+  const intl = useIntl();
 
   // HANDLERS
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -125,10 +138,12 @@ export default function AccountReset(inProps: AccountResetProps): JSX.Element {
     setIsSubmitting(true);
 
     AccountService.reset({validation_code: validationCode, password})
-      .then((res) => onSuccess && onSuccess(null))
+      .then((res) => {
+        setIsSucceed(true);
+        onSuccess && onSuccess();
+      })
       .catch((error) => {
         const _error = formatHttpError(error);
-        console.log(_error);
         if (_error.passwordError) {
           setPasswordError(_error.passwordError.error);
         }
@@ -147,14 +162,29 @@ export default function AccountReset(inProps: AccountResetProps): JSX.Element {
   }
 
   // RENDER
+  if (isSucceed) {
+    return (
+      <Typography>
+        <FormattedMessage id="ui.accountReset.success" defaultMessage="ui.accountReset.success" />
+      </Typography>
+    );
+  }
+
   return (
-    <Root className={classNames(classes.root, className)} {...rest} onSubmit={handleSubmit}>
-      {validationCodeError ? (
-        <Typography color="error">
+    <Root className={classNames(classes.root, className)} {...rest}>
+      {isSucceed ? (
+        <>
+          <Typography className={classes.success}>
+            {intl.formatMessage({id: 'ui.accountReset.success', defaultMessage: 'ui.accountReset.success'})}
+          </Typography>
+          {successAction}
+        </>
+      ) : validationCodeError ? (
+        <Typography className={classes.error}>
           <FormattedMessage id="ui.accountReset.code.error" defaultMessage="ui.accountReset.code.error" />
         </Typography>
       ) : (
-        <>
+        <form className={classes.form} onSubmit={handleSubmit}>
           <PasswordTextField
             className={classes.password}
             disabled={isSubmitting}
@@ -168,7 +198,7 @@ export default function AccountReset(inProps: AccountResetProps): JSX.Element {
           <Button type="submit" {...ButtonProps} disabled={!password || isSubmitting}>
             <FormattedMessage id="ui.accountReset.submit" defaultMessage="ui.accountReset.submit" />
           </Button>
-        </>
+        </form>
       )}
     </Root>
   );
