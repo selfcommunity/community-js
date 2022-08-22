@@ -45,6 +45,10 @@ const config = {
   "plugins": [
     "@typescript-eslint",
     "import"
+  ],
+  ignorePatterns: [
+    '.eslintrc.js',
+    '*.stories.*'
   ]
 };
 

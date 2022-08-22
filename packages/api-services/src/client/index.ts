@@ -116,6 +116,24 @@ export class ApiClient implements ApiClientInterface {
   };
 
   /**
+   * Delete default header
+   * @param name
+   * @param methods
+   */
+  public deleteDefaultHeader = ({name, methods}: {name: string; methods?: string[]}) => {
+    const headers = this.client.defaults.headers;
+    if (Array.isArray(methods)) {
+      methods.forEach((method) => {
+        if (headers[method]) {
+          delete headers[method][name];
+        }
+      });
+    } else {
+      delete headers.common[name];
+    }
+  };
+
+  /**
    * setSupportWithCredentials
    * Disable/enable withCredentials
    * Bypass cookie if disabled
@@ -139,9 +157,11 @@ export class ApiClient implements ApiClientInterface {
    * Set authorization header for all http requests
    * @param token
    */
-  public setAuthorizeToken(token: string): void {
+  public setAuthorizeToken(token?: string): void {
     if (token) {
       this.setDefaultHeader({name: 'Authorization', value: `Bearer ${token}`});
+    } else {
+      this.deleteDefaultHeader({name: 'Authorization'});
     }
   }
 

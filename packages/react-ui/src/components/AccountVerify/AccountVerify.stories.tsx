@@ -1,19 +1,19 @@
 import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
 
-import AccountSignIn from './index';
+import AccountVerify from './index';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/React UI/Account Sign In',
-  component: AccountSignIn
+  title: 'Design System/React UI/Account Verify',
+  component: AccountVerify
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
-} as ComponentMeta<typeof AccountSignIn>;
+} as ComponentMeta<typeof AccountVerify>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof AccountSignIn> = (args) => (
+const Template: ComponentStory<typeof AccountVerify> = (args) => (
   <div style={{width: 400}}>
-    <AccountSignIn {...args} />
+    <AccountVerify {...args} />
   </div>
 );
 
@@ -21,5 +21,5 @@ export const Base = Template.bind({});
 
 Base.args = {
   /* the args you need here will depend on your component */
-  onSuccess: (data) => console.log(data)
+  validationCode: ''
 };

@@ -397,17 +397,16 @@
   "ui.thread.newMessage.autocomplete.placeholder" : "nome utente...",
   "ui.thread.emptyBox.message" : "Seleziona o componi un messaggio",
 
-  "ui.accountSignin.username.label": "Username",
-  "ui.accountSignin.password.label": "Password",
-  "ui.accountSignin.submit": "Accedi",
-
-  "ui.accountSignup.email.label": "Email",
-  "ui.accountSignup.username.label": "Username",
-  "ui.accountSignup.password.label": "Password",
-  "ui.accountSignup.submit": "Registrati",
-
   "ui.accountRecover.email.label": "Email",
   "ui.accountRecover.submit": "Recupera Account",
+
+  "ui.accountReset.password.label": "Password",
+  "ui.accountReset.code.error": "Token non valido o scaduto",
+  "ui.accountReset.submit": "Reset Password",
+
+  "ui.accountVerify.verifying": "Validazione in corso",
+  "ui.accountVerify.error": "Token non valido o scaduto",
+  "ui.accountVerify.success": "Email verificata con successo",
 
   "ui.contributionActionMenu.permanentLink": "Link permanente",
   "ui.contributionActionMenu.editContribution": "Modifica",

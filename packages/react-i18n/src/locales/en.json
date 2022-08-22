@@ -397,17 +397,16 @@
   "ui.thread.newMessage.autocomplete.placeholder" : "type username...",
   "ui.thread.emptyBox.message" : "Select or compose a message",
 
-  "ui.accountSignin.username.label": "Username",
-  "ui.accountSignin.password.label": "Password",
-  "ui.accountSignin.submit": "Sign In",
-
-  "ui.accountSignup.email.label": "Email",
-  "ui.accountSignup.username.label": "Username",
-  "ui.accountSignup.password.label": "Password",
-  "ui.accountSignup.submit": "Register",
-
   "ui.accountRecover.email.label": "Email",
   "ui.accountRecover.submit": "Recover Account",
+
+  "ui.accountReset.password.label": "Password",
+  "ui.accountReset.code.error": "Invalid token",
+  "ui.accountReset.submit": "Reset Password",
+
+  "ui.accountVerify.verifying": "Validating",
+  "ui.accountVerify.error": "Invalid token",
+  "ui.accountVerify.success": "Email verfyied successfully",
 
   "ui.contributionActionMenu.permanentLink": "Permanent link",
   "ui.contributionActionMenu.editContribution": "Edit",
