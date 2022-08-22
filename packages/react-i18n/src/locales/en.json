@@ -13,6 +13,8 @@
   "ui.common.statusWithoutText": "View status",
   "ui.common.commentWithoutText": "View comment",
   "ui.common.permanentLinkCopied": "Link copied!",
+  "ui.common.nextPage": "Next page",
+  "ui.common.previousPage": "Previous page",
 
   "ui.confirmDialog.title": "Are you sure you want to proceed?",
   "ui.confirmDialog.btnConfirm": "Yes",

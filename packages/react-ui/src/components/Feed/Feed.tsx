@@ -8,7 +8,8 @@ import {
   SCUserContextType,
   useSCFetchFeed,
   SCPreferences,
-  usePreviousValue
+  usePreviousValue,
+  Link
 } from '@selfcommunity/react-core';
 import {styled, useTheme} from '@mui/material/styles';
 import {CardContent, Grid, Hidden, Theme, useMediaQuery} from '@mui/material';
@@ -39,7 +40,8 @@ const classes = {
   left: `${PREFIX}-left`,
   right: `${PREFIX}-right`,
   end: `${PREFIX}-end`,
-  refresh: `${PREFIX}-refresh`
+  refresh: `${PREFIX}-refresh`,
+  paginationLink: `${PREFIX}-pagination-link`
 };
 
 const Root = styled(Grid, {
@@ -60,6 +62,9 @@ const Root = styled(Grid, {
   },
   [`& .${classes.end}, & .${classes.refresh}`]: {
     textAlign: 'center'
+  },
+  [`& .${classes.paginationLink}`]: {
+    display: 'none'
   }
 }));
 
@@ -209,6 +214,30 @@ export interface FeedProps {
    * @default {}
    */
   VirtualizedScrollerProps?: VirtualizedScrollerCommonProps;
+
+  /**
+   * Add/remove pagination links on top/bottom of items
+   * @default false
+   */
+  disablePaginationLinks?: boolean;
+
+  /**
+   * Show/hide pagination links
+   * @default true
+   */
+  hidePaginationLinks?: boolean;
+
+  /**
+   * Page query parameter name
+   * @default 'p'
+   */
+  paginationLinksPageQueryParam?: string;
+
+  /**
+   * Props to spread to the pagination Link component
+   * @default {}
+   */
+  PaginationLinkProps?: Record<string, any>;
 }
 
 const PREFERENCES = [SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED, SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED];
@@ -235,6 +264,7 @@ const PREFERENCES = [SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED, SCPreferences
  |right|.SCFeed-right|Styles applied to the right element.|
  |end|.SCFeed-end|Styles applied to the end element.|
  |refresh|.SCFeed-refresh|Styles applied to the refresh section.|
+ |paginationLink|.SCFeed-pagination-link|Styles applied to pagination links.|
  *
  * @param inProps
  */
@@ -268,7 +298,11 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     requireAuthentication = false,
     cacheStrategy = CacheStrategies.NETWORK_ONLY,
     prefetchedData,
-    VirtualizedScrollerProps = {}
+    VirtualizedScrollerProps = {},
+    disablePaginationLinks = false,
+    hidePaginationLinks = true,
+    paginationLinksPageQueryParam = 'p',
+    PaginationLinkProps = {}
   } = props;
 
   // CONTEXT
@@ -574,6 +608,44 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     setHeadData(headData.filter((item) => !itemIds.includes(itemIdGenerator(item))));
   };
 
+  /**
+   * Next page url
+   * Useful for SSR and SEO
+   */
+  const NextPageLink = useMemo(() => {
+    return (
+      <>
+        {!disablePaginationLinks && feedDataObject.nextPage && (
+          <Link
+            to={`?${paginationLinksPageQueryParam}=${feedDataObject.nextPage}`}
+            className={classNames({[classes.paginationLink]: hidePaginationLinks})}
+            {...PaginationLinkProps}>
+            <FormattedMessage id="ui.common.nextPage" defaultMessage="ui.common.nextPage" />
+          </Link>
+        )}
+      </>
+    );
+  }, [feedDataObject.nextPage, disablePaginationLinks, paginationLinksPageQueryParam, hidePaginationLinks]);
+
+  /**
+   * Previous page url
+   * Useful for SSR and SEO
+   */
+  const PreviousPageLink = useMemo(() => {
+    return (
+      <>
+        {!disablePaginationLinks && feedDataObject.previousPage && (
+          <Link
+            to={`?${paginationLinksPageQueryParam}=${feedDataObject.previousPage}`}
+            className={classNames({[classes.paginationLink]: hidePaginationLinks})}
+            {...PaginationLinkProps}>
+            <FormattedMessage id="ui.common.previousPage" defaultMessage="ui.common.previousPage" />
+          </Link>
+        )}
+      </>
+    );
+  }, [feedDataObject.previousPage, disablePaginationLinks, paginationLinksPageQueryParam, hidePaginationLinks]);
+
   // EXPOSED METHODS
   useImperativeHandle(ref, () => ({
     addFeedData: (data: any, syncPagination: boolean) => {
@@ -642,6 +714,8 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
             previous={feedDataObject.getPreviousPage}
             hasMoreNext={Boolean(feedDataObject.next)}
             hasMorePrevious={Boolean(feedDataObject.previous)}
+            header={PreviousPageLink}
+            footer={NextPageLink}
             loaderNext={<ItemSkeleton {...ItemSkeletonProps} />}
             loaderPrevious={<ItemSkeleton {...ItemSkeletonProps} />}
             scrollThreshold={1}

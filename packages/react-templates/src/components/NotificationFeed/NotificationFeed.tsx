@@ -179,6 +179,7 @@ export default function NotificationFeed(inProps: NotificationFeedProps): JSX.El
       }}
       FeedSidebarProps={FeedSidebarProps}
       requireAuthentication={true}
+      disablePaginationLinks={true}
       {...FeedProps}
     />
   );

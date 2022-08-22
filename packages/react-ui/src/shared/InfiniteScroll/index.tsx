@@ -13,6 +13,8 @@ export interface Props {
   loaderPrevious?: ReactNode;
   scrollThreshold?: number | string;
   endMessage?: ReactNode;
+  header?: ReactNode;
+  footer?: ReactNode;
   style?: CSSProperties;
   height?: number | string;
   scrollableTarget?: ReactNode;
@@ -322,6 +324,7 @@ export default class InfiniteScroll extends Component<Props, State> {
           className={`infinite-scroll-component ${this.props.className || ''}`}
           ref={(infScroll: HTMLDivElement) => (this._infScroll = infScroll)}
           style={style}>
+          {this.props.header}
           {this.props.pullDownToRefresh && (
             <div style={{position: 'relative'}} ref={(pullDown: HTMLDivElement) => (this._pullDown = pullDown)}>
               <div
@@ -340,6 +343,7 @@ export default class InfiniteScroll extends Component<Props, State> {
           {!this.state.showLoaderNext && !hasChildren && this.props.hasMoreNext && this.props.loaderNext}
           {this.state.showLoaderNext && this.props.hasMoreNext && this.props.loaderNext}
           {!this.props.hasMoreNext && this.props.endMessage}
+          {this.props.footer}
         </div>
       </div>
     );
