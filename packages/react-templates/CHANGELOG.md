@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.36-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.1.36-alpha.1...@selfcommunity/react-templates@0.1.36-alpha.2) (2022-08-23)
+
+
+### Bug Fixes
+
+* pagination seo ([7756ecc](https://github.com/selfcommunity/community-js/commit/7756ecccf2cf1db6bbcb819f01dfdcf7262d23fc))
+
+
+
+
+
 ## [0.1.36-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.1.36-alpha.0...@selfcommunity/react-templates@0.1.36-alpha.1) (2022-08-23)
 
 **Note:** Version bump only for package @selfcommunity/react-templates
