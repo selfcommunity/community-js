@@ -24,6 +24,7 @@ Base.args = {
   feedObjectType: SCFeedObjectTypologyType.POST
 };
 
+
 export const BaseCacheSWR = Template.bind({});
 
 BaseCacheSWR.args = {
@@ -31,6 +32,14 @@ BaseCacheSWR.args = {
   feedObjectType: SCFeedObjectTypologyType.POST,
   FeedObjectProps: {cacheStrategy: CacheStrategies.STALE_WHILE_REVALIDATE},
   CommentsFeedObjectProps: {cacheStrategy: CacheStrategies.STALE_WHILE_REVALIDATE}
+};
+
+export const BasePagination = Template.bind({});
+
+BasePagination.args = {
+  feedObjectId: 360,
+  feedObjectType: SCFeedObjectTypologyType.POST,
+  CommentsFeedObjectProps: {page: 3}
 };
 
 export const CommentFirstLevel = Template.bind({});

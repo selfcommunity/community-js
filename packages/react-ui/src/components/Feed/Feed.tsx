@@ -27,7 +27,8 @@ import {useThemeProps} from '@mui/system';
 import Widget from '../Widget';
 import InfiniteScroll from '../../shared/InfiniteScroll';
 import VirtualizedScroller, {VirtualizedScrollerCommonProps, VirtualScrollChild} from '../../shared/VirtualizedScroller';
-import {WIDGET_PREFIX_KEY, DEFAULT_WIDGETS_NUMBER, DEFAULT_FEED_PAGINATION_ITEMS_NUMBER} from '../../constants/Feed';
+import {WIDGET_PREFIX_KEY, DEFAULT_WIDGETS_NUMBER} from '../../constants/Feed';
+import {DEFAULT_PAGINATION_LIMIT, DEFAULT_PAGINATION_OFFSET, DEFAULT_PAGINATION_QUERY_PARAM_NAME} from '../../constants/Pagination';
 import {widgetSort} from '../../utils/feed';
 import Footer from '../Footer';
 import FeedSkeleton from './Skeleton';
@@ -229,7 +230,7 @@ export interface FeedProps {
 
   /**
    * Page query parameter name
-   * @default 'p'
+   * @default 'page'
    */
   paginationLinksPageQueryParam?: string;
 
@@ -278,7 +279,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     id = 'feed',
     className,
     endpoint,
-    endpointQueryParams = {limit: DEFAULT_FEED_PAGINATION_ITEMS_NUMBER, offset: 0},
+    endpointQueryParams = {limit: DEFAULT_PAGINATION_LIMIT, offset: DEFAULT_PAGINATION_OFFSET},
     endMessage = <FormattedMessage id="ui.feed.noOtherFeedObject" defaultMessage="ui.feed.noOtherFeedObject" />,
     refreshMessage = <FormattedMessage id="ui.feed.refreshRelease" defaultMessage="ui.feed.refreshRelease" />,
     HeaderComponent,
@@ -301,7 +302,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     VirtualizedScrollerProps = {},
     disablePaginationLinks = false,
     hidePaginationLinks = true,
-    paginationLinksPageQueryParam = 'p',
+    paginationLinksPageQueryParam = DEFAULT_PAGINATION_QUERY_PARAM_NAME,
     PaginationLinkProps = {}
   } = props;
 
@@ -311,7 +312,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
 
   // CONST
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
-  const limit = useMemo(() => endpointQueryParams.limit || DEFAULT_FEED_PAGINATION_ITEMS_NUMBER, [endpointQueryParams]);
+  const limit = useMemo(() => endpointQueryParams.limit || DEFAULT_PAGINATION_LIMIT, [endpointQueryParams]);
   const offset = useMemo(() => {
     if (prefetchedData) {
       const currentOffset = getQueryStringParameter(prefetchedData.previous, 'offset') || 0;

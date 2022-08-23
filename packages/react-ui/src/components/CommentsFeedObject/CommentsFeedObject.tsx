@@ -15,6 +15,7 @@ import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {CacheStrategies, Logger} from '@selfcommunity/utils';
 import {useSCFetchCommentObject, useSCFetchCommentObjects} from '@selfcommunity/react-core';
 import {SCCommentType, SCFeedObjectType, SCFeedObjectTypologyType} from '@selfcommunity/types';
+import {DEFAULT_PAGINATION_LIMIT} from '../../constants/Pagination';
 
 const PREFIX = 'SCCommentsFeedObject';
 
@@ -214,7 +215,7 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
     renderNoComments,
     renderCommentNotFound,
     page = 1,
-    commentsPageCount = 5,
+    commentsPageCount = DEFAULT_PAGINATION_LIMIT,
     commentsOrderBy = SCCommentsOrderBy.ADDED_AT_ASC,
     showTitle = false,
     infiniteScrolling = true,
@@ -423,6 +424,8 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
           isLoadingNext={commentsObject.isLoadingNext}
           handleNext={commentsObject.getNextPage}
           page={commentsObject.page}
+          previousPage={commentsObject.previousPage}
+          nextPage={commentsObject.nextPage}
           infiniteScrolling={infiniteScrolling && commentsObject.total > 0 && !comment && !comments.length}
           CommentComponent={CommentComponent}
           CommentComponentProps={CommentComponentProps}
