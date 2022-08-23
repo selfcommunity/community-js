@@ -14,6 +14,7 @@ import {getContributionRouteName, getRouteData} from '../../utils/contribution';
 import {SCCommentType, SCCustomAdvPosition, SCFeedObjectType, SCFeedObjectTypologyType} from '@selfcommunity/types';
 import {appendURLSearchParams} from '@selfcommunity/utils';
 import {scrollIntoView} from 'seamless-scroll-polyfill';
+import {DEFAULT_PAGINATION_QUERY_PARAM_NAME} from '../../constants/Pagination';
 import {
   Link,
   SCPreferences,
@@ -25,7 +26,7 @@ import {
   useSCRouting,
   useSCUser
 } from '@selfcommunity/react-core';
-import {DEFAULT_PAGINATION_QUERY_PARAM_NAME} from '@selfcommunity/react-ui';
+
 
 const PREFIX = 'SCCommentsObject';
 
