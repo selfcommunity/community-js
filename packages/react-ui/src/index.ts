@@ -76,6 +76,7 @@ import IncubatorDetail, {IncubatorDetailProps} from './components/IncubatorDetai
 import IncubatorSuggestion, {IncubatorSuggestionProps} from './components/IncubatorSuggestion';
 import Footer, {FooterProps} from './components/Footer';
 import Header, {HeaderProps} from './components/Header';
+import {DEFAULT_FEED_PAGINATION_ITEMS_NUMBER, DEFAULT_WIDGETS_NUMBER} from './constants/Feed';
 import {FACEBOOK_SHARE, LINKEDIN_SHARE, TWITTER_SHARE} from './constants/SocialShare';
 import {DEFAULT_PRELOAD_OFFSET_VIEWPORT, MAX_PRELOAD_OFFSET_VIEWPORT, MIN_PRELOAD_OFFSET_VIEWPORT} from './constants/LazyLoad';
 
@@ -246,6 +247,8 @@ export {
   DEFAULT_PRELOAD_OFFSET_VIEWPORT,
   MIN_PRELOAD_OFFSET_VIEWPORT,
   MAX_PRELOAD_OFFSET_VIEWPORT,
+  DEFAULT_FEED_PAGINATION_ITEMS_NUMBER,
+  DEFAULT_WIDGETS_NUMBER,
   PollSuggestion,
   PollSuggestionProps,
   Incubator,
