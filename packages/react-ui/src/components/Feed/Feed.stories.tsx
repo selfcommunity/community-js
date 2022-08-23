@@ -382,7 +382,8 @@ Notification.args = {
   }),
   itemIdGenerator: (item) => item.sid,
   ItemSkeleton: NotificationSkeleton,
-  requireAuthentication: true
+  requireAuthentication: true,
+  disablePaginationLinks: true
 };
 
 export const NotificationCached = Template.bind({});
@@ -413,5 +414,6 @@ NotificationCached.args = {
   itemIdGenerator: (item) => item.sid,
   ItemSkeleton: NotificationSkeleton,
   requireAuthentication: true,
+  disablePaginationLinks: true,
   cacheStrategy: CacheStrategies.CACHE_FIRST
 };

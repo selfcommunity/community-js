@@ -3,6 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.0-alpha.1...@selfcommunity/react-ui@0.5.0-alpha.2) (2022-08-22)
+
+
+### Bug Fixes
+
+* feed pagination ([2ed14a5](https://github.com/selfcommunity/community-js/commit/2ed14a5e0dcc7931b325e80c50d0f5d254737e08))
+
+
+
+
+
+# [0.5.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.0-alpha.0...@selfcommunity/react-ui@0.5.0-alpha.1) (2022-08-22)
+
+
+### Bug Fixes
+
+* Fix behaviour of account components ([5a1bbf9](https://github.com/selfcommunity/community-js/commit/5a1bbf9ce8ffe4cb0f977c7ee3f4515484198acb))
+
+
+
+
+
+# [0.5.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.4.2...@selfcommunity/react-ui@0.5.0-alpha.0) (2022-08-22)
+
+
+### Features
+
+* Added components for AccountRecover, AccountReset, AccountVerify and relative API Endpoints ([2f3e527](https://github.com/selfcommunity/community-js/commit/2f3e5278ec0971b760b7fa1d60057777959b9107))
+
+
+
+
+
 ## [0.4.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.4.2-alpha.2...@selfcommunity/react-ui@0.4.2) (2022-08-22)
 
 **Note:** Version bump only for package @selfcommunity/react-ui

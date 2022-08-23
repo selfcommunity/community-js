@@ -13,6 +13,8 @@
   "ui.common.statusWithoutText": "Vedi lo status",
   "ui.common.commentWithoutText": "Vedi il commento",
   "ui.common.permanentLinkCopied": "Link copiato!",
+  "ui.common.nextPage": "Pagina successiva",
+  "ui.common.previousPage": "Pagina precedente",
 
   "ui.confirmDialog.title": "Sei sicuro di voler procedere?",
   "ui.confirmDialog.btnConfirm": "Si",
@@ -397,17 +399,18 @@
   "ui.thread.newMessage.autocomplete.placeholder" : "nome utente...",
   "ui.thread.emptyBox.message" : "Seleziona o componi un messaggio",
 
-  "ui.accountSignin.username.label": "Username",
-  "ui.accountSignin.password.label": "Password",
-  "ui.accountSignin.submit": "Accedi",
-
-  "ui.accountSignup.email.label": "Email",
-  "ui.accountSignup.username.label": "Username",
-  "ui.accountSignup.password.label": "Password",
-  "ui.accountSignup.submit": "Registrati",
-
   "ui.accountRecover.email.label": "Email",
   "ui.accountRecover.submit": "Recupera Account",
+  "ui.accountRecover.success": "Abbiamo inviato una mail di conferma a <bold>{email}</bold>, controlla la tua casella di posta",
+
+  "ui.accountReset.password.label": "Password",
+  "ui.accountReset.code.error": "Token non valido o scaduto",
+  "ui.accountReset.submit": "Reset Password",
+  "ui.accountReset.success": "Password modificate",
+
+  "ui.accountVerify.verifying": "Validazione in corso",
+  "ui.accountVerify.error": "Token non valido o scaduto",
+  "ui.accountVerify.success": "Email verificata con successo",
 
   "ui.contributionActionMenu.permanentLink": "Link permanente",
   "ui.contributionActionMenu.editContribution": "Modifica",

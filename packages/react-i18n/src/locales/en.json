@@ -13,6 +13,8 @@
   "ui.common.statusWithoutText": "View status",
   "ui.common.commentWithoutText": "View comment",
   "ui.common.permanentLinkCopied": "Link copied!",
+  "ui.common.nextPage": "Next page",
+  "ui.common.previousPage": "Previous page",
 
   "ui.confirmDialog.title": "Are you sure you want to proceed?",
   "ui.confirmDialog.btnConfirm": "Yes",
@@ -397,17 +399,18 @@
   "ui.thread.newMessage.autocomplete.placeholder" : "type username...",
   "ui.thread.emptyBox.message" : "Select or compose a message",
 
-  "ui.accountSignin.username.label": "Username",
-  "ui.accountSignin.password.label": "Password",
-  "ui.accountSignin.submit": "Sign In",
-
-  "ui.accountSignup.email.label": "Email",
-  "ui.accountSignup.username.label": "Username",
-  "ui.accountSignup.password.label": "Password",
-  "ui.accountSignup.submit": "Register",
-
   "ui.accountRecover.email.label": "Email",
   "ui.accountRecover.submit": "Recover Account",
+  "ui.accountRecover.success": "We sent an email to <b>{email}</b>, check your inbox",
+
+  "ui.accountReset.password.label": "Password",
+  "ui.accountReset.code.error": "Invalid token",
+  "ui.accountReset.submit": "Reset Password",
+  "ui.accountReset.success": "Password updated",
+
+  "ui.accountVerify.verifying": "Validating",
+  "ui.accountVerify.error": "Invalid token",
+  "ui.accountVerify.success": "Email verfyied successfully",
 
   "ui.contributionActionMenu.permanentLink": "Permanent link",
   "ui.contributionActionMenu.editContribution": "Edit",

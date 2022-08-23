@@ -14,7 +14,7 @@ import Composer, {ComposerProps, ComposerSkeleton} from './components/Composer';
 import {COMPOSER_TYPE_DISCUSSION, COMPOSER_TYPE_POST} from './constants/Composer';
 import Editor, {EditorProps, EditorSkeleton} from './components/Editor';
 import User, {UserProps, UserSkeleton} from './components/User';
-import Feed, {FeedRef, FeedProps, FeedSidebarProps, FeedSkeleton} from './components/Feed';
+import Feed, {FeedProps, FeedRef, FeedSidebarProps, FeedSkeleton} from './components/Feed';
 import FeedObject, {FeedObjectProps, FeedObjectSkeleton} from './components/FeedObject';
 import FeedUpdates, {FeedUpdatesProps, FeedUpdatesSkeleton} from './components/FeedUpdates';
 import FollowCategoryButton, {FollowCategoryButtonProps} from './components/FollowCategoryButton';
@@ -45,29 +45,29 @@ import CommentsObject, {CommentsObjectProps, CommentsObjectSkeleton} from './com
 import CommentsFeedObject, {CommentsFeedObjectProps, CommentsFeedObjectSkeleton} from './components/CommentsFeedObject';
 import ReplyComment from './components/CommentObject/ReplyComment';
 import CustomAdv, {CustomAdvProps, CustomAdvSkeleton} from './components/CustomAdv';
-import {GenericSkeleton, AvatarGroupSkeleton} from './components/Skeleton';
+import {AvatarGroupSkeleton, GenericSkeleton} from './components/Skeleton';
 import Message, {MessageProps, MessageSkeleton} from './components/Message';
 import MessageEditor, {MessageEditorProps, MessageEditorSkeleton} from './components/MessageEditor';
 import Thread, {ThreadProps, ThreadSkeleton} from './components/Thread';
 import ToastNotifications, {ToastNotificationsProps, ToastNotificationsSkeleton} from './components/ToastNotifications';
 import SnippetNotifications, {SnippetNotificationsProps, SnippetNotificationsSkeleton} from './components/SnippetNotifications';
 import Notification, {NotificationProps, NotificationSkeleton} from './components/Notification';
-import AccountSignIn, {AccountSignInProps} from './components/AccountSignIn';
-import AccountSignUp, {AccountSignUpProps} from './components/AccountSignUp';
 import AccountRecover, {AccountRecoverProps} from './components/AccountRecover';
+import AccountReset, {AccountResetProps} from './components/AccountReset';
+import AccountVerify, {AccountVerifyProps} from './components/AccountVerify';
 import {
-  SCFeedWidgetType,
-  SCFeedObjectTemplateType,
+  SCBroadcastMessageTemplateType,
   SCCommentsOrderBy,
   SCFeedObjectActivitiesType,
-  SCMediaObjectType,
+  SCFeedObjectTemplateType,
+  SCFeedWidgetType,
   SCMediaChunkType,
-  SCNotificationObjectTemplateType,
-  SCBroadcastMessageTemplateType
+  SCMediaObjectType,
+  SCNotificationObjectTemplateType
 } from './types';
 import Widget from './components/Widget';
 import MediaChunkUploader, {MediaChunkUploaderProps} from './shared/MediaChunkUploader';
-import {Document, Image, Link, Share, EditMediaProps} from './shared/Media';
+import {Document, EditMediaProps, Image, Link, Share} from './shared/Media';
 import {MEDIA_TYPE_EMBED} from './constants/Media';
 import PollSuggestion, {PollSuggestionProps} from './components/PollSuggestion';
 import Incubator, {IncubatorProps} from './components/Incubator';
@@ -76,8 +76,8 @@ import IncubatorDetail, {IncubatorDetailProps} from './components/IncubatorDetai
 import IncubatorSuggestion, {IncubatorSuggestionProps} from './components/IncubatorSuggestion';
 import Footer, {FooterProps} from './components/Footer';
 import Header, {HeaderProps} from './components/Header';
-import {FACEBOOK_SHARE, TWITTER_SHARE, LINKEDIN_SHARE} from './constants/SocialShare';
-import {DEFAULT_PRELOAD_OFFSET_VIEWPORT, MIN_PRELOAD_OFFSET_VIEWPORT, MAX_PRELOAD_OFFSET_VIEWPORT} from './constants/LazyLoad';
+import {FACEBOOK_SHARE, LINKEDIN_SHARE, TWITTER_SHARE} from './constants/SocialShare';
+import {DEFAULT_PRELOAD_OFFSET_VIEWPORT, MAX_PRELOAD_OFFSET_VIEWPORT, MIN_PRELOAD_OFFSET_VIEWPORT} from './constants/LazyLoad';
 
 /**
  * Utilities:
@@ -89,12 +89,12 @@ import * as ContributionUtils from './utils/contribution';
  * List all exports
  */
 export {
-  AccountSignIn,
-  AccountSignInProps,
-  AccountSignUp,
-  AccountSignUpProps,
   AccountRecover,
   AccountRecoverProps,
+  AccountReset,
+  AccountResetProps,
+  AccountVerify,
+  AccountVerifyProps,
   BroadcastMessages,
   BroadcastMessagesProps,
   BroadcastMessagesSkeleton,

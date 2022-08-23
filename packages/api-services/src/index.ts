@@ -19,6 +19,7 @@ import {urlParams} from './utils/url';
 /**
  * Services
  */
+import AccountService, {AccountApiClient, AccountApiClientInterface} from './services/account';
 import CategoryService, {CategoryApiClient, CategoryApiClientInterface} from './services/category';
 import CommentService, {CommentApiClient, CommentApiClientInterface} from './services/comment';
 import CustomAdvService, {CustomAdvApiClient, CustomAdvApiClientInterface} from './services/custom_adv';
@@ -49,6 +50,10 @@ import WebhookService, {WebhookApiClient, WebhookApiClientInterface} from './ser
  * Types
  */
 import {
+  AccountCreateParams,
+  AccountVerifyParams,
+  AccountResetParams,
+  AccountRecoverParams,
   SCPaginatedResponse,
   WebhookParamType,
   WebhookEventsType,
@@ -112,6 +117,9 @@ export {
   urlParams,
   Endpoints,
   EndpointType,
+  AccountService,
+  AccountApiClient,
+  AccountApiClientInterface,
   PreferenceService,
   PreferenceApiClient,
   PreferenceApiClientInterface,
@@ -190,6 +198,10 @@ export {
   SCPaginatedResponse,
   WebhookParamType,
   WebhookEventsType,
+  AccountCreateParams,
+  AccountVerifyParams,
+  AccountResetParams,
+  AccountRecoverParams,
   CommentCreateParams,
   IncubatorCreateParams,
   IncubatorSearchParams,

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.1.34...@selfcommunity/api-services@0.2.0-alpha.0) (2022-08-22)
+
+
+### Features
+
+* Added components for AccountRecover, AccountReset, AccountVerify and relative API Endpoints ([2f3e527](https://github.com/selfcommunity/community-js/commit/2f3e5278ec0971b760b7fa1d60057777959b9107))
+
+
+
+
+
 ## [0.1.34](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.1.34-alpha.1...@selfcommunity/api-services@0.1.34) (2022-08-22)
 
 **Note:** Version bump only for package @selfcommunity/api-services

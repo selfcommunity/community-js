@@ -85,9 +85,13 @@ function stateInitializer(session: SCSessionType): any {
    * Set http authorization if session type is OAuth or JWT
    * Configure http object (Authorization, etc...)
    */
-  if ([Session.OAUTH_SESSION, Session.JWT_SESSION].includes(_session.type) && _session.authToken && _session.authToken.accessToken) {
-    http.setAuthorizeToken(_session.authToken.accessToken);
-    _isLoading = true;
+  if ([Session.OAUTH_SESSION, Session.JWT_SESSION].includes(_session.type)) {
+    if (_session.authToken && _session.authToken.accessToken) {
+      http.setAuthorizeToken(_session.authToken.accessToken);
+      _isLoading = true;
+    } else {
+      http.setAuthorizeToken();
+    }
   }
   http.setSupportWithCredentials(_session.type === Session.COOKIE_SESSION);
   return {user: null, session: _session, error: null, loading: _isLoading, isSessionRefreshing: false, refreshSession: false};

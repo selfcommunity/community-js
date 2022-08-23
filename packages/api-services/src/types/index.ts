@@ -1,3 +1,4 @@
+import {AccountCreateParams, AccountVerifyParams, AccountRecoverParams, AccountResetParams, AccountSearchParams} from './account';
 import {SCPaginatedResponse} from './paginatedResponse';
 import {WebhookParamType, WebhookEventsType} from './webhook';
 import {SSOSignUpParams} from './sso';
@@ -30,6 +31,11 @@ import {ScoreParams} from './score';
 import {InsightCommonParams, InsightEmbedParams, InsightUserParams, InsightContributionParams} from './insight';
 
 export {
+  AccountCreateParams,
+  AccountVerifyParams,
+  AccountRecoverParams,
+  AccountResetParams,
+  AccountSearchParams,
   SCPaginatedResponse,
   WebhookParamType,
   WebhookEventsType,

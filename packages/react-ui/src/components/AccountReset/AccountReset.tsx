@@ -4,17 +4,18 @@ import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import {Box, Button, ButtonProps, TextFieldProps, Typography} from '@mui/material';
 import classNames from 'classnames';
 import {FormattedMessage, useIntl} from 'react-intl';
-import EmailTextField from '../../shared/EmailTextField';
 import {useThemeProps} from '@mui/system';
 import {AccountService, formatHttpError} from '@selfcommunity/api-services';
+import PasswordTextField from '../../shared/PasswordTextField';
 
-const PREFIX = 'SCAccountRecover';
+const PREFIX = 'SCAccountReset';
 
 const classes = {
   root: `${PREFIX}-root`,
   form: `${PREFIX}-form`,
-  email: `${PREFIX}-email`,
-  success: `${PREFIX}-success`
+  password: `${PREFIX}-password`,
+  success: `${PREFIX}-success`,
+  error: `${PREFIX}-error`
 };
 
 const Root = styled(Box, {
@@ -30,7 +31,7 @@ const Root = styled(Box, {
   }
 }));
 
-export interface AccountRecoverProps {
+export interface AccountResetProps {
   /**
    * Overrides or extends the styles applied to the component.
    * @default null
@@ -48,6 +49,12 @@ export interface AccountRecoverProps {
    * @default {variant: 'contained'}
    */
   ButtonProps?: ButtonProps;
+
+  /**
+   * Validation code sent by email to the user
+   * @default empty string
+   */
+  validationCode: string;
 
   /**
    * Callback triggered on success sign in
@@ -77,32 +84,42 @@ export interface AccountRecoverProps {
 
  #### Component Name
 
- The name `SCAccountRecover` can be used when providing style overrides in the theme.
+ The name `SCAccountReset` can be used when providing style overrides in the theme.
 
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCAccountRecover-root|Styles applied to the root element.|
- |form|.SCAccountRecover-form|Styles applied to the form element.|
- |email|.SCAccountRecover-email|Styles applied to the email TextField.|
+ |root|.SCAccountReset-root|Styles applied to the root element.|
+ |form|.SCAccountReset-form|Styles applied to the form element.|
+ |email|.SCAccountReset-password|Styles applied to the password TextField.|
  |success|.SCAccountRecover-success|Styles applied to the success Typography.|
+ |error|.SCAccountRecover-error|Styles applied to the error Typography.|
 
  *
  * @param inProps
  */
-export default function AccountRecover(inProps: AccountRecoverProps): JSX.Element {
-  const props: AccountRecoverProps = useThemeProps({
+export default function AccountReset(inProps: AccountResetProps): JSX.Element {
+  const props: AccountResetProps = useThemeProps({
     props: inProps,
     name: PREFIX
   });
   // PROPS
-  const {className, onSuccess = null, TextFieldProps = {variant: 'outlined', fullWidth: true}, ButtonProps = {variant: 'contained'}, successAction = null, ...rest} = props;
+  const {
+    className,
+    onSuccess = null,
+    TextFieldProps = {variant: 'outlined', fullWidth: true},
+    ButtonProps = {variant: 'contained'},
+    validationCode,
+    successAction = null,
+    ...rest
+  } = props;
 
   // STATE
-  const [email, setEmail] = useState<string>('');
-  const [emailError, setEmailError] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [passwordError, setPasswordError] = useState<string>('');
+  const [validationCodeError, setValidationCodeError] = useState<string>('');
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [isSucceed, setIsSucceed] = useState<boolean>(false);
 
@@ -112,7 +129,7 @@ export default function AccountRecover(inProps: AccountRecoverProps): JSX.Elemen
 
   // HANDLERS
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(event.target.value);
+    setPassword(event.target.value);
   };
 
   const handleSubmit = (event: React.SyntheticEvent<HTMLFormElement>) => {
@@ -120,15 +137,18 @@ export default function AccountRecover(inProps: AccountRecoverProps): JSX.Elemen
     event.stopPropagation();
     setIsSubmitting(true);
 
-    AccountService.recover({email})
-      .then(() => {
+    AccountService.reset({validation_code: validationCode, password})
+      .then((res) => {
         setIsSucceed(true);
         onSuccess && onSuccess();
       })
       .catch((error) => {
         const _error = formatHttpError(error);
-        if (_error.emailError) {
-          setEmailError(_error.emailError.error);
+        if (_error.passwordError) {
+          setPasswordError(_error.passwordError.error);
+        }
+        if (_error.validationCodeError) {
+          setValidationCodeError(_error.validationCodeError.error);
         }
       })
       .then(() => setIsSubmitting(false));
@@ -142,32 +162,41 @@ export default function AccountRecover(inProps: AccountRecoverProps): JSX.Elemen
   }
 
   // RENDER
+  if (isSucceed) {
+    return (
+      <Typography>
+        <FormattedMessage id="ui.accountReset.success" defaultMessage="ui.accountReset.success" />
+      </Typography>
+    );
+  }
+
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
       {isSucceed ? (
         <>
           <Typography className={classes.success}>
-            {intl.formatMessage(
-              {id: 'ui.accountRecover.success', defaultMessage: 'ui.accountRecover.success'},
-              {email, bold: (chunks) => <b>{chunks}</b>}
-            )}
+            {intl.formatMessage({id: 'ui.accountReset.success', defaultMessage: 'ui.accountReset.success'})}
           </Typography>
           {successAction}
         </>
+      ) : validationCodeError ? (
+        <Typography className={classes.error}>
+          <FormattedMessage id="ui.accountReset.code.error" defaultMessage="ui.accountReset.code.error" />
+        </Typography>
       ) : (
         <form className={classes.form} onSubmit={handleSubmit}>
-          <EmailTextField
-            className={classes.email}
+          <PasswordTextField
+            className={classes.password}
             disabled={isSubmitting}
-            label={<FormattedMessage id="ui.accountRecover.email.label" defaultMessage="ui.accountRecover.email.label" />}
+            label={<FormattedMessage id="ui.accountReset.password.label" defaultMessage="ui.accountReset.password.label" />}
             {...TextFieldProps}
-            value={email}
+            value={password}
             onChange={handleChange}
-            error={Boolean(emailError)}
-            helperText={emailError}
+            error={Boolean(passwordError)}
+            helperText={passwordError}
           />
-          <Button type="submit" {...ButtonProps} disabled={!email || isSubmitting}>
-            <FormattedMessage id="ui.accountRecover.submit" defaultMessage="ui.accountRecover.submit" />
+          <Button type="submit" {...ButtonProps} disabled={!password || isSubmitting}>
+            <FormattedMessage id="ui.accountReset.submit" defaultMessage="ui.accountReset.submit" />
           </Button>
         </form>
       )}
