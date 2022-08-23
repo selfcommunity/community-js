@@ -58,7 +58,7 @@ export default function useSCFetchCategory({
    * If id attempt to get the category by id
    */
   useEffect(() => {
-    if (__categoryId && (!scCategory || cacheStrategy === CacheStrategies.STALE_WHILE_REVALIDATE)) {
+    if (__categoryId && (!scCategory || (scCategory && __categoryId !== scCategory.id) || cacheStrategy === CacheStrategies.STALE_WHILE_REVALIDATE)) {
       fetchCategory()
         .then((obj: SCCategoryType) => {
           setSCCategory(obj);
