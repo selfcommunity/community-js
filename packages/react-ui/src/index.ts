@@ -68,6 +68,8 @@ import {
 import Widget from './components/Widget';
 import MediaChunkUploader, {MediaChunkUploaderProps} from './shared/MediaChunkUploader';
 import {Document, EditMediaProps, Image, Link, Share} from './shared/Media';
+import UsernameTextField from './shared/UsernameTextField';
+import PasswordTextField from './shared/PasswordTextField';
 import {MEDIA_TYPE_EMBED} from './constants/Media';
 import PollSuggestion, {PollSuggestionProps} from './components/PollSuggestion';
 import Incubator, {IncubatorProps} from './components/Incubator';
@@ -233,6 +235,8 @@ export {
   SCNotificationObjectTemplateType,
   SCBroadcastMessageTemplateType,
   /* SC UI SHARED */
+  UsernameTextField,
+  PasswordTextField,
   MediaChunkUploader,
   MediaChunkUploaderProps,
   Document,
