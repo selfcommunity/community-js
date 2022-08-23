@@ -14,6 +14,7 @@ import {getContributionRouteName, getRouteData} from '../../utils/contribution';
 import {SCCommentType, SCCustomAdvPosition, SCFeedObjectType, SCFeedObjectTypologyType} from '@selfcommunity/types';
 import {appendURLSearchParams} from '@selfcommunity/utils';
 import {scrollIntoView} from 'seamless-scroll-polyfill';
+import {DEFAULT_PAGINATION_QUERY_PARAM_NAME} from '../../constants/Pagination';
 import {
   Link,
   SCPreferences,
@@ -25,6 +26,7 @@ import {
   useSCRouting,
   useSCUser
 } from '@selfcommunity/react-core';
+
 
 const PREFIX = 'SCCommentsObject';
 
@@ -177,6 +179,40 @@ export interface CommentsObjectProps {
   page?: number;
 
   /**
+   * Previous page
+   */
+  previousPage?: number;
+
+  /**
+   * Next page
+   */
+  nextPage?: number;
+
+  /**
+   * Add/remove pagination links on top/bottom of items
+   * @default false
+   */
+  disablePaginationLinks?: boolean;
+
+  /**
+   * Show/hide pagination links
+   * @default true
+   */
+  hidePaginationLinks?: boolean;
+
+  /**
+   * Page query parameter name
+   * @default 'page'
+   */
+  paginationLinksPageQueryParam?: string;
+
+  /**
+   * Props to spread to the pagination Link component
+   * @default {}
+   */
+  PaginationLinkProps?: Record<string, any>;
+
+  /**
    * Add/show other comments at the head of the component
    * Useful when there is a new comment (reply feed object)
    */
@@ -253,11 +289,17 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
     totalLoadedComments,
     totalComments,
     page,
+    previousPage,
+    nextPage,
     comments = [],
     startComments = [],
     endComments = [],
     infiniteScrolling = false,
     hideAdvertising = false,
+    disablePaginationLinks = false,
+    hidePaginationLinks = true,
+    paginationLinksPageQueryParam = DEFAULT_PAGINATION_QUERY_PARAM_NAME,
+    PaginationLinkProps = {},
     ...rest
   } = props;
 
@@ -349,12 +391,13 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
               classes={{root: classes.loadPreviousCommentsButton}}>
               <FormattedMessage id="ui.commentsObject.loadPreviousComments" defaultMessage="ui.commentsObject.loadPreviousComments" />
             </Button>
-            {page && (
+            {!disablePaginationLinks && previousPage && previous && (
               <Link
                 to={`${appendURLSearchParams(scRoutingContext.url(getContributionRouteName(feedObject), getRouteData(feedObject)), [
-                  {page: page - 1}
+                  {[paginationLinksPageQueryParam]: previousPage}
                 ])}`}
-                className={classes.paginationLink}>
+                className={classNames({[classes.paginationLink]: hidePaginationLinks})}
+                {...PaginationLinkProps}>
                 <FormattedMessage id="ui.commentsObject.previousComments" defaultMessage="ui.commentsObject.previousComments" />
               </Link>
             )}
@@ -373,31 +416,34 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
         {isLoadingNext ? (
           <CommentObjectSkeleton {...CommentObjectSkeletonProps} count={1} />
         ) : (
-          <InView as="div" onChange={handleScrollEnd} threshold={0.5}>
-            <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
-              <Button variant="text" onClick={handleNext} disabled={isLoadingNext} color="inherit" classes={{root: classes.loadNextCommentsButton}}>
-                <FormattedMessage id="ui.commentsObject.loadMoreComments" defaultMessage="ui.commentsObject.loadMoreComments" />
-              </Button>
-              {page && (
-                <Link
-                  to={`${appendURLSearchParams(scRoutingContext.url(getContributionRouteName(feedObject), getRouteData(feedObject)), [
-                    {page: page + 1}
-                  ])}`}
-                  className={classes.paginationLink}>
-                  <FormattedMessage id="ui.commentsObject.nextComments" defaultMessage="ui.commentsObject.nextComments" />
-                </Link>
-              )}
-              {showCommentsCounter() && (
-                <Typography variant="body1" classes={{root: classes.commentsCounter}}>
-                  <FormattedMessage
-                    id="ui.commentsObject.numberOfComments"
-                    defaultMessage="ui.commentsObject.numberOfComments"
-                    values={{loaded: totalLoadedComments, total: totalComments}}
-                  />
-                </Typography>
-              )}
-            </Stack>
-          </InView>
+          <>
+            <InView as="div" onChange={handleScrollEnd} threshold={0.5}>
+              <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
+                <Button variant="text" onClick={handleNext} disabled={isLoadingNext} color="inherit" classes={{root: classes.loadNextCommentsButton}}>
+                  <FormattedMessage id="ui.commentsObject.loadMoreComments" defaultMessage="ui.commentsObject.loadMoreComments" />
+                </Button>
+                {showCommentsCounter() && (
+                  <Typography variant="body1" classes={{root: classes.commentsCounter}}>
+                    <FormattedMessage
+                      id="ui.commentsObject.numberOfComments"
+                      defaultMessage="ui.commentsObject.numberOfComments"
+                      values={{loaded: totalLoadedComments, total: totalComments}}
+                    />
+                  </Typography>
+                )}
+              </Stack>
+            </InView>
+            {!disablePaginationLinks && nextPage && next && (
+              <Link
+                to={`${appendURLSearchParams(scRoutingContext.url(getContributionRouteName(feedObject), getRouteData(feedObject)), [
+                  {[paginationLinksPageQueryParam]: nextPage}
+                ])}`}
+                className={classNames({[classes.paginationLink]: hidePaginationLinks})}
+                {...PaginationLinkProps}>
+                <FormattedMessage id="ui.commentsObject.nextComments" defaultMessage="ui.commentsObject.nextComments" />
+              </Link>
+            )}
+          </>
         )}
       </Box>
     );

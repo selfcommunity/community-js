@@ -166,6 +166,7 @@ export default function MainFeed(inProps: MainFeedProps): JSX.Element {
       FeedSidebarProps={FeedSidebarProps}
       HeaderComponent={<InlineComposer />}
       requireAuthentication={true}
+      disablePaginationLinks={true}
       {...FeedProps}
     />
   );

@@ -68,6 +68,9 @@ import {
 import Widget from './components/Widget';
 import MediaChunkUploader, {MediaChunkUploaderProps} from './shared/MediaChunkUploader';
 import {Document, EditMediaProps, Image, Link, Share} from './shared/Media';
+import UsernameTextField from './shared/UsernameTextField';
+import EmailTextField from './shared/EmailTextField';
+import PasswordTextField from './shared/PasswordTextField';
 import {MEDIA_TYPE_EMBED} from './constants/Media';
 import PollSuggestion, {PollSuggestionProps} from './components/PollSuggestion';
 import Incubator, {IncubatorProps} from './components/Incubator';
@@ -76,6 +79,12 @@ import IncubatorDetail, {IncubatorDetailProps} from './components/IncubatorDetai
 import IncubatorSuggestion, {IncubatorSuggestionProps} from './components/IncubatorSuggestion';
 import Footer, {FooterProps} from './components/Footer';
 import Header, {HeaderProps} from './components/Header';
+import {DEFAULT_WIDGETS_NUMBER} from './constants/Feed';
+import {
+  DEFAULT_PAGINATION_QUERY_PARAM_NAME,
+  DEFAULT_PAGINATION_OFFSET,
+  DEFAULT_PAGINATION_LIMIT
+} from './constants/Pagination';
 import {FACEBOOK_SHARE, LINKEDIN_SHARE, TWITTER_SHARE} from './constants/SocialShare';
 import {DEFAULT_PRELOAD_OFFSET_VIEWPORT, MAX_PRELOAD_OFFSET_VIEWPORT, MIN_PRELOAD_OFFSET_VIEWPORT} from './constants/LazyLoad';
 
@@ -232,6 +241,9 @@ export {
   SCNotificationObjectTemplateType,
   SCBroadcastMessageTemplateType,
   /* SC UI SHARED */
+  UsernameTextField,
+  EmailTextField,
+  PasswordTextField,
   MediaChunkUploader,
   MediaChunkUploaderProps,
   Document,
@@ -246,6 +258,11 @@ export {
   DEFAULT_PRELOAD_OFFSET_VIEWPORT,
   MIN_PRELOAD_OFFSET_VIEWPORT,
   MAX_PRELOAD_OFFSET_VIEWPORT,
+  /* SC UI PAGINATION */
+  DEFAULT_PAGINATION_QUERY_PARAM_NAME,
+  DEFAULT_PAGINATION_OFFSET,
+  DEFAULT_PAGINATION_LIMIT,
+  DEFAULT_WIDGETS_NUMBER,
   PollSuggestion,
   PollSuggestionProps,
   Incubator,

@@ -113,6 +113,7 @@ export default function AccountRecover(inProps: AccountRecoverProps): JSX.Elemen
   // HANDLERS
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
+    setEmailError('');
   };
 
   const handleSubmit = (event: React.SyntheticEvent<HTMLFormElement>) => {
@@ -166,7 +167,7 @@ export default function AccountRecover(inProps: AccountRecoverProps): JSX.Elemen
             error={Boolean(emailError)}
             helperText={emailError}
           />
-          <Button type="submit" {...ButtonProps} disabled={!email || isSubmitting}>
+          <Button type="submit" {...ButtonProps} disabled={!email || Boolean(emailError) || isSubmitting}>
             <FormattedMessage id="ui.accountRecover.submit" defaultMessage="ui.accountRecover.submit" />
           </Button>
         </form>

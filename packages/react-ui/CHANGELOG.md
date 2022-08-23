@@ -3,6 +3,50 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.1-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.1-alpha.1...@selfcommunity/react-ui@0.5.1-alpha.2) (2022-08-23)
+
+
+### Bug Fixes
+
+* pagination seo ([10d2efb](https://github.com/selfcommunity/community-js/commit/10d2efbacf3ef2ef378ed900e48d6421f33bfca3))
+* pagination seo ([7756ecc](https://github.com/selfcommunity/community-js/commit/7756ecccf2cf1db6bbcb819f01dfdcf7262d23fc))
+
+
+
+
+
+## [0.5.1-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.1-alpha.0...@selfcommunity/react-ui@0.5.1-alpha.1) (2022-08-23)
+
+
+### Bug Fixes
+
+* Fix AccountRecover.tsx error handling ([3235b24](https://github.com/selfcommunity/community-js/commit/3235b24b6125938b6c161896ce65e24edf615b34))
+
+
+### Performance Improvements
+
+* Added export of EmailTextField shared component ([0d886bb](https://github.com/selfcommunity/community-js/commit/0d886bb39f4b0ad07e7a8c7c05f55c795fcbc9a9))
+
+
+
+
+
+## [0.5.1-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.0...@selfcommunity/react-ui@0.5.1-alpha.0) (2022-08-23)
+
+
+### Bug Fixes
+
+* export feed pagination constants ([f6c7263](https://github.com/selfcommunity/community-js/commit/f6c726377275d472d650e2fe38e8c7740bb59f81))
+
+
+### Performance Improvements
+
+* Export UsernameTextField and PasswordTextField shared components ([1e85aaa](https://github.com/selfcommunity/community-js/commit/1e85aaa4dbc49f6875ff066440f6a1cffecccba8))
+
+
+
+
+
 # [0.5.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.0-alpha.3...@selfcommunity/react-ui@0.5.0) (2022-08-23)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
