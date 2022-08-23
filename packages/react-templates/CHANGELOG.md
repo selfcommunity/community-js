@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.35](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.1.35-alpha.3...@selfcommunity/react-templates@0.1.35) (2022-08-23)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.1.35-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.1.35-alpha.2...@selfcommunity/react-templates@0.1.35-alpha.3) (2022-08-23)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.1.35-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.1.35-alpha.1...@selfcommunity/react-templates@0.1.35-alpha.2) (2022-08-22)
+
+
+### Bug Fixes
+
+* feed pagination ([2ed14a5](https://github.com/selfcommunity/community-js/commit/2ed14a5e0dcc7931b325e80c50d0f5d254737e08))
+
+
+
+
+
 ## [0.1.35-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.1.35-alpha.0...@selfcommunity/react-templates@0.1.35-alpha.1) (2022-08-22)
 
 **Note:** Version bump only for package @selfcommunity/react-templates
