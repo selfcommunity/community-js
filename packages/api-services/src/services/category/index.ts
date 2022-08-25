@@ -9,17 +9,17 @@ export interface CategoryApiClientInterface {
   getAllCategories(params?: CategoryParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCategoryType>>;
   searchCategory(params?: CategoryParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCategoryType>>;
   createCategory(data: SCCategoryType, config?: AxiosRequestConfig): Promise<SCCategoryType>;
-  getSpecificCategory(id: number, config?: AxiosRequestConfig): Promise<SCCategoryType>;
-  updateASpecificCategory(id: number, data: SCCategoryType, config?: AxiosRequestConfig): Promise<SCCategoryType>;
-  patchASpecificCategory(id: number, data: SCCategoryType, config?: AxiosRequestConfig): Promise<SCCategoryType>;
-  deleteASpecificCategory(id: number, config?: AxiosRequestConfig): Promise<any>;
-  getCategoryAudience(id: number, config?: AxiosRequestConfig): Promise<SCCategoryAudienceType>;
-  getCategoryFollowers(id: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>>;
-  getCategoryFeed(id: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeedUnitType>>;
-  getCategoryTrendingFeed(id: number, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeedUnitType>>;
-  getCategoryTrendingFollowers(id: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>>;
-  followCategory(id: number, config?: AxiosRequestConfig): Promise<any>;
-  checkCategoryIsFollowed(id: number, config?: AxiosRequestConfig): Promise<SCCategoryFollowedStatusType>;
+  getSpecificCategory(id: number | string, config?: AxiosRequestConfig): Promise<SCCategoryType>;
+  updateASpecificCategory(id: number | string, data: SCCategoryType, config?: AxiosRequestConfig): Promise<SCCategoryType>;
+  patchASpecificCategory(id: number | string, data: SCCategoryType, config?: AxiosRequestConfig): Promise<SCCategoryType>;
+  deleteASpecificCategory(id: number | string, config?: AxiosRequestConfig): Promise<any>;
+  getCategoryAudience(id: number | string, config?: AxiosRequestConfig): Promise<SCCategoryAudienceType>;
+  getCategoryFollowers(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>>;
+  getCategoryFeed(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeedUnitType>>;
+  getCategoryTrendingFeed(id: number | string, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeedUnitType>>;
+  getCategoryTrendingFollowers(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>>;
+  followCategory(id: number | string, config?: AxiosRequestConfig): Promise<any>;
+  checkCategoryIsFollowed(id: number | string, config?: AxiosRequestConfig): Promise<SCCategoryFollowedStatusType>;
   getFollowedCategories(params?: CategoryParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCategoryType>>;
   getPopularCategories(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCategoryType>>;
 }
@@ -62,7 +62,7 @@ export class CategoryApiClient {
    * @param id
    * @param config
    */
-  static getSpecificCategory(id: number, config?: AxiosRequestConfig): Promise<SCCategoryType> {
+  static getSpecificCategory(id: number | string, config?: AxiosRequestConfig): Promise<SCCategoryType> {
     return apiRequest({...config, url: Endpoints.Category.url({id}), method: Endpoints.Category.method});
   }
 
@@ -72,7 +72,7 @@ export class CategoryApiClient {
    * @param data
    * @param config
    */
-  static updateASpecificCategory(id: number, data: SCCategoryType, config?: AxiosRequestConfig): Promise<SCCategoryType> {
+  static updateASpecificCategory(id: number | string, data: SCCategoryType, config?: AxiosRequestConfig): Promise<SCCategoryType> {
     return apiRequest({...config, url: Endpoints.UpdateCategory.url({id}), method: Endpoints.UpdateCategory.method, data: data});
   }
 
@@ -82,7 +82,7 @@ export class CategoryApiClient {
    * @param data
    * @param config
    */
-  static patchASpecificCategory(id: number, data: SCCategoryType, config?: AxiosRequestConfig): Promise<SCCategoryType> {
+  static patchASpecificCategory(id: number | string, data: SCCategoryType, config?: AxiosRequestConfig): Promise<SCCategoryType> {
     return apiRequest({...config, url: Endpoints.PatchCategory.url({id}), method: Endpoints.PatchCategory.method, data: data});
   }
 
@@ -91,7 +91,7 @@ export class CategoryApiClient {
    * @param id
    * @param config
    */
-  static deleteASpecificCategory(id: number, config?: AxiosRequestConfig): Promise<any> {
+  static deleteASpecificCategory(id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return apiRequest({...config, url: Endpoints.DeleteCategory.url({id}), method: Endpoints.DeleteCategory.method});
   }
 
@@ -100,7 +100,7 @@ export class CategoryApiClient {
    * @param id
    * @param config
    */
-  static getCategoryAudience(id: number, config?: AxiosRequestConfig): Promise<SCCategoryAudienceType> {
+  static getCategoryAudience(id: number | string, config?: AxiosRequestConfig): Promise<SCCategoryAudienceType> {
     return apiRequest({...config, url: Endpoints.CategoryAudience.url({id}), method: Endpoints.CategoryAudience.method});
   }
 
@@ -109,7 +109,7 @@ export class CategoryApiClient {
    * @param id
    * @param config
    */
-  static getCategoryFollowers(id: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
+  static getCategoryFollowers(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
     return apiRequest({...config, url: Endpoints.CategoryFollowers.url({id}), method: Endpoints.CategoryFollowers.method});
   }
 
@@ -118,7 +118,7 @@ export class CategoryApiClient {
    * @param id
    * @param config
    */
-  static getCategoryFeed(id: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeedUnitType>> {
+  static getCategoryFeed(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeedUnitType>> {
     return apiRequest({...config, url: Endpoints.CategoryFeed.url({id}), method: Endpoints.CategoryFeed.method});
   }
 
@@ -128,7 +128,7 @@ export class CategoryApiClient {
    * @param params
    * @param config
    */
-  static getCategoryTrendingFeed(id: number, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeedUnitType>> {
+  static getCategoryTrendingFeed(id: number | string, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeedUnitType>> {
     const p = urlParams(params);
     return apiRequest({...config, url: `${Endpoints.CategoryTrendingFeed.url({id})}?${p.toString()}`, method: Endpoints.CategoryTrendingFeed.method});
   }
@@ -138,7 +138,7 @@ export class CategoryApiClient {
    * @param id
    * @param config
    */
-  static getCategoryTrendingFollowers(id: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
+  static getCategoryTrendingFollowers(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
     return apiRequest({...config, url: Endpoints.CategoryTrendingPeople.url({id}), method: Endpoints.CategoryTrendingPeople.method});
   }
 
@@ -147,7 +147,7 @@ export class CategoryApiClient {
    * @param id
    * @param config
    */
-  static followCategory(id: number, config?: AxiosRequestConfig): Promise<any> {
+  static followCategory(id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return apiRequest({...config, url: Endpoints.FollowCategory.url({id}), method: Endpoints.FollowCategory.method});
   }
 
@@ -156,7 +156,7 @@ export class CategoryApiClient {
    * @param id
    * @param config
    */
-  static checkCategoryIsFollowed(id: number, config?: AxiosRequestConfig): Promise<SCCategoryFollowedStatusType> {
+  static checkCategoryIsFollowed(id: number | string, config?: AxiosRequestConfig): Promise<SCCategoryFollowedStatusType> {
     return apiRequest({...config, url: Endpoints.CheckCategoryIsFollowed.url({id}), method: Endpoints.CheckCategoryIsFollowed.method});
   }
 
@@ -228,51 +228,51 @@ export default class CategoryService {
     return CategoryApiClient.createCategory(data, config);
   }
 
-  static async getSpecificCategory(id: number, config?: AxiosRequestConfig): Promise<SCCategoryType> {
+  static async getSpecificCategory(id: number | string, config?: AxiosRequestConfig): Promise<SCCategoryType> {
     return CategoryApiClient.getSpecificCategory(id, config);
   }
 
-  static async updateASpecificCategory(id: number, data: SCCategoryType, config?: AxiosRequestConfig): Promise<SCCategoryType> {
+  static async updateASpecificCategory(id: number | string, data: SCCategoryType, config?: AxiosRequestConfig): Promise<SCCategoryType> {
     return CategoryApiClient.updateASpecificCategory(id, data, config);
   }
 
-  static async patchASpecificCategory(id: number, data: SCCategoryType, config?: AxiosRequestConfig): Promise<SCCategoryType> {
+  static async patchASpecificCategory(id: number | string, data: SCCategoryType, config?: AxiosRequestConfig): Promise<SCCategoryType> {
     return CategoryApiClient.patchASpecificCategory(id, data, config);
   }
 
-  static async deleteASpecificCategory(id: number, config?: AxiosRequestConfig): Promise<any> {
+  static async deleteASpecificCategory(id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return CategoryApiClient.deleteASpecificCategory(id, config);
   }
 
-  static async getCategoryAudience(id: number, config?: AxiosRequestConfig): Promise<SCCategoryAudienceType> {
+  static async getCategoryAudience(id: number | string, config?: AxiosRequestConfig): Promise<SCCategoryAudienceType> {
     return CategoryApiClient.getCategoryAudience(id, config);
   }
 
-  static async getCategoryFollowers(id: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
+  static async getCategoryFollowers(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
     return CategoryApiClient.getCategoryFollowers(id, config);
   }
 
-  static async getCategoryFeed(id: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeedUnitType>> {
+  static async getCategoryFeed(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeedUnitType>> {
     return CategoryApiClient.getCategoryFeed(id, config);
   }
 
   static async getCategoryTrendingFeed(
-    id: number,
+    id: number | string,
     params?: BaseGetParams,
     config?: AxiosRequestConfig
   ): Promise<SCPaginatedResponse<SCFeedUnitType>> {
     return CategoryApiClient.getCategoryTrendingFeed(id, params, config);
   }
 
-  static async getCategoryTrendingFollowers(id: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
+  static async getCategoryTrendingFollowers(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
     return CategoryApiClient.getCategoryTrendingFollowers(id, config);
   }
 
-  static async followCategory(id: number, config?: AxiosRequestConfig): Promise<any> {
+  static async followCategory(id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return CategoryApiClient.followCategory(id, config);
   }
 
-  static async checkCategoryIsFollowed(id: number, config?: AxiosRequestConfig): Promise<SCCategoryFollowedStatusType> {
+  static async checkCategoryIsFollowed(id: number | string, config?: AxiosRequestConfig): Promise<SCCategoryFollowedStatusType> {
     return CategoryApiClient.checkCategoryIsFollowed(id, config);
   }
 

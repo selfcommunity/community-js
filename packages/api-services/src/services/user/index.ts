@@ -32,49 +32,49 @@ export interface UserApiClientInterface {
   getHiddenUsers(params?: any, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>>;
   userAutocomplete(params: UserAutocompleteParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserAutocompleteType>>;
   userSearch(params: UserSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>>;
-  getSpecificUser(id: number, config?: AxiosRequestConfig): Promise<SCUserType>;
-  getUserCounters(id: number, config?: AxiosRequestConfig): Promise<SCUserCounterType>;
-  userUpdate(id: number, data?: SCUserType, config?: AxiosRequestConfig): Promise<SCUserType>;
-  userPatch(id: number, data?: SCUserType, config?: AxiosRequestConfig): Promise<SCUserType>;
-  userDelete(id: number, hard?: number, config?: AxiosRequestConfig): Promise<any>;
-  changeUserMail(id: number, new_email: string, confirm?: boolean, config?: AxiosRequestConfig): Promise<any | SCUserChangeEmailType>;
-  confirmChangeUserMail(id: number, new_email: string, validation_code?: string, config?: AxiosRequestConfig): Promise<any>;
-  changeUserPassword(id: number, password: string, new_password: string, config?: AxiosRequestConfig): Promise<any>;
-  userSettings(id: number, config?: AxiosRequestConfig): Promise<SCUserSettingsType>;
-  userSettingsPatch(id: number, data?: SCUserSettingsType, config?: AxiosRequestConfig): Promise<SCUserSettingsType>;
+  getSpecificUser(id: number | string, config?: AxiosRequestConfig): Promise<SCUserType>;
+  getUserCounters(id: number | string, config?: AxiosRequestConfig): Promise<SCUserCounterType>;
+  userUpdate(id: number | string, data?: SCUserType, config?: AxiosRequestConfig): Promise<SCUserType>;
+  userPatch(id: number | string, data?: SCUserType, config?: AxiosRequestConfig): Promise<SCUserType>;
+  userDelete(id: number | string, hard?: number, config?: AxiosRequestConfig): Promise<any>;
+  changeUserMail(id: number | string, new_email: string, confirm?: boolean, config?: AxiosRequestConfig): Promise<any | SCUserChangeEmailType>;
+  confirmChangeUserMail(id: number | string, new_email: string, validation_code?: string, config?: AxiosRequestConfig): Promise<any>;
+  changeUserPassword(id: number | string, password: string, new_password: string, config?: AxiosRequestConfig): Promise<any>;
+  userSettings(id: number | string, config?: AxiosRequestConfig): Promise<SCUserSettingsType>;
+  userSettingsPatch(id: number | string, data?: SCUserSettingsType, config?: AxiosRequestConfig): Promise<SCUserSettingsType>;
   getCurrentUser(config?: AxiosRequestConfig): Promise<SCUserType>;
   getCurrentUserAvatar(config?: AxiosRequestConfig): Promise<SCUserAvatarType>;
   getCurrentUserPermission(config?: AxiosRequestConfig): Promise<SCUserPermissionType>;
   getCurrentUserPlatform(next?: string, config?: AxiosRequestConfig): Promise<SCPlatformType>;
-  getUserFollowedCategories(id: number, mutual?: number, config?: AxiosRequestConfig): Promise<SCCategoryType[]>;
-  getUserFeed(id: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeedUnitType>>;
-  getUserFollowers(id: number, mutual?: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>>;
-  getUserFollowed(id: number, mutual?: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>>;
-  followUser(id: number, config?: AxiosRequestConfig): Promise<any>;
-  checkUserFollowed(id: number, config?: AxiosRequestConfig): Promise<SCUserFollowedStatusType>;
-  checkUserFollower(id: number, config?: AxiosRequestConfig): Promise<SCUserFollowerStatusType>;
-  getUserConnections(id: number, mutual?: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>>;
-  checkUserConnections(id: number, config?: AxiosRequestConfig): Promise<SCUserConnectionStatusType>;
-  getUserConnectionRequests(id: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserConnectionRequestType>>;
-  getUserRequestConnectionsSent(id: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserConnectionRequestType>>;
-  userAcceptRequestConnection(id: number, config?: AxiosRequestConfig): Promise<any>;
-  userRequestConnection(id: number, config?: AxiosRequestConfig): Promise<any>;
-  userRemoveConnection(id: number, config?: AxiosRequestConfig): Promise<any>;
-  userCancelRejectConnectionRequest(id: number, config?: AxiosRequestConfig): Promise<any>;
-  userCancelRequestConnection(id: number, config?: AxiosRequestConfig): Promise<any>;
-  userRejectConnectionRequest(id: number, config?: AxiosRequestConfig): Promise<any>;
-  userMarkSeenConnectionRequest(id: number, config?: AxiosRequestConfig): Promise<any>;
-  showHideUser(id: number, config?: AxiosRequestConfig): Promise<any>;
-  checkUserHidden(id: number, config?: AxiosRequestConfig): Promise<SCUserHiddenStatusType>;
-  checkUserHiddenBy(id: number, config?: AxiosRequestConfig): Promise<SCUserHiddenByStatusType>;
-  getUserLoyaltyPoints(id: number, config?: AxiosRequestConfig): Promise<SCUserLoyaltyPointsType>;
+  getUserFollowedCategories(id: number | string, mutual?: number, config?: AxiosRequestConfig): Promise<SCCategoryType[]>;
+  getUserFeed(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeedUnitType>>;
+  getUserFollowers(id: number | string, mutual?: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>>;
+  getUserFollowed(id: number | string, mutual?: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>>;
+  followUser(id: number | string, config?: AxiosRequestConfig): Promise<any>;
+  checkUserFollowed(id: number | string, config?: AxiosRequestConfig): Promise<SCUserFollowedStatusType>;
+  checkUserFollower(id: number | string, config?: AxiosRequestConfig): Promise<SCUserFollowerStatusType>;
+  getUserConnections(id: number | string, mutual?: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>>;
+  checkUserConnections(id: number | string, config?: AxiosRequestConfig): Promise<SCUserConnectionStatusType>;
+  getUserConnectionRequests(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserConnectionRequestType>>;
+  getUserRequestConnectionsSent(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserConnectionRequestType>>;
+  userAcceptRequestConnection(id: number | string, config?: AxiosRequestConfig): Promise<any>;
+  userRequestConnection(id: number | string, config?: AxiosRequestConfig): Promise<any>;
+  userRemoveConnection(id: number | string, config?: AxiosRequestConfig): Promise<any>;
+  userCancelRejectConnectionRequest(id: number | string, config?: AxiosRequestConfig): Promise<any>;
+  userCancelRequestConnection(id: number | string, config?: AxiosRequestConfig): Promise<any>;
+  userRejectConnectionRequest(id: number | string, config?: AxiosRequestConfig): Promise<any>;
+  userMarkSeenConnectionRequest(id: number | string, config?: AxiosRequestConfig): Promise<any>;
+  showHideUser(id: number | string, config?: AxiosRequestConfig): Promise<any>;
+  checkUserHidden(id: number | string, config?: AxiosRequestConfig): Promise<SCUserHiddenStatusType>;
+  checkUserHiddenBy(id: number | string, config?: AxiosRequestConfig): Promise<SCUserHiddenByStatusType>;
+  getUserLoyaltyPoints(id: number | string, config?: AxiosRequestConfig): Promise<SCUserLoyaltyPointsType>;
   getUserConnectionStatuses(users: number[], config?: AxiosRequestConfig): Promise<any>;
   userTagToAddressContribution(config?: AxiosRequestConfig): Promise<SCTagType>;
   checkUserEmailToken(email_token: string, config?: AxiosRequestConfig): Promise<SCUserEmailTokenType>;
   addUserAvatar(avatar: SCMediaType, config?: AxiosRequestConfig): Promise<SCAvatarType>;
   getUserAvatars(config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCAvatarType>>;
-  removeUserAvatar(avatar_id: number, config?: AxiosRequestConfig): Promise<any>;
-  setUserPrimaryAvatar(avatar_id: number, config?: AxiosRequestConfig): Promise<any>;
+  removeUserAvatar(avatar_id: number | string, config?: AxiosRequestConfig): Promise<any>;
+  setUserPrimaryAvatar(avatar_id: number | string, config?: AxiosRequestConfig): Promise<any>;
 }
 
 /**
@@ -127,7 +127,7 @@ export class UserApiClient {
    * @param id
    * @param config
    */
-  static getSpecificUser(id: number, config?: AxiosRequestConfig): Promise<SCUserType> {
+  static getSpecificUser(id: number | string, config?: AxiosRequestConfig): Promise<SCUserType> {
     return apiRequest({...config, url: Endpoints.User.url({id}), method: Endpoints.User.method});
   }
 
@@ -136,7 +136,7 @@ export class UserApiClient {
    * @param id
    * @param config
    */
-  static getUserCounters(id: number, config?: AxiosRequestConfig): Promise<SCUserCounterType> {
+  static getUserCounters(id: number | string, config?: AxiosRequestConfig): Promise<SCUserCounterType> {
     return apiRequest({...config, url: Endpoints.UserCounters.url({id}), method: Endpoints.UserCounters.method});
   }
 
@@ -147,7 +147,7 @@ export class UserApiClient {
    * @param data
    * @param config
    */
-  static userUpdate(id: number, data?: SCUserType, config?: AxiosRequestConfig): Promise<SCUserType> {
+  static userUpdate(id: number | string, data?: SCUserType, config?: AxiosRequestConfig): Promise<SCUserType> {
     return apiRequest({...config, url: Endpoints.UserUpdate.url({id}), method: Endpoints.UserUpdate.method, data: data});
   }
 
@@ -157,7 +157,7 @@ export class UserApiClient {
    * @param data
    * @param config
    */
-  static userPatch(id: number, data?: SCUserType, config?: AxiosRequestConfig): Promise<SCUserType> {
+  static userPatch(id: number | string, data?: SCUserType, config?: AxiosRequestConfig): Promise<SCUserType> {
     return apiRequest({...config, url: Endpoints.UserPatch.url({id}), method: Endpoints.UserPatch.method, data: data});
   }
 
@@ -167,7 +167,7 @@ export class UserApiClient {
    * @param hard
    * @param config
    */
-  static userDelete(id: number, hard?: number, config?: AxiosRequestConfig): Promise<any> {
+  static userDelete(id: number | string, hard?: number, config?: AxiosRequestConfig): Promise<any> {
     const p = urlParams({hard: hard});
     return apiRequest({...config, url: `${Endpoints.UserDelete.url({id})}?${p.toString()}`, method: Endpoints.UserDelete.method});
   }
@@ -179,7 +179,7 @@ export class UserApiClient {
    * @param confirm
    * @param config
    */
-  static changeUserMail(id: number, new_email: string, confirm?: boolean, config?: AxiosRequestConfig): Promise<any | SCUserChangeEmailType> {
+  static changeUserMail(id: number | string, new_email: string, confirm?: boolean, config?: AxiosRequestConfig): Promise<any | SCUserChangeEmailType> {
     return apiRequest({
       ...config,
       url: Endpoints.ChangeUserMail.url({id}),
@@ -198,7 +198,7 @@ export class UserApiClient {
    * @param validation_code
    * @param config
    */
-  static confirmChangeUserMail(id: number, new_email: string, validation_code?: string, config?: AxiosRequestConfig): Promise<any> {
+  static confirmChangeUserMail(id: number | string, new_email: string, validation_code?: string, config?: AxiosRequestConfig): Promise<any> {
     return apiRequest({
       ...config,
       url: Endpoints.ConfirmUserChangeMail.url({id}),
@@ -217,7 +217,7 @@ export class UserApiClient {
    * @param new_password
    * @param config
    */
-  static changeUserPassword(id: number, password: string, new_password: string, config?: AxiosRequestConfig): Promise<any> {
+  static changeUserPassword(id: number | string, password: string, new_password: string, config?: AxiosRequestConfig): Promise<any> {
     return apiRequest({
       ...config,
       url: Endpoints.ChangeUserPassword.url({id}),
@@ -234,7 +234,7 @@ export class UserApiClient {
    * @param id
    * @param config
    */
-  static userSettings(id: number, config?: AxiosRequestConfig): Promise<SCUserSettingsType> {
+  static userSettings(id: number | string, config?: AxiosRequestConfig): Promise<SCUserSettingsType> {
     return apiRequest({...config, url: Endpoints.UserSettings.url({id}), method: Endpoints.UserSettings.method});
   }
 
@@ -244,7 +244,7 @@ export class UserApiClient {
    * @param data
    * @param config
    */
-  static userSettingsPatch(id: number, data?: SCUserSettingsType, config?: AxiosRequestConfig): Promise<SCUserSettingsType> {
+  static userSettingsPatch(id: number | string, data?: SCUserSettingsType, config?: AxiosRequestConfig): Promise<SCUserSettingsType> {
     return apiRequest({...config, url: Endpoints.UserSettingsPatch.url({id}), method: Endpoints.UserSettingsPatch.method, data: data ?? null});
   }
 
@@ -288,7 +288,7 @@ export class UserApiClient {
    * @param mutual
    * @param config
    */
-  static getUserFollowedCategories(id: number, mutual?: number, config?: AxiosRequestConfig): Promise<SCCategoryType[]> {
+  static getUserFollowedCategories(id: number | string, mutual?: number, config?: AxiosRequestConfig): Promise<SCCategoryType[]> {
     const p = urlParams({mutual: mutual});
     return apiRequest({...config, url: `${Endpoints.FollowedCategories.url({id})}?${p.toString()}`, method: Endpoints.FollowedCategories.method});
   }
@@ -298,7 +298,7 @@ export class UserApiClient {
    * @param id
    * @param config
    */
-  static getUserFeed(id: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeedUnitType>> {
+  static getUserFeed(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeedUnitType>> {
     return apiRequest({...config, url: Endpoints.UserFeed.url({id}), method: Endpoints.UserFeed.method});
   }
 
@@ -308,7 +308,7 @@ export class UserApiClient {
    * @param mutual
    * @param config
    */
-  static getUserFollowers(id: number, mutual?: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
+  static getUserFollowers(id: number | string, mutual?: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
     const p = urlParams({mutual: mutual});
     return apiRequest({...config, url: `${Endpoints.UserFollowers.url({id})}?${p.toString()}`, method: Endpoints.UserFollowers.method});
   }
@@ -319,7 +319,7 @@ export class UserApiClient {
    * @param mutual
    * @param config
    */
-  static getUserFollowed(id: number, mutual?: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
+  static getUserFollowed(id: number | string, mutual?: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
     const p = urlParams({mutual: mutual});
     return apiRequest({...config, url: `${Endpoints.UsersFollowed.url({id})}?${p.toString()}`, method: Endpoints.UsersFollowed.method});
   }
@@ -329,7 +329,7 @@ export class UserApiClient {
    * @param id
    * @param config
    */
-  static followUser(id: number, config?: AxiosRequestConfig): Promise<any> {
+  static followUser(id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return apiRequest({...config, url: Endpoints.FollowUser.url({id}), method: Endpoints.FollowUser.method});
   }
 
@@ -338,7 +338,7 @@ export class UserApiClient {
    * @param id
    * @param config
    */
-  static checkUserFollowed(id: number, config?: AxiosRequestConfig): Promise<SCUserFollowedStatusType> {
+  static checkUserFollowed(id: number | string, config?: AxiosRequestConfig): Promise<SCUserFollowedStatusType> {
     return apiRequest({...config, url: Endpoints.CheckUserFollowed.url({id}), method: Endpoints.CheckUserFollowed.method});
   }
 
@@ -347,7 +347,7 @@ export class UserApiClient {
    * @param id
    * @param config
    */
-  static checkUserFollower(id: number, config?: AxiosRequestConfig): Promise<SCUserFollowerStatusType> {
+  static checkUserFollower(id: number | string, config?: AxiosRequestConfig): Promise<SCUserFollowerStatusType> {
     return apiRequest({...config, url: Endpoints.CheckUserFollower.url({id}), method: Endpoints.CheckUserFollower.method});
   }
 
@@ -357,7 +357,7 @@ export class UserApiClient {
    * @param mutual
    * @param config
    */
-  static getUserConnections(id: number, mutual?: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
+  static getUserConnections(id: number | string, mutual?: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
     const p = urlParams({mutual: mutual});
     return apiRequest({...config, url: `${Endpoints.UserConnections.url({id})}?${p.toString()}`, method: Endpoints.UserConnections.method});
   }
@@ -367,7 +367,7 @@ export class UserApiClient {
    * @param id
    * @param config
    */
-  static checkUserConnections(id: number, config?: AxiosRequestConfig): Promise<SCUserConnectionStatusType> {
+  static checkUserConnections(id: number | string, config?: AxiosRequestConfig): Promise<SCUserConnectionStatusType> {
     return apiRequest({...config, url: Endpoints.UserCheckConnection.url({id}), method: Endpoints.UserCheckConnection.method});
   }
 
@@ -376,7 +376,7 @@ export class UserApiClient {
    * @param id
    * @param config
    */
-  static getUserConnectionRequests(id: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserConnectionRequestType>> {
+  static getUserConnectionRequests(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserConnectionRequestType>> {
     return apiRequest({...config, url: Endpoints.UserConnectionRequests.url({id}), method: Endpoints.UserConnectionRequests.method});
   }
 
@@ -385,7 +385,7 @@ export class UserApiClient {
    * @param id
    * @param config
    */
-  static getUserRequestConnectionsSent(id: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserConnectionRequestType>> {
+  static getUserRequestConnectionsSent(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserConnectionRequestType>> {
     return apiRequest({...config, url: Endpoints.UserRequestConnectionsSent.url({id}), method: Endpoints.UserRequestConnectionsSent.method});
   }
 
@@ -394,7 +394,7 @@ export class UserApiClient {
    * @param id
    * @param config
    */
-  static userAcceptRequestConnection(id: number, config?: AxiosRequestConfig): Promise<any> {
+  static userAcceptRequestConnection(id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return apiRequest({...config, url: Endpoints.UserAcceptRequestConnection.url({id}), method: Endpoints.UserAcceptRequestConnection.method});
   }
 
@@ -403,7 +403,7 @@ export class UserApiClient {
    * @param id
    * @param config
    */
-  static userRequestConnection(id: number, config?: AxiosRequestConfig): Promise<any> {
+  static userRequestConnection(id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return apiRequest({...config, url: Endpoints.UserRequestConnection.url({id}), method: Endpoints.UserRequestConnection.method});
   }
 
@@ -412,7 +412,7 @@ export class UserApiClient {
    * @param id
    * @param config
    */
-  static userRemoveConnection(id: number, config?: AxiosRequestConfig): Promise<any> {
+  static userRemoveConnection(id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return apiRequest({...config, url: Endpoints.UserRemoveConnection.url({id}), method: Endpoints.UserRemoveConnection.method});
   }
 
@@ -421,7 +421,7 @@ export class UserApiClient {
    * @param id
    * @param config
    */
-  static userCancelRejectConnectionRequest(id: number, config?: AxiosRequestConfig): Promise<any> {
+  static userCancelRejectConnectionRequest(id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return apiRequest({
       ...config,
       url: Endpoints.UserCancelRejectConnectionRequest.url({id}),
@@ -434,7 +434,7 @@ export class UserApiClient {
    * @param id
    * @param config
    */
-  static userCancelRequestConnection(id: number, config?: AxiosRequestConfig): Promise<any> {
+  static userCancelRequestConnection(id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return apiRequest({...config, url: Endpoints.UserCancelRequestConnection.url({id}), method: Endpoints.UserCancelRequestConnection.method});
   }
 
@@ -443,7 +443,7 @@ export class UserApiClient {
    * @param id
    * @param config
    */
-  static userRejectConnectionRequest(id: number, config?: AxiosRequestConfig): Promise<any> {
+  static userRejectConnectionRequest(id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return apiRequest({...config, url: Endpoints.UserRejectConnectionRequest.url({id}), method: Endpoints.UserRejectConnectionRequest.method});
   }
 
@@ -452,7 +452,7 @@ export class UserApiClient {
    * @param id
    * @param config
    */
-  static userMarkSeenConnectionRequest(id: number, config?: AxiosRequestConfig): Promise<any> {
+  static userMarkSeenConnectionRequest(id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return apiRequest({...config, url: Endpoints.UserMarkSeenConnectionRequest.url({id}), method: Endpoints.UserMarkSeenConnectionRequest.method});
   }
 
@@ -461,7 +461,7 @@ export class UserApiClient {
    * @param id
    * @param config
    */
-  static showHideUser(id: number, config?: AxiosRequestConfig): Promise<any> {
+  static showHideUser(id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return apiRequest({...config, url: Endpoints.UserShowHide.url({id}), method: Endpoints.UserShowHide.method});
   }
 
@@ -470,7 +470,7 @@ export class UserApiClient {
    * @param id
    * @param config
    */
-  static checkUserHidden(id: number, config?: AxiosRequestConfig): Promise<SCUserHiddenStatusType> {
+  static checkUserHidden(id: number | string, config?: AxiosRequestConfig): Promise<SCUserHiddenStatusType> {
     return apiRequest({...config, url: Endpoints.CheckUserHidden.url({id}), method: Endpoints.CheckUserHidden.method});
   }
 
@@ -479,7 +479,7 @@ export class UserApiClient {
    * @param id
    * @param config
    */
-  static checkUserHiddenBy(id: number, config?: AxiosRequestConfig): Promise<SCUserHiddenByStatusType> {
+  static checkUserHiddenBy(id: number | string, config?: AxiosRequestConfig): Promise<SCUserHiddenByStatusType> {
     return apiRequest({...config, url: Endpoints.CheckUserHiddenBy.url({id}), method: Endpoints.CheckUserHiddenBy.method});
   }
 
@@ -488,7 +488,7 @@ export class UserApiClient {
    * @param id
    * @param config
    */
-  static getUserLoyaltyPoints(id: number, config?: AxiosRequestConfig): Promise<SCUserLoyaltyPointsType> {
+  static getUserLoyaltyPoints(id: number | string, config?: AxiosRequestConfig): Promise<SCUserLoyaltyPointsType> {
     return apiRequest({...config, url: Endpoints.GetUserLoyaltyPoints.url({id}), method: Endpoints.GetUserLoyaltyPoints.method});
   }
 
@@ -546,7 +546,7 @@ export class UserApiClient {
    * @param avatar_id
    * @param config
    */
-  static removeUserAvatar(avatar_id: number, config?: AxiosRequestConfig): Promise<any> {
+  static removeUserAvatar(avatar_id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return apiRequest({...config, url: Endpoints.RemoveAvatar.url({}), method: Endpoints.RemoveAvatar.method, data: {avatar_id: avatar_id}});
   }
 
@@ -555,7 +555,7 @@ export class UserApiClient {
    * @param avatar_id
    * @param config
    */
-  static setUserPrimaryAvatar(avatar_id: number, config?: AxiosRequestConfig): Promise<any> {
+  static setUserPrimaryAvatar(avatar_id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return apiRequest({...config, url: Endpoints.SetPrimaryAvatar.url({}), method: Endpoints.SetPrimaryAvatar.method, data: {avatar_id: avatar_id}});
   }
 }
@@ -610,34 +610,34 @@ export default class UserService {
   static async userSearch(params: UserSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
     return UserApiClient.userSearch(params, config);
   }
-  static async getSpecificUser(id: number, config?: AxiosRequestConfig): Promise<SCUserType> {
+  static async getSpecificUser(id: number | string, config?: AxiosRequestConfig): Promise<SCUserType> {
     return UserApiClient.getSpecificUser(id, config);
   }
-  static async getUserCounters(id: number, config?: AxiosRequestConfig): Promise<SCUserCounterType> {
+  static async getUserCounters(id: number | string, config?: AxiosRequestConfig): Promise<SCUserCounterType> {
     return UserApiClient.getUserCounters(id, config);
   }
-  static async userUpdate(id: number, data?: SCUserType, config?: AxiosRequestConfig): Promise<SCUserType> {
+  static async userUpdate(id: number | string, data?: SCUserType, config?: AxiosRequestConfig): Promise<SCUserType> {
     return UserApiClient.userUpdate(id, data, config);
   }
-  static async userPatch(id: number, data?: SCUserType, config?: AxiosRequestConfig): Promise<SCUserType> {
+  static async userPatch(id: number | string, data?: SCUserType, config?: AxiosRequestConfig): Promise<SCUserType> {
     return UserApiClient.userPatch(id, data, config);
   }
-  static async userDelete(id: number, hard?: number, config?: AxiosRequestConfig): Promise<any> {
+  static async userDelete(id: number | string, hard?: number, config?: AxiosRequestConfig): Promise<any> {
     return UserApiClient.userDelete(id, hard, config);
   }
-  static async changeUserMail(id: number, new_email: string, confirm?: boolean, config?: AxiosRequestConfig): Promise<any | SCUserChangeEmailType> {
+  static async changeUserMail(id: number | string, new_email: string, confirm?: boolean, config?: AxiosRequestConfig): Promise<any | SCUserChangeEmailType> {
     return UserApiClient.changeUserMail(id, new_email, confirm, config);
   }
-  static async confirmChangeUserMail(id: number, new_email: string, validation_code?: string, config?: AxiosRequestConfig): Promise<any> {
+  static async confirmChangeUserMail(id: number | string, new_email: string, validation_code?: string, config?: AxiosRequestConfig): Promise<any> {
     return UserApiClient.confirmChangeUserMail(id, new_email, validation_code, config);
   }
-  static async changeUserPassword(id: number, password: string, new_password: string, config?: AxiosRequestConfig): Promise<any> {
+  static async changeUserPassword(id: number | string, password: string, new_password: string, config?: AxiosRequestConfig): Promise<any> {
     return UserApiClient.changeUserPassword(id, password, new_password, config);
   }
-  static async userSettings(id: number, config?: AxiosRequestConfig): Promise<SCUserSettingsType> {
+  static async userSettings(id: number | string, config?: AxiosRequestConfig): Promise<SCUserSettingsType> {
     return UserApiClient.userSettings(id, config);
   }
-  static async userSettingsPatch(id: number, data?: SCUserSettingsType, config?: AxiosRequestConfig): Promise<SCUserSettingsType> {
+  static async userSettingsPatch(id: number | string, data?: SCUserSettingsType, config?: AxiosRequestConfig): Promise<SCUserSettingsType> {
     return UserApiClient.userSettingsPatch(id, data, config);
   }
   static async getCurrentUser(config?: AxiosRequestConfig): Promise<SCUserType> {
@@ -652,70 +652,70 @@ export default class UserService {
   static async getCurrentUserPlatform(next?: string, config?: AxiosRequestConfig): Promise<SCPlatformType> {
     return UserApiClient.getCurrentUserPlatform(next, config);
   }
-  static async getUserFollowedCategories(id: number, mutual?: number, config?: AxiosRequestConfig): Promise<SCCategoryType[]> {
+  static async getUserFollowedCategories(id: number | string, mutual?: number, config?: AxiosRequestConfig): Promise<SCCategoryType[]> {
     return UserApiClient.getUserFollowedCategories(id, mutual, config);
   }
-  static async getUserFeed(id: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeedUnitType>> {
+  static async getUserFeed(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeedUnitType>> {
     return UserApiClient.getUserFeed(id, config);
   }
-  static async getUserFollowers(id: number, mutual?: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
+  static async getUserFollowers(id: number | string, mutual?: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
     return UserApiClient.getUserFollowers(id, mutual, config);
   }
-  static async getUserFollowed(id: number, mutual?: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
+  static async getUserFollowed(id: number | string, mutual?: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
     return UserApiClient.getUserFollowed(id, mutual, config);
   }
-  static async followUser(id: number, config?: AxiosRequestConfig): Promise<any> {
+  static async followUser(id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return UserApiClient.followUser(id, config);
   }
-  static async checkUserFollowed(id: number, config?: AxiosRequestConfig): Promise<SCUserFollowedStatusType> {
+  static async checkUserFollowed(id: number | string, config?: AxiosRequestConfig): Promise<SCUserFollowedStatusType> {
     return UserApiClient.checkUserFollowed(id, config);
   }
-  static async checkUserFollower(id: number, config?: AxiosRequestConfig): Promise<SCUserFollowerStatusType> {
+  static async checkUserFollower(id: number | string, config?: AxiosRequestConfig): Promise<SCUserFollowerStatusType> {
     return UserApiClient.checkUserFollower(id, config);
   }
-  static async getUserConnections(id: number, mutual?: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
+  static async getUserConnections(id: number | string, mutual?: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
     return UserApiClient.getUserConnections(id, mutual, config);
   }
-  static async checkUserConnections(id: number, config?: AxiosRequestConfig): Promise<SCUserConnectionStatusType> {
+  static async checkUserConnections(id: number | string, config?: AxiosRequestConfig): Promise<SCUserConnectionStatusType> {
     return UserApiClient.checkUserConnections(id, config);
   }
-  static async getUserConnectionRequests(id: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserConnectionRequestType>> {
+  static async getUserConnectionRequests(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserConnectionRequestType>> {
     return UserApiClient.getUserConnectionRequests(id, config);
   }
-  static async getUserRequestConnectionsSent(id: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserConnectionRequestType>> {
+  static async getUserRequestConnectionsSent(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserConnectionRequestType>> {
     return UserApiClient.getUserRequestConnectionsSent(id, config);
   }
-  static async userAcceptRequestConnection(id: number, config?: AxiosRequestConfig): Promise<any> {
+  static async userAcceptRequestConnection(id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return UserApiClient.userAcceptRequestConnection(id, config);
   }
-  static async userRequestConnection(id: number, config?: AxiosRequestConfig): Promise<any> {
+  static async userRequestConnection(id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return UserApiClient.userRequestConnection(id, config);
   }
-  static async userRemoveConnection(id: number, config?: AxiosRequestConfig): Promise<any> {
+  static async userRemoveConnection(id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return UserApiClient.userRemoveConnection(id, config);
   }
-  static async userCancelRejectConnectionRequest(id: number, config?: AxiosRequestConfig): Promise<any> {
+  static async userCancelRejectConnectionRequest(id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return UserApiClient.userCancelRejectConnectionRequest(id, config);
   }
-  static async userCancelRequestConnection(id: number, config?: AxiosRequestConfig): Promise<any> {
+  static async userCancelRequestConnection(id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return UserApiClient.userCancelRequestConnection(id, config);
   }
-  static async userRejectConnectionRequest(id: number, config?: AxiosRequestConfig): Promise<any> {
+  static async userRejectConnectionRequest(id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return UserApiClient.userRejectConnectionRequest(id, config);
   }
-  static async userMarkSeenConnectionRequest(id: number, config?: AxiosRequestConfig): Promise<any> {
+  static async userMarkSeenConnectionRequest(id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return UserApiClient.userMarkSeenConnectionRequest(id, config);
   }
-  static async showHideUser(id: number, config?: AxiosRequestConfig): Promise<any> {
+  static async showHideUser(id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return UserApiClient.showHideUser(id, config);
   }
-  static async checkUserHidden(id: number, config?: AxiosRequestConfig): Promise<SCUserHiddenStatusType> {
+  static async checkUserHidden(id: number | string, config?: AxiosRequestConfig): Promise<SCUserHiddenStatusType> {
     return UserApiClient.checkUserHidden(id, config);
   }
-  static async checkUserHiddenBy(id: number, config?: AxiosRequestConfig): Promise<SCUserHiddenByStatusType> {
+  static async checkUserHiddenBy(id: number | string, config?: AxiosRequestConfig): Promise<SCUserHiddenByStatusType> {
     return UserApiClient.checkUserHiddenBy(id, config);
   }
-  static async getUserLoyaltyPoints(id: number, config?: AxiosRequestConfig): Promise<SCUserLoyaltyPointsType> {
+  static async getUserLoyaltyPoints(id: number | string, config?: AxiosRequestConfig): Promise<SCUserLoyaltyPointsType> {
     return UserApiClient.getUserLoyaltyPoints(id, config);
   }
   static async getUserConnectionStatuses(users: number[], config?: AxiosRequestConfig): Promise<any> {
@@ -733,10 +733,10 @@ export default class UserService {
   static async getUserAvatars(config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCAvatarType>> {
     return UserApiClient.getUserAvatars(config);
   }
-  static async removeUserAvatar(avatar_id: number, config?: AxiosRequestConfig): Promise<any> {
+  static async removeUserAvatar(avatar_id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return UserApiClient.removeUserAvatar(avatar_id, config);
   }
-  static async setUserPrimaryAvatar(avatar_id: number, config?: AxiosRequestConfig): Promise<any> {
+  static async setUserPrimaryAvatar(avatar_id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return UserApiClient.setUserPrimaryAvatar(avatar_id, config);
   }
 }

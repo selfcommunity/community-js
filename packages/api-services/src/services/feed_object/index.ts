@@ -29,67 +29,67 @@ export interface FeedObjectApiClientInterface {
   ): Promise<SCPaginatedResponse<SCFeedObjectType>>;
   searchFeedObject(type: SCFeedObjectTypologyType, search?: string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeedObjectType>>;
   createFeedObject(type: SCFeedObjectTypologyType, data: FeedObjCreateParams, config?: AxiosRequestConfig): Promise<SCFeedObjectType>;
-  getSpecificFeedObject(type: SCFeedObjectTypologyType, id: number, config?: AxiosRequestConfig): Promise<SCFeedObjectType>;
-  updateFeedObject(type: SCFeedObjectTypologyType, id: number, data: FeedObjCreateParams, config?: AxiosRequestConfig): Promise<SCFeedObjectType>;
-  deleteFeedObject(type: SCFeedObjectTypologyType, id: number, config?: AxiosRequestConfig): Promise<any>;
+  getSpecificFeedObject(type: SCFeedObjectTypologyType, id: number | string, config?: AxiosRequestConfig): Promise<SCFeedObjectType>;
+  updateFeedObject(type: SCFeedObjectTypologyType, id: number | string, data: FeedObjCreateParams, config?: AxiosRequestConfig): Promise<SCFeedObjectType>;
+  deleteFeedObject(type: SCFeedObjectTypologyType, id: number | string, config?: AxiosRequestConfig): Promise<any>;
   feedObjectContributorsList(
     type: SCFeedObjectTypologyType,
-    id: number,
+    id: number | string,
     params?: BaseGetParams,
     config?: AxiosRequestConfig
   ): Promise<SCPaginatedResponse<SCUserType>>;
   feedObjectSharesList(
     type: SCFeedObjectTypologyType,
-    id: number,
+    id: number | string,
     params?: BaseGetParams,
     config?: AxiosRequestConfig
   ): Promise<SCPaginatedResponse<SCFeedObjectType>>;
   feedObjectUserSharesList(
     type: SCFeedObjectTypologyType,
-    id: number,
+    id: number | string,
     params?: BaseGetParams,
     config?: AxiosRequestConfig
   ): Promise<SCPaginatedResponse<SCUserType>>;
-  restoreFeedObject(type: SCFeedObjectTypologyType, id: number, config?: AxiosRequestConfig): Promise<any>;
+  restoreFeedObject(type: SCFeedObjectTypologyType, id: number | string, config?: AxiosRequestConfig): Promise<any>;
   relatedFeedObjects(
     type: SCFeedObjectTypologyType,
-    id: number,
+    id: number | string,
     params?: BaseGetParams,
     config?: AxiosRequestConfig
   ): Promise<SCPaginatedResponse<SCFeedObjectType>>;
-  voteFeedObject(type: SCFeedObjectTypologyType, id: number, config?: AxiosRequestConfig): Promise<any>;
+  voteFeedObject(type: SCFeedObjectTypologyType, id: number | string, config?: AxiosRequestConfig): Promise<any>;
   feedObjectVotes(
     type: SCFeedObjectTypologyType,
-    id: number,
+    id: number | string,
     params?: BaseGetParams,
     config?: AxiosRequestConfig
   ): Promise<SCPaginatedResponse<SCVoteType>>;
-  feedObjectPollVote(type: SCFeedObjectTypologyType, id: number, choice: number, config?: AxiosRequestConfig): Promise<any>;
+  feedObjectPollVote(type: SCFeedObjectTypologyType, id: number | string, choice: number, config?: AxiosRequestConfig): Promise<any>;
   feedObjectPollVotesList(
     type: SCFeedObjectTypologyType,
-    id: number,
+    id: number | string,
     params?: FeedObjectPollVotesSearch,
     config?: AxiosRequestConfig
   ): Promise<SCPaginatedResponse<SCPollVoteType>>;
-  followFeedObject(type: SCFeedObjectTypologyType, id: number, config?: AxiosRequestConfig): Promise<any>;
+  followFeedObject(type: SCFeedObjectTypologyType, id: number | string, config?: AxiosRequestConfig): Promise<any>;
   feedObjectFollowingList(
     type: SCFeedObjectTypologyType,
     params?: BaseGetParams,
     config?: AxiosRequestConfig
   ): Promise<SCPaginatedResponse<SCFeedObjectType>>;
-  checkIfFollowingFeedObject(type: SCFeedObjectTypologyType, id: number, config?: AxiosRequestConfig): Promise<SCFeedObjectFollowingStatusType>;
-  suspendFeedObject(type: SCFeedObjectTypologyType, id: number, config?: AxiosRequestConfig): Promise<any>;
-  checkIfSuspendedFeedObject(type: SCFeedObjectTypologyType, id: number, config?: AxiosRequestConfig): Promise<SCFeedObjectSuspendedStatusType>;
+  checkIfFollowingFeedObject(type: SCFeedObjectTypologyType, id: number | string, config?: AxiosRequestConfig): Promise<SCFeedObjectFollowingStatusType>;
+  suspendFeedObject(type: SCFeedObjectTypologyType, id: number | string, config?: AxiosRequestConfig): Promise<any>;
+  checkIfSuspendedFeedObject(type: SCFeedObjectTypologyType, id: number | string, config?: AxiosRequestConfig): Promise<SCFeedObjectSuspendedStatusType>;
   feedObjectSuspendedList(
     type: SCFeedObjectTypologyType,
     params?: BaseGetParams,
     config?: AxiosRequestConfig
   ): Promise<SCPaginatedResponse<SCFeedObjectType>>;
-  flagFeedObject(type: SCFeedObjectTypologyType, id: number, flag_type: SCFlagTypeEnum, config?: AxiosRequestConfig): Promise<any>;
-  feedObjectFlagList(type: SCFeedObjectTypologyType, id: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFlagType>>;
-  feedObjectFlagStatus(type: SCFeedObjectTypologyType, id: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFlagType>>;
-  hideFeedObject(type: SCFeedObjectTypologyType, id: number, config?: AxiosRequestConfig): Promise<any>;
-  feedObjectHideStatus(type: SCFeedObjectTypologyType, id: number, config?: AxiosRequestConfig): Promise<SCFeedObjectHideStatusType>;
+  flagFeedObject(type: SCFeedObjectTypologyType, id: number | string, flag_type: SCFlagTypeEnum, config?: AxiosRequestConfig): Promise<any>;
+  feedObjectFlagList(type: SCFeedObjectTypologyType, id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFlagType>>;
+  feedObjectFlagStatus(type: SCFeedObjectTypologyType, id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFlagType>>;
+  hideFeedObject(type: SCFeedObjectTypologyType, id: number | string, config?: AxiosRequestConfig): Promise<any>;
+  feedObjectHideStatus(type: SCFeedObjectTypologyType, id: number | string, config?: AxiosRequestConfig): Promise<SCFeedObjectHideStatusType>;
 }
 /**
  * Contains all the endpoints needed to manage feed objs (discussions-posts-statuses).
@@ -161,7 +161,7 @@ export class FeedObjectApiClient {
    * @param id
    * @param config
    */
-  static getSpecificFeedObject(type: SCFeedObjectTypologyType, id: number, config?: AxiosRequestConfig): Promise<SCFeedObjectType> {
+  static getSpecificFeedObject(type: SCFeedObjectTypologyType, id: number | string, config?: AxiosRequestConfig): Promise<SCFeedObjectType> {
     return apiRequest({...config, url: Endpoints.FeedObject.url({type, id}), method: Endpoints.FeedObject.method});
   }
 
@@ -174,7 +174,7 @@ export class FeedObjectApiClient {
    */
   static updateFeedObject(
     type: SCFeedObjectTypologyType,
-    id: number,
+    id: number | string,
     data: FeedObjCreateParams,
     config?: AxiosRequestConfig
   ): Promise<SCFeedObjectType> {
@@ -187,7 +187,7 @@ export class FeedObjectApiClient {
    * @param id
    * @param config
    */
-  static deleteFeedObject(type: SCFeedObjectTypologyType, id: number, config?: AxiosRequestConfig): Promise<any> {
+  static deleteFeedObject(type: SCFeedObjectTypologyType, id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return apiRequest({...config, url: Endpoints.DeleteFeedObject.url({type, id}), method: Endpoints.DeleteFeedObject.method});
   }
 
@@ -200,7 +200,7 @@ export class FeedObjectApiClient {
    */
   static feedObjectContributorsList(
     type: SCFeedObjectTypologyType,
-    id: number,
+    id: number | string,
     params?: BaseGetParams,
     config?: AxiosRequestConfig
   ): Promise<SCPaginatedResponse<SCUserType>> {
@@ -221,7 +221,7 @@ export class FeedObjectApiClient {
    */
   static feedObjectSharesList(
     type: SCFeedObjectTypologyType,
-    id: number,
+    id: number | string,
     params?: BaseGetParams,
     config?: AxiosRequestConfig
   ): Promise<SCPaginatedResponse<SCFeedObjectType>> {
@@ -242,7 +242,7 @@ export class FeedObjectApiClient {
    */
   static feedObjectUserSharesList(
     type: SCFeedObjectTypologyType,
-    id: number,
+    id: number | string,
     params?: BaseGetParams,
     config?: AxiosRequestConfig
   ): Promise<SCPaginatedResponse<SCUserType>> {
@@ -260,7 +260,7 @@ export class FeedObjectApiClient {
    * @param id
    * @param config
    */
-  static restoreFeedObject(type: SCFeedObjectTypologyType, id: number, config?: AxiosRequestConfig): Promise<any> {
+  static restoreFeedObject(type: SCFeedObjectTypologyType, id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return apiRequest({...config, url: Endpoints.RestoreFeedObject.url({type, id}), method: Endpoints.RestoreFeedObject.method});
   }
 
@@ -273,7 +273,7 @@ export class FeedObjectApiClient {
    */
   static relatedFeedObjects(
     type: SCFeedObjectTypologyType,
-    id: number,
+    id: number | string,
     params?: BaseGetParams,
     config?: AxiosRequestConfig
   ): Promise<SCPaginatedResponse<SCFeedObjectType>> {
@@ -291,7 +291,7 @@ export class FeedObjectApiClient {
    * @param id
    * @param config
    */
-  static voteFeedObject(type: SCFeedObjectTypologyType, id: number, config?: AxiosRequestConfig): Promise<any> {
+  static voteFeedObject(type: SCFeedObjectTypologyType, id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return apiRequest({...config, url: Endpoints.Vote.url({type, id}), method: Endpoints.Vote.method});
   }
 
@@ -304,7 +304,7 @@ export class FeedObjectApiClient {
    */
   static feedObjectVotes(
     type: SCFeedObjectTypologyType,
-    id: number,
+    id: number | string,
     params?: BaseGetParams,
     config?: AxiosRequestConfig
   ): Promise<SCPaginatedResponse<SCVoteType>> {
@@ -319,7 +319,7 @@ export class FeedObjectApiClient {
    * @param choice
    * @param config
    */
-  static feedObjectPollVote(type: SCFeedObjectTypologyType, id: number, choice: number, config?: AxiosRequestConfig): Promise<any> {
+  static feedObjectPollVote(type: SCFeedObjectTypologyType, id: number | string, choice: number, config?: AxiosRequestConfig): Promise<any> {
     return apiRequest({...config, url: Endpoints.PollVote.url({type, id}), method: Endpoints.PollVote.method, data: {choice: choice}});
   }
 
@@ -332,7 +332,7 @@ export class FeedObjectApiClient {
    */
   static feedObjectPollVotesList(
     type: SCFeedObjectTypologyType,
-    id: number,
+    id: number | string,
     params?: FeedObjectPollVotesSearch,
     config?: AxiosRequestConfig
   ): Promise<SCPaginatedResponse<SCPollVoteType>> {
@@ -346,7 +346,7 @@ export class FeedObjectApiClient {
    * @param id
    * @param config
    */
-  static followFeedObject(type: SCFeedObjectTypologyType, id: number, config?: AxiosRequestConfig): Promise<any> {
+  static followFeedObject(type: SCFeedObjectTypologyType, id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return apiRequest({...config, url: Endpoints.FollowContribution.url({id}), method: Endpoints.FollowContribution.method});
   }
 
@@ -377,7 +377,7 @@ export class FeedObjectApiClient {
    */
   static checkIfFollowingFeedObject(
     type: SCFeedObjectTypologyType,
-    id: number,
+    id: number | string,
     config?: AxiosRequestConfig
   ): Promise<SCFeedObjectFollowingStatusType> {
     return apiRequest({...config, url: Endpoints.CheckIfFollowingFeedObject.url({type, id}), method: Endpoints.CheckIfFollowingFeedObject.method});
@@ -389,7 +389,7 @@ export class FeedObjectApiClient {
    * @param id
    * @param config
    */
-  static suspendFeedObject(type: SCFeedObjectTypologyType, id: number, config?: AxiosRequestConfig): Promise<any> {
+  static suspendFeedObject(type: SCFeedObjectTypologyType, id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return apiRequest({
       ...config,
       url: Endpoints.UserSuspendContributionNotification.url({type, id}),
@@ -405,7 +405,7 @@ export class FeedObjectApiClient {
    */
   static checkIfSuspendedFeedObject(
     type: SCFeedObjectTypologyType,
-    id: number,
+    id: number | string,
     config?: AxiosRequestConfig
   ): Promise<SCFeedObjectSuspendedStatusType> {
     return apiRequest({
@@ -441,7 +441,7 @@ export class FeedObjectApiClient {
    * @param flag_type
    * @param config
    */
-  static flagFeedObject(type: SCFeedObjectTypologyType, id: number, flag_type: SCFlagTypeEnum, config?: AxiosRequestConfig): Promise<any> {
+  static flagFeedObject(type: SCFeedObjectTypologyType, id: number | string, flag_type: SCFlagTypeEnum, config?: AxiosRequestConfig): Promise<any> {
     return apiRequest({...config, url: Endpoints.Flag.url({type, id}), method: Endpoints.Flag.method, data: flag_type});
   }
 
@@ -451,7 +451,7 @@ export class FeedObjectApiClient {
    * @param id
    * @param config
    */
-  static feedObjectFlagStatus(type: SCFeedObjectTypologyType, id: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFlagType>> {
+  static feedObjectFlagStatus(type: SCFeedObjectTypologyType, id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFlagType>> {
     return apiRequest({...config, url: Endpoints.FlagStatus.url({type, id}), method: Endpoints.FlagStatus.method});
   }
 
@@ -461,7 +461,7 @@ export class FeedObjectApiClient {
    * @param id
    * @param config
    */
-  static feedObjectFlagList(type: SCFeedObjectTypologyType, id: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFlagType>> {
+  static feedObjectFlagList(type: SCFeedObjectTypologyType, id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFlagType>> {
     return apiRequest({...config, url: Endpoints.FeedObjectFlagList.url({type, id}), method: Endpoints.FeedObjectFlagList.method});
   }
 
@@ -471,7 +471,7 @@ export class FeedObjectApiClient {
    * @param id
    * @param config
    */
-  static hideFeedObject(type: SCFeedObjectTypologyType, id: number, config?: AxiosRequestConfig): Promise<any> {
+  static hideFeedObject(type: SCFeedObjectTypologyType, id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return apiRequest({...config, url: Endpoints.HideFeedObject.url({type, id}), method: Endpoints.HideFeedObject.method});
   }
 
@@ -481,7 +481,7 @@ export class FeedObjectApiClient {
    * @param id
    * @param config
    */
-  static feedObjectHideStatus(type: SCFeedObjectTypologyType, id: number, config?: AxiosRequestConfig): Promise<SCFeedObjectHideStatusType> {
+  static feedObjectHideStatus(type: SCFeedObjectTypologyType, id: number | string, config?: AxiosRequestConfig): Promise<SCFeedObjectHideStatusType> {
     return apiRequest({...config, url: Endpoints.FeedObjectHideStatus.url({type, id}), method: Endpoints.FeedObjectHideStatus.method});
   }
 }
@@ -543,26 +543,26 @@ export default class FeedObjectService {
     return FeedObjectApiClient.createFeedObject(type, data, config);
   }
 
-  static async getSpecificFeedObject(type: SCFeedObjectTypologyType, id: number, config?: AxiosRequestConfig): Promise<SCFeedObjectType> {
+  static async getSpecificFeedObject(type: SCFeedObjectTypologyType, id: number | string, config?: AxiosRequestConfig): Promise<SCFeedObjectType> {
     return FeedObjectApiClient.getSpecificFeedObject(type, id, config);
   }
 
   static async updateFeedObject(
     type: SCFeedObjectTypologyType,
-    id: number,
+    id: number | string,
     data: FeedObjCreateParams,
     config?: AxiosRequestConfig
   ): Promise<SCFeedObjectType> {
     return FeedObjectApiClient.updateFeedObject(type, id, data, config);
   }
 
-  static async deleteFeedObject(type: SCFeedObjectTypologyType, id: number, config?: AxiosRequestConfig): Promise<any> {
+  static async deleteFeedObject(type: SCFeedObjectTypologyType, id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return FeedObjectApiClient.deleteFeedObject(type, id, config);
   }
 
   static async feedObjectContributorsList(
     type: SCFeedObjectTypologyType,
-    id: number,
+    id: number | string,
     params?: BaseGetParams,
     config?: AxiosRequestConfig
   ): Promise<SCPaginatedResponse<SCUserType>> {
@@ -571,7 +571,7 @@ export default class FeedObjectService {
 
   static async feedObjectSharesList(
     type: SCFeedObjectTypologyType,
-    id: number,
+    id: number | string,
     params?: BaseGetParams,
     config?: AxiosRequestConfig
   ): Promise<SCPaginatedResponse<SCFeedObjectType>> {
@@ -580,50 +580,50 @@ export default class FeedObjectService {
 
   static async feedObjectUserSharesList(
     type: SCFeedObjectTypologyType,
-    id: number,
+    id: number | string,
     params?: BaseGetParams
   ): Promise<SCPaginatedResponse<SCUserType>> {
     return FeedObjectApiClient.feedObjectUserSharesList(type, id, params);
   }
 
-  static async restoreFeedObject(type: SCFeedObjectTypologyType, id: number, config?: AxiosRequestConfig): Promise<any> {
+  static async restoreFeedObject(type: SCFeedObjectTypologyType, id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return FeedObjectApiClient.restoreFeedObject(type, id, config);
   }
 
   static async relatedFeedObjects(
     type: SCFeedObjectTypologyType,
-    id: number,
+    id: number | string,
     params?: BaseGetParams,
     config?: AxiosRequestConfig
   ): Promise<SCPaginatedResponse<SCFeedObjectType>> {
     return FeedObjectApiClient.relatedFeedObjects(type, id, params, config);
   }
 
-  static async voteFeedObject(type: SCFeedObjectTypologyType, id: number, config?: AxiosRequestConfig): Promise<any> {
+  static async voteFeedObject(type: SCFeedObjectTypologyType, id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return FeedObjectApiClient.voteFeedObject(type, id, config);
   }
   static async feedObjectVotes(
     type: SCFeedObjectTypologyType,
-    id: number,
+    id: number | string,
     params?: BaseGetParams,
     config?: AxiosRequestConfig
   ): Promise<SCPaginatedResponse<SCVoteType>> {
     return FeedObjectApiClient.feedObjectVotes(type, id, params, config);
   }
-  static async feedObjectPollVote(type: SCFeedObjectTypologyType, id: number, choice: number, config?: AxiosRequestConfig): Promise<any> {
+  static async feedObjectPollVote(type: SCFeedObjectTypologyType, id: number | string, choice: number, config?: AxiosRequestConfig): Promise<any> {
     return FeedObjectApiClient.feedObjectPollVote(type, id, choice, config);
   }
 
   static async feedObjectPollVotesList(
     type: SCFeedObjectTypologyType,
-    id: number,
+    id: number | string,
     params?: FeedObjectPollVotesSearch,
     config?: AxiosRequestConfig
   ): Promise<SCPaginatedResponse<SCPollVoteType>> {
     return FeedObjectApiClient.feedObjectPollVotesList(type, id, params, config);
   }
 
-  static async followFeedObject(type: SCFeedObjectTypologyType, id: number, config?: AxiosRequestConfig): Promise<any> {
+  static async followFeedObject(type: SCFeedObjectTypologyType, id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return FeedObjectApiClient.followFeedObject(type, id, config);
   }
 
@@ -637,19 +637,19 @@ export default class FeedObjectService {
 
   static async checkIfFollowingFeedObject(
     type: SCFeedObjectTypologyType,
-    id: number,
+    id: number | string,
     config?: AxiosRequestConfig
   ): Promise<SCFeedObjectFollowingStatusType> {
     return FeedObjectApiClient.checkIfFollowingFeedObject(type, id, config);
   }
 
-  static async suspendFeedObject(type: SCFeedObjectTypologyType, id: number, config?: AxiosRequestConfig): Promise<any> {
+  static async suspendFeedObject(type: SCFeedObjectTypologyType, id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return FeedObjectApiClient.suspendFeedObject(type, id, config);
   }
 
   static async checkIfSuspendedFeedObject(
     type: SCFeedObjectTypologyType,
-    id: number,
+    id: number | string,
     config?: AxiosRequestConfig
   ): Promise<SCFeedObjectSuspendedStatusType> {
     return FeedObjectApiClient.checkIfSuspendedFeedObject(type, id, config);
@@ -662,26 +662,26 @@ export default class FeedObjectService {
     return FeedObjectApiClient.feedObjectSuspendedList(type, params, config);
   }
 
-  static async flagFeedObject(type: SCFeedObjectTypologyType, id: number, flag_type: SCFlagTypeEnum, config?: AxiosRequestConfig): Promise<any> {
+  static async flagFeedObject(type: SCFeedObjectTypologyType, id: number | string, flag_type: SCFlagTypeEnum, config?: AxiosRequestConfig): Promise<any> {
     return FeedObjectApiClient.flagFeedObject(type, id, flag_type, config);
   }
 
-  static async feedObjectFlagList(type: SCFeedObjectTypologyType, id: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFlagType>> {
+  static async feedObjectFlagList(type: SCFeedObjectTypologyType, id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFlagType>> {
     return FeedObjectApiClient.feedObjectFlagList(type, id, config);
   }
 
   static async feedObjectFlagStatus(
     type: SCFeedObjectTypologyType,
-    id: number,
+    id: number | string,
     config?: AxiosRequestConfig
   ): Promise<SCPaginatedResponse<SCFlagType>> {
     return FeedObjectApiClient.feedObjectFlagStatus(type, id, config);
   }
-  static async hideFeedObject(type: SCFeedObjectTypologyType, id: number, config?: AxiosRequestConfig): Promise<any> {
+  static async hideFeedObject(type: SCFeedObjectTypologyType, id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return FeedObjectApiClient.hideFeedObject(type, id, config);
   }
 
-  static async feedObjectHideStatus(type: SCFeedObjectTypologyType, id: number, config?: AxiosRequestConfig): Promise<SCFeedObjectHideStatusType> {
+  static async feedObjectHideStatus(type: SCFeedObjectTypologyType, id: number | string, config?: AxiosRequestConfig): Promise<SCFeedObjectHideStatusType> {
     return FeedObjectApiClient.feedObjectHideStatus(type, id, config);
   }
 }

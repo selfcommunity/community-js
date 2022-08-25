@@ -7,13 +7,13 @@ import {AxiosRequestConfig} from 'axios';
 export interface LoyaltyApiClientInterface {
   getPrizes(config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPrizeType>>;
   createPrize(data: LoyaltyPrizeParams, config?: AxiosRequestConfig): Promise<SCPrizeType>;
-  getSpecificPrize(id: number, config?: AxiosRequestConfig): Promise<SCPrizeType>;
-  updatePrize(id: number, data: LoyaltyPrizeParams, config?: AxiosRequestConfig): Promise<SCPrizeType>;
-  patchPrize(id: number, data?: LoyaltyPrizeParams, config?: AxiosRequestConfig): Promise<SCPrizeType>;
+  getSpecificPrize(id: number | string, config?: AxiosRequestConfig): Promise<SCPrizeType>;
+  updatePrize(id: number | string, data: LoyaltyPrizeParams, config?: AxiosRequestConfig): Promise<SCPrizeType>;
+  patchPrize(id: number | string, data?: LoyaltyPrizeParams, config?: AxiosRequestConfig): Promise<SCPrizeType>;
   getAllPrizeRequests(config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPrizeUserType>>;
   createPrizeRequest(prize: number, config?: AxiosRequestConfig): Promise<SCPrizeUserType>;
-  getSpecificPrizeRequest(id: number, config?: AxiosRequestConfig): Promise<SCPrizeUserType>;
-  patchPrizeRequest(id: number, status?: SCPrizeUserStatusType, config?: AxiosRequestConfig): Promise<SCPrizeUserType>;
+  getSpecificPrizeRequest(id: number | string, config?: AxiosRequestConfig): Promise<SCPrizeUserType>;
+  patchPrizeRequest(id: number | string, status?: SCPrizeUserStatusType, config?: AxiosRequestConfig): Promise<SCPrizeUserType>;
 }
 /**
  * Contains all the endpoints needed to manage loyalty program.
@@ -42,7 +42,7 @@ export class LoyaltyApiClient {
    * @param id
    * @param config
    */
-  static getSpecificPrize(id: number, config?: AxiosRequestConfig): Promise<SCPrizeType> {
+  static getSpecificPrize(id: number | string, config?: AxiosRequestConfig): Promise<SCPrizeType> {
     return apiRequest({...config, url: Endpoints.GetSpecificPrize.url({id}), method: Endpoints.GetSpecificPrize.method});
   }
 
@@ -52,7 +52,7 @@ export class LoyaltyApiClient {
    * @param data
    * @param config
    */
-  static updatePrize(id: number, data: LoyaltyPrizeParams, config?: AxiosRequestConfig): Promise<SCPrizeType> {
+  static updatePrize(id: number | string, data: LoyaltyPrizeParams, config?: AxiosRequestConfig): Promise<SCPrizeType> {
     return apiRequest({...config, url: Endpoints.UpdatePrize.url({id}), method: Endpoints.UpdatePrize.method, data: data});
   }
 
@@ -62,7 +62,7 @@ export class LoyaltyApiClient {
    * @param data
    * @param config
    */
-  static patchPrize(id: number, data?: LoyaltyPrizeParams, config?: AxiosRequestConfig): Promise<SCPrizeType> {
+  static patchPrize(id: number | string, data?: LoyaltyPrizeParams, config?: AxiosRequestConfig): Promise<SCPrizeType> {
     return apiRequest({...config, url: Endpoints.PatchPrize.url({id}), method: Endpoints.PatchPrize.method, data: data});
   }
 
@@ -88,7 +88,7 @@ export class LoyaltyApiClient {
    * @param id
    * @param config
    */
-  static getSpecificPrizeRequest(id: number, config?: AxiosRequestConfig): Promise<SCPrizeUserType> {
+  static getSpecificPrizeRequest(id: number | string, config?: AxiosRequestConfig): Promise<SCPrizeUserType> {
     return apiRequest({...config, url: Endpoints.GetSpecificPrizeRequest.url({id}), method: Endpoints.GetSpecificPrizeRequest.method});
   }
 
@@ -99,7 +99,7 @@ export class LoyaltyApiClient {
    * @param status
    * @param config
    */
-  static patchPrizeRequest(id: number, status?: SCPrizeUserStatusType, config?: AxiosRequestConfig): Promise<SCPrizeUserType> {
+  static patchPrizeRequest(id: number | string, status?: SCPrizeUserStatusType, config?: AxiosRequestConfig): Promise<SCPrizeUserType> {
     return apiRequest({...config, url: Endpoints.PatchPrizeRequest.url({id}), method: Endpoints.PatchPrizeRequest.method, data: {status: status}});
   }
 }
@@ -148,15 +148,15 @@ export default class LoyaltyService {
     return LoyaltyApiClient.createPrize(data, config);
   }
 
-  static async getSpecificPrize(id: number, config?: AxiosRequestConfig): Promise<SCPrizeType> {
+  static async getSpecificPrize(id: number | string, config?: AxiosRequestConfig): Promise<SCPrizeType> {
     return LoyaltyApiClient.getSpecificPrize(id, config);
   }
 
-  static async updatePrize(id: number, data: LoyaltyPrizeParams, config?: AxiosRequestConfig): Promise<SCPrizeType> {
+  static async updatePrize(id: number | string, data: LoyaltyPrizeParams, config?: AxiosRequestConfig): Promise<SCPrizeType> {
     return LoyaltyApiClient.updatePrize(id, data, config);
   }
 
-  static async patchPrize(id: number, data?: LoyaltyPrizeParams, config?: AxiosRequestConfig): Promise<SCPrizeType> {
+  static async patchPrize(id: number | string, data?: LoyaltyPrizeParams, config?: AxiosRequestConfig): Promise<SCPrizeType> {
     return LoyaltyApiClient.patchPrize(id, data, config);
   }
 
@@ -168,10 +168,10 @@ export default class LoyaltyService {
     return LoyaltyApiClient.createPrizeRequest(prize, config);
   }
 
-  static async getSpecificPrizeRequest(id: number, config?: AxiosRequestConfig): Promise<SCPrizeUserType> {
+  static async getSpecificPrizeRequest(id: number | string, config?: AxiosRequestConfig): Promise<SCPrizeUserType> {
     return LoyaltyApiClient.getSpecificPrizeRequest(id, config);
   }
-  static async patchPrizeRequest(id: number, status?: SCPrizeUserStatusType, config?: AxiosRequestConfig): Promise<SCPrizeUserType> {
+  static async patchPrizeRequest(id: number | string, status?: SCPrizeUserStatusType, config?: AxiosRequestConfig): Promise<SCPrizeUserType> {
     return LoyaltyApiClient.patchPrizeRequest(id, status, config);
   }
 }

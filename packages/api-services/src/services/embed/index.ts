@@ -9,11 +9,11 @@ export interface EmbedApiClientInterface {
   getAllEmbeds(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCEmbedType>>;
   createEmbed(data: SCEmbedType, config?: AxiosRequestConfig): Promise<SCEmbedType>;
   searchEmbed(params?: EmbedSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCEmbedType>>;
-  getSpecificEmbed(id: number, config?: AxiosRequestConfig): Promise<SCEmbedType>;
-  updateASpecificEmbed(id: number, data?: EmbedUpdateParams, config?: AxiosRequestConfig): Promise<SCEmbedType>;
-  patchASpecificEmbed(id: number, data?: EmbedUpdateParams, config?: AxiosRequestConfig): Promise<SCEmbedType>;
+  getSpecificEmbed(id: number | string, config?: AxiosRequestConfig): Promise<SCEmbedType>;
+  updateASpecificEmbed(id: number | string, data?: EmbedUpdateParams, config?: AxiosRequestConfig): Promise<SCEmbedType>;
+  patchASpecificEmbed(id: number | string, data?: EmbedUpdateParams, config?: AxiosRequestConfig): Promise<SCEmbedType>;
   getEmbedFeed(embed_type?: string, embed_id?: string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeedUnitType>>;
-  getSpecificEmbedFeed(id: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeedUnitType>>;
+  getSpecificEmbedFeed(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeedUnitType>>;
 }
 /**
  * Contains all the endpoints needed to manage embeds.
@@ -54,7 +54,7 @@ export class EmbedApiClient {
    * @param id
    * @param config
    */
-  static getSpecificEmbed(id: number, config?: AxiosRequestConfig): Promise<SCEmbedType> {
+  static getSpecificEmbed(id: number | string, config?: AxiosRequestConfig): Promise<SCEmbedType> {
     return apiRequest({...config, url: Endpoints.Embed.url({id}), method: Endpoints.Embed.method});
   }
 
@@ -64,7 +64,7 @@ export class EmbedApiClient {
    * @param data
    * @param config
    */
-  static updateASpecificEmbed(id: number, data?: EmbedUpdateParams, config?: AxiosRequestConfig): Promise<SCEmbedType> {
+  static updateASpecificEmbed(id: number | string, data?: EmbedUpdateParams, config?: AxiosRequestConfig): Promise<SCEmbedType> {
     return apiRequest({...config, url: Endpoints.UpdateEmbed.url({id}), method: Endpoints.UpdateEmbed.method, data: data});
   }
 
@@ -74,7 +74,7 @@ export class EmbedApiClient {
    * @param data
    * @param config
    */
-  static patchASpecificEmbed(id: number, data?: EmbedUpdateParams, config?: AxiosRequestConfig): Promise<SCEmbedType> {
+  static patchASpecificEmbed(id: number | string, data?: EmbedUpdateParams, config?: AxiosRequestConfig): Promise<SCEmbedType> {
     return apiRequest({...config, url: Endpoints.PatchEmbed.url({id}), method: Endpoints.PatchEmbed.method, data: data});
   }
 
@@ -94,7 +94,7 @@ export class EmbedApiClient {
    * @param id
    * @param config
    */
-  static getSpecificEmbedFeed(id: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeedUnitType>> {
+  static getSpecificEmbedFeed(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeedUnitType>> {
     return apiRequest({...config, url: Endpoints.SpecificEmbedFeed.url({id}), method: Endpoints.SpecificEmbedFeed.method});
   }
 }
@@ -147,15 +147,15 @@ export default class EmbedService {
     return EmbedApiClient.createEmbed(data, config);
   }
 
-  static async getSpecificEmbed(id: number, config?: AxiosRequestConfig): Promise<SCEmbedType> {
+  static async getSpecificEmbed(id: number | string, config?: AxiosRequestConfig): Promise<SCEmbedType> {
     return EmbedApiClient.getSpecificEmbed(id, config);
   }
 
-  static async updateASpecificEmbed(id: number, data?: EmbedUpdateParams, config?: AxiosRequestConfig): Promise<SCEmbedType> {
+  static async updateASpecificEmbed(id: number | string, data?: EmbedUpdateParams, config?: AxiosRequestConfig): Promise<SCEmbedType> {
     return EmbedApiClient.updateASpecificEmbed(id, data, config);
   }
 
-  static async patchASpecificEmbed(id: number, data?: EmbedUpdateParams, config?: AxiosRequestConfig): Promise<SCEmbedType> {
+  static async patchASpecificEmbed(id: number | string, data?: EmbedUpdateParams, config?: AxiosRequestConfig): Promise<SCEmbedType> {
     return EmbedApiClient.patchASpecificEmbed(id, data, config);
   }
 
@@ -163,7 +163,7 @@ export default class EmbedService {
     return EmbedApiClient.getEmbedFeed(embed_type, embed_id, config);
   }
 
-  static async getSpecificEmbedFeed(id: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeedUnitType>> {
+  static async getSpecificEmbedFeed(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeedUnitType>> {
     return EmbedApiClient.getSpecificEmbedFeed(id, config);
   }
 }
