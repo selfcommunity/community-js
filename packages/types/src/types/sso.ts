@@ -15,9 +15,9 @@ export interface SSOSignInType {
  */
 export interface SSOSignUpType {
   id: number;
-  ext_id: number | null;
+  ext_id?: number | null;
   username: string;
-  email?: string;
+  email: string;
   role?: string | null;
   tags?: number[] | null;
 }
