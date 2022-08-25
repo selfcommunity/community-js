@@ -5,7 +5,7 @@ import {AxiosRequestConfig} from 'axios';
 import {SCUserType} from '@selfcommunity/types/src/types';
 
 export interface AccountApiClientInterface {
-  create(data?: AccountCreateParams, config?: AxiosRequestConfig): Promise<any>;
+  create(data?: AccountCreateParams, config?: AxiosRequestConfig): Promise<SCUserType>;
   verify(data?: AccountVerifyParams, config?: AxiosRequestConfig): Promise<any>;
   recover(data?: AccountRecoverParams, config?: AxiosRequestConfig): Promise<any>;
   reset(data?: AccountResetParams, config?: AxiosRequestConfig): Promise<any>;
@@ -24,7 +24,7 @@ export class AccountApiClient {
    * @param data
    * @param config
    */
-  static create(data?: AccountCreateParams, config?: AxiosRequestConfig): Promise<any> {
+  static create(data?: AccountCreateParams, config?: AxiosRequestConfig): Promise<SCUserType> {
     return apiRequest({...config, data, url: Endpoints.AccountCreate.url({}), method: Endpoints.AccountCreate.method});
   }
   /**
@@ -99,7 +99,7 @@ export class AccountApiClient {
  :::
  */
 export default class AccountService {
-  static async create(data?: AccountCreateParams, config?: AxiosRequestConfig): Promise<any> {
+  static async create(data?: AccountCreateParams, config?: AxiosRequestConfig): Promise<SCUserType> {
     return AccountApiClient.create(data, config);
   }
   static async verify(data?: AccountVerifyParams, config?: AxiosRequestConfig): Promise<any> {

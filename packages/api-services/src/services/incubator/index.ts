@@ -8,11 +8,11 @@ import {urlParams} from '../../utils/url';
 export interface IncubatorApiClientInterface {
   getAllIncubators(params?: IncubatorSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCIncubatorType>>;
   searchIncubators(params?: IncubatorSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCIncubatorType>>;
-  getSpecificIncubator(id: number, config?: AxiosRequestConfig): Promise<SCIncubatorType>;
+  getSpecificIncubator(id: number | string, config?: AxiosRequestConfig): Promise<SCIncubatorType>;
   createIncubator(data: IncubatorCreateParams, config?: AxiosRequestConfig): Promise<SCIncubatorType>;
-  getIncubatorSubscribers(id: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>>;
-  subscribeToIncubator(id: number, config?: AxiosRequestConfig): Promise<any>;
-  checkIncubatorSubscription(id: number, config?: AxiosRequestConfig): Promise<SCIncubatorSubscriptionType>;
+  getIncubatorSubscribers(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>>;
+  subscribeToIncubator(id: number | string, config?: AxiosRequestConfig): Promise<any>;
+  checkIncubatorSubscription(id: number | string, config?: AxiosRequestConfig): Promise<SCIncubatorSubscriptionType>;
 }
 /**
  * Contains all the endpoints needed to manage incubators.
@@ -44,7 +44,7 @@ export class IncubatorApiClient {
    * @param id
    * @param config
    */
-  static getSpecificIncubator(id: number, config?: AxiosRequestConfig): Promise<SCIncubatorType> {
+  static getSpecificIncubator(id: number | string, config?: AxiosRequestConfig): Promise<SCIncubatorType> {
     return apiRequest({...config, url: Endpoints.GetASpecificIncubator.url({id}), method: Endpoints.GetASpecificIncubator.method});
   }
 
@@ -62,7 +62,7 @@ export class IncubatorApiClient {
    * @param id
    * @param config
    */
-  static getIncubatorSubscribers(id: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
+  static getIncubatorSubscribers(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
     return apiRequest({...config, url: Endpoints.GetIncubatorSubscribers.url({id}), method: Endpoints.GetIncubatorSubscribers.method});
   }
 
@@ -71,7 +71,7 @@ export class IncubatorApiClient {
    * @param id
    * @param config
    */
-  static subscribeToIncubator(id: number, config?: AxiosRequestConfig): Promise<any> {
+  static subscribeToIncubator(id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return apiRequest({...config, url: Endpoints.SubscribeToIncubator.url({id}), method: Endpoints.SubscribeToIncubator.method});
   }
 
@@ -80,7 +80,7 @@ export class IncubatorApiClient {
    * @param id
    * @param config
    */
-  static checkIncubatorSubscription(id: number, config?: AxiosRequestConfig): Promise<SCIncubatorSubscriptionType> {
+  static checkIncubatorSubscription(id: number | string, config?: AxiosRequestConfig): Promise<SCIncubatorSubscriptionType> {
     return apiRequest({...config, url: Endpoints.CheckIncubatorSubscription.url({id}), method: Endpoints.CheckIncubatorSubscription.method});
   }
 }
@@ -129,22 +129,22 @@ export default class IncubatorService {
     return IncubatorApiClient.searchIncubators(params, config);
   }
 
-  static async getSpecificIncubator(id: number, config?: AxiosRequestConfig): Promise<SCIncubatorType> {
+  static async getSpecificIncubator(id: number | string, config?: AxiosRequestConfig): Promise<SCIncubatorType> {
     return IncubatorApiClient.getSpecificIncubator(id, config);
   }
   static async createIncubator(data: IncubatorCreateParams, config?: AxiosRequestConfig): Promise<SCIncubatorType> {
     return IncubatorApiClient.createIncubator(data, config);
   }
 
-  static async getIncubatorSubscribers(id: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
+  static async getIncubatorSubscribers(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
     return IncubatorApiClient.getIncubatorSubscribers(id, config);
   }
 
-  static async subscribeToIncubator(id: number, config?: AxiosRequestConfig): Promise<any> {
+  static async subscribeToIncubator(id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return IncubatorApiClient.subscribeToIncubator(id, config);
   }
 
-  static async checkIncubatorSubscription(id: number, config?: AxiosRequestConfig): Promise<SCIncubatorSubscriptionType> {
+  static async checkIncubatorSubscription(id: number | string, config?: AxiosRequestConfig): Promise<SCIncubatorSubscriptionType> {
     return IncubatorApiClient.checkIncubatorSubscription(id, config);
   }
 }

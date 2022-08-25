@@ -9,10 +9,10 @@ export interface TagApiClientInterface {
   getAllTags(params?: TagGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCTagType>>;
   createTag(data: TagParams, config?: AxiosRequestConfig): Promise<SCTagType>;
   searchTag(params?: TagGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCTagType>>;
-  getSpecificTag(id: number, config?: AxiosRequestConfig): Promise<SCTagType>;
-  updateTag(id: number, data?: TagParams, config?: AxiosRequestConfig): Promise<SCTagType>;
-  patchTag(id: number, data?: TagParams, config?: AxiosRequestConfig): Promise<SCTagType>;
-  assignATag(id: number, user?: number, category?: number, config?: AxiosRequestConfig): Promise<SCTagType>;
+  getSpecificTag(id: number | string, config?: AxiosRequestConfig): Promise<SCTagType>;
+  updateTag(id: number | string, data?: TagParams, config?: AxiosRequestConfig): Promise<SCTagType>;
+  patchTag(id: number | string, data?: TagParams, config?: AxiosRequestConfig): Promise<SCTagType>;
+  assignATag(id: number | string, user?: number, category?: number, config?: AxiosRequestConfig): Promise<SCTagType>;
 }
 /**
  * Contains all the endpoints needed to manage tags.
@@ -53,7 +53,7 @@ export class TagApiClient {
    * @param id
    * @param config
    */
-  static getSpecificTag(id: number, config?: AxiosRequestConfig): Promise<SCTagType> {
+  static getSpecificTag(id: number | string, config?: AxiosRequestConfig): Promise<SCTagType> {
     return apiRequest({...config, url: Endpoints.Tag.url({id}), method: Endpoints.Tag.method});
   }
 
@@ -63,7 +63,7 @@ export class TagApiClient {
    * @param data
    * @param config
    */
-  static updateTag(id: number, data?: TagParams, config?: AxiosRequestConfig): Promise<SCTagType> {
+  static updateTag(id: number | string, data?: TagParams, config?: AxiosRequestConfig): Promise<SCTagType> {
     return apiRequest({...config, url: Endpoints.UpdateTag.url({id}), method: Endpoints.UpdateTag.method, data: data ?? null});
   }
 
@@ -73,7 +73,7 @@ export class TagApiClient {
    * @param data
    * @param config
    */
-  static patchTag(id: number, data?: TagParams, config?: AxiosRequestConfig): Promise<SCTagType> {
+  static patchTag(id: number | string, data?: TagParams, config?: AxiosRequestConfig): Promise<SCTagType> {
     return apiRequest({...config, url: Endpoints.PatchTag.url({id}), method: Endpoints.PatchTag.method, data: data ?? null});
   }
 
@@ -85,7 +85,7 @@ export class TagApiClient {
    * @param category
    * @param config
    */
-  static assignATag(id: number, user?: number, category?: number, config?: AxiosRequestConfig): Promise<SCTagType> {
+  static assignATag(id: number | string, user?: number, category?: number, config?: AxiosRequestConfig): Promise<SCTagType> {
     return apiRequest({
       ...config,
       url: Endpoints.AssignTag.url({id}),
@@ -140,16 +140,16 @@ export default class TagService {
   static async searchTag(params?: TagGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCTagType>> {
     return TagApiClient.searchTag(params, config);
   }
-  static async getSpecificTag(id: number, config?: AxiosRequestConfig): Promise<SCTagType> {
+  static async getSpecificTag(id: number | string, config?: AxiosRequestConfig): Promise<SCTagType> {
     return TagApiClient.getSpecificTag(id, config);
   }
-  static async updateTag(id: number, data?: TagParams, config?: AxiosRequestConfig): Promise<SCTagType> {
+  static async updateTag(id: number | string, data?: TagParams, config?: AxiosRequestConfig): Promise<SCTagType> {
     return TagApiClient.updateTag(id, data, config);
   }
-  static async patchTag(id: number, data?: TagParams, config?: AxiosRequestConfig): Promise<SCTagType> {
+  static async patchTag(id: number | string, data?: TagParams, config?: AxiosRequestConfig): Promise<SCTagType> {
     return TagApiClient.patchTag(id, data, config);
   }
-  static async assignATag(id: number, user?: number, category?: number, config?: AxiosRequestConfig): Promise<SCTagType> {
+  static async assignATag(id: number | string, user?: number, category?: number, config?: AxiosRequestConfig): Promise<SCTagType> {
     return TagApiClient.assignATag(id, user, category, config);
   }
 }

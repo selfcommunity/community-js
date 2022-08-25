@@ -6,7 +6,7 @@ import {AxiosRequestConfig} from 'axios';
 import {urlParams} from '../../utils/url';
 
 export interface CustomAdvApiClientInterface {
-  getASpecificCustomAdv(id: number, config?: AxiosRequestConfig): Promise<SCCustomAdvType>;
+  getASpecificCustomAdv(id: number | string, config?: AxiosRequestConfig): Promise<SCCustomAdvType>;
   getAllCustomAdv(params?: CustomAdvParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCustomAdvType>>;
   searchCustomAdv(params?: CustomAdvParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCustomAdvType>>;
 }
@@ -20,7 +20,7 @@ export class CustomAdvApiClient {
    * @param id
    * @param config
    */
-  static getASpecificCustomAdv(id: number, config?: AxiosRequestConfig): Promise<SCCustomAdvType> {
+  static getASpecificCustomAdv(id: number | string, config?: AxiosRequestConfig): Promise<SCCustomAdvType> {
     return apiRequest({...config, url: Endpoints.CustomAdv.url({id}), method: Endpoints.CustomAdv.method});
   }
 
@@ -81,7 +81,7 @@ export class CustomAdvApiClient {
  :::
  */
 export default class CustomAdvService {
-  static async getASpecificCustomAdv(id: number, config?: AxiosRequestConfig): Promise<SCCustomAdvType> {
+  static async getASpecificCustomAdv(id: number | string, config?: AxiosRequestConfig): Promise<SCCustomAdvType> {
     return CustomAdvApiClient.getASpecificCustomAdv(id, config);
   }
   static async getAllCustomAdv(params?: CustomAdvParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCustomAdvType>> {

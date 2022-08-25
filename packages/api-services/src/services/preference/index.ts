@@ -14,7 +14,7 @@ export interface PreferenceApiClientInterface {
     ordering?: string,
     config?: AxiosRequestConfig
   ): Promise<SCPaginatedResponse<SCPreferenceType[]>>;
-  getSpecificPreference(id: number, config?: AxiosRequestConfig): Promise<SCPreferenceType>;
+  getSpecificPreference(id: number | string, config?: AxiosRequestConfig): Promise<SCPreferenceType>;
 }
 /**
  * Contains all the endpoints needed to manage dynamic preferences.
@@ -58,7 +58,7 @@ export class PreferenceApiClient {
    * @param id
    * @param config
    */
-  static getSpecificPreference(id: number, config?: AxiosRequestConfig): Promise<SCPreferenceType> {
+  static getSpecificPreference(id: number | string, config?: AxiosRequestConfig): Promise<SCPreferenceType> {
     return apiRequest({...config, url: Endpoints.GetPreference.url({id}), method: Endpoints.Preferences.method});
   }
 }
@@ -113,7 +113,7 @@ export default class PreferenceService {
     return PreferenceApiClient.searchPreferences(search, section, keys, ordering, config);
   }
 
-  static async getSpecificPreference(id: number, config?: AxiosRequestConfig): Promise<SCPreferenceType> {
+  static async getSpecificPreference(id: number | string, config?: AxiosRequestConfig): Promise<SCPreferenceType> {
     return PreferenceApiClient.getSpecificPreference(id, config);
   }
 }
