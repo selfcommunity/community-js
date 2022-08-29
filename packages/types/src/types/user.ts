@@ -582,3 +582,30 @@ export interface SCUserConnectionRequestType {
    */
   viewed: Date | string;
 }
+
+/**
+ * Interface SCUserSocialAssociation
+ */
+
+export interface SCUserProviderAssociationType {
+  /**
+   * The user id of the association
+   */
+  user_id: number | string;
+  /**
+   * The provider of the social association
+   */
+  provider: string;
+  /**
+   * The external id of the user in the provider platform
+   */
+  ext_id: string;
+  /**
+   * Profile url of the user in the external provider
+   */
+  profile_url?: string;
+  /**
+   * Optional json metadata
+   */
+  metadata?: any;
+}
