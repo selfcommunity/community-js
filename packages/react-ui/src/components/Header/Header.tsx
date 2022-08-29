@@ -145,7 +145,6 @@ export default function Header(inProps: HeaderProps) {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [value, setValue] = React.useState(0);
   const [anchorEl, setAnchorEl] = React.useState(null);
-
   const handleOpenSettingsMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -157,7 +156,7 @@ export default function Header(inProps: HeaderProps) {
   return (
     <Root className={classNames(classes.root, className)}>
       {isMobile ? (
-        <MobileHeader url={url} {...searchBarProps} />
+        <MobileHeader url={url} searchBarProps={searchBarProps} />
       ) : (
         <AppBar position="fixed" color={'default'}>
           <Toolbar>
