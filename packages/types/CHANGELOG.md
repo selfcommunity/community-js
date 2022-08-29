@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.8-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.2.8-alpha.1...@selfcommunity/types@0.2.8-alpha.2) (2022-08-29)
+
+
+### Performance Improvements
+
+* Add props to choose the settings to display in UserProfileEdit.tsx ([5019bd3](https://github.com/selfcommunity/community-js/commit/5019bd3c6321c6db4312a02ea5c77c0193db6f8f))
+
+
+
+
+
 ## [0.2.8-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.2.8-alpha.0...@selfcommunity/types@0.2.8-alpha.1) (2022-08-25)
 
 
