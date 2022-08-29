@@ -2,13 +2,15 @@ import React, {ChangeEvent, useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Box, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Typography} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
-import {SCUserSettingsType} from '@selfcommunity/types';
-import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
+import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
 import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
+import {SCUserSettingsType} from '@selfcommunity/types';
 import classNames from 'classnames';
 import SettingsSkeleton from './SettingsSkeleton';
 import {useSnackbar} from 'notistack';
 import {useThemeProps} from '@mui/system';
+import {DEFAULT_SETTINGS} from '../../../constants/UserProfile';
+import {SCUserProfileSettings} from '../../../types';
 
 const PREFIX = 'SCUserProfileEditSectionSettings';
 
@@ -44,6 +46,12 @@ export interface SettingsProps {
   className?: string;
 
   /**
+   * Settings to display in the profile
+   * @default [notification, interaction, private_message]
+   */
+  settings?: SCUserProfileSettings[];
+
+  /**
    * Callback on edit data with success
    */
   onEditSuccess?: () => void;
@@ -60,13 +68,13 @@ export default function Settings(inProps: SettingsProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {id = null, className = null, onEditSuccess = null, ...rest} = props;
+  const {id = null, className = null, settings = [...DEFAULT_SETTINGS], onEditSuccess = null, ...rest} = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
 
   // STATE
-  const [settings, setSetting] = useState<SCUserSettingsType>(null);
+  const [_settings, setSetting] = useState<SCUserSettingsType>(null);
 
   // HOOKS
   const {enqueueSnackbar} = useSnackbar();
@@ -91,7 +99,7 @@ export default function Settings(inProps: SettingsProps): JSX.Element {
   // HANDLERS
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setSetting({...settings, [event.target.name]: event.target.value});
+    setSetting({..._settings, [event.target.name]: event.target.value});
     http
       .request({
         url: Endpoints.UserSettingsPatch.url({id: scUserContext.user.id}),
@@ -114,42 +122,49 @@ export default function Settings(inProps: SettingsProps): JSX.Element {
       });
   };
 
+  // RENDER
   if (!scUserContext.user) {
     return null;
   }
 
-  if (settings === null) {
+  if (_settings === null) {
     return <SettingsSkeleton />;
   }
 
-  return (
-    <Root id={id} className={classNames(classes.root, className)} {...rest}>
-      <Typography gutterBottom variant="body1">
-        <FormattedMessage id="ui.userProfileEditSettings.notification.title" defaultMessage="ui.userProfileEditSettings.notification.title" />
-      </Typography>
-      <Box className={classes.control}>
-        <FormControl>
-          <FormLabel>
-            <FormattedMessage id="ui.userProfileEditSettings.notification.label" defaultMessage="ui.userProfileEditSettings.notification.label" />
-          </FormLabel>
-          <RadioGroup
-            aria-labelledby="notification settings"
-            value={settings.show_toast_notifications}
-            name="show_toast_notifications"
-            onChange={handleChange}>
-            <FormControlLabel
-              value={1}
-              control={<Radio size="small" />}
-              label={<FormattedMessage id="ui.common.yes" defaultMessage="ui.common.yes" />}
-            />
-            <FormControlLabel
-              value={0}
-              control={<Radio size="small" />}
-              label={<FormattedMessage id="ui.common.no" defaultMessage="ui.common.no" />}
-            />
-          </RadioGroup>
-        </FormControl>
-        {/*
+  const renderSetting = (setting: SCUserProfileSettings) => {
+    switch (setting) {
+      case SCUserProfileSettings.NOTIFICATION:
+        return (
+          <>
+            <Typography gutterBottom variant="body1">
+              <FormattedMessage id="ui.userProfileEditSettings.notification.title" defaultMessage="ui.userProfileEditSettings.notification.title" />
+            </Typography>
+            <Box className={classes.control}>
+              <FormControl>
+                <FormLabel>
+                  <FormattedMessage
+                    id="ui.userProfileEditSettings.notification.label"
+                    defaultMessage="ui.userProfileEditSettings.notification.label"
+                  />
+                </FormLabel>
+                <RadioGroup
+                  aria-labelledby="notification settings"
+                  value={_settings.show_toast_notifications}
+                  name="show_toast_notifications"
+                  onChange={handleChange}>
+                  <FormControlLabel
+                    value={1}
+                    control={<Radio size="small" />}
+                    label={<FormattedMessage id="ui.common.yes" defaultMessage="ui.common.yes" />}
+                  />
+                  <FormControlLabel
+                    value={0}
+                    control={<Radio size="small" />}
+                    label={<FormattedMessage id="ui.common.no" defaultMessage="ui.common.no" />}
+                  />
+                </RadioGroup>
+              </FormControl>
+              {/*
         <FormControl>
           <FormLabel>
             <FormattedMessage
@@ -159,7 +174,7 @@ export default function Settings(inProps: SettingsProps): JSX.Element {
           </FormLabel>
           <RadioGroup
             aria-labelledby="notification sound settings"
-            value={settings.toast_notifications_emit_sound}
+            value={_settings.toast_notifications_emit_sound}
             name="toast_notifications_emit_sound"
             onChange={handleChange}>
             <FormControlLabel
@@ -175,79 +190,111 @@ export default function Settings(inProps: SettingsProps): JSX.Element {
           </RadioGroup>
         </FormControl>
         */}
-      </Box>
-      <Typography gutterBottom variant="body1">
-        <FormattedMessage id="ui.userProfileEditSettings.interaction.title" defaultMessage="ui.userProfileEditSettings.interaction.title" />
-      </Typography>
-      <Box className={classes.control}>
-        <FormControl>
-          <FormLabel>
-            <FormattedMessage id="ui.userProfileEditSettings.interaction.label" defaultMessage="ui.userProfileEditSettings.interaction.label" />
-          </FormLabel>
-          <RadioGroup aria-labelledby="email notification settings" value={settings.qa_frequency} name="qa_frequency" onChange={handleChange}>
-            <FormControlLabel
-              value={-1}
-              control={<Radio size="small" />}
-              label={
-                <FormattedMessage
-                  id="ui.userProfileEditSettings.interaction.immediatly"
-                  defaultMessage="ui.userProfileEditSettings.interaction.immediatly"
-                />
-              }
-            />
-            <FormControlLabel
-              value={1}
-              control={<Radio size="small" />}
-              label={
-                <FormattedMessage id="ui.userProfileEditSettings.interaction.daily" defaultMessage="ui.userProfileEditSettings.interaction.daily" />
-              }
-            />
-            <FormControlLabel
-              value={0}
-              control={<Radio size="small" />}
-              label={
-                <FormattedMessage id="ui.userProfileEditSettings.interaction.never" defaultMessage="ui.userProfileEditSettings.interaction.never" />
-              }
-            />
-          </RadioGroup>
-        </FormControl>
-      </Box>
-      <Typography gutterBottom variant="body1">
-        <FormattedMessage id="ui.userProfileEditSettings.privateMessage.title" defaultMessage="ui.userProfileEditSettings.privateMessage.title" />
-      </Typography>
-      <Box className={classes.control}>
-        <FormControl>
-          <FormLabel>
-            <FormattedMessage id="ui.userProfileEditSettings.privateMessage.label" defaultMessage="ui.userProfileEditSettings.privateMessage.label" />
-          </FormLabel>
-          <RadioGroup
-            aria-labelledby="email notification settings"
-            value={settings.email_notification_not_qa}
-            name="email_notification_not_qa"
-            onChange={handleChange}>
-            <FormControlLabel
-              value={1}
-              control={<Radio size="small" />}
-              label={
-                <FormattedMessage
-                  id="ui.userProfileEditSettings.privateMessage.email"
-                  defaultMessage="ui.userProfileEditSettings.privateMessage.email"
-                />
-              }
-            />
-            <FormControlLabel
-              value={0}
-              control={<Radio size="small" />}
-              label={
-                <FormattedMessage
-                  id="ui.userProfileEditSettings.privateMessage.frontend"
-                  defaultMessage="ui.userProfileEditSettings.privateMessage.frontend"
-                />
-              }
-            />
-          </RadioGroup>
-        </FormControl>
-      </Box>
+            </Box>
+          </>
+        );
+      case SCUserProfileSettings.INTERACTION:
+        return (
+          <>
+            <Typography gutterBottom variant="body1">
+              <FormattedMessage id="ui.userProfileEditSettings.interaction.title" defaultMessage="ui.userProfileEditSettings.interaction.title" />
+            </Typography>
+            <Box className={classes.control}>
+              <FormControl>
+                <FormLabel>
+                  <FormattedMessage id="ui.userProfileEditSettings.interaction.label" defaultMessage="ui.userProfileEditSettings.interaction.label" />
+                </FormLabel>
+                <RadioGroup aria-labelledby="email notification settings" value={_settings.qa_frequency} name="qa_frequency" onChange={handleChange}>
+                  <FormControlLabel
+                    value={-1}
+                    control={<Radio size="small" />}
+                    label={
+                      <FormattedMessage
+                        id="ui.userProfileEditSettings.interaction.immediatly"
+                        defaultMessage="ui.userProfileEditSettings.interaction.immediatly"
+                      />
+                    }
+                  />
+                  <FormControlLabel
+                    value={1}
+                    control={<Radio size="small" />}
+                    label={
+                      <FormattedMessage
+                        id="ui.userProfileEditSettings.interaction.daily"
+                        defaultMessage="ui.userProfileEditSettings.interaction.daily"
+                      />
+                    }
+                  />
+                  <FormControlLabel
+                    value={0}
+                    control={<Radio size="small" />}
+                    label={
+                      <FormattedMessage
+                        id="ui.userProfileEditSettings.interaction.never"
+                        defaultMessage="ui.userProfileEditSettings.interaction.never"
+                      />
+                    }
+                  />
+                </RadioGroup>
+              </FormControl>
+            </Box>
+          </>
+        );
+      case SCUserProfileSettings.PRIVATE_MESSAGE:
+        return (
+          <>
+            <Typography gutterBottom variant="body1">
+              <FormattedMessage
+                id="ui.userProfileEditSettings.privateMessage.title"
+                defaultMessage="ui.userProfileEditSettings.privateMessage.title"
+              />
+            </Typography>
+            <Box className={classes.control}>
+              <FormControl>
+                <FormLabel>
+                  <FormattedMessage
+                    id="ui.userProfileEditSettings.privateMessage.label"
+                    defaultMessage="ui.userProfileEditSettings.privateMessage.label"
+                  />
+                </FormLabel>
+                <RadioGroup
+                  aria-labelledby="email notification settings"
+                  value={_settings.email_notification_not_qa}
+                  name="email_notification_not_qa"
+                  onChange={handleChange}>
+                  <FormControlLabel
+                    value={1}
+                    control={<Radio size="small" />}
+                    label={
+                      <FormattedMessage
+                        id="ui.userProfileEditSettings.privateMessage.email"
+                        defaultMessage="ui.userProfileEditSettings.privateMessage.email"
+                      />
+                    }
+                  />
+                  <FormControlLabel
+                    value={0}
+                    control={<Radio size="small" />}
+                    label={
+                      <FormattedMessage
+                        id="ui.userProfileEditSettings.privateMessage.frontend"
+                        defaultMessage="ui.userProfileEditSettings.privateMessage.frontend"
+                      />
+                    }
+                  />
+                </RadioGroup>
+              </FormControl>
+            </Box>
+          </>
+        );
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <Root id={id} className={classNames(classes.root, className)} {...rest}>
+      {settings.map((setting) => renderSetting(setting))}
     </Root>
   );
 }

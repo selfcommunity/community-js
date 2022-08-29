@@ -19,9 +19,9 @@ export interface InsightApiClientInterface {
   ): Promise<SCPaginatedResponse<SCContributionInsightType>>;
   getBestEmbedInsight(params?: InsightEmbedParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCEmbedInsightType>>;
   getBestUsersInsight(params?: InsightUserParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUsersInsightType>>;
-  getContributionsInsightCounters(id: number, config?: AxiosRequestConfig): Promise<SCContributionInsightCountersType>;
-  getEmbedsInsightCounters(type: string, id: number, config?: AxiosRequestConfig): Promise<SCEmbedInsightCountersType>;
-  getUsersInsightCounters(id: number, config?: AxiosRequestConfig): Promise<SCUsersInsightCountersType>;
+  getContributionsInsightCounters(id: number | string, config?: AxiosRequestConfig): Promise<SCContributionInsightCountersType>;
+  getEmbedsInsightCounters(type: string, id: number | string, config?: AxiosRequestConfig): Promise<SCEmbedInsightCountersType>;
+  getUsersInsightCounters(id: number | string, config?: AxiosRequestConfig): Promise<SCUsersInsightCountersType>;
 }
 /**
  * Contains all the endpoints needed to manage insights.
@@ -70,7 +70,7 @@ export class InsightApiClient {
    * @param id
    * @param config
    */
-  static getContributionsInsightCounters(id: number, config?: AxiosRequestConfig): Promise<SCContributionInsightCountersType> {
+  static getContributionsInsightCounters(id: number | string, config?: AxiosRequestConfig): Promise<SCContributionInsightCountersType> {
     return apiRequest({...config, url: Endpoints.InsightContributionCounter.url({id}), method: Endpoints.InsightContributionCounter.method});
   }
 
@@ -80,7 +80,7 @@ export class InsightApiClient {
    * @param id
    * @param config
    */
-  static getEmbedsInsightCounters(type: string, id: number, config?: AxiosRequestConfig): Promise<SCEmbedInsightCountersType> {
+  static getEmbedsInsightCounters(type: string, id: number | string, config?: AxiosRequestConfig): Promise<SCEmbedInsightCountersType> {
     return apiRequest({...config, url: Endpoints.InsightEmbedCounter.url({type, id}), method: Endpoints.InsightEmbedCounter.method});
   }
 
@@ -89,7 +89,7 @@ export class InsightApiClient {
    * @param id
    * @param config
    */
-  static getUsersInsightCounters(id: number, config?: AxiosRequestConfig): Promise<SCUsersInsightCountersType> {
+  static getUsersInsightCounters(id: number | string, config?: AxiosRequestConfig): Promise<SCUsersInsightCountersType> {
     return apiRequest({...config, url: Endpoints.InsightUserCounter.url({id}), method: Endpoints.InsightUserCounter.method});
   }
 }
@@ -145,15 +145,15 @@ export default class InsightService {
     return InsightApiClient.getBestUsersInsight(params, config);
   }
 
-  static async getContributionsInsightCounters(id: number, config?: AxiosRequestConfig): Promise<SCContributionInsightCountersType> {
+  static async getContributionsInsightCounters(id: number | string, config?: AxiosRequestConfig): Promise<SCContributionInsightCountersType> {
     return InsightApiClient.getContributionsInsightCounters(id, config);
   }
 
-  static async getEmbedsInsightCounters(type: string, id: number, config?: AxiosRequestConfig): Promise<SCEmbedInsightCountersType> {
+  static async getEmbedsInsightCounters(type: string, id: number | string, config?: AxiosRequestConfig): Promise<SCEmbedInsightCountersType> {
     return InsightApiClient.getEmbedsInsightCounters(type, id, config);
   }
 
-  static async getUsersInsightCounters(id: number, config?: AxiosRequestConfig): Promise<SCUsersInsightCountersType> {
+  static async getUsersInsightCounters(id: number | string, config?: AxiosRequestConfig): Promise<SCUsersInsightCountersType> {
     return InsightApiClient.getUsersInsightCounters(id, config);
   }
 }

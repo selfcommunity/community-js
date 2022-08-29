@@ -14,10 +14,10 @@ export interface MediaApiClientInterface {
   ): Promise<SCChunkMediaType>;
   chunkUploadMediaComplete(data: ChunkUploadCompleteParams, config?: AxiosRequestConfig): Promise<SCMediaType>;
   createMedia(data: MediaCreateParams, config?: AxiosRequestConfig): Promise<SCMediaType>;
-  clickMedia(id: number, ip?: string, config?: AxiosRequestConfig): Promise<any>;
-  getSpecificMedia(id: number, config?: AxiosRequestConfig): Promise<SCMediaType>;
-  updateMedia(id: number, image: string, config?: AxiosRequestConfig): Promise<SCMediaType>;
-  deleteMedia(id: number, config?: AxiosRequestConfig): Promise<any>;
+  clickMedia(id: number | string, ip?: string, config?: AxiosRequestConfig): Promise<any>;
+  getSpecificMedia(id: number | string, config?: AxiosRequestConfig): Promise<SCMediaType>;
+  updateMedia(id: number | string, image: string, config?: AxiosRequestConfig): Promise<SCMediaType>;
+  deleteMedia(id: number | string, config?: AxiosRequestConfig): Promise<any>;
 }
 /**
  * Contains all the endpoints needed to manage medias.
@@ -78,7 +78,7 @@ export class MediaApiClient {
    * @param ip
    * @param config
    */
-  static clickMedia(id: number, ip?: string, config?: AxiosRequestConfig): Promise<any> {
+  static clickMedia(id: number | string, ip?: string, config?: AxiosRequestConfig): Promise<any> {
     return apiRequest({...config, url: Endpoints.MediaClickTracker.url({id}), method: Endpoints.MediaClickTracker.method, data: {ip: ip} ?? null});
   }
 
@@ -87,7 +87,7 @@ export class MediaApiClient {
    * @param id
    * @param config
    */
-  static getSpecificMedia(id: number, config?: AxiosRequestConfig): Promise<SCMediaType> {
+  static getSpecificMedia(id: number | string, config?: AxiosRequestConfig): Promise<SCMediaType> {
     return apiRequest({...config, url: Endpoints.GetMedia.url({id}), method: Endpoints.GetMedia.method});
   }
 
@@ -97,7 +97,7 @@ export class MediaApiClient {
    * @param image
    * @param config
    */
-  static updateMedia(id: number, image: string, config?: AxiosRequestConfig): Promise<SCMediaType> {
+  static updateMedia(id: number | string, image: string, config?: AxiosRequestConfig): Promise<SCMediaType> {
     return apiRequest({...config, url: Endpoints.UpdateMedia.url({id}), method: Endpoints.UpdateMedia.method, data: {image: image}});
   }
 
@@ -106,7 +106,7 @@ export class MediaApiClient {
    * @param id
    * @param config
    */
-  static deleteMedia(id: number, config?: AxiosRequestConfig): Promise<any> {
+  static deleteMedia(id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return apiRequest({...config, url: Endpoints.DeleteMedia.url({id}), method: Endpoints.DeleteMedia.method});
   }
 }
@@ -159,19 +159,19 @@ export default class MediaService {
     return MediaApiClient.createMedia(data, config);
   }
 
-  static async clickMedia(id: number, ip?: string, config?: AxiosRequestConfig): Promise<any> {
+  static async clickMedia(id: number | string, ip?: string, config?: AxiosRequestConfig): Promise<any> {
     return MediaApiClient.clickMedia(id, ip, config);
   }
 
-  static async getSpecificMedia(id: number, config?: AxiosRequestConfig): Promise<SCMediaType> {
+  static async getSpecificMedia(id: number | string, config?: AxiosRequestConfig): Promise<SCMediaType> {
     return MediaApiClient.getSpecificMedia(id, config);
   }
 
-  static async updateMedia(id: number, image: string, config?: AxiosRequestConfig): Promise<SCMediaType> {
+  static async updateMedia(id: number | string, image: string, config?: AxiosRequestConfig): Promise<SCMediaType> {
     return MediaApiClient.updateMedia(id, image, config);
   }
 
-  static async deleteMedia(id: number, config?: AxiosRequestConfig): Promise<any> {
+  static async deleteMedia(id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return MediaApiClient.deleteMedia(id, config);
   }
 }

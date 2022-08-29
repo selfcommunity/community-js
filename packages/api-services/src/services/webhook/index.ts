@@ -9,15 +9,15 @@ export interface WebhookApiClientInterface {
   getAllWebhookEndpoints(config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCWebhookEndpointType>>;
   getAllWebhookEvents(config?: AxiosRequestConfig): Promise<string[]>;
   createWebhookEndpoint(params: WebhookParamType, config?: AxiosRequestConfig): Promise<SCWebhookEndpointType>;
-  getASpecificWebhookEndpoint(id: number, config?: AxiosRequestConfig): Promise<SCWebhookEndpointType>;
-  updateASpecificWebhookEndpoint(id: number, params: WebhookParamType, config?: AxiosRequestConfig): Promise<SCWebhookEndpointType>;
-  updateASingleWebhookEndpointField(id: number, params: WebhookParamType, config?: AxiosRequestConfig): Promise<SCWebhookEndpointType>;
-  deleteWebhookEndpoint(id: number, config?: AxiosRequestConfig): Promise<any>;
-  getAllWebhookEndpointAttempts(id: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCWebhookEndpointAttemptType>>;
-  expireWebhookSigningSecret(id: number, config?: AxiosRequestConfig): Promise<SCWebhookEndpointType>;
-  revealWebhookSigningSecret(id: number, config?: AxiosRequestConfig): Promise<SCWebhookEndpointSecretType>;
-  resendWebhookEndpointEvent(id: number, event: number, config?: AxiosRequestConfig): Promise<any>;
-  resendMultipleWebhookEndpointEvent(id: number, event: number[], config?: AxiosRequestConfig): Promise<any>;
+  getASpecificWebhookEndpoint(id: number | string, config?: AxiosRequestConfig): Promise<SCWebhookEndpointType>;
+  updateASpecificWebhookEndpoint(id: number | string, params: WebhookParamType, config?: AxiosRequestConfig): Promise<SCWebhookEndpointType>;
+  updateASingleWebhookEndpointField(id: number | string, params: WebhookParamType, config?: AxiosRequestConfig): Promise<SCWebhookEndpointType>;
+  deleteWebhookEndpoint(id: number | string, config?: AxiosRequestConfig): Promise<any>;
+  getAllWebhookEndpointAttempts(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCWebhookEndpointAttemptType>>;
+  expireWebhookSigningSecret(id: number | string, config?: AxiosRequestConfig): Promise<SCWebhookEndpointType>;
+  revealWebhookSigningSecret(id: number | string, config?: AxiosRequestConfig): Promise<SCWebhookEndpointSecretType>;
+  resendWebhookEndpointEvent(id: number | string, event: number, config?: AxiosRequestConfig): Promise<any>;
+  resendMultipleWebhookEndpointEvent(id: number | string, event: number[], config?: AxiosRequestConfig): Promise<any>;
 }
 
 /**
@@ -54,7 +54,7 @@ export class WebhookApiClient {
    * @param id
    * @param config
    */
-  static getASpecificWebhookEndpoint(id: number, config?: AxiosRequestConfig): Promise<SCWebhookEndpointType> {
+  static getASpecificWebhookEndpoint(id: number | string, config?: AxiosRequestConfig): Promise<SCWebhookEndpointType> {
     return apiRequest({...config, url: Endpoints.GetSpecificWebhook.url({id}), method: Endpoints.GetSpecificWebhook.method});
   }
 
@@ -64,7 +64,7 @@ export class WebhookApiClient {
    * @param params
    * @param config
    */
-  static updateASpecificWebhookEndpoint(id: number, params: WebhookParamType, config?: AxiosRequestConfig): Promise<SCWebhookEndpointType> {
+  static updateASpecificWebhookEndpoint(id: number | string, params: WebhookParamType, config?: AxiosRequestConfig): Promise<SCWebhookEndpointType> {
     return apiRequest({...config, url: Endpoints.WebhookUpdate.url({id}), method: Endpoints.WebhookUpdate.method, data: params});
   }
 
@@ -74,7 +74,7 @@ export class WebhookApiClient {
    * @param params
    * @param config
    */
-  static updateASingleWebhookEndpointField(id: number, params: WebhookParamType, config?: AxiosRequestConfig): Promise<SCWebhookEndpointType> {
+  static updateASingleWebhookEndpointField(id: number | string, params: WebhookParamType, config?: AxiosRequestConfig): Promise<SCWebhookEndpointType> {
     return apiRequest({...config, url: Endpoints.WebhookPatch.url({id}), method: Endpoints.WebhookPatch.method, data: params});
   }
 
@@ -83,7 +83,7 @@ export class WebhookApiClient {
    * @param id
    * @param config
    */
-  static deleteWebhookEndpoint(id: number, config?: AxiosRequestConfig): Promise<any> {
+  static deleteWebhookEndpoint(id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return apiRequest({...config, url: Endpoints.WebhookDelete.url({id}), method: Endpoints.WebhookDelete.method});
   }
 
@@ -92,7 +92,7 @@ export class WebhookApiClient {
    * @param id
    * @param config
    */
-  static getAllWebhookEndpointAttempts(id: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCWebhookEndpointAttemptType>> {
+  static getAllWebhookEndpointAttempts(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCWebhookEndpointAttemptType>> {
     return apiRequest({...config, url: Endpoints.WebhookEndpointAttempts.url({id}), method: Endpoints.WebhookEndpointAttempts.method});
   }
 
@@ -101,7 +101,7 @@ export class WebhookApiClient {
    * @param id
    * @param config
    */
-  static expireWebhookSigningSecret(id: number, config?: AxiosRequestConfig): Promise<SCWebhookEndpointType> {
+  static expireWebhookSigningSecret(id: number | string, config?: AxiosRequestConfig): Promise<SCWebhookEndpointType> {
     return apiRequest({...config, url: Endpoints.WebhookExpireSigningSecret.url({id}), method: Endpoints.WebhookExpireSigningSecret.method});
   }
 
@@ -110,7 +110,7 @@ export class WebhookApiClient {
    * @param id
    * @param config
    */
-  static revealWebhookSigningSecret(id: number, config?: AxiosRequestConfig): Promise<SCWebhookEndpointSecretType> {
+  static revealWebhookSigningSecret(id: number | string, config?: AxiosRequestConfig): Promise<SCWebhookEndpointSecretType> {
     return apiRequest({...config, url: Endpoints.WebhookRevealSigningSecret.url({id}), method: Endpoints.WebhookRevealSigningSecret.method});
   }
 
@@ -120,7 +120,7 @@ export class WebhookApiClient {
    * @param event
    * @param config
    */
-  static resendWebhookEndpointEvent(id: number, event: number, config?: AxiosRequestConfig): Promise<any> {
+  static resendWebhookEndpointEvent(id: number | string, event: number, config?: AxiosRequestConfig): Promise<any> {
     return apiRequest({
       ...config,
       url: Endpoints.WebhookResendEndpointEvent.url({id}),
@@ -135,7 +135,7 @@ export class WebhookApiClient {
    * @param event
    * @param config
    */
-  static resendMultipleWebhookEndpointEvent(id: number, event: number[], config?: AxiosRequestConfig): Promise<any> {
+  static resendMultipleWebhookEndpointEvent(id: number | string, event: number[], config?: AxiosRequestConfig): Promise<any> {
     return apiRequest({
       ...config,
       url: Endpoints.WebhookResendMultipleEndpointEvent.url({id}),
@@ -190,31 +190,31 @@ export default class WebhookService {
   static async createWebhookEndpoint(params: WebhookParamType, config?: AxiosRequestConfig): Promise<SCWebhookEndpointType> {
     return WebhookApiClient.createWebhookEndpoint(params, config);
   }
-  static async getASpecificWebhookEndpoint(id: number, config?: AxiosRequestConfig): Promise<SCWebhookEndpointType> {
+  static async getASpecificWebhookEndpoint(id: number | string, config?: AxiosRequestConfig): Promise<SCWebhookEndpointType> {
     return WebhookApiClient.getASpecificWebhookEndpoint(id, config);
   }
-  static async updateASpecificWebhookEndpoint(id: number, params: WebhookParamType, config?: AxiosRequestConfig): Promise<SCWebhookEndpointType> {
+  static async updateASpecificWebhookEndpoint(id: number | string, params: WebhookParamType, config?: AxiosRequestConfig): Promise<SCWebhookEndpointType> {
     return WebhookApiClient.updateASpecificWebhookEndpoint(id, params, config);
   }
-  static async updateASingleWebhookEndpointField(id: number, params: WebhookParamType, config?: AxiosRequestConfig): Promise<SCWebhookEndpointType> {
+  static async updateASingleWebhookEndpointField(id: number | string, params: WebhookParamType, config?: AxiosRequestConfig): Promise<SCWebhookEndpointType> {
     return WebhookApiClient.updateASingleWebhookEndpointField(id, params, config);
   }
-  static async deleteWebhookEndpoint(id: number, config?: AxiosRequestConfig): Promise<any> {
+  static async deleteWebhookEndpoint(id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return WebhookApiClient.deleteWebhookEndpoint(id, config);
   }
-  static async getAllWebhookEndpointAttempts(id: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCWebhookEndpointAttemptType>> {
+  static async getAllWebhookEndpointAttempts(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCWebhookEndpointAttemptType>> {
     return WebhookApiClient.getAllWebhookEndpointAttempts(id, config);
   }
-  static async expireWebhookSigningSecret(id: number, config?: AxiosRequestConfig): Promise<SCWebhookEndpointType> {
+  static async expireWebhookSigningSecret(id: number | string, config?: AxiosRequestConfig): Promise<SCWebhookEndpointType> {
     return WebhookApiClient.expireWebhookSigningSecret(id, config);
   }
-  static async revealWebhookSigningSecret(id: number, config?: AxiosRequestConfig): Promise<SCWebhookEndpointSecretType> {
+  static async revealWebhookSigningSecret(id: number | string, config?: AxiosRequestConfig): Promise<SCWebhookEndpointSecretType> {
     return WebhookApiClient.revealWebhookSigningSecret(id, config);
   }
-  static async resendWebhookEndpointEvent(id: number, event: number, config?: AxiosRequestConfig): Promise<any> {
+  static async resendWebhookEndpointEvent(id: number | string, event: number, config?: AxiosRequestConfig): Promise<any> {
     return WebhookApiClient.resendWebhookEndpointEvent(id, event, config);
   }
-  static async resendMultipleWebhookEndpointEvent(id: number, event: number[], config?: AxiosRequestConfig): Promise<any> {
+  static async resendMultipleWebhookEndpointEvent(id: number | string, event: number[], config?: AxiosRequestConfig): Promise<any> {
     return WebhookApiClient.resendMultipleWebhookEndpointEvent(id, event, config);
   }
 }

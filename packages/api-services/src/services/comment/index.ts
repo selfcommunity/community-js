@@ -8,15 +8,15 @@ import {urlParams} from '../../utils/url';
 export interface CommentApiClientInterface {
   getAllComments(params: CommentListParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCommentType>>;
   createComment(data: CommentCreateParams, config?: AxiosRequestConfig): Promise<SCCommentType>;
-  getASpecificComment(id: number, config?: AxiosRequestConfig): Promise<SCCommentType>;
-  updateComment(id: number, text: string, config?: AxiosRequestConfig): Promise<SCCommentType>;
-  deleteComment(id: number, config?: AxiosRequestConfig): Promise<any>;
-  restoreComment(id: number, config?: AxiosRequestConfig): Promise<any>;
-  getSpecificCommentVotesList(id: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCVoteType>>;
-  upvoteComment(id: number, config?: AxiosRequestConfig): Promise<any>;
-  getSpecificCommentFlags(id: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFlagType>>;
-  flagComment(id: number, flagType: SCFlagTypeEnum, config?: AxiosRequestConfig): Promise<any>;
-  getSpecificCommentFlagStatus(id: number, config?: AxiosRequestConfig): Promise<SCFlagType>;
+  getASpecificComment(id: number | string, config?: AxiosRequestConfig): Promise<SCCommentType>;
+  updateComment(id: number | string, text: string, config?: AxiosRequestConfig): Promise<SCCommentType>;
+  deleteComment(id: number | string, config?: AxiosRequestConfig): Promise<any>;
+  restoreComment(id: number | string, config?: AxiosRequestConfig): Promise<any>;
+  getSpecificCommentVotesList(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCVoteType>>;
+  upvoteComment(id: number | string, config?: AxiosRequestConfig): Promise<any>;
+  getSpecificCommentFlags(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFlagType>>;
+  flagComment(id: number | string, flagType: SCFlagTypeEnum, config?: AxiosRequestConfig): Promise<any>;
+  getSpecificCommentFlagStatus(id: number | string, config?: AxiosRequestConfig): Promise<SCFlagType>;
 }
 
 /**
@@ -48,7 +48,7 @@ export class CommentApiClient {
    * @param id
    * @param config
    */
-  static getASpecificComment(id: number, config?: AxiosRequestConfig): Promise<SCCommentType> {
+  static getASpecificComment(id: number | string, config?: AxiosRequestConfig): Promise<SCCommentType> {
     return apiRequest({...config, url: Endpoints.Comment.url({id}), method: Endpoints.Comment.method});
   }
 
@@ -58,7 +58,7 @@ export class CommentApiClient {
    * @param text
    * @param config
    */
-  static updateComment(id: number, text: string, config?: AxiosRequestConfig): Promise<SCCommentType> {
+  static updateComment(id: number | string, text: string, config?: AxiosRequestConfig): Promise<SCCommentType> {
     return apiRequest({...config, url: Endpoints.UpdateComment.url({id}), method: Endpoints.UpdateComment.method, data: {text: text}});
   }
 
@@ -67,7 +67,7 @@ export class CommentApiClient {
    * @param id
    * @param config
    */
-  static deleteComment(id: number, config?: AxiosRequestConfig): Promise<any> {
+  static deleteComment(id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return apiRequest({...config, url: Endpoints.DeleteComment.url({id}), method: Endpoints.DeleteComment.method});
   }
 
@@ -76,7 +76,7 @@ export class CommentApiClient {
    * @param id
    * @param config
    */
-  static restoreComment(id: number, config?: AxiosRequestConfig): Promise<any> {
+  static restoreComment(id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return apiRequest({...config, url: Endpoints.RestoreComment.url({id}), method: Endpoints.RestoreComment.method});
   }
 
@@ -85,7 +85,7 @@ export class CommentApiClient {
    * @param id
    * @param config
    */
-  static getSpecificCommentVotesList(id: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCVoteType>> {
+  static getSpecificCommentVotesList(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCVoteType>> {
     return apiRequest({...config, url: Endpoints.CommentVotesList.url({id}), method: Endpoints.CommentVotesList.method});
   }
 
@@ -94,7 +94,7 @@ export class CommentApiClient {
    * @param id
    * @param config
    */
-  static upvoteComment(id: number, config?: AxiosRequestConfig): Promise<any> {
+  static upvoteComment(id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return apiRequest({...config, url: Endpoints.CommentVote.url({id}), method: Endpoints.CommentVote.method});
   }
 
@@ -104,7 +104,7 @@ export class CommentApiClient {
    * @param id
    * @param config
    */
-  static getSpecificCommentFlags(id: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFlagType>> {
+  static getSpecificCommentFlags(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFlagType>> {
     return apiRequest({...config, url: Endpoints.CommentFlagList.url({id}), method: Endpoints.CommentFlagList.method});
   }
 
@@ -114,7 +114,7 @@ export class CommentApiClient {
    * @param flagType
    * @param config
    */
-  static flagComment(id: number, flagType: SCFlagTypeEnum, config?: AxiosRequestConfig): Promise<any> {
+  static flagComment(id: number | string, flagType: SCFlagTypeEnum, config?: AxiosRequestConfig): Promise<any> {
     return apiRequest({...config, url: Endpoints.FlagComment.url({id}), method: Endpoints.FlagComment.method, data: {flagType: flagType}});
   }
 
@@ -123,7 +123,7 @@ export class CommentApiClient {
    * @param id
    * @param config
    */
-  static getSpecificCommentFlagStatus(id: number, config?: AxiosRequestConfig): Promise<SCFlagType> {
+  static getSpecificCommentFlagStatus(id: number | string, config?: AxiosRequestConfig): Promise<SCFlagType> {
     return apiRequest({...config, url: Endpoints.CommentFlagStatus.url({id}), method: Endpoints.CommentFlagStatus.method});
   }
 }
@@ -170,31 +170,31 @@ export default class CommentService {
   static async createComment(data: CommentCreateParams, config?: AxiosRequestConfig): Promise<SCCommentType> {
     return CommentApiClient.createComment(data, config);
   }
-  static async getASpecificComment(id: number, config?: AxiosRequestConfig): Promise<SCCommentType> {
+  static async getASpecificComment(id: number | string, config?: AxiosRequestConfig): Promise<SCCommentType> {
     return CommentApiClient.getASpecificComment(id, config);
   }
-  static async updateComment(id: number, text: string, config?: AxiosRequestConfig): Promise<SCCommentType> {
+  static async updateComment(id: number | string, text: string, config?: AxiosRequestConfig): Promise<SCCommentType> {
     return CommentApiClient.updateComment(id, text, config);
   }
-  static async deleteComment(id: number, config?: AxiosRequestConfig): Promise<any> {
+  static async deleteComment(id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return CommentApiClient.deleteComment(id, config);
   }
-  static async restoreComment(id: number, config?: AxiosRequestConfig): Promise<any> {
+  static async restoreComment(id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return CommentApiClient.restoreComment(id, config);
   }
-  static async getSpecificCommentVotesList(id: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCVoteType>> {
+  static async getSpecificCommentVotesList(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCVoteType>> {
     return CommentApiClient.getSpecificCommentVotesList(id, config);
   }
-  static async upvoteComment(id: number, config?: AxiosRequestConfig): Promise<any> {
+  static async upvoteComment(id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return CommentApiClient.upvoteComment(id, config);
   }
-  static async getSpecificCommentFlags(id: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFlagType>> {
+  static async getSpecificCommentFlags(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFlagType>> {
     return CommentApiClient.getSpecificCommentFlags(id, config);
   }
-  static async flagComment(id: number, flagType: SCFlagTypeEnum, config?: AxiosRequestConfig): Promise<any> {
+  static async flagComment(id: number | string, flagType: SCFlagTypeEnum, config?: AxiosRequestConfig): Promise<any> {
     return CommentApiClient.flagComment(id, flagType, config);
   }
-  static async getSpecificCommentFlagStatus(id: number, config?: AxiosRequestConfig): Promise<SCFlagType> {
+  static async getSpecificCommentFlagStatus(id: number | string, config?: AxiosRequestConfig): Promise<SCFlagType> {
     return CommentApiClient.getSpecificCommentFlagStatus(id, config);
   }
 }

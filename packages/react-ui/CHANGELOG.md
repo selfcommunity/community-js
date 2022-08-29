@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.2-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.2-alpha.1...@selfcommunity/react-ui@0.5.2-alpha.2) (2022-08-29)
+
+
+### Bug Fixes
+
+* Fix imports ([2eb9977](https://github.com/selfcommunity/community-js/commit/2eb99773a4cb0b000ef6843ad2ee0a1715214d55))
+
+
+### Performance Improvements
+
+* Add props to choose the settings to display in UserProfileEdit.tsx ([5019bd3](https://github.com/selfcommunity/community-js/commit/5019bd3c6321c6db4312a02ea5c77c0193db6f8f))
+
+
+
+
+
+## [0.5.2-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.2-alpha.0...@selfcommunity/react-ui@0.5.2-alpha.1) (2022-08-25)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.5.2-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.1...@selfcommunity/react-ui@0.5.2-alpha.0) (2022-08-25)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
 ## [0.5.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.1-alpha.3...@selfcommunity/react-ui@0.5.1) (2022-08-23)
 
 **Note:** Version bump only for package @selfcommunity/react-ui

@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.2-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.2.2-alpha.1...@selfcommunity/api-services@0.2.2-alpha.2) (2022-08-29)
+
+**Note:** Version bump only for package @selfcommunity/api-services
+
+
+
+
+
+## [0.2.2-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.2.2-alpha.0...@selfcommunity/api-services@0.2.2-alpha.1) (2022-08-25)
+
+
+### Bug Fixes
+
+* Fix SSO SignUp params ([6ab656e](https://github.com/selfcommunity/community-js/commit/6ab656e3e6a16cb6dbb6060ce8ae0cd497bbb87b))
+
+
+
+
+
+## [0.2.2-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.2.1...@selfcommunity/api-services@0.2.2-alpha.0) (2022-08-25)
+
+
+### Bug Fixes
+
+* Fix type of id parameter in services, now support also strings ([4e362c2](https://github.com/selfcommunity/community-js/commit/4e362c23affab41701552041c6ee16e85fdd1ba0))
+
+
+
+
+
 ## [0.2.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.2.1-alpha.1...@selfcommunity/api-services@0.2.1) (2022-08-23)
 
 **Note:** Version bump only for package @selfcommunity/api-services

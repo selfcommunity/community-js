@@ -1,10 +1,12 @@
-import {SCUserFields} from '@selfcommunity/types';
+import {SCUserProfileFields, SCUserProfileSettings} from '../types';
 
 export const DEFAULT_FIELDS = [
-  SCUserFields.REAL_NAME,
-  SCUserFields.DATE_JOINED,
-  SCUserFields.DATE_OF_BIRTH,
-  SCUserFields.DESCRIPTION,
-  SCUserFields.WEBSITE,
-  SCUserFields.BIO
+  SCUserProfileFields.REAL_NAME,
+  SCUserProfileFields.DATE_JOINED,
+  SCUserProfileFields.DATE_OF_BIRTH,
+  SCUserProfileFields.DESCRIPTION,
+  SCUserProfileFields.WEBSITE,
+  SCUserProfileFields.BIO
 ];
+
+export const DEFAULT_SETTINGS = [SCUserProfileSettings.NOTIFICATION, SCUserProfileSettings.INTERACTION, SCUserProfileSettings.PRIVATE_MESSAGE];

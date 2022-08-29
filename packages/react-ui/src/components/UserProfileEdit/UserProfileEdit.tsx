@@ -1,50 +1,15 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
 import {Accordion, AccordionDetails, AccordionProps as MUIAccordionProps, AccordionSummary, Box, Typography} from '@mui/material';
-import {defineMessages, FormattedMessage} from 'react-intl';
-import {SCUserFields} from '@selfcommunity/types';
-import {DEFAULT_FIELDS} from '../../constants/UserProfile';
+import {FormattedMessage} from 'react-intl';
+import {DEFAULT_FIELDS, DEFAULT_SETTINGS} from '../../constants/UserProfile';
 import PublicInfo, {PublicInfoProps} from './Section/PublicInfo';
-import Settings, {SettingsProps} from './Section/Settings';
+import Settings from './Section/Settings';
 import classNames from 'classnames';
 import {DistributiveOmit} from '@mui/types';
 import {OverrideProps} from '@mui/material/OverridableComponent';
 import {useThemeProps} from '@mui/system';
-
-const messages = defineMessages({
-  realName: {
-    id: 'ui.userProfileEdit.realName',
-    defaultMessage: 'ui.userProfileEdit.realName'
-  },
-  dateJoined: {
-    id: 'ui.userProfileEdit.dateJoined',
-    defaultMessage: 'ui.userProfileEdit.dateJoined'
-  },
-  bio: {
-    id: 'ui.userProfileEdit.bio',
-    defaultMessage: 'ui.userProfileEdit.bio'
-  },
-  location: {
-    id: 'ui.userProfileEdit.location',
-    defaultMessage: 'ui.userProfileEdit.location'
-  },
-  dateOfBirth: {
-    id: 'ui.userProfileEdit.dateOfBirth',
-    defaultMessage: 'ui.userProfileEdit.dateOfBirth'
-  },
-  description: {
-    id: 'ui.userProfileEdit.description',
-    defaultMessage: 'ui.userProfileEdit.description'
-  },
-  gender: {
-    id: 'ui.userProfileEdit.gender',
-    defaultMessage: 'ui.userProfileEdit.gender'
-  },
-  website: {
-    id: 'ui.userProfileEdit.website',
-    defaultMessage: 'ui.userProfileEdit.website'
-  }
-});
+import {SCUserProfileFields, SCUserProfileSettings} from '../../types';
 
 const PREFIX = 'SCUserProfileEdit';
 
@@ -85,7 +50,12 @@ export interface UserProfileEditProps {
    * User fields to display in the profile
    * @default [real_name, date_joined, date_of_birth, website, description, bio]
    */
-  fields?: SCUserFields[];
+  fields?: SCUserProfileFields[];
+  /**
+   * Settings to display in the profile
+   * @default [notification, interaction, private_message]
+   */
+  settings?: SCUserProfileSettings[];
   /**
    * Props to apply to the accordion component
    * @default null
@@ -96,13 +66,13 @@ export interface UserProfileEditProps {
    * Props to apply to PublicInfo section
    * @default {}
    */
-  UserProfileEditSectionPublicInfoProps?: PublicInfoProps;
+  UserProfileEditSectionPublicInfoProps?: Omit<PublicInfoProps, 'fields'>;
 
   /**
    * Props to apply to Settings section
    * @default {}
    */
-  UserProfileEditSectionSettingsProps?: SettingsProps;
+  UserProfileEditSectionSettingsProps?: Omit<PublicInfoProps, 'settings'>;
 
   /**
    * Any other properties
@@ -144,6 +114,7 @@ export default function UserProfileEdit(inProps: UserProfileEditProps): JSX.Elem
     id = null,
     className = null,
     fields = [...DEFAULT_FIELDS],
+    settings = [...DEFAULT_SETTINGS],
     AccordionProps = {},
     UserProfileEditSectionPublicInfoProps = {},
     UserProfileEditSectionSettingsProps = {},
@@ -160,7 +131,7 @@ export default function UserProfileEdit(inProps: UserProfileEditProps): JSX.Elem
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <PublicInfo fields={fields} {...UserProfileEditSectionPublicInfoProps}/>
+          <PublicInfo fields={fields} {...UserProfileEditSectionPublicInfoProps} />
         </AccordionDetails>
       </Accordion>
       <Accordion {...AccordionProps}>
@@ -170,7 +141,7 @@ export default function UserProfileEdit(inProps: UserProfileEditProps): JSX.Elem
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Settings {...UserProfileEditSectionSettingsProps} />
+          <Settings settings={settings} {...UserProfileEditSectionSettingsProps} />
         </AccordionDetails>
       </Accordion>
     </Root>

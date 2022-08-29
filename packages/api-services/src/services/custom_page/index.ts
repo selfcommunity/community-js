@@ -6,7 +6,7 @@ import {AxiosRequestConfig} from 'axios';
 import {urlParams} from '../../utils/url';
 
 export interface CustomPageApiClientInterface {
-  getASpecificCustomPage(id: number, config?: AxiosRequestConfig): Promise<SCCustomPageType>;
+  getASpecificCustomPage(id: number | string, config?: AxiosRequestConfig): Promise<SCCustomPageType>;
   getAllCustomPages(params?: CustomPageParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCustomPageType>>;
   searchCustomPages(params?: CustomPageSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCustomPageType>>;
 }
@@ -20,7 +20,7 @@ export class CustomPageApiClient {
    * @param id
    * @param config
    */
-  static getASpecificCustomPage(id: number, config?: AxiosRequestConfig): Promise<SCCustomPageType> {
+  static getASpecificCustomPage(id: number | string, config?: AxiosRequestConfig): Promise<SCCustomPageType> {
     return apiRequest({...config, url: Endpoints.CustomPage.url({id}), method: Endpoints.CustomPage.method});
   }
 
@@ -81,7 +81,7 @@ export class CustomPageApiClient {
  :::
  */
 export default class CustomPageService {
-  static async getASpecificCustomPage(id: number, config?: AxiosRequestConfig): Promise<SCCustomPageType> {
+  static async getASpecificCustomPage(id: number | string, config?: AxiosRequestConfig): Promise<SCCustomPageType> {
     return CustomPageApiClient.getASpecificCustomPage(id, config);
   }
   static async getAllCustomPages(params?: CustomPageParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCustomPageType>> {
