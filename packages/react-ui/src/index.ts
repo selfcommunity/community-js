@@ -63,7 +63,10 @@ import {
   SCFeedWidgetType,
   SCMediaChunkType,
   SCMediaObjectType,
-  SCNotificationObjectTemplateType
+  SCNotificationObjectTemplateType,
+  SCHeaderMenuUrlsType,
+  SCUserProfileFields,
+  SCUserProfileSettings
 } from './types';
 import Widget from './components/Widget';
 import MediaChunkUploader, {MediaChunkUploaderProps} from './shared/MediaChunkUploader';
@@ -195,6 +198,8 @@ export {
   UserProfileInfo,
   UserProfileInfoProps,
   UserProfileInfoSkeleton,
+  SCUserProfileFields,
+  SCUserProfileSettings,
   UserProfileEdit,
   UserProfileEditProps,
   UserProfileEditSectionPublicInfo,
@@ -276,6 +281,7 @@ export {
   ContributionUtils,
   Footer,
   FooterProps,
+  SCHeaderMenuUrlsType,
   Header,
   HeaderProps
 };

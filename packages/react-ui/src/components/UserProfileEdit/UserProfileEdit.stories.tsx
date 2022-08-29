@@ -1,8 +1,7 @@
 import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
-
+import {SCUserProfileFields, SCUserProfileSettings} from '../../types';
 import UserProfileEdit from './index';
-import {SCUserFields} from '@selfcommunity/types';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -33,14 +32,18 @@ export const Base = Template.bind({});
 Base.args = {
   /* the args you need here will depend on your component */
   fields: [
-    SCUserFields.USERNAME,
-    SCUserFields.REAL_NAME,
-    SCUserFields.DATE_JOINED,
-    SCUserFields.DATE_OF_BIRTH,
-    SCUserFields.DESCRIPTION,
-    SCUserFields.WEBSITE,
-    SCUserFields.BIO,
-    SCUserFields.LOCATION,
-    SCUserFields.GENDER
+    SCUserProfileFields.USERNAME,
+    SCUserProfileFields.REAL_NAME,
+    SCUserProfileFields.DATE_JOINED,
+    SCUserProfileFields.DATE_OF_BIRTH,
+    SCUserProfileFields.DESCRIPTION,
+    SCUserProfileFields.WEBSITE,
+    SCUserProfileFields.BIO,
+    SCUserProfileFields.LOCATION,
+    SCUserProfileFields.GENDER
+  ],
+  settings: [
+    SCUserProfileSettings.INTERACTION,
+    SCUserProfileSettings.NOTIFICATION
   ]
 };

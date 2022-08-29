@@ -3,7 +3,7 @@ import {styled} from '@mui/material/styles';
 import {Box, CircularProgress, IconButton, InputAdornment, MenuItem, TextField} from '@mui/material';
 import Icon from '@mui/material/Icon';
 import {defineMessages, useIntl} from 'react-intl';
-import {SCUserFields, SCUserType} from '@selfcommunity/types';
+import {SCUserType} from '@selfcommunity/types';
 import {http, Endpoints, formatHttpError, HttpResponse} from '@selfcommunity/api-services';
 import {camelCase} from '@selfcommunity/utils';
 import {SCPreferences, SCPreferencesContextType, SCUserContextType, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
@@ -14,6 +14,7 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import UsernameTextField from '../../../shared/UsernameTextField';
 import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
 import {useThemeProps} from '@mui/system';
+import {SCUserProfileFields} from '../../../types';
 
 const messages = defineMessages({
   genderMale: {
@@ -65,7 +66,7 @@ export interface PublicInfoProps {
    * User fields to display in the profile
    * @default [real_name, date_joined, date_of_birth, website, description, bio]
    */
-  fields?: SCUserFields[];
+  fields?: SCUserProfileFields[];
 
   /**
    * Callback on edit data with success
@@ -100,8 +101,8 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
   // STATE
   const [user, setUser] = useState<SCUserType>(scUserContext.user);
   const [error, setError] = useState<any>({});
-  const [editing, setEditing] = useState<SCUserFields[]>([]);
-  const [saving, setSaving] = useState<SCUserFields[]>([]);
+  const [editing, setEditing] = useState<SCUserProfileFields[]>([]);
+  const [saving, setSaving] = useState<SCUserProfileFields[]>([]);
 
   // INTL
   const intl = useIntl();
@@ -112,7 +113,7 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
   }, [scUserContext.user]);
 
   // HANDLERS
-  const handleEdit = (field: SCUserFields) => {
+  const handleEdit = (field: SCUserProfileFields) => {
     return (event: React.MouseEvent<HTMLButtonElement>) => {
       setEditing([...editing, field]);
       if (error[`${camelCase(field)}Error`]) {
@@ -122,7 +123,7 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
     };
   };
 
-  const handleSave = (field: SCUserFields) => {
+  const handleSave = (field: SCUserProfileFields) => {
     return (event: React.MouseEvent<HTMLButtonElement>) => {
       if (user[field] === scUserContext.user[field]) {
         setEditing(editing.filter((f) => f !== field));
@@ -205,12 +206,12 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
     let content = null;
 
     switch (field) {
-      case SCUserFields.USERNAME:
+      case SCUserProfileFields.USERNAME:
         component.element = UsernameTextField;
         break;
-      case SCUserFields.DATE_JOINED:
+      case SCUserProfileFields.DATE_JOINED:
         return null;
-      case SCUserFields.DATE_OF_BIRTH:
+      case SCUserProfileFields.DATE_OF_BIRTH:
         return (
           <LocalizationProvider dateAdapter={AdapterDateFns} key={field}>
             <DatePicker
@@ -237,15 +238,15 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
             />
           </LocalizationProvider>
         );
-      case SCUserFields.BIO:
+      case SCUserProfileFields.BIO:
         props.multiline = true;
         break;
-      case SCUserFields.WEBSITE:
+      case SCUserProfileFields.WEBSITE:
         props.type = 'url';
         props.pattern = 'https://.*';
         props.size = '30';
         break;
-      case SCUserFields.GENDER:
+      case SCUserProfileFields.GENDER:
         props.select = true;
         content = GENDERS.map((gender) => (
           <MenuItem key={gender} value={gender}>
