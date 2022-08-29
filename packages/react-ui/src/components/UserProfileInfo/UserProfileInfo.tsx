@@ -3,7 +3,7 @@ import {styled} from '@mui/material/styles';
 import {Box, Grid, Typography} from '@mui/material';
 import {defineMessages, useIntl} from 'react-intl';
 import {camelCase} from '@selfcommunity/utils';
-import {SCUserFields, SCUserType} from '@selfcommunity/types';
+import {SCUserProfileFields, SCUserType} from '@selfcommunity/types';
 import {useSCFetchUser} from '@selfcommunity/react-core';
 import {DEFAULT_FIELDS} from '../../constants/UserProfile';
 import UserProfileInfoSkeleton from './Skeleton';
@@ -80,7 +80,7 @@ export interface UserProfileInfoProps {
    * User fields to display in the profile
    * @default [real_name, date_joined, date_of_birth, website, description, bio]
    */
-  fields?: SCUserFields[];
+  fields?: SCUserProfileFields[];
 
   /**
    * Any other properties
@@ -128,8 +128,8 @@ export default function UserProfileInfo(inProps: UserProfileInfoProps): JSX.Elem
   // RENDER
   const renderField = (user, field) => {
     switch (field) {
-      case SCUserFields.DATE_JOINED:
-      case SCUserFields.DATE_OF_BIRTH:
+      case SCUserProfileFields.DATE_JOINED:
+      case SCUserProfileFields.DATE_OF_BIRTH:
         return `${intl.formatDate(user[field], {year: 'numeric', month: 'numeric', day: 'numeric'})}`;
       default:
         return user[field];
