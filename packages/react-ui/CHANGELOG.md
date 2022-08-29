@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.3-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.2...@selfcommunity/react-ui@0.5.3-alpha.0) (2022-08-29)
+
+
+### Bug Fixes
+
+* Fix account reset and verify messages ([7af3133](https://github.com/selfcommunity/community-js/commit/7af31338e91c2dc04f1690261d00971106a72121))
+* fixed mobile header searchbar props ([4fe7f42](https://github.com/selfcommunity/community-js/commit/4fe7f422d2c46d10f1b136ebf40ff59b8a6f6249))
+
+
+
+
+
 ## [0.5.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.2-alpha.3...@selfcommunity/react-ui@0.5.2) (2022-08-29)
 
 **Note:** Version bump only for package @selfcommunity/react-ui

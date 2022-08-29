@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.2.2...@selfcommunity/api-services@0.3.0-alpha.0) (2022-08-29)
+
+
+### Features
+
+* Added Services for provider associations ([51e7855](https://github.com/selfcommunity/community-js/commit/51e7855c247d1bb0ae7fc8bf7a70e7426afdb9c8))
+
+
+
+
+
 ## [0.2.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.2.2-alpha.3...@selfcommunity/api-services@0.2.2) (2022-08-29)
 
 **Note:** Version bump only for package @selfcommunity/api-services
