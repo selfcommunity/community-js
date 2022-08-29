@@ -480,6 +480,18 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/user/avatar/'),
     method: 'PATCH'
   },
+  ProviderAssociations: {
+    url: urlReplacer('/api/v2/user/$(id)/provider/'),
+    method: 'GET'
+  },
+  CreateProviderAssociation: {
+    url: urlReplacer('/api/v2/user/$(id)/provider/'),
+    method: 'POST'
+  },
+  DeleteProviderAssociation: {
+    url: urlReplacer('/api/v2/user/$(id)/provider/'),
+    method: 'DELETE'
+  },
   /**
    * Broadcast Messages
    */

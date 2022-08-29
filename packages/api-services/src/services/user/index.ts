@@ -1,31 +1,33 @@
 import {apiRequest} from '../../utils/apiRequest';
 import Endpoints from '../../constants/Endpoints';
 import {
-  SCUserAutocompleteType,
-  SCUserType,
-  SCUserCounterType,
-  SCUserSettingsType,
-  SCUserChangeEmailType,
-  SCUserAvatarType,
-  SCUserPermissionType,
-  SCPlatformType,
+  SCAvatarType,
   SCCategoryType,
   SCFeedUnitType,
+  SCMediaType,
+  SCPlatformType,
+  SCTagType,
+  SCUserAutocompleteType,
+  SCUserAvatarType,
+  SCUserChangeEmailType,
+  SCUserConnectionRequestType,
+  SCUserConnectionStatusType,
+  SCUserCounterType,
+  SCUserEmailTokenType,
   SCUserFollowedStatusType,
   SCUserFollowerStatusType,
-  SCUserConnectionStatusType,
-  SCUserHiddenStatusType,
-  SCUserConnectionRequestType,
-  SCTagType,
-  SCUserLoyaltyPointsType,
-  SCUserEmailTokenType,
   SCUserHiddenByStatusType,
-  SCAvatarType,
-  SCMediaType
+  SCUserHiddenStatusType,
+  SCUserLoyaltyPointsType,
+  SCUserPermissionType,
+  SCUserProviderAssociationType,
+  SCUserSettingsType,
+  SCUserType
 } from '@selfcommunity/types';
 import {SCPaginatedResponse, UserAutocompleteParams, UserSearchParams} from '../../types';
 import {AxiosRequestConfig} from 'axios';
 import {urlParams} from '../../utils/url';
+import {DeleteProviderAssociation} from '../../types/user';
 
 export interface UserApiClientInterface {
   getAllUsers(params?: any, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>>;
@@ -75,6 +77,9 @@ export interface UserApiClientInterface {
   getUserAvatars(config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCAvatarType>>;
   removeUserAvatar(avatar_id: number | string, config?: AxiosRequestConfig): Promise<any>;
   setUserPrimaryAvatar(avatar_id: number | string, config?: AxiosRequestConfig): Promise<any>;
+  getProviderAssociations(userId: string | number, config?: AxiosRequestConfig): Promise<SCUserProviderAssociationType[]>;
+  createProviderAssociation(data: SCUserProviderAssociationType, config?: AxiosRequestConfig): Promise<SCUserProviderAssociationType>;
+  deleteProviderAssociation(data: DeleteProviderAssociation, config?: AxiosRequestConfig): Promise<any>;
 }
 
 /**
@@ -179,7 +184,12 @@ export class UserApiClient {
    * @param confirm
    * @param config
    */
-  static changeUserMail(id: number | string, new_email: string, confirm?: boolean, config?: AxiosRequestConfig): Promise<any | SCUserChangeEmailType> {
+  static changeUserMail(
+    id: number | string,
+    new_email: string,
+    confirm?: boolean,
+    config?: AxiosRequestConfig
+  ): Promise<any | SCUserChangeEmailType> {
     return apiRequest({
       ...config,
       url: Endpoints.ChangeUserMail.url({id}),
@@ -558,6 +568,50 @@ export class UserApiClient {
   static setUserPrimaryAvatar(avatar_id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return apiRequest({...config, url: Endpoints.SetPrimaryAvatar.url({}), method: Endpoints.SetPrimaryAvatar.method, data: {avatar_id: avatar_id}});
   }
+
+  /**
+   * This endpoint retrieve all provider associations owned by a user
+   *
+   * @param userId
+   * @param config
+   */
+  static getProviderAssociations(userId: string | number, config?: AxiosRequestConfig): Promise<SCUserProviderAssociationType[]> {
+    return apiRequest({
+      ...config,
+      url: Endpoints.ProviderAssociations.url({id: userId}),
+      method: Endpoints.ProviderAssociations.method
+    });
+  }
+  /**
+   * This endpoint creates a provider association for a given account.
+   *
+   * @param data
+   * @param config
+   */
+  static createProviderAssociation(data: SCUserProviderAssociationType, config?: AxiosRequestConfig): Promise<SCUserProviderAssociationType> {
+    return apiRequest({
+      ...config,
+      data,
+      url: Endpoints.CreateProviderAssociation.url({userId: data.user_id}),
+      method: Endpoints.CreateProviderAssociation.method
+    });
+  }
+  /**
+   * This endpoint deletes a provider association for a given account.
+   *
+   * It requires an administration token.
+   *
+   * @param data
+   * @param config
+   */
+  static deleteProviderAssociation(data: DeleteProviderAssociation, config?: AxiosRequestConfig): Promise<any> {
+    return apiRequest({
+      ...config,
+      data,
+      url: Endpoints.DeleteProviderAssociation.url({id: data.user_id}),
+      method: Endpoints.DeleteProviderAssociation.method
+    });
+  }
 }
 
 /**
@@ -625,7 +679,12 @@ export default class UserService {
   static async userDelete(id: number | string, hard?: number, config?: AxiosRequestConfig): Promise<any> {
     return UserApiClient.userDelete(id, hard, config);
   }
-  static async changeUserMail(id: number | string, new_email: string, confirm?: boolean, config?: AxiosRequestConfig): Promise<any | SCUserChangeEmailType> {
+  static async changeUserMail(
+    id: number | string,
+    new_email: string,
+    confirm?: boolean,
+    config?: AxiosRequestConfig
+  ): Promise<any | SCUserChangeEmailType> {
     return UserApiClient.changeUserMail(id, new_email, confirm, config);
   }
   static async confirmChangeUserMail(id: number | string, new_email: string, validation_code?: string, config?: AxiosRequestConfig): Promise<any> {
@@ -679,10 +738,16 @@ export default class UserService {
   static async checkUserConnections(id: number | string, config?: AxiosRequestConfig): Promise<SCUserConnectionStatusType> {
     return UserApiClient.checkUserConnections(id, config);
   }
-  static async getUserConnectionRequests(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserConnectionRequestType>> {
+  static async getUserConnectionRequests(
+    id: number | string,
+    config?: AxiosRequestConfig
+  ): Promise<SCPaginatedResponse<SCUserConnectionRequestType>> {
     return UserApiClient.getUserConnectionRequests(id, config);
   }
-  static async getUserRequestConnectionsSent(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserConnectionRequestType>> {
+  static async getUserRequestConnectionsSent(
+    id: number | string,
+    config?: AxiosRequestConfig
+  ): Promise<SCPaginatedResponse<SCUserConnectionRequestType>> {
     return UserApiClient.getUserRequestConnectionsSent(id, config);
   }
   static async userAcceptRequestConnection(id: number | string, config?: AxiosRequestConfig): Promise<any> {
@@ -738,5 +803,14 @@ export default class UserService {
   }
   static async setUserPrimaryAvatar(avatar_id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return UserApiClient.setUserPrimaryAvatar(avatar_id, config);
+  }
+  static async getProviderAssociations(userId: string | number, config?: AxiosRequestConfig): Promise<SCUserProviderAssociationType[]> {
+    return UserApiClient.getProviderAssociations(userId, config);
+  }
+  static async createProviderAssociation(data: SCUserProviderAssociationType, config?: AxiosRequestConfig): Promise<SCUserProviderAssociationType> {
+    return UserApiClient.createProviderAssociation(data, config);
+  }
+  static async deleteProviderAssociation(data: DeleteProviderAssociation, config?: AxiosRequestConfig): Promise<any> {
+    return UserApiClient.deleteProviderAssociation(data, config);
   }
 }

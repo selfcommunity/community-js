@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
-import {Box, Button, ButtonProps, TextFieldProps, Typography} from '@mui/material';
+import {Alert, Box, Button, ButtonProps, TextFieldProps, Typography} from '@mui/material';
 import classNames from 'classnames';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useThemeProps} from '@mui/system';
@@ -60,7 +60,7 @@ export interface AccountResetProps {
    * Callback triggered on success sign in
    * @default null
    */
-  onSuccess?: () => void;
+  onSuccess?: (res: any) => void;
 
   /**
    * Action component to display after success message
@@ -94,8 +94,8 @@ export interface AccountResetProps {
  |root|.SCAccountReset-root|Styles applied to the root element.|
  |form|.SCAccountReset-form|Styles applied to the form element.|
  |email|.SCAccountReset-password|Styles applied to the password TextField.|
- |success|.SCAccountRecover-success|Styles applied to the success Typography.|
- |error|.SCAccountRecover-error|Styles applied to the error Typography.|
+ |success|.SCAccountRecover-success|Styles applied to the success Alert.|
+ |error|.SCAccountRecover-error|Styles applied to the error Alert.|
 
  *
  * @param inProps
@@ -138,9 +138,9 @@ export default function AccountReset(inProps: AccountResetProps): JSX.Element {
     setIsSubmitting(true);
 
     AccountService.reset({validation_code: validationCode, password})
-      .then((res) => {
+      .then((res: any) => {
         setIsSucceed(true);
-        onSuccess && onSuccess();
+        onSuccess && onSuccess(res);
       })
       .catch((error) => {
         const _error = formatHttpError(error);
@@ -162,27 +162,17 @@ export default function AccountReset(inProps: AccountResetProps): JSX.Element {
   }
 
   // RENDER
-  if (isSucceed) {
-    return (
-      <Typography>
-        <FormattedMessage id="ui.accountReset.success" defaultMessage="ui.accountReset.success" />
-      </Typography>
-    );
-  }
-
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
       {isSucceed ? (
-        <>
-          <Typography className={classes.success}>
-            {intl.formatMessage({id: 'ui.accountReset.success', defaultMessage: 'ui.accountReset.success'})}
-          </Typography>
+        <Alert severity="success" className={classes.success}>
+          {intl.formatMessage({id: 'ui.accountReset.success', defaultMessage: 'ui.accountReset.success'})}
           {successAction}
-        </>
+        </Alert>
       ) : validationCodeError ? (
-        <Typography className={classes.error}>
+        <Alert severity="error" className={classes.error}>
           <FormattedMessage id="ui.accountReset.code.error" defaultMessage="ui.accountReset.code.error" />
-        </Typography>
+        </Alert>
       ) : (
         <form className={classes.form} onSubmit={handleSubmit}>
           <PasswordTextField
