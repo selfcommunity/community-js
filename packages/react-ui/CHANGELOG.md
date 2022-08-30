@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.3-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.3-alpha.2...@selfcommunity/react-ui@0.5.3-alpha.3) (2022-08-30)
+
+
+### Bug Fixes
+
+* fixed header menu position ([880fb7c](https://github.com/selfcommunity/community-js/commit/880fb7c730369d5dd6822d35602090ecff10ce79))
+* fixed header tabs selector visibility when clicking other elements. ([2fc64d9](https://github.com/selfcommunity/community-js/commit/2fc64d9cbbff57a7ac6dd1a1464d77513730d4dd))
+
+
+
+
+
 ## [0.5.3-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.3-alpha.1...@selfcommunity/react-ui@0.5.3-alpha.2) (2022-08-30)
 
 
