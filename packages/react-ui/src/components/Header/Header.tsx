@@ -209,7 +209,7 @@ export default function Header(inProps: HeaderProps) {
                 </Box>
                 <Box className={classes.iconButtonsContainer}>
                   {url && url.profile && (
-                    <IconButton component={Link} to={url.profile} size="large" aria-label="Profile" color="inherit" className={classes.iconButton}>
+                    <IconButton component={Link} to={url.profile} onClick={()=> setValue(null)} size="large" aria-label="Profile" color="inherit" className={classes.iconButton}>
                       <Badge color="error">
                         <Avatar alt="Remy Sharp" src={scUserContext.user.avatar} />
                       </Badge>
@@ -219,6 +219,7 @@ export default function Header(inProps: HeaderProps) {
                     <IconButton
                       component={Link}
                       to={url.create}
+                      onClick={()=> setValue(null)}
                       size='large'
                       aria-label='New Contribute'
                       color='inherit'
@@ -232,6 +233,7 @@ export default function Header(inProps: HeaderProps) {
                     <IconButton
                       component={Link}
                       to={url.notifications}
+                      onClick={()=> setValue(null)}
                       size='large'
                       aria-label='Notifications'
                       color='inherit'
@@ -247,13 +249,16 @@ export default function Header(inProps: HeaderProps) {
                   <Menu
                     id='menu-appbar'
                     anchorEl={anchorEl}
-                    keepMounted
                     open={Boolean(anchorEl)}
+                    PaperProps={{
+                      style: {
+                        transform: 'translateX(14px) translateY(14px)',
+                      }
+                    }}
                     onClose={handleCloseSettingsMenu}
                     onClick={handleCloseSettingsMenu}
-                    anchorOrigin={{vertical: 'bottom', horizontal: 'center'}}
-                    transformOrigin={{vertical: 'top', horizontal: 'center'}}>
-                    <HeaderMenu url={url} />
+                  >
+                    <HeaderMenu onItemClick={()=> setValue(null)} url={url} />
                   </Menu>
                 </Box>
               </>
