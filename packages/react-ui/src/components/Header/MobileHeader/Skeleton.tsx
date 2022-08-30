@@ -15,7 +15,7 @@ const Root = styled(Box, {
   overridesResolver: (props, styles) => styles.root
 })(() => ({}));
 /**
- * > API documentation for the Community-JS Header Skeleton component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS Mobile Header Skeleton component. Learn about the available props and the CSS API.
 
  #### Import
 
@@ -34,11 +34,11 @@ const Root = styled(Box, {
  |root|.SCMobileHeaderSkeleton-root|Styles applied to the root element.|
  *
  */
-export default function CategoryHeaderSkeleton(): JSX.Element {
+export default function MobileHeaderSkeleton(): JSX.Element {
   return (
     <Root className={classes.root}>
-      <AppBar sx={{position: 'fixed'}}><Skeleton sx={{height: 60}} animation="wave" variant="rectangular" /></AppBar>
-      <AppBar sx={{position: 'fixed', top: 'auto', bottom: 0}}><Skeleton sx={{height: 60}} animation="wave" variant="rectangular" /></AppBar>
+      <AppBar sx={{position: 'fixed', backgroundColor: '#fff'}}><Skeleton sx={{height: 60}} animation="wave" variant="rectangular" /></AppBar>
+      <AppBar sx={{position: 'fixed', top: 'auto', bottom: 0, backgroundColor: '#fff'}}><Skeleton sx={{height: 60}} animation="wave" variant="rectangular" /></AppBar>
     </Root>
   );
 }
