@@ -247,12 +247,15 @@ export default function Header(inProps: HeaderProps) {
                   <Menu
                     id='menu-appbar'
                     anchorEl={anchorEl}
-                    keepMounted
                     open={Boolean(anchorEl)}
+                    PaperProps={{
+                      style: {
+                        transform: 'translateX(14px) translateY(14px)',
+                      }
+                    }}
                     onClose={handleCloseSettingsMenu}
                     onClick={handleCloseSettingsMenu}
-                    anchorOrigin={{vertical: 'bottom', horizontal: 'center'}}
-                    transformOrigin={{vertical: 'top', horizontal: 'center'}}>
+                  >
                     <HeaderMenu url={url} />
                   </Menu>
                 </Box>
