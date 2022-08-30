@@ -81,7 +81,7 @@ import IncubatorsList, {IncubatorsListProps} from './components/IncubatorsList';
 import IncubatorDetail, {IncubatorDetailProps} from './components/IncubatorDetail';
 import IncubatorSuggestion, {IncubatorSuggestionProps} from './components/IncubatorSuggestion';
 import Footer, {FooterProps} from './components/Footer';
-import Header, {HeaderProps} from './components/Header';
+import Header, {HeaderProps, HeaderSkeleton} from './components/Header';
 import {DEFAULT_WIDGETS_NUMBER} from './constants/Feed';
 import {
   DEFAULT_PAGINATION_QUERY_PARAM_NAME,
@@ -283,5 +283,6 @@ export {
   FooterProps,
   SCHeaderMenuUrlsType,
   Header,
-  HeaderProps
+  HeaderProps,
+  HeaderSkeleton
 };
