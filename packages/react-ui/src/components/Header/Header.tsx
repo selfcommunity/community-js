@@ -25,6 +25,7 @@ import classNames from 'classnames';
 import {FormattedMessage} from 'react-intl';
 import HeaderMenu from './HeaderMenu';
 import {SCHeaderMenuUrlsType} from '../../types';
+import HeaderSkeleton from './Skeleton';
 
 const PREFIX = 'SCHeader';
 
@@ -157,22 +158,26 @@ export default function Header(inProps: HeaderProps) {
   };
 
   useEffect(() => {
-    const getSelectedTab = JSON.parse(localStorage.getItem("selectedTab"));
+    const getSelectedTab = JSON.parse(localStorage.getItem('selectedTab'));
     if (getSelectedTab) {
       setValue(getSelectedTab);
     }
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("selectedTab", JSON.stringify(value));
+    localStorage.setItem('selectedTab', JSON.stringify(value));
   }, [value]);
+
+  if (scUserContext.loading) {
+    return <HeaderSkeleton />;
+  }
 
   return (
     <Root className={classNames(classes.root, className)}>
       {isMobile ? (
         <MobileHeader url={url} searchBarProps={searchBarProps} />
       ) : (
-        <AppBar position="fixed" color={'default'}>
+        <AppBar position='fixed' color={'default'}>
           <Toolbar>
             <Box className={classes.logoContainer}>
               {scUserContext.user && url && url.home ? (
@@ -185,7 +190,7 @@ export default function Header(inProps: HeaderProps) {
                 </Link>
               )}
               {!scUserContext.user && url && url.register && (
-                <Button color="inherit" component={Link} to={url.register} className={classes.registerButton}>
+                <Button color='inherit' component={Link} to={url.register} className={classes.registerButton}>
                   sign up
                 </Button>
               )}
@@ -214,11 +219,11 @@ export default function Header(inProps: HeaderProps) {
                     <IconButton
                       component={Link}
                       to={url.create}
-                      size="large"
-                      aria-label="New Contribute"
-                      color="inherit"
+                      size='large'
+                      aria-label='New Contribute'
+                      color='inherit'
                       className={classes.iconButton}>
-                      <Badge color="error">
+                      <Badge color='error'>
                         <Icon>add_circle_outline</Icon>
                       </Badge>
                     </IconButton>
@@ -227,20 +232,20 @@ export default function Header(inProps: HeaderProps) {
                     <IconButton
                       component={Link}
                       to={url.notifications}
-                      size="large"
-                      aria-label="Notifications"
-                      color="inherit"
+                      size='large'
+                      aria-label='Notifications'
+                      color='inherit'
                       className={classes.iconButton}>
-                      <Badge badgeContent={scUserContext.user.unseen_interactions_counter} color="error">
+                      <Badge badgeContent={scUserContext.user.unseen_interactions_counter} color='error'>
                         <Icon>notifications</Icon>
                       </Badge>
                     </IconButton>
                   )}
-                    <IconButton onClick={handleOpenSettingsMenu} className={classes.iconButton}>
-                      <Icon>expand_more</Icon>
-                    </IconButton>
+                  <IconButton onClick={handleOpenSettingsMenu} className={classes.iconButton}>
+                    <Icon>expand_more</Icon>
+                  </IconButton>
                   <Menu
-                    id="menu-appbar"
+                    id='menu-appbar'
                     anchorEl={anchorEl}
                     keepMounted
                     open={Boolean(anchorEl)}
@@ -254,17 +259,17 @@ export default function Header(inProps: HeaderProps) {
               </>
             ) : (
               <>
-                <Grid container direction="row" justifyContent="flex-end" alignItems="center">
+                <Grid container direction='row' justifyContent='flex-end' alignItems='center'>
                   <SearchBar {...searchBarProps} />
                   {url && url.explore && (
-                    <Button component={Link} to={url.explore} size="medium" aria-label="Explore" color="inherit">
-                      <FormattedMessage id="ui.header.button.explore" defaultMessage="ui.header.button.explore" />
+                    <Button component={Link} to={url.explore} size='medium' aria-label='Explore' color='inherit'>
+                      <FormattedMessage id='ui.header.button.explore' defaultMessage='ui.header.button.explore' />
                     </Button>
                   )}
                   {url && url.login && (
-                    <Button color="inherit" onClick={url.login}>
+                    <Button color='inherit' onClick={url.login}>
                       {' '}
-                      <FormattedMessage id="ui.header.button.login" defaultMessage="ui.header.button.login" />
+                      <FormattedMessage id='ui.header.button.login' defaultMessage='ui.header.button.login' />
                     </Button>
                   )}
                 </Grid>
