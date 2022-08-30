@@ -6,7 +6,6 @@ import {
   Button,
   IconButton,
   Toolbar,
-  Tooltip,
   styled,
   Grid,
   Tabs,
@@ -15,7 +14,7 @@ import {
   useMediaQuery,
   Menu
 } from '@mui/material';
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {SCPreferences, useSCPreferences, Link, SCUserContext} from '@selfcommunity/react-core';
 import {SCUserContextType} from '@selfcommunity/react-core';
 import Icon from '@mui/material/Icon';
@@ -141,10 +140,14 @@ export default function Header(inProps: HeaderProps) {
   // PREFERENCES
   const scPreferences = useSCPreferences();
   const logo = scPreferences.preferences[SCPreferences.LOGO_NAVBAR_LOGO].value;
+
+  // STATE
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [value, setValue] = React.useState(0);
   const [anchorEl, setAnchorEl] = React.useState(null);
+
+  // HANDLERS
   const handleOpenSettingsMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -152,6 +155,17 @@ export default function Header(inProps: HeaderProps) {
   const handleCloseSettingsMenu = () => {
     setAnchorEl(null);
   };
+
+  useEffect(() => {
+    const getSelectedTab = JSON.parse(localStorage.getItem("selectedTab"));
+    if (getSelectedTab) {
+      setValue(getSelectedTab);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("selectedTab", JSON.stringify(value));
+  }, [value]);
 
   return (
     <Root className={classNames(classes.root, className)}>
@@ -180,9 +194,9 @@ export default function Header(inProps: HeaderProps) {
               <>
                 <Box className={classes.tabsContainer}>
                   <Tabs onChange={(e, v) => setValue(v)} value={value} textColor="inherit" indicatorColor="primary" aria-label="Navigation Tabs">
-                    {url && url.home && <Tab icon={<Icon>home</Icon>} aria-label="HomePage" to={url.home} component={Link}></Tab>}
-                    {url && url.explore && <Tab icon={<Icon>explore</Icon>} aria-label="Explore" to={url.explore} component={Link}></Tab>}
-                    {url && url.followings && <Tab icon={<Icon>person</Icon>} aria-label="Followings" to={url.followings} component={Link}></Tab>}
+                    {url && url.home && <Tab value={0} icon={<Icon>home</Icon>} aria-label="HomePage" to={url.home} component={Link}></Tab>}
+                    {url && url.explore && <Tab value={1} icon={<Icon>explore</Icon>} aria-label="Explore" to={url.explore} component={Link}></Tab>}
+                    {url && url.followings && <Tab value={2} icon={<Icon>person</Icon>} aria-label="Followings" to={url.followings} component={Link}></Tab>}
                   </Tabs>
                 </Box>
                 <Box className={classes.searchBarContainer}>
@@ -222,11 +236,9 @@ export default function Header(inProps: HeaderProps) {
                       </Badge>
                     </IconButton>
                   )}
-                  <Tooltip title="HeaderMenu">
                     <IconButton onClick={handleOpenSettingsMenu} className={classes.iconButton}>
                       <Icon>expand_more</Icon>
                     </IconButton>
-                  </Tooltip>
                   <Menu
                     id="menu-appbar"
                     anchorEl={anchorEl}

@@ -1,6 +1,6 @@
 import {AppBar, Badge, Box, Button, Grid, IconButton, styled, SwipeableDrawer, Tab, Tabs, Toolbar} from '@mui/material';
 import Icon from '@mui/material/Icon';
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Link, SCPreferences, SCUserContext, SCUserContextType, useSCPreferences} from '@selfcommunity/react-core';
 import {useThemeProps} from '@mui/system';
 import SearchBar, {HeaderSearchBarProps} from '../SearchBar';
@@ -107,6 +107,17 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
     }
   };
 
+  useEffect(() => {
+    const getSelectedTab = JSON.parse(localStorage.getItem("selectedTab"));
+    if (getSelectedTab) {
+      setValue(getSelectedTab);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("selectedTab", JSON.stringify(value));
+  }, [value]);
+
   return (
     <Root className={classNames(classes.root, className)}>
       <AppBar position="fixed" color={'default'}>
@@ -141,11 +152,12 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
               indicatorColor="primary"
               aria-label="Navigation Tabs"
               variant="scrollable">
-              {url && url.home && <Tab icon={<Icon>home</Icon>} aria-label="HomePage" to={url.home} component={Link}></Tab>}
-              {url && url.explore && <Tab icon={<Icon>explore</Icon>} aria-label="Explore" to={url.explore} component={Link}></Tab>}
-              {url && url.followings && <Tab icon={<Icon>person</Icon>} aria-label="Followings" to={url.followings} component={Link}></Tab>}
+              {url && url.home && <Tab value={0} icon={<Icon>home</Icon>} aria-label="HomePage" to={url.home} component={Link}></Tab>}
+              {url && url.explore && <Tab value={1} icon={<Icon>explore</Icon>} aria-label="Explore" to={url.explore} component={Link}></Tab>}
+              {url && url.followings && <Tab value={2} icon={<Icon>person</Icon>} aria-label="Followings" to={url.followings} component={Link}></Tab>}
               {url && url.notifications && (
                 <Tab
+                  value={3}
                   icon={
                     <Badge badgeContent={scUserContext.user.unseen_interactions_counter} color="error">
                       <Icon>notifications</Icon>
@@ -155,7 +167,7 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
                   to={url.notifications}
                   component={Link}></Tab>
               )}
-              <Tab className={classes.settingsTab} icon={<Icon>menu</Icon>} aria-label="HeaderMenu" onClick={handleOpenSettingsMenu}></Tab>
+              <Tab value={4} className={classes.settingsTab} icon={<Icon>menu</Icon>} aria-label="HeaderMenu" onClick={handleOpenSettingsMenu}></Tab>
               <SwipeableDrawer
                 anchor={'right'}
                 open={openSettings}
