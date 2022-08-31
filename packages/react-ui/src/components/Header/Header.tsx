@@ -173,7 +173,7 @@ export default function Header(inProps: HeaderProps) {
   }
 
   return (
-    <Root className={classNames(classes.root, className)}>
+    <Root className={classNames(classes.root, className)} {...rest}>
       {isMobile ? (
         <MobileHeader url={url} searchBarProps={searchBarProps} />
       ) : (

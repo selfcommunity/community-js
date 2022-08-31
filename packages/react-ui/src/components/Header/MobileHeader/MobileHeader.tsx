@@ -15,7 +15,6 @@ const PREFIX = 'SCMobileHeader';
 const classes = {
   root: `${PREFIX}-root`,
   tabs: `${PREFIX}-tabs`,
-  settingsTab: `${PREFIX}-setting-tab`,
   topToolbar: `${PREFIX}-top-toolbar`,
   bottomToolbar: `${PREFIX}-bottom-toolbar`
 };
@@ -28,13 +27,6 @@ const Root = styled(Box, {
   [`& .${classes.tabs}`]: {
     '& .MuiTabs-indicator': {
       top: '0px'
-    }
-  },
-  [`& .${classes.settingsTab}`]: {
-    '& .MuiTabs-indicator': {
-      top: '0px',
-      backgroundColor: '#000000',
-      opacity: 0
     }
   },
   [`& .${classes.topToolbar}`]: {
@@ -124,7 +116,7 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
   }
 
   return (
-    <Root className={classNames(classes.root, className)}>
+    <Root className={classNames(classes.root, className)} {...rest}>
       <AppBar position='fixed' color={'default'}>
         <Toolbar className={classes.topToolbar}>
           <Grid container direction='row' justifyContent='flex-start'>
@@ -150,7 +142,7 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
         {scUserContext.user ? (
           <Toolbar className={classes.bottomToolbar}>
             <Tabs
-              className={value === 4 ? classes.settingsTab : classes.tabs}
+              className={classes.tabs}
               onChange={(e, v) => setValue(v)}
               value={value}
               textColor='primary'
@@ -172,16 +164,16 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
                   to={url.notifications}
                   component={Link}></Tab>
               )}
-              <Tab value={4} className={classes.settingsTab} icon={<Icon>menu</Icon>} aria-label="HeaderMenu" onClick={handleOpenSettingsMenu}></Tab>
-              <SwipeableDrawer
-                anchor={'right'}
-                open={openSettings}
-                onClick={() => setOpenSettings(false)}
-                onClose={() => setOpenSettings(false)}
-                onOpen={toggleDrawer('right', true)}>
-                <HeaderMenu url={url} />
-              </SwipeableDrawer>
             </Tabs>
+            <IconButton onClick={handleOpenSettingsMenu}><Icon>menu</Icon></IconButton>
+            <SwipeableDrawer
+              anchor={'right'}
+              open={openSettings}
+              onClick={() => setOpenSettings(false)}
+              onClose={() => setOpenSettings(false)}
+              onOpen={toggleDrawer('right', true)}>
+              <HeaderMenu onItemClick={()=> setValue(null)} url={url} />
+            </SwipeableDrawer>
           </Toolbar>
         ) : (
           <Toolbar sx={{justifyContent: 'space-between'}}>
