@@ -592,7 +592,7 @@ export class UserApiClient {
     return apiRequest({
       ...config,
       data,
-      url: Endpoints.CreateProviderAssociation.url({userId: data.user_id}),
+      url: Endpoints.CreateProviderAssociation.url({id: data.user_id}),
       method: Endpoints.CreateProviderAssociation.method
     });
   }
