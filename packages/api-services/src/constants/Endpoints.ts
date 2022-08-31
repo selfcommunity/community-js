@@ -28,7 +28,7 @@ const Endpoints: {[key: string]: EndpointType} = {
   },
   AccountSearch: {
     url: urlReplacer('/api/v2/account/search/'),
-    method: 'POST'
+    method: 'GET'
   },
   /**
    * OAuth2 Endpoints
