@@ -105,3 +105,18 @@ export interface UserSearchParams extends BaseGetParams {
    */
   category?: number;
 }
+
+export interface DeleteProviderAssociation {
+  /**
+   * The user id of the association
+   */
+  user_id: number | string;
+  /**
+   * The provider of the provider association
+   */
+  provider: string;
+  /**
+   * The external id of the user in the provider platform
+   */
+  ext_id: string;
+}

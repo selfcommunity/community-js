@@ -60,7 +60,7 @@ export class AccountApiClient {
    * @param config
    */
   static search(params?: AccountSearchParams, config?: AxiosRequestConfig): Promise<SCUserType> {
-    return apiRequest({...config, params, url: Endpoints.AccountReset.url({}), method: Endpoints.AccountReset.method});
+    return apiRequest({...config, params, url: Endpoints.AccountSearch.url({}), method: Endpoints.AccountSearch.method});
   }
 }
 

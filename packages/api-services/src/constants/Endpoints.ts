@@ -28,7 +28,7 @@ const Endpoints: {[key: string]: EndpointType} = {
   },
   AccountSearch: {
     url: urlReplacer('/api/v2/account/search/'),
-    method: 'POST'
+    method: 'GET'
   },
   /**
    * OAuth2 Endpoints
@@ -479,6 +479,18 @@ const Endpoints: {[key: string]: EndpointType} = {
   SetPrimaryAvatar: {
     url: urlReplacer('/api/v2/user/avatar/'),
     method: 'PATCH'
+  },
+  ProviderAssociations: {
+    url: urlReplacer('/api/v2/user/$(id)/provider/'),
+    method: 'GET'
+  },
+  CreateProviderAssociation: {
+    url: urlReplacer('/api/v2/user/$(id)/provider/'),
+    method: 'POST'
+  },
+  DeleteProviderAssociation: {
+    url: urlReplacer('/api/v2/user/$(id)/provider/'),
+    method: 'DELETE'
   },
   /**
    * Broadcast Messages

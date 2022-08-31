@@ -183,7 +183,8 @@ export default function Share(inProps: ShareProps): JSX.Element {
     scPreferencesContext.preferences[SCPreferences.ADDONS_SHARE_POST_ON_LINKEDIN_ENABLED].value;
   const scUserContext: SCUserContextType = useSCUser();
   const {enqueueSnackbar} = useSnackbar();
-  const url = scContext.settings.portal + scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj));
+  const domain = typeof location !== 'undefined' && location.origin ? location.origin : '';
+  const url = domain + scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj));
 
   // INTL
   const intl = useIntl();

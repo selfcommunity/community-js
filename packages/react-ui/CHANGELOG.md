@@ -3,6 +3,90 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.3-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.3-alpha.6...@selfcommunity/react-ui@0.5.3-alpha.7) (2022-08-31)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.5.3-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.3-alpha.5...@selfcommunity/react-ui@0.5.3-alpha.6) (2022-08-31)
+
+
+### Bug Fixes
+
+* fixed social share path ([c2cced3](https://github.com/selfcommunity/community-js/commit/c2cced386e7bb3ca950b2110fd56a810a44cad33))
+
+
+
+
+
+## [0.5.3-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.3-alpha.4...@selfcommunity/react-ui@0.5.3-alpha.5) (2022-08-31)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.5.3-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.3-alpha.3...@selfcommunity/react-ui@0.5.3-alpha.4) (2022-08-31)
+
+
+### Bug Fixes
+
+* fixed mobile header settings icon ([cb03dbe](https://github.com/selfcommunity/community-js/commit/cb03dbea537c96d4e5c4025ff02d2596b2129c94))
+
+
+
+
+
+## [0.5.3-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.3-alpha.2...@selfcommunity/react-ui@0.5.3-alpha.3) (2022-08-30)
+
+
+### Bug Fixes
+
+* fixed header menu position ([880fb7c](https://github.com/selfcommunity/community-js/commit/880fb7c730369d5dd6822d35602090ecff10ce79))
+* fixed header tabs selector visibility when clicking other elements. ([2fc64d9](https://github.com/selfcommunity/community-js/commit/2fc64d9cbbff57a7ac6dd1a1464d77513730d4dd))
+
+
+
+
+
+## [0.5.3-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.3-alpha.1...@selfcommunity/react-ui@0.5.3-alpha.2) (2022-08-30)
+
+
+### Bug Fixes
+
+* fixed header skeleton ([d52aa99](https://github.com/selfcommunity/community-js/commit/d52aa9974a2de9b53668f45de2499d3e39405eea))
+
+
+
+
+
+## [0.5.3-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.3-alpha.0...@selfcommunity/react-ui@0.5.3-alpha.1) (2022-08-30)
+
+
+### Bug Fixes
+
+* fixed tab selection on refresh ([18d3eb0](https://github.com/selfcommunity/community-js/commit/18d3eb0e35f0b7719b5127cf665e823bb8c0c1a4))
+
+
+
+
+
+## [0.5.3-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.2...@selfcommunity/react-ui@0.5.3-alpha.0) (2022-08-29)
+
+
+### Bug Fixes
+
+* Fix account reset and verify messages ([7af3133](https://github.com/selfcommunity/community-js/commit/7af31338e91c2dc04f1690261d00971106a72121))
+* fixed mobile header searchbar props ([4fe7f42](https://github.com/selfcommunity/community-js/commit/4fe7f422d2c46d10f1b136ebf40ff59b8a6f6249))
+
+
+
+
+
 ## [0.5.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.2-alpha.3...@selfcommunity/react-ui@0.5.2) (2022-08-29)
 
 **Note:** Version bump only for package @selfcommunity/react-ui

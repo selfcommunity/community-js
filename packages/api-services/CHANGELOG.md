@@ -3,6 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.0-alpha.1...@selfcommunity/api-services@0.3.0-alpha.2) (2022-08-31)
+
+
+### Bug Fixes
+
+* Fix AccountService search endpoint ([0e1d380](https://github.com/selfcommunity/community-js/commit/0e1d380cf58f95269edbe722048d198429b26a67))
+
+
+
+
+
+# [0.3.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.0-alpha.0...@selfcommunity/api-services@0.3.0-alpha.1) (2022-08-31)
+
+
+### Bug Fixes
+
+* Fix AccountService search endpoint ([3003af2](https://github.com/selfcommunity/community-js/commit/3003af2b0f387b907f098ffc1cebdda58df15558))
+
+
+
+
+
+# [0.3.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.2.2...@selfcommunity/api-services@0.3.0-alpha.0) (2022-08-29)
+
+
+### Features
+
+* Added Services for provider associations ([51e7855](https://github.com/selfcommunity/community-js/commit/51e7855c247d1bb0ae7fc8bf7a70e7426afdb9c8))
+
+
+
+
+
 ## [0.2.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.2.2-alpha.3...@selfcommunity/api-services@0.2.2) (2022-08-29)
 
 **Note:** Version bump only for package @selfcommunity/api-services

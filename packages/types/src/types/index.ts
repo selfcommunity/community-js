@@ -21,7 +21,8 @@ import {
   SCUserScoreVariation,
   SCUserSettingsType,
   SCUserStatus,
-  SCUserType
+  SCUserType,
+  SCUserProviderAssociationType
 } from './user';
 import {SCTagType} from './tag';
 import {SCCategoryAudienceType, SCCategoryFollowedStatusType, SCCategoryType} from './category';
@@ -130,6 +131,7 @@ export {
   SCUserHiddenByStatusType,
   SCUserConnectionRequestType,
   SCUserEmailTokenType,
+  SCUserProviderAssociationType,
   SCTagType,
   SCCategoryType,
   SCCategoryAudienceType,
