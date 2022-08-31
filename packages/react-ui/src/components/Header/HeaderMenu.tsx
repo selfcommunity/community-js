@@ -66,9 +66,9 @@ export default function HeaderMenu(inProps: HeaderMenuProps) {
   };
 
   return (
-    <Root className={classNames(classes.root, className)}>
+    <Root className={classNames(classes.root, className)} {...rest}>
       {url && url.profile && (
-        <MenuItem className={classes.menuItem} key={'profile'} component={Link}  onClick={onItemClick}>
+        <MenuItem className={classes.menuItem} key={'profile'} component={Link} to={url.profile} onClick={onItemClick}>
           <Typography textAlign="center">
             <FormattedMessage id="ui.header.menuItem.profile" defaultMessage="ui.header.menuItem.profile" />
           </Typography>
