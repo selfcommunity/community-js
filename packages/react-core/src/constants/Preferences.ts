@@ -73,6 +73,7 @@ export const ADDONS_AFFINIDY_ENABLED = 'addons.affinity_enabled';
 export const ADDONS_CLOSED_COMMUNITY = 'addons.closed_community';
 export const ADDONS_INCUBATOR_ENABLED = 'addons.incubator_enabled';
 export const ADDONS_INCUBATOR_SUBSCRIBERS = 'addons.incubator_subscribers';
+export const ADDONS_INVITE_CODE = 'addons.invite_code';
 export const ADDONS_LOYALTY_POINTS_COLLECTION = 'addons.loyalty_points_collection';
 export const ADDONS_POLLS_ENABLED = 'addons.polls_enabled';
 export const ADDONS_REGISTRATION_WIZARD = 'addons.registration_wizard';
@@ -226,6 +227,7 @@ export const DATA_TYPES = {
   [ADDONS_CLOSED_COMMUNITY]: booleanType,
   [ADDONS_INCUBATOR_ENABLED]: booleanType,
   [ADDONS_INCUBATOR_SUBSCRIBERS]: integerType,
+  [ADDONS_INVITE_CODE]: booleanType,
   [ADDONS_LOYALTY_POINTS_COLLECTION]: booleanType,
   [ADDONS_POLLS_ENABLED]: booleanType,
   [ADDONS_REGISTRATION_WIZARD]: booleanType,
