@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.0-alpha.0...@selfcommunity/api-services@0.3.0-alpha.1) (2022-08-31)
+
+
+### Bug Fixes
+
+* Fix AccountService search endpoint ([3003af2](https://github.com/selfcommunity/community-js/commit/3003af2b0f387b907f098ffc1cebdda58df15558))
+
+
+
+
+
 # [0.3.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.2.2...@selfcommunity/api-services@0.3.0-alpha.0) (2022-08-29)
 
 
