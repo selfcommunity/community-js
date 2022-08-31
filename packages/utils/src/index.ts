@@ -1,4 +1,4 @@
-import {capitalize, isString, stripHtml, camelCase, copyTextToClipboard, fallbackCopyTextToClipboard, random} from './utils/string';
+import {capitalize, isString, stripHtml, camelCase, copyTextToClipboard, fallbackCopyTextToClipboard, random, slugify} from './utils/string';
 import {
   isValidUrl,
   isValidUrls,
@@ -27,6 +27,7 @@ export {
   copyTextToClipboard,
   fallbackCopyTextToClipboard,
   random,
+  slugify,
   isValidUrl,
   isValidUrls,
   urlReplacer,
