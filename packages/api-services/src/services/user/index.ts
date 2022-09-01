@@ -4,7 +4,6 @@ import {
   SCAvatarType,
   SCCategoryType,
   SCFeedUnitType,
-  SCMediaType,
   SCPlatformType,
   SCTagType,
   SCUserAutocompleteType,
@@ -73,7 +72,7 @@ export interface UserApiClientInterface {
   getUserConnectionStatuses(users: number[], config?: AxiosRequestConfig): Promise<any>;
   userTagToAddressContribution(config?: AxiosRequestConfig): Promise<SCTagType>;
   checkUserEmailToken(email_token: string, config?: AxiosRequestConfig): Promise<SCUserEmailTokenType>;
-  addUserAvatar(avatar: SCMediaType, config?: AxiosRequestConfig): Promise<SCAvatarType>;
+  addUserAvatar(data: FormData, config?: AxiosRequestConfig): Promise<SCAvatarType>;
   getUserAvatars(config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCAvatarType>>;
   removeUserAvatar(avatar_id: number | string, config?: AxiosRequestConfig): Promise<any>;
   setUserPrimaryAvatar(avatar_id: number | string, config?: AxiosRequestConfig): Promise<any>;
@@ -536,11 +535,11 @@ export class UserApiClient {
 
   /**
    * This endpoint adds an avatar to my avatars.
-   * @param avatar
+   * @param data
    * @param config
    */
-  static addUserAvatar(avatar: SCMediaType, config?: AxiosRequestConfig): Promise<SCAvatarType> {
-    return apiRequest({...config, url: Endpoints.AddAvatar.url({}), method: Endpoints.AddAvatar.method, data: {avatar: avatar}});
+  static addUserAvatar(data: FormData, config?: AxiosRequestConfig): Promise<SCAvatarType> {
+    return apiRequest({...config, url: Endpoints.AddAvatar.url({}), method: Endpoints.AddAvatar.method, data});
   }
 
   /**
@@ -592,7 +591,7 @@ export class UserApiClient {
     return apiRequest({
       ...config,
       data,
-      url: Endpoints.CreateProviderAssociation.url({userId: data.user_id}),
+      url: Endpoints.CreateProviderAssociation.url({id: data.user_id}),
       method: Endpoints.CreateProviderAssociation.method
     });
   }
@@ -792,8 +791,8 @@ export default class UserService {
   static async checkUserEmailToken(email_token, config?: AxiosRequestConfig): Promise<SCUserEmailTokenType> {
     return UserApiClient.checkUserEmailToken(email_token, config);
   }
-  static async addUserAvatar(avatar: SCMediaType, config?: AxiosRequestConfig): Promise<SCAvatarType> {
-    return UserApiClient.addUserAvatar(avatar, config);
+  static async addUserAvatar(data: FormData, config?: AxiosRequestConfig): Promise<SCAvatarType> {
+    return UserApiClient.addUserAvatar(data, config);
   }
   static async getUserAvatars(config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCAvatarType>> {
     return UserApiClient.getUserAvatars(config);

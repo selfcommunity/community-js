@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.1-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.1-alpha.1...@selfcommunity/api-services@0.3.1-alpha.2) (2022-09-01)
+
+
+### Bug Fixes
+
+* api services: user add avatar param type ([52b36a0](https://github.com/selfcommunity/community-js/commit/52b36a0de8d582661e9577dc5c4c3637c5120b0d))
+
+
+
+
+
+## [0.3.1-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.1-alpha.0...@selfcommunity/api-services@0.3.1-alpha.1) (2022-08-31)
+
+
+### Bug Fixes
+
+* Fix CreateProviderAssociation service ([14302cc](https://github.com/selfcommunity/community-js/commit/14302cc6cec5065d96aa9a0cccc81df7c58d9b27))
+
+
+
+
+
+## [0.3.1-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.0...@selfcommunity/api-services@0.3.1-alpha.0) (2022-08-31)
+
+**Note:** Version bump only for package @selfcommunity/api-services
+
+
+
+
+
 # [0.3.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.0-alpha.3...@selfcommunity/api-services@0.3.0) (2022-08-31)
 
 **Note:** Version bump only for package @selfcommunity/api-services
