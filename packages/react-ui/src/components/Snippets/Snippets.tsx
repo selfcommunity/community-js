@@ -23,7 +23,9 @@ const Root = styled(Widget, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  width: '500px',
+  [theme.breakpoints.up('sm')]: {
+    minWidth: '500px'
+  },
   ['& .MuiCardContent-root']: {
     '&:last-child': {
       paddingBottom: 0

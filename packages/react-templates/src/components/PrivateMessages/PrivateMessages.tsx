@@ -1,6 +1,6 @@
 import React, {useContext, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Button, Box} from '@mui/material';
+import {Button, Box, useTheme, useMediaQuery} from '@mui/material';
 import {Snippets} from '@selfcommunity/react-ui';
 import {Thread} from '@selfcommunity/react-ui';
 import {FormattedMessage} from 'react-intl';
@@ -16,7 +16,9 @@ const classes = {
   snippetsBox: `${PREFIX}-snippets-box`,
   threadBox: `${PREFIX}-thread-box`,
   newMessage: `${PREFIX}-new-message`,
-  selected: `${PREFIX}-selected`
+  selected: `${PREFIX}-selected`,
+  desktopBox: `${PREFIX}-desktop-box`,
+  mobileBox: `${PREFIX}-mobile-box`
 };
 
 const Root = styled(Box, {
@@ -24,19 +26,21 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  height: '100%',
-  display: 'flex',
-  flexFlow: 'row',
-  [`& .${classes.snippetsBox}`]: {
-    flexGrow: 0,
-    flexShrink: 1,
-    flexBasis: 'auto'
+  [`& .${classes.desktopBox}`]: {
+    height: '100%',
+    display: 'flex',
+    flexFlow: 'row'
   },
-  [`& .${classes.threadBox}`]: {
-    flexGrow: 1,
-    flexShrink: 1,
-    flexBasis: 'auto'
-  },
+  // [`& .${classes.snippetsBox}`]: {
+  //   flexGrow: 0,
+  //   flexShrink: 1,
+  //   flexBasis: 'auto'
+  // },
+  // [`& .${classes.threadBox}`]: {
+  //   flexGrow: 1,
+  //   flexShrink: 1,
+  //   flexBasis: 'auto'
+  // },
   [`& .${classes.newMessage}`]: {
     width: '100%',
     justifyContent: 'flex-start',
@@ -107,6 +111,9 @@ export default function PrivateMessages(inProps: PrivateMessagesProps): JSX.Elem
   const {autoHide = false, className = null, ...rest} = props;
 
   // STATE
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const [layout, setLayout] = useState('default');
   const [obj, setObj] = useState(null);
   const [data, setData] = useState(null);
   const [openNewMessage, setOpenNewMessage] = useState<boolean>(false);
@@ -119,6 +126,9 @@ export default function PrivateMessages(inProps: PrivateMessagesProps): JSX.Elem
   const handleThreadOpening = (i) => {
     setObj(i);
     setOpenNewMessage(false);
+    if (isMobile) {
+      setLayout('mobile');
+    }
   };
 
   const handleOpenNewMessage = () => {
@@ -136,23 +146,50 @@ export default function PrivateMessages(inProps: PrivateMessagesProps): JSX.Elem
   if (!autoHide && scUserContext.user) {
     return (
       <Root {...rest} className={classNames(classes.root, className)}>
-        <Box className={classes.snippetsBox}>
-          <Button className={openNewMessage ? classes.selected : classes.newMessage} onClick={handleOpenNewMessage}>
-            <Icon>add_circle_outline</Icon>
-            <FormattedMessage id="templates.privateMessages.button.new" defaultMessage="templates.privateMessages.button.new" />
-          </Button>
-          <Snippets onSnippetClick={handleThreadOpening} threadId={obj ? obj.id : null} getSnippetHeadline={data} shouldUpdate={shouldUpdate} />
-        </Box>
-        <Box className={classes.threadBox}>
-          <Thread
-            id={obj ? obj.id : null}
-            receiverId={obj && !openNewMessage ? obj.receiver.id : null}
-            openNewMessage={openNewMessage}
-            onNewMessageSent={openNewMessage ? setObj : null}
-            onMessageSent={handleSnippetsUpdate}
-            shouldUpdate={setShouldUpdate}
-          />
-        </Box>
+        {isMobile ? (
+          <Box className={classes.mobileBox}>
+            {layout === 'default' && (
+              <>
+                <Button className={openNewMessage ? classes.selected : classes.newMessage} onClick={handleOpenNewMessage}>
+                  <Icon>add_circle_outline</Icon>
+                  <FormattedMessage id="templates.privateMessages.button.new" defaultMessage="templates.privateMessages.button.new" />
+                </Button>
+                <Snippets onSnippetClick={handleThreadOpening} threadId={obj ? obj.id : null} getSnippetHeadline={data} shouldUpdate={shouldUpdate} />
+              </>
+            )}
+            {layout === 'mobile' && (
+              <Thread
+                threadObj={obj ? obj : null}
+                receiverId={obj && !openNewMessage ? obj.receiver.id : null}
+                openNewMessage={openNewMessage}
+                onNewMessageSent={openNewMessage ? setObj : null}
+                onMessageSent={handleSnippetsUpdate}
+                shouldUpdate={setShouldUpdate}
+                onMessageBack={setLayout}
+              />
+            )}
+          </Box>
+        ) : (
+          <Box className={classes.desktopBox}>
+            <Box className={classes.snippetsBox}>
+              <Button className={openNewMessage ? classes.selected : classes.newMessage} onClick={handleOpenNewMessage}>
+                <Icon>add_circle_outline</Icon>
+                <FormattedMessage id="templates.privateMessages.button.new" defaultMessage="templates.privateMessages.button.new" />
+              </Button>
+              <Snippets onSnippetClick={handleThreadOpening} threadId={obj ? obj.id : null} getSnippetHeadline={data} shouldUpdate={shouldUpdate} />
+            </Box>
+            <Box className={classes.threadBox}>
+              <Thread
+                threadObj={obj ? obj : null}
+                receiverId={obj && !openNewMessage ? obj.receiver.id : null}
+                openNewMessage={openNewMessage}
+                onNewMessageSent={openNewMessage ? setObj : null}
+                onMessageSent={handleSnippetsUpdate}
+                shouldUpdate={setShouldUpdate}
+              />
+            </Box>
+          </Box>
+        )}
       </Root>
     );
   }
