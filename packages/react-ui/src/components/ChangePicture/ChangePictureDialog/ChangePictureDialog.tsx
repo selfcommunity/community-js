@@ -77,7 +77,7 @@ export default function ChangePictureDialog(inProps: CPDialogProps): JSX.Element
 
   //STATE
   const [file, setFile] = useState(scUserContext.user['avatar']);
-  const [error, setError] = useState('');
+  const [error, setError] = useState<boolean>(false);
   const [primary, setPrimary] = useState(null);
   const [avatars, setAvatars] = useState([]);
   const [deleteAvatarId, setDeleteAvatarId] = useState<number>(null);
@@ -100,7 +100,7 @@ export default function ChangePictureDialog(inProps: CPDialogProps): JSX.Element
    */
   function handleUpload(event) {
     fileInput = event.target.files[0];
-    setFile(URL.createObjectURL(fileInput));
+    setFile(URL.createObjectURL(fileInput as any));
     handleSave();
   }
 
@@ -118,7 +118,7 @@ export default function ChangePictureDialog(inProps: CPDialogProps): JSX.Element
         setLoading(false);
       })
       .catch((error) => {
-        setError(formatHttpError(error));
+        setError(true);
         setLoading(false);
         console.log(error);
       });
@@ -204,47 +204,48 @@ export default function ChangePictureDialog(inProps: CPDialogProps): JSX.Element
       {openDeleteAvatarDialog && (
         <ConfirmDialog
           open={openDeleteAvatarDialog}
-          title={<FormattedMessage id='ui.changePicture.dialog.msg' defaultMessage='ui.changePicture.dialog.msg' />}
-          btnConfirm={<FormattedMessage id='ui.changePicture.dialog.confirm'
-                                        defaultMessage='ui.changePicture.dialog.confirm' />}
+          title={<FormattedMessage id="ui.changePicture.dialog.msg" defaultMessage="ui.changePicture.dialog.msg" />}
+          btnConfirm={<FormattedMessage id="ui.changePicture.dialog.confirm" defaultMessage="ui.changePicture.dialog.confirm" />}
           onConfirm={deleteAvatar}
           isUpdating={isDeletingAvatar}
           onClose={() => setOpenDeleteAvatarDialog(false)}
         />
       )}
-      <BaseDialog title={<FormattedMessage defaultMessage='ui.changePicture.title' id='ui.changePicture.title' />}
-                  onClose={onClose} open={open}>
+      <BaseDialog title={<FormattedMessage defaultMessage="ui.changePicture.title" id="ui.changePicture.title" />} onClose={onClose} open={open}>
         <Box className={classes.upload}>
-          <input type='file' onChange={() => handleUpload(event)} ref={fileInput} hidden />
-          <Button disabled={loading || isDeletingAvatar} variant='outlined' onClick={() => fileInput.current.click()} color={Boolean(error) ? 'error' : 'primary'} startIcon={loading ? null : <Icon fontSize='small'>folder_open</Icon>}>
+          <input type="file" onChange={() => handleUpload(event)} ref={fileInput} hidden />
+          <Button
+            disabled={loading || isDeletingAvatar}
+            variant="outlined"
+            onClick={() => fileInput.current.click()}
+            color={error ? 'error' : 'primary'}
+            startIcon={loading ? null : <Icon fontSize="small">folder_open</Icon>}>
             {loading ? (
-                <CircularProgress size={15} />
+              <CircularProgress size={15} />
             ) : (
               <>
-                {Boolean(error) ?
-                  <FormattedMessage id='ui.changePicture.button.upload.error' defaultMessage='ui.changePicture.button.upload.error' />
-                  :
-                  <FormattedMessage id='ui.changePicture.button.upload' defaultMessage='ui.changePicture.button.upload' />
-                }
+                {error ? (
+                  <FormattedMessage id="ui.changePicture.button.upload.error" defaultMessage="ui.changePicture.button.upload.error" />
+                ) : (
+                  <FormattedMessage id="ui.changePicture.button.upload" defaultMessage="ui.changePicture.button.upload" />
+                )}
               </>
             )}
           </Button>
-          <Typography sx={{fontSize: 10}} color='text.secondary' gutterBottom>
-            <FormattedMessage id='ui.changePicture.listF' defaultMessage='ui.changePicture.listF' /> <br />
-            <FormattedMessage id='ui.changePicture.listS' defaultMessage='ui.changePicture.listS' />
+          <Typography sx={{fontSize: 10}} color="text.secondary" gutterBottom>
+            <FormattedMessage id="ui.changePicture.listF" defaultMessage="ui.changePicture.listF" /> <br />
+            <FormattedMessage id="ui.changePicture.listS" defaultMessage="ui.changePicture.listS" />
           </Typography>
         </Box>
         <ImageList cols={3} rowHeight={'auto'}>
           {avatars.map((avatar) => (
             <Box className={classes.imageItem} key={avatar.id}>
-              <ImageListItem key={avatar.id} onClick={() => selectPrimaryAvatar(avatar)}
-                             sx={{border: primary === avatar.id ? 'solid' : null}}>
-                <img src={avatar.avatar} loading='lazy' alt={'img'} />
+              <ImageListItem key={avatar.id} onClick={() => selectPrimaryAvatar(avatar)} sx={{border: primary === avatar.id ? 'solid' : null}}>
+                <img src={avatar.avatar} loading="lazy" alt={'img'} />
                 <ImageListItemBar
-                  position='top'
+                  position="top"
                   actionIcon={
-                    <IconButton onClick={() => handleOpen(avatar.id)} size='small'
-                                sx={{color: 'rgba(255, 255, 255, 0.54)'}}>
+                    <IconButton onClick={() => handleOpen(avatar.id)} size="small" sx={{color: 'rgba(255, 255, 255, 0.54)'}}>
                       <Icon>delete</Icon>
                     </IconButton>
                   }
