@@ -84,6 +84,7 @@
   "ui.changePicture.title": "Change Profile Image",
   "ui.changePicture.button.change": "Change Picture",
   "ui.changePicture.button.upload": "Upload new Image",
+  "ui.changePicture.button.upload.error": "Retry upload",
   "ui.changePicture.listF": "Allowed formats: gif,png,jpg,jpeg",
   "ui.changePicture.listS": "Maximum size: 3 MB",
   "ui.changePicture.button.finished": "Finished",

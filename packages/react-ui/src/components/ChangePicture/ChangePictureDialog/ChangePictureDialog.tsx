@@ -4,8 +4,8 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import {Box, Card, IconButton, ImageListItemBar} from '@mui/material';
 import Icon from '@mui/material/Icon';
-import {http, Endpoints} from '@selfcommunity/api-services';
-import {SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
+import {UserService, formatHttpError} from '@selfcommunity/api-services';
+import {SCContext, SCContextType, SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
 import {FormattedMessage} from 'react-intl';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
@@ -73,9 +73,11 @@ export default function ChangePictureDialog(inProps: CPDialogProps): JSX.Element
   const {open, onChange, onClose, className, ...rest} = props;
   //CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
+  const scContext: SCContextType = useContext(SCContext);
 
   //STATE
   const [file, setFile] = useState(scUserContext.user['avatar']);
+  const [error, setError] = useState('');
   const [primary, setPrimary] = useState(null);
   const [avatars, setAvatars] = useState([]);
   const [deleteAvatarId, setDeleteAvatarId] = useState<number>(null);
@@ -98,8 +100,6 @@ export default function ChangePictureDialog(inProps: CPDialogProps): JSX.Element
    */
   function handleUpload(event) {
     fileInput = event.target.files[0];
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore
     setFile(URL.createObjectURL(fileInput));
     handleSave();
   }
@@ -109,25 +109,17 @@ export default function ChangePictureDialog(inProps: CPDialogProps): JSX.Element
    */
   function handleSave() {
     setLoading(true);
-    const formData = new FormData();
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore
+    const formData: any = new FormData();
     formData.append('avatar', fileInput);
-    http
-      .request({
-        url: Endpoints.AddAvatar.url({id: scUserContext.user['id']}),
-        method: Endpoints.AddAvatar.method,
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        },
-        data: formData
-      })
-      .then((res) => {
-        setAvatars((prev) => [...prev, res.data]);
-        selectPrimaryAvatar(res.data);
+    UserService.addUserAvatar(formData, {headers: {'Content-Type': 'multipart/form-data'}})
+      .then((data) => {
+        setAvatars((prev) => [...prev, data]);
+        selectPrimaryAvatar(data);
         setLoading(false);
       })
       .catch((error) => {
+        setError(formatHttpError(error));
+        setLoading(false);
         console.log(error);
       });
   }
@@ -136,15 +128,11 @@ export default function ChangePictureDialog(inProps: CPDialogProps): JSX.Element
    * Fetches the list of scUser's avatars
    */
   function fetchUserAvatar() {
-    http
-      .request({
-        url: Endpoints.GetAvatars.url({id: scUserContext.user['id']}),
-        method: Endpoints.GetAvatars.method
-      })
-      .then((res: any) => {
-        const primary = getPrimaryAvatar(res.data);
-        if (res.data && res.data.results.length) {
-          setAvatars(res.data.results);
+    UserService.getUserAvatars({headers: {Authorization: `Bearer ${scContext.settings.session.authToken.accessToken}`}})
+      .then((data: any) => {
+        const primary = getPrimaryAvatar(data);
+        if (data && data.length) {
+          setAvatars(data);
           setPrimary(primary.id);
           setFile(primary.avatar);
         }
@@ -159,7 +147,7 @@ export default function ChangePictureDialog(inProps: CPDialogProps): JSX.Element
    * @param data
    */
   function getPrimaryAvatar(data) {
-    return data.results.find((a) => a.primary === true);
+    return data.find((a) => a.primary === true);
   }
 
   /**
@@ -169,14 +157,7 @@ export default function ChangePictureDialog(inProps: CPDialogProps): JSX.Element
    */
   function selectPrimaryAvatar(avatar) {
     if (avatar.id !== primary) {
-      http
-        .request({
-          url: Endpoints.SetPrimaryAvatar.url({id: scUserContext.user['id']}),
-          method: Endpoints.SetPrimaryAvatar.method,
-          data: {
-            avatar_id: avatar.id
-          }
-        })
+      UserService.setUserPrimaryAvatar(avatar.id, {headers: {Authorization: `Bearer ${scContext.settings.session.authToken.accessToken}`}})
         .then(() => {
           scUserContext.updateUser({avatar: avatar.avatar});
           setPrimary(avatar.id);
@@ -190,18 +171,10 @@ export default function ChangePictureDialog(inProps: CPDialogProps): JSX.Element
 
   /**
    * Handles deletion of a specific avatar
-   * @param id
    */
   function deleteAvatar() {
     setIsDeletingAvatar(true);
-    http
-      .request({
-        url: Endpoints.RemoveAvatar.url({id: scUserContext.user['id']}),
-        method: Endpoints.RemoveAvatar.method,
-        data: {
-          avatar_id: deleteAvatarId
-        }
-      })
+    UserService.removeUserAvatar(deleteAvatarId, {headers: {Authorization: `Bearer ${scContext.settings.session.authToken.accessToken}`}})
       .then(() => {
         const _avatars = avatars.filter((a) => a.id !== deleteAvatarId);
         setAvatars(_avatars);
@@ -231,42 +204,47 @@ export default function ChangePictureDialog(inProps: CPDialogProps): JSX.Element
       {openDeleteAvatarDialog && (
         <ConfirmDialog
           open={openDeleteAvatarDialog}
-          title={<FormattedMessage id="ui.changePicture.dialog.msg" defaultMessage="ui.changePicture.dialog.msg" />}
-          btnConfirm={<FormattedMessage id="ui.changePicture.dialog.confirm" defaultMessage="ui.changePicture.dialog.confirm" />}
+          title={<FormattedMessage id='ui.changePicture.dialog.msg' defaultMessage='ui.changePicture.dialog.msg' />}
+          btnConfirm={<FormattedMessage id='ui.changePicture.dialog.confirm'
+                                        defaultMessage='ui.changePicture.dialog.confirm' />}
           onConfirm={deleteAvatar}
           isUpdating={isDeletingAvatar}
           onClose={() => setOpenDeleteAvatarDialog(false)}
         />
       )}
-      <BaseDialog title={<FormattedMessage defaultMessage="ui.changePicture.title" id="ui.changePicture.title" />} onClose={onClose} open={open}>
+      <BaseDialog title={<FormattedMessage defaultMessage='ui.changePicture.title' id='ui.changePicture.title' />}
+                  onClose={onClose} open={open}>
         <Box className={classes.upload}>
-          <input type="file" onChange={() => handleUpload(event)} ref={fileInput} hidden />
-          <Button disabled={loading} variant="outlined" onClick={() => fileInput.current.click()}>
+          <input type='file' onChange={() => handleUpload(event)} ref={fileInput} hidden />
+          <Button disabled={loading || isDeletingAvatar} variant='outlined' onClick={() => fileInput.current.click()} color={Boolean(error) ? 'error' : 'primary'} startIcon={loading ? null : <Icon fontSize='small'>folder_open</Icon>}>
             {loading ? (
-              <React.Fragment>
                 <CircularProgress size={15} />
-              </React.Fragment>
             ) : (
-              <React.Fragment>
-                <Icon fontSize="small">folder_open</Icon>
-                <FormattedMessage id="ui.changePicture.button.upload" defaultMessage="ui.changePicture.button.upload" />
-              </React.Fragment>
+              <>
+                {Boolean(error) ?
+                  <FormattedMessage id='ui.changePicture.button.upload.error' defaultMessage='ui.changePicture.button.upload.error' />
+                  :
+                  <FormattedMessage id='ui.changePicture.button.upload' defaultMessage='ui.changePicture.button.upload' />
+                }
+              </>
             )}
           </Button>
-          <Typography sx={{fontSize: 10}} color="text.secondary" gutterBottom>
-            <FormattedMessage id="ui.changePicture.listF" defaultMessage="ui.changePicture.listF" /> <br />
-            <FormattedMessage id="ui.changePicture.listS" defaultMessage="ui.changePicture.listS" />
+          <Typography sx={{fontSize: 10}} color='text.secondary' gutterBottom>
+            <FormattedMessage id='ui.changePicture.listF' defaultMessage='ui.changePicture.listF' /> <br />
+            <FormattedMessage id='ui.changePicture.listS' defaultMessage='ui.changePicture.listS' />
           </Typography>
         </Box>
         <ImageList cols={3} rowHeight={'auto'}>
           {avatars.map((avatar) => (
             <Box className={classes.imageItem} key={avatar.id}>
-              <ImageListItem key={avatar.id} onClick={() => selectPrimaryAvatar(avatar)} sx={{border: primary === avatar.id ? 'solid' : null}}>
-                <img src={avatar.avatar} loading="lazy" alt={'img'} />
+              <ImageListItem key={avatar.id} onClick={() => selectPrimaryAvatar(avatar)}
+                             sx={{border: primary === avatar.id ? 'solid' : null}}>
+                <img src={avatar.avatar} loading='lazy' alt={'img'} />
                 <ImageListItemBar
-                  position="top"
+                  position='top'
                   actionIcon={
-                    <IconButton onClick={() => handleOpen(avatar.id)} size="small" sx={{color: 'rgba(255, 255, 255, 0.54)'}}>
+                    <IconButton onClick={() => handleOpen(avatar.id)} size='small'
+                                sx={{color: 'rgba(255, 255, 255, 0.54)'}}>
                       <Icon>delete</Icon>
                     </IconButton>
                   }
