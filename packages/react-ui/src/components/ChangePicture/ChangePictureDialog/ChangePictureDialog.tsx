@@ -116,6 +116,7 @@ export default function ChangePictureDialog(inProps: CPDialogProps): JSX.Element
         setAvatars((prev) => [...prev, data]);
         selectPrimaryAvatar(data);
         setLoading(false);
+        setError(false);
       })
       .catch((error) => {
         setError(true);
