@@ -1,13 +1,14 @@
 import React, {useContext, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Button, Box, useTheme, useMediaQuery} from '@mui/material';
-import {Snippets} from '@selfcommunity/react-ui';
+import {ConfirmDialog, Snippets} from '@selfcommunity/react-ui';
 import {Thread} from '@selfcommunity/react-ui';
 import {FormattedMessage} from 'react-intl';
 import Icon from '@mui/material/Icon';
 import {SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
+import {PrivateMessageService} from '@selfcommunity/api-services';
 
 const PREFIX = 'SCPrivateMessagesTemplate';
 
@@ -18,7 +19,8 @@ const classes = {
   newMessage: `${PREFIX}-new-message`,
   selected: `${PREFIX}-selected`,
   desktopBox: `${PREFIX}-desktop-box`,
-  mobileBox: `${PREFIX}-mobile-box`
+  mobileBox: `${PREFIX}-mobile-box`,
+  deleteSection: `${PREFIX}-delete-section`
 };
 
 const Root = styled(Box, {
@@ -31,11 +33,9 @@ const Root = styled(Box, {
     display: 'flex',
     flexFlow: 'row'
   },
-  // [`& .${classes.snippetsBox}`]: {
-  //   flexGrow: 0,
-  //   flexShrink: 1,
-  //   flexBasis: 'auto'
-  // },
+  [`& .${classes.snippetsBox}`]: {
+    position: 'relative'
+  },
   // [`& .${classes.threadBox}`]: {
   //   flexGrow: 1,
   //   flexShrink: 1,
@@ -55,6 +55,13 @@ const Root = styled(Box, {
     '& .MuiIcon-root': {
       marginRight: '5px'
     }
+  },
+  [`& .${classes.deleteSection}`]: {
+    display: 'flex',
+    width: '100%',
+    position: 'absolute',
+    bottom: '0px',
+    justifyContent: 'center'
   }
 }));
 
@@ -118,6 +125,8 @@ export default function PrivateMessages(inProps: PrivateMessagesProps): JSX.Elem
   const [data, setData] = useState(null);
   const [openNewMessage, setOpenNewMessage] = useState<boolean>(false);
   const [shouldUpdate, setShouldUpdate] = useState<boolean>(false);
+  const [clickedDelete, setClickedDelete] = useState<boolean>(false);
+  const [openDeleteThreadDialog, setOpenDeleteThreadDialog] = useState<boolean>(false);
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
@@ -134,11 +143,38 @@ export default function PrivateMessages(inProps: PrivateMessagesProps): JSX.Elem
   const handleOpenNewMessage = () => {
     setOpenNewMessage(!openNewMessage);
     setObj(null);
+    if (isMobile) {
+      setLayout('mobile');
+    }
   };
 
   const handleSnippetsUpdate = (data) => {
     setData(data.message);
   };
+
+  /**
+   * Handles thread deletion
+   */
+  function handleDeleteThread() {
+    PrivateMessageService.deleteAThread(obj.id)
+      .then(() => {
+        setOpenDeleteThreadDialog(false);
+        setClickedDelete(false);
+        setShouldUpdate(true);
+      })
+      .catch((error) => {
+        setOpenDeleteThreadDialog(false);
+        console.log(error);
+      });
+  }
+
+  /**
+   * Handles thread selection for delete action
+   */
+  function handleThreadToDelete(i) {
+    setOpenDeleteThreadDialog(true);
+    setObj(i);
+  }
 
   /**
    * Renders the component (if not hidden by autoHide prop)
@@ -176,7 +212,19 @@ export default function PrivateMessages(inProps: PrivateMessagesProps): JSX.Elem
                 <Icon>add_circle_outline</Icon>
                 <FormattedMessage id="templates.privateMessages.button.new" defaultMessage="templates.privateMessages.button.new" />
               </Button>
-              <Snippets onSnippetClick={handleThreadOpening} threadId={obj ? obj.id : null} getSnippetHeadline={data} shouldUpdate={shouldUpdate} />
+              <Snippets
+                onSnippetClick={clickedDelete ? handleThreadToDelete : handleThreadOpening}
+                threadId={obj ? obj.id : null}
+                getSnippetHeadline={data}
+                shouldUpdate={shouldUpdate}
+              />
+              <Box className={classes.deleteSection}>
+                {clickedDelete ? (
+                  <Icon onClick={() => setClickedDelete(false)}>close</Icon>
+                ) : (
+                  <Icon onClick={() => setClickedDelete(true)}>delete</Icon>
+                )}
+              </Box>
             </Box>
             <Box className={classes.threadBox}>
               <Thread
@@ -189,6 +237,15 @@ export default function PrivateMessages(inProps: PrivateMessagesProps): JSX.Elem
               />
             </Box>
           </Box>
+        )}
+        {openDeleteThreadDialog && (
+          <ConfirmDialog
+            open={openDeleteThreadDialog}
+            title={<FormattedMessage id="ui.delete.thread.message.dialog.msg" defaultMessage="ui.delete.thread.message.dialog.msg" />}
+            btnConfirm={<FormattedMessage id="ui.thread.message.dialog.confirm" defaultMessage="ui.thread.message.dialog.confirm" />}
+            onConfirm={() => handleDeleteThread()}
+            onClose={() => setOpenDeleteThreadDialog(false)}
+          />
         )}
       </Root>
     );
