@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useMemo, useState, useRef} from 'react';
 import {styled} from '@mui/material/styles';
 import Widget from '../Widget';
-import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
+import {http, Endpoints, HttpResponse, PrivateMessageService, UserService} from '@selfcommunity/api-services';
 import {SCUserContext, SCUserContextType, UserUtils} from '@selfcommunity/react-core';
 import {SCNotificationTopicType, SCNotificationTypologyType, SCPrivateMessageType} from '@selfcommunity/types';
 import Message from '../Message';
@@ -16,6 +16,7 @@ import {useSnackbar} from 'notistack';
 import PubSub from 'pubsub-js';
 import {useThemeProps} from '@mui/system';
 import Icon from '@mui/material/Icon';
+import {ThreadSkeleton} from '@selfcommunity/react-ui';
 
 const smessages = defineMessages({
   placeholder: {
@@ -37,7 +38,8 @@ const classes = {
   sender: `${PREFIX}-sender`,
   receiver: `${PREFIX}-receiver`,
   center: `${PREFIX}-center`,
-  autocomplete: `${PREFIX}-autocomplete`
+  autocomplete: `${PREFIX}-autocomplete`,
+  toolBar: `${PREFIX}-tool-bar`
 };
 
 const Root = styled(Widget, {
@@ -47,11 +49,12 @@ const Root = styled(Widget, {
 })(({theme}) => ({
   width: '600px',
   height: '100%',
+  position: 'absolute',
   [theme.breakpoints.down('md')]: {
     width: '345px'
   },
   [`& .${classes.threadBox}`]: {
-    maxHeight: '600px',
+    //maxHeight: '500px',
     width: 'inherit',
     overflow: 'auto'
   },
@@ -108,6 +111,12 @@ const Root = styled(Widget, {
   },
   [`& .${classes.autocomplete}`]: {
     marginRight: theme.spacing(1)
+  },
+  [`& .${classes.toolBar}`]: {
+    alignItems: 'center',
+    paddingLeft: '8px',
+    paddingRight: '8px',
+    justifyContent: 'space-between'
   }
 }));
 
@@ -216,6 +225,7 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
   const loggedUser = scUserContext.user && scUserContext.user.id;
   const [isHovered, setIsHovered] = useState({});
   const [openDeleteMessageDialog, setOpenDeleteMessageDialog] = useState<boolean>(false);
+  const [openDeleteThreadDialog, setOpenDeleteThreadDialog] = useState<boolean>(false);
   const [deletingMsg, setDeletingMsg] = useState(null);
   const [message, setMessage] = useState<string>('');
   const [messageFile, setMessageFile] = useState(null);
@@ -291,7 +301,6 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
 
   /**
    * Handles deletion of a single message
-   * @param id
    */
   function handleDelete() {
     http
@@ -305,6 +314,28 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
         handleClose();
       })
       .catch((error) => {
+        console.log(error);
+        let _snackBar = enqueueSnackbar(<FormattedMessage id="ui.common.error" defaultMessage="ui.common.error" />, {
+          variant: 'error',
+          onClick: () => {
+            closeSnackbar(_snackBar);
+          }
+        });
+      });
+  }
+
+  /**
+   * Handles deletion of a thread
+   */
+  function handleDeleteThread() {
+    PrivateMessageService.deleteAThread(threadId)
+      .then(() => {
+        onMessageBack('default');
+        shouldUpdate(true);
+        setOpenDeleteThreadDialog(false);
+      })
+      .catch((error) => {
+        setOpenDeleteThreadDialog(false);
         console.log(error);
         let _snackBar = enqueueSnackbar(<FormattedMessage id="ui.common.error" defaultMessage="ui.common.error" />, {
           variant: 'error',
@@ -363,9 +394,9 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
         url: Endpoints.UserFollowers.url({id: scUserContext['user'].id}),
         method: Endpoints.UserFollowers.method
       })
-      .then((res: HttpResponse<any>) => {
+      .then((res: any) => {
         const data = res.data;
-        setFollowers(data.results);
+        setFollowers(data);
       })
       .catch((error) => {
         console.log(error);
@@ -439,16 +470,34 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
       <>
         {isMobile && threadObj && (
           <AppBar position="static">
-            <Toolbar>
-              <Icon onClick={() => onMessageBack('default')}>chevron_left</Icon>
-              <Avatar alt="Remy Sharp" src={threadObj.sender.id === loggedUser ? threadObj.receiver.avatar : threadObj.sender.avatar} />
-              <Typography variant="h6" color="inherit" component="div">
-                {threadObj.sender.id === loggedUser ? threadObj.receiver.username : threadObj.sender.username}
-              </Typography>
+            <Toolbar className={classes.toolBar}>
+              <Box sx={{display: 'flex', justifyContent: 'flex-start', alignItems: 'center'}}>
+                <Icon onClick={() => onMessageBack('default')}>chevron_left</Icon>
+                <Avatar
+                  alt="Remy Sharp"
+                  src={threadObj.sender.id === loggedUser ? threadObj.receiver.avatar : threadObj.sender.avatar}
+                  sx={{marginRight: '8px'}}
+                />
+                <Typography variant="h6" color="inherit" component="div">
+                  {threadObj.sender.id === loggedUser ? threadObj.receiver.username : threadObj.sender.username}
+                </Typography>
+              </Box>
+              <Box sx={{display: 'flex', justifyContent: 'flex-end', alignItems: 'center'}}>
+                <Icon onClick={() => setOpenDeleteThreadDialog(true)}>delete</Icon>
+              </Box>
             </Toolbar>
           </AppBar>
         )}
         <Box className={classes.threadBox}>
+          {openDeleteThreadDialog && (
+            <ConfirmDialog
+              open={openDeleteThreadDialog}
+              title={<FormattedMessage id="ui.delete.thread.message.dialog.msg" defaultMessage="ui.delete.thread.message.dialog.msg" />}
+              btnConfirm={<FormattedMessage id="ui.thread.message.dialog.confirm" defaultMessage="ui.thread.message.dialog.confirm" />}
+              onConfirm={() => handleDeleteThread()}
+              onClose={() => setOpenDeleteThreadDialog(false)}
+            />
+          )}
           {openDeleteMessageDialog && (
             <ConfirmDialog
               open={openDeleteMessageDialog}
@@ -496,6 +545,7 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
             <Box sx={{flexGrow: 0, flexShrink: 1, flexBasis: 'auto'}}>
               <Grid container className={classes.newMessageHeader}>
                 <Grid item xs={4} sx={{display: 'flex', alignItems: 'center'}}>
+                  {isMobile && <Icon onClick={() => onMessageBack('default')}>chevron_left</Icon>}
                   <Icon sx={{marginRight: '8px'}} fontSize="small">
                     person
                   </Icon>
@@ -545,6 +595,9 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
   // Anonymous
   if (!scUserContext.user) {
     return null;
+  }
+  if (loading && threadId) {
+    return <ThreadSkeleton />;
   }
 
   /**

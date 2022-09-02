@@ -1,10 +1,9 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Divider, Typography, List} from '@mui/material';
+import {Divider, List} from '@mui/material';
 import Widget from '../Widget';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {SCPrivateMessageType, SCNotificationTopicType, SCNotificationTypologyType} from '@selfcommunity/types';
-import {FormattedMessage} from 'react-intl';
 import SnippetsSkeleton from './Skeleton';
 import Message from '../Message';
 import classNames from 'classnames';
@@ -23,6 +22,7 @@ const Root = styled(Widget, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
+  height: '100%',
   [theme.breakpoints.up('sm')]: {
     minWidth: '500px'
   },
@@ -209,46 +209,32 @@ export default function Snippets(inProps: SnippetsProps): JSX.Element {
   }
 
   /**
-   * Renders snippets list
+   * Renders snippets skeleton when loading
    */
-  const c = (
-    <React.Fragment>
-      {loading ? (
-        <SnippetsSkeleton elevation={0} />
-      ) : (
-        <>
-          {!total ? (
-            <Typography variant="body2">
-              <FormattedMessage id="ui.categoriesSuggestion.noResults" defaultMessage="ui.categoriesSuggestion.noResults" />
-            </Typography>
-          ) : (
-            <List>
-              {snippets.map((message: SCPrivateMessageType, index) => (
-                <div key={index}>
-                  <Message
-                    elevation={0}
-                    message={message}
-                    key={message.id}
-                    onClick={() => handleOpenThread(message)}
-                    className={message.id === threadId ? classes.selected : ''}
-                  />
-                  {index < total - 1 ? <Divider /> : null}
-                </div>
-              ))}
-            </List>
-          )}
-        </>
-      )}
-    </React.Fragment>
-  );
+  if (loading) {
+    return <SnippetsSkeleton elevation={0} />;
+  }
 
   /**
    * Renders the component (if not hidden by autoHide prop)
    */
-  if (!autoHide) {
+  if (!autoHide && total) {
     return (
       <Root {...rest} className={classNames(classes.root, className)}>
-        {c}
+        <List>
+          {snippets.map((message: SCPrivateMessageType, index) => (
+            <div key={index}>
+              <Message
+                elevation={0}
+                message={message}
+                key={message.id}
+                onClick={() => handleOpenThread(message)}
+                className={message.id === threadId ? classes.selected : ''}
+              />
+              {index < total - 1 ? <Divider /> : null}
+            </div>
+          ))}
+        </List>
       </Root>
     );
   }

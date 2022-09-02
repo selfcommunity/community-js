@@ -28,12 +28,13 @@ const Root = styled(Box, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   width: '100%',
-  display: 'inline-block',
+  position: 'absolute',
+  bottom: '0px',
   [`& .${classes.messageInput}`]: {
-    width: '100%',
-    '& .MuiOutlinedInput-root': {
-      borderRadius: '20px'
-    }
+    width: '100%'
+    // '& .MuiOutlinedInput-root': {
+    //   borderRadius: '20px'
+    // }
   },
   [`& .${classes.sendMediaSection}`]: {
     backgroundColor: theme.palette.grey['A200'],
