@@ -395,6 +395,7 @@
   "ui.messageEditor.button.send" : "invia",
 
   "ui.thread.message.dialog.msg": "Sei sicuro di voler eliminare il messaggio selezionato?",
+  "ui.delete.thread.message.dialog.msg": "Sei sicuro di voler eliminare il thread selezionato?",
   "ui.thread.message.dialog.confirm": "Sì",
   "ui.thread.newMessage.to" : "A:",
   "ui.thread.newMessage.autocomplete.placeholder" : "nome utente...",
