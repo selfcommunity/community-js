@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useMemo, useState, useRef} from 'react';
 import {styled} from '@mui/material/styles';
 import Widget from '../Widget';
-import {http, Endpoints, HttpResponse, PrivateMessageService, UserService} from '@selfcommunity/api-services';
+import {http, Endpoints, HttpResponse, PrivateMessageService} from '@selfcommunity/api-services';
 import {SCUserContext, SCUserContextType, UserUtils} from '@selfcommunity/react-core';
 import {SCNotificationTopicType, SCNotificationTypologyType, SCPrivateMessageType} from '@selfcommunity/types';
 import Message from '../Message';
@@ -16,7 +16,7 @@ import {useSnackbar} from 'notistack';
 import PubSub from 'pubsub-js';
 import {useThemeProps} from '@mui/system';
 import Icon from '@mui/material/Icon';
-import {ThreadSkeleton} from '@selfcommunity/react-ui';
+import ThreadSkeleton from './Skeleton';
 
 const smessages = defineMessages({
   placeholder: {
