@@ -22,17 +22,11 @@ const Root = styled(Widget, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  height: '100%',
   [theme.breakpoints.up('sm')]: {
     minWidth: '500px'
   },
-  ['& .MuiCardContent-root']: {
-    '&:last-child': {
-      paddingBottom: 0
-    }
-  },
   [`& .${classes.selected}`]: {
-    background: theme.palette.grey['A200']
+    background: theme.palette.primary.main
   }
 }));
 
