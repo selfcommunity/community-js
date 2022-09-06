@@ -1,6 +1,6 @@
 import React, {useContext, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Button, Box, useTheme, useMediaQuery} from '@mui/material';
+import {Button, Box, useTheme, useMediaQuery, Typography} from '@mui/material';
 import {ConfirmDialog, Snippets} from '@selfcommunity/react-ui';
 import {Thread} from '@selfcommunity/react-ui';
 import {FormattedMessage} from 'react-intl';
@@ -18,8 +18,8 @@ const classes = {
   threadBox: `${PREFIX}-thread-box`,
   newMessage: `${PREFIX}-new-message`,
   selected: `${PREFIX}-selected`,
-  desktopBox: `${PREFIX}-desktop-box`,
-  mobileBox: `${PREFIX}-mobile-box`,
+  desktopLayout: `${PREFIX}-desktop-layout`,
+  mobileLayout: `${PREFIX}-mobile-layout`,
   deleteSection: `${PREFIX}-delete-section`
 };
 
@@ -28,19 +28,19 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  [`& .${classes.desktopBox}`]: {
+  [`& .${classes.desktopLayout}`]: {
     height: '100%',
     display: 'flex',
-    flexFlow: 'row'
+    flexDirection: 'row'
   },
   [`& .${classes.snippetsBox}`]: {
-    position: 'relative'
+    position: 'relative',
+    ['& .MuiList-root']: {
+      '&:last-child': {
+        paddingBottom: '24px'
+      }
+    }
   },
-  // [`& .${classes.threadBox}`]: {
-  //   flexGrow: 1,
-  //   flexShrink: 1,
-  //   flexBasis: 'auto'
-  // },
   [`& .${classes.newMessage}`]: {
     width: '100%',
     justifyContent: 'flex-start',
@@ -101,10 +101,13 @@ export interface PrivateMessagesProps {
  |Rule Name|Global class|Description|
  |---|---|---|
  |root|.SCPrivateMessagesTemplate-root|Styles applied to the root element.|
+ |desktopLayout|.SCPrivateMessagesTemplate-desktop-layout|Styles applied when using desktop view.|
+ |mobileLayout|.SCPrivateMessagesTemplate-mobile-layout|Styles applied when using mobile view.|
  |newMessage|.SCPrivateMessagesTemplate-new-message|Styles applied to the new message element.|
  |selected|.SCPrivateMessagesTemplate-selected|Styles applied to the selected element.|
  |snippetsBox|.SCPrivateMessagesTemplate-snippets-box|Styles applied to the snippets box element.|
  |threadBox|.SCPrivateMessagesTemplate-thread-box|Styles applied to the thread box element.|
+ |deleteSection|.SCPrivateMessagesTemplate-delete-section|Styles applied to the delete thread section.|
 
 
  * @param inProps
@@ -152,6 +155,11 @@ export default function PrivateMessages(inProps: PrivateMessagesProps): JSX.Elem
     setData(data.message);
   };
 
+  const handleCloseDeleteDialog = () => {
+    setOpenDeleteThreadDialog(false);
+    setClickedDelete(false);
+  };
+
   /**
    * Handles thread deletion
    */
@@ -161,6 +169,7 @@ export default function PrivateMessages(inProps: PrivateMessagesProps): JSX.Elem
         setOpenDeleteThreadDialog(false);
         setClickedDelete(false);
         setShouldUpdate(true);
+        setObj(null);
       })
       .catch((error) => {
         setOpenDeleteThreadDialog(false);
@@ -183,7 +192,7 @@ export default function PrivateMessages(inProps: PrivateMessagesProps): JSX.Elem
     return (
       <Root {...rest} className={classNames(classes.root, className)}>
         {isMobile ? (
-          <Box className={classes.mobileBox}>
+          <Box className={classes.mobileLayout}>
             {layout === 'default' && (
               <>
                 <Button className={openNewMessage ? classes.selected : classes.newMessage} onClick={handleOpenNewMessage}>
@@ -196,7 +205,6 @@ export default function PrivateMessages(inProps: PrivateMessagesProps): JSX.Elem
             {layout === 'mobile' && (
               <Thread
                 threadObj={obj ? obj : null}
-                receiverId={obj && !openNewMessage ? obj.receiver.id : null}
                 openNewMessage={openNewMessage}
                 onNewMessageSent={openNewMessage ? setObj : null}
                 onMessageSent={handleSnippetsUpdate}
@@ -206,12 +214,18 @@ export default function PrivateMessages(inProps: PrivateMessagesProps): JSX.Elem
             )}
           </Box>
         ) : (
-          <Box className={classes.desktopBox}>
+          <Box className={classes.desktopLayout}>
             <Box className={classes.snippetsBox}>
-              <Button className={openNewMessage ? classes.selected : classes.newMessage} onClick={handleOpenNewMessage}>
-                <Icon>add_circle_outline</Icon>
-                <FormattedMessage id="templates.privateMessages.button.new" defaultMessage="templates.privateMessages.button.new" />
-              </Button>
+              {clickedDelete ? (
+                <Typography component="h4" align="center" sx={{backgroundColor: theme.palette.primary.main, textTransform: 'upperCase'}}>
+                  <FormattedMessage id="templates.privateMessages.delete" defaultMessage="templates.privateMessages.delete" />
+                </Typography>
+              ) : (
+                <Button className={openNewMessage ? classes.selected : classes.newMessage} onClick={handleOpenNewMessage}>
+                  <Icon>add_circle_outline</Icon>
+                  <FormattedMessage id="templates.privateMessages.button.new" defaultMessage="templates.privateMessages.button.new" />
+                </Button>
+              )}
               <Snippets
                 onSnippetClick={clickedDelete ? handleThreadToDelete : handleThreadOpening}
                 threadId={obj ? obj.id : null}
@@ -229,7 +243,6 @@ export default function PrivateMessages(inProps: PrivateMessagesProps): JSX.Elem
             <Box className={classes.threadBox}>
               <Thread
                 threadObj={obj ? obj : null}
-                receiverId={obj && !openNewMessage ? obj.receiver.id : null}
                 openNewMessage={openNewMessage}
                 onNewMessageSent={openNewMessage ? setObj : null}
                 onMessageSent={handleSnippetsUpdate}
@@ -244,7 +257,7 @@ export default function PrivateMessages(inProps: PrivateMessagesProps): JSX.Elem
             title={<FormattedMessage id="ui.delete.thread.message.dialog.msg" defaultMessage="ui.delete.thread.message.dialog.msg" />}
             btnConfirm={<FormattedMessage id="ui.thread.message.dialog.confirm" defaultMessage="ui.thread.message.dialog.confirm" />}
             onConfirm={() => handleDeleteThread()}
-            onClose={() => setOpenDeleteThreadDialog(false)}
+            onClose={handleCloseDeleteDialog}
           />
         )}
       </Root>
