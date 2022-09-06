@@ -395,6 +395,7 @@
   "ui.messageEditor.button.send" : "send",
 
   "ui.thread.message.dialog.msg": "Are you sure you want to delete this message?",
+  "ui.delete.thread.message.dialog.msg": "Are you sure you want to delete this thread?",
   "ui.thread.message.dialog.confirm": "Yes",
   "ui.thread.newMessage.to" : "To:",
   "ui.thread.newMessage.autocomplete.placeholder" : "type username...",
@@ -505,5 +506,6 @@
 
   "templates.userProfile.edit": "Edit",
   "templates.privateMessages.button.new" : "New Message",
+  "templates.privateMessages.delete" : "Select thread to delete",
   "templates.feedObjectDetail.contributionNotFound": "Contribution not found or you do not have permission to view it."
 }

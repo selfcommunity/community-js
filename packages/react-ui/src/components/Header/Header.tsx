@@ -1,19 +1,4 @@
-import {
-  AppBar,
-  Avatar,
-  Badge,
-  Box,
-  Button,
-  IconButton,
-  Toolbar,
-  styled,
-  Grid,
-  Tabs,
-  Tab,
-  useTheme,
-  useMediaQuery,
-  Menu
-} from '@mui/material';
+import {AppBar, Avatar, Badge, Box, Button, IconButton, Toolbar, styled, Grid, Tabs, Tab, useTheme, useMediaQuery, Menu} from '@mui/material';
 import React, {useContext, useEffect} from 'react';
 import {SCPreferences, useSCPreferences, Link, SCUserContext} from '@selfcommunity/react-core';
 import {SCUserContextType} from '@selfcommunity/react-core';
@@ -177,7 +162,7 @@ export default function Header(inProps: HeaderProps) {
       {isMobile ? (
         <MobileHeader url={url} searchBarProps={searchBarProps} />
       ) : (
-        <AppBar position='fixed' color={'default'}>
+        <AppBar position="fixed" color={'default'}>
           <Toolbar>
             <Box className={classes.logoContainer}>
               {scUserContext.user && url && url.home ? (
@@ -190,7 +175,7 @@ export default function Header(inProps: HeaderProps) {
                 </Link>
               )}
               {!scUserContext.user && url && url.register && (
-                <Button color='inherit' component={Link} to={url.register} className={classes.registerButton}>
+                <Button color="inherit" component={Link} to={url.register} className={classes.registerButton}>
                   sign up
                 </Button>
               )}
@@ -201,7 +186,9 @@ export default function Header(inProps: HeaderProps) {
                   <Tabs onChange={(e, v) => setValue(v)} value={value} textColor="inherit" indicatorColor="primary" aria-label="Navigation Tabs">
                     {url && url.home && <Tab value={0} icon={<Icon>home</Icon>} aria-label="HomePage" to={url.home} component={Link}></Tab>}
                     {url && url.explore && <Tab value={1} icon={<Icon>explore</Icon>} aria-label="Explore" to={url.explore} component={Link}></Tab>}
-                    {url && url.followings && <Tab value={2} icon={<Icon>person</Icon>} aria-label="Followings" to={url.followings} component={Link}></Tab>}
+                    {url && url.followings && (
+                      <Tab value={2} icon={<Icon>person</Icon>} aria-label="Followings" to={url.followings} component={Link}></Tab>
+                    )}
                   </Tabs>
                 </Box>
                 <Box className={classes.searchBarContainer}>
@@ -209,7 +196,14 @@ export default function Header(inProps: HeaderProps) {
                 </Box>
                 <Box className={classes.iconButtonsContainer}>
                   {url && url.profile && (
-                    <IconButton component={Link} to={url.profile} onClick={()=> setValue(null)} size="large" aria-label="Profile" color="inherit" className={classes.iconButton}>
+                    <IconButton
+                      component={Link}
+                      to={url.profile}
+                      onClick={() => setValue(null)}
+                      size="large"
+                      aria-label="Profile"
+                      color="inherit"
+                      className={classes.iconButton}>
                       <Badge color="error">
                         <Avatar alt="Remy Sharp" src={scUserContext.user.avatar} />
                       </Badge>
@@ -219,12 +213,12 @@ export default function Header(inProps: HeaderProps) {
                     <IconButton
                       component={Link}
                       to={url.create}
-                      onClick={()=> setValue(null)}
-                      size='large'
-                      aria-label='New Contribute'
-                      color='inherit'
+                      onClick={() => setValue(null)}
+                      size="large"
+                      aria-label="New Contribute"
+                      color="inherit"
                       className={classes.iconButton}>
-                      <Badge color='error'>
+                      <Badge color="error">
                         <Icon>add_circle_outline</Icon>
                       </Badge>
                     </IconButton>
@@ -233,12 +227,12 @@ export default function Header(inProps: HeaderProps) {
                     <IconButton
                       component={Link}
                       to={url.notifications}
-                      onClick={()=> setValue(null)}
-                      size='large'
-                      aria-label='Notifications'
-                      color='inherit'
+                      onClick={() => setValue(null)}
+                      size="large"
+                      aria-label="Notifications"
+                      color="inherit"
                       className={classes.iconButton}>
-                      <Badge badgeContent={scUserContext.user.unseen_interactions_counter} color='error'>
+                      <Badge badgeContent={scUserContext.user.unseen_interactions_counter} color="error">
                         <Icon>notifications</Icon>
                       </Badge>
                     </IconButton>
@@ -247,34 +241,33 @@ export default function Header(inProps: HeaderProps) {
                     <Icon>expand_more</Icon>
                   </IconButton>
                   <Menu
-                    id='menu-appbar'
+                    id="menu-appbar"
                     anchorEl={anchorEl}
                     open={Boolean(anchorEl)}
                     PaperProps={{
                       style: {
-                        transform: 'translateX(14px) translateY(14px)',
+                        transform: 'translateX(14px) translateY(14px)'
                       }
                     }}
                     onClose={handleCloseSettingsMenu}
-                    onClick={handleCloseSettingsMenu}
-                  >
-                    <HeaderMenu onItemClick={()=> setValue(null)} url={url} />
+                    onClick={handleCloseSettingsMenu}>
+                    <HeaderMenu onItemClick={() => setValue(null)} url={url} />
                   </Menu>
                 </Box>
               </>
             ) : (
               <>
-                <Grid container direction='row' justifyContent='flex-end' alignItems='center'>
+                <Grid container direction="row" justifyContent="flex-end" alignItems="center">
                   <SearchBar {...searchBarProps} />
                   {url && url.explore && (
-                    <Button component={Link} to={url.explore} size='medium' aria-label='Explore' color='inherit'>
-                      <FormattedMessage id='ui.header.button.explore' defaultMessage='ui.header.button.explore' />
+                    <Button component={Link} to={url.explore} size="medium" aria-label="Explore" color="inherit">
+                      <FormattedMessage id="ui.header.button.explore" defaultMessage="ui.header.button.explore" />
                     </Button>
                   )}
                   {url && url.login && (
-                    <Button color='inherit' onClick={url.login}>
+                    <Button color="inherit" onClick={url.login}>
                       {' '}
-                      <FormattedMessage id='ui.header.button.login' defaultMessage='ui.header.button.login' />
+                      <FormattedMessage id="ui.header.button.login" defaultMessage="ui.header.button.login" />
                     </Button>
                   )}
                 </Grid>

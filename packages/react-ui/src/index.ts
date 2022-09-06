@@ -69,6 +69,7 @@ import {
   SCUserProfileSettings
 } from './types';
 import Widget from './components/Widget';
+import ConfirmDialog from './shared/ConfirmDialog/ConfirmDialog';
 import MediaChunkUploader, {MediaChunkUploaderProps} from './shared/MediaChunkUploader';
 import {Document, EditMediaProps, Image, Link, Share} from './shared/Media';
 import UsernameTextField from './shared/UsernameTextField';
@@ -83,11 +84,7 @@ import IncubatorSuggestion, {IncubatorSuggestionProps} from './components/Incuba
 import Footer, {FooterProps} from './components/Footer';
 import Header, {HeaderProps, HeaderSkeleton} from './components/Header';
 import {DEFAULT_WIDGETS_NUMBER} from './constants/Feed';
-import {
-  DEFAULT_PAGINATION_QUERY_PARAM_NAME,
-  DEFAULT_PAGINATION_OFFSET,
-  DEFAULT_PAGINATION_LIMIT
-} from './constants/Pagination';
+import {DEFAULT_PAGINATION_QUERY_PARAM_NAME, DEFAULT_PAGINATION_OFFSET, DEFAULT_PAGINATION_LIMIT} from './constants/Pagination';
 import {FACEBOOK_SHARE, LINKEDIN_SHARE, TWITTER_SHARE} from './constants/SocialShare';
 import {DEFAULT_PRELOAD_OFFSET_VIEWPORT, MAX_PRELOAD_OFFSET_VIEWPORT, MIN_PRELOAD_OFFSET_VIEWPORT} from './constants/LazyLoad';
 
@@ -249,6 +246,7 @@ export {
   UsernameTextField,
   EmailTextField,
   PasswordTextField,
+  ConfirmDialog,
   MediaChunkUploader,
   MediaChunkUploaderProps,
   Document,
