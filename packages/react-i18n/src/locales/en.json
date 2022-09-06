@@ -506,5 +506,6 @@
 
   "templates.userProfile.edit": "Edit",
   "templates.privateMessages.button.new" : "New Message",
+  "templates.privateMessages.delete" : "Select thread to delete",
   "templates.feedObjectDetail.contributionNotFound": "Contribution not found or you do not have permission to view it."
 }
