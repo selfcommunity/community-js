@@ -3,6 +3,65 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.39-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.1.38...@selfcommunity/utils@0.1.39-alpha.0) (2022-08-31)
+
+
+### Performance Improvements
+
+* Added slugify utils string ([cd3c089](https://github.com/selfcommunity/community-js/commit/cd3c089a0b32e20240ed70bdbaa0cc86ee3a198b))
+
+
+
+
+
+## [0.1.38](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.1.38-alpha.1...@selfcommunity/utils@0.1.38) (2022-08-31)
+
+**Note:** Version bump only for package @selfcommunity/utils
+
+
+
+
+
+## [0.1.38-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.1.38-alpha.0...@selfcommunity/utils@0.1.38-alpha.1) (2022-08-31)
+
+**Note:** Version bump only for package @selfcommunity/utils
+
+
+
+
+
+## [0.1.38-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.1.37...@selfcommunity/utils@0.1.38-alpha.0) (2022-08-29)
+
+**Note:** Version bump only for package @selfcommunity/utils
+
+
+
+
+
+## [0.1.37](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.1.37-alpha.1...@selfcommunity/utils@0.1.37) (2022-08-29)
+
+**Note:** Version bump only for package @selfcommunity/utils
+
+
+
+
+
+## [0.1.37-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.1.37-alpha.0...@selfcommunity/utils@0.1.37-alpha.1) (2022-08-29)
+
+**Note:** Version bump only for package @selfcommunity/utils
+
+
+
+
+
+## [0.1.37-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.1.36...@selfcommunity/utils@0.1.37-alpha.0) (2022-08-25)
+
+**Note:** Version bump only for package @selfcommunity/utils
+
+
+
+
+
 ## [0.1.36](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.1.36-alpha.1...@selfcommunity/utils@0.1.36) (2022-08-23)
 
 **Note:** Version bump only for package @selfcommunity/utils

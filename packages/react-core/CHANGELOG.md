@@ -3,6 +3,121 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.4-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.4-alpha.1...@selfcommunity/react-core@0.3.4-alpha.2) (2022-09-01)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.3.4-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.4-alpha.0...@selfcommunity/react-core@0.3.4-alpha.1) (2022-08-31)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.3.4-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.3...@selfcommunity/react-core@0.3.4-alpha.0) (2022-08-31)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.3.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.3-alpha.4...@selfcommunity/react-core@0.3.3) (2022-08-31)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.3.3-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.3-alpha.3...@selfcommunity/react-core@0.3.3-alpha.4) (2022-08-31)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.3.3-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.3-alpha.2...@selfcommunity/react-core@0.3.3-alpha.3) (2022-08-31)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.3.3-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.3-alpha.1...@selfcommunity/react-core@0.3.3-alpha.2) (2022-08-31)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.3.3-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.3-alpha.0...@selfcommunity/react-core@0.3.3-alpha.1) (2022-08-31)
+
+
+### Performance Improvements
+
+* Added invite_code preferences ([12f8817](https://github.com/selfcommunity/community-js/commit/12f8817c10d379beb6bfb5b637e10e5358e71359))
+
+
+
+
+
+## [0.3.3-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.2...@selfcommunity/react-core@0.3.3-alpha.0) (2022-08-29)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.3.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.2-alpha.3...@selfcommunity/react-core@0.3.2) (2022-08-29)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.3.2-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.2-alpha.2...@selfcommunity/react-core@0.3.2-alpha.3) (2022-08-29)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.3.2-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.2-alpha.1...@selfcommunity/react-core@0.3.2-alpha.2) (2022-08-29)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.3.2-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.2-alpha.0...@selfcommunity/react-core@0.3.2-alpha.1) (2022-08-25)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.3.2-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.1...@selfcommunity/react-core@0.3.2-alpha.0) (2022-08-25)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
 ## [0.3.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.1-alpha.2...@selfcommunity/react-core@0.3.1) (2022-08-23)
 
 **Note:** Version bump only for package @selfcommunity/react-core

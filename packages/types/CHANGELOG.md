@@ -3,6 +3,87 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.1-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.3.0...@selfcommunity/types@0.3.1-alpha.0) (2022-08-31)
+
+**Note:** Version bump only for package @selfcommunity/types
+
+
+
+
+
+# [0.3.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.3.0-alpha.1...@selfcommunity/types@0.3.0) (2022-08-31)
+
+**Note:** Version bump only for package @selfcommunity/types
+
+
+
+
+
+# [0.3.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.3.0-alpha.0...@selfcommunity/types@0.3.0-alpha.1) (2022-08-31)
+
+**Note:** Version bump only for package @selfcommunity/types
+
+
+
+
+
+# [0.3.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.2.8...@selfcommunity/types@0.3.0-alpha.0) (2022-08-29)
+
+
+### Features
+
+* Added Services for provider associations ([51e7855](https://github.com/selfcommunity/community-js/commit/51e7855c247d1bb0ae7fc8bf7a70e7426afdb9c8))
+
+
+
+
+
+## [0.2.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.2.8-alpha.3...@selfcommunity/types@0.2.8) (2022-08-29)
+
+**Note:** Version bump only for package @selfcommunity/types
+
+
+
+
+
+## [0.2.8-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.2.8-alpha.2...@selfcommunity/types@0.2.8-alpha.3) (2022-08-29)
+
+**Note:** Version bump only for package @selfcommunity/types
+
+
+
+
+
+## [0.2.8-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.2.8-alpha.1...@selfcommunity/types@0.2.8-alpha.2) (2022-08-29)
+
+
+### Performance Improvements
+
+* Add props to choose the settings to display in UserProfileEdit.tsx ([5019bd3](https://github.com/selfcommunity/community-js/commit/5019bd3c6321c6db4312a02ea5c77c0193db6f8f))
+
+
+
+
+
+## [0.2.8-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.2.8-alpha.0...@selfcommunity/types@0.2.8-alpha.1) (2022-08-25)
+
+
+### Bug Fixes
+
+* Fix SSO SignUp params ([a5ccd16](https://github.com/selfcommunity/community-js/commit/a5ccd16e647d5df902666283a9deee5d3a7deea2))
+
+
+
+
+
+## [0.2.8-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.2.7...@selfcommunity/types@0.2.8-alpha.0) (2022-08-25)
+
+**Note:** Version bump only for package @selfcommunity/types
+
+
+
+
+
 ## [0.2.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.2.7-alpha.1...@selfcommunity/types@0.2.7) (2022-08-23)
 
 **Note:** Version bump only for package @selfcommunity/types
