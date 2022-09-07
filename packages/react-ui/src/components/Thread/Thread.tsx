@@ -56,7 +56,7 @@ const Root = styled(Widget, {
     minHeight: '500px'
   },
   [`& .${classes.threadBox}`]: {
-    maxHeight: '550px',
+    maxHeight: '540px',
     [theme.breakpoints.down('md')]: {
       maxHeight: '400px'
     },
