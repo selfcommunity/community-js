@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.5-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.4...@selfcommunity/react-ui@0.5.5-alpha.0) (2022-09-07)
+
+
+### Bug Fixes
+
+* fixed delete thread endpoint, thread skeleton import ([44b3481](https://github.com/selfcommunity/community-js/commit/44b3481f0552eb2e43c4854a7cab6a87d8af0ae5))
+* Fixed private message layout when mobile ([4bdb864](https://github.com/selfcommunity/community-js/commit/4bdb864fde32c5475024264b1f3fea139a94b3b7))
+* fixed private messages components. Added thread skeleton and delete thread feature ([e43f182](https://github.com/selfcommunity/community-js/commit/e43f1825f82e380963216a64e18c331089edca33))
+
+
+
+
+
 ## [0.5.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.4-alpha.4...@selfcommunity/react-ui@0.5.4) (2022-09-01)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
