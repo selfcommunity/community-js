@@ -22,8 +22,14 @@ const Root = styled(Widget, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
+  height: '550px',
+  overflow: 'auto',
   [theme.breakpoints.up('sm')]: {
     minWidth: '500px'
+  },
+  [theme.breakpoints.down('md')]: {
+    height: '100%',
+    maxHeight: '450px'
   },
   [`& .${classes.selected}`]: {
     background: theme.palette.primary.main

@@ -51,7 +51,8 @@ const Root = styled(Widget, {
   height: '100%',
   position: 'relative',
   [theme.breakpoints.down('md')]: {
-    width: '345px',
+    width: '100%',
+    maxWidth: '345px',
     minHeight: '500px'
   },
   [`& .${classes.threadBox}`]: {
@@ -70,6 +71,9 @@ const Root = styled(Widget, {
     alignItems: 'center',
     '& .MuiTypography-root': {
       fontSize: '1.5rem'
+    },
+    [theme.breakpoints.down('md')]: {
+      maxHeight: '450px'
     }
   },
   [`& .${classes.newMessageBox}`]: {
@@ -85,7 +89,10 @@ const Root = styled(Widget, {
   [`& .${classes.newMessageEmptyBox}`]: {
     flexGrow: 1,
     flexShrink: 1,
-    flexBasis: 'auto'
+    flexBasis: 'auto',
+    [theme.breakpoints.down('md')]: {
+      height: '450px'
+    }
   },
   [`& .${classes.sender}`]: {
     display: 'flex',
@@ -120,7 +127,8 @@ const Root = styled(Widget, {
     alignItems: 'center',
     paddingLeft: '8px',
     paddingRight: '8px',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    backgroundColor: theme.palette.primary.main
   }
 }));
 

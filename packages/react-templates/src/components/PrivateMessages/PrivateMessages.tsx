@@ -19,7 +19,8 @@ const classes = {
   newMessage: `${PREFIX}-new-message`,
   selected: `${PREFIX}-selected`,
   desktopLayout: `${PREFIX}-desktop-layout`,
-  mobileLayout: `${PREFIX}-mobile-layout`,
+  snippetsMobileLayout: `${PREFIX}-snippets-mobile-layout`,
+  threadMobileLayout: `${PREFIX}-thread-mobile-layout`,
   deleteSection: `${PREFIX}-delete-section`
 };
 
@@ -61,6 +62,10 @@ const Root = styled(Box, {
     width: '100%',
     position: 'absolute',
     bottom: '0px',
+    justifyContent: 'center'
+  },
+  [`& .${classes.threadMobileLayout}`]: {
+    display: 'flex',
     justifyContent: 'center'
   }
 }));
@@ -192,7 +197,7 @@ export default function PrivateMessages(inProps: PrivateMessagesProps): JSX.Elem
     return (
       <Root {...rest} className={classNames(classes.root, className)}>
         {isMobile ? (
-          <Box className={classes.mobileLayout}>
+          <Box className={classes.snippetsMobileLayout}>
             {layout === 'default' && (
               <>
                 <Button className={openNewMessage ? classes.selected : classes.newMessage} onClick={handleOpenNewMessage}>
@@ -203,14 +208,16 @@ export default function PrivateMessages(inProps: PrivateMessagesProps): JSX.Elem
               </>
             )}
             {layout === 'mobile' && (
-              <Thread
-                threadObj={obj ? obj : null}
-                openNewMessage={openNewMessage}
-                onNewMessageSent={openNewMessage ? setObj : null}
-                onMessageSent={handleSnippetsUpdate}
-                shouldUpdate={setShouldUpdate}
-                onMessageBack={setLayout}
-              />
+              <Box className={classes.threadMobileLayout}>
+                <Thread
+                  threadObj={obj ? obj : null}
+                  openNewMessage={openNewMessage}
+                  onNewMessageSent={openNewMessage ? setObj : null}
+                  onMessageSent={handleSnippetsUpdate}
+                  shouldUpdate={setShouldUpdate}
+                  onMessageBack={setLayout}
+                />
+              </Box>
             )}
           </Box>
         ) : (
