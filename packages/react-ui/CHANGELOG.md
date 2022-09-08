@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.5-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.5-alpha.2...@selfcommunity/react-ui@0.5.5-alpha.3) (2022-09-08)
+
+
+### Performance Improvements
+
+* thread component/message editor ([50d043f](https://github.com/selfcommunity/community-js/commit/50d043fcf0f04d56f2e031be3f88f7d4b925d341))
+* thread component/message editor ([c4b62ec](https://github.com/selfcommunity/community-js/commit/c4b62ec8348a1945605ac4a396ce541101c1eae6))
+
+
+
+
+
 ## [0.5.5-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.5-alpha.1...@selfcommunity/react-ui@0.5.5-alpha.2) (2022-09-07)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
