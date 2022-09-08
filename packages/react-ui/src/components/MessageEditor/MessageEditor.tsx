@@ -30,6 +30,7 @@ const Root = styled(Box, {
   width: '100%',
   position: 'absolute',
   bottom: '0px',
+  zIndex: 1,
   [`& .${classes.messageInput}`]: {
     width: '100%'
     // '& .MuiOutlinedInput-root': {
@@ -112,12 +113,7 @@ export default function MessageEditor(inProps: MessageEditorProps): JSX.Element 
   const [messageFile, setMessageFile] = useState(null);
   const [show, setShow] = useState(false);
   const [emojiAnchorEl, setEmojiAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
   const [openMediaSection, setOpenMediaSection] = useState(false);
-
-  // CONTEXT
-  const scContext: SCContextType = useContext(SCContext);
 
   // REF
   const ref = useRef(null);
@@ -161,81 +157,79 @@ export default function MessageEditor(inProps: MessageEditorProps): JSX.Element 
     setShow(true);
   };
 
-  if (!autoHide) {
-    return (
-      <Root {...rest} className={classNames(classes.root, className)}>
-        {openMediaSection ? (
-          <>
-            <Box className={classes.sendMediaSection}>
-              {show && (
-                <Button disabled={!messageFile} onClick={handleMessageSend} variant="outlined">
-                  <FormattedMessage id="ui.messageEditor.button.send" defaultMessage="ui.messageEditor.button.send" />
-                </Button>
-              )}
-            </Box>
-            <MessageMediaUploader
-              open={openMediaSection}
-              onClose={handleMediaSectionClose}
-              forwardMessageFile={handleMessageFile}
-              onFileUploaded={() => setShow(true)}
-              onFileCleared={() => setShow(false)}
-            />
-          </>
-        ) : (
-          <>
-            <TextField
-              size="small"
-              ref={ref}
-              className={classes.messageInput}
-              multiline
-              placeholder="Aa"
-              value={message}
-              onChange={handleMessageInput}
-              InputProps={{
-                endAdornment: (
-                  <>
-                    <InputAdornment position="end">
-                      <IconButton onClick={() => setOpenMediaSection(true)}>
-                        <Icon>attach_file</Icon>
-                      </IconButton>
-                    </InputAdornment>
-                    <InputAdornment position="end">
-                      <Stack>
-                        <div>
-                          <IconButton size="small" onClick={handleToggleEmoji}>
-                            <Icon>sentiment_satisfied_alt</Icon>
-                          </IconButton>
-                          <Popover
-                            open={Boolean(emojiAnchorEl)}
-                            anchorEl={emojiAnchorEl}
-                            onClose={handleToggleEmoji}
-                            anchorOrigin={{
-                              vertical: 'top',
-                              horizontal: 'right'
-                            }}
-                            transformOrigin={{
-                              vertical: 'bottom',
-                              horizontal: 'left'
-                            }}
-                            sx={(theme) => {
-                              return {zIndex: theme.zIndex.tooltip};
-                            }}>
-                            {Picker && <Picker onEmojiClick={handleEmojiClick} />}
-                          </Popover>
-                        </div>
-                      </Stack>
-                      <IconButton disabled={isSending} onClick={handleMessageSend}>
-                        {show && <Icon>send</Icon>}
-                      </IconButton>
-                    </InputAdornment>
-                  </>
-                )
-              }}
-            />
-          </>
-        )}
-      </Root>
-    );
+  if (autoHide) {
+    return null;
   }
-  return null;
+
+  return (
+    <Root {...rest} className={classNames(classes.root, className)}>
+      {openMediaSection && (
+        <>
+          <Box className={classes.sendMediaSection}>
+            {show && (
+              <Button disabled={!messageFile} onClick={handleMessageSend} variant="outlined">
+                <FormattedMessage id="ui.messageEditor.button.send" defaultMessage="ui.messageEditor.button.send" />
+              </Button>
+            )}
+          </Box>
+          <MessageMediaUploader
+            open={openMediaSection}
+            onClose={handleMediaSectionClose}
+            forwardMessageFile={handleMessageFile}
+            onFileUploaded={() => setShow(true)}
+            onFileCleared={() => setShow(false)}
+          />
+        </>
+      )}
+      <TextField
+        size="small"
+        ref={ref}
+        className={classes.messageInput}
+        multiline
+        placeholder="Aa"
+        value={message}
+        onChange={handleMessageInput}
+        InputProps={{
+          endAdornment: (
+            <>
+              <InputAdornment position="end">
+                <IconButton onClick={() => setOpenMediaSection(true)}>
+                  <Icon>attach_file</Icon>
+                </IconButton>
+              </InputAdornment>
+              <InputAdornment position="end">
+                <Stack>
+                  <div>
+                    <IconButton size="small" onClick={handleToggleEmoji}>
+                      <Icon>sentiment_satisfied_alt</Icon>
+                    </IconButton>
+                    <Popover
+                      open={Boolean(emojiAnchorEl)}
+                      anchorEl={emojiAnchorEl}
+                      onClose={handleToggleEmoji}
+                      anchorOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right'
+                      }}
+                      transformOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'left'
+                      }}
+                      sx={(theme) => {
+                        return {zIndex: theme.zIndex.tooltip};
+                      }}>
+                      {Picker && <Picker onEmojiClick={handleEmojiClick} />}
+                    </Popover>
+                  </div>
+                </Stack>
+                <IconButton disabled={isSending} onClick={handleMessageSend}>
+                  {show && <Icon>send</Icon>}
+                </IconButton>
+              </InputAdornment>
+            </>
+          )
+        }}
+      />
+    </Root>
+  );
 }

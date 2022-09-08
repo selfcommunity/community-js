@@ -544,9 +544,13 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
               ))}
             </div>
           ))}
-          {isFollowed && (
-            <MessageEditor send={() => sendMessage()} isSending={sending} getMessage={handleMessage} getMessageFile={handleMessageFile} />
-          )}
+          <MessageEditor
+            send={() => sendMessage()}
+            isSending={sending}
+            getMessage={handleMessage}
+            getMessageFile={handleMessageFile}
+            autoHide={!isFollowed}
+          />
         </Box>
       </>
     );
@@ -597,9 +601,13 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
             </Box>
             <Box className={classes.newMessageEmptyBox} />
             <Box className={classes.newMessageEditor}>
-              {isFollowed && (
-                <MessageEditor send={() => sendMessage()} isSending={sending} getMessage={handleMessage} getMessageFile={handleMessageFile} />
-              )}
+              <MessageEditor
+                send={() => sendMessage()}
+                isSending={sending}
+                getMessage={handleMessage}
+                getMessageFile={handleMessageFile}
+                autoHide={!isFollowed}
+              />
             </Box>
           </Box>
         ) : (
