@@ -244,6 +244,13 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
   const [followers, setFollowers] = useState<any[]>([]);
   const [recipients, setRecipients] = useState([]);
   const threadId = threadObj ? threadObj.id : null;
+  let receiver;
+  if (threadObj && threadObj.receiver.id !== loggedUser) {
+    receiver = threadObj.receiver;
+  } else {
+    receiver = threadObj ? threadObj.sender : null;
+  }
+  const isFollowed = followers.length && followers.some((f) => f.id === receiver.id);
 
   // REFS
   const refreshSubscription = useRef(null);
@@ -370,7 +377,7 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
           url: Endpoints.SendMessage.url(),
           method: Endpoints.SendMessage.method,
           data: {
-            recipients: openNewMessage ? ids : [threadObj.receiver.id !== loggedUser ? threadObj.receiver.id : threadObj.sender.id],
+            recipients: openNewMessage ? ids : [receiver.id],
             message: message,
             file_uuid: messageFile ?? null
           }
@@ -444,10 +451,10 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
    * if openNewMessage is true, fetches user followers too.
    */
   useEffect(() => {
-    if (openNewMessage) {
+    if (threadObj) {
+      fetchThread();
       fetchFollowers();
     }
-    fetchThread();
   }, [threadId, openNewMessage]);
 
   /**
@@ -487,13 +494,9 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
             <Toolbar className={classes.toolBar}>
               <Box sx={{display: 'flex', justifyContent: 'flex-start', alignItems: 'center'}}>
                 <Icon onClick={() => onMessageBack('default')}>chevron_left</Icon>
-                <Avatar
-                  alt="Remy Sharp"
-                  src={threadObj.sender.id === loggedUser ? threadObj.receiver.avatar : threadObj.sender.avatar}
-                  sx={{marginRight: '8px'}}
-                />
+                <Avatar alt="Remy Sharp" src={receiver.avatar} sx={{marginRight: '8px'}} />
                 <Typography variant="h6" color="inherit" component="div">
-                  {threadObj.sender.id === loggedUser ? threadObj.receiver.username : threadObj.sender.username}
+                  {receiver.username}
                 </Typography>
               </Box>
               <Box sx={{display: 'flex', justifyContent: 'flex-end', alignItems: 'center'}}>
@@ -541,7 +544,13 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
               ))}
             </div>
           ))}
-          <MessageEditor send={() => sendMessage()} isSending={sending} getMessage={handleMessage} getMessageFile={handleMessageFile} />
+          <MessageEditor
+            send={() => sendMessage()}
+            isSending={sending}
+            getMessage={handleMessage}
+            getMessageFile={handleMessageFile}
+            autoHide={!isFollowed}
+          />
         </Box>
       </>
     );
@@ -592,7 +601,13 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
             </Box>
             <Box className={classes.newMessageEmptyBox} />
             <Box className={classes.newMessageEditor}>
-              <MessageEditor send={() => sendMessage()} isSending={sending} getMessage={handleMessage} getMessageFile={handleMessageFile} />
+              <MessageEditor
+                send={() => sendMessage()}
+                isSending={sending}
+                getMessage={handleMessage}
+                getMessageFile={handleMessageFile}
+                autoHide={!isFollowed}
+              />
             </Box>
           </Box>
         ) : (
