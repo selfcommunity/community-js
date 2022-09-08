@@ -142,7 +142,11 @@ export default function MessageEditor(inProps: MessageEditorProps): JSX.Element 
   };
   const handleMessageInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setMessage(event.target.value);
-    setShow(true);
+    if (event.target.value === '') {
+      setShow(false);
+    } else {
+      setShow(true);
+    }
     getMessage(event.target.value);
   };
 
