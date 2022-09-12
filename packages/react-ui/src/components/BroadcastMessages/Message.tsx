@@ -189,9 +189,9 @@ export default function Message(props: MessageProps): JSX.Element {
             {banner.body_text}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            <Link to={banner.link} target={banner.open_in_new_tab ? '_blank' : '_self'}>
+            <a href={banner.link} target={banner.open_in_new_tab ? '_blank' : '_self'}>
               {banner.link_text}
-            </Link>
+            </a>
           </Typography>
         </CardContent>
       </>
@@ -213,9 +213,7 @@ export default function Message(props: MessageProps): JSX.Element {
             {message.viewed_at === null && <MarkRead endpoint={Endpoints.BroadcastMessagesMarkRead} data={{banner_ids: [message.id]}} />}
             <CardHeader
               className={classes.header}
-              avatar={
-                <Avatar alt={preferences[SCPreferences.TEXT_APPLICATION_NAME]} src={preferences[SCPreferences.LOGO_NAVBAR_LOGO_MOBILE]} />
-              }
+              avatar={<Avatar alt={preferences[SCPreferences.TEXT_APPLICATION_NAME]} src={preferences[SCPreferences.LOGO_NAVBAR_LOGO_MOBILE]} />}
               action={
                 template === SCBroadcastMessageTemplateType.DETAIL && (
                   <IconButton aria-label="close" onClick={handleClose} disabled={closing}>
