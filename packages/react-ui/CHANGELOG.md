@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.5-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.5-alpha.4...@selfcommunity/react-ui@0.5.5-alpha.5) (2022-09-12)
+
+
+### Bug Fixes
+
+* finished editing private message components for feature: https://app.asana.com/0/1202638443591994/1202904399787898/f ([ec08d77](https://github.com/selfcommunity/community-js/commit/ec08d77f7c2e2d122952d3d4204d6a2c8e271ff5))
+
+
+
+
+
 ## [0.5.5-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.5-alpha.3...@selfcommunity/react-ui@0.5.5-alpha.4) (2022-09-12)
 
 
