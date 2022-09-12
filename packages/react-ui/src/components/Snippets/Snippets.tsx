@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Divider, List} from '@mui/material';
+import {Box, Divider, List} from '@mui/material';
 import Widget from '../Widget';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {SCPrivateMessageType, SCNotificationTopicType, SCNotificationTypologyType} from '@selfcommunity/types';
@@ -9,12 +9,14 @@ import Message from '../Message';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import PubSub from 'pubsub-js';
+import Icon from '@mui/material/Icon';
 
 const PREFIX = 'SCSnippets';
 
 const classes = {
   root: `${PREFIX}-root`,
-  selected: `${PREFIX}-selected`
+  selected: `${PREFIX}-selected`,
+  deleteSection: `${PREFIX}-delete-section`
 };
 
 const Root = styled(Widget, {
@@ -33,6 +35,13 @@ const Root = styled(Widget, {
   },
   [`& .${classes.selected}`]: {
     background: theme.palette.primary.main
+  },
+  [`& .${classes.deleteSection}`]: {
+    display: 'flex',
+    width: '100%',
+    position: 'absolute',
+    bottom: '0px',
+    justifyContent: 'center'
   }
 }));
 
@@ -71,6 +80,14 @@ export interface SnippetsProps {
    * @default false
    */
   shouldUpdate?: boolean;
+  /**
+   * Props spread to delete icon
+   */
+  deleteIconProps?: {
+    show: boolean;
+    action?: () => void;
+    name?: string;
+  };
 }
 /**
  *
@@ -93,6 +110,7 @@ export interface SnippetsProps {
  |---|---|---|
  |root|.SCSnippets-root|Styles applied to the root element.|
  |selected|.SCSnippets-selected|Styles applied to the selected element.|
+ |deleteSection|.SCSnippets-delete-section|Styles applied to  delete thread section.|
 
  * @param inProps
  */
@@ -103,7 +121,7 @@ export default function Snippets(inProps: SnippetsProps): JSX.Element {
     name: PREFIX
   });
 
-  const {autoHide = false, className = null, onSnippetClick, threadId, getSnippetHeadline, shouldUpdate, ...rest} = props;
+  const {autoHide = false, className = null, onSnippetClick, threadId, getSnippetHeadline, shouldUpdate, deleteIconProps, ...rest} = props;
 
   // STATE
   const [snippets, setSnippets] = useState<any[]>([]);
@@ -235,6 +253,11 @@ export default function Snippets(inProps: SnippetsProps): JSX.Element {
             </div>
           ))}
         </List>
+        {total && deleteIconProps.show && (
+          <Box className={classes.deleteSection}>
+            <Icon onClick={deleteIconProps.action}>{deleteIconProps.name}</Icon>
+          </Box>
+        )}
       </Root>
     );
   }
