@@ -2,9 +2,9 @@ import React, {useContext, useEffect, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import {Box, Card, IconButton, ImageListItemBar} from '@mui/material';
+import {Box, IconButton, ImageListItemBar} from '@mui/material';
 import Icon from '@mui/material/Icon';
-import {UserService, formatHttpError} from '@selfcommunity/api-services';
+import {Endpoints, UserService} from '@selfcommunity/api-services';
 import {SCContext, SCContextType, SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
 import {FormattedMessage} from 'react-intl';
 import ImageList from '@mui/material/ImageList';
@@ -24,7 +24,7 @@ const classes = {
   imageItem: `${PREFIX}-imageItem`
 };
 
-const Root = styled(Card, {
+const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
@@ -126,22 +126,12 @@ export default function ChangePictureDialog(inProps: CPDialogProps): JSX.Element
   }
 
   /**
-   * Fetches the list of scUser's avatars
+   * Fetches the list of avatars
    */
-  function fetchUserAvatar() {
-    UserService.getUserAvatars({headers: {Authorization: `Bearer ${scContext.settings.session.authToken.accessToken}`}})
-      .then((data: any) => {
-        const primary = getPrimaryAvatar(data);
-        if (data && data.length) {
-          setAvatars(data);
-          setPrimary(primary.id);
-          setFile(primary.avatar);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
+  const fetchUserAvatars = async (next: string = Endpoints.GetAvatars.url({})): Promise<[]> => {
+    const data: any = await UserService.getUserAvatars({url: next});
+    return data.next ? data.results.concat(await fetchUserAvatars(data.next)) : data.results;
+  };
 
   /**
    * Gets the primary avatar from a list of avatars
@@ -184,6 +174,9 @@ export default function ChangePictureDialog(inProps: CPDialogProps): JSX.Element
         if (primary === deleteAvatarId) {
           if (_avatars.length > 0) {
             selectPrimaryAvatar(_avatars[_avatars.length - 1]);
+          } else {
+            // if there are no more avatars set auto generated image
+            onChange && onChange(null);
           }
         }
       })
@@ -197,7 +190,18 @@ export default function ChangePictureDialog(inProps: CPDialogProps): JSX.Element
    * On mount, fetches the list of scUser's avatars
    */
   useEffect(() => {
-    fetchUserAvatar();
+    fetchUserAvatars()
+      .then((data: any) => {
+        const primary = getPrimaryAvatar(data);
+        if (data && data.length) {
+          setAvatars(data);
+          setPrimary(primary.id);
+          setFile(primary.avatar);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, []);
 
   return (
