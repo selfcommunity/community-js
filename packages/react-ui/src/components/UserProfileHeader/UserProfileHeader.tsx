@@ -4,7 +4,16 @@ import {Box, Paper, Typography} from '@mui/material';
 import ChangeCover, {ChangeCoverProps} from '../ChangeCover';
 import ChangePicture, {ChangePictureProps} from '../ChangePicture';
 import {SCUserType} from '@selfcommunity/types';
-import {SCPreferences, SCPreferencesContextType, SCUserContextType, useSCFetchUser, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
+import {
+  SCContextType,
+  SCPreferences,
+  SCPreferencesContextType,
+  SCUserContextType,
+  useSCContext,
+  useSCFetchUser,
+  useSCPreferences,
+  useSCUser
+} from '@selfcommunity/react-core';
 import UserProfileHeaderSkeleton from './Skeleton';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
@@ -142,6 +151,7 @@ export default function UserProfileHeader(inProps: UserProfileHeaderProps): JSX.
   const scPreferences: SCPreferencesContextType = useSCPreferences();
 
   // CONTEXT
+  const scContext: SCContextType = useSCContext();
   const scUserContext: SCUserContextType = useSCUser();
 
   // HOOKS
@@ -150,11 +160,14 @@ export default function UserProfileHeader(inProps: UserProfileHeaderProps): JSX.
   /**
    * Handles Change Avatar
    * Only if scUser.id === scUserContext.user.id
+   * If avatar === null reset the avatar with auto-generated image
    * @param avatar
    */
   function handleChangeAvatar(avatar) {
-    if (scUser.id === scUserContext.user.id) {
+    if (scUser.id === scUserContext.user.id && avatar) {
       setSCUser(Object.assign({}, scUser, {avatar: avatar.avatar}));
+    } else {
+      setSCUser(Object.assign({}, scUser, {avatar: `${scContext.settings.portal}/avatar/${scUser.username}`}));
     }
   }
 
