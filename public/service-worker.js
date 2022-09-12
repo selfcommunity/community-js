@@ -41,9 +41,7 @@ function getNotificationLocation(notification) {
     try {
       return new URL(notification.options.data.url).origin;
     } catch (e) {
-      console.log(
-        `[Service Worker] Invalid notification url: "${notification.options.data.url}"`,
-      );
+      console.log(`[Service Worker] Invalid notification url: "${notification.options.data.url}"`);
       return origin;
     }
   } else {
