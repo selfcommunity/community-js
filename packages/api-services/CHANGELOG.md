@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.2-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.2-alpha.0...@selfcommunity/api-services@0.3.2-alpha.1) (2022-09-12)
+
+
+### Bug Fixes
+
+* api request override config ([c281283](https://github.com/selfcommunity/community-js/commit/c2812835baa6e0dc1e4d60a5a9c48346d8501735))
+
+
+
+
+
 ## [0.3.2-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.1...@selfcommunity/api-services@0.3.2-alpha.0) (2022-09-07)
 
 

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.5-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.5-alpha.6...@selfcommunity/react-ui@0.5.5-alpha.7) (2022-09-12)
+
+
+### Bug Fixes
+
+* change avatar ([e0f8005](https://github.com/selfcommunity/community-js/commit/e0f80053475525d48353a47f051bac4a7217d7c4))
+
+
+
+
+
 ## [0.5.5-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.5-alpha.5...@selfcommunity/react-ui@0.5.5-alpha.6) (2022-09-12)
 
 
