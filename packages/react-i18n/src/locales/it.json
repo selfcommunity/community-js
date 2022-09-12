@@ -503,6 +503,7 @@
   "ui.header.searchBar.search": "Cerca",
 
   "templates.userProfile.edit": "Modifica",
+  "templates.userProfile.send.pm": "Invia messaggio privato",
   "templates.privateMessages.button.new" : "Nuovo Messaggio",
   "templates.privateMessages.delete" : "Seleziona la conversazione da eliminare",
   "templates.feedObjectDetail.contributionNotFound": "Il contributo non è stato trovato oppure non hai i permessi per vederlo."
