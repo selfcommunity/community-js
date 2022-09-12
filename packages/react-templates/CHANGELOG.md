@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.1.40-alpha.4...@selfcommunity/react-templates@0.2.0-alpha.0) (2022-09-12)
+
+
+### Bug Fixes
+
+* finished editing private message components for feature: https://app.asana.com/0/1202638443591994/1202904399787898/f ([ec08d77](https://github.com/selfcommunity/community-js/commit/ec08d77f7c2e2d122952d3d4204d6a2c8e271ff5))
+
+
+### Features
+
+* added send pm in user profile template. Asana issue: https://app.asana.com/0/1202638443591994/1202904399787898/f ([bbcbbdc](https://github.com/selfcommunity/community-js/commit/bbcbbdc4edc3e2128c8ce05ff86bdc57d1dd1b4d))
+
+
+
+
+
 ## [0.1.40-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.1.40-alpha.3...@selfcommunity/react-templates@0.1.40-alpha.4) (2022-09-12)
 
 **Note:** Version bump only for package @selfcommunity/react-templates
