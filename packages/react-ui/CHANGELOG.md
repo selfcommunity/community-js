@@ -3,6 +3,58 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.5-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.5-alpha.3...@selfcommunity/react-ui@0.5.5-alpha.4) (2022-09-12)
+
+
+### Bug Fixes
+
+* broadcast message absolute path ([d58a69d](https://github.com/selfcommunity/community-js/commit/d58a69d082980cada85a33699bab269500669e4f))
+
+
+
+
+
+## [0.5.5-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.5-alpha.2...@selfcommunity/react-ui@0.5.5-alpha.3) (2022-09-08)
+
+
+### Performance Improvements
+
+* thread component/message editor ([50d043f](https://github.com/selfcommunity/community-js/commit/50d043fcf0f04d56f2e031be3f88f7d4b925d341))
+* thread component/message editor ([c4b62ec](https://github.com/selfcommunity/community-js/commit/c4b62ec8348a1945605ac4a396ce541101c1eae6))
+
+
+
+
+
+## [0.5.5-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.5-alpha.1...@selfcommunity/react-ui@0.5.5-alpha.2) (2022-09-07)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.5.5-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.5-alpha.0...@selfcommunity/react-ui@0.5.5-alpha.1) (2022-09-07)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.5.5-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.4...@selfcommunity/react-ui@0.5.5-alpha.0) (2022-09-07)
+
+
+### Bug Fixes
+
+* fixed delete thread endpoint, thread skeleton import ([44b3481](https://github.com/selfcommunity/community-js/commit/44b3481f0552eb2e43c4854a7cab6a87d8af0ae5))
+* Fixed private message layout when mobile ([4bdb864](https://github.com/selfcommunity/community-js/commit/4bdb864fde32c5475024264b1f3fea139a94b3b7))
+* fixed private messages components. Added thread skeleton and delete thread feature ([e43f182](https://github.com/selfcommunity/community-js/commit/e43f1825f82e380963216a64e18c331089edca33))
+
+
+
+
+
 ## [0.5.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.4-alpha.4...@selfcommunity/react-ui@0.5.4) (2022-09-01)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
