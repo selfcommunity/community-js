@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.2.0-alpha.3...@selfcommunity/react-templates@0.2.0-alpha.4) (2022-09-13)
+
+
+### Bug Fixes
+
+* changed pm notifications target obj, fixed header ([7802cdd](https://github.com/selfcommunity/community-js/commit/7802cdd9f363d34945566847e1a9855a70da608b))
+
+
+
+
+
 # [0.2.0-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.2.0-alpha.2...@selfcommunity/react-templates@0.2.0-alpha.3) (2022-09-13)
 
 
