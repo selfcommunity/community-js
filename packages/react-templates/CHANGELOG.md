@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.2.0-alpha.2...@selfcommunity/react-templates@0.2.0-alpha.3) (2022-09-13)
+
+
+### Bug Fixes
+
+* fixed private messages template when prop id is passed to component. ([1e11398](https://github.com/selfcommunity/community-js/commit/1e11398ff3ef2bec2beb6c13971a0cb008ce6b8c))
+
+
+
+
+
 # [0.2.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.2.0-alpha.1...@selfcommunity/react-templates@0.2.0-alpha.2) (2022-09-12)
 
 **Note:** Version bump only for package @selfcommunity/react-templates
