@@ -176,7 +176,7 @@ export default function Header(inProps: HeaderProps) {
               )}
               {!scUserContext.user && url && url.register && (
                 <Button color="inherit" component={Link} to={url.register} className={classes.registerButton}>
-                  sign up
+                  <FormattedMessage id="ui.header.button.register" defaultMessage="ui.header.button.register" />
                 </Button>
               )}
             </Box>
@@ -205,7 +205,7 @@ export default function Header(inProps: HeaderProps) {
                       color="inherit"
                       className={classes.iconButton}>
                       <Badge color="error">
-                        <Avatar alt="Remy Sharp" src={scUserContext.user.avatar} />
+                        <Avatar alt={scUserContext.user.username} src={scUserContext.user.avatar} />
                       </Badge>
                     </IconButton>
                   )}

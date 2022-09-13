@@ -67,7 +67,7 @@ export interface PrivateMessagesProps {
    * Thread receiver id
    * @default null
    */
-  id?: number;
+  id?: number | string;
   /**
    * Overrides or extends the styles applied to the component.
    * @default null
