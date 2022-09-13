@@ -252,6 +252,7 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
   const [followers, setFollowers] = useState<any[]>([]);
   const [recipients, setRecipients] = useState([]);
   const [isFollowed, setIsFollowed] = useState<boolean>(false);
+  const [receiver, setReceiver] = useState(null);
 
   // REFS
   const refreshSubscription = useRef(null);
@@ -357,7 +358,7 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
           url: Endpoints.SendMessage.url(),
           method: Endpoints.SendMessage.method,
           data: {
-            recipients: openNewMessage ? ids : [userObj.receiver.id],
+            recipients: openNewMessage ? ids : [typeof userObj === 'number' ? userObj : userObj.receiver.id],
             message: message,
             file_uuid: messageFile ?? null
           }
@@ -367,7 +368,6 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
           setMessageObjs((prev) => [...prev, res.data]);
           setSending(false);
           onMessageSent(res.data);
-          shouldUpdate(false);
           if (openNewMessage) {
             onNewMessageSent(res.data);
             shouldUpdate(true);
@@ -399,7 +399,13 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
         const data = res.data;
         setFollowers(data);
         if (data.length && userObj) {
-          setIsFollowed(data.some((f) => f.id === userObj.receiver.id));
+          let u;
+          if (typeof userObj === 'number') {
+            u = userObj;
+          } else {
+            u = userObj.receiver.id;
+          }
+          setIsFollowed(data.some((f) => f.id === u));
         }
         if (openNewMessage) {
           setIsFollowed(true);
@@ -414,17 +420,28 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
    * Fetches thread
    */
   function fetchThread() {
+    let u;
+    if (typeof userObj === 'number') {
+      u = userObj;
+    } else {
+      u = userObj.receiver.id;
+    }
     http
       .request({
         url: Endpoints.GetAThread.url(),
         method: Endpoints.GetAThread.method,
         params: {
-          user: userObj.receiver.id
+          user: u
         }
       })
       .then((res: HttpResponse<any>) => {
         const data = res.data;
         setMessageObjs(data.results);
+        if (data.results[0].receiver.id !== loggedUser) {
+          setReceiver(data.results[0].receiver);
+        } else {
+          setReceiver(data.results[0].sender);
+        }
         setLoading(false);
       })
       .catch((error) => {
@@ -478,14 +495,14 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
   function renderThread() {
     return (
       <>
-        {isMobile && userObj && (
+        {isMobile && receiver && (
           <AppBar position="static">
             <Toolbar className={classes.toolBar}>
               <Box sx={{display: 'flex', justifyContent: 'flex-start', alignItems: 'center'}}>
                 <Icon onClick={onMessageBack}>chevron_left</Icon>
-                <Avatar alt="Remy Sharp" src={userObj.receiver.avatar} sx={{marginRight: '8px'}} />
+                <Avatar alt="Remy Sharp" src={receiver.avatar} sx={{marginRight: '8px'}} />
                 <Typography variant="h6" color="inherit" component="div">
-                  {userObj.receiver.username}
+                  {receiver.username}
                 </Typography>
               </Box>
               <Box sx={{display: 'flex', justifyContent: 'flex-end', alignItems: 'center'}}>

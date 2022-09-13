@@ -20,8 +20,7 @@ const classes = {
   selected: `${PREFIX}-selected`,
   desktopLayout: `${PREFIX}-desktop-layout`,
   snippetsMobileLayout: `${PREFIX}-snippets-mobile-layout`,
-  threadMobileLayout: `${PREFIX}-thread-mobile-layout`,
-  deleteSection: `${PREFIX}-delete-section`
+  threadMobileLayout: `${PREFIX}-thread-mobile-layout`
 };
 
 const Root = styled(Box, {
@@ -56,13 +55,6 @@ const Root = styled(Box, {
     '& .MuiIcon-root': {
       marginRight: '5px'
     }
-  },
-  [`& .${classes.deleteSection}`]: {
-    display: 'flex',
-    width: '100%',
-    position: 'absolute',
-    bottom: '0px',
-    justifyContent: 'center'
   },
   [`& .${classes.threadMobileLayout}`]: {
     display: 'flex',
@@ -117,8 +109,6 @@ export interface PrivateMessagesProps {
  |selected|.SCPrivateMessagesTemplate-selected|Styles applied to the selected element.|
  |snippetsBox|.SCPrivateMessagesTemplate-snippets-box|Styles applied to the snippets box element.|
  |threadBox|.SCPrivateMessagesTemplate-thread-box|Styles applied to the thread box element.|
- |deleteSection|.SCPrivateMessagesTemplate-delete-section|Styles applied to  delete thread section.|
-
 
  * @param inProps
  */
@@ -134,12 +124,14 @@ export default function PrivateMessages(inProps: PrivateMessagesProps): JSX.Elem
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [layout, setLayout] = useState('default');
-  const [obj, setObj] = useState(null);
+  const [obj, setObj] = useState<any>(id ? id : null);
   const [data, setData] = useState(null);
   const [openNewMessage, setOpenNewMessage] = useState<boolean>(false);
   const [shouldUpdate, setShouldUpdate] = useState<boolean>(false);
   const [clickedDelete, setClickedDelete] = useState<boolean>(false);
   const [openDeleteThreadDialog, setOpenDeleteThreadDialog] = useState<boolean>(false);
+  const mobileSnippetsView = (layout === 'default' && !id) || (layout === 'mobile' && id);
+  const mobileThreadView = (layout === 'mobile' && !id) || (layout === 'default' && id);
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
@@ -151,6 +143,9 @@ export default function PrivateMessages(inProps: PrivateMessagesProps): JSX.Elem
     if (isMobile) {
       setLayout('mobile');
     }
+    if (id) {
+      setLayout('default');
+    }
   };
 
   const handleOpenNewMessage = () => {
@@ -158,6 +153,9 @@ export default function PrivateMessages(inProps: PrivateMessagesProps): JSX.Elem
     setObj(null);
     if (isMobile) {
       setLayout('mobile');
+    }
+    if (id) {
+      setLayout('default');
     }
   };
 
@@ -172,6 +170,9 @@ export default function PrivateMessages(inProps: PrivateMessagesProps): JSX.Elem
 
   const handleMessageBack = () => {
     setLayout('default');
+    if (id) {
+      setLayout('mobile');
+    }
     setOpenNewMessage(false);
   };
 
@@ -183,6 +184,9 @@ export default function PrivateMessages(inProps: PrivateMessagesProps): JSX.Elem
       .then(() => {
         if (layout === 'mobile') {
           setLayout('default');
+        }
+        if (id) {
+          setLayout('mobile');
         }
         setOpenDeleteThreadDialog(false);
         setClickedDelete(false);
@@ -211,7 +215,7 @@ export default function PrivateMessages(inProps: PrivateMessagesProps): JSX.Elem
       <Root {...rest} className={classNames(classes.root, className)}>
         {isMobile ? (
           <Box className={classes.snippetsMobileLayout}>
-            {layout === 'default' && (
+            {mobileSnippetsView && (
               <>
                 <Button className={openNewMessage ? classes.selected : classes.newMessage} onClick={handleOpenNewMessage}>
                   <Icon>add_circle_outline</Icon>
@@ -219,14 +223,14 @@ export default function PrivateMessages(inProps: PrivateMessagesProps): JSX.Elem
                 </Button>
                 <Snippets
                   onSnippetClick={handleThreadOpening}
-                  threadId={obj ? obj.id : null}
+                  threadId={typeof obj === 'number' ? obj : obj ? obj.id : null}
                   getSnippetHeadline={data}
                   shouldUpdate={shouldUpdate}
                   deleteIconProps={{show: false}}
                 />
               </>
             )}
-            {layout === 'mobile' && (
+            {mobileThreadView && (
               <Box className={classes.threadMobileLayout}>
                 {openDeleteThreadDialog && (
                   <ConfirmDialog
@@ -238,7 +242,7 @@ export default function PrivateMessages(inProps: PrivateMessagesProps): JSX.Elem
                   />
                 )}
                 <Thread
-                  userObj={id ? id : obj ? obj : null}
+                  userObj={obj ? obj : null}
                   openNewMessage={openNewMessage}
                   onNewMessageSent={openNewMessage ? setObj : null}
                   onMessageSent={handleSnippetsUpdate}
@@ -264,7 +268,7 @@ export default function PrivateMessages(inProps: PrivateMessagesProps): JSX.Elem
               )}
               <Snippets
                 onSnippetClick={clickedDelete ? handleThreadToDelete : handleThreadOpening}
-                threadId={id ? id : obj ? obj.id : null}
+                threadId={obj ? obj.id : null}
                 getSnippetHeadline={data}
                 shouldUpdate={shouldUpdate}
                 deleteIconProps={{
@@ -276,7 +280,7 @@ export default function PrivateMessages(inProps: PrivateMessagesProps): JSX.Elem
             </Box>
             <Box className={classes.threadBox}>
               <Thread
-                userObj={id ? id : obj ? obj : null}
+                userObj={obj ? obj : null}
                 openNewMessage={openNewMessage}
                 onNewMessageSent={openNewMessage ? setObj : null}
                 onMessageSent={handleSnippetsUpdate}
