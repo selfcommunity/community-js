@@ -41,7 +41,8 @@ const Root = styled(Widget, {
     width: '100%',
     position: 'absolute',
     bottom: '0px',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    backgroundColor: '#fff'
   }
 }));
 
