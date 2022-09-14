@@ -377,6 +377,7 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
             onNewMessageSent(res.data);
             shouldUpdate(true);
             setNewMessageThread(false);
+            setRecipients([]);
           }
         })
         .catch((error) => {
