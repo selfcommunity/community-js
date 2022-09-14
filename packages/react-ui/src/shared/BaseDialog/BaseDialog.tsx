@@ -41,17 +41,17 @@ export interface BaseDialogProps {
    * Dialog title
    * @default ''
    */
-  title: any;
+  title?: any;
   /**
    * Handles dialog opening
    * @default false
    */
-  open: boolean;
+  open?: boolean;
   /**
    * Handles dialog closing
    * @default null
    */
-  onClose: () => any;
+  onClose?: () => any;
   /**
    * Any other properties
    */
