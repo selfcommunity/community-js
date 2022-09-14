@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.6-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.5...@selfcommunity/react-ui@0.5.6-alpha.0) (2022-09-14)
+
+
+### Bug Fixes
+
+* fixed pm template when opening from user profile link ([7e64b38](https://github.com/selfcommunity/community-js/commit/7e64b3836cafffd022b7504e77770e2e634a3414))
+
+
+
+
+
 ## [0.5.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.5-alpha.11...@selfcommunity/react-ui@0.5.5) (2022-09-14)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
