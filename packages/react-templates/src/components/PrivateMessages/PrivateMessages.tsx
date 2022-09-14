@@ -150,6 +150,9 @@ export default function PrivateMessages(inProps: PrivateMessagesProps): JSX.Elem
 
   const handleOpenNewMessage = () => {
     setOpenNewMessage(!openNewMessage);
+    if (shouldUpdate) {
+      setShouldUpdate(false);
+    }
     setObj(null);
     if (isMobile) {
       setLayout('mobile');
@@ -176,10 +179,16 @@ export default function PrivateMessages(inProps: PrivateMessagesProps): JSX.Elem
     setOpenNewMessage(false);
   };
 
+  const handleNewMessageSent = (o) => {
+    setObj(o);
+    setOpenNewMessage(false);
+  };
+
   /**
    * Handles thread deletion
    */
   function handleDeleteThread() {
+    setShouldUpdate(!shouldUpdate);
     PrivateMessageService.deleteAThread(obj.id)
       .then(() => {
         if (layout === 'mobile') {
@@ -284,7 +293,7 @@ export default function PrivateMessages(inProps: PrivateMessagesProps): JSX.Elem
               <Thread
                 userObj={obj ? obj : null}
                 openNewMessage={openNewMessage}
-                onNewMessageSent={setObj}
+                onNewMessageSent={handleNewMessageSent}
                 onMessageSent={handleSnippetsUpdate}
                 shouldUpdate={setShouldUpdate}
                 onMessageBack={handleMessageBack}
