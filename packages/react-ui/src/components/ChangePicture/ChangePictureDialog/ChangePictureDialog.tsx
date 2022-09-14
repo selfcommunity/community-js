@@ -9,11 +9,12 @@ import {SCContext, SCContextType, SCUserContext, SCUserContextType} from '@selfc
 import {FormattedMessage} from 'react-intl';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
-import BaseDialog from '../../../shared/BaseDialog';
+import BaseDialog, {BaseDialogProps} from '../../../shared/BaseDialog';
 import ConfirmDialog from '../../../shared/ConfirmDialog/ConfirmDialog';
 import classNames from 'classnames';
 import CircularProgress from '@mui/material/CircularProgress';
 import {useThemeProps} from '@mui/system';
+import {scroll} from 'seamless-scroll-polyfill';
 
 const PREFIX = 'SCChangePictureDialog';
 
@@ -21,47 +22,30 @@ const classes = {
   root: `${PREFIX}-root`,
   actions: `${PREFIX}-actions`,
   upload: `${PREFIX}-upload`,
-  imageItem: `${PREFIX}-imageItem`
+  imagesList: `${PREFIX}-images-list`,
+  imageItem: `${PREFIX}-image-item`
 };
 
-const Root = styled(Box, {
+const Root = styled(BaseDialog, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  maxWidth: 800,
-  marginBottom: theme.spacing(2),
+  [`& .${classes.imagesList}`]: {
+    maxHeight: 500
+  },
   [`& .${classes.actions}`]: {
     display: 'flex',
     justifyContent: 'flex-end'
   }
 }));
 
-export interface CPDialogProps {
-  /**
-   * Overrides or extends the styles applied to the component.
-   * @default null
-   */
-  className?: string;
+export interface CPDialogProps extends BaseDialogProps {
   /**
    * On change function.
    * @default null
    */
   onChange?: (avatar) => void;
-  /**
-   * On dialog close callback function
-   * @default null
-   */
-  onClose?: () => void;
-  /**
-   * Opens dialog
-   * @default false
-   */
-  open: boolean;
-  /**
-   * Any other properties
-   */
-  [p: string]: any;
 }
 
 export default function ChangePictureDialog(inProps: CPDialogProps): JSX.Element {
@@ -116,6 +100,7 @@ export default function ChangePictureDialog(inProps: CPDialogProps): JSX.Element
         setAvatars((prev) => [...prev, data]);
         selectPrimaryAvatar(data);
         setLoading(false);
+        scrollToEndListAvatars();
         setError(false);
       })
       .catch((error) => {
@@ -123,6 +108,18 @@ export default function ChangePictureDialog(inProps: CPDialogProps): JSX.Element
         setLoading(false);
         console.log(error);
       });
+  }
+
+  /**
+   * Handle scroll to the last item added in the list of avatars
+   */
+  function scrollToEndListAvatars() {
+    setTimeout(() => {
+      const element = document.getElementById(`avatarsList`);
+      if (element) {
+        scroll(element, {top: element.scrollHeight, behavior: 'smooth'});
+      }
+    }, 200);
   }
 
   /**
@@ -205,7 +202,54 @@ export default function ChangePictureDialog(inProps: CPDialogProps): JSX.Element
   }, []);
 
   return (
-    <Root className={classNames(classes.root, className)} {...rest}>
+    <Root
+      className={classNames(classes.root, className)}
+      title={<FormattedMessage defaultMessage="ui.changePicture.title" id="ui.changePicture.title" />}
+      onClose={onClose}
+      open={open}
+      {...rest}>
+      <Box className={classes.upload}>
+        <input type="file" onChange={() => handleUpload(event)} ref={fileInput} hidden />
+        <Button
+          disabled={loading || isDeletingAvatar}
+          variant="outlined"
+          onClick={() => fileInput.current.click()}
+          color={error ? 'error' : 'primary'}
+          startIcon={loading ? null : <Icon fontSize="small">folder_open</Icon>}>
+          {loading ? (
+            <CircularProgress size={15} />
+          ) : (
+            <>
+              {error ? (
+                <FormattedMessage id="ui.changePicture.button.upload.error" defaultMessage="ui.changePicture.button.upload.error" />
+              ) : (
+                <FormattedMessage id="ui.changePicture.button.upload" defaultMessage="ui.changePicture.button.upload" />
+              )}
+            </>
+          )}
+        </Button>
+        <Typography sx={{fontSize: 10}} color="text.secondary" gutterBottom>
+          <FormattedMessage id="ui.changePicture.listF" defaultMessage="ui.changePicture.listF" /> <br />
+          <FormattedMessage id="ui.changePicture.listS" defaultMessage="ui.changePicture.listS" />
+        </Typography>
+      </Box>
+      <ImageList cols={3} rowHeight={'auto'} id="avatarsList" classes={{root: classes.imagesList}}>
+        {avatars.map((avatar) => (
+          <Box className={classes.imageItem} key={avatar.id}>
+            <ImageListItem key={avatar.id} onClick={() => selectPrimaryAvatar(avatar)} sx={{border: primary === avatar.id ? 'solid' : null}}>
+              <img src={avatar.avatar} loading="lazy" alt={'img'} />
+              <ImageListItemBar
+                position="top"
+                actionIcon={
+                  <IconButton onClick={() => handleOpen(avatar.id)} size="small" sx={{color: 'rgba(255, 255, 255, 0.54)'}}>
+                    <Icon>delete</Icon>
+                  </IconButton>
+                }
+              />
+            </ImageListItem>
+          </Box>
+        ))}
+      </ImageList>
       {openDeleteAvatarDialog && (
         <ConfirmDialog
           open={openDeleteAvatarDialog}
@@ -216,50 +260,6 @@ export default function ChangePictureDialog(inProps: CPDialogProps): JSX.Element
           onClose={() => setOpenDeleteAvatarDialog(false)}
         />
       )}
-      <BaseDialog title={<FormattedMessage defaultMessage="ui.changePicture.title" id="ui.changePicture.title" />} onClose={onClose} open={open}>
-        <Box className={classes.upload}>
-          <input type="file" onChange={() => handleUpload(event)} ref={fileInput} hidden />
-          <Button
-            disabled={loading || isDeletingAvatar}
-            variant="outlined"
-            onClick={() => fileInput.current.click()}
-            color={error ? 'error' : 'primary'}
-            startIcon={loading ? null : <Icon fontSize="small">folder_open</Icon>}>
-            {loading ? (
-              <CircularProgress size={15} />
-            ) : (
-              <>
-                {error ? (
-                  <FormattedMessage id="ui.changePicture.button.upload.error" defaultMessage="ui.changePicture.button.upload.error" />
-                ) : (
-                  <FormattedMessage id="ui.changePicture.button.upload" defaultMessage="ui.changePicture.button.upload" />
-                )}
-              </>
-            )}
-          </Button>
-          <Typography sx={{fontSize: 10}} color="text.secondary" gutterBottom>
-            <FormattedMessage id="ui.changePicture.listF" defaultMessage="ui.changePicture.listF" /> <br />
-            <FormattedMessage id="ui.changePicture.listS" defaultMessage="ui.changePicture.listS" />
-          </Typography>
-        </Box>
-        <ImageList cols={3} rowHeight={'auto'}>
-          {avatars.map((avatar) => (
-            <Box className={classes.imageItem} key={avatar.id}>
-              <ImageListItem key={avatar.id} onClick={() => selectPrimaryAvatar(avatar)} sx={{border: primary === avatar.id ? 'solid' : null}}>
-                <img src={avatar.avatar} loading="lazy" alt={'img'} />
-                <ImageListItemBar
-                  position="top"
-                  actionIcon={
-                    <IconButton onClick={() => handleOpen(avatar.id)} size="small" sx={{color: 'rgba(255, 255, 255, 0.54)'}}>
-                      <Icon>delete</Icon>
-                    </IconButton>
-                  }
-                />
-              </ImageListItem>
-            </Box>
-          ))}
-        </ImageList>
-      </BaseDialog>
     </Root>
   );
 }
