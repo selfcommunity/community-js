@@ -25,7 +25,6 @@ const PREFIX = 'SCMessageMediaUploader';
 
 const classes = {
   previewContainer: `${PREFIX}-preview-container`,
-  mediaUploadSection: `${PREFIX}-media-upload-section`,
   uploadButton: `${PREFIX}-upload-button`,
   docPreview: `${PREFIX}-doc-preview`,
   docLoadingPreview: `${PREFIX}-doc-loading-preview`,
@@ -33,11 +32,16 @@ const classes = {
   clearMedia: `${PREFIX}-clear-media`
 };
 
-const Root = styled(Box, {
+const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
+  '& .MuiCardHeader-root': {
+    paddingRight: theme.spacing(2),
+    paddingTop: theme.spacing(1)
+  },
+  backgroundColor: theme.palette.grey['A200'],
   [`& .${classes.previewContainer}`]: {
     display: 'flex',
     justifyContent: 'center',
@@ -48,13 +52,14 @@ const Root = styled(Box, {
       maxWidth: '40%'
     }
   },
-  [`& .${classes.mediaUploadSection}`]: {
-    backgroundColor: theme.palette.grey['A200']
-  },
   [`& .${classes.uploadButton}`]: {
     backgroundColor: theme.palette.common.white
   },
   [`& .${classes.docPreview}`]: {
+    [theme.breakpoints.down('md')]: {
+      height: 100,
+      width: 200
+    },
     height: 200,
     width: 400,
     position: 'relative'
@@ -141,6 +146,7 @@ export default function MessageMediaUploader(props: MessageMediaUploaderProps): 
     }
     setPreviews([]);
     setFile(null);
+    setLoading(false);
     setFileType(null);
     forwardMessageFile(null);
     setLoaded(false);
@@ -183,63 +189,57 @@ export default function MessageMediaUploader(props: MessageMediaUploaderProps): 
    */
   return (
     <Root>
-      <Widget className={classes.mediaUploadSection}>
-        <CardHeader action={<Icon onClick={onClose}>close</Icon>} />
-        <CardContent>
-          <Box>
-            {Object.keys(errors).map((id: string) => (
-              <Fade in key={id}>
-                <Alert severity="error" onClose={handleRemoveErrors(id)}>
-                  <AlertTitle>{errors[id].name}</AlertTitle>
-                  {errors[id].error}
-                </Alert>
-              </Fade>
+      <CardHeader action={<Icon onClick={onClose}>close</Icon>} />
+      <CardContent>
+        {Object.keys(errors).map((id: string) => (
+          <Fade in key={id}>
+            <Alert severity="error" onClose={handleRemoveErrors(id)}>
+              <AlertTitle>{errors[id].name}</AlertTitle>
+              {errors[id].error}
+            </Alert>
+          </Fade>
+        ))}
+        <ChunkedUploady
+          destination={{
+            url: `${scContext.settings.portal}${Endpoints.PrivateMessageUploadMediaInChunks.url()}`,
+            headers: {Authorization: `Bearer ${scContext.settings.session.authToken.accessToken}`},
+            method: Endpoints.PrivateMessageUploadMediaInChunks.method
+          }}
+          chunkSize={2142880}
+          chunked>
+          <MessageChunkUploader onStart={handleStart} onSuccess={handleSuccess} onProgress={handleProgress} onError={handleError} />
+          <Box className={classes.progress}>
+            {Object.values(uploading).map((chunk: SCMessageChunkType, index) => (
+              <div key={index}>
+                <Typography align="center">{`${Math.round(chunk.completed)}%`}</Typography>
+              </div>
             ))}
           </Box>
-          <ChunkedUploady
-            destination={{
-              url: `${scContext.settings.portal}${Endpoints.PrivateMessageUploadMediaInChunks.url()}`,
-              headers: {Authorization: `Bearer ${scContext.settings.session.authToken.accessToken}`},
-              method: Endpoints.PrivateMessageUploadMediaInChunks.method
-            }}
-            chunkSize={2142880}
-            chunked>
-            <MessageChunkUploader onStart={handleStart} onSuccess={handleSuccess} onProgress={handleProgress} onError={handleError} />
-            <Box display="grid">
-              <Box gridColumn="span 12" className={classes.progress}>
-                {Object.values(uploading).map((chunk: SCMessageChunkType, index) => (
-                  <div key={index}>
-                    <Typography align="center">{`${Math.round(chunk.completed)}%`}</Typography>
-                  </div>
-                ))}
+          <Box sx={{display: 'flex', justifyContent: 'center'}}>
+            {!file && !loading && <UploadButton className={classes.uploadButton} inputFieldName="qqfile" />}
+          </Box>
+          <Box className={classes.clearMedia}>
+            {previews.length && loaded ? (
+              <IconButton onClick={onClear}>
+                <Icon>close</Icon>
+              </IconButton>
+            ) : null}
+          </Box>
+          <Box className={classes.previewContainer}>
+            {fileType && fileType.startsWith(SCMessageFileType.DOCUMENT) ? (
+              <Box className={loaded ? classes.docPreview : classes.docLoadingPreview}>
+                {file && loaded ? (
+                  <iframe src={file.file_url} title="file" width="100%" height="100%" style={{resize: 'both'}} loading="lazy" />
+                ) : (
+                  <CircularProgress size={30} />
+                )}
               </Box>
-              <Box gridColumn="span 12" sx={{display: 'flex', justifyContent: 'center'}}>
-                {!file && !loading && <UploadButton className={classes.uploadButton} inputFieldName="qqfile" />}
-              </Box>
-              <Box gridColumn="span 12" className={classes.clearMedia}>
-                {previews.length && loaded ? (
-                  <IconButton onClick={onClear}>
-                    <Icon>close</Icon>
-                  </IconButton>
-                ) : null}
-              </Box>
-            </Box>
-            <Box className={classes.previewContainer}>
-              {fileType && fileType.startsWith(SCMessageFileType.DOCUMENT) ? (
-                <Box className={loaded ? classes.docPreview : classes.docLoadingPreview}>
-                  {file && loaded ? (
-                    <iframe src={file.file_url} title="file" width="100%" height="100%" style={{resize: 'both'}} loading="lazy" />
-                  ) : (
-                    <CircularProgress size={30} />
-                  )}
-                </Box>
-              ) : (
-                <UploadPreview rememberPreviousBatches previewMethodsRef={previewMethodsRef} onPreviewsChanged={onPreviewsChanged} />
-              )}
-            </Box>
-          </ChunkedUploady>
-        </CardContent>
-      </Widget>
+            ) : (
+              <UploadPreview rememberPreviousBatches previewMethodsRef={previewMethodsRef} onPreviewsChanged={onPreviewsChanged} />
+            )}
+          </Box>
+        </ChunkedUploady>
+      </CardContent>
     </Root>
   );
 }

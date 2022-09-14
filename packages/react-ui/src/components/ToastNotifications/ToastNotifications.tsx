@@ -131,7 +131,6 @@ export default function UserToastNotifications(inProps: ToastNotificationsProps)
     }
     if (n.activity_type && n.activity_type === SCNotificationTypologyType.NOTIFICATION_BANNER) {
       /** Notification of type: 'notification_banner' */
-      // TODO: When api is fixed, use BroadcastMessage -> Message as the component to render this content
       content = <Message key={n.notification_obj.id} message={n.notification_obj} elevation={0} template={SCBroadcastMessageTemplateType.TOAST} />;
     }
     if (handleNotification && type) {

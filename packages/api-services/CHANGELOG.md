@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.2-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.2-alpha.0...@selfcommunity/api-services@0.3.2-alpha.1) (2022-09-12)
+
+
+### Bug Fixes
+
+* api request override config ([c281283](https://github.com/selfcommunity/community-js/commit/c2812835baa6e0dc1e4d60a5a9c48346d8501735))
+
+
+
+
+
+## [0.3.2-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.1...@selfcommunity/api-services@0.3.2-alpha.0) (2022-09-07)
+
+
+### Bug Fixes
+
+* fixed delete thread endpoint, thread skeleton import ([44b3481](https://github.com/selfcommunity/community-js/commit/44b3481f0552eb2e43c4854a7cab6a87d8af0ae5))
+
+
+
+
+
 ## [0.3.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.1-alpha.3...@selfcommunity/api-services@0.3.1) (2022-09-01)
 
 **Note:** Version bump only for package @selfcommunity/api-services

@@ -835,7 +835,7 @@ const Endpoints: {[key: string]: EndpointType} = {
     method: 'DELETE'
   },
   DeleteAThread: {
-    url: urlReplacer('/api/v2/pm/$(id)/?hide=1/'),
+    url: urlReplacer('/api/v2/pm/$(id)/?hide=1'),
     method: 'DELETE'
   },
 

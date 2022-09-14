@@ -3,6 +3,125 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.5-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.5-alpha.9...@selfcommunity/react-ui@0.5.5-alpha.10) (2022-09-14)
+
+
+### Bug Fixes
+
+* change avatar ([5097565](https://github.com/selfcommunity/community-js/commit/50975651ca221780201e8dc3a569ae90c9e640cf))
+* change avatar ([b79ae69](https://github.com/selfcommunity/community-js/commit/b79ae69ddda5ea976e18defdd4f8dd30d4660c22))
+
+
+
+
+
+## [0.5.5-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.5-alpha.8...@selfcommunity/react-ui@0.5.5-alpha.9) (2022-09-13)
+
+
+### Bug Fixes
+
+* changed pm notifications target obj, fixed header ([7802cdd](https://github.com/selfcommunity/community-js/commit/7802cdd9f363d34945566847e1a9855a70da608b))
+
+
+
+
+
+## [0.5.5-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.5-alpha.7...@selfcommunity/react-ui@0.5.5-alpha.8) (2022-09-13)
+
+
+### Bug Fixes
+
+* fixed private messages template when prop id is passed to component. ([1e11398](https://github.com/selfcommunity/community-js/commit/1e11398ff3ef2bec2beb6c13971a0cb008ce6b8c))
+
+
+
+
+
+## [0.5.5-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.5-alpha.6...@selfcommunity/react-ui@0.5.5-alpha.7) (2022-09-12)
+
+
+### Bug Fixes
+
+* change avatar ([e0f8005](https://github.com/selfcommunity/community-js/commit/e0f80053475525d48353a47f051bac4a7217d7c4))
+
+
+
+
+
+## [0.5.5-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.5-alpha.5...@selfcommunity/react-ui@0.5.5-alpha.6) (2022-09-12)
+
+
+### Bug Fixes
+
+* broadcast message absolute path ([1c78c76](https://github.com/selfcommunity/community-js/commit/1c78c76f646440087c0709bfeede055284b6687d))
+
+
+
+
+
+## [0.5.5-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.5-alpha.4...@selfcommunity/react-ui@0.5.5-alpha.5) (2022-09-12)
+
+
+### Bug Fixes
+
+* finished editing private message components for feature: https://app.asana.com/0/1202638443591994/1202904399787898/f ([ec08d77](https://github.com/selfcommunity/community-js/commit/ec08d77f7c2e2d122952d3d4204d6a2c8e271ff5))
+
+
+
+
+
+## [0.5.5-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.5-alpha.3...@selfcommunity/react-ui@0.5.5-alpha.4) (2022-09-12)
+
+
+### Bug Fixes
+
+* broadcast message absolute path ([d58a69d](https://github.com/selfcommunity/community-js/commit/d58a69d082980cada85a33699bab269500669e4f))
+
+
+
+
+
+## [0.5.5-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.5-alpha.2...@selfcommunity/react-ui@0.5.5-alpha.3) (2022-09-08)
+
+
+### Performance Improvements
+
+* thread component/message editor ([50d043f](https://github.com/selfcommunity/community-js/commit/50d043fcf0f04d56f2e031be3f88f7d4b925d341))
+* thread component/message editor ([c4b62ec](https://github.com/selfcommunity/community-js/commit/c4b62ec8348a1945605ac4a396ce541101c1eae6))
+
+
+
+
+
+## [0.5.5-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.5-alpha.1...@selfcommunity/react-ui@0.5.5-alpha.2) (2022-09-07)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.5.5-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.5-alpha.0...@selfcommunity/react-ui@0.5.5-alpha.1) (2022-09-07)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.5.5-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.4...@selfcommunity/react-ui@0.5.5-alpha.0) (2022-09-07)
+
+
+### Bug Fixes
+
+* fixed delete thread endpoint, thread skeleton import ([44b3481](https://github.com/selfcommunity/community-js/commit/44b3481f0552eb2e43c4854a7cab6a87d8af0ae5))
+* Fixed private message layout when mobile ([4bdb864](https://github.com/selfcommunity/community-js/commit/4bdb864fde32c5475024264b1f3fea139a94b3b7))
+* fixed private messages components. Added thread skeleton and delete thread feature ([e43f182](https://github.com/selfcommunity/community-js/commit/e43f1825f82e380963216a64e18c331089edca33))
+
+
+
+
+
 ## [0.5.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.4-alpha.4...@selfcommunity/react-ui@0.5.4) (2022-09-01)
 
 **Note:** Version bump only for package @selfcommunity/react-ui

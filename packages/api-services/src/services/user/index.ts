@@ -539,7 +539,7 @@ export class UserApiClient {
    * @param config
    */
   static addUserAvatar(data: FormData, config?: AxiosRequestConfig): Promise<SCAvatarType> {
-    return apiRequest({...config, url: Endpoints.AddAvatar.url({}), method: Endpoints.AddAvatar.method, data});
+    return apiRequest({url: Endpoints.AddAvatar.url({}), method: Endpoints.AddAvatar.method, data, ...config});
   }
 
   /**
@@ -547,7 +547,7 @@ export class UserApiClient {
    * @param config
    */
   static getUserAvatars(config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCAvatarType>> {
-    return apiRequest({...config, url: Endpoints.GetAvatars.url({}), method: Endpoints.GetAvatars.method});
+    return apiRequest({url: Endpoints.GetAvatars.url({}), method: Endpoints.GetAvatars.method, ...config});
   }
 
   /**
@@ -556,7 +556,7 @@ export class UserApiClient {
    * @param config
    */
   static removeUserAvatar(avatar_id: number | string, config?: AxiosRequestConfig): Promise<any> {
-    return apiRequest({...config, url: Endpoints.RemoveAvatar.url({}), method: Endpoints.RemoveAvatar.method, data: {avatar_id: avatar_id}});
+    return apiRequest({url: Endpoints.RemoveAvatar.url({}), method: Endpoints.RemoveAvatar.method, data: {avatar_id: avatar_id}, ...config});
   }
 
   /**
@@ -565,7 +565,7 @@ export class UserApiClient {
    * @param config
    */
   static setUserPrimaryAvatar(avatar_id: number | string, config?: AxiosRequestConfig): Promise<any> {
-    return apiRequest({...config, url: Endpoints.SetPrimaryAvatar.url({}), method: Endpoints.SetPrimaryAvatar.method, data: {avatar_id: avatar_id}});
+    return apiRequest({url: Endpoints.SetPrimaryAvatar.url({}), method: Endpoints.SetPrimaryAvatar.method, data: {avatar_id: avatar_id}, ...config});
   }
 
   /**

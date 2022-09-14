@@ -1,21 +1,22 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Divider, Typography, List} from '@mui/material';
+import {Box, Divider, List} from '@mui/material';
 import Widget from '../Widget';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {SCPrivateMessageType, SCNotificationTopicType, SCNotificationTypologyType} from '@selfcommunity/types';
-import {FormattedMessage} from 'react-intl';
 import SnippetsSkeleton from './Skeleton';
 import Message from '../Message';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import PubSub from 'pubsub-js';
+import Icon from '@mui/material/Icon';
 
 const PREFIX = 'SCSnippets';
 
 const classes = {
   root: `${PREFIX}-root`,
-  selected: `${PREFIX}-selected`
+  selected: `${PREFIX}-selected`,
+  deleteSection: `${PREFIX}-delete-section`
 };
 
 const Root = styled(Widget, {
@@ -23,14 +24,25 @@ const Root = styled(Widget, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  width: '500px',
-  ['& .MuiCardContent-root']: {
-    '&:last-child': {
-      paddingBottom: 0
-    }
+  height: '550px',
+  overflow: 'auto',
+  [theme.breakpoints.up('sm')]: {
+    minWidth: '500px'
+  },
+  [theme.breakpoints.down('md')]: {
+    height: '100%',
+    maxHeight: '450px'
   },
   [`& .${classes.selected}`]: {
-    background: theme.palette.grey['A200']
+    background: theme.palette.primary.main
+  },
+  [`& .${classes.deleteSection}`]: {
+    display: 'flex',
+    width: '100%',
+    position: 'absolute',
+    bottom: '0px',
+    justifyContent: 'center',
+    backgroundColor: '#fff'
   }
 }));
 
@@ -69,6 +81,14 @@ export interface SnippetsProps {
    * @default false
    */
   shouldUpdate?: boolean;
+  /**
+   * Props spread to delete icon
+   */
+  deleteIconProps?: {
+    show: boolean;
+    action?: () => void;
+    name?: string;
+  };
 }
 /**
  *
@@ -91,6 +111,7 @@ export interface SnippetsProps {
  |---|---|---|
  |root|.SCSnippets-root|Styles applied to the root element.|
  |selected|.SCSnippets-selected|Styles applied to the selected element.|
+ |deleteSection|.SCSnippets-delete-section|Styles applied to  delete thread section.|
 
  * @param inProps
  */
@@ -101,7 +122,7 @@ export default function Snippets(inProps: SnippetsProps): JSX.Element {
     name: PREFIX
   });
 
-  const {autoHide = false, className = null, onSnippetClick, threadId, getSnippetHeadline, shouldUpdate, ...rest} = props;
+  const {autoHide = false, className = null, onSnippetClick, threadId, getSnippetHeadline, shouldUpdate, deleteIconProps, ...rest} = props;
 
   // STATE
   const [snippets, setSnippets] = useState<any[]>([]);
@@ -207,46 +228,37 @@ export default function Snippets(inProps: SnippetsProps): JSX.Element {
   }
 
   /**
-   * Renders snippets list
+   * Renders snippets skeleton when loading
    */
-  const c = (
-    <React.Fragment>
-      {loading ? (
-        <SnippetsSkeleton elevation={0} />
-      ) : (
-        <>
-          {!total ? (
-            <Typography variant="body2">
-              <FormattedMessage id="ui.categoriesSuggestion.noResults" defaultMessage="ui.categoriesSuggestion.noResults" />
-            </Typography>
-          ) : (
-            <List>
-              {snippets.map((message: SCPrivateMessageType, index) => (
-                <div key={index}>
-                  <Message
-                    elevation={0}
-                    message={message}
-                    key={message.id}
-                    onClick={() => handleOpenThread(message)}
-                    className={message.id === threadId ? classes.selected : ''}
-                  />
-                  {index < total - 1 ? <Divider /> : null}
-                </div>
-              ))}
-            </List>
-          )}
-        </>
-      )}
-    </React.Fragment>
-  );
+  if (loading) {
+    return <SnippetsSkeleton elevation={0} />;
+  }
 
   /**
    * Renders the component (if not hidden by autoHide prop)
    */
-  if (!autoHide) {
+  if (!autoHide && total) {
     return (
       <Root {...rest} className={classNames(classes.root, className)}>
-        {c}
+        <List>
+          {snippets.map((message: SCPrivateMessageType, index) => (
+            <div key={index}>
+              <Message
+                elevation={0}
+                message={message}
+                key={message.id}
+                onClick={() => handleOpenThread(message)}
+                className={message.id === threadId ? classes.selected : ''}
+              />
+              {index < total - 1 ? <Divider /> : null}
+            </div>
+          ))}
+        </List>
+        {total && deleteIconProps.show && (
+          <Box className={classes.deleteSection}>
+            <Icon onClick={deleteIconProps.action}>{deleteIconProps.name}</Icon>
+          </Box>
+        )}
       </Root>
     );
   }

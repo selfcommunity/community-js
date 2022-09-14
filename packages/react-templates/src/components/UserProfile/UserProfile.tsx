@@ -15,7 +15,17 @@ import {
   UsersFollowed
 } from '@selfcommunity/react-ui';
 import UserFeed, {UserFeedProps} from '../UserFeed';
-import {SCContextType, SCUserContextType, useSCContext, useSCFetchUser, useSCUser} from '@selfcommunity/react-core';
+import {
+  Link,
+  SCContextType,
+  SCRoutes,
+  SCRoutingContextType,
+  SCUserContextType,
+  useSCContext,
+  useSCFetchUser,
+  useSCRouting,
+  useSCUser
+} from '@selfcommunity/react-core';
 import {SCUserType} from '@selfcommunity/types';
 import UserProfileSkeleton from './Skeleton';
 import classNames from 'classnames';
@@ -107,6 +117,11 @@ export interface UserProfileProps {
    * @default {}
    */
   UserFeedProps?: UserFeedProps;
+  /**
+   * Props to show send pm
+   * @default false
+   */
+  showSendPmButton?: boolean;
 }
 
 const WIDGETS = [
@@ -189,12 +204,14 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
     UserProfileHeaderProps = {},
     UserProfileInfoProps = {},
     onEditClick = null,
-    UserFeedProps = {}
+    UserFeedProps = {},
+    showSendPmButton
   } = props;
 
   // CONTEXT
   const scContext: SCContextType = useSCContext();
   const scUserContext: SCUserContextType = useSCUser();
+  const scRoutingContext: SCRoutingContextType = useSCRouting();
 
   // Hooks
   const {scUser} = useSCFetchUser({id: userId, user});
@@ -246,7 +263,14 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
             <FormattedMessage defaultMessage="templates.userProfile.edit" id="templates.userProfile.edit" />
           </Button>
         ) : (
-          <ConnectionUserButton user={scUser} />
+          <>
+            <ConnectionUserButton user={scUser} />
+            {showSendPmButton && (
+              <Button color="secondary" component={Link} to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, scUser)}>
+                <FormattedMessage defaultMessage="templates.userProfile.send.pm" id="templates.userProfile.send.pm" />
+              </Button>
+            )}
+          </>
         )}
         {canModerate && (
           <Button

@@ -245,7 +245,7 @@ export default function Message(inProps: MessageProps): JSX.Element {
   const c = (
     <React.Fragment>
       {snippetType ? (
-        <React.Fragment>
+        <>
           <ListItem>
             <ListItemAvatar>
               {scUserContext['user'] && scUserContext['user'].username === message.receiver.username ? (
@@ -280,7 +280,7 @@ export default function Message(inProps: MessageProps): JSX.Element {
               }
             />
           </ListItem>
-        </React.Fragment>
+        </>
       ) : (
         <LazyLoad once offset={DEFAULT_PRELOAD_OFFSET_VIEWPORT}>
           <ListItem onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} button={true}>

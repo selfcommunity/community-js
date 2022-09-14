@@ -3,6 +3,111 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.2.0-alpha.4...@selfcommunity/react-templates@0.2.0-alpha.5) (2022-09-14)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.2.0-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.2.0-alpha.3...@selfcommunity/react-templates@0.2.0-alpha.4) (2022-09-13)
+
+
+### Bug Fixes
+
+* changed pm notifications target obj, fixed header ([7802cdd](https://github.com/selfcommunity/community-js/commit/7802cdd9f363d34945566847e1a9855a70da608b))
+
+
+
+
+
+# [0.2.0-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.2.0-alpha.2...@selfcommunity/react-templates@0.2.0-alpha.3) (2022-09-13)
+
+
+### Bug Fixes
+
+* fixed private messages template when prop id is passed to component. ([1e11398](https://github.com/selfcommunity/community-js/commit/1e11398ff3ef2bec2beb6c13971a0cb008ce6b8c))
+
+
+
+
+
+# [0.2.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.2.0-alpha.1...@selfcommunity/react-templates@0.2.0-alpha.2) (2022-09-12)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.2.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.2.0-alpha.0...@selfcommunity/react-templates@0.2.0-alpha.1) (2022-09-12)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.2.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.1.40-alpha.4...@selfcommunity/react-templates@0.2.0-alpha.0) (2022-09-12)
+
+
+### Bug Fixes
+
+* finished editing private message components for feature: https://app.asana.com/0/1202638443591994/1202904399787898/f ([ec08d77](https://github.com/selfcommunity/community-js/commit/ec08d77f7c2e2d122952d3d4204d6a2c8e271ff5))
+
+
+### Features
+
+* added send pm in user profile template. Asana issue: https://app.asana.com/0/1202638443591994/1202904399787898/f ([bbcbbdc](https://github.com/selfcommunity/community-js/commit/bbcbbdc4edc3e2128c8ce05ff86bdc57d1dd1b4d))
+
+
+
+
+
+## [0.1.40-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.1.40-alpha.3...@selfcommunity/react-templates@0.1.40-alpha.4) (2022-09-12)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.1.40-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.1.40-alpha.2...@selfcommunity/react-templates@0.1.40-alpha.3) (2022-09-08)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.1.40-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.1.40-alpha.1...@selfcommunity/react-templates@0.1.40-alpha.2) (2022-09-07)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.1.40-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.1.40-alpha.0...@selfcommunity/react-templates@0.1.40-alpha.1) (2022-09-07)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.1.40-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.1.39...@selfcommunity/react-templates@0.1.40-alpha.0) (2022-09-07)
+
+
+### Bug Fixes
+
+* Fixed private message layout when mobile ([4bdb864](https://github.com/selfcommunity/community-js/commit/4bdb864fde32c5475024264b1f3fea139a94b3b7))
+
+
+
+
+
 ## [0.1.39](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.1.39-alpha.4...@selfcommunity/react-templates@0.1.39) (2022-09-01)
 
 **Note:** Version bump only for package @selfcommunity/react-templates

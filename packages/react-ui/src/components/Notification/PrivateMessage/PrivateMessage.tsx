@@ -183,7 +183,9 @@ export default function PrivateMessageNotification(inProps: NotificationPrivateM
                 />
                 :
                 <Box className={classes.messageWrap}>
-                  <Link to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, notificationObject.message)} className={classes.message}>
+                  <Link
+                    to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, notificationObject.message.sender)}
+                    className={classes.message}>
                     <Typography variant="body2" dangerouslySetInnerHTML={{__html: notificationObject.message.message}} />
                   </Link>
                 </Box>
@@ -196,7 +198,7 @@ export default function PrivateMessageNotification(inProps: NotificationPrivateM
                     {notificationObject.message.sender.username}
                   </Link>{' '}
                   <Link
-                    to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, notificationObject.message)}
+                    to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, notificationObject.message.sender)}
                     className={classes.messageLabel}>
                     {intl.formatMessage(messages.receivePrivateMessage, {
                       total: 1,
@@ -214,7 +216,7 @@ export default function PrivateMessageNotification(inProps: NotificationPrivateM
               <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
                 <DateTimeAgo date={notificationObject.active_at} />
                 <Typography color="primary">
-                  <Link to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, notificationObject.message)}>
+                  <Link to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, notificationObject.message.sender)}>
                     <FormattedMessage id="ui.userToastNotifications.replyMessage" defaultMessage={'ui.userToastNotifications.replyMessage'} />
                   </Link>
                 </Typography>
@@ -239,14 +241,14 @@ export default function PrivateMessageNotification(inProps: NotificationPrivateM
               size="small"
               classes={{root: classes.replyButton}}
               component={Link}
-              to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, notificationObject.message)}>
+              to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, notificationObject.message.sender)}>
               <FormattedMessage id="ui.notification.privateMessage.btnReplyLabel" defaultMessage="ui.notification.privateMessage.btnReplyLabel" />
             </Button>
           </Stack>
         }
         primary={
           <Box className={classes.messageWrap}>
-            <Link to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, notificationObject.message)} className={classes.message}>
+            <Link to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, notificationObject.message.sender)} className={classes.message}>
               <Typography variant="body2" dangerouslySetInnerHTML={{__html: notificationObject.message.message}} />
             </Link>
           </Box>

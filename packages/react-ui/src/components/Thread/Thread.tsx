@@ -1,13 +1,13 @@
 import React, {useContext, useEffect, useMemo, useState, useRef} from 'react';
 import {styled} from '@mui/material/styles';
 import Widget from '../Widget';
-import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
+import {http, Endpoints, HttpResponse, PrivateMessageService} from '@selfcommunity/api-services';
 import {SCUserContext, SCUserContextType, UserUtils} from '@selfcommunity/react-core';
 import {SCNotificationTopicType, SCNotificationTypologyType, SCPrivateMessageType} from '@selfcommunity/types';
 import Message from '../Message';
 import _ from 'lodash';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {Box, Grid, ListSubheader, TextField, Typography} from '@mui/material';
+import {AppBar, Avatar, Box, Grid, ListSubheader, TextField, Toolbar, Typography, useMediaQuery, useTheme} from '@mui/material';
 import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
 import MessageEditor from '../MessageEditor';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -16,8 +16,9 @@ import {useSnackbar} from 'notistack';
 import PubSub from 'pubsub-js';
 import {useThemeProps} from '@mui/system';
 import Icon from '@mui/material/Icon';
+import ThreadSkeleton from './Skeleton';
 
-const smessages = defineMessages({
+const messages = defineMessages({
   placeholder: {
     id: 'ui.thread.newMessage.autocomplete.placeholder',
     defaultMessage: 'ui.thread.newMessage.autocomplete.placeholder'
@@ -37,7 +38,8 @@ const classes = {
   sender: `${PREFIX}-sender`,
   receiver: `${PREFIX}-receiver`,
   center: `${PREFIX}-center`,
-  autocomplete: `${PREFIX}-autocomplete`
+  autocomplete: `${PREFIX}-autocomplete`,
+  toolBar: `${PREFIX}-tool-bar`
 };
 
 const Root = styled(Widget, {
@@ -47,9 +49,17 @@ const Root = styled(Widget, {
 })(({theme}) => ({
   width: '600px',
   height: '100%',
+  position: 'relative',
+  [theme.breakpoints.down('md')]: {
+    width: '100%',
+    maxWidth: '345px',
+    minHeight: '500px'
+  },
   [`& .${classes.threadBox}`]: {
-    display: 'inline-block',
-    maxHeight: '600px',
+    maxHeight: '540px',
+    [theme.breakpoints.down('md')]: {
+      maxHeight: '400px'
+    },
     width: 'inherit',
     overflow: 'auto'
   },
@@ -61,6 +71,10 @@ const Root = styled(Widget, {
     alignItems: 'center',
     '& .MuiTypography-root': {
       fontSize: '1.5rem'
+    },
+    minHeight: '550px',
+    [theme.breakpoints.down('md')]: {
+      maxHeight: '450px'
     }
   },
   [`& .${classes.newMessageBox}`]: {
@@ -76,7 +90,11 @@ const Root = styled(Widget, {
   [`& .${classes.newMessageEmptyBox}`]: {
     flexGrow: 1,
     flexShrink: 1,
-    flexBasis: 'auto'
+    flexBasis: 'auto',
+    minHeight: '550px',
+    [theme.breakpoints.down('md')]: {
+      height: '450px'
+    }
   },
   [`& .${classes.sender}`]: {
     display: 'flex',
@@ -106,20 +124,26 @@ const Root = styled(Widget, {
   },
   [`& .${classes.autocomplete}`]: {
     marginRight: theme.spacing(1)
+  },
+  [`& .${classes.toolBar}`]: {
+    alignItems: 'center',
+    paddingLeft: '8px',
+    paddingRight: '8px',
+    justifyContent: 'space-between',
+    backgroundColor: theme.palette.primary.main
   }
 }));
 
 export interface ThreadProps {
   /**
-   * Thread id
-   * @default null
+   * User object (thread receiver)
+   * default null
    */
-  id?: number;
+  userObj?: SCPrivateMessageType;
   /**
    * Message receiver id
    * @default null
    */
-  receiverId?: number;
   /**
    * Overrides or extends the styles applied to the component.
    * @default null
@@ -155,6 +179,16 @@ export interface ThreadProps {
    * @default null
    */
   shouldUpdate?: (dispatch: any) => void;
+  /**
+   * Callback fired only when exiting a thread.
+   * @default null
+   */
+  onMessageBack?: (dispatch: any) => void;
+  /**
+   * Callback fired when deleting a thread.
+   * @default null
+   */
+  onMessageDelete?: (dispatch: any) => void;
 }
 /**
  *
@@ -176,17 +210,17 @@ export interface ThreadProps {
  |Rule Name|Global class|Description|
  |---|---|---|
  |root|.SCThread-root|Styles applied to the root element.|
- |emptyBox|.SCThread-empty-box|Styles applied to the empty box element.|
- |sender|.SCThread-sender|Styles applied to the sender element.|
- |receiver|.SCThread-receiver|Styles applied to the receiver element.|
- |center|.SCThread-center|Styles applied to the center section.|
  |threadBox|.SCThread-thread-box|Styles applied to the thread box element.|
  |emptyBox|.SCThread-empty-box|Styles applied to the empty box element.|
  |newMessageBox|.SCThread-new-message-box|Styles applied to the new message box element.|
  |newMessageEditor|.SCThread-new-message-editor|Styles applied to the new message editor.|
  |newMessageEmptyBox|.SCThread-new-message-empty-box|Styles applied to the new message empty box element.|
  |newMessageHeader|.SCThread-new-message-header|Styles applied to the new message header section.|
+ |sender|.SCThread-sender|Styles applied to the sender element.|
+ |receiver|.SCThread-receiver|Styles applied to the receiver element.|
+ |center|.SCThread-center|Styles applied to the center section.|
  |autocomplete|.SCThread-autocomplete|Styles applied to new message user insertion autocomplete.|
+ |toolBar|.SCThread-toolBar|Styles applied to the toolBar element.|
 
  * @param inProps
  */
@@ -196,15 +230,18 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {id, receiverId, autoHide, className, openNewMessage, onNewMessageSent, onMessageSent, shouldUpdate, ...rest} = props;
+  const {userObj, autoHide, className, openNewMessage, onNewMessageSent, onMessageSent, shouldUpdate, onMessageBack, onMessageDelete, ...rest} =
+    props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
   const {enqueueSnackbar, closeSnackbar} = useSnackbar();
 
   // STATE
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [loading, setLoading] = useState<boolean>(true);
-  const [messages, setMessages] = useState<any[]>([]);
+  const [messageObjs, setMessageObjs] = useState<any[]>([]);
   const loggedUser = scUserContext.user && scUserContext.user.id;
   const [isHovered, setIsHovered] = useState({});
   const [openDeleteMessageDialog, setOpenDeleteMessageDialog] = useState<boolean>(false);
@@ -214,6 +251,8 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
   const [sending, setSending] = useState<boolean>(false);
   const [followers, setFollowers] = useState<any[]>([]);
   const [recipients, setRecipients] = useState([]);
+  const [isFollowed, setIsFollowed] = useState<boolean>(false);
+  const [receiver, setReceiver] = useState(null);
 
   // REFS
   const refreshSubscription = useRef(null);
@@ -231,13 +270,13 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
 
   // HANDLERS
 
-  const formatMessages = (messages) => {
-    return _.groupBy(messages, format);
+  const formatMessages = (messageObjs) => {
+    return _.groupBy(messageObjs, format);
   };
 
   const formattedMessages = useMemo(() => {
-    return formatMessages(messages);
-  }, [messages]);
+    return formatMessages(messageObjs);
+  }, [messageObjs]);
 
   const handleMessage = (m) => {
     setMessage(m);
@@ -257,6 +296,11 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
     setIsHovered((prevState) => {
       return {...prevState, [index]: false};
     });
+  };
+
+  const clearState = () => {
+    setMessage('');
+    setMessageFile(null);
   };
 
   const handleClose = () => {
@@ -282,17 +326,13 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
 
   /**
    * Handles deletion of a single message
-   * @param id
    */
   function handleDelete() {
-    http
-      .request({
-        url: Endpoints.DeleteASingleMessage.url({id: deletingMsg.id}),
-        method: Endpoints.DeleteASingleMessage.method
-      })
+    PrivateMessageService.deleteAMessage(deletingMsg.id)
       .then(() => {
-        const result = messages.filter((m) => m.id !== deletingMsg.id);
-        setMessages(result);
+        const result = messageObjs.filter((m) => m.id !== deletingMsg.id);
+        setMessageObjs(result);
+        shouldUpdate(true);
         handleClose();
       })
       .catch((error) => {
@@ -318,22 +358,23 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
           url: Endpoints.SendMessage.url(),
           method: Endpoints.SendMessage.method,
           data: {
-            recipients: openNewMessage ? ids : [receiverId],
+            recipients: openNewMessage ? ids : [typeof userObj === 'number' ? userObj : userObj.receiver.id],
             message: message,
             file_uuid: messageFile ?? null
           }
         })
         .then((res) => {
-          setMessages((prev) => [...prev, res.data]);
+          clearState();
+          setMessageObjs((prev) => [...prev, res.data]);
           setSending(false);
           onMessageSent(res.data);
-          shouldUpdate(false);
           if (openNewMessage) {
             onNewMessageSent(res.data);
             shouldUpdate(true);
           }
         })
         .catch((error) => {
+          setMessage('');
           console.log(error);
           let _snackBar = enqueueSnackbar(<FormattedMessage id="ui.common.error.messageError" defaultMessage="ui.common.error.messageError" />, {
             variant: 'error',
@@ -354,9 +395,21 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
         url: Endpoints.UserFollowers.url({id: scUserContext['user'].id}),
         method: Endpoints.UserFollowers.method
       })
-      .then((res: HttpResponse<any>) => {
+      .then((res: any) => {
         const data = res.data;
-        setFollowers(data.results);
+        setFollowers(data);
+        if (data.length && userObj) {
+          let u;
+          if (typeof userObj === 'number') {
+            u = userObj;
+          } else {
+            u = userObj.receiver.id;
+          }
+          setIsFollowed(data.some((f) => f.id === u));
+        }
+        if (openNewMessage) {
+          setIsFollowed(true);
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -367,17 +420,28 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
    * Fetches thread
    */
   function fetchThread() {
+    let u;
+    if (typeof userObj === 'number') {
+      u = userObj;
+    } else {
+      u = userObj.receiver.id;
+    }
     http
       .request({
         url: Endpoints.GetAThread.url(),
         method: Endpoints.GetAThread.method,
         params: {
-          thread: id
+          user: u
         }
       })
       .then((res: HttpResponse<any>) => {
         const data = res.data;
-        setMessages(data.results);
+        setMessageObjs(data.results);
+        if (data.results[0].receiver.id !== loggedUser) {
+          setReceiver(data.results[0].receiver);
+        } else {
+          setReceiver(data.results[0].sender);
+        }
         setLoading(false);
       })
       .catch((error) => {
@@ -390,11 +454,14 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
    * if openNewMessage is true, fetches user followers too.
    */
   useEffect(() => {
+    if (userObj) {
+      fetchThread();
+      fetchFollowers();
+    }
     if (openNewMessage) {
       fetchFollowers();
     }
-    fetchThread();
-  }, [id, openNewMessage]);
+  }, [userObj, openNewMessage]);
 
   /**
    * When a ws notification arrives, update data
@@ -407,17 +474,17 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
     return () => {
       PubSub.unsubscribe(refreshSubscription.current);
     };
-  }, [messages]);
+  }, [messageObjs]);
 
   /**
    * Notification subscriber
    */
   const subscriber = (msg, data) => {
     const res = data.data;
-    const newMessages = [...messages];
+    const newMessages = [...messageObjs];
     const index = newMessages.findIndex((m) => m.sender.id === res.notification_obj.message.sender.id);
     if (index !== -1) {
-      setMessages((prev) => [...prev, res.notification_obj.message]);
+      setMessageObjs((prev) => [...prev, res.notification_obj.message]);
     }
   };
 
@@ -427,38 +494,62 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
    */
   function renderThread() {
     return (
-      <Box className={classes.threadBox}>
-        {openDeleteMessageDialog && (
-          <ConfirmDialog
-            open={openDeleteMessageDialog}
-            title={<FormattedMessage id="ui.thread.message.dialog.msg" defaultMessage="ui.thread.message.dialog.msg" />}
-            btnConfirm={<FormattedMessage id="ui.thread.message.dialog.confirm" defaultMessage="ui.thread.message.dialog.confirm" />}
-            onConfirm={() => handleDelete()}
-            onClose={handleClose}
-          />
+      <>
+        {isMobile && receiver && (
+          <AppBar position="static">
+            <Toolbar className={classes.toolBar}>
+              <Box sx={{display: 'flex', justifyContent: 'flex-start', alignItems: 'center'}}>
+                <Icon onClick={onMessageBack}>chevron_left</Icon>
+                <Avatar alt="Remy Sharp" src={receiver.avatar} sx={{marginRight: '8px'}} />
+                <Typography variant="h6" color="inherit" component="div">
+                  {receiver.username}
+                </Typography>
+              </Box>
+              <Box sx={{display: 'flex', justifyContent: 'flex-end', alignItems: 'center'}}>
+                <Icon onClick={onMessageDelete}>delete</Icon>
+              </Box>
+            </Toolbar>
+          </AppBar>
         )}
-        {Object.keys(formattedMessages).map((key, index) => (
-          <div key={index}>
-            <ListSubheader className={classes.center}>{key}</ListSubheader>
-            {formattedMessages[key].map((msg: SCPrivateMessageType, index) => (
-              <div key={index} className={loggedUser === msg.sender.id ? classes.sender : classes.receiver}>
-                <Message
-                  elevation={0}
-                  message={msg}
-                  key={msg.id}
-                  snippetType={false}
-                  loggedUser={loggedUser}
-                  onMouseEnter={() => handleMouseEnter(msg.id)}
-                  onMouseLeave={() => handleMouseLeave(msg.id)}
-                  isHovering={isHovered[msg.id]}
-                  onDeleteIconClick={() => handleDeleteDialog(msg)}
-                />
-              </div>
-            ))}
-          </div>
-        ))}
-        <MessageEditor send={() => sendMessage()} isSending={sending} getMessage={handleMessage} getMessageFile={handleMessageFile} />
-      </Box>
+        <Box className={classes.threadBox}>
+          {openDeleteMessageDialog && (
+            <ConfirmDialog
+              open={openDeleteMessageDialog}
+              title={<FormattedMessage id="ui.thread.message.dialog.msg" defaultMessage="ui.thread.message.dialog.msg" />}
+              btnConfirm={<FormattedMessage id="ui.thread.message.dialog.confirm" defaultMessage="ui.thread.message.dialog.confirm" />}
+              onConfirm={() => handleDelete()}
+              onClose={handleClose}
+            />
+          )}
+          {Object.keys(formattedMessages).map((key, index) => (
+            <div key={index}>
+              <ListSubheader className={classes.center}>{key}</ListSubheader>
+              {formattedMessages[key].map((msg: SCPrivateMessageType, index) => (
+                <div key={index} className={loggedUser === msg.sender.id ? classes.sender : classes.receiver}>
+                  <Message
+                    elevation={0}
+                    message={msg}
+                    key={msg.id}
+                    snippetType={false}
+                    loggedUser={loggedUser}
+                    onMouseEnter={() => handleMouseEnter(msg.id)}
+                    onMouseLeave={() => handleMouseLeave(msg.id)}
+                    isHovering={isHovered[msg.id]}
+                    onDeleteIconClick={() => handleDeleteDialog(msg)}
+                  />
+                </div>
+              ))}
+            </div>
+          ))}
+          <MessageEditor
+            send={() => sendMessage()}
+            isSending={sending}
+            getMessage={handleMessage}
+            getMessageFile={handleMessageFile}
+            autoHide={!isFollowed}
+          />
+        </Box>
+      </>
     );
   }
 
@@ -474,6 +565,7 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
             <Box sx={{flexGrow: 0, flexShrink: 1, flexBasis: 'auto'}}>
               <Grid container className={classes.newMessageHeader}>
                 <Grid item xs={4} sx={{display: 'flex', alignItems: 'center'}}>
+                  {isMobile && <Icon onClick={() => onMessageBack('default')}>chevron_left</Icon>}
                   <Icon sx={{marginRight: '8px'}} fontSize="small">
                     person
                   </Icon>
@@ -491,7 +583,7 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
                     renderInput={(params) => (
                       <TextField
                         {...params}
-                        placeholder={`${intl.formatMessage(smessages.placeholder)}`}
+                        placeholder={`${intl.formatMessage(messages.placeholder)}`}
                         variant="standard"
                         InputProps={{
                           ...params.InputProps,
@@ -506,7 +598,13 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
             </Box>
             <Box className={classes.newMessageEmptyBox} />
             <Box className={classes.newMessageEditor}>
-              <MessageEditor send={() => sendMessage()} isSending={sending} getMessage={handleMessage} getMessageFile={handleMessageFile} />
+              <MessageEditor
+                send={() => sendMessage()}
+                isSending={sending}
+                getMessage={handleMessage}
+                getMessageFile={handleMessageFile}
+                autoHide={!isFollowed}
+              />
             </Box>
           </Box>
         ) : (
@@ -524,6 +622,9 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
   if (!scUserContext.user) {
     return null;
   }
+  if (loading && userObj) {
+    return <ThreadSkeleton />;
+  }
 
   /**
    * Renders the component (if not hidden by autoHide prop)
@@ -531,7 +632,7 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
   if (!autoHide) {
     return (
       <Root {...rest} className={classNames(classes.root, className)}>
-        {id ? renderThread() : renderNewOrNoMessageBox()}
+        {userObj ? renderThread() : renderNewOrNoMessageBox()}
       </Root>
     );
   }

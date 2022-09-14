@@ -2,18 +2,19 @@ import React, {useContext, useEffect, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import {Box, Card, IconButton, ImageListItemBar} from '@mui/material';
+import {Box, IconButton, ImageListItemBar} from '@mui/material';
 import Icon from '@mui/material/Icon';
-import {UserService, formatHttpError} from '@selfcommunity/api-services';
+import {Endpoints, UserService} from '@selfcommunity/api-services';
 import {SCContext, SCContextType, SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
 import {FormattedMessage} from 'react-intl';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
-import BaseDialog from '../../../shared/BaseDialog';
+import BaseDialog, {BaseDialogProps} from '../../../shared/BaseDialog';
 import ConfirmDialog from '../../../shared/ConfirmDialog/ConfirmDialog';
 import classNames from 'classnames';
 import CircularProgress from '@mui/material/CircularProgress';
 import {useThemeProps} from '@mui/system';
+import {scroll} from 'seamless-scroll-polyfill';
 
 const PREFIX = 'SCChangePictureDialog';
 
@@ -21,47 +22,30 @@ const classes = {
   root: `${PREFIX}-root`,
   actions: `${PREFIX}-actions`,
   upload: `${PREFIX}-upload`,
-  imageItem: `${PREFIX}-imageItem`
+  imagesList: `${PREFIX}-images-list`,
+  imageItem: `${PREFIX}-image-item`
 };
 
-const Root = styled(Card, {
+const Root = styled(BaseDialog, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  maxWidth: 800,
-  marginBottom: theme.spacing(2),
+  [`& .${classes.imagesList}`]: {
+    maxHeight: 500
+  },
   [`& .${classes.actions}`]: {
     display: 'flex',
     justifyContent: 'flex-end'
   }
 }));
 
-export interface CPDialogProps {
-  /**
-   * Overrides or extends the styles applied to the component.
-   * @default null
-   */
-  className?: string;
+export interface CPDialogProps extends BaseDialogProps {
   /**
    * On change function.
    * @default null
    */
   onChange?: (avatar) => void;
-  /**
-   * On dialog close callback function
-   * @default null
-   */
-  onClose?: () => void;
-  /**
-   * Opens dialog
-   * @default false
-   */
-  open: boolean;
-  /**
-   * Any other properties
-   */
-  [p: string]: any;
 }
 
 export default function ChangePictureDialog(inProps: CPDialogProps): JSX.Element {
@@ -116,6 +100,7 @@ export default function ChangePictureDialog(inProps: CPDialogProps): JSX.Element
         setAvatars((prev) => [...prev, data]);
         selectPrimaryAvatar(data);
         setLoading(false);
+        scrollToEndListAvatars();
         setError(false);
       })
       .catch((error) => {
@@ -126,22 +111,24 @@ export default function ChangePictureDialog(inProps: CPDialogProps): JSX.Element
   }
 
   /**
-   * Fetches the list of scUser's avatars
+   * Handle scroll to the last item added in the list of avatars
    */
-  function fetchUserAvatar() {
-    UserService.getUserAvatars({headers: {Authorization: `Bearer ${scContext.settings.session.authToken.accessToken}`}})
-      .then((data: any) => {
-        const primary = getPrimaryAvatar(data);
-        if (data && data.length) {
-          setAvatars(data);
-          setPrimary(primary.id);
-          setFile(primary.avatar);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  function scrollToEndListAvatars() {
+    setTimeout(() => {
+      const element = document.getElementById(`avatarsList`);
+      if (element) {
+        scroll(element, {top: element.scrollHeight, behavior: 'smooth'});
+      }
+    }, 200);
   }
+
+  /**
+   * Fetches the list of avatars
+   */
+  const fetchUserAvatars = async (next: string = Endpoints.GetAvatars.url({})): Promise<[]> => {
+    const data: any = await UserService.getUserAvatars({url: next});
+    return data.next ? data.results.concat(await fetchUserAvatars(data.next)) : data.results;
+  };
 
   /**
    * Gets the primary avatar from a list of avatars
@@ -184,6 +171,9 @@ export default function ChangePictureDialog(inProps: CPDialogProps): JSX.Element
         if (primary === deleteAvatarId) {
           if (_avatars.length > 0) {
             selectPrimaryAvatar(_avatars[_avatars.length - 1]);
+          } else {
+            // if there are no more avatars set auto generated image
+            onChange && onChange(null);
           }
         }
       })
@@ -197,11 +187,69 @@ export default function ChangePictureDialog(inProps: CPDialogProps): JSX.Element
    * On mount, fetches the list of scUser's avatars
    */
   useEffect(() => {
-    fetchUserAvatar();
+    fetchUserAvatars()
+      .then((data: any) => {
+        const primary = getPrimaryAvatar(data);
+        if (data && data.length) {
+          setAvatars(data);
+          setPrimary(primary.id);
+          setFile(primary.avatar);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, []);
 
   return (
-    <Root className={classNames(classes.root, className)} {...rest}>
+    <Root
+      className={classNames(classes.root, className)}
+      title={<FormattedMessage defaultMessage="ui.changePicture.title" id="ui.changePicture.title" />}
+      onClose={onClose}
+      open={open}
+      {...rest}>
+      <Box className={classes.upload}>
+        <input type="file" onChange={() => handleUpload(event)} ref={fileInput} hidden />
+        <Button
+          disabled={loading || isDeletingAvatar}
+          variant="outlined"
+          onClick={() => fileInput.current.click()}
+          color={error ? 'error' : 'primary'}
+          startIcon={loading ? null : <Icon fontSize="small">folder_open</Icon>}>
+          {loading ? (
+            <CircularProgress size={15} />
+          ) : (
+            <>
+              {error ? (
+                <FormattedMessage id="ui.changePicture.button.upload.error" defaultMessage="ui.changePicture.button.upload.error" />
+              ) : (
+                <FormattedMessage id="ui.changePicture.button.upload" defaultMessage="ui.changePicture.button.upload" />
+              )}
+            </>
+          )}
+        </Button>
+        <Typography sx={{fontSize: 10}} color="text.secondary" gutterBottom>
+          <FormattedMessage id="ui.changePicture.listF" defaultMessage="ui.changePicture.listF" /> <br />
+          <FormattedMessage id="ui.changePicture.listS" defaultMessage="ui.changePicture.listS" />
+        </Typography>
+      </Box>
+      <ImageList cols={3} rowHeight={'auto'} id="avatarsList" classes={{root: classes.imagesList}}>
+        {avatars.map((avatar) => (
+          <Box className={classes.imageItem} key={avatar.id}>
+            <ImageListItem key={avatar.id} onClick={() => selectPrimaryAvatar(avatar)} sx={{border: primary === avatar.id ? 'solid' : null}}>
+              <img src={avatar.avatar} loading="lazy" alt={'img'} />
+              <ImageListItemBar
+                position="top"
+                actionIcon={
+                  <IconButton onClick={() => handleOpen(avatar.id)} size="small" sx={{color: 'rgba(255, 255, 255, 0.54)'}}>
+                    <Icon>delete</Icon>
+                  </IconButton>
+                }
+              />
+            </ImageListItem>
+          </Box>
+        ))}
+      </ImageList>
       {openDeleteAvatarDialog && (
         <ConfirmDialog
           open={openDeleteAvatarDialog}
@@ -212,50 +260,6 @@ export default function ChangePictureDialog(inProps: CPDialogProps): JSX.Element
           onClose={() => setOpenDeleteAvatarDialog(false)}
         />
       )}
-      <BaseDialog title={<FormattedMessage defaultMessage="ui.changePicture.title" id="ui.changePicture.title" />} onClose={onClose} open={open}>
-        <Box className={classes.upload}>
-          <input type="file" onChange={() => handleUpload(event)} ref={fileInput} hidden />
-          <Button
-            disabled={loading || isDeletingAvatar}
-            variant="outlined"
-            onClick={() => fileInput.current.click()}
-            color={error ? 'error' : 'primary'}
-            startIcon={loading ? null : <Icon fontSize="small">folder_open</Icon>}>
-            {loading ? (
-              <CircularProgress size={15} />
-            ) : (
-              <>
-                {error ? (
-                  <FormattedMessage id="ui.changePicture.button.upload.error" defaultMessage="ui.changePicture.button.upload.error" />
-                ) : (
-                  <FormattedMessage id="ui.changePicture.button.upload" defaultMessage="ui.changePicture.button.upload" />
-                )}
-              </>
-            )}
-          </Button>
-          <Typography sx={{fontSize: 10}} color="text.secondary" gutterBottom>
-            <FormattedMessage id="ui.changePicture.listF" defaultMessage="ui.changePicture.listF" /> <br />
-            <FormattedMessage id="ui.changePicture.listS" defaultMessage="ui.changePicture.listS" />
-          </Typography>
-        </Box>
-        <ImageList cols={3} rowHeight={'auto'}>
-          {avatars.map((avatar) => (
-            <Box className={classes.imageItem} key={avatar.id}>
-              <ImageListItem key={avatar.id} onClick={() => selectPrimaryAvatar(avatar)} sx={{border: primary === avatar.id ? 'solid' : null}}>
-                <img src={avatar.avatar} loading="lazy" alt={'img'} />
-                <ImageListItemBar
-                  position="top"
-                  actionIcon={
-                    <IconButton onClick={() => handleOpen(avatar.id)} size="small" sx={{color: 'rgba(255, 255, 255, 0.54)'}}>
-                      <Icon>delete</Icon>
-                    </IconButton>
-                  }
-                />
-              </ImageListItem>
-            </Box>
-          ))}
-        </ImageList>
-      </BaseDialog>
     </Root>
   );
 }
