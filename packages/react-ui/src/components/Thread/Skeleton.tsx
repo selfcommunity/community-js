@@ -19,6 +19,9 @@ const Root = styled(Widget, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
+  width: '600px',
+  height: '100%',
+  position: 'relative',
   [theme.breakpoints.down('md')]: {
     height: '100%',
     maxHeight: '450px',
@@ -51,7 +54,7 @@ export default function ThreadSkeleton(props): JSX.Element {
     <Root className={classes.root} {...props}>
       <CardContent>
         <List className={classes.list}>
-          {[...Array(4)].map((category, index) => (
+          {[...Array(6)].map((category, index) => (
             <ListItem key={index}>
               <ListItemText
                 sx={{display: 'flex', justifyContent: index % 2 === 0 ? 'flex-start' : 'flex-end'}}

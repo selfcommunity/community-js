@@ -139,7 +139,7 @@ export interface ThreadProps {
    * User object (thread receiver)
    * default null
    */
-  userObj?: SCPrivateMessageType;
+  userObj?: SCPrivateMessageType | number;
   /**
    * Message receiver id
    * @default null
@@ -253,6 +253,8 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
   const [recipients, setRecipients] = useState([]);
   const [isFollowed, setIsFollowed] = useState<boolean>(false);
   const [receiver, setReceiver] = useState(null);
+  const [newMessageThread, setNewMessageThread] = useState<boolean>(false);
+  const [newMessageUser, setNewMessageUser] = useState('');
 
   // REFS
   const refreshSubscription = useRef(null);
@@ -317,10 +319,13 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
   };
 
   const ids = useMemo(() => {
-    if (recipients !== null) {
+    if (recipients !== null && openNewMessage) {
       return recipients.map((u) => {
         return parseInt(u.id, 10);
       });
+    }
+    if (newMessageThread && !openNewMessage) {
+      return recipients;
     }
   }, [recipients]);
 
@@ -368,9 +373,10 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
           setMessageObjs((prev) => [...prev, res.data]);
           setSending(false);
           onMessageSent(res.data);
-          if (openNewMessage) {
+          if (openNewMessage || newMessageThread) {
             onNewMessageSent(res.data);
             shouldUpdate(true);
+            setNewMessageThread(false);
           }
         })
         .catch((error) => {
@@ -406,10 +412,13 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
             u = userObj.receiver.id;
           }
           setIsFollowed(data.some((f) => f.id === u));
+          const r = data.filter((o) => o.id === userObj);
+          setNewMessageUser(r[0]);
         }
-        if (openNewMessage) {
+        if (openNewMessage || newMessageThread) {
           setIsFollowed(true);
         }
+        setLoading(false);
       })
       .catch((error) => {
         console.log(error);
@@ -437,10 +446,15 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
       .then((res: HttpResponse<any>) => {
         const data = res.data;
         setMessageObjs(data.results);
-        if (data.results[0].receiver.id !== loggedUser) {
-          setReceiver(data.results[0].receiver);
+        if (data.results.length) {
+          if (data.results[0].receiver.id !== loggedUser) {
+            setReceiver(data.results[0].receiver);
+          } else {
+            setReceiver(data.results[0].sender);
+          }
         } else {
-          setReceiver(data.results[0].sender);
+          setNewMessageThread(true);
+          setRecipients(u);
         }
         setLoading(false);
       })
@@ -560,7 +574,7 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
   function renderNewOrNoMessageBox() {
     return (
       <React.Fragment>
-        {openNewMessage ? (
+        {openNewMessage || newMessageThread ? (
           <Box className={classes.newMessageBox}>
             <Box sx={{flexGrow: 0, flexShrink: 1, flexBasis: 'auto'}}>
               <Grid container className={classes.newMessageHeader}>
@@ -576,10 +590,11 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
                 <Grid item xs={8}>
                   <Autocomplete
                     className={classes.autocomplete}
-                    multiple
+                    multiple={!newMessageThread}
                     freeSolo
                     options={followers}
-                    getOptionLabel={(option) => option.username}
+                    value={newMessageThread ? newMessageUser : recipients}
+                    getOptionLabel={(option) => (option ? option.username : '...')}
                     renderInput={(params) => (
                       <TextField
                         {...params}
@@ -632,7 +647,7 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
   if (!autoHide) {
     return (
       <Root {...rest} className={classNames(classes.root, className)}>
-        {userObj ? renderThread() : renderNewOrNoMessageBox()}
+        {userObj && !newMessageThread ? renderThread() : renderNewOrNoMessageBox()}
       </Root>
     );
   }
