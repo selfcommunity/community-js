@@ -253,8 +253,9 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
   const [recipients, setRecipients] = useState([]);
   const [isFollowed, setIsFollowed] = useState<boolean>(false);
   const [receiver, setReceiver] = useState(null);
-  const [newMessageThread, setNewMessageThread] = useState<boolean>(null);
+  const [newMessageThread, setNewMessageThread] = useState<boolean>(false);
   const [newMessageUser, setNewMessageUser] = useState('');
+
   // REFS
   const refreshSubscription = useRef(null);
 
@@ -372,9 +373,10 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
           setMessageObjs((prev) => [...prev, res.data]);
           setSending(false);
           onMessageSent(res.data);
-          if (openNewMessage) {
+          if (openNewMessage || newMessageThread) {
             onNewMessageSent(res.data);
             shouldUpdate(true);
+            setNewMessageThread(false);
           }
         })
         .catch((error) => {
@@ -591,7 +593,8 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
                     multiple={!newMessageThread}
                     freeSolo
                     options={followers}
-                    getOptionLabel={(option) => (newMessageThread ? newMessageUser['username'] : option ? option.username : '...')}
+                    value={newMessageThread ? newMessageUser : recipients}
+                    getOptionLabel={(option) => (option ? option.username : '...')}
                     renderInput={(params) => (
                       <TextField
                         {...params}

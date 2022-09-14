@@ -227,6 +227,7 @@ export default function PrivateMessages(inProps: PrivateMessagesProps): JSX.Elem
                   getSnippetHeadline={data}
                   shouldUpdate={shouldUpdate}
                   deleteIconProps={{show: false}}
+                  selected={obj}
                 />
               </>
             )}
@@ -244,7 +245,7 @@ export default function PrivateMessages(inProps: PrivateMessagesProps): JSX.Elem
                 <Thread
                   userObj={obj ? obj : null}
                   openNewMessage={openNewMessage}
-                  onNewMessageSent={openNewMessage ? setObj : null}
+                  onNewMessageSent={setObj}
                   onMessageSent={handleSnippetsUpdate}
                   shouldUpdate={setShouldUpdate}
                   onMessageBack={handleMessageBack}
@@ -276,13 +277,14 @@ export default function PrivateMessages(inProps: PrivateMessagesProps): JSX.Elem
                   action: clickedDelete ? () => setClickedDelete(false) : () => setClickedDelete(true),
                   name: clickedDelete ? 'close' : 'delete'
                 }}
+                selected={obj}
               />
             </Box>
             <Box className={classes.threadBox}>
               <Thread
                 userObj={obj ? obj : null}
                 openNewMessage={openNewMessage}
-                onNewMessageSent={openNewMessage ? setObj : null}
+                onNewMessageSent={setObj}
                 onMessageSent={handleSnippetsUpdate}
                 shouldUpdate={setShouldUpdate}
                 onMessageBack={handleMessageBack}

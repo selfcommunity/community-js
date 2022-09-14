@@ -89,6 +89,11 @@ export interface SnippetsProps {
     action?: () => void;
     name?: string;
   };
+  /**
+   * Prop to highlight selected snippet
+   * @default null
+   */
+  selected?: number | string;
 }
 /**
  *
@@ -122,7 +127,7 @@ export default function Snippets(inProps: SnippetsProps): JSX.Element {
     name: PREFIX
   });
 
-  const {autoHide = false, className = null, onSnippetClick, threadId, getSnippetHeadline, shouldUpdate, deleteIconProps, ...rest} = props;
+  const {autoHide = false, className = null, onSnippetClick, threadId, getSnippetHeadline, shouldUpdate, deleteIconProps, selected, ...rest} = props;
 
   // STATE
   const [snippets, setSnippets] = useState<any[]>([]);
@@ -248,7 +253,7 @@ export default function Snippets(inProps: SnippetsProps): JSX.Element {
                 message={message}
                 key={message.id}
                 onClick={() => handleOpenThread(message)}
-                className={message.id === threadId ? classes.selected : ''}
+                className={message.id === threadId || message.receiver.id === selected ? classes.selected : ''}
               />
               {index < total - 1 ? <Divider /> : null}
             </div>
