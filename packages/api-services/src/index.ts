@@ -31,6 +31,7 @@ import FeedService, {FeedApiClient, FeedApiClientInterface} from './services/fee
 import FeedObjectService, {FeedObjectApiClient, FeedObjectApiClientInterface} from './services/feed_object';
 import IncubatorService, {IncubatorApiClient, IncubatorApiClientInterface} from './services/incubator';
 import InsightService, {InsightApiClient, InsightApiClientInterface} from './services/insight';
+import InviteCodeService, {InviteCodeApiClient, InviteCodeApiClientInterface} from './services/invite_code';
 import LegalPageService, {LegalPageApiClient, LegalPageApiClientInterface} from './services/legal_page';
 import LocalityService, {LocalityApiClient, LocalityApiClientInterface} from './services/locality';
 import LoyaltyService, {LoyaltyApiClient, LoyaltyApiClientInterface} from './services/loyalty';
@@ -159,6 +160,9 @@ export {
   InsightService,
   InsightApiClient,
   InsightApiClientInterface,
+  InviteCodeService,
+  InviteCodeApiClient,
+  InviteCodeApiClientInterface,
   LegalPageService,
   LegalPageApiClient,
   LegalPageApiClientInterface,
