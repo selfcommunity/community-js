@@ -15,6 +15,10 @@ export interface AccountCreateParams {
    * 	Password field for the account
    */
   password: string;
+  /**
+   * 	Optional Invite Code field for confirm invitation
+   */
+  invite_code?: string;
 }
 
 export interface AccountVerifyParams {
