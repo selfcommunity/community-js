@@ -550,8 +550,8 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
                     loggedUser={loggedUser}
                     onMouseEnter={() => handleMouseEnter(msg.id)}
                     onMouseLeave={() => handleMouseLeave(msg.id)}
-                    onTouchEnter={() => handleMouseEnter(msg.id)}
-                    onTouchLeave={() => handleMouseLeave(msg.id)}
+                    onTouchStart={() => handleMouseEnter(msg.id)}
+                    onTouchEnd={() => handleMouseLeave(msg.id)}
                     isHovering={isHovered[msg.id]}
                     onDeleteIconClick={() => handleDeleteDialog(msg)}
                   />
