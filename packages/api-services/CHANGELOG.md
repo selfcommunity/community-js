@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.3-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.3-alpha.1...@selfcommunity/api-services@0.3.3-alpha.2) (2022-09-15)
+
+
+### Bug Fixes
+
+* fixed user service/user test ([8d33ef8](https://github.com/selfcommunity/community-js/commit/8d33ef8c354d2ff514ec3efb4767939a0056fe29))
+* Rename inviteCode service to invite ([cd3add8](https://github.com/selfcommunity/community-js/commit/cd3add8591ee5868a9ea5bbf03952503a0e61c63))
+
+
+
+
+
 ## [0.3.3-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.3-alpha.0...@selfcommunity/api-services@0.3.3-alpha.1) (2022-09-15)
 
 

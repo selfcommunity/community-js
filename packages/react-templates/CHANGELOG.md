@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.1-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.2.1-alpha.3...@selfcommunity/react-templates@0.2.1-alpha.4) (2022-09-15)
+
+
+### Performance Improvements
+
+* pm, added onItemClick prop ([f7292d1](https://github.com/selfcommunity/community-js/commit/f7292d167290a2a0343f97f9bd660d5ce637a1a6))
+
+
+
+
+
 ## [0.2.1-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.2.1-alpha.2...@selfcommunity/react-templates@0.2.1-alpha.3) (2022-09-15)
 
 **Note:** Version bump only for package @selfcommunity/react-templates

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.6-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.6-alpha.1...@selfcommunity/react-core@0.3.6-alpha.2) (2022-09-15)
+
+
+### Bug Fixes
+
+* Rename inviteCode service to invite ([cd3add8](https://github.com/selfcommunity/community-js/commit/cd3add8591ee5868a9ea5bbf03952503a0e61c63))
+
+
+
+
+
 ## [0.3.6-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.6-alpha.0...@selfcommunity/react-core@0.3.6-alpha.1) (2022-09-15)
 
 **Note:** Version bump only for package @selfcommunity/react-core
