@@ -1,10 +1,10 @@
 import {SCUserType} from './user';
 
 /**
- * Interface SCInviteCodeType.
+ * Interface SCInviteType.
  * Invite Code Schema.
  */
-export interface SCInviteCodeType {
+export interface SCInviteType {
   /**
    * The ID of the user.
    */

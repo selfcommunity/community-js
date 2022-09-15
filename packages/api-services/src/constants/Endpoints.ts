@@ -34,7 +34,7 @@ const Endpoints: {[key: string]: EndpointType} = {
    * Invite Code Endpoints
    */
   InviteCode: {
-    url: urlReplacer('/api/v2/invite_code/$(invite_code)/'),
+    url: urlReplacer('/api/v2/invite_code/$(code)/'),
     method: 'GET'
   },
   /**
