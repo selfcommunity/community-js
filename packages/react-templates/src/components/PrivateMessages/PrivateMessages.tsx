@@ -69,6 +69,11 @@ export interface PrivateMessagesProps {
    */
   id?: number | string;
   /**
+   * Handler on message click
+   * @default null
+   */
+  onItemClick?: (id) => void;
+  /**
    * Overrides or extends the styles applied to the component.
    * @default null
    */
@@ -118,7 +123,7 @@ export default function PrivateMessages(inProps: PrivateMessagesProps): JSX.Elem
     props: inProps,
     name: PREFIX
   });
-  const {id, autoHide = false, className = null, ...rest} = props;
+  const {id, autoHide = false, className = null, onItemClick = null, ...rest} = props;
 
   // STATE
   const theme = useTheme();
@@ -138,6 +143,7 @@ export default function PrivateMessages(inProps: PrivateMessagesProps): JSX.Elem
 
   //  HANDLERS
   const handleThreadOpening = (i) => {
+    onItemClick && onItemClick(i.id);
     setObj(i);
     setOpenNewMessage(false);
     if (isMobile) {

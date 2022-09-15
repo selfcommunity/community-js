@@ -59,10 +59,10 @@ describe('User Service Test', () => {
   });
   test('Get user avatars', () => {
     return UserService.getUserAvatars().then((data) => {
-      if (data.count !== 0) {
-        avatar = data.results[0].id;
+      if (data) {
+        avatar = data[0].id;
       }
-      expect(data.results).toBeInstanceOf(Array);
+      expect(data).toBeInstanceOf(Array);
     });
   });
   test('Set user primary avatar', () => {
@@ -86,23 +86,30 @@ describe('User Service Test', () => {
   });
   test('Get all users', () => {
     return UserService.getAllUsers().then((data) => {
-      user = data.results[0];
+      user = data[0];
       expect(user).toHaveProperty('username');
     });
   });
   test('Get hidden users', () => {
     return UserService.getHiddenUsers().then((data) => {
-      expect(data.results).toBeInstanceOf(Array);
+      expect(data).toBeInstanceOf(Array);
     });
   });
   test('User Autocomplete', () => {
     return UserService.userAutocomplete({username: user.username}).then((data) => {
-      expect(data.results[0].username).toBe(user.username);
+      if (data) {
+        expect(data[0].username).toBe(user.username);
+      } else {
+        expect(data).toBe('');
+      }
     });
   });
   test('Search user', () => {
     return UserService.userSearch({username: user.username}).then((data) => {
-      expect(data.results[0].username).toBe(user.username);
+      if (data.count) {
+        expect(data.results[0].username).toBe(user.username);
+      }
+      expect(data.results).toBeInstanceOf(Array);
     });
   });
   test('Get Specific user', () => {
@@ -122,7 +129,11 @@ describe('User Service Test', () => {
   });
   test('Get current user permission', () => {
     return UserService.getCurrentUserPermission().then((data) => {
-      expect(data).toHaveProperty('create_post');
+      if (data) {
+        expect(data).toHaveProperty('create_post');
+      } else {
+        expect(data).toBe('');
+      }
     });
   });
   test('Get user platform', () => {
@@ -215,7 +226,7 @@ describe('User Service Test -connections enabled-', () => {
   if (enabled) {
     test('Get all users', () => {
       return UserService.getAllUsers().then((data) => {
-        user = data.results[0];
+        user = data[0];
         expect(user).toHaveProperty('username');
       });
     });
