@@ -162,7 +162,6 @@ export default function MessageMediaUploader(props: MessageMediaUploaderProps): 
   };
 
   const handleProgress = (chunks: any) => {
-    setLoading(true);
     setUploading({...chunks});
   };
 
