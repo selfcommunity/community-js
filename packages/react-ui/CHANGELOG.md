@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.6-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.6-alpha.1...@selfcommunity/react-ui@0.5.6-alpha.2) (2022-09-15)
+
+
+### Bug Fixes
+
+* fixed message uploader icon state ([c8a725e](https://github.com/selfcommunity/community-js/commit/c8a725e7507af8de86598a9426810b8a2a061f4f))
+
+
+
+
+
 ## [0.5.6-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.6-alpha.0...@selfcommunity/react-ui@0.5.6-alpha.1) (2022-09-15)
 
 
