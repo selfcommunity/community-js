@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.3-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.3-alpha.2...@selfcommunity/api-services@0.3.3-alpha.3) (2022-09-20)
+
+
+### Bug Fixes
+
+* fixed api-services user test ([d8a72ad](https://github.com/selfcommunity/community-js/commit/d8a72adf3fd54604e7797780ba0fb9a1def9ef45))
+* fixed api-services user test (connections) ([fc59b14](https://github.com/selfcommunity/community-js/commit/fc59b14d9d8de7b787df96b04860737a96753e5f))
+
+
+
+
+
 ## [0.3.3-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.3-alpha.1...@selfcommunity/api-services@0.3.3-alpha.2) (2022-09-15)
 
 

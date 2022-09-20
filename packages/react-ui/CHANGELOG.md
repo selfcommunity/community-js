@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.6-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.6-alpha.6...@selfcommunity/react-ui@0.5.6-alpha.7) (2022-09-20)
+
+
+### Bug Fixes
+
+* fixed thread autocomplete/message editor visibility ([4e43832](https://github.com/selfcommunity/community-js/commit/4e438325d7b6e5993f0da5a0b5530cd3e3546fb6))
+* fixed thread fetch followers when connection is enabled ([25ae6d0](https://github.com/selfcommunity/community-js/commit/25ae6d04f45a2ebf7b93aab6d0da25891da90ef0))
+
+
+
+
+
 ## [0.5.6-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.6-alpha.5...@selfcommunity/react-ui@0.5.6-alpha.6) (2022-09-20)
 
 
