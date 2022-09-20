@@ -59,10 +59,10 @@ describe('User Service Test', () => {
   });
   test('Get user avatars', () => {
     return UserService.getUserAvatars().then((data) => {
-      if (data) {
-        avatar = data[0].id;
+      if (data.count) {
+        avatar = data.results[0].id;
       }
-      expect(data).toBeInstanceOf(Array);
+      expect(data.results).toBeInstanceOf(Array);
     });
   });
   test('Set user primary avatar', () => {
@@ -86,21 +86,21 @@ describe('User Service Test', () => {
   });
   test('Get all users', () => {
     return UserService.getAllUsers().then((data) => {
-      user = data[0];
+      user = data.results[0];
       expect(user).toHaveProperty('username');
     });
   });
   test('Get hidden users', () => {
     return UserService.getHiddenUsers().then((data) => {
-      expect(data).toBeInstanceOf(Array);
+      expect(data.results).toBeInstanceOf(Array);
     });
   });
   test('User Autocomplete', () => {
     return UserService.userAutocomplete({username: user.username}).then((data) => {
-      if (data) {
-        expect(data[0].username).toBe(user.username);
+      if (data.count) {
+        expect(data.results[0].username).toBe(user.username);
       } else {
-        expect(data).toBe('');
+        expect(data.results).toBe('');
       }
     });
   });
@@ -151,37 +151,51 @@ describe('User Service Test', () => {
       expect(data.results).toBeInstanceOf(Array);
     });
   });
-  if (enabled) {
-    test('Get users followers', () => {
+  test('Get users followers', () => {
+    if (enabled) {
       return UserService.getUserFollowers(user.id).then((data) => {
         expect(data.results).toBeInstanceOf(Array);
       });
-    });
-    test('Get users followed', () => {
+    } else {
+      test.skip;
+    }
+  });
+  test('Get users followed', () => {
+    if (enabled) {
       return UserService.getUserFollowed(user.id).then((data) => {
         expect(data.results).toBeInstanceOf(Array);
       });
-    });
-    test('Follow user', () => {
-      if (user.id !== loggedUser) {
-        return UserService.followUser(user.id).then((data) => {
-          expect(data).toBe('');
-        });
-      } else {
-        test.skip;
-      }
-    });
-    test('Check user  followed', () => {
+    } else {
+      test.skip;
+    }
+  });
+  test('Follow user', () => {
+    if (enabled && user.id !== loggedUser) {
+      return UserService.followUser(user.id).then((data) => {
+        expect(data).toBe('');
+      });
+    } else {
+      test.skip;
+    }
+  });
+  test('Check user  followed', () => {
+    if (enabled) {
       return UserService.checkUserFollowed(user.id).then((data) => {
         expect(data).toHaveProperty('is_followed');
       });
-    });
-    test('Check user follower', () => {
+    } else {
+      test.skip;
+    }
+  });
+  test('Check user follower', () => {
+    if (enabled) {
       return UserService.checkUserFollower(user.id).then((data) => {
         expect(data).toHaveProperty('is_follower');
       });
-    });
-  }
+    } else {
+      test.skip;
+    }
+  });
   test('Show/Hide User', () => {
     if (user.id !== loggedUser && user.id !== admin) {
       return UserService.showHideUser(user.id).then((data) => {
