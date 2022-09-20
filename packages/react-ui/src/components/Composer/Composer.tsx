@@ -851,7 +851,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
       <React.Fragment>
         <DialogTitle className={classes.title}>
           <Typography component="div">
-            <IconButton onClick={handleChangeView(MAIN_VIEW)} size="small" disabled={!hasPoll()}>
+            <IconButton onClick={handleChangeView(MAIN_VIEW)} size="small">
               <Icon>arrow_back</Icon>
             </IconButton>
             <FormattedMessage id="ui.composer.poll" defaultMessage="ui.composer.poll" />
@@ -865,7 +865,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
                 <IconButton onClick={handleChangeView(MAIN_VIEW)} color="inherit" disabled={!hasPoll()}>
                   <Icon>check</Icon>
                 </IconButton>
-                <IconButton onClick={handleChangeView(MAIN_VIEW)} color="inherit" disabled={!hasPoll()}>
+                <IconButton onClick={handleDeletePoll} color="inherit" disabled={!hasPoll()}>
                   <Icon>delete</Icon>
                 </IconButton>
               </>
