@@ -59,10 +59,10 @@ describe('User Service Test', () => {
   });
   test('Get user avatars', () => {
     return UserService.getUserAvatars().then((data) => {
-      if (data) {
-        avatar = data[0].id;
+      if (data.count) {
+        avatar = data.results[0].id;
       }
-      expect(data).toBeInstanceOf(Array);
+      expect(data.results).toBeInstanceOf(Array);
     });
   });
   test('Set user primary avatar', () => {
@@ -86,21 +86,21 @@ describe('User Service Test', () => {
   });
   test('Get all users', () => {
     return UserService.getAllUsers().then((data) => {
-      user = data[0];
+      user = data.results[0];
       expect(user).toHaveProperty('username');
     });
   });
   test('Get hidden users', () => {
     return UserService.getHiddenUsers().then((data) => {
-      expect(data).toBeInstanceOf(Array);
+      expect(data.results).toBeInstanceOf(Array);
     });
   });
   test('User Autocomplete', () => {
     return UserService.userAutocomplete({username: user.username}).then((data) => {
-      if (data) {
-        expect(data[0].username).toBe(user.username);
+      if (data.count) {
+        expect(data.results[0].username).toBe(user.username);
       } else {
-        expect(data).toBe('');
+        expect(data.results).toBe('');
       }
     });
   });
@@ -151,37 +151,51 @@ describe('User Service Test', () => {
       expect(data.results).toBeInstanceOf(Array);
     });
   });
-  if (enabled) {
-    test('Get users followers', () => {
+  test('Get users followers', () => {
+    if (enabled) {
       return UserService.getUserFollowers(user.id).then((data) => {
         expect(data.results).toBeInstanceOf(Array);
       });
-    });
-    test('Get users followed', () => {
+    } else {
+      test.skip;
+    }
+  });
+  test('Get users followed', () => {
+    if (enabled) {
       return UserService.getUserFollowed(user.id).then((data) => {
         expect(data.results).toBeInstanceOf(Array);
       });
-    });
-    test('Follow user', () => {
-      if (user.id !== loggedUser) {
-        return UserService.followUser(user.id).then((data) => {
-          expect(data).toBe('');
-        });
-      } else {
-        test.skip;
-      }
-    });
-    test('Check user  followed', () => {
+    } else {
+      test.skip;
+    }
+  });
+  test('Follow user', () => {
+    if (enabled && user.id !== loggedUser) {
+      return UserService.followUser(user.id).then((data) => {
+        expect(data).toBe('');
+      });
+    } else {
+      test.skip;
+    }
+  });
+  test('Check user  followed', () => {
+    if (enabled) {
       return UserService.checkUserFollowed(user.id).then((data) => {
         expect(data).toHaveProperty('is_followed');
       });
-    });
-    test('Check user follower', () => {
+    } else {
+      test.skip;
+    }
+  });
+  test('Check user follower', () => {
+    if (enabled) {
       return UserService.checkUserFollower(user.id).then((data) => {
         expect(data).toHaveProperty('is_follower');
       });
-    });
-  }
+    } else {
+      test.skip;
+    }
+  });
   test('Show/Hide User', () => {
     if (user.id !== loggedUser && user.id !== admin) {
       return UserService.showHideUser(user.id).then((data) => {
@@ -223,69 +237,110 @@ describe('User Service Test -connections enabled-', () => {
       enabled = !data.results[0].value;
     });
   });
-  if (enabled) {
-    test('Get all users', () => {
-      return UserService.getAllUsers().then((data) => {
-        user = data[0];
-        expect(user).toHaveProperty('username');
-      });
+  test('Get all users', () => {
+    return UserService.getAllUsers().then((data) => {
+      user = data.results[0];
+      expect(user).toHaveProperty('username');
     });
-    test('Get user connections', () => {
+  });
+  test('Get user connections', () => {
+    if (enabled) {
       return UserService.getUserConnections(user.id).then((data) => {
         expect(data.results).toBeInstanceOf(Array);
       });
-    });
-    test('Check user connection', () => {
+    } else {
+      test.skip;
+    }
+  });
+  test('Check user connection', () => {
+    if (enabled) {
       return UserService.checkUserConnections(user.id).then((data) => {
         expect(data).toHaveProperty('is_connection');
       });
-    });
-    test('Get user connection requests', () => {
+    } else {
+      test.skip;
+    }
+  });
+  test('Get user connection requests', () => {
+    if (enabled) {
       return UserService.getUserConnectionRequests(user.id).then((data) => {
         expect(data.results).toBeInstanceOf(Array);
       });
-    });
-    test('Get user connection requests sent', () => {
+    } else {
+      test.skip;
+    }
+  });
+  test('Get user connection requests sent', () => {
+    if (enabled) {
       return UserService.getUserRequestConnectionsSent(user.id).then((data) => {
         expect(data.results).toBeInstanceOf(Array);
       });
-    });
-    if (user.id !== loggedUser) {
-      test('User accept request connection', () => {
-        return UserService.userAcceptRequestConnection(user.id).then((data) => {
-          expect(data).toBe('');
-        });
-      });
-      test('User request connection', () => {
-        return UserService.userRequestConnection(user.id).then((data) => {
-          expect(data).toBe('');
-        });
-      });
-      test('User remove connection', () => {
-        return UserService.userRemoveConnection(user.id).then((data) => {
-          expect(data).toBe('');
-        });
-      });
-      test('User cancel reject connection request', () => {
-        return UserService.userCancelRejectConnectionRequest(user.id).then((data) => {
-          expect(data).toBe('');
-        });
-      });
-      test('User cancel request connection', () => {
-        return UserService.userCancelRequestConnection(user.id).then((data) => {
-          expect(data).toBe('');
-        });
-      });
-      test('User reject connection request', () => {
-        return UserService.userRejectConnectionRequest(user.id).then((data) => {
-          expect(data).toBe('');
-        });
-      });
-      test('User mark seen connection request', () => {
-        return UserService.userMarkSeenConnectionRequest(user.id).then((data) => {
-          expect(data).toBe('');
-        });
-      });
+    } else {
+      test.skip;
     }
-  }
+  });
+
+  test('User accept request connection', () => {
+    if (enabled && user.id !== loggedUser) {
+      return UserService.userAcceptRequestConnection(user.id).then((data) => {
+        expect(data).toBe('');
+      });
+    } else {
+      test.skip;
+    }
+  });
+  test('User request connection', () => {
+    if (enabled && user.id !== loggedUser) {
+      return UserService.userRequestConnection(user.id).then((data) => {
+        expect(data).toBe('');
+      });
+    } else {
+      test.skip;
+    }
+  });
+  test('User remove connection', () => {
+    if (enabled && user.id !== loggedUser) {
+      return UserService.userRemoveConnection(user.id).then((data) => {
+        expect(data).toBe('');
+      });
+    } else {
+      test.skip;
+    }
+  });
+  test('User cancel reject connection request', () => {
+    if (enabled && user.id !== loggedUser) {
+      return UserService.userCancelRejectConnectionRequest(user.id).then((data) => {
+        expect(data).toBe('');
+      });
+    } else {
+      test.skip;
+    }
+  });
+  test('User cancel request connection', () => {
+    if (enabled && user.id !== loggedUser) {
+      return UserService.userCancelRequestConnection(user.id).then((data) => {
+        expect(data).toBe('');
+      });
+    } else {
+      test.skip;
+    }
+  });
+  test('User reject connection request', () => {
+    if (enabled && user.id !== loggedUser) {
+      return UserService.userRejectConnectionRequest(user.id).then((data) => {
+        expect(data).toBe('');
+      });
+    } else {
+      test.skip;
+    }
+  });
+  test('User mark seen connection request', () => {
+    if (enabled) {
+      return UserService.userMarkSeenConnectionRequest(user.id).then((data) => {
+        expect(data).toBe('');
+      });
+    } else {
+      test.skip;
+    }
+  });
 });
