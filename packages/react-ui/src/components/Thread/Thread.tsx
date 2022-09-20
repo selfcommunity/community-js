@@ -1,8 +1,8 @@
 import React, {useContext, useEffect, useMemo, useState, useRef} from 'react';
 import {styled} from '@mui/material/styles';
 import Widget from '../Widget';
-import {http, Endpoints, HttpResponse, PrivateMessageService} from '@selfcommunity/api-services';
-import {SCUserContext, SCUserContextType, UserUtils} from '@selfcommunity/react-core';
+import {http, Endpoints, HttpResponse, PrivateMessageService, UserService} from '@selfcommunity/api-services';
+import {SCPreferences, SCPreferencesContext, SCPreferencesContextType, SCUserContext, SCUserContextType, UserUtils} from '@selfcommunity/react-core';
 import {SCNotificationTopicType, SCNotificationTypologyType, SCPrivateMessageType} from '@selfcommunity/types';
 import Message from '../Message';
 import _ from 'lodash';
@@ -236,6 +236,10 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
   const {enqueueSnackbar, closeSnackbar} = useSnackbar();
+  const scPreferencesContext: SCPreferencesContextType = useContext(SCPreferencesContext);
+  const followEnabled =
+    SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED in scPreferencesContext.preferences &&
+    scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED].value;
 
   // STATE
   const theme = useTheme();
@@ -394,29 +398,30 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
   }
 
   /**
-   * Fetches user followers
+   * Fetches user followers/connections
    */
   function fetchFollowers() {
-    http
-      .request({
-        url: Endpoints.UserFollowers.url({id: scUserContext['user'].id}),
-        method: Endpoints.UserFollowers.method
-      })
-      .then((res: any) => {
-        const data = res.data;
-        setFollowers(data);
-        if (data.length && userObj) {
+    let fetch;
+    if (followEnabled) {
+      fetch = UserService.getUserFollowers(scUserContext['user'].id);
+    } else {
+      fetch = UserService.getUserConnections(scUserContext['user'].id);
+    }
+    fetch
+      .then((data: any) => {
+        setFollowers(data.results);
+        if (data.results && userObj) {
           let u;
           if (typeof userObj === 'number') {
             u = userObj;
           } else {
             u = userObj.receiver.id;
           }
-          setIsFollowed(data.some((f) => f.id === u));
-          const r = data.filter((o) => o.id === userObj);
+          setIsFollowed(data.results.some((f) => f.id === u));
+          const r = data.results.filter((o) => o.id === userObj);
           setNewMessageUser(r[0]);
         }
-        if (openNewMessage || newMessageThread) {
+        if (openNewMessage || newMessageThread || UserUtils.isStaff(scUserContext.user)) {
           setIsFollowed(true);
         }
         setLoading(false);
