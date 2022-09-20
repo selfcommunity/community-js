@@ -616,6 +616,7 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
                       />
                     )}
                     onChange={selectRecipients}
+                    disabled={!followers}
                   />
                 </Grid>
               </Grid>
@@ -627,7 +628,7 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
                 isSending={sending}
                 getMessage={handleMessage}
                 getMessageFile={handleMessageFile}
-                autoHide={!isFollowed}
+                autoHide={!followers}
               />
             </Box>
           </Box>
