@@ -139,6 +139,7 @@
   "ui.composer.audience.tags.label": "Tags",
   "ui.composer.location.title": "Localize",
   "ui.composer.location.label": "Insert a city",
+  "ui.composer.location.empty": "Search for location",
   "ui.composer.categories.label": "Category",
   "ui.composer.categories.empty": "No category to assign",
   "ui.composer.poll": "Poll",

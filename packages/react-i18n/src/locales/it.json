@@ -142,6 +142,7 @@
   "ui.composer.location.title": "Localize",
   "ui.composer.location.label": "Insert a city",
   "ui.composer.categories.label": "Category",
+  "ui.composer.location.empty": "Seleziona località",
   "ui.composer.categories.empty": "No category to assign",
   "ui.composer.poll": "Sondaggio",
   "ui.composer.poll.title": "Poll's title",

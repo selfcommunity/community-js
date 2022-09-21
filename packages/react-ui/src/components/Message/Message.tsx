@@ -295,7 +295,7 @@ export default function Message(inProps: MessageProps): JSX.Element {
         </>
       ) : (
         <LazyLoad once offset={DEFAULT_PRELOAD_OFFSET_VIEWPORT}>
-          <ListItem onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
+          <ListItem onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} onTouchStart={onTouchStart} onTouchMove={onTouchEnd}>
             {!snippetType && isHovering && loggedUser === message.sender.id && message.status !== 'hidden' && (
               <>
                 <IconButton sx={{marginBottom: '25px'}} onClick={onDeleteIconClick}>
