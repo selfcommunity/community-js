@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.6-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.6-alpha.4...@selfcommunity/react-core@0.3.6-alpha.5) (2022-09-21)
+
+
+### Performance Improvements
+
+* Added dynamic preferences for tag manager and cookie consent ([d84bdfa](https://github.com/selfcommunity/community-js/commit/d84bdfa28673f183c8d4ab31ed9e6bcb9b4001a4))
+
+
+
+
+
 ## [0.3.6-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.6-alpha.3...@selfcommunity/react-core@0.3.6-alpha.4) (2022-09-20)
 
 **Note:** Version bump only for package @selfcommunity/react-core
