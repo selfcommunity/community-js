@@ -169,6 +169,9 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
               <Icon>menu</Icon>
             </IconButton>
             <SwipeableDrawer
+              PaperProps={{
+                sx: {width: '85%'}
+              }}
               anchor={'right'}
               open={openSettings}
               onClick={() => setOpenSettings(false)}
