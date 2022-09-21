@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.6-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.6-alpha.7...@selfcommunity/react-ui@0.5.6-alpha.8) (2022-09-21)
+
+
+### Bug Fixes
+
+* fixed loyalty program detail width ([0a90cde](https://github.com/selfcommunity/community-js/commit/0a90cdeb9be932da1319c05af4ce5e18a43308ec))
+
+
+
+
+
 ## [0.5.6-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.6-alpha.6...@selfcommunity/react-ui@0.5.6-alpha.7) (2022-09-20)
 
 
