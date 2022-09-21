@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.6-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.3.6-alpha.0...@selfcommunity/react-i18n@0.3.6-alpha.1) (2022-09-21)
+
+
+### Bug Fixes
+
+* added composer location empty translation string ([5958243](https://github.com/selfcommunity/community-js/commit/5958243c91909564f184ec02764b3d74e229caa1))
+
+
+
+
+
 ## [0.3.6-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.3.5...@selfcommunity/react-i18n@0.3.6-alpha.0) (2022-09-14)
 
 **Note:** Version bump only for package @selfcommunity/react-i18n
