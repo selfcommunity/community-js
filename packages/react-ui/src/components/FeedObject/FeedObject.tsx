@@ -164,9 +164,7 @@ const Root = styled(Widget, {
     color: '#3e3e3e'
   },
   [`& .${classes.tag}`]: {
-    display: 'inline-block',
-    position: 'relative',
-    top: 3
+    display: 'inline-flex'
   },
   [`& .${classes.actionsSection}`]: {
     padding: 0,
