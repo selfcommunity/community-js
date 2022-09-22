@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.6-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.6-alpha.9...@selfcommunity/react-ui@0.5.6-alpha.10) (2022-09-22)
+
+
+### Performance Improvements
+
+* added props to mobile header to show navigation button ([7781813](https://github.com/selfcommunity/community-js/commit/77818137f8f9d307eb4d4ad9fb9701342242c2b7))
+
+
+
+
+
 ## [0.5.6-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.6-alpha.8...@selfcommunity/react-ui@0.5.6-alpha.9) (2022-09-21)
 
 
