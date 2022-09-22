@@ -53,6 +53,7 @@ function Image({editor, className = ''}: {editor: LexicalEditor; className?: str
       width: media.image_width,
       height: media.image_height
     };
+    editor.focus();
     editor.dispatchCommand(INSERT_IMAGE_COMMAND, data);
   };
 
