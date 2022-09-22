@@ -70,6 +70,14 @@ export interface HeaderProps {
    */
   searchBarProps?: HeaderSearchBarProps;
   /**
+   * If true, adds a navigation button to mobile header
+   */
+  showNavigation?: boolean;
+  /**
+   * Props forwarded to mobile header
+   */
+  navigationHeaderProps?: {};
+  /**
    * The single pages url to pass to menu
    */
   url?: SCHeaderMenuUrlsType;
@@ -119,7 +127,7 @@ export default function Header(inProps: HeaderProps) {
     props: inProps,
     name: PREFIX
   });
-  const {url, className, searchBarProps, ...rest} = props;
+  const {url, className, searchBarProps, showNavigation, navigationHeaderProps, ...rest} = props;
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
 
@@ -160,7 +168,7 @@ export default function Header(inProps: HeaderProps) {
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
       {isMobile ? (
-        <MobileHeader url={url} searchBarProps={searchBarProps} />
+        <MobileHeader url={url} searchBarProps={searchBarProps} showNavigation={showNavigation} {...navigationHeaderProps} />
       ) : (
         <AppBar position="fixed" color={'default'}>
           <Toolbar>
