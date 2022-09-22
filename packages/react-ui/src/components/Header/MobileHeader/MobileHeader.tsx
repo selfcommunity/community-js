@@ -1,4 +1,4 @@
-import {AppBar, Badge, Box, Button, Grid, IconButton, styled, SwipeableDrawer, Tab, Tabs, Toolbar} from '@mui/material';
+import {AppBar, Badge, Box, Button, Grid, IconButton, styled, SwipeableDrawer, Tab, Tabs, Toolbar, Typography} from '@mui/material';
 import Icon from '@mui/material/Icon';
 import React, {useContext, useEffect, useState} from 'react';
 import {Link, SCPreferences, SCUserContext, SCUserContextType, useSCPreferences} from '@selfcommunity/react-core';
@@ -68,7 +68,17 @@ export interface MobileHeaderProps {
    * @default null
    */
   className?: string;
-
+  /**
+   * If true, adds a navigation button to mobile header
+   */
+  showNavigation?: boolean;
+  /**
+   * Header section showed when entering certain urls
+   */
+  navigationHeaderProps?: {
+    title?: string;
+    onNavigationBack?: () => any;
+  };
   /**
    * Other props
    */
@@ -81,7 +91,7 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
     props: inProps,
     name: PREFIX
   });
-  const {url, className, searchBarProps, ...rest} = props;
+  const {url, className, searchBarProps, showNavigation, navigationHeaderProps, ...rest} = props;
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
 
@@ -120,14 +130,18 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
       <AppBar position="fixed" color={'default'}>
         <Toolbar className={classes.topToolbar}>
           <Grid container direction="row" justifyContent="flex-start">
-            {scUserContext.user && url && url.home ? (
-              <Link to={url.home}>
+            {!showNavigation && (
+              <Link to={scUserContext.user && url ? url.home : '/'}>
                 <img src={logo} alt={'logo'} style={{height: '30px'}} />
               </Link>
-            ) : (
-              <Link to={'/'}>
-                <img src={logo} alt={'logo'} style={{height: '30px'}} />
-              </Link>
+            )}
+            {scUserContext.user && showNavigation && navigationHeaderProps && (
+              <Typography component="div">
+                <IconButton onClick={navigationHeaderProps.onNavigationBack} size="large" aria-label="back" color="inherit">
+                  <Icon>arrow_back</Icon>
+                </IconButton>
+                {navigationHeaderProps.title}
+              </Typography>
             )}
           </Grid>
           <SearchBar {...searchBarProps} />
