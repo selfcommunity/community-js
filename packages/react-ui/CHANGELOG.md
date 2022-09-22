@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.6-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.6-alpha.10...@selfcommunity/react-ui@0.5.6-alpha.11) (2022-09-22)
+
+
+### Bug Fixes
+
+* Fix Composer.tsx actions alignment on small devices ([d0e6feb](https://github.com/selfcommunity/community-js/commit/d0e6feb538ddacb11b58fa81f107761909f56b82))
+* Fix FeedObject.tsx tag alignment ([e5982ee](https://github.com/selfcommunity/community-js/commit/e5982ee1edf4c3c3290c6252f1fa20d662ded398))
+
+
+
+
+
 ## [0.5.6-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.6-alpha.9...@selfcommunity/react-ui@0.5.6-alpha.10) (2022-09-22)
 
 
