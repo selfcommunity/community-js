@@ -985,7 +985,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
             className={classNames(classes.block, classes.editor)}
             onChange={handleChangeText}
             defaultValue={text}
-            readOnly={isSubmitting}
+            editable={!isSubmitting}
           />
           <Box className={classes.medias}>
             <MediasPreview

@@ -670,7 +670,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
               id={`edit-${comment.id}`}
               onSave={handleSave}
               onCancel={handleCancel}
-              readOnly={isReplying || isSavingComment}
+              editable={!isReplying || !isSavingComment}
               {...ReplyCommentObjectProps}
             />
           </Box>
@@ -730,7 +730,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
               key={`reply-${replyComment.id}`}
               id={`reply-${replyComment.id}`}
               onReply={handleReply}
-              readOnly={isReplying}
+              editable={!isReplying}
               {...ReplyCommentObjectProps}
             />
           </Box>
