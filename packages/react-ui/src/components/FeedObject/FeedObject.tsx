@@ -810,7 +810,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                 <Box className={classes.replyContent}>
                   <ReplyCommentComponent
                     onReply={handleReply}
-                    readOnly={isReplying || !obj}
+                    editable={!isReplying || Boolean(obj)}
                     key={Number(isReplying)}
                     {...ReplyCommentComponentProps}
                   />

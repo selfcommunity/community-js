@@ -20,6 +20,7 @@ function Emoji({editor, className = ''}: {editor: LexicalEditor; className?: str
   };
 
   const handleEmojiClick = (event: SyntheticEvent, emoji) => {
+    editor.focus();
     editor.dispatchCommand(CONTROLLED_TEXT_INSERTION_COMMAND, emoji.emoji);
   };
 
