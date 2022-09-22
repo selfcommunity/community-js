@@ -1,7 +1,15 @@
-import React from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Avatar, Box, Button, Stack, Typography} from '@mui/material';
-import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
+import {
+  Link,
+  SCFollowersManagerType,
+  SCRoutes,
+  SCRoutingContextType,
+  SCUserContext,
+  SCUserContextType,
+  useSCRouting
+} from '@selfcommunity/react-core';
 import {SCNotificationPrivateMessageType} from '@selfcommunity/types';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
@@ -9,6 +17,7 @@ import classNames from 'classnames';
 import {SCNotificationObjectTemplateType} from '../../../types';
 import {useThemeProps} from '@mui/system';
 import NotificationItem from '../../../shared/NotificationItem';
+import {LoadingButton} from '@mui/lab';
 
 const messages = defineMessages({
   receivePrivateMessage: {
@@ -142,6 +151,9 @@ export default function PrivateMessageNotification(inProps: NotificationPrivateM
 
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
+  const scUserContext: SCUserContextType = useContext(SCUserContext);
+  const scFollowersManager: SCFollowersManagerType = scUserContext.managers.followers;
+  const [follower, setFollower] = useState<boolean>(null);
 
   // CONST
   const isSnippetTemplate = template === SCNotificationObjectTemplateType.SNIPPET;
@@ -149,6 +161,17 @@ export default function PrivateMessageNotification(inProps: NotificationPrivateM
 
   //INTL
   const intl = useIntl();
+
+  useEffect(() => {
+    /**
+     * Call scFollowedManager.isFollower inside an effect
+     * to avoid warning rendering child during update parent state
+     */
+    if (scUserContext.user && scUserContext.user.id !== notificationObject.message.sender.id) {
+      const f =
+      setFollower(scFollowersManager.isFollower(notificationObject.message.sender));
+    }
+  });
 
   /**
    * Renders content
@@ -217,7 +240,11 @@ export default function PrivateMessageNotification(inProps: NotificationPrivateM
                 <DateTimeAgo date={notificationObject.active_at} />
                 <Typography color="primary">
                   <Link to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, notificationObject.message.sender)}>
-                    <FormattedMessage id="ui.userToastNotifications.replyMessage" defaultMessage={'ui.userToastNotifications.replyMessage'} />
+                    {scUserContext.user && follower ? (
+                      <FormattedMessage id="ui.userToastNotifications.replyMessage" defaultMessage={'ui.userToastNotifications.replyMessage'} />
+                    ) : (
+                      <FormattedMessage id="ui.userToastNotifications.viewMessage" defaultMessage={'ui.userToastNotifications.viewMessage'} />
+                    )}
                   </Link>
                 </Typography>
               </Stack>
@@ -235,15 +262,20 @@ export default function PrivateMessageNotification(inProps: NotificationPrivateM
         actions={
           <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
             <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
-            <Button
+            <LoadingButton
               color={'primary'}
               variant="outlined"
               size="small"
               classes={{root: classes.replyButton}}
               component={Link}
+              loading={scUserContext.user ? follower === null || scFollowersManager.isLoading(notificationObject.message.sender) : null}
               to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, notificationObject.message.sender)}>
-              <FormattedMessage id="ui.notification.privateMessage.btnReplyLabel" defaultMessage="ui.notification.privateMessage.btnReplyLabel" />
-            </Button>
+              {scUserContext.user && follower ? (
+                <FormattedMessage id="ui.notification.privateMessage.btnReplyLabel" defaultMessage="ui.notification.privateMessage.btnReplyLabel" />
+              ) : (
+                <FormattedMessage id="ui.notification.privateMessage.btnViewLabel" defaultMessage="ui.notification.privateMessage.btnViewLabel" />
+              )}
+            </LoadingButton>
           </Stack>
         }
         primary={

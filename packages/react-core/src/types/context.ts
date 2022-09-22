@@ -131,6 +131,7 @@ export interface SCUserContextType {
    */
   managers: {
     followed?: SCFollowedManagerType;
+    followers?: SCFollowersManagerType;
     connections?: SCConnectionsManagerType;
     categories: SCFollowedCategoriesManagerType;
     incubators?: SCSubscribedIncubatorsManagerType;
@@ -170,6 +171,33 @@ export interface SCFollowedManagerType {
 
   /**
    * Empty cache to revalidate all followed
+   */
+  emptyCache?: () => void;
+}
+
+export interface SCFollowersManagerType {
+  /**
+   * List of all user ids that follow the authenticated user
+   */
+  followers: number[];
+
+  /**
+   * List of all users in loading state
+   */
+  loading: number[];
+
+  /**
+   * List of current users in loading state
+   */
+  isLoading: (user: SCUserType) => boolean;
+
+  /**
+   * Handle check if a user is a followers, caching data
+   */
+  isFollower?: (user: SCUserType) => boolean;
+
+  /**
+   * Empty cache to revalidate all followers
    */
   emptyCache?: () => void;
 }
