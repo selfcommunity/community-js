@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.6-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.6-alpha.8...@selfcommunity/react-ui@0.5.6-alpha.9) (2022-09-21)
+
+
+### Bug Fixes
+
+* fixed mobile drawer width ([9fe321a](https://github.com/selfcommunity/community-js/commit/9fe321a924ff28020ad3c474415f24631cf94eb8))
+* fixed mobile touch event for single message delete ([03c57d4](https://github.com/selfcommunity/community-js/commit/03c57d49fa58e6960d444e19c7b816e29cd93c38))
+
+
+
+
+
 ## [0.5.6-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.6-alpha.7...@selfcommunity/react-ui@0.5.6-alpha.8) (2022-09-21)
 
 
