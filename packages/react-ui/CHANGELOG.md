@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.6-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.6-alpha.11...@selfcommunity/react-ui@0.5.6-alpha.12) (2022-09-22)
+
+
+### Bug Fixes
+
+* Fix insertion of emoji and images when editor not focused ([b0fce8f](https://github.com/selfcommunity/community-js/commit/b0fce8f0c0c29c8e741ecbe1b8577d3c557c8a15))
+
+
+### Performance Improvements
+
+* Update Editor.tsx to latest version ([90f2d91](https://github.com/selfcommunity/community-js/commit/90f2d9160953d6bf649eedd4d60affe54f23f00d))
+
+
+
+
+
 ## [0.5.6-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.6-alpha.10...@selfcommunity/react-ui@0.5.6-alpha.11) (2022-09-22)
 
 
