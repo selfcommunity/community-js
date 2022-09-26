@@ -329,6 +329,7 @@
   "ui.notification.undeletedFor.restoredContentSnippet": "Your removed content has been restored",
   "ui.notification.undeletedFor.youWrote": "Your contribution: ",
   "ui.notification.privateMessage.btnReplyLabel": "Reply",
+  "ui.notification.privateMessage.btnViewLabel": "View",
   "ui.notification.mention.quotedYou": "quoted you on:",
   "ui.notification.viewRules": "View website rules.",
 
@@ -380,6 +381,7 @@
   "ui.userToastNotifications.goToProfile": "Go to profile",
   "ui.userToastNotifications.viewContribution": "View contribution",
   "ui.userToastNotifications.replyMessage": "Reply",
+  "ui.userToastNotifications.viewMessage": "View",
   "ui.userToastNotifications.privateMessage.sentMessage": "sent you a message",
   "ui.userToastNotifications.mention.quotedYou": "quoted you on",
   "ui.userToastNotifications.comment.addedComment": "added a comment",

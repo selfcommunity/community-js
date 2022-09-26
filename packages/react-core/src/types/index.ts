@@ -1,6 +1,7 @@
 import {
   SCUserContextType,
   SCFollowedManagerType,
+  SCFollowersManagerType,
   SCFollowedCategoriesManagerType,
   SCSubscribedIncubatorsManagerType,
   SCConnectionsManagerType,
@@ -25,6 +26,7 @@ export {
   SCSettingsType,
   SCSessionType,
   SCFollowedManagerType,
+  SCFollowersManagerType,
   SCConnectionsManagerType,
   SCSubscribedIncubatorsManagerType,
   SCLocaleType,

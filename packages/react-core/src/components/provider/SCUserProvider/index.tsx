@@ -7,7 +7,8 @@ import PubSub from 'pubsub-js';
 import {SCOPE_SC_CORE} from '../../../constants/Errors';
 import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
 import useSCFollowedCategoriesManager from '../../../hooks/useSCFollowedCategoriesManager';
-import useSCFollowedManager from '../../../hooks/useSCFollowersManager';
+import useSCFollowedManager from '../../../hooks/useSCFollowedManager';
+import useSCFollowersManager from '../../../hooks/useSCFollowersManager';
 import useSCConnectionsManager from '../../../hooks/useSCConnectionsManager';
 import {
   SCUserContextType,
@@ -15,6 +16,7 @@ import {
   SCSessionType,
   SCFollowedCategoriesManagerType,
   SCFollowedManagerType,
+  SCFollowersManagerType,
   SCConnectionsManagerType,
   SCSubscribedIncubatorsManagerType,
 } from '../../../types';
@@ -70,6 +72,7 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
    * Managers followed, categories
    */
   const followedManager: SCFollowedManagerType = useSCFollowedManager(state.user);
+  const followersManager: SCFollowersManagerType = useSCFollowersManager(state.user);
   const subscribedIncubatorsManager: SCSubscribedIncubatorsManagerType = useSCSubscribedIncubatorsManager(state.user);
   const connectionsManager: SCConnectionsManagerType = useSCConnectionsManager(state.user);
   const categoriesManager: SCFollowedCategoriesManagerType = useSCFollowedCategoriesManager(state.user, updateUser);
@@ -229,6 +232,7 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
       managers: {
         categories: categoriesManager,
         followed: followedManager,
+        followers: followersManager,
         connections: connectionsManager,
         incubators: subscribedIncubatorsManager,
       },
@@ -239,6 +243,8 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
       categoriesManager.categories,
       followedManager.loading,
       followedManager.followed,
+      followersManager.loading,
+      followersManager.followers,
       connectionsManager.loading,
       connectionsManager.connections,
       subscribedIncubatorsManager.loading,

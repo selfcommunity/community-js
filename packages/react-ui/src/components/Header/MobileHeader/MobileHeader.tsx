@@ -96,7 +96,7 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
   const scUserContext: SCUserContextType = useContext(SCUserContext);
 
   // STATE
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = React.useState(window ? window.location.pathname : 0);
   // PREFERENCES
   const scPreferences = useSCPreferences();
   const logo = scPreferences.preferences[SCPreferences.LOGO_NAVBAR_LOGO].value;
@@ -107,6 +107,27 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
   const toggleDrawer = (anchor: 'right', open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
     if (event && event.type === 'keydown' && ((event as React.KeyboardEvent).key === 'Tab' || (event as React.KeyboardEvent).key === 'Shift')) {
       return;
+    }
+  };
+  const handleOpenDrawer = () => {
+    setOpenSettings(false);
+    if (window) {
+      setValue(window.location.pathname);
+    }
+  };
+
+  const handleChange = () => {
+    if (window) {
+      setValue(window.location.pathname);
+    }
+  };
+
+  const checkValue = () => {
+    if (url) {
+      if (value === url.home || value === url.explore || value === url.followings || value === url.notifications) {
+        return true;
+      }
+      return null;
     }
   };
 
@@ -157,18 +178,17 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
           <Toolbar className={classes.bottomToolbar}>
             <Tabs
               className={classes.tabs}
-              onChange={(e, v) => setValue(v)}
+              onChange={handleChange}
               value={value}
               textColor="primary"
-              indicatorColor="primary"
+              indicatorColor={checkValue() ? 'primary' : null}
               aria-label="Navigation Tabs"
               variant="scrollable">
-              {url && url.home && <Tab value={0} icon={<Icon>home</Icon>} aria-label="HomePage" to={url.home} component={Link}></Tab>}
-              {url && url.explore && <Tab value={1} icon={<Icon>explore</Icon>} aria-label="Explore" to={url.explore} component={Link}></Tab>}
-              {url && url.followings && <Tab value={2} icon={<Icon>person</Icon>} aria-label="Followings" to={url.followings} component={Link}></Tab>}
+              {url && url.home && <Tab icon={<Icon>home</Icon>} aria-label="HomePage" to={url.home} component={Link}></Tab>}
+              {url && url.explore && <Tab icon={<Icon>explore</Icon>} aria-label="Explore" to={url.explore} component={Link}></Tab>}
+              {url && url.followings && <Tab icon={<Icon>person</Icon>} aria-label="Followings" to={url.followings} component={Link}></Tab>}
               {url && url.notifications && (
                 <Tab
-                  value={3}
                   icon={
                     <Badge badgeContent={scUserContext.user.unseen_interactions_counter} color="error">
                       <Icon>notifications</Icon>
@@ -188,10 +208,10 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
               }}
               anchor={'right'}
               open={openSettings}
-              onClick={() => setOpenSettings(false)}
+              onClick={handleOpenDrawer}
               onClose={() => setOpenSettings(false)}
               onOpen={toggleDrawer('right', true)}>
-              <HeaderMenu onItemClick={() => setValue(null)} url={url} />
+              <HeaderMenu url={url} />
             </SwipeableDrawer>
           </Toolbar>
         ) : (
