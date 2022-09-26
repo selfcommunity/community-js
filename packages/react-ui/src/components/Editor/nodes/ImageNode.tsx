@@ -36,7 +36,7 @@ const Root = styled(Stack, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   position: 'fixed',
-  zIndex: 100,
+  zIndex: 2000,
   paddingTop: theme.spacing(),
   backgroundColor: theme.palette.background.paper,
   minWidth: 200,
