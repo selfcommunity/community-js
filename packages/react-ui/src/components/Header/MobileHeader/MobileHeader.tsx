@@ -96,7 +96,7 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
   const scUserContext: SCUserContextType = useContext(SCUserContext);
 
   // STATE
-  const [value, setValue] = React.useState(window ? window.location.pathname : 0);
+  const [value, setValue] = React.useState(window ? window.location.pathname : null);
   // PREFERENCES
   const scPreferences = useSCPreferences();
   const logo = scPreferences.preferences[SCPreferences.LOGO_NAVBAR_LOGO].value;
@@ -116,10 +116,8 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
     }
   };
 
-  const handleChange = () => {
-    if (window) {
-      setValue(window.location.pathname);
-    }
+  const handleChange = (e, v) => {
+    setValue(v);
   };
 
   const checkValue = () => {
@@ -184,11 +182,16 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
               indicatorColor={checkValue() ? 'primary' : null}
               aria-label="Navigation Tabs"
               variant="scrollable">
-              {url && url.home && <Tab icon={<Icon>home</Icon>} aria-label="HomePage" to={url.home} component={Link}></Tab>}
-              {url && url.explore && <Tab icon={<Icon>explore</Icon>} aria-label="Explore" to={url.explore} component={Link}></Tab>}
-              {url && url.followings && <Tab icon={<Icon>person</Icon>} aria-label="Followings" to={url.followings} component={Link}></Tab>}
+              {url && url.home && <Tab value={url.home} icon={<Icon>home</Icon>} aria-label="HomePage" to={url.home} component={Link}></Tab>}
+              {url && url.explore && (
+                <Tab value={url.explore} icon={<Icon>explore</Icon>} aria-label="Explore" to={url.explore} component={Link}></Tab>
+              )}
+              {url && url.followings && (
+                <Tab value={url.followings} icon={<Icon>person</Icon>} aria-label="Followings" to={url.followings} component={Link}></Tab>
+              )}
               {url && url.notifications && (
                 <Tab
+                  value={url.notifications}
                   icon={
                     <Badge badgeContent={scUserContext.user.unseen_interactions_counter} color="error">
                       <Icon>notifications</Icon>
