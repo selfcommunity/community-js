@@ -122,7 +122,12 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
 
   const checkValue = () => {
     if (url) {
-      if (value === url.home || value === url.explore || value === url.followings || value === url.notifications) {
+      if (
+        (url.home && value === url.home) ||
+        (url.explore && value === url.explore) ||
+        (url.followings && value === url.followings) ||
+        (url.notifications && value === url.notifications)
+      ) {
         return true;
       }
       return null;

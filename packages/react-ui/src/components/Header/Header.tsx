@@ -138,16 +138,28 @@ export default function Header(inProps: HeaderProps) {
   // STATE
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = React.useState(window ? window.location.pathname : null);
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   // HANDLERS
   const handleOpenSettingsMenu = (event) => {
     setAnchorEl(event.currentTarget);
+    if (window) {
+      setValue(window.location.pathname);
+    }
   };
 
   const handleCloseSettingsMenu = () => {
     setAnchorEl(null);
+  };
+
+  const checkValue = () => {
+    if (url) {
+      if ((url.home && value === url.home) || (url.explore && value === url.explore) || (url.followings && value === url.followings)) {
+        return true;
+      }
+      return null;
+    }
   };
 
   useEffect(() => {
@@ -191,11 +203,18 @@ export default function Header(inProps: HeaderProps) {
             {scUserContext.user ? (
               <>
                 <Box className={classes.tabsContainer}>
-                  <Tabs onChange={(e, v) => setValue(v)} value={value} textColor="inherit" indicatorColor="primary" aria-label="Navigation Tabs">
-                    {url && url.home && <Tab value={0} icon={<Icon>home</Icon>} aria-label="HomePage" to={url.home} component={Link}></Tab>}
-                    {url && url.explore && <Tab value={1} icon={<Icon>explore</Icon>} aria-label="Explore" to={url.explore} component={Link}></Tab>}
+                  <Tabs
+                    onChange={(e, v) => setValue(v)}
+                    value={value}
+                    textColor="inherit"
+                    indicatorColor={checkValue() ? 'primary' : null}
+                    aria-label="Navigation Tabs">
+                    {url && url.home && <Tab value={url.home} icon={<Icon>home</Icon>} aria-label="HomePage" to={url.home} component={Link}></Tab>}
+                    {url && url.explore && (
+                      <Tab value={url.explore} icon={<Icon>explore</Icon>} aria-label="Explore" to={url.explore} component={Link}></Tab>
+                    )}
                     {url && url.followings && (
-                      <Tab value={2} icon={<Icon>person</Icon>} aria-label="Followings" to={url.followings} component={Link}></Tab>
+                      <Tab value={url.followings} icon={<Icon>person</Icon>} aria-label="Followings" to={url.followings} component={Link}></Tab>
                     )}
                   </Tabs>
                 </Box>
@@ -259,7 +278,7 @@ export default function Header(inProps: HeaderProps) {
                     }}
                     onClose={handleCloseSettingsMenu}
                     onClick={handleCloseSettingsMenu}>
-                    <HeaderMenu onItemClick={() => setValue(null)} url={url} />
+                    <HeaderMenu url={url} />
                   </Menu>
                 </Box>
               </>
