@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.6-alpha.15](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.6-alpha.14...@selfcommunity/react-ui@0.5.6-alpha.15) (2022-09-26)
+
+
+### Bug Fixes
+
+* fixed navigation tabs on header component ([1ba5bf6](https://github.com/selfcommunity/community-js/commit/1ba5bf66df225b7362092c6ba34220317ea17dd5))
+
+
+
+
+
 ## [0.5.6-alpha.14](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.6-alpha.13...@selfcommunity/react-ui@0.5.6-alpha.14) (2022-09-26)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
