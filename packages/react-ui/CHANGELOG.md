@@ -3,6 +3,45 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.6-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.6-alpha.11...@selfcommunity/react-ui@0.5.6-alpha.12) (2022-09-22)
+
+
+### Bug Fixes
+
+* Fix insertion of emoji and images when editor not focused ([b0fce8f](https://github.com/selfcommunity/community-js/commit/b0fce8f0c0c29c8e741ecbe1b8577d3c557c8a15))
+
+
+### Performance Improvements
+
+* Update Editor.tsx to latest version ([90f2d91](https://github.com/selfcommunity/community-js/commit/90f2d9160953d6bf649eedd4d60affe54f23f00d))
+
+
+
+
+
+## [0.5.6-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.6-alpha.10...@selfcommunity/react-ui@0.5.6-alpha.11) (2022-09-22)
+
+
+### Bug Fixes
+
+* Fix Composer.tsx actions alignment on small devices ([d0e6feb](https://github.com/selfcommunity/community-js/commit/d0e6feb538ddacb11b58fa81f107761909f56b82))
+* Fix FeedObject.tsx tag alignment ([e5982ee](https://github.com/selfcommunity/community-js/commit/e5982ee1edf4c3c3290c6252f1fa20d662ded398))
+
+
+
+
+
+## [0.5.6-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.6-alpha.9...@selfcommunity/react-ui@0.5.6-alpha.10) (2022-09-22)
+
+
+### Performance Improvements
+
+* added props to mobile header to show navigation button ([7781813](https://github.com/selfcommunity/community-js/commit/77818137f8f9d307eb4d4ad9fb9701342242c2b7))
+
+
+
+
+
 ## [0.5.6-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.6-alpha.8...@selfcommunity/react-ui@0.5.6-alpha.9) (2022-09-21)
 
 
