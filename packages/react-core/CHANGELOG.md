@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.6-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.6-alpha.6...@selfcommunity/react-core@0.3.6-alpha.7) (2022-09-26)
+
+
+### Bug Fixes
+
+* caching followers ([be05a86](https://github.com/selfcommunity/community-js/commit/be05a86c0d11c2df3264c59e84a118de9a71ad55))
+* feed notification ([3712f0d](https://github.com/selfcommunity/community-js/commit/3712f0d99c36e80348a5cb8d9f131dfeb20d1fe3))
+
+
+
+
+
 ## [0.3.6-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.6-alpha.5...@selfcommunity/react-core@0.3.6-alpha.6) (2022-09-21)
 
 **Note:** Version bump only for package @selfcommunity/react-core

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.6-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.3.6-alpha.1...@selfcommunity/react-i18n@0.3.6-alpha.2) (2022-09-26)
+
+
+### Bug Fixes
+
+* caching followers ([be05a86](https://github.com/selfcommunity/community-js/commit/be05a86c0d11c2df3264c59e84a118de9a71ad55))
+
+
+
+
+
 ## [0.3.6-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.3.6-alpha.0...@selfcommunity/react-i18n@0.3.6-alpha.1) (2022-09-21)
 
 
