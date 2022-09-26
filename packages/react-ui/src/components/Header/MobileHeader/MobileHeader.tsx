@@ -96,7 +96,7 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
   const scUserContext: SCUserContextType = useContext(SCUserContext);
 
   // STATE
-  const [value, setValue] = React.useState(window ? window.location.pathname : null);
+  const [value, setValue] = React.useState(typeof window !== 'undefined' ? window.location.pathname : null);
   // PREFERENCES
   const scPreferences = useSCPreferences();
   const logo = scPreferences.preferences[SCPreferences.LOGO_NAVBAR_LOGO].value;
@@ -111,7 +111,7 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
   };
   const handleOpenDrawer = () => {
     setOpenSettings(false);
-    if (window) {
+    if (typeof window !== 'undefined') {
       setValue(window.location.pathname);
     }
   };
