@@ -140,12 +140,15 @@ export default function Header(inProps: HeaderProps) {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [value, setValue] = React.useState(typeof window !== 'undefined' ? window.location.pathname : null);
   const [anchorEl, setAnchorEl] = React.useState(null);
+  console.log(value);
 
   // HANDLERS
   const handleOpenSettingsMenu = (event) => {
     setAnchorEl(event.currentTarget);
     if (typeof window !== 'undefined') {
       setValue(window.location.pathname);
+    } else {
+      setValue(null);
     }
   };
 
@@ -226,7 +229,7 @@ export default function Header(inProps: HeaderProps) {
                     <IconButton
                       component={Link}
                       to={url.profile}
-                      onClick={() => setValue(null)}
+                      onClick={() => setValue(url.profile)}
                       size="large"
                       aria-label="Profile"
                       color="inherit"
@@ -240,7 +243,7 @@ export default function Header(inProps: HeaderProps) {
                     <IconButton
                       component={Link}
                       to={url.create}
-                      onClick={() => setValue(null)}
+                      onClick={() => setValue(url.create)}
                       size="large"
                       aria-label="New Contribute"
                       color="inherit"
@@ -254,7 +257,7 @@ export default function Header(inProps: HeaderProps) {
                     <IconButton
                       component={Link}
                       to={url.notifications}
-                      onClick={() => setValue(null)}
+                      onClick={() => setValue(url.notifications)}
                       size="large"
                       aria-label="Notifications"
                       color="inherit"
