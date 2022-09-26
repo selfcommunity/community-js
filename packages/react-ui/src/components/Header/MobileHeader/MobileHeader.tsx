@@ -103,16 +103,13 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
   const [openSettings, setOpenSettings] = useState<boolean>(false);
   const handleOpenSettingsMenu = () => {
     setOpenSettings(true);
+    if (typeof window !== 'undefined') {
+      setValue(window.location.pathname);
+    }
   };
   const toggleDrawer = (anchor: 'right', open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
     if (event && event.type === 'keydown' && ((event as React.KeyboardEvent).key === 'Tab' || (event as React.KeyboardEvent).key === 'Shift')) {
       return;
-    }
-  };
-  const handleOpenDrawer = () => {
-    setOpenSettings(false);
-    if (typeof window !== 'undefined') {
-      setValue(window.location.pathname);
     }
   };
 
@@ -134,16 +131,16 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
     }
   };
 
-  useEffect(() => {
-    const getSelectedTab = JSON.parse(localStorage.getItem('selectedTab'));
-    if (getSelectedTab) {
-      setValue(getSelectedTab);
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem('selectedTab', JSON.stringify(value));
-  }, [value]);
+  // useEffect(() => {
+  //   const getSelectedTab = JSON.parse(localStorage.getItem('selectedTab'));
+  //   if (getSelectedTab) {
+  //     setValue(getSelectedTab);
+  //   }
+  // }, []);
+  //
+  // useEffect(() => {
+  //   localStorage.setItem('selectedTab', JSON.stringify(value));
+  // }, [value]);
 
   if (scUserContext.loading) {
     return <MobileHeaderSkeleton />;
@@ -216,7 +213,7 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
               }}
               anchor={'right'}
               open={openSettings}
-              onClick={handleOpenDrawer}
+              onClick={() => setOpenSettings(false)}
               onClose={() => setOpenSettings(false)}
               onOpen={toggleDrawer('right', true)}>
               <HeaderMenu url={url} />

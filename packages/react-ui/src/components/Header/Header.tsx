@@ -165,16 +165,16 @@ export default function Header(inProps: HeaderProps) {
     }
   };
 
-  useEffect(() => {
-    const getSelectedTab = JSON.parse(localStorage.getItem('selectedTab'));
-    if (getSelectedTab) {
-      setValue(getSelectedTab);
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem('selectedTab', JSON.stringify(value));
-  }, [value]);
+  // useEffect(() => {
+  //   const getSelectedTab = JSON.parse(localStorage.getItem('selectedTab'));
+  //   if (getSelectedTab) {
+  //     setValue(getSelectedTab);
+  //   }
+  // }, []);
+  //
+  // useEffect(() => {
+  //   localStorage.setItem('selectedTab', JSON.stringify(value));
+  // }, [value]);
 
   if (scUserContext.loading) {
     return <HeaderSkeleton />;
