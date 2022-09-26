@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.6-alpha.18](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.6-alpha.17...@selfcommunity/react-ui@0.5.6-alpha.18) (2022-09-26)
+
+
+### Bug Fixes
+
+* Fix image upload into editor ([771c3d9](https://github.com/selfcommunity/community-js/commit/771c3d9dd78b2968a93d42823fd237ae22b44ee1))
+
+
+### Performance Improvements
+
+* Update editor and chunk upload lib ([0639fcc](https://github.com/selfcommunity/community-js/commit/0639fcce67ceec9ef9964a4aa8b2d48955f34091))
+
+
+
+
+
 ## [0.5.6-alpha.17](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.6-alpha.16...@selfcommunity/react-ui@0.5.6-alpha.17) (2022-09-26)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
