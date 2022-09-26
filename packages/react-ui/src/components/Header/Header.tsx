@@ -138,13 +138,13 @@ export default function Header(inProps: HeaderProps) {
   // STATE
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const [value, setValue] = React.useState(window ? window.location.pathname : null);
+  const [value, setValue] = React.useState(typeof window !== 'undefined' ? window.location.pathname : null);
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   // HANDLERS
   const handleOpenSettingsMenu = (event) => {
     setAnchorEl(event.currentTarget);
-    if (window) {
+    if (typeof window !== 'undefined') {
       setValue(window.location.pathname);
     }
   };
