@@ -94,7 +94,7 @@ function Image({editor, className = ''}: {editor: LexicalEditor; className?: str
         },
         method: Endpoints.ComposerChunkUploadMedia.method
       }}
-      chunkSize={2142880}
+      chunkSize={204800}
       multiple
       accept="image/*"
       fileFilter={handleFileUploadFilter}>

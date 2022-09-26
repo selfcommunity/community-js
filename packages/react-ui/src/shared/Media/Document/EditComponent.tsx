@@ -132,7 +132,7 @@ export default (props: EditMediaProps): JSX.Element => {
             headers: {Authorization: `Bearer ${scContext.settings.session.authToken.accessToken}`},
             method: Endpoints.ComposerChunkUploadMedia.method
           }}
-          chunkSize={2142880}
+          chunkSize={204800}
           multiple
           accept="application/pdf">
           <MediaChunkUploader onSuccess={handleSuccess} onProgress={handleProgress} onError={handleError} />
