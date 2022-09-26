@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.6-alpha.16](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.6-alpha.15...@selfcommunity/react-ui@0.5.6-alpha.16) (2022-09-26)
+
+
+### Bug Fixes
+
+* fixed window is not defined error ([49f776f](https://github.com/selfcommunity/community-js/commit/49f776f8a097e4f9ee06d42625420445d6f2e929))
+
+
+
+
+
 ## [0.5.6-alpha.15](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.6-alpha.14...@selfcommunity/react-ui@0.5.6-alpha.15) (2022-09-26)
 
 
