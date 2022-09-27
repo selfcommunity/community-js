@@ -4,6 +4,7 @@
 import BroadcastMessages, {BroadcastMessagesProps, BroadcastMessagesSkeleton} from './components/BroadcastMessages';
 import Category, {CategoryProps, CategorySkeleton} from './components/Category';
 import CategoryHeader, {CategoryHeaderProps, CategoryHeaderSkeleton} from './components/CategoryHeader';
+import Categories, {CategoriesProps, CategoriesSkeleton, CategoriesSkeletonProps} from './components/Categories';
 import CategoriesFollowed, {CategoriesFollowedSkeleton} from './components/CategoriesFollowed';
 import CategoriesPopular, {CategoriesPopularSkeleton} from './components/CategoriesPopular';
 import CategoriesSuggestion, {CategoriesListProps, CategoriesSuggestionSkeleton} from './components/CategoriesSuggestion';
@@ -113,6 +114,10 @@ export {
   CategoryHeader,
   CategoryHeaderProps,
   CategoryHeaderSkeleton,
+  Categories,
+  CategoriesProps,
+  CategoriesSkeleton,
+  CategoriesSkeletonProps,
   CategoriesFollowed,
   CategoriesFollowedSkeleton,
   CategoriesPopular,
