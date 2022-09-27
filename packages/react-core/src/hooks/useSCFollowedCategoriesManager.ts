@@ -109,6 +109,19 @@ export default function useSCFollowedCategoriesManager(user?: SCUserType, update
   };
 
   /**
+   * Bypass remote check if the user is followed
+   */
+  const getFollowStatus = useMemo(
+    () => (category: SCCategoryType) => {
+      const isFollowed = category.followed || false;
+      updateCache([category.id]);
+      setData((prev) => (isFollowed ? [...prev, ...[category.id]] : prev));
+      return isFollowed;
+    },
+    [data, cache]
+  );
+
+  /**
    * Memoized isFollowed
    * If category is already in cache -> check if the category is in categories,
    * otherwise, check if user follow the category
@@ -118,6 +131,9 @@ export default function useSCFollowedCategoriesManager(user?: SCUserType, update
       (category: SCCategoryType): boolean => {
         if (cache.includes(category.id)) {
           return Boolean(data.includes(category.id));
+        }
+        if ('followed' in category) {
+          return getFollowStatus(category);
         }
         if (!loading.includes(category.id)) {
           checkIsCategoryFollowed(category);
