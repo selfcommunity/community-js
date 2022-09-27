@@ -1,7 +1,12 @@
+export enum SCLegalPagePoliciesType {
+  COOKIES = 'cookies',
+  TERMS_AND_CONDITIONS = 'tec',
+  PRIVACY = 'privacy'
+}
+
 /**
  * SCLegalPageType interface
  */
-
 export interface SCLegalPageType {
   /**
    * Unique integer value identifying this page

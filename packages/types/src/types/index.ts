@@ -91,7 +91,7 @@ import {SCDataPortabilityType} from './dataPortability';
 import {SCPreferenceType} from './preference';
 import {SCFeatureType} from './feature';
 import {SSOSignInType, SSOSignUpType} from './sso';
-import {SCLegalPageAckType, SCLegalPageType} from './legalPage';
+import {SCLegalPagePoliciesType, SCLegalPageAckType, SCLegalPageType} from './legalPage';
 import {
   SCContributionInsightCountersType,
   SCContributionInsightType,
@@ -217,6 +217,7 @@ export {
   SSOSignInType,
   SSOSignUpType,
   SCLegalPageType,
+  SCLegalPagePoliciesType,
   SCLegalPageAckType,
   SCContributionInsightCountersType,
   SCContributionInsightType,
