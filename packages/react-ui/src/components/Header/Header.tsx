@@ -171,7 +171,7 @@ export default function Header(inProps: HeaderProps) {
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
       {isMobile ? (
-        <MobileHeader url={url} searchBarProps={searchBarProps} showNavigation={showNavigation} {...navigationHeaderProps} />
+        <MobileHeader url={url} searchBarProps={searchBarProps} showNavigation={showNavigation} navigationHeaderProps={navigationHeaderProps} />
       ) : (
         <AppBar position="fixed" color={'default'}>
           <Toolbar>
