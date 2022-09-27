@@ -138,9 +138,9 @@ export interface EditorProps {
 
   /**
    * Is the content of the editor read only
-   * @default false
+   * @default true
    */
-  readOnly?: boolean;
+  editable?: boolean;
 
   /**
    * Handler for change event of the editor
@@ -177,7 +177,7 @@ const Editor: ForwardRefRenderFunction<EditorRef, EditorProps> = (inProps: Edito
     props: inProps,
     name: PREFIX
   });
-  const {id = 'editor', className = null, defaultValue = '', readOnly = false, onChange = null} = props;
+  const {id = 'editor', className = null, defaultValue = '', editable = true, onChange = null} = props;
   const apiRef = useRef<ApiRef>();
 
   // HANDLERS
@@ -205,11 +205,11 @@ const Editor: ForwardRefRenderFunction<EditorRef, EditorProps> = (inProps: Edito
   const initialConfig = useMemo(
     () => ({
       namespace: 'LexicalEditor',
-      readOnly: readOnly,
+      editable: editable,
       onError: handleError,
       nodes: [...nodes]
     }),
-    [readOnly]
+    [editable]
   );
 
   return (

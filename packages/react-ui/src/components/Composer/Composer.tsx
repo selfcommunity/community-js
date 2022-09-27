@@ -226,11 +226,23 @@ const Root = styled(Dialog, {
       margin: 0,
       borderTop: '1px solid #D1D1D1',
       padding: theme.spacing(1),
-      display: 'flex',
-      flexDirection: 'row',
-      flexWrap: 'nowrap',
-      justifyContent: 'space-between',
-      alignItems: 'center'
+      display: 'block',
+      '& .MuiTypography-alignLeft': {
+        float: 'left'
+      },
+      '& .MuiTypography-alignRight': {
+        float: 'right'
+      },
+      [theme.breakpoints.up('md')]: {
+        display: 'flex',
+        flexDirection: 'row',
+        flexWrap: 'nowrap',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        '& .MuiTypography-alignLeft, & .MuiTypography-alignRight': {
+          float: 'none'
+        }
+      }
     },
     [`& .${classes.actionInput}`]: {
       display: 'none !important'
@@ -851,7 +863,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
       <React.Fragment>
         <DialogTitle className={classes.title}>
           <Typography component="div">
-            <IconButton onClick={handleChangeView(MAIN_VIEW)} size="small" disabled={!hasPoll()}>
+            <IconButton onClick={handleChangeView(MAIN_VIEW)} size="small">
               <Icon>arrow_back</Icon>
             </IconButton>
             <FormattedMessage id="ui.composer.poll" defaultMessage="ui.composer.poll" />
@@ -865,7 +877,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
                 <IconButton onClick={handleChangeView(MAIN_VIEW)} color="inherit" disabled={!hasPoll()}>
                   <Icon>check</Icon>
                 </IconButton>
-                <IconButton onClick={handleChangeView(MAIN_VIEW)} color="inherit" disabled={!hasPoll()}>
+                <IconButton onClick={handleDeletePoll} color="inherit" disabled={!hasPoll()}>
                   <Icon>delete</Icon>
                 </IconButton>
               </>
@@ -973,7 +985,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
             className={classNames(classes.block, classes.editor)}
             onChange={handleChangeText}
             defaultValue={text}
-            readOnly={isSubmitting}
+            editable={!isSubmitting}
           />
           <Box className={classes.medias}>
             <MediasPreview
@@ -1047,10 +1059,17 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
                 {audience === AUDIENCE_TAG ? <Icon>label</Icon> : <Icon>public</Icon>}
               </IconButton>
             )}
-            <LoadingButton onClick={handleSubmit} color="primary" variant="contained" disabled={!canSubmit()} loading={isSubmitting}>
+            {!fullScreen && (
+              <LoadingButton onClick={handleSubmit} color="primary" variant="contained" disabled={!canSubmit()} loading={isSubmitting}>
+                <FormattedMessage id="ui.composer.submit" defaultMessage="ui.composer.submit" />
+              </LoadingButton>
+            )}
+          </Typography>
+          {fullScreen && (
+            <LoadingButton onClick={handleSubmit} color="primary" variant="contained" disabled={!canSubmit()} loading={isSubmitting} fullWidth>
               <FormattedMessage id="ui.composer.submit" defaultMessage="ui.composer.submit" />
             </LoadingButton>
-          </Typography>
+          )}
         </DialogActions>
       </React.Fragment>
     );

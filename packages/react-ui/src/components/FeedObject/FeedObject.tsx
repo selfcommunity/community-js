@@ -142,6 +142,9 @@ const Root = styled(Widget, {
     '& a': {
       color: theme.palette.text.primary,
       textDecoration: 'none'
+    },
+    '& img': {
+      maxWidth: '100%'
     }
   },
   [`& .${classes.text}`]: {
@@ -164,9 +167,7 @@ const Root = styled(Widget, {
     color: '#3e3e3e'
   },
   [`& .${classes.tag}`]: {
-    display: 'inline-block',
-    position: 'relative',
-    top: 3
+    display: 'inline-flex'
   },
   [`& .${classes.actionsSection}`]: {
     padding: 0,
@@ -812,7 +813,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                 <Box className={classes.replyContent}>
                   <ReplyCommentComponent
                     onReply={handleReply}
-                    readOnly={isReplying || !obj}
+                    editable={!isReplying || Boolean(obj)}
                     key={Number(isReplying)}
                     {...ReplyCommentComponentProps}
                   />

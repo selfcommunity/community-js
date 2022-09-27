@@ -1,8 +1,8 @@
 import React, {useContext, useEffect, useMemo, useState, useRef} from 'react';
 import {styled} from '@mui/material/styles';
 import Widget from '../Widget';
-import {http, Endpoints, HttpResponse, PrivateMessageService} from '@selfcommunity/api-services';
-import {SCUserContext, SCUserContextType, UserUtils} from '@selfcommunity/react-core';
+import {http, Endpoints, HttpResponse, PrivateMessageService, UserService} from '@selfcommunity/api-services';
+import {SCPreferences, SCPreferencesContext, SCPreferencesContextType, SCUserContext, SCUserContextType, UserUtils} from '@selfcommunity/react-core';
 import {SCNotificationTopicType, SCNotificationTypologyType, SCPrivateMessageType} from '@selfcommunity/types';
 import Message from '../Message';
 import _ from 'lodash';
@@ -139,7 +139,7 @@ export interface ThreadProps {
    * User object (thread receiver)
    * default null
    */
-  userObj?: SCPrivateMessageType;
+  userObj?: SCPrivateMessageType | number;
   /**
    * Message receiver id
    * @default null
@@ -236,6 +236,10 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
   const {enqueueSnackbar, closeSnackbar} = useSnackbar();
+  const scPreferencesContext: SCPreferencesContextType = useContext(SCPreferencesContext);
+  const followEnabled =
+    SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED in scPreferencesContext.preferences &&
+    scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED].value;
 
   // STATE
   const theme = useTheme();
@@ -253,6 +257,8 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
   const [recipients, setRecipients] = useState([]);
   const [isFollowed, setIsFollowed] = useState<boolean>(false);
   const [receiver, setReceiver] = useState(null);
+  const [newMessageThread, setNewMessageThread] = useState<boolean>(false);
+  const [newMessageUser, setNewMessageUser] = useState('');
 
   // REFS
   const refreshSubscription = useRef(null);
@@ -317,10 +323,13 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
   };
 
   const ids = useMemo(() => {
-    if (recipients !== null) {
+    if (recipients !== null && openNewMessage) {
       return recipients.map((u) => {
         return parseInt(u.id, 10);
       });
+    }
+    if (newMessageThread && !openNewMessage) {
+      return recipients;
     }
   }, [recipients]);
 
@@ -368,9 +377,11 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
           setMessageObjs((prev) => [...prev, res.data]);
           setSending(false);
           onMessageSent(res.data);
-          if (openNewMessage) {
+          if (openNewMessage || newMessageThread) {
             onNewMessageSent(res.data);
             shouldUpdate(true);
+            setNewMessageThread(false);
+            setRecipients([]);
           }
         })
         .catch((error) => {
@@ -387,29 +398,33 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
   }
 
   /**
-   * Fetches user followers
+   * Fetches user followers/connections
    */
   function fetchFollowers() {
-    http
-      .request({
-        url: Endpoints.UserFollowers.url({id: scUserContext['user'].id}),
-        method: Endpoints.UserFollowers.method
-      })
-      .then((res: any) => {
-        const data = res.data;
-        setFollowers(data);
-        if (data.length && userObj) {
+    let fetch;
+    if (followEnabled) {
+      fetch = UserService.getUserFollowers(scUserContext['user'].id);
+    } else {
+      fetch = UserService.getUserConnections(scUserContext['user'].id);
+    }
+    fetch
+      .then((data: any) => {
+        setFollowers(data.results);
+        if (data.results && userObj) {
           let u;
           if (typeof userObj === 'number') {
             u = userObj;
           } else {
             u = userObj.receiver.id;
           }
-          setIsFollowed(data.some((f) => f.id === u));
+          setIsFollowed(data.results.some((f) => f.id === u));
+          const r = data.results.filter((o) => o.id === userObj);
+          setNewMessageUser(r[0]);
         }
-        if (openNewMessage) {
+        if (openNewMessage || newMessageThread || UserUtils.isStaff(scUserContext.user)) {
           setIsFollowed(true);
         }
+        setLoading(false);
       })
       .catch((error) => {
         console.log(error);
@@ -437,10 +452,16 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
       .then((res: HttpResponse<any>) => {
         const data = res.data;
         setMessageObjs(data.results);
-        if (data.results[0].receiver.id !== loggedUser) {
-          setReceiver(data.results[0].receiver);
+        if (data.results.length) {
+          if (data.results[0].receiver.id !== loggedUser) {
+            setReceiver(data.results[0].receiver);
+          } else {
+            setReceiver(data.results[0].sender);
+          }
+          setNewMessageThread(false);
         } else {
-          setReceiver(data.results[0].sender);
+          setNewMessageThread(true);
+          setRecipients(u);
         }
         setLoading(false);
       })
@@ -534,6 +555,8 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
                     loggedUser={loggedUser}
                     onMouseEnter={() => handleMouseEnter(msg.id)}
                     onMouseLeave={() => handleMouseLeave(msg.id)}
+                    onTouchStart={() => handleMouseEnter(msg.id)}
+                    onTouchMove={() => handleMouseLeave(msg.id)}
                     isHovering={isHovered[msg.id]}
                     onDeleteIconClick={() => handleDeleteDialog(msg)}
                   />
@@ -560,7 +583,7 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
   function renderNewOrNoMessageBox() {
     return (
       <React.Fragment>
-        {openNewMessage ? (
+        {openNewMessage || newMessageThread ? (
           <Box className={classes.newMessageBox}>
             <Box sx={{flexGrow: 0, flexShrink: 1, flexBasis: 'auto'}}>
               <Grid container className={classes.newMessageHeader}>
@@ -576,10 +599,11 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
                 <Grid item xs={8}>
                   <Autocomplete
                     className={classes.autocomplete}
-                    multiple
+                    multiple={!newMessageThread}
                     freeSolo
                     options={followers}
-                    getOptionLabel={(option) => option.username}
+                    value={newMessageThread ? newMessageUser : recipients}
+                    getOptionLabel={(option) => (option ? option.username : '...')}
                     renderInput={(params) => (
                       <TextField
                         {...params}
@@ -592,6 +616,7 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
                       />
                     )}
                     onChange={selectRecipients}
+                    disabled={!followers}
                   />
                 </Grid>
               </Grid>
@@ -603,7 +628,7 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
                 isSending={sending}
                 getMessage={handleMessage}
                 getMessageFile={handleMessageFile}
-                autoHide={!isFollowed}
+                autoHide={!followers}
               />
             </Box>
           </Box>
@@ -632,7 +657,7 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
   if (!autoHide) {
     return (
       <Root {...rest} className={classNames(classes.root, className)}>
-        {userObj ? renderThread() : renderNewOrNoMessageBox()}
+        {userObj && !newMessageThread ? renderThread() : renderNewOrNoMessageBox()}
       </Root>
     );
   }

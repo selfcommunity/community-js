@@ -3,6 +3,60 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.3-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.3-alpha.3...@selfcommunity/api-services@0.3.3-alpha.4) (2022-09-27)
+
+
+### Bug Fixes
+
+* category service ([a571e45](https://github.com/selfcommunity/community-js/commit/a571e45abec8d9b8d217cb783ce0e782d4a706b3))
+
+
+
+
+
+## [0.3.3-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.3-alpha.2...@selfcommunity/api-services@0.3.3-alpha.3) (2022-09-20)
+
+
+### Bug Fixes
+
+* fixed api-services user test ([d8a72ad](https://github.com/selfcommunity/community-js/commit/d8a72adf3fd54604e7797780ba0fb9a1def9ef45))
+* fixed api-services user test (connections) ([fc59b14](https://github.com/selfcommunity/community-js/commit/fc59b14d9d8de7b787df96b04860737a96753e5f))
+
+
+
+
+
+## [0.3.3-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.3-alpha.1...@selfcommunity/api-services@0.3.3-alpha.2) (2022-09-15)
+
+
+### Bug Fixes
+
+* fixed user service/user test ([8d33ef8](https://github.com/selfcommunity/community-js/commit/8d33ef8c354d2ff514ec3efb4767939a0056fe29))
+* Rename inviteCode service to invite ([cd3add8](https://github.com/selfcommunity/community-js/commit/cd3add8591ee5868a9ea5bbf03952503a0e61c63))
+
+
+
+
+
+## [0.3.3-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.3-alpha.0...@selfcommunity/api-services@0.3.3-alpha.1) (2022-09-15)
+
+
+### Performance Improvements
+
+* Added InviteCode flow to API services ([5dfba84](https://github.com/selfcommunity/community-js/commit/5dfba8492b091ce8847ae7f885adc4b53951a14f))
+
+
+
+
+
+## [0.3.3-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.2...@selfcommunity/api-services@0.3.3-alpha.0) (2022-09-14)
+
+**Note:** Version bump only for package @selfcommunity/api-services
+
+
+
+
+
 ## [0.3.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.2-alpha.2...@selfcommunity/api-services@0.3.2) (2022-09-14)
 
 **Note:** Version bump only for package @selfcommunity/api-services

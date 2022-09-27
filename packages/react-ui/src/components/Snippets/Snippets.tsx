@@ -89,6 +89,11 @@ export interface SnippetsProps {
     action?: () => void;
     name?: string;
   };
+  /**
+   * Prop to highlight selected snippet
+   * @default null
+   */
+  selected?: any;
 }
 /**
  *
@@ -122,12 +127,13 @@ export default function Snippets(inProps: SnippetsProps): JSX.Element {
     name: PREFIX
   });
 
-  const {autoHide = false, className = null, onSnippetClick, threadId, getSnippetHeadline, shouldUpdate, deleteIconProps, ...rest} = props;
+  const {autoHide = false, className = null, onSnippetClick, threadId, getSnippetHeadline, shouldUpdate, deleteIconProps, selected, ...rest} = props;
 
   // STATE
   const [snippets, setSnippets] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [total, setTotal] = useState<number>(0);
+  const isNumber = typeof selected === 'number';
 
   // REFS
   const refreshSubscription = useRef(null);
@@ -248,7 +254,11 @@ export default function Snippets(inProps: SnippetsProps): JSX.Element {
                 message={message}
                 key={message.id}
                 onClick={() => handleOpenThread(message)}
-                className={message.id === threadId ? classes.selected : ''}
+                className={
+                  message.id === threadId || (!isNumber && selected ? message.receiver.id === selected.receiver.id : message.receiver.id === selected)
+                    ? classes.selected
+                    : ''
+                }
               />
               {index < total - 1 ? <Divider /> : null}
             </div>

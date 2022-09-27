@@ -92,9 +92,9 @@ export interface ReplyCommentObjectProps extends WidgetProps {
 
   /**
    * Disable component
-   * @default false
+   * @default true
    */
-  readOnly?: boolean;
+  editable?: boolean;
 
   /**
    * Initial content
@@ -127,7 +127,7 @@ export default function ReplyCommentObject(inProps: ReplyCommentObjectProps): JS
     onReply,
     onSave,
     onCancel,
-    readOnly = false,
+    editable = true,
     text = '',
     WidgetProps = {variant: 'outlined'},
     ...rest
@@ -216,11 +216,11 @@ export default function ReplyCommentObject(inProps: ReplyCommentObjectProps): JS
       }
       secondary={
         <Widget className={classes.comment} {...WidgetProps}>
-          <Editor ref={editor} onChange={handleChangeText} defaultValue={html} readOnly={readOnly} />
+          <Editor ref={editor} onChange={handleChangeText} defaultValue={html} editable={editable} />
           {!isEditorEmpty() && (
             <Stack direction="row" spacing={2} className={classes.actions}>
               {onReply && (
-                <LoadingButton variant="outlined" size="small" onClick={handleReply} loading={readOnly} className={classes.buttonReply}>
+                <LoadingButton variant="outlined" size="small" onClick={handleReply} loading={!editable} className={classes.buttonReply}>
                   {intl.formatMessage(messages.reply)}
                 </LoadingButton>
               )}
@@ -231,13 +231,13 @@ export default function ReplyCommentObject(inProps: ReplyCommentObjectProps): JS
                       variant={'text'}
                       size="small"
                       onClick={handleCancel}
-                      disabled={readOnly}
+                      disabled={!editable}
                       color="inherit"
                       className={classes.buttonCancel}>
                       {intl.formatMessage(messages.cancel)}
                     </LoadingButton>
                   )}
-                  <LoadingButton variant="outlined" size="small" onClick={handleSave} loading={readOnly} className={classes.buttonSave}>
+                  <LoadingButton variant="outlined" size="small" onClick={handleSave} loading={!editable} className={classes.buttonSave}>
                     {intl.formatMessage(messages.save)}
                   </LoadingButton>
                 </>

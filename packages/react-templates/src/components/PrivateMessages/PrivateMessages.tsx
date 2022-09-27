@@ -69,6 +69,11 @@ export interface PrivateMessagesProps {
    */
   id?: number | string;
   /**
+   * Handler on message click
+   * @default null
+   */
+  onItemClick?: (id) => void;
+  /**
    * Overrides or extends the styles applied to the component.
    * @default null
    */
@@ -118,7 +123,7 @@ export default function PrivateMessages(inProps: PrivateMessagesProps): JSX.Elem
     props: inProps,
     name: PREFIX
   });
-  const {id, autoHide = false, className = null, ...rest} = props;
+  const {id, autoHide = false, className = null, onItemClick = null, ...rest} = props;
 
   // STATE
   const theme = useTheme();
@@ -138,6 +143,7 @@ export default function PrivateMessages(inProps: PrivateMessagesProps): JSX.Elem
 
   //  HANDLERS
   const handleThreadOpening = (i) => {
+    onItemClick && onItemClick(i.id);
     setObj(i);
     setOpenNewMessage(false);
     if (isMobile) {
@@ -150,6 +156,9 @@ export default function PrivateMessages(inProps: PrivateMessagesProps): JSX.Elem
 
   const handleOpenNewMessage = () => {
     setOpenNewMessage(!openNewMessage);
+    if (shouldUpdate) {
+      setShouldUpdate(false);
+    }
     setObj(null);
     if (isMobile) {
       setLayout('mobile');
@@ -176,10 +185,16 @@ export default function PrivateMessages(inProps: PrivateMessagesProps): JSX.Elem
     setOpenNewMessage(false);
   };
 
+  const handleNewMessageSent = (o) => {
+    setObj(o);
+    setOpenNewMessage(false);
+  };
+
   /**
    * Handles thread deletion
    */
   function handleDeleteThread() {
+    setShouldUpdate(!shouldUpdate);
     PrivateMessageService.deleteAThread(obj.id)
       .then(() => {
         if (layout === 'mobile') {
@@ -227,6 +242,7 @@ export default function PrivateMessages(inProps: PrivateMessagesProps): JSX.Elem
                   getSnippetHeadline={data}
                   shouldUpdate={shouldUpdate}
                   deleteIconProps={{show: false}}
+                  selected={obj}
                 />
               </>
             )}
@@ -244,7 +260,7 @@ export default function PrivateMessages(inProps: PrivateMessagesProps): JSX.Elem
                 <Thread
                   userObj={obj ? obj : null}
                   openNewMessage={openNewMessage}
-                  onNewMessageSent={openNewMessage ? setObj : null}
+                  onNewMessageSent={setObj}
                   onMessageSent={handleSnippetsUpdate}
                   shouldUpdate={setShouldUpdate}
                   onMessageBack={handleMessageBack}
@@ -276,13 +292,14 @@ export default function PrivateMessages(inProps: PrivateMessagesProps): JSX.Elem
                   action: clickedDelete ? () => setClickedDelete(false) : () => setClickedDelete(true),
                   name: clickedDelete ? 'close' : 'delete'
                 }}
+                selected={obj}
               />
             </Box>
             <Box className={classes.threadBox}>
               <Thread
                 userObj={obj ? obj : null}
                 openNewMessage={openNewMessage}
-                onNewMessageSent={openNewMessage ? setObj : null}
+                onNewMessageSent={handleNewMessageSent}
                 onMessageSent={handleSnippetsUpdate}
                 shouldUpdate={setShouldUpdate}
                 onMessageBack={handleMessageBack}

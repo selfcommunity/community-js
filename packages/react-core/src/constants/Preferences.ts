@@ -129,6 +129,9 @@ export const CONFIGURATIONS_URL_TEMPLATE_USER_NOTIFICATIONS = 'configurations.ur
 export const CONFIGURATIONS_URL_TEMPLATE_USER_PRIVATE_MESSAGES = 'configurations.url_template_private_message';
 export const CONFIGURATIONS_URL_TEMPLATE_INCUBATOR = 'configurations.url_template_incubator';
 export const CONFIGURATIONS_USER_METADATA_DEFINITIONS = 'configurations.user_metadata_definition';
+export const CONFIGURATIONS_TAG_MANAGER_CONTAINER_ID = 'configurations.tag_manager_container_id';
+export const CONFIGURATIONS_GDPR_COOKIE_CONSENT_EXTERNAL_HTML = 'configurations.gdpr_cookie_consent_external_html';
+export const CONFIGURATIONS_GDPR_SIGNUP_ACCEPT_HTML = 'configurations.gdpr_signup_accept_html';
 
 /**
  * PROVIDERS
@@ -267,6 +270,10 @@ export const DATA_TYPES = {
   [CONFIGURATIONS_URL_TEMPLATE_USER_NOTIFICATIONS]: stringType,
   [CONFIGURATIONS_URL_TEMPLATE_USER_PRIVATE_MESSAGES]: stringType,
   [CONFIGURATIONS_URL_TEMPLATE_INCUBATOR]: stringType,
+  [CONFIGURATIONS_USER_METADATA_DEFINITIONS]: stringType,
+  [CONFIGURATIONS_TAG_MANAGER_CONTAINER_ID]: stringType,
+  [CONFIGURATIONS_GDPR_COOKIE_CONSENT_EXTERNAL_HTML]: stringType,
+  [CONFIGURATIONS_GDPR_SIGNUP_ACCEPT_HTML]: stringType,
   [PROVIDERS_APP_URL_ON_APP_STORE]: stringType,
   [PROVIDERS_APP_URL_ON_GOOGLE_PLAY]: stringType,
   [PROVIDERS_FACEBOOK_SIGNIN_ENABLED]: stringType,

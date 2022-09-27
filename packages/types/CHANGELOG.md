@@ -3,6 +3,47 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.3-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.3.3-alpha.2...@selfcommunity/types@0.3.3-alpha.3) (2022-09-27)
+
+
+### Bug Fixes
+
+* category types ([8927abe](https://github.com/selfcommunity/community-js/commit/8927abee403a3e14f802898cee77ccc8b7329152))
+
+
+
+
+
+## [0.3.3-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.3.3-alpha.1...@selfcommunity/types@0.3.3-alpha.2) (2022-09-15)
+
+
+### Bug Fixes
+
+* Rename inviteCode service to invite ([cd3add8](https://github.com/selfcommunity/community-js/commit/cd3add8591ee5868a9ea5bbf03952503a0e61c63))
+
+
+
+
+
+## [0.3.3-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.3.3-alpha.0...@selfcommunity/types@0.3.3-alpha.1) (2022-09-15)
+
+
+### Performance Improvements
+
+* Added InviteCode flow to API services ([5dfba84](https://github.com/selfcommunity/community-js/commit/5dfba8492b091ce8847ae7f885adc4b53951a14f))
+
+
+
+
+
+## [0.3.3-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.3.2...@selfcommunity/types@0.3.3-alpha.0) (2022-09-14)
+
+**Note:** Version bump only for package @selfcommunity/types
+
+
+
+
+
 ## [0.3.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.3.2-alpha.1...@selfcommunity/types@0.3.2) (2022-09-14)
 
 **Note:** Version bump only for package @selfcommunity/types

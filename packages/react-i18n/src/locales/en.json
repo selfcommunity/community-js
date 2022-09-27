@@ -53,9 +53,9 @@
   "ui.relatedFeedObjects.button.showMore": "Show More",
   "ui.relatedFeedObjects.noMoreResults": "No more results",
 
-
   "ui.category.categoryFollowers": "{total, plural, =0 {Followed by # people} one {Followed by # person} other {Followed by # people}}",
 
+  "ui.categories.filterByName": "Find and add an interest",
 
   "ui.categoriesFollowed.title": "{total, plural, =0 {# Lifestyles followed} one {# Lifestyle followed} other {# Lifestyles followed}}",
   "ui.categoriesFollowed.modal.title": "Followed Lifestyles",
@@ -139,6 +139,7 @@
   "ui.composer.audience.tags.label": "Tags",
   "ui.composer.location.title": "Localize",
   "ui.composer.location.label": "Insert a city",
+  "ui.composer.location.empty": "Search for location",
   "ui.composer.categories.label": "Category",
   "ui.composer.categories.empty": "No category to assign",
   "ui.composer.poll": "Poll",
@@ -328,6 +329,7 @@
   "ui.notification.undeletedFor.restoredContentSnippet": "Your removed content has been restored",
   "ui.notification.undeletedFor.youWrote": "Your contribution: ",
   "ui.notification.privateMessage.btnReplyLabel": "Reply",
+  "ui.notification.privateMessage.btnViewLabel": "View",
   "ui.notification.mention.quotedYou": "quoted you on:",
   "ui.notification.viewRules": "View website rules.",
 
@@ -379,6 +381,7 @@
   "ui.userToastNotifications.goToProfile": "Go to profile",
   "ui.userToastNotifications.viewContribution": "View contribution",
   "ui.userToastNotifications.replyMessage": "Reply",
+  "ui.userToastNotifications.viewMessage": "View",
   "ui.userToastNotifications.privateMessage.sentMessage": "sent you a message",
   "ui.userToastNotifications.mention.quotedYou": "quoted you on",
   "ui.userToastNotifications.comment.addedComment": "added a comment",

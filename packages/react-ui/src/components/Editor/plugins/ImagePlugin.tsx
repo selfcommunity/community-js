@@ -1,5 +1,14 @@
 import React, {forwardRef, useEffect, useState} from 'react';
-import {$getSelection, $isRangeSelection, $isRootNode, COMMAND_PRIORITY_EDITOR, createCommand, LexicalCommand, LexicalEditor} from 'lexical';
+import {
+  $getSelection,
+  $isRangeSelection,
+  $isRootNode,
+  COMMAND_PRIORITY_EDITOR,
+  CONTROLLED_TEXT_INSERTION_COMMAND,
+  createCommand, INSERT_PARAGRAPH_COMMAND,
+  LexicalCommand,
+  LexicalEditor,
+} from 'lexical';
 import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
 import {Icon, IconButton, IconButtonProps} from '@mui/material';
 import {styled} from '@mui/material/styles';
@@ -53,7 +62,9 @@ function Image({editor, className = ''}: {editor: LexicalEditor; className?: str
       width: media.image_width,
       height: media.image_height
     };
+    editor.focus();
     editor.dispatchCommand(INSERT_IMAGE_COMMAND, data);
+    editor.dispatchCommand(INSERT_PARAGRAPH_COMMAND, undefined);
   };
 
   const handleUploadProgress = (chunks: any) => {
@@ -83,7 +94,7 @@ function Image({editor, className = ''}: {editor: LexicalEditor; className?: str
         },
         method: Endpoints.ComposerChunkUploadMedia.method
       }}
-      chunkSize={2142880}
+      chunkSize={204800}
       multiple
       accept="image/*"
       fileFilter={handleFileUploadFilter}>

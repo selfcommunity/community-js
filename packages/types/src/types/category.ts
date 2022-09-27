@@ -114,10 +114,16 @@ export interface SCCategoryType {
    * The category's tags.
    */
   tags?: Array<SCTagType>;
+
   /**
    * Followers counter for the category.
    */
   followers_counter?: number;
+
+  /**
+   * If the category is followed by the authenticated user
+   */
+  followed?: boolean;
 }
 
 export interface SCCategoryAudienceType {

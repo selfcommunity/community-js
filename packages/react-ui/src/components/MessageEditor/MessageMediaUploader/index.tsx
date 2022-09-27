@@ -162,7 +162,6 @@ export default function MessageMediaUploader(props: MessageMediaUploaderProps): 
   };
 
   const handleProgress = (chunks: any) => {
-    setLoading(true);
     setUploading({...chunks});
   };
 
@@ -205,7 +204,7 @@ export default function MessageMediaUploader(props: MessageMediaUploaderProps): 
             headers: {Authorization: `Bearer ${scContext.settings.session.authToken.accessToken}`},
             method: Endpoints.PrivateMessageUploadMediaInChunks.method
           }}
-          chunkSize={2142880}
+          chunkSize={204800}
           chunked>
           <MessageChunkUploader onStart={handleStart} onSuccess={handleSuccess} onProgress={handleProgress} onError={handleError} />
           <Box className={classes.progress}>

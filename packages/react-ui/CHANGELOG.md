@@ -3,6 +3,253 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.6-alpha.22](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.6-alpha.21...@selfcommunity/react-ui@0.5.6-alpha.22) (2022-09-27)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.5.6-alpha.21](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.6-alpha.20...@selfcommunity/react-ui@0.5.6-alpha.21) (2022-09-27)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.5.6-alpha.20](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.6-alpha.19...@selfcommunity/react-ui@0.5.6-alpha.20) (2022-09-27)
+
+
+### Bug Fixes
+
+* categories ([ff62422](https://github.com/selfcommunity/community-js/commit/ff6242248d949b1057c3cf371f2d93c5077dab73))
+
+
+
+
+
+## [0.5.6-alpha.19](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.6-alpha.18...@selfcommunity/react-ui@0.5.6-alpha.19) (2022-09-27)
+
+
+### Bug Fixes
+
+* Fix media chunk uploader ([78c4c72](https://github.com/selfcommunity/community-js/commit/78c4c72990cbd58b59ffc54df27e2f97c86d4327))
+* Fix media upload appeareance in FeedObject.tsx ([008c25e](https://github.com/selfcommunity/community-js/commit/008c25e2d73e12af3ac4d512a9a5c26cb31c1b4f))
+
+
+
+
+
+## [0.5.6-alpha.18](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.6-alpha.17...@selfcommunity/react-ui@0.5.6-alpha.18) (2022-09-26)
+
+
+### Bug Fixes
+
+* Fix image upload into editor ([771c3d9](https://github.com/selfcommunity/community-js/commit/771c3d9dd78b2968a93d42823fd237ae22b44ee1))
+
+
+### Performance Improvements
+
+* Update editor and chunk upload lib ([0639fcc](https://github.com/selfcommunity/community-js/commit/0639fcce67ceec9ef9964a4aa8b2d48955f34091))
+
+
+
+
+
+## [0.5.6-alpha.17](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.6-alpha.16...@selfcommunity/react-ui@0.5.6-alpha.17) (2022-09-26)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.5.6-alpha.16](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.6-alpha.15...@selfcommunity/react-ui@0.5.6-alpha.16) (2022-09-26)
+
+
+### Bug Fixes
+
+* fixed window is not defined error ([49f776f](https://github.com/selfcommunity/community-js/commit/49f776f8a097e4f9ee06d42625420445d6f2e929))
+
+
+
+
+
+## [0.5.6-alpha.15](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.6-alpha.14...@selfcommunity/react-ui@0.5.6-alpha.15) (2022-09-26)
+
+
+### Bug Fixes
+
+* fixed navigation tabs on header component ([1ba5bf6](https://github.com/selfcommunity/community-js/commit/1ba5bf66df225b7362092c6ba34220317ea17dd5))
+
+
+
+
+
+## [0.5.6-alpha.14](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.6-alpha.13...@selfcommunity/react-ui@0.5.6-alpha.14) (2022-09-26)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.5.6-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.6-alpha.12...@selfcommunity/react-ui@0.5.6-alpha.13) (2022-09-26)
+
+
+### Bug Fixes
+
+* caching followers ([be05a86](https://github.com/selfcommunity/community-js/commit/be05a86c0d11c2df3264c59e84a118de9a71ad55))
+* feed notification ([3712f0d](https://github.com/selfcommunity/community-js/commit/3712f0d99c36e80348a5cb8d9f131dfeb20d1fe3))
+
+
+
+
+
+## [0.5.6-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.6-alpha.11...@selfcommunity/react-ui@0.5.6-alpha.12) (2022-09-22)
+
+
+### Bug Fixes
+
+* Fix insertion of emoji and images when editor not focused ([b0fce8f](https://github.com/selfcommunity/community-js/commit/b0fce8f0c0c29c8e741ecbe1b8577d3c557c8a15))
+
+
+### Performance Improvements
+
+* Update Editor.tsx to latest version ([90f2d91](https://github.com/selfcommunity/community-js/commit/90f2d9160953d6bf649eedd4d60affe54f23f00d))
+
+
+
+
+
+## [0.5.6-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.6-alpha.10...@selfcommunity/react-ui@0.5.6-alpha.11) (2022-09-22)
+
+
+### Bug Fixes
+
+* Fix Composer.tsx actions alignment on small devices ([d0e6feb](https://github.com/selfcommunity/community-js/commit/d0e6feb538ddacb11b58fa81f107761909f56b82))
+* Fix FeedObject.tsx tag alignment ([e5982ee](https://github.com/selfcommunity/community-js/commit/e5982ee1edf4c3c3290c6252f1fa20d662ded398))
+
+
+
+
+
+## [0.5.6-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.6-alpha.9...@selfcommunity/react-ui@0.5.6-alpha.10) (2022-09-22)
+
+
+### Performance Improvements
+
+* added props to mobile header to show navigation button ([7781813](https://github.com/selfcommunity/community-js/commit/77818137f8f9d307eb4d4ad9fb9701342242c2b7))
+
+
+
+
+
+## [0.5.6-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.6-alpha.8...@selfcommunity/react-ui@0.5.6-alpha.9) (2022-09-21)
+
+
+### Bug Fixes
+
+* fixed mobile drawer width ([9fe321a](https://github.com/selfcommunity/community-js/commit/9fe321a924ff28020ad3c474415f24631cf94eb8))
+* fixed mobile touch event for single message delete ([03c57d4](https://github.com/selfcommunity/community-js/commit/03c57d49fa58e6960d444e19c7b816e29cd93c38))
+
+
+
+
+
+## [0.5.6-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.6-alpha.7...@selfcommunity/react-ui@0.5.6-alpha.8) (2022-09-21)
+
+
+### Bug Fixes
+
+* fixed loyalty program detail width ([0a90cde](https://github.com/selfcommunity/community-js/commit/0a90cdeb9be932da1319c05af4ce5e18a43308ec))
+
+
+
+
+
+## [0.5.6-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.6-alpha.6...@selfcommunity/react-ui@0.5.6-alpha.7) (2022-09-20)
+
+
+### Bug Fixes
+
+* fixed thread autocomplete/message editor visibility ([4e43832](https://github.com/selfcommunity/community-js/commit/4e438325d7b6e5993f0da5a0b5530cd3e3546fb6))
+* fixed thread fetch followers when connection is enabled ([25ae6d0](https://github.com/selfcommunity/community-js/commit/25ae6d04f45a2ebf7b93aab6d0da25891da90ef0))
+
+
+
+
+
+## [0.5.6-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.6-alpha.5...@selfcommunity/react-ui@0.5.6-alpha.6) (2022-09-20)
+
+
+### Bug Fixes
+
+* fixed composer poll back/delete icon ([5eb22e2](https://github.com/selfcommunity/community-js/commit/5eb22e2137b7f8b79b7ba8b04b1d767fb37d2a43))
+
+
+
+
+
+## [0.5.6-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.6-alpha.4...@selfcommunity/react-ui@0.5.6-alpha.5) (2022-09-15)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.5.6-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.6-alpha.3...@selfcommunity/react-ui@0.5.6-alpha.4) (2022-09-15)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.5.6-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.6-alpha.2...@selfcommunity/react-ui@0.5.6-alpha.3) (2022-09-15)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.5.6-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.6-alpha.1...@selfcommunity/react-ui@0.5.6-alpha.2) (2022-09-15)
+
+
+### Bug Fixes
+
+* fixed message uploader icon state ([c8a725e](https://github.com/selfcommunity/community-js/commit/c8a725e7507af8de86598a9426810b8a2a061f4f))
+
+
+
+
+
+## [0.5.6-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.6-alpha.0...@selfcommunity/react-ui@0.5.6-alpha.1) (2022-09-15)
+
+
+### Bug Fixes
+
+* fixed single message delete on touch (when mobile) ([215a4cf](https://github.com/selfcommunity/community-js/commit/215a4cfafc13e521ae4cb8dd47a0632bba6c3fc3))
+
+
+
+
+
+## [0.5.6-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.5...@selfcommunity/react-ui@0.5.6-alpha.0) (2022-09-14)
+
+
+### Bug Fixes
+
+* fixed pm template when opening from user profile link ([7e64b38](https://github.com/selfcommunity/community-js/commit/7e64b3836cafffd022b7504e77770e2e634a3414))
+
+
+
+
+
 ## [0.5.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.5-alpha.11...@selfcommunity/react-ui@0.5.5) (2022-09-14)
 
 **Note:** Version bump only for package @selfcommunity/react-ui

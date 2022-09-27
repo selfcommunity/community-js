@@ -2,8 +2,6 @@ import {useEffect, useMemo, useRef} from 'react';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {SCPreferencesContextType} from '../types';
 import {SCNotificationTopicType, SCNotificationTypologyType, SCUserType} from '@selfcommunity/types';
-import {Logger} from '@selfcommunity/utils';
-import {SCOPE_SC_CORE} from '../constants/Errors';
 import {useSCPreferences} from '../components/provider/SCPreferencesProvider';
 import {CONFIGURATIONS_FOLLOW_ENABLED} from '../constants/Preferences';
 import useSCCachingManager from './useSCCachingManager';
@@ -11,27 +9,20 @@ import PubSub from 'pubsub-js';
 import {SCNotificationMapping} from '../constants/Notification';
 
 /**
- * Used on refresh and in isFollowed method
- * Check if the user status is 'followed'
- * to update the cache and data
- */
-const STATUS_FOLLOWED = 'followed';
-
-/**
  :::info
- This custom hook is used to manage to manage followed users.
+ This custom hook is used to manage followers users.
  :::
  :::tipHow to use it:
 
  Follow these steps:
  ```jsx
  1. const scUserContext: SCUserContextType = useSCUser();
- 2. const scFollowedManager: SCFollowedManagerType = scUserContext.manager.followed;
- 3. scFollowedManager.isFollowed(user)
+ 2. const scFollowersManager: SCFollowersManagerType = scUserContext.manager.followers;
+ 3. scFollowersManager.isFollowers(user)
  ```
  :::
  */
-export default function useSCFollowedManager(user?: SCUserType) {
+export default function useSCFollowersManager(user?: SCUserType) {
   const {cache, updateCache, emptyCache, data, setData, loading, setLoading, isLoading} = useSCCachingManager();
   const scPreferencesContext: SCPreferencesContextType = useSCPreferences();
   const followEnabled =
@@ -44,17 +35,16 @@ export default function useSCFollowedManager(user?: SCUserType) {
    * @param msg
    * @param data
    */
-  const notificationSubscriber = (msg, data) => {
-    if (data.connection && data.connection_id !== undefined) {
-      updateCache([data.connection_id]);
-      if (SCNotificationMapping[data.data.activity_type] === SCNotificationTypologyType.USER_FOLLOW) {
-        if (!data.includes(user.id)) {
-          setData((prev) => [...[data.connection_id], ...prev]);
-        }
-      } else if (SCNotificationMapping[data.data.activity_type] === SCNotificationTypologyType.USER_UNFOLLOW) {
-        if (data.includes(user.id)) {
-          setData((prev) => prev.filter((id) => id !== data.connection_id));
-        }
+  const notificationSubscriber = (msg, d) => {
+    if (SCNotificationMapping[d.data.activity_type] === SCNotificationTypologyType.USER_FOLLOW) {
+      updateCache([d.data.follower.id]);
+      if (!data.includes(d.data.follower.id)) {
+        setData((prev) => [...[d.data.follower.id], ...prev]);
+      }
+    } else if (SCNotificationMapping[d.data.activity_type] === SCNotificationTypologyType.USER_UNFOLLOW) {
+      updateCache([d.data.unfollower.id]);
+      if (data.includes(d.data.unfollower.id)) {
+        setData((prev) => prev.filter((id) => id !== d.data.unfollower.id));
       }
     }
   };
@@ -75,126 +65,44 @@ export default function useSCFollowedManager(user?: SCUserType) {
       PubSub.unsubscribe(notificationFollowSubscription.current);
       PubSub.unsubscribe(notificationUnFollowSubscription.current);
     };
-  }, []);
+  }, [data.length, cache.length]);
 
   /**
-   * Memoized refresh all followed
-   * It makes a single request to the server and retrieves
-   * all the users followed by the authenticated user in a single solution
-   * It might be useful for multi-tab sync
-   */
-  const refresh = useMemo(
-    () => (): void => {
-      emptyCache();
-      if (user && cache.length > 0) {
-        // Only if user is authenticated
-        http
-          .request({
-            url: Endpoints.UserConnectionStatuses.url({}),
-            method: Endpoints.UserConnectionStatuses.method,
-            data: {users: cache},
-          })
-          .then((res: HttpResponse<any>) => {
-            if (res.status >= 300) {
-              return Promise.reject(res);
-            }
-            updateCache(Object.keys(res.data.connection_statuses).map((id) => parseInt(id)));
-            setData(
-              Object.entries(res.data.connection_statuses)
-                .filter(([k, v]) => v === STATUS_FOLLOWED)
-                .map(([k, v]) => parseInt(k))
-            );
-            return Promise.resolve(res.data);
-          })
-          .catch((e) => {
-            Logger.error(SCOPE_SC_CORE, 'Unable to refresh users followed by the authenticated user.');
-            Logger.error(SCOPE_SC_CORE, e);
-          });
-      }
-    },
-    [data, user, cache]
-  );
-
-  /**
-   * Memoized follow/unfollow User
-   * Toggle action
-   */
-  const follow = useMemo(
-    () =>
-      (user: SCUserType): Promise<any> => {
-        setLoading((prev) => [...prev, ...[user.id]]);
-        return http
-          .request({
-            url: Endpoints.FollowUser.url({id: user.id}),
-            method: Endpoints.FollowUser.method,
-          })
-          .then((res: HttpResponse<any>) => {
-            if (res.status >= 300) {
-              return Promise.reject(res);
-            }
-            updateCache([user.id]);
-            const isFollowed = data.includes(user.id);
-            setData((prev) => (isFollowed ? prev.filter((id) => id !== user.id) : [...[user.id], ...prev]));
-            setLoading((prev) => prev.filter((u) => u !== user.id));
-            return Promise.resolve(res.data);
-          });
-      },
-    [data, loading, cache]
-  );
-
-  /**
-   * Check if the authenticated user follow the user
-   * Update the followed cached
-   * Update followed user
+   * Check if the user is a followers of the authenticated user
+   * Update the followers cached
    * @param user
    */
-  const checkIsUserFollowed = (user: SCUserType): void => {
+  const checkIsUserFollowers = (user: SCUserType): void => {
     setLoading((prev) => (prev.includes(user.id) ? prev : [...prev, ...[user.id]]));
     http
       .request({
-        url: Endpoints.CheckUserFollowed.url({id: user.id}),
-        method: Endpoints.CheckUserFollowed.method,
+        url: Endpoints.CheckUserFollower.url({id: user.id}),
+        method: Endpoints.CheckUserFollower.method,
       })
       .then((res: HttpResponse<any>) => {
         if (res.status >= 300) {
           return Promise.reject(res);
         }
         updateCache([user.id]);
-        setData((prev) => (res.data.is_followed ? [...prev, ...[user.id]] : prev.filter((id) => id !== user.id)));
+        setData((prev) => (res.data.is_follower ? [...prev, ...[user.id]] : prev.filter((id) => id !== user.id)));
         setLoading((prev) => prev.filter((u) => u !== user.id));
         return Promise.resolve(res.data);
       });
   };
 
   /**
-   * Bypass remote check if the user is followed
+   * Memoized isFollower
+   * If user is already in cache -> check if the user is in followers,
+   * otherwise, check if user is a followers of the authenticated user
    */
-  const getConnectionStatus = useMemo(
-    () => (user: SCUserType) => {
-      const isFollowed = user.connection_status === STATUS_FOLLOWED;
-      updateCache([user.id]);
-      setData((prev) => (isFollowed ? [...prev, ...[user.id]] : prev));
-      return isFollowed;
-    },
-    [data, cache]
-  );
-
-  /**
-   * Memoized isFollowed
-   * If user is already in cache -> check if the user is in followed,
-   * otherwise, check if auth user follow the user
-   */
-  const isFollowed = useMemo(
+  const isFollower = useMemo(
     () =>
       (user: SCUserType): boolean => {
         if (cache.includes(user.id)) {
           return Boolean(data.includes(user.id));
         }
-        if ('connection_status' in user) {
-          return getConnectionStatus(user);
-        }
         if (!loading.includes(user.id)) {
-          checkIsUserFollowed(user);
+          checkIsUserFollowers(user);
         }
         return false;
       },
@@ -202,7 +110,7 @@ export default function useSCFollowedManager(user?: SCUserType) {
   );
 
   if (!followEnabled || !user) {
-    return {followed: data, loading, isLoading};
+    return {followers: data, loading, isLoading};
   }
-  return {followed: data, loading, isLoading, follow, isFollowed, refresh, emptyCache};
+  return {followers: data, loading, isLoading, isFollower, emptyCache};
 }

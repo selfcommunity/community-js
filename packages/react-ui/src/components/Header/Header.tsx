@@ -70,6 +70,14 @@ export interface HeaderProps {
    */
   searchBarProps?: HeaderSearchBarProps;
   /**
+   * If true, adds a navigation button to mobile header
+   */
+  showNavigation?: boolean;
+  /**
+   * Props forwarded to mobile header
+   */
+  navigationHeaderProps?: {};
+  /**
    * The single pages url to pass to menu
    */
   url?: SCHeaderMenuUrlsType;
@@ -119,7 +127,7 @@ export default function Header(inProps: HeaderProps) {
     props: inProps,
     name: PREFIX
   });
-  const {url, className, searchBarProps, ...rest} = props;
+  const {url, className, searchBarProps, showNavigation, navigationHeaderProps, ...rest} = props;
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
 
@@ -130,7 +138,8 @@ export default function Header(inProps: HeaderProps) {
   // STATE
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const [value, setValue] = React.useState(0);
+  const path = typeof window !== 'undefined' ? window.location.pathname : null;
+  const [value, setValue] = React.useState(path);
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   // HANDLERS
@@ -142,16 +151,18 @@ export default function Header(inProps: HeaderProps) {
     setAnchorEl(null);
   };
 
-  useEffect(() => {
-    const getSelectedTab = JSON.parse(localStorage.getItem('selectedTab'));
-    if (getSelectedTab) {
-      setValue(getSelectedTab);
+  const checkValue = () => {
+    if (url) {
+      if ((url.home && value === url.home) || (url.explore && value === url.explore) || (url.followings && value === url.followings)) {
+        return true;
+      }
+      return null;
     }
-  }, []);
+  };
 
   useEffect(() => {
-    localStorage.setItem('selectedTab', JSON.stringify(value));
-  }, [value]);
+    setValue(path);
+  }, [path]);
 
   if (scUserContext.loading) {
     return <HeaderSkeleton />;
@@ -160,7 +171,7 @@ export default function Header(inProps: HeaderProps) {
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
       {isMobile ? (
-        <MobileHeader url={url} searchBarProps={searchBarProps} />
+        <MobileHeader url={url} searchBarProps={searchBarProps} showNavigation={showNavigation} {...navigationHeaderProps} />
       ) : (
         <AppBar position="fixed" color={'default'}>
           <Toolbar>
@@ -183,11 +194,18 @@ export default function Header(inProps: HeaderProps) {
             {scUserContext.user ? (
               <>
                 <Box className={classes.tabsContainer}>
-                  <Tabs onChange={(e, v) => setValue(v)} value={value} textColor="inherit" indicatorColor="primary" aria-label="Navigation Tabs">
-                    {url && url.home && <Tab value={0} icon={<Icon>home</Icon>} aria-label="HomePage" to={url.home} component={Link}></Tab>}
-                    {url && url.explore && <Tab value={1} icon={<Icon>explore</Icon>} aria-label="Explore" to={url.explore} component={Link}></Tab>}
+                  <Tabs
+                    onChange={(e, v) => setValue(v)}
+                    value={value}
+                    textColor="inherit"
+                    indicatorColor={checkValue() ? 'primary' : null}
+                    aria-label="Navigation Tabs">
+                    {url && url.home && <Tab value={url.home} icon={<Icon>home</Icon>} aria-label="HomePage" to={url.home} component={Link}></Tab>}
+                    {url && url.explore && (
+                      <Tab value={url.explore} icon={<Icon>explore</Icon>} aria-label="Explore" to={url.explore} component={Link}></Tab>
+                    )}
                     {url && url.followings && (
-                      <Tab value={2} icon={<Icon>person</Icon>} aria-label="Followings" to={url.followings} component={Link}></Tab>
+                      <Tab value={url.followings} icon={<Icon>person</Icon>} aria-label="Followings" to={url.followings} component={Link}></Tab>
                     )}
                   </Tabs>
                 </Box>
@@ -199,7 +217,7 @@ export default function Header(inProps: HeaderProps) {
                     <IconButton
                       component={Link}
                       to={url.profile}
-                      onClick={() => setValue(null)}
+                      onClick={() => setValue(url.profile)}
                       size="large"
                       aria-label="Profile"
                       color="inherit"
@@ -213,7 +231,7 @@ export default function Header(inProps: HeaderProps) {
                     <IconButton
                       component={Link}
                       to={url.create}
-                      onClick={() => setValue(null)}
+                      onClick={() => setValue(url.create)}
                       size="large"
                       aria-label="New Contribute"
                       color="inherit"
@@ -227,7 +245,7 @@ export default function Header(inProps: HeaderProps) {
                     <IconButton
                       component={Link}
                       to={url.notifications}
-                      onClick={() => setValue(null)}
+                      onClick={() => setValue(url.notifications)}
                       size="large"
                       aria-label="Notifications"
                       color="inherit"
@@ -251,7 +269,7 @@ export default function Header(inProps: HeaderProps) {
                     }}
                     onClose={handleCloseSettingsMenu}
                     onClick={handleCloseSettingsMenu}>
-                    <HeaderMenu onItemClick={() => setValue(null)} url={url} />
+                    <HeaderMenu url={url} />
                   </Menu>
                 </Box>
               </>

@@ -1,4 +1,4 @@
-import {AppBar, Badge, Box, Button, Grid, IconButton, styled, SwipeableDrawer, Tab, Tabs, Toolbar} from '@mui/material';
+import {AppBar, Badge, Box, Button, Grid, IconButton, styled, SwipeableDrawer, Tab, Tabs, Toolbar, Typography} from '@mui/material';
 import Icon from '@mui/material/Icon';
 import React, {useContext, useEffect, useState} from 'react';
 import {Link, SCPreferences, SCUserContext, SCUserContextType, useSCPreferences} from '@selfcommunity/react-core';
@@ -68,7 +68,17 @@ export interface MobileHeaderProps {
    * @default null
    */
   className?: string;
-
+  /**
+   * If true, adds a navigation button to mobile header
+   */
+  showNavigation?: boolean;
+  /**
+   * Header section showed when entering certain urls
+   */
+  navigationHeaderProps?: {
+    title?: string;
+    onNavigationBack?: () => any;
+  };
   /**
    * Other props
    */
@@ -81,16 +91,21 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
     props: inProps,
     name: PREFIX
   });
-  const {url, className, searchBarProps, ...rest} = props;
+  const {url, className, searchBarProps, showNavigation, navigationHeaderProps, ...rest} = props;
+
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
 
   // STATE
-  const [value, setValue] = React.useState(0);
+  const path = typeof window !== 'undefined' ? window.location.pathname : null;
+  const [value, setValue] = React.useState(path);
+
   // PREFERENCES
   const scPreferences = useSCPreferences();
   const logo = scPreferences.preferences[SCPreferences.LOGO_NAVBAR_LOGO].value;
   const [openSettings, setOpenSettings] = useState<boolean>(false);
+
+  // HANDLERS
   const handleOpenSettingsMenu = () => {
     setOpenSettings(true);
   };
@@ -100,16 +115,27 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
     }
   };
 
-  useEffect(() => {
-    const getSelectedTab = JSON.parse(localStorage.getItem('selectedTab'));
-    if (getSelectedTab) {
-      setValue(getSelectedTab);
+  const handleChange = (e, v) => {
+    setValue(v);
+  };
+
+  const checkValue = () => {
+    if (url) {
+      if (
+        (url.home && value === url.home) ||
+        (url.explore && value === url.explore) ||
+        (url.followings && value === url.followings) ||
+        (url.notifications && value === url.notifications)
+      ) {
+        return true;
+      }
+      return null;
     }
-  }, []);
+  };
 
   useEffect(() => {
-    localStorage.setItem('selectedTab', JSON.stringify(value));
-  }, [value]);
+    setValue(path);
+  }, [path]);
 
   if (scUserContext.loading) {
     return <MobileHeaderSkeleton />;
@@ -120,14 +146,18 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
       <AppBar position="fixed" color={'default'}>
         <Toolbar className={classes.topToolbar}>
           <Grid container direction="row" justifyContent="flex-start">
-            {scUserContext.user && url && url.home ? (
-              <Link to={url.home}>
+            {!showNavigation && (
+              <Link to={scUserContext.user && url ? url.home : '/'}>
                 <img src={logo} alt={'logo'} style={{height: '30px'}} />
               </Link>
-            ) : (
-              <Link to={'/'}>
-                <img src={logo} alt={'logo'} style={{height: '30px'}} />
-              </Link>
+            )}
+            {scUserContext.user && showNavigation && navigationHeaderProps && (
+              <Typography component="div">
+                <IconButton onClick={navigationHeaderProps.onNavigationBack} size="large" aria-label="back" color="inherit">
+                  <Icon>arrow_back</Icon>
+                </IconButton>
+                {navigationHeaderProps.title}
+              </Typography>
             )}
           </Grid>
           <SearchBar {...searchBarProps} />
@@ -143,18 +173,22 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
           <Toolbar className={classes.bottomToolbar}>
             <Tabs
               className={classes.tabs}
-              onChange={(e, v) => setValue(v)}
+              onChange={handleChange}
               value={value}
               textColor="primary"
-              indicatorColor="primary"
+              indicatorColor={checkValue() ? 'primary' : null}
               aria-label="Navigation Tabs"
               variant="scrollable">
-              {url && url.home && <Tab value={0} icon={<Icon>home</Icon>} aria-label="HomePage" to={url.home} component={Link}></Tab>}
-              {url && url.explore && <Tab value={1} icon={<Icon>explore</Icon>} aria-label="Explore" to={url.explore} component={Link}></Tab>}
-              {url && url.followings && <Tab value={2} icon={<Icon>person</Icon>} aria-label="Followings" to={url.followings} component={Link}></Tab>}
+              {url && url.home && <Tab value={url.home} icon={<Icon>home</Icon>} aria-label="HomePage" to={url.home} component={Link}></Tab>}
+              {url && url.explore && (
+                <Tab value={url.explore} icon={<Icon>explore</Icon>} aria-label="Explore" to={url.explore} component={Link}></Tab>
+              )}
+              {url && url.followings && (
+                <Tab value={url.followings} icon={<Icon>person</Icon>} aria-label="Followings" to={url.followings} component={Link}></Tab>
+              )}
               {url && url.notifications && (
                 <Tab
-                  value={3}
+                  value={url.notifications}
                   icon={
                     <Badge badgeContent={scUserContext.user.unseen_interactions_counter} color="error">
                       <Icon>notifications</Icon>
@@ -169,12 +203,15 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
               <Icon>menu</Icon>
             </IconButton>
             <SwipeableDrawer
+              PaperProps={{
+                sx: {width: '85%'}
+              }}
               anchor={'right'}
               open={openSettings}
               onClick={() => setOpenSettings(false)}
               onClose={() => setOpenSettings(false)}
               onOpen={toggleDrawer('right', true)}>
-              <HeaderMenu onItemClick={() => setValue(null)} url={url} />
+              <HeaderMenu url={url} />
             </SwipeableDrawer>
           </Toolbar>
         ) : (

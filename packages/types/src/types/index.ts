@@ -100,6 +100,7 @@ import {
   SCUsersInsightCountersType,
   SCUsersInsightType
 } from './insight';
+import {SCInviteType} from './invite';
 import {SCContributeStatusType, SCContributionStatus, SCContributionType, SCFlaggedContributionType} from './contribution';
 import {SCPlatformType} from './platform';
 import {SCAvatarType} from './avatar';
@@ -194,6 +195,7 @@ export {
   SCIncubatorType,
   SCIncubatorSubscriptionType,
   SCIncubatorStatusType,
+  SCInviteType,
   SCNotificationIncubatorType,
   SCNotificationContributionType,
   SCPrizeType,

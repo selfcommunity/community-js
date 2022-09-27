@@ -114,6 +114,16 @@ export interface MessageProps extends Pick<CardProps, Exclude<keyof CardProps, '
    * @default null
    */
   onDeleteIconClick?: () => void;
+  /**
+   * Callback fired on touch hover
+   * @default null
+   */
+  onTouchStart?: () => void;
+  /**
+   * Callback fired on touch leave
+   * @default null
+   */
+  onTouchEnd?: () => void;
 }
 
 /**
@@ -162,6 +172,8 @@ export default function Message(inProps: MessageProps): JSX.Element {
     snippetType = true,
     onMouseEnter = null,
     onMouseLeave = null,
+    onTouchStart = null,
+    onTouchEnd = null,
     isHovering = null,
     loggedUser = null,
     onDeleteIconClick = null,
@@ -283,7 +295,7 @@ export default function Message(inProps: MessageProps): JSX.Element {
         </>
       ) : (
         <LazyLoad once offset={DEFAULT_PRELOAD_OFFSET_VIEWPORT}>
-          <ListItem onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} button={true}>
+          <ListItem onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} onTouchStart={onTouchStart} onTouchMove={onTouchEnd}>
             {!snippetType && isHovering && loggedUser === message.sender.id && message.status !== 'hidden' && (
               <>
                 <IconButton sx={{marginBottom: '25px'}} onClick={onDeleteIconClick}>

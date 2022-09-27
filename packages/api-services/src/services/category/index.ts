@@ -35,7 +35,7 @@ export class CategoryApiClient {
    */
   static getAllCategories(params?: CategoryParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCategoryType>> {
     const p = urlParams(params);
-    return apiRequest({...config, url: `${Endpoints.CategoryList.url({})}?${p.toString()}`, method: Endpoints.CategoryList.method});
+    return apiRequest({url: `${Endpoints.CategoryList.url({})}?${p.toString()}`, method: Endpoints.CategoryList.method, ...config});
   }
 
   /**
@@ -45,7 +45,7 @@ export class CategoryApiClient {
    */
   static searchCategory(params?: CategoryParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCategoryType>> {
     const p = urlParams(params);
-    return apiRequest({...config, url: `${Endpoints.SearchCategory.url({})}?${p.toString()}`, method: Endpoints.SearchCategory.method});
+    return apiRequest({url: `${Endpoints.SearchCategory.url({})}?${p.toString()}`, method: Endpoints.SearchCategory.method, ...config});
   }
 
   /**
@@ -54,7 +54,7 @@ export class CategoryApiClient {
    * @param config
    */
   static createCategory(data: SCCategoryType, config?: AxiosRequestConfig): Promise<SCCategoryType> {
-    return apiRequest({...config, url: Endpoints.CreateCategory.url({}), method: Endpoints.CreateCategory.method, data: data});
+    return apiRequest({url: Endpoints.CreateCategory.url({}), method: Endpoints.CreateCategory.method, data: data, ...config});
   }
 
   /**
@@ -63,7 +63,7 @@ export class CategoryApiClient {
    * @param config
    */
   static getSpecificCategory(id: number | string, config?: AxiosRequestConfig): Promise<SCCategoryType> {
-    return apiRequest({...config, url: Endpoints.Category.url({id}), method: Endpoints.Category.method});
+    return apiRequest({url: Endpoints.Category.url({id}), method: Endpoints.Category.method, ...config});
   }
 
   /**
@@ -73,7 +73,7 @@ export class CategoryApiClient {
    * @param config
    */
   static updateASpecificCategory(id: number | string, data: SCCategoryType, config?: AxiosRequestConfig): Promise<SCCategoryType> {
-    return apiRequest({...config, url: Endpoints.UpdateCategory.url({id}), method: Endpoints.UpdateCategory.method, data: data});
+    return apiRequest({url: Endpoints.UpdateCategory.url({id}), method: Endpoints.UpdateCategory.method, data: data, ...config});
   }
 
   /**
@@ -83,7 +83,7 @@ export class CategoryApiClient {
    * @param config
    */
   static patchASpecificCategory(id: number | string, data: SCCategoryType, config?: AxiosRequestConfig): Promise<SCCategoryType> {
-    return apiRequest({...config, url: Endpoints.PatchCategory.url({id}), method: Endpoints.PatchCategory.method, data: data});
+    return apiRequest({url: Endpoints.PatchCategory.url({id}), method: Endpoints.PatchCategory.method, data: data, ...config});
   }
 
   /**
@@ -92,7 +92,7 @@ export class CategoryApiClient {
    * @param config
    */
   static deleteASpecificCategory(id: number | string, config?: AxiosRequestConfig): Promise<any> {
-    return apiRequest({...config, url: Endpoints.DeleteCategory.url({id}), method: Endpoints.DeleteCategory.method});
+    return apiRequest({url: Endpoints.DeleteCategory.url({id}), method: Endpoints.DeleteCategory.method, ...config});
   }
 
   /**
@@ -101,7 +101,7 @@ export class CategoryApiClient {
    * @param config
    */
   static getCategoryAudience(id: number | string, config?: AxiosRequestConfig): Promise<SCCategoryAudienceType> {
-    return apiRequest({...config, url: Endpoints.CategoryAudience.url({id}), method: Endpoints.CategoryAudience.method});
+    return apiRequest({url: Endpoints.CategoryAudience.url({id}), method: Endpoints.CategoryAudience.method, ...config});
   }
 
   /**
@@ -110,7 +110,7 @@ export class CategoryApiClient {
    * @param config
    */
   static getCategoryFollowers(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
-    return apiRequest({...config, url: Endpoints.CategoryFollowers.url({id}), method: Endpoints.CategoryFollowers.method});
+    return apiRequest({url: Endpoints.CategoryFollowers.url({id}), method: Endpoints.CategoryFollowers.method, ...config});
   }
 
   /**
@@ -119,7 +119,7 @@ export class CategoryApiClient {
    * @param config
    */
   static getCategoryFeed(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeedUnitType>> {
-    return apiRequest({...config, url: Endpoints.CategoryFeed.url({id}), method: Endpoints.CategoryFeed.method});
+    return apiRequest({url: Endpoints.CategoryFeed.url({id}), method: Endpoints.CategoryFeed.method, ...config});
   }
 
   /**
@@ -128,9 +128,13 @@ export class CategoryApiClient {
    * @param params
    * @param config
    */
-  static getCategoryTrendingFeed(id: number | string, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeedUnitType>> {
+  static getCategoryTrendingFeed(
+    id: number | string,
+    params?: BaseGetParams,
+    config?: AxiosRequestConfig
+  ): Promise<SCPaginatedResponse<SCFeedUnitType>> {
     const p = urlParams(params);
-    return apiRequest({...config, url: `${Endpoints.CategoryTrendingFeed.url({id})}?${p.toString()}`, method: Endpoints.CategoryTrendingFeed.method});
+    return apiRequest({url: `${Endpoints.CategoryTrendingFeed.url({id})}?${p.toString()}`, method: Endpoints.CategoryTrendingFeed.method, ...config});
   }
 
   /**
@@ -139,7 +143,7 @@ export class CategoryApiClient {
    * @param config
    */
   static getCategoryTrendingFollowers(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
-    return apiRequest({...config, url: Endpoints.CategoryTrendingPeople.url({id}), method: Endpoints.CategoryTrendingPeople.method});
+    return apiRequest({url: Endpoints.CategoryTrendingPeople.url({id}), method: Endpoints.CategoryTrendingPeople.method, ...config});
   }
 
   /**
@@ -148,7 +152,7 @@ export class CategoryApiClient {
    * @param config
    */
   static followCategory(id: number | string, config?: AxiosRequestConfig): Promise<any> {
-    return apiRequest({...config, url: Endpoints.FollowCategory.url({id}), method: Endpoints.FollowCategory.method});
+    return apiRequest({url: Endpoints.FollowCategory.url({id}), method: Endpoints.FollowCategory.method, ...config});
   }
 
   /**
@@ -157,7 +161,7 @@ export class CategoryApiClient {
    * @param config
    */
   static checkCategoryIsFollowed(id: number | string, config?: AxiosRequestConfig): Promise<SCCategoryFollowedStatusType> {
-    return apiRequest({...config, url: Endpoints.CheckCategoryIsFollowed.url({id}), method: Endpoints.CheckCategoryIsFollowed.method});
+    return apiRequest({url: Endpoints.CheckCategoryIsFollowed.url({id}), method: Endpoints.CheckCategoryIsFollowed.method, ...config});
   }
 
   /**
@@ -167,7 +171,7 @@ export class CategoryApiClient {
    */
   static getFollowedCategories(params?: CategoryParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCategoryType>> {
     const p = urlParams(params);
-    return apiRequest({...config, url: `${Endpoints.CategoriesFollowed.url({})}?${p.toString()}`, method: Endpoints.CategoriesFollowed.method});
+    return apiRequest({url: `${Endpoints.CategoriesFollowed.url({})}?${p.toString()}`, method: Endpoints.CategoriesFollowed.method, ...config});
   }
 
   /**
@@ -177,7 +181,7 @@ export class CategoryApiClient {
    */
   static getPopularCategories(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCategoryType>> {
     const p = urlParams(params);
-    return apiRequest({...config, url: `${Endpoints.PopularCategories.url({})}?${p.toString()}`, method: Endpoints.PopularCategories.method});
+    return apiRequest({url: `${Endpoints.PopularCategories.url({})}?${p.toString()}`, method: Endpoints.PopularCategories.method, ...config});
   }
 }
 

@@ -3,6 +3,94 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.6-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.6-alpha.7...@selfcommunity/react-core@0.3.6-alpha.8) (2022-09-27)
+
+
+### Bug Fixes
+
+* categories followed manager ([1a3f527](https://github.com/selfcommunity/community-js/commit/1a3f5271675ab2f2abc4c7abb20ad101cad63f19))
+
+
+
+
+
+## [0.3.6-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.6-alpha.6...@selfcommunity/react-core@0.3.6-alpha.7) (2022-09-26)
+
+
+### Bug Fixes
+
+* caching followers ([be05a86](https://github.com/selfcommunity/community-js/commit/be05a86c0d11c2df3264c59e84a118de9a71ad55))
+* feed notification ([3712f0d](https://github.com/selfcommunity/community-js/commit/3712f0d99c36e80348a5cb8d9f131dfeb20d1fe3))
+
+
+
+
+
+## [0.3.6-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.6-alpha.5...@selfcommunity/react-core@0.3.6-alpha.6) (2022-09-21)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.3.6-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.6-alpha.4...@selfcommunity/react-core@0.3.6-alpha.5) (2022-09-21)
+
+
+### Performance Improvements
+
+* Added dynamic preferences for tag manager and cookie consent ([d84bdfa](https://github.com/selfcommunity/community-js/commit/d84bdfa28673f183c8d4ab31ed9e6bcb9b4001a4))
+
+
+
+
+
+## [0.3.6-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.6-alpha.3...@selfcommunity/react-core@0.3.6-alpha.4) (2022-09-20)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.3.6-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.6-alpha.2...@selfcommunity/react-core@0.3.6-alpha.3) (2022-09-15)
+
+
+### Bug Fixes
+
+* Fix export preferences ([ec1bfbd](https://github.com/selfcommunity/community-js/commit/ec1bfbd45b9e3ceca84e8cdd623bf4a8a6e2efd2))
+
+
+
+
+
+## [0.3.6-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.6-alpha.1...@selfcommunity/react-core@0.3.6-alpha.2) (2022-09-15)
+
+
+### Bug Fixes
+
+* Rename inviteCode service to invite ([cd3add8](https://github.com/selfcommunity/community-js/commit/cd3add8591ee5868a9ea5bbf03952503a0e61c63))
+
+
+
+
+
+## [0.3.6-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.6-alpha.0...@selfcommunity/react-core@0.3.6-alpha.1) (2022-09-15)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.3.6-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.5...@selfcommunity/react-core@0.3.6-alpha.0) (2022-09-14)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
 ## [0.3.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.5-alpha.3...@selfcommunity/react-core@0.3.5) (2022-09-14)
 
 **Note:** Version bump only for package @selfcommunity/react-core
