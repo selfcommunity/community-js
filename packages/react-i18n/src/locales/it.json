@@ -57,6 +57,7 @@
 
   "ui.category.categoryFollowers": "{total, plural, =0 {Seguito da # persone} one {Seguito da # persona} other {Seguito da # persone}}",
 
+  "ui.categories.filterByName": "Trova e aggiungi un interesse",
 
   "ui.categoriesFollowed.title": "{total, plural, =0 {Segue # stili di vita} one {Segue # stile di vita} other {Segue # stili di vita}}",
   "ui.categoriesFollowed.modal.title": "Stili di vita seguiti",

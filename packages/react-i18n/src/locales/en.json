@@ -53,9 +53,9 @@
   "ui.relatedFeedObjects.button.showMore": "Show More",
   "ui.relatedFeedObjects.noMoreResults": "No more results",
 
-
   "ui.category.categoryFollowers": "{total, plural, =0 {Followed by # people} one {Followed by # person} other {Followed by # people}}",
 
+  "ui.categories.filterByName": "Find and add an interest",
 
   "ui.categoriesFollowed.title": "{total, plural, =0 {# Lifestyles followed} one {# Lifestyle followed} other {# Lifestyles followed}}",
   "ui.categoriesFollowed.modal.title": "Followed Lifestyles",
