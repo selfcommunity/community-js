@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.6-alpha.19](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.6-alpha.18...@selfcommunity/react-ui@0.5.6-alpha.19) (2022-09-27)
+
+
+### Bug Fixes
+
+* Fix media chunk uploader ([78c4c72](https://github.com/selfcommunity/community-js/commit/78c4c72990cbd58b59ffc54df27e2f97c86d4327))
+* Fix media upload appeareance in FeedObject.tsx ([008c25e](https://github.com/selfcommunity/community-js/commit/008c25e2d73e12af3ac4d512a9a5c26cb31c1b4f))
+
+
+
+
+
+## [0.5.6-alpha.18](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.6-alpha.17...@selfcommunity/react-ui@0.5.6-alpha.18) (2022-09-26)
+
+
+### Bug Fixes
+
+* Fix image upload into editor ([771c3d9](https://github.com/selfcommunity/community-js/commit/771c3d9dd78b2968a93d42823fd237ae22b44ee1))
+
+
+### Performance Improvements
+
+* Update editor and chunk upload lib ([0639fcc](https://github.com/selfcommunity/community-js/commit/0639fcce67ceec9ef9964a4aa8b2d48955f34091))
+
+
+
+
+
 ## [0.5.6-alpha.17](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.6-alpha.16...@selfcommunity/react-ui@0.5.6-alpha.17) (2022-09-26)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
