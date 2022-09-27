@@ -31,7 +31,15 @@ const Root = styled(BaseItemButton, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+})(({theme}) => ({
+  '& .SCBaseItemButton-primary, & .SCBaseItemButton-secondary': {
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    display: 'block',
+    width: '44%'
+  }
+}));
 
 export interface CategoryProps extends WidgetProps {
   /**
@@ -59,6 +67,7 @@ export interface CategoryProps extends WidgetProps {
    * @default true
    */
   showFollowers?: boolean;
+
   /**
    * Any other properties
    */
@@ -122,13 +131,13 @@ export default function Category(inProps: CategoryProps): JSX.Element {
     return (
       <Root
         elevation={elevation}
-        {...rest}
         className={classNames(classes.root, className)}
         ButtonBaseProps={{component: Link, to: scRoutingContext.url(SCRoutes.CATEGORY_ROUTE_NAME, scCategory)}}
         image={<Avatar alt={scCategory.name} src={scCategory.image_medium} variant="square" className={classes.categoryImage} />}
         primary={scCategory.name}
         secondary={showFollowers ? `${intl.formatMessage(messages.categoryFollowers, {total: scCategory.followers_counter})}` : scCategory.slogan}
         actions={<FollowButton category={scCategory} {...followCategoryButtonProps} />}
+        {...rest}
       />
     );
   }

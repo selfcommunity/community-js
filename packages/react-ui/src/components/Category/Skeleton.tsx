@@ -7,10 +7,28 @@ import BaseItem from '../../shared/BaseItem';
 const PREFIX = 'SCCategorySkeleton';
 
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-root`,
+  image: `${PREFIX}-image`,
+  primary: `${PREFIX}-primary`,
+  secondary: `${PREFIX}-secondary`,
+  button: `${PREFIX}-button`,
+  action: `${PREFIX}-action`
 };
 
-const Root = styled(BaseItem)(({theme}) => ({}));
+const Root = styled(BaseItem)(({theme}) => ({
+  [`& .${classes.primary}`]: {
+    marginBottom: theme.spacing()
+  },
+  [`& .${classes.secondary}`]: {
+    marginBottom: theme.spacing()
+  },
+  [`& .${classes.button}`]: {
+    margin: theme.spacing()
+  },
+  [`& .${classes.action}`]: {
+    margin: theme.spacing()
+  }
+}));
 
 /**
  * > API documentation for the Community-JS Category Skeleton component. Learn about the available props and the CSS API.
@@ -37,12 +55,12 @@ export default function CategorySkeleton(props): JSX.Element {
     <Root
       className={classes.root}
       {...props}
-      image={<Skeleton animation="wave" variant="rectangular" width={40} height={40} />}
-      primary={<Skeleton animation="wave" height={10} width={120} style={{marginBottom: 10}} />}
-      secondary={<Skeleton animation="wave" height={10} width={70} style={{marginBottom: 10}} />}
+      image={<Skeleton animation="wave" variant="rectangular" width={40} height={40} className={classes.image} />}
+      primary={<Skeleton animation="wave" height={10} width={120} className={classes.primary} />}
+      secondary={<Skeleton animation="wave" height={10} width={70} className={classes.secondary} />}
       actions={
-        <Button size="small" variant="outlined" disabled>
-          <Skeleton animation="wave" height={10} width={50} style={{marginTop: 5, marginBottom: 5}} />
+        <Button size="small" variant="outlined" disabled className={classes.button}>
+          <Skeleton animation="wave" height={10} width={50} className={classes.action} />
         </Button>
       }
     />
