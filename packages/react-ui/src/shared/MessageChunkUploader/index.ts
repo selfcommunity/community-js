@@ -48,16 +48,18 @@ export default (props: MessageChunkUploaderProps): JSX.Element => {
 
   // REFS
   const firstRender = useRef<boolean>(true);
+  const chunkStateRef = React.useRef({chunks: {}, setChunk: null, setChunks: null});
 
   // STATE
   const [chunks, setChunks] = useState({});
   const setChunk: Function = (chunk: SCMessageChunkType) => {
-    setChunks({...chunks, [chunk.id]: {...chunks[chunk.id], ...chunk}});
+    const _chunks = {...chunks, [chunk.id]: {...chunks[chunk.id], ...chunk}};
+    setChunks(_chunks);
+    chunkStateRef.current.chunks = _chunks;
   };
 
   // Using refs to have the correct chunks values in the callbacks
   // https://stackoverflow.com/questions/57847594/react-hooks-accessing-up-to-date-state-from-within-a-callback
-  const chunkStateRef = React.useRef({chunks, setChunk, setChunks});
   chunkStateRef.current = {chunks, setChunk, setChunks};
 
   // CONTEXT
