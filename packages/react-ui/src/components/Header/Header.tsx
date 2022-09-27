@@ -1,5 +1,5 @@
 import {AppBar, Avatar, Badge, Box, Button, IconButton, Toolbar, styled, Grid, Tabs, Tab, useTheme, useMediaQuery, Menu} from '@mui/material';
-import React, {useContext, useEffect, useRef} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {SCPreferences, useSCPreferences, Link, SCUserContext} from '@selfcommunity/react-core';
 import {SCUserContextType} from '@selfcommunity/react-core';
 import Icon from '@mui/material/Icon';
@@ -141,7 +141,6 @@ export default function Header(inProps: HeaderProps) {
   const path = typeof window !== 'undefined' ? window.location.pathname : null;
   const [value, setValue] = React.useState(path);
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const ref = useRef(null);
 
   // HANDLERS
   const handleOpenSettingsMenu = (event) => {
@@ -167,9 +166,7 @@ export default function Header(inProps: HeaderProps) {
   };
 
   useEffect(() => {
-    if (ref.current) {
-      ref.current.updateIndicator();
-    }
+    setValue(path);
   }, [path]);
 
   if (scUserContext.loading) {
@@ -203,11 +200,10 @@ export default function Header(inProps: HeaderProps) {
               <>
                 <Box className={classes.tabsContainer}>
                   <Tabs
-                    action={ref}
                     onChange={(e, v) => setValue(v)}
                     value={value}
                     textColor="inherit"
-                    indicatorColor="primary"
+                    indicatorColor={checkValue() ? 'primary' : null}
                     aria-label="Navigation Tabs">
                     {url && url.home && <Tab value={url.home} icon={<Icon>home</Icon>} aria-label="HomePage" to={url.home} component={Link}></Tab>}
                     {url && url.explore && (
