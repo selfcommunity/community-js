@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.7-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.6...@selfcommunity/react-ui@0.5.7-alpha.0) (2022-09-27)
+
+
+### Bug Fixes
+
+* categories ([e875a6d](https://github.com/selfcommunity/community-js/commit/e875a6de29261a1e662efef5cbeaa30379b92cbf))
+* fixed mobile header props ([893d76b](https://github.com/selfcommunity/community-js/commit/893d76bd56a0a5101a57826e42eb9d60bbcdc247))
+
+
+
+
+
 ## [0.5.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.6-alpha.23...@selfcommunity/react-ui@0.5.6) (2022-09-27)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
