@@ -145,11 +145,6 @@ export default function Header(inProps: HeaderProps) {
   // HANDLERS
   const handleOpenSettingsMenu = (event) => {
     setAnchorEl(event.currentTarget);
-    if (typeof window !== 'undefined') {
-      setValue(window.location.pathname);
-    } else {
-      setValue(null);
-    }
   };
 
   const handleCloseSettingsMenu = () => {

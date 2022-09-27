@@ -92,20 +92,22 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
     name: PREFIX
   });
   const {url, className, searchBarProps, showNavigation, navigationHeaderProps, ...rest} = props;
+
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
 
   // STATE
-  const [value, setValue] = React.useState(typeof window !== 'undefined' ? window.location.pathname : null);
+  const path = typeof window !== 'undefined' ? window.location.pathname : null;
+  const [value, setValue] = React.useState(path);
+
   // PREFERENCES
   const scPreferences = useSCPreferences();
   const logo = scPreferences.preferences[SCPreferences.LOGO_NAVBAR_LOGO].value;
   const [openSettings, setOpenSettings] = useState<boolean>(false);
+
+  // HANDLERS
   const handleOpenSettingsMenu = () => {
     setOpenSettings(true);
-    if (typeof window !== 'undefined') {
-      setValue(window.location.pathname);
-    }
   };
   const toggleDrawer = (anchor: 'right', open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
     if (event && event.type === 'keydown' && ((event as React.KeyboardEvent).key === 'Tab' || (event as React.KeyboardEvent).key === 'Shift')) {
@@ -131,16 +133,9 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
     }
   };
 
-  // useEffect(() => {
-  //   const getSelectedTab = JSON.parse(localStorage.getItem('selectedTab'));
-  //   if (getSelectedTab) {
-  //     setValue(getSelectedTab);
-  //   }
-  // }, []);
-  //
-  // useEffect(() => {
-  //   localStorage.setItem('selectedTab', JSON.stringify(value));
-  // }, [value]);
+  useEffect(() => {
+    setValue(path);
+  }, [path]);
 
   if (scUserContext.loading) {
     return <MobileHeaderSkeleton />;
