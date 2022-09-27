@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.4-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.3.4-alpha.0...@selfcommunity/types@0.3.4-alpha.1) (2022-09-27)
+
+
+### Performance Improvements
+
+* Added legal pages policy types ([162bed6](https://github.com/selfcommunity/community-js/commit/162bed67da9ba5d7c7a0081fba3b4baaf059dd1d))
+
+
+
+
+
 ## [0.3.4-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.3.3...@selfcommunity/types@0.3.4-alpha.0) (2022-09-27)
 
 **Note:** Version bump only for package @selfcommunity/types
