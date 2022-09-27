@@ -142,6 +142,9 @@ const Root = styled(Widget, {
     '& a': {
       color: theme.palette.text.primary,
       textDecoration: 'none'
+    },
+    '& img': {
+      maxWidth: '100%'
     }
   },
   [`& .${classes.text}`]: {
