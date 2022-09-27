@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.3-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.3.3-alpha.2...@selfcommunity/types@0.3.3-alpha.3) (2022-09-27)
+
+
+### Bug Fixes
+
+* category types ([8927abe](https://github.com/selfcommunity/community-js/commit/8927abee403a3e14f802898cee77ccc8b7329152))
+
+
+
+
+
 ## [0.3.3-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.3.3-alpha.1...@selfcommunity/types@0.3.3-alpha.2) (2022-09-15)
 
 

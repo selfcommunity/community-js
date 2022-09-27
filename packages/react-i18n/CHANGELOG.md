@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.6-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.3.6-alpha.2...@selfcommunity/react-i18n@0.3.6-alpha.3) (2022-09-27)
+
+
+### Bug Fixes
+
+* categories i18n ([da5bfa9](https://github.com/selfcommunity/community-js/commit/da5bfa947ef514a1e2d85c870c1b19552388a83b))
+
+
+
+
+
 ## [0.3.6-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.3.6-alpha.1...@selfcommunity/react-i18n@0.3.6-alpha.2) (2022-09-26)
 
 

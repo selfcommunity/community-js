@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.6-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.6-alpha.7...@selfcommunity/react-core@0.3.6-alpha.8) (2022-09-27)
+
+
+### Bug Fixes
+
+* categories followed manager ([1a3f527](https://github.com/selfcommunity/community-js/commit/1a3f5271675ab2f2abc4c7abb20ad101cad63f19))
+
+
+
+
+
 ## [0.3.6-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.6-alpha.6...@selfcommunity/react-core@0.3.6-alpha.7) (2022-09-26)
 
 
