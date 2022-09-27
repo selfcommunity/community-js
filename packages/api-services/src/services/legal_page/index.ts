@@ -8,6 +8,8 @@ import {urlParams} from '../../utils/url';
 export interface LegalPageApiClientInterface {
   getLegalPages(params?: LegalPageFilterParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCLegalPageType>>;
   getSpecificLegalPage(id: number | string, config?: AxiosRequestConfig): Promise<SCLegalPageType>;
+  getAllRevisionsOfLegalPage(policy: string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCLegalPageType>>;
+  getLastRevisionOfLegalPage(policy: string, config?: AxiosRequestConfig): Promise<SCLegalPageType>;
   searchLegalPages(params?: LegalPageFilterParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCLegalPageType>>;
   ackLegalPage(id: number | string, accept?: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCLegalPageType>>;
   getSpecificUserAck(id: number | string, config?: AxiosRequestConfig): Promise<SCLegalPageAckType>;
@@ -34,6 +36,23 @@ export class LegalPageApiClient {
    */
   static getSpecificLegalPage(id: number | string, config?: AxiosRequestConfig): Promise<SCLegalPageType> {
     return apiRequest({...config, url: Endpoints.LegalPage.url({id}), method: Endpoints.LegalPage.method});
+  }
+  /**
+   * This endpoint retrieves all revisions of a legal page.
+   * @param id
+   * @param config
+   */
+  static getAllRevisionsOfLegalPage(policy: string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCLegalPageType>> {
+    return apiRequest({...config, url: Endpoints.LegalPageRevisions.url({policy}), method: Endpoints.LegalPageRevisions.method});
+  }
+
+  /**
+   * This endpoint retrieves last revision of a legal page.
+   * @param id
+   * @param config
+   */
+  static getLastRevisionOfLegalPage(policy: string, config?: AxiosRequestConfig): Promise<SCLegalPageType> {
+    return apiRequest({...config, url: Endpoints.LegalPageLastRevision.url({policy}), method: Endpoints.LegalPageLastRevision.method});
   }
 
   /**
@@ -115,6 +134,14 @@ export default class LegalPageService {
 
   static async getSpecificLegalPage(id: number | string, config?: AxiosRequestConfig): Promise<SCLegalPageType> {
     return LegalPageApiClient.getSpecificLegalPage(id, config);
+  }
+
+  static async getAllRevisionsOfLegalPage(policy: string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCLegalPageType>> {
+    return LegalPageApiClient.getAllRevisionsOfLegalPage(policy, config);
+  }
+
+  static async getLastRevisionOfLegalPage(policy: string, config?: AxiosRequestConfig): Promise<SCLegalPageType> {
+    return LegalPageApiClient.getLastRevisionOfLegalPage(policy, config);
   }
 
   static async searchLegalPages(params?: LegalPageFilterParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCLegalPageType>> {

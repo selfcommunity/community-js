@@ -980,6 +980,14 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/legal_page/search/'),
     method: 'GET'
   },
+  LegalPageLastRevision: {
+    url: urlReplacer('/api/v2/legal_page/$(policy)/'),
+    method: 'GET'
+  },
+  LegalPageRevisions: {
+    url: urlReplacer('/api/v2/legal_page/$(policy)/revisions/'),
+    method: 'GET'
+  },
   AckLegalPage: {
     url: urlReplacer('/api/v2/legal_page/$(id)/ack/'),
     method: 'POST'
