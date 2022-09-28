@@ -134,8 +134,8 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
 
   useEffect(() => {
     setValue(path);
-    if (showNavigation) {
-      setTitle(title);
+    if (showNavigation && typeof document !== 'undefined') {
+      setTitle(document.title.split('|')[0]);
     }
   }, [path]);
 
