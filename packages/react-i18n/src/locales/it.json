@@ -507,6 +507,10 @@
   "ui.header.menuItem.logout": "Esci",
   "ui.header.searchBar.search": "Cerca",
 
+  "ui.footer.legalPages.cookies": "Cookies",
+  "ui.footer.legalPages.tec": "Termini e Condizioni",
+  "ui.footer.legalPages.privacy": "Privacy",
+
   "templates.userProfile.edit": "Modifica",
   "templates.userProfile.send.pm": "Invia messaggio privato",
   "templates.privateMessages.button.new" : "Nuovo Messaggio",
