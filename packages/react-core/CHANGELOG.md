@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.7-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.7-alpha.3...@selfcommunity/react-core@0.3.7-alpha.4) (2022-09-28)
+
+
+### Bug Fixes
+
+* fixed footer legal pages ([a6fa0d1](https://github.com/selfcommunity/community-js/commit/a6fa0d11aebfbb60cbc65ed7ff3c35e4044a639f))
+
+
+
+
+
 ## [0.3.7-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.7-alpha.2...@selfcommunity/react-core@0.3.7-alpha.3) (2022-09-28)
 
 **Note:** Version bump only for package @selfcommunity/react-core

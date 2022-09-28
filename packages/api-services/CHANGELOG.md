@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.4-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.4-alpha.3...@selfcommunity/api-services@0.3.4-alpha.4) (2022-09-28)
+
+
+### Performance Improvements
+
+* updated legal pages service test ([098314f](https://github.com/selfcommunity/community-js/commit/098314f0607ee33b921fc2ce8cfdf7926e0ef605))
+
+
+
+
+
 ## [0.3.4-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.4-alpha.2...@selfcommunity/api-services@0.3.4-alpha.3) (2022-09-28)
 
 

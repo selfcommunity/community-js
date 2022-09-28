@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.7-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.3.7-alpha.0...@selfcommunity/react-i18n@0.3.7-alpha.1) (2022-09-28)
+
+
+### Performance Improvements
+
+* added transl for footer custom pages ([c6a5ece](https://github.com/selfcommunity/community-js/commit/c6a5ece85b4cbae30580c5a6f386293ef6513253))
+* added translations for footer legal pages ([acff4da](https://github.com/selfcommunity/community-js/commit/acff4daf647815ad91aa1d13fd5b9b4a64ac9454))
+
+
+
+
+
 ## [0.3.7-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.3.6...@selfcommunity/react-i18n@0.3.7-alpha.0) (2022-09-27)
 
 
