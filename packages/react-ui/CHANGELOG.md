@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.7-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.7-alpha.2...@selfcommunity/react-ui@0.5.7-alpha.3) (2022-09-28)
+
+
+### Bug Fixes
+
+* Fix word break that broke the words in wrong way ([20e513d](https://github.com/selfcommunity/community-js/commit/20e513d9793f85b22d27089ee25e6dc927a0f091))
+
+
+
+
+
 ## [0.5.7-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.7-alpha.1...@selfcommunity/react-ui@0.5.7-alpha.2) (2022-09-27)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
