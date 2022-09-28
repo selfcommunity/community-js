@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.7-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.7-alpha.5...@selfcommunity/react-core@0.3.7-alpha.6) (2022-09-28)
+
+
+### Bug Fixes
+
+* fixed policy route ([b80bfc2](https://github.com/selfcommunity/community-js/commit/b80bfc242367902bb54e1d9f51c70a5263935296))
+
+
+
+
+
 ## [0.3.7-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.7-alpha.4...@selfcommunity/react-core@0.3.7-alpha.5) (2022-09-28)
 
 
