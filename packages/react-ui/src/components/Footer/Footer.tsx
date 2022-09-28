@@ -4,6 +4,7 @@ import {styled} from '@mui/material/styles';
 import {Box, Grid, Typography} from '@mui/material';
 import classNames from 'classnames';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
+import {SCLegalPagePoliciesType} from '@selfcommunity/types';
 import {Logger} from '@selfcommunity/utils';
 import {
   SCRoutes,
@@ -16,7 +17,7 @@ import {
 } from '@selfcommunity/react-core';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import FooterSkeleton from './Skeleton';
-import DetailDialog from './DetailDialog';
+import {FormattedMessage} from 'react-intl';
 
 const PREFIX = 'SCFooter';
 
@@ -84,7 +85,6 @@ export default function Footer(inProps: FooterProps): JSX.Element {
     name: PREFIX
   });
   const {className, ...rest} = props;
-  const activePages = '2099-01-01';
 
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
@@ -95,19 +95,7 @@ export default function Footer(inProps: FooterProps): JSX.Element {
 
   //STATE
   const [pages, setPages] = useState<any[]>([]);
-  const [legalPages, setLegalPages] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [openLegalPageDialog, setOpenLegalPageDialog] = useState<boolean>(false);
-  const ids = [7, 5, 4];
-  const filteredLegalPages = legalPages.filter((i) => ids.includes(i.id));
-  const [detailObj, setDetailObj] = useState(null);
-
-  // HANDLERS
-
-  function handleOpenLegalPageDialog(item) {
-    setOpenLegalPageDialog(true);
-    setDetailObj(item);
-  }
 
   /**
    * Fetches custom pages
@@ -132,33 +120,11 @@ export default function Footer(inProps: FooterProps): JSX.Element {
       });
   }
 
-  function fetchLegalPages() {
-    setLoading(true);
-    http
-      .request({
-        url: Endpoints.GetLegalPages.url(),
-        method: Endpoints.GetLegalPages.method,
-        params: {
-          valid_to: activePages
-        }
-      })
-      .then((res: HttpResponse<any>) => {
-        setLegalPages(res.data.results);
-        //console.log(res.data.results, 'legal');
-        setLoading(false);
-      })
-      .catch((error) => {
-        setLoading(false);
-        Logger.error(SCOPE_SC_UI, error);
-      });
-  }
-
   /**
    * On mount, fetches legal and custom pages
    */
   useEffect(() => {
     fetchCustomPages();
-    fetchLegalPages();
   }, []);
 
   /**
@@ -179,10 +145,10 @@ export default function Footer(inProps: FooterProps): JSX.Element {
             </Link>
           </Grid>
         ))}
-        {filteredLegalPages.map((item, index) => (
+        {Object.values(SCLegalPagePoliciesType).map((policy: string, index) => (
           <Grid item key={index}>
-            <Link className={classes.linkItem} onClick={() => handleOpenLegalPageDialog(item)}>
-              {item.label}
+            <Link className={classes.linkItem} to={scRoutingContext.url(SCRoutes.LEGAL_PAGES_ROUTE_NAME, {policy: policy})}>
+              <FormattedMessage id={`ui.footer.legalPages.${policy}`} defaultMessage={`ui.footer.legalPages.${policy}`} />
             </Link>
           </Grid>
         ))}
@@ -190,7 +156,6 @@ export default function Footer(inProps: FooterProps): JSX.Element {
       <Typography textAlign="center" className={classes.copyright} variant="subtitle2">
         {copyRight}
       </Typography>
-      {openLegalPageDialog && <DetailDialog pageObj={detailObj} open={openLegalPageDialog} onClose={() => setOpenLegalPageDialog(false)} />}
     </Root>
   );
 }
