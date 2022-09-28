@@ -108,7 +108,6 @@ const Root = styled(Box, {
   [`& .${classes.content}`]: {
     position: 'relative',
     display: 'flex',
-    wordBreak: 'break-all',
     '& .MuiCardContent-root': {
       padding: '7px 13px 7px 13px',
       flexGrow: 1
