@@ -510,6 +510,8 @@
   "ui.footer.legalPages.cookies": "Cookies",
   "ui.footer.legalPages.tec": "Termini e Condizioni",
   "ui.footer.legalPages.privacy": "Privacy",
+  "ui.footer.customPages.explore": "Esplora",
+  "ui.footer.customPages.rules": "Regolamento",
 
   "templates.userProfile.edit": "Modifica",
   "templates.userProfile.send.pm": "Invia messaggio privato",

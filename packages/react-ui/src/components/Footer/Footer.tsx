@@ -141,7 +141,7 @@ export default function Footer(inProps: FooterProps): JSX.Element {
             <Link
               className={classes.linkItem}
               to={page.alternative_url ? page.alternative_url : scRoutingContext.url(SCRoutes.CUSTOM_PAGES_ROUTE_NAME, page)}>
-              {page.label}
+              <FormattedMessage id={`ui.footer.customPages.${page.slug}`} defaultMessage={`ui.footer.customPages.${page.slug}`} />
             </Link>
           </Grid>
         ))}
