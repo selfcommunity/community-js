@@ -43,5 +43,5 @@ export const defaultRoutes: {[k: string]: string} = {
   [SIGNUP_ROUTE_NAME]: '/signup/',
   [RECOVER_ROUTE_NAME]: '/recover/',
   [CUSTOM_PAGES_ROUTE_NAME]: '/:id/:slug/',
-  [LEGAL_PAGES_ROUTE_NAME]: '/legal/:policy',
+  [LEGAL_PAGES_ROUTE_NAME]: '/policy/:policy',
 };
