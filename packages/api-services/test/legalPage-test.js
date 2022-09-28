@@ -8,6 +8,18 @@ describe('Legal Page Service Test', () => {
       legalPage = data.results[0];
     });
   });
+  test('Get last revision of legal page', () => {
+    const policy = 'cookies';
+    return LegalPageService.getLastRevisionOfLegalPage(policy).then((data) => {
+      expect(data).toBeInstanceOf(Object);
+    });
+  });
+  test('Get all revisions of a legal page', () => {
+    const policy = 'cookies';
+    return LegalPageService.getAllRevisionsOfLegalPage(policy).then((data) => {
+      expect(data.results).toBeInstanceOf(Array);
+    });
+  });
   test('Get a specific legalPage', () => {
     return LegalPageService.getSpecificLegalPage(legalPage.id).then((data) => {
       expect(data.id).toEqual(legalPage.id);
