@@ -94,10 +94,11 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
   const setInitialTitle = (title, path) => {
+    let p = path.replace(/^\/([^/]*).*$/, '$1');
     if (
-      path
-        .replace(/^\/([^/]*).*$/, '$1')
-        .startsWith(SCFeedObjectTypologyType.POST || SCFeedObjectTypologyType.DISCUSSION || SCFeedObjectTypologyType.STATUS)
+      p.startsWith(SCFeedObjectTypologyType.POST) ||
+      p.startsWith(SCFeedObjectTypologyType.DISCUSSION) ||
+      p.startsWith(SCFeedObjectTypologyType.STATUS)
     ) {
       return '';
     }
