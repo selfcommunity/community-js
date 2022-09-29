@@ -96,6 +96,13 @@ export interface CategoriesProps {
   handleFilterCategories?: (categories: SCCategoryType[]) => SCCategoryType[];
 
   /**
+   * Prefetch categories. Useful for SSR.
+   * Use this to init the component with categories
+   * @default null
+   */
+  prefetchedCategories?: SCCategoryType[];
+
+  /**
    * Other props
    */
   [p: string]: any;
@@ -139,12 +146,13 @@ export default function CategoriesSuggestion(inProps: CategoriesProps): JSX.Elem
     showFilters = true,
     filters,
     handleFilterCategories,
+    prefetchedCategories = [],
     ...rest
   } = props;
 
   // STATE
-  const [categories, setCategories] = useState<any[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [categories, setCategories] = useState<SCCategoryType[]>(prefetchedCategories);
+  const [loading, setLoading] = useState<boolean>(!prefetchedCategories.length);
   const [filterName, setFilterName] = useState<string>(null);
 
   // CONTEXT
@@ -168,7 +176,7 @@ export default function CategoriesSuggestion(inProps: CategoriesProps): JSX.Elem
    * On mount, fetches categories list
    */
   useEffect(() => {
-    if (scUserContext.user) {
+    if (scUserContext.user && !prefetchedCategories.length) {
       fetchCategories()
         .then((data: any) => {
           if (isMountedRef.current) {
@@ -180,7 +188,7 @@ export default function CategoriesSuggestion(inProps: CategoriesProps): JSX.Elem
           Logger.error(SCOPE_SC_UI, error);
         });
     }
-  }, [authUserId]);
+  }, [authUserId, prefetchedCategories]);
 
   /**
    * Get categories filtered
