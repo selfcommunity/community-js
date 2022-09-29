@@ -126,15 +126,18 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
         (url.followings && value === url.followings) ||
         (url.notifications && value === url.notifications)
       ) {
-        return true;
+        return value;
       }
-      return null;
+      return false;
     }
   };
 
   useEffect(() => {
     setValue(path);
     if (showNavigation && typeof document !== 'undefined') {
+      if (document.title.split('|')[0].startsWith('/post/')) {
+        setTitle('');
+      }
       setTitle(document.title.split('|')[0]);
     }
   }, [path]);
@@ -176,9 +179,9 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
             <Tabs
               className={classes.tabs}
               onChange={handleChange}
-              value={value}
+              value={checkValue()}
               textColor="primary"
-              indicatorColor={checkValue() ? 'primary' : null}
+              indicatorColor="primary"
               aria-label="Navigation Tabs"
               variant="scrollable">
               {url && url.home && <Tab value={url.home} icon={<Icon>home</Icon>} aria-label="HomePage" to={url.home} component={Link}></Tab>}
