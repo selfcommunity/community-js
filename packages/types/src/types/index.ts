@@ -22,7 +22,8 @@ import {
   SCUserSettingsType,
   SCUserStatus,
   SCUserType,
-  SCUserProviderAssociationType
+  SCUserProviderAssociationType,
+  SCUserMetadataType
 } from './user';
 import {SCTagType} from './tag';
 import {SCCategoryAudienceType, SCCategoryFollowedStatusType, SCCategoryType} from './category';
@@ -133,6 +134,7 @@ export {
   SCUserConnectionRequestType,
   SCUserEmailTokenType,
   SCUserProviderAssociationType,
+  SCUserMetadataType,
   SCTagType,
   SCCategoryType,
   SCCategoryAudienceType,
