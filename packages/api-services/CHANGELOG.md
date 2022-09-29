@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.5-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.5-alpha.0...@selfcommunity/api-services@0.3.5-alpha.1) (2022-09-29)
+
+
+### Bug Fixes
+
+* Fix SCPaginatedResponse return type ([df91ca4](https://github.com/selfcommunity/community-js/commit/df91ca4e40b486b33ae561afdff7c23c3ef91095))
+* Fix SCPaginatedResponse return type ([23556a4](https://github.com/selfcommunity/community-js/commit/23556a48b8ff10c4806fc55901420d936a5a6442))
+
+
+
+
+
 ## [0.3.5-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.4...@selfcommunity/api-services@0.3.5-alpha.0) (2022-09-29)
 
 **Note:** Version bump only for package @selfcommunity/api-services
