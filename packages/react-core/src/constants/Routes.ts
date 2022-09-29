@@ -20,6 +20,7 @@ export const SIGNIN_ROUTE_NAME = 'signin';
 export const SIGNUP_ROUTE_NAME = 'signup';
 export const RECOVER_ROUTE_NAME = 'recover';
 export const CUSTOM_PAGES_ROUTE_NAME = 'custom_pages';
+export const LEGAL_PAGES_ROUTE_NAME = 'legal_pages';
 
 /**
  * Default Routes
@@ -42,4 +43,5 @@ export const defaultRoutes: {[k: string]: string} = {
   [SIGNUP_ROUTE_NAME]: '/signup/',
   [RECOVER_ROUTE_NAME]: '/recover/',
   [CUSTOM_PAGES_ROUTE_NAME]: '/:id/:slug/',
+  [LEGAL_PAGES_ROUTE_NAME]: '/legal/:policy/',
 };

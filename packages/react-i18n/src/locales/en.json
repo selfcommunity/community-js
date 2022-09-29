@@ -56,6 +56,7 @@
   "ui.category.categoryFollowers": "{total, plural, =0 {Followed by # people} one {Followed by # person} other {Followed by # people}}",
 
   "ui.categories.filterByName": "Find and add an interest",
+  "ui.categories.noResults": "No categories found",
 
   "ui.categoriesFollowed.title": "{total, plural, =0 {# Lifestyles followed} one {# Lifestyle followed} other {# Lifestyles followed}}",
   "ui.categoriesFollowed.modal.title": "Followed Lifestyles",
@@ -506,6 +507,11 @@
   "ui.header.menuItem.logout": "Logout",
   "ui.header.searchBar.search": "Search",
 
+  "ui.footer.legalPages.cookies": "Cookies",
+  "ui.footer.legalPages.tec": "Terms and Conditions",
+  "ui.footer.legalPages.privacy": "Privacy",
+  "ui.footer.customPages.explore": "Explore",
+  "ui.footer.customPages.rules": "Rules",
 
   "templates.userProfile.edit": "Edit",
   "templates.userProfile.send.pm": "Send private message",

@@ -3,6 +3,71 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.7-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.7-alpha.5...@selfcommunity/react-core@0.3.7-alpha.6) (2022-09-28)
+
+
+### Bug Fixes
+
+* fixed policy route ([b80bfc2](https://github.com/selfcommunity/community-js/commit/b80bfc242367902bb54e1d9f51c70a5263935296))
+
+
+
+
+
+## [0.3.7-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.7-alpha.4...@selfcommunity/react-core@0.3.7-alpha.5) (2022-09-28)
+
+
+### Bug Fixes
+
+* fixed policy route ([b1b6b54](https://github.com/selfcommunity/community-js/commit/b1b6b54dd17ed862deba9500e50284d4dd907674))
+
+
+
+
+
+## [0.3.7-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.7-alpha.3...@selfcommunity/react-core@0.3.7-alpha.4) (2022-09-28)
+
+
+### Bug Fixes
+
+* fixed footer legal pages ([a6fa0d1](https://github.com/selfcommunity/community-js/commit/a6fa0d11aebfbb60cbc65ed7ff3c35e4044a639f))
+
+
+
+
+
+## [0.3.7-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.7-alpha.2...@selfcommunity/react-core@0.3.7-alpha.3) (2022-09-28)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.3.7-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.7-alpha.1...@selfcommunity/react-core@0.3.7-alpha.2) (2022-09-27)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.3.7-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.7-alpha.0...@selfcommunity/react-core@0.3.7-alpha.1) (2022-09-27)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.3.7-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.6...@selfcommunity/react-core@0.3.7-alpha.0) (2022-09-27)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
 ## [0.3.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.6-alpha.9...@selfcommunity/react-core@0.3.6) (2022-09-27)
 
 **Note:** Version bump only for package @selfcommunity/react-core

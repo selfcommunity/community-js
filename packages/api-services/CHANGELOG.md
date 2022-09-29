@@ -3,6 +3,55 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.4-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.4-alpha.3...@selfcommunity/api-services@0.3.4-alpha.4) (2022-09-28)
+
+
+### Performance Improvements
+
+* updated legal pages service test ([098314f](https://github.com/selfcommunity/community-js/commit/098314f0607ee33b921fc2ce8cfdf7926e0ef605))
+
+
+
+
+
+## [0.3.4-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.4-alpha.2...@selfcommunity/api-services@0.3.4-alpha.3) (2022-09-28)
+
+
+### Bug Fixes
+
+* Fix legal page service return types ([e182894](https://github.com/selfcommunity/community-js/commit/e182894299702dd33e5b8a1de580a3ad29807379))
+
+
+
+
+
+## [0.3.4-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.4-alpha.1...@selfcommunity/api-services@0.3.4-alpha.2) (2022-09-27)
+
+**Note:** Version bump only for package @selfcommunity/api-services
+
+
+
+
+
+## [0.3.4-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.4-alpha.0...@selfcommunity/api-services@0.3.4-alpha.1) (2022-09-27)
+
+
+### Performance Improvements
+
+* Added service for new legal_pages api endpoints ([8326c77](https://github.com/selfcommunity/community-js/commit/8326c776c36ed3418b71120e5e8d266674ced1a5))
+
+
+
+
+
+## [0.3.4-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.3...@selfcommunity/api-services@0.3.4-alpha.0) (2022-09-27)
+
+**Note:** Version bump only for package @selfcommunity/api-services
+
+
+
+
+
 ## [0.3.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.3-alpha.5...@selfcommunity/api-services@0.3.3) (2022-09-27)
 
 **Note:** Version bump only for package @selfcommunity/api-services

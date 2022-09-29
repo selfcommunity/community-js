@@ -3,6 +3,104 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.7-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.7-alpha.8...@selfcommunity/react-ui@0.5.7-alpha.9) (2022-09-28)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.5.7-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.7-alpha.7...@selfcommunity/react-ui@0.5.7-alpha.8) (2022-09-28)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.5.7-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.7-alpha.6...@selfcommunity/react-ui@0.5.7-alpha.7) (2022-09-28)
+
+
+### Bug Fixes
+
+* fixed footer legal pages ([a6fa0d1](https://github.com/selfcommunity/community-js/commit/a6fa0d11aebfbb60cbc65ed7ff3c35e4044a639f))
+
+
+### Performance Improvements
+
+* added transl for footer custom pages ([c6a5ece](https://github.com/selfcommunity/community-js/commit/c6a5ece85b4cbae30580c5a6f386293ef6513253))
+
+
+
+
+
+## [0.5.7-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.7-alpha.5...@selfcommunity/react-ui@0.5.7-alpha.6) (2022-09-28)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.5.7-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.7-alpha.4...@selfcommunity/react-ui@0.5.7-alpha.5) (2022-09-28)
+
+
+### Performance Improvements
+
+* mobile header navigation ([1501cd3](https://github.com/selfcommunity/community-js/commit/1501cd35c13eb876f850a9f88863912acef2389e))
+
+
+
+
+
+## [0.5.7-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.7-alpha.3...@selfcommunity/react-ui@0.5.7-alpha.4) (2022-09-28)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.5.7-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.7-alpha.2...@selfcommunity/react-ui@0.5.7-alpha.3) (2022-09-28)
+
+
+### Bug Fixes
+
+* Fix word break that broke the words in wrong way ([20e513d](https://github.com/selfcommunity/community-js/commit/20e513d9793f85b22d27089ee25e6dc927a0f091))
+
+
+
+
+
+## [0.5.7-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.7-alpha.1...@selfcommunity/react-ui@0.5.7-alpha.2) (2022-09-27)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.5.7-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.7-alpha.0...@selfcommunity/react-ui@0.5.7-alpha.1) (2022-09-27)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.5.7-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.6...@selfcommunity/react-ui@0.5.7-alpha.0) (2022-09-27)
+
+
+### Bug Fixes
+
+* categories ([e875a6d](https://github.com/selfcommunity/community-js/commit/e875a6de29261a1e662efef5cbeaa30379b92cbf))
+* fixed mobile header props ([893d76b](https://github.com/selfcommunity/community-js/commit/893d76bd56a0a5101a57826e42eb9d60bbcdc247))
+
+
+
+
+
 ## [0.5.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.6-alpha.23...@selfcommunity/react-ui@0.5.6) (2022-09-27)
 
 **Note:** Version bump only for package @selfcommunity/react-ui

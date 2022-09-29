@@ -206,50 +206,53 @@ export default function CategoriesSuggestion(inProps: CategoriesProps): JSX.Elem
   /**
    * Renders categories list
    */
+  const filteredCategories = getFilteredCategories();
   const c = (
-    <Box>
-      {!categories.length && !loading ? (
-        <Typography className={classes.noResults} variant="body2">
-          <FormattedMessage id="ui.categoriesSuggestion.noResults" defaultMessage="ui.categoriesSuggestion.noResults" />
-        </Typography>
-      ) : (
-        <>
-          {showFilters && (
-            <Grid container direction="row" justifyContent="center" alignItems="center" className={classes.filters}>
-              {filters ? (
-                filters
-              ) : (
-                <Grid item xs={12} md={6}>
-                  <TextField
-                    fullWidth
-                    value={filterName}
-                    label={<FormattedMessage id="ui.categories.filterByName" defaultMessage="ui.categories.filterByName" />}
-                    variant="outlined"
-                    onChange={handleOnChangeFilterName}
-                    disabled={loading}
-                  />
-                </Grid>
-              )}
+    <>
+      {showFilters && (
+        <Grid container direction="row" justifyContent="center" alignItems="center" className={classes.filters}>
+          {filters ? (
+            filters
+          ) : (
+            <Grid item xs={12} md={6}>
+              <TextField
+                fullWidth
+                value={filterName}
+                label={<FormattedMessage id="ui.categories.filterByName" defaultMessage="ui.categories.filterByName" />}
+                variant="outlined"
+                onChange={handleOnChangeFilterName}
+                disabled={loading}
+              />
             </Grid>
           )}
-          <Grid container spacing={{xs: 3}} className={classes.categories}>
-            {loading ? (
+        </Grid>
+      )}
+      <Grid container spacing={{xs: 3}} className={classes.categories}>
+        {loading ? (
+          <Grid item>
+            <CategoriesSkeletonComponent {...CategoriesSkeletonProps} />
+          </Grid>
+        ) : (
+          <>
+            {!filteredCategories.length ? (
               <Grid item>
-                <CategoriesSkeletonComponent {...CategoriesSkeletonProps} />
+                <Typography className={classes.noResults} variant="body2">
+                  <FormattedMessage id="ui.categories.noResults" defaultMessage="ui.categories.noResults" />
+                </Typography>
               </Grid>
             ) : (
               <>
-                {getFilteredCategories().map((category: SCCategoryType) => (
+                {filteredCategories.map((category: SCCategoryType) => (
                   <Grid item xs={12} sm={6} md={4} key={category.id}>
                     <CategoryComponent category={category} {...CategoryComponentProps} className={classes.category} />
                   </Grid>
                 ))}
               </>
             )}
-          </Grid>
-        </>
-      )}
-    </Box>
+          </>
+        )}
+      </Grid>
+    </>
   );
 
   /**

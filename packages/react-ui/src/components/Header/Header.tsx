@@ -74,9 +74,9 @@ export interface HeaderProps {
    */
   showNavigation?: boolean;
   /**
-   * Props forwarded to mobile header
+   * Callback fired when navigating back
    */
-  navigationHeaderProps?: {};
+  onNavigationBack?: () => any;
   /**
    * The single pages url to pass to menu
    */
@@ -127,7 +127,7 @@ export default function Header(inProps: HeaderProps) {
     props: inProps,
     name: PREFIX
   });
-  const {url, className, searchBarProps, showNavigation, navigationHeaderProps, ...rest} = props;
+  const {url, className, searchBarProps, showNavigation, onNavigationBack, ...rest} = props;
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
 
@@ -171,7 +171,7 @@ export default function Header(inProps: HeaderProps) {
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
       {isMobile ? (
-        <MobileHeader url={url} searchBarProps={searchBarProps} showNavigation={showNavigation} {...navigationHeaderProps} />
+        <MobileHeader url={url} searchBarProps={searchBarProps} showNavigation={showNavigation} onNavigationBack={onNavigationBack} />
       ) : (
         <AppBar position="fixed" color={'default'}>
           <Toolbar>

@@ -73,12 +73,9 @@ export interface MobileHeaderProps {
    */
   showNavigation?: boolean;
   /**
-   * Header section showed when entering certain urls
+   * Callback fired when navigating back
    */
-  navigationHeaderProps?: {
-    title?: string;
-    onNavigationBack?: () => any;
-  };
+  onNavigationBack?: () => any;
   /**
    * Other props
    */
@@ -91,14 +88,16 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
     props: inProps,
     name: PREFIX
   });
-  const {url, className, searchBarProps, showNavigation, navigationHeaderProps, ...rest} = props;
+  const {url, className, searchBarProps, showNavigation, onNavigationBack, ...rest} = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
 
   // STATE
   const path = typeof window !== 'undefined' ? window.location.pathname : null;
-  const [value, setValue] = React.useState(path);
+  const [value, setValue] = useState(path);
+  const t = typeof document !== 'undefined' ? document.title.split('|')[0] : '';
+  const [title, setTitle] = useState(t);
 
   // PREFERENCES
   const scPreferences = useSCPreferences();
@@ -135,6 +134,9 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
 
   useEffect(() => {
     setValue(path);
+    if (showNavigation && typeof document !== 'undefined') {
+      setTitle(document.title.split('|')[0]);
+    }
   }, [path]);
 
   if (scUserContext.loading) {
@@ -151,12 +153,12 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
                 <img src={logo} alt={'logo'} style={{height: '30px'}} />
               </Link>
             )}
-            {scUserContext.user && showNavigation && navigationHeaderProps && (
+            {scUserContext.user && showNavigation && onNavigationBack && (
               <Typography component="div">
-                <IconButton onClick={navigationHeaderProps.onNavigationBack} size="large" aria-label="back" color="inherit">
+                <IconButton onClick={onNavigationBack} size="large" aria-label="back" color="inherit">
                   <Icon>arrow_back</Icon>
                 </IconButton>
-                {navigationHeaderProps.title}
+                {title}
               </Typography>
             )}
           </Grid>
