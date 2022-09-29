@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.8-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.8-alpha.0...@selfcommunity/react-ui@0.5.8-alpha.1) (2022-09-29)
+
+
+### Bug Fixes
+
+* categories ([fc19815](https://github.com/selfcommunity/community-js/commit/fc1981510c4c757cefdf50e4e89a15ad32c725fb))
+* fixed feedObjs mobile navigation titles. ([4ec8db8](https://github.com/selfcommunity/community-js/commit/4ec8db833737d988a55556888fa9f34fcded0629))
+* fixed tabs warning in header component ([0dbefce](https://github.com/selfcommunity/community-js/commit/0dbefce11314316f80ce085b5388a7d1d64864a0))
+
+
+
+
+
 ## [0.5.8-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.7...@selfcommunity/react-ui@0.5.8-alpha.0) (2022-09-29)
 
 
