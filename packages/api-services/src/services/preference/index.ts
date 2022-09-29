@@ -6,14 +6,14 @@ import {AxiosRequestConfig} from 'axios';
 import {urlParams} from '../../utils/url';
 
 export interface PreferenceApiClientInterface {
-  getAllPreferences(config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPreferenceType[]>>;
+  getAllPreferences(config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPreferenceType>>;
   searchPreferences(
     search?: string,
     section?: string,
     keys?: string,
     ordering?: string,
     config?: AxiosRequestConfig
-  ): Promise<SCPaginatedResponse<SCPreferenceType[]>>;
+  ): Promise<SCPaginatedResponse<SCPreferenceType>>;
   getSpecificPreference(id: number | string, config?: AxiosRequestConfig): Promise<SCPreferenceType>;
 }
 /**
@@ -25,7 +25,7 @@ export class PreferenceApiClient {
    * This endpoint retrieves all available dynamic preferences.
    * @param config
    */
-  static getAllPreferences(config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPreferenceType[]>> {
+  static getAllPreferences(config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPreferenceType>> {
     return apiRequest({...config, url: Endpoints.Preferences.url({}), method: Endpoints.Preferences.method});
   }
 
@@ -43,7 +43,7 @@ export class PreferenceApiClient {
     keys?: string,
     ordering?: string,
     config?: AxiosRequestConfig
-  ): Promise<SCPaginatedResponse<SCPreferenceType[]>> {
+  ): Promise<SCPaginatedResponse<SCPreferenceType>> {
     const params = urlParams({
       ...(search && {search: search}),
       ...(section && {section: section}),
@@ -99,7 +99,7 @@ export class PreferenceApiClient {
  :::
  */
 export default class PreferenceService {
-  static async getAllPreferences(config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPreferenceType[]>> {
+  static async getAllPreferences(config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPreferenceType>> {
     return PreferenceApiClient.getAllPreferences(config);
   }
 
@@ -109,7 +109,7 @@ export default class PreferenceService {
     keys?: string,
     ordering?: string,
     config?: AxiosRequestConfig
-  ): Promise<SCPaginatedResponse<SCPreferenceType[]>> {
+  ): Promise<SCPaginatedResponse<SCPreferenceType>> {
     return PreferenceApiClient.searchPreferences(search, section, keys, ordering, config);
   }
 
