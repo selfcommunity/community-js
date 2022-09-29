@@ -94,7 +94,11 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
   const setInitialTitle = (title, path) => {
-    if (path.substring(1, 5).startsWith(SCFeedObjectTypologyType.POST || SCFeedObjectTypologyType.DISCUSSION || SCFeedObjectTypologyType.STATUS)) {
+    if (
+      path
+        .replace(/^\/([^/]*).*$/, '$1')
+        .startsWith(SCFeedObjectTypologyType.POST || SCFeedObjectTypologyType.DISCUSSION || SCFeedObjectTypologyType.STATUS)
+    ) {
       return '';
     }
     return title;
