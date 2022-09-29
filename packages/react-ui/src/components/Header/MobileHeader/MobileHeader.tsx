@@ -93,7 +93,12 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
-
+  const setInitialTitle = (title, path) => {
+    if (path.substring(1, 5).startsWith(SCFeedObjectTypologyType.POST || SCFeedObjectTypologyType.DISCUSSION || SCFeedObjectTypologyType.STATUS)) {
+      return '';
+    }
+    return title;
+  };
   // STATE
   const path = typeof window !== 'undefined' ? window.location.pathname : null;
   const [value, setValue] = useState(path);
@@ -106,13 +111,6 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
   const [openSettings, setOpenSettings] = useState<boolean>(false);
 
   // HANDLERS
-
-  const setInitialTitle = (title, path) => {
-    if (path.substring(1, 5).startsWith(SCFeedObjectTypologyType.POST || SCFeedObjectTypologyType.DISCUSSION || SCFeedObjectTypologyType.STATUS)) {
-      return '';
-    }
-    return title;
-  };
 
   const handleOpenSettingsMenu = () => {
     setOpenSettings(true);
