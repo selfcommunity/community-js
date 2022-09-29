@@ -135,9 +135,6 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
   useEffect(() => {
     setValue(path);
     if (showNavigation && typeof document !== 'undefined') {
-      if (document.title.split('|')[0].startsWith('/post/')) {
-        setTitle('');
-      }
       setTitle(document.title.split('|')[0]);
     }
   }, [path]);

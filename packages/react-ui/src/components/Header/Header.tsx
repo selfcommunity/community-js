@@ -154,9 +154,9 @@ export default function Header(inProps: HeaderProps) {
   const checkValue = () => {
     if (url) {
       if ((url.home && value === url.home) || (url.explore && value === url.explore) || (url.followings && value === url.followings)) {
-        return true;
+        return value;
       }
-      return null;
+      return false;
     }
   };
 
@@ -196,9 +196,9 @@ export default function Header(inProps: HeaderProps) {
                 <Box className={classes.tabsContainer}>
                   <Tabs
                     onChange={(e, v) => setValue(v)}
-                    value={value}
+                    value={checkValue()}
                     textColor="inherit"
-                    indicatorColor={checkValue() ? 'primary' : null}
+                    indicatorColor="primary"
                     aria-label="Navigation Tabs">
                     {url && url.home && <Tab value={url.home} icon={<Icon>home</Icon>} aria-label="HomePage" to={url.home} component={Link}></Tab>}
                     {url && url.explore && (
