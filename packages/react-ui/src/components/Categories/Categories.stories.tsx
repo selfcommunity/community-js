@@ -1,6 +1,6 @@
 import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
-
+import {prefetchedCategories} from './prefetchedCategories';
 import Categories from './index';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
@@ -28,6 +28,8 @@ const Template: ComponentStory<typeof Categories> = (args) => (
 
 export const Base = Template.bind({});
 
-Base.args = {
-  /* the args you need here will depend on your component */
+export const BasePrefetchedCategories = Template.bind({});
+
+BasePrefetchedCategories.args = {
+  prefetchedCategories
 };

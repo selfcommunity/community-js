@@ -9,6 +9,7 @@ import {FormattedMessage} from 'react-intl';
 import HeaderMenu from '../HeaderMenu';
 import {SCHeaderMenuUrlsType} from '../../../types';
 import MobileHeaderSkeleton from './Skeleton';
+import {SCFeedObjectTypologyType} from '@selfcommunity/types';
 
 const PREFIX = 'SCMobileHeader';
 
@@ -97,7 +98,7 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
   const path = typeof window !== 'undefined' ? window.location.pathname : null;
   const [value, setValue] = useState(path);
   const t = typeof document !== 'undefined' ? document.title.split('|')[0] : '';
-  const [title, setTitle] = useState(t);
+  const [title, setTitle] = useState(() => setInitialTitle(t, path));
 
   // PREFERENCES
   const scPreferences = useSCPreferences();
@@ -105,6 +106,14 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
   const [openSettings, setOpenSettings] = useState<boolean>(false);
 
   // HANDLERS
+
+  const setInitialTitle = (title, path) => {
+    if (path.substring(1, 5).startsWith(SCFeedObjectTypologyType.POST || SCFeedObjectTypologyType.DISCUSSION || SCFeedObjectTypologyType.STATUS)) {
+      return '';
+    }
+    return title;
+  };
+
   const handleOpenSettingsMenu = () => {
     setOpenSettings(true);
   };
@@ -135,10 +144,7 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
   useEffect(() => {
     setValue(path);
     if (showNavigation && typeof document !== 'undefined') {
-      if (document.title.split('|')[0].startsWith('/post/')) {
-        setTitle('');
-      }
-      setTitle(document.title.split('|')[0]);
+      setTitle(() => setInitialTitle(document.title.split('|')[0], path));
     }
   }, [path]);
 
