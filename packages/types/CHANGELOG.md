@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.5-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.3.5-alpha.1...@selfcommunity/types@0.3.5-alpha.2) (2022-09-29)
+
+
+### Performance Improvements
+
+* Added type for user metadata ([bbb5c35](https://github.com/selfcommunity/community-js/commit/bbb5c35d8fc68c797d6dae2497751fde2d46d300))
+
+
+
+
+
 ## [0.3.5-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.3.5-alpha.0...@selfcommunity/types@0.3.5-alpha.1) (2022-09-29)
 
 
