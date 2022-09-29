@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.8-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.7...@selfcommunity/react-ui@0.5.8-alpha.0) (2022-09-29)
+
+
+### Bug Fixes
+
+* prova fix tabs warning ([e72da0f](https://github.com/selfcommunity/community-js/commit/e72da0f861bdbfca97037baa96c3325ac7eb11d5))
+
+
+
+
+
 ## [0.5.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.7-alpha.10...@selfcommunity/react-ui@0.5.7) (2022-09-29)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
