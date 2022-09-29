@@ -23,6 +23,7 @@ import {
   SCUserStatus,
   SCUserType,
   SCUserProviderAssociationType,
+  SCUserMetadataTypeFieldType,
   SCUserMetadataType
 } from './user';
 import {SCTagType} from './tag';
@@ -134,6 +135,7 @@ export {
   SCUserConnectionRequestType,
   SCUserEmailTokenType,
   SCUserProviderAssociationType,
+  SCUserMetadataTypeFieldType,
   SCUserMetadataType,
   SCTagType,
   SCCategoryType,
