@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.8-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.8-alpha.1...@selfcommunity/react-ui@0.5.8-alpha.2) (2022-09-29)
+
+
+### Bug Fixes
+
+* fixed initialization error ([3d38e80](https://github.com/selfcommunity/community-js/commit/3d38e80a4952cd987af8d4d3824bc008b4fe3eb7))
+
+
+
+
+
 ## [0.5.8-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.8-alpha.0...@selfcommunity/react-ui@0.5.8-alpha.1) (2022-09-29)
 
 
