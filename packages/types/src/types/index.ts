@@ -22,14 +22,13 @@ import {
   SCUserSettingsType,
   SCUserStatus,
   SCUserType,
-  SCUserProviderAssociationType,
-  SCUserMetadataTypeFieldType,
-  SCUserMetadataType
+  SCUserProviderAssociationType
 } from './user';
 import {SCTagType} from './tag';
 import {SCCategoryAudienceType, SCCategoryFollowedStatusType, SCCategoryType} from './category';
 import {SCEmbedType} from './embed';
 import {SCChunkMediaType, SCMediaType} from './media';
+import {SCMetadataTypeFieldType, SCMetadataType} from './metadata';
 import {SCContributionLocation, SCLocalityType} from './location';
 import {SCPollChoiceType, SCPollType, SCPollVoteType} from './poll';
 import {SCCommentsOrderBy, SCCommentType, SCCommentTypologyType} from './comment';
@@ -136,8 +135,8 @@ export {
   SCUserConnectionRequestType,
   SCUserEmailTokenType,
   SCUserProviderAssociationType,
-  SCUserMetadataTypeFieldType,
-  SCUserMetadataType,
+  SCMetadataTypeFieldType,
+  SCMetadataType,
   SCTagType,
   SCCategoryType,
   SCCategoryAudienceType,
