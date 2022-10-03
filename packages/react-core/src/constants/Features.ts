@@ -45,3 +45,4 @@ export const WEBHOOK = 'webhook';
 export const HEADLESS = 'headless';
 export const CUSTOMIZE_HEADLESS = 'customize_headless';
 export const SYSTEM_PAGES = 'system_pages';
+export const REACTION = 'reaction';
