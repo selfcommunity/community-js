@@ -1081,6 +1081,17 @@ const Endpoints: {[key: string]: EndpointType} = {
   AddScore: {
     url: urlReplacer('/api/v2/score/'),
     method: 'POST'
+  },
+  /**
+   * Reactions
+   */
+  GetReactions: {
+    url: urlReplacer('/api/v2/reaction/'),
+    method: 'GET'
+  },
+  GetSpecificReaction: {
+    url: urlReplacer('/api/v2/reaction/$(id)/'),
+    method: 'GET'
   }
 };
 

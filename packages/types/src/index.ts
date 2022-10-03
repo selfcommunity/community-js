@@ -29,8 +29,8 @@ import {
   SCUserConnectionRequestType,
   SCUserEmailTokenType,
   SCUserProviderAssociationType,
-  SCUserMetadataTypeFieldType,
-  SCUserMetadataType,
+  SCMetadataTypeFieldType,
+  SCMetadataType,
   SCTagType,
   SCCategoryType,
   SCCategoryAudienceType,
@@ -125,7 +125,8 @@ import {
   SCContributionStatus,
   SCContributeStatusType,
   SCPlatformType,
-  SCAvatarType
+  SCAvatarType,
+  SCReactionType
 } from './types';
 
 /**
@@ -159,8 +160,8 @@ export {
   SCUserConnectionRequestType,
   SCUserEmailTokenType,
   SCUserProviderAssociationType,
-  SCUserMetadataTypeFieldType,
-  SCUserMetadataType,
+  SCMetadataTypeFieldType,
+  SCMetadataType,
   SCTagType,
   SCCategoryType,
   SCCategoryAudienceType,
@@ -255,5 +256,6 @@ export {
   SCContributeStatusType,
   SCContributionStatus,
   SCPlatformType,
-  SCAvatarType
+  SCAvatarType,
+  SCReactionType
 };

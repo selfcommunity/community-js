@@ -22,14 +22,13 @@ import {
   SCUserSettingsType,
   SCUserStatus,
   SCUserType,
-  SCUserProviderAssociationType,
-  SCUserMetadataTypeFieldType,
-  SCUserMetadataType
+  SCUserProviderAssociationType
 } from './user';
 import {SCTagType} from './tag';
 import {SCCategoryAudienceType, SCCategoryFollowedStatusType, SCCategoryType} from './category';
 import {SCEmbedType} from './embed';
 import {SCChunkMediaType, SCMediaType} from './media';
+import {SCMetadataTypeFieldType, SCMetadataType} from './metadata';
 import {SCContributionLocation, SCLocalityType} from './location';
 import {SCPollChoiceType, SCPollType, SCPollVoteType} from './poll';
 import {SCCommentsOrderBy, SCCommentType, SCCommentTypologyType} from './comment';
@@ -106,6 +105,7 @@ import {SCInviteType} from './invite';
 import {SCContributeStatusType, SCContributionStatus, SCContributionType, SCFlaggedContributionType} from './contribution';
 import {SCPlatformType} from './platform';
 import {SCAvatarType} from './avatar';
+import {SCReactionType} from './reaction';
 /**
  * Exports all types
  */
@@ -135,8 +135,8 @@ export {
   SCUserConnectionRequestType,
   SCUserEmailTokenType,
   SCUserProviderAssociationType,
-  SCUserMetadataTypeFieldType,
-  SCUserMetadataType,
+  SCMetadataTypeFieldType,
+  SCMetadataType,
   SCTagType,
   SCCategoryType,
   SCCategoryAudienceType,
@@ -234,5 +234,6 @@ export {
   SCContributionStatus,
   SCContributeStatusType,
   SCPlatformType,
-  SCAvatarType
+  SCAvatarType,
+  SCReactionType
 };

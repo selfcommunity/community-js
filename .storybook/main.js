@@ -1,8 +1,17 @@
 const path = require("path");
 const toPath = (filePath) => path.join(process.cwd(), filePath);
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 module.exports = {
-  staticDirs: ['../public'],
+  "staticDirs": ['../public'],
+  "framework": '@storybook/react',
+  "core": {
+    "builder": 'webpack5',
+    "options": {
+      "lazyCompilation": true,
+      "fsCache": true
+    },
+  },
   "stories": [
     "../packages/react-core/src/**/*.stories.@(js|jsx|ts|tsx)",
     "../packages/react-ui/src/components/**/*.stories.@(js|jsx|ts|tsx)",
@@ -25,6 +34,12 @@ module.exports = {
       ...config,
       "resolve": {
         ...config.resolve,
+        "plugins": [
+          ...(config.resolve.plugins || []),
+          new TsconfigPathsPlugin({
+            extensions: config.resolve.extensions,
+          }),
+        ],
         "alias": {
           ...config.resolve.alias,
           "@emotion/core": toPath("node_modules/@emotion/react"),
