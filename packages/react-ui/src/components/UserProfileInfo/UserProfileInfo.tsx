@@ -1,10 +1,10 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {styled} from '@mui/material/styles';
 import {Box, Grid, Typography} from '@mui/material';
 import {defineMessages, useIntl} from 'react-intl';
 import {camelCase} from '@selfcommunity/utils';
 import {SCUserType} from '@selfcommunity/types';
-import {useSCFetchUser} from '@selfcommunity/react-core';
+import {SCPreferences, SCPreferencesContextType, useSCFetchUser, useSCPreferences} from '@selfcommunity/react-core';
 import {DEFAULT_FIELDS} from '../../constants/UserProfile';
 import UserProfileInfoSkeleton from './Skeleton';
 import classNames from 'classnames';
@@ -126,6 +126,12 @@ export default function UserProfileInfo(inProps: UserProfileInfoProps): JSX.Elem
   // INTL
   const intl = useIntl();
 
+  // PREFERENCES
+  const scPreferences: SCPreferencesContextType = useSCPreferences();
+  const metadataDefinitions = useMemo(() => {
+    return JSON.parse(scPreferences.preferences[SCPreferences.CONFIGURATIONS_USER_METADATA_DEFINITIONS].value);
+  }, [scPreferences.preferences]);
+
   // RENDER
   const renderField = (user, field) => {
     switch (field) {
@@ -153,7 +159,10 @@ export default function UserProfileInfo(inProps: UserProfileInfoProps): JSX.Elem
             return (
               <Grid item xs={6} key={field}>
                 <Typography variant="body2">
-                  <span className={classes.field}>{intl.formatMessage(messages[camelCase(field)])}:</span> {renderField(scUser, field)}
+                  <span className={classes.field}>
+                    {metadataDefinitions[field] ? metadataDefinitions[field].label : intl.formatMessage(messages[camelCase(field)])}:
+                  </span>{' '}
+                  {renderField(scUser, field)}
                 </Typography>
               </Grid>
             );

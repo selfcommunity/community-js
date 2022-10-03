@@ -15,6 +15,7 @@ import UsernameTextField from '../../../shared/UsernameTextField';
 import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
 import {useThemeProps} from '@mui/system';
 import {SCUserProfileFields} from '../../../types';
+import MetadataField from '../../../shared/MetadataField';
 
 const messages = defineMessages({
   genderMale: {
@@ -157,33 +158,16 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
   };
 
   // RENDER
-  const getMetadataProps = (field) => {
-    if (!metadataDefinitions[field]) {
-      return {};
-    }
-    const props: any = {};
-    switch (metadataDefinitions[field].type) {
-      case 'url':
-        props.type = 'url';
-        props.pattern = 'https://.*';
-        props.size = '30';
-        break;
-      case 'email':
-        props.type = 'email';
-        break;
-      case 'phone_number':
-        props.type = 'tel';
-        break;
-    }
-    return props;
-  };
-
   const renderField = (field) => {
     const isEditing = editing.includes(field);
     const isSaving = saving.includes(field);
     const camelField = camelCase(field);
     const _error = error !== null && error[`${camelField}Error`] && error[`${camelField}Error`].error;
     const component = {element: TextField};
+    let label = intl.formatMessage({
+      id: `ui.userProfileInfo.${camelField}`,
+      defaultMessage: `ui.userProfileInfo.${field}`
+    });
     let props: any = {
       InputProps: {
         endAdornment: (
@@ -255,7 +239,24 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
         ));
         break;
       default:
-        props = {...props, ...getMetadataProps(field)};
+        if (metadataDefinitions[field]) {
+          return (
+            <MetadataField
+              key={field}
+              {...props}
+              className={classes.field}
+              name={field}
+              fullWidth
+              label={label}
+              value={user[field] || ''}
+              onChange={handleChange}
+              disabled={!isEditing || isSaving}
+              error={_error}
+              helperText={_error}
+              metadata={metadataDefinitions[field]}
+            />
+          );
+        }
         break;
     }
     return (
@@ -265,10 +266,7 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
         className={classes.field}
         name={field}
         fullWidth
-        label={intl.formatMessage({
-          id: `ui.userProfileInfo.${camelField}`,
-          defaultMessage: `ui.userProfileInfo.${field}`
-        })}
+        label={label}
         value={user[field] || ''}
         onChange={handleChange}
         disabled={!isEditing || isSaving}

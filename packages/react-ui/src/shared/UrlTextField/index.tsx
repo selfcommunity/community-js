@@ -2,16 +2,15 @@ import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {TextField, TextFieldProps} from '@mui/material';
 import {defineMessages, useIntl} from 'react-intl';
-import {USERNAME_REGEX} from '../../constants/Account';
 
 const messages = defineMessages({
-  usernameError: {
-    id: 'ui.common.error.username',
-    defaultMessage: 'ui.common.error.username'
+  urlError: {
+    id: 'ui.common.error.url',
+    defaultMessage: 'ui.common.error.url'
   }
 });
 
-const PREFIX = 'SCUsernameTextField';
+const PREFIX = 'SCUrlTextField';
 
 const Root = styled(TextField, {
   name: PREFIX,
@@ -19,7 +18,9 @@ const Root = styled(TextField, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({}));
 
-const UsernameTextField = (props: TextFieldProps): JSX.Element => {
+const URL_REGEX = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/;
+
+const UrlTextField = (props: TextFieldProps): JSX.Element => {
   // PROPS
   const {onChange, error = false, helperText = null, ...rest} = props;
 
@@ -31,8 +32,8 @@ const UsernameTextField = (props: TextFieldProps): JSX.Element => {
 
   // HANDLERS
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.value && !USERNAME_REGEX.test(event.target.value)) {
-      setErrorMsg(intl.formatMessage(messages.usernameError));
+    if (event.target.value && !URL_REGEX.test(event.target.value)) {
+      setErrorMsg(intl.formatMessage(messages.urlError));
     } else if (error !== null) {
       setErrorMsg(null);
     }
@@ -43,4 +44,4 @@ const UsernameTextField = (props: TextFieldProps): JSX.Element => {
   return <Root {...rest} onChange={handleChange} error={Boolean(errorMsg) || error} helperText={errorMsg || helperText} />;
 };
 
-export default UsernameTextField;
+export default UrlTextField;

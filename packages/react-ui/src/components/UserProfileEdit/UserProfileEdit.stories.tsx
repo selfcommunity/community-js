@@ -1,7 +1,7 @@
 import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
-import {SCUserProfileFields, SCUserProfileSettings} from '../../types';
+import { ComponentMeta, ComponentStory } from '@storybook/react';
 import UserProfileEdit from './index';
+import { DEFAULT_FIELDS, DEFAULT_SETTINGS } from '../../constants/UserProfile';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -31,19 +31,6 @@ export const Base = Template.bind({});
 
 Base.args = {
   /* the args you need here will depend on your component */
-  fields: [
-    SCUserProfileFields.USERNAME,
-    SCUserProfileFields.REAL_NAME,
-    SCUserProfileFields.DATE_JOINED,
-    SCUserProfileFields.DATE_OF_BIRTH,
-    SCUserProfileFields.DESCRIPTION,
-    SCUserProfileFields.WEBSITE,
-    SCUserProfileFields.BIO,
-    SCUserProfileFields.LOCATION,
-    SCUserProfileFields.GENDER
-  ],
-  settings: [
-    SCUserProfileSettings.INTERACTION,
-    SCUserProfileSettings.NOTIFICATION
-  ]
+  fields: [...DEFAULT_FIELDS],
+  settings: [...DEFAULT_SETTINGS]
 };
