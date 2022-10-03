@@ -61,7 +61,7 @@ const MetadataField = (props: MetadataFieldProps): JSX.Element => {
       break;
     case SCMetadataTypeFieldType.ENUM:
       component = (
-        <TextField {...rest} className={classNames(className, classes.root)} label={metadata.label} required={metadata?.mandatory}>
+        <TextField {...rest} className={classNames(className, classes.root)} label={metadata.label} required={metadata?.mandatory} select>
           {metadata?.type_options.map((option: string) => (
             <MenuItem key={option} value={option}>
               {option}
