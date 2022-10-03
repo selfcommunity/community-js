@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.6.0-alpha.0...@selfcommunity/react-ui@0.6.0-alpha.1) (2022-10-03)
+
+
+### Bug Fixes
+
+* Fix enum MetadataField.tsx ([6581de5](https://github.com/selfcommunity/community-js/commit/6581de5045e790fc46bb0ed97f98f7e6afc9f332))
+
+
+
+
+
 # [0.6.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.8-alpha.7...@selfcommunity/react-ui@0.6.0-alpha.0) (2022-10-03)
 
 
