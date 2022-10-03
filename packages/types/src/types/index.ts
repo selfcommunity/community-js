@@ -106,6 +106,7 @@ import {SCInviteType} from './invite';
 import {SCContributeStatusType, SCContributionStatus, SCContributionType, SCFlaggedContributionType} from './contribution';
 import {SCPlatformType} from './platform';
 import {SCAvatarType} from './avatar';
+import {SCReactionType} from './reaction';
 /**
  * Exports all types
  */
@@ -234,5 +235,6 @@ export {
   SCContributionStatus,
   SCContributeStatusType,
   SCPlatformType,
-  SCAvatarType
+  SCAvatarType,
+  SCReactionType
 };

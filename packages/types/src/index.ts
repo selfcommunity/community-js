@@ -125,7 +125,8 @@ import {
   SCContributionStatus,
   SCContributeStatusType,
   SCPlatformType,
-  SCAvatarType
+  SCAvatarType,
+  SCReactionType
 } from './types';
 
 /**
@@ -255,5 +256,6 @@ export {
   SCContributeStatusType,
   SCContributionStatus,
   SCPlatformType,
-  SCAvatarType
+  SCAvatarType,
+  SCReactionType
 };
