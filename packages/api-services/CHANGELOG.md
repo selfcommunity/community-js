@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.5-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.5-alpha.3...@selfcommunity/api-services@0.3.5-alpha.4) (2022-10-03)
+
+
+### Performance Improvements
+
+* added reaction service + test ([2496aae](https://github.com/selfcommunity/community-js/commit/2496aae07010156a66c402e1f435a63abcc3b883))
+
+
+
+
+
 ## [0.3.5-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.5-alpha.2...@selfcommunity/api-services@0.3.5-alpha.3) (2022-09-29)
 
 **Note:** Version bump only for package @selfcommunity/api-services

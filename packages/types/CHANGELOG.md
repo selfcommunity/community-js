@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.3.5-alpha.2...@selfcommunity/types@0.4.0-alpha.0) (2022-10-03)
+
+
+### Features
+
+* Added metadata definition for user profile ([96ab06b](https://github.com/selfcommunity/community-js/commit/96ab06b49e6c70c5445b04b903b697f363a20a80))
+
+
+### Performance Improvements
+
+* added reaction type ([5092d67](https://github.com/selfcommunity/community-js/commit/5092d670e277ab6c6686ebb944708932fe46593b))
+
+
+
+
+
 ## [0.3.5-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.3.5-alpha.1...@selfcommunity/types@0.3.5-alpha.2) (2022-09-29)
 
 

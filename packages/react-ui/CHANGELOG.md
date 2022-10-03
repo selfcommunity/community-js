@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.8-alpha.7...@selfcommunity/react-ui@0.6.0-alpha.0) (2022-10-03)
+
+
+### Bug Fixes
+
+* storybook webpack configuration ([8673c94](https://github.com/selfcommunity/community-js/commit/8673c94e081865c15f705d710f02509494404de9))
+
+
+### Features
+
+* Added metadata definition for user profile ([96ab06b](https://github.com/selfcommunity/community-js/commit/96ab06b49e6c70c5445b04b903b697f363a20a80))
+
+
+
+
+
 ## [0.5.8-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.8-alpha.6...@selfcommunity/react-ui@0.5.8-alpha.7) (2022-09-29)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
