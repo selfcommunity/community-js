@@ -182,6 +182,7 @@
   "ui.feedObject.share.shareInCategories": "Condividi in {categories}",
   "ui.feedObject.share.shares": "{total, plural, =0 {# Condivisioni} one {# Condivisione} other {# Condivisioni}}",
   "ui.feedObject.votesDialog.title": "Voti",
+  "ui.feedObject.votesDialog.reactionsEnabled.title": "Tutti",
   "ui.feedObject.votesDialog.noOtherLikes": "Non ci sono altri voti.",
   "ui.feedObject.sharesDialog.title": "Condivisioni",
   "ui.feedObject.sharesDialog.noOtherLikes": "Non ci sono altre condivisioni.",
