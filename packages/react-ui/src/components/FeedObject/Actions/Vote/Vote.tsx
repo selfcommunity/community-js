@@ -1,7 +1,7 @@
-import React, {useEffect, useMemo, useReducer, useState} from 'react';
+import React, {useEffect, useMemo, useReducer} from 'react';
 import BaseDialog from '../../../../shared/BaseDialog';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {Box, Button, Divider, List, ListItem, Tab, Tabs, Tooltip} from '@mui/material';
+import {Box, Button, Divider, List, ListItem, Tooltip} from '@mui/material';
 import InfiniteScroll from '../../../../shared/InfiniteScroll';
 import Icon from '@mui/material/Icon';
 import Skeleton from '@mui/material/Skeleton';
@@ -15,18 +15,8 @@ import {useSnackbar} from 'notistack';
 import {SCFeedObjectType, SCFeedObjectTypologyType, SCTagType} from '@selfcommunity/types';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
-import {
-  SCContextType,
-  SCFeatures,
-  SCUserContextType,
-  UserUtils,
-  useSCContext,
-  useSCFetchFeedObject,
-  useSCPreferences,
-  useSCUser
-} from '@selfcommunity/react-core';
+import {SCContextType, SCUserContextType, UserUtils, useSCContext, useSCFetchFeedObject, useSCUser} from '@selfcommunity/react-core';
 import {useThemeProps} from '@mui/system';
-import _ from 'lodash';
 
 /**
  * We have complex state logic that involves multiple sub-values,
@@ -115,8 +105,7 @@ const classes = {
   actionButton: `${PREFIX}-action-button`,
   inline: `${PREFIX}-inline`,
   inlineActionButton: `${PREFIX}-inline-action-button`,
-  viewAudienceButton: `${PREFIX}-view-audience-button`,
-  reactionIcon: `${PREFIX}-reaction-icon`
+  viewAudienceButton: `${PREFIX}-view-audience-button`
 };
 
 const messages = defineMessages({
@@ -168,27 +157,8 @@ const Root = styled(Box, {
     '& p': {
       fontSize: '0.9rem'
     }
-  },
-  [`& .${classes.reactionIcon}`]: {
-    width: '20px',
-    height: '20px'
   }
 }));
-
-export interface TabPanelProps {
-  children?: React.ReactNode;
-  index: string;
-  value: string | any;
-}
-function TabPanel(props: TabPanelProps) {
-  const {children, value, index, ...other} = props;
-
-  return (
-    <div hidden={value !== index} id={`tab-panel-${index}`} {...other}>
-      {value === index && <>{children}</>}
-    </div>
-  );
-}
 
 export interface VoteProps {
   /**
@@ -265,14 +235,9 @@ export default function Vote(inProps: VoteProps): JSX.Element {
     ...rest
   } = props;
 
-  // PREFERENCES
-  const scPreferences = useSCPreferences();
-
   // STATE
   const {obj, setObj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
   const [state, dispatch] = useReducer(votesReducer, {}, () => stateInitializer({feedObjectId, feedObject, feedObjectType}));
-  const [tabIndex, setTabIndex] = useState<string>('all');
-  const reactionsEnabled = scPreferences.features.includes(SCFeatures.REACTION);
 
   // CONTEXT
   const scContext: SCContextType = useSCContext();
@@ -281,11 +246,6 @@ export default function Vote(inProps: VoteProps): JSX.Element {
 
   // INTL
   const intl = useIntl();
-
-  // HANDLERS
-  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
-    setTabIndex(newValue);
-  };
 
   /**
    * Fetches Votes only if obj
@@ -395,7 +355,6 @@ export default function Vote(inProps: VoteProps): JSX.Element {
    */
   function renderAudience() {
     const {loadingVotes, votes, openVotesDialog} = state;
-    const filteredVotes = _.groupBy(votes, (v) => v.reaction.label);
     let audience;
     if (withAudience) {
       if (!obj) {
@@ -441,100 +400,33 @@ export default function Vote(inProps: VoteProps): JSX.Element {
             </Button>
             {openVotesDialog && (
               <BaseDialog
-                title={
-                  reactionsEnabled ? (
-                    <Tabs value={tabIndex} onChange={handleChange} variant="scrollable" scrollButtons allowScrollButtonsMobile>
-                      <Tab
-                        value={'all'}
-                        label={
-                          <FormattedMessage
-                            defaultMessage="ui.feedObject.votesDialog.reactionsEnabled.title"
-                            id="ui.feedObject.votesDialog.reactionsEnabled.title"
-                          />
-                        }
-                      />
-                      {Object.entries(filteredVotes).map(([key, value], index) => (
-                        <Tab
-                          icon={
-                            <Icon>
-                              <img alt={key} src={value[0].reaction.image} width={20} height={20} />
-                            </Icon>
-                          }
-                          iconPosition="start"
-                          label={value.length}
-                          key={index}
-                          value={key}
-                        />
-                      ))}
-                    </Tabs>
-                  ) : (
-                    <FormattedMessage defaultMessage="ui.feedObject.votesDialog.title" id="ui.feedObject.votesDialog.title" />
-                  )
-                }
+                title={<FormattedMessage defaultMessage="ui.feedObject.votesDialog.title" id="ui.feedObject.votesDialog.title" />}
                 onClose={handleToggleVotesDialog}
                 open={openVotesDialog}>
                 {loadingVotes ? (
                   <CentralProgress size={50} />
                 ) : (
-                  <>
-                    <TabPanel value={'all'} index={tabIndex}>
-                      <InfiniteScroll
-                        dataLength={votes.length}
-                        next={fetchVotes}
-                        hasMoreNext={Boolean(state.next)}
-                        loaderNext={<CentralProgress size={30} />}
-                        height={400}
-                        endMessage={
-                          <p style={{textAlign: 'center'}}>
-                            <b>
-                              <FormattedMessage id="ui.feedObject.votesDialog.noOtherLikes" defaultMessage="ui.feedObject.votesDialog.noOtherLikes" />
-                            </b>
-                          </p>
-                        }>
-                        <List>
-                          {votes.map((vote, index) => (
-                            <ListItem key={index}>
-                              <User elevation={0} user={vote.user} key={index} sx={{m: 0}} />
-                            </ListItem>
-                          ))}
-                        </List>
-                      </InfiniteScroll>
-                    </TabPanel>
-                    {reactionsEnabled && (
-                      <>
-                        {Object.keys(filteredVotes).map((key, index) => (
-                          <React.Fragment key={index}>
-                            <TabPanel value={key} index={tabIndex}>
-                              <InfiniteScroll
-                                dataLength={votes.length}
-                                next={fetchVotes}
-                                hasMoreNext={Boolean(state.next)}
-                                loaderNext={<CentralProgress size={30} />}
-                                height={400}
-                                endMessage={
-                                  <p style={{textAlign: 'center'}}>
-                                    <b>
-                                      <FormattedMessage
-                                        id="ui.feedObject.votesDialog.noOtherLikes"
-                                        defaultMessage="ui.feedObject.votesDialog.noOtherLikes"
-                                      />
-                                    </b>
-                                  </p>
-                                }>
-                                <List>
-                                  {filteredVotes[key].map((vote, index) => (
-                                    <ListItem key={index}>
-                                      <User elevation={0} user={vote.user} key={index} sx={{m: 0}} />
-                                    </ListItem>
-                                  ))}
-                                </List>
-                              </InfiniteScroll>
-                            </TabPanel>
-                          </React.Fragment>
-                        ))}
-                      </>
-                    )}
-                  </>
+                  <InfiniteScroll
+                    dataLength={votes.length}
+                    next={fetchVotes}
+                    hasMoreNext={Boolean(state.next)}
+                    loaderNext={<CentralProgress size={30} />}
+                    height={400}
+                    endMessage={
+                      <p style={{textAlign: 'center'}}>
+                        <b>
+                          <FormattedMessage id="ui.feedObject.votesDialog.noOtherLikes" defaultMessage="ui.feedObject.votesDialog.noOtherLikes" />
+                        </b>
+                      </p>
+                    }>
+                    <List>
+                      {votes.map((vote, index) => (
+                        <ListItem key={index}>
+                          <User elevation={0} user={vote.user} key={index} sx={{m: 0}} />
+                        </ListItem>
+                      ))}
+                    </List>
+                  </InfiniteScroll>
                 )}
               </BaseDialog>
             )}
