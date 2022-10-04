@@ -184,7 +184,7 @@ function TabPanel(props: TabPanelProps) {
   const {children, value, index, ...other} = props;
 
   return (
-    <div role="tab-panel" hidden={value !== index} id={`simple-tabanel-${index}`} aria-labelledby={`simple-tab-${index}`} {...other}>
+    <div hidden={value !== index} id={`tab-panel-${index}`} {...other}>
       {value === index && <>{children}</>}
     </div>
   );
@@ -443,7 +443,7 @@ export default function Vote(inProps: VoteProps): JSX.Element {
               <BaseDialog
                 title={
                   reactionsEnabled ? (
-                    <Tabs value={tabIndex} onChange={handleChange} variant="scrollable" scrollButtons="auto" aria-label="search types">
+                    <Tabs value={tabIndex} onChange={handleChange} variant="scrollable" scrollButtons allowScrollButtonsMobile>
                       <Tab
                         value={'all'}
                         label={
