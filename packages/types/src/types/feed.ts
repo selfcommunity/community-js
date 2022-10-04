@@ -186,7 +186,10 @@ export interface SCFeedObjectType {
    * Number of votes
    */
   vote_count: number;
-
+  /**
+   * Reactions number and objs
+   */
+  reactions_count: [];
   /**
    * True if the logged user has already voted this object
    */
