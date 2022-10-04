@@ -4,7 +4,7 @@ import {SCReactionType} from '@selfcommunity/types';
 import {Endpoints, http} from '@selfcommunity/api-services';
 import {CacheStrategies, Logger, LRUCache} from '@selfcommunity/utils';
 import {getReactionsObjectCacheKey, getReactionObjectCacheKey} from '../constants/Cache';
-import {useSCPreferences, useSCUser} from '@selfcommunity/react-core';
+import {useSCPreferences} from '../components/provider/SCPreferencesProvider';
 import * as SCFeatures from '../constants/Features';
 
 const init = {reactions: [], isLoading: true};
