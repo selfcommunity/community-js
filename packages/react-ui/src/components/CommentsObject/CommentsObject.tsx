@@ -27,7 +27,6 @@ import {
   useSCUser
 } from '@selfcommunity/react-core';
 
-
 const PREFIX = 'SCCommentsObject';
 
 const classes = {
@@ -309,6 +308,7 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
   const scRoutingContext: SCRoutingContextType = useSCRouting();
   const {obj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
   const commentsIds = comments.map((c) => c.id);
+  const advPosition = Math.floor(Math.random() * (Math.min(comments.length, 5) - 1 + 1) + 1);
 
   /**
    * Compute preferences
@@ -483,7 +483,6 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
   /**
    * Render comments
    */
-  const advPosition = Math.floor(Math.random() * (Math.min(totalComments, 5) - 1 + 1) + 1);
   let commentsRendered = <></>;
   if (!obj || ((isLoadingPrevious || isLoadingNext) && !comments.length)) {
     /**
