@@ -320,7 +320,7 @@ export default function Vote(inProps: VoteProps): JSX.Element {
    * Performs voteUp/voteDown
    */
   function vote() {
-    if (scUserContext.user && obj.voted) {
+    if (scUserContext.user) {
       if (UserUtils.isBlocked(scUserContext.user)) {
         enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
           variant: 'warning',
