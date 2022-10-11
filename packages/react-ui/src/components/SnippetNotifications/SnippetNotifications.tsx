@@ -375,10 +375,10 @@ export default function SnippetNotifications(inProps: SnippetNotificationsProps)
               </Box>
             ) : (
               <ScrollContainer {...ScrollContainerProps}>
-                <MenuList className={classNames(classes.notificationsList, classes.broadcastMessagesBanner)}>
+                <MenuList className={classes.notificationsList}>
                   {scUserContext.user.unseen_notification_banners_counter ? (
                     <MenuItem
-                      className={classes.notificationItem}
+                      className={classNames(classes.notificationItem, classes.broadcastMessagesBanner)}
                       key="banner"
                       component={Link}
                       to={scRoutingContext.url(SCRoutes.USER_NOTIFICATIONS_ROUTE_NAME, {})}>
@@ -390,7 +390,7 @@ export default function SnippetNotifications(inProps: SnippetNotificationsProps)
                           <Avatar alt={preferences[SCPreferences.TEXT_APPLICATION_NAME]} src={preferences[SCPreferences.LOGO_NAVBAR_LOGO_MOBILE]} />
                         }
                         primary={
-                          <Typography variant="body2" gutterBottom component={'div'}>
+                          <Typography component={'div'}>
                             {intl.formatMessage(
                               {id: 'ui.snippetNotifications.broadcastMessages', defaultMessage: 'ui.snippetNotifications.broadcastMessages'},
                               {
