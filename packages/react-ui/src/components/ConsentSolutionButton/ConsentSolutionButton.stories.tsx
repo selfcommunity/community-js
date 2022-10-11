@@ -1,7 +1,7 @@
 import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
 import ConsentSolutionButton from './index';
-import { LEGAL_POLICY_TEC, LEGAL_POLICY_PRIVACY } from "../../constants/LegalPages";
+import {SCLegalPagePoliciesType} from '@selfcommunity/types';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -19,7 +19,7 @@ export const Tec = Template.bind({});
 
 Tec.args = {
   ConsentSolutionProps: {
-    legalPolicies: [LEGAL_POLICY_TEC]
+    legalPolicies: [SCLegalPagePoliciesType.TERMS_AND_CONDITIONS]
   }
 };
 
@@ -27,6 +27,6 @@ export const Privacy = Template.bind({});
 
 Privacy.args = {
   ConsentSolutionProps: {
-    legalPolicies: [LEGAL_POLICY_PRIVACY]
+    legalPolicies: [SCLegalPagePoliciesType.PRIVACY]
   }
 };
