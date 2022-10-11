@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.8-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.8-alpha.4...@selfcommunity/react-core@0.3.8-alpha.5) (2022-10-11)
+
+
+### Performance Improvements
+
+* added fetch reactions hook ([72a6614](https://github.com/selfcommunity/community-js/commit/72a661462691ad561fac71eab507488e47c67099))
+* added reaction feature const ([8a13f27](https://github.com/selfcommunity/community-js/commit/8a13f27d106086eaf64c82cde6dfe783ff30b5f7))
+* Update material ui version ([1a0ca30](https://github.com/selfcommunity/community-js/commit/1a0ca302fe3176cd0cb3e346ce96817833be3360))
+
+
+
+
+
 ## [0.3.8-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.8-alpha.3...@selfcommunity/react-core@0.3.8-alpha.4) (2022-10-03)
 
 **Note:** Version bump only for package @selfcommunity/react-core

@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.8-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.3.8-alpha.0...@selfcommunity/react-i18n@0.3.8-alpha.1) (2022-10-11)
+
+
+### Bug Fixes
+
+* ConsentSolution components ([55a0a07](https://github.com/selfcommunity/community-js/commit/55a0a07b16a35688566b9ca9274a7a8828903df9))
+
+
+### Performance Improvements
+
+* added voteDialog title translation when reactions enabled ([04df5c2](https://github.com/selfcommunity/community-js/commit/04df5c2cd39efc2d71a72fe0921d714a48b9254e))
+
+
+
+
+
 ## [0.3.8-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.3.7...@selfcommunity/react-i18n@0.3.8-alpha.0) (2022-09-29)
 
 **Note:** Version bump only for package @selfcommunity/react-i18n

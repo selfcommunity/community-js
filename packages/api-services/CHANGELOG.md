@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.5-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.5-alpha.4...@selfcommunity/api-services@0.3.5-alpha.5) (2022-10-11)
+
+
+### Bug Fixes
+
+* ConsentSolution components ([79eeb6c](https://github.com/selfcommunity/community-js/commit/79eeb6cbc01133002b94047f1c028458bc9e8e44))
+* ConsentSolution components ([55a0a07](https://github.com/selfcommunity/community-js/commit/55a0a07b16a35688566b9ca9274a7a8828903df9))
+
+
+
+
+
 ## [0.3.5-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.5-alpha.3...@selfcommunity/api-services@0.3.5-alpha.4) (2022-10-03)
 
 

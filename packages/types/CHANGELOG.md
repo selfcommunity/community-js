@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.4.0-alpha.0...@selfcommunity/types@0.4.0-alpha.1) (2022-10-11)
+
+
+### Bug Fixes
+
+* added reaction_count field to feedObj type ([b5e6648](https://github.com/selfcommunity/community-js/commit/b5e6648d865126e46e917501f1e42a795ca6874e))
+* ConsentSolution components ([55a0a07](https://github.com/selfcommunity/community-js/commit/55a0a07b16a35688566b9ca9274a7a8828903df9))
+
+
+
+
+
 # [0.4.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.3.5-alpha.2...@selfcommunity/types@0.4.0-alpha.0) (2022-10-03)
 
 
