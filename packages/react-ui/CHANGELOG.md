@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.6.0-alpha.5...@selfcommunity/react-ui@0.6.0-alpha.6) (2022-10-11)
+
+
+### Bug Fixes
+
+* Added classes for theming Broadcast Message banner in SnippetNotifications.tsx ([580f722](https://github.com/selfcommunity/community-js/commit/580f722c5aa6930b5da721fbcdc070fa8af2bb77))
+* consentSolution component ([4b2f178](https://github.com/selfcommunity/community-js/commit/4b2f17807311ab7bae1906344a0c6449e3882bac))
+* consentSolution constants ([dfc5e56](https://github.com/selfcommunity/community-js/commit/dfc5e564abaf831fb130203afa9acd17d0cdd1f4))
+* Fix lib version ([3fc24dc](https://github.com/selfcommunity/community-js/commit/3fc24dc5dec291a6279d28f763d3a3a2f8cc3da9))
+* preferences ([946fba8](https://github.com/selfcommunity/community-js/commit/946fba8e897968c437f792c84c662b97502504f2))
+
+
+
+
+
 # [0.6.0-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.6.0-alpha.4...@selfcommunity/react-ui@0.6.0-alpha.5) (2022-10-11)
 
 
