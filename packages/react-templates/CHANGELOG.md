@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.3-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.2.3-alpha.9...@selfcommunity/react-templates@0.2.3-alpha.10) (2022-10-11)
+
+
+### Performance Improvements
+
+* Update material ui version ([1a0ca30](https://github.com/selfcommunity/community-js/commit/1a0ca302fe3176cd0cb3e346ce96817833be3360))
+
+
+
+
+
 ## [0.2.3-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.2.3-alpha.8...@selfcommunity/react-templates@0.2.3-alpha.9) (2022-10-03)
 
 **Note:** Version bump only for package @selfcommunity/react-templates
