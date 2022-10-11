@@ -366,7 +366,10 @@ export default function ConsentSolution(inProps: ConsentSolutionProps): JSX.Elem
         const url = window.URL.createObjectURL(new Blob([res], {type: 'application/zip'}));
         const link = document.createElement('a');
         link.href = url;
-        link.setAttribute('download', `udp_${scUserContext.user.username}.zip`);
+        link.setAttribute(
+          'download',
+          `${scUserContext.user.username}_${intl.formatDate(moment(), {year: 'numeric', month: 'numeric', day: 'numeric'})}.zip`
+        );
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
