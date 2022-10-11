@@ -1,5 +1,5 @@
 import {AppBar, Avatar, Badge, Box, Button, IconButton, Toolbar, styled, Grid, Tabs, Tab, useTheme, useMediaQuery, Menu} from '@mui/material';
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useMemo} from 'react';
 import {SCPreferences, useSCPreferences, Link, SCUserContext} from '@selfcommunity/react-core';
 import {SCUserContextType} from '@selfcommunity/react-core';
 import Icon from '@mui/material/Icon';
@@ -133,7 +133,11 @@ export default function Header(inProps: HeaderProps) {
 
   // PREFERENCES
   const scPreferences = useSCPreferences();
-  const logo = scPreferences.preferences[SCPreferences.LOGO_NAVBAR_LOGO].value;
+  const logo = useMemo(() => {
+    return scPreferences.preferences && SCPreferences.LOGO_NAVBAR_LOGO in scPreferences.preferences
+      ? scPreferences.preferences[SCPreferences.LOGO_NAVBAR_LOGO].value
+      : null;
+  }, [scPreferences.preferences]);
 
   // STATE
   const theme = useTheme();

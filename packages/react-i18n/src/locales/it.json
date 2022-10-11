@@ -6,6 +6,7 @@
   "ui.common.error.email": "L'email non è valida",
   "ui.common.error.username": "Il campo username può essere composto da caratteri alfanumerici _ e -",
   "ui.common.error.action": "Si è verificato un'errore. Riprova più tardi!",
+  "ui.common.error.phone": "Il numero di telefono non è valido",
   "ui.common.userBlocked": "Siamo spiacenti, non puoi segnalare un intervento perché il tuo account è bloccato",
   "ui.common.error.messageError": "Non è stato possibile inviare il messaggio!",
   "ui.common.discussionWithoutText": "Vedi la discussione",

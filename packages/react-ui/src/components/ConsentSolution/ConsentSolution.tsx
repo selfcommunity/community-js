@@ -1,7 +1,7 @@
-import React, {forwardRef, useContext, useEffect, useRef, useState} from 'react';
+import React, {forwardRef, useContext, useEffect, useMemo, useRef, useState} from 'react';
 import {useThemeProps} from '@mui/system';
 import {styled} from '@mui/material/styles';
-import {Alert, Checkbox, Button, DialogProps, FormControlLabel, Typography} from '@mui/material';
+import {Alert, Checkbox, Button, DialogProps, FormControlLabel, Typography, CardProps} from '@mui/material';
 import classNames from 'classnames';
 import Icon from '@mui/material/Icon';
 import {LoadingButton} from '@mui/lab';
@@ -18,7 +18,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import {TransitionProps} from '@mui/material/transitions';
-import {LEGAL_POLICIES} from './../../constants/LegalPages';
+import {LEGAL_POLICIES} from './../../constants/LegalPolicies';
 import ConsentSolutionSkeleton from './Skeleton';
 import {getDocumentBody, isDocumentApproved, isEmptyDocumentBody} from '../../utils/legalPages';
 import {FormattedMessage, FormattedDate, FormattedTime, defineMessages, useIntl} from 'react-intl';
@@ -168,12 +168,18 @@ const messages = defineMessages({
   }
 });
 
-export interface ConsentSolutionProps extends DialogProps {
+export interface ConsentSolutionProps extends Pick<DialogProps, Exclude<keyof DialogProps, 'open'>> {
   /**
    * Overrides or extends the styles applied to the component.
    * @default null
    */
   className?: string;
+
+  /**
+   * Open dialog
+   * @default true
+   */
+  open?: boolean;
 
   /**
    * Filter policies
@@ -256,14 +262,18 @@ export default function ConsentSolution(inProps: ConsentSolutionProps): JSX.Elem
     props: inProps,
     name: PREFIX
   });
-  const {className, autoShow = true, onClose, legalPolicies = LEGAL_POLICIES, onLogout, onDeleteAccount, ...rest} = props;
+  const {className, open = true, onClose, legalPolicies = LEGAL_POLICIES, onLogout, onDeleteAccount, ...rest} = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
 
   // PREFERENCES
   const scPreferences: SCPreferencesContextType = useSCPreferences();
-  const communityName = scPreferences.preferences[SCPreferences.TEXT_APPLICATION_NAME].value;
+  const communityName = useMemo(() => {
+    return scPreferences.preferences && SCPreferences.TEXT_APPLICATION_NAME in scPreferences.preferences
+      ? scPreferences.preferences[SCPreferences.TEXT_APPLICATION_NAME].value
+      : null;
+  }, [scPreferences.preferences]);
 
   // STATE
   const [ready, setReady] = React.useState(false);

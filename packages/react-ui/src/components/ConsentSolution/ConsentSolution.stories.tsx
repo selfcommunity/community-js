@@ -1,7 +1,7 @@
 import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
 import ConsentSolution from './ConsentSolution';
-import { LEGAL_POLICY_PRIVACY, LEGAL_POLICY_TEC } from "../../constants/LegalPages";
+import {SCLegalPagePoliciesType} from '@selfcommunity/types';
 
 export default {
   title: 'Design System/React UI/ConsentSolution',
@@ -23,11 +23,11 @@ Base.args = {};
 export const Tec = Template.bind({});
 
 Tec.args = {
-  legalPolicies: [LEGAL_POLICY_TEC]
+  legalPolicies: [SCLegalPagePoliciesType.TERMS_AND_CONDITIONS]
 };
 
 export const Privacy = Template.bind({});
 
 Privacy.args = {
-  legalPolicies: [LEGAL_POLICY_PRIVACY]
+  legalPolicies: [SCLegalPagePoliciesType.PRIVACY]
 };

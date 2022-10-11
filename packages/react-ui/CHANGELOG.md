@@ -3,6 +3,54 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.6.0-alpha.5...@selfcommunity/react-ui@0.6.0-alpha.6) (2022-10-11)
+
+
+### Bug Fixes
+
+* Added classes for theming Broadcast Message banner in SnippetNotifications.tsx ([580f722](https://github.com/selfcommunity/community-js/commit/580f722c5aa6930b5da721fbcdc070fa8af2bb77))
+* consentSolution component ([4b2f178](https://github.com/selfcommunity/community-js/commit/4b2f17807311ab7bae1906344a0c6449e3882bac))
+* consentSolution constants ([dfc5e56](https://github.com/selfcommunity/community-js/commit/dfc5e564abaf831fb130203afa9acd17d0cdd1f4))
+* Fix lib version ([3fc24dc](https://github.com/selfcommunity/community-js/commit/3fc24dc5dec291a6279d28f763d3a3a2f8cc3da9))
+* preferences ([946fba8](https://github.com/selfcommunity/community-js/commit/946fba8e897968c437f792c84c662b97502504f2))
+
+
+
+
+
+# [0.6.0-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.6.0-alpha.4...@selfcommunity/react-ui@0.6.0-alpha.5) (2022-10-11)
+
+
+### Bug Fixes
+
+* Fix phone number in MetadataField.tsx ([b51a550](https://github.com/selfcommunity/community-js/commit/b51a550dc586c6d90f46f0d195ba0703a57e3967))
+
+
+
+
+
+# [0.6.0-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.6.0-alpha.3...@selfcommunity/react-ui@0.6.0-alpha.4) (2022-10-11)
+
+
+### Features
+
+* Added BroadcastMessages to SnippetNotifications.tsx ([dcd12f0](https://github.com/selfcommunity/community-js/commit/dcd12f08ad2109819160cb7a106422384d0b954b))
+
+
+
+
+
+# [0.6.0-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.6.0-alpha.2...@selfcommunity/react-ui@0.6.0-alpha.3) (2022-10-11)
+
+
+### Bug Fixes
+
+* footer ads ([8456e01](https://github.com/selfcommunity/community-js/commit/8456e016272247ff2a3f33b47ea46893d7b0d49b))
+
+
+
+
+
 # [0.6.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.6.0-alpha.1...@selfcommunity/react-ui@0.6.0-alpha.2) (2022-10-11)
 
 

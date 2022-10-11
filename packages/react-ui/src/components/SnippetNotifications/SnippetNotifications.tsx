@@ -1,4 +1,4 @@
-import React, {ReactNode, useEffect, useMemo, useRef, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import CommentNotification from '../Notification/Comment';
 import UserFollowNotification from '../Notification/UserFollow';
@@ -15,21 +15,15 @@ import VoteUpNotification from '../Notification/VoteUp';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import PubSub from 'pubsub-js';
 import ContributionFollowNotification from '../Notification/ContributionFollow';
-import {Avatar, Box, CardProps, MenuItem, MenuList, Stack, Tooltip, Typography} from '@mui/material';
+import {Avatar, Box, CardProps, MenuItem, MenuList, Typography} from '@mui/material';
 import IncubatorApprovedNotification from '../Notification/IncubatorApproved';
 import classNames from 'classnames';
 import Skeleton from './Skeleton';
 import {SCNotificationObjectTemplateType} from '../../types';
 import ScrollContainer from '../../shared/ScrollContainer';
 import {FormattedMessage, useIntl} from 'react-intl';
-import {
-  SCFeedObjectTypologyType,
-  SCNotificationAggregatedType,
-  SCNotificationTopicType,
-  SCNotificationType,
-  SCNotificationTypologyType
-} from '@selfcommunity/types';
-import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
+import {SCNotificationAggregatedType, SCNotificationTopicType, SCNotificationType, SCNotificationTypologyType} from '@selfcommunity/types';
+import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
 import {
   Link,
@@ -45,13 +39,7 @@ import {
 } from '@selfcommunity/react-core';
 import {useThemeProps} from '@mui/system';
 import ContributionNotification from '../Notification/Contribution';
-import {getContributionSnippet, getRouteData} from '../../utils/contribution';
-import DateTimeAgo from '../../shared/DateTimeAgo';
-import Bullet from '../../shared/Bullet';
-import {LoadingButton} from '@mui/lab';
-import Icon from '@mui/material/Icon';
 import NotificationItem from '../../shared/NotificationItem';
-import {USER_NOTIFICATIONS_ROUTE_NAME} from '@selfcommunity/react-core/src/constants/Routes';
 
 const PREFIX = 'SCSnippetNotifications';
 
@@ -60,6 +48,7 @@ const classes = {
   notificationsWrap: `${PREFIX}-notifications-wrap`,
   emptyBoxNotifications: `${PREFIX}-empty-box-notifications`,
   notificationsList: `${PREFIX}-notifications-list`,
+  broadcastMessagesBanner: `${PREFIX}-broadcast-messages-banner`,
   notificationItem: `${PREFIX}-notification-item`
 };
 
@@ -171,6 +160,7 @@ const PREFERENCES = [SCPreferences.LOGO_NAVBAR_LOGO_MOBILE, SCPreferences.TEXT_A
  |emptyBoxNotifications|.SCSnippetNotification-empty-box-notifications|Styles applied to the box indicating that there are no notifications.|
  |notificationsList|.SCSnippetNotification-notifications-list|Styles applied to the list of notifications.|
  |notificationItem|.SCSnippetNotification-notification-item|Styles applied to the single notification.|
+ |broadcastMessagesBanner|.SCSnippetNotification-broadcast-messages-banner|Styles applied to the broadcast message banner.|
 
  * @param inProps
  */
@@ -388,7 +378,7 @@ export default function SnippetNotifications(inProps: SnippetNotificationsProps)
                 <MenuList className={classes.notificationsList}>
                   {scUserContext.user.unseen_notification_banners_counter ? (
                     <MenuItem
-                      className={classes.notificationItem}
+                      className={classNames(classes.notificationItem, classes.broadcastMessagesBanner)}
                       key="banner"
                       component={Link}
                       to={scRoutingContext.url(SCRoutes.USER_NOTIFICATIONS_ROUTE_NAME, {})}>
@@ -400,7 +390,7 @@ export default function SnippetNotifications(inProps: SnippetNotificationsProps)
                           <Avatar alt={preferences[SCPreferences.TEXT_APPLICATION_NAME]} src={preferences[SCPreferences.LOGO_NAVBAR_LOGO_MOBILE]} />
                         }
                         primary={
-                          <Typography variant="body2" gutterBottom component={'div'}>
+                          <Typography component={'div'}>
                             {intl.formatMessage(
                               {id: 'ui.snippetNotifications.broadcastMessages', defaultMessage: 'ui.snippetNotifications.broadcastMessages'},
                               {

@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.4.0-alpha.0...@selfcommunity/react-i18n@0.4.0-alpha.1) (2022-10-11)
+
+
+### Bug Fixes
+
+* Fix phone number in MetadataField.tsx ([b51a550](https://github.com/selfcommunity/community-js/commit/b51a550dc586c6d90f46f0d195ba0703a57e3967))
+
+
+
+
+
+# [0.4.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.3.8-alpha.1...@selfcommunity/react-i18n@0.4.0-alpha.0) (2022-10-11)
+
+
+### Features
+
+* Added BroadcastMessages to SnippetNotifications.tsx ([dcd12f0](https://github.com/selfcommunity/community-js/commit/dcd12f08ad2109819160cb7a106422384d0b954b))
+
+
+
+
+
 ## [0.3.8-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.3.8-alpha.0...@selfcommunity/react-i18n@0.3.8-alpha.1) (2022-10-11)
 
 
