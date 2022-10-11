@@ -270,7 +270,7 @@ export default function ConsentSolution(inProps: ConsentSolutionProps): JSX.Elem
   // PREFERENCES
   const scPreferences: SCPreferencesContextType = useSCPreferences();
   const communityName = useMemo(() => {
-    return SCPreferences.TEXT_APPLICATION_NAME in scPreferences.preferences
+    return scPreferences.preferences && SCPreferences.TEXT_APPLICATION_NAME in scPreferences.preferences
       ? scPreferences.preferences[SCPreferences.TEXT_APPLICATION_NAME].value
       : null;
   }, [scPreferences.preferences]);

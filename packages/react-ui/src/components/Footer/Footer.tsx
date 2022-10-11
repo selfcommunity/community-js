@@ -98,7 +98,7 @@ export default function Footer(inProps: FooterProps): JSX.Element {
   // PREFERENCES
   const scPreferences: SCPreferencesContextType = useSCPreferences();
   const copyRight = useMemo(() => {
-    return SCPreferences.TEXT_APPLICATION_COPYRIGHT in scPreferences.preferences
+    return scPreferences.preferences && SCPreferences.TEXT_APPLICATION_COPYRIGHT in scPreferences.preferences
       ? scPreferences.preferences[SCPreferences.TEXT_APPLICATION_COPYRIGHT].value
       : null;
   }, [scPreferences.preferences]);

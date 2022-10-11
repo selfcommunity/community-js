@@ -113,7 +113,9 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
   // PREFERENCES
   const scPreferences = useSCPreferences();
   const logo = useMemo(() => {
-    return SCPreferences.LOGO_NAVBAR_LOGO in scPreferences.preferences ? scPreferences.preferences[SCPreferences.LOGO_NAVBAR_LOGO].value : null;
+    return scPreferences.preferences && SCPreferences.LOGO_NAVBAR_LOGO in scPreferences.preferences
+      ? scPreferences.preferences[SCPreferences.LOGO_NAVBAR_LOGO].value
+      : null;
   }, [scPreferences.preferences]);
 
   const [openSettings, setOpenSettings] = useState<boolean>(false);
