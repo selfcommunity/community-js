@@ -1,6 +1,6 @@
 import {AppBar, Badge, Box, Button, Grid, IconButton, styled, SwipeableDrawer, Tab, Tabs, Toolbar, Typography} from '@mui/material';
 import Icon from '@mui/material/Icon';
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useMemo, useState} from 'react';
 import {Link, SCPreferences, SCUserContext, SCUserContextType, useSCPreferences} from '@selfcommunity/react-core';
 import {useThemeProps} from '@mui/system';
 import SearchBar, {HeaderSearchBarProps} from '../SearchBar';
@@ -112,7 +112,10 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
 
   // PREFERENCES
   const scPreferences = useSCPreferences();
-  const logo = scPreferences.preferences[SCPreferences.LOGO_NAVBAR_LOGO].value;
+  const logo = useMemo(() => {
+    return SCPreferences.LOGO_NAVBAR_LOGO in scPreferences.preferences ? scPreferences.preferences[SCPreferences.LOGO_NAVBAR_LOGO].value : null;
+  }, [scPreferences.preferences]);
+
   const [openSettings, setOpenSettings] = useState<boolean>(false);
 
   // HANDLERS
