@@ -38,11 +38,18 @@ export interface TagChipProps {
    * If `true`, the chip will appear clickable, and will raise when pressed,
    * even if the onClick prop is not defined.
    * If `false`, the chip will not appear clickable, even if onClick prop is defined.
-   * This can be used, for example,
-   * along with the component prop to indicate an anchor Chip is clickable.
-   * Note: this controls the UI and does not affect the onClick event.
+   * This can be used, for example, along with the component prop to indicate an anchor Chip is clickable.
+   * @default true
    */
   clickable?: boolean;
+  /**
+   * If `true`, the chip will appear disposable, and will raise when pressed,
+   * even if the onDelete prop is not defined.
+   * If `false`, the chip will not appear disposable, even if onDelete prop is defined.
+   * This can be used, for example, along with the component prop to indicate an anchor Chip is disposable.
+   * @default true
+   */
+  disposable?: boolean;
   /**
    * If `true`, the component is disabled.
    * @default false
@@ -94,7 +101,17 @@ export interface TagChipProps {
 
 export default function TagChip(props: TagChipProps): JSX.Element {
   // PROPS
-  const {tag, label = null, ellipsis = false, onClick = null, onDelete = null, className = null, ...rest} = props;
+  const {
+    tag,
+    clickable = true,
+    disposable = true,
+    label = null,
+    ellipsis = false,
+    onClick = null,
+    onDelete = null,
+    className = null,
+    ...rest
+  } = props;
 
   // HANDLERS
   const handleClick = (): void => {
@@ -111,8 +128,8 @@ export default function TagChip(props: TagChipProps): JSX.Element {
     <Root
       className={classNames(className, {[classes.ellipsis]: ellipsis})}
       sx={{backgroundColor: `${tag.color}`, color: (theme) => theme.palette.getContrastText(tag.color)}}
-      onClick={handleClick}
-      onDelete={handleDelete}
+      {...(clickable && {onClick: handleClick})}
+      {...(disposable && {onDelete: handleDelete})}
       label={label ? label : tag.name}
       {...rest}
     />

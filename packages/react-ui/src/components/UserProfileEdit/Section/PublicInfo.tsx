@@ -238,6 +238,8 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
           </MenuItem>
         ));
         break;
+      case SCUserProfileFields.TAGS:
+        return null;
       default:
         if (metadataDefinitions[field]) {
           return (

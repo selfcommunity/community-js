@@ -368,7 +368,7 @@ export default function ConsentSolution(inProps: ConsentSolutionProps): JSX.Elem
         link.href = url;
         link.setAttribute(
           'download',
-          `${scUserContext.user.username}_${intl.formatDate(moment(), {year: 'numeric', month: 'numeric', day: 'numeric'})}.zip`
+          `${scUserContext.user.username}_${intl.formatDate(moment().format(), {year: 'numeric', month: 'numeric', day: 'numeric'})}.zip`
         );
         document.body.appendChild(link);
         link.click();
