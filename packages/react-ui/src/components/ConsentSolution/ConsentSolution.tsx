@@ -18,7 +18,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import {TransitionProps} from '@mui/material/transitions';
-import {LEGAL_POLICIES} from './../../constants/LegalPages';
+import {LEGAL_POLICIES} from './../../constants/LegalPolicies';
 import ConsentSolutionSkeleton from './Skeleton';
 import {getDocumentBody, isDocumentApproved, isEmptyDocumentBody} from '../../utils/legalPages';
 import {FormattedMessage, FormattedDate, FormattedTime, defineMessages, useIntl} from 'react-intl';
