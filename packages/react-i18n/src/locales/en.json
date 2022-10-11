@@ -396,6 +396,7 @@
   "ui.userToastNotifications.userBlocked.accountReactivated": "Your account has been <b>reactivated</b>",
 
   "ui.snippetNotifications.noNotifications": "At the moment, there aren't notifications",
+  "ui.snippetNotifications.broadcastMessages": "<b>MESSAGES:</b> you have {count, plural, =0 {# messages unread. <link>See it now →</link>} one {# message unread. <link>See it now →</link>} other {# messages unreads. <link>See it now →</link>}}",
 
   "ui.messageEditor.button.send" : "send",
 

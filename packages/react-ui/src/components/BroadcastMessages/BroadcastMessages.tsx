@@ -1,10 +1,17 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useContext, useEffect, useMemo, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Box, Button, CardContent} from '@mui/material';
+import {Avatar, Box, Button, CardContent} from '@mui/material';
 import {SCBroadcastMessageType, SCNotificationTopicType, SCNotificationTypologyType} from '@selfcommunity/types';
 import {http, Endpoints} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
-import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
+import {
+  SCPreferences,
+  SCPreferencesContext,
+  SCPreferencesContextType,
+  SCUserContextType,
+  useSCPreferences,
+  useSCUser
+} from '@selfcommunity/react-core';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import Message, {MessageProps} from './Message';
 import classNames from 'classnames';
@@ -19,6 +26,7 @@ const PREFIX = 'SCBroadcastMessages';
 const classes = {
   root: `${PREFIX}-root`,
   boxLoadMore: `${PREFIX}-box-load-more`,
+  avatarLoadMore: `${PREFIX}-avatar-load-more`,
   buttonLoadMore: `${PREFIX}-button-load-more`
 };
 
@@ -28,10 +36,16 @@ const Root = styled(Box, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   [`& .${classes.boxLoadMore}`]: {
+    textAlign: 'center',
     '& > div': {
       paddingBottom: theme.spacing(2)
     },
     marginBottom: theme.spacing(2)
+  },
+  [`& .${classes.avatarLoadMore}`]: {
+    width: theme.spacing(4),
+    height: theme.spacing(4),
+    marginRight: theme.spacing()
   },
   [`& .${classes.buttonLoadMore}`]: {
     textTransform: 'capitalize',
@@ -70,6 +84,9 @@ export interface BroadcastMessagesProps {
    */
   [p: string]: any;
 }
+
+const PREFERENCES = [SCPreferences.LOGO_NAVBAR_LOGO_MOBILE, SCPreferences.TEXT_APPLICATION_NAME];
+
 /**
  > API documentation for the Community-JS Broadcast Messages component. Learn about the available props and the CSS API.
  > This component handles message broadcasts. It initially displays unseen messages. If all messages have been viewed it will show at most one message.
@@ -87,6 +104,7 @@ export interface BroadcastMessagesProps {
  |---|---|---|
  |root|.SCBroadcastMessages-root|Styles applied to the root element.|
  |boxLoadMore|.SCBroadcastMessages-box-load-more|Styles applied to load more box.|
+ |avatarLoadMore|.SCBroadcastMessages-avatar-load-more|Styles applied to load more avatar.|
  |buttonLoadMore|.SCBroadcastMessages-button-load-more|Styles applied to load more button.|
 
  * @param inProps
@@ -123,6 +141,14 @@ export default function BroadcastMessages(inProps: BroadcastMessagesProps): JSX.
 
   // REFS
   const refreshSubscription = useRef(null);
+
+  // Compute preferences
+  const scPreferences: SCPreferencesContextType = useSCPreferences();
+  const preferences = useMemo(() => {
+    const _preferences = {};
+    PREFERENCES.map((p) => (_preferences[p] = p in scPreferences.preferences ? scPreferences.preferences[p].value : null));
+    return _preferences;
+  }, [scPreferences.preferences]);
 
   const handleDisposeMessage = (message) => {
     setMessages(messages.filter((m) => m.id != message.id));
@@ -213,6 +239,12 @@ export default function BroadcastMessages(inProps: BroadcastMessagesProps): JSX.
         <Widget className={classes.boxLoadMore}>
           <CardContent>
             <Button variant="text" onClick={fetchOtherMessages} disabled={loading} color="inherit" classes={{root: classes.buttonLoadMore}}>
+              <Avatar
+                component="span"
+                className={classes.avatarLoadMore}
+                alt={preferences[SCPreferences.TEXT_APPLICATION_NAME]}
+                src={preferences[SCPreferences.LOGO_NAVBAR_LOGO_MOBILE]}
+              />
               <FormattedMessage id="ui.broadcastMessages.loadMore" defaultMessage="ui.broadcastMessages.loadMore" />
             </Button>
           </CardContent>
