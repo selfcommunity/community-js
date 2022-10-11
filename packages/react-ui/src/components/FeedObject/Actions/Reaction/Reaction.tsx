@@ -125,7 +125,9 @@ const classes = {
   inline: `${PREFIX}-inline`,
   inlineActionButton: `${PREFIX}-inline-action-button`,
   viewAudienceButton: `${PREFIX}-view-audience-button`,
-  groupedIcons: `${PREFIX}-grouped-icons`
+  groupedIcons: `${PREFIX}-grouped-icons`,
+  reactionAvatar: `${PREFIX}-reaction-avatar`,
+  reactionIcon: `${PREFIX}-reaction-icon`
 };
 
 const Root = styled(Box, {
@@ -161,6 +163,16 @@ const Root = styled(Box, {
       height: '20px',
       fontSize: '0.8rem'
     }
+  },
+  [`& .${classes.reactionAvatar}`]: {
+    '& .MuiAvatar-img': {
+      width: theme.spacing(2),
+      height: theme.spacing(2)
+    }
+  },
+  [`& .${classes.reactionIcon}`]: {
+    width: theme.spacing(2),
+    height: theme.spacing(2)
   }
 }));
 
@@ -214,7 +226,6 @@ export default function Reaction(inProps: VoteProps): JSX.Element {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const [hovered, setHovered] = useState<boolean>(false);
   const [reactionsList, setReactionsList] = useState<[] | any>(obj.reactions_count);
-  console.log(obj.reaction);
 
   // HANDLERS
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
@@ -440,7 +451,7 @@ export default function Reaction(inProps: VoteProps): JSX.Element {
               endIcon={obj.vote_count !== 0 ? obj.vote_count : null}>
               <AvatarGroup className={classes.groupedIcons} max={3}>
                 {reactionsList.map((r: any, i) => (
-                  <Avatar alt={r.reaction.label} src={r.reaction.image} key={i} />
+                  <Avatar alt={r.reaction.label} src={r.reaction.image} key={i} className={classes.reactionAvatar} />
                 ))}
               </AvatarGroup>
             </Button>
@@ -562,8 +573,8 @@ export default function Reaction(inProps: VoteProps): JSX.Element {
                 color="inherit"
                 classes={{root: classNames(classes.actionButton, {[classes.inlineActionButton]: inlineAction})}}>
                 {scUserContext.user && obj.voted ? (
-                  <Icon fontSize={'large'} color="primary">
-                    <img alt={obj.reaction.label} src={obj.reaction.image} width={20} height={20} />
+                  <Icon fontSize={'large'}>
+                    <img alt={obj.reaction.label} src={obj.reaction.image} className={classes.reactionIcon} />
                   </Icon>
                 ) : (
                   <Icon fontSize={'large'}>thumb_up_off_alt</Icon>
@@ -599,7 +610,7 @@ export default function Reaction(inProps: VoteProps): JSX.Element {
                 {reactions.map((reaction: SCReactionType, index) => (
                   <MenuItem key={index} onClick={() => vote(reaction)}>
                     <Icon>
-                      <img alt={reaction.label} src={reaction.image} width={20} height={20} />
+                      <img alt={reaction.label} src={reaction.image} width={16} height={16} />
                     </Icon>
                   </MenuItem>
                 ))}
