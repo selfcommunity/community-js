@@ -14313,7 +14313,7 @@ react-sortablejs@^6.0.0:
     classnames "2.3.1"
     tiny-invariant "1.2.0"
 
-react-stickynode@^4.0.0:
+react-stickynode@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/react-stickynode/-/react-stickynode-4.1.0.tgz#ecd80987f64b98f999c589cd4b992eee6bed9562"
   integrity sha512-zylWgfad75jLfh/gYIayDcDWIDwO4weZrsZqDpjZ/axhF06zRjdCWFBgUr33Pvv2+htKWqPSFksWTyB6aMQ1ZQ==
