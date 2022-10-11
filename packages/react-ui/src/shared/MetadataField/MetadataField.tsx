@@ -4,10 +4,9 @@ import {MenuItem, TextField} from '@mui/material';
 import {SCMetadataType, SCMetadataTypeFieldType} from '@selfcommunity/types';
 import EmailTextField from '../EmailTextField';
 import UrlTextField from '../UrlTextField';
+import PhoneTextField from '../PhoneTextField';
 import classNames from 'classnames';
 import {TextFieldProps} from '@mui/material/TextField';
-
-const {MuiTelInput} = require('mui-tel-input');
 
 const PREFIX = 'SCMetadataField';
 
@@ -29,13 +28,6 @@ const MetadataField = (props: MetadataFieldProps): JSX.Element => {
   // PROPS
   const {metadata, className = '', ...rest} = props;
 
-  // HANDLERS
-  const handleChangeValue = (value) => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore
-    rest.onChange && rest.onChange({target: {name: rest.name, value}});
-  };
-
   // RENDER
   let component = null;
 
@@ -49,15 +41,7 @@ const MetadataField = (props: MetadataFieldProps): JSX.Element => {
       );
       break;
     case SCMetadataTypeFieldType.PHONE_NUMBER:
-      component = (
-        <MuiTelInput
-          {...rest}
-          className={classNames(className, classes.root)}
-          label={metadata.label}
-          onChange={handleChangeValue}
-          required={metadata?.mandatory}
-        />
-      );
+      component = <PhoneTextField {...rest} className={classNames(className, classes.root)} label={metadata.label} required={metadata?.mandatory} />;
       break;
     case SCMetadataTypeFieldType.ENUM:
       component = (
