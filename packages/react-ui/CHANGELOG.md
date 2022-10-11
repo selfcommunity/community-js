@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.6.0-alpha.3...@selfcommunity/react-ui@0.6.0-alpha.4) (2022-10-11)
+
+
+### Features
+
+* Added BroadcastMessages to SnippetNotifications.tsx ([dcd12f0](https://github.com/selfcommunity/community-js/commit/dcd12f08ad2109819160cb7a106422384d0b954b))
+
+
+
+
+
+# [0.6.0-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.6.0-alpha.2...@selfcommunity/react-ui@0.6.0-alpha.3) (2022-10-11)
+
+
+### Bug Fixes
+
+* footer ads ([8456e01](https://github.com/selfcommunity/community-js/commit/8456e016272247ff2a3f33b47ea46893d7b0d49b))
+
+
+
+
+
 # [0.6.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.6.0-alpha.1...@selfcommunity/react-ui@0.6.0-alpha.2) (2022-10-11)
 
 
