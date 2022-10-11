@@ -96,7 +96,9 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
   // PREFERENCES
   const scPreferences: SCPreferencesContextType = useSCPreferences();
   const metadataDefinitions = useMemo(() => {
-    return JSON.parse(scPreferences.preferences[SCPreferences.CONFIGURATIONS_USER_METADATA_DEFINITIONS].value);
+    return SCPreferences.CONFIGURATIONS_USER_METADATA_DEFINITIONS in scPreferences.preferences
+      ? JSON.parse(scPreferences.preferences[SCPreferences.CONFIGURATIONS_USER_METADATA_DEFINITIONS].value)
+      : null;
   }, [scPreferences.preferences]);
 
   // STATE
