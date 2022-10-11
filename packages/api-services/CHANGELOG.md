@@ -3,6 +3,57 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.5-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.5-alpha.4...@selfcommunity/api-services@0.3.5-alpha.5) (2022-10-11)
+
+
+### Bug Fixes
+
+* ConsentSolution components ([79eeb6c](https://github.com/selfcommunity/community-js/commit/79eeb6cbc01133002b94047f1c028458bc9e8e44))
+* ConsentSolution components ([55a0a07](https://github.com/selfcommunity/community-js/commit/55a0a07b16a35688566b9ca9274a7a8828903df9))
+
+
+
+
+
+## [0.3.5-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.5-alpha.3...@selfcommunity/api-services@0.3.5-alpha.4) (2022-10-03)
+
+
+### Performance Improvements
+
+* added reaction service + test ([2496aae](https://github.com/selfcommunity/community-js/commit/2496aae07010156a66c402e1f435a63abcc3b883))
+
+
+
+
+
+## [0.3.5-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.5-alpha.2...@selfcommunity/api-services@0.3.5-alpha.3) (2022-09-29)
+
+**Note:** Version bump only for package @selfcommunity/api-services
+
+
+
+
+
+## [0.3.5-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.5-alpha.1...@selfcommunity/api-services@0.3.5-alpha.2) (2022-09-29)
+
+**Note:** Version bump only for package @selfcommunity/api-services
+
+
+
+
+
+## [0.3.5-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.5-alpha.0...@selfcommunity/api-services@0.3.5-alpha.1) (2022-09-29)
+
+
+### Bug Fixes
+
+* Fix SCPaginatedResponse return type ([df91ca4](https://github.com/selfcommunity/community-js/commit/df91ca4e40b486b33ae561afdff7c23c3ef91095))
+* Fix SCPaginatedResponse return type ([23556a4](https://github.com/selfcommunity/community-js/commit/23556a48b8ff10c4806fc55901420d936a5a6442))
+
+
+
+
+
 ## [0.3.5-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.4...@selfcommunity/api-services@0.3.5-alpha.0) (2022-09-29)
 
 **Note:** Version bump only for package @selfcommunity/api-services

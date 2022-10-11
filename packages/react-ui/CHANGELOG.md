@@ -3,6 +3,93 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.6.0-alpha.1...@selfcommunity/react-ui@0.6.0-alpha.2) (2022-10-11)
+
+
+### Bug Fixes
+
+* adv in post comments ([15ef8e7](https://github.com/selfcommunity/community-js/commit/15ef8e75488d3e1feddf65a4b60dc60b2c4aa5e8))
+* ConsentSolution components ([70f70ef](https://github.com/selfcommunity/community-js/commit/70f70ef4cb38339618203ea32181bd3b01b60ffc))
+* ConsentSolution components ([79eeb6c](https://github.com/selfcommunity/community-js/commit/79eeb6cbc01133002b94047f1c028458bc9e8e44))
+* ConsentSolution components ([549617b](https://github.com/selfcommunity/community-js/commit/549617b65a2696899f373263aae42f22fdd59334))
+* ConsentSolution components ([d41a1c4](https://github.com/selfcommunity/community-js/commit/d41a1c491c99f2794e3ee923914eacd3b21b3ab4))
+* ConsentSolution components ([64e314d](https://github.com/selfcommunity/community-js/commit/64e314d59cfa898ed772d43c3a1c304df3a4587b))
+* ConsentSolution components ([55a0a07](https://github.com/selfcommunity/community-js/commit/55a0a07b16a35688566b9ca9274a7a8828903df9))
+* Fix error in keys for settings profile edit ([e9cb11c](https://github.com/selfcommunity/community-js/commit/e9cb11c2b644ac470c5aeeab4ae5789fa9c7cfc8))
+* fixed reaction scrollable tabs ([d67b4b9](https://github.com/selfcommunity/community-js/commit/d67b4b92a6489477855a481601d6bd9e4c4dec0a))
+* fixed vote action in single feedObj view ([3a536e6](https://github.com/selfcommunity/community-js/commit/3a536e614e8dd056ef4dd70365e9ec10566363d9))
+* rolled back vote component ([c86dd31](https://github.com/selfcommunity/community-js/commit/c86dd310cb0d9b7b307accf787fb4bb2a91eab58))
+* user profile tags ([f87155d](https://github.com/selfcommunity/community-js/commit/f87155dab749b05934cd35c48f601708886e94c9))
+
+
+### Performance Improvements
+
+* added reactions rendering in feedObject vote audience dialog. ([e385475](https://github.com/selfcommunity/community-js/commit/e385475d81e5c6186aa1d9775ac887e66340eb8a))
+* Update material ui version ([1a0ca30](https://github.com/selfcommunity/community-js/commit/1a0ca302fe3176cd0cb3e346ce96817833be3360))
+
+
+
+
+
+# [0.6.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.6.0-alpha.0...@selfcommunity/react-ui@0.6.0-alpha.1) (2022-10-03)
+
+
+### Bug Fixes
+
+* Fix enum MetadataField.tsx ([6581de5](https://github.com/selfcommunity/community-js/commit/6581de5045e790fc46bb0ed97f98f7e6afc9f332))
+
+
+
+
+
+# [0.6.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.8-alpha.7...@selfcommunity/react-ui@0.6.0-alpha.0) (2022-10-03)
+
+
+### Bug Fixes
+
+* storybook webpack configuration ([8673c94](https://github.com/selfcommunity/community-js/commit/8673c94e081865c15f705d710f02509494404de9))
+
+
+### Features
+
+* Added metadata definition for user profile ([96ab06b](https://github.com/selfcommunity/community-js/commit/96ab06b49e6c70c5445b04b903b697f363a20a80))
+
+
+
+
+
+## [0.5.8-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.8-alpha.6...@selfcommunity/react-ui@0.5.8-alpha.7) (2022-09-29)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.5.8-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.8-alpha.5...@selfcommunity/react-ui@0.5.8-alpha.6) (2022-09-29)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.5.8-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.8-alpha.4...@selfcommunity/react-ui@0.5.8-alpha.5) (2022-09-29)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.5.8-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.8-alpha.3...@selfcommunity/react-ui@0.5.8-alpha.4) (2022-09-29)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
 ## [0.5.8-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.8-alpha.2...@selfcommunity/react-ui@0.5.8-alpha.3) (2022-09-29)
 
 **Note:** Version bump only for package @selfcommunity/react-ui

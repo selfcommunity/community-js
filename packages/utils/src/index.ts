@@ -11,6 +11,7 @@ import {
 } from './utils/url';
 import {getHighestSafeWindowContext, getWindowWidth, getWindowHeight, isClientSideRendering} from './utils/window';
 import {mergeDeep, isObject} from './utils/object';
+import {arraysEqual} from './utils/array';
 import {loadVersionBrowser} from './utils/browser';
 import LRUCache, {LruCache, LruCacheType, CacheStrategies} from './utils/cache';
 import {Logger} from './utils/logger';
@@ -43,6 +44,7 @@ export {
   Logger,
   mergeDeep,
   isObject,
+  arraysEqual,
   WSClient,
   WSClientType,
   WSClientPropTypes,

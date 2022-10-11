@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useRef, useState} from 'react';
+import React, {ReactNode, useEffect, useMemo, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import CommentNotification from '../Notification/Comment';
 import UserFollowNotification from '../Notification/UserFollow';
@@ -15,19 +15,43 @@ import VoteUpNotification from '../Notification/VoteUp';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import PubSub from 'pubsub-js';
 import ContributionFollowNotification from '../Notification/ContributionFollow';
-import {Box, CardProps, MenuItem, MenuList} from '@mui/material';
+import {Avatar, Box, CardProps, MenuItem, MenuList, Stack, Tooltip, Typography} from '@mui/material';
 import IncubatorApprovedNotification from '../Notification/IncubatorApproved';
 import classNames from 'classnames';
 import Skeleton from './Skeleton';
 import {SCNotificationObjectTemplateType} from '../../types';
 import ScrollContainer from '../../shared/ScrollContainer';
-import {FormattedMessage} from 'react-intl';
-import {SCNotificationAggregatedType, SCNotificationTopicType, SCNotificationType, SCNotificationTypologyType} from '@selfcommunity/types';
+import {FormattedMessage, useIntl} from 'react-intl';
+import {
+  SCFeedObjectTypologyType,
+  SCNotificationAggregatedType,
+  SCNotificationTopicType,
+  SCNotificationType,
+  SCNotificationTypologyType
+} from '@selfcommunity/types';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
-import {SCNotification, SCUserContextType, useSCUser} from '@selfcommunity/react-core';
+import {
+  Link,
+  SCNotification,
+  SCPreferences,
+  SCPreferencesContextType,
+  SCRoutes,
+  SCRoutingContextType,
+  SCUserContextType,
+  useSCPreferences,
+  useSCRouting,
+  useSCUser
+} from '@selfcommunity/react-core';
 import {useThemeProps} from '@mui/system';
 import ContributionNotification from '../Notification/Contribution';
+import {getContributionSnippet, getRouteData} from '../../utils/contribution';
+import DateTimeAgo from '../../shared/DateTimeAgo';
+import Bullet from '../../shared/Bullet';
+import {LoadingButton} from '@mui/lab';
+import Icon from '@mui/material/Icon';
+import NotificationItem from '../../shared/NotificationItem';
+import {USER_NOTIFICATIONS_ROUTE_NAME} from '@selfcommunity/react-core/src/constants/Routes';
 
 const PREFIX = 'SCSnippetNotifications';
 
@@ -121,6 +145,8 @@ export interface SnippetNotificationsProps extends CardProps {
   [p: string]: any;
 }
 
+const PREFERENCES = [SCPreferences.LOGO_NAVBAR_LOGO_MOBILE, SCPreferences.TEXT_APPLICATION_NAME];
+
 /**
  *
  > API documentation for the Community-JS SnippetNotifications component. Learn about the available props and the CSS API.
@@ -168,6 +194,7 @@ export default function SnippetNotifications(inProps: SnippetNotificationsProps)
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
+  const scRoutingContext: SCRoutingContextType = useSCRouting();
 
   // STATE
   const [notifications, setNotifications] = useState<SCNotificationAggregatedType[]>([]);
@@ -175,6 +202,17 @@ export default function SnippetNotifications(inProps: SnippetNotificationsProps)
 
   // REFS
   const notificationSubscription = useRef(null);
+
+  // Compute preferences
+  const scPreferences: SCPreferencesContextType = useSCPreferences();
+  const preferences = useMemo(() => {
+    const _preferences = {};
+    PREFERENCES.map((p) => (_preferences[p] = p in scPreferences.preferences ? scPreferences.preferences[p].value : null));
+    return _preferences;
+  }, [scPreferences.preferences]);
+
+  // HOOKS
+  const intl = useIntl();
 
   /**
    * Perform vote
@@ -348,6 +386,34 @@ export default function SnippetNotifications(inProps: SnippetNotificationsProps)
             ) : (
               <ScrollContainer {...ScrollContainerProps}>
                 <MenuList className={classes.notificationsList}>
+                  {scUserContext.user.unseen_notification_banners_counter ? (
+                    <MenuItem
+                      className={classes.notificationItem}
+                      key="banner"
+                      component={Link}
+                      to={scRoutingContext.url(SCRoutes.USER_NOTIFICATIONS_ROUTE_NAME, {})}>
+                      <NotificationItem
+                        template={SCNotificationObjectTemplateType.SNIPPET}
+                        isNew
+                        disableTypography
+                        image={
+                          <Avatar alt={preferences[SCPreferences.TEXT_APPLICATION_NAME]} src={preferences[SCPreferences.LOGO_NAVBAR_LOGO_MOBILE]} />
+                        }
+                        primary={
+                          <Typography variant="body2" gutterBottom component={'div'}>
+                            {intl.formatMessage(
+                              {id: 'ui.snippetNotifications.broadcastMessages', defaultMessage: 'ui.snippetNotifications.broadcastMessages'},
+                              {
+                                count: scUserContext.user.unseen_notification_banners_counter,
+                                b: (...chunks) => <strong>{chunks}</strong>,
+                                link: (...chunks) => <Link to={scRoutingContext.url(SCRoutes.USER_NOTIFICATIONS_ROUTE_NAME, {})}>{chunks}</Link>
+                              }
+                            )}
+                          </Typography>
+                        }
+                      />
+                    </MenuItem>
+                  ) : null}
                   {notifications.slice(0, showMax).map((notificationObject: SCNotificationAggregatedType, i) =>
                     notificationObject.aggregated.map((n: SCNotificationType, k) => (
                       <MenuItem className={classes.notificationItem} key={k} onClick={(e) => handleSingleNotificationClick(e, n)}>
