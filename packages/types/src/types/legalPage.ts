@@ -56,6 +56,10 @@ export interface SCLegalPageType {
    * The id of the creator of this page
    */
   created_by: number;
+  /**
+   * User ack
+   */
+  ack?: SCLegalPageAckType;
 }
 
 /**

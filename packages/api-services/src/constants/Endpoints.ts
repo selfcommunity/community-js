@@ -980,6 +980,10 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/legal_page/search/'),
     method: 'GET'
   },
+  LegalPagesLastRevision: {
+    url: urlReplacer('/api/v2/legal_page/last_revisions/'),
+    method: 'GET'
+  },
   LegalPageLastRevision: {
     url: urlReplacer('/api/v2/legal_page/$(policy)/'),
     method: 'GET'
@@ -1064,7 +1068,7 @@ const Endpoints: {[key: string]: EndpointType} = {
     method: 'GET'
   },
   DataPortabilityDownload: {
-    url: urlReplacer('/api/v2/udp/'),
+    url: urlReplacer('/api/v2/udp/download'),
     method: 'GET'
   },
   /**
