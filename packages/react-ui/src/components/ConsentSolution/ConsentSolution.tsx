@@ -1,4 +1,4 @@
-import React, { forwardRef, useContext, useEffect, useRef, useState } from "react";
+import React, {forwardRef, useContext, useEffect, useRef, useState} from 'react';
 import {useThemeProps} from '@mui/system';
 import {styled} from '@mui/material/styles';
 import {Alert, Checkbox, Button, DialogProps, FormControlLabel, Typography} from '@mui/material';
@@ -22,7 +22,7 @@ import {LEGAL_POLICIES} from './../../constants/LegalPages';
 import ConsentSolutionSkeleton from './Skeleton';
 import {getDocumentBody, isDocumentApproved, isEmptyDocumentBody} from '../../utils/legalPages';
 import {FormattedMessage, FormattedDate, FormattedTime, defineMessages, useIntl} from 'react-intl';
-import { elementScrollTo } from "seamless-scroll-polyfill";
+import {elementScrollTo} from 'seamless-scroll-polyfill';
 
 const PREFIX = 'SCConsentSolution';
 
@@ -67,16 +67,13 @@ const Root = styled(Dialog, {
   [`& .${classes.content}`]: {
     padding: theme.spacing(2),
     overflowX: 'hidden',
-    fontSize: '0.7rem',
+    fontSize: '0.8rem',
     [theme.breakpoints.down('sm')]: {
       padding: 12,
-      '& h5': {
+      '& h6': {
         fontSize: '0.8rem'
       },
-      '& span': {
-        fontSize: '0.7rem'
-      },
-      '& p': {
+      '& span, p, li': {
         fontSize: '0.7rem'
       },
       '& li': {
@@ -130,8 +127,8 @@ const Root = styled(Dialog, {
   [`& .${classes.alertAcceptDocument}`]: {
     padding: theme.spacing(),
     [theme.breakpoints.down('sm')]: {
-      fontSize: '0.6rem',
-      padding: 3
+      fontSize: '0.7rem',
+      padding: 5
     }
   },
   [`& .${classes.acceptConditions}`]: {
@@ -366,10 +363,10 @@ export default function ConsentSolution(inProps: ConsentSolutionProps): JSX.Elem
     setDownloadingDataPortability(true);
     DataPortabilityService.downloadDataPortability()
       .then((res) => {
-        const url = window.URL.createObjectURL(new Blob([res.data], {type: 'application/zip'}));
+        const url = window.URL.createObjectURL(new Blob([res], {type: 'application/zip'}));
         const link = document.createElement('a');
         link.href = url;
-        link.setAttribute('download', `data_portability_${scUserContext.user.username}.zip`);
+        link.setAttribute('download', `udp_${scUserContext.user.username}_${}.zip`);
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
@@ -589,13 +586,11 @@ export default function ConsentSolution(inProps: ConsentSolutionProps): JSX.Elem
           <Typography variant="body2">
             <FormattedMessage id="ui.consentSolution.deleteAccountTitle" defaultMessage="ui.consentSolution.deleteAccountTitle" />
           </Typography>
-          <Typography variant="body2">
-            <ul>
-              {intl.formatMessage(messages.createDpSectionInfo, {
-                li: (chunks) => <li>{chunks}</li>
-              })}
-            </ul>
-          </Typography>
+          <ul>
+            {intl.formatMessage(messages.createDpSectionInfo, {
+              li: (chunks) => <li>{chunks}</li>
+            })}
+          </ul>
           <LoadingButton
             size="small"
             loading={(dataPortability && dataPortability.computing) || loadingDataPortability}
@@ -638,9 +633,7 @@ export default function ConsentSolution(inProps: ConsentSolutionProps): JSX.Elem
               values={{username: capitalize(scUserContext.user.username)}}
             />
           </Typography>
-          <Typography variant="body2">
-            <ul>{intl.formatMessage(messages.deleteAccountDpSectionInfo, {communityName, li: (chunks) => <li>{chunks}</li>})}</ul>
-          </Typography>
+          <ul>{intl.formatMessage(messages.deleteAccountDpSectionInfo, {communityName, li: (chunks) => <li>{chunks}</li>})}</ul>
           <FormControlLabel
             control={
               <Checkbox
@@ -701,9 +694,7 @@ export default function ConsentSolution(inProps: ConsentSolutionProps): JSX.Elem
           <Typography variant="body2">
             <FormattedMessage id="ui.consentSolution.removeAccountTitle" defaultMessage="ui.consentSolution.removeAccountTitle" />
           </Typography>
-          <Typography variant="body2">
-            <ul>{intl.formatMessage(messages.deleteAccountDpSectionInfo, {communityName, li: (chunks) => <li>{chunks}</li>})}</ul>
-          </Typography>
+          <ul>{intl.formatMessage(messages.deleteAccountDpSectionInfo, {communityName, li: (chunks) => <li>{chunks}</li>})}</ul>
           <br />
           <Typography variant="body2">
             <b>
