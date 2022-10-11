@@ -3,6 +3,65 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.6.0-alpha.0...@selfcommunity/react-ui@0.6.0-alpha.1) (2022-10-03)
+
+
+### Bug Fixes
+
+* Fix enum MetadataField.tsx ([6581de5](https://github.com/selfcommunity/community-js/commit/6581de5045e790fc46bb0ed97f98f7e6afc9f332))
+
+
+
+
+
+# [0.6.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.8-alpha.7...@selfcommunity/react-ui@0.6.0-alpha.0) (2022-10-03)
+
+
+### Bug Fixes
+
+* storybook webpack configuration ([8673c94](https://github.com/selfcommunity/community-js/commit/8673c94e081865c15f705d710f02509494404de9))
+
+
+### Features
+
+* Added metadata definition for user profile ([96ab06b](https://github.com/selfcommunity/community-js/commit/96ab06b49e6c70c5445b04b903b697f363a20a80))
+
+
+
+
+
+## [0.5.8-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.8-alpha.6...@selfcommunity/react-ui@0.5.8-alpha.7) (2022-09-29)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.5.8-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.8-alpha.5...@selfcommunity/react-ui@0.5.8-alpha.6) (2022-09-29)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.5.8-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.8-alpha.4...@selfcommunity/react-ui@0.5.8-alpha.5) (2022-09-29)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.5.8-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.8-alpha.3...@selfcommunity/react-ui@0.5.8-alpha.4) (2022-09-29)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
 ## [0.5.8-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.8-alpha.2...@selfcommunity/react-ui@0.5.8-alpha.3) (2022-09-29)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
