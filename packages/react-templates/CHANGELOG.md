@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.3-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.2.3-alpha.12...@selfcommunity/react-templates@0.2.3-alpha.13) (2022-10-11)
+
+
+### Bug Fixes
+
+* Fix phone number in MetadataField.tsx ([b51a550](https://github.com/selfcommunity/community-js/commit/b51a550dc586c6d90f46f0d195ba0703a57e3967))
+
+
+
+
+
 ## [0.2.3-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.2.3-alpha.11...@selfcommunity/react-templates@0.2.3-alpha.12) (2022-10-11)
 
 **Note:** Version bump only for package @selfcommunity/react-templates

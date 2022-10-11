@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.6.0-alpha.4...@selfcommunity/react-ui@0.6.0-alpha.5) (2022-10-11)
+
+
+### Bug Fixes
+
+* Fix phone number in MetadataField.tsx ([b51a550](https://github.com/selfcommunity/community-js/commit/b51a550dc586c6d90f46f0d195ba0703a57e3967))
+
+
+
+
+
 # [0.6.0-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.6.0-alpha.3...@selfcommunity/react-ui@0.6.0-alpha.4) (2022-10-11)
 
 
