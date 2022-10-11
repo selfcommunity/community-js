@@ -135,7 +135,7 @@ export default function UserProfileInfo(inProps: UserProfileInfoProps): JSX.Elem
   // PREFERENCES
   const scPreferences: SCPreferencesContextType = useSCPreferences();
   const metadataDefinitions = useMemo(() => {
-    return SCPreferences.CONFIGURATIONS_USER_METADATA_DEFINITIONS in scPreferences.preferences
+    return scPreferences.preferences && SCPreferences.CONFIGURATIONS_USER_METADATA_DEFINITIONS in scPreferences.preferences
       ? JSON.parse(scPreferences.preferences[SCPreferences.CONFIGURATIONS_USER_METADATA_DEFINITIONS].value)
       : null;
   }, [scPreferences.preferences]);
