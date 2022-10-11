@@ -397,6 +397,7 @@
   "ui.userToastNotifications.userBlocked.accountReactivated": "Il tuo accont è stato <b>sbloccato</b>",
 
   "ui.snippetNotifications.noNotifications": "Al momento non ci sono notifiche",
+  "ui.snippetNotifications.broadcastMessages": "<b>IN EVIDENZA:</b> hai {count, plural, =0 {# messaggi non ancora visti. <link>Guardali ora →</link>} one {# messaggi non ancora visto. <link>Guardalo ora →</link>} other {# messaggi non ancora visti. <link>Guardali ora →</link>}}",
 
   "ui.messageEditor.button.send" : "invia",
 
