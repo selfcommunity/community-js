@@ -79,16 +79,23 @@ import EmailTextField from './shared/EmailTextField';
 import PasswordTextField from './shared/PasswordTextField';
 import {MEDIA_TYPE_EMBED} from './constants/Media';
 import PollSuggestion, {PollSuggestionProps} from './components/PollSuggestion';
+import ConsentSolution, {ConsentSolutionProps, ConsentSolutionSkeleton} from './components/ConsentSolution';
+import ConsentSolutionButton, {ConsentSolutionButtonProps} from './components/ConsentSolutionButton';
 import Incubator, {IncubatorProps} from './components/Incubator';
 import IncubatorsList, {IncubatorsListProps} from './components/IncubatorsList';
 import IncubatorDetail, {IncubatorDetailProps} from './components/IncubatorDetail';
 import IncubatorSuggestion, {IncubatorSuggestionProps} from './components/IncubatorSuggestion';
 import Footer, {FooterProps} from './components/Footer';
 import Header, {HeaderProps, HeaderSkeleton} from './components/Header';
+
+/**
+ * Constants
+ */
 import {DEFAULT_WIDGETS_NUMBER} from './constants/Feed';
 import {DEFAULT_PAGINATION_QUERY_PARAM_NAME, DEFAULT_PAGINATION_OFFSET, DEFAULT_PAGINATION_LIMIT} from './constants/Pagination';
 import {FACEBOOK_SHARE, LINKEDIN_SHARE, TWITTER_SHARE} from './constants/SocialShare';
 import {DEFAULT_PRELOAD_OFFSET_VIEWPORT, MAX_PRELOAD_OFFSET_VIEWPORT, MIN_PRELOAD_OFFSET_VIEWPORT} from './constants/LazyLoad';
+import {LEGAL_POLICY_TEC, LEGAL_POLICY_PRIVACY} from './constants/LegalPages';
 
 /**
  * Utilities:
@@ -270,6 +277,14 @@ export {
   DEFAULT_PRELOAD_OFFSET_VIEWPORT,
   MIN_PRELOAD_OFFSET_VIEWPORT,
   MAX_PRELOAD_OFFSET_VIEWPORT,
+  /* SC CONSENT SOLUTION */
+  ConsentSolution,
+  ConsentSolutionProps,
+  ConsentSolutionSkeleton,
+  ConsentSolutionButton,
+  ConsentSolutionButtonProps,
+  LEGAL_POLICY_TEC,
+  LEGAL_POLICY_PRIVACY,
   /* SC UI PAGINATION */
   DEFAULT_PAGINATION_QUERY_PARAM_NAME,
   DEFAULT_PAGINATION_OFFSET,

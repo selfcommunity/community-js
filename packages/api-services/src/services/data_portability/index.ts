@@ -18,7 +18,7 @@ export class DataPortabilityApiClient {
    * @param config
    */
   static generateDataPortability(config?: AxiosRequestConfig): Promise<SCDataPortabilityType> {
-    return apiRequest({...config, url: Endpoints.GenerateDataPortability.url({}), method: Endpoints.GenerateDataPortability.method});
+    return apiRequest({url: Endpoints.GenerateDataPortability.url({}), method: Endpoints.GenerateDataPortability.method, ...config});
   }
 
   /**
@@ -26,7 +26,12 @@ export class DataPortabilityApiClient {
    * @param config
    */
   static downloadDataPortability(config?: AxiosRequestConfig): Promise<any> {
-    return apiRequest({...config, url: Endpoints.DataPortabilityDownload.url({}), method: Endpoints.DataPortabilityDownload.method});
+    return apiRequest({
+      url: Endpoints.DataPortabilityDownload.url({}),
+      method: Endpoints.DataPortabilityDownload.method,
+      responseType: 'blob',
+      ...config
+    });
   }
 
   /**
@@ -34,7 +39,7 @@ export class DataPortabilityApiClient {
    * @param config
    */
   static dataPortabilityStatus(config?: AxiosRequestConfig): Promise<SCDataPortabilityType> {
-    return apiRequest({...config, url: Endpoints.DataPortabilityStatus.url({}), method: Endpoints.DataPortabilityStatus.method});
+    return apiRequest({url: Endpoints.DataPortabilityStatus.url({}), method: Endpoints.DataPortabilityStatus.method, ...config});
   }
 }
 

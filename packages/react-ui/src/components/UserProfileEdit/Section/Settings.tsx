@@ -135,7 +135,7 @@ export default function Settings(inProps: SettingsProps): JSX.Element {
     switch (setting) {
       case SCUserProfileSettings.NOTIFICATION:
         return (
-          <>
+          <React.Fragment key={setting}>
             <Typography gutterBottom variant="body1">
               <FormattedMessage id="ui.userProfileEditSettings.notification.title" defaultMessage="ui.userProfileEditSettings.notification.title" />
             </Typography>
@@ -191,11 +191,11 @@ export default function Settings(inProps: SettingsProps): JSX.Element {
         </FormControl>
         */}
             </Box>
-          </>
+          </React.Fragment>
         );
       case SCUserProfileSettings.INTERACTION:
         return (
-          <>
+          <React.Fragment key={setting}>
             <Typography gutterBottom variant="body1">
               <FormattedMessage id="ui.userProfileEditSettings.interaction.title" defaultMessage="ui.userProfileEditSettings.interaction.title" />
             </Typography>
@@ -238,11 +238,11 @@ export default function Settings(inProps: SettingsProps): JSX.Element {
                 </RadioGroup>
               </FormControl>
             </Box>
-          </>
+          </React.Fragment>
         );
       case SCUserProfileSettings.PRIVATE_MESSAGE:
         return (
-          <>
+          <React.Fragment key={setting}>
             <Typography gutterBottom variant="body1">
               <FormattedMessage
                 id="ui.userProfileEditSettings.privateMessage.title"
@@ -285,7 +285,7 @@ export default function Settings(inProps: SettingsProps): JSX.Element {
                 </RadioGroup>
               </FormControl>
             </Box>
-          </>
+          </React.Fragment>
         );
       default:
         return null;

@@ -8,14 +8,14 @@ export default {
   title: 'Design System/React UI/User Profile Edit',
   component: UserProfileEdit,
   argTypes: {
-    userId: {
+    id: {
       control: {type: 'number'},
       description: 'User Id',
       table: {defaultValue: {summary: 1}}
     }
   },
   args: {
-    userId: 796
+    id: 796
   }
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
 } as ComponentMeta<typeof UserProfileEdit>;
