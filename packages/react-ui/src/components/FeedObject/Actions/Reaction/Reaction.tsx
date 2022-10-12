@@ -566,7 +566,7 @@ export default function Reaction(inProps: VoteProps): JSX.Element {
             {!inlineAction && withAudience && <Divider className={classes.divider} />}
             <span>
               <LoadingButton
-                onClick={() => vote(obj.reaction !== null ? obj.reaction : defaultReaction)}
+                onClick={() => vote(reaction ?? defaultReaction)}
                 onMouseOver={handleClick}
                 loading={voting}
                 disabled={!obj}
