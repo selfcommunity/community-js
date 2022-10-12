@@ -134,7 +134,7 @@ const Root = styled(Dialog, {
   [`& .${classes.acceptConditions}`]: {
     fontSize: '0.8rem',
     fontWeight: 300,
-    color: theme.palette.grey['A400'],
+    color: theme.palette.grey['A700'],
     padding: `${theme.spacing()} ${theme.spacing()}`,
     [theme.breakpoints.down('sm')]: {
       fontSize: '0.6rem'
@@ -613,7 +613,11 @@ export default function ConsentSolution(inProps: ConsentSolutionProps): JSX.Elem
             variant="outlined"
             className={classes.createDataPortabilityButton}
             onClick={handleCreateDataPortabilityFile}>
-            <FormattedMessage id="ui.consentSolution.createFileButton" defaultMessage="ui.consentSolution.createFileButton" />
+            {(dataPortability && dataPortability.computing) || loadingDataPortability ? (
+              <FormattedMessage id="ui.consentSolution.createFileLoadingButton" defaultMessage="ui.consentSolution.createFileLoadingButton" />
+            ) : (
+              <FormattedMessage id="ui.consentSolution.createFileButton" defaultMessage="ui.consentSolution.createFileButton" />
+            )}
           </LoadingButton>
           {dataPortability && !dataPortability.computing && dataPortability.generated_at && (
             <LoadingButton
@@ -677,8 +681,7 @@ export default function ConsentSolution(inProps: ConsentSolutionProps): JSX.Elem
             variant={'outlined'}
             className={classes.logoutAccountButton}
             startIcon={<Icon>door_back_outlined</Icon>}
-            onClick={handleLogout}
-            color={'secondary'}>
+            onClick={handleLogout}>
             <FormattedMessage id="ui.consentSolution.logoutImmediatelyButton" defaultMessage="ui.consentSolution.logoutImmediatelyButton" />
           </Button>
         </DialogContent>
@@ -728,9 +731,15 @@ export default function ConsentSolution(inProps: ConsentSolutionProps): JSX.Elem
   };
 
   /**
+   * If there's no authUserId, component is hidden.
+   */
+  if (!authUserId) {
+    return null;
+  }
+
+  /**
    * Set content dialog component
    */
-
   let content: Function = () => null;
   if (ready && doc && !loading) {
     switch (_view) {

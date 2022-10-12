@@ -528,6 +528,7 @@
   "ui.consentSolution.createDpSectionTitle": "{username}, if you want to download a copy of your information, here's how:",
   "ui.consentSolution.createDpSectionInfo": "<li>Click on \"Create file\" to start.</li><li>Preparing the file may take several hours, but you can exit the screen while waiting.</li><li>We will send you an email as soon as the file is ready for download.</li><li>To make sure you're able to download the file, do not delete your account until you've received an email telling us that the file is ready.</li>",
   "ui.consentSolution.createFileButton": "Create your file",
+  "ui.consentSolution.createFileLoadingButton": "Create file in progress",
   "ui.consentSolution.downloadFileButton": "Download file",
   "ui.consentSolution.createDpSectionGeneratedAt": "You have requested the generation of the data portability file on {date} at {time}. You can request the creation of the file every 24 hours at the most.",
   "ui.consentSolution.deleteAccountDpSectionTitle": "{username}, if you decide to cancel your account:",

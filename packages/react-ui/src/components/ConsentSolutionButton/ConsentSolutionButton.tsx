@@ -1,10 +1,12 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {useThemeProps} from '@mui/system';
 import {styled} from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
 import ConsentSolution, {ConsentSolutionProps} from '../ConsentSolution';
 import {Button} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
+import {SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
+import {ButtonProps} from '@mui/material/Button/Button';
 
 const PREFIX = 'SCConsentSolutionButton';
 
@@ -18,13 +20,17 @@ const Root = styled(Dialog, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({}));
 
-export interface ConsentSolutionButtonProps {
+export interface ConsentSolutionButtonProps extends ButtonProps {
   /**
    * Overrides or extends the styles applied to the component.
    * @default null
    */
   className?: string;
 
+  /**
+   * Props to spread to ConsentSolution component
+   * @default empty object
+   */
   ConsentSolutionProps?: ConsentSolutionProps;
 
   /**
@@ -60,8 +66,14 @@ export default function ConsentSolutionButton(inProps: ConsentSolutionButtonProp
   });
   const {className, ConsentSolutionProps = {}, ...rest} = props;
 
+  // CONTEXT
+  const scUserContext: SCUserContextType = useContext(SCUserContext);
+
   // STATE
   const [open, setOpen] = React.useState(false);
+
+  // CONST
+  const authUserId = scUserContext.user ? scUserContext.user.id : null;
 
   /**
    * Handle click on button
@@ -71,11 +83,18 @@ export default function ConsentSolutionButton(inProps: ConsentSolutionButtonProp
   };
 
   /**
+   * If there's no authUserId, component is hidden.
+   */
+  if (!authUserId) {
+    return null;
+  }
+
+  /**
    * Renders root object
    */
   return (
     <React.Fragment>
-      <Button size="small" variant="outlined" onClick={handleClick} {...rest}>
+      <Button onClick={handleClick} size="small" variant="outlined" {...rest}>
         <FormattedMessage id="ui.consentSolutionButton.viewStateButton" defaultMessage="ui.consentSolutionButton.viewStateButton" />
       </Button>
       {open && <ConsentSolution {...ConsentSolutionProps} open onClose={handleClick} />}
