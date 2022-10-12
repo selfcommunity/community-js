@@ -5,7 +5,7 @@ import Icon from '@mui/material/Icon';
 import {defineMessages, useIntl} from 'react-intl';
 import {SCUserType} from '@selfcommunity/types';
 import {http, Endpoints, formatHttpError, HttpResponse} from '@selfcommunity/api-services';
-import {camelCase} from '@selfcommunity/utils';
+import {camelCase, Logger} from '@selfcommunity/utils';
 import {SCPreferences, SCPreferencesContextType, SCUserContextType, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
 import {DEFAULT_FIELDS} from '../../../constants/UserProfile';
 import classNames from 'classnames';
@@ -16,6 +16,7 @@ import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
 import {useThemeProps} from '@mui/system';
 import {SCUserProfileFields} from '../../../types';
 import MetadataField from '../../../shared/MetadataField';
+import {SCOPE_SC_UI} from '../../../constants/Errors';
 
 const messages = defineMessages({
   genderMale: {
@@ -96,9 +97,16 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
   // PREFERENCES
   const scPreferences: SCPreferencesContextType = useSCPreferences();
   const metadataDefinitions = useMemo(() => {
-    return scPreferences.preferences && SCPreferences.CONFIGURATIONS_USER_METADATA_DEFINITIONS in scPreferences.preferences
-      ? JSON.parse(scPreferences.preferences[SCPreferences.CONFIGURATIONS_USER_METADATA_DEFINITIONS].value)
-      : null;
+    if (scPreferences.preferences && SCPreferences.CONFIGURATIONS_USER_METADATA_DEFINITIONS in scPreferences.preferences) {
+      try {
+        return JSON.parse(scPreferences.preferences[SCPreferences.CONFIGURATIONS_USER_METADATA_DEFINITIONS].value);
+      } catch (e) {
+        Logger.error(SCOPE_SC_UI, 'Error on parse user metadata.');
+        console.log(scPreferences.preferences[SCPreferences.CONFIGURATIONS_USER_METADATA_DEFINITIONS]);
+        return {};
+      }
+    }
+    return null;
   }, [scPreferences.preferences]);
 
   // STATE
@@ -243,7 +251,7 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
       case SCUserProfileFields.TAGS:
         return null;
       default:
-        if (metadataDefinitions[field]) {
+        if (metadataDefinitions && metadataDefinitions[field]) {
           return (
             <MetadataField
               key={field}

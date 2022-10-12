@@ -2,7 +2,7 @@ import React, {useMemo} from 'react';
 import {styled} from '@mui/material/styles';
 import {Box, Grid, Typography} from '@mui/material';
 import {defineMessages, useIntl} from 'react-intl';
-import {camelCase} from '@selfcommunity/utils';
+import {camelCase, Logger} from '@selfcommunity/utils';
 import {SCUserType} from '@selfcommunity/types';
 import {SCPreferences, SCPreferencesContextType, useSCFetchUser, useSCPreferences} from '@selfcommunity/react-core';
 import {DEFAULT_FIELDS} from '../../constants/UserProfile';
@@ -12,6 +12,7 @@ import {useThemeProps} from '@mui/system';
 import {SCUserProfileFields} from '../../types';
 import TagChip from '../../shared/TagChip';
 import {isArray} from 'lodash';
+import {SCOPE_SC_UI} from '../../constants/Errors';
 
 const messages = defineMessages({
   realName: {
@@ -135,9 +136,16 @@ export default function UserProfileInfo(inProps: UserProfileInfoProps): JSX.Elem
   // PREFERENCES
   const scPreferences: SCPreferencesContextType = useSCPreferences();
   const metadataDefinitions = useMemo(() => {
-    return scPreferences.preferences && SCPreferences.CONFIGURATIONS_USER_METADATA_DEFINITIONS in scPreferences.preferences
-      ? JSON.parse(scPreferences.preferences[SCPreferences.CONFIGURATIONS_USER_METADATA_DEFINITIONS].value)
-      : null;
+    if (scPreferences.preferences && SCPreferences.CONFIGURATIONS_USER_METADATA_DEFINITIONS in scPreferences.preferences) {
+      try {
+        return JSON.parse(scPreferences.preferences[SCPreferences.CONFIGURATIONS_USER_METADATA_DEFINITIONS].value);
+      } catch (e) {
+        Logger.error(SCOPE_SC_UI, 'Error on parse user metadata.');
+        console.log(scPreferences.preferences[SCPreferences.CONFIGURATIONS_USER_METADATA_DEFINITIONS]);
+        return {};
+      }
+    }
+    return null;
   }, [scPreferences.preferences]);
 
   // RENDER
