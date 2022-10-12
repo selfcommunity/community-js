@@ -26,7 +26,7 @@ export default {
 } as ComponentMeta<typeof Footer>;
 
 const Template: ComponentStory<typeof Footer> = (args) => (
-  <div style={{width: 800}}>
+  <div style={{width: 1200}}>
     <Footer {...args} />
   </div>
 );
@@ -35,4 +35,10 @@ export const Base = Template.bind({});
 
 Base.args = {
   /* the args you need here will depend on your component */
+};
+
+export const BaseNoAdv = Template.bind({});
+
+BaseNoAdv.args = {
+  hideAdvertising: true
 };

@@ -54,6 +54,13 @@ export interface FooterProps {
    * @default null
    */
   className?: string;
+
+  /**
+   * Show/hide advertising
+   * @default false
+   */
+  hideAdvertising?: boolean;
+
   /**
    * Any other properties
    */
@@ -89,7 +96,7 @@ export default function Footer(inProps: FooterProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {className, ...rest} = props;
+  const {className, hideAdvertising, ...rest} = props;
 
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
@@ -123,10 +130,11 @@ export default function Footer(inProps: FooterProps): JSX.Element {
     if (
       preferences[SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED] &&
       ((preferences[SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED] && scUserContext.user === null) ||
-        !preferences[SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED])
+        !preferences[SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED]) &&
+      !hideAdvertising
     ) {
       return (
-        <Grid item>
+        <Grid item xs={12}>
           <CustomAdv position={SCCustomAdvPosition.POSITION_ABOVE_FOOTER_BAR} />
         </Grid>
       );

@@ -11,7 +11,7 @@ export default {
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const Template: ComponentStory<typeof FooterSkeleton> = (args) => (
-  <div style={{width: 800}}>
+  <div style={{width: 1200}}>
     <FooterSkeleton {...args} />
   </div>
 );
