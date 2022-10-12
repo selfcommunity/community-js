@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.6.0-alpha.7...@selfcommunity/react-ui@0.6.0-alpha.8) (2022-10-12)
+
+
+### Bug Fixes
+
+* added check for prop 'voted' on feedObj when performing vote action ([61210da](https://github.com/selfcommunity/community-js/commit/61210da0678500528eebbd512e44d65b742080f5))
+* Fix update user counters after BroadcastMessages views ([e366b9c](https://github.com/selfcommunity/community-js/commit/e366b9c32e8cf66741b0463fbbf4aae7cef7f62c))
+* fixed reaction icons size ([e6dfd60](https://github.com/selfcommunity/community-js/commit/e6dfd60e908a4f7c4199e0f3d1e1cc97bf032e52))
+* fixed reaction vote action ([e3b75ec](https://github.com/selfcommunity/community-js/commit/e3b75ecd6359f2c30e001fbefb2122ec6855943c))
+
+
+### Features
+
+* added reaction feature v.1 ([13cc0a3](https://github.com/selfcommunity/community-js/commit/13cc0a310128aeaabaf14d9ee7f249ca0196a177))
+
+
+
+
+
 # [0.6.0-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.6.0-alpha.6...@selfcommunity/react-ui@0.6.0-alpha.7) (2022-10-11)
 
 
