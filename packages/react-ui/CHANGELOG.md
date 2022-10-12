@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.6.0-alpha.6...@selfcommunity/react-ui@0.6.0-alpha.7) (2022-10-11)
+
+
+### Bug Fixes
+
+* Fix broadcast banner ([0d955c1](https://github.com/selfcommunity/community-js/commit/0d955c1055453f406519a7ddd824a7ad9b4adc14))
+* preferences ([c44d602](https://github.com/selfcommunity/community-js/commit/c44d6026b1bc0bc50fd47b69d1d6a18c8ad29026))
+
+
+
+
+
 # [0.6.0-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.6.0-alpha.5...@selfcommunity/react-ui@0.6.0-alpha.6) (2022-10-11)
 
 
