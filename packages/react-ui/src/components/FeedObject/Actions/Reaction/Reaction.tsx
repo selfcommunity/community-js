@@ -126,8 +126,8 @@ const classes = {
   inlineActionButton: `${PREFIX}-inline-action-button`,
   viewAudienceButton: `${PREFIX}-view-audience-button`,
   groupedIcons: `${PREFIX}-grouped-icons`,
-  reactionAvatar: `${PREFIX}-reaction-avatar`,
-  reactionIcon: `${PREFIX}-reaction-icon`
+  reactionAvatar: `${PREFIX}-reaction-avatar`
+  // reactionIcon: `${PREFIX}-reaction-icon`
 };
 
 const Root = styled(Box, {
@@ -169,11 +169,11 @@ const Root = styled(Box, {
       width: theme.spacing(2),
       height: theme.spacing(2)
     }
-  },
-  [`& .${classes.reactionIcon}`]: {
-    width: theme.spacing(2),
-    height: theme.spacing(2)
   }
+  // [`& .${classes.reactionIcon}`]: {
+  //   width: theme.spacing(2),
+  //   height: theme.spacing(2)
+  // }
 }));
 
 export interface TabPanelProps {
@@ -235,7 +235,7 @@ export default function Reaction(inProps: VoteProps): JSX.Element {
   function handleClick(event) {
     setTimeout(() => {
       setHovered(true);
-    }, 1000);
+    }, 1500);
     if (anchorEl !== event.currentTarget) {
       setAnchorEl(event.currentTarget);
     }
@@ -574,7 +574,7 @@ export default function Reaction(inProps: VoteProps): JSX.Element {
                 classes={{root: classNames(classes.actionButton, {[classes.inlineActionButton]: inlineAction})}}>
                 {scUserContext.user && obj.voted ? (
                   <Icon fontSize={'large'}>
-                    <img alt={obj.reaction.label} src={obj.reaction.image} className={classes.reactionIcon} />
+                    <img alt={obj.reaction.label} src={obj.reaction.image} height={16} width={16} />
                   </Icon>
                 ) : (
                   <Icon fontSize={'large'}>thumb_up_off_alt</Icon>
