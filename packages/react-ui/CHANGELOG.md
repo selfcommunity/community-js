@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.6.0-alpha.12...@selfcommunity/react-ui@0.6.0-alpha.13) (2022-10-12)
+
+
+### Bug Fixes
+
+* user profile ([7e99c46](https://github.com/selfcommunity/community-js/commit/7e99c468b4ea399fdf446bffdb001493e8f22798))
+
+
+
+
+
 # [0.6.0-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.6.0-alpha.11...@selfcommunity/react-ui@0.6.0-alpha.12) (2022-10-12)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
