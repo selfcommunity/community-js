@@ -6,7 +6,7 @@ import {AxiosRequestConfig} from 'axios';
 import {urlParams} from '../../utils/url';
 
 export interface FeatureApiClientInterface {
-  getAllFeatures(params?: FeatureParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeatureType[]>>;
+  getAllFeatures(params?: FeatureParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeatureType>>;
 }
 /**
  * Contains all the endpoints needed to manage features.
@@ -18,7 +18,7 @@ export class FeatureApiClient {
    * @param params
    * @param config
    */
-  static getAllFeatures(params?: FeatureParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeatureType[]>> {
+  static getAllFeatures(params?: FeatureParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeatureType>> {
     const p = urlParams(params);
     return apiRequest({...config, url: `${Endpoints.Feature.url({})}?${p.toString()}`, method: Endpoints.Feature.method});
   }
@@ -53,7 +53,7 @@ export class FeatureApiClient {
  :::
  */
 export default class FeatureService {
-  static async getAllFeatures(params?: FeatureParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeatureType[]>> {
+  static async getAllFeatures(params?: FeatureParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeatureType>> {
     return FeatureApiClient.getAllFeatures(params, config);
   }
 }

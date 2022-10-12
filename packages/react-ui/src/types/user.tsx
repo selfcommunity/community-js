@@ -10,7 +10,8 @@ export enum SCUserProfileFields {
   DATE_OF_BIRTH = 'date_of_birth',
   DESCRIPTION = 'description',
   GENDER = 'gender',
-  WEBSITE = 'website'
+  WEBSITE = 'website',
+  TAGS = 'tags'
 }
 
 /**

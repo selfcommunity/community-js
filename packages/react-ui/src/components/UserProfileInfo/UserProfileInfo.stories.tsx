@@ -1,6 +1,7 @@
 import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
 import UserProfileInfo from './index';
+import { DEFAULT_FIELDS } from '../../constants/UserProfile';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -10,11 +11,11 @@ export default {
     userId: {
       control: {type: 'number'},
       description: 'User Id',
-      table: {defaultValue: {summary: 1}}
+      table: {defaultValue: {summary: 7}}
     }
   },
   args: {
-    userId: 1
+    userId: 7
   }
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
 } as ComponentMeta<typeof UserProfileInfo>;
@@ -30,4 +31,5 @@ export const Base = Template.bind({});
 
 Base.args = {
   /* the args you need here will depend on your component */
+  fields: [...DEFAULT_FIELDS]
 };

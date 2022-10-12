@@ -46,6 +46,7 @@ import SuggestionService, {SuggestionApiClient, SuggestionApiClientInterface} fr
 import TagService, {TagApiClient, TagApiClientInterface} from './services/tag';
 import UserService, {UserApiClient, UserApiClientInterface} from './services/user';
 import WebhookService, {WebhookApiClient, WebhookApiClientInterface} from './services/webhook';
+import ReactionService, {ReactionApiClient, ReactionApiClientInterface} from './services/reactions';
 
 /**
  * Types
@@ -101,7 +102,8 @@ import {
   InsightContributionParams,
   InsightUserParams,
   InsightEmbedParams,
-  InsightCommonParams
+  InsightCommonParams,
+  ReactionParams
 } from './types';
 
 /**
@@ -249,5 +251,9 @@ export {
   InsightContributionParams,
   InsightUserParams,
   InsightEmbedParams,
-  InsightCommonParams
+  InsightCommonParams,
+  ReactionParams,
+  ReactionService,
+  ReactionApiClient,
+  ReactionApiClientInterface
 };

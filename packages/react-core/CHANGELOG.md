@@ -3,6 +3,94 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.8-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.8-alpha.8...@selfcommunity/react-core@0.3.8-alpha.9) (2022-10-12)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.3.8-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.8-alpha.7...@selfcommunity/react-core@0.3.8-alpha.8) (2022-10-12)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.3.8-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.8-alpha.6...@selfcommunity/react-core@0.3.8-alpha.7) (2022-10-11)
+
+
+### Bug Fixes
+
+* Fix phone number in MetadataField.tsx ([b51a550](https://github.com/selfcommunity/community-js/commit/b51a550dc586c6d90f46f0d195ba0703a57e3967))
+
+
+
+
+
+## [0.3.8-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.8-alpha.5...@selfcommunity/react-core@0.3.8-alpha.6) (2022-10-11)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.3.8-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.8-alpha.4...@selfcommunity/react-core@0.3.8-alpha.5) (2022-10-11)
+
+
+### Performance Improvements
+
+* added fetch reactions hook ([72a6614](https://github.com/selfcommunity/community-js/commit/72a661462691ad561fac71eab507488e47c67099))
+* added reaction feature const ([8a13f27](https://github.com/selfcommunity/community-js/commit/8a13f27d106086eaf64c82cde6dfe783ff30b5f7))
+* Update material ui version ([1a0ca30](https://github.com/selfcommunity/community-js/commit/1a0ca302fe3176cd0cb3e346ce96817833be3360))
+
+
+
+
+
+## [0.3.8-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.8-alpha.3...@selfcommunity/react-core@0.3.8-alpha.4) (2022-10-03)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.3.8-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.8-alpha.2...@selfcommunity/react-core@0.3.8-alpha.3) (2022-09-29)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.3.8-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.8-alpha.1...@selfcommunity/react-core@0.3.8-alpha.2) (2022-09-29)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.3.8-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.8-alpha.0...@selfcommunity/react-core@0.3.8-alpha.1) (2022-09-29)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.3.8-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.7...@selfcommunity/react-core@0.3.8-alpha.0) (2022-09-29)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
 ## [0.3.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.7-alpha.7...@selfcommunity/react-core@0.3.7) (2022-09-29)
 
 **Note:** Version bump only for package @selfcommunity/react-core

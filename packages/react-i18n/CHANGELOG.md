@@ -3,6 +3,63 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.4.0-alpha.1...@selfcommunity/react-i18n@0.4.0-alpha.2) (2022-10-12)
+
+
+### Bug Fixes
+
+* consentSolution ([8fef593](https://github.com/selfcommunity/community-js/commit/8fef593af9d95a507d437929675e3c6dba8652f4))
+
+
+
+
+
+# [0.4.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.4.0-alpha.0...@selfcommunity/react-i18n@0.4.0-alpha.1) (2022-10-11)
+
+
+### Bug Fixes
+
+* Fix phone number in MetadataField.tsx ([b51a550](https://github.com/selfcommunity/community-js/commit/b51a550dc586c6d90f46f0d195ba0703a57e3967))
+
+
+
+
+
+# [0.4.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.3.8-alpha.1...@selfcommunity/react-i18n@0.4.0-alpha.0) (2022-10-11)
+
+
+### Features
+
+* Added BroadcastMessages to SnippetNotifications.tsx ([dcd12f0](https://github.com/selfcommunity/community-js/commit/dcd12f08ad2109819160cb7a106422384d0b954b))
+
+
+
+
+
+## [0.3.8-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.3.8-alpha.0...@selfcommunity/react-i18n@0.3.8-alpha.1) (2022-10-11)
+
+
+### Bug Fixes
+
+* ConsentSolution components ([55a0a07](https://github.com/selfcommunity/community-js/commit/55a0a07b16a35688566b9ca9274a7a8828903df9))
+
+
+### Performance Improvements
+
+* added voteDialog title translation when reactions enabled ([04df5c2](https://github.com/selfcommunity/community-js/commit/04df5c2cd39efc2d71a72fe0921d714a48b9254e))
+
+
+
+
+
+## [0.3.8-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.3.7...@selfcommunity/react-i18n@0.3.8-alpha.0) (2022-09-29)
+
+**Note:** Version bump only for package @selfcommunity/react-i18n
+
+
+
+
+
 ## [0.3.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.3.7-alpha.2...@selfcommunity/react-i18n@0.3.7) (2022-09-29)
 
 **Note:** Version bump only for package @selfcommunity/react-i18n

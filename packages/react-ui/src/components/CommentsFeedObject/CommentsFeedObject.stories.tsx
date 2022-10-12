@@ -34,7 +34,7 @@ export default {
     }
   },
   args: {
-    feedObjectId: 360,
+    feedObjectId: 554,
     feedObjectType: SCFeedObjectTypologyType.POST,
     infiniteScrolling: true,
     commentsOrderBy: SCCommentsOrderBy.ADDED_AT_ASC,

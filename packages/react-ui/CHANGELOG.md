@@ -3,6 +3,279 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0-alpha.14](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.6.0-alpha.13...@selfcommunity/react-ui@0.6.0-alpha.14) (2022-10-12)
+
+
+### Bug Fixes
+
+* user profile ([878dd29](https://github.com/selfcommunity/community-js/commit/878dd29b1d65493412c7032e338a3178c435c146))
+
+
+
+
+
+# [0.6.0-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.6.0-alpha.12...@selfcommunity/react-ui@0.6.0-alpha.13) (2022-10-12)
+
+
+### Bug Fixes
+
+* user profile ([7e99c46](https://github.com/selfcommunity/community-js/commit/7e99c468b4ea399fdf446bffdb001493e8f22798))
+
+
+
+
+
+# [0.6.0-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.6.0-alpha.11...@selfcommunity/react-ui@0.6.0-alpha.12) (2022-10-12)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.6.0-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.6.0-alpha.10...@selfcommunity/react-ui@0.6.0-alpha.11) (2022-10-12)
+
+
+### Bug Fixes
+
+* removed reaction icon class ([51b1532](https://github.com/selfcommunity/community-js/commit/51b1532850998576156dbb913a9c37e6d4ad8cfb))
+
+
+
+
+
+# [0.6.0-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.6.0-alpha.9...@selfcommunity/react-ui@0.6.0-alpha.10) (2022-10-12)
+
+
+### Bug Fixes
+
+* footer ([e9960b2](https://github.com/selfcommunity/community-js/commit/e9960b25b28d56eef06e129b0f2c14be86263467))
+* user profile ([cd31f91](https://github.com/selfcommunity/community-js/commit/cd31f919a88e39dd215fdcb501fe11e0e998cda5))
+
+
+
+
+
+# [0.6.0-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.6.0-alpha.8...@selfcommunity/react-ui@0.6.0-alpha.9) (2022-10-12)
+
+
+### Bug Fixes
+
+* consentSolution ([8fef593](https://github.com/selfcommunity/community-js/commit/8fef593af9d95a507d437929675e3c6dba8652f4))
+
+
+
+
+
+# [0.6.0-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.6.0-alpha.7...@selfcommunity/react-ui@0.6.0-alpha.8) (2022-10-12)
+
+
+### Bug Fixes
+
+* added check for prop 'voted' on feedObj when performing vote action ([61210da](https://github.com/selfcommunity/community-js/commit/61210da0678500528eebbd512e44d65b742080f5))
+* Fix update user counters after BroadcastMessages views ([e366b9c](https://github.com/selfcommunity/community-js/commit/e366b9c32e8cf66741b0463fbbf4aae7cef7f62c))
+* fixed reaction icons size ([e6dfd60](https://github.com/selfcommunity/community-js/commit/e6dfd60e908a4f7c4199e0f3d1e1cc97bf032e52))
+* fixed reaction vote action ([e3b75ec](https://github.com/selfcommunity/community-js/commit/e3b75ecd6359f2c30e001fbefb2122ec6855943c))
+
+
+### Features
+
+* added reaction feature v.1 ([13cc0a3](https://github.com/selfcommunity/community-js/commit/13cc0a310128aeaabaf14d9ee7f249ca0196a177))
+
+
+
+
+
+# [0.6.0-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.6.0-alpha.6...@selfcommunity/react-ui@0.6.0-alpha.7) (2022-10-11)
+
+
+### Bug Fixes
+
+* Fix broadcast banner ([0d955c1](https://github.com/selfcommunity/community-js/commit/0d955c1055453f406519a7ddd824a7ad9b4adc14))
+* preferences ([c44d602](https://github.com/selfcommunity/community-js/commit/c44d6026b1bc0bc50fd47b69d1d6a18c8ad29026))
+
+
+
+
+
+# [0.6.0-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.6.0-alpha.5...@selfcommunity/react-ui@0.6.0-alpha.6) (2022-10-11)
+
+
+### Bug Fixes
+
+* Added classes for theming Broadcast Message banner in SnippetNotifications.tsx ([580f722](https://github.com/selfcommunity/community-js/commit/580f722c5aa6930b5da721fbcdc070fa8af2bb77))
+* consentSolution component ([4b2f178](https://github.com/selfcommunity/community-js/commit/4b2f17807311ab7bae1906344a0c6449e3882bac))
+* consentSolution constants ([dfc5e56](https://github.com/selfcommunity/community-js/commit/dfc5e564abaf831fb130203afa9acd17d0cdd1f4))
+* Fix lib version ([3fc24dc](https://github.com/selfcommunity/community-js/commit/3fc24dc5dec291a6279d28f763d3a3a2f8cc3da9))
+* preferences ([946fba8](https://github.com/selfcommunity/community-js/commit/946fba8e897968c437f792c84c662b97502504f2))
+
+
+
+
+
+# [0.6.0-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.6.0-alpha.4...@selfcommunity/react-ui@0.6.0-alpha.5) (2022-10-11)
+
+
+### Bug Fixes
+
+* Fix phone number in MetadataField.tsx ([b51a550](https://github.com/selfcommunity/community-js/commit/b51a550dc586c6d90f46f0d195ba0703a57e3967))
+
+
+
+
+
+# [0.6.0-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.6.0-alpha.3...@selfcommunity/react-ui@0.6.0-alpha.4) (2022-10-11)
+
+
+### Features
+
+* Added BroadcastMessages to SnippetNotifications.tsx ([dcd12f0](https://github.com/selfcommunity/community-js/commit/dcd12f08ad2109819160cb7a106422384d0b954b))
+
+
+
+
+
+# [0.6.0-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.6.0-alpha.2...@selfcommunity/react-ui@0.6.0-alpha.3) (2022-10-11)
+
+
+### Bug Fixes
+
+* footer ads ([8456e01](https://github.com/selfcommunity/community-js/commit/8456e016272247ff2a3f33b47ea46893d7b0d49b))
+
+
+
+
+
+# [0.6.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.6.0-alpha.1...@selfcommunity/react-ui@0.6.0-alpha.2) (2022-10-11)
+
+
+### Bug Fixes
+
+* adv in post comments ([15ef8e7](https://github.com/selfcommunity/community-js/commit/15ef8e75488d3e1feddf65a4b60dc60b2c4aa5e8))
+* ConsentSolution components ([70f70ef](https://github.com/selfcommunity/community-js/commit/70f70ef4cb38339618203ea32181bd3b01b60ffc))
+* ConsentSolution components ([79eeb6c](https://github.com/selfcommunity/community-js/commit/79eeb6cbc01133002b94047f1c028458bc9e8e44))
+* ConsentSolution components ([549617b](https://github.com/selfcommunity/community-js/commit/549617b65a2696899f373263aae42f22fdd59334))
+* ConsentSolution components ([d41a1c4](https://github.com/selfcommunity/community-js/commit/d41a1c491c99f2794e3ee923914eacd3b21b3ab4))
+* ConsentSolution components ([64e314d](https://github.com/selfcommunity/community-js/commit/64e314d59cfa898ed772d43c3a1c304df3a4587b))
+* ConsentSolution components ([55a0a07](https://github.com/selfcommunity/community-js/commit/55a0a07b16a35688566b9ca9274a7a8828903df9))
+* Fix error in keys for settings profile edit ([e9cb11c](https://github.com/selfcommunity/community-js/commit/e9cb11c2b644ac470c5aeeab4ae5789fa9c7cfc8))
+* fixed reaction scrollable tabs ([d67b4b9](https://github.com/selfcommunity/community-js/commit/d67b4b92a6489477855a481601d6bd9e4c4dec0a))
+* fixed vote action in single feedObj view ([3a536e6](https://github.com/selfcommunity/community-js/commit/3a536e614e8dd056ef4dd70365e9ec10566363d9))
+* rolled back vote component ([c86dd31](https://github.com/selfcommunity/community-js/commit/c86dd310cb0d9b7b307accf787fb4bb2a91eab58))
+* user profile tags ([f87155d](https://github.com/selfcommunity/community-js/commit/f87155dab749b05934cd35c48f601708886e94c9))
+
+
+### Performance Improvements
+
+* added reactions rendering in feedObject vote audience dialog. ([e385475](https://github.com/selfcommunity/community-js/commit/e385475d81e5c6186aa1d9775ac887e66340eb8a))
+* Update material ui version ([1a0ca30](https://github.com/selfcommunity/community-js/commit/1a0ca302fe3176cd0cb3e346ce96817833be3360))
+
+
+
+
+
+# [0.6.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.6.0-alpha.0...@selfcommunity/react-ui@0.6.0-alpha.1) (2022-10-03)
+
+
+### Bug Fixes
+
+* Fix enum MetadataField.tsx ([6581de5](https://github.com/selfcommunity/community-js/commit/6581de5045e790fc46bb0ed97f98f7e6afc9f332))
+
+
+
+
+
+# [0.6.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.8-alpha.7...@selfcommunity/react-ui@0.6.0-alpha.0) (2022-10-03)
+
+
+### Bug Fixes
+
+* storybook webpack configuration ([8673c94](https://github.com/selfcommunity/community-js/commit/8673c94e081865c15f705d710f02509494404de9))
+
+
+### Features
+
+* Added metadata definition for user profile ([96ab06b](https://github.com/selfcommunity/community-js/commit/96ab06b49e6c70c5445b04b903b697f363a20a80))
+
+
+
+
+
+## [0.5.8-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.8-alpha.6...@selfcommunity/react-ui@0.5.8-alpha.7) (2022-09-29)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.5.8-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.8-alpha.5...@selfcommunity/react-ui@0.5.8-alpha.6) (2022-09-29)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.5.8-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.8-alpha.4...@selfcommunity/react-ui@0.5.8-alpha.5) (2022-09-29)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.5.8-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.8-alpha.3...@selfcommunity/react-ui@0.5.8-alpha.4) (2022-09-29)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.5.8-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.8-alpha.2...@selfcommunity/react-ui@0.5.8-alpha.3) (2022-09-29)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.5.8-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.8-alpha.1...@selfcommunity/react-ui@0.5.8-alpha.2) (2022-09-29)
+
+
+### Bug Fixes
+
+* fixed initialization error ([3d38e80](https://github.com/selfcommunity/community-js/commit/3d38e80a4952cd987af8d4d3824bc008b4fe3eb7))
+
+
+
+
+
+## [0.5.8-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.8-alpha.0...@selfcommunity/react-ui@0.5.8-alpha.1) (2022-09-29)
+
+
+### Bug Fixes
+
+* categories ([fc19815](https://github.com/selfcommunity/community-js/commit/fc1981510c4c757cefdf50e4e89a15ad32c725fb))
+* fixed feedObjs mobile navigation titles. ([4ec8db8](https://github.com/selfcommunity/community-js/commit/4ec8db833737d988a55556888fa9f34fcded0629))
+* fixed tabs warning in header component ([0dbefce](https://github.com/selfcommunity/community-js/commit/0dbefce11314316f80ce085b5388a7d1d64864a0))
+
+
+
+
+
+## [0.5.8-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.7...@selfcommunity/react-ui@0.5.8-alpha.0) (2022-09-29)
+
+
+### Bug Fixes
+
+* prova fix tabs warning ([e72da0f](https://github.com/selfcommunity/community-js/commit/e72da0f861bdbfca97037baa96c3325ac7eb11d5))
+
+
+
+
+
 ## [0.5.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.5.7-alpha.10...@selfcommunity/react-ui@0.5.7) (2022-09-29)
 
 **Note:** Version bump only for package @selfcommunity/react-ui

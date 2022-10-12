@@ -81,6 +81,7 @@ import useSCFetchIncubator from './hooks/useSCFetchIncubator';
 import useSCMediaClick from './hooks/useSCMediaClick';
 import useSCFetchContributors from './hooks/useSCFetchContributors';
 import useSCFetchFeed from './hooks/useSCFetchFeed';
+import useSCFetchReactions from './hooks/useSCFetchReactions';
 
 /**
  * Routing component
@@ -171,4 +172,5 @@ export {
   useSCFetchFeed,
   useIsComponentMountedRef,
   usePreviousValue,
+  useSCFetchReactions,
 };

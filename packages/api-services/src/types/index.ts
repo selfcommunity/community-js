@@ -29,6 +29,7 @@ import {LegalPageFilterParams} from './legalPage';
 import {FeatureParams} from './feature';
 import {ScoreParams} from './score';
 import {InsightCommonParams, InsightEmbedParams, InsightUserParams, InsightContributionParams} from './insight';
+import {ReactionParams} from './reaction';
 
 export {
   AccountCreateParams,
@@ -82,5 +83,6 @@ export {
   InsightContributionParams,
   InsightUserParams,
   InsightEmbedParams,
-  InsightCommonParams
+  InsightCommonParams,
+  ReactionParams
 };

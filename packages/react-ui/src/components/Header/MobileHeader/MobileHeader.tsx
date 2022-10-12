@@ -1,6 +1,6 @@
 import {AppBar, Badge, Box, Button, Grid, IconButton, styled, SwipeableDrawer, Tab, Tabs, Toolbar, Typography} from '@mui/material';
 import Icon from '@mui/material/Icon';
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useMemo, useState} from 'react';
 import {Link, SCPreferences, SCUserContext, SCUserContextType, useSCPreferences} from '@selfcommunity/react-core';
 import {useThemeProps} from '@mui/system';
 import SearchBar, {HeaderSearchBarProps} from '../SearchBar';
@@ -9,6 +9,7 @@ import {FormattedMessage} from 'react-intl';
 import HeaderMenu from '../HeaderMenu';
 import {SCHeaderMenuUrlsType} from '../../../types';
 import MobileHeaderSkeleton from './Skeleton';
+import {SCFeedObjectTypologyType} from '@selfcommunity/types';
 
 const PREFIX = 'SCMobileHeader';
 
@@ -92,19 +93,35 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
-
+  const setInitialTitle = (title, path) => {
+    let p = path.replace(/^\/([^/]*).*$/, '$1');
+    if (
+      p.startsWith(SCFeedObjectTypologyType.POST) ||
+      p.startsWith(SCFeedObjectTypologyType.DISCUSSION) ||
+      p.startsWith(SCFeedObjectTypologyType.STATUS)
+    ) {
+      return '';
+    }
+    return title;
+  };
   // STATE
   const path = typeof window !== 'undefined' ? window.location.pathname : null;
   const [value, setValue] = useState(path);
   const t = typeof document !== 'undefined' ? document.title.split('|')[0] : '';
-  const [title, setTitle] = useState(t);
+  const [title, setTitle] = useState(() => setInitialTitle(t, path));
 
   // PREFERENCES
   const scPreferences = useSCPreferences();
-  const logo = scPreferences.preferences[SCPreferences.LOGO_NAVBAR_LOGO].value;
+  const logo = useMemo(() => {
+    return scPreferences.preferences && SCPreferences.LOGO_NAVBAR_LOGO in scPreferences.preferences
+      ? scPreferences.preferences[SCPreferences.LOGO_NAVBAR_LOGO].value
+      : null;
+  }, [scPreferences.preferences]);
+
   const [openSettings, setOpenSettings] = useState<boolean>(false);
 
   // HANDLERS
+
   const handleOpenSettingsMenu = () => {
     setOpenSettings(true);
   };
@@ -126,16 +143,16 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
         (url.followings && value === url.followings) ||
         (url.notifications && value === url.notifications)
       ) {
-        return true;
+        return value;
       }
-      return null;
+      return false;
     }
   };
 
   useEffect(() => {
     setValue(path);
     if (showNavigation && typeof document !== 'undefined') {
-      setTitle(document.title.split('|')[0]);
+      setTitle(() => setInitialTitle(document.title.split('|')[0], path));
     }
   }, [path]);
 
@@ -176,9 +193,9 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
             <Tabs
               className={classes.tabs}
               onChange={handleChange}
-              value={value}
+              value={checkValue()}
               textColor="primary"
-              indicatorColor={checkValue() ? 'primary' : null}
+              indicatorColor="primary"
               aria-label="Navigation Tabs"
               variant="scrollable">
               {url && url.home && <Tab value={url.home} icon={<Icon>home</Icon>} aria-label="HomePage" to={url.home} component={Link}></Tab>}

@@ -1,15 +1,18 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {styled} from '@mui/material/styles';
 import {Box, Grid, Typography} from '@mui/material';
 import {defineMessages, useIntl} from 'react-intl';
-import {camelCase} from '@selfcommunity/utils';
+import {camelCase, Logger} from '@selfcommunity/utils';
 import {SCUserType} from '@selfcommunity/types';
-import {useSCFetchUser} from '@selfcommunity/react-core';
+import {SCPreferences, SCPreferencesContextType, useSCFetchUser, useSCPreferences} from '@selfcommunity/react-core';
 import {DEFAULT_FIELDS} from '../../constants/UserProfile';
 import UserProfileInfoSkeleton from './Skeleton';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import {SCUserProfileFields} from '../../types';
+import TagChip from '../../shared/TagChip';
+import {isArray} from 'lodash';
+import {SCOPE_SC_UI} from '../../constants/Errors';
 
 const messages = defineMessages({
   realName: {
@@ -41,6 +44,10 @@ const messages = defineMessages({
     defaultMessage: 'ui.userProfileInfo.gender'
   },
   website: {
+    id: 'ui.userProfileInfo.website',
+    defaultMessage: 'ui.userProfileInfo.website'
+  },
+  tags: {
     id: 'ui.userProfileInfo.website',
     defaultMessage: 'ui.userProfileInfo.website'
   }
@@ -126,18 +133,43 @@ export default function UserProfileInfo(inProps: UserProfileInfoProps): JSX.Elem
   // INTL
   const intl = useIntl();
 
+  // PREFERENCES
+  const scPreferences: SCPreferencesContextType = useSCPreferences();
+  const metadataDefinitions = useMemo(() => {
+    if (scPreferences.preferences && SCPreferences.CONFIGURATIONS_USER_METADATA_DEFINITIONS in scPreferences.preferences) {
+      try {
+        return JSON.parse(scPreferences.preferences[SCPreferences.CONFIGURATIONS_USER_METADATA_DEFINITIONS].value);
+      } catch (e) {
+        Logger.error(SCOPE_SC_UI, 'Error on parse user metadata.');
+        console.log(scPreferences.preferences[SCPreferences.CONFIGURATIONS_USER_METADATA_DEFINITIONS]);
+        return {};
+      }
+    }
+    return null;
+  }, [scPreferences.preferences]);
+
   // RENDER
   const renderField = (user, field) => {
     switch (field) {
       case SCUserProfileFields.DATE_JOINED:
       case SCUserProfileFields.DATE_OF_BIRTH:
         return `${intl.formatDate(user[field], {year: 'numeric', month: 'numeric', day: 'numeric'})}`;
+      case SCUserProfileFields.TAGS:
+        return (
+          <>
+            {user.tags
+              .filter((t) => t.visible)
+              .map((t, i) => (
+                <TagChip tag={t} key={i} clickable={false} disposable={false} />
+              ))}
+          </>
+        );
       default:
         return user[field];
     }
   };
 
-  if (!scUser) {
+  if (!scUser || !metadataDefinitions) {
     return <UserProfileInfoSkeleton />;
   }
 
@@ -150,10 +182,24 @@ export default function UserProfileInfo(inProps: UserProfileInfoProps): JSX.Elem
       <Grid container spacing={2}>
         {fields.map((field) => {
           if (scUser[field]) {
+            if (field === SCUserProfileFields.TAGS) {
+              return (
+                <React.Fragment key={field}>
+                  {scUser[field].length > 0 && (
+                    <Grid item xs={6}>
+                      {renderField(scUser, field)}
+                    </Grid>
+                  )}
+                </React.Fragment>
+              );
+            }
             return (
               <Grid item xs={6} key={field}>
                 <Typography variant="body2">
-                  <span className={classes.field}>{intl.formatMessage(messages[camelCase(field)])}:</span> {renderField(scUser, field)}
+                  <span className={classes.field}>
+                    {metadataDefinitions[field] ? metadataDefinitions[field].label : intl.formatMessage(messages[camelCase(field)])}:
+                  </span>{' '}
+                  {renderField(scUser, field)}
                 </Typography>
               </Grid>
             );

@@ -5,16 +5,18 @@ import Icon from '@mui/material/Icon';
 import {defineMessages, useIntl} from 'react-intl';
 import {SCUserType} from '@selfcommunity/types';
 import {http, Endpoints, formatHttpError, HttpResponse} from '@selfcommunity/api-services';
-import {camelCase} from '@selfcommunity/utils';
+import {camelCase, Logger} from '@selfcommunity/utils';
 import {SCPreferences, SCPreferencesContextType, SCUserContextType, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
 import {DEFAULT_FIELDS} from '../../../constants/UserProfile';
 import classNames from 'classnames';
-import {DatePicker, LocalizationProvider} from '@mui/lab';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import {DatePicker, LocalizationProvider} from '@mui/x-date-pickers';
+import {AdapterDateFns} from '@mui/x-date-pickers/AdapterDateFns';
 import UsernameTextField from '../../../shared/UsernameTextField';
 import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
 import {useThemeProps} from '@mui/system';
 import {SCUserProfileFields} from '../../../types';
+import MetadataField from '../../../shared/MetadataField';
+import {SCOPE_SC_UI} from '../../../constants/Errors';
 
 const messages = defineMessages({
   genderMale: {
@@ -95,7 +97,16 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
   // PREFERENCES
   const scPreferences: SCPreferencesContextType = useSCPreferences();
   const metadataDefinitions = useMemo(() => {
-    return JSON.parse(scPreferences.preferences[SCPreferences.CONFIGURATIONS_USER_METADATA_DEFINITIONS].value);
+    if (scPreferences.preferences && SCPreferences.CONFIGURATIONS_USER_METADATA_DEFINITIONS in scPreferences.preferences) {
+      try {
+        return JSON.parse(scPreferences.preferences[SCPreferences.CONFIGURATIONS_USER_METADATA_DEFINITIONS].value);
+      } catch (e) {
+        Logger.error(SCOPE_SC_UI, 'Error on parse user metadata.');
+        console.log(scPreferences.preferences[SCPreferences.CONFIGURATIONS_USER_METADATA_DEFINITIONS]);
+        return {};
+      }
+    }
+    return null;
   }, [scPreferences.preferences]);
 
   // STATE
@@ -157,33 +168,16 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
   };
 
   // RENDER
-  const getMetadataProps = (field) => {
-    if (!metadataDefinitions[field]) {
-      return {};
-    }
-    const props: any = {};
-    switch (metadataDefinitions[field].type) {
-      case 'url':
-        props.type = 'url';
-        props.pattern = 'https://.*';
-        props.size = '30';
-        break;
-      case 'email':
-        props.type = 'email';
-        break;
-      case 'phone_number':
-        props.type = 'tel';
-        break;
-    }
-    return props;
-  };
-
   const renderField = (field) => {
     const isEditing = editing.includes(field);
     const isSaving = saving.includes(field);
     const camelField = camelCase(field);
     const _error = error !== null && error[`${camelField}Error`] && error[`${camelField}Error`].error;
     const component = {element: TextField};
+    let label = intl.formatMessage({
+      id: `ui.userProfileInfo.${camelField}`,
+      defaultMessage: `ui.userProfileInfo.${field}`
+    });
     let props: any = {
       InputProps: {
         endAdornment: (
@@ -254,8 +248,27 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
           </MenuItem>
         ));
         break;
+      case SCUserProfileFields.TAGS:
+        return null;
       default:
-        props = {...props, ...getMetadataProps(field)};
+        if (metadataDefinitions && metadataDefinitions[field]) {
+          return (
+            <MetadataField
+              key={field}
+              {...props}
+              className={classes.field}
+              name={field}
+              fullWidth
+              label={label}
+              value={user[field] || ''}
+              onChange={handleChange}
+              disabled={!isEditing || isSaving}
+              error={_error}
+              helperText={_error}
+              metadata={metadataDefinitions[field]}
+            />
+          );
+        }
         break;
     }
     return (
@@ -265,10 +278,7 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
         className={classes.field}
         name={field}
         fullWidth
-        label={intl.formatMessage({
-          id: `ui.userProfileInfo.${camelField}`,
-          defaultMessage: `ui.userProfileInfo.${field}`
-        })}
+        label={label}
         value={user[field] || ''}
         onChange={handleChange}
         disabled={!isEditing || isSaving}

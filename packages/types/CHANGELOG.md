@@ -3,6 +3,75 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.4.0-alpha.1...@selfcommunity/types@0.4.0-alpha.2) (2022-10-12)
+
+
+### Performance Improvements
+
+* added reaction on feedobj type ([bfde97d](https://github.com/selfcommunity/community-js/commit/bfde97de70da1bec4bb0fe403f60d56d233acafb))
+
+
+
+
+
+# [0.4.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.4.0-alpha.0...@selfcommunity/types@0.4.0-alpha.1) (2022-10-11)
+
+
+### Bug Fixes
+
+* added reaction_count field to feedObj type ([b5e6648](https://github.com/selfcommunity/community-js/commit/b5e6648d865126e46e917501f1e42a795ca6874e))
+* ConsentSolution components ([55a0a07](https://github.com/selfcommunity/community-js/commit/55a0a07b16a35688566b9ca9274a7a8828903df9))
+
+
+
+
+
+# [0.4.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.3.5-alpha.2...@selfcommunity/types@0.4.0-alpha.0) (2022-10-03)
+
+
+### Features
+
+* Added metadata definition for user profile ([96ab06b](https://github.com/selfcommunity/community-js/commit/96ab06b49e6c70c5445b04b903b697f363a20a80))
+
+
+### Performance Improvements
+
+* added reaction type ([5092d67](https://github.com/selfcommunity/community-js/commit/5092d670e277ab6c6686ebb944708932fe46593b))
+
+
+
+
+
+## [0.3.5-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.3.5-alpha.1...@selfcommunity/types@0.3.5-alpha.2) (2022-09-29)
+
+
+### Performance Improvements
+
+* Added type for user metadata ([bbb5c35](https://github.com/selfcommunity/community-js/commit/bbb5c35d8fc68c797d6dae2497751fde2d46d300))
+
+
+
+
+
+## [0.3.5-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.3.5-alpha.0...@selfcommunity/types@0.3.5-alpha.1) (2022-09-29)
+
+
+### Performance Improvements
+
+* Added type for user metadata ([7cf1b4e](https://github.com/selfcommunity/community-js/commit/7cf1b4e2d341da262d66289b936435f55d1a4519))
+
+
+
+
+
+## [0.3.5-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.3.4...@selfcommunity/types@0.3.5-alpha.0) (2022-09-29)
+
+**Note:** Version bump only for package @selfcommunity/types
+
+
+
+
+
 ## [0.3.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.3.4-alpha.2...@selfcommunity/types@0.3.4) (2022-09-29)
 
 **Note:** Version bump only for package @selfcommunity/types

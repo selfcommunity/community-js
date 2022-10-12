@@ -192,6 +192,7 @@ export default function UserProfileHeader(inProps: UserProfileHeaderProps): JSX.
       ? {background: `url('${scUser.cover}') center / cover`}
       : {background: `url('${scPreferences.preferences[SCPreferences.IMAGES_USER_DEFAULT_COVER].value}') center / cover`})
   };
+
   return (
     <Root id={id} className={classNames(classes.root, className)} {...rest}>
       <Paper style={_backgroundCover} classes={{root: classes.cover}}>

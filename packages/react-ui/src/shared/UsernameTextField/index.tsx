@@ -19,7 +19,7 @@ const Root = styled(TextField, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({}));
 
-export default function PasswordTextField(props: TextFieldProps): JSX.Element {
+const UsernameTextField = (props: TextFieldProps): JSX.Element => {
   // PROPS
   const {onChange, error = false, helperText = null, ...rest} = props;
 
@@ -41,4 +41,6 @@ export default function PasswordTextField(props: TextFieldProps): JSX.Element {
 
   // RENDER
   return <Root {...rest} onChange={handleChange} error={Boolean(errorMsg) || error} helperText={errorMsg || helperText} />;
-}
+};
+
+export default UsernameTextField;
