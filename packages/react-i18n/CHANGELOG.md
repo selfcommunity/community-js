@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.4.0-alpha.1...@selfcommunity/react-i18n@0.4.0-alpha.2) (2022-10-12)
+
+
+### Bug Fixes
+
+* consentSolution ([8fef593](https://github.com/selfcommunity/community-js/commit/8fef593af9d95a507d437929675e3c6dba8652f4))
+
+
+
+
+
 # [0.4.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.4.0-alpha.0...@selfcommunity/react-i18n@0.4.0-alpha.1) (2022-10-11)
 
 
