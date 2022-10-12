@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.6.0-alpha.10...@selfcommunity/react-ui@0.6.0-alpha.11) (2022-10-12)
+
+
+### Bug Fixes
+
+* removed reaction icon class ([51b1532](https://github.com/selfcommunity/community-js/commit/51b1532850998576156dbb913a9c37e6d4ad8cfb))
+
+
+
+
+
 # [0.6.0-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.6.0-alpha.9...@selfcommunity/react-ui@0.6.0-alpha.10) (2022-10-12)
 
 
