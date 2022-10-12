@@ -183,6 +183,10 @@ export default function BroadcastMessages(inProps: BroadcastMessagesProps): JSX.
         setMessages(refresh ? res.data : [...messages, ...res.data]);
         setNext(res.next);
         setLoading(false);
+        const unviewd = res.data.filter((m) => !m.viewed_at).length;
+        if (unviewd > 0) {
+          scUserContext.setUnseenNotificationBannersCounter(scUserContext.user.unseen_notification_banners_counter - unviewd);
+        }
       })
       .catch((error) => {
         Logger.error(SCOPE_SC_UI, error);

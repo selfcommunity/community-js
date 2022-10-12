@@ -4,6 +4,7 @@ import {SCContributionLocation} from './location';
 import {SCPollType} from './poll';
 import {SCMediaType} from './media';
 import {SCTagType} from './tag';
+import {SCReactionType} from './reaction';
 
 /**
  * Typology of feed
@@ -186,6 +187,10 @@ export interface SCFeedObjectType {
    * Number of votes
    */
   vote_count: number;
+  /**
+   * Reaction obj
+   */
+  reaction: SCReactionType;
   /**
    * Reactions number and objs
    */

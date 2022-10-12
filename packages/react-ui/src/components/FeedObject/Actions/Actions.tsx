@@ -5,10 +5,11 @@ import Vote, {VoteProps} from './Vote';
 import Comment, {CommentProps} from './Comment';
 import Share, {ShareProps} from './Share';
 import {SCFeedObjectType, SCFeedObjectTypologyType} from '@selfcommunity/types';
-import {useSCFetchFeedObject} from '@selfcommunity/react-core';
+import {SCFeatures, useSCFetchFeedObject, useSCPreferences} from '@selfcommunity/react-core';
 import {SCFeedObjectTemplateType} from '../../../types/feedObject';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
+import Reaction from './Reaction';
 
 const PREFIX = 'SCFeedObjectActions';
 
@@ -121,8 +122,12 @@ export default function Actions(inProps: ActionsProps): JSX.Element {
     ShareActionProps = {}
   } = props;
 
+  // PREFERENCES
+  const scPreferences = useSCPreferences();
+
   // STATE
   const {obj, setObj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
+  const reactionsEnabled = scPreferences.features.includes(SCFeatures.REACTION);
 
   if (!obj) {
     return null;
@@ -149,7 +154,11 @@ export default function Actions(inProps: ActionsProps): JSX.Element {
     <Root container className={classNames(classes.root, className)}>
       {!hideVoteAction && (
         <Grid item xs={columnWidth} className={classes.action}>
-          <Vote feedObject={obj} feedObjectType={feedObjectType} {...VoteActionProps} />
+          {reactionsEnabled ? (
+            <Reaction feedObject={obj} feedObjectType={feedObjectType} {...VoteActionProps} />
+          ) : (
+            <Vote feedObject={obj} feedObjectType={feedObjectType} {...VoteActionProps} />
+          )}
         </Grid>
       )}
       {!hideCommentAction && (
