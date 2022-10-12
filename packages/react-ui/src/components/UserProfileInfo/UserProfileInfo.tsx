@@ -141,7 +141,7 @@ export default function UserProfileInfo(inProps: UserProfileInfoProps): JSX.Elem
         return JSON.parse(scPreferences.preferences[SCPreferences.CONFIGURATIONS_USER_METADATA_DEFINITIONS].value);
       } catch (e) {
         Logger.error(SCOPE_SC_UI, 'Error on parse user metadata.');
-        console.log(scPreferences.preferences[SCPreferences.CONFIGURATIONS_USER_METADATA_DEFINITIONS]);
+        console.log(scPreferences.preferences[SCPreferences.CONFIGURATIONS_USER_METADATA_DEFINITIONS].value);
         return {};
       }
     }
