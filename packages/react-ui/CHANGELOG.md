@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.1-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.6.1-alpha.2...@selfcommunity/react-ui@0.6.1-alpha.3) (2022-10-14)
+
+
+### Bug Fixes
+
+* user profile ([6093eae](https://github.com/selfcommunity/community-js/commit/6093eaed3881e6d236b6e189a6a88febc205b3a6))
+* user profile ([fd54617](https://github.com/selfcommunity/community-js/commit/fd546177650b03e3d34a49de6f83c3a2b2737f57))
+
+
+
+
+
 ## [0.6.1-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.6.1-alpha.1...@selfcommunity/react-ui@0.6.1-alpha.2) (2022-10-14)
 
 
