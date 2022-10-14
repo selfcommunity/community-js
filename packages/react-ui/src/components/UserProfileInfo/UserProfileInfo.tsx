@@ -10,9 +10,8 @@ import UserProfileInfoSkeleton from './Skeleton';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import {SCUserProfileFields} from '../../types';
-import TagChip from '../../shared/TagChip';
-import {isArray} from 'lodash';
 import {SCOPE_SC_UI} from '../../constants/Errors';
+import Tags, {TagsComponentType} from '../../shared/Tags';
 
 const messages = defineMessages({
   realName: {
@@ -156,13 +155,12 @@ export default function UserProfileInfo(inProps: UserProfileInfoProps): JSX.Elem
         return `${intl.formatDate(user[field], {year: 'numeric', month: 'numeric', day: 'numeric'})}`;
       case SCUserProfileFields.TAGS:
         return (
-          <>
-            {user.tags
-              .filter((t) => t.visible)
-              .map((t, i) => (
-                <TagChip tag={t} key={i} clickable={false} disposable={false} />
-              ))}
-          </>
+          <Tags
+            tags={user.tags.filter((t) => t.visible)}
+            type={TagsComponentType.LIST}
+            direction={'row'}
+            TagChipProps={{clickable: false, disposable: false}}
+          />
         );
       default:
         return user[field];
@@ -186,7 +184,7 @@ export default function UserProfileInfo(inProps: UserProfileInfoProps): JSX.Elem
               return (
                 <React.Fragment key={field}>
                   {scUser[field].length > 0 && (
-                    <Grid item xs={6}>
+                    <Grid item xs={12}>
                       {renderField(scUser, field)}
                     </Grid>
                   )}

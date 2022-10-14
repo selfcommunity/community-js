@@ -1,13 +1,13 @@
 import React, {useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
+import {Box, Divider, Stack, Typography} from '@mui/material';
 import Grow from '@mui/material/Grow';
 import Paper from '@mui/material/Paper';
 import Popper from '@mui/material/Popper';
 import Icon from '@mui/material/Icon';
-import TagChip from '../TagChip';
+import TagChip, {TagChipProps} from '../TagChip';
 import {SCTagType} from '@selfcommunity/types';
-import {Box, Divider, Stack, Typography} from '@mui/material';
 
 const PREFIX = 'SCTags';
 
@@ -72,31 +72,43 @@ export interface TagsProps {
    * @default []
    */
   tags?: SCTagType[];
+
   /**
    * Tag title
    * @default null
    */
   title?: string;
+
   /**
    * Handles component opening
    * @default null
    */
   onOpen?: (res: any) => void;
+
   /**
    * Handles component closing
    * @default null
    */
   onClose?: (res: any) => void;
+
   /**
    * Handles on tag clicking
    * @default null
    */
   onClickTag?: (res: any) => void;
+
+  /**
+   * Props to spread change picture button
+   * @default {}
+   */
+  TagChipProps?: Pick<TagChipProps, Exclude<keyof TagChipProps, 'tag'>>;
+
   /**
    * Tag component type
    * @default 'popper'
    */
   type?: TagsComponentType;
+
   /**
    * Any other properties
    */
@@ -104,7 +116,16 @@ export interface TagsProps {
 }
 export default function Tags(props: TagsProps): JSX.Element {
   // PROPS
-  const {tags = [], title = null, type = TagsComponentType.POPPER, onOpen = null, onClose = null, onClickTag = null, ...rest} = props;
+  const {
+    tags = [],
+    title = null,
+    type = TagsComponentType.POPPER,
+    onOpen = null,
+    onClose = null,
+    onClickTag = null,
+    TagChipProps = {},
+    ...rest
+  } = props;
 
   // STATE
   const [open, setOpen] = useState<boolean>(false);
@@ -188,7 +209,7 @@ export default function Tags(props: TagsProps): JSX.Element {
                           <StackList spacing={2} {...rest}>
                             {tags.map((tag) => (
                               <ItemList key={tag.id}>
-                                <TagChip tag={tag} onClick={onClickTag} />
+                                <TagChip tag={tag} onClick={onClickTag} {...TagChipProps} />
                               </ItemList>
                             ))}
                           </StackList>
@@ -202,10 +223,10 @@ export default function Tags(props: TagsProps): JSX.Element {
           ) : (
             <ListRoot>
               {renderTitle()}
-              <StackList spacing={2} direction={rest.direction ? rest.direction : 'column'}>
+              <StackList spacing={1} direction={rest.direction ? rest.direction : 'column'}>
                 {tags.map((tag) => (
                   <ItemList key={tag.id}>
-                    <TagChip tag={tag} onClick={onClickTag} />
+                    <TagChip tag={tag} onClick={onClickTag} {...TagChipProps} />
                   </ItemList>
                 ))}
               </StackList>
