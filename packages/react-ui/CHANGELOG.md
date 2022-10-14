@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.1-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.6.1-alpha.1...@selfcommunity/react-ui@0.6.1-alpha.2) (2022-10-14)
+
+
+### Bug Fixes
+
+* fixed reaction components ([814d794](https://github.com/selfcommunity/community-js/commit/814d794ebcef70ad1fc15fefbb216f7863d33f4d))
+
+
+### Performance Improvements
+
+* added props to show reaction badge on avatar ([4b6f4cd](https://github.com/selfcommunity/community-js/commit/4b6f4cde5928a23d31ff6ba3b3ca23f01637514d))
+
+
+
+
+
 ## [0.6.1-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.6.1-alpha.0...@selfcommunity/react-ui@0.6.1-alpha.1) (2022-10-12)
 
 
