@@ -23,6 +23,7 @@ const Root = styled(Chip, {
   whiteSpace: 'nowrap',
   overflow: 'hidden',
   textOverflow: 'ellipsis',
+  height: 25,
   [`&.${classes.ellipsis}`]: {
     maxWidth: 120
   }
