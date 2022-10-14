@@ -1,6 +1,6 @@
 import React, {useEffect, useMemo, useReducer, useState, useRef} from 'react';
 import BaseDialog from '../../../../shared/BaseDialog';
-import {FormattedMessage} from 'react-intl';
+import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {Avatar, AvatarGroup, Box, Button, ClickAwayListener, Divider, List, ListItem, Tab, Tabs} from '@mui/material';
 import InfiniteScroll from '../../../../shared/InfiniteScroll';
 import Icon from '@mui/material/Icon';
@@ -28,6 +28,21 @@ import {useThemeProps} from '@mui/system';
 import _ from 'lodash';
 import {VoteProps} from '../Vote';
 import ReactionsPopover from './ReactionsPopover';
+
+const messages = defineMessages({
+  votes: {
+    id: 'ui.feedObject.vote.votes',
+    defaultMessage: 'ui.feedObject.vote.votes'
+  },
+  votedByMe: {
+    id: 'ui.feedObject.vote.votedByMe',
+    defaultMessage: 'ui.feedObject.votedByMe.you'
+  },
+  votedByOnlyMe: {
+    id: 'ui.feedObject.vote.votedByOnlyMe',
+    defaultMessage: 'ui.feedObject.votedByOnlyMe.you'
+  }
+});
 
 /**
  * We have complex state logic that involves multiple sub-values,
@@ -127,7 +142,8 @@ const classes = {
   inlineActionButton: `${PREFIX}-inline-action-button`,
   viewAudienceButton: `${PREFIX}-view-audience-button`,
   groupedIcons: `${PREFIX}-grouped-icons`,
-  reactionAvatar: `${PREFIX}-reaction-avatar`
+  reactionAvatar: `${PREFIX}-reaction-avatar`,
+  reactionIcon: `${PREFIX}-reaction-icon`
 };
 
 const Root = styled(Box, {
@@ -162,12 +178,6 @@ const Root = styled(Box, {
       width: '20px',
       height: '20px',
       fontSize: '0.8rem'
-    }
-  },
-  [`& .${classes.reactionAvatar}`]: {
-    '& .MuiAvatar-img': {
-      width: theme.spacing(2),
-      height: theme.spacing(2)
     }
   }
 }));
@@ -223,6 +233,8 @@ export default function Reaction(inProps: VoteProps): JSX.Element {
   const [timeout, setModalTimeout] = useState(null);
   const [hovered, setHovered] = useState<boolean>(false);
   const [reactionsList, setReactionsList] = useState<[] | any>(obj.reactions_count);
+  // INTL
+  const intl = useIntl();
 
   // HANDLERS
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
@@ -404,7 +416,7 @@ export default function Reaction(inProps: VoteProps): JSX.Element {
               setObj(newObj);
               handleReactions(obj.voted, reaction);
               onVoteAction && onVoteAction(newObj);
-              setHovered(false);
+              handleMouseLeave();
             })
             .catch((error) => {
               Logger.error(SCOPE_SC_UI, error);
@@ -444,13 +456,21 @@ export default function Reaction(inProps: VoteProps): JSX.Element {
               onClick={handleToggleVotesDialog}
               disabled={obj.vote_count === 0}
               color="inherit"
-              classes={{root: classes.viewAudienceButton}}
-              endIcon={obj.vote_count !== 0 ? obj.vote_count : null}>
+              classes={{root: classes.viewAudienceButton}}>
               <AvatarGroup className={classes.groupedIcons} max={3}>
                 {reactionsList.map((r: any, i) => (
                   <Avatar alt={r.reaction.label} src={r.reaction.image} key={i} className={classes.reactionAvatar} />
                 ))}
               </AvatarGroup>
+              {scUserContext.user && obj.voted ? (
+                <React.Fragment>
+                  {obj.vote_count === 1
+                    ? intl.formatMessage(messages.votedByOnlyMe)
+                    : intl.formatMessage(messages.votedByMe, {total: obj.vote_count - 1})}
+                </React.Fragment>
+              ) : (
+                <React.Fragment>{`${intl.formatMessage(messages.votes, {total: obj.vote_count})}`}</React.Fragment>
+              )}
             </Button>
             {openVotesDialog && (
               <BaseDialog
@@ -561,25 +581,23 @@ export default function Reaction(inProps: VoteProps): JSX.Element {
         {withAction && (
           <React.Fragment>
             {!inlineAction && withAudience && <Divider className={classes.divider} />}
-            <span>
-              <LoadingButton
-                ref={popoverAnchor}
-                onClick={() => vote(obj.reaction ?? defaultReaction)}
-                onTouchStart={handleMouseEnter}
-                onMouseEnter={handleMouseEnter}
-                loading={voting}
-                disabled={!obj}
-                color="inherit"
-                classes={{root: classNames(classes.actionButton, {[classes.inlineActionButton]: inlineAction})}}>
-                {scUserContext.user && obj.voted ? (
-                  <Icon fontSize={'large'}>
-                    <img alt={obj.reaction.label} src={obj.reaction.image} height={16} width={16} />
-                  </Icon>
-                ) : (
-                  <Icon fontSize={'large'}>thumb_up_off_alt</Icon>
-                )}
-              </LoadingButton>
-            </span>
+            <LoadingButton
+              ref={popoverAnchor}
+              onClick={() => vote(obj.reaction ?? defaultReaction)}
+              onTouchStart={handleMouseEnter}
+              onMouseEnter={handleMouseEnter}
+              loading={voting}
+              disabled={!obj}
+              color="inherit"
+              classes={{root: classNames(classes.actionButton, {[classes.inlineActionButton]: inlineAction})}}>
+              {scUserContext.user && obj.voted ? (
+                <Icon fontSize={'large'} className={classes.reactionIcon}>
+                  <img alt={obj.reaction.label} src={obj.reaction.image} height={16} width={16} />
+                </Icon>
+              ) : (
+                <Icon fontSize={'large'}>thumb_up_off_alt</Icon>
+              )}
+            </LoadingButton>
             {hovered && (
               <ReactionsPopover
                 anchorEl={popoverAnchor.current}
