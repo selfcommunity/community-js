@@ -247,7 +247,7 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
   // RENDER
   const isMe = scUserContext.user && scUser.id === scUserContext.user.id;
   const roles = scUserContext.user && scUserContext.user.role;
-  const canModerate = roles && (roles.includes('admin') || roles.includes('moderator'));
+  const canModerate = roles && (roles.includes('admin') || roles.includes('moderator')) && !isMe;
 
   if (!isMe) {
     UserFeedProps.FeedProps = {HeaderComponent: null, ...UserFeedProps.FeedProps};
@@ -279,7 +279,7 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
             component="a"
             href={`${scContext.settings.portal}/platform/access?next=/moderation/user/?username=${scUser.username}`}
             target="_blank">
-            <FormattedMessage defaultMessage="templates.userProfile.edit" id="templates.userProfile.edit" />
+            <FormattedMessage defaultMessage="templates.userProfile.moderate" id="templates.userProfile.moderate" />
           </Button>
         )}
       </Stack>

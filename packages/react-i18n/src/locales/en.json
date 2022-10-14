@@ -544,6 +544,7 @@
   "ui.consentSolutionButton.viewStateButton": "See your acceptance status",
 
   "templates.userProfile.edit": "Edit",
+  "templates.userProfile.moderate": "Moderate user",
   "templates.userProfile.send.pm": "Send private message",
   "templates.privateMessages.button.new" : "New Message",
   "templates.privateMessages.delete" : "Select thread to delete",

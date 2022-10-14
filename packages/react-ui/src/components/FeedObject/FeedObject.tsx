@@ -734,7 +734,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                   <Bullet />
                   <Box className={classes.tag}>
                     {obj.addressing.length > 0 ? (
-                      <Tags tags={obj.addressing} />
+                      <Tags tags={obj.addressing} TagChipProps={{disposable: false, clickable: false}}/>
                     ) : (
                       <Tooltip title={`${intl.formatMessage(messages.visibleToAll)}`}>
                         <Icon color="disabled" fontSize="small">

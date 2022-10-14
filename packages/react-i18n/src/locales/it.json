@@ -544,6 +544,7 @@
   "ui.consentSolutionButton.viewStateButton": "Vedi il tuo stato di accettazione",
 
   "templates.userProfile.edit": "Modifica",
+  "templates.userProfile.moderate": "Modera utente",
   "templates.userProfile.send.pm": "Invia messaggio privato",
   "templates.privateMessages.button.new" : "Nuovo Messaggio",
   "templates.privateMessages.delete" : "Seleziona la conversazione da eliminare",

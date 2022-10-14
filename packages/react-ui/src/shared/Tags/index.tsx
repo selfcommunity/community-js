@@ -50,7 +50,14 @@ const StackList = styled(Stack, {
   name: `${PREFIX}Stack`,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})({});
+})({
+  flexWrap: 'wrap',
+  justifyContent: 'flex-start',
+  alignItems: 'flex-start',
+  '& > div:not(style)+:not(style)': {
+    margin: 0
+  }
+});
 
 const ItemList = styled(Box, {
   name: `${PREFIX}ItemList`,
