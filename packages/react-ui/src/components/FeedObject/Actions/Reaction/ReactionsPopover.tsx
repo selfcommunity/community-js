@@ -54,6 +54,10 @@ export interface ReactionPopoverProps {
    */
   className?: string;
   /**
+   * The popover id
+   */
+  id: string;
+  /**
    * The reaction objs to show.
    * @default []
    */
@@ -74,7 +78,7 @@ export interface ReactionPopoverProps {
   /**
    * Callback fired when unhovering anchor element
    */
-  onClose?: () => void;
+  onClose?: (e?: any) => void;
   /**
    * Callback fired when selecting a reaction from the menu
    */
@@ -91,7 +95,7 @@ export default function ReactionsPopover(inProps: ReactionPopoverProps) {
     props: inProps,
     name: PREFIX
   });
-  const {className, open, reactions, anchorEl, onClose, onReactionSelection, onOpen, ...rest} = props;
+  const {className, open, reactions, anchorEl, onClose, onReactionSelection, onOpen, id, ...rest} = props;
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const scroll = useRef(null);
@@ -131,6 +135,7 @@ export default function ReactionsPopover(inProps: ReactionPopoverProps) {
    */
   return (
     <Root
+      {...rest}
       open={open}
       anchorEl={anchorEl}
       className={classNames(classes.root, className)}
@@ -142,7 +147,7 @@ export default function ReactionsPopover(inProps: ReactionPopoverProps) {
         vertical: 'bottom',
         horizontal: 'center'
       }}
-      PaperProps={{onMouseEnter: onOpen, onMouseLeave: onClose, onTouchStart: onOpen}}>
+      PaperProps={{id: id, onMouseEnter: onOpen, onMouseLeave: onClose, onTouchStart: onOpen}}>
       <ClickAwayListener onClickAway={onClose}>
         <Box component={'div'} className={classes.reactionsMenu}>
           {scrollLeft !== 0 && !isMobile && (

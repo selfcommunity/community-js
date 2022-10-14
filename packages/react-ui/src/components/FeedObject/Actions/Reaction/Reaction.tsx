@@ -177,7 +177,8 @@ const Root = styled(Box, {
     '& .MuiAvatar-root': {
       width: '20px',
       height: '20px',
-      fontSize: '0.8rem'
+      fontSize: '0.8rem',
+      marginRight: '6px'
     }
   }
 }));
@@ -243,12 +244,15 @@ export default function Reaction(inProps: VoteProps): JSX.Element {
 
   function handleMouseEnter() {
     timeout && !hovered && clearTimeout(timeout);
-    setModalTimeout(setTimeout(() => setHovered(true), 1500));
+    setModalTimeout(setTimeout(() => setHovered(true), 1000));
   }
 
-  function handleMouseLeave() {
+  function handleMouseLeave(e?) {
+    if (e?.currentTarget === popoverAnchor) {
+      return;
+    }
     timeout && clearTimeout(timeout);
-    setHovered(false);
+    setModalTimeout(setTimeout(() => setHovered(false), 1000));
   }
 
   function dispatchReactionsActions(type: string, reactionObj) {
@@ -457,20 +461,22 @@ export default function Reaction(inProps: VoteProps): JSX.Element {
               disabled={obj.vote_count === 0}
               color="inherit"
               classes={{root: classes.viewAudienceButton}}>
-              <AvatarGroup className={classes.groupedIcons} max={3}>
-                {reactionsList.map((r: any, i) => (
-                  <Avatar alt={r.reaction.label} src={r.reaction.image} key={i} className={classes.reactionAvatar} />
-                ))}
-              </AvatarGroup>
-              {scUserContext.user && obj.voted ? (
-                <React.Fragment>
-                  {obj.vote_count === 1
-                    ? intl.formatMessage(messages.votedByOnlyMe)
-                    : intl.formatMessage(messages.votedByMe, {total: obj.vote_count - 1})}
-                </React.Fragment>
-              ) : (
-                <React.Fragment>{`${intl.formatMessage(messages.votes, {total: obj.vote_count})}`}</React.Fragment>
-              )}
+              <Box component={'div'} sx={{display: 'flex', justifyContent: 'center'}}>
+                <AvatarGroup className={classes.groupedIcons} max={3}>
+                  {reactionsList.map((r: any, i) => (
+                    <Avatar alt={r.reaction.label} src={r.reaction.image} key={i} className={classes.reactionAvatar} />
+                  ))}
+                </AvatarGroup>
+                {scUserContext.user && obj.voted ? (
+                  <React.Fragment>
+                    {obj.vote_count === 1
+                      ? intl.formatMessage(messages.votedByOnlyMe)
+                      : intl.formatMessage(messages.votedByMe, {total: obj.vote_count - 1})}
+                  </React.Fragment>
+                ) : (
+                  <React.Fragment>{`${intl.formatMessage(messages.votes, {total: obj.vote_count})}`}</React.Fragment>
+                )}
+              </Box>
             </Button>
             {openVotesDialog && (
               <BaseDialog
@@ -586,6 +592,8 @@ export default function Reaction(inProps: VoteProps): JSX.Element {
               onClick={() => vote(obj.reaction ?? defaultReaction)}
               onTouchStart={handleMouseEnter}
               onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+              onTouchMove={handleMouseLeave}
               loading={voting}
               disabled={!obj}
               color="inherit"
@@ -600,6 +608,7 @@ export default function Reaction(inProps: VoteProps): JSX.Element {
             </LoadingButton>
             {hovered && (
               <ReactionsPopover
+                id="reactions-popover-id"
                 anchorEl={popoverAnchor.current}
                 open={hovered}
                 onOpen={handleMouseEnter}
