@@ -1,7 +1,7 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
 import UserSkeleton from './Skeleton';
-import {Avatar, Button} from '@mui/material';
+import {Avatar, Badge, Button} from '@mui/material';
 import {SCUserType} from '@selfcommunity/types';
 import {Link, SCRoutes, SCRoutingContextType, useSCFetchUser, useSCRouting} from '@selfcommunity/react-core';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
@@ -59,6 +59,15 @@ export interface UserProps extends WidgetProps {
    */
   showFollowers?: boolean;
   /**
+   *  Prop to show reaction badge on user avatar when showing feedObj reactions list
+   * @default false
+   */
+  showReaction?: boolean;
+  /**
+   * Reaction icon to show as user avatar badge if show reaction is true.
+   */
+  reaction?: any;
+  /**
    * Any other properties
    */
   [p: string]: any;
@@ -100,8 +109,17 @@ export default function User(inProps: UserProps): JSX.Element {
     followConnectUserButtonProps = {},
     showFollowers = false,
     elevation,
+    showReaction = false,
+    reaction,
     ...rest
   } = props;
+
+  const SmallAvatar = styled(Avatar)(({theme}) => ({
+    width: 12,
+    height: 12,
+    backgroundColor: theme.palette.common.white,
+    border: `2px solid ${theme.palette.background.paper}`
+  }));
 
   // STATE
   const {scUser, setSCUser} = useSCFetchUser({id: userId, user});
@@ -145,7 +163,18 @@ export default function User(inProps: UserProps): JSX.Element {
       {...rest}
       className={classNames(classes.root, className)}
       ButtonBaseProps={{component: Link, to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, scUser)}}
-      image={<Avatar alt={scUser.username} src={scUser.avatar} />}
+      image={
+        showReaction ? (
+          <Badge
+            overlap="circular"
+            anchorOrigin={{vertical: 'bottom', horizontal: 'right'}}
+            badgeContent={<SmallAvatar alt={reaction.label} src={reaction.image} />}>
+            <Avatar alt={scUser.username} src={scUser.avatar} />
+          </Badge>
+        ) : (
+          <Avatar alt={scUser.username} src={scUser.avatar} />
+        )
+      }
       primary={scUser.username}
       secondary={showFollowers ? `${intl.formatMessage(messages.userFollowers, {total: scUser.followers_counter})}` : scUser.description}
       actions={renderAuthenticatedActions()}
