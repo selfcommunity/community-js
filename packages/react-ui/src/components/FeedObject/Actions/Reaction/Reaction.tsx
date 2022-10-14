@@ -1,7 +1,7 @@
-import React, {useEffect, useMemo, useReducer, useState} from 'react';
+import React, {useEffect, useMemo, useReducer, useState, useRef} from 'react';
 import BaseDialog from '../../../../shared/BaseDialog';
 import {FormattedMessage} from 'react-intl';
-import {Avatar, AvatarGroup, Box, Button, Divider, List, ListItem, Menu, MenuItem, MenuList, Tab, Tabs} from '@mui/material';
+import {Avatar, AvatarGroup, Box, Button, ClickAwayListener, Divider, List, ListItem, Tab, Tabs} from '@mui/material';
 import InfiniteScroll from '../../../../shared/InfiniteScroll';
 import Icon from '@mui/material/Icon';
 import Skeleton from '@mui/material/Skeleton';
@@ -27,6 +27,7 @@ import {
 import {useThemeProps} from '@mui/system';
 import _ from 'lodash';
 import {VoteProps} from '../Vote';
+import ReactionsPopover from './ReactionsPopover';
 
 /**
  * We have complex state logic that involves multiple sub-values,
@@ -127,7 +128,6 @@ const classes = {
   viewAudienceButton: `${PREFIX}-view-audience-button`,
   groupedIcons: `${PREFIX}-grouped-icons`,
   reactionAvatar: `${PREFIX}-reaction-avatar`
-  // reactionIcon: `${PREFIX}-reaction-icon`
 };
 
 const Root = styled(Box, {
@@ -170,10 +170,6 @@ const Root = styled(Box, {
       height: theme.spacing(2)
     }
   }
-  // [`& .${classes.reactionIcon}`]: {
-  //   width: theme.spacing(2),
-  //   height: theme.spacing(2)
-  // }
 }));
 
 export interface TabPanelProps {
@@ -223,7 +219,8 @@ export default function Reaction(inProps: VoteProps): JSX.Element {
   const [reaction, setReaction] = useState<SCReactionType>(null);
   const defaultReactionId = 1;
   const defaultReaction = reactions.find((r) => r.id === defaultReactionId);
-  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+  const popoverAnchor = useRef(null);
+  const [timeout, setModalTimeout] = useState(null);
   const [hovered, setHovered] = useState<boolean>(false);
   const [reactionsList, setReactionsList] = useState<[] | any>(obj.reactions_count);
 
@@ -232,18 +229,14 @@ export default function Reaction(inProps: VoteProps): JSX.Element {
     setTabIndex(newValue);
   };
 
-  function handleClick(event) {
-    setTimeout(() => {
-      setHovered(true);
-    }, 1500);
-    if (anchorEl !== event.currentTarget) {
-      setAnchorEl(event.currentTarget);
-    }
+  function handleMouseEnter() {
+    timeout && !hovered && clearTimeout(timeout);
+    setModalTimeout(setTimeout(() => setHovered(true), 1500));
   }
 
-  function handleClose() {
+  function handleMouseLeave() {
+    timeout && clearTimeout(timeout);
     setHovered(false);
-    setAnchorEl(null);
   }
 
   function dispatchReactionsActions(type: string, reactionObj) {
@@ -411,7 +404,7 @@ export default function Reaction(inProps: VoteProps): JSX.Element {
               setObj(newObj);
               handleReactions(obj.voted, reaction);
               onVoteAction && onVoteAction(newObj);
-              setAnchorEl(null);
+              setHovered(false);
             })
             .catch((error) => {
               Logger.error(SCOPE_SC_UI, error);
@@ -422,6 +415,10 @@ export default function Reaction(inProps: VoteProps): JSX.Element {
       scContext.settings.handleAnonymousAction();
     }
   }
+
+  const handleReactionVote = (r) => {
+    vote(r);
+  };
 
   /**
    * Renders audience with detail dialog
@@ -506,7 +503,7 @@ export default function Reaction(inProps: VoteProps): JSX.Element {
                         <List>
                           {votes.map((vote, index) => (
                             <ListItem key={index}>
-                              <User elevation={0} user={vote.user} key={index} sx={{m: 0}} />
+                              <User elevation={0} user={vote.user} key={index} sx={{m: 0}} showReaction={true} reaction={vote.reaction} />
                             </ListItem>
                           ))}
                         </List>
@@ -534,7 +531,7 @@ export default function Reaction(inProps: VoteProps): JSX.Element {
                             <List>
                               {filteredVotes[key].map((vote, index) => (
                                 <ListItem key={index}>
-                                  <User elevation={0} user={vote.user} key={index} sx={{m: 0}} />
+                                  <User elevation={0} user={vote.user} key={index} sx={{m: 0}} showReaction={true} reaction={vote.reaction} />
                                 </ListItem>
                               ))}
                             </List>
@@ -566,8 +563,10 @@ export default function Reaction(inProps: VoteProps): JSX.Element {
             {!inlineAction && withAudience && <Divider className={classes.divider} />}
             <span>
               <LoadingButton
-                onClick={() => vote(reaction ?? defaultReaction)}
-                onMouseOver={handleClick}
+                ref={popoverAnchor}
+                onClick={() => vote(obj.reaction ?? defaultReaction)}
+                onTouchStart={handleMouseEnter}
+                onMouseEnter={handleMouseEnter}
                 loading={voting}
                 disabled={!obj}
                 color="inherit"
@@ -582,39 +581,14 @@ export default function Reaction(inProps: VoteProps): JSX.Element {
               </LoadingButton>
             </span>
             {hovered && (
-              <Menu
-                id="reactions-menu"
-                anchorEl={anchorEl}
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
-                PaperProps={{
-                  elevation: 0,
-                  sx: {
-                    width: 200,
-                    overflow: 'hidden',
-                    borderRadius: '40px',
-                    '& .MuiList-root': {
-                      display: 'flex',
-                      overflow: 'auto'
-                    }
-                  }
-                }}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'center'
-                }}
-                transformOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'center'
-                }}>
-                {reactions.map((reaction: SCReactionType, index) => (
-                  <MenuItem key={index} onClick={() => vote(reaction)}>
-                    <Icon>
-                      <img alt={reaction.label} src={reaction.image} width={16} height={16} />
-                    </Icon>
-                  </MenuItem>
-                ))}
-              </Menu>
+              <ReactionsPopover
+                anchorEl={popoverAnchor.current}
+                open={hovered}
+                onOpen={handleMouseEnter}
+                onClose={handleMouseLeave}
+                reactions={reactions}
+                onReactionSelection={handleReactionVote}
+              />
             )}
           </React.Fragment>
         )}

@@ -123,11 +123,11 @@ export default function Actions(inProps: ActionsProps): JSX.Element {
   } = props;
 
   // PREFERENCES
-  //const scPreferences = useSCPreferences();
+  const scPreferences = useSCPreferences();
 
   // STATE
   const {obj, setObj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
-  //const reactionsEnabled = scPreferences.features.includes(SCFeatures.REACTION);
+  const reactionsEnabled = scPreferences.features.includes(SCFeatures.REACTION);
 
   if (!obj) {
     return null;
@@ -154,12 +154,11 @@ export default function Actions(inProps: ActionsProps): JSX.Element {
     <Root container className={classNames(classes.root, className)}>
       {!hideVoteAction && (
         <Grid item xs={columnWidth} className={classes.action}>
-          <Vote feedObject={obj} feedObjectType={feedObjectType} {...VoteActionProps} />
-          {/*{reactionsEnabled ? (*/}
-          {/*  <Reaction feedObject={obj} feedObjectType={feedObjectType} {...VoteActionProps} />*/}
-          {/*) : (*/}
-          {/*  <Vote feedObject={obj} feedObjectType={feedObjectType} {...VoteActionProps} />*/}
-          {/*)}*/}
+          {reactionsEnabled ? (
+            <Reaction feedObject={obj} feedObjectType={feedObjectType} {...VoteActionProps} />
+          ) : (
+            <Vote feedObject={obj} feedObjectType={feedObjectType} {...VoteActionProps} />
+          )}
         </Grid>
       )}
       {!hideCommentAction && (
