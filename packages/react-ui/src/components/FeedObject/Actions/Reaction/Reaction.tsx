@@ -1,7 +1,7 @@
 import React, {useEffect, useMemo, useReducer, useState, useRef} from 'react';
 import BaseDialog from '../../../../shared/BaseDialog';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {Avatar, AvatarGroup, Box, Button, ClickAwayListener, Divider, List, ListItem, Tab, Tabs} from '@mui/material';
+import {Avatar, AvatarGroup, Box, Button, Divider, List, ListItem, Tab, Tabs} from '@mui/material';
 import InfiniteScroll from '../../../../shared/InfiniteScroll';
 import Icon from '@mui/material/Icon';
 import Skeleton from '@mui/material/Skeleton';
@@ -247,10 +247,7 @@ export default function Reaction(inProps: VoteProps): JSX.Element {
     setModalTimeout(setTimeout(() => setHovered(true), 1000));
   }
 
-  function handleMouseLeave(e?) {
-    if (e?.currentTarget === popoverAnchor) {
-      return;
-    }
+  function handleMouseLeave() {
     timeout && clearTimeout(timeout);
     setModalTimeout(setTimeout(() => setHovered(false), 1000));
   }
@@ -420,7 +417,6 @@ export default function Reaction(inProps: VoteProps): JSX.Element {
               setObj(newObj);
               handleReactions(obj.voted, reaction);
               onVoteAction && onVoteAction(newObj);
-              handleMouseLeave();
             })
             .catch((error) => {
               Logger.error(SCOPE_SC_UI, error);
@@ -461,12 +457,10 @@ export default function Reaction(inProps: VoteProps): JSX.Element {
               disabled={obj.vote_count === 0}
               color="inherit"
               classes={{root: classes.viewAudienceButton}}>
-              <Box component={'div'} sx={{display: 'flex', justifyContent: 'center'}}>
-                <AvatarGroup className={classes.groupedIcons} max={3}>
-                  {reactionsList.map((r: any, i) => (
-                    <Avatar alt={r.reaction.label} src={r.reaction.image} key={i} className={classes.reactionAvatar} />
-                  ))}
-                </AvatarGroup>
+              <AvatarGroup className={classes.groupedIcons} max={3}>
+                {reactionsList.map((r: any, i) => (
+                  <Avatar alt={r.reaction.label} src={r.reaction.image} key={i} className={classes.reactionAvatar} />
+                ))}
                 {scUserContext.user && obj.voted ? (
                   <React.Fragment>
                     {obj.vote_count === 1
@@ -476,7 +470,7 @@ export default function Reaction(inProps: VoteProps): JSX.Element {
                 ) : (
                   <React.Fragment>{`${intl.formatMessage(messages.votes, {total: obj.vote_count})}`}</React.Fragment>
                 )}
-              </Box>
+              </AvatarGroup>
             </Button>
             {openVotesDialog && (
               <BaseDialog
@@ -606,17 +600,14 @@ export default function Reaction(inProps: VoteProps): JSX.Element {
                 <Icon fontSize={'large'}>thumb_up_off_alt</Icon>
               )}
             </LoadingButton>
-            {hovered && (
-              <ReactionsPopover
-                id="reactions-popover-id"
-                anchorEl={popoverAnchor.current}
-                open={hovered}
-                onOpen={handleMouseEnter}
-                onClose={handleMouseLeave}
-                reactions={reactions}
-                onReactionSelection={handleReactionVote}
-              />
-            )}
+            <ReactionsPopover
+              anchorEl={popoverAnchor.current}
+              open={hovered}
+              onOpen={handleMouseEnter}
+              onClose={handleMouseLeave}
+              reactions={reactions}
+              onReactionSelection={handleReactionVote}
+            />
           </React.Fragment>
         )}
       </React.Fragment>
