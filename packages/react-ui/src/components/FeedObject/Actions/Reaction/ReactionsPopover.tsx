@@ -11,6 +11,7 @@ const classes = {
   root: `${PREFIX}-root`,
   reactionsMenu: `${PREFIX}-reactions-menu`,
   reactionsList: `${PREFIX}-reactions-list`,
+  reactionIcon: `${PREFIX}-reaction-icon`,
   arrowIcon: `${PREFIX}-arrow-icon`
 };
 
@@ -18,12 +19,14 @@ const Root = styled(Popover, {
   name: PREFIX,
   slot: 'Root'
 })(({theme}) => ({
-  cursor: 'pointer',
+  '	.MuiPopover-paper': {
+    pointerEvents: 'auto'
+  },
+  pointerEvents: 'none',
   '& .MuiPaper-root': {
     borderRadius: '40px',
     paddingBottom: '4px',
     paddingTop: '4px'
-    //position: 'fixed',
   },
   [`.${classes.reactionsMenu}`]: {
     width: 200,
@@ -44,6 +47,12 @@ const Root = styled(Popover, {
       width: 0,
       height: 0
     }
+  },
+  [`.${classes.reactionIcon}`]: {
+    cursor: 'pointer',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 }));
 
@@ -53,10 +62,6 @@ export interface ReactionPopoverProps {
    * @default null
    */
   className?: string;
-  /**
-   * The popover id
-   */
-  id: string;
   /**
    * The reaction objs to show.
    * @default []
@@ -95,7 +100,7 @@ export default function ReactionsPopover(inProps: ReactionPopoverProps) {
     props: inProps,
     name: PREFIX
   });
-  const {className, open, reactions, anchorEl, onClose, onReactionSelection, onOpen, id, ...rest} = props;
+  const {className, open, reactions, anchorEl, onClose, onReactionSelection, onOpen, ...rest} = props;
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const scroll = useRef(null);
@@ -147,7 +152,7 @@ export default function ReactionsPopover(inProps: ReactionPopoverProps) {
         vertical: 'bottom',
         horizontal: 'center'
       }}
-      PaperProps={{id: id, onMouseEnter: onOpen, onMouseLeave: onClose, onTouchStart: onOpen}}>
+      PaperProps={{onMouseEnter: onOpen, onMouseLeave: onClose, onTouchStart: onOpen}}>
       <ClickAwayListener onClickAway={onClose}>
         <Box component={'div'} className={classes.reactionsMenu}>
           {scrollLeft !== 0 && !isMobile && (
@@ -158,7 +163,7 @@ export default function ReactionsPopover(inProps: ReactionPopoverProps) {
           <List ref={scroll} onScroll={checkScrollEnd} className={classes.reactionsList}>
             {reactions.map((reaction: SCReactionType, index) => (
               <ListItem key={index} onClick={() => onReactionSelection(reaction)}>
-                <Icon sx={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                <Icon className={classes.reactionIcon}>
                   <img alt={reaction.label} src={reaction.image} width={16} height={16} />
                 </Icon>
               </ListItem>
