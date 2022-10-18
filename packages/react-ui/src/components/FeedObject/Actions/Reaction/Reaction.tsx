@@ -1,7 +1,7 @@
 import React, {useEffect, useMemo, useReducer, useState, useRef} from 'react';
 import BaseDialog from '../../../../shared/BaseDialog';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {Avatar, AvatarGroup, Box, Button, Divider, List, ListItem, Tab, Tabs} from '@mui/material';
+import {Avatar, AvatarGroup, Box, Button, Divider, List, ListItem, Tab, Tabs, Typography} from '@mui/material';
 import InfiniteScroll from '../../../../shared/InfiniteScroll';
 import Icon from '@mui/material/Icon';
 import Skeleton from '@mui/material/Skeleton';
@@ -462,13 +462,13 @@ export default function Reaction(inProps: VoteProps): JSX.Element {
                   <Avatar alt={r.reaction.label} src={r.reaction.image} key={i} className={classes.reactionAvatar} />
                 ))}
                 {scUserContext.user && obj.voted ? (
-                  <React.Fragment>
+                  <Typography component={'span'}>
                     {obj.vote_count === 1
                       ? intl.formatMessage(messages.votedByOnlyMe)
                       : intl.formatMessage(messages.votedByMe, {total: obj.vote_count - 1})}
-                  </React.Fragment>
+                  </Typography>
                 ) : (
-                  <React.Fragment>{`${intl.formatMessage(messages.votes, {total: obj.vote_count})}`}</React.Fragment>
+                  <Typography component={'span'}>{`${intl.formatMessage(messages.votes, {total: obj.vote_count})}`}</Typography>
                 )}
               </AvatarGroup>
             </Button>
@@ -592,7 +592,7 @@ export default function Reaction(inProps: VoteProps): JSX.Element {
               disabled={!obj}
               color="inherit"
               classes={{root: classNames(classes.actionButton, {[classes.inlineActionButton]: inlineAction})}}>
-              {scUserContext.user && obj.voted ? (
+              {scUserContext.user && obj.voted && obj.reaction ? (
                 <Icon fontSize={'large'} className={classes.reactionIcon}>
                   <img alt={obj.reaction.label} src={obj.reaction.image} height={16} width={16} />
                 </Icon>

@@ -130,6 +130,11 @@ export interface SCUserType {
   reputation: number;
 
   /**
+   * If the user has the community badge active.
+   */
+  community_badge: boolean;
+
+  /**
    * List of user permission. Only for the resource /user/me/.
    */
   permission?: Array<string>;

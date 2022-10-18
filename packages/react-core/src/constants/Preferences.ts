@@ -58,6 +58,7 @@ export const IMAGES_ERRORPAGES_IMAGE = 'images.errorpages_image';
  * STAFF
  */
 export const STAFF_STAFF_BADGE_ICON = 'staff.staff_badge_icon';
+export const STAFF_STAFF_BADGE_LABEL = 'staff.staff_badge_label';
 
 /**
  * LOYALTY
@@ -223,6 +224,7 @@ export const DATA_TYPES = {
   [IMAGES_ERROR_503]: stringType,
   [IMAGES_ERRORPAGES_IMAGE]: stringType,
   [STAFF_STAFF_BADGE_ICON]: stringType,
+  [STAFF_STAFF_BADGE_LABEL]: stringType,
   [LOYALTY_PRIZE_A_IMAGE]: stringType,
   [LOYALTY_PRIZE_B_IMAGE]: stringType,
   [LOYALTY_PRIZE_C_IMAGE]: stringType,

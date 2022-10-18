@@ -1,9 +1,18 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {styled} from '@mui/material/styles';
 import UserSkeleton from './Skeleton';
-import {Avatar, Badge, Button} from '@mui/material';
+import {Avatar, Badge, Button, Chip, Typography} from '@mui/material';
 import {SCUserType} from '@selfcommunity/types';
-import {Link, SCRoutes, SCRoutingContextType, useSCFetchUser, useSCRouting} from '@selfcommunity/react-core';
+import {
+  Link,
+  SCPreferences,
+  SCPreferencesContextType,
+  SCRoutes,
+  SCRoutingContextType,
+  useSCFetchUser,
+  useSCPreferences,
+  useSCRouting
+} from '@selfcommunity/react-core';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {FollowUserButtonProps} from '../FollowUserButton/FollowUserButton';
 import classNames from 'classnames';
@@ -23,14 +32,29 @@ const messages = defineMessages({
 const PREFIX = 'SCUser';
 
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-root`,
+  staffBadgeLabel: `${PREFIX}-staff-badge-label`,
+  staffBadgeIcon: `${PREFIX}-staff-badge-icon`
 };
 
 const Root = styled(BaseItemButton, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+})(({theme}) => ({
+  '& .MuiChip-root': {
+    height: '18px'
+  },
+  [`& .${classes.staffBadgeLabel}`]: {
+    marginLeft: theme.spacing(1),
+    borderRadius: 0,
+    fontSize: '0.5rem'
+  },
+  [`& .${classes.staffBadgeIcon}`]: {
+    top: '25%',
+    right: '5%'
+  }
+}));
 
 export interface UserProps extends WidgetProps {
   /**
@@ -72,6 +96,7 @@ export interface UserProps extends WidgetProps {
    */
   [p: string]: any;
 }
+const PREFERENCES = [SCPreferences.STAFF_STAFF_BADGE_LABEL, SCPreferences.STAFF_STAFF_BADGE_ICON];
 
 /**
  * > API documentation for the Community-JS User component. Learn about the available props and the CSS API.
@@ -92,6 +117,8 @@ export interface UserProps extends WidgetProps {
  |Rule Name|Global class|Description|
  |---|---|---|
  |root|.SCUser-root|Styles applied to the root element.|
+ |staffBadgeLabel|.SCUser-staff-badge-label|Styles applied to the staff badge label element.|
+ |staffBadgeIcon|.SCUser-staff-badge-icon|Styles applied to the staff badge icon element.|
 
  * @param inProps
  */
@@ -126,6 +153,15 @@ export default function User(inProps: UserProps): JSX.Element {
 
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
+
+  // PREFERENCES
+  const scPreferences: SCPreferencesContextType = useSCPreferences();
+  const preferences = useMemo(() => {
+    const _preferences = {};
+    PREFERENCES.map((p) => (_preferences[p] = p in scPreferences.preferences ? scPreferences.preferences[p].value : null));
+    return _preferences;
+  }, [scPreferences.preferences]);
+  const hasBadge = scUser && scUser.community_badge;
 
   // INTL
   const intl = useIntl();
@@ -172,10 +208,29 @@ export default function User(inProps: UserProps): JSX.Element {
             <Avatar alt={scUser.username} src={scUser.avatar} />
           </Badge>
         ) : (
-          <Avatar alt={scUser.username} src={scUser.avatar} />
+          <Badge
+            invisible={!hasBadge}
+            classes={{badge: classes.staffBadgeIcon}}
+            overlap="circular"
+            anchorOrigin={{vertical: 'top', horizontal: 'right'}}
+            badgeContent={
+              preferences ? (
+                <SmallAvatar alt={preferences[SCPreferences.STAFF_STAFF_BADGE_LABEL]} src={preferences[SCPreferences.STAFF_STAFF_BADGE_ICON]} />
+              ) : null
+            }>
+            <Avatar alt={scUser.username} src={scUser.avatar} />
+          </Badge>
         )
       }
-      primary={scUser.username}
+      primary={
+        hasBadge && preferences ? (
+          <Typography component={'span'}>
+            {scUser.username} <Chip className={classes.staffBadgeLabel} size="small" label={preferences[SCPreferences.STAFF_STAFF_BADGE_LABEL]} />
+          </Typography>
+        ) : (
+          scUser.username
+        )
+      }
       secondary={showFollowers ? `${intl.formatMessage(messages.userFollowers, {total: scUser.followers_counter})}` : scUser.description}
       actions={renderAuthenticatedActions()}
     />
