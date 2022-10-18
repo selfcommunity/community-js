@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.1-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.6.1-alpha.5...@selfcommunity/react-ui@0.6.1-alpha.6) (2022-10-17)
+
+
+### Bug Fixes
+
+* fixed popover flickering ([7f2d671](https://github.com/selfcommunity/community-js/commit/7f2d671ba0a78de96c2bae18fce7c39bf5866dc9))
+
+
+
+
+
 ## [0.6.1-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.6.1-alpha.4...@selfcommunity/react-ui@0.6.1-alpha.5) (2022-10-14)
 
 
