@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.1-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.6.1-alpha.6...@selfcommunity/react-ui@0.6.1-alpha.7) (2022-10-18)
+
+
+### Performance Improvements
+
+* added community badge to user component. Asana issue: https://app.asana.com/0/1202523699272956/1203176346726554/f ([41ee41f](https://github.com/selfcommunity/community-js/commit/41ee41f37a90b3f9a6c205d8343538598d5f7e00))
+
+
+
+
+
 ## [0.6.1-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.6.1-alpha.5...@selfcommunity/react-ui@0.6.1-alpha.6) (2022-10-17)
 
 

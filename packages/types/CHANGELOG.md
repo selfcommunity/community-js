@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.1-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.4.1-alpha.0...@selfcommunity/types@0.4.1-alpha.1) (2022-10-18)
+
+
+### Performance Improvements
+
+* added community badge to user component. Asana issue: https://app.asana.com/0/1202523699272956/1203176346726554/f ([41ee41f](https://github.com/selfcommunity/community-js/commit/41ee41f37a90b3f9a6c205d8343538598d5f7e00))
+
+
+
+
+
 ## [0.4.1-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.4.0...@selfcommunity/types@0.4.1-alpha.0) (2022-10-12)
 
 **Note:** Version bump only for package @selfcommunity/types
