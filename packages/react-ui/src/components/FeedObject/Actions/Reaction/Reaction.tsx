@@ -351,7 +351,7 @@ export default function Reaction(inProps: VoteProps): JSX.Element {
     () => () => {
       return http
         .request({
-          url: state.next,
+          url: obj.type === state.feedObjectType ? state.next : Endpoints.VotesList.url({type: obj.type, id: obj.id}),
           method: Endpoints.VotesList.method
         })
         .then((res: HttpResponse<SCTagType>) => {
@@ -417,6 +417,7 @@ export default function Reaction(inProps: VoteProps): JSX.Element {
               setObj(newObj);
               handleReactions(obj.voted, reaction);
               onVoteAction && onVoteAction(newObj);
+              handleMouseLeave();
             })
             .catch((error) => {
               Logger.error(SCOPE_SC_UI, error);
@@ -583,7 +584,7 @@ export default function Reaction(inProps: VoteProps): JSX.Element {
             {!inlineAction && withAudience && <Divider className={classes.divider} />}
             <LoadingButton
               ref={popoverAnchor}
-              onClick={() => vote(obj.reaction ?? defaultReaction)}
+              onClick={() => vote(obj.reaction && obj.voted ? obj.reaction : defaultReaction)}
               onTouchStart={handleMouseEnter}
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
