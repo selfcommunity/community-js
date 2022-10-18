@@ -8,11 +8,19 @@ import Skeleton from '@mui/material/Skeleton';
 
 const PREFIX = 'SCPreviewMediaVideo';
 
+const classes = {
+  previewVideo: `${PREFIX}-preview-video`
+};
+
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+})(({theme}) => ({
+  [`& .${classes.previewVideo}`]: {
+    minHeight: 360
+  }
+}));
 
 export interface PreviewVideoProps {
   /**
@@ -52,6 +60,7 @@ export default (props: PreviewVideoProps): JSX.Element => {
               placeholder={<Skeleton variant="rectangular" height={360} width={'100%'} />}
               key={i}
               once
+              className={classes.previewVideo}
               offset={DEFAULT_PRELOAD_OFFSET_VIEWPORT}>
               <AutoPlayer url={v.url} width={'100%'} onVideoWatch={() => handleVideoClick(v)} />
             </LazyLoad>

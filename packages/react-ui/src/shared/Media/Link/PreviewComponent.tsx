@@ -7,12 +7,15 @@ import CentralProgress from '../../CentralProgress';
 import Box from '@mui/material/Box';
 import {DEFAULT_PRELOAD_OFFSET_VIEWPORT} from '../../../constants/LazyLoad';
 import Skeleton from '@mui/material/Skeleton';
+import classNames from 'classnames';
 
 const PREFIX = 'SCPreviewMediaLink';
 
 const classes = {
-  preview: `${PREFIX}-preview`,
+  previewLink: `${PREFIX}-preview-link`,
+  previewVideo: `${PREFIX}-preview-video`,
   thumbnail: `${PREFIX}-thumbnail`,
+  thumbnailFullWidth: `${PREFIX}-thumbnail`,
   image: `${PREFIX}-image`,
   snippet: `${PREFIX}-snippet`,
   snippetTitle: `${PREFIX}-snippetTitle`,
@@ -24,23 +27,31 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  [`& .${classes.preview}`]: {
+  [`& .${classes.previewLink}`]: {
     position: 'relative',
     backgroundColor: '#F5F5F5',
-    margin: '10px 0px'
+    margin: '10px 0px',
+    padding: theme.spacing()
   },
-
+  [`& .${classes.previewVideo}`]: {
+    margin: '10px 0px',
+    height: 360
+  },
   [`& .${classes.thumbnail}`]: {
-    maxWidth: 150,
     border: '1px solid #dddddd',
-    borderRadius: 4,
-    margin: '10px 10px 10px 20px',
-    padding: 4,
-    float: 'left'
+    borderRadius: 3,
+    paddingTop: theme.spacing(),
+    margin: theme.spacing(),
+    [theme.breakpoints.up('sm')]: {
+      maxWidth: 200,
+      width: '100%',
+      float: 'left'
+    }
   },
-
   [`& .${classes.image}`]: {
-    width: '100%'
+    backgroundSize: 'cover !important',
+    backgroundPosition: 'center !important',
+    backgroundRepeat: 'no-repeat !important'
   },
 
   [`& .${classes.snippet}`]: {
@@ -90,17 +101,21 @@ export default (props: LinkPreviewProps): JSX.Element => {
    */
   const renderPreview = (link, key) => {
     return (
-      <Box className={classes.preview} key={key}>
+      <Box className={classes.previewLink} key={key}>
         {link.embed.metadata.images.length > 0 && (
-          <Box>
+          <>
             {fullWidth ? (
-              <img src={link.embed.metadata.images[0].url} className={classes.image} />
+              <Box
+                className={classNames(classes.thumbnailFullWidth, classes.image)}
+                style={{background: `url(${link.image})`, paddingBottom: `${100 / link.image_width / link.image_height}%`}}
+              />
             ) : (
-              <Box className={classes.thumbnail}>
-                <img src={link.embed.metadata.images[0].url} className={classes.image} />
-              </Box>
+              <Box
+                className={classNames(classes.thumbnail, classes.image)}
+                style={{background: `url(${link.image})`, paddingBottom: 170}}
+              />
             )}
-          </Box>
+          </>
         )}
         <Box className={classes.snippet}>
           <b className={classes.snippetTitle}>{link.embed.metadata.title}</b>
@@ -127,7 +142,7 @@ export default (props: LinkPreviewProps): JSX.Element => {
             if (l.embed.metadata && l.embed.metadata.type === MEDIA_TYPE_VIDEO) {
               return (
                 <LazyLoad
-                  height={360}
+                  className={classes.previewVideo}
                   placeholder={<Skeleton variant="rectangular" height={360} width={'100%'} />}
                   key={i}
                   once
@@ -136,11 +151,7 @@ export default (props: LinkPreviewProps): JSX.Element => {
                 </LazyLoad>
               );
             }
-            return (
-              <LazyLoad key={i} height={370} placeholder={<CentralProgress size={20} />} once offset={DEFAULT_PRELOAD_OFFSET_VIEWPORT}>
-                {renderPreview(l, i)}
-              </LazyLoad>
-            );
+            return <React.Fragment key={i}>{renderPreview(l, i)}</React.Fragment>;
           })}
         </Root>
       )}
