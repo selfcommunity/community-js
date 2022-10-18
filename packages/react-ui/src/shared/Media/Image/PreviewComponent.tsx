@@ -48,12 +48,12 @@ const Root = styled(Box, {
   },
 
   [`& .${classes.heightHalfOne}`]: {
-    paddingTop: '50%',
+    paddingTop: '50%'
   },
 
   [`& .${classes.heightTwo}`]: {
     width: '50%',
-    paddingTop: '50%',
+    paddingTop: '50%'
   },
 
   [`& .${classes.heightThree}`]: {
