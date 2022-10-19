@@ -118,6 +118,11 @@ describe('Feed Object Service Test', () => {
       expect(data).toBe('');
     });
   });
+  test('React to a feedObj', () => {
+    return FeedObjectService.voteFeedObject(type, feedObj.id, 3).then((data) => {
+      expect(data).toBe('');
+    });
+  });
   test('Get  feedObj votes list', () => {
     return FeedObjectService.feedObjectVotes(type, feedObj.id).then((data) => {
       expect(data.results).toBeInstanceOf(Array);
