@@ -54,6 +54,7 @@ export const voteActionTypes = {
   LOADING: '_loading_votes',
   REQUEST_VOTES_LOADING: '_request_votes_loading',
   REQUEST_VOTES_SUCCESS: '_request_votes_success',
+  REQUEST_REACTION_SUCCESS: '_request_reaction_success',
   REQUEST_VOTES_FAILED: '_request_votes_failed',
   TOGGLE_VOTE_DIALOG: '_toggle_vote_dialog',
   REFRESHING_VOTES: '_refreshing_votes',
@@ -79,7 +80,19 @@ function votesReducer(state, action) {
         voting: false,
         next: action.payload.next,
         openVotesDialog: state.openVotesDialog,
-        error: null
+        error: null,
+        triggered: false
+      };
+    case voteActionTypes.REQUEST_REACTION_SUCCESS:
+      return {
+        votes: state.refreshing ? [...state.votes] : action.payload.data,
+        loadingVotes: false,
+        refreshing: false,
+        voting: false,
+        next: action.payload.next,
+        openVotesDialog: state.openVotesDialog,
+        error: null,
+        triggered: false
       };
     case voteActionTypes.TOGGLE_VOTE_DIALOG:
       return Object.assign({}, state, {openVotesDialog: !state.openVotesDialog});
@@ -90,7 +103,7 @@ function votesReducer(state, action) {
     case voteActionTypes.VOTING:
       return Object.assign({}, state, {voting: true, error: null});
     case voteActionTypes.REQUEST_VOTING_SUCCESS:
-      return Object.assign({}, state, {voting: false, error: null});
+      return Object.assign({}, state, {voting: false, error: null, triggered: true});
     default:
       throw new Error(`Unhandled type: ${action.type}`);
   }
@@ -119,7 +132,8 @@ function stateInitializer({
     refreshing: false,
     next,
     openVotesDialog: false,
-    error: null
+    error: null,
+    triggered: false
   };
 }
 
@@ -260,34 +274,28 @@ export default function Reaction(inProps: VoteProps): JSX.Element {
     switch (type) {
       case reactionActionTypes.REMOVE:
         if (inList && list[index].count > 1) {
-          // console.log('Update count -');
           list[index].count = list[index].count - 1;
           updatedList = list;
         } else {
-          // console.log('Delete obj');
           list.splice(index, 1);
           updatedList = list;
         }
         return updatedList;
       case reactionActionTypes.ADD:
         if (inList) {
-          // console.log('Update count +');
           list[index].count = list[index].count + 1;
           updatedList = list;
         } else {
-          // console.log('Add obj');
           updatedList = [...list, {reaction: reactionObj, count: 1}];
         }
         return updatedList;
       case reactionActionTypes.CHANGE:
         const i = list.findIndex((r) => r.reaction.id === obj.reaction.id);
         if (!inList) {
-          // console.log('Change not in list, add + update count');
           list[i].reaction = list[i].count === 1 ? reactionObj : list[i].reaction;
           list[i].count = list[i].count >= 1 ? list[i].count - 1 : list[i].count;
           setReactionsList(dispatchReactionsActions(reactionActionTypes.ADD, reactionObj));
         } else {
-          // console.log('Change in list, remove + update count');
           const n = dispatchReactionsActions(reactionActionTypes.REMOVE, obj.reaction);
           const newIndex = n.findIndex((r) => r.reaction.id === reactionObj.id);
           n[newIndex].count = n[newIndex].count + 1;
@@ -336,6 +344,28 @@ export default function Reaction(inProps: VoteProps): JSX.Element {
         });
     }
   }, [state.openVotesDialog]);
+
+  /**
+   * Fetches votes only when changing/performing vote and opening votes dialog at the same time.
+   */
+  useEffect(() => {
+    if (obj && !state.loadingVotes && !state.refreshing && state.openVotesDialog) {
+      dispatch({type: voteActionTypes.REQUEST_VOTES_LOADING});
+      fetchVotes()
+        .then((data) => {
+          dispatch({
+            type: voteActionTypes.REQUEST_REACTION_SUCCESS,
+            payload: {
+              next: data['next'],
+              data: data['results']
+            }
+          });
+        })
+        .catch((error) => {
+          Logger.error(SCOPE_SC_UI, error);
+        });
+    }
+  }, [state.openVotesDialog && state.triggered]);
 
   /**
    * Opens dialog votes
@@ -473,7 +503,7 @@ export default function Reaction(inProps: VoteProps): JSX.Element {
                 )}
               </AvatarGroup>
             </Button>
-            {openVotesDialog && (
+            {openVotesDialog && !state.triggered && (
               <BaseDialog
                 title={
                   <Tabs value={tabIndex} onChange={handleChange} variant="scrollable" scrollButtons allowScrollButtonsMobile>
