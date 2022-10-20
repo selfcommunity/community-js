@@ -1,6 +1,6 @@
 import React, {useContext, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Menu, MenuItem, ListItemIcon, Typography, Button, Popover, Divider, IconButton, Box} from '@mui/material';
+import {Menu, MenuItem, ListItemIcon, Typography, Button, Popover, Divider, IconButton, Box, useTheme, useMediaQuery} from '@mui/material';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
 import {SCUserType} from '@selfcommunity/types';
@@ -10,6 +10,7 @@ import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
 import classNames from 'classnames';
 import CircularProgress from '@mui/material/CircularProgress';
 import {useThemeProps} from '@mui/system';
+import BaseDrawer from '../../shared/BaseDrawer';
 
 const PREFIX = 'SCChangeCoverButton';
 
@@ -27,7 +28,14 @@ const Root = styled(Box, {
 })(({theme}) => ({
   display: 'flex',
   alignItems: 'center',
-  flexWrap: 'wrap'
+  flexWrap: 'wrap',
+  [theme.breakpoints.down('md')]: {
+    '& .MuiButtonBase-root': {
+      padding: 6,
+      borderRadius: 50,
+      minWidth: 'auto'
+    }
+  }
 }));
 
 export interface ChangeCoverProps {
@@ -86,6 +94,8 @@ export default function ChangeCover(inProps: ChangeCoverProps): JSX.Element {
   const scUserContext: SCUserContextType = useContext(SCUserContext);
 
   //STATE
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   let fileInput = useRef(null);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -173,20 +183,17 @@ export default function ChangeCover(inProps: ChangeCoverProps): JSX.Element {
   }
 
   /**
-   * Renders change cover card
+   * Renders change cover menu items
    */
-  const cc = (
-    <React.Fragment>
-      <Button size="small" variant="contained" disabled={loading} onClick={handleClick} {...rest}>
-        <FormattedMessage id="ui.changeCover.button.change" defaultMessage="ui.changeCover.button.change" />
-      </Button>
-      <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
+  function renderMenuItems() {
+    return (
+      <Box>
         {loading ? (
           <MenuItem sx={{justifyContent: 'center'}}>
             <CircularProgress size={15} />
           </MenuItem>
         ) : (
-          <Box>
+          <>
             <input type="file" onChange={() => handleUpload(event)} ref={fileInput} hidden />
             <MenuItem disabled={loading} onClick={() => fileInput.current.click()} className={classes.addMenuItem}>
               <ListItemIcon>
@@ -202,41 +209,67 @@ export default function ChangeCover(inProps: ChangeCoverProps): JSX.Element {
                 <FormattedMessage id="ui.changeCover.button.delete" defaultMessage="ui.changeCover.button.delete" />
               </MenuItem>
             )}
-          </Box>
+          </>
         )}
-      </Menu>
-      <IconButton className={classes.helpPopover} color="primary" aria-label="upload picture" component="span" onClick={handleClickHelpButton}>
-        <Icon fontSize="small">help_outline</Icon>
-      </IconButton>
-      {isOpen && (
-        <Popover
-          open={isOpen}
-          anchorEl={anchorElPopover}
-          onClose={handleCloseHelpPopover}
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'right'
-          }}>
-          <Box sx={{p: '10px'}}>
-            <Typography component="h3">
-              <FormattedMessage id="ui.changeCover.button.uploadA" defaultMessage="ui.changeCover.button.uploadA" />
-            </Typography>
-            <Divider />
-            <Typography component="span">
-              <ul className="list">
-                <li>
-                  <FormattedMessage id="ui.changeCover.listF" defaultMessage="ui.changeCover.listF" />
-                </li>
-                <li>
-                  <FormattedMessage id="ui.changeCover.listD" defaultMessage="ui.changeCover.listF" />
-                </li>
-                <li>
-                  <FormattedMessage id="ui.changeCover.listW" defaultMessage="ui.changeCover.listF" />
-                </li>
-              </ul>
-            </Typography>
-          </Box>
-        </Popover>
+      </Box>
+    );
+  }
+
+  /**
+   * Renders change cover menu
+   */
+  const cc = (
+    <React.Fragment>
+      <Button size="small" variant="contained" disabled={loading} onClick={handleClick} {...rest}>
+        {isMobile ? <Icon>photo_camera</Icon> : <FormattedMessage id="ui.changeCover.button.change" defaultMessage="ui.changeCover.button.change" />}
+      </Button>
+      <>
+        {isMobile ? (
+          <BaseDrawer open={open} onClose={handleClose} width={'100%'}>
+            {renderMenuItems()}
+          </BaseDrawer>
+        ) : (
+          <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
+            {renderMenuItems()}
+          </Menu>
+        )}
+      </>
+      {!isMobile && (
+        <>
+          <IconButton className={classes.helpPopover} color="primary" aria-label="upload picture" component="span" onClick={handleClickHelpButton}>
+            <Icon fontSize="small">help_outline</Icon>
+          </IconButton>
+          {isOpen && (
+            <Popover
+              open={isOpen}
+              anchorEl={anchorElPopover}
+              onClose={handleCloseHelpPopover}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'right'
+              }}>
+              <Box sx={{p: '10px'}}>
+                <Typography component="h3">
+                  <FormattedMessage id="ui.changeCover.button.uploadA" defaultMessage="ui.changeCover.button.uploadA" />
+                </Typography>
+                <Divider />
+                <Typography component="span">
+                  <ul className="list">
+                    <li>
+                      <FormattedMessage id="ui.changeCover.listF" defaultMessage="ui.changeCover.listF" />
+                    </li>
+                    <li>
+                      <FormattedMessage id="ui.changeCover.listD" defaultMessage="ui.changeCover.listF" />
+                    </li>
+                    <li>
+                      <FormattedMessage id="ui.changeCover.listW" defaultMessage="ui.changeCover.listF" />
+                    </li>
+                  </ul>
+                </Typography>
+              </Box>
+            </Popover>
+          )}
+        </>
       )}
       {openDeleteCoverDialog && (
         <ConfirmDialog
