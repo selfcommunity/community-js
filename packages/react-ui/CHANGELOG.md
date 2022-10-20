@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.1-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.6.1-alpha.7...@selfcommunity/react-ui@0.6.1-alpha.8) (2022-10-19)
+
+
+### Bug Fixes
+
+* feed medias ([84df580](https://github.com/selfcommunity/community-js/commit/84df580d37f18f5c747ae97f4fc2efa16b2c5dbe))
+* fixed votes dialog update when performing vote(reaction component) ([4be4c34](https://github.com/selfcommunity/community-js/commit/4be4c34e3fef24675837f26c4f26cf0768585bf4))
+* reactions component; -fixed votes loading on dialog opening (default feedObj type given in next url was wrong); ([42b22a2](https://github.com/selfcommunity/community-js/commit/42b22a2b0d7f9671658429abf70f6b273e0224bc))
+
+
+
+
+
+## [0.6.1-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.6.1-alpha.6...@selfcommunity/react-ui@0.6.1-alpha.7) (2022-10-18)
+
+
+### Performance Improvements
+
+* added community badge to user component. Asana issue: https://app.asana.com/0/1202523699272956/1203176346726554/f ([41ee41f](https://github.com/selfcommunity/community-js/commit/41ee41f37a90b3f9a6c205d8343538598d5f7e00))
+
+
+
+
+
 ## [0.6.1-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.6.1-alpha.5...@selfcommunity/react-ui@0.6.1-alpha.6) (2022-10-17)
 
 
