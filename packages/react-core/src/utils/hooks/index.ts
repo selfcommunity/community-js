@@ -1,3 +1,4 @@
 import useIsComponentMountedRef from './useIsComponentMountedRef';
 import usePreviousValue from './usePreviousValue';
-export {useIsComponentMountedRef, usePreviousValue};
+import useIsomorphicLayoutEffect from './useIsomorphicLayoutEffect';
+export {useIsComponentMountedRef, usePreviousValue, useIsomorphicLayoutEffect};

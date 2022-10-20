@@ -94,7 +94,7 @@ import * as SCRoutes from './constants/Routes';
  * User, hooks (useIsComponentMountedRef)
  */
 import * as UserUtils from './utils/user';
-import {useIsComponentMountedRef, usePreviousValue} from './utils/hooks';
+import {useIsComponentMountedRef, usePreviousValue, useIsomorphicLayoutEffect} from './utils/hooks';
 
 /**
  * Constants:
@@ -172,5 +172,6 @@ export {
   useSCFetchFeed,
   useIsComponentMountedRef,
   usePreviousValue,
+  useIsomorphicLayoutEffect,
   useSCFetchReactions,
 };
