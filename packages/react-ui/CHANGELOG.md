@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.6.1-alpha.8...@selfcommunity/react-ui@0.7.0-alpha.0) (2022-10-21)
+
+
+### Bug Fixes
+
+* Media preview ([af42c60](https://github.com/selfcommunity/community-js/commit/af42c60a055255336314416c261d9a082e9e3a2c))
+* Media preview and comment votes ([d2b9374](https://github.com/selfcommunity/community-js/commit/d2b937475f3d00b0734d912eda82d03ec9791616))
+
+
+### Features
+
+* added base drawer component ([aabedac](https://github.com/selfcommunity/community-js/commit/aabedac29abd53e84d0983fd220c7fe2f7848da8))
+
+
+### Performance Improvements
+
+* adapted modal dialogs to mobile view ([d9e0378](https://github.com/selfcommunity/community-js/commit/d9e03787743f7273363865a9aa987f62a09fa5d7))
+* added drawer for change cover component when mobile ([85051c8](https://github.com/selfcommunity/community-js/commit/85051c8f397710d7cd226607d99fcdf02c498116))
+* added drawer to contributionActionMenu ([a991fbe](https://github.com/selfcommunity/community-js/commit/a991fbea35a5adb582283a3d0d6fdf6394475aec))
+* added drawer to share(feed obj) ([d254755](https://github.com/selfcommunity/community-js/commit/d2547551addf0514cc3986f3ee357158e2165f78))
+
+
+
+
+
 ## [0.6.1-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.6.1-alpha.7...@selfcommunity/react-ui@0.6.1-alpha.8) (2022-10-19)
 
 
