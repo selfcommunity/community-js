@@ -18,6 +18,7 @@ import classNames from 'classnames';
 import Widget from '../Widget';
 import {useThemeProps} from '@mui/system';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
+import {VirtualScrollerItemProps} from '../../types/virtualScroller';
 
 const PREFIX = 'SCPeopleSuggestion';
 
@@ -40,7 +41,7 @@ const Root = styled(Widget, {
   }
 }));
 
-export interface PeopleSuggestionProps {
+export interface PeopleSuggestionProps extends VirtualScrollerItemProps {
   /**
    * Hides this component
    * @default false
@@ -99,7 +100,7 @@ export default function PeopleSuggestion(inProps: PeopleSuggestionProps): JSX.El
     props: inProps,
     name: PREFIX
   });
-  const {autoHide, className, UserProps = {}, ...rest} = props;
+  const {autoHide, className, UserProps = {}, onHeightChange, ...rest} = props;
 
   // REFS
   const isMountedRef = useIsComponentMountedRef();
@@ -183,6 +184,13 @@ export default function PeopleSuggestion(inProps: PeopleSuggestionProps): JSX.El
       setLoading(false);
     }
   }, [authUserId]);
+
+  /**
+   * Virtual feed update
+   */
+  useEffect(() => {
+    onHeightChange && onHeightChange();
+  }, [users.length, loading]);
 
   /**
    * Renders people suggestion list

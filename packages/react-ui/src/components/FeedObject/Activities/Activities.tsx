@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Box} from '@mui/material';
 import {SCCommentsOrderBy} from '../../../types/comments';
@@ -91,6 +91,12 @@ export interface ActivitiesProps {
   CommentsObjectProps?: CommentsObjectProps;
 
   /**
+   * Props to spread to comments object skeleton
+   * @default {variant: 'oulined'}
+   */
+  CommentComponentProps?: CommentObjectProps;
+
+  /**
    * Caching strategies
    * @default CacheStrategies.CACHE_FIRST
    */
@@ -115,12 +121,13 @@ export default function Activities(inProps: ActivitiesProps): JSX.Element {
     feedObjectId,
     feedObject,
     feedObjectType = SCFeedObjectTypologyType.POST,
-    CommentsObjectProps = {CommentComponentProps: {variant: 'outlined'} as CommentObjectProps},
+    cacheStrategy = CacheStrategies.CACHE_FIRST,
+    CommentsObjectProps = {},
+    CommentComponentProps = {variant: 'outlined'},
     feedObjectActivities = [],
     comments = [],
     onSetSelectedActivities,
     activitiesType = SCFeedObjectActivitiesType.RECENT_COMMENTS,
-    cacheStrategy = CacheStrategies.CACHE_FIRST,
     ...rest
   } = props;
 
@@ -133,18 +140,18 @@ export default function Activities(inProps: ActivitiesProps): JSX.Element {
     id: feedObjectId,
     feedObject,
     feedObjectType,
+    cacheStrategy,
     pageSize: 3,
     orderBy:
       selectedActivities === SCFeedObjectActivitiesType.CONNECTIONS_COMMENTS
         ? SCCommentsOrderBy.CONNECTION_DESC
         : selectedActivities === SCFeedObjectActivitiesType.FIRST_COMMENTS
         ? SCCommentsOrderBy.ADDED_AT_ASC
-        : SCCommentsOrderBy.ADDED_AT_DESC,
-    cacheStrategy
+        : SCCommentsOrderBy.ADDED_AT_DESC
   });
 
   const objId = commentsObject.feedObject ? commentsObject.feedObject.id : null;
-  const skeletonsCount = Math.min(5, commentsObject.feedObject ? commentsObject.feedObject.comment_count : 3);
+  const skeletonsCount = Math.min(3, commentsObject.feedObject ? commentsObject.feedObject.comment_count : 2);
   const existFeedObjectActivities = feedObjectActivities && feedObjectActivities.length > 0;
 
   /**
@@ -196,8 +203,10 @@ export default function Activities(inProps: ActivitiesProps): JSX.Element {
             totalLoadedComments={commentsObject.comments.length + comments.length}
             totalComments={commentsObject.feedObject.comment_count}
             hideAdvertising
-            CommentsObjectSkeletonProps={{count: skeletonsCount}}
+            cacheStrategy={cacheStrategy}
             {...CommentsObjectProps}
+            CommentsObjectSkeletonProps={{count: skeletonsCount}}
+            CommentComponentProps={{...CommentComponentProps, ...{cacheStrategy}}}
           />
         )}
       </>

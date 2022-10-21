@@ -82,7 +82,7 @@ export default function CategoriesFollowed(inProps: CategoriesListProps): JSX.El
     props: inProps,
     name: PREFIX
   });
-  const {userId, autoHide, className, CategoryProps = {}} = props;
+  const {userId, autoHide, className, CategoryProps = {}, onHeightChange} = props;
 
   // REFS
   const isMountedRef = useIsComponentMountedRef();
@@ -160,6 +160,13 @@ export default function CategoriesFollowed(inProps: CategoriesListProps): JSX.El
     }
     fetchCategoriesFollowed();
   }, [authUserId]);
+
+  /**
+   * Virtual feed update
+   */
+  useEffect(() => {
+    onHeightChange && onHeightChange();
+  }, [categories.length]);
 
   /**
    * Renders the list of categories followed

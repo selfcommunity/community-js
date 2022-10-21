@@ -20,6 +20,7 @@ import {MessageSkeleton} from './Skeleton';
 import Widget from '../Widget';
 import PubSub from 'pubsub-js';
 import {useThemeProps} from '@mui/system';
+import {VirtualScrollerItemProps} from '../../types/virtualScroller';
 
 const PREFIX = 'SCBroadcastMessages';
 
@@ -53,7 +54,7 @@ const Root = styled(Box, {
   }
 }));
 
-export interface BroadcastMessagesProps {
+export interface BroadcastMessagesProps extends VirtualScrollerItemProps {
   /**
    * Id of the BroadcastMessages
    * @default 'broadcast_messages'
@@ -78,6 +79,11 @@ export interface BroadcastMessagesProps {
    * @default `interaction.notification_banner`
    */
   subscriptionChannel?: string;
+
+  /**
+   * Disable skeleton loader
+   */
+  disableLoader?: boolean;
 
   /**
    * Any other properties
@@ -121,6 +127,9 @@ export default function BroadcastMessages(inProps: BroadcastMessagesProps): JSX.
     className = null,
     MessageProps = {},
     subscriptionChannel = `${SCNotificationTopicType.INTERACTION}.${SCNotificationTypologyType.NOTIFICATION_BANNER}`,
+    disableLoader = false,
+    onStateChange,
+    onHeightChange,
     ...rest
   } = props;
 
@@ -150,6 +159,10 @@ export default function BroadcastMessages(inProps: BroadcastMessagesProps): JSX.
     return _preferences;
   }, [scPreferences.preferences]);
 
+  /**
+   * Dispose a broadcast message
+   * @param message
+   */
   const handleDisposeMessage = (message) => {
     setMessages(messages.filter((m) => m.id != message.id));
     if (messages.length <= 1) {
@@ -230,6 +243,14 @@ export default function BroadcastMessages(inProps: BroadcastMessagesProps): JSX.
     };
   }, []);
 
+  /**
+   * Feed virtual update
+   */
+  useEffect(() => {
+    onStateChange && onStateChange({disableLoader: true});
+    onHeightChange && onHeightChange();
+  }, [messages.length, loading]);
+
   const messagesToShow = [...unViewedMessages, ...messages.slice(unViewedMessages.length, viewAll ? viewedMessageCounter : 1)];
   return (
     <Root id={id} className={classNames(classes.root, className)} {...rest}>
@@ -238,7 +259,7 @@ export default function BroadcastMessages(inProps: BroadcastMessagesProps): JSX.
           <Message message={message} {...MessageProps} onClose={handleDisposeMessage} />
         </Box>
       ))}
-      {loading && <MessageSkeleton />}
+      {loading && !disableLoader && <MessageSkeleton />}
       {loading !== null && !loading && (next || (viewedMessageCounter > 0 && !viewAll)) && (
         <Widget className={classes.boxLoadMore}>
           <CardContent>

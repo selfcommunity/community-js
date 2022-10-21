@@ -17,6 +17,7 @@ import Widget from '../Widget';
 import {useThemeProps} from '@mui/system';
 import PollSnippet from './PollSnippet';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
+import { VirtualScrollerItemProps } from "../../types/virtualScroller";
 
 const PREFIX = 'SCPollSuggestion';
 
@@ -40,7 +41,7 @@ const Root = styled(Widget, {
   }
 }));
 
-export interface PollSuggestionProps {
+export interface PollSuggestionProps extends VirtualScrollerItemProps {
   /**
    * Overrides or extends the styles applied to the component.
    * @default null

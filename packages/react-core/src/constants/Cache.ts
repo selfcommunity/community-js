@@ -46,10 +46,16 @@ export const getVirtualizedScrollStateCacheKey = (id) => `${VIRTUALIZED_SCROLL_S
 export const FEED_CACHE_SP_KEY = '_feed_spos_';
 export const getFeedSPCacheKey = (id) => `${FEED_CACHE_SP_KEY}${id}`;
 
-/** REACTIONS OBJECT **/
+/** REACTIONS **/
+
+// Reactions Object
 export const REACTIONS_OBJECT_CACHE_PREFIX_KEY = '_res_';
 export const getReactionsObjectCacheKey = () => `${REACTIONS_OBJECT_CACHE_PREFIX_KEY}`;
 
-/** REACTION OBJECT **/
+// Reaction Object
 export const REACTION_OBJECT_CACHE_PREFIX_KEY = '_re_';
 export const getReactionObjectCacheKey = (id) => `${REACTION_OBJECT_CACHE_PREFIX_KEY}${id}`;
+
+/** CUSTOM ADVERTISING **/
+export const ADV_OBJECT_CACHE_PREFIX_KEY = '_adv_';
+export const getAdvObjectCacheKey = (id) => `${ADV_OBJECT_CACHE_PREFIX_KEY}${id}`;

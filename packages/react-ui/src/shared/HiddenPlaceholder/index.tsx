@@ -9,7 +9,8 @@ const Root = styled('div', {
   overridesResolver: (props, styles) => [styles.root]
 })(() => ({
   height: 1,
-  width: '100%'
+  width: '100%',
+  display: 'none'
 }));
 
 export default function HiddenPlaceholder(props): JSX.Element {

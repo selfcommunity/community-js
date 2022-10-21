@@ -30,6 +30,7 @@ import {CommentObjectProps} from '../CommentObject';
 import {SCCommentType, SCFeedObjectType, SCFeedObjectTypologyType, SCPollType} from '@selfcommunity/types';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {CacheStrategies, Logger, LRUCache} from '@selfcommunity/utils';
+import {VirtualScrollerItemProps} from '../../types/virtualScroller';
 import {
   Link,
   SCCache,
@@ -139,6 +140,10 @@ const Root = styled(Widget, {
     padding: `${theme.spacing()} 0px`
   },
   [`& .${classes.textSection}`]: {
+    '& >:first-child': {
+      padding: `${theme.spacing(2)}`,
+      display: 'block'
+    },
     '& a': {
       color: theme.palette.text.primary,
       textDecoration: 'none'
@@ -148,7 +153,6 @@ const Root = styled(Widget, {
     }
   },
   [`& .${classes.text}`]: {
-    padding: `${theme.spacing()} ${theme.spacing(2)}`,
     marginBottom: 0,
     '& a': {
       color: theme.palette.text.primary
@@ -206,7 +210,7 @@ const Root = styled(Widget, {
   }
 }));
 
-export interface FeedObjectProps extends CardProps {
+export interface FeedObjectProps extends CardProps, VirtualScrollerItemProps {
   /**
    * Id of the feedObject
    * @default `feed_object_<feedObjectType>_<feedObjectId | feedObject.id>`
@@ -265,6 +269,14 @@ export interface FeedObjectProps extends CardProps {
    * @default false
    */
   activitiesExpanded?: boolean;
+
+  /**
+   * Activities type shown initially. If not set, they are shown in order:
+   * RELEVANCE_ACTIVITIES, RECENT_COMMENTS
+   * If the obj has no comments/activites, or activitiesExpanded == false
+   * nothing will be shown
+   */
+  activitiesExpandedType?: SCFeedObjectActivitiesType;
 
   /**
    * Hide Participants preview
@@ -358,12 +370,6 @@ export interface FeedObjectProps extends CardProps {
   cacheStrategy?: CacheStrategies;
 
   /**
-   * When an action of feedObject change the layout of the element
-   * @param s
-   */
-  onChangeLayout?: (s) => void;
-
-  /**
    * Other props
    */
   [p: string]: any;
@@ -426,10 +432,12 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
     feedObject = null,
     feedObjectType = SCFeedObjectTypologyType.DISCUSSION,
     feedObjectActivities = null,
+    cacheStrategy = CacheStrategies.CACHE_FIRST,
     markRead = false,
     template = SCFeedObjectTemplateType.PREVIEW,
     hideFollowAction = false,
     activitiesExpanded = true,
+    activitiesExpandedType,
     hideParticipantsPreview = false,
     FollowButtonProps = {},
     FeedObjectSkeletonProps = {elevation: 0},
@@ -440,11 +448,12 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
     CommentObjectSkeletonProps = {elevation: 0, WidgetProps: {variant: 'outlined'} as WidgetProps},
     ContributionActionsMenuProps = {},
     MediasPreviewProps = {},
+    ActivitiesProps = {cacheStrategy},
     PollObjectProps = {elevation: 0},
     ContributorsFeedObjectProps = {},
     onReply,
-    cacheStrategy = CacheStrategies.CACHE_FIRST,
-    onChangeLayout,
+    onHeightChange,
+    onStateChange,
     ...rest
   } = props;
 
@@ -454,7 +463,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
   const scUserContext: SCUserContextType = useSCUser();
   const {enqueueSnackbar} = useSnackbar();
 
-  // RETRIVE OBJECTS
+  // OBJECTS
   const {obj, setObj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType, cacheStrategy});
   const objId = obj ? obj.id : null;
 
@@ -476,18 +485,35 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
   const intl = useIntl();
 
   /**
+   * Notify changes to Feed if the FeedObject is contained in the feed
+   */
+  const notifyFeedChanges = useMemo(
+    () => (state?: Record<string, any>) => {
+      if (onStateChange && state) {
+        onStateChange(state);
+      }
+      onHeightChange && onHeightChange();
+    },
+    [onStateChange, onHeightChange]
+  );
+
+  /**
    * Update state object
    * @param obj
    */
   function updateObject(newObj) {
     LRUCache.set(SCCache.getFeedObjectCacheKey(obj.id, obj.type), newObj);
     setObj(newObj);
+    notifyFeedChanges();
   }
 
   /**
    * Get initial selected activities section
    */
   function getInitialSelectedActivitiesType() {
+    if (activitiesExpandedType) {
+      return activitiesExpandedType;
+    }
     if (feedObjectActivities && feedObjectActivities.length > 0) {
       return SCFeedObjectActivitiesType.RELEVANCE_ACTIVITIES;
     }
@@ -498,17 +524,20 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
    * Open expanded activities
    */
   useEffect(() => {
-    setExpandedActivities(geExpandedActivities());
+    const _e = geExpandedActivities();
+    setExpandedActivities(_e);
+    notifyFeedChanges({activitiesExpanded: _e, cacheStrategy: CacheStrategies.CACHE_FIRST});
   }, [objId]);
 
   /**
    * Handle change/update poll: votes
    */
-  function handleChangePoll(pollObject: SCPollType) {
-    const newObj = obj;
-    obj['poll'] = pollObject;
-    setObj(newObj);
-  }
+  const handleChangePoll = useCallback(
+    (pollObject: SCPollType) => {
+      updateObject(Object.assign(obj, {poll: pollObject}));
+    },
+    [obj]
+  );
 
   /**
    * Render header action
@@ -573,7 +602,6 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
     (data) => {
       updateObject(data);
       setComposerOpen(false);
-      onChangeLayout && onChangeLayout({activitiesExpanded: expandedActivities});
     },
     [obj, composerOpen]
   );
@@ -593,12 +621,13 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
    */
   const handleExpandActivities = useCallback(() => {
     if (scUserContext.user) {
-      onChangeLayout && onChangeLayout({activitiesExpanded: !expandedActivities});
-      setExpandedActivities((prev) => !prev);
+      const _e = !expandedActivities;
+      setExpandedActivities(_e);
+      notifyFeedChanges({activitiesExpanded: _e});
     } else {
       scContext.settings.handleAnonymousAction();
     }
-  }, [scUserContext.user]);
+  }, [scUserContext.user, notifyFeedChanges]);
 
   /**
    * Handle follow obj
@@ -624,7 +653,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
     (type) => {
       setSelectedActivities(type);
       setComments([]);
-      onChangeLayout && onChangeLayout({activitiesExpanded: expandedActivities});
+      notifyFeedChanges({activitiesExpanded: expandedActivities, activitiesExpandedType: type});
     },
     [obj]
   );
@@ -679,8 +708,8 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
           const newObj = Object.assign(obj, {comment_count: obj.comment_count + 1});
           updateObject(newObj);
           LRUCache.deleteKeysWithPrefix(SCCache.getCommentObjectsCachePrefixKeys(obj.id, obj.type));
-          onChangeLayout && onChangeLayout({activitiesExpanded: expandedActivities});
           onReply && onReply(data);
+          notifyFeedChanges({activitiesExpanded: expandedActivities, activitiesExpandedType: SCFeedObjectActivitiesType.RECENT_COMMENTS});
         })
         .catch((error) => {
           Logger.error(SCOPE_SC_UI, error);
@@ -734,7 +763,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                   <Bullet />
                   <Box className={classes.tag}>
                     {obj.addressing.length > 0 ? (
-                      <Tags tags={obj.addressing} TagChipProps={{disposable: false, clickable: false}}/>
+                      <Tags tags={obj.addressing} TagChipProps={{disposable: false, clickable: false}} />
                     ) : (
                       <Tooltip title={`${intl.formatMessage(messages.visibleToAll)}`}>
                         <Icon color="disabled" fontSize="small">
@@ -835,6 +864,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                       CommentObjectSkeletonProps: CommentObjectSkeletonProps
                     }}
                     cacheStrategy={cacheStrategy}
+                    {...ActivitiesProps}
                   />
                 </CardContent>
               </Collapse>

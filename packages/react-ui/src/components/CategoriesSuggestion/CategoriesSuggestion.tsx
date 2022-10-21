@@ -11,6 +11,7 @@ import classNames from 'classnames';
 import Widget from '../Widget';
 import {useThemeProps} from '@mui/system';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
+import {VirtualScrollerItemProps} from '../../types/virtualScroller';
 
 const PREFIX = 'SCCategoriesSuggestion';
 
@@ -29,7 +30,7 @@ const Root = styled(Widget, {
   marginBottom: theme.spacing(2)
 }));
 
-export interface CategoriesListProps {
+export interface CategoriesListProps extends VirtualScrollerItemProps {
   /**
    * The user id
    * @default null
@@ -89,7 +90,7 @@ export default function CategoriesSuggestion(inProps: CategoriesListProps): JSX.
     name: PREFIX
   });
 
-  const {autoHide, className, CategoryProps = {}, ...rest} = props;
+  const {autoHide, className, CategoryProps = {}, onHeightChange, ...rest} = props;
 
   // STATE
   const [categories, setCategories] = useState<any[]>([]);
@@ -158,6 +159,13 @@ export default function CategoriesSuggestion(inProps: CategoriesListProps): JSX.
       fetchCategoriesSuggestion();
     }
   }, [authUserId]);
+
+  /**
+   * Virtual feed update
+   */
+  useEffect(() => {
+    onHeightChange && onHeightChange();
+  }, [categories]);
 
   /**
    * Renders categories suggestion list

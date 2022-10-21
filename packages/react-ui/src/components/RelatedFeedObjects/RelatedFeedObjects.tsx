@@ -26,6 +26,7 @@ import {
   useSCPreferences,
   useSCUser
 } from '@selfcommunity/react-core';
+import { VirtualScrollerItemProps } from "../../types/virtualScroller";
 
 const PREFIX = 'SCRelatedFeedObjects';
 
@@ -49,7 +50,7 @@ const Root = styled(Widget, {
   }
 }));
 
-export interface RelatedFeedObjectsProps {
+export interface RelatedFeedObjectsProps extends VirtualScrollerItemProps {
   /**
    * Id of the feed object
    * @default null

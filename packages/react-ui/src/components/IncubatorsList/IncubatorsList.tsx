@@ -19,6 +19,7 @@ import {useThemeProps} from '@mui/system';
 import Widget from '../Widget';
 import CreateIncubatorDialog from './CreateIncubatorDialog';
 import IncubatorDetail from '../IncubatorDetail';
+import { VirtualScrollerItemProps } from "../../types/virtualScroller";
 
 const PREFIX = 'SCIncubatorsList';
 
@@ -58,7 +59,7 @@ const Root = styled(Widget, {
   }
 }));
 
-export interface IncubatorsListProps {
+export interface IncubatorsListProps extends VirtualScrollerItemProps {
   /**
    * Hides this component
    * @default false

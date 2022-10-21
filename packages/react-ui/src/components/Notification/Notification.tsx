@@ -21,6 +21,10 @@ import {getContribution, getContributionRouteName, getContributionSnippet, getRo
 import ContributionFollowNotification from './ContributionFollow';
 import {Avatar, CardProps, Collapse, ListItemButton, ListItemText, Stack, Tooltip, Typography} from '@mui/material';
 import IncubatorApprovedNotification from './IncubatorApproved';
+import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
+import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
+import ContributionNotification from './Contribution';
+import {VirtualScrollerItemProps} from '../../types/virtualScroller';
 import classNames from 'classnames';
 import LoadingButton from '@mui/lab/LoadingButton';
 import Widget from '../Widget';
@@ -34,9 +38,6 @@ import {
   SCNotificationType,
   SCNotificationTypologyType
 } from '@selfcommunity/types';
-import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
-import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
-import ContributionNotification from './Contribution';
 
 const messages = defineMessages({
   receivePrivateMessage: {
@@ -114,7 +115,7 @@ const Root = styled(Widget, {
   }
 }));
 
-export interface NotificationProps extends CardProps {
+export interface NotificationProps extends CardProps, VirtualScrollerItemProps {
   /**
    * Id of the UserNotification
    * @default `notification_<notificationObject.sid>`
@@ -150,12 +151,6 @@ export interface NotificationProps extends CardProps {
    * @default 2
    */
   showMaxAggregated?: number;
-
-  /**
-   * When an action of feedObject change the layout of the element
-   * @param s
-   */
-  onChangeLayout?: (s) => void;
 
   /**
    * The obj key
@@ -215,7 +210,8 @@ export default function UserNotification(inProps: NotificationProps): JSX.Elemen
     handleCustomNotification,
     showMaxAggregated = 2,
     collapsedOtherAggregated = true,
-    onChangeLayout,
+    onStateChange,
+    onHeightChange,
     ...rest
   } = props;
 
@@ -230,6 +226,19 @@ export default function UserNotification(inProps: NotificationProps): JSX.Elemen
 
   //INTL
   const intl = useIntl();
+
+  /**
+   * Notify changes to Feed if the FeedObject is contained in the feed
+   */
+  const notifyFeedChanges = useMemo(
+    () => (state?: Record<string, any>) => {
+      if (onStateChange && state) {
+        onStateChange(state);
+      }
+      onHeightChange && onHeightChange();
+    },
+    [onStateChange, onHeightChange]
+  );
 
   /**
    * Performs  notification suspension
@@ -314,11 +323,12 @@ export default function UserNotification(inProps: NotificationProps): JSX.Elemen
 
   /**
    * Open/close other aggregated activities
-   * The layout change -> call onChangeLayout
+   * The layout change -> call onStateChange
    */
   function setStateAggregated() {
-    onChangeLayout({collapsedOtherAggregated: !openOtherAggregated});
-    setOpenOtherAggregated((prev) => !prev);
+    const _openOtherAggregated = !openOtherAggregated;
+    notifyFeedChanges({collapsedOtherAggregated: _openOtherAggregated});
+    setOpenOtherAggregated(_openOtherAggregated);
   }
 
   /**
