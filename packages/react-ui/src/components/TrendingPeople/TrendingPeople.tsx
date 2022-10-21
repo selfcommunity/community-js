@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
-import {Button, CardContent, ListItem, Typography} from '@mui/material';
+import {Button, CardContent, ListItem, Typography, useMediaQuery, useTheme} from '@mui/material';
 import Widget from '../Widget';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {
@@ -115,6 +115,8 @@ export default function TrendingPeople(inProps: TrendingPeopleProps): JSX.Elemen
   const isMountedRef = useIsComponentMountedRef();
 
   // STATE
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [people, setPeople] = useState<any[]>([]);
   const [visiblePeople, setVisiblePeople] = useState<number>(limit);
   const [loading, setLoading] = useState<boolean>(true);
@@ -236,7 +238,7 @@ export default function TrendingPeople(inProps: TrendingPeopleProps): JSX.Elemen
               next={fetchTrendingPeople}
               hasMoreNext={Boolean(next)}
               loaderNext={<CentralProgress size={30} />}
-              height={400}
+              height={isMobile ? '100vh' : 400}
               endMessage={
                 <p style={{textAlign: 'center'}}>
                   <b>

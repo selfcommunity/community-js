@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
-import {Button, CardContent, Typography, ListItem} from '@mui/material';
+import {Button, CardContent, Typography, ListItem, useMediaQuery, useTheme} from '@mui/material';
 import {SCFeedDiscussionType} from '@selfcommunity/types';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
@@ -103,6 +103,8 @@ export default function PollSuggestion(inProps: PollSuggestionProps): JSX.Elemen
   const isMountedRef = useIsComponentMountedRef();
 
   // STATE
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [objs, setObjs] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [hasMore, setHasMore] = useState<boolean>(false);
@@ -194,7 +196,7 @@ export default function PollSuggestion(inProps: PollSuggestionProps): JSX.Elemen
                   next={fetchPollSuggestion}
                   hasMoreNext={Boolean(next)}
                   loaderNext={<CentralProgress size={30} />}
-                  height={400}
+                  height={isMobile ? '100vh' : 400}
                   endMessage={
                     <p style={{textAlign: 'center'}}>
                       <b>

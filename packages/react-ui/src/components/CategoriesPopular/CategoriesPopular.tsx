@@ -1,6 +1,6 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Button, CardContent, List, ListItem, Typography} from '@mui/material';
+import {Button, CardContent, List, ListItem, Typography, useMediaQuery, useTheme} from '@mui/material';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
 import Skeleton from './Skeleton';
@@ -73,6 +73,8 @@ export default function CategoriesPopular(inProps: CategoriesListProps): JSX.Ele
   const isMountedRef = useIsComponentMountedRef();
 
   // STATE
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [categories, setCategories] = useState<any[]>([]);
   const [visibleCategories, setVisibleCategories] = useState<number>(limit);
   const [loading, setLoading] = useState<boolean>(true);
@@ -180,7 +182,7 @@ export default function CategoriesPopular(inProps: CategoriesListProps): JSX.Ele
               next={fetchPopularCategories}
               hasMoreNext={Boolean(next)}
               loaderNext={<CentralProgress size={30} />}
-              height={400}
+              height={isMobile ? '100vh' : 400}
               endMessage={
                 <p style={{textAlign: 'center'}}>
                   <b>
