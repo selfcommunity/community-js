@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.0...@selfcommunity/react-ui@0.7.0-alpha.1) (2022-10-21)
+
+
+### Bug Fixes
+
+* ssr VirtualScroller ([f15b909](https://github.com/selfcommunity/community-js/commit/f15b9098502e0a789501e3eff1ab9adac9a1a839))
+
+
+
+
+
 # [0.7.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.6.1-alpha.8...@selfcommunity/react-ui@0.7.0-alpha.0) (2022-10-21)
 
 
