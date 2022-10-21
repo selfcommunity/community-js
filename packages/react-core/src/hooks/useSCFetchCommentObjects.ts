@@ -90,12 +90,13 @@ function commentsReducer(state, action) {
         comments: [],
         total: 0,
         previous: null,
+        isLoadingNext: true,
         reload: true,
       };
     case commentsObjectActionTypes.DATA_RELOADED:
       return {
         ...state,
-        componentLoaded: false,
+        componentLoaded: true,
         reload: false,
       };
     case commentsObjectActionTypes.DATA_REVALIDATE:
@@ -192,11 +193,8 @@ export default function useSCFetchCommentObjects(props: {
     cacheStrategy = CacheStrategies.NETWORK_ONLY,
   } = props;
 
-  // REFS
-  const isMountedRef = useIsComponentMountedRef();
-
   // FeedObject
-  const {obj, setObj} = useSCFetchFeedObject({id, feedObject, feedObjectType});
+  const {obj, setObj} = useSCFetchFeedObject({id, feedObject, feedObjectType, cacheStrategy});
   const objId = obj ? obj.id : null;
 
   /**
@@ -211,7 +209,10 @@ export default function useSCFetchCommentObjects(props: {
   };
 
   // STATE
-  const [state, dispatch] = useReducer(commentsReducer, {}, () => stateInitializer({obj, offset, pageSize, next: getNextUrl(), cacheStrategy}));
+  const [state, dispatch] = useReducer(commentsReducer, {obj, offset, pageSize, next: getNextUrl(), cacheStrategy}, stateInitializer);
+
+  // REFS
+  const isMountedRef = useIsComponentMountedRef();
 
   /**
    * Get Comments (with cache)
@@ -340,8 +341,8 @@ export default function useSCFetchCommentObjects(props: {
   /**
    * Reset component status on change orderBy, pageSize, offset
    */
-  useEffect(() => {
-    if (isMountedRef.current && state.componentLoaded && Boolean(obj) && !state.reload) {
+  const reload = () => {
+    if (isMountedRef.current && state.componentLoaded && Boolean(obj) && !state.isLoadingNext && !state.reload) {
       dispatch({
         type: commentsObjectActionTypes.DATA_RELOAD,
         payload: {
@@ -349,7 +350,7 @@ export default function useSCFetchCommentObjects(props: {
         },
       });
     }
-  }, [objId, parent, orderBy, pageSize, offset, isMountedRef]);
+  };
 
   /**
    * Reload fetch comments
@@ -380,5 +381,6 @@ export default function useSCFetchCommentObjects(props: {
     getNextPage,
     getPreviousPage,
     orderBy,
+    reload,
   };
 }

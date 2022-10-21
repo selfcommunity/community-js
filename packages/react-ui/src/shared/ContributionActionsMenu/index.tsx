@@ -1150,7 +1150,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
         onClick={handleOpen}
         className={classes.button}
         size="medium">
-        {contributionObj.collapsed || contributionObj.deleted ? (
+        {contributionObj && (contributionObj.collapsed || contributionObj.deleted) ? (
           <Badge
             badgeContent={contributionObj.collapsed ? <Icon>visibility_off</Icon> : <Icon>delete</Icon>}
             classes={{badge: classes.visibilityBadge}}>

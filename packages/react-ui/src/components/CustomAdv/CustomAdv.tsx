@@ -6,6 +6,8 @@ import {SCCustomAdvPosition} from '@selfcommunity/types';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
+import {VirtualScrollerItemProps} from '../../types/virtualScroller';
+import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
 
 const PREFIX = 'SCCustomAdv';
 
@@ -25,7 +27,7 @@ const Root = styled(Box, {
   }
 }));
 
-export interface CustomAdvProps {
+export interface CustomAdvProps extends VirtualScrollerItemProps {
   /**
    * Id of the feed object
    * @default 'custom_adv'
@@ -37,6 +39,11 @@ export interface CustomAdvProps {
    * @default null
    */
   className?: string;
+
+  /**
+   * Advertising id
+   */
+  advId?: number;
 
   /**
    * Position of the ADV
@@ -74,10 +81,20 @@ export default function CustomAdv(inProps: CustomAdvProps): JSX.Element {
     name: PREFIX
   });
 
-  const {id = 'custom_adv', className = null, position, categoriesId = null} = props;
+  const {id = 'custom_adv', className, advId = null, position, categoriesId, onStateChange, onHeightChange} = props;
 
   // retrieve adv
-  const {scCustomAdv} = useSCFetchCustomAdv({position, categoriesId});
+  const {scCustomAdv} = useSCFetchCustomAdv({id: advId, position, categoriesId});
+
+  /**
+   * Virtual Feed update
+   */
+  useDeepCompareEffectNoCheck(() => {
+    if (scCustomAdv) {
+      onStateChange && onStateChange({advId: scCustomAdv.id});
+    }
+    onHeightChange && onHeightChange();
+  }, [scCustomAdv]);
 
   if (!scCustomAdv) {
     return <HiddenPlaceholder />;

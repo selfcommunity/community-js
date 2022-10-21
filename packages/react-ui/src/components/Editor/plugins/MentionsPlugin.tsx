@@ -1,4 +1,5 @@
-import React, {useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, useTransition} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
+import {useIsomorphicLayoutEffect} from '@selfcommunity/react-core';
 import {
   $getSelection,
   $isRangeSelection,
@@ -15,7 +16,6 @@ import {
 import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
 import {mergeRegister} from '@lexical/utils';
 import {createPortal} from 'react-dom';
-
 import {createMentionNode, MentionNode} from '../nodes/MentionNode';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {SCUserType} from '@selfcommunity/types';
@@ -163,10 +163,6 @@ function MentionsTypeahead({
   const results = useMentionLookupService(match.matchingString);
   const [selectedIndex, setSelectedIndex] = useState<null | number>(null);
   const [hoveredIndex, setHoveredIndex] = useState(null);
-
-  // Ensure that the SSR uses React.useEffect instead of React.useLayoutEffect
-  // because document is undefined on the server-side.
-  const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 
   useEffect(() => {
     const div = divRef.current;

@@ -21,7 +21,7 @@ import CommentsObject from '../CommentsObject';
 import BaseItem from '../../shared/BaseItem';
 import {SCCommentType, SCCommentTypologyType, SCFeedObjectType, SCFeedObjectTypologyType} from '@selfcommunity/types';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
-import {Logger, LRUCache} from '@selfcommunity/utils';
+import {CacheStrategies, Logger, LRUCache} from '@selfcommunity/utils';
 import {
   Link,
   SCContextType,
@@ -252,6 +252,12 @@ export interface CommentObjectProps {
   linkableCommentDateTime?: boolean;
 
   /**
+   * Caching strategies
+   * @default CacheStrategies.CACHE_FIRST
+   */
+  cacheStrategy?: CacheStrategies;
+
+  /**
    * Other props
    */
   [p: string]: any;
@@ -314,6 +320,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
     CommentObjectSkeletonProps = {elevation, WidgetProps: {variant: 'outlined'} as WidgetProps},
     ReplyCommentObjectProps = {elevation, WidgetProps: {variant: 'outlined'} as WidgetProps},
     linkableCommentDateTime = true,
+    cacheStrategy = CacheStrategies.NETWORK_ONLY,
     ...rest
   } = props;
 
@@ -325,7 +332,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
   const intl = useIntl();
 
   // STATE
-  const {obj, setObj} = useSCFetchCommentObject({id: commentObjectId, commentObject});
+  const {obj, setObj} = useSCFetchCommentObject({id: commentObjectId, commentObject, cacheStrategy});
   const [loadingVote, setLoadingVote] = useState(false);
   const [replyComment, setReplyComment] = useState<SCCommentType>(commentReply);
   const [isReplying, setIsReplying] = useState<boolean>(false);
@@ -336,7 +343,8 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
     feedObject,
     feedObjectType,
     orderBy: SCCommentsOrderBy.ADDED_AT_DESC,
-    parent: commentObject ? commentObject.id : commentObjectId
+    parent: commentObject ? commentObject.id : commentObjectId,
+    cacheStrategy
   });
 
   /**
@@ -744,28 +752,26 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
    */
   function renderLatestComment(comment) {
     return (
-      <>
-        {Boolean(comment.comment_count) && (
-          <CommentsObject
-            feedObject={commentsObject.feedObject}
-            feedObjectType={commentsObject.feedObject ? commentsObject.feedObject.type : feedObjectType}
-            hideAdvertising={true}
-            comments={[].concat(commentsObject.comments).reverse()}
-            endComments={comment.latest_comments}
-            previous={comment.comment_count > comment.latest_comments.length ? commentsObject.next : null}
-            isLoadingPrevious={commentsObject.isLoadingNext}
-            handlePrevious={commentsObject.getNextPage}
-            CommentComponentProps={{
-              onOpenReply: reply,
-              CommentObjectSkeletonProps,
-              elevation: elevation,
-              linkableCommentDateTime: linkableCommentDateTime,
-              ...rest
-            }}
-            CommentsObjectSkeletonProps={{count: 1, CommentObjectSkeletonProps: CommentObjectSkeletonProps}}
-          />
-        )}
-      </>
+      <CommentsObject
+        feedObject={commentsObject.feedObject}
+        feedObjectType={commentsObject.feedObject ? commentsObject.feedObject.type : feedObjectType}
+        hideAdvertising={true}
+        comments={[].concat(commentsObject.comments).reverse()}
+        endComments={comment.latest_comments}
+        previous={comment.comment_count > comment.latest_comments.length ? commentsObject.next : null}
+        isLoadingPrevious={commentsObject.isLoadingNext}
+        handlePrevious={commentsObject.getNextPage}
+        CommentComponentProps={{
+          onOpenReply: reply,
+          CommentObjectSkeletonProps,
+          elevation: elevation,
+          linkableCommentDateTime: linkableCommentDateTime,
+          ...rest,
+          cacheStrategy
+        }}
+        CommentsObjectSkeletonProps={{count: 1, CommentObjectSkeletonProps: CommentObjectSkeletonProps}}
+        cacheStrategy={cacheStrategy}
+      />
     );
   }
 

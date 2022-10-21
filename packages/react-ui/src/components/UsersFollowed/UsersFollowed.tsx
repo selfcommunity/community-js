@@ -24,6 +24,7 @@ import CentralProgress from '../../shared/CentralProgress';
 import InfiniteScroll from '../../shared/InfiniteScroll';
 import {useThemeProps} from '@mui/system';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
+import {VirtualScrollerItemProps} from '../../types/virtualScroller';
 
 const messages = defineMessages({
   title: {
@@ -57,7 +58,7 @@ const Root = styled(Widget, {
   }
 }));
 
-export interface UsersFollowedProps {
+export interface UsersFollowedProps extends VirtualScrollerItemProps {
   /**
    * The user id
    * @default null
@@ -128,7 +129,7 @@ export default function UsersFollowed(inProps: UsersFollowedProps): JSX.Element 
     props: inProps,
     name: PREFIX
   });
-  const {userId, autoHide, className, UserProps = {}} = props;
+  const {userId, autoHide, className, UserProps = {}, onHeightChange} = props;
 
   // REFS
   const isMountedRef = useIsComponentMountedRef();
@@ -206,6 +207,13 @@ export default function UsersFollowed(inProps: UsersFollowedProps): JSX.Element 
     }
     fetchFollowed();
   }, [scUserContext.user]);
+
+  /**
+   * Virtual feed update
+   */
+  useEffect(() => {
+    onHeightChange && onHeightChange();
+  }, [followed.length, loading]);
 
   /**
    * Renders the list of users followed

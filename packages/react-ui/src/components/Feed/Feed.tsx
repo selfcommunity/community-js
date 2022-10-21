@@ -53,6 +53,12 @@ const Root = styled(Grid, {
   marginTop: theme.spacing(-2),
   [`& .${classes.left}`]: {
     padding: '0 2px 0 2px',
+    '& > div:first-child': {
+      marginTop: 0
+    },
+    '& > div:last-child': {
+      marginTop: 0
+    },
     [theme.breakpoints.down('md')]: {
       '& > .SCWidget-root, & > .SCCustomAdv-root': {
         maxWidth: 850,
@@ -482,6 +488,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
 
   // REFS
   const refreshSubscription = useRef(null);
+  const virtualScrollerState = useRef(null);
   const virtualScrollerMountState = useRef(false);
 
   // VIRTUAL SCROLL HELPERS
@@ -498,6 +505,16 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
   const onScrollerMount = useMemo(
     () => () => {
       virtualScrollerMountState.current = true;
+    },
+    []
+  );
+
+  /**
+   * Callback on scroll mount
+   */
+  const onScrollerStateChange = useMemo(
+    () => (state) => {
+      virtualScrollerState.current = state;
     },
     []
   );
@@ -671,21 +688,31 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
   const InnerItem = useMemo(
     () =>
       ({state: savedState, onHeightChange, onStateChange, children: item}) => {
+        const onItemHeightChange = () => {
+          if (virtualScrollerMountState.current && virtualScrollerState.current && virtualScrollerState.current.firstShownItemIndex !== undefined) {
+            onHeightChange();
+          }
+        };
         return (
-          <VirtualScrollChild virtualScrollerMountState onHeightChange={onHeightChange}>
+          <VirtualScrollChild onHeightChange={onItemHeightChange}>
             {item.type === 'widget' ? (
               <item.component
                 id={`${WIDGET_PREFIX_KEY}${item.position}`}
                 {...item.componentProps}
-                {...(item.publishEvents && {publicationChannel: id})}></item.component>
+                {...(item.publishEvents && {publicationChannel: id})}
+                {...savedState}
+                onStateChange={onStateChange}
+                onHeightChange={onItemHeightChange}
+              />
             ) : (
               <ItemComponent
                 id={`item_${itemIdGenerator(item)}`}
                 {...itemPropsGenerator(scUserContext.user, item)}
                 {...ItemProps}
                 sx={{width: '100%'}}
-                onChangeLayout={onStateChange}
                 {...savedState}
+                onStateChange={onStateChange}
+                onHeightChange={onItemHeightChange}
               />
             )}
           </VirtualScrollChild>
@@ -743,6 +770,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
               items={feedDataLeft}
               itemComponent={InnerItem}
               onMount={onScrollerMount}
+              onScrollerStateChange={onScrollerStateChange}
               getItemId={getScrollItemId}
               preserveScrollPosition
               preserveScrollPositionOnPrependItems

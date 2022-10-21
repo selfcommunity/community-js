@@ -18,6 +18,7 @@ import Skeleton from './Skeleton';
 import {useThemeProps} from '@mui/system';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import {useIsComponentMountedRef} from '@selfcommunity/react-core';
+import { VirtualScrollerItemProps } from "../../types/virtualScroller";
 
 const PREFIX = 'SCTrendingFeed';
 
@@ -39,7 +40,7 @@ const Root = styled(Widget, {
     marginBottom: 0
   }
 }));
-export interface TrendingFeedProps {
+export interface TrendingFeedProps extends VirtualScrollerItemProps {
   /**
    * Overrides or extends the styles applied to the component.
    * @default null

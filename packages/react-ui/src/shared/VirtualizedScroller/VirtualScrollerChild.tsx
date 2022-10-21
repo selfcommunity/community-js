@@ -1,26 +1,32 @@
-import React, { useEffect, useLayoutEffect } from "react";
+import React from 'react';
 import {useIsComponentMountedRef} from '@selfcommunity/react-core';
+import useResizeObserver from 'use-resize-observer';
 
 /**
  * A wrapper component for children of
  * VirtualScroll. Computes current height and
- * update virtual scroll
+ * update virtual scroll.
  */
-const VirtualScrollChild = ({virtualScrollerMountState, children, onHeightChange}) => {
+const VirtualScrollChild = ({children, onHeightChange}) => {
   // REFS
   const isMountedRef = useIsComponentMountedRef();
 
-  // Ensure that the SSR uses React.useEffect instead of React.useLayoutEffect
-  // because document is undefined on the server-side.
-  const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
-
-  useIsomorphicLayoutEffect(() => {
-    if (virtualScrollerMountState.current && isMountedRef.current) {
-      onHeightChange();
+  /**
+   * Use useResizeObserver to intercept layout change:
+   * onResize callback function, receive the width and height of the
+   * element when it changes and call onHeightChange
+   * It does not cover all possible cases, so all elements that can be
+   * included in the feed must implement the interface VirtualScrollerItemProps
+   */
+  const {ref} = useResizeObserver<HTMLDivElement>({
+    onResize: ({width, height}) => {
+      if (isMountedRef.current) {
+        onHeightChange && onHeightChange();
+      }
     }
-  }, [isMountedRef]);
+  });
 
-  return <div>{children}</div>;
+  return <div ref={ref}>{children}</div>;
 };
 
 export default VirtualScrollChild;

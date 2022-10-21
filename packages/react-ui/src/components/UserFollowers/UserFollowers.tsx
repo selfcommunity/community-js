@@ -24,6 +24,7 @@ import CentralProgress from '../../shared/CentralProgress';
 import InfiniteScroll from '../../shared/InfiniteScroll';
 import {useThemeProps} from '@mui/system';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
+import {VirtualScrollerItemProps} from '../../types/virtualScroller';
 
 const messages = defineMessages({
   title: {
@@ -57,7 +58,7 @@ const Root = styled(Widget, {
   }
 }));
 
-export interface UserFollowersProps {
+export interface UserFollowersProps extends VirtualScrollerItemProps {
   /**
    * The user id
    * @default null

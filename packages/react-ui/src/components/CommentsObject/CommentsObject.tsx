@@ -12,7 +12,7 @@ import CommentsObjectSkeleton from './Skeleton';
 import {InView} from 'react-intersection-observer';
 import {getContributionRouteName, getRouteData} from '../../utils/contribution';
 import {SCCommentType, SCCustomAdvPosition, SCFeedObjectType, SCFeedObjectTypologyType} from '@selfcommunity/types';
-import {appendURLSearchParams} from '@selfcommunity/utils';
+import {appendURLSearchParams, CacheStrategies} from '@selfcommunity/utils';
 import {scrollIntoView} from 'seamless-scroll-polyfill';
 import {DEFAULT_PAGINATION_QUERY_PARAM_NAME} from '../../constants/Pagination';
 import {
@@ -231,6 +231,12 @@ export interface CommentsObjectProps {
   infiniteScrolling?: boolean;
 
   /**
+   * Caching strategies
+   * @default CacheStrategies.CACHE_FIRST
+   */
+  cacheStrategy?: CacheStrategies;
+
+  /**
    * Other props
    */
   [p: string]: any;
@@ -299,6 +305,7 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
     hidePaginationLinks = true,
     paginationLinksPageQueryParam = DEFAULT_PAGINATION_QUERY_PARAM_NAME,
     PaginationLinkProps = {},
+    cacheStrategy = CacheStrategies.NETWORK_ONLY,
     ...rest
   } = props;
 
@@ -306,7 +313,7 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
   const scUserContext: SCUserContextType = useSCUser();
   const scPreferences: SCPreferencesContextType = useSCPreferences();
   const scRoutingContext: SCRoutingContextType = useSCRouting();
-  const {obj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
+  const {obj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType, cacheStrategy});
   const commentsIds = comments.map((c) => c.id);
   const advPosition = Math.floor(Math.random() * (Math.min(comments.length, 5) - 1 + 1) + 1);
 

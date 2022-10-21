@@ -21,6 +21,7 @@ import InfiniteScroll from '../../shared/InfiniteScroll';
 import Skeleton from './Skeleton';
 import {useThemeProps} from '@mui/system';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
+import { VirtualScrollerItemProps } from "../../types/virtualScroller";
 
 const PREFIX = 'SCTrendingPeople';
 
@@ -43,7 +44,7 @@ const Root = styled(Widget, {
   }
 }));
 
-export interface TrendingPeopleProps {
+export interface TrendingPeopleProps extends VirtualScrollerItemProps {
   /**
    * Category id
    * @default null

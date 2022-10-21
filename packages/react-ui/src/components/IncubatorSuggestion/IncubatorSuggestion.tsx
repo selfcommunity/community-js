@@ -18,6 +18,7 @@ import {useThemeProps} from '@mui/system';
 import Widget from '../Widget';
 import IncubatorDetail from '../IncubatorDetail';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
+import { VirtualScrollerItemProps } from "../../types/virtualScroller";
 
 const PREFIX = 'SCIncubatorSuggestion';
 
@@ -47,7 +48,7 @@ const Root = styled(Widget, {
   }
 }));
 
-export interface IncubatorSuggestionProps {
+export interface IncubatorSuggestionProps extends VirtualScrollerItemProps {
   /**
    * Hides this component
    * @default false

@@ -7,6 +7,7 @@ import classNames from 'classnames';
 import Widget from '../Widget';
 import {useThemeProps} from '@mui/system';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
+import {VirtualScrollerItemProps} from '../../types/virtualScroller';
 
 const PREFIX = 'SCFeedUpdates';
 
@@ -27,7 +28,7 @@ const Root = styled(Widget, {
   }
 }));
 
-export interface FeedUpdatesProps {
+export interface FeedUpdatesProps extends VirtualScrollerItemProps {
   /**
    * Id of the feed object
    * @default 'custom_adv'
@@ -107,6 +108,7 @@ export default function FeedUpdates(inProps: FeedUpdatesProps): JSX.Element {
     subscriptionChannel,
     subscriptionChannelUpdatesCallback = (msg, data) => true,
     publicationChannel = null,
+    onHeightChange,
     ...rest
   } = props;
 
@@ -133,6 +135,13 @@ export default function FeedUpdates(inProps: FeedUpdatesProps): JSX.Element {
       PubSub.unsubscribe(updatesSubscription.current);
     };
   }, []);
+
+  /**
+   * Virtual Feed update
+   */
+  useEffect(() => {
+    onHeightChange && onHeightChange();
+  }, [updates]);
 
   if (!updates) {
     return <HiddenPlaceholder />;
