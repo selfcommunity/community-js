@@ -4,7 +4,7 @@ import Icon from '@mui/material/Icon';
 import LoadingButton from '@mui/lab/LoadingButton';
 import SharesDialog from './SharesDialog';
 import {styled} from '@mui/material/styles';
-import {Box, Button, Divider, ListItemText, Menu, Tooltip} from '@mui/material';
+import {Box, Button, Divider, ListItemText, Menu, Tooltip, useMediaQuery, useTheme} from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Composer from '../../../Composer';
@@ -32,6 +32,7 @@ import {
 import {useThemeProps} from '@mui/system';
 import {getContributionRouteName, getRouteData} from '../../../../utils/contribution';
 import {FACEBOOK_SHARE, TWITTER_SHARE, LINKEDIN_SHARE} from '../../../../constants/SocialShare';
+import BaseDrawer from '../../../../shared/BaseDrawer';
 
 const messages = defineMessages({
   shares: {
@@ -161,6 +162,8 @@ export default function Share(inProps: ShareProps): JSX.Element {
   } = props;
 
   // STATE
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const {obj, setObj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
   const [isSharing, setIsSharing] = useState<boolean>(false);
   const [isComposerOpen, setIsComposerOpen] = useState<boolean>(false);
@@ -316,6 +319,51 @@ export default function Share(inProps: ShareProps): JSX.Element {
     return audience;
   }
 
+  function renderShareMenuItems() {
+    return (
+      <Box>
+        <MenuItem onClick={() => share(false)}>
+          <ListItemIcon classes={{root: classes.shareMenuIcon}}>
+            <Icon fontSize="small">redo</Icon>
+          </ListItemIcon>
+          <ListItemText primary={<FormattedMessage id="ui.feedObject.share.shareNow" defaultMessage="ui.feedObject.share.shareNow" />} />
+        </MenuItem>
+        {obj.categories.length > 0 && (
+          <MenuItem onClick={() => share(true)}>
+            <ListItemIcon classes={{root: classes.shareMenuIcon}}>
+              <Icon fontSize="small">share</Icon>
+            </ListItemIcon>
+            <ListItemText primary={intl.formatMessage(messages.shareInCategories, {categories: obj.categories.map((c) => c.name).join(', ')})} />
+          </MenuItem>
+        )}
+        {facebookShareEnabled && (
+          <MenuItem onClick={() => window.open(FACEBOOK_SHARE + url, 'facebook-share-dialog', 'width=626,height=436')}>
+            <ListItemIcon classes={{root: classes.shareMenuIcon}}>
+              <Icon fontSize="small">facebook</Icon>
+            </ListItemIcon>
+            <ListItemText primary={<FormattedMessage id="ui.feedObject.share.facebook" defaultMessage="ui.feedObject.share.facebook" />} />
+          </MenuItem>
+        )}
+        {twitterShareEnabled && (
+          <MenuItem onClick={() => window.open(TWITTER_SHARE + url, 'twitter-share-dialog', 'width=626,height=436')}>
+            <ListItemIcon classes={{root: classes.shareMenuIcon}}>
+              <Icon fontSize="small">twitter</Icon>
+            </ListItemIcon>
+            <ListItemText primary={<FormattedMessage id="ui.feedObject.share.twitter" defaultMessage="ui.feedObject.share.twitter" />} />
+          </MenuItem>
+        )}
+        {linkedinShareEnabled && (
+          <MenuItem onClick={() => window.open(LINKEDIN_SHARE + url, 'linkedin-share-dialog', 'width=626,height=436')}>
+            <ListItemIcon classes={{root: classes.shareMenuIcon}}>
+              <Icon fontSize="small">linkedin</Icon>
+            </ListItemIcon>
+            <ListItemText primary={<FormattedMessage id="ui.feedObject.share.linkedin" defaultMessage="ui.feedObject.share.linkedin" />} />
+          </MenuItem>
+        )}
+      </Box>
+    );
+  }
+
   /**
    * Renders vote action if withAction==true
    * @return {JSX.Element}
@@ -335,74 +383,43 @@ export default function Share(inProps: ShareProps): JSX.Element {
                 <Icon fontSize={'large'}>share</Icon>
               </LoadingButton>
             </Tooltip>
-            <Menu
-              anchorEl={anchorEl}
-              open={Boolean(anchorEl)}
-              onClose={handleClose}
-              onClick={handleClose}
-              PaperProps={{
-                elevation: 0,
-                sx: {
-                  overflow: 'visible',
-                  filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-                  mt: 1.5,
-                  '&:before': {
-                    content: '""',
-                    display: 'block',
-                    position: 'absolute',
-                    top: 0,
-                    right: 14,
-                    width: 10,
-                    height: 10,
-                    bgcolor: 'background.paper',
-                    transform: 'translateY(-50%) rotate(45deg)',
-                    zIndex: 0
-                  }
-                }
-              }}
-              transformOrigin={{horizontal: 'right', vertical: 'top'}}
-              anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}>
-              <MenuItem onClick={() => share(false)}>
-                <ListItemIcon classes={{root: classes.shareMenuIcon}}>
-                  <Icon fontSize="small">redo</Icon>
-                </ListItemIcon>
-                <ListItemText primary={<FormattedMessage id="ui.feedObject.share.shareNow" defaultMessage="ui.feedObject.share.shareNow" />} />
-              </MenuItem>
-              {obj.categories.length > 0 && (
-                <MenuItem onClick={() => share(true)}>
-                  <ListItemIcon classes={{root: classes.shareMenuIcon}}>
-                    <Icon fontSize="small">share</Icon>
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={intl.formatMessage(messages.shareInCategories, {categories: obj.categories.map((c) => c.name).join(', ')})}
-                  />
-                </MenuItem>
+            <>
+              {!isMobile ? (
+                <Menu
+                  anchorEl={anchorEl}
+                  open={Boolean(anchorEl)}
+                  onClose={handleClose}
+                  onClick={handleClose}
+                  PaperProps={{
+                    elevation: 0,
+                    sx: {
+                      overflow: 'visible',
+                      filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                      mt: 1.5,
+                      '&:before': {
+                        content: '""',
+                        display: 'block',
+                        position: 'absolute',
+                        top: 0,
+                        right: 14,
+                        width: 10,
+                        height: 10,
+                        bgcolor: 'background.paper',
+                        transform: 'translateY(-50%) rotate(45deg)',
+                        zIndex: 0
+                      }
+                    }
+                  }}
+                  transformOrigin={{horizontal: 'right', vertical: 'top'}}
+                  anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}>
+                  {renderShareMenuItems()}
+                </Menu>
+              ) : (
+                <BaseDrawer open={Boolean(anchorEl)} onClose={handleClose} width={'100%'}>
+                  {renderShareMenuItems()}
+                </BaseDrawer>
               )}
-              {facebookShareEnabled && (
-                <MenuItem onClick={() => window.open(FACEBOOK_SHARE + url, 'facebook-share-dialog', 'width=626,height=436')}>
-                  <ListItemIcon classes={{root: classes.shareMenuIcon}}>
-                    <Icon fontSize="small">facebook</Icon>
-                  </ListItemIcon>
-                  <ListItemText primary={<FormattedMessage id="ui.feedObject.share.facebook" defaultMessage="ui.feedObject.share.facebook" />} />
-                </MenuItem>
-              )}
-              {twitterShareEnabled && (
-                <MenuItem onClick={() => window.open(TWITTER_SHARE + url, 'twitter-share-dialog', 'width=626,height=436')}>
-                  <ListItemIcon classes={{root: classes.shareMenuIcon}}>
-                    <Icon fontSize="small">twitter</Icon>
-                  </ListItemIcon>
-                  <ListItemText primary={<FormattedMessage id="ui.feedObject.share.twitter" defaultMessage="ui.feedObject.share.twitter" />} />
-                </MenuItem>
-              )}
-              {linkedinShareEnabled && (
-                <MenuItem onClick={() => window.open(LINKEDIN_SHARE + url, 'linkedin-share-dialog', 'width=626,height=436')}>
-                  <ListItemIcon classes={{root: classes.shareMenuIcon}}>
-                    <Icon fontSize="small">linkedin</Icon>
-                  </ListItemIcon>
-                  <ListItemText primary={<FormattedMessage id="ui.feedObject.share.linkedin" defaultMessage="ui.feedObject.share.linkedin" />} />
-                </MenuItem>
-              )}
-            </Menu>
+            </>
             {isComposerOpen && (
               <Composer
                 open={isComposerOpen}
