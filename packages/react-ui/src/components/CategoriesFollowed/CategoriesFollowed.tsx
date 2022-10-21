@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
-import {Button, CardContent, ListItem, Typography} from '@mui/material';
+import {Button, CardContent, ListItem, Typography, useMediaQuery, useTheme} from '@mui/material';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
 import {SCUserContext, SCUserContextType, useIsComponentMountedRef} from '@selfcommunity/react-core';
@@ -88,6 +88,8 @@ export default function CategoriesFollowed(inProps: CategoriesListProps): JSX.El
   const isMountedRef = useIsComponentMountedRef();
 
   // STATE
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [categories, setCategories] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [hasMore, setHasMore] = useState<boolean>(false);
@@ -199,7 +201,7 @@ export default function CategoriesFollowed(inProps: CategoriesListProps): JSX.El
                   next={fetchCategoriesFollowed}
                   hasMoreNext={Boolean(next)}
                   loaderNext={<CentralProgress size={30} />}
-                  height={400}
+                  height={isMobile ? '100vh' : 400}
                   endMessage={
                     <p style={{textAlign: 'center'}}>
                       <b>

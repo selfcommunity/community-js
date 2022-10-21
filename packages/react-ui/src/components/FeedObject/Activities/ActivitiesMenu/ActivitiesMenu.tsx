@@ -2,7 +2,7 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Menu from '@mui/material/Menu';
 import Tooltip from '@mui/material/Tooltip';
-import {Button, ListItem, ListItemText} from '@mui/material';
+import {Button, ListItem, ListItemText, useTheme, useMediaQuery} from '@mui/material';
 import Icon from '@mui/material/Icon';
 import {styled} from '@mui/material/styles';
 import {SCFeedObjectActivitiesType} from '../../../../types/feedObject';
@@ -12,6 +12,7 @@ import {SCPreferences, SCPreferencesContext, SCPreferencesContextType, SCUserCon
 import {useContext} from 'react';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
+import BaseDrawer from '../../../../shared/BaseDrawer';
 
 const messages = defineMessages({
   relevantActivities: {
@@ -99,6 +100,8 @@ export default function ActivitiesMenu(inProps: ActivitiesMenuProps) {
   const scUserContext: SCUserContextType = useSCUser();
 
   // STATE
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const followEnabled = scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED].value;
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -121,48 +124,9 @@ export default function ActivitiesMenu(inProps: ActivitiesMenuProps) {
     };
   };
 
-  /**
-   * Renders root object
-   */
-  return (
-    <Root className={classNames(classes.root, className)} {...rest}>
-      <Box className={classes.selector}>
-        <Tooltip
-          title={<FormattedMessage id="ui.feedObject.activitiesMenu.tooltipTitle" defaultMessage="ui.feedObject.activitiesMenu.tooltipTitle" />}>
-          <Button variant="text" size="small" onClick={handleClick} endIcon={<Icon>expand_more</Icon>} color="inherit">
-            {selectedActivities === SCFeedObjectActivitiesType.CONNECTIONS_COMMENTS && followEnabled
-              ? intl.formatMessage(messages.followedComments)
-              : intl.formatMessage(messages[`${camelCase(selectedActivities)}`])}
-          </Button>
-        </Tooltip>
-      </Box>
-      <Menu
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        onClick={handleClose}
-        PaperProps={{
-          elevation: 0,
-          sx: {
-            overflow: 'visible',
-            filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-            mt: 1.5,
-            '&:before': {
-              content: '""',
-              display: 'block',
-              position: 'absolute',
-              top: 0,
-              right: 14,
-              width: 10,
-              height: 10,
-              bgcolor: 'background.paper',
-              transform: 'translateY(-50%) rotate(45deg)',
-              zIndex: 0
-            }
-          }
-        }}
-        transformOrigin={{horizontal: 'right', vertical: 'top'}}
-        anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}>
+  function renderMenuContent() {
+    return (
+      <Box>
         {!hideRelevantActivitiesItem && (
           <ListItem
             selected={selectedActivities === SCFeedObjectActivitiesType.RELEVANCE_ACTIVITIES}
@@ -230,7 +194,60 @@ export default function ActivitiesMenu(inProps: ActivitiesMenuProps) {
             />
           </ListItem>
         )}
-      </Menu>
+      </Box>
+    );
+  }
+
+  /**
+   * Renders root object
+   */
+  return (
+    <Root className={classNames(classes.root, className)} {...rest}>
+      <Box className={classes.selector}>
+        <Tooltip
+          title={<FormattedMessage id="ui.feedObject.activitiesMenu.tooltipTitle" defaultMessage="ui.feedObject.activitiesMenu.tooltipTitle" />}>
+          <Button variant="text" size="small" onClick={handleClick} endIcon={<Icon>expand_more</Icon>} color="inherit">
+            {selectedActivities === SCFeedObjectActivitiesType.CONNECTIONS_COMMENTS && followEnabled
+              ? intl.formatMessage(messages.followedComments)
+              : intl.formatMessage(messages[`${camelCase(selectedActivities)}`])}
+          </Button>
+        </Tooltip>
+      </Box>
+      {isMobile ? (
+        <BaseDrawer open={open} onClose={handleClose} width={'100%'}>
+          {renderMenuContent()}
+        </BaseDrawer>
+      ) : (
+        <Menu
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          onClick={handleClose}
+          PaperProps={{
+            elevation: 0,
+            sx: {
+              overflow: 'visible',
+              filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+              mt: 1.5,
+              '&:before': {
+                content: '""',
+                display: 'block',
+                position: 'absolute',
+                top: 0,
+                right: 14,
+                width: 10,
+                height: 10,
+                bgcolor: 'background.paper',
+                transform: 'translateY(-50%) rotate(45deg)',
+                zIndex: 0
+              }
+            }
+          }}
+          transformOrigin={{horizontal: 'right', vertical: 'top'}}
+          anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}>
+          {renderMenuContent()}
+        </Menu>
+      )}
     </Root>
   );
 }

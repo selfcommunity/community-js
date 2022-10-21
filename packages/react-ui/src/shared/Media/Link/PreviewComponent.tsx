@@ -3,7 +3,6 @@ import {styled} from '@mui/material/styles';
 import LazyLoad from 'react-lazyload';
 import {MEDIA_TYPE_VIDEO} from '../../../constants/Media';
 import AutoPlayer from '../../AutoPlayer';
-import CentralProgress from '../../CentralProgress';
 import Box from '@mui/material/Box';
 import {DEFAULT_PRELOAD_OFFSET_VIEWPORT} from '../../../constants/LazyLoad';
 import Skeleton from '@mui/material/Skeleton';

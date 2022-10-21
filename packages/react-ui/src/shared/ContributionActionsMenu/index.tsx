@@ -24,7 +24,9 @@ import {
   MenuItem,
   MenuList,
   Paper,
-  Typography
+  Typography,
+  useMediaQuery,
+  useTheme
 } from '@mui/material';
 import {
   REPORT_AGGRESSIVE,
@@ -65,6 +67,7 @@ import {
   MODERATE_CONTRIBUTION_HIDDEN,
   MODERATE_CONTRIBUTION_DELETED
 } from '../../constants/ContributionsActionsMenu';
+import BaseDrawer from '../BaseDrawer';
 
 const PREFIX = 'SCContributionActionsMenu';
 
@@ -267,6 +270,8 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
   const intl = useIntl();
 
   // CONTEXT
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const scContext: SCContextType = useContext(SCContext);
   const scUserContext: SCUserContextType = useContext(SCUserContext);
   const scUserId = scUserContext.user ? scUserContext.user.id : null;
@@ -1112,6 +1117,27 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
   }
 
   /**
+   * Renders contribution menu content
+   */
+  function renderContent() {
+    return (
+      <Box>
+        {isLoading || (!feedObj && !commentObj) ? (
+          <CentralProgress size={30} />
+        ) : (
+          <MenuList>
+            {renderGeneralSection()}
+            {Boolean(extraSections.length) && <Divider />}
+            {extraSections.map((s, i) => (
+              <Box key={`es_${i}`}>{extraSectionsRenders[s]()}</Box>
+            ))}
+          </MenuList>
+        )}
+      </Box>
+    );
+  }
+
+  /**
    * Renders component
    */
   return (
@@ -1134,36 +1160,28 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
           <Icon>more_vert</Icon>
         )}
       </IconButton>
-      <PopperRoot
-        open={open}
-        anchorEl={popperRef.current}
-        role={undefined}
-        transition
-        className={classes.popper}
-        {...PopperProps}
-        placement="bottom-end">
-        {({TransitionProps, placement}) => (
-          <Grow {...TransitionProps} style={{transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom'}}>
-            <Paper variant={'outlined'} className={classes.paper}>
-              <ClickAwayListener onClickAway={handleClose}>
-                <Box>
-                  {isLoading || (!feedObj && !commentObj) ? (
-                    <CentralProgress size={30} />
-                  ) : (
-                    <MenuList>
-                      {renderGeneralSection()}
-                      {Boolean(extraSections.length) && <Divider />}
-                      {extraSections.map((s, i) => (
-                        <Box key={`es_${i}`}>{extraSectionsRenders[s]()}</Box>
-                      ))}
-                    </MenuList>
-                  )}
-                </Box>
-              </ClickAwayListener>
-            </Paper>
-          </Grow>
-        )}
-      </PopperRoot>
+      {isMobile ? (
+        <BaseDrawer open={open} onClose={handleClose} width={'100%'}>
+          {renderContent()}
+        </BaseDrawer>
+      ) : (
+        <PopperRoot
+          open={open}
+          anchorEl={popperRef.current}
+          role={undefined}
+          transition
+          className={classes.popper}
+          {...PopperProps}
+          placement="bottom-end">
+          {({TransitionProps, placement}) => (
+            <Grow {...TransitionProps} style={{transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom'}}>
+              <Paper variant={'outlined'} className={classes.paper}>
+                <ClickAwayListener onClickAway={handleClose}>{renderContent()}</ClickAwayListener>
+              </Paper>
+            </Grow>
+          )}
+        </PopperRoot>
+      )}
       {openConfirmDialog && (
         <ConfirmDialog
           open={openConfirmDialog}

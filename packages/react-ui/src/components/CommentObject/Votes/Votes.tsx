@@ -74,6 +74,9 @@ export default function Votes(inProps: VotesProps): JSX.Element {
    * @return {JSX.Element}
    */
   function renderVotes() {
+    if (!obj) {
+      return null;
+    }
     return (
       <>
         <Button variant="text" size="small" disabled={obj.vote_count <= 0} className={classes.btnViewVotes} onClick={handleToggleSharesDialog}>

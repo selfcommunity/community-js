@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Button, List, Typography, ListItem} from '@mui/material';
+import {Button, List, Typography, ListItem, useMediaQuery, useTheme} from '@mui/material';
 import CardContent from '@mui/material/CardContent';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
@@ -112,6 +112,8 @@ export default function IncubatorSuggestion(inProps: IncubatorSuggestionProps): 
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
 
   // STATE
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [incubators, setIncubators] = useState<any[]>([]);
   const [visibleIncubators, setVisibleIncubators] = useState<number>(limit);
   const [loading, setLoading] = useState<boolean>(true);
@@ -240,7 +242,7 @@ export default function IncubatorSuggestion(inProps: IncubatorSuggestionProps): 
               next={fetchIncubatorSuggestion}
               hasMoreNext={Boolean(next)}
               loaderNext={<CentralProgress size={30} />}
-              height={400}
+              height={isMobile ? '100vh' : 400}
               endMessage={
                 <p style={{textAlign: 'center'}}>
                   <b>
