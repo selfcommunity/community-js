@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.1...@selfcommunity/react-ui@0.7.0-alpha.2) (2022-10-24)
+
+
+### Bug Fixes
+
+* ads ([73dee76](https://github.com/selfcommunity/community-js/commit/73dee76134a91d6fba56814c70a09c70a11d9f94))
+* mobile view fixes ([3798df9](https://github.com/selfcommunity/community-js/commit/3798df96abdf19a0b2e4d96cd74bc93e50aed776))
+
+
+### Performance Improvements
+
+* added drawer for emojiplugin ([0efb2a4](https://github.com/selfcommunity/community-js/commit/0efb2a43ef9a7737d7ba4f7d9fcc3545c41d6b04))
+
+
+
+
+
 # [0.7.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.0...@selfcommunity/react-ui@0.7.0-alpha.1) (2022-10-21)
 
 
