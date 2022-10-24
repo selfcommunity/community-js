@@ -31,6 +31,9 @@ const Root = styled(BaseDialog, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
+  '& .MuiDialogContent-root': {
+    paddingLeft: theme.spacing(2)
+  },
   [`& .${classes.imagesList}`]: {
     maxHeight: 500
   },

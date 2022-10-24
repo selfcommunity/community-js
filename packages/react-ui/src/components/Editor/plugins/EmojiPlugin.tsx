@@ -1,8 +1,9 @@
 import React, {SyntheticEvent, useState} from 'react';
 import {CONTROLLED_TEXT_INSERTION_COMMAND, LexicalEditor} from 'lexical';
 import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
-import {Fade, Icon, IconButton, Popover} from '@mui/material';
+import {Fade, Icon, IconButton, Popover, useTheme, useMediaQuery} from '@mui/material';
 import {styled} from '@mui/material/styles';
+import BaseDrawer from '../../../shared/BaseDrawer';
 // import deps only if csr
 let Picker;
 typeof window !== 'undefined' &&
@@ -12,6 +13,8 @@ typeof window !== 'undefined' &&
 
 function Emoji({editor, className = ''}: {editor: LexicalEditor; className?: string}): JSX.Element {
   // STATE
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [emojiAnchorEl, setEmojiAnchorEl] = useState<any>(false);
 
   // HANDLERS
@@ -29,24 +32,30 @@ function Emoji({editor, className = ''}: {editor: LexicalEditor; className?: str
       <IconButton className={className} onClick={handleClick} color="inherit">
         <Icon>sentiment_satisfied_alt</Icon>
       </IconButton>
-      <Popover
-        open={Boolean(emojiAnchorEl)}
-        anchorEl={emojiAnchorEl}
-        onClose={() => setEmojiAnchorEl(null)}
-        TransitionComponent={Fade}
-        anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'right'
-        }}
-        transformOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left'
-        }}
-        sx={(theme) => {
-          return {zIndex: theme.zIndex.tooltip};
-        }}>
-        {Picker && <Picker onEmojiClick={handleEmojiClick} />}
-      </Popover>
+      {isMobile ? (
+        <BaseDrawer open={Boolean(emojiAnchorEl)} onClose={() => setEmojiAnchorEl(null)} width={'100%'}>
+          {Picker && <Picker onEmojiClick={handleEmojiClick} />}
+        </BaseDrawer>
+      ) : (
+        <Popover
+          open={Boolean(emojiAnchorEl)}
+          anchorEl={emojiAnchorEl}
+          onClose={() => setEmojiAnchorEl(null)}
+          TransitionComponent={Fade}
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'right'
+          }}
+          transformOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left'
+          }}
+          sx={(theme) => {
+            return {zIndex: theme.zIndex.tooltip};
+          }}>
+          {Picker && <Picker onEmojiClick={handleEmojiClick} />}
+        </Popover>
+      )}
     </>
   );
 }

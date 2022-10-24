@@ -250,7 +250,13 @@ export default function UsersFollowed(inProps: UsersFollowedProps): JSX.Element 
           )}
           {openUsersFollowedDialog && (
             <BaseDialog
-              title={`${intl.formatMessage(messages.title, {total: total})}`}
+              title={
+                isMobile ? (
+                  <FormattedMessage id="ui.usersFollowed.modal.title" defaultMessage="ui.usersFollowed.modal.title" />
+                ) : (
+                  `${intl.formatMessage(messages.title, {total: total})}`
+                )
+              }
               onClose={() => setOpenUsersFollowedDialog(false)}
               open={openUsersFollowedDialog}>
               {loading ? (
