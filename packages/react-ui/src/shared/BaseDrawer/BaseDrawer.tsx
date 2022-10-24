@@ -20,7 +20,10 @@ const Root = styled(SwipeableDrawer, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+})(({theme}) => ({
+  '& aside ': {width: '100%'},
+  zIndex: 1300
+}));
 
 type Anchor = AnchorDirection.TOP | AnchorDirection.LEFT | AnchorDirection.BOTTOM | AnchorDirection.RIGHT;
 
