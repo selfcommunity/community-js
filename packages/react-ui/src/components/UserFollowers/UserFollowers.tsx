@@ -239,7 +239,13 @@ export default function UserFollowers(inProps: UserFollowersProps): JSX.Element 
           )}
           {openUserFollowersDialog && (
             <BaseDialog
-              title={`${intl.formatMessage(messages.title, {total: total})}`}
+              title={
+                isMobile ? (
+                  <FormattedMessage id="ui.userFollowers.modal.title" defaultMessage="ui.userFollowers.modal.title" />
+                ) : (
+                  `${intl.formatMessage(messages.title, {total: total})}`
+                )
+              }
               onClose={() => setOpenUserFollowersDialog(false)}
               open={openUserFollowersDialog}>
               {loading ? (

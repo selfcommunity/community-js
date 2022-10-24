@@ -197,7 +197,13 @@ export default function CategoriesFollowed(inProps: CategoriesListProps): JSX.El
           )}
           {openCategoriesFollowedDialog && (
             <BaseDialog
-              title={`${intl.formatMessage(messages.title, {total: total})}`}
+              title={
+                isMobile ? (
+                  <FormattedMessage id="ui.categoriesFollowed.modal.title" defaultMessage="ui.categoriesFollowed.modal.title" />
+                ) : (
+                  `${intl.formatMessage(messages.title, {total: total})}`
+                )
+              }
               onClose={() => setOpenCategoriesFollowedDialog(false)}
               open={openCategoriesFollowedDialog}>
               {loading ? (

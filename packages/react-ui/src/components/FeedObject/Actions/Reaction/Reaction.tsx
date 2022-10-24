@@ -421,6 +421,7 @@ export default function Reaction(inProps: VoteProps): JSX.Element {
    * Performs voteUp/voteDown
    */
   function vote(reaction) {
+    handleMouseLeave();
     setReaction(reaction);
     if (scUserContext.user && Object.prototype.hasOwnProperty.call(obj, 'reaction')) {
       if (UserUtils.isBlocked(scUserContext.user)) {
@@ -447,7 +448,6 @@ export default function Reaction(inProps: VoteProps): JSX.Element {
               setObj(newObj);
               handleReactions(obj.voted, reaction);
               onVoteAction && onVoteAction(newObj);
-              handleMouseLeave();
             })
             .catch((error) => {
               Logger.error(SCOPE_SC_UI, error);

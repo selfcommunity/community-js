@@ -21,7 +21,7 @@ import InfiniteScroll from '../../shared/InfiniteScroll';
 import Skeleton from './Skeleton';
 import {useThemeProps} from '@mui/system';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
-import { VirtualScrollerItemProps } from "../../types/virtualScroller";
+import {VirtualScrollerItemProps} from '../../types/virtualScroller';
 
 const PREFIX = 'SCTrendingPeople';
 
