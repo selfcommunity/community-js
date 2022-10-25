@@ -56,18 +56,10 @@ export interface FooterProps {
   className?: string;
 
   /**
-   * Show/hide advertising
-   * @default false
-   */
-  hideAdvertising?: boolean;
-
-  /**
    * Any other properties
    */
   [p: string]: any;
 }
-
-const PREFERENCES = [SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED, SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED];
 
 /**
  *> API documentation for the Community-JS Footer component. Learn about the available props and the CSS API.
@@ -96,11 +88,10 @@ export default function Footer(inProps: FooterProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {className, hideAdvertising, ...rest} = props;
+  const {className, ...rest} = props;
 
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
-  const scUserContext: SCUserContextType = useSCUser();
 
   // PREFERENCES
   const scPreferences: SCPreferencesContextType = useSCPreferences();
@@ -113,34 +104,6 @@ export default function Footer(inProps: FooterProps): JSX.Element {
   // STATE
   const [pages, setPages] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-
-  /**
-   * Compute preferences
-   */
-  const preferences = useMemo(() => {
-    const _preferences = {};
-    PREFERENCES.map((p) => (_preferences[p] = p in scPreferences.preferences ? scPreferences.preferences[p].value : null));
-    return _preferences;
-  }, [scPreferences.preferences]);
-
-  /**
-   * Render advertising
-   */
-  function renderAdvertising() {
-    if (
-      preferences[SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED] &&
-      ((preferences[SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED] && scUserContext.user === null) ||
-        !preferences[SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED]) &&
-      !hideAdvertising
-    ) {
-      return (
-        <Grid item xs={12}>
-          <CustomAdv position={SCCustomAdvPosition.POSITION_ABOVE_FOOTER_BAR} />
-        </Grid>
-      );
-    }
-    return null;
-  }
 
   /**
    * Fetches custom pages
@@ -181,7 +144,6 @@ export default function Footer(inProps: FooterProps): JSX.Element {
   return (
     <Root {...rest} className={classNames(classes.root, className)}>
       <Grid container spacing={1} justifyContent="center">
-        {renderAdvertising()}
         {pages.map((page, index) => (
           <Grid item key={index}>
             <Link

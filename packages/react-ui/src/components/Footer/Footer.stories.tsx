@@ -40,5 +40,4 @@ Base.args = {
 export const BaseNoAdv = Template.bind({});
 
 BaseNoAdv.args = {
-  hideAdvertising: true
 };
