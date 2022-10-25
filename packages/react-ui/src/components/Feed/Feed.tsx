@@ -748,23 +748,13 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     );
   }
 
-  /**
-   * Render advertising
-   */
-  const renderBelowTopbarAdvertising = (): JSX.Element => {
-    if (advEnabled && enabledCustomAdvPositions.includes(SCCustomAdvPosition.POSITION_BELOW_TOPBAR)) {
-      return (
+  return (
+    <Root container spacing={2} id={id} className={classNames(classes.root, className)}>
+      {advEnabled && enabledCustomAdvPositions.includes(SCCustomAdvPosition.POSITION_BELOW_TOPBAR) ? (
         <Grid item xs={12}>
           <CustomAdv position={SCCustomAdvPosition.POSITION_BELOW_TOPBAR} {...CustomAdvProps} />
         </Grid>
-      );
-    }
-    return null;
-  };
-
-  return (
-    <Root container spacing={2} id={id} className={classNames(classes.root, className)}>
-      {renderBelowTopbarAdvertising()}
+      ) : null}
       <Grid item xs={12} md={7}>
         <div className={classes.left} style={{overflow: 'visible'}}>
           <InfiniteScroll
@@ -784,6 +774,9 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
                 <Widget className={classes.end}>
                   <CardContent>{endMessage}</CardContent>
                 </Widget>
+                {advEnabled && enabledCustomAdvPositions.includes(SCCustomAdvPosition.POSITION_ABOVE_FOOTER_BAR) ? (
+                  <CustomAdv position={SCCustomAdvPosition.POSITION_ABOVE_FOOTER_BAR} {...CustomAdvProps} />
+                ) : null}
                 {FooterComponent ? <FooterComponent {...FooterComponentProps} /> : null}
               </>
             }
