@@ -19,6 +19,7 @@ import {
 import {Endpoints} from '@selfcommunity/api-services';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
+import {SCCustomAdvPosition} from '@selfcommunity/types';
 
 const PREFIX = 'SCExploreFeedTemplate';
 
@@ -182,6 +183,11 @@ export default function ExploreFeed(inProps: ExploreFeedProps): JSX.Element {
       }}
       HeaderComponent={<InlineComposer onSuccess={handleComposerSuccess} />}
       FeedSidebarProps={FeedSidebarProps}
+      enabledCustomAdvPositions={[
+        SCCustomAdvPosition.POSITION_FEED_SIDEBAR,
+        SCCustomAdvPosition.POSITION_FEED,
+        SCCustomAdvPosition.POSITION_BELOW_TOPBAR
+      ]}
       {...FeedProps}
     />
   );
