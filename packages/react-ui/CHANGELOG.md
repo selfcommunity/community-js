@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.4...@selfcommunity/react-ui@0.7.0-alpha.5) (2022-10-25)
+
+
+### Performance Improvements
+
+* Removed Adv from Footer component and move logic to Feed ([8a9c3f1](https://github.com/selfcommunity/community-js/commit/8a9c3f1a7e4afa36b3247c99e50cd4c2f1995be8))
+
+
+
+
+
 # [0.7.0-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.3...@selfcommunity/react-ui@0.7.0-alpha.4) (2022-10-25)
 
 
