@@ -104,7 +104,7 @@ const withProvider = (Story, context) => {
         MuiIcon: {
           defaultProps: {
             // Replace the `material-icons` default value.
-            baseClassName: 'material-icons-outlined',
+            baseClassName: 'community-icons',
           },
         },
         SCInlineComposer: {
