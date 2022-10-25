@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.2...@selfcommunity/react-ui@0.7.0-alpha.3) (2022-10-25)
+
+
+### Bug Fixes
+
+* fixed mobile emoji drawer width ([9abe44f](https://github.com/selfcommunity/community-js/commit/9abe44f65a5698272bf504d882446a4cf46f20e0))
+
+
+
+
+
 # [0.7.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.1...@selfcommunity/react-ui@0.7.0-alpha.2) (2022-10-24)
 
 
