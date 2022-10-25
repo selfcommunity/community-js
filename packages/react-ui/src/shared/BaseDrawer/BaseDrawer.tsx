@@ -21,7 +21,7 @@ const Root = styled(SwipeableDrawer, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  '& aside ': {width: '100%'},
+  '& aside ': {width: '100% !important'},
   zIndex: 1300
 }));
 
