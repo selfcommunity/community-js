@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.3...@selfcommunity/react-ui@0.7.0-alpha.4) (2022-10-25)
+
+
+### Performance Improvements
+
+* Added Adv BELOW_TOPBAR position in Feed ([578c304](https://github.com/selfcommunity/community-js/commit/578c304dfeeaaff9dce1ef739791ad30e0c217c6))
+
+
+
+
+
 # [0.7.0-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.2...@selfcommunity/react-ui@0.7.0-alpha.3) (2022-10-25)
 
 

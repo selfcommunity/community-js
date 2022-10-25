@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.9-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.9-alpha.5...@selfcommunity/react-core@0.3.9-alpha.6) (2022-10-25)
+
+
+### Performance Improvements
+
+* Added Adv BELOW_TOPBAR position in Feed ([578c304](https://github.com/selfcommunity/community-js/commit/578c304dfeeaaff9dce1ef739791ad30e0c217c6))
+
+
+
+
+
 ## [0.3.9-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.9-alpha.4...@selfcommunity/react-core@0.3.9-alpha.5) (2022-10-21)
 
 
