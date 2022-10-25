@@ -19,6 +19,7 @@ import {Endpoints} from '@selfcommunity/api-services';
 import {SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
+import {SCCustomAdvPosition} from '@selfcommunity/types';
 
 const PREFIX = 'SCMainFeedTemplate';
 
@@ -167,6 +168,11 @@ export default function MainFeed(inProps: MainFeedProps): JSX.Element {
       HeaderComponent={<InlineComposer />}
       requireAuthentication={true}
       disablePaginationLinks={true}
+      enabledCustomAdvPositions={[
+        SCCustomAdvPosition.POSITION_FEED_SIDEBAR,
+        SCCustomAdvPosition.POSITION_FEED,
+        SCCustomAdvPosition.POSITION_BELOW_TOPBAR
+      ]}
       {...FeedProps}
     />
   );

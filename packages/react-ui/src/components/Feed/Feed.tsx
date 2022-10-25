@@ -1,15 +1,15 @@
 // @ts-nocheck
 import React, {forwardRef, ForwardRefRenderFunction, ReactNode, useContext, useEffect, useImperativeHandle, useMemo, useRef, useState} from 'react';
 import {
+  Link,
   SCCache,
+  SCPreferences,
   SCPreferencesContext,
   SCPreferencesContextType,
   SCUserContext,
   SCUserContextType,
-  useSCFetchFeed,
-  SCPreferences,
   usePreviousValue,
-  Link
+  useSCFetchFeed
 } from '@selfcommunity/react-core';
 import {styled, useTheme} from '@mui/material/styles';
 import {CardContent, Grid, Hidden, Theme, useMediaQuery} from '@mui/material';
@@ -27,7 +27,7 @@ import {useThemeProps} from '@mui/system';
 import Widget from '../Widget';
 import InfiniteScroll from '../../shared/InfiniteScroll';
 import VirtualizedScroller, {VirtualizedScrollerCommonProps, VirtualScrollChild} from '../../shared/VirtualizedScroller';
-import {WIDGET_PREFIX_KEY, DEFAULT_WIDGETS_NUMBER} from '../../constants/Feed';
+import {DEFAULT_WIDGETS_NUMBER, WIDGET_PREFIX_KEY} from '../../constants/Feed';
 import {DEFAULT_PAGINATION_LIMIT, DEFAULT_PAGINATION_OFFSET, DEFAULT_PAGINATION_QUERY_PARAM_NAME} from '../../constants/Pagination';
 import {widgetSort} from '../../utils/feed';
 import Footer from '../Footer';
@@ -211,6 +211,12 @@ export interface FeedProps {
   CustomAdvProps?: CustomAdvProps;
 
   /**
+   * Props to programmatically enable the custom adv position in the feed
+   * @default [SCCustomAdvPosition.POSITION_FEED_SIDEBAR, SCCustomAdvPosition.POSITION_FEED]
+   */
+  enabledCustomAdvPositions?: SCCustomAdvPosition[];
+
+  /**
    * Prefetch data. Useful for SSR.
    * Use this to init the component (in particular useSCFetchFeed)
    */
@@ -302,6 +308,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     onPreviousData,
     FeedSidebarProps = {top: 0, bottomBoundary: `#${id}`},
     CustomAdvProps = {},
+    enabledCustomAdvPositions = [SCCustomAdvPosition.POSITION_FEED_SIDEBAR, SCCustomAdvPosition.POSITION_FEED],
     requireAuthentication = false,
     cacheStrategy = CacheStrategies.NETWORK_ONLY,
     prefetchedData,
@@ -395,7 +402,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     () =>
       [
         ...widgets,
-        ...(advEnabled
+        ...(advEnabled && enabledCustomAdvPositions.includes(SCCustomAdvPosition.POSITION_FEED_SIDEBAR)
           ? [
               {
                 type: 'widget',
@@ -434,14 +441,24 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
       const remainingWidgets = position === total - 1 ? _widgets.filter((w) => w.position >= total) : [];
       return [
         ..._widgets.filter((w) => w.position === position),
-        ...(advEnabled && position > 0 && position % DEFAULT_WIDGETS_NUMBER === 0 ? [tw] : []),
+        ...(advEnabled &&
+        enabledCustomAdvPositions.includes(SCCustomAdvPosition.POSITION_FEED) &&
+        position > 0 &&
+        position % DEFAULT_WIDGETS_NUMBER === 0
+          ? [tw]
+          : []),
         ...remainingWidgets
       ];
     }
     const remainingWidgets = position === total - 1 ? _widgets.filter((w) => w.position >= total && w.column === 'left') : [];
     return [
       ..._widgets.filter((w) => w.position === position && w.column === 'left'),
-      ...(advEnabled && position > 0 && position % DEFAULT_WIDGETS_NUMBER === 0 ? [tw] : []),
+      ...(advEnabled &&
+      enabledCustomAdvPositions.includes(SCCustomAdvPosition.POSITION_FEED) &&
+      position > 0 &&
+      position % DEFAULT_WIDGETS_NUMBER === 0
+        ? [tw]
+        : []),
       ...remainingWidgets
     ];
   };
@@ -731,8 +748,23 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     );
   }
 
+  /**
+   * Render advertising
+   */
+  const renderBelowTopbarAdvertising = (): JSX.Element => {
+    if (advEnabled && enabledCustomAdvPositions.includes(SCCustomAdvPosition.POSITION_BELOW_TOPBAR)) {
+      return (
+        <Grid item xs={12}>
+          <CustomAdv position={SCCustomAdvPosition.POSITION_BELOW_TOPBAR} {...CustomAdvProps} />
+        </Grid>
+      );
+    }
+    return null;
+  };
+
   return (
     <Root container spacing={2} id={id} className={classNames(classes.root, className)}>
+      {renderBelowTopbarAdvertising()}
       <Grid item xs={12} md={7}>
         <div className={classes.left} style={{overflow: 'visible'}}>
           <InfiniteScroll

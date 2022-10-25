@@ -15,11 +15,13 @@ import {
   TrendingPeople
 } from '@selfcommunity/react-ui';
 import {Endpoints} from '@selfcommunity/api-services';
-import {useSCFetchCategory} from '@selfcommunity/react-core';
+import {SCPreferences, useSCFetchCategory} from '@selfcommunity/react-core';
 import {SCCategoryType, SCCustomAdvPosition} from '@selfcommunity/types';
 import {CategoryFeedSkeleton} from './index';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
+import {Grid} from '@mui/material';
+import CustomAdv from '@selfcommunity/react-ui/src/components/CustomAdv';
 
 const PREFIX = 'SCCategoryFeedTemplate';
 
@@ -209,6 +211,11 @@ export default function CategoryFeed(inProps: CategoryFeedProps): JSX.Element {
       FeedSidebarProps={FeedSidebarProps}
       HeaderComponent={<InlineComposer onSuccess={handleComposerSuccess} defaultValue={{categories: [scCategory]}} />}
       CustomAdvProps={{position: SCCustomAdvPosition.POSITION_FEED, categoriesId: [scCategory.id]}}
+      enabledCustomAdvPositions={[
+        SCCustomAdvPosition.POSITION_FEED_SIDEBAR,
+        SCCustomAdvPosition.POSITION_FEED,
+        SCCustomAdvPosition.POSITION_BELOW_TOPBAR
+      ]}
       {...FeedProps}
     />
   );
