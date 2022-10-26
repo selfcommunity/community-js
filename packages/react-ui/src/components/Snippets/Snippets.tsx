@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Box, Divider, List} from '@mui/material';
+import {Box, Divider, List, useMediaQuery, useTheme} from '@mui/material';
 import Widget from '../Widget';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {SCPrivateMessageType, SCNotificationTopicType, SCNotificationTypologyType} from '@selfcommunity/types';
@@ -31,7 +31,7 @@ const Root = styled(Widget, {
   },
   [theme.breakpoints.down('md')]: {
     height: '100%',
-    maxHeight: '450px'
+    boxShadow: 'none'
   },
   [`& .${classes.selected}`]: {
     background: theme.palette.primary.main
@@ -130,6 +130,8 @@ export default function Snippets(inProps: SnippetsProps): JSX.Element {
   const {autoHide = false, className = null, onSnippetClick, threadId, getSnippetHeadline, shouldUpdate, deleteIconProps, selected, ...rest} = props;
 
   // STATE
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [snippets, setSnippets] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [total, setTotal] = useState<number>(0);
@@ -260,7 +262,7 @@ export default function Snippets(inProps: SnippetsProps): JSX.Element {
                     : ''
                 }
               />
-              {index < total - 1 ? <Divider /> : null}
+              {index < total - 1 && !isMobile ? <Divider /> : null}
             </div>
           ))}
         </List>

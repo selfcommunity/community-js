@@ -65,11 +65,6 @@ const Root = styled(Widget, {
 
 export interface MessageProps extends Pick<CardProps, Exclude<keyof CardProps, 'id'>> {
   /**
-   * Id of message object
-   * @default null
-   */
-  id?: number;
-  /**
    * Overrides or extends the styles applied to the component.
    * @default null
    */
@@ -105,25 +100,15 @@ export interface MessageProps extends Pick<CardProps, Exclude<keyof CardProps, '
    */
   isHovering?: () => void;
   /**
-   * Id of the logged user
-   * @default null
+   * Delete icon showed only for messages sent by logged user
+   * @default false
    */
-  loggedUser?: number;
+  showDeleteIcon?: boolean;
   /**
    * Action triggered on delete icon click
    * @default null
    */
   onDeleteIconClick?: () => void;
-  /**
-   * Callback fired on touch hover
-   * @default null
-   */
-  onTouchStart?: () => void;
-  /**
-   * Callback fired on touch leave
-   * @default null
-   */
-  onTouchEnd?: () => void;
 }
 
 /**
@@ -165,17 +150,14 @@ export default function Message(inProps: MessageProps): JSX.Element {
     name: PREFIX
   });
   const {
-    id = null,
     autoHide = false,
     message = null,
     className = null,
     snippetType = true,
     onMouseEnter = null,
     onMouseLeave = null,
-    onTouchStart = null,
-    onTouchEnd = null,
     isHovering = null,
-    loggedUser = null,
+    showDeleteIcon = false,
     onDeleteIconClick = null,
     ...rest
   } = props;
@@ -252,76 +234,75 @@ export default function Message(inProps: MessageProps): JSX.Element {
   };
 
   /**
-   * Renders snippet or thread type message object
+   * Renders thread type message object
    */
-  const c = (
-    <React.Fragment>
-      {snippetType ? (
-        <>
-          <ListItem>
-            <ListItemAvatar>
-              {scUserContext['user'] && scUserContext['user'].username === message.receiver.username ? (
-                <Avatar alt={message.sender.username} src={message.sender.avatar} />
-              ) : (
-                <Avatar alt={message.receiver.username} src={message.receiver.avatar} />
-              )}
-            </ListItemAvatar>
-            <ListItemText
-              primary={
-                <Box className={classes.info}>
-                  {scUserContext['user'] && scUserContext['user'].username === message.receiver.username ? (
-                    <Typography component="span">{message.sender.username}</Typography>
-                  ) : (
-                    <Typography component="span">{message.receiver.username}</Typography>
-                  )}
-                  <Typography component="span">{`${intl.formatDate(message.last_message_at, {
-                    weekday: 'long',
-                    day: 'numeric'
-                  })}`}</Typography>
-                </Box>
-              }
-              secondary={
-                <Box component="span" className={classes.info}>
-                  <Typography component="span" dangerouslySetInnerHTML={{__html: message.headline}} />
-                  {isNew && (
-                    <Icon fontSize="small" className={classes.unread}>
-                      fiber_manual_record
-                    </Icon>
-                  )}
-                </Box>
-              }
-            />
-          </ListItem>
-        </>
-      ) : (
-        <LazyLoad once offset={DEFAULT_PRELOAD_OFFSET_VIEWPORT}>
-          <ListItem onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} onTouchStart={onTouchStart} onTouchMove={onTouchEnd}>
-            {!snippetType && isHovering && loggedUser === message.sender.id && message.status !== 'hidden' && (
-              <>
-                <IconButton sx={{marginBottom: '25px'}} onClick={onDeleteIconClick}>
-                  <Icon fontSize="small">delete</Icon>
-                </IconButton>
-              </>
+  const threadMessage = (
+    <LazyLoad once offset={DEFAULT_PRELOAD_OFFSET_VIEWPORT}>
+      <ListItem onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} onTouchStart={onMouseEnter} onTouchMove={onMouseLeave}>
+        {isHovering && showDeleteIcon && message.status !== 'hidden' && (
+          <>
+            <IconButton sx={{marginBottom: '25px'}} onClick={onDeleteIconClick}>
+              <Icon fontSize="small">delete</Icon>
+            </IconButton>
+          </>
+        )}
+        <ListItemText
+          primary={
+            <Box className={classes.messageBox}>
+              {hasFile ? renderMessageFile(message) : <Typography component="span" dangerouslySetInnerHTML={{__html: message.message}} />}
+            </Box>
+          }
+          secondary={
+            <Box component="span" className={classes.messageTime}>
+              <Typography component="span">{`${intl.formatDate(message.created_at, {
+                hour: 'numeric',
+                minute: 'numeric'
+              })}`}</Typography>
+            </Box>
+          }
+        />
+      </ListItem>
+    </LazyLoad>
+  );
+
+  /**
+   * Renders snippet type message object
+   */
+  const snippetMessage = (
+    <ListItem>
+      <ListItemAvatar>
+        {scUserContext['user'] && scUserContext['user'].username === message.receiver.username ? (
+          <Avatar alt={message.sender.username} src={message.sender.avatar} />
+        ) : (
+          <Avatar alt={message.receiver.username} src={message.receiver.avatar} />
+        )}
+      </ListItemAvatar>
+      <ListItemText
+        primary={
+          <Box className={classes.info}>
+            {scUserContext['user'] && scUserContext['user'].username === message.receiver.username ? (
+              <Typography component="span">{message.sender.username}</Typography>
+            ) : (
+              <Typography component="span">{message.receiver.username}</Typography>
             )}
-            <ListItemText
-              primary={
-                <Box className={classes.messageBox}>
-                  {hasFile ? renderMessageFile(message) : <Typography component="span" dangerouslySetInnerHTML={{__html: message.message}} />}
-                </Box>
-              }
-              secondary={
-                <Box component="span" className={classes.messageTime}>
-                  <Typography component="span">{`${intl.formatDate(message.created_at, {
-                    hour: 'numeric',
-                    minute: 'numeric'
-                  })}`}</Typography>
-                </Box>
-              }
-            />
-          </ListItem>
-        </LazyLoad>
-      )}
-    </React.Fragment>
+            <Typography component="span">{`${intl.formatDate(message.last_message_at, {
+              weekday: 'long',
+              day: 'numeric'
+            })}`}</Typography>
+          </Box>
+        }
+        secondary={
+          <Box component="span" className={classes.info}>
+            <Typography component="span" dangerouslySetInnerHTML={{__html: message.headline}} />
+            {isNew && (
+              <Icon fontSize="small" className={classes.unread}>
+                fiber_manual_record
+              </Icon>
+            )}
+          </Box>
+        }
+      />
+    </ListItem>
   );
 
   /**
@@ -330,7 +311,7 @@ export default function Message(inProps: MessageProps): JSX.Element {
   if (!autoHide) {
     return (
       <Root className={classNames(classes.root, className)} {...rest}>
-        <List>{c}</List>
+        <List>{snippetType ? snippetMessage : threadMessage}</List>
       </Root>
     );
   }
