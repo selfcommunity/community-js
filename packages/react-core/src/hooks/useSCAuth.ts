@@ -41,7 +41,7 @@ function userReducer(state, action) {
       return {user: action.payload.user, error: null, session: Object.assign({}, state.session), loading: false};
 
     case userActionTypes.LOGIN_FAILURE:
-      return {user: null, session: Object.assign({}, state.session), error: action.payload.error, loading: false};
+      return {user: null, session: Object.assign({}, state.session), error: action.payload.error ? action.payload.error : null, loading: false};
 
     case userActionTypes.REFRESH_TOKEN_SUCCESS:
       const newAuthToken = Object.assign({}, state.session.authToken, {
