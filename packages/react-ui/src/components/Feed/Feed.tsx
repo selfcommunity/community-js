@@ -9,9 +9,7 @@ import {
   SCUserContext,
   SCUserContextType,
   useSCFetchFeed,
-  SCPreferences,
   usePreviousValue,
-  Link,
   useIsComponentMountedRef
 } from '@selfcommunity/react-core';
 import {styled, useTheme} from '@mui/material/styles';
@@ -22,7 +20,7 @@ import {SCFeedWidgetType} from '../../types/feed';
 import Sticky from 'react-stickynode';
 import CustomAdv, {CustomAdvProps} from '../CustomAdv';
 import {SCCustomAdvPosition, SCFeedUnitType, SCUserType} from '@selfcommunity/types';
-import {EndpointType, getCancelTokenSourceRequest, SCPaginatedResponse} from '@selfcommunity/api-services';
+import {EndpointType, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {CacheStrategies, getQueryStringParameter, updateQueryStringParameter} from '@selfcommunity/utils';
 import classNames from 'classnames';
 import PubSub from 'pubsub-js';
@@ -322,10 +320,6 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     PaginationLinkProps = {}
   } = props;
 
-  // REF
-  const isMountRef = useIsComponentMountedRef();
-  const ignore = useRef(false);
-
   // CONTEXT
   const scPreferences: SCPreferencesContextType = useContext(SCPreferencesContext);
   const scUserContext: SCUserContextType = useContext(SCUserContext);
@@ -614,13 +608,9 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
      * Initialize authenticated feed
      * Init feed data when the user is authenticated and there is no data prefetched
      */
-    if (requireAuthentication && authUserId !== null && !prefetchedData && !ignore.current) {
+    if (requireAuthentication && authUserId !== null && !prefetchedData) {
       _initFeedData();
     }
-
-    return () => {
-      ignore.current = true;
-    };
   }, [requireAuthentication, authUserId, prefetchedData]);
 
   useEffect(() => {
@@ -628,13 +618,9 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
      * Initialize un-authenticated feed
      * Init feed if there is no data prefetched
      */
-    if (!requireAuthentication && !prefetchedData && !ignore.current) {
+    if (!requireAuthentication && !prefetchedData) {
       _initFeedData();
     }
-
-    return () => {
-      ignore.current = true;
-    };
   }, [requireAuthentication, prefetchedData]);
 
   /**
