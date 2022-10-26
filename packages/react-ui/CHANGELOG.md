@@ -3,6 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.4...@selfcommunity/react-ui@0.7.0-alpha.5) (2022-10-25)
+
+
+### Performance Improvements
+
+* Removed Adv from Footer component and move logic to Feed ([8a9c3f1](https://github.com/selfcommunity/community-js/commit/8a9c3f1a7e4afa36b3247c99e50cd4c2f1995be8))
+
+
+
+
+
+# [0.7.0-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.3...@selfcommunity/react-ui@0.7.0-alpha.4) (2022-10-25)
+
+
+### Performance Improvements
+
+* Added Adv BELOW_TOPBAR position in Feed ([578c304](https://github.com/selfcommunity/community-js/commit/578c304dfeeaaff9dce1ef739791ad30e0c217c6))
+
+
+
+
+
+# [0.7.0-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.2...@selfcommunity/react-ui@0.7.0-alpha.3) (2022-10-25)
+
+
+### Bug Fixes
+
+* fixed mobile emoji drawer width ([9abe44f](https://github.com/selfcommunity/community-js/commit/9abe44f65a5698272bf504d882446a4cf46f20e0))
+
+
+
+
+
 # [0.7.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.1...@selfcommunity/react-ui@0.7.0-alpha.2) (2022-10-24)
 
 

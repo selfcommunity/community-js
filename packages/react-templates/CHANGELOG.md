@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.4-alpha.15](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.2.4-alpha.14...@selfcommunity/react-templates@0.2.4-alpha.15) (2022-10-25)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.2.4-alpha.14](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.2.4-alpha.13...@selfcommunity/react-templates@0.2.4-alpha.14) (2022-10-25)
+
+
+### Performance Improvements
+
+* Added Adv BELOW_TOPBAR position in Feed ([578c304](https://github.com/selfcommunity/community-js/commit/578c304dfeeaaff9dce1ef739791ad30e0c217c6))
+
+
+
+
+
+## [0.2.4-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.2.4-alpha.12...@selfcommunity/react-templates@0.2.4-alpha.13) (2022-10-25)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
 ## [0.2.4-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.2.4-alpha.11...@selfcommunity/react-templates@0.2.4-alpha.12) (2022-10-24)
 
 **Note:** Version bump only for package @selfcommunity/react-templates
