@@ -1,6 +1,7 @@
 import React from 'react';
 import {ComponentMeta, ComponentStory} from '@storybook/react';
 import NotificationFeedTemplate from './index';
+import { CacheStrategies } from "@selfcommunity/utils";
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -18,3 +19,8 @@ const Template: ComponentStory<typeof NotificationFeedTemplate> = (args) => (
 export const Notification = Template.bind({});
 
 Notification.args = {};
+
+
+export const NotificationCached = Template.bind({});
+
+NotificationCached.args = {FeedProps: {cacheStrategy: CacheStrategies.CACHE_FIRST}};

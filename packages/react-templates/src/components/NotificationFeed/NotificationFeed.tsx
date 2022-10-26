@@ -92,7 +92,7 @@ const WIDGETS: SCFeedWidgetType[] = [
     component: BroadcastMessages,
     componentProps: {subscriptionChannel: 'notification_feed'},
     column: 'left',
-    position: 1
+    position: 0
   },
   {
     type: 'widget',
