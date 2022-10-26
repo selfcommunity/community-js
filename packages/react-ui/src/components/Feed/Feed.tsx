@@ -8,8 +8,11 @@ import {
   SCPreferencesContextType,
   SCUserContext,
   SCUserContextType,
+  useSCFetchFeed,
+  SCPreferences,
   usePreviousValue,
-  useSCFetchFeed
+  Link,
+  useIsComponentMountedRef
 } from '@selfcommunity/react-core';
 import {styled, useTheme} from '@mui/material/styles';
 import {CardContent, Grid, Hidden, Theme, useMediaQuery} from '@mui/material';
@@ -19,7 +22,7 @@ import {SCFeedWidgetType} from '../../types/feed';
 import Sticky from 'react-stickynode';
 import CustomAdv, {CustomAdvProps} from '../CustomAdv';
 import {SCCustomAdvPosition, SCFeedUnitType, SCUserType} from '@selfcommunity/types';
-import {EndpointType, SCPaginatedResponse} from '@selfcommunity/api-services';
+import {EndpointType, getCancelTokenSourceRequest, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {CacheStrategies, getQueryStringParameter, updateQueryStringParameter} from '@selfcommunity/utils';
 import classNames from 'classnames';
 import PubSub from 'pubsub-js';
@@ -319,6 +322,10 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     PaginationLinkProps = {}
   } = props;
 
+  // REF
+  const isMountRef = useIsComponentMountedRef();
+  const ignore = useRef(false);
+
   // CONTEXT
   const scPreferences: SCPreferencesContextType = useContext(SCPreferencesContext);
   const scUserContext: SCUserContextType = useContext(SCUserContext);
@@ -540,10 +547,15 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
    * Callback on refresh
    */
   const refresh = () => {
-    setHeadData([]);
-    setFeedDataLeft([]);
-    setFeedDataRight(_getFeedDataRight());
-    feedDataObject.reload();
+    /**
+     * Only if the feedDataObject is loaded reload data
+     */
+    if (feedDataObject.componentLoaded) {
+      setHeadData([]);
+      setFeedDataLeft([]);
+      setFeedDataRight(_getFeedDataRight());
+      feedDataObject.reload();
+    }
   };
 
   /**
@@ -586,13 +598,14 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
       if (cacheStrategy === CacheStrategies.CACHE_FIRST && feedDataObject.componentLoaded) {
         // Set current cached feed or prefetched data
         setFeedDataLeft(_getFeedDataLeft(feedDataObject.results, feedDataObject.initialOffset, feedDataObject.count));
-      } else {
+        setFeedDataRight(_getFeedDataRight());
+      } else if (!feedDataObject.componentLoaded) {
         // Load next page
         feedDataObject.getNextPage();
+        setFeedDataRight(_getFeedDataRight());
       }
-      setFeedDataRight(_getFeedDataRight());
     },
-    [cacheStrategy, feedDataObject, endpointQueryParams]
+    [cacheStrategy, feedDataObject.componentLoaded, endpointQueryParams]
   );
 
   // EFFECTS
@@ -601,26 +614,34 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
      * Initialize authenticated feed
      * Init feed data when the user is authenticated and there is no data prefetched
      */
-    if (requireAuthentication && authUserId !== null && !prefetchedData) {
+    if (requireAuthentication && authUserId !== null && !prefetchedData && !ignore.current) {
       _initFeedData();
     }
-  }, [authUserId]);
+
+    return () => {
+      ignore.current = true;
+    };
+  }, [requireAuthentication, authUserId, prefetchedData]);
 
   useEffect(() => {
     /**
      * Initialize un-authenticated feed
      * Init feed if there is no data prefetched
      */
-    if (!requireAuthentication && !prefetchedData) {
+    if (!requireAuthentication && !prefetchedData && !ignore.current) {
       _initFeedData();
     }
-  }, []);
+
+    return () => {
+      ignore.current = true;
+    };
+  }, [requireAuthentication, prefetchedData]);
 
   /**
    * If widgets changed, refresh the feed (it must recalculate the correct positions of the objects)
    */
   useDeepCompareEffectNoCheck(() => {
-    if (prevWidgets && widgets && prevWidgets !== widgets && feedDataObject.componentLoaded) {
+    if (prevWidgets && widgets && prevWidgets !== widgets) {
       refresh();
     }
   }, [widgets]);
