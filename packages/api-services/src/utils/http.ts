@@ -1,4 +1,5 @@
 import {camelCase} from '@selfcommunity/utils';
+import axios, { CancelTokenSource } from "axios";
 
 export function defaultError(error: {request?: any; message?: any}): void {
   if (error.request) {
@@ -37,4 +38,8 @@ export function formatHttpError(error) {
     defaultError(error);
   }
   return errors;
+}
+
+export function getCancelTokenSourceRequest() {
+  return axios.CancelToken.source();
 }
