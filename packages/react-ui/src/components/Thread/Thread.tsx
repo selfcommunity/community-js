@@ -52,16 +52,16 @@ const Root = styled(Widget, {
   position: 'relative',
   [theme.breakpoints.down('md')]: {
     width: '100%',
-    maxWidth: '345px',
-    minHeight: '500px'
+    boxShadow: 'none'
+    //overflow: 'auto'
+    //maxWidth: '345px'
   },
   [`& .${classes.threadBox}`]: {
-    maxHeight: '540px',
-    [theme.breakpoints.down('md')]: {
-      maxHeight: '400px'
-    },
-    width: 'inherit',
-    overflow: 'auto'
+    [theme.breakpoints.up('sm')]: {
+      maxHeight: '540px',
+      overflow: 'auto'
+      // width: 'inherit',
+    }
   },
   [`& .${classes.emptyBox}`]: {
     display: 'flex',
@@ -517,11 +517,11 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
     return (
       <>
         {isMobile && receiver && (
-          <AppBar position="static">
+          <AppBar position="fixed">
             <Toolbar className={classes.toolBar}>
               <Box sx={{display: 'flex', justifyContent: 'flex-start', alignItems: 'center'}}>
                 <Icon onClick={onMessageBack}>chevron_left</Icon>
-                <Avatar alt="Remy Sharp" src={receiver.avatar} sx={{marginRight: '8px'}} />
+                <Avatar alt={receiver.username} src={receiver.avatar} sx={{marginRight: '8px'}} />
                 <Typography variant="h6" color="inherit" component="div">
                   {receiver.username}
                 </Typography>
@@ -543,35 +543,33 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
             />
           )}
           {Object.keys(formattedMessages).map((key, index) => (
-            <div key={index}>
+            <React.Fragment key={index}>
               <ListSubheader className={classes.center}>{key}</ListSubheader>
               {formattedMessages[key].map((msg: SCPrivateMessageType, index) => (
-                <div key={index} className={loggedUser === msg.sender.id ? classes.sender : classes.receiver}>
+                <Box key={index} className={loggedUser === msg.sender.id ? classes.sender : classes.receiver}>
                   <Message
                     elevation={0}
                     message={msg}
                     key={msg.id}
                     snippetType={false}
-                    loggedUser={loggedUser}
                     onMouseEnter={() => handleMouseEnter(msg.id)}
                     onMouseLeave={() => handleMouseLeave(msg.id)}
-                    onTouchStart={() => handleMouseEnter(msg.id)}
-                    onTouchMove={() => handleMouseLeave(msg.id)}
                     isHovering={isHovered[msg.id]}
+                    showDeleteIcon={loggedUser === msg.sender.id}
                     onDeleteIconClick={() => handleDeleteDialog(msg)}
                   />
-                </div>
+                </Box>
               ))}
-            </div>
+            </React.Fragment>
           ))}
-          <MessageEditor
-            send={() => sendMessage()}
-            isSending={sending}
-            getMessage={handleMessage}
-            getMessageFile={handleMessageFile}
-            autoHide={!isFollowed}
-          />
         </Box>
+        <MessageEditor
+          send={() => sendMessage()}
+          isSending={sending}
+          getMessage={handleMessage}
+          getMessageFile={handleMessageFile}
+          autoHide={!isFollowed}
+        />
       </>
     );
   }

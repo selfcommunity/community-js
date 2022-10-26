@@ -57,8 +57,7 @@ const Root = styled(Box, {
     }
   },
   [`& .${classes.threadMobileLayout}`]: {
-    display: 'flex',
-    justifyContent: 'center'
+    height: '80%'
   }
 }));
 
@@ -258,7 +257,7 @@ export default function PrivateMessages(inProps: PrivateMessagesProps): JSX.Elem
                   />
                 )}
                 <Thread
-                  userObj={obj ? obj : null}
+                  userObj={obj ?? null}
                   openNewMessage={openNewMessage}
                   onNewMessageSent={setObj}
                   onMessageSent={handleSnippetsUpdate}
@@ -297,7 +296,7 @@ export default function PrivateMessages(inProps: PrivateMessagesProps): JSX.Elem
             </Box>
             <Box className={classes.threadBox}>
               <Thread
-                userObj={obj ? obj : null}
+                userObj={obj ?? null}
                 openNewMessage={openNewMessage}
                 onNewMessageSent={handleNewMessageSent}
                 onMessageSent={handleSnippetsUpdate}

@@ -46,7 +46,7 @@ export interface BaseDrawerProps {
    * Handles drawer closing
    * @default null
    */
-  onClose?: () => any;
+  onClose?: (event?: any) => any;
   /**
    * Drawer width
    */
