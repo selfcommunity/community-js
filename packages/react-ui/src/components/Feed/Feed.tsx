@@ -8,8 +8,9 @@ import {
   SCPreferencesContextType,
   SCUserContext,
   SCUserContextType,
+  useSCFetchFeed,
   usePreviousValue,
-  useSCFetchFeed
+  useIsComponentMountedRef
 } from '@selfcommunity/react-core';
 import {styled, useTheme} from '@mui/material/styles';
 import {CardContent, Grid, Hidden, Theme, useMediaQuery} from '@mui/material';
@@ -540,10 +541,15 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
    * Callback on refresh
    */
   const refresh = () => {
-    setHeadData([]);
-    setFeedDataLeft([]);
-    setFeedDataRight(_getFeedDataRight());
-    feedDataObject.reload();
+    /**
+     * Only if the feedDataObject is loaded reload data
+     */
+    if (feedDataObject.componentLoaded) {
+      setHeadData([]);
+      setFeedDataLeft([]);
+      setFeedDataRight(_getFeedDataRight());
+      feedDataObject.reload();
+    }
   };
 
   /**
@@ -586,13 +592,14 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
       if (cacheStrategy === CacheStrategies.CACHE_FIRST && feedDataObject.componentLoaded) {
         // Set current cached feed or prefetched data
         setFeedDataLeft(_getFeedDataLeft(feedDataObject.results, feedDataObject.initialOffset, feedDataObject.count));
-      } else {
+        setFeedDataRight(_getFeedDataRight());
+      } else if (!feedDataObject.componentLoaded) {
         // Load next page
         feedDataObject.getNextPage();
+        setFeedDataRight(_getFeedDataRight());
       }
-      setFeedDataRight(_getFeedDataRight());
     },
-    [cacheStrategy, feedDataObject, endpointQueryParams]
+    [cacheStrategy, feedDataObject.componentLoaded, endpointQueryParams]
   );
 
   // EFFECTS
@@ -601,26 +608,38 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
      * Initialize authenticated feed
      * Init feed data when the user is authenticated and there is no data prefetched
      */
+    let _t;
     if (requireAuthentication && authUserId !== null && !prefetchedData) {
-      _initFeedData();
+      _t = setTimeout(() => {
+        _initFeedData();
+      });
     }
-  }, [authUserId]);
+    return () => {
+      _t && clearTimeout(_t);
+    };
+  }, [requireAuthentication, authUserId, prefetchedData]);
 
   useEffect(() => {
     /**
      * Initialize un-authenticated feed
      * Init feed if there is no data prefetched
      */
+    let _t;
     if (!requireAuthentication && !prefetchedData) {
-      _initFeedData();
+      _t = setTimeout(() => {
+        _initFeedData();
+      });
     }
-  }, []);
+    return () => {
+      _t && clearTimeout(_t);
+    };
+  }, [requireAuthentication, prefetchedData]);
 
   /**
    * If widgets changed, refresh the feed (it must recalculate the correct positions of the objects)
    */
   useDeepCompareEffectNoCheck(() => {
-    if (prevWidgets && widgets && prevWidgets !== widgets && feedDataObject.componentLoaded) {
+    if (prevWidgets && widgets && prevWidgets !== widgets) {
       refresh();
     }
   }, [widgets]);

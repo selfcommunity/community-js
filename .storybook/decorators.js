@@ -5,6 +5,7 @@ import { Box, Button } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
 import { ThemeProvider as EmotionThemeProvider } from 'emotion-theming';
 import {Image, Link} from '../packages/react-ui/src';
+
 /**
  * Fix Storybook v6.3.10 with mui v5
  * Wrap stories with EmotionThemeProvider, to fix problem of storybook 6.4.19 with mui_v5
@@ -53,7 +54,10 @@ const withProvider = (Story, context) => {
    * Auth session
    */
   let session;
-  if (authToken) {
+  if (['OAuth', 'JWT'].includes(context.globals.session)) {
+    if (!authToken) {
+      return null;
+    }
     session = {
       type: context.globals.session,
       clientId: context.globals.clientId,
@@ -144,29 +148,29 @@ const withProvider = (Story, context) => {
   };
 
   return (
-      <EmotionThemeProvider theme={defaultTheme}>
-        <Box style={{ textAlign: 'right' }}>
-          {!authToken && (
-            <Button
-              variant="contained"
-              onClick={() => changeCommunityConf(true)}
-            >
-              Login
-            </Button>
-          )}
-          {authToken && (
-            <Button
-              variant="contained"
-              onClick={() => changeCommunityConf(false)}
-            >
-              Logout
-            </Button>
-          )}
-        </Box>
-        <SCContextProvider conf={_conf}>
-          <Story {...context} />
-        </SCContextProvider>
-      </EmotionThemeProvider>
+    <EmotionThemeProvider theme={defaultTheme}>
+      <Box style={{ textAlign: 'right' }}>
+        {!authToken && (
+          <Button
+            variant="contained"
+            onClick={() => changeCommunityConf(true)}
+          >
+            Login
+          </Button>
+        )}
+        {authToken && (
+          <Button
+            variant="contained"
+            onClick={() => changeCommunityConf(false)}
+          >
+            Logout
+          </Button>
+        )}
+      </Box>
+      <SCContextProvider conf={_conf}>
+        <Story {...context} />
+      </SCContextProvider>
+    </EmotionThemeProvider>
   );
 };
 

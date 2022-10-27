@@ -9,6 +9,7 @@ import classNames from 'classnames';
 import Widget from '../Widget';
 import {useThemeProps} from '@mui/system';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
+import {VirtualScrollerItemProps} from '../../types/virtualScroller';
 
 const PREFIX = 'SCPlatform';
 
@@ -26,7 +27,7 @@ const Root = styled(Widget, {
   padding: 20
 }));
 
-export interface PlatformProps {
+export interface PlatformProps extends VirtualScrollerItemProps {
   /**
    * Hides this component
    * @default false
