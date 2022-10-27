@@ -526,8 +526,8 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
   useEffect(() => {
     const _e = geExpandedActivities();
     setExpandedActivities(_e);
-    notifyFeedChanges({activitiesExpanded: _e, cacheStrategy: CacheStrategies.CACHE_FIRST});
-  }, [objId]);
+    notifyFeedChanges({activitiesExpanded: _e, activitiesExpandedType: selectedActivities, cacheStrategy: CacheStrategies.CACHE_FIRST});
+  }, [objId, selectedActivities]);
 
   /**
    * Handle change/update poll: votes
@@ -623,11 +623,11 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
     if (scUserContext.user) {
       const _e = !expandedActivities;
       setExpandedActivities(_e);
-      notifyFeedChanges({activitiesExpanded: _e});
+      notifyFeedChanges({activitiesExpanded: _e, activitiesExpandedType: selectedActivities, cacheStrategy: CacheStrategies.CACHE_FIRST});
     } else {
       scContext.settings.handleAnonymousAction();
     }
-  }, [scUserContext.user, notifyFeedChanges]);
+  }, [expandedActivities, scUserContext.user, notifyFeedChanges, selectedActivities]);
 
   /**
    * Handle follow obj
@@ -653,9 +653,9 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
     (type) => {
       setSelectedActivities(type);
       setComments([]);
-      notifyFeedChanges({activitiesExpanded: expandedActivities, activitiesExpandedType: type});
+      notifyFeedChanges({activitiesExpanded: expandedActivities, activitiesExpandedType: type, cacheStrategy: CacheStrategies.CACHE_FIRST});
     },
-    [obj]
+    [obj, expandedActivities]
   );
 
   /**
@@ -709,7 +709,11 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
           updateObject(newObj);
           LRUCache.deleteKeysWithPrefix(SCCache.getCommentObjectsCachePrefixKeys(obj.id, obj.type));
           onReply && onReply(data);
-          notifyFeedChanges({activitiesExpanded: expandedActivities, activitiesExpandedType: SCFeedObjectActivitiesType.RECENT_COMMENTS});
+          notifyFeedChanges({
+            activitiesExpanded: expandedActivities,
+            activitiesExpandedType: SCFeedObjectActivitiesType.RECENT_COMMENTS,
+            cacheStrategy: CacheStrategies.CACHE_FIRST
+          });
         })
         .catch((error) => {
           Logger.error(SCOPE_SC_UI, error);

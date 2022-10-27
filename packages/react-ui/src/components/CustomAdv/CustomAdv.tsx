@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import {styled} from '@mui/material/styles';
 import {Box} from '@mui/material';
 import {useIsComponentMountedRef, useSCFetchCustomAdv} from '@selfcommunity/react-core';
@@ -108,6 +108,7 @@ export default function CustomAdv(inProps: CustomAdvProps): JSX.Element {
 
   // REFS
   const isMountedRef = useIsComponentMountedRef();
+  const estimatedHeight = useRef(0);
 
   // ADV
   const {scCustomAdv} = useSCFetchCustomAdv({id: advId, position, categoriesId});
@@ -117,7 +118,7 @@ export default function CustomAdv(inProps: CustomAdvProps): JSX.Element {
    */
   useDeepCompareEffectNoCheck(() => {
     if (scCustomAdv) {
-      onStateChange && onStateChange({advId: scCustomAdv.id});
+      onStateChange && onStateChange({advId: scCustomAdv.id, prefixedHeight: estimatedHeight.current});
     }
     onHeightChange && onHeightChange();
   }, [scCustomAdv]);
@@ -128,8 +129,12 @@ export default function CustomAdv(inProps: CustomAdvProps): JSX.Element {
    * element when it changes and call onHeightChange
    */
   const {ref} = useResizeObserver<HTMLDivElement>({
+    round: (n) => {
+      return n;
+    },
     onResize: ({width, height}) => {
       if (isMountedRef.current) {
+        estimatedHeight.current = height;
         onStateChange && onStateChange({advId: scCustomAdv.id, prefixedHeight: height});
       }
     }
