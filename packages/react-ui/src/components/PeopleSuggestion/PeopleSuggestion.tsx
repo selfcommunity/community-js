@@ -100,7 +100,7 @@ export default function PeopleSuggestion(inProps: PeopleSuggestionProps): JSX.El
     props: inProps,
     name: PREFIX
   });
-  const {autoHide, className, UserProps = {}, onHeightChange, ...rest} = props;
+  const {autoHide, className, UserProps = {}, onHeightChange, onStateChange, ...rest} = props;
 
   // REFS
   const isMountedRef = useIsComponentMountedRef();

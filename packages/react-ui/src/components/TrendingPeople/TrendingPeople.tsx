@@ -110,7 +110,7 @@ export default function TrendingPeople(inProps: TrendingPeopleProps): JSX.Elemen
     props: inProps,
     name: PREFIX
   });
-  const {categoryId, autoHide, className, UserProps = {}, ...rest} = props;
+  const {categoryId, autoHide, className, UserProps = {}, onHeightChange, onStateChange, ...rest} = props;
 
   // REFS
   const isMountedRef = useIsComponentMountedRef();

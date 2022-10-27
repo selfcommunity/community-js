@@ -75,7 +75,7 @@ export default function Platform(inProps: PlatformProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {autoHide, className, ...rest} = props;
+  const {autoHide, className, onHeightChange, onStateChange, ...rest} = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);

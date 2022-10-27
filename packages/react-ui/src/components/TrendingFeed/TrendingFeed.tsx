@@ -18,7 +18,7 @@ import Skeleton from './Skeleton';
 import {useThemeProps} from '@mui/system';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import {useIsComponentMountedRef} from '@selfcommunity/react-core';
-import { VirtualScrollerItemProps } from "../../types/virtualScroller";
+import {VirtualScrollerItemProps} from '../../types/virtualScroller';
 
 const PREFIX = 'SCTrendingFeed';
 
@@ -103,7 +103,7 @@ export default function TrendingFeed(inProps: TrendingFeedProps): JSX.Element {
     name: PREFIX
   });
 
-  const {className = null, categoryId = null, template = null, autoHide = null, ...rest} = props;
+  const {className = null, categoryId = null, template = null, autoHide = null, onHeightChange, onStateChange, ...rest} = props;
 
   // REFS
   const isMountedRef = useIsComponentMountedRef();

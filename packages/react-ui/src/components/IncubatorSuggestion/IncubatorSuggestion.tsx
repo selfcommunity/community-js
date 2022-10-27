@@ -18,7 +18,7 @@ import {useThemeProps} from '@mui/system';
 import Widget from '../Widget';
 import IncubatorDetail from '../IncubatorDetail';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
-import { VirtualScrollerItemProps } from "../../types/virtualScroller";
+import {VirtualScrollerItemProps} from '../../types/virtualScroller';
 
 const PREFIX = 'SCIncubatorSuggestion';
 
@@ -103,7 +103,7 @@ export default function IncubatorSuggestion(inProps: IncubatorSuggestionProps): 
     props: inProps,
     name: PREFIX
   });
-  const {autoHide = true, className, IncubatorProps = {}, ...rest} = props;
+  const {autoHide = true, className, IncubatorProps = {}, onHeightChange, onStateChange, ...rest} = props;
 
   // REFS
   const isMountedRef = useIsComponentMountedRef();
