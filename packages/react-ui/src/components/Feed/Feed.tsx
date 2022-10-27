@@ -632,39 +632,19 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
   // EFFECTS
   useEffect(() => {
     /**
-     * Initialize AUTHENTICATED feed
-     * Init feed data when the user is authenticated and there is no data prefetched
+     * Initialize feed
+     * Init feed data when the user is authenticated/un-authenticated
      * Use setTimeout helper to delay the request and cancel the effect
      * (ex. in strict-mode) if need it
      */
     let _t;
-    if (requireAuthentication && authUserId !== null && !prefetchedData) {
-      _t = setTimeout(() => {
-        _initFeedData();
-      });
+    if ((requireAuthentication && authUserId !== null && !prefetchedData) || (!requireAuthentication && !prefetchedData)) {
+      _t = setTimeout(_initFeedData);
     }
     return () => {
       _t && clearTimeout(_t);
     };
   }, [requireAuthentication, authUserId, prefetchedData]);
-
-  useEffect(() => {
-    /**
-     * Initialize UN-AUTHENTICATED feed
-     * Init feed if there is no data prefetched
-     * Use setTimeout helper to delay the request and cancel the effect
-     * (ex. in strict-mode) if need it
-     */
-    let _t;
-    if (!requireAuthentication && !prefetchedData) {
-      _t = setTimeout(() => {
-        _initFeedData();
-      });
-    }
-    return () => {
-      _t && clearTimeout(_t);
-    };
-  }, [requireAuthentication, prefetchedData]);
 
   /**
    * If widgets changed, refresh the feed (it must recalculate the correct positions of the objects)
