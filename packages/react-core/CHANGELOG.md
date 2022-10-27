@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.9-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.9-alpha.7...@selfcommunity/react-core@0.3.9-alpha.8) (2022-10-27)
+
+
+### Bug Fixes
+
+* helpers ([e097938](https://github.com/selfcommunity/community-js/commit/e097938c95732bc2509f0ce0b71b641b3bf9c7d8))
+
+
+
+
+
 ## [0.3.9-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.9-alpha.6...@selfcommunity/react-core@0.3.9-alpha.7) (2022-10-27)
 
 
