@@ -55,9 +55,6 @@ const withProvider = (Story, context) => {
    */
   let session;
   if (['OAuth', 'JWT'].includes(context.globals.session)) {
-    if (!authToken) {
-      return null;
-    }
     session = {
       type: context.globals.session,
       clientId: context.globals.clientId,
