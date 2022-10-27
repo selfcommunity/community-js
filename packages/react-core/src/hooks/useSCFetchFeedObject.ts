@@ -35,7 +35,7 @@ export default function useSCFetchFeedObject({
   const __feedObjectCacheKey = getFeedObjectCacheKey(__feedObjectId, __feedObjectType);
 
   const [obj, setObj] = useState<SCFeedDiscussionType | SCFeedPostType | SCFeedStatusType>(
-    cacheStrategy !== CacheStrategies.NETWORK_ONLY ? LRUCache.get(__feedObjectCacheKey, feedObject) : null
+    cacheStrategy !== CacheStrategies.NETWORK_ONLY ? LRUCache.get(__feedObjectCacheKey, feedObject) : feedObject
   );
   const [error, setError] = useState<string>(null);
 
