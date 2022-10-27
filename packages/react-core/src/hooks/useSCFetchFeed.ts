@@ -295,9 +295,9 @@ export default function useSCFetchFeed(props: {
                 previous: res.previous,
               },
             });
-            onPreviousPage && onPreviousPage(currentPage, currentOffset, count, res.results);
+            onPreviousPage && onPreviousPage(currentPage, currentOffset, count, res);
             if (cacheStrategy === CacheStrategies.STALE_WHILE_REVALIDATE) {
-              revalidate(state.next, false);
+              revalidate(state.next, true);
             }
           }
         })
@@ -360,6 +360,27 @@ export default function useSCFetchFeed(props: {
   }
 
   /**
+   * Update component state
+   * Re-sync next/previous url
+   * When an element is added in the head of a rendered list, fix the next/previous url
+   * to avoid importing posts already in the list
+   * @param payload
+   */
+  function updateState(payload) {
+    dispatch({type: feedDataActionTypes.UPDATE_DATA, payload: payload});
+  }
+
+  /**
+   * Reset state component
+   */
+  function reset() {
+    dispatch({
+      type: feedDataActionTypes.RESET,
+      payload: stateInitializer({id, endpoint, queryParams, next: getInitialNextUrl(), cacheStrategy, prefetchedData}),
+    });
+  }
+
+  /**
    * Reload fetch data
    */
   useEffect(() => {
@@ -371,23 +392,9 @@ export default function useSCFetchFeed(props: {
     }
   }, [state.reload]);
 
-  /**
-   * Update component state
-   * Re-sync next/previous url
-   * When an element is added in the head of a rendered list, fix the next/previous url
-   * to avoid importing posts already in the list
-   * @param payload
-   */
-  function updateState(payload) {
-    dispatch({type: feedDataActionTypes.UPDATE_DATA, payload: payload});
-  }
-
   useEffect(() => {
     return () => {
-      dispatch({
-        type: feedDataActionTypes.RESET,
-        payload: stateInitializer({id, endpoint, queryParams, next: getInitialNextUrl(), cacheStrategy, prefetchedData}),
-      });
+      reset();
     };
   }, []);
 
@@ -397,5 +404,6 @@ export default function useSCFetchFeed(props: {
     getNextPage,
     getPreviousPage,
     reload,
+    reset,
   };
 }

@@ -296,7 +296,7 @@ export default class InfiniteScroll extends Component<Props, State> {
       this.props.next && this.props.next();
     }
 
-    // call the `next` function in the props to trigger the next data fetch
+    // call the `next` function in the props to trigger the previous data fetch
     if (atTop && this.props.hasMorePrevious) {
       this.actionTriggered = true;
       this.setState({showLoaderPrevious: true});
