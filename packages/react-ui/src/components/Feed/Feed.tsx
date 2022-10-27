@@ -335,6 +335,9 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     return endpointQueryParams.offset || 0;
   }, [endpointQueryParams, prefetchedData]);
 
+  // REF
+  const isMountRef = useIsComponentMountedRef();
+
   /**
    * Compute preferences
    */
@@ -585,6 +588,30 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
   };
 
   /**
+   * Infinite scroll getNextPage
+   */
+  const getNextPage = useMemo(
+    () => () => {
+      if (isMountRef.current && !feedDataObject.isLoadingNext) {
+        feedDataObject.getNextPage();
+      }
+    },
+    [isMountRef.current, feedDataObject.isLoadingNext]
+  );
+
+  /**
+   * Infinite scroll getNextPage
+   */
+  const getPreviousPage = useMemo(
+    () => () => {
+      if (isMountRef.current && feedDataObject.isLoadingPrevious) {
+        feedDataObject.getPreviousPage();
+      }
+    },
+    [isMountRef.current, feedDataObject.isLoadingPrevious]
+  );
+
+  /**
    * Bootstrap initial data
    */
   const _initFeedData = useMemo(
@@ -605,8 +632,10 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
   // EFFECTS
   useEffect(() => {
     /**
-     * Initialize authenticated feed
+     * Initialize AUTHENTICATED feed
      * Init feed data when the user is authenticated and there is no data prefetched
+     * Use setTimeout helper to delay the request and cancel the effect
+     * (ex. in strict-mode) if need it
      */
     let _t;
     if (requireAuthentication && authUserId !== null && !prefetchedData) {
@@ -621,8 +650,10 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
 
   useEffect(() => {
     /**
-     * Initialize un-authenticated feed
+     * Initialize UN-AUTHENTICATED feed
      * Init feed if there is no data prefetched
+     * Use setTimeout helper to delay the request and cancel the effect
+     * (ex. in strict-mode) if need it
      */
     let _t;
     if (!requireAuthentication && !prefetchedData) {
@@ -779,8 +810,8 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
           <InfiniteScroll
             className={classes.left}
             dataLength={feedDataLeft.length}
-            next={feedDataObject.getNextPage}
-            previous={feedDataObject.getPreviousPage}
+            next={getNextPage}
+            previous={getPreviousPage}
             hasMoreNext={Boolean(feedDataObject.next)}
             hasMorePrevious={Boolean(feedDataObject.previous)}
             header={PreviousPageLink}
