@@ -592,11 +592,11 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
    */
   const getNextPage = useMemo(
     () => () => {
-      if (isMountRef.current && !feedDataObject.isLoadingNext) {
+      if (isMountRef.current && feedDataObject.componentLoaded && !feedDataObject.isLoadingNext) {
         feedDataObject.getNextPage();
       }
     },
-    [isMountRef.current, feedDataObject.isLoadingNext]
+    [isMountRef.current, feedDataObject.componentLoaded, feedDataObject.isLoadingNext]
   );
 
   /**
@@ -604,11 +604,11 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
    */
   const getPreviousPage = useMemo(
     () => () => {
-      if (isMountRef.current && feedDataObject.isLoadingPrevious) {
+      if (isMountRef.current && feedDataObject.componentLoaded && feedDataObject.isLoadingPrevious) {
         feedDataObject.getPreviousPage();
       }
     },
-    [isMountRef.current, feedDataObject.isLoadingPrevious]
+    [isMountRef.current, feedDataObject.componentLoaded, feedDataObject.isLoadingPrevious]
   );
 
   /**

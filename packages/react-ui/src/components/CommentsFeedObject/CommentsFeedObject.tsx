@@ -387,7 +387,7 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
         commentsObject.getNextPage();
       }
     }
-  }, [objId, commentObjId, errorCommentObj]);
+  }, [objId, commentObjId]);
 
   /**
    * Render comments
