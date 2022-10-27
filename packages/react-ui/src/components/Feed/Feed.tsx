@@ -736,7 +736,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     () =>
       ({state: savedState, onHeightChange, onStateChange, children: item}) => {
         const onItemHeightChange = () => {
-          if (virtualScrollerMountState.current && virtualScrollerState.current && virtualScrollerState.current.firstShownItemIndex !== undefined) {
+          if (savedState && savedState.firstShownItemIndex !== undefined) {
             onHeightChange();
           }
         };
