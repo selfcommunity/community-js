@@ -39,6 +39,7 @@ export const feedDataActionTypes = {
   DATA_RELOAD: '_data_reload',
   DATA_RELOADED: '_data_reloaded',
   UPDATE_DATA: '_data_update',
+  RESET: '_reset',
 };
 
 /**
@@ -58,36 +59,32 @@ function feedDataReducer(state, action) {
       _state = {...state, isLoadingNext: false, isLoadingPrevious: true};
       break;
     case feedDataActionTypes.DATA_NEXT_LOADED:
-      if (_state.isLoadingNext) {
-        _state = {
-          ...state,
-          currentPage: action.payload.currentPage,
-          currentOffset: action.payload.currentOffset,
-          results: [...state.results, ...action.payload.results],
-          isLoadingNext: false,
-          componentLoaded: true,
-          next: action.payload.next,
-          nextPage: action.payload.nextPage,
-          ...(action.payload.previous ? {previous: action.payload.previous} : {}),
-          ...(action.payload.count ? {count: action.payload.count} : {}),
-          ...(action.payload.previousPage ? {previousPage: action.payload.previousPage} : {}),
-        };
-      }
+      _state = {
+        ...state,
+        currentPage: action.payload.currentPage,
+        currentOffset: action.payload.currentOffset,
+        results: [...state.results, ...action.payload.results],
+        isLoadingNext: false,
+        componentLoaded: true,
+        next: action.payload.next,
+        nextPage: action.payload.nextPage,
+        ...(action.payload.previous ? {previous: action.payload.previous} : {}),
+        ...(action.payload.count ? {count: action.payload.count} : {}),
+        ...(action.payload.previousPage ? {previousPage: action.payload.previousPage} : {}),
+      };
       break;
     case feedDataActionTypes.DATA_PREVIOUS_LOADED:
-      if (_state.isLoadingPrevious) {
-        _state = {
-          ...state,
-          currentPage: action.payload.currentPage,
-          currentOffset: action.payload.currentOffset,
-          initialOffset: action.payload.initialOffset,
-          results: [...action.payload.results, ...state.results],
-          isLoadingPrevious: false,
-          componentLoaded: true,
-          previous: action.payload.previous,
-          previousPage: action.payload.previousPage,
-        };
-      }
+      _state = {
+        ...state,
+        currentPage: action.payload.currentPage,
+        currentOffset: action.payload.currentOffset,
+        initialOffset: action.payload.initialOffset,
+        results: [...action.payload.results, ...state.results],
+        isLoadingPrevious: false,
+        componentLoaded: true,
+        previous: action.payload.previous,
+        previousPage: action.payload.previousPage,
+      };
       break;
     case feedDataActionTypes.DATA_REVALIDATE:
       _state = {
@@ -120,6 +117,11 @@ function feedDataReducer(state, action) {
     case feedDataActionTypes.UPDATE_DATA:
       _state = {
         ...state,
+        ...action.payload,
+      };
+      break;
+    case feedDataActionTypes.RESET:
+      _state = {
         ...action.payload,
       };
       break;
@@ -379,6 +381,15 @@ export default function useSCFetchFeed(props: {
   function updateState(payload) {
     dispatch({type: feedDataActionTypes.UPDATE_DATA, payload: payload});
   }
+
+  useEffect(() => {
+    return () => {
+      dispatch({
+        type: feedDataActionTypes.RESET,
+        payload: stateInitializer({id, endpoint, queryParams, next: getInitialNextUrl(), cacheStrategy, prefetchedData}),
+      });
+    };
+  }, []);
 
   return {
     ...state,
