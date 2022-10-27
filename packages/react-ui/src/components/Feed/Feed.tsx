@@ -608,9 +608,15 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
      * Initialize authenticated feed
      * Init feed data when the user is authenticated and there is no data prefetched
      */
+    let _t;
     if (requireAuthentication && authUserId !== null && !prefetchedData) {
-      _initFeedData();
+      _t = setTimeout(() => {
+        _initFeedData();
+      });
     }
+    return () => {
+      _t && clearTimeout(_t);
+    };
   }, [requireAuthentication, authUserId, prefetchedData]);
 
   useEffect(() => {
@@ -618,9 +624,15 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
      * Initialize un-authenticated feed
      * Init feed if there is no data prefetched
      */
+    let _t;
     if (!requireAuthentication && !prefetchedData) {
-      _initFeedData();
+      _t = setTimeout(() => {
+        _initFeedData();
+      });
     }
+    return () => {
+      _t && clearTimeout(_t);
+    };
   }, [requireAuthentication, prefetchedData]);
 
   /**
