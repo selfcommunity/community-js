@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.5...@selfcommunity/react-ui@0.7.0-alpha.6) (2022-10-26)
+
+
+### Bug Fixes
+
+* fixed mobile private messages ([5aa99dd](https://github.com/selfcommunity/community-js/commit/5aa99dd490c594d0c73ebe009ef88b7e93257eaa))
+
+
+
+
+
 # [0.7.0-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.4...@selfcommunity/react-ui@0.7.0-alpha.5) (2022-10-25)
 
 
