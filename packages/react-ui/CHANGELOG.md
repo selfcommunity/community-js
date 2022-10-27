@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.6...@selfcommunity/react-ui@0.7.0-alpha.7) (2022-10-27)
+
+
+### Bug Fixes
+
+* feed ([b47524c](https://github.com/selfcommunity/community-js/commit/b47524c5b604692f580d0008eb20fa92f7d370b5))
+* feed ([c49f68f](https://github.com/selfcommunity/community-js/commit/c49f68f5785c77c9c1ff96bfe17407e99598e38a))
+* virtual scroller ([762c437](https://github.com/selfcommunity/community-js/commit/762c437cfac67703a3e8fa52c5529f3f6736792f))
+
+
+
+
+
 # [0.7.0-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.5...@selfcommunity/react-ui@0.7.0-alpha.6) (2022-10-26)
 
 
