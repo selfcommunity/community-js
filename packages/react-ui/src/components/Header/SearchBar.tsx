@@ -1,9 +1,11 @@
-import {alpha, Box, IconButton, TextField, styled, useTheme, useMediaQuery} from '@mui/material';
+import {Box, IconButton, TextField, styled, useTheme, useMediaQuery, Autocomplete} from '@mui/material';
 import Icon from '@mui/material/Icon';
-import React, { FormEvent, useState } from 'react';
+import React, {FormEvent, useEffect, useState} from 'react';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
-import {defineMessages, useIntl} from 'react-intl';
+import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
+import {SuggestionType} from '@selfcommunity/types';
+import {SuggestionService} from '@selfcommunity/api-services';
 
 const messages = defineMessages({
   placeholder: {
@@ -16,6 +18,7 @@ const PREFIX = 'SCHeaderSearchBar';
 
 const classes = {
   root: `${PREFIX}-root`,
+  autocomplete: `${PREFIX}-autocomplete`,
   searchInput: `${PREFIX}-search-input`
 };
 
@@ -23,35 +26,23 @@ const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root'
 })(({theme}) => ({
-  position: 'relative',
-  display: 'flex',
-  justifyContent: 'right',
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  '&:hover': {
-    backgroundColor: alpha(theme.palette.common.white, 0.25)
-  },
-  marginLeft: 0,
   width: '100%',
-  maxWidth: '25ch',
-  [theme.breakpoints.up('sm')]: {
-    marginLeft: theme.spacing(1),
-    width: 'auto'
-  },
+  maxWidth: '20ch',
+  marginLeft: theme.spacing(1),
   [`& .${classes.searchInput}`]: {
-    color: 'inherit',
-    '& .MuiInputBase-input': {
-      padding: theme.spacing(1, 1, 1, 0),
-      paddingLeft: theme.spacing(1),
-      transition: theme.transitions.create('width'),
-      width: '100%',
-      [theme.breakpoints.up('sm')]: {
-        width: '12ch',
-        '&:focus': {
-          width: '25ch'
-        }
-      }
-    }
+    paddingRight: '2px !important'
+  }
+}));
+
+const MobileRoot = styled(Box, {
+  slot: 'Root',
+  overridesResolver: (props, styles) => styles.root
+})(({theme}) => ({
+  position: 'absolute',
+  marginLeft: theme.spacing(4),
+  width: '85%',
+  [`& .${classes.searchInput}`]: {
+    paddingRight: '2px !important'
   }
 }));
 
@@ -65,6 +56,11 @@ export interface HeaderSearchBarProps {
    * onSearch callback
    */
   onSearch?: (query) => void;
+
+  /**
+   * onClick callback
+   */
+  onClick?: (clicked) => void;
   /**
    * Other props
    */
@@ -77,11 +73,14 @@ export default function HeaderSearchBar(inProps: HeaderSearchBarProps) {
     props: inProps,
     name: PREFIX
   });
-  const {className, onSearch, ...rest} = props;
+  const {className, onSearch, onClick, ...rest} = props;
   const [query, setQuery] = useState('');
   const [clicked, setClicked] = useState(false);
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up('sm'));
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [results, setResults] = useState([]);
+  const [open, setOpen] = useState(false);
 
   // INTL
   const intl = useIntl();
@@ -94,32 +93,103 @@ export default function HeaderSearchBar(inProps: HeaderSearchBarProps) {
     event.preventDefault();
     event.stopPropagation();
     onSearch && onSearch(query);
+    handleClear();
     return false;
   };
 
+  const handleClear = () => {
+    setOpen(false);
+    setQuery('');
+    setResults([]);
+  };
+
+  const handleClick = () => {
+    setClicked(true);
+    onClick(clicked);
+  };
+
+  function fetchResults() {
+    setIsLoading(true);
+    SuggestionService.getSearchSuggestion(query)
+      .then((data) => {
+        setIsLoading(false);
+        const r = data.results;
+        setResults(r);
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        console.log(error);
+      });
+  }
+  useEffect(() => {
+    if (query) {
+      fetchResults();
+    }
+  }, [query]);
+
+  const renderAutocomplete = () => {
+    return (
+      <form onSubmit={handleSearch}>
+        <Autocomplete
+          className={classes.autocomplete}
+          id={`${PREFIX}-autocomplete`}
+          size="small"
+          inputValue={query}
+          loading={isLoading}
+          open={query !== ''}
+          loadingText={<FormattedMessage id="ui.header.searchBar.loading" defaultMessage="ui.header.searchBar.loading" />}
+          noOptionsText={<FormattedMessage id="ui.header.searchBar.noOptions" defaultMessage="ui.header.searchBar.noOptions" />}
+          options={results.map((o) => (o.type === SuggestionType.USER ? o[SuggestionType.USER] : o[SuggestionType.CATEGORY]))}
+          getOptionLabel={(option: any) => option['username'] ?? option['name']}
+          onChange={handleSearch}
+          onInputChange={(e, value) => {
+            if (value.length === 0) {
+              if (open) setOpen(false);
+            } else {
+              if (!open) setOpen(true);
+            }
+          }}
+          onClose={() => setOpen(false)}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              onChange={handleChange}
+              placeholder={`${intl.formatMessage(messages.placeholder)}`}
+              InputProps={{
+                ...params.InputProps,
+                className: classes.searchInput,
+                startAdornment: <>{!query && isDesktop && <Icon color="primary">search</Icon>}</>,
+                endAdornment: (
+                  <>
+                    {query && (
+                      <IconButton onClick={handleClear}>
+                        <Icon color="primary">close</Icon>
+                      </IconButton>
+                    )}
+                  </>
+                )
+              }}
+            />
+          )}
+        />
+      </form>
+    );
+  };
+
   return (
-    <Root className={classNames(classes.root, className)}>
-      {clicked || isDesktop ? (
-        <form onSubmit={handleSearch}>
-          <TextField
-            placeholder={`${intl.formatMessage(messages.placeholder)}`}
-            className={classes.searchInput}
-            value={query}
-            onChange={handleChange}
-            InputProps={{
-              endAdornment: (
-                <IconButton onClick={handleSearch}>
-                  <Icon>search</Icon>
-                </IconButton>
-              )
-            }}
-          />
-        </form>
+    <>
+      {isDesktop ? (
+        <Root className={classNames(classes.root, className)}>{renderAutocomplete()}</Root>
       ) : (
-        <IconButton onClick={() => setClicked(!clicked)}>
-          <Icon>search</Icon>
-        </IconButton>
+        <>
+          {!clicked && (
+            <IconButton onClick={handleClick}>
+              <Icon>search</Icon>
+            </IconButton>
+          )}
+        </>
       )}
-    </Root>
+      {clicked && !isDesktop && <MobileRoot>{renderAutocomplete()}</MobileRoot>}
+    </>
   );
 }
