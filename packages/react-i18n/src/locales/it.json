@@ -509,6 +509,8 @@
   "ui.header.menuItem.communityTour": "Community tour",
   "ui.header.menuItem.logout": "Esci",
   "ui.header.searchBar.search": "Cerca",
+  "ui.header.searchBar.loading": "Cercando...",
+  "ui.header.searchBar.noOptions": "Nessun risultato...",
 
   "ui.footer.legalPages.cookies": "Cookies",
   "ui.footer.legalPages.tec": "Termini e Condizioni",
