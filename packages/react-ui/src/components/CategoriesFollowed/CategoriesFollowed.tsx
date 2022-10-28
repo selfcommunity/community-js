@@ -82,7 +82,7 @@ export default function CategoriesFollowed(inProps: CategoriesListProps): JSX.El
     props: inProps,
     name: PREFIX
   });
-  const {userId, autoHide, className, CategoryProps = {}, onHeightChange} = props;
+  const {userId, autoHide, className, CategoryProps = {}, onHeightChange, onStateChange} = props;
 
   // REFS
   const isMountedRef = useIsComponentMountedRef();

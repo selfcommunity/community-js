@@ -90,7 +90,7 @@ export default function CategoriesSuggestion(inProps: CategoriesListProps): JSX.
     name: PREFIX
   });
 
-  const {autoHide, className, CategoryProps = {}, onHeightChange, ...rest} = props;
+  const {autoHide, className, CategoryProps = {}, onHeightChange, onStateChange, ...rest} = props;
 
   // STATE
   const [categories, setCategories] = useState<any[]>([]);

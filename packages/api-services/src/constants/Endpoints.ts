@@ -573,7 +573,10 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/suggestion/user/'),
     method: 'GET'
   },
-
+  SearchSuggestion: {
+    url: urlReplacer('/api/v2/suggestion/'),
+    method: 'GET'
+  },
   /**
    * Follow
    */

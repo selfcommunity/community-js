@@ -21,4 +21,9 @@ describe('Suggestion Service Test', () => {
       expect(data.results).toBeInstanceOf(Array);
     });
   });
+  test('Get Search Suggestion', () => {
+    return SuggestionService.getSearchSuggestion('ni').then((data) => {
+      expect(data.results).toBeInstanceOf(Array);
+    });
+  });
 });

@@ -1,14 +1,16 @@
 import {apiRequest} from '../../utils/apiRequest';
 import Endpoints from '../../constants/Endpoints';
 import {SCPaginatedResponse} from '../../types';
-import {SCCategoryType, SCFeedObjectType, SCIncubatorType, SCUserType} from '@selfcommunity/types';
+import {SCCategoryType, SCFeedObjectType, SCIncubatorType, SCSuggestionType, SCUserType} from '@selfcommunity/types';
 import {AxiosRequestConfig} from 'axios';
+import {urlParams} from '../../utils/url';
 
 export interface SuggestionApiClientInterface {
   getCategorySuggestion(config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCategoryType>>;
   getIncubatorSuggestion(config?: AxiosRequestConfig): Promise<SCIncubatorType[]>;
   getPollSuggestion(config?: AxiosRequestConfig): Promise<SCFeedObjectType[]>;
   getUserSuggestion(config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>>;
+  getSearchSuggestion(search: string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCSuggestionType>>;
 }
 /**
  * Contains all the endpoints needed to manage suggestions.
@@ -45,6 +47,15 @@ export class SuggestionApiClient {
    */
   static getUserSuggestion(config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
     return apiRequest({...config, url: Endpoints.UserSuggestion.url({}), method: Endpoints.UserSuggestion.method});
+  }
+  /**
+   * This endpoint retrieves a list of users suggested to the current user.
+   * @param search
+   * @param config
+   */
+  static getSearchSuggestion(search: string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCSuggestionType>> {
+    const p = urlParams({search: search});
+    return apiRequest({...config, url: `${Endpoints.SearchSuggestion.url({})}?${p.toString()}`, method: Endpoints.UserSuggestion.method});
   }
 }
 
@@ -91,5 +102,8 @@ export default class SuggestionService {
 
   static async getUserSuggestion(config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
     return SuggestionApiClient.getUserSuggestion(config);
+  }
+  static async getSearchSuggestion(search: string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCSuggestionType>> {
+    return SuggestionApiClient.getSearchSuggestion(search, config);
   }
 }

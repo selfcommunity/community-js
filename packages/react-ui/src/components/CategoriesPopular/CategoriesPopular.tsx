@@ -67,7 +67,7 @@ export default function CategoriesPopular(inProps: CategoriesListProps): JSX.Ele
     name: PREFIX
   });
 
-  const {autoHide = true, className, CategoryProps = {}, ...rest} = props;
+  const {autoHide = true, className, CategoryProps = {}, onHeightChange, onStateChange, ...rest} = props;
 
   // REFS
   const isMountedRef = useIsComponentMountedRef();

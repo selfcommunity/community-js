@@ -109,6 +109,7 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
   const [value, setValue] = useState(path);
   const t = typeof document !== 'undefined' ? document.title.split('|')[0] : '';
   const [title, setTitle] = useState(() => setInitialTitle(t, path));
+  const [clicked, setClicked] = useState(false);
 
   // PREFERENCES
   const scPreferences = useSCPreferences();
@@ -165,7 +166,7 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
       <AppBar position="fixed" color={'default'}>
         <Toolbar className={classes.topToolbar}>
           <Grid container direction="row" justifyContent="flex-start">
-            {!showNavigation && (
+            {!showNavigation && !clicked && (
               <Link to={scUserContext.user && url ? url.home : '/'}>
                 <img src={logo} alt={'logo'} style={{height: '30px'}} />
               </Link>
@@ -179,7 +180,7 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
               </Typography>
             )}
           </Grid>
-          <SearchBar {...searchBarProps} />
+          <SearchBar {...searchBarProps} onClick={() => setClicked(!clicked)} />
           {scUserContext.user && url && url.create && (
             <IconButton component={Link} to={url.create} size="large" aria-label="New Contribute" color="inherit">
               <Icon>create</Icon>
