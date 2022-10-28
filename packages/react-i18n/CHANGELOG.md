@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.1-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.4.1-alpha.1...@selfcommunity/react-i18n@0.4.1-alpha.2) (2022-10-28)
+
+
+### Performance Improvements
+
+* added header search bar translations ([3c5f062](https://github.com/selfcommunity/community-js/commit/3c5f062ca4dc566aec5bd70773acffa8183dda11))
+
+
+
+
+
 ## [0.4.1-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.4.1-alpha.0...@selfcommunity/react-i18n@0.4.1-alpha.1) (2022-10-14)
 
 

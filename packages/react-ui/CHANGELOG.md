@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.9...@selfcommunity/react-ui@0.7.0-alpha.10) (2022-10-28)
+
+
+### Bug Fixes
+
+* feed ([2fc2ca7](https://github.com/selfcommunity/community-js/commit/2fc2ca7f45db96fa244fe3daf1d57e038c0ed8c8))
+* feed ([4654190](https://github.com/selfcommunity/community-js/commit/4654190b7488d54904955f7bf8b11d4325c6ee41))
+* feed ([77a3af0](https://github.com/selfcommunity/community-js/commit/77a3af055cd8100792db0f6eb8a0510cd2320d53))
+* feed ([9fbc244](https://github.com/selfcommunity/community-js/commit/9fbc244bff3f71fd11b578d53c2f1ff37f7f7836))
+
+
+### Performance Improvements
+
+* added header search autocomplete ([d3b0441](https://github.com/selfcommunity/community-js/commit/d3b0441139afae0b582f55b80d5387b6db00d337))
+
+
+
+
+
 # [0.7.0-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.8...@selfcommunity/react-ui@0.7.0-alpha.9) (2022-10-27)
 
 

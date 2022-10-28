@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.6-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.6-alpha.3...@selfcommunity/api-services@0.3.6-alpha.4) (2022-10-28)
+
+
+### Performance Improvements
+
+* added search suggestion endpoint/service/test ([0ed5da4](https://github.com/selfcommunity/community-js/commit/0ed5da494d9ef73d1e2310a1d272eb4a3120a8b7))
+
+
+
+
+
 ## [0.3.6-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.6-alpha.2...@selfcommunity/api-services@0.3.6-alpha.3) (2022-10-27)
 
 
