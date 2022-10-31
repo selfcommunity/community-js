@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.10...@selfcommunity/react-ui@0.7.0-alpha.11) (2022-10-31)
+
+
+### Bug Fixes
+
+* fixed searchbar autocomplete ([d61cbce](https://github.com/selfcommunity/community-js/commit/d61cbce5e3772df66f0929574d527c74c87b5ff8))
+
+
+
+
+
 # [0.7.0-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.9...@selfcommunity/react-ui@0.7.0-alpha.10) (2022-10-28)
 
 
