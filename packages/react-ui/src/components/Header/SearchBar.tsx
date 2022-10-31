@@ -85,11 +85,16 @@ export default function HeaderSearchBar(inProps: HeaderSearchBarProps) {
   // INTL
   const intl = useIntl();
 
-  const handleSearch = (event: FormEvent) => {
+  const handleChange = (event, value) => {
+    setQuery(value);
+    setIsSearching(true);
+  };
+
+  const handleSearch = (event: FormEvent, value) => {
     setIsSearching(false);
     event.preventDefault();
     event.stopPropagation();
-    onSearch && onSearch(query);
+    onSearch && onSearch(value);
   };
 
   const handleClick = () => {
@@ -118,40 +123,34 @@ export default function HeaderSearchBar(inProps: HeaderSearchBarProps) {
 
   const renderAutocomplete = () => {
     return (
-      <form onSubmit={handleSearch}>
-        <Autocomplete
-          autoComplete={true}
-          className={classes.autocomplete}
-          id={`${PREFIX}-autocomplete`}
-          size="small"
-          inputValue={query}
-          loading={isLoading}
-          forcePopupIcon={false}
-          clearOnEscape={true}
-          clearOnBlur={true}
-          open={query !== '' && isSearching}
-          loadingText={<FormattedMessage id="ui.header.searchBar.loading" defaultMessage="ui.header.searchBar.loading" />}
-          noOptionsText={<FormattedMessage id="ui.header.searchBar.noOptions" defaultMessage="ui.header.searchBar.noOptions" />}
-          options={results.map((o) => (o.type === SuggestionType.USER ? o[SuggestionType.USER] : o[SuggestionType.CATEGORY]))}
-          getOptionLabel={(option: any) => option['username'] ?? option['name']}
-          onChange={handleSearch}
-          onInputChange={(e, value) => {
-            setQuery(value);
-            setIsSearching(true);
-          }}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              placeholder={`${intl.formatMessage(messages.placeholder)}`}
-              InputProps={{
-                ...params.InputProps,
-                className: classes.searchInput,
-                startAdornment: <>{!query && isDesktop && <Icon color="primary">search</Icon>}</>
-              }}
-            />
-          )}
-        />
-      </form>
+      <Autocomplete
+        autoComplete={true}
+        className={classes.autocomplete}
+        id={`${PREFIX}-autocomplete`}
+        size="small"
+        inputValue={query}
+        loading={isLoading}
+        forcePopupIcon={false}
+        clearOnEscape={true}
+        clearOnBlur={true}
+        open={query !== '' && isSearching}
+        loadingText={<FormattedMessage id="ui.header.searchBar.loading" defaultMessage="ui.header.searchBar.loading" />}
+        noOptionsText={<FormattedMessage id="ui.header.searchBar.noOptions" defaultMessage="ui.header.searchBar.noOptions" />}
+        options={results.map((o) => (o.type === SuggestionType.USER ? o[SuggestionType.USER]['username'] : o[SuggestionType.CATEGORY]['name']))}
+        onChange={handleSearch}
+        onInputChange={handleChange}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            placeholder={`${intl.formatMessage(messages.placeholder)}`}
+            InputProps={{
+              ...params.InputProps,
+              className: classes.searchInput,
+              startAdornment: <>{!query && isDesktop && <Icon color="primary">search</Icon>}</>
+            }}
+          />
+        )}
+      />
     );
   };
 
