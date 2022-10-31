@@ -171,7 +171,7 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
                 <img src={logo} alt={'logo'} style={{height: '30px'}} />
               </Link>
             )}
-            {scUserContext.user && showNavigation && onNavigationBack && (
+            {scUserContext.user && showNavigation && onNavigationBack && !clicked && (
               <Typography component="div">
                 <IconButton onClick={onNavigationBack} size="large" aria-label="back" color="inherit">
                   <Icon>arrow_back</Icon>
