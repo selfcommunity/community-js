@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.15](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.14...@selfcommunity/react-ui@0.7.0-alpha.15) (2022-11-02)
+
+
+### Bug Fixes
+
+* fixed searchbar ([bf72ea5](https://github.com/selfcommunity/community-js/commit/bf72ea5936c05658a4510fae8f77a30392681bef))
+
+
+
+
+
 # [0.7.0-alpha.14](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.13...@selfcommunity/react-ui@0.7.0-alpha.14) (2022-11-02)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
