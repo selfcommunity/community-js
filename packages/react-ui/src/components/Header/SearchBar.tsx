@@ -94,7 +94,7 @@ export default function HeaderSearchBar(inProps: HeaderSearchBarProps) {
     setIsSearching(false);
     event.preventDefault();
     event.stopPropagation();
-    onSearch && onSearch(value);
+    onSearch && onSearch(value ?? query);
   };
 
   const handleClick = () => {
