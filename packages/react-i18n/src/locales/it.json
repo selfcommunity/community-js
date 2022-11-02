@@ -512,9 +512,10 @@
   "ui.header.searchBar.loading": "Cercando...",
   "ui.header.searchBar.noOptions": "Nessun risultato...",
 
-  "ui.footer.legalPages.cookies": "Cookies",
+
   "ui.footer.legalPages.tec": "Termini e Condizioni",
   "ui.footer.legalPages.privacy": "Privacy",
+  "ui.footer.customPages.cookie": "Cookies",
   "ui.footer.customPages.explore": "Esplora",
   "ui.footer.customPages.rules": "Regolamento",
 
