@@ -90,11 +90,18 @@ export default function HeaderSearchBar(inProps: HeaderSearchBarProps) {
     setIsSearching(true);
   };
 
-  const handleSearch = (event: FormEvent, value?: string) => {
+  const handleSearch = (event: FormEvent, value: string) => {
     setIsSearching(false);
     event.preventDefault();
     event.stopPropagation();
-    onSearch && onSearch(value ?? query);
+    onSearch && onSearch(value);
+  };
+
+  const handleFormSearch = (event: FormEvent) => {
+    setIsSearching(false);
+    event.preventDefault();
+    event.stopPropagation();
+    onSearch && onSearch(query);
   };
 
   const handleClick = () => {
@@ -123,7 +130,7 @@ export default function HeaderSearchBar(inProps: HeaderSearchBarProps) {
 
   const renderAutocomplete = () => {
     return (
-      <form onSubmit={handleSearch}>
+      <form onSubmit={handleFormSearch}>
         <Autocomplete
           autoComplete={true}
           className={classes.autocomplete}
