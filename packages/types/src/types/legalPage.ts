@@ -1,5 +1,4 @@
 export enum SCLegalPagePoliciesType {
-  COOKIES = 'cookies',
   TERMS_AND_CONDITIONS = 'tec',
   PRIVACY = 'privacy'
 }
