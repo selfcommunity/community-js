@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.1-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.4.1-alpha.2...@selfcommunity/react-i18n@0.4.1-alpha.3) (2022-11-02)
+
+
+### Bug Fixes
+
+* fixed footer link trans ([e858277](https://github.com/selfcommunity/community-js/commit/e858277dca299b3cb795c6ba4c2256eb2f79ea88))
+
+
+
+
+
 ## [0.4.1-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.4.1-alpha.1...@selfcommunity/react-i18n@0.4.1-alpha.2) (2022-10-28)
 
 
