@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.2.4-alpha.26...@selfcommunity/react-templates@0.3.0-alpha.0) (2022-11-03)
+
+
+### Features
+
+* added users list template ([191e910](https://github.com/selfcommunity/community-js/commit/191e9104d8e9031b03cf8ef9b47b25fe8e095bed))
+
+
+
+
+
 ## [0.2.4-alpha.26](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.2.4-alpha.25...@selfcommunity/react-templates@0.2.4-alpha.26) (2022-11-02)
 
 **Note:** Version bump only for package @selfcommunity/react-templates

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.17](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.16...@selfcommunity/react-ui@0.7.0-alpha.17) (2022-11-03)
+
+
+### Performance Improvements
+
+* added prop to feed component to hide adv banners ([71e2945](https://github.com/selfcommunity/community-js/commit/71e294521d85f26f1c65a263a9056ca5e286596f))
+
+
+
+
+
 # [0.7.0-alpha.16](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.15...@selfcommunity/react-ui@0.7.0-alpha.16) (2022-11-02)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
