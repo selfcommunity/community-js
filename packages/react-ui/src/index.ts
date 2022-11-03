@@ -71,6 +71,7 @@ import {
 } from './types';
 import Widget from './components/Widget';
 import ConfirmDialog from './shared/ConfirmDialog/ConfirmDialog';
+import BaseItem from './shared/BaseItem';
 import MediaChunkUploader, {MediaChunkUploaderProps} from './shared/MediaChunkUploader';
 import {Document, EditMediaProps, Image, Link, Share} from './shared/Media';
 import UrlTextField from './shared/UrlTextField';
@@ -307,5 +308,6 @@ export {
   SCHeaderMenuUrlsType,
   Header,
   HeaderProps,
-  HeaderSkeleton
+  HeaderSkeleton,
+  BaseItem
 };

@@ -551,5 +551,9 @@
   "templates.userProfile.send.pm": "Send private message",
   "templates.privateMessages.button.new" : "New Message",
   "templates.privateMessages.delete" : "Select thread to delete",
-  "templates.feedObjectDetail.contributionNotFound": "Contribution not found or you do not have permission to view it."
+  "templates.feedObjectDetail.contributionNotFound": "Contribution not found or you do not have permission to view it.",
+  "templates.usersList.followers" : "Followers",
+  "templates.usersList.followings" : "Users Followed",
+  "templates.usersList.noMoreResults": "No more results",
+  "templates.usersList.card.secondary": "{total, plural, =0 {# people} one {# person} other {# people}}"
 }

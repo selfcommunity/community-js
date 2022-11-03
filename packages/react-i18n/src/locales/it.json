@@ -551,5 +551,9 @@
   "templates.userProfile.send.pm": "Invia messaggio privato",
   "templates.privateMessages.button.new" : "Nuovo Messaggio",
   "templates.privateMessages.delete" : "Seleziona la conversazione da eliminare",
-  "templates.feedObjectDetail.contributionNotFound": "Il contributo non è stato trovato oppure non hai i permessi per vederlo."
+  "templates.feedObjectDetail.contributionNotFound": "Il contributo non è stato trovato oppure non hai i permessi per vederlo.",
+  "templates.usersList.followers" : "I miei follower",
+  "templates.usersList.followings" : "Utenti che seguo",
+  "templates.usersList.noMoreResults": "Nient'altro da mostrare",
+  "templates.usersList.card.secondary": "{total, plural, =0 {# persone} one {# persona} other {# persone}}"
 }
