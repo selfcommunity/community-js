@@ -252,6 +252,12 @@ export interface FeedProps {
    * @default {}
    */
   PaginationLinkProps?: Record<string, any>;
+
+  /**
+   * Show/hide adv banners
+   * @default false
+   */
+  hideAdvs?: boolean;
 }
 
 const PREFERENCES = [SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED, SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED];
@@ -317,7 +323,8 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     disablePaginationLinks = false,
     hidePaginationLinks = true,
     paginationLinksPageQueryParam = DEFAULT_PAGINATION_QUERY_PARAM_NAME,
-    PaginationLinkProps = {}
+    PaginationLinkProps = {},
+    hideAdvs = false
   } = props;
 
   // CONTEXT
@@ -441,7 +448,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
       position,
       id: `left_${position}`
     };
-    if (oneColLayout) {
+    if (oneColLayout && !hideAdvs) {
       const remainingWidgets = position === total - 1 ? _widgets.filter((w) => w.position >= total) : [];
       return [
         ..._widgets.filter((w) => w.position === position),
@@ -458,6 +465,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     return [
       ..._widgets.filter((w) => w.position === position && w.column === 'left'),
       ...(advEnabled &&
+      !hideAdvs &&
       enabledCustomAdvPositions.includes(SCCustomAdvPosition.POSITION_FEED) &&
       position > 0 &&
       position % DEFAULT_WIDGETS_NUMBER === 0
@@ -780,7 +788,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
 
   return (
     <Root container spacing={2} id={id} className={classNames(classes.root, className)}>
-      {advEnabled && enabledCustomAdvPositions.includes(SCCustomAdvPosition.POSITION_BELOW_TOPBAR) ? (
+      {advEnabled && !hideAdvs && enabledCustomAdvPositions.includes(SCCustomAdvPosition.POSITION_BELOW_TOPBAR) ? (
         <Grid item xs={12}>
           <CustomAdv position={SCCustomAdvPosition.POSITION_BELOW_TOPBAR} {...CustomAdvProps} />
         </Grid>
@@ -804,7 +812,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
                 <Widget className={classes.end}>
                   <CardContent>{endMessage}</CardContent>
                 </Widget>
-                {advEnabled && enabledCustomAdvPositions.includes(SCCustomAdvPosition.POSITION_ABOVE_FOOTER_BAR) ? (
+                {advEnabled && !hideAdvs && enabledCustomAdvPositions.includes(SCCustomAdvPosition.POSITION_ABOVE_FOOTER_BAR) ? (
                   <CustomAdv position={SCCustomAdvPosition.POSITION_ABOVE_FOOTER_BAR} {...CustomAdvProps} />
                 ) : null}
                 {FooterComponent ? <FooterComponent {...FooterComponentProps} /> : null}
@@ -837,7 +845,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
           </InfiniteScroll>
         </div>
       </Grid>
-      {feedDataRight.length > 0 && (
+      {feedDataRight.length > 0 && !hideAdvs && (
         <Hidden smDown>
           <Grid item xs={12} md={5}>
             <Sticky enabled className={classes.right} {...FeedSidebarProps}>
