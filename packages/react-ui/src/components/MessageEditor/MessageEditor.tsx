@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {AppBar, Box, Button, IconButton, InputAdornment, Popover, Stack, TextField, useTheme, useMediaQuery} from '@mui/material';
 import Icon from '@mui/material/Icon';
@@ -7,6 +7,8 @@ import MessageMediaUploader from './MessageMediaUploader/index';
 import {FormattedMessage} from 'react-intl';
 import {useThemeProps} from '@mui/system';
 import BaseDrawer from '../../shared/BaseDrawer';
+import Editor from '../Editor';
+import {SCMessageFileType} from '@selfcommunity/types';
 // import deps only if csr
 let Picker;
 typeof window !== 'undefined' &&
@@ -68,23 +70,13 @@ export interface MessageEditorProps {
    */
   className?: string;
   /**
+   * Callback to send the message
+   */
+  send?: (message?: string, file?: SCMessageFileType) => void;
+  /**
    * Any other properties
    */
   [p: string]: any;
-  /**
-   * Callback to send the message
-   */
-  send?: () => void;
-  /**
-   * Callback to pass message item
-   * @param message
-   */
-  getMessage?: (message) => void;
-  /**
-   * Callback to pass message file item
-   * @param file
-   */
-  getMessageFile?: (file) => void;
 }
 
 /**
@@ -118,7 +110,7 @@ export default function MessageEditor(inProps: MessageEditorProps): JSX.Element 
     props: inProps,
     name: PREFIX
   });
-  const {autoHide = null, className = null, send = null, isSending = null, getMessage = null, getMessageFile = null, ...rest} = props;
+  const {autoHide = null, className = null, send = null, onThreadChangeId, ...rest} = props;
 
   // STATE
   const theme = useTheme();
@@ -128,6 +120,7 @@ export default function MessageEditor(inProps: MessageEditorProps): JSX.Element 
   const [show, setShow] = useState(false);
   const [emojiAnchorEl, setEmojiAnchorEl] = React.useState<null | HTMLElement>(null);
   const [openMediaSection, setOpenMediaSection] = useState(false);
+  const [threadId, setThreadId] = useState<number>(null);
 
   // REF
   const ref = useRef(null);
@@ -141,35 +134,39 @@ export default function MessageEditor(inProps: MessageEditorProps): JSX.Element 
 
   const handleMessageFile = (f) => {
     setMessageFile(f);
-    getMessageFile(f);
   };
 
   const handleMessageSend = () => {
-    send();
+    send(message, messageFile);
     setMessage('');
     setOpenMediaSection(false);
     setShow(false);
   };
+
   const handleMessageInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setMessage(event.target.value);
-    if (event.target.value === '') {
-      setShow(false);
-    } else {
-      setShow(true);
-    }
-    getMessage(event.target.value);
+    setShow(event.target.value !== '');
   };
 
   const handleToggleEmoji = (event: React.MouseEvent<HTMLElement>) => {
     setEmojiAnchorEl(emojiAnchorEl ? null : event.currentTarget);
   };
+
   const handleEmojiClick = (event, emojiObject) => {
     const cursor = ref.current.selectionStart;
     const text = message.slice(0, cursor) + emojiObject.emoji;
     setMessage(text);
-    getMessage(text);
     setShow(true);
   };
+
+  useEffect(() => {
+    setThreadId(onThreadChangeId);
+    if (threadId !== onThreadChangeId) {
+      setMessage('');
+      setMessageFile(null);
+      setOpenMediaSection(false);
+    }
+  }, [onThreadChangeId]);
 
   if (autoHide) {
     return null;
@@ -208,7 +205,7 @@ export default function MessageEditor(inProps: MessageEditorProps): JSX.Element 
             endAdornment: (
               <>
                 <InputAdornment position="end">
-                  <IconButton onClick={() => setOpenMediaSection(true)}>
+                  <IconButton disabled={message !== ''} onClick={() => setOpenMediaSection(true)}>
                     <Icon>attach_file</Icon>
                   </IconButton>
                 </InputAdornment>
@@ -243,7 +240,7 @@ export default function MessageEditor(inProps: MessageEditorProps): JSX.Element 
                       )}
                     </div>
                   </Stack>
-                  <IconButton disabled={isSending} onClick={handleMessageSend}>
+                  <IconButton disabled={messageFile !== null} onClick={handleMessageSend}>
                     {show && <Icon>send</Icon>}
                   </IconButton>
                 </InputAdornment>

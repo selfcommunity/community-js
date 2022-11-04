@@ -623,7 +623,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
     if (scUserContext.user) {
       const _e = !expandedActivities;
       setExpandedActivities(_e);
-      notifyFeedChanges({activitiesExpanded: _e, activitiesExpandedType: selectedActivities, cacheStrategy: CacheStrategies.CACHE_FIRST});
+      notifyFeedChanges({activitiesExpanded: _e});
     } else {
       scContext.settings.handleAnonymousAction();
     }
@@ -653,7 +653,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
     (type) => {
       setSelectedActivities(type);
       setComments([]);
-      notifyFeedChanges({activitiesExpanded: expandedActivities, activitiesExpandedType: type, cacheStrategy: CacheStrategies.CACHE_FIRST});
+      notifyFeedChanges({activitiesExpandedType: type});
     },
     [obj, expandedActivities]
   );
@@ -711,8 +711,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
           onReply && onReply(data);
           notifyFeedChanges({
             activitiesExpanded: expandedActivities,
-            activitiesExpandedType: SCFeedObjectActivitiesType.RECENT_COMMENTS,
-            cacheStrategy: CacheStrategies.CACHE_FIRST
+            activitiesExpandedType: SCFeedObjectActivitiesType.RECENT_COMMENTS
           });
         })
         .catch((error) => {
