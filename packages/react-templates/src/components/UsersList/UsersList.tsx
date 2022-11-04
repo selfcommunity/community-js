@@ -1,23 +1,13 @@
 import React, {useContext} from 'react';
 import {styled} from '@mui/material/styles';
-import {Avatar, CardHeader, Typography} from '@mui/material';
-import {Feed, User, UserSkeleton, Widget} from '@selfcommunity/react-ui';
-import {
-  Link,
-  SCPreferences,
-  SCPreferencesContext,
-  SCPreferencesContextType,
-  SCRoutes,
-  SCRoutingContextType,
-  useSCFetchUser,
-  useSCRouting
-} from '@selfcommunity/react-core';
+import {Feed, User, UserSkeleton} from '@selfcommunity/react-ui';
+import {SCPreferences, SCPreferencesContext, SCPreferencesContextType, useSCFetchUser} from '@selfcommunity/react-core';
 import {SCUserType} from '@selfcommunity/types';
 import UsersListSkeleton from './Skeleton';
 import classNames from 'classnames';
-import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
+import {FormattedMessage} from 'react-intl';
 import {useThemeProps} from '@mui/system';
-import {Endpoints, EndpointType} from '@selfcommunity/api-services';
+import {EndpointType} from '@selfcommunity/api-services';
 
 const PREFIX = 'SCUsersListTemplate';
 
@@ -31,18 +21,10 @@ const Root = styled(Feed, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   marginTop: theme.spacing(2),
-  //marginLeft: theme.spacing(-4),
   '& .SCFeed-left .SCUser-root': {
     marginBottom: theme.spacing(2)
   }
 }));
-
-const messages = defineMessages({
-  usersNumber: {
-    id: 'templates.usersList.card.secondary',
-    defaultMessage: 'templates.usersList.card.secondary'
-  }
-});
 
 export interface UsersListProps {
   /**
