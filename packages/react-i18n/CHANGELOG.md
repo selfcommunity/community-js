@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.1-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.4.1-alpha.4...@selfcommunity/react-i18n@0.4.1-alpha.5) (2022-11-04)
+
+
+### Performance Improvements
+
+* cleaned unused imports/deleted unused translations ([c5e7e2d](https://github.com/selfcommunity/community-js/commit/c5e7e2d1b6f4a2dba499b61b3265c85ed964bb68))
+
+
+
+
+
 ## [0.4.1-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.4.1-alpha.3...@selfcommunity/react-i18n@0.4.1-alpha.4) (2022-11-03)
 
 **Note:** Version bump only for package @selfcommunity/react-i18n
