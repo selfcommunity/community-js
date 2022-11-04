@@ -20,7 +20,6 @@ export default {
       ...Endpoints.UserFollowers,
       url: () => Endpoints.UserFollowers.url({id: 7})
     },
-    showFollowers: true
   }
 } as ComponentMeta<typeof UsersListTemplate>;
 

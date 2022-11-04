@@ -46,11 +46,10 @@ const messages = defineMessages({
 
 export interface UsersListProps {
   /**
-   * Id of the user profile
-   * @default 'user'
+   * Id of the component
+   * @default 'users_list'
    */
   id?: string;
-
   /**
    * Overrides or extends the styles applied to the component.
    * @default null
@@ -65,22 +64,16 @@ export interface UsersListProps {
    * @default null
    */
   user?: SCUserType;
-
   /**
    * Id of the user for filter the feed
    * @default null
    */
   userId?: number | string;
   /**
-   * Props to show followers
-   * @default false
-   */
-  showFollowers?: boolean;
-  /**
    * Props to show component header
-   * @default false
+   * @default null
    */
-  showHeader?: boolean;
+  header?: JSX.Element;
 }
 
 /**
@@ -101,7 +94,6 @@ export interface UsersListProps {
  |Rule Name|Global class|Description|
  |---|---|---|
  |root|.SCUsersListTemplate-root|Styles applied to the root element.|
- |actions|.SCUsersListTemplate-actions|Styles applied to the actions section.|
  *
  * @param inProps
  */
@@ -111,49 +103,14 @@ export default function UsersList(inProps: UsersListProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {id = 'users_list', className, user, userId, showFollowers, showHeader = true, endpoint} = props;
-
+  const {id = 'users_list', className, user, userId, header = null, endpoint} = props;
+  // HOOKS
+  const {scUser} = useSCFetchUser({id: userId, user});
   // CONTEXT
   const scPreferencesContext: SCPreferencesContextType = useContext(SCPreferencesContext);
   const followEnabled =
     SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED in scPreferencesContext.preferences &&
     scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED].value;
-  const scRoutingContext: SCRoutingContextType = useSCRouting();
-
-  // INTL
-  const intl = useIntl();
-  // Hooks
-  const {scUser} = useSCFetchUser({id: userId, user});
-
-  function renderHeader() {
-    if (followEnabled) {
-      return (
-        <CardHeader
-          avatar={
-            <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, scUser)}>
-              <Avatar alt={scUser.username} src={scUser.avatar} sx={{width: '80px', height: '80px'}} />
-            </Link>
-          }
-          title={
-            showFollowers ? (
-              <Typography variant="h6">
-                <FormattedMessage defaultMessage="templates.usersList.followers" id="templates.usersList.followers" />
-              </Typography>
-            ) : (
-              <Typography variant="h6">
-                <FormattedMessage defaultMessage="templates.usersList.followings" id="templates.usersList.followings" />
-              </Typography>
-            )
-          }
-          subheader={
-            <Typography variant="subtitle1">
-              {`${intl.formatMessage(messages.usersNumber, showFollowers ? {total: scUser.followers_counter} : {total: scUser.followings_counter})}`}
-            </Typography>
-          }
-        />
-      );
-    }
-  }
 
   if (scUser === null || !endpoint) {
     return <UsersListSkeleton />;
@@ -170,7 +127,7 @@ export default function UsersList(inProps: UsersListProps): JSX.Element {
       ItemProps={{showFollowers: followEnabled}}
       ItemSkeleton={UserSkeleton}
       ItemSkeletonProps={{sx: {marginBottom: 2}}}
-      HeaderComponent={showHeader && followEnabled ? renderHeader() : null}
+      HeaderComponent={header}
       FooterComponent={null}
       hideAdvs={true}
       endMessage={<FormattedMessage id="templates.usersList.noMoreResults" defaultMessage="templates.usersList.noMoreResults" />}
