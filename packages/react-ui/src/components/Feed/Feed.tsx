@@ -748,6 +748,9 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
             onHeightChange();
           }
         };
+        const onItemStateChange = (state) => {
+          onStateChange({...savedState, ...state});
+        };
         return (
           <VirtualScrollChild onHeightChange={onItemHeightChange}>
             {item.type === 'widget' ? (
@@ -756,7 +759,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
                 {...item.componentProps}
                 {...(item.publishEvents && {publicationChannel: id})}
                 {...savedState}
-                onStateChange={onStateChange}
+                onStateChange={onItemStateChange}
                 onHeightChange={onItemHeightChange}
               />
             ) : (
@@ -766,7 +769,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
                 {...ItemProps}
                 sx={{width: '100%'}}
                 {...savedState}
-                onStateChange={onStateChange}
+                onStateChange={onItemStateChange}
                 onHeightChange={onItemHeightChange}
               />
             )}
