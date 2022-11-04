@@ -40,8 +40,14 @@ const MobileRoot = styled(Box, {
 })(({theme}) => ({
   position: 'absolute',
   marginLeft: '40px',
-  width: '85%',
+  width: '100%',
+  [theme.breakpoints.down('sm')]: {
+    width: '85%'
+  },
   [`& .${classes.searchInput}`]: {
+    [theme.breakpoints.down('sm')]: {
+      width: '95%'
+    },
     paddingRight: '2px !important'
   }
 }));
