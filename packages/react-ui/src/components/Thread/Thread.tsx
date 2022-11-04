@@ -3,7 +3,7 @@ import {styled} from '@mui/material/styles';
 import Widget from '../Widget';
 import {http, Endpoints, HttpResponse, PrivateMessageService, UserService} from '@selfcommunity/api-services';
 import {SCPreferences, SCPreferencesContext, SCPreferencesContextType, SCUserContext, SCUserContextType, UserUtils} from '@selfcommunity/react-core';
-import {SCNotificationTopicType, SCNotificationTypologyType, SCPrivateMessageType} from '@selfcommunity/types';
+import {SCMessageFileType, SCNotificationTopicType, SCNotificationTypologyType, SCPrivateMessageType} from '@selfcommunity/types';
 import Message from '../Message';
 import _ from 'lodash';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
@@ -250,9 +250,6 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
   const [isHovered, setIsHovered] = useState({});
   const [openDeleteMessageDialog, setOpenDeleteMessageDialog] = useState<boolean>(false);
   const [deletingMsg, setDeletingMsg] = useState(null);
-  const [message, setMessage] = useState<string>('');
-  const [messageFile, setMessageFile] = useState(null);
-  const [sending, setSending] = useState<boolean>(false);
   const [followers, setFollowers] = useState<any[]>([]);
   const [recipients, setRecipients] = useState([]);
   const [isFollowed, setIsFollowed] = useState<boolean>(false);
@@ -284,14 +281,6 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
     return formatMessages(messageObjs);
   }, [messageObjs]);
 
-  const handleMessage = (m) => {
-    setMessage(m);
-  };
-
-  const handleMessageFile = (f) => {
-    setMessageFile(f);
-  };
-
   const handleMouseEnter = (index) => {
     setIsHovered((prevState) => {
       return {...prevState, [index]: true};
@@ -302,11 +291,6 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
     setIsHovered((prevState) => {
       return {...prevState, [index]: false};
     });
-  };
-
-  const clearState = () => {
-    setMessage('');
-    setMessageFile(null);
   };
 
   const handleClose = () => {
@@ -355,7 +339,7 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
       });
   }
 
-  function sendMessage() {
+  function sendMessage(m, f) {
     if (UserUtils.isBlocked(scUserContext.user)) {
       enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
         variant: 'warning',
@@ -368,14 +352,12 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
           method: Endpoints.SendMessage.method,
           data: {
             recipients: openNewMessage ? ids : [typeof userObj === 'number' ? userObj : userObj.receiver.id],
-            message: message,
-            file_uuid: messageFile ?? null
+            message: m,
+            file_uuid: f && !m ? f : null
           }
         })
         .then((res) => {
-          clearState();
           setMessageObjs((prev) => [...prev, res.data]);
-          setSending(false);
           onMessageSent(res.data);
           if (openNewMessage || newMessageThread) {
             onNewMessageSent(res.data);
@@ -385,7 +367,6 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
           }
         })
         .catch((error) => {
-          setMessage('');
           console.log(error);
           let _snackBar = enqueueSnackbar(<FormattedMessage id="ui.common.error.messageError" defaultMessage="ui.common.error.messageError" />, {
             variant: 'error',
@@ -563,13 +544,7 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
             </React.Fragment>
           ))}
         </Box>
-        <MessageEditor
-          send={() => sendMessage()}
-          isSending={sending}
-          getMessage={handleMessage}
-          getMessageFile={handleMessageFile}
-          autoHide={!isFollowed}
-        />
+        <MessageEditor send={(m: string, f: SCMessageFileType) => sendMessage(m, f)} autoHide={!isFollowed} onThreadChangeId={userObj} />
       </>
     );
   }
@@ -621,13 +596,7 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
             </Box>
             <Box className={classes.newMessageEmptyBox} />
             <Box className={classes.newMessageEditor}>
-              <MessageEditor
-                send={() => sendMessage()}
-                isSending={sending}
-                getMessage={handleMessage}
-                getMessageFile={handleMessageFile}
-                autoHide={!followers}
-              />
+              <MessageEditor send={(m: string, f: SCMessageFileType) => sendMessage(m, f)} autoHide={!followers} />
             </Box>
           </Box>
         ) : (
