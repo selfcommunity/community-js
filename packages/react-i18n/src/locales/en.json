@@ -554,5 +554,6 @@
   "templates.feedObjectDetail.contributionNotFound": "Contribution not found or you do not have permission to view it.",
   "templates.usersList.followers" : "Followers",
   "templates.usersList.followings" : "Users Followed",
-  "templates.usersList.noMoreResults": "No more results"
+  "templates.usersList.noMoreResults": "No more results",
+  "templates.feedObjsList.noMoreResults": "No more results"
 }

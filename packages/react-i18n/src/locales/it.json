@@ -554,5 +554,6 @@
   "templates.feedObjectDetail.contributionNotFound": "Il contributo non è stato trovato oppure non hai i permessi per vederlo.",
   "templates.usersList.followers" : "I miei follower",
   "templates.usersList.followings" : "Utenti che seguo",
-  "templates.usersList.noMoreResults": "Nient'altro da mostrare"
+  "templates.usersList.noMoreResults": "Nient'altro da mostrare",
+  "templates.feedObjsList.noMoreResults": "Nient'altro da mostrare"
 }

@@ -62,6 +62,11 @@ export interface TrendingFeedProps extends VirtualScrollerItemProps {
    */
   autoHide?: boolean;
   /**
+   * Shows results in a page instead of in a dialog card
+   * @default null
+   */
+  pageUrl?: () => void;
+  /**
    * Any other properties
    */
   [p: string]: any;
@@ -103,7 +108,7 @@ export default function TrendingFeed(inProps: TrendingFeedProps): JSX.Element {
     name: PREFIX
   });
 
-  const {className = null, categoryId = null, template = null, autoHide = null, onHeightChange, onStateChange, ...rest} = props;
+  const {className = null, categoryId = null, template = null, autoHide = null, onHeightChange, onStateChange, pageUrl = null, ...rest} = props;
 
   // REFS
   const isMountedRef = useIsComponentMountedRef();
@@ -143,7 +148,9 @@ export default function TrendingFeed(inProps: TrendingFeedProps): JSX.Element {
         });
     }
   }
-
+  const handleDialogOpening = () => {
+    setOpenTrendingPostDialog(true);
+  };
   /**
    * On mount, fetches trending posts list
    */
@@ -176,7 +183,7 @@ export default function TrendingFeed(inProps: TrendingFeedProps): JSX.Element {
             ))}
           </List>
           {hasMore && (
-            <Button size="small" className={classes.showMore} onClick={() => setOpenTrendingPostDialog(true)}>
+            <Button size="small" className={classes.showMore} onClick={pageUrl ?? handleDialogOpening}>
               <FormattedMessage id="ui.trendingFeed.button.showMore" defaultMessage="ui.trendingFeed.button.showMore" />
             </Button>
           )}

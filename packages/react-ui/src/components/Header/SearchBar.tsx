@@ -1,4 +1,4 @@
-import {Box, IconButton, TextField, styled, useTheme, useMediaQuery, Autocomplete} from '@mui/material';
+import {Box, IconButton, TextField, styled, useTheme, useMediaQuery, Autocomplete, Avatar, Typography} from '@mui/material';
 import Icon from '@mui/material/Icon';
 import React, {FormEvent, useEffect, useState} from 'react';
 import classNames from 'classnames';
@@ -27,10 +27,18 @@ const Root = styled(Box, {
   slot: 'Root'
 })(({theme}) => ({
   width: '100%',
-  maxWidth: '20ch',
+  maxWidth: '25ch',
   marginLeft: theme.spacing(1),
   [`& .${classes.searchInput}`]: {
     paddingRight: '2px !important'
+  },
+  [`& .${classes.autocomplete}`]: {
+    [theme.breakpoints.up('sm')]: {
+      width: '18ch',
+      '& .Mui-focused': {
+        width: '25ch'
+      }
+    }
   }
 }));
 
@@ -150,9 +158,27 @@ export default function HeaderSearchBar(inProps: HeaderSearchBarProps) {
           open={query !== '' && isSearching}
           loadingText={<FormattedMessage id="ui.header.searchBar.loading" defaultMessage="ui.header.searchBar.loading" />}
           noOptionsText={<FormattedMessage id="ui.header.searchBar.noOptions" defaultMessage="ui.header.searchBar.noOptions" />}
-          options={results.map((o) => (o.type === SuggestionType.USER ? o[SuggestionType.USER]['username'] : o[SuggestionType.CATEGORY]['name']))}
+          options={results}
+          getOptionLabel={(option) =>
+            option.type === SuggestionType.USER ? option[SuggestionType.USER]['username'] : option[SuggestionType.CATEGORY]['name']
+          }
           onChange={handleSearch}
           onInputChange={handleChange}
+          renderOption={(props, option) => (
+            <Box component="li" {...props}>
+              {option.type === SuggestionType.USER ? (
+                <>
+                  <Avatar alt={option[SuggestionType.USER]['username']} src={option[SuggestionType.USER]['avatar']} />
+                  <Typography ml={1}>{option[SuggestionType.USER]['username']}</Typography>
+                </>
+              ) : (
+                <>
+                  <Avatar alt={option[SuggestionType.CATEGORY]['name']} src={option[SuggestionType.CATEGORY]['image_small']} variant="square" />
+                  <Typography ml={1}>{option[SuggestionType.CATEGORY]['name']}</Typography>
+                </>
+              )}
+            </Box>
+          )}
           renderInput={(params) => (
             <TextField
               {...params}
