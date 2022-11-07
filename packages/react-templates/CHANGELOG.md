@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.3...@selfcommunity/react-templates@0.3.0-alpha.4) (2022-11-07)
+
+
+### Performance Improvements
+
+* added  feedobjs list template ([700411b](https://github.com/selfcommunity/community-js/commit/700411b261473ff991080cf6fd1e95db11934108))
+* added prop to show trending feed as  a page ([113e859](https://github.com/selfcommunity/community-js/commit/113e859365504f1d14715f2c805008e41b4afb43))
+
+
+
+
+
 # [0.3.0-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.2...@selfcommunity/react-templates@0.3.0-alpha.3) (2022-11-04)
 
 **Note:** Version bump only for package @selfcommunity/react-templates

@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.20](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.19...@selfcommunity/react-ui@0.7.0-alpha.20) (2022-11-07)
+
+
+### Bug Fixes
+
+* fixed searchbar style ([c9c0a1d](https://github.com/selfcommunity/community-js/commit/c9c0a1d149ddb4e3ac667ed317a67b0dceea9e0c))
+
+
+### Performance Improvements
+
+* added images to search autocomplete results ([c401c7c](https://github.com/selfcommunity/community-js/commit/c401c7c805ffe969bb32b8271855f4460f7c9c92))
+* added prop to show trending feed as  a page ([113e859](https://github.com/selfcommunity/community-js/commit/113e859365504f1d14715f2c805008e41b4afb43))
+
+
+
+
+
 # [0.7.0-alpha.19](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.18...@selfcommunity/react-ui@0.7.0-alpha.19) (2022-11-04)
 
 
