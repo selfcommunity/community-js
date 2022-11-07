@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.19](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.18...@selfcommunity/react-ui@0.7.0-alpha.19) (2022-11-04)
+
+
+### Bug Fixes
+
+* feed ([10d6812](https://github.com/selfcommunity/community-js/commit/10d68128a835f8f833a523fc63d91ed581fa20f3))
+* fixed mobile searchbar width ([9966e18](https://github.com/selfcommunity/community-js/commit/9966e184b0d03e84298694802452bd4a710633a1))
+* private messages components bugfixing ([367a061](https://github.com/selfcommunity/community-js/commit/367a0610d02feb3cba7d98e459feeb8994d1125d))
+
+
+
+
+
 # [0.7.0-alpha.18](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.17...@selfcommunity/react-ui@0.7.0-alpha.18) (2022-11-04)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
