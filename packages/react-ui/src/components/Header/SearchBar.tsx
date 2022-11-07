@@ -27,10 +27,18 @@ const Root = styled(Box, {
   slot: 'Root'
 })(({theme}) => ({
   width: '100%',
-  maxWidth: '20ch',
+  maxWidth: '25ch',
   marginLeft: theme.spacing(1),
   [`& .${classes.searchInput}`]: {
     paddingRight: '2px !important'
+  },
+  [`& .${classes.autocomplete}`]: {
+    [theme.breakpoints.up('sm')]: {
+      width: '18ch',
+      '& .Mui-focused': {
+        width: '25ch'
+      }
+    }
   }
 }));
 
