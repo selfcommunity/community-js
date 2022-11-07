@@ -12,6 +12,7 @@ import {useThemeProps} from '@mui/system';
 import {SCUserProfileFields} from '../../types';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import Tags, {TagsComponentType} from '../../shared/Tags';
+import UserSocialAssociation from '../UserSocialAssociation';
 
 const messages = defineMessages({
   realName: {

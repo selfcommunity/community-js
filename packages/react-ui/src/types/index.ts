@@ -5,7 +5,7 @@ import {SCFeedObjectActivitiesType, SCFeedObjectTemplateType} from './feedObject
 import {SCNotificationObjectTemplateType} from './notification';
 import {SCBroadcastMessageTemplateType} from './broadcastMessage';
 import {SCHeaderMenuUrlsType} from './headerMenuUrls';
-import {SCUserProfileFields, SCUserProfileSettings} from './user';
+import {SCUserProfileFields, SCUserProfileSettings, SCUserSocialAssociations} from './user';
 
 export {
   SCFeedWidgetType,
@@ -18,5 +18,6 @@ export {
   SCBroadcastMessageTemplateType,
   SCHeaderMenuUrlsType,
   SCUserProfileFields,
-  SCUserProfileSettings
+  SCUserProfileSettings,
+  SCUserSocialAssociations
 };

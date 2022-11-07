@@ -69,6 +69,7 @@ import * as SCCache from './constants/Cache';
  * Custom Hooks
  */
 import useSCFetchUser from './hooks/useSCFetchUser';
+import useSCFetchUserProviders from './hooks/useSCFetchUserProviders';
 import useSCFetchFeedObject from './hooks/useSCFetchFeedObject';
 import useSCFetchCommentObject from './hooks/useSCFetchCommentObject';
 import useSCFetchCommentObjects from './hooks/useSCFetchCommentObjects';
@@ -158,6 +159,7 @@ export {
   UserUtils,
   Locale,
   useSCFetchUser,
+  useSCFetchUserProviders,
   useSCFetchFeedObject,
   useSCFetchCommentObject,
   useSCFetchCommentObjects,
