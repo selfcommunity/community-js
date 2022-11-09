@@ -53,7 +53,8 @@ const Root = styled(Box, {
   },
   [`& .${classes.searchBarContainer}`]: {
     flexGrow: 1,
-    maxWidth: '25ch'
+    maxWidth: '25ch',
+    marginRight: theme.spacing(1)
   },
   [`& .${classes.iconButtonsContainer}`]: {
     display: 'flex',
