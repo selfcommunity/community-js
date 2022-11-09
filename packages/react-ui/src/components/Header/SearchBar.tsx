@@ -4,7 +4,7 @@ import React, {FormEvent, useEffect, useState} from 'react';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {SuggestionType} from '@selfcommunity/types';
+import {SCSuggestionType, SuggestionType} from '@selfcommunity/types';
 import {SuggestionService} from '@selfcommunity/api-services';
 
 const messages = defineMessages({
@@ -104,11 +104,13 @@ export default function HeaderSearchBar(inProps: HeaderSearchBarProps) {
     setIsSearching(true);
   };
 
-  const handleSearch = (event: FormEvent, value: string) => {
+  const handleSearch = (event: FormEvent, value: SCSuggestionType) => {
     setIsSearching(false);
     event.preventDefault();
     event.stopPropagation();
-    onSearch && onSearch(value);
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
+    onSearch && onSearch(value[value.type].username ?? value[value.type].name);
   };
 
   const handleFormSearch = (event: FormEvent) => {
@@ -159,9 +161,7 @@ export default function HeaderSearchBar(inProps: HeaderSearchBarProps) {
           loadingText={<FormattedMessage id="ui.header.searchBar.loading" defaultMessage="ui.header.searchBar.loading" />}
           noOptionsText={<FormattedMessage id="ui.header.searchBar.noOptions" defaultMessage="ui.header.searchBar.noOptions" />}
           options={results}
-          getOptionLabel={(option) =>
-            option.type === SuggestionType.USER ? option[SuggestionType.USER]['username'] : option[SuggestionType.CATEGORY]['name']
-          }
+          getOptionLabel={(option) => option[option.type]['username'] ?? option[option.type]['name']}
           onChange={handleSearch}
           onInputChange={handleChange}
           renderOption={(props, option) => (
