@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.22](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.21...@selfcommunity/react-ui@0.7.0-alpha.22) (2022-11-09)
+
+
+### Bug Fixes
+
+* fixed searchbar container margin ([750d6a5](https://github.com/selfcommunity/community-js/commit/750d6a5beac9d73079099401f89c9d091fcfb1f1))
+
+
+
+
+
 # [0.7.0-alpha.21](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.20...@selfcommunity/react-ui@0.7.0-alpha.21) (2022-11-09)
 
 

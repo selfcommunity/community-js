@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.5...@selfcommunity/react-templates@0.3.0-alpha.6) (2022-11-09)
+
+
+### Performance Improvements
+
+* added widgets to feedobjs list template ([3f7905a](https://github.com/selfcommunity/community-js/commit/3f7905a2e2d39a8b290529eb70f614c9af272da8))
+
+
+
+
+
 # [0.3.0-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.4...@selfcommunity/react-templates@0.3.0-alpha.5) (2022-11-09)
 
 **Note:** Version bump only for package @selfcommunity/react-templates
