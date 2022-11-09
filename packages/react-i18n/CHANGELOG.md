@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.1-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.4.1-alpha.5...@selfcommunity/react-i18n@0.4.1-alpha.6) (2022-11-07)
+
+
+### Performance Improvements
+
+* added translations for  feedobjs list template ([5a3dba1](https://github.com/selfcommunity/community-js/commit/5a3dba1077f5f96621a3070173708b477c2e4308))
+
+
+
+
+
 ## [0.4.1-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.4.1-alpha.4...@selfcommunity/react-i18n@0.4.1-alpha.5) (2022-11-04)
 
 
