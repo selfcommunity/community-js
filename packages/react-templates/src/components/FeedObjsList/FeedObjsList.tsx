@@ -1,6 +1,14 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {styled} from '@mui/material/styles';
-import {Feed, FeedObjectSkeleton, SCFeedObjectTemplateType, FeedObject, FeedObjectProps} from '@selfcommunity/react-ui';
+import {
+  Feed,
+  FeedObjectSkeleton,
+  SCFeedObjectTemplateType,
+  FeedObject,
+  FeedObjectProps,
+  SCFeedWidgetType,
+  CategoriesSuggestion
+} from '@selfcommunity/react-ui';
 import {useSCFetchCategory} from '@selfcommunity/react-core';
 import {SCCategoryType} from '@selfcommunity/types';
 import FeedObjsListSkeleton from './Skeleton';
@@ -61,7 +69,22 @@ export interface FeedObjsListProps {
    * @default empty object
    */
   FeedObjectProps?: FeedObjectProps;
+  /**
+   * Widgets to be rendered into the feed
+   * @default [CategoriesSuggestion]
+   */
+  widgets?: SCFeedWidgetType[] | null;
 }
+// Widgets for feed
+const WIDGETS: SCFeedWidgetType[] = [
+  {
+    type: 'widget',
+    component: CategoriesSuggestion,
+    componentProps: {},
+    column: 'right',
+    position: 0
+  }
+];
 
 /**
  * > API documentation for the Community-JS Feed Objs List Template. Learn about the available props and the CSS API.
@@ -90,10 +113,21 @@ export default function FeedObjsList(inProps: FeedObjsListProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {id = 'feedObjs_list', className, category, categoryId, header = null, endpoint, FeedObjectProps = {}} = props;
+  const {id = 'feedObjs_list', className, category, categoryId, header = null, endpoint, FeedObjectProps = {}, widgets = WIDGETS} = props;
   // HOOKS
   const {scCategory} = useSCFetchCategory({id: categoryId, category});
 
+  // WIDGETS
+  const _widgets = useMemo(
+    () =>
+      widgets.map((w) => {
+        if (scCategory) {
+          return {...w, componentProps: {...w.componentProps, categoryId: scCategory.id}};
+        }
+        return w;
+      }),
+    [widgets, scCategory]
+  );
   if (scCategory === null || !endpoint) {
     return <FeedObjsListSkeleton />;
   }
@@ -103,6 +137,7 @@ export default function FeedObjsList(inProps: FeedObjsListProps): JSX.Element {
       id={id}
       className={classNames(classes.root, className)}
       endpoint={endpoint}
+      widgets={_widgets}
       ItemComponent={FeedObject}
       itemPropsGenerator={(scUser, item) => ({
         feedObject: item[item.type],
@@ -118,7 +153,6 @@ export default function FeedObjsList(inProps: FeedObjsListProps): JSX.Element {
       }}
       HeaderComponent={header}
       FooterComponent={null}
-      hideAdvs={true}
       endMessage={<FormattedMessage id="templates.feedObjsList.noMoreResults" defaultMessage="templates.feedObjsList.noMoreResults" />}
     />
   );
