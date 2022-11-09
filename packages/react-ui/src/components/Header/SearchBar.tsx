@@ -110,7 +110,7 @@ export default function HeaderSearchBar(inProps: HeaderSearchBarProps) {
     event.stopPropagation();
     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore
-    onSearch && onSearch(value[value.type].username ?? value[value.type].name);
+    onSearch && onSearch(!value ? null : value[value.type].username ?? value[value.type].name);
   };
 
   const handleFormSearch = (event: FormEvent) => {
