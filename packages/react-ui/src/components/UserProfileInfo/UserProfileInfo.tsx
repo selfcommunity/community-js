@@ -1,10 +1,10 @@
-import React, {useMemo} from 'react';
+import React, {useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Box, Grid, Typography} from '@mui/material';
-import {defineMessages, useIntl} from 'react-intl';
+import {Box, Link, Grid, Typography} from '@mui/material';
+import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {camelCase, Logger} from '@selfcommunity/utils';
 import {SCUserType} from '@selfcommunity/types';
-import {SCPreferences, SCPreferencesContextType, useSCFetchUser, useSCPreferences} from '@selfcommunity/react-core';
+import {SCPreferences, SCPreferencesContextType, SCUserContextType, useSCFetchUser, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
 import {DEFAULT_FIELDS} from '../../constants/UserProfile';
 import UserProfileInfoSkeleton from './Skeleton';
 import classNames from 'classnames';
@@ -12,6 +12,8 @@ import {useThemeProps} from '@mui/system';
 import {SCUserProfileFields} from '../../types';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import Tags, {TagsComponentType} from '../../shared/Tags';
+import PublicInfo from '../UserProfileEdit/Section/PublicInfo';
+import BaseDialog from '../../shared/BaseDialog';
 
 const messages = defineMessages({
   realName: {
@@ -49,6 +51,14 @@ const messages = defineMessages({
   tags: {
     id: 'ui.userProfileInfo.website',
     defaultMessage: 'ui.userProfileInfo.website'
+  },
+  fieldLink: {
+    id: 'ui.userProfileInfo.fieldLink',
+    defaultMessage: 'ui.userProfileInfo.fieldLink'
+  },
+  fieldLinkFemale: {
+    id: 'ui.userProfileInfo.fieldLink.female',
+    defaultMessage: 'ui.userProfileInfo.fieldLink.female'
   }
 });
 
@@ -56,7 +66,8 @@ const PREFIX = 'SCUserProfileInfo';
 
 const classes = {
   root: `${PREFIX}-root`,
-  field: `${PREFIX}-field`
+  field: `${PREFIX}-field`,
+  fieldLink: `${PREFIX}-field-link`
 };
 
 const Root = styled(Box, {
@@ -67,6 +78,9 @@ const Root = styled(Box, {
   margin: theme.spacing(2),
   [`& .${classes.field}`]: {
     fontWeight: 'bold'
+  },
+  [`& .${classes.fieldLink}`]: {
+    textDecoration: 'none'
   }
 }));
 
@@ -125,12 +139,31 @@ export default function UserProfileInfo(inProps: UserProfileInfoProps): JSX.Elem
     name: PREFIX
   });
   const {className = null, userId = null, user = null, fields = [...DEFAULT_FIELDS], ...rest} = props;
-
+  // CONTEXT
+  const scUserContext: SCUserContextType = useSCUser();
   // STATE
   const {scUser, setSCUser} = useSCFetchUser({id: userId, user});
+  const isMe = scUserContext.user && scUserContext.user.id === scUser?.id;
+  const [openDialog, setOpenDialog] = useState<boolean>(false);
+  const [editField, setEditField] = useState<string>('');
 
   // INTL
   const intl = useIntl();
+  const isIt = intl.locale === 'it';
+
+  const renderFieldTranslation = (field) => {
+    if (isIt) {
+      switch (field) {
+        case SCUserProfileFields.DATE_OF_BIRTH:
+        case SCUserProfileFields.DESCRIPTION:
+        case SCUserProfileFields.BIO:
+          return intl.formatMessage(messages.fieldLinkFemale, {field: intl.formatMessage(messages[camelCase(field)]).toLowerCase()});
+        default:
+          return intl.formatMessage(messages.fieldLink, {field: intl.formatMessage(messages[camelCase(field)]).toLowerCase()});
+      }
+    }
+    return intl.formatMessage(messages.fieldLink, {field: intl.formatMessage(messages[camelCase(field)]).toLowerCase()});
+  };
 
   // PREFERENCES
   const scPreferences: SCPreferencesContextType = useSCPreferences();
@@ -167,6 +200,23 @@ export default function UserProfileInfo(inProps: UserProfileInfoProps): JSX.Elem
     }
   };
 
+  const handleDialogOpening = (field) => {
+    setEditField(field);
+    setOpenDialog(true);
+  };
+
+  const renderFieldLink = (field) => {
+    return (
+      <Link component="button" variant="body2" onClick={() => handleDialogOpening(field)} className={classes.fieldLink}>
+        {renderFieldTranslation(field)}
+      </Link>
+    );
+  };
+
+  const handleFieldUpdate = (f) => {
+    setSCUser(Object.assign({}, scUser, f));
+  };
+
   if (!scUser || !metadataDefinitions) {
     return <UserProfileInfoSkeleton />;
   }
@@ -201,10 +251,31 @@ export default function UserProfileInfo(inProps: UserProfileInfoProps): JSX.Elem
                 </Typography>
               </Grid>
             );
+          } else if (isMe) {
+            return (
+              <Grid item xs={6} key={field}>
+                <Typography variant="body2">
+                  <span className={classes.field}>
+                    {metadataDefinitions[field] ? metadataDefinitions[field].label : intl.formatMessage(messages[camelCase(field)])}:
+                  </span>{' '}
+                  {renderFieldLink(field)}
+                </Typography>
+              </Grid>
+            );
           }
           return null;
         })}
       </Grid>
+      {openDialog && (
+        <BaseDialog
+          title={<FormattedMessage id="ui.userProfileInfo.dialog.title" defaultMessage="ui.userProfileInfo.dialog.title" />}
+          open={openDialog}
+          onClose={() => setOpenDialog(false)}
+          className={classNames(classes.root, className)}
+          {...rest}>
+          <PublicInfo editingField={editField} onEditSuccess={(f: {}) => handleFieldUpdate(f)} />
+        </BaseDialog>
+      )}
     </Root>
   );
 }
