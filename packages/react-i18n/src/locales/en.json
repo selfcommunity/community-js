@@ -263,6 +263,8 @@
   "ui.userProfileInfo.bio": "Bio",
   "ui.userProfileInfo.location": "Location",
   "ui.userProfileInfo.gender": "Gender",
+  "ui.userProfileInfo.fieldLink": "add your {field}",
+  "ui.userProfileInfo.dialog.title": "Public informations",
 
   "ui.userProfileEditPublicInfo.genderMale": "Male",
   "ui.userProfileEditPublicInfo.genderFemale": "Female",

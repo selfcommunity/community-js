@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useEffect, useMemo, useState} from 'react';
+import React, {ChangeEvent, useEffect, useMemo, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Box, CircularProgress, IconButton, InputAdornment, MenuItem, TextField} from '@mui/material';
 import Icon from '@mui/material/Icon';
@@ -48,7 +48,7 @@ const Root = styled(Box, {
   [`& .${classes.field}`]: {
     margin: theme.spacing(1, 0, 1, 0)
   },
-  ['& .${classes.field} .MuiSelect-icon']: {
+  [`& .${classes.field} .MuiSelect-icon`]: {
     right: theme.spacing(5)
   }
 }));
@@ -73,7 +73,7 @@ export interface PublicInfoProps {
   /**
    * Callback on edit data with success
    */
-  onEditSuccess?: () => void;
+  onEditSuccess?: (editedField?: {}) => void;
 
   /**
    * Any other properties
@@ -89,7 +89,7 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {id = null, className = null, fields = [...DEFAULT_FIELDS], onEditSuccess = null, ...rest} = props;
+  const {id = null, className = null, fields = [...DEFAULT_FIELDS], onEditSuccess = null, editingField, ...rest} = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
@@ -112,9 +112,10 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
   // STATE
   const [user, setUser] = useState<SCUserType>(scUserContext.user);
   const [error, setError] = useState<any>({});
-  const [editing, setEditing] = useState<SCUserProfileFields[]>([]);
+  const [editing, setEditing] = useState<SCUserProfileFields[]>([editingField] ?? []);
   const [saving, setSaving] = useState<SCUserProfileFields[]>([]);
-
+  const [editedField, setEditedField] = useState<any>({});
+  const inputRef = useRef(null);
   // INTL
   const intl = useIntl();
 
@@ -126,7 +127,7 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
   // HANDLERS
   const handleEdit = (field: SCUserProfileFields) => {
     return (event: React.MouseEvent<HTMLButtonElement>) => {
-      setEditing([...editing, field]);
+      setEditing([...editing, editingField ?? field]);
       if (error[`${camelCase(field)}Error`]) {
         delete error[`${camelCase(field)}Error`];
         setError(error);
@@ -140,7 +141,7 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
         setEditing(editing.filter((f) => f !== field));
         return;
       }
-      setSaving([...saving, field]);
+      setSaving([...saving, editingField ?? field]);
       http
         .request({
           url: Endpoints.UserPatch.url({id: user.id}),
@@ -157,15 +158,22 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
           setEditing(editing.filter((f) => f !== field));
           setSaving(saving.filter((f) => f !== field));
           if (onEditSuccess) {
-            onEditSuccess();
+            editingField ? onEditSuccess(editedField) : onEditSuccess();
           }
         });
     };
   };
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setEditedField({[event.target.name]: event.target.value});
     setUser({...user, [event.target.name]: event.target.value});
   };
+
+  useEffect(() => {
+    if (editingField) {
+      inputRef.current.focus();
+    }
+  }, [editingField]);
 
   // RENDER
   const renderField = (field) => {
@@ -254,7 +262,9 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
         if (metadataDefinitions && metadataDefinitions[field]) {
           return (
             <MetadataField
+              id={field}
               key={field}
+              inputRef={inputRef}
               {...props}
               className={classes.field}
               name={field}
@@ -265,6 +275,7 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
               disabled={!isEditing || isSaving}
               error={_error}
               helperText={_error}
+              inputProps={{autoFocus: true}}
               metadata={metadataDefinitions[field]}
             />
           );
@@ -273,7 +284,9 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
     }
     return (
       <component.element
+        id={field}
         key={field}
+        inputRef={inputRef}
         {...props}
         className={classes.field}
         name={field}
@@ -283,6 +296,7 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
         onChange={handleChange}
         disabled={!isEditing || isSaving}
         error={_error}
+        inputProps={{autoFocus: true}}
         helperText={_error}>
         {content}
       </component.element>
