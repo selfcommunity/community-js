@@ -52,9 +52,9 @@ const Root = styled(Box, {
     flexGrow: 1
   },
   [`& .${classes.searchBarContainer}`]: {
-    marginRight: '24px',
     flexGrow: 1,
-    maxWidth: '25ch'
+    maxWidth: '25ch',
+    marginRight: theme.spacing(1)
   },
   [`& .${classes.iconButtonsContainer}`]: {
     display: 'flex',

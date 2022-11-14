@@ -1,10 +1,10 @@
-import {Box, IconButton, TextField, styled, useTheme, useMediaQuery, Autocomplete} from '@mui/material';
+import {Box, IconButton, TextField, styled, useTheme, useMediaQuery, Autocomplete, Avatar, Typography} from '@mui/material';
 import Icon from '@mui/material/Icon';
 import React, {FormEvent, useEffect, useState} from 'react';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {SuggestionType} from '@selfcommunity/types';
+import {SCSuggestionType, SuggestionType} from '@selfcommunity/types';
 import {SuggestionService} from '@selfcommunity/api-services';
 
 const messages = defineMessages({
@@ -27,10 +27,18 @@ const Root = styled(Box, {
   slot: 'Root'
 })(({theme}) => ({
   width: '100%',
-  maxWidth: '20ch',
+  maxWidth: '25ch',
   marginLeft: theme.spacing(1),
   [`& .${classes.searchInput}`]: {
     paddingRight: '2px !important'
+  },
+  [`& .${classes.autocomplete}`]: {
+    [theme.breakpoints.up('sm')]: {
+      width: '18ch',
+      '& .Mui-focused': {
+        width: '25ch'
+      }
+    }
   }
 }));
 
@@ -39,9 +47,15 @@ const MobileRoot = styled(Box, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   position: 'absolute',
-  marginLeft: theme.spacing(4),
-  width: '85%',
+  marginLeft: '40px',
+  width: '100%',
+  [theme.breakpoints.down('sm')]: {
+    width: '85%'
+  },
   [`& .${classes.searchInput}`]: {
+    [theme.breakpoints.down('sm')]: {
+      width: '95%'
+    },
     paddingRight: '2px !important'
   }
 }));
@@ -80,31 +94,34 @@ export default function HeaderSearchBar(inProps: HeaderSearchBarProps) {
   const isDesktop = useMediaQuery(theme.breakpoints.up('sm'));
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [results, setResults] = useState([]);
-  const [open, setOpen] = useState(false);
+  const [isSearching, setIsSearching] = useState<boolean>(false);
 
   // INTL
   const intl = useIntl();
 
-  const handleChange = (event) => {
-    setQuery(event.target.value);
+  const handleChange = (event, value) => {
+    setQuery(value);
+    setIsSearching(true);
   };
 
-  const handleSearch = (event: FormEvent) => {
+  const handleSearch = (event: FormEvent, value: SCSuggestionType) => {
+    setIsSearching(false);
+    event.preventDefault();
+    event.stopPropagation();
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
+    onSearch && onSearch(!value ? null : value[value.type].username ?? value[value.type].name);
+  };
+
+  const handleFormSearch = (event: FormEvent) => {
+    setIsSearching(false);
     event.preventDefault();
     event.stopPropagation();
     onSearch && onSearch(query);
-    handleClear();
-    return false;
-  };
-
-  const handleClear = () => {
-    setOpen(false);
-    setQuery('');
-    setResults([]);
   };
 
   const handleClick = () => {
-    setClicked(true);
+    setClicked(!clicked);
     onClick(clicked);
   };
 
@@ -129,45 +146,47 @@ export default function HeaderSearchBar(inProps: HeaderSearchBarProps) {
 
   const renderAutocomplete = () => {
     return (
-      <form onSubmit={handleSearch}>
+      <form onSubmit={handleFormSearch}>
         <Autocomplete
+          autoComplete={true}
           className={classes.autocomplete}
           id={`${PREFIX}-autocomplete`}
           size="small"
           inputValue={query}
           loading={isLoading}
-          open={query !== ''}
+          forcePopupIcon={false}
+          clearOnEscape={true}
+          clearOnBlur={true}
+          open={query !== '' && isSearching}
           loadingText={<FormattedMessage id="ui.header.searchBar.loading" defaultMessage="ui.header.searchBar.loading" />}
           noOptionsText={<FormattedMessage id="ui.header.searchBar.noOptions" defaultMessage="ui.header.searchBar.noOptions" />}
-          options={results.map((o) => (o.type === SuggestionType.USER ? o[SuggestionType.USER] : o[SuggestionType.CATEGORY]))}
-          getOptionLabel={(option: any) => option['username'] ?? option['name']}
+          options={results}
+          getOptionLabel={(option) => option[option.type]['username'] ?? option[option.type]['name']}
           onChange={handleSearch}
-          onInputChange={(e, value) => {
-            if (value.length === 0) {
-              if (open) setOpen(false);
-            } else {
-              if (!open) setOpen(true);
-            }
-          }}
-          onClose={() => setOpen(false)}
+          onInputChange={handleChange}
+          renderOption={(props, option) => (
+            <Box component="li" {...props}>
+              {option.type === SuggestionType.USER ? (
+                <>
+                  <Avatar alt={option[SuggestionType.USER]['username']} src={option[SuggestionType.USER]['avatar']} />
+                  <Typography ml={1}>{option[SuggestionType.USER]['username']}</Typography>
+                </>
+              ) : (
+                <>
+                  <Avatar alt={option[SuggestionType.CATEGORY]['name']} src={option[SuggestionType.CATEGORY]['image_small']} variant="square" />
+                  <Typography ml={1}>{option[SuggestionType.CATEGORY]['name']}</Typography>
+                </>
+              )}
+            </Box>
+          )}
           renderInput={(params) => (
             <TextField
               {...params}
-              onChange={handleChange}
               placeholder={`${intl.formatMessage(messages.placeholder)}`}
               InputProps={{
                 ...params.InputProps,
                 className: classes.searchInput,
-                startAdornment: <>{!query && isDesktop && <Icon color="primary">search</Icon>}</>,
-                endAdornment: (
-                  <>
-                    {query && (
-                      <IconButton onClick={handleClear}>
-                        <Icon color="primary">close</Icon>
-                      </IconButton>
-                    )}
-                  </>
-                )
+                startAdornment: <>{!query && isDesktop && <Icon color="primary">search</Icon>}</>
               }}
             />
           )}
@@ -179,9 +198,19 @@ export default function HeaderSearchBar(inProps: HeaderSearchBarProps) {
   return (
     <>
       {isDesktop ? (
-        <Root className={classNames(classes.root, className)}>{renderAutocomplete()}</Root>
+        <Root className={classNames(classes.root, className)} {...rest}>
+          {renderAutocomplete()}
+        </Root>
       ) : (
         <>
+          {clicked && (
+            <>
+              <IconButton onClick={handleClick} sx={{position: 'absolute'}}>
+                <Icon>arrow_back</Icon>
+              </IconButton>
+              <MobileRoot>{renderAutocomplete()}</MobileRoot>
+            </>
+          )}
           {!clicked && (
             <IconButton onClick={handleClick}>
               <Icon>search</Icon>
@@ -189,7 +218,6 @@ export default function HeaderSearchBar(inProps: HeaderSearchBarProps) {
           )}
         </>
       )}
-      {clicked && !isDesktop && <MobileRoot>{renderAutocomplete()}</MobileRoot>}
     </>
   );
 }

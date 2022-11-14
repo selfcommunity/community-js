@@ -3,6 +3,155 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.8...@selfcommunity/react-templates@0.3.0-alpha.9) (2022-11-14)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.7...@selfcommunity/react-templates@0.3.0-alpha.8) (2022-11-11)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.6...@selfcommunity/react-templates@0.3.0-alpha.7) (2022-11-09)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.5...@selfcommunity/react-templates@0.3.0-alpha.6) (2022-11-09)
+
+
+### Performance Improvements
+
+* added widgets to feedobjs list template ([3f7905a](https://github.com/selfcommunity/community-js/commit/3f7905a2e2d39a8b290529eb70f614c9af272da8))
+
+
+
+
+
+# [0.3.0-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.4...@selfcommunity/react-templates@0.3.0-alpha.5) (2022-11-09)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.3...@selfcommunity/react-templates@0.3.0-alpha.4) (2022-11-07)
+
+
+### Performance Improvements
+
+* added  feedobjs list template ([700411b](https://github.com/selfcommunity/community-js/commit/700411b261473ff991080cf6fd1e95db11934108))
+* added prop to show trending feed as  a page ([113e859](https://github.com/selfcommunity/community-js/commit/113e859365504f1d14715f2c805008e41b4afb43))
+
+
+
+
+
+# [0.3.0-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.2...@selfcommunity/react-templates@0.3.0-alpha.3) (2022-11-04)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.1...@selfcommunity/react-templates@0.3.0-alpha.2) (2022-11-04)
+
+
+### Performance Improvements
+
+* cleaned unused imports/deleted unused translations ([c5e7e2d](https://github.com/selfcommunity/community-js/commit/c5e7e2d1b6f4a2dba499b61b3265c85ed964bb68))
+
+
+
+
+
+# [0.3.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.0...@selfcommunity/react-templates@0.3.0-alpha.1) (2022-11-04)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.2.4-alpha.26...@selfcommunity/react-templates@0.3.0-alpha.0) (2022-11-03)
+
+
+### Features
+
+* added users list template ([191e910](https://github.com/selfcommunity/community-js/commit/191e9104d8e9031b03cf8ef9b47b25fe8e095bed))
+
+
+
+
+
+## [0.2.4-alpha.26](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.2.4-alpha.25...@selfcommunity/react-templates@0.2.4-alpha.26) (2022-11-02)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.2.4-alpha.25](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.2.4-alpha.24...@selfcommunity/react-templates@0.2.4-alpha.25) (2022-11-02)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.2.4-alpha.24](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.2.4-alpha.23...@selfcommunity/react-templates@0.2.4-alpha.24) (2022-11-02)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.2.4-alpha.23](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.2.4-alpha.22...@selfcommunity/react-templates@0.2.4-alpha.23) (2022-11-02)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.2.4-alpha.22](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.2.4-alpha.21...@selfcommunity/react-templates@0.2.4-alpha.22) (2022-10-31)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.2.4-alpha.21](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.2.4-alpha.20...@selfcommunity/react-templates@0.2.4-alpha.21) (2022-10-31)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.2.4-alpha.20](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.2.4-alpha.19...@selfcommunity/react-templates@0.2.4-alpha.20) (2022-10-28)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
 ## [0.2.4-alpha.19](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.2.4-alpha.18...@selfcommunity/react-templates@0.2.4-alpha.19) (2022-10-27)
 
 

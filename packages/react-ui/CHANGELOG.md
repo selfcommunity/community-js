@@ -3,6 +3,186 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.25](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.24...@selfcommunity/react-ui@0.7.0-alpha.25) (2022-11-14)
+
+
+### Bug Fixes
+
+* fixed publicInfo component autofocus/ datepicker endAdornment icon bug ([c3e8485](https://github.com/selfcommunity/community-js/commit/c3e848504fb3051c8b1dce5f9245d9f5ec90f225))
+
+
+
+
+
+# [0.7.0-alpha.24](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.23...@selfcommunity/react-ui@0.7.0-alpha.24) (2022-11-11)
+
+
+### Performance Improvements
+
+* asana issue : https://app.asana.com/0/1202523699272956/1203310518624016/f ([df7411d](https://github.com/selfcommunity/community-js/commit/df7411d6c264c344b15e67892b662557a6face84))
+
+
+
+
+
+# [0.7.0-alpha.23](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.22...@selfcommunity/react-ui@0.7.0-alpha.23) (2022-11-09)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.7.0-alpha.22](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.21...@selfcommunity/react-ui@0.7.0-alpha.22) (2022-11-09)
+
+
+### Bug Fixes
+
+* fixed searchbar container margin ([750d6a5](https://github.com/selfcommunity/community-js/commit/750d6a5beac9d73079099401f89c9d091fcfb1f1))
+
+
+
+
+
+# [0.7.0-alpha.21](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.20...@selfcommunity/react-ui@0.7.0-alpha.21) (2022-11-09)
+
+
+### Bug Fixes
+
+* fixed autocomplete value on searchbar ([b6d6e66](https://github.com/selfcommunity/community-js/commit/b6d6e661ccaa50e3c79b2e5e07a73cbf07c427f6))
+
+
+
+
+
+# [0.7.0-alpha.20](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.19...@selfcommunity/react-ui@0.7.0-alpha.20) (2022-11-07)
+
+
+### Bug Fixes
+
+* fixed searchbar style ([c9c0a1d](https://github.com/selfcommunity/community-js/commit/c9c0a1d149ddb4e3ac667ed317a67b0dceea9e0c))
+
+
+### Performance Improvements
+
+* added images to search autocomplete results ([c401c7c](https://github.com/selfcommunity/community-js/commit/c401c7c805ffe969bb32b8271855f4460f7c9c92))
+* added prop to show trending feed as  a page ([113e859](https://github.com/selfcommunity/community-js/commit/113e859365504f1d14715f2c805008e41b4afb43))
+
+
+
+
+
+# [0.7.0-alpha.19](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.18...@selfcommunity/react-ui@0.7.0-alpha.19) (2022-11-04)
+
+
+### Bug Fixes
+
+* feed ([10d6812](https://github.com/selfcommunity/community-js/commit/10d68128a835f8f833a523fc63d91ed581fa20f3))
+* fixed mobile searchbar width ([9966e18](https://github.com/selfcommunity/community-js/commit/9966e184b0d03e84298694802452bd4a710633a1))
+* private messages components bugfixing ([367a061](https://github.com/selfcommunity/community-js/commit/367a0610d02feb3cba7d98e459feeb8994d1125d))
+
+
+
+
+
+# [0.7.0-alpha.18](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.17...@selfcommunity/react-ui@0.7.0-alpha.18) (2022-11-04)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.7.0-alpha.17](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.16...@selfcommunity/react-ui@0.7.0-alpha.17) (2022-11-03)
+
+
+### Performance Improvements
+
+* added prop to feed component to hide adv banners ([71e2945](https://github.com/selfcommunity/community-js/commit/71e294521d85f26f1c65a263a9056ca5e286596f))
+
+
+
+
+
+# [0.7.0-alpha.16](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.15...@selfcommunity/react-ui@0.7.0-alpha.16) (2022-11-02)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.7.0-alpha.15](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.14...@selfcommunity/react-ui@0.7.0-alpha.15) (2022-11-02)
+
+
+### Bug Fixes
+
+* fixed searchbar ([bf72ea5](https://github.com/selfcommunity/community-js/commit/bf72ea5936c05658a4510fae8f77a30392681bef))
+
+
+
+
+
+# [0.7.0-alpha.14](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.13...@selfcommunity/react-ui@0.7.0-alpha.14) (2022-11-02)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.7.0-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.12...@selfcommunity/react-ui@0.7.0-alpha.13) (2022-11-02)
+
+
+### Bug Fixes
+
+* fix search ([6e6d17c](https://github.com/selfcommunity/community-js/commit/6e6d17cdb9e9ac94699ace1af11c6aadcbe8e710))
+
+
+
+
+
+# [0.7.0-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.11...@selfcommunity/react-ui@0.7.0-alpha.12) (2022-10-31)
+
+
+### Bug Fixes
+
+* fix autocomplete ([5166f7c](https://github.com/selfcommunity/community-js/commit/5166f7c09c4df6f26d17d7b99e9911d84e1b1fa2))
+
+
+
+
+
+# [0.7.0-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.10...@selfcommunity/react-ui@0.7.0-alpha.11) (2022-10-31)
+
+
+### Bug Fixes
+
+* fixed searchbar autocomplete ([d61cbce](https://github.com/selfcommunity/community-js/commit/d61cbce5e3772df66f0929574d527c74c87b5ff8))
+
+
+
+
+
+# [0.7.0-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.9...@selfcommunity/react-ui@0.7.0-alpha.10) (2022-10-28)
+
+
+### Bug Fixes
+
+* feed ([2fc2ca7](https://github.com/selfcommunity/community-js/commit/2fc2ca7f45db96fa244fe3daf1d57e038c0ed8c8))
+* feed ([4654190](https://github.com/selfcommunity/community-js/commit/4654190b7488d54904955f7bf8b11d4325c6ee41))
+* feed ([77a3af0](https://github.com/selfcommunity/community-js/commit/77a3af055cd8100792db0f6eb8a0510cd2320d53))
+* feed ([9fbc244](https://github.com/selfcommunity/community-js/commit/9fbc244bff3f71fd11b578d53c2f1ff37f7f7836))
+
+
+### Performance Improvements
+
+* added header search autocomplete ([d3b0441](https://github.com/selfcommunity/community-js/commit/d3b0441139afae0b582f55b80d5387b6db00d337))
+
+
+
+
+
 # [0.7.0-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.8...@selfcommunity/react-ui@0.7.0-alpha.9) (2022-10-27)
 
 

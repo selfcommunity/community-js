@@ -3,6 +3,69 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.1-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.4.1-alpha.6...@selfcommunity/react-i18n@0.4.1-alpha.7) (2022-11-11)
+
+
+### Performance Improvements
+
+* added user profile info translations ([da84c5f](https://github.com/selfcommunity/community-js/commit/da84c5f3710edb54a56c4acbf8b7ecf6f5ed2f6f))
+
+
+
+
+
+## [0.4.1-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.4.1-alpha.5...@selfcommunity/react-i18n@0.4.1-alpha.6) (2022-11-07)
+
+
+### Performance Improvements
+
+* added translations for  feedobjs list template ([5a3dba1](https://github.com/selfcommunity/community-js/commit/5a3dba1077f5f96621a3070173708b477c2e4308))
+
+
+
+
+
+## [0.4.1-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.4.1-alpha.4...@selfcommunity/react-i18n@0.4.1-alpha.5) (2022-11-04)
+
+
+### Performance Improvements
+
+* cleaned unused imports/deleted unused translations ([c5e7e2d](https://github.com/selfcommunity/community-js/commit/c5e7e2d1b6f4a2dba499b61b3265c85ed964bb68))
+
+
+
+
+
+## [0.4.1-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.4.1-alpha.3...@selfcommunity/react-i18n@0.4.1-alpha.4) (2022-11-03)
+
+**Note:** Version bump only for package @selfcommunity/react-i18n
+
+
+
+
+
+## [0.4.1-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.4.1-alpha.2...@selfcommunity/react-i18n@0.4.1-alpha.3) (2022-11-02)
+
+
+### Bug Fixes
+
+* fixed footer link trans ([e858277](https://github.com/selfcommunity/community-js/commit/e858277dca299b3cb795c6ba4c2256eb2f79ea88))
+
+
+
+
+
+## [0.4.1-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.4.1-alpha.1...@selfcommunity/react-i18n@0.4.1-alpha.2) (2022-10-28)
+
+
+### Performance Improvements
+
+* added header search bar translations ([3c5f062](https://github.com/selfcommunity/community-js/commit/3c5f062ca4dc566aec5bd70773acffa8183dda11))
+
+
+
+
+
 ## [0.4.1-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.4.1-alpha.0...@selfcommunity/react-i18n@0.4.1-alpha.1) (2022-10-14)
 
 

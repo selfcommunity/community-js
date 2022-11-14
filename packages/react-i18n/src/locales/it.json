@@ -260,10 +260,13 @@
   "ui.userProfileInfo.dateOfBirth": "Data di nascita",
   "ui.userProfileInfo.description": "Occupazione",
   "ui.userProfileInfo.dateJoined": "Registrato dal",
-  "ui.userProfileInfo.website": "Website",
+  "ui.userProfileInfo.website": "Sito web",
   "ui.userProfileInfo.bio": "Biografia",
   "ui.userProfileInfo.location": "Località",
   "ui.userProfileInfo.gender": "Genere",
+  "ui.userProfileInfo.fieldLink": "aggiungi il tuo {field}",
+  "ui.userProfileInfo.fieldLink.female": "aggiungi la tua {field}",
+  "ui.userProfileInfo.dialog.title": "Informazioni pubbliche",
 
   "ui.userProfileEditPublicInfo.genderMale": "Maschile",
   "ui.userProfileEditPublicInfo.genderFemale": "Femminile",
@@ -512,9 +515,10 @@
   "ui.header.searchBar.loading": "Cercando...",
   "ui.header.searchBar.noOptions": "Nessun risultato...",
 
-  "ui.footer.legalPages.cookies": "Cookies",
+
   "ui.footer.legalPages.tec": "Termini e Condizioni",
   "ui.footer.legalPages.privacy": "Privacy",
+  "ui.footer.customPages.cookie": "Cookies",
   "ui.footer.customPages.explore": "Esplora",
   "ui.footer.customPages.rules": "Regolamento",
 
@@ -550,5 +554,9 @@
   "templates.userProfile.send.pm": "Invia messaggio privato",
   "templates.privateMessages.button.new" : "Nuovo Messaggio",
   "templates.privateMessages.delete" : "Seleziona la conversazione da eliminare",
-  "templates.feedObjectDetail.contributionNotFound": "Il contributo non è stato trovato oppure non hai i permessi per vederlo."
+  "templates.feedObjectDetail.contributionNotFound": "Il contributo non è stato trovato oppure non hai i permessi per vederlo.",
+  "templates.usersList.followers" : "I miei follower",
+  "templates.usersList.followings" : "Utenti che seguo",
+  "templates.usersList.noMoreResults": "Nient'altro da mostrare",
+  "templates.feedObjsList.noMoreResults": "Nient'altro da mostrare"
 }

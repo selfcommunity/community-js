@@ -263,6 +263,8 @@
   "ui.userProfileInfo.bio": "Bio",
   "ui.userProfileInfo.location": "Location",
   "ui.userProfileInfo.gender": "Gender",
+  "ui.userProfileInfo.fieldLink": "add your {field}",
+  "ui.userProfileInfo.dialog.title": "Public informations",
 
   "ui.userProfileEditPublicInfo.genderMale": "Male",
   "ui.userProfileEditPublicInfo.genderFemale": "Female",
@@ -512,9 +514,10 @@
   "ui.header.searchBar.loading": "Loading...",
   "ui.header.searchBar.noOptions": "No results...",
 
-  "ui.footer.legalPages.cookies": "Cookies",
+
   "ui.footer.legalPages.tec": "Terms and Conditions",
   "ui.footer.legalPages.privacy": "Privacy",
+  "ui.footer.customPages.cookie": "Cookies",
   "ui.footer.customPages.explore": "Explore",
   "ui.footer.customPages.rules": "Rules",
 
@@ -550,5 +553,9 @@
   "templates.userProfile.send.pm": "Send private message",
   "templates.privateMessages.button.new" : "New Message",
   "templates.privateMessages.delete" : "Select thread to delete",
-  "templates.feedObjectDetail.contributionNotFound": "Contribution not found or you do not have permission to view it."
+  "templates.feedObjectDetail.contributionNotFound": "Contribution not found or you do not have permission to view it.",
+  "templates.usersList.followers" : "Followers",
+  "templates.usersList.followings" : "Users Followed",
+  "templates.usersList.noMoreResults": "No more results",
+  "templates.feedObjsList.noMoreResults": "No more results"
 }

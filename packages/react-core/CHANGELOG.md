@@ -3,6 +3,54 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.9-alpha.15](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.9-alpha.14...@selfcommunity/react-core@0.3.9-alpha.15) (2022-11-11)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.3.9-alpha.14](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.9-alpha.13...@selfcommunity/react-core@0.3.9-alpha.14) (2022-11-07)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.3.9-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.9-alpha.12...@selfcommunity/react-core@0.3.9-alpha.13) (2022-11-04)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.3.9-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.9-alpha.11...@selfcommunity/react-core@0.3.9-alpha.12) (2022-11-03)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.3.9-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.9-alpha.10...@selfcommunity/react-core@0.3.9-alpha.11) (2022-11-02)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.3.9-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.9-alpha.9...@selfcommunity/react-core@0.3.9-alpha.10) (2022-10-28)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
 ## [0.3.9-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.9-alpha.8...@selfcommunity/react-core@0.3.9-alpha.9) (2022-10-27)
 
 

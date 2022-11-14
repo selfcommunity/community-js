@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.1-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.4.1-alpha.2...@selfcommunity/types@0.4.1-alpha.3) (2022-11-02)
+
+
+### Bug Fixes
+
+* fixed legal pages types ([6d37027](https://github.com/selfcommunity/community-js/commit/6d370277fb675ea010706cfc4936f4b7742312dd))
+
+
+
+
+
+## [0.4.1-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.4.1-alpha.1...@selfcommunity/types@0.4.1-alpha.2) (2022-10-28)
+
+
+### Performance Improvements
+
+* added suggestion type ([931370a](https://github.com/selfcommunity/community-js/commit/931370a6c0cca249bd6537ef1e5038dd1bc3c662))
+
+
+
+
+
 ## [0.4.1-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.4.1-alpha.0...@selfcommunity/types@0.4.1-alpha.1) (2022-10-18)
 
 
