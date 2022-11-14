@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.25](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.24...@selfcommunity/react-ui@0.7.0-alpha.25) (2022-11-14)
+
+
+### Bug Fixes
+
+* fixed publicInfo component autofocus/ datepicker endAdornment icon bug ([c3e8485](https://github.com/selfcommunity/community-js/commit/c3e848504fb3051c8b1dce5f9245d9f5ec90f225))
+
+
+
+
+
 # [0.7.0-alpha.24](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.23...@selfcommunity/react-ui@0.7.0-alpha.24) (2022-11-11)
 
 
