@@ -1,8 +1,8 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useReducer, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Button, CardContent, List, ListItem, Typography, useMediaQuery, useTheme} from '@mui/material';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
-import {Logger} from '@selfcommunity/utils';
+import {CacheStrategies, Logger} from '@selfcommunity/utils';
 import Skeleton from './Skeleton';
 import {SCCategoryType} from '@selfcommunity/types';
 import {SCOPE_SC_UI} from '../../constants/Errors';
@@ -16,7 +16,8 @@ import InfiniteScroll from '../../shared/InfiniteScroll';
 import Widget from '../Widget';
 import {useThemeProps} from '@mui/system';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
-import {useIsComponentMountedRef} from '@selfcommunity/react-core';
+import {SCCache, useIsComponentMountedRef} from '@selfcommunity/react-core';
+import {actionToolsTypes, dataToolsReducer, stateToolsInitializer} from '../../utils/tools';
 
 const PREFIX = 'SCCategoriesPopular';
 
@@ -67,7 +68,15 @@ export default function CategoriesPopular(inProps: CategoriesListProps): JSX.Ele
     name: PREFIX
   });
 
-  const {autoHide = true, className, CategoryProps = {}, onHeightChange, onStateChange, ...rest} = props;
+  const {
+    autoHide = true,
+    className,
+    CategoryProps = {},
+    onHeightChange,
+    onStateChange,
+    cacheStrategy = CacheStrategies.NETWORK_ONLY,
+    ...rest
+  } = props;
 
   // REFS
   const isMountedRef = useIsComponentMountedRef();
@@ -75,48 +84,61 @@ export default function CategoriesPopular(inProps: CategoriesListProps): JSX.Ele
   // STATE
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const [categories, setCategories] = useState<any[]>([]);
-  const [visibleCategories, setVisibleCategories] = useState<number>(limit);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [hasMore, setHasMore] = useState<boolean>(false);
-  const [total, setTotal] = useState<number>(0);
+
+  const [state, dispatch] = useReducer(
+    dataToolsReducer,
+    {
+      isLoadingNext: true,
+      next: `${Endpoints.PopularCategories.url()}?limit=10`,
+      cacheKey: SCCache.getToolsStateCacheKey(SCCache.CATEGORIES_POPULAR_TOOLS_STATE_CACHE_PREFIX_KEY),
+      cacheStrategy,
+      visibleItems: limit
+    },
+    stateToolsInitializer
+  );
   const [openPopularCategoriesDialog, setOpenPopularCategoriesDialog] = useState<boolean>(false);
-  const [next, setNext] = useState<string>(`${Endpoints.PopularCategories.url()}?limit=10`);
+
   /**
    * Fetches popular categories list
    */
   const fetchPopularCategories = useMemo(
     () => () => {
-      if (next) {
+      if (state.next) {
         http
           .request({
-            url: next,
+            url: state.next,
             method: Endpoints.PopularCategories.method
           })
           .then((res: HttpResponse<any>) => {
             if (res.status < 300 && isMountedRef.current) {
               const data = res.data;
-              setCategories([...categories, ...data['results']]);
-              setHasMore(data['count'] > visibleCategories);
-              setNext(data['next']);
-              setLoading(false);
-              setTotal(data['count']);
+              dispatch({
+                type: actionToolsTypes.LOAD_NEXT_SUCCESS,
+                payload: {
+                  results: data.results,
+                  count: data.count,
+                  next: data.next
+                }
+              });
             }
           })
           .catch((error) => {
-            setLoading(false);
+            dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
             Logger.error(SCOPE_SC_UI, error);
           });
       }
     },
-    [categories, next, loading]
+    [dispatch, state.next, state.isLoadingNext]
   );
 
   /**
    * On mount, fetches popular categories list
    */
   useEffect(() => {
-    fetchPopularCategories();
+    if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
+      fetchPopularCategories();
+      onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
+    }
   }, []);
 
   /**
@@ -124,7 +146,7 @@ export default function CategoriesPopular(inProps: CategoriesListProps): JSX.Ele
    * @param category
    */
   function handleFollowersUpdate(category) {
-    const newCategories = [...categories];
+    const newCategories = [...state.results];
     const index = newCategories.findIndex((u) => u.id === category.id);
     if (index !== -1) {
       if (category.followed) {
@@ -134,14 +156,17 @@ export default function CategoriesPopular(inProps: CategoriesListProps): JSX.Ele
         newCategories[index].followers_counter = category.followers_counter + 1;
         newCategories[index].followed = !category.followed;
       }
-      setCategories(newCategories);
+      dispatch({
+        type: actionToolsTypes.SET_RESULTS,
+        payload: {results: newCategories}
+      });
     }
   }
 
   /**
    * Renders popular categories list
    */
-  if (loading) {
+  if (state.isLoadingNext) {
     return <Skeleton />;
   }
   const c = (
@@ -149,20 +174,20 @@ export default function CategoriesPopular(inProps: CategoriesListProps): JSX.Ele
       <Typography className={classes.title} variant="h5">
         <FormattedMessage id="ui.categoriesPopular.title" defaultMessage="ui.categoriesPopular.title" />
       </Typography>
-      {!total ? (
+      {!state.count ? (
         <Typography className={classes.noResults} variant="body2">
           <FormattedMessage id="ui.categoriesPopular.noResults" defaultMessage="ui.categoriesPopular.noResults" />
         </Typography>
       ) : (
         <React.Fragment>
           <List>
-            {categories.slice(0, visibleCategories).map((category: SCCategoryType) => (
+            {state.results.slice(0, state.visibleItems).map((category: SCCategoryType) => (
               <ListItem key={category.id}>
                 <Category elevation={0} category={category} followCategoryButtonProps={{onFollow: handleFollowersUpdate}} {...CategoryProps} />
               </ListItem>
             ))}
           </List>
-          {hasMore && (
+          {state.count > state.visibleItems && (
             <Button size="small" className={classes.showMore} onClick={() => setOpenPopularCategoriesDialog(true)}>
               <FormattedMessage id="ui.categoriesPopular.button.showAll" defaultMessage="ui.categoriesPopular.button.showAll" />
             </Button>
@@ -174,13 +199,13 @@ export default function CategoriesPopular(inProps: CategoriesListProps): JSX.Ele
           title={<FormattedMessage defaultMessage="ui.categoriesPopular.title" id="ui.categoriesPopular.title" />}
           onClose={() => setOpenPopularCategoriesDialog(false)}
           open={openPopularCategoriesDialog}>
-          {loading ? (
+          {state.isLoadingNext ? (
             <CentralProgress size={50} />
           ) : (
             <InfiniteScroll
-              dataLength={categories.length}
+              dataLength={state.results.length}
               next={fetchPopularCategories}
-              hasMoreNext={Boolean(next)}
+              hasMoreNext={Boolean(state.next)}
               loaderNext={<CentralProgress size={30} />}
               height={isMobile ? '100vh' : 400}
               endMessage={
@@ -191,7 +216,7 @@ export default function CategoriesPopular(inProps: CategoriesListProps): JSX.Ele
                 </p>
               }>
               <List>
-                {categories.map((c) => (
+                {state.results.map((c) => (
                   <ListItem key={c.id}>
                     <Category elevation={0} category={c} {...CategoryProps} followCategoryButtonProps={{onFollow: handleFollowersUpdate}} />
                   </ListItem>
@@ -207,7 +232,7 @@ export default function CategoriesPopular(inProps: CategoriesListProps): JSX.Ele
   /**
    * Renders root object (if results and autoHide prop is set to false, otherwise component is hidden)
    */
-  if (autoHide && !total) {
+  if (autoHide && !state.count) {
     return <HiddenPlaceholder />;
   }
   return (

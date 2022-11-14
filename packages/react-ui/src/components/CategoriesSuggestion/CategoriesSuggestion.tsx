@@ -1,17 +1,19 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {styled} from '@mui/material/styles';
-import {Button, Typography, List, CardContent, ListItem} from '@mui/material';
-import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
-import {SCUserContext, SCUserContextType, useIsComponentMountedRef} from '@selfcommunity/react-core';
-import {SCCategoryType} from '@selfcommunity/types';
-import Skeleton from './Skeleton';
-import Category, {CategoryProps} from '../Category';
-import {FormattedMessage} from 'react-intl';
-import classNames from 'classnames';
-import Widget from '../Widget';
-import {useThemeProps} from '@mui/system';
-import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
-import {VirtualScrollerItemProps} from '../../types/virtualScroller';
+import React, { useContext, useEffect, useReducer, useState } from "react";
+import { styled } from "@mui/material/styles";
+import { Button, CardContent, List, ListItem, Typography } from "@mui/material";
+import { Endpoints, http, HttpResponse } from "@selfcommunity/api-services";
+import { SCCache, SCUserContext, SCUserContextType, useIsComponentMountedRef } from "@selfcommunity/react-core";
+import { SCCategoryType } from "@selfcommunity/types";
+import Skeleton from "./Skeleton";
+import Category, { CategoryProps } from "../Category";
+import { FormattedMessage } from "react-intl";
+import classNames from "classnames";
+import Widget from "../Widget";
+import { useThemeProps } from "@mui/system";
+import HiddenPlaceholder from "../../shared/HiddenPlaceholder";
+import { VirtualScrollerItemProps } from "../../types/virtualScroller";
+import { CacheStrategies } from "@selfcommunity/utils";
+import { actionToolsTypes, dataToolsReducer, stateToolsInitializer } from "../../utils/tools";
 
 const PREFIX = 'SCCategoriesSuggestion';
 
@@ -53,6 +55,12 @@ export interface CategoriesListProps extends VirtualScrollerItemProps {
   CategoryProps?: CategoryProps;
 
   /**
+   * Caching strategies
+   * @default CacheStrategies.CACHE_FIRST
+   */
+  cacheStrategy?: CacheStrategies;
+
+  /**
    * Other props
    */
   [p: string]: any;
@@ -90,15 +98,20 @@ export default function CategoriesSuggestion(inProps: CategoriesListProps): JSX.
     name: PREFIX
   });
 
-  const {autoHide, className, CategoryProps = {}, onHeightChange, onStateChange, ...rest} = props;
+  const {autoHide, className, CategoryProps = {}, onHeightChange, onStateChange, cacheStrategy = CacheStrategies.NETWORK_ONLY, ...rest} = props;
 
-  // STATE
-  const [categories, setCategories] = useState<any[]>([]);
-  const [visibleCategories, setVisibleCategories] = useState<number>(limit);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [hasMore, setHasMore] = useState<boolean>(false);
+  const [state, dispatch] = useReducer(
+    dataToolsReducer,
+    {
+      isLoadingNext: true,
+      next: Endpoints.CategoriesSuggestion.url({}),
+      cacheKey: SCCache.getToolsStateCacheKey(SCCache.CATEGORIES_SUGGESTION_TOOLS_STATE_CACHE_PREFIX_KEY),
+      cacheStrategy,
+      visibleItems: limit
+    },
+    stateToolsInitializer
+  );
   const [openCategoriesSuggestionDialog, setOpenCategoriesSuggestionDialog] = useState<boolean>(false);
-  const [total, setTotal] = useState<number>(0);
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
@@ -113,9 +126,10 @@ export default function CategoriesSuggestion(inProps: CategoriesListProps): JSX.
    * Handles list change on category follow
    */
   function handleOnFollowCategory(category, follow) {
-    setCategories(categories.filter((c) => c.id !== category.id));
-    setTotal((prev) => prev - 1);
-    setHasMore(total - 1 > limit);
+    dispatch({
+      type: actionToolsTypes.SET_RESULTS,
+      payload: {results: state.results.filter((c) => c.id !== category.id), count: state.count - 1}
+    });
   }
 
   /**
@@ -130,13 +144,17 @@ export default function CategoriesSuggestion(inProps: CategoriesListProps): JSX.
       .then((res: HttpResponse<any>) => {
         if (isMountedRef.current) {
           const data = res.data;
-          setCategories(data.results);
-          setHasMore(data.count > visibleCategories);
-          setLoading(false);
-          setTotal(data.count);
+          dispatch({
+            type: actionToolsTypes.LOAD_NEXT_SUCCESS,
+            payload: {
+              results: data.results,
+              count: data.results.length
+            }
+          });
         }
       })
       .catch((error) => {
+        dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
         console.log(error);
       });
   }
@@ -145,18 +163,16 @@ export default function CategoriesSuggestion(inProps: CategoriesListProps): JSX.
    * Loads more categories on "see more" button click
    */
   function loadCategories(n) {
-    const newIndex = visibleCategories + n;
-    const newHasMore = newIndex < categories.length - 1;
-    setVisibleCategories(newIndex);
-    setHasMore(newHasMore);
+    dispatch({type: actionToolsTypes.SET_VISIBLE_ITEMS, payload: {visibleItems: state.visibleItems + n}});
   }
 
   /**
    * On mount, fetches categories suggestion list
    */
   useEffect(() => {
-    if (scUserContext.user) {
+    if (scUserContext.user && cacheStrategy === CacheStrategies.NETWORK_ONLY) {
       fetchCategoriesSuggestion();
+      onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
     }
   }, [authUserId]);
 
@@ -165,34 +181,34 @@ export default function CategoriesSuggestion(inProps: CategoriesListProps): JSX.
    */
   useEffect(() => {
     onHeightChange && onHeightChange();
-  }, [categories]);
+  }, [state.results]);
 
   /**
    * Renders categories suggestion list
    */
   const c = (
     <React.Fragment>
-      {loading ? (
+      {state.isLoadingNext ? (
         <Skeleton elevation={0} />
       ) : (
         <CardContent>
           <Typography className={classes.title} variant="h5">
             <FormattedMessage id="ui.categoriesSuggestion.title" defaultMessage="ui.categoriesSuggestion.title" />
           </Typography>
-          {!total ? (
+          {!state.count ? (
             <Typography className={classes.noResults} variant="body2">
               <FormattedMessage id="ui.categoriesSuggestion.noResults" defaultMessage="ui.categoriesSuggestion.noResults" />
             </Typography>
           ) : (
             <React.Fragment>
               <List>
-                {categories.slice(0, visibleCategories).map((category: SCCategoryType) => (
+                {state.results.slice(0, state.visibleItems).map((category: SCCategoryType) => (
                   <ListItem key={category.id}>
                     <Category elevation={0} category={category} followCategoryButtonProps={{onFollow: handleOnFollowCategory}} {...CategoryProps} />
                   </ListItem>
                 ))}
               </List>
-              {hasMore && (
+              {state.visibleItems < state.results.length && (
                 <Button size="small" className={classes.showMore} onClick={() => loadCategories(2)}>
                   <FormattedMessage id="ui.categoriesSuggestion.button.showMore" defaultMessage="ui.categoriesSuggestion.button.showMore" />
                 </Button>
@@ -208,7 +224,7 @@ export default function CategoriesSuggestion(inProps: CategoriesListProps): JSX.
   /**
    * Renders root object (if results and if user is logged, otherwise component is hidden)
    */
-  if (autoHide && !total) {
+  if (autoHide && !state.count) {
     return <HiddenPlaceholder />;
   }
   if (scUserContext.user) {

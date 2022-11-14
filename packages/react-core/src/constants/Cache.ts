@@ -59,3 +59,9 @@ export const getReactionObjectCacheKey = (id) => `${REACTION_OBJECT_CACHE_PREFIX
 /** CUSTOM ADVERTISING **/
 export const ADV_OBJECT_CACHE_PREFIX_KEY = '_adv_';
 export const getAdvObjectCacheKey = (id) => `${ADV_OBJECT_CACHE_PREFIX_KEY}${id}`;
+
+/** TOOLS */
+export const CATEGORIES_FOLLOWED_TOOLS_STATE_CACHE_PREFIX_KEY = '_cFolTools_';
+export const CATEGORIES_SUGGESTION_TOOLS_STATE_CACHE_PREFIX_KEY = '_cSugTools_';
+export const CATEGORIES_POPULAR_TOOLS_STATE_CACHE_PREFIX_KEY = '_cPopTools_';
+export const getToolsStateCacheKey = (p, id = undefined) => `${p}${id !== undefined ? id : ''}`;

@@ -9,7 +9,7 @@ import SCNotification, {NotificationSkeleton} from '../Notification';
 import FeedUpdates from '../FeedUpdates';
 import BroadcastMessages from '../BroadcastMessages';
 import {CacheStrategies} from '@selfcommunity/utils';
-import {CategoriesSuggestion, InlineComposer, PeopleSuggestion, TrendingPeople} from '../../index';
+import {CategoriesSuggestion, InlineComposer, CategoriesPopular, PeopleSuggestion, TrendingPeople} from '../../index';
 import {exampleExploreData} from './prefetchedData';
 import {Button} from '@mui/material';
 import Icon from '@mui/material/Icon';
@@ -46,6 +46,13 @@ const _WIDGETS = [
   },
   {
     type: 'widget',
+    component: CategoriesPopular,
+    componentProps: {},
+    column: 'right',
+    position: 1
+  },
+  {
+    type: 'widget',
     component: CategoriesSuggestion,
     componentProps: {},
     column: 'right',
@@ -57,7 +64,8 @@ const _WIDGETS = [
     componentProps: {},
     column: 'right',
     position: 6
-  }];
+  }
+];
 
 export const Main = Template.bind({});
 
