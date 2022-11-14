@@ -115,7 +115,6 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
   const [editing, setEditing] = useState<SCUserProfileFields[]>([editingField] ?? []);
   const [saving, setSaving] = useState<SCUserProfileFields[]>([]);
   const [editedField, setEditedField] = useState<any>({});
-  const inputRef = useRef(null);
   // INTL
   const intl = useIntl();
 
@@ -170,8 +169,9 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
   };
 
   useEffect(() => {
-    if (editingField) {
-      inputRef.current.focus();
+    if (editingField && typeof document !== 'undefined') {
+      const element = document.getElementById(editingField);
+      element && element.focus();
     }
   }, [editingField]);
 
@@ -231,7 +231,7 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
                 const {InputProps, ...rest} = params;
                 InputProps.endAdornment = (
                   <>
-                    {InputProps.endAdornment}
+                    {/*{InputProps.endAdornment}*/}
                     {props.InputProps.endAdornment}
                   </>
                 );
@@ -264,7 +264,6 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
             <MetadataField
               id={field}
               key={field}
-              inputRef={inputRef}
               {...props}
               className={classes.field}
               name={field}
@@ -275,7 +274,6 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
               disabled={!isEditing || isSaving}
               error={_error}
               helperText={_error}
-              inputProps={{autoFocus: true}}
               metadata={metadataDefinitions[field]}
             />
           );
@@ -286,7 +284,6 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
       <component.element
         id={field}
         key={field}
-        inputRef={inputRef}
         {...props}
         className={classes.field}
         name={field}
@@ -296,7 +293,6 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
         onChange={handleChange}
         disabled={!isEditing || isSaving}
         error={_error}
-        inputProps={{autoFocus: true}}
         helperText={_error}>
         {content}
       </component.element>
