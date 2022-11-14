@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.1-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.4.1-alpha.6...@selfcommunity/react-i18n@0.4.1-alpha.7) (2022-11-11)
+
+
+### Performance Improvements
+
+* added user profile info translations ([da84c5f](https://github.com/selfcommunity/community-js/commit/da84c5f3710edb54a56c4acbf8b7ecf6f5ed2f6f))
+
+
+
+
+
 ## [0.4.1-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.4.1-alpha.5...@selfcommunity/react-i18n@0.4.1-alpha.6) (2022-11-07)
 
 

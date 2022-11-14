@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.24](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.23...@selfcommunity/react-ui@0.7.0-alpha.24) (2022-11-11)
+
+
+### Performance Improvements
+
+* asana issue : https://app.asana.com/0/1202523699272956/1203310518624016/f ([df7411d](https://github.com/selfcommunity/community-js/commit/df7411d6c264c344b15e67892b662557a6face84))
+
+
+
+
+
 # [0.7.0-alpha.23](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.22...@selfcommunity/react-ui@0.7.0-alpha.23) (2022-11-09)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
