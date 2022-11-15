@@ -160,7 +160,6 @@ export default function TrendingPeople(inProps: TrendingPeopleProps): JSX.Elemen
   const fetchTrendingPeople = useMemo(
     () => () => {
       if (state.next) {
-        dispatch({type: actionToolsTypes.LOADING_NEXT});
         http
           .request({
             url: state.next,

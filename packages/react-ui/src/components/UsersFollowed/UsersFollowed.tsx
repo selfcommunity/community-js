@@ -193,7 +193,6 @@ export default function UsersFollowed(inProps: UsersFollowedProps): JSX.Element 
   const fetchFollowed = useMemo(
     () => () => {
       if (state.next) {
-        dispatch({type: actionToolsTypes.LOADING_NEXT});
         http
           .request({
             url: state.next,
