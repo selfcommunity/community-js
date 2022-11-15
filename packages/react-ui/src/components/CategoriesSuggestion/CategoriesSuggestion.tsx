@@ -1,19 +1,19 @@
-import React, { useContext, useEffect, useReducer, useState } from "react";
-import { styled } from "@mui/material/styles";
-import { Button, CardContent, List, ListItem, Typography } from "@mui/material";
-import { Endpoints, http, HttpResponse } from "@selfcommunity/api-services";
-import { SCCache, SCUserContext, SCUserContextType, useIsComponentMountedRef } from "@selfcommunity/react-core";
-import { SCCategoryType } from "@selfcommunity/types";
-import Skeleton from "./Skeleton";
-import Category, { CategoryProps } from "../Category";
-import { FormattedMessage } from "react-intl";
-import classNames from "classnames";
-import Widget from "../Widget";
-import { useThemeProps } from "@mui/system";
-import HiddenPlaceholder from "../../shared/HiddenPlaceholder";
-import { VirtualScrollerItemProps } from "../../types/virtualScroller";
-import { CacheStrategies } from "@selfcommunity/utils";
-import { actionToolsTypes, dataToolsReducer, stateToolsInitializer } from "../../utils/tools";
+import React, {useContext, useEffect, useReducer, useState} from 'react';
+import {styled} from '@mui/material/styles';
+import {Button, CardContent, List, ListItem, Typography} from '@mui/material';
+import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
+import {SCCache, SCUserContext, SCUserContextType, useIsComponentMountedRef} from '@selfcommunity/react-core';
+import {SCCategoryType} from '@selfcommunity/types';
+import Skeleton from './Skeleton';
+import Category, {CategoryProps} from '../Category';
+import {FormattedMessage} from 'react-intl';
+import classNames from 'classnames';
+import Widget from '../Widget';
+import {useThemeProps} from '@mui/system';
+import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
+import {VirtualScrollerItemProps} from '../../types/virtualScroller';
+import {CacheStrategies} from '@selfcommunity/utils';
+import {actionToolsTypes, dataToolsReducer, stateToolsInitializer} from '../../utils/tools';
 
 const PREFIX = 'SCCategoriesSuggestion';
 
