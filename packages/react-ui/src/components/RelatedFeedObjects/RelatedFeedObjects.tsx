@@ -204,32 +204,36 @@ export default function RelatedFeedObjects(inProps: RelatedFeedObjectsProps): JS
   /**
    * Fetches related discussions list
    */
-  function fetchRelated() {
-    if (state.next) {
-      dispatch({type: actionToolsTypes.LOADING_NEXT});
-      http
-        .request({
-          url: state.next,
-          method: Endpoints.RelatedFeedObjects.method
-        })
-        .then((res: HttpResponse<any>) => {
-          if (isMountedRef.current) {
-            const data = res.data.results;
-            dispatch({
-              type: actionToolsTypes.LOAD_NEXT_SUCCESS,
-              payload: {
-                results: data,
-                count: data.length
-              }
-            });
-          }
-        })
-        .catch((error) => {
-          dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
-          Logger.error(SCOPE_SC_UI, error);
-        });
-    }
-  }
+  const fetchRelated = useMemo(
+    () => () => {
+      if (state.next) {
+        dispatch({type: actionToolsTypes.LOADING_NEXT});
+        http
+          .request({
+            url: state.next,
+            method: Endpoints.RelatedFeedObjects.method
+          })
+          .then((res: HttpResponse<any>) => {
+            if (res.status < 300 && isMountedRef.current) {
+              const data = res.data;
+              dispatch({
+                type: actionToolsTypes.LOAD_NEXT_SUCCESS,
+                payload: {
+                  results: data.results,
+                  count: data.count,
+                  next: data.next
+                }
+              });
+            }
+          })
+          .catch((error) => {
+            dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
+            Logger.error(SCOPE_SC_UI, error);
+          });
+      }
+    },
+    [dispatch, state.next, state.isLoadingNext]
+  );
 
   /**
    * On mount, fetches related discussions list

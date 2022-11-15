@@ -1,4 +1,4 @@
-import React, {useEffect, useReducer, useState} from 'react';
+import React, {useEffect, useMemo, useReducer, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Button, List, Typography, Box, IconButton, ListItem} from '@mui/material';
 import CardContent from '@mui/material/CardContent';
@@ -176,32 +176,36 @@ export default function IncubatorsList(inProps: IncubatorsListProps): JSX.Elemen
   /**
    * Fetches incubators list
    */
-  function fetchIncubators() {
-    if (state.next) {
-      dispatch({type: actionToolsTypes.LOADING_NEXT});
-      http
-        .request({
-          url: state.next,
-          method: Endpoints.GetAllIncubators.method
-        })
-        .then((res: HttpResponse<any>) => {
-          if (isMountedRef.current) {
-            const data = res.data.results;
-            dispatch({
-              type: actionToolsTypes.LOAD_NEXT_SUCCESS,
-              payload: {
-                results: data,
-                count: data.length
-              }
-            });
-          }
-        })
-        .catch((error) => {
-          dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
-          Logger.error(SCOPE_SC_UI, error);
-        });
-    }
-  }
+  const fetchIncubators = useMemo(
+    () => () => {
+      if (state.next) {
+        dispatch({type: actionToolsTypes.LOADING_NEXT});
+        http
+          .request({
+            url: state.next,
+            method: Endpoints.GetAllIncubators.method
+          })
+          .then((res: HttpResponse<any>) => {
+            if (res.status < 300 && isMountedRef.current) {
+              const data = res.data;
+              dispatch({
+                type: actionToolsTypes.LOAD_NEXT_SUCCESS,
+                payload: {
+                  results: data.results,
+                  count: data.count,
+                  next: data.next
+                }
+              });
+            }
+          })
+          .catch((error) => {
+            dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
+            Logger.error(SCOPE_SC_UI, error);
+          });
+      }
+    },
+    [dispatch, state.next, state.isLoadingNext]
+  );
 
   /**
    * On mount, fetches  incubators list
