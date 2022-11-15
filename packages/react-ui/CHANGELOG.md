@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.26](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.25...@selfcommunity/react-ui@0.7.0-alpha.26) (2022-11-15)
+
+
+### Bug Fixes
+
+* init widget tools caching ([b9ff9b3](https://github.com/selfcommunity/community-js/commit/b9ff9b388faae91f2b1a67d02b23bd00522c915a))
+
+
+### Performance Improvements
+
+* cached feed widgets components. ([919af07](https://github.com/selfcommunity/community-js/commit/919af07371af5818b3db1c30b4546df7bc86914d))
+
+
+
+
+
 # [0.7.0-alpha.25](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.24...@selfcommunity/react-ui@0.7.0-alpha.25) (2022-11-14)
 
 
