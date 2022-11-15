@@ -12,7 +12,9 @@ const classes = {
   list: `${PREFIX}-list`
 };
 
-const Root = styled(Widget)(({theme}) => ({}));
+const Root = styled(Widget)(({theme}) => ({
+  marginBottom: theme.spacing(2)
+}));
 /**
  * > API documentation for the Community-JS Categories Suggestion Skeleton component. Learn about the available props and the CSS API.
 

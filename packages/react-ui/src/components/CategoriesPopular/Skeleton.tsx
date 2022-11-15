@@ -12,7 +12,9 @@ const Root = styled(CategoriesSuggestionSkeleton, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+})(({theme}) => ({
+  marginBottom: theme.spacing(2)
+}));
 /**
  * > API documentation for the Community-JS Categories Popular Skeleton component. Learn about the available props and the CSS API.
 

@@ -59,3 +59,18 @@ export const getReactionObjectCacheKey = (id) => `${REACTION_OBJECT_CACHE_PREFIX
 /** CUSTOM ADVERTISING **/
 export const ADV_OBJECT_CACHE_PREFIX_KEY = '_adv_';
 export const getAdvObjectCacheKey = (id) => `${ADV_OBJECT_CACHE_PREFIX_KEY}${id}`;
+
+/** TOOLS */
+export const CATEGORIES_FOLLOWED_TOOLS_STATE_CACHE_PREFIX_KEY = '_cFolTools_';
+export const CATEGORIES_SUGGESTION_TOOLS_STATE_CACHE_PREFIX_KEY = '_cSugTools_';
+export const CATEGORIES_POPULAR_TOOLS_STATE_CACHE_PREFIX_KEY = '_cPopTools_';
+export const USER_FOLLOWERS_TOOLS_STATE_CACHE_PREFIX_KEY = '_uFolTools_';
+export const USERS_FOLLOWED_TOOLS_STATE_CACHE_PREFIX_KEY = '_uFoldTools_';
+export const TRENDING_FEED_TOOLS_STATE_CACHE_PREFIX_KEY = '_fTrendTools_';
+export const RELATED_FEED_TOOLS_STATE_CACHE_PREFIX_KEY = '_rFeedTools_';
+export const TRENDING_PEOPLE_TOOLS_STATE_CACHE_PREFIX_KEY = '_pTrendTools_';
+export const PEOPLE_SUGGESTION_TOOLS_STATE_CACHE_PREFIX_KEY = '_pSugTools_';
+export const INCUBATORS_LIST_TOOLS_STATE_CACHE_PREFIX_KEY = '_iListTools_';
+export const INCUBATOR_SUGGESTION_TOOLS_STATE_CACHE_PREFIX_KEY = '_iSugTools_';
+export const POLL_SUGGESTION_TOOLS_STATE_CACHE_PREFIX_KEY = '_pSugTools_';
+export const getToolsStateCacheKey = (p, id = undefined) => `${p}${id !== undefined ? id : ''}`;

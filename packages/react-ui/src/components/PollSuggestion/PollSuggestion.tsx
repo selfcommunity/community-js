@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useReducer, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
 import {Button, CardContent, Typography, ListItem, useMediaQuery, useTheme} from '@mui/material';
 import {SCFeedDiscussionType} from '@selfcommunity/types';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
-import {Logger} from '@selfcommunity/utils';
-import {SCUserContextType, useIsComponentMountedRef, useSCUser} from '@selfcommunity/react-core';
+import {CacheStrategies, Logger} from '@selfcommunity/utils';
+import {SCCache, SCUserContextType, useIsComponentMountedRef, useSCUser} from '@selfcommunity/react-core';
 import TrendingFeedSkeleton from '../TrendingFeed/Skeleton';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {FormattedMessage} from 'react-intl';
@@ -17,7 +17,9 @@ import Widget from '../Widget';
 import {useThemeProps} from '@mui/system';
 import PollSnippet from './PollSnippet';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
-import { VirtualScrollerItemProps } from "../../types/virtualScroller";
+import {VirtualScrollerItemProps} from '../../types/virtualScroller';
+import {actionToolsTypes, dataToolsReducer, stateToolsInitializer} from '../../utils/tools';
+import Skeleton from '../TrendingFeed/Skeleton';
 
 const PREFIX = 'SCPollSuggestion';
 
@@ -52,7 +54,11 @@ export interface PollSuggestionProps extends VirtualScrollerItemProps {
    * @default false
    */
   autoHide?: boolean;
-
+  /**
+   * Caching strategies
+   * @default CacheStrategies.CACHE_FIRST
+   */
+  cacheStrategy?: CacheStrategies;
   /**
    * Other props
    */
@@ -98,40 +104,47 @@ export default function PollSuggestion(inProps: PollSuggestionProps): JSX.Elemen
     props: inProps,
     name: PREFIX
   });
-  const {className, autoHide = true, ...rest} = props;
+  const {className, autoHide = true, onHeightChange, onStateChange, cacheStrategy = CacheStrategies.NETWORK_ONLY, ...rest} = props;
 
   // REFS
   const isMountedRef = useIsComponentMountedRef();
 
   // STATE
+  const [state, dispatch] = useReducer(
+    dataToolsReducer,
+    {
+      isLoadingNext: true,
+      next: Endpoints.PollSuggestion.url({}),
+      cacheKey: SCCache.getToolsStateCacheKey(SCCache.POLL_SUGGESTION_TOOLS_STATE_CACHE_PREFIX_KEY),
+      cacheStrategy
+    },
+    stateToolsInitializer
+  );
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const [objs, setObjs] = useState<any[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [hasMore, setHasMore] = useState<boolean>(false);
-  const [total, setTotal] = useState<number>(0);
-  const [visibleObjs, setVisibleObjs] = useState<number>(limit);
   const [openPollSuggestionDialog, setOpenPollSuggestionDialog] = useState<boolean>(false);
-  const [next, setNext] = useState<string>(`${Endpoints.PollSuggestion.url()}?limit=10`);
 
   /**
    * Fetches related discussions list
    */
   function fetchPollSuggestion() {
-    if (next) {
+    if (state.next) {
+      dispatch({type: actionToolsTypes.LOADING_NEXT});
       http
         .request({
-          url: next,
+          url: state.next,
           method: Endpoints.PollSuggestion.method
         })
         .then((res: HttpResponse<any>) => {
           if (isMountedRef.current) {
             const data = res.data;
-            setObjs([...objs, ...data]);
-            setTotal(data.length);
-            setHasMore(data.length > visibleObjs);
-            setLoading(false);
-            setNext(data['next']);
+            dispatch({
+              type: actionToolsTypes.LOAD_NEXT_SUCCESS,
+              payload: {
+                results: data,
+                count: data.length
+              }
+            });
           }
         })
         .catch((error) => {
@@ -144,87 +157,84 @@ export default function PollSuggestion(inProps: PollSuggestionProps): JSX.Elemen
    * On mount, fetches related discussions list
    */
   useEffect(() => {
-    if (scUserContext.user) {
+    if (scUserContext.user && cacheStrategy === CacheStrategies.NETWORK_ONLY) {
       fetchPollSuggestion();
+      onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
     }
   }, [authUserId]);
 
   /**
    * Renders suggested poll list
    */
-
+  if (state.isLoadingNext) {
+    return <Skeleton elevation={0} />;
+  }
   const p = (
-    <React.Fragment>
-      {loading ? (
-        <TrendingFeedSkeleton elevation={0} />
+    <CardContent>
+      <Typography className={classes.title} variant="h5">
+        <FormattedMessage id="ui.pollSuggestion.title" defaultMessage="ui.pollSuggestion.title" />
+      </Typography>
+      {!state.count ? (
+        <Typography className={classes.noResults} variant="body2">
+          <FormattedMessage id="ui.pollSuggestion.noResults" defaultMessage="ui.pollSuggestion.noResults" />
+        </Typography>
       ) : (
-        <CardContent>
-          <Typography className={classes.title} variant="h5">
-            <FormattedMessage id="ui.pollSuggestion.title" defaultMessage="ui.pollSuggestion.title" />
-          </Typography>
-          {!total ? (
-            <Typography className={classes.noResults} variant="body2">
-              <FormattedMessage id="ui.pollSuggestion.noResults" defaultMessage="ui.pollSuggestion.noResults" />
-            </Typography>
-          ) : (
-            <React.Fragment>
-              <List>
-                {objs.slice(0, visibleObjs).map((obj: SCFeedDiscussionType) => {
-                  return (
-                    <ListItem key={obj.id}>
-                      <PollSnippet elevation={0} feedObj={obj} className={classes.pollSnippetItem} />
-                    </ListItem>
-                  );
-                })}
-              </List>
-              {hasMore && (
-                <Button size="small" className={classes.showMore} onClick={() => setOpenPollSuggestionDialog(true)}>
-                  <FormattedMessage id="ui.pollSuggestion.button.showMore" defaultMessage="ui.pollSuggestion.button.showMore" />
-                </Button>
-              )}
-            </React.Fragment>
+        <React.Fragment>
+          <List>
+            {state.results.slice(0, limit).map((obj: SCFeedDiscussionType) => {
+              return (
+                <ListItem key={obj.id}>
+                  <PollSnippet elevation={0} feedObj={obj} className={classes.pollSnippetItem} />
+                </ListItem>
+              );
+            })}
+          </List>
+          {limit < state.count && (
+            <Button size="small" className={classes.showMore} onClick={() => setOpenPollSuggestionDialog(true)}>
+              <FormattedMessage id="ui.pollSuggestion.button.showMore" defaultMessage="ui.pollSuggestion.button.showMore" />
+            </Button>
           )}
-          {openPollSuggestionDialog && (
-            <BaseDialog
-              title={<FormattedMessage id="ui.pollSuggestion.title" defaultMessage="ui.pollSuggestion.title" />}
-              onClose={() => setOpenPollSuggestionDialog(false)}
-              open={openPollSuggestionDialog}>
-              {loading ? (
-                <CentralProgress size={50} />
-              ) : (
-                <InfiniteScroll
-                  dataLength={objs.length}
-                  next={fetchPollSuggestion}
-                  hasMoreNext={Boolean(next)}
-                  loaderNext={<CentralProgress size={30} />}
-                  height={isMobile ? '100vh' : 400}
-                  endMessage={
-                    <p style={{textAlign: 'center'}}>
-                      <b>
-                        <FormattedMessage id="ui.pollSuggestion.noMoreResults" defaultMessage="ui.pollSuggestion.noMoreResults" />
-                      </b>
-                    </p>
-                  }>
-                  <List>
-                    {objs.map((obj: SCFeedDiscussionType) => (
-                      <ListItem key={obj.id}>
-                        <PollSnippet elevation={0} feedObj={obj} className={classes.pollSnippetItem} />
-                      </ListItem>
-                    ))}
-                  </List>
-                </InfiniteScroll>
-              )}
-            </BaseDialog>
-          )}
-        </CardContent>
+        </React.Fragment>
       )}
-    </React.Fragment>
+      {openPollSuggestionDialog && (
+        <BaseDialog
+          title={<FormattedMessage id="ui.pollSuggestion.title" defaultMessage="ui.pollSuggestion.title" />}
+          onClose={() => setOpenPollSuggestionDialog(false)}
+          open={openPollSuggestionDialog}>
+          {state.isLoadingNext ? (
+            <CentralProgress size={50} />
+          ) : (
+            <InfiniteScroll
+              dataLength={state.results.length}
+              next={fetchPollSuggestion}
+              hasMoreNext={Boolean(state.next)}
+              loaderNext={<CentralProgress size={30} />}
+              height={isMobile ? '100vh' : 400}
+              endMessage={
+                <p style={{textAlign: 'center'}}>
+                  <b>
+                    <FormattedMessage id="ui.pollSuggestion.noMoreResults" defaultMessage="ui.pollSuggestion.noMoreResults" />
+                  </b>
+                </p>
+              }>
+              <List>
+                {state.results.map((obj: SCFeedDiscussionType) => (
+                  <ListItem key={obj.id}>
+                    <PollSnippet elevation={0} feedObj={obj} className={classes.pollSnippetItem} />
+                  </ListItem>
+                ))}
+              </List>
+            </InfiniteScroll>
+          )}
+        </BaseDialog>
+      )}
+    </CardContent>
   );
 
   /**
    * Renders root object (if results and autoHide prop is set to false, otherwise component is hidden)
    */
-  if (autoHide && !total) {
+  if (autoHide && !state.count) {
     return <HiddenPlaceholder />;
   }
   if (scUserContext.user) {
