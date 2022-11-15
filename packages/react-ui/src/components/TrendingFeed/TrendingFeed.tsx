@@ -148,7 +148,6 @@ export default function TrendingFeed(inProps: TrendingFeedProps): JSX.Element {
   const fetchTrendingPost = useMemo(
     () => () => {
       if (state.next) {
-        dispatch({type: actionToolsTypes.LOADING_NEXT});
         http
           .request({
             url: state.next,

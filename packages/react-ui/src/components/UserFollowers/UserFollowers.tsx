@@ -166,7 +166,6 @@ export default function UserFollowers(inProps: UserFollowersProps): JSX.Element 
   const fetchFollowers = useMemo(
     () => () => {
       if (state.next) {
-        dispatch({type: actionToolsTypes.LOADING_NEXT});
         http
           .request({
             url: state.next,
