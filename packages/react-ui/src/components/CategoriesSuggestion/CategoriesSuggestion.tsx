@@ -171,6 +171,7 @@ export default function CategoriesSuggestion(inProps: CategoriesListProps): JSX.
    */
   useEffect(() => {
     if (scUserContext.user && cacheStrategy === CacheStrategies.NETWORK_ONLY) {
+      console.log('fetch categorie network');
       fetchCategoriesSuggestion();
       onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
     }
