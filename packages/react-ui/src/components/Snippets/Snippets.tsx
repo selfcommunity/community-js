@@ -266,7 +266,7 @@ export default function Snippets(inProps: SnippetsProps): JSX.Element {
             </div>
           ))}
         </List>
-        {total && deleteIconProps.show && (
+        {total && deleteIconProps && deleteIconProps.show && (
           <Box className={classes.deleteSection}>
             <Icon onClick={deleteIconProps.action}>{deleteIconProps.name}</Icon>
           </Box>
