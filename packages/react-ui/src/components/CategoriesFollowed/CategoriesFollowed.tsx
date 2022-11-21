@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useReducer, useState} from 'react';
+import React, {useContext, useEffect, useMemo, useReducer, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
 import {Button, CardContent, ListItem, Typography, useMediaQuery, useTheme} from '@mui/material';
@@ -139,44 +139,48 @@ export default function CategoriesFollowed(inProps: CategoriesListProps): JSX.El
   /**
    * fetches Categories Followed
    */
-  function fetchCategoriesFollowed() {
-    if (state.next) {
-      dispatch({type: actionToolsTypes.LOADING_NEXT});
-      http
-        .request({
-          url: state.next,
-          method: Endpoints.FollowedCategories.method
-        })
-        .then((res: HttpResponse<any>) => {
-          if (isMountedRef.current) {
-            const data = res.data;
-            dispatch({
-              type: actionToolsTypes.LOAD_NEXT_SUCCESS,
-              payload: {
-                results: data,
-                count: data.length
-              }
-            });
-          }
-        })
-        .catch((error) => {
-          dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
-          Logger.error(SCOPE_SC_UI, error);
-        });
-    }
+  function fetchCategoriesFollowed(ignore) {
+    return http
+      .request({
+        url: state.next,
+        method: Endpoints.FollowedCategories.method
+      })
+      .then((res: HttpResponse<any>) => {
+        if (res.status < 300 && isMountedRef.current && !ignore) {
+          const data = res.data;
+          dispatch({
+            type: actionToolsTypes.LOAD_NEXT_SUCCESS,
+            payload: {
+              results: data,
+              count: data.length
+            }
+          });
+        }
+      })
+      .catch((error) => {
+        dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
+        Logger.error(SCOPE_SC_UI, error);
+      });
   }
-
-  /**
-   * On mount, fetches the list of categories followed
-   */
   useEffect(() => {
     if (!userId) {
       return;
     } else if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
-      fetchCategoriesFollowed();
       onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
     }
   }, [authUserId]);
+  /**
+   * On mount, fetches the list of categories followed
+   */
+  useEffect(() => {
+    let ignore = false;
+    if (state.isLoadingNext) {
+      fetchCategoriesFollowed(ignore);
+      return () => {
+        ignore = true;
+      };
+    }
+  }, [state.isLoadingNext]);
 
   /**
    * Virtual feed update
@@ -228,7 +232,7 @@ export default function CategoriesFollowed(inProps: CategoriesListProps): JSX.El
               ) : (
                 <InfiniteScroll
                   dataLength={state.results.length}
-                  next={fetchCategoriesFollowed}
+                  next={() => fetchCategoriesFollowed(false)}
                   hasMoreNext={Boolean(state.next)}
                   loaderNext={<CentralProgress size={30} />}
                   height={isMobile ? '100vh' : 400}

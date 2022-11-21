@@ -117,7 +117,7 @@ export default function PeopleSuggestion(inProps: PeopleSuggestionProps): JSX.El
     dataToolsReducer,
     {
       isLoadingNext: true,
-      next: Endpoints.UserSuggestion.url({}),
+      next: `${Endpoints.UserSuggestion.url()}?limit=10`,
       cacheKey: SCCache.getToolsStateCacheKey(SCCache.PEOPLE_SUGGESTION_TOOLS_STATE_CACHE_PREFIX_KEY),
       cacheStrategy,
       visibleItems: limit
@@ -150,14 +150,14 @@ export default function PeopleSuggestion(inProps: PeopleSuggestionProps): JSX.El
    * Fetches user suggestion list
    */
   const fetchUserSuggestion = useMemo(
-    () => () => {
-      http
+    () => (ignore) => {
+      return http
         .request({
           url: Endpoints.UserSuggestion.url(),
           method: Endpoints.UserSuggestion.method
         })
         .then((res: HttpResponse<any>) => {
-          if (res.status < 300 && isMountedRef.current) {
+          if (res.status < 300 && isMountedRef.current && !ignore) {
             const data = res.data;
             dispatch({
               type: actionToolsTypes.LOAD_NEXT_SUCCESS,
@@ -183,16 +183,24 @@ export default function PeopleSuggestion(inProps: PeopleSuggestionProps): JSX.El
   function loadPeople(n) {
     dispatch({type: actionToolsTypes.SET_VISIBLE_ITEMS, payload: {visibleItems: state.visibleItems + n}});
   }
-
+  useEffect(() => {
+    if (scUserContext.user && cacheStrategy === CacheStrategies.NETWORK_ONLY) {
+      onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
+    }
+  }, [authUserId]);
   /**
    * On mount, fetches people suggestion list
    */
   useEffect(() => {
-    if (scUserContext.user && cacheStrategy === CacheStrategies.NETWORK_ONLY) {
-      fetchUserSuggestion();
-      onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
+    let ignore = false;
+    if (state.isLoadingNext && scUserContext.user) {
+      fetchUserSuggestion(ignore);
+
+      return () => {
+        ignore = true;
+      };
     }
-  }, [authUserId]);
+  }, [state.isLoadingNext, authUserId]);
 
   /**
    * Virtual feed update

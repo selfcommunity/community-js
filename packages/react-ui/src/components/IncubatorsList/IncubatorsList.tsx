@@ -177,44 +177,50 @@ export default function IncubatorsList(inProps: IncubatorsListProps): JSX.Elemen
    * Fetches incubators list
    */
   const fetchIncubators = useMemo(
-    () => () => {
-      if (state.next) {
-        http
-          .request({
-            url: state.next,
-            method: Endpoints.GetAllIncubators.method
-          })
-          .then((res: HttpResponse<any>) => {
-            if (res.status < 300 && isMountedRef.current) {
-              const data = res.data;
-              dispatch({
-                type: actionToolsTypes.LOAD_NEXT_SUCCESS,
-                payload: {
-                  results: data.results,
-                  count: data.count,
-                  next: data.next
-                }
-              });
-            }
-          })
-          .catch((error) => {
-            dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
-            Logger.error(SCOPE_SC_UI, error);
-          });
-      }
+    () => (ignore) => {
+      return http
+        .request({
+          url: state.next,
+          method: Endpoints.GetAllIncubators.method
+        })
+        .then((res: HttpResponse<any>) => {
+          if (res.status < 300 && isMountedRef.current && !ignore) {
+            const data = res.data;
+            dispatch({
+              type: actionToolsTypes.LOAD_NEXT_SUCCESS,
+              payload: {
+                results: data.results,
+                count: data.count,
+                next: data.next
+              }
+            });
+          }
+        })
+        .catch((error) => {
+          dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
+          Logger.error(SCOPE_SC_UI, error);
+        });
     },
     [dispatch, state.next, state.isLoadingNext]
   );
+  useEffect(() => {
+    if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
+      onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
+    }
+  }, []);
 
   /**
    * On mount, fetches  incubators list
    */
   useEffect(() => {
-    if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
-      fetchIncubators();
-      onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
+    let ignore = false;
+    if (state.isLoadingNext) {
+      fetchIncubators(ignore);
+      return () => {
+        ignore = true;
+      };
     }
-  }, []);
+  }, [state.isLoadingNext]);
 
   /**
    * Handles subscriptions counter update on subscribe/unsubscribe action.
@@ -312,7 +318,7 @@ export default function IncubatorsList(inProps: IncubatorsListProps): JSX.Elemen
           ) : (
             <InfiniteScroll
               dataLength={state.results.length}
-              next={fetchIncubators}
+              next={() => fetchIncubators(false)}
               hasMoreNext={Boolean(state.next)}
               loaderNext={<CentralProgress size={30} />}
               height={400}

@@ -164,48 +164,54 @@ export default function UserFollowers(inProps: UserFollowersProps): JSX.Element 
    * Fetches the list of users followers
    */
   const fetchFollowers = useMemo(
-    () => () => {
-      if (state.next) {
-        http
-          .request({
-            url: state.next,
-            method: Endpoints.UserFollowers.method
-          })
-          .then((res: HttpResponse<any>) => {
-            if (res.status < 300 && isMountedRef.current) {
-              const data = res.data;
-              dispatch({
-                type: actionToolsTypes.LOAD_NEXT_SUCCESS,
-                payload: {
-                  results: data.results,
-                  count: data.count,
-                  next: data.next
-                }
-              });
-            }
-          })
-          .catch((error) => {
-            dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
-            Logger.error(SCOPE_SC_UI, error);
-          });
-      }
+    () => (ignore) => {
+      return http
+        .request({
+          url: state.next,
+          method: Endpoints.UserFollowers.method
+        })
+        .then((res: HttpResponse<any>) => {
+          if (res.status < 300 && isMountedRef.current && !ignore) {
+            const data = res.data;
+            dispatch({
+              type: actionToolsTypes.LOAD_NEXT_SUCCESS,
+              payload: {
+                results: data.results,
+                count: data.count,
+                next: data.next
+              }
+            });
+          }
+        })
+        .catch((error) => {
+          dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
+          Logger.error(SCOPE_SC_UI, error);
+        });
     },
     [dispatch, state.next, state.isLoadingNext]
   );
 
+  useEffect(() => {
+    if (!userId) {
+      return;
+    } else if (!contentAvailability && !authUserId) {
+      return;
+    } else if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
+      onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
+    }
+  }, [authUserId]);
   /**
    * On mount, fetches the list of users followers
    */
   useEffect(() => {
-    if (!userId) {
-      return;
-    } else if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
-      fetchFollowers();
-      onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
-    } else if (!contentAvailability && !authUserId) {
-      return;
+    let ignore = false;
+    if (state.isLoadingNext) {
+      fetchFollowers(ignore);
+      return () => {
+        ignore = true;
+      };
     }
-  }, [authUserId]);
+  }, [state.isLoadingNext]);
 
   /**
    * Virtual feed update
@@ -219,27 +225,20 @@ export default function UserFollowers(inProps: UserFollowersProps): JSX.Element 
    * @param user
    */
   function handleFollowersUpdate(user) {
-    if (scUserContext.user['id'] === userId) {
+    const newUsers = [...state.results];
+    const index = newUsers.findIndex((u) => u.id === user.id);
+    if (index !== -1) {
+      if (user.connection_status === 'followed') {
+        newUsers[index].followers_counter = user.followers_counter - 1;
+        newUsers[index].connection_status = null;
+      } else {
+        newUsers[index].followers_counter = user.followers_counter + 1;
+        newUsers[index].connection_status = 'followed';
+      }
       dispatch({
         type: actionToolsTypes.SET_RESULTS,
-        payload: {results: state.results.filter((u) => u.id !== user.id), count: state.count - 1}
+        payload: {results: newUsers}
       });
-    } else {
-      const newUsers = [...state.results];
-      const index = newUsers.findIndex((u) => u.id === user.id);
-      if (index !== -1) {
-        if (user.connection_status === 'followed') {
-          newUsers[index].followers_counter = user.followers_counter - 1;
-          newUsers[index].connection_status = null;
-        } else {
-          newUsers[index].followers_counter = user.followers_counter + 1;
-          newUsers[index].connection_status = 'followed';
-        }
-        dispatch({
-          type: actionToolsTypes.SET_RESULTS,
-          payload: {results: newUsers}
-        });
-      }
     }
   }
 
@@ -292,7 +291,7 @@ export default function UserFollowers(inProps: UserFollowersProps): JSX.Element 
               ) : (
                 <InfiniteScroll
                   dataLength={state.results.length}
-                  next={fetchFollowers}
+                  next={() => fetchFollowers(false)}
                   hasMoreNext={Boolean(state.next)}
                   loaderNext={<CentralProgress size={30} />}
                   height={isMobile ? '100vh' : 400}
