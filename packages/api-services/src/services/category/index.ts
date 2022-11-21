@@ -21,7 +21,7 @@ export interface CategoryApiClientInterface {
   followCategory(id: number | string, config?: AxiosRequestConfig): Promise<any>;
   checkCategoryIsFollowed(id: number | string, config?: AxiosRequestConfig): Promise<SCCategoryFollowedStatusType>;
   getFollowedCategories(params?: CategoryParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCategoryType>>;
-  getPopularCategories(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCategoryType>>;
+  getPopularCategories(config?: AxiosRequestConfig, params?: BaseGetParams): Promise<SCPaginatedResponse<SCCategoryType>>;
 }
 
 /**
@@ -179,9 +179,9 @@ export class CategoryApiClient {
    * @param params
    * @param config
    */
-  static getPopularCategories(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCategoryType>> {
+  static getPopularCategories(config?: AxiosRequestConfig, params?: BaseGetParams): Promise<SCPaginatedResponse<SCCategoryType>> {
     const p = urlParams(params);
-    return apiRequest({url: `${Endpoints.PopularCategories.url({})}?${p.toString()}`, method: Endpoints.PopularCategories.method, ...config});
+    return apiRequest({...config, url: `${Endpoints.PopularCategories.url({})}?${p.toString()}`, method: Endpoints.PopularCategories.method});
   }
 }
 
@@ -284,7 +284,7 @@ export default class CategoryService {
     return CategoryApiClient.getFollowedCategories(params, config);
   }
 
-  static async getPopularCategories(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCategoryType>> {
-    return CategoryApiClient.getPopularCategories(params, config);
+  static async getPopularCategories(config?: AxiosRequestConfig, params?: BaseGetParams): Promise<SCPaginatedResponse<SCCategoryType>> {
+    return CategoryApiClient.getPopularCategories(config, params);
   }
 }

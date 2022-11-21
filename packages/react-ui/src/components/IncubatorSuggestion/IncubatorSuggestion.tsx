@@ -157,42 +157,47 @@ export default function IncubatorSuggestion(inProps: IncubatorSuggestionProps): 
   /**
    * Fetches incubator suggestion list
    */
-  function fetchIncubatorSuggestion() {
-    if (state.next) {
-      dispatch({type: actionToolsTypes.LOADING_NEXT});
-      http
-        .request({
-          url: state.next,
-          method: Endpoints.GetIncubatorSuggestion.method
-        })
-        .then((res: HttpResponse<any>) => {
-          if (isMountedRef.current) {
-            const data = res.data;
-            dispatch({
-              type: actionToolsTypes.LOAD_NEXT_SUCCESS,
-              payload: {
-                results: data,
-                count: data.length
-              }
-            });
-          }
-        })
-        .catch((error) => {
-          dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
-          Logger.error(SCOPE_SC_UI, error);
-        });
-    }
+  function fetchIncubatorSuggestion(ignore) {
+    return http
+      .request({
+        url: state.next,
+        method: Endpoints.GetIncubatorSuggestion.method
+      })
+      .then((res: HttpResponse<any>) => {
+        if (isMountedRef.current && !ignore) {
+          const data = res.data;
+          dispatch({
+            type: actionToolsTypes.LOAD_NEXT_SUCCESS,
+            payload: {
+              results: data,
+              count: data.length
+            }
+          });
+        }
+      })
+      .catch((error) => {
+        dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
+        Logger.error(SCOPE_SC_UI, error);
+      });
   }
 
+  useEffect(() => {
+    if (scUserContext.user && cacheStrategy === CacheStrategies.NETWORK_ONLY) {
+      onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
+    }
+  }, [authUserId]);
   /**
    * On mount, if user is authenticated, fetches suggested incubators list
    */
   useEffect(() => {
-    if (scUserContext.user && cacheStrategy === CacheStrategies.NETWORK_ONLY) {
-      fetchIncubatorSuggestion();
-      onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
+    let ignore = false;
+    if (state.isLoadingNext) {
+      fetchIncubatorSuggestion(ignore);
+      return () => {
+        ignore = true;
+      };
     }
-  }, [authUserId]);
+  }, [state.isLoadingNext]);
 
   /**
    * Handles subscriptions counter update on subscribe/unsubscribe action.
@@ -264,7 +269,7 @@ export default function IncubatorSuggestion(inProps: IncubatorSuggestionProps): 
           ) : (
             <InfiniteScroll
               dataLength={state.results.length}
-              next={fetchIncubatorSuggestion}
+              next={() => fetchIncubatorSuggestion(false)}
               hasMoreNext={Boolean(state.next)}
               loaderNext={<CentralProgress size={30} />}
               height={isMobile ? '100vh' : 400}

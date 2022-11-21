@@ -158,44 +158,49 @@ export default function TrendingPeople(inProps: TrendingPeopleProps): JSX.Elemen
    * Fetches trending people list
    */
   const fetchTrendingPeople = useMemo(
-    () => () => {
-      if (state.next) {
-        http
-          .request({
-            url: state.next,
-            method: Endpoints.CategoryTrendingPeople.method
-          })
-          .then((res: HttpResponse<any>) => {
-            if (res.status < 300 && isMountedRef.current) {
-              const data = res.data;
-              dispatch({
-                type: actionToolsTypes.LOAD_NEXT_SUCCESS,
-                payload: {
-                  results: data.results,
-                  count: data.count,
-                  next: data.next
-                }
-              });
-            }
-          })
-          .catch((error) => {
-            dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
-            Logger.error(SCOPE_SC_UI, error);
-          });
-      }
+    () => (ignore) => {
+      return http
+        .request({
+          url: state.next,
+          method: Endpoints.CategoryTrendingPeople.method
+        })
+        .then((res: HttpResponse<any>) => {
+          if (res.status < 300 && isMountedRef.current && !ignore) {
+            const data = res.data;
+            dispatch({
+              type: actionToolsTypes.LOAD_NEXT_SUCCESS,
+              payload: {
+                results: data.results,
+                count: data.count,
+                next: data.next
+              }
+            });
+          }
+        })
+        .catch((error) => {
+          dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
+          Logger.error(SCOPE_SC_UI, error);
+        });
     },
     [dispatch, state.next, state.isLoadingNext]
   );
-
+  useEffect(() => {
+    if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
+      onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
+    }
+  }, []);
   /**
    * On mount, fetches trending people list
    */
   useEffect(() => {
-    if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
-      fetchTrendingPeople();
-      onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
+    let ignore = false;
+    if (state.isLoadingNext) {
+      fetchTrendingPeople(ignore);
+      return () => {
+        ignore = true;
+      };
     }
-  }, []);
+  }, [state.isLoadingNext]);
 
   /**
    * Handles followers counter update on follow/unfollow action.
@@ -268,7 +273,7 @@ export default function TrendingPeople(inProps: TrendingPeopleProps): JSX.Elemen
           ) : (
             <InfiniteScroll
               dataLength={state.results.length}
-              next={fetchTrendingPeople}
+              next={() => fetchTrendingPeople(false)}
               hasMoreNext={Boolean(state.next)}
               loaderNext={<CentralProgress size={30} />}
               height={isMobile ? '100vh' : 400}

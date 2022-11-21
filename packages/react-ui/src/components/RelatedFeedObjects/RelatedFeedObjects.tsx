@@ -192,10 +192,12 @@ export default function RelatedFeedObjects(inProps: RelatedFeedObjectsProps): JS
         !preferences[SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED])
     ) {
       return (
-        <CustomAdv
-          position={SCCustomAdvPosition.POSITION_RELATED_POSTS_COLUMN}
-          {...(obj.categories.length && {categoriesId: obj.categories.map((c) => c.id)})}
-        />
+        <ListItem>
+          <CustomAdv
+            position={SCCustomAdvPosition.POSITION_RELATED_POSTS_COLUMN}
+            {...(obj.categories.length && {categoriesId: obj.categories.map((c) => c.id)})}
+          />
+        </ListItem>
       );
     }
     return null;
@@ -205,15 +207,15 @@ export default function RelatedFeedObjects(inProps: RelatedFeedObjectsProps): JS
    * Fetches related discussions list
    */
   const fetchRelated = useMemo(
-    () => () => {
+    () => (ignore) => {
       if (state.next) {
-        http
+        return http
           .request({
             url: state.next,
             method: Endpoints.RelatedFeedObjects.method
           })
           .then((res: HttpResponse<any>) => {
-            if (res.status < 300 && isMountedRef.current) {
+            if (res.status < 300 && isMountedRef.current && !ignore) {
               const data = res.data;
               dispatch({
                 type: actionToolsTypes.LOAD_NEXT_SUCCESS,
@@ -234,15 +236,24 @@ export default function RelatedFeedObjects(inProps: RelatedFeedObjectsProps): JS
     [dispatch, state.next, state.isLoadingNext]
   );
 
+  useEffect(() => {
+    if (objId !== null && cacheStrategy === CacheStrategies.NETWORK_ONLY) {
+      onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
+    }
+  }, [objId]);
+
   /**
    * On mount, fetches related discussions list
    */
   useEffect(() => {
-    if (objId !== null && cacheStrategy === CacheStrategies.NETWORK_ONLY) {
-      fetchRelated();
-      onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
+    let ignore = false;
+    if (state.isLoadingNext) {
+      fetchRelated(ignore);
+      return () => {
+        ignore = true;
+      };
     }
-  }, [objId]);
+  }, [state.isLoadingNext]);
 
   /**
    * Renders related discussions list
@@ -269,7 +280,7 @@ export default function RelatedFeedObjects(inProps: RelatedFeedObjectsProps): JS
                   <ListItem>
                     <FeedObject elevation={0} feedObject={obj} template={template} className={classes.relatedItem} {...FeedObjectProps} />
                   </ListItem>
-                  {advPosition === index && <ListItem>{renderAdvertising()}</ListItem>}
+                  {advPosition === index && renderAdvertising()}
                 </React.Fragment>
               );
             })}
@@ -291,7 +302,7 @@ export default function RelatedFeedObjects(inProps: RelatedFeedObjectsProps): JS
           ) : (
             <InfiniteScroll
               dataLength={state.results.length}
-              next={fetchRelated}
+              next={() => fetchRelated(false)}
               hasMoreNext={Boolean(state.next)}
               loaderNext={<CentralProgress size={30} />}
               height={400}

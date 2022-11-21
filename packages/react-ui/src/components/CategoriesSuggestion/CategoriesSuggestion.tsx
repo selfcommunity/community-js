@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useReducer, useState} from 'react';
+import React, {useContext, useEffect, useMemo, useReducer, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Button, CardContent, List, ListItem, Typography} from '@mui/material';
 import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
@@ -104,7 +104,7 @@ export default function CategoriesSuggestion(inProps: CategoriesListProps): JSX.
     dataToolsReducer,
     {
       isLoadingNext: true,
-      next: Endpoints.CategoriesSuggestion.url({}),
+      next: `${Endpoints.CategoriesSuggestion.url()}?limit=10`,
       cacheKey: SCCache.getToolsStateCacheKey(SCCache.CATEGORIES_SUGGESTION_TOOLS_STATE_CACHE_PREFIX_KEY),
       cacheStrategy,
       visibleItems: limit
@@ -135,29 +135,33 @@ export default function CategoriesSuggestion(inProps: CategoriesListProps): JSX.
   /**
    * Fetches categories suggestion list
    */
-  function fetchCategoriesSuggestion() {
-    http
-      .request({
-        url: Endpoints.CategoriesSuggestion.url(),
-        method: Endpoints.CategoriesSuggestion.method
-      })
-      .then((res: HttpResponse<any>) => {
-        if (isMountedRef.current) {
-          const data = res.data;
-          dispatch({
-            type: actionToolsTypes.LOAD_NEXT_SUCCESS,
-            payload: {
-              results: data.results,
-              count: data.results.length
-            }
-          });
-        }
-      })
-      .catch((error) => {
-        dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
-        console.log(error);
-      });
-  }
+  const fetchCategoriesSuggestion = useMemo(
+    () => (ignore) => {
+      return http
+        .request({
+          url: state.next,
+          method: Endpoints.CategoriesSuggestion.method
+        })
+        .then((res: HttpResponse<any>) => {
+          if (res.status < 300 && isMountedRef.current && !ignore) {
+            const data = res.data;
+            dispatch({
+              type: actionToolsTypes.LOAD_NEXT_SUCCESS,
+              payload: {
+                results: data.results,
+                count: data.count,
+                next: data.next
+              }
+            });
+          }
+        })
+        .catch((error) => {
+          dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
+          console.log(error);
+        });
+    },
+    [dispatch, state.next, state.isLoadingNext]
+  );
 
   /**
    * Loads more categories on "see more" button click
@@ -165,17 +169,23 @@ export default function CategoriesSuggestion(inProps: CategoriesListProps): JSX.
   function loadCategories(n) {
     dispatch({type: actionToolsTypes.SET_VISIBLE_ITEMS, payload: {visibleItems: state.visibleItems + n}});
   }
-
+  useEffect(() => {
+    if (scUserContext.user && cacheStrategy === CacheStrategies.NETWORK_ONLY) {
+      onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
+    }
+  }, [authUserId]);
   /**
    * On mount, fetches categories suggestion list
    */
   useEffect(() => {
-    if (scUserContext.user && cacheStrategy === CacheStrategies.NETWORK_ONLY) {
-      console.log('fetch categorie network');
-      fetchCategoriesSuggestion();
-      onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
+    let ignore = false;
+    if (state.isLoadingNext && scUserContext.user) {
+      fetchCategoriesSuggestion(ignore);
+      return () => {
+        ignore = true;
+      };
     }
-  }, [authUserId]);
+  }, [state.isLoadingNext, authUserId]);
 
   /**
    * Virtual feed update

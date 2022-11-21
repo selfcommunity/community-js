@@ -191,55 +191,62 @@ export default function UsersFollowed(inProps: UsersFollowedProps): JSX.Element 
    * Fetches the list of users followed
    */
   const fetchFollowed = useMemo(
-    () => () => {
-      if (state.next) {
-        http
-          .request({
-            url: state.next,
-            method: Endpoints.UsersFollowed.method
-          })
-          .then((res: HttpResponse<any>) => {
-            if (res.status < 300 && isMountedRef.current) {
-              const data = res.data;
-              dispatch({
-                type: actionToolsTypes.LOAD_NEXT_SUCCESS,
-                payload: {
-                  results: data.results,
-                  count: data.count,
-                  next: data.next
-                }
-              });
-            }
-          })
-          .catch((error) => {
-            dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
-            Logger.error(SCOPE_SC_UI, error);
-          });
-      }
+    () => (ignore) => {
+      return http
+        .request({
+          url: state.next,
+          method: Endpoints.UsersFollowed.method
+        })
+        .then((res: HttpResponse<any>) => {
+          if (res.status < 300 && isMountedRef.current && !ignore) {
+            const data = res.data;
+            dispatch({
+              type: actionToolsTypes.LOAD_NEXT_SUCCESS,
+              payload: {
+                results: data.results,
+                count: data.count,
+                next: data.next
+              }
+            });
+          }
+        })
+        .catch((error) => {
+          dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
+          Logger.error(SCOPE_SC_UI, error);
+        });
     },
     [dispatch, state.next, state.isLoadingNext]
   );
 
-  /**
-   * On mount, fetches the list of users followed
-   */
   useEffect(() => {
     if (!userId) {
       return;
     } else if (!contentAvailability && !scUserContext.user) {
       return;
     } else if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
-      fetchFollowed();
       onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
     }
   }, [authUserId]);
+
+  /**
+   * On mount, fetches the list of users followed
+   */
+  useEffect(() => {
+    let ignore = false;
+    if (state.isLoadingNext) {
+      fetchFollowed(ignore);
+      return () => {
+        ignore = true;
+      };
+    }
+  }, [state.isLoadingNext]);
 
   /**
    * Virtual feed update
    */
   useEffect(() => {
     onHeightChange && onHeightChange();
-  }, [state.results]);
+  }, [state.results.length]);
 
   /**
    * Renders the list of users followed
@@ -290,7 +297,7 @@ export default function UsersFollowed(inProps: UsersFollowedProps): JSX.Element 
               ) : (
                 <InfiniteScroll
                   dataLength={state.results.length}
-                  next={fetchFollowed}
+                  next={() => fetchFollowed(false)}
                   hasMoreNext={Boolean(state.next)}
                   loaderNext={<CentralProgress size={30} />}
                   height={isMobile ? '100vh' : 400}
