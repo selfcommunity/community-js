@@ -157,28 +157,11 @@ export default function IncubatorSuggestion(inProps: IncubatorSuggestionProps): 
   /**
    * Fetches incubator suggestion list
    */
-  function fetchIncubatorSuggestion(ignore) {
-    return http
-      .request({
-        url: state.next,
-        method: Endpoints.GetIncubatorSuggestion.method
-      })
-      .then((res: HttpResponse<any>) => {
-        if (isMountedRef.current && !ignore) {
-          const data = res.data;
-          dispatch({
-            type: actionToolsTypes.LOAD_NEXT_SUCCESS,
-            payload: {
-              results: data,
-              count: data.length
-            }
-          });
-        }
-      })
-      .catch((error) => {
-        dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
-        Logger.error(SCOPE_SC_UI, error);
-      });
+  function fetchIncubatorSuggestion() {
+    return http.request({
+      url: state.next,
+      method: Endpoints.GetIncubatorSuggestion.method
+    });
   }
 
   useEffect(() => {
@@ -191,13 +174,29 @@ export default function IncubatorSuggestion(inProps: IncubatorSuggestionProps): 
    */
   useEffect(() => {
     let ignore = false;
-    if (state.isLoadingNext) {
-      fetchIncubatorSuggestion(ignore);
+    if (state.next) {
+      fetchIncubatorSuggestion()
+        .then((res: HttpResponse<any>) => {
+          if (isMountedRef.current && !ignore) {
+            const data = res.data;
+            dispatch({
+              type: actionToolsTypes.LOAD_NEXT_SUCCESS,
+              payload: {
+                results: data,
+                count: data.length
+              }
+            });
+          }
+        })
+        .catch((error) => {
+          dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
+          Logger.error(SCOPE_SC_UI, error);
+        });
       return () => {
         ignore = true;
       };
     }
-  }, [state.isLoadingNext]);
+  }, [state.next]);
 
   /**
    * Handles subscriptions counter update on subscribe/unsubscribe action.
@@ -269,7 +268,7 @@ export default function IncubatorSuggestion(inProps: IncubatorSuggestionProps): 
           ) : (
             <InfiniteScroll
               dataLength={state.results.length}
-              next={() => fetchIncubatorSuggestion(false)}
+              next={fetchIncubatorSuggestion}
               hasMoreNext={Boolean(state.next)}
               loaderNext={<CentralProgress size={30} />}
               height={isMobile ? '100vh' : 400}

@@ -164,29 +164,11 @@ export default function UserFollowers(inProps: UserFollowersProps): JSX.Element 
    * Fetches the list of users followers
    */
   const fetchFollowers = useMemo(
-    () => (ignore) => {
-      return http
-        .request({
-          url: state.next,
-          method: Endpoints.UserFollowers.method
-        })
-        .then((res: HttpResponse<any>) => {
-          if (res.status < 300 && isMountedRef.current && !ignore) {
-            const data = res.data;
-            dispatch({
-              type: actionToolsTypes.LOAD_NEXT_SUCCESS,
-              payload: {
-                results: data.results,
-                count: data.count,
-                next: data.next
-              }
-            });
-          }
-        })
-        .catch((error) => {
-          dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
-          Logger.error(SCOPE_SC_UI, error);
-        });
+    () => () => {
+      return http.request({
+        url: state.next,
+        method: Endpoints.UserFollowers.method
+      });
     },
     [dispatch, state.next, state.isLoadingNext]
   );
@@ -205,13 +187,30 @@ export default function UserFollowers(inProps: UserFollowersProps): JSX.Element 
    */
   useEffect(() => {
     let ignore = false;
-    if (state.isLoadingNext) {
-      fetchFollowers(ignore);
+    if (state.next) {
+      fetchFollowers()
+        .then((res: HttpResponse<any>) => {
+          if (res.status < 300 && isMountedRef.current && !ignore) {
+            const data = res.data;
+            dispatch({
+              type: actionToolsTypes.LOAD_NEXT_SUCCESS,
+              payload: {
+                results: data.results,
+                count: data.count,
+                next: data.next
+              }
+            });
+          }
+        })
+        .catch((error) => {
+          dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
+          Logger.error(SCOPE_SC_UI, error);
+        });
       return () => {
         ignore = true;
       };
     }
-  }, [state.isLoadingNext]);
+  }, [state.next]);
 
   /**
    * Virtual feed update
@@ -291,7 +290,7 @@ export default function UserFollowers(inProps: UserFollowersProps): JSX.Element 
               ) : (
                 <InfiniteScroll
                   dataLength={state.results.length}
-                  next={() => fetchFollowers(false)}
+                  next={fetchFollowers}
                   hasMoreNext={Boolean(state.next)}
                   loaderNext={<CentralProgress size={30} />}
                   height={isMobile ? '100vh' : 400}

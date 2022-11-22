@@ -158,12 +158,26 @@ export default function TrendingPeople(inProps: TrendingPeopleProps): JSX.Elemen
    * Fetches trending people list
    */
   const fetchTrendingPeople = useMemo(
-    () => (ignore) => {
-      return http
-        .request({
-          url: state.next,
-          method: Endpoints.CategoryTrendingPeople.method
-        })
+    () => () => {
+      return http.request({
+        url: state.next,
+        method: Endpoints.CategoryTrendingPeople.method
+      });
+    },
+    [dispatch, state.next, state.isLoadingNext]
+  );
+  useEffect(() => {
+    if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
+      onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
+    }
+  }, []);
+  /**
+   * On mount, fetches trending people list
+   */
+  useEffect(() => {
+    let ignore = false;
+    if (state.next) {
+      fetchTrendingPeople()
         .then((res: HttpResponse<any>) => {
           if (res.status < 300 && isMountedRef.current && !ignore) {
             const data = res.data;
@@ -181,26 +195,11 @@ export default function TrendingPeople(inProps: TrendingPeopleProps): JSX.Elemen
           dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
           Logger.error(SCOPE_SC_UI, error);
         });
-    },
-    [dispatch, state.next, state.isLoadingNext]
-  );
-  useEffect(() => {
-    if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
-      onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
-    }
-  }, []);
-  /**
-   * On mount, fetches trending people list
-   */
-  useEffect(() => {
-    let ignore = false;
-    if (state.isLoadingNext) {
-      fetchTrendingPeople(ignore);
       return () => {
         ignore = true;
       };
     }
-  }, [state.isLoadingNext]);
+  }, [state.next]);
 
   /**
    * Handles followers counter update on follow/unfollow action.
@@ -273,7 +272,7 @@ export default function TrendingPeople(inProps: TrendingPeopleProps): JSX.Elemen
           ) : (
             <InfiniteScroll
               dataLength={state.results.length}
-              next={() => fetchTrendingPeople(false)}
+              next={fetchTrendingPeople}
               hasMoreNext={Boolean(state.next)}
               loaderNext={<CentralProgress size={30} />}
               height={isMobile ? '100vh' : 400}

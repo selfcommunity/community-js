@@ -102,12 +102,27 @@ export default function CategoriesPopular(inProps: CategoriesListProps): JSX.Ele
    * Fetches popular categories list
    */
   const fetchPopularCategories = useMemo(
-    () => (ignore) => {
-      return http
-        .request({
-          url: state.next,
-          method: Endpoints.PopularCategories.method
-        })
+    () => () => {
+      return http.request({
+        url: state.next,
+        method: Endpoints.PopularCategories.method
+      });
+    },
+    [dispatch, state.next, state.isLoadingNext]
+  );
+  useEffect(() => {
+    if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
+      onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
+      // dispatch({type: actionToolsTypes.LOADING_NEXT});
+    }
+  }, []);
+  /**
+   * On mount, fetches popular categories list
+   */
+  useEffect(() => {
+    let ignore = false;
+    if (state.next) {
+      fetchPopularCategories()
         .then((res: HttpResponse<any>) => {
           if (res.status < 300 && isMountedRef.current && !ignore) {
             const data = res.data;
@@ -125,26 +140,11 @@ export default function CategoriesPopular(inProps: CategoriesListProps): JSX.Ele
           dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
           Logger.error(SCOPE_SC_UI, error);
         });
-    },
-    [dispatch, state.next, state.isLoadingNext]
-  );
-  useEffect(() => {
-    if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
-      onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
-    }
-  }, []);
-  /**
-   * On mount, fetches popular categories list
-   */
-  useEffect(() => {
-    let ignore = false;
-    if (state.isLoadingNext) {
-      fetchPopularCategories(ignore);
       return () => {
         ignore = true;
       };
     }
-  }, [state.isLoadingNext]);
+  }, [state.next]);
 
   /**
    * Handles followers counter update on follow/unfollow action.
@@ -209,7 +209,7 @@ export default function CategoriesPopular(inProps: CategoriesListProps): JSX.Ele
           ) : (
             <InfiniteScroll
               dataLength={state.results.length}
-              next={() => fetchPopularCategories(false)}
+              next={fetchPopularCategories}
               hasMoreNext={Boolean(state.next)}
               loaderNext={<CentralProgress size={30} />}
               height={isMobile ? '100vh' : 400}
