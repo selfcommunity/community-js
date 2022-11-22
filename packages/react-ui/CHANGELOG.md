@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.29](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.28...@selfcommunity/react-ui@0.7.0-alpha.29) (2022-11-21)
+
+
+### Bug Fixes
+
+* fixed widget cached results when react strict is enabled ([5a5b0f3](https://github.com/selfcommunity/community-js/commit/5a5b0f3ed437529b4efcef397f5b40730e123f7c))
+
+
+
+
+
+# [0.7.0-alpha.28](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.27...@selfcommunity/react-ui@0.7.0-alpha.28) (2022-11-18)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
 # [0.7.0-alpha.27](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.26...@selfcommunity/react-ui@0.7.0-alpha.27) (2022-11-15)
 
 

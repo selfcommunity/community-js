@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.6-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.6-alpha.5...@selfcommunity/api-services@0.3.6-alpha.6) (2022-11-21)
+
+
+### Bug Fixes
+
+* fixed widget cached results when react strict is enabled ([5a5b0f3](https://github.com/selfcommunity/community-js/commit/5a5b0f3ed437529b4efcef397f5b40730e123f7c))
+
+
+
+
+
 ## [0.3.6-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.6-alpha.4...@selfcommunity/api-services@0.3.6-alpha.5) (2022-11-02)
 
 **Note:** Version bump only for package @selfcommunity/api-services
