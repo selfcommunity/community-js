@@ -177,12 +177,27 @@ export default function IncubatorsList(inProps: IncubatorsListProps): JSX.Elemen
    * Fetches incubators list
    */
   const fetchIncubators = useMemo(
-    () => (ignore) => {
-      return http
-        .request({
-          url: state.next,
-          method: Endpoints.GetAllIncubators.method
-        })
+    () => () => {
+      return http.request({
+        url: state.next,
+        method: Endpoints.GetAllIncubators.method
+      });
+    },
+    [dispatch, state.next, state.isLoadingNext]
+  );
+  useEffect(() => {
+    if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
+      onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
+    }
+  }, []);
+
+  /**
+   * On mount, fetches  incubators list
+   */
+  useEffect(() => {
+    let ignore = false;
+    if (state.next) {
+      fetchIncubators()
         .then((res: HttpResponse<any>) => {
           if (res.status < 300 && isMountedRef.current && !ignore) {
             const data = res.data;
@@ -200,27 +215,11 @@ export default function IncubatorsList(inProps: IncubatorsListProps): JSX.Elemen
           dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
           Logger.error(SCOPE_SC_UI, error);
         });
-    },
-    [dispatch, state.next, state.isLoadingNext]
-  );
-  useEffect(() => {
-    if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
-      onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
-    }
-  }, []);
-
-  /**
-   * On mount, fetches  incubators list
-   */
-  useEffect(() => {
-    let ignore = false;
-    if (state.isLoadingNext) {
-      fetchIncubators(ignore);
       return () => {
         ignore = true;
       };
     }
-  }, [state.isLoadingNext]);
+  }, [state.next]);
 
   /**
    * Handles subscriptions counter update on subscribe/unsubscribe action.
@@ -318,7 +317,7 @@ export default function IncubatorsList(inProps: IncubatorsListProps): JSX.Elemen
           ) : (
             <InfiniteScroll
               dataLength={state.results.length}
-              next={() => fetchIncubators(false)}
+              next={fetchIncubators}
               hasMoreNext={Boolean(state.next)}
               loaderNext={<CentralProgress size={30} />}
               height={400}

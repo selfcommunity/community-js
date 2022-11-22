@@ -146,29 +146,11 @@ export default function TrendingFeed(inProps: TrendingFeedProps): JSX.Element {
    * Fetches a list of trending posts
    */
   const fetchTrendingPost = useMemo(
-    () => (ignore) => {
-      return http
-        .request({
-          url: state.next,
-          method: Endpoints.CategoryTrendingFeed.method
-        })
-        .then((res: HttpResponse<any>) => {
-          if (res.status < 300 && isMountedRef.current && !ignore) {
-            const data = res.data;
-            dispatch({
-              type: actionToolsTypes.LOAD_NEXT_SUCCESS,
-              payload: {
-                results: data.results,
-                count: data.count,
-                next: data.next
-              }
-            });
-          }
-        })
-        .catch((error) => {
-          dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
-          Logger.error(SCOPE_SC_UI, error);
-        });
+    () => () => {
+      return http.request({
+        url: state.next,
+        method: Endpoints.CategoryTrendingFeed.method
+      });
     },
     [dispatch, state.next, state.isLoadingNext]
   );
@@ -188,13 +170,30 @@ export default function TrendingFeed(inProps: TrendingFeedProps): JSX.Element {
    */
   useEffect(() => {
     let ignore = false;
-    if (state.isLoadingNext) {
-      fetchTrendingPost(ignore);
+    if (state.next) {
+      fetchTrendingPost()
+        .then((res: HttpResponse<any>) => {
+          if (res.status < 300 && isMountedRef.current && !ignore) {
+            const data = res.data;
+            dispatch({
+              type: actionToolsTypes.LOAD_NEXT_SUCCESS,
+              payload: {
+                results: data.results,
+                count: data.count,
+                next: data.next
+              }
+            });
+          }
+        })
+        .catch((error) => {
+          dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
+          Logger.error(SCOPE_SC_UI, error);
+        });
       return () => {
         ignore = true;
       };
     }
-  }, [state.isLoadingNext]);
+  }, [state.next]);
 
   /**
    * Renders the list
@@ -237,7 +236,7 @@ export default function TrendingFeed(inProps: TrendingFeedProps): JSX.Element {
           ) : (
             <InfiniteScroll
               dataLength={state.results.length}
-              next={() => fetchTrendingPost(false)}
+              next={fetchTrendingPost}
               hasMoreNext={Boolean(state.next)}
               loaderNext={<CentralProgress size={30} />}
               height={400}

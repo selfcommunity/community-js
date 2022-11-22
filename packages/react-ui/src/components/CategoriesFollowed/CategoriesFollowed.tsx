@@ -139,28 +139,11 @@ export default function CategoriesFollowed(inProps: CategoriesListProps): JSX.El
   /**
    * fetches Categories Followed
    */
-  function fetchCategoriesFollowed(ignore) {
-    return http
-      .request({
-        url: state.next,
-        method: Endpoints.FollowedCategories.method
-      })
-      .then((res: HttpResponse<any>) => {
-        if (res.status < 300 && isMountedRef.current && !ignore) {
-          const data = res.data;
-          dispatch({
-            type: actionToolsTypes.LOAD_NEXT_SUCCESS,
-            payload: {
-              results: data,
-              count: data.length
-            }
-          });
-        }
-      })
-      .catch((error) => {
-        dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
-        Logger.error(SCOPE_SC_UI, error);
-      });
+  function fetchCategoriesFollowed() {
+    return http.request({
+      url: state.next,
+      method: Endpoints.FollowedCategories.method
+    });
   }
   useEffect(() => {
     if (!userId) {
@@ -174,13 +157,29 @@ export default function CategoriesFollowed(inProps: CategoriesListProps): JSX.El
    */
   useEffect(() => {
     let ignore = false;
-    if (state.isLoadingNext) {
-      fetchCategoriesFollowed(ignore);
+    if (state.next) {
+      fetchCategoriesFollowed()
+        .then((res: HttpResponse<any>) => {
+          if (res.status < 300 && isMountedRef.current && !ignore) {
+            const data = res.data;
+            dispatch({
+              type: actionToolsTypes.LOAD_NEXT_SUCCESS,
+              payload: {
+                results: data,
+                count: data.length
+              }
+            });
+          }
+        })
+        .catch((error) => {
+          dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
+          Logger.error(SCOPE_SC_UI, error);
+        });
       return () => {
         ignore = true;
       };
     }
-  }, [state.isLoadingNext]);
+  }, [state.next]);
 
   /**
    * Virtual feed update
@@ -232,7 +231,7 @@ export default function CategoriesFollowed(inProps: CategoriesListProps): JSX.El
               ) : (
                 <InfiniteScroll
                   dataLength={state.results.length}
-                  next={() => fetchCategoriesFollowed(false)}
+                  next={fetchCategoriesFollowed}
                   hasMoreNext={Boolean(state.next)}
                   loaderNext={<CentralProgress size={30} />}
                   height={isMobile ? '100vh' : 400}

@@ -136,29 +136,11 @@ export default function CategoriesSuggestion(inProps: CategoriesListProps): JSX.
    * Fetches categories suggestion list
    */
   const fetchCategoriesSuggestion = useMemo(
-    () => (ignore) => {
-      return http
-        .request({
-          url: state.next,
-          method: Endpoints.CategoriesSuggestion.method
-        })
-        .then((res: HttpResponse<any>) => {
-          if (res.status < 300 && isMountedRef.current && !ignore) {
-            const data = res.data;
-            dispatch({
-              type: actionToolsTypes.LOAD_NEXT_SUCCESS,
-              payload: {
-                results: data.results,
-                count: data.count,
-                next: data.next
-              }
-            });
-          }
-        })
-        .catch((error) => {
-          dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
-          console.log(error);
-        });
+    () => () => {
+      return http.request({
+        url: state.next,
+        method: Endpoints.CategoriesSuggestion.method
+      });
     },
     [dispatch, state.next, state.isLoadingNext]
   );
@@ -179,13 +161,30 @@ export default function CategoriesSuggestion(inProps: CategoriesListProps): JSX.
    */
   useEffect(() => {
     let ignore = false;
-    if (state.isLoadingNext && scUserContext.user) {
-      fetchCategoriesSuggestion(ignore);
+    if (state.next && scUserContext.user) {
+      fetchCategoriesSuggestion()
+        .then((res: HttpResponse<any>) => {
+          if (res.status < 300 && isMountedRef.current && !ignore) {
+            const data = res.data;
+            dispatch({
+              type: actionToolsTypes.LOAD_NEXT_SUCCESS,
+              payload: {
+                results: data.results,
+                count: data.count,
+                next: data.next
+              }
+            });
+          }
+        })
+        .catch((error) => {
+          dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
+          console.log(error);
+        });
       return () => {
         ignore = true;
       };
     }
-  }, [state.isLoadingNext, authUserId]);
+  }, [state.next, authUserId]);
 
   /**
    * Virtual feed update
