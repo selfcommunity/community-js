@@ -40,6 +40,7 @@ import ModerationService, {ModerationApiClient, ModerationApiClientInterface} fr
 import NotificationService, {NotificationApiClient, NotificationApiClientInterface} from './services/notification';
 import PreferenceService, {PreferenceApiClient, PreferenceApiClientInterface} from './services/preference';
 import PrivateMessageService, {PrivateMessageApiClient, PrivateMessageApiClientInterface} from './services/private_message';
+import PromoService, {PromoApiClient, PromoApiClientInterface} from './services/promo';
 import ScoreService, {ScoreApiClient, ScoreApiClientInterface} from './services/score';
 import SSOService, {SSOApiClient, SSOApiClientInterface} from './services/sso';
 import SuggestionService, {SuggestionApiClient, SuggestionApiClientInterface} from './services/suggestion';
@@ -187,6 +188,9 @@ export {
   PrivateMessageService,
   PrivateMessageApiClient,
   PrivateMessageApiClientInterface,
+  PromoService,
+  PromoApiClient,
+  PromoApiClientInterface,
   ScoreService,
   ScoreApiClient,
   ScoreApiClientInterface,

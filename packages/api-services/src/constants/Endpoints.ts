@@ -38,6 +38,13 @@ const Endpoints: {[key: string]: EndpointType} = {
     method: 'GET'
   },
   /**
+   * Promo Code Endpoints
+   */
+  PromoCode: {
+    url: urlReplacer('/api/v2/promo_code/$(code)/'),
+    method: 'GET'
+  },
+  /**
    * OAuth2 Endpoints
    */
   OAuthToken: {

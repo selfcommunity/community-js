@@ -140,7 +140,7 @@ export default function CategoriesSuggestion(inProps: CategoriesProps): JSX.Elem
   const {
     className,
     CategoryComponent = Category,
-    CategoryComponentProps = {variant: 'outlined', ButtonBaseProps: {disableRipple: 'true', component: Box}},
+    CategoryComponentProps = {variant: 'outlined', ButtonBaseProps: {disableRipple: true, component: Box}},
     CategoriesSkeletonComponent = CategoriesSkeleton,
     CategoriesSkeletonProps = {},
     showFilters = true,
@@ -153,7 +153,7 @@ export default function CategoriesSuggestion(inProps: CategoriesProps): JSX.Elem
   // STATE
   const [categories, setCategories] = useState<SCCategoryType[]>(prefetchedCategories);
   const [loading, setLoading] = useState<boolean>(!prefetchedCategories.length);
-  const [filterName, setFilterName] = useState<string>(null);
+  const [filterName, setFilterName] = useState<string>('');
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
