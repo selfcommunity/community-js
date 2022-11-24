@@ -1,11 +1,9 @@
 import React from 'react';
-import {styled} from '@mui/material/styles';
 import {MenuItem, TextField} from '@mui/material';
 import {SCMetadataType, SCMetadataTypeFieldType} from '@selfcommunity/types';
 import EmailTextField from '../EmailTextField';
 import UrlTextField from '../UrlTextField';
 import PhoneTextField from '../PhoneTextField';
-import classNames from 'classnames';
 import {TextFieldProps} from '@mui/material/TextField';
 
 export type MetadataFieldProps = TextFieldProps & {
@@ -24,9 +22,7 @@ const MetadataField = (props: MetadataFieldProps): JSX.Element => {
       component = <EmailTextField {...rest} className={className} label={metadata.label} required={metadata?.mandatory} />;
       break;
     case SCMetadataTypeFieldType.URL:
-      component = (
-        <UrlTextField {...rest} type="url" className={className} label={metadata.label} required={metadata?.mandatory} />
-      );
+      component = <UrlTextField {...rest} type="url" className={className} label={metadata.label} required={metadata?.mandatory} />;
       break;
     case SCMetadataTypeFieldType.PHONE_NUMBER:
       component = <PhoneTextField {...rest} className={className} label={metadata.label} required={metadata?.mandatory} />;
