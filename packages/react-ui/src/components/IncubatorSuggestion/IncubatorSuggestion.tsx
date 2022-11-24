@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useReducer, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Button, List, Typography, ListItem, useMediaQuery, useTheme} from '@mui/material';
 import CardContent from '@mui/material/CardContent';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
-import {Logger} from '@selfcommunity/utils';
-import {SCUserContextType, useIsComponentMountedRef, useSCUser} from '@selfcommunity/react-core';
+import {CacheStrategies, Logger} from '@selfcommunity/utils';
+import {SCCache, SCUserContextType, useIsComponentMountedRef, useSCUser} from '@selfcommunity/react-core';
 import {SCIncubatorType} from '@selfcommunity/types';
 import Skeleton from './Skeleton';
 import {SCOPE_SC_UI} from '../../constants/Errors';
@@ -19,6 +19,7 @@ import Widget from '../Widget';
 import IncubatorDetail from '../IncubatorDetail';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import {VirtualScrollerItemProps} from '../../types/virtualScroller';
+import {actionToolsTypes, dataToolsReducer, stateToolsInitializer} from '../../utils/tools';
 
 const PREFIX = 'SCIncubatorSuggestion';
 
@@ -64,7 +65,11 @@ export interface IncubatorSuggestionProps extends VirtualScrollerItemProps {
    * @default {}
    */
   IncubatorProps?: IncubatorProps;
-
+  /**
+   * Caching strategies
+   * @default CacheStrategies.CACHE_FIRST
+   */
+  cacheStrategy?: CacheStrategies;
   /**
    * Other props
    */
@@ -103,7 +108,15 @@ export default function IncubatorSuggestion(inProps: IncubatorSuggestionProps): 
     props: inProps,
     name: PREFIX
   });
-  const {autoHide = true, className, IncubatorProps = {}, onHeightChange, onStateChange, ...rest} = props;
+  const {
+    autoHide = true,
+    className,
+    IncubatorProps = {},
+    cacheStrategy = CacheStrategies.NETWORK_ONLY,
+    onHeightChange,
+    onStateChange,
+    ...rest
+  } = props;
 
   // REFS
   const isMountedRef = useIsComponentMountedRef();
@@ -115,14 +128,18 @@ export default function IncubatorSuggestion(inProps: IncubatorSuggestionProps): 
   // STATE
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const [incubators, setIncubators] = useState<any[]>([]);
-  const [visibleIncubators, setVisibleIncubators] = useState<number>(limit);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [hasMore, setHasMore] = useState<boolean>(false);
-  const [total, setTotal] = useState<number>(0);
+  const [state, dispatch] = useReducer(
+    dataToolsReducer,
+    {
+      isLoadingNext: true,
+      next: `${Endpoints.GetIncubatorSuggestion.url()}?limit=10`,
+      cacheKey: SCCache.getToolsStateCacheKey(SCCache.INCUBATOR_SUGGESTION_TOOLS_STATE_CACHE_PREFIX_KEY),
+      cacheStrategy
+    },
+    stateToolsInitializer
+  );
   const [openIncubatorsDialog, setOpenIncubatorsDialog] = useState<boolean>(false);
   const [openIncubatorDetailDialog, setOpenIncubatorDetailDialog] = useState<boolean>(false);
-  const [next, setNext] = useState<string>(`${Endpoints.GetIncubatorSuggestion.url()}?limit=10`);
   const [detailObj, setDetailObj] = useState(null);
 
   // HANDLERS
@@ -141,44 +158,52 @@ export default function IncubatorSuggestion(inProps: IncubatorSuggestionProps): 
    * Fetches incubator suggestion list
    */
   function fetchIncubatorSuggestion() {
-    if (next) {
-      http
-        .request({
-          url: next,
-          method: Endpoints.GetIncubatorSuggestion.method
-        })
-        .then((res: HttpResponse<any>) => {
-          if (isMountedRef.current) {
-            const data = res.data;
-            setIncubators([...incubators, ...data]);
-            setHasMore(data.length > visibleIncubators);
-            setNext(data['next']);
-            setLoading(false);
-            setTotal(data.length);
-          }
-        })
-        .catch((error) => {
-          setLoading(false);
-          Logger.error(SCOPE_SC_UI, error);
-        });
-    }
+    return http.request({
+      url: state.next,
+      method: Endpoints.GetIncubatorSuggestion.method
+    });
   }
 
+  useEffect(() => {
+    if (scUserContext.user && cacheStrategy === CacheStrategies.NETWORK_ONLY) {
+      onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
+    }
+  }, [authUserId]);
   /**
    * On mount, if user is authenticated, fetches suggested incubators list
    */
   useEffect(() => {
-    if (scUserContext.user) {
-      fetchIncubatorSuggestion();
+    let ignore = false;
+    if (state.next) {
+      fetchIncubatorSuggestion()
+        .then((res: HttpResponse<any>) => {
+          if (isMountedRef.current && !ignore) {
+            const data = res.data;
+            dispatch({
+              type: actionToolsTypes.LOAD_NEXT_SUCCESS,
+              payload: {
+                results: data,
+                count: data.length
+              }
+            });
+          }
+        })
+        .catch((error) => {
+          dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
+          Logger.error(SCOPE_SC_UI, error);
+        });
+      return () => {
+        ignore = true;
+      };
     }
-  }, [authUserId]);
+  }, [state.next]);
 
   /**
    * Handles subscriptions counter update on subscribe/unsubscribe action.
    * @param incubator
    */
   function handleSubscriptionsUpdate(incubator) {
-    const newIncubators = [...incubators];
+    const newIncubators = [...state.results];
     const index = newIncubators.findIndex((i) => i.id === incubator.id);
     if (index !== -1) {
       if (incubator.subscribed) {
@@ -188,14 +213,17 @@ export default function IncubatorSuggestion(inProps: IncubatorSuggestionProps): 
         newIncubators[index].subscribers_count = incubator.subscribers_count + 1;
         newIncubators[index].subscribed = !incubator.subscribed;
       }
-      setIncubators(newIncubators);
+      dispatch({
+        type: actionToolsTypes.SET_RESULTS,
+        payload: {results: newIncubators}
+      });
     }
   }
 
   /**
    * Renders suggested incubators list
    */
-  if (loading) {
+  if (state.isLoadingNext) {
     return <Skeleton />;
   }
   const c = (
@@ -203,14 +231,14 @@ export default function IncubatorSuggestion(inProps: IncubatorSuggestionProps): 
       <Typography className={classes.title} variant={'h5'}>
         <FormattedMessage id="ui.IncubatorSuggestion.title" defaultMessage="ui.IncubatorSuggestion.title" />
       </Typography>
-      {!total ? (
+      {!state.count ? (
         <Typography className={classes.noResults} variant="body2">
           <FormattedMessage id="ui.IncubatorSuggestion.noResults" defaultMessage="ui.IncubatorSuggestion.noResults" />
         </Typography>
       ) : (
         <React.Fragment>
           <List>
-            {incubators.slice(0, visibleIncubators).map((incubator: SCIncubatorType) => (
+            {state.results.slice(0, limit).map((incubator: SCIncubatorType) => (
               <ListItem key={incubator.id}>
                 <Incubator
                   elevation={0}
@@ -223,7 +251,7 @@ export default function IncubatorSuggestion(inProps: IncubatorSuggestionProps): 
               </ListItem>
             ))}
           </List>
-          {hasMore && (
+          {limit < state.count && (
             <Button className={classes.showMore} size="small" onClick={() => setOpenIncubatorsDialog(true)}>
               <FormattedMessage id="ui.IncubatorSuggestion.ShowAll" defaultMessage="ui.IncubatorSuggestion.ShowAll" />
             </Button>
@@ -235,13 +263,13 @@ export default function IncubatorSuggestion(inProps: IncubatorSuggestionProps): 
           title={<FormattedMessage id="ui.IncubatorSuggestion.title" defaultMessage="ui.IncubatorSuggestion.title" />}
           onClose={() => setOpenIncubatorsDialog(false)}
           open={openIncubatorsDialog}>
-          {loading ? (
+          {state.isLoadingNext ? (
             <CentralProgress size={50} />
           ) : (
             <InfiniteScroll
-              dataLength={incubators.length}
+              dataLength={state.results.length}
               next={fetchIncubatorSuggestion}
-              hasMoreNext={Boolean(next)}
+              hasMoreNext={Boolean(state.next)}
               loaderNext={<CentralProgress size={30} />}
               height={isMobile ? '100vh' : 400}
               endMessage={
@@ -252,7 +280,7 @@ export default function IncubatorSuggestion(inProps: IncubatorSuggestionProps): 
                 </p>
               }>
               <List>
-                {incubators.map((i) => (
+                {state.results.map((i) => (
                   <ListItem key={i.id} sx={{display: 'block', padding: 0}}>
                     <Incubator
                       elevation={0}
@@ -283,7 +311,7 @@ export default function IncubatorSuggestion(inProps: IncubatorSuggestionProps): 
   /**
    * Renders root object (if results and autoHide prop is set to false, otherwise component is hidden)
    */
-  if (autoHide && !total) {
+  if (autoHide && !state.count) {
     return <HiddenPlaceholder />;
   }
   if (scUserContext.user) {

@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useReducer, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
 import {Button, CardContent, ListItem, Typography} from '@mui/material';
 import Widget from '../Widget';
 import {SCFeedObjectType} from '@selfcommunity/types';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
-import {Logger} from '@selfcommunity/utils';
+import {CacheStrategies, Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import FeedObject from '../FeedObject';
 import {FormattedMessage} from 'react-intl';
@@ -17,8 +17,9 @@ import InfiniteScroll from '../../shared/InfiniteScroll';
 import Skeleton from './Skeleton';
 import {useThemeProps} from '@mui/system';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
-import {useIsComponentMountedRef} from '@selfcommunity/react-core';
+import {SCCache, useIsComponentMountedRef} from '@selfcommunity/react-core';
 import {VirtualScrollerItemProps} from '../../types/virtualScroller';
+import {actionToolsTypes, dataToolsReducer, stateToolsInitializer} from '../../utils/tools';
 
 const PREFIX = 'SCTrendingFeed';
 
@@ -67,6 +68,11 @@ export interface TrendingFeedProps extends VirtualScrollerItemProps {
    */
   pageUrl?: () => void;
   /**
+   * Caching strategies
+   * @default CacheStrategies.CACHE_FIRST
+   */
+  cacheStrategy?: CacheStrategies;
+  /**
    * Any other properties
    */
   [p: string]: any;
@@ -108,60 +114,91 @@ export default function TrendingFeed(inProps: TrendingFeedProps): JSX.Element {
     name: PREFIX
   });
 
-  const {className = null, categoryId = null, template = null, autoHide = null, onHeightChange, onStateChange, pageUrl = null, ...rest} = props;
+  const {
+    className = null,
+    categoryId = null,
+    template = null,
+    autoHide = null,
+    cacheStrategy = CacheStrategies.NETWORK_ONLY,
+    onHeightChange,
+    onStateChange,
+    pageUrl = null,
+    ...rest
+  } = props;
 
   // REFS
   const isMountedRef = useIsComponentMountedRef();
 
   // STATE
-  const [posts, setPosts] = useState<any[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [hasMore, setHasMore] = useState<boolean>(false);
+  const [state, dispatch] = useReducer(
+    dataToolsReducer,
+    {
+      isLoadingNext: true,
+      next: `${Endpoints.CategoryTrendingFeed.url({id: categoryId})}?limit=10`,
+      cacheKey: SCCache.getToolsStateCacheKey(SCCache.TRENDING_FEED_TOOLS_STATE_CACHE_PREFIX_KEY, categoryId),
+      cacheStrategy
+    },
+    stateToolsInitializer
+  );
   const [openTrendingPostDialog, setOpenTrendingPostDialog] = useState<boolean>(false);
-  const [total, setTotal] = useState<number>(0);
-  const [visible, setVisible] = useState<number>(limit);
-  const [next, setNext] = useState<string>(`${Endpoints.CategoryTrendingFeed.url({id: categoryId})}?limit=10`);
 
   /**
    * Fetches a list of trending posts
    */
-  function fetchTrendingPost() {
-    if (next) {
-      http
-        .request({
-          url: next,
-          method: Endpoints.CategoryTrendingFeed.method
-        })
-        .then((res: HttpResponse<any>) => {
-          if (isMountedRef.current) {
-            const data = res.data;
-            setPosts([...posts, ...data.results]);
-            setHasMore(data.count > visible);
-            setLoading(false);
-            setTotal(data.count);
-            setNext(data['next']);
-          }
-        })
-        .catch((error) => {
-          setLoading(false);
-          Logger.error(SCOPE_SC_UI, error);
-        });
-    }
-  }
+  const fetchTrendingPost = useMemo(
+    () => () => {
+      return http.request({
+        url: state.next,
+        method: Endpoints.CategoryTrendingFeed.method
+      });
+    },
+    [dispatch, state.next, state.isLoadingNext]
+  );
+
   const handleDialogOpening = () => {
     setOpenTrendingPostDialog(true);
   };
+
+  useEffect(() => {
+    if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
+      onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
+    }
+  }, []);
+
   /**
    * On mount, fetches trending posts list
    */
   useEffect(() => {
-    fetchTrendingPost();
-  }, []);
+    let ignore = false;
+    if (state.next) {
+      fetchTrendingPost()
+        .then((res: HttpResponse<any>) => {
+          if (res.status < 300 && isMountedRef.current && !ignore) {
+            const data = res.data;
+            dispatch({
+              type: actionToolsTypes.LOAD_NEXT_SUCCESS,
+              payload: {
+                results: data.results,
+                count: data.count,
+                next: data.next
+              }
+            });
+          }
+        })
+        .catch((error) => {
+          dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
+          Logger.error(SCOPE_SC_UI, error);
+        });
+      return () => {
+        ignore = true;
+      };
+    }
+  }, [state.next]);
 
   /**
    * Renders the list
    */
-  if (loading) {
+  if (state.isLoadingNext) {
     return <Skeleton />;
   }
   const f = (
@@ -169,20 +206,20 @@ export default function TrendingFeed(inProps: TrendingFeedProps): JSX.Element {
       <Typography className={classes.title} variant="h5">
         <FormattedMessage id="ui.trendingFeed.title" defaultMessage="ui.trendingFeed.title" />
       </Typography>
-      {!total ? (
+      {!state.count ? (
         <Typography className={classes.noResults} variant="body2">
           <FormattedMessage id="ui.trendingFeed.noResults" defaultMessage="ui.trendingFeed.noResults" />
         </Typography>
       ) : (
         <React.Fragment>
           <List>
-            {posts.slice(0, visible).map((obj: SCFeedObjectType, index) => (
+            {state.results.slice(0, limit).map((obj: SCFeedObjectType, index) => (
               <ListItem key={index}>
                 <FeedObject elevation={0} feedObject={obj[obj.type]} template={template} className={classes.trendingItem} />
               </ListItem>
             ))}
           </List>
-          {hasMore && (
+          {limit < state.count && (
             <Button size="small" className={classes.showMore} onClick={pageUrl ?? handleDialogOpening}>
               <FormattedMessage id="ui.trendingFeed.button.showMore" defaultMessage="ui.trendingFeed.button.showMore" />
             </Button>
@@ -194,13 +231,13 @@ export default function TrendingFeed(inProps: TrendingFeedProps): JSX.Element {
           title={<FormattedMessage id="ui.trendingFeed.title" defaultMessage="ui.trendingFeed.title" />}
           onClose={() => setOpenTrendingPostDialog(false)}
           open={openTrendingPostDialog}>
-          {loading ? (
+          {state.isLoadingNext ? (
             <CentralProgress size={50} />
           ) : (
             <InfiniteScroll
-              dataLength={posts.length}
+              dataLength={state.results.length}
               next={fetchTrendingPost}
-              hasMoreNext={Boolean(next)}
+              hasMoreNext={Boolean(state.next)}
               loaderNext={<CentralProgress size={30} />}
               height={400}
               endMessage={
@@ -211,7 +248,7 @@ export default function TrendingFeed(inProps: TrendingFeedProps): JSX.Element {
                 </p>
               }>
               <List>
-                {posts.map((obj: SCFeedObjectType, index) => (
+                {state.results.map((obj: SCFeedObjectType, index) => (
                   <ListItem key={index}>
                     <FeedObject elevation={0} feedObject={obj[obj.type]} template={template} className={classes.trendingItem} />
                   </ListItem>
@@ -227,7 +264,7 @@ export default function TrendingFeed(inProps: TrendingFeedProps): JSX.Element {
   /**
    * Renders root object (if results and autoHide prop is set to false, otherwise component is hidden)
    */
-  if (autoHide && !total) {
+  if (autoHide && !state.count) {
     return <HiddenPlaceholder />;
   }
   return (

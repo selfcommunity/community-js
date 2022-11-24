@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useReducer, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
 import {Button, CardContent, ListItem, Typography} from '@mui/material';
@@ -15,18 +15,21 @@ import InfiniteScroll from '../../shared/InfiniteScroll';
 import Widget from '../Widget';
 import {useThemeProps} from '@mui/system';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
-import {Logger} from '@selfcommunity/utils';
+import {CacheStrategies, Logger} from '@selfcommunity/utils';
 import {SCCustomAdvPosition, SCFeedDiscussionType, SCFeedObjectType, SCFeedObjectTypologyType} from '@selfcommunity/types';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import {
+  SCCache,
   SCPreferences,
   SCPreferencesContextType,
   SCUserContextType,
+  useIsComponentMountedRef,
   useSCFetchFeedObject,
   useSCPreferences,
   useSCUser
 } from '@selfcommunity/react-core';
-import { VirtualScrollerItemProps } from "../../types/virtualScroller";
+import {VirtualScrollerItemProps} from '../../types/virtualScroller';
+import {actionToolsTypes, dataToolsReducer, stateToolsInitializer} from '../../utils/tools';
 
 const PREFIX = 'SCRelatedFeedObjects';
 
@@ -86,7 +89,11 @@ export interface RelatedFeedObjectsProps extends VirtualScrollerItemProps {
    * @default false
    */
   autoHide?: boolean;
-
+  /**
+   * Caching strategies
+   * @default CacheStrategies.CACHE_FIRST
+   */
+  cacheStrategy?: CacheStrategies;
   /**
    * Other props
    */
@@ -141,23 +148,29 @@ export default function RelatedFeedObjects(inProps: RelatedFeedObjectsProps): JS
     FeedObjectProps = {},
     className,
     autoHide = true,
+    cacheStrategy = CacheStrategies.NETWORK_ONLY,
+    onHeightChange,
+    onStateChange,
     ...rest
   } = props;
-
+  // REFS
+  const isMountedRef = useIsComponentMountedRef();
   // STATE
-  const {obj, setObj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
-  const [objs, setObjs] = useState<any[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [hasMore, setHasMore] = useState<boolean>(false);
-  const [total, setTotal] = useState<number>(0);
-  const [visibleDiscussions, setVisibleDiscussions] = useState<number>(limit);
-  const [openRelatedFeedObjectsDialog, setOpenRelatedFeedObjectsDialog] = useState<boolean>(false);
-  const [next, setNext] = useState<string>(
-    `${Endpoints.RelatedFeedObjects.url({
-      type: feedObject ? feedObject.type : feedObjectType,
-      id: feedObject ? feedObject.id : feedObjectId
-    })}?limit=10`
+  const [state, dispatch] = useReducer(
+    dataToolsReducer,
+    {
+      isLoadingNext: true,
+      next: `${Endpoints.RelatedFeedObjects.url({
+        type: feedObject ? feedObject.type : feedObjectType,
+        id: feedObject ? feedObject.id : feedObjectId
+      })}?limit=10`,
+      cacheKey: SCCache.getToolsStateCacheKey(SCCache.RELATED_FEED_TOOLS_STATE_CACHE_PREFIX_KEY),
+      cacheStrategy
+    },
+    stateToolsInitializer
   );
+  const {obj, setObj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
+  const [openRelatedFeedObjectsDialog, setOpenRelatedFeedObjectsDialog] = useState<boolean>(false);
   const objId = obj ? obj.id : null;
 
   /**
@@ -179,10 +192,12 @@ export default function RelatedFeedObjects(inProps: RelatedFeedObjectsProps): JS
         !preferences[SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED])
     ) {
       return (
-        <CustomAdv
-          position={SCCustomAdvPosition.POSITION_RELATED_POSTS_COLUMN}
-          {...(obj.categories.length && {categoriesId: obj.categories.map((c) => c.id)})}
-        />
+        <ListItem>
+          <CustomAdv
+            position={SCCustomAdvPosition.POSITION_RELATED_POSTS_COLUMN}
+            {...(obj.categories.length && {categoriesId: obj.categories.map((c) => c.id)})}
+          />
+        </ListItem>
       );
     }
     return null;
@@ -191,67 +206,85 @@ export default function RelatedFeedObjects(inProps: RelatedFeedObjectsProps): JS
   /**
    * Fetches related discussions list
    */
-  function fetchRelated() {
-    if (next) {
-      http
-        .request({
-          url: next,
+  const fetchRelated = useMemo(
+    () => () => {
+      if (state.next) {
+        return http.request({
+          url: state.next,
           method: Endpoints.RelatedFeedObjects.method
-        })
-        .then((res: HttpResponse<any>) => {
-          const data = res.data;
-          setObjs([...objs, ...data.results]);
-          setHasMore(data.count > visibleDiscussions);
-          setLoading(false);
-          setTotal(data.count);
-          setNext(data['next']);
-        })
-        .catch((error) => {
-          Logger.error(SCOPE_SC_UI, error);
         });
+      }
+    },
+    [dispatch, state.next, state.isLoadingNext]
+  );
+
+  useEffect(() => {
+    if (objId !== null && cacheStrategy === CacheStrategies.NETWORK_ONLY) {
+      onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
     }
-  }
+  }, [objId]);
 
   /**
    * On mount, fetches related discussions list
    */
   useEffect(() => {
-    if (objId !== null) {
-      fetchRelated();
+    let ignore = false;
+    if (state.next) {
+      fetchRelated()
+        .then((res: HttpResponse<any>) => {
+          if (res.status < 300 && isMountedRef.current && !ignore) {
+            const data = res.data;
+            dispatch({
+              type: actionToolsTypes.LOAD_NEXT_SUCCESS,
+              payload: {
+                results: data.results,
+                count: data.count,
+                next: data.next
+              }
+            });
+          }
+        })
+        .catch((error) => {
+          dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
+          Logger.error(SCOPE_SC_UI, error);
+        });
+      return () => {
+        ignore = true;
+      };
     }
-  }, [objId]);
+  }, [state.next]);
 
   /**
    * Renders related discussions list
    */
-  if (loading) {
+  if (state.isLoadingNext) {
     return <TrendingFeedSkeleton />;
   }
-  const advPosition = Math.floor(Math.random() * (Math.min(total, 5) - 1 + 1) + 1);
+  const advPosition = Math.floor(Math.random() * (Math.min(state.count, 5) - 1 + 1) + 1);
   const d = (
     <CardContent>
       <Typography className={classes.title} variant="h5">
         <FormattedMessage id="ui.relatedFeedObjects.title" defaultMessage="ui.relatedFeedObjects.title" />
       </Typography>
-      {!total ? (
+      {!state.count ? (
         <Typography className={classes.noResults} variant="body2">
           <FormattedMessage id="ui.relatedFeedObjects.noResults" defaultMessage="ui.relatedFeedObjects.noResults" />
         </Typography>
       ) : (
         <React.Fragment>
           <List>
-            {objs.slice(0, visibleDiscussions).map((obj: SCFeedDiscussionType, index) => {
+            {state.results.slice(0, limit).map((obj: SCFeedDiscussionType, index) => {
               return (
                 <React.Fragment key={index}>
                   <ListItem>
                     <FeedObject elevation={0} feedObject={obj} template={template} className={classes.relatedItem} {...FeedObjectProps} />
                   </ListItem>
-                  {advPosition === index && <ListItem>{renderAdvertising()}</ListItem>}
+                  {advPosition === index && renderAdvertising()}
                 </React.Fragment>
               );
             })}
           </List>
-          {hasMore && (
+          {limit < state.count && (
             <Button size="small" className={classes.showMore} onClick={() => setOpenRelatedFeedObjectsDialog(true)}>
               <FormattedMessage id="ui.relatedFeedObjects.button.showMore" defaultMessage="ui.relatedFeedObjects.button.showMore" />
             </Button>
@@ -263,13 +296,13 @@ export default function RelatedFeedObjects(inProps: RelatedFeedObjectsProps): JS
           title={<FormattedMessage id="ui.relatedFeedObjects.title" defaultMessage="ui.relatedFeedObjects.title" />}
           onClose={() => setOpenRelatedFeedObjectsDialog(false)}
           open={openRelatedFeedObjectsDialog}>
-          {loading ? (
+          {state.isLoadingNext ? (
             <CentralProgress size={50} />
           ) : (
             <InfiniteScroll
-              dataLength={objs.length}
+              dataLength={state.results.length}
               next={fetchRelated}
-              hasMoreNext={Boolean(next)}
+              hasMoreNext={Boolean(state.next)}
               loaderNext={<CentralProgress size={30} />}
               height={400}
               endMessage={
@@ -280,7 +313,7 @@ export default function RelatedFeedObjects(inProps: RelatedFeedObjectsProps): JS
                 </p>
               }>
               <List>
-                {objs.map((obj: SCFeedDiscussionType, index) => (
+                {state.results.map((obj: SCFeedDiscussionType, index) => (
                   <ListItem key={index}>
                     <FeedObject elevation={0} feedObject={obj} template={template} className={classes.relatedItem} {...FeedObjectProps} />
                   </ListItem>
@@ -296,7 +329,7 @@ export default function RelatedFeedObjects(inProps: RelatedFeedObjectsProps): JS
   /**
    * Renders root object (if results and autoHide prop is set to false, otherwise component is hidden)
    */
-  if (autoHide && !total) {
+  if (autoHide && !state.count) {
     return <HiddenPlaceholder />;
   }
   return (

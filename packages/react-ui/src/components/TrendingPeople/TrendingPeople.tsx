@@ -1,10 +1,11 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useMemo, useReducer, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
 import {Button, CardContent, ListItem, Typography, useMediaQuery, useTheme} from '@mui/material';
 import Widget from '../Widget';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {
+  SCCache,
   SCPreferences,
   SCPreferencesContext,
   SCPreferencesContextType,
@@ -22,6 +23,9 @@ import Skeleton from './Skeleton';
 import {useThemeProps} from '@mui/system';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import {VirtualScrollerItemProps} from '../../types/virtualScroller';
+import {CacheStrategies, Logger} from '@selfcommunity/utils';
+import {actionToolsTypes, dataToolsReducer, stateToolsInitializer} from '../../utils/tools';
+import {SCOPE_SC_UI} from '../../constants/Errors';
 
 const PREFIX = 'SCTrendingPeople';
 
@@ -68,7 +72,11 @@ export interface TrendingPeopleProps extends VirtualScrollerItemProps {
    * @default empty object
    */
   UserProps?: UserProps;
-
+  /**
+   * Caching strategies
+   * @default CacheStrategies.CACHE_FIRST
+   */
+  cacheStrategy?: CacheStrategies;
   /**
    * Other props
    */
@@ -110,7 +118,16 @@ export default function TrendingPeople(inProps: TrendingPeopleProps): JSX.Elemen
     props: inProps,
     name: PREFIX
   });
-  const {categoryId, autoHide, className, UserProps = {}, onHeightChange, onStateChange, ...rest} = props;
+  const {
+    categoryId,
+    autoHide,
+    className,
+    UserProps = {},
+    cacheStrategy = CacheStrategies.NETWORK_ONLY,
+    onHeightChange,
+    onStateChange,
+    ...rest
+  } = props;
 
   // REFS
   const isMountedRef = useIsComponentMountedRef();
@@ -118,13 +135,17 @@ export default function TrendingPeople(inProps: TrendingPeopleProps): JSX.Elemen
   // STATE
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const [people, setPeople] = useState<any[]>([]);
-  const [visiblePeople, setVisiblePeople] = useState<number>(limit);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [hasMore, setHasMore] = useState<boolean>(false);
+  const [state, dispatch] = useReducer(
+    dataToolsReducer,
+    {
+      isLoadingNext: true,
+      next: `${Endpoints.CategoryTrendingPeople.url({id: categoryId})}?limit=10`,
+      cacheKey: SCCache.getToolsStateCacheKey(SCCache.TRENDING_PEOPLE_TOOLS_STATE_CACHE_PREFIX_KEY, categoryId),
+      cacheStrategy
+    },
+    stateToolsInitializer
+  );
   const [openTrendingPeopleDialog, setOpenTrendingPeopleDialog] = useState<boolean>(false);
-  const [total, setTotal] = useState<number>(0);
-  const [next, setNext] = useState<string>(`${Endpoints.CategoryTrendingPeople.url({id: categoryId})}?limit=10`);
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
@@ -136,44 +157,56 @@ export default function TrendingPeople(inProps: TrendingPeopleProps): JSX.Elemen
   /**
    * Fetches trending people list
    */
-  function fetchTrendingPeople() {
-    setLoading(true);
-    if (next) {
-      http
-        .request({
-          url: next,
-          method: Endpoints.CategoryTrendingPeople.method
-        })
-        .then((res: HttpResponse<any>) => {
-          if (isMountedRef.current) {
-            const data = res.data;
-            setPeople([...people, ...data.results]);
-            setHasMore(data.count > visiblePeople);
-            setNext(data['next']);
-            setLoading(false);
-            setTotal(data.count);
-          }
-        })
-        .catch((error) => {
-          setLoading(false);
-          console.log(error);
-        });
+  const fetchTrendingPeople = useMemo(
+    () => () => {
+      return http.request({
+        url: state.next,
+        method: Endpoints.CategoryTrendingPeople.method
+      });
+    },
+    [dispatch, state.next, state.isLoadingNext]
+  );
+  useEffect(() => {
+    if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
+      onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
     }
-  }
-
+  }, []);
   /**
    * On mount, fetches trending people list
    */
   useEffect(() => {
-    fetchTrendingPeople();
-  }, []);
+    let ignore = false;
+    if (state.next) {
+      fetchTrendingPeople()
+        .then((res: HttpResponse<any>) => {
+          if (res.status < 300 && isMountedRef.current && !ignore) {
+            const data = res.data;
+            dispatch({
+              type: actionToolsTypes.LOAD_NEXT_SUCCESS,
+              payload: {
+                results: data.results,
+                count: data.count,
+                next: data.next
+              }
+            });
+          }
+        })
+        .catch((error) => {
+          dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
+          Logger.error(SCOPE_SC_UI, error);
+        });
+      return () => {
+        ignore = true;
+      };
+    }
+  }, [state.next]);
 
   /**
    * Handles followers counter update on follow/unfollow action.
    * @param user
    */
   function handleFollowersUpdate(user) {
-    const newUsers = [...people];
+    const newUsers = [...state.results];
     const index = newUsers.findIndex((u) => u.id === user.id);
     if (index !== -1) {
       if (user.connection_status === 'followed') {
@@ -183,14 +216,17 @@ export default function TrendingPeople(inProps: TrendingPeopleProps): JSX.Elemen
         newUsers[index].followers_counter = user.followers_counter + 1;
         newUsers[index].connection_status = 'followed';
       }
-      setPeople(newUsers);
+      dispatch({
+        type: actionToolsTypes.SET_RESULTS,
+        payload: {results: newUsers}
+      });
     }
   }
 
   /**
    * Renders trending people list
    */
-  if (loading) {
+  if (state.isLoadingNext) {
     return <Skeleton />;
   }
   const p = (
@@ -198,14 +234,14 @@ export default function TrendingPeople(inProps: TrendingPeopleProps): JSX.Elemen
       <Typography className={classes.title} variant="h5">
         <FormattedMessage id="ui.trendingPeople.title" defaultMessage="ui.trendingPeople.title" />
       </Typography>
-      {!total ? (
+      {!state.count ? (
         <Typography className={classes.noResults} variant="body2">
           <FormattedMessage id="ui.trendingPeople.noResults" defaultMessage="ui.trendingPeople.noResults" />
         </Typography>
       ) : (
         <React.Fragment>
           <List>
-            {people.slice(0, visiblePeople).map((user) => (
+            {state.results.slice(0, limit).map((user) => (
               <ListItem key={user.id}>
                 <User
                   elevation={0}
@@ -221,7 +257,7 @@ export default function TrendingPeople(inProps: TrendingPeopleProps): JSX.Elemen
           </List>
         </React.Fragment>
       )}
-      {hasMore && (
+      {limit < state.count && (
         <Button size="small" className={classes.showMore} onClick={() => setOpenTrendingPeopleDialog(true)}>
           <FormattedMessage id="ui.trendingPeople.button.showAll" defaultMessage="ui.trendingPeople.button.showAll" />
         </Button>
@@ -231,13 +267,13 @@ export default function TrendingPeople(inProps: TrendingPeopleProps): JSX.Elemen
           title={<FormattedMessage defaultMessage="ui.trendingPeople.title" id="ui.trendingPeople.title" />}
           onClose={() => setOpenTrendingPeopleDialog(false)}
           open={openTrendingPeopleDialog}>
-          {loading ? (
+          {state.isLoadingNext ? (
             <CentralProgress size={50} />
           ) : (
             <InfiniteScroll
-              dataLength={people.length}
+              dataLength={state.results.length}
               next={fetchTrendingPeople}
-              hasMoreNext={Boolean(next)}
+              hasMoreNext={Boolean(state.next)}
               loaderNext={<CentralProgress size={30} />}
               height={isMobile ? '100vh' : 400}
               endMessage={
@@ -248,7 +284,7 @@ export default function TrendingPeople(inProps: TrendingPeopleProps): JSX.Elemen
                 </p>
               }>
               <List>
-                {people.map((p, index) => (
+                {state.results.map((p) => (
                   <ListItem key={p.id}>
                     <User
                       elevation={0}
@@ -272,7 +308,7 @@ export default function TrendingPeople(inProps: TrendingPeopleProps): JSX.Elemen
   /**
    * Renders root object (if results and autoHide prop is set to false, otherwise component is hidden)
    */
-  if (autoHide && !total) {
+  if (autoHide && !state.count) {
     return <HiddenPlaceholder />;
   }
   return (

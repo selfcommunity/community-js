@@ -1,14 +1,15 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useMemo, useReducer, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
 import {Button, CardContent, ListItem, Typography, useMediaQuery, useTheme} from '@mui/material';
-import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
-import {Logger} from '@selfcommunity/utils';
-import {SCUserContext, SCUserContextType, useIsComponentMountedRef} from '@selfcommunity/react-core';
+import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
+import {CacheStrategies, Logger} from '@selfcommunity/utils';
+import {SCCache, SCUserContext, SCUserContextType, useIsComponentMountedRef} from '@selfcommunity/react-core';
+import {actionToolsTypes, dataToolsReducer, stateToolsInitializer} from '../../utils/tools';
 import Category from '../Category';
 import {SCCategoryType} from '@selfcommunity/types';
 import {SCOPE_SC_UI} from '../../constants/Errors';
-import {defineMessages, useIntl, FormattedMessage} from 'react-intl';
+import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {CategoriesListProps} from '../CategoriesSuggestion';
 import Skeleton from './Skeleton';
 import classNames from 'classnames';
@@ -82,7 +83,7 @@ export default function CategoriesFollowed(inProps: CategoriesListProps): JSX.El
     props: inProps,
     name: PREFIX
   });
-  const {userId, autoHide, className, CategoryProps = {}, onHeightChange, onStateChange} = props;
+  const {userId, autoHide, className, CategoryProps = {}, cacheStrategy = CacheStrategies.NETWORK_ONLY, onHeightChange, onStateChange} = props;
 
   // REFS
   const isMountedRef = useIsComponentMountedRef();
@@ -90,12 +91,19 @@ export default function CategoriesFollowed(inProps: CategoriesListProps): JSX.El
   // STATE
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const [categories, setCategories] = useState<any[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [hasMore, setHasMore] = useState<boolean>(false);
-  const [total, setTotal] = useState<number>(0);
+
+  const [state, dispatch] = useReducer(
+    dataToolsReducer,
+    {
+      isLoadingNext: true,
+      next: `${Endpoints.FollowedCategories.url({id: userId})}?limit=10`,
+      cacheKey: SCCache.getToolsStateCacheKey(SCCache.CATEGORIES_FOLLOWED_TOOLS_STATE_CACHE_PREFIX_KEY, userId),
+      cacheStrategy
+    },
+    stateToolsInitializer
+  );
+
   const [openCategoriesFollowedDialog, setOpenCategoriesFollowedDialog] = useState<boolean>(false);
-  const [next, setNext] = useState<string>(`${Endpoints.FollowedCategories.url({id: userId})}?limit=10`);
 
   // CONST
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
@@ -105,11 +113,12 @@ export default function CategoriesFollowed(inProps: CategoriesListProps): JSX.El
    */
   function handleOnFollowCategory(category) {
     if (scUserContext.user['id'] === userId) {
-      setCategories(categories.filter((c) => c.id !== category.id));
-      setTotal((prev) => prev - 1);
-      setHasMore(total - 1 > limit);
+      dispatch({
+        type: actionToolsTypes.SET_RESULTS,
+        payload: {results: state.results.filter((c) => c.id !== category.id), count: state.count - 1}
+      });
     } else {
-      const newCategories = [...categories];
+      const newCategories = [...state.results];
       const index = newCategories.findIndex((u) => u.id === category.id);
       if (index !== -1) {
         if (category.followed) {
@@ -119,7 +128,10 @@ export default function CategoriesFollowed(inProps: CategoriesListProps): JSX.El
           newCategories[index].followers_counter = category.followers_counter + 1;
           newCategories[index].followed = !category.followed;
         }
-        setCategories(newCategories);
+        dispatch({
+          type: actionToolsTypes.SET_RESULTS,
+          payload: {results: newCategories}
+        });
       }
     }
   }
@@ -128,69 +140,77 @@ export default function CategoriesFollowed(inProps: CategoriesListProps): JSX.El
    * fetches Categories Followed
    */
   function fetchCategoriesFollowed() {
-    if (next) {
-      http
-        .request({
-          url: next,
-          method: Endpoints.FollowedCategories.method
-        })
-        .then((res: HttpResponse<any>) => {
-          if (isMountedRef.current) {
-            const data = res.data;
-            setCategories([...categories, ...data]);
-            setTotal(data.length);
-            setNext(data['next']);
-            setHasMore(data.length > limit);
-            setLoading(false);
-          }
-        })
-        .catch((error) => {
-          setLoading(false);
-          Logger.error(SCOPE_SC_UI, error);
-        });
-    }
+    return http.request({
+      url: state.next,
+      method: Endpoints.FollowedCategories.method
+    });
   }
-
+  useEffect(() => {
+    if (!userId) {
+      return;
+    } else if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
+      onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
+    }
+  }, [authUserId]);
   /**
    * On mount, fetches the list of categories followed
    */
   useEffect(() => {
-    if (!userId) {
-      return;
+    let ignore = false;
+    if (state.next) {
+      fetchCategoriesFollowed()
+        .then((res: HttpResponse<any>) => {
+          if (res.status < 300 && isMountedRef.current && !ignore) {
+            const data = res.data;
+            dispatch({
+              type: actionToolsTypes.LOAD_NEXT_SUCCESS,
+              payload: {
+                results: data,
+                count: data.length
+              }
+            });
+          }
+        })
+        .catch((error) => {
+          dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
+          Logger.error(SCOPE_SC_UI, error);
+        });
+      return () => {
+        ignore = true;
+      };
     }
-    fetchCategoriesFollowed();
-  }, [authUserId]);
+  }, [state.next]);
 
   /**
    * Virtual feed update
    */
   useEffect(() => {
     onHeightChange && onHeightChange();
-  }, [categories.length]);
+  }, [state.results.length]);
 
   /**
    * Renders the list of categories followed
    */
-  if (loading) {
+  if (state.isLoadingNext) {
     return <Skeleton />;
   }
   const c = (
     <CardContent>
       <Typography className={classes.title} variant="h5">{`${intl.formatMessage(messages.title, {
-        total: total
+        total: state.count
       })}`}</Typography>
-      {!total ? (
+      {!state.count ? (
         <Typography className={classes.noResults} variant="body2">{`${intl.formatMessage(messages.noCategories)}`}</Typography>
       ) : (
         <React.Fragment>
           <List>
-            {categories.slice(0, limit).map((category: SCCategoryType) => (
+            {state.results.slice(0, limit).map((category: SCCategoryType) => (
               <ListItem key={category.id}>
                 <Category elevation={0} category={category} followCategoryButtonProps={{onFollow: handleOnFollowCategory}} {...CategoryProps} />
               </ListItem>
             ))}
           </List>
-          {hasMore && (
+          {limit < state.count && (
             <Button size="small" className={classes.showMore} onClick={() => setOpenCategoriesFollowedDialog(true)}>
               <FormattedMessage id="ui.categoriesFollowed.button.showAll" defaultMessage="ui.categoriesFollowed.button.showAll" />
             </Button>
@@ -201,18 +221,18 @@ export default function CategoriesFollowed(inProps: CategoriesListProps): JSX.El
                 isMobile ? (
                   <FormattedMessage id="ui.categoriesFollowed.modal.title" defaultMessage="ui.categoriesFollowed.modal.title" />
                 ) : (
-                  `${intl.formatMessage(messages.title, {total: total})}`
+                  `${intl.formatMessage(messages.title, {total: state.count})}`
                 )
               }
               onClose={() => setOpenCategoriesFollowedDialog(false)}
               open={openCategoriesFollowedDialog}>
-              {loading ? (
+              {state.isLoadingNext ? (
                 <CentralProgress size={50} />
               ) : (
                 <InfiniteScroll
-                  dataLength={categories.length}
+                  dataLength={state.results.length}
                   next={fetchCategoriesFollowed}
-                  hasMoreNext={Boolean(next)}
+                  hasMoreNext={Boolean(state.next)}
                   loaderNext={<CentralProgress size={30} />}
                   height={isMobile ? '100vh' : 400}
                   endMessage={
@@ -223,7 +243,7 @@ export default function CategoriesFollowed(inProps: CategoriesListProps): JSX.El
                     </p>
                   }>
                   <List>
-                    {categories.map((c) => (
+                    {state.results.map((c) => (
                       <ListItem key={c.id}>
                         <Category
                           elevation={0}
@@ -247,7 +267,7 @@ export default function CategoriesFollowed(inProps: CategoriesListProps): JSX.El
   /**
    * Renders root object (if results and if user is logged, otherwise component is hidden)
    */
-  if (autoHide && !total) {
+  if (autoHide && !state.count) {
     return <HiddenPlaceholder />;
   }
   /**

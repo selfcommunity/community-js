@@ -1,9 +1,10 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useMemo, useReducer, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Button, CardContent, List, ListItem, Typography} from '@mui/material';
 import {SCUserType} from '@selfcommunity/types';
-import {http, Endpoints} from '@selfcommunity/api-services';
+import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {
+  SCCache,
   SCPreferences,
   SCPreferencesContext,
   SCPreferencesContextType,
@@ -19,6 +20,8 @@ import Widget from '../Widget';
 import {useThemeProps} from '@mui/system';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import {VirtualScrollerItemProps} from '../../types/virtualScroller';
+import {CacheStrategies} from '@selfcommunity/utils';
+import {actionToolsTypes, dataToolsReducer, stateToolsInitializer} from '../../utils/tools';
 
 const PREFIX = 'SCPeopleSuggestion';
 
@@ -57,7 +60,11 @@ export interface PeopleSuggestionProps extends VirtualScrollerItemProps {
    * @default empty object
    */
   UserProps?: UserProps;
-
+  /**
+   * Caching strategies
+   * @default CacheStrategies.CACHE_FIRST
+   */
+  cacheStrategy?: CacheStrategies;
   /**
    * Other props
    */
@@ -100,17 +107,23 @@ export default function PeopleSuggestion(inProps: PeopleSuggestionProps): JSX.El
     props: inProps,
     name: PREFIX
   });
-  const {autoHide, className, UserProps = {}, onHeightChange, onStateChange, ...rest} = props;
+  const {autoHide, className, UserProps = {}, onHeightChange, onStateChange, cacheStrategy = CacheStrategies.NETWORK_ONLY, ...rest} = props;
 
   // REFS
   const isMountedRef = useIsComponentMountedRef();
 
   // STATE
-  const [users, setUsers] = useState<SCUserType[]>([]);
-  const [visiblePeople, setVisiblePeople] = useState<number>(limit);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [hasMore, setHasMore] = useState<boolean>(false);
-  const [total, setTotal] = useState<number>(0);
+  const [state, dispatch] = useReducer(
+    dataToolsReducer,
+    {
+      isLoadingNext: true,
+      next: `${Endpoints.UserSuggestion.url()}?limit=10`,
+      cacheKey: SCCache.getToolsStateCacheKey(SCCache.PEOPLE_SUGGESTION_TOOLS_STATE_CACHE_PREFIX_KEY),
+      cacheStrategy,
+      visibleItems: limit
+    },
+    stateToolsInitializer
+  );
   const [openPeopleSuggestionDialog, setOpenPeopleSuggestionDialog] = useState<boolean>(false);
 
   // CONTEXT
@@ -126,82 +139,85 @@ export default function PeopleSuggestion(inProps: PeopleSuggestionProps): JSX.El
   /**
    * Handles list change on user follow
    */
-  function handleOnFollowUser(user, follow) {
-    setUsers(users.filter((u) => u.id !== user.id));
-    setTotal((prev) => prev - 1);
-    setHasMore(total - 1 > limit);
-  }
-
-  /**
-   * Handles list change on user connection
-   */
-  function handleOnConnectUser(user, status) {
-    setUsers(users.filter((u) => u.id !== user.id));
-    setTotal((prev) => prev - 1);
-    setHasMore(total - 1 > limit);
+  function handleOnFollowConnectUser(user, follow) {
+    dispatch({
+      type: actionToolsTypes.SET_RESULTS,
+      payload: {results: state.results.filter((u) => u.id !== user.id), count: state.count - 1}
+    });
   }
 
   /**
    * Fetches user suggestion list
    */
-  function fetchUserSuggestion() {
-    http
-      .request({
+  const fetchUserSuggestion = useMemo(
+    () => () => {
+      return http.request({
         url: Endpoints.UserSuggestion.url(),
         method: Endpoints.UserSuggestion.method
-      })
-      .then((res: any) => {
-        if (isMountedRef.current) {
-          const data = res.data;
-          setUsers(data['results']);
-          setHasMore(data['count'] > visiblePeople);
-          setLoading(false);
-          setTotal(data.count);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
       });
-  }
+    },
+    [dispatch, state.next, state.isLoadingNext]
+  );
 
   /**
    * Loads more people on "see more" button click
    */
   function loadPeople(n) {
-    const newIndex = visiblePeople + n;
-    const newHasMore = newIndex < users.length - 1;
-    setVisiblePeople(newIndex);
-    setHasMore(newHasMore);
+    dispatch({type: actionToolsTypes.SET_VISIBLE_ITEMS, payload: {visibleItems: state.visibleItems + n}});
   }
-
+  useEffect(() => {
+    if (scUserContext.user && cacheStrategy === CacheStrategies.NETWORK_ONLY) {
+      onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
+    }
+  }, [authUserId]);
   /**
    * On mount, fetches people suggestion list
    */
   useEffect(() => {
-    if (scUserContext.user) {
-      fetchUserSuggestion();
-    } else {
-      setLoading(false);
+    let ignore = false;
+    if (state.next && scUserContext.user) {
+      fetchUserSuggestion()
+        .then((res: HttpResponse<any>) => {
+          if (res.status < 300 && isMountedRef.current && !ignore) {
+            const data = res.data;
+            dispatch({
+              type: actionToolsTypes.LOAD_NEXT_SUCCESS,
+              payload: {
+                results: data.results,
+                count: data.count,
+                next: data.next
+              }
+            });
+          }
+        })
+        .catch((error) => {
+          dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
+          console.log(error);
+        });
+
+      return () => {
+        ignore = true;
+      };
     }
-  }, [authUserId]);
+  }, [state.next, authUserId]);
 
   /**
    * Virtual feed update
    */
   useEffect(() => {
     onHeightChange && onHeightChange();
-  }, [users.length, loading]);
+  }, [state.results]);
 
   /**
    * Renders people suggestion list
    */
-  if (loading) {
+  if (state.isLoadingNext) {
     return <PeopleSuggestionSkeleton />;
   }
   /**
    * Renders root object (if results and if user is logged, otherwise component is hidden)
    */
-  if ((autoHide && !total) || !scUserContext.user) {
+  if ((autoHide && !state.count) || !scUserContext.user) {
     return <HiddenPlaceholder />;
   }
   return (
@@ -210,28 +226,28 @@ export default function PeopleSuggestion(inProps: PeopleSuggestionProps): JSX.El
         <Typography className={classes.title} variant="h5">
           <FormattedMessage id="ui.peopleSuggestion.title" defaultMessage="ui.peopleSuggestion.title" />
         </Typography>
-        {!total ? (
+        {!state.count ? (
           <Typography className={classes.noResults} variant="body2">
             <FormattedMessage id="ui.peopleSuggestion.subtitle.noResults" defaultMessage="ui.peopleSuggestion.subtitle.noResults" />
           </Typography>
         ) : (
           <React.Fragment>
             <List>
-              {users.slice(0, visiblePeople).map((user: SCUserType, index) => (
+              {state.results.slice(0, state.visibleItems).map((user: SCUserType) => (
                 <ListItem key={user.id}>
                   <User
                     elevation={0}
                     user={user}
                     {...(followEnabled
-                      ? {followConnectUserButtonProps: {onFollow: handleOnFollowUser}}
-                      : {followConnectUserButtonProps: {onChangeConnectionStatus: handleOnConnectUser}})}
+                      ? {followConnectUserButtonProps: {onFollow: handleOnFollowConnectUser}}
+                      : {followConnectUserButtonProps: {onChangeConnectionStatus: handleOnFollowConnectUser}})}
                     className={classes.suggestedUserItem}
                     {...UserProps}
                   />
                 </ListItem>
               ))}
             </List>
-            {hasMore && (
+            {state.visibleItems < state.results.length && (
               <Button className={classes.showMore} size="small" onClick={() => loadPeople(limit)}>
                 <FormattedMessage id="ui.peopleSuggestion.button.showMore" defaultMessage="ui.peopleSuggestion.button.showMore" />
               </Button>

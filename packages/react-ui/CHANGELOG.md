@@ -3,6 +3,63 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.30](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.29...@selfcommunity/react-ui@0.7.0-alpha.30) (2022-11-22)
+
+
+### Bug Fixes
+
+* reverted ([12a5bf2](https://github.com/selfcommunity/community-js/commit/12a5bf25f55069ce39d686d5cc10ae3b1291ea59))
+
+
+
+
+
+# [0.7.0-alpha.29](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.28...@selfcommunity/react-ui@0.7.0-alpha.29) (2022-11-21)
+
+
+### Bug Fixes
+
+* fixed widget cached results when react strict is enabled ([5a5b0f3](https://github.com/selfcommunity/community-js/commit/5a5b0f3ed437529b4efcef397f5b40730e123f7c))
+
+
+
+
+
+# [0.7.0-alpha.28](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.27...@selfcommunity/react-ui@0.7.0-alpha.28) (2022-11-18)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.7.0-alpha.27](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.26...@selfcommunity/react-ui@0.7.0-alpha.27) (2022-11-15)
+
+
+### Bug Fixes
+
+* fixed cached components ([d125bcf](https://github.com/selfcommunity/community-js/commit/d125bcfe2e9b83cd10c9b98178432f2070fb186a))
+
+
+
+
+
+# [0.7.0-alpha.26](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.25...@selfcommunity/react-ui@0.7.0-alpha.26) (2022-11-15)
+
+
+### Bug Fixes
+
+* init widget tools caching ([b9ff9b3](https://github.com/selfcommunity/community-js/commit/b9ff9b388faae91f2b1a67d02b23bd00522c915a))
+
+
+### Performance Improvements
+
+* cached feed widgets components. ([919af07](https://github.com/selfcommunity/community-js/commit/919af07371af5818b3db1c30b4546df7bc86914d))
+
+
+
+
+
 # [0.7.0-alpha.25](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.24...@selfcommunity/react-ui@0.7.0-alpha.25) (2022-11-14)
 
 

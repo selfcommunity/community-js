@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useReducer, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Button, List, Typography, Box, IconButton, ListItem} from '@mui/material';
 import CardContent from '@mui/material/CardContent';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
-import {Logger} from '@selfcommunity/utils';
+import {CacheStrategies, Logger} from '@selfcommunity/utils';
 import {SCIncubatorType} from '@selfcommunity/types';
 import Skeleton from './Skeleton';
 import {SCOPE_SC_UI} from '../../constants/Errors';
@@ -19,7 +19,9 @@ import {useThemeProps} from '@mui/system';
 import Widget from '../Widget';
 import CreateIncubatorDialog from './CreateIncubatorDialog';
 import IncubatorDetail from '../IncubatorDetail';
-import { VirtualScrollerItemProps } from "../../types/virtualScroller";
+import {VirtualScrollerItemProps} from '../../types/virtualScroller';
+import {actionToolsTypes, dataToolsReducer, stateToolsInitializer} from '../../utils/tools';
+import {SCCache, useIsComponentMountedRef} from '@selfcommunity/react-core';
 
 const PREFIX = 'SCIncubatorsList';
 
@@ -75,7 +77,11 @@ export interface IncubatorsListProps extends VirtualScrollerItemProps {
    * @default {}
    */
   IncubatorProps?: IncubatorProps;
-
+  /**
+   * Caching strategies
+   * @default CacheStrategies.CACHE_FIRST
+   */
+  cacheStrategy?: CacheStrategies;
   /**
    * Other props
    */
@@ -115,18 +121,31 @@ export default function IncubatorsList(inProps: IncubatorsListProps): JSX.Elemen
     props: inProps,
     name: PREFIX
   });
-  const {autoHide = true, className, IncubatorProps = {}, ...rest} = props;
-
+  const {
+    autoHide = true,
+    className,
+    IncubatorProps = {},
+    cacheStrategy = CacheStrategies.NETWORK_ONLY,
+    onHeightChange,
+    onStateChange,
+    ...rest
+  } = props;
+  // REFS
+  const isMountedRef = useIsComponentMountedRef();
   // STATE
-  const [incubators, setIncubators] = useState<any[]>([]);
-  const [visibleIncubators, setVisibleIncubators] = useState<number>(limit);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [hasMore, setHasMore] = useState<boolean>(false);
-  const [total, setTotal] = useState<number>(0);
+  const [state, dispatch] = useReducer(
+    dataToolsReducer,
+    {
+      isLoadingNext: true,
+      next: `${Endpoints.GetAllIncubators.url()}?limit=10`,
+      cacheKey: SCCache.getToolsStateCacheKey(SCCache.INCUBATORS_LIST_TOOLS_STATE_CACHE_PREFIX_KEY),
+      cacheStrategy
+    },
+    stateToolsInitializer
+  );
   const [openIncubatorsDialog, setOpenIncubatorsDialog] = useState<boolean>(false);
   const [openCreateIncubatorDialog, setOpenCreateIncubatorDialog] = useState<boolean>(false);
   const [openIncubatorDetailDialog, setOpenIncubatorDetailDialog] = useState<boolean>(false);
-  const [next, setNext] = useState<string>(`${Endpoints.GetAllIncubators.url()}?limit=10`);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const isOpen = Boolean(anchorEl);
   const [detailObj, setDetailObj] = useState(null);
@@ -157,41 +176,57 @@ export default function IncubatorsList(inProps: IncubatorsListProps): JSX.Elemen
   /**
    * Fetches incubators list
    */
-  function fetchIncubators() {
-    if (next) {
-      http
-        .request({
-          url: next,
-          method: Endpoints.GetAllIncubators.method
-        })
-        .then((res: HttpResponse<any>) => {
-          const data = res.data;
-          setIncubators([...incubators, ...data['results']]);
-          setHasMore(data['count'] > visibleIncubators);
-          setNext(data['next']);
-          setLoading(false);
-          setTotal(data['count']);
-        })
-        .catch((error) => {
-          setLoading(false);
-          Logger.error(SCOPE_SC_UI, error);
-        });
+  const fetchIncubators = useMemo(
+    () => () => {
+      return http.request({
+        url: state.next,
+        method: Endpoints.GetAllIncubators.method
+      });
+    },
+    [dispatch, state.next, state.isLoadingNext]
+  );
+  useEffect(() => {
+    if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
+      onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
     }
-  }
+  }, []);
 
   /**
    * On mount, fetches  incubators list
    */
   useEffect(() => {
-    fetchIncubators();
-  }, []);
+    let ignore = false;
+    if (state.next) {
+      fetchIncubators()
+        .then((res: HttpResponse<any>) => {
+          if (res.status < 300 && isMountedRef.current && !ignore) {
+            const data = res.data;
+            dispatch({
+              type: actionToolsTypes.LOAD_NEXT_SUCCESS,
+              payload: {
+                results: data.results,
+                count: data.count,
+                next: data.next
+              }
+            });
+          }
+        })
+        .catch((error) => {
+          dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
+          Logger.error(SCOPE_SC_UI, error);
+        });
+      return () => {
+        ignore = true;
+      };
+    }
+  }, [state.next]);
 
   /**
    * Handles subscriptions counter update on subscribe/unsubscribe action.
    * @param incubator
    */
   function handleSubscriptionsUpdate(incubator) {
-    const newIncubators = [...incubators];
+    const newIncubators = [...state.results];
     const index = newIncubators.findIndex((i) => i.id === incubator.id);
     if (index !== -1) {
       if (incubator.subscribed) {
@@ -201,132 +236,132 @@ export default function IncubatorsList(inProps: IncubatorsListProps): JSX.Elemen
         newIncubators[index].subscribers_count = incubator.subscribers_count + 1;
         newIncubators[index].subscribed = !incubator.subscribed;
       }
-      setIncubators(newIncubators);
+      dispatch({
+        type: actionToolsTypes.SET_RESULTS,
+        payload: {results: newIncubators}
+      });
     }
   }
 
   /**
    * Renders incubators list
    */
+  if (state.isLoadingNext) {
+    return <Skeleton elevation={0} />;
+  }
   const c = (
-    <React.Fragment>
-      {loading ? (
-        <Skeleton elevation={0} />
+    <CardContent>
+      <Box className={classes.header}>
+        <Typography className={classes.title} variant={'h5'}>
+          <FormattedMessage id="ui.incubatorsList.title" defaultMessage="ui.incubatorsList.title" />
+        </Typography>
+        <IconButton className={classes.helpPopover} color="primary" aria-label="info" component="span" onClick={handleClickHelpButton}>
+          <Icon fontSize="small">help_outline</Icon>
+        </IconButton>
+        {isOpen && (
+          <Popover
+            open={isOpen}
+            anchorEl={anchorEl}
+            onClose={handlePopoverClose}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'right'
+            }}>
+            <Box sx={{p: '10px'}}>
+              <Typography component={'span'} sx={{whiteSpace: 'pre-line'}}>
+                <FormattedMessage id="ui.incubatorsList.popover" defaultMessage="ui.incubatorsList.popover" />
+              </Typography>
+            </Box>
+          </Popover>
+        )}
+      </Box>
+      {!state.count ? (
+        <Typography className={classes.noResults} variant="body2">
+          <FormattedMessage id="ui.incubatorsList.noResults" defaultMessage="ui.incubatorsList.noResults" />
+        </Typography>
       ) : (
-        <CardContent>
-          <Box className={classes.header}>
-            <Typography className={classes.title} variant={'h5'}>
-              <FormattedMessage id="ui.incubatorsList.title" defaultMessage="ui.incubatorsList.title" />
-            </Typography>
-            <IconButton className={classes.helpPopover} color="primary" aria-label="info" component="span" onClick={handleClickHelpButton}>
-              <Icon fontSize="small">help_outline</Icon>
-            </IconButton>
-            {isOpen && (
-              <Popover
-                open={isOpen}
-                anchorEl={anchorEl}
-                onClose={handlePopoverClose}
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'right'
-                }}>
-                <Box sx={{p: '10px'}}>
-                  <Typography component={'span'} sx={{whiteSpace: 'pre-line'}}>
-                    <FormattedMessage id="ui.incubatorsList.popover" defaultMessage="ui.incubatorsList.popover" />
-                  </Typography>
-                </Box>
-              </Popover>
+        <React.Fragment>
+          <List>
+            {state.results.slice(0, limit).map((incubator: SCIncubatorType) => (
+              <ListItem key={incubator.id}>
+                <Incubator
+                  elevation={0}
+                  incubator={incubator}
+                  className={classes.incubatorItem}
+                  subscribeButtonProps={{onSubscribe: handleSubscriptionsUpdate}}
+                  ButtonProps={{onClick: () => handleIncubatorDetailDialogOpening(incubator)}}
+                  {...IncubatorProps}
+                />
+              </ListItem>
+            ))}
+          </List>
+          <Box className={classes.actions}>
+            {limit < state.count && (
+              <Button size="small" onClick={() => setOpenIncubatorsDialog(true)}>
+                <FormattedMessage id="ui.incubatorsList.ShowAll" defaultMessage="ui.incubatorsList.ShowAll" />
+              </Button>
             )}
+            <Button size="small" onClick={() => setOpenCreateIncubatorDialog(true)}>
+              <FormattedMessage id="ui.incubatorsList.SuggestNewTopic" defaultMessage="ui.incubatorsList.SuggestNewTopic" />
+            </Button>
           </Box>
-          {!total ? (
-            <Typography className={classes.noResults} variant="body2">
-              <FormattedMessage id="ui.incubatorsList.noResults" defaultMessage="ui.incubatorsList.noResults" />
-            </Typography>
+        </React.Fragment>
+      )}
+      {openIncubatorsDialog && (
+        <BaseDialog
+          title={<FormattedMessage id="ui.incubatorsList.title" defaultMessage="ui.incubatorsList.title" />}
+          onClose={() => setOpenIncubatorsDialog(false)}
+          open={openIncubatorsDialog}>
+          {state.isLoadingNext ? (
+            <CentralProgress size={50} />
           ) : (
-            <React.Fragment>
+            <InfiniteScroll
+              dataLength={state.results.length}
+              next={fetchIncubators}
+              hasMoreNext={Boolean(state.next)}
+              loaderNext={<CentralProgress size={30} />}
+              height={400}
+              endMessage={
+                <p style={{textAlign: 'center'}}>
+                  <b>
+                    <FormattedMessage id="ui.incubatorsList.noMoreIncubators" defaultMessage="ui.incubatorsList.noMoreIncubators" />
+                  </b>
+                </p>
+              }>
               <List>
-                {incubators.slice(0, visibleIncubators).map((incubator: SCIncubatorType) => (
-                  <ListItem key={incubator.id}>
+                {state.results.map((i) => (
+                  <ListItem key={i.id} sx={{display: 'block', padding: 0}}>
                     <Incubator
                       elevation={0}
-                      incubator={incubator}
+                      incubator={i}
                       className={classes.incubatorItem}
                       subscribeButtonProps={{onSubscribe: handleSubscriptionsUpdate}}
-                      ButtonProps={{onClick: () => handleIncubatorDetailDialogOpening(incubator)}}
+                      ButtonProps={{onClick: () => handleIncubatorDetailDialogOpening(i)}}
                       {...IncubatorProps}
                     />
                   </ListItem>
                 ))}
               </List>
-              <Box className={classes.actions}>
-                {hasMore && (
-                  <Button size="small" onClick={() => setOpenIncubatorsDialog(true)}>
-                    <FormattedMessage id="ui.incubatorsList.ShowAll" defaultMessage="ui.incubatorsList.ShowAll" />
-                  </Button>
-                )}
-                <Button size="small" onClick={() => setOpenCreateIncubatorDialog(true)}>
-                  <FormattedMessage id="ui.incubatorsList.SuggestNewTopic" defaultMessage="ui.incubatorsList.SuggestNewTopic" />
-                </Button>
-              </Box>
-            </React.Fragment>
+            </InfiniteScroll>
           )}
-          {openIncubatorsDialog && (
-            <BaseDialog
-              title={<FormattedMessage id="ui.incubatorsList.title" defaultMessage="ui.incubatorsList.title" />}
-              onClose={() => setOpenIncubatorsDialog(false)}
-              open={openIncubatorsDialog}>
-              {loading ? (
-                <CentralProgress size={50} />
-              ) : (
-                <InfiniteScroll
-                  dataLength={incubators.length}
-                  next={fetchIncubators}
-                  hasMoreNext={Boolean(next)}
-                  loaderNext={<CentralProgress size={30} />}
-                  height={400}
-                  endMessage={
-                    <p style={{textAlign: 'center'}}>
-                      <b>
-                        <FormattedMessage id="ui.incubatorsList.noMoreIncubators" defaultMessage="ui.incubatorsList.noMoreIncubators" />
-                      </b>
-                    </p>
-                  }>
-                  <List>
-                    {incubators.map((i) => (
-                      <ListItem key={i.id} sx={{display: 'block', padding: 0}}>
-                        <Incubator
-                          elevation={0}
-                          incubator={i}
-                          className={classes.incubatorItem}
-                          subscribeButtonProps={{onSubscribe: handleSubscriptionsUpdate}}
-                          ButtonProps={{onClick: () => handleIncubatorDetailDialogOpening(i)}}
-                          {...IncubatorProps}
-                        />
-                      </ListItem>
-                    ))}
-                  </List>
-                </InfiniteScroll>
-              )}
-            </BaseDialog>
-          )}
-          {openCreateIncubatorDialog && <CreateIncubatorDialog open={openCreateIncubatorDialog} onClose={handleCreateIncubatorDialogClose} />}
-          {openIncubatorDetailDialog && (
-            <IncubatorDetail
-              open={openIncubatorDetailDialog}
-              onClose={handleIncubatorDetailDialogClose}
-              incubator={detailObj}
-              onSubscriptionsUpdate={handleSubscriptionsUpdate}
-            />
-          )}
-        </CardContent>
+        </BaseDialog>
       )}
-    </React.Fragment>
+      {openCreateIncubatorDialog && <CreateIncubatorDialog open={openCreateIncubatorDialog} onClose={handleCreateIncubatorDialogClose} />}
+      {openIncubatorDetailDialog && (
+        <IncubatorDetail
+          open={openIncubatorDetailDialog}
+          onClose={handleIncubatorDetailDialogClose}
+          incubator={detailObj}
+          onSubscriptionsUpdate={handleSubscriptionsUpdate}
+        />
+      )}
+    </CardContent>
   );
 
   /**
    * Renders root object (if results and autoHide prop is set to false, otherwise component is hidden)
    */
-  if (autoHide && !total) {
+  if (autoHide && !state.count) {
     return null;
   }
   return (

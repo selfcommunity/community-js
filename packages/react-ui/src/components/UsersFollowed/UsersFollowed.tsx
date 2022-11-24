@@ -1,12 +1,13 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useMemo, useReducer, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
 import {Button, CardContent, ListItem, Typography, useMediaQuery, useTheme} from '@mui/material';
 import Widget from '../Widget';
 import {SCUserType} from '@selfcommunity/types';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
-import {Logger} from '@selfcommunity/utils';
+import {CacheStrategies, Logger} from '@selfcommunity/utils';
 import {
+  SCCache,
   SCPreferences,
   SCPreferencesContext,
   SCPreferencesContextType,
@@ -25,6 +26,7 @@ import InfiniteScroll from '../../shared/InfiniteScroll';
 import {useThemeProps} from '@mui/system';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import {VirtualScrollerItemProps} from '../../types/virtualScroller';
+import {actionToolsTypes, dataToolsReducer, stateToolsInitializer} from '../../utils/tools';
 
 const messages = defineMessages({
   title: {
@@ -79,6 +81,11 @@ export interface UsersFollowedProps extends VirtualScrollerItemProps {
    * @default empty object
    */
   UserProps?: UserProps;
+  /**
+   * Caching strategies
+   * @default CacheStrategies.CACHE_FIRST
+   */
+  cacheStrategy?: CacheStrategies;
 }
 
 /**
@@ -129,7 +136,7 @@ export default function UsersFollowed(inProps: UsersFollowedProps): JSX.Element 
     props: inProps,
     name: PREFIX
   });
-  const {userId, autoHide, className, UserProps = {}, onHeightChange} = props;
+  const {userId, autoHide, className, UserProps = {}, cacheStrategy = CacheStrategies.NETWORK_ONLY, onHeightChange, onStateChange} = props;
 
   // REFS
   const isMountedRef = useIsComponentMountedRef();
@@ -137,23 +144,32 @@ export default function UsersFollowed(inProps: UsersFollowedProps): JSX.Element 
   // STATE
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const [followed, setFollowed] = useState<any[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [hasMore, setHasMore] = useState<boolean>(false);
-  const [total, setTotal] = useState<number>(0);
+  const [state, dispatch] = useReducer(
+    dataToolsReducer,
+    {
+      isLoadingNext: true,
+      next: `${Endpoints.UsersFollowed.url({id: userId})}?limit=10`,
+      cacheKey: SCCache.getToolsStateCacheKey(SCCache.USERS_FOLLOWED_TOOLS_STATE_CACHE_PREFIX_KEY, userId),
+      cacheStrategy
+    },
+    stateToolsInitializer
+  );
   const [openUsersFollowedDialog, setOpenUsersFollowedDialog] = useState<boolean>(false);
-  const [next, setNext] = useState<string>(`${Endpoints.UsersFollowed.url({id: userId})}?limit=10`);
+
+  // CONST
+  const authUserId = scUserContext.user ? scUserContext.user.id : null;
 
   /**
    * Handles list change on user follow
    */
   function handleOnFollowUser(user, follow) {
     if (scUserContext.user['id'] === userId) {
-      setFollowed(followed.filter((u) => u.id !== user.id));
-      setTotal((prev) => prev - 1);
-      setHasMore(total - 1 > limit);
+      dispatch({
+        type: actionToolsTypes.SET_RESULTS,
+        payload: {results: state.results.filter((u) => u.id !== user.id), count: state.count - 1}
+      });
     } else {
-      const newUsers = [...followed];
+      const newUsers = [...state.results];
       const index = newUsers.findIndex((u) => u.id === user.id);
       if (index !== -1) {
         if (user.connection_status === 'followed') {
@@ -163,7 +179,10 @@ export default function UsersFollowed(inProps: UsersFollowedProps): JSX.Element 
           newUsers[index].followers_counter = user.followers_counter + 1;
           newUsers[index].connection_status = 'followed';
         }
-        setFollowed(newUsers);
+        dispatch({
+          type: actionToolsTypes.SET_RESULTS,
+          payload: {results: newUsers}
+        });
       }
     }
   }
@@ -171,65 +190,78 @@ export default function UsersFollowed(inProps: UsersFollowedProps): JSX.Element 
   /**
    * Fetches the list of users followed
    */
-  function fetchFollowed() {
-    if (next) {
-      http
-        .request({
-          url: next,
-          method: Endpoints.UsersFollowed.method
-        })
-        .then((res: HttpResponse<any>) => {
-          if (isMountedRef.current) {
-            const data = res.data;
-            setFollowed([...followed, ...data.results]);
-            setHasMore(data.count > limit);
-            setNext(data['next']);
-            setLoading(false);
-            setTotal(data.count);
-          }
-        })
-        .catch((error) => {
-          setLoading(false);
-          Logger.error(SCOPE_SC_UI, error);
-        });
+  const fetchFollowed = useMemo(
+    () => () => {
+      return http.request({
+        url: state.next,
+        method: Endpoints.UsersFollowed.method
+      });
+    },
+    [dispatch, state.next, state.isLoadingNext]
+  );
+
+  useEffect(() => {
+    if (!userId) {
+      return;
+    } else if (!contentAvailability && !scUserContext.user) {
+      return;
+    } else if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
+      onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
     }
-  }
+  }, [authUserId]);
 
   /**
    * On mount, fetches the list of users followed
    */
   useEffect(() => {
-    if (!userId) {
-      return;
+    let ignore = false;
+    if (state.next) {
+      fetchFollowed()
+        .then((res: HttpResponse<any>) => {
+          if (res.status < 300 && isMountedRef.current && !ignore) {
+            const data = res.data;
+            dispatch({
+              type: actionToolsTypes.LOAD_NEXT_SUCCESS,
+              payload: {
+                results: data.results,
+                count: data.count,
+                next: data.next
+              }
+            });
+          }
+        })
+        .catch((error) => {
+          dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
+          Logger.error(SCOPE_SC_UI, error);
+        });
+      return () => {
+        ignore = true;
+      };
     }
-    if (!contentAvailability && !scUserContext.user) {
-      return;
-    }
-    fetchFollowed();
-  }, [scUserContext.user]);
+  }, [state.next]);
 
   /**
    * Virtual feed update
    */
   useEffect(() => {
     onHeightChange && onHeightChange();
-  }, [followed.length, loading]);
+  }, [state.results.length]);
 
   /**
    * Renders the list of users followed
    */
-  if (loading) {
+  if (state.isLoadingNext) {
     return <Skeleton />;
   }
   const u = (
     <CardContent>
-      <Typography className={classes.title} variant="h5">{`${intl.formatMessage(messages.title, {total: total})}`}</Typography>
-      {!total ? (
+      <Typography className={classes.title} variant="h5">{`${intl.formatMessage(messages.title, {total: state.count})}`}</Typography>
+      {!state.count ? (
         <Typography className={classes.noResults} variant="body2">{`${intl.formatMessage(messages.noUsers)}`}</Typography>
       ) : (
         <React.Fragment>
           <List>
-            {followed.slice(0, limit).map((user: SCUserType) => (
+            {state.results.slice(0, limit).map((user: SCUserType) => (
               <ListItem key={user.id}>
                 <User
                   elevation={0}
@@ -243,7 +275,7 @@ export default function UsersFollowed(inProps: UsersFollowedProps): JSX.Element 
               </ListItem>
             ))}
           </List>
-          {hasMore && (
+          {limit < state.count && (
             <Button size="small" className={classes.showMore} onClick={() => setOpenUsersFollowedDialog(true)}>
               <FormattedMessage id="ui.usersFollowed.button.showAll" defaultMessage="ui.usersFollowed.button.showAll" />
             </Button>
@@ -254,18 +286,18 @@ export default function UsersFollowed(inProps: UsersFollowedProps): JSX.Element 
                 isMobile ? (
                   <FormattedMessage id="ui.usersFollowed.modal.title" defaultMessage="ui.usersFollowed.modal.title" />
                 ) : (
-                  `${intl.formatMessage(messages.title, {total: total})}`
+                  `${intl.formatMessage(messages.title, {total: state.count})}`
                 )
               }
               onClose={() => setOpenUsersFollowedDialog(false)}
               open={openUsersFollowedDialog}>
-              {loading ? (
+              {state.isLoadingNext ? (
                 <CentralProgress size={50} />
               ) : (
                 <InfiniteScroll
-                  dataLength={followed.length}
+                  dataLength={state.results.length}
                   next={fetchFollowed}
-                  hasMoreNext={Boolean(next)}
+                  hasMoreNext={Boolean(state.next)}
                   loaderNext={<CentralProgress size={30} />}
                   height={isMobile ? '100vh' : 400}
                   endMessage={
@@ -276,7 +308,7 @@ export default function UsersFollowed(inProps: UsersFollowedProps): JSX.Element 
                     </p>
                   }>
                   <List>
-                    {followed.map((f) => (
+                    {state.results.map((f) => (
                       <ListItem key={f.id}>
                         <User
                           elevation={0}
@@ -302,7 +334,7 @@ export default function UsersFollowed(inProps: UsersFollowedProps): JSX.Element 
   /**
    * if there are no results and autoHide prop is set to true ,component is hidden
    */
-  if (autoHide && !total) {
+  if (autoHide && !state.count) {
     return <HiddenPlaceholder />;
   }
   /**
