@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.1-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.4.1-alpha.3...@selfcommunity/types@0.4.1-alpha.4) (2022-11-24)
+
+
+### Performance Improvements
+
+* Update user type and account service signature to support new parameters ([219a2f4](https://github.com/selfcommunity/community-js/commit/219a2f44dcc587cf3d42fec563e2cb20901ac35b))
+
+
+
+
+
 ## [0.4.1-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.4.1-alpha.2...@selfcommunity/types@0.4.1-alpha.3) (2022-11-02)
 
 
