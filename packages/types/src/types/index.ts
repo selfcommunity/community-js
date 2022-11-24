@@ -102,6 +102,7 @@ import {
   SCUsersInsightType
 } from './insight';
 import {SCInviteType} from './invite';
+import {SCPromoType} from './promo';
 import {SCContributeStatusType, SCContributionStatus, SCContributionType, SCFlaggedContributionType} from './contribution';
 import {SCPlatformType} from './platform';
 import {SCAvatarType} from './avatar';
@@ -176,6 +177,7 @@ export {
   SCPrivateMessageUploadMediaType,
   SCPrivateMessageUploadThumbnailType,
   SCPrivateMessageUploadMediaChunkType,
+  SCPromoType,
   SCNotificationTypologyType,
   SCNotificationAggregatedType,
   SCNotificationCommentType,
