@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.32](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.31...@selfcommunity/react-ui@0.7.0-alpha.32) (2022-11-24)
+
+
+### Bug Fixes
+
+* Fix Metadata field warning ([375fb71](https://github.com/selfcommunity/community-js/commit/375fb7194e6cfe3022f7b18a1e303c5243565018))
+
+
+
+
+
 # [0.7.0-alpha.31](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.30...@selfcommunity/react-ui@0.7.0-alpha.31) (2022-11-24)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
