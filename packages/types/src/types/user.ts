@@ -41,6 +41,11 @@ export interface SCUserType {
   email_isvalid?: boolean;
 
   /**
+   * The user is approved and can access the community
+   */
+  reg_approved?: boolean;
+
+  /**
    * Date joined to the community.
    */
   date_joined: Date;
