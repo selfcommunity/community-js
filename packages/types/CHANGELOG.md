@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.1-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.4.1-alpha.4...@selfcommunity/types@0.4.1-alpha.5) (2022-11-24)
+
+**Note:** Version bump only for package @selfcommunity/types
+
+
+
+
+
 ## [0.4.1-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.4.1-alpha.3...@selfcommunity/types@0.4.1-alpha.4) (2022-11-24)
 
 
