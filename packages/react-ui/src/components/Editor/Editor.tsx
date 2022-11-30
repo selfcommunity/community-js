@@ -9,6 +9,7 @@ import {LexicalComposer} from '@lexical/react/LexicalComposer';
 import {ContentEditable} from '@lexical/react/LexicalContentEditable';
 import {HistoryPlugin} from '@lexical/react/LexicalHistoryPlugin';
 import {RichTextPlugin} from '@lexical/react/LexicalRichTextPlugin';
+import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary';
 import {OnChangePlugin, AutoLinkPlugin, MentionsPlugin, ImagePlugin, EmojiPlugin, DefaultHtmlValuePlugin} from './plugins';
 import {LinkPlugin} from '@lexical/react/LexicalLinkPlugin';
 import ApiPlugin, {ApiRef} from './plugins/ApiPlugin';
@@ -214,27 +215,30 @@ const Editor: ForwardRefRenderFunction<EditorRef, EditorProps> = (inProps: Edito
 
   return (
     <Root id={id} className={classNames(classes.root, className)}>
-      <LexicalComposer initialConfig={initialConfig}>
-        <RichTextPlugin
-          contentEditable={<ContentEditable className={classes.content} />}
-          placeholder={
-            <Box className={classes.placeholder} onClick={handleFocus}>
-              <FormattedMessage id="ui.editor.placeholder" defaultMessage="ui.editor.placeholder" />
-            </Box>
-          }
-        />
-        <DefaultHtmlValuePlugin defaultValue={defaultValue} />
-        <HistoryPlugin />
-        <OnChangePlugin onChange={handleChange} />
-        <AutoLinkPlugin />
-        <MentionsPlugin />
-        <LinkPlugin />
-        <Stack className={classes.actions} direction="row">
-          <ImagePlugin />
-          <EmojiPlugin />
-        </Stack>
-        <ApiPlugin ref={apiRef} />
-      </LexicalComposer>
+      {typeof window !== 'undefined' && (
+        <LexicalComposer initialConfig={initialConfig}>
+          <RichTextPlugin
+            contentEditable={<ContentEditable className={classes.content} />}
+            placeholder={
+              <Box className={classes.placeholder} onClick={handleFocus}>
+                <FormattedMessage id="ui.editor.placeholder" defaultMessage="ui.editor.placeholder" />
+              </Box>
+            }
+            ErrorBoundary={LexicalErrorBoundary}
+          />
+          <DefaultHtmlValuePlugin defaultValue={defaultValue} />
+          <HistoryPlugin />
+          <OnChangePlugin onChange={handleChange} />
+          <AutoLinkPlugin />
+          <MentionsPlugin />
+          <LinkPlugin />
+          <Stack className={classes.actions} direction="row">
+            <ImagePlugin />
+            <EmojiPlugin />
+          </Stack>
+          <ApiPlugin ref={apiRef} />
+        </LexicalComposer>
+      )}
     </Root>
   );
 };
