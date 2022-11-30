@@ -610,6 +610,10 @@ export interface SCUserProviderAssociationType {
    */
   profile_url?: string;
   /**
+   * An optional flag to indicate if the social association can be showed in the user profile.
+   */
+  show_in_profile?: boolean;
+  /**
    * Optional json metadata
    */
   metadata?: any;
