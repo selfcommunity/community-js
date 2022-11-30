@@ -267,10 +267,18 @@
   "ui.userProfileInfo.fieldLink": "aggiungi il tuo {field}",
   "ui.userProfileInfo.fieldLink.female": "aggiungi la tua {field}",
   "ui.userProfileInfo.dialog.title": "Informazioni pubbliche",
+  "ui.userProfileInfo.socialAssociations": "Gestisci account social",
+
+  "ui.userSocialAssociation.add": "aggiungi un login social:",
+  "ui.userSocialAssociation.remove": "rimuovi i login social:",
 
   "ui.userProfileEditPublicInfo.genderMale": "Maschile",
   "ui.userProfileEditPublicInfo.genderFemale": "Femminile",
   "ui.userProfileEditPublicInfo.genderUnspecified": "Non specificato",
+
+  "ui.userProfileEditSocialAccount.socialAssociations.title": "Gestisci i metodi di accesso",
+  "ui.userProfileEditSocialAccount.socialAssociations.dialog.msg": "Sei sicuro di voler eliminare il login {field} ?",
+  "ui.userProfileEditSocialAccount.socialAssociations.dialog.confirm": "Sì",
 
   "ui.userProfileEditSettings.notification.title": "Quando ricevi una notifica",
   "ui.userProfileEditSettings.notification.label": "mostra un messaggio in basso a sinistra:",

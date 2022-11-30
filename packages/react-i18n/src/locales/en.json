@@ -265,10 +265,18 @@
   "ui.userProfileInfo.gender": "Gender",
   "ui.userProfileInfo.fieldLink": "add your {field}",
   "ui.userProfileInfo.dialog.title": "Public informations",
+  "ui.userProfileInfo.socialAssociations": "Handle your social account",
+
+  "ui.userSocialAssociation.add": "add a social login:",
+  "ui.userSocialAssociation.remove": "remove social login:",
 
   "ui.userProfileEditPublicInfo.genderMale": "Male",
   "ui.userProfileEditPublicInfo.genderFemale": "Female",
   "ui.userProfileEditPublicInfo.genderUnspecified": "Unspecified",
+
+  "ui.userProfileEditSocialAccount.socialAssociations.title": "Handle your access methods",
+  "ui.userProfileEditSocialAccount.socialAssociations.dialog.msg": "Are you sure you want to delete {field} association ?",
+  "ui.userProfileEditSocialAccount.socialAssociations.dialog.confirm": "Yes",
 
   "ui.userProfileEditSettings.notification.title": "When receive a notification",
   "ui.userProfileEditSettings.notification.label": "show a toast message in the bottom left corner:",
