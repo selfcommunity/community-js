@@ -196,6 +196,7 @@ export default function Tags(props: TagsProps): JSX.Element {
               <Icon ref={popperRef} fontSize="small" onClick={handleToggle} aria-haspopup="true">
                 local_offer
               </Icon>
+              {/* @ts-ignore */}
               <TagsPopper
                 open={open}
                 anchorEl={popperRef.current}
@@ -207,7 +208,7 @@ export default function Tags(props: TagsProps): JSX.Element {
                     enabled: true
                   }
                 ]}>
-                {({TransitionProps, placement}) => (
+                {({TransitionProps, placement, ...rest}) => (
                   <Grow {...TransitionProps} style={{transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom'}}>
                     <Paper variant={'outlined'} className={classes.paper}>
                       <ClickAwayListener onClickAway={handleClose}>
