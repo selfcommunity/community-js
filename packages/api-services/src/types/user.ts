@@ -118,5 +118,5 @@ export interface DeleteProviderAssociation {
   /**
    * The external id of the user in the provider platform
    */
-  ext_id: string;
+  ext_id: number;
 }
