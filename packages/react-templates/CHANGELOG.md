@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.18](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.17...@selfcommunity/react-templates@0.3.0-alpha.18) (2022-11-30)
+
+
+### Bug Fixes
+
+* Fix build and ts-ignore ([1bf0b6a](https://github.com/selfcommunity/community-js/commit/1bf0b6ada567038d8558c383a75e614a486c1494))
+
+
+
+
+
 # [0.3.0-alpha.17](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.16...@selfcommunity/react-templates@0.3.0-alpha.17) (2022-11-24)
 
 **Note:** Version bump only for package @selfcommunity/react-templates

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.9-alpha.20](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.9-alpha.19...@selfcommunity/react-core@0.3.9-alpha.20) (2022-11-30)
+
+
+### Bug Fixes
+
+* Fix build and ts-ignore ([1bf0b6a](https://github.com/selfcommunity/community-js/commit/1bf0b6ada567038d8558c383a75e614a486c1494))
+
+
+
+
+
 ## [0.3.9-alpha.19](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.9-alpha.18...@selfcommunity/react-core@0.3.9-alpha.19) (2022-11-24)
 
 **Note:** Version bump only for package @selfcommunity/react-core
