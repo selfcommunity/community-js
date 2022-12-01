@@ -16,7 +16,7 @@ import {
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import Icon from '@mui/material/Icon';
-import {SCUserSocialAssociations} from '@selfcommunity/react-ui';
+import {SCUserSocialAssociations} from '../../types';
 
 const messages = defineMessages({
   socialAdd: {
