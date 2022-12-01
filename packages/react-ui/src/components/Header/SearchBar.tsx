@@ -1,6 +1,6 @@
-import {Box, IconButton, TextField, styled, useTheme, useMediaQuery, Autocomplete, Avatar, Typography} from '@mui/material';
+import {Box, IconButton, TextField, styled, useTheme, useMediaQuery, Autocomplete, Avatar, Typography, AutocompleteChangeReason} from '@mui/material';
 import Icon from '@mui/material/Icon';
-import React, {FormEvent, useEffect, useState} from 'react';
+import React, {FormEvent, SyntheticEvent, useEffect, useState} from 'react';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
@@ -104,7 +104,7 @@ export default function HeaderSearchBar(inProps: HeaderSearchBarProps) {
     setIsSearching(true);
   };
 
-  const handleSearch = (event: FormEvent, value: SCSuggestionType) => {
+  const handleSearch = (event: SyntheticEvent<Element, Event>, value: any[], reason: AutocompleteChangeReason) => {
     setIsSearching(false);
     event.preventDefault();
     event.stopPropagation();

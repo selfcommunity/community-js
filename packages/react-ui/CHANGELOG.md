@@ -3,6 +3,49 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.34](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.33...@selfcommunity/react-ui@0.7.0-alpha.34) (2022-11-30)
+
+
+### Bug Fixes
+
+* Fix build and ts-ignore ([1bf0b6a](https://github.com/selfcommunity/community-js/commit/1bf0b6ada567038d8558c383a75e614a486c1494))
+
+
+### Performance Improvements
+
+* Update Editor ([475cf04](https://github.com/selfcommunity/community-js/commit/475cf040d4b60a23aa49e97f1795b4eb4e0ecc9d))
+
+
+
+
+
+# [0.7.0-alpha.33](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.32...@selfcommunity/react-ui@0.7.0-alpha.33) (2022-11-24)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.7.0-alpha.32](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.31...@selfcommunity/react-ui@0.7.0-alpha.32) (2022-11-24)
+
+
+### Bug Fixes
+
+* Fix Metadata field warning ([375fb71](https://github.com/selfcommunity/community-js/commit/375fb7194e6cfe3022f7b18a1e303c5243565018))
+
+
+
+
+
+# [0.7.0-alpha.31](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.30...@selfcommunity/react-ui@0.7.0-alpha.31) (2022-11-24)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
 # [0.7.0-alpha.30](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.29...@selfcommunity/react-ui@0.7.0-alpha.30) (2022-11-22)
 
 

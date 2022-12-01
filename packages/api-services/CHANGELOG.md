@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.6-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.6-alpha.7...@selfcommunity/api-services@0.3.6-alpha.8) (2022-11-24)
+
+**Note:** Version bump only for package @selfcommunity/api-services
+
+
+
+
+
+## [0.3.6-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.6-alpha.6...@selfcommunity/api-services@0.3.6-alpha.7) (2022-11-24)
+
+
+### Performance Improvements
+
+* Update user type and account service signature to support new parameters ([219a2f4](https://github.com/selfcommunity/community-js/commit/219a2f44dcc587cf3d42fec563e2cb20901ac35b))
+
+
+
+
+
 ## [0.3.6-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.6-alpha.5...@selfcommunity/api-services@0.3.6-alpha.6) (2022-11-21)
 
 
