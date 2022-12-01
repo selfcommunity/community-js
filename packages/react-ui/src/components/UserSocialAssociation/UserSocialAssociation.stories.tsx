@@ -14,7 +14,7 @@ export default {
     }
   },
   args: {
-    userId: 417
+    userId: 7
   }
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
 } as ComponentMeta<typeof UserSocialAssociation>;

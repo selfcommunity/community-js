@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useEffect, useMemo, useRef, useState} from 'react';
+import React, {ChangeEvent, useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Box, CircularProgress, IconButton, InputAdornment, MenuItem, TextField} from '@mui/material';
 import Icon from '@mui/material/Icon';
@@ -17,6 +17,7 @@ import {useThemeProps} from '@mui/system';
 import {SCUserProfileFields} from '../../../types';
 import MetadataField from '../../../shared/MetadataField';
 import {SCOPE_SC_UI} from '../../../constants/Errors';
+import SocialAccount from './SocialAccount';
 
 const messages = defineMessages({
   genderMale: {
@@ -74,7 +75,16 @@ export interface PublicInfoProps {
    * Callback on edit data with success
    */
   onEditSuccess?: (editedField?: {}) => void;
-
+  /**
+   * Callback on delete social association success
+   * @default null
+   */
+  onAssociationDelete?: () => void;
+  /**
+   * Callback on create social association
+   * default null
+   */
+  onAssociationCreate?: (provider: string) => void;
   /**
    * Any other properties
    */
@@ -89,11 +99,18 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {id = null, className = null, fields = [...DEFAULT_FIELDS], onEditSuccess = null, editingField, ...rest} = props;
-
+  const {
+    id = null,
+    className = null,
+    fields = [...DEFAULT_FIELDS],
+    onEditSuccess = null,
+    onAssociationDelete = null,
+    onAssociationCreate = null,
+    editingField,
+    ...rest
+  } = props;
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
-
   // PREFERENCES
   const scPreferences: SCPreferencesContextType = useSCPreferences();
   const metadataDefinitions = useMemo(() => {
@@ -258,6 +275,12 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
         break;
       case SCUserProfileFields.TAGS:
         return null;
+      case SCUserProfileFields.SOCIAL_ASSOCIATIONS:
+        return (
+          <React.Fragment key={field}>
+            <SocialAccount user={user} handleAssociation={onAssociationCreate} />
+          </React.Fragment>
+        );
       default:
         if (metadataDefinitions && metadataDefinitions[field]) {
           return (
