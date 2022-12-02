@@ -15,7 +15,7 @@ export default {
     }
   },
   args: {
-    userId: 7
+    userId: 11
   }
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
 } as ComponentMeta<typeof UserProfileInfo>;

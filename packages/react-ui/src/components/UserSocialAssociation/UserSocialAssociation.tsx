@@ -17,6 +17,9 @@ import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import Icon from '@mui/material/Icon';
 import {SCUserSocialAssociations} from '../../types';
+import {UserService} from '@selfcommunity/api-services';
+import {SCOPE_SC_UI} from '../../constants/Errors';
+import {Logger} from '@selfcommunity/utils';
 
 const messages = defineMessages({
   socialAdd: {
@@ -88,6 +91,10 @@ export interface UserSocialAssociationProps extends StackProps {
    * @default null
    */
   children?: React.ReactNode;
+  /**
+   * If providers list must be updated
+   */
+  shouldUpdate?: boolean;
 }
 /**
  *
@@ -129,12 +136,13 @@ export default function UserSocialAssociation(inProps: UserSocialAssociationProp
     onDeleteAssociation = null,
     isEditView = false,
     children = null,
+    shouldUpdate,
     ...rest
   } = props;
   // HOOKS
   const scUserContext: SCUserContextType = useSCUser();
   const {scUser} = useSCFetchUser({id: userId, user});
-  const {scUserProviders} = useSCFetchUserProviders({id: userId || scUser.id, providers});
+  const {scUserProviders, setSCUserProviders} = useSCFetchUserProviders({id: userId || scUser.id, providers});
   // INTL
   const intl = useIntl();
 
@@ -169,12 +177,25 @@ export default function UserSocialAssociation(inProps: UserSocialAssociationProp
   const providersList = (op?: string) => {
     return providersEnabled?.filter((p) => (op === '!' ? !_providers[p]?.profile_url : _providers[p]?.profile_url));
   };
+  useEffect(() => {
+    if (shouldUpdate) {
+      UserService.getProviderAssociations(scUser.id)
+        .then((providers: SCUserProviderAssociationType[]) => {
+          setSCUserProviders(providers);
+        })
+        .catch((err) => {
+          Logger.error(SCOPE_SC_UI, `User with id ${scUser.id} not found`);
+          Logger.error(SCOPE_SC_UI, err.message);
+        });
+    }
+  }, [shouldUpdate]);
 
   // RENDER
   if (isEditView && providersEnabled) {
     return (
       <Root className={classNames(classes.editView, className)} {...rest} direction="column">
-        {providersList('!').length !== 0 && (
+        {providersList().length !== 0 || (providersList('!').length !== 0 && onCreateAssociation) ? children : null}
+        {providersList('!').length !== 0 && onCreateAssociation && (
           <Box>
             <Typography variant="body2"> {intl.formatMessage(messages.socialAdd)}</Typography>
             {providersList('!').map((p: string, index) => (

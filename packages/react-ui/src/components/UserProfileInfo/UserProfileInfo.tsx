@@ -277,7 +277,7 @@ export default function UserProfileInfo(inProps: UserProfileInfoProps): JSX.Elem
                       user={scUser}
                       children={
                         <Typography variant="body2" ml={2}>
-                          {renderFieldLink(field)}
+                          {scUser?.ext_id ? renderFieldLink(field) : null}
                         </Typography>
                       }
                       {...socialAssociationProps}

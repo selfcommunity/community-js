@@ -5,9 +5,11 @@ import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import ConfirmDialog from '../../../shared/ConfirmDialog/ConfirmDialog';
-import UserSocialAssociation, {UserSocialAssociationProps} from '../../UserSocialAssociation';
+import UserSocialAssociation from '../../UserSocialAssociation';
 import {UserService} from '@selfcommunity/api-services';
 import {SCUserType} from '@selfcommunity/types';
+import {SCOPE_SC_UI} from '../../../constants/Errors';
+import {Logger} from '@selfcommunity/utils';
 
 const messages = defineMessages({
   socialTitle: {
@@ -66,6 +68,7 @@ export default function SocialAccount(inProps: SocialAccountProps): JSX.Element 
   // STATE
   const [provider, setProvider] = useState('');
   const [openDeleteDialog, setOpenDeleteDialog] = useState<boolean>(false);
+  const [update, setUpdate] = useState<boolean>(false);
   // INTL
   const intl = useIntl();
 
@@ -73,10 +76,12 @@ export default function SocialAccount(inProps: SocialAccountProps): JSX.Element 
     const data = {user_id: user.id, provider: provider, ext_id: user.ext_id};
     UserService.deleteProviderAssociation(data)
       .then(() => {
+        setUpdate(true);
         setOpenDeleteDialog(false);
       })
       .catch((error) => {
         console.log(error);
+        Logger.error(SCOPE_SC_UI, error);
       });
   }
 
@@ -91,16 +96,19 @@ export default function SocialAccount(inProps: SocialAccountProps): JSX.Element 
 
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
-      <Typography variant="body1" mb={1} sx={{fontWeight: 'bold'}}>
-        {' '}
-        {intl.formatMessage(messages.socialTitle)}
-      </Typography>
       <UserSocialAssociation
+        children={
+          <Typography variant="body1" mb={1} sx={{fontWeight: 'bold'}}>
+            {' '}
+            {intl.formatMessage(messages.socialTitle)}
+          </Typography>
+        }
         direction="row"
         userId={user.id}
         isEditView={true}
         onDeleteAssociation={handleOpenDeleteDialog}
         onCreateAssociation={handleAssociation}
+        shouldUpdate={update}
       />
       {openDeleteDialog && (
         <ConfirmDialog
