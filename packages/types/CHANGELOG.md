@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.1-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.4.1-alpha.5...@selfcommunity/types@0.4.1-alpha.6) (2022-12-05)
+
+
+### Performance Improvements
+
+* added field to SCUserProviderAssociationType ([89273ea](https://github.com/selfcommunity/community-js/commit/89273ea5eb717e1a8ad0db532bb1d10aef6dc0d5))
+
+
+
+
+
 ## [0.4.1-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.4.1-alpha.4...@selfcommunity/types@0.4.1-alpha.5) (2022-11-24)
 
 **Note:** Version bump only for package @selfcommunity/types

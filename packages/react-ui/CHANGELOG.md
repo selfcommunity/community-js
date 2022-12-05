@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.35](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.34...@selfcommunity/react-ui@0.7.0-alpha.35) (2022-12-05)
+
+
+### Bug Fixes
+
+* fixed import ([2fa3f01](https://github.com/selfcommunity/community-js/commit/2fa3f01eca56937485d73c8afcb836a438dcd3df))
+* fixed social association section update on edit ([63ef717](https://github.com/selfcommunity/community-js/commit/63ef717e319bc7996a9b6e2821b653810b27ccf1))
+
+
+### Performance Improvements
+
+* added social account providers handling. ([66f4c72](https://github.com/selfcommunity/community-js/commit/66f4c729f4436d71904832967d200bd27cdff60c))
+
+
+
+
+
 # [0.7.0-alpha.34](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.33...@selfcommunity/react-ui@0.7.0-alpha.34) (2022-11-30)
 
 

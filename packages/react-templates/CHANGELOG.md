@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.19](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.18...@selfcommunity/react-templates@0.3.0-alpha.19) (2022-12-05)
+
+
+### Performance Improvements
+
+* added social account providers handling. ([66f4c72](https://github.com/selfcommunity/community-js/commit/66f4c729f4436d71904832967d200bd27cdff60c))
+
+
+
+
+
 # [0.3.0-alpha.18](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.17...@selfcommunity/react-templates@0.3.0-alpha.18) (2022-11-30)
 
 

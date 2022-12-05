@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.6-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.6-alpha.8...@selfcommunity/api-services@0.3.6-alpha.9) (2022-12-05)
+
+
+### Bug Fixes
+
+* fixed type ([04277c2](https://github.com/selfcommunity/community-js/commit/04277c265feda889022e44ecf04e6758d63de7fe))
+
+
+
+
+
 ## [0.3.6-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.6-alpha.7...@selfcommunity/api-services@0.3.6-alpha.8) (2022-11-24)
 
 **Note:** Version bump only for package @selfcommunity/api-services
