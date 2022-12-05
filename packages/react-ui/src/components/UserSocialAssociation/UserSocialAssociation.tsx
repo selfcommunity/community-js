@@ -170,7 +170,7 @@ export default function UserSocialAssociation(inProps: UserSocialAssociationProp
     } else if (isMe && onCreateAssociation) {
       return {onClick: onCreateAssociation(name)};
     } else {
-      return null;
+      return {disabled: true};
     }
   };
   const providersEnabled = Object.values(SCUserSocialAssociations).filter((p) => preferences[`providers.${p}_signin_enabled`]);
@@ -194,8 +194,8 @@ export default function UserSocialAssociation(inProps: UserSocialAssociationProp
   if (isEditView && providersEnabled) {
     return (
       <Root className={classNames(classes.editView, className)} {...rest} direction="column">
-        {providersList().length !== 0 || (providersList('!').length !== 0 && onCreateAssociation) ? children : null}
-        {providersList('!').length !== 0 && onCreateAssociation && (
+        {providersList().length || (providersList('!').length && onCreateAssociation) ? children : null}
+        {providersList('!').length && onCreateAssociation && (
           <Box>
             <Typography variant="body2"> {intl.formatMessage(messages.socialAdd)}</Typography>
             {providersList('!').map((p: string, index) => (
@@ -207,7 +207,7 @@ export default function UserSocialAssociation(inProps: UserSocialAssociationProp
             ))}
           </Box>
         )}
-        {providersList().length !== 0 && (
+        {providersList().length && (
           <Box>
             <Typography variant="body2"> {intl.formatMessage(messages.socialRemove)}</Typography>
             {providersList().map((p: string, index) => (
@@ -221,6 +221,8 @@ export default function UserSocialAssociation(inProps: UserSocialAssociationProp
         )}
       </Root>
     );
+  } else if (!providersList().length) {
+    return null;
   }
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
