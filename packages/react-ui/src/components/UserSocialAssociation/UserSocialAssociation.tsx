@@ -170,7 +170,7 @@ export default function UserSocialAssociation(inProps: UserSocialAssociationProp
     } else if (isMe && onCreateAssociation) {
       return {onClick: onCreateAssociation(name)};
     } else {
-      return {disabled: true};
+      return null;
     }
   };
   const providersEnabled = Object.values(SCUserSocialAssociations).filter((p) => preferences[`providers.${p}_signin_enabled`]);
