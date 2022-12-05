@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.36](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.35...@selfcommunity/react-ui@0.7.0-alpha.36) (2022-12-05)
+
+
+### Bug Fixes
+
+* added default fields export ([1655e13](https://github.com/selfcommunity/community-js/commit/1655e13c07b2e2f09cda9a8ae6ff95262a67cbc0))
+
+
+
+
+
 # [0.7.0-alpha.35](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.34...@selfcommunity/react-ui@0.7.0-alpha.35) (2022-12-05)
 
 
