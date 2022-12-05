@@ -14,6 +14,7 @@ import {SCOPE_SC_UI} from '../../constants/Errors';
 import Tags, {TagsComponentType} from '../../shared/Tags';
 import PublicInfo from '../UserProfileEdit/Section/PublicInfo';
 import BaseDialog from '../../shared/BaseDialog';
+import UserSocialAssociation, {UserSocialAssociationProps} from '../UserSocialAssociation';
 
 const messages = defineMessages({
   realName: {
@@ -59,6 +60,10 @@ const messages = defineMessages({
   fieldLinkFemale: {
     id: 'ui.userProfileInfo.fieldLink.female',
     defaultMessage: 'ui.userProfileInfo.fieldLink.female'
+  },
+  socialAssociations: {
+    id: 'ui.userProfileInfo.socialAssociations',
+    defaultMessage: 'ui.userProfileInfo.socialAssociations'
   }
 });
 
@@ -102,7 +107,11 @@ export interface UserProfileInfoProps {
    * @default [real_name, date_joined, date_of_birth, website, description, bio]
    */
   fields?: SCUserProfileFields[];
-
+  /**
+   * Props to spread to user social association component
+   * default {}
+   */
+  socialAssociationProps?: UserSocialAssociationProps;
   /**
    * Any other properties
    */
@@ -138,7 +147,7 @@ export default function UserProfileInfo(inProps: UserProfileInfoProps): JSX.Elem
     props: inProps,
     name: PREFIX
   });
-  const {className = null, userId = null, user = null, fields = [...DEFAULT_FIELDS], ...rest} = props;
+  const {className = null, userId = null, user = null, fields = [...DEFAULT_FIELDS], socialAssociationProps = {}, ...rest} = props;
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
   // STATE
@@ -158,9 +167,14 @@ export default function UserProfileInfo(inProps: UserProfileInfoProps): JSX.Elem
         case SCUserProfileFields.DESCRIPTION:
         case SCUserProfileFields.BIO:
           return intl.formatMessage(messages.fieldLinkFemale, {field: intl.formatMessage(messages[camelCase(field)]).toLowerCase()});
+        case SCUserProfileFields.SOCIAL_ASSOCIATIONS:
+          return intl.formatMessage(messages.socialAssociations);
         default:
           return intl.formatMessage(messages.fieldLink, {field: intl.formatMessage(messages[camelCase(field)]).toLowerCase()});
       }
+    }
+    if (field === SCUserProfileFields.SOCIAL_ASSOCIATIONS) {
+      return intl.formatMessage(messages.socialAssociations, {field: intl.formatMessage(messages[camelCase(field)]).toLowerCase()});
     }
     return intl.formatMessage(messages.fieldLink, {field: intl.formatMessage(messages[camelCase(field)]).toLowerCase()});
   };
@@ -195,6 +209,8 @@ export default function UserProfileInfo(inProps: UserProfileInfoProps): JSX.Elem
             TagChipProps={{clickable: false, disposable: false}}
           />
         );
+      case SCUserProfileFields.SOCIAL_ASSOCIATIONS:
+        return <UserSocialAssociation user={user} direction="row" ml={1} />;
       default:
         return user[field];
     }
@@ -224,7 +240,6 @@ export default function UserProfileInfo(inProps: UserProfileInfoProps): JSX.Elem
   if (fields.length === 0) {
     return null;
   }
-
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
       <Grid container spacing={2}>
@@ -252,6 +267,25 @@ export default function UserProfileInfo(inProps: UserProfileInfoProps): JSX.Elem
               </Grid>
             );
           } else if (isMe) {
+            if (field === SCUserProfileFields.SOCIAL_ASSOCIATIONS) {
+              return (
+                <React.Fragment key={field}>
+                  <Grid item xs={6}>
+                    <UserSocialAssociation
+                      direction="row"
+                      alignItems="center"
+                      user={scUser}
+                      children={
+                        <Typography variant="body2" ml={2}>
+                          {scUser?.ext_id ? renderFieldLink(field) : null}
+                        </Typography>
+                      }
+                      {...socialAssociationProps}
+                    />
+                  </Grid>
+                </React.Fragment>
+              );
+            }
             return (
               <Grid item xs={6} key={field}>
                 <Typography variant="body2">
@@ -263,6 +297,9 @@ export default function UserProfileInfo(inProps: UserProfileInfoProps): JSX.Elem
               </Grid>
             );
           }
+          if (field === SCUserProfileFields.SOCIAL_ASSOCIATIONS) {
+            return <React.Fragment key={field}>{renderField(scUser, field)}</React.Fragment>;
+          }
           return null;
         })}
       </Grid>
@@ -273,7 +310,11 @@ export default function UserProfileInfo(inProps: UserProfileInfoProps): JSX.Elem
           onClose={() => setOpenDialog(false)}
           className={classNames(classes.root, className)}
           {...rest}>
-          <PublicInfo editingField={editField} onEditSuccess={(f: {}) => handleFieldUpdate(f)} />
+          <PublicInfo
+            editingField={editField}
+            onEditSuccess={(f: {}) => handleFieldUpdate(f)}
+            onAssociationCreate={socialAssociationProps?.onCreateAssociation}
+          />
         </BaseDialog>
       )}
     </Root>

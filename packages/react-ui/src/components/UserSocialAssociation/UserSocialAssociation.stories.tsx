@@ -1,12 +1,11 @@
 import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
-import UserProfileInfo from './index';
-import { DEFAULT_FIELDS } from '../../constants/UserProfile';
+import UserSocialAssociation from './index';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/React UI/UserProfileInfo ',
-  component: UserProfileInfo,
+  title: 'Design System/React UI/User Social Association ',
+  component: UserSocialAssociation,
   argTypes: {
     userId: {
       control: {type: 'number'},
@@ -15,15 +14,15 @@ export default {
     }
   },
   args: {
-    userId: 11
+    userId: 7
   }
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
-} as ComponentMeta<typeof UserProfileInfo>;
+} as ComponentMeta<typeof UserSocialAssociation>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof UserProfileInfo> = (args) => (
+const Template: ComponentStory<typeof UserSocialAssociation> = (args) => (
   <div style={{width: '100%'}}>
-    <UserProfileInfo {...args} />
+    <UserSocialAssociation {...args} />
   </div>
 );
 
@@ -31,5 +30,7 @@ export const Base = Template.bind({});
 
 Base.args = {
   /* the args you need here will depend on your component */
-  fields: [...DEFAULT_FIELDS]
+  spacing: 2,
+  direction: 'row',
+  onCreateAssociation: (name) => () => console.log(name)
 };

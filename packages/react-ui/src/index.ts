@@ -39,6 +39,7 @@ import UserProfileEdit, {
   UserProfileEditSectionSettingsProps
 } from './components/UserProfileEdit';
 import UsersFollowed, {UsersFollowedProps, UsersFollowedSkeleton} from './components/UsersFollowed';
+import UserSocialAssociation, {UserSocialAssociationProps} from './components/UserSocialAssociation';
 import UserFollowers, {UserFollowersProps, UserFollowersSkeleton} from './components/UserFollowers';
 import RelatedFeedObjects, {RelatedFeedObjectsProps, RelatedFeedObjectsSkeleton} from './components/RelatedFeedObjects';
 import CommentObject, {CommentObjectProps, CommentObjectSkeleton} from './components/CommentObject';
@@ -67,7 +68,8 @@ import {
   SCNotificationObjectTemplateType,
   SCHeaderMenuUrlsType,
   SCUserProfileFields,
-  SCUserProfileSettings
+  SCUserProfileSettings,
+  SCUserSocialAssociations
 } from './types';
 import Widget from './components/Widget';
 import ConfirmDialog from './shared/ConfirmDialog/ConfirmDialog';
@@ -225,6 +227,9 @@ export {
   UserFollowers,
   UserFollowersProps,
   UserFollowersSkeleton,
+  UserSocialAssociation,
+  UserSocialAssociationProps,
+  SCUserSocialAssociations,
   CustomAdv,
   CustomAdvProps,
   CustomAdvSkeleton,
