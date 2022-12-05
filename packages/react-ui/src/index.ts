@@ -100,6 +100,7 @@ import {DEFAULT_PAGINATION_QUERY_PARAM_NAME, DEFAULT_PAGINATION_OFFSET, DEFAULT_
 import {FACEBOOK_SHARE, LINKEDIN_SHARE, TWITTER_SHARE} from './constants/SocialShare';
 import {DEFAULT_PRELOAD_OFFSET_VIEWPORT, MAX_PRELOAD_OFFSET_VIEWPORT, MIN_PRELOAD_OFFSET_VIEWPORT} from './constants/LazyLoad';
 import {LEGAL_POLICIES} from './constants/LegalPolicies';
+import {DEFAULT_FIELDS} from './constants/UserProfile';
 
 /**
  * Utilities:
@@ -292,6 +293,7 @@ export {
   ConsentSolutionButton,
   ConsentSolutionButtonProps,
   LEGAL_POLICIES,
+  DEFAULT_FIELDS,
   /* SC UI PAGINATION */
   DEFAULT_PAGINATION_QUERY_PARAM_NAME,
   DEFAULT_PAGINATION_OFFSET,
