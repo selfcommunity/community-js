@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.38](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.37...@selfcommunity/react-ui@0.7.0-alpha.38) (2022-12-05)
+
+
+### Bug Fixes
+
+* fixed user social association disabled icon rendering ([1ab0134](https://github.com/selfcommunity/community-js/commit/1ab013485025f6d1917333f3aa654f55d0cab022))
+
+
+
+
+
 # [0.7.0-alpha.37](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.36...@selfcommunity/react-ui@0.7.0-alpha.37) (2022-12-05)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
