@@ -248,7 +248,7 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
                 const {InputProps, ...rest} = params;
                 InputProps.endAdornment = (
                   <>
-                    {/*{InputProps.endAdornment}*/}
+                    {InputProps.endAdornment}
                     {props.InputProps.endAdornment}
                   </>
                 );
