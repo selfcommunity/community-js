@@ -194,8 +194,8 @@ export default function UserSocialAssociation(inProps: UserSocialAssociationProp
   if (isEditView && providersEnabled) {
     return (
       <Root className={classNames(classes.editView, className)} {...rest} direction="column">
-        {providersList().length || (providersList('!').length && onCreateAssociation) ? children : null}
-        {providersList('!').length && onCreateAssociation && (
+        {providersList().length !== 0 || (providersList('!').length !== 0 && onCreateAssociation) ? children : null}
+        {providersList('!').length !== 0 && onCreateAssociation && (
           <Box>
             <Typography variant="body2"> {intl.formatMessage(messages.socialAdd)}</Typography>
             {providersList('!').map((p: string, index) => (
@@ -207,7 +207,7 @@ export default function UserSocialAssociation(inProps: UserSocialAssociationProp
             ))}
           </Box>
         )}
-        {providersList().length && (
+        {providersList().length !== 0 && (
           <Box>
             <Typography variant="body2"> {intl.formatMessage(messages.socialRemove)}</Typography>
             {providersList().map((p: string, index) => (
