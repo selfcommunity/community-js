@@ -221,7 +221,7 @@ export default function UserSocialAssociation(inProps: UserSocialAssociationProp
         )}
       </Root>
     );
-  } else if ((isMe && !onCreateAssociation) || (!isMe && !providersEnabled)) {
+  } else if ((isMe && !onCreateAssociation) || (!isMe && !providersList().length)) {
     return null;
   }
   return (
