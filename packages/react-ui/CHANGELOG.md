@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.41](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.40...@selfcommunity/react-ui@0.7.0-alpha.41) (2022-12-07)
+
+
+### Bug Fixes
+
+* fixed social association rendering ([4a7aeea](https://github.com/selfcommunity/community-js/commit/4a7aeea51e3fa698a1a306f51c20c3a16e1c5425))
+
+
+
+
+
 # [0.7.0-alpha.40](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.39...@selfcommunity/react-ui@0.7.0-alpha.40) (2022-12-06)
 
 
