@@ -85,7 +85,7 @@ export interface UserSocialAssociationProps extends StackProps {
    * Handler for deleting an existing association
    * @default null
    */
-  onDeleteAssociation?: (provider: string) => any;
+  onDeleteAssociation?: (provider: SCUserProviderAssociationType) => any;
   /**
    * children
    * @default null
@@ -96,6 +96,7 @@ export interface UserSocialAssociationProps extends StackProps {
    */
   shouldUpdate?: boolean;
 }
+
 /**
  *
  > API documentation for the Community-JS User Social Association component. Learn about the available props and the CSS API.
@@ -173,10 +174,9 @@ export default function UserSocialAssociation(inProps: UserSocialAssociationProp
       return {disabled: true};
     }
   };
-  const providersEnabled = Object.values(SCUserSocialAssociations).filter((p) => preferences[`providers.${p}_signin_enabled`]);
-  const providersList = (op?: string) => {
-    return providersEnabled?.filter((p) => (op === '!' ? !_providers[p]?.profile_url : _providers[p]?.profile_url));
-  };
+  const providersEnabled = Object.values<string>(SCUserSocialAssociations).filter((p) => preferences[`providers.${p}_signin_enabled`]);
+  const providersToLink = providersEnabled?.filter((p) => !_providers[p]?.profile_url && !_providers[p]?.ext_id);
+  const providersLinked = Object.values(_providers).filter((p) => providersEnabled.includes(p.provider));
   useEffect(() => {
     if (shouldUpdate) {
       UserService.getProviderAssociations(scUser.id)
@@ -194,11 +194,11 @@ export default function UserSocialAssociation(inProps: UserSocialAssociationProp
   if (isEditView && providersEnabled) {
     return (
       <Root className={classNames(classes.editView, className)} {...rest} direction="column">
-        {providersList().length !== 0 || (providersList('!').length !== 0 && onCreateAssociation) ? children : null}
-        {providersList('!').length !== 0 && onCreateAssociation && (
+        {providersLinked.length !== 0 || (providersToLink.length !== 0 && onCreateAssociation) ? children : null}
+        {providersToLink.length !== 0 && onCreateAssociation && (
           <Box>
             <Typography variant="body2"> {intl.formatMessage(messages.socialAdd)}</Typography>
-            {providersList('!').map((p: string, index) => (
+            {providersToLink.map((p: string, index) => (
               <React.Fragment key={index}>
                 <IconButton onClick={onCreateAssociation ? () => onCreateAssociation(p) : null}>
                   <Icon>{p}</Icon>
@@ -207,13 +207,13 @@ export default function UserSocialAssociation(inProps: UserSocialAssociationProp
             ))}
           </Box>
         )}
-        {providersList().length !== 0 && (
+        {providersLinked.length !== 0 && (
           <Box>
             <Typography variant="body2"> {intl.formatMessage(messages.socialRemove)}</Typography>
-            {providersList().map((p: string, index) => (
+            {providersLinked.map((p: SCUserProviderAssociationType, index) => (
               <React.Fragment key={index}>
-                <IconButton color="primary" onClick={onDeleteAssociation ? () => onDeleteAssociation(p) : null}>
-                  <Icon>{p}</Icon>
+                <IconButton color="primary" onClick={() => onDeleteAssociation(p)}>
+                  <Icon>{p.provider}</Icon>
                 </IconButton>
               </React.Fragment>
             ))}
@@ -221,7 +221,7 @@ export default function UserSocialAssociation(inProps: UserSocialAssociationProp
         )}
       </Root>
     );
-  } else if ((isMe && !onCreateAssociation) || (!isMe && !providersList().length)) {
+  } else if ((isMe && !onCreateAssociation) || (!isMe && !providersLinked.length)) {
     return null;
   }
   return (
