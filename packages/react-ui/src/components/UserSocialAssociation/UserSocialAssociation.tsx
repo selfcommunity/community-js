@@ -212,7 +212,7 @@ export default function UserSocialAssociation(inProps: UserSocialAssociationProp
             <Typography variant="body2"> {intl.formatMessage(messages.socialRemove)}</Typography>
             {providersList().map((p: string, index) => (
               <React.Fragment key={index}>
-                <IconButton color="primary" onClick={() => onDeleteAssociation(p)}>
+                <IconButton color="primary" onClick={onDeleteAssociation ? () => onDeleteAssociation(p) : null}>
                   <Icon>{p}</Icon>
                 </IconButton>
               </React.Fragment>
