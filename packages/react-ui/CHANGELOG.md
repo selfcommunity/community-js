@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.43](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.42...@selfcommunity/react-ui@0.7.0-alpha.43) (2022-12-09)
+
+
+### Bug Fixes
+
+* removed delete social association, added callback ([8dc0df2](https://github.com/selfcommunity/community-js/commit/8dc0df2c16c60224a263adda8c7c20cad6cfa843))
+
+
+
+
+
 # [0.7.0-alpha.42](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.41...@selfcommunity/react-ui@0.7.0-alpha.42) (2022-12-07)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
