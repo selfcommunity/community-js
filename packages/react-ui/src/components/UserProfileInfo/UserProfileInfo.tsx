@@ -314,6 +314,7 @@ export default function UserProfileInfo(inProps: UserProfileInfoProps): JSX.Elem
             editingField={editField}
             onEditSuccess={(f: {}) => handleFieldUpdate(f)}
             onAssociationCreate={socialAssociationProps?.onCreateAssociation}
+            onAssociationDelete={socialAssociationProps?.onDeleteAssociation}
           />
         </BaseDialog>
       )}

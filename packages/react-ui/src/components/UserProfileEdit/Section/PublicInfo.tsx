@@ -79,7 +79,7 @@ export interface PublicInfoProps {
    * Callback on delete social association success
    * @default null
    */
-  onAssociationDelete?: () => void;
+  onAssociationDelete?: (provider: string) => void;
   /**
    * Callback on create social association
    * default null
@@ -278,7 +278,7 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
       case SCUserProfileFields.SOCIAL_ASSOCIATIONS:
         return (
           <React.Fragment key={field}>
-            <SocialAccount user={user} handleAssociation={onAssociationCreate} />
+            <SocialAccount user={user} handleAssociation={onAssociationCreate} deleteAssociation={onAssociationDelete} />
           </React.Fragment>
         );
       default:

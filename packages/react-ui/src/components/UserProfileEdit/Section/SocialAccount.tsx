@@ -54,6 +54,10 @@ export interface SocialAccountProps {
    */
   handleAssociation?: (provider) => void;
   /**
+   * Handles delete association callback
+   */
+  deleteAssociation?: (provider) => void;
+  /**
    * Any other properties
    */
   [p: string]: any;
@@ -64,7 +68,7 @@ export default function SocialAccount(inProps: SocialAccountProps): JSX.Element 
     props: inProps,
     name: PREFIX
   });
-  const {user = null, className = null, handleAssociation, ...rest} = props;
+  const {user = null, className = null, handleAssociation, deleteAssociation, ...rest} = props;
   // STATE
   const [provider, setProvider] = useState('');
   const [openDeleteDialog, setOpenDeleteDialog] = useState<boolean>(false);
@@ -72,18 +76,11 @@ export default function SocialAccount(inProps: SocialAccountProps): JSX.Element 
   // INTL
   const intl = useIntl();
 
-  function handleDelete() {
-    const data = {user_id: user.id, provider: provider, ext_id: user.ext_id};
-    UserService.deleteProviderAssociation(data)
-      .then(() => {
-        setUpdate(true);
-        setOpenDeleteDialog(false);
-      })
-      .catch((error) => {
-        console.log(error);
-        Logger.error(SCOPE_SC_UI, error);
-      });
-  }
+  const handleDelete = () => {
+    deleteAssociation(provider);
+    setUpdate(true);
+    setOpenDeleteDialog(false);
+  };
 
   const handleOpenDeleteDialog = (p) => {
     setOpenDeleteDialog(true);
