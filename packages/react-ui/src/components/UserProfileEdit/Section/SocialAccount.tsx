@@ -54,10 +54,6 @@ export interface SocialAccountProps {
    */
   handleAssociation?: (provider) => void;
   /**
-   * Handles delete association callback
-   */
-  deleteAssociation?: (provider) => void;
-  /**
    * Any other properties
    */
   [p: string]: any;
@@ -68,19 +64,26 @@ export default function SocialAccount(inProps: SocialAccountProps): JSX.Element 
     props: inProps,
     name: PREFIX
   });
-  const {user = null, className = null, handleAssociation, deleteAssociation, ...rest} = props;
+  const {user = null, className = null, handleAssociation, ...rest} = props;
   // STATE
-  const [provider, setProvider] = useState('');
+  const [provider, setProvider] = useState(null);
   const [openDeleteDialog, setOpenDeleteDialog] = useState<boolean>(false);
   const [update, setUpdate] = useState<boolean>(false);
   // INTL
   const intl = useIntl();
 
-  const handleDelete = () => {
-    deleteAssociation(provider);
-    setUpdate(true);
-    setOpenDeleteDialog(false);
-  };
+  function handleDelete() {
+    const data = {user_id: user.id, provider: provider.provider, ext_id: provider.ext_id};
+    UserService.deleteProviderAssociation(data)
+      .then(() => {
+        setUpdate(true);
+        setOpenDeleteDialog(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        Logger.error(SCOPE_SC_UI, error);
+      });
+  }
 
   const handleOpenDeleteDialog = (p) => {
     setOpenDeleteDialog(true);
@@ -110,7 +113,7 @@ export default function SocialAccount(inProps: SocialAccountProps): JSX.Element 
       {openDeleteDialog && (
         <ConfirmDialog
           open={openDeleteDialog}
-          title={intl.formatMessage(messages.dialogTitleMsg, {field: provider})}
+          title={intl.formatMessage(messages.dialogTitleMsg, {field: provider.provider})}
           btnConfirm={
             <FormattedMessage
               id="ui.userProfileEditSocialAccount.socialAssociations.dialog.confirm"
