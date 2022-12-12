@@ -68,7 +68,7 @@ export default function SocialAccount(inProps: SocialAccountProps): JSX.Element 
   // STATE
   const [provider, setProvider] = useState(null);
   const [openDeleteDialog, setOpenDeleteDialog] = useState<boolean>(false);
-  const [update, setUpdate] = useState<boolean>(false);
+  const [shouldUpdate, setShouldUpdate] = useState<boolean>(false);
   // INTL
   const intl = useIntl();
 
@@ -76,7 +76,7 @@ export default function SocialAccount(inProps: SocialAccountProps): JSX.Element 
     const data = {user_id: user.id, provider: provider.provider, ext_id: provider.ext_id};
     UserService.deleteProviderAssociation(data)
       .then(() => {
-        setUpdate(true);
+        setShouldUpdate(true);
         setOpenDeleteDialog(false);
       })
       .catch((error) => {
@@ -105,10 +105,9 @@ export default function SocialAccount(inProps: SocialAccountProps): JSX.Element 
         }
         direction="row"
         userId={user.id}
-        isEditView={true}
         onDeleteAssociation={handleOpenDeleteDialog}
         onCreateAssociation={handleAssociation}
-        shouldUpdate={update}
+        deletingProvider={shouldUpdate ? provider : null}
       />
       {openDeleteDialog && (
         <ConfirmDialog
