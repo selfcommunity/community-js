@@ -265,7 +265,6 @@
   "ui.userProfileInfo.gender": "Gender",
   "ui.userProfileInfo.fieldLink": "add your {field}",
   "ui.userProfileInfo.dialog.title": "Public informations",
-  "ui.userProfileInfo.socialAssociations": "Handle your social account",
 
   "ui.userSocialAssociation.add": "add a social login:",
   "ui.userSocialAssociation.remove": "remove social login:",

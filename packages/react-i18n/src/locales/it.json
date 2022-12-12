@@ -267,7 +267,6 @@
   "ui.userProfileInfo.fieldLink": "aggiungi il tuo {field}",
   "ui.userProfileInfo.fieldLink.female": "aggiungi la tua {field}",
   "ui.userProfileInfo.dialog.title": "Informazioni pubbliche",
-  "ui.userProfileInfo.socialAssociations": "Gestisci account social",
 
   "ui.userSocialAssociation.add": "aggiungi un login social:",
   "ui.userSocialAssociation.remove": "rimuovi i login social:",
