@@ -3,23 +3,11 @@ import {styled} from '@mui/material/styles';
 import {Box, IconButton, Stack, StackProps, Typography} from '@mui/material';
 import {defineMessages, useIntl} from 'react-intl';
 import {SCUserProviderAssociationType, SCUserType} from '@selfcommunity/types';
-import {
-  Link,
-  SCPreferences,
-  SCPreferencesContextType,
-  SCUserContextType,
-  useSCFetchUser,
-  useSCFetchUserProviders,
-  useSCPreferences,
-  useSCUser
-} from '@selfcommunity/react-core';
+import {SCPreferences, SCPreferencesContextType, useSCFetchUser, useSCFetchUserProviders, useSCPreferences} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import Icon from '@mui/material/Icon';
 import {SCUserSocialAssociations} from '../../types';
-import {UserService} from '@selfcommunity/api-services';
-import {SCOPE_SC_UI} from '../../constants/Errors';
-import {Logger} from '@selfcommunity/utils';
 
 const messages = defineMessages({
   socialAdd: {
@@ -36,7 +24,6 @@ const PREFIX = 'SCUserSocialAssociation';
 
 const classes = {
   root: `${PREFIX}-root`,
-  editView: `${PREFIX}-edit-view`,
   field: `${PREFIX}-field`
 };
 
@@ -92,9 +79,9 @@ export interface UserSocialAssociationProps extends StackProps {
    */
   children?: React.ReactNode;
   /**
-   * If providers list must be updated
+   * If present, providers list must be updated
    */
-  shouldUpdate?: boolean;
+  deletingProvider?: SCUserProviderAssociationType;
 }
 
 /**
@@ -135,13 +122,11 @@ export default function UserSocialAssociation(inProps: UserSocialAssociationProp
     providers = null,
     onCreateAssociation = null,
     onDeleteAssociation = null,
-    isEditView = false,
     children = null,
-    shouldUpdate,
+    deletingProvider = null,
     ...rest
   } = props;
   // HOOKS
-  const scUserContext: SCUserContextType = useSCUser();
   const {scUser} = useSCFetchUser({id: userId, user});
   const {scUserProviders, setSCUserProviders} = useSCFetchUserProviders({id: userId || scUser.id, providers});
   // INTL
@@ -156,97 +141,56 @@ export default function UserSocialAssociation(inProps: UserSocialAssociationProp
   }, [scPreferences.preferences]);
 
   // MEMO PROVIDERS
-  const isMe = useMemo(() => scUserContext.user?.id === scUser?.id, [scUserContext.user, scUser]);
   const _providers: {[p: string]: SCUserProviderAssociationType} = useMemo(() => {
     return scUserProviders
       .map((provider: SCUserProviderAssociationType) => ({[provider.provider]: provider}))
       .reduce((prev, provider) => Object.assign(prev, provider), {});
   }, [scUserProviders]);
-
-  const getProviderButtonProps = (name: SCUserSocialAssociations): any => {
-    if (_providers[name]?.profile_url && _providers[name]?.show_in_profile) {
-      return {component: Link, to: _providers[name]?.profile_url, color: 'primary', target: '_blank'};
-    } else if (_providers[name]) {
-      return {color: 'primary'};
-    } else if (isMe && onCreateAssociation) {
-      return {onClick: onCreateAssociation(name)};
-    } else {
-      return {disabled: true};
-    }
-  };
   const providersEnabled = Object.values<string>(SCUserSocialAssociations).filter((p) => preferences[`providers.${p}_signin_enabled`]);
-  const providersToLink = providersEnabled?.filter((p) => !_providers[p]?.profile_url && !_providers[p]?.ext_id);
+  const providersToLink = providersEnabled?.filter((p) => !_providers[p]?.provider && !_providers[p]?.ext_id);
   const providersLinked = Object.values(_providers).filter((p) => providersEnabled.includes(p.provider));
+  /**
+   * Updates providers list onDelete association
+   */
   useEffect(() => {
-    if (shouldUpdate) {
-      UserService.getProviderAssociations(scUser.id)
-        .then((providers: SCUserProviderAssociationType[]) => {
-          setSCUserProviders(providers);
-        })
-        .catch((err) => {
-          Logger.error(SCOPE_SC_UI, `User with id ${scUser.id} not found`);
-          Logger.error(SCOPE_SC_UI, err.message);
-        });
+    if (deletingProvider) {
+      const updatedProviders = scUserProviders.filter((p) => p.provider !== deletingProvider.provider);
+      setSCUserProviders(updatedProviders);
     }
-  }, [shouldUpdate]);
-
-  // RENDER
-  if (isEditView && providersEnabled) {
-    return (
-      <Root className={classNames(classes.editView, className)} {...rest} direction="column">
-        {providersLinked.length !== 0 || (providersToLink.length !== 0 && onCreateAssociation) ? children : null}
-        {providersToLink.length !== 0 && onCreateAssociation && (
-          <Box>
-            <Typography variant="body2"> {intl.formatMessage(messages.socialAdd)}</Typography>
-            {providersToLink.map((p: string, index) => (
-              <React.Fragment key={index}>
-                <IconButton onClick={onCreateAssociation ? () => onCreateAssociation(p) : null}>
-                  <Icon>{p}</Icon>
-                </IconButton>
-              </React.Fragment>
-            ))}
-          </Box>
-        )}
-        {providersLinked.length !== 0 && (
-          <Box>
-            <Typography variant="body2"> {intl.formatMessage(messages.socialRemove)}</Typography>
-            {providersLinked.map((p: SCUserProviderAssociationType, index) => (
-              <React.Fragment key={index}>
-                <IconButton color="primary" onClick={() => onDeleteAssociation(p)}>
-                  <Icon>{p.provider}</Icon>
-                </IconButton>
-              </React.Fragment>
-            ))}
-          </Box>
-        )}
-      </Root>
-    );
-  } else if ((isMe && !onCreateAssociation) || (!isMe && !providersLinked.length)) {
+  }, [deletingProvider]);
+  /**
+   * Renders social association block
+   */
+  if (!providersEnabled) {
     return null;
   }
   return (
-    <Root className={classNames(classes.root, className)} {...rest}>
-      {preferences[SCPreferences.PROVIDERS_FACEBOOK_SIGNIN_ENABLED] && (
-        <IconButton {...getProviderButtonProps(SCUserSocialAssociations.FACEBOOK)}>
-          <Icon>facebook</Icon>
-        </IconButton>
+    <Root className={classNames(classes.root, className)} {...rest} direction="column">
+      {providersLinked.length !== 0 || (providersToLink.length !== 0 && onCreateAssociation) ? children : null}
+      {providersToLink.length !== 0 && onCreateAssociation && (
+        <Box>
+          <Typography variant="body2"> {intl.formatMessage(messages.socialAdd)}</Typography>
+          {providersToLink.map((p: string, index) => (
+            <React.Fragment key={index}>
+              <IconButton onClick={onCreateAssociation ? () => onCreateAssociation(p) : null}>
+                <Icon>{p}</Icon>
+              </IconButton>
+            </React.Fragment>
+          ))}
+        </Box>
       )}
-      {preferences[SCPreferences.PROVIDERS_GOOGLE_SIGNIN_ENABLED] && (
-        <IconButton {...getProviderButtonProps(SCUserSocialAssociations.GOOGLE)}>
-          <Icon>google</Icon>
-        </IconButton>
+      {providersLinked.length !== 0 && (
+        <Box>
+          <Typography variant="body2"> {intl.formatMessage(messages.socialRemove)}</Typography>
+          {providersLinked.map((p: SCUserProviderAssociationType, index) => (
+            <React.Fragment key={index}>
+              <IconButton color="primary" onClick={() => onDeleteAssociation(p)}>
+                <Icon>{p.provider}</Icon>
+              </IconButton>
+            </React.Fragment>
+          ))}
+        </Box>
       )}
-      {preferences[SCPreferences.PROVIDERS_TWITTER_SIGNIN_ENABLED] && (
-        <IconButton {...getProviderButtonProps(SCUserSocialAssociations.TWITTER)}>
-          <Icon>twitter</Icon>
-        </IconButton>
-      )}
-      {preferences[SCPreferences.PROVIDERS_LINKEDIN_SIGNIN_ENABLED] && (
-        <IconButton {...getProviderButtonProps(SCUserSocialAssociations.LINKEDIN)}>
-          <Icon>linkedin</Icon>
-        </IconButton>
-      )}
-      {children}
     </Root>
   );
 }
