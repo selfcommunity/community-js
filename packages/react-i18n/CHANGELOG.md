@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.1-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.4.1-alpha.8...@selfcommunity/react-i18n@0.4.1-alpha.9) (2022-12-12)
+
+
+### Bug Fixes
+
+* removed profile info social association transl ([82fad6e](https://github.com/selfcommunity/community-js/commit/82fad6eff16937a38b8f76769e0eac686fab6443))
+
+
+
+
+
 ## [0.4.1-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.4.1-alpha.7...@selfcommunity/react-i18n@0.4.1-alpha.8) (2022-12-05)
 
 
