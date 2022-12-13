@@ -4,6 +4,7 @@ import {Accordion, AccordionDetails, AccordionProps as MUIAccordionProps, Accord
 import {FormattedMessage} from 'react-intl';
 import {DEFAULT_FIELDS, DEFAULT_SETTINGS} from '../../constants/UserProfile';
 import PublicInfo, {PublicInfoProps} from './Section/PublicInfo';
+import Account, {AccountProps} from './Section/Account';
 import Settings from './Section/Settings';
 import classNames from 'classnames';
 import {DistributiveOmit} from '@mui/types';
@@ -75,6 +76,12 @@ export interface UserProfileEditProps {
   UserProfileEditSectionSettingsProps?: Omit<PublicInfoProps, 'settings'>;
 
   /**
+   * Props to apply to Account section
+   * @default {}
+   */
+  UserProfileEditSectionAccountProps?: AccountProps;
+
+  /**
    * Any other properties
    */
   [p: string]: any;
@@ -118,6 +125,7 @@ export default function UserProfileEdit(inProps: UserProfileEditProps): JSX.Elem
     AccordionProps = {},
     UserProfileEditSectionPublicInfoProps = {},
     UserProfileEditSectionSettingsProps = {},
+    UserProfileEditSectionAccountProps = {},
     ...rest
   } = props;
 
@@ -132,6 +140,16 @@ export default function UserProfileEdit(inProps: UserProfileEditProps): JSX.Elem
         </AccordionSummary>
         <AccordionDetails>
           <PublicInfo fields={fields} {...UserProfileEditSectionPublicInfoProps} />
+        </AccordionDetails>
+      </Accordion>
+      <Accordion {...AccordionProps}>
+        <AccordionSummary aria-controls="account settings">
+          <Typography variant="body1">
+            <FormattedMessage id="ui.userProfileEdit.account" defaultMessage="ui.userProfileEdit.account" />
+          </Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Account {...UserProfileEditSectionAccountProps} />
         </AccordionDetails>
       </Accordion>
       <Accordion {...AccordionProps}>
