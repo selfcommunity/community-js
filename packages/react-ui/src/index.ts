@@ -36,7 +36,9 @@ import UserProfileEdit, {
   UserProfileEditSectionPublicInfo,
   UserProfileEditSectionPublicInfoProps,
   UserProfileEditSectionSettings,
-  UserProfileEditSectionSettingsProps
+  UserProfileEditSectionSettingsProps,
+  UserProfileEditSectionAccount,
+  UserProfileEditSectionAccountProps
 } from './components/UserProfileEdit';
 import UsersFollowed, {UsersFollowedProps, UsersFollowedSkeleton} from './components/UsersFollowed';
 import UserSocialAssociation, {UserSocialAssociationProps} from './components/UserSocialAssociation';
@@ -222,6 +224,8 @@ export {
   UserProfileEditSectionPublicInfoProps,
   UserProfileEditSectionSettings,
   UserProfileEditSectionSettingsProps,
+  UserProfileEditSectionAccount,
+  UserProfileEditSectionAccountProps,
   UsersFollowed,
   UsersFollowedProps,
   UsersFollowedSkeleton,
