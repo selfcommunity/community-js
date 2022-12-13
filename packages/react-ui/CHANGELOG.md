@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.46](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.45...@selfcommunity/react-ui@0.7.0-alpha.46) (2022-12-13)
+
+
+### Bug Fixes
+
+* moved social account settings in a separate section ([b97eb30](https://github.com/selfcommunity/community-js/commit/b97eb302007eb9b18b7c4cc9a6f2ea3ae3b42de3))
+
+
+
+
+
 # [0.7.0-alpha.45](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.44...@selfcommunity/react-ui@0.7.0-alpha.45) (2022-12-12)
 
 
