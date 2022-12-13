@@ -295,6 +295,7 @@
 
   "ui.userProfileEdit.info": "Public informations",
   "ui.userProfileEdit.notification": "Notification settings",
+  "ui.userProfileEdit.account": "Account settings",
 
   "ui.usersFollowed.title": "{total, plural, =0 {# users followed} one {# user followed} other {# users followed}}",
   "ui.usersFollowed.modal.title": "Users Followed",

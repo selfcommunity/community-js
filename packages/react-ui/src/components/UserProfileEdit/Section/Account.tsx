@@ -7,9 +7,9 @@ import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import ConfirmDialog from '../../../shared/ConfirmDialog/ConfirmDialog';
 import UserSocialAssociation from '../../UserSocialAssociation';
 import {UserService} from '@selfcommunity/api-services';
-import {SCUserType} from '@selfcommunity/types';
 import {SCOPE_SC_UI} from '../../../constants/Errors';
 import {Logger} from '@selfcommunity/utils';
+import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 
 const messages = defineMessages({
   socialTitle: {
@@ -25,7 +25,7 @@ const messages = defineMessages({
     defaultMessage: 'ui.userProfileEditSocialAccount.socialAssociations.dialog.msg'
   }
 });
-const PREFIX = 'SCUserProfileEditSectionSocialAccount';
+const PREFIX = 'SCUserProfileEditSectionAccount';
 
 const classes = {
   root: `${PREFIX}-root`
@@ -37,12 +37,7 @@ const Root = styled(Box, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({}));
 
-export interface SocialAccountProps {
-  /**
-   * The user object
-   * @default null
-   */
-  user: SCUserType;
+export interface AccountProps {
   /**
    * Overrides or extends the styles applied to the component.
    * @default null
@@ -52,19 +47,21 @@ export interface SocialAccountProps {
    * Handles create association callback
    * @param provider
    */
-  handleAssociation?: (provider) => void;
+  handleAssociationCreate?: (provider) => void;
   /**
    * Any other properties
    */
   [p: string]: any;
 }
-export default function SocialAccount(inProps: SocialAccountProps): JSX.Element {
+export default function Account(inProps: AccountProps): JSX.Element {
   // PROPS
-  const props: SocialAccountProps = useThemeProps({
+  const props: AccountProps = useThemeProps({
     props: inProps,
     name: PREFIX
   });
-  const {user = null, className = null, handleAssociation, ...rest} = props;
+  // CONTEXT
+  const scUserContext: SCUserContextType = useSCUser();
+  const {className = null, handleAssociationCreate, ...rest} = props;
   // STATE
   const [provider, setProvider] = useState(null);
   const [openDeleteDialog, setOpenDeleteDialog] = useState<boolean>(false);
@@ -73,7 +70,7 @@ export default function SocialAccount(inProps: SocialAccountProps): JSX.Element 
   const intl = useIntl();
 
   function handleDelete() {
-    const data = {user_id: user.id, provider: provider.provider, ext_id: provider.ext_id};
+    const data = {user_id: scUserContext.user.id, provider: provider.provider, ext_id: provider.ext_id};
     UserService.deleteProviderAssociation(data)
       .then(() => {
         setShouldUpdate(true);
@@ -90,7 +87,7 @@ export default function SocialAccount(inProps: SocialAccountProps): JSX.Element 
     setProvider(p);
   };
 
-  if (!user) {
+  if (!scUserContext.user) {
     return;
   }
 
@@ -104,9 +101,9 @@ export default function SocialAccount(inProps: SocialAccountProps): JSX.Element 
           </Typography>
         }
         direction="row"
-        userId={user.id}
+        userId={scUserContext.user.id}
         onDeleteAssociation={handleOpenDeleteDialog}
-        onCreateAssociation={handleAssociation}
+        onCreateAssociation={handleAssociationCreate}
         deletingProvider={shouldUpdate ? provider : null}
       />
       {openDeleteDialog && (
