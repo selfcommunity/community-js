@@ -273,9 +273,19 @@
   "ui.userProfileEditPublicInfo.genderFemale": "Female",
   "ui.userProfileEditPublicInfo.genderUnspecified": "Unspecified",
 
-  "ui.userProfileEditSocialAccount.socialAssociations.title": "Handle your access methods",
-  "ui.userProfileEditSocialAccount.socialAssociations.dialog.msg": "Are you sure you want to delete {field} association ?",
-  "ui.userProfileEditSocialAccount.socialAssociations.dialog.confirm": "Yes",
+  "ui.userProfileEditAccount.socialAssociations.title": "Handle your access methods",
+  "ui.userProfileEditAccount.socialAssociations.dialog.msg": "Are you sure you want to delete {field} association ?",
+  "ui.userProfileEditAccount.socialAssociations.dialog.confirm": "Yes",
+
+  "ui.userProfileEditAccountCredentials.email": "Email",
+  "ui.userProfileEditAccountCredentials.email.success": "Your email has been successfully changed",
+  "ui.userProfileEditAccountCredentials.passwordLabel": "Password",
+  "ui.userProfileEditAccountCredentials.password": "password",
+  "ui.userProfileEditAccountCredentials.newPassword": "new password",
+  "ui.userProfileEditAccountCredentials.confirmPassword": "confirm password",
+  "ui.userProfileEditAccountCredentials.confirmPassword.error": "Password and confirm password do not match.",
+  "ui.userProfileEditAccountCredentials.changePassword": "Change Password",
+  "ui.userProfileEditAccountCredentials.newPassword.info": "The password must be at least 8 characters long \n and contain at least 3 of the following types of characters: \n lowercase letters, uppercase letters, numbers \n and special characters (eg !@#$%^&).",
 
   "ui.userProfileEditSettings.notification.title": "When receive a notification",
   "ui.userProfileEditSettings.notification.label": "show a toast message in the bottom left corner:",

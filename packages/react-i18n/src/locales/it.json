@@ -275,9 +275,19 @@
   "ui.userProfileEditPublicInfo.genderFemale": "Femminile",
   "ui.userProfileEditPublicInfo.genderUnspecified": "Non specificato",
 
-  "ui.userProfileEditSocialAccount.socialAssociations.title": "Gestisci i metodi di accesso",
-  "ui.userProfileEditSocialAccount.socialAssociations.dialog.msg": "Sei sicuro di voler eliminare il login {field} ?",
-  "ui.userProfileEditSocialAccount.socialAssociations.dialog.confirm": "Sì",
+  "ui.userProfileEditAccount.socialAssociations.title": "Gestisci i metodi di accesso",
+  "ui.userProfileEditAccount.socialAssociations.dialog.msg": "Sei sicuro di voler eliminare il login {field} ?",
+  "ui.userProfileEditAccount.socialAssociations.dialog.confirm": "Sì",
+
+  "ui.userProfileEditAccountCredentials.email": "Email",
+  "ui.userProfileEditAccountCredentials.email.success": "La tua email è stata cambiata correttamente",
+  "ui.userProfileEditAccountCredentials.passwordLabel": "Password",
+  "ui.userProfileEditAccountCredentials.password": "vecchia password",
+  "ui.userProfileEditAccountCredentials.newPassword": "nuova password",
+  "ui.userProfileEditAccountCredentials.confirmPassword": "conferma password",
+  "ui.userProfileEditAccountCredentials.confirmPassword.error": "Password e conferma password non corrispondono.",
+  "ui.userProfileEditAccountCredentials.changePassword": "Cambia Password",
+  "ui.userProfileEditAccountCredentials.newPassword.info": "La password deve essere lunga almeno 8 caratteri \n e contenere almeno 3 dei seguenti tipi di caratteri: \n lettere minuscole, lettere maiuscole, numeri \n e caratteri speciali (eg !@#$%^&).",
 
   "ui.userProfileEditSettings.notification.title": "Quando ricevi una notifica",
   "ui.userProfileEditSettings.notification.label": "mostra un messaggio in basso a sinistra:",
