@@ -10,19 +10,20 @@ import {UserService} from '@selfcommunity/api-services';
 import {SCOPE_SC_UI} from '../../../constants/Errors';
 import {Logger} from '@selfcommunity/utils';
 import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
+import AccountCredentials from './AccountCredentials';
 
 const messages = defineMessages({
   socialTitle: {
-    id: 'ui.userProfileEditSocialAccount.socialAssociations.title',
-    defaultMessage: 'ui.userProfileEditSocialAccount.socialAssociations.title'
+    id: 'ui.userProfileEditAccount.socialAssociations.title',
+    defaultMessage: 'ui.userProfileEditAccount.socialAssociations.title'
   },
   dialogTitleMsg: {
-    id: 'ui.userProfileEditSocialAccount.socialAssociations.dialog.msg',
-    defaultMessage: 'ui.userProfileEditSocialAccount.socialAssociations.dialog.msg'
+    id: 'ui.userProfileEditAccount.socialAssociations.dialog.msg',
+    defaultMessage: 'ui.userProfileEditAccount.socialAssociations.dialog.msg'
   },
   deleteDialogMsg: {
-    id: 'ui.userProfileEditSocialAccount.socialAssociations.dialog.msg',
-    defaultMessage: 'ui.userProfileEditSocialAccount.socialAssociations.dialog.msg'
+    id: 'ui.userProfileEditAccount.socialAssociations.dialog.msg',
+    defaultMessage: 'ui.userProfileEditAccount.socialAssociations.dialog.msg'
   }
 });
 const PREFIX = 'SCUserProfileEditSectionAccount';
@@ -49,6 +50,16 @@ export interface AccountProps {
    */
   handleAssociationCreate?: (provider) => void;
   /**
+   * If true, shows email and password section
+   * @default false
+   */
+  showCredentialsSection?: boolean;
+  /**
+   * If true, shows social account section
+   *@default true
+   */
+  showSocialAccountSection?: boolean;
+  /**
    * Any other properties
    */
   [p: string]: any;
@@ -61,7 +72,7 @@ export default function Account(inProps: AccountProps): JSX.Element {
   });
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
-  const {className = null, handleAssociationCreate, ...rest} = props;
+  const {className = null, handleAssociationCreate, showSocialAccountSection = true, showCredentialsSection = false, ...rest} = props;
   // STATE
   const [provider, setProvider] = useState(null);
   const [openDeleteDialog, setOpenDeleteDialog] = useState<boolean>(false);
@@ -93,27 +104,30 @@ export default function Account(inProps: AccountProps): JSX.Element {
 
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
-      <UserSocialAssociation
-        children={
-          <Typography variant="body1" mb={1} sx={{fontWeight: 'bold'}}>
-            {' '}
-            {intl.formatMessage(messages.socialTitle)}
-          </Typography>
-        }
-        direction="row"
-        userId={scUserContext.user.id}
-        onDeleteAssociation={handleOpenDeleteDialog}
-        onCreateAssociation={handleAssociationCreate}
-        deletingProvider={shouldUpdate ? provider : null}
-      />
+      {showCredentialsSection && <AccountCredentials user={scUserContext?.user} />}
+      {showSocialAccountSection && (
+        <UserSocialAssociation
+          children={
+            <Typography variant="body1" mb={1} sx={{fontWeight: 'bold'}}>
+              {' '}
+              {intl.formatMessage(messages.socialTitle)}
+            </Typography>
+          }
+          direction="row"
+          userId={scUserContext.user.id}
+          onDeleteAssociation={handleOpenDeleteDialog}
+          onCreateAssociation={handleAssociationCreate}
+          deletingProvider={shouldUpdate ? provider : null}
+        />
+      )}
       {openDeleteDialog && (
         <ConfirmDialog
           open={openDeleteDialog}
           title={intl.formatMessage(messages.dialogTitleMsg, {field: provider.provider})}
           btnConfirm={
             <FormattedMessage
-              id="ui.userProfileEditSocialAccount.socialAssociations.dialog.confirm"
-              defaultMessage="ui.userProfileEditSocialAccount.socialAssociations.dialog.confirm"
+              id="ui.userProfileEditAccount.socialAssociations.dialog.confirm"
+              defaultMessage="ui.userProfileEditAccount.socialAssociations.dialog.confirm"
             />
           }
           onConfirm={handleDelete}

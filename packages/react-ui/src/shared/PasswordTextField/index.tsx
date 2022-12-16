@@ -27,11 +27,14 @@ export default function PasswordTextField(props: TextFieldProps): JSX.Element {
       {...props}
       InputProps={{
         endAdornment: (
-          <InputAdornment position="end">
-            <IconButton aria-label="toggle password visibility" onClick={handleClick} edge="end">
-              {showPassword ? <Icon>visibility_off</Icon> : <Icon>visibility</Icon>}
-            </IconButton>
-          </InputAdornment>
+          <>
+            {props?.InputProps?.endAdornment}
+            <InputAdornment position="end">
+              <IconButton aria-label="toggle password visibility" onClick={handleClick} edge="end">
+                {showPassword ? <Icon>visibility_off</Icon> : <Icon>visibility</Icon>}
+              </IconButton>
+            </InputAdornment>
+          </>
         )
       }}
     />

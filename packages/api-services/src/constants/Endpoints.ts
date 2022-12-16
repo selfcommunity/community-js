@@ -351,7 +351,7 @@ const Endpoints: {[key: string]: EndpointType} = {
     method: 'PATCH'
   },
   ConfirmUserChangeMail: {
-    url: urlReplacer('/api/v2/user/$(id)/change_email/'),
+    url: urlReplacer('/api/v2/user/$(id)/confirm_email/'),
     method: 'POST'
   },
   ChangeUserPassword: {
