@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.6-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.6-alpha.9...@selfcommunity/api-services@0.3.6-alpha.10) (2022-12-16)
+
+
+### Bug Fixes
+
+* fixed confirm user email endpoint ([3592f64](https://github.com/selfcommunity/community-js/commit/3592f64f27be8a6e67d3de6df5824bdda7a0a162))
+
+
+
+
+
 ## [0.3.6-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.6-alpha.8...@selfcommunity/api-services@0.3.6-alpha.9) (2022-12-05)
 
 

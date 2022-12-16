@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.48](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.47...@selfcommunity/react-ui@0.7.0-alpha.48) (2022-12-16)
+
+
+### Performance Improvements
+
+* added end adornemnt in SCPasswordTextField component ([cdaf16d](https://github.com/selfcommunity/community-js/commit/cdaf16d88dea66645149de241eb3bd7c45c46b8d))
+* Asana issue: https://app.asana.com/0/1202523699272956/1203542099033251/f ([896492e](https://github.com/selfcommunity/community-js/commit/896492e51d1b1daa8ab9731af49cd255ee1f21e3))
+
+
+
+
+
 # [0.7.0-alpha.47](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.46...@selfcommunity/react-ui@0.7.0-alpha.47) (2022-12-13)
 
 
