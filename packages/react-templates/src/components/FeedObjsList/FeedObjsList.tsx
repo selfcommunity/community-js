@@ -2,6 +2,7 @@ import React, {useMemo} from 'react';
 import {styled} from '@mui/material/styles';
 import {
   Feed,
+  FeedProps,
   FeedObjectSkeleton,
   SCFeedObjectTemplateType,
   FeedObject,
@@ -74,6 +75,11 @@ export interface FeedObjsListProps {
    * @default [CategoriesSuggestion]
    */
   widgets?: SCFeedWidgetType[] | null;
+  /**
+   * Props to spread to feed component
+   * @default {}
+   */
+  FeedProps?: FeedProps;
 }
 // Widgets for feed
 const WIDGETS: SCFeedWidgetType[] = [
@@ -113,7 +119,17 @@ export default function FeedObjsList(inProps: FeedObjsListProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {id = 'feedObjs_list', className, category, categoryId, header = null, endpoint, FeedObjectProps = {}, widgets = WIDGETS} = props;
+  const {
+    id = 'feedObjs_list',
+    className,
+    category,
+    categoryId,
+    header = null,
+    endpoint,
+    FeedObjectProps = {},
+    widgets = WIDGETS,
+    FeedProps = {}
+  } = props;
   // HOOKS
   const {scCategory} = useSCFetchCategory({id: categoryId, category});
 
@@ -154,6 +170,7 @@ export default function FeedObjsList(inProps: FeedObjsListProps): JSX.Element {
       HeaderComponent={header}
       FooterComponent={null}
       endMessage={<FormattedMessage id="templates.feedObjsList.noMoreResults" defaultMessage="templates.feedObjsList.noMoreResults" />}
+      {...FeedProps}
     />
   );
 }
