@@ -521,6 +521,7 @@
   "ui.header.menuItem.comments": "My comments",
   "ui.header.menuItem.loyalty": "Loyalty program",
   "ui.header.menuItem.postsFollowed": "Posts followed",
+  "ui.header.menuItem.discussionsFollowed": "Discussions Followed",
   "ui.header.menuItem.interestingPeople": "People suggestion",
   "ui.header.menuItem.privateMessages": "Private messages",
   "ui.header.menuItem.settings": "Settings",
