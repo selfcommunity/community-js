@@ -120,6 +120,13 @@ export default function HeaderMenu(inProps: HeaderMenuProps) {
           </Typography>
         </MenuItem>
       )}
+      {url && url.followedDiscussions && (
+        <MenuItem className={classes.menuItem} key={'followedDiscussions'} component={Link} to={url.followedDiscussions}>
+          <Typography textAlign="center">
+            <FormattedMessage id="ui.header.menuItem.discussionsFollowed" defaultMessage="ui.header.menuItem.discussionsFollowed" />
+          </Typography>
+        </MenuItem>
+      )}
       {url && url.peopleSuggestion && (
         <MenuItem className={classes.menuItem} key={'suggestedPeople'} component={Link} to={url.peopleSuggestion}>
           <Typography textAlign="center">
