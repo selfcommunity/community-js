@@ -47,6 +47,10 @@ export interface SCHeaderMenuUrlsType {
    */
   followedPosts?: string;
   /**
+   * User followed discussions page url
+   */
+  followedDiscussions?: string;
+  /**
    * People suggestion page url
    */
   peopleSuggestion?: string;
