@@ -522,6 +522,7 @@
   "ui.header.menuItem.comments": "I miei commenti",
   "ui.header.menuItem.loyalty": "Il mio programma fedeltà",
   "ui.header.menuItem.postsFollowed": "Post seguiti",
+  "ui.header.menuItem.discussionsFollowed": "Discussioni seguite",
   "ui.header.menuItem.interestingPeople": "Persone interessanti",
   "ui.header.menuItem.privateMessages": "Messaggi privati",
   "ui.header.menuItem.settings": "Impostazioni",
