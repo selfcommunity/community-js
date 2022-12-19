@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.34](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.33...@selfcommunity/react-templates@0.3.0-alpha.34) (2022-12-19)
+
+
+### Bug Fixes
+
+* fixed props ([dedb620](https://github.com/selfcommunity/community-js/commit/dedb620795d943a5a6cbd11ec63b4f87edeb48be))
+
+
+
+
+
 # [0.3.0-alpha.33](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.32...@selfcommunity/react-templates@0.3.0-alpha.33) (2022-12-16)
 
 
