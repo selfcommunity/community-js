@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.33](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.32...@selfcommunity/react-templates@0.3.0-alpha.33) (2022-12-16)
+
+
+### Performance Improvements
+
+* added feed props to feedObjList template ([cf55cd3](https://github.com/selfcommunity/community-js/commit/cf55cd3f56519a4b16b08500d30a7b74d4b90e10))
+
+
+
+
+
 # [0.3.0-alpha.32](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.31...@selfcommunity/react-templates@0.3.0-alpha.32) (2022-12-16)
 
 **Note:** Version bump only for package @selfcommunity/react-templates
