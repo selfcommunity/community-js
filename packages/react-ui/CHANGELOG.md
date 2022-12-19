@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.49](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.48...@selfcommunity/react-ui@0.7.0-alpha.49) (2022-12-19)
+
+
+### Performance Improvements
+
+* added header url ([fea9daf](https://github.com/selfcommunity/community-js/commit/fea9daf75f6f2c1c23cfd8d342eaca0144ac5a66))
+
+
+
+
+
 # [0.7.0-alpha.48](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.47...@selfcommunity/react-ui@0.7.0-alpha.48) (2022-12-16)
 
 
