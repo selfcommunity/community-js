@@ -79,7 +79,7 @@ export interface FeedObjsListProps {
    * Props to spread to feed component
    * @default {}
    */
-  FeedProps?: FeedProps;
+  FeedProps?: Omit<FeedProps, 'endpoint' | 'ItemComponent' | 'ItemSkeleton'>;
 }
 // Widgets for feed
 const WIDGETS: SCFeedWidgetType[] = [
