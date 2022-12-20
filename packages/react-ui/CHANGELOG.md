@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.51](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.50...@selfcommunity/react-ui@0.7.0-alpha.51) (2022-12-20)
+
+
+### Performance Improvements
+
+* fixed loyalty program/loyalty program detail skeletons ([99682dd](https://github.com/selfcommunity/community-js/commit/99682dd5de327de16f63ca435dd43d54fa1fe929))
+
+
+
+
+
 # [0.7.0-alpha.50](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.49...@selfcommunity/react-ui@0.7.0-alpha.50) (2022-12-19)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
