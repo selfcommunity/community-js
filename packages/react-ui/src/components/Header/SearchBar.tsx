@@ -1,11 +1,12 @@
-import {Box, IconButton, TextField, styled, useTheme, useMediaQuery, Autocomplete, Avatar, Typography, AutocompleteChangeReason} from '@mui/material';
+import {Box, IconButton, TextField, styled, useTheme, useMediaQuery, Autocomplete, Avatar, Typography} from '@mui/material';
 import Icon from '@mui/material/Icon';
-import React, {FormEvent, SyntheticEvent, useEffect, useState} from 'react';
+import React, {FormEvent, useEffect, useState} from 'react';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {SCSuggestionType, SuggestionType} from '@selfcommunity/types';
+import {SuggestionType} from '@selfcommunity/types';
 import {SuggestionService} from '@selfcommunity/api-services';
+import {SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
 
 const messages = defineMessages({
   placeholder: {
@@ -88,6 +89,9 @@ export default function HeaderSearchBar(inProps: HeaderSearchBarProps) {
     name: PREFIX
   });
   const {className, onSearch, onClick, ...rest} = props;
+  // CONTEXT
+  const scRoutingContext: SCRoutingContextType = useSCRouting();
+  // STATE
   const [query, setQuery] = useState('');
   const [clicked, setClicked] = useState(false);
   const theme = useTheme();
@@ -104,13 +108,18 @@ export default function HeaderSearchBar(inProps: HeaderSearchBarProps) {
     setIsSearching(true);
   };
 
-  const handleSearch = (event: SyntheticEvent<Element, Event>, value: any[], reason: AutocompleteChangeReason) => {
+  const handleSearch = (option) => {
     setIsSearching(false);
-    event.preventDefault();
-    event.stopPropagation();
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore
-    onSearch && onSearch(!value ? null : value[value.type].username ?? value[value.type].name);
+    if (typeof window !== 'undefined') {
+      switch (option.type) {
+        case SuggestionType.USER:
+          window.location.href = scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, option[SuggestionType.USER]);
+          break;
+        case SuggestionType.CATEGORY:
+          window.location.href = scRoutingContext.url(SCRoutes.CATEGORY_ROUTE_NAME, option[SuggestionType.CATEGORY]);
+          break;
+      }
+    }
   };
 
   const handleFormSearch = (event: FormEvent) => {
@@ -162,10 +171,9 @@ export default function HeaderSearchBar(inProps: HeaderSearchBarProps) {
           noOptionsText={<FormattedMessage id="ui.header.searchBar.noOptions" defaultMessage="ui.header.searchBar.noOptions" />}
           options={results}
           getOptionLabel={(option) => option[option.type]['username'] ?? option[option.type]['name']}
-          onChange={handleSearch}
           onInputChange={handleChange}
           renderOption={(props, option) => (
-            <Box component="li" {...props}>
+            <Box component="li" {...props} onClick={() => handleSearch(option)}>
               {option.type === SuggestionType.USER ? (
                 <>
                   <Avatar alt={option[SuggestionType.USER]['username']} src={option[SuggestionType.USER]['avatar']} />

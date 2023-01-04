@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import {styled} from '@mui/material/styles';
-import {Feed, User, UserSkeleton} from '@selfcommunity/react-ui';
+import {Feed, FeedProps, User, UserSkeleton} from '@selfcommunity/react-ui';
 import {SCPreferences, SCPreferencesContext, SCPreferencesContextType, useSCFetchUser} from '@selfcommunity/react-core';
 import {SCUserType} from '@selfcommunity/types';
 import UsersListSkeleton from './Skeleton';
@@ -56,6 +56,11 @@ export interface UsersListProps {
    * @default null
    */
   header?: JSX.Element;
+  /**
+   * Props to spread to feed component
+   * @default {}
+   */
+  FeedProps?: Omit<FeedProps, 'endpoint' | 'ItemComponent' | 'ItemSkeleton' | 'itemPropsGenerator' | 'itemIdGenerator'>;
 }
 
 /**
@@ -85,7 +90,7 @@ export default function UsersList(inProps: UsersListProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {id = 'users_list', className, user, userId, header = null, endpoint} = props;
+  const {id = 'users_list', className, user, userId, header = null, endpoint, FeedProps = {}} = props;
   // HOOKS
   const {scUser} = useSCFetchUser({id: userId, user});
   // CONTEXT
@@ -113,6 +118,7 @@ export default function UsersList(inProps: UsersListProps): JSX.Element {
       FooterComponent={null}
       hideAdvs={true}
       endMessage={<FormattedMessage id="templates.usersList.noMoreResults" defaultMessage="templates.usersList.noMoreResults" />}
+      {...FeedProps}
     />
   );
 }
