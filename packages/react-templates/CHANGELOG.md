@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.38](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.37...@selfcommunity/react-templates@0.3.0-alpha.38) (2023-01-04)
+
+
+### Performance Improvements
+
+* added feed props to users list template ([c0597b2](https://github.com/selfcommunity/community-js/commit/c0597b28391cc54d62b55f0688cafac8c999dc43))
+* updated mui material from 5.10.16 to 5.11.3. Asana issue: https://app.asana.com/0/1202523699272956/1203647078088632/f ([a0f00a7](https://github.com/selfcommunity/community-js/commit/a0f00a7f7f46d354bef83928b8d9c634c9737b70))
+
+
+
+
+
 # [0.3.0-alpha.37](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.36...@selfcommunity/react-templates@0.3.0-alpha.37) (2022-12-20)
 
 **Note:** Version bump only for package @selfcommunity/react-templates

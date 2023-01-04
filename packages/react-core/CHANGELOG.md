@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.9-alpha.26](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.9-alpha.25...@selfcommunity/react-core@0.3.9-alpha.26) (2023-01-04)
+
+
+### Performance Improvements
+
+* updated mui material from 5.10.16 to 5.11.3. Asana issue: https://app.asana.com/0/1202523699272956/1203647078088632/f ([a0f00a7](https://github.com/selfcommunity/community-js/commit/a0f00a7f7f46d354bef83928b8d9c634c9737b70))
+
+
+
+
+
 ## [0.3.9-alpha.25](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.9-alpha.24...@selfcommunity/react-core@0.3.9-alpha.25) (2022-12-19)
 
 **Note:** Version bump only for package @selfcommunity/react-core

@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.52](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.51...@selfcommunity/react-ui@0.7.0-alpha.52) (2023-01-04)
+
+
+### Bug Fixes
+
+* fix search. Asana issue: https://app.asana.com/0/1202523699272956/1203647078088626/f ([0b31d6c](https://github.com/selfcommunity/community-js/commit/0b31d6cb0840eb33c29fd9c2a9efce2f532b3a27))
+
+
+### Performance Improvements
+
+* updated mui material from 5.10.16 to 5.11.3. Asana issue: https://app.asana.com/0/1202523699272956/1203647078088632/f ([a0f00a7](https://github.com/selfcommunity/community-js/commit/a0f00a7f7f46d354bef83928b8d9c634c9737b70))
+
+
+
+
+
 # [0.7.0-alpha.51](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.50...@selfcommunity/react-ui@0.7.0-alpha.51) (2022-12-20)
 
 
