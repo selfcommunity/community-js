@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.9-alpha.27](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.9-alpha.26...@selfcommunity/react-core@0.3.9-alpha.27) (2023-01-11)
+
+
+### Bug Fixes
+
+* removed old preferences for invite_code ([289dd17](https://github.com/selfcommunity/community-js/commit/289dd17108c14558e438083768012daa70c2fc55))
+
+
+
+
+
 ## [0.3.9-alpha.26](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.9-alpha.25...@selfcommunity/react-core@0.3.9-alpha.26) (2023-01-04)
 
 
