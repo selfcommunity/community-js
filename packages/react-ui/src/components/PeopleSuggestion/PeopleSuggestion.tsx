@@ -211,7 +211,7 @@ export default function PeopleSuggestion(inProps: PeopleSuggestionProps): JSX.El
   /**
    * Renders people suggestion list
    */
-  if (state.isLoadingNext) {
+  if (state.isLoadingNext && scUserContext.user) {
     return <PeopleSuggestionSkeleton />;
   }
   /**
