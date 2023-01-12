@@ -169,7 +169,7 @@ export default function PollSuggestion(inProps: PollSuggestionProps): JSX.Elemen
   /**
    * Renders suggested poll list
    */
-  if (state.isLoadingNext) {
+  if (state.isLoadingNext && scUserContext.user) {
     return <Skeleton elevation={0} />;
   }
   const p = (

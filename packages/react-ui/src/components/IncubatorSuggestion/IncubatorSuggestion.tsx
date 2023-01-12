@@ -223,7 +223,7 @@ export default function IncubatorSuggestion(inProps: IncubatorSuggestionProps): 
   /**
    * Renders suggested incubators list
    */
-  if (state.isLoadingNext) {
+  if (state.isLoadingNext && scUserContext.user) {
     return <Skeleton />;
   }
   const c = (
