@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.54](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.53...@selfcommunity/react-ui@0.7.0-alpha.54) (2023-01-12)
+
+
+### Bug Fixes
+
+* fixed suggestion component bug. Asana issue: https://app.asana.com/0/1202523699272956/1203700925991379/f ([cd26ffc](https://github.com/selfcommunity/community-js/commit/cd26ffccc4f8e6dc63558fd9d5d9dc3d6d4d1249))
+
+
+
+
+
 # [0.7.0-alpha.53](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.52...@selfcommunity/react-ui@0.7.0-alpha.53) (2023-01-11)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
