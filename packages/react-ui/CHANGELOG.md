@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.55](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.54...@selfcommunity/react-ui@0.7.0-alpha.55) (2023-01-16)
+
+
+### Bug Fixes
+
+* add new core config for websocket secure/insecure ([deeb8f8](https://github.com/selfcommunity/community-js/commit/deeb8f8a6717a74529fd8328f4303182f0aa89da))
+
+
+
+
+
 # [0.7.0-alpha.54](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.53...@selfcommunity/react-ui@0.7.0-alpha.54) (2023-01-12)
 
 

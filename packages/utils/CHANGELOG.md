@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.44-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.1.44-alpha.0...@selfcommunity/utils@0.1.44-alpha.1) (2023-01-16)
+
+
+### Bug Fixes
+
+* add new core config for websocket secure/insecure ([deeb8f8](https://github.com/selfcommunity/community-js/commit/deeb8f8a6717a74529fd8328f4303182f0aa89da))
+
+
+
+
+
 ## [0.1.44-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.1.43...@selfcommunity/utils@0.1.44-alpha.0) (2022-10-12)
 
 **Note:** Version bump only for package @selfcommunity/utils
