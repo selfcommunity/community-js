@@ -110,6 +110,9 @@ import {DEFAULT_FIELDS} from './constants/UserProfile';
  */
 import * as ContributionUtils from './utils/contribution';
 import MetadataField from './shared/MetadataField';
+import InfiniteScroll from './shared/InfiniteScroll';
+import CentralProgress from './shared/CentralProgress';
+import {actionToolsTypes, dataToolsReducer, stateToolsInitializer} from './utils/tools';
 
 /**
  * List all exports
@@ -275,6 +278,8 @@ export {
   PasswordTextField,
   PhoneTextField,
   MetadataField,
+  InfiniteScroll,
+  CentralProgress,
   ConfirmDialog,
   MediaChunkUploader,
   MediaChunkUploaderProps,
@@ -314,6 +319,9 @@ export {
   IncubatorSuggestion,
   IncubatorSuggestionProps,
   ContributionUtils,
+  actionToolsTypes,
+  dataToolsReducer,
+  stateToolsInitializer,
   Footer,
   FooterProps,
   SCHeaderMenuUrlsType,
