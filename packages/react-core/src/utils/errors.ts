@@ -23,6 +23,7 @@ export class ValidationError {
   static ERROR_INVALID_NOTIFICATIONS = 4900;
   static ERROR_INVALID_NOTIFICATIONS_WEBSOCKET = 4901;
   static ERROR_INVALID_NOTIFICATIONS_WEBSOCKET_DISABLE_TOAST_MESSAGE = 4902;
+  static ERROR_INVALID_NOTIFICATIONS_WEBSOCKET_SECURE = 4903;
   static ERROR_INVALID_NOTIFICATIONS_WEB_PUSH_MESSAGING = 4921;
   static ERROR_INVALID_NOTIFICATIONS_WEB_PUSH_MESSAGING_DISABLE_TOAST_MESSAGE = 4922;
   static ERROR_INVALID_NOTIFICATIONS_WEB_PUSH_MESSAGING_APPLICATION_SERVER_KEY = 4923;
@@ -48,6 +49,7 @@ export class ValidationError {
     [ValidationError.ERROR_INVALID_NOTIFICATIONS_WEBSOCKET]: 'Invalid notifications (websocket) option.',
     [ValidationError.ERROR_INVALID_NOTIFICATIONS_WEBSOCKET_DISABLE_TOAST_MESSAGE]:
       'Invalid notifications websocket conf: disableToastMessage must be a boolean value.',
+    [ValidationError.ERROR_INVALID_NOTIFICATIONS_WEBSOCKET_SECURE]: 'Invalid notifications websocket conf: secure must be a boolean value.',
     [ValidationError.ERROR_INVALID_NOTIFICATIONS_WEB_PUSH_MESSAGING]: 'Invalid notifications (web push messaging) option.',
     [ValidationError.ERROR_INVALID_NOTIFICATIONS_WEB_PUSH_MESSAGING_DISABLE_TOAST_MESSAGE]:
       "Invalid notifications web push messaging option. 'disableToastMessage' must be a boolean value.",
@@ -56,8 +58,7 @@ export class ValidationError {
     [ValidationError.ERROR_INVALID_PREFERENCES]: 'Invalid preferences option.',
     [ValidationError.ERROR_INVALID_GLOBAL_PREFERENCES]:
       "Invalid preferences option. 'preferences' inside preferences must be a valid array of global preferences.",
-    [ValidationError.ERROR_INVALID_PREFERENCES_FEATURES]:
-      "Invalid preferences option. 'features' must be a valid array of features.",
+    [ValidationError.ERROR_INVALID_PREFERENCES_FEATURES]: "Invalid preferences option. 'features' must be a valid array of features.",
   };
 
   errorCode = null;

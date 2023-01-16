@@ -196,7 +196,7 @@ export default class WSClient implements WSClientType {
   tryToReconnect() {
     if (this._cfg.mustReconnect && !this._timer) {
       this._cfg.debug && console.info(`Reconnecting...`);
-      let interval = this.generateInteval(this._attempts);
+      let interval = this.generateInterval(this._attempts);
       this._timer = setTimeout(this.reconnect.bind(this), interval);
     }
   }
@@ -282,7 +282,7 @@ export default class WSClient implements WSClientType {
    * the number of connection attmpts, with a maximum interval of 30 seconds,
    * so it starts at 0 - 1 seconds and maxes out at 0 - 30 seconds
    */
-  generateInteval(k) {
+  generateInterval(k) {
     let maxInterval = (Math.pow(2, k) - 1) * 1000;
     // If the generated interval is more than 30 seconds, truncate it down to 30 seconds.
     if (maxInterval > 30 * 1000) {

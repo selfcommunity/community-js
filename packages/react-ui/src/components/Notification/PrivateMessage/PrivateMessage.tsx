@@ -65,7 +65,6 @@ const Root = styled(Box, {
     color: theme.palette.text.primary
   },
   [`& .${classes.messageWrap}`]: {
-    display: 'inline-block',
     textOverflow: 'ellipsis',
     overflow: 'hidden',
     WebkitLineClamp: '2',
@@ -168,7 +167,6 @@ export default function PrivateMessageNotification(inProps: NotificationPrivateM
      * to avoid warning rendering child during update parent state
      */
     if (scUserContext.user && scUserContext.user.id !== notificationObject.message.sender.id) {
-      const f =
       setFollower(scFollowersManager.isFollower(notificationObject.message.sender));
     }
   });

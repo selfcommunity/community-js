@@ -21,7 +21,6 @@ import {PORTAL_OPTION, ROUTER_OPTION} from '../constants/Routes';
 import * as Actions from '../constants/Actions';
 import * as Preferences from '../constants/Preferences';
 import * as Features from '../constants/Features';
-import {DEFAULT_FEATURES_OPTION} from '../constants/Features';
 
 /**
  * Validate session option
@@ -192,6 +191,28 @@ export const validateWebSocketDisableToastMessage = (value, notifications) => {
       warnings,
       value:
         Notifications.DEFAULT_NOTIFICATIONS[Notifications.NOTIFICATIONS_WEB_SOCKET_OPTION][Notifications.NOTIFICATIONS_DISABLE_TOAST_MESSAGE_OPTION],
+    };
+  }
+  return {errors, warnings, value};
+};
+
+/**
+ * Validate default secure (webSocket)
+ * @param value
+ * @param {}
+ */
+export const validateWebSocketSecure = (value, notifications) => {
+  const errors = [];
+  const warnings = [];
+  if (value) {
+    if (!(typeof value === 'boolean')) {
+      errors.push(ValidationError.ERROR_INVALID_NOTIFICATIONS_WEBSOCKET_SECURE);
+    }
+  } else {
+    return {
+      errors,
+      warnings,
+      value: Notifications.DEFAULT_NOTIFICATIONS[Notifications.NOTIFICATIONS_WEB_SOCKET_OPTION][Notifications.NOTIFICATIONS_SECURE_OPTION],
     };
   }
   return {errors, warnings, value};
@@ -574,6 +595,10 @@ const NotificationsWebSocketDisableToastMessageOption = {
   name: Notifications.NOTIFICATIONS_DISABLE_TOAST_MESSAGE_OPTION,
   validator: validateWebSocketDisableToastMessage,
 };
+const NotificationsWebSocketSecureOption = {
+  name: Notifications.NOTIFICATIONS_SECURE_OPTION,
+  validator: validateWebSocketSecure,
+};
 const NotificationsWebPushMessagingDisableToastMessageOption = {
   name: Notifications.NOTIFICATIONS_DISABLE_TOAST_MESSAGE_OPTION,
   validator: validateWebPushMessagingDisableToastMessage,
@@ -614,6 +639,7 @@ export const notificationsOptions: Record<string, any> = {
 };
 export const notificationsWebSocketOptions: Record<string, any> = {
   [NotificationsWebSocketDisableToastMessageOption.name]: NotificationsWebSocketDisableToastMessageOption,
+  [NotificationsWebSocketSecureOption.name]: NotificationsWebSocketSecureOption,
 };
 export const notificationsWebSPushMessagingOptions: Record<string, any> = {
   [NotificationsWebPushMessagingDisableToastMessageOption.name]: NotificationsWebPushMessagingDisableToastMessageOption,
