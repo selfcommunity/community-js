@@ -451,6 +451,11 @@ export interface SCNotificationsWebSocketType {
    * Disable toast message
    */
   disableToastMessage?: boolean;
+  /**
+   * Set websocket protocol: wss or ws.
+   * Default: wss
+   */
+  secure?: boolean;
 }
 
 /**

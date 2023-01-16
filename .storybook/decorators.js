@@ -76,6 +76,7 @@ const withProvider = (Story, context) => {
     notifications: {
       webSocket: {
         disableToastMessage: false,
+        secure: true
       },
       webPushMessaging: {
         disableToastMessage: true,
