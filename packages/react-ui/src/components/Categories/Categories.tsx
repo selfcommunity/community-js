@@ -1,8 +1,8 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Typography, Box, Grid, TextField} from '@mui/material';
-import {Endpoints, CategoryService} from '@selfcommunity/api-services';
-import {Link, SCUserContext, SCUserContextType, useIsComponentMountedRef} from '@selfcommunity/react-core';
+import {Box, Grid, TextField, Typography} from '@mui/material';
+import {CategoryService, Endpoints} from '@selfcommunity/api-services';
+import {SCUserContext, SCUserContextType, useIsComponentMountedRef} from '@selfcommunity/react-core';
 import {SCCategoryType} from '@selfcommunity/types';
 import CategoriesSkeleton, {CategoriesSkeletonProps} from './Skeleton';
 import Category, {CategoryProps} from '../Category';
@@ -130,7 +130,7 @@ export interface CategoriesProps {
 
  * @param inProps
  */
-export default function CategoriesSuggestion(inProps: CategoriesProps): JSX.Element {
+export default function Categories(inProps: CategoriesProps): JSX.Element {
   // PROPS
   const props: CategoriesProps = useThemeProps({
     props: inProps,
