@@ -139,7 +139,7 @@ export interface CategoriesProps {
 
  * @param inProps
  */
-export default function CategoriesSuggestion(inProps: CategoriesProps): JSX.Element {
+export default function Categories(inProps: CategoriesProps): JSX.Element {
   // PROPS
   const props: CategoriesProps = useThemeProps({
     props: inProps,
