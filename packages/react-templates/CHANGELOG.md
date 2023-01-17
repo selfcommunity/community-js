@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.43](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.42...@selfcommunity/react-templates@0.3.0-alpha.43) (2023-01-17)
+
+
+### Bug Fixes
+
+* fixed template export ([2b75173](https://github.com/selfcommunity/community-js/commit/2b75173503af3fc12b2af766065779511cbbaa4d))
+
+
+
+
+
 # [0.3.0-alpha.42](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.41...@selfcommunity/react-templates@0.3.0-alpha.42) (2023-01-17)
 
 
