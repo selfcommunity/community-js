@@ -112,7 +112,7 @@ import * as ContributionUtils from './utils/contribution';
 import MetadataField from './shared/MetadataField';
 import InfiniteScroll from './shared/InfiniteScroll';
 import CentralProgress from './shared/CentralProgress';
-import {actionToolsTypes, dataToolsReducer, stateToolsInitializer} from './utils/tools';
+import {highlight} from './utils/highlight';
 
 /**
  * List all exports
@@ -319,9 +319,7 @@ export {
   IncubatorSuggestion,
   IncubatorSuggestionProps,
   ContributionUtils,
-  actionToolsTypes,
-  dataToolsReducer,
-  stateToolsInitializer,
+  highlight,
   Footer,
   FooterProps,
   SCHeaderMenuUrlsType,

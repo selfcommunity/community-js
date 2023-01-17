@@ -21,6 +21,7 @@ import ConnectionUserButton from '../ConnectionUserButton';
 import {useThemeProps} from '@mui/system';
 import BaseItemButton from '../../shared/BaseItemButton';
 import {WidgetProps} from '../Widget';
+import {highlight} from '../../index';
 
 const messages = defineMessages({
   userFollowers: {
@@ -92,6 +93,10 @@ export interface UserProps extends WidgetProps {
    */
   reaction?: any;
   /**
+   * A search term used for highlighting matching results
+   */
+  search?: string;
+  /**
    * Any other properties
    */
   [p: string]: any;
@@ -138,6 +143,7 @@ export default function User(inProps: UserProps): JSX.Element {
     elevation,
     showReaction = false,
     reaction,
+    search,
     ...rest
   } = props;
 
@@ -225,8 +231,11 @@ export default function User(inProps: UserProps): JSX.Element {
       primary={
         hasBadge && preferences ? (
           <Typography component={'span'}>
-            {scUser.username} <Chip className={classes.staffBadgeLabel} size="small" label={preferences[SCPreferences.STAFF_STAFF_BADGE_LABEL]} />
+            {search && search !== '' ? highlight(scUser.username, search) : scUser.username}
+            <Chip className={classes.staffBadgeLabel} size="small" label={preferences[SCPreferences.STAFF_STAFF_BADGE_LABEL]} />
           </Typography>
+        ) : search && search !== '' ? (
+          highlight(scUser.username, search)
         ) : (
           scUser.username
         )
