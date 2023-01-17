@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.9-alpha.29](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.9-alpha.28...@selfcommunity/react-core@0.3.9-alpha.29) (2023-01-17)
+
+
+### Performance Improvements
+
+* added categories list cache const ([f093ba4](https://github.com/selfcommunity/community-js/commit/f093ba4488d36c685acc22ac5399af75f05a4118))
+
+
+
+
+
 ## [0.3.9-alpha.28](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.9-alpha.27...@selfcommunity/react-core@0.3.9-alpha.28) (2023-01-16)
 
 
