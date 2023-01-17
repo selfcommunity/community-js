@@ -7,9 +7,12 @@ export function highlight(text, searchQuery): JSX.Element {
   return (
     <>
       {parts.map((p, i) => (
-        <Typography component={'span'} key={i} sx={{fontWeight: p.toLowerCase() === searchQuery.toLowerCase() ? 'bold' : ''}}>
-          {p}
-        </Typography>
+        <Typography
+          component={'span'}
+          key={i}
+          sx={{fontWeight: p.toLowerCase() === searchQuery.toLowerCase() ? 'bold' : ''}}
+          dangerouslySetInnerHTML={{__html: p}}
+        />
       ))}
     </>
   );

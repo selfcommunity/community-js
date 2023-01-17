@@ -17,7 +17,13 @@ import {SCFeedObjectActivitiesType, SCFeedObjectTemplateType} from '../../types/
 import MarkRead from '../../shared/MarkRead';
 import classNames from 'classnames';
 import ContributionActionsMenu, {ContributionActionsMenuProps} from '../../shared/ContributionActionsMenu';
-import {getContributionHtml, getContributionRouteName, getContributionSnippet, getRouteData} from '../../utils/contribution';
+import {
+  getContributionHtml,
+  getContributionRouteName,
+  getContributionSnippet,
+  getRouteData,
+  getSearchContributionSnippet
+} from '../../utils/contribution';
 import Follow, {FollowProps} from './Actions/Follow';
 import Widget, {WidgetProps} from '../Widget';
 import {useThemeProps} from '@mui/system';
@@ -368,7 +374,10 @@ export interface FeedObjectProps extends CardProps, VirtualScrollerItemProps {
    * @default CacheStrategies.CACHE_FIRST
    */
   cacheStrategy?: CacheStrategies;
-
+  /**
+   * A search term used for highlighting matching results
+   */
+  search?: string;
   /**
    * Other props
    */
@@ -454,6 +463,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
     onReply,
     onHeightChange,
     onStateChange,
+    search,
     ...rest
   } = props;
 
@@ -973,7 +983,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
               <Box>
                 <Typography variant="body2">
                   <Link to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))} className={classes.snippetContent}>
-                    {getContributionSnippet(obj)}
+                    {search && search !== '' ? getSearchContributionSnippet(obj, search) : getContributionSnippet(obj)}
                   </Link>
                 </Typography>
                 <Link to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))} className={classes.activityAt}>
