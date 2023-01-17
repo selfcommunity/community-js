@@ -2,7 +2,15 @@ import React, {useContext, useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Typography, Box, Grid, TextField} from '@mui/material';
 import {Endpoints, CategoryService} from '@selfcommunity/api-services';
-import {Link, SCUserContext, SCUserContextType, useIsComponentMountedRef} from '@selfcommunity/react-core';
+import {
+  Link,
+  SCPreferences,
+  SCPreferencesContext,
+  SCPreferencesContextType,
+  SCUserContext,
+  SCUserContextType,
+  useIsComponentMountedRef
+} from '@selfcommunity/react-core';
 import {SCCategoryType} from '@selfcommunity/types';
 import CategoriesSkeleton, {CategoriesSkeletonProps} from './Skeleton';
 import Category, {CategoryProps} from '../Category';
@@ -11,6 +19,7 @@ import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {Logger} from '@selfcommunity/utils';
+import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 
 const PREFIX = 'SCCategories';
 
@@ -157,6 +166,10 @@ export default function CategoriesSuggestion(inProps: CategoriesProps): JSX.Elem
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
+  const scPreferencesContext: SCPreferencesContextType = useContext(SCPreferencesContext);
+  const contentAvailability =
+    SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY in scPreferencesContext.preferences &&
+    scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY].value;
 
   // CONST
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
@@ -176,7 +189,9 @@ export default function CategoriesSuggestion(inProps: CategoriesProps): JSX.Elem
    * On mount, fetches categories list
    */
   useEffect(() => {
-    if (scUserContext.user && !prefetchedCategories.length) {
+    if (!contentAvailability && !authUserId) {
+      return;
+    } else if (scUserContext.user && !prefetchedCategories.length) {
       fetchCategories()
         .then((data: any) => {
           if (isMountedRef.current) {
@@ -264,8 +279,11 @@ export default function CategoriesSuggestion(inProps: CategoriesProps): JSX.Elem
   );
 
   /**
-   * Renders root object
+   * Renders root object (if content availability community option is false and user is anonymous, component is hidden)
    */
+  if (!contentAvailability && !scUserContext.user) {
+    return <HiddenPlaceholder />;
+  }
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
       {c}

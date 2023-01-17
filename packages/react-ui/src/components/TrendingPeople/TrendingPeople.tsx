@@ -150,10 +150,14 @@ export default function TrendingPeople(inProps: TrendingPeopleProps): JSX.Elemen
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
   const scPreferencesContext: SCPreferencesContextType = useContext(SCPreferencesContext);
+  const contentAvailability =
+    SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY in scPreferencesContext.preferences &&
+    scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY].value;
   const followEnabled =
     SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED in scPreferencesContext.preferences &&
     scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED].value;
-
+  // CONST
+  const authUserId = scUserContext.user ? scUserContext.user.id : null;
   /**
    * Fetches trending people list
    */
@@ -167,10 +171,12 @@ export default function TrendingPeople(inProps: TrendingPeopleProps): JSX.Elemen
     [dispatch, state.next, state.isLoadingNext]
   );
   useEffect(() => {
-    if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
+    if (!contentAvailability && !authUserId) {
+      return;
+    } else if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
       onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
     }
-  }, []);
+  }, [authUserId]);
   /**
    * On mount, fetches trending people list
    */
@@ -305,6 +311,12 @@ export default function TrendingPeople(inProps: TrendingPeopleProps): JSX.Elemen
     </CardContent>
   );
 
+  /**
+   * If content availability community option is false and user is anonymous, component is hidden.
+   */
+  if (!contentAvailability && !scUserContext.user) {
+    return <HiddenPlaceholder />;
+  }
   /**
    * Renders root object (if results and autoHide prop is set to false, otherwise component is hidden)
    */
