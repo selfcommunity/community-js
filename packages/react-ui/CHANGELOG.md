@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.57](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.56...@selfcommunity/react-ui@0.7.0-alpha.57) (2023-01-17)
+
+
+### Bug Fixes
+
+* fixed react-ui imports, added highlight function util ([a78254f](https://github.com/selfcommunity/community-js/commit/a78254fc49aa6f4d883908121f3d2aec3142eead))
+
+
+### Performance Improvements
+
+* added highlight for search. Asana issue: https://app.asana.com/0/1202523699272956/1202819955319930/f ([645fd9d](https://github.com/selfcommunity/community-js/commit/645fd9d87c3706dc9f245064f2db02e1453c23b5))
+
+
+
+
+
 # [0.7.0-alpha.56](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.55...@selfcommunity/react-ui@0.7.0-alpha.56) (2023-01-17)
 
 
