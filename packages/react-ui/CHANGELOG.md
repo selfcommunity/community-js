@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.58](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.57...@selfcommunity/react-ui@0.7.0-alpha.58) (2023-01-17)
+
+
+### Bug Fixes
+
+* Fix component name ([4ef1333](https://github.com/selfcommunity/community-js/commit/4ef133352066f4958915c460d9c8bce581e4c9d9))
+
+
+### Performance Improvements
+
+* added content availability check in react ui components ([ac65e55](https://github.com/selfcommunity/community-js/commit/ac65e55de95781317ca09b17925d6c159c0776d8))
+
+
+
+
+
 # [0.7.0-alpha.57](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.56...@selfcommunity/react-ui@0.7.0-alpha.57) (2023-01-17)
 
 
