@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.42](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.41...@selfcommunity/react-templates@0.3.0-alpha.42) (2023-01-17)
+
+
+### Performance Improvements
+
+* added categories list template. Asana issue: https://app.asana.com/0/1202523699272956/1203748780124821/f ([fda9509](https://github.com/selfcommunity/community-js/commit/fda9509fda2d5b4cc9b72f214537dd7e1aa6573b))
+
+
+
+
+
 # [0.3.0-alpha.41](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.40...@selfcommunity/react-templates@0.3.0-alpha.41) (2023-01-16)
 
 **Note:** Version bump only for package @selfcommunity/react-templates
