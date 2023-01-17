@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useReducer, useState} from 'react';
+import React, {useContext, useEffect, useMemo, useReducer, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Button, CardContent, List, ListItem, Typography, useMediaQuery, useTheme} from '@mui/material';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
@@ -16,7 +16,15 @@ import InfiniteScroll from '../../shared/InfiniteScroll';
 import Widget from '../Widget';
 import {useThemeProps} from '@mui/system';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
-import {SCCache, useIsComponentMountedRef} from '@selfcommunity/react-core';
+import {
+  SCCache,
+  SCPreferences,
+  SCPreferencesContext,
+  SCPreferencesContextType,
+  SCUserContext,
+  SCUserContextType,
+  useIsComponentMountedRef
+} from '@selfcommunity/react-core';
 import {actionToolsTypes, dataToolsReducer, stateToolsInitializer} from '../../utils/tools';
 
 const PREFIX = 'SCCategoriesPopular';
@@ -81,6 +89,12 @@ export default function CategoriesPopular(inProps: CategoriesListProps): JSX.Ele
   // REFS
   const isMountedRef = useIsComponentMountedRef();
 
+  // CONTEXT
+  const scUserContext: SCUserContextType = useContext(SCUserContext);
+  const scPreferencesContext: SCPreferencesContextType = useContext(SCPreferencesContext);
+  const contentAvailability =
+    SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY in scPreferencesContext.preferences &&
+    scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY].value;
   // STATE
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
@@ -97,7 +111,8 @@ export default function CategoriesPopular(inProps: CategoriesListProps): JSX.Ele
     stateToolsInitializer
   );
   const [openPopularCategoriesDialog, setOpenPopularCategoriesDialog] = useState<boolean>(false);
-
+  // CONST
+  const authUserId = scUserContext.user ? scUserContext.user.id : null;
   /**
    * Fetches popular categories list
    */
@@ -111,11 +126,13 @@ export default function CategoriesPopular(inProps: CategoriesListProps): JSX.Ele
     [dispatch, state.next, state.isLoadingNext]
   );
   useEffect(() => {
-    if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
+    if (!contentAvailability && !authUserId) {
+      return;
+    } else if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
       onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
       // dispatch({type: actionToolsTypes.LOADING_NEXT});
     }
-  }, []);
+  }, [authUserId]);
   /**
    * On mount, fetches popular categories list
    */
@@ -234,6 +251,12 @@ export default function CategoriesPopular(inProps: CategoriesListProps): JSX.Ele
     </CardContent>
   );
 
+  /**
+   * If content availability community option is false and user is anonymous, component is hidden.
+   */
+  if (!contentAvailability && !scUserContext.user) {
+    return <HiddenPlaceholder />;
+  }
   /**
    * Renders root object (if results and autoHide prop is set to false, otherwise component is hidden)
    */

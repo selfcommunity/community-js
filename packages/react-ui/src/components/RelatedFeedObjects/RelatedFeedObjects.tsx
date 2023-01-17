@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useReducer, useState} from 'react';
+import React, {useContext, useEffect, useMemo, useReducer, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
 import {Button, CardContent, ListItem, Typography} from '@mui/material';
@@ -21,6 +21,7 @@ import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import {
   SCCache,
   SCPreferences,
+  SCPreferencesContext,
   SCPreferencesContextType,
   SCUserContextType,
   useIsComponentMountedRef,
@@ -134,6 +135,10 @@ export default function RelatedFeedObjects(inProps: RelatedFeedObjectsProps): JS
   // CONTEXT
   const scPreferences: SCPreferencesContextType = useSCPreferences();
   const scUserContext: SCUserContextType = useSCUser();
+  const scPreferencesContext: SCPreferencesContextType = useContext(SCPreferencesContext);
+  const contentAvailability =
+    SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY in scPreferencesContext.preferences &&
+    scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY].value;
 
   // PROPS
   const props: RelatedFeedObjectsProps = useThemeProps({
@@ -172,7 +177,7 @@ export default function RelatedFeedObjects(inProps: RelatedFeedObjectsProps): JS
   const {obj, setObj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
   const [openRelatedFeedObjectsDialog, setOpenRelatedFeedObjectsDialog] = useState<boolean>(false);
   const objId = obj ? obj.id : null;
-
+  const authUserId = scUserContext.user ? scUserContext.user.id : null;
   /**
    * Compute preferences
    */
@@ -219,10 +224,12 @@ export default function RelatedFeedObjects(inProps: RelatedFeedObjectsProps): JS
   );
 
   useEffect(() => {
-    if (objId !== null && cacheStrategy === CacheStrategies.NETWORK_ONLY) {
+    if (!contentAvailability && !authUserId) {
+      return;
+    } else if (objId !== null && cacheStrategy === CacheStrategies.NETWORK_ONLY) {
       onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
     }
-  }, [objId]);
+  }, [objId, authUserId]);
 
   /**
    * On mount, fetches related discussions list
@@ -326,6 +333,12 @@ export default function RelatedFeedObjects(inProps: RelatedFeedObjectsProps): JS
     </CardContent>
   );
 
+  /**
+   * If content availability community option is false and user is anonymous, component is hidden.
+   */
+  if (!contentAvailability && !scUserContext.user) {
+    return <HiddenPlaceholder />;
+  }
   /**
    * Renders root object (if results and autoHide prop is set to false, otherwise component is hidden)
    */

@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useReducer, useState} from 'react';
+import React, {useContext, useEffect, useMemo, useReducer, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
 import {Button, CardContent, ListItem, Typography} from '@mui/material';
@@ -17,7 +17,15 @@ import InfiniteScroll from '../../shared/InfiniteScroll';
 import Skeleton from './Skeleton';
 import {useThemeProps} from '@mui/system';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
-import {SCCache, useIsComponentMountedRef} from '@selfcommunity/react-core';
+import {
+  SCCache,
+  SCPreferences,
+  SCPreferencesContext,
+  SCPreferencesContextType,
+  SCUserContext,
+  SCUserContextType,
+  useIsComponentMountedRef
+} from '@selfcommunity/react-core';
 import {VirtualScrollerItemProps} from '../../types/virtualScroller';
 import {actionToolsTypes, dataToolsReducer, stateToolsInitializer} from '../../utils/tools';
 
@@ -128,7 +136,12 @@ export default function TrendingFeed(inProps: TrendingFeedProps): JSX.Element {
 
   // REFS
   const isMountedRef = useIsComponentMountedRef();
-
+  // CONTEXT
+  const scUserContext: SCUserContextType = useContext(SCUserContext);
+  const scPreferencesContext: SCPreferencesContextType = useContext(SCPreferencesContext);
+  const contentAvailability =
+    SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY in scPreferencesContext.preferences &&
+    scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY].value;
   // STATE
   const [state, dispatch] = useReducer(
     dataToolsReducer,
@@ -141,7 +154,8 @@ export default function TrendingFeed(inProps: TrendingFeedProps): JSX.Element {
     stateToolsInitializer
   );
   const [openTrendingPostDialog, setOpenTrendingPostDialog] = useState<boolean>(false);
-
+  // CONST
+  const authUserId = scUserContext.user ? scUserContext.user.id : null;
   /**
    * Fetches a list of trending posts
    */
@@ -160,10 +174,12 @@ export default function TrendingFeed(inProps: TrendingFeedProps): JSX.Element {
   };
 
   useEffect(() => {
-    if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
+    if (!contentAvailability && !authUserId) {
+      return;
+    } else if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
       onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
     }
-  }, []);
+  }, [authUserId]);
 
   /**
    * On mount, fetches trending posts list
@@ -261,6 +277,12 @@ export default function TrendingFeed(inProps: TrendingFeedProps): JSX.Element {
     </CardContent>
   );
 
+  /**
+   * If content availability community option is false and user is anonymous, component is hidden.
+   */
+  if (!contentAvailability && !scUserContext.user) {
+    return <HiddenPlaceholder />;
+  }
   /**
    * Renders root object (if results and autoHide prop is set to false, otherwise component is hidden)
    */
