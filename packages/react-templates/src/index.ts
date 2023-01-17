@@ -9,7 +9,7 @@ import UserProfile, {UserProfileProps, UserProfileSkeleton} from './components/U
 import PrivateMessages, {PrivateMessagesProps, PrivateMessagesSkeleton} from './components/PrivateMessages';
 import UsersList, {UsersListProps, UsersListSkeleton} from './components/UsersList';
 import FeedObjsList, {FeedObjsListProps, FeedObjsListSkeleton} from './components/FeedObjsList';
-
+import CategoriesList, {CategoriesListProps, CategoriesListSkeleton} from './components/CategoriesList';
 export {
   Category,
   CategoryProps,
@@ -43,5 +43,8 @@ export {
   UsersListSkeleton,
   FeedObjsList,
   FeedObjsListProps,
-  FeedObjsListSkeleton
+  FeedObjsListSkeleton,
+  CategoriesList,
+  CategoriesListProps,
+  CategoriesListSkeleton
 };

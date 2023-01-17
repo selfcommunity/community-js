@@ -1,8 +1,8 @@
 import React from 'react';
-import UsersListSkeleton from './Skeleton';
+import CategoriesListSkeleton from './Skeleton';
 
 import CategoriesList, {CategoriesListProps} from './CategoriesList';
 
 export default CategoriesList;
 
-export {CategoriesListProps, UsersListSkeleton};
+export {CategoriesListProps, CategoriesListSkeleton};
