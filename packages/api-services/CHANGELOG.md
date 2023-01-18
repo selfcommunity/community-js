@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.6-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.6-alpha.11...@selfcommunity/api-services@0.3.6-alpha.12) (2023-01-18)
+
+
+### Bug Fixes
+
+* fixed change user email endpoint/service/test ([b08c4dd](https://github.com/selfcommunity/community-js/commit/b08c4ddf53fbb1a5468917d84e6b535b09834d94))
+
+
+
+
+
 ## [0.3.6-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.6-alpha.10...@selfcommunity/api-services@0.3.6-alpha.11) (2023-01-16)
 
 **Note:** Version bump only for package @selfcommunity/api-services
