@@ -71,7 +71,7 @@ export interface UserApiClientInterface {
   getUserLoyaltyPoints(id: number | string, config?: AxiosRequestConfig): Promise<SCUserLoyaltyPointsType>;
   getUserConnectionStatuses(users: number[], config?: AxiosRequestConfig): Promise<any>;
   userTagToAddressContribution(config?: AxiosRequestConfig): Promise<SCTagType>;
-  checkUserEmailToken(email_token: string, config?: AxiosRequestConfig): Promise<SCUserEmailTokenType>;
+  checkUserEmailToken(id: number | string, email_token: string, config?: AxiosRequestConfig): Promise<SCUserEmailTokenType>;
   addUserAvatar(data: FormData, config?: AxiosRequestConfig): Promise<SCAvatarType>;
   getUserAvatars(config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCAvatarType>>;
   removeUserAvatar(avatar_id: number | string, config?: AxiosRequestConfig): Promise<any>;
@@ -525,12 +525,13 @@ export class UserApiClient {
 
   /**
    * This endpoint checks an email token.
+   * @param id
    * @param email_token
    * @param config
    */
-  static checkUserEmailToken(email_token, config?: AxiosRequestConfig): Promise<SCUserEmailTokenType> {
+  static checkUserEmailToken(id, email_token, config?: AxiosRequestConfig): Promise<SCUserEmailTokenType> {
     const p = urlParams({email_token: email_token});
-    return apiRequest({...config, url: `${Endpoints.CheckEmailToken.url({})}?${p.toString()}`, method: Endpoints.CheckEmailToken.method});
+    return apiRequest({...config, url: `${Endpoints.CheckEmailToken.url({id})}?${p.toString()}`, method: Endpoints.CheckEmailToken.method});
   }
 
   /**
@@ -788,8 +789,8 @@ export default class UserService {
   static async userTagToAddressContribution(config?: AxiosRequestConfig): Promise<SCTagType> {
     return UserApiClient.userTagToAddressContribution(config);
   }
-  static async checkUserEmailToken(email_token, config?: AxiosRequestConfig): Promise<SCUserEmailTokenType> {
-    return UserApiClient.checkUserEmailToken(email_token, config);
+  static async checkUserEmailToken(id: number | string, email_token, config?: AxiosRequestConfig): Promise<SCUserEmailTokenType> {
+    return UserApiClient.checkUserEmailToken(id, email_token, config);
   }
   static async addUserAvatar(data: FormData, config?: AxiosRequestConfig): Promise<SCAvatarType> {
     return UserApiClient.addUserAvatar(data, config);

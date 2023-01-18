@@ -475,7 +475,7 @@ const Endpoints: {[key: string]: EndpointType} = {
     method: 'GET'
   },
   CheckEmailToken: {
-    url: urlReplacer('/api/v2/user/check_email_token/'),
+    url: urlReplacer('/api/v2/user/$(id)/check_email_token/'),
     method: 'GET'
   },
   AddAvatar: {
