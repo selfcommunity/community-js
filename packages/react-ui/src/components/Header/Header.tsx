@@ -11,6 +11,7 @@ import {FormattedMessage} from 'react-intl';
 import HeaderMenu from './HeaderMenu';
 import {SCHeaderMenuUrlsType} from '../../types';
 import HeaderSkeleton from './Skeleton';
+import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 
 const PREFIX = 'SCHeader';
 
@@ -86,7 +87,10 @@ export interface HeaderProps {
    * @default null
    */
   className?: string;
-
+  /**
+   * If true, header component is hidden
+   */
+  hidden?: boolean;
   /**
    * Other props
    */
@@ -127,7 +131,7 @@ export default function Header(inProps: HeaderProps) {
     props: inProps,
     name: PREFIX
   });
-  const {url, className, searchBarProps, showNavigation, onNavigationBack, ...rest} = props;
+  const {url, className, searchBarProps, showNavigation, onNavigationBack, hidden, ...rest} = props;
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
 
@@ -170,8 +174,9 @@ export default function Header(inProps: HeaderProps) {
 
   if (scUserContext.loading) {
     return <HeaderSkeleton />;
+  } else if (hidden) {
+    return <HiddenPlaceholder />;
   }
-
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
       {isMobile ? (
