@@ -131,7 +131,7 @@ const Root = styled(Dialog, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}: {theme: SCThemeType}) => {
+})(({theme}: any) => {
   let mediaActionBackground = theme.palette.getContrastText(theme.palette.primary.main);
   if (mediaActionBackground.startsWith('#')) {
     mediaActionBackground = hexToRgb(mediaActionBackground).replace(')', ', .5)');
