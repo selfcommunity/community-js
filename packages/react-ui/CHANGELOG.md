@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.60](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.59...@selfcommunity/react-ui@0.7.0-alpha.60) (2023-01-23)
+
+
+### Performance Improvements
+
+* added hidden prop to hide header component ([124215d](https://github.com/selfcommunity/community-js/commit/124215d31d78511e9a4bcc9cb22d19749d9e9aa8))
+
+
+
+
+
 # [0.7.0-alpha.59](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.58...@selfcommunity/react-ui@0.7.0-alpha.59) (2023-01-18)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
