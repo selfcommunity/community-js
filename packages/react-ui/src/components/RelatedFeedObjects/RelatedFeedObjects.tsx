@@ -285,7 +285,7 @@ export default function RelatedFeedObjects(inProps: RelatedFeedObjectsProps): JS
             })}
           </List>
           {limit < state.count && (
-            <Button size="small" className={classes.showMore} onClick={() => setOpenRelatedFeedObjectsDialog(true)}>
+            <Button className={classes.showMore} onClick={() => setOpenRelatedFeedObjectsDialog(true)}>
               <FormattedMessage id="ui.relatedFeedObjects.button.showMore" defaultMessage="ui.relatedFeedObjects.button.showMore" />
             </Button>
           )}

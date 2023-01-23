@@ -1,8 +1,9 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
 import Skeleton from '@mui/material/Skeleton';
-import {Button} from '@mui/material';
+import {Button, useTheme} from '@mui/material';
 import BaseItem from '../../shared/BaseItem';
+import {SCThemeType} from '@selfcommunity/react-core';
 
 const PREFIX = 'SCCategorySkeleton';
 
@@ -51,11 +52,20 @@ const Root = styled(BaseItem)(({theme}) => ({
  *
  */
 export default function CategorySkeleton(props): JSX.Element {
+  const theme = useTheme<SCThemeType>();
   return (
     <Root
       className={classes.root}
       {...props}
-      image={<Skeleton animation="wave" variant="rectangular" width={40} height={40} className={classes.image} />}
+      image={
+        <Skeleton
+          animation="wave"
+          variant="rectangular"
+          width={theme.selfcommunity.category.icon.sizeMedium}
+          height={theme.selfcommunity.category.icon.sizeMedium}
+          className={classes.image}
+        />
+      }
       primary={<Skeleton animation="wave" height={10} width={120} className={classes.primary} />}
       secondary={<Skeleton animation="wave" height={10} width={70} className={classes.secondary} />}
       actions={

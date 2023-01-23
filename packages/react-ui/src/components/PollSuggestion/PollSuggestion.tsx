@@ -5,7 +5,7 @@ import {Button, CardContent, Typography, ListItem, useMediaQuery, useTheme} from
 import {SCFeedDiscussionType} from '@selfcommunity/types';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {CacheStrategies, Logger} from '@selfcommunity/utils';
-import {SCCache, SCUserContextType, useIsComponentMountedRef, useSCUser} from '@selfcommunity/react-core';
+import {SCCache, SCThemeType, SCUserContextType, useIsComponentMountedRef, useSCUser} from '@selfcommunity/react-core';
 import TrendingFeedSkeleton from '../TrendingFeed/Skeleton';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {FormattedMessage} from 'react-intl';
@@ -120,7 +120,7 @@ export default function PollSuggestion(inProps: PollSuggestionProps): JSX.Elemen
     },
     stateToolsInitializer
   );
-  const theme = useTheme();
+  const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [openPollSuggestionDialog, setOpenPollSuggestionDialog] = useState<boolean>(false);
 
@@ -193,7 +193,7 @@ export default function PollSuggestion(inProps: PollSuggestionProps): JSX.Elemen
             })}
           </List>
           {limit < state.count && (
-            <Button size="small" className={classes.showMore} onClick={() => setOpenPollSuggestionDialog(true)}>
+            <Button className={classes.showMore} onClick={() => setOpenPollSuggestionDialog(true)}>
               <FormattedMessage id="ui.pollSuggestion.button.showMore" defaultMessage="ui.pollSuggestion.button.showMore" />
             </Button>
           )}

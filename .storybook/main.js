@@ -51,7 +51,8 @@ module.exports = {
           "@selfcommunity/react-i18n": toPath("packages/react-i18n/src"), // development
           "@selfcommunity/react-core": toPath("packages/react-core/src"), // development
           "@selfcommunity/react-ui": toPath("packages/react-ui/src"), // development
-          "@selfcommunity/react-templates": toPath("packages/react-templates/src") // development
+          "@selfcommunity/react-templates": toPath("packages/react-templates/src"), // development
+          "@selfcommunity/react-theme-default": toPath("packages/react-theme-default/src") // development
         },
       },
     };

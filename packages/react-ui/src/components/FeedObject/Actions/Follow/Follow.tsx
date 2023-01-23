@@ -13,7 +13,7 @@ import {Logger} from '@selfcommunity/utils';
 import {SCContextType, SCUserContextType, useSCContext, useSCFetchFeedObject, useSCUser} from '@selfcommunity/react-core';
 import {useThemeProps} from '@mui/system';
 
-const PREFIX = 'SCFollowObject';
+const PREFIX = 'SCFollowAction';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -33,6 +33,9 @@ const Root = styled(Box, {
     '&:hover': {
       backgroundColor: theme.palette.grey[300],
       boxShadow: 'none'
+    },
+    '& .MuiIcon-root': {
+      fontSize: '1.143rem'
     }
   },
   [`& .${classes.iconizedButton}`]: {

@@ -14,27 +14,27 @@ import {SCCommentsOrderBy} from '../../types/comments';
 import ReplyCommentObject from './ReplyComment';
 import ContributionActionsMenu from '../../shared/ContributionActionsMenu';
 import DateTimeAgo from '../../shared/DateTimeAgo';
-import {getContribution, getContributionHtml, getContributionType, getRouteData} from '../../utils/contribution';
+import {getContributionHtml, getContributionType, getRouteData} from '../../utils/contribution';
 import {useSnackbar} from 'notistack';
 import {useThemeProps} from '@mui/system';
 import CommentsObject from '../CommentsObject';
 import BaseItem from '../../shared/BaseItem';
 import {SCCommentType, SCCommentTypologyType, SCFeedObjectType, SCFeedObjectTypologyType} from '@selfcommunity/types';
-import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
+import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
 import {CacheStrategies, Logger, LRUCache} from '@selfcommunity/utils';
 import {
   Link,
+  SCCache,
   SCContextType,
   SCRoutes,
-  SCCache,
-  SCRoutingContextType,
+  SCRoutingContextType, SCThemeType,
   SCUserContext,
   SCUserContextType,
   UserUtils,
   useSCContext,
   useSCFetchCommentObject,
   useSCFetchCommentObjects,
-  useSCRouting
+  useSCRouting,
 } from '@selfcommunity/react-core';
 
 const messages = defineMessages({
@@ -67,6 +67,7 @@ const classes = {
   commentActionsMenu: `${PREFIX}-comment-actions-menu`,
   deleted: `${PREFIX}-deleted`,
   activityAt: `${PREFIX}-activity-at`,
+  vote: `${PREFIX}-vote`,
   reply: `${PREFIX}-reply`,
   contentSubSection: `${PREFIX}-comment-sub-section`
 };
@@ -75,13 +76,9 @@ const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
+})(({theme}: {theme: SCThemeType}) => ({
   overflow: 'visible',
   width: '100%',
-  '& .MuiIcon-root': {
-    fontSize: '18px',
-    marginBottom: '0.5px'
-  },
   [`& .${classes.comment}`]: {
     paddingBottom: 0,
     overflow: 'visible',
@@ -114,7 +111,9 @@ const Root = styled(Box, {
     }
   },
   [`& .${classes.avatar}`]: {
-    top: theme.spacing()
+    top: theme.spacing(),
+    width: theme.selfcommunity.user.avatar.sizeMedium,
+    height: theme.selfcommunity.user.avatar.sizeMedium
   },
   [`& .${classes.author}`]: {
     textDecoration: 'none',
@@ -151,6 +150,9 @@ const Root = styled(Box, {
     display: 'flex',
     textDecoration: 'none',
     color: 'inherit'
+  },
+  [`& .${classes.vote}`]: {
+    minWidth: 0
   },
   [`& .${classes.reply}`]: {
     textTransform: 'capitalize',
@@ -382,7 +384,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
    */
   function renderActionVote(comment) {
     return (
-      <LoadingButton variant={'text'} sx={{minWidth: 30}} onClick={() => vote(comment)} disabled={loadingVote} color="inherit">
+      <LoadingButton variant={'text'} className={classes.vote} onClick={() => vote(comment)} disabled={loadingVote} color="inherit">
         {comment.voted ? (
           <Tooltip title={<FormattedMessage id={'ui.commentObject.voteDown'} defaultMessage={'ui.commentObject.voteDown'} />}>
             <Icon fontSize={'small'} color="primary">

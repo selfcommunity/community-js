@@ -1,9 +1,10 @@
 import React from 'react';
 import CardContent from '@mui/material/CardContent';
 import {styled} from '@mui/material/styles';
-import {CardHeader} from '@mui/material';
+import { CardHeader, useTheme } from '@mui/material';
 import Skeleton from '@mui/material/Skeleton';
 import Widget from '../Widget';
+import { SCThemeType } from '@selfcommunity/react-core';
 
 const PREFIX = 'SCNotificationSkeleton';
 
@@ -36,10 +37,11 @@ const Root = styled(Widget)(({theme}) => ({
  *
  */
 export default function NotificationSkeleton(props): JSX.Element {
+  const theme = useTheme<SCThemeType>();
   const notification = (
     <>
       <CardHeader
-        avatar={<Skeleton animation="wave" variant="circular" width={40} height={40} />}
+        avatar={<Skeleton animation="wave" variant="circular" width={theme.selfcommunity.user.avatar.sizeMedium} height={theme.selfcommunity.user.avatar.sizeMedium} />}
         title={<Skeleton animation="wave" height={10} width="80%" style={{marginBottom: 6}} />}
         subheader={<Skeleton animation="wave" height={10} width="40%" />}
       />

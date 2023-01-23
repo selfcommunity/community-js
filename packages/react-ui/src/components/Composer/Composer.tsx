@@ -1,20 +1,21 @@
 import React, {forwardRef, ReactNode, SyntheticEvent, useContext, useEffect, useMemo, useReducer, useState} from 'react';
 import {
+  SCCategoryType,
   SCFeedDiscussionType,
   SCFeedObjectTypologyType,
   SCFeedPostType,
   SCFeedStatusType,
   SCMediaType,
   SCPollType,
-  SCCategoryType,
   SCTagType
 } from '@selfcommunity/types';
-import {http, Endpoints, formatHttpError, HttpResponse} from '@selfcommunity/api-services';
+import {Endpoints, formatHttpError, http, HttpResponse} from '@selfcommunity/api-services';
 import {
   SCFeatures,
   SCPreferences,
   SCPreferencesContext,
   SCPreferencesContextType,
+  SCThemeType,
   SCUserContext,
   SCUserContextType,
   UserUtils,
@@ -130,7 +131,7 @@ const Root = styled(Dialog, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => {
+})(({theme}: {theme: SCThemeType}) => {
   let mediaActionBackground = theme.palette.getContrastText(theme.palette.primary.main);
   if (mediaActionBackground.startsWith('#')) {
     mediaActionBackground = hexToRgb(mediaActionBackground).replace(')', ', .5)');
@@ -163,8 +164,8 @@ const Root = styled(Dialog, {
       alignItems: 'center'
     },
     [`& .${classes.avatar}`]: {
-      width: theme.spacing(4),
-      height: theme.spacing(4),
+      width: theme.selfcommunity.user.avatar.sizeMedium,
+      height: theme.selfcommunity.user.avatar.sizeMedium,
       display: 'inline-block'
     },
     [`& .${classes.content}`]: {
@@ -728,7 +729,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
   };
 
   // RENDER
-  const theme: Theme = useTheme();
+  const theme: Theme = useTheme<SCThemeType>();
   const smDown = useMediaQuery(theme.breakpoints.down('sm'), {noSsr: typeof window !== 'undefined'});
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'), {noSsr: typeof window !== 'undefined'});
 

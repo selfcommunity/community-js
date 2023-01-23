@@ -46,6 +46,7 @@ import {
   SCContext,
   SCContextType,
   SCRoutingContextType,
+  SCThemeType,
   SCUserContext,
   SCUserContextType,
   UserUtils,
@@ -270,7 +271,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
   const intl = useIntl();
 
   // CONTEXT
-  const theme = useTheme();
+  const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const scContext: SCContextType = useContext(SCContext);
   const scUserContext: SCUserContextType = useContext(SCUserContext);

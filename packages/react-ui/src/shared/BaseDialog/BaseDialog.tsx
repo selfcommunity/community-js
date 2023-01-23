@@ -9,6 +9,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import Title from './title';
 import classNames from 'classnames';
 import {useTheme} from '@mui/material';
+import {SCThemeType} from '@selfcommunity/react-core';
 
 const PREFIX = 'SCBaseDialog';
 
@@ -61,7 +62,7 @@ export interface BaseDialogProps {
 
 export default function BaseDialog(props: BaseDialogProps) {
   // PROPS
-  const theme = useTheme();
+  const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const {className, title = '', open = false, onClose = null, ...rest} = props;
   const {children} = rest;

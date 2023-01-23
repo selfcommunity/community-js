@@ -4,6 +4,7 @@ import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
 import {Fade, Icon, IconButton, Popover, useTheme, useMediaQuery} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import BaseDrawer from '../../../shared/BaseDrawer';
+import {SCThemeType} from '@selfcommunity/react-core';
 // import deps only if csr
 let Picker;
 typeof window !== 'undefined' &&
@@ -13,7 +14,7 @@ typeof window !== 'undefined' &&
 
 function Emoji({editor, className = ''}: {editor: LexicalEditor; className?: string}): JSX.Element {
   // STATE
-  const theme = useTheme();
+  const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [emojiAnchorEl, setEmojiAnchorEl] = useState<any>(false);
 

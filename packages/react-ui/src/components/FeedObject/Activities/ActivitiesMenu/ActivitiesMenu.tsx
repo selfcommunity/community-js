@@ -8,7 +8,7 @@ import {styled} from '@mui/material/styles';
 import {SCFeedObjectActivitiesType} from '../../../../types/feedObject';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {camelCase} from '@selfcommunity/utils';
-import {SCPreferences, SCPreferencesContext, SCPreferencesContextType, SCUserContextType, useSCUser} from '@selfcommunity/react-core';
+import {SCPreferences, SCPreferencesContext, SCPreferencesContextType, SCThemeType, SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import {useContext} from 'react';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
@@ -100,7 +100,7 @@ export default function ActivitiesMenu(inProps: ActivitiesMenuProps) {
   const scUserContext: SCUserContextType = useSCUser();
 
   // STATE
-  const theme = useTheme();
+  const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const followEnabled = scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED].value;
   const [anchorEl, setAnchorEl] = React.useState(null);

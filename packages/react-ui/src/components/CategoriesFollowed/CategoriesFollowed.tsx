@@ -1,10 +1,10 @@
-import React, {useContext, useEffect, useMemo, useReducer, useState} from 'react';
+import React, {useContext, useEffect, useReducer, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
 import {Button, CardContent, ListItem, Typography, useMediaQuery, useTheme} from '@mui/material';
 import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
 import {CacheStrategies, Logger} from '@selfcommunity/utils';
-import {SCCache, SCUserContext, SCUserContextType, useIsComponentMountedRef} from '@selfcommunity/react-core';
+import {SCCache, SCThemeType, SCUserContext, SCUserContextType, useIsComponentMountedRef} from '@selfcommunity/react-core';
 import {actionToolsTypes, dataToolsReducer, stateToolsInitializer} from '../../utils/tools';
 import Category from '../Category';
 import {SCCategoryType} from '@selfcommunity/types';
@@ -89,7 +89,7 @@ export default function CategoriesFollowed(inProps: CategoriesListProps): JSX.El
   const isMountedRef = useIsComponentMountedRef();
 
   // STATE
-  const theme = useTheme();
+  const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   const [state, dispatch] = useReducer(
@@ -211,7 +211,7 @@ export default function CategoriesFollowed(inProps: CategoriesListProps): JSX.El
             ))}
           </List>
           {limit < state.count && (
-            <Button size="small" className={classes.showMore} onClick={() => setOpenCategoriesFollowedDialog(true)}>
+            <Button className={classes.showMore} onClick={() => setOpenCategoriesFollowedDialog(true)}>
               <FormattedMessage id="ui.categoriesFollowed.button.showAll" defaultMessage="ui.categoriesFollowed.button.showAll" />
             </Button>
           )}

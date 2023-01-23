@@ -1,6 +1,7 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import {Avatar, AvatarGroup, Skeleton} from '@mui/material';
+import {Avatar, AvatarGroup, Skeleton, useTheme} from '@mui/material';
+import {SCThemeType} from '@selfcommunity/react-core';
 
 const PREFIX = 'SCAvatarGroupSkeleton';
 
@@ -46,11 +47,13 @@ const Root = styled(AvatarGroup, {
  */
 export default function AvatarGroupSkeleton(props): JSX.Element {
   const {count = 2, ...rest} = props;
+  const theme = useTheme<SCThemeType>();
+
   return (
     <Root className={classes.root} {...rest}>
       {[...Array(count + 1)].map((x, i) => (
         <Avatar key={i}>
-          <Skeleton variant="circular" width={24} height={24} />
+          <Skeleton variant="circular" width={theme.selfcommunity.user.avatar.sizeSmall} height={theme.selfcommunity.user.avatar.sizeSmall} />
         </Avatar>
       ))}
     </Root>

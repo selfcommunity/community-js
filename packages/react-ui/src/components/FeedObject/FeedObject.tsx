@@ -65,6 +65,7 @@ const classes = {
   deleted: `${PREFIX}-deleted`,
   header: `${PREFIX}-header`,
   category: `${PREFIX}-category`,
+  avatar: `${PREFIX}-avatar`,
   username: `${PREFIX}-username`,
   activityAt: `${PREFIX}-activity-at`,
   tag: `${PREFIX}-tag`,
@@ -89,14 +90,11 @@ const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
+})(({theme}: any) => ({
   marginBottom: theme.spacing(2),
   [`&.${classes.root}`]: {
     width: '100%',
     paddingBottom: 5
-  },
-  [`& .${classes.header}`]: {
-    paddingBottom: 0
   },
   [`& .${classes.titleSection}`]: {
     '& a': {
@@ -114,10 +112,14 @@ const Root = styled(Widget, {
   [`& .${classes.username}`]: {
     color: '#000',
     fontWeight: 600,
-    fontSize: '15px',
     textDecoration: 'none'
   },
+  [`& .${classes.avatar}`]: {
+    width: theme.selfcommunity.user.avatar.sizeMedium,
+    height: theme.selfcommunity.user.avatar.sizeMedium
+  },
   [`& .${classes.header}`]: {
+    paddingBottom: 0,
     '& .MuiCardHeader-subheader': {
       display: 'flex',
       alignItems: 'center'
@@ -209,10 +211,6 @@ const Root = styled(Widget, {
     '&:hover': {
       opacity: 1
     }
-  },
-  '& .MuiIcon-root': {
-    fontSize: '18px',
-    marginBottom: '0.5px'
   }
 }));
 
@@ -758,7 +756,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
               classes={{root: classes.header}}
               avatar={
                 <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, obj.author)}>
-                  <Avatar aria-label="recipe" src={obj.author.avatar}>
+                  <Avatar aria-label="recipe" src={obj.author.avatar} className={classes.avatar}>
                     {obj.author.username}
                   </Avatar>
                 </Link>
@@ -917,7 +915,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
               classes={{root: classes.header}}
               avatar={
                 <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, obj.author)} className={classes.username}>
-                  <Avatar aria-label="recipe" src={obj.author.avatar}>
+                  <Avatar aria-label="recipe" src={obj.author.avatar} className={classes.avatar}>
                     {obj.author.username}
                   </Avatar>
                 </Link>
@@ -970,7 +968,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
             className={classes.snippet}
             image={
               <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, obj.author)}>
-                <Avatar alt={obj.author.username} variant="circular" src={obj.author.avatar} />
+                <Avatar alt={obj.author.username} variant="circular" src={obj.author.avatar} className={classes.avatar} />
               </Link>
             }
             primary={

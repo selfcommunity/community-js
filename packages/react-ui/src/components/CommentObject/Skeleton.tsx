@@ -2,8 +2,9 @@ import React from 'react';
 import Widget from '../Widget';
 import {styled} from '@mui/material/styles';
 import Skeleton from '@mui/material/Skeleton';
-import {CardContent} from '@mui/material';
+import { CardContent, useTheme } from '@mui/material';
 import BaseItem from '../../shared/BaseItem';
+import { SCThemeType } from '@selfcommunity/react-core';
 
 const PREFIX = 'SCCommentObjectSkeleton';
 
@@ -51,12 +52,14 @@ const Root = styled(BaseItem)(({theme}) => ({
  */
 export default function CommentObjectSkeleton(props): JSX.Element {
   const {WidgetProps, ...rest} = props;
+  const theme = useTheme<SCThemeType>();
+
   return (
     <Root
       className={classes.root}
       disableTypography
       {...rest}
-      image={<Skeleton animation="wave" variant="circular" width={40} height={40} className={classes.avatar} />}
+      image={<Skeleton animation="wave" variant="circular" width={theme.selfcommunity.user.avatar.sizeMedium} height={theme.selfcommunity.user.avatar.sizeMedium} className={classes.avatar} />}
       secondary={
         <>
           <Widget {...WidgetProps}>

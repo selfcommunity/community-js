@@ -1,5 +1,6 @@
 import React, {ReactNode} from 'react';
 import {SCAuthTokenType, SCIncubatorType, SCCategoryType, SCUserType} from '@selfcommunity/types';
+import {Theme} from './theme';
 
 /**
  * Interface SCSettingsType
@@ -395,7 +396,7 @@ export interface SCThemeContextType {
   /**
    * Theme
    */
-  theme: Record<string, any>;
+  theme: Theme;
 
   /**
    * Change theme

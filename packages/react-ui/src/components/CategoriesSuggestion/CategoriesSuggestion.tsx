@@ -219,7 +219,7 @@ export default function CategoriesSuggestion(inProps: CategoriesListProps): JSX.
                 ))}
               </List>
               {state.visibleItems < state.results.length && (
-                <Button size="small" className={classes.showMore} onClick={() => loadCategories(2)}>
+                <Button className={classes.showMore} onClick={() => loadCategories(2)}>
                   <FormattedMessage id="ui.categoriesSuggestion.button.showMore" defaultMessage="ui.categoriesSuggestion.button.showMore" />
                 </Button>
               )}
