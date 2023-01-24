@@ -97,7 +97,7 @@ function stateInitializer({
   };
 }
 
-const PREFIX = 'SCVoteObject';
+const PREFIX = 'SCVoteAction';
 
 const classes = {
   root: `${PREFIX}-root`,

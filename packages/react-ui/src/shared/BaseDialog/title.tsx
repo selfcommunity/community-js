@@ -5,6 +5,7 @@ import Icon from '@mui/material/Icon';
 import DialogTitle from '@mui/material/DialogTitle';
 import {useTheme} from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import {SCThemeType} from '@selfcommunity/react-core';
 
 const PREFIX = 'SCBaseDialogTitle';
 
@@ -32,7 +33,7 @@ const Mobile = styled(DialogTitle, {
 }));
 
 export default function ({children = null, onClose = null}) {
-  const theme = useTheme();
+  const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   return (
     <>

@@ -6,7 +6,7 @@ import {useThemeProps} from '@mui/system';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {SuggestionType} from '@selfcommunity/types';
 import {SuggestionService} from '@selfcommunity/api-services';
-import {SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
+import {SCRoutes, SCRoutingContextType, SCThemeType, useSCRouting} from '@selfcommunity/react-core';
 
 const messages = defineMessages({
   placeholder: {
@@ -94,7 +94,7 @@ export default function HeaderSearchBar(inProps: HeaderSearchBarProps) {
   // STATE
   const [query, setQuery] = useState('');
   const [clicked, setClicked] = useState(false);
-  const theme = useTheme();
+  const theme = useTheme<SCThemeType>();
   const isDesktop = useMediaQuery(theme.breakpoints.up('sm'));
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [results, setResults] = useState([]);

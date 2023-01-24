@@ -2,7 +2,15 @@ import React, {useContext, useEffect, useMemo, useState, useRef} from 'react';
 import {styled} from '@mui/material/styles';
 import Widget from '../Widget';
 import {http, Endpoints, HttpResponse, PrivateMessageService, UserService} from '@selfcommunity/api-services';
-import {SCPreferences, SCPreferencesContext, SCPreferencesContextType, SCUserContext, SCUserContextType, UserUtils} from '@selfcommunity/react-core';
+import {
+  SCPreferences,
+  SCPreferencesContext,
+  SCPreferencesContextType,
+  SCThemeType,
+  SCUserContext,
+  SCUserContextType,
+  UserUtils
+} from '@selfcommunity/react-core';
 import {SCMessageFileType, SCNotificationTopicType, SCNotificationTypologyType, SCPrivateMessageType} from '@selfcommunity/types';
 import Message from '../Message';
 import _ from 'lodash';
@@ -242,7 +250,7 @@ export default function Thread(inProps: ThreadProps): JSX.Element {
     scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED].value;
 
   // STATE
-  const theme = useTheme();
+  const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [loading, setLoading] = useState<boolean>(true);
   const [messageObjs, setMessageObjs] = useState<any[]>([]);

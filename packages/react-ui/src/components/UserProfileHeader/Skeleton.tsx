@@ -1,7 +1,8 @@
 import React from 'react';
-import {Box, Typography} from '@mui/material';
+import { Box, Typography, useTheme } from '@mui/material';
 import {styled} from '@mui/material/styles';
 import Skeleton from '@mui/material/Skeleton';
+import { SCThemeType } from '@selfcommunity/react-core';
 
 const PREFIX = 'SCUserProfileHeaderSkeleton';
 
@@ -55,11 +56,13 @@ const Root = styled(Box, {
  *
  */
 function UserProfileHeaderSkeleton(): JSX.Element {
+  const theme = useTheme<SCThemeType>();
+
   return (
     <Root className={classes.root}>
       <Skeleton sx={{height: 350}} animation="wave" variant="rectangular" />
       <Box className={classes.avatar}>
-        <Skeleton animation="wave" variant="circular" width={200} height={200} />
+        <Skeleton animation="wave" variant="circular" width={theme.selfcommunity.user.avatar.sizeLarge} height={theme.selfcommunity.user.avatar.sizeLarge} />
       </Box>
       <Typography variant="h5" className={classes.username}>
         <Skeleton animation="wave" sx={{height: 20, width: 100, margin: '0 auto'}} />

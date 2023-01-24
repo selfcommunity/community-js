@@ -18,6 +18,15 @@ import {
   SCAlertMessagesContextType,
 } from './context';
 
+import {
+  SCThemeAvatarVariableType,
+  SCThemeUserVariableType,
+  SCThemeCategoryIconVariableType,
+  SCThemeCategoryVariableType,
+  SCThemeVariablesType,
+  SCThemeType
+} from './theme';
+
 export {
   SCUserContextType,
   SCFollowedCategoriesManagerType,
@@ -36,4 +45,10 @@ export {
   SCRoutingContextType,
   SCLocaleContextType,
   SCAlertMessagesContextType,
+  SCThemeAvatarVariableType,
+  SCThemeUserVariableType,
+  SCThemeCategoryIconVariableType,
+  SCThemeCategoryVariableType,
+  SCThemeVariablesType,
+  SCThemeType,
 };

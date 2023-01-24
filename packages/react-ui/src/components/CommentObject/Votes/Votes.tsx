@@ -6,6 +6,7 @@ import {styled} from '@mui/material/styles';
 import Icon from '@mui/material/Icon';
 import CommentObjectVotesDialog from './VotesDialog';
 import {useThemeProps} from '@mui/system';
+import classNames from 'classnames';
 
 const PREFIX = 'SCCommentObjectVotes';
 
@@ -54,7 +55,7 @@ export default function Votes(inProps: VotesProps): JSX.Element {
     name: PREFIX
   });
 
-  const {commentObjectId, commentObject, ...rest} = props;
+  const {className = '', commentObjectId, commentObject, ...rest} = props;
 
   // RETRIEVE OBJECTS
   const {obj, setObj} = useSCFetchCommentObject({id: commentObjectId, commentObject});
@@ -100,5 +101,9 @@ export default function Votes(inProps: VotesProps): JSX.Element {
     );
   }
 
-  return <Root {...rest}>{renderVotes()}</Root>;
+  return (
+    <Root className={classNames(classes.root, className)} {...rest}>
+      {renderVotes()}
+    </Root>
+  );
 }

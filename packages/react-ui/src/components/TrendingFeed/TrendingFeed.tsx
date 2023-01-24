@@ -236,7 +236,7 @@ export default function TrendingFeed(inProps: TrendingFeedProps): JSX.Element {
             ))}
           </List>
           {limit < state.count && (
-            <Button size="small" className={classes.showMore} onClick={pageUrl ?? handleDialogOpening}>
+            <Button className={classes.showMore} onClick={pageUrl ?? handleDialogOpening}>
               <FormattedMessage id="ui.trendingFeed.button.showMore" defaultMessage="ui.trendingFeed.button.showMore" />
             </Button>
           )}

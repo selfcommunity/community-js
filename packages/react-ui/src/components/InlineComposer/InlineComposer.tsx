@@ -12,7 +12,7 @@ import {
   SCUserContextType,
   UserUtils,
   useSCRouting,
-  Link
+  Link, SCThemeType,
 } from '@selfcommunity/react-core';
 import {Avatar, Box, Button, IconButton, CardProps, CardContent} from '@mui/material';
 import {styled} from '@mui/material/styles';
@@ -41,7 +41,7 @@ const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
+})(({theme}: {theme: SCThemeType}) => ({
   marginBottom: theme.spacing(2),
   [`& .${classes.content}`]: {
     padding: theme.spacing(),
@@ -54,6 +54,10 @@ const Root = styled(Widget, {
     [`& .${classes.input} .MuiButton-text`]: {
       justifyContent: 'flex-start',
       textTransform: 'none'
+    },
+    [`& .${classes.avatar} .MuiAvatar-root`]: {
+      width: theme.selfcommunity.user.avatar.sizeMedium,
+      height: theme.selfcommunity.user.avatar.sizeMedium
     }
   }
 }));

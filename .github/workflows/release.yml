@@ -76,6 +76,12 @@ jobs:
       with:
         path: packages/react-templates
     - run: echo "@selfcommunity/react-templates - ${{ steps.react-templates.outputs.current-version }}"
+    - name: Get @selfcommunity/react-theme-default version
+      id: react-theme-default
+      uses: martinbeentjes/npm-get-version-action@master
+      with:
+        path: packages/react-theme-default
+    - run: echo "@selfcommunity/react-theme-default - ${{ steps.react-theme-default.outputs.current-version }}"
     - uses: peter-evans/repository-dispatch@v2
       name: Repository Dispatch
       with:

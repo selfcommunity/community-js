@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useMemo, useReducer, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Button, CardContent, List, ListItem, Typography, useMediaQuery, useTheme} from '@mui/material';
-import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
+import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
 import {CacheStrategies, Logger} from '@selfcommunity/utils';
 import Skeleton from './Skeleton';
 import {SCCategoryType} from '@selfcommunity/types';
@@ -23,7 +23,8 @@ import {
   SCPreferencesContextType,
   SCUserContext,
   SCUserContextType,
-  useIsComponentMountedRef
+  useIsComponentMountedRef,
+  SCThemeType
 } from '@selfcommunity/react-core';
 import {actionToolsTypes, dataToolsReducer, stateToolsInitializer} from '../../utils/tools';
 
@@ -96,7 +97,7 @@ export default function CategoriesPopular(inProps: CategoriesListProps): JSX.Ele
     SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY in scPreferencesContext.preferences &&
     scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY].value;
   // STATE
-  const theme = useTheme();
+  const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   const [state, dispatch] = useReducer(
@@ -210,7 +211,7 @@ export default function CategoriesPopular(inProps: CategoriesListProps): JSX.Ele
             ))}
           </List>
           {state.count > state.visibleItems && (
-            <Button size="small" className={classes.showMore} onClick={() => setOpenPopularCategoriesDialog(true)}>
+            <Button className={classes.showMore} onClick={() => setOpenPopularCategoriesDialog(true)}>
               <FormattedMessage id="ui.categoriesPopular.button.showAll" defaultMessage="ui.categoriesPopular.button.showAll" />
             </Button>
           )}
