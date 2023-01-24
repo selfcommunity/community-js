@@ -1,6 +1,6 @@
 import React, {ReactNode} from 'react';
 import {SCAuthTokenType, SCIncubatorType, SCCategoryType, SCUserType} from '@selfcommunity/types';
-import {Theme} from './theme';
+import {SCThemeType} from './theme';
 
 /**
  * Interface SCSettingsType
@@ -24,7 +24,7 @@ export interface SCSettingsType {
   /**
    * Object conf of session.
    */
-  theme?: Record<string, any>;
+  theme?: SCThemeType;
 
   /**
    * Object conf of router.
@@ -396,7 +396,7 @@ export interface SCThemeContextType {
   /**
    * Theme
    */
-  theme: Theme;
+  theme: SCThemeType;
 
   /**
    * Change theme

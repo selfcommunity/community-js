@@ -939,7 +939,6 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
         <DialogTitle className={classes.title}>
           <Box>
             <FormControl className={classes.types}>
-              <Icon>create</Icon>
               <Select value={type} onChange={handleChangeType} input={<TypeInput />} disabled={editMode}>
                 {composerTypes.map((t) => (
                   <MenuItem value={t} key={t}>

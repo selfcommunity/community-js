@@ -7,7 +7,8 @@ const Component = {
         padding: theme.spacing(3),
         '& .MuiIconButton-root': {
           right: theme.spacing(3),
-          top: theme.spacing(3)
+          top: theme.spacing(3),
+          fontSize: '1rem'
         }
       },
       '& .MuiDialogContent-root': {
@@ -29,7 +30,7 @@ const Component = {
               }
             }
           }
-        },
+        }
       },
       '& .MuiDialogActions-spacing': {
         padding: theme.spacing(2, 3)

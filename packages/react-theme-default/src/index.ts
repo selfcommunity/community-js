@@ -52,6 +52,9 @@ import MuiIconButton from './components/MuiIconButton';
 import SCUser from './components/SCUser';
 import SCLoyaltyProgram from './components/SCLoyaltyProgram';
 import MuiOutlinedInput from './components/MuiOutlinedInput';
+import MuiSelect from './components/MuiSelect';
+import SCComposerCategories from './components/SCComposerCategories';
+import MuiAutocomplete from './components/MuiAutocomplete';
 
 /**
  * Style fragments - Imports - End
@@ -90,6 +93,7 @@ const theme = createTheme({
   spacing: 8,
   components: {
     MuiAppBar,
+    MuiAutocomplete,
     MuiAvatar,
     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore
@@ -99,6 +103,7 @@ const theme = createTheme({
     MuiIcon,
     MuiIconButton,
     MuiOutlinedInput,
+    MuiSelect,
     SCWidget,
     SCBaseDialog,
     SCBaseItem,
@@ -119,6 +124,7 @@ const theme = createTheme({
     SCCommentObject,
     SCCommentsFeedObject,
     SCComposer,
+    SCComposerCategories,
     SCBroadcastMessages,
     SCSnippetNotifications,
     SCCustomSnackMessage,
