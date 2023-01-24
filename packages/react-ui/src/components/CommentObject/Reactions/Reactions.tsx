@@ -13,7 +13,7 @@ const classes = {
   root: `${PREFIX}-root`,
   btnViewVotes: `${PREFIX}-btnViewVotes`,
   votes: `${PREFIX}-votes`,
-  groupedReactions: `${PREFIX}-grouped-icons`,
+  groupedReactions: `${PREFIX}-grouped-reactions`,
   reactionAvatar: `${PREFIX}-reaction-avatar`,
   reactionIcon: `${PREFIX}-reaction-icon`
 };
@@ -30,6 +30,8 @@ const Root = styled(Box, {
     position: 'absolute'
   },
   [`& .${classes.groupedReactions}`]: {
+    justifyContent: 'center',
+    alignItems: 'center',
     '& .MuiAvatar-root': {
       width: '20px',
       height: '20px',
