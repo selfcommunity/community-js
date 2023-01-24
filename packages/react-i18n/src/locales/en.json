@@ -244,6 +244,9 @@
   "ui.commentObjectVotesDialog.title": "Votes",
   "ui.commentObjectVotesDialog.noOtherVotes": "No other votes.",
 
+  "ui.commentObjectReactionsDialog.title": "All",
+  "ui.commentObjectReactionsDialog.noOtherLikes": "No other votes.",
+
   "ui.feedObjectVotesDialog.title": "Votes",
 
   "ui.followCategoryButton.follow": "Follow",
