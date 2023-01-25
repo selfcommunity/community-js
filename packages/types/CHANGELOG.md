@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.1-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.4.1-alpha.6...@selfcommunity/types@0.4.1-alpha.7) (2023-01-25)
+
+
+### Performance Improvements
+
+* added params to comment type ([d5c7873](https://github.com/selfcommunity/community-js/commit/d5c7873592d07f43f9b8b8fea5842fd1c8e23a6c))
+
+
+
+
+
 ## [0.4.1-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.4.1-alpha.5...@selfcommunity/types@0.4.1-alpha.6) (2022-12-05)
 
 

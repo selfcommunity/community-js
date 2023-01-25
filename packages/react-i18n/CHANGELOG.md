@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.1-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.4.1-alpha.12...@selfcommunity/react-i18n@0.4.1-alpha.13) (2023-01-25)
+
+
+### Performance Improvements
+
+* added comment reactions translations ([690c3aa](https://github.com/selfcommunity/community-js/commit/690c3aa67b5666bc5bfcafc1f169cc399c882af4))
+
+
+
+
+
 ## [0.4.1-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.4.1-alpha.11...@selfcommunity/react-i18n@0.4.1-alpha.12) (2022-12-19)
 
 
