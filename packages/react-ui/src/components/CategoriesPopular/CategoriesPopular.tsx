@@ -1,23 +1,32 @@
-import React, { useEffect, useMemo, useReducer, useState } from 'react';
-import { styled } from '@mui/material/styles';
-import { Button, CardContent, List, ListItem, Typography, useMediaQuery, useTheme } from '@mui/material';
-import { Endpoints, http, HttpResponse } from '@selfcommunity/api-services';
-import { CacheStrategies, Logger } from '@selfcommunity/utils';
+import React, {useContext, useEffect, useMemo, useReducer, useState} from 'react';
+import {styled} from '@mui/material/styles';
+import {Button, CardContent, List, ListItem, Typography, useMediaQuery, useTheme} from '@mui/material';
+import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
+import {CacheStrategies, Logger} from '@selfcommunity/utils';
 import Skeleton from './Skeleton';
-import { SCCategoryType } from '@selfcommunity/types';
-import { SCOPE_SC_UI } from '../../constants/Errors';
-import { FormattedMessage } from 'react-intl';
+import {SCCategoryType} from '@selfcommunity/types';
+import {SCOPE_SC_UI} from '../../constants/Errors';
+import {FormattedMessage} from 'react-intl';
 import Category from '../Category';
-import { CategoriesListProps } from '../CategoriesSuggestion';
+import {CategoriesListProps} from '../CategoriesSuggestion';
 import classNames from 'classnames';
 import BaseDialog from '../../shared/BaseDialog';
 import CentralProgress from '../../shared/CentralProgress';
 import InfiniteScroll from '../../shared/InfiniteScroll';
 import Widget from '../Widget';
-import { useThemeProps } from '@mui/system';
+import {useThemeProps} from '@mui/system';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
-import { SCCache, useIsComponentMountedRef } from '@selfcommunity/react-core';
-import { actionToolsTypes, dataToolsReducer, stateToolsInitializer } from '../../utils/tools';
+import {
+  SCCache,
+  SCPreferences,
+  SCPreferencesContext,
+  SCPreferencesContextType,
+  SCThemeType,
+  SCUserContext,
+  SCUserContextType,
+  useIsComponentMountedRef
+} from '@selfcommunity/react-core';
+import {actionToolsTypes, dataToolsReducer, stateToolsInitializer} from '../../utils/tools';
 
 const PREFIX = 'SCCategoriesPopular';
 

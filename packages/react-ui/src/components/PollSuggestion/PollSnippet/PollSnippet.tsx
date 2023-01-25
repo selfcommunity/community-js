@@ -1,28 +1,52 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import {Button, Typography} from '@mui/material';
+import {Avatar, Box, Button, Stack, Typography} from '@mui/material';
 import {SCFeedDiscussionType} from '@selfcommunity/types';
-import {Link, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
+import {Link, SCRoutes, SCRoutingContextType, SCThemeType, useSCRouting} from '@selfcommunity/react-core';
 import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import {getContributionRouteName, getRouteData} from '../../../utils/contribution';
-import BaseItemButton from '../../../shared/BaseItemButton';
+import DateTimeAgo from '../../../shared/DateTimeAgo';
+import {BaseItem} from '@selfcommunity/react-ui';
 
 const PREFIX = 'SCPollSnippet';
 
 const classes = {
   root: `${PREFIX}-root`,
+  avatar: `${PREFIX}-avatar`,
+  username: `${PREFIX}-username`,
   title: `${PREFIX}-title`,
-  action: `${PREFIX}-action`,
-  seeItem: `${PREFIX}-see-item`
+  activityAt: `${PREFIX}-activity-at`
 };
 
-const Root = styled(BaseItemButton, {
+const Root = styled(BaseItem, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+})(({theme}: {theme: SCThemeType}) => ({
+  [`&.${classes.root} > div`]: {
+    alignItems: 'flex-start'
+  },
+  '& .SCBaseItem-text': {
+    marginTop: 0
+  },
+  [`& .${classes.username}`]: {
+    color: theme.palette.text.primary,
+    fontWeight: theme.typography.fontWeightBold,
+    textDecoration: 'none'
+  },
+  [`& .${classes.title}`]: {},
+  [`& .${classes.avatar}`]: {
+    width: theme.selfcommunity.user.avatar.sizeMedium,
+    height: theme.selfcommunity.user.avatar.sizeMedium
+  },
+  [`& .${classes.activityAt}`]: {
+    textDecoration: 'none',
+    color: 'inherit',
+    marginTop: 3
+  }
+}));
 
 export interface PollSnippetProps {
   /**
@@ -83,32 +107,38 @@ export default function PollSnippet(inProps: PollSnippetProps): JSX.Element {
   if (!autoHide) {
     return (
       <Root
-        {...rest}
+        elevation={0}
         className={classNames(classes.root, className)}
+        image={
+          <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, feedObj.author)}>
+            <Avatar alt={feedObj.author.username} variant="circular" src={feedObj.author.avatar} className={classes.avatar} />
+          </Link>
+        }
         primary={
-          <>
-            <Typography>{feedObj.author.username}</Typography>
-            <Typography variant="body1" className={classes.title}>
+          <Box>
+            <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, feedObj.author)} className={classes.username}>
+              {feedObj.author.username}
+            </Link>
+            <Typography variant="body2" className={classes.title}>
               {feedObj.poll.title}
             </Typography>
-          </>
+          </Box>
         }
+        disableTypography
         secondary={
-          <Typography
-            variant="body2"
-            sx={{whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'}}
-            dangerouslySetInnerHTML={{__html: feedObj.summary ?? null}}
-          />
-        }
-        actions={
-          <Button
-            size="small"
-            variant="outlined"
-            className={classes.seeItem}
-            component={Link}
-            to={scRoutingContext.url(getContributionRouteName(feedObj), getRouteData(feedObj))}>
-            <FormattedMessage id="ui.pollSuggestion.pollSnippet.button.seeItem" defaultMessage="ui.pollSuggestion.pollSnippet.button.seeItem" />
-          </Button>
+          <Stack direction="row" justifyContent="space-between" spacing={2} alignItems="center">
+            <Link to={scRoutingContext.url(getContributionRouteName(feedObj), getRouteData(feedObj))} className={classes.activityAt}>
+              <DateTimeAgo component="span" date={feedObj.added_at} />
+            </Link>
+            <Button
+              component={Link}
+              to={scRoutingContext.url(getContributionRouteName(feedObj), getRouteData(feedObj))}
+              variant="text"
+              color="secondary"
+              size="small">
+              <FormattedMessage id="ui.pollSuggestion.pollSnippet.button.seeItem" defaultMessage="ui.pollSuggestion.pollSnippet.button.seeItem" />
+            </Button>
+          </Stack>
         }
       />
     );

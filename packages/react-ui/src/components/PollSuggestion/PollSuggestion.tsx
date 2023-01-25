@@ -1,12 +1,12 @@
 import React, {useEffect, useReducer, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
-import {Button, CardContent, Typography, ListItem, useMediaQuery, useTheme} from '@mui/material';
+import {Button, CardContent, ListItem, Typography, useMediaQuery, useTheme} from '@mui/material';
 import {SCFeedDiscussionType} from '@selfcommunity/types';
-import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
+import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
 import {CacheStrategies, Logger} from '@selfcommunity/utils';
 import {SCCache, SCThemeType, SCUserContextType, useIsComponentMountedRef, useSCUser} from '@selfcommunity/react-core';
-import TrendingFeedSkeleton from '../TrendingFeed/Skeleton';
+import Skeleton from '../TrendingFeed/Skeleton';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
@@ -19,7 +19,6 @@ import PollSnippet from './PollSnippet';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import {VirtualScrollerItemProps} from '../../types/virtualScroller';
 import {actionToolsTypes, dataToolsReducer, stateToolsInitializer} from '../../utils/tools';
-import Skeleton from '../TrendingFeed/Skeleton';
 
 const PREFIX = 'SCPollSuggestion';
 
