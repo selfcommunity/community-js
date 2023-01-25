@@ -131,7 +131,7 @@ const getTheme = (options, preferences): SCThemeType => {
         },
       }
     : {};
-  return createTheme(mergeDeep({...selfcommunity, ...defaultOptions}, options)) as SCThemeType;
+  return createTheme(mergeDeep({selfcommunity, ...defaultOptions}, options)) as SCThemeType;
 };
 
 export default getTheme;
