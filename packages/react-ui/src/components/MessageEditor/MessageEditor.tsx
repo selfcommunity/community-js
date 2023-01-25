@@ -1,14 +1,14 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {AppBar, Box, Button, IconButton, InputAdornment, Popover, Stack, TextField, useTheme, useMediaQuery} from '@mui/material';
+import {AppBar, Box, Button, IconButton, InputAdornment, Popover, Stack, TextField, useMediaQuery, useTheme} from '@mui/material';
 import Icon from '@mui/material/Icon';
 import classNames from 'classnames';
 import MessageMediaUploader from './MessageMediaUploader/index';
 import {FormattedMessage} from 'react-intl';
 import {useThemeProps} from '@mui/system';
 import BaseDrawer from '../../shared/BaseDrawer';
-import Editor from '../Editor';
 import {SCMessageFileType} from '@selfcommunity/types';
+import {SCThemeType} from '@selfcommunity/react-core';
 // import deps only if csr
 let Picker;
 typeof window !== 'undefined' &&
@@ -113,7 +113,7 @@ export default function MessageEditor(inProps: MessageEditorProps): JSX.Element 
   const {autoHide = null, className = null, send = null, onThreadChangeId, ...rest} = props;
 
   // STATE
-  const theme = useTheme();
+  const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [message, setMessage] = useState<string>('');
   const [messageFile, setMessageFile] = useState(null);

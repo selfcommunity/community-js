@@ -49,7 +49,7 @@ export default (props: MediaChunkUploaderProps): JSX.Element => {
   // STATE
   const [chunks, setChunks] = useState({});
   const setChunk: Function = (chunk: SCMediaChunkType) => {
-    const _chunks = {...chunks, [chunk.id]: {...chunks[chunk.id], ...chunk}};
+    const _chunks = {...chunkStateRef.current.chunks, [chunk.id]: {...chunkStateRef.current.chunks[chunk.id], ...chunk}};
     setChunks(_chunks);
     chunkStateRef.current.chunks = _chunks;
   };

@@ -125,7 +125,7 @@ export default function TrendingFeed(inProps: TrendingFeedProps): JSX.Element {
   const {
     className = null,
     categoryId = null,
-    template = null,
+    template = SCFeedObjectTemplateType.SNIPPET,
     autoHide = null,
     cacheStrategy = CacheStrategies.NETWORK_ONLY,
     onHeightChange,
@@ -236,7 +236,7 @@ export default function TrendingFeed(inProps: TrendingFeedProps): JSX.Element {
             ))}
           </List>
           {limit < state.count && (
-            <Button size="small" className={classes.showMore} onClick={pageUrl ?? handleDialogOpening}>
+            <Button className={classes.showMore} onClick={pageUrl ?? handleDialogOpening}>
               <FormattedMessage id="ui.trendingFeed.button.showMore" defaultMessage="ui.trendingFeed.button.showMore" />
             </Button>
           )}

@@ -1,6 +1,6 @@
 import {AppBar, Avatar, Badge, Box, Button, IconButton, Toolbar, styled, Grid, Tabs, Tab, useTheme, useMediaQuery, Menu} from '@mui/material';
 import React, {useContext, useEffect, useMemo} from 'react';
-import {SCPreferences, useSCPreferences, Link, SCUserContext} from '@selfcommunity/react-core';
+import {SCPreferences, useSCPreferences, Link, SCUserContext, SCThemeType} from '@selfcommunity/react-core';
 import {SCUserContextType} from '@selfcommunity/react-core';
 import Icon from '@mui/material/Icon';
 import MobileHeader from './MobileHeader/MobileHeader';
@@ -144,7 +144,7 @@ export default function Header(inProps: HeaderProps) {
   }, [scPreferences.preferences]);
 
   // STATE
-  const theme = useTheme();
+  const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const path = typeof window !== 'undefined' ? window.location.pathname : null;
   const [value, setValue] = React.useState(path);

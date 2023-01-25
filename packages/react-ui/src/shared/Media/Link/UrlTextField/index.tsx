@@ -148,7 +148,7 @@ export default (props: UrlTextFieldProps): JSX.Element => {
         onSuccess && onSuccess(res.data as SCMediaType);
       })
       .catch((error) => {
-        setState({...formatHttpError(error), url: urlRef.current});
+        setState({urlError: formatHttpError(error).urlError.error, url: urlRef.current});
       })
       .then(() => setIsCreating(false));
   };

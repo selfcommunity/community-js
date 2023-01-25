@@ -18,7 +18,6 @@ const PREFIX = 'SCContributorsFeedObject';
 const classes = {
   root: `${PREFIX}-root`,
   avatarGroup: `${PREFIX}-avatarGroup`,
-  avatar: `${PREFIX}-avatar`,
   btnParticipants: `${PREFIX}-btn-participants`
 };
 
@@ -26,7 +25,7 @@ const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
+})(({theme}: any) => ({
   minHeight: 40,
   marginTop: 0,
   marginBottom: 0,
@@ -41,9 +40,9 @@ const Root = styled(Box, {
     border: '2px solid #FFF !important',
     color: '#FFF',
     fontSize: '0.55rem',
-    width: 24,
-    height: 24,
-    marginLeft: -7,
+    width: theme.selfcommunity.user.avatar.sizeSmall,
+    height: theme.selfcommunity.user.avatar.sizeSmall,
+    marginLeft: theme.spacing(-1),
     lineHeight: '24px'
   }
 }));

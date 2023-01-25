@@ -4,6 +4,7 @@ import React, {useRef, useState} from 'react';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import {SCReactionType} from '@selfcommunity/types';
+import {SCThemeType} from '@selfcommunity/react-core';
 
 const PREFIX = 'SCReactionsPopover';
 
@@ -101,7 +102,7 @@ export default function ReactionsPopover(inProps: ReactionPopoverProps) {
     name: PREFIX
   });
   const {className, open, reactions, anchorEl, onClose, onReactionSelection, onOpen, ...rest} = props;
-  const theme = useTheme();
+  const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const scroll = useRef(null);
   const [scrollLeft, setScrollLeft] = useState(0);

@@ -3,7 +3,8 @@ import Widget from '../Widget';
 import {styled} from '@mui/material/styles';
 import Skeleton from '@mui/material/Skeleton';
 import {SCFeedObjectTemplateType} from '../../types/feedObject';
-import {Box, CardContent, CardHeader, CardProps} from '@mui/material';
+import { Box, CardContent, CardHeader, CardProps, useTheme } from '@mui/material';
+import { SCThemeType } from '@selfcommunity/react-core';
 
 const PREFIX = 'SCFeedObjectSkeleton';
 
@@ -58,14 +59,14 @@ export interface FeedObjectSkeletonProps extends CardProps {
  *
  */
 export default function FeedObjectSkeleton(props: {template?: SCFeedObjectTemplateType; [p: string]: any}): JSX.Element {
-  const {template, ...rest} = props;
-  const _template = template || SCFeedObjectTemplateType.SNIPPET;
+  const {template = SCFeedObjectTemplateType.SNIPPET, ...rest} = props;
+  const theme = useTheme<SCThemeType>();
   let obj;
-  if (_template === SCFeedObjectTemplateType.PREVIEW || _template === SCFeedObjectTemplateType.DETAIL) {
+  if (template === SCFeedObjectTemplateType.PREVIEW || template === SCFeedObjectTemplateType.DETAIL) {
     obj = (
       <React.Fragment>
         <CardHeader
-          avatar={<Skeleton animation="wave" variant="circular" width={40} height={40} />}
+          avatar={<Skeleton animation="wave" variant="circular" width={theme.selfcommunity.user.avatar.sizeMedium} height={theme.selfcommunity.user.avatar.sizeMedium} />}
           title={<Skeleton animation="wave" height={10} width="80%" style={{marginBottom: 6}} />}
           subheader={<Skeleton animation="wave" height={10} width="40%" />}
         />
@@ -83,7 +84,7 @@ export default function FeedObjectSkeleton(props: {template?: SCFeedObjectTempla
     obj = (
       <React.Fragment>
         <CardHeader
-          avatar={<Skeleton animation="wave" variant="circular" width={40} height={40} />}
+          avatar={<Skeleton animation="wave" variant="circular" width={theme.selfcommunity.user.avatar.sizeMedium} height={theme.selfcommunity.user.avatar.sizeMedium} />}
           title={<Skeleton animation="wave" height={10} width="80%" style={{marginBottom: 6}} />}
           subheader={<Skeleton animation="wave" height={10} width="40%" />}
         />
@@ -100,7 +101,7 @@ export default function FeedObjectSkeleton(props: {template?: SCFeedObjectTempla
 
   return (
     <Root className={classes.root} {...rest}>
-      <Box className={`${PREFIX}-${_template}`}>{obj}</Box>
+      <Box className={`${PREFIX}-${template}`}>{obj}</Box>
     </Root>
   );
 }

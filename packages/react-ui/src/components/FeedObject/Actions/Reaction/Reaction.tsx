@@ -146,7 +146,7 @@ export const reactionActionTypes = {
   REMOVE: 'remove'
 };
 
-const PREFIX = 'SCReactionObject';
+const PREFIX = 'SCReactionAction';
 
 const classes = {
   root: `${PREFIX}-root`,

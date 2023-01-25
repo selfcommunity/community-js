@@ -4,7 +4,9 @@ import { getJWTSession, getOAuthSession, refreshToken } from './sessionHelpers';
 import { Box, Button } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
 import { ThemeProvider as EmotionThemeProvider } from 'emotion-theming';
-import {Image, Link} from '../packages/react-ui/src';
+import {Image, Document, Link} from '../packages/react-ui/src';
+import theme from '@selfcommunity/react-theme-default';
+import { mergeDeep } from '@selfcommunity/utils';
 
 /**
  * Fix Storybook v6.3.10 with mui v5
@@ -83,39 +85,15 @@ const withProvider = (Story, context) => {
         // applicationServerKey: 'BD9Ic3IqC5Uom1NiC46fjOFYCvQcDPA2emgmyBx25oTXySeA25C0cJsWfK1Dxr4zDYeQ-MUwV9vOqz8aIGMeLAI',
       },
     },
-    /* preferences: {
-      preferences: {
-        'addons.affinity_enabled': {
-          id: 81,
-          section: 'addons',
-          name: 'affinity_enabled',
-          value: true
-        }
-      }, features: ['addons', 'advertising']
-    }, */
-    theme: {
-      palette: {
-        primary: {
-          main: '#7baa5d',
-        },
-        secondary: {
-          main: '#4a8f62',
-        },
-      },
+    theme: mergeDeep(theme, {
       components: {
-        MuiIcon: {
-          defaultProps: {
-            // Replace the `material-icons` default value.
-            baseClassName: 'material-icons-outlined',
-          },
-        },
         SCInlineComposer: {
           defaultProps: {
-            mediaObjectTypes: [Image, Link]
+            mediaObjectTypes: [Image, Document, Link]
           }
         }
       },
-    },
+    }),
     handleAnonymousAction: () => {
       alert('Anonymous action');
     },

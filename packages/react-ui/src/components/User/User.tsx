@@ -34,6 +34,7 @@ const PREFIX = 'SCUser';
 
 const classes = {
   root: `${PREFIX}-root`,
+  avatar: `${PREFIX}-avatar`,
   staffBadgeLabel: `${PREFIX}-staff-badge-label`,
   staffBadgeIcon: `${PREFIX}-staff-badge-icon`
 };
@@ -42,9 +43,13 @@ const Root = styled(BaseItemButton, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
+})(({theme}: any) => ({
   '& .MuiChip-root': {
     height: '18px'
+  },
+  [`& .${classes.avatar}`]: {
+    width: theme.selfcommunity.user.avatar.sizeMedium,
+    height: theme.selfcommunity.user.avatar.sizeMedium
   },
   [`& .${classes.staffBadgeLabel}`]: {
     marginLeft: theme.spacing(1),
@@ -147,9 +152,9 @@ export default function User(inProps: UserProps): JSX.Element {
     ...rest
   } = props;
 
-  const SmallAvatar = styled(Avatar)(({theme}) => ({
-    width: 12,
-    height: 12,
+  const SmallAvatar = styled(Avatar)(({theme}: any) => ({
+    width: theme.selfcommunity.user.avatar.sizeSmall,
+    height: theme.selfcommunity.user.avatar.sizeSmall,
     backgroundColor: theme.palette.common.white,
     border: `2px solid ${theme.palette.background.paper}`
   }));
@@ -211,7 +216,7 @@ export default function User(inProps: UserProps): JSX.Element {
             overlap="circular"
             anchorOrigin={{vertical: 'bottom', horizontal: 'right'}}
             badgeContent={<SmallAvatar alt={reaction.label} src={reaction.image} />}>
-            <Avatar alt={scUser.username} src={scUser.avatar} />
+            <Avatar alt={scUser.username} src={scUser.avatar} className={classes.avatar} />
           </Badge>
         ) : (
           <Badge
@@ -224,7 +229,7 @@ export default function User(inProps: UserProps): JSX.Element {
                 <SmallAvatar alt={preferences[SCPreferences.STAFF_STAFF_BADGE_LABEL]} src={preferences[SCPreferences.STAFF_STAFF_BADGE_ICON]} />
               ) : null
             }>
-            <Avatar alt={scUser.username} src={scUser.avatar} />
+            <Avatar alt={scUser.username} src={scUser.avatar} className={classes.avatar} />
           </Badge>
         )
       }

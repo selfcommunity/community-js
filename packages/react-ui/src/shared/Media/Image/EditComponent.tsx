@@ -13,12 +13,16 @@ import MediaChunkUploader from '../../MediaChunkUploader';
 import {SCMediaChunkType} from '../../../types/media';
 import {EditMediaProps} from '../types';
 import {ButtonProps} from '@mui/material/Button/Button';
+import UploadDropZone from '@rpldy/upload-drop-zone';
 
 const PREFIX = 'SCMediaActionImage';
 
 const classes = {
+  root: `${PREFIX}-root`,
   preview: `${PREFIX}-preview`,
-  loadingText: `${PREFIX}-loadingText`
+  upload: `${PREFIX}-upload`,
+  dragOver: `${PREFIX}-dragOver`,
+  uploadBtn: `${PREFIX}-uploadBtn`
 };
 
 const Root = styled(Box, {
@@ -34,19 +38,8 @@ const Root = styled(Box, {
     height: 200,
     position: 'relative'
   },
-  [`& .${PREFIX}-loadingText`]: {
-    top: 0,
-    left: 0,
-    bottom: 0,
-    right: 0,
-    position: 'absolute',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'rgba(0,0,0,.8)',
-    '& > *': {
-      color: theme.palette.text.primary
-    }
+  [`& .${classes.upload}`]: {
+    textAlign: 'center'
   }
 }));
 
@@ -103,33 +96,34 @@ export default (props: EditMediaProps): JSX.Element => {
    * Renders root object
    */
   return (
-    <Root>
-      <Typography gutterBottom component="div">
-        <ReactSortable
-          list={[...medias, ...Object.values(uploading)] as any[]}
-          setList={(newSort) => onSort(newSort.filter((s: any) => s.upload_id === undefined) as SCMediaType[])}
-          tag={SortableComponent}>
-          {medias.map((media: SCMediaType) => (
-            <ImageListItem key={media.id}>
-              <Box className={classes.preview} sx={{backgroundImage: `url(${media.image})`}}></Box>
-              <ImageListItemBar
-                position="top"
-                actionIcon={
-                  <IconButton onClick={onDelete(media.id)} size="small" sx={{color: 'rgba(255, 255, 255, 0.54)'}}>
-                    <Icon>delete</Icon>
-                  </IconButton>
-                }
-              />
-            </ImageListItem>
-          ))}
-          {Object.values(uploading).map((media: SCMediaChunkType) => (
-            <ImageListItem key={media.id} className={'ignore-elements'}>
-              <Box className={classes.preview} sx={{backgroundImage: `url(${media.image})`}}></Box>
-              <ImageListItemBar title={<Typography align="center">{`${Math.round(media.completed)}%`}</Typography>} position="top" />
-            </ImageListItem>
-          ))}
-        </ReactSortable>
-      </Typography>
+    <Root className={classes.root}>
+      {(medias.length > 0 || Object.values(uploading).length > 0) && (
+        <Typography gutterBottom component="div">
+          <ReactSortable
+            list={[...medias, ...Object.values(uploading)] as any[]}
+            setList={(newSort) => onSort(newSort.filter((s: any) => s.upload_id === undefined) as SCMediaType[])}
+            tag={SortableComponent}>
+            {medias.map((media: SCMediaType) => (
+              <ImageListItem key={media.id}>
+                <Box className={classes.preview} sx={{backgroundImage: `url(${media.image})`}}></Box>
+                <ImageListItemBar
+                  actionIcon={
+                    <IconButton onClick={onDelete(media.id)} size="small" sx={{color: 'rgba(255, 255, 255, 0.54)'}}>
+                      <Icon>delete</Icon>
+                    </IconButton>
+                  }
+                />
+              </ImageListItem>
+            ))}
+            {Object.values(uploading).map((media: SCMediaChunkType) => (
+              <ImageListItem key={media.id} className={'ignore-elements'}>
+                <Box className={classes.preview} sx={{backgroundImage: `url(${media.image})`}}></Box>
+                <ImageListItemBar title={<Typography align="center">{`${Math.round(media.completed)}%`}</Typography>} />
+              </ImageListItem>
+            ))}
+          </ReactSortable>
+        </Typography>
+      )}
       <Box>
         {Object.keys(errors).map((id: string) => (
           <Fade in key={id}>
@@ -140,20 +134,20 @@ export default (props: EditMediaProps): JSX.Element => {
           </Fade>
         ))}
       </Box>
-      <Typography align="center" gutterBottom>
-        <ChunkedUploady
-          destination={{
-            url: `${scContext.settings.portal}${Endpoints.ComposerChunkUploadMedia.url()}`,
-            headers: {Authorization: `Bearer ${scContext.settings.session.authToken.accessToken}`},
-            method: Endpoints.ComposerChunkUploadMedia.method
-          }}
-          chunkSize={204800}
-          multiple
-          accept="image/*">
-          <MediaChunkUploader onSuccess={handleSuccess} onProgress={handleProgress} onError={handleError} />
-          <UploadButton inputFieldName="image" />
-        </ChunkedUploady>
-      </Typography>
+      <ChunkedUploady
+        destination={{
+          url: `${scContext.settings.portal}${Endpoints.ComposerChunkUploadMedia.url()}`,
+          headers: {Authorization: `Bearer ${scContext.settings.session.authToken.accessToken}`},
+          method: Endpoints.ComposerChunkUploadMedia.method
+        }}
+        chunkSize={204800}
+        multiple
+        accept="image/*">
+        <MediaChunkUploader onSuccess={handleSuccess} onProgress={handleProgress} onError={handleError} />
+        <UploadDropZone onDragOverClassName={classes.dragOver} inputFieldName="image" className={classes.upload}>
+          <UploadButton inputFieldName="image" className={classes.uploadBtn} />
+        </UploadDropZone>
+      </ChunkedUploady>
     </Root>
   );
 };

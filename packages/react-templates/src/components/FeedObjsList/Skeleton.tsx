@@ -41,7 +41,7 @@ const Root = styled(Widget, {
  |list|.SCUFeedObjsListTemplateSkeleton-list|Styles applied to the list element.|
  *
  */
-export default function UsersListSkeleton(): JSX.Element {
+export default function FeedObjsList(): JSX.Element {
   return (
     <Root className={classes.root}>
       <BaseItem

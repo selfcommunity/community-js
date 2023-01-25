@@ -11,6 +11,7 @@ import {
   SCPreferences,
   SCPreferencesContext,
   SCPreferencesContextType,
+  SCThemeType,
   SCUserContext,
   SCUserContextType,
   useIsComponentMountedRef
@@ -142,7 +143,7 @@ export default function UserFollowers(inProps: UserFollowersProps): JSX.Element 
   const isMountedRef = useIsComponentMountedRef();
 
   // STATE
-  const theme = useTheme();
+  const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   const [state, dispatch] = useReducer(

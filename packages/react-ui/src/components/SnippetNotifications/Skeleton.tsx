@@ -1,9 +1,10 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import {List} from '@mui/material';
+import {List, useTheme} from '@mui/material';
 import Skeleton from '@mui/material/Skeleton';
 import NotificationItem from '../../shared/NotificationItem';
 import {SCNotificationObjectTemplateType} from '../../types/notification';
+import {SCThemeType} from '@selfcommunity/react-core';
 
 const PREFIX = 'SCSnippetNotificationSkeleton';
 
@@ -44,11 +45,15 @@ const Root = styled(List)(({theme}) => ({
  *
  */
 export default function SnippetNotificationSkeleton(props): JSX.Element {
+  const theme = useTheme<SCThemeType>();
+
   const notificationSkeleton = (
     <NotificationItem
       className={classes.item}
       template={SCNotificationObjectTemplateType.SNIPPET}
-      image={<Skeleton animation="wave" variant="circular" width={25} height={25} />}
+      image={
+        <Skeleton animation="wave" variant="circular" width={theme.selfcommunity.user.avatar.sizeSmall} height={theme.selfcommunity.user.avatar.sizeSmall} />
+      }
       primary={<Skeleton animation="wave" height={10} width={120} style={{marginBottom: 10}} />}
       secondary={<Skeleton animation="wave" height={10} width={70} style={{marginBottom: 10}} />}
     />

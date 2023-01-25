@@ -9,6 +9,7 @@ import {
   SCPreferences,
   SCPreferencesContext,
   SCPreferencesContextType,
+  SCThemeType,
   SCUserContext,
   SCUserContextType,
   useIsComponentMountedRef
@@ -133,7 +134,7 @@ export default function TrendingPeople(inProps: TrendingPeopleProps): JSX.Elemen
   const isMountedRef = useIsComponentMountedRef();
 
   // STATE
-  const theme = useTheme();
+  const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [state, dispatch] = useReducer(
     dataToolsReducer,
@@ -264,7 +265,7 @@ export default function TrendingPeople(inProps: TrendingPeopleProps): JSX.Elemen
         </React.Fragment>
       )}
       {limit < state.count && (
-        <Button size="small" className={classes.showMore} onClick={() => setOpenTrendingPeopleDialog(true)}>
+        <Button className={classes.showMore} onClick={() => setOpenTrendingPeopleDialog(true)}>
           <FormattedMessage id="ui.trendingPeople.button.showAll" defaultMessage="ui.trendingPeople.button.showAll" />
         </Button>
       )}

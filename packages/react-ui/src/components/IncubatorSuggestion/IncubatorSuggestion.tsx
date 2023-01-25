@@ -4,7 +4,7 @@ import {Button, List, Typography, ListItem, useMediaQuery, useTheme} from '@mui/
 import CardContent from '@mui/material/CardContent';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {CacheStrategies, Logger} from '@selfcommunity/utils';
-import {SCCache, SCUserContextType, useIsComponentMountedRef, useSCUser} from '@selfcommunity/react-core';
+import {SCCache, SCThemeType, SCUserContextType, useIsComponentMountedRef, useSCUser} from '@selfcommunity/react-core';
 import {SCIncubatorType} from '@selfcommunity/types';
 import Skeleton from './Skeleton';
 import {SCOPE_SC_UI} from '../../constants/Errors';
@@ -126,7 +126,7 @@ export default function IncubatorSuggestion(inProps: IncubatorSuggestionProps): 
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
 
   // STATE
-  const theme = useTheme();
+  const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [state, dispatch] = useReducer(
     dataToolsReducer,
@@ -252,7 +252,7 @@ export default function IncubatorSuggestion(inProps: IncubatorSuggestionProps): 
             ))}
           </List>
           {limit < state.count && (
-            <Button className={classes.showMore} size="small" onClick={() => setOpenIncubatorsDialog(true)}>
+            <Button className={classes.showMore} onClick={() => setOpenIncubatorsDialog(true)}>
               <FormattedMessage id="ui.IncubatorSuggestion.ShowAll" defaultMessage="ui.IncubatorSuggestion.ShowAll" />
             </Button>
           )}

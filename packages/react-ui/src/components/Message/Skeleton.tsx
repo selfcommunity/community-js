@@ -6,6 +6,8 @@ import ListItemText from '@mui/material/ListItemText';
 import {styled} from '@mui/material/styles';
 import Skeleton from '@mui/material/Skeleton';
 import Widget from '../Widget';
+import {useTheme} from '@mui/material';
+import {SCThemeType} from '@selfcommunity/react-core';
 
 const PREFIX = 'SCMessageSkeleton';
 
@@ -39,10 +41,16 @@ const Root = styled(Widget)(({theme}) => ({
  *
  */
 export default function MessageSkeleton(props): JSX.Element {
+  const theme = useTheme<SCThemeType>();
   const m = (
     <ListItem>
       <ListItemAvatar>
-        <Skeleton animation="wave" variant="circular" width={40} height={40} />
+        <Skeleton
+          animation="wave"
+          variant="circular"
+          width={theme.selfcommunity.user.avatar.sizeMedium}
+          height={theme.selfcommunity.user.avatar.sizeMedium}
+        />
       </ListItemAvatar>
       <ListItemText
         primary={<Skeleton animation="wave" height={10} width={120} style={{marginBottom: 10}} />}

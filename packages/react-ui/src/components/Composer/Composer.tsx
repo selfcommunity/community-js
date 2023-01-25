@@ -1,20 +1,21 @@
 import React, {forwardRef, ReactNode, SyntheticEvent, useContext, useEffect, useMemo, useReducer, useState} from 'react';
 import {
+  SCCategoryType,
   SCFeedDiscussionType,
   SCFeedObjectTypologyType,
   SCFeedPostType,
   SCFeedStatusType,
   SCMediaType,
   SCPollType,
-  SCCategoryType,
   SCTagType
 } from '@selfcommunity/types';
-import {http, Endpoints, formatHttpError, HttpResponse} from '@selfcommunity/api-services';
+import {Endpoints, formatHttpError, http, HttpResponse} from '@selfcommunity/api-services';
 import {
   SCFeatures,
   SCPreferences,
   SCPreferencesContext,
   SCPreferencesContextType,
+  SCThemeType,
   SCUserContext,
   SCUserContextType,
   UserUtils,
@@ -48,6 +49,7 @@ import {
   Theme,
   ToggleButton,
   ToggleButtonGroup,
+  Tooltip,
   Typography,
   useMediaQuery
 } from '@mui/material';
@@ -118,6 +120,8 @@ const classes = {
   location: `${PREFIX}-location`,
   audience: `${PREFIX}-audience`,
   mediasActions: `${PREFIX}-mediasActions`,
+  mediasActionsTitle: `${PREFIX}-mediasActionsTitle`,
+  mediasActionsActions: `${PREFIX}-mediasActionsActions`,
   sortableMedia: `${PREFIX}-sortableMedia`,
   sortableMediaCover: `${PREFIX}-sortableMediaCover`,
   links: `${PREFIX}-links`,
@@ -130,7 +134,7 @@ const Root = styled(Dialog, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => {
+})(({theme}: any) => {
   let mediaActionBackground = theme.palette.getContrastText(theme.palette.primary.main);
   if (mediaActionBackground.startsWith('#')) {
     mediaActionBackground = hexToRgb(mediaActionBackground).replace(')', ', .5)');
@@ -163,8 +167,8 @@ const Root = styled(Dialog, {
       alignItems: 'center'
     },
     [`& .${classes.avatar}`]: {
-      width: theme.spacing(4),
-      height: theme.spacing(4),
+      width: theme.selfcommunity.user.avatar.sizeMedium,
+      height: theme.selfcommunity.user.avatar.sizeMedium,
       display: 'inline-block'
     },
     [`& .${classes.content}`]: {
@@ -206,7 +210,10 @@ const Root = styled(Dialog, {
       zIndex: 1,
       display: 'flex',
       flexWrap: 'nowrap',
-      justifyContent: 'space-between'
+      justifyContent: 'space-between',
+      [`& .${classes.mediasActionsActions}`]: {
+        textAlign: 'right'
+      }
     },
     [`& .${classes.sortableMedia}`]: {
       position: 'relative'
@@ -422,7 +429,6 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
   const {scAddressingTags} = useSCFetchAddressingTagList({fetch: rest.open});
 
   // State variables
-  const [fades, setFades] = useState({});
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [_view, setView] = useState<string>(view);
   const [composerTypes, setComposerTypes] = useState([]);
@@ -636,14 +642,6 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
       dispatch({type: 'multiple', value: {audience: _addressing.length === 0 ? AUDIENCE_ALL : AUDIENCE_TAG, addressing: _addressing}});
     };
 
-  const handleFadeIn = (obj: string) => {
-    return (event: SyntheticEvent): void => setFades({...fades, [obj]: true});
-  };
-
-  const handleFadeOut = (obj) => {
-    return (event: SyntheticEvent): void => setFades({...fades, [obj]: false});
-  };
-
   const handleDeleteMedia = (id?: number | null, mediaObjectType?: any) => {
     return (event: SyntheticEvent): void => {
       if (id) {
@@ -728,29 +726,28 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
   };
 
   // RENDER
-  const theme: Theme = useTheme();
-  const smDown = useMediaQuery(theme.breakpoints.down('sm'), {noSsr: typeof window !== 'undefined'});
+  const theme: Theme = useTheme<SCThemeType>();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'), {noSsr: typeof window !== 'undefined'});
 
   const hasMediaShare = useMemo(() => medias.findIndex((m) => m.type === MEDIA_TYPE_SHARE) !== -1, [medias]);
 
   const renderMediaAdornment = (mediaObjectType: SCMediaObjectType): JSX.Element => {
     return (
-      <Box className={classes.mediasActions} onMouseEnter={handleFadeIn(mediaObjectType.name)} onMouseLeave={handleFadeOut(mediaObjectType.name)}>
-        <Fade in={Boolean(fades[mediaObjectType.name])}>
-          <Typography align="left">
-            <Button onClick={handleChangeView(mediaObjectType.name)} variant="text" size="small">
-              <FormattedMessage
-                id={`ui.composer.media.${mediaObjectType.name}.edit`}
-                defaultMessage={`ui.composer.media.${mediaObjectType.name}.edit`}
-              />
-            </Button>
-          </Typography>
-        </Fade>
-        <Typography align="right">
-          <IconButton onClick={handleDeleteMedia(null, mediaObjectType)} size="small" color="primary">
-            <Icon>delete</Icon>
-          </IconButton>
+      <Box className={classes.mediasActions}>
+        <Typography className={classes.mediasActionsTitle}>
+          <FormattedMessage id={`ui.composer.media.${mediaObjectType.name}.edit`} defaultMessage={`ui.composer.media.${mediaObjectType.name}.edit`} />
+        </Typography>
+        <Typography className={classes.mediasActionsActions}>
+          <Tooltip title={<FormattedMessage id="ui.composer.edit" defaultMessage="ui.composer.edit" />}>
+            <IconButton onClick={handleChangeView(mediaObjectType.name)} color="inherit">
+              <Icon>edit</Icon>
+            </IconButton>
+          </Tooltip>
+          <Tooltip title={<FormattedMessage id="ui.composer.delete" defaultMessage="ui.composer.delete" />}>
+            <IconButton onClick={handleDeleteMedia(null, mediaObjectType)} color="inherit">
+              <Icon>delete</Icon>
+            </IconButton>
+          </Tooltip>
         </Typography>
       </Box>
     );
@@ -761,24 +758,19 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
       <React.Fragment>
         <DialogTitle className={classes.title}>
           <Typography component="div">
-            <IconButton onClick={handleChangeView(MAIN_VIEW)} size="small">
+            <IconButton onClick={handleChangeView(MAIN_VIEW)}>
               <Icon>arrow_back</Icon>
             </IconButton>
-            <FormattedMessage id="ui.composer.audience.title" defaultMessage="ui.composer.audience.title" />
           </Typography>
           <Box>
-            <Avatar className={classes.avatar} src={scAuthContext.user.avatar}></Avatar>
+            <FormattedMessage id="ui.composer.audience.title" defaultMessage="ui.composer.audience.title" />
           </Box>
           <Box>
-            {smDown ? (
+            <Tooltip title={<FormattedMessage id="ui.composer.done" defaultMessage="ui.composer.done" />}>
               <IconButton onClick={handleChangeView(MAIN_VIEW)} color="inherit">
                 <Icon>check</Icon>
               </IconButton>
-            ) : (
-              <Button onClick={handleChangeView(MAIN_VIEW)} variant="text" color="inherit">
-                <FormattedMessage id="ui.composer.done" defaultMessage="ui.composer.done" />
-              </Button>
-            )}
+            </Tooltip>
           </Box>
         </DialogTitle>
         <DialogContent className={classes.audienceContent}>
@@ -819,27 +811,26 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
         <React.Fragment>
           <DialogTitle className={classes.title}>
             <Typography component="div">
-              <IconButton onClick={handleChangeView(MAIN_VIEW)} size="small" disabled={mediasRef.current.mediaChunks.length > 0}>
-                <Icon>arrow_back</Icon>
-              </IconButton>
+              <span>
+                <IconButton onClick={handleChangeView(MAIN_VIEW)} disabled={mediasRef.current.mediaChunks.length > 0}>
+                  <Icon>arrow_back</Icon>
+                </IconButton>
+              </span>
+            </Typography>
+            <Box>
               <FormattedMessage
                 id={`ui.composer.media.${mediaObjectType.name}.edit`}
                 defaultMessage={`ui.composer.media.${mediaObjectType.name}.edit`}
               />
-            </Typography>
-            <Box>
-              <Avatar className={classes.avatar} src={scAuthContext.user.avatar}></Avatar>
             </Box>
             <Box>
-              {smDown ? (
-                <IconButton onClick={handleChangeView(MAIN_VIEW)} color="inherit" disabled={mediasRef.current.mediaChunks.length > 0}>
-                  <Icon>check</Icon>
-                </IconButton>
-              ) : (
-                <Button onClick={handleChangeView(MAIN_VIEW)} variant="text" color="inherit" disabled={mediasRef.current.mediaChunks.length > 0}>
-                  <FormattedMessage id="ui.composer.done" defaultMessage="ui.composer.done" />
-                </Button>
-              )}
+              <Tooltip title={<FormattedMessage id="ui.composer.done" defaultMessage="ui.composer.done" />}>
+                <span>
+                  <IconButton onClick={handleChangeView(MAIN_VIEW)} color="inherit" disabled={mediasRef.current.mediaChunks.length > 0}>
+                    <Icon>check</Icon>
+                  </IconButton>
+                </span>
+              </Tooltip>
             </Box>
           </DialogTitle>
           <DialogContent className={classNames(classes.content, classes.mediaContent)}>
@@ -863,34 +854,30 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
       <React.Fragment>
         <DialogTitle className={classes.title}>
           <Typography component="div">
-            <IconButton onClick={handleChangeView(MAIN_VIEW)} size="small">
+            <IconButton onClick={handleChangeView(MAIN_VIEW)}>
               <Icon>arrow_back</Icon>
             </IconButton>
-            <FormattedMessage id="ui.composer.poll" defaultMessage="ui.composer.poll" />
           </Typography>
           <Box>
-            <Avatar className={classes.avatar} src={scAuthContext.user.avatar}></Avatar>
+            <FormattedMessage id="ui.composer.poll" defaultMessage="ui.composer.poll" />
           </Box>
           <Stack spacing={2} direction="row">
-            {smDown ? (
-              <>
-                <IconButton onClick={handleChangeView(MAIN_VIEW)} color="inherit" disabled={!hasPoll()}>
-                  <Icon>check</Icon>
-                </IconButton>
-                <IconButton onClick={handleDeletePoll} color="inherit" disabled={!hasPoll()}>
-                  <Icon>delete</Icon>
-                </IconButton>
-              </>
-            ) : (
-              <>
-                <Button onClick={handleDeletePoll} variant="text" color="inherit">
-                  <FormattedMessage id="ui.composer.delete" defaultMessage="ui.composer.delete" />
-                </Button>
-                <Button onClick={handleChangeView(MAIN_VIEW)} variant="text" color="inherit" disabled={!hasPoll()}>
-                  <FormattedMessage id="ui.composer.done" defaultMessage="ui.composer.done" />
-                </Button>
-              </>
-            )}
+            <>
+              <Tooltip title={<FormattedMessage id="ui.composer.delete" defaultMessage="ui.composer.delete" />}>
+                <span>
+                  <IconButton onClick={handleDeletePoll} color="inherit" disabled={!hasPoll()}>
+                    <Icon>delete</Icon>
+                  </IconButton>
+                </span>
+              </Tooltip>
+              <Tooltip title={<FormattedMessage id="ui.composer.done" defaultMessage="ui.composer.done" />}>
+                <span>
+                  <IconButton onClick={handleChangeView(MAIN_VIEW)} color="inherit" disabled={!hasPoll()}>
+                    <Icon>check</Icon>
+                  </IconButton>
+                </span>
+              </Tooltip>
+            </>
           </Stack>
         </DialogTitle>
         <DialogContent className={classes.content}>
@@ -905,24 +892,19 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
       <React.Fragment>
         <DialogTitle className={classes.title}>
           <Typography component="div">
-            <IconButton onClick={handleChangeView(MAIN_VIEW)} size="small">
+            <IconButton onClick={handleChangeView(MAIN_VIEW)}>
               <Icon>arrow_back</Icon>
             </IconButton>
-            <FormattedMessage id="ui.composer.location.title" defaultMessage="ui.composer.location.title" />
           </Typography>
           <Box>
-            <Avatar className={classes.avatar} src={scAuthContext.user.avatar}></Avatar>
+            <FormattedMessage id="ui.composer.location.title" defaultMessage="ui.composer.location.title" />
           </Box>
           <Box>
-            {smDown ? (
+            <Tooltip title={<FormattedMessage id="ui.composer.done" defaultMessage="ui.composer.done" />}>
               <IconButton onClick={handleChangeView(MAIN_VIEW)} color="inherit">
                 <Icon>check</Icon>
               </IconButton>
-            ) : (
-              <Button onClick={handleChangeView(MAIN_VIEW)} variant="text" color="inherit">
-                <FormattedMessage id="ui.composer.done" defaultMessage="ui.composer.done" />
-              </Button>
-            )}
+            </Tooltip>
           </Box>
         </DialogTitle>
         <DialogContent className={classes.locationContent}>
@@ -938,7 +920,6 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
         <DialogTitle className={classes.title}>
           <Box>
             <FormControl className={classes.types}>
-              <Icon>create</Icon>
               <Select value={type} onChange={handleChangeType} input={<TypeInput />} disabled={editMode}>
                 {composerTypes.map((t) => (
                   <MenuItem value={t} key={t}>
