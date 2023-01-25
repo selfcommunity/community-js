@@ -3,8 +3,8 @@ import Widget from '../Widget';
 import {styled} from '@mui/material/styles';
 import Skeleton from '@mui/material/Skeleton';
 import {SCFeedObjectTemplateType} from '../../types/feedObject';
-import { Box, CardContent, CardHeader, CardProps, useTheme } from '@mui/material';
-import { SCThemeType } from '@selfcommunity/react-core';
+import {Box, CardContent, CardHeader, CardProps, useTheme} from '@mui/material';
+import {SCThemeType} from '@selfcommunity/react-core';
 
 const PREFIX = 'SCFeedObjectSkeleton';
 
@@ -66,7 +66,14 @@ export default function FeedObjectSkeleton(props: {template?: SCFeedObjectTempla
     obj = (
       <React.Fragment>
         <CardHeader
-          avatar={<Skeleton animation="wave" variant="circular" width={theme.selfcommunity.user.avatar.sizeMedium} height={theme.selfcommunity.user.avatar.sizeMedium} />}
+          avatar={
+            <Skeleton
+              animation="wave"
+              variant="circular"
+              width={theme.selfcommunity.user.avatar.sizeMedium}
+              height={theme.selfcommunity.user.avatar.sizeMedium}
+            />
+          }
           title={<Skeleton animation="wave" height={10} width="80%" style={{marginBottom: 6}} />}
           subheader={<Skeleton animation="wave" height={10} width="40%" />}
         />
@@ -84,7 +91,14 @@ export default function FeedObjectSkeleton(props: {template?: SCFeedObjectTempla
     obj = (
       <React.Fragment>
         <CardHeader
-          avatar={<Skeleton animation="wave" variant="circular" width={theme.selfcommunity.user.avatar.sizeMedium} height={theme.selfcommunity.user.avatar.sizeMedium} />}
+          avatar={
+            <Skeleton
+              animation="wave"
+              variant="circular"
+              width={theme.selfcommunity.user.avatar.sizeMedium}
+              height={theme.selfcommunity.user.avatar.sizeMedium}
+            />
+          }
           title={<Skeleton animation="wave" height={10} width="80%" style={{marginBottom: 6}} />}
           subheader={<Skeleton animation="wave" height={10} width="40%" />}
         />
