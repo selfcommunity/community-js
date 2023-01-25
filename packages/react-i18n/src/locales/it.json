@@ -248,6 +248,9 @@
   "ui.commentObjectVotesDialog.title": "Voti",
   "ui.commentObjectVotesDialog.noOtherVotes": "Non ci sono altri voti.",
 
+  "ui.commentObjectReactionsDialog.title": "Tutti",
+  "ui.commentObjectReactionsDialog.noOtherLikes": "Non ci sono altri voti.",
+
   "ui.feedObjectVotesDialog.title": "Votes",
 
   "ui.followCategoryButton.follow": "Segui",
