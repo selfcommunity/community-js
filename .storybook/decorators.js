@@ -4,7 +4,7 @@ import { getJWTSession, getOAuthSession, refreshToken } from './sessionHelpers';
 import { Box, Button } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
 import { ThemeProvider as EmotionThemeProvider } from 'emotion-theming';
-import {Image, Link} from '../packages/react-ui/src';
+import {Image, Document, Link} from '../packages/react-ui/src';
 import theme from '@selfcommunity/react-theme-default';
 import { mergeDeep } from '@selfcommunity/utils';
 
@@ -89,7 +89,7 @@ const withProvider = (Story, context) => {
       components: {
         SCInlineComposer: {
           defaultProps: {
-            mediaObjectTypes: [Image, Link]
+            mediaObjectTypes: [Image, Document, Link]
           }
         }
       },

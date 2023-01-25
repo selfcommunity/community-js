@@ -5,6 +5,10 @@ import {MAX_GRID_IMAGES} from '../../../constants/Media';
 
 const PREFIX = 'SCPreviewMediaDocument';
 
+const classes = {
+  root: `${PREFIX}-root`
+};
+
 const Root = styled(ImagePreview, {
   name: PREFIX,
   slot: 'Root',
@@ -35,7 +39,7 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
    * Renders document preview
    */
   if (medias.length > 0) {
-    return <Root medias={medias} {...rest} onClick={handleClickOnPdf} />;
+    return <Root className={classes.root} medias={medias} {...rest} onClick={handleClickOnPdf} />;
   }
   return null;
 };

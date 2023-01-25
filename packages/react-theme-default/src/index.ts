@@ -55,6 +55,9 @@ import MuiOutlinedInput from './components/MuiOutlinedInput';
 import MuiSelect from './components/MuiSelect';
 import SCComposerCategories from './components/SCComposerCategories';
 import MuiAutocomplete from './components/MuiAutocomplete';
+import SCComposerPoll from './components/SCComposerPoll';
+import SCPreviewMediaDocument from './components/SCPreviewMediaDocument';
+import SCCommentObjectSkeleton from './components/SCCommentObjectSkeleton';
 
 /**
  * Style fragments - Imports - End
@@ -122,9 +125,11 @@ const theme = createTheme({
     SCEditor,
     SCCommentsObject,
     SCCommentObject,
+    SCCommentObjectSkeleton,
     SCCommentsFeedObject,
     SCComposer,
     SCComposerCategories,
+    SCComposerPoll,
     SCBroadcastMessages,
     SCSnippetNotifications,
     SCCustomSnackMessage,
@@ -137,6 +142,7 @@ const theme = createTheme({
     SCFeed,
     SCFeedSkeleton,
     SCPollObject,
+    SCPreviewMediaDocument,
     SCUser,
     SCUserNotification,
     SCUserProfileTemplate,

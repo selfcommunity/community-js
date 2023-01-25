@@ -5,6 +5,7 @@ import {Fade, Icon, IconButton, Popover, useTheme, useMediaQuery} from '@mui/mat
 import {styled} from '@mui/material/styles';
 import BaseDrawer from '../../../shared/BaseDrawer';
 import {SCThemeType} from '@selfcommunity/react-core';
+import { EmojiClickData } from 'emoji-picker-react';
 // import deps only if csr
 let Picker;
 typeof window !== 'undefined' &&
@@ -23,9 +24,9 @@ function Emoji({editor, className = ''}: {editor: LexicalEditor; className?: str
     setEmojiAnchorEl(emojiAnchorEl ? null : event.currentTarget);
   };
 
-  const handleEmojiClick = (event: SyntheticEvent, emoji) => {
+  const handleEmojiClick = (emojiData: EmojiClickData, event: MouseEvent) => {
     editor.focus();
-    editor.dispatchCommand(CONTROLLED_TEXT_INSERTION_COMMAND, emoji.emoji);
+    editor.dispatchCommand(CONTROLLED_TEXT_INSERTION_COMMAND, emojiData.emoji);
   };
 
   return (

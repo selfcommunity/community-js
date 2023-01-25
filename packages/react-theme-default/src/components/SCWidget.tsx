@@ -42,6 +42,9 @@ const Component = {
             '& .SCBaseItemButton-text': {
               marginTop: 0,
               marginBottom: 0
+            },
+            '& .SCWidget-root': {
+              borderRadius: 0
             }
           }
         },
@@ -52,9 +55,6 @@ const Component = {
         },
         '& a:not(.MuiButton-colorInherit):hover': {
           color: theme.palette.primary.main
-        },
-        '& .SCWidget-root': {
-          borderRadius: 0
         }
       }
     })

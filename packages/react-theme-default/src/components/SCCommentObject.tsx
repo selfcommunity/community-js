@@ -5,6 +5,7 @@ const Component = {
     root: ({theme}: any) => ({
       '& .SCCommentObject-content': {
         padding: theme.spacing(),
+        borderRadius: theme.shape.borderRadius * 0.5,
         borderColor: alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
         '& .SCCommentObject-text-content': {
           margin: 0,

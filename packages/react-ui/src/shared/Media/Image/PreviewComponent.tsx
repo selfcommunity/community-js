@@ -8,6 +8,7 @@ import Icon from '@mui/material/Icon';
 const PREFIX = 'SCPreviewMediaImage';
 
 const classes = {
+  root: `${PREFIX}-root`,
   background: `${PREFIX}-background`,
   heightOne: `${PREFIX}-heightOne`,
   heightHalfOne: `${PREFIX}-heightHalfOne`,
@@ -131,6 +132,11 @@ const Root = styled(Box, {
 }));
 export interface ImagePreviewComponentProps {
   /**
+   * Class name to apply to the root object
+   * @default empty string
+   */
+  className: string;
+  /**
    * Medias objs
    * @default []
    */
@@ -156,7 +162,7 @@ export interface ImagePreviewComponentProps {
 }
 export default (props: ImagePreviewComponentProps): JSX.Element => {
   // PROPS
-  const {medias = [], gallery = true, adornment = null, onClick = null, onMediaClick = null} = props;
+  const {className = '', medias = [], gallery = true, adornment = null, onClick = null, onMediaClick = null} = props;
 
   // STATE
   const [preview, setPreview] = useState(-1);
@@ -342,7 +348,7 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
   return (
     <>
       {medias.length > 0 && (
-        <Root>
+        <Root className={classNames(classes.root, className)}>
           {adornment}
           {[1, 3, 4].includes(imagesToShow.length) && renderOne()}
           {imagesToShow.length >= 2 && imagesToShow.length != 4 && renderTwo()}

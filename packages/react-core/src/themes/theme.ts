@@ -27,7 +27,6 @@ const isValidPreference = (preferences, prop, tFunc) => {
  * @return {SCThemeType}
  */
 const getTheme = (options, preferences): SCThemeType => {
-  console.log(options);
   const selfcommunity: SCThemeVariablesType = {
     user: {
       avatar: {

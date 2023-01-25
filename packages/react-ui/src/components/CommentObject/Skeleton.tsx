@@ -2,9 +2,9 @@ import React from 'react';
 import Widget from '../Widget';
 import {styled} from '@mui/material/styles';
 import Skeleton from '@mui/material/Skeleton';
-import { CardContent, useTheme } from '@mui/material';
+import {CardContent, useTheme} from '@mui/material';
 import BaseItem from '../../shared/BaseItem';
-import { SCThemeType } from '@selfcommunity/react-core';
+import {SCThemeType} from '@selfcommunity/react-core';
 
 const PREFIX = 'SCCommentObjectSkeleton';
 
@@ -14,7 +14,11 @@ const classes = {
   primaryContent: `${PREFIX}-primary-content`
 };
 
-const Root = styled(BaseItem)(({theme}) => ({
+const Root = styled(BaseItem, {
+  name: PREFIX,
+  slot: 'Root',
+  overridesResolver: (props, styles) => styles.root
+})(({theme}) => ({
   [`&.${classes.root}`]: {
     paddingBottom: theme.spacing(),
     overflow: 'visible',
@@ -59,7 +63,15 @@ export default function CommentObjectSkeleton(props): JSX.Element {
       className={classes.root}
       disableTypography
       {...rest}
-      image={<Skeleton animation="wave" variant="circular" width={theme.selfcommunity.user.avatar.sizeMedium} height={theme.selfcommunity.user.avatar.sizeMedium} className={classes.avatar} />}
+      image={
+        <Skeleton
+          animation="wave"
+          variant="circular"
+          width={theme.selfcommunity.user.avatar.sizeMedium}
+          height={theme.selfcommunity.user.avatar.sizeMedium}
+          className={classes.avatar}
+        />
+      }
       secondary={
         <>
           <Widget {...WidgetProps}>

@@ -119,6 +119,7 @@
 
   "ui.composer.type.post": "Create Post",
   "ui.composer.type.discussion": "Create Discussion",
+  "ui.composer.edit": "edit",
   "ui.composer.done": "done",
   "ui.composer.delete": "Delete",
   "ui.composer.title.label": "Write a good title...",

@@ -1,3 +1,5 @@
+import {alpha} from '@mui/system';
+
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
@@ -8,12 +10,10 @@ const Component = {
         borderBottom: `1px solid ${theme.palette.grey[400]}`,
         padding: theme.spacing(0, 0, 2, 0),
         lineHeight: 1,
+        fontSize: '1.143rem',
         '& .SCComposer-types .MuiInputBase-input': {
           fontWeight: theme.typography.fontWeightBold,
           fontSize: '1.286rem'
-        },
-        '& .MuiIconButton-root': {
-          fontSize: '1rem'
         }
       },
       '& .SCComposer-content': {
@@ -37,7 +37,54 @@ const Component = {
         '& .SCComposer-medias, & .SCComposer-audience, & .SCComposer-block': {
           margin: theme.spacing(1, 0),
           padding: 0
+        },
+        '& .SCComposer-medias': {
+          '& .SCComposer-mediasActions': {
+            position: 'relative',
+            borderTop: `1px solid ${theme.palette.grey[400]}`,
+            backgroundColor: theme.palette.background.paper,
+            padding: theme.spacing(1, 0),
+            '& .SCComposer-mediasActionsTitle': {
+              fontSize: '1.143rem'
+            }
+          }
         }
+      },
+      '& .SCComposer-mediaContent': {
+        '& .SCMediaActionImage-root': {
+          padding: 0,
+          '& .SCMediaActionImage-upload': {
+            padding: theme.spacing(2),
+            backgroundColor: alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
+            borderRadius: theme.shape.borderRadius,
+            color: theme.palette.primary.main,
+            '&.SCMediaActionImage-dragOver': {
+              backgroundColor: alpha(theme.palette.primary.main, theme.palette.action.hoverOpacity)
+            },
+            '& .SCMediaActionImage-uploadBtn': {
+              border: '0 none'
+            }
+          }
+        },
+        '& .SCMediaActionDocument-root': {
+          padding: 0,
+          '& .SCMediaActionDocument-upload': {
+            padding: theme.spacing(2),
+            backgroundColor: alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
+            borderRadius: theme.shape.borderRadius,
+            color: theme.palette.primary.main,
+            '&.SCMediaActionDocument-dragOver': {
+              backgroundColor: alpha(theme.palette.primary.main, theme.palette.action.hoverOpacity)
+            },
+            '& .SCMediaActionDocument-uploadBtn': {
+              border: '0 none'
+            }
+          }
+        }
+      },
+      '& .SCComposer-locationContent': {
+        padding: theme.spacing(3, 0),
+        minHeight: 300
       },
       '& .SCComposer-actions': {
         borderTop: `1px solid ${theme.palette.grey[300]}`,
@@ -54,6 +101,9 @@ const Component = {
         },
         '& > p.MuiTypography-alignRight > .MuiIconButton-root': {
           marginRight: theme.spacing(1.5)
+        },
+        '& .MuiIconButton-sizeMedium': {
+          fontSize: '1.429rem'
         }
       },
       '& .SCComposer-block': {
