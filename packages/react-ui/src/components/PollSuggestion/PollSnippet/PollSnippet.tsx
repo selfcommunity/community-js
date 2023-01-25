@@ -8,7 +8,7 @@ import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import {getContributionRouteName, getRouteData} from '../../../utils/contribution';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
-import {BaseItem} from '@selfcommunity/react-ui';
+import BaseItem from '../../../shared/BaseItem';
 
 const PREFIX = 'SCPollSnippet';
 

@@ -24,8 +24,7 @@ import {
   SCThemeType,
   SCUserContext,
   SCUserContextType,
-  useIsComponentMountedRef,
-  SCThemeType
+  useIsComponentMountedRef
 } from '@selfcommunity/react-core';
 import {actionToolsTypes, dataToolsReducer, stateToolsInitializer} from '../../utils/tools';
 
