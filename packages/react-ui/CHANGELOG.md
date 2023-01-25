@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.61](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.60...@selfcommunity/react-ui@0.7.0-alpha.61) (2023-01-25)
+
+
+### Bug Fixes
+
+* Fix imports in theme ([6e62627](https://github.com/selfcommunity/community-js/commit/6e62627fcaccc563264ea2dd19c8aaa3e160bd22))
+* fixed alignment ([5f9b6ee](https://github.com/selfcommunity/community-js/commit/5f9b6ee72340be7cace062dfb922a8bac1831688))
+* fixed build errors ([57ab29c](https://github.com/selfcommunity/community-js/commit/57ab29c72a3c7d15ede0e92888e7c0c9d0b70aaa))
+* fixed reaction icon size ([cb46af3](https://github.com/selfcommunity/community-js/commit/cb46af39892de18f0cb6d485a8a8c32ccabf280f))
+
+
+### Features
+
+* New theme ([37b4b86](https://github.com/selfcommunity/community-js/commit/37b4b8694cdc722b112ba18b0bff6478a787df25))
+* New theme ([34a4b62](https://github.com/selfcommunity/community-js/commit/34a4b62e1c904e01df3fc7488593b406830dca6a))
+
+
+### Performance Improvements
+
+* added reaction to comment objects. Asana issue: https://app.asana.com/0/1202523699272956/1203780410176755/f ([600e3e6](https://github.com/selfcommunity/community-js/commit/600e3e691c70e4ed01ae097b3f51ccca556afa52))
+
+
+
+
+
 # [0.7.0-alpha.60](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.59...@selfcommunity/react-ui@0.7.0-alpha.60) (2023-01-23)
 
 
