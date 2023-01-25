@@ -22,6 +22,7 @@ import {
   SCPreferencesContext,
   SCPreferencesContextType,
   SCRoutingContextType,
+  SCThemeType,
   SCUserContextType,
   UserUtils,
   useSCContext,
@@ -49,7 +50,7 @@ const messages = defineMessages({
   }
 });
 
-const PREFIX = 'SCShareObject';
+const PREFIX = 'SCShareAction';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -162,7 +163,7 @@ export default function Share(inProps: ShareProps): JSX.Element {
   } = props;
 
   // STATE
-  const theme = useTheme();
+  const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const {obj, setObj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
   const [isSharing, setIsSharing] = useState<boolean>(false);

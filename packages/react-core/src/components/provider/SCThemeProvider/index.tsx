@@ -3,7 +3,7 @@ import {ThemeProvider} from '@mui/material/styles';
 import getTheme from '../../../themes/theme';
 import {SCContextType, SCPreferencesContextType} from '../../../types/context';
 import {useSCContext} from '../SCContextProvider';
-import {SCThemeContextType} from '../../../types';
+import {SCThemeContextType, SCThemeType} from '../../../types';
 import {useSCPreferences} from '../SCPreferencesProvider';
 import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
 
@@ -44,14 +44,14 @@ export const SCThemeContext = createContext<SCThemeContextType>({} as SCThemeCon
 export default function SCThemeProvider({children = null}: {children: React.ReactNode}): JSX.Element {
   const scContext: SCContextType = useSCContext();
   const scPreferencesContext: SCPreferencesContextType = useSCPreferences();
-  const [theme, setTheme] = useState<Record<string, any>>(getTheme(scContext.settings.theme, scPreferencesContext.preferences));
+  const [theme, setTheme] = useState<SCThemeType>(getTheme(scContext.settings.theme, scPreferencesContext.preferences));
 
   /**
    * Set custom theme
    * Merge with scPreferencesContext.preferences
    * @param theme
    */
-  const setCustomTheme = (theme) => {
+  const setCustomTheme = (theme: SCThemeType) => {
     setTheme(getTheme(theme, scPreferencesContext.preferences));
   };
 

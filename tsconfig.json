@@ -11,6 +11,7 @@
       "@selfcommunity/react-core": ["packages/react-core/src"],
       "@selfcommunity/react-ui": ["packages/react-ui/src"],
       "@selfcommunity/react-templates": ["packages/react-templates/src"],
+      "@selfcommunity/react-theme-default": ["packages/react-theme-default/src"],
       "@selfcommunity/*": ["packages/*/src"]
     },
     "resolveJsonModule": true,

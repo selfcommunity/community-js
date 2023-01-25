@@ -19,6 +19,12 @@ import {
   SCRoutingContextType,
   SCLocaleContextType,
   SCAlertMessagesContextType,
+  SCThemeAvatarVariableType,
+  SCThemeUserVariableType,
+  SCThemeCategoryIconVariableType,
+  SCThemeCategoryVariableType,
+  SCThemeVariablesType,
+  SCThemeType,
 } from './types';
 
 /**
@@ -124,6 +130,11 @@ export {
   SCRoutingContextType,
   SCLocaleContextType,
   SCAlertMessagesContextType,
+  SCThemeAvatarVariableType,
+  SCThemeCategoryIconVariableType,
+  SCThemeCategoryVariableType,
+  SCThemeVariablesType,
+  SCThemeType,
   SCContext,
   SCUserContext,
   SCThemeContext,

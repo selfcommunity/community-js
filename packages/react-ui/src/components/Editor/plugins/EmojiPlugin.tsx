@@ -4,6 +4,8 @@ import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
 import {Fade, Icon, IconButton, Popover, useTheme, useMediaQuery} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import BaseDrawer from '../../../shared/BaseDrawer';
+import {SCThemeType} from '@selfcommunity/react-core';
+import { EmojiClickData } from 'emoji-picker-react';
 // import deps only if csr
 let Picker;
 typeof window !== 'undefined' &&
@@ -13,7 +15,7 @@ typeof window !== 'undefined' &&
 
 function Emoji({editor, className = ''}: {editor: LexicalEditor; className?: string}): JSX.Element {
   // STATE
-  const theme = useTheme();
+  const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [emojiAnchorEl, setEmojiAnchorEl] = useState<any>(false);
 
@@ -22,9 +24,9 @@ function Emoji({editor, className = ''}: {editor: LexicalEditor; className?: str
     setEmojiAnchorEl(emojiAnchorEl ? null : event.currentTarget);
   };
 
-  const handleEmojiClick = (event: SyntheticEvent, emoji) => {
+  const handleEmojiClick = (emojiData: EmojiClickData, event: MouseEvent) => {
     editor.focus();
-    editor.dispatchCommand(CONTROLLED_TEXT_INSERTION_COMMAND, emoji.emoji);
+    editor.dispatchCommand(CONTROLLED_TEXT_INSERTION_COMMAND, emojiData.emoji);
   };
 
   return (

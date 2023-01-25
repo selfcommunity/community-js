@@ -10,7 +10,8 @@ import {
   SCUserContextType,
   useSCFetchFeed,
   usePreviousValue,
-  useIsComponentMountedRef
+  useIsComponentMountedRef,
+  SCThemeType
 } from '@selfcommunity/react-core';
 import {styled, useTheme} from '@mui/material/styles';
 import {CardContent, Grid, Hidden, Theme, useMediaQuery} from '@mui/material';
@@ -357,7 +358,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
   }, [scPreferences.preferences]);
 
   // RENDER
-  const theme: Theme = useTheme();
+  const theme: Theme = useTheme<SCThemeType>();
   const oneColLayout = useMediaQuery(theme.breakpoints.down('md'), {noSsr: typeof window !== 'undefined'});
   const advEnabled = useMemo(
     () =>
@@ -797,7 +798,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
         </Grid>
       ) : null}
       <Grid item xs={12} md={7}>
-        <div className={classes.left} style={{overflow: 'visible'}}>
+        <div style={{overflow: 'visible'}}>
           <InfiniteScroll
             className={classes.left}
             dataLength={feedDataLeft.length}

@@ -1,7 +1,8 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
 import Skeleton from '@mui/material/Skeleton';
-import {Box, DialogActions, DialogContent, DialogTitle} from '@mui/material';
+import { Box, DialogActions, DialogContent, DialogTitle, useTheme } from '@mui/material';
+import { SCThemeType } from '@selfcommunity/react-core';
 
 const PREFIX = 'SCComposerSkeleton';
 
@@ -89,6 +90,8 @@ const Root = styled(Box, {
  *
  */
 export default function ComposerSkeleton(): JSX.Element {
+  const theme = useTheme<SCThemeType>();
+
   return (
     <Root className={classes.root}>
       <DialogTitle className={classes.title}>
@@ -96,7 +99,7 @@ export default function ComposerSkeleton(): JSX.Element {
           <Skeleton animation="wave" height={10} width="100%" />
         </Box>
         <Box>
-          <Skeleton className={classes.avatar} animation="wave" variant="circular" width={40} height={40} />
+          <Skeleton className={classes.avatar} animation="wave" variant="circular" width={theme.selfcommunity.user.avatar.sizeMedium} height={theme.selfcommunity.user.avatar.sizeMedium} />
         </Box>
         <Box>
           <Skeleton animation="wave" height={10} width="100%" />

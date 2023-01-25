@@ -22,7 +22,7 @@ const messages = defineMessages({
   }
 });
 
-const PREFIX = 'SCCommentObject';
+const PREFIX = 'SCCommentAction';
 
 const classes = {
   root: `${PREFIX}-root`,

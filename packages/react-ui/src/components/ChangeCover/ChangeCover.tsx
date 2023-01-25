@@ -2,7 +2,7 @@ import React, {useContext, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Menu, MenuItem, ListItemIcon, Typography, Button, Popover, Divider, IconButton, Box, useTheme, useMediaQuery} from '@mui/material';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
-import {SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
+import {SCThemeType, SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
 import {SCUserType} from '@selfcommunity/types';
 import Icon from '@mui/material/Icon';
 import {FormattedMessage} from 'react-intl';
@@ -94,7 +94,7 @@ export default function ChangeCover(inProps: ChangeCoverProps): JSX.Element {
   const scUserContext: SCUserContextType = useContext(SCUserContext);
 
   //STATE
-  const theme = useTheme();
+  const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   let fileInput = useRef(null);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);

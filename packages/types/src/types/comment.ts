@@ -1,4 +1,5 @@
 import {SCUserType} from './user';
+import {SCReactionType} from './reaction';
 
 /**
  * Typology Comment
@@ -104,6 +105,16 @@ export interface SCCommentType {
    * Type: comment
    */
   type: string;
+
+  /**
+   * Reactions number and objs
+   */
+  reactions_count: [];
+
+  /**
+   * Reaction obj
+   */
+  reaction: SCReactionType;
 }
 
 /**

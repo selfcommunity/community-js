@@ -146,7 +146,7 @@ export const reactionActionTypes = {
   REMOVE: 'remove'
 };
 
-const PREFIX = 'SCReactionObject';
+const PREFIX = 'SCReactionAction';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -192,7 +192,11 @@ const Root = styled(Box, {
       width: '20px',
       height: '20px',
       fontSize: '0.8rem',
-      marginRight: '6px'
+      marginRight: '6px',
+      '& img': {
+        height: '1rem',
+        width: '1rem'
+      }
     }
   }
 }));

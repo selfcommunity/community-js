@@ -3,6 +3,7 @@ import {styled} from '@mui/material/styles';
 import Widget from '../Widget';
 import {CardContent, List, ListItem} from '@mui/material';
 import {PollSnippetSkeleton} from './PollSnippet';
+import Skeleton from '@mui/material/Skeleton';
 
 const PREFIX = 'SCPollSuggestionSkeleton';
 
@@ -38,6 +39,7 @@ export default function PollSuggestionSkeleton(props): JSX.Element {
   return (
     <Root className={classes.root} {...props}>
       <CardContent>
+        <Skeleton animation="wave" height={10} width={120} />
         <List className={classes.list}>
           {[...Array(4)].map((user, index) => (
             <ListItem key={index}>

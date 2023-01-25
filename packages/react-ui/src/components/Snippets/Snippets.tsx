@@ -10,6 +10,7 @@ import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import PubSub from 'pubsub-js';
 import Icon from '@mui/material/Icon';
+import {SCThemeType} from '@selfcommunity/react-core';
 
 const PREFIX = 'SCSnippets';
 
@@ -130,7 +131,7 @@ export default function Snippets(inProps: SnippetsProps): JSX.Element {
   const {autoHide = false, className = null, onSnippetClick, threadId, getSnippetHeadline, shouldUpdate, deleteIconProps, selected, ...rest} = props;
 
   // STATE
-  const theme = useTheme();
+  const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [snippets, setSnippets] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);

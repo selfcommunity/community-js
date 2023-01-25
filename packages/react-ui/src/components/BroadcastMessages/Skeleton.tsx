@@ -1,7 +1,8 @@
 import React from 'react';
-import {Box, Card, CardContent, CardHeader, Skeleton} from '@mui/material';
+import {Box, Card, CardContent, CardHeader, Skeleton, useTheme} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import Widget from '../Widget';
+import {SCThemeType} from '@selfcommunity/react-core';
 
 const MESSAGE_PREFIX = 'SCBroadcastMessageSkeleton';
 
@@ -45,11 +46,13 @@ const MessageRoot = styled(Widget, {
  *
  */
 export function MessageSkeleton(props): JSX.Element {
+  const theme = useTheme<SCThemeType>();
+
   return (
     <MessageRoot className={classes.root}>
       <CardHeader
         className={messageClasses.header}
-        avatar={<Skeleton animation="wave" variant="circular" width={40} height={40} />}
+        avatar={<Skeleton animation="wave" variant="circular" width={theme.selfcommunity.user.avatar.sizeMedium} height={theme.selfcommunity.user.avatar.sizeMedium} />}
         title={<Skeleton animation="wave" variant="rectangular" width={60} height={20} />}
       />
       <CardContent className={messageClasses.title}>

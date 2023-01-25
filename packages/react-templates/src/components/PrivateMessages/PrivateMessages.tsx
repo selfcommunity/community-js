@@ -5,7 +5,7 @@ import {ConfirmDialog, Snippets} from '@selfcommunity/react-ui';
 import {Thread} from '@selfcommunity/react-ui';
 import {FormattedMessage} from 'react-intl';
 import Icon from '@mui/material/Icon';
-import {SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
+import {SCThemeType, SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import {PrivateMessageService} from '@selfcommunity/api-services';
@@ -125,7 +125,7 @@ export default function PrivateMessages(inProps: PrivateMessagesProps): JSX.Elem
   const {id, autoHide = false, className = null, onItemClick = null, ...rest} = props;
 
   // STATE
-  const theme = useTheme();
+  const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [layout, setLayout] = useState('default');
   const [obj, setObj] = useState<any>(id ? id : null);

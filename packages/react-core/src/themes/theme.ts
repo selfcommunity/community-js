@@ -3,6 +3,7 @@ import {mergeDeep} from '@selfcommunity/utils';
 import validateColor from 'validate-color';
 import {COLORS_COLORBACK, COLORS_COLORPRIMARY, COLORS_COLORSECONDARY, COLORS_COLORFONT, FONT_FAMILY} from '../constants/Preferences';
 import {isString} from '@selfcommunity/utils';
+import {SCThemeVariablesType, SCThemeType} from '../types';
 
 /**
  * check if colorProp is a valid color
@@ -23,9 +24,25 @@ const isValidPreference = (preferences, prop, tFunc) => {
  * Overrides theme properties
  * @param options: store.settings.theme
  * @param preferences: community global preferences
- * @return {Theme}
+ * @return {SCThemeType}
  */
-const getTheme = (options, preferences) => {
+const getTheme = (options, preferences): SCThemeType => {
+  const selfcommunity: SCThemeVariablesType = {
+    user: {
+      avatar: {
+        sizeSmall: 24,
+        sizeMedium: 40,
+        sizeLarge: 50,
+      },
+    },
+    category: {
+      icon: {
+        sizeSmall: 24,
+        sizeMedium: 40,
+        sizeLarge: 50,
+      },
+    },
+  };
   const defaultOptions = preferences
     ? {
         palette: {
@@ -38,12 +55,6 @@ const getTheme = (options, preferences) => {
         },
         typography: {
           ...(isValidPreference(preferences, FONT_FAMILY, isString) && {fontFamily: preferences[FONT_FAMILY].value}),
-          body1: {
-            fontSize: '0.9rem',
-          },
-          body2: {
-            fontSize: '0.8rem',
-          },
         },
         components: {
           MuiPaper: {
@@ -78,27 +89,6 @@ const getTheme = (options, preferences) => {
             //     borderRadius: '15px',
             //   },
             // },
-          },
-          MuiDivider: {
-            styleOverrides: {
-              root: {
-                borderWidth: '1px',
-              },
-            },
-          },
-          SCFeedObject: {
-            styleOverrides: {
-              root: {},
-            },
-          },
-          SCTrendingFeed: {
-            styleOverrides: {
-              root: {
-                '& .MuiIcon-root': {
-                  marginBottom: '0.5px',
-                },
-              },
-            },
           },
           SCNotificationItem: {
             // styleOverrides: {
@@ -138,21 +128,10 @@ const getTheme = (options, preferences) => {
               },
             },
           },
-          SCPlatform: {
-            styleOverrides: {
-              root: {
-                '& .MuiIcon-root': {
-                  fontSize: '18px',
-                  marginLeft: '2px',
-                  marginBottom: '-3px',
-                },
-              },
-            },
-          },
         },
       }
     : {};
-  return createTheme(mergeDeep(defaultOptions, options));
+  return createTheme(mergeDeep({...selfcommunity, ...defaultOptions}, options)) as SCThemeType;
 };
 
 export default getTheme;
