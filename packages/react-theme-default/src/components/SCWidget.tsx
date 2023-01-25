@@ -51,7 +51,8 @@ const Component = {
         '& > .MuiButton-sizeMedium': {
           marginLeft: theme.spacing(-2),
           paddingLeft: theme.spacing(2),
-          paddingRight: theme.spacing(2)
+          paddingRight: theme.spacing(2),
+          color: theme.palette.secondary.main
         },
         '& a:not(.MuiButton-colorInherit):hover': {
           color: theme.palette.primary.main

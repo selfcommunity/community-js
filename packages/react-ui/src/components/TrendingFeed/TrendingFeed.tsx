@@ -117,7 +117,7 @@ export default function TrendingFeed(inProps: TrendingFeedProps): JSX.Element {
   const {
     className = null,
     categoryId = null,
-    template = null,
+    template = SCFeedObjectTemplateType.SNIPPET,
     autoHide = null,
     cacheStrategy = CacheStrategies.NETWORK_ONLY,
     onHeightChange,

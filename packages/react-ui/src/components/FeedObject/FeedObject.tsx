@@ -174,7 +174,7 @@ const Root = styled(Widget, {
       marginTop: 0
     }
   },
-  [`& .${classes.snippetContent}`]: {
+  [`& .${classes.snippetContent} a`]: {
     textDecoration: 'none',
     color: '#3e3e3e'
   },
@@ -972,27 +972,32 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
               </Link>
             }
             primary={
-              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, obj.author)} className={classes.username}>
-                {obj.author.username}
-              </Link>
-            }
-            disableTypography
-            secondary={
               <Box>
-                <Typography variant="body2">
-                  <Link to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))} className={classes.snippetContent}>
+                <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, obj.author)} className={classes.username}>
+                  {obj.author.username}
+                </Link>
+                <Typography variant="body2" className={classes.snippetContent}>
+                  <Link to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))}>
                     {search && search !== '' ? getSearchContributionSnippet(obj, search) : getContributionSnippet(obj)}
                   </Link>
                 </Typography>
+              </Box>
+            }
+            disableTypography
+            secondary={
+              <Stack direction="row" justifyContent="space-between" spacing={2} alignItems="center">
                 <Link to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))} className={classes.activityAt}>
                   <DateTimeAgo component="span" date={obj.added_at} />
                 </Link>
-              </Box>
-            }
-            actions={
-              <Button component={Link} to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))} variant="outlined">
-                <FormattedMessage id="ui.feedObject.comment" defaultMessage="ui.feedObject.comment" />
-              </Button>
+                <Button
+                  component={Link}
+                  to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))}
+                  variant="text"
+                  color="secondary"
+                  size="small">
+                  <FormattedMessage id="ui.feedObject.comment" defaultMessage="ui.feedObject.comment" />
+                </Button>
+              </Stack>
             }
           />
         ) : (

@@ -172,6 +172,25 @@ const Component = {
           }
         }
       },
+      '&.SCFeedObject-snippet': {
+        '& .SCFeedObject-username': {
+          fontSize: '1rem',
+          fontWeight: theme.typography.fontWeightBold,
+          display: 'block',
+          marginBottom: theme.spacing(1)
+        },
+        '& .SCFeedObject-snippet-content': {
+          fontSize: '1rem',
+          marginBottom: theme.spacing(1)
+        },
+        '& .SCFeedObject-activity-at': {
+          marginTop: 0,
+          '&:hover': {
+            color: 'inherit',
+            textDecoration: 'underline'
+          }
+        }
+      },
       '&.SCFeedObject-detail .SCFeedObject-reply-content': {
         borderBottom: '0 none'
       }
