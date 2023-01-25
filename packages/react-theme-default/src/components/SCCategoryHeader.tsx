@@ -1,5 +1,3 @@
-import { Document, Image, Link } from '@selfcommunity/react-ui';
-
 const Component = {
   defaultProps: {
     FollowCategoryButtonProps: {

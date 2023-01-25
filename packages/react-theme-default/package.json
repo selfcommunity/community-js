@@ -43,9 +43,15 @@
     "access": "public"
   },
   "peerDependencies": {
-    "@mui/material": "^5.11.3",
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@mui/material": "^5.11.6",
     "react": "^17.0.2 || 18",
     "react-dom": "17 || 18"
+  },
+  "dependencies": {
+    "@selfcommunity/react-core": "^0.3.9-alpha.30",
+    "@selfcommunity/react-ui": "^0.7.0-alpha.60"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.13",
