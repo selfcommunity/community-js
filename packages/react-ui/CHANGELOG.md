@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.62](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.61...@selfcommunity/react-ui@0.7.0-alpha.62) (2023-01-25)
+
+
+### Bug Fixes
+
+* Fix default theme var ([5219400](https://github.com/selfcommunity/community-js/commit/521940024862e348fd0b5c92a7111656834fd0c7))
+
+
+
+
+
 # [0.7.0-alpha.61](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.60...@selfcommunity/react-ui@0.7.0-alpha.61) (2023-01-25)
 
 

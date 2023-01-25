@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.9-alpha.32](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.9-alpha.31...@selfcommunity/react-core@0.3.9-alpha.32) (2023-01-25)
+
+
+### Bug Fixes
+
+* Fix default theme var ([5219400](https://github.com/selfcommunity/community-js/commit/521940024862e348fd0b5c92a7111656834fd0c7))
+
+
+
+
+
 ## [0.3.9-alpha.31](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.9-alpha.30...@selfcommunity/react-core@0.3.9-alpha.31) (2023-01-25)
 
 
