@@ -534,7 +534,7 @@
   "ui.header.menuItem.platform": "Platform",
   "ui.header.menuItem.communityTour": "Community tour",
   "ui.header.menuItem.logout": "Logout",
-  "ui.header.searchBar.search": "Search",
+  "ui.header.searchBar.search": "Search on {community}",
   "ui.header.searchBar.loading": "Loading...",
   "ui.header.searchBar.noOptions": "No results...",
 
