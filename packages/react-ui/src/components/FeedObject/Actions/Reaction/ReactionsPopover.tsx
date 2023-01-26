@@ -53,7 +53,11 @@ const Root = styled(Popover, {
     cursor: 'pointer',
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    '& img': {
+      width: '1rem',
+      height: '1rem'
+    }
   }
 }));
 
@@ -165,7 +169,7 @@ export default function ReactionsPopover(inProps: ReactionPopoverProps) {
             {reactions.map((reaction: SCReactionType, index) => (
               <ListItem key={index} onClick={() => onReactionSelection(reaction)}>
                 <Icon className={classes.reactionIcon}>
-                  <img alt={reaction.label} src={reaction.image} width={16} height={16} />
+                  <img alt={reaction.label} src={reaction.image} />
                 </Icon>
               </ListItem>
             ))}

@@ -77,7 +77,7 @@ const classes = {
   vote: `${PREFIX}-vote`,
   reply: `${PREFIX}-reply`,
   contentSubSection: `${PREFIX}-comment-sub-section`,
-  actionButton: `${PREFIX}-action-button`,
+  addReaction: `${PREFIX}-add-reaction`,
   reactionIcon: `${PREFIX}-reaction-icon`
 };
 
@@ -366,7 +366,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
   });
   const reactionsEnabled = scPreferences.features.includes(SCFeatures.REACTION);
   const [reaction, setReaction] = useState<SCReactionType>(null);
-  const [_reactionsList, setReactionsList] = useState<[] | any>(obj?.reactions_count ?? []);
+  const [_reactionsList, setReactionsList] = useState<[] | any>(obj?.reactions_count);
 
   // HANDLERS
   function handleMouseEnter() {
@@ -502,7 +502,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
           loading={loadingVote}
           disabled={!obj}
           color="inherit"
-          classes={{root: classNames(classes.actionButton)}}>
+          classes={{root: classNames(classes.addReaction)}}>
           {scUserContext.user && obj.voted && obj.reaction ? (
             <Icon fontSize={'large'} className={classes.reactionIcon}>
               <img alt={obj.reaction.label} src={obj.reaction.image} height={16} width={16} />
@@ -642,7 +642,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
   function addReaction(comment, reaction) {
     handleMouseLeave();
     setReaction(reaction);
-    if (scUserContext.user && Object.prototype.hasOwnProperty.call(obj, 'reaction')) {
+    if (scUserContext.user) {
       if (UserUtils.isBlocked(scUserContext.user)) {
         enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
           variant: 'warning',
