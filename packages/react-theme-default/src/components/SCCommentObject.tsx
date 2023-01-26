@@ -1,4 +1,4 @@
-import { alpha } from '@mui/system';
+import {alpha} from '@mui/system';
 
 const Component = {
   styleOverrides: {
@@ -26,6 +26,14 @@ const Component = {
         '& .SCCommentObject-vote': {
           padding: theme.spacing(1),
           fontSize: '1.571rem'
+        },
+        '& .SCCommentObject-add-reaction': {
+          '& > span': {
+            '& img': {
+              width: '1rem',
+              height: '1rem'
+            }
+          }
         },
         '& .SCCommentObject-reply': {
           textDecorationStyle: 'solid',
