@@ -19,6 +19,10 @@ export interface SCHeaderMenuUrlsType {
    */
   followings?: string;
   /**
+   * User connections page url
+   */
+  connections?: string;
+  /**
    * Create contribute page url
    */
   create?: string;

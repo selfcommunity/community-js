@@ -112,7 +112,7 @@ export interface SnippetNotificationsProps extends CardProps {
   /**
    * The obj key
    */
-  key: number;
+  key?: number;
 
   /**
    * Props to spread to ScrollContainer component

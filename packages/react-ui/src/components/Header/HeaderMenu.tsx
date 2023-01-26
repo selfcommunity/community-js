@@ -1,5 +1,5 @@
-import {Box, MenuItem, styled, Typography} from '@mui/material';
-import {Link, SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
+import {Box, Divider, MenuItem, styled, Typography} from '@mui/material';
+import {Link, SCPreferences, SCPreferencesContext, SCPreferencesContextType, SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
 import {FormattedMessage} from 'react-intl';
 import React, {useContext} from 'react';
 import {useThemeProps} from '@mui/system';
@@ -46,6 +46,10 @@ export default function HeaderMenu(inProps: HeaderMenuProps) {
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
+  const scPreferencesContext: SCPreferencesContextType = useContext(SCPreferencesContext);
+  const followEnabled =
+    SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED in scPreferencesContext.preferences &&
+    scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED].value;
   const roles = scUserContext.user && scUserContext.user.role;
   const isAdmin = roles && roles.includes('admin');
   const isModerator = roles && roles.includes('moderator');
@@ -70,39 +74,24 @@ export default function HeaderMenu(inProps: HeaderMenuProps) {
           </Typography>
         </MenuItem>
       )}
-      {url && url.interests && (
-        <MenuItem className={classes.menuItem} key={'categories'} component={Link} to={url.interests}>
-          <Typography textAlign="center">
-            <FormattedMessage id="ui.header.menuItem.interests" defaultMessage="ui.header.menuItem.interests" />
-          </Typography>
-        </MenuItem>
-      )}
-      {url && url.followings && (
+      {followEnabled && url && url.followings && (
         <MenuItem className={classes.menuItem} key={'followings'} component={Link} to={url.followings}>
           <Typography textAlign="center">
             <FormattedMessage id="ui.header.menuItem.followings" defaultMessage="ui.header.menuItem.followings" />
           </Typography>
         </MenuItem>
       )}
-
-      {url && url.followers && (
+      {followEnabled && url && url.followers && (
         <MenuItem className={classes.menuItem} key={'followers'} component={Link} to={url.followers}>
           <Typography textAlign="center">
             <FormattedMessage id="ui.header.menuItem.followers" defaultMessage="ui.header.menuItem.followers" />
           </Typography>
         </MenuItem>
       )}
-      {url && url.posts && (
-        <MenuItem className={classes.menuItem} key={'userPosts'} component={Link} to={url.posts}>
+      {!followEnabled && url && url.connections && (
+        <MenuItem className={classes.menuItem} key={'followers'} component={Link} to={url.connections}>
           <Typography textAlign="center">
-            <FormattedMessage id="ui.header.menuItem.posts" defaultMessage="ui.header.menuItem.posts" />
-          </Typography>
-        </MenuItem>
-      )}
-      {url && url.comments && (
-        <MenuItem className={classes.menuItem} key={'comments'} component={Link} to={url.comments}>
-          <Typography textAlign="center">
-            <FormattedMessage id="ui.header.menuItem.comments" defaultMessage="ui.header.menuItem.comments" />
+            <FormattedMessage id="ui.header.menuItem.connections" defaultMessage="ui.header.menuItem.connections" />
           </Typography>
         </MenuItem>
       )}
@@ -110,6 +99,13 @@ export default function HeaderMenu(inProps: HeaderMenuProps) {
         <MenuItem className={classes.menuItem} key={'loyaltyProgram'} component={Link} to={url.loyalty}>
           <Typography textAlign="center">
             <FormattedMessage id="ui.header.menuItem.loyalty" defaultMessage="ui.header.menuItem.loyalty" />
+          </Typography>
+        </MenuItem>
+      )}
+      {url && url.peopleSuggestion && (
+        <MenuItem className={classes.menuItem} key={'suggestedPeople'} component={Link} to={url.peopleSuggestion}>
+          <Typography textAlign="center">
+            <FormattedMessage id="ui.header.menuItem.interestingPeople" defaultMessage="ui.header.menuItem.interestingPeople" />
           </Typography>
         </MenuItem>
       )}
@@ -124,13 +120,6 @@ export default function HeaderMenu(inProps: HeaderMenuProps) {
         <MenuItem className={classes.menuItem} key={'followedDiscussions'} component={Link} to={url.followedDiscussions}>
           <Typography textAlign="center">
             <FormattedMessage id="ui.header.menuItem.discussionsFollowed" defaultMessage="ui.header.menuItem.discussionsFollowed" />
-          </Typography>
-        </MenuItem>
-      )}
-      {url && url.peopleSuggestion && (
-        <MenuItem className={classes.menuItem} key={'suggestedPeople'} component={Link} to={url.peopleSuggestion}>
-          <Typography textAlign="center">
-            <FormattedMessage id="ui.header.menuItem.interestingPeople" defaultMessage="ui.header.menuItem.interestingPeople" />
           </Typography>
         </MenuItem>
       )}
@@ -173,6 +162,7 @@ export default function HeaderMenu(inProps: HeaderMenuProps) {
           </Typography>
         </MenuItem>
       )}
+      <Divider />
       {url && url.logout && (
         <MenuItem className={classes.menuItem} key={'logout'} onClick={url.logout}>
           <Typography textAlign="center">

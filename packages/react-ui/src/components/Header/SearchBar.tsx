@@ -1,12 +1,20 @@
 import {Box, IconButton, TextField, styled, useTheme, useMediaQuery, Autocomplete, Avatar, Typography} from '@mui/material';
 import Icon from '@mui/material/Icon';
-import React, {FormEvent, useEffect, useState} from 'react';
+import React, {FormEvent, useEffect, useRef, useState} from 'react';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {SuggestionType} from '@selfcommunity/types';
 import {SuggestionService} from '@selfcommunity/api-services';
-import {SCRoutes, SCRoutingContextType, SCThemeType, useSCRouting} from '@selfcommunity/react-core';
+import {
+  SCPreferences,
+  SCPreferencesContextType,
+  SCRoutes,
+  SCRoutingContextType,
+  SCThemeType,
+  useSCPreferences,
+  useSCRouting
+} from '@selfcommunity/react-core';
 
 const messages = defineMessages({
   placeholder: {
@@ -28,17 +36,14 @@ const Root = styled(Box, {
   slot: 'Root'
 })(({theme}) => ({
   width: '100%',
-  maxWidth: '25ch',
   marginLeft: theme.spacing(1),
   [`& .${classes.searchInput}`]: {
-    paddingRight: '2px !important'
+    paddingRight: '2px !important',
+    borderRadius: theme.shape.borderRadius
   },
   [`& .${classes.autocomplete}`]: {
     [theme.breakpoints.up('sm')]: {
-      width: '18ch',
-      '& .Mui-focused': {
-        width: '25ch'
-      }
+      width: '100%'
     }
   }
 }));
@@ -55,7 +60,8 @@ const MobileRoot = styled(Box, {
   },
   [`& .${classes.searchInput}`]: {
     [theme.breakpoints.down('sm')]: {
-      width: '95%'
+      width: '95%',
+      borderRadius: theme.shape.borderRadius
     },
     paddingRight: '2px !important'
   }
@@ -91,6 +97,7 @@ export default function HeaderSearchBar(inProps: HeaderSearchBarProps) {
   const {className, onSearch, onClick, ...rest} = props;
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
+  const scPreferences: SCPreferencesContextType = useSCPreferences();
   // STATE
   const [query, setQuery] = useState('');
   const [clicked, setClicked] = useState(false);
@@ -190,7 +197,9 @@ export default function HeaderSearchBar(inProps: HeaderSearchBarProps) {
           renderInput={(params) => (
             <TextField
               {...params}
-              placeholder={`${intl.formatMessage(messages.placeholder)}`}
+              placeholder={`${intl.formatMessage(messages.placeholder, {
+                community: scPreferences.preferences[SCPreferences.TEXT_APPLICATION_NAME].value
+              })}`}
               InputProps={{
                 ...params.InputProps,
                 className: classes.searchInput,
