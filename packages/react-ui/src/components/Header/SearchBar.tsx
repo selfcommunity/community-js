@@ -52,15 +52,10 @@ const MobileRoot = styled(Box, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  position: 'absolute',
-  marginLeft: '40px',
   width: '100%',
-  [theme.breakpoints.down('sm')]: {
-    width: '85%'
-  },
   [`& .${classes.searchInput}`]: {
     [theme.breakpoints.down('sm')]: {
-      width: '95%',
+      width: '100%',
       borderRadius: theme.shape.borderRadius
     },
     paddingRight: '2px !important'

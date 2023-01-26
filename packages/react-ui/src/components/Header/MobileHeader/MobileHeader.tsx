@@ -171,7 +171,7 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
       <AppBar position="fixed" color={'default'}>
         <Toolbar className={classes.topToolbar}>
           <Grid container direction="row" justifyContent="flex-start">
-            {!showNavigation && !clicked && (
+            {!showNavigation && (
               <Link to={scUserContext.user && url ? url.home : '/'}>
                 <img src={logo} alt={'logo'} style={{height: '30px'}} />
               </Link>

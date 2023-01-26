@@ -37,7 +37,10 @@ const Root = styled(Box, {
   },
   [`& .${classes.iconButton}`]: {
     whiteSpace: 'nowrap',
-    overFlow: 'hidden'
+    overFlow: 'hidden',
+    '&:hover': {
+      color: theme.palette.primary.main
+    }
   },
   ' & .MuiTab-root': {
     minWidth: '130px',
