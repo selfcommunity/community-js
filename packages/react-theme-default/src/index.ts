@@ -64,24 +64,24 @@ import SCCommentObjectSkeleton from './components/SCCommentObjectSkeleton';
  */
 
 const theme = createTheme({
-  palette: {
-    background: {
-      default: '#FFFFFF'
-    },
-    text: {
-      primary: 'rgba(0,0,0,0.8)'
-    },
-    primary: {
-      main: '#546E7A'
-    },
-    secondary: {
-      main: '#008080'
-    }
-  },
+  // palette: {
+  //   background: {
+  //     default: '#FFFFFF'
+  //   },
+  //   text: {
+  //     primary: 'rgba(0,0,0,0.8)'
+  //   },
+  //   primary: {
+  //     main: '#546E7A'
+  //   },
+  //   secondary: {
+  //     main: '#008080'
+  //   }
+  // },
   typography: {
     htmlFontSize: 14,
     fontSize: 14,
-    fontFamily: '"Inter", "Helvetica", "Arial", sans-serif',
+    // fontFamily: '"Inter", "Helvetica", "Arial", sans-serif',
     fontWeightLight: '300',
     fontWeightRegular: '400',
     fontWeightMedium: '500',
