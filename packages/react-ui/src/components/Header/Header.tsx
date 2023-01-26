@@ -90,10 +90,6 @@ export interface HeaderProps {
    */
   className?: string;
   /**
-   * If true, header component is hidden
-   */
-  hidden?: boolean;
-  /**
    * Other props
    */
   [p: string]: any;
@@ -139,7 +135,6 @@ export default function Header(inProps: HeaderProps) {
     searchBarProps,
     showNavigation,
     onNavigationBack,
-    hidden,
     ...rest
   } = props;
   // CONTEXT
@@ -192,9 +187,8 @@ export default function Header(inProps: HeaderProps) {
 
   if (scUserContext.loading) {
     return <HeaderSkeleton />;
-  } else if (hidden) {
-    return <HiddenPlaceholder />;
   }
+
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
       {isMobile ? (
