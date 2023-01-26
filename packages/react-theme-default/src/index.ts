@@ -1,6 +1,7 @@
 import {createTheme} from '@mui/material/styles';
 
-import './reset.css';
+import './styles/reset.css';
+import './fonts/community-icons.css';
 
 /**
  * Style fragments - Imports - Start
