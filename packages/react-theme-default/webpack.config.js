@@ -20,14 +20,13 @@ module.exports = (env, argv) => {
         {...rules.js({rootMode: 'upward'}), test: /\.(j|t)sx?$/},
         {...rules.css(), test: /\.css?$/},
         {
-          test: /.(ttf|otf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/,
+          test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
           use: [
             {
               loader: 'file-loader',
               options: {
                 name: '[name].[ext]',
-                outputPath: './community/',
-                publicPath: '../community/'
+                outputPath: 'community/'
               }
             }
           ]

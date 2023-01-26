@@ -3,7 +3,7 @@ const toPath = (filePath) => path.join(process.cwd(), filePath);
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 module.exports = {
-  "staticDirs": ['../public'],
+  "staticDirs": ['../public', '../packages/react-theme-default/src'],
   "framework": '@storybook/react',
   "core": {
     "builder": 'webpack5',
