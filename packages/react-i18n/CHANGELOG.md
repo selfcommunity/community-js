@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.1-alpha.14](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.4.1-alpha.13...@selfcommunity/react-i18n@0.4.1-alpha.14) (2023-01-27)
+
+
+### Bug Fixes
+
+* fixed header menu translations ([d22bd7e](https://github.com/selfcommunity/community-js/commit/d22bd7eb49c4e633371d2a44985eb64cb96da6ed))
+* fixed searchbar transl ([867b804](https://github.com/selfcommunity/community-js/commit/867b804d930b2de414f470f908137cff8988f461))
+
+
+
+
+
 ## [0.4.1-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.4.1-alpha.12...@selfcommunity/react-i18n@0.4.1-alpha.13) (2023-01-25)
 
 

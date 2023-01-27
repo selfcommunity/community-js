@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.5...@selfcommunity/react-theme-default@0.1.0-alpha.6) (2023-01-27)
+
+
+### Performance Improvements
+
+* added reaction img size ([ec9ceb5](https://github.com/selfcommunity/community-js/commit/ec9ceb565392d6a53df139d9f01424ece901cc04))
+
+
+
+
+
 # [0.1.0-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.4...@selfcommunity/react-theme-default@0.1.0-alpha.5) (2023-01-26)
 
 
