@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.63](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.62...@selfcommunity/react-ui@0.7.0-alpha.63) (2023-01-27)
+
+
+### Bug Fixes
+
+* fixed header ([967c3ac](https://github.com/selfcommunity/community-js/commit/967c3ac7b8400741782726c097451f5da759835d))
+* fixed reactions bugfixes + style ([8380212](https://github.com/selfcommunity/community-js/commit/838021222076b3889fa1162be104886765c92861))
+* header components fixes ([0316ab6](https://github.com/selfcommunity/community-js/commit/0316ab63b4c919fce069688b783a156326e2b1f3))
+* mobileSearchbar position and width ([eec95d0](https://github.com/selfcommunity/community-js/commit/eec95d07b0382a8a6472344073e566f7ac2878ba))
+
+
+### Performance Improvements
+
+* Removed hidden parameter in Header.tsx ([6b6d481](https://github.com/selfcommunity/community-js/commit/6b6d48169d925be07107c6a1cb8e18ba08723b80))
+
+
+
+
+
 # [0.7.0-alpha.62](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.61...@selfcommunity/react-ui@0.7.0-alpha.62) (2023-01-25)
 
 
