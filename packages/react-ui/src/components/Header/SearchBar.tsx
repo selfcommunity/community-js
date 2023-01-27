@@ -1,6 +1,6 @@
 import {Box, IconButton, TextField, styled, useTheme, useMediaQuery, Autocomplete, Avatar, Typography} from '@mui/material';
 import Icon from '@mui/material/Icon';
-import React, {FormEvent, useEffect, useRef, useState} from 'react';
+import React, {FormEvent, useEffect, useState} from 'react';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
@@ -101,6 +101,7 @@ export default function HeaderSearchBar(inProps: HeaderSearchBarProps) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [results, setResults] = useState([]);
   const [isSearching, setIsSearching] = useState<boolean>(false);
+  const [focused, setFocused] = useState<boolean>(false);
 
   // INTL
   const intl = useIntl();
@@ -108,6 +109,15 @@ export default function HeaderSearchBar(inProps: HeaderSearchBarProps) {
   const handleChange = (event, value) => {
     setQuery(value);
     setIsSearching(true);
+  };
+
+  const handleClear = () => {
+    if (!isDesktop) {
+      handleClick();
+    }
+    setQuery('');
+    setIsSearching(false);
+    setFocused(false);
   };
 
   const handleSearch = (option) => {
@@ -169,6 +179,11 @@ export default function HeaderSearchBar(inProps: HeaderSearchBarProps) {
           clearOnEscape={true}
           clearOnBlur={true}
           open={query !== '' && isSearching}
+          onOpen={(event) => {
+            if (event.type === 'mousedown') {
+              setFocused(true);
+            }
+          }}
           loadingText={<FormattedMessage id="ui.header.searchBar.loading" defaultMessage="ui.header.searchBar.loading" />}
           noOptionsText={<FormattedMessage id="ui.header.searchBar.noOptions" defaultMessage="ui.header.searchBar.noOptions" />}
           options={results}
@@ -198,7 +213,16 @@ export default function HeaderSearchBar(inProps: HeaderSearchBarProps) {
               InputProps={{
                 ...params.InputProps,
                 className: classes.searchInput,
-                startAdornment: <>{!query && isDesktop && <Icon color="primary">search</Icon>}</>
+                startAdornment: <>{!query && isDesktop && <Icon color="primary">search</Icon>}</>,
+                endAdornment: (
+                  <>
+                    {focused && query !== '' && (
+                      <IconButton onClick={handleClear}>
+                        <Icon color="primary">close</Icon>
+                      </IconButton>
+                    )}
+                  </>
+                )
               }}
             />
           )}

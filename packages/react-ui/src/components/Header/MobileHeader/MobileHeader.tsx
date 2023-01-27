@@ -1,11 +1,10 @@
-import {AppBar, Badge, Box, Button, Grid, IconButton, styled, SwipeableDrawer, Tab, Tabs, Toolbar, Typography} from '@mui/material';
+import {AppBar, Badge, Box, Grid, IconButton, styled, SwipeableDrawer, Tab, Tabs, Toolbar, Typography} from '@mui/material';
 import Icon from '@mui/material/Icon';
 import React, {useContext, useEffect, useMemo, useState} from 'react';
 import {Link, SCPreferences, SCUserContext, SCUserContextType, useSCPreferences} from '@selfcommunity/react-core';
 import {useThemeProps} from '@mui/system';
 import SearchBar, {HeaderSearchBarProps} from '../SearchBar';
 import classNames from 'classnames';
-import {FormattedMessage} from 'react-intl';
 import HeaderMenu from '../HeaderMenu';
 import {SCHeaderMenuUrlsType} from '../../../types';
 import MobileHeaderSkeleton from './Skeleton';
@@ -17,6 +16,7 @@ const PREFIX = 'SCMobileHeader';
 
 const classes = {
   root: `${PREFIX}-root`,
+  logo: `${PREFIX}-logo`,
   tabs: `${PREFIX}-tabs`,
   topToolbar: `${PREFIX}-top-toolbar`,
   bottomToolbar: `${PREFIX}-bottom-toolbar`
@@ -27,6 +27,9 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
+  [`& .${classes.logo}`]: {
+    height: theme.spacing(4)
+  },
   [`& .${classes.tabs}`]: {
     '& .MuiTabs-indicator': {
       top: '0px'
@@ -144,8 +147,8 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
       if (
         (url.home && value === url.home) ||
         (url.explore && value === url.explore) ||
-        (url.followings && value === url.followings) ||
-        (url.notifications && value === url.notifications)
+        (url.notifications && value === url.notifications) ||
+        (url.messages && value === url.messages)
       ) {
         return value;
       }
@@ -162,8 +165,7 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
 
   if (scUserContext.loading) {
     return <MobileHeaderSkeleton />;
-  }
-  if (!scUserContext.user) {
+  } else if (!scUserContext.user) {
     return <HiddenPlaceholder />;
   }
   return (
@@ -171,9 +173,9 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
       <AppBar position="fixed" color={'default'}>
         <Toolbar className={classes.topToolbar}>
           <Grid container direction="row" justifyContent="flex-start">
-            {!showNavigation && (
-              <Link to={scUserContext.user && url ? url.home : '/'}>
-                <img src={logo} alt={'logo'} style={{height: '30px'}} />
+            {!showNavigation && url && url.home && (
+              <Link to={url.home}>
+                <img src={logo} alt={'logo'} className={classes.logo} />
               </Link>
             )}
             {scUserContext.user && showNavigation && onNavigationBack && !clicked && (
