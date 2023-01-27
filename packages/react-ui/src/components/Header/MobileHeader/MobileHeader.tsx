@@ -1,20 +1,22 @@
-import {AppBar, Badge, Box, Button, Grid, IconButton, styled, SwipeableDrawer, Tab, Tabs, Toolbar, Typography} from '@mui/material';
+import {AppBar, Badge, Box, Grid, IconButton, styled, SwipeableDrawer, Tab, Tabs, Toolbar, Typography} from '@mui/material';
 import Icon from '@mui/material/Icon';
 import React, {useContext, useEffect, useMemo, useState} from 'react';
 import {Link, SCPreferences, SCUserContext, SCUserContextType, useSCPreferences} from '@selfcommunity/react-core';
 import {useThemeProps} from '@mui/system';
 import SearchBar, {HeaderSearchBarProps} from '../SearchBar';
 import classNames from 'classnames';
-import {FormattedMessage} from 'react-intl';
 import HeaderMenu from '../HeaderMenu';
 import {SCHeaderMenuUrlsType} from '../../../types';
 import MobileHeaderSkeleton from './Skeleton';
 import {SCFeedObjectTypologyType} from '@selfcommunity/types';
+import HiddenPlaceholder from '../../../shared/HiddenPlaceholder';
+import SnippetNotifications from '../../SnippetNotifications';
 
 const PREFIX = 'SCMobileHeader';
 
 const classes = {
   root: `${PREFIX}-root`,
+  logo: `${PREFIX}-logo`,
   tabs: `${PREFIX}-tabs`,
   topToolbar: `${PREFIX}-top-toolbar`,
   bottomToolbar: `${PREFIX}-bottom-toolbar`
@@ -25,6 +27,9 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
+  [`& .${classes.logo}`]: {
+    height: theme.spacing(4)
+  },
   [`& .${classes.tabs}`]: {
     '& .MuiTabs-indicator': {
       top: '0px'
@@ -120,6 +125,7 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
   }, [scPreferences.preferences]);
 
   const [openSettings, setOpenSettings] = useState<boolean>(false);
+  const [openNotifications, setOpenNotifications] = useState<boolean>(false);
 
   // HANDLERS
 
@@ -141,8 +147,8 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
       if (
         (url.home && value === url.home) ||
         (url.explore && value === url.explore) ||
-        (url.followings && value === url.followings) ||
-        (url.notifications && value === url.notifications)
+        (url.notifications && value === url.notifications) ||
+        (url.messages && value === url.messages)
       ) {
         return value;
       }
@@ -159,16 +165,17 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
 
   if (scUserContext.loading) {
     return <MobileHeaderSkeleton />;
+  } else if (!scUserContext.user) {
+    return <HiddenPlaceholder />;
   }
-
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
       <AppBar position="fixed" color={'default'}>
         <Toolbar className={classes.topToolbar}>
           <Grid container direction="row" justifyContent="flex-start">
-            {!showNavigation && !clicked && (
-              <Link to={scUserContext.user && url ? url.home : '/'}>
-                <img src={logo} alt={'logo'} style={{height: '30px'}} />
+            {!showNavigation && url && url.home && (
+              <Link to={url.home}>
+                <img src={logo} alt={'logo'} className={classes.logo} />
               </Link>
             )}
             {scUserContext.user && showNavigation && onNavigationBack && !clicked && (
@@ -181,78 +188,59 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
             )}
           </Grid>
           <SearchBar {...searchBarProps} onClick={() => setClicked(!clicked)} />
-          {scUserContext.user && url && url.create && (
-            <IconButton component={Link} to={url.create} size="large" aria-label="New Contribute" color="inherit">
-              <Icon>create</Icon>
-            </IconButton>
-          )}
         </Toolbar>
       </AppBar>
       <BottomBar>
-        {scUserContext.user ? (
-          <Toolbar className={classes.bottomToolbar}>
-            <Tabs
-              className={classes.tabs}
-              onChange={handleChange}
-              value={checkValue()}
-              textColor="primary"
-              indicatorColor="primary"
-              aria-label="Navigation Tabs"
-              variant="scrollable">
-              {url && url.home && <Tab value={url.home} icon={<Icon>home</Icon>} aria-label="HomePage" to={url.home} component={Link}></Tab>}
-              {url && url.explore && (
-                <Tab value={url.explore} icon={<Icon>explore</Icon>} aria-label="Explore" to={url.explore} component={Link}></Tab>
-              )}
-              {url && url.followings && (
-                <Tab value={url.followings} icon={<Icon>person</Icon>} aria-label="Followings" to={url.followings} component={Link}></Tab>
-              )}
-              {url && url.notifications && (
-                <Tab
-                  value={url.notifications}
-                  icon={
-                    <Badge badgeContent={scUserContext.user.unseen_interactions_counter} color="error">
-                      <Icon>notifications</Icon>
-                    </Badge>
-                  }
-                  aria-label="Notifications"
-                  to={url.notifications}
-                  component={Link}></Tab>
-              )}
-            </Tabs>
-            <IconButton onClick={handleOpenSettingsMenu}>
-              <Icon>menu</Icon>
-            </IconButton>
+        <Toolbar className={classes.bottomToolbar}>
+          <Tabs
+            className={classes.tabs}
+            onChange={handleChange}
+            value={checkValue()}
+            textColor="primary"
+            indicatorColor="primary"
+            aria-label="Navigation Tabs"
+            variant="scrollable">
+            {url && url.home && <Tab value={url.home} icon={<Icon>home</Icon>} aria-label="HomePage" to={url.home} component={Link}></Tab>}
+            {url && url.explore && <Tab value={url.explore} icon={<Icon>explore</Icon>} aria-label="Explore" to={url.explore} component={Link}></Tab>}
+            <Tab
+              value={url.notifications}
+              icon={
+                <Badge badgeContent={scUserContext.user.unseen_interactions_counter} color="error">
+                  <Icon>notifications_active</Icon>{' '}
+                </Badge>
+              }
+              aria-label="Notifications"
+              onClick={() => setOpenNotifications(true)}></Tab>
             <SwipeableDrawer
               PaperProps={{
                 sx: {width: '85%'}
               }}
               anchor={'right'}
-              open={openSettings}
-              onClick={() => setOpenSettings(false)}
-              onClose={() => setOpenSettings(false)}
+              open={openNotifications}
+              onClick={() => setOpenNotifications(false)}
+              onClose={() => setOpenNotifications(false)}
               onOpen={toggleDrawer('right', true)}>
-              <HeaderMenu url={url} />
+              <SnippetNotifications />
             </SwipeableDrawer>
-          </Toolbar>
-        ) : (
-          <Toolbar sx={{justifyContent: 'space-between'}}>
-            {url && url.explore && (
-              <Button component={Link} to={url.explore} size="medium" color="inherit">
-                <FormattedMessage id="ui.header.button.explore" defaultMessage="ui.header.button.explore" />
-              </Button>
+            {url && url.messages && (
+              <Tab value={url.messages} icon={<Icon>email</Icon>} aria-label="Explore" to={url.messages} component={Link}></Tab>
             )}
-            {url && url.login && (
-              <Button color="inherit" onClick={url.login}>
-                <FormattedMessage id="ui.header.button.login" defaultMessage="ui.header.button.login" />
-              </Button>
-            )}
-            {url && url.register && (
-              <Button color="inherit" component={Link} to={url.register}>
-                <FormattedMessage id="ui.header.button.register" defaultMessage="ui.header.button.register" />
-              </Button>
-            )}
-          </Toolbar>
-        )}
+          </Tabs>
+          <IconButton onClick={handleOpenSettingsMenu}>
+            <Icon>more_vert</Icon>
+          </IconButton>
+          <SwipeableDrawer
+            PaperProps={{
+              sx: {width: '85%'}
+            }}
+            anchor={'right'}
+            open={openSettings}
+            onClick={() => setOpenSettings(false)}
+            onClose={() => setOpenSettings(false)}
+            onOpen={toggleDrawer('right', true)}>
+            <HeaderMenu url={url} />
+          </SwipeableDrawer>
+        </Toolbar>
       </BottomBar>
     </Root>
   );

@@ -521,7 +521,8 @@
   "ui.header.menuItem.profile": "Profilo",
   "ui.header.menuItem.interests": "I miei interessi",
   "ui.header.menuItem.followings": "Utenti che seguo",
-  "ui.header.menuItem.followers": "I miei follower",
+  "ui.header.menuItem.followers": "Utenti che mi seguono",
+  "ui.header.menuItem.connections.connections": "Connessioni",
   "ui.header.menuItem.posts": "I miei post",
   "ui.header.menuItem.comments": "I miei commenti",
   "ui.header.menuItem.loyalty": "Il mio programma fedeltà",
@@ -534,7 +535,7 @@
   "ui.header.menuItem.platform": "Platform",
   "ui.header.menuItem.communityTour": "Community tour",
   "ui.header.menuItem.logout": "Esci",
-  "ui.header.searchBar.search": "Cerca",
+  "ui.header.searchBar.search": "Cerca su {community}",
   "ui.header.searchBar.loading": "Cercando...",
   "ui.header.searchBar.noOptions": "Nessun risultato...",
 

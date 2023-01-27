@@ -6,7 +6,15 @@ import {useThemeProps} from '@mui/system';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {SuggestionType} from '@selfcommunity/types';
 import {SuggestionService} from '@selfcommunity/api-services';
-import {SCRoutes, SCRoutingContextType, SCThemeType, useSCRouting} from '@selfcommunity/react-core';
+import {
+  SCPreferences,
+  SCPreferencesContextType,
+  SCRoutes,
+  SCRoutingContextType,
+  SCThemeType,
+  useSCPreferences,
+  useSCRouting
+} from '@selfcommunity/react-core';
 
 const messages = defineMessages({
   placeholder: {
@@ -28,17 +36,14 @@ const Root = styled(Box, {
   slot: 'Root'
 })(({theme}) => ({
   width: '100%',
-  maxWidth: '25ch',
   marginLeft: theme.spacing(1),
   [`& .${classes.searchInput}`]: {
-    paddingRight: '2px !important'
+    paddingRight: '2px !important',
+    borderRadius: theme.shape.borderRadius
   },
   [`& .${classes.autocomplete}`]: {
     [theme.breakpoints.up('sm')]: {
-      width: '18ch',
-      '& .Mui-focused': {
-        width: '25ch'
-      }
+      width: '100%'
     }
   }
 }));
@@ -47,15 +52,11 @@ const MobileRoot = styled(Box, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  position: 'absolute',
-  marginLeft: '40px',
   width: '100%',
-  [theme.breakpoints.down('sm')]: {
-    width: '85%'
-  },
   [`& .${classes.searchInput}`]: {
     [theme.breakpoints.down('sm')]: {
-      width: '95%'
+      width: '100%',
+      borderRadius: theme.shape.borderRadius
     },
     paddingRight: '2px !important'
   }
@@ -91,6 +92,7 @@ export default function HeaderSearchBar(inProps: HeaderSearchBarProps) {
   const {className, onSearch, onClick, ...rest} = props;
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
+  const scPreferences: SCPreferencesContextType = useSCPreferences();
   // STATE
   const [query, setQuery] = useState('');
   const [clicked, setClicked] = useState(false);
@@ -99,6 +101,7 @@ export default function HeaderSearchBar(inProps: HeaderSearchBarProps) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [results, setResults] = useState([]);
   const [isSearching, setIsSearching] = useState<boolean>(false);
+  const [focused, setFocused] = useState<boolean>(false);
 
   // INTL
   const intl = useIntl();
@@ -106,6 +109,15 @@ export default function HeaderSearchBar(inProps: HeaderSearchBarProps) {
   const handleChange = (event, value) => {
     setQuery(value);
     setIsSearching(true);
+  };
+
+  const handleClear = () => {
+    if (!isDesktop) {
+      handleClick();
+    }
+    setQuery('');
+    setIsSearching(false);
+    setFocused(false);
   };
 
   const handleSearch = (option) => {
@@ -167,6 +179,11 @@ export default function HeaderSearchBar(inProps: HeaderSearchBarProps) {
           clearOnEscape={true}
           clearOnBlur={true}
           open={query !== '' && isSearching}
+          onOpen={(event) => {
+            if (event.type === 'mousedown') {
+              setFocused(true);
+            }
+          }}
           loadingText={<FormattedMessage id="ui.header.searchBar.loading" defaultMessage="ui.header.searchBar.loading" />}
           noOptionsText={<FormattedMessage id="ui.header.searchBar.noOptions" defaultMessage="ui.header.searchBar.noOptions" />}
           options={results}
@@ -190,11 +207,22 @@ export default function HeaderSearchBar(inProps: HeaderSearchBarProps) {
           renderInput={(params) => (
             <TextField
               {...params}
-              placeholder={`${intl.formatMessage(messages.placeholder)}`}
+              placeholder={`${intl.formatMessage(messages.placeholder, {
+                community: scPreferences.preferences[SCPreferences.TEXT_APPLICATION_NAME].value
+              })}`}
               InputProps={{
                 ...params.InputProps,
                 className: classes.searchInput,
-                startAdornment: <>{!query && isDesktop && <Icon color="primary">search</Icon>}</>
+                startAdornment: <>{!query && isDesktop && <Icon color="primary">search</Icon>}</>,
+                endAdornment: (
+                  <>
+                    {focused && query !== '' && (
+                      <IconButton onClick={handleClear}>
+                        <Icon color="primary">close</Icon>
+                      </IconButton>
+                    )}
+                  </>
+                )
               }}
             />
           )}

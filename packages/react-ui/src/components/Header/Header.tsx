@@ -1,22 +1,32 @@
-import {AppBar, Avatar, Badge, Box, Button, IconButton, Toolbar, styled, Grid, Tabs, Tab, useTheme, useMediaQuery, Menu} from '@mui/material';
+import {AppBar, Avatar, Badge, Box, IconButton, Toolbar, styled, Tabs, Tab, useTheme, useMediaQuery, Menu} from '@mui/material';
 import React, {useContext, useEffect, useMemo} from 'react';
-import {SCPreferences, useSCPreferences, Link, SCUserContext, SCThemeType} from '@selfcommunity/react-core';
+import {
+  SCPreferences,
+  useSCPreferences,
+  Link,
+  SCUserContext,
+  SCThemeType,
+  SCRoutes,
+  SCRoutingContextType,
+  useSCRouting
+} from '@selfcommunity/react-core';
 import {SCUserContextType} from '@selfcommunity/react-core';
 import Icon from '@mui/material/Icon';
 import MobileHeader from './MobileHeader/MobileHeader';
 import {useThemeProps} from '@mui/system';
 import SearchBar, {HeaderSearchBarProps} from './SearchBar';
 import classNames from 'classnames';
-import {FormattedMessage} from 'react-intl';
 import HeaderMenu from './HeaderMenu';
 import {SCHeaderMenuUrlsType} from '../../types';
 import HeaderSkeleton from './Skeleton';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
+import SnippetNotifications from '../SnippetNotifications';
 
 const PREFIX = 'SCHeader';
 
 const classes = {
   root: `${PREFIX}-root`,
+  logo: `${PREFIX}-logo`,
   registerButton: `${PREFIX}-register-button`,
   iconButton: `${PREFIX}-icon-button`,
   logoContainer: `${PREFIX}-logo-container`,
@@ -31,12 +41,18 @@ const Root = styled(Box, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   flexGrow: 1,
+  [`& .${classes.logo}`]: {
+    height: theme.spacing(4)
+  },
   [`& .${classes.registerButton}`]: {
     marginLeft: theme.spacing(2)
   },
   [`& .${classes.iconButton}`]: {
     whiteSpace: 'nowrap',
-    overFlow: 'hidden'
+    overFlow: 'hidden',
+    '&:hover': {
+      color: theme.palette.primary.main
+    }
   },
   ' & .MuiTab-root': {
     minWidth: '130px',
@@ -53,9 +69,7 @@ const Root = styled(Box, {
     flexGrow: 1
   },
   [`& .${classes.searchBarContainer}`]: {
-    flexGrow: 1,
-    maxWidth: '25ch',
-    marginRight: theme.spacing(1)
+    marginRight: theme.spacing(2)
   },
   [`& .${classes.iconButtonsContainer}`]: {
     display: 'flex',
@@ -87,10 +101,6 @@ export interface HeaderProps {
    * @default null
    */
   className?: string;
-  /**
-   * If true, header component is hidden
-   */
-  hidden?: boolean;
   /**
    * Other props
    */
@@ -131,9 +141,10 @@ export default function Header(inProps: HeaderProps) {
     props: inProps,
     name: PREFIX
   });
-  const {url, className, searchBarProps, showNavigation, onNavigationBack, hidden, ...rest} = props;
+  const {url, className, searchBarProps, showNavigation, onNavigationBack, ...rest} = props;
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
+  const scRoutingContext: SCRoutingContextType = useSCRouting();
 
   // PREFERENCES
   const scPreferences = useSCPreferences();
@@ -148,20 +159,28 @@ export default function Header(inProps: HeaderProps) {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const path = typeof window !== 'undefined' ? window.location.pathname : null;
   const [value, setValue] = React.useState(path);
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorMenu, setAnchorMenu] = React.useState(null);
+  const [anchorNotifications, setAnchorNotifications] = React.useState(null);
 
   // HANDLERS
   const handleOpenSettingsMenu = (event) => {
-    setAnchorEl(event.currentTarget);
+    setAnchorMenu(event.currentTarget);
   };
 
   const handleCloseSettingsMenu = () => {
-    setAnchorEl(null);
+    setAnchorMenu(null);
+  };
+  const handleOpenNotificationsMenu = (event) => {
+    setAnchorNotifications(event.currentTarget);
+  };
+
+  const handleCloseNotificationsMenu = () => {
+    setAnchorNotifications(null);
   };
 
   const checkValue = () => {
     if (url) {
-      if ((url.home && value === url.home) || (url.explore && value === url.explore) || (url.followings && value === url.followings)) {
+      if ((url.home && value === url.home) || (url.explore && value === url.explore)) {
         return value;
       }
       return false;
@@ -174,7 +193,7 @@ export default function Header(inProps: HeaderProps) {
 
   if (scUserContext.loading) {
     return <HeaderSkeleton />;
-  } else if (hidden) {
+  } else if (!scUserContext.user) {
     return <HiddenPlaceholder />;
   }
   return (
@@ -185,121 +204,113 @@ export default function Header(inProps: HeaderProps) {
         <AppBar position="fixed" color={'default'}>
           <Toolbar>
             <Box className={classes.logoContainer}>
-              {scUserContext.user && url && url.home ? (
+              {url && url.home && (
                 <Link to={url.home}>
-                  <img src={logo} alt={'logo'} style={{height: '30px'}} />
-                </Link>
-              ) : (
-                <Link to={'/'}>
-                  <img src={logo} alt={'logo'} style={{height: '30px'}} />
+                  <img src={logo} alt={'logo'} className={classes.logo} />
                 </Link>
               )}
-              {!scUserContext.user && url && url.register && (
-                <Button color="inherit" component={Link} to={url.register} className={classes.registerButton}>
-                  <FormattedMessage id="ui.header.button.register" defaultMessage="ui.header.button.register" />
-                </Button>
-              )}
+              {/*{!scUserContext.user && url && url.register && (*/}
+              {/*  <Button color="inherit" component={Link} to={url.register} className={classes.registerButton}>*/}
+              {/*    <FormattedMessage id="ui.header.button.register" defaultMessage="ui.header.button.register" />*/}
+              {/*  </Button>*/}
+              {/*)}*/}
             </Box>
-            {scUserContext.user ? (
-              <>
-                <Box className={classes.tabsContainer}>
-                  <Tabs
-                    onChange={(e, v) => setValue(v)}
-                    value={checkValue()}
-                    textColor="inherit"
-                    indicatorColor="primary"
-                    aria-label="Navigation Tabs">
-                    {url && url.home && <Tab value={url.home} icon={<Icon>home</Icon>} aria-label="HomePage" to={url.home} component={Link}></Tab>}
-                    {url && url.explore && (
-                      <Tab value={url.explore} icon={<Icon>explore</Icon>} aria-label="Explore" to={url.explore} component={Link}></Tab>
-                    )}
-                    {url && url.followings && (
-                      <Tab value={url.followings} icon={<Icon>person</Icon>} aria-label="Followings" to={url.followings} component={Link}></Tab>
-                    )}
-                  </Tabs>
-                </Box>
-                <Box className={classes.searchBarContainer}>
-                  <SearchBar {...searchBarProps} />
-                </Box>
-                <Box className={classes.iconButtonsContainer}>
-                  {url && url.profile && (
-                    <IconButton
-                      component={Link}
-                      to={url.profile}
-                      onClick={() => setValue(url.profile)}
-                      size="large"
-                      aria-label="Profile"
-                      color="inherit"
-                      className={classes.iconButton}>
-                      <Badge color="error">
-                        <Avatar alt={scUserContext.user.username} src={scUserContext.user.avatar} />
-                      </Badge>
-                    </IconButton>
-                  )}
-                  {url && url.create && (
-                    <IconButton
-                      component={Link}
-                      to={url.create}
-                      onClick={() => setValue(url.create)}
-                      size="large"
-                      aria-label="New Contribute"
-                      color="inherit"
-                      className={classes.iconButton}>
-                      <Badge color="error">
-                        <Icon>add_circle_outline</Icon>
-                      </Badge>
-                    </IconButton>
-                  )}
-                  {url && url.notifications && (
-                    <IconButton
-                      component={Link}
-                      to={url.notifications}
-                      onClick={() => setValue(url.notifications)}
-                      size="large"
-                      aria-label="Notifications"
-                      color="inherit"
-                      className={classes.iconButton}>
-                      <Badge badgeContent={scUserContext.user.unseen_interactions_counter} color="error">
-                        <Icon>notifications</Icon>
-                      </Badge>
-                    </IconButton>
-                  )}
-                  <IconButton onClick={handleOpenSettingsMenu} className={classes.iconButton}>
-                    <Icon>expand_more</Icon>
-                  </IconButton>
-                  <Menu
-                    id="menu-appbar"
-                    anchorEl={anchorEl}
-                    open={Boolean(anchorEl)}
-                    PaperProps={{
-                      style: {
-                        transform: 'translateX(14px) translateY(14px)'
-                      }
-                    }}
-                    onClose={handleCloseSettingsMenu}
-                    onClick={handleCloseSettingsMenu}>
-                    <HeaderMenu url={url} />
-                  </Menu>
-                </Box>
-              </>
-            ) : (
-              <>
-                <Grid container direction="row" justifyContent="flex-end" alignItems="center">
-                  <SearchBar {...searchBarProps} />
-                  {url && url.explore && (
-                    <Button component={Link} to={url.explore} size="medium" aria-label="Explore" color="inherit">
-                      <FormattedMessage id="ui.header.button.explore" defaultMessage="ui.header.button.explore" />
-                    </Button>
-                  )}
-                  {url && url.login && (
-                    <Button color="inherit" onClick={url.login}>
-                      {' '}
-                      <FormattedMessage id="ui.header.button.login" defaultMessage="ui.header.button.login" />
-                    </Button>
-                  )}
-                </Grid>
-              </>
-            )}
+            {/*{scUserContext.user ? (*/}
+            {/*  <>*/}
+            <Box className={classes.tabsContainer}>
+              <Tabs onChange={(e, v) => setValue(v)} value={checkValue()} textColor="inherit" indicatorColor="primary" aria-label="Navigation Tabs">
+                {url && url.home && <Tab value={url.home} icon={<Icon>home</Icon>} aria-label="HomePage" to={url.home} component={Link}></Tab>}
+                {url && url.explore && (
+                  <Tab value={url.explore} icon={<Icon>explore</Icon>} aria-label="Explore" to={url.explore} component={Link}></Tab>
+                )}
+              </Tabs>
+            </Box>
+            <Box className={classes.searchBarContainer}>
+              <SearchBar {...searchBarProps} />
+            </Box>
+            <Box className={classes.iconButtonsContainer}>
+              <IconButton
+                component={Link}
+                to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, scUserContext.user)}
+                onClick={() => setValue('profile')}
+                size="large"
+                aria-label="Profile"
+                color="inherit"
+                className={classes.iconButton}>
+                <Badge color="error">
+                  <Avatar alt={scUserContext.user.username} src={scUserContext.user.avatar} />
+                </Badge>
+              </IconButton>
+              <IconButton onClick={handleOpenNotificationsMenu} className={classes.iconButton}>
+                <Badge badgeContent={scUserContext.user.unseen_interactions_counter} color="error">
+                  <Icon>notifications_active</Icon>
+                </Badge>
+              </IconButton>
+              <Menu
+                id="notifications-menu"
+                anchorEl={anchorNotifications}
+                open={Boolean(anchorNotifications)}
+                PaperProps={{
+                  style: {
+                    width: '200px',
+                    transform: 'translateX(14px) translateY(14px)'
+                  }
+                }}
+                onClose={handleCloseNotificationsMenu}
+                onClick={handleCloseNotificationsMenu}>
+                <SnippetNotifications />
+              </Menu>
+              {url && url.messages && (
+                <IconButton
+                  component={Link}
+                  to={url.messages}
+                  onClick={() => setValue(url.messages)}
+                  size="large"
+                  aria-label="Messages"
+                  color="inherit"
+                  className={classes.iconButton}>
+                  <Badge badgeContent={scUserContext.user.unseen_notification_banners_counter} color="error">
+                    <Icon>email</Icon>
+                  </Badge>
+                </IconButton>
+              )}
+              <IconButton onClick={handleOpenSettingsMenu} className={classes.iconButton}>
+                {anchorMenu ? <Icon>expand_less</Icon> : <Icon>expand_more</Icon>}
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorMenu}
+                open={Boolean(anchorMenu)}
+                PaperProps={{
+                  style: {
+                    transform: 'translateX(14px) translateY(14px)'
+                  }
+                }}
+                onClose={handleCloseSettingsMenu}
+                onClick={handleCloseSettingsMenu}>
+                <HeaderMenu url={url} />
+              </Menu>
+            </Box>
+            {/*  </>*/}
+            {/*) : (*/}
+            {/*  <HiddenPlaceholder />*/}
+            {/*  <>*/}
+            {/*    <Grid container direction="row" justifyContent="flex-end" alignItems="center">*/}
+            {/*      <SearchBar {...searchBarProps} />*/}
+            {/*      {url && url.explore && (*/}
+            {/*        <Button component={Link} to={url.explore} size="medium" aria-label="Explore" color="inherit">*/}
+            {/*          <FormattedMessage id="ui.header.button.explore" defaultMessage="ui.header.button.explore" />*/}
+            {/*        </Button>*/}
+            {/*      )}*/}
+            {/*      {url && url.login && (*/}
+            {/*        <Button color="inherit" onClick={url.login}>*/}
+            {/*          {' '}*/}
+            {/*          <FormattedMessage id="ui.header.button.login" defaultMessage="ui.header.button.login" />*/}
+            {/*        </Button>*/}
+            {/*      )}*/}
+            {/*    </Grid>*/}
+            {/*  </>*/}
+            {/*)}*/}
           </Toolbar>
         </AppBar>
       )}

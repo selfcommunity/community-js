@@ -157,7 +157,8 @@ const classes = {
   viewAudienceButton: `${PREFIX}-view-audience-button`,
   groupedIcons: `${PREFIX}-grouped-icons`,
   reactionAvatar: `${PREFIX}-reaction-avatar`,
-  reactionIcon: `${PREFIX}-reaction-icon`
+  reactionIcon: `${PREFIX}-reaction-icon`,
+  tabReactionIcon: `${PREFIX}-tab-reaction-icon`
 };
 
 const Root = styled(Box, {
@@ -197,6 +198,12 @@ const Root = styled(Box, {
         height: '1rem',
         width: '1rem'
       }
+    }
+  },
+  [`& .${classes.tabReactionIcon}`]: {
+    '& img': {
+      width: '2rem',
+      height: '2rem'
     }
   }
 }));
@@ -523,8 +530,8 @@ export default function Reaction(inProps: VoteProps): JSX.Element {
                     {reactionsList.map((r: any, index) => (
                       <Tab
                         icon={
-                          <Icon>
-                            <img alt={r.reaction.label} src={r.reaction.image} width={20} height={20} />
+                          <Icon className={classes.tabReactionIcon}>
+                            <img alt={r.reaction.label} src={r.reaction.image} />
                           </Icon>
                         }
                         iconPosition="start"
