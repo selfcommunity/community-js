@@ -215,30 +215,28 @@ const Editor: ForwardRefRenderFunction<EditorRef, EditorProps> = (inProps: Edito
 
   return (
     <Root id={id} className={classNames(classes.root, className)}>
-      {typeof window !== 'undefined' && (
-        <LexicalComposer initialConfig={initialConfig}>
-          <RichTextPlugin
-            contentEditable={<ContentEditable className={classes.content} />}
-            placeholder={
-              <Box className={classes.placeholder} onClick={handleFocus}>
-                <FormattedMessage id="ui.editor.placeholder" defaultMessage="ui.editor.placeholder" />
-              </Box>
-            }
-            ErrorBoundary={LexicalErrorBoundary}
-          />
-          <DefaultHtmlValuePlugin defaultValue={defaultValue} />
-          <HistoryPlugin />
-          <OnChangePlugin onChange={handleChange} />
-          <AutoLinkPlugin />
-          <MentionsPlugin />
-          <LinkPlugin />
-          <Stack className={classes.actions} direction="row">
-            <ImagePlugin />
-            <EmojiPlugin />
-          </Stack>
-          <ApiPlugin ref={apiRef} />
-        </LexicalComposer>
-      )}
+      <LexicalComposer initialConfig={initialConfig}>
+        <RichTextPlugin
+          contentEditable={<ContentEditable className={classes.content} />}
+          placeholder={
+            <Box className={classes.placeholder} onClick={handleFocus}>
+              <FormattedMessage id="ui.editor.placeholder" defaultMessage="ui.editor.placeholder" />
+            </Box>
+          }
+          ErrorBoundary={LexicalErrorBoundary}
+        />
+        <DefaultHtmlValuePlugin defaultValue={defaultValue} />
+        <HistoryPlugin />
+        <OnChangePlugin onChange={handleChange} />
+        <AutoLinkPlugin />
+        <MentionsPlugin />
+        <LinkPlugin />
+        <Stack className={classes.actions} direction="row">
+          <ImagePlugin />
+          <EmojiPlugin />
+        </Stack>
+        <ApiPlugin ref={apiRef} />
+      </LexicalComposer>
     </Root>
   );
 };

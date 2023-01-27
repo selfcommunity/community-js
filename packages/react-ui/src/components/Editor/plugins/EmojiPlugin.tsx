@@ -5,7 +5,7 @@ import {Fade, Icon, IconButton, Popover, useTheme, useMediaQuery} from '@mui/mat
 import {styled} from '@mui/material/styles';
 import BaseDrawer from '../../../shared/BaseDrawer';
 import {SCThemeType} from '@selfcommunity/react-core';
-import { EmojiClickData } from 'emoji-picker-react';
+import {EmojiClickData} from 'emoji-picker-react';
 // import deps only if csr
 let Picker;
 typeof window !== 'undefined' &&
