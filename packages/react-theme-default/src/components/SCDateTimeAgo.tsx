@@ -3,8 +3,8 @@ const Component = {
     root: ({theme}: any) => ({
       color: theme.palette.text.secondary,
       '& .MuiIcon-root': {
-        fontSize: '0.857rem',
-        lineHeight: '1rem',
+        fontSize: '1rem',
+        lineHeight: '1.143rem',
         marginRight: 2
       },
       '& .MuiTypography-root': {

@@ -59,6 +59,7 @@ import MuiAutocomplete from './components/MuiAutocomplete';
 import SCComposerPoll from './components/SCComposerPoll';
 import SCPreviewMediaDocument from './components/SCPreviewMediaDocument';
 import SCCommentObjectSkeleton from './components/SCCommentObjectSkeleton';
+import SCChoices from './components/SCChoices';
 
 /**
  * Style fragments - Imports - End
@@ -124,6 +125,7 @@ const theme = createTheme({
     SCLoyaltyProgram,
     SCLoyaltyProgramDetail,
     SCEditor,
+    SCChoices,
     SCCommentsObject,
     SCCommentObject,
     SCCommentObjectSkeleton,
