@@ -18,8 +18,10 @@ const classes = {
   root: `${PREFIX}-root`,
   logo: `${PREFIX}-logo`,
   tabs: `${PREFIX}-tabs`,
+  iconButton: `${PREFIX}-icon-button`,
   topToolbar: `${PREFIX}-top-toolbar`,
-  bottomToolbar: `${PREFIX}-bottom-toolbar`
+  bottomToolbar: `${PREFIX}-bottom-toolbar`,
+  gridContainer: `${PREFIX}-grid-container`
 };
 
 const Root = styled(Box, {
@@ -42,6 +44,13 @@ const Root = styled(Box, {
   [`& .${classes.bottomToolbar}`]: {
     display: 'flex',
     justifyContent: 'space-between'
+  },
+  [`& .${classes.gridContainer}`]: {
+    direction: 'row',
+    justifyContent: 'flex-start'
+  },
+  [`& .${classes.gridContainer}-width`]: {
+    width: '30%'
   },
   ' & .MuiTab-root': {
     minWidth: '70px',
@@ -172,7 +181,7 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
     <Root className={classNames(classes.root, className)} {...rest}>
       <AppBar position="fixed" color={'default'}>
         <Toolbar className={classes.topToolbar}>
-          <Grid container direction="row" justifyContent="flex-start">
+          <Grid container className={clicked ? `${classes.gridContainer}-width` : classes.gridContainer}>
             {!showNavigation && url && url.home && (
               <Link to={url.home}>
                 <img src={logo} alt={'logo'} className={classes.logo} />
@@ -187,7 +196,7 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
               </Typography>
             )}
           </Grid>
-          <SearchBar {...searchBarProps} onClick={() => setClicked(!clicked)} />
+          <SearchBar {...searchBarProps} showNavigation={showNavigation} onClick={() => setClicked(!clicked)} />
         </Toolbar>
       </AppBar>
       <BottomBar>
@@ -203,7 +212,7 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
             {url && url.home && <Tab value={url.home} icon={<Icon>home</Icon>} aria-label="HomePage" to={url.home} component={Link}></Tab>}
             {url && url.explore && <Tab value={url.explore} icon={<Icon>explore</Icon>} aria-label="Explore" to={url.explore} component={Link}></Tab>}
             <Tab
-              value={url.notifications}
+              value={url && url.notifications}
               icon={
                 <Badge badgeContent={scUserContext.user.unseen_interactions_counter} color="error">
                   <Icon>notifications_active</Icon>{' '}
@@ -223,10 +232,10 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
               <SnippetNotifications />
             </SwipeableDrawer>
             {url && url.messages && (
-              <Tab value={url.messages} icon={<Icon>email</Icon>} aria-label="Explore" to={url.messages} component={Link}></Tab>
+              <Tab value={url.messages} icon={<Icon>email</Icon>} aria-label="Messages" to={url.messages} component={Link}></Tab>
             )}
           </Tabs>
-          <IconButton onClick={handleOpenSettingsMenu}>
+          <IconButton className={classes.iconButton} onClick={handleOpenSettingsMenu}>
             <Icon>more_vert</Icon>
           </IconButton>
           <SwipeableDrawer
