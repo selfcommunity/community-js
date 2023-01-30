@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.7...@selfcommunity/react-theme-default@0.1.0-alpha.8) (2023-01-30)
+
+
+### Bug Fixes
+
+* Update font icon ([2376232](https://github.com/selfcommunity/community-js/commit/2376232122ef035847049db6bb60c70ef245f039))
+
+
+### Performance Improvements
+
+* New icon font ([32e7c9d](https://github.com/selfcommunity/community-js/commit/32e7c9de0042803872c16493d232ca449c0f181e))
+
+
+
+
+
 # [0.1.0-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.6...@selfcommunity/react-theme-default@0.1.0-alpha.7) (2023-01-27)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default
