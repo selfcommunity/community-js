@@ -30,8 +30,8 @@ const Component = {
             },
             '& .SCFeedObject-tag': {
               '& .MuiIcon-root': {
-                fontSize: '0.857rem',
-                lineHeight: '1rem'
+                fontSize: '1rem',
+                lineHeight: '1.143rem'
               }
             }
           }
@@ -89,7 +89,7 @@ const Component = {
                 padding: theme.spacing(1.5),
                 minWidth: 0,
                 '& .MuiIcon-root': {
-                  fontSize: '1.38rem'
+                  fontSize: '1.571rem'
                 },
                 '& .SCReactionAction-reaction-icon': {
                   '>img': {

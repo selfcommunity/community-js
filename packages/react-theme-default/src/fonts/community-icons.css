@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'community-icons';
-  src:  url('./community/icons.eot?261q38');
-  src:  url('./community/icons.eot?261q38#iefix') format('embedded-opentype'),
-    url('./community/icons.woff2?261q38') format('woff2'),
-    url('./community/icons.ttf?261q38') format('truetype'),
-    url('./community/icons.woff?261q38') format('woff'),
-    url('./community/icons.svg?261q38#icons') format('svg');
+  src:  url('./community/icons.eot?taykjf');
+  src:  url('./community/icons.eot?taykjf#iefix') format('embedded-opentype'),
+  url('./community/icons.woff2?taykjf') format('woff2'),
+  url('./community/icons.ttf?taykjf') format('truetype'),
+  url('./community/icons.woff?taykjf') format('woff'),
+  url('./community/icons.svg?taykjf#fashionista') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -36,249 +36,267 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.access_time:before {
-  content: "\e900";
-}
-.add_circle_outline:before {
-  content: "\e901";
-}
-.add_location_alt:before {
-  content: "\e902";
-}
-.add:before {
-  content: "\e903";
-}
-.arrow_back:before {
-  content: "\e904";
-}
-.attach_file:before {
-  content: "\e905";
-}
-.bar_chart:before {
-  content: "\e906";
-}
-.bookmark_added:before {
-  content: "\e907";
-}
-.bookmark_border:before {
-  content: "\e908";
-}
-.card_giftcard:before {
-  content: "\e909";
-}
-.card_membership:before {
-  content: "\e90a";
-}
-.chat_bubble_outline:before {
-  content: "\e90b";
-}
-.check:before {
-  content: "\e90c";
-}
-.chevron_left:before {
-  content: "\e90d";
-}
-.chevron_right:before {
-  content: "\e90e";
-}
-.close:before {
+.icon-close:before {
   content: "\e90f";
 }
-.code:before {
+.icon-access_time:before {
+  content: "\e900";
+}
+.icon-add_circle_outline:before {
+  content: "\e901";
+}
+.icon-add_location_alt:before {
+  content: "\e902";
+}
+.icon-add:before {
+  content: "\e903";
+}
+.icon-arrow_back:before {
+  content: "\e904";
+}
+.icon-attach_file:before {
+  content: "\e905";
+}
+.icon-bar_chart:before {
+  content: "\e906";
+}
+.icon-bookmark_added:before {
+  content: "\e907";
+}
+.icon-bookmark_border:before {
+  content: "\e908";
+}
+.icon-card_giftcard:before {
+  content: "\e909";
+}
+.icon-card_membership:before {
+  content: "\e90a";
+}
+.icon-chat_bubble_outline:before {
+  content: "\e90b";
+}
+.icon-check:before {
+  content: "\e90c";
+}
+.icon-chevron_left:before {
+  content: "\e90d";
+}
+.icon-chevron_right:before {
+  content: "\e90e";
+}
+.icon-code:before {
   content: "\e910";
 }
-.create:before {
+.icon-create:before {
   content: "\e911";
 }
-.delete:before {
+.icon-delete:before {
   content: "\e912";
 }
-.download:before {
+.icon-download:before {
   content: "\e913";
 }
-.edit:before {
+.icon-edit:before {
   content: "\e914";
 }
-.expand_less:before {
+.icon-email:before {
   content: "\e915";
 }
-.expand_more:before {
+.icon-error:before {
   content: "\e916";
 }
-.face:before {
+.icon-expand_less:before {
   content: "\e917";
 }
-.facebook_circle:before {
+.icon-expand_more:before {
   content: "\e918";
 }
-.fiber_manual_record:before {
+.icon-explore:before {
   content: "\e919";
 }
-.folder_open:before {
+.icon-face:before {
   content: "\e91a";
 }
-.format_align_center:before {
+.icon-facebook:before {
   content: "\e91b";
 }
-.format_align_left:before {
+.icon-fiber_manual_record:before {
   content: "\e91c";
 }
-.format_align_right:before {
+.icon-folder_open:before {
   content: "\e91d";
 }
-.format_bold:before {
+.icon-format_align_center:before {
   content: "\e91e";
 }
-.format_clear:before {
+.icon-format_align_left:before {
   content: "\e91f";
 }
-.format_italic:before {
+.icon-format_align_right:before {
   content: "\e920";
 }
-.format_list_bulleted:before {
+.icon-format_bold:before {
   content: "\e921";
 }
-.format_list_numbered:before {
+.icon-format_clear:before {
   content: "\e922";
 }
-.format_quote:before {
+.icon-format_italic:before {
   content: "\e923";
 }
-.format_strikethrough:before {
+.icon-format_list_bulleted:before {
   content: "\e924";
 }
-.format_underline:before {
+.icon-format_list_numbered:before {
   content: "\e925";
 }
-.help_outline:before {
+.icon-format_quote:before {
   content: "\e926";
 }
-.hide_image:before {
+.icon-format_strikethrough:before {
   content: "\e927";
 }
-.highlight_off:before {
+.icon-format_underline:before {
   content: "\e928";
 }
-.highlight:before {
+.icon-help_outline:before {
   content: "\e929";
 }
-.image:before {
+.icon-hide_image:before {
   content: "\e92a";
 }
-.insert_link:before {
+.icon-highlight_off:before {
   content: "\e92b";
 }
-.instagram_circle:before {
+.icon-highlight:before {
   content: "\e92c";
 }
-.label:before {
+.icon-home:before {
   content: "\e92d";
 }
-.link:before {
+.icon-image:before {
   content: "\e92e";
 }
-.linkedin_circle:before {
+.icon-info:before {
   content: "\e92f";
 }
-.list:before {
+.icon-insert_link:before {
   content: "\e930";
 }
-.more_circle:before {
+.icon-instagram:before {
   content: "\e931";
 }
-.more_vert:before {
+.icon-label:before {
   content: "\e932";
 }
-.movie:before {
+.icon-link:before {
   content: "\e933";
 }
-.notifications_off:before {
+.icon-linkedin:before {
   content: "\e934";
 }
-.notifications:before {
+.icon-list:before {
   content: "\e935";
 }
-.outlined_flag:before {
+.icon-more_circle:before {
   content: "\e936";
 }
-.people_alt:before {
+.icon-more_vert:before {
   content: "\e937";
 }
-.person:before {
+.icon-movie:before {
   content: "\e938";
 }
-.photo_camera:before {
+.icon-notifications_active:before {
   content: "\e939";
 }
-.photo:before {
+.icon-notifications_off:before {
   content: "\e93a";
 }
-.picture_as_pdf:before {
+.icon-outlined_flag:before {
   content: "\e93b";
 }
-.play_arrow:before {
+.icon-people_alt:before {
   content: "\e93c";
 }
-.play_circle_outline:before {
+.icon-person:before {
   content: "\e93d";
 }
-.public:before {
+.icon-photo_camera:before {
   content: "\e93e";
 }
-.redo:before {
+.icon-photo:before {
   content: "\e93f";
 }
-.restore_from_trash:before {
+.icon-picture_as_pdf:before {
   content: "\e940";
 }
-.restore:before {
+.icon-play_arrow:before {
   content: "\e941";
 }
-.save:before {
+.icon-play_circle_outline:before {
   content: "\e942";
 }
-.send:before {
+.icon-public:before {
   content: "\e943";
 }
-.sentiment_satisfied_alt:before {
+.icon-redo:before {
   content: "\e944";
 }
-.share:before {
+.icon-restore_from_trash:before {
   content: "\e945";
 }
-.thumb_up_off_alt:before {
+.icon-restore:before {
   content: "\e946";
 }
-.thumb_up:before {
+.icon-save:before {
   content: "\e947";
 }
-.title:before {
+.icon-search:before {
   content: "\e948";
 }
-.twitter_circle:before {
+.icon-send:before {
   content: "\e949";
 }
-.undo:before {
+.icon-sentiment_satisfied_alt:before {
   content: "\e94a";
 }
-.upload:before {
+.icon-share:before {
   content: "\e94b";
 }
-.visibility_off:before {
+.icon-thumb_up_off_alt:before {
   content: "\e94c";
 }
-.visibility:before {
+.icon-thumb_up:before {
   content: "\e94d";
 }
-.whatsup_circle:before {
+.icon-title:before {
   content: "\e94e";
 }
-.zoom_in:before {
+.icon-twitter:before {
   content: "\e94f";
 }
-.zoom_out_map:before {
+.icon-undo:before {
   content: "\e950";
 }
-.zoom_out:before {
+.icon-upload:before {
   content: "\e951";
+}
+.icon-visibility_off:before {
+  content: "\e952";
+}
+.icon-visibility:before {
+  content: "\e953";
+}
+.icon-whatsup:before {
+  content: "\e954";
+}
+.icon-zoom_in:before {
+  content: "\e955";
+}
+.icon-zoom_out_map:before {
+  content: "\e956";
+}
+.icon-zoom_out:before {
+  content: "\e957";
 }
