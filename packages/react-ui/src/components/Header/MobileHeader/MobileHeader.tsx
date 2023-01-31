@@ -1,4 +1,4 @@
-import {AppBar, Badge, Box, Grid, IconButton, styled, SwipeableDrawer, Tab, Tabs, Toolbar, Typography} from '@mui/material';
+import {AppBar, Badge, Box, Button, Grid, IconButton, styled, SwipeableDrawer, Tab, Tabs, Toolbar, Typography} from '@mui/material';
 import Icon from '@mui/material/Icon';
 import React, {useContext, useEffect, useMemo, useState} from 'react';
 import {Link, SCPreferences, SCUserContext, SCUserContextType, useSCPreferences} from '@selfcommunity/react-core';
@@ -9,8 +9,8 @@ import HeaderMenu from '../HeaderMenu';
 import {SCHeaderMenuUrlsType} from '../../../types';
 import MobileHeaderSkeleton from './Skeleton';
 import {SCFeedObjectTypologyType} from '@selfcommunity/types';
-import HiddenPlaceholder from '../../../shared/HiddenPlaceholder';
 import SnippetNotifications from '../../SnippetNotifications';
+import {FormattedMessage} from 'react-intl';
 
 const PREFIX = 'SCMobileHeader';
 
@@ -174,8 +174,6 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
 
   if (scUserContext.loading) {
     return <MobileHeaderSkeleton />;
-  } else if (!scUserContext.user) {
-    return <HiddenPlaceholder />;
   }
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
@@ -200,56 +198,91 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
         </Toolbar>
       </AppBar>
       <BottomBar>
-        <Toolbar className={classes.bottomToolbar}>
-          <Tabs
-            className={classes.tabs}
-            onChange={handleChange}
-            value={checkValue()}
-            textColor="primary"
-            indicatorColor="primary"
-            aria-label="Navigation Tabs"
-            variant="scrollable">
-            {url && url.home && <Tab value={url.home} icon={<Icon>home</Icon>} aria-label="HomePage" to={url.home} component={Link}></Tab>}
-            {url && url.explore && <Tab value={url.explore} icon={<Icon>explore</Icon>} aria-label="Explore" to={url.explore} component={Link}></Tab>}
-            <Tab
-              value={url && url.notifications}
-              icon={
-                <Badge badgeContent={scUserContext.user.unseen_interactions_counter} color="error">
-                  <Icon>notifications_active</Icon>{' '}
-                </Badge>
-              }
-              aria-label="Notifications"
-              onClick={() => setOpenNotifications(true)}></Tab>
+        {scUserContext.user ? (
+          <Toolbar className={classes.bottomToolbar}>
+            <Tabs
+              className={classes.tabs}
+              onChange={handleChange}
+              value={checkValue()}
+              textColor="primary"
+              indicatorColor="primary"
+              aria-label="Navigation Tabs"
+              variant="scrollable">
+              {url && url.home && <Tab value={url.home} icon={<Icon>home</Icon>} aria-label="HomePage" to={url.home} component={Link}></Tab>}
+              {url && url.explore && (
+                <Tab value={url.explore} icon={<Icon>explore</Icon>} aria-label="Explore" to={url.explore} component={Link}></Tab>
+              )}
+              {url && url.notifications && (
+                <>
+                  <Tab
+                    value={url.notifications}
+                    icon={
+                      <Badge badgeContent={scUserContext.user.unseen_interactions_counter} color="error">
+                        <Icon>notifications_active</Icon>{' '}
+                      </Badge>
+                    }
+                    aria-label="Notifications"
+                    onClick={() => setOpenNotifications(true)}></Tab>
+                  <SwipeableDrawer
+                    PaperProps={{
+                      sx: {
+                        width: '85%',
+                        '& .SCSnippetNotifications-root': {height: 'inherit'},
+                        '& .SCSnippetNotifications-root .SCSnippetNotifications-notifications-wrap': {height: 'inherit'}
+                      }
+                    }}
+                    anchor={'right'}
+                    open={openNotifications}
+                    onClick={() => setOpenNotifications(false)}
+                    onClose={() => setOpenNotifications(false)}
+                    onOpen={toggleDrawer('right', true)}>
+                    <>
+                      <SnippetNotifications />
+                      <Button component={Link} to={url.notifications} sx={{display: 'flex'}}>
+                        <FormattedMessage id="ui.header.notifications.button.seeMore" defaultMessage="ui.header.notifications.button.seeMore" />
+                      </Button>
+                    </>
+                  </SwipeableDrawer>
+                </>
+              )}
+              {url && url.messages && (
+                <Tab value={url.messages} icon={<Icon>email</Icon>} aria-label="Messages" to={url.messages} component={Link}></Tab>
+              )}
+            </Tabs>
+            <IconButton className={classes.iconButton} onClick={handleOpenSettingsMenu}>
+              <Icon>more_vert</Icon>
+            </IconButton>
             <SwipeableDrawer
               PaperProps={{
-                sx: {width: '85%', '& .SCSnippetNotifications-root .SCSnippetNotifications-notifications-wrap': {height: '100vh'}}
+                sx: {width: '85%'}
               }}
               anchor={'right'}
-              open={openNotifications}
-              onClick={() => setOpenNotifications(false)}
-              onClose={() => setOpenNotifications(false)}
+              open={openSettings}
+              onClick={() => setOpenSettings(false)}
+              onClose={() => setOpenSettings(false)}
               onOpen={toggleDrawer('right', true)}>
-              <SnippetNotifications />
+              <HeaderMenu url={url} />
             </SwipeableDrawer>
-            {url && url.messages && (
-              <Tab value={url.messages} icon={<Icon>email</Icon>} aria-label="Messages" to={url.messages} component={Link}></Tab>
+          </Toolbar>
+        ) : (
+          <Toolbar sx={{justifyContent: 'space-between'}}>
+            {url && url.explore && (
+              <Button component={Link} to={url.explore} size="medium" color="inherit">
+                <FormattedMessage id="ui.header.button.explore" defaultMessage="ui.header.button.explore" />
+              </Button>
             )}
-          </Tabs>
-          <IconButton className={classes.iconButton} onClick={handleOpenSettingsMenu}>
-            <Icon>more_vert</Icon>
-          </IconButton>
-          <SwipeableDrawer
-            PaperProps={{
-              sx: {width: '85%'}
-            }}
-            anchor={'right'}
-            open={openSettings}
-            onClick={() => setOpenSettings(false)}
-            onClose={() => setOpenSettings(false)}
-            onOpen={toggleDrawer('right', true)}>
-            <HeaderMenu url={url} />
-          </SwipeableDrawer>
-        </Toolbar>
+            {url && url.login && (
+              <Button color="inherit" onClick={url.login}>
+                <FormattedMessage id="ui.header.button.login" defaultMessage="ui.header.button.login" />
+              </Button>
+            )}
+            {url && url.register && (
+              <Button color="inherit" component={Link} to={url.register}>
+                <FormattedMessage id="ui.header.button.register" defaultMessage="ui.header.button.register" />
+              </Button>
+            )}
+          </Toolbar>
+        )}
       </BottomBar>
     </Root>
   );

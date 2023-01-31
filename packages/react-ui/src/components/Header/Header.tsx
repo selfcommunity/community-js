@@ -1,4 +1,4 @@
-import {AppBar, Avatar, Badge, Box, IconButton, Toolbar, styled, Tabs, Tab, useTheme, useMediaQuery, Menu} from '@mui/material';
+import {AppBar, Avatar, Badge, Box, IconButton, Toolbar, styled, Tabs, Tab, useTheme, useMediaQuery, Menu, Button, Grid} from '@mui/material';
 import React, {useContext, useEffect, useMemo} from 'react';
 import {
   SCPreferences,
@@ -19,8 +19,8 @@ import classNames from 'classnames';
 import HeaderMenu from './HeaderMenu';
 import {SCHeaderMenuUrlsType} from '../../types';
 import HeaderSkeleton from './Skeleton';
-import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import SnippetNotifications from '../SnippetNotifications';
+import {FormattedMessage} from 'react-intl';
 
 const PREFIX = 'SCHeader';
 
@@ -29,11 +29,15 @@ const classes = {
   logo: `${PREFIX}-logo`,
   registerButton: `${PREFIX}-register-button`,
   tab: `${PREFIX}-tab`,
+  tabsL: `${PREFIX}-tabs-left`,
+  tabsR: `${PREFIX}-tabs-right`,
   iconButton: `${PREFIX}-icon-button`,
   logoContainer: `${PREFIX}-logo-container`,
-  tabsContainer: `${PREFIX}-tabs-container`,
+  tabsLContainer: `${PREFIX}-tabs-left-container`,
   searchBarContainer: `${PREFIX}-search-bar-container`,
-  iconButtonsContainer: `${PREFIX}-icon-buttons-container`
+  rightBlockContainer: `${PREFIX}-right-block-container`,
+  notificationsMenu: `${PREFIX}-notifications-menu`,
+  notificationsContent: `${PREFIX}-notifications-content`
 };
 
 const Root = styled(Box, {
@@ -41,6 +45,7 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
+  position: 'relative',
   flexGrow: 1,
   [`& .${classes.logo}`]: {
     height: theme.spacing(4)
@@ -60,27 +65,33 @@ const Root = styled(Box, {
       color: theme.palette.primary.main
     }
   },
-  '& .SCHeader-icon-button-settings': {
-    marginLeft: theme.spacing(3)
+  [`& .${classes.tabsR}`]: {
+    marginRight: theme.spacing(3)
   },
   [`& .${classes.logoContainer}`]: {
     display: 'flex',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    marginRight: '24px',
-    flexGrow: 2
+    marginRight: theme.spacing(3),
+    flexGrow: 1
   },
-  [`& .${classes.tabsContainer}`]: {
+  [`& .${classes.tabsLContainer}`]: {
     flexGrow: 1
   },
   [`& .${classes.searchBarContainer}`]: {
-    marginRight: theme.spacing(2)
+    marginRight: theme.spacing(2),
+    flexGrow: 1,
+    maxWidth: '40ch'
   },
-  [`& .${classes.iconButtonsContainer}`]: {
+  [`& .${classes.rightBlockContainer}`]: {
     display: 'flex',
     justifyContent: 'flex-end',
     alignItems: 'center',
-    whiteSpace: 'nowrap'
+    whiteSpace: 'nowrap',
+    [`& .${classes.tab}`]: {
+      minWidth: theme.spacing(5),
+      maxWidth: theme.spacing(5)
+    }
   }
 }));
 
@@ -134,9 +145,9 @@ export interface HeaderProps {
  |registerButton|.SCHeader-register-button|Styles applied to the register button element.|
  |iconButton|.SCHeader-icon-button|Styles applied to the icon button elements.|
  |logoContainer|.SCHeader-logo-container|Styles applied to the logo container element|
- |tabsContainer|.SCHeader-tabs-container|Styles applied to the tabs container element|
+ |tabsLContainer|.SCHeader-tabs-container|Styles applied to the tabs container element|
  |searchBarContainer|.SCHeader-search-bar-container|Styles applied to the search bar container element|
- |iconButtonsContainer|.SCHeader-icon-buttons-container|Styles applied to the icon buttons container element|
+ |rightBlockContainer|.SCHeader-right-block-container|Styles applied to the right container elements|
  *
  * @param inProps
  */
@@ -185,7 +196,12 @@ export default function Header(inProps: HeaderProps) {
 
   const checkValue = () => {
     if (url) {
-      if ((url.home && value === url.home) || (url.explore && value === url.explore)) {
+      if (
+        (url.home && value === url.home) ||
+        (url.explore && value === url.explore) ||
+        (url.messages && value === url.messages) ||
+        (url.notifications && value === url.notifications)
+      ) {
         return value;
       }
       return false;
@@ -198,9 +214,8 @@ export default function Header(inProps: HeaderProps) {
 
   if (scUserContext.loading) {
     return <HeaderSkeleton />;
-  } else if (!scUserContext.user) {
-    return <HiddenPlaceholder />;
   }
+
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
       {isMobile ? (
@@ -214,116 +229,152 @@ export default function Header(inProps: HeaderProps) {
                   <img src={logo} alt={'logo'} className={classes.logo} />
                 </Link>
               )}
-              {/*{!scUserContext.user && url && url.register && (*/}
-              {/*  <Button color="inherit" component={Link} to={url.register} className={classes.registerButton}>*/}
-              {/*    <FormattedMessage id="ui.header.button.register" defaultMessage="ui.header.button.register" />*/}
-              {/*  </Button>*/}
-              {/*)}*/}
-            </Box>
-            {/*{scUserContext.user ? (*/}
-            {/*  <>*/}
-            <Box className={classes.tabsContainer}>
-              <Tabs onChange={(e, v) => setValue(v)} value={checkValue()} textColor="inherit" indicatorColor="primary" aria-label="Navigation Tabs">
-                {url && url.home && (
-                  <Tab className={classes.tab} value={url.home} icon={<Icon>home</Icon>} aria-label="HomePage" to={url.home} component={Link}></Tab>
-                )}
-                {url && url.explore && (
-                  <Tab
-                    className={classes.tab}
-                    value={url.explore}
-                    icon={<Icon>explore</Icon>}
-                    aria-label="Explore"
-                    to={url.explore}
-                    component={Link}></Tab>
-                )}
-              </Tabs>
-            </Box>
-            <Box className={classes.searchBarContainer}>
-              <SearchBar {...searchBarProps} />
-            </Box>
-            <Box className={classes.iconButtonsContainer}>
-              <IconButton
-                component={Link}
-                to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, scUserContext.user)}
-                onClick={() => setValue('profile')}
-                size="large"
-                aria-label="Profile"
-                color="inherit"
-                className={classes.iconButton}>
-                <Badge color="error">
-                  <Avatar alt={scUserContext.user.username} src={scUserContext.user.avatar} />
-                </Badge>
-              </IconButton>
-              <IconButton onClick={handleOpenNotificationsMenu} className={classes.iconButton}>
-                <Badge badgeContent={scUserContext.user.unseen_interactions_counter} color="error">
-                  <Icon>notifications_active</Icon>
-                </Badge>
-              </IconButton>
-              <Menu
-                id="notifications-menu"
-                anchorEl={anchorNotifications}
-                open={Boolean(anchorNotifications)}
-                PaperProps={{
-                  style: {
-                    width: '200px',
-                    transform: 'translateX(-14px) translateY(14px)'
-                  }
-                }}
-                onClose={handleCloseNotificationsMenu}
-                onClick={handleCloseNotificationsMenu}>
-                <SnippetNotifications />
-              </Menu>
-              {url && url.messages && (
-                <IconButton
-                  component={Link}
-                  to={url.messages}
-                  onClick={() => setValue(url.messages)}
-                  size="large"
-                  aria-label="Messages"
-                  color="inherit"
-                  className={classes.iconButton}>
-                  <Badge badgeContent={scUserContext.user.unseen_notification_banners_counter} color="error">
-                    <Icon>email</Icon>
-                  </Badge>
-                </IconButton>
+              {!scUserContext.user && url && url.register && (
+                <Button color="inherit" component={Link} to={url.register} className={classes.registerButton}>
+                  <FormattedMessage id="ui.header.button.register" defaultMessage="ui.header.button.register" />
+                </Button>
               )}
-              <IconButton onClick={handleOpenSettingsMenu} className={classNames(classes.iconButton, `${classes.iconButton}-settings`)}>
-                {anchorMenu ? <Icon>expand_less</Icon> : <Icon>expand_more</Icon>}
-              </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorMenu}
-                open={Boolean(anchorMenu)}
-                PaperProps={{
-                  style: {
-                    transform: 'translateX(14px) translateY(14px)'
-                  }
-                }}
-                onClose={handleCloseSettingsMenu}
-                onClick={handleCloseSettingsMenu}>
-                <HeaderMenu url={url} />
-              </Menu>
             </Box>
-            {/*  </>*/}
-            {/*) : (*/}
-            {/*  <HiddenPlaceholder />*/}
-            {/*  <>*/}
-            {/*    <Grid container direction="row" justifyContent="flex-end" alignItems="center">*/}
-            {/*      <SearchBar {...searchBarProps} />*/}
-            {/*      {url && url.explore && (*/}
-            {/*        <Button component={Link} to={url.explore} size="medium" aria-label="Explore" color="inherit">*/}
-            {/*          <FormattedMessage id="ui.header.button.explore" defaultMessage="ui.header.button.explore" />*/}
-            {/*        </Button>*/}
-            {/*      )}*/}
-            {/*      {url && url.login && (*/}
-            {/*        <Button color="inherit" onClick={url.login}>*/}
-            {/*          {' '}*/}
-            {/*          <FormattedMessage id="ui.header.button.login" defaultMessage="ui.header.button.login" />*/}
-            {/*        </Button>*/}
-            {/*      )}*/}
-            {/*    </Grid>*/}
-            {/*  </>*/}
-            {/*)}*/}
+            {scUserContext.user ? (
+              <>
+                <Box className={classes.tabsLContainer}>
+                  <Tabs
+                    className={classes.tabsL}
+                    onChange={(e, v) => setValue(v)}
+                    value={checkValue()}
+                    textColor="inherit"
+                    indicatorColor="primary"
+                    aria-label="Navigation Tabs_L">
+                    {url && url.home && (
+                      <Tab
+                        className={classes.tab}
+                        value={url.home}
+                        icon={<Icon>home</Icon>}
+                        aria-label="HomePage"
+                        to={url.home}
+                        component={Link}></Tab>
+                    )}
+                    {url && url.explore && (
+                      <Tab
+                        className={classes.tab}
+                        value={url.explore}
+                        icon={<Icon>explore</Icon>}
+                        aria-label="Explore"
+                        to={url.explore}
+                        component={Link}></Tab>
+                    )}
+                  </Tabs>
+                </Box>
+                <Box className={classes.searchBarContainer}>
+                  <SearchBar {...searchBarProps} />
+                </Box>
+                <Box className={classes.rightBlockContainer}>
+                  <IconButton
+                    component={Link}
+                    to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, scUserContext.user)}
+                    onClick={() => setValue('profile')}
+                    size="large"
+                    aria-label="Profile"
+                    color="inherit"
+                    className={classes.iconButton}>
+                    <Badge color="error">
+                      <Avatar alt={scUserContext.user.username} src={scUserContext.user.avatar} />
+                    </Badge>
+                  </IconButton>
+                  <Tabs
+                    className={classes.tabsR}
+                    onChange={(e, v) => setValue(v)}
+                    value={checkValue()}
+                    textColor="inherit"
+                    indicatorColor="primary"
+                    aria-label="Navigation Tabs_R">
+                    {url && url.notifications && (
+                      <>
+                        <Tab
+                          className={classes.tab}
+                          value={url.notifications}
+                          icon={
+                            <Badge badgeContent={scUserContext.user.unseen_interactions_counter} color="error">
+                              <Icon>notifications_active</Icon>
+                            </Badge>
+                          }
+                          aria-label="Notifications"
+                          onClick={handleOpenNotificationsMenu}
+                          component={Button}></Tab>
+                        <Menu
+                          id="notifications-menu"
+                          anchorEl={anchorNotifications}
+                          open={Boolean(anchorNotifications)}
+                          PaperProps={{
+                            style: {
+                              width: '200px',
+                              transform: 'translateX(-14px) translateY(14px)'
+                            },
+                            className: classNames(classes.notificationsMenu)
+                          }}
+                          onClose={handleCloseNotificationsMenu}
+                          onClick={handleCloseNotificationsMenu}>
+                          <Box className={classes.notificationsContent}>
+                            <SnippetNotifications />
+                            <Button component={Link} to={url.notifications} sx={{display: 'flex'}}>
+                              <FormattedMessage id="ui.header.notifications.button.seeMore" defaultMessage="ui.header.notifications.button.seeMore" />
+                            </Button>
+                          </Box>
+                        </Menu>
+                      </>
+                    )}
+                    {url && url.messages && (
+                      <Tab
+                        className={classes.tab}
+                        value={url.messages}
+                        icon={
+                          <Badge badgeContent={scUserContext.user.unseen_notification_banners_counter} color="error">
+                            <Icon>email</Icon>
+                          </Badge>
+                        }
+                        aria-label="Messages"
+                        to={url.messages}
+                        component={Link}></Tab>
+                    )}
+                  </Tabs>
+                  <IconButton onClick={handleOpenSettingsMenu} className={classNames(classes.iconButton, `${classes.iconButton}-settings`)}>
+                    {anchorMenu ? <Icon>expand_less</Icon> : <Icon>expand_more</Icon>}
+                  </IconButton>
+                  <Menu
+                    id="menu-appbar"
+                    anchorEl={anchorMenu}
+                    open={Boolean(anchorMenu)}
+                    PaperProps={{
+                      style: {
+                        transform: 'translateX(14px) translateY(14px)'
+                      }
+                    }}
+                    onClose={handleCloseSettingsMenu}
+                    onClick={handleCloseSettingsMenu}>
+                    <HeaderMenu url={url} />
+                  </Menu>
+                </Box>
+              </>
+            ) : (
+              <>
+                <Grid container direction="row" justifyContent="flex-end" alignItems="center">
+                  <Box className={classes.searchBarContainer}>
+                    <SearchBar {...searchBarProps} />
+                  </Box>
+                  {url && url.explore && (
+                    <Button component={Link} to={url.explore} size="medium" aria-label="Explore" color="inherit">
+                      <FormattedMessage id="ui.header.button.explore" defaultMessage="ui.header.button.explore" />
+                    </Button>
+                  )}
+                  {url && url.login && (
+                    <Button color="inherit" onClick={url.login}>
+                      {' '}
+                      <FormattedMessage id="ui.header.button.login" defaultMessage="ui.header.button.login" />
+                    </Button>
+                  )}
+                </Grid>
+              </>
+            )}
           </Toolbar>
         </AppBar>
       )}
