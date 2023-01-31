@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.66](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.65...@selfcommunity/react-ui@0.7.0-alpha.66) (2023-01-31)
+
+
+### Bug Fixes
+
+* fixed searchbar width ([46d17c9](https://github.com/selfcommunity/community-js/commit/46d17c94b0f4cb76c22244f407becc207157b251))
+* fixes ([3dabeed](https://github.com/selfcommunity/community-js/commit/3dabeed32d03a5a3faa2494cbabb85ebdcf968e6))
+
+
+
+
+
 # [0.7.0-alpha.65](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.64...@selfcommunity/react-ui@0.7.0-alpha.65) (2023-01-31)
 
 
