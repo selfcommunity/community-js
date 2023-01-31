@@ -266,7 +266,7 @@ export default function Header(inProps: HeaderProps) {
                 PaperProps={{
                   style: {
                     width: '200px',
-                    transform: 'translateX(14px) translateY(14px)'
+                    transform: 'translateX(-14px) translateY(14px)'
                   }
                 }}
                 onClose={handleCloseNotificationsMenu}
