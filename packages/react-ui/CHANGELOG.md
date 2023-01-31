@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.65](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.64...@selfcommunity/react-ui@0.7.0-alpha.65) (2023-01-31)
+
+
+### Bug Fixes
+
+* fixed mobile header searchbar appearance ([ce0add6](https://github.com/selfcommunity/community-js/commit/ce0add68e157fec8b91b389f4e60f17a921dc995))
+
+
+
+
+
 # [0.7.0-alpha.64](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.63...@selfcommunity/react-ui@0.7.0-alpha.64) (2023-01-27)
 
 
