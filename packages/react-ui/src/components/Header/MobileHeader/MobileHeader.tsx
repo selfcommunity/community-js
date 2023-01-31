@@ -222,7 +222,7 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
               onClick={() => setOpenNotifications(true)}></Tab>
             <SwipeableDrawer
               PaperProps={{
-                sx: {width: '85%'}
+                sx: {width: '85%', '& .SCSnippetNotifications-root .SCSnippetNotifications-notifications-wrap': {height: '100vh'}}
               }}
               anchor={'right'}
               open={openNotifications}
