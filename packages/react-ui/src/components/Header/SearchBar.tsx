@@ -36,14 +36,19 @@ const Root = styled(Box, {
   slot: 'Root'
 })(({theme}) => ({
   width: '100%',
+  maxWidth: '25ch',
   marginLeft: theme.spacing(1),
   [`& .${classes.searchInput}`]: {
     paddingRight: '2px !important',
-    borderRadius: theme.shape.borderRadius
+    borderRadius: theme.shape.borderRadius,
+    height: theme.spacing(4)
   },
   [`& .${classes.autocomplete}`]: {
     [theme.breakpoints.up('sm')]: {
-      width: '100%'
+      width: '100%',
+      '& .Mui-focused': {
+        width: 'inherit'
+      }
     }
   }
 }));
@@ -56,7 +61,8 @@ const MobileRoot = styled(Box, {
   [`& .${classes.searchInput}`]: {
     [theme.breakpoints.down('sm')]: {
       width: '100%',
-      borderRadius: theme.shape.borderRadius
+      borderRadius: theme.shape.borderRadius,
+      height: theme.spacing(4)
     },
     paddingRight: '2px !important'
   }
@@ -175,6 +181,7 @@ export default function HeaderSearchBar(inProps: HeaderSearchBarProps) {
     return (
       <form onSubmit={handleFormSearch}>
         <Autocomplete
+          fullWidth={false}
           autoComplete={true}
           className={classes.autocomplete}
           id={`${PREFIX}-autocomplete`}
