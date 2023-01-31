@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.1-alpha.15](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.4.1-alpha.14...@selfcommunity/react-i18n@0.4.1-alpha.15) (2023-01-31)
+
+
+### Performance Improvements
+
+*  added new header trans ([fdb8a0e](https://github.com/selfcommunity/community-js/commit/fdb8a0ecc6e34b72b917807c79524e22c512b9d8))
+
+
+
+
+
 ## [0.4.1-alpha.14](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.4.1-alpha.13...@selfcommunity/react-i18n@0.4.1-alpha.14) (2023-01-27)
 
 

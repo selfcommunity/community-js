@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.67](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.66...@selfcommunity/react-ui@0.7.0-alpha.67) (2023-01-31)
+
+
+### Bug Fixes
+
+* restored anonymous header, added see more link to snippets snippets pop up content ([2420b13](https://github.com/selfcommunity/community-js/commit/2420b13af9c639cc05023c813a28f325db5c119e))
+
+
+
+
+
 # [0.7.0-alpha.66](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.65...@selfcommunity/react-ui@0.7.0-alpha.66) (2023-01-31)
 
 
