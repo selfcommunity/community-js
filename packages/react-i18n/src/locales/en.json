@@ -537,6 +537,7 @@
   "ui.header.searchBar.search": "Search on {community}",
   "ui.header.searchBar.loading": "Loading...",
   "ui.header.searchBar.noOptions": "No results...",
+  "ui.header.notifications.button.seeMore": "See more",
 
 
   "ui.footer.legalPages.tec": "Terms and Conditions",

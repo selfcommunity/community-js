@@ -538,6 +538,7 @@
   "ui.header.searchBar.search": "Cerca su {community}",
   "ui.header.searchBar.loading": "Cercando...",
   "ui.header.searchBar.noOptions": "Nessun risultato...",
+  "ui.header.notifications.button.seeMore": "Vedi di più",
 
 
   "ui.footer.legalPages.tec": "Termini e Condizioni",
