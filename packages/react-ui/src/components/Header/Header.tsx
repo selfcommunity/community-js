@@ -289,7 +289,7 @@ export default function Header(inProps: HeaderProps) {
                     indicatorColor="primary"
                     aria-label="Navigation Tabs_R">
                     {url && url.notifications && (
-                      <>
+                      <Box>
                         <Tab
                           className={classes.tab}
                           value={url.notifications}
@@ -321,7 +321,7 @@ export default function Header(inProps: HeaderProps) {
                             </Button>
                           </Box>
                         </Menu>
-                      </>
+                      </Box>
                     )}
                     {url && url.messages && (
                       <Tab
