@@ -28,6 +28,7 @@ const classes = {
   root: `${PREFIX}-root`,
   logo: `${PREFIX}-logo`,
   registerButton: `${PREFIX}-register-button`,
+  tab: `${PREFIX}-tab`,
   iconButton: `${PREFIX}-icon-button`,
   logoContainer: `${PREFIX}-logo-container`,
   tabsContainer: `${PREFIX}-tabs-container`,
@@ -54,9 +55,13 @@ const Root = styled(Box, {
       color: theme.palette.primary.main
     }
   },
-  ' & .MuiTab-root': {
-    minWidth: '130px',
-    maxWidth: '520px'
+  [`& .${classes.tab}`]: {
+    '&:hover': {
+      color: theme.palette.primary.main
+    }
+  },
+  '& .SCHeader-icon-button-settings': {
+    marginLeft: theme.spacing(3)
   },
   [`& .${classes.logoContainer}`]: {
     display: 'flex',
@@ -219,9 +224,17 @@ export default function Header(inProps: HeaderProps) {
             {/*  <>*/}
             <Box className={classes.tabsContainer}>
               <Tabs onChange={(e, v) => setValue(v)} value={checkValue()} textColor="inherit" indicatorColor="primary" aria-label="Navigation Tabs">
-                {url && url.home && <Tab value={url.home} icon={<Icon>home</Icon>} aria-label="HomePage" to={url.home} component={Link}></Tab>}
+                {url && url.home && (
+                  <Tab className={classes.tab} value={url.home} icon={<Icon>home</Icon>} aria-label="HomePage" to={url.home} component={Link}></Tab>
+                )}
                 {url && url.explore && (
-                  <Tab value={url.explore} icon={<Icon>explore</Icon>} aria-label="Explore" to={url.explore} component={Link}></Tab>
+                  <Tab
+                    className={classes.tab}
+                    value={url.explore}
+                    icon={<Icon>explore</Icon>}
+                    aria-label="Explore"
+                    to={url.explore}
+                    component={Link}></Tab>
                 )}
               </Tabs>
             </Box>
@@ -274,7 +287,7 @@ export default function Header(inProps: HeaderProps) {
                   </Badge>
                 </IconButton>
               )}
-              <IconButton onClick={handleOpenSettingsMenu} className={classes.iconButton}>
+              <IconButton onClick={handleOpenSettingsMenu} className={classNames(classes.iconButton, `${classes.iconButton}-settings`)}>
                 {anchorMenu ? <Icon>expand_less</Icon> : <Icon>expand_more</Icon>}
               </IconButton>
               <Menu

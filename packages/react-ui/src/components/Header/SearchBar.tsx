@@ -77,6 +77,12 @@ export interface HeaderSearchBarProps {
    * onClick callback
    */
   onClick?: (clicked) => void;
+
+  /**
+   * Props to show navigation icon on mobile view
+   */
+  showNavigation?: boolean;
+
   /**
    * Other props
    */
@@ -89,7 +95,7 @@ export default function HeaderSearchBar(inProps: HeaderSearchBarProps) {
     props: inProps,
     name: PREFIX
   });
-  const {className, onSearch, onClick, ...rest} = props;
+  const {className, onSearch, onClick, showNavigation, ...rest} = props;
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
   const scPreferences: SCPreferencesContextType = useSCPreferences();
@@ -241,9 +247,11 @@ export default function HeaderSearchBar(inProps: HeaderSearchBarProps) {
         <>
           {clicked && (
             <>
-              <IconButton onClick={handleClick} sx={{position: 'absolute'}}>
-                <Icon>arrow_back</Icon>
-              </IconButton>
+              {showNavigation && (
+                <IconButton onClick={handleClick} sx={{position: 'absolute'}}>
+                  <Icon>arrow_back</Icon>
+                </IconButton>
+              )}
               <MobileRoot>{renderAutocomplete()}</MobileRoot>
             </>
           )}
