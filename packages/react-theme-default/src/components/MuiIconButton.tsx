@@ -7,7 +7,7 @@ const Component = {
       fontSize: '1.429rem'
     },
     sizeLarge: {
-      fontSize: '1.571em'
+      fontSize: '1.571rem'
     }
   }
 };
