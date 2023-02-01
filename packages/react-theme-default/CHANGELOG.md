@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.12...@selfcommunity/react-theme-default@0.1.0-alpha.13) (2023-02-01)
+
+
+### Bug Fixes
+
+* fix theme icon button ([42c8abf](https://github.com/selfcommunity/community-js/commit/42c8abf7c0c8fc38288592a1ca2438251fef7bfa))
+
+
+
+
+
 # [0.1.0-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.11...@selfcommunity/react-theme-default@0.1.0-alpha.12) (2023-02-01)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default
