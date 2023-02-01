@@ -1,7 +1,7 @@
 import {createTheme} from '@mui/material/styles';
 import {mergeDeep} from '@selfcommunity/utils';
 import validateColor from 'validate-color';
-import {COLORS_COLORBACK, COLORS_COLORPRIMARY, COLORS_COLORSECONDARY, COLORS_COLORFONT, FONT_FAMILY} from '../constants/Preferences';
+import {COLORS_COLORBACK, COLORS_COLORPRIMARY, COLORS_COLORSECONDARY, COLORS_COLORFONT, STYLE_FONT_FAMILY} from '../constants/Preferences';
 import {isString} from '@selfcommunity/utils';
 import {SCThemeVariablesType, SCThemeType} from '../types';
 
@@ -54,7 +54,7 @@ const getTheme = (options, preferences): SCThemeType => {
           }),
         },
         typography: {
-          ...(isValidPreference(preferences, FONT_FAMILY, isString) && {fontFamily: preferences[FONT_FAMILY].value}),
+          ...(isValidPreference(preferences, STYLE_FONT_FAMILY, isString) && {fontFamily: preferences[STYLE_FONT_FAMILY].value}),
         },
         components: {
           MuiPaper: {
