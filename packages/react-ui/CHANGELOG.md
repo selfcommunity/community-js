@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.69](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.68...@selfcommunity/react-ui@0.7.0-alpha.69) (2023-02-01)
+
+
+### Bug Fixes
+
+* Fix error if ack is undefined in ConsentSolution.tsx ([61ad54d](https://github.com/selfcommunity/community-js/commit/61ad54d8922c1392b18eedbcac72d55929a441f6))
+
+
+
+
+
 # [0.7.0-alpha.68](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.67...@selfcommunity/react-ui@0.7.0-alpha.68) (2023-02-01)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
