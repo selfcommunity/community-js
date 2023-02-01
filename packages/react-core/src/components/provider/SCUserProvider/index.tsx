@@ -108,9 +108,9 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
    * and document is in foreground refresh the cache
    */
   useEffect(() => {
-    typeof window !== 'undefined' && document.addEventListener('visibilitychange', handleVisibilityChange);
+    typeof window !== 'undefined' && window.document.addEventListener('visibilitychange', handleVisibilityChange);
     return () => {
-      typeof window !== 'undefined' && document.removeEventListener('visibilitychange', handleVisibilityChange);
+      typeof window !== 'undefined' && window.document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
   });
 

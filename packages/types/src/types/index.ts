@@ -89,7 +89,7 @@ import {SCVoteType} from './vote';
 import {SCFlagModerationStatusType, SCFlagType, SCFlagTypeEnum} from './flag';
 import {SCCustomPageType} from './customPage';
 import {SCDataPortabilityType} from './dataPortability';
-import {SCPreferenceType} from './preference';
+import {SCPreferenceSection, SCPreferenceName, SCPreferenceType} from './preference';
 import {SCFeatureType} from './feature';
 import {SSOSignInType, SSOSignUpType} from './sso';
 import {SCLegalPagePoliciesType, SCLegalPageAckType, SCLegalPageType} from './legalPage';
@@ -219,6 +219,8 @@ export {
   SCFlagModerationStatusType,
   SCCustomPageType,
   SCDataPortabilityType,
+  SCPreferenceSection,
+  SCPreferenceName,
   SCPreferenceType,
   SCFeatureType,
   SSOSignInType,
