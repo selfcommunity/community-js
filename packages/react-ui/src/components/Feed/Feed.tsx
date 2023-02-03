@@ -18,7 +18,6 @@ import {CardContent, Grid, Hidden, Theme, useMediaQuery} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import {GenericSkeleton} from '../Skeleton';
 import {SCFeedWidgetType} from '../../types/feed';
-import Sticky from 'react-stickynode';
 import CustomAdv, {CustomAdvProps} from '../CustomAdv';
 import {SCCustomAdvPosition, SCFeedUnitType, SCUserType} from '@selfcommunity/types';
 import {EndpointType, SCPaginatedResponse} from '@selfcommunity/api-services';
@@ -35,6 +34,7 @@ import {widgetSort} from '../../utils/feed';
 import Footer from '../Footer';
 import FeedSkeleton from './Skeleton';
 import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
+import StickyBoxComp, {StickyBoxProps} from '../../shared/StickyBox';
 
 const PREFIX = 'SCFeed';
 
@@ -77,10 +77,10 @@ const Root = styled(Grid, {
   }
 }));
 
-export interface FeedSidebarProps {
-  top: string | number;
-  bottomBoundary: string | number;
-}
+/**
+ * FeedSidebarProps has the same props as StickyBoxProps type
+ */
+export type FeedSidebarProps = StickyBoxProps;
 
 export type FeedRef = {
   addFeedData: (obj: any, syncPagination?: boolean) => void;
@@ -314,7 +314,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     ItemSkeletonProps = {},
     onNextData,
     onPreviousData,
-    FeedSidebarProps = {top: 0, bottomBoundary: `#${id}`},
+    FeedSidebarProps = {top: 0, bottomBoundary: `#${id}`, shouldFreeze: () => false},
     CustomAdvProps = {},
     enabledCustomAdvPositions = [SCCustomAdvPosition.POSITION_FEED_SIDEBAR, SCCustomAdvPosition.POSITION_FEED],
     requireAuthentication = false,
@@ -852,13 +852,13 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
       {feedDataRight.length > 0 && !hideAdvs && (
         <Hidden smDown>
           <Grid item xs={12} md={5}>
-            <Sticky enabled className={classes.right} {...FeedSidebarProps}>
+            <StickyBoxComp className={classes.right} offsetTop={0} offsetBottom={20} {...FeedSidebarProps}>
               <React.Suspense fallback={<GenericSkeleton />}>
                 {feedDataRight.map((d, i) => (
                   <d.component key={i} {...d.componentProps}></d.component>
                 ))}
               </React.Suspense>
-            </Sticky>
+            </StickyBoxComp>
           </Grid>
         </Hidden>
       )}
