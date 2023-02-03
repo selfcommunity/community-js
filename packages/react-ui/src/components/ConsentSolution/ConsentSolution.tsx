@@ -493,7 +493,7 @@ export default function ConsentSolution(inProps: ConsentSolutionProps): JSX.Elem
     if (!doc) {
       return null;
     }
-    const isAccept = Boolean(doc.ack !== null && doc.ack.accepted_at);
+    const isAccept = Boolean(doc.ack && doc.ack.accepted_at);
     return (
       <>
         <DialogTitle className={classes.title}>
