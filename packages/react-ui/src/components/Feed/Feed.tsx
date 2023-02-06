@@ -82,6 +82,9 @@ const Root = styled(Grid, {
  */
 export type FeedSidebarProps = StickyBoxProps;
 
+/**
+ * FeedRef props
+ */
 export type FeedRef = {
   addFeedData: (obj: any, syncPagination?: boolean) => void;
   refresh: () => void;

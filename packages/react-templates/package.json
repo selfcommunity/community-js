@@ -55,10 +55,10 @@
     "react-intl": "^5.25.0"
   },
   "dependencies": {
-    "@selfcommunity/react-i18n": "file:../react-i18n",
-    "@selfcommunity/react-core": "file:../react-core",
-    "@selfcommunity/react-ui": "file:../react-ui",
-    "@selfcommunity/types": "file:../types",
+    "@selfcommunity/react-core": "^0.3.9-alpha.34",
+    "@selfcommunity/react-i18n": "^0.4.1-alpha.15",
+    "@selfcommunity/react-ui": "^0.7.0-alpha.67",
+    "@selfcommunity/types": "^0.4.1-alpha.7",
     "@types/classnames": "^2.2.11",
     "classnames": "^2.2.6",
     "seamless-scroll-polyfill": "^2.1.8"
