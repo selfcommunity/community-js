@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.9-alpha.35](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.9-alpha.34...@selfcommunity/react-core@0.3.9-alpha.35) (2023-02-01)
+
+
+### Bug Fixes
+
+* Renaming preferences and added types ([2703a5f](https://github.com/selfcommunity/community-js/commit/2703a5fbc500eb77402c4c9cb5e7001116e55966))
+
+
+
+
+
 ## [0.3.9-alpha.34](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.9-alpha.33...@selfcommunity/react-core@0.3.9-alpha.34) (2023-01-31)
 
 **Note:** Version bump only for package @selfcommunity/react-core
