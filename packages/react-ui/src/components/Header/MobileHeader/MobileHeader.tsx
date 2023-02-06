@@ -213,7 +213,7 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
                 <Tab value={url.explore} icon={<Icon>explore</Icon>} aria-label="Explore" to={url.explore} component={Link}></Tab>
               )}
               {url && url.notifications && (
-                <>
+                <Box>
                   <Tab
                     value={url.notifications}
                     icon={
@@ -243,7 +243,7 @@ export default function MobileHeader(inProps: MobileHeaderProps) {
                       </Button>
                     </>
                   </SwipeableDrawer>
-                </>
+                </Box>
               )}
               {url && url.messages && (
                 <Tab value={url.messages} icon={<Icon>email</Icon>} aria-label="Messages" to={url.messages} component={Link}></Tab>

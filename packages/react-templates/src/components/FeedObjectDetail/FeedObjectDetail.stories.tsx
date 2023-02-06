@@ -20,7 +20,7 @@ const Template: ComponentStory<typeof FeedObjectDetailTemplate> = (args) => (
 export const Base = Template.bind({});
 
 Base.args = {
-  feedObjectId: 1302,
+  feedObjectId: 724,
   feedObjectType: SCFeedObjectTypologyType.POST
 };
 

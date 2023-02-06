@@ -83,6 +83,7 @@ import UsernameTextField from './shared/UsernameTextField';
 import EmailTextField from './shared/EmailTextField';
 import PasswordTextField from './shared/PasswordTextField';
 import PhoneTextField from './shared/PhoneTextField';
+import StickyBox, {useStickyBox, StickyBoxProps, StickyBoxComponent, UseStickyBoxProps} from './shared/StickyBox';
 import {MEDIA_TYPE_EMBED} from './constants/Media';
 import PollSuggestion, {PollSuggestionProps} from './components/PollSuggestion';
 import ConsentSolution, {ConsentSolutionProps, ConsentSolutionSkeleton} from './components/ConsentSolution';
@@ -279,6 +280,11 @@ export {
   PhoneTextField,
   MetadataField,
   InfiniteScroll,
+  StickyBox,
+  useStickyBox,
+  StickyBoxProps,
+  StickyBoxComponent,
+  UseStickyBoxProps,
   CentralProgress,
   ConfirmDialog,
   MediaChunkUploader,
