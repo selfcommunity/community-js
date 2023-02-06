@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.70](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.69...@selfcommunity/react-ui@0.7.0-alpha.70) (2023-02-06)
+
+
+### Bug Fixes
+
+* fixed tabs warnings ([b92a691](https://github.com/selfcommunity/community-js/commit/b92a691dddd789e23c3bb5d5d0cd3badd4061500))
+* test sidebar ([d49528f](https://github.com/selfcommunity/community-js/commit/d49528f4965094fde14e0c247a581bdd986ebdcd))
+* test sidebar ([a8020f8](https://github.com/selfcommunity/community-js/commit/a8020f8c64ec0dce6d7cce14f51b7e3b540e06dc))
+* test sidebar ([8af1a8d](https://github.com/selfcommunity/community-js/commit/8af1a8de7617e28c093e96386feecd4e7a8ec469))
+
+
+### Performance Improvements
+
+* set search default value/chip element as span in user component ([b9ebd79](https://github.com/selfcommunity/community-js/commit/b9ebd79a2027af91fc624e28bc93d01f2f0e552a))
+
+
+
+
+
 # [0.7.0-alpha.69](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.68...@selfcommunity/react-ui@0.7.0-alpha.69) (2023-02-01)
 
 
