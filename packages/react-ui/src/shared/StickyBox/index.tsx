@@ -330,7 +330,7 @@ export type UseStickyBoxProps = {
 export type StickyBoxProps = UseStickyBoxProps & {
   style?: React.CSSProperties;
   className?: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 };
 
 export type useStickyBox = <T = any>(options?: UseStickyBoxProps) => React.RefCallback<T>;

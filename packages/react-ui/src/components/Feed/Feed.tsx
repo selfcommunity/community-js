@@ -201,8 +201,8 @@ export interface FeedProps {
   cacheStrategy?: CacheStrategies;
 
   /**
-   * Props to spread to single feed object
-   * @default {top: 0, bottomBoundary: `#${id}`}
+   * Props to spread to the sidebar
+   * @default {}
    */
   FeedSidebarProps?: FeedSidebarProps;
 
@@ -314,7 +314,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     ItemSkeletonProps = {},
     onNextData,
     onPreviousData,
-    FeedSidebarProps = {top: 0, bottomBoundary: `#${id}`, shouldFreeze: () => false},
+    FeedSidebarProps = {},
     CustomAdvProps = {},
     enabledCustomAdvPositions = [SCCustomAdvPosition.POSITION_FEED_SIDEBAR, SCCustomAdvPosition.POSITION_FEED],
     requireAuthentication = false,
@@ -852,7 +852,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
       {feedDataRight.length > 0 && !hideAdvs && (
         <Hidden smDown>
           <Grid item xs={12} md={5}>
-            <StickyBoxComp className={classes.right} offsetTop={0} offsetBottom={20} {...FeedSidebarProps}>
+            <StickyBoxComp className={classes.right} {...FeedSidebarProps}>
               <React.Suspense fallback={<GenericSkeleton />}>
                 {feedDataRight.map((d, i) => (
                   <d.component key={i} {...d.componentProps}></d.component>
