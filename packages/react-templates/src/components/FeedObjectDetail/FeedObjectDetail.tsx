@@ -1,7 +1,7 @@
 import React, {useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Box, Grid, Hidden} from '@mui/material';
-import Sticky from 'react-stickynode';
+import {StickyBox, FeedSidebarProps} from '@selfcommunity/react-ui';
 import FeedObjectDetailSkeleton from './Skeleton';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
@@ -79,6 +79,12 @@ export interface FeedObjectDetailProps {
   FeedObjectProps?: FeedObjectProps;
 
   /**
+   * Props to spread to the sidebar
+   * @default {}
+   */
+  FeedSidebarProps?: FeedSidebarProps;
+
+  /**
    * Props to spread to CommentsFeedObject
    * @default empty object
    */
@@ -128,6 +134,7 @@ export default function FeedObjectDetail(inProps: FeedObjectDetailProps): JSX.El
     feedObject,
     feedObjectType,
     FeedObjectProps = {},
+    FeedSidebarProps = {},
     CommentsFeedObjectProps = {},
     RelatedFeedObjectProps = {autoHide: false}
   } = props;
@@ -203,9 +210,9 @@ export default function FeedObjectDetail(inProps: FeedObjectDetailProps): JSX.El
         </Grid>
         <Grid item xs={12} md={5}>
           <Hidden mdDown>
-            <Sticky enabled top={15} bottomBoundary={`#${id}`}>
+            <StickyBox {...FeedSidebarProps}>
               <RelatedFeedObjects key={`related_${obj.id}`} feedObject={obj} {...RelatedFeedObjectProps} />
-            </Sticky>
+            </StickyBox>
           </Hidden>
         </Grid>
       </Grid>

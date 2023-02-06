@@ -89,7 +89,7 @@
     "react-player": "^2.10.1",
     "react-share": "^4.4.0",
     "react-sortablejs": "^6.0.0",
-    "react-stickynode": "^4.1.0",
+    "resize-observer-polyfill": "^1.5.1",
     "react-virtuoso": "^2.11.1",
     "react-waypoint": "^10.1.0",
     "seamless-scroll-polyfill": "^2.1.8",
