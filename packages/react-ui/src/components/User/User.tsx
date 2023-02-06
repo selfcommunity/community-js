@@ -148,7 +148,7 @@ export default function User(inProps: UserProps): JSX.Element {
     elevation,
     showReaction = false,
     reaction,
-    search,
+    search = '',
     ...rest
   } = props;
 
@@ -236,10 +236,10 @@ export default function User(inProps: UserProps): JSX.Element {
       primary={
         hasBadge && preferences ? (
           <Typography component={'span'}>
-            {search && search !== '' ? highlight(scUser.username, search) : scUser.username}
-            <Chip className={classes.staffBadgeLabel} size="small" label={preferences[SCPreferences.STAFF_STAFF_BADGE_LABEL]} />
+            {search !== '' ? highlight(scUser.username, search) : scUser.username}
+            <Chip component="span" className={classes.staffBadgeLabel} size="small" label={preferences[SCPreferences.STAFF_STAFF_BADGE_LABEL]} />
           </Typography>
-        ) : search && search !== '' ? (
+        ) : search !== '' ? (
           highlight(scUser.username, search)
         ) : (
           scUser.username
