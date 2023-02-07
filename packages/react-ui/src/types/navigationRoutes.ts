@@ -1,7 +1,7 @@
 /**
- * Interface SCHeaderMenuUrlsType
+ * Interface SCNavigationRoutesType
  */
-export interface SCHeaderMenuUrlsType {
+export interface SCNavigationRoutesType {
   /**
    * Homepage url
    */

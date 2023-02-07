@@ -3,7 +3,7 @@ import {ComponentStory, ComponentMeta} from '@storybook/react';
 import UserProfileHeaderSkeleton from './Skeleton';
 
 export default {
-  title: 'Design System/React UI/Skeleton/User Profile Header',
+  title: 'Design System/React UI/Skeleton/User Profile AppBar',
   component: UserProfileHeaderSkeleton,
   argTypes: {},
   args: {}

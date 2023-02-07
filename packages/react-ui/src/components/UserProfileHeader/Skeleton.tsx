@@ -34,7 +34,7 @@ const Root = styled(Box, {
 }));
 
 /**
- * > API documentation for the Community-JS User Profile Header Skeleton component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS User Profile AppBar Skeleton component. Learn about the available props and the CSS API.
 
  #### Import
 

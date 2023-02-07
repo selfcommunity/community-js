@@ -1,6 +1,16 @@
 /**
  * Components
  */
+import AppBar, {
+  NavigationToolbarMobile,
+  NavigationToolbarMobileProps,
+  NavigationToolbarMobileSkeleton,
+  NavigationToolbar,
+  NavigationToolbarProps,
+  NavigationToolbarSkeleton,
+  AppBarProps
+} from './components/AppBar';
+import BottomNavigation, {BottomNavigationProps} from './components/BottomNavigation';
 import BroadcastMessages, {BroadcastMessagesProps, BroadcastMessagesSkeleton} from './components/BroadcastMessages';
 import Category, {CategoryProps, CategorySkeleton} from './components/Category';
 import CategoryHeader, {CategoryHeaderProps, CategoryHeaderSkeleton} from './components/CategoryHeader';
@@ -68,7 +78,7 @@ import {
   SCMediaChunkType,
   SCMediaObjectType,
   SCNotificationObjectTemplateType,
-  SCHeaderMenuUrlsType,
+  SCNavigationRoutesType,
   SCUserProfileFields,
   SCUserProfileSettings,
   SCUserSocialAssociations
@@ -93,7 +103,8 @@ import IncubatorsList, {IncubatorsListProps} from './components/IncubatorsList';
 import IncubatorDetail, {IncubatorDetailProps} from './components/IncubatorDetail';
 import IncubatorSuggestion, {IncubatorSuggestionProps} from './components/IncubatorSuggestion';
 import Footer, {FooterProps} from './components/Footer';
-import Header, {HeaderProps, HeaderSkeleton} from './components/Header';
+import SearchAutocomplete, {SearchAutocompleteProps} from './components/SearchAutocomplete';
+import SearchDialog, {SearchDialogProps} from './components/SearchDialog';
 
 /**
  * Constants
@@ -125,6 +136,16 @@ export {
   AccountResetProps,
   AccountVerify,
   AccountVerifyProps,
+  AppBar,
+  NavigationToolbarMobile,
+  NavigationToolbarMobileProps,
+  NavigationToolbarMobileSkeleton,
+  NavigationToolbar,
+  NavigationToolbarProps,
+  NavigationToolbarSkeleton,
+  AppBarProps,
+  BottomNavigation,
+  BottomNavigationProps,
   BroadcastMessages,
   BroadcastMessagesProps,
   BroadcastMessagesSkeleton,
@@ -263,6 +284,10 @@ export {
   SnippetNotifications,
   SnippetNotificationsProps,
   SnippetNotificationsSkeleton,
+  SearchAutocomplete,
+  SearchAutocompleteProps,
+  SearchDialog,
+  SearchDialogProps,
   Widget,
   SCFeedWidgetType,
   SCFeedObjectTemplateType,
@@ -328,9 +353,6 @@ export {
   highlight,
   Footer,
   FooterProps,
-  SCHeaderMenuUrlsType,
-  Header,
-  HeaderProps,
-  HeaderSkeleton,
+  SCNavigationRoutesType,
   BaseItem
 };

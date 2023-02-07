@@ -5,7 +5,7 @@ import UserProfileHeader from './index';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/React UI/User Profile Header ',
+  title: 'Design System/React UI/User Profile AppBar ',
   component: UserProfileHeader,
   argTypes: {
     userId: {
