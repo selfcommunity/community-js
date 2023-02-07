@@ -60,6 +60,7 @@ import SCComposerPoll from './components/SCComposerPoll';
 import SCPreviewMediaDocument from './components/SCPreviewMediaDocument';
 import SCCommentObjectSkeleton from './components/SCCommentObjectSkeleton';
 import SCChoices from './components/SCChoices';
+import SCPrivateMessageItem from './components/SCPrivateMessageItem';
 
 /**
  * Style fragments - Imports - End
@@ -152,7 +153,8 @@ const theme = createTheme({
     SCUserProfileHeader,
     SCMobileHeader,
     SCPrivateMessagesTemplate,
-    SCCategories
+    SCCategories,
+    SCPrivateMessageItem
   },
   selfcommunity: {
     user: {
