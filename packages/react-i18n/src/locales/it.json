@@ -427,12 +427,10 @@
 
   "ui.messageEditor.button.send" : "invia",
 
-  "ui.thread.message.dialog.msg": "Sei sicuro di voler eliminare il messaggio selezionato?",
-  "ui.delete.thread.message.dialog.msg": "Sei sicuro di voler eliminare il thread selezionato?",
-  "ui.thread.message.dialog.confirm": "Sì",
-  "ui.thread.newMessage.to" : "A:",
-  "ui.thread.newMessage.autocomplete.placeholder" : "nome utente...",
-  "ui.thread.emptyBox.message" : "Seleziona o componi un messaggio",
+  "ui.privateMessage.thread.message.dialog.msg": "Sei sicuro di voler eliminare il messaggio selezionato?",
+  "ui.privateMessage.thread.newMessage.to" : "A:",
+  "ui.privateMessage.thread.newMessage.autocomplete.placeholder" : "nome utente...",
+  "ui.privateMessage.thread.emptyBox.message" : "Seleziona o componi un messaggio",
 
   "ui.accountRecover.email.label": "Email",
   "ui.accountRecover.submit": "Recupera Account",
@@ -579,6 +577,8 @@
   "templates.userProfile.send.pm": "Invia messaggio privato",
   "templates.privateMessages.button.new" : "Nuovo Messaggio",
   "templates.privateMessages.delete" : "Seleziona la conversazione da eliminare",
+  "templates.privateMessages.delete.thread.dialog.msg": "Sei sicuro di voler eliminare il thread selezionato?",
+  "templates.privateMessages.delete.thread.dialog.confirm": "Sì",
   "templates.feedObjectDetail.contributionNotFound": "Il contributo non è stato trovato oppure non hai i permessi per vederlo.",
   "templates.usersList.followers" : "I miei follower",
   "templates.usersList.followings" : "Utenti che seguo",
