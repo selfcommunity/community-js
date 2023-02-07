@@ -1,11 +1,15 @@
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
-      '& .SCCategorySkeleton-root': {
-        padding: theme.spacing()
-      },
-      '& .SCCategorySkeleton-image': {
-        borderRadius: '50px'
+      '& .SCCategoriesSkeleton-categories': {
+        marginTop: theme.spacing(3),
+        '& .SCCategorySkeleton-root': {
+          padding: theme.spacing(2),
+          width: 'auto',
+          '& .SCCategorySkeleton-image': {
+            borderRadius: 0
+          }
+        }
       }
     })
   }

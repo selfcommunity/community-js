@@ -1,19 +1,20 @@
 import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
 
-import ChangeCover from './index';
+import SearchAutocomplete from './index';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/React UI/SearchDialog',
-  component: ChangeCover
+  title: 'Design System/React UI/Search Autocomplete',
+  component: SearchAutocomplete
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
-} as ComponentMeta<typeof ChangeCover>;
+} as ComponentMeta<typeof SearchAutocomplete>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof ChangeCover> = (args) => (
+// @ts-ignore
+const Template: ComponentStory<typeof SearchAutocomplete> = (args) => (
   <div style={{width: 400}}>
-    <ChangeCover {...args} />
+    <SearchAutocomplete {...args}></SearchAutocomplete>
   </div>
 );
 

@@ -1,9 +1,15 @@
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
-      marginTop: theme.spacing(3),
-      '& .SCCategory-root': {
-        padding: theme.spacing(1)
+      '& .SCCategories-categories': {
+        marginTop: theme.spacing(3),
+        '& .SCCategories-category': {
+          padding: theme.spacing(2),
+          width: 'auto',
+          '& .SCCategory-category-image': {
+            borderRadius: 0
+          }
+        }
       }
     })
   }

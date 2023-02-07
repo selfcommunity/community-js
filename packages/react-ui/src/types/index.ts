@@ -4,7 +4,7 @@ import {SCCommentsOrderBy} from './comments';
 import {SCFeedObjectActivitiesType, SCFeedObjectTemplateType} from './feedObject';
 import {SCNotificationObjectTemplateType} from './notification';
 import {SCBroadcastMessageTemplateType} from './broadcastMessage';
-import {SCHeaderMenuUrlsType} from './headerMenuUrls';
+import {SCNavigationRoutesType} from './navigationRoutes';
 import {SCUserProfileFields, SCUserProfileSettings, SCUserSocialAssociations} from './user';
 
 export {
@@ -16,7 +16,7 @@ export {
   SCFeedObjectTemplateType,
   SCNotificationObjectTemplateType,
   SCBroadcastMessageTemplateType,
-  SCHeaderMenuUrlsType,
+  SCNavigationRoutesType,
   SCUserProfileFields,
   SCUserProfileSettings,
   SCUserSocialAssociations
