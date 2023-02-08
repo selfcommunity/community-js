@@ -78,7 +78,6 @@ import {
   SCMediaChunkType,
   SCMediaObjectType,
   SCNotificationObjectTemplateType,
-  SCNavigationRoutesType,
   SCUserProfileFields,
   SCUserProfileSettings,
   SCUserSocialAssociations
@@ -353,6 +352,5 @@ export {
   highlight,
   Footer,
   FooterProps,
-  SCNavigationRoutesType,
   BaseItem
 };
