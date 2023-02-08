@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.75](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.74...@selfcommunity/react-ui@0.7.0-alpha.75) (2023-02-08)
+
+
+### Bug Fixes
+
+* Refactor and remove AppBar.tsx ([c782c2a](https://github.com/selfcommunity/community-js/commit/c782c2a30f8b06033ff5102d23f8832d46d8b951))
+
+
+
+
+
 # [0.7.0-alpha.74](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.73...@selfcommunity/react-ui@0.7.0-alpha.74) (2023-02-08)
 
 

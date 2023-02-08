@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.20](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.19...@selfcommunity/react-theme-default@0.1.0-alpha.20) (2023-02-08)
+
+
+### Bug Fixes
+
+* Refactor and remove AppBar.tsx ([c782c2a](https://github.com/selfcommunity/community-js/commit/c782c2a30f8b06033ff5102d23f8832d46d8b951))
+
+
+
+
+
 # [0.1.0-alpha.19](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.18...@selfcommunity/react-theme-default@0.1.0-alpha.19) (2023-02-08)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default
