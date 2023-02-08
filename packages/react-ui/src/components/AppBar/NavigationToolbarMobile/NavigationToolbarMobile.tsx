@@ -20,7 +20,7 @@ import {FormattedMessage} from 'react-intl';
 import {SearchAutocompleteProps} from '../../SearchAutocomplete';
 import SearchDialog from '../../SearchDialog';
 
-const PREFIX = 'SCNavigationToolbar';
+const PREFIX = 'SCNavigationToolbarMobile';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -38,7 +38,7 @@ const Root = styled(Toolbar, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  [`& .${classes.logo}`]: {
+  [`& .${classes.logo} img`]: {
     maxHeight: theme.mixins.toolbar.minHeight
   },
   [`& .${classes.grow}`]: {
@@ -132,8 +132,8 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
         children
       ) : (
         <>
-          <Link to={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})}>
-            <img src={preferences[SCPreferences.LOGO_NAVBAR_LOGO_MOBILE]} alt="logo" className={classes.logo} />
+          <Link to={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})} className={classes.logo}>
+            <img src={preferences[SCPreferences.LOGO_NAVBAR_LOGO_MOBILE]} alt="logo" />
           </Link>
           <Box className={classes.grow}></Box>
           {preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY] && (
