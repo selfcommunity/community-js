@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.18](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.17...@selfcommunity/react-theme-default@0.1.0-alpha.18) (2023-02-08)
+
+
+### Performance Improvements
+
+* BottomNavigation.tsx themed ([6240c67](https://github.com/selfcommunity/community-js/commit/6240c67d9f9361db2e04e4b187df683bd6b914fb))
+* BottomNavigation.tsx themed ([e088174](https://github.com/selfcommunity/community-js/commit/e0881741ba6c2e94392f56c433ad628dc9f83d9a))
+* NavigationToolbar.tsx themed ([065a88d](https://github.com/selfcommunity/community-js/commit/065a88d9c9eb543ac10a1e44324e15abd378526a))
+
+
+
+
+
 # [0.1.0-alpha.17](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.16...@selfcommunity/react-theme-default@0.1.0-alpha.17) (2023-02-08)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default

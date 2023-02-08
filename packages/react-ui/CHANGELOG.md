@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.73](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.72...@selfcommunity/react-ui@0.7.0-alpha.73) (2023-02-08)
+
+
+### Performance Improvements
+
+* BottomNavigation.tsx themed ([e088174](https://github.com/selfcommunity/community-js/commit/e0881741ba6c2e94392f56c433ad628dc9f83d9a))
+* NavigationToolbar.tsx themed ([065a88d](https://github.com/selfcommunity/community-js/commit/065a88d9c9eb543ac10a1e44324e15abd378526a))
+
+
+
+
+
 # [0.7.0-alpha.72](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.71...@selfcommunity/react-ui@0.7.0-alpha.72) (2023-02-08)
 
 
