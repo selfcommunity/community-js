@@ -14,7 +14,6 @@ import {
 import {FormattedMessage} from 'react-intl';
 import React, {useMemo} from 'react';
 import {useThemeProps} from '@mui/system';
-import {SCNavigationRoutesType} from '../../../types';
 import {UserService} from '@selfcommunity/api-services';
 
 const PREFIX = 'SCSettingDrawer';
@@ -68,7 +67,6 @@ export default function SettingsDrawer(inProps: SettingsDrawerProps) {
     PREFERENCES.map((p) => (_preferences[p] = p in scPreferences.preferences ? scPreferences.preferences[p].value : null));
     return _preferences;
   }, [scPreferences.preferences]);
-  console.log(scPreferences.features);
 
   /**
    * Fetches paltform url
