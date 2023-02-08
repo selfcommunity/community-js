@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.58](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.57...@selfcommunity/react-templates@0.3.0-alpha.58) (2023-02-08)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.57](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.56...@selfcommunity/react-templates@0.3.0-alpha.57) (2023-02-06)
+
+
+### Bug Fixes
+
+* test sidebar ([d49528f](https://github.com/selfcommunity/community-js/commit/d49528f4965094fde14e0c247a581bdd986ebdcd))
+* test sidebar ([a8020f8](https://github.com/selfcommunity/community-js/commit/a8020f8c64ec0dce6d7cce14f51b7e3b540e06dc))
+* test sidebar ([8af1a8d](https://github.com/selfcommunity/community-js/commit/8af1a8de7617e28c093e96386feecd4e7a8ec469))
+
+
+
+
+
 # [0.3.0-alpha.56](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.55...@selfcommunity/react-templates@0.3.0-alpha.56) (2023-02-01)
 
 **Note:** Version bump only for package @selfcommunity/react-templates

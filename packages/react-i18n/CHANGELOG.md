@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.1-alpha.16](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.4.1-alpha.15...@selfcommunity/react-i18n@0.4.1-alpha.16) (2023-02-08)
+
+
+### Bug Fixes
+
+* Header refactoring ([393cfab](https://github.com/selfcommunity/community-js/commit/393cfab85b38289a3c5c308cc4ff98d3d4a535b7))
+* Header refactoring ([b5f295b](https://github.com/selfcommunity/community-js/commit/b5f295b4d02c90da273866669ed4ecf99b1d215a))
+
+
+
+
+
 ## [0.4.1-alpha.15](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.4.1-alpha.14...@selfcommunity/react-i18n@0.4.1-alpha.15) (2023-01-31)
 
 
