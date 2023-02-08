@@ -5,11 +5,11 @@ import {
   SCPreferences,
   SCPreferencesContextType,
   SCRoutes,
-  SCRoutingContextType,
+  SCRoutingContextType, SCThemeType,
   SCUserContextType,
   useSCPreferences,
   useSCRouting,
-  useSCUser
+  useSCUser,
 } from '@selfcommunity/react-core';
 import Icon from '@mui/material/Icon';
 import {useThemeProps} from '@mui/system';
@@ -41,8 +41,8 @@ const Root = styled(Toolbar, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  [`& .${classes.logo}`]: {
+})(({theme}: {theme: SCThemeType}) => ({
+  [`& .${classes.logo} img`]: {
     maxHeight: theme.mixins.toolbar.minHeight
   },
   [`& .${classes.navigation}`]: {
@@ -51,6 +51,10 @@ const Root = styled(Toolbar, {
   },
   [`& .${classes.search}`]: {
     flexGrow: 1
+  },
+  [`& .${classes.profile} .MuiAvatar-root`]: {
+    width: theme.selfcommunity.user.avatar.sizeMedium,
+    height: theme.selfcommunity.user.avatar.sizeMedium
   }
 }));
 
@@ -153,8 +157,8 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
 
   return (
     <Root className={classNames(className, classes.root)} {...rest}>
-      <Link to={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})}>
-        <img src={preferences[SCPreferences.LOGO_NAVBAR_LOGO]} alt={'logo'} className={classes.logo} />
+      <Link to={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})} className={classes.logo}>
+        <img src={preferences[SCPreferences.LOGO_NAVBAR_LOGO]} alt="logo"></img>
       </Link>
       {!scUserContext.user && !preferences[SCPreferences.ADDONS_CLOSED_COMMUNITY] && (
         <Button color="inherit" component={Link} to={scRoutingContext.url(SCRoutes.SIGNUP_ROUTE_NAME, {})} className={classes.register}>

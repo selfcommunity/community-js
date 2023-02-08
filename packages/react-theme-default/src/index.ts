@@ -1,4 +1,4 @@
-import {createTheme} from '@mui/material/styles';
+import { createTheme } from '@mui/material/styles';
 
 import './styles/reset.css';
 import './fonts/community-icons.css';
@@ -21,7 +21,6 @@ import SCFeedObject from './components/SCFeedObject';
 import SCFeed from './components/SCFeed';
 import MuiButton from './components/MuiButton';
 import MuiAvatar from './components/MuiAvatar';
-import MuiAppBar from './components/MuiAppBar';
 import SCContributorsFeedObject from './components/SCContributorsFeedObject';
 import SCBaseItem from './components/SCBaseItem';
 import SCCategoryHeader from './components/SCCategoryHeader';
@@ -60,6 +59,10 @@ import SCComposerPoll from './components/SCComposerPoll';
 import SCPreviewMediaDocument from './components/SCPreviewMediaDocument';
 import SCCommentObjectSkeleton from './components/SCCommentObjectSkeleton';
 import SCChoices from './components/SCChoices';
+import SCNavigationToolbar from './components/SCNavigationToolbar';
+import SCSearchAutocomplete from './components/SCSearchAutocomplete';
+import SCNavigationToolbarMobile from './components/SCNavigationToolbarMobile';
+import SCBottomNavigation from './components/SCBottomNavigation';
 
 /**
  * Style fragments - Imports - End
@@ -96,8 +99,18 @@ const theme = createTheme({
     borderRadius: 20
   },
   spacing: 8,
+  mixins: {
+    toolbar: {
+      minHeight: 40,
+      '@media (min-width:0px)': {
+        minHeight: 40
+      },
+      '@media (min-width:600px)': {
+        minHeight: 40
+      }
+    }
+  },
   components: {
-    MuiAppBar,
     MuiAutocomplete,
     MuiAvatar,
     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
@@ -109,6 +122,10 @@ const theme = createTheme({
     MuiIconButton,
     MuiOutlinedInput,
     MuiSelect,
+    SCNavigationToolbar,
+    SCNavigationToolbarMobile,
+    SCBottomNavigation,
+    SCSearchAutocomplete,
     SCWidget,
     SCBaseDialog,
     SCBaseItem,
