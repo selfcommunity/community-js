@@ -14,12 +14,11 @@ import {
 import Icon from '@mui/material/Icon';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
-import SettingMenu from './SettingMenu';
+import SettingsMenu from './SettingsMenu';
 import NavigationToolbarSkeleton from './Skeleton';
 import {FormattedMessage} from 'react-intl';
 import NotificationMenu from './NotificationMenu';
 import SearchAutocomplete, {SearchAutocompleteProps} from '../../SearchAutocomplete';
-import {SCNavigationRoutesType} from '../../../types';
 
 const PREFIX = 'SCNavigationToolbar';
 
@@ -61,51 +60,49 @@ export interface NavigationToolbarProps extends ToolbarProps {
    */
   SearchAutocompleteProps?: SearchAutocompleteProps;
   /**
-   * The single routes url to pass to menu
+   * The navigation path
    */
-  routes?: SCNavigationRoutesType;
-  /**
-   * Overrides or extends the styles applied to the component.
-   * @default null
-   */
-  className?: string;
-  /**
-   * Other props
-   */
-  [p: string]: any;
+  value: string;
 }
 
 const PREFERENCES = [
   SCPreferences.CONFIGURATIONS_EXPLORE_STREAM_ENABLED,
   SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY,
-  SCPreferences.LOGO_NAVBAR_LOGO
+  SCPreferences.LOGO_NAVBAR_LOGO,
+  SCPreferences.ADDONS_CLOSED_COMMUNITY
 ];
 
 /**
- * > API documentation for the Community-JS Desktop AppBar component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS NavigationToolbar component. Learn about the available props and the CSS API.
 
  #### Import
 
  ```jsx
- import {AppBar} from '@selfcommunity/react-ui';
+ import {NavigationToolbar} from '@selfcommunity/react-ui';
  ```
 
  #### Component Name
 
- The name `SCDesktopHeader` can be used when providing style overrides in the theme.
+ The name `SCNavigationToolbar` can be used when providing style overrides in the theme.
 
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCDesktopHeader-root|Styles applied to the root element.|
- |registerButton|.SCDesktopHeader-register-button|Styles applied to the register button element.|
- |iconButton|.SCDesktopHeader-icon-button|Styles applied to the icon button elements.|
- |logoContainer|.SCDesktopHeader-logo-container|Styles applied to the logo container element|
- |tabsLContainer|.SCDesktopHeader-tabs-container|Styles applied to the tabs container element|
- |searchBarContainer|.SCDesktopHeader-search-bar-container|Styles applied to the search bar container element|
- |rightBlockContainer|.SCDesktopHeader-right-block-container|Styles applied to the right container elements|
+ |root|.SCNavigationToolbar-root|Styles applied to the root element.|
+ |logo|.SCNavigationToolbar-logo|Styles applied to the logo element.|
+ |register|.SCNavigationToolbar-register|Styles applied to the register button elements.|
+ |navigation|.SCNavigationToolbar-navigation|Styles applied to the navigation container element|
+ |home|.SCNavigationToolbar-home|Styles applied to the home button|
+ |explore|.SCNavigationToolbar-explore|Styles applied to the explore button|
+ |search|.SCNavigationToolbar-search|Styles applied to the search component|
+ |profile|.SCNavigationToolbar-profile|Styles applied to the profile button|
+ |notification|.SCNavigationToolbar-notification|Styles applied to the notification button|
+ |messages|.SCNavigationToolbar-messages|Styles applied to the messages button|
+ |settings|.SCNavigationToolbar-settings|Styles applied to the settings button|
+ |active|.SCNavigationToolbar-active|Styles applied to the active button on navigation|
+
  *
  * @param inProps
  */
@@ -115,7 +112,7 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
     props: inProps,
     name: PREFIX
   });
-  const {routes = {}, className, SearchAutocompleteProps = {}, ...rest} = props;
+  const {value = '', className, SearchAutocompleteProps = {}, ...rest} = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
@@ -130,7 +127,6 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
   }, [scPreferences.preferences]);
 
   // STATE
-  const path = typeof window !== 'undefined' ? window.location.pathname : null;
   const [anchorSetting, setAnchorMenu] = React.useState(null);
   const [anchorNotification, setAnchorNotification] = React.useState(null);
 
@@ -157,35 +153,30 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
 
   return (
     <Root className={classNames(className, classes.root)} {...rest}>
-      {routes.home ? (
-        <Link to={routes.home}>
-          <img src={preferences[SCPreferences.LOGO_NAVBAR_LOGO]} alt={'logo'} className={classes.logo} />
-        </Link>
-      ) : (
+      <Link to={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})}>
         <img src={preferences[SCPreferences.LOGO_NAVBAR_LOGO]} alt={'logo'} className={classes.logo} />
-      )}
-      {!scUserContext.user && routes.register && (
-        <Button color="inherit" component={Link} to={routes.register} className={classes.register}>
+      </Link>
+      {!scUserContext.user && !preferences[SCPreferences.ADDONS_CLOSED_COMMUNITY] && (
+        <Button color="inherit" component={Link} to={scRoutingContext.url(SCRoutes.SIGNUP_ROUTE_NAME, {})} className={classes.register}>
           <FormattedMessage id="ui.appBar.navigation.register" defaultMessage="ui.appBar.navigation.register" />
         </Button>
       )}
       <Box className={classes.navigation}>
-        {routes.home && scUserContext.user && (
+        {scUserContext.user && (
           <IconButton
-            className={classNames(classes.home, {[classes.active]: path.startsWith(routes.home)})}
+            className={classNames(classes.home, {[classes.active]: value.startsWith(scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {}))})}
             aria-label="Home"
-            to={routes.home}
+            to={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})}
             component={Link}>
             <Icon>home</Icon>
           </IconButton>
         )}
-        {routes.explore &&
-          preferences[SCPreferences.CONFIGURATIONS_EXPLORE_STREAM_ENABLED] &&
+        {preferences[SCPreferences.CONFIGURATIONS_EXPLORE_STREAM_ENABLED] &&
           (preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY] || scUserContext.user) && (
             <IconButton
-              className={classNames(classes.explore, {[classes.active]: path.startsWith(routes.explore)})}
+              className={classNames(classes.explore, {[classes.active]: value.startsWith(scRoutingContext.url(SCRoutes.EXPLORE_ROUTE_NAME, {}))})}
               aria-label="Explore"
-              to={routes.explore}
+              to={scRoutingContext.url(SCRoutes.EXPLORE_ROUTE_NAME, {})}
               component={Link}>
               <Icon>explore</Icon>
             </IconButton>
@@ -207,7 +198,9 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
           </IconButton>
           <>
             <IconButton
-              className={classNames(classes.notification, {[classes.active]: path.startsWith(routes.notifications)})}
+              className={classNames(classes.notification, {
+                [classes.active]: value.startsWith(scRoutingContext.url(SCRoutes.USER_NOTIFICATIONS_ROUTE_NAME, {}))
+              })}
               aria-label="Notification"
               onClick={handleOpenNotificationMenu}>
               <Badge
@@ -222,41 +215,39 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
               open={Boolean(anchorNotification)}
               onClose={handleCloseNotificationMenu}
               onClick={handleCloseNotificationMenu}
-              detail={routes.notifications}
               transformOrigin={{horizontal: 'right', vertical: 'top'}}
               anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
             />
           </>
-          {routes.messages && (
-            <IconButton
-              className={classNames(classes.messages, {[classes.active]: path.startsWith(routes.messages)})}
-              aria-label="Messages"
-              to={routes.messages}
-              component={Link}>
-              <Badge badgeContent={scUserContext.user.unseen_notification_banners_counter} color="secondary">
-                <Icon>email</Icon>
-              </Badge>
-            </IconButton>
-          )}
+          <IconButton
+            className={classNames(classes.messages, {
+              [classes.active]: value.startsWith(scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, {}))
+            })}
+            aria-label="Messages"
+            to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, {})}
+            component={Link}>
+            <Badge badgeContent={scUserContext.user.unseen_notification_banners_counter} color="secondary">
+              <Icon>email</Icon>
+            </Badge>
+          </IconButton>
           <IconButton onClick={handleOpenSettingMenu} className={classes.settings}>
             {anchorSetting ? <Icon>expand_less</Icon> : <Icon>expand_more</Icon>}
           </IconButton>
-          <SettingMenu
+          <SettingsMenu
             id="setting-menu"
             anchorEl={anchorSetting}
             open={Boolean(anchorSetting)}
             onClose={handleCloseSettingMenu}
             onClick={handleCloseSettingMenu}
-            routes={routes}
             transformOrigin={{horizontal: 'right', vertical: 'top'}}
             anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
           />
         </>
-      ) : routes.login ? (
-        <Button color="inherit" onClick={routes.login}>
+      ) : (
+        <Button color="inherit" component={Link} to={scRoutingContext.url(SCRoutes.SIGNIN_ROUTE_NAME, {})}>
           <FormattedMessage id="ui.appBar.navigation.login" defaultMessage="ui.appBar.navigation.login" />
         </Button>
-      ) : null}
+      )}
     </Root>
   );
 }

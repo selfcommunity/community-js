@@ -1,5 +1,5 @@
 import {Box, Button, Menu, MenuProps, styled} from '@mui/material';
-import {Link} from '@selfcommunity/react-core';
+import { Link, SCRoutes, SCRoutingContextType, useSCRouting } from '@selfcommunity/react-core';
 import {FormattedMessage} from 'react-intl';
 import React from 'react';
 import {useThemeProps} from '@mui/system';
@@ -29,12 +29,7 @@ const Root = styled(Menu, {
   }
 }));
 
-export interface NotificationsMenuProps extends MenuProps {
-  /**
-   * The single pages url
-   */
-  detail?: string;
-}
+export type NotificationsMenuProps = MenuProps;
 
 export default function NotificationMenu(inProps: NotificationsMenuProps) {
   // PROPS
@@ -42,15 +37,17 @@ export default function NotificationMenu(inProps: NotificationsMenuProps) {
     props: inProps,
     name: PREFIX
   });
-  const {detail = '', PaperProps = {className: classes.paper}, ...rest} = props;
+  const {PaperProps = {className: classes.paper}, ...rest} = props;
+
+  // HOOKS
+  const scRoutingContext: SCRoutingContextType = useSCRouting();
+
   return (
     <Root className={classes.root} PaperProps={PaperProps} {...rest}>
       <SnippetNotifications className={classes.notifications} />
-      {detail && (
-        <Button className={classes.link} component={Link} to={detail} variant="text">
-          <FormattedMessage id="ui.header.notifications.button.seeMore" defaultMessage="ui.header.notifications.button.seeMore" />
-        </Button>
-      )}
+      <Button className={classes.link} component={Link} to={scRoutingContext.url(SCRoutes.USER_NOTIFICATIONS_ROUTE_NAME, {})} variant="text">
+        <FormattedMessage id="ui.header.notifications.button.seeMore" defaultMessage="ui.header.notifications.button.seeMore" />
+      </Button>
     </Root>
   );
 }

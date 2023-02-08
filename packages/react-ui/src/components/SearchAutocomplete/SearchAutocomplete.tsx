@@ -55,7 +55,7 @@ export interface SearchAutocompleteProps
   /**
    * Handler for search action
    */
-  onSearch?: (value) => void;
+  onSearch?: (value: string) => void;
   /**
    * Handler for clear action
    */

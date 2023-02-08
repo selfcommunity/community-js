@@ -7,10 +7,19 @@ import {
   styled
 } from '@mui/material';
 import React, {useMemo} from 'react';
-import {Link, SCPreferences, SCPreferencesContextType, SCUserContextType, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
+import {
+  Link,
+  SCPreferences,
+  SCPreferencesContextType,
+  SCRoutes,
+  SCRoutingContextType,
+  SCUserContextType,
+  useSCPreferences,
+  useSCRouting,
+  useSCUser
+} from '@selfcommunity/react-core';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
-import {SCNavigationRoutesType} from '../../types';
 
 const PREFIX = 'SCBottomNavigation';
 
@@ -32,12 +41,7 @@ const Root = styled(MuiBottomNavigation, {
   }
 }));
 
-export interface BottomNavigationProps extends MuiBottomNavigationProps {
-  /**
-   * The single routes url to pass to menu
-   */
-  routes?: SCNavigationRoutesType;
-}
+export type BottomNavigationProps = MuiBottomNavigationProps;
 
 const PREFERENCES = [SCPreferences.CONFIGURATIONS_EXPLORE_STREAM_ENABLED, SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY];
 
@@ -70,11 +74,11 @@ export default function BottomNavigation(inProps: BottomNavigationProps) {
     props: inProps,
     name: PREFIX
   });
-  const {routes = {}, className, children = null, ...rest} = props;
-  console.log(props);
+  const {className, children = null, ...rest} = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
+  const scRoutingContext: SCRoutingContextType = useSCRouting();
 
   // PREFERENCES
   const scPreferences: SCPreferencesContextType = useSCPreferences();
@@ -91,15 +95,21 @@ export default function BottomNavigation(inProps: BottomNavigationProps) {
         ? children
         : [
             scUserContext.user ? (
-              <BottomNavigationAction className={classes.action} component={Link} to={routes.explore} value="home" icon={<Icon>home</Icon>} />
+              <BottomNavigationAction
+                className={classes.action}
+                component={Link}
+                to={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})}
+                value="home"
+                icon={<Icon>home</Icon>}
+              />
             ) : null,
             (scUserContext.user || preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY]) &&
             preferences[SCPreferences.CONFIGURATIONS_EXPLORE_STREAM_ENABLED] ? (
               <BottomNavigationAction
                 className={classes.action}
                 component={Link}
-                to={routes.explore}
-                value={routes.explore}
+                to={scRoutingContext.url(SCRoutes.EXPLORE_ROUTE_NAME, {})}
+                value={scRoutingContext.url(SCRoutes.EXPLORE_ROUTE_NAME, {})}
                 icon={<Icon>explore</Icon>}
               />
             ) : null,
@@ -107,8 +117,8 @@ export default function BottomNavigation(inProps: BottomNavigationProps) {
               <BottomNavigationAction
                 className={classes.action}
                 component={Link}
-                to={routes.notifications}
-                value={routes.notifications}
+                to={scRoutingContext.url(SCRoutes.USER_NOTIFICATIONS_ROUTE_NAME, {})}
+                value={scRoutingContext.url(SCRoutes.USER_NOTIFICATIONS_ROUTE_NAME, {})}
                 icon={
                   <Badge
                     badgeContent={scUserContext.user.unseen_notification_banners_counter + scUserContext.user.unseen_interactions_counter}
@@ -122,8 +132,8 @@ export default function BottomNavigation(inProps: BottomNavigationProps) {
               <BottomNavigationAction
                 className={classes.action}
                 component={Link}
-                to={routes.messages}
-                value={routes.messages}
+                to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, {})}
+                value={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, {})}
                 icon={
                   <Badge
                     badgeContent={scUserContext.user.unseen_notification_banners_counter + scUserContext.user.unseen_interactions_counter}
