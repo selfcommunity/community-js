@@ -105,6 +105,7 @@ export const validateSessionAuthTokenOption = (value, session) => {
 /**
  * Validate handleRefreshToken option
  * @param value
+ * @param session
  * @return {}
  */
 export const validateHandleRefreshToken = (value, session) => {
@@ -120,6 +121,20 @@ export const validateHandleRefreshToken = (value, session) => {
     if (session.handleRefreshToken && !isFunc(session.handleRefreshToken)) {
       errors.push(ValidationError.ERROR_INVALID_SESSION_REFRESH_TOKEN_CALLBACK);
     }
+  }
+  return {errors, warnings, value};
+};
+
+/**
+ * Validate handleLogout option
+ * @param value
+ * @return {}
+ */
+export const validateHandleLogout = (value, session) => {
+  const errors = [];
+  const warnings = [];
+  if (session.handleLogout && !isFunc(session.handleLogout)) {
+    errors.push(ValidationError.ERROR_INVALID_SESSION_LOGOUT_CALLBACK);
   }
   return {errors, warnings, value};
 };
@@ -567,6 +582,10 @@ const SessionHandleRefreshTokenOption = {
   name: Session.SESSION_HANDLE_REFRESH_TOKEN_OPTION,
   validator: validateHandleRefreshToken,
 };
+const SessionHandleLogoutOption = {
+  name: Session.SESSION_HANDLE_LOGOUT_OPTION,
+  validator: validateHandleLogout,
+};
 const LocaleDefaultOption = {
   name: Locale.LOCALE_DEFAULT_OPTION,
   validator: validateLocaleDefault,
@@ -628,6 +647,7 @@ export const sessionOptions: Record<string, any> = {
   [SessionClientIdOption.name]: SessionClientIdOption,
   [SessionAuthTokenOption.name]: SessionAuthTokenOption,
   [SessionHandleRefreshTokenOption.name]: SessionHandleRefreshTokenOption,
+  [SessionHandleLogoutOption.name]: SessionHandleLogoutOption,
 };
 export const localeOptions: Record<string, any> = {
   [LocaleDefaultOption.name]: LocaleDefaultOption,

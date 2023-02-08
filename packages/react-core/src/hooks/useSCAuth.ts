@@ -61,7 +61,7 @@ function userReducer(state, action) {
       return {user: null, session: Object.assign({}, state.session), loading: null, error: action.payload.error};
 
     case userActionTypes.LOGOUT:
-      return {user: null, session: null, error: null, loading: null};
+      return {user: null, session: {}, error: null, loading: null};
 
     case userActionTypes.UPDATE_USER:
       return {...state, user: {...state.user, ...action.payload}};
@@ -161,6 +161,20 @@ export default function useAuth(initialSession: SCSessionType) {
       return Promise.reject(new Error('Unable to refresh session. Unauthenticated user.'));
     },
     [accessToken]
+  );
+
+  /**
+   * Logout session
+   */
+  const logoutSession = useMemo(
+    () => () => {
+      dispatch({type: userActionTypes.LOGOUT});
+      const session: SCSessionType = state.session;
+      if (session.handleLogout) {
+        session.handleLogout();
+      }
+    },
+    []
   );
 
   /**
@@ -266,5 +280,5 @@ export default function useAuth(initialSession: SCSessionType) {
     dispatch({type: userActionTypes.REFRESH_SESSION, payload: {conf: stateInitializer(initialSession)}});
   }, [initialSession]);
 
-  return {state, dispatch, helpers: {refreshSession}};
+  return {state, dispatch, helpers: {refreshSession, logoutSession}};
 }
