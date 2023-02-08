@@ -18,7 +18,7 @@ export default {
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const BaseTemplate: ComponentStory<typeof AppBar> = (args) => (
-  <AppBar position="relative">
+  <AppBar position="relative" elevation={0}>
     <NavigationToolbar {...args} />
   </AppBar>
 );
@@ -26,7 +26,7 @@ const BaseTemplate: ComponentStory<typeof AppBar> = (args) => (
 export const Desktop = BaseTemplate.bind({});
 
 const MobileTemplate: ComponentStory<typeof AppBar> = (args) => (
-  <AppBar position="relative">
+  <AppBar position="relative" elevation={0}>
     <NavigationToolbarMobile {...args}></NavigationToolbarMobile>
   </AppBar>
 );

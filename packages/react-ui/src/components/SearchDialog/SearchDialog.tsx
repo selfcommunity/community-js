@@ -14,7 +14,8 @@ const classes = {
 
 const Root = styled(Dialog, {
   name: PREFIX,
-  slot: 'Root'
+  slot: 'Root',
+  overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   '& .MuiAutocomplete-popperDisablePortal .MuiPaper-root': {
     boxShadow: 'none',
