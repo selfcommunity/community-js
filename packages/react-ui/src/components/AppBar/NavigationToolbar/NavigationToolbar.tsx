@@ -230,7 +230,7 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
             aria-label="Messages"
             to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, {})}
             component={Link}>
-            <Badge badgeContent={scUserContext.user.unseen_notification_banners_counter} color="secondary">
+            <Badge badgeContent={0} color="secondary">
               <Icon>email</Icon>
             </Badge>
           </IconButton>
