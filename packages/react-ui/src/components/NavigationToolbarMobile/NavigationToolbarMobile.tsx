@@ -17,8 +17,8 @@ import classNames from 'classnames';
 import SettingsDrawer from './SettingsDrawer';
 import NavigationToolbarMobileSkeleton from './Skeleton';
 import {FormattedMessage} from 'react-intl';
-import {SearchAutocompleteProps} from '../../SearchAutocomplete';
-import SearchDialog from '../../SearchDialog';
+import {SearchAutocompleteProps} from '../SearchAutocomplete';
+import SearchDialog from '../SearchDialog';
 
 const PREFIX = 'SCNavigationToolbarMobile';
 

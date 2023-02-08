@@ -18,7 +18,7 @@ import SettingsMenu from './SettingsMenu';
 import NavigationToolbarSkeleton from './Skeleton';
 import {FormattedMessage} from 'react-intl';
 import NotificationMenu from './NotificationMenu';
-import SearchAutocomplete, {SearchAutocompleteProps} from '../../SearchAutocomplete';
+import SearchAutocomplete, {SearchAutocompleteProps} from '../SearchAutocomplete';
 
 const PREFIX = 'SCNavigationToolbar';
 

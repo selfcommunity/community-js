@@ -3,7 +3,7 @@ import { Link, SCRoutes, SCRoutingContextType, useSCRouting } from '@selfcommuni
 import {FormattedMessage} from 'react-intl';
 import React from 'react';
 import {useThemeProps} from '@mui/system';
-import SnippetNotifications from '../../SnippetNotifications';
+import SnippetNotifications from '../SnippetNotifications';
 
 const PREFIX = 'SCNotificationsMenu';
 

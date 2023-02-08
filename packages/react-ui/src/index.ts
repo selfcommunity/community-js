@@ -1,15 +1,8 @@
 /**
  * Components
  */
-import AppBar, {
-  NavigationToolbarMobile,
-  NavigationToolbarMobileProps,
-  NavigationToolbarMobileSkeleton,
-  NavigationToolbar,
-  NavigationToolbarProps,
-  NavigationToolbarSkeleton,
-  AppBarProps
-} from './components/AppBar';
+import NavigationToolbar, {NavigationToolbarProps, NavigationToolbarSkeleton} from './components/NavigationToolbar';
+import NavigationToolbarMobile, {NavigationToolbarMobileProps, NavigationToolbarMobileSkeleton} from './components/NavigationToolbarMobile';
 import BottomNavigation, {BottomNavigationProps} from './components/BottomNavigation';
 import BroadcastMessages, {BroadcastMessagesProps, BroadcastMessagesSkeleton} from './components/BroadcastMessages';
 import Category, {CategoryProps, CategorySkeleton} from './components/Category';
@@ -135,14 +128,12 @@ export {
   AccountResetProps,
   AccountVerify,
   AccountVerifyProps,
-  AppBar,
   NavigationToolbarMobile,
   NavigationToolbarMobileProps,
   NavigationToolbarMobileSkeleton,
   NavigationToolbar,
   NavigationToolbarProps,
   NavigationToolbarSkeleton,
-  AppBarProps,
   BottomNavigation,
   BottomNavigationProps,
   BroadcastMessages,
