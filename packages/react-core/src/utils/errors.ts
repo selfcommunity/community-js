@@ -13,6 +13,7 @@ export class ValidationError {
   static ERROR_INVALID_SESSION_AUTH_TOKEN = 4102;
   static ERROR_INVALID_SESSION_CLIENT_ID = 4103;
   static ERROR_INVALID_SESSION_REFRESH_TOKEN_CALLBACK = 4104;
+  static ERROR_INVALID_SESSION_LOGOUT_CALLBACK = 4105;
   static ERROR_INVALID_PORTAL = 4200;
   static ERROR_INVALID_LOCALE = 4300;
   static ERROR_INVALID_TRANSLATIONS = 4400;
@@ -38,6 +39,7 @@ export class ValidationError {
     [ValidationError.ERROR_INVALID_SESSION_AUTH_TOKEN]: 'Invalid auth token format',
     [ValidationError.ERROR_INVALID_SESSION_CLIENT_ID]: 'Invalid clientId in the initial configuration.',
     [ValidationError.ERROR_INVALID_SESSION_REFRESH_TOKEN_CALLBACK]: 'Invalid refresh token callback',
+    [ValidationError.ERROR_INVALID_SESSION_LOGOUT_CALLBACK]: 'Invalid logout callback',
     [ValidationError.ERROR_INVALID_PORTAL]: `Invalid portal. Check if the url format is valid.`,
     [ValidationError.ERROR_INVALID_LOCALE]: `Invalid locale. Available options are ${LOCALES.join(', ')}.`,
     [ValidationError.ERROR_INVALID_TRANSLATIONS]: `Invalid locale messages(translations) options.`,
