@@ -1,22 +1,19 @@
-import {Box, Divider, Menu, MenuItem, MenuProps, styled, Typography} from '@mui/material';
+import {Divider, Menu, MenuItem, MenuProps, styled} from '@mui/material';
 import {
   Link,
   SCFeatures,
   SCPreferences,
-  SCPreferencesContext,
   SCPreferencesContextType,
   SCRoutes,
   SCRoutingContextType,
-  SCUserContext,
   SCUserContextType,
   useSCPreferences,
   useSCRouting,
   useSCUser
 } from '@selfcommunity/react-core';
 import {FormattedMessage} from 'react-intl';
-import React, {useContext, useMemo} from 'react';
+import React, {useMemo} from 'react';
 import {useThemeProps} from '@mui/system';
-import {SCNavigationRoutesType} from '../../../types';
 import {UserService} from '@selfcommunity/api-services';
 
 const PREFIX = 'SCSettingMenu';
