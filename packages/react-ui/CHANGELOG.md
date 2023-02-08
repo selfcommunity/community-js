@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.74](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.73...@selfcommunity/react-ui@0.7.0-alpha.74) (2023-02-08)
+
+
+### Bug Fixes
+
+* Fix snippet notifications when no notifications available in the list ([0803b18](https://github.com/selfcommunity/community-js/commit/0803b1807902678bfd0d032d87ae23f3af3e0666))
+
+
+
+
+
 # [0.7.0-alpha.73](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.72...@selfcommunity/react-ui@0.7.0-alpha.73) (2023-02-08)
 
 
