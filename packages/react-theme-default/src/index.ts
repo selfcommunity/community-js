@@ -61,6 +61,8 @@ import SCCommentObjectSkeleton from './components/SCCommentObjectSkeleton';
 import SCChoices from './components/SCChoices';
 import SCNavigationToolbar from './components/SCNavigationToolbar';
 import SCSearchAutocomplete from './components/SCSearchAutocomplete';
+import SCNavigationToolbarMobile from './components/SCNavigationToolbarMobile';
+import SCBottomNavigation from './components/SCBottomNavigation';
 
 /**
  * Style fragments - Imports - End
@@ -121,6 +123,8 @@ const theme = createTheme({
     MuiOutlinedInput,
     MuiSelect,
     SCNavigationToolbar,
+    SCNavigationToolbarMobile,
+    SCBottomNavigation,
     SCSearchAutocomplete,
     SCWidget,
     SCBaseDialog,

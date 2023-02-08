@@ -99,7 +99,7 @@ export default function BottomNavigation(inProps: BottomNavigationProps) {
                 className={classes.action}
                 component={Link}
                 to={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})}
-                value="home"
+                value={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})}
                 icon={<Icon>home</Icon>}
               />
             ) : null,
