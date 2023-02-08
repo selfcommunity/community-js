@@ -342,6 +342,11 @@ export interface SCSessionType {
    * Callback to refresh the token.
    */
   handleRefreshToken?: (currentSession) => Promise<SCAuthTokenType>;
+
+  /**
+   * Callback on logout.
+   */
+  handleLogout?: () => void;
 }
 
 /**

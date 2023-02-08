@@ -63,11 +63,17 @@ const withProvider = (Story, context) => {
       authToken: authToken,
       handleRefreshToken:
         context.globals.session !== 'Cookie' ? refreshToken(context) : null,
+      handleLogout: () => {
+        changeCommunityConf(false);
+      }
     };
   } else {
     session = {
       type: context.globals.session,
       clientId: context.globals.clientId,
+      handleLogout: () => {
+        changeCommunityConf(false);
+      }
     };
   }
 

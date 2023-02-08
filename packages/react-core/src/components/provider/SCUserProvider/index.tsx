@@ -10,6 +10,8 @@ import useSCFollowedCategoriesManager from '../../../hooks/useSCFollowedCategori
 import useSCFollowedManager from '../../../hooks/useSCFollowedManager';
 import useSCFollowersManager from '../../../hooks/useSCFollowersManager';
 import useSCConnectionsManager from '../../../hooks/useSCConnectionsManager';
+import {SCUserType, SCNotificationTopicType, SCNotificationTypologyType, SCUserStatus} from '@selfcommunity/types';
+import useSCSubscribedIncubatorsManager from '../../../hooks/useSCSubscribedIncubatorsManager';
 import {
   SCUserContextType,
   SCContextType,
@@ -20,8 +22,6 @@ import {
   SCConnectionsManagerType,
   SCSubscribedIncubatorsManagerType,
 } from '../../../types';
-import {SCUserType, SCNotificationTopicType, SCNotificationTypologyType, SCUserStatus} from '@selfcommunity/types';
-import useSCSubscribedIncubatorsManager from '../../../hooks/useSCSubscribedIncubatorsManager';
 
 /**
  * SCUserContext (Authentication Context)
@@ -203,7 +203,7 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
    * from the state.
    */
   function logout(): void {
-    dispatch({type: userActionTypes.LOGOUT});
+    helpers.logoutSession();
   }
 
   /**
