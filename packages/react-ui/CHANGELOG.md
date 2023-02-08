@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.72](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.71...@selfcommunity/react-ui@0.7.0-alpha.72) (2023-02-08)
+
+
+### Bug Fixes
+
+* Fix import in SettingsDrawer.tsx and SettingsMenu.tsx ([84cd273](https://github.com/selfcommunity/community-js/commit/84cd273cb32a0111a02cad87ea7ccc6c29f9ed7c))
+* Removed navigation routes ([58fc3f8](https://github.com/selfcommunity/community-js/commit/58fc3f8fd64cda273ddf4cd7f2622fbc22a750a8))
+* SCNavigationRoutesType ([baee325](https://github.com/selfcommunity/community-js/commit/baee3256b36ed4289cb248778fdf27352887fd9f))
+
+
+
+
+
 # [0.7.0-alpha.71](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.70...@selfcommunity/react-ui@0.7.0-alpha.71) (2023-02-08)
 
 
