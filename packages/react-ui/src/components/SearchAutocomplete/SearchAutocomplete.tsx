@@ -27,7 +27,8 @@ const classes = {
 
 const Root = styled(Autocomplete, {
   name: PREFIX,
-  slot: 'Root'
+  slot: 'Root',
+  overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   [`& .${classes.input}`]: {
     flexGrow: 1
@@ -181,7 +182,7 @@ export default function SearchAutocomplete(inProps: SearchAutocompleteProps) {
             className: classes.input,
             startAdornment: <Icon className={classes.icon}>search</Icon>,
             endAdornment: (
-              <IconButton className={classes.clear} onClick={handleClear}>
+              <IconButton className={classes.clear} onClick={handleClear} size="small">
                 <Icon>close</Icon>
               </IconButton>
             )
@@ -189,6 +190,7 @@ export default function SearchAutocomplete(inProps: SearchAutocompleteProps) {
         />
       )}
       {...rest}
+      open
     />
   );
 }
