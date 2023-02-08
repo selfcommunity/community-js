@@ -112,7 +112,7 @@ export interface UserProfileHeaderProps {
 }
 
 /**
- * > API documentation for the Community-JS User Profile Header component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS User Profile AppBar component. Learn about the available props and the CSS API.
 
  #### Import
 

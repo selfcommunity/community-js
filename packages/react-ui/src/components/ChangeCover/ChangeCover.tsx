@@ -65,7 +65,7 @@ export interface ChangeCoverProps {
  *
  #### Import
  ```jsx
- import {ChangeCover} from '@selfcommunity/react-ui';
+ import {SearchDialog} from '@selfcommunity/react-ui';
  ```
 
  #### Component Name

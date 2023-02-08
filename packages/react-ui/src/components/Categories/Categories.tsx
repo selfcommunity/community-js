@@ -250,31 +250,27 @@ export default function Categories(inProps: CategoriesProps): JSX.Element {
           )}
         </Grid>
       )}
-      <Grid container spacing={{xs: 3}} className={classes.categories}>
-        {loading ? (
-          <Grid item>
-            <CategoriesSkeletonComponent {...CategoriesSkeletonProps} />
-          </Grid>
-        ) : (
-          <>
-            {!filteredCategories.length ? (
-              <Grid item>
-                <Typography className={classes.noResults} variant="body2">
-                  <FormattedMessage id="ui.categories.noResults" defaultMessage="ui.categories.noResults" />
-                </Typography>
-              </Grid>
-            ) : (
-              <>
-                {filteredCategories.map((category: SCCategoryType) => (
-                  <Grid item xs={12} sm={6} md={4} key={category.id}>
-                    <CategoryComponent category={category} {...CategoryComponentProps} className={classes.category} />
-                  </Grid>
-                ))}
-              </>
-            )}
-          </>
-        )}
-      </Grid>
+      {loading ? (
+        <CategoriesSkeletonComponent {...CategoriesSkeletonProps} />
+      ) : (
+        <Grid container spacing={{xs: 3}} className={classes.categories}>
+          {!filteredCategories.length ? (
+            <Grid item>
+              <Typography className={classes.noResults} variant="body2">
+                <FormattedMessage id="ui.categories.noResults" defaultMessage="ui.categories.noResults" />
+              </Typography>
+            </Grid>
+          ) : (
+            <>
+              {filteredCategories.map((category: SCCategoryType) => (
+                <Grid item xs={12} sm={6} md={4} key={category.id}>
+                  <CategoryComponent category={category} {...CategoryComponentProps} className={classes.category} />
+                </Grid>
+              ))}
+            </>
+          )}
+        </Grid>
+      )}
     </>
   );
 

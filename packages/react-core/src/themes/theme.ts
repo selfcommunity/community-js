@@ -1,7 +1,14 @@
 import {createTheme} from '@mui/material/styles';
 import {mergeDeep} from '@selfcommunity/utils';
 import validateColor from 'validate-color';
-import {COLORS_COLORBACK, COLORS_COLORPRIMARY, COLORS_COLORSECONDARY, COLORS_COLORFONT, STYLE_FONT_FAMILY} from '../constants/Preferences';
+import {
+  COLORS_COLORBACK,
+  COLORS_COLORPRIMARY,
+  COLORS_COLORSECONDARY,
+  COLORS_COLORFONT,
+  COLORS_NAVBARBACK,
+  STYLE_FONT_FAMILY,
+} from '../constants/Preferences';
 import {isString} from '@selfcommunity/utils';
 import {SCThemeVariablesType, SCThemeType} from '../types';
 
@@ -51,6 +58,7 @@ const getTheme = (options, preferences): SCThemeType => {
           ...(isValidPreference(preferences, COLORS_COLORPRIMARY, validateColor) && {primary: {main: preferences[COLORS_COLORPRIMARY].value}}),
           ...(isValidPreference(preferences, COLORS_COLORSECONDARY, validateColor) && {
             secondary: {main: preferences[COLORS_COLORSECONDARY].value},
+            ...(isValidPreference(preferences, COLORS_NAVBARBACK, validateColor) && {navbar: {main: preferences[COLORS_NAVBARBACK].value}}),
           }),
         },
         typography: {
