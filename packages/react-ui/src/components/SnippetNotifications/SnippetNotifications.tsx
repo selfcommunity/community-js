@@ -366,55 +366,51 @@ export default function SnippetNotifications(inProps: SnippetNotificationsProps)
         {loading ? (
           <Skeleton elevation={0} />
         ) : (
-          <>
-            {notifications.length === 0 ? (
-              <Box className={classes.emptyBoxNotifications}>
-                <FormattedMessage
-                  id="ui.snippetNotifications.noNotifications"
-                  defaultMessage="ui.snippetNotifications.noNotifications"></FormattedMessage>
-              </Box>
-            ) : (
-              <ScrollContainer {...ScrollContainerProps}>
-                <MenuList className={classes.notificationsList}>
-                  {scUserContext.user.unseen_notification_banners_counter ? (
-                    <MenuItem
-                      className={classNames(classes.notificationItem, classes.broadcastMessagesBanner)}
-                      key="banner"
-                      component={Link}
-                      to={scRoutingContext.url(SCRoutes.USER_NOTIFICATIONS_ROUTE_NAME, {})}>
-                      <NotificationItem
-                        template={SCNotificationObjectTemplateType.SNIPPET}
-                        isNew
-                        disableTypography
-                        image={
-                          <Avatar alt={preferences[SCPreferences.TEXT_APPLICATION_NAME]} src={preferences[SCPreferences.LOGO_NAVBAR_LOGO_MOBILE]} />
-                        }
-                        primary={
-                          <Typography component={'div'}>
-                            {intl.formatMessage(
-                              {id: 'ui.snippetNotifications.broadcastMessages', defaultMessage: 'ui.snippetNotifications.broadcastMessages'},
-                              {
-                                count: scUserContext.user.unseen_notification_banners_counter,
-                                b: (...chunks) => <strong>{chunks}</strong>,
-                                link: (...chunks) => <Link to={scRoutingContext.url(SCRoutes.USER_NOTIFICATIONS_ROUTE_NAME, {})}>{chunks}</Link>
-                              }
-                            )}
-                          </Typography>
-                        }
-                      />
+          <ScrollContainer {...ScrollContainerProps}>
+            <MenuList className={classes.notificationsList}>
+              {scUserContext.user.unseen_notification_banners_counter ? (
+                <MenuItem
+                  className={classNames(classes.notificationItem, classes.broadcastMessagesBanner)}
+                  key="banner"
+                  component={Link}
+                  to={scRoutingContext.url(SCRoutes.USER_NOTIFICATIONS_ROUTE_NAME, {})}>
+                  <NotificationItem
+                    template={SCNotificationObjectTemplateType.SNIPPET}
+                    isNew
+                    disableTypography
+                    image={<Avatar alt={preferences[SCPreferences.TEXT_APPLICATION_NAME]} src={preferences[SCPreferences.LOGO_NAVBAR_LOGO_MOBILE]} />}
+                    primary={
+                      <Typography component={'div'}>
+                        {intl.formatMessage(
+                          {id: 'ui.snippetNotifications.broadcastMessages', defaultMessage: 'ui.snippetNotifications.broadcastMessages'},
+                          {
+                            count: scUserContext.user.unseen_notification_banners_counter,
+                            b: (...chunks) => <strong>{chunks}</strong>,
+                            link: (...chunks) => <Link to={scRoutingContext.url(SCRoutes.USER_NOTIFICATIONS_ROUTE_NAME, {})}>{chunks}</Link>
+                          }
+                        )}
+                      </Typography>
+                    }
+                  />
+                </MenuItem>
+              ) : null}
+              {notifications.length === 0 ? (
+                <MenuItem className={classes.emptyBoxNotifications}>
+                  <FormattedMessage
+                    id="ui.snippetNotifications.noNotifications"
+                    defaultMessage="ui.snippetNotifications.noNotifications"></FormattedMessage>
+                </MenuItem>
+              ) : (
+                notifications.slice(0, showMax).map((notificationObject: SCNotificationAggregatedType, i) =>
+                  notificationObject.aggregated.map((n: SCNotificationType, k) => (
+                    <MenuItem className={classes.notificationItem} key={k} onClick={(e) => handleSingleNotificationClick(e, n)}>
+                      {renderAggregatedItem(n, i)}
                     </MenuItem>
-                  ) : null}
-                  {notifications.slice(0, showMax).map((notificationObject: SCNotificationAggregatedType, i) =>
-                    notificationObject.aggregated.map((n: SCNotificationType, k) => (
-                      <MenuItem className={classes.notificationItem} key={k} onClick={(e) => handleSingleNotificationClick(e, n)}>
-                        {renderAggregatedItem(n, i)}
-                      </MenuItem>
-                    ))
-                  )}
-                </MenuList>
-              </ScrollContainer>
-            )}
-          </>
+                  ))
+                )
+              )}
+            </MenuList>
+          </ScrollContainer>
         )}
       </Box>
     </Root>
