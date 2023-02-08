@@ -1,6 +1,16 @@
 import {Box, Button, IconButton, styled, Toolbar, ToolbarProps} from '@mui/material';
 import React, {useMemo, useState} from 'react';
-import {Link, SCPreferences, SCPreferencesContextType, SCUserContextType, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
+import {
+  Link,
+  SCPreferences,
+  SCPreferencesContextType,
+  SCRoutes,
+  SCRoutingContextType,
+  SCUserContextType,
+  useSCPreferences,
+  useSCRouting,
+  useSCUser
+} from '@selfcommunity/react-core';
 import Icon from '@mui/material/Icon';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
@@ -8,7 +18,6 @@ import SettingsDrawer from './SettingsDrawer';
 import NavigationToolbarMobileSkeleton from './Skeleton';
 import {FormattedMessage} from 'react-intl';
 import {SearchAutocompleteProps} from '../../SearchAutocomplete';
-import {SCNavigationRoutesType} from '../../../types';
 import SearchDialog from '../../SearchDialog';
 
 const PREFIX = 'SCNavigationToolbar';
@@ -39,51 +48,38 @@ const Root = styled(Toolbar, {
 
 export interface NavigationToolbarMobileProps extends ToolbarProps {
   /**
-   * Searchbar props
+   * Props spread to SearchAutocomplete component
    */
   SearchAutocompleteProps?: SearchAutocompleteProps;
-  /**
-   * The single routes url to pass to menu
-   */
-  routes?: SCNavigationRoutesType;
-  /**
-   * Overrides or extends the styles applied to the component.
-   * @default null
-   */
-  className?: string;
-  /**
-   * Other props
-   */
-  [p: string]: any;
 }
 
 const PREFERENCES = [SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY, SCPreferences.LOGO_NAVBAR_LOGO_MOBILE];
 
 /**
- * > API documentation for the Community-JS Desktop AppBar component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS NavigationToolbarMobile component. Learn about the available props and the CSS API.
 
  #### Import
 
  ```jsx
- import {AppBar} from '@selfcommunity/react-ui';
+ import {NavigationToolbarMobile} from '@selfcommunity/react-ui';
  ```
 
  #### Component Name
 
- The name `SCDesktopHeader` can be used when providing style overrides in the theme.
+ The name `SCNavigationToolbar` can be used when providing style overrides in the theme.
 
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCDesktopHeader-root|Styles applied to the root element.|
- |registerButton|.SCDesktopHeader-register-button|Styles applied to the register button element.|
- |iconButton|.SCDesktopHeader-icon-button|Styles applied to the icon button elements.|
- |logoContainer|.SCDesktopHeader-logo-container|Styles applied to the logo container element|
- |tabsLContainer|.SCDesktopHeader-tabs-container|Styles applied to the tabs container element|
- |searchBarContainer|.SCDesktopHeader-search-bar-container|Styles applied to the search bar container element|
- |rightBlockContainer|.SCDesktopHeader-right-block-container|Styles applied to the right container elements|
+ |root|.SCNavigationToolbar-root|Styles applied to the root element.|
+ |logo|.SCNavigationToolbar-logo|Styles applied to the logo element.|
+ |grow|.SCNavigationToolbar-grow|Styles applied to the element that can space between left and right.|
+ |search|.SCNavigationToolbar-search|Styles applied to the search button element|
+ |searchDialog|.SCNavigationToolbar-search-dialog|Styles applied to the search dialog element|
+ |settings|.SCNavigationToolbar-settings|Styles applied to the settings button element|
+ |settingsDialog|.SCNavigationToolbar-settingsDialog|Styles applied to the settings dialog elements|
  *
  * @param inProps
  */
@@ -93,10 +89,11 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
     props: inProps,
     name: PREFIX
   });
-  const {routes = {}, className, SearchAutocompleteProps = {}, children = null, ...rest} = props;
+  const {className, SearchAutocompleteProps = {}, children = null, ...rest} = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
+  const scRoutingContext: SCRoutingContextType = useSCRouting();
 
   // PREFERENCES
   const scPreferences: SCPreferencesContextType = useSCPreferences();
@@ -135,13 +132,9 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
         children
       ) : (
         <>
-          {routes.home ? (
-            <Link to={routes.home}>
-              <img src={preferences[SCPreferences.LOGO_NAVBAR_LOGO_MOBILE]} alt="logo" className={classes.logo} />
-            </Link>
-          ) : (
+          <Link to={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})}>
             <img src={preferences[SCPreferences.LOGO_NAVBAR_LOGO_MOBILE]} alt="logo" className={classes.logo} />
-          )}
+          </Link>
           <Box className={classes.grow}></Box>
           {preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY] && (
             <>
@@ -168,12 +161,11 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
                 onClose={handleCloseSettings}
                 onClick={handleCloseSettings}
                 onOpen={handleOpenSettings}
-                routes={routes}
               />
             </>
           )}
-          {!scUserContext.user && routes.login && (
-            <Button className={classes.login} color="inherit" onClick={routes.login}>
+          {!scUserContext.user && (
+            <Button className={classes.login} color="inherit" component={Link} to={scRoutingContext.url(SCRoutes.SIGNIN_ROUTE_NAME, {})}>
               <FormattedMessage id="ui.appBar.navigation.login" defaultMessage="ui.appBar.navigation.login" />
             </Button>
           )}

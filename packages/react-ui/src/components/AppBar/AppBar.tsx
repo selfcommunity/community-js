@@ -23,7 +23,7 @@ export type AppBarProps = MuiAppBarProps;
 
 /**
  * > API documentation for the Community-JS AppBar component. Learn about the available props and the CSS API.
- * The AppBar component is a bridge between BottomNavigation and MobileHeader header. It loads the right component based on the screen resolution.
+ * The AppBar component is wrapper of Toolbars used to render the header and navigation.
 
  #### Import
 
@@ -33,8 +33,8 @@ export type AppBarProps = MuiAppBarProps;
 
  #### Component Name
 
- The name `SCHeader` can be used when providing style overrides in the theme.
-
+ The name `SCAppBar` can be used when providing style overrides in the theme.
+ |root|.SCAppBar-root|Styles applied to the root element|
  *
  * @param inProps
  */

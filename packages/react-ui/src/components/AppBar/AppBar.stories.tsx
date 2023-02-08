@@ -34,22 +34,8 @@ export const Mobile = MobileTemplate.bind({});
 
 Desktop.args = Mobile.args = {
   /* the args you need here will depend on your component */
-  routes: {
-    home: '?path=/story/design-system-react-templates-main-feed--main',
-    followings: `?path=/story/design-system-react-templates-user-profile--me`,
-    //connections: '/connections'
-    notifications: '?path=/story/design-system-react-templates-notification-feed--notification',
-    followers: `?path=/story/design-system-react-templates-user-profile--me`,
-    loyalty: `?path=/story/design-system-react-ui-loyalty-program-detail--base`,
-    followedPosts: '?path=/story/design-system-react-templates-user-profile--me',
-    followedDiscussions: '?path=/story/design-system-react-templates-user-profile--me',
-    peopleSuggestion: '?path=/story/design-system-react-templates-user-profile--me',
-    messages: '?path=/story/design-system-react-templates-privatemessages--base',
-    settings: `?path=/story/design-system-react-ui-user-profile-edit--base`,
-    explore: '?path=/story/design-system-react-templates-explore-feed--main',
-    logout: '/'
-  },
-  SearchAutocompleteProps: {onSearch: (q) => console.log(q)}
+  SearchAutocompleteProps: {onSearch: (q) => console.log(q)},
+  value: '/'
 };
 
 Mobile.parameters = {

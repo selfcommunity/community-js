@@ -1,5 +1,16 @@
 import {Divider, List, ListItem, ListItemButton, styled, SwipeableDrawer, SwipeableDrawerProps} from '@mui/material';
-import {Link, SCPreferences, SCPreferencesContextType, SCUserContextType, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
+import {
+  Link,
+  SCFeatures,
+  SCPreferences,
+  SCPreferencesContextType,
+  SCRoutes,
+  SCRoutingContextType,
+  SCUserContextType,
+  useSCPreferences,
+  useSCRouting,
+  useSCUser
+} from '@selfcommunity/react-core';
 import {FormattedMessage} from 'react-intl';
 import React, {useMemo} from 'react';
 import {useThemeProps} from '@mui/system';
@@ -25,14 +36,13 @@ const Root = styled(SwipeableDrawer, {
   [`& .${classes.item}`]: {}
 }));
 
-export interface SettingsDrawerProps extends SwipeableDrawerProps {
-  /**
-   * The single routes url
-   */
-  routes?: SCNavigationRoutesType;
-}
+export type SettingsDrawerProps = SwipeableDrawerProps;
 
-const PREFERENCES = [SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED];
+const PREFERENCES = [
+  SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED,
+  SCPreferences.CONFIGURATIONS_POST_TYPE_ENABLED,
+  SCPreferences.CONFIGURATIONS_DISCUSSION_TYPE_ENABLED
+];
 
 export default function SettingsDrawer(inProps: SettingsDrawerProps) {
   // PROPS
@@ -40,13 +50,16 @@ export default function SettingsDrawer(inProps: SettingsDrawerProps) {
     props: inProps,
     name: PREFIX
   });
-  const {routes = {}, PaperProps = {className: classes.paper}, ...rest} = props;
+  const {PaperProps = {className: classes.paper}, ...rest} = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
   const roles = scUserContext.user && scUserContext.user.role;
   const isAdmin = roles && roles.includes('admin');
   const isModerator = roles && roles.includes('moderator');
+
+  // HOOKS
+  const scRoutingContext: SCRoutingContextType = useSCRouting();
 
   // PREFERENCES
   const scPreferences: SCPreferencesContextType = useSCPreferences();
@@ -55,6 +68,7 @@ export default function SettingsDrawer(inProps: SettingsDrawerProps) {
     PREFERENCES.map((p) => (_preferences[p] = p in scPreferences.preferences ? scPreferences.preferences[p].value : null));
     return _preferences;
   }, [scPreferences.preferences]);
+  console.log(scPreferences.features);
 
   /**
    * Fetches paltform url
@@ -67,90 +81,102 @@ export default function SettingsDrawer(inProps: SettingsDrawerProps) {
     });
   };
 
+  const handleLogout = () => {
+    scUserContext.logout();
+  };
+
   return (
     <Root className={classes.root} PaperProps={PaperProps} {...rest}>
       <List>
-        {routes.profile && (
-          <ListItem className={classes.item} key="profile">
-            <ListItemButton component={Link} to={routes.profile}>
-              <FormattedMessage id="ui.header.settings.menuItem.profile" defaultMessage="ui.header.settings.menuItem.profile" />
-            </ListItemButton>
-          </ListItem>
-        )}
-        {preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED] && routes.followings && (
+        <ListItem className={classes.item} key="profile">
+          <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, scUserContext.user)}>
+            <FormattedMessage id="ui.appBar.navigation.settings.menuItem.profile" defaultMessage="ui.appBar.navigation.settings.menuItem.profile" />
+          </ListItemButton>
+        </ListItem>
+        {preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED] && (
           <ListItem className={classes.item} key="followings">
-            <ListItemButton component={Link} to={routes.followings}>
-              <FormattedMessage id="ui.header.settings.menuItem.followings" defaultMessage="ui.header.settings.menuItem.followings" />
-            </ListItemButton>
-          </ListItem>
-        )}
-        {preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED] && routes.followers && (
-          <ListItem className={classes.item} key="followers">
-            <ListItemButton component={Link} to={routes.followers}>
-              <FormattedMessage id="ui.header.settings.menuItem.followers" defaultMessage="ui.header.settings.menuItem.followers" />
-            </ListItemButton>
-          </ListItem>
-        )}
-        {!preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED] && routes.connections && (
-          <ListItem className={classes.item} key="connections">
-            <ListItemButton component={Link} to={routes.connections}>
-              <FormattedMessage id="ui.header.settings.menuItem.connections" defaultMessage="ui.header.settings.menuItem.connections" />
-            </ListItemButton>
-          </ListItem>
-        )}
-        {routes.loyalty && (
-          <ListItem className={classes.item} key="loyaltyProgram">
-            <ListItemButton component={Link} to={routes.loyalty}>
-              <FormattedMessage id="ui.header.settings.menuItem.loyalty" defaultMessage="ui.header.settings.menuItem.loyalty" />
-            </ListItemButton>
-          </ListItem>
-        )}
-        {routes.peopleSuggestion && (
-          <ListItem className={classes.item} key="suggestedPeople">
-            <ListItemButton component={Link} to={routes.peopleSuggestion}>
-              <FormattedMessage id="ui.header.settings.menuItem.interestingPeople" defaultMessage="ui.header.settings.menuItem.interestingPeople" />
-            </ListItemButton>
-          </ListItem>
-        )}
-        {routes.followedPosts && (
-          <ListItem className={classes.item} key="followedPosts">
-            <ListItemButton component={Link} to={routes.followedPosts}>
-              <FormattedMessage id="ui.header.settings.menuItem.postsFollowed" defaultMessage="ui.header.settings.menuItem.postsFollowed" />
-            </ListItemButton>
-          </ListItem>
-        )}
-        {routes.followedDiscussions && (
-          <ListItem className={classes.item} key="followedDiscussions">
-            <ListItemButton component={Link} to={routes.followedDiscussions}>
+            <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.USER_PROFILE_FOLLOWINGS_ROUTE_NAME, scUserContext.user)}>
               <FormattedMessage
-                id="ui.header.settings.menuItem.discussionsFollowed"
-                defaultMessage="ui.header.settings.menuItem.discussionsFollowed"
+                id="ui.appBar.navigation.settings.menuItem.followings"
+                defaultMessage="ui.appBar.navigation.settings.menuItem.followings"
               />
             </ListItemButton>
           </ListItem>
         )}
-        {routes.messages && (
-          <ListItem className={classes.item} key="privateMessages">
-            <ListItemButton component={Link} to={routes.messages}>
-              <FormattedMessage id="ui.header.settings.menuItem.privateMessages" defaultMessage="ui.header.settings.menuItem.privateMessages" />
+        {preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED] && (
+          <ListItem className={classes.item} key="followers">
+            <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.USER_PROFILE_FOLLOWERS_ROUTE_NAME, scUserContext.user)}>
+              <FormattedMessage
+                id="ui.appBar.navigation.settings.menuItem.followers"
+                defaultMessage="ui.appBar.navigation.settings.menuItem.followers"
+              />
             </ListItemButton>
           </ListItem>
         )}
+        {!preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED] && (
+          <ListItem className={classes.item} key="connections">
+            <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.USER_PROFILE_CONNECTIONS_ROUTE_NAME, scUserContext.user)}>
+              <FormattedMessage
+                id="ui.appBar.navigation.settings.menuItem.connections"
+                defaultMessage="ui.appBar.navigation.settings.menuItem.connections"
+              />
+            </ListItemButton>
+          </ListItem>
+        )}
+        {scPreferences.features.includes(SCFeatures.LOYALTY) && (
+          <ListItem className={classes.item} key="loyaltyProgram">
+            <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.LOYALTY_ROUTE_NAME, {})}>
+              <FormattedMessage id="ui.appBar.navigation.settings.menuItem.loyalty" defaultMessage="ui.appBar.navigation.settings.menuItem.loyalty" />
+            </ListItemButton>
+          </ListItem>
+        )}
+        <ListItem className={classes.item} key="suggestedPeople">
+          <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.PEOPLE_SUGGESTION_ROUTE_NAME, {})}>
+            <FormattedMessage
+              id="ui.appBar.navigation.settings.menuItem.interestingPeople"
+              defaultMessage="ui.appBar.navigation.settings.menuItem.interestingPeople"
+            />
+          </ListItemButton>
+        </ListItem>
+        {preferences[SCPreferences.CONFIGURATIONS_POST_TYPE_ENABLED] && (
+          <ListItem className={classes.item} key="followedPosts">
+            <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.USER_PROFILE_FOLLOWED_POSTS_ROUTE_NAME, scUserContext.user)}>
+              <FormattedMessage
+                id="ui.appBar.navigation.settings.menuItem.postsFollowed"
+                defaultMessage="ui.appBar.navigation.settings.menuItem.postsFollowed"
+              />
+            </ListItemButton>
+          </ListItem>
+        )}
+        {preferences[SCPreferences.CONFIGURATIONS_DISCUSSION_TYPE_ENABLED] && (
+          <ListItem className={classes.item} key="followedDiscussions">
+            <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.USER_PROFILE_FOLLOWED_DISCUSSIONS_ROUTE_NAME, scUserContext.user)}>
+              <FormattedMessage
+                id="ui.appBar.navigation.settings.menuItem.discussionsFollowed"
+                defaultMessage="ui.appBar.navigation.settings.menuItem.discussionsFollowed"
+              />
+            </ListItemButton>
+          </ListItem>
+        )}
+        <ListItem className={classes.item} key="privateMessages">
+          <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, {})}>
+            <FormattedMessage
+              id="ui.appBar.navigation.settings.menuItem.privateMessages"
+              defaultMessage="ui.appBar.navigation.settings.menuItem.privateMessages"
+            />
+          </ListItemButton>
+        </ListItem>
         {isAdmin && (
           <>
             <Divider />
             <ListItem className={classes.item} key="platform">
               <ListItemButton onClick={() => fetchPlatform('')}>
-                <FormattedMessage id="ui.header.settings.menuItem.platform" defaultMessage="ui.header.settings.menuItem.platform" />
+                <FormattedMessage
+                  id="ui.appBar.navigation.settings.menuItem.platform"
+                  defaultMessage="ui.appBar.navigation.settings.menuItem.platform"
+                />
               </ListItemButton>
             </ListItem>
-            {routes.communityTour && (
-              <ListItem className={classes.item} key="communityTour">
-                <ListItemButton component={Link} to={routes.communityTour}>
-                  <FormattedMessage id="ui.header.settings.menuItem.communityTour" defaultMessage="ui.header.settings.menuItem.communityTour" />
-                </ListItemButton>
-              </ListItem>
-            )}
           </>
         )}
         {(isModerator || isAdmin) && (
@@ -158,26 +184,25 @@ export default function SettingsDrawer(inProps: SettingsDrawerProps) {
             <Divider />
             <ListItem className={classes.item} key="moderation">
               <ListItemButton onClick={() => fetchPlatform('/moderation')}>
-                <FormattedMessage id="ui.header.settings.menuItem.moderation" defaultMessage="ui.header.settings.menuItem.moderation" />
+                <FormattedMessage
+                  id="ui.appBar.navigation.settings.menuItem.moderation"
+                  defaultMessage="ui.appBar.navigation.settings.menuItem.moderation"
+                />
               </ListItemButton>
             </ListItem>
           </>
         )}
-        {routes.settings && (
-          <ListItem className={classes.item} key="settings">
-            <ListItemButton component={Link} to={routes.settings}>
-              <FormattedMessage id="ui.header.settings.menuItem.settings" defaultMessage="ui.header.settings.menuItem.settings" />
-            </ListItemButton>
-          </ListItem>
-        )}
+        <ListItem className={classes.item} key="settings">
+          <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.USER_PROFILE_SETTINGS_ROUTE_NAME, scUserContext.user)}>
+            <FormattedMessage id="ui.appBar.navigation.settings.menuItem.settings" defaultMessage="ui.appBar.navigation.settings.menuItem.settings" />
+          </ListItemButton>
+        </ListItem>
         <Divider />
-        {routes.logout && (
-          <ListItem className={classes.item}>
-            <ListItemButton component={Link} to={routes.logout}>
-              <FormattedMessage id="ui.header.settings.menuItem.logout" defaultMessage="ui.header.settings.menuItem.logout" />
-            </ListItemButton>
-          </ListItem>
-        )}
+        <ListItem className={classes.item}>
+          <ListItemButton onClick={handleLogout}>
+            <FormattedMessage id="ui.appBar.navigation.settings.menuItem.logout" defaultMessage="ui.appBar.navigation.settings.menuItem.logout" />
+          </ListItemButton>
+        </ListItem>
       </List>
     </Root>
   );
