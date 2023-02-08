@@ -63,6 +63,7 @@ import SCNavigationToolbar from './components/SCNavigationToolbar';
 import SCSearchAutocomplete from './components/SCSearchAutocomplete';
 import SCNavigationToolbarMobile from './components/SCNavigationToolbarMobile';
 import SCBottomNavigation from './components/SCBottomNavigation';
+import MuiAppBar from './components/MuiAppBar';
 
 /**
  * Style fragments - Imports - End
@@ -111,6 +112,7 @@ const theme = createTheme({
     }
   },
   components: {
+    MuiAppBar,
     MuiAutocomplete,
     MuiAvatar,
     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore

@@ -190,7 +190,6 @@ export default function SearchAutocomplete(inProps: SearchAutocompleteProps) {
         />
       )}
       {...rest}
-      open
     />
   );
 }
