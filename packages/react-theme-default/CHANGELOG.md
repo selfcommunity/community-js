@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.21](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.20...@selfcommunity/react-theme-default@0.1.0-alpha.21) (2023-02-09)
+
+
+### Bug Fixes
+
+* Fix navigation ([378887d](https://github.com/selfcommunity/community-js/commit/378887d20b0315d26f155bc5b725b41b8cb1e8ed))
+* Fix navigation ([dc6a871](https://github.com/selfcommunity/community-js/commit/dc6a871281d149d8d4d8abc5ddedf104bc534afa))
+* inline composer theme ([f9b9d19](https://github.com/selfcommunity/community-js/commit/f9b9d19da9d605b939c9f34a05634005051bec7c))
+
+
+
+
+
 # [0.1.0-alpha.20](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.19...@selfcommunity/react-theme-default@0.1.0-alpha.20) (2023-02-08)
 
 
