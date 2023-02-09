@@ -1,7 +1,7 @@
 import React from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import NavigationToolbarMobile from './index';
-import { AppBar } from '@mui/material';
+import { AppBar, Icon, IconButton, Typography } from '@mui/material';
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
@@ -33,6 +33,21 @@ Base.args = {
 };
 
 Base.parameters = {
+  viewport: {
+    defaultViewport: 'iphone6',
+  }
+}
+
+export const Custom = Template.bind({});
+
+Custom.args = {
+  /* the args you need here will depend on your component */
+  SearchAutocompleteProps: {onSearch: (q) => console.log(q)},
+  value: '/',
+  children: <><IconButton><Icon>arrow_back</Icon></IconButton><Typography variant="h4" sx={{flexGrow: 1}}>TITLE</Typography></>
+};
+
+Custom.parameters = {
   viewport: {
     defaultViewport: 'iphone6',
   }
