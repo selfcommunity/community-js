@@ -1,4 +1,4 @@
-import {Avatar, Badge, Box, Button, IconButton, styled, Toolbar, ToolbarProps} from '@mui/material';
+import { Avatar, Badge, Box, Button, IconButton, styled, Toolbar, ToolbarProps, Tooltip } from '@mui/material';
 import React, {useMemo} from 'react';
 import {
   Link,
@@ -198,13 +198,15 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
       )}
       {scUserContext.user ? (
         <>
-          <IconButton
-            component={Link}
-            to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, scUserContext.user)}
-            aria-label="Profile"
-            className={classes.profile}>
-            <Avatar alt={scUserContext.user.username} src={scUserContext.user.avatar} />
-          </IconButton>
+          <Tooltip title={scUserContext.user.username}>
+            <IconButton
+              component={Link}
+              to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, scUserContext.user)}
+              aria-label="Profile"
+              className={classes.profile}>
+              <Avatar alt={scUserContext.user.username} src={scUserContext.user.avatar} />
+            </IconButton>
+          </Tooltip>
           <>
             <IconButton
               className={classNames(classes.notification, {
