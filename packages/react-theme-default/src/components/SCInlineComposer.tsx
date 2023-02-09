@@ -29,6 +29,8 @@ const Component = {
           }
         },
         '& .SCInlineComposer-avatar': {
+          display: 'flex',
+          alignItems: 'center',
           [theme.breakpoints.up('sm')]: {
             marginLeft: theme.spacing(2)
           }
