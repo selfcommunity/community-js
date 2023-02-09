@@ -1,5 +1,5 @@
-import {Box, Button, Menu, MenuProps, styled} from '@mui/material';
-import { Link, SCRoutes, SCRoutingContextType, useSCRouting } from '@selfcommunity/react-core';
+import {Button, Menu, MenuProps, styled} from '@mui/material';
+import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
 import {FormattedMessage} from 'react-intl';
 import React from 'react';
 import {useThemeProps} from '@mui/system';
