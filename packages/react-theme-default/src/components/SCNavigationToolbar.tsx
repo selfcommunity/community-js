@@ -3,6 +3,7 @@ const Component = {
     root: ({theme}: any) => ({
       padding: theme.spacing(0, 3),
       '& .SCNavigationToolbar-logo': {
+        marginRight: theme.spacing(2),
         '& img': {
           verticalAlign: 'middle',
           maxHeight: theme.mixins.toolbar.maxHeight
