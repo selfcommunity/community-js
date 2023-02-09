@@ -5,11 +5,12 @@ import {
   SCPreferences,
   SCPreferencesContextType,
   SCRoutes,
-  SCRoutingContextType, SCThemeType,
+  SCRoutingContextType,
+  SCThemeType,
   SCUserContextType,
   useSCPreferences,
   useSCRouting,
-  useSCUser,
+  useSCUser
 } from '@selfcommunity/react-core';
 import Icon from '@mui/material/Icon';
 import {useThemeProps} from '@mui/system';
@@ -111,13 +112,6 @@ const PREFERENCES = [
  * @param inProps
  */
 export default function NavigationToolbar(inProps: NavigationToolbarProps) {
-  // PROPS
-  const props: NavigationToolbarProps = useThemeProps({
-    props: inProps,
-    name: PREFIX
-  });
-  const {value = '', className, SearchAutocompleteProps = {}, ...rest} = props;
-
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
   const scRoutingContext: SCRoutingContextType = useSCRouting();
@@ -129,6 +123,41 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
     PREFERENCES.map((p) => (_preferences[p] = p in scPreferences.preferences ? scPreferences.preferences[p].value : null));
     return _preferences;
   }, [scPreferences.preferences]);
+
+  // PROPS
+  const props: NavigationToolbarProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
+  const {
+    value = '',
+    className,
+    SearchAutocompleteProps = {},
+    children = (
+      <Box className={classes.navigation}>
+        {scUserContext.user && (
+          <IconButton
+            className={classNames(classes.home, {[classes.active]: value.startsWith(scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {}))})}
+            aria-label="Home"
+            to={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})}
+            component={Link}>
+            <Icon>home</Icon>
+          </IconButton>
+        )}
+        {preferences[SCPreferences.CONFIGURATIONS_EXPLORE_STREAM_ENABLED] &&
+          (preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY] || scUserContext.user) && (
+            <IconButton
+              className={classNames(classes.explore, {[classes.active]: value.startsWith(scRoutingContext.url(SCRoutes.EXPLORE_ROUTE_NAME, {}))})}
+              aria-label="Explore"
+              to={scRoutingContext.url(SCRoutes.EXPLORE_ROUTE_NAME, {})}
+              component={Link}>
+              <Icon>explore</Icon>
+            </IconButton>
+          )}
+      </Box>
+    ),
+    ...rest
+  } = props;
 
   // STATE
   const [anchorSetting, setAnchorMenu] = React.useState(null);
@@ -165,27 +194,7 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
           <FormattedMessage id="ui.appBar.navigation.register" defaultMessage="ui.appBar.navigation.register" />
         </Button>
       )}
-      <Box className={classes.navigation}>
-        {scUserContext.user && (
-          <IconButton
-            className={classNames(classes.home, {[classes.active]: value.startsWith(scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {}))})}
-            aria-label="Home"
-            to={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})}
-            component={Link}>
-            <Icon>home</Icon>
-          </IconButton>
-        )}
-        {preferences[SCPreferences.CONFIGURATIONS_EXPLORE_STREAM_ENABLED] &&
-          (preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY] || scUserContext.user) && (
-            <IconButton
-              className={classNames(classes.explore, {[classes.active]: value.startsWith(scRoutingContext.url(SCRoutes.EXPLORE_ROUTE_NAME, {}))})}
-              aria-label="Explore"
-              to={scRoutingContext.url(SCRoutes.EXPLORE_ROUTE_NAME, {})}
-              component={Link}>
-              <Icon>explore</Icon>
-            </IconButton>
-          )}
-      </Box>
+      {children}
       {preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY] || scUserContext.user ? (
         <SearchAutocomplete className={classes.search} blurOnSelect {...SearchAutocompleteProps} />
       ) : (
