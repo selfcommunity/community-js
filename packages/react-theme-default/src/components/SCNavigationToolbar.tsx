@@ -33,6 +33,9 @@ const Component = {
         margin: theme.spacing(0, 0.5)
       },
       '& .SCNavigationToolbar-notification, & .SCNavigationToolbar-messages': {
+        paddingTop: theme.spacing(2),
+        paddingBottom: theme.spacing(1),
+        borderRadius: 0,
         borderBottom: `1px solid transparent`,
         color: theme.palette.primary.main,
         '&.SCNavigationToolbar-active, &:hover': {
