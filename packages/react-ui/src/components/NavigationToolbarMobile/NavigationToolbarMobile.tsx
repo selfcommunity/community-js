@@ -82,6 +82,13 @@ const PREFERENCES = [SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY, SCPrefer
  * @param inProps
  */
 export default function NavigationToolbarMobile(inProps: NavigationToolbarMobileProps) {
+  // PROPS
+  const props: NavigationToolbarMobileProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
+  const {className, SearchAutocompleteProps = {}, children = null, ...rest} = props;
+
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
   const scRoutingContext: SCRoutingContextType = useSCRouting();
@@ -93,22 +100,6 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
     PREFERENCES.map((p) => (_preferences[p] = p in scPreferences.preferences ? scPreferences.preferences[p].value : null));
     return _preferences;
   }, [scPreferences.preferences]);
-
-  // PROPS
-  const props: NavigationToolbarMobileProps = useThemeProps({
-    props: inProps,
-    name: PREFIX
-  });
-  const {
-    className,
-    SearchAutocompleteProps = {},
-    children = (
-      <Link to={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})} className={classes.logo}>
-        <img src={preferences[SCPreferences.LOGO_NAVBAR_LOGO_MOBILE]} alt="logo" />
-      </Link>
-    ),
-    ...rest
-  } = props;
 
   // STATE
   const [searchOpen, setSearchOpen] = useState<boolean>(false);
@@ -133,9 +124,15 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
     return <NavigationToolbarMobileSkeleton />;
   }
 
+  const _children = children || (
+    <Link to={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})} className={classes.logo}>
+      <img src={preferences[SCPreferences.LOGO_NAVBAR_LOGO_MOBILE]} alt="logo" />
+    </Link>
+  );
+
   return (
     <Root className={classNames(className, classes.root)} {...rest}>
-      {children}
+      {_children}
       {preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY] && (
         <>
           <IconButton className={classes.search} onClick={handleOpenSearch}>
