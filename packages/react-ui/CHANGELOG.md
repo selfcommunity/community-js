@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.76](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.75...@selfcommunity/react-ui@0.7.0-alpha.76) (2023-02-09)
+
+
+### Performance Improvements
+
+* Added capability to customize navigation toolbars ([fbb4cf9](https://github.com/selfcommunity/community-js/commit/fbb4cf92d411dd99daaf2e2936d127deda06531c))
+
+
+
+
+
 # [0.7.0-alpha.75](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.74...@selfcommunity/react-ui@0.7.0-alpha.75) (2023-02-08)
 
 
