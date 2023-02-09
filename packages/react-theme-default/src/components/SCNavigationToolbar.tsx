@@ -32,6 +32,14 @@ const Component = {
       '& .SCNavigationToolbar-profile, & .SCNavigationToolbar-notification, & .SCNavigationToolbar-messages': {
         margin: theme.spacing(0, 0.5)
       },
+      '& .SCNavigationToolbar-notification, & .SCNavigationToolbar-messages': {
+        borderBottom: `1px solid transparent`,
+        color: theme.palette.primary.main,
+        '&.SCNavigationToolbar-active, &:hover': {
+          color: theme.palette.secondary.main,
+          borderBottom: `1px solid ${theme.palette.secondary.main}`
+        }
+      },
       '& .SCNavigationToolbar-settings': {
         marginLeft: theme.spacing(4.5)
       }
