@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.23](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.22...@selfcommunity/react-theme-default@0.1.0-alpha.23) (2023-02-09)
+
+
+### Bug Fixes
+
+* Fix personalization of Navigation ([661a1b4](https://github.com/selfcommunity/community-js/commit/661a1b428e4c3984c0bbd51a201b7b931011de89))
+
+
+
+
+
 # [0.1.0-alpha.22](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.21...@selfcommunity/react-theme-default@0.1.0-alpha.22) (2023-02-09)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default

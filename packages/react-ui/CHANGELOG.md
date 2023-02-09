@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.77](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.76...@selfcommunity/react-ui@0.7.0-alpha.77) (2023-02-09)
+
+
+### Bug Fixes
+
+* Fix personalization of Navigation ([661a1b4](https://github.com/selfcommunity/community-js/commit/661a1b428e4c3984c0bbd51a201b7b931011de89))
+
+
+
+
+
 # [0.7.0-alpha.76](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.75...@selfcommunity/react-ui@0.7.0-alpha.76) (2023-02-09)
 
 
