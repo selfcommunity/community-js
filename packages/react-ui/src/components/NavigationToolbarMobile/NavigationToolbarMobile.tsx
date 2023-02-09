@@ -25,7 +25,6 @@ const PREFIX = 'SCNavigationToolbarMobile';
 const classes = {
   root: `${PREFIX}-root`,
   logo: `${PREFIX}-logo`,
-  grow: `${PREFIX}-grow`,
   search: `${PREFIX}-search`,
   searchDialog: `${PREFIX}-search-dialog`,
   settings: `${PREFIX}-settings`,
@@ -38,11 +37,11 @@ const Root = styled(Toolbar, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  [`& .${classes.logo} img`]: {
-    maxHeight: theme.mixins.toolbar.minHeight
-  },
-  [`& .${classes.grow}`]: {
-    flexGrow: 1
+  [`& .${classes.logo}`]: {
+    flexGrow: 1,
+    '& img': {
+      maxHeight: theme.mixins.toolbar.minHeight
+    }
   }
 }));
 
@@ -75,7 +74,6 @@ const PREFERENCES = [SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY, SCPrefer
  |---|---|---|
  |root|.SCNavigationToolbar-root|Styles applied to the root element.|
  |logo|.SCNavigationToolbar-logo|Styles applied to the logo element.|
- |grow|.SCNavigationToolbar-grow|Styles applied to the element that can space between left and right.|
  |search|.SCNavigationToolbar-search|Styles applied to the search button element|
  |searchDialog|.SCNavigationToolbar-search-dialog|Styles applied to the search dialog element|
  |settings|.SCNavigationToolbar-settings|Styles applied to the settings button element|
@@ -84,13 +82,6 @@ const PREFERENCES = [SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY, SCPrefer
  * @param inProps
  */
 export default function NavigationToolbarMobile(inProps: NavigationToolbarMobileProps) {
-  // PROPS
-  const props: NavigationToolbarMobileProps = useThemeProps({
-    props: inProps,
-    name: PREFIX
-  });
-  const {className, SearchAutocompleteProps = {}, children = null, ...rest} = props;
-
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
   const scRoutingContext: SCRoutingContextType = useSCRouting();
@@ -102,6 +93,22 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
     PREFERENCES.map((p) => (_preferences[p] = p in scPreferences.preferences ? scPreferences.preferences[p].value : null));
     return _preferences;
   }, [scPreferences.preferences]);
+
+  // PROPS
+  const props: NavigationToolbarMobileProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
+  const {
+    className,
+    SearchAutocompleteProps = {},
+    children = (
+      <Link to={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})} className={classes.logo}>
+        <img src={preferences[SCPreferences.LOGO_NAVBAR_LOGO_MOBILE]} alt="logo" />
+      </Link>
+    ),
+    ...rest
+  } = props;
 
   // STATE
   const [searchOpen, setSearchOpen] = useState<boolean>(false);
@@ -122,54 +129,45 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
   };
 
   // RENDER
-  if (scUserContext.loading && !children) {
+  if (scUserContext.loading) {
     return <NavigationToolbarMobileSkeleton />;
   }
 
   return (
     <Root className={classNames(className, classes.root)} {...rest}>
-      {children ? (
-        children
-      ) : (
+      {children}
+      {preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY] && (
         <>
-          <Link to={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})} className={classes.logo}>
-            <img src={preferences[SCPreferences.LOGO_NAVBAR_LOGO_MOBILE]} alt="logo" />
-          </Link>
-          <Box className={classes.grow}></Box>
-          {preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY] && (
-            <>
-              <IconButton className={classes.search} onClick={handleOpenSearch}>
-                <Icon>search</Icon>
-              </IconButton>
-              <SearchDialog
-                className={classes.searchDialog}
-                fullScreen
-                open={searchOpen}
-                SearchAutocompleteProps={{...SearchAutocompleteProps, onClear: handleCloseSearch}}></SearchDialog>
-            </>
-          )}
-          {scUserContext.user && (
-            <>
-              <IconButton className={classes.settings} onClick={handleOpenSettings}>
-                <Icon>more_vert</Icon>
-              </IconButton>
-              <SettingsDrawer
-                id="setting-swipe-menu"
-                className={classes.settingsDialog}
-                anchor="bottom"
-                open={settingsOpen}
-                onClose={handleCloseSettings}
-                onClick={handleCloseSettings}
-                onOpen={handleOpenSettings}
-              />
-            </>
-          )}
-          {!scUserContext.user && (
-            <Button className={classes.login} color="inherit" component={Link} to={scRoutingContext.url(SCRoutes.SIGNIN_ROUTE_NAME, {})}>
-              <FormattedMessage id="ui.appBar.navigation.login" defaultMessage="ui.appBar.navigation.login" />
-            </Button>
-          )}
+          <IconButton className={classes.search} onClick={handleOpenSearch}>
+            <Icon>search</Icon>
+          </IconButton>
+          <SearchDialog
+            className={classes.searchDialog}
+            fullScreen
+            open={searchOpen}
+            SearchAutocompleteProps={{...SearchAutocompleteProps, onClear: handleCloseSearch}}></SearchDialog>
         </>
+      )}
+      {scUserContext.user && (
+        <>
+          <IconButton className={classes.settings} onClick={handleOpenSettings}>
+            <Icon>more_vert</Icon>
+          </IconButton>
+          <SettingsDrawer
+            id="setting-swipe-menu"
+            className={classes.settingsDialog}
+            anchor="bottom"
+            open={settingsOpen}
+            onClose={handleCloseSettings}
+            onClick={handleCloseSettings}
+            onOpen={handleOpenSettings}
+          />
+        </>
+      )}
+      {!scUserContext.user && (
+        <Button className={classes.login} color="inherit" component={Link} to={scRoutingContext.url(SCRoutes.SIGNIN_ROUTE_NAME, {})}>
+          <FormattedMessage id="ui.appBar.navigation.login" defaultMessage="ui.appBar.navigation.login" />
+        </Button>
       )}
     </Root>
   );

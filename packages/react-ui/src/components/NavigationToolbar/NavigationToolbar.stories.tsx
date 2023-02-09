@@ -2,7 +2,7 @@ import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 import NavigationToolbar from './index';
-import { AppBar } from '@mui/material';
+import { AppBar, Typography } from '@mui/material';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -30,4 +30,13 @@ Main.args = {
   /* the args you need here will depend on your component */
   SearchAutocompleteProps: {onSearch: (q) => console.log(q)},
   value: '/'
+};
+
+export const Custom = BaseTemplate.bind({});
+
+Custom.args = {
+  /* the args you need here will depend on your component */
+  SearchAutocompleteProps: {onSearch: (q) => console.log(q)},
+  value: '/',
+  children: <Typography variant="h4" sx={{flexGrow: 1}}>TITLE</Typography>
 };
