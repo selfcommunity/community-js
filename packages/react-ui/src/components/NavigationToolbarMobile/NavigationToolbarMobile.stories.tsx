@@ -1,12 +1,13 @@
 import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
+import { ComponentMeta, ComponentStory } from '@storybook/react';
+import NavigationToolbarMobile from './index';
+import { AppBar } from '@mui/material';
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
-import AppBar, { NavigationToolbar, NavigationToolbarMobile } from './index';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/React UI/AppBar ',
-  component: AppBar,
+  title: 'Design System/React UI/Navigation Toolbar Mobile',
+  component: NavigationToolbarMobile,
   parameters: {
     // The viewports object from the Essentials addon
     viewport: {
@@ -14,31 +15,24 @@ export default {
       viewports: INITIAL_VIEWPORTS,
     },
   },
-} as ComponentMeta<typeof AppBar>;
+} as ComponentMeta<typeof NavigationToolbarMobile>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const BaseTemplate: ComponentStory<typeof AppBar> = (args) => (
-  <AppBar position="relative" elevation={0}>
-    <NavigationToolbar {...args} />
-  </AppBar>
-);
-
-export const Desktop = BaseTemplate.bind({});
-
-const MobileTemplate: ComponentStory<typeof AppBar> = (args) => (
+const Template: ComponentStory<typeof NavigationToolbarMobile> = (args) => (
   <AppBar position="relative" elevation={0}>
     <NavigationToolbarMobile {...args}></NavigationToolbarMobile>
   </AppBar>
 );
-export const Mobile = MobileTemplate.bind({});
 
-Desktop.args = Mobile.args = {
+export const Base = Template.bind({});
+
+Base.args = {
   /* the args you need here will depend on your component */
   SearchAutocompleteProps: {onSearch: (q) => console.log(q)},
   value: '/'
 };
 
-Mobile.parameters = {
+Base.parameters = {
   viewport: {
     defaultViewport: 'iphone6',
   }
