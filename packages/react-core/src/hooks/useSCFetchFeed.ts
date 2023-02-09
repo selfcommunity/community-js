@@ -319,7 +319,7 @@ export default function useSCFetchFeed(props: {
             let currentOffset = Math.max(getCurrentOffset(res.next) - queryParams.limit, state.results.length);
             let currentPage = Math.ceil(currentOffset / queryParams.limit + 1);
             let nextPage = res.next ? currentPage + 1 : null;
-            let count = res.count || state.count + res.results.length + 1;
+            let count = res.count || (state.count === 0 && res.results.length === 0 ? 0 : state.count + res.results.length + 1);
             dispatch({
               type: feedDataActionTypes.DATA_NEXT_LOADED,
               payload: {
