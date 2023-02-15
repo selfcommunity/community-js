@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.67](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.66...@selfcommunity/react-templates@0.3.0-alpha.67) (2023-02-15)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
 # [0.3.0-alpha.66](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.65...@selfcommunity/react-templates@0.3.0-alpha.66) (2023-02-09)
 
 **Note:** Version bump only for package @selfcommunity/react-templates
