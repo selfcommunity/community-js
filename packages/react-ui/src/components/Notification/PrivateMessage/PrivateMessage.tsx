@@ -16,7 +16,7 @@ import DateTimeAgo from '../../../shared/DateTimeAgo';
 import classNames from 'classnames';
 import {SCNotificationObjectTemplateType} from '../../../types';
 import {useThemeProps} from '@mui/system';
-import NotificationItem from '../../../shared/NotificationItem';
+import NotificationItem, {NotificationItemProps} from '../../../shared/NotificationItem';
 import {LoadingButton} from '@mui/lab';
 
 const messages = defineMessages({
@@ -26,7 +26,7 @@ const messages = defineMessages({
   }
 });
 
-const PREFIX = 'SCUserNotificationPrivateMessage';
+const PREFIX = 'SCNotificationPrivateMessage';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -40,7 +40,7 @@ const classes = {
   message: `${PREFIX}-message`
 };
 
-const Root = styled(Box, {
+const Root = styled(NotificationItem, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
@@ -98,35 +98,19 @@ const Root = styled(Box, {
   }
 }));
 
-export interface NotificationPrivateMessageProps {
-  /**
-   * Id of the feedObject
-   * @default `n_<notificationObject.sid>`
-   */
-  id?: string;
-
-  /**
-   * Overrides or extends the styles applied to the component.
-   * @default null
-   */
-  className?: string;
-
+export interface NotificationPrivateMessageProps
+  extends Pick<
+    NotificationItemProps,
+    Exclude<
+      keyof NotificationItemProps,
+      'image' | 'disableTypography' | 'primary' | 'primaryTypographyProps' | 'secondary' | 'secondaryTypographyProps' | 'actions' | 'footer' | 'isNew'
+    >
+  > {
   /**
    * Notification obj
    * @default null
    */
   notificationObject: SCNotificationPrivateMessageType;
-
-  /**
-   * Notification Object template type
-   * @default 'detail'
-   */
-  template?: SCNotificationObjectTemplateType;
-
-  /**
-   * Any other properties
-   */
-  [p: string]: any;
 }
 
 /**
@@ -171,13 +155,12 @@ export default function PrivateMessageNotification(inProps: NotificationPrivateM
     }
   });
 
-  /**
-   * Renders content
-   */
-  let content;
+  // RENDER
   if (isSnippetTemplate || isToastTemplate) {
-    content = (
-      <NotificationItem
+    return (
+      <Root
+        id={id}
+        className={classNames(classes.root, className, `${PREFIX}-${template}`)}
         template={template}
         isNew={notificationObject.is_new}
         disableTypography
@@ -232,67 +215,59 @@ export default function PrivateMessageNotification(inProps: NotificationPrivateM
           </>
         }
         footer={
-          <>
-            {isToastTemplate && (
-              <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
-                <DateTimeAgo date={notificationObject.active_at} />
-                <Typography color="primary">
-                  <Link to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, notificationObject.message.sender)}>
-                    {scUserContext.user && follower ? (
-                      <FormattedMessage id="ui.userToastNotifications.replyMessage" defaultMessage={'ui.userToastNotifications.replyMessage'} />
-                    ) : (
-                      <FormattedMessage id="ui.userToastNotifications.viewMessage" defaultMessage={'ui.userToastNotifications.viewMessage'} />
-                    )}
-                  </Link>
-                </Typography>
-              </Stack>
-            )}
-          </>
+          isToastTemplate && (
+            <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
+              <DateTimeAgo date={notificationObject.active_at} />
+              <Typography color="primary">
+                <Link to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, notificationObject.message.sender)}>
+                  {scUserContext.user && follower ? (
+                    <FormattedMessage id="ui.userToastNotifications.replyMessage" defaultMessage={'ui.userToastNotifications.replyMessage'} />
+                  ) : (
+                    <FormattedMessage id="ui.userToastNotifications.viewMessage" defaultMessage={'ui.userToastNotifications.viewMessage'} />
+                  )}
+                </Link>
+              </Typography>
+            </Stack>
+          )
         }
-      />
-    );
-  } else {
-    content = (
-      <NotificationItem
-        template={template}
-        isNew={notificationObject.is_new}
-        disableTypography
-        actions={
-          <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
-            <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
-            <LoadingButton
-              color={'primary'}
-              variant="outlined"
-              size="small"
-              classes={{root: classes.replyButton}}
-              component={Link}
-              loading={scUserContext.user ? follower === null || scFollowersManager.isLoading(notificationObject.message.sender) : null}
-              to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, notificationObject.message.sender)}>
-              {scUserContext.user && follower ? (
-                <FormattedMessage id="ui.notification.privateMessage.btnReplyLabel" defaultMessage="ui.notification.privateMessage.btnReplyLabel" />
-              ) : (
-                <FormattedMessage id="ui.notification.privateMessage.btnViewLabel" defaultMessage="ui.notification.privateMessage.btnViewLabel" />
-              )}
-            </LoadingButton>
-          </Stack>
-        }
-        primary={
-          <Box className={classes.messageWrap}>
-            <Link to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, notificationObject.message.sender)} className={classes.message}>
-              <Typography variant="body2" dangerouslySetInnerHTML={{__html: notificationObject.message.message}} />
-            </Link>
-          </Box>
-        }
+        {...rest}
       />
     );
   }
-
-  /**
-   * Renders root object
-   */
   return (
-    <Root id={id} className={classNames(classes.root, className, `${PREFIX}-${template}`)} {...rest}>
-      {content}
-    </Root>
+    <Root
+      id={id}
+      className={classNames(classes.root, className, `${PREFIX}-${template}`)}
+      template={template}
+      isNew={notificationObject.is_new}
+      disableTypography
+      actions={
+        <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
+          <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
+          <LoadingButton
+            color={'primary'}
+            variant="outlined"
+            size="small"
+            classes={{root: classes.replyButton}}
+            component={Link}
+            loading={scUserContext.user ? follower === null || scFollowersManager.isLoading(notificationObject.message.sender) : null}
+            to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, notificationObject.message.sender)}>
+            {scUserContext.user && follower ? (
+              <FormattedMessage id="ui.notification.privateMessage.btnReplyLabel" defaultMessage="ui.notification.privateMessage.btnReplyLabel" />
+            ) : (
+              <FormattedMessage id="ui.notification.privateMessage.btnViewLabel" defaultMessage="ui.notification.privateMessage.btnViewLabel" />
+            )}
+          </LoadingButton>
+        </Stack>
+      }
+      primary={
+        <Box className={classes.messageWrap}>
+          <Link to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, notificationObject.message.sender)} className={classes.message}>
+            <Typography variant="body2" dangerouslySetInnerHTML={{__html: notificationObject.message.message}} />
+          </Link>
+        </Box>
+      }
+      {...rest}
+    />
   );
 }

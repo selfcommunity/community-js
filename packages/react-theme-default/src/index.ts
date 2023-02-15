@@ -1,4 +1,4 @@
-import { createTheme } from '@mui/material/styles';
+import {createTheme} from '@mui/material/styles';
 
 import './styles/reset.css';
 import './fonts/community-icons.css';
@@ -40,7 +40,6 @@ import SCFeedObjectSkeleton from './components/SCFeedObjectSkeleton';
 import SCFeedSkeleton from './components/SCFeedSkeleton';
 import MuiContainer from './components/MuiContainer';
 import SCLoyaltyProgramDetail from './components/SCLoyaltyProgramDetail';
-import SCMobileHeader from './components/SCMobileHeader';
 import SCPrivateMessagesTemplate from './components/SCPrivateMessagesTemplate';
 import MuiDialog from './components/MuiDialog';
 import SCCategories from './components/SCCategories';
@@ -64,6 +63,11 @@ import SCSearchAutocomplete from './components/SCSearchAutocomplete';
 import SCNavigationToolbarMobile from './components/SCNavigationToolbarMobile';
 import SCBottomNavigation from './components/SCBottomNavigation';
 import MuiAppBar from './components/MuiAppBar';
+import SCNotificationsMenu from './components/SCNotificationsMenu';
+import SCNotificationItem from './components/SCNotificationItem';
+import SCNotification from './components/SCNotification';
+import SCContributionNotification from './components/SCContributionNotification';
+import SCSnippetNotificationsSkeleton from './components/SCSnippetNotificationsSkeleton';
 
 /**
  * Style fragments - Imports - End
@@ -124,54 +128,58 @@ const theme = createTheme({
     MuiIconButton,
     MuiOutlinedInput,
     MuiSelect,
-    SCNavigationToolbar,
-    SCNavigationToolbarMobile,
-    SCBottomNavigation,
-    SCSearchAutocomplete,
-    SCWidget,
     SCBaseDialog,
     SCBaseItem,
     SCBaseItemButton,
-    SCCategory,
-    SCCategoryTemplate,
+    SCBottomNavigation,
+    SCBroadcastMessages,
+    SCCategories,
     SCCategoriesSkeleton,
-    SCCategoryTemplateSkeleton,
+    SCCategory,
     SCCategoryFeedTemplate,
     SCCategoryHeader,
-    SCContributorsFeedObject,
-    SCDateTimeAgo,
-    SCInlineComposer,
-    SCLoyaltyProgram,
-    SCLoyaltyProgramDetail,
-    SCEditor,
+    SCCategoryTemplate,
+    SCCategoryTemplateSkeleton,
     SCChoices,
-    SCCommentsObject,
     SCCommentObject,
     SCCommentObjectSkeleton,
     SCCommentsFeedObject,
+    SCCommentsObject,
     SCComposer,
     SCComposerCategories,
     SCComposerPoll,
-    SCBroadcastMessages,
-    SCSnippetNotifications,
+    SCContributionNotification,
+    SCContributorsFeedObject,
     SCCustomSnackMessage,
-    SCScrollContainer,
+    SCDateTimeAgo,
+    SCEditor,
+    SCFeed,
     SCFeedObject,
-    SCFeedObjectSkeleton,
     SCFeedObjectDetailTemplate,
     SCFeedObjectDetailTemplateSkeleton,
+    SCFeedObjectSkeleton,
     SCFeedRelevantActivities,
-    SCFeed,
     SCFeedSkeleton,
+    SCInlineComposer,
+    SCLoyaltyProgram,
+    SCLoyaltyProgramDetail,
+    SCNavigationToolbar,
+    SCNavigationToolbarMobile,
+    SCNotification,
+    SCNotificationItem,
+    SCNotificationsMenu,
     SCPollObject,
     SCPreviewMediaDocument,
+    SCPrivateMessagesTemplate,
+    SCScrollContainer,
+    SCSearchAutocomplete,
+    SCSnippetNotifications,
+    SCSnippetNotificationsSkeleton,
     SCUser,
     SCUserNotification,
-    SCUserProfileTemplate,
     SCUserProfileHeader,
-    SCMobileHeader,
-    SCPrivateMessagesTemplate,
-    SCCategories
+    SCUserProfileTemplate,
+    SCWidget
   },
   selfcommunity: {
     user: {

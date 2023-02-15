@@ -112,10 +112,10 @@ const getTheme = (options, preferences): SCThemeType => {
           SCSnippetNotifications: {
             styleOverrides: {
               root: {
-                '& .SCSnippetNotifications-notifications-list': {
+                '& .SCSnippetNotifications-list': {
                   // wrap notifications list (ul)
                 },
-                '& .SCSnippetNotifications-notification-item': {
+                '& .SCSnippetNotifications-item': {
                   // single notification item (li)
                 },
                 ['& .SCUserFollowNotification-username, .SCUserFollowNotification-username, .SCCommentNotification-username,' +

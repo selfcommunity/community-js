@@ -1,4 +1,4 @@
-import {Button, Menu, MenuProps, styled} from '@mui/material';
+import {Box, Button, Menu, MenuProps, styled} from '@mui/material';
 import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
 import {FormattedMessage} from 'react-intl';
 import React from 'react';
@@ -37,13 +37,15 @@ export default function NotificationMenu(inProps: NotificationsMenuProps) {
     props: inProps,
     name: PREFIX
   });
-  const {PaperProps = {className: classes.paper}, ...rest} = props;
+  const {PaperProps = {className: classes.paper}, MenuListProps = {component: Box}, ...rest} = props;
 
   // HOOKS
   const scRoutingContext: SCRoutingContextType = useSCRouting();
 
   return (
-    <Root className={classes.root} PaperProps={PaperProps} {...rest}>
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
+    <Root className={classes.root} PaperProps={PaperProps} MenuListProps={MenuListProps} {...rest}>
       <SnippetNotifications className={classes.notifications} />
       <Button className={classes.link} component={Link} to={scRoutingContext.url(SCRoutes.USER_NOTIFICATIONS_ROUTE_NAME, {})} variant="text">
         <FormattedMessage id="ui.header.notifications.button.seeMore" defaultMessage="ui.header.notifications.button.seeMore" />
