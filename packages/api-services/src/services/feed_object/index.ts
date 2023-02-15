@@ -306,7 +306,7 @@ export class FeedObjectApiClient {
    * @param reaction
    */
   static voteFeedObject(type: SCFeedObjectTypologyType, id: number | string, reaction?: number, config?: AxiosRequestConfig): Promise<any> {
-    const p = urlParams(reaction ? {reaction: reaction} : null);
+    const p = urlParams({...(reaction && {reaction: reaction})});
     return apiRequest({...config, url: `${Endpoints.Vote.url({type, id})}?${p.toString()}`, method: Endpoints.Vote.method});
   }
 

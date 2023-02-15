@@ -172,7 +172,7 @@ export class UserApiClient {
    * @param config
    */
   static userDelete(id: number | string, hard?: number, config?: AxiosRequestConfig): Promise<any> {
-    const p = urlParams(hard ? {hard: hard} : null);
+    const p = urlParams({...(hard && {hard: hard})});
     return apiRequest({...config, url: `${Endpoints.UserDelete.url({id})}?${p.toString()}`, method: Endpoints.UserDelete.method});
   }
 
@@ -287,7 +287,7 @@ export class UserApiClient {
    * @param config
    */
   static getCurrentUserPlatform(next?: string, config?: AxiosRequestConfig): Promise<SCPlatformType> {
-    const p = urlParams(next ? {next: next} : null);
+    const p = urlParams({...(next && {next: next})});
     return apiRequest({...config, url: `${Endpoints.Platform.url({})}?${p.toString()}`, method: Endpoints.Platform.method});
   }
 
@@ -298,7 +298,7 @@ export class UserApiClient {
    * @param config
    */
   static getUserFollowedCategories(id: number | string, mutual?: number, config?: AxiosRequestConfig): Promise<SCCategoryType[]> {
-    const p = urlParams(mutual ? {mutual: mutual} : null);
+    const p = urlParams({...(mutual && {mutual: mutual})});
     return apiRequest({...config, url: `${Endpoints.FollowedCategories.url({id})}?${p.toString()}`, method: Endpoints.FollowedCategories.method});
   }
 
@@ -318,7 +318,7 @@ export class UserApiClient {
    * @param config
    */
   static getUserFollowers(id: number | string, mutual?: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
-    const p = urlParams(mutual ? {mutual: mutual} : null);
+    const p = urlParams({...(mutual && {mutual: mutual})});
     return apiRequest({...config, url: `${Endpoints.UserFollowers.url({id})}?${p.toString()}`, method: Endpoints.UserFollowers.method});
   }
 
@@ -329,7 +329,7 @@ export class UserApiClient {
    * @param config
    */
   static getUserFollowed(id: number | string, mutual?: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
-    const p = urlParams(mutual ? {mutual: mutual} : null);
+    const p = urlParams({...(mutual && {mutual: mutual})});
     return apiRequest({...config, url: `${Endpoints.UsersFollowed.url({id})}?${p.toString()}`, method: Endpoints.UsersFollowed.method});
   }
 
@@ -367,7 +367,7 @@ export class UserApiClient {
    * @param config
    */
   static getUserConnections(id: number | string, mutual?: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
-    const p = urlParams(mutual ? {mutual: mutual} : null);
+    const p = urlParams({...(mutual && {mutual: mutual})});
     return apiRequest({...config, url: `${Endpoints.UserConnections.url({id})}?${p.toString()}`, method: Endpoints.UserConnections.method});
   }
 
