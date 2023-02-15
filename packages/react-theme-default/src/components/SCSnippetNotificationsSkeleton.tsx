@@ -1,7 +1,9 @@
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
-      '& .SCSnippetNotifications-item': {
+      margin: 0,
+      padding: 0,
+      '& .SCSnippetNotificationsSkeleton-item': {
         padding: 0,
         marginBottom: theme.spacing(),
         '& .SCNotificationItem-root': {
@@ -27,17 +29,6 @@ const Component = {
             '& .SCNotificationItem-header': {
               padding: theme.spacing(1, 2)
             }
-          }
-        },
-        '&.SCSnippetNotifications-broadcast-messages-banner': {
-          '& .SCNotificationItem-root.SCNotificationItem-snippet.SCNotificationItem-new': {
-            '&:before': {
-              backgroundColor: theme.palette.secondary.main
-            }
-          },
-          '& .SCNotificationItem-title a': {
-            color: theme.palette.secondary.main,
-            fontWeight: theme.typography.fontWeightBold
           }
         }
       }

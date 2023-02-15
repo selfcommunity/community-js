@@ -47,9 +47,9 @@ const classes = {
   root: `${PREFIX}-root`,
   notificationsWrap: `${PREFIX}-notifications-wrap`,
   emptyBoxNotifications: `${PREFIX}-empty-box-notifications`,
-  notificationsList: `${PREFIX}-notifications-list`,
+  list: `${PREFIX}-list`,
   broadcastMessagesBanner: `${PREFIX}-broadcast-messages-banner`,
-  notificationItem: `${PREFIX}-notification-item`
+  item: `${PREFIX}-item`
 };
 
 const Root = styled(Box, {
@@ -60,21 +60,7 @@ const Root = styled(Box, {
   width: '100%',
   [`& .${classes.notificationsWrap}`]: {
     height: 330,
-    maxWidth: 320,
     overflowY: 'hidden'
-  },
-  [`& .${classes.notificationItem}`]: {
-    padding: 0,
-    margin: `${theme.spacing()} 0px`,
-    whiteSpace: 'normal',
-    '&:hover': {
-      backgroundColor: 'rgba(0, 0, 0, 0.05)',
-      cursor: 'default'
-    }
-  },
-  '& a': {
-    textDecoration: 'none',
-    color: theme.palette.text.primary
   }
 }));
 
@@ -158,8 +144,8 @@ const PREFERENCES = [SCPreferences.LOGO_NAVBAR_LOGO_MOBILE, SCPreferences.TEXT_A
  |root|.SCSnippetNotification-root|Styles applied to the root element.|
  |notificationsWrap|.SCSnippetNotification-notification-wrap|Styles applied to the notifications wrap.|
  |emptyBoxNotifications|.SCSnippetNotification-empty-box-notifications|Styles applied to the box indicating that there are no notifications.|
- |notificationsList|.SCSnippetNotification-notifications-list|Styles applied to the list of notifications.|
- |notificationItem|.SCSnippetNotification-notification-item|Styles applied to the single notification.|
+ |list|.SCSnippetNotification-list|Styles applied to the list of notifications.|
+ |item|.SCSnippetNotification-item|Styles applied to the single notification.|
  |broadcastMessagesBanner|.SCSnippetNotification-broadcast-messages-banner|Styles applied to the broadcast message banner.|
 
  * @param inProps
@@ -367,10 +353,10 @@ export default function SnippetNotifications(inProps: SnippetNotificationsProps)
           <Skeleton elevation={0} />
         ) : (
           <ScrollContainer {...ScrollContainerProps}>
-            <MenuList className={classes.notificationsList}>
+            <MenuList className={classes.list}>
               {scUserContext.user.unseen_notification_banners_counter ? (
                 <MenuItem
-                  className={classNames(classes.notificationItem, classes.broadcastMessagesBanner)}
+                  className={classNames(classes.item, classes.broadcastMessagesBanner)}
                   key="banner"
                   component={Link}
                   to={scRoutingContext.url(SCRoutes.USER_NOTIFICATIONS_ROUTE_NAME, {})}>
@@ -403,7 +389,7 @@ export default function SnippetNotifications(inProps: SnippetNotificationsProps)
               ) : (
                 notifications.slice(0, showMax).map((notificationObject: SCNotificationAggregatedType, i) =>
                   notificationObject.aggregated.map((n: SCNotificationType, k) => (
-                    <MenuItem className={classes.notificationItem} key={k} onClick={(e) => handleSingleNotificationClick(e, n)}>
+                    <MenuItem className={classes.item} key={k} onClick={(e) => handleSingleNotificationClick(e, n)}>
                       {renderAggregatedItem(n, i)}
                     </MenuItem>
                   ))

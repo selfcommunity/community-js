@@ -11,7 +11,7 @@ import DateTimeAgo from '../../../shared/DateTimeAgo';
 import classNames from 'classnames';
 import {SCNotificationObjectTemplateType} from '../../../types';
 import {useThemeProps} from '@mui/system';
-import NotificationItem from '../../../shared/NotificationItem';
+import NotificationItem, {NotificationItemProps} from '../../../shared/NotificationItem';
 import {red} from '@mui/material/colors';
 
 const messages = defineMessages({
@@ -33,7 +33,7 @@ const classes = {
   contributionText: `${PREFIX}-contribution-text`
 };
 
-const Root = styled(Box, {
+const Root = styled(NotificationItem, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
@@ -58,35 +58,19 @@ const Root = styled(Box, {
   }
 }));
 
-export interface NotificationKindlyNoticeFlagProps {
-  /**
-   * Id of the feedObject
-   * @default `n_<notificationObject.sid>`
-   */
-  id?: string;
-
-  /**
-   * Overrides or extends the styles applied to the component.
-   * @default null
-   */
-  className?: string;
-
+export interface NotificationKindlyNoticeFlagProps
+  extends Pick<
+    NotificationItemProps,
+    Exclude<
+      keyof NotificationItemProps,
+      'image' | 'disableTypography' | 'primary' | 'primaryTypographyProps' | 'secondary' | 'secondaryTypographyProps' | 'actions' | 'footer' | 'isNew'
+    >
+  > {
   /**
    * Notification obj
    * @default null
    */
   notificationObject: SCNotificationDeletedForType;
-
-  /**
-   * Notification Object template type
-   * @default 'detail'
-   */
-  template?: SCNotificationObjectTemplateType;
-
-  /**
-   * Any other properties
-   */
-  [p: string]: any;
 }
 
 /**
@@ -122,63 +106,58 @@ export default function KindlyNoticeFlagNotification(inProps: NotificationKindly
    * Renders root object
    */
   return (
-    <Root id={id} className={classNames(classes.root, className, `${PREFIX}-${template}`)} {...rest}>
-      <NotificationItem
-        template={template}
-        isNew={notificationObject.is_new}
-        disableTypography
-        image={
-          <Avatar variant="circular" classes={{root: classes.flagIcon}}>
-            <Icon>outlined_flag</Icon>
-          </Avatar>
-        }
-        primary={
-          <>
-            {isSnippetTemplate ? (
-              <Link
-                to={scRoutingContext.url(
-                  SCRoutes[`${contributionType.toUpperCase()}_ROUTE_NAME`],
-                  getRouteData(notificationObject[contributionType])
-                )}>
-                <Typography component="div" color="inherit" className={classes.flagText}>
-                  <FormattedMessage
-                    id={`ui.notification.kindlyNoticeFlag.kindlyNoticeFlagSnippet`}
-                    defaultMessage={`ui.notification.kindlyNoticeFlag.kindlyNoticeFlagSnippet`}
-                  />
-                </Typography>
-              </Link>
-            ) : (
+    <Root
+      id={id}
+      className={classNames(classes.root, className, `${PREFIX}-${template}`)}
+      template={template}
+      isNew={notificationObject.is_new}
+      disableTypography
+      image={
+        <Avatar variant="circular" classes={{root: classes.flagIcon}}>
+          <Icon>outlined_flag</Icon>
+        </Avatar>
+      }
+      primary={
+        <>
+          {isSnippetTemplate ? (
+            <Link
+              to={scRoutingContext.url(SCRoutes[`${contributionType.toUpperCase()}_ROUTE_NAME`], getRouteData(notificationObject[contributionType]))}>
               <Typography component="div" color="inherit" className={classes.flagText}>
-                {intl.formatMessage(messages[camelCase(notificationObject.type)], {b: (...chunks) => <strong>{chunks}</strong>})}
+                <FormattedMessage
+                  id={`ui.notification.kindlyNoticeFlag.kindlyNoticeFlagSnippet`}
+                  defaultMessage={`ui.notification.kindlyNoticeFlag.kindlyNoticeFlagSnippet`}
+                />
               </Typography>
-            )}
-          </>
-        }
-        secondary={
-          template === SCNotificationObjectTemplateType.DETAIL && <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
-        }
-        footer={
-          <>
-            {!isSnippetTemplate && (
-              <Box className={classes.contributionWrap}>
-                <Typography variant={'body2'} color={'inherit'} component={'div'} classes={{root: classes.contributionYouWroteLabel}}>
-                  <FormattedMessage id="ui.notification.undeletedFor.youWrote" defaultMessage="ui.notification.undeletedFor.youWrote" />
-                </Typography>
-                <Link
-                  to={scRoutingContext.url(
-                    SCRoutes[`${contributionType.toUpperCase()}_ROUTE_NAME`],
-                    getRouteData(notificationObject[contributionType])
-                  )}
-                  className={classes.contributionText}>
-                  <Typography component={'span'} variant="body2" gutterBottom>
-                    {getContributionSnippet(notificationObject[contributionType])}
-                  </Typography>
-                </Link>
-              </Box>
-            )}
-          </>
-        }
-      />
-    </Root>
+            </Link>
+          ) : (
+            <Typography component="div" color="inherit" className={classes.flagText}>
+              {intl.formatMessage(messages[camelCase(notificationObject.type)], {b: (...chunks) => <strong>{chunks}</strong>})}
+            </Typography>
+          )}
+        </>
+      }
+      secondary={
+        (template === SCNotificationObjectTemplateType.DETAIL || template === SCNotificationObjectTemplateType.SNIPPET) && (
+          <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
+        )
+      }
+      footer={
+        !isSnippetTemplate && (
+          <Box className={classes.contributionWrap}>
+            <Typography variant={'body2'} color={'inherit'} component={'div'} classes={{root: classes.contributionYouWroteLabel}}>
+              <FormattedMessage id="ui.notification.undeletedFor.youWrote" defaultMessage="ui.notification.undeletedFor.youWrote" />
+            </Typography>
+            <Link
+              to={scRoutingContext.url(SCRoutes[`${contributionType.toUpperCase()}_ROUTE_NAME`], getRouteData(notificationObject[contributionType]))}
+              className={classes.contributionText}>
+              <Typography component={'span'} variant="body2">
+                {getContributionSnippet(notificationObject[contributionType])}
+              </Typography>
+            </Link>
+          </Box>
+        )
+      }
+      {...rest}
+    />
   );
 }

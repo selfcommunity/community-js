@@ -91,7 +91,6 @@ const Root = styled(Widget, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}: any) => ({
-  marginBottom: theme.spacing(2),
   [`&.${classes.root}`]: {
     width: '100%',
     paddingBottom: 5

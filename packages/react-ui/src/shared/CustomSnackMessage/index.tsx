@@ -10,8 +10,8 @@ const PREFIX = 'SCCustomSnackMessage';
 const classes = {
   root: `${PREFIX}-root`,
   card: `${PREFIX}-card`,
-  cardContent: `${PREFIX}-card-content`,
-  closeAction: `${PREFIX}-close-action`
+  content: `${PREFIX}-content`,
+  close: `${PREFIX}-close`
 };
 
 const Root = styled(SnackbarContent, {
@@ -23,25 +23,11 @@ const Root = styled(SnackbarContent, {
   [theme.breakpoints.up('sm')]: {
     minWidth: '345px !important'
   },
-  [`& .${classes.card}`]: {
-    backgroundColor: '#fff',
-    width: '100%',
-    padding: theme.spacing(),
-    borderRadius: 10
-  },
-  [`& .${classes.cardContent}`]: {
-    padding: `5px 5px`,
-    paddingBottom: `5px !important`
-  },
-  [`& .${classes.closeAction}`]: {
+  [`& .${classes.close}`]: {
     position: 'absolute',
     right: 0,
     top: 0,
     zIndex: 1
-  },
-  '& a': {
-    textDecoration: 'none',
-    color: theme.palette.text.primary
   }
 }));
 
@@ -63,8 +49,8 @@ const CustomSnackMessage = forwardRef<HTMLDivElement, {id: string | number; mess
   return (
     <Root ref={ref} className={classes.root} key={props.id}>
       <Widget className={classes.card}>
-        <CardContent className={classes.cardContent}>
-          <IconButton className={classes.closeAction} onClick={handleDismiss}>
+        <CardContent className={classes.content}>
+          <IconButton className={classes.close} onClick={handleDismiss}>
             <Icon>close</Icon>
           </IconButton>
           {props.message}

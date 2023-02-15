@@ -1,27 +1,20 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import {List, useTheme} from '@mui/material';
+import {List, ListItem, useTheme} from '@mui/material';
 import Skeleton from '@mui/material/Skeleton';
 import NotificationItem from '../../shared/NotificationItem';
 import {SCNotificationObjectTemplateType} from '../../types/notification';
 import {SCThemeType} from '@selfcommunity/react-core';
 
-const PREFIX = 'SCSnippetNotificationSkeleton';
+const PREFIX = 'SCSnippetNotificationsSkeleton';
 
 const classes = {
   root: `${PREFIX}-root`,
+  list: `${PREFIX}-list`,
   item: `${PREFIX}-item`
 };
 
-const Root = styled(List)(({theme}) => ({
-  marginBottom: theme.spacing(2),
-  [`& .${classes.item}`]: {
-    marginBottom: theme.spacing(),
-    '&::before': {
-      height: '11% !important'
-    }
-  }
-}));
+const Root = styled(List, {name: PREFIX, slot: 'Root', overridesResolver: (props, styles) => styles.root})(({theme}) => ({}));
 
 /**
  * > API documentation for the Community-JS Snippet Notification Skeleton component. Learn about the available props and the CSS API.
@@ -29,7 +22,7 @@ const Root = styled(List)(({theme}) => ({
  #### Import
 
  ```jsx
- import {SnippetNotificationSkeleton} from '@selfcommunity/react-ui';
+ import {SnippetNotificationsSkeleton} from '@selfcommunity/react-ui';
  ```
 
  #### Component Name
@@ -52,7 +45,12 @@ export default function SnippetNotificationSkeleton(props): JSX.Element {
       className={classes.item}
       template={SCNotificationObjectTemplateType.SNIPPET}
       image={
-        <Skeleton animation="wave" variant="circular" width={theme.selfcommunity.user.avatar.sizeSmall} height={theme.selfcommunity.user.avatar.sizeSmall} />
+        <Skeleton
+          animation="wave"
+          variant="circular"
+          width={theme.selfcommunity.user.avatar.sizeSmall}
+          height={theme.selfcommunity.user.avatar.sizeSmall}
+        />
       }
       primary={<Skeleton animation="wave" height={10} width={120} style={{marginBottom: 10}} />}
       secondary={<Skeleton animation="wave" height={10} width={70} style={{marginBottom: 10}} />}
@@ -61,7 +59,9 @@ export default function SnippetNotificationSkeleton(props): JSX.Element {
   return (
     <Root className={classes.root} {...props}>
       {[...Array(7)].map((x, i) => (
-        <React.Fragment key={i}>{notificationSkeleton}</React.Fragment>
+        <ListItem className={classes.item} key={i}>
+          {notificationSkeleton}
+        </ListItem>
       ))}
     </Root>
   );

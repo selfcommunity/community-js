@@ -6,12 +6,12 @@ import {red} from '@mui/material/colors';
 import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
 import {SCNotificationUnDeletedForType} from '@selfcommunity/types';
 import {FormattedMessage} from 'react-intl';
-import {getContributionType, getContributionSnippet, getRouteData} from '../../../utils/contribution';
+import {getContributionSnippet, getContributionType, getRouteData} from '../../../utils/contribution';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
 import classNames from 'classnames';
 import {SCNotificationObjectTemplateType} from '../../../types';
 import {useThemeProps} from '@mui/system';
-import NotificationItem from '../../../shared/NotificationItem';
+import NotificationItem, {NotificationItemProps} from '../../../shared/NotificationItem';
 
 const PREFIX = 'SCUndeletedForNotification';
 
@@ -25,7 +25,7 @@ const classes = {
   contributionText: `${PREFIX}-contribution-text`
 };
 
-const Root = styled(Box, {
+const Root = styled(NotificationItem, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
@@ -51,35 +51,19 @@ const Root = styled(Box, {
   }
 }));
 
-export interface NotificationUndeletedProps {
-  /**
-   * Id of the feedObject
-   * @default `n_<notificationObject.sid>`
-   */
-  id?: string;
-
-  /**
-   * Overrides or extends the styles applied to the component.
-   * @default null
-   */
-  className?: string;
-
+export interface NotificationUndeletedProps
+  extends Pick<
+    NotificationItemProps,
+    Exclude<
+      keyof NotificationItemProps,
+      'image' | 'disableTypography' | 'primary' | 'primaryTypographyProps' | 'secondary' | 'secondaryTypographyProps' | 'actions' | 'footer' | 'isNew'
+    >
+  > {
   /**
    * Notification obj
    * @default null
    */
   notificationObject: SCNotificationUnDeletedForType;
-
-  /**
-   * Notification Object template type
-   * @default 'detail'
-   */
-  template?: SCNotificationObjectTemplateType;
-
-  /**
-   * Any other properties
-   */
-  [p: string]: any;
 }
 
 /**
@@ -112,60 +96,59 @@ export default function UndeletedForNotification(inProps: NotificationUndeletedP
    * Renders root object
    */
   return (
-    <Root id={id} className={classNames(classes.root, className, `${PREFIX}-${template}`)} {...rest}>
-      <NotificationItem
-        template={template}
-        isNew={notificationObject.is_new}
-        disableTypography
-        image={
-          <Avatar variant="circular" classes={{root: classes.undeletedIcon}}>
-            <Icon>outlined_flag</Icon>
-          </Avatar>
-        }
-        primary={
+    <Root
+      id={id}
+      className={classNames(classes.root, className, `${PREFIX}-${template}`)}
+      template={template}
+      isNew={notificationObject.is_new}
+      disableTypography
+      image={
+        <Avatar variant="circular" classes={{root: classes.undeletedIcon}}>
+          <Icon>outlined_flag</Icon>
+        </Avatar>
+      }
+      primary={
+        <>
+          {isSnippetTemplate ? (
+            <Link
+              to={scRoutingContext.url(SCRoutes[`${contributionType.toUpperCase()}_ROUTE_NAME`], getRouteData(notificationObject[contributionType]))}>
+              <Typography component="div" color="inherit" className={classes.undeletedText}>
+                <FormattedMessage
+                  id="ui.notification.undeletedFor.restoredContentSnippet"
+                  defaultMessage="ui.notification.undeletedFor.restoredContentSnippet"
+                />
+              </Typography>
+            </Link>
+          ) : (
+            <Typography component="div" color="inherit" className={classes.undeletedText}>
+              <FormattedMessage id="ui.notification.undeletedFor.restoredContent" defaultMessage="ui.notification.undeletedFor.restoredContent" />
+            </Typography>
+          )}
+        </>
+      }
+      secondary={
+        (template === SCNotificationObjectTemplateType.DETAIL || template === SCNotificationObjectTemplateType.SNIPPET) && (
+          <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
+        )
+      }
+      footer={
+        isSnippetTemplate ? null : (
           <>
-            {isSnippetTemplate ? (
+            <Box className={classes.contributionWrap}>
+              <Typography variant={'body2'} color={'inherit'} component={'div'} classes={{root: classes.contributionYouWroteLabel}}>
+                <FormattedMessage id="ui.notification.undeletedFor.youWrote" defaultMessage="ui.notification.undeletedFor.youWrote" />
+              </Typography>
               <Link
                 to={scRoutingContext.url(
                   SCRoutes[`${contributionType.toUpperCase()}_ROUTE_NAME`],
                   getRouteData(notificationObject[contributionType])
-                )}>
-                <Typography component="div" color="inherit" className={classes.undeletedText}>
-                  <FormattedMessage
-                    id="ui.notification.undeletedFor.restoredContentSnippet"
-                    defaultMessage="ui.notification.undeletedFor.restoredContentSnippet"
-                  />
+                )}
+                className={classes.contributionText}>
+                <Typography component={'span'} variant="body2">
+                  {getContributionSnippet(notificationObject[contributionType])}
                 </Typography>
               </Link>
-            ) : (
-              <Typography component="div" color="inherit" className={classes.undeletedText}>
-                <FormattedMessage id="ui.notification.undeletedFor.restoredContent" defaultMessage="ui.notification.undeletedFor.restoredContent" />
-              </Typography>
-            )}
-          </>
-        }
-        secondary={
-          template === SCNotificationObjectTemplateType.DETAIL && <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
-        }
-        footer={
-          <>
-            {!isSnippetTemplate && (
-              <Box className={classes.contributionWrap}>
-                <Typography variant={'body2'} color={'inherit'} component={'div'} classes={{root: classes.contributionYouWroteLabel}}>
-                  <FormattedMessage id="ui.notification.undeletedFor.youWrote" defaultMessage="ui.notification.undeletedFor.youWrote" />
-                </Typography>
-                <Link
-                  to={scRoutingContext.url(
-                    SCRoutes[`${contributionType.toUpperCase()}_ROUTE_NAME`],
-                    getRouteData(notificationObject[contributionType])
-                  )}
-                  className={classes.contributionText}>
-                  <Typography component={'span'} variant="body2" gutterBottom>
-                    {getContributionSnippet(notificationObject[contributionType])}
-                  </Typography>
-                </Link>
-              </Box>
-            )}
+            </Box>
             {template === SCNotificationObjectTemplateType.TOAST && (
               <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
                 <DateTimeAgo date={notificationObject.active_at} />
@@ -181,8 +164,9 @@ export default function UndeletedForNotification(inProps: NotificationUndeletedP
               </Stack>
             )}
           </>
-        }
-      />
-    </Root>
+        )
+      }
+      {...rest}
+    />
   );
 }
