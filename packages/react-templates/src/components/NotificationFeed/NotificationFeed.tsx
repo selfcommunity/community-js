@@ -33,7 +33,6 @@ const Root = styled(Feed, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  marginTop: theme.spacing(2)
 }));
 
 export interface NotificationFeedProps {

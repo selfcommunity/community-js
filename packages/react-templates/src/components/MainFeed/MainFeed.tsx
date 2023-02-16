@@ -31,9 +31,7 @@ const Root = styled(Feed, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  marginTop: theme.spacing(2)
-}));
+})(({theme}) => ({}));
 
 export interface MainFeedProps {
   /**

@@ -36,6 +36,7 @@ const PREFIX = 'SCUserProfileTemplate';
 
 const classes = {
   root: `${PREFIX}-root`,
+  feed: `${PREFIX}-feed`,
   actions: `${PREFIX}-actions`
 };
 
@@ -44,7 +45,9 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  marginTop: theme.spacing(2),
+  [`& .${classes.feed}`]: {
+    marginTop: theme.spacing(2)
+  },
   [`& .${classes.actions}`]: {
     margin: theme.spacing(2),
     justifyContent: 'space-around'
@@ -285,6 +288,7 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
       </Stack>
       <UserFeed
         key={`feed_${scUser.id}`}
+        className={classes.feed}
         user={scUser}
         widgets={_widgets}
         FeedObjectProps={FeedObjectProps}

@@ -12,7 +12,8 @@ import classNames from 'classnames';
 const PREFIX = 'SCCategoryTemplate';
 
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-root`,
+  feed: `${PREFIX}-feed`
 };
 
 const Root = styled(Box, {
@@ -20,7 +21,9 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  marginTop: theme.spacing(2)
+  [`& .${classes.feed}`]: {
+    marginTop: theme.spacing(2)
+  }
 }));
 
 export interface CategoryProps {
@@ -112,6 +115,7 @@ export default function Category(inProps: CategoryProps): JSX.Element {
     <Root id={id} className={classNames(classes.root, className)}>
       <CategoryHeader category={scCategory} />
       <CategoryFeed
+        className={classes.feed}
         category={scCategory}
         widgets={widgets}
         FeedObjectProps={FeedObjectProps}
