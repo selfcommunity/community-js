@@ -38,7 +38,6 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  marginTop: theme.spacing(2)
 }));
 
 export interface FeedObjectDetailProps {

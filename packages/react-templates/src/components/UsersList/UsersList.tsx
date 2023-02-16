@@ -20,7 +20,6 @@ const Root = styled(Feed, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  marginTop: theme.spacing(2),
   '& .SCFeed-left .SCUser-root': {
     marginBottom: theme.spacing(2)
   }
