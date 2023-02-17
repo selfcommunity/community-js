@@ -7,7 +7,7 @@ import ListItem from '@mui/material/ListItem';
 import Skeleton from '@mui/material/Skeleton';
 import ListItemText from '@mui/material/ListItemText';
 
-const PREFIX = 'SCThreadSkeleton';
+const PREFIX = 'SCPrivateMessageThreadSkeleton';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -29,27 +29,27 @@ const Root = styled(Widget, {
   }
 }));
 /**
- * > API documentation for the Community-JS Thread Skeleton component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS PrivateMessage Thread Skeleton component. Learn about the available props and the CSS API.
 
  #### Import
 
  ```jsx
- import {ThreadSkeleton} from '@selfcommunity/react-ui';
+ import {PrivateMessageThreadSkeleton} from '@selfcommunity/react-ui';
  ```
 
  #### Component Name
 
- The name `SCThreadSkeleton` can be used when providing style overrides in the theme.
+ The name `SCPrivateMessageThreadSkeleton` can be used when providing style overrides in the theme.
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCThreadSkeleton-root|Styles applied to the root element.|
- |list|.SCThreadSkeleton-list|Styles applied to the list element.|
+ |root|.SCPrivateMessageThreadSkeleton-root|Styles applied to the root element.|
+ |list|.SCPrivateMessageThreadSkeleton-list|Styles applied to the list element.|
  *
  */
-export default function ThreadSkeleton(props): JSX.Element {
+export default function PrivateMessageThreadSkeleton(props): JSX.Element {
   return (
     <Root className={classes.root} {...props}>
       <CardContent>
