@@ -1,4 +1,4 @@
-import { createTheme } from '@mui/material/styles';
+import {createTheme} from '@mui/material/styles';
 
 import './styles/reset.css';
 import './fonts/community-icons.css';
@@ -64,8 +64,10 @@ import SCSearchAutocomplete from './components/SCSearchAutocomplete';
 import SCNavigationToolbarMobile from './components/SCNavigationToolbarMobile';
 import SCBottomNavigation from './components/SCBottomNavigation';
 import MuiAppBar from './components/MuiAppBar';
-import SCPrivateMessageItem from './components/SCPrivateMessageItem';
-
+import SCPrivateMessageSnippetItem from './components/SCPrivateMessageSnippetItem';
+import SCPrivateMessageThread from './components/SCPrivateMessageThread';
+import SCPrivateMessageSnippets from './components/SCPrivateMessageSnippets';
+import SCPrivateMessageEditor from './components/SCPrivateMessageEditor';
 /**
  * Style fragments - Imports - End
  */
@@ -173,7 +175,10 @@ const theme = createTheme({
     SCMobileHeader,
     SCPrivateMessagesTemplate,
     SCCategories,
-    SCPrivateMessageItem
+    SCPrivateMessageSnippetItem,
+    SCPrivateMessageSnippets,
+    SCPrivateMessageThread,
+    SCPrivateMessageEditor
   },
   selfcommunity: {
     user: {
