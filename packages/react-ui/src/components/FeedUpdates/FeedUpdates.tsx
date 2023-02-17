@@ -21,7 +21,6 @@ const Root = styled(Widget, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  height: 20,
   marginBottom: theme.spacing(2),
   '& div:last-child': {
     paddingBottom: theme.spacing(2)

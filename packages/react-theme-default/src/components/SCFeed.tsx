@@ -9,6 +9,9 @@ const Component = {
         },
         '&:last-child': {
           paddingBottom: theme.spacing(4)
+        },
+        '& > * > * > .SCWidget-root': {
+          marginBottom: theme.spacing(2)
         }
       },
       '& .SCFeed-right': {

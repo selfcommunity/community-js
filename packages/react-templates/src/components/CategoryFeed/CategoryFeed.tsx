@@ -1,27 +1,25 @@
-import React, {useEffect, useMemo, useRef, useState} from 'react';
-import {styled} from '@mui/material/styles';
+import React, { useMemo, useRef } from 'react';
+import { styled } from '@mui/material/styles';
 import {
   Feed,
   FeedObject,
   FeedObjectProps,
   FeedObjectSkeleton,
-  SCFeedObjectTemplateType,
+  FeedProps,
   FeedRef,
   FeedSidebarProps,
-  FeedProps,
   InlineComposer,
+  SCFeedObjectTemplateType,
   SCFeedWidgetType,
   TrendingFeed,
-  TrendingPeople
+  TrendingPeople,
 } from '@selfcommunity/react-ui';
-import {Endpoints} from '@selfcommunity/api-services';
-import {SCPreferences, useSCFetchCategory} from '@selfcommunity/react-core';
-import {SCCategoryType, SCCustomAdvPosition} from '@selfcommunity/types';
-import {CategoryFeedSkeleton} from './index';
-import {useThemeProps} from '@mui/system';
+import { Endpoints } from '@selfcommunity/api-services';
+import { useSCFetchCategory } from '@selfcommunity/react-core';
+import { SCCategoryType, SCCustomAdvPosition } from '@selfcommunity/types';
+import { CategoryFeedSkeleton } from './index';
+import { useThemeProps } from '@mui/system';
 import classNames from 'classnames';
-import {Grid} from '@mui/material';
-import CustomAdv from '@selfcommunity/react-ui/src/components/CustomAdv';
 
 const PREFIX = 'SCCategoryFeedTemplate';
 
@@ -33,9 +31,7 @@ const Root = styled(Feed, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  marginTop: theme.spacing(2)
-}));
+})(({theme}) => ({}));
 
 export interface CategoryFeedProps {
   /**

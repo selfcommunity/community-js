@@ -12,7 +12,7 @@ import {getContributionSnippet, getRouteData} from '../../../utils/contribution'
 import classNames from 'classnames';
 import {SCNotificationObjectTemplateType} from '../../../types';
 import {useThemeProps} from '@mui/system';
-import NotificationItem from '../../../shared/NotificationItem';
+import NotificationItem, {NotificationItemProps} from '../../../shared/NotificationItem';
 
 const messages = defineMessages({
   comment: {
@@ -37,7 +37,7 @@ const classes = {
   bullet: `${PREFIX}-bullet`
 };
 
-const Root = styled(Box, {
+const Root = styled(NotificationItem, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
@@ -67,30 +67,19 @@ const Root = styled(Box, {
   }
 }));
 
-export interface CommentNotificationProps {
-  /**
-   * Id of the feedObject
-   * @default `n_<notificationObject.sid>`
-   */
-  id?: string;
-
-  /**
-   * Overrides or extends the styles applied to the component.
-   * @default null
-   */
-  className?: string;
-
+export interface CommentNotificationProps
+  extends Pick<
+    NotificationItemProps,
+    Exclude<
+      keyof NotificationItemProps,
+      'image' | 'disableTypography' | 'primary' | 'primaryTypographyProps' | 'secondary' | 'secondaryTypographyProps' | 'actions' | 'footer' | 'isNew'
+    >
+  > {
   /**
    * Notification obj
    * @default null
    */
   notificationObject: SCNotificationCommentType;
-
-  /**
-   * Notification Object template type
-   * @default 'detail'
-   */
-  template?: SCNotificationObjectTemplateType;
 
   /**
    * Index
@@ -109,11 +98,6 @@ export interface CommentNotificationProps {
    * @default null
    */
   loadingVote?: number;
-
-  /**
-   * Any other properties
-   */
-  [p: string]: any;
 }
 
 /**
@@ -155,87 +139,86 @@ export default function CommentNotification(inProps: CommentNotificationProps): 
    * Renders root object
    */
   return (
-    <Root id={id} className={classNames(classes.root, className, `${PREFIX}-${template}`)} {...rest}>
-      <NotificationItem
-        template={template}
-        isNew={notificationObject.is_new}
-        disableTypography
-        image={
-          <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject['follower'])}>
-            <Avatar
-              alt={notificationObject.comment.author.username}
-              variant="circular"
-              src={notificationObject.comment.author.avatar}
-              classes={{root: classes.avatar}}
-            />
+    <Root
+      id={id}
+      className={classNames(classes.root, className, `${PREFIX}-${template}`)}
+      template={template}
+      isNew={notificationObject.is_new}
+      disableTypography
+      image={
+        <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject['follower'])}>
+          <Avatar
+            alt={notificationObject.comment.author.username}
+            variant="circular"
+            src={notificationObject.comment.author.avatar}
+            classes={{root: classes.avatar}}
+          />
+        </Link>
+      }
+      primary={
+        <>
+          <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.comment.author)} className={classes.username}>
+            {notificationObject.comment.author.username}
+          </Link>{' '}
+          {notificationObject.type === SCNotificationTypologyType.NESTED_COMMENT
+            ? intl.formatMessage(messages.comment, {
+                b: (...chunks) => <strong>{chunks}</strong>
+              })
+            : intl.formatMessage(messages.nestedComment, {
+                b: (...chunks) => <strong>{chunks}</strong>
+              })}
+        </>
+      }
+      secondary={
+        <React.Fragment>
+          <Link to={scRoutingContext.url(SCRoutes.COMMENT_ROUTE_NAME, getRouteData(notificationObject.comment))}>
+            <Typography variant="body2" className={classes.contributionText}>
+              {getContributionSnippet(notificationObject.comment)}
+            </Typography>
           </Link>
-        }
-        primary={
-          <>
-            <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.comment.author)} className={classes.username}>
-              {notificationObject.comment.author.username}
-            </Link>{' '}
-            {notificationObject.type === SCNotificationTypologyType.NESTED_COMMENT
-              ? intl.formatMessage(messages.comment, {
-                  b: (...chunks) => <strong>{chunks}</strong>
-                })
-              : intl.formatMessage(messages.nestedComment, {
-                  b: (...chunks) => <strong>{chunks}</strong>
-                })}
-          </>
-        }
-        secondary={
-          <React.Fragment>
-            <Link to={scRoutingContext.url(SCRoutes.COMMENT_ROUTE_NAME, getRouteData(notificationObject.comment))}>
-              <Typography variant="body2" gutterBottom className={classes.contributionText}>
-                {getContributionSnippet(notificationObject.comment)}
-              </Typography>
-            </Link>
-            {template === SCNotificationObjectTemplateType.DETAIL && (
-              <Stack direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
-                <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
-                <Bullet className={classes.bullet} />
-                <LoadingButton
-                  color={'inherit'}
-                  size={'small'}
-                  classes={{root: classes.voteButton}}
-                  variant={'text'}
-                  onClick={handleVote}
-                  disabled={loadingVote === index}
-                  loading={loadingVote === index}>
-                  {notificationObject.comment.voted ? (
-                    <Tooltip title={<FormattedMessage id={'ui.notification.comment.voteDown'} defaultMessage={'ui.notification.comment.voteDown'} />}>
-                      <Icon fontSize={'small'} color={'primary'}>
-                        thumb_up_alt
-                      </Icon>
-                    </Tooltip>
-                  ) : (
-                    <Tooltip title={<FormattedMessage id={'ui.notification.comment.voteUp'} defaultMessage={'ui.notification.comment.voteUp'} />}>
-                      <Icon fontSize={'small'} color="inherit">
-                        thumb_up_off_alt
-                      </Icon>
-                    </Tooltip>
-                  )}
-                </LoadingButton>
-              </Stack>
-            )}
-          </React.Fragment>
-        }
-        footer={
-          <>
-            {template === SCNotificationObjectTemplateType.TOAST && (
-              <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
-                <DateTimeAgo date={notificationObject.active_at} />
-                <Typography color="primary" component={'div'}>
-                  <Link to={scRoutingContext.url(SCRoutes.COMMENT_ROUTE_NAME, getRouteData(notificationObject.comment))}>
-                    <FormattedMessage id="ui.userToastNotifications.viewContribution" defaultMessage={'ui.userToastNotifications.viewContribution'} />
-                  </Link>
-                </Typography>
-              </Stack>
-            )}
-          </>
-        }
-      />
-    </Root>
+          {(template === SCNotificationObjectTemplateType.DETAIL || template === SCNotificationObjectTemplateType.SNIPPET) && (
+            <Stack direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
+              <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
+              <Bullet className={classes.bullet} />
+              <LoadingButton
+                color={'inherit'}
+                size={'small'}
+                className={classes.voteButton}
+                variant={'text'}
+                onClick={handleVote}
+                disabled={loadingVote === index}
+                loading={loadingVote === index}>
+                {notificationObject.comment.voted ? (
+                  <Tooltip title={<FormattedMessage id={'ui.notification.comment.voteDown'} defaultMessage={'ui.notification.comment.voteDown'} />}>
+                    <Icon fontSize={'small'} color={'primary'}>
+                      thumb_up_alt
+                    </Icon>
+                  </Tooltip>
+                ) : (
+                  <Tooltip title={<FormattedMessage id={'ui.notification.comment.voteUp'} defaultMessage={'ui.notification.comment.voteUp'} />}>
+                    <Icon fontSize={'small'} color="inherit">
+                      thumb_up_off_alt
+                    </Icon>
+                  </Tooltip>
+                )}
+              </LoadingButton>
+            </Stack>
+          )}
+        </React.Fragment>
+      }
+      footer={
+        template === SCNotificationObjectTemplateType.TOAST && (
+          <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
+            <DateTimeAgo date={notificationObject.active_at} />
+            <Typography color="primary" component={'div'}>
+              <Link to={scRoutingContext.url(SCRoutes.COMMENT_ROUTE_NAME, getRouteData(notificationObject.comment))}>
+                <FormattedMessage id="ui.userToastNotifications.viewContribution" defaultMessage={'ui.userToastNotifications.viewContribution'} />
+              </Link>
+            </Typography>
+          </Stack>
+        )
+      }
+      {...rest}
+    />
   );
 }
