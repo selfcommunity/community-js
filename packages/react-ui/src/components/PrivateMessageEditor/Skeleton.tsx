@@ -19,7 +19,7 @@ const Root = styled(GenericSkeleton, {
  #### Import
 
  ```jsx
- import {MessageEditorSkeleton} from '@selfcommunity/react-ui';
+ import {PrivateMessageEditorSkeleton} from '@selfcommunity/react-ui';
  ```
 
  #### Component Name
@@ -33,6 +33,6 @@ const Root = styled(GenericSkeleton, {
  |root|.SCMessageEditorSkeleton-root|Styles applied to the root element.|
  *
  */
-export default function MessageEditorSkeleton(): JSX.Element {
+export default function PrivateMessageEditorSkeleton(): JSX.Element {
   return <Root className={classes.root} />;
 }

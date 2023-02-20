@@ -9,7 +9,7 @@ import Widget from '../Widget';
 import {useTheme} from '@mui/material';
 import {SCThemeType} from '@selfcommunity/react-core';
 
-const PREFIX = 'SCMessageSkeleton';
+const PREFIX = 'SCPrivateMessageSnippetItemSkeleton';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -20,27 +20,27 @@ const Root = styled(Widget)(({theme}) => ({
   maxWidth: 700
 }));
 /**
- * > API documentation for the Community-JS Message Skeleton component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS PrivateMessageSnippetItem Skeleton component. Learn about the available props and the CSS API.
 
  #### Import
 
  ```jsx
- import {MessageSkeleton} from '@selfcommunity/react-ui';
+ import {PrivateMessageSnippetItemSkeleton} from '@selfcommunity/react-ui';
  ```
 
  #### Component Name
 
- The name `SCMessageSkeleton` can be used when providing style overrides in the theme.
+ The name `SCPrivateMessageSnippetItemSkeleton` can be used when providing style overrides in the theme.
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCMessageSkeleton-root|Styles applied to the root element.|
- |list|.SCMessageSkeleton-list|Styles applied to the list element.|
+ |root|.SCPrivateMessageSnippetItemSkeleton-root|Styles applied to the root element.|
+ |list|.SCPrivateMessageSnippetItemSkeleton-list|Styles applied to the list element.|
  *
  */
-export default function MessageSkeleton(props): JSX.Element {
+export default function PrivateMessageSnippetItemSkeleton(props): JSX.Element {
   const theme = useTheme<SCThemeType>();
   const m = (
     <ListItem>

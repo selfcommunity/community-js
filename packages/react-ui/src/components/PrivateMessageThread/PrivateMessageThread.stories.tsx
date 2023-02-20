@@ -1,23 +1,25 @@
 import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
-import MessageEditorSkeleton from './Skeleton';
+
+import PrivateMessageThread from './index';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/React UI/Skeleton/MessageEditor',
-  component: MessageEditorSkeleton
+  title: 'Design System/React UI/PrivateMessageThread',
+  component: PrivateMessageThread
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
-} as ComponentMeta<typeof MessageEditorSkeleton>;
+} as ComponentMeta<typeof PrivateMessageThread>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof MessageEditorSkeleton> = (args) => (
-  <div style={{width: 400}}>
-    <MessageEditorSkeleton {...args} />
+const Template: ComponentStory<typeof PrivateMessageThread> = (args) => (
+  <div>
+    <PrivateMessageThread {...args} />
   </div>
 );
 
 export const Base = Template.bind({});
 
 Base.args = {
-  contained: true
+  userObj: 91
+  /* the args you need here will depend on your component */
 };

@@ -27,7 +27,7 @@ import ConnectionUserButton from './components/ConnectionUserButton';
 import InlineComposer, {InlineComposerProps, InlineComposerSkeleton} from './components/InlineComposer';
 import PeopleSuggestion, {PeopleSuggestionProps, PeopleSuggestionSkeleton} from './components/PeopleSuggestion';
 import Platform, {PlatformProps, PlatformSkeleton} from './components/Platform';
-import Snippets, {SnippetsProps, SnippetsSkeleton} from './components/Snippets';
+import PrivateMessageSnippets, {PrivateMessageSnippetsProps, PrivateMessageSnippetsSkeleton} from './components/PrivateMessageSnippets';
 import LoyaltyProgram, {LoyaltyProgramProps, LoyaltyProgramSkeleton} from './components/LoyaltyProgram';
 import LoyaltyProgramDetail, {LoyaltyProgramDetailProps, LoyaltyProgramDetailSkeleton} from './components/LoyaltyProgramDetail';
 import TrendingFeed, {TrendingFeedProps, TrendingFeedSkeleton} from './components/TrendingFeed';
@@ -53,9 +53,10 @@ import CommentsFeedObject, {CommentsFeedObjectProps, CommentsFeedObjectSkeleton}
 import ReplyComment from './components/CommentObject/ReplyComment';
 import CustomAdv, {CustomAdvProps, CustomAdvSkeleton} from './components/CustomAdv';
 import {AvatarGroupSkeleton, GenericSkeleton} from './components/Skeleton';
-import Message, {MessageProps, MessageSkeleton} from './components/Message';
-import MessageEditor, {MessageEditorProps, MessageEditorSkeleton} from './components/MessageEditor';
-import Thread, {ThreadProps, ThreadSkeleton} from './components/Thread';
+import PrivateMessageSnippetItem, {PrivateMessageSnippetItemProps, PrivateMessageSnippetItemSkeleton} from './components/PrivateMessageSnippetItem';
+import PrivateMessageThreadItem, {PrivateMessageThreadItemProps, PrivateMessageThreadItemSkeleton} from './components/PrivateMessageThreadItem';
+import PrivateMessageEditor, {PrivateMessageEditorProps, PrivateMessageEditorSkeleton} from './components/PrivateMessageEditor';
+import PrivateMessageThread, {PrivateMessageThreadProps, PrivateMessageThreadSkeleton} from './components/PrivateMessageThread';
 import ToastNotifications, {ToastNotificationsProps, ToastNotificationsSkeleton} from './components/ToastNotifications';
 import SnippetNotifications, {SnippetNotificationsProps, SnippetNotificationsSkeleton} from './components/SnippetNotifications';
 import Notification, {NotificationProps, NotificationSkeleton} from './components/Notification';
@@ -256,18 +257,21 @@ export {
   User,
   UserProps,
   UserSkeleton,
-  Thread,
-  ThreadProps,
-  ThreadSkeleton,
-  Message,
-  MessageProps,
-  MessageEditor,
-  MessageEditorProps,
-  MessageEditorSkeleton,
-  Snippets,
-  SnippetsProps,
-  SnippetsSkeleton,
-  MessageSkeleton,
+  PrivateMessageThread,
+  PrivateMessageThreadProps,
+  PrivateMessageThreadSkeleton,
+  PrivateMessageThreadItem,
+  PrivateMessageThreadItemProps,
+  PrivateMessageThreadItemSkeleton,
+  PrivateMessageSnippetItem,
+  PrivateMessageSnippetItemProps,
+  PrivateMessageSnippetItemSkeleton,
+  PrivateMessageEditor,
+  PrivateMessageEditorProps,
+  PrivateMessageEditorSkeleton,
+  PrivateMessageSnippets,
+  PrivateMessageSnippetsProps,
+  PrivateMessageSnippetsSkeleton,
   ToastNotifications,
   ToastNotificationsProps,
   ToastNotificationsSkeleton,

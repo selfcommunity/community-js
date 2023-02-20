@@ -10,7 +10,8 @@ import {
   ThreadParams
 } from '../../types';
 import {
-  SCPrivateMessageType,
+  SCPrivateMessageSnippetType,
+  SCPrivateMessageThreadType,
   SCPrivateMessageUploadMediaChunkType,
   SCPrivateMessageUploadMediaType,
   SCPrivateMessageUploadThumbnailType
@@ -18,10 +19,10 @@ import {
 import {AxiosRequestConfig} from 'axios';
 
 export interface PrivateMessageApiClientInterface {
-  getAllSnippets(config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPrivateMessageType>>;
-  getAThread(data: ThreadParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPrivateMessageType>>;
-  getASingleMessage(id: number | string, config?: AxiosRequestConfig): Promise<SCPrivateMessageType>;
-  sendAMessage(data: MessageCreateParams, config?: AxiosRequestConfig): Promise<SCPrivateMessageType>;
+  getAllSnippets(config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPrivateMessageSnippetType>>;
+  getAThread(data: ThreadParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPrivateMessageThreadType>>;
+  getASingleMessage(id: number | string, config?: AxiosRequestConfig): Promise<SCPrivateMessageThreadType>;
+  sendAMessage(data: MessageCreateParams, config?: AxiosRequestConfig): Promise<SCPrivateMessageThreadType>;
   deleteAMessage(id: number | string, config?: AxiosRequestConfig): Promise<any>;
   deleteAThread(id: number | string, config?: AxiosRequestConfig): Promise<any>;
   uploadMedia(data: MessageMediaUploadParams, config?: AxiosRequestConfig): Promise<SCPrivateMessageUploadMediaType>;
@@ -38,7 +39,7 @@ export class PrivateMessageApiClient {
    * This endpoint retrieves all snippets.
    * @param config
    */
-  static getAllSnippets(config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPrivateMessageType>> {
+  static getAllSnippets(config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPrivateMessageSnippetType>> {
     return apiRequest({...config, url: Endpoints.GetSnippets.url({}), method: Endpoints.GetSnippets.method});
   }
 
@@ -47,7 +48,7 @@ export class PrivateMessageApiClient {
    * @param data
    * @param config
    */
-  static getAThread(data: ThreadParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPrivateMessageType>> {
+  static getAThread(data: ThreadParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPrivateMessageThreadType>> {
     return apiRequest({...config, url: Endpoints.GetAThread.url({}), method: Endpoints.GetAThread.method, data: data});
   }
 
@@ -56,7 +57,7 @@ export class PrivateMessageApiClient {
    * @param id
    * @param config
    */
-  static getASingleMessage(id: number | string, config?: AxiosRequestConfig): Promise<SCPrivateMessageType> {
+  static getASingleMessage(id: number | string, config?: AxiosRequestConfig): Promise<SCPrivateMessageThreadType> {
     return apiRequest({...config, url: Endpoints.GetASingleMessage.url({id}), method: Endpoints.GetASingleMessage.method});
   }
 
@@ -65,7 +66,7 @@ export class PrivateMessageApiClient {
    * @param data
    * @param config
    */
-  static sendAMessage(data: MessageCreateParams, config?: AxiosRequestConfig): Promise<SCPrivateMessageType> {
+  static sendAMessage(data: MessageCreateParams, config?: AxiosRequestConfig): Promise<SCPrivateMessageThreadType> {
     return apiRequest({...config, url: Endpoints.SendMessage.url({}), method: Endpoints.SendMessage.method, data: data});
   }
 
@@ -175,16 +176,16 @@ export class PrivateMessageApiClient {
  :::
  */
 export default class PrivateMessageService {
-  static async getAllSnippets(config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPrivateMessageType>> {
+  static async getAllSnippets(config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPrivateMessageSnippetType>> {
     return PrivateMessageApiClient.getAllSnippets(config);
   }
-  static async getAThread(data: ThreadParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPrivateMessageType>> {
+  static async getAThread(data: ThreadParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPrivateMessageThreadType>> {
     return PrivateMessageApiClient.getAThread(data, config);
   }
-  static async getASingleMessage(id: number | string, config?: AxiosRequestConfig): Promise<SCPrivateMessageType> {
+  static async getASingleMessage(id: number | string, config?: AxiosRequestConfig): Promise<SCPrivateMessageThreadType> {
     return PrivateMessageApiClient.getASingleMessage(id, config);
   }
-  static async sendAMessage(data: MessageCreateParams, config?: AxiosRequestConfig): Promise<SCPrivateMessageType> {
+  static async sendAMessage(data: MessageCreateParams, config?: AxiosRequestConfig): Promise<SCPrivateMessageThreadType> {
     return PrivateMessageApiClient.sendAMessage(data, config);
   }
   static async deleteAMessage(id: number | string, config?: AxiosRequestConfig): Promise<any> {

@@ -25,7 +25,7 @@ const PREFIX = 'SCMessageMediaUploader';
 
 const classes = {
   previewContainer: `${PREFIX}-preview-container`,
-  uploadButton: `${PREFIX}-upload-button`,
+  upload: `${PREFIX}-upload`,
   docPreview: `${PREFIX}-doc-preview`,
   docLoadingPreview: `${PREFIX}-doc-loading-preview`,
   progress: `${PREFIX}-progress`,
@@ -36,54 +36,7 @@ const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  '& .MuiCardHeader-root': {
-    paddingRight: theme.spacing(2),
-    paddingTop: theme.spacing(1)
-  },
-  backgroundColor: theme.palette.grey['A200'],
-  [`& .${classes.previewContainer}`]: {
-    display: 'flex',
-    justifyContent: 'center',
-    img: {
-      maxWidth: '50%'
-    },
-    video: {
-      maxWidth: '40%'
-    }
-  },
-  [`& .${classes.uploadButton}`]: {
-    backgroundColor: theme.palette.common.white
-  },
-  [`& .${classes.docPreview}`]: {
-    [theme.breakpoints.down('md')]: {
-      height: 100,
-      width: 200
-    },
-    height: 200,
-    width: 400,
-    position: 'relative'
-  },
-  [`& .${classes.docLoadingPreview}`]: {
-    backgroundColor: theme.palette.background.default,
-    height: 100,
-    width: 200,
-    position: 'relative',
-    '& .MuiCircularProgress-root': {
-      position: 'absolute',
-      top: '40%',
-      left: '45%'
-    },
-    [`& .${classes.progress}`]: {
-      display: 'flex',
-      justifyContent: 'center'
-    },
-    [`& .${classes.clearMedia}`]: {
-      display: 'flex',
-      justifyContent: 'flex-end'
-    }
-  }
-}));
+})(({theme}) => ({}));
 
 export interface MessageMediaUploaderProps {
   /**
@@ -163,6 +116,7 @@ export default function MessageMediaUploader(props: MessageMediaUploaderProps): 
 
   const handleProgress = (chunks: any) => {
     setUploading({...chunks});
+    setLoading(true);
   };
 
   const handleStart = (type: any) => {
@@ -209,14 +163,12 @@ export default function MessageMediaUploader(props: MessageMediaUploaderProps): 
           <MessageChunkUploader onStart={handleStart} onSuccess={handleSuccess} onProgress={handleProgress} onError={handleError} />
           <Box className={classes.progress}>
             {Object.values(uploading).map((chunk: SCMessageChunkType, index) => (
-              <div key={index}>
+              <React.Fragment key={index}>
                 <Typography align="center">{`${Math.round(chunk.completed)}%`}</Typography>
-              </div>
+              </React.Fragment>
             ))}
           </Box>
-          <Box sx={{display: 'flex', justifyContent: 'center'}}>
-            {!file && !loading && <UploadButton className={classes.uploadButton} inputFieldName="qqfile" />}
-          </Box>
+          <Box className={classes.upload}> {!file && !loading && <UploadButton inputFieldName="qqfile" />}</Box>
           <Box className={classes.clearMedia}>
             {previews.length && loaded ? (
               <IconButton onClick={onClear}>

@@ -63,6 +63,10 @@ import SCSearchAutocomplete from './components/SCSearchAutocomplete';
 import SCNavigationToolbarMobile from './components/SCNavigationToolbarMobile';
 import SCBottomNavigation from './components/SCBottomNavigation';
 import MuiAppBar from './components/MuiAppBar';
+import SCPrivateMessageSnippetItem from './components/SCPrivateMessageSnippetItem';
+import SCPrivateMessageThread from './components/SCPrivateMessageThread';
+import SCPrivateMessageSnippets from './components/SCPrivateMessageSnippets';
+import SCPrivateMessageEditor from './components/SCPrivateMessageEditor';
 import SCNotificationsMenu from './components/SCNotificationsMenu';
 import SCNotificationItem from './components/SCNotificationItem';
 import SCNotification from './components/SCNotification';
@@ -179,7 +183,11 @@ const theme = createTheme({
     SCUserNotification,
     SCUserProfileHeader,
     SCUserProfileTemplate,
-    SCWidget
+    SCWidget,
+    SCPrivateMessageSnippetItem,
+    SCPrivateMessageSnippets,
+    SCPrivateMessageThread,
+    SCPrivateMessageEditor
   },
   selfcommunity: {
     user: {

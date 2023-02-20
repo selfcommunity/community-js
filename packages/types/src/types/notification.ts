@@ -1,5 +1,5 @@
 import {SCCommentType, SCFeedDiscussionType, SCFeedPostType, SCFeedStatusType, SCUserType} from '../index';
-import {SCPrivateMessageType} from './privateMessage';
+import {SCPrivateMessageThreadType, SCPrivateMessageSnippetType} from './privateMessage';
 import {SCUserBlockedSettingsType} from './user';
 import {SCCustomNotificationType} from './customNotification';
 import {SCIncubatorType} from './incubator';
@@ -221,7 +221,7 @@ export interface SCNotificationPrivateMessageType extends SCNotificationType {
   /**
    * Private message
    */
-  message: SCPrivateMessageType;
+  message: SCPrivateMessageThreadType;
 }
 
 /**
