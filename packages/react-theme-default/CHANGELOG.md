@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.27](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.26...@selfcommunity/react-theme-default@0.1.0-alpha.27) (2023-02-20)
+
+
+### Bug Fixes
+
+* fixed private messages theme ([12e8723](https://github.com/selfcommunity/community-js/commit/12e8723cddca5897eba72a6aa454087b11f4e70f))
+
+
+### Performance Improvements
+
+* added SCPrivateMessageItem theme ([d8e9557](https://github.com/selfcommunity/community-js/commit/d8e9557c271a9309a1054a1f5b29cb9d5081412f))
+
+
+
+
+
 # [0.1.0-alpha.26](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.25...@selfcommunity/react-theme-default@0.1.0-alpha.26) (2023-02-15)
 
 

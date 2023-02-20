@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.1-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.4.1-alpha.8...@selfcommunity/types@0.4.1-alpha.9) (2023-02-20)
+
+
+### Bug Fixes
+
+* fixed  private messages types ([95bb206](https://github.com/selfcommunity/community-js/commit/95bb2069108343da32e0071ffeae442380268cad))
+
+
+
+
+
 ## [0.4.1-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.4.1-alpha.7...@selfcommunity/types@0.4.1-alpha.8) (2023-02-01)
 
 
