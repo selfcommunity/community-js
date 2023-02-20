@@ -3,6 +3,105 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.26](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.25...@selfcommunity/react-theme-default@0.1.0-alpha.26) (2023-02-15)
+
+
+### Performance Improvements
+
+* Added theme to notifications ([54c4a28](https://github.com/selfcommunity/community-js/commit/54c4a284c6c929fb853a620b74943eff8a100aeb))
+
+
+
+
+
+# [0.1.0-alpha.25](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.24...@selfcommunity/react-theme-default@0.1.0-alpha.25) (2023-02-09)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+# [0.1.0-alpha.24](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.23...@selfcommunity/react-theme-default@0.1.0-alpha.24) (2023-02-09)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+# [0.1.0-alpha.23](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.22...@selfcommunity/react-theme-default@0.1.0-alpha.23) (2023-02-09)
+
+
+### Bug Fixes
+
+* Fix personalization of Navigation ([661a1b4](https://github.com/selfcommunity/community-js/commit/661a1b428e4c3984c0bbd51a201b7b931011de89))
+
+
+
+
+
+# [0.1.0-alpha.22](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.21...@selfcommunity/react-theme-default@0.1.0-alpha.22) (2023-02-09)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+# [0.1.0-alpha.21](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.20...@selfcommunity/react-theme-default@0.1.0-alpha.21) (2023-02-09)
+
+
+### Bug Fixes
+
+* Fix navigation ([378887d](https://github.com/selfcommunity/community-js/commit/378887d20b0315d26f155bc5b725b41b8cb1e8ed))
+* Fix navigation ([dc6a871](https://github.com/selfcommunity/community-js/commit/dc6a871281d149d8d4d8abc5ddedf104bc534afa))
+* inline composer theme ([f9b9d19](https://github.com/selfcommunity/community-js/commit/f9b9d19da9d605b939c9f34a05634005051bec7c))
+
+
+
+
+
+# [0.1.0-alpha.20](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.19...@selfcommunity/react-theme-default@0.1.0-alpha.20) (2023-02-08)
+
+
+### Bug Fixes
+
+* Refactor and remove AppBar.tsx ([c782c2a](https://github.com/selfcommunity/community-js/commit/c782c2a30f8b06033ff5102d23f8832d46d8b951))
+
+
+
+
+
+# [0.1.0-alpha.19](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.18...@selfcommunity/react-theme-default@0.1.0-alpha.19) (2023-02-08)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+# [0.1.0-alpha.18](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.17...@selfcommunity/react-theme-default@0.1.0-alpha.18) (2023-02-08)
+
+
+### Performance Improvements
+
+* BottomNavigation.tsx themed ([6240c67](https://github.com/selfcommunity/community-js/commit/6240c67d9f9361db2e04e4b187df683bd6b914fb))
+* BottomNavigation.tsx themed ([e088174](https://github.com/selfcommunity/community-js/commit/e0881741ba6c2e94392f56c433ad628dc9f83d9a))
+* NavigationToolbar.tsx themed ([065a88d](https://github.com/selfcommunity/community-js/commit/065a88d9c9eb543ac10a1e44324e15abd378526a))
+
+
+
+
+
+# [0.1.0-alpha.17](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.16...@selfcommunity/react-theme-default@0.1.0-alpha.17) (2023-02-08)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
 # [0.1.0-alpha.16](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.15...@selfcommunity/react-theme-default@0.1.0-alpha.16) (2023-02-08)
 
 

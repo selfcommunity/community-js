@@ -3,6 +3,105 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.80](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.79...@selfcommunity/react-ui@0.7.0-alpha.80) (2023-02-15)
+
+
+### Performance Improvements
+
+* Added theme to notifications ([54c4a28](https://github.com/selfcommunity/community-js/commit/54c4a284c6c929fb853a620b74943eff8a100aeb))
+
+
+
+
+
+# [0.7.0-alpha.79](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.78...@selfcommunity/react-ui@0.7.0-alpha.79) (2023-02-09)
+
+
+### Bug Fixes
+
+* Fix NavigationToolbar.tsx ([06950f2](https://github.com/selfcommunity/community-js/commit/06950f24deb286a7019448660028ed263f99b64b))
+
+
+
+
+
+# [0.7.0-alpha.78](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.77...@selfcommunity/react-ui@0.7.0-alpha.78) (2023-02-09)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.7.0-alpha.77](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.76...@selfcommunity/react-ui@0.7.0-alpha.77) (2023-02-09)
+
+
+### Bug Fixes
+
+* Fix personalization of Navigation ([661a1b4](https://github.com/selfcommunity/community-js/commit/661a1b428e4c3984c0bbd51a201b7b931011de89))
+
+
+
+
+
+# [0.7.0-alpha.76](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.75...@selfcommunity/react-ui@0.7.0-alpha.76) (2023-02-09)
+
+
+### Performance Improvements
+
+* Added capability to customize navigation toolbars ([fbb4cf9](https://github.com/selfcommunity/community-js/commit/fbb4cf92d411dd99daaf2e2936d127deda06531c))
+
+
+
+
+
+# [0.7.0-alpha.75](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.74...@selfcommunity/react-ui@0.7.0-alpha.75) (2023-02-08)
+
+
+### Bug Fixes
+
+* Refactor and remove AppBar.tsx ([c782c2a](https://github.com/selfcommunity/community-js/commit/c782c2a30f8b06033ff5102d23f8832d46d8b951))
+
+
+
+
+
+# [0.7.0-alpha.74](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.73...@selfcommunity/react-ui@0.7.0-alpha.74) (2023-02-08)
+
+
+### Bug Fixes
+
+* Fix snippet notifications when no notifications available in the list ([0803b18](https://github.com/selfcommunity/community-js/commit/0803b1807902678bfd0d032d87ae23f3af3e0666))
+
+
+
+
+
+# [0.7.0-alpha.73](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.72...@selfcommunity/react-ui@0.7.0-alpha.73) (2023-02-08)
+
+
+### Performance Improvements
+
+* BottomNavigation.tsx themed ([e088174](https://github.com/selfcommunity/community-js/commit/e0881741ba6c2e94392f56c433ad628dc9f83d9a))
+* NavigationToolbar.tsx themed ([065a88d](https://github.com/selfcommunity/community-js/commit/065a88d9c9eb543ac10a1e44324e15abd378526a))
+
+
+
+
+
+# [0.7.0-alpha.72](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.71...@selfcommunity/react-ui@0.7.0-alpha.72) (2023-02-08)
+
+
+### Bug Fixes
+
+* Fix import in SettingsDrawer.tsx and SettingsMenu.tsx ([84cd273](https://github.com/selfcommunity/community-js/commit/84cd273cb32a0111a02cad87ea7ccc6c29f9ed7c))
+* Removed navigation routes ([58fc3f8](https://github.com/selfcommunity/community-js/commit/58fc3f8fd64cda273ddf4cd7f2622fbc22a750a8))
+* SCNavigationRoutesType ([baee325](https://github.com/selfcommunity/community-js/commit/baee3256b36ed4289cb248778fdf27352887fd9f))
+
+
+
+
+
 # [0.7.0-alpha.71](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.70...@selfcommunity/react-ui@0.7.0-alpha.71) (2023-02-08)
 
 
