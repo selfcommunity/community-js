@@ -185,7 +185,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
   const [isFollower, setIsFollower] = useState<boolean>(false);
   const [receiver, setReceiver] = useState(null);
   const [newMessageThread, setNewMessageThread] = useState<boolean>(false);
-  const [newMessageUser, setNewMessageUser] = useState('');
+
   // REFS
   const refreshSubscription = useRef(null);
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
@@ -366,7 +366,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
           }
           setNewMessageThread(false);
         } else {
-          // setNewMessageThread(true);
+          setNewMessageThread(true);
           setRecipients(u);
         }
         setLoading(false);
@@ -507,7 +507,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
                   limitTags={3}
                   freeSolo
                   options={followers}
-                  value={newMessageThread ? newMessageUser : recipients}
+                  value={newMessageThread ? userObj : recipients}
                   getOptionLabel={(option) => (option ? option.username : '...')}
                   renderInput={(params) => (
                     <TextField

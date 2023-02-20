@@ -100,7 +100,7 @@ export default function PrivateMessages(inProps: PrivateMessagesProps): JSX.Elem
 
   //  HANDLERS
   const handleThreadOpening = (i) => {
-    onItemClick && onItemClick(i.id);
+    onItemClick && onItemClick(i.receiver.id);
     setObj(i);
     setOpenNewMessage(false);
     isMobile && setLayout('mobile');

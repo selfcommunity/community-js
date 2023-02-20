@@ -31,7 +31,7 @@ const Component = {
         }
       },
       '& .SCPrivateMessageSnippets-new-message-button': {
-        color: theme.palette.primary.main,
+        color: `${theme.palette.primary.main} !important`,
         alignSelf: 'center',
         backgroundColor: 'transparent',
         '&:hover': {
