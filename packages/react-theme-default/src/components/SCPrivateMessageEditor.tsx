@@ -6,6 +6,11 @@ const Component = {
       bottom: 0,
       left: 0,
       zIndex: 1,
+      [theme.breakpoints.down('md')]: {
+        position: 'fixed',
+        top: 'auto',
+        bottom: 0
+      },
       backgroundColor: theme.palette.primary.main,
       '& .MuiIcon-root': {
         fontSize: '1.571rem'
