@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.1-alpha.18](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.4.1-alpha.17...@selfcommunity/react-i18n@0.4.1-alpha.18) (2023-02-21)
+
+
+### Bug Fixes
+
+* fixed translations for pm action menu/drawer ([81b2ea6](https://github.com/selfcommunity/community-js/commit/81b2ea63b88b53ba1e2396f1b6c81406c6cc20a5))
+
+
+
+
+
 ## [0.4.1-alpha.17](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.4.1-alpha.16...@selfcommunity/react-i18n@0.4.1-alpha.17) (2023-02-20)
 
 
