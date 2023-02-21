@@ -1,8 +1,8 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import {ListItem, Typography, IconButton, Box, Menu, MenuItem, ListItemIcon} from '@mui/material';
+import {ListItem, Typography, IconButton, Box, useTheme} from '@mui/material';
 import PrivateMessageThreadItemSkeleton from './Skeleton';
-import {FormattedMessage, useIntl} from 'react-intl';
+import {useIntl} from 'react-intl';
 import {SCPrivateMessageThreadType, SCMessageFileType} from '@selfcommunity/types';
 import Icon from '@mui/material/Icon';
 import classNames from 'classnames';
@@ -11,6 +11,10 @@ import LazyLoad from 'react-lazyload';
 import {DEFAULT_PRELOAD_OFFSET_VIEWPORT} from '../../constants/LazyLoad';
 import {useThemeProps} from '@mui/system';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
+import PrivateMessageActionMenu from '../PrivateMessageActionMenu';
+import {SCThemeType} from '@selfcommunity/react-core';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import PrivateMessageActionDrawer from '../PrivateMessageActionDrawer';
 
 const PREFIX = 'SCPrivateMessageThreadItem';
 
@@ -125,6 +129,8 @@ export default function PrivateMessageThreadItem(inProps: PrivateMessageThreadIt
   const intl = useIntl();
 
   // STATE
+  const theme = useTheme<SCThemeType>();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const hasFile = message ? message.file : null;
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -215,14 +221,18 @@ export default function PrivateMessageThreadItem(inProps: PrivateMessageThreadIt
             <IconButton onClick={handleOpenMenu}>
               <Icon fontSize="small">more_vert</Icon>
             </IconButton>
-            <Menu anchorEl={anchorEl} open={open} onClose={handleMenuClose}>
-              <MenuItem classes={{root: classes.menuItem}} onClick={handleMenuItemClick}>
-                <ListItemIcon>
-                  <Icon fontSize="small">delete</Icon>
-                </ListItemIcon>
-                <FormattedMessage id="ui.privateMessage.threadItem.menu.item.delete" defaultMessage="ui.privateMessage.threadItem.menu.item.delete" />
-              </MenuItem>
-            </Menu>
+            {isMobile ? (
+              <PrivateMessageActionDrawer
+                anchor="bottom"
+                open={open}
+                onClick={handleMenuClose}
+                onOpen={handleOpenMenu}
+                onClose={handleMenuClose}
+                onMenuItemDeleteClick={handleMenuItemClick}
+              />
+            ) : (
+              <PrivateMessageActionMenu anchorEl={anchorEl} open={open} onClose={handleMenuClose} onMenuItemDeleteClick={handleMenuItemClick} />
+            )}
           </>
         )
       }>

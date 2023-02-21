@@ -1,21 +1,8 @@
 import React, {useContext, useMemo} from 'react';
 import {styled} from '@mui/material/styles';
-import {
-  Avatar,
-  ListItemButton,
-  ListItemAvatar,
-  ListItemText,
-  Typography,
-  Chip,
-  IconButton,
-  useTheme,
-  Menu,
-  MenuItem,
-  ListItem,
-  ListItemIcon
-} from '@mui/material';
+import {Avatar, ListItemButton, ListItemAvatar, ListItemText, Typography, Chip, IconButton, useTheme, ListItem} from '@mui/material';
 import PrivateMessageSnippetItemSkeleton from './Skeleton';
-import {FormattedMessage, useIntl} from 'react-intl';
+import {useIntl} from 'react-intl';
 import {SCPrivateMessageSnippetType} from '@selfcommunity/types';
 import {SCUserContextType, SCUserContext, SCPreferences, SCPreferencesContextType, useSCPreferences, SCThemeType} from '@selfcommunity/react-core';
 import Icon from '@mui/material/Icon';
@@ -23,6 +10,7 @@ import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import PrivateMessageActionMenu from '../PrivateMessageActionMenu';
 
 const PREFIX = 'SCPrivateMessageSnippetItem';
 
@@ -162,17 +150,7 @@ export default function PrivateMessageSnippetItem(inProps: PrivateMessageSnippet
             <IconButton size="small" onClick={handleOpenMenu}>
               <Icon>more_vert</Icon>
             </IconButton>
-            <Menu anchorEl={anchorEl} open={open} onClose={handleMenuClose}>
-              <MenuItem classes={{root: classes.menuItem}} onClick={handleMenuItemClick}>
-                <ListItemIcon>
-                  <Icon fontSize="small">delete</Icon>
-                </ListItemIcon>
-                <FormattedMessage
-                  id="ui.privateMessage.snippetItem.menu.item.delete"
-                  defaultMessage="ui.privateMessage.snippetItem.menu.item.delete"
-                />
-              </MenuItem>
-            </Menu>
+            <PrivateMessageActionMenu anchorEl={anchorEl} open={open} onClose={handleMenuClose} onMenuItemDeleteClick={handleMenuItemClick} />
           </>
         )
       }

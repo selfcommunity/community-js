@@ -87,9 +87,10 @@ export default function PrivateMessages(inProps: PrivateMessagesProps): JSX.Elem
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [layout, setLayout] = useState('default');
-  const [obj, setObj] = useState<any>(id ? id : null);
+  const [obj, setObj] = useState<any>(id ?? null);
   const [snippetData, setSnippetData] = useState(null);
   const [deletingThread, setDeletingThread] = useState(null);
+  const [deletedThread, setDeletedThread] = useState(null);
   const [openNewMessage, setOpenNewMessage] = useState<boolean>(false);
   const [openDeleteThreadDialog, setOpenDeleteThreadDialog] = useState<boolean>(false);
   const mobileSnippetsView = (layout === 'default' && !id) || (layout === 'mobile' && id);
@@ -124,40 +125,40 @@ export default function PrivateMessages(inProps: PrivateMessagesProps): JSX.Elem
     setOpenNewMessage(false);
   };
 
-  const handleSnippetsUpdate = (message: SCPrivateMessageThreadType, reason: string) => {
-    setSnippetData({message, reason});
+  const handleSnippetsUpdate = (message: SCPrivateMessageThreadType) => {
+    setDeletedThread(null);
+    setSnippetData(message);
     if (openNewMessage) {
       setObj(message);
       setOpenNewMessage(false);
     }
   };
-
+  /**
+   * Handles thread selection for delete action
+   */
+  function handleThreadToDelete(threadObj) {
+    setOpenDeleteThreadDialog(true);
+    setDeletingThread(threadObj.id);
+  }
   /**
    * Handles thread deletion
    */
   function handleDeleteThread() {
-    PrivateMessageService.deleteAThread(obj.id)
+    PrivateMessageService.deleteAThread(deletingThread)
       .then(() => {
         if (layout === 'mobile') {
           setLayout('default');
         }
         id && setLayout('mobile');
         setOpenDeleteThreadDialog(false);
-        setDeletingThread(obj.id);
-        setObj(null);
+        setDeletedThread(deletingThread);
+        deletingThread === obj?.id && setObj(null);
+        setSnippetData(null);
       })
       .catch((error) => {
         setOpenDeleteThreadDialog(false);
         console.log(error);
       });
-  }
-
-  /**
-   * Handles thread selection for delete action
-   */
-  function handleThreadToDelete(i) {
-    setOpenDeleteThreadDialog(true);
-    setObj(i);
   }
 
   /**
@@ -172,7 +173,7 @@ export default function PrivateMessages(inProps: PrivateMessagesProps): JSX.Elem
             onNewMessageClick: handleOpenNewMessage,
             onMenuItemClick: handleThreadToDelete
           }}
-          snippetCallbacksData={{onMessageChanges: snippetData, onDeleteThreadSuccess: deletingThread}}
+          snippetCallbacksData={{onMessageChanges: snippetData, onDeleteThreadSuccess: deletedThread}}
           threadId={obj?.id ?? null}
           selected={obj}
         />
