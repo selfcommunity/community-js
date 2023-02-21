@@ -7,7 +7,7 @@ const Component = {
       maxHeight: 'inherit',
       '& .MuiCardContent-root': {
         height: '100%',
-        maxHeight: theme.spacing(87.5),
+        maxHeight: `calc(100% - ${theme.spacing(10)})`,
         overflow: 'auto',
         '& .MuiList-root': {
           [theme.breakpoints.down('md')]: {
@@ -16,6 +16,8 @@ const Component = {
           '& .MuiListItem-root': {
             '&.SCPrivateMessageThread-receiver': {
               backgroundColor: theme.palette.common.white,
+              marginLeft: theme.spacing(-2),
+              filter: 'drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.1))',
               '&:after': {
                 marginRight: theme.spacing(3),
                 content: `""`,
@@ -27,7 +29,6 @@ const Component = {
               }
             },
             '&.SCPrivateMessageThread-sender': {
-              marginLeft: theme.spacing(2),
               backgroundColor: theme.palette.primary.main
             }
           }
@@ -39,32 +40,6 @@ const Component = {
         display: 'flex',
         justifyContent: 'center',
         fontSize: '1.5rem'
-      },
-      '& .SCPrivateMessageThread-mobile-header': {
-        display: 'flex',
-        flexDirection: 'row',
-        position: 'absolute',
-        top: 0,
-        right: 0,
-        width: '100%',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        zIndex: 1,
-        backgroundColor: theme.palette.primary.main,
-        '& .SCPrivateMessageThread-mobile-header-content': {
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          '& .MuiAvatar-root': {
-            width: theme.selfcommunity.user.avatar.sizeMedium,
-            height: theme.selfcommunity.user.avatar.sizeMedium,
-            padding: theme.spacing(1)
-          }
-        },
-        '& .MuiIcon-root': {
-          padding: theme.spacing(1),
-          fontSize: '1.571rem'
-        }
       },
       '& .SCPrivateMessageThread-new-message-header': {
         position: 'absolute',

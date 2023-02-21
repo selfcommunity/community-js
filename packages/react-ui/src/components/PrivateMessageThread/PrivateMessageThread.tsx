@@ -16,21 +16,7 @@ import {SCMessageFileType, SCNotificationTopicType, SCNotificationTypologyType, 
 import PrivateMessageThreadItem from '../PrivateMessageThreadItem';
 import _ from 'lodash';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {
-  Avatar,
-  Box,
-  CardContent,
-  Chip,
-  IconButton,
-  List,
-  ListItem,
-  ListItemText,
-  ListSubheader,
-  TextField,
-  Typography,
-  useMediaQuery,
-  useTheme
-} from '@mui/material';
+import {Box, CardContent, IconButton, List, ListSubheader, TextField, Typography, useMediaQuery, useTheme} from '@mui/material';
 import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
 import PrivateMessageEditor from '../PrivateMessageEditor';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -57,8 +43,6 @@ const classes = {
   root: `${PREFIX}-root`,
   subHeader: `${PREFIX}-subheader`,
   section: `${PREFIX}-section`,
-  mobileHeader: `${PREFIX}-mobile-header`,
-  mobileHeaderContent: `${PREFIX}-mobile-header-content`,
   emptyMessage: `${PREFIX}-empty-message`,
   newMessageHeader: `${PREFIX}-new-message-header`,
   newMessageHeaderContent: `${PREFIX}-new-message-header-content`,
@@ -104,7 +88,7 @@ export interface PrivateMessageThreadProps {
      * @param data
      * @default null
      */
-    onMessageSentOrDeleted?: (data, reason: string) => void;
+    onMessageSentOrDeleted?: (data) => void;
     /**
      * Callback fired only when exiting a thread.
      * @default null
@@ -147,8 +131,6 @@ export interface PrivateMessageThreadProps {
  |newMessageHeaderIcon|.SCPrivateMessageThread-new-message-header-icon|Styles applied to the new message header icon element.|
  |newMessageHeaderContent|.SCPrivateMessageThread-new-message-header-content|Styles applied to the new message header content.|
  |subHeader|.SCPrivateMessageThread-subheader|Styles applied to thread list subheader element.|
- |mobileHeader|.SCPrivateMessageThread-mobile-header|Styles applied to mobile header element.|
- |mobileHeaderContent|.SCPrivateMessageThread-mobile-header-content|Styles applied to mobile header content.|
  |sender|.SCPrivateMessageThread-sender|Styles applied to the sender element.|
  |receiver|.SCPrivateMessageThread-receiver|Styles applied to the receiver element.|
  |autocomplete|.SCPrivateMessageThread-autocomplete|Styles applied to new message user insertion autocomplete.|
@@ -257,7 +239,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
       .then(() => {
         const result = messageObjs.filter((m) => m.id !== deletingMsg.id);
         setMessageObjs(result);
-        threadCallbacks.onMessageSentOrDeleted(result.length > 1 ? result.slice(-1)[0] : deletingMsg, 'deleted');
+        threadCallbacks.onMessageSentOrDeleted(result.length >= 1 ? result.slice(-1)[0] : deletingMsg);
         handleCloseDeleteDialog();
       })
       .catch((error) => {
@@ -295,7 +277,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
         })
         .then((res) => {
           setMessageObjs((prev) => [...prev, res.data]);
-          threadCallbacks.onMessageSentOrDeleted(res.data, 'sent');
+          threadCallbacks.onMessageSentOrDeleted(res.data);
           if (openNewMessage || newMessageThread) {
             setNewMessageThread(false);
             setRecipients([]);
@@ -428,34 +410,6 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
   function renderThread() {
     return (
       <CardContent>
-        {isMobile && receiver && (
-          <Box className={classes.mobileHeader}>
-            <Box className={classes.mobileHeaderContent}>
-              <Icon onClick={() => threadCallbacks.onMessageBack('default')}>chevron_left</Icon>
-              <Avatar alt={receiver.username} src={receiver.avatar} />
-              <Typography variant="body1" color="inherit">
-                {receiver.username}
-              </Typography>
-            </Box>
-            <Icon fontSize="medium" onClick={threadCallbacks.onThreadDelete}>
-              delete
-            </Icon>
-          </Box>
-        )}
-        {openDeleteMessageDialog && (
-          <ConfirmDialog
-            open={openDeleteMessageDialog}
-            title={<FormattedMessage id="ui.privateMessage.thread.message.dialog.msg" defaultMessage="ui.privateMessage.thread.message.dialog.msg" />}
-            btnConfirm={
-              <FormattedMessage
-                id="ui.privateMessage.thread.message.dialog.confirm"
-                defaultMessage="ui.privateMessage.thread.message.dialog.confirm"
-              />
-            }
-            onConfirm={() => handleDelete()}
-            onClose={handleCloseDeleteDialog}
-          />
-        )}
         <List subheader={<li />}>
           {Object.keys(formattedMessages).map((key, index) => (
             <li key={key} className={classes.section}>
@@ -481,6 +435,20 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
           ))}
         </List>
         <PrivateMessageEditor send={(m: string, f: SCMessageFileType) => sendMessage(m, f)} autoHide={!isFollower} onThreadChangeId={userObj} />
+        {openDeleteMessageDialog && (
+          <ConfirmDialog
+            open={openDeleteMessageDialog}
+            title={<FormattedMessage id="ui.privateMessage.thread.message.dialog.msg" defaultMessage="ui.privateMessage.thread.message.dialog.msg" />}
+            btnConfirm={
+              <FormattedMessage
+                id="ui.privateMessage.thread.message.dialog.confirm"
+                defaultMessage="ui.privateMessage.thread.message.dialog.confirm"
+              />
+            }
+            onConfirm={() => handleDelete()}
+            onClose={handleCloseDeleteDialog}
+          />
+        )}
       </CardContent>
     );
   }
@@ -496,7 +464,6 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
           <>
             <Box className={classes.newMessageHeader}>
               <Box className={classes.newMessageHeaderContent}>
-                {/*{isMobile && <Icon onClick={() => threadCallbacks.onMessageBack('default')}>chevron_left</Icon>}*/}
                 <Icon className={classes.newMessageHeaderIcon}>person</Icon>
                 <Typography>
                   <FormattedMessage defaultMessage="ui.privateMessage.thread.newMessage.to" id="ui.privateMessage.thread.newMessage.to" />

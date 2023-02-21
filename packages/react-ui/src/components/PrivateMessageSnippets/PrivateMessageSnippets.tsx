@@ -240,17 +240,16 @@ export default function PrivateMessageSnippets(inProps: PrivateMessageSnippetsPr
     } else if (snippetCallbacksData.onMessageChanges) {
       //Updates snippet headline when a new message is sent or deleted
       const newSnippets = [...snippets];
-      //console.log(newSnippets);
-      const inList = newSnippets.some((o) => o.receiver.id === snippetCallbacksData.onMessageChanges['message'].receiver.id);
+      const inList = newSnippets.some((o) => o.receiver.id === snippetCallbacksData.onMessageChanges.receiver.id);
       if (inList) {
-        const index = newSnippets.findIndex((s) => s.receiver.id === snippetCallbacksData.onMessageChanges['message'].receiver.id);
+        const index = newSnippets.findIndex((s) => s.receiver.id === snippetCallbacksData.onMessageChanges.receiver.id);
         if (index !== -1) {
-          newSnippets[index].headline = snippetCallbacksData.onMessageChanges['message'].message;
+          newSnippets[index].headline = snippetCallbacksData.onMessageChanges.message;
           setSnippets(newSnippets);
         }
       } else {
         //Adds a new snippet when a new message is sent
-        setSnippets((prev) => [...prev, snippetCallbacksData.onMessageChanges['message']]);
+        setSnippets((prev) => [...prev, snippetCallbacksData.onMessageChanges]);
       }
     }
   }
@@ -265,6 +264,7 @@ export default function PrivateMessageSnippets(inProps: PrivateMessageSnippetsPr
    */
   const subscriber = (msg, data) => {
     const res = data.data;
+    console.log(res);
     updateSnippets(res.thread_id, res.notification_obj.snippet.headline, res.notification_obj.snippet.thread_status);
   };
 

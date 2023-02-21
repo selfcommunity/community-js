@@ -50,6 +50,10 @@ export interface NavigationToolbarMobileProps extends ToolbarProps {
    * Props spread to SearchAutocomplete component
    */
   SearchAutocompleteProps?: SearchAutocompleteProps;
+  /**
+   * Prop to customize some routes
+   */
+  action?: React.ReactNode;
 }
 
 const PREFERENCES = [SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY, SCPreferences.LOGO_NAVBAR_LOGO_MOBILE];
@@ -87,7 +91,7 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
     props: inProps,
     name: PREFIX
   });
-  const {className, SearchAutocompleteProps = {}, children = null, ...rest} = props;
+  const {className, SearchAutocompleteProps = {}, children = null, action = null, ...rest} = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
@@ -130,10 +134,27 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
     </Link>
   );
 
+  const _actions = action || (
+    <>
+      <IconButton className={classes.settings} onClick={handleOpenSettings}>
+        <Icon>more_vert</Icon>
+      </IconButton>
+      <SettingsDrawer
+        id="setting-swipe-menu"
+        className={classes.settingsDialog}
+        anchor="bottom"
+        open={settingsOpen}
+        onClose={handleCloseSettings}
+        onClick={handleCloseSettings}
+        onOpen={handleOpenSettings}
+      />
+    </>
+  );
+
   return (
     <Root className={classNames(className, classes.root)} {...rest}>
       {_children}
-      {preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY] && (
+      {preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY] && !action && (
         <>
           <IconButton className={classes.search} onClick={handleOpenSearch}>
             <Icon>search</Icon>
@@ -145,22 +166,7 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
             SearchAutocompleteProps={{...SearchAutocompleteProps, onClear: handleCloseSearch}}></SearchDialog>
         </>
       )}
-      {scUserContext.user && (
-        <>
-          <IconButton className={classes.settings} onClick={handleOpenSettings}>
-            <Icon>more_vert</Icon>
-          </IconButton>
-          <SettingsDrawer
-            id="setting-swipe-menu"
-            className={classes.settingsDialog}
-            anchor="bottom"
-            open={settingsOpen}
-            onClose={handleCloseSettings}
-            onClick={handleCloseSettings}
-            onOpen={handleOpenSettings}
-          />
-        </>
-      )}
+      {scUserContext.user && _actions}
       {!scUserContext.user && (
         <Button className={classes.login} color="inherit" component={Link} to={scRoutingContext.url(SCRoutes.SIGNIN_ROUTE_NAME, {})}>
           <FormattedMessage id="ui.appBar.navigation.login" defaultMessage="ui.appBar.navigation.login" />

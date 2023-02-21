@@ -434,7 +434,9 @@
   "ui.privateMessage.thread.emptyBox.message" : "Select or compose a message",
   "ui.privateMessage.snippets.button.newMessage" : "Create New Message",
   "ui.privateMessage.snippets.searchBar.placeholder" : "Search on Private Messages",
-  "ui.privateMessage.snippetItem.menu.item.delete" : "Delete Chat",
+
+  "ui.privateMessage.actionMenu.item.delete" : "Delete",
+  "ui.privateMessage.actionDrawer.item.delete" : "Delete",
 
   "ui.accountRecover.email.label": "Email",
   "ui.accountRecover.submit": "Recover Account",

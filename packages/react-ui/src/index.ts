@@ -98,7 +98,11 @@ import IncubatorSuggestion, {IncubatorSuggestionProps} from './components/Incuba
 import Footer, {FooterProps} from './components/Footer';
 import SearchAutocomplete, {SearchAutocompleteProps} from './components/SearchAutocomplete';
 import SearchDialog, {SearchDialogProps} from './components/SearchDialog';
-
+import PrivateMessageActionMenu, {PrivateMessageActionMenuProps, PrivateMessageActionMenuSkeleton} from './components/PrivateMessageActionMenu';
+import PrivateMessageActionDrawer, {
+  PrivateMessageActionDrawerProps,
+  PrivateMessageActionDrawerSkeleton
+} from './components/PrivateMessageActionDrawer';
 /**
  * Constants
  */
@@ -272,6 +276,12 @@ export {
   PrivateMessageSnippets,
   PrivateMessageSnippetsProps,
   PrivateMessageSnippetsSkeleton,
+  PrivateMessageActionMenu,
+  PrivateMessageActionMenuProps,
+  PrivateMessageActionMenuSkeleton,
+  PrivateMessageActionDrawer,
+  PrivateMessageActionDrawerProps,
+  PrivateMessageActionDrawerSkeleton,
   ToastNotifications,
   ToastNotificationsProps,
   ToastNotificationsSkeleton,

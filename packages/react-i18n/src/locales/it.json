@@ -436,7 +436,9 @@
   "ui.privateMessage.thread.emptyBox.message" : "Seleziona o componi un messaggio",
   "ui.privateMessage.snippets.button.newMessage": "Componi Nuovo Messaggio",
   "ui.privateMessage.snippets.searchBar.placeholder" : "Cerca tra i messaggi privati",
-  "ui.privateMessage.snippetItem.menu.item.delete" : "Elimina conversazione",
+
+  "ui.privateMessage.actionMenu.item.delete" : "Elimina",
+  "ui.privateMessage.actionDrawer.item.delete" : "Elimina",
 
   "ui.accountRecover.email.label": "Email",
   "ui.accountRecover.submit": "Recupera Account",
