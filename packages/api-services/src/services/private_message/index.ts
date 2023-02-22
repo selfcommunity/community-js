@@ -17,10 +17,11 @@ import {
   SCPrivateMessageUploadThumbnailType
 } from '@selfcommunity/types';
 import {AxiosRequestConfig} from 'axios';
+import {urlParams} from '../../utils/url';
 
 export interface PrivateMessageApiClientInterface {
   getAllSnippets(config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPrivateMessageSnippetType>>;
-  getAThread(data: ThreadParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPrivateMessageThreadType>>;
+  getAThread(params: ThreadParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPrivateMessageThreadType>>;
   getASingleMessage(id: number | string, config?: AxiosRequestConfig): Promise<SCPrivateMessageThreadType>;
   sendAMessage(data: MessageCreateParams, config?: AxiosRequestConfig): Promise<SCPrivateMessageThreadType>;
   deleteAMessage(id: number | string, config?: AxiosRequestConfig): Promise<any>;
@@ -45,11 +46,12 @@ export class PrivateMessageApiClient {
 
   /**
    * This endpoint retrieves all messages in a thread.
-   * @param data
+   * @param params
    * @param config
    */
-  static getAThread(data: ThreadParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPrivateMessageThreadType>> {
-    return apiRequest({...config, data, url: Endpoints.GetAThread.url({}), method: Endpoints.GetAThread.method});
+  static getAThread(params: ThreadParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPrivateMessageThreadType>> {
+    const p = urlParams(params);
+    return apiRequest({...config, url: `${Endpoints.GetAThread.url({})}?${p.toString()}`, method: Endpoints.GetAThread.method});
   }
 
   /**
@@ -179,8 +181,8 @@ export default class PrivateMessageService {
   static async getAllSnippets(config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPrivateMessageSnippetType>> {
     return PrivateMessageApiClient.getAllSnippets(config);
   }
-  static async getAThread(data: ThreadParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPrivateMessageThreadType>> {
-    return PrivateMessageApiClient.getAThread(data, config);
+  static async getAThread(params: ThreadParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPrivateMessageThreadType>> {
+    return PrivateMessageApiClient.getAThread(params, config);
   }
   static async getASingleMessage(id: number | string, config?: AxiosRequestConfig): Promise<SCPrivateMessageThreadType> {
     return PrivateMessageApiClient.getASingleMessage(id, config);
