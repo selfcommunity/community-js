@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.83](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.82...@selfcommunity/react-ui@0.7.0-alpha.83) (2023-02-21)
+
+
+### Bug Fixes
+
+* pm bugfixes ([e55a877](https://github.com/selfcommunity/community-js/commit/e55a877afb75756bd013e9fd249edbf4043f6e33))
+
+
+### Performance Improvements
+
+* added pm action menu/drawer ([fcb8b1b](https://github.com/selfcommunity/community-js/commit/fcb8b1b9da2a4bb7accfef8de0098afb1bcf30b2))
+
+
+
+
+
 # [0.7.0-alpha.82](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.81...@selfcommunity/react-ui@0.7.0-alpha.82) (2023-02-20)
 
 
