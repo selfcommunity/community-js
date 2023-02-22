@@ -6,7 +6,7 @@ export interface ThreadParams {
   /**
    * The id of the thread(one between thread or user is required).
    */
-  thread: number;
+  thread?: number;
   /**
    * The id of the user(one between thread or user is required).
    */

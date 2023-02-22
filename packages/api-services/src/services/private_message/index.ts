@@ -49,7 +49,7 @@ export class PrivateMessageApiClient {
    * @param config
    */
   static getAThread(data: ThreadParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPrivateMessageThreadType>> {
-    return apiRequest({...config, url: Endpoints.GetAThread.url({}), method: Endpoints.GetAThread.method, data: data});
+    return apiRequest({...config, data, url: Endpoints.GetAThread.url({}), method: Endpoints.GetAThread.method});
   }
 
   /**
@@ -67,7 +67,7 @@ export class PrivateMessageApiClient {
    * @param config
    */
   static sendAMessage(data: MessageCreateParams, config?: AxiosRequestConfig): Promise<SCPrivateMessageThreadType> {
-    return apiRequest({...config, url: Endpoints.SendMessage.url({}), method: Endpoints.SendMessage.method, data: data});
+    return apiRequest({...config, data, url: Endpoints.SendMessage.url({}), method: Endpoints.SendMessage.method});
   }
 
   /**
@@ -94,7 +94,7 @@ export class PrivateMessageApiClient {
    * @param config
    */
   static uploadMedia(data: MessageMediaUploadParams, config?: AxiosRequestConfig): Promise<SCPrivateMessageUploadMediaType> {
-    return apiRequest({...config, url: Endpoints.PrivateMessageUploadMedia.url({}), method: Endpoints.PrivateMessageUploadMedia.method, data: data});
+    return apiRequest({...config, data, url: Endpoints.PrivateMessageUploadMedia.url({}), method: Endpoints.PrivateMessageUploadMedia.method});
   }
 
   /**
@@ -105,9 +105,9 @@ export class PrivateMessageApiClient {
   static uploadThumbnail(data: MessageThumbnailUploadParams, config?: AxiosRequestConfig): Promise<SCPrivateMessageUploadThumbnailType> {
     return apiRequest({
       ...config,
+      data,
       url: Endpoints.PrivateMessageUploadThumbnail.url({}),
-      method: Endpoints.PrivateMessageUploadThumbnail.method,
-      data: data
+      method: Endpoints.PrivateMessageUploadThumbnail.method
     });
   }
 
@@ -119,9 +119,9 @@ export class PrivateMessageApiClient {
   static uploadMediaInChunks(data: MessageMediaChunksParams, config?: AxiosRequestConfig): Promise<SCPrivateMessageUploadMediaChunkType> {
     return apiRequest({
       ...config,
+      data,
       url: Endpoints.PrivateMessageUploadMediaInChunks.url({}),
-      method: Endpoints.PrivateMessageUploadMediaInChunks.method,
-      data: data
+      method: Endpoints.PrivateMessageUploadMediaInChunks.method
     });
   }
 
