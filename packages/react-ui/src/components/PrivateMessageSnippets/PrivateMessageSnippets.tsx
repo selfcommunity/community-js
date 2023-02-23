@@ -287,44 +287,49 @@ export default function PrivateMessageSnippets(inProps: PrivateMessageSnippetsPr
   /**
    * Renders the component (if not hidden by autoHide prop)
    */
-  if (!autoHide && total) {
+  if (!autoHide) {
     return (
       <Root {...rest} className={classNames(classes.root, className)}>
         <CardContent>
           <Button variant="outlined" size="medium" className={classes.newMessageButton} onClick={handleOpenNewMessage}>
             <FormattedMessage id="ui.privateMessage.snippets.button.newMessage" defaultMessage="ui.privateMessage.snippets.button.newMessage" />
           </Button>
-          <TextField
-            className={classes.searchBar}
-            margin="normal"
-            fullWidth
-            id={`${PREFIX}-search`}
-            placeholder={`${intl.formatMessage(messages.placeholder)}`}
-            size="small"
-            onChange={handleChange}
-            value={search}
-            InputProps={{
-              className: classes.input,
-              startAdornment: <Icon className={classes.icon}>search</Icon>,
-              endAdornment: (
-                <IconButton className={classes.clear} disabled={!search} onClick={handleClear} size="small">
-                  <Icon>close</Icon>
-                </IconButton>
-              )
-            }}
-          />
-          <List>
-            {filteredSnippets.map((message: SCPrivateMessageSnippetType) => (
-              <PrivateMessageSnippetItem
-                message={message}
-                key={message.id}
-                actions={{onItemClick: () => handleOpenThread(message), onMenuClick: () => handleDeleteConversation(message)}}
-                selected={
-                  message.id === threadId || (!isNumber && selected ? message.receiver.id === selected.receiver.id : message.receiver.id === selected)
-                }
+          {snippets.length !== 0 && (
+            <>
+              <TextField
+                className={classes.searchBar}
+                margin="normal"
+                fullWidth
+                id={`${PREFIX}-search`}
+                placeholder={`${intl.formatMessage(messages.placeholder)}`}
+                size="small"
+                onChange={handleChange}
+                value={search}
+                InputProps={{
+                  className: classes.input,
+                  startAdornment: <Icon className={classes.icon}>search</Icon>,
+                  endAdornment: (
+                    <IconButton className={classes.clear} disabled={!search} onClick={handleClear} size="small">
+                      <Icon>close</Icon>
+                    </IconButton>
+                  )
+                }}
               />
-            ))}
-          </List>
+              <List>
+                {filteredSnippets.map((message: SCPrivateMessageSnippetType) => (
+                  <PrivateMessageSnippetItem
+                    message={message}
+                    key={message.id}
+                    actions={{onItemClick: () => handleOpenThread(message), onMenuClick: () => handleDeleteConversation(message)}}
+                    selected={
+                      message.id === threadId ||
+                      (!isNumber && selected ? message.receiver.id === selected.receiver.id : message.receiver.id === selected)
+                    }
+                  />
+                ))}
+              </List>
+            </>
+          )}
         </CardContent>
       </Root>
     );
