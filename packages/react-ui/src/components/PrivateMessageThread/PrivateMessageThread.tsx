@@ -336,7 +336,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
         url: Endpoints.GetAThread.url(),
         method: Endpoints.GetAThread.method,
         params: {
-          user: u
+          thread: u
         }
       })
       .then((res: HttpResponse<any>) => {
