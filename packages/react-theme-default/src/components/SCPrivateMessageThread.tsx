@@ -64,8 +64,8 @@ const Component = {
             fontSize: '1.714rem'
           },
           '& .MuiIcon-root': {
-            color: theme.palette.secondary.main,
-            padding: theme.spacing(1)
+            color: theme.palette.secondary.main
+            // padding: theme.spacing(1)
           },
           '& .MuiTypography-root': {
             color: theme.palette.secondary.main
