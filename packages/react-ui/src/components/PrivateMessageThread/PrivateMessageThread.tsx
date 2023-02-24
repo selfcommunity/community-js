@@ -329,7 +329,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
     if (typeof threadObj === 'number') {
       u = threadObj;
     } else {
-      u = threadObj.receiver.id;
+      u = threadObj.id;
     }
     http
       .request({
