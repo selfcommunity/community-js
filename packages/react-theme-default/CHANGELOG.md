@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.33](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.32...@selfcommunity/react-theme-default@0.1.0-alpha.33) (2023-02-24)
+
+
+### Bug Fixes
+
+* pm new message icon padding ([fc53ad6](https://github.com/selfcommunity/community-js/commit/fc53ad601db6e4432d97aee589052c72de3c088c))
+
+
+
+
+
 # [0.1.0-alpha.32](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.31...@selfcommunity/react-theme-default@0.1.0-alpha.32) (2023-02-23)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default
