@@ -59,6 +59,7 @@ const Root = styled(Widget, {
 })(({theme}: any) => ({}));
 
 export interface PrivateMessageThreadProps {
+  threadObj?: SCPrivateMessageThreadType;
   /**
    * User object (thread receiver)
    * default null
@@ -94,11 +95,6 @@ export interface PrivateMessageThreadProps {
      * @default null
      */
     onMessageBack?: (dispatch: any) => void;
-    /**
-     * Callback fired when deleting a thread.
-     * @default null
-     */
-    onThreadDelete?: (dispatch: any) => void;
   };
   /**
    * Any other properties
@@ -143,7 +139,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
     props: inProps,
     name: PREFIX
   });
-  const {userObj, autoHide, className, openNewMessage, threadCallbacks, ...rest} = props;
+  const {threadObj, autoHide, className, openNewMessage, threadCallbacks, ...rest} = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
@@ -270,7 +266,8 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
           url: Endpoints.SendMessage.url(),
           method: Endpoints.SendMessage.method,
           data: {
-            recipients: openNewMessage ? ids : [typeof userObj === 'number' ? userObj : userObj.receiver.id],
+            recipients: openNewMessage ? ids : [typeof threadObj === 'number' ? threadObj : threadObj.receiver.id],
+            //recipients: openNewMessage ? ids : [typeof userObj === 'number' ? userObj : userObj.receiver.id],
             message: m,
             file_uuid: f && !m ? f : null
           }
@@ -324,10 +321,15 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
    */
   function fetchThread() {
     let u;
-    if (typeof userObj === 'number') {
-      u = userObj;
+    // if (typeof userObj === 'number') {
+    //   u = userObj;
+    // } else {
+    //   u = userObj.receiver.id;
+    // }
+    if (typeof threadObj === 'number') {
+      u = threadObj;
     } else {
-      u = userObj.receiver.id;
+      u = threadObj.receiver.id;
     }
     http
       .request({
@@ -365,9 +367,9 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
    * if openNewMessage is true, fetches user followers too.
    */
   useEffect(() => {
-    userObj && fetchThread();
+    threadObj && fetchThread();
     openNewMessage && fetchFollowers();
-  }, [userObj, openNewMessage, authUserId]);
+  }, [threadObj, openNewMessage, authUserId]);
 
   /**
    * Checks is thread receiver is a user follower
@@ -434,7 +436,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
             </li>
           ))}
         </List>
-        <PrivateMessageEditor send={(m: string, f: SCMessageFileType) => sendMessage(m, f)} autoHide={!isFollower} onThreadChangeId={userObj} />
+        <PrivateMessageEditor send={(m: string, f: SCMessageFileType) => sendMessage(m, f)} autoHide={!isFollower} onThreadChangeId={threadObj} />
         {openDeleteMessageDialog && (
           <ConfirmDialog
             open={openDeleteMessageDialog}
@@ -474,7 +476,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
                   limitTags={3}
                   freeSolo
                   options={followers}
-                  value={newMessageThread ? userObj : recipients}
+                  value={newMessageThread ? threadObj : recipients}
                   getOptionLabel={(option) => (option ? option.username : '...')}
                   renderInput={(params) => (
                     <TextField
@@ -510,7 +512,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
   if (!scUserContext.user) {
     return <HiddenPlaceholder />;
   }
-  if (loading && userObj) {
+  if (loading && threadObj) {
     return <PrivateMessageThreadSkeleton />;
   }
 
@@ -520,7 +522,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
   if (!autoHide) {
     return (
       <Root {...rest} className={classNames(classes.root, className)}>
-        {userObj && !newMessageThread ? renderThread() : renderNewOrNoMessageBox()}
+        {threadObj && !newMessageThread ? renderThread() : renderNewOrNoMessageBox()}
       </Root>
     );
   }

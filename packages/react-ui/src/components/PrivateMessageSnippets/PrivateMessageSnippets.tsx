@@ -76,7 +76,7 @@ export interface PrivateMessageSnippetsProps {
    * Prop to highlight selected snippet
    * @default null
    */
-  selected?: any;
+  //selected?: any;
 }
 /**
  *
@@ -113,13 +113,12 @@ export default function PrivateMessageSnippets(inProps: PrivateMessageSnippetsPr
     name: PREFIX
   });
 
-  const {autoHide = false, className = null, threadId, selected, snippetActions, snippetCallbacksData, ...rest} = props;
+  const {autoHide = false, className = null, threadId, snippetActions, snippetCallbacksData, ...rest} = props;
 
   // STATE
   const [snippets, setSnippets] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [total, setTotal] = useState<number>(0);
-  const isNumber = typeof selected === 'number';
+  //const isNumber = typeof selected === 'number';
   const [search, setSearch] = useState<string>('');
   // REFS
   const refreshSubscription = useRef(null);
@@ -154,7 +153,6 @@ export default function PrivateMessageSnippets(inProps: PrivateMessageSnippetsPr
       .then((data: any) => {
         setSnippets(data.results);
         setLoading(false);
-        setTotal(data.count);
       })
       .catch((error) => {
         console.log(error);
@@ -264,7 +262,6 @@ export default function PrivateMessageSnippets(inProps: PrivateMessageSnippetsPr
    */
   const subscriber = (msg, data) => {
     const res = data.data;
-    console.log(res);
     updateSnippets(res.thread_id, res.notification_obj.snippet.headline, res.notification_obj.snippet.thread_status);
   };
 
@@ -321,10 +318,11 @@ export default function PrivateMessageSnippets(inProps: PrivateMessageSnippetsPr
                     message={message}
                     key={message.id}
                     actions={{onItemClick: () => handleOpenThread(message), onMenuClick: () => handleDeleteConversation(message)}}
-                    selected={
-                      message.id === threadId ||
-                      (!isNumber && selected ? message.receiver.id === selected.receiver.id : message.receiver.id === selected)
-                    }
+                    selected={message.id === threadId}
+                    // selected={
+                    //   message.id === threadId ||
+                    //   (!isNumber && selected ? message.receiver.id === selected.receiver.id : message.receiver.id === selected)
+                    // }
                   />
                 ))}
               </List>
