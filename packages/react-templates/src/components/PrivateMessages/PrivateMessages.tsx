@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Grid, useTheme, useMediaQuery} from '@mui/material';
 import {ConfirmDialog, PrivateMessageSnippets} from '@selfcommunity/react-ui';
@@ -35,6 +35,11 @@ export interface PrivateMessagesProps {
    * @default null
    */
   onItemClick?: (id) => void;
+  /**
+   * Deleting threadId
+   * @default null
+   */
+  deletingThreadId?: number;
   /**
    * Overrides or extends the styles applied to the component.
    * @default null
@@ -81,7 +86,7 @@ export default function PrivateMessages(inProps: PrivateMessagesProps): JSX.Elem
     props: inProps,
     name: PREFIX
   });
-  const {id = null, autoHide = false, className = null, onItemClick = null, ...rest} = props;
+  const {id = null, autoHide = false, className = null, onItemClick = null, deletingThreadId, ...rest} = props;
 
   // STATE
   const theme = useTheme<SCThemeType>();
@@ -101,7 +106,7 @@ export default function PrivateMessages(inProps: PrivateMessagesProps): JSX.Elem
 
   //  HANDLERS
   const handleThreadOpening = (i) => {
-    onItemClick && onItemClick(i.receiver.id);
+    onItemClick && onItemClick(i.id);
     setObj(i);
     setOpenNewMessage(false);
     isMobile && setLayout('mobile');
@@ -144,14 +149,14 @@ export default function PrivateMessages(inProps: PrivateMessagesProps): JSX.Elem
    * Handles thread deletion
    */
   function handleDeleteThread() {
-    PrivateMessageService.deleteAThread(deletingThread)
+    PrivateMessageService.deleteAThread(deletingThread ?? obj.id)
       .then(() => {
         if (layout === 'mobile') {
           setLayout('default');
         }
         id && setLayout('mobile');
         setOpenDeleteThreadDialog(false);
-        setDeletedThread(deletingThread);
+        setDeletedThread(deletingThread ?? obj.id);
         deletingThread === obj?.id && setObj(null);
         setSnippetData(null);
       })
@@ -160,6 +165,12 @@ export default function PrivateMessages(inProps: PrivateMessagesProps): JSX.Elem
         console.log(error);
       });
   }
+
+  useEffect(() => {
+    if (deletingThreadId) {
+      handleThreadToDelete(deletingThreadId);
+    }
+  });
 
   /**
    * Renders snippets section
@@ -175,25 +186,7 @@ export default function PrivateMessages(inProps: PrivateMessagesProps): JSX.Elem
           }}
           snippetCallbacksData={{onMessageChanges: snippetData, onDeleteThreadSuccess: deletedThread}}
           threadId={obj?.id ?? null}
-          selected={obj}
-        />
-      </Grid>
-    );
-  }
-  /**
-   * Renders thread section
-   */
-  function renderThread() {
-    return (
-      <Grid item xs={12} md={7} className={classes.threadBox}>
-        <PrivateMessageThread
-          userObj={obj ?? null}
-          openNewMessage={openNewMessage}
-          threadCallbacks={{
-            onMessageSentOrDeleted: handleSnippetsUpdate,
-            onMessageBack: handleMessageBack,
-            onThreadDelete: () => setOpenDeleteThreadDialog(true)
-          }}
+          //selected={obj}
         />
         {openDeleteThreadDialog && (
           <ConfirmDialog
@@ -214,6 +207,23 @@ export default function PrivateMessages(inProps: PrivateMessagesProps): JSX.Elem
             onClose={handleCloseDeleteDialog}
           />
         )}
+      </Grid>
+    );
+  }
+  /**
+   * Renders thread section
+   */
+  function renderThread() {
+    return (
+      <Grid item xs={12} md={7} className={classes.threadBox}>
+        <PrivateMessageThread
+          threadObj={obj ?? null}
+          openNewMessage={openNewMessage}
+          threadCallbacks={{
+            onMessageSentOrDeleted: handleSnippetsUpdate,
+            onMessageBack: handleMessageBack
+          }}
+        />
       </Grid>
     );
   }
