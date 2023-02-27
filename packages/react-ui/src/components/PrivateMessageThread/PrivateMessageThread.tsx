@@ -150,8 +150,6 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
     scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED].value;
 
   // STATE
-  const theme = useTheme<SCThemeType>();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const scFollowersManager: SCFollowersManagerType = scUserContext.managers.followers;
   const [loading, setLoading] = useState<boolean>(true);
   const [messageObjs, setMessageObjs] = useState<any[]>([]);
@@ -159,7 +157,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
   const [openDeleteMessageDialog, setOpenDeleteMessageDialog] = useState<boolean>(false);
   const [deletingMsg, setDeletingMsg] = useState(null);
   const [followers, setFollowers] = useState<any[]>([]);
-  const [recipients, setRecipients] = useState([]);
+  const [recipients, setRecipients] = useState<any>([]);
   const [isFollower, setIsFollower] = useState<boolean>(false);
   const [receiver, setReceiver] = useState(null);
   const [newMessageThread, setNewMessageThread] = useState<boolean>(false);
@@ -266,8 +264,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
           url: Endpoints.SendMessage.url(),
           method: Endpoints.SendMessage.method,
           data: {
-            recipients: openNewMessage ? ids : [typeof threadObj === 'number' ? threadObj : threadObj.receiver.id],
-            //recipients: openNewMessage ? ids : [typeof userObj === 'number' ? userObj : userObj.receiver.id],
+            recipients: openNewMessage ? ids : [threadObj.receiver.id],
             message: m,
             file_uuid: f && !m ? f : null
           }
@@ -320,23 +317,12 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
    * Fetches thread
    */
   function fetchThread() {
-    let u;
-    // if (typeof userObj === 'number') {
-    //   u = userObj;
-    // } else {
-    //   u = userObj.receiver.id;
-    // }
-    if (typeof threadObj === 'number') {
-      u = threadObj;
-    } else {
-      u = threadObj.id;
-    }
     http
       .request({
         url: Endpoints.GetAThread.url(),
         method: Endpoints.GetAThread.method,
         params: {
-          thread: u
+          thread: threadObj?.id
         }
       })
       .then((res: HttpResponse<any>) => {
@@ -351,7 +337,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
           setNewMessageThread(false);
         } else {
           setNewMessageThread(true);
-          setRecipients(u);
+          setRecipients(threadObj?.id);
         }
         setLoading(false);
       })
@@ -436,7 +422,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
             </li>
           ))}
         </List>
-        <PrivateMessageEditor send={(m: string, f: SCMessageFileType) => sendMessage(m, f)} autoHide={!isFollower} onThreadChangeId={threadObj} />
+        <PrivateMessageEditor send={(m: string, f: SCMessageFileType) => sendMessage(m, f)} autoHide={!isFollower} onThreadChangeId={threadObj?.id} />
         {openDeleteMessageDialog && (
           <ConfirmDialog
             open={openDeleteMessageDialog}
@@ -476,7 +462,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
                   limitTags={3}
                   freeSolo
                   options={followers}
-                  value={newMessageThread ? threadObj : recipients}
+                  value={newMessageThread ? threadObj?.id : recipients}
                   getOptionLabel={(option) => (option ? option.username : '...')}
                   renderInput={(params) => (
                     <TextField

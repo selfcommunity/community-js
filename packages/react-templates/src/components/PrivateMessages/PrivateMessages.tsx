@@ -36,11 +36,6 @@ export interface PrivateMessagesProps {
    */
   onItemClick?: (id) => void;
   /**
-   * Deleting threadId
-   * @default null
-   */
-  deletingThreadId?: number;
-  /**
    * Overrides or extends the styles applied to the component.
    * @default null
    */
@@ -86,7 +81,7 @@ export default function PrivateMessages(inProps: PrivateMessagesProps): JSX.Elem
     props: inProps,
     name: PREFIX
   });
-  const {id = null, autoHide = false, className = null, onItemClick = null, deletingThreadId, ...rest} = props;
+  const {id = null, autoHide = false, className = null, onItemClick = null, ...rest} = props;
 
   // STATE
   const theme = useTheme<SCThemeType>();
@@ -166,12 +161,6 @@ export default function PrivateMessages(inProps: PrivateMessagesProps): JSX.Elem
       });
   }
 
-  useEffect(() => {
-    if (deletingThreadId) {
-      handleThreadToDelete(deletingThreadId);
-    }
-  });
-
   /**
    * Renders snippets section
    */
@@ -185,7 +174,7 @@ export default function PrivateMessages(inProps: PrivateMessagesProps): JSX.Elem
             onMenuItemClick: handleThreadToDelete
           }}
           snippetCallbacksData={{onMessageChanges: snippetData, onDeleteThreadSuccess: deletedThread}}
-          threadId={obj?.id ?? null}
+          threadId={id ?? obj?.id ?? null}
           //selected={obj}
         />
         {openDeleteThreadDialog && (
