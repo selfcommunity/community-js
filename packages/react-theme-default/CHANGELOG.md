@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.37](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.36...@selfcommunity/react-theme-default@0.1.0-alpha.37) (2023-02-27)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
 # [0.1.0-alpha.36](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.35...@selfcommunity/react-theme-default@0.1.0-alpha.36) (2023-02-27)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default
