@@ -7,16 +7,15 @@ import {
   SCPreferences,
   SCPreferencesContext,
   SCPreferencesContextType,
-  SCThemeType,
   SCUserContext,
   SCUserContextType,
   UserUtils
 } from '@selfcommunity/react-core';
-import {SCMessageFileType, SCNotificationTopicType, SCNotificationTypologyType, SCPrivateMessageThreadType} from '@selfcommunity/types';
+import {SCNotificationTopicType, SCNotificationTypologyType, SCPrivateMessageFileType, SCPrivateMessageThreadType} from '@selfcommunity/types';
 import PrivateMessageThreadItem from '../PrivateMessageThreadItem';
 import _ from 'lodash';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {Box, CardContent, IconButton, List, ListSubheader, TextField, Typography, useMediaQuery, useTheme} from '@mui/material';
+import {Box, CardContent, IconButton, List, ListSubheader, TextField, Typography} from '@mui/material';
 import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
 import PrivateMessageEditor from '../PrivateMessageEditor';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -249,10 +248,10 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
 
   /**
    * Sends a message
-   * @param m
-   * @param f
+   * @param message
+   * @param file
    */
-  function sendMessage(m, f) {
+  function sendMessage(message: string, file: SCPrivateMessageFileType) {
     if (UserUtils.isBlocked(scUserContext.user)) {
       enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
         variant: 'warning',
@@ -265,8 +264,8 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
           method: Endpoints.SendMessage.method,
           data: {
             recipients: openNewMessage ? ids : [threadObj.receiver.id],
-            message: m,
-            file_uuid: f && !m ? f : null
+            message: message,
+            file_uuid: file && !message ? file : null
           }
         })
         .then((res) => {
@@ -422,7 +421,11 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
             </li>
           ))}
         </List>
-        <PrivateMessageEditor send={(m: string, f: SCMessageFileType) => sendMessage(m, f)} autoHide={!isFollower} onThreadChangeId={threadObj?.id} />
+        <PrivateMessageEditor
+          send={(message: string, file: SCPrivateMessageFileType) => sendMessage(message, file)}
+          autoHide={!isFollower}
+          onThreadChangeId={threadObj?.id}
+        />
         {openDeleteMessageDialog && (
           <ConfirmDialog
             open={openDeleteMessageDialog}
@@ -483,7 +486,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
                 <Icon fontSize="small">close</Icon>
               </IconButton>
             </Box>
-            <PrivateMessageEditor send={(m: string, f: SCMessageFileType) => sendMessage(m, f)} autoHide={!followers} />
+            <PrivateMessageEditor send={(message: string, file: SCPrivateMessageFileType) => sendMessage(message, file)} autoHide={!followers} />
           </>
         ) : (
           <Typography component="span" className={classes.emptyMessage}>
