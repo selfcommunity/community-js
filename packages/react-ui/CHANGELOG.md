@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.92](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.91...@selfcommunity/react-ui@0.7.0-alpha.92) (2023-02-27)
+
+
+### Bug Fixes
+
+* fix thread id prop ([f8b2ed2](https://github.com/selfcommunity/community-js/commit/f8b2ed26ab5a938540ac90270ad625b4143fd1e2))
+
+
+
+
+
 # [0.7.0-alpha.91](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.90...@selfcommunity/react-ui@0.7.0-alpha.91) (2023-02-27)
 
 
