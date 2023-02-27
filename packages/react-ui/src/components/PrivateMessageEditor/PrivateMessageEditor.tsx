@@ -7,7 +7,7 @@ import MessageMediaUploader from './MessageMediaUploader/index';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {useThemeProps} from '@mui/system';
 import BaseDrawer from '../../shared/BaseDrawer';
-import {SCMessageFileType} from '@selfcommunity/types';
+import {SCPrivateMessageFileType} from '@selfcommunity/types';
 import {SCThemeType} from '@selfcommunity/react-core';
 import {EmojiClickData} from 'emoji-picker-react';
 // import deps only if csr
@@ -52,7 +52,7 @@ export interface PrivateMessageEditorProps {
   /**
    * Callback to send the message
    */
-  send?: (message?: string, file?: SCMessageFileType) => void;
+  send?: (message?: string, file?: SCPrivateMessageFileType) => void;
   /**
    * Any other properties
    */
