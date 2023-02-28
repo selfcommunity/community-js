@@ -263,7 +263,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
           url: Endpoints.SendMessage.url(),
           method: Endpoints.SendMessage.method,
           data: {
-            recipients: openNewMessage ? ids : [isNumber ? threadObj : threadObj.receiver.id],
+            recipients: openNewMessage ? ids : [isNumber ? receiver.id : threadObj.receiver.id],
             message: message,
             file_uuid: file && !message ? file : null
           }
