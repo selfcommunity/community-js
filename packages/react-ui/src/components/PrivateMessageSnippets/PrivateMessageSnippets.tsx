@@ -108,6 +108,7 @@ export default function PrivateMessageSnippets(inProps: PrivateMessageSnippetsPr
   });
 
   const {snippets = [], loading, autoHide = false, className = null, threadObj = null, snippetActions, clearSearch, ...rest} = props;
+  console.log(threadObj);
 
   // STATE
   const [search, setSearch] = useState<string>('');
@@ -196,7 +197,9 @@ export default function PrivateMessageSnippets(inProps: PrivateMessageSnippetsPr
                     message={message}
                     key={message.id}
                     actions={{onItemClick: () => handleOpenThread(message), onMenuClick: () => handleDeleteConversation(message)}}
-                    selected={message.id === (isNumber ? threadObj : threadObj?.id) || message.receiver.id === (isNumber ? threadObj : threadObj?.id)}
+                    selected={
+                      message.id === (isNumber ? threadObj : threadObj?.id) || message.receiver.id === (isNumber ? threadObj : threadObj?.receiver.id)
+                    }
                   />
                 ))}
               </List>
