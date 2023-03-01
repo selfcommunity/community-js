@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.41](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.40...@selfcommunity/react-theme-default@0.1.0-alpha.41) (2023-03-01)
+
+
+### Performance Improvements
+
+* added private message component skeleton theme ([c816701](https://github.com/selfcommunity/community-js/commit/c816701ab88592958c5bc8c8d54e2ebea1434872))
+
+
+
+
+
 # [0.1.0-alpha.40](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.39...@selfcommunity/react-theme-default@0.1.0-alpha.40) (2023-02-28)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default

@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.95](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.94...@selfcommunity/react-ui@0.7.0-alpha.95) (2023-03-01)
+
+
+### Bug Fixes
+
+* pm components + skeletons fixes ([538e030](https://github.com/selfcommunity/community-js/commit/538e0303f06821049d004f0b8fd0db90f67260f8))
+
+
+### Performance Improvements
+
+* created private messages ui component (handles both snippets and thread state) ([8b0d059](https://github.com/selfcommunity/community-js/commit/8b0d0594831bce5f25356d78e20f00945470a1af))
+
+
+
+
+
 # [0.7.0-alpha.94](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.93...@selfcommunity/react-ui@0.7.0-alpha.94) (2023-02-28)
 
 
