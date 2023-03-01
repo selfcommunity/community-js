@@ -427,8 +427,6 @@
   "ui.privateMessage.editor.placeholder" : "Write your message",
 
   "ui.privateMessage.threadItem.menu.item.delete" : "Delete Message",
-  "ui.privateMessage.thread.message.dialog.msg": "Are you sure you want to delete this message?",
-  "ui.privateMessage.thread.message.dialog.confirm": "Yes",
   "ui.privateMessage.thread.newMessage.to" : "To:",
   "ui.privateMessage.thread.newMessage.autocomplete.placeholder" : "Username",
   "ui.privateMessage.thread.emptyBox.message" : "Select or compose a message",
@@ -437,6 +435,11 @@
 
   "ui.privateMessage.actionMenu.item.delete" : "Delete",
   "ui.privateMessage.actionDrawer.item.delete" : "Delete",
+
+  "ui.privateMessage.component.delete.thread.dialog.msg": "Are you sure you want to delete this conversation?",
+  "ui.privateMessage.component.delete.thread.dialog.confirm": "Yes",
+  "ui.privateMessage.component.delete.message.dialog.msg": "Are you sure you want to delete this message?",
+  "ui.privateMessage.component.delete.message.dialog.confirm": "Yes",
 
   "ui.accountRecover.email.label": "Email",
   "ui.accountRecover.submit": "Recover Account",
@@ -583,8 +586,6 @@
   "templates.userProfile.moderate": "Moderate user",
   "templates.userProfile.send.pm": "Send private message",
   "templates.privateMessages.delete" : "Select thread to delete",
-  "templates.privateMessages.delete.thread.dialog.msg": "Are you sure you want to delete this conversation?",
-  "templates.privateMessages.delete.thread.dialog.confirm": "Yes",
   "templates.feedObjectDetail.contributionNotFound": "Contribution not found or you do not have permission to view it.",
   "templates.usersList.followers" : "Followers",
   "templates.usersList.followings" : "Users Followed",

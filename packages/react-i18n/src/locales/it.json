@@ -429,8 +429,6 @@
   "ui.privateMessage.editor.placeholder" : "Scrivi il tuo messagio",
 
   "ui.privateMessage.threadItem.menu.item.delete" : "Elimina Messaggio",
-  "ui.privateMessage.thread.message.dialog.msg": "Sei sicuro di voler eliminare il messaggio selezionato?",
-  "ui.privateMessage.thread.message.dialog.confirm": "Sì",
   "ui.privateMessage.thread.newMessage.to" : "A:",
   "ui.privateMessage.thread.newMessage.autocomplete.placeholder" : "nome utente",
   "ui.privateMessage.thread.emptyBox.message" : "Seleziona o componi un messaggio",
@@ -439,6 +437,11 @@
 
   "ui.privateMessage.actionMenu.item.delete" : "Elimina",
   "ui.privateMessage.actionDrawer.item.delete" : "Elimina",
+
+  "ui.privateMessage.component.delete.thread.dialog.msg": "Sei sicuro di voler eliminare questa conversazione?",
+  "ui.privateMessage.component.delete.thread.dialog.confirm": "Sì",
+  "ui.privateMessage.component.delete.message.dialog.msg": "Sei sicuro di voler eliminare il messaggio selezionato?",
+  "ui.privateMessage.component.delete.message.dialog.confirm": "Sì",
 
   "ui.accountRecover.email.label": "Email",
   "ui.accountRecover.submit": "Recupera Account",
@@ -584,8 +587,6 @@
   "templates.userProfile.moderate": "Modera utente",
   "templates.userProfile.send.pm": "Invia messaggio privato",
   "templates.privateMessages.delete" : "Seleziona la conversazione da eliminare",
-  "templates.privateMessages.delete.thread.dialog.msg": "Sei sicuro di voler eliminare questa conversazione?",
-  "templates.privateMessages.delete.thread.dialog.confirm": "Sì",
   "templates.feedObjectDetail.contributionNotFound": "Il contributo non è stato trovato oppure non hai i permessi per vederlo.",
   "templates.usersList.followers" : "I miei follower",
   "templates.usersList.followings" : "Utenti che seguo",
