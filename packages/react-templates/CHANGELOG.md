@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.83](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.82...@selfcommunity/react-templates@0.3.0-alpha.83) (2023-03-01)
+
+
+### Bug Fixes
+
+* pm components + skeletons fixes ([538e030](https://github.com/selfcommunity/community-js/commit/538e0303f06821049d004f0b8fd0db90f67260f8))
+* removed state handling from private messages template ([5b17e56](https://github.com/selfcommunity/community-js/commit/5b17e566765ffdcbf956b28fcdc0d900dd3afbff))
+
+
+
+
+
 # [0.3.0-alpha.82](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.81...@selfcommunity/react-templates@0.3.0-alpha.82) (2023-02-28)
 
 **Note:** Version bump only for package @selfcommunity/react-templates
