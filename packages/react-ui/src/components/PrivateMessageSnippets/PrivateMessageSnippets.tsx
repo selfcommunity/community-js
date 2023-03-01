@@ -70,7 +70,7 @@ export interface PrivateMessageSnippetsProps {
    * Clicked thread object
    * @default null
    */
-  threadObj?: SCPrivateMessageThreadType;
+  threadObj?: any;
 }
 /**
  *
@@ -197,7 +197,9 @@ export default function PrivateMessageSnippets(inProps: PrivateMessageSnippetsPr
                     key={message.id}
                     actions={{onItemClick: () => handleOpenThread(message), onMenuClick: () => handleDeleteConversation(message)}}
                     selected={
-                      message.id === (isNumber ? threadObj : threadObj?.id) || message.receiver.id === (isNumber ? threadObj : threadObj?.receiver.id)
+                      threadObj !== 'new' &&
+                      (message.id === (isNumber ? threadObj : threadObj?.id) ||
+                        message.receiver.id === (isNumber ? threadObj : threadObj?.receiver.id))
                     }
                   />
                 ))}
