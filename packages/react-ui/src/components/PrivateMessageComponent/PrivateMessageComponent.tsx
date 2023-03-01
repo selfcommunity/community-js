@@ -303,7 +303,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
           url: Endpoints.SendMessage.url(),
           method: Endpoints.SendMessage.method,
           data: {
-            recipients: openNewMessage ? ids : [isNumber ? obj : obj?.receiver?.id],
+            recipients: openNewMessage ? ids : [isNumber ? receiver.id : obj?.receiver?.id],
             message: message,
             file_uuid: file && !message ? file : null
           }
