@@ -1,8 +1,8 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
 import {Grid} from '@mui/material';
-import PrivateMessageSnippetsSkeleton from '../PrivateMessageSnippets';
-import PrivateMessageThreadSkeleton from '../PrivateMessageThread';
+import PrivateMessageSnippetsSkeleton from '../PrivateMessageSnippets/Skeleton';
+import PrivateMessageThreadSkeleton from '../PrivateMessageThread/Skeleton';
 import classNames from 'classnames';
 
 const PREFIX = 'SCPrivateMessageComponentSkeleton';
