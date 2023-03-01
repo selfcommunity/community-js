@@ -8,6 +8,7 @@ import Skeleton from '@mui/material/Skeleton';
 import Widget from '../Widget';
 import {useTheme} from '@mui/material';
 import {SCThemeType} from '@selfcommunity/react-core';
+import Icon from '@mui/material/Icon';
 
 const PREFIX = 'SCPrivateMessageSnippetItemSkeleton';
 
@@ -43,7 +44,7 @@ const Root = styled(Widget)(({theme}) => ({
 export default function PrivateMessageSnippetItemSkeleton(props): JSX.Element {
   const theme = useTheme<SCThemeType>();
   const m = (
-    <ListItem>
+    <ListItem secondaryAction={<Icon>more_vert</Icon>}>
       <ListItemAvatar>
         <Skeleton
           animation="wave"

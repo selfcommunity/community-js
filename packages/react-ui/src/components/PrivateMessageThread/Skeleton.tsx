@@ -18,16 +18,7 @@ const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  width: '600px',
-  height: '100%',
-  position: 'relative',
-  [theme.breakpoints.down('md')]: {
-    height: '100%',
-    maxHeight: '450px',
-    width: '345px'
-  }
-}));
+})(({theme}) => ({}));
 /**
  * > API documentation for the Community-JS PrivateMessage Thread Skeleton component. Learn about the available props and the CSS API.
 
