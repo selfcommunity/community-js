@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.98](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.97...@selfcommunity/react-ui@0.7.0-alpha.98) (2023-03-01)
+
+
+### Bug Fixes
+
+* fix pm component skeleton imports ([c38f643](https://github.com/selfcommunity/community-js/commit/c38f6435aecee1a1dad55a5219bcb0d35d47dbd3))
+
+
+
+
+
 # [0.7.0-alpha.97](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.96...@selfcommunity/react-ui@0.7.0-alpha.97) (2023-03-01)
 
 
