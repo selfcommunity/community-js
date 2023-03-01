@@ -355,7 +355,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
   if (!autoHide) {
     return (
       <Root {...rest} className={classNames(classes.root, className)}>
-        {threadObj && !newMessageThread ? renderThread() : renderNewOrNoMessageBox()}
+        {threadObj !== 'new' && !newMessageThread ? renderThread() : renderNewOrNoMessageBox()}
       </Root>
     );
   }
