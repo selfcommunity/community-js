@@ -136,6 +136,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
   const handleOpenNewMessage = () => {
     setOpenNewMessage(!openNewMessage);
     setObj('new');
+    onItemClick && onItemClick('new');
     isMobile && setLayout('mobile');
     id && setLayout('default');
   };
