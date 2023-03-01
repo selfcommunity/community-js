@@ -40,7 +40,7 @@ import SCFeedObjectSkeleton from './components/SCFeedObjectSkeleton';
 import SCFeedSkeleton from './components/SCFeedSkeleton';
 import MuiContainer from './components/MuiContainer';
 import SCLoyaltyProgramDetail from './components/SCLoyaltyProgramDetail';
-import SCPrivateMessagesTemplate from './components/SCPrivateMessagesTemplate';
+import SCPrivateMessageComponent from './components/SCPrivateMessageComponent';
 import MuiDialog from './components/MuiDialog';
 import SCCategories from './components/SCCategories';
 import MuiIcon from './components/MuiIcon';
@@ -72,6 +72,7 @@ import SCNotificationItem from './components/SCNotificationItem';
 import SCNotification from './components/SCNotification';
 import SCContributionNotification from './components/SCContributionNotification';
 import SCSnippetNotificationsSkeleton from './components/SCSnippetNotificationsSkeleton';
+import SCPrivateMessageComponentSkeleton from './components/SCPrivateMessageComponentSkeleton';
 
 /**
  * Style fragments - Imports - End
@@ -174,7 +175,7 @@ const theme = createTheme({
     SCNotificationsMenu,
     SCPollObject,
     SCPreviewMediaDocument,
-    SCPrivateMessagesTemplate,
+    SCPrivateMessageComponent,
     SCScrollContainer,
     SCSearchAutocomplete,
     SCSnippetNotifications,
@@ -187,7 +188,8 @@ const theme = createTheme({
     SCPrivateMessageSnippetItem,
     SCPrivateMessageSnippets,
     SCPrivateMessageThread,
-    SCPrivateMessageEditor
+    SCPrivateMessageEditor,
+    SCPrivateMessageComponentSkeleton
   },
   selfcommunity: {
     user: {

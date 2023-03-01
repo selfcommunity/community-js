@@ -103,6 +103,7 @@ import PrivateMessageActionDrawer, {
   PrivateMessageActionDrawerProps,
   PrivateMessageActionDrawerSkeleton
 } from './components/PrivateMessageActionDrawer';
+import PrivateMessageComponent, {PrivateMessageComponentProps, PrivateMessageComponentSkeleton} from './components/PrivateMessageComponent';
 /**
  * Constants
  */
@@ -282,6 +283,9 @@ export {
   PrivateMessageActionDrawer,
   PrivateMessageActionDrawerProps,
   PrivateMessageActionDrawerSkeleton,
+  PrivateMessageComponent,
+  PrivateMessageComponentProps,
+  PrivateMessageComponentSkeleton,
   ToastNotifications,
   ToastNotificationsProps,
   ToastNotificationsSkeleton,

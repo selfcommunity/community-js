@@ -3,12 +3,14 @@ import Widget from '../Widget';
 import List from '@mui/material/List';
 import {styled} from '@mui/material/styles';
 import PrivateMessageSnippetItemSkeleton from '../PrivateMessageSnippetItem/Skeleton';
-import {CardContent} from '@mui/material';
+import {Button, CardContent, Skeleton} from '@mui/material';
 
 const PREFIX = 'SCPrivateMessageSnippetsSkeleton';
 
 const classes = {
   root: `${PREFIX}-root`,
+  searchBar: `${PREFIX}-search-bar`,
+  button: `${PREFIX}-button`,
   list: `${PREFIX}-list`
 };
 
@@ -32,6 +34,8 @@ const Root = styled(Widget)(({theme}) => ({}));
  |Rule Name|Global class|Description|
  |---|---|---|
  |root|.SCPrivateMessageSnippetsSkeleton-root|Styles applied to the root element.|
+ |searchBar|.SCPrivateMessageSnippetsSkeleton-search-bar|Styles applied to the search bar element.|
+ |button|.SCPrivateMessageSnippetsSkeleton-button|Styles applied to the button element.|
  |list|.SCPrivateMessageSnippetsSkeleton-list|Styles applied to the list element.|
  *
  */
@@ -39,8 +43,12 @@ export default function PrivateMessageSnippetsSkeleton(props): JSX.Element {
   return (
     <Root className={classes.root} {...props}>
       <CardContent>
+        <Button variant="outlined" size="medium" disabled className={classes.button}>
+          <Skeleton height={20} width={100} variant={'rectangular'} />
+        </Button>
+        <Skeleton height={30} width={'100%'} variant={'rounded'} className={classes.searchBar} />
         <List className={classes.list}>
-          {[...Array(4)].map((category, index) => (
+          {[...Array(5)].map((category, index) => (
             <PrivateMessageSnippetItemSkeleton key={index} elevation={0} />
           ))}
         </List>

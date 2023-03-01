@@ -1,5 +1,5 @@
 import React from 'react';
-import {GenericSkeleton} from '@selfcommunity/react-ui';
+import {PrivateMessageComponentSkeleton} from '@selfcommunity/react-ui';
 import {styled} from '@mui/material/styles';
 
 const PREFIX = 'SCPrivateMessagesTemplateSkeleton';
@@ -7,7 +7,7 @@ const PREFIX = 'SCPrivateMessagesTemplateSkeleton';
 const classes = {
   root: `${PREFIX}-root`
 };
-const Root = styled(GenericSkeleton, {
+const Root = styled(PrivateMessageComponentSkeleton, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root

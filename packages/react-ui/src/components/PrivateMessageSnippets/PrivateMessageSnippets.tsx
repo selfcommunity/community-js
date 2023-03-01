@@ -108,7 +108,6 @@ export default function PrivateMessageSnippets(inProps: PrivateMessageSnippetsPr
   });
 
   const {snippets = [], loading, autoHide = false, className = null, threadObj = null, snippetActions, clearSearch, ...rest} = props;
-  console.log(threadObj);
 
   // STATE
   const [search, setSearch] = useState<string>('');
