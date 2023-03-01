@@ -115,6 +115,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
+  const isNumber = typeof obj === 'number';
 
   //  HANDLERS
   /**
@@ -302,7 +303,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
           url: Endpoints.SendMessage.url(),
           method: Endpoints.SendMessage.method,
           data: {
-            recipients: openNewMessage ? ids : [obj.receiver.id],
+            recipients: openNewMessage ? ids : [isNumber ? obj : obj?.receiver?.id],
             message: message,
             file_uuid: file && !message ? file : null
           }
@@ -331,13 +332,13 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
    * Fetches thread
    */
   function fetchThread() {
-    //const _threadObjId = isNumber ? threadObj : threadObj?.id;
+    const _threadObjId = isNumber ? obj : obj?.id;
     http
       .request({
         url: Endpoints.GetAThread.url(),
         method: Endpoints.GetAThread.method,
         params: {
-          thread: obj.id
+          thread: _threadObjId
         }
       })
       .then((res: HttpResponse<any>) => {
@@ -352,7 +353,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
           setNewMessageThread(false);
         } else {
           setNewMessageThread(true);
-          setRecipients(obj.receiver.id);
+          setRecipients(obj?.receiver?.id);
         }
         setLoadingMessageObjs(false);
       })
