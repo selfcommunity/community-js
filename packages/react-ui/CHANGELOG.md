@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.104](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.103...@selfcommunity/react-ui@0.7.0-alpha.104) (2023-03-02)
+
+
+### Bug Fixes
+
+* fix threadObj type check ([345a3c6](https://github.com/selfcommunity/community-js/commit/345a3c68b51bc6608c9dcd635673958702c3f375))
+
+
+
+
+
 # [0.7.0-alpha.103](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.102...@selfcommunity/react-ui@0.7.0-alpha.103) (2023-03-02)
 
 
