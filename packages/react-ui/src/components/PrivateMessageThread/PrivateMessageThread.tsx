@@ -10,7 +10,7 @@ import {
   SCUserContext,
   SCUserContextType
 } from '@selfcommunity/react-core';
-import {SCPrivateMessageFileType, SCPrivateMessageThreadType} from '@selfcommunity/types';
+import {SCPrivateMessageFileType, SCPrivateMessageStatusType, SCPrivateMessageThreadType} from '@selfcommunity/types';
 import PrivateMessageThreadItem from '../PrivateMessageThreadItem';
 import _ from 'lodash';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
@@ -89,11 +89,6 @@ export interface PrivateMessageThreadProps {
    * Opens new message screen
    * @default false
    */
-  openNewMessage?: boolean;
-  /**
-   * Opens new message screen
-   * @default false
-   */
   newMessageThread?: boolean;
   /**
    * Functions called on thread actions
@@ -147,19 +142,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
     props: inProps,
     name: PREFIX
   });
-  const {
-    userObj,
-    messages,
-    loadingMessageObjs,
-    receiver,
-    recipients,
-    openNewMessage,
-    threadCallbacks,
-    newMessageThread,
-    autoHide,
-    className,
-    ...rest
-  } = props;
+  const {userObj, messages, loadingMessageObjs, receiver, recipients, threadCallbacks, newMessageThread, autoHide, className, ...rest} = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
@@ -175,6 +158,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
   const [followers, setFollowers] = useState<any[]>([]);
   const [isFollower, setIsFollower] = useState<boolean>(false);
   const isObj = typeof userObj === 'object';
+  const isNew = userObj && userObj === SCPrivateMessageStatusType.NEW;
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
 
   // INTL
@@ -239,8 +223,8 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
    * Fetches followers when a new message is selected
    */
   useEffect(() => {
-    openNewMessage && fetchFollowers();
-  }, [openNewMessage, authUserId]);
+    isNew && fetchFollowers();
+  }, [isNew, authUserId]);
 
   /**
    * Checks is thread receiver is a user follower
@@ -294,7 +278,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
   function renderNewOrNoMessageBox() {
     return (
       <CardContent>
-        {openNewMessage || newMessageThread || typeof userObj === 'string' ? (
+        {isNew || newMessageThread ? (
           <>
             <Box className={classes.newMessageHeader}>
               <Box className={classes.newMessageHeaderContent}>
@@ -355,7 +339,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
   if (!autoHide) {
     return (
       <Root {...rest} className={classNames(classes.root, className)}>
-        {userObj !== null && typeof userObj !== 'string' && !newMessageThread ? renderThread() : renderNewOrNoMessageBox()}
+        {userObj !== null && !isNew && !newMessageThread ? renderThread() : renderNewOrNoMessageBox()}
       </Root>
     );
   }
