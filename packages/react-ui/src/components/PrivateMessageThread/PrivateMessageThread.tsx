@@ -174,7 +174,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
   const [isHovered, setIsHovered] = useState({});
   const [followers, setFollowers] = useState<any[]>([]);
   const [isFollower, setIsFollower] = useState<boolean>(false);
-  const isNumber = typeof threadObj === 'number';
+  const isObj = typeof threadObj === 'object';
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
 
   // INTL
@@ -282,7 +282,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
             </li>
           ))}
         </List>
-        <PrivateMessageEditor send={threadCallbacks.onMessageSend} autoHide={!isFollower} onThreadChangeId={isNumber ? threadObj : threadObj?.id} />
+        <PrivateMessageEditor send={threadCallbacks.onMessageSend} autoHide={!isFollower} onThreadChangeId={isObj ? threadObj.id : threadObj} />
       </CardContent>
     );
   }
@@ -309,7 +309,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
                   limitTags={3}
                   freeSolo
                   options={followers}
-                  value={newMessageThread ? (isNumber ? threadObj : threadObj?.receiver.id) : recipients}
+                  value={newMessageThread ? (isObj ? threadObj.receiver.id : threadObj) : recipients}
                   getOptionLabel={(option) => (option ? option.username : '...')}
                   renderInput={(params) => (
                     <TextField
