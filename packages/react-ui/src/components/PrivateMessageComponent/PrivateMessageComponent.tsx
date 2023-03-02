@@ -6,7 +6,13 @@ import {SCThemeType, SCUserContext, SCUserContextType, UserUtils} from '@selfcom
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import {Endpoints, http, HttpResponse, PrivateMessageService} from '@selfcommunity/api-services';
-import {SCNotificationTopicType, SCNotificationTypologyType, SCPrivateMessageFileType, SCPrivateMessageThreadType} from '@selfcommunity/types';
+import {
+  SCNotificationTopicType,
+  SCNotificationTypologyType,
+  SCPrivateMessageFileType,
+  SCPrivateMessageStatusType,
+  SCPrivateMessageThreadType
+} from '@selfcommunity/types';
 import PubSub from 'pubsub-js';
 import PrivateMessageThread from '../PrivateMessageThread';
 import PrivateMessageSnippets from '../PrivateMessageSnippets';
@@ -123,8 +129,8 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
    * @param item
    */
   const handleThreadOpening = (item) => {
-    updateSnippetsParams(item.id, 'seen');
-    onItemClick && onItemClick(item.id);
+    updateSnippetsParams(item.receiver.id, 'seen');
+    onItemClick && onItemClick(item.receiver.id);
     setObj(item);
     setOpenNewMessage(false);
     isMobile && setLayout('mobile');
@@ -135,8 +141,8 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
    */
   const handleOpenNewMessage = () => {
     setOpenNewMessage(!openNewMessage);
-    setObj('new');
-    onItemClick && onItemClick('new');
+    setObj(SCPrivateMessageStatusType.NEW);
+    onItemClick && onItemClick(SCPrivateMessageStatusType.NEW);
     isMobile && setLayout('mobile');
     id && setLayout('default');
   };
@@ -213,13 +219,13 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
 
   /**
    * Updates snippet headline and status or just snippet status
-   * @param id
+   * @param receiverId
    * @param status
    * @param headline
    */
-  function updateSnippetsParams(id: number, status: string, headline?: string) {
+  function updateSnippetsParams(receiverId: number, status: string, headline?: string) {
     const newSnippets = [...snippets];
-    const index = newSnippets.findIndex((s) => s.id === id);
+    const index = newSnippets.findIndex((s) => s.receiver.id === receiverId);
     if (index !== -1) {
       newSnippets[index].headline = headline ?? newSnippets[index].headline;
       newSnippets[index].thread_status = status;
@@ -239,6 +245,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
       const index = newSnippets.findIndex((s) => s.receiver.id === message.receiver.id);
       if (index !== -1) {
         newSnippets[index].headline = message.message;
+        newSnippets[index].thread_status = message.thread_status;
         setSnippets(newSnippets);
       }
       //a new snippets gets added to the list
@@ -335,13 +342,13 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
    * Fetches thread
    */
   function fetchThread() {
-    const _threadObjId = isNumber ? obj : obj?.id;
+    const _userObjId = isNumber ? obj : obj?.receiver?.id;
     http
       .request({
         url: Endpoints.GetAThread.url(),
         method: Endpoints.GetAThread.method,
         params: {
-          thread: _threadObjId
+          user: _userObjId
         }
       })
       .then((res: HttpResponse<any>) => {
@@ -356,7 +363,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
           setNewMessageThread(false);
         } else {
           setNewMessageThread(true);
-          setRecipients(obj?.receiver?.id);
+          setRecipients(_userObjId);
         }
         setLoadingMessageObjs(false);
       })
@@ -404,7 +411,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
    */
   const subscriber = (msg, data) => {
     const res = data.data;
-    updateSnippetsParams(res.thread_id, res.notification_obj.snippet.thread_status, res.notification_obj.snippet.headline);
+    updateSnippetsParams(res.notification_obj.message.sender.id, res.notification_obj.snippet.thread_status, res.notification_obj.snippet.headline);
     const newMessages = [...messageObjs];
     const index = newMessages.findIndex((m) => m.sender.id === res.notification_obj.message.sender.id);
     if (index !== -1) {
@@ -438,7 +445,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
             onNewMessageClick: handleOpenNewMessage,
             onMenuItemClick: handleOpenDeleteThreadDialog
           }}
-          threadObj={obj ?? null}
+          userObj={obj ?? null}
           clearSearch={clear}
         />
         {openDeleteThreadDialog && (
@@ -472,7 +479,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
         <PrivateMessageThread
           receiver={receiver}
           recipients={recipients}
-          threadObj={obj ?? null}
+          userObj={obj ?? null}
           loadingMessageObjs={loadingMessageObjs}
           messages={messageObjs}
           openNewMessage={openNewMessage}

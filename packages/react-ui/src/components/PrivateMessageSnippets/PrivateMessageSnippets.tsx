@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Button, CardContent, Icon, IconButton, List, TextField} from '@mui/material';
 import Widget from '../Widget';
-import {SCPrivateMessageSnippetType, SCPrivateMessageThreadType} from '@selfcommunity/types';
+import {SCPrivateMessageSnippetType, SCPrivateMessageStatusType} from '@selfcommunity/types';
 import PrivateMessageSnippetsSkeleton from './Skeleton';
 import PrivateMessageSnippetItem from '../PrivateMessageSnippetItem';
 import classNames from 'classnames';
@@ -67,10 +67,10 @@ export interface PrivateMessageSnippetsProps {
    */
   [p: string]: any;
   /**
-   * Clicked thread object
+   * thread user object
    * @default null
    */
-  threadObj?: any;
+  userObj?: any;
 }
 /**
  *
@@ -107,11 +107,11 @@ export default function PrivateMessageSnippets(inProps: PrivateMessageSnippetsPr
     name: PREFIX
   });
 
-  const {snippets = [], loading, autoHide = false, className = null, threadObj = null, snippetActions, clearSearch, ...rest} = props;
+  const {snippets = [], loading, autoHide = false, className = null, userObj = null, snippetActions, clearSearch, ...rest} = props;
 
   // STATE
   const [search, setSearch] = useState<string>('');
-  const isObj = typeof threadObj === 'object';
+  const isObj = typeof userObj === 'object';
 
   // INTL
   const intl = useIntl();
@@ -196,10 +196,7 @@ export default function PrivateMessageSnippets(inProps: PrivateMessageSnippetsPr
                     message={message}
                     key={message.id}
                     actions={{onItemClick: () => handleOpenThread(message), onMenuClick: () => handleDeleteConversation(message)}}
-                    selected={
-                      threadObj !== 'new' &&
-                      (message.id === (isObj ? threadObj?.id : threadObj) || message.receiver.id === (isObj ? threadObj?.receiver.id : threadObj))
-                    }
+                    selected={userObj !== SCPrivateMessageStatusType.NEW && message.receiver.id === (isObj ? userObj?.receiver?.id : userObj)}
                   />
                 ))}
               </List>

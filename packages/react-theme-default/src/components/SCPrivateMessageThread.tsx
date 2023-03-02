@@ -10,9 +10,9 @@ const Component = {
         maxHeight: `calc(100% - ${theme.spacing(10)})`,
         overflow: 'auto',
         '& .MuiList-root': {
-          [theme.breakpoints.down('md')]: {
-            marginTop: theme.spacing(2)
-          },
+          // [theme.breakpoints.down('md')]: {
+          //   marginTop: theme.spacing(2)
+          // },
           '& .MuiListItem-root': {
             '&.SCPrivateMessageThread-receiver': {
               backgroundColor: theme.palette.common.white,
