@@ -174,6 +174,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
     setLayout('default');
     id && setLayout('mobile');
     setOpenNewMessage(false);
+    setObj(null);
   };
   /**
    * Handles snippets list update on message changes inside thread component
