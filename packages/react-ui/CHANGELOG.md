@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.105](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.104...@selfcommunity/react-ui@0.7.0-alpha.105) (2023-03-02)
+
+
+### Bug Fixes
+
+* fix newMessage opening ([c4f24c3](https://github.com/selfcommunity/community-js/commit/c4f24c34460ecd49b3d57edc4d588c82a1496cc9))
+
+
+
+
+
 # [0.7.0-alpha.104](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.103...@selfcommunity/react-ui@0.7.0-alpha.104) (2023-03-02)
 
 
