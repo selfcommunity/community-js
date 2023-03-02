@@ -175,6 +175,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
     id && setLayout('mobile');
     setOpenNewMessage(false);
     setObj(null);
+    onItemClick && onItemClick(null);
   };
   /**
    * Handles snippets list update on message changes inside thread component

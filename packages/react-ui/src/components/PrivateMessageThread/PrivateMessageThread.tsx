@@ -294,7 +294,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
   function renderNewOrNoMessageBox() {
     return (
       <CardContent>
-        {openNewMessage || newMessageThread ? (
+        {openNewMessage || newMessageThread || typeof threadObj === 'string' ? (
           <>
             <Box className={classes.newMessageHeader}>
               <Box className={classes.newMessageHeaderContent}>
@@ -348,8 +348,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
   if (loadingMessageObjs && threadObj) {
     return <PrivateMessageThreadSkeleton />;
   }
-  console.log(threadObj !== null && typeof threadObj !== 'string' && !newMessageThread, 'condizione');
-  console.log(threadObj, typeof threadObj, 'threadObj');
+
   /**
    * Renders the component (if not hidden by autoHide prop)
    */
