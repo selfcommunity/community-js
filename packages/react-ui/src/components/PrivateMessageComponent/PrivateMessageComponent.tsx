@@ -6,7 +6,13 @@ import {SCThemeType, SCUserContext, SCUserContextType, UserUtils} from '@selfcom
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import {Endpoints, http, HttpResponse, PrivateMessageService} from '@selfcommunity/api-services';
-import {SCNotificationTopicType, SCNotificationTypologyType, SCPrivateMessageFileType, SCPrivateMessageThreadType} from '@selfcommunity/types';
+import {
+  SCNotificationTopicType,
+  SCNotificationTypologyType,
+  SCPrivateMessageFileType,
+  SCPrivateMessageStatusType,
+  SCPrivateMessageThreadType
+} from '@selfcommunity/types';
 import PubSub from 'pubsub-js';
 import PrivateMessageThread from '../PrivateMessageThread';
 import PrivateMessageSnippets from '../PrivateMessageSnippets';
@@ -135,8 +141,8 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
    */
   const handleOpenNewMessage = () => {
     setOpenNewMessage(!openNewMessage);
-    setObj('new');
-    onItemClick && onItemClick('new');
+    setObj(SCPrivateMessageStatusType.NEW);
+    onItemClick && onItemClick(SCPrivateMessageStatusType.NEW);
     isMobile && setLayout('mobile');
     id && setLayout('default');
   };

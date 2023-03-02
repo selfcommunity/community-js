@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Button, CardContent, Icon, IconButton, List, TextField} from '@mui/material';
 import Widget from '../Widget';
-import {SCPrivateMessageSnippetType, SCPrivateMessageThreadType} from '@selfcommunity/types';
+import {SCPrivateMessageSnippetType, SCPrivateMessageStatusType} from '@selfcommunity/types';
 import PrivateMessageSnippetsSkeleton from './Skeleton';
 import PrivateMessageSnippetItem from '../PrivateMessageSnippetItem';
 import classNames from 'classnames';
@@ -197,7 +197,7 @@ export default function PrivateMessageSnippets(inProps: PrivateMessageSnippetsPr
                     key={message.id}
                     actions={{onItemClick: () => handleOpenThread(message), onMenuClick: () => handleDeleteConversation(message)}}
                     selected={
-                      threadObj !== 'new' &&
+                      threadObj !== SCPrivateMessageStatusType.NEW &&
                       (message.id === (isObj ? threadObj?.id : threadObj) || message.receiver.id === (isObj ? threadObj?.receiver.id : threadObj))
                     }
                   />
