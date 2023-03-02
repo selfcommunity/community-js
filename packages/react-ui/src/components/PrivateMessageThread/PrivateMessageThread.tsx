@@ -58,7 +58,7 @@ export interface PrivateMessageThreadProps {
    * Thread object or thread id
    * default null
    */
-  threadObj?: any;
+  userObj?: any;
   /**
    * Thread receiver
    */
@@ -148,7 +148,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
     name: PREFIX
   });
   const {
-    threadObj,
+    userObj,
     messages,
     loadingMessageObjs,
     receiver,
@@ -174,7 +174,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
   const [isHovered, setIsHovered] = useState({});
   const [followers, setFollowers] = useState<any[]>([]);
   const [isFollower, setIsFollower] = useState<boolean>(false);
-  const isObj = typeof threadObj === 'object';
+  const isObj = typeof userObj === 'object';
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
 
   // INTL
@@ -282,7 +282,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
             </li>
           ))}
         </List>
-        <PrivateMessageEditor send={threadCallbacks.onMessageSend} autoHide={!isFollower} onThreadChangeId={isObj ? threadObj.id : threadObj} />
+        <PrivateMessageEditor send={threadCallbacks.onMessageSend} autoHide={!isFollower} onThreadChangeId={isObj ? userObj.receiver.id : userObj} />
       </CardContent>
     );
   }
@@ -294,7 +294,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
   function renderNewOrNoMessageBox() {
     return (
       <CardContent>
-        {openNewMessage || newMessageThread || typeof threadObj === 'string' ? (
+        {openNewMessage || newMessageThread || typeof userObj === 'string' ? (
           <>
             <Box className={classes.newMessageHeader}>
               <Box className={classes.newMessageHeaderContent}>
@@ -309,7 +309,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
                   limitTags={3}
                   freeSolo
                   options={followers}
-                  value={newMessageThread ? (isObj ? threadObj.receiver.id : threadObj) : recipients}
+                  value={newMessageThread ? (isObj ? userObj.receiver.id : userObj) : recipients}
                   getOptionLabel={(option) => (option ? option.username : '...')}
                   renderInput={(params) => (
                     <TextField
@@ -345,7 +345,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
   if (!authUserId) {
     return <HiddenPlaceholder />;
   }
-  if (loadingMessageObjs && threadObj) {
+  if (loadingMessageObjs && userObj) {
     return <PrivateMessageThreadSkeleton />;
   }
 
@@ -355,7 +355,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
   if (!autoHide) {
     return (
       <Root {...rest} className={classNames(classes.root, className)}>
-        {threadObj !== null && typeof threadObj !== 'string' && !newMessageThread ? renderThread() : renderNewOrNoMessageBox()}
+        {userObj !== null && typeof userObj !== 'string' && !newMessageThread ? renderThread() : renderNewOrNoMessageBox()}
       </Root>
     );
   }
