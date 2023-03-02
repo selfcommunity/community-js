@@ -348,7 +348,8 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
   if (loadingMessageObjs && threadObj) {
     return <PrivateMessageThreadSkeleton />;
   }
-
+  console.log(threadObj !== null && typeof threadObj !== 'string' && !newMessageThread, 'condizione');
+  console.log(threadObj, typeof threadObj, 'threadObj');
   /**
    * Renders the component (if not hidden by autoHide prop)
    */
