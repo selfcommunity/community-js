@@ -58,7 +58,7 @@ export interface PrivateMessageThreadProps {
    * Thread object or thread id
    * default null
    */
-  threadObj?: SCPrivateMessageThreadType | any;
+  threadObj?: any;
   /**
    * Thread receiver
    */
@@ -342,7 +342,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
   }
 
   // Anonymous
-  if (!scUserContext.user) {
+  if (!authUserId) {
     return <HiddenPlaceholder />;
   }
   if (loadingMessageObjs && threadObj) {
@@ -355,7 +355,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
   if (!autoHide) {
     return (
       <Root {...rest} className={classNames(classes.root, className)}>
-        {threadObj !== 'new' && !newMessageThread ? renderThread() : renderNewOrNoMessageBox()}
+        {threadObj !== null && typeof threadObj !== 'string' && !newMessageThread ? renderThread() : renderNewOrNoMessageBox()}
       </Root>
     );
   }

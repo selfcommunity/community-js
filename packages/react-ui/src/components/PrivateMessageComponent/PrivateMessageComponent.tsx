@@ -508,7 +508,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
   /**
    * Renders the component (if not hidden by autoHide prop)
    */
-  if (!scUserContext.user) {
+  if (!authUserId) {
     return <HiddenPlaceholder />;
   }
   if (!autoHide) {
