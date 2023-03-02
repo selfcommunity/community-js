@@ -111,6 +111,7 @@ export default function PrivateMessageSnippets(inProps: PrivateMessageSnippetsPr
 
   // STATE
   const [search, setSearch] = useState<string>('');
+  const isObj = typeof threadObj === 'object';
 
   // INTL
   const intl = useIntl();
@@ -122,7 +123,6 @@ export default function PrivateMessageSnippets(inProps: PrivateMessageSnippetsPr
     }
     return el.receiver.username.toLowerCase().includes(search);
   });
-  const isNumber = typeof threadObj === 'number';
 
   //HANDLERS
   const handleChange = (event) => {
@@ -198,8 +198,7 @@ export default function PrivateMessageSnippets(inProps: PrivateMessageSnippetsPr
                     actions={{onItemClick: () => handleOpenThread(message), onMenuClick: () => handleDeleteConversation(message)}}
                     selected={
                       threadObj !== 'new' &&
-                      (message.id === (isNumber ? threadObj : threadObj?.id) ||
-                        message.receiver.id === (isNumber ? threadObj : threadObj?.receiver.id))
+                      (message.id === (isObj ? threadObj?.id : threadObj) || message.receiver.id === (isObj ? threadObj?.receiver.id : threadObj))
                     }
                   />
                 ))}
