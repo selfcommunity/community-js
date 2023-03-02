@@ -137,6 +137,13 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
     id && setLayout('default');
   };
   /**
+   * Handles thread closing after delete
+   */
+  const handleThreadClosing = () => {
+    setObj(null);
+    onItemClick && onItemClick(null);
+  };
+  /**
    * Handles new message opening on button action click
    */
   const handleOpenNewMessage = () => {
@@ -264,7 +271,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
         }
         id && setLayout('mobile');
         setOpenDeleteThreadDialog(false);
-        deletingThread === obj?.id && setObj(null);
+        deletingThread === obj?.id && handleThreadClosing();
         const _snippets = snippets.filter((s) => s.id !== deletingThread);
         setSnippets(_snippets);
         setClear(true);
@@ -342,7 +349,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
    * Fetches thread
    */
   function fetchThread() {
-    const _userObjId = isNumber ? obj : obj?.receiver?.id;
+    const _userObjId = isNumber ? obj : obj?.receiver?.id !== authUserId ? obj?.receiver?.id : obj?.sender?.id;
     http
       .request({
         url: Endpoints.GetAThread.url(),
@@ -355,7 +362,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
         const data = res.data;
         setMessageObjs(data.results);
         if (data.results.length) {
-          if (data.results[0].receiver.id !== scUserContext.user.id) {
+          if (data.results[0].receiver.id !== authUserId) {
             setReceiver(data.results[0].receiver);
           } else {
             setReceiver(data.results[0].sender);
@@ -482,7 +489,6 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
           userObj={obj ?? null}
           loadingMessageObjs={loadingMessageObjs}
           messages={messageObjs}
-          openNewMessage={openNewMessage}
           newMessageThread={newMessageThread}
           threadCallbacks={{
             onMessageBack: handleMessageBack,
