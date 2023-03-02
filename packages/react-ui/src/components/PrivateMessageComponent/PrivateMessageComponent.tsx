@@ -116,6 +116,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
   const mobileThreadView = (layout === 'mobile' && !id) || (layout === 'default' && id);
   const [newMessageThread, setNewMessageThread] = useState<boolean>(false);
   const {enqueueSnackbar, closeSnackbar} = useSnackbar();
+  const isNew = obj && obj === SCPrivateMessageStatusType.NEW;
   // REFS
   const refreshSubscription = useRef(null);
   // CONTEXT
@@ -320,7 +321,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
           url: Endpoints.SendMessage.url(),
           method: Endpoints.SendMessage.method,
           data: {
-            recipients: openNewMessage ? ids : [isNumber ? receiver.id : obj?.receiver?.id],
+            recipients: openNewMessage || isNew ? ids : [isNumber ? receiver.id : obj?.receiver?.id],
             message: message,
             file_uuid: file && !message ? file : null
           }
