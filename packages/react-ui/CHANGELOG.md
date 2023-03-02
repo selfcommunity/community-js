@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.106](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.105...@selfcommunity/react-ui@0.7.0-alpha.106) (2023-03-02)
+
+
+### Bug Fixes
+
+* changed string with type for new message ([e9efebf](https://github.com/selfcommunity/community-js/commit/e9efebf9bdb1227333659b6b70e768d4d87fa9a1))
+* fetch thread with user id ([d071809](https://github.com/selfcommunity/community-js/commit/d07180965e4ff5b8b1cb321027824b71d5fad8dc))
+
+
+
+
+
 # [0.7.0-alpha.105](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.104...@selfcommunity/react-ui@0.7.0-alpha.105) (2023-03-02)
 
 
