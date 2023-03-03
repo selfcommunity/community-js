@@ -148,6 +148,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
    * Handles new message opening on button action click
    */
   const handleOpenNewMessage = () => {
+    console.log('new message open');
     setOpenNewMessage(!openNewMessage);
     setObj(SCPrivateMessageStatusType.NEW);
     onItemClick && onItemClick(SCPrivateMessageStatusType.NEW);
@@ -310,6 +311,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
    * @param file
    */
   function handleSend(message: string, file: SCPrivateMessageFileType) {
+    console.log(openNewMessage, ids, 'send');
     if (UserUtils.isBlocked(scUserContext.user)) {
       enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
         variant: 'warning',
