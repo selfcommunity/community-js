@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.110](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.109...@selfcommunity/react-ui@0.7.0-alpha.110) (2023-03-03)
+
+
+### Bug Fixes
+
+* added new prop to pm component ([90663df](https://github.com/selfcommunity/community-js/commit/90663df58cb21c2b5467dd7841fa01240ccf759e))
+
+
+
+
+
 # [0.7.0-alpha.109](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.108...@selfcommunity/react-ui@0.7.0-alpha.109) (2023-03-03)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
