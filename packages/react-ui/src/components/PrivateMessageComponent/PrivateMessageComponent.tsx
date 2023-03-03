@@ -48,6 +48,11 @@ export interface PrivateMessageComponentProps {
    */
   onItemClick?: (id) => void;
   /**
+   * Handler on message back
+   * @default null
+   */
+  onMessageBack?: () => void;
+  /**
    * Overrides or extends the styles applied to the component.
    * @default null
    */
@@ -93,7 +98,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
     props: inProps,
     name: PREFIX
   });
-  const {id = null, autoHide = false, className = null, onItemClick = null, ...rest} = props;
+  const {id = null, autoHide = false, className = null, onItemClick = null, onMessageBack = null, ...rest} = props;
 
   // STATE
   const theme = useTheme<SCThemeType>();
@@ -123,7 +128,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
   const scUserContext: SCUserContextType = useContext(SCUserContext);
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
   const isNumber = typeof obj === 'number';
-
+  console.log(openNewMessage);
   //  HANDLERS
   /**
    * Handles thread opening on click
@@ -148,7 +153,6 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
    * Handles new message opening on button action click
    */
   const handleOpenNewMessage = () => {
-    console.log('new message open');
     setOpenNewMessage(!openNewMessage);
     setObj(SCPrivateMessageStatusType.NEW);
     onItemClick && onItemClick(SCPrivateMessageStatusType.NEW);
@@ -190,7 +194,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
     id && setLayout('mobile');
     setOpenNewMessage(false);
     setObj(null);
-    onItemClick && onItemClick(null);
+    onMessageBack && onMessageBack();
   };
   /**
    * Handles snippets list update on message changes inside thread component
