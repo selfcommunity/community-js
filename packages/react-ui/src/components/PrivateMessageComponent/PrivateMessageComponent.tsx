@@ -110,9 +110,10 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [layout, setLayout] = useState('default');
   const [obj, setObj] = useState<any>(id ?? null);
+  const isNew = obj && obj === SCPrivateMessageStatusType.NEW;
   const [deletingThread, setDeletingThread] = useState(null);
   const [deletingMsg, setDeletingMsg] = useState(null);
-  const [openNewMessage, setOpenNewMessage] = useState<boolean>(false);
+  const [openNewMessage, setOpenNewMessage] = useState<boolean>(isNew ?? false);
   const [openDeleteThreadDialog, setOpenDeleteThreadDialog] = useState<boolean>(false);
   const [openDeleteMessageDialog, setOpenDeleteMessageDialog] = useState<boolean>(false);
   const [receiver, setReceiver] = useState(null);
@@ -121,7 +122,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
   const mobileThreadView = (layout === 'mobile' && !id) || (layout === 'default' && id);
   const [newMessageThread, setNewMessageThread] = useState<boolean>(false);
   const {enqueueSnackbar, closeSnackbar} = useSnackbar();
-  const isNew = obj && obj === SCPrivateMessageStatusType.NEW;
+
   // REFS
   const refreshSubscription = useRef(null);
   // CONTEXT
@@ -315,7 +316,6 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
    * @param file
    */
   function handleSend(message: string, file: SCPrivateMessageFileType) {
-    console.log(openNewMessage, ids, 'send');
     if (UserUtils.isBlocked(scUserContext.user)) {
       enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
         variant: 'warning',
