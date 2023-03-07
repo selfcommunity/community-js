@@ -1,14 +1,11 @@
 import React from 'react';
-import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemText from '@mui/material/ListItemText';
 import {styled} from '@mui/material/styles';
 import Skeleton from '@mui/material/Skeleton';
-import Widget from '../Widget';
 import {useTheme} from '@mui/material';
 import {SCThemeType} from '@selfcommunity/react-core';
-import Icon from '@mui/material/Icon';
 
 const PREFIX = 'SCPrivateMessageSnippetItemSkeleton';
 
@@ -17,7 +14,7 @@ const classes = {
   list: `${PREFIX}-list`
 };
 
-const Root = styled(Widget)(({theme}) => ({
+const Root = styled(ListItem)(({theme}) => ({
   maxWidth: 700
 }));
 /**
@@ -43,8 +40,8 @@ const Root = styled(Widget)(({theme}) => ({
  */
 export default function PrivateMessageSnippetItemSkeleton(props): JSX.Element {
   const theme = useTheme<SCThemeType>();
-  const m = (
-    <ListItem secondaryAction={<Icon>more_vert</Icon>}>
+  return (
+    <Root className={classes.root} {...props} secondaryAction={<Skeleton animation="wave" height={30} width={5} />}>
       <ListItemAvatar>
         <Skeleton
           animation="wave"
@@ -57,11 +54,6 @@ export default function PrivateMessageSnippetItemSkeleton(props): JSX.Element {
         primary={<Skeleton animation="wave" height={10} width={120} style={{marginBottom: 10}} />}
         secondary={<Skeleton animation="wave" height={10} width={70} style={{marginBottom: 10}} />}
       />
-    </ListItem>
-  );
-  return (
-    <Root className={classes.root} {...props}>
-      <List>{m}</List>
     </Root>
   );
 }

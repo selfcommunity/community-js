@@ -73,6 +73,7 @@ import SCNotification from './components/SCNotification';
 import SCContributionNotification from './components/SCContributionNotification';
 import SCSnippetNotificationsSkeleton from './components/SCSnippetNotificationsSkeleton';
 import SCPrivateMessageComponentSkeleton from './components/SCPrivateMessageComponentSkeleton';
+import SCLightbox from './components/SCLightbox';
 
 /**
  * Style fragments - Imports - End
@@ -166,6 +167,7 @@ const theme = createTheme({
     SCFeedRelevantActivities,
     SCFeedSkeleton,
     SCInlineComposer,
+    SCLightbox,
     SCLoyaltyProgram,
     SCLoyaltyProgramDetail,
     SCNavigationToolbar,

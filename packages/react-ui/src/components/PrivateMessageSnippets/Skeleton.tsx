@@ -3,7 +3,7 @@ import Widget from '../Widget';
 import List from '@mui/material/List';
 import {styled} from '@mui/material/styles';
 import PrivateMessageSnippetItemSkeleton from '../PrivateMessageSnippetItem/Skeleton';
-import {Button, CardContent, Skeleton} from '@mui/material';
+import {Button, CardContent, Skeleton, Stack} from '@mui/material';
 
 const PREFIX = 'SCPrivateMessageSnippetsSkeleton';
 
@@ -43,12 +43,14 @@ export default function PrivateMessageSnippetsSkeleton(props): JSX.Element {
   return (
     <Root className={classes.root} {...props}>
       <CardContent>
-        <Button variant="outlined" size="medium" disabled className={classes.button}>
-          <Skeleton height={20} width={100} variant={'rectangular'} />
-        </Button>
-        <Skeleton height={30} width={'100%'} variant={'rounded'} className={classes.searchBar} />
+        <Stack direction="column" justifyContent="center" spacing={1} alignItems="center">
+          <Button variant="outlined" size="medium" disabled className={classes.button}>
+            <Skeleton height={20} width={100} variant={'rectangular'} />
+          </Button>
+          <Skeleton height={25} width={'100%'} variant={'rounded'} className={classes.searchBar} />
+        </Stack>
         <List className={classes.list}>
-          {[...Array(5)].map((category, index) => (
+          {[...Array(6)].map((category, index) => (
             <PrivateMessageSnippetItemSkeleton key={index} elevation={0} />
           ))}
         </List>
