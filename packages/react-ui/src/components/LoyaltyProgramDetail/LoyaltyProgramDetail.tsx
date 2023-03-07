@@ -32,7 +32,6 @@ const PREFIX = 'SCLoyaltyProgramDetail';
 const classes = {
   root: `${PREFIX}-root`,
   header: `${PREFIX}-header`,
-  intro: `${PREFIX}-intro`,
   icon: `${PREFIX}-icon`,
   card: `${PREFIX}-card`,
   title: `${PREFIX}-title`,
@@ -42,40 +41,24 @@ const classes = {
   chip: `${PREFIX}-chip`
 };
 
-const Root = styled(Card, {
+const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
   boxShadow: 'none',
-  margin: 2,
   [`& .${classes.header}`]: {
     backgroundColor: theme.palette.grey['A200'],
     marginBottom: '20px'
   },
-  [`& .${classes.intro}`]: {
-    display: 'flex',
-    alignItems: 'center',
-    marginBottom: '20px'
-  },
-  [`& .${classes.points}`]: {
-    marginLeft: '16px'
-  },
   [`& .${classes.title}`]: {
     fontWeight: 'bold'
-  },
-  [`& .${classes.icon}`]: {
-    backgroundColor: theme.palette.grey['A200'],
-    padding: 5,
-    borderRadius: '5px',
-    '& .MuiSvgIcon-root ': {
-      fontSize: '2rem'
-    }
   },
   [`& .${classes.card}`]: {
     height: '100%',
     flexDirection: 'column',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    margin: 1
   },
   [`& .${classes.action}`]: {
     pointerEvents: 'all',
@@ -167,86 +150,6 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
   /**
    * Renders loyalty program detail
    */
-  const d = (
-    <React.Fragment>
-      {cardType && (
-        <Typography component="h3" align="left" className={classes.header}>
-          <FormattedMessage id="ui.loyaltyProgram.lp" defaultMessage="ui.loyaltyProgram.lp" />
-        </Typography>
-      )}
-      <Box className={classes.intro}>
-        <Box className={classes.icon}>
-          <Icon>card_giftcard</Icon>
-        </Box>
-        {points && (
-          <Box className={classes.points}>
-            <Chip label={`${intl.formatMessage(messages.userPoints, {total: points})}`} />
-          </Box>
-        )}
-      </Box>
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <Typography variant="h6">
-            <FormattedMessage id="ui.loyaltyProgramDetail.community" defaultMessage="ui.loyaltyProgramDetail.community" />
-          </Typography>
-          <Typography component="div">
-            <FormattedMessage id="ui.loyaltyProgramDetail.description" defaultMessage="ui.loyaltyProgramDetail.description" />
-          </Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <Typography>
-            <FormattedMessage id="ui.loyaltyProgramDetail.listTitle" defaultMessage="ui.loyaltyProgramDetail.listTitle" />
-          </Typography>
-          <ul style={{columnCount: 2}}>
-            {intl.formatMessage(messages.list, {
-              b: (chunks) => <strong>{chunks}</strong>,
-              li: (chunks) => <li>{chunks}</li>
-            })}
-          </ul>
-        </Grid>
-        <Grid item xs={12} sx={{mb: 2}}>
-          <Typography variant="h6">
-            <FormattedMessage id="ui.loyaltyProgramDetail.prizes" defaultMessage="ui.loyaltyProgramDetail.prizes" />
-          </Typography>
-          <Typography component="div">
-            <FormattedMessage id="ui.loyaltyProgramDetail.prizesIntro" defaultMessage="ui.loyaltyProgramDetail.prizesIntro" />
-          </Typography>
-          <Typography component="div">
-            <FormattedMessage id="ui.loyaltyProgramDetail.prizesContent" defaultMessage="ui.loyaltyProgramDetail.prizesContent" />
-          </Typography>
-        </Grid>
-      </Grid>
-      <Grid container spacing={2} direction="row">
-        {prizes.map((prize: SCPrizeType, index) => (
-          <Grid item xs={12} sm={6} md={4} key={index}>
-            <Card className={classes.card}>
-              <CardMedia component="img" height="140" image={prize.image} />
-              <Box className={classes.chip}>
-                <Chip label={`${intl.formatMessage(messages.points, {total: prize.points})}`} />
-              </Box>
-              <CardContent>
-                <Typography gutterBottom variant="body1" component="div" className={classes.title}>
-                  {prize.title}
-                </Typography>
-                <Typography variant="body2" className={classes.description}>
-                  {prize.description}
-                </Typography>
-              </CardContent>
-              <CardActions sx={{justifyContent: 'center'}}>
-                <Button size="small" variant="outlined" disabled={requestable} className={classes.action}>
-                  {points >= prize.points ? (
-                    <FormattedMessage id="ui.loyaltyProgramDetail.button.request" defaultMessage="ui.loyaltyProgramDetail.button.request" />
-                  ) : (
-                    <FormattedMessage id="ui.loyaltyProgram.discover" defaultMessage="ui.loyaltyProgram.discover" />
-                  )}
-                </Button>
-              </CardActions>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
-    </React.Fragment>
-  );
 
   if (!prizes) {
     return <LoyaltyProgramDetailSkeleton />;
@@ -258,7 +161,77 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
   if (!autoHide && scUserContext.user) {
     return (
       <Root className={classNames(classes.root, className)} {...rest}>
-        {d}
+        {cardType && (
+          <Typography component="h3" align="left" className={classes.header}>
+            <FormattedMessage id="ui.loyaltyProgram.title" defaultMessage="ui.loyaltyProgram.title" />
+          </Typography>
+        )}
+        {points && (
+          <Box className={classes.points}>
+            <Chip label={`${intl.formatMessage(messages.userPoints, {total: points})}`} />
+          </Box>
+        )}
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <Typography variant="h6">
+              <FormattedMessage id="ui.loyaltyProgramDetail.community" defaultMessage="ui.loyaltyProgramDetail.community" />
+            </Typography>
+            <Typography component="div">
+              <FormattedMessage id="ui.loyaltyProgramDetail.description" defaultMessage="ui.loyaltyProgramDetail.description" />
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Typography>
+              <FormattedMessage id="ui.loyaltyProgramDetail.listTitle" defaultMessage="ui.loyaltyProgramDetail.listTitle" />
+            </Typography>
+            <ul style={{columnCount: 2}}>
+              {intl.formatMessage(messages.list, {
+                b: (chunks) => <strong>{chunks}</strong>,
+                li: (chunks) => <li>{chunks}</li>
+              })}
+            </ul>
+          </Grid>
+          <Grid item xs={12} sx={{mb: 2}}>
+            <Typography variant="h6">
+              <FormattedMessage id="ui.loyaltyProgramDetail.prizes" defaultMessage="ui.loyaltyProgramDetail.prizes" />
+            </Typography>
+            <Typography component="div">
+              <FormattedMessage id="ui.loyaltyProgramDetail.prizesIntro" defaultMessage="ui.loyaltyProgramDetail.prizesIntro" />
+            </Typography>
+            <Typography component="div">
+              <FormattedMessage id="ui.loyaltyProgramDetail.prizesContent" defaultMessage="ui.loyaltyProgramDetail.prizesContent" />
+            </Typography>
+          </Grid>
+        </Grid>
+        <Grid container spacing={2} direction="row">
+          {prizes.map((prize: SCPrizeType, index) => (
+            <Grid item xs={12} sm={6} md={4} key={index}>
+              <Card className={classes.card}>
+                <CardMedia component="img" height="140" image={prize.image} />
+                <Box className={classes.chip}>
+                  <Chip label={`${intl.formatMessage(messages.points, {total: prize.points})}`} />
+                </Box>
+                <CardContent>
+                  <Typography gutterBottom variant="body1" component="div" className={classes.title}>
+                    {prize.title}
+                  </Typography>
+                  <Typography variant="body2" className={classes.description}>
+                    {prize.description}
+                  </Typography>
+                </CardContent>
+                <CardActions sx={{justifyContent: 'center'}}>
+                  <Button size="small" variant="outlined" disabled={requestable} className={classes.action}>
+                    {points >= prize.points ? (
+                      <FormattedMessage id="ui.loyaltyProgramDetail.button.request" defaultMessage="ui.loyaltyProgramDetail.button.request" />
+                    ) : (
+                      <FormattedMessage id="ui.loyaltyProgram.discover" defaultMessage="ui.loyaltyProgram.discover" />
+                    )}
+                  </Button>
+                </CardActions>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
       </Root>
     );
   }

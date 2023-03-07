@@ -1,4 +1,4 @@
-import {Autocomplete, AutocompleteProps, Avatar, Box, IconButton, styled, TextField, Typography} from '@mui/material';
+import {Autocomplete, AutocompleteProps, Avatar, Box, Fade, IconButton, styled, TextField, Typography} from '@mui/material';
 import Icon from '@mui/material/Icon';
 import React, {useEffect, useState} from 'react';
 import classNames from 'classnames';
@@ -7,7 +7,6 @@ import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {SCSuggestionType, SuggestionType} from '@selfcommunity/types';
 import {SuggestionService} from '@selfcommunity/api-services';
 import {SCPreferences, SCPreferencesContextType, useSCPreferences} from '@selfcommunity/react-core';
-import {ChipTypeMap} from '@mui/material/Chip';
 
 const messages = defineMessages({
   placeholder: {
@@ -40,6 +39,7 @@ export interface SearchAutocompleteProps
     AutocompleteProps<string, false, false, true>,
     Exclude<
       keyof AutocompleteProps<string, false, false, true>,
+      | 'inputValue'
       | 'freeSolo'
       | 'multiple'
       | 'autoComplete'
@@ -58,10 +58,6 @@ export interface SearchAutocompleteProps
    */
   onSearch?: (value: string) => void;
   /**
-   * Handler for clear action
-   */
-  onClear?: () => void;
-  /**
    * Handler for item select action
    */
   onSuggestionSelect?: (suggestion: SCSuggestionType) => void;
@@ -78,7 +74,6 @@ export default function SearchAutocomplete(inProps: SearchAutocompleteProps) {
     className,
     blurOnSelect,
     onSearch = () => null,
-    onClear = () => null,
     onSuggestionSelect = (suggestion: SCSuggestionType) => null,
     ...rest
   } = props;
@@ -107,15 +102,18 @@ export default function SearchAutocomplete(inProps: SearchAutocompleteProps) {
     switch (reason) {
       case 'selectOption':
         onSuggestionSelect && onSuggestionSelect(value);
+        handleClear(event);
         break;
       case 'createOption':
         onSearch && onSearch(value);
+        handleClear(event);
         break;
     }
   };
 
   const handleClear = (event) => {
-    onClear && onClear();
+    setValue('');
+    setOptions([]);
   };
 
   function fetchResults() {
@@ -143,6 +141,7 @@ export default function SearchAutocomplete(inProps: SearchAutocompleteProps) {
       blurOnSelect={blurOnSelect}
       onChange={handleChange}
       onInputChange={handleInputChange}
+      inputValue={value}
       freeSolo
       autoComplete
       disableClearable
@@ -182,9 +181,11 @@ export default function SearchAutocomplete(inProps: SearchAutocompleteProps) {
             className: classes.input,
             startAdornment: <Icon className={classes.icon}>search</Icon>,
             endAdornment: (
-              <IconButton className={classes.clear} onClick={handleClear} size="small">
-                <Icon>close</Icon>
-              </IconButton>
+              <Fade in={value.length > 0} appear={false}>
+                <IconButton className={classes.clear} onClick={handleClear} size="small">
+                  <Icon>close</Icon>
+                </IconButton>
+              </Fade>
             )
           }}
         />
