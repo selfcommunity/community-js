@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.114](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.113...@selfcommunity/react-ui@0.7.0-alpha.114) (2023-03-07)
+
+
+### Bug Fixes
+
+* fixed pm component ([adc0244](https://github.com/selfcommunity/community-js/commit/adc02447be188d788c5da3a806e377c369b9e2af))
+* fixed pm snippets/thread skeletons ([64318d7](https://github.com/selfcommunity/community-js/commit/64318d7c295f512860939a263dcc86f5e5944ac9))
+
+
+
+
+
 # [0.7.0-alpha.113](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.112...@selfcommunity/react-ui@0.7.0-alpha.113) (2023-03-07)
 
 
