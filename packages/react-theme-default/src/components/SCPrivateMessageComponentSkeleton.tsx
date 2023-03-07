@@ -3,17 +3,13 @@ const Component = {
     root: ({theme}: any) => ({
       [theme.breakpoints.up('sm')]: {
         width: theme.breakpoints.values['lg']
-        //maxHeight: theme.breakpoints.values['lg'],
       },
-      '& .SCPrivateMessageComponentSkeleton-snippets-section': {
+      '& .SCPrivateMessageComponentSkeleton-thread-section': {
         '& .MuiCardContent-root': {
-          display: 'flex',
-          flexDirection: 'column',
-          '& .SCPrivateMessageSnippetsSkeleton-button': {
-            alignSelf: 'center'
-          },
-          '& .SCPrivateMessageSnippetsSkeleton-search-bar': {
-            marginTop: theme.spacing(2)
+          padding: 0,
+          '& .MuiList-root': {
+            paddingTop: 0,
+            paddingBottom: 0
           }
         }
       },
