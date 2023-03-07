@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.113](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.112...@selfcommunity/react-ui@0.7.0-alpha.113) (2023-03-07)
+
+
+### Bug Fixes
+
+* Fix LoyaltyProgram.tsx ([c2a8990](https://github.com/selfcommunity/community-js/commit/c2a899076da6410effdfeee74571a716413cee6a))
+* Fix NavigationToolbarMobile behaviour ([1f413e8](https://github.com/selfcommunity/community-js/commit/1f413e84a359ba1f4be4049fad42b8bf35c194f5))
+* Fix search autocomplete ([1feed4d](https://github.com/selfcommunity/community-js/commit/1feed4d881bca7f716d2ef03632991fd60c01db1))
+* pm component fixes ([676b121](https://github.com/selfcommunity/community-js/commit/676b121284c3e239d0aaab72fe041a4931600b9b))
+
+
+
+
+
 # [0.7.0-alpha.112](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.111...@selfcommunity/react-ui@0.7.0-alpha.112) (2023-03-07)
 
 
