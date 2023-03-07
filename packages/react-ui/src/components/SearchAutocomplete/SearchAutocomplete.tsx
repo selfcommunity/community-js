@@ -58,6 +58,10 @@ export interface SearchAutocompleteProps
    */
   onSearch?: (value: string) => void;
   /**
+   * Handler for clear action
+   */
+  onClear?: () => void;
+  /**
    * Handler for item select action
    */
   onSuggestionSelect?: (suggestion: SCSuggestionType) => void;
@@ -74,6 +78,7 @@ export default function SearchAutocomplete(inProps: SearchAutocompleteProps) {
     className,
     blurOnSelect,
     onSearch = () => null,
+    onClear = () => null,
     onSuggestionSelect = (suggestion: SCSuggestionType) => null,
     ...rest
   } = props;
@@ -114,6 +119,7 @@ export default function SearchAutocomplete(inProps: SearchAutocompleteProps) {
   const handleClear = (event) => {
     setValue('');
     setOptions([]);
+    onClear && onClear();
   };
 
   function fetchResults() {

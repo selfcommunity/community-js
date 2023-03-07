@@ -123,7 +123,12 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
   const scUserContext: SCUserContextType = useContext(SCUserContext);
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
   const isNumber = typeof obj === 'number';
-
+  const _recipient = useMemo(
+    () => (userObj) => {
+      return userObj.receiver.id !== authUserId ? userObj.receiver.id : userObj.sender.id;
+    },
+    [authUserId]
+  );
   //  HANDLERS
   /**
    * Handles thread opening on click
@@ -131,7 +136,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
    */
   const handleThreadOpening = (item) => {
     updateSnippetsParams(item.id, 'seen');
-    onItemClick && onItemClick(item.receiver.id);
+    onItemClick && onItemClick(_recipient(item));
     setObj(item);
     setOpenNewMessage(false);
     isMobile && setLayout('mobile');
@@ -142,7 +147,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
    */
   const handleThreadClosing = () => {
     setObj(null);
-    onItemClick && onItemClick(null);
+    onMessageBack && onMessageBack();
   };
   /**
    * Handles new message opening on button action click
@@ -312,7 +317,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
    * @param file
    */
   function handleSend(message: string, file: SCPrivateMessageFileType) {
-    const _receiver = authUserId !== obj?.receiver?.id ? obj?.receiver?.id : obj?.sender?.id;
+    //const _receiver = authUserId !== obj?.receiver?.id ? obj?.receiver?.id : obj?.sender?.id;
     if (UserUtils.isBlocked(scUserContext.user)) {
       enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
         variant: 'warning',
@@ -324,14 +329,18 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
           url: Endpoints.SendMessage.url(),
           method: Endpoints.SendMessage.method,
           data: {
-            recipients: openNewMessage || isNew ? ids : [isNumber ? receiver.id : _receiver],
+            recipients: openNewMessage || isNew ? ids : [isNumber ? receiver.id : _recipient(obj)],
             message: message,
             file_uuid: file && !message ? file : null
           }
         })
         .then((res: any) => {
           const single = res.data.length <= 1;
-          single && setMessageObjs((prev) => [...prev, res.data[0]]);
+          if (single) {
+            setMessageObjs((prev) => [...prev, res.data[0]]);
+            onItemClick && onItemClick(_recipient(res.data[0]));
+          }
+          !single && onMessageBack && onMessageBack();
           handleSnippetsUpdate(res.data);
           if (openNewMessage || newMessageThread) {
             setNewMessageThread(false);
@@ -355,7 +364,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
    * Fetches thread
    */
   function fetchThread() {
-    const _userObjId = isNumber ? obj : obj?.receiver?.id !== authUserId ? obj?.receiver?.id : obj?.sender?.id;
+    const _userObjId = _recipient(obj);
     http
       .request({
         url: Endpoints.GetAThread.url(),
@@ -416,7 +425,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
    * On mount, if obj, fetches thread
    */
   useEffect(() => {
-    obj && fetchThread();
+    obj && !openNewMessage && fetchThread();
   }, [obj, authUserId]);
 
   /**
