@@ -6,13 +6,7 @@ import {SCThemeType, SCUserContext, SCUserContextType, UserUtils} from '@selfcom
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import {Endpoints, http, HttpResponse, PrivateMessageService} from '@selfcommunity/api-services';
-import {
-  SCNotificationTopicType,
-  SCNotificationTypologyType,
-  SCPrivateMessageFileType,
-  SCPrivateMessageStatusType,
-  SCPrivateMessageThreadType
-} from '@selfcommunity/types';
+import {SCNotificationTopicType, SCNotificationTypologyType, SCPrivateMessageFileType, SCPrivateMessageStatusType} from '@selfcommunity/types';
 import PubSub from 'pubsub-js';
 import PrivateMessageThread from '../PrivateMessageThread';
 import PrivateMessageSnippets from '../PrivateMessageSnippets';
@@ -129,14 +123,14 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
   const scUserContext: SCUserContextType = useContext(SCUserContext);
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
   const isNumber = typeof obj === 'number';
-  console.log(openNewMessage);
+
   //  HANDLERS
   /**
    * Handles thread opening on click
    * @param item
    */
   const handleThreadOpening = (item) => {
-    updateSnippetsParams(item.receiver.id, 'seen');
+    updateSnippetsParams(item.id, 'seen');
     onItemClick && onItemClick(item.receiver.id);
     setObj(item);
     setOpenNewMessage(false);
@@ -179,7 +173,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
    */
   function handleOpenDeleteThreadDialog(threadObj) {
     setOpenDeleteThreadDialog(true);
-    setDeletingThread(threadObj.id);
+    setDeletingThread(threadObj.thread_id ?? threadObj.id);
   }
   /**
    * Handles delete thread dialog close
@@ -201,10 +195,10 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
    * Handles snippets list update on message changes inside thread component
    * @param message
    */
-  const handleSnippetsUpdate = (message: SCPrivateMessageThreadType) => {
+  const handleSnippetsUpdate = (message: any) => {
     updateSnippetsList(message);
     if (openNewMessage) {
-      setObj(message);
+      setObj(message[0]);
       setOpenNewMessage(false);
     }
   };
@@ -233,13 +227,13 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
 
   /**
    * Updates snippet headline and status or just snippet status
-   * @param receiverId
+   * @param threadId
    * @param status
    * @param headline
    */
-  function updateSnippetsParams(receiverId: number, status: string, headline?: string) {
+  function updateSnippetsParams(threadId: number, status: string, headline?: string) {
     const newSnippets = [...snippets];
-    const index = newSnippets.findIndex((s) => s.receiver.id === receiverId);
+    const index = newSnippets.findIndex((s) => s.id === threadId);
     if (index !== -1) {
       newSnippets[index].headline = headline ?? newSnippets[index].headline;
       newSnippets[index].thread_status = status;
@@ -248,29 +242,29 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
   }
 
   /**
-   * Updates snippets list when a new message is sent or another one is deleted
-   * @param message
+   * Updates snippets list when a new message(or more) are sent or another one is deleted
+   * @param message, it can be a single object or an array of objects
    */
-  function updateSnippetsList(message) {
+  function updateSnippetsList(message: any) {
     const newSnippets = [...snippets];
-    const inList = newSnippets.some((o) => o.receiver.id === message.receiver.id);
-    //if snippet is already present in the list, its headline gets updated
-    if (inList) {
-      const index = newSnippets.findIndex((s) => s.receiver.id === message.receiver.id);
-      if (index !== -1) {
-        newSnippets[index].headline = message.message;
-        newSnippets[index].thread_status = message.thread_status;
-        setSnippets(newSnippets);
+    message.map((m) => {
+      const idx = newSnippets.findIndex((s) =>
+        Object.prototype.hasOwnProperty.call(s, 'thread_id') ? s.thread_id === m.thread_id : s.id === m.thread_id
+      );
+      if (idx !== -1) {
+        newSnippets[idx].headline = m.message;
+        newSnippets[idx].thread_status = m.status;
+      } else {
+        setSnippets((prev) => [...prev, m]);
       }
-      //a new snippets gets added to the list
-    } else {
-      setSnippets((prev) => [...prev, message]);
-    }
+    });
   }
+
   /**
    * Handles thread deletion
    */
   function handleDeleteThread() {
+    const _threadId = obj?.thread_id ?? obj?.id;
     PrivateMessageService.deleteAThread(deletingThread ?? obj.id)
       .then(() => {
         if (layout === 'mobile') {
@@ -278,8 +272,10 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
         }
         id && setLayout('mobile');
         setOpenDeleteThreadDialog(false);
-        deletingThread === obj?.id && handleThreadClosing();
-        const _snippets = snippets.filter((s) => s.id !== deletingThread);
+        deletingThread === _threadId && handleThreadClosing();
+        const _snippets = snippets.filter((s) =>
+          Object.prototype.hasOwnProperty.call(s, 'thread_id') ? s.thread_id !== deletingThread : s.id !== deletingThread
+        );
         setSnippets(_snippets);
         setClear(true);
       })
@@ -297,7 +293,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
       .then(() => {
         const result = messageObjs.filter((m) => m.id !== deletingMsg.id);
         setMessageObjs(result);
-        handleSnippetsUpdate(result.length >= 1 ? result.slice(-1)[0] : deletingMsg);
+        handleSnippetsUpdate(result.length >= 1 ? result.slice(-1) : deletingMsg);
         handleCloseDeleteMessageDialog();
       })
       .catch((error) => {
@@ -316,6 +312,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
    * @param file
    */
   function handleSend(message: string, file: SCPrivateMessageFileType) {
+    const _receiver = authUserId !== obj?.receiver?.id ? obj?.receiver?.id : obj?.sender?.id;
     if (UserUtils.isBlocked(scUserContext.user)) {
       enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
         variant: 'warning',
@@ -327,16 +324,18 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
           url: Endpoints.SendMessage.url(),
           method: Endpoints.SendMessage.method,
           data: {
-            recipients: openNewMessage || isNew ? ids : [isNumber ? receiver.id : obj?.receiver?.id],
+            recipients: openNewMessage || isNew ? ids : [isNumber ? receiver.id : _receiver],
             message: message,
             file_uuid: file && !message ? file : null
           }
         })
         .then((res: any) => {
-          setMessageObjs((prev) => [...prev, res.data]);
+          const single = res.data.length <= 1;
+          single && setMessageObjs((prev) => [...prev, res.data[0]]);
           handleSnippetsUpdate(res.data);
           if (openNewMessage || newMessageThread) {
             setNewMessageThread(false);
+            setOpenNewMessage(false);
             setRecipients([]);
           }
         })
@@ -425,7 +424,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
    */
   const subscriber = (msg, data) => {
     const res = data.data;
-    updateSnippetsParams(res.notification_obj.message.sender.id, res.notification_obj.snippet.thread_status, res.notification_obj.snippet.headline);
+    updateSnippetsParams(res.thread_id, res.notification_obj.snippet.thread_status, res.notification_obj.snippet.headline);
     const newMessages = [...messageObjs];
     const index = newMessages.findIndex((m) => m.sender.id === res.notification_obj.message.sender.id);
     if (index !== -1) {
