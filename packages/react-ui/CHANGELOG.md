@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.112](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.111...@selfcommunity/react-ui@0.7.0-alpha.112) (2023-03-07)
+
+
+### Performance Improvements
+
+* updated private messages update with new api response ([3f3505c](https://github.com/selfcommunity/community-js/commit/3f3505c768d34bfefd8a511baa8a30e8000d94e3))
+
+
+
+
+
 # [0.7.0-alpha.111](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.110...@selfcommunity/react-ui@0.7.0-alpha.111) (2023-03-03)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
