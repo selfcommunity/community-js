@@ -25,11 +25,8 @@ const PREFIX = 'SCLoyaltyProgram';
 const classes = {
   root: `${PREFIX}-root`,
   title: `${PREFIX}-title`,
-  cardHeader: `${PREFIX}-card-header`,
-  pointsIcon: `${PREFIX}-pointsIcon`,
   actions: `${PREFIX}-actions`,
   points: `${PREFIX}-points`,
-  pointsBox: `${PREFIX}-points-box`,
   discoverMore: `${PREFIX}-discover-more`
 };
 
@@ -38,28 +35,9 @@ const Root = styled(Widget, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  marginBottom: theme.spacing(2),
-  [`& .${classes.cardHeader}`]: {
-    display: 'flex',
-    alignItems: 'start',
-    flexWrap: 'wrap',
-    marginTop: theme.spacing(2)
-  },
-  [`& .${classes.pointsIcon}`]: {
-    backgroundColor: theme.palette.grey['A200'],
-    padding: 10,
-    '& .MuiSvgIcon-root ': {
-      fontSize: '3rem',
-      color: theme.palette.primary.main
-    }
-  },
   [`& .${classes.actions}`]: {
     display: 'flex',
     justifyContent: 'space-between'
-  },
-  [`& .${classes.pointsBox}`]: {
-    backgroundColor: theme.palette.primary.main,
-    padding: 10
   },
   [`& .${classes.points}`]: {
     color: theme.palette.common.white,
@@ -104,11 +82,8 @@ export interface LoyaltyProgramProps {
  |---|---|---|
  |root|.SCLoyaltyProgram-root|Styles applied to the root element.|
  |title.SCLoyaltyProgram-title|Styles applied to the title element.|
- |cardHeader|.SCLoyaltyProgram-card-header|Styles applied to the card header element.|
- |pointsIcon|.SCLoyaltyProgram-pointsIcon|Styles applied to the points icon element.|
  |actions|.SCLoyaltyProgram-actions|Styles applied to the actions section.|
  |points|.SCLoyaltyProgram-points|Styles applied to the points section.|
- |pointsBox|.SCLoyaltyProgram-points-box|Styles applied to the points box element.|
  |discoverMore|.SCLoyaltyProgram-discover-more|Styles applied to discover more button element.|
  *
  * @param inProps
@@ -174,28 +149,11 @@ export default function LoyaltyProgram(inProps: LoyaltyProgramProps): JSX.Elemen
         <Typography className={classes.title} variant="h5">
           <FormattedMessage id="ui.loyaltyProgram.title" defaultMessage="ui.loyaltyProgram.title" />
         </Typography>
-        <Grid container spacing={2} className={classes.cardHeader}>
-          <Grid item>
-            <Box className={classes.pointsIcon}>
-              <Icon>card_membership</Icon>
-            </Box>
-          </Grid>
-          <Grid item xs={12} sm container>
-            <Typography gutterBottom variant="h6">
-              <FormattedMessage id="ui.loyaltyProgram.lp" defaultMessage="ui.loyaltyProgram.lp" />
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              <FormattedMessage id="ui.loyaltyProgram.description" defaultMessage="ui.loyaltyProgram.description" />
-            </Typography>
-          </Grid>
-        </Grid>
       </CardContent>
       <CardActions className={classes.actions}>
-        <Box component="span" className={classes.pointsBox}>
-          <Typography variant="body2" className={classes.points}>
-            {`${intl.formatMessage(messages.points, {total: points})}`}
-          </Typography>
-        </Box>
+        <Typography variant="body2" className={classes.points}>
+          {`${intl.formatMessage(messages.points, {total: points})}`}
+        </Typography>
         {cardType ? (
           <Button
             variant="outlined"
@@ -206,7 +164,7 @@ export default function LoyaltyProgram(inProps: LoyaltyProgramProps): JSX.Elemen
             <FormattedMessage id="ui.loyaltyProgram.discover" defaultMessage="ui.loyaltyProgram.discover" />
           </Button>
         ) : (
-          <Button variant="outlined" size="small" className={classes.discoverMore} onClick={() => setOpenLoyaltyProgramDialog(true)}>
+          <Button variant="outlined" className={classes.discoverMore} onClick={() => setOpenLoyaltyProgramDialog(true)}>
             <FormattedMessage id="ui.loyaltyProgram.discover" defaultMessage="ui.loyaltyProgram.discover" />
           </Button>
         )}
