@@ -1,11 +1,9 @@
 import React from 'react';
 import Widget from '../Widget';
 import {styled} from '@mui/material/styles';
-import {CardContent} from '@mui/material';
+import {CardContent, ListSubheader, Skeleton} from '@mui/material';
 import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import Skeleton from '@mui/material/Skeleton';
-import ListItemText from '@mui/material/ListItemText';
+import PrivateMessageThreadItemSkeleton from '../PrivateMessageThreadItem/Skeleton';
 
 const PREFIX = 'SCPrivateMessageThreadSkeleton';
 
@@ -45,18 +43,11 @@ export default function PrivateMessageThreadSkeleton(props): JSX.Element {
     <Root className={classes.root} {...props}>
       <CardContent>
         <List className={classes.list}>
-          {[...Array(6)].map((category, index) => (
-            <ListItem key={index}>
-              <ListItemText
-                sx={{display: 'flex', justifyContent: index % 2 === 0 ? 'flex-start' : 'flex-end'}}
-                primary={
-                  <>
-                    <Skeleton animation="wave" height={50} width={100} style={{borderRadius: 20}} />
-                    <Skeleton animation="wave" height={10} width={30} />
-                  </>
-                }
-              />
-            </ListItem>
+          <ListSubheader sx={{display: 'flex', justifyContent: 'center'}}>
+            <Skeleton animation="wave" height={40} width={80} style={{borderRadius: 20}} />
+          </ListSubheader>
+          {[...Array(4)].map((item, index) => (
+            <PrivateMessageThreadItemSkeleton index={index} key={index} />
           ))}
         </List>
       </CardContent>

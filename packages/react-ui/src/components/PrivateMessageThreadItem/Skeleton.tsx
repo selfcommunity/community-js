@@ -1,11 +1,8 @@
 import React from 'react';
-import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemText from '@mui/material/ListItemText';
 import {styled} from '@mui/material/styles';
 import Skeleton from '@mui/material/Skeleton';
-import Widget from '../Widget';
 import {useTheme} from '@mui/material';
 import {SCThemeType} from '@selfcommunity/react-core';
 
@@ -16,7 +13,7 @@ const classes = {
   list: `${PREFIX}-list`
 };
 
-const Root = styled(Widget)(({theme}) => ({
+const Root = styled(ListItem)(({theme}) => ({
   maxWidth: 700
 }));
 /**
@@ -42,25 +39,12 @@ const Root = styled(Widget)(({theme}) => ({
  */
 export default function PrivateMessageThreadItemSkeleton(props): JSX.Element {
   const theme = useTheme<SCThemeType>();
-  const m = (
-    <ListItem>
-      <ListItemAvatar>
-        <Skeleton
-          animation="wave"
-          variant="circular"
-          width={theme.selfcommunity.user.avatar.sizeMedium}
-          height={theme.selfcommunity.user.avatar.sizeMedium}
-        />
-      </ListItemAvatar>
-      <ListItemText
-        primary={<Skeleton animation="wave" height={10} width={120} style={{marginBottom: 10}} />}
-        secondary={<Skeleton animation="wave" height={10} width={70} style={{marginBottom: 10}} />}
-      />
-    </ListItem>
-  );
   return (
     <Root className={classes.root} {...props}>
-      <List>{m}</List>
+      <ListItemText
+        sx={{display: 'flex', justifyContent: props.index % 2 === 0 ? 'flex-start' : 'flex-end'}}
+        primary={<Skeleton animation="wave" height={100} width={450} style={{borderRadius: theme.shape.borderRadius}} />}
+      />
     </Root>
   );
 }
