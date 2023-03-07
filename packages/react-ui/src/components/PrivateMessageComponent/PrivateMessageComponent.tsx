@@ -123,12 +123,6 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
   const scUserContext: SCUserContextType = useContext(SCUserContext);
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
   const isNumber = typeof obj === 'number';
-  const _recipient = useMemo(
-    () => (userObj) => {
-      return userObj.receiver.id !== authUserId ? userObj.receiver.id : userObj.sender.id;
-    },
-    [authUserId]
-  );
   //  HANDLERS
   /**
    * Handles thread opening on click
@@ -136,7 +130,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
    */
   const handleThreadOpening = (item) => {
     updateSnippetsParams(item.id, 'seen');
-    onItemClick && onItemClick(_recipient(item));
+    onItemClick && onItemClick(item.receiver.id !== authUserId ? item.receiver.id : item.sender.id);
     setObj(item);
     setOpenNewMessage(false);
     isMobile && setLayout('mobile');
@@ -317,7 +311,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
    * @param file
    */
   function handleSend(message: string, file: SCPrivateMessageFileType) {
-    //const _receiver = authUserId !== obj?.receiver?.id ? obj?.receiver?.id : obj?.sender?.id;
+    const _receiver = authUserId !== obj?.receiver?.id ? obj?.receiver?.id : obj?.sender?.id;
     if (UserUtils.isBlocked(scUserContext.user)) {
       enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
         variant: 'warning',
@@ -329,7 +323,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
           url: Endpoints.SendMessage.url(),
           method: Endpoints.SendMessage.method,
           data: {
-            recipients: openNewMessage || isNew ? ids : [isNumber ? receiver.id : _recipient(obj)],
+            recipients: openNewMessage || isNew ? ids : [isNumber ? receiver.id : _receiver],
             message: message,
             file_uuid: file && !message ? file : null
           }
@@ -338,7 +332,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
           const single = res.data.length <= 1;
           if (single) {
             setMessageObjs((prev) => [...prev, res.data[0]]);
-            onItemClick && onItemClick(_recipient(res.data[0]));
+            onItemClick && onItemClick(isNumber ? receiver.id : _receiver);
           }
           !single && onMessageBack && onMessageBack();
           handleSnippetsUpdate(res.data);
@@ -364,7 +358,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
    * Fetches thread
    */
   function fetchThread() {
-    const _userObjId = _recipient(obj);
+    const _userObjId = isNumber ? obj : obj?.receiver?.id !== authUserId ? obj?.receiver?.id : obj?.sender?.id;
     http
       .request({
         url: Endpoints.GetAThread.url(),
@@ -425,7 +419,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
    * On mount, if obj, fetches thread
    */
   useEffect(() => {
-    obj && !openNewMessage && fetchThread();
+    obj && fetchThread();
   }, [obj, authUserId]);
 
   /**
