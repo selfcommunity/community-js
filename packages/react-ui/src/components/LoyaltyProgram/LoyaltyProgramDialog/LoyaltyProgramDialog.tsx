@@ -56,7 +56,8 @@ export default function LoyaltyProgramDialog(inProps: LoyaltyProgramDialogProps)
   const {className, open, onClose, points, ...rest} = props;
   return (
     <Root
-      title={<FormattedMessage id="ui.loyaltyProgram.lp" defaultMessage="ui.loyaltyProgram.lp" />}
+      title={<FormattedMessage id="ui.loyaltyProgram.title" defaultMessage="ui.loyaltyProgram.title" />}
+      maxWidth="md"
       open={open}
       onClose={onClose}
       className={classNames(classes.root, className)}
