@@ -29,6 +29,7 @@ const Component = {
         height: theme.spacing(15),
         backgroundColor: theme.palette.primary.main,
         '& .MuiCardContent-root': {
+          overflow: 'visible',
           padding: theme.spacing(1),
           display: 'flex',
           flexDirection: 'column',

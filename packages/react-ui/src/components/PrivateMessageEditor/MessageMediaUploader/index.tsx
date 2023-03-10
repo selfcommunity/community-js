@@ -162,7 +162,7 @@ export default function MessageMediaUploader(props: MessageMediaUploaderProps): 
           multiple
           chunked>
           <MessageChunkUploader onStart={handleStart} onSuccess={handleSuccess} onProgress={handleProgress} onError={handleError} />
-          {!file && Object.keys(uploading).length === 0 && (
+          {!file && Object.keys(uploading).length === 0 && Object.keys(errors).length === 0 && (
             <UploadDropZone className={classes.uploadSection} grouped maxGroupSize={3}>
               <UploadButton inputFieldName="qqfile" className={classes.uploadButton} />
               <Typography textAlign={'center'} fontWeight={'medium'}>
@@ -177,18 +177,20 @@ export default function MessageMediaUploader(props: MessageMediaUploaderProps): 
               () => setIsHovered(false)
             )}>
             <UploadPreview rememberPreviousBatches previewMethodsRef={previewMethodsRef} onPreviewsChanged={onPreviewsChanged} />
-            <Box className={classes.previewActions}>
-              {Object.values(uploading).map((chunk: SCMessageChunkType) => (
-                <Box key={chunk.id} className={classes.progress}>
-                  <Typography textAlign="center">{`${Math.round(chunk.completed)}%`}</Typography>
-                </Box>
-              ))}
-              {loaded && isHovered && (
-                <IconButton onClick={onClear} size="small">
-                  <Icon>delete</Icon>
-                </IconButton>
-              )}
-            </Box>
+            {batchFile && (
+              <Box className={classes.previewActions}>
+                {Object.values(uploading).map((chunk: SCMessageChunkType) => (
+                  <Box key={chunk.id} className={classes.progress}>
+                    <Typography textAlign="center">{`${Math.round(chunk.completed)}%`}</Typography>
+                  </Box>
+                ))}
+                {loaded && isHovered && (
+                  <IconButton onClick={onClear} size="small">
+                    <Icon>delete</Icon>
+                  </IconButton>
+                )}
+              </Box>
+            )}
           </Box>
           {loaded && isHovered && (
             <Box className={classes.previewInfo}>
