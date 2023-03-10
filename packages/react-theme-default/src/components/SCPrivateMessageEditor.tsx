@@ -46,6 +46,7 @@ const Component = {
             }
           },
           '& .SCMessageMediaUploader-preview-content': {
+            position: 'relative',
             display: 'flex',
             margin: '0 auto',
             width: theme.spacing(6.25),
@@ -59,23 +60,23 @@ const Component = {
               width: theme.spacing(6.25),
               height: theme.spacing(6.25)
             },
-            '& .MuiImageListItemBar-root': {
-              height: '100%',
-              background: 'transparent',
+            '& .SCMessageMediaUploader-preview-actions': {
+              width: 'inherit',
+              height: 'inherit',
+              position: 'absolute',
+              '& .MuiButtonBase-root, .MuiTypography-root': {
+                color: theme.palette.common.white,
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)'
+              },
               '&:hover': {
                 background: 'rgba(0,0,0,0.5)'
               },
-              '& .MuiImageListItemBar-title': {
-                '& .MuiTypography-root': {
-                  fontSize: '0.75rem'
-                }
-              },
-              '& .MuiImageListItemBar-actionIcon': {
-                position: 'absolute',
-                left: '20%',
-                '& .MuiIcon-root': {
-                  color: theme.palette.common.white
-                }
+              '& .SCMessageMediaUploader-progress': {
+                background: 'rgba(0,0,0,0.5)',
+                height: '100%'
               }
             }
           },

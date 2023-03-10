@@ -1,6 +1,6 @@
 import {asUploadButton} from '@rpldy/upload-button';
 import React, {forwardRef, useCallback, useContext, useRef, useState} from 'react';
-import {Alert, AlertTitle, Box, CardContent, Fade, IconButton, ImageListItem, ImageListItemBar, Typography} from '@mui/material';
+import {Alert, AlertTitle, Box, CardContent, Fade, IconButton, Typography} from '@mui/material';
 import {ButtonProps} from '@mui/material/Button/Button';
 import Icon from '@mui/material/Icon';
 import ChunkedUploady from '@rpldy/chunked-uploady';
@@ -31,6 +31,8 @@ const classes = {
   uploadSection: `${PREFIX}-upload-section`,
   uploadButton: `${PREFIX}-upload-button`,
   previewContent: `${PREFIX}-preview-content`,
+  previewActions: `${PREFIX}-preview-actions`,
+  progress: `${PREFIX}-progress`,
   previewInfo: `${PREFIX}-preview-info`,
   close: `${PREFIX}-close`
 };
@@ -122,7 +124,6 @@ export default function MessageMediaUploader(props: MessageMediaUploaderProps): 
       setFile(null);
     };
   };
-  // HANDLERS
 
   const getMouseEvents = (mouseEnter, mouseLeave) => ({
     onMouseEnter: mouseEnter,
@@ -169,33 +170,25 @@ export default function MessageMediaUploader(props: MessageMediaUploaderProps): 
               </Typography>
             </UploadDropZone>
           )}
-          <Box className={classes.previewContent}>
-            <ImageListItem
-              {...getMouseEvents(
-                () => setIsHovered(true),
-                () => setIsHovered(false)
-              )}>
-              <UploadPreview rememberPreviousBatches previewMethodsRef={previewMethodsRef} onPreviewsChanged={onPreviewsChanged} />
-              <ImageListItemBar
-                title={
-                  <>
-                    {Object.values(uploading).map((chunk: SCMessageChunkType) => (
-                      <React.Fragment key={chunk.id}>
-                        <Typography align="center">{`${Math.round(chunk.completed)}%`}</Typography>
-                      </React.Fragment>
-                    ))}
-                  </>
-                }
-                actionIcon={
-                  loaded &&
-                  isHovered && (
-                    <IconButton onClick={onClear} size="small">
-                      <Icon>delete</Icon>
-                    </IconButton>
-                  )
-                }
-              />
-            </ImageListItem>
+          <Box
+            className={classes.previewContent}
+            {...getMouseEvents(
+              () => setIsHovered(true),
+              () => setIsHovered(false)
+            )}>
+            <UploadPreview rememberPreviousBatches previewMethodsRef={previewMethodsRef} onPreviewsChanged={onPreviewsChanged} />
+            <Box className={classes.previewActions}>
+              {Object.values(uploading).map((chunk: SCMessageChunkType) => (
+                <Box key={chunk.id} className={classes.progress}>
+                  <Typography textAlign="center">{`${Math.round(chunk.completed)}%`}</Typography>
+                </Box>
+              ))}
+              {loaded && isHovered && (
+                <IconButton onClick={onClear} size="small">
+                  <Icon>delete</Icon>
+                </IconButton>
+              )}
+            </Box>
           </Box>
           {loaded && isHovered && (
             <Box className={classes.previewInfo}>
