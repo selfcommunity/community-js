@@ -3,7 +3,7 @@ import {styled} from '@mui/material/styles';
 import {Box, Button, Fade, IconButton, InputAdornment, Popover, Stack, TextField, useMediaQuery, useTheme} from '@mui/material';
 import Icon from '@mui/material/Icon';
 import classNames from 'classnames';
-import MessageMediaUploader from './MessageMediaUploader/index';
+import MessageMediaUploader from './MessageMediaUploader';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {useThemeProps} from '@mui/system';
 import BaseDrawer from '../../shared/BaseDrawer';
@@ -97,7 +97,6 @@ export default function PrivateMessageEditor(inProps: PrivateMessageEditorProps)
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [message, setMessage] = useState<string>('');
   const [messageFile, setMessageFile] = useState(null);
-  const [show, setShow] = useState(false);
   const [emojiAnchorEl, setEmojiAnchorEl] = useState<any>(false);
   const [openMediaSection, setOpenMediaSection] = useState(false);
   const [threadId, setThreadId] = useState<number>(null);
@@ -111,7 +110,6 @@ export default function PrivateMessageEditor(inProps: PrivateMessageEditorProps)
 
   const handleMediaSectionClose = () => {
     setOpenMediaSection(false);
-    setShow(false);
   };
 
   const handleMessageFile = (f) => {
@@ -121,13 +119,12 @@ export default function PrivateMessageEditor(inProps: PrivateMessageEditorProps)
   const handleMessageSend = () => {
     send(message, messageFile);
     setMessage('');
+    setMessageFile(null);
     setOpenMediaSection(false);
-    setShow(false);
   };
 
   const handleMessageInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setMessage(event.target.value);
-    setShow(event.target.value !== '');
   };
 
   const handleToggleEmoji = (event: React.MouseEvent<HTMLElement>) => {
@@ -138,7 +135,6 @@ export default function PrivateMessageEditor(inProps: PrivateMessageEditorProps)
     const cursor = ref.current.selectionStart;
     const text = message.slice(0, cursor) + emojiData.emoji;
     setMessage(text);
-    setShow(true);
   };
 
   useEffect(() => {
@@ -158,25 +154,11 @@ export default function PrivateMessageEditor(inProps: PrivateMessageEditorProps)
     return (
       <>
         {openMediaSection && (
-          <>
-            <Box className={classes.sendMediaSection}>
-              {show && (
-                <Button disabled={!messageFile} onClick={handleMessageSend} variant="outlined">
-                  <FormattedMessage id="ui.privateMessage.editor.button.send" defaultMessage="ui.privateMessage.editor.button.send" />
-                </Button>
-              )}
-            </Box>
-            <MessageMediaUploader
-              open={openMediaSection}
-              onClose={handleMediaSectionClose}
-              forwardMessageFile={handleMessageFile}
-              onFileUploaded={() => setShow(true)}
-              onFileCleared={() => setShow(false)}
-            />
-          </>
+          <MessageMediaUploader open={openMediaSection} onClose={handleMediaSectionClose} forwardMessageFile={handleMessageFile} />
         )}
         <TextField
           size="small"
+          disabled={Boolean(messageFile)}
           ref={ref}
           className={classes.messageInput}
           multiline
@@ -224,7 +206,7 @@ export default function PrivateMessageEditor(inProps: PrivateMessageEditorProps)
               </>
             ),
             endAdornment: (
-              <IconButton disabled={messageFile !== null || !message} onClick={handleMessageSend}>
+              <IconButton disabled={!message && !messageFile} onClick={handleMessageSend}>
                 <Icon>send</Icon>
               </IconButton>
             )
@@ -233,7 +215,6 @@ export default function PrivateMessageEditor(inProps: PrivateMessageEditorProps)
       </>
     );
   }
-
   return (
     <Root {...rest} className={classNames(classes.root, className)}>
       {renderContent()}

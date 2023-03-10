@@ -123,6 +123,7 @@ import MetadataField from './shared/MetadataField';
 import InfiniteScroll from './shared/InfiniteScroll';
 import CentralProgress from './shared/CentralProgress';
 import {highlight} from './utils/highlight';
+import {bytesToSize} from './utils/sizeCoverter';
 
 /**
  * List all exports
@@ -359,6 +360,7 @@ export {
   IncubatorSuggestionProps,
   ContributionUtils,
   highlight,
+  bytesToSize,
   Footer,
   FooterProps,
   BaseItem

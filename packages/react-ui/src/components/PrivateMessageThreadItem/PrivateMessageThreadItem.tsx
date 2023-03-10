@@ -15,6 +15,7 @@ import PrivateMessageActionMenu from '../PrivateMessageActionMenu';
 import {SCThemeType} from '@selfcommunity/react-core';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import PrivateMessageActionDrawer from '../PrivateMessageActionDrawer';
+import {bytesToSize} from '../../utils/sizeCoverter';
 
 const PREFIX = 'SCPrivateMessageThreadItem';
 
@@ -135,9 +136,6 @@ export default function PrivateMessageThreadItem(inProps: PrivateMessageThreadIt
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
-  function bytesToSize(bytes) {
-    return (bytes / (1024 * 1024)).toFixed(1) + 'MB';
-  }
   const getMouseEvents = (mouseEnter, mouseLeave) => ({
     onMouseEnter: mouseEnter,
     onMouseLeave: mouseLeave,
