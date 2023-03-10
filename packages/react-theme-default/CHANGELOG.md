@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.60](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.59...@selfcommunity/react-theme-default@0.1.0-alpha.60) (2023-03-07)
+
+
+### Bug Fixes
+
+* fix css in lightbox image ([e1cdb3d](https://github.com/selfcommunity/community-js/commit/e1cdb3dfae4f8de0d8d023d09dc653cc1a61afd1))
+* fixed pm component skeleton theme ([3b6a097](https://github.com/selfcommunity/community-js/commit/3b6a0975a3f090a31ff5835341bb26b886912f38))
+
+
+
+
+
 # [0.1.0-alpha.59](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.58...@selfcommunity/react-theme-default@0.1.0-alpha.59) (2023-03-07)
 
 
