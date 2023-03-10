@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.1-alpha.21](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.4.1-alpha.20...@selfcommunity/react-i18n@0.4.1-alpha.21) (2023-03-10)
+
+
+### Performance Improvements
+
+* added transl for private message editor uploader ([1621f19](https://github.com/selfcommunity/community-js/commit/1621f19e809aef3681ff9a2d54006845d7e83038))
+
+
+
+
+
 ## [0.4.1-alpha.20](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.4.1-alpha.19...@selfcommunity/react-i18n@0.4.1-alpha.20) (2023-03-07)
 
 

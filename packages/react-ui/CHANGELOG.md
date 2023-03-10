@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.115](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.114...@selfcommunity/react-ui@0.7.0-alpha.115) (2023-03-10)
+
+
+### Bug Fixes
+
+* fixed message chunk uploader ([82337d5](https://github.com/selfcommunity/community-js/commit/82337d565f93849cd407f70e155dd56767c8a787))
+* fixed pm component ([c208890](https://github.com/selfcommunity/community-js/commit/c208890076a7cd2dadb5249e9bacd79eb8f2f474))
+* fixed private message editor/private message editor uploader ([81cde03](https://github.com/selfcommunity/community-js/commit/81cde03ee888664fede2f116384d0466124f4bdd))
+* removed unnecessary ui components ([d6e105a](https://github.com/selfcommunity/community-js/commit/d6e105a8592b545929db737e6cd29ddea2403390))
+
+
+
+
+
 # [0.7.0-alpha.114](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.113...@selfcommunity/react-ui@0.7.0-alpha.114) (2023-03-07)
 
 

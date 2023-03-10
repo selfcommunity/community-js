@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.61](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.60...@selfcommunity/react-theme-default@0.1.0-alpha.61) (2023-03-10)
+
+
+### Bug Fixes
+
+* fixed private message editor theme ([b349ffd](https://github.com/selfcommunity/community-js/commit/b349ffdf61e4ba98c1351d101ab2e82dffc8c8aa))
+* removed unnecessary ui components ([d6e105a](https://github.com/selfcommunity/community-js/commit/d6e105a8592b545929db737e6cd29ddea2403390))
+
+
+
+
+
 # [0.1.0-alpha.60](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.59...@selfcommunity/react-theme-default@0.1.0-alpha.60) (2023-03-07)
 
 
