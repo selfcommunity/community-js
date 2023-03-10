@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.62](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.61...@selfcommunity/react-theme-default@0.1.0-alpha.62) (2023-03-10)
+
+
+### Bug Fixes
+
+* message uploader fixes ([5494847](https://github.com/selfcommunity/community-js/commit/5494847c09aff9b476e603d1ee47991e276691d8))
+
+
+
+
+
 # [0.1.0-alpha.61](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.60...@selfcommunity/react-theme-default@0.1.0-alpha.61) (2023-03-10)
 
 
