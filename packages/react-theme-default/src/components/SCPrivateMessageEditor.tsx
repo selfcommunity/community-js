@@ -19,71 +19,70 @@ const Component = {
         width: '100%'
       },
       '& .MuiInputBase-root, MuiOutlinedInput-root': {
-        //height: theme.spacing(6.25),
         '& textarea': {
           backgroundColor: theme.palette.common.white,
           borderRadius: theme.shape.borderRadius,
           padding: theme.spacing(1)
         }
       },
-      '& .SCPrivateMessageEditor-send-media-section': {
-        backgroundColor: theme.palette.primary.main,
-        display: 'flex',
-        justifyContent: 'center'
-      },
       '& .MuiPaper-root, MuiCard-root, SCWidget-root, SCMessageMediaUploader-root': {
-        '& .MuiIcon-root': {
-          fontSize: '1.143rem'
-        },
+        height: theme.spacing(15),
         backgroundColor: theme.palette.primary.main,
-        '& .MuiCardHeader-root': {
-          paddingRight: theme.spacing(2),
-          paddingTop: theme.spacing(1)
-        },
         '& .MuiCardContent-root': {
-          '& .SCMessageMediaUploader-upload': {
-            display: 'flex',
-            justifyContent: 'center',
-            '& .MuiButtonBase-root, MuiIconButton-root': {
-              backgroundColor: theme.palette.common.white
+          padding: theme.spacing(1),
+          display: 'flex',
+          flexDirection: 'column',
+          minHeight: theme.spacing(15),
+          '& .SCMessageMediaUploader-close': {
+            '& .MuiIcon-root': {
+              fontSize: '0.857rem'
             }
           },
-          '& .SCMessageMediaUploader-preview-container': {
+          '& .SCMessageMediaUploader-upload-section': {
+            '& .SCMessageMediaUploader-upload-button': {
+              display: 'flex',
+              margin: '0 auto',
+              fontSize: '1.571rem'
+            }
+          },
+          '& .SCMessageMediaUploader-preview-content': {
+            position: 'relative',
             display: 'flex',
-            justifyContent: 'center',
+            margin: '0 auto',
+            width: theme.spacing(6.25),
+            height: theme.spacing(6.25),
             img: {
-              maxWidth: theme.spacing(25)
+              resizeMode: 'contain',
+              width: theme.spacing(6.25),
+              height: theme.spacing(6.25)
             },
             video: {
-              maxWidth: theme.spacing(25)
+              width: theme.spacing(6.25),
+              height: theme.spacing(6.25)
+            },
+            '& .SCMessageMediaUploader-preview-actions': {
+              width: 'inherit',
+              height: 'inherit',
+              position: 'absolute',
+              '& .MuiButtonBase-root, .MuiTypography-root': {
+                color: theme.palette.common.white,
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)'
+              },
+              '&:hover': {
+                background: 'rgba(0,0,0,0.5)'
+              },
+              '& .SCMessageMediaUploader-progress': {
+                background: 'rgba(0,0,0,0.5)',
+                height: '100%'
+              }
             }
           },
-          '& .SCMessageMediaUploader-doc-preview': {
-            [theme.breakpoints.down('md')]: {
-              height: theme.spacing(12.5),
-              width: theme.spacing(25)
-            },
-            height: theme.spacing(25),
-            width: theme.spacing(50),
-            position: 'relative'
-          },
-          '& .SCMessageMediaUploader-doc-loading-preview': {
-            backgroundColor: theme.palette.background.default,
-            height: theme.spacing(12.5),
-            width: theme.spacing(25),
-            position: 'relative',
-            '& .MuiCircularProgress-root': {
-              position: 'absolute',
-              top: '40%',
-              left: '45%'
-            },
-            '& .SCMessageMediaUploader-progress': {
-              display: 'flex',
-              justifyContent: 'center'
-            },
-            '& .SCMessageMediaUploader-clear-media': {
-              display: 'flex',
-              justifyContent: 'flex-end'
+          '& .SCMessageMediaUploader-preview-info': {
+            '& .MuiTypography-root': {
+              fontSize: '0.75rem'
             }
           }
         }

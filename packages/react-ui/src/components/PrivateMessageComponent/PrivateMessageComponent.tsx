@@ -195,8 +195,10 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
    * @param message
    */
   const handleSnippetsUpdate = (message: any) => {
+    const _receiver = authUserId !== message[0].receiver.id ? message[0].receiver.id : message[0].sender.id;
     updateSnippetsList(message);
     if (openNewMessage) {
+      onItemClick && onItemClick(_receiver);
       setObj(message[0]);
       setOpenNewMessage(false);
     }
@@ -330,11 +332,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
         })
         .then((res: any) => {
           const single = res.data.length <= 1;
-          if (single) {
-            setMessageObjs((prev) => [...prev, res.data[0]]);
-            onItemClick && onItemClick(isNumber ? receiver.id : _receiver);
-          }
-          !single && onMessageBack && onMessageBack();
+          single && setMessageObjs((prev) => [...prev, res.data[0]]);
           handleSnippetsUpdate(res.data);
           if (openNewMessage || newMessageThread) {
             setNewMessageThread(false);

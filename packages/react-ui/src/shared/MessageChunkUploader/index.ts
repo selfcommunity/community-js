@@ -25,7 +25,7 @@ export interface MessageChunkUploaderProps {
    * Handles on progress
    * @default null
    */
-  onStart: (type: any) => void;
+  onStart: (item: any) => void;
   /**
    * Handles on success
    * @default null
@@ -79,7 +79,7 @@ export default (props: MessageChunkUploaderProps): JSX.Element => {
 
   // LISTENERS
   useItemStartListener((item) => {
-    onStart(item.file.type);
+    onStart(item);
     if (item.file.type.startsWith('image/')) {
       const reader = new FileReader();
       reader.onload = (e) => {
