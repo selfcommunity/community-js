@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.64](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.63...@selfcommunity/react-theme-default@0.1.0-alpha.64) (2023-03-13)
+
+
+### Performance Improvements
+
+* Update material-ui ([d01b7bf](https://github.com/selfcommunity/community-js/commit/d01b7bf137344c4239e41c40e991fb6e32f28710))
+
+
+
+
+
 # [0.1.0-alpha.63](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.62...@selfcommunity/react-theme-default@0.1.0-alpha.63) (2023-03-13)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default

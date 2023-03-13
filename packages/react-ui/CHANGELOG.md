@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.118](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.117...@selfcommunity/react-ui@0.7.0-alpha.118) (2023-03-13)
+
+
+### Performance Improvements
+
+* Update material-ui ([d01b7bf](https://github.com/selfcommunity/community-js/commit/d01b7bf137344c4239e41c40e991fb6e32f28710))
+
+
+
+
+
 # [0.7.0-alpha.117](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.116...@selfcommunity/react-ui@0.7.0-alpha.117) (2023-03-13)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
