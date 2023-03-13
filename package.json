@@ -80,12 +80,12 @@
     "react-lazyload": "^3.2.0",
     "seamless-scroll-polyfill": "^2.1.8",
     "use-deep-compare-effect": "^1.8.1",
-    "validate-color": "^2.2.1"
+    "validate-color": "^2.2.4"
   },
   "peerDependencies": {
-    "@emotion/react": "^11.10.5",
-    "@emotion/styled": "^11.10.5",
-    "@mui/material": "^5.11.6",
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@mui/material": "^5.11.12",
     "react": "^17.0.2 || 18",
     "react-dom": "17 || 18",
     "react-intl": "^5.25.0"
