@@ -325,7 +325,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
           url: Endpoints.SendMessage.url(),
           method: Endpoints.SendMessage.method,
           data: {
-            recipients: openNewMessage || isNew ? ids : [isNumber ? receiver.id : _receiver],
+            recipients: openNewMessage || isNew || newMessageThread ? ids : [isNumber ? receiver.id : _receiver],
             message: message,
             file_uuid: file && !message ? file : null
           }
