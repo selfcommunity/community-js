@@ -425,6 +425,7 @@
 
   "ui.privateMessage.editor.button.send" : "invia",
   "ui.privateMessage.editor.placeholder" : "Scrivi il tuo messagio",
+  "ui.privateMessage.editor.disabled.msg" : "Non puoi inviare messaggi a chi non ti segue!",
   "ui.privateMessage.editor.media.uploader.msg" : "Carica l'allegato (max 10MB) oppure trascinalo qui",
 
   "ui.privateMessage.threadItem.menu.item.delete" : "Elimina Messaggio",
