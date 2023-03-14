@@ -9,6 +9,14 @@ const Component = {
         height: '100%',
         maxHeight: `calc(100% - ${theme.spacing(10)})`,
         overflow: 'auto',
+        '& .MuiAlert-root': {
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          display: 'flex',
+          justifyContent: 'center'
+        },
         '& .MuiList-root': {
           // [theme.breakpoints.down('md')]: {
           //   marginTop: theme.spacing(2)

@@ -8,7 +8,8 @@ import {
   SCPreferencesContext,
   SCPreferencesContextType,
   SCUserContext,
-  SCUserContextType
+  SCUserContextType,
+  UserUtils
 } from '@selfcommunity/react-core';
 import {SCPrivateMessageFileType, SCPrivateMessageStatusType, SCPrivateMessageThreadType} from '@selfcommunity/types';
 import PrivateMessageThreadItem from '../PrivateMessageThreadItem';
@@ -86,15 +87,15 @@ export interface PrivateMessageThreadProps {
    */
   autoHide?: boolean;
   /**
-   * Opens new message screen
+   * Opens a new message screen with a specific user
    * @default false
    */
-  newMessageThread?: boolean;
+  singleMessageThread?: boolean;
   /**
    * Functions called on thread actions
    */
   threadCallbacks?: {
-    onMessageBack?: (dispatch: any) => void;
+    onThreadDelete?: (dispatch: any) => void;
     onMessageDelete?: (msg: SCPrivateMessageThreadType) => void;
     onMessageSend?: (message: string, file: SCPrivateMessageFileType) => void;
     onRecipientSelect?: (event, recipient) => void;
@@ -142,10 +143,11 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
     props: inProps,
     name: PREFIX
   });
-  const {userObj, messages, loadingMessageObjs, receiver, recipients, threadCallbacks, newMessageThread, autoHide, className, ...rest} = props;
+  const {userObj, messages, loadingMessageObjs, receiver, recipients, threadCallbacks, singleMessageThread, autoHide, className, ...rest} = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
+  const role = UserUtils.getUserRole(scUserContext['user']);
   const scPreferencesContext: SCPreferencesContextType = useContext(SCPreferencesContext);
   const followEnabled =
     SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED in scPreferencesContext.preferences &&
@@ -160,7 +162,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
   const isObj = typeof userObj === 'object';
   const isNew = userObj && userObj === SCPrivateMessageStatusType.NEW;
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
-
+  const [singleMessageUser, setSingleMessageUser] = useState(null);
   // INTL
   const intl = useIntl();
 
@@ -209,6 +211,8 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
         .then((data: any) => {
           setFollowers(data.results);
           setLoading(false);
+          const _user = data.results.find((o) => o.id === userObj);
+          setSingleMessageUser(_user);
         })
         .catch((error) => {
           setLoading(false);
@@ -223,8 +227,10 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
    * Fetches followers when a new message is selected
    */
   useEffect(() => {
-    isNew && fetchFollowers();
-  }, [isNew, authUserId]);
+    if (isNew || singleMessageThread) {
+      fetchFollowers();
+    }
+  }, [isNew, singleMessageThread, authUserId]);
 
   /**
    * Checks is thread receiver is a user follower
@@ -266,7 +272,11 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
             </li>
           ))}
         </List>
-        <PrivateMessageEditor send={threadCallbacks.onMessageSend} autoHide={!isFollower} onThreadChangeId={isObj ? userObj.receiver.id : userObj} />
+        <PrivateMessageEditor
+          send={threadCallbacks.onMessageSend}
+          autoHide={!isFollower && !role}
+          onThreadChangeId={isObj ? userObj.receiver.id : userObj}
+        />
       </CardContent>
     );
   }
@@ -278,7 +288,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
   function renderNewOrNoMessageBox() {
     return (
       <CardContent>
-        {isNew || newMessageThread ? (
+        {isNew || singleMessageThread ? (
           <>
             <Box className={classes.newMessageHeader}>
               <Box className={classes.newMessageHeaderContent}>
@@ -289,11 +299,11 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
                 <Autocomplete
                   className={classes.autocomplete}
                   loading={loading}
-                  multiple={!newMessageThread}
+                  multiple={!singleMessageThread}
                   limitTags={3}
                   freeSolo
                   options={followers}
-                  value={recipients}
+                  value={singleMessageUser ?? recipients}
                   getOptionLabel={(option) => (option ? option.username : '...')}
                   renderInput={(params) => (
                     <TextField
@@ -310,7 +320,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
                   disabled={!followers}
                 />
               </Box>
-              <IconButton size="small" onClick={threadCallbacks.onMessageBack}>
+              <IconButton size="small" onClick={threadCallbacks.onThreadDelete}>
                 <Icon fontSize="small">close</Icon>
               </IconButton>
             </Box>
@@ -339,7 +349,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
   if (!autoHide) {
     return (
       <Root {...rest} className={classNames(classes.root, className)}>
-        {userObj !== null && !isNew && !newMessageThread ? renderThread() : renderNewOrNoMessageBox()}
+        {userObj !== null && !isNew && !singleMessageThread ? renderThread() : renderNewOrNoMessageBox()}
       </Root>
     );
   }
