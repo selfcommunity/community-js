@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.119](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.118...@selfcommunity/react-ui@0.7.0-alpha.119) (2023-03-14)
+
+
+### Bug Fixes
+
+* renamed pm component callback, fixed recipient for single message thread option and autohide on message editor ([bfe8327](https://github.com/selfcommunity/community-js/commit/bfe8327c253703a0ce2a564dcbfcc44e8362863f))
+
+
+### Performance Improvements
+
+* added alert to message editor on autohide prop ([986fd09](https://github.com/selfcommunity/community-js/commit/986fd09aa0c3eeca1f25851c2d9216728cf68dee))
+
+
+
+
+
 # [0.7.0-alpha.118](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.117...@selfcommunity/react-ui@0.7.0-alpha.118) (2023-03-13)
 
 

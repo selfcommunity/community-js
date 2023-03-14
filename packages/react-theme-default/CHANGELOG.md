@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.65](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.64...@selfcommunity/react-theme-default@0.1.0-alpha.65) (2023-03-14)
+
+
+### Performance Improvements
+
+* added style to message editor alert ([fcc9013](https://github.com/selfcommunity/community-js/commit/fcc901319c57ac7d1a531ffbf1d37800d13c6603))
+
+
+
+
+
 # [0.1.0-alpha.64](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.63...@selfcommunity/react-theme-default@0.1.0-alpha.64) (2023-03-13)
 
 
