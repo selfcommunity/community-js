@@ -42,10 +42,10 @@ export interface PrivateMessageComponentProps {
    */
   onItemClick?: (id) => void;
   /**
-   * Handler on message back
+   * Handler on thread delete
    * @default null
    */
-  onMessageBack?: () => void;
+  onThreadDelete?: () => void;
   /**
    * Overrides or extends the styles applied to the component.
    * @default null
@@ -92,7 +92,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
     props: inProps,
     name: PREFIX
   });
-  const {id = null, autoHide = false, className = null, onItemClick = null, onMessageBack = null, ...rest} = props;
+  const {id = null, autoHide = false, className = null, onItemClick = null, onThreadDelete = null, ...rest} = props;
 
   // STATE
   const theme = useTheme<SCThemeType>();
@@ -114,7 +114,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
   const [recipients, setRecipients] = useState<any>([]);
   const mobileSnippetsView = (layout === 'default' && !id) || (layout === 'mobile' && id);
   const mobileThreadView = (layout === 'mobile' && !id) || (layout === 'default' && id);
-  const [newMessageThread, setNewMessageThread] = useState<boolean>(false);
+  const [singleMessageThread, setSingleMessageThread] = useState<boolean>(false);
   const {enqueueSnackbar, closeSnackbar} = useSnackbar();
 
   // REFS
@@ -141,7 +141,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
    */
   const handleThreadClosing = () => {
     setObj(null);
-    onMessageBack && onMessageBack();
+    onThreadDelete && onThreadDelete();
   };
   /**
    * Handles new message opening on button action click
@@ -188,7 +188,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
     id && setLayout('mobile');
     setOpenNewMessage(false);
     setObj(null);
-    onMessageBack && onMessageBack();
+    onThreadDelete && onThreadDelete();
   };
   /**
    * Handles snippets list update on message changes inside thread component
@@ -221,9 +221,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
         return parseInt(u.id, 10);
       });
     }
-    if (newMessageThread && !openNewMessage) {
-      return recipients;
-    }
+    return [recipients];
   }, [recipients]);
 
   /**
@@ -325,7 +323,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
           url: Endpoints.SendMessage.url(),
           method: Endpoints.SendMessage.method,
           data: {
-            recipients: openNewMessage || isNew || newMessageThread ? ids : [isNumber ? receiver.id : _receiver],
+            recipients: openNewMessage || isNew || singleMessageThread ? ids : [isNumber ? receiver.id : _receiver],
             message: message,
             file_uuid: file && !message ? file : null
           }
@@ -334,8 +332,8 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
           const single = res.data.length <= 1;
           single && setMessageObjs((prev) => [...prev, res.data[0]]);
           handleSnippetsUpdate(res.data);
-          if (openNewMessage || newMessageThread) {
-            setNewMessageThread(false);
+          if (openNewMessage || singleMessageThread) {
+            setSingleMessageThread(false);
             setOpenNewMessage(false);
             setRecipients([]);
           }
@@ -374,9 +372,9 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
           } else {
             setReceiver(data.results[0].sender);
           }
-          setNewMessageThread(false);
+          setSingleMessageThread(false);
         } else {
-          setNewMessageThread(true);
+          setSingleMessageThread(true);
           setRecipients(_userObjId);
         }
         setLoadingMessageObjs(false);
@@ -496,9 +494,9 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
           userObj={obj ?? null}
           loadingMessageObjs={loadingMessageObjs}
           messages={messageObjs}
-          newMessageThread={newMessageThread}
+          singleMessageThread={singleMessageThread}
           threadCallbacks={{
-            onMessageBack: handleMessageBack,
+            onThreadDelete: handleMessageBack,
             onMessageDelete: handleOpenDeleteMessageDialog,
             onRecipientSelect: handleRecipientSelect,
             onMessageSend: handleSend
