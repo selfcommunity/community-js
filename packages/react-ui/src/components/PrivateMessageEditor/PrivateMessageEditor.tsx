@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Box, Button, Fade, IconButton, InputAdornment, Popover, Stack, TextField, useMediaQuery, useTheme} from '@mui/material';
+import {Alert, Box, Fade, IconButton, InputAdornment, Popover, Stack, TextField, useMediaQuery, useTheme} from '@mui/material';
 import Icon from '@mui/material/Icon';
 import classNames from 'classnames';
 import MessageMediaUploader from './MessageMediaUploader';
@@ -147,7 +147,11 @@ export default function PrivateMessageEditor(inProps: PrivateMessageEditorProps)
   }, [onThreadChangeId]);
 
   if (autoHide) {
-    return null;
+    return (
+      <Alert severity="info">
+        <FormattedMessage id="ui.privateMessage.editor.disabled.msg" defaultMessage="ui.privateMessage.editor.disabled.msg" />
+      </Alert>
+    );
   }
 
   function renderContent() {
