@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.121](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.120...@selfcommunity/react-ui@0.7.0-alpha.121) (2023-03-15)
+
+
+### Bug Fixes
+
+* pm components fixed thread delete with new params, fixed snippets selected status ([033f8a3](https://github.com/selfcommunity/community-js/commit/033f8a3bb8c5217430a7d5fa5c010725a2e6fa28))
+
+
+### Performance Improvements
+
+* renamed pm upload media params ([e4597ca](https://github.com/selfcommunity/community-js/commit/e4597cac008f9d3190dcef95106ebe075e988b28))
+
+
+
+
+
 # [0.7.0-alpha.120](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.119...@selfcommunity/react-ui@0.7.0-alpha.120) (2023-03-15)
 
 

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.6-alpha.18](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.6-alpha.17...@selfcommunity/api-services@0.3.6-alpha.18) (2023-03-15)
+
+
+### Performance Improvements
+
+* updated pm services + test ([9028c1d](https://github.com/selfcommunity/community-js/commit/9028c1da78274b7cc976da6dd0c8d3892a98f771))
+
+
+
+
+
 ## [0.3.6-alpha.17](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.6-alpha.16...@selfcommunity/api-services@0.3.6-alpha.17) (2023-02-22)
 
 
