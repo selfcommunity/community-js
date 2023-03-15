@@ -42,7 +42,7 @@ export default function useSCFetchAddressingTagList({fetch = false}: {fetch?: bo
 
   // load addressing tags
   useEffect(() => {
-    if (!loaded && fetch && scUserContext.user && scPreferences.features.includes(SCFeatures.USER_TAGGING)) {
+    if (!loaded && fetch && scUserContext.user && scPreferences.features.includes(SCFeatures.TAGGING)) {
       fetchAddressingTags().then((obj: SCTagType[]) => {
         setLoaded(true);
         setSCAddressingTags(obj);

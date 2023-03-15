@@ -150,63 +150,19 @@ const PREFIX = 'SCReactionAction';
 
 const classes = {
   root: `${PREFIX}-root`,
-  divider: `${PREFIX}-divider`,
-  actionButton: `${PREFIX}-action-button`,
   inline: `${PREFIX}-inline`,
-  inlineActionButton: `${PREFIX}-inline-action-button`,
+  divider: `${PREFIX}-divider`,
+  button: `${PREFIX}-button`,
+  voted: `${PREFIX}-voted`,
   viewAudienceButton: `${PREFIX}-view-audience-button`,
-  groupedIcons: `${PREFIX}-grouped-icons`,
-  reactionAvatar: `${PREFIX}-reaction-avatar`,
-  reactionIcon: `${PREFIX}-reaction-icon`,
-  tabReactionIcon: `${PREFIX}-tab-reaction-icon`
+  reaction: `${PREFIX}-reaction`
 };
 
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  flexDirection: 'column',
-  [`&.${classes.inline}`]: {
-    flexDirection: 'row-reverse'
-  },
-  [`& .${classes.inlineActionButton}`]: {
-    minWidth: 30
-  },
-  [`& .${classes.divider}`]: {
-    width: '100%',
-    borderBottom: 0
-  },
-  [`& .${classes.viewAudienceButton}`]: {
-    height: 32,
-    fontSize: 15,
-    textTransform: 'capitalize',
-    '& p': {
-      fontSize: '0.9rem'
-    }
-  },
-  [`& .${classes.groupedIcons}`]: {
-    '& .MuiAvatar-root': {
-      width: '20px',
-      height: '20px',
-      fontSize: '0.8rem',
-      marginRight: '6px',
-      '& img': {
-        height: '1rem',
-        width: '1rem'
-      }
-    }
-  },
-  [`& .${classes.tabReactionIcon}`]: {
-    '& img': {
-      width: '2rem',
-      height: '2rem'
-    }
-  }
-}));
+})(({theme}) => ({}));
 
 export interface TabPanelProps {
   children?: React.ReactNode;
@@ -497,11 +453,10 @@ export default function Reaction(inProps: VoteProps): JSX.Element {
               size="small"
               onClick={handleToggleVotesDialog}
               disabled={obj.vote_count === 0}
-              color="inherit"
-              classes={{root: classes.viewAudienceButton}}>
-              <AvatarGroup className={classes.groupedIcons} max={3}>
+              className={classes.viewAudienceButton}>
+              <AvatarGroup max={3}>
                 {reactionsList.map((r: any, i) => (
-                  <Avatar alt={r.reaction.label} src={r.reaction.image} key={i} className={classes.reactionAvatar} />
+                  <Avatar alt={r.reaction.label} src={r.reaction.image} key={i} className={classes.reaction} />
                 ))}
                 {scUserContext.user && obj.voted ? (
                   <Typography component={'span'}>
@@ -530,7 +485,7 @@ export default function Reaction(inProps: VoteProps): JSX.Element {
                     {reactionsList.map((r: any, index) => (
                       <Tab
                         icon={
-                          <Icon className={classes.tabReactionIcon}>
+                          <Icon>
                             <img alt={r.reaction.label} src={r.reaction.image} />
                           </Icon>
                         }
@@ -632,14 +587,15 @@ export default function Reaction(inProps: VoteProps): JSX.Element {
               onTouchMove={handleMouseLeave}
               loading={voting}
               disabled={!obj}
-              color="inherit"
-              classes={{root: classNames(classes.actionButton, {[classes.inlineActionButton]: inlineAction})}}>
+              classes={{
+                root: classNames(classes.button, {
+                  [classes.voted]: scUserContext.user && obj.voted && obj.reaction
+                })
+              }}>
               {scUserContext.user && obj.voted && obj.reaction ? (
-                <Icon fontSize={'large'} className={classes.reactionIcon}>
-                  <img alt={obj.reaction.label} src={obj.reaction.image} height={16} width={16} />
-                </Icon>
+                <img alt={obj.reaction.label} src={obj.reaction.image} />
               ) : (
-                <Icon fontSize={'large'}>thumb_up_off_alt</Icon>
+                <Icon>thumb_up_off_alt</Icon>
               )}
             </LoadingButton>
             <ReactionsPopover

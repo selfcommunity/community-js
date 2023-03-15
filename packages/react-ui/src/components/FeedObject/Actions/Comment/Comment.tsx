@@ -28,8 +28,7 @@ const classes = {
   root: `${PREFIX}-root`,
   divider: `${PREFIX}-divider`,
   inline: `${PREFIX}-inline`,
-  actionButton: `${PREFIX}-action-button`,
-  inlineActionButton: `${PREFIX}-inline-action-button`,
+  button: `${PREFIX}-button`,
   viewAudienceButton: `${PREFIX}-view-audience-button`
 };
 
@@ -37,30 +36,7 @@ const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  flexDirection: 'column',
-  [`&.${classes.inline}`]: {
-    flexDirection: 'row-reverse'
-  },
-  [`& .${classes.inlineActionButton}`]: {
-    minWidth: 30
-  },
-  [`& .${classes.divider}`]: {
-    width: '100%',
-    borderBottom: 0
-  },
-  [`& .${classes.viewAudienceButton}`]: {
-    height: 32,
-    fontSize: 15,
-    textTransform: 'capitalize',
-    '& p': {
-      fontSize: '0.9rem'
-    }
-  }
-}));
+})(({theme}) => ({}));
 
 export interface CommentProps {
   /**
@@ -185,7 +161,6 @@ export default function Comment(inProps: CommentProps): JSX.Element {
                   <Typography variant={'body2'}>{`${intl.formatMessage(messages.comments, {total: obj.comment_count})}`}</Typography>
                 ) : (
                   <Button
-                    color="inherit"
                     variant="text"
                     size="small"
                     component={Link}
@@ -214,11 +189,8 @@ export default function Comment(inProps: CommentProps): JSX.Element {
           <React.Fragment>
             {!inlineAction && withAudience && <Divider className={classes.divider} />}
             <Tooltip title={`${intl.formatMessage(messages.comment)}`}>
-              <Button
-                onClick={onCommentAction}
-                color="inherit"
-                classes={{root: classNames(classes.actionButton, {[classes.inlineActionButton]: inlineAction})}}>
-                <Icon fontSize={'large'}>chat_bubble_outline</Icon>
+              <Button onClick={onCommentAction} className={classes.button}>
+                <Icon>chat_bubble_outline</Icon>
               </Button>
             </Tooltip>
           </React.Fragment>

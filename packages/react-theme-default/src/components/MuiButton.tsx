@@ -13,8 +13,7 @@ const Component = {
     {
       props: {variant: 'text'},
       style: {
-        borderWidth: 0,
-        borderRadius: 0
+        borderWidth: 0
       }
     }
   ],
@@ -24,7 +23,7 @@ const Component = {
       fontWeight: theme.typography.fontWeightRegular,
       padding: '.4em .6em',
       lineHeight: 1.2,
-      borderRadius: 25
+      borderRadius: theme.shape.borderRadius
     }),
     sizeSmall: {
       fontSize: '0.875rem',

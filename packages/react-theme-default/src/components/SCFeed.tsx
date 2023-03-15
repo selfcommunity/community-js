@@ -16,7 +16,7 @@ const Component = {
       },
       '& .SCFeed-right': {
         padding: theme.spacing(1.25, 0),
-        '& > * > .SCWidget-root': {
+        '& > .SCWidget-root': {
           marginBottom: theme.spacing(3)
         }
       },
