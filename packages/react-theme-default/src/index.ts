@@ -1,5 +1,3 @@
-import {createTheme} from '@mui/material/styles';
-
 import './styles/reset.css';
 import './fonts/community-icons.css';
 
@@ -82,6 +80,7 @@ import SCCommentObjectReactions from './components/SCCommentObjectReactions';
 import SCCommentObjectVotes from './components/SCCommentObjectVotes';
 import SCActivitiesMenu from './components/SCActivitiesMenu';
 import MuiTooltip from './components/MuiTooltip';
+import SCCommentNotification from './components/SCCommentNotification';
 
 /**
  * Style fragments - Imports - End
@@ -158,6 +157,7 @@ const theme = {
     SCCategoryTemplateSkeleton,
     SCChoices,
     SCCommentAction,
+    SCCommentNotification,
     SCCommentObject,
     SCCommentObjectReactions,
     SCCommentObjectSkeleton,

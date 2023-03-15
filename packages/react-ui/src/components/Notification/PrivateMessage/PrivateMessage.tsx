@@ -45,15 +45,6 @@ const Root = styled(NotificationItem, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  [`& .${classes.replyButton}`]: {
-    minWidth: 30
-  },
-  [`& .${classes.activeAt}`]: {
-    minWidth: 30,
-    [theme.breakpoints.down('md')]: {
-      display: 'none'
-    }
-  },
   [`& .${classes.username}`]: {
     display: 'inline',
     fontWeight: 700,

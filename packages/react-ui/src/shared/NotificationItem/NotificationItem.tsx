@@ -5,7 +5,6 @@ import classNames from 'classnames';
 import Widget, {WidgetProps} from '../../components/Widget';
 import {useThemeProps} from '@mui/system';
 import NewChip from '../NewChip/NewChip';
-import {grey} from '@mui/material/colors';
 import {SCNotificationObjectTemplateType} from '../../types/notification';
 import {SCThemeType} from '@selfcommunity/react-core';
 
@@ -30,9 +29,7 @@ const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}: {theme: SCThemeType}) => ({
-  whiteSpace: 'normal'
-}));
+})(({theme}: {theme: SCThemeType}) => ({}));
 
 export interface NotificationItemProps extends Pick<WidgetProps, Exclude<keyof WidgetProps, 'id'>> {
   /**

@@ -49,30 +49,7 @@ const Root = styled(NotificationItem, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  [`& .${classes.username}`]: {
-    fontWeight: 700,
-    '&:hover': {
-      textDecoration: 'underline'
-    }
-  },
-  [`& .${classes.voteButton}`]: {
-    marginLeft: '-1px',
-    minWidth: '30px',
-    paddingTop: 3,
-    '& > span': {
-      fontSize: '15px'
-    }
-  },
-  [`& .${classes.contributionText}`]: {
-    color: theme.palette.text.primary,
-    textOverflow: 'ellipsis',
-    overflow: 'hidden',
-    '&:hover': {
-      textDecoration: 'underline'
-    }
-  }
-}));
+})(({theme}) => ({}));
 
 export interface ContributionNotificationProps
   extends Pick<
