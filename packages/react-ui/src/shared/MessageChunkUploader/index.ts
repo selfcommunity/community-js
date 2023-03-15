@@ -89,7 +89,7 @@ export default (props: MessageChunkUploaderProps): JSX.Element => {
       // @ts-ignore
       reader.readAsDataURL(item.file);
     }
-    chunkStateRef.current.setChunk({id: item.id, [`file_uuid`]: null, completed: 0, filename: item.file.name, [`qqtotalparts`]: null});
+    chunkStateRef.current.setChunk({id: item.id, [`file_uuid`]: null, completed: 0, filename: item.file.name, [`totalparts`]: null});
   });
 
   useItemProgressListener((item) => {
@@ -104,9 +104,9 @@ export default (props: MessageChunkUploaderProps): JSX.Element => {
       onSuccess(item.uploadResponse.results[0].data);
     } else {
       const formData = new FormData();
-      formData.append('qquuid', chunkStateRef.current.chunks[item.id].file_uuid);
-      formData.append('qqfilename', chunkStateRef.current.chunks[item.id].filename);
-      formData.append('qqtotalparts', chunkStateRef.current.chunks[item.id].qqtotalparts);
+      formData.append('uuid', chunkStateRef.current.chunks[item.id].file_uuid);
+      formData.append('filename', chunkStateRef.current.chunks[item.id].filename);
+      formData.append('totalparts', chunkStateRef.current.chunks[item.id].totalparts);
       http
         .request({
           url: Endpoints.PrivateMessageChunkUploadDone.url(),
@@ -140,12 +140,12 @@ export default (props: MessageChunkUploaderProps): JSX.Element => {
   useChunkStartListener((data): StartEventResponse => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore
-    chunkStateRef.current.setChunk({id: data.item.id, [`qqpartindex`]: data.chunk.index});
-    chunkStateRef.current.setChunk({id: data.item.id, [`qqtotalparts`]: data.totalCount});
+    chunkStateRef.current.setChunk({id: data.item.id, [`partindex`]: data.chunk.index});
+    chunkStateRef.current.setChunk({id: data.item.id, [`totalparts`]: data.totalCount});
     const res: StartEventResponse = {
       url: `${scContext.settings.portal}${Endpoints.PrivateMessageUploadMediaInChunks.url()}`,
       sendOptions: {
-        paramName: 'qqfile',
+        paramName: 'file',
         headers: {Authorization: `Bearer ${scContext.settings.session.authToken.accessToken}`},
         method: Endpoints.PrivateMessageUploadMediaInChunks.method
       }
@@ -154,15 +154,15 @@ export default (props: MessageChunkUploaderProps): JSX.Element => {
       res.sendOptions.params = {
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
-        qqpartindex: data.chunkIndex,
-        qqtotalparts: data.totalCount
+        partindex: data.chunkIndex,
+        totalparts: data.totalCount
       };
     }
     if (chunkStateRef.current.chunks[data.item.id].file_uuid && data.totalCount > 1) {
       res.sendOptions.params = {
-        [`qquuid`]: chunkStateRef.current.chunks[data.item.id].file_uuid,
-        [`qqtotalparts`]: chunkStateRef.current.chunks[data.item.id].qqtotalparts,
-        [`qqpartindex`]: chunkStateRef.current.chunks[data.item.id].qqpartindex
+        [`uuid`]: chunkStateRef.current.chunks[data.item.id].file_uuid,
+        [`totalparts`]: chunkStateRef.current.chunks[data.item.id].totalparts,
+        [`partindex`]: chunkStateRef.current.chunks[data.item.id].partindex
       };
     } else {
       chunkStateRef.current.setChunk({id: data.item.id, type: type || data.sendOptions.paramName});

@@ -164,7 +164,7 @@ export default function MessageMediaUploader(props: MessageMediaUploaderProps): 
           <MessageChunkUploader onStart={handleStart} onSuccess={handleSuccess} onProgress={handleProgress} onError={handleError} />
           {!file && Object.keys(uploading).length === 0 && Object.keys(errors).length === 0 && (
             <UploadDropZone className={classes.uploadSection} grouped maxGroupSize={3}>
-              <UploadButton inputFieldName="qqfile" className={classes.uploadButton} />
+              <UploadButton inputFieldName="file" className={classes.uploadButton} />
               <Typography textAlign={'center'} fontWeight={'medium'}>
                 <FormattedMessage id="ui.privateMessage.editor.media.uploader.msg" defaultMessage="ui.privateMessage.editor.media.uploader.msg" />
               </Typography>
