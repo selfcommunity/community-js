@@ -194,7 +194,7 @@ export default function Tags(props: TagsProps): JSX.Element {
           {type === TagsComponentType.POPPER ? (
             <TagsPopperRoot {...rest}>
               <Icon ref={popperRef} fontSize="small" onClick={handleToggle} aria-haspopup="true">
-                local_offer
+                label
               </Icon>
               {/* @ts-ignore */}
               <TagsPopper

@@ -6,6 +6,7 @@ import {styled} from '@mui/material/styles';
 import Icon from '@mui/material/Icon';
 import CommentObjectReactionsDialog from './ReactionsDialog';
 import {useThemeProps} from '@mui/system';
+import classNames from 'classnames';
 
 const PREFIX = 'SCCommentObjectReactions';
 
@@ -22,28 +23,7 @@ const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  [`& .${classes.btnViewVotes}`]: {
-    minWidth: 42,
-    marginTop: -14,
-    right: 0,
-    position: 'absolute'
-  },
-  [`& .${classes.groupedReactions}`]: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    '& .MuiAvatar-root': {
-      width: '20px',
-      height: '20px',
-      fontSize: '0.8rem',
-      marginRight: '6px',
-      '& img': {
-        height: '1rem',
-        width: '1rem'
-      }
-    }
-  }
-}));
+})(({theme}) => ({}));
 
 export interface ReactionsProps {
   /**
@@ -75,7 +55,7 @@ export default function Reactions(inProps: ReactionsProps): JSX.Element {
     name: PREFIX
   });
 
-  const {commentObjectId, commentObject, reactionsList = [], ...rest} = props;
+  const {className = '', commentObjectId, commentObject, reactionsList = [], ...rest} = props;
 
   // RETRIEVE OBJECTS
   const {obj, setObj} = useSCFetchCommentObject({id: commentObjectId, commentObject});
@@ -100,13 +80,7 @@ export default function Reactions(inProps: ReactionsProps): JSX.Element {
     }
     return (
       <>
-        <Button
-          variant="text"
-          size="small"
-          onClick={handleToggleReactionsDialog}
-          disabled={obj.vote_count === 0}
-          color="inherit"
-          classes={{root: classes.btnViewVotes}}>
+        <Button variant="text" size="small" onClick={handleToggleReactionsDialog} disabled={obj.vote_count === 0} className={classes.btnViewVotes}>
           <>
             {obj.vote_count <= 0 ? (
               <Icon fontSize="medium" sx={{marginTop: '-1px'}}>
@@ -134,5 +108,9 @@ export default function Reactions(inProps: ReactionsProps): JSX.Element {
     );
   }
 
-  return <Root {...rest}>{renderReactions()}</Root>;
+  return (
+    <Root className={classNames(classes.root, className)} {...rest}>
+      {renderReactions()}
+    </Root>
+  );
 }

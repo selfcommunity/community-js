@@ -17,31 +17,16 @@ const PREFIX = 'SCFollowAction';
 
 const classes = {
   root: `${PREFIX}-root`,
-  followButton: `${PREFIX}-follow-button`,
-  iconizedButton: `${PREFIX}-button-iconized`
+  button: `${PREFIX}-button`,
+  iconized: `${PREFIX}-iconized`,
+  followed: `${PREFIX}-followed`
 };
 
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  [`& .${classes.followButton}`]: {
-    backgroundColor: theme.palette.grey[100],
-    color: theme.palette.grey[700],
-    boxShadow: 'none',
-    '&:hover': {
-      backgroundColor: theme.palette.grey[300],
-      boxShadow: 'none'
-    },
-    '& .MuiIcon-root': {
-      fontSize: '1.143rem'
-    }
-  },
-  [`& .${classes.iconizedButton}`]: {
-    minWidth: 45
-  }
-}));
+})(({theme}) => ({}));
 
 export interface FollowProps {
   /**
@@ -77,7 +62,7 @@ export interface FollowProps {
   /**
    * Iconized Button
    */
-  iconizedButton?: boolean;
+  iconized?: boolean;
 
   /**
    * Any other properties
@@ -97,7 +82,7 @@ export default function Follow(inProps: FollowProps): JSX.Element {
     feedObject = null,
     feedObjectType = SCFeedObjectTypologyType.POST,
     handleFollow,
-    iconizedButton = true,
+    iconized = true,
     ...rest
   } = props;
 
@@ -171,25 +156,12 @@ export default function Follow(inProps: FollowProps): JSX.Element {
         {scUserContext.user && obj.author.id !== scUserContext.user.id && !obj.deleted && (
           <Tooltip title={btnLabel}>
             <LoadingButton
-              classes={{root: classNames(classes.followButton, {[classes.iconizedButton]: classes.iconizedButton})}}
+              className={classNames(classes.button, {[classes.iconized]: iconized, [classes.followed]: obj.followed})}
               loading={isFollowing}
-              variant={iconizedButton ? 'text' : 'contained'}
-              size="small"
+              variant={iconized ? 'text' : 'contained'}
               disabled={isFollowing}
               onClick={follow}>
-              {obj.followed ? (
-                <>
-                  {iconizedButton ? (
-                    <Icon fontSize="large" color="primary">
-                      bookmark_added
-                    </Icon>
-                  ) : (
-                    btnLabel
-                  )}
-                </>
-              ) : (
-                <>{iconizedButton ? <Icon fontSize="large">bookmark_border</Icon> : btnLabel}</>
-              )}
+              {iconized ? <Icon>{obj.followed ? 'bookmark_added' : 'bookmark_border'}</Icon> : btnLabel}
             </LoadingButton>
           </Tooltip>
         )}

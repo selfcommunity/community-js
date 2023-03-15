@@ -20,14 +20,7 @@ const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  [`& .${classes.btnViewVotes}`]: {
-    minWidth: 42,
-    marginTop: -14,
-    right: 0,
-    position: 'absolute'
-  }
-}));
+})(({theme}) => ({}));
 
 export interface VotesProps {
   /**

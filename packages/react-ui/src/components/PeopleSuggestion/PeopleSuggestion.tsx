@@ -37,12 +37,7 @@ const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  marginBottom: theme.spacing(2),
-  [`& .${classes.suggestedUserItem}`]: {
-    marginBottom: theme.spacing()
-  }
-}));
+})(({theme}) => ({}));
 
 export interface PeopleSuggestionProps extends VirtualScrollerItemProps {
   /**

@@ -1150,7 +1150,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
         aria-haspopup="true"
         onClick={handleOpen}
         className={classes.button}
-        size="medium">
+        size="small">
         {contributionObj && (contributionObj.collapsed || contributionObj.deleted) ? (
           <Badge
             badgeContent={contributionObj.collapsed ? <Icon>visibility_off</Icon> : <Icon>delete</Icon>}

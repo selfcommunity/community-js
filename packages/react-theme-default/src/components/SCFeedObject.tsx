@@ -15,14 +15,19 @@ const Component = {
           margin: theme.spacing(0, 2)
         },
         '& .SCFeedObject-header': {
+          '& .MuiCardHeader-avatar': {
+            marginRight: theme.spacing(1)
+          },
           '& .SCFeedObject-username': {
             fontWeight: theme.typography.fontWeightMedium
           },
           '& .MuiCardHeader-subheader': {
             fontSize: '0.857rem',
+            color: theme.palette.primary.main,
             marginTop: theme.spacing(0.5),
             '& .SCFeedObject-activity-at': {
               marginTop: 0,
+              display: 'inline-flex',
               '&:hover': {
                 color: 'inherit',
                 textDecoration: 'underline'
@@ -31,7 +36,8 @@ const Component = {
             '& .SCFeedObject-tag': {
               '& .MuiIcon-root': {
                 fontSize: '1rem',
-                lineHeight: '1.143rem'
+                lineHeight: '1.143rem',
+                color: 'inherit'
               }
             }
           }
@@ -70,19 +76,16 @@ const Component = {
                   fontWeight: theme.typography.fontWeightRegular,
                   marginTop: theme.spacing(1),
                   marginBottom: 0,
-                  color: theme.palette.text.secondary,
+                  color: theme.palette.primary.main,
                   '&:hover': {
                     color: 'inherit'
-                  },
-                  '& .SCReactionAction-grouped-icons': {
-                    justifyContent: 'center',
-                    alignItems: 'center'
                   }
                 },
               '& .MuiDivider-root': {
                 borderColor: theme.palette.grey[300]
               },
-              '& .SCVoteAction-action-button, & .SCCommentAction-action-button, & .SCShareAction-action-button, & .SCReactionAction-action-button': {
+              '& .SCVoteAction-button, & .SCCommentAction-button, & .SCShareAction-button, & .SCReactionAction-button': {
+                color: theme.palette.primary.main,
                 marginTop: theme.spacing(0.5),
                 marginBottom: theme.spacing(0.5),
                 borderRadius: '50%',
@@ -91,11 +94,9 @@ const Component = {
                 '& .MuiIcon-root': {
                   fontSize: '1.571rem'
                 },
-                '& .SCReactionAction-reaction-icon': {
-                  '>img': {
-                    height: '18px',
-                    width: '18px'
-                  }
+                '& > img': {
+                  width: '1.571rem',
+                  height: '1.571rem'
                 }
               }
             }
@@ -185,6 +186,7 @@ const Component = {
         },
         '& .SCFeedObject-activity-at': {
           marginTop: 0,
+          display: 'inline-flex',
           '&:hover': {
             color: 'inherit',
             textDecoration: 'underline'

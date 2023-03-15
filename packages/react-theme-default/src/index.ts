@@ -74,12 +74,21 @@ import SCContributionNotification from './components/SCContributionNotification'
 import SCSnippetNotificationsSkeleton from './components/SCSnippetNotificationsSkeleton';
 import SCPrivateMessageComponentSkeleton from './components/SCPrivateMessageComponentSkeleton';
 import SCLightbox from './components/SCLightbox';
+import SCFollowAction from './components/SCFollowAction';
+import SCReactionAction from './components/SCReactionAction';
+import SCCommentAction from './components/SCCommentAction';
+import SCShareAction from './components/SCShareAction';
+import SCVoteAction from './components/SCVoteAction';
+import SCCommentObjectReactions from './components/SCCommentObjectReactions';
+import SCCommentObjectVotes from './components/SCCommentObjectVotes';
+import SCActivitiesMenu from './components/SCActivitiesMenu';
+import MuiTooltip from './components/MuiTooltip';
 
 /**
  * Style fragments - Imports - End
  */
 
-const theme = createTheme({
+const theme = {
   // palette: {
   //   background: {
   //     default: '#FFFFFF'
@@ -134,6 +143,8 @@ const theme = createTheme({
     MuiIconButton,
     MuiOutlinedInput,
     MuiSelect,
+    MuiTooltip,
+    SCActivitiesMenu,
     SCBaseDialog,
     SCBaseItem,
     SCBaseItemButton,
@@ -147,8 +158,11 @@ const theme = createTheme({
     SCCategoryTemplate,
     SCCategoryTemplateSkeleton,
     SCChoices,
+    SCCommentAction,
     SCCommentObject,
+    SCCommentObjectReactions,
     SCCommentObjectSkeleton,
+    SCCommentObjectVotes,
     SCCommentsFeedObject,
     SCCommentsObject,
     SCComposer,
@@ -166,6 +180,7 @@ const theme = createTheme({
     SCFeedObjectSkeleton,
     SCFeedRelevantActivities,
     SCFeedSkeleton,
+    SCFollowAction,
     SCInlineComposer,
     SCLightbox,
     SCLoyaltyProgram,
@@ -178,14 +193,17 @@ const theme = createTheme({
     SCPollObject,
     SCPreviewMediaDocument,
     SCPrivateMessageComponent,
+    SCReactionAction,
     SCScrollContainer,
     SCSearchAutocomplete,
+    SCShareAction,
     SCSnippetNotifications,
     SCSnippetNotificationsSkeleton,
     SCUser,
     SCUserNotification,
     SCUserProfileHeader,
     SCUserProfileTemplate,
+    SCVoteAction,
     SCWidget,
     SCPrivateMessageSnippetItem,
     SCPrivateMessageSnippets,
@@ -207,6 +225,5 @@ const theme = createTheme({
       }
     }
   }
-});
-
+};
 export default theme;

@@ -140,46 +140,35 @@ export default function LoyaltyProgram(inProps: LoyaltyProgramProps): JSX.Elemen
     }
   }, [scUserContext.user]);
 
-  /**
-   * Renders loyalty card
-   */
-  const l = (
-    <React.Fragment>
-      <CardContent>
-        <Typography className={classes.title} variant="h5">
-          <FormattedMessage id="ui.loyaltyProgram.title" defaultMessage="ui.loyaltyProgram.title" />
-        </Typography>
-      </CardContent>
-      <CardActions className={classes.actions}>
-        <Typography variant="body2" className={classes.points}>
-          {`${intl.formatMessage(messages.points, {total: points})}`}
-        </Typography>
-        {cardType ? (
-          <Button
-            variant="outlined"
-            size="small"
-            className={classes.discoverMore}
-            component={Link}
-            to={scRoutingContext.url(SCRoutes.LOYALTY_ROUTE_NAME, {LoyaltyProgramDetail})}>
-            <FormattedMessage id="ui.loyaltyProgram.discover" defaultMessage="ui.loyaltyProgram.discover" />
-          </Button>
-        ) : (
-          <Button variant="outlined" className={classes.discoverMore} onClick={() => setOpenLoyaltyProgramDialog(true)}>
-            <FormattedMessage id="ui.loyaltyProgram.discover" defaultMessage="ui.loyaltyProgram.discover" />
-          </Button>
-        )}
-      </CardActions>
-      {openLoyaltyProgramDialog && <LoyaltyProgramDialog open={openLoyaltyProgramDialog} onClose={handleClose} points={points} />}
-    </React.Fragment>
-  );
-
-  /**
-   * Renders root object (if not hidden by autoHide prop)
-   */
+  // RENDER
   if (!autoHide && scUserContext.user) {
     return (
       <Root {...props} className={classNames(classes.root, className)}>
-        {l}
+        <CardContent>
+          <Typography className={classes.title} variant="h5">
+            <FormattedMessage id="ui.loyaltyProgram.title" defaultMessage="ui.loyaltyProgram.title" />
+          </Typography>
+        </CardContent>
+        <CardActions className={classes.actions}>
+          <Typography variant="body2" className={classes.points}>
+            {`${intl.formatMessage(messages.points, {total: points})}`}
+          </Typography>
+          {cardType ? (
+            <Button
+              variant="outlined"
+              size="small"
+              className={classes.discoverMore}
+              component={Link}
+              to={scRoutingContext.url(SCRoutes.LOYALTY_ROUTE_NAME, {LoyaltyProgramDetail})}>
+              <FormattedMessage id="ui.loyaltyProgram.discover" defaultMessage="ui.loyaltyProgram.discover" />
+            </Button>
+          ) : (
+            <Button variant="outlined" className={classes.discoverMore} onClick={() => setOpenLoyaltyProgramDialog(true)}>
+              <FormattedMessage id="ui.loyaltyProgram.discover" defaultMessage="ui.loyaltyProgram.discover" />
+            </Button>
+          )}
+        </CardActions>
+        {openLoyaltyProgramDialog && <LoyaltyProgramDialog open={openLoyaltyProgramDialog} onClose={handleClose} points={points} />}
       </Root>
     );
   }
