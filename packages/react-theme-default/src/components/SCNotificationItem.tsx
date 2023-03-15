@@ -1,13 +1,7 @@
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
-      a: {
-        color: theme.palette.text.primary,
-        textDecoration: 'none',
-        '&:hover, &:active': {
-          textDecoration: 'underline'
-        }
-      },
+      whiteSpace: 'normal',
       '& .SCNotificationItem-header': {
         display: 'flex',
         flexDirection: 'row',
@@ -17,9 +11,15 @@ const Component = {
             fontWeight: theme.typography.fontWeightBold
           }
         },
-        '& .SCNotificationItem-secondary .SCDateTimeAgo-root': {
-          marginTop: theme.spacing(1)
+        '& .SCNotificationItem-secondary': {
+          '& .SCDateTimeAgo-root, & .MuiStack-root': {
+            color: theme.palette.primary.main,
+            minHeight: theme.spacing(3)
+          }
         }
+      },
+      '& .SCNotificationItem-actions': {
+        color: theme.palette.primary.main
       },
       '&.SCNotificationItem-toast': {
         backgroundColor: 'transparent',

@@ -3,7 +3,10 @@ const Component = {
     {
       props: {variant: 'outlined'},
       style: {
-        borderWidth: 2
+        borderWidth: 2,
+        '&:hover, &:active': {
+          borderWidth: 2
+        }
       }
     },
     {
