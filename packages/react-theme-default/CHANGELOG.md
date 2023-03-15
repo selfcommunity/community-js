@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.66](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.65...@selfcommunity/react-theme-default@0.1.0-alpha.66) (2023-03-15)
+
+
+### Performance Improvements
+
+* Update default theme with make it goods ([e957797](https://github.com/selfcommunity/community-js/commit/e9577971d7706067df213db3dd88028ca045df7c))
+
+
+
+
+
 # [0.1.0-alpha.65](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.64...@selfcommunity/react-theme-default@0.1.0-alpha.65) (2023-03-14)
 
 

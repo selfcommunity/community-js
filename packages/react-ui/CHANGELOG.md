@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.120](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.119...@selfcommunity/react-ui@0.7.0-alpha.120) (2023-03-15)
+
+
+### Performance Improvements
+
+* Update default theme with make it goods ([e957797](https://github.com/selfcommunity/community-js/commit/e9577971d7706067df213db3dd88028ca045df7c))
+
+
+
+
+
 # [0.7.0-alpha.119](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.118...@selfcommunity/react-ui@0.7.0-alpha.119) (2023-03-14)
 
 
