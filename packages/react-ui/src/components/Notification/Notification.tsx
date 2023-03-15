@@ -12,16 +12,15 @@ import MentionNotification from './Mention';
 import CollapsedForNotification from './CollapsedFor';
 import KindlyNoticeForNotification from './KindlyNoticeFor';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {grey} from '@mui/material/colors';
 import KindlyNoticeFlagNotification from './KindlyNoticeFlag';
 import VoteUpNotification from './VoteUp';
 import Icon from '@mui/material/Icon';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {getContribution, getContributionRouteName, getContributionSnippet, getRouteData} from '../../utils/contribution';
 import ContributionFollowNotification from './ContributionFollow';
-import {Avatar, CardHeader, CardProps, Collapse, ListItemButton, ListItemText, Stack, Tooltip, Typography} from '@mui/material';
+import {Avatar, CardHeader, CardProps, Collapse, ListItemButton, ListItemText, Tooltip} from '@mui/material';
 import IncubatorApprovedNotification from './IncubatorApproved';
-import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
+import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
 import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
 import ContributionNotification from './Contribution';
 import {VirtualScrollerItemProps} from '../../types/virtualScroller';
@@ -29,15 +28,8 @@ import classNames from 'classnames';
 import LoadingButton from '@mui/lab/LoadingButton';
 import Widget from '../Widget';
 import {useThemeProps} from '@mui/system';
-import BaseItem from '../../shared/BaseItem';
 import {Logger} from '@selfcommunity/utils';
-import {
-  SCCommentTypologyType,
-  SCNotificationAggregatedType,
-  SCNotificationPrivateMessageType,
-  SCNotificationType,
-  SCNotificationTypologyType
-} from '@selfcommunity/types';
+import {SCNotificationAggregatedType, SCNotificationPrivateMessageType, SCNotificationType, SCNotificationTypologyType} from '@selfcommunity/types';
 
 const messages = defineMessages({
   receivePrivateMessage: {
