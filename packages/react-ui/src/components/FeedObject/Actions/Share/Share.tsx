@@ -56,43 +56,15 @@ const classes = {
   root: `${PREFIX}-root`,
   divider: `${PREFIX}-divider`,
   inline: `${PREFIX}-inline`,
-  actionButton: `${PREFIX}-action-button`,
-  inlineActionButton: `${PREFIX}-inline-action-button`,
-  viewAudienceButton: `${PREFIX}-view-audience-button`,
-  shareMenuIcon: `${PREFIX}-share-Menu-icon`
+  button: `${PREFIX}-button`,
+  viewAudienceButton: `${PREFIX}-view-audience-button`
 };
 
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  flexDirection: 'column',
-  [`&.${classes.inline}`]: {
-    flexDirection: 'row-reverse'
-  },
-  [`& .${classes.inlineActionButton}`]: {
-    minWidth: 30
-  },
-  [`& .${classes.divider}`]: {
-    width: '100%',
-    borderBottom: 0
-  },
-  [`& .${classes.viewAudienceButton}`]: {
-    height: 32,
-    fontSize: 15,
-    textTransform: 'capitalize',
-    '& p': {
-      fontSize: '0.9rem'
-    }
-  },
-  [`&.${classes.shareMenuIcon}`]: {
-    minWidth: 30
-  }
-}));
+})(({theme}) => ({}));
 
 export interface ShareProps {
   /**
@@ -306,7 +278,6 @@ export default function Share(inProps: ShareProps): JSX.Element {
               size="small"
               onClick={handleToggleSharesDialog}
               disabled={sharesCount < 1}
-              color="inherit"
               classes={{root: classes.viewAudienceButton}}>
               {`${intl.formatMessage(messages.shares, {total: sharesCount})}`}
             </Button>
@@ -324,14 +295,14 @@ export default function Share(inProps: ShareProps): JSX.Element {
     return (
       <Box>
         <MenuItem onClick={() => share(false)}>
-          <ListItemIcon classes={{root: classes.shareMenuIcon}}>
+          <ListItemIcon>
             <Icon fontSize="small">redo</Icon>
           </ListItemIcon>
           <ListItemText primary={<FormattedMessage id="ui.feedObject.share.shareNow" defaultMessage="ui.feedObject.share.shareNow" />} />
         </MenuItem>
         {obj.categories.length > 0 && (
           <MenuItem onClick={() => share(true)}>
-            <ListItemIcon classes={{root: classes.shareMenuIcon}}>
+            <ListItemIcon>
               <Icon fontSize="small">share</Icon>
             </ListItemIcon>
             <ListItemText primary={intl.formatMessage(messages.shareInCategories, {categories: obj.categories.map((c) => c.name).join(', ')})} />
@@ -339,7 +310,7 @@ export default function Share(inProps: ShareProps): JSX.Element {
         )}
         {facebookShareEnabled && (
           <MenuItem onClick={() => window.open(FACEBOOK_SHARE + url, 'facebook-share-dialog', 'width=626,height=436')}>
-            <ListItemIcon classes={{root: classes.shareMenuIcon}}>
+            <ListItemIcon>
               <Icon fontSize="small">facebook</Icon>
             </ListItemIcon>
             <ListItemText primary={<FormattedMessage id="ui.feedObject.share.facebook" defaultMessage="ui.feedObject.share.facebook" />} />
@@ -347,7 +318,7 @@ export default function Share(inProps: ShareProps): JSX.Element {
         )}
         {twitterShareEnabled && (
           <MenuItem onClick={() => window.open(TWITTER_SHARE + url, 'twitter-share-dialog', 'width=626,height=436')}>
-            <ListItemIcon classes={{root: classes.shareMenuIcon}}>
+            <ListItemIcon>
               <Icon fontSize="small">twitter</Icon>
             </ListItemIcon>
             <ListItemText primary={<FormattedMessage id="ui.feedObject.share.twitter" defaultMessage="ui.feedObject.share.twitter" />} />
@@ -355,7 +326,7 @@ export default function Share(inProps: ShareProps): JSX.Element {
         )}
         {linkedinShareEnabled && (
           <MenuItem onClick={() => window.open(LINKEDIN_SHARE + url, 'linkedin-share-dialog', 'width=626,height=436')}>
-            <ListItemIcon classes={{root: classes.shareMenuIcon}}>
+            <ListItemIcon>
               <Icon fontSize="small">linkedin</Icon>
             </ListItemIcon>
             <ListItemText primary={<FormattedMessage id="ui.feedObject.share.linkedin" defaultMessage="ui.feedObject.share.linkedin" />} />
@@ -376,12 +347,8 @@ export default function Share(inProps: ShareProps): JSX.Element {
           <React.Fragment>
             {!inlineAction && withAudience && <Divider className={classes.divider} />}
             <Tooltip title={`${intl.formatMessage(messages.share)}`}>
-              <LoadingButton
-                loading={isSharing}
-                onClick={handleOpenShareMenu}
-                color="inherit"
-                classes={{root: classNames(classes.actionButton, {[classes.inlineActionButton]: inlineAction})}}>
-                <Icon fontSize={'large'}>share</Icon>
+              <LoadingButton loading={isSharing} onClick={handleOpenShareMenu} className={classes.button}>
+                <Icon>share</Icon>
               </LoadingButton>
             </Tooltip>
             <>

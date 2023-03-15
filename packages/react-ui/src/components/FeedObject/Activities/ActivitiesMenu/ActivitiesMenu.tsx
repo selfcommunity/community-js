@@ -2,7 +2,7 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Menu from '@mui/material/Menu';
 import Tooltip from '@mui/material/Tooltip';
-import {Button, ListItem, ListItemText, useTheme, useMediaQuery} from '@mui/material';
+import {Button, ListItemButton, ListItemText, useTheme, useMediaQuery} from '@mui/material';
 import Icon from '@mui/material/Icon';
 import {styled} from '@mui/material/styles';
 import {SCFeedObjectActivitiesType} from '../../../../types/feedObject';
@@ -48,18 +48,7 @@ const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  [`& .${classes.selector}`]: {
-    display: 'flex',
-    alignItems: 'center',
-    textAlign: 'center',
-    justifyContent: 'flex-end'
-  },
-  [`& .${classes.selector} .MuiButton-root`]: {
-    textTransform: 'capitalize',
-    fontWeight: 'bold'
-  }
-}));
+})(({theme}) => ({}));
 
 export interface ActivitiesMenuProps {
   /**
@@ -128,9 +117,8 @@ export default function ActivitiesMenu(inProps: ActivitiesMenuProps) {
     return (
       <Box>
         {!hideRelevantActivitiesItem && (
-          <ListItem
+          <ListItemButton
             selected={selectedActivities === SCFeedObjectActivitiesType.RELEVANCE_ACTIVITIES}
-            button
             onClick={handleChangeActivitiesType(SCFeedObjectActivitiesType.RELEVANCE_ACTIVITIES)}>
             <ListItemText
               primary={<b>{intl.formatMessage(messages.relevantActivities)}</b>}
@@ -141,11 +129,10 @@ export default function ActivitiesMenu(inProps: ActivitiesMenuProps) {
                 />
               }
             />
-          </ListItem>
+          </ListItemButton>
         )}
-        <ListItem
+        <ListItemButton
           selected={selectedActivities === SCFeedObjectActivitiesType.RECENT_COMMENTS}
-          button
           onClick={handleChangeActivitiesType(SCFeedObjectActivitiesType.RECENT_COMMENTS)}>
           <ListItemText
             primary={<b>{intl.formatMessage(messages.recentComments)}</b>}
@@ -156,10 +143,9 @@ export default function ActivitiesMenu(inProps: ActivitiesMenuProps) {
               />
             }
           />
-        </ListItem>
-        <ListItem
+        </ListItemButton>
+        <ListItemButton
           selected={selectedActivities === SCFeedObjectActivitiesType.FIRST_COMMENTS}
-          button
           onClick={handleChangeActivitiesType(SCFeedObjectActivitiesType.FIRST_COMMENTS)}>
           <ListItemText
             primary={<b>{intl.formatMessage(messages.firstComments)}</b>}
@@ -170,11 +156,10 @@ export default function ActivitiesMenu(inProps: ActivitiesMenuProps) {
               />
             }
           />
-        </ListItem>
+        </ListItemButton>
         {scUserContext.user && (
-          <ListItem
+          <ListItemButton
             selected={selectedActivities === SCFeedObjectActivitiesType.CONNECTIONS_COMMENTS}
-            button
             onClick={handleChangeActivitiesType(SCFeedObjectActivitiesType.CONNECTIONS_COMMENTS)}>
             <ListItemText
               primary={<b>{followEnabled ? intl.formatMessage(messages.followedComments) : intl.formatMessage(messages.connectionsComments)}</b>}
@@ -192,7 +177,7 @@ export default function ActivitiesMenu(inProps: ActivitiesMenuProps) {
                 )
               }
             />
-          </ListItem>
+          </ListItemButton>
         )}
       </Box>
     );
@@ -206,10 +191,11 @@ export default function ActivitiesMenu(inProps: ActivitiesMenuProps) {
       <Box className={classes.selector}>
         <Tooltip
           title={<FormattedMessage id="ui.feedObject.activitiesMenu.tooltipTitle" defaultMessage="ui.feedObject.activitiesMenu.tooltipTitle" />}>
-          <Button variant="text" size="small" onClick={handleClick} endIcon={<Icon>expand_more</Icon>} color="inherit">
+          <Button variant="text" size="small" onClick={handleClick}>
             {selectedActivities === SCFeedObjectActivitiesType.CONNECTIONS_COMMENTS && followEnabled
               ? intl.formatMessage(messages.followedComments)
               : intl.formatMessage(messages[`${camelCase(selectedActivities)}`])}
+            &nbsp; <Icon>expand_more</Icon>
           </Button>
         </Tooltip>
       </Box>

@@ -241,7 +241,7 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
               <Icon>email</Icon>
             </Badge>
           </IconButton>
-          <IconButton onClick={handleOpenSettingMenu} className={classes.settings}>
+          <IconButton size="small" onClick={handleOpenSettingMenu} className={classes.settings}>
             {anchorSetting ? <Icon>expand_less</Icon> : <Icon>expand_more</Icon>}
           </IconButton>
           <SettingsMenu

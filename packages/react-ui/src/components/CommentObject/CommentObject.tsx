@@ -64,7 +64,7 @@ const PREFIX = 'SCCommentObject';
 const classes = {
   root: `${PREFIX}-root`,
   comment: `${PREFIX}-comment`,
-  nestedComments: `${PREFIX}-nestedComments`,
+  nestedComments: `${PREFIX}-nested-comments`,
   avatar: `${PREFIX}-avatar`,
   content: `${PREFIX}-content`,
   author: `${PREFIX}-author`,
@@ -75,100 +75,17 @@ const classes = {
   deleted: `${PREFIX}-deleted`,
   activityAt: `${PREFIX}-activity-at`,
   vote: `${PREFIX}-vote`,
+  voted: `${PREFIX}-voted`,
+  reaction: `${PREFIX}-reaction`,
   reply: `${PREFIX}-reply`,
-  contentSubSection: `${PREFIX}-comment-sub-section`,
-  addReaction: `${PREFIX}-add-reaction`,
-  reactionIcon: `${PREFIX}-reaction-icon`
+  contentSubSection: `${PREFIX}-comment-sub-section`
 };
 
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}: {theme: SCThemeType}) => ({
-  overflow: 'visible',
-  width: '100%',
-  [`& .${classes.comment}`]: {
-    paddingBottom: 0,
-    overflow: 'visible',
-    '& > div': {
-      alignItems: 'flex-start'
-    }
-  },
-  [`& .${classes.nestedComments}`]: {
-    paddingTop: 0,
-    paddingBottom: 0,
-    paddingLeft: 25,
-    '& ul.MuiList-root': {
-      paddingTop: 0,
-      paddingBottom: 0,
-      width: '100%',
-      '& li.MuiListItem-root': {
-        paddingTop: 5
-      }
-    },
-    [theme.breakpoints.up('sm')]: {
-      paddingLeft: 55
-    }
-  },
-  [`& .${classes.content}`]: {
-    position: 'relative',
-    display: 'flex',
-    '& .MuiCardContent-root': {
-      padding: '7px 13px 7px 13px',
-      flexGrow: 1
-    }
-  },
-  [`& .${classes.avatar}`]: {
-    top: theme.spacing(),
-    width: theme.selfcommunity.user.avatar.sizeMedium,
-    height: theme.selfcommunity.user.avatar.sizeMedium
-  },
-  [`& .${classes.author}`]: {
-    textDecoration: 'none',
-    color: theme.palette.text.primary,
-    '& span': {
-      fontWeight: '600'
-    }
-  },
-  [`& .${classes.textContent}`]: {
-    '& a': {
-      color: theme.palette.text.primary
-    },
-    '& p': {
-      marginBlockStart: '0.3em',
-      marginBlockEnd: '0.3em'
-    },
-    '& img': {
-      maxWidth: '100%'
-    }
-  },
-  [`& .${classes.commentActionsMenu}`]: {
-    alignItems: 'flexStart'
-  },
-  [`& .${classes.deleted}`]: {
-    opacity: 0.3
-  },
-  [`& .${classes.contentSubSection}`]: {
-    display: 'flex',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    color: theme.palette.text.secondary
-  },
-  [`& .${classes.activityAt}`]: {
-    display: 'flex',
-    textDecoration: 'none',
-    color: 'inherit'
-  },
-  [`& .${classes.vote}`]: {
-    minWidth: 0
-  },
-  [`& .${classes.reply}`]: {
-    textTransform: 'capitalize',
-    textDecoration: 'underline',
-    textDecorationStyle: 'dotted'
-  }
-}));
+})(({theme}: {theme: SCThemeType}) => ({}));
 
 export interface CommentObjectProps {
   /**
@@ -469,18 +386,18 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
    */
   function renderActionVote(comment) {
     return (
-      <LoadingButton variant={'text'} className={classes.vote} onClick={() => vote(comment)} disabled={loadingVote} color="inherit">
+      <LoadingButton
+        variant="text"
+        className={classNames(classes.vote, {[classes.voted]: comment.voted})}
+        onClick={() => vote(comment)}
+        disabled={loadingVote}>
         {comment.voted ? (
           <Tooltip title={<FormattedMessage id={'ui.commentObject.voteDown'} defaultMessage={'ui.commentObject.voteDown'} />}>
-            <Icon fontSize={'small'} color="primary">
-              thumb_up_alt
-            </Icon>
+            <Icon>thumb_up_alt</Icon>
           </Tooltip>
         ) : (
           <Tooltip title={<FormattedMessage id={'ui.commentObject.voteUp'} defaultMessage={'ui.commentObject.voteUp'} />}>
-            <Icon fontSize={'small'} color="inherit">
-              thumb_up_off_alt
-            </Icon>
+            <Icon>thumb_up_off_alt</Icon>
           </Tooltip>
         )}
       </LoadingButton>
@@ -501,14 +418,11 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
           onTouchMove={handleMouseLeave}
           loading={loadingVote}
           disabled={!obj}
-          color="inherit"
-          classes={{root: classNames(classes.addReaction)}}>
+          className={classNames(classes.reaction, {[classes.voted]: comment.voted})}>
           {scUserContext.user && obj.voted && obj.reaction ? (
-            <Icon fontSize={'large'} className={classes.reactionIcon}>
-              <img alt={obj.reaction.label} src={obj.reaction.image} height={16} width={16} />
-            </Icon>
+            <img alt={obj.reaction.label} src={obj.reaction.image} />
           ) : (
-            <Icon fontSize={'large'}>thumb_up_off_alt</Icon>
+            <Icon>thumb_up_off_alt</Icon>
           )}
         </LoadingButton>
         <ReactionsPopover
@@ -529,7 +443,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
    */
   function renderActionReply(comment) {
     return (
-      <Button className={classes.reply} variant="text" onClick={() => reply(comment)} color="inherit">
+      <Button className={classes.reply} variant="text" onClick={() => reply(comment)}>
         {intl.formatMessage(messages.reply)}
       </Button>
     );
@@ -540,9 +454,9 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
    */
   function renderVotes(comment) {
     if (reactionsEnabled) {
-      return <Reactions commentObject={comment} reactionsList={_reactionsList} sx={{display: {xs: 'none', sm: 'block'}}} />;
+      return <Reactions commentObject={comment} reactionsList={_reactionsList} />;
     }
-    return <Votes commentObject={comment} sx={{display: {xs: 'none', sm: 'block'}}} />;
+    return <Votes commentObject={comment} />;
   }
 
   /**

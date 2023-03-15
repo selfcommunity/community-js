@@ -13,7 +13,8 @@ const Component = {
         fontSize: '1.143rem',
         '& .SCComposer-types .MuiInputBase-input': {
           fontWeight: theme.typography.fontWeightBold,
-          fontSize: '1.286rem'
+          fontSize: '1.286rem',
+          minHeight: 'auto'
         }
       },
       '& .SCComposer-content': {

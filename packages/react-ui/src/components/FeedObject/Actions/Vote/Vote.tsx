@@ -102,10 +102,10 @@ const PREFIX = 'SCVoteAction';
 const classes = {
   root: `${PREFIX}-root`,
   divider: `${PREFIX}-divider`,
-  actionButton: `${PREFIX}-action-button`,
+  button: `${PREFIX}-button`,
   inline: `${PREFIX}-inline`,
-  inlineActionButton: `${PREFIX}-inline-action-button`,
-  viewAudienceButton: `${PREFIX}-view-audience-button`
+  viewAudienceButton: `${PREFIX}-view-audience-button`,
+  voted: `${PREFIX}-voted`
 };
 
 const messages = defineMessages({
@@ -135,30 +135,7 @@ const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  flexDirection: 'column',
-  [`&.${classes.inline}`]: {
-    flexDirection: 'row-reverse'
-  },
-  [`& .${classes.inlineActionButton}`]: {
-    minWidth: 30
-  },
-  [`& .${classes.divider}`]: {
-    width: '100%',
-    borderBottom: 0
-  },
-  [`& .${classes.viewAudienceButton}`]: {
-    height: 32,
-    fontSize: 15,
-    textTransform: 'capitalize',
-    '& p': {
-      fontSize: '0.9rem'
-    }
-  }
-}));
+})(({theme}) => ({}));
 
 export interface VoteProps {
   /**
@@ -371,23 +348,8 @@ export default function Vote(inProps: VoteProps): JSX.Element {
               size="small"
               onClick={handleToggleVotesDialog}
               disabled={obj.vote_count === 0}
-              color="inherit"
               classes={{root: classes.viewAudienceButton}}
-              startIcon={
-                <>
-                  {!inlineAction && (
-                    <>
-                      {scUserContext.user && obj.voted ? (
-                        <Icon fontSize="small" color="primary">
-                          thumb_up
-                        </Icon>
-                      ) : (
-                        <Icon fontSize="small">thumb_up_off_alt</Icon>
-                      )}
-                    </>
-                  )}
-                </>
-              }>
+              startIcon={<>{!inlineAction && <>{scUserContext.user && obj.voted ? <Icon>thumb_up</Icon> : <Icon>thumb_up_off_alt</Icon>}</>}</>}>
               {scUserContext.user && obj.voted ? (
                 <React.Fragment>
                   {obj.vote_count === 1
@@ -455,15 +417,10 @@ export default function Vote(inProps: VoteProps): JSX.Element {
                   loading={voting}
                   disabled={!obj}
                   onClick={vote}
-                  color="inherit"
-                  classes={{root: classNames(classes.actionButton, {[classes.inlineActionButton]: inlineAction})}}>
-                  {scUserContext.user && obj.voted ? (
-                    <Icon fontSize={'large'} color="primary">
-                      thumb_up
-                    </Icon>
-                  ) : (
-                    <Icon fontSize={'large'}>thumb_up_off_alt</Icon>
-                  )}
+                  className={classNames(classes.button, {
+                    [classes.voted]: scUserContext.user && obj.voted
+                  })}>
+                  {scUserContext.user && obj.voted ? <Icon>thumb_up</Icon> : <Icon>thumb_up_off_alt</Icon>}
                 </LoadingButton>
               </span>
             </Tooltip>
