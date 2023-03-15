@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Button, CardContent, Icon, IconButton, List, TextField} from '@mui/material';
 import Widget from '../Widget';
@@ -9,6 +9,7 @@ import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
+import {SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
 
 const messages = defineMessages({
   placeholder: {
@@ -112,7 +113,8 @@ export default function PrivateMessageSnippets(inProps: PrivateMessageSnippetsPr
   // STATE
   const [search, setSearch] = useState<string>('');
   const isObj = typeof userObj === 'object';
-
+  const scUserContext: SCUserContextType = useContext(SCUserContext);
+  const authUserId = scUserContext.user ? scUserContext.user.id : null;
   // INTL
   const intl = useIntl();
 
@@ -120,9 +122,14 @@ export default function PrivateMessageSnippets(inProps: PrivateMessageSnippetsPr
   const filteredSnippets = snippets.filter((el) => {
     if (search === '') {
       return el;
+    } else if (el.receiver.id === authUserId) {
+      return el.sender.username.toLowerCase().includes(search);
     }
     return el.receiver.username.toLowerCase().includes(search);
   });
+  const messageReceiver = (item, loggedUserId) => {
+    return item?.receiver?.id !== loggedUserId ? item?.receiver?.id : item?.sender?.id;
+  };
 
   //HANDLERS
   const handleChange = (event) => {
@@ -196,7 +203,10 @@ export default function PrivateMessageSnippets(inProps: PrivateMessageSnippetsPr
                     message={message}
                     key={message.id}
                     actions={{onItemClick: () => handleOpenThread(message), onMenuClick: () => handleDeleteConversation(message)}}
-                    selected={userObj !== SCPrivateMessageStatusType.NEW && message.receiver.id === (isObj ? userObj?.receiver?.id : userObj)}
+                    selected={
+                      userObj !== SCPrivateMessageStatusType.NEW &&
+                      messageReceiver(message, authUserId) === (isObj ? messageReceiver(userObj, authUserId) : userObj)
+                    }
                   />
                 ))}
               </List>

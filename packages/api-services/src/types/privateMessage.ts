@@ -30,6 +30,20 @@ export interface ThreadParams {
 }
 
 /**
+ * Delete Thread Params interface.
+ */
+export interface ThreadDeleteParams {
+  /**
+   * The id of the thread(one between thread or user is required).
+   */
+  thread?: number;
+  /**
+   * The id of the user(one between thread or user is required).
+   */
+  user?: number;
+}
+
+/**
  * MessageCreateParams interface.
  */
 export interface MessageCreateParams {
@@ -54,27 +68,27 @@ export interface MessageMediaUploadParams {
   /**
    * The file to upload.
    */
-  qqfile: Blob;
+  file: Blob;
   /**
    * The type of the file to upload.
    */
-  qqfiletype?: string;
+  filetype?: string;
   /**
    * The name of the file to upload.
    */
-  qqfilename?: string;
+  filename?: string;
   /**
    * The duration (in seconds) of the video or audio track to upload.
    */
-  qqduration?: number;
+  duration?: number;
   /**
    * The size of the file to upload.
    */
-  qqtotalfilesize?: number;
+  totalfilesize?: number;
   /**
    * The MD5 of the file to upload.
    */
-  qqmd5?: string;
+  md5?: string;
 }
 
 /**
@@ -84,28 +98,28 @@ export interface MessageThumbnailUploadParams {
   /**
    * The file to upload.
    */
-  qqfile: Blob;
+  file: Blob;
   /**
    * The parent file uuid. It has to be the file_uuid returned by the previous call
    */
-  qqparentuuid: string;
+  parentuuid: string;
   /**
    * The type of the file to upload.
    */
-  qqfiletype?: string;
+  filetype?: string;
   /**
    * The name of the file to upload.
    */
-  qqfilename?: string;
+  filename?: string;
 
   /**
    * The size of the file to upload.
    */
-  qqtotalfilesize?: number;
+  totalfilesize?: number;
   /**
    * The MD5 of the file to upload.
    */
-  qqmd5?: string;
+  md5?: string;
 }
 
 /**
@@ -115,39 +129,39 @@ export interface MessageMediaChunksParams {
   /**
    * The file to upload.
    */
-  qqfile: Blob;
+  file: Blob;
   /**
-   * The file uuid returned by the first chunk upload. It is required only when qqpartindex > 0.
+   * The file uuid returned by the first chunk upload. It is required only when partindex > 0.
    */
-  qquuid: string;
+  uuid: string;
   /**
-   * The index of the chunk part to upload. It starts at 0 and reaches qqtotalparts -1.
+   * The index of the chunk part to upload. It starts at 0 and reaches totalparts -1.
    */
-  qqpartindex: number;
+  partindex: number;
   /**
    * The number of total parts of the chunk to upload.
    */
-  qqtotalparts: number;
+  totalparts: number;
   /**
    * The type of the file to upload.
    */
-  qqfiletype?: string;
+  filetype?: string;
   /**
    * The size of the file to upload.
    */
-  qqtotalfilesize?: number;
+  totalfilesize?: number;
   /**
    * 	The chunk byte offset.
    */
-  qqpartbyteoffset?: number;
+  partbyteoffset?: number;
   /**
    * 	The size of the chunk.
    */
-  qqchunksize?: number;
+  chunksize?: number;
   /**
    * The name of the file to upload.
    */
-  qqfilename?: string;
+  filename?: string;
 }
 
 /**
@@ -155,27 +169,27 @@ export interface MessageMediaChunksParams {
  */
 export interface MessageChunkUploadDoneParams {
   /**
-   * The file uuid returned by the first chunk upload. It is required only when qqpartindex > 0.
+   * The file uuid returned by the first chunk upload. It is required only when partindex > 0.
    */
-  qquuid: string;
+  uuid: string;
   /**
    * The name of the file to upload.
    */
-  qqfilename: string;
+  filename: string;
   /**
    * The number of total parts of the chunk to upload.
    */
-  qqtotalparts?: number;
+  totalparts?: number;
   /**
    * The MD5 of the file to upload.
    */
-  qqmd5?: string;
+  md5?: string;
   /**
    * The type of the file to upload.
    */
-  qqfiletype?: string;
+  filetype?: string;
   /**
    * The size of the file to upload.
    */
-  qqtotalfilesize?: number;
+  totalfilesize?: number;
 }

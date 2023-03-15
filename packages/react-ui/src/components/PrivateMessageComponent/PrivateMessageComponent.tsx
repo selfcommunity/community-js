@@ -94,6 +94,10 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
   });
   const {id = null, autoHide = false, className = null, onItemClick = null, onThreadDelete = null, ...rest} = props;
 
+  // CONTEXT
+  const scUserContext: SCUserContextType = useContext(SCUserContext);
+  const authUserId = scUserContext.user ? scUserContext.user.id : null;
+
   // STATE
   const theme = useTheme<SCThemeType>();
   const [snippets, setSnippets] = useState<any[]>([]);
@@ -116,13 +120,13 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
   const mobileThreadView = (layout === 'mobile' && !id) || (layout === 'default' && id);
   const [singleMessageThread, setSingleMessageThread] = useState<boolean>(false);
   const {enqueueSnackbar, closeSnackbar} = useSnackbar();
-
+  const isNumber = typeof obj === 'number';
+  const messageReceiver = (item, loggedUserId) => {
+    return item?.receiver?.id !== loggedUserId ? item?.receiver?.id : item?.sender?.id;
+  };
   // REFS
   const refreshSubscription = useRef(null);
-  // CONTEXT
-  const scUserContext: SCUserContextType = useContext(SCUserContext);
-  const authUserId = scUserContext.user ? scUserContext.user.id : null;
-  const isNumber = typeof obj === 'number';
+
   //  HANDLERS
   /**
    * Handles thread opening on click
@@ -130,7 +134,8 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
    */
   const handleThreadOpening = (item) => {
     updateSnippetsParams(item.id, 'seen');
-    onItemClick && onItemClick(item.receiver.id !== authUserId ? item.receiver.id : item.sender.id);
+    onItemClick && onItemClick(messageReceiver(item, authUserId));
+    // onItemClick && onItemClick(item.receiver.id !== authUserId ? item.receiver.id : item.sender.id);
     setObj(item);
     setOpenNewMessage(false);
     isMobile && setLayout('mobile');
@@ -172,7 +177,8 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
    */
   function handleOpenDeleteThreadDialog(threadObj) {
     setOpenDeleteThreadDialog(true);
-    setDeletingThread(threadObj.thread_id ?? threadObj.id);
+    //setDeletingThread(threadObj.thread_id ?? threadObj.id);
+    setDeletingThread(messageReceiver(threadObj, authUserId));
   }
   /**
    * Handles delete thread dialog close
@@ -195,10 +201,10 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
    * @param message
    */
   const handleSnippetsUpdate = (message: any) => {
-    const _receiver = authUserId !== message[0].receiver.id ? message[0].receiver.id : message[0].sender.id;
+    // const _receiver = authUserId !== message[0].receiver.id ? message[0].receiver.id : message[0].sender.id;
     updateSnippetsList(message);
     if (openNewMessage) {
-      onItemClick && onItemClick(_receiver);
+      onItemClick && onItemClick(messageReceiver(message[0], authUserId));
       setObj(message[0]);
       setOpenNewMessage(false);
     }
@@ -263,18 +269,20 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
    * Handles thread deletion
    */
   function handleDeleteThread() {
-    const _threadId = obj?.thread_id ?? obj?.id;
-    PrivateMessageService.deleteAThread(deletingThread ?? obj.id)
+    // const _threadId = obj?.thread_id ?? obj?.id;
+    PrivateMessageService.deleteAThread({user: deletingThread})
       .then(() => {
         if (layout === 'mobile') {
           setLayout('default');
         }
         id && setLayout('mobile');
         setOpenDeleteThreadDialog(false);
-        deletingThread === _threadId && handleThreadClosing();
-        const _snippets = snippets.filter((s) =>
-          Object.prototype.hasOwnProperty.call(s, 'thread_id') ? s.thread_id !== deletingThread : s.id !== deletingThread
-        );
+        deletingThread === messageReceiver(obj, authUserId) && handleThreadClosing();
+        //deletingThread === _threadId && handleThreadClosing();
+        // const _snippets = snippets.filter((s) =>
+        //   Object.prototype.hasOwnProperty.call(s, 'thread_id') ? s.thread_id !== deletingThread : s.id !== deletingThread
+        // );
+        const _snippets = snippets.filter((s) => messageReceiver(s, authUserId) !== deletingThread);
         setSnippets(_snippets);
         setClear(true);
       })
@@ -311,7 +319,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
    * @param file
    */
   function handleSend(message: string, file: SCPrivateMessageFileType) {
-    const _receiver = authUserId !== obj?.receiver?.id ? obj?.receiver?.id : obj?.sender?.id;
+    //const _receiver = authUserId !== obj?.receiver?.id ? obj?.receiver?.id : obj?.sender?.id;
     if (UserUtils.isBlocked(scUserContext.user)) {
       enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
         variant: 'warning',
@@ -323,7 +331,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
           url: Endpoints.SendMessage.url(),
           method: Endpoints.SendMessage.method,
           data: {
-            recipients: openNewMessage || isNew || singleMessageThread ? ids : [isNumber ? receiver.id : _receiver],
+            recipients: openNewMessage || isNew || singleMessageThread ? ids : [isNumber && obj ? obj : messageReceiver(obj, authUserId)],
             message: message,
             file_uuid: file && !message ? file : null
           }
@@ -354,7 +362,8 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
    * Fetches thread
    */
   function fetchThread() {
-    const _userObjId = isNumber ? obj : obj?.receiver?.id !== authUserId ? obj?.receiver?.id : obj?.sender?.id;
+    //const _userObjId = isNumber ? obj : obj?.receiver?.id !== authUserId ? obj?.receiver?.id : obj?.sender?.id;
+    const _userObjId = isNumber ? obj : messageReceiver(obj, authUserId);
     http
       .request({
         url: Endpoints.GetAThread.url(),
@@ -457,7 +466,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
             onNewMessageClick: handleOpenNewMessage,
             onMenuItemClick: handleOpenDeleteThreadDialog
           }}
-          userObj={obj ?? null}
+          userObj={obj}
           clearSearch={clear}
         />
         {openDeleteThreadDialog && (
@@ -491,7 +500,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
         <PrivateMessageThread
           receiver={receiver}
           recipients={recipients}
-          userObj={obj ?? null}
+          userObj={obj}
           loadingMessageObjs={loadingMessageObjs}
           messages={messageObjs}
           singleMessageThread={singleMessageThread}

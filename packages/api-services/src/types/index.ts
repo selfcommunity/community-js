@@ -16,7 +16,8 @@ import {
   MessageMediaUploadParams,
   MessageThumbnailUploadParams,
   MessageChunkUploadDoneParams,
-  MessageMediaChunksParams
+  MessageMediaChunksParams,
+  ThreadDeleteParams
 } from './privateMessage';
 import {CategoryParams} from './category';
 import {CustomAdvParams} from './customAdv';
@@ -60,6 +61,7 @@ export {
   ChunkUploadCompleteParams,
   ChunkUploadParams,
   ThreadParams,
+  ThreadDeleteParams,
   MessageCreateParams,
   MessageMediaUploadParams,
   MessageThumbnailUploadParams,
