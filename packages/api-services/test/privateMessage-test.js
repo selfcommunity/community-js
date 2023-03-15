@@ -54,7 +54,7 @@ describe('Private Message Service Test', () => {
   });
   test('Delete a message', () => {
     if (message) {
-      return PrivateMessageService.deleteAMessage(message.id).then((data) => {
+      return PrivateMessageService.deleteAMessage(message[0].id).then((data) => {
         expect(data).toBe('');
       });
     } else {
@@ -63,7 +63,7 @@ describe('Private Message Service Test', () => {
   });
   test('Delete a thread', () => {
     if (threadId) {
-      return PrivateMessageService.deleteAThread(threadId).then((data) => {
+      return PrivateMessageService.deleteAThread({thread: threadId}).then((data) => {
         expect(data).toBe('');
       });
     } else {

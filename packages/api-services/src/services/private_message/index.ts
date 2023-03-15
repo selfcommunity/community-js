@@ -7,7 +7,8 @@ import {
   MessageMediaUploadParams,
   MessageThumbnailUploadParams,
   SCPaginatedResponse,
-  ThreadParams
+  ThreadParams,
+  ThreadDeleteParams
 } from '../../types';
 import {
   SCPrivateMessageSnippetType,
@@ -25,7 +26,7 @@ export interface PrivateMessageApiClientInterface {
   getASingleMessage(id: number | string, config?: AxiosRequestConfig): Promise<SCPrivateMessageThreadType>;
   sendAMessage(data: MessageCreateParams, config?: AxiosRequestConfig): Promise<SCPrivateMessageThreadType>;
   deleteAMessage(id: number | string, config?: AxiosRequestConfig): Promise<any>;
-  deleteAThread(id: number | string, config?: AxiosRequestConfig): Promise<any>;
+  deleteAThread(params: ThreadDeleteParams, config?: AxiosRequestConfig): Promise<any>;
   uploadMedia(data: MessageMediaUploadParams, config?: AxiosRequestConfig): Promise<SCPrivateMessageUploadMediaType>;
   uploadThumbnail(data: MessageThumbnailUploadParams, config?: AxiosRequestConfig): Promise<SCPrivateMessageUploadThumbnailType>;
   uploadMediaInChunks(data: MessageMediaChunksParams, config?: AxiosRequestConfig): Promise<SCPrivateMessageUploadMediaChunkType>;
@@ -83,11 +84,12 @@ export class PrivateMessageApiClient {
 
   /**
    * This endpoint deletes a thread.
-   * @param id
+   * @param params
    * @param config
    */
-  static deleteAThread(id: number | string, config?: AxiosRequestConfig): Promise<any> {
-    return apiRequest({...config, url: Endpoints.DeleteAThread.url({id}), method: Endpoints.DeleteAThread.method});
+  static deleteAThread(params: ThreadDeleteParams, config?: AxiosRequestConfig): Promise<any> {
+    const p = urlParams(params);
+    return apiRequest({...config, url: `${Endpoints.DeleteAThread.url({})}?${p.toString()}`, method: Endpoints.DeleteAThread.method});
   }
 
   /**
@@ -193,8 +195,8 @@ export default class PrivateMessageService {
   static async deleteAMessage(id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return PrivateMessageApiClient.deleteAMessage(id, config);
   }
-  static async deleteAThread(id: number | string, config?: AxiosRequestConfig): Promise<any> {
-    return PrivateMessageApiClient.deleteAThread(id, config);
+  static async deleteAThread(params: ThreadDeleteParams, config?: AxiosRequestConfig): Promise<any> {
+    return PrivateMessageApiClient.deleteAThread(params, config);
   }
   static async uploadMedia(data: MessageMediaUploadParams, config?: AxiosRequestConfig): Promise<SCPrivateMessageUploadMediaType> {
     return PrivateMessageApiClient.uploadMedia(data, config);
