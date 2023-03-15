@@ -162,7 +162,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
   const isObj = typeof userObj === 'object';
   const isNew = userObj && userObj === SCPrivateMessageStatusType.NEW;
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
-  const [singleMessageUser, setSingleMessageUser] = useState(null);
+  const [singleMessageUser, setSingleMessageUser] = useState('');
   // INTL
   const intl = useIntl();
 
