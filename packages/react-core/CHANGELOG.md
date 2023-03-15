@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.9-alpha.49](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.9-alpha.48...@selfcommunity/react-core@0.3.9-alpha.49) (2023-03-15)
+
+
+### Performance Improvements
+
+* Update default theme with make it goods ([e957797](https://github.com/selfcommunity/community-js/commit/e9577971d7706067df213db3dd88028ca045df7c))
+
+
+
+
+
 ## [0.3.9-alpha.48](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.9-alpha.47...@selfcommunity/react-core@0.3.9-alpha.48) (2023-03-14)
 
 **Note:** Version bump only for package @selfcommunity/react-core
