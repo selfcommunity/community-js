@@ -222,7 +222,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
    * Memoized message recipients ids
    */
   const ids = useMemo(() => {
-    if (recipients !== null && openNewMessage) {
+    if (recipients && openNewMessage) {
       return recipients.map((u) => {
         return parseInt(u.id, 10);
       });
@@ -270,6 +270,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
    */
   function handleDeleteThread() {
     // const _threadId = obj?.thread_id ?? obj?.id;
+    console.log(obj, 'delete obj check');
     PrivateMessageService.deleteAThread({user: deletingThread})
       .then(() => {
         if (layout === 'mobile') {
@@ -362,37 +363,39 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
    * Fetches thread
    */
   function fetchThread() {
-    //const _userObjId = isNumber ? obj : obj?.receiver?.id !== authUserId ? obj?.receiver?.id : obj?.sender?.id;
-    const _userObjId = isNumber ? obj : messageReceiver(obj, authUserId);
-    http
-      .request({
-        url: Endpoints.GetAThread.url(),
-        method: Endpoints.GetAThread.method,
-        params: {
-          user: _userObjId
-        }
-      })
-      .then((res: HttpResponse<any>) => {
-        const data = res.data;
-        setMessageObjs(data.results);
-        if (data.results.length) {
-          if (data.results[0].receiver.id !== authUserId) {
-            setReceiver(data.results[0].receiver);
-          } else {
-            setReceiver(data.results[0].sender);
+    setLoadingMessageObjs(false);
+    if (obj && typeof obj !== 'string') {
+      const _userObjId = isNumber ? obj : messageReceiver(obj, authUserId);
+      http
+        .request({
+          url: Endpoints.GetAThread.url(),
+          method: Endpoints.GetAThread.method,
+          params: {
+            user: _userObjId
           }
-          setSingleMessageThread(false);
-        } else {
-          setSingleMessageThread(true);
-          setRecipients(_userObjId);
-        }
-        setLoadingMessageObjs(false);
-      })
-      .catch((error) => {
-        setLoadingMessageObjs(false);
-        console.log(error);
-        Logger.error(SCOPE_SC_UI, {error});
-      });
+        })
+        .then((res: HttpResponse<any>) => {
+          const data = res.data;
+          setMessageObjs(data.results);
+          if (data.results.length) {
+            if (data.results[0].receiver.id !== authUserId) {
+              setReceiver(data.results[0].receiver);
+            } else {
+              setReceiver(data.results[0].sender);
+            }
+            setSingleMessageThread(false);
+          } else {
+            setSingleMessageThread(true);
+            setRecipients(_userObjId);
+          }
+          setLoadingMessageObjs(false);
+        })
+        .catch((error) => {
+          setLoadingMessageObjs(false);
+          console.log(error);
+          Logger.error(SCOPE_SC_UI, {error});
+        });
+    }
   }
   /**
    * Memoized fetchSnippets

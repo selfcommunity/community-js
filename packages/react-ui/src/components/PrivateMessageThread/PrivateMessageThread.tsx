@@ -246,6 +246,9 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
    * @return {JSX.Element}
    */
   function renderThread() {
+    if (loadingMessageObjs) {
+      return <PrivateMessageThreadSkeleton />;
+    }
     return (
       <CardContent>
         <List subheader={<li />}>
@@ -262,7 +265,10 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
                     className={authUserId === msg.sender.id ? classes.sender : classes.receiver}
                     message={msg}
                     key={msg.id}
-                    mouseEvents={{onMouseEnter: () => handleMouseEnter(msg.id), onMouseLeave: () => handleMouseLeave(msg.id)}}
+                    mouseEvents={{
+                      onMouseEnter: () => handleMouseEnter(msg.id),
+                      onMouseLeave: () => handleMouseLeave(msg.id)
+                    }}
                     isHovering={isHovered[msg.id]}
                     showMenuIcon={authUserId === msg.sender.id}
                     onMenuIconClick={() => threadCallbacks.onMessageDelete(msg)}
@@ -339,10 +345,6 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
   if (!authUserId) {
     return <HiddenPlaceholder />;
   }
-  if (loadingMessageObjs && userObj) {
-    return <PrivateMessageThreadSkeleton />;
-  }
-
   /**
    * Renders the component (if not hidden by autoHide prop)
    */
