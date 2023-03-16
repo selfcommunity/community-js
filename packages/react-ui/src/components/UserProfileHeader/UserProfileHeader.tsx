@@ -33,42 +33,7 @@ const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  [`& .${classes.cover}`]: {
-    position: 'relative',
-    minHeight: 350,
-    background: 'linear-gradient(180deg, rgba(177,177,177,1) 0%, rgba(255,255,255,1) 90%)'
-  },
-  [`& .${classes.avatar}`]: {
-    display: 'block',
-    position: 'relative',
-    margin: '0px auto',
-    top: 190,
-    width: 200,
-    height: 200,
-    borderRadius: 120,
-    border: '#FFF solid 5px'
-  },
-  [`& .${classes.username}`]: {
-    marginTop: 50,
-    textAlign: 'center'
-  },
-  [`& .${classes.changePicture}`]: {
-    position: 'relative',
-    display: 'flex',
-    margin: '0px auto',
-    top: 110,
-    left: 90
-  },
-  [`& .${classes.changeCover}`]: {
-    position: 'absolute',
-    right: 10,
-    bottom: 10,
-    [theme.breakpoints.down('md')]: {
-      bottom: 310
-    }
-  }
-}));
+})(({theme}) => ({}));
 
 export interface UserProfileHeaderProps {
   /**
@@ -117,7 +82,7 @@ export interface UserProfileHeaderProps {
  #### Import
 
  ```jsx
- import {UserProfileHeader} from '@selfcommunity/react-ui';
+ import {UserTagStack} from '@selfcommunity/react-ui';
  ```
 
  #### Component Name
@@ -207,7 +172,7 @@ export default function UserProfileHeader(inProps: UserProfileHeaderProps): JSX.
         )}
       </Paper>
       <Typography variant="h5" className={classes.username}>
-        {scUser.username}
+        {scUser.real_name ? scUser.real_name : scUser.username}
       </Typography>
     </Root>
   );

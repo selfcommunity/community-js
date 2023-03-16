@@ -1,4 +1,4 @@
-import {Box, Button, IconButton, styled, Toolbar, ToolbarProps} from '@mui/material';
+import {Button, IconButton, styled, Toolbar, ToolbarProps} from '@mui/material';
 import React, {useMemo, useState} from 'react';
 import {
   Link,
@@ -14,11 +14,11 @@ import {
 import Icon from '@mui/material/Icon';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
-import SettingsDrawer from './SettingsDrawer';
 import NavigationToolbarMobileSkeleton from './Skeleton';
 import {FormattedMessage} from 'react-intl';
 import {SearchAutocompleteProps} from '../SearchAutocomplete';
 import SearchDialog from '../SearchDialog';
+import NavigationSettingsIconButton from '../NavigationSettingsIconButton';
 
 const PREFIX = 'SCNavigationToolbarMobile';
 
@@ -36,14 +36,7 @@ const Root = styled(Toolbar, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  [`& .${classes.logo}`]: {
-    flexGrow: 1,
-    '& img': {
-      maxHeight: theme.mixins.toolbar.minHeight
-    }
-  }
-}));
+})(({theme}) => ({}));
 
 export interface NavigationToolbarMobileProps extends ToolbarProps {
   /**
@@ -91,7 +84,13 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
     props: inProps,
     name: PREFIX
   });
-  const {className, SearchAutocompleteProps = {}, children = null, action = null, ...rest} = props;
+  const {
+    className = '',
+    SearchAutocompleteProps = {},
+    children = null,
+    action = <NavigationSettingsIconButton size="small" className={classes.settings}></NavigationSettingsIconButton>,
+    ...rest
+  } = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
@@ -107,7 +106,6 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
 
   // STATE
   const [searchOpen, setSearchOpen] = useState<boolean>(false);
-  const [settingsOpen, setSettingsOpen] = React.useState<boolean>(false);
 
   // HANDLERS
   const handleOpenSearch = () => {
@@ -115,12 +113,6 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
   };
   const handleCloseSearch = () => {
     setSearchOpen(false);
-  };
-  const handleOpenSettings = () => {
-    setSettingsOpen(true);
-  };
-  const handleCloseSettings = () => {
-    setSettingsOpen(false);
   };
 
   // RENDER
@@ -132,23 +124,6 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
     <Link to={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})} className={classes.logo}>
       <img src={preferences[SCPreferences.LOGO_NAVBAR_LOGO_MOBILE]} alt="logo" />
     </Link>
-  );
-
-  const _actions = action || (
-    <>
-      <IconButton className={classes.settings} onClick={handleOpenSettings}>
-        <Icon>more_vert</Icon>
-      </IconButton>
-      <SettingsDrawer
-        id="setting-swipe-menu"
-        className={classes.settingsDialog}
-        anchor="bottom"
-        open={settingsOpen}
-        onClose={handleCloseSettings}
-        onClick={handleCloseSettings}
-        onOpen={handleOpenSettings}
-      />
-    </>
   );
 
   return (
@@ -166,7 +141,7 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
             SearchAutocompleteProps={{...SearchAutocompleteProps, onClear: handleCloseSearch}}></SearchDialog>
         </>
       )}
-      {scUserContext.user && _actions}
+      {scUserContext.user && action}
       {!scUserContext.user && (
         <Button className={classes.login} color="inherit" component={Link} to={scRoutingContext.url(SCRoutes.SIGNIN_ROUTE_NAME, {})}>
           <FormattedMessage id="ui.appBar.navigation.login" defaultMessage="ui.appBar.navigation.login" />

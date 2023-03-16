@@ -6,10 +6,12 @@ const Component = {
         marginRight: theme.spacing(2),
         '& img': {
           verticalAlign: 'middle',
-          maxHeight: theme.mixins.toolbar.maxHeight
+          maxHeight: theme.mixins.toolbar.minHeight
         }
       },
       '& .SCNavigationToolbar-navigation': {
+        flexGrow: 1,
+        textAlign: 'center',
         alignSelf: 'end',
         '& .SCNavigationToolbar-home, & .SCNavigationToolbar-explore': {
           padding: theme.spacing(2, 2, 1, 2),
@@ -24,6 +26,7 @@ const Component = {
         }
       },
       '& .SCNavigationToolbar-search': {
+        flexGrow: 1,
         textAlign: 'right',
         marginRight: theme.spacing(1.5),
         '& .MuiFormControl-root': {
@@ -32,6 +35,10 @@ const Component = {
       },
       '& .SCNavigationToolbar-profile, & .SCNavigationToolbar-notification, & .SCNavigationToolbar-messages': {
         margin: theme.spacing(0, 0.5)
+      },
+      '& .SCNavigationToolbar-profile .MuiAvatar-root': {
+        width: theme.selfcommunity.user.avatar.sizeMedium,
+        height: theme.selfcommunity.user.avatar.sizeMedium
       },
       '& .SCNavigationToolbar-notification, & .SCNavigationToolbar-messages': {
         paddingTop: theme.spacing(2),

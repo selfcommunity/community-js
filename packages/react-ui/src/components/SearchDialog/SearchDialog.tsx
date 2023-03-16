@@ -1,8 +1,7 @@
-import {Box, Dialog, DialogContent, DialogProps, styled} from '@mui/material';
+import {Dialog, DialogContent, DialogProps, styled} from '@mui/material';
 import React from 'react';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
-import {SCSuggestionType} from '@selfcommunity/types';
 import SearchAutocomplete, {SearchAutocompleteProps} from '../SearchAutocomplete';
 
 const PREFIX = 'SCSearchDialog';

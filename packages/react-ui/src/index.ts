@@ -1,6 +1,7 @@
 /**
  * Components
  */
+import NavigationSettingsIconButton, {NavigationSettingsIconButtonProps} from './components/NavigationSettingsIconButton';
 import NavigationToolbar, {NavigationToolbarProps, NavigationToolbarSkeleton} from './components/NavigationToolbar';
 import NavigationToolbarMobile, {NavigationToolbarMobileProps, NavigationToolbarMobileSkeleton} from './components/NavigationToolbarMobile';
 import BottomNavigation, {BottomNavigationProps} from './components/BottomNavigation';
@@ -32,8 +33,11 @@ import LoyaltyProgram, {LoyaltyProgramProps, LoyaltyProgramSkeleton} from './com
 import LoyaltyProgramDetail, {LoyaltyProgramDetailProps, LoyaltyProgramDetailSkeleton} from './components/LoyaltyProgramDetail';
 import TrendingFeed, {TrendingFeedProps, TrendingFeedSkeleton} from './components/TrendingFeed';
 import TrendingPeople, {TrendingPeopleProps, TrendingPeopleSkeleton} from './components/TrendingPeople';
+import UserActionIconButton, {UserActionIconButtonProps} from './components/UserActionIconButton';
+import UserCounters, {UserCountersProps} from './components/UserCounters';
 import UserProfileHeader, {UserProfileHeaderProps, UserProfileHeaderSkeleton} from './components/UserProfileHeader';
-import UserProfileInfo, {UserProfileInfoProps, UserProfileInfoSkeleton} from './components/UserProfileInfo';
+import UserInfoDialog, {UserInfoDialogProps} from './components/UserInfoDialog';
+import UserInfo, {UserInfoProps, UserInfoSkeleton} from './components/UserInfo';
 import UserProfileEdit, {
   UserProfileEditProps,
   UserProfileEditSectionPublicInfo,
@@ -87,6 +91,7 @@ import EmailTextField from './shared/EmailTextField';
 import PasswordTextField from './shared/PasswordTextField';
 import PhoneTextField from './shared/PhoneTextField';
 import StickyBox, {useStickyBox, StickyBoxProps, StickyBoxComponent, UseStickyBoxProps} from './shared/StickyBox';
+import TagChip, {TagChipProps} from './shared/TagChip';
 import {MEDIA_TYPE_EMBED} from './constants/Media';
 import PollSuggestion, {PollSuggestionProps} from './components/PollSuggestion';
 import ConsentSolution, {ConsentSolutionProps, ConsentSolutionSkeleton} from './components/ConsentSolution';
@@ -135,6 +140,8 @@ export {
   AccountResetProps,
   AccountVerify,
   AccountVerifyProps,
+  NavigationSettingsIconButton,
+  NavigationSettingsIconButtonProps,
   NavigationToolbarMobile,
   NavigationToolbarMobileProps,
   NavigationToolbarMobileSkeleton,
@@ -232,12 +239,18 @@ export {
   RelatedFeedObjects,
   RelatedFeedObjectsProps,
   RelatedFeedObjectsSkeleton,
+  UserActionIconButton,
+  UserActionIconButtonProps,
+  UserCounters,
+  UserCountersProps,
   UserProfileHeader,
   UserProfileHeaderProps,
   UserProfileHeaderSkeleton,
-  UserProfileInfo,
-  UserProfileInfoProps,
-  UserProfileInfoSkeleton,
+  UserInfoDialog,
+  UserInfoDialogProps,
+  UserInfo,
+  UserInfoProps,
+  UserInfoSkeleton,
   SCUserProfileFields,
   SCUserProfileSettings,
   UserProfileEdit,
@@ -319,6 +332,8 @@ export {
   StickyBoxProps,
   StickyBoxComponent,
   UseStickyBoxProps,
+  TagChip,
+  TagChipProps,
   CentralProgress,
   ConfirmDialog,
   MediaChunkUploader,

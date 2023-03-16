@@ -1,4 +1,4 @@
-import { Avatar, Badge, Box, Button, IconButton, styled, Toolbar, ToolbarProps, Tooltip } from '@mui/material';
+import {Avatar, Badge, Box, Button, IconButton, styled, Toolbar, ToolbarProps, Tooltip} from '@mui/material';
 import React, {useMemo} from 'react';
 import {
   Link,
@@ -15,11 +15,11 @@ import {
 import Icon from '@mui/material/Icon';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
-import SettingsMenu from './SettingsMenu';
 import NavigationToolbarSkeleton from './Skeleton';
 import {FormattedMessage} from 'react-intl';
 import NotificationMenu from './NotificationMenu';
 import SearchAutocomplete, {SearchAutocompleteProps} from '../SearchAutocomplete';
+import NavigationSettingsIconButton from '../NavigationSettingsIconButton';
 
 const PREFIX = 'SCNavigationToolbar';
 
@@ -68,6 +68,10 @@ export interface NavigationToolbarProps extends ToolbarProps {
    * The navigation path
    */
   value: string;
+  /**
+   * Prop to customize some routes
+   */
+  action?: React.ReactNode;
 }
 
 const PREFERENCES = [
@@ -117,7 +121,14 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
     props: inProps,
     name: PREFIX
   });
-  const {value = '', className, SearchAutocompleteProps = {}, children = null, ...rest} = props;
+  const {
+    value = '',
+    className = '',
+    SearchAutocompleteProps = {},
+    action = <NavigationSettingsIconButton size="small" className={classes.settings}></NavigationSettingsIconButton>,
+    children = null,
+    ...rest
+  } = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
@@ -132,17 +143,9 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
   }, [scPreferences.preferences]);
 
   // STATE
-  const [anchorSetting, setAnchorMenu] = React.useState(null);
   const [anchorNotification, setAnchorNotification] = React.useState(null);
 
   // HANDLERS
-  const handleOpenSettingMenu = (event) => {
-    setAnchorMenu(event.currentTarget);
-  };
-
-  const handleCloseSettingMenu = () => {
-    setAnchorMenu(null);
-  };
   const handleOpenNotificationMenu = (event) => {
     setAnchorNotification(event.currentTarget);
   };
@@ -241,18 +244,7 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
               <Icon>email</Icon>
             </Badge>
           </IconButton>
-          <IconButton size="small" onClick={handleOpenSettingMenu} className={classes.settings}>
-            {anchorSetting ? <Icon>expand_less</Icon> : <Icon>expand_more</Icon>}
-          </IconButton>
-          <SettingsMenu
-            id="setting-menu"
-            anchorEl={anchorSetting}
-            open={Boolean(anchorSetting)}
-            onClose={handleCloseSettingMenu}
-            onClick={handleCloseSettingMenu}
-            transformOrigin={{horizontal: 'right', vertical: 'top'}}
-            anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
-          />
+          {action}
         </>
       ) : (
         <Button color="inherit" component={Link} to={scRoutingContext.url(SCRoutes.SIGNIN_ROUTE_NAME, {})}>

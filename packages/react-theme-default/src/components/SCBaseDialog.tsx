@@ -4,10 +4,10 @@ const Component = {
       '& h2': {
         fontSize: '1.286rem',
         fontWeight: theme.typography.fontWeightBold,
-        padding: theme.spacing(3),
+        padding: theme.spacing(2, 3),
         '& .MuiIconButton-root': {
           right: theme.spacing(3),
-          top: theme.spacing(3),
+          top: theme.spacing(2),
           fontSize: '1rem'
         }
       },

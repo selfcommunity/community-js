@@ -16,6 +16,10 @@ export interface SCThemeAvatarVariableType {
    * Avatar size large
    */
   sizeLarge: number;
+  /**
+   * Avatar size extra large
+   */
+  sizeXLarge: number;
 }
 
 /**

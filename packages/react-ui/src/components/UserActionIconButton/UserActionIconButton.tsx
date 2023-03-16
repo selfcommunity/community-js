@@ -1,0 +1,222 @@
+import React, {useEffect, useState} from 'react';
+import {styled} from '@mui/material/styles';
+import {
+  Divider,
+  Icon,
+  IconButton,
+  IconButtonProps,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+  Menu,
+  MenuItem,
+  SwipeableDrawer,
+  useMediaQuery,
+  useTheme
+} from '@mui/material';
+import {SCUserHiddenStatusType, SCUserType} from '@selfcommunity/types';
+import {Link, SCThemeType, SCUserContextType, useEffectOnce, useSCFetchUser, useSCUser} from '@selfcommunity/react-core';
+import classNames from 'classnames';
+import {useThemeProps} from '@mui/system';
+import {FormattedMessage} from 'react-intl';
+import {UserService} from '@selfcommunity/api-services';
+import UserInfoDialog from '../UserInfoDialog';
+
+const PREFIX = 'SCUserActionIconButton';
+
+const classes = {
+  root: `${PREFIX}-root`,
+  drawerRoot: `${PREFIX}-drawer-root`,
+  menuRoot: `${PREFIX}-menu-root`
+};
+
+const Root = styled(IconButton, {
+  name: PREFIX,
+  slot: 'Root',
+  overridesResolver: (props, styles) => styles.root
+})(({theme}) => ({}));
+
+const SwipeableDrawerRoot = styled(SwipeableDrawer, {
+  name: PREFIX,
+  slot: 'Root',
+  overridesResolver: (props, styles) => styles.drawerRoot
+})(({theme}) => ({}));
+
+const MenuRoot = styled(Menu, {
+  name: PREFIX,
+  slot: 'Root',
+  overridesResolver: (props, styles) => styles.menuRoot
+})(({theme}) => ({}));
+
+export interface UserActionIconButtonProps extends IconButtonProps {
+  /**
+   * Id of user object
+   * @default null
+   */
+  userId?: number;
+
+  /**
+   * User Object
+   * @default null
+   */
+  user?: SCUserType;
+
+  items?: any;
+}
+
+/**
+ * > API documentation for the Community-JS User Action Menu component. Learn about the available props and the CSS API.
+
+ #### Import
+
+ ```jsx
+ import {NavigationSettingsIconButton} from '@selfcommunity/react-ui';
+ ```
+
+ #### Component Name
+
+ The name `SUserActionIconButton` can be used when providing style overrides in the theme.
+
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SUserActionIconButton-root|Styles applied to the root element.|
+
+ * @param inProps
+ */
+export default function UserActionIconButton(inProps: UserActionIconButtonProps): JSX.Element {
+  // PROPS
+  const props: UserActionIconButtonProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
+  const {className = null, userId = null, user = null, items = [], ...rest} = props;
+
+  // STATE
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [infoOpen, setInfoOpen] = useState<boolean>(false);
+  const [isHiddenLoading, setHiddenLoading] = useState<boolean>(true);
+  const [hidden, setHidden] = useState<boolean | null>(null);
+
+  // CONTEXT
+  const scUserContext: SCUserContextType = useSCUser();
+
+  // HOOKS
+  const {scUser, setSCUser} = useSCFetchUser({id: userId, user});
+  const theme = useTheme<SCThemeType>();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
+  // HANDLERS
+  const handleOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const handleInfoOpen = () => {
+    setInfoOpen(true);
+    setAnchorEl(null);
+  };
+  const handleInfoClose = () => {
+    setInfoOpen(false);
+  };
+  const handleHideToggle = () => {
+    if (hidden === null) {
+      return null;
+    }
+    setHiddenLoading(true);
+    UserService.showHideUser(scUser.id)
+      .then(() => setHidden(!hidden))
+      .then(() => setHiddenLoading(false));
+  };
+
+  // EFFECTS
+  useEffect(() => {
+    if (anchorEl && hidden === null) {
+      UserService.checkUserHidden(scUser.id)
+        .then((res: SCUserHiddenStatusType) => setHidden(res.is_hidden))
+        .then(() => setHiddenLoading(false));
+    }
+  }, [anchorEl]);
+
+  // RENDER
+  const isMe = scUserContext.user && scUser.id === scUserContext.user.id;
+  if (isMe) {
+    return null;
+  }
+
+  const renderList = () => {
+    if (isMobile) {
+      return [
+        ...items.map((item, index) => (
+          <ListItem key={index}>
+            <ListItemButton component={Link} to={item.to}>
+              <ListItemText primary={item.label} />
+            </ListItemButton>
+          </ListItem>
+        )),
+        <ListItem key="info">
+          <ListItemButton onClick={handleInfoOpen}>
+            <ListItemText
+              primary={<FormattedMessage defaultMessage="ui.userActionIconButton.information" id="ui.userActionIconButton.information" />}
+            />
+          </ListItemButton>
+        </ListItem>,
+        <Divider key="divider" />,
+        <ListItem key="hide">
+          <ListItemButton onClick={handleHideToggle} disabled={isHiddenLoading}>
+            <ListItemText
+              primary={
+                hidden ? (
+                  <FormattedMessage defaultMessage="ui.userActionIconButton.show" id="ui.userActionIconButton.show" />
+                ) : (
+                  <FormattedMessage defaultMessage="ui.userActionIconButton.hide" id="ui.userActionIconButton.hide" />
+                )
+              }
+            />
+          </ListItemButton>
+        </ListItem>
+      ];
+    } else {
+      return [
+        ...items.map((item, index) => (
+          <MenuItem key={index} component={Link} to={item.to} onClick={handleClose}>
+            {item.label}
+          </MenuItem>
+        )),
+        <MenuItem key="info" onClick={handleInfoOpen}>
+          <FormattedMessage defaultMessage="ui.userActionIconButton.information" id="ui.userActionIconButton.information" />
+        </MenuItem>,
+        <Divider key="divider" />,
+        <MenuItem key="hide" onClick={handleHideToggle} disabled={isHiddenLoading}>
+          {hidden ? (
+            <FormattedMessage defaultMessage="ui.userActionIconButton.show" id="ui.userActionIconButton.show" />
+          ) : (
+            <FormattedMessage defaultMessage="ui.userActionIconButton.hide" id="ui.userActionIconButton.hide" />
+          )}
+        </MenuItem>
+      ];
+    }
+  };
+
+  return (
+    <>
+      <Root className={classNames(classes.root, className)} {...rest} onClick={handleOpen}>
+        <Icon>more_vert</Icon>
+      </Root>
+      {isMobile ? (
+        <SwipeableDrawerRoot className={classes.drawerRoot} anchor="bottom" open={Boolean(anchorEl)} onClose={handleClose} onOpen={handleOpen}>
+          <List>{renderList()}</List>
+        </SwipeableDrawerRoot>
+      ) : (
+        <MenuRoot className={classes.menuRoot} anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
+          {renderList()}
+        </MenuRoot>
+      )}
+      <UserInfoDialog userId={userId} user={scUser} open={infoOpen} onClose={handleInfoClose} />
+    </>
+  );
+}

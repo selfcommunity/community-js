@@ -45,6 +45,11 @@ export interface BaseDialogProps {
    */
   title?: any;
   /**
+   * Dialog subtitle
+   * @default ''
+   */
+  subtitle?: any;
+  /**
    * Handles dialog opening
    * @default false
    */
@@ -64,7 +69,7 @@ export default function BaseDialog(props: BaseDialogProps) {
   // PROPS
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const {className, title = '', open = false, onClose = null, ...rest} = props;
+  const {className, title = '', subtitle = null, open = false, onClose = null, ...rest} = props;
   const {children} = rest;
 
   // OPTIONS
@@ -83,6 +88,7 @@ export default function BaseDialog(props: BaseDialogProps) {
       maxWidth={rest.maxWidth ? rest.maxWidth : 'sm'}
       scroll="body">
       <Title onClose={onClose}>{title}</Title>
+      {subtitle && subtitle}
       <DialogContent dividers={!isMobile}>{children}</DialogContent>
       {!isMobile && (
         <DialogActions>

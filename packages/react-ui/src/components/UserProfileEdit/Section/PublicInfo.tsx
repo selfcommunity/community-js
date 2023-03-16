@@ -180,8 +180,8 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
     const _error = error !== null && error[`${camelField}Error`] && error[`${camelField}Error`].error;
     const component = {element: TextField};
     let label = intl.formatMessage({
-      id: `ui.userProfileInfo.${camelField}`,
-      defaultMessage: `ui.userProfileInfo.${field}`
+      id: `ui.userInfo.${camelField}`,
+      defaultMessage: `ui.userInfo.${field}`
     });
     let props: any = {
       InputProps: {
@@ -215,8 +215,8 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
           <LocalizationProvider dateAdapter={AdapterDateFns} key={field}>
             <DatePicker
               label={intl.formatMessage({
-                id: `ui.userProfileInfo.${camelCase(field)}`,
-                defaultMessage: `ui.userProfileInfo.${field}`
+                id: `ui.userInfo.${camelCase(field)}`,
+                defaultMessage: `ui.userInfo.${field}`
               })}
               value={user[field]}
               onChange={(newValue) => {

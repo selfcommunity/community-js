@@ -40,6 +40,7 @@ const getTheme = (options, preferences): SCThemeType => {
         sizeSmall: 24,
         sizeMedium: 40,
         sizeLarge: 50,
+        sizeXLarge: 100,
       },
     },
     category: {
@@ -139,7 +140,6 @@ const getTheme = (options, preferences): SCThemeType => {
         },
       }
     : {};
-  console.log(options);
   return createTheme(mergeDeep({selfcommunity, ...defaultOptions}, options)) as SCThemeType;
 };
 

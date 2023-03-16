@@ -4,10 +4,14 @@ const Component = {
       padding: theme.spacing(0, 1, 0, 2),
       '& .SCNavigationToolbarMobile-logo': {
         marginRight: theme.spacing(2),
+        flexGrow: 1,
         '& img': {
           verticalAlign: 'middle',
-          maxHeight: theme.mixins.toolbar.maxHeight
+          maxHeight: theme.mixins.toolbar.minHeight
         }
+      },
+      '& h4': {
+        fontSize: '1.286rem'
       }
     })
   }

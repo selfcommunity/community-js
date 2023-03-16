@@ -81,6 +81,12 @@ import SCCommentObjectVotes from './components/SCCommentObjectVotes';
 import SCActivitiesMenu from './components/SCActivitiesMenu';
 import MuiTooltip from './components/MuiTooltip';
 import SCCommentNotification from './components/SCCommentNotification';
+import MuiPopover from './components/MuiPopover';
+import SCUserActionIconButton from './components/SCUserActionIconButton';
+import SCNavigationSettingsIconButton from './components/SCNavigationSettingsIconButton';
+import SCUserInfoDialog from './components/SCUserInfoDialog';
+import SCUserInfo from './components/SCUserInfo';
+import SCUserCounters from './components/SCUserCounters';
 
 /**
  * Style fragments - Imports - End
@@ -140,6 +146,7 @@ const theme = {
     MuiIcon,
     MuiIconButton,
     MuiOutlinedInput,
+    MuiPopover,
     MuiSelect,
     MuiTooltip,
     SCActivitiesMenu,
@@ -184,6 +191,7 @@ const theme = {
     SCLightbox,
     SCLoyaltyProgram,
     SCLoyaltyProgramDetail,
+    SCNavigationSettingsIconButton,
     SCNavigationToolbar,
     SCNavigationToolbarMobile,
     SCNotification,
@@ -199,6 +207,10 @@ const theme = {
     SCSnippetNotifications,
     SCSnippetNotificationsSkeleton,
     SCUser,
+    SCUserActionIconButton,
+    SCUserCounters,
+    SCUserInfo,
+    SCUserInfoDialog,
     SCUserProfileHeader,
     SCUserProfileTemplate,
     SCVoteAction,
@@ -214,7 +226,8 @@ const theme = {
       avatar: {
         sizeSmall: 24,
         sizeMedium: 30,
-        sizeLarge: 140
+        sizeLarge: 60,
+        sizeXLarge: 140
       }
     },
     category: {
