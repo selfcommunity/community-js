@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.9-alpha.52...@selfcommunity/react-core@0.4.0-alpha.0) (2023-03-16)
+
+
+### Features
+
+* Added new user profile page ([96c1e70](https://github.com/selfcommunity/community-js/commit/96c1e70f23ed2b641dd136922457f6e6f2cb8fd6))
+
+
+
+
+
 ## [0.3.9-alpha.52](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.9-alpha.51...@selfcommunity/react-core@0.3.9-alpha.52) (2023-03-16)
 
 

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.125](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.124...@selfcommunity/react-ui@0.7.0-alpha.125) (2023-03-16)
+
+
+### Features
+
+* Added new user profile page ([96c1e70](https://github.com/selfcommunity/community-js/commit/96c1e70f23ed2b641dd136922457f6e6f2cb8fd6))
+
+
+
+
+
 # [0.7.0-alpha.124](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.123...@selfcommunity/react-ui@0.7.0-alpha.124) (2023-03-16)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
