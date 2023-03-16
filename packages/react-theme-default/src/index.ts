@@ -87,6 +87,7 @@ import SCNavigationSettingsIconButton from './components/SCNavigationSettingsIco
 import SCUserInfoDialog from './components/SCUserInfoDialog';
 import SCUserInfo from './components/SCUserInfo';
 import SCUserCounters from './components/SCUserCounters';
+import SCUserProfileEdit from './components/SCUserProfileEdit';
 
 /**
  * Style fragments - Imports - End
@@ -212,6 +213,7 @@ const theme = {
     SCUserInfo,
     SCUserInfoDialog,
     SCUserProfileHeader,
+    SCUserProfileEdit,
     SCUserProfileTemplate,
     SCVoteAction,
     SCWidget,
