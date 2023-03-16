@@ -1,41 +1,47 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {styled} from '@mui/material/styles';
-import {Box, Button, Stack} from '@mui/material';
+import {Box, Button, Icon, Stack, Typography} from '@mui/material';
 import {
   CategoriesFollowed,
   ConnectionUserButton,
   FeedObjectProps,
   FeedSidebarProps,
   SCFeedWidgetType,
+  TagChip,
+  UserActionIconButton,
   UserFollowers,
   UserProfileHeader,
   UserProfileHeaderProps,
-  UserProfileInfo,
-  UserProfileInfoProps,
-  UsersFollowed
+  UsersFollowed,
+  UserCounters
 } from '@selfcommunity/react-ui';
 import UserFeed, {UserFeedProps} from '../UserFeed';
 import {
-  Link,
   SCContextType,
+  SCFeatures,
+  SCPreferencesContextType,
   SCRoutes,
   SCRoutingContextType,
   SCUserContextType,
   useSCContext,
   useSCFetchUser,
+  useSCPreferences,
   useSCRouting,
   useSCUser
 } from '@selfcommunity/react-core';
 import {SCUserType} from '@selfcommunity/types';
 import UserProfileSkeleton from './Skeleton';
 import classNames from 'classnames';
-import {FormattedMessage} from 'react-intl';
+import {FormattedMessage, useIntl} from 'react-intl';
 import {useThemeProps} from '@mui/system';
 
 const PREFIX = 'SCUserProfileTemplate';
 
 const classes = {
   root: `${PREFIX}-root`,
+  counters: `${PREFIX}-counters`,
+  tags: `${PREFIX}-tags`,
+  info: `${PREFIX}-info`,
   feed: `${PREFIX}-feed`,
   actions: `${PREFIX}-actions`
 };
@@ -44,15 +50,7 @@ const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  [`& .${classes.feed}`]: {
-    marginTop: theme.spacing(2)
-  },
-  [`& .${classes.actions}`]: {
-    margin: theme.spacing(2),
-    justifyContent: 'space-around'
-  }
-}));
+})(({theme}) => ({}));
 
 export interface UserProfileProps {
   /**
@@ -98,16 +96,10 @@ export interface UserProfileProps {
   FeedSidebarProps?: FeedSidebarProps;
 
   /**
-   * Props to spread to UserProfileHeader component
+   * Props to spread to UserTagStack component
    * @default {}
    */
   UserProfileHeaderProps?: UserProfileHeaderProps;
-
-  /**
-   * Props to spread to UserProfileInfo component
-   * @default {}
-   */
-  UserProfileInfoProps?: UserProfileInfoProps;
 
   /**
    * Click handler for edit button
@@ -205,7 +197,6 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
     FeedObjectProps,
     FeedSidebarProps,
     UserProfileHeaderProps = {},
-    UserProfileInfoProps = {},
     onEditClick = null,
     UserFeedProps = {},
     showSendPmButton
@@ -215,9 +206,14 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
   const scContext: SCContextType = useSCContext();
   const scUserContext: SCUserContextType = useSCUser();
   const scRoutingContext: SCRoutingContextType = useSCRouting();
+  const {features}: SCPreferencesContextType = useSCPreferences();
+
+  // MEMO
+  const taggingEnabled = useMemo(() => features.includes(SCFeatures.TAGGING), [features]);
 
   // Hooks
   const {scUser} = useSCFetchUser({id: userId, user});
+  const intl = useIntl();
 
   if (scUser === null) {
     return <UserProfileSkeleton />;
@@ -256,23 +252,28 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
     UserFeedProps.FeedProps = {HeaderComponent: null, ...UserFeedProps.FeedProps};
   }
 
+  let actionItems = [];
+  if (showSendPmButton) {
+    actionItems = [
+      {
+        label: <FormattedMessage defaultMessage="templates.userProfile.send.pm" id="templates.userProfile.send.pm" />,
+        to: scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, scUser)
+      }
+    ];
+  }
+
   return (
     <Root id={id} className={classNames(classes.root, className)}>
       <UserProfileHeader user={scUser} {...UserProfileHeaderProps} />
-      <UserProfileInfo user={scUser} {...UserProfileInfoProps} />
       <Stack key={`actions_${scUser.id}`} direction="row" spacing={2} className={classes.actions}>
         {isMe ? (
-          <Button variant="outlined" color="secondary" onClick={handleEdit}>
+          <Button variant="contained" color="secondary" onClick={handleEdit}>
             <FormattedMessage defaultMessage="templates.userProfile.edit" id="templates.userProfile.edit" />
           </Button>
         ) : (
           <>
             <ConnectionUserButton user={scUser} />
-            {showSendPmButton && (
-              <Button color="secondary" component={Link} to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, scUser)}>
-                <FormattedMessage defaultMessage="templates.userProfile.send.pm" id="templates.userProfile.send.pm" />
-              </Button>
-            )}
+            <UserActionIconButton user={scUser} items={actionItems} />
           </>
         )}
         {canModerate && (
@@ -286,6 +287,35 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
           </Button>
         )}
       </Stack>
+      <UserCounters className={classes.counters} userId={userId as number} user={scUser} />
+      {scUser.date_joined && (
+        <Typography className={classes.info}>
+          <FormattedMessage
+            id="templates.userProfile.dateJoined"
+            defaultMessage="templates.userProfile.dateJoined"
+            values={{
+              date: intl.formatDate(scUser.date_joined, {
+                year: 'numeric',
+                month: 'long'
+              })
+            }}
+          />
+        </Typography>
+      )}
+      {scUser.location && (
+        <Typography className={classes.info}>
+          <Icon>add_location_alt</Icon> {scUser.location}
+        </Typography>
+      )}
+      {taggingEnabled && (
+        <Stack key={`tags_${scUser.id}`} direction="row" spacing={2} className={classes.tags}>
+          {scUser.tags
+            .filter((t) => t.visible)
+            .map((tag) => (
+              <TagChip tag={tag} clickable={false} disposable={false} />
+            ))}
+        </Stack>
+      )}
       <UserFeed
         key={`feed_${scUser.id}`}
         className={classes.feed}

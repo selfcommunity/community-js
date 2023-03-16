@@ -1,12 +1,13 @@
 import React from 'react';
-import {Box, Grid} from '@mui/material';
-import {styled} from '@mui/material/styles';
+import { Box, Typography } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import Skeleton from '@mui/material/Skeleton';
 
-const PREFIX = 'SCUserProfileInfoSkeleton';
+const PREFIX = 'SCUserInfoSkeleton';
 
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-root`,
+  field: `${PREFIX}-field`
 };
 
 const Root = styled(Box, {
@@ -39,12 +40,16 @@ const Root = styled(Box, {
 function UserProfileInfoSkeleton(): JSX.Element {
   return (
     <Root className={classes.root}>
-      <Grid container>
-        <Grid item md={12} sm={12}>
-          <Skeleton animation="wave" sx={{height: 20, width: '100%'}} />
-          <Skeleton animation="wave" sx={{height: 20, width: '100%'}} />
-        </Grid>
-      </Grid>
+      {Array.from({length: 3}).map(() => (
+        <Box className={classes.field}>
+          <Typography variant="h6">
+            <Skeleton animation="wave" sx={{height: 20, width: '50%'}} />
+          </Typography>
+          <Typography variant="body2">
+            <Skeleton animation="wave" sx={{height: 20, width: '80%'}} />
+          </Typography>
+        </Box>
+      ))}
     </Root>
   );
 }

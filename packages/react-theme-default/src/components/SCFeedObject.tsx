@@ -24,7 +24,6 @@ const Component = {
           '& .MuiCardHeader-subheader': {
             fontSize: '0.857rem',
             color: theme.palette.primary.main,
-            marginTop: theme.spacing(0.5),
             '& .SCFeedObject-activity-at': {
               marginTop: 0,
               display: 'inline-flex',
