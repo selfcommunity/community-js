@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.122](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.121...@selfcommunity/react-ui@0.7.0-alpha.122) (2023-03-16)
+
+
+### Bug Fixes
+
+* Fix feed skeleton ([975e825](https://github.com/selfcommunity/community-js/commit/975e82513248735fe5a45c24ca8621735c3ab499))
+* Fix notification layout ([a78fc3c](https://github.com/selfcommunity/community-js/commit/a78fc3c9fc27bdb3033fd31c86586ffece71b200))
+
+
+
+
+
 # [0.7.0-alpha.121](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.120...@selfcommunity/react-ui@0.7.0-alpha.121) (2023-03-15)
 
 

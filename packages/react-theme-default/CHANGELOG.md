@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.68](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.67...@selfcommunity/react-theme-default@0.1.0-alpha.68) (2023-03-16)
+
+
+### Bug Fixes
+
+* Fix feed skeleton ([975e825](https://github.com/selfcommunity/community-js/commit/975e82513248735fe5a45c24ca8621735c3ab499))
+* Fix notification layout ([a78fc3c](https://github.com/selfcommunity/community-js/commit/a78fc3c9fc27bdb3033fd31c86586ffece71b200))
+
+
+
+
+
 # [0.1.0-alpha.67](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.66...@selfcommunity/react-theme-default@0.1.0-alpha.67) (2023-03-15)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default

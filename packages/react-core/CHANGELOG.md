@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.9-alpha.51](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.9-alpha.50...@selfcommunity/react-core@0.3.9-alpha.51) (2023-03-16)
+
+
+### Bug Fixes
+
+* add websocket prefixPath option ([524f1d1](https://github.com/selfcommunity/community-js/commit/524f1d18e95a0b2d31701744f3f78cbcdf31649a))
+
+
+
+
+
 ## [0.3.9-alpha.50](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.3.9-alpha.49...@selfcommunity/react-core@0.3.9-alpha.50) (2023-03-15)
 
 **Note:** Version bump only for package @selfcommunity/react-core
