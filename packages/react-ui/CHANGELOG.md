@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.126](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.125...@selfcommunity/react-ui@0.7.0-alpha.126) (2023-03-16)
+
+
+### Bug Fixes
+
+* Fix user profile edit layout ([4c2916a](https://github.com/selfcommunity/community-js/commit/4c2916ac39cfb7470725a7b8beade28e3ea1c55a))
+
+
+
+
+
 # [0.7.0-alpha.125](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.124...@selfcommunity/react-ui@0.7.0-alpha.125) (2023-03-16)
 
 
