@@ -34,7 +34,7 @@ const Template: ComponentStory<typeof UserProfileTemplate> = (args) => {
         <Dialog fullWidth open={edit} onClose={() => setEdit(false)} scroll="body">
           <DialogTitle>Edit Profile</DialogTitle>
           <DialogContent>
-            <UserProfileEdit AccordionProps={{elevation: 0}} />
+            <UserProfileEdit />
           </DialogContent>
         </Dialog>
       )}

@@ -1,14 +1,12 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import {Accordion, AccordionDetails, AccordionProps as MUIAccordionProps, AccordionSummary, Box, Tab, Tabs, Typography} from '@mui/material';
+import {Box, Tab, Tabs} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import {DEFAULT_FIELDS, DEFAULT_SETTINGS} from '../../constants/UserProfile';
 import PublicInfo, {PublicInfoProps} from './Section/PublicInfo';
 import Account, {AccountProps} from './Section/Account';
 import Settings from './Section/Settings';
 import classNames from 'classnames';
-import {DistributiveOmit} from '@mui/types';
-import {OverrideProps} from '@mui/material/OverridableComponent';
 import {useThemeProps} from '@mui/system';
 import {SCUserProfileFields, SCUserProfileSettings} from '../../types';
 
@@ -25,13 +23,6 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({}));
-
-interface AccordionTypeMap<P = {}, D extends React.ElementType = 'div'> {
-  props: P & DistributiveOmit<MUIAccordionProps, 'children'> & {};
-  defaultComponent: D;
-}
-
-type AccordionProps<D extends React.ElementType = AccordionTypeMap['defaultComponent'], P = {}> = OverrideProps<AccordionTypeMap<P, D>, D>;
 
 export interface UserProfileEditProps {
   /**
@@ -54,11 +45,6 @@ export interface UserProfileEditProps {
    * @default [notification, interaction, private_message]
    */
   settings?: SCUserProfileSettings[];
-  /**
-   * Props to apply to the accordion component
-   * @default null
-   */
-  AccordionProps?: AccordionProps;
 
   /**
    * Props to apply to PublicInfo section
@@ -119,7 +105,6 @@ export default function UserProfileEdit(inProps: UserProfileEditProps): JSX.Elem
     className = null,
     fields = [...DEFAULT_FIELDS],
     settings = [...DEFAULT_SETTINGS],
-    AccordionProps = {},
     UserProfileEditSectionPublicInfoProps = {},
     UserProfileEditSectionSettingsProps = {},
     UserProfileEditSectionAccountProps = {
