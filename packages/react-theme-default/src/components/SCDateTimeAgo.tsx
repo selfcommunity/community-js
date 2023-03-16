@@ -1,6 +1,7 @@
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
+      color: 'inherit',
       '& .MuiIcon-root': {
         fontSize: '1rem',
         lineHeight: '1.143rem',

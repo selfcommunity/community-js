@@ -8,6 +8,9 @@ const Component = {
         '& .SCNotification-avatar': {
           width: theme.selfcommunity.user.avatar.sizeMedium,
           height: theme.selfcommunity.user.avatar.sizeMedium
+        },
+        '& .SCNotification-username': {
+          fontWeight: theme.typography.fontWeightBold
         }
       },
       '& .SCNotification-content': {
@@ -31,7 +34,7 @@ const Component = {
           borderRadius: 0
         }
       },
-      '& a': {
+      '& a:not(.MuiButton-root)': {
         textDecoration: 'none',
         color: theme.palette.text.primary,
         '&:hover, &:active': {

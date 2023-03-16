@@ -1,7 +1,6 @@
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
-      marginTop: theme.spacing(2),
       maxWidth: theme.breakpoints.values['lg'],
       '& .SCFeedSkeleton-left': {
         padding: theme.spacing(1.25),

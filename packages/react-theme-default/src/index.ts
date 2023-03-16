@@ -1,5 +1,3 @@
-import {createTheme} from '@mui/material/styles';
-
 import './styles/reset.css';
 import './fonts/community-icons.css';
 
@@ -14,7 +12,6 @@ import SCCommentsObject from './components/SCCommentsObject';
 import SCCommentsFeedObject from './components/SCCommentsFeedObject';
 import SCComposer from './components/SCComposer';
 import SCBroadcastMessages from './components/SCBroadcastMessages';
-import SCUserNotification from './components/SCUserNotification';
 import SCSnippetNotifications from './components/SCSnippetNotifications';
 import SCScrollContainer from './components/SCScrollContainer';
 import SCFeedObject from './components/SCFeedObject';
@@ -83,6 +80,7 @@ import SCCommentObjectReactions from './components/SCCommentObjectReactions';
 import SCCommentObjectVotes from './components/SCCommentObjectVotes';
 import SCActivitiesMenu from './components/SCActivitiesMenu';
 import MuiTooltip from './components/MuiTooltip';
+import SCCommentNotification from './components/SCCommentNotification';
 
 /**
  * Style fragments - Imports - End
@@ -159,6 +157,7 @@ const theme = {
     SCCategoryTemplateSkeleton,
     SCChoices,
     SCCommentAction,
+    SCCommentNotification,
     SCCommentObject,
     SCCommentObjectReactions,
     SCCommentObjectSkeleton,
@@ -200,7 +199,6 @@ const theme = {
     SCSnippetNotifications,
     SCSnippetNotificationsSkeleton,
     SCUser,
-    SCUserNotification,
     SCUserProfileHeader,
     SCUserProfileTemplate,
     SCVoteAction,

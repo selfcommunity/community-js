@@ -6,7 +6,14 @@ import {useSCUser} from '../components/provider/SCUserProvider';
 import {WSClientType} from '@selfcommunity/utils';
 import {WSClient} from '@selfcommunity/utils';
 import {SCNotificationMapping, SCNotificationTopics} from '../constants/Notification';
-import {WS_FACILITY_NOTIFY, WS_SUB_PROTOCOL_PREFIX, WS_HEARTBEAT_MESSAGE, WS_PROTOCOL_SECURE, WS_PROTOCOL_INSECURE} from '../constants/WebSocket';
+import {
+  WS_FACILITY_NOTIFY,
+  WS_SUB_PROTOCOL_PREFIX,
+  WS_HEARTBEAT_MESSAGE,
+  WS_PROTOCOL_SECURE,
+  WS_PROTOCOL_INSECURE,
+  WS_PREFIX_PATH,
+} from '../constants/WebSocket';
 import PubSub from 'pubsub-js';
 
 /**
@@ -19,12 +26,13 @@ export default function useSCWebSocket() {
   const scUserContext: SCUserContextType = useSCUser();
   const [wsInstance, setWsInstance] = useState<WSClientType>(null);
 
-  // Websocket uri, protocols and sub-protocols
+  // Websocket uri, prefixPath, protocols and sub-protocols
   const _wsProtocol =
     scContext.settings.notifications.webSocket.secure || !('secure' in scContext.settings.notifications.webSocket)
       ? WS_PROTOCOL_SECURE
       : WS_PROTOCOL_INSECURE;
-  const _wsUri = `${_wsProtocol}://${new URL(scContext.settings.portal).hostname}/ws/${WS_FACILITY_NOTIFY}?subscribe-user`;
+  const _wsPrefixPath = scContext.settings.notifications.webSocket.prefixPath || WS_PREFIX_PATH;
+  const _wsUri = `${_wsProtocol}://${new URL(scContext.settings.portal).hostname}/${_wsPrefixPath}/${WS_FACILITY_NOTIFY}?subscribe-user`;
   const _wsSubProtocol =
     scContext.settings.session.authToken && scContext.settings.session.authToken.accessToken
       ? `${WS_SUB_PROTOCOL_PREFIX}${scContext.settings.session.authToken.accessToken}`
