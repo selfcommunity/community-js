@@ -1,6 +1,6 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import {Accordion, AccordionDetails, AccordionProps as MUIAccordionProps, AccordionSummary, Box, Typography} from '@mui/material';
+import {Accordion, AccordionDetails, AccordionProps as MUIAccordionProps, AccordionSummary, Box, Tab, Tabs, Typography} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import {DEFAULT_FIELDS, DEFAULT_SETTINGS} from '../../constants/UserProfile';
 import PublicInfo, {PublicInfoProps} from './Section/PublicInfo';
@@ -16,18 +16,15 @@ const PREFIX = 'SCUserProfileEdit';
 
 const classes = {
   root: `${PREFIX}-root`,
-  field: `${PREFIX}-field`
+  tabs: `${PREFIX}-tabs`,
+  tabContent: `${PREFIX}-tab-content`
 };
 
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  [`& .${classes.field}`]: {
-    fontWeight: 'bold'
-  }
-}));
+})(({theme}) => ({}));
 
 interface AccordionTypeMap<P = {}, D extends React.ElementType = 'div'> {
   props: P & DistributiveOmit<MUIAccordionProps, 'children'> & {};
@@ -125,43 +122,33 @@ export default function UserProfileEdit(inProps: UserProfileEditProps): JSX.Elem
     AccordionProps = {},
     UserProfileEditSectionPublicInfoProps = {},
     UserProfileEditSectionSettingsProps = {},
-    UserProfileEditSectionAccountProps = {},
+    UserProfileEditSectionAccountProps = {
+      showCredentialsSection: true,
+      showSocialAccountSection: true
+    },
     ...rest
   } = props;
+
+  // STATE
+  const [tab, setTab] = React.useState<number>(0);
+
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    setTab(newValue);
+  };
 
   // RENDER
   return (
     <Root id={id} className={classNames(classes.root, className)} {...rest}>
-      <Accordion defaultExpanded {...AccordionProps}>
-        <AccordionSummary aria-controls="profile information">
-          <Typography variant="body1">
-            <FormattedMessage id="ui.userProfileEdit.info" defaultMessage="ui.userProfileEdit.info" />
-          </Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <PublicInfo fields={fields} {...UserProfileEditSectionPublicInfoProps} />
-        </AccordionDetails>
-      </Accordion>
-      <Accordion {...AccordionProps}>
-        <AccordionSummary aria-controls="account settings">
-          <Typography variant="body1">
-            <FormattedMessage id="ui.userProfileEdit.account" defaultMessage="ui.userProfileEdit.account" />
-          </Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Account {...UserProfileEditSectionAccountProps} />
-        </AccordionDetails>
-      </Accordion>
-      <Accordion {...AccordionProps}>
-        <AccordionSummary aria-controls="profile settings">
-          <Typography variant="body1">
-            <FormattedMessage id="ui.userProfileEdit.notification" defaultMessage="ui.userProfileEdit.notification" />
-          </Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Settings settings={settings} {...UserProfileEditSectionSettingsProps} />
-        </AccordionDetails>
-      </Accordion>
+      <Tabs className={classes.tabs} value={tab} onChange={handleChange} variant="scrollable" scrollButtons="auto">
+        <Tab label={<FormattedMessage id="ui.userProfileEdit.info" defaultMessage="ui.userProfileEdit.info" />} />
+        <Tab label={<FormattedMessage id="ui.userProfileEdit.account" defaultMessage="ui.userProfileEdit.account" />} />
+        <Tab label={<FormattedMessage id="ui.userProfileEdit.notification" defaultMessage="ui.userProfileEdit.notification" />} />
+      </Tabs>
+      <Box className={classes.tabContent}>
+        {tab === 0 && <PublicInfo fields={fields} {...UserProfileEditSectionPublicInfoProps} />}
+        {tab === 1 && <Account {...UserProfileEditSectionAccountProps} />}
+        {tab === 2 && <Settings settings={settings} {...UserProfileEditSectionSettingsProps} />}
+      </Box>
     </Root>
   );
 }
