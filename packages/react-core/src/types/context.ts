@@ -462,7 +462,7 @@ export interface SCNotificationsWebSocketType {
    * Set websocket prefix path
    * Default: ws
    */
-  prefixPath?: boolean;
+  prefixPath?: string;
   /**
    * Disable toast message
    */
