@@ -300,13 +300,16 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
     );
   };
 
-  if (fields.length === 0 || !user) {
+  // FIELDS
+  const _fields: string[] = [...fields, ...Object.keys(metadataDefinitions)];
+
+  if (_fields.length === 0 || !user) {
     return null;
   }
 
   return (
     <Root id={id} className={classNames(classes.root, className)} {...rest}>
-      {fields.map((field) => {
+      {_fields.map((field) => {
         return renderField(field);
       })}
     </Root>
