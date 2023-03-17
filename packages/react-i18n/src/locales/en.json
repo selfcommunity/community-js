@@ -541,7 +541,7 @@
   "ui.navigationSettingsIconButton.interests": "Interests",
   "ui.navigationSettingsIconButton.followings": "Following",
   "ui.navigationSettingsIconButton.followers": "Followers",
-  "ui.navigationSettingsIconButton.connections.connections": "Connections",
+  "ui.navigationSettingsIconButton.connections": "Connections",
   "ui.navigationSettingsIconButton.posts": "My posts",
   "ui.navigationSettingsIconButton.comments": "My comments",
   "ui.navigationSettingsIconButton.loyalty": "Loyalty program",
