@@ -1,3 +1,5 @@
+import {alpha} from '@mui/system';
+
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
@@ -11,24 +13,34 @@ const Component = {
         top: 'auto',
         bottom: 0
       },
-      backgroundColor: theme.palette.primary.main,
+      backgroundColor: alpha(theme.palette.secondary.main, theme.palette.action.activatedOpacity),
       '& .MuiIcon-root': {
         fontSize: '1.571rem'
       },
       '& .SCPrivateMessageEditor-message-input': {
         width: '100%'
       },
-      '& .MuiInputBase-root, MuiOutlinedInput-root': {
+      '& .MuiInputBase-root, MuiFilledInput-root': {
+        borderRadius: 0,
+        padding: theme.spacing(0.5, 0, 0.5, 0),
         '& textarea': {
           backgroundColor: theme.palette.common.white,
           borderRadius: theme.shape.borderRadius,
-          padding: theme.spacing(1)
+          padding: theme.spacing(1),
+          border: `2px solid transparent`,
+          '&:hover': {
+            border: `2px solid${theme.palette.secondary.main}`
+          }
         }
       },
       '& .MuiPaper-root, MuiCard-root, SCWidget-root, SCMessageMediaUploader-root': {
         height: theme.spacing(15),
-        backgroundColor: theme.palette.primary.main,
+        backgroundColor: theme.palette.secondary.light,
         '& .MuiCardContent-root': {
+          borderTop: `1px dashed${theme.palette.secondary.main}`,
+          '&:hover': {
+            backgroundColor: alpha(theme.palette.secondary.main, theme.palette.action.selectedOpacity)
+          },
           overflow: 'visible',
           padding: theme.spacing(1),
           display: 'flex',

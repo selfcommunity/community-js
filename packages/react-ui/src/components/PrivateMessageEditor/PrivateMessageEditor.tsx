@@ -162,6 +162,7 @@ export default function PrivateMessageEditor(inProps: PrivateMessageEditorProps)
         )}
         <TextField
           size="small"
+          variant="filled"
           disabled={Boolean(messageFile)}
           ref={ref}
           className={classes.messageInput}
@@ -171,6 +172,7 @@ export default function PrivateMessageEditor(inProps: PrivateMessageEditorProps)
           onChange={handleMessageInput}
           maxRows={2}
           InputProps={{
+            disableUnderline: true,
             startAdornment: (
               <>
                 <Stack>
@@ -202,11 +204,9 @@ export default function PrivateMessageEditor(inProps: PrivateMessageEditorProps)
                     </Popover>
                   )}
                 </Stack>
-                <InputAdornment position="start">
-                  <IconButton disabled={message !== ''} onClick={() => setOpenMediaSection(true)}>
-                    <Icon>attach_file</Icon>
-                  </IconButton>
-                </InputAdornment>
+                <IconButton disabled={message !== ''} onClick={() => setOpenMediaSection(true)}>
+                  <Icon>attach_file</Icon>
+                </IconButton>
               </>
             ),
             endAdornment: (
