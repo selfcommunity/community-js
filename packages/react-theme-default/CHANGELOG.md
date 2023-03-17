@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.75](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.74...@selfcommunity/react-theme-default@0.1.0-alpha.75) (2023-03-17)
+
+
+### Bug Fixes
+
+* fixed pm colors/style ([bd94abf](https://github.com/selfcommunity/community-js/commit/bd94abf68e813697c9e150f288547f5376d7ffd9))
+
+
+
+
+
 # [0.1.0-alpha.74](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.73...@selfcommunity/react-theme-default@0.1.0-alpha.74) (2023-03-17)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default
