@@ -174,7 +174,7 @@ export default function PrivateMessageThreadItem(inProps: PrivateMessageThreadIt
         case type.startsWith(SCMessageFileType.VIDEO):
           section = (
             <LazyLoad className={classes.video} once offset={DEFAULT_PRELOAD_OFFSET_VIEWPORT}>
-              <AutoPlayer url={src} width={'100%'} />
+              <AutoPlayer url={src} width={'100%'} enableAutoplay={false} />
             </LazyLoad>
           );
           break;

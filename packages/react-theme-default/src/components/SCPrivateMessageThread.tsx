@@ -1,7 +1,9 @@
+import {alpha} from '@mui/system';
+
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
-      backgroundColor: theme.palette.action.hover,
+      backgroundColor: alpha(theme.palette.secondary.main, theme.palette.action.selectedOpacity),
       position: 'relative',
       height: theme.spacing(103.5),
       maxHeight: 'inherit',
@@ -9,6 +11,7 @@ const Component = {
         height: '100%',
         maxHeight: `calc(100% - ${theme.spacing(10)})`,
         overflow: 'auto',
+        padding: theme.spacing(0),
         '& .MuiAlert-root': {
           position: 'absolute',
           bottom: 0,
@@ -18,9 +21,7 @@ const Component = {
           justifyContent: 'center'
         },
         '& .MuiList-root': {
-          // [theme.breakpoints.down('md')]: {
-          //   marginTop: theme.spacing(2)
-          // },
+          margin: theme.spacing(0, 2, 0, 2),
           '& .MuiListItem-root': {
             '&.SCPrivateMessageThread-receiver': {
               backgroundColor: theme.palette.common.white,
@@ -37,7 +38,7 @@ const Component = {
               }
             },
             '&.SCPrivateMessageThread-sender': {
-              backgroundColor: theme.palette.primary.main
+              backgroundColor: alpha(theme.palette.secondary.main, theme.palette.action.activatedOpacity)
             }
           }
         }
@@ -58,11 +59,12 @@ const Component = {
         height: theme.spacing(6.25),
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: theme.palette.primary.main,
+        backgroundColor: alpha(theme.palette.secondary.main, theme.palette.action.activatedOpacity),
         '& .SCPrivateMessageThread-new-message-header-content': {
           display: 'flex',
           alignItems: 'center',
           width: '80%',
+          //padding: theme.spacing(0.5),
           maxHeight: theme.spacing(5),
           overflow: 'auto',
           backgroundColor: theme.palette.common.white,
@@ -72,8 +74,8 @@ const Component = {
             fontSize: '1.714rem'
           },
           '& .MuiIcon-root': {
-            color: theme.palette.secondary.main
-            // padding: theme.spacing(1)
+            color: theme.palette.secondary.main,
+            padding: theme.spacing(0.5)
           },
           '& .MuiTypography-root': {
             color: theme.palette.secondary.main
@@ -97,7 +99,7 @@ const Component = {
         marginBottom: theme.spacing(1),
         '& .SCPrivateMessageThread-subheader': {
           width: 'fit-content',
-          padding: theme.spacing(1),
+          padding: theme.spacing(0.5),
           backgroundColor: 'white',
           fontWeight: theme.typography.fontWeightRegular,
           borderRadius: theme.shape.borderRadius,
@@ -111,13 +113,14 @@ const Component = {
         paddingRight: `${theme.spacing(2)} !important`,
         paddingLeft: `${theme.spacing(2)} !important`,
         '& .MuiListItemSecondaryAction-root': {
-          right: theme.spacing(0),
-          top: theme.spacing(2)
+          right: theme.spacing(0.5),
+          top: theme.spacing(3)
         },
         '& .SCPrivateMessageThreadItem-message-time': {
           position: 'absolute',
           bottom: theme.spacing(0),
-          right: theme.spacing(1)
+          right: theme.spacing(1),
+          padding: theme.spacing(0.5)
         },
         '& .SCPrivateMessageThreadItem-text': {
           minHeight: theme.spacing(6),

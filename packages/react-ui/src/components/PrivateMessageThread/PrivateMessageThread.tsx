@@ -45,7 +45,8 @@ const classes = {
   newMessageHeaderIcon: `${PREFIX}-new-message-header-icon`,
   sender: `${PREFIX}-sender`,
   receiver: `${PREFIX}-receiver`,
-  autocomplete: `${PREFIX}-autocomplete`
+  autocomplete: `${PREFIX}-autocomplete`,
+  autocompleteDialog: `${PREFIX}-autocomplete-dialog`
 };
 
 const Root = styled(Widget, {
@@ -133,7 +134,8 @@ export interface PrivateMessageThreadProps {
  |subHeader|.SCPrivateMessageThread-subheader|Styles applied to thread list subheader element.|
  |sender|.SCPrivateMessageThread-sender|Styles applied to the sender element.|
  |receiver|.SCPrivateMessageThread-receiver|Styles applied to the receiver element.|
- |autocomplete|.SCPrivateMessageThread-autocomplete|Styles applied to new message user insertion autocomplete.|
+ |autocomplete|.SCPrivateMessageThread-autocomplete|Styles applied to autocomplete element.|
+ |autocompleteDialog|.SCPrivateMessageThread-autocomplete-dialog|Styles applied to autocomplete dialog element.|
 
  * @param inProps
  */
@@ -322,6 +324,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
                       }}
                     />
                   )}
+                  classes={{popper: classes.autocompleteDialog}}
                   onChange={threadCallbacks.onRecipientSelect}
                   disabled={!followers}
                 />
