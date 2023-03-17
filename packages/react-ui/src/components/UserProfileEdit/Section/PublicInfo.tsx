@@ -120,6 +120,10 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
     setUser(scUserContext.user);
   }, [scUserContext.user]);
 
+  useEffect(() => {
+    scUserContext.updateUser(user);
+  }, [user]);
+
   // HANDLERS
   const handleEdit = (field: SCUserProfileFields) => {
     return (event: React.MouseEvent<HTMLButtonElement>) => {

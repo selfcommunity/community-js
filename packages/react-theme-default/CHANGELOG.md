@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.73](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.72...@selfcommunity/react-theme-default@0.1.0-alpha.73) (2023-03-16)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+# [0.1.0-alpha.72](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.71...@selfcommunity/react-theme-default@0.1.0-alpha.72) (2023-03-16)
+
+
+### Bug Fixes
+
+* Fix user profile edit layout ([4c2916a](https://github.com/selfcommunity/community-js/commit/4c2916ac39cfb7470725a7b8beade28e3ea1c55a))
+
+
+
+
+
+# [0.1.0-alpha.71](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.70...@selfcommunity/react-theme-default@0.1.0-alpha.71) (2023-03-16)
+
+
+### Features
+
+* Added new user profile page ([96c1e70](https://github.com/selfcommunity/community-js/commit/96c1e70f23ed2b641dd136922457f6e6f2cb8fd6))
+
+
+
+
+
 # [0.1.0-alpha.70](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.69...@selfcommunity/react-theme-default@0.1.0-alpha.70) (2023-03-16)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default

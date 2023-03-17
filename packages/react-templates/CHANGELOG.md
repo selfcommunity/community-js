@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.115](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.114...@selfcommunity/react-templates@0.3.0-alpha.115) (2023-03-16)
+
+
+### Bug Fixes
+
+* Fix user profile ([164ec55](https://github.com/selfcommunity/community-js/commit/164ec55a83fa3ddb791c6d8cc1ccd37827b4cf88))
+
+
+
+
+
+# [0.3.0-alpha.114](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.113...@selfcommunity/react-templates@0.3.0-alpha.114) (2023-03-16)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.113](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.112...@selfcommunity/react-templates@0.3.0-alpha.113) (2023-03-16)
+
+
+### Features
+
+* Added new user profile page ([96c1e70](https://github.com/selfcommunity/community-js/commit/96c1e70f23ed2b641dd136922457f6e6f2cb8fd6))
+
+
+
+
+
 # [0.3.0-alpha.112](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.111...@selfcommunity/react-templates@0.3.0-alpha.112) (2023-03-16)
 
 **Note:** Version bump only for package @selfcommunity/react-templates

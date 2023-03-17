@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.127](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.126...@selfcommunity/react-ui@0.7.0-alpha.127) (2023-03-16)
+
+
+### Bug Fixes
+
+* Fix update user ([23e81a4](https://github.com/selfcommunity/community-js/commit/23e81a433f00534f1c61d538855f2934d74ae914))
+* Fix user profile ([164ec55](https://github.com/selfcommunity/community-js/commit/164ec55a83fa3ddb791c6d8cc1ccd37827b4cf88))
+
+
+
+
+
+# [0.7.0-alpha.126](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.125...@selfcommunity/react-ui@0.7.0-alpha.126) (2023-03-16)
+
+
+### Bug Fixes
+
+* Fix user profile edit layout ([4c2916a](https://github.com/selfcommunity/community-js/commit/4c2916ac39cfb7470725a7b8beade28e3ea1c55a))
+
+
+
+
+
+# [0.7.0-alpha.125](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.124...@selfcommunity/react-ui@0.7.0-alpha.125) (2023-03-16)
+
+
+### Features
+
+* Added new user profile page ([96c1e70](https://github.com/selfcommunity/community-js/commit/96c1e70f23ed2b641dd136922457f6e6f2cb8fd6))
+
+
+
+
+
 # [0.7.0-alpha.124](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.123...@selfcommunity/react-ui@0.7.0-alpha.124) (2023-03-16)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
