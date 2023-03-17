@@ -3,7 +3,7 @@ import {styled} from '@mui/material/styles';
 import {Box, Typography} from '@mui/material';
 import {defineMessages, useIntl} from 'react-intl';
 import {camelCase, Logger} from '@selfcommunity/utils';
-import {SCUserType} from '@selfcommunity/types';
+import {SCMetadataType, SCUserType} from '@selfcommunity/types';
 import {SCPreferences, SCPreferencesContextType, useSCFetchUser, useSCPreferences} from '@selfcommunity/react-core';
 import {DEFAULT_FIELDS} from '../../constants/UserProfile';
 import UserInfoSkeleton from './Skeleton';
@@ -157,6 +157,9 @@ export default function UserInfo(inProps: UserInfoProps): JSX.Element {
     return null;
   }, [scPreferences.preferences]);
 
+  // FIELDS
+  const _fields: string[] = [...fields, ...Object.keys(metadataDefinitions)];
+
   // RENDER
   const renderField = (user, field) => {
     switch (field) {
@@ -181,12 +184,12 @@ export default function UserInfo(inProps: UserInfoProps): JSX.Element {
     return <UserInfoSkeleton />;
   }
 
-  if (fields.length === 0) {
+  if (_fields.length === 0) {
     return null;
   }
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
-      {fields.map((field) => {
+      {_fields.map((field) => {
         if (scUser[field]) {
           if (field === SCUserProfileFields.TAGS) {
             return scUser[field].length > 0 ? (
