@@ -1,9 +1,8 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Typography, Box, Grid, TextField} from '@mui/material';
-import {Endpoints, CategoryService} from '@selfcommunity/api-services';
+import {Box, Grid, TextField, Typography} from '@mui/material';
+import {CategoryService, Endpoints} from '@selfcommunity/api-services';
 import {
-  Link,
   SCPreferences,
   SCPreferencesContext,
   SCPreferencesContextType,
