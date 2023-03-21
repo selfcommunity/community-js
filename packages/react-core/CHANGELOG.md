@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.1...@selfcommunity/react-core@0.4.0-alpha.2) (2023-03-21)
+
+
+### Bug Fixes
+
+* Fix url names ([bb883a5](https://github.com/selfcommunity/community-js/commit/bb883a522990b16df77deb7fa9fe014aaabce82a))
+* removed query param from routing url when empty ([4d46948](https://github.com/selfcommunity/community-js/commit/4d469489ac15535752bb8669231a90bedfc34106))
+
+
+
+
+
 # [0.4.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.0...@selfcommunity/react-core@0.4.0-alpha.1) (2023-03-17)
 
 **Note:** Version bump only for package @selfcommunity/react-core

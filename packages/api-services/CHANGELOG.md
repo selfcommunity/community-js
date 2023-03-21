@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.6-alpha.19](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.6-alpha.18...@selfcommunity/api-services@0.3.6-alpha.19) (2023-03-21)
+
+
+### Bug Fixes
+
+* Fix url names ([bb883a5](https://github.com/selfcommunity/community-js/commit/bb883a522990b16df77deb7fa9fe014aaabce82a))
+
+
+
+
+
 ## [0.3.6-alpha.18](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.6-alpha.17...@selfcommunity/api-services@0.3.6-alpha.18) (2023-03-15)
 
 
