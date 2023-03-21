@@ -16,7 +16,7 @@ export const USER_PROFILE_ROUTE_NAME = 'user_profile';
 export const USER_PROFILE_SETTINGS_ROUTE_NAME = 'user_profile_settings';
 export const USER_NOTIFICATIONS_ROUTE_NAME = 'user_notifications';
 export const USER_PRIVATE_MESSAGES_ROUTE_NAME = 'user_messages';
-export const USER_PROFILE_FOLLOWINGS_ROUTE_NAME = 'user_profile_followings';
+export const USER_PROFILE_FOLLOWINGS_ROUTE_NAME = 'user_followings';
 export const USER_PROFILE_FOLLOWERS_ROUTE_NAME = 'user_followers';
 export const USER_PROFILE_CONNECTIONS_ROUTE_NAME = 'user_connections';
 export const USER_PROFILE_CATEGORIES_ROUTE_NAME = 'user_categories';
@@ -48,7 +48,7 @@ export const defaultRoutes: {[k: string]: string} = {
   [USER_PROFILE_SETTINGS_ROUTE_NAME]: '/user/:id/edit/',
   [USER_NOTIFICATIONS_ROUTE_NAME]: '/notification/',
   [USER_PRIVATE_MESSAGES_ROUTE_NAME]: '/messages/:id/',
-  [USER_PROFILE_FOLLOWINGS_ROUTE_NAME]: '/user/:id/followings/',
+  [USER_PROFILE_FOLLOWINGS_ROUTE_NAME]: '/user/:id/followed/',
   [USER_PROFILE_FOLLOWERS_ROUTE_NAME]: '/user/:id/followers/',
   [USER_PROFILE_CONNECTIONS_ROUTE_NAME]: '/user/:id/connections/',
   [USER_PROFILE_CATEGORIES_ROUTE_NAME]: '/user/:id/categories/',

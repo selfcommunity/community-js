@@ -107,8 +107,9 @@ export default function SCRoutingProvider({children = null}: {children: React.Re
       const re = /:([^/|^?|^#]+)?/g;
       let _tpl = tpl;
       let match = re.exec(tpl);
+      const hasParams = Object.keys(data).length > 0;
       while (match) {
-        _tpl = _tpl.replace(match[0], data[match[1]]);
+        _tpl = hasParams ? _tpl.replace(match[0], data[match[1]]) : _tpl.split(match[0])[0];
         re.lastIndex = 0;
         match = re.exec(_tpl);
       }
