@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.131](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.130...@selfcommunity/react-ui@0.7.0-alpha.131) (2023-03-21)
+
+
+### Bug Fixes
+
+* Fix key props in list ([4c6bd08](https://github.com/selfcommunity/community-js/commit/4c6bd088e5acd5725f89b6edd74f55b21d7a335e))
+
+
+
+
+
 # [0.7.0-alpha.130](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.129...@selfcommunity/react-ui@0.7.0-alpha.130) (2023-03-21)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
