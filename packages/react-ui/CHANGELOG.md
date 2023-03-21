@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.129](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.128...@selfcommunity/react-ui@0.7.0-alpha.129) (2023-03-17)
+
+
+### Bug Fixes
+
+* fixed pm colors/style ([bd94abf](https://github.com/selfcommunity/community-js/commit/bd94abf68e813697c9e150f288547f5376d7ffd9))
+
+
+
+
+
 # [0.7.0-alpha.128](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.127...@selfcommunity/react-ui@0.7.0-alpha.128) (2023-03-17)
 
 
