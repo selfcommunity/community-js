@@ -224,33 +224,33 @@ export default function NavigationSettingsIconButton(inProps: NavigationSettings
             <FormattedMessage id="ui.navigationSettingsIconButton.privateMessages" defaultMessage="ui.navigationSettingsIconButton.privateMessages" />
           </ListItemButton>
         </ListItem>,
-        isAdmin && (
-          <>
-            <Divider />
-            <ListItem className={classes.item} key="platform">
-              <ListItemButton onClick={() => fetchPlatform('')}>
-                <FormattedMessage id="ui.navigationSettingsIconButton.platform" defaultMessage="ui.navigationSettingsIconButton.platform" />
-              </ListItemButton>
-            </ListItem>
-          </>
-        ),
-        (isModerator || isAdmin) && (
-          <>
-            <Divider />
-            <ListItem className={classes.item} key="moderation">
-              <ListItemButton onClick={() => fetchPlatform('/moderation')}>
-                <FormattedMessage id="ui.navigationSettingsIconButton.moderation" defaultMessage="ui.navigationSettingsIconButton.moderation" />
-              </ListItemButton>
-            </ListItem>
-          </>
-        ),
+        ...(isAdmin
+          ? [
+              <Divider key="admin_divider" />,
+              <ListItem className={classes.item} key="platform">
+                <ListItemButton onClick={() => fetchPlatform('')}>
+                  <FormattedMessage id="ui.navigationSettingsIconButton.platform" defaultMessage="ui.navigationSettingsIconButton.platform" />
+                </ListItemButton>
+              </ListItem>
+            ]
+          : []),
+        ...(isModerator || isAdmin
+          ? [
+              <Divider key="moderation_divider" />,
+              <ListItem className={classes.item} key="moderation">
+                <ListItemButton onClick={() => fetchPlatform('/moderation')}>
+                  <FormattedMessage id="ui.navigationSettingsIconButton.moderation" defaultMessage="ui.navigationSettingsIconButton.moderation" />
+                </ListItemButton>
+              </ListItem>
+            ]
+          : []),
         <ListItem className={classes.item} key="settings">
           <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.USER_PROFILE_SETTINGS_ROUTE_NAME, scUserContext.user)}>
             <FormattedMessage id="ui.navigationSettingsIconButton.settings" defaultMessage="ui.navigationSettingsIconButton.settings" />
           </ListItemButton>
         </ListItem>,
-        <Divider />,
-        <ListItem className={classes.item}>
+        <Divider key="divider" />,
+        <ListItem className={classes.item} key="logout">
           <ListItemButton onClick={handleLogout}>
             <FormattedMessage id="ui.navigationSettingsIconButton.logout" defaultMessage="ui.navigationSettingsIconButton.logout" />
           </ListItemButton>
@@ -335,22 +335,22 @@ export default function NavigationSettingsIconButton(inProps: NavigationSettings
           to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, {})}>
           <FormattedMessage id="ui.navigationSettingsIconButton.privateMessages" defaultMessage="ui.navigationSettingsIconButton.privateMessages" />
         </MenuItem>,
-        isAdmin && (
-          <>
-            <Divider />
-            <MenuItem className={classes.item} key="platform" onClick={() => fetchPlatform('')}>
-              <FormattedMessage id="ui.navigationSettingsIconButton.platform" defaultMessage="ui.navigationSettingsIconButton.platform" />
-            </MenuItem>
-          </>
-        ),
-        (isModerator || isAdmin) && (
-          <>
-            <Divider />
-            <MenuItem className={classes.item} key="moderation" onClick={() => fetchPlatform('/moderation')}>
-              <FormattedMessage id="ui.navigationSettingsIconButton.moderation" defaultMessage="ui.navigationSettingsIconButton.moderation" />
-            </MenuItem>
-          </>
-        ),
+        ...(isAdmin
+          ? [
+              <Divider key="platform_divider" />,
+              <MenuItem className={classes.item} key="platform" onClick={() => fetchPlatform('')}>
+                <FormattedMessage id="ui.navigationSettingsIconButton.platform" defaultMessage="ui.navigationSettingsIconButton.platform" />
+              </MenuItem>
+            ]
+          : []),
+        ...(isModerator || isAdmin
+          ? [
+              <Divider key="moderation_divider" />,
+              <MenuItem className={classes.item} key="moderation" onClick={() => fetchPlatform('/moderation')}>
+                <FormattedMessage id="ui.navigationSettingsIconButton.moderation" defaultMessage="ui.navigationSettingsIconButton.moderation" />
+              </MenuItem>
+            ]
+          : []),
         <MenuItem
           className={classes.item}
           key="settings"
@@ -358,7 +358,7 @@ export default function NavigationSettingsIconButton(inProps: NavigationSettings
           to={scRoutingContext.url(SCRoutes.USER_PROFILE_SETTINGS_ROUTE_NAME, scUserContext.user)}>
           <FormattedMessage id="ui.navigationSettingsIconButton.settings" defaultMessage="ui.navigationSettingsIconButton.settings" />
         </MenuItem>,
-        <Divider />,
+        <Divider key="divider" />,
         <MenuItem className={classes.item} key="logout" onClick={handleLogout}>
           <FormattedMessage id="ui.navigationSettingsIconButton.logout" defaultMessage="ui.navigationSettingsIconButton.logout" />
         </MenuItem>
