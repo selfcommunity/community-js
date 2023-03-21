@@ -330,7 +330,7 @@ export class UserApiClient {
    */
   static getUserFollowings(id: number | string, mutual?: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
     const p = urlParams({...(mutual && {mutual: mutual})});
-    return apiRequest({...config, url: `${Endpoints.UsersFollowings.url({id})}?${p.toString()}`, method: Endpoints.UsersFollowings.method});
+    return apiRequest({...config, url: `${Endpoints.UserFollowings.url({id})}?${p.toString()}`, method: Endpoints.UserFollowings.method});
   }
 
   /**

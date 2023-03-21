@@ -149,13 +149,13 @@ export default function UsersFollowed(inProps: UsersFollowedProps): JSX.Element 
     dataToolsReducer,
     {
       isLoadingNext: true,
-      next: `${Endpoints.UsersFollowings.url({id: userId})}?limit=10`,
+      next: `${Endpoints.UserFollowings.url({id: userId})}?limit=10`,
       cacheKey: SCCache.getToolsStateCacheKey(SCCache.USERS_FOLLOWED_TOOLS_STATE_CACHE_PREFIX_KEY, userId),
       cacheStrategy
     },
     stateToolsInitializer
   );
-  const [openUsersFollowingsDialog, setOpenUsersFollowingsDialog] = useState<boolean>(false);
+  const [openUserFollowingsDialog, setOpenUserFollowingsDialog] = useState<boolean>(false);
 
   // CONST
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
@@ -195,7 +195,7 @@ export default function UsersFollowed(inProps: UsersFollowedProps): JSX.Element 
     () => () => {
       return http.request({
         url: state.next,
-        method: Endpoints.UsersFollowings.method
+        method: Endpoints.UserFollowings.method
       });
     },
     [dispatch, state.next, state.isLoadingNext]
@@ -277,11 +277,11 @@ export default function UsersFollowed(inProps: UsersFollowedProps): JSX.Element 
             ))}
           </List>
           {limit < state.count && (
-            <Button size="small" className={classes.showMore} onClick={() => setOpenUsersFollowingsDialog(true)}>
+            <Button size="small" className={classes.showMore} onClick={() => setOpenUserFollowingsDialog(true)}>
               <FormattedMessage id="ui.usersFollowed.button.showAll" defaultMessage="ui.usersFollowed.button.showAll" />
             </Button>
           )}
-          {openUsersFollowingsDialog && (
+          {openUserFollowingsDialog && (
             <BaseDialog
               title={
                 isMobile ? (
@@ -290,8 +290,8 @@ export default function UsersFollowed(inProps: UsersFollowedProps): JSX.Element 
                   `${intl.formatMessage(messages.title, {total: state.count})}`
                 )
               }
-              onClose={() => setOpenUsersFollowingsDialog(false)}
-              open={openUsersFollowingsDialog}>
+              onClose={() => setOpenUserFollowingsDialog(false)}
+              open={openUserFollowingsDialog}>
               {state.isLoadingNext ? (
                 <CentralProgress size={50} />
               ) : (

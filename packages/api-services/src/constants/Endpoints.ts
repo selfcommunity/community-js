@@ -390,7 +390,7 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/user/$(id)/followers/'),
     method: 'GET'
   },
-  UsersFollowings: {
+  UserFollowings: {
     url: urlReplacer('/api/v2/user/$(id)/followings/'),
     method: 'GET'
   },
