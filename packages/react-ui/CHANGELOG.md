@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.134](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.133...@selfcommunity/react-ui@0.7.0-alpha.134) (2023-03-22)
+
+
+### Bug Fixes
+
+* Fix theme ([2f423a7](https://github.com/selfcommunity/community-js/commit/2f423a71571b671c85d619b59e2324f50b1f5f8a))
+* Fix Warning: Unknown event handler property `onStateChange`. It will be ignored. ([ad381dd](https://github.com/selfcommunity/community-js/commit/ad381dd4390bc75d150c49cbb6cb8e4c71380108))
+* Removed unused components ([5e22877](https://github.com/selfcommunity/community-js/commit/5e228775c5d5407f1c502f8e89a0d5783328b1fb))
+
+
+
+
+
 # [0.7.0-alpha.133](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.132...@selfcommunity/react-ui@0.7.0-alpha.133) (2023-03-21)
 
 
