@@ -22,7 +22,6 @@ export const USER_PROFILE_CONNECTIONS_ROUTE_NAME = 'user_connections';
 export const USER_PROFILE_CATEGORIES_ROUTE_NAME = 'user_categories';
 export const USER_PROFILE_FOLLOWED_POSTS_ROUTE_NAME = 'user_followed_posts';
 export const USER_PROFILE_FOLLOWED_DISCUSSIONS_ROUTE_NAME = 'user_followed_discussions';
-export const PEOPLE_SUGGESTION_ROUTE_NAME = 'people_suggestion';
 export const LOYALTY_ROUTE_NAME = 'loyalty';
 export const INCUBATOR_ROUTE_NAME = 'incubator';
 export const SIGNIN_ROUTE_NAME = 'signin';
@@ -54,7 +53,6 @@ export const defaultRoutes: {[k: string]: string} = {
   [USER_PROFILE_CATEGORIES_ROUTE_NAME]: '/user/:id/categories/',
   [USER_PROFILE_FOLLOWED_POSTS_ROUTE_NAME]: '/user/:id/posts/followed/',
   [USER_PROFILE_FOLLOWED_DISCUSSIONS_ROUTE_NAME]: '/user/:id/discussions/followed/',
-  [PEOPLE_SUGGESTION_ROUTE_NAME]: '/people/',
   [LOYALTY_ROUTE_NAME]: '/loyalty/',
   [INCUBATOR_ROUTE_NAME]: '/incubator/:id/',
   [SIGNIN_ROUTE_NAME]: '/signin/',

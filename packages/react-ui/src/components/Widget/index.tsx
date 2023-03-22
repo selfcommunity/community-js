@@ -50,7 +50,7 @@ export interface WidgetProps extends CardProps {
 }
 
 const Widget: ForwardRefRenderFunction<ComponentRef<'div'>, WidgetProps> = (props, ref) => {
-  const {className, ...rest} = props;
+  const {className, onHeightChange, onStateChange, ...rest} = props;
   return <Root className={classNames(classes.root, className)} {...rest} ref={ref} />;
 };
 

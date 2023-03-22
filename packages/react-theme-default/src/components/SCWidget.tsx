@@ -48,6 +48,9 @@ const Component = {
             }
           }
         },
+        '& > .MuiTypography-root': {
+          paddingTop: theme.spacing(2)
+        },
         '& > .MuiButton-sizeMedium': {
           marginLeft: theme.spacing(-2),
           paddingLeft: theme.spacing(2),
