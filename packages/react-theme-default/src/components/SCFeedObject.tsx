@@ -52,7 +52,7 @@ const Component = {
             }
           },
           '& .SCFeedObject-text-section': {
-            '& > :first-child': {
+            '& > :first-of-type': {
               padding: theme.spacing(0, 2, 2)
             },
             '& a': {

@@ -147,7 +147,7 @@ const Root = styled(Widget, {
     padding: `${theme.spacing()} 0px`
   },
   [`& .${classes.textSection}`]: {
-    '& >:first-child': {
+    '& >:first-of-type': {
       padding: `${theme.spacing(2)}`,
       display: 'block'
     },

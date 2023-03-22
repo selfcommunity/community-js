@@ -55,7 +55,7 @@ const Root = styled(Grid, {
   marginTop: theme.spacing(-2),
   [`& .${classes.left}`]: {
     padding: '0 2px 0 2px',
-    '& > div:first-child': {
+    '& > div:first-of-type': {
       marginTop: 0
     },
     '& > div:last-child': {

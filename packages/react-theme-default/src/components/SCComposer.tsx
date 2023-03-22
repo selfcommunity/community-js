@@ -93,7 +93,7 @@ const Component = {
         '& > p.MuiTypography-alignLeft > .MuiIconButton-root': {
           marginLeft: theme.spacing(0.3),
           marginRight: theme.spacing(0.3),
-          '&:first-child': {
+          '&:first-of-type': {
             marginLeft: 0
           },
           '&:last-child': {

@@ -40,6 +40,10 @@ const Root = styled(Toolbar, {
 
 export interface NavigationToolbarMobileProps extends ToolbarProps {
   /**
+   * Disable search action if possible
+   */
+  disableSearch?: boolean;
+  /**
    * Props spread to SearchAutocomplete component
    */
   SearchAutocompleteProps?: SearchAutocompleteProps;
@@ -86,6 +90,7 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
   });
   const {
     className = '',
+    disableSearch = false,
     SearchAutocompleteProps = {},
     children = null,
     action = <NavigationSettingsIconButton size="small" className={classes.settings}></NavigationSettingsIconButton>,
@@ -129,7 +134,7 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
   return (
     <Root className={classNames(className, classes.root)} {...rest}>
       {_children}
-      {preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY] && !action && (
+      {preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY] && !disableSearch && (
         <>
           <IconButton className={classes.search} onClick={handleOpenSearch}>
             <Icon>search</Icon>

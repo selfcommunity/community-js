@@ -96,6 +96,7 @@ export default function BottomNavigation(inProps: BottomNavigationProps) {
         : [
             scUserContext.user ? (
               <BottomNavigationAction
+                key="home"
                 className={classes.action}
                 component={Link}
                 to={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})}
@@ -106,6 +107,7 @@ export default function BottomNavigation(inProps: BottomNavigationProps) {
             (scUserContext.user || preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY]) &&
             preferences[SCPreferences.CONFIGURATIONS_EXPLORE_STREAM_ENABLED] ? (
               <BottomNavigationAction
+                key="explore"
                 className={classes.action}
                 component={Link}
                 to={scRoutingContext.url(SCRoutes.EXPLORE_ROUTE_NAME, {})}
@@ -115,6 +117,7 @@ export default function BottomNavigation(inProps: BottomNavigationProps) {
             ) : null,
             scUserContext.user ? (
               <BottomNavigationAction
+                key="notifications"
                 className={classes.action}
                 component={Link}
                 to={scRoutingContext.url(SCRoutes.USER_NOTIFICATIONS_ROUTE_NAME, {})}
@@ -130,6 +133,7 @@ export default function BottomNavigation(inProps: BottomNavigationProps) {
             ) : null,
             scUserContext.user ? (
               <BottomNavigationAction
+                key="messages"
                 className={classes.action}
                 component={Link}
                 to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, {})}
