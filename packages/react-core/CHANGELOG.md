@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.5...@selfcommunity/react-core@0.4.0-alpha.6) (2023-03-22)
+
+
+### Bug Fixes
+
+* profile edit notification settings ([0239e32](https://github.com/selfcommunity/community-js/commit/0239e3204b5115638c666e15f37680ba72be0485))
+
+
+
+
+
 # [0.4.0-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.4...@selfcommunity/react-core@0.4.0-alpha.5) (2023-03-22)
 
 
