@@ -92,12 +92,24 @@ export default function useSCSettingsManager(user?: SCUserType) {
    */
   const update = useMemo(
     () =>
-      (p: string, v: any): any => {
+      (p: string, v: any): Promise<any> => {
         if (data && p in data) {
-          setData(Object.assign({}, data, {[p]: v}));
-          return v;
+          return http
+            .request({
+              url: Endpoints.UserSettingsPatch.url({id: user.id}),
+              method: Endpoints.UserSettingsPatch.method,
+              data: {[p]: v},
+            })
+            .then((res: HttpResponse<SCUserSettingsType>) => {
+              const _data = Object.assign({}, data, {[p]: v});
+              setData(_data);
+              return Promise.resolve(_data);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
         }
-        return null;
+        return Promise.reject();
       },
     [data]
   );
