@@ -3,6 +3,49 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.122](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.121...@selfcommunity/react-templates@0.3.0-alpha.122) (2023-03-22)
+
+
+### Bug Fixes
+
+* Removed unused components ([5e22877](https://github.com/selfcommunity/community-js/commit/5e228775c5d5407f1c502f8e89a0d5783328b1fb))
+
+
+
+
+
+# [0.3.0-alpha.121](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.120...@selfcommunity/react-templates@0.3.0-alpha.121) (2023-03-21)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.120](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.119...@selfcommunity/react-templates@0.3.0-alpha.120) (2023-03-21)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.119](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.118...@selfcommunity/react-templates@0.3.0-alpha.119) (2023-03-21)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.118](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.117...@selfcommunity/react-templates@0.3.0-alpha.118) (2023-03-21)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
 # [0.3.0-alpha.117](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.116...@selfcommunity/react-templates@0.3.0-alpha.117) (2023-03-17)
 
 **Note:** Version bump only for package @selfcommunity/react-templates

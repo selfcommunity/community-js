@@ -3,6 +3,51 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.80](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.79...@selfcommunity/react-theme-default@0.1.0-alpha.80) (2023-03-22)
+
+
+### Bug Fixes
+
+* Fix FeedSkeleton theme ([a4035d0](https://github.com/selfcommunity/community-js/commit/a4035d0db16a2148495b53d0c2559ebcbf945529))
+* Fix theme ([2f423a7](https://github.com/selfcommunity/community-js/commit/2f423a71571b671c85d619b59e2324f50b1f5f8a))
+* Removed unused components ([5e22877](https://github.com/selfcommunity/community-js/commit/5e228775c5d5407f1c502f8e89a0d5783328b1fb))
+
+
+
+
+
+# [0.1.0-alpha.79](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.78...@selfcommunity/react-theme-default@0.1.0-alpha.79) (2023-03-21)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+# [0.1.0-alpha.78](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.77...@selfcommunity/react-theme-default@0.1.0-alpha.78) (2023-03-21)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+# [0.1.0-alpha.77](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.76...@selfcommunity/react-theme-default@0.1.0-alpha.77) (2023-03-21)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+# [0.1.0-alpha.76](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.75...@selfcommunity/react-theme-default@0.1.0-alpha.76) (2023-03-21)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
 # [0.1.0-alpha.75](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.74...@selfcommunity/react-theme-default@0.1.0-alpha.75) (2023-03-17)
 
 

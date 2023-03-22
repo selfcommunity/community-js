@@ -3,6 +3,60 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.134](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.133...@selfcommunity/react-ui@0.7.0-alpha.134) (2023-03-22)
+
+
+### Bug Fixes
+
+* Fix theme ([2f423a7](https://github.com/selfcommunity/community-js/commit/2f423a71571b671c85d619b59e2324f50b1f5f8a))
+* Fix Warning: Unknown event handler property `onStateChange`. It will be ignored. ([ad381dd](https://github.com/selfcommunity/community-js/commit/ad381dd4390bc75d150c49cbb6cb8e4c71380108))
+* Removed unused components ([5e22877](https://github.com/selfcommunity/community-js/commit/5e228775c5d5407f1c502f8e89a0d5783328b1fb))
+
+
+
+
+
+# [0.7.0-alpha.133](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.132...@selfcommunity/react-ui@0.7.0-alpha.133) (2023-03-21)
+
+
+### Bug Fixes
+
+* Fix endpoint ([527a643](https://github.com/selfcommunity/community-js/commit/527a64309122baa2fabaa1022bc9749a1da525d3))
+
+
+
+
+
+# [0.7.0-alpha.132](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.131...@selfcommunity/react-ui@0.7.0-alpha.132) (2023-03-21)
+
+
+### Bug Fixes
+
+* Fix endpoint ([8bd277e](https://github.com/selfcommunity/community-js/commit/8bd277ede9f49d97371c2ee7bb0a6594ff238b02))
+
+
+
+
+
+# [0.7.0-alpha.131](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.130...@selfcommunity/react-ui@0.7.0-alpha.131) (2023-03-21)
+
+
+### Bug Fixes
+
+* Fix key props in list ([4c6bd08](https://github.com/selfcommunity/community-js/commit/4c6bd088e5acd5725f89b6edd74f55b21d7a335e))
+
+
+
+
+
+# [0.7.0-alpha.130](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.129...@selfcommunity/react-ui@0.7.0-alpha.130) (2023-03-21)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
 # [0.7.0-alpha.129](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.128...@selfcommunity/react-ui@0.7.0-alpha.129) (2023-03-17)
 
 
