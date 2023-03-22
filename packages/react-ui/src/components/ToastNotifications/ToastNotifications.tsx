@@ -1,7 +1,7 @@
 import React, {useEffect, useRef} from 'react';
 import {styled} from '@mui/material/styles';
 import {Box, BoxProps} from '@mui/material';
-import {SCContextType, SCNotification, useSCContext} from '@selfcommunity/react-core';
+import {SCContextType, SCNotification, SCUserContextType, useSCContext, useSCUser} from '@selfcommunity/react-core';
 import {SCNotificationTopicType, SCNotificationTypologyType} from '@selfcommunity/types';
 import PubSub from 'pubsub-js';
 import {useSnackbar} from 'notistack';
@@ -88,6 +88,7 @@ export default function UserToastNotifications(inProps: ToastNotificationsProps)
 
   // CONTEXT
   const scContext: SCContextType = useSCContext();
+  const scUserContext: SCUserContextType = useSCUser();
 
   // REFS
   const notificationSubscription = useRef(null);
@@ -152,7 +153,8 @@ export default function UserToastNotifications(inProps: ToastNotificationsProps)
       (data.data.activity_type === SCNotificationTypologyType.NOTIFICATION_BANNER || SCNotification.SCNotificationMapping[data.data.activity_type]) &&
       !SCNotification.SCSilentToastNotifications.includes(data.data.activity_type) &&
       !disableToastNotification &&
-      !scContext.settings.notifications.webSocket.disableToastMessage
+      !scContext.settings.notifications.webSocket.disableToastMessage &&
+      scUserContext.managers.settings.get(SCNotification.NOTIFICATIONS_SETTINGS_SHOW_TOAST)
     ) {
       /**
        * !IMPORTANT
@@ -188,7 +190,7 @@ export default function UserToastNotifications(inProps: ToastNotificationsProps)
     return () => {
       PubSub.unsubscribe(notificationSubscription.current);
     };
-  }, []);
+  }, [scUserContext.managers.settings.all]);
 
-  return <Root></Root>;
+  return <Root />;
 }

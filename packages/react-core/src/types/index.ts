@@ -3,6 +3,7 @@ import {
   SCFollowedManagerType,
   SCFollowersManagerType,
   SCFollowedCategoriesManagerType,
+  SCSettingsManagerType,
   SCSubscribedIncubatorsManagerType,
   SCConnectionsManagerType,
   SCContextProviderType,
@@ -24,12 +25,13 @@ import {
   SCThemeCategoryIconVariableType,
   SCThemeCategoryVariableType,
   SCThemeVariablesType,
-  SCThemeType
+  SCThemeType,
 } from './theme';
 
 export {
   SCUserContextType,
   SCFollowedCategoriesManagerType,
+  SCSettingsManagerType,
   SCContextProviderType,
   SCContextType,
   SCSettingsType,
