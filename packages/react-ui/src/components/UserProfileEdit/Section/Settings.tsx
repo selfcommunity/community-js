@@ -108,6 +108,7 @@ export default function Settings(inProps: SettingsProps): JSX.Element {
       })
       .then((res: HttpResponse<SCUserSettingsType>) => {
         setSetting(res.data);
+        scUserContext.managers.settings.update(event.target.name, parseInt(event.target.value, 10));
         if (onEditSuccess) {
           onEditSuccess();
         } else {

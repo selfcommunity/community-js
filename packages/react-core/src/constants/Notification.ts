@@ -57,3 +57,12 @@ export const SCSilentSnippetNotifications: number[] = [57, 58, 59, 60, 98, 99, 1
  * Silent Toast Notifications
  */
 export const SCSilentToastNotifications: number[] = [50, 51, 52, 54, 57, 58, 59, 60, 65, 66, 67, 68, 69, 70, 71, 75, 76, 77, 78, 79, 98, 99, 105];
+
+/**
+ * Notification settings keys
+ */
+export const NOTIFICATIONS_SETTINGS_QA_FREQUENCY = 'qa_frequency';
+export const NOTIFICATIONS_SETTINGS_EMAIL_NOT_QA = 'email_notification_not_qa';
+export const NOTIFICATIONS_SETTINGS_MOBILE = 'mobile_notifications_scmty';
+export const NOTIFICATIONS_SETTINGS_TOAST_EMIT_SOUND = 'toast_notifications_emit_sound';
+export const NOTIFICATIONS_SETTINGS_SHOW_TOAST = 'show_toast_notifications';

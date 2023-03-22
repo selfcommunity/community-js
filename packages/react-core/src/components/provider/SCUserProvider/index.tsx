@@ -8,6 +8,7 @@ import {SCOPE_SC_CORE} from '../../../constants/Errors';
 import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
 import useSCFollowedCategoriesManager from '../../../hooks/useSCFollowedCategoriesManager';
 import useSCFollowedManager from '../../../hooks/useSCFollowedManager';
+import useSCSettingsManager from '../../../hooks/useSCSettingsManager';
 import useSCFollowersManager from '../../../hooks/useSCFollowersManager';
 import useSCConnectionsManager from '../../../hooks/useSCConnectionsManager';
 import {SCUserType, SCNotificationTopicType, SCNotificationTypologyType, SCUserStatus} from '@selfcommunity/types';
@@ -16,6 +17,7 @@ import {
   SCUserContextType,
   SCContextType,
   SCSessionType,
+  SCSettingsManagerType,
   SCFollowedCategoriesManagerType,
   SCFollowedManagerType,
   SCFollowersManagerType,
@@ -71,6 +73,7 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
   /**
    * Managers followed, categories
    */
+  const settingsManager: SCSettingsManagerType = useSCSettingsManager(state.user);
   const followedManager: SCFollowedManagerType = useSCFollowedManager(state.user);
   const followersManager: SCFollowersManagerType = useSCFollowersManager(state.user);
   const subscribedIncubatorsManager: SCSubscribedIncubatorsManagerType = useSCSubscribedIncubatorsManager(state.user);
@@ -120,6 +123,7 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
    */
   function handleVisibilityChange() {
     if (isClientSideRendering() && !window.document.hidden && state.user) {
+      settingsManager.refresh && settingsManager.refresh();
       categoriesManager.refresh && categoriesManager.refresh();
       followedManager.refresh && followedManager.refresh();
       connectionsManager.refresh && connectionsManager.refresh();
@@ -230,6 +234,7 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
       logout,
       refreshSession,
       managers: {
+        settings: settingsManager,
         categories: categoriesManager,
         followed: followedManager,
         followers: followersManager,
@@ -239,6 +244,8 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
     }),
     [
       state,
+      settingsManager.all,
+      settingsManager.isLoading,
       categoriesManager.loading,
       categoriesManager.categories,
       followedManager.loading,

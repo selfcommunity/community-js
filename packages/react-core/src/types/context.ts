@@ -1,5 +1,5 @@
 import React, {ReactNode} from 'react';
-import {SCAuthTokenType, SCIncubatorType, SCCategoryType, SCUserType} from '@selfcommunity/types';
+import {SCAuthTokenType, SCIncubatorType, SCCategoryType, SCUserType, SCUserSettingsType} from '@selfcommunity/types';
 import {SCThemeType} from './theme';
 
 /**
@@ -131,12 +131,40 @@ export interface SCUserContextType {
    * Managers: followed, connections, categories, incubators, etc...
    */
   managers: {
+    settings?: SCSettingsManagerType;
     followed?: SCFollowedManagerType;
     followers?: SCFollowersManagerType;
     connections?: SCConnectionsManagerType;
     categories: SCFollowedCategoriesManagerType;
     incubators?: SCSubscribedIncubatorsManagerType;
   };
+}
+
+export interface SCSettingsManagerType {
+  /**
+   * Get a settings
+   */
+  get?: (p) => any;
+
+  /**
+   * Get all settings
+   */
+  all?: () => SCUserSettingsType;
+
+  /**
+   * Update a settings
+   */
+  update?: (p, v) => any;
+
+  /**
+   * Refresh settings
+   */
+  refresh?: () => void;
+
+  /**
+   * Check if component is loading
+   */
+  isLoading: () => boolean;
 }
 
 export interface SCFollowedManagerType {
