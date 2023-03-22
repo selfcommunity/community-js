@@ -194,14 +194,6 @@ export default function NavigationSettingsIconButton(inProps: NavigationSettings
             </ListItemButton>
           </ListItem>
         ),
-        <ListItem className={classes.item} key="suggestedPeople">
-          <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.PEOPLE_SUGGESTION_ROUTE_NAME, {})}>
-            <FormattedMessage
-              id="ui.navigationSettingsIconButton.interestingPeople"
-              defaultMessage="ui.navigationSettingsIconButton.interestingPeople"
-            />
-          </ListItemButton>
-        </ListItem>,
         preferences[SCPreferences.CONFIGURATIONS_POST_TYPE_ENABLED] && (
           <ListItem className={classes.item} key="followedPosts">
             <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.USER_PROFILE_FOLLOWED_POSTS_ROUTE_NAME, scUserContext.user)}>
@@ -297,16 +289,6 @@ export default function NavigationSettingsIconButton(inProps: NavigationSettings
             <FormattedMessage id="ui.navigationSettingsIconButton.loyalty" defaultMessage="ui.navigationSettingsIconButton.loyalty" />
           </MenuItem>
         ),
-        <MenuItem
-          className={classes.item}
-          key="suggestedPeople"
-          component={Link}
-          to={scRoutingContext.url(SCRoutes.PEOPLE_SUGGESTION_ROUTE_NAME, {})}>
-          <FormattedMessage
-            id="ui.navigationSettingsIconButton.interestingPeople"
-            defaultMessage="ui.navigationSettingsIconButton.interestingPeople"
-          />
-        </MenuItem>,
         preferences[SCPreferences.CONFIGURATIONS_POST_TYPE_ENABLED] && (
           <MenuItem
             className={classes.item}
