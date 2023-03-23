@@ -1,10 +1,10 @@
-import {useEffect, useMemo, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {SCOPE_SC_CORE} from '../constants/Errors';
 import {SCPrivateMessageSnippetType} from '@selfcommunity/types';
 import {Endpoints, http} from '@selfcommunity/api-services';
 import {CacheStrategies, Logger, LRUCache} from '@selfcommunity/utils';
 import {getPmSnippetObjectCacheKey, getPmSnippetsObjectCacheKey} from '../constants/Cache';
-import {useSCUser} from '@selfcommunity/react-core';
+import {useSCUser} from '../components/provider/SCUserProvider';
 const init = {snippets: [], isLoading: true};
 
 // HYDRATE the cache
