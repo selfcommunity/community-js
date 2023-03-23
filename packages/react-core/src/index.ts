@@ -89,6 +89,7 @@ import useSCMediaClick from './hooks/useSCMediaClick';
 import useSCFetchContributors from './hooks/useSCFetchContributors';
 import useSCFetchFeed from './hooks/useSCFetchFeed';
 import useSCFetchReactions from './hooks/useSCFetchReactions';
+import useSCFetchPrivateMessageSnippets from './hooks/useSCFetchPrivateMessageSnippets';
 
 /**
  * Routing component
@@ -190,4 +191,5 @@ export {
   useEffectOnce,
   useNoInitialEffect,
   useSCFetchReactions,
+  useSCFetchPrivateMessageSnippets,
 };
