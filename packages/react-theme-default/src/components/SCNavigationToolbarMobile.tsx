@@ -11,7 +11,10 @@ const Component = {
         }
       },
       '& h4': {
-        fontSize: '1.286rem'
+        fontSize: '1.286rem',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap'
       }
     })
   }

@@ -60,6 +60,14 @@ export const getReactionObjectCacheKey = (id) => `${REACTION_OBJECT_CACHE_PREFIX
 export const ADV_OBJECT_CACHE_PREFIX_KEY = '_adv_';
 export const getAdvObjectCacheKey = (id) => `${ADV_OBJECT_CACHE_PREFIX_KEY}${id}`;
 
+/** PRIVATE MESSAGE SNIPPETS  OBJECT **/
+export const PM_SNIPPETS_OBJECT_CACHE_PREFIX_KEY = '_pmss_';
+export const getPmSnippetsObjectCacheKey = () => `${PM_SNIPPETS_OBJECT_CACHE_PREFIX_KEY}`;
+
+/** PRIVATE MESSAGE SNIPPET  OBJECT **/
+export const PM_SNIPPET_OBJECT_CACHE_PREFIX_KEY = '_pms_';
+export const getPmSnippetObjectCacheKey = (id) => `${PM_SNIPPET_OBJECT_CACHE_PREFIX_KEY}${id}`;
+
 /** TOOLS */
 export const CATEGORIES_LIST_TOOLS_STATE_CACHE_PREFIX_KEY = '_cListTools_';
 export const CATEGORIES_FOLLOWED_TOOLS_STATE_CACHE_PREFIX_KEY = '_cFolTools_';
