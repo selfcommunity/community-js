@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.83](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.82...@selfcommunity/react-theme-default@0.1.0-alpha.83) (2023-03-23)
+
+
+### Bug Fixes
+
+* Fix theme ([af19fbd](https://github.com/selfcommunity/community-js/commit/af19fbd6c80b8988f4f7a586105bed04c1974086))
+* Fix theme for mobile toolbar ([fa28dd9](https://github.com/selfcommunity/community-js/commit/fa28dd93c44be3da22d062a4c4526c49a021336e))
+
+
+
+
+
 # [0.1.0-alpha.82](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.81...@selfcommunity/react-theme-default@0.1.0-alpha.82) (2023-03-22)
 
 

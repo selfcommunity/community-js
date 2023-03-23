@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.125](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.124...@selfcommunity/react-templates@0.3.0-alpha.125) (2023-03-23)
+
+
+### Performance Improvements
+
+* removed private messages template ([a0f1db4](https://github.com/selfcommunity/community-js/commit/a0f1db41ca10c410ac852c66ce628fd6f938a48d))
+
+
+
+
+
 # [0.3.0-alpha.124](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.123...@selfcommunity/react-templates@0.3.0-alpha.124) (2023-03-22)
 
 **Note:** Version bump only for package @selfcommunity/react-templates
