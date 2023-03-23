@@ -1,7 +1,7 @@
-import React, {useContext, useEffect, useMemo, useState} from 'react';
+import React, {useContext, useEffect, useMemo, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Widget from '../Widget';
-import {UserService} from '@selfcommunity/api-services';
+import {Endpoints, http, HttpResponse, PrivateMessageService, UserService} from '@selfcommunity/api-services';
 import {
   SCFollowersManagerType,
   SCPreferences,
@@ -11,8 +11,15 @@ import {
   SCUserContextType,
   UserUtils
 } from '@selfcommunity/react-core';
-import {SCPrivateMessageFileType, SCPrivateMessageStatusType, SCPrivateMessageThreadType} from '@selfcommunity/types';
+import {
+  SCNotificationTopicType,
+  SCNotificationTypologyType,
+  SCPrivateMessageFileType,
+  SCPrivateMessageStatusType,
+  SCPrivateMessageThreadType
+} from '@selfcommunity/types';
 import PrivateMessageThreadItem from '../PrivateMessageThreadItem';
+import PubSub from 'pubsub-js';
 import _ from 'lodash';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {Box, CardContent, IconButton, List, ListSubheader, TextField, Typography} from '@mui/material';
@@ -25,6 +32,8 @@ import PrivateMessageThreadSkeleton from './Skeleton';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {Logger} from '@selfcommunity/utils';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
+import {useSnackbar} from 'notistack';
+import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
 
 const translMessages = defineMessages({
   placeholder: {
@@ -62,45 +71,30 @@ export interface PrivateMessageThreadProps {
    */
   userObj?: any;
   /**
-   * Thread receiver
-   */
-  receiver?: any;
-  /**
-   * Thread recipients
-   */
-  recipients?: any;
-  /**
-   * Loading state
-   */
-  loadingMessageObjs?: boolean;
-  /***
-   * Thread messages
-   */
-  messages?: SCPrivateMessageThreadType[];
-  /**
    * Overrides or extends the styles applied to the component.
    * @default null
    */
   className?: string;
   /**
+   * If new message section is open
+   * @default false
+   */
+  openNewMessage?: boolean;
+  /**
+   * Callback fired when new message is sent
+   * @default null
+   */
+  onNewMessageSent?: (msg) => void;
+  /**
+   * Callback fired when new message section is closed
+   * @default null
+   */
+  onNewMessageClose?: (dispatch: any) => void;
+  /**
    * Hides this component
    * @default false
    */
   autoHide?: boolean;
-  /**
-   * Opens a new message screen with a specific user
-   * @default false
-   */
-  singleMessageThread?: boolean;
-  /**
-   * Functions called on thread actions
-   */
-  threadCallbacks?: {
-    onThreadDelete?: (dispatch: any) => void;
-    onMessageDelete?: (msg: SCPrivateMessageThreadType) => void;
-    onMessageSend?: (message: string, file: SCPrivateMessageFileType) => void;
-    onRecipientSelect?: (event, recipient) => void;
-  };
   /**
    * Any other properties
    */
@@ -145,7 +139,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
     props: inProps,
     name: PREFIX
   });
-  const {userObj, messages, loadingMessageObjs, receiver, recipients, threadCallbacks, singleMessageThread, autoHide, className, ...rest} = props;
+  const {userObj, openNewMessage = false, onNewMessageClose = null, onNewMessageSent = null, autoHide, className, ...rest} = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
@@ -157,14 +151,27 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
 
   // STATE
   const scFollowersManager: SCFollowersManagerType = scUserContext.managers.followers;
+  const [messageObjs, setMessageObjs] = useState<any[]>([]);
+  const [loadingMessageObjs, setLoadingMessageObjs] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(true);
   const [isHovered, setIsHovered] = useState({});
   const [followers, setFollowers] = useState<any[]>([]);
   const [isFollower, setIsFollower] = useState<boolean>(false);
-  const isObj = typeof userObj === 'object';
   const isNew = userObj && userObj === SCPrivateMessageStatusType.NEW;
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
   const [singleMessageUser, setSingleMessageUser] = useState('');
+  const [receiver, setReceiver] = useState(null);
+  const [deletingMsg, setDeletingMsg] = useState(null);
+  const [singleMessageThread, setSingleMessageThread] = useState<boolean>(false);
+  const [openDeleteMessageDialog, setOpenDeleteMessageDialog] = useState<boolean>(false);
+  const [recipients, setRecipients] = useState<any>([]);
+  const {enqueueSnackbar, closeSnackbar} = useSnackbar();
+  const isNumber = typeof userObj === 'number';
+  const messageReceiver = (item, loggedUserId) => {
+    return item?.receiver?.id !== loggedUserId ? item?.receiver?.id : item?.sender?.id;
+  };
+  // REFS
+  const refreshSubscription = useRef(null);
   // INTL
   const intl = useIntl();
 
@@ -182,8 +189,8 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
 
   // CONST
   const formattedMessages = useMemo(() => {
-    return formatMessages(messages);
-  }, [messages]);
+    return formatMessages(messageObjs);
+  }, [messageObjs]);
 
   // HANDLERS
   const handleMouseEnter = (index) => {
@@ -197,6 +204,41 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
       return {...prevState, [index]: false};
     });
   };
+  /**
+   * Handles autocomplete recipients selection
+   * @param event
+   * @param recipient
+   */
+  const handleRecipientSelect = (event, recipient) => {
+    setRecipients(recipient);
+  };
+
+  /**
+   * Handles delete message dialog opening
+   * @param msg
+   */
+  const handleOpenDeleteMessageDialog = (msg) => {
+    setOpenDeleteMessageDialog(true);
+    setDeletingMsg(msg);
+  };
+  /**
+   * Handles delete message dialog close
+   */
+  const handleCloseDeleteMessageDialog = () => {
+    setOpenDeleteMessageDialog(false);
+  };
+
+  /**
+   * Memoized message recipients ids
+   */
+  const ids = useMemo(() => {
+    if (recipients && openNewMessage) {
+      return recipients.map((u) => {
+        return parseInt(u.id, 10);
+      });
+    }
+    return [recipients];
+  }, [recipients]);
 
   /**
    * Memoized fetchFollowers
@@ -226,6 +268,118 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
   );
 
   /**
+   * Fetches thread
+   */
+  function fetchThread() {
+    setLoadingMessageObjs(false);
+    if (userObj && typeof userObj !== 'string') {
+      const _userObjId = isNumber ? userObj : messageReceiver(userObj, authUserId);
+      http
+        .request({
+          url: Endpoints.GetAThread.url(),
+          method: Endpoints.GetAThread.method,
+          params: {
+            user: _userObjId
+          }
+        })
+        .then((res: HttpResponse<any>) => {
+          const data = res.data;
+          setMessageObjs(data.results);
+          if (data.results.length) {
+            if (data.results[0].receiver.id !== authUserId) {
+              setReceiver(data.results[0].receiver);
+            } else {
+              setReceiver(data.results[0].sender);
+            }
+            setSingleMessageThread(false);
+          } else {
+            setSingleMessageThread(true);
+            setRecipients(_userObjId);
+          }
+          setLoadingMessageObjs(false);
+        })
+        .catch((error) => {
+          setLoadingMessageObjs(false);
+          console.log(error);
+          Logger.error(SCOPE_SC_UI, {error});
+        });
+    }
+  }
+  /**
+   * Handles the deletion of a single message
+   */
+  function handleDeleteMessage() {
+    PrivateMessageService.deleteAMessage(deletingMsg.id)
+      .then(() => {
+        const result = messageObjs.filter((m) => m.id !== deletingMsg.id);
+        setMessageObjs(result);
+        handleSnippetsUpdate(result.length >= 1 ? result.slice(-1) : deletingMsg);
+        handleCloseDeleteMessageDialog();
+      })
+      .catch((error) => {
+        console.log(error);
+        let _snackBar = enqueueSnackbar(<FormattedMessage id="ui.common.error" defaultMessage="ui.common.error" />, {
+          variant: 'error',
+          onClick: () => {
+            closeSnackbar(_snackBar);
+          }
+        });
+      });
+  }
+
+  /**
+   * Updates snippets list when a new message(or more) are sent or another one is deleted
+   * @param message, it can be a single object or an array of objects
+   */
+  function handleSnippetsUpdate(message: any) {
+    PubSub.publish('snippetsChannel', message);
+  }
+
+  /**
+   * Handles message sending
+   * @param message
+   * @param file
+   */
+  function handleSend(message: string, file: SCPrivateMessageFileType) {
+    if (UserUtils.isBlocked(scUserContext.user)) {
+      enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
+        variant: 'warning',
+        autoHideDuration: 3000
+      });
+    } else {
+      http
+        .request({
+          url: Endpoints.SendMessage.url(),
+          method: Endpoints.SendMessage.method,
+          data: {
+            recipients: openNewMessage || isNew || singleMessageThread ? ids : [isNumber && userObj ? userObj : messageReceiver(userObj, authUserId)],
+            message: message,
+            file_uuid: file && !message ? file : null
+          }
+        })
+        .then((res: any) => {
+          const single = res.data.length <= 1;
+          single && setMessageObjs((prev) => [...prev, res.data[0]]);
+          handleSnippetsUpdate(res.data);
+          if (openNewMessage || singleMessageThread) {
+            setSingleMessageThread(false);
+            setRecipients([]);
+            onNewMessageSent(res.data[0]);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          let _snackBar = enqueueSnackbar(<FormattedMessage id="ui.common.error.messageError" defaultMessage="ui.common.error.messageError" />, {
+            variant: 'error',
+            onClick: () => {
+              closeSnackbar(_snackBar);
+            }
+          });
+        });
+    }
+  }
+
+  /**
    * Fetches followers when a new message is selected
    */
   useEffect(() => {
@@ -242,6 +396,38 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
       setIsFollower(scFollowersManager.isFollower(receiver));
     }
   });
+
+  /**
+   * On mount, if obj, fetches thread
+   */
+  useEffect(() => {
+    userObj && fetchThread();
+  }, [userObj, authUserId]);
+
+  /**
+   * Notification subscriber
+   */
+  const subscriber = (msg, data) => {
+    const res = data.data;
+    const newMessages = [...messageObjs];
+    const index = newMessages.findIndex((m) => m.sender.id === res.notification_obj.message.sender.id);
+    if (index !== -1) {
+      setMessageObjs((prev) => [...prev, res.notification_obj.message]);
+    }
+  };
+
+  /**
+   * When a ws notification arrives, updates thread and snippets data
+   */
+  useEffect(() => {
+    refreshSubscription.current = PubSub.subscribe(
+      `${SCNotificationTopicType.INTERACTION}.${SCNotificationTypologyType.PRIVATE_MESSAGE}`,
+      subscriber
+    );
+    return () => {
+      PubSub.unsubscribe(refreshSubscription.current);
+    };
+  }, [messageObjs]);
 
   /**
    * Renders thread component
@@ -273,18 +459,33 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
                     }}
                     isHovering={isHovered[msg.id]}
                     showMenuIcon={authUserId === msg.sender.id}
-                    onMenuIconClick={() => threadCallbacks.onMessageDelete(msg)}
+                    onMenuIconClick={() => handleOpenDeleteMessageDialog(msg)}
                   />
                 ))}
               </ul>
             </li>
           ))}
         </List>
-        <PrivateMessageEditor
-          send={threadCallbacks.onMessageSend}
-          autoHide={!isFollower && !role}
-          onThreadChangeId={isObj ? userObj.receiver.id : userObj}
-        />
+        <PrivateMessageEditor send={handleSend} autoHide={!isFollower && !role} onThreadChangeId={isNumber ? userObj : userObj.receiver.id} />
+        {openDeleteMessageDialog && (
+          <ConfirmDialog
+            open={openDeleteMessageDialog}
+            title={
+              <FormattedMessage
+                id="ui.privateMessage.component.delete.message.dialog.msg"
+                defaultMessage="ui.privateMessage.component.delete.message.dialog.msg"
+              />
+            }
+            btnConfirm={
+              <FormattedMessage
+                id="ui.privateMessage.component.delete.message.dialog.confirm"
+                defaultMessage="ui.privateMessage.component.delete.message.dialog.confirm"
+              />
+            }
+            onConfirm={handleDeleteMessage}
+            onClose={handleCloseDeleteMessageDialog}
+          />
+        )}
       </CardContent>
     );
   }
@@ -325,15 +526,15 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
                     />
                   )}
                   classes={{popper: classes.autocompleteDialog}}
-                  onChange={threadCallbacks.onRecipientSelect}
+                  onChange={handleRecipientSelect}
                   disabled={!followers}
                 />
               </Box>
-              <IconButton size="small" onClick={threadCallbacks.onThreadDelete}>
+              <IconButton size="small" onClick={onNewMessageClose}>
                 <Icon fontSize="small">close</Icon>
               </IconButton>
             </Box>
-            <PrivateMessageEditor send={threadCallbacks.onMessageSend} autoHide={!followers} />
+            <PrivateMessageEditor send={handleSend} autoHide={!followers} />
           </>
         ) : (
           <Typography component="span" className={classes.emptyMessage}>

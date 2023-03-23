@@ -1,15 +1,17 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Button, CardContent, Icon, IconButton, List, TextField} from '@mui/material';
 import Widget from '../Widget';
-import {SCPrivateMessageSnippetType, SCPrivateMessageStatusType} from '@selfcommunity/types';
+import PubSub from 'pubsub-js';
+import {SCNotificationTopicType, SCNotificationTypologyType, SCPrivateMessageSnippetType, SCPrivateMessageStatusType} from '@selfcommunity/types';
 import PrivateMessageSnippetsSkeleton from './Skeleton';
 import PrivateMessageSnippetItem from '../PrivateMessageSnippetItem';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
+import {SCUserContext, SCUserContextType, useSCFetchPrivateMessageSnippets} from '@selfcommunity/react-core';
+import {CacheStrategies} from '@selfcommunity/utils';
 
 const messages = defineMessages({
   placeholder: {
@@ -108,18 +110,22 @@ export default function PrivateMessageSnippets(inProps: PrivateMessageSnippetsPr
     name: PREFIX
   });
 
-  const {snippets = [], loading, autoHide = false, className = null, userObj = null, snippetActions, clearSearch, ...rest} = props;
+  const {autoHide = false, className = null, userObj = null, snippetActions, clearSearch, ...rest} = props;
 
   // STATE
+
+  const {data, updateSnippets} = useSCFetchPrivateMessageSnippets({cacheStrategy: CacheStrategies.CACHE_FIRST});
   const [search, setSearch] = useState<string>('');
   const isObj = typeof userObj === 'object';
   const scUserContext: SCUserContextType = useContext(SCUserContext);
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
   // INTL
   const intl = useIntl();
+  // REFS
+  const refreshSubscription = useRef(null);
 
   // CONST
-  const filteredSnippets = snippets.filter((el) => {
+  const filteredSnippets = data.snippets.filter((el) => {
     if (search === '') {
       return el;
     } else if (el.receiver.id === authUserId) {
@@ -151,18 +157,98 @@ export default function PrivateMessageSnippets(inProps: PrivateMessageSnippetsPr
   function handleOpenThread(msg) {
     snippetActions && snippetActions.onSnippetClick(msg);
     handleClear();
+    updateSnippetsParams(msg.id, 'seen');
   }
+
+  /**
+   * Updates snippet headline and status or just snippet status
+   * @param threadId
+   * @param status
+   * @param headline
+   */
+  function updateSnippetsParams(threadId: number, status: string, headline?: string) {
+    const newSnippets = [...data.snippets];
+    const index = newSnippets.findIndex((s) => s.id === threadId);
+    if (index !== -1) {
+      newSnippets[index].headline = headline ?? newSnippets[index].headline;
+      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // @ts-ignore
+      newSnippets[index].thread_status = status;
+      updateSnippets(newSnippets);
+    }
+  }
+
+  function handleSnippetsUpdate(message: any, forDeletion?: boolean) {
+    const newSnippets = [...data.snippets];
+    if (forDeletion) {
+      const _snippets = newSnippets.filter((s) => messageReceiver(s, authUserId) !== message);
+      updateSnippets(_snippets);
+    } else {
+      message.map((m) => {
+        const idx = newSnippets.findIndex((s) =>
+          // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+          // @ts-ignore
+          Object.prototype.hasOwnProperty.call(s, 'thread_id') ? s.thread_id === m.thread_id : s.id === m.thread_id
+        );
+        if (idx !== -1) {
+          newSnippets[idx].headline = m.message;
+          newSnippets[idx].thread_status = m.status;
+          updateSnippets(newSnippets);
+        } else {
+          updateSnippets([...data.snippets, m]);
+        }
+      });
+    }
+  }
+
+  /**
+   * Notification subscriber
+   */
+  const subscriber = (msg, data) => {
+    const res = data.data;
+    updateSnippetsParams(res.thread_id, res.notification_obj.snippet.thread_status, res.notification_obj.snippet.headline);
+  };
+
+  /**
+   * When a ws notification arrives, updates data
+   */
+  useEffect(() => {
+    refreshSubscription.current = PubSub.subscribe(
+      `${SCNotificationTopicType.INTERACTION}.${SCNotificationTypologyType.PRIVATE_MESSAGE}`,
+      subscriber
+    );
+    return () => {
+      PubSub.unsubscribe(refreshSubscription.current);
+    };
+  }, [data.snippets]);
 
   useEffect(() => {
     if (clearSearch) handleClear();
   }, [clearSearch]);
+
+  /**
+   * Thread/ Private Message Component subscribtions handlers
+   */
+  useEffect(() => {
+    const threadSubscriber = PubSub.subscribe('snippetsChannel', (msg, data) => {
+      handleSnippetsUpdate(data);
+    });
+    const pmComponentSubscriber = PubSub.subscribe('snippetsChannel2', (msg, data) => {
+      handleSnippetsUpdate(data, true);
+    });
+
+    return () => {
+      PubSub.unsubscribe(threadSubscriber);
+      PubSub.unsubscribe(pmComponentSubscriber);
+    };
+  }, [data.snippets]);
 
   //RENDERING
 
   /**
    * Renders snippets skeleton when loading
    */
-  if (loading) {
+  if (data.isLoading) {
     return <PrivateMessageSnippetsSkeleton elevation={0} />;
   }
 
@@ -176,7 +262,7 @@ export default function PrivateMessageSnippets(inProps: PrivateMessageSnippetsPr
           <Button variant="outlined" size="medium" className={classes.newMessageButton} onClick={handleOpenNewMessage}>
             <FormattedMessage id="ui.privateMessage.snippets.button.newMessage" defaultMessage="ui.privateMessage.snippets.button.newMessage" />
           </Button>
-          {snippets.length !== 0 && (
+          {data.snippets.length !== 0 && (
             <>
               <TextField
                 className={classes.searchBar}
