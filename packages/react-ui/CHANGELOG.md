@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.136](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.135...@selfcommunity/react-ui@0.7.0-alpha.136) (2023-03-22)
+
+
+### Bug Fixes
+
+* Fix toolbars ([183bedd](https://github.com/selfcommunity/community-js/commit/183beddb400b534335536cfa0cb1d7217970f3de))
+* profile edit notification settings ([0239e32](https://github.com/selfcommunity/community-js/commit/0239e3204b5115638c666e15f37680ba72be0485))
+
+
+
+
+
+# [0.7.0-alpha.135](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.134...@selfcommunity/react-ui@0.7.0-alpha.135) (2023-03-22)
+
+
+### Bug Fixes
+
+* settings manager ([d7abca5](https://github.com/selfcommunity/community-js/commit/d7abca57c238bfa3906c4c81ddaf99feb1ef7d16))
+
+
+
+
+
 # [0.7.0-alpha.134](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.133...@selfcommunity/react-ui@0.7.0-alpha.134) (2023-03-22)
 
 

@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.82](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.81...@selfcommunity/react-theme-default@0.1.0-alpha.82) (2023-03-22)
+
+
+### Bug Fixes
+
+* Fix toolbars ([183bedd](https://github.com/selfcommunity/community-js/commit/183beddb400b534335536cfa0cb1d7217970f3de))
+
+
+
+
+
+# [0.1.0-alpha.81](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.80...@selfcommunity/react-theme-default@0.1.0-alpha.81) (2023-03-22)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
 # [0.1.0-alpha.80](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.79...@selfcommunity/react-theme-default@0.1.0-alpha.80) (2023-03-22)
 
 
