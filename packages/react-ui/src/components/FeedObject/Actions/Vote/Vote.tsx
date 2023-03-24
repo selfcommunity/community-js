@@ -12,11 +12,12 @@ import {SCOPE_SC_UI} from '../../../../constants/Errors';
 import {styled} from '@mui/material/styles';
 import classNames from 'classnames';
 import {useSnackbar} from 'notistack';
-import {SCFeedObjectType, SCFeedObjectTypologyType, SCTagType} from '@selfcommunity/types';
+import {SCCommentType, SCFeedObjectType, SCFeedObjectTypologyType, SCTagType} from '@selfcommunity/types';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
 import {SCContextType, SCUserContextType, UserUtils, useSCContext, useSCFetchFeedObject, useSCUser} from '@selfcommunity/react-core';
 import {useThemeProps} from '@mui/system';
+import VoteButton from '../../../VoteButton';
 
 /**
  * We have complex state logic that involves multiple sub-values,
@@ -217,9 +218,7 @@ export default function Vote(inProps: VoteProps): JSX.Element {
   const [state, dispatch] = useReducer(votesReducer, {}, () => stateInitializer({feedObjectId, feedObject, feedObjectType}));
 
   // CONTEXT
-  const scContext: SCContextType = useSCContext();
   const scUserContext: SCUserContextType = useSCUser();
-  const {enqueueSnackbar} = useSnackbar();
 
   // INTL
   const intl = useIntl();
@@ -273,59 +272,13 @@ export default function Vote(inProps: VoteProps): JSX.Element {
     [state.next]
   );
 
-  /**
-   * Performs vote up/down
-   */
-  const performVote = useMemo(
-    () => () => {
-      return http
-        .request({
-          url: Endpoints.Vote.url({type: obj.type, id: obj.id}),
-          method: Endpoints.Vote.method
-        })
-        .then((res: HttpResponse<SCTagType>) => {
-          if (res.status >= 300) {
-            return Promise.reject(res);
-          }
-          return Promise.resolve(res.data);
-        });
-    },
-    [obj]
-  );
+  // HANDLERS
+  const handleVoteSuccess = (feedObject: SCFeedObjectType | SCCommentType) => {
+    setObj(feedObject);
+    onVoteAction && onVoteAction(feedObject);
+  };
 
-  /**
-   * Performs voteUp/voteDown
-   */
-  function vote() {
-    if (scUserContext.user && Object.prototype.hasOwnProperty.call(obj, 'voted')) {
-      if (UserUtils.isBlocked(scUserContext.user)) {
-        enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
-          variant: 'warning',
-          autoHideDuration: 3000
-        });
-      } else {
-        if (obj && !state.voting) {
-          dispatch({type: voteActionTypes.VOTING});
-          performVote()
-            .then((data) => {
-              dispatch({type: voteActionTypes.REQUEST_VOTING_SUCCESS});
-              const newObj = Object.assign({}, obj, {
-                voted: !obj.voted,
-                vote_count: obj.voted ? obj.vote_count - 1 : obj.vote_count + 1
-              });
-              setObj(newObj);
-              onVoteAction && onVoteAction(newObj);
-            })
-            .catch((error) => {
-              Logger.error(SCOPE_SC_UI, error);
-            });
-        }
-      }
-    } else {
-      scContext.settings.handleAnonymousAction();
-    }
-  }
-
+  // RENDER
   /**
    * Renders audience with detail dialog
    * @return {JSX.Element}
@@ -404,26 +357,18 @@ export default function Vote(inProps: VoteProps): JSX.Element {
    * @return {JSX.Element}
    */
   function renderVoteButton() {
-    const {voting} = state;
     return (
       <React.Fragment>
         {withAction && (
           <React.Fragment>
             {!inlineAction && withAudience && <Divider className={classes.divider} />}
-            <Tooltip
-              title={voting ? '' : obj.voted && scUserContext.user ? intl.formatMessage(messages.voteDown) : intl.formatMessage(messages.voteUp)}>
-              <span>
-                <LoadingButton
-                  loading={voting}
-                  disabled={!obj}
-                  onClick={vote}
-                  className={classNames(classes.button, {
-                    [classes.voted]: scUserContext.user && obj.voted
-                  })}>
-                  {scUserContext.user && obj.voted ? <Icon>thumb_up</Icon> : <Icon>thumb_up_off_alt</Icon>}
-                </LoadingButton>
-              </span>
-            </Tooltip>
+            <VoteButton
+              className={classes.button}
+              contributionId={feedObjectId}
+              contributionType={feedObjectType}
+              contribution={feedObject}
+              onVote={handleVoteSuccess}
+            />
           </React.Fragment>
         )}
       </React.Fragment>
