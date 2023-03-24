@@ -7,7 +7,7 @@ import {getReactionsObjectCacheKey, getReactionObjectCacheKey} from '../constant
 import {useSCPreferences} from '../components/provider/SCPreferencesProvider';
 import * as SCFeatures from '../constants/Features';
 
-const init = {reactions: [], isLoading: true};
+const init = {default: null, reactions: [], isLoading: true};
 
 // HYDRATE the cache
 const hydrate = (ids: number[]) => {
@@ -48,11 +48,13 @@ const useSCFetchReactions = (props?: {cacheStrategy?: CacheStrategies}) => {
   const {cacheStrategy = CacheStrategies.CACHE_FIRST} = props || {};
 
   // CACHE
-  const __categoriesCacheKey = getReactionsObjectCacheKey();
+  const __reactionsCacheKey = getReactionsObjectCacheKey();
 
   // STATE
-  const reactions = cacheStrategy !== CacheStrategies.NETWORK_ONLY ? hydrate(LRUCache.get(__categoriesCacheKey, null)) : null;
-  const [data, setData] = useState<{reactions: SCReactionType[]; isLoading: boolean}>(reactions !== null ? {reactions, isLoading: false} : init);
+  const reactions = cacheStrategy !== CacheStrategies.NETWORK_ONLY ? hydrate(LRUCache.get(__reactionsCacheKey, null)) : null;
+  const [data, setData] = useState<{default: SCReactionType; reactions: SCReactionType[]; isLoading: boolean}>(
+    reactions !== null ? {default: reactions.find((reaction) => reaction.id === 1), reactions, isLoading: false} : init
+  );
 
   /**
    * Fetch reactions
@@ -80,10 +82,10 @@ const useSCFetchReactions = (props?: {cacheStrategy?: CacheStrategies}) => {
       return;
     }
     fetchReactions()
-      .then((data) => {
-        setData({reactions: data, isLoading: false});
+      .then((data: SCReactionType[]) => {
+        setData({reactions: data, isLoading: false, default: data.find((reaction: SCReactionType) => reaction.id === 1)});
         LRUCache.set(
-          __categoriesCacheKey,
+          __reactionsCacheKey,
           data.map((r: SCReactionType) => {
             const __categoryCacheKey = getReactionObjectCacheKey(r.id);
             LRUCache.set(__categoryCacheKey, r);

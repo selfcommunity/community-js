@@ -88,6 +88,7 @@ import SCUserInfoDialog from './components/SCUserInfoDialog';
 import SCUserInfo from './components/SCUserInfo';
 import SCUserCounters from './components/SCUserCounters';
 import SCUserProfileEdit from './components/SCUserProfileEdit';
+import SCVoteButton from './components/SCVoteButton';
 
 /**
  * Style fragments - Imports - End
@@ -216,6 +217,7 @@ const theme = {
     SCUserProfileEdit,
     SCUserProfileTemplate,
     SCVoteAction,
+    SCVoteButton,
     SCWidget,
     SCPrivateMessageSnippetItem,
     SCPrivateMessageSnippets,

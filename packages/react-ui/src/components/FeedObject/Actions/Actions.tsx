@@ -154,11 +154,7 @@ export default function Actions(inProps: ActionsProps): JSX.Element {
     <Root container className={classNames(classes.root, className)}>
       {!hideVoteAction && (
         <Grid item xs={columnWidth} className={classes.action}>
-          {reactionsEnabled ? (
-            <Reaction feedObject={obj} feedObjectType={feedObjectType} {...VoteActionProps} />
-          ) : (
-            <Vote feedObject={obj} feedObjectType={feedObjectType} {...VoteActionProps} />
-          )}
+          <Vote feedObject={obj} feedObjectType={feedObjectType} {...VoteActionProps} />
         </Grid>
       )}
       {!hideCommentAction && (
