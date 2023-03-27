@@ -1,8 +1,10 @@
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
-      maxWidth: theme.breakpoints.values['lg'],
-      maxHeight: theme.breakpoints.values['lg'],
+      [theme.breakpoints.up('sm')]: {
+        maxWidth: theme.breakpoints.values['lg'],
+        maxHeight: theme.breakpoints.values['lg']
+      },
       ' .MuiPaper-root, MuiAppBar-root': {
         boxShadow: 'none',
         borderRadius: 0
@@ -18,15 +20,6 @@ const Component = {
             borderRadius: 0
           }
         }
-        // '& .MuiAppBar-root': {
-        //   color: theme.palette.text.secondary,
-        //   '& .MuiFormControl-root, MuiTextField-root': {
-        //     marginTop: '30px',
-        //     '&  .MuiInputBase-root': {
-        //       borderRadius: 0
-        //     }
-        //   }
-        // }
       }
     })
   }

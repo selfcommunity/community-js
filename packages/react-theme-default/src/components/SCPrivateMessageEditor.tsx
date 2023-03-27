@@ -9,9 +9,7 @@ const Component = {
       left: 0,
       zIndex: 1,
       [theme.breakpoints.down('md')]: {
-        position: 'fixed',
-        top: 'auto',
-        bottom: 0
+        position: 'fixed'
       },
       backgroundColor: alpha(theme.palette.secondary.main, theme.palette.action.activatedOpacity),
       '& .MuiIcon-root': {
