@@ -1,4 +1,4 @@
-import {SCUserType} from '@selfcommunity/types/src/types';
+import {SCUserType} from '@selfcommunity/types';
 
 /**
  * LoyaltyPrizeParams interface

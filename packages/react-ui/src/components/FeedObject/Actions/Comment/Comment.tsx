@@ -2,8 +2,8 @@ import React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 import {Box, Button, Divider, Tooltip, Typography} from '@mui/material';
 import Icon from '@mui/material/Icon';
-import {SCRoutingContextType, useSCFetchFeedObject, useSCRouting, Link} from '@selfcommunity/react-core';
-import {SCFeedObjectType, SCFeedObjectTypologyType} from '@selfcommunity/types';
+import {Link, SCRoutingContextType, useSCFetchFeedObject, useSCRouting} from '@selfcommunity/react-core';
+import {SCContributionType, SCFeedObjectType} from '@selfcommunity/types';
 import {styled} from '@mui/material/styles';
 import {SCFeedObjectTemplateType} from '../../../../types/feedObject';
 import {getContributionRouteName, getRouteData} from '../../../../utils/contribution';
@@ -61,7 +61,7 @@ export interface CommentProps {
    * Feed object type
    * @default 'post' type
    */
-  feedObjectType?: SCFeedObjectTypologyType;
+  feedObjectType?: Exclude<SCContributionType, SCContributionType.COMMENT>;
 
   /**
    * Feed Object template type
@@ -116,7 +116,7 @@ export default function Comment(inProps: CommentProps): JSX.Element {
     className,
     feedObjectId,
     feedObject,
-    feedObjectType = SCFeedObjectTypologyType.POST,
+    feedObjectType = SCContributionType.POST,
     feedObjectTemplate = SCFeedObjectTemplateType,
     withAction = true,
     withAudience = true,

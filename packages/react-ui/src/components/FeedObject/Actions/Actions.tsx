@@ -4,12 +4,11 @@ import {Grid} from '@mui/material';
 import Vote, {VoteProps} from './Vote';
 import Comment, {CommentProps} from './Comment';
 import Share, {ShareProps} from './Share';
-import {SCFeedObjectType, SCFeedObjectTypologyType} from '@selfcommunity/types';
+import {SCContributionType, SCFeedObjectType} from '@selfcommunity/types';
 import {SCFeatures, useSCFetchFeedObject, useSCPreferences} from '@selfcommunity/react-core';
 import {SCFeedObjectTemplateType} from '../../../types/feedObject';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
-import Reaction from './Reaction';
 
 const PREFIX = 'SCFeedObjectActions';
 
@@ -50,7 +49,7 @@ export interface ActionsProps {
    * Feed object type
    * @default 'post' type
    */
-  feedObjectType?: SCFeedObjectTypologyType;
+  feedObjectType?: Exclude<SCContributionType, SCContributionType.COMMENT>;
 
   /**
    * Feed Object template type
@@ -111,7 +110,7 @@ export default function Actions(inProps: ActionsProps): JSX.Element {
     className,
     feedObjectId,
     feedObject,
-    feedObjectType = SCFeedObjectTypologyType.POST,
+    feedObjectType = SCContributionType.POST,
     feedObjectTemplate = SCFeedObjectTemplateType.PREVIEW,
     hideVoteAction = false,
     hideShareAction = false,

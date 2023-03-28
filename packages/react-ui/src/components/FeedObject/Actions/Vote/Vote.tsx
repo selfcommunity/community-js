@@ -1,21 +1,19 @@
 import React, {useEffect, useMemo, useReducer} from 'react';
 import BaseDialog from '../../../../shared/BaseDialog';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {Box, Button, Divider, List, ListItem, Tooltip} from '@mui/material';
+import {Box, Button, Divider, List, ListItem} from '@mui/material';
 import InfiniteScroll from '../../../../shared/InfiniteScroll';
 import Icon from '@mui/material/Icon';
 import Skeleton from '@mui/material/Skeleton';
-import LoadingButton from '@mui/lab/LoadingButton';
 import CentralProgress from '../../../../shared/CentralProgress';
 import User from '../../../User';
 import {SCOPE_SC_UI} from '../../../../constants/Errors';
 import {styled} from '@mui/material/styles';
 import classNames from 'classnames';
-import {useSnackbar} from 'notistack';
-import {SCCommentType, SCFeedObjectType, SCFeedObjectTypologyType, SCTagType} from '@selfcommunity/types';
-import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
+import {SCCommentType, SCContributionType, SCFeedObjectType, SCTagType} from '@selfcommunity/types';
+import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
-import {SCContextType, SCUserContextType, UserUtils, useSCContext, useSCFetchFeedObject, useSCUser} from '@selfcommunity/react-core';
+import {SCUserContextType, useSCFetchFeedObject, useSCUser} from '@selfcommunity/react-core';
 import {useThemeProps} from '@mui/system';
 import VoteButton from '../../../VoteButton';
 
@@ -77,11 +75,11 @@ function votesReducer(state, action) {
 function stateInitializer({
   feedObjectId = null,
   feedObject = null,
-  feedObjectType = SCFeedObjectTypologyType.POST
+  feedObjectType = SCContributionType.POST
 }: {
   feedObjectId?: number;
   feedObject?: SCFeedObjectType;
-  feedObjectType?: SCFeedObjectTypologyType;
+  feedObjectType?: Exclude<SCContributionType, SCContributionType.COMMENT>;
 }): any {
   const next =
     feedObjectId && feedObjectType
@@ -161,7 +159,7 @@ export interface VoteProps {
    * Feed object type
    * @default 'post' type
    */
-  feedObjectType?: SCFeedObjectTypologyType;
+  feedObjectType?: Exclude<SCContributionType, SCContributionType.COMMENT>;
 
   /**
    * Show audience.
@@ -205,7 +203,7 @@ export default function Vote(inProps: VoteProps): JSX.Element {
     className = null,
     feedObjectId = null,
     feedObject = null,
-    feedObjectType = SCFeedObjectTypologyType.POST,
+    feedObjectType = SCContributionType.POST,
     withAudience = true,
     withAction = true,
     inlineAction = false,
@@ -274,8 +272,8 @@ export default function Vote(inProps: VoteProps): JSX.Element {
 
   // HANDLERS
   const handleVoteSuccess = (feedObject: SCFeedObjectType | SCCommentType | any) => {
-    setObj(feedObject);
-    onVoteAction && onVoteAction(feedObject);
+    setObj(feedObject as SCFeedObjectType);
+    onVoteAction && onVoteAction(feedObject as SCFeedObjectType);
   };
 
   // RENDER

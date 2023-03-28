@@ -1,8 +1,8 @@
 import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
+import { ComponentMeta, ComponentStory } from '@storybook/react';
 
 import CommentObject from './index';
-import {SCFeedObjectTypologyType} from '@selfcommunity/types';
+import { SCContributionType } from '@selfcommunity/types';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -28,7 +28,7 @@ export default {
   },
   args: {
     commentObjectId: 995,
-    feedObjectType: SCFeedObjectTypologyType.POST,
+    feedObjectType: SCContributionType.POST,
     feedObjectId: 392,
     variant: 'outlined'
   }

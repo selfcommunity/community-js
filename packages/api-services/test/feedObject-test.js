@@ -1,5 +1,5 @@
 import {FeedObjectService, PreferenceService} from '../src/index';
-import {SCFeedObjectTypologyType} from '@selfcommunity/types/src/types';
+import {SCContributionType} from '@selfcommunity/types';
 import {generateString} from './utils/random';
 import {SCFlagTypeEnum} from '@selfcommunity/types';
 
@@ -10,9 +10,9 @@ describe('Feed Object Service Test', () => {
   test('Get dynamic preferences', () => {
     return PreferenceService.searchPreferences('discussion_type_enabled').then((data) => {
       if (data.results[0].value) {
-        type = SCFeedObjectTypologyType.DISCUSSION;
+        type = SCContributionType.DISCUSSION;
       } else {
-        type = SCFeedObjectTypologyType.POST;
+        type = SCContributionType.POST;
       }
     });
   });

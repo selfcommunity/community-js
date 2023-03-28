@@ -5,9 +5,9 @@ import Popper from '@mui/material/Popper';
 import Icon from '@mui/material/Icon';
 import CentralProgress from '../CentralProgress';
 import {SCOPE_SC_UI} from '../../constants/Errors';
-import {copyTextToClipboard} from '@selfcommunity/utils';
+import {copyTextToClipboard, Logger} from '@selfcommunity/utils';
 import {useSnackbar} from 'notistack';
-import {getRouteData, getContributionRouteName} from '../../utils/contribution';
+import {getContributionRouteName, getRouteData} from '../../utils/contribution';
 import classNames from 'classnames';
 import ConfirmDialog from '../ConfirmDialog/ConfirmDialog';
 import {
@@ -29,19 +29,18 @@ import {
   useTheme
 } from '@mui/material';
 import {
+  MODERATION_CONTRIBUTION_STATE_DELETED,
+  MODERATION_CONTRIBUTION_STATE_HIDDEN,
+  MODERATION_TYPE_ACTION_DELETE,
+  MODERATION_TYPE_ACTION_HIDE,
   REPORT_AGGRESSIVE,
   REPORT_OFFTOPIC,
   REPORT_POORCONTENT,
   REPORT_SPAM,
   REPORT_VULGAR,
-  REPORTS,
-  MODERATION_TYPE_ACTION_HIDE,
-  MODERATION_TYPE_ACTION_DELETE,
-  MODERATION_CONTRIBUTION_STATE_HIDDEN,
-  MODERATION_CONTRIBUTION_STATE_DELETED
+  REPORTS
 } from '../../constants/Flagging';
-import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
-import {Logger} from '@selfcommunity/utils';
+import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
 import {
   SCContext,
   SCContextType,
@@ -54,19 +53,19 @@ import {
   useSCFetchFeedObject,
   useSCRouting
 } from '@selfcommunity/react-core';
-import {SCCommentType, SCCommentTypologyType, SCFeedObjectType, SCFeedObjectTypologyType} from '@selfcommunity/types';
+import {SCCommentType, SCCommentTypologyType, SCContributionType, SCFeedObjectType} from '@selfcommunity/types';
 import {
-  GENERAL_SECTION,
   DELETE_CONTRIBUTION,
   DELETE_CONTRIBUTION_SECTION,
   EDIT_CONTRIBUTION,
   FLAG_CONTRIBUTION_SECTION,
+  GENERAL_SECTION,
   GET_CONTRIBUTION_PERMALINK,
   HIDE_CONTRIBUTION_SECTION,
-  RESTORE_CONTRIBUTION,
-  SUSPEND_NOTIFICATION_CONTRIBUTION,
+  MODERATE_CONTRIBUTION_DELETED,
   MODERATE_CONTRIBUTION_HIDDEN,
-  MODERATE_CONTRIBUTION_DELETED
+  RESTORE_CONTRIBUTION,
+  SUSPEND_NOTIFICATION_CONTRIBUTION
 } from '../../constants/ContributionsActionsMenu';
 import BaseDrawer from '../BaseDrawer';
 
@@ -198,7 +197,7 @@ export interface ContributionActionsMenuProps {
    * Feed obj type
    * @default 'post'
    */
-  feedObjectType?: SCFeedObjectTypologyType;
+  feedObjectType?: Exclude<SCContributionType, SCContributionType.COMMENT>;
 
   /**
    * CommentObject id
@@ -255,7 +254,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
     className,
     feedObjectId,
     feedObject,
-    feedObjectType = SCFeedObjectTypologyType.POST,
+    feedObjectType = SCContributionType.POST,
     commentObjectId,
     commentObject,
     onEditContribution,

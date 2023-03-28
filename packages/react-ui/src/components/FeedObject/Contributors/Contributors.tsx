@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {CacheStrategies} from '@selfcommunity/utils';
 import {useSCFetchContributors} from '@selfcommunity/react-core';
-import {SCFeedObjectType, SCFeedObjectTypologyType, SCUserType} from '@selfcommunity/types';
+import {SCContributionType, SCFeedObjectType, SCUserType} from '@selfcommunity/types';
 import {Avatar, AvatarGroup, Box, Button, List, ListItem} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import BaseDialog from '../../../shared/BaseDialog';
@@ -67,7 +67,7 @@ export interface ContributorsFeedObjectProps {
   /**
    * feedObjectType
    */
-  feedObjectType: SCFeedObjectTypologyType;
+  feedObjectType: Exclude<SCContributionType, SCContributionType.COMMENT>;
 
   /**
    * AvatarGroupSkeleton props

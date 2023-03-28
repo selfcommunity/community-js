@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
 import {useSCFetchFeedObject} from '@selfcommunity/react-core';
-import {SCFeedObjectType, SCFeedObjectTypologyType} from '@selfcommunity/types';
+import {SCContributionType, SCFeedObjectType} from '@selfcommunity/types';
 import {SCOPE_SC_UI} from '../../../../../constants/Errors';
 import BaseDialog from '../../../../../shared/BaseDialog';
 import CentralProgress from '../../../../../shared/CentralProgress';
@@ -27,7 +27,7 @@ export interface ShareDialogProps {
    * Feed object type
    * @default 'post' type
    */
-  feedObjectType?: SCFeedObjectTypologyType;
+  feedObjectType?: Exclude<SCContributionType, SCContributionType.COMMENT>;
   /**
    * Opens dialog
    * @default false
@@ -47,7 +47,7 @@ export default function SharesDialog(props: ShareDialogProps): JSX.Element {
   const {
     id = null,
     feedObject = null,
-    feedObjectType = feedObject ? feedObject.type : SCFeedObjectTypologyType.POST,
+    feedObjectType = feedObject ? feedObject.type : SCContributionType.POST,
     open = false,
     onClose = null,
     ...rest

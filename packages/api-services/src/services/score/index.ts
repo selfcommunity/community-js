@@ -1,6 +1,6 @@
 import {apiRequest} from '../../utils/apiRequest';
 import Endpoints from '../../constants/Endpoints';
-import {SCUserScoreType} from '@selfcommunity/types/src/types';
+import {SCUserScoreType} from '@selfcommunity/types';
 import {ScoreParams, SCPaginatedResponse, UserScoreParams} from '../../types';
 import {AxiosRequestConfig} from 'axios';
 import {urlParams} from '../../utils/url';

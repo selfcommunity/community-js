@@ -1,7 +1,7 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import {Avatar, Box, Stack, Tooltip, Typography} from '@mui/material';
-import {SCFeedObjectTypologyType, SCNotificationContributionType} from '@selfcommunity/types';
+import {Avatar, Stack, Tooltip, Typography} from '@mui/material';
+import {SCContributionType, SCNotificationContributionType} from '@selfcommunity/types';
 import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
@@ -148,15 +148,15 @@ export default function ContributionNotification(inProps: ContributionNotificati
           </Link>{' '}
           {template === SCNotificationObjectTemplateType.SNIPPET ? (
             <>
-              {notificationObject[contributionType]['type'] === SCFeedObjectTypologyType.POST ||
-              notificationObject[contributionType]['type'] === SCFeedObjectTypologyType.STATUS
+              {notificationObject[contributionType]['type'] === SCContributionType.POST ||
+              notificationObject[contributionType]['type'] === SCContributionType.STATUS
                 ? intl.formatMessage(messages.postOrStatusSnippet, {contribution: notificationObject[contributionType]['type']})
                 : intl.formatMessage(messages.discussionSnippet)}
             </>
           ) : (
             <>
-              {notificationObject[contributionType]['type'] === SCFeedObjectTypologyType.POST ||
-              notificationObject[contributionType]['type'] === SCFeedObjectTypologyType.STATUS
+              {notificationObject[contributionType]['type'] === SCContributionType.POST ||
+              notificationObject[contributionType]['type'] === SCContributionType.STATUS
                 ? intl.formatMessage(messages.postOrStatus, {contribution: notificationObject[contributionType]['type']})
                 : intl.formatMessage(messages.discussion)}
             </>

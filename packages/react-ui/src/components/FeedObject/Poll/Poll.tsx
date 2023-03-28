@@ -3,7 +3,7 @@ import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
-import {SCFeedObjectType, SCFeedObjectTypologyType, SCPollChoiceType, SCPollType} from '@selfcommunity/types';
+import {SCFeedObjectType, SCContributionType, SCPollChoiceType, SCPollType} from '@selfcommunity/types';
 import {Button, CardContent, CardHeader, Collapse, ListItem, Typography} from '@mui/material';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import List from '@mui/material/List';
@@ -157,7 +157,7 @@ export default function PollObject(inProps: PollObjectProps): JSX.Element {
   const [choices, setChoices] = useState(pollObject.choices);
   const [isVoting, setIsVoting] = useState<number>(null);
   const [collapsed, setCollapsed] = useState<boolean>(
-    Boolean(feedObject && (feedObject.type === SCFeedObjectTypologyType.DISCUSSION || feedObject.html || feedObject.medias.length))
+    Boolean(feedObject && (feedObject.type === SCContributionType.DISCUSSION || feedObject.html || feedObject.medias.length))
   );
 
   // CONST

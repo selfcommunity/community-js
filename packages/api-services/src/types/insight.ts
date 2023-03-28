@@ -1,5 +1,5 @@
 import {BaseGetParams} from './baseParams';
-import {SCFeedObjectTypologyType} from '@selfcommunity/types';
+import {SCContributionType} from '@selfcommunity/types';
 
 /**
  * Interface InsightParams
@@ -42,7 +42,7 @@ export interface InsightContributionParams extends InsightCommonParams {
   /**
    * The contribution type (discussion, post, status).
    */
-  contribution_type?: SCFeedObjectTypologyType;
+  contribution_type?: Exclude<SCContributionType, SCContributionType.COMMENT>;
 }
 
 /**

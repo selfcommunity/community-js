@@ -1,4 +1,4 @@
-import {SCPrivateMessageFileType} from '@selfcommunity/types/src/types';
+import {SCPrivateMessageFileType} from '@selfcommunity/types';
 /**
  * ThreadParams interface.
  */

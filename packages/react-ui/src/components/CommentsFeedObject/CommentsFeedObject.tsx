@@ -11,10 +11,10 @@ import CommentsObject from '../CommentsObject';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import Typography from '@mui/material/Typography';
 import {getContribution} from '../../utils/contribution';
-import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
+import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
 import {CacheStrategies, Logger} from '@selfcommunity/utils';
 import {useSCFetchCommentObject, useSCFetchCommentObjects} from '@selfcommunity/react-core';
-import {SCCommentType, SCFeedObjectType, SCFeedObjectTypologyType} from '@selfcommunity/types';
+import {SCCommentType, SCContributionType, SCFeedObjectType} from '@selfcommunity/types';
 import {DEFAULT_PAGINATION_LIMIT} from '../../constants/Pagination';
 
 const PREFIX = 'SCCommentsFeedObject';
@@ -67,9 +67,9 @@ export interface CommentsFeedObjectProps {
 
   /**
    * Type of feed object
-   * @default SCFeedObjectTypologyType.POST
+   * @default SCContributionType.POST
    */
-  feedObjectType?: SCFeedObjectTypologyType;
+  feedObjectType?: Exclude<SCContributionType, SCContributionType.COMMENT>;
 
   /**
    * Id of the comment object
@@ -206,7 +206,7 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
     className,
     feedObjectId,
     feedObject,
-    feedObjectType = SCFeedObjectTypologyType.POST,
+    feedObjectType = SCContributionType.POST,
     commentObjectId,
     commentObject,
     CommentComponent = CommentObject,

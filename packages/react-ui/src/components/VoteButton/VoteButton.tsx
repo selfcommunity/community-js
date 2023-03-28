@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import {SCCommentType, SCContributionType, SCFeedObjectType, SCFeedObjectTypologyType, SCReactionType} from '@selfcommunity/types';
 import {useThemeProps} from '@mui/system';
 import Icon from '@mui/material/Icon';
-import {IconButton, Paper, Popper, Tooltip} from '@mui/material';
+import {AutocompleteProps, IconButton, Paper, Popper, Tooltip} from '@mui/material';
 import {defineMessages, useIntl} from 'react-intl';
 import {SCUserContextType, useSCFetchVote, useSCUser} from '@selfcommunity/react-core';
 
@@ -31,7 +31,7 @@ const PopperRoot = styled(Popper, {
   overridesResolver: (props, styles) => styles.popperRoot
 })(({theme}) => ({}));
 
-export interface VoteButtonProps extends LoadingButtonProps {
+export interface VoteButtonProps extends Pick<LoadingButtonProps, Exclude<keyof LoadingButtonProps, 'onClick' | 'disabled' | 'loading'>> {
   /**
    * Id of the contribution object to vote
    * @default null

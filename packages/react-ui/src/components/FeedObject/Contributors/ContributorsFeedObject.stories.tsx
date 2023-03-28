@@ -2,7 +2,7 @@ import React from 'react';
 import {ComponentMeta, ComponentStory} from '@storybook/react';
 
 import ContributorsFeedObject from './index';
-import {SCFeedObjectTypologyType} from '@selfcommunity/types';
+import {SCContributionType} from '@selfcommunity/types';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -15,14 +15,14 @@ export default {
       table: {defaultValue: {summary: 17}}
     },
     feedObjectType: {
-      options: [SCFeedObjectTypologyType.POST, SCFeedObjectTypologyType.DISCUSSION, SCFeedObjectTypologyType.STATUS],
+      options: [SCContributionType.POST, SCContributionType.DISCUSSION, SCContributionType.STATUS],
       control: {type: 'select'},
       description: 'Object type. Used only with args id.'
     }
   },
   args: {
     feedObjectId: 17,
-    feedObjectType: SCFeedObjectTypologyType.DISCUSSION
+    feedObjectType: SCContributionType.DISCUSSION
   }
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
 } as ComponentMeta<typeof ContributorsFeedObject>;

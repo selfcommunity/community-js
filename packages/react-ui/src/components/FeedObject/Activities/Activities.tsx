@@ -4,14 +4,13 @@ import {Box} from '@mui/material';
 import {SCCommentsOrderBy} from '../../../types/comments';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
-import CommentsObject from '../../CommentsObject';
+import CommentsObject, {CommentsObjectProps} from '../../CommentsObject';
 import ActivitiesMenu from './ActivitiesMenu';
 import {CommentObjectProps} from '../../CommentObject';
 import RelevantActivities from './RelevantActivities';
-import {CommentsObjectProps} from '../../CommentsObject';
 import {SCFeedObjectActivitiesType} from '../../../types/feedObject';
 import {useSCFetchCommentObjects} from '@selfcommunity/react-core';
-import {SCCommentType, SCFeedObjectType, SCFeedObjectTypologyType} from '@selfcommunity/types';
+import {SCCommentType, SCContributionType, SCFeedObjectType} from '@selfcommunity/types';
 import {CacheStrategies} from '@selfcommunity/utils';
 import {useInView} from 'react-intersection-observer';
 
@@ -57,9 +56,9 @@ export interface ActivitiesProps {
 
   /**
    * Type of feed object
-   * @default SCFeedObjectTypologyType.POST
+   * @default SCContributionType.POST
    */
-  feedObjectType?: SCFeedObjectTypologyType;
+  feedObjectType?: Exclude<SCContributionType, SCContributionType.COMMENT>;
 
   /**
    * Feed Object latest activities
@@ -120,7 +119,7 @@ export default function Activities(inProps: ActivitiesProps): JSX.Element {
     className,
     feedObjectId,
     feedObject,
-    feedObjectType = SCFeedObjectTypologyType.POST,
+    feedObjectType = SCContributionType.POST,
     cacheStrategy = CacheStrategies.CACHE_FIRST,
     CommentsObjectProps = {},
     CommentComponentProps = {variant: 'outlined'},

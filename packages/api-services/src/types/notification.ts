@@ -1,4 +1,4 @@
-import {SCEmbedType} from '@selfcommunity/types/src/types';
+import {SCEmbedType} from '@selfcommunity/types';
 
 /**
  *  CustomNotificationParams interface

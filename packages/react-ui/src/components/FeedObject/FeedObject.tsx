@@ -33,8 +33,8 @@ import ReplyCommentObject, {ReplyCommentObjectProps} from '../CommentObject/Repl
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {useSnackbar} from 'notistack';
 import {CommentObjectProps} from '../CommentObject';
-import {SCCommentType, SCFeedObjectType, SCFeedObjectTypologyType, SCPollType} from '@selfcommunity/types';
-import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
+import {SCCommentType, SCContributionType, SCFeedObjectType, SCPollType} from '@selfcommunity/types';
+import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
 import {CacheStrategies, Logger, LRUCache} from '@selfcommunity/utils';
 import {VirtualScrollerItemProps} from '../../types/virtualScroller';
 import {
@@ -241,7 +241,7 @@ export interface FeedObjectProps extends CardProps, VirtualScrollerItemProps {
    * Feed Object type
    * @default 'post'
    */
-  feedObjectType?: SCFeedObjectTypologyType;
+  feedObjectType?: Exclude<SCContributionType, SCContributionType.COMMENT>;
 
   /**
    * Mark the FeedObject as read when enter in viewport
@@ -436,7 +436,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
     className = null,
     feedObjectId = null,
     feedObject = null,
-    feedObjectType = SCFeedObjectTypologyType.DISCUSSION,
+    feedObjectType = SCContributionType.DISCUSSION,
     feedObjectActivities = null,
     cacheStrategy = CacheStrategies.CACHE_FIRST,
     markRead = false,

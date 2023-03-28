@@ -1,11 +1,11 @@
-import {useEffect, useReducer} from 'react';
-import {SCOPE_SC_CORE} from '../constants/Errors';
-import {SCUserType, SCFeedObjectType, SCFeedObjectTypologyType} from '@selfcommunity/types';
-import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
-import {CacheStrategies, Logger, LRUCache} from '@selfcommunity/utils';
+import { useEffect, useReducer } from 'react';
+import { SCOPE_SC_CORE } from '../constants/Errors';
+import { SCContributionType, SCFeedObjectType, SCUserType } from '@selfcommunity/types';
+import { Endpoints, http, HttpResponse } from '@selfcommunity/api-services';
+import { CacheStrategies, Logger, LRUCache } from '@selfcommunity/utils';
 import useSCFetchFeedObject from './useSCFetchFeedObject';
-import {getContributorsCacheKey} from '../constants/Cache';
-import {useIsComponentMountedRef} from '../utils/hooks';
+import { getContributorsCacheKey } from '../constants/Cache';
+import { useIsComponentMountedRef } from '../utils/hooks';
 
 /**
  * Interface SCCommentsObjectType
@@ -127,7 +127,7 @@ function stateInitializer(data): SCPaginatedContributorsType {
 export default function useSCFetchContributors(props: {
   id?: number;
   feedObject?: SCFeedObjectType;
-  feedObjectType: SCFeedObjectTypologyType;
+  feedObjectType: Exclude<SCContributionType, SCContributionType.COMMENT>;
   offset?: number;
   pageSize?: number;
   onChangePage?: (page) => any;

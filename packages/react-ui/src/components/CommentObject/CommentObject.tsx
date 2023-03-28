@@ -1,15 +1,13 @@
-import React, {useContext, useMemo, useRef, useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Widget, {WidgetProps} from '../Widget';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {Avatar, Box, Button, CardContent, CardProps, Tooltip, Typography} from '@mui/material';
+import {Avatar, Box, Button, CardContent, CardProps, Typography} from '@mui/material';
 import Bullet from '../../shared/Bullet';
 import classNames from 'classnames';
 import Votes from './Votes';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import CommentObjectSkeleton from './Skeleton';
-import {LoadingButton} from '@mui/lab';
-import Icon from '@mui/material/Icon';
 import {SCCommentsOrderBy} from '../../types/comments';
 import ReplyCommentObject from './ReplyComment';
 import ContributionActionsMenu from '../../shared/ContributionActionsMenu';
@@ -19,15 +17,7 @@ import {useSnackbar} from 'notistack';
 import {useThemeProps} from '@mui/system';
 import CommentsObject from '../CommentsObject';
 import BaseItem from '../../shared/BaseItem';
-import {
-  SCCommentType,
-  SCCommentTypologyType,
-  SCContributionType,
-  SCFeedObjectType,
-  SCFeedObjectTypologyType,
-  SCReactionType,
-  SCTagType
-} from '@selfcommunity/types';
+import {SCCommentType, SCContributionType, SCFeedObjectType} from '@selfcommunity/types';
 import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
 import {CacheStrategies, Logger, LRUCache} from '@selfcommunity/utils';
 import {
@@ -44,13 +34,10 @@ import {
   useSCContext,
   useSCFetchCommentObject,
   useSCFetchCommentObjects,
-  useSCFetchReactions,
   useSCPreferences,
   useSCRouting
 } from '@selfcommunity/react-core';
 import Reactions from './Reactions';
-import ReactionsPopover from '../FeedObject/Actions/Reaction/ReactionsPopover';
-import {reactionActionTypes} from '../FeedObject/Actions/Reaction/Reaction';
 import VoteButton from '../VoteButton';
 
 const messages = defineMessages({
@@ -129,9 +116,9 @@ export interface CommentObjectProps {
 
   /**
    * Type of feed object
-   * @default SCFeedObjectTypologyType.POST
+   * @default SCContributionType.POST
    */
-  feedObjectType?: SCFeedObjectTypologyType;
+  feedObjectType?: Exclude<SCContributionType, SCContributionType.COMMENT>;
 
   /**
    * comments per page (latest_comments)
@@ -248,7 +235,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
     commentObject,
     feedObjectId,
     feedObject,
-    feedObjectType = SCFeedObjectTypologyType.POST,
+    feedObjectType = SCContributionType.POST,
     commentReply,
     onOpenReply,
     onDelete,

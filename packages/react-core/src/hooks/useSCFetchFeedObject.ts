@@ -1,10 +1,9 @@
 import {useEffect, useMemo, useState} from 'react';
-import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
-import {Logger} from '@selfcommunity/utils';
+import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
+import {CacheStrategies, Logger, LRUCache} from '@selfcommunity/utils';
 import {SCOPE_SC_CORE} from '../constants/Errors';
-import {SCFeedDiscussionType, SCFeedObjectType, SCFeedObjectTypologyType, SCFeedPostType, SCFeedStatusType} from '@selfcommunity/types';
+import {SCContributionType, SCFeedDiscussionType, SCFeedObjectType, SCFeedPostType, SCFeedStatusType} from '@selfcommunity/types';
 import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
-import {LRUCache, CacheStrategies} from '@selfcommunity/utils';
 import {getFeedObjectCacheKey} from '../constants/Cache';
 
 /**
@@ -20,12 +19,12 @@ import {getFeedObjectCacheKey} from '../constants/Cache';
 export default function useSCFetchFeedObject({
   id = null,
   feedObject = null,
-  feedObjectType = SCFeedObjectTypologyType.POST || SCFeedObjectTypologyType.DISCUSSION || SCFeedObjectTypologyType.STATUS,
+  feedObjectType = SCContributionType.POST || SCContributionType.DISCUSSION || SCContributionType.STATUS,
   cacheStrategy = CacheStrategies.CACHE_FIRST,
 }: {
   id?: number | string;
   feedObject?: SCFeedObjectType;
-  feedObjectType?: SCFeedObjectTypologyType;
+  feedObjectType?: Exclude<SCContributionType, SCContributionType.COMMENT>;
   cacheStrategy?: CacheStrategies;
 }) {
   const __feedObjectId = feedObject ? feedObject.id : id;

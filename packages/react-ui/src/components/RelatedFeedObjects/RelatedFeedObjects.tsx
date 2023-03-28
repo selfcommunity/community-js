@@ -16,7 +16,7 @@ import Widget from '../Widget';
 import {useThemeProps} from '@mui/system';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {CacheStrategies, Logger} from '@selfcommunity/utils';
-import {SCCustomAdvPosition, SCFeedDiscussionType, SCFeedObjectType, SCFeedObjectTypologyType} from '@selfcommunity/types';
+import {SCContributionType, SCCustomAdvPosition, SCFeedDiscussionType, SCFeedObjectType} from '@selfcommunity/types';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import {
   SCCache,
@@ -64,7 +64,7 @@ export interface RelatedFeedObjectsProps extends VirtualScrollerItemProps {
    * Type of  feed object
    * @default 'discussion'
    */
-  feedObjectType?: SCFeedObjectTypologyType;
+  feedObjectType?: Exclude<SCContributionType, SCContributionType.COMMENT>;
   /**
    * Feed Object
    * @default null

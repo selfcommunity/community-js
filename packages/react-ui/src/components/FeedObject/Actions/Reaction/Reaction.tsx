@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useReducer, useState, useRef} from 'react';
+import React, {useEffect, useMemo, useReducer, useRef, useState} from 'react';
 import BaseDialog from '../../../../shared/BaseDialog';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {Avatar, AvatarGroup, Box, Button, Divider, List, ListItem, Tab, Tabs, Typography} from '@mui/material';
@@ -12,8 +12,8 @@ import {SCOPE_SC_UI} from '../../../../constants/Errors';
 import {styled} from '@mui/material/styles';
 import classNames from 'classnames';
 import {useSnackbar} from 'notistack';
-import {SCFeedObjectType, SCFeedObjectTypologyType, SCReactionType, SCTagType} from '@selfcommunity/types';
-import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
+import {SCContributionType, SCFeedObjectType, SCReactionType, SCTagType} from '@selfcommunity/types';
+import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
 import {
   SCContextType,
@@ -115,11 +115,11 @@ function votesReducer(state, action) {
 function stateInitializer({
   feedObjectId = null,
   feedObject = null,
-  feedObjectType = SCFeedObjectTypologyType.POST
+  feedObjectType = SCContributionType.POST
 }: {
   feedObjectId?: number;
   feedObject?: SCFeedObjectType;
-  feedObjectType?: SCFeedObjectTypologyType;
+  feedObjectType?: SCContributionType;
 }): any {
   const next =
     feedObjectId && feedObjectType
@@ -190,7 +190,7 @@ export default function Reaction(inProps: VoteProps): JSX.Element {
     className = null,
     feedObjectId = null,
     feedObject = null,
-    feedObjectType = SCFeedObjectTypologyType.POST,
+    feedObjectType = SCContributionType.POST,
     withAudience = true,
     withAction = true,
     inlineAction = false,
