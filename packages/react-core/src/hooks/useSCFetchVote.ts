@@ -12,13 +12,14 @@ import {
   SCReactionType,
   SCTagType,
 } from '@selfcommunity/types';
-import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
 import {getCommentObjectCacheKey, getFeedObjectCacheKey} from '../constants/Cache';
-import {SCContextType, SCUserContextType, UserUtils, useSCContext, useSCUser} from '@selfcommunity/react-core';
 import {useSnackbar} from 'notistack';
 import useSCFetchReactions from './useSCFetchReactions';
 import {useIntl} from 'react-intl';
-import vote from '@selfcommunity/react-ui/src/components/FeedObject/Actions/Vote';
+import {SCContextType, SCUserContextType} from '../types/context';
+import {useSCContext} from '../components/provider/SCContextProvider';
+import {useSCUser} from '../components/provider/SCUserProvider';
+import {UserUtils} from '../index';
 
 interface FetchVoteProps {
   /**

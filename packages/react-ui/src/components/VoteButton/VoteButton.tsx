@@ -2,7 +2,7 @@ import React, {useMemo, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {LoadingButton, LoadingButtonProps} from '@mui/lab';
 import classNames from 'classnames';
-import {SCCommentType, SCContributionType, SCFeedObjectType, SCReactionType} from '@selfcommunity/types';
+import {SCCommentType, SCContributionType, SCFeedObjectType, SCFeedObjectTypologyType, SCReactionType} from '@selfcommunity/types';
 import {useThemeProps} from '@mui/system';
 import Icon from '@mui/material/Icon';
 import {IconButton, Paper, Popper, Tooltip} from '@mui/material';
@@ -41,7 +41,7 @@ export interface VoteButtonProps extends LoadingButtonProps {
    * Type of the contribution object to vote
    * @default null
    */
-  contributionType: SCContributionType;
+  contributionType: SCContributionType | any;
   /**
    * Contribution object to vote
    * @default null

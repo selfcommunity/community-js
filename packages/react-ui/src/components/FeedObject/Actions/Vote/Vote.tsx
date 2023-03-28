@@ -273,7 +273,7 @@ export default function Vote(inProps: VoteProps): JSX.Element {
   );
 
   // HANDLERS
-  const handleVoteSuccess = (feedObject: SCFeedObjectType | SCCommentType) => {
+  const handleVoteSuccess = (feedObject: SCFeedObjectType | SCCommentType | any) => {
     setObj(feedObject);
     onVoteAction && onVoteAction(feedObject);
   };
