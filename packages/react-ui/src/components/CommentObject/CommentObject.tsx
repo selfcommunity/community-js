@@ -1,11 +1,10 @@
 import React, {useContext, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Widget, {WidgetProps} from '../Widget';
-import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
+import {FormattedMessage} from 'react-intl';
 import {Avatar, Box, Button, CardContent, CardProps, Typography} from '@mui/material';
 import Bullet from '../../shared/Bullet';
 import classNames from 'classnames';
-import Votes from './Votes';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import CommentObjectSkeleton from './Skeleton';
 import {SCCommentsOrderBy} from '../../types/comments';
@@ -24,7 +23,6 @@ import {
   Link,
   SCCache,
   SCContextType,
-  SCFeatures,
   SCRoutes,
   SCRoutingContextType,
   SCThemeType,
@@ -34,26 +32,10 @@ import {
   useSCContext,
   useSCFetchCommentObject,
   useSCFetchCommentObjects,
-  useSCPreferences,
   useSCRouting
 } from '@selfcommunity/react-core';
-import Reactions from './Reactions';
 import VoteButton from '../VoteButton';
-
-const messages = defineMessages({
-  reply: {
-    id: 'ui.commentObject.reply',
-    defaultMessage: 'ui.commentObject.reply'
-  },
-  voteUp: {
-    id: 'ui.commentObject.voteUp',
-    defaultMessage: 'ui.commentObject.voteUp'
-  },
-  voteDown: {
-    id: 'ui.commentObject.voteDown',
-    defaultMessage: 'ui.commentObject.voteDown'
-  }
-});
+import VoteAudienceButton from '../VoteAudienceButton';
 
 const PREFIX = 'SCCommentObject';
 
@@ -65,14 +47,11 @@ const classes = {
   content: `${PREFIX}-content`,
   author: `${PREFIX}-author`,
   textContent: `${PREFIX}-text-content`,
-  btnVotes: `${PREFIX}-btn-votes`,
-  votes: `${PREFIX}-votes`,
   commentActionsMenu: `${PREFIX}-comment-actions-menu`,
   deleted: `${PREFIX}-deleted`,
   activityAt: `${PREFIX}-activity-at`,
   vote: `${PREFIX}-vote`,
-  voted: `${PREFIX}-voted`,
-  reaction: `${PREFIX}-reaction`,
+  voteAudience: `${PREFIX}-vote-audience`,
   reply: `${PREFIX}-reply`,
   contentSubSection: `${PREFIX}-comment-sub-section`
 };
@@ -212,8 +191,8 @@ export interface CommentObjectProps {
  |author|.SCCommentObject-author|Styles applied to the author section.|
  |content|.SCCommentObject-content|Styles applied to content section.|
  |textContent|.SCCommentObject-text-content|Styles applied to text content section.|
- |btnVotes|.SCCommentObject-btn-votes|Styles applied to the vote button element.|
- |votes|.SCCommentObject-votes|Styles applied to the votes section.|
+ |vote|.SCCommentObject-vote|Styles applied to the votes section.|
+ |btnVotes|.SCCommentObject-vote-audience|Styles applied to the votes audience section.|
  |commentActionsMenu|.SCCommentObject-comment-actions-menu|Styles applied to comment action menu element.|
  |deleted|.SCCommentObject-deleted|Styles applied to tdeleted element.|
  |activityAt|.SCCommentObject-activity-at|Styles applied to activity at section.|
@@ -252,9 +231,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
   const scContext: SCContextType = useSCContext();
   const scUserContext: SCUserContextType = useContext(SCUserContext);
   const scRoutingContext: SCRoutingContextType = useSCRouting();
-  const scPreferences = useSCPreferences();
   const {enqueueSnackbar} = useSnackbar();
-  const intl = useIntl();
 
   // STATE
   const {obj, setObj} = useSCFetchCommentObject({id: commentObjectId, commentObject, cacheStrategy});
@@ -270,13 +247,10 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
     parent: commentObject ? commentObject.id : commentObjectId,
     cacheStrategy
   });
-  const reactionsEnabled = scPreferences.features.includes(SCFeatures.REACTION);
-  const [_reactionsList, setReactionsList] = useState<[] | any>(obj?.reactions_count);
 
   // HANDLERS
   const handleVoteSuccess = (contribution: SCFeedObjectType | SCCommentType) => {
     setObj(contribution as SCCommentType);
-    setReactionsList(commentObject.reactions_count);
     onVote && onVote(contribution as SCCommentType);
   };
 
@@ -316,19 +290,9 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
   function renderActionReply(comment) {
     return (
       <Button className={classes.reply} variant="text" onClick={() => reply(comment)}>
-        {intl.formatMessage(messages.reply)}
+        <FormattedMessage id="ui.commentObject.reply" defaultMessage="ui.commentObject.reply" />
       </Button>
     );
-  }
-
-  /**
-   * Render Votes counter
-   */
-  function renderVotes(comment) {
-    if (reactionsEnabled) {
-      return <Reactions commentObject={comment} reactionsList={_reactionsList} />;
-    }
-    return <Votes commentObject={comment} />;
   }
 
   /**
@@ -577,6 +541,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
                   {renderTimeAgo(comment)}
                   <Bullet />
                   <VoteButton
+                    size="small"
                     className={classes.vote}
                     contributionId={comment.id}
                     contributionType={SCContributionType.COMMENT}
@@ -585,7 +550,13 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
                   />
                   <Bullet />
                   {renderActionReply(comment)}
-                  {renderVotes(comment)}
+                  <VoteAudienceButton
+                    size="small"
+                    className={classes.voteAudience}
+                    contributionId={comment.id}
+                    contributionType={SCContributionType.COMMENT}
+                    contribution={comment}
+                  />
                 </Box>
               </>
             }

@@ -1,5 +1,5 @@
 import {useEffect, useMemo, useState} from 'react';
-import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
+import {Endpoints, http, HttpResponse, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {CacheStrategies, Logger, LRUCache} from '@selfcommunity/utils';
 import {SCOPE_SC_CORE} from '../constants/Errors';
 import {
@@ -11,6 +11,7 @@ import {
   SCFeedStatusType,
   SCReactionType,
   SCTagType,
+  SCVoteType,
 } from '@selfcommunity/types';
 import {getCommentObjectCacheKey, getFeedObjectCacheKey} from '../constants/Cache';
 import {useSnackbar} from 'notistack';
@@ -20,6 +21,7 @@ import {SCContextType, SCUserContextType} from '../types/context';
 import {useSCContext} from '../components/provider/SCContextProvider';
 import {useSCUser} from '../components/provider/SCUserProvider';
 import {UserUtils} from '../index';
+import useDeepCompareEffect from 'use-deep-compare-effect';
 
 interface FetchVoteProps {
   /**
@@ -78,6 +80,9 @@ export default function useSCFetchVote({
     cacheStrategy !== CacheStrategies.NETWORK_ONLY ? LRUCache.get(__contributionCacheKey, contribution) : contribution
   );
   const [isVoting, setIsVoting] = useState<boolean>(false);
+  const [voteListNext, setVoteListNext] = useState<string>(Endpoints.VotesList.url({type: contributionType, id}));
+  const [voteList, setVoteList] = useState<SCVoteType[]>([]);
+  const [isLoadingVoteList, setIsLoadingVoteList] = useState<boolean>(false);
   const [error, setError] = useState<string>(null);
 
   // HOOKS
@@ -87,9 +92,6 @@ export default function useSCFetchVote({
   const reactions = useSCFetchReactions();
   const intl = useIntl();
 
-  /**
-   * Memoized fetchObject
-   */
   const fetchObject = useMemo(
     () => () => {
       setIsLoading(true);
@@ -149,6 +151,12 @@ export default function useSCFetchVote({
     }
   }, [id, contributionType, scUserContext.user]);
 
+  useDeepCompareEffect(() => {
+    if (contribution) {
+      setObj(contribution);
+    }
+  }, [contribution]);
+
   // HANDLERS
   const handleVote = (reaction?: SCReactionType) => {
     if (!scUserContext.user) {
@@ -186,9 +194,10 @@ export default function useSCFetchVote({
                     } else if (count.reaction.id === reaction.id) {
                       return {count: count.count + 1, reaction: count.reaction};
                     }
+                    return count;
                   }),
                   addCount ? {count: 1, reaction} : null,
-                ].filter((count) => count !== null),
+                ].filter((count) => Boolean(count)),
               };
             } else if (reaction && obj?.reaction && obj?.reaction?.id === reaction.id) {
               // RIMOZIONE
@@ -201,8 +210,9 @@ export default function useSCFetchVote({
                     } else if (count.reaction.id === obj?.reaction?.id && count.count - 1 > 0) {
                       return {count: count.count - 1, reaction: count.reaction};
                     }
+                    return count;
                   })
-                  .filter((count) => count !== null),
+                  .filter((count) => Boolean(count)),
               });
             }
             const newObj = Object.assign({}, obj, _obj);
@@ -217,14 +227,48 @@ export default function useSCFetchVote({
     }
   };
 
+  const handleFetchVoteList = ({reaction = null, reset = false}: {reaction?: SCReactionType; reset?: boolean}) => {
+    const _url = reset
+      ? `${Endpoints.VotesList.url({
+          type: contributionType,
+          id,
+        })}${reaction ? `?reaction=${reaction.id}` : ''}`
+      : voteListNext;
+
+    setIsLoadingVoteList(true);
+    http
+      .request({
+        url: _url,
+        method: Endpoints.VotesList.method,
+      })
+      .then((res: HttpResponse<SCPaginatedResponse<SCVoteType>>) => {
+        setVoteList(reset ? res.data.results : [...voteList, ...res.data.results]);
+        setVoteListNext(res.data.next);
+      })
+      .catch((error) => setError(error))
+      .then(() => setIsLoadingVoteList(false));
+  };
+
   const data = useMemo(
     () => ({
       contributionVoted: obj ? obj.voted : false,
+      contributionVoteCount: obj ? obj.vote_count : 0,
       contributionReaction: obj ? obj.reaction : null,
       contributionReactionsCount: obj ? obj.reactions_count : null,
     }),
     [obj]
   );
 
-  return {...data, isLoading, isVoting, handleVote, reactions, error};
+  return {
+    ...data,
+    isLoading,
+    isVoting,
+    handleVote,
+    reactions,
+    error,
+    handleFetchVoteList,
+    voteList,
+    isLoadingVoteList,
+    voteListHasNext: Boolean(voteListNext),
+  };
 }

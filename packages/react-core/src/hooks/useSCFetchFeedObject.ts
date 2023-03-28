@@ -88,5 +88,12 @@ export default function useSCFetchFeedObject({
     }
   }, [feedObject]);
 
-  return {obj, setObj, error};
+  return {
+    obj,
+    setObj: (newObj) => {
+      LRUCache.set(__feedObjectCacheKey, newObj);
+      setObj(Object.assign({}, newObj));
+    },
+    error,
+  };
 }

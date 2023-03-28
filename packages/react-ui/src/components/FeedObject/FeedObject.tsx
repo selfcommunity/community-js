@@ -509,7 +509,6 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
    * @param obj
    */
   function updateObject(newObj) {
-    LRUCache.set(SCCache.getFeedObjectCacheKey(obj.id, obj.type), newObj);
     setObj(newObj);
     notifyFeedChanges();
   }
@@ -541,7 +540,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
    */
   const handleChangePoll = useCallback(
     (pollObject: SCPollType) => {
-      updateObject(Object.assign(obj, {poll: pollObject}));
+      updateObject(Object.assign({}, obj, {poll: pollObject}));
     },
     [obj]
   );
@@ -570,28 +569,28 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
    * Handle restore obj
    */
   const handleRestore = useCallback(() => {
-    updateObject(Object.assign(obj, {deleted: false}));
+    updateObject(Object.assign({}, obj, {deleted: false}));
   }, [obj]);
 
   /**
    * Handle restore obj
    */
   const handleHide = useCallback(() => {
-    updateObject(Object.assign(obj, {collapsed: !obj.collapsed}));
+    updateObject(Object.assign({}, obj, {collapsed: !obj.collapsed}));
   }, [obj]);
 
   /**
    * Handle delete obj
    */
   const handleDelete = useCallback(() => {
-    updateObject(Object.assign(obj, {deleted: !obj.deleted}));
+    updateObject(Object.assign({}, obj, {deleted: !obj.deleted}));
   }, [obj]);
 
   /**
    * Handle suspend notification obj
    */
   const handleSuspendNotification = useCallback(() => {
-    updateObject(Object.assign(obj, {suspended: !obj.suspended}));
+    updateObject(Object.assign({}, obj, {suspended: !obj.suspended}));
   }, [obj]);
 
   /**
@@ -618,7 +617,9 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
    */
   const handleVoteSuccess = useCallback(
     (data) => {
-      updateObject(Object.assign(obj, {voted: data.voted, vote_count: data.vote_count}));
+      updateObject(
+        Object.assign({}, obj, {voted: data.voted, vote_count: data.vote_count, reactions_count: data.reactions_count, reaction: data.reaction})
+      );
     },
     [obj]
   );
@@ -712,7 +713,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
             setComments([...[data], ...comments]);
           }
           setIsReplying(false);
-          const newObj = Object.assign(obj, {comment_count: obj.comment_count + 1});
+          const newObj = Object.assign({}, obj, {comment_count: obj.comment_count + 1});
           updateObject(newObj);
           LRUCache.deleteKeysWithPrefix(SCCache.getCommentObjectsCachePrefixKeys(obj.id, obj.type));
           onReply && onReply(data);
