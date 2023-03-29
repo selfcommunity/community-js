@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.84](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.83...@selfcommunity/react-theme-default@0.1.0-alpha.84) (2023-03-29)
+
+
+### Bug Fixes
+
+* Fix build ([2a28d36](https://github.com/selfcommunity/community-js/commit/2a28d361e02aef1a1c7d21a0a348d5da1e93c14b))
+* fixed pm components layout ([94cd2ab](https://github.com/selfcommunity/community-js/commit/94cd2ab239bfcbce55507625c350ac861f20a9f5))
+* fixed pm components skeletons ([4fdc455](https://github.com/selfcommunity/community-js/commit/4fdc455027400b31ac0c456b4c2536e239abb663))
+
+
+### Performance Improvements
+
+* Refactor vote audience component ([ec30368](https://github.com/selfcommunity/community-js/commit/ec30368a6e4a606e28b4be4efd2fd692a75b740a))
+* Refactor vote components ([9862018](https://github.com/selfcommunity/community-js/commit/9862018f9ed71d2f303a1bf7b71e402575591fad))
+
+
+
+
+
 # [0.1.0-alpha.83](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.82...@selfcommunity/react-theme-default@0.1.0-alpha.83) (2023-03-23)
 
 

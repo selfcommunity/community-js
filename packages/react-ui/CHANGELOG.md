@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.138](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.137...@selfcommunity/react-ui@0.7.0-alpha.138) (2023-03-29)
+
+
+### Bug Fixes
+
+* Fix build ([2a28d36](https://github.com/selfcommunity/community-js/commit/2a28d361e02aef1a1c7d21a0a348d5da1e93c14b))
+* fixed broken build ([6c90723](https://github.com/selfcommunity/community-js/commit/6c907239387ec806c968c03de02aaed70a11fce6))
+* fixed pm components skeletons ([4fdc455](https://github.com/selfcommunity/community-js/commit/4fdc455027400b31ac0c456b4c2536e239abb663))
+* fixed thread loading state ([9ac17db](https://github.com/selfcommunity/community-js/commit/9ac17db75b0d8cadb083fd8a8c8011b4f981bc74))
+
+
+### Performance Improvements
+
+* clenup imports ([cec9a83](https://github.com/selfcommunity/community-js/commit/cec9a83b657b3d2f7ffc66497b9adcc9a6da3fb6))
+* Refactor types of Contribution.tsx ([b6fb690](https://github.com/selfcommunity/community-js/commit/b6fb6900745cd7d33b104f524eba265e48973c6a))
+* Refactor vote audience component ([ec30368](https://github.com/selfcommunity/community-js/commit/ec30368a6e4a606e28b4be4efd2fd692a75b740a))
+* Refactor vote components ([9862018](https://github.com/selfcommunity/community-js/commit/9862018f9ed71d2f303a1bf7b71e402575591fad))
+* Refactor votes on notifications ([9c050ad](https://github.com/selfcommunity/community-js/commit/9c050ad6006bc1d9b60e3012abbfa7450a1f52d7))
+
+
+
+
+
 # [0.7.0-alpha.137](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.136...@selfcommunity/react-ui@0.7.0-alpha.137) (2023-03-23)
 
 

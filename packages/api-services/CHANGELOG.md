@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.6-alpha.21](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.6-alpha.20...@selfcommunity/api-services@0.3.6-alpha.21) (2023-03-29)
+
+
+### Bug Fixes
+
+* Fix build ([2a28d36](https://github.com/selfcommunity/community-js/commit/2a28d361e02aef1a1c7d21a0a348d5da1e93c14b))
+
+
+### Performance Improvements
+
+* Refactor types of Contribution.tsx ([b6fb690](https://github.com/selfcommunity/community-js/commit/b6fb6900745cd7d33b104f524eba265e48973c6a))
+
+
+
+
+
 ## [0.3.6-alpha.20](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.6-alpha.19...@selfcommunity/api-services@0.3.6-alpha.20) (2023-03-21)
 
 
