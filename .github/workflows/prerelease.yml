@@ -25,6 +25,8 @@ jobs:
     - run: git config --global user.email "team@quentral.com"
     - run: git config --global user.name "quentralhub"
     - run: yarn build
+      env:
+        NODE_OPTIONS: "--max_old_space_size=4096"
     - run: yarn prerelease
     - name: Open pull-request (prerelease -> main)
       uses: mirk8xr/pull-request@v2.6.2
