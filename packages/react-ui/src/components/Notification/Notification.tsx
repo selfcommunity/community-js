@@ -233,8 +233,14 @@ export default function UserNotification(inProps: NotificationProps): JSX.Elemen
    * Handles vote
    * @param comment
    */
-  const handleVote = (contribution: SCFeedObjectType | SCCommentType) => {
-    setObj(contribution);
+  const handleVote = (index) => {
+    return (contribution: SCFeedObjectType | SCCommentType) => {
+      const newObj: SCNotificationAggregatedType = Object.assign({}, notificationObject);
+      const _notification: SCNotificationType = Object.assign({}, newObj.aggregated[index]);
+      _notification[contribution.type] = contribution;
+      newObj.aggregated[index] = _notification;
+      setObj(newObj);
+    };
   };
 
   /**
@@ -351,7 +357,7 @@ export default function UserNotification(inProps: NotificationProps): JSX.Elemen
    */
   function renderAggregatedItem(n, i) {
     if (n.type === SCNotificationTypologyType.COMMENT || n.type === SCNotificationTypologyType.NESTED_COMMENT) {
-      return <CommentNotification notificationObject={n} key={i} onVote={handleVote} />;
+      return <CommentNotification notificationObject={n} key={i} onVote={handleVote(i)} />;
     } else if (n.type === SCNotificationTypologyType.FOLLOW) {
       return <ContributionFollowNotification notificationObject={n} key={i} />;
     } else if (n.type === SCNotificationTypologyType.USER_FOLLOW) {
@@ -399,7 +405,7 @@ export default function UserNotification(inProps: NotificationProps): JSX.Elemen
     } else if (n.type === SCNotificationTypologyType.CUSTOM_NOTIFICATION) {
       handleCustomNotification && handleCustomNotification(n);
     } else if (n.type === SCNotificationTypologyType.CONTRIBUTION) {
-      return <ContributionNotification notificationObject={n} key={i} onVote={handleVote} />;
+      return <ContributionNotification notificationObject={n} key={i} onVote={handleVote(i)} />;
     }
     return null;
   }
