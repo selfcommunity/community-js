@@ -5,7 +5,9 @@ const Component = {
     root: ({theme}: any) => ({
       backgroundColor: alpha(theme.palette.secondary.main, theme.palette.action.selectedOpacity),
       position: 'relative',
-      minHeight: '100vh',
+      [theme.breakpoints.down('md')]: {
+        minHeight: '100vh'
+      },
       [theme.breakpoints.up('sm')]: {
         height: theme.spacing(103.5),
         maxHeight: 'inherit'

@@ -427,7 +427,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
       PubSub.unsubscribe(refreshSubscription.current);
     };
   }, [messageObjs]);
-  console.log(loadingMessageObjs);
+
   /**
    * Renders thread component
    * @return {JSX.Element}

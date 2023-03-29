@@ -5,7 +5,7 @@ const Component = {
         maxWidth: theme.breakpoints.values['lg'],
         maxHeight: theme.breakpoints.values['lg']
       },
-      ' .MuiPaper-root, MuiAppBar-root': {
+      ' .MuiPaper-root': {
         boxShadow: 'none',
         borderRadius: 0
       },
