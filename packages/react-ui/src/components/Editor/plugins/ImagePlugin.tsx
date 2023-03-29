@@ -4,10 +4,10 @@ import {
   $isRangeSelection,
   $isRootNode,
   COMMAND_PRIORITY_EDITOR,
-  CONTROLLED_TEXT_INSERTION_COMMAND,
-  createCommand, INSERT_PARAGRAPH_COMMAND,
+  createCommand,
+  INSERT_PARAGRAPH_COMMAND,
   LexicalCommand,
-  LexicalEditor,
+  LexicalEditor
 } from 'lexical';
 import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
 import {Icon, IconButton, IconButtonProps} from '@mui/material';
