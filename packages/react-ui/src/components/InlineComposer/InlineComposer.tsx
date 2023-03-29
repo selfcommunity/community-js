@@ -41,26 +41,7 @@ const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}: {theme: SCThemeType}) => ({
-  marginBottom: theme.spacing(2),
-  [`& .${classes.content}`]: {
-    padding: theme.spacing(),
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    [`& .${classes.input}`]: {
-      flexGrow: 2
-    },
-    [`& .${classes.input} .MuiButton-text`]: {
-      justifyContent: 'flex-start',
-      textTransform: 'none'
-    },
-    [`& .${classes.avatar} .MuiAvatar-root`]: {
-      width: theme.selfcommunity.user.avatar.sizeMedium,
-      height: theme.selfcommunity.user.avatar.sizeMedium
-    }
-  }
-}));
+})(({theme}: {theme: SCThemeType}) => ({}));
 
 export interface InlineComposerTypeMap<P = {}, D extends React.ElementType = 'div'> {
   props: P &
