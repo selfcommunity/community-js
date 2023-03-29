@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.85](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.84...@selfcommunity/react-theme-default@0.1.0-alpha.85) (2023-03-29)
+
+
+### Bug Fixes
+
+* fixed pm thread skeleton height ([1b4f325](https://github.com/selfcommunity/community-js/commit/1b4f325eb0c75b57504d233b3becb5d0d0b68f6b))
+* fixed pm tlayout height ([b0d542a](https://github.com/selfcommunity/community-js/commit/b0d542a59be7ffad1ac4ee77da2b85cf78d766b4))
+
+
+
+
+
 # [0.1.0-alpha.84](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.83...@selfcommunity/react-theme-default@0.1.0-alpha.84) (2023-03-29)
 
 

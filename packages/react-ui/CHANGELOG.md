@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.139](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.138...@selfcommunity/react-ui@0.7.0-alpha.139) (2023-03-29)
+
+
+### Bug Fixes
+
+* fixed pm component skeleton on mobile viewport ([6f8dd68](https://github.com/selfcommunity/community-js/commit/6f8dd6899cfb6b56691481d742f04fc45238fb66))
+
+
+
+
+
 # [0.7.0-alpha.138](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.137...@selfcommunity/react-ui@0.7.0-alpha.138) (2023-03-29)
 
 
