@@ -29,7 +29,14 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import Widget from '../Widget';
 import {useThemeProps} from '@mui/system';
 import {Logger} from '@selfcommunity/utils';
-import {SCNotificationAggregatedType, SCNotificationPrivateMessageType, SCNotificationType, SCNotificationTypologyType} from '@selfcommunity/types';
+import {
+  SCCommentType,
+  SCFeedObjectType,
+  SCNotificationAggregatedType,
+  SCNotificationPrivateMessageType,
+  SCNotificationType,
+  SCNotificationTypologyType
+} from '@selfcommunity/types';
 
 const messages = defineMessages({
   receivePrivateMessage: {
@@ -165,7 +172,6 @@ export default function UserNotification(inProps: NotificationProps): JSX.Elemen
 
   // STATE
   const [obj, setObj] = useState<SCNotificationAggregatedType>(notificationObject);
-  const [loadingVote, setLoadingVote] = useState<number>(null);
   const [loadingSuspendNotification, setLoadingSuspendNotification] = useState<boolean>(false);
   const [openOtherAggregated, setOpenOtherAggregated] = useState<boolean>(!collapsedOtherAggregated);
 
@@ -224,47 +230,12 @@ export default function UserNotification(inProps: NotificationProps): JSX.Elemen
   }
 
   /**
-   * Perform vote
-   */
-  const performVote = useMemo(
-    () => (contribution) => {
-      return http
-        .request({
-          url: Endpoints.Vote.url({type: contribution.type, id: contribution.id}),
-          method: Endpoints.Vote.method
-        })
-        .then((res: HttpResponse<any>) => {
-          if (res.status >= 300) {
-            return Promise.reject(res);
-          }
-          return Promise.resolve(res.data);
-        });
-    },
-    [obj]
-  );
-
-  /**
    * Handles vote
    * @param comment
    */
-  function handleVote(index, contribution) {
-    setLoadingVote(index);
-    performVote(contribution)
-      .then((data) => {
-        const newObj: SCNotificationAggregatedType = Object.assign({}, notificationObject);
-        const _notification: SCNotificationType = Object.assign({}, newObj.aggregated[index]);
-        const _contribution = _notification[contribution.type];
-        _contribution.voted = !_contribution.voted;
-        _contribution.vote_count = _contribution.vote_count - (_contribution.voted ? -1 : 1);
-        _notification[contribution.type] = _contribution;
-        newObj.aggregated[index] = _notification;
-        setObj(newObj);
-        setLoadingVote(null);
-      })
-      .catch((error) => {
-        Logger.error(SCOPE_SC_UI, error);
-      });
-  }
+  const handleVote = (contribution: SCFeedObjectType | SCCommentType) => {
+    setObj(contribution);
+  };
 
   /**
    * Open/close other aggregated activities
@@ -380,7 +351,7 @@ export default function UserNotification(inProps: NotificationProps): JSX.Elemen
    */
   function renderAggregatedItem(n, i) {
     if (n.type === SCNotificationTypologyType.COMMENT || n.type === SCNotificationTypologyType.NESTED_COMMENT) {
-      return <CommentNotification notificationObject={n} key={i} index={i} onVote={handleVote} loadingVote={loadingVote} />;
+      return <CommentNotification notificationObject={n} key={i} onVote={handleVote} />;
     } else if (n.type === SCNotificationTypologyType.FOLLOW) {
       return <ContributionFollowNotification notificationObject={n} key={i} />;
     } else if (n.type === SCNotificationTypologyType.USER_FOLLOW) {
@@ -428,7 +399,7 @@ export default function UserNotification(inProps: NotificationProps): JSX.Elemen
     } else if (n.type === SCNotificationTypologyType.CUSTOM_NOTIFICATION) {
       handleCustomNotification && handleCustomNotification(n);
     } else if (n.type === SCNotificationTypologyType.CONTRIBUTION) {
-      return <ContributionNotification notificationObject={n} key={i} index={i} onVote={handleVote} loadingVote={loadingVote} />;
+      return <ContributionNotification notificationObject={n} key={i} onVote={handleVote} />;
     }
     return null;
   }

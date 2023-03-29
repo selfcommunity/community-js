@@ -1,18 +1,23 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import {Avatar, Box, Stack, Tooltip, Typography} from '@mui/material';
+import {Avatar, Stack, Typography} from '@mui/material';
 import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
-import {SCNotificationCommentType, SCNotificationTypologyType} from '@selfcommunity/types';
+import {
+  SCCommentType,
+  SCContributionType,
+  SCFeedObjectType,
+  SCNotificationCommentType,
+  SCNotificationTypologyType,
+} from '@selfcommunity/types';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import Bullet from '../../../shared/Bullet';
-import {LoadingButton} from '@mui/lab';
-import Icon from '@mui/material/Icon';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
 import {getContributionSnippet, getRouteData} from '../../../utils/contribution';
 import classNames from 'classnames';
 import {SCNotificationObjectTemplateType} from '../../../types';
 import {useThemeProps} from '@mui/system';
 import NotificationItem, {NotificationItemProps} from '../../../shared/NotificationItem';
+import VoteButton from '../../VoteButton';
 
 const messages = defineMessages({
   comment: {
@@ -58,22 +63,10 @@ export interface CommentNotificationProps
   notificationObject: SCNotificationCommentType;
 
   /**
-   * Index
-   * @default null
-   */
-  index?: number;
-
-  /**
    * Handles action on vote
    * @default null
    */
-  onVote?: (i, v) => void;
-
-  /**
-   * The id of the loading vote
-   * @default null
-   */
-  loadingVote?: number;
+  onVote?: (contribution: SCFeedObjectType | SCCommentType) => any;
 }
 
 /**
@@ -89,9 +82,7 @@ export default function CommentNotification(inProps: CommentNotificationProps): 
   });
   const {
     notificationObject,
-    index,
     onVote,
-    loadingVote,
     id = `n_${props.notificationObject['sid']}`,
     template = SCNotificationObjectTemplateType.DETAIL,
     className,
@@ -104,12 +95,10 @@ export default function CommentNotification(inProps: CommentNotificationProps): 
   //INTL
   const intl = useIntl();
 
-  /**
-   * Handle vote
-   */
-  function handleVote() {
-    return onVote && index !== undefined && onVote(index, notificationObject.comment);
-  }
+  // HANDLERS
+  const handleVote = (contribution: SCFeedObjectType | SCCommentType) => {
+    return onVote && onVote(contribution);
+  };
 
   /**
    * Renders root object
@@ -156,28 +145,15 @@ export default function CommentNotification(inProps: CommentNotificationProps): 
             <Stack direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
               <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
               <Bullet className={classes.bullet} />
-              <LoadingButton
-                color={'inherit'}
-                size={'small'}
+              <VoteButton
                 className={classes.voteButton}
-                variant={'text'}
-                onClick={handleVote}
-                disabled={loadingVote === index}
-                loading={loadingVote === index}>
-                {notificationObject.comment.voted ? (
-                  <Tooltip title={<FormattedMessage id={'ui.notification.comment.voteDown'} defaultMessage={'ui.notification.comment.voteDown'} />}>
-                    <Icon fontSize={'small'} color={'primary'}>
-                      thumb_up_alt
-                    </Icon>
-                  </Tooltip>
-                ) : (
-                  <Tooltip title={<FormattedMessage id={'ui.notification.comment.voteUp'} defaultMessage={'ui.notification.comment.voteUp'} />}>
-                    <Icon fontSize={'small'} color="inherit">
-                      thumb_up_off_alt
-                    </Icon>
-                  </Tooltip>
-                )}
-              </LoadingButton>
+                variant="text"
+                size="small"
+                contributionId={notificationObject.comment.id}
+                contributionType={SCContributionType.COMMENT}
+                contribution={notificationObject.comment}
+                onVote={handleVote}
+              />
             </Stack>
           )}
         </React.Fragment>
