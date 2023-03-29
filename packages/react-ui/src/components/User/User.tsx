@@ -35,6 +35,7 @@ const PREFIX = 'SCUser';
 const classes = {
   root: `${PREFIX}-root`,
   avatar: `${PREFIX}-avatar`,
+  staffBadge: `${PREFIX}-staff-badge`,
   staffBadgeLabel: `${PREFIX}-staff-badge-label`,
   staffBadgeIcon: `${PREFIX}-staff-badge-icon`
 };
@@ -43,24 +44,7 @@ const Root = styled(BaseItemButton, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}: any) => ({
-  '& .MuiChip-root': {
-    height: '18px'
-  },
-  [`& .${classes.avatar}`]: {
-    width: theme.selfcommunity.user.avatar.sizeMedium,
-    height: theme.selfcommunity.user.avatar.sizeMedium
-  },
-  [`& .${classes.staffBadgeLabel}`]: {
-    marginLeft: theme.spacing(1),
-    borderRadius: 0,
-    fontSize: '0.5rem'
-  },
-  [`& .${classes.staffBadgeIcon}`]: {
-    top: '25%',
-    right: '5%'
-  }
-}));
+})(({theme}: any) => ({}));
 
 export interface UserProps extends WidgetProps {
   /**
@@ -89,14 +73,9 @@ export interface UserProps extends WidgetProps {
    */
   showFollowers?: boolean;
   /**
-   *  Prop to show reaction badge on user avatar when showing feedObj reactions list
-   * @default false
+   * Badge content to show as user avatar badge if show reaction is true.
    */
-  showReaction?: boolean;
-  /**
-   * Reaction icon to show as user avatar badge if show reaction is true.
-   */
-  reaction?: any;
+  badgeContent?: any;
   /**
    * A search term used for highlighting matching results
    */
@@ -129,7 +108,7 @@ const PREFERENCES = [SCPreferences.STAFF_STAFF_BADGE_LABEL, SCPreferences.STAFF_
  |root|.SCUser-root|Styles applied to the root element.|
  |staffBadgeLabel|.SCUser-staff-badge-label|Styles applied to the staff badge label element.|
  |staffBadgeIcon|.SCUser-staff-badge-icon|Styles applied to the staff badge icon element.|
-
+ |staffBadge|.SCUser-staff-badge|Styles applied to the reaction icon element.|
  * @param inProps
  */
 export default function User(inProps: UserProps): JSX.Element {
@@ -146,18 +125,10 @@ export default function User(inProps: UserProps): JSX.Element {
     followConnectUserButtonProps = {},
     showFollowers = false,
     elevation,
-    showReaction = false,
-    reaction,
+    badgeContent = null,
     search = '',
     ...rest
   } = props;
-
-  const SmallAvatar = styled(Avatar)(({theme}: any) => ({
-    width: theme.selfcommunity.user.avatar.sizeSmall,
-    height: theme.selfcommunity.user.avatar.sizeSmall,
-    backgroundColor: theme.palette.common.white,
-    border: `2px solid ${theme.palette.background.paper}`
-  }));
 
   // STATE
   const {scUser, setSCUser} = useSCFetchUser({id: userId, user});
@@ -211,11 +182,8 @@ export default function User(inProps: UserProps): JSX.Element {
       className={classNames(classes.root, className)}
       ButtonBaseProps={{component: Link, to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, scUser)}}
       image={
-        showReaction ? (
-          <Badge
-            overlap="circular"
-            anchorOrigin={{vertical: 'bottom', horizontal: 'right'}}
-            badgeContent={<SmallAvatar alt={reaction.label} src={reaction.image} />}>
+        badgeContent ? (
+          <Badge overlap="circular" anchorOrigin={{vertical: 'bottom', horizontal: 'right'}} badgeContent={badgeContent}>
             <Avatar alt={scUser.username} src={scUser.avatar} className={classes.avatar} />
           </Badge>
         ) : (
@@ -226,7 +194,11 @@ export default function User(inProps: UserProps): JSX.Element {
             anchorOrigin={{vertical: 'top', horizontal: 'right'}}
             badgeContent={
               preferences ? (
-                <SmallAvatar alt={preferences[SCPreferences.STAFF_STAFF_BADGE_LABEL]} src={preferences[SCPreferences.STAFF_STAFF_BADGE_ICON]} />
+                <Avatar
+                  className={classes.staffBadge}
+                  alt={preferences[SCPreferences.STAFF_STAFF_BADGE_LABEL]}
+                  src={preferences[SCPreferences.STAFF_STAFF_BADGE_ICON]}
+                />
               ) : null
             }>
             <Avatar alt={scUser.username} src={scUser.avatar} className={classes.avatar} />

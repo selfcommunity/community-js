@@ -82,29 +82,12 @@ const Component = {
         alignItems: 'center',
         color: theme.palette.primary.main,
         marginTop: 0,
+        position: 'relative',
         '& .SCCommentObject-activity-at': {
           color: 'inherit',
           textDecoration: 'none',
           '&:hover': {
             textDecoration: 'underline'
-          }
-        },
-        '& .SCCommentObject-vote': {
-          color: 'inherit',
-          padding: theme.spacing(1),
-          fontSize: '1.571rem',
-          minWidth: 0,
-          borderRadius: '50%'
-        },
-        '& .SCCommentObject-reaction': {
-          color: 'inherit',
-          padding: theme.spacing(1),
-          fontSize: '1.571rem',
-          minWidth: 0,
-          borderRadius: '50%',
-          '& img': {
-            width: '1em',
-            height: '1em'
           }
         },
         '& .SCCommentObject-reply': {
@@ -114,11 +97,10 @@ const Component = {
           padding: theme.spacing(1),
           textTransform: 'capitalize'
         },
-        '& .SCCommentObjectVotes-root .SCCommentObjectVotes-btnViewVotes': {
-          color: 'inherit',
-          padding: theme.spacing(1),
-          marginTop: theme.spacing(-2.5),
-          fontSize: '1.571rem'
+        '& .SCCommentObject-vote-audience': {
+          position: 'absolute',
+          right: 0,
+          top: 0
         }
       }
     })

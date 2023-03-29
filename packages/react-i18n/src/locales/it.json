@@ -594,6 +594,17 @@
 
   "ui.consentSolutionButton.viewStateButton": "Vedi il tuo stato di accettazione",
 
+  "ui.voteButton.voteDown": "Rimuovi il tuo like",
+  "ui.voteButton.voteUp": "Mi piace",
+
+  "ui.voteAudienceButton.votedByMe": "Tu + {total}",
+  "ui.voteAudienceButton.votedOnlyByMe": "Solo tu",
+  "ui.voteAudienceButton.votes": "{total, plural, =0 {# Voti} one {# Voto} other {# Voti}}",
+
+  "ui.voteAudienceButton.dialog.title": "Voti",
+  "ui.voteAudienceButton.dialog.tab.all": "Tutti",
+  "ui.voteAudienceButton.dialog.end": "Non ci sono altri votanti",
+
   "templates.userProfile.dateJoined": "Iscritto da {date}",
   "templates.userProfile.edit": "Modifica",
   "templates.userProfile.moderate": "Modera utente",

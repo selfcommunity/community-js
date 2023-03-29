@@ -2,12 +2,12 @@ import React, {useMemo, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {LoadingButton, LoadingButtonProps} from '@mui/lab';
 import classNames from 'classnames';
-import {SCCommentType, SCContributionType, SCFeedObjectType, SCFeedObjectTypologyType, SCReactionType} from '@selfcommunity/types';
+import {SCCommentType, SCContributionType, SCFeedObjectType, SCReactionType} from '@selfcommunity/types';
 import {useThemeProps} from '@mui/system';
 import Icon from '@mui/material/Icon';
-import {AutocompleteProps, IconButton, Paper, Popper, Tooltip} from '@mui/material';
-import {defineMessages, useIntl} from 'react-intl';
+import {IconButton, Paper, Popper, Tooltip} from '@mui/material';
 import {SCUserContextType, useSCFetchVote, useSCUser} from '@selfcommunity/react-core';
+import {FormattedMessage} from 'react-intl';
 
 const PREFIX = 'SCVoteButton';
 
@@ -60,36 +60,13 @@ export interface VoteButtonProps extends Pick<LoadingButtonProps, Exclude<keyof 
   [p: string]: any;
 }
 
-const messages = defineMessages({
-  voteUp: {
-    id: 'ui.feedObject.vote.voteUp',
-    defaultMessage: 'ui.feedObject.vote.voteUp'
-  },
-  voteDown: {
-    id: 'ui.feedObject.vote.voteDown',
-    defaultMessage: 'ui.feedObject.vote.voteDown'
-  },
-  votes: {
-    id: 'ui.feedObject.vote.votes',
-    defaultMessage: 'ui.feedObject.vote.votes'
-  },
-  votedByMe: {
-    id: 'ui.feedObject.vote.votedByMe',
-    defaultMessage: 'ui.feedObject.votedByMe.you'
-  },
-  votedByOnlyMe: {
-    id: 'ui.feedObject.vote.votedByOnlyMe',
-    defaultMessage: 'ui.feedObject.votedByOnlyMe.you'
-  }
-});
-
 /**
  * > API documentation for the Community-JS Vote Button component. Learn about the available props and the CSS API.
 
  #### Import
 
  ```jsx
- import {VoteButton} from '@selfcommunity/react-ui';
+ import {VoteAudienceButton} from '@selfcommunity/react-ui';
  ```
 
  #### Component Name
@@ -142,13 +119,12 @@ export default function VoteButton(inProps: VoteButtonProps): JSX.Element {
   };
 
   // HOOKS
-  const {isLoading, isVoting, contributionVoted, contributionReaction, contributionReactionsCount, reactions, handleVote, error} = useSCFetchVote({
+  const {isLoading, isVoting, contributionVoted, contributionReaction, reactions, handleVote, error} = useSCFetchVote({
     id: contributionId,
     contributionType,
     contribution,
     onVote: handleVoteDone
   });
-  const intl = useIntl();
 
   // MEMO
   const rootProps = useMemo(() => {
@@ -193,7 +169,14 @@ export default function VoteButton(inProps: VoteButtonProps): JSX.Element {
       {reactions.default ? (
         button
       ) : (
-        <Tooltip title={contributionVoted ? intl.formatMessage(messages.voteDown) : intl.formatMessage(messages.voteUp)}>
+        <Tooltip
+          title={
+            contributionVoted ? (
+              <FormattedMessage id="ui.voteButton.voteDown" defaultMessage="ui.voteButton.voteDown" />
+            ) : (
+              <FormattedMessage id="ui.voteButton.voteUp" defaultMessage="ui.voteButton.voteUp" />
+            )
+          }>
           <span>{button}</span>
         </Tooltip>
       )}

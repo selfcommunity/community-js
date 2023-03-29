@@ -399,7 +399,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
     setCurrentActionLoading(SUSPEND_NOTIFICATION_CONTRIBUTION);
     performSuspendNotification()
       .then((data) => {
-        const _feedObj = Object.assign(feedObj, {suspended: !feedObj.suspended});
+        const _feedObj = Object.assign({}, feedObj, {suspended: !feedObj.suspended});
         setFeedObj(_feedObj);
         onSuspendNotificationContribution && onSuspendNotificationContribution(_feedObj);
         setCurrentActionLoading(null);
@@ -722,7 +722,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
         setCurrentActionLoading(RESTORE_CONTRIBUTION);
         performDeleteContribution()
           .then((data) => {
-            setFeedObj(Object.assign(feedObj, {deleted: true}));
+            setFeedObj(Object.assign({}, feedObj, {deleted: true}));
             onDeleteContribution && onDeleteContribution(contributionObj);
             performPostConfirmAction(true);
           })
@@ -734,7 +734,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
         setCurrentActionLoading(RESTORE_CONTRIBUTION);
         performRestoreContribution()
           .then((data) => {
-            setFeedObj(Object.assign(feedObj, {deleted: false}));
+            setFeedObj(Object.assign({}, feedObj, {deleted: false}));
             onRestoreContribution && onRestoreContribution(contributionObj);
             performPostConfirmAction(true);
           })
@@ -748,7 +748,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
           .then((data) => {
             setHideType(hideType === hideFlagType ? null : hideFlagType);
             setHideFlagType(null);
-            setFeedObj(Object.assign(feedObj, {collapsed: !feedObj.collapsed}));
+            setFeedObj(Object.assign({}, feedObj, {collapsed: !feedObj.collapsed}));
             onHideContribution && onHideContribution(contributionObj);
             performPostConfirmAction(true);
           })
@@ -762,7 +762,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
           .then((data) => {
             setDeleteType(deleteType === deleteFlagType ? null : deleteFlagType);
             setDeleteFlagType(null);
-            setFeedObj(Object.assign(feedObj, {deleted: !feedObj.deleted}));
+            setFeedObj(Object.assign({}, feedObj, {deleted: !feedObj.deleted}));
             onDeleteContribution && onDeleteContribution(contributionObj);
             performPostConfirmAction(true);
           })

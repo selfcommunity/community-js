@@ -9,6 +9,12 @@ const Component = {
       minWidth: 0,
       '& .MuiIcon-root': {
         fontSize: '1.571rem'
+      },
+      '&.MuiButton-sizeSmall': {
+        padding: theme.spacing(0.5),
+        '& .MuiIcon-root': {
+          fontSize: '1rem'
+        }
       }
     })
   }

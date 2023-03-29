@@ -90,6 +90,7 @@ import SCUserInfo from './components/SCUserInfo';
 import SCUserCounters from './components/SCUserCounters';
 import SCUserProfileEdit from './components/SCUserProfileEdit';
 import SCVoteButton from './components/SCVoteButton';
+import SCVoteAudienceButton from './components/SCVoteAudienceButton';
 
 /**
  * Style fragments - Imports - End
@@ -219,6 +220,7 @@ const theme = {
     SCUserProfileTemplate,
     SCVoteAction,
     SCVoteButton,
+    SCVoteAudienceButton,
     SCWidget,
     SCPrivateMessageSnippetItem,
     SCPrivateMessageSnippets,

@@ -593,6 +593,17 @@
 
   "ui.consentSolutionButton.viewStateButton": "See your acceptance status",
 
+  "ui.voteButton.voteDown": "Unlike this contribute",
+  "ui.voteButton.voteUp": "Like this contribute",
+
+  "ui.voteAudienceButton.votedByMe": "You + {total}",
+  "ui.voteAudienceButton.votedOnlyByMe": "Only you",
+  "ui.voteAudienceButton.votes": "{total, plural, =0 {# Likes} one {# Like} other {# Likes}}",
+
+  "ui.voteAudienceButton.dialog.title": "Votes",
+  "ui.voteAudienceButton.dialog.tab.all": "All",
+  "ui.voteAudienceButton.dialog.end": "No more votes left",
+
   "templates.userProfile.dateJoined": "Joined {date}",
   "templates.userProfile.edit": "Edit",
   "templates.userProfile.moderate": "Moderate user",

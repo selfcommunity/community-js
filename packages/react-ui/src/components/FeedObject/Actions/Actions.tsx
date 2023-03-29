@@ -5,7 +5,7 @@ import Vote, {VoteProps} from './Vote';
 import Comment, {CommentProps} from './Comment';
 import Share, {ShareProps} from './Share';
 import {SCContributionType, SCFeedObjectType} from '@selfcommunity/types';
-import {SCFeatures, useSCFetchFeedObject, useSCPreferences} from '@selfcommunity/react-core';
+import {useSCFetchFeedObject} from '@selfcommunity/react-core';
 import {SCFeedObjectTemplateType} from '../../../types/feedObject';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
@@ -121,12 +121,8 @@ export default function Actions(inProps: ActionsProps): JSX.Element {
     ShareActionProps = {}
   } = props;
 
-  // PREFERENCES
-  const scPreferences = useSCPreferences();
-
   // STATE
-  const {obj, setObj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
-  const reactionsEnabled = scPreferences.features.includes(SCFeatures.REACTION);
+  const {obj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
 
   if (!obj) {
     return null;
@@ -153,7 +149,7 @@ export default function Actions(inProps: ActionsProps): JSX.Element {
     <Root container className={classNames(classes.root, className)}>
       {!hideVoteAction && (
         <Grid item xs={columnWidth} className={classes.action}>
-          <Vote feedObject={obj} feedObjectType={feedObjectType} {...VoteActionProps} />
+          <Vote feedObjectId={feedObjectId || obj.id} feedObject={obj} feedObjectType={feedObjectType || obj.type} {...VoteActionProps} />
         </Grid>
       )}
       {!hideCommentAction && (
