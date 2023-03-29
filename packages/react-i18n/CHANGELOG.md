@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.2...@selfcommunity/react-i18n@0.5.0-alpha.3) (2023-03-29)
+
+
+### Performance Improvements
+
+* added translation for media uploader error ([9261179](https://github.com/selfcommunity/community-js/commit/9261179ef57276caa47195c9a5ba19db285dbac5))
+* Refactor vote audience component ([ec30368](https://github.com/selfcommunity/community-js/commit/ec30368a6e4a606e28b4be4efd2fd692a75b740a))
+* Refactor votes on notifications ([9c050ad](https://github.com/selfcommunity/community-js/commit/9c050ad6006bc1d9b60e3012abbfa7450a1f52d7))
+
+
+
+
+
 # [0.5.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.1...@selfcommunity/react-i18n@0.5.0-alpha.2) (2023-03-22)
 
 

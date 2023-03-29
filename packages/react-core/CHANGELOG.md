@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.7...@selfcommunity/react-core@0.4.0-alpha.8) (2023-03-29)
+
+
+### Bug Fixes
+
+* fixed broken build ([6c90723](https://github.com/selfcommunity/community-js/commit/6c907239387ec806c968c03de02aaed70a11fce6))
+
+
+### Performance Improvements
+
+* Refactor types of Contribution.tsx ([b6fb690](https://github.com/selfcommunity/community-js/commit/b6fb6900745cd7d33b104f524eba265e48973c6a))
+* Refactor vote audience component ([ec30368](https://github.com/selfcommunity/community-js/commit/ec30368a6e4a606e28b4be4efd2fd692a75b740a))
+* Refactor vote components ([9862018](https://github.com/selfcommunity/community-js/commit/9862018f9ed71d2f303a1bf7b71e402575591fad))
+
+
+
+
+
 # [0.4.0-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.6...@selfcommunity/react-core@0.4.0-alpha.7) (2023-03-23)
 
 

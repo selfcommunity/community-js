@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.1-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.4.1-alpha.9...@selfcommunity/types@0.4.1-alpha.10) (2023-03-29)
+
+
+### Performance Improvements
+
+* Refactor types of Contribution.tsx ([b6fb690](https://github.com/selfcommunity/community-js/commit/b6fb6900745cd7d33b104f524eba265e48973c6a))
+
+
+
+
+
 ## [0.4.1-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.4.1-alpha.8...@selfcommunity/types@0.4.1-alpha.9) (2023-02-20)
 
 
