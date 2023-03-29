@@ -1,6 +1,7 @@
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
+      height: '100%',
       '& .MuiCardContent-root': {
         padding: 0,
         '& .MuiList-root .MuiListItem-root': {
