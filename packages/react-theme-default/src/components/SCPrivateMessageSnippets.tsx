@@ -3,8 +3,10 @@ import {alpha} from '@mui/system';
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
-      height: theme.spacing(103.5),
-      maxHeight: 'inherit',
+      [theme.breakpoints.up('sm')]: {
+        height: theme.spacing(103.5),
+        maxHeight: 'inherit'
+      },
       '& .MuiCardContent-root': {
         display: 'flex',
         flexDirection: 'column',

@@ -1,15 +1,12 @@
-import React, {useContext, useMemo, useRef, useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Widget, {WidgetProps} from '../Widget';
-import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {Avatar, Box, Button, CardContent, CardProps, Divider, Tooltip, Typography} from '@mui/material';
+import {FormattedMessage} from 'react-intl';
+import {Avatar, Box, Button, CardContent, CardProps, Typography} from '@mui/material';
 import Bullet from '../../shared/Bullet';
 import classNames from 'classnames';
-import Votes from './Votes';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import CommentObjectSkeleton from './Skeleton';
-import {LoadingButton} from '@mui/lab';
-import Icon from '@mui/material/Icon';
 import {SCCommentsOrderBy} from '../../types/comments';
 import ReplyCommentObject from './ReplyComment';
 import ContributionActionsMenu from '../../shared/ContributionActionsMenu';
@@ -19,8 +16,8 @@ import {useSnackbar} from 'notistack';
 import {useThemeProps} from '@mui/system';
 import CommentsObject from '../CommentsObject';
 import BaseItem from '../../shared/BaseItem';
-import {SCCommentType, SCCommentTypologyType, SCFeedObjectType, SCFeedObjectTypologyType, SCReactionType, SCTagType} from '@selfcommunity/types';
-import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
+import {SCCommentType, SCContributionType, SCFeedObjectType} from '@selfcommunity/types';
+import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
 import {CacheStrategies, Logger, LRUCache} from '@selfcommunity/utils';
 import {
   Link,
@@ -35,29 +32,10 @@ import {
   useSCContext,
   useSCFetchCommentObject,
   useSCFetchCommentObjects,
-  useSCRouting,
-  SCFeatures,
-  useSCPreferences,
-  useSCFetchReactions
+  useSCRouting
 } from '@selfcommunity/react-core';
-import Reactions from './Reactions';
-import ReactionsPopover from '../FeedObject/Actions/Reaction/ReactionsPopover';
-import {reactionActionTypes} from '../FeedObject/Actions/Reaction/Reaction';
-
-const messages = defineMessages({
-  reply: {
-    id: 'ui.commentObject.reply',
-    defaultMessage: 'ui.commentObject.reply'
-  },
-  voteUp: {
-    id: 'ui.commentObject.voteUp',
-    defaultMessage: 'ui.commentObject.voteUp'
-  },
-  voteDown: {
-    id: 'ui.commentObject.voteDown',
-    defaultMessage: 'ui.commentObject.voteDown'
-  }
-});
+import VoteButton from '../VoteButton';
+import VoteAudienceButton from '../VoteAudienceButton';
 
 const PREFIX = 'SCCommentObject';
 
@@ -69,14 +47,11 @@ const classes = {
   content: `${PREFIX}-content`,
   author: `${PREFIX}-author`,
   textContent: `${PREFIX}-text-content`,
-  btnVotes: `${PREFIX}-btn-votes`,
-  votes: `${PREFIX}-votes`,
   commentActionsMenu: `${PREFIX}-comment-actions-menu`,
   deleted: `${PREFIX}-deleted`,
   activityAt: `${PREFIX}-activity-at`,
   vote: `${PREFIX}-vote`,
-  voted: `${PREFIX}-voted`,
-  reaction: `${PREFIX}-reaction`,
+  voteAudience: `${PREFIX}-vote-audience`,
   reply: `${PREFIX}-reply`,
   contentSubSection: `${PREFIX}-comment-sub-section`
 };
@@ -120,9 +95,9 @@ export interface CommentObjectProps {
 
   /**
    * Type of feed object
-   * @default SCFeedObjectTypologyType.POST
+   * @default SCContributionType.POST
    */
-  feedObjectType?: SCFeedObjectTypologyType;
+  feedObjectType?: Exclude<SCContributionType, SCContributionType.COMMENT>;
 
   /**
    * comments per page (latest_comments)
@@ -216,8 +191,8 @@ export interface CommentObjectProps {
  |author|.SCCommentObject-author|Styles applied to the author section.|
  |content|.SCCommentObject-content|Styles applied to content section.|
  |textContent|.SCCommentObject-text-content|Styles applied to text content section.|
- |btnVotes|.SCCommentObject-btn-votes|Styles applied to the vote button element.|
- |votes|.SCCommentObject-votes|Styles applied to the votes section.|
+ |vote|.SCCommentObject-vote|Styles applied to the votes section.|
+ |btnVotes|.SCCommentObject-vote-audience|Styles applied to the votes audience section.|
  |commentActionsMenu|.SCCommentObject-comment-actions-menu|Styles applied to comment action menu element.|
  |deleted|.SCCommentObject-deleted|Styles applied to tdeleted element.|
  |activityAt|.SCCommentObject-activity-at|Styles applied to activity at section.|
@@ -239,7 +214,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
     commentObject,
     feedObjectId,
     feedObject,
-    feedObjectType = SCFeedObjectTypologyType.POST,
+    feedObjectType = SCContributionType.POST,
     commentReply,
     onOpenReply,
     onDelete,
@@ -256,23 +231,14 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
   const scContext: SCContextType = useSCContext();
   const scUserContext: SCUserContextType = useContext(SCUserContext);
   const scRoutingContext: SCRoutingContextType = useSCRouting();
-  const scPreferences = useSCPreferences();
   const {enqueueSnackbar} = useSnackbar();
-  const intl = useIntl();
 
   // STATE
   const {obj, setObj} = useSCFetchCommentObject({id: commentObjectId, commentObject, cacheStrategy});
-  const [loadingVote, setLoadingVote] = useState(false);
   const [replyComment, setReplyComment] = useState<SCCommentType>(commentReply);
   const [isReplying, setIsReplying] = useState<boolean>(false);
   const [isSavingComment, setIsSavingComment] = useState<boolean>(false);
   const [editComment, setEditComment] = useState<SCCommentType>(null);
-  const {reactions, isLoading} = useSCFetchReactions();
-  const [hovered, setHovered] = useState<boolean>(false);
-  const popoverAnchor = useRef(null);
-  const [timeout, setModalTimeout] = useState(null);
-  const defaultReactionId = 1;
-  const defaultReaction = reactions.find((r) => r.id === defaultReactionId);
   const commentsObject = useSCFetchCommentObjects({
     id: feedObjectId,
     feedObject,
@@ -281,20 +247,13 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
     parent: commentObject ? commentObject.id : commentObjectId,
     cacheStrategy
   });
-  const reactionsEnabled = scPreferences.features.includes(SCFeatures.REACTION);
-  const [reaction, setReaction] = useState<SCReactionType>(null);
-  const [_reactionsList, setReactionsList] = useState<[] | any>(obj?.reactions_count);
 
   // HANDLERS
-  function handleMouseEnter() {
-    timeout && !hovered && clearTimeout(timeout);
-    setModalTimeout(setTimeout(() => setHovered(true), 1000));
-  }
+  const handleVoteSuccess = (contribution: SCFeedObjectType | SCCommentType) => {
+    setObj(contribution as SCCommentType);
+    onVote && onVote(contribution as SCCommentType);
+  };
 
-  function handleMouseLeave() {
-    timeout && clearTimeout(timeout);
-    setModalTimeout(setTimeout(() => setHovered(false), 1000));
-  }
   /**
    * Update state object
    * @param newObj
@@ -304,62 +263,6 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
     setObj(newObj);
     const contributionType = getContributionType(obj);
     LRUCache.deleteKeysWithPrefix(SCCache.getCommentObjectsCachePrefixKeys(newObj[contributionType].id, contributionType));
-  }
-  function dispatchReactionsActions(type: string, reactionObj) {
-    const list = [..._reactionsList];
-    let updatedList;
-    const index = list.findIndex((r) => r.reaction.id === reactionObj.id);
-    const inList = list.length ? list.some((o) => o.reaction.id === reactionObj.id) : false;
-    switch (type) {
-      case reactionActionTypes.REMOVE:
-        if (inList && list[index].count > 1) {
-          list[index].count = list[index].count - 1;
-          updatedList = list;
-        } else {
-          list.splice(index, 1);
-          updatedList = list;
-        }
-        return updatedList;
-      case reactionActionTypes.ADD:
-        if (inList) {
-          list[index].count = list[index].count + 1;
-          updatedList = list;
-        } else {
-          updatedList = [...list, {reaction: reactionObj, count: 1}];
-        }
-        return updatedList;
-      case reactionActionTypes.CHANGE:
-        const i = list.findIndex((r) => r.reaction.id === obj.reaction.id);
-        if (!inList) {
-          list[i].reaction = list[i].count === 1 ? reactionObj : list[i].reaction;
-          list[i].count = list[i].count >= 1 ? list[i].count - 1 : list[i].count;
-          setReactionsList(dispatchReactionsActions(reactionActionTypes.ADD, reactionObj));
-        } else {
-          const n = dispatchReactionsActions(reactionActionTypes.REMOVE, obj.reaction);
-          const newIndex = n.findIndex((r) => r.reaction.id === reactionObj.id);
-          n[newIndex].count = n[newIndex].count + 1;
-          setReactionsList(n);
-        }
-        break;
-    }
-  }
-
-  /**
-   * Handles reaction actions(add, update, delete);
-   * @param voted
-   * @param r
-   */
-  function handleReactions(voted, r) {
-    if (voted) {
-      const forRemoval = obj.reaction.id === r.id;
-      if (forRemoval) {
-        setReactionsList(dispatchReactionsActions(reactionActionTypes.REMOVE, obj.reaction));
-      } else {
-        dispatchReactionsActions(reactionActionTypes.CHANGE, r);
-      }
-    } else {
-      setReactionsList(dispatchReactionsActions(reactionActionTypes.ADD, r));
-    }
   }
 
   /**
@@ -381,82 +284,15 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
   }
 
   /**
-   * Render vote action
-   * @param comment
-   */
-  function renderActionVote(comment) {
-    return (
-      <LoadingButton
-        variant="text"
-        className={classNames(classes.vote, {[classes.voted]: comment.voted})}
-        onClick={() => vote(comment)}
-        disabled={loadingVote}>
-        {comment.voted ? (
-          <Tooltip title={<FormattedMessage id={'ui.commentObject.voteDown'} defaultMessage={'ui.commentObject.voteDown'} />}>
-            <Icon>thumb_up_alt</Icon>
-          </Tooltip>
-        ) : (
-          <Tooltip title={<FormattedMessage id={'ui.commentObject.voteUp'} defaultMessage={'ui.commentObject.voteUp'} />}>
-            <Icon>thumb_up_off_alt</Icon>
-          </Tooltip>
-        )}
-      </LoadingButton>
-    );
-  }
-  /**
-   * Render reaction action
-   */
-  function renderActionReaction(comment) {
-    return (
-      <React.Fragment>
-        <LoadingButton
-          ref={popoverAnchor}
-          onClick={() => addReaction(comment, obj.reaction && obj.voted ? obj.reaction : defaultReaction)}
-          onTouchStart={handleMouseEnter}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-          onTouchMove={handleMouseLeave}
-          loading={loadingVote}
-          disabled={!obj}
-          className={classNames(classes.reaction, {[classes.voted]: comment.voted})}>
-          {scUserContext.user && obj.voted && obj.reaction ? (
-            <img alt={obj.reaction.label} src={obj.reaction.image} />
-          ) : (
-            <Icon>thumb_up_off_alt</Icon>
-          )}
-        </LoadingButton>
-        <ReactionsPopover
-          anchorEl={popoverAnchor.current}
-          open={hovered}
-          onOpen={handleMouseEnter}
-          onClose={handleMouseLeave}
-          reactions={reactions}
-          onReactionSelection={(r) => handleReactionVote(comment, r)}
-        />
-      </React.Fragment>
-    );
-  }
-
-  /**
    * Render Reply action
    * @param comment
    */
   function renderActionReply(comment) {
     return (
       <Button className={classes.reply} variant="text" onClick={() => reply(comment)}>
-        {intl.formatMessage(messages.reply)}
+        <FormattedMessage id="ui.commentObject.reply" defaultMessage="ui.commentObject.reply" />
       </Button>
     );
-  }
-
-  /**
-   * Render Votes counter
-   */
-  function renderVotes(comment) {
-    if (reactionsEnabled) {
-      return <Reactions commentObject={comment} reactionsList={_reactionsList} />;
-    }
-    return <Votes commentObject={comment} />;
   }
 
   /**
@@ -471,130 +307,6 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
       onOpenReply && onOpenReply(comment);
     }
   }
-
-  /**
-   * Perform vote comment
-   */
-  const performVoteComment = useMemo(
-    () => (comment) => {
-      return http
-        .request({
-          url: Endpoints.Vote.url({type: SCCommentTypologyType, id: comment.id}),
-          method: Endpoints.Vote.method
-        })
-        .then((res: HttpResponse<any>) => {
-          if (res.status >= 300) {
-            return Promise.reject(res);
-          }
-          return Promise.resolve(res.data);
-        });
-    },
-    [obj]
-  );
-
-  /**
-   * Performs vote with reactions
-   */
-  const performReaction = useMemo(
-    () => (reaction) => {
-      return http
-        .request({
-          url: Endpoints.Vote.url({type: SCCommentTypologyType, id: obj.id}),
-          method: Endpoints.Vote.method,
-          params: {
-            reaction: reaction.id
-          }
-        })
-        .then((res: HttpResponse<SCTagType>) => {
-          if (res.status >= 300) {
-            return Promise.reject(res);
-          }
-          return Promise.resolve(res.data);
-        });
-    },
-    [obj]
-  );
-
-  /**
-   * Handle vote comment
-   * @param comment
-   */
-  function vote(comment) {
-    if (!scUserContext.user) {
-      scContext.settings.handleAnonymousAction();
-    } else {
-      if (UserUtils.isBlocked(scUserContext.user)) {
-        enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
-          variant: 'warning',
-          autoHideDuration: 3000
-        });
-      } else {
-        setLoadingVote(true);
-        performVoteComment(comment)
-          .then((data) => {
-            const newObj = obj;
-            obj.voted = !obj.voted;
-            obj.vote_count = obj.vote_count - (obj.voted ? -1 : 1);
-            updateObject(obj);
-            setLoadingVote(false);
-            onVote && onVote(comment);
-          })
-          .catch((error) => {
-            Logger.error(SCOPE_SC_UI, error);
-            enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
-              variant: 'error',
-              autoHideDuration: 3000
-            });
-          });
-      }
-    }
-  }
-
-  /**
-   * Performs reaction voting
-   */
-  function addReaction(comment, reaction) {
-    handleMouseLeave();
-    setReaction(reaction);
-    if (scUserContext.user) {
-      if (UserUtils.isBlocked(scUserContext.user)) {
-        enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
-          variant: 'warning',
-          autoHideDuration: 3000
-        });
-      } else {
-        if (obj && !loadingVote) {
-          setLoadingVote(true);
-          performReaction(reaction)
-            .then((data) => {
-              setLoadingVote(false);
-              const newObj = Object.assign({}, obj, {
-                voted: obj.voted && obj.reaction.id !== reaction.id ? true : !obj.voted,
-                vote_count:
-                  obj.voted && obj.reaction.id === reaction.id
-                    ? obj.vote_count - 1
-                    : obj.voted && obj.reaction.id !== reaction.id
-                    ? obj.vote_count
-                    : obj.vote_count + 1,
-                reaction: reaction
-              });
-              setObj(newObj);
-              handleReactions(obj.voted, reaction);
-              onVote && onVote(comment);
-            })
-            .catch((error) => {
-              Logger.error(SCOPE_SC_UI, error);
-            });
-        }
-      }
-    } else {
-      scContext.settings.handleAnonymousAction();
-    }
-  }
-
-  const handleReactionVote = (comment, r) => {
-    addReaction(comment, r);
-  };
 
   /**
    * Perform reply
@@ -828,10 +540,23 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
                 <Box component="span" className={classes.contentSubSection}>
                   {renderTimeAgo(comment)}
                   <Bullet />
-                  {reactionsEnabled ? renderActionReaction(comment) : renderActionVote(comment)}
+                  <VoteButton
+                    size="small"
+                    className={classes.vote}
+                    contributionId={comment.id}
+                    contributionType={SCContributionType.COMMENT}
+                    contribution={comment}
+                    onVote={handleVoteSuccess}
+                  />
                   <Bullet />
                   {renderActionReply(comment)}
-                  {renderVotes(comment)}
+                  <VoteAudienceButton
+                    size="small"
+                    className={classes.voteAudience}
+                    contributionId={comment.id}
+                    contributionType={SCContributionType.COMMENT}
+                    contribution={comment}
+                  />
                 </Box>
               </>
             }

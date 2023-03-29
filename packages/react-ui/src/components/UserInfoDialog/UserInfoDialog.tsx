@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import UserInfo, { UserInfoProps, UserInfoSkeleton } from '../UserInfo';
 import BaseDialog, {BaseDialogProps} from '../../shared/BaseDialog';
-import {SCUserType} from '@selfcommunity/types/src/types';
+import {SCUserType} from '@selfcommunity/types';
 import {useSCFetchUser} from '@selfcommunity/react-core';
 import {FormattedMessage} from 'react-intl';
 

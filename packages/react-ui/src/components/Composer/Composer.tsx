@@ -1,8 +1,8 @@
 import React, {forwardRef, ReactNode, SyntheticEvent, useContext, useEffect, useMemo, useReducer, useState} from 'react';
 import {
   SCCategoryType,
+  SCContributionType,
   SCFeedDiscussionType,
-  SCFeedObjectTypologyType,
   SCFeedPostType,
   SCFeedStatusType,
   SCMediaType,
@@ -29,7 +29,6 @@ import {
   Avatar,
   Badge,
   Box,
-  Button,
   Chip,
   Dialog,
   DialogActions,
@@ -272,7 +271,7 @@ export interface ComposerTypeMap<P = {}, D extends React.ElementType = 'div'> {
        * Type of feed object
        * @default null
        */
-      feedObjectType?: SCFeedObjectTypologyType;
+      feedObjectType?: Exclude<SCContributionType, SCContributionType.COMMENT>;
       /**
        * Feed object
        * @default null

@@ -271,7 +271,6 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
    * Fetches thread
    */
   function fetchThread() {
-    setLoadingMessageObjs(false);
     if (userObj && typeof userObj !== 'string') {
       const _userObjId = isNumber ? userObj : messageReceiver(userObj, authUserId);
       http
@@ -428,7 +427,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
       PubSub.unsubscribe(refreshSubscription.current);
     };
   }, [messageObjs]);
-
+  console.log(loadingMessageObjs);
   /**
    * Renders thread component
    * @return {JSX.Element}

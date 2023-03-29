@@ -1,23 +1,24 @@
 import React, {useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Box, Grid, Hidden} from '@mui/material';
-import {StickyBox, FeedSidebarProps} from '@selfcommunity/react-ui';
+import {
+  CommentsFeedObject,
+  CommentsFeedObjectProps,
+  CustomAdv,
+  FeedObject,
+  FeedObjectProps,
+  FeedSidebarProps,
+  RelatedFeedObjects,
+  RelatedFeedObjectsProps,
+  SCFeedObjectTemplateType,
+  StickyBox
+} from '@selfcommunity/react-ui';
 import FeedObjectDetailSkeleton from './Skeleton';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {scrollIntoView} from 'seamless-scroll-polyfill';
 import {FormattedMessage} from 'react-intl';
-import {SCCommentType, SCCustomAdvPosition, SCFeedObjectType, SCFeedObjectTypologyType} from '@selfcommunity/types';
-import {
-  CommentsFeedObjectProps,
-  CustomAdv,
-  FeedObject,
-  FeedObjectProps,
-  RelatedFeedObjects,
-  SCFeedObjectTemplateType,
-  CommentsFeedObject,
-  RelatedFeedObjectsProps
-} from '@selfcommunity/react-ui';
+import {SCCommentType, SCContributionType, SCCustomAdvPosition, SCFeedObjectType} from '@selfcommunity/types';
 import {
   SCPreferences,
   SCPreferencesContextType,
@@ -37,8 +38,7 @@ const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-}));
+})(({theme}) => ({}));
 
 export interface FeedObjectDetailProps {
   /**
@@ -67,9 +67,9 @@ export interface FeedObjectDetailProps {
 
   /**
    * Type of feed object
-   * @default SCFeedObjectTypologyType.POST
+   * @default SCContributionType.POST
    */
-  feedObjectType?: SCFeedObjectTypologyType;
+  feedObjectType?: Exclude<SCContributionType, SCContributionType.COMMENT>;
 
   /**
    * Props to spread to single feed object

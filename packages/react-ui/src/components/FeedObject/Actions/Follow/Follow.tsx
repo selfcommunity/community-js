@@ -1,5 +1,5 @@
 import React, {useMemo, useState} from 'react';
-import {FormattedMessage, useIntl} from 'react-intl';
+import {FormattedMessage} from 'react-intl';
 import LoadingButton from '@mui/lab/LoadingButton';
 import {styled} from '@mui/material/styles';
 import {Box, Tooltip} from '@mui/material';
@@ -7,8 +7,8 @@ import {SCOPE_SC_UI} from '../../../../constants/Errors';
 import classNames from 'classnames';
 import {useSnackbar} from 'notistack';
 import Icon from '@mui/material/Icon';
-import {SCFeedObjectType, SCFeedObjectTypologyType, SCTagType} from '@selfcommunity/types';
-import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
+import {SCContributionType, SCFeedObjectType, SCTagType} from '@selfcommunity/types';
+import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
 import {SCContextType, SCUserContextType, useSCContext, useSCFetchFeedObject, useSCUser} from '@selfcommunity/react-core';
 import {useThemeProps} from '@mui/system';
@@ -51,7 +51,7 @@ export interface FollowProps {
    * Feed object type
    * @default 'post' type
    */
-  feedObjectType?: SCFeedObjectTypologyType;
+  feedObjectType?: Exclude<SCContributionType, SCContributionType.COMMENT>;
 
   /**
    * Handle follow object
@@ -80,7 +80,7 @@ export default function Follow(inProps: FollowProps): JSX.Element {
     className = null,
     feedObjectId = null,
     feedObject = null,
-    feedObjectType = SCFeedObjectTypologyType.POST,
+    feedObjectType = SCContributionType.POST,
     handleFollow,
     iconized = true,
     ...rest

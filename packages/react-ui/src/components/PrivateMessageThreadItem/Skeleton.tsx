@@ -13,9 +13,7 @@ const classes = {
   list: `${PREFIX}-list`
 };
 
-const Root = styled(ListItem)(({theme}) => ({
-  maxWidth: 700
-}));
+const Root = styled(ListItem)(({theme}) => ({}));
 /**
  * > API documentation for the Community-JS PrivateMessageThreadItem Skeleton component. Learn about the available props and the CSS API.
 
@@ -43,7 +41,7 @@ export default function PrivateMessageThreadItemSkeleton(props): JSX.Element {
     <Root className={classes.root} {...props}>
       <ListItemText
         sx={{display: 'flex', justifyContent: props.index % 2 === 0 ? 'flex-start' : 'flex-end'}}
-        primary={<Skeleton animation="wave" height={100} width={450} style={{borderRadius: theme.shape.borderRadius}} />}
+        primary={<Skeleton animation="wave" height={100} width={300} style={{borderRadius: theme.shape.borderRadius}} />}
       />
     </Root>
   );

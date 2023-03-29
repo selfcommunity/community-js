@@ -1,4 +1,4 @@
-import {SCContributionType, SCFlagTypeEnum} from '@selfcommunity/types/src/types';
+import {SCContributionType, SCFlagTypeEnum} from '@selfcommunity/types';
 import {BaseGetParams, BaseSearchParams} from './baseParams';
 
 /**

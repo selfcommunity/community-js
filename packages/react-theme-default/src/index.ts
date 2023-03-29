@@ -70,6 +70,7 @@ import SCNotification from './components/SCNotification';
 import SCContributionNotification from './components/SCContributionNotification';
 import SCSnippetNotificationsSkeleton from './components/SCSnippetNotificationsSkeleton';
 import SCPrivateMessageComponentSkeleton from './components/SCPrivateMessageComponentSkeleton';
+import SCPrivateMessageThreadSkeleton from './components/SCPrivateMessageThreadSkeleton';
 import SCLightbox from './components/SCLightbox';
 import SCFollowAction from './components/SCFollowAction';
 import SCReactionAction from './components/SCReactionAction';
@@ -88,6 +89,8 @@ import SCUserInfoDialog from './components/SCUserInfoDialog';
 import SCUserInfo from './components/SCUserInfo';
 import SCUserCounters from './components/SCUserCounters';
 import SCUserProfileEdit from './components/SCUserProfileEdit';
+import SCVoteButton from './components/SCVoteButton';
+import SCVoteAudienceButton from './components/SCVoteAudienceButton';
 
 /**
  * Style fragments - Imports - End
@@ -216,12 +219,15 @@ const theme = {
     SCUserProfileEdit,
     SCUserProfileTemplate,
     SCVoteAction,
+    SCVoteButton,
+    SCVoteAudienceButton,
     SCWidget,
     SCPrivateMessageSnippetItem,
     SCPrivateMessageSnippets,
     SCPrivateMessageThread,
     SCPrivateMessageEditor,
-    SCPrivateMessageComponentSkeleton
+    SCPrivateMessageComponentSkeleton,
+    SCPrivateMessageThreadSkeleton
   },
   selfcommunity: {
     user: {

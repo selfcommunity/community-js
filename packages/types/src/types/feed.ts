@@ -5,6 +5,7 @@ import {SCPollType} from './poll';
 import {SCMediaType} from './media';
 import {SCTagType} from './tag';
 import {SCReactionType} from './reaction';
+import { SCContributionType } from './contribution';
 
 /**
  * Typology of feed
@@ -15,15 +16,6 @@ export enum SCFeedTypologyType {
 }
 
 /**
- * Typology of feedObject
- */
-export enum SCFeedObjectTypologyType {
-  DISCUSSION = 'discussion',
-  POST = 'post',
-  STATUS = 'status'
-}
-
-/**
  * Interface SCFeedUnitType.
  * FeedUnit Schema.
  */
@@ -31,7 +23,7 @@ export interface SCFeedUnitType {
   /**
    * The type of the object, can be discussion, post or status
    */
-  type: SCFeedObjectTypologyType;
+  type: Exclude<SCContributionType, SCContributionType.COMMENT>;
 
   /**
    * Discussion object
@@ -213,7 +205,7 @@ export interface SCFeedObjectType {
   /**
    * Type: discussion, post, status
    */
-  type: SCFeedObjectTypologyType;
+  type: Exclude<SCContributionType, SCContributionType.COMMENT>;
 
   /**
    * Suspended notification

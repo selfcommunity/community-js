@@ -2,7 +2,7 @@ import Endpoints from '../../constants/Endpoints';
 import {AccountCreateParams, AccountRecoverParams, AccountResetParams, AccountSearchParams, AccountVerifyParams} from '../../types';
 import {apiRequest} from '../../utils/apiRequest';
 import {AxiosRequestConfig} from 'axios';
-import {SCUserType} from '@selfcommunity/types/src/types';
+import {SCUserType} from '@selfcommunity/types';
 
 export interface AccountApiClientInterface {
   create(data?: AccountCreateParams, config?: AxiosRequestConfig): Promise<SCUserType>;

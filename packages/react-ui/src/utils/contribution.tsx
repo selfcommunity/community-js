@@ -1,6 +1,6 @@
 import React from 'react';
 import {SCRoutes} from '@selfcommunity/react-core';
-import {SCCommentTypologyType, SCFeedObjectTypologyType} from '@selfcommunity/types';
+import {SCCommentTypologyType, SCContributionType} from '@selfcommunity/types';
 import {FormattedMessage} from 'react-intl';
 import {highlight} from './highlight';
 
@@ -9,12 +9,12 @@ import {highlight} from './highlight';
  * @param obj
  */
 export function getContributionType(obj) {
-  return SCFeedObjectTypologyType.DISCUSSION in obj
-    ? SCFeedObjectTypologyType.DISCUSSION
-    : SCFeedObjectTypologyType.POST in obj
-    ? SCFeedObjectTypologyType.POST
-    : SCFeedObjectTypologyType.STATUS in obj
-    ? SCFeedObjectTypologyType.STATUS
+  return SCContributionType.DISCUSSION in obj
+    ? SCContributionType.DISCUSSION
+    : SCContributionType.POST in obj
+    ? SCContributionType.POST
+    : SCContributionType.STATUS in obj
+    ? SCContributionType.STATUS
     : SCCommentTypologyType in obj
     ? SCCommentTypologyType
     : null;
@@ -25,12 +25,12 @@ export function getContributionType(obj) {
  * @param obj
  */
 export function getContribution(obj) {
-  return SCFeedObjectTypologyType.DISCUSSION in obj
-    ? obj[SCFeedObjectTypologyType.DISCUSSION]
-    : SCFeedObjectTypologyType.POST in obj
-    ? obj[SCFeedObjectTypologyType.POST]
-    : SCFeedObjectTypologyType.STATUS in obj
-    ? obj[SCFeedObjectTypologyType.STATUS]
+  return SCContributionType.DISCUSSION in obj
+    ? obj[SCContributionType.DISCUSSION]
+    : SCContributionType.POST in obj
+    ? obj[SCContributionType.POST]
+    : SCContributionType.STATUS in obj
+    ? obj[SCContributionType.STATUS]
     : SCCommentTypologyType in obj
     ? obj[SCCommentTypologyType]
     : null;
@@ -41,7 +41,7 @@ export function getContribution(obj) {
  * @param obj (Discussion, Post, Status, Comment)
  */
 export function getContributionSnippet(obj) {
-  if (obj.type === SCFeedObjectTypologyType.DISCUSSION) {
+  if (obj.type === SCContributionType.DISCUSSION) {
     return obj.summary ? <span dangerouslySetInnerHTML={{__html: obj.summary}}></span> : obj.title;
   } else {
     return obj.summary ? (
@@ -58,7 +58,7 @@ export function getContributionSnippet(obj) {
  * @param search (a search term)
  */
 export function getSearchContributionSnippet(obj, search) {
-  if (obj.type === SCFeedObjectTypologyType.DISCUSSION) {
+  if (obj.type === SCContributionType.DISCUSSION) {
     return obj.summary ? highlight(obj.summary, search) : highlight(obj.title, search);
   } else {
     return obj.summary ? (
@@ -100,11 +100,7 @@ export function getContributionRouteName(obj) {
 export function getRouteData(obj) {
   let data = {};
   if (obj) {
-    if (
-      obj.type === SCFeedObjectTypologyType.DISCUSSION ||
-      obj.type === SCFeedObjectTypologyType.POST ||
-      obj.type === SCFeedObjectTypologyType.STATUS
-    ) {
+    if (obj.type === SCContributionType.DISCUSSION || obj.type === SCContributionType.POST || obj.type === SCContributionType.STATUS) {
       data = {
         ...obj,
         contribution_type: obj.type,

@@ -2,7 +2,7 @@
  * IncubatorCreateParams interface
  */
 import {BaseSearchParams} from './baseParams';
-import {SCIncubatorStatusType} from '@selfcommunity/types/src/types';
+import {SCIncubatorStatusType} from '@selfcommunity/types';
 
 export interface IncubatorCreateParams {
   /**

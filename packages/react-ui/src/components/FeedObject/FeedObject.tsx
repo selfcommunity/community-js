@@ -33,8 +33,8 @@ import ReplyCommentObject, {ReplyCommentObjectProps} from '../CommentObject/Repl
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {useSnackbar} from 'notistack';
 import {CommentObjectProps} from '../CommentObject';
-import {SCCommentType, SCFeedObjectType, SCFeedObjectTypologyType, SCPollType} from '@selfcommunity/types';
-import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
+import {SCCommentType, SCContributionType, SCFeedObjectType, SCPollType} from '@selfcommunity/types';
+import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
 import {CacheStrategies, Logger, LRUCache} from '@selfcommunity/utils';
 import {VirtualScrollerItemProps} from '../../types/virtualScroller';
 import {
@@ -241,7 +241,7 @@ export interface FeedObjectProps extends CardProps, VirtualScrollerItemProps {
    * Feed Object type
    * @default 'post'
    */
-  feedObjectType?: SCFeedObjectTypologyType;
+  feedObjectType?: Exclude<SCContributionType, SCContributionType.COMMENT>;
 
   /**
    * Mark the FeedObject as read when enter in viewport
@@ -436,7 +436,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
     className = null,
     feedObjectId = null,
     feedObject = null,
-    feedObjectType = SCFeedObjectTypologyType.DISCUSSION,
+    feedObjectType = SCContributionType.DISCUSSION,
     feedObjectActivities = null,
     cacheStrategy = CacheStrategies.CACHE_FIRST,
     markRead = false,
@@ -509,7 +509,6 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
    * @param obj
    */
   function updateObject(newObj) {
-    LRUCache.set(SCCache.getFeedObjectCacheKey(obj.id, obj.type), newObj);
     setObj(newObj);
     notifyFeedChanges();
   }
@@ -541,7 +540,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
    */
   const handleChangePoll = useCallback(
     (pollObject: SCPollType) => {
-      updateObject(Object.assign(obj, {poll: pollObject}));
+      updateObject(Object.assign({}, obj, {poll: pollObject}));
     },
     [obj]
   );
@@ -570,28 +569,28 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
    * Handle restore obj
    */
   const handleRestore = useCallback(() => {
-    updateObject(Object.assign(obj, {deleted: false}));
+    updateObject(Object.assign({}, obj, {deleted: false}));
   }, [obj]);
 
   /**
    * Handle restore obj
    */
   const handleHide = useCallback(() => {
-    updateObject(Object.assign(obj, {collapsed: !obj.collapsed}));
+    updateObject(Object.assign({}, obj, {collapsed: !obj.collapsed}));
   }, [obj]);
 
   /**
    * Handle delete obj
    */
   const handleDelete = useCallback(() => {
-    updateObject(Object.assign(obj, {deleted: !obj.deleted}));
+    updateObject(Object.assign({}, obj, {deleted: !obj.deleted}));
   }, [obj]);
 
   /**
    * Handle suspend notification obj
    */
   const handleSuspendNotification = useCallback(() => {
-    updateObject(Object.assign(obj, {suspended: !obj.suspended}));
+    updateObject(Object.assign({}, obj, {suspended: !obj.suspended}));
   }, [obj]);
 
   /**
@@ -618,7 +617,9 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
    */
   const handleVoteSuccess = useCallback(
     (data) => {
-      updateObject(Object.assign(obj, {voted: data.voted, vote_count: data.vote_count}));
+      updateObject(
+        Object.assign({}, obj, {voted: data.voted, vote_count: data.vote_count, reactions_count: data.reactions_count, reaction: data.reaction})
+      );
     },
     [obj]
   );
@@ -712,7 +713,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
             setComments([...[data], ...comments]);
           }
           setIsReplying(false);
-          const newObj = Object.assign(obj, {comment_count: obj.comment_count + 1});
+          const newObj = Object.assign({}, obj, {comment_count: obj.comment_count + 1});
           updateObject(newObj);
           LRUCache.deleteKeysWithPrefix(SCCache.getCommentObjectsCachePrefixKeys(obj.id, obj.type));
           onReply && onReply(data);

@@ -1,6 +1,6 @@
 import {apiRequest} from '../../utils/apiRequest';
 import Endpoints from '../../constants/Endpoints';
-import {SSOSignInType, SSOSignUpType} from '@selfcommunity/types/src/types/sso';
+import {SSOSignInType, SSOSignUpType} from '@selfcommunity/types/sso';
 import {SSOSignUpParams} from '../../types';
 import {AxiosRequestConfig} from 'axios';
 

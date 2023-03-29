@@ -1,5 +1,5 @@
 import {LoyaltyService} from '../src/index';
-import {SCPrizeUserStatusType} from '@selfcommunity/types/src/types';
+import {SCPrizeUserStatusType} from '@selfcommunity/types';
 
 describe('Loyalty Service Test', () => {
   let prize;

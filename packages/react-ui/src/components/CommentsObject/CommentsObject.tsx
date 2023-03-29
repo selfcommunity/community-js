@@ -11,7 +11,7 @@ import {WidgetProps} from '../Widget';
 import CommentsObjectSkeleton from './Skeleton';
 import {InView} from 'react-intersection-observer';
 import {getContributionRouteName, getRouteData} from '../../utils/contribution';
-import {SCCommentType, SCCustomAdvPosition, SCFeedObjectType, SCFeedObjectTypologyType} from '@selfcommunity/types';
+import {SCCommentType, SCContributionType, SCCustomAdvPosition, SCFeedObjectType} from '@selfcommunity/types';
 import {appendURLSearchParams, CacheStrategies} from '@selfcommunity/utils';
 import {scrollIntoView} from 'seamless-scroll-polyfill';
 import {DEFAULT_PAGINATION_QUERY_PARAM_NAME} from '../../constants/Pagination';
@@ -94,9 +94,9 @@ export interface CommentsObjectProps {
 
   /**
    * Type of feed object
-   * @default SCFeedObjectTypologyType.POST
+   * @default SCContributionType.POST
    */
-  feedObjectType?: SCFeedObjectTypologyType;
+  feedObjectType?: Exclude<SCContributionType, SCContributionType.COMMENT>;
 
   /**
    * CommentComponent component
@@ -280,7 +280,7 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
     className,
     feedObjectId,
     feedObject,
-    feedObjectType = SCFeedObjectTypologyType.POST,
+    feedObjectType = SCContributionType.POST,
     CommentComponent = CommentObject,
     CommentComponentProps = {variant: 'outlined'},
     CommentObjectSkeletonProps = {elevation: 0, WidgetProps: {variant: 'outlined'} as WidgetProps},

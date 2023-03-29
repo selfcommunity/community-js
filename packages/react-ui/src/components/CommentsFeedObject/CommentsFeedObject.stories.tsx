@@ -1,9 +1,9 @@
 import React from 'react';
-import {ComponentMeta, ComponentStory} from '@storybook/react';
+import { ComponentMeta, ComponentStory } from '@storybook/react';
 
 import CommentsFeedObject from './index';
-import {SCFeedObjectTypologyType} from '@selfcommunity/types';
-import {SCCommentsOrderBy} from '../../types/comments';
+import { SCCommentsOrderBy } from '../../types/comments';
+import { SCContributionType } from '@selfcommunity/types';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -16,10 +16,10 @@ export default {
       table: {defaultValue: {summary: 360}}
     },
     feedObjectType: {
-      options: [SCFeedObjectTypologyType.POST, SCFeedObjectTypologyType.DISCUSSION, SCFeedObjectTypologyType.STATUS],
+      options: [SCContributionType.POST, SCContributionType.DISCUSSION, SCContributionType.STATUS],
       control: {type: 'select'},
       description: 'Object type. Used only with args id.',
-      table: {defaultValue: {summary: SCFeedObjectTypologyType.POST}}
+      table: {defaultValue: {summary: SCContributionType.POST}}
     },
     elevation: {
       control: {type: 'number'},
@@ -35,7 +35,7 @@ export default {
   },
   args: {
     feedObjectId: 554,
-    feedObjectType: SCFeedObjectTypologyType.POST,
+    feedObjectType: SCContributionType.POST,
     infiniteScrolling: true,
     commentsOrderBy: SCCommentsOrderBy.ADDED_AT_ASC,
     showTitle: true,

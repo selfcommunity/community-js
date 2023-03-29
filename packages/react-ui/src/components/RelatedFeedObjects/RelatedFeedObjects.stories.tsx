@@ -1,7 +1,7 @@
 import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
 import RelatedFeedObjects from './index';
-import {SCFeedObjectTypologyType} from '@selfcommunity/types';
+import {SCContributionType} from '@selfcommunity/types';
 import {SCFeedObjectTemplateType} from '../../types/feedObject';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
@@ -28,7 +28,7 @@ export default {
   },
   args: {
     feedObjectId: 23,
-    feedObjectType: SCFeedObjectTypologyType.DISCUSSION,
+    feedObjectType: SCContributionType.DISCUSSION,
     template: SCFeedObjectTemplateType.SNIPPET,
     elevation: 1,
     variant: 'elevation'

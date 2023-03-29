@@ -13,7 +13,7 @@ import {SCOPE_SC_UI} from '../../../../constants/Errors';
 import classNames from 'classnames';
 import {useSnackbar} from 'notistack';
 import Skeleton from '@mui/material/Skeleton';
-import {SCFeedObjectType, SCFeedObjectTypologyType, SCMediaType} from '@selfcommunity/types';
+import {SCFeedObjectType, SCContributionType, SCMediaType} from '@selfcommunity/types';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
 import {
@@ -89,7 +89,7 @@ export interface ShareProps {
    * Feed object type
    * @default 'post' type
    */
-  feedObjectType?: SCFeedObjectTypologyType;
+  feedObjectType?: Exclude<SCContributionType, SCContributionType.COMMENT>;
 
   /**
    * Show audience
@@ -127,7 +127,7 @@ export default function Share(inProps: ShareProps): JSX.Element {
     className = null,
     feedObjectId = null,
     feedObject = null,
-    feedObjectType = SCFeedObjectTypologyType.POST,
+    feedObjectType = SCContributionType.POST,
     withAction = true,
     withAudience = true,
     inlineAction = false,

@@ -5,13 +5,18 @@ const Component = {
     root: ({theme}: any) => ({
       backgroundColor: alpha(theme.palette.secondary.main, theme.palette.action.selectedOpacity),
       position: 'relative',
-      height: theme.spacing(103.5),
-      maxHeight: 'inherit',
+      minHeight: '100vh',
+      [theme.breakpoints.up('sm')]: {
+        height: theme.spacing(103.5),
+        maxHeight: 'inherit'
+      },
       '& .MuiCardContent-root': {
-        height: '100%',
-        maxHeight: `calc(100% - ${theme.spacing(10)})`,
-        overflow: 'auto',
-        padding: theme.spacing(0),
+        [theme.breakpoints.up('sm')]: {
+          height: '100%',
+          maxHeight: `calc(100% - ${theme.spacing(6.25)})`,
+          overflow: 'auto',
+          padding: theme.spacing(0)
+        },
         '& .MuiAlert-root': {
           position: 'absolute',
           bottom: 0,
@@ -64,21 +69,21 @@ const Component = {
           display: 'flex',
           alignItems: 'center',
           width: '80%',
-          //padding: theme.spacing(0.5),
           maxHeight: theme.spacing(5),
           overflow: 'auto',
           backgroundColor: theme.palette.common.white,
           borderRadius: theme.shape.borderRadius,
           marginRight: theme.spacing(2),
           '& .SCPrivateMessageThread-new-message-header-icon': {
-            fontSize: '1.714rem'
+            fontSize: '1.714rem',
+            marginLeft: theme.spacing(1)
           },
           '& .MuiIcon-root': {
-            color: theme.palette.secondary.main,
-            padding: theme.spacing(0.5)
+            color: theme.palette.secondary.main
           },
           '& .MuiTypography-root': {
-            color: theme.palette.secondary.main
+            color: theme.palette.secondary.main,
+            marginLeft: theme.spacing(1)
           },
           '& .SCPrivateMessageThread-autocomplete': {
             minWidth: theme.spacing(27),

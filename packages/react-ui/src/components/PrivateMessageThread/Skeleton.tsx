@@ -44,9 +44,9 @@ export default function PrivateMessageThreadSkeleton(props): JSX.Element {
       <CardContent>
         <List className={classes.list}>
           <ListSubheader sx={{display: 'flex', justifyContent: 'center'}}>
-            <Skeleton animation="wave" height={40} width={80} style={{borderRadius: 20}} />
+            <Skeleton animation="wave" height={30} width={120} style={{borderRadius: 20}} />
           </ListSubheader>
-          {[...Array(4)].map((item, index) => (
+          {[...Array(6)].map((item, index) => (
             <PrivateMessageThreadItemSkeleton index={index} key={index} />
           ))}
         </List>

@@ -1,7 +1,12 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import {Avatar, Box, Stack, Tooltip, Typography} from '@mui/material';
-import {SCFeedObjectTypologyType, SCNotificationContributionType} from '@selfcommunity/types';
+import {Avatar, Stack, Tooltip, Typography} from '@mui/material';
+import {
+  SCCommentType,
+  SCContributionType,
+  SCFeedObjectType,
+  SCNotificationContributionType,
+} from '@selfcommunity/types';
 import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
@@ -13,6 +18,7 @@ import NotificationItem, {NotificationItemProps} from '../../../shared/Notificat
 import Bullet from '../../../shared/Bullet';
 import {LoadingButton} from '@mui/lab';
 import Icon from '@mui/material/Icon';
+import VoteButton from '../../VoteButton';
 
 const messages = defineMessages({
   postOrStatus: {
@@ -66,22 +72,10 @@ export interface ContributionNotificationProps
   notificationObject: SCNotificationContributionType;
 
   /**
-   * Index
-   * @default null
-   */
-  index?: number;
-
-  /**
    * Handles action on vote
    * @default null
    */
-  onVote?: (i, v) => void;
-
-  /**
-   * The id of the loading vote
-   * @default null
-   */
-  loadingVote?: number;
+  onVote?: (contribution: SCFeedObjectType | SCCommentType) => any;
 }
 
 /**
@@ -97,9 +91,7 @@ export default function ContributionNotification(inProps: ContributionNotificati
   });
   const {
     notificationObject,
-    index,
     onVote,
-    loadingVote,
     id = `n_${props.notificationObject['sid']}`,
     className,
     template = SCNotificationObjectTemplateType.DETAIL,
@@ -114,12 +106,11 @@ export default function ContributionNotification(inProps: ContributionNotificati
 
   // INTL
   const intl = useIntl();
-  /**
-   * Handle vote
-   */
-  function handleVote() {
-    return onVote && index !== undefined && onVote(index, notificationObject[contributionType]);
-  }
+
+  // HANDLERS
+  const handleVote = (contribution: SCFeedObjectType | SCCommentType) => {
+    return onVote && onVote(contribution);
+  };
 
   /**
    * Renders root object
@@ -148,15 +139,15 @@ export default function ContributionNotification(inProps: ContributionNotificati
           </Link>{' '}
           {template === SCNotificationObjectTemplateType.SNIPPET ? (
             <>
-              {notificationObject[contributionType]['type'] === SCFeedObjectTypologyType.POST ||
-              notificationObject[contributionType]['type'] === SCFeedObjectTypologyType.STATUS
+              {notificationObject[contributionType]['type'] === SCContributionType.POST ||
+              notificationObject[contributionType]['type'] === SCContributionType.STATUS
                 ? intl.formatMessage(messages.postOrStatusSnippet, {contribution: notificationObject[contributionType]['type']})
                 : intl.formatMessage(messages.discussionSnippet)}
             </>
           ) : (
             <>
-              {notificationObject[contributionType]['type'] === SCFeedObjectTypologyType.POST ||
-              notificationObject[contributionType]['type'] === SCFeedObjectTypologyType.STATUS
+              {notificationObject[contributionType]['type'] === SCContributionType.POST ||
+              notificationObject[contributionType]['type'] === SCContributionType.STATUS
                 ? intl.formatMessage(messages.postOrStatus, {contribution: notificationObject[contributionType]['type']})
                 : intl.formatMessage(messages.discussion)}
             </>
@@ -177,32 +168,15 @@ export default function ContributionNotification(inProps: ContributionNotificati
             <Stack direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
               <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
               <Bullet className={classes.bullet} />
-              <LoadingButton
-                color={'inherit'}
-                size={'small'}
-                classes={{root: classes.voteButton}}
-                variant={'text'}
-                onClick={handleVote}
-                disabled={loadingVote === index}
-                loading={loadingVote === index}>
-                {notificationObject[contributionType].voted ? (
-                  <Tooltip
-                    title={
-                      <FormattedMessage id={'ui.notification.contribution.voteDown'} defaultMessage={'ui.notification.contribution.voteDown'} />
-                    }>
-                    <Icon fontSize={'small'} color={'primary'}>
-                      thumb_up_alt
-                    </Icon>
-                  </Tooltip>
-                ) : (
-                  <Tooltip
-                    title={<FormattedMessage id={'ui.notification.contribution.voteUp'} defaultMessage={'ui.notification.contribution.voteUp'} />}>
-                    <Icon fontSize={'small'} color="inherit">
-                      thumb_up_off_alt
-                    </Icon>
-                  </Tooltip>
-                )}
-              </LoadingButton>
+              <VoteButton
+                className={classes.voteButton}
+                variant="text"
+                size="small"
+                contributionId={notificationObject[contributionType].id}
+                contributionType={contributionType}
+                contribution={notificationObject[contributionType]}
+                onVote={handleVote}
+              />
             </Stack>
           )}
           {template === SCNotificationObjectTemplateType.SNIPPET && <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />}

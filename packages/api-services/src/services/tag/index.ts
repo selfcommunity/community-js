@@ -1,7 +1,7 @@
 import {apiRequest} from '../../utils/apiRequest';
 import {TagParams, SCPaginatedResponse, TagGetParams} from '../../types';
 import Endpoints from '../../constants/Endpoints';
-import {SCTagType} from '@selfcommunity/types/src/types';
+import {SCTagType} from '@selfcommunity/types';
 import {AxiosRequestConfig} from 'axios';
 import {urlParams} from '../../utils/url';
 
