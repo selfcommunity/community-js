@@ -7,13 +7,14 @@ import {
   useRequestPreSend
 } from '@rpldy/chunked-uploady';
 import {http, Endpoints, formatHttpError, HttpResponse} from '@selfcommunity/api-services';
-import {SCPrivateMessageFileType} from '@selfcommunity/types';
+import {SCMessageFileType, SCPrivateMessageFileType} from '@selfcommunity/types';
 import {SCContextType, useSCContext} from '@selfcommunity/react-core';
 import {useItemProgressListener, useItemStartListener} from '@rpldy/uploady';
 import React, {useEffect, useRef, useState} from 'react';
 import {SCMessageChunkType} from '../../types/media';
 import {useIntl} from 'react-intl';
 import messages from '../../messages/common';
+import {createThumbnail, createVideoThumbnail, dataURLtoFile, pdfToPng} from '../../utils/thumbnailCoverter';
 
 export interface MessageChunkUploaderProps {
   /**
@@ -57,6 +58,8 @@ export default (props: MessageChunkUploaderProps): JSX.Element => {
     setChunks(_chunks);
     chunkStateRef.current.chunks = _chunks;
   };
+  // HOOKS
+  const intl = useIntl();
 
   // Using refs to have the correct chunks values in the callbacks
   // https://stackoverflow.com/questions/57847594/react-hooks-accessing-up-to-date-state-from-within-a-callback
@@ -64,9 +67,6 @@ export default (props: MessageChunkUploaderProps): JSX.Element => {
 
   // CONTEXT
   const scContext: SCContextType = useSCContext();
-
-  // INTL
-  const intl = useIntl();
 
   // component update
   useEffect(() => {
@@ -80,28 +80,67 @@ export default (props: MessageChunkUploaderProps): JSX.Element => {
   // LISTENERS
   useItemStartListener((item) => {
     onStart(item);
-    if (item.file.type.startsWith('image/')) {
+    if (item.file.type.startsWith(SCMessageFileType.IMAGE)) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        chunkStateRef.current.setChunk({id: item.id, url: e.target.result});
+        chunkStateRef.current.setChunk({id: item.id, file_url: e.target.result});
       };
       // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
       // @ts-ignore
       reader.readAsDataURL(item.file);
     }
-    chunkStateRef.current.setChunk({id: item.id, [`file_uuid`]: null, completed: 0, filename: item.file.name, [`totalparts`]: null});
+    chunkStateRef.current.setChunk({id: item.id, file_uuid: null, completed: 0, filename: item.file.name, totalparts: null});
   });
 
   useItemProgressListener((item) => {
     chunkStateRef.current.setChunk({id: item.id, completed: item.completed});
   });
+  const uploadThumbnail = (item, file, parentUuid) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('parentuuid', parentUuid);
+    http
+      .request({
+        url: Endpoints.PrivateMessageUploadThumbnail.url(),
+        method: Endpoints.PrivateMessageUploadThumbnail.method,
+        data: formData,
+        headers: {'Content-Type': 'multipart/form-data'}
+      })
+      .then((res: HttpResponse<any>) => {
+        const _chunks = {...chunkStateRef.current.chunks};
+        delete _chunks[item.id];
+        chunkStateRef.current.setChunks(_chunks);
+        onSuccess(res.data);
+      })
+      .catch((error) => {
+        error = formatHttpError(error);
+        onError({...chunkStateRef.current.chunks[item.id]}, error.error);
+        const _chunks = {...chunkStateRef.current.chunks};
+        delete _chunks[item.id];
+        chunkStateRef.current.setChunks(_chunks);
+      });
+  };
+
+  const generateImageThumbnail = (callBack, item, fileUrl, uuid) => {
+    callBack(fileUrl)
+      .then((data) => {
+        const file = dataURLtoFile(data, item.file.name);
+        uploadThumbnail(item, file, uuid);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
   useItemFinishListener((item) => {
-    if (item.file.size < 10485760) {
-      const _chunks = {...chunkStateRef.current.chunks};
-      delete _chunks[item.id];
-      chunkStateRef.current.setChunks(_chunks);
-      onSuccess(item.uploadResponse.results[0].data);
+    const callBack = item.file.type.startsWith(SCMessageFileType.DOCUMENT)
+      ? pdfToPng
+      : item.file.type.startsWith(SCMessageFileType.VIDEO)
+      ? createVideoThumbnail
+      : createThumbnail;
+    const _chunks = {...chunkStateRef.current.chunks};
+    if (item.file.size < 1048576) {
+      generateImageThumbnail(callBack, item, _chunks[item.id].file_url, item.uploadResponse.results[0].data.file_uuid);
     } else {
       const formData = new FormData();
       formData.append('uuid', chunkStateRef.current.chunks[item.id].file_uuid);
@@ -115,10 +154,7 @@ export default (props: MessageChunkUploaderProps): JSX.Element => {
           headers: {'Content-Type': 'multipart/form-data'}
         })
         .then((res: HttpResponse<any>) => {
-          const _chunks = {...chunkStateRef.current.chunks};
-          delete _chunks[item.id];
-          chunkStateRef.current.setChunks(_chunks);
-          onSuccess(res.data);
+          generateImageThumbnail(callBack, item, res.data.file_url, res.data.file_uuid);
         })
         .catch((error) => {
           error = formatHttpError(error);
@@ -138,10 +174,6 @@ export default (props: MessageChunkUploaderProps): JSX.Element => {
   });
 
   useChunkStartListener((data): StartEventResponse => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore
-    chunkStateRef.current.setChunk({id: data.item.id, [`partindex`]: data.chunk.index});
-    chunkStateRef.current.setChunk({id: data.item.id, [`totalparts`]: data.totalCount});
     const res: StartEventResponse = {
       url: `${scContext.settings.portal}${Endpoints.PrivateMessageUploadMediaInChunks.url()}`,
       sendOptions: {
@@ -150,20 +182,15 @@ export default (props: MessageChunkUploaderProps): JSX.Element => {
         method: Endpoints.PrivateMessageUploadMediaInChunks.method
       }
     };
-    if (data.totalCount > 1) {
-      res.sendOptions.params = {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-        // @ts-ignore
-        partindex: data.chunkIndex,
+    if (data.totalCount > 0) {
+      let _params = {
+        partindex: data.chunk.index,
         totalparts: data.totalCount
       };
-    }
-    if (chunkStateRef.current.chunks[data.item.id].file_uuid && data.totalCount > 1) {
-      res.sendOptions.params = {
-        [`uuid`]: chunkStateRef.current.chunks[data.item.id].file_uuid,
-        [`totalparts`]: chunkStateRef.current.chunks[data.item.id].totalparts,
-        [`partindex`]: chunkStateRef.current.chunks[data.item.id].partindex
-      };
+      if (chunkStateRef.current.chunks[data.item.id].file_uuid) {
+        _params['uuid'] = chunkStateRef.current.chunks[data.item.id].file_uuid;
+      }
+      res.sendOptions.params = _params;
     } else {
       chunkStateRef.current.setChunk({id: data.item.id, type: type || data.sendOptions.paramName});
     }
@@ -171,7 +198,11 @@ export default (props: MessageChunkUploaderProps): JSX.Element => {
   });
 
   useChunkFinishListener((data) => {
-    chunkStateRef.current.setChunk({id: data.item.id, [`file_uuid`]: data.uploadData.response.data.file_uuid});
+    chunkStateRef.current.setChunk({
+      id: data.item.id,
+      file_uuid: data.uploadData.response.data.file_uuid,
+      totalparts: data.chunk.index + 1
+    });
   });
 
   useRequestPreSend(({items, options}) => {
