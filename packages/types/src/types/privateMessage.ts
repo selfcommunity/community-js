@@ -146,7 +146,8 @@ export interface SCPrivateMessageFileType {
 export enum SCMessageFileType {
   DOCUMENT = 'application/',
   IMAGE = 'image/',
-  VIDEO = 'video/'
+  VIDEO = 'video/',
+  PDF = 'application/pdf'
 }
 
 /**
