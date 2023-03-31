@@ -80,6 +80,7 @@
     "lexical": "^0.7.6",
     "libphonenumber-js": "^1.10.18",
     "moment": "^2.29.4",
+    "pdfjs-dist": "^3.4.120",
     "prop-types": "^15.8.1",
     "prop-types-extra": "^1.1.1",
     "pubsub-js": "^1.9.4",
