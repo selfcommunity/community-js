@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.141](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.140...@selfcommunity/react-ui@0.7.0-alpha.141) (2023-04-03)
+
+
+### Bug Fixes
+
+* Fix VoteAudienceButton ([a71eea1](https://github.com/selfcommunity/community-js/commit/a71eea152455f30aae5eefb549010160ab3576ea))
+
+
+
+
+
 # [0.7.0-alpha.140](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.139...@selfcommunity/react-ui@0.7.0-alpha.140) (2023-04-03)
 
 
