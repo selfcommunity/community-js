@@ -159,7 +159,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
   const [isFollower, setIsFollower] = useState<boolean>(false);
   const isNew = userObj && userObj === SCPrivateMessageStatusType.NEW;
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
-  const [singleMessageUser, setSingleMessageUser] = useState('');
+  const [singleMessageUser, setSingleMessageUser] = useState(null);
   const [receiver, setReceiver] = useState(null);
   const [deletingMsg, setDeletingMsg] = useState(null);
   const [singleMessageThread, setSingleMessageThread] = useState<boolean>(false);
@@ -526,7 +526,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
                   )}
                   classes={{popper: classes.autocompleteDialog}}
                   onChange={handleRecipientSelect}
-                  disabled={!followers}
+                  disabled={!followers || Boolean(singleMessageUser)}
                 />
               </Box>
               <IconButton size="small" onClick={onNewMessageClose}>
