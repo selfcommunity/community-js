@@ -140,19 +140,54 @@ const Component = {
         '& .SCPrivateMessageThreadItem-img': {
           display: 'flex',
           alignItems: 'center',
-          // maxWidth: 'max-content',
-          // maxHeight: 'max-content',
           '& img': {
             width: '100%',
-            minHeight: 400,
+            minHeight: theme.spacing(50),
             [theme.breakpoints.down('md')]: {
-              minHeight: 170
+              minHeight: theme.spacing(22)
+            }
+          }
+        },
+        '& .SCPrivateMessageThreadItem-video': {
+          '& .MuiButtonBase-root': {
+            color: theme.palette.common.white,
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            '& .MuiIcon-root': {
+              color: theme.palette.common.white,
+              fontSize: '6rem',
+              [theme.breakpoints.down('md')]: {
+                fontSize: '3rem'
+              }
             }
           }
         },
         '& .SCPrivateMessageThreadItem-document': {
-          display: 'flex',
-          alignItems: 'center'
+          width: theme.spacing(32.5),
+          '& img': {
+            minHeight: theme.spacing(40),
+            [theme.breakpoints.down('md')]: {
+              minHeight: theme.spacing(22)
+            },
+            width: '100%'
+          },
+          '& .MuiButtonBase-root': {
+            width: 'inherit',
+            position: 'absolute',
+            bottom: '10%',
+            backgroundColor: 'rgba(0,0,0,0.5)',
+            color: 'rgba(255,255,255,0.9)',
+            display: 'flex',
+            borderRadius: 0,
+            '& .MuiTypography-root': {
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              marginLeft: theme.spacing(0.5)
+            }
+          }
         }
       }
     })
