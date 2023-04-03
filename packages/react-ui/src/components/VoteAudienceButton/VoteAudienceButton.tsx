@@ -197,7 +197,7 @@ export default function VoteAudienceButton(inProps: VoteAudienceButtonProps): JS
       </Root>
       {open && (
         <DialogRoot title={dialogTitle} onClose={handleClose} open={open} DialogContentProps={{}}>
-          {isLoadingVoteList ? (
+          {isLoadingVoteList && !voteList ? (
             <CentralProgress size={50} />
           ) : (
             <InfiniteScroll
