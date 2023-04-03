@@ -5,9 +5,9 @@ import classNames from 'classnames';
 import {SCCommentType, SCContributionType, SCFeedObjectType} from '@selfcommunity/types';
 import {useThemeProps} from '@mui/system';
 import Icon from '@mui/material/Icon';
-import { Avatar, Box, List, ListItem, Tab, Tabs, Typography } from '@mui/material';
+import {Avatar, Box, List, ListItem, Tab, Tabs, Typography} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
-import {SCPreferences, SCUserContextType, useSCFetchVote, useSCUser} from '@selfcommunity/react-core';
+import {SCUserContextType, useSCFetchVote, useSCUser} from '@selfcommunity/react-core';
 import BaseDialog from '../../shared/BaseDialog';
 import CentralProgress from '../../shared/CentralProgress';
 import InfiniteScroll from '../../shared/InfiniteScroll';
@@ -151,11 +151,12 @@ export default function VoteAudienceButton(inProps: VoteAudienceButtonProps): JS
     if (reactions.default && !isLoading && !error) {
       return (
         <Box className={classes.reactionList}>
-          {contributionReactionsCount.slice(0, 3).map((count: any, i) => (
-            <Icon key={count.reaction.id}>
-              <img alt={count.reaction.label} src={count.reaction.image} width="100%" height="100%" />
-            </Icon>
-          ))}
+          {contributionReactionsCount &&
+            contributionReactionsCount.slice(0, 3).map((count: any, i) => (
+              <Icon key={count.reaction.id}>
+                <img alt={count.reaction.label} src={count.reaction.image} width="100%" height="100%" />
+              </Icon>
+            ))}
         </Box>
       );
     }
@@ -167,9 +168,20 @@ export default function VoteAudienceButton(inProps: VoteAudienceButtonProps): JS
       return (
         <Tabs className={classes.dialogTabs} value={tab} onChange={handleChangeTab} aria-label="reactions">
           <Tab label={<FormattedMessage defaultMessage="ui.voteAudienceButton.dialog.tab.all" id="ui.voteAudienceButton.dialog.tab.all" />} />
-          {contributionReactionsCount.map((count: any) => <Tab key={count.reaction.id} label={<><Icon>
-            <img alt={count.reaction.label} src={count.reaction.image} width="100%" height="100%" />
-          </Icon>{count.count}</>} />)}
+          {contributionReactionsCount &&
+            contributionReactionsCount.map((count: any) => (
+              <Tab
+                key={count.reaction.id}
+                label={
+                  <>
+                    <Icon>
+                      <img alt={count.reaction.label} src={count.reaction.image} width="100%" height="100%" />
+                    </Icon>
+                    {count.count}
+                  </>
+                }
+              />
+            ))}
         </Tabs>
       );
     } else {
@@ -179,7 +191,12 @@ export default function VoteAudienceButton(inProps: VoteAudienceButtonProps): JS
 
   return (
     <>
-      <Root onClick={handleOpen} disabled={isLoading || Boolean(error) || contributionVoteCount === 0} loading={isLoading} className={classNames(classes.root, className)} {...rest}>
+      <Root
+        onClick={handleOpen}
+        disabled={isLoading || Boolean(error) || contributionVoteCount === 0}
+        loading={isLoading}
+        className={classNames(classes.root, className)}
+        {...rest}>
         {audienceIcon}&nbsp;
         {scUserContext.user && contributionVoted ? (
           contributionVoteCount === 1 ? (
