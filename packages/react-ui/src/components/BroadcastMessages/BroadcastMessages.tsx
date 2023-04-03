@@ -1,17 +1,10 @@
-import React, {useContext, useEffect, useMemo, useRef, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Avatar, Box, Button, CardContent} from '@mui/material';
 import {SCBroadcastMessageType, SCNotificationTopicType, SCNotificationTypologyType} from '@selfcommunity/types';
-import {http, Endpoints} from '@selfcommunity/api-services';
+import {Endpoints, http} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
-import {
-  SCPreferences,
-  SCPreferencesContext,
-  SCPreferencesContextType,
-  SCUserContextType,
-  useSCPreferences,
-  useSCUser
-} from '@selfcommunity/react-core';
+import {SCPreferences, SCPreferencesContextType, SCUserContextType, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import Message, {MessageProps} from './Message';
 import classNames from 'classnames';
