@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.3...@selfcommunity/react-i18n@0.5.0-alpha.4) (2023-04-03)
+
+
+### Bug Fixes
+
+* removed unused transl for message media uploader ([713f99d](https://github.com/selfcommunity/community-js/commit/713f99d1ea12a66dbdad7f24f760da329d5de8bc))
+
+
+
+
+
 # [0.5.0-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.2...@selfcommunity/react-i18n@0.5.0-alpha.3) (2023-03-29)
 
 
