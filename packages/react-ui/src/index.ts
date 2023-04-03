@@ -130,6 +130,7 @@ import InfiniteScroll from './shared/InfiniteScroll';
 import CentralProgress from './shared/CentralProgress';
 import {highlight} from './utils/highlight';
 import {bytesToSize} from './utils/sizeCoverter';
+import * as MessageUploaderUtils from './utils/thumbnailCoverter';
 
 /**
  * List all exports
@@ -377,6 +378,7 @@ export {
   ContributionUtils,
   highlight,
   bytesToSize,
+  MessageUploaderUtils,
   Footer,
   FooterProps,
   BaseItem,

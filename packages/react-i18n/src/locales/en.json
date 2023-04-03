@@ -413,7 +413,6 @@
   "ui.privateMessage.editor.placeholder" : "Write your message",
   "ui.privateMessage.editor.disabled.msg" : "You cannot send messages to people who don't follow you!",
   "ui.privateMessage.editor.media.uploader.msg" : "Upload the attachment (max 10MB) or drag it here",
-  "ui.privateMessage.editor.media.uploader.error.msg" :"The selected file is too large, the maximum size allowed is 10 MB",
 
   "ui.privateMessage.threadItem.menu.item.delete" : "Delete Message",
   "ui.privateMessage.thread.newMessage.to" : "To:",

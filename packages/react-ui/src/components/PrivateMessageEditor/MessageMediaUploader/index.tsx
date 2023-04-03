@@ -4,7 +4,7 @@ import {Alert, AlertTitle, Box, CardContent, Fade, IconButton, Typography} from 
 import {ButtonProps} from '@mui/material/Button/Button';
 import Icon from '@mui/material/Icon';
 import ChunkedUploady from '@rpldy/chunked-uploady';
-import {SCPrivateMessageFileType} from '@selfcommunity/types';
+import {SCMessageFileType, SCPrivateMessageFileType} from '@selfcommunity/types';
 import {Endpoints} from '@selfcommunity/api-services';
 import {SCContext, SCContextType} from '@selfcommunity/react-core';
 import {styled} from '@mui/material/styles';
@@ -15,6 +15,9 @@ import UploadPreview from '@rpldy/upload-preview';
 import UploadDropZone from '@rpldy/upload-drop-zone';
 import {FormattedMessage} from 'react-intl';
 import {bytesToSize} from '../../../utils/sizeCoverter';
+import {fallbackImage} from '../../../utils/thumbnailCoverter';
+
+const MAX_FILE_SIZE = 10485760;
 
 const UploadButton = asUploadButton(
   forwardRef((props: ButtonProps, ref: any) => (
@@ -135,6 +138,12 @@ export default function MessageMediaUploader(props: MessageMediaUploaderProps): 
   /**
    * Renders root object
    */
+  const filterBySizeAndType = (file) => {
+    return (
+      file.size < MAX_FILE_SIZE &&
+      (file.type.startsWith(SCMessageFileType.IMAGE) || file.type.startsWith(SCMessageFileType.VIDEO) || file.type.startsWith(SCMessageFileType.PDF))
+    );
+  };
 
   return (
     <Root className={classes.root}>
@@ -160,10 +169,11 @@ export default function MessageMediaUploader(props: MessageMediaUploaderProps): 
           }}
           chunkSize={204800}
           multiple
-          chunked>
+          chunked
+          fileFilter={filterBySizeAndType}>
           <MessageChunkUploader onStart={handleStart} onSuccess={handleSuccess} onProgress={handleProgress} onError={handleError} />
           {!file && Object.keys(uploading).length === 0 && Object.keys(errors).length === 0 && (
-            <UploadDropZone className={classes.uploadSection} grouped maxGroupSize={3}>
+            <UploadDropZone className={classes.uploadSection}>
               <UploadButton inputFieldName="file" className={classes.uploadButton} />
               <Typography textAlign={'center'} fontWeight={'medium'}>
                 <FormattedMessage id="ui.privateMessage.editor.media.uploader.msg" defaultMessage="ui.privateMessage.editor.media.uploader.msg" />
@@ -176,7 +186,12 @@ export default function MessageMediaUploader(props: MessageMediaUploaderProps): 
               () => setIsHovered(true),
               () => setIsHovered(false)
             )}>
-            <UploadPreview rememberPreviousBatches previewMethodsRef={previewMethodsRef} onPreviewsChanged={onPreviewsChanged} />
+            <UploadPreview
+              rememberPreviousBatches
+              previewMethodsRef={previewMethodsRef}
+              onPreviewsChanged={onPreviewsChanged}
+              fallbackUrl={fallbackImage}
+            />
             {batchFile && (
               <Box className={classes.previewActions}>
                 {Object.values(uploading).map((chunk: SCMessageChunkType) => (

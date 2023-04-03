@@ -1,5 +1,5 @@
 import {apiRequest} from '../../utils/apiRequest';
-import {BaseGetParams, FeedObjCreateParams, FeedObjectPollVotesSearch, FeedObjGetParams, SCPaginatedResponse} from '../../types';
+import {BaseGetParams, BaseSearchParams, FeedObjCreateParams, FeedObjectPollVotesSearch, FeedObjGetParams, SCPaginatedResponse} from '../../types';
 import Endpoints from '../../constants/Endpoints';
 import {
   SCContributionType,
@@ -11,7 +11,7 @@ import {
   SCFlagTypeEnum,
   SCPollVoteType,
   SCUserType,
-  SCVoteType,
+  SCVoteType
 } from '@selfcommunity/types';
 import {AxiosRequestConfig} from 'axios';
 import {urlParams} from '../../utils/url';
@@ -27,9 +27,21 @@ export interface FeedObjectApiClientInterface {
     params?: BaseGetParams,
     config?: AxiosRequestConfig
   ): Promise<SCPaginatedResponse<SCFeedObjectType>>;
-  searchFeedObject(type: Exclude<SCContributionType, SCContributionType.COMMENT>, search?: string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeedObjectType>>;
-  createFeedObject(type: Exclude<SCContributionType, SCContributionType.COMMENT>, data: FeedObjCreateParams, config?: AxiosRequestConfig): Promise<SCFeedObjectType>;
-  getSpecificFeedObject(type: Exclude<SCContributionType, SCContributionType.COMMENT>, id: number | string, config?: AxiosRequestConfig): Promise<SCFeedObjectType>;
+  searchFeedObject(
+    type: Exclude<SCContributionType, SCContributionType.COMMENT>,
+    params?: BaseSearchParams,
+    config?: AxiosRequestConfig
+  ): Promise<SCPaginatedResponse<SCFeedObjectType>>;
+  createFeedObject(
+    type: Exclude<SCContributionType, SCContributionType.COMMENT>,
+    data: FeedObjCreateParams,
+    config?: AxiosRequestConfig
+  ): Promise<SCFeedObjectType>;
+  getSpecificFeedObject(
+    type: Exclude<SCContributionType, SCContributionType.COMMENT>,
+    id: number | string,
+    config?: AxiosRequestConfig
+  ): Promise<SCFeedObjectType>;
   updateFeedObject(
     type: Exclude<SCContributionType, SCContributionType.COMMENT>,
     id: number | string,
@@ -62,14 +74,24 @@ export interface FeedObjectApiClientInterface {
     params?: BaseGetParams,
     config?: AxiosRequestConfig
   ): Promise<SCPaginatedResponse<SCFeedObjectType>>;
-  voteFeedObject(type: Exclude<SCContributionType, SCContributionType.COMMENT>, id: number | string, reaction?: number, config?: AxiosRequestConfig): Promise<any>;
+  voteFeedObject(
+    type: Exclude<SCContributionType, SCContributionType.COMMENT>,
+    id: number | string,
+    reaction?: number,
+    config?: AxiosRequestConfig
+  ): Promise<any>;
   feedObjectVotes(
     type: Exclude<SCContributionType, SCContributionType.COMMENT>,
     id: number | string,
     params?: BaseGetParams,
     config?: AxiosRequestConfig
   ): Promise<SCPaginatedResponse<SCVoteType>>;
-  feedObjectPollVote(type: Exclude<SCContributionType, SCContributionType.COMMENT>, id: number | string, choice: number, config?: AxiosRequestConfig): Promise<any>;
+  feedObjectPollVote(
+    type: Exclude<SCContributionType, SCContributionType.COMMENT>,
+    id: number | string,
+    choice: number,
+    config?: AxiosRequestConfig
+  ): Promise<any>;
   feedObjectPollVotesList(
     type: Exclude<SCContributionType, SCContributionType.COMMENT>,
     id: number | string,
@@ -98,11 +120,28 @@ export interface FeedObjectApiClientInterface {
     params?: BaseGetParams,
     config?: AxiosRequestConfig
   ): Promise<SCPaginatedResponse<SCFeedObjectType>>;
-  flagFeedObject(type: Exclude<SCContributionType, SCContributionType.COMMENT>, id: number | string, flag_type: SCFlagTypeEnum, config?: AxiosRequestConfig): Promise<any>;
-  feedObjectFlagList(type: Exclude<SCContributionType, SCContributionType.COMMENT>, id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFlagType>>;
-  feedObjectFlagStatus(type: Exclude<SCContributionType, SCContributionType.COMMENT>, id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFlagType>>;
+  flagFeedObject(
+    type: Exclude<SCContributionType, SCContributionType.COMMENT>,
+    id: number | string,
+    flag_type: SCFlagTypeEnum,
+    config?: AxiosRequestConfig
+  ): Promise<any>;
+  feedObjectFlagList(
+    type: Exclude<SCContributionType, SCContributionType.COMMENT>,
+    id: number | string,
+    config?: AxiosRequestConfig
+  ): Promise<SCPaginatedResponse<SCFlagType>>;
+  feedObjectFlagStatus(
+    type: Exclude<SCContributionType, SCContributionType.COMMENT>,
+    id: number | string,
+    config?: AxiosRequestConfig
+  ): Promise<SCPaginatedResponse<SCFlagType>>;
   hideFeedObject(type: Exclude<SCContributionType, SCContributionType.COMMENT>, id: number | string, config?: AxiosRequestConfig): Promise<any>;
-  feedObjectHideStatus(type: Exclude<SCContributionType, SCContributionType.COMMENT>, id: number | string, config?: AxiosRequestConfig): Promise<SCFeedObjectHideStatusType>;
+  feedObjectHideStatus(
+    type: Exclude<SCContributionType, SCContributionType.COMMENT>,
+    id: number | string,
+    config?: AxiosRequestConfig
+  ): Promise<SCFeedObjectHideStatusType>;
 }
 /**
  * Contains all the endpoints needed to manage feed objs (discussions-posts-statuses).
@@ -146,15 +185,15 @@ export class FeedObjectApiClient {
   /**
    * This endpoint performs search operation to feed objs
    * @param type
-   * @param search
+   * @param params
    * @param config
    */
   static searchFeedObject(
     type: Exclude<SCContributionType, SCContributionType.COMMENT>,
-    search?: string,
+    params?: BaseSearchParams,
     config?: AxiosRequestConfig
   ): Promise<SCPaginatedResponse<SCFeedObjectType>> {
-    const p = urlParams({...(search && {search: search})});
+    const p = urlParams(params);
     return apiRequest({...config, url: `${Endpoints.SearchFeedObject.url({type})}?${p.toString()}`, method: Endpoints.SearchFeedObject.method});
   }
 
@@ -164,7 +203,11 @@ export class FeedObjectApiClient {
    * @param data
    * @param config
    */
-  static createFeedObject(type: Exclude<SCContributionType, SCContributionType.COMMENT>, data: FeedObjCreateParams, config?: AxiosRequestConfig): Promise<SCFeedObjectType> {
+  static createFeedObject(
+    type: Exclude<SCContributionType, SCContributionType.COMMENT>,
+    data: FeedObjCreateParams,
+    config?: AxiosRequestConfig
+  ): Promise<SCFeedObjectType> {
     return apiRequest({...config, url: Endpoints.CreateFeedObject.url({type}), method: Endpoints.CreateFeedObject.method, data: data});
   }
 
@@ -174,7 +217,11 @@ export class FeedObjectApiClient {
    * @param id
    * @param config
    */
-  static getSpecificFeedObject(type: Exclude<SCContributionType, SCContributionType.COMMENT>, id: number | string, config?: AxiosRequestConfig): Promise<SCFeedObjectType> {
+  static getSpecificFeedObject(
+    type: Exclude<SCContributionType, SCContributionType.COMMENT>,
+    id: number | string,
+    config?: AxiosRequestConfig
+  ): Promise<SCFeedObjectType> {
     return apiRequest({...config, url: Endpoints.FeedObject.url({type, id}), method: Endpoints.FeedObject.method});
   }
 
@@ -200,7 +247,11 @@ export class FeedObjectApiClient {
    * @param id
    * @param config
    */
-  static deleteFeedObject(type: Exclude<SCContributionType, SCContributionType.COMMENT>, id: number | string, config?: AxiosRequestConfig): Promise<any> {
+  static deleteFeedObject(
+    type: Exclude<SCContributionType, SCContributionType.COMMENT>,
+    id: number | string,
+    config?: AxiosRequestConfig
+  ): Promise<any> {
     return apiRequest({...config, url: Endpoints.DeleteFeedObject.url({type, id}), method: Endpoints.DeleteFeedObject.method});
   }
 
@@ -273,7 +324,11 @@ export class FeedObjectApiClient {
    * @param id
    * @param config
    */
-  static restoreFeedObject(type: Exclude<SCContributionType, SCContributionType.COMMENT>, id: number | string, config?: AxiosRequestConfig): Promise<any> {
+  static restoreFeedObject(
+    type: Exclude<SCContributionType, SCContributionType.COMMENT>,
+    id: number | string,
+    config?: AxiosRequestConfig
+  ): Promise<any> {
     return apiRequest({...config, url: Endpoints.RestoreFeedObject.url({type, id}), method: Endpoints.RestoreFeedObject.method});
   }
 
@@ -305,7 +360,12 @@ export class FeedObjectApiClient {
    * @param config
    * @param reaction
    */
-  static voteFeedObject(type: Exclude<SCContributionType, SCContributionType.COMMENT>, id: number | string, reaction?: number, config?: AxiosRequestConfig): Promise<any> {
+  static voteFeedObject(
+    type: Exclude<SCContributionType, SCContributionType.COMMENT>,
+    id: number | string,
+    reaction?: number,
+    config?: AxiosRequestConfig
+  ): Promise<any> {
     const p = urlParams({...(reaction && {reaction: reaction})});
     return apiRequest({...config, url: `${Endpoints.Vote.url({type, id})}?${p.toString()}`, method: Endpoints.Vote.method});
   }
@@ -334,7 +394,12 @@ export class FeedObjectApiClient {
    * @param choice
    * @param config
    */
-  static feedObjectPollVote(type: Exclude<SCContributionType, SCContributionType.COMMENT>, id: number | string, choice: number, config?: AxiosRequestConfig): Promise<any> {
+  static feedObjectPollVote(
+    type: Exclude<SCContributionType, SCContributionType.COMMENT>,
+    id: number | string,
+    choice: number,
+    config?: AxiosRequestConfig
+  ): Promise<any> {
     return apiRequest({...config, url: Endpoints.PollVote.url({type, id}), method: Endpoints.PollVote.method, data: {choice: choice}});
   }
 
@@ -361,7 +426,11 @@ export class FeedObjectApiClient {
    * @param id
    * @param config
    */
-  static followFeedObject(type: Exclude<SCContributionType, SCContributionType.COMMENT>, id: number | string, config?: AxiosRequestConfig): Promise<any> {
+  static followFeedObject(
+    type: Exclude<SCContributionType, SCContributionType.COMMENT>,
+    id: number | string,
+    config?: AxiosRequestConfig
+  ): Promise<any> {
     return apiRequest({...config, url: Endpoints.FollowContribution.url({id}), method: Endpoints.FollowContribution.method});
   }
 
@@ -404,7 +473,11 @@ export class FeedObjectApiClient {
    * @param id
    * @param config
    */
-  static suspendFeedObject(type: Exclude<SCContributionType, SCContributionType.COMMENT>, id: number | string, config?: AxiosRequestConfig): Promise<any> {
+  static suspendFeedObject(
+    type: Exclude<SCContributionType, SCContributionType.COMMENT>,
+    id: number | string,
+    config?: AxiosRequestConfig
+  ): Promise<any> {
     return apiRequest({
       ...config,
       url: Endpoints.UserSuspendContributionNotification.url({type, id}),
@@ -456,7 +529,12 @@ export class FeedObjectApiClient {
    * @param flag_type
    * @param config
    */
-  static flagFeedObject(type: Exclude<SCContributionType, SCContributionType.COMMENT>, id: number | string, flag_type: SCFlagTypeEnum, config?: AxiosRequestConfig): Promise<any> {
+  static flagFeedObject(
+    type: Exclude<SCContributionType, SCContributionType.COMMENT>,
+    id: number | string,
+    flag_type: SCFlagTypeEnum,
+    config?: AxiosRequestConfig
+  ): Promise<any> {
     return apiRequest({...config, url: Endpoints.Flag.url({type, id}), method: Endpoints.Flag.method, data: flag_type});
   }
 
@@ -494,7 +572,11 @@ export class FeedObjectApiClient {
    * @param id
    * @param config
    */
-  static hideFeedObject(type: Exclude<SCContributionType, SCContributionType.COMMENT>, id: number | string, config?: AxiosRequestConfig): Promise<any> {
+  static hideFeedObject(
+    type: Exclude<SCContributionType, SCContributionType.COMMENT>,
+    id: number | string,
+    config?: AxiosRequestConfig
+  ): Promise<any> {
     return apiRequest({...config, url: Endpoints.HideFeedObject.url({type, id}), method: Endpoints.HideFeedObject.method});
   }
 
@@ -504,7 +586,11 @@ export class FeedObjectApiClient {
    * @param id
    * @param config
    */
-  static feedObjectHideStatus(type: Exclude<SCContributionType, SCContributionType.COMMENT>, id: number | string, config?: AxiosRequestConfig): Promise<SCFeedObjectHideStatusType> {
+  static feedObjectHideStatus(
+    type: Exclude<SCContributionType, SCContributionType.COMMENT>,
+    id: number | string,
+    config?: AxiosRequestConfig
+  ): Promise<SCFeedObjectHideStatusType> {
     return apiRequest({...config, url: Endpoints.FeedObjectHideStatus.url({type, id}), method: Endpoints.FeedObjectHideStatus.method});
   }
 }
@@ -556,17 +642,25 @@ export default class FeedObjectService {
 
   static async searchFeedObject(
     type: Exclude<SCContributionType, SCContributionType.COMMENT>,
-    search?: string,
+    params?: BaseSearchParams,
     config?: AxiosRequestConfig
   ): Promise<SCPaginatedResponse<SCFeedObjectType>> {
-    return FeedObjectApiClient.searchFeedObject(type, search, config);
+    return FeedObjectApiClient.searchFeedObject(type, params, config);
   }
 
-  static async createFeedObject(type: Exclude<SCContributionType, SCContributionType.COMMENT>, data: FeedObjCreateParams, config?: AxiosRequestConfig): Promise<SCFeedObjectType> {
+  static async createFeedObject(
+    type: Exclude<SCContributionType, SCContributionType.COMMENT>,
+    data: FeedObjCreateParams,
+    config?: AxiosRequestConfig
+  ): Promise<SCFeedObjectType> {
     return FeedObjectApiClient.createFeedObject(type, data, config);
   }
 
-  static async getSpecificFeedObject(type: Exclude<SCContributionType, SCContributionType.COMMENT>, id: number | string, config?: AxiosRequestConfig): Promise<SCFeedObjectType> {
+  static async getSpecificFeedObject(
+    type: Exclude<SCContributionType, SCContributionType.COMMENT>,
+    id: number | string,
+    config?: AxiosRequestConfig
+  ): Promise<SCFeedObjectType> {
     return FeedObjectApiClient.getSpecificFeedObject(type, id, config);
   }
 
@@ -579,7 +673,11 @@ export default class FeedObjectService {
     return FeedObjectApiClient.updateFeedObject(type, id, data, config);
   }
 
-  static async deleteFeedObject(type: Exclude<SCContributionType, SCContributionType.COMMENT>, id: number | string, config?: AxiosRequestConfig): Promise<any> {
+  static async deleteFeedObject(
+    type: Exclude<SCContributionType, SCContributionType.COMMENT>,
+    id: number | string,
+    config?: AxiosRequestConfig
+  ): Promise<any> {
     return FeedObjectApiClient.deleteFeedObject(type, id, config);
   }
 
@@ -609,7 +707,11 @@ export default class FeedObjectService {
     return FeedObjectApiClient.feedObjectUserSharesList(type, id, params);
   }
 
-  static async restoreFeedObject(type: Exclude<SCContributionType, SCContributionType.COMMENT>, id: number | string, config?: AxiosRequestConfig): Promise<any> {
+  static async restoreFeedObject(
+    type: Exclude<SCContributionType, SCContributionType.COMMENT>,
+    id: number | string,
+    config?: AxiosRequestConfig
+  ): Promise<any> {
     return FeedObjectApiClient.restoreFeedObject(type, id, config);
   }
 
@@ -622,7 +724,12 @@ export default class FeedObjectService {
     return FeedObjectApiClient.relatedFeedObjects(type, id, params, config);
   }
 
-  static async voteFeedObject(type: Exclude<SCContributionType, SCContributionType.COMMENT>, id: number | string, reaction?: number, config?: AxiosRequestConfig): Promise<any> {
+  static async voteFeedObject(
+    type: Exclude<SCContributionType, SCContributionType.COMMENT>,
+    id: number | string,
+    reaction?: number,
+    config?: AxiosRequestConfig
+  ): Promise<any> {
     return FeedObjectApiClient.voteFeedObject(type, id, reaction, config);
   }
   static async feedObjectVotes(
@@ -633,7 +740,12 @@ export default class FeedObjectService {
   ): Promise<SCPaginatedResponse<SCVoteType>> {
     return FeedObjectApiClient.feedObjectVotes(type, id, params, config);
   }
-  static async feedObjectPollVote(type: Exclude<SCContributionType, SCContributionType.COMMENT>, id: number | string, choice: number, config?: AxiosRequestConfig): Promise<any> {
+  static async feedObjectPollVote(
+    type: Exclude<SCContributionType, SCContributionType.COMMENT>,
+    id: number | string,
+    choice: number,
+    config?: AxiosRequestConfig
+  ): Promise<any> {
     return FeedObjectApiClient.feedObjectPollVote(type, id, choice, config);
   }
 
@@ -646,7 +758,11 @@ export default class FeedObjectService {
     return FeedObjectApiClient.feedObjectPollVotesList(type, id, params, config);
   }
 
-  static async followFeedObject(type: Exclude<SCContributionType, SCContributionType.COMMENT>, id: number | string, config?: AxiosRequestConfig): Promise<any> {
+  static async followFeedObject(
+    type: Exclude<SCContributionType, SCContributionType.COMMENT>,
+    id: number | string,
+    config?: AxiosRequestConfig
+  ): Promise<any> {
     return FeedObjectApiClient.followFeedObject(type, id, config);
   }
 
@@ -666,7 +782,11 @@ export default class FeedObjectService {
     return FeedObjectApiClient.checkIfFollowingFeedObject(type, id, config);
   }
 
-  static async suspendFeedObject(type: Exclude<SCContributionType, SCContributionType.COMMENT>, id: number | string, config?: AxiosRequestConfig): Promise<any> {
+  static async suspendFeedObject(
+    type: Exclude<SCContributionType, SCContributionType.COMMENT>,
+    id: number | string,
+    config?: AxiosRequestConfig
+  ): Promise<any> {
     return FeedObjectApiClient.suspendFeedObject(type, id, config);
   }
 
@@ -709,7 +829,11 @@ export default class FeedObjectService {
   ): Promise<SCPaginatedResponse<SCFlagType>> {
     return FeedObjectApiClient.feedObjectFlagStatus(type, id, config);
   }
-  static async hideFeedObject(type: Exclude<SCContributionType, SCContributionType.COMMENT>, id: number | string, config?: AxiosRequestConfig): Promise<any> {
+  static async hideFeedObject(
+    type: Exclude<SCContributionType, SCContributionType.COMMENT>,
+    id: number | string,
+    config?: AxiosRequestConfig
+  ): Promise<any> {
     return FeedObjectApiClient.hideFeedObject(type, id, config);
   }
 
