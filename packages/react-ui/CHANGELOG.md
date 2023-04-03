@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.141](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.140...@selfcommunity/react-ui@0.7.0-alpha.141) (2023-04-03)
+
+
+### Bug Fixes
+
+* Fix VoteAudienceButton ([a71eea1](https://github.com/selfcommunity/community-js/commit/a71eea152455f30aae5eefb549010160ab3576ea))
+
+
+
+
+
+# [0.7.0-alpha.140](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.139...@selfcommunity/react-ui@0.7.0-alpha.140) (2023-04-03)
+
+
+### Bug Fixes
+
+* Fix feed object search params ([f997b1a](https://github.com/selfcommunity/community-js/commit/f997b1a985b93cfb54e9cc970de07453312f246d))
+* temporary fallback image + upload file filter ([0a6e372](https://github.com/selfcommunity/community-js/commit/0a6e372e3a090520a81727cd36ed34b16c35999e))
+
+
+### Features
+
+* added pdfjs lib to generate thumbnails ([b364607](https://github.com/selfcommunity/community-js/commit/b364607cce46d198efa1abf64831171327c4510d))
+
+
+### Performance Improvements
+
+* added thumbnail converter util for message media uploader ([5d8a297](https://github.com/selfcommunity/community-js/commit/5d8a2978e32a36f93177636f979ca2793f973604))
+* added thumbnail upload to message chunk uploader ([82ffedf](https://github.com/selfcommunity/community-js/commit/82ffedf4bc34eb554a18aaaa5ed8186b5ce22660))
+
+
+
+
+
 # [0.7.0-alpha.139](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.138...@selfcommunity/react-ui@0.7.0-alpha.139) (2023-03-29)
 
 

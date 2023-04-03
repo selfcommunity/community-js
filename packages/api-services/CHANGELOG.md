@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.6-alpha.22](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.6-alpha.21...@selfcommunity/api-services@0.3.6-alpha.22) (2023-04-03)
+
+
+### Bug Fixes
+
+* Fix feed object search params ([f997b1a](https://github.com/selfcommunity/community-js/commit/f997b1a985b93cfb54e9cc970de07453312f246d))
+
+
+
+
+
 ## [0.3.6-alpha.21](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.6-alpha.20...@selfcommunity/api-services@0.3.6-alpha.21) (2023-03-29)
 
 

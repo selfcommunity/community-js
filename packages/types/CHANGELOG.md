@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.1-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.4.1-alpha.10...@selfcommunity/types@0.4.1-alpha.11) (2023-04-03)
+
+
+### Bug Fixes
+
+* add pm file type ([4d22865](https://github.com/selfcommunity/community-js/commit/4d22865ff6bb0d8fb3eb6eab85b0f25121c003c8))
+
+
+
+
+
 ## [0.4.1-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.4.1-alpha.9...@selfcommunity/types@0.4.1-alpha.10) (2023-03-29)
 
 
