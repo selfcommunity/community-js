@@ -21,7 +21,7 @@ export default {
       description: 'Object type. Used only with args id.'
     },
     template: {
-      options: [SCFeedObjectTemplateType.SNIPPET, SCFeedObjectTemplateType.PREVIEW, SCFeedObjectTemplateType.DETAIL, SCFeedObjectTemplateType.SHARE],
+      options: [SCFeedObjectTemplateType.SEARCH, SCFeedObjectTemplateType.SNIPPET, SCFeedObjectTemplateType.PREVIEW, SCFeedObjectTemplateType.DETAIL, SCFeedObjectTemplateType.SHARE],
       control: {type: 'select'},
       description: 'Object template. Used only with args id.',
       table: {defaultValue: {summary: SCFeedObjectTemplateType.SNIPPET}}
@@ -64,8 +64,8 @@ Base.args = {
 export const CacheBase = Template.bind({});
 
 CacheBase.args = {
-  feedObjectId: 327,
-  feedObjectType: SCContributionType.POST
+  feedObjectId: 1372,
+  feedObjectType: SCContributionType.DISCUSSION
 };
 
 export const BaseWithImage = Template.bind({});
