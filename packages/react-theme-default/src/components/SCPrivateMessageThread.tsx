@@ -71,8 +71,6 @@ const Component = {
           display: 'flex',
           alignItems: 'center',
           width: '80%',
-          maxHeight: theme.spacing(5),
-          overflow: 'auto',
           backgroundColor: theme.palette.common.white,
           borderRadius: theme.shape.borderRadius,
           marginRight: theme.spacing(2),
@@ -90,6 +88,9 @@ const Component = {
           '& .SCPrivateMessageThread-autocomplete': {
             minWidth: theme.spacing(27),
             marginLeft: theme.spacing(1),
+            maxHeight: theme.spacing(5),
+            overflow: 'auto',
+            scrollbarWidth: 'none',
             '& .MuiAutocomplete-endAdornment': {
               position: 'relative',
               '& .MuiAutocomplete-clearIndicator': {

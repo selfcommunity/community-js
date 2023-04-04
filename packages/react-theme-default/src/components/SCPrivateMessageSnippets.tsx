@@ -5,13 +5,12 @@ const Component = {
     root: ({theme}: any) => ({
       [theme.breakpoints.up('sm')]: {
         height: theme.spacing(103.5),
-        maxHeight: 'inherit'
+        maxHeight: 'inherit',
+        overflow: 'auto'
       },
       '& .MuiCardContent-root': {
         display: 'flex',
         flexDirection: 'column',
-        maxHeight: theme.spacing(103.5),
-        overflow: 'auto',
         '& .MuiList-root': {
           '& .Mui-selected': {
             backgroundColor: alpha(theme.palette.secondary.main, theme.palette.action.selectedOpacity)
