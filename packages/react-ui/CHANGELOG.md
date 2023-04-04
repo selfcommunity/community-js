@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.145](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.144...@selfcommunity/react-ui@0.7.0-alpha.145) (2023-04-04)
+
+
+### Performance Improvements
+
+* renamed pm component callback ([5b6341c](https://github.com/selfcommunity/community-js/commit/5b6341c37b6d242c3763e5fa2d5cf5036c298712))
+
+
+
+
+
 # [0.7.0-alpha.144](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.143...@selfcommunity/react-ui@0.7.0-alpha.144) (2023-04-04)
 
 

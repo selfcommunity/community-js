@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.91](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.90...@selfcommunity/react-theme-default@0.1.0-alpha.91) (2023-04-04)
+
+
+### Bug Fixes
+
+* pm components theme fixes: autocomplete bar height/snippets height and overflow ([4ee810e](https://github.com/selfcommunity/community-js/commit/4ee810ef52bcc6043c03b846a9b26df9b6920a8c))
+
+
+
+
+
 # [0.1.0-alpha.90](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.89...@selfcommunity/react-theme-default@0.1.0-alpha.90) (2023-04-04)
 
 
