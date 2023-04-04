@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.1-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.4.1-alpha.11...@selfcommunity/types@0.4.1-alpha.12) (2023-04-04)
+
+
+### Performance Improvements
+
+* Added search template for feedObject.ts ([0ba3f82](https://github.com/selfcommunity/community-js/commit/0ba3f82a7a0c3876fb00773117341fb2b323028b))
+
+
+
+
+
 ## [0.4.1-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.4.1-alpha.10...@selfcommunity/types@0.4.1-alpha.11) (2023-04-03)
 
 

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.143](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.142...@selfcommunity/react-ui@0.7.0-alpha.143) (2023-04-04)
+
+
+### Performance Improvements
+
+* Added search template for feedObject.ts ([0ba3f82](https://github.com/selfcommunity/community-js/commit/0ba3f82a7a0c3876fb00773117341fb2b323028b))
+
+
+
+
+
 # [0.7.0-alpha.142](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.141...@selfcommunity/react-ui@0.7.0-alpha.142) (2023-04-04)
 
 
