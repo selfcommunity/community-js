@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.144](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.143...@selfcommunity/react-ui@0.7.0-alpha.144) (2023-04-04)
+
+
+### Bug Fixes
+
+* Fix feed object search template ([75676da](https://github.com/selfcommunity/community-js/commit/75676da86350122b98a1ff2cee2f29febe6f0390))
+
+
+
+
+
 # [0.7.0-alpha.143](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.142...@selfcommunity/react-ui@0.7.0-alpha.143) (2023-04-04)
 
 

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.90](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.89...@selfcommunity/react-theme-default@0.1.0-alpha.90) (2023-04-04)
+
+
+### Bug Fixes
+
+* Fix feed object search template ([75676da](https://github.com/selfcommunity/community-js/commit/75676da86350122b98a1ff2cee2f29febe6f0390))
+
+
+
+
+
 # [0.1.0-alpha.89](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.88...@selfcommunity/react-theme-default@0.1.0-alpha.89) (2023-04-04)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default
