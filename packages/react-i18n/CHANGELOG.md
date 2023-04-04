@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.5...@selfcommunity/react-i18n@0.5.0-alpha.6) (2023-04-04)
+
+
+### Bug Fixes
+
+* Fix category and locations atocompletes ([da3804a](https://github.com/selfcommunity/community-js/commit/da3804a522b798e7fb04945ec53817cff15decf9))
+
+
+
+
+
 # [0.5.0-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.4...@selfcommunity/react-i18n@0.5.0-alpha.5) (2023-04-04)
 
 
