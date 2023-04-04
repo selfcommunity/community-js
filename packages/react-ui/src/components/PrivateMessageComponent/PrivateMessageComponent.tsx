@@ -39,10 +39,10 @@ export interface PrivateMessageComponentProps {
    */
   onItemClick?: (id) => void;
   /**
-   * Handler on thread delete
+   * Handler on thread back
    * @default null
    */
-  onThreadDelete?: () => void;
+  onThreadBack?: () => void;
   /**
    * Overrides or extends the styles applied to the component.
    * @default null
@@ -89,7 +89,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
     props: inProps,
     name: PREFIX
   });
-  const {id = null, autoHide = false, className = null, onItemClick = null, onThreadDelete = null, ...rest} = props;
+  const {id = null, autoHide = false, className = null, onItemClick = null, onThreadBack = null, ...rest} = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
@@ -127,7 +127,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
    */
   const handleThreadClosing = () => {
     setObj(null);
-    onThreadDelete && onThreadDelete();
+    onThreadBack && onThreadBack();
   };
   /**
    * Handles new message opening on button action click
@@ -161,7 +161,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
     id && setLayout('mobile');
     setOpenNewMessage(false);
     setObj(null);
-    onThreadDelete && onThreadDelete();
+    onThreadBack && onThreadBack();
   };
   /**
    * Handles state update when a new message is sent
