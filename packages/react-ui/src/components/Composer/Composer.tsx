@@ -772,7 +772,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
             </IconButton>
           </Typography>
           <Box>
-            <FormattedMessage id="ui.composer.location.title" defaultMessage="ui.composer.location.title" />
+            <FormattedMessage id="ui.locationAutocomplete.title" defaultMessage="ui.locationAutocomplete.title" />
           </Box>
           <Box>
             <Tooltip title={<FormattedMessage id="ui.composer.done" defaultMessage="ui.composer.done" />}>

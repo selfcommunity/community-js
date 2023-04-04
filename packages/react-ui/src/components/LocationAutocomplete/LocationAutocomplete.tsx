@@ -26,10 +26,9 @@ const Root = styled(Autocomplete, {
 
 export interface LocationAutocompleteProps
   extends Pick<
-    AutocompleteProps<string, false, false, true>,
+    AutocompleteProps<SCLocalityType, false, false, true>,
     Exclude<
-      keyof AutocompleteProps<string, false, false, true>,
-      | 'defaultValue'
+      keyof AutocompleteProps<SCLocalityType, false, false, true>,
       | 'options'
       | 'getOptionLabel'
       | 'filterOptions'
@@ -47,11 +46,6 @@ export interface LocationAutocompleteProps
       | 'renderOption'
     >
   > {
-  /**
-   * Force the visibility display of the popup icon.
-   * @default 'auto'
-   */
-  defaultValue?: SCLocalityType;
   /**
    * The props applied to the text field.
    * @default {variant: 'outlined, label: location_label}
@@ -75,14 +69,17 @@ export default function LocationAutocomplete(inProps: LocationAutocompleteProps)
     defaultValue = null,
     disabled = false,
     onChange,
-    TextFieldProps = {variant: 'outlined', label: <FormattedMessage id="ui.composer.location.label" defaultMessage="ui.composer.locations.label" />},
+    TextFieldProps = {
+      variant: 'outlined',
+      label: <FormattedMessage id="ui.locationAutocomplete.label" defaultMessage="ui.composer.locations.label" />
+    },
     ...rest
   } = props;
 
   // State
   const [isLoading, setIsLoading] = useState(false);
   const [locations, setLocations] = useState([]);
-  const [value, setValue] = useState<SCLocalityType | null>(defaultValue);
+  const [value, setValue] = useState<string | SCLocalityType>(defaultValue);
   const [search, setSearch] = useState<string>('');
 
   const load = (offset = 0, limit = 20) => {
@@ -140,7 +137,7 @@ export default function LocationAutocomplete(inProps: LocationAutocompleteProps)
       selectOnFocus
       handleHomeEndKeys
       disabled={disabled}
-      noOptionsText={<FormattedMessage id="ui.composer.location.empty" defaultMessage="ui.composer.location.empty" />}
+      noOptionsText={<FormattedMessage id="ui.locationAutocomplete.empty" defaultMessage="ui.locationAutocomplete.empty" />}
       onChange={handleChange}
       onInputChange={handleSearch}
       isOptionEqualToValue={(option: SCLocalityType, value: SCLocalityType) => value.lat === option.lat && value.lng === option.lng}

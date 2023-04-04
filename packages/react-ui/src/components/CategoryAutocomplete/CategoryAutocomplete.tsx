@@ -20,10 +20,9 @@ const classes = {
 
 export interface CategoryAutocompleteProps
   extends Pick<
-    AutocompleteProps<string, true, false, true>,
+    AutocompleteProps<SCCategoryType, true, false, true>,
     Exclude<
-      keyof AutocompleteProps<string, true, false, true>,
-      | 'defaultValue'
+      keyof AutocompleteProps<SCCategoryType, true, false, true>,
       | 'open'
       | 'onOpen'
       | 'onClose'
@@ -45,11 +44,6 @@ export interface CategoryAutocompleteProps
       | 'renderInput'
     >
   > {
-  /**
-   * Force the visibility display of the popup icon.
-   * @default 'auto'
-   */
-  defaultValue?: SCCategoryType[];
   /**
    * The maximum number of categories that will be visible when not focused.
    * @default 0
@@ -86,20 +80,22 @@ const CategoryAutocomplete = (inProps: CategoryAutocompleteProps): JSX.Element =
   // Props
   const {
     onChange,
-    defaultValue = [],
+    multiple = false,
+    defaultValue = multiple ? [] : null,
     limitCountCategories = 0,
     checkboxSelect = false,
     disabled = false,
     TextFieldProps = {
       variant: 'outlined',
-      label: <FormattedMessage id="ui.composer.categories.label" defaultMessage="ui.composer.categories.label" />
+      label: <FormattedMessage id="ui.categoryAutocomplete.label" defaultMessage="ui.categoryAutocomplete.label" />
     },
     ...rest
   } = props;
 
   // State
-  const [open, setOpen] = useState(false);
-  const [value, setValue] = useState(defaultValue);
+  const [open, setOpen] = useState<boolean>(false);
+  const [_defaultValue, setDefaultValue] = useState<string | SCCategoryType | (string | SCCategoryType)[]>(defaultValue);
+  const [value, setValue] = useState<string | SCCategoryType | (string | SCCategoryType)[]>(defaultValue);
 
   // HOOKS
   const {categories, isLoading} = useSCFetchCategories();
@@ -120,7 +116,7 @@ const CategoryAutocomplete = (inProps: CategoryAutocompleteProps): JSX.Element =
 
   const handleChange = (event: SyntheticEvent, value) => {
     let newValue = null;
-    if (limitCountCategories > 0) {
+    if (multiple && limitCountCategories > 0) {
       const [...rest] = value;
       newValue = rest.slice(-1 * limitCountCategories);
     } else {
@@ -130,10 +126,10 @@ const CategoryAutocomplete = (inProps: CategoryAutocompleteProps): JSX.Element =
   };
 
   // Render
-
   return (
     <Root
       className={classes.root}
+      multiple={multiple}
       open={open}
       onOpen={handleOpen}
       onClose={handleClose}
@@ -141,14 +137,14 @@ const CategoryAutocomplete = (inProps: CategoryAutocompleteProps): JSX.Element =
       disableCloseOnSelect={checkboxSelect}
       options={categories || []}
       getOptionLabel={(option: SCCategoryType) => option.name || ''}
-      value={value}
+      defaultValue={_defaultValue}
       selectOnFocus
       clearOnBlur
       blurOnSelect
       handleHomeEndKeys
       clearIcon={null}
-      disabled={disabled}
-      noOptionsText={<FormattedMessage id="ui.composer.categories.empty" defaultMessage="ui.composer.categories.empty" />}
+      disabled={disabled || isLoading}
+      noOptionsText={<FormattedMessage id="ui.categoryAutocomplete.empty" defaultMessage="ui.categoryAutocomplete.empty" />}
       onChange={handleChange}
       isOptionEqualToValue={(option: SCCategoryType, value: SCCategoryType) => value.id === option.id}
       renderTags={(value, getTagProps) => {
