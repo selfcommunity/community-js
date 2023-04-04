@@ -5,7 +5,7 @@ import {SCPollType} from './poll';
 import {SCMediaType} from './media';
 import {SCTagType} from './tag';
 import {SCReactionType} from './reaction';
-import { SCContributionType } from './contribution';
+import {SCContributionType} from './contribution';
 
 /**
  * Typology of feed

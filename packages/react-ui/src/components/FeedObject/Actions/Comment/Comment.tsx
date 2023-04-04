@@ -183,13 +183,20 @@ export default function Comment(inProps: CommentProps): JSX.Element {
    * @return {JSX.Element}
    */
   function renderCommentButton() {
+    let ButtonProps = {};
+    if (!onCommentAction) {
+      ButtonProps = {
+        component: Link,
+        to: scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))
+      };
+    }
     return (
       <>
         {withAction && (
           <React.Fragment>
             {!inlineAction && withAudience && <Divider className={classes.divider} />}
             <Tooltip title={`${intl.formatMessage(messages.comment)}`}>
-              <Button onClick={onCommentAction} className={classes.button}>
+              <Button onClick={onCommentAction} className={classes.button} {...ButtonProps}>
                 <Icon>chat_bubble_outline</Icon>
               </Button>
             </Tooltip>

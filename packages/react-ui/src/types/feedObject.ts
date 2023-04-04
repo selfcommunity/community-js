@@ -5,6 +5,7 @@ export enum SCFeedObjectTemplateType {
   SNIPPET = 'snippet',
   PREVIEW = 'preview',
   DETAIL = 'detail',
+  SEARCH = 'search',
   SHARE = 'share'
 }
 

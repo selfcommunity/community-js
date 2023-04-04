@@ -1,7 +1,7 @@
 import React, {useMemo} from 'react';
 import {styled} from '@mui/material/styles';
 import UserSkeleton from './Skeleton';
-import {Avatar, Badge, Button, Chip, Typography} from '@mui/material';
+import {Avatar, Badge, Button, Chip} from '@mui/material';
 import {SCUserType} from '@selfcommunity/types';
 import {
   Link,
@@ -21,7 +21,6 @@ import ConnectionUserButton from '../ConnectionUserButton';
 import {useThemeProps} from '@mui/system';
 import BaseItemButton from '../../shared/BaseItemButton';
 import {WidgetProps} from '../Widget';
-import {highlight} from '../../index';
 
 const messages = defineMessages({
   userFollowers: {
@@ -77,10 +76,6 @@ export interface UserProps extends WidgetProps {
    */
   badgeContent?: any;
   /**
-   * A search term used for highlighting matching results
-   */
-  search?: string;
-  /**
    * Any other properties
    */
   [p: string]: any;
@@ -126,7 +121,6 @@ export default function User(inProps: UserProps): JSX.Element {
     showFollowers = false,
     elevation,
     badgeContent = null,
-    search = '',
     ...rest
   } = props;
 
@@ -208,11 +202,9 @@ export default function User(inProps: UserProps): JSX.Element {
       primary={
         hasBadge && preferences ? (
           <>
-            {search !== '' ? highlight(scUser.username, search) : scUser.username}
+            {scUser.username}
             <Chip component="span" className={classes.staffBadgeLabel} size="small" label={preferences[SCPreferences.STAFF_STAFF_BADGE_LABEL]} />
           </>
-        ) : search !== '' ? (
-          highlight(scUser.username, search)
         ) : (
           scUser.username
         )

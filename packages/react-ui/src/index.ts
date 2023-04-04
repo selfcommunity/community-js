@@ -128,7 +128,6 @@ import * as ContributionUtils from './utils/contribution';
 import MetadataField from './shared/MetadataField';
 import InfiniteScroll from './shared/InfiniteScroll';
 import CentralProgress from './shared/CentralProgress';
-import {highlight} from './utils/highlight';
 import {bytesToSize} from './utils/sizeCoverter';
 import * as MessageUploaderUtils from './utils/thumbnailCoverter';
 
@@ -376,7 +375,6 @@ export {
   IncubatorSuggestion,
   IncubatorSuggestionProps,
   ContributionUtils,
-  highlight,
   bytesToSize,
   MessageUploaderUtils,
   Footer,
