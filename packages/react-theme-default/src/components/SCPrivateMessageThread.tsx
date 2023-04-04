@@ -6,7 +6,7 @@ const Component = {
       backgroundColor: alpha(theme.palette.secondary.main, theme.palette.action.selectedOpacity),
       position: 'relative',
       [theme.breakpoints.down('md')]: {
-        minHeight: '100vh'
+        minHeight: '90vh'
       },
       [theme.breakpoints.up('sm')]: {
         height: theme.spacing(103.5),
@@ -142,10 +142,11 @@ const Component = {
           display: 'flex',
           alignItems: 'center',
           '& img': {
-            width: '100%',
-            minHeight: theme.spacing(50),
+            width: theme.spacing(72),
+            height: theme.spacing(52.5),
             [theme.breakpoints.down('md')]: {
-              minHeight: theme.spacing(22)
+              height: theme.spacing(22),
+              width: '100%'
             }
           }
         },
@@ -167,12 +168,15 @@ const Component = {
         },
         '& .SCPrivateMessageThreadItem-document': {
           width: theme.spacing(32.5),
+          [theme.breakpoints.down('md')]: {
+            width: theme.spacing(22)
+          },
           '& img': {
-            minHeight: theme.spacing(40),
+            height: theme.spacing(40),
+            width: '100%',
             [theme.breakpoints.down('md')]: {
-              minHeight: theme.spacing(22)
-            },
-            width: '100%'
+              height: theme.spacing(22)
+            }
           },
           '& .MuiButtonBase-root': {
             width: 'inherit',
@@ -187,6 +191,9 @@ const Component = {
               overflow: 'hidden',
               textOverflow: 'ellipsis',
               marginLeft: theme.spacing(0.5)
+            },
+            [theme.breakpoints.down('md')]: {
+              bottom: '15%'
             }
           }
         }

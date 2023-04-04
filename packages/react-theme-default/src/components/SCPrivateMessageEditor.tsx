@@ -82,7 +82,7 @@ const Component = {
                 left: '50%',
                 transform: 'translate(-50%, -50%)'
               },
-              '&:hover': {
+              '&:hover, &:active': {
                 background: 'rgba(0,0,0,0.5)'
               },
               '& .SCMessageMediaUploader-progress': {
