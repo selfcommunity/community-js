@@ -17,13 +17,7 @@ import {SCFeedObjectActivitiesType, SCFeedObjectTemplateType} from '../../types/
 import MarkRead from '../../shared/MarkRead';
 import classNames from 'classnames';
 import ContributionActionsMenu, {ContributionActionsMenuProps} from '../../shared/ContributionActionsMenu';
-import {
-  getContributionHtml,
-  getContributionRouteName,
-  getContributionSnippet,
-  getRouteData,
-  getSearchContributionSnippet
-} from '../../utils/contribution';
+import {getContributionHtml, getContributionRouteName, getContributionSnippet, getRouteData} from '../../utils/contribution';
 import Follow, {FollowProps} from './Actions/Follow';
 import Widget, {WidgetProps} from '../Widget';
 import {useThemeProps} from '@mui/system';
@@ -372,10 +366,6 @@ export interface FeedObjectProps extends CardProps, VirtualScrollerItemProps {
    */
   cacheStrategy?: CacheStrategies;
   /**
-   * A search term used for highlighting matching results
-   */
-  search?: string;
-  /**
    * Other props
    */
   [p: string]: any;
@@ -460,7 +450,6 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
     onReply,
     onHeightChange,
     onStateChange,
-    search,
     ...rest
   } = props;
 
@@ -735,10 +724,10 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
   /**
    * Render the obj object
    * Manage variants:
-   * SNIPPET, PREVIEW, DETAIL
+   * SNIPPET, PREVIEW, DETAIL, SEARCH, SHARE
    */
   let objElement;
-  if (template === SCFeedObjectTemplateType.PREVIEW || template === SCFeedObjectTemplateType.DETAIL) {
+  if (template === SCFeedObjectTemplateType.PREVIEW || template === SCFeedObjectTemplateType.DETAIL || template === SCFeedObjectTemplateType.SEARCH) {
     objElement = (
       <React.Fragment>
         {obj ? (
@@ -977,9 +966,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                   {obj.author.username}
                 </Link>
                 <Typography variant="body2" className={classes.snippetContent}>
-                  <Link to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))}>
-                    {search && search !== '' ? getSearchContributionSnippet(obj, search) : getContributionSnippet(obj)}
-                  </Link>
+                  <Link to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))}>{getContributionSnippet(obj)}</Link>
                 </Typography>
               </Box>
             }
