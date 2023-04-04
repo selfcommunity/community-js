@@ -20,7 +20,10 @@ const Component = {
       '& .MuiListItemText-secondary': {
         display: 'flex',
         justifyContent: 'space-between',
-        alignItems: 'center'
+        alignItems: 'center',
+        whiteSpace: 'nowrap',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis'
       },
       '& .MuiListItemSecondaryAction-root': {
         position: 'absolute',

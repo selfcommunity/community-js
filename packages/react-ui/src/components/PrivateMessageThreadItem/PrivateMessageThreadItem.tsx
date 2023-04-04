@@ -1,14 +1,11 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import {ListItem, Typography, IconButton, Box, useTheme} from '@mui/material';
+import {ListItem, Typography, IconButton, Box, useTheme, Button} from '@mui/material';
 import PrivateMessageThreadItemSkeleton from './Skeleton';
 import {useIntl} from 'react-intl';
 import {SCPrivateMessageThreadType, SCMessageFileType} from '@selfcommunity/types';
 import Icon from '@mui/material/Icon';
 import classNames from 'classnames';
-import AutoPlayer from '../../shared/AutoPlayer';
-import LazyLoad from 'react-lazyload';
-import {DEFAULT_PRELOAD_OFFSET_VIEWPORT} from '../../constants/LazyLoad';
 import {useThemeProps} from '@mui/system';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import PrivateMessageActionMenu from '../PrivateMessageActionMenu';
@@ -153,6 +150,16 @@ export default function PrivateMessageThreadItem(inProps: PrivateMessageThreadIt
     handleMenuClose();
   };
 
+  const handleDownload = (fileUrl, fileName) => {
+    const link = document.createElement('a');
+    link.href = fileUrl;
+    link.setAttribute('download', fileName);
+    link.setAttribute('target', '_blank');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   // RENDERING
 
   const renderMessageFile = (m) => {
@@ -162,30 +169,33 @@ export default function PrivateMessageThreadItem(inProps: PrivateMessageThreadIt
     let section = null;
     if (m.file) {
       let type = m.file.mimetype;
-      let src = message.file.url;
       switch (true) {
         case type.startsWith(SCMessageFileType.IMAGE):
           section = (
             <Box className={classes.img}>
-              <img src={src} loading="lazy" alt={'img'} />
+              <img src={m.file.thumbnail} loading="lazy" alt={'img'} onClick={() => handleDownload(m.file.url, m.file.fileName)} />
             </Box>
           );
           break;
         case type.startsWith(SCMessageFileType.VIDEO):
           section = (
-            <LazyLoad className={classes.video} once offset={DEFAULT_PRELOAD_OFFSET_VIEWPORT}>
-              <AutoPlayer url={src} width={'100%'} enableAutoplay={false} />
-            </LazyLoad>
+            <Box className={classNames(classes.img, classes.video)}>
+              <img src={m.file.thumbnail} loading="lazy" alt={'img'} />
+              <IconButton onClick={() => handleDownload(m.file.url, m.file.fileName)}>
+                <Icon>play_circle_outline</Icon>
+              </IconButton>
+            </Box>
           );
           break;
         case type.startsWith(SCMessageFileType.DOCUMENT):
           section = (
             <Box className={classes.document}>
-              <IconButton onClick={() => window.open(src, '_blank')}>
+              <img src={m.file.thumbnail} loading="lazy" alt={'img'} />
+              <Button onClick={() => handleDownload(m.file.url, m.file.fileName)}>
                 <Icon>download</Icon>
-              </IconButton>
-              <Typography>{m.file.filename} </Typography>
-              <Typography ml={1}>{bytesToSize(m.file.filesize)}</Typography>
+                <Typography>{m.file.filename}</Typography>
+                <Typography>{bytesToSize(m.file.filesize)}</Typography>
+              </Button>
             </Box>
           );
           break;

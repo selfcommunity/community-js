@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Alert, Box, Fade, IconButton, InputAdornment, Popover, Stack, TextField, useMediaQuery, useTheme} from '@mui/material';
+import {Alert, Box, Fade, IconButton, Popover, Stack, TextField, useMediaQuery, useTheme} from '@mui/material';
 import Icon from '@mui/material/Icon';
 import classNames from 'classnames';
 import MessageMediaUploader from './MessageMediaUploader';
@@ -54,6 +54,16 @@ export interface PrivateMessageEditorProps {
    */
   send?: (message?: string, file?: SCPrivateMessageFileType) => void;
   /**
+   * If there's an error
+   * @default false
+   */
+  error?: boolean;
+  /**
+   * Callback fired when removing error
+   * @default null
+   */
+  onErrorRemove?: () => void;
+  /**
    * Any other properties
    */
   [p: string]: any;
@@ -90,7 +100,7 @@ export default function PrivateMessageEditor(inProps: PrivateMessageEditorProps)
     props: inProps,
     name: PREFIX
   });
-  const {autoHide = null, className = null, send = null, onThreadChangeId, ...rest} = props;
+  const {autoHide = null, className = null, send = null, onThreadChangeId, error = false, onErrorRemove = null, ...rest} = props;
 
   // STATE
   const theme = useTheme<SCThemeType>();
@@ -150,6 +160,18 @@ export default function PrivateMessageEditor(inProps: PrivateMessageEditorProps)
     return (
       <Alert severity="info">
         <FormattedMessage id="ui.privateMessage.editor.disabled.msg" defaultMessage="ui.privateMessage.editor.disabled.msg" />
+      </Alert>
+    );
+  } else if (error) {
+    return (
+      <Alert
+        severity="error"
+        action={
+          <IconButton color="inherit" size="small" onClick={onErrorRemove}>
+            <Icon>close</Icon>
+          </IconButton>
+        }>
+        <FormattedMessage id="ui.privateMessage.editor.error.send.msg" defaultMessage="ui.privateMessage.editor.error.send.msg" />
       </Alert>
     );
   }

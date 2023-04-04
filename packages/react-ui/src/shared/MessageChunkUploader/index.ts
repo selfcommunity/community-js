@@ -129,6 +129,10 @@ export default (props: MessageChunkUploaderProps): JSX.Element => {
       })
       .catch((error) => {
         console.error(error);
+        onError({...chunkStateRef.current.chunks[item.id]}, error.toString());
+        const _chunks = {...chunkStateRef.current.chunks};
+        delete _chunks[item.id];
+        chunkStateRef.current.setChunks(_chunks);
       });
   };
 

@@ -159,7 +159,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
   const [isFollower, setIsFollower] = useState<boolean>(false);
   const isNew = userObj && userObj === SCPrivateMessageStatusType.NEW;
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
-  const [singleMessageUser, setSingleMessageUser] = useState('');
+  const [singleMessageUser, setSingleMessageUser] = useState(null);
   const [receiver, setReceiver] = useState(null);
   const [deletingMsg, setDeletingMsg] = useState(null);
   const [singleMessageThread, setSingleMessageThread] = useState<boolean>(false);
@@ -170,6 +170,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
   const messageReceiver = (item, loggedUserId) => {
     return item?.receiver?.id !== loggedUserId ? item?.receiver?.id : item?.sender?.id;
   };
+  const [error, setError] = useState<boolean>(false);
   // REFS
   const refreshSubscription = useRef(null);
   // INTL
@@ -317,12 +318,15 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
       })
       .catch((error) => {
         console.log(error);
-        let _snackBar = enqueueSnackbar(<FormattedMessage id="ui.common.error" defaultMessage="ui.common.error" />, {
-          variant: 'error',
-          onClick: () => {
-            closeSnackbar(_snackBar);
+        let _snackBar = enqueueSnackbar(
+          <FormattedMessage id="ui.privateMessage.thread.error.delete.msg" defaultMessage="ui.privateMessage.thread.error.delete.msg" />,
+          {
+            variant: 'error',
+            onClick: () => {
+              closeSnackbar(_snackBar);
+            }
           }
-        });
+        );
       });
   }
 
@@ -368,12 +372,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
         })
         .catch((error) => {
           console.log(error);
-          let _snackBar = enqueueSnackbar(<FormattedMessage id="ui.common.error.messageError" defaultMessage="ui.common.error.messageError" />, {
-            variant: 'error',
-            onClick: () => {
-              closeSnackbar(_snackBar);
-            }
-          });
+          setError(true);
         });
     }
   }
@@ -465,7 +464,13 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
             </li>
           ))}
         </List>
-        <PrivateMessageEditor send={handleSend} autoHide={!isFollower && !role} onThreadChangeId={isNumber ? userObj : userObj.receiver.id} />
+        <PrivateMessageEditor
+          send={handleSend}
+          autoHide={!isFollower && !role}
+          onThreadChangeId={isNumber ? userObj : userObj.receiver.id}
+          error={error}
+          onErrorRemove={() => setError(false)}
+        />
         {openDeleteMessageDialog && (
           <ConfirmDialog
             open={openDeleteMessageDialog}
@@ -526,14 +531,14 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
                   )}
                   classes={{popper: classes.autocompleteDialog}}
                   onChange={handleRecipientSelect}
-                  disabled={!followers}
+                  disabled={!followers || Boolean(singleMessageUser)}
                 />
               </Box>
               <IconButton size="small" onClick={onNewMessageClose}>
                 <Icon fontSize="small">close</Icon>
               </IconButton>
             </Box>
-            <PrivateMessageEditor send={handleSend} autoHide={!followers} />
+            <PrivateMessageEditor send={handleSend} autoHide={!followers} error={error} onErrorRemove={() => setError(false)} />
           </>
         ) : (
           <Typography component="span" className={classes.emptyMessage}>

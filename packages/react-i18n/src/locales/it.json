@@ -420,11 +420,13 @@
   "ui.privateMessage.editor.placeholder" : "Scrivi il tuo messagio",
   "ui.privateMessage.editor.disabled.msg" : "Non puoi inviare messaggi a chi non ti segue!",
   "ui.privateMessage.editor.media.uploader.msg" : "Carica l'allegato (max 10MB) oppure trascinalo qui",
+  "ui.privateMessage.editor.error.send.msg" : "Non è stato possibile inviare il messaggio",
 
   "ui.privateMessage.threadItem.menu.item.delete" : "Elimina Messaggio",
   "ui.privateMessage.thread.newMessage.to" : "A:",
   "ui.privateMessage.thread.newMessage.autocomplete.placeholder" : "nome utente",
   "ui.privateMessage.thread.emptyBox.message" : "Seleziona o componi un messaggio",
+  "ui.privateMessage.thread.error.delete.msg" : "Si è verificato un errore durante l'eliminazione del messaggio",
   "ui.privateMessage.snippets.button.newMessage": "Componi Nuovo Messaggio",
   "ui.privateMessage.snippets.searchBar.placeholder" : "Cerca tra i messaggi privati",
 
