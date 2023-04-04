@@ -2,7 +2,6 @@ import React from 'react';
 import {SCRoutes} from '@selfcommunity/react-core';
 import {SCCommentTypologyType, SCContributionType} from '@selfcommunity/types';
 import {FormattedMessage} from 'react-intl';
-import {highlight} from './highlight';
 
 /**
  * From obj extract type of the contribution
@@ -46,23 +45,6 @@ export function getContributionSnippet(obj) {
   } else {
     return obj.summary ? (
       <span dangerouslySetInnerHTML={{__html: obj.summary}}></span>
-    ) : (
-      <FormattedMessage id={`ui.common.${obj.type.toLowerCase()}WithoutText`} defaultMessage={`ui.common.${obj.type.toLowerCase()}WithoutText`} />
-    );
-  }
-}
-
-/**
- * Get a search snippet for a contribution
- * @param obj (Discussion, Post, Status, Comment)
- * @param search (a search term)
- */
-export function getSearchContributionSnippet(obj, search) {
-  if (obj.type === SCContributionType.DISCUSSION) {
-    return obj.summary ? highlight(obj.summary, search) : highlight(obj.title, search);
-  } else {
-    return obj.summary ? (
-      highlight(obj.summary, search)
     ) : (
       <FormattedMessage id={`ui.common.${obj.type.toLowerCase()}WithoutText`} defaultMessage={`ui.common.${obj.type.toLowerCase()}WithoutText`} />
     );

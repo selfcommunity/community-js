@@ -62,7 +62,7 @@ export default function FeedObjectSkeleton(props: {template?: SCFeedObjectTempla
   const {template = SCFeedObjectTemplateType.SNIPPET, ...rest} = props;
   const theme = useTheme<SCThemeType>();
   let obj;
-  if (template === SCFeedObjectTemplateType.PREVIEW || template === SCFeedObjectTemplateType.DETAIL) {
+  if (template === SCFeedObjectTemplateType.PREVIEW || template === SCFeedObjectTemplateType.DETAIL || template === SCFeedObjectTemplateType.SEARCH) {
     obj = (
       <React.Fragment>
         <CardHeader

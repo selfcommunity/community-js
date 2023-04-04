@@ -104,6 +104,8 @@ export default function SearchAutocomplete(inProps: SearchAutocompleteProps) {
   };
 
   const handleChange = (event, value, reason, detail) => {
+    event.preventDefault();
+    event.stopPropagation();
     switch (reason) {
       case 'selectOption':
         onSuggestionSelect && onSuggestionSelect(value);
@@ -114,6 +116,7 @@ export default function SearchAutocomplete(inProps: SearchAutocompleteProps) {
         handleClear(event);
         break;
     }
+    return false;
   };
 
   const handleClear = (event) => {
