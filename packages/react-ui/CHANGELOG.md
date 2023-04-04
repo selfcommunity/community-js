@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.142](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.141...@selfcommunity/react-ui@0.7.0-alpha.142) (2023-04-04)
+
+
+### Bug Fixes
+
+* fixed message chunk uploader error ([2f38d72](https://github.com/selfcommunity/community-js/commit/2f38d7291f2e5d7b71004ef27c85fc33a4ca8ac6))
+* fixed pm thumbnail rendering, autocomplete warning ([aa0e573](https://github.com/selfcommunity/community-js/commit/aa0e5737e75ff901bf6626a21a646b63b73a6e4d))
+
+
+### Performance Improvements
+
+* moved pm message error from thread to editor ([7ccf35e](https://github.com/selfcommunity/community-js/commit/7ccf35ed06a1537af7da410654e8d91a38a1c2e3))
+
+
+
+
+
 # [0.7.0-alpha.141](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.140...@selfcommunity/react-ui@0.7.0-alpha.141) (2023-04-03)
 
 

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.4...@selfcommunity/react-i18n@0.5.0-alpha.5) (2023-04-04)
+
+
+### Performance Improvements
+
+* added pm error translations ([c6cfca4](https://github.com/selfcommunity/community-js/commit/c6cfca49dc82ae499b8a89aaa09cc77d76cc9f7f))
+
+
+
+
+
 # [0.5.0-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.3...@selfcommunity/react-i18n@0.5.0-alpha.4) (2023-04-03)
 
 
