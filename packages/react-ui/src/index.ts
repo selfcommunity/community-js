@@ -7,6 +7,7 @@ import NavigationToolbarMobile, {NavigationToolbarMobileProps, NavigationToolbar
 import BottomNavigation, {BottomNavigationProps} from './components/BottomNavigation';
 import BroadcastMessages, {BroadcastMessagesProps, BroadcastMessagesSkeleton} from './components/BroadcastMessages';
 import Category, {CategoryProps, CategorySkeleton} from './components/Category';
+import CategoryAutocomplete, {CategoryAutocompleteProps} from './components/CategoryAutocomplete';
 import CategoryHeader, {CategoryHeaderProps, CategoryHeaderSkeleton} from './components/CategoryHeader';
 import Categories, {CategoriesProps, CategoriesSkeleton, CategoriesSkeletonProps} from './components/Categories';
 import CategoriesFollowed, {CategoriesFollowedSkeleton} from './components/CategoriesFollowed';
@@ -29,6 +30,7 @@ import InlineComposer, {InlineComposerProps, InlineComposerSkeleton} from './com
 import PeopleSuggestion, {PeopleSuggestionProps, PeopleSuggestionSkeleton} from './components/PeopleSuggestion';
 import Platform, {PlatformProps, PlatformSkeleton} from './components/Platform';
 import PrivateMessageSnippets, {PrivateMessageSnippetsProps, PrivateMessageSnippetsSkeleton} from './components/PrivateMessageSnippets';
+import LocationAutocomplete, {LocationAutocompleteProps} from './components/LocationAutocomplete';
 import LoyaltyProgram, {LoyaltyProgramProps, LoyaltyProgramSkeleton} from './components/LoyaltyProgram';
 import LoyaltyProgramDetail, {LoyaltyProgramDetailProps, LoyaltyProgramDetailSkeleton} from './components/LoyaltyProgramDetail';
 import TrendingFeed, {TrendingFeedProps, TrendingFeedSkeleton} from './components/TrendingFeed';
@@ -157,6 +159,8 @@ export {
   Category,
   CategoryProps,
   CategorySkeleton,
+  CategoryAutocomplete,
+  CategoryAutocompleteProps,
   CategoryHeader,
   CategoryHeaderProps,
   CategoryHeaderSkeleton,
@@ -225,6 +229,8 @@ export {
   Platform,
   PlatformProps,
   PlatformSkeleton,
+  LocationAutocomplete,
+  LocationAutocompleteProps,
   LoyaltyProgram,
   LoyaltyProgramProps,
   LoyaltyProgramSkeleton,
