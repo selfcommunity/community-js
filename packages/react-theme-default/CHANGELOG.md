@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.92](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.91...@selfcommunity/react-theme-default@0.1.0-alpha.92) (2023-04-04)
+
+
+### Performance Improvements
+
+* Refactor Composer.tsx internal components ([ffb9cf5](https://github.com/selfcommunity/community-js/commit/ffb9cf5a06055bf70c17e4a8abc26473b3089ef6))
+
+
+
+
+
 # [0.1.0-alpha.91](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.90...@selfcommunity/react-theme-default@0.1.0-alpha.91) (2023-04-04)
 
 
