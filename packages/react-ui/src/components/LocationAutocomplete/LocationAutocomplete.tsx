@@ -3,7 +3,7 @@ import {FormattedMessage} from 'react-intl';
 import TextField, {TextFieldProps} from '@mui/material/TextField';
 import CircularProgress from '@mui/material/CircularProgress';
 import {Autocomplete, AutocompleteProps} from '@mui/material';
-import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services/src/index';
+import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
 import {SCLocalityType} from '@selfcommunity/types/src/index';
 import {styled} from '@mui/material/styles';
 import parse from 'autosuggest-highlight/parse';
