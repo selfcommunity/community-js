@@ -3,7 +3,7 @@ import {alpha} from '@mui/system';
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
-      '&.SCFeedObject-preview, &.SCFeedObject-detail': {
+      '&.SCFeedObject-preview, &.SCFeedObject-detail, &.SCFeedObject-search': {
         border: `0 none`,
         boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
         borderRadius: 0,

@@ -10,7 +10,6 @@ import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import BaseItemButton from '../../shared/BaseItemButton';
 import {WidgetProps} from '../Widget';
-import {highlight} from '../../index';
 
 const messages = defineMessages({
   categoryFollowers: {
@@ -69,10 +68,6 @@ export interface CategoryProps extends WidgetProps {
    */
   showFollowers?: boolean;
   /**
-   * A search term used for highlighting matching results
-   */
-  search?: string;
-  /**
    * Any other properties
    */
   [p: string]: any;
@@ -114,7 +109,6 @@ export default function Category(inProps: CategoryProps): JSX.Element {
     autoHide = false,
     followCategoryButtonProps = {},
     showFollowers = true,
-    search,
     ...rest
   } = props;
 
@@ -139,7 +133,7 @@ export default function Category(inProps: CategoryProps): JSX.Element {
         className={classNames(classes.root, className)}
         ButtonBaseProps={{component: Link, to: scRoutingContext.url(SCRoutes.CATEGORY_ROUTE_NAME, scCategory)}}
         image={<Avatar alt={scCategory.name} src={scCategory.image_medium} variant="square" className={classes.categoryImage} />}
-        primary={search && search !== '' ? highlight(scCategory.name, search) : scCategory.name}
+        primary={scCategory.name}
         secondary={showFollowers ? `${intl.formatMessage(messages.categoryFollowers, {total: scCategory.followers_counter})}` : scCategory.slogan}
         actions={<FollowButton category={scCategory} {...followCategoryButtonProps} />}
         {...rest}

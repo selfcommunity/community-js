@@ -834,7 +834,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
               <Actions
                 feedObject={obj}
                 hideCommentAction={template === SCFeedObjectTemplateType.DETAIL}
-                handleExpandActivities={handleExpandActivities}
+                handleExpandActivities={template === SCFeedObjectTemplateType.PREVIEW ? handleExpandActivities : null}
                 VoteActionProps={{onVoteAction: handleVoteSuccess}}
                 {...ActionsProps}
               />
