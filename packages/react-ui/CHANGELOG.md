@@ -3,6 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.147](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.146...@selfcommunity/react-ui@0.7.0-alpha.147) (2023-04-04)
+
+
+### Bug Fixes
+
+* Fix imports ([9d61e2f](https://github.com/selfcommunity/community-js/commit/9d61e2fd9e8a85b58339e0b3c4470bd1f3c2074c))
+
+
+
+
+
+# [0.7.0-alpha.146](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.145...@selfcommunity/react-ui@0.7.0-alpha.146) (2023-04-04)
+
+
+### Performance Improvements
+
+* Refactor Composer.tsx internal components ([ffb9cf5](https://github.com/selfcommunity/community-js/commit/ffb9cf5a06055bf70c17e4a8abc26473b3089ef6))
+
+
+
+
+
+# [0.7.0-alpha.145](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.144...@selfcommunity/react-ui@0.7.0-alpha.145) (2023-04-04)
+
+
+### Performance Improvements
+
+* renamed pm component callback ([5b6341c](https://github.com/selfcommunity/community-js/commit/5b6341c37b6d242c3763e5fa2d5cf5036c298712))
+
+
+
+
+
 # [0.7.0-alpha.144](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.143...@selfcommunity/react-ui@0.7.0-alpha.144) (2023-04-04)
 
 
