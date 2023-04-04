@@ -1,8 +1,7 @@
-import React, {SyntheticEvent, useEffect, useState} from 'react';
+import React, {SyntheticEvent, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField, {TextFieldProps} from '@mui/material/TextField';
-import CircularProgress from '@mui/material/CircularProgress';
 import Checkbox from '@mui/material/Checkbox';
 import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
@@ -12,7 +11,6 @@ import {AutocompleteClasses} from '@mui/material/Autocomplete/autocompleteClasse
 import {OverridableStringUnion} from '@mui/types';
 import {AutocompletePropsSizeOverrides} from '@mui/material/Autocomplete/Autocomplete';
 import {SCTagType} from '@selfcommunity/types';
-import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import TagChip from '../../../shared/TagChip';
 import {useThemeProps} from '@mui/system';
 

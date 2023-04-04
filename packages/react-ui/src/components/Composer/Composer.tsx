@@ -57,7 +57,7 @@ import {COMPOSER_POLL_MIN_CHOICES, COMPOSER_TITLE_MAX_LENGTH, COMPOSER_TYPE_DISC
 import {MEDIA_TYPE_SHARE} from '../../constants/Media';
 import LoadingButton from '@mui/lab/LoadingButton';
 import Audience from './Audience';
-import Categories from './Categories';
+import CategoryAutocomplete from '../CategoryAutocomplete';
 import {random, stripHtml} from '@selfcommunity/utils';
 import classNames from 'classnames';
 import {TransitionProps} from '@mui/material/transitions';
@@ -67,7 +67,7 @@ import {SCMediaChunkType, SCMediaObjectType} from '../../types/media';
 import {Document, Image, Link, Share} from '../../shared/Media';
 import MediasPreview from '../../shared/MediasPreview';
 import Poll from './Poll';
-import Location from './Location';
+import LocationAutocomplete from '../LocationAutocomplete';
 import TagChip from '../../shared/TagChip';
 import {DistributiveOmit} from '@mui/types';
 import {OverrideProps} from '@mui/material/OverridableComponent';
@@ -783,7 +783,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
           </Box>
         </DialogTitle>
         <DialogContent className={classes.locationContent}>
-          <Location onChange={handleChange('location')} defaultValue={location} />
+          <LocationAutocomplete onChange={handleChange('location')} defaultValue={location} />
         </DialogContent>
       </React.Fragment>
     );
@@ -871,7 +871,13 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
               ))}
           </Stack>
           <div className={classes.block}>
-            <Categories key={`${key}-categories`} onChange={handleChange('categories')} defaultValue={categories} disabled={isSubmitting} />
+            <CategoryAutocomplete
+              multiple
+              key={`${key}-categories`}
+              onChange={handleChange('categories')}
+              defaultValue={categories}
+              disabled={isSubmitting}
+            />
           </div>
           {error && (
             <Typography className={classes.block} color="error">

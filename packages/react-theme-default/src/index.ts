@@ -49,7 +49,7 @@ import SCUser from './components/SCUser';
 import SCLoyaltyProgram from './components/SCLoyaltyProgram';
 import MuiOutlinedInput from './components/MuiOutlinedInput';
 import MuiSelect from './components/MuiSelect';
-import SCComposerCategories from './components/SCComposerCategories';
+import SCCategoryAutocomplete from './components/SCCategoryAutocomplete';
 import MuiAutocomplete from './components/MuiAutocomplete';
 import SCComposerPoll from './components/SCComposerPoll';
 import SCPreviewMediaDocument from './components/SCPreviewMediaDocument';
@@ -176,7 +176,7 @@ const theme = {
     SCCommentsFeedObject,
     SCCommentsObject,
     SCComposer,
-    SCComposerCategories,
+    SCCategoryAutocomplete,
     SCComposerPoll,
     SCContributionNotification,
     SCContributorsFeedObject,

@@ -6,60 +6,45 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Checkbox from '@mui/material/Checkbox';
 import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
-import {Chip, InternalStandardProps as StandardProps} from '@mui/material';
+import {AutocompleteProps, Chip} from '@mui/material';
 import {useSCFetchCategories} from '@selfcommunity/react-core';
 import {styled} from '@mui/material/styles';
-import {AutocompleteClasses} from '@mui/material/Autocomplete/autocompleteClasses';
-import {OverridableStringUnion} from '@mui/types';
-import {AutocompletePropsSizeOverrides} from '@mui/material/Autocomplete/Autocomplete';
-import {SCCategoryType} from '@selfcommunity/types';
+import {SCCategoryType} from '@selfcommunity/types/src/index';
 import {useThemeProps} from '@mui/system';
 
-const PREFIX = 'SCComposerCategories';
+const PREFIX = 'SCCategoryAutocomplete';
 
 const classes = {
   root: `${PREFIX}-root`
 };
 
-const Root = styled(Autocomplete, {
-  name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(() => ({
-  minWidth: 120
-}));
-
-export interface CategoriesProps extends StandardProps<React.HTMLAttributes<HTMLDivElement>, 'defaultValue' | 'onChange' | 'children'> {
-  /**
-   * Overrides or extends the styles applied to the component.
-   */
-  classes?: Partial<AutocompleteClasses>;
-  /**
-   * The size of the component.
-   * @default 'medium'
-   */
-  size?: OverridableStringUnion<'small' | 'medium', AutocompletePropsSizeOverrides>;
-  /**
-   * The maximum number of tags that will be visible when not focused.
-   * Set `-1` to disable the limit.
-   * @default -1
-   */
-  limitTags?: number;
-  /**
-   * If `true`, hide the selected options from the list box.
-   * @default false
-   */
-  filterSelectedOptions?: boolean;
-  /**
-   * If `true`, the popup won't close when a value is selected.
-   * @default false
-   */
-  disableCloseOnSelect?: boolean;
-  /**
-   * If `true`, the autocomplede will be disabled.
-   * @default false
-   */
-  disabled?: boolean;
+export interface CategoryAutocompleteProps
+  extends Pick<
+    AutocompleteProps<string, true, false, true>,
+    Exclude<
+      keyof AutocompleteProps<string, true, false, true>,
+      | 'defaultValue'
+      | 'open'
+      | 'onOpen'
+      | 'onClose'
+      | 'onChange'
+      | 'filterSelectedOptions'
+      | 'disableCloseOnSelect'
+      | 'options'
+      | 'getOptionLabel'
+      | 'value'
+      | 'selectOnFocus'
+      | 'clearOnBlur'
+      | 'blurOnSelect'
+      | 'handleHomeEndKeys'
+      | 'clearIcon'
+      | 'noOptionsText'
+      | 'isOptionEqualToValue'
+      | 'renderTags'
+      | 'renderOption'
+      | 'renderInput'
+    >
+  > {
   /**
    * Force the visibility display of the popup icon.
    * @default 'auto'
@@ -87,8 +72,14 @@ export interface CategoriesProps extends StandardProps<React.HTMLAttributes<HTML
   onChange?: (value: any) => void;
 }
 
-export default function (inProps: CategoriesProps): JSX.Element {
-  const props: CategoriesProps = useThemeProps({
+const Root = styled(Autocomplete, {
+  name: PREFIX,
+  slot: 'Root',
+  overridesResolver: (props, styles) => styles.root
+})(() => ({}));
+
+const CategoryAutocomplete = (inProps: CategoryAutocompleteProps): JSX.Element => {
+  const props: CategoryAutocompleteProps = useThemeProps({
     props: inProps,
     name: PREFIX
   });
@@ -148,7 +139,6 @@ export default function (inProps: CategoriesProps): JSX.Element {
       onClose={handleClose}
       filterSelectedOptions={!checkboxSelect}
       disableCloseOnSelect={checkboxSelect}
-      multiple
       options={categories || []}
       getOptionLabel={(option: SCCategoryType) => option.name || ''}
       value={value}
@@ -208,4 +198,6 @@ export default function (inProps: CategoriesProps): JSX.Element {
       {...rest}
     />
   );
-}
+};
+
+export default CategoryAutocomplete;

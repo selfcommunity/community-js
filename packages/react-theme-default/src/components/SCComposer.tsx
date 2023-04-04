@@ -178,7 +178,7 @@ const Component = {
           padding: 0
         },
         '& .MuiDialog-paper': {
-          //padding: theme.spacing(2, 3, 3)
+          padding: theme.spacing(2, 3, 3)
         },
         '& .SCComposer-mediaContent': {
           '& .SCMediaActionImage-root': {
@@ -223,7 +223,8 @@ const Component = {
               borderRadius: theme.shape.borderRadius
             },
             '&.MuiDialog-paperFullScreen': {
-              height: 'auto'
+              height: 'auto',
+              minHeight: '100%'
             }
           }
         }

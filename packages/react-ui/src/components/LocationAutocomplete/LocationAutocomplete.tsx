@@ -1,20 +1,16 @@
 import React, {SyntheticEvent, useEffect, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
-import Autocomplete from '@mui/material/Autocomplete';
 import TextField, {TextFieldProps} from '@mui/material/TextField';
 import CircularProgress from '@mui/material/CircularProgress';
-import {InternalStandardProps as StandardProps} from '@mui/material';
-import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
-import {SCLocalityType} from '@selfcommunity/types';
+import {Autocomplete, AutocompleteProps} from '@mui/material';
+import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services/src/index';
+import {SCLocalityType} from '@selfcommunity/types/src/index';
 import {styled} from '@mui/material/styles';
-import {AutocompleteClasses} from '@mui/material/Autocomplete/autocompleteClasses';
-import {OverridableStringUnion} from '@mui/types';
-import {AutocompletePropsSizeOverrides} from '@mui/material/Autocomplete/Autocomplete';
 import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
 import {useThemeProps} from '@mui/system';
 
-const PREFIX = 'SCComposerLocation';
+const PREFIX = 'SCLocationAutocomplete';
 
 const classes = {
   root: `${PREFIX}-root`
@@ -28,27 +24,29 @@ const Root = styled(Autocomplete, {
   minWidth: 120
 }));
 
-export interface LocationProps extends StandardProps<React.HTMLAttributes<HTMLDivElement>, 'defaultValue' | 'onChange' | 'children'> {
-  /**
-   * Overrides or extends the styles applied to the component.
-   */
-  classes?: Partial<AutocompleteClasses>;
-  /**
-   * The size of the component.
-   * @default 'medium'
-   */
-  size?: OverridableStringUnion<'small' | 'medium', AutocompletePropsSizeOverrides>;
-  /**
-   * The maximum number of tags that will be visible when not focused.
-   * Set `-1` to disable the limit.
-   * @default -1
-   */
-  limitTags?: number;
-  /**
-   * If `true`, the autocomplete will be disabled.
-   * @default false
-   */
-  disabled?: boolean;
+export interface LocationAutocompleteProps
+  extends Pick<
+    AutocompleteProps<string, false, false, true>,
+    Exclude<
+      keyof AutocompleteProps<string, false, false, true>,
+      | 'defaultValue'
+      | 'options'
+      | 'getOptionLabel'
+      | 'filterOptions'
+      | 'autoComplete'
+      | 'includeInputInList'
+      | 'filterSelectedOptions'
+      | 'value'
+      | 'selectOnFocus'
+      | 'handleHomeEndKeys'
+      | 'noOptionsText'
+      | 'onChange'
+      | 'onInputChange'
+      | 'isOptionEqualToValue'
+      | 'renderInput'
+      | 'renderOption'
+    >
+  > {
   /**
    * Force the visibility display of the popup icon.
    * @default 'auto'
@@ -67,9 +65,9 @@ export interface LocationProps extends StandardProps<React.HTMLAttributes<HTMLDi
   onChange?: (value: any) => void;
 }
 
-export default function Location(inProps: LocationProps): JSX.Element {
+export default function LocationAutocomplete(inProps: LocationAutocompleteProps): JSX.Element {
   // Props
-  const props: LocationProps = useThemeProps({
+  const props: LocationAutocompleteProps = useThemeProps({
     props: inProps,
     name: PREFIX
   });
