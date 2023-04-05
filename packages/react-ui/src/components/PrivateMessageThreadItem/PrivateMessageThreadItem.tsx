@@ -1,6 +1,6 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {ListItem, Typography, IconButton, Box, useTheme, Button} from '@mui/material';
+import {ListItem, Typography, IconButton, Box, useTheme, Button, Dialog, DialogContent} from '@mui/material';
 import PrivateMessageThreadItemSkeleton from './Skeleton';
 import {useIntl} from 'react-intl';
 import {SCPrivateMessageThreadType, SCMessageFileType} from '@selfcommunity/types';
@@ -13,8 +13,11 @@ import {SCThemeType} from '@selfcommunity/react-core';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import PrivateMessageActionDrawer from '../PrivateMessageActionDrawer';
 import {bytesToSize} from '../../utils/sizeCoverter';
+import BaseDialog from '../../shared/BaseDialog';
+import AutoPlayer from '../../shared/AutoPlayer';
 
 const PREFIX = 'SCPrivateMessageThreadItem';
+const DIALOG_PREFIX = `${PREFIX}Dialog`;
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -25,6 +28,12 @@ const classes = {
   messageTime: `${PREFIX}-message-time`,
   menuItem: `${PREFIX}-menu-item`
 };
+
+const MediaPreviewDialog = styled(BaseDialog, {
+  name: DIALOG_PREFIX,
+  slot: 'Root',
+  overridesResolver: (props, styles) => styles.root
+})(({theme}) => ({}));
 
 const Root = styled(ListItem, {
   name: PREFIX,
@@ -130,8 +139,9 @@ export default function PrivateMessageThreadItem(inProps: PrivateMessageThreadIt
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const hasFile = message ? message.file : null;
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+  const [openDialog, setOpenDialog] = useState<boolean>(false);
 
   const getMouseEvents = (mouseEnter, mouseLeave) => ({
     onMouseEnter: mouseEnter,
@@ -173,7 +183,7 @@ export default function PrivateMessageThreadItem(inProps: PrivateMessageThreadIt
         case type.startsWith(SCMessageFileType.IMAGE):
           section = (
             <Box className={classes.img}>
-              <img src={m.file.thumbnail} loading="lazy" alt={'img'} onClick={() => handleDownload(m.file.url, m.file.fileName)} />
+              <img src={m.file.thumbnail} loading="lazy" alt={'img'} onClick={() => setOpenDialog(true)} />
             </Box>
           );
           break;
@@ -181,7 +191,7 @@ export default function PrivateMessageThreadItem(inProps: PrivateMessageThreadIt
           section = (
             <Box className={classNames(classes.img, classes.video)}>
               <img src={m.file.thumbnail} loading="lazy" alt={'img'} />
-              <IconButton onClick={() => handleDownload(m.file.url, m.file.fileName)}>
+              <IconButton onClick={() => setOpenDialog(true)}>
                 <Icon>play_circle_outline</Icon>
               </IconButton>
             </Box>
@@ -257,6 +267,20 @@ export default function PrivateMessageThreadItem(inProps: PrivateMessageThreadIt
           minute: 'numeric'
         })}`}</Typography>
       </>
+      {openDialog && (
+        <MediaPreviewDialog open={openDialog} onClose={() => setOpenDialog(false)}>
+          {message?.file.mimetype.startsWith(SCMessageFileType.VIDEO) ? (
+            <AutoPlayer url={message?.file.url} width={'100%'} enableAutoplay={false} />
+          ) : (
+            <>
+              <img src={message?.file.thumbnail} loading="lazy" alt={'img'} />
+              <IconButton onClick={() => handleDownload(message?.file.url, message?.file.filename)}>
+                <Icon>download</Icon>
+              </IconButton>
+            </>
+          )}
+        </MediaPreviewDialog>
+      )}
     </Root>
   );
 }
