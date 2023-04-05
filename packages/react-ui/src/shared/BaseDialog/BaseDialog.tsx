@@ -1,10 +1,8 @@
 import React, {ReactNode} from 'react';
 import {styled} from '@mui/material/styles';
-import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent, {DialogContentProps} from '@mui/material/DialogContent';
-import {FormattedMessage} from 'react-intl';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Title from './title';
 import classNames from 'classnames';
@@ -21,17 +19,7 @@ const Root = styled(Dialog, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  [theme.breakpoints.down(500)]: {
-    minWidth: 300
-  },
-  [theme.breakpoints.only('xs')]: {
-    '& .MuiDialogContent-root': {
-      padding: 0
-    }
-  },
-  minWidth: 500
-}));
+})(({theme}) => ({}));
 
 export interface BaseDialogProps {
   /**

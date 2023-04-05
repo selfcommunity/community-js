@@ -1,6 +1,10 @@
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
+      minWidth: 300,
+      [theme.breakpoints.up(500)]: {
+        minWidth: 500
+      },
       '& h2': {
         fontSize: '1.286rem',
         fontWeight: theme.typography.fontWeightBold,
@@ -16,6 +20,9 @@ const Component = {
         paddingRight: 0,
         marginLeft: theme.spacing(3),
         marginRight: theme.spacing(3),
+        [theme.breakpoints.only('xs')]: {
+          padding: 0
+        },
         '& .infinite-scroll-component': {
           ' > .': {
             marginBottom: theme.spacing(2.5)
