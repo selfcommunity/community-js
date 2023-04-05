@@ -4,7 +4,7 @@ import {SCRoutingContextType} from '../../types/context';
 
 /**
  *
- * Import this components:
+ * Import these components:
  * import {SCRoutingContextType, useSCRouting, Link, SCRoutes} from '@selfcommunity/react-core';
  *
  * Example:
