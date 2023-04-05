@@ -50,7 +50,7 @@
     "react-dom": "17 || 18"
   },
   "dependencies": {
-    "@selfcommunity/react-core": "^0.4.0-alpha.11",
+    "@selfcommunity/react-core": "^0.4.0-alpha.12",
     "@selfcommunity/react-ui": "^0.7.0-alpha.151"
   },
   "devDependencies": {
