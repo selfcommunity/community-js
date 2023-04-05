@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.95](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.94...@selfcommunity/react-theme-default@0.1.0-alpha.95) (2023-04-05)
+
+
+### Bug Fixes
+
+* Fix imports ([f1743f7](https://github.com/selfcommunity/community-js/commit/f1743f7cc2f8dc216dc5e4c85086e28b13477649))
+
+
+
+
+
 # [0.1.0-alpha.94](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.93...@selfcommunity/react-theme-default@0.1.0-alpha.94) (2023-04-04)
 
 
