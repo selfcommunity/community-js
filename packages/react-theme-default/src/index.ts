@@ -72,6 +72,7 @@ import SCContributionNotification from './components/SCContributionNotification'
 import SCSnippetNotificationsSkeleton from './components/SCSnippetNotificationsSkeleton';
 import SCPrivateMessageComponentSkeleton from './components/SCPrivateMessageComponentSkeleton';
 import SCPrivateMessageThreadSkeleton from './components/SCPrivateMessageThreadSkeleton';
+import SCPrivateMessageThreadItemDialog from './components/SCPrivateMessageThreadItemDialog';
 import SCLightbox from './components/SCLightbox';
 import SCFollowAction from './components/SCFollowAction';
 import SCReactionAction from './components/SCReactionAction';
@@ -229,7 +230,8 @@ const theme = {
     SCPrivateMessageThreadItem,
     SCPrivateMessageEditor,
     SCPrivateMessageComponentSkeleton,
-    SCPrivateMessageThreadSkeleton
+    SCPrivateMessageThreadSkeleton,
+    SCPrivateMessageThreadItemDialog
   },
   selfcommunity: {
     user: {
