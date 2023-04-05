@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.151](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.150...@selfcommunity/react-ui@0.7.0-alpha.151) (2023-04-05)
+
+
+### Performance Improvements
+
+* added dialog for pm media preview ([0ed1ec7](https://github.com/selfcommunity/community-js/commit/0ed1ec7af6a397352ed571c4b5fcb3e84a75ee85))
+
+
+
+
+
 # [0.7.0-alpha.150](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.149...@selfcommunity/react-ui@0.7.0-alpha.150) (2023-04-05)
 
 

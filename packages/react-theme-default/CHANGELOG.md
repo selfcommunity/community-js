@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.97](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.96...@selfcommunity/react-theme-default@0.1.0-alpha.97) (2023-04-05)
+
+
+### Performance Improvements
+
+* added thread item dialog theme ([021b70d](https://github.com/selfcommunity/community-js/commit/021b70d2944332195ed14c3775380f64ec400da4))
+
+
+
+
+
 # [0.1.0-alpha.96](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.95...@selfcommunity/react-theme-default@0.1.0-alpha.96) (2023-04-05)
 
 
