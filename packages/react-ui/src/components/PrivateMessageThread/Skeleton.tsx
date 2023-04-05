@@ -1,9 +1,10 @@
 import React from 'react';
 import Widget from '../Widget';
 import {styled} from '@mui/material/styles';
-import {CardContent, ListSubheader, Skeleton} from '@mui/material';
+import {CardContent, ListSubheader, Skeleton, useMediaQuery, useTheme} from '@mui/material';
 import List from '@mui/material/List';
 import PrivateMessageThreadItemSkeleton from '../PrivateMessageThreadItem/Skeleton';
+import {SCThemeType} from '@selfcommunity/react-core';
 
 const PREFIX = 'SCPrivateMessageThreadSkeleton';
 
@@ -39,6 +40,8 @@ const Root = styled(Widget, {
  *
  */
 export default function PrivateMessageThreadSkeleton(props): JSX.Element {
+  const theme = useTheme<SCThemeType>();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   return (
     <Root className={classes.root} {...props}>
       <CardContent>
@@ -46,7 +49,7 @@ export default function PrivateMessageThreadSkeleton(props): JSX.Element {
           <ListSubheader sx={{display: 'flex', justifyContent: 'center'}}>
             <Skeleton animation="wave" height={30} width={120} style={{borderRadius: 20}} />
           </ListSubheader>
-          {[...Array(6)].map((item, index) => (
+          {[...Array(isMobile ? 6 : 8)].map((item, index) => (
             <PrivateMessageThreadItemSkeleton index={index} key={index} />
           ))}
         </List>
