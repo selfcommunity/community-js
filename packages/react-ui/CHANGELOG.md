@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.150](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.149...@selfcommunity/react-ui@0.7.0-alpha.150) (2023-04-05)
+
+
+### Bug Fixes
+
+* fixed thread skeleton ([3ad8567](https://github.com/selfcommunity/community-js/commit/3ad85672eea32ab19e8651aebca4c1badce78545))
+
+
+
+
+
 # [0.7.0-alpha.149](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.148...@selfcommunity/react-ui@0.7.0-alpha.149) (2023-04-05)
 
 
