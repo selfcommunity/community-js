@@ -62,6 +62,7 @@ import SCBottomNavigation from './components/SCBottomNavigation';
 import MuiAppBar from './components/MuiAppBar';
 import SCPrivateMessageSnippetItem from './components/SCPrivateMessageSnippetItem';
 import SCPrivateMessageThread from './components/SCPrivateMessageThread';
+import SCPrivateMessageThreadItem from './components/SCPrivateMessageThreadItem';
 import SCPrivateMessageSnippets from './components/SCPrivateMessageSnippets';
 import SCPrivateMessageEditor from './components/SCPrivateMessageEditor';
 import SCNotificationsMenu from './components/SCNotificationsMenu';
@@ -225,6 +226,7 @@ const theme = {
     SCPrivateMessageSnippetItem,
     SCPrivateMessageSnippets,
     SCPrivateMessageThread,
+    SCPrivateMessageThreadItem,
     SCPrivateMessageEditor,
     SCPrivateMessageComponentSkeleton,
     SCPrivateMessageThreadSkeleton
