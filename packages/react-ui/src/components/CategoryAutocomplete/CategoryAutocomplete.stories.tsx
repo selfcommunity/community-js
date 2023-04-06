@@ -23,5 +23,6 @@ export const Base = Template.bind({});
 Base.args = {
   /* the args you need here will depend on your component */
   multiple: false,
+  defaultValue: null,
   onChange: (value) => console.log(value)
 };
