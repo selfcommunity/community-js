@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.153](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.152...@selfcommunity/react-ui@0.7.0-alpha.153) (2023-04-06)
+
+
+### Performance Improvements
+
+* Moved pdfjs-dist as peer-dependencies ([058f86b](https://github.com/selfcommunity/community-js/commit/058f86b2684b1cd5d45fc59b8f7da51c0f962b6e))
+
+
+
+
+
 # [0.7.0-alpha.152](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.151...@selfcommunity/react-ui@0.7.0-alpha.152) (2023-04-05)
 
 
