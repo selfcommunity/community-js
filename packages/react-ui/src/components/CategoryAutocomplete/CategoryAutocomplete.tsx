@@ -11,6 +11,7 @@ import {useSCFetchCategories} from '@selfcommunity/react-core';
 import {styled} from '@mui/material/styles';
 import {SCCategoryType} from '@selfcommunity/types/src/index';
 import {useThemeProps} from '@mui/system';
+import {ChipTypeMap} from '@mui/material/Chip';
 
 const PREFIX = 'SCCategoryAutocomplete';
 
@@ -20,9 +21,9 @@ const classes = {
 
 export interface CategoryAutocompleteProps
   extends Pick<
-    AutocompleteProps<SCCategoryType, true, false, true>,
+    AutocompleteProps<SCCategoryType | null, any, any, any>,
     Exclude<
-      keyof AutocompleteProps<SCCategoryType, true, false, true>,
+      keyof AutocompleteProps<SCCategoryType | null, any, any, any>,
       | 'open'
       | 'onOpen'
       | 'onClose'
@@ -94,7 +95,6 @@ const CategoryAutocomplete = (inProps: CategoryAutocompleteProps): JSX.Element =
 
   // State
   const [open, setOpen] = useState<boolean>(false);
-  const [_defaultValue, setDefaultValue] = useState<string | SCCategoryType | (string | SCCategoryType)[]>(defaultValue);
   const [value, setValue] = useState<string | SCCategoryType | (string | SCCategoryType)[]>(defaultValue);
 
   // HOOKS
@@ -137,7 +137,7 @@ const CategoryAutocomplete = (inProps: CategoryAutocompleteProps): JSX.Element =
       disableCloseOnSelect={checkboxSelect}
       options={categories || []}
       getOptionLabel={(option: SCCategoryType) => option.name || ''}
-      defaultValue={_defaultValue}
+      value={value}
       selectOnFocus
       clearOnBlur
       blurOnSelect
