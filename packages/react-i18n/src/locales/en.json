@@ -112,7 +112,7 @@
   "ui.platformAccess.hc": "Help Center",
 
   "ui.loyaltyProgram.title":"Loyalty Program",
-  "ui.loyaltyProgram.points": "Your points: {total}",
+  "ui.loyaltyProgram.points": "Your points",
   "ui.loyaltyProgram.discover": "Discover more",
 
   "ui.loyaltyProgramDetail.community": "Joining the Community Rewards you!",
