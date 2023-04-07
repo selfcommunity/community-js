@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.155](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.154...@selfcommunity/react-ui@0.7.0-alpha.155) (2023-04-07)
+
+
+### Bug Fixes
+
+* fixed snippets search case ([4e8c5fe](https://github.com/selfcommunity/community-js/commit/4e8c5fedc9abd8bdb0a7e9972ba640ffe53e1f61))
+* fixed thread item menu visibility on mobile view ([d41832e](https://github.com/selfcommunity/community-js/commit/d41832e9c07e95f06b1e9011561012430ec13cdd))
+* fixed thread skeleton ([40f57d9](https://github.com/selfcommunity/community-js/commit/40f57d9cc1f41d41827ebbb8d2ea8675c6183bfd))
+* fixed video thumbnail generation on chrome ([1e8715c](https://github.com/selfcommunity/community-js/commit/1e8715cf5e22f82152d5fa9b48810c43c3976ee5))
+
+
+### Performance Improvements
+
+* cleaned loyalty program component ([e0663dd](https://github.com/selfcommunity/community-js/commit/e0663dd54715b9a59ba8eacfc18aa231223ba349))
+
+
+
+
+
 # [0.7.0-alpha.154](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.153...@selfcommunity/react-ui@0.7.0-alpha.154) (2023-04-06)
 
 

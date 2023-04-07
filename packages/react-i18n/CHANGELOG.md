@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.6...@selfcommunity/react-i18n@0.5.0-alpha.7) (2023-04-07)
+
+
+### Bug Fixes
+
+* fixed loyalty program translations ([4709ac9](https://github.com/selfcommunity/community-js/commit/4709ac9bd555159b7dfe74bb546ffdf92455fbde))
+
+
+
+
+
 # [0.5.0-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.5...@selfcommunity/react-i18n@0.5.0-alpha.6) (2023-04-04)
 
 

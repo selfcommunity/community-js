@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.101](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.100...@selfcommunity/react-theme-default@0.1.0-alpha.101) (2023-04-07)
+
+
+### Bug Fixes
+
+* fixed loyalty program component theme ([982b6ec](https://github.com/selfcommunity/community-js/commit/982b6ec32fd363aed8fdb7f7577689a7bf57b44f))
+* fixed pm components theme ([d2f0fc3](https://github.com/selfcommunity/community-js/commit/d2f0fc395b5d48a2b7fe8c542682904c6653eacb))
+
+
+
+
+
 # [0.1.0-alpha.100](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.99...@selfcommunity/react-theme-default@0.1.0-alpha.100) (2023-04-06)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default
