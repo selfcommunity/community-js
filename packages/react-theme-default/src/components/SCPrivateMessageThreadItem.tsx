@@ -44,7 +44,7 @@ const Component = {
           position: 'absolute',
           top: '50%',
           left: '50%',
-          transform: 'translate(-50%, -50%)',
+          transform: 'translate(-60%, -50%)',
           '& .MuiIcon-root': {
             color: theme.palette.common.white,
             fontSize: '6rem',
